@@ -102,19 +102,10 @@ export default function JannaNaarPage() {
     });
   }, []);
 
-  const activeColor = TABS.find(t => t.id === activeTab)?.color ?? "#1F4D3A";
-
   return (
     <div className="jn-page" dir="rtl">
       {/* Hero */}
-      <section
-        className="jn-hero"
-        style={{
-          "--jn-hero-bg": activeTab === "naar"
-            ? "linear-gradient(145deg, #1A0000, #7B1010, #9B1C1C)"
-            : "linear-gradient(145deg, #0A1628, #1a2e20, #1F4D3A)",
-        } as { [k: string]: string }}
-      >
+      <section className={`jn-hero${activeTab === "naar" ? " jn-hero--naar" : ""}`}>
         <div className="jn-hero__inner">
           <div className="jn-hero__badge">الدار الآخرة</div>
           <h1 className="jn-hero__title">
@@ -138,8 +129,7 @@ export default function JannaNaarPage() {
           <button
             key={t.id}
             type="button"
-            className={`jn-tab${activeTab === t.id ? " jn-tab--active" : ""}`}
-            style={activeTab === t.id ? { background: t.color, borderColor: t.color } : {}}
+            className={`jn-tab jn-tab--${t.id}${activeTab === t.id ? " jn-tab--active" : ""}`}
             onClick={() => setActiveTab(t.id)}
             aria-pressed={activeTab === t.id}
           >{t.label}</button>
@@ -151,10 +141,10 @@ export default function JannaNaarPage() {
         {/* صفة الجنة */}
         {activeTab === "janna" && (
           <div className="jn-sections">
-            <Section title="أبواب الجنة" cards={JANNA_ABWAB} color={activeColor} />
-            <Section title="أنهار الجنة" cards={JANNA_ANHAR} color={activeColor} />
-            <Section title="درجات الجنة" cards={JANNA_DARAJAT} color={activeColor} />
-            <Section title="نعيم الجنة" cards={JANNA_NAIM} color={activeColor} />
+            <Section title="أبواب الجنة" cards={JANNA_ABWAB} tabId={activeTab} />
+            <Section title="أنهار الجنة" cards={JANNA_ANHAR} tabId={activeTab} />
+            <Section title="درجات الجنة" cards={JANNA_DARAJAT} tabId={activeTab} />
+            <Section title="نعيم الجنة" cards={JANNA_NAIM} tabId={activeTab} />
           </div>
         )}
 
@@ -164,8 +154,8 @@ export default function JannaNaarPage() {
             <div className="jn-naar-warn">
               ﴿وَاتَّقُوا النَّارَ الَّتِي أُعِدَّتْ لِلْكَافِرِينَ﴾ — آل عمران: ١٣١
             </div>
-            <Section title="أبواب النار وطبقاتها" cards={NAAR_ABWAB} color="#9B1C1C" />
-            <Section title="أحوال أهل النار" cards={NAAR_ATHQAL} color="#9B1C1C" />
+            <Section title="أبواب النار وطبقاتها" cards={NAAR_ABWAB} tabId={activeTab} />
+            <Section title="أحوال أهل النار" cards={NAAR_ATHQAL} tabId={activeTab} />
           </div>
         )}
 
@@ -210,9 +200,9 @@ export default function JannaNaarPage() {
   );
 }
 
-function Section({ title, cards, color }: { title: string; cards: DescCard[]; color: string }) {
+function Section({ title, cards, tabId }: { title: string; cards: DescCard[]; tabId: Tab }) {
   return (
-    <div className="jn-section" style={{ "--jn-section-color": color } as { [k: string]: string }}>
+    <div className={`jn-section jn-section--${tabId}`}>
       <h2 className="jn-section__title">{title}</h2>
       <div className="jn-cards-grid">
         {cards.map((c, i) => (

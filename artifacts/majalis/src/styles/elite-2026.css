@@ -10907,10 +10907,10 @@ body {
 .ds-skeleton--card { height: 6rem; border-radius: 0.75rem; }
 
 /* lsw — Learning Seasons Widget — per-season color tokens */
-.lsw--rajab-1448      { --lsw-color: #1e4d8a; }
-.lsw--shaban-1448     { --lsw-color: #7c3aed; }
-.lsw--ramadan-1448    { --lsw-color: var(--majalis-emerald-deep, #0A5040); }
-.lsw--dhul-hijja-1448 { --lsw-color: var(--majalis-emerald, #1F4D3A); }
+.lsw--rajab-1448      { --lsw-color: #1e4d8a; --lsw-dot-color: #1e4d8a; }
+.lsw--shaban-1448     { --lsw-color: #7c3aed; --lsw-dot-color: #7c3aed; }
+.lsw--ramadan-1448    { --lsw-color: var(--majalis-emerald-deep, #0A5040); --lsw-dot-color: var(--majalis-emerald-deep, #0A5040); }
+.lsw--dhul-hijja-1448 { --lsw-color: var(--majalis-emerald, #1F4D3A);     --lsw-dot-color: var(--majalis-emerald, #1F4D3A); }
 .lsw-featured { border-color: var(--lsw-color, var(--majalis-emerald)); }
 .lsw-featured__name { color: var(--lsw-color, var(--majalis-emerald)); }
 .lsw-featured__now { background: var(--lsw-color, var(--majalis-emerald)); }
@@ -21797,6 +21797,13 @@ img[loading="lazy"]:not([src=""]) {
 }
 .gl-term__arabic { font-size: 1.1rem; font-weight: 800; color: #0F172A; }
 .gl-term__plural { font-size: .78rem; color: #64748B; }
+.gl-cat--all     { --gl-cat-bg: rgba(31,77,58,.1);   --gl-cat-color: #1F4D3A; }
+.gl-cat--aqeedah { --gl-cat-bg: rgba(26,90,122,.1);  --gl-cat-color: #1a5a7a; }
+.gl-cat--fiqh    { --gl-cat-bg: rgba(123,62,12,.1);  --gl-cat-color: #7B3E0C; }
+.gl-cat--hadith  { --gl-cat-bg: rgba(49,46,129,.1);  --gl-cat-color: #312E81; }
+.gl-cat--quran   { --gl-cat-bg: rgba(6,95,70,.1);    --gl-cat-color: #065F46; }
+.gl-cat--seerah  { --gl-cat-bg: rgba(155,28,28,.1);  --gl-cat-color: #9B1C1C; }
+.gl-cat--tazkiya { --gl-cat-bg: rgba(74,32,8,.1);    --gl-cat-color: #4A2008; }
 .gl-term__cat {
   font-size: .65rem; font-weight: 800; border-radius: 999px;
   padding: .15rem .55rem; letter-spacing: .04em;
@@ -22140,6 +22147,7 @@ img[loading="lazy"]:not([src=""]) {
 .jn-page { min-height: 100vh; background: #F8FAFC; }
 
 .jn-hero { padding: 3.5rem 1.5rem 2.5rem; text-align: center; transition: background .3s ease; background: var(--jn-hero-bg, linear-gradient(145deg, #0A1628, #1a2e20, #1F4D3A)); }
+.jn-hero--naar { --jn-hero-bg: linear-gradient(145deg, #1A0000, #7B1010, #9B1C1C); }
 .jn-hero__inner { max-width: 680px; margin: 0 auto; }
 .jn-hero__badge {
   display: inline-block; background: rgba(255,255,255,.15); color: #fff;
@@ -22162,12 +22170,20 @@ img[loading="lazy"]:not([src=""]) {
   cursor: pointer; flex-shrink: 0; transition: all .15s ease;
 }
 .jn-tab:hover { border-color: #1F4D3A; color: #1F4D3A; }
-.jn-tab--active { color: #fff; }
+.jn-tab--janna       { --jn-tab-active-bg: #1F4D3A; }
+.jn-tab--naar        { --jn-tab-active-bg: #9B1C1C; }
+.jn-tab--asbab-janna { --jn-tab-active-bg: #1a3a5c; }
+.jn-tab--duas        { --jn-tab-active-bg: #312E81; }
+.jn-tab--active { color: #fff; background: var(--jn-tab-active-bg, #1F4D3A); border-color: var(--jn-tab-active-bg, #1F4D3A); }
 
 .jn-container { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
 .jn-sections { display: flex; flex-direction: column; gap: 2rem; }
 
 .jn-section {}
+.jn-section--janna       { --jn-section-color: #1F4D3A; }
+.jn-section--naar        { --jn-section-color: #9B1C1C; }
+.jn-section--asbab-janna { --jn-section-color: #1a3a5c; }
+.jn-section--duas        { --jn-section-color: #312E81; }
 .jn-section__title { font-size: 1.1rem; font-weight: 800; margin: 0 0 .85rem; border-right: 3px solid currentColor; padding-right: .7rem; color: var(--jn-section-color, #1F4D3A); }
 
 .jn-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .75rem; }

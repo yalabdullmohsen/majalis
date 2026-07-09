@@ -136,7 +136,7 @@ export function HomeLearningSeasonsWidget() {
           {upcoming.slice(active ? 0 : 1).map((s) => {
             const d = daysUntil(s.startDate);
             return (
-              <div key={s.id} className="lsw-mini-item" style={{ "--lsw-dot-color": s.color } as React.CSSProperties}>
+              <div key={s.id} className={`lsw-mini-item lsw--${s.id}`}>
                 <span className="lsw-mini-item__dot" />
                 <span className="lsw-mini-item__name">{s.arabicName}</span>
                 <span className="lsw-mini-item__days">{d} يوم</span>
