@@ -101,7 +101,7 @@ const AyahItem = memo(function AyahItem({
       id={`ayah-${ayah.numberInSurah}`}
       className={`qs-ayah${isBookmarked ? " qs-ayah--bm" : ""}`}
     >
-      <span className="qs-ayah__text" style={{ fontSize: `${fontSize}rem` }}>
+      <span className="qs-ayah__text" style={{ "--qs-font-size": `${fontSize}rem` } as React.CSSProperties}>
         {ayah.text}
         {" "}
         <span className="qs-ayah__num" aria-label={`الآية ${ayah.numberInSurah}`}>
