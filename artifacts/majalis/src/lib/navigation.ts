@@ -58,6 +58,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/sawm",              label: "الصيام وأحكامه" },
   { href: "/hajj",              label: "الحج والعمرة" },
   { href: "/tahara",            label: "الطهارة وأحكامها" },
+  { href: "/fadail-aamal",     label: "فضائل الأعمال" },
   { href: "/universities",       label: "دليل الجامعات" },
   { href: "/learning-path",      label: "خارطة طالب العلم" },
   // القرآن
@@ -305,6 +306,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/sawm",            title: "الصيام وأحكامه",      description: "دليل شامل لأنواع الصيام وشروطه ومفطراته والمعذورين وفضائل رمضان" },
   { href: "/hajj",            title: "الحج والعمرة",        description: "دليل شامل لمناسك الحج والعمرة: الأركان والواجبات والمشاعر ومحظورات الإحرام" },
   { href: "/tahara",          title: "الطهارة وأحكامها",   description: "الوضوء والغسل والتيمم وأنواع المياه والنجاسات — شروط ونواقض وكيفية" },
+  { href: "/fadail-aamal",   title: "فضائل الأعمال",      description: "30+ حديث صحيح وحسن في فضائل الصلاة والصيام والقرآن والذكر والصدقة والأخلاق" },
   { href: "/knowledge-map", title: "الخريطة المعرفية",   description: "14 حقلاً علمياً بروابط تفاعلية ومحركات البحث" },
   { href: "/quran-hub",    title: "مركز القرآن",          description: "بوابتك الشاملة للمصحف والتجويد والإذاعات والبث المباشر" },
 ] as const;

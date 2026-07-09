@@ -26,6 +26,7 @@ const FOOTER_GROUPS = [
       { href: "/hadith-science", label: "مصطلح الحديث" },
       { href: "/fawaid",         label: "الفوائد" },
       { href: "/hikam-salaf",    label: "حكم السلف" },
+      { href: "/fadail-aamal",   label: "فضائل الأعمال" },
       { href: "/stories",        label: "القصص الإسلامية" },
       { href: "/seerah",         label: "السيرة النبوية" },
       { href: "/qa",             label: "الأسئلة" },

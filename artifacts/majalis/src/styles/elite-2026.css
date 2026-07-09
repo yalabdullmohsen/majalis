@@ -19222,3 +19222,153 @@ img[loading="lazy"]:not([src=""]) {
 }
 
 /* ── نهاية §230 ─────────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════════════════
+   §231 · FadailAamalPage · /fadail-aamal
+   ══════════════════════════════════════════════════════════ */
+
+.fa-page { min-height: 100vh; background: #F9FAFB; padding-bottom: 4rem; }
+
+.fa-hero {
+  background: linear-gradient(155deg, #0A5040 0%, #0E6E52 70%, #1B8C68 100%);
+  color: #fff;
+  padding: 2.5rem 1.25rem 1.75rem;
+  text-align: center;
+}
+.fa-hero__badge {
+  display: inline-block;
+  background: rgba(255,255,255,.18);
+  border-radius: 999px;
+  padding: .25rem .9rem;
+  font-size: .75rem;
+  margin-bottom: .6rem;
+}
+.fa-hero__title { font-size: clamp(1.65rem, 4vw, 2.4rem); font-weight: 800; margin: 0 0 .5rem; color: #fff; }
+.fa-hero__sub { font-size: .9rem; opacity: .88; max-width: 480px; margin: 0 auto 1.5rem; line-height: 1.65; }
+
+.fa-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+.fa-stat { display: flex; flex-direction: column; align-items: center; gap: .1rem; }
+.fa-stat__num { font-size: 1.8rem; font-weight: 800; color: #fff; line-height: 1; }
+.fa-stat__label { font-size: .75rem; opacity: .8; }
+
+.fa-body { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem; }
+
+.fa-search-row { margin-bottom: 1rem; }
+.fa-search {
+  width: 100%;
+  border: 1px solid #D1D5DB;
+  border-radius: .6rem;
+  padding: .7rem 1rem;
+  font-size: .9rem;
+  color: #111;
+  background: #fff;
+  outline: none;
+  transition: border-color .18s;
+  direction: rtl;
+}
+.fa-search:focus { border-color: var(--majalis-emerald, #0E6E52); box-shadow: 0 0 0 3px rgba(14,110,82,.1); }
+
+.fa-cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-bottom: .75rem;
+}
+.fa-cat-btn {
+  background: #fff;
+  border: 1px solid #D1D5DB;
+  border-radius: 999px;
+  padding: .3rem .85rem;
+  font-size: .8rem;
+  color: #374151;
+  cursor: pointer;
+  transition: all .15s;
+}
+.fa-cat-btn:hover { border-color: var(--majalis-emerald, #0E6E52); color: var(--majalis-emerald, #0E6E52); }
+.fa-cat-btn--active { background: var(--majalis-emerald, #0E6E52); border-color: var(--majalis-emerald, #0E6E52); color: #fff; }
+
+.fa-count { font-size: .78rem; color: #6B7280; margin: 0 0 1rem; }
+
+.fa-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.fa-card {
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: .85rem;
+  padding: 1.1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  transition: box-shadow .2s;
+}
+.fa-card:hover { box-shadow: 0 4px 14px rgba(14,110,82,.1); }
+.fa-card--sahih { border-top: 3px solid var(--majalis-emerald, #0E6E52); }
+.fa-card--hasan { border-top: 3px solid #F59E0B; }
+
+.fa-card__head { display: flex; justify-content: space-between; align-items: center; }
+.fa-card__icon { font-size: 1.7rem; }
+.fa-card__meta { display: flex; flex-direction: column; align-items: flex-end; gap: .2rem; }
+.fa-card__cat { font-size: .7rem; color: #6B7280; }
+.fa-card__grade {
+  font-size: .7rem;
+  font-weight: 700;
+  padding: .12rem .5rem;
+  border-radius: 999px;
+}
+.fa-card__grade--sahih { background: #D1FAE5; color: #065F46; }
+.fa-card__grade--hasan { background: #FEF3C7; color: #92400E; }
+
+.fa-card__title { font-size: .92rem; font-weight: 700; color: #111; margin: 0; }
+.fa-card__text {
+  font-size: .87rem;
+  line-height: 1.9;
+  color: #1F2937;
+  background: #F9FAFB;
+  border-right: 3px solid var(--majalis-emerald, #0E6E52);
+  border-radius: .4rem;
+  padding: .6rem .75rem;
+  margin: 0;
+  font-style: normal;
+}
+.fa-card__source { font-size: .72rem; color: #6B7280; font-style: normal; }
+
+.fa-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #9CA3AF;
+}
+.fa-empty__icon { font-size: 2.5rem; display: block; margin-bottom: .5rem; }
+.fa-empty p { margin: 0; font-size: .9rem; }
+
+.fa-related { margin-top: 2.5rem; }
+.fa-related__title { font-size: 1rem; font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.fa-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+.fa-related__link {
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: .6rem;
+  padding: .6rem .7rem;
+  font-size: .82rem;
+  color: var(--majalis-emerald, #0E6E52);
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background .15s;
+}
+.fa-related__link:hover { background: #F0FDF4; border-color: var(--majalis-emerald, #0E6E52); }
+
+@media (max-width: 640px) {
+  .fa-grid { grid-template-columns: 1fr; }
+  .fa-related__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── نهاية §231 ─────────────────────────────────────────── */
