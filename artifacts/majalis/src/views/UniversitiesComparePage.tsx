@@ -65,8 +65,8 @@ function CompareContent() {
       <div dir="rtl" className="flex items-center justify-center min-h-[60vh] text-center px-4">
         <div>
           <p className="text-5xl mb-4">⇔</p>
-          <p className="text-lg font-bold text-[var(--majalis-ink-soft)] mb-2">لا توجد جامعات للمقارنة</p>
-          <p className="text-sm text-[var(--majalis-ink-soft)] opacity-60 mb-4">اختر جامعتين على الأقل من الدليل لتبدأ المقارنة.</p>
+          <p className="ucp-empty-title">لا توجد جامعات للمقارنة</p>
+          <p className="ucp-empty-desc">اختر جامعتين على الأقل من الدليل لتبدأ المقارنة.</p>
           <Link href="/universities"
             className="px-5 py-2 citation-btn citation-btn--primary rounded-xl text-sm font-medium transition-colors">
             → الدليل
@@ -77,7 +77,7 @@ function CompareContent() {
   }
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-10">
+    <div dir="rtl" className="ucp-root">
       {/* Header */}
       <div className="text-white px-4 py-6 ldb-hero">
         <div className="max-w-5xl mx-auto">
@@ -90,33 +90,27 @@ function CompareContent() {
 
       <div className="max-w-5xl mx-auto px-2 py-6 overflow-x-auto">
         {/* تنبيه */}
-        <div className="bg-[var(--majalis-emerald-muted)] border border-[var(--majalis-emerald)]
-          rounded-xl px-4 py-2 text-xs text-[var(--majalis-emerald)] mb-4">
+        <div className="ucp-alert">
           <AlertTriangle size={13} className="inline ml-1" />البيانات تجريبية — تحقق من الموقع الرسمي لكل جامعة قبل التقديم.
         </div>
 
         {/* جدول المقارنة */}
-        <div className="bg-[var(--majalis-panel)] rounded-2xl border border-[var(--majalis-line)]
-          overflow-hidden shadow-sm">
+        <div className="ucp-table-wrap">
           <table className="w-full min-w-[600px]">
             <thead>
-              <tr className="border-b border-[var(--majalis-line)]">
-                <th className="px-4 py-3 text-right text-xs font-semibold text-[var(--majalis-ink-soft)]
-                  w-32 sticky right-0 bg-[var(--majalis-panel)]">المعيار</th>
+              <tr className="ucp-table-header-row">
+                <th className="ucp-th-label">المعيار</th>
                 {compareList.map((u) => (
                   <th key={u.slug} className="px-4 py-3 text-center min-w-[180px]">
                     <div className="space-y-1">
-                      <p className="text-sm font-bold text-[var(--majalis-ink)] leading-snug">
-                        {u.name_ar}
-                      </p>
+                      <p className="ucp-uni-name">{u.name_ar}</p>
                       <div className="flex justify-center gap-1">
-                        <a href={`/universities/${u.slug}`}
-                          className="text-xs text-[var(--majalis-emerald)] hover:underline">
+                        <a href={`/universities/${u.slug}`} className="ucp-detail-link">
                           التفاصيل
                         </a>
-                        <span className="text-[var(--majalis-ink-soft)] opacity-50">|</span>
+                        <span className="ucp-sep">|</span>
                         <button type="button" onClick={() => removeFromCompare(u.slug)}
-                          className="text-xs text-[var(--majalis-danger,#dc2626)] opacity-70 hover:opacity-100">إزالة</button>
+                          className="ucp-danger-btn">إزالة</button>
                       </div>
                     </div>
                   </th>
@@ -126,15 +120,10 @@ function CompareContent() {
             <tbody>
               {COMPARE_ROWS.map((row, i) => (
                 <tr key={row.label}
-                  className={`border-b border-[var(--majalis-line)] ${
-                    i % 2 === 0 ? "bg-[var(--majalis-parchment)]" : ""
-                  }`}>
-                  <td className="px-4 py-3 text-xs font-semibold text-[var(--majalis-ink-soft)]
-                    sticky right-0 bg-inherit">
-                    {row.label}
-                  </td>
+                  className={`ucp-table-row${i % 2 === 0 ? " ucp-table-row--even" : ""}`}>
+                  <td className="ucp-td-label">{row.label}</td>
                   {compareList.map((u) => (
-                    <td key={u.slug} className="px-4 py-3 text-sm text-center text-[var(--majalis-ink-soft)]">
+                    <td key={u.slug} className="ucp-td-val">
                       {row.label === "حالة الاعتماد" ? (
                         <span className="px-2 py-0.5 rounded-full text-white text-xs font-medium ucp-acc-badge"
                           style={{ "--acc-color": ACCREDITATION_COLOR[u.accreditation_status] } as React.CSSProperties}>
@@ -154,8 +143,7 @@ function CompareContent() {
           {compareList.map((u) => (
             u.website_url ? (
               <a key={u.slug} href={u.website_url} target="_blank" rel="noopener noreferrer"
-                className="text-center py-2.5 citation-btn citation-btn--primary
-                  rounded-xl text-sm font-medium transition-colors">
+                className="text-center py-2.5 citation-btn citation-btn--primary rounded-xl text-sm font-medium transition-colors">
                 <Globe size={13} className="inline ml-1" />موقع {u.name_ar.split(" ")[1] || u.name_ar} ↗
               </a>
             ) : <div key={u.slug} />

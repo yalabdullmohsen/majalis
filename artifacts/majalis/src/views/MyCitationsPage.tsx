@@ -34,6 +34,7 @@ export default function MyCitationsPage() {
       robots: "noindex, follow",
     });
   }, []);
+
   const [tab, setTab] = useState<Tab>("الكل");
   const [saved, setSaved] = useState<SavedCitation[]>([]);
   const [folders, setFolders] = useState<CitationFolder[]>([]);
@@ -97,12 +98,10 @@ export default function MyCitationsPage() {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) return;
 
-    await fetch(`/api/user/citations`, { method: "GET" }); // placeholder
-    // تحديث محلي سريع
+    await fetch(`/api/user/citations`, { method: "GET" });
     setSaved((prev) =>
       prev.map((s) => s.id === item.id ? { ...s, is_favorite: !s.is_favorite } : s)
     );
-    // sync مع الـ DB عبر supabase مباشرة
     await supabase
       .from("user_saved_citations")
       .update({ is_favorite: !item.is_favorite })
@@ -136,13 +135,11 @@ export default function MyCitationsPage() {
         setTimeout(() => setExportStatus(null), 2500);
       }
     } else {
-      // PDF: إرسال الى صفحة طباعة
       window.print();
       setExportStatus(null);
     }
   };
 
-  // فلترة محلية
   const displayed = saved.filter((item) => {
     if (!searchQuery) return true;
     const q = searchQuery.toLowerCase();
@@ -155,7 +152,7 @@ export default function MyCitationsPage() {
   if (authLoading) {
     return (
       <div dir="rtl" className="min-h-screen flex items-center justify-center">
-        <Spinner className="size-10 text-[var(--majalis-emerald)]" aria-label="جارٍ التحميل" />
+        <Spinner className="size-10 icon-emerald" aria-label="جارٍ التحميل" />
       </div>
     );
   }
@@ -163,12 +160,9 @@ export default function MyCitationsPage() {
   if (!isLoggedIn) {
     return (
       <div dir="rtl" className="min-h-screen flex flex-col items-center justify-center gap-6 p-6 text-center">
-        <h1 className="text-2xl font-bold text-[var(--majalis-ink)]">مكتبة الاقتباسات</h1>
-        <p className="text-[var(--majalis-ink-soft)]">يرجى تسجيل الدخول للوصول لمكتبتك الشخصية</p>
-        <Link
-          href="/login"
-          className="px-6 py-3 citation-btn citation-btn--primary font-medium"
-        >
+        <h1 className="mcp-page-title">مكتبة الاقتباسات</h1>
+        <p className="mcp-page-desc">يرجى تسجيل الدخول للوصول لمكتبتك الشخصية</p>
+        <Link href="/login" className="px-6 py-3 citation-btn citation-btn--primary font-medium">
           تسجيل الدخول
         </Link>
       </div>
@@ -176,59 +170,40 @@ export default function MyCitationsPage() {
   }
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] print:bg-white">
+    <div dir="rtl" className="mcp-root print:bg-white">
       {/* الرأس */}
-      <div className="bg-[var(--majalis-panel)] border-b border-[var(--majalis-line)] px-4 py-5 print:hidden">
+      <div className="mcp-header print:hidden">
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-xl font-bold text-[var(--majalis-ink)]"><FileText size={20} className="inline ml-1" />اقتباساتي</h1>
-              <p className="text-sm text-[var(--majalis-ink-soft)] mt-0.5">
-                {saved.length} اقتباس محفوظ
-              </p>
+              <h1 className="mcp-header-title"><FileText size={20} className="inline ml-1" />اقتباساتي</h1>
+              <p className="mcp-header-count">{saved.length} اقتباس محفوظ</p>
             </div>
             <div className="flex items-center gap-2">
-              {/* تصدير */}
               <div className="relative group">
-                <button
-                  type="button"
-                  className="flex items-center gap-1.5 px-3 py-2 text-sm border border-[var(--majalis-line)] rounded-lg bg-[var(--majalis-panel)] text-[var(--majalis-ink-soft)] hover:border-[var(--majalis-emerald)] transition-colors"
-                >
-                  <Download size={13} className="inline ml-1" /> تصدير
+                <button type="button" className="mcp-export-btn">
+                  <Download size={13} /> تصدير
                 </button>
-                <div className="absolute top-full right-0 mt-1 bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-lg shadow-xl z-50 min-w-[140px] hidden group-hover:block">
-                  <button
-                    type="button"
-                    onClick={() => handleExport("markdown")}
-                    className="block w-full text-right px-4 py-2 text-sm text-[var(--majalis-ink-soft)] hover:bg-[var(--mn-surface-hover)]"
-                  >
+                <div className="mcp-dropdown">
+                  <button type="button" onClick={() => handleExport("markdown")} className="mcp-dropdown-item">
                     <FileText size={13} strokeWidth={1.8} aria-hidden="true" /> Markdown
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => handleExport("pdf")}
-                    className="block w-full text-right px-4 py-2 text-sm text-[var(--majalis-ink-soft)] hover:bg-[var(--mn-surface-hover)]"
-                  >
+                  <button type="button" onClick={() => handleExport("pdf")} className="mcp-dropdown-item">
                     <Printer size={13} className="inline ml-1" /> PDF (طباعة)
                   </button>
                 </div>
               </div>
-              {exportStatus && (
-                <span className="text-xs text-[var(--majalis-emerald)]">{exportStatus}</span>
-              )}
+              {exportStatus && <span className="mcp-export-status">{exportStatus}</span>}
             </div>
           </div>
 
-          {/* بحث */}
           <div className="mt-4">
             <input
               type="search"
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
               placeholder="ابحث في اقتباساتك وملاحظاتك..."
-              className="w-full border border-[var(--majalis-line)] rounded-xl px-4 py-2.5 text-sm text-right
-                bg-[var(--majalis-parchment)] text-[var(--majalis-ink)]
-                focus:ring-2 focus:ring-[var(--majalis-emerald)] outline-none"
+              className="mcp-search-input"
               dir="rtl"
             />
           </div>
@@ -238,18 +213,13 @@ export default function MyCitationsPage() {
       <div className="max-w-4xl mx-auto px-4 py-6 flex flex-col lg:flex-row gap-6 print:block">
         {/* الشريط الجانبي */}
         <aside className="lg:w-56 print:hidden space-y-3">
-          {/* التبويبات */}
-          <nav aria-label="تصنيفات الاقتباسات" className="bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-line)] overflow-hidden">
+          <nav aria-label="تصنيفات الاقتباسات" className="mcp-sidebar-nav">
             {TABS.map((t) => (
               <button
                 key={t}
                 type="button"
                 onClick={() => handleTabChange(t)}
-                className={`w-full text-right px-4 py-3 text-sm font-medium transition-colors border-b border-[var(--majalis-line)] last:border-0 ${
-                  tab === t && activeFolder === null
-                    ? "bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)]"
-                    : "text-[var(--majalis-ink-soft)] hover:bg-[var(--mn-surface-hover)]"
-                }`}
+                className={`mcp-tab${tab === t && activeFolder === null ? " mcp-tab--active" : ""}`}
               >
                 {t === "الكل" && <ClipboardList size={13} strokeWidth={1.8} aria-hidden="true" />}{" "}
                 {t === "المجلدات" && <FolderOpen size={13} strokeWidth={1.8} aria-hidden="true" />}{" "}
@@ -260,31 +230,22 @@ export default function MyCitationsPage() {
             ))}
           </nav>
 
-          {/* المجلدات */}
-          <div className="bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-line)] overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--majalis-line)]">
-              <span className="text-xs font-semibold text-[var(--majalis-ink-soft)] uppercase tracking-wide">
-                المجلدات
-              </span>
-              <button
-                type="button"
-                onClick={() => setShowNewFolder(!showNewFolder)}
-                className="text-[var(--majalis-emerald)] text-lg leading-none hover:opacity-80"
-                title="مجلد جديد"
-              >
+          <div className="mcp-folders-panel">
+            <div className="mcp-folders-header">
+              <span className="mcp-folders-label">المجلدات</span>
+              <button type="button" onClick={() => setShowNewFolder(!showNewFolder)} className="mcp-add-folder-btn" title="مجلد جديد">
                 +
               </button>
             </div>
 
             {showNewFolder && (
-              <div className="p-3 border-b border-[var(--majalis-line)] space-y-2">
+              <div className="mcp-new-folder-box space-y-2">
                 <input
                   type="text"
                   value={newFolderName}
                   onChange={(e) => setNewFolderName(e.target.value)}
                   placeholder="اسم المجلد..."
-                  className="w-full border border-[var(--majalis-line)] rounded-lg px-2 py-1.5 text-xs text-right
-                    bg-[var(--majalis-panel)] focus:ring-2 focus:ring-[var(--majalis-emerald)] outline-none"
+                  className="mcp-folder-name-input"
                   dir="rtl"
                   onKeyDown={(e) => { if (e.key === "Enter") handleCreateFolder(); }}
                 />
@@ -299,32 +260,24 @@ export default function MyCitationsPage() {
                     />
                   ))}
                 </div>
-                <button
-                  type="button"
-                  onClick={handleCreateFolder}
-                  className="w-full py-1.5 text-xs citation-btn citation-btn--primary"
-                >
+                <button type="button" onClick={handleCreateFolder} className="w-full py-1.5 text-xs citation-btn citation-btn--primary">
                   إنشاء
                 </button>
               </div>
             )}
 
             {folders.length === 0 ? (
-              <p className="text-xs text-[var(--majalis-ink-soft)] opacity-60 text-center py-3">لا توجد مجلدات</p>
+              <p className="mcp-no-folders">لا توجد مجلدات</p>
             ) : (
               folders.map((f) => (
                 <button
                   key={f.id}
                   type="button"
                   onClick={() => handleFolderClick(f.id)}
-                  className={`w-full flex items-center gap-2 px-4 py-2.5 text-sm text-right transition-colors border-b border-[var(--majalis-line)] last:border-0 ${
-                    activeFolder === f.id
-                      ? "bg-[var(--majalis-emerald-muted)]"
-                      : "hover:bg-[var(--mn-surface-hover)]"
-                  }`}
+                  className={`mcp-folder-btn${activeFolder === f.id ? " mcp-folder-btn--active" : ""}`}
                 >
                   <span className="w-2.5 h-2.5 rounded-full flex-shrink-0 cit-folder-dot" style={{ "--folder-dot-bg": f.color } as React.CSSProperties} />
-                  <span className="truncate text-[var(--majalis-ink-soft)]">{f.folder_name}</span>
+                  <span className="mcp-folder-name">{f.folder_name}</span>
                 </button>
               ))
             )}
@@ -335,18 +288,16 @@ export default function MyCitationsPage() {
         <main className="flex-1 min-w-0">
           {loading ? (
             <div className="flex items-center justify-center py-16">
-              <Spinner className="size-8 text-[var(--majalis-emerald)]" aria-label="جارٍ التحميل" />
+              <Spinner className="size-8 icon-emerald" aria-label="جارٍ التحميل" />
             </div>
           ) : displayed.length === 0 ? (
             <div className="text-center py-16 space-y-3">
               <p className="text-4xl"><FileText size={40} strokeWidth={1.3} /></p>
-              <p className="text-[var(--majalis-ink-soft)] text-sm">
+              <p className="mcp-empty-text">
                 {searchQuery ? "لا توجد نتائج مطابقة" : "لا توجد اقتباسات محفوظة بعد"}
               </p>
               {!searchQuery && (
-                <p className="text-xs text-[var(--majalis-ink-soft)] opacity-60">
-                  ابدأ بالاقتباس من أي محتوى في المنصة
-                </p>
+                <p className="mcp-empty-hint">ابدأ بالاقتباس من أي محتوى في المنصة</p>
               )}
             </div>
           ) : (
@@ -364,101 +315,83 @@ export default function MyCitationsPage() {
                 return (
                   <div
                     key={item.id}
-                    className="bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-line)] overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                    className="mcp-cit-card"
                     style={{ "--cit-type-color": typeColor } as React.CSSProperties}
                   >
-                    {/* شريط ملوَّن */}
                     <div className="h-1 cit-type-bar" />
 
                     <div className="p-4 space-y-3">
-                      {/* العنوان والنوع */}
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex items-center gap-2 min-w-0">
                           {typeLabel && (
-                            <span
-                              className="px-1.5 py-0.5 rounded text-xs text-white font-medium flex-shrink-0 cit-type-badge"
-                            >
+                            <span className="px-1.5 py-0.5 rounded text-xs text-white font-medium flex-shrink-0 cit-type-badge">
                               {typeLabel}
                             </span>
                           )}
-                          <span className="text-sm font-semibold text-[var(--majalis-ink)] truncate">
-                            {src?.title_ar || "اقتباس"}
-                          </span>
+                          <span className="mcp-cit-title">{src?.title_ar || "اقتباس"}</span>
                         </div>
                         <button
                           type="button"
                           onClick={() => handleToggleFavorite(item)}
-                          className={`text-lg flex-shrink-0 transition-transform hover:scale-110 ${item.is_favorite ? "text-[var(--majalis-emerald)]" : "text-[var(--majalis-ink-soft)] opacity-40"}`}
+                          className={`mcp-fav-btn${item.is_favorite ? " mcp-fav-btn--active" : ""}`}
                           title={item.is_favorite ? "إزالة من المفضلة" : "إضافة للمفضلة"}
                         >
                           <Star size={16} strokeWidth={2} aria-hidden="true" />
                         </button>
                       </div>
 
-                      {/* النص */}
-                      <blockquote className="border-r-2 border-[var(--majalis-emerald)] pr-3">
-                        <p className="text-[var(--majalis-ink)] text-sm leading-relaxed line-clamp-3">
-                          {cit?.quoted_text || ""}
-                        </p>
+                      <blockquote className="mcp-blockquote">
+                        <p className="mcp-quoted-text">{cit?.quoted_text || ""}</p>
                       </blockquote>
 
-                      {/* بيانات المصدر */}
                       {(src?.author_name || src?.book_name) && (
-                        <p className="text-xs text-[var(--majalis-ink-soft)]">
+                        <p className="mcp-source-meta">
                           {src.author_name}{src.author_name && src.book_name && " — "}{src.book_name}
                         </p>
                       )}
 
-                      {/* ملاحظة شخصية */}
                       {editNoteId === item.id ? (
                         <div className="space-y-1">
                           <textarea
                             value={editNoteText}
                             onChange={(e) => setEditNoteText(e.target.value)}
                             rows={2}
-                            className="w-full border border-[var(--majalis-line)] rounded-lg px-3 py-1.5 text-xs text-right
-                              bg-[var(--majalis-parchment)] text-[var(--majalis-ink)] focus:ring-2 focus:ring-[var(--majalis-emerald)] outline-none resize-none"
+                            className="mcp-note-textarea"
                             dir="rtl"
                           />
                           <div className="flex gap-2">
                             <button type="button" onClick={() => handleSaveNote(item)} className="text-xs px-3 py-1 citation-btn citation-btn--primary">حفظ</button>
-                            <button type="button" onClick={() => setEditNoteId(null)} className="text-xs px-3 py-1 border border-[var(--majalis-line)] rounded-lg text-[var(--majalis-ink-soft)]">إلغاء</button>
+                            <button type="button" onClick={() => setEditNoteId(null)} className="mcp-cancel-btn">إلغاء</button>
                           </div>
                         </div>
                       ) : item.personal_note ? (
                         <div className="flex items-start gap-1.5">
-                          <span className="text-xs text-[var(--majalis-ink-soft)] opacity-60" aria-hidden="true"><FileText size={12} strokeWidth={1.8} /></span>
-                          <p className="text-xs text-[var(--majalis-ink-soft)] italic">{item.personal_note}</p>
+                          <span className="mcp-note-icon" aria-hidden="true"><FileText size={12} strokeWidth={1.8} /></span>
+                          <p className="mcp-note-text">{item.personal_note}</p>
                           <button
                             type="button"
                             onClick={() => { setEditNoteId(item.id); setEditNoteText(item.personal_note || ""); }}
-                            className="text-xs text-[var(--majalis-ink-soft)] opacity-60 hover:opacity-100 hover:text-[var(--majalis-emerald)] flex-shrink-0"
+                            className="mcp-edit-note-btn"
                           >
                             <Pencil size={12} strokeWidth={1.8} aria-hidden="true" />
                           </button>
                         </div>
                       ) : null}
 
-                      {/* أزرار */}
-                      <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-[var(--majalis-line)]">
+                      <div className="mcp-cit-actions">
                         {cit?.deep_link_slug && (
-                          <Link
-                            href={`/c/${cit.deep_link_slug}`}
-                            className="text-xs text-[var(--majalis-emerald)] hover:underline"
-                          >
+                          <Link href={`/c/${cit.deep_link_slug}`} className="mcp-cit-link">
                             <Link2 size={12} className="inline ml-1" /> عرض الاقتباس
                           </Link>
                         )}
                         <button
                           type="button"
                           onClick={() => { setEditNoteId(item.id); setEditNoteText(item.personal_note || ""); }}
-                          className="text-xs text-[var(--majalis-ink-soft)] hover:text-[var(--majalis-emerald)]"
+                          className="mcp-note-action"
                         >
                           {item.personal_note ? "تعديل الملاحظة" : "إضافة ملاحظة"}
                         </button>
-                        <span className="text-xs text-[var(--majalis-ink-soft)] opacity-60 mr-auto">
-                          استُخدم {item.usage_count} مرة
-                        </span>
+                        <span className="mcp-usage-count">استُخدم {item.usage_count} مرة</span>
                       </div>
                     </div>
                   </div>

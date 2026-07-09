@@ -40,7 +40,6 @@ export default function ScholarlyResearchPage() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const answerRef   = useRef<HTMLDivElement>(null);
 
-  /* ── Auto-resize textarea ─────────────────────────── */
   useEffect(() => {
     const el = textareaRef.current;
     if (!el) return;
@@ -48,7 +47,6 @@ export default function ScholarlyResearchPage() {
     el.style.height = `${Math.min(el.scrollHeight, 200)}px`;
   }, [query]);
 
-  /* ── Load library when switching to it ────────────── */
   useEffect(() => {
     if (view !== "library" || !isLoggedIn) return;
     setLibLoading(true);
@@ -58,7 +56,6 @@ export default function ScholarlyResearchPage() {
       .finally(() => setLibLoading(false));
   }, [view, isLoggedIn]);
 
-  /* ── Run search ───────────────────────────────────── */
   const handleSearch = useCallback(async (q: string) => {
     const trimmed = q.trim();
     if (!trimmed) return;
@@ -90,7 +87,6 @@ export default function ScholarlyResearchPage() {
     }
   }, [query, handleSearch]);
 
-  /* ── Save to library ──────────────────────────────── */
   const handleSave = useCallback(async () => {
     if (!result || !isLoggedIn) {
       setSaveMsg(isLoggedIn ? "لا توجد نتائج للحفظ" : "يجب تسجيل الدخول أولاً");
@@ -112,13 +108,11 @@ export default function ScholarlyResearchPage() {
     }
   }, [result, isLoggedIn, query]);
 
-  /* ── Delete from library ──────────────────────────── */
   const handleDelete = useCallback(async (id: string) => {
     const ok = await deleteResearch(id);
     if (ok) setLibrary((prev) => prev.filter((r) => r.id !== id));
   }, []);
 
-  /* ── Export as Markdown ───────────────────────────── */
   const handleExportMd = useCallback(() => {
     if (!result) return;
     const md = [
@@ -141,11 +135,13 @@ export default function ScholarlyResearchPage() {
   }, [result, query]);
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)]">
+    <div dir="rtl" className="srp-root">
       {/* ── Header ───────────────────────────────────── */}
       <div className="text-white py-10 px-4 ldb-hero">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-2xl font-bold mb-2 flex items-center justify-center gap-2"><FlaskConical size={22} strokeWidth={1.6} aria-hidden="true" /> الباحث الشرعي</h1>
+          <h1 className="text-2xl font-bold mb-2 flex items-center justify-center gap-2">
+            <FlaskConical size={22} strokeWidth={1.6} aria-hidden="true" /> الباحث الشرعي
+          </h1>
           <p className="text-white/85 text-sm leading-relaxed max-w-xl mx-auto">
             يُجيب من المصادر الموثّقة فقط — آيات وأحاديث وقرارات مجامع وفتاوى علماء.
             لا يُصدر فتاوى شخصية ولا يُصنّف الأحاديث بنفسه.
@@ -154,20 +150,19 @@ export default function ScholarlyResearchPage() {
       </div>
 
       {/* ── Subnav ───────────────────────────────────── */}
-      <div className="bg-[var(--majalis-panel)] border-b border-[var(--majalis-line)] sticky top-0 z-20">
+      <div className="srp-subnav">
         <div className="max-w-3xl mx-auto flex">
           {(["search", "library"] as View[]).map((v) => (
             <button
               key={v}
               type="button"
               onClick={() => setView(v)}
-              className={`px-5 py-3 text-sm font-medium border-b-2 transition-colors ${
-                view === v
-                  ? "border-[var(--mn-border-active)] text-[var(--mn-text-active)]"
-                  : "border-transparent text-[var(--majalis-ink-soft)] hover:text-[var(--majalis-ink)]"
-              }`}
+              className={`srp-tab${view === v ? " srp-tab--active" : ""}`}
             >
-              {v === "search" ? <><Search size={14} strokeWidth={1.8} aria-hidden="true" /> البحث</> : <><BookOpen size={14} strokeWidth={1.8} aria-hidden="true" /> مكتبتي</>}
+              {v === "search"
+                ? <><Search size={14} strokeWidth={1.8} aria-hidden="true" /> البحث</>
+                : <><BookOpen size={14} strokeWidth={1.8} aria-hidden="true" /> مكتبتي</>
+              }
             </button>
           ))}
         </div>
@@ -179,8 +174,7 @@ export default function ScholarlyResearchPage() {
         {view === "search" && (
           <>
             {/* نموذج البحث */}
-            <form onSubmit={handleSubmit} className="bg-[var(--majalis-panel)] rounded-2xl shadow-sm
-              border border-[var(--majalis-line)] p-4 space-y-3">
+            <form onSubmit={handleSubmit} className="srp-form space-y-3">
               <textarea
                 ref={textareaRef}
                 dir="rtl"
@@ -189,10 +183,7 @@ export default function ScholarlyResearchPage() {
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="اكتب سؤالك الشرعي هنا… (Shift+Enter للسطر الجديد)"
-                className="w-full resize-none rounded-xl border border-[var(--majalis-line)]
-                  bg-[var(--majalis-parchment)] text-[var(--majalis-ink)] placeholder-[var(--majalis-ink-soft)]
-                  px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--majalis-emerald)]
-                  transition-all overflow-hidden"
+                className="srp-textarea"
               />
 
               <div className="flex items-center gap-2">
@@ -205,46 +196,29 @@ export default function ScholarlyResearchPage() {
                 </button>
                 {result && (
                   <>
-                    <button
-                      type="button"
-                      onClick={handleSave}
-                      title="حفظ في مكتبتي"
-                      className="px-3 py-2 text-sm bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink)]
-                        rounded-xl hover:bg-[var(--mn-surface-hover)] transition-colors"
-                    >
+                    <button type="button" onClick={handleSave} title="حفظ في مكتبتي" className="srp-action-btn">
                       <Save size={15} />
                     </button>
-                    <button
-                      type="button"
-                      onClick={handleExportMd}
-                      title="تصدير Markdown"
-                      className="px-3 py-2 text-sm bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink)]
-                        rounded-xl hover:bg-[var(--mn-surface-hover)] transition-colors"
-                    >
+                    <button type="button" onClick={handleExportMd} title="تصدير Markdown" className="srp-action-btn">
                       <Download size={15} />
                     </button>
                   </>
                 )}
-                {saveMsg && (
-                  <span className="text-xs text-[var(--majalis-ink-soft)] mr-auto">{saveMsg}</span>
-                )}
+                {saveMsg && <span className="srp-save-msg">{saveMsg}</span>}
               </div>
             </form>
 
             {/* أسئلة مقترحة */}
             {!result && !loading && (
               <div>
-                <p className="text-xs text-[var(--majalis-ink-soft)] opacity-60 mb-2 font-medium">أسئلة مقترحة</p>
+                <p className="srp-suggestions-label">أسئلة مقترحة</p>
                 <div className="flex flex-wrap gap-2">
                   {QUICK_PROMPTS.map((p) => (
                     <button
                       key={p.text}
                       type="button"
                       onClick={() => handleSearch(p.text)}
-                      className="text-xs px-3 py-1.5 rounded-full bg-[var(--majalis-panel)] border
-                        border-[var(--majalis-line)] text-[var(--majalis-ink)]
-                        hover:border-[var(--majalis-emerald)] hover:text-[var(--majalis-emerald)]
-                        transition-colors"
+                      className="srp-prompt-btn"
                     >
                       {p.text}
                     </button>
@@ -256,25 +230,21 @@ export default function ScholarlyResearchPage() {
             {/* حالة التحميل */}
             {loading && (
               <div className="flex flex-col items-center justify-center py-16 gap-4">
-                <div className="relative">
-                  <Spinner className="size-12 text-[var(--majalis-emerald)]" aria-label="يبحث في المصادر" />
-                </div>
-                <p className="text-sm text-[var(--majalis-ink-soft)] opacity-60">يبحث في المصادر الشرعية…</p>
+                <Spinner className="size-12 icon-emerald" aria-label="يبحث في المصادر" />
+                <p className="srp-loading-text">يبحث في المصادر الشرعية…</p>
               </div>
             )}
 
             {/* خطأ */}
             {error && !loading && (
-              <div className="bg-[var(--majalis-danger-muted)] border border-[var(--majalis-danger)]
-                rounded-xl p-4 text-sm text-[var(--majalis-danger)]">
+              <div className="srp-error">
                 <AlertTriangle size={13} className="inline ml-1" />{error}
               </div>
             )}
 
             {/* نتيجة البحث */}
             {result && !loading && (
-              <div ref={answerRef} className="bg-[var(--majalis-panel)] rounded-2xl shadow-sm
-                border border-[var(--majalis-line)] p-5">
+              <div ref={answerRef} className="srp-result-box">
                 <ResearchAnswer result={result} onSave={handleSave} />
               </div>
             )}
@@ -285,60 +255,46 @@ export default function ScholarlyResearchPage() {
         {view === "library" && (
           <div className="space-y-4">
             {!isLoggedIn && (
-              <div className="bg-[var(--majalis-emerald-muted)] border border-[var(--majalis-emerald)]
-                rounded-xl p-4 text-sm text-[var(--majalis-emerald)] text-center">
+              <div className="srp-login-notice">
                 يجب <Link href="/login" className="underline font-medium">تسجيل الدخول</Link> لعرض مكتبتك البحثية الخاصة.
               </div>
             )}
 
             {isLoggedIn && libLoading && (
-              <div className="text-center py-10 text-[var(--majalis-ink-soft)] opacity-60">جارٍ التحميل…</div>
+              <div className="srp-empty">جارٍ التحميل…</div>
             )}
 
             {isLoggedIn && !libLoading && library.length === 0 && (
-              <div className="text-center py-10 text-[var(--majalis-ink-soft)] opacity-60">
+              <div className="srp-empty">
                 <p className="text-4xl mb-3"><Inbox size={40} strokeWidth={1.3} /></p>
                 <p>لم تحفظ أي بحث بعد.</p>
-                <button
-                  type="button"
-                  onClick={() => setView("search")}
-                  className="mt-4 text-sm text-[var(--majalis-emerald)] hover:underline"
-                >
+                <button type="button" onClick={() => setView("search")} className="srp-start-search">
                   ابدأ بحثاً الآن ←
                 </button>
               </div>
             )}
 
             {isLoggedIn && !libLoading && library.map((item) => (
-              <div key={item.id} className="bg-[var(--majalis-panel)] border border-[var(--majalis-line)]
-                rounded-2xl p-4 space-y-2 hover:shadow-sm transition-shadow">
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="font-semibold text-[var(--majalis-ink)] text-sm leading-snug">
-                    {item.title || item.query_text}
-                  </h3>
+              <div key={item.id} className="srp-lib-item">
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <h3 className="srp-lib-title">{item.title || item.query_text}</h3>
                   <button
                     type="button"
                     onClick={() => handleDelete(item.id)}
-                    className="flex-shrink-0 text-[var(--majalis-line)] hover:text-[var(--majalis-danger)] text-lg leading-none transition-colors"
+                    className="srp-lib-del"
                     title="حذف"
                   >
                     ×
                   </button>
                 </div>
 
-                <p className="text-xs text-[var(--majalis-ink-soft)] line-clamp-2">
-                  {item.answer_snapshot}
-                </p>
+                <p className="srp-lib-excerpt mb-2">{item.answer_snapshot}</p>
 
-                <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex items-center gap-2 flex-wrap mb-2">
                   {item.tags?.map((tag) => (
-                    <span key={tag} className="text-xs bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)] px-2 py-0.5 rounded-full">
-                      {tag}
-                    </span>
+                    <span key={tag} className="srp-lib-tag">{tag}</span>
                   ))}
-                  <span className="text-xs text-[var(--majalis-ink-soft)] opacity-40 mr-auto">
-                    {new Date(item.saved_at).toLocaleDateString("ar-SA")}
-                  </span>
+                  <span className="srp-lib-date">{new Date(item.saved_at).toLocaleDateString("ar-SA")}</span>
                 </div>
 
                 <button
@@ -348,7 +304,7 @@ export default function ScholarlyResearchPage() {
                     setQuery(item.query_text);
                     handleSearch(item.query_text);
                   }}
-                  className="text-xs text-[var(--majalis-emerald)] hover:underline"
+                  className="srp-lib-search-btn"
                 >
                   إعادة البحث ←
                 </button>

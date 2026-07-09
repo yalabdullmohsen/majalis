@@ -29,13 +29,11 @@ function FilterSelect({
 }) {
   return (
     <label className="flex flex-col gap-1 min-w-0">
-      <span className="text-xs font-medium text-[var(--majalis-ink-soft)]">{label}</span>
+      <span className="up-filter-label">{label}</span>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="px-3 py-2 text-sm rounded-xl border border-[var(--majalis-line)]
-          bg-[var(--majalis-parchment)] text-[var(--majalis-ink)]
-          focus:outline-none focus:ring-2 focus:ring-[var(--majalis-emerald)]"
+        className="up-filter-select"
       >
         <option value="">{placeholder}</option>
         {options.map((o) => <option key={o} value={o}>{o}</option>)}
@@ -88,11 +86,14 @@ function UniversitiesContent() {
   }
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-24">
+    <div dir="rtl" className="up-root">
       {/* Header */}
       <div className="text-white py-10 px-4 ldb-hero">
         <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-2xl font-bold mb-2 flex items-center justify-center gap-2"><GraduationCap size={22} strokeWidth={1.5} aria-hidden="true" /> دليل الجامعات والكليات الشرعية</h1>
+          <h1 className="text-2xl font-bold mb-2 flex items-center justify-center gap-2">
+            <GraduationCap size={22} strokeWidth={1.5} aria-hidden="true" />
+            دليل الجامعات والكليات الشرعية
+          </h1>
           <p className="text-white/85 text-sm max-w-xl mx-auto leading-relaxed">
             موسوعة شاملة للجامعات التي تُقدّم دراسات شرعية حول العالم.
             ابحث وقارن وصل لرابط التقديم الرسمي مباشرة.
@@ -106,12 +107,10 @@ function UniversitiesContent() {
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="ابحث عن جامعة أو تخصص…"
               aria-label="بحث عن جامعة أو تخصص"
-              className="flex-1 px-4 py-2.5 rounded-xl text-[#1E1E1E] text-sm focus:outline-none
-                focus:ring-2 focus:ring-white/50"
+              className="flex-1 px-4 py-2.5 rounded-xl text-[#1E1E1E] text-sm focus:outline-none focus:ring-2 focus:ring-white/50"
             />
             <button type="submit"
-              className="px-4 py-2.5 bg-white/20 hover:bg-white/30 text-white text-sm
-                rounded-xl font-medium transition-colors">
+              className="px-4 py-2.5 bg-white/20 hover:bg-white/30 text-white text-sm rounded-xl font-medium transition-colors">
               بحث
             </button>
           </form>
@@ -120,33 +119,32 @@ function UniversitiesContent() {
 
       <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
         {/* تنبيه البيانات التجريبية */}
-        <div className="bg-[var(--majalis-emerald-muted)] border border-[var(--majalis-emerald)]
-          rounded-xl px-4 py-3 text-sm text-[var(--majalis-emerald)]">
-          <AlertTriangle size={14} aria-hidden="true" className="inline ml-1" /> <strong>تنبيه:</strong> البيانات المعروضة تجريبية وتحتاج تحقق بشري. تأكد دائماً من الموقع
+        <div className="up-alert">
+          <AlertTriangle size={14} aria-hidden="true" className="inline ml-1" />
+          <strong>تنبيه:</strong> البيانات المعروضة تجريبية وتحتاج تحقق بشري. تأكد دائماً من الموقع
           الرسمي للجامعة قبل اتخاذ أي قرار.
         </div>
 
         {/* فلاتر */}
-        <div className="bg-[var(--majalis-panel)] border border-[var(--majalis-line)]
-          rounded-2xl p-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        <div className="up-filters-box">
           <FilterSelect label="الدولة"         value={filters.country || ""} onChange={(v) => setFilter("country", v)}       options={COUNTRIES} />
           <FilterSelect label="الدرجة العلمية" value={filters.degree_level || ""} onChange={(v) => setFilter("degree_level", v as UniversityFilters["degree_level"])} options={DEGREE_LEVELS} />
           <FilterSelect label="نظام الدراسة"   value={filters.study_mode || ""}   onChange={(v) => setFilter("study_mode", v as UniversityFilters["study_mode"])}   options={STUDY_MODES} />
           <FilterSelect label="لغة الدراسة"    value={filters.study_language || ""} onChange={(v) => setFilter("study_language", v)} options={LANGUAGES} />
           <div className="flex flex-col gap-1">
-            <span className="text-xs font-medium text-[var(--majalis-ink-soft)]">خيارات</span>
+            <span className="up-filter-label">خيارات</span>
             <div className="flex flex-col gap-1.5 mt-1">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" checked={!!filters.has_scholarship}
                   onChange={(e) => setFilter("has_scholarship", e.target.checked || undefined)}
                   className="accent-emerald-600" />
-                <span className="text-sm text-[var(--majalis-ink-soft)]">منح متاحة</span>
+                <span className="up-filter-opt-label">منح متاحة</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" checked={!!filters.is_verified}
                   onChange={(e) => setFilter("is_verified", e.target.checked || undefined)}
                   className="accent-emerald-600" />
-                <span className="text-sm text-[var(--majalis-ink-soft)]">موثقة فقط</span>
+                <span className="up-filter-opt-label">موثقة فقط</span>
               </label>
             </div>
           </div>
@@ -154,14 +152,14 @@ function UniversitiesContent() {
 
         {/* إحصائية */}
         <div className="flex items-center justify-between">
-          <p className="text-sm text-[var(--majalis-ink-soft)]">
+          <p className="up-count-text">
             {loading ? "جارٍ التحميل…" : `${universities.length} جامعة`}
             {search && ` — نتائج "${search}"`}
           </p>
           {Object.values(filters).some(Boolean) || search ? (
             <button type="button"
               onClick={() => { setFilters({}); setSearch(""); setSearchInput(""); }}
-              className="text-sm text-[var(--majalis-emerald)] hover:underline">
+              className="up-clear-btn">
               مسح الفلاتر
             </button>
           ) : null}
@@ -169,23 +167,23 @@ function UniversitiesContent() {
 
         {/* Grid */}
         {seedNeeded && (
-          <div className="text-center py-10 text-[var(--majalis-ink-soft)] opacity-60">
+          <div className="up-empty-state">
             <Landmark size={40} strokeWidth={1.3} className="mx-auto mb-3" aria-hidden="true" />
             <p>جداول الجامعات لم تُطبَّق بعد على قاعدة البيانات.</p>
-            <p className="text-xs mt-2">شغّل: <code className="bg-[var(--majalis-parchment-deep)] px-1 rounded">node scripts/apply-universities-migrations.mjs</code></p>
+            <p className="text-xs mt-2">شغّل: <code className="up-code">node scripts/apply-universities-migrations.mjs</code></p>
           </div>
         )}
 
         {!seedNeeded && loading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[1,2,3,4,5,6].map((i) => (
-              <div key={i} className="bg-[var(--majalis-panel)] rounded-2xl h-64 animate-pulse border border-[var(--majalis-line)]" />
+              <div key={i} className="up-skeleton" />
             ))}
           </div>
         )}
 
         {!seedNeeded && !loading && universities.length === 0 && (
-          <div className="text-center py-12 text-[var(--majalis-ink-soft)] opacity-60">
+          <div className="up-empty-state up-empty-state--py12">
             <Search size={40} strokeWidth={1.3} className="mx-auto mb-3" aria-hidden="true" />
             <p>لا توجد نتائج مطابقة للبحث الحالي.</p>
           </div>
