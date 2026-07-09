@@ -134,6 +134,7 @@ export const NAV_GROUPS: NavGroup[] = [
     links: [
       { href: "/adhkar?cat=morning", label: "أذكار الصباح" },
       { href: "/adhkar?cat=evening", label: "أذكار المساء" },
+      { href: "/duas",               label: "الأدعية الشرعية" },
       { href: "/adhkar?cat=distress", label: "الدعاء" },
       { href: "/tasbih", label: "التسابيح" },
     ],
@@ -283,6 +284,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/scholars",     title: "أعلام الإسلام",        description: "15 عالماً من الأئمة الأربعة حتى العلماء المعاصرين" },
   { href: "/asma-husna",  title: "الأسماء الحسنى",       description: "أسماء الله التسعة والتسعون — كل اسم بمعناه وآيته ومنفعته" },
   { href: "/akhlaq",     title: "الأخلاق الإسلامية",    description: "15 خلقاً إسلامياً مع آيات وأحاديث وأقوال العلماء والتطبيق العملي" },
+  { href: "/duas",       title: "الأدعية الشرعية",      description: "25 دعاءً موثقاً من القرآن والسنة — أدعية الصباح والكرب والسفر والنوم" },
   { href: "/knowledge-map", title: "الخريطة المعرفية",   description: "14 حقلاً علمياً بروابط تفاعلية ومحركات البحث" },
   { href: "/quran-hub",    title: "مركز القرآن",          description: "بوابتك الشاملة للمصحف والتجويد والإذاعات والبث المباشر" },
 ] as const;

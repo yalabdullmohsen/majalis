@@ -104,6 +104,7 @@ const FEATURE_CATS: FeatureCat[] = [
     label: "العبادة والأذكار",
     items: [
       { href: "/adhkar",      Icon: Star,        title: "الأذكار",              desc: "أذكار الصباح والمساء" },
+      { href: "/duas",        Icon: Heart,       title: "الأدعية الشرعية",    desc: "25 دعاءً موثقاً مع المعنى والمصدر" },
       { href: "/fawaid",      Icon: Lightbulb,   title: "الفوائد الدينية",      desc: "فوائد علمية منتقاة" },
       { href: "/car-mode",    Icon: Car,         title: "وضع السيارة",          desc: "تلاوات أثناء القيادة" },
       { href: "/daily-wird",  Icon: BookOpen,    title: "الورد اليومي",         desc: "ختم يومي منتظم للقرآن" },
