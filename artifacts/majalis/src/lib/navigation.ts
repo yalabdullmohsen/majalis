@@ -68,6 +68,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/anbiya",            label: "قصص الأنبياء والرسل" },
   { href: "/janna-naar",        label: "صفة الجنة والنار" },
   { href: "/alamat-saah",       label: "علامات الساعة" },
+  { href: "/malaika",           label: "الملائكة في الإسلام" },
   { href: "/tawba",             label: "التوبة والاستغفار" },
   { href: "/ulum-quran",        label: "علوم القرآن" },
   { href: "/mawarith",          label: "المواريث والفرائض" },

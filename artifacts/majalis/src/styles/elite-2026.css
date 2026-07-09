@@ -22053,3 +22053,143 @@ img[loading="lazy"]:not([src=""]) {
   .as-kubra-grid { grid-template-columns: 1fr; }
   .as-tab { font-size: .82rem; padding: .4rem .85rem; }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   §247 — الملائكة في الإسلام  (.mk-*)
+   ══════════════════════════════════════════════════════════════════ */
+
+.mk-page { min-height: 100vh; background: var(--clr-bg); }
+
+/* Hero */
+.mk-hero {
+  background: linear-gradient(135deg, #0e1a2e 0%, #1a3a5c 55%, #112235 100%);
+  padding: 3.5rem 1.25rem 2.5rem;
+  text-align: center; color: #fff;
+}
+.mk-hero__inner { max-width: 700px; margin: 0 auto; }
+.mk-hero__badge {
+  display: inline-block; margin-bottom: .85rem;
+  padding: .3rem .9rem; border-radius: 999px;
+  background: rgba(255,255,255,.12); font-size: .8rem; letter-spacing: .04em;
+}
+.mk-hero__title { font-size: 2.1rem; font-weight: 800; margin: 0 0 .6rem; }
+.mk-hero__sub   { font-size: 1rem; opacity: .82; margin: 0 0 1.2rem; line-height: 1.7; }
+.mk-hero__ayah  {
+  font-size: .95rem; opacity: .75;
+  border-top: 1px solid rgba(255,255,255,.15); padding-top: .9rem;
+}
+.mk-hero__ayah span { font-size: .82rem; opacity: .65; margin-right: .4rem; }
+
+/* Tabs */
+.mk-tabs {
+  display: flex; flex-wrap: wrap; gap: .5rem;
+  padding: 1rem 1.25rem; border-bottom: 1px solid var(--clr-border);
+  background: var(--clr-surface);
+  position: sticky; top: 0; z-index: 10;
+}
+.mk-tab {
+  padding: .45rem 1.1rem; border-radius: 999px;
+  border: 1.5px solid var(--clr-border);
+  background: #fff; font-size: .88rem; cursor: pointer; color: var(--clr-text-2);
+  transition: all .18s;
+}
+.mk-tab:hover  { border-color: #1a3a5c; color: #1a3a5c; }
+.mk-tab--active { background: #1a3a5c; border-color: #1a3a5c; color: #fff; font-weight: 600; }
+
+/* Container */
+.mk-container { max-width: 900px; margin: 0 auto; padding: 1.75rem 1.25rem 3rem; }
+
+/* Intro */
+.mk-intro {
+  background: var(--clr-surface); border-right: 4px solid #1a3a5c;
+  border-radius: .6rem; padding: 1rem 1.2rem; margin-bottom: 1.75rem;
+  font-size: .95rem; line-height: 1.8; color: var(--clr-text-1);
+}
+
+/* Aqida list */
+.mk-aqida-list { display: flex; flex-direction: column; gap: 1rem; }
+.mk-aqida-card {
+  display: flex; gap: 1rem; align-items: flex-start;
+  background: #fff; border: 1px solid var(--clr-border);
+  border-radius: .75rem; padding: 1.1rem 1.25rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+}
+.mk-aqida-num {
+  width: 2rem; height: 2rem; flex-shrink: 0;
+  border-radius: 50%; background: #1a3a5c;
+  color: #fff; font-weight: 700; font-size: .85rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.mk-aqida-title { font-size: 1rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .35rem; }
+.mk-aqida-text  { font-size: .9rem; line-height: 1.75; color: var(--clr-text-2); margin: 0; }
+
+/* Malaika grid */
+.mk-malaika-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.1rem;
+}
+.mk-malak-card {
+  display: flex; gap: .85rem; align-items: flex-start;
+  background: #fff; border: 1px solid var(--clr-border);
+  border-radius: .75rem; padding: 1.1rem 1.1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+}
+.mk-malak-num {
+  width: 2rem; height: 2rem; flex-shrink: 0;
+  border-radius: 50%; border: 2px solid #1a3a5c;
+  color: #1a3a5c; font-weight: 800; font-size: .82rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.mk-malak-body { flex: 1; min-width: 0; }
+.mk-malak-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: .4rem; margin-bottom: .25rem; }
+.mk-malak-name { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); margin: 0; }
+.mk-malak-badge {
+  font-size: .75rem; padding: .15rem .55rem; border-radius: 999px;
+  background: #e8f0f8; color: #1a3a5c; font-weight: 600; white-space: nowrap;
+}
+.mk-malak-role   { font-size: .78rem; color: #1a3a5c; font-weight: 600; margin: 0 0 .4rem; }
+.mk-malak-detail { font-size: .86rem; line-height: 1.7; color: var(--clr-text-2); margin: 0 0 .4rem; }
+.mk-malak-ref    { font-size: .78rem; color: var(--clr-text-2); margin: 0; opacity: .75; }
+
+/* Awsaf */
+.mk-awsaf-list { display: flex; flex-direction: column; gap: 1rem; }
+.mk-wasf-card {
+  display: flex; gap: 1rem; align-items: flex-start;
+  background: #fff; border: 1px solid var(--clr-border);
+  border-radius: .75rem; padding: 1rem 1.2rem;
+}
+.mk-wasf-icon  { color: #1a3a5c; font-size: 1.1rem; flex-shrink: 0; margin-top: .15rem; }
+.mk-wasf-title { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .35rem; }
+.mk-wasf-text  { font-size: .9rem; line-height: 1.75; color: var(--clr-text-2); margin: 0 0 .3rem; }
+.mk-wasf-ref   { font-size: .8rem; color: #1a3a5c; font-weight: 500; margin: 0; }
+
+/* Fadail */
+.mk-fadail-list { display: flex; flex-direction: column; gap: 1rem; }
+.mk-fadl-card {
+  background: #fff; border: 1px solid var(--clr-border);
+  border-right: 4px solid #1a3a5c;
+  border-radius: .75rem; padding: 1.1rem 1.25rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+}
+.mk-fadl-title { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .45rem; }
+.mk-fadl-text  { font-size: .9rem; line-height: 1.75; color: var(--clr-text-2); margin: 0 0 .4rem; }
+.mk-fadl-ref   { font-size: .8rem; color: #1a3a5c; font-weight: 500; margin: 0; }
+
+/* Amal grid */
+.mk-amal-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.1rem;
+}
+.mk-amal-card {
+  background: #fff; border: 1px solid var(--clr-border);
+  border-radius: .75rem; padding: 1.2rem 1.2rem 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+}
+.mk-amal-title { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .45rem; }
+.mk-amal-text  { font-size: .88rem; line-height: 1.7; color: var(--clr-text-2); margin: 0; }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .mk-hero__title { font-size: 1.5rem; }
+  .mk-malaika-grid { grid-template-columns: 1fr; }
+  .mk-amal-grid    { grid-template-columns: 1fr; }
+  .mk-tab { font-size: .82rem; padding: .4rem .85rem; }
+}

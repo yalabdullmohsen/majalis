@@ -36,6 +36,7 @@ const FOOTER_GROUPS = [
       { href: "/anbiya",          label: "الأنبياء والرسل" },
       { href: "/janna-naar",      label: "صفة الجنة والنار" },
       { href: "/alamat-saah",    label: "علامات الساعة" },
+      { href: "/malaika",       label: "الملائكة في الإسلام" },
       { href: "/tawba",          label: "التوبة والاستغفار" },
       { href: "/ulum-quran",     label: "علوم القرآن" },
       { href: "/qa",             label: "الأسئلة" },
