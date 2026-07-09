@@ -100,7 +100,10 @@
 /* ══ غلاف كامل الشاشة ══ */
 .mshf-shell {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 10100;
   display: flex;
   flex-direction: column;
@@ -131,7 +134,8 @@
 .mshf-top {
   position: absolute;
   top: 0;
-  inset-inline: 0;
+  left: 0;
+  right: 0;
   z-index: 210;
   display: flex;
   align-items: center;
@@ -274,7 +278,10 @@
 /* ── تحميل ── */
 .mshf-loading {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -326,7 +333,8 @@
 .mshf-bot {
   position: absolute;
   bottom: 0;
-  inset-inline: 0;
+  left: 0;
+  right: 0;
   z-index: 210;
   display: flex;
   align-items: center;
@@ -476,7 +484,10 @@
 
 .mshf-sheet-overlay {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 400;
   background: rgba(0,0,0,0.5);
   display: flex;
