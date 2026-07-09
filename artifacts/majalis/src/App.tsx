@@ -117,6 +117,7 @@ const AutoContentDetailPage = lazy(() => import("@/views/AutoContentDetailPage")
 const DeveloperPage = lazy(() => import("@/views/DeveloperPage"));
 const KnowledgeGraphPage = lazy(() => import("@/views/KnowledgeGraphPage"));
 const IslamicKnowledgeMapPage = lazy(() => import("@/views/IslamicKnowledgeMapPage"));
+const QuranLivePage = lazy(() => import("@/views/QuranLivePage"));
 const AdminPage = lazyWithRetry(() => import("@/views/AdminPage"), "AdminPage");
 const LessonImportImagePage = lazyWithRetry(() => import("@/views/admin/LessonImportImagePage"), "LessonImportImagePage");
 const LessonImportUrlPage = lazyWithRetry(() => import("@/views/admin/LessonImportUrlPage"), "LessonImportUrlPage");
@@ -343,7 +344,7 @@ function Router() {
       </Route>
       <Route path="/quran-hub"><SafeLazyRoute component={QuranHubPage} /></Route>
       <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
-      <Route path="/quran-live" component={QuranComingSoon} />
+      <Route path="/quran-live"><SafeLazyRoute component={QuranLivePage} /></Route>
       <Route path="/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
       <Route path="/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
       <Route path="/quran/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>

@@ -119,7 +119,21 @@ const FEATURE_CATS: FeatureCat[] = [
       { href: "/quiz",            Icon: Target,      title: "لعبة سؤال وجواب",   desc: "اختبر معلوماتك الإسلامية" },
       { href: "/assistant",       Icon: Bot,         title: "المساعد العلمي",    desc: "إرشاد فوري بالذكاء الاصطناعي" },
       { href: "/calendar",        Icon: CalendarDays, title: "التقويم الهجري",   desc: "التواريخ والأيام المميزة" },
-      { href: "/knowledge-graph", Icon: Network,     title: "خارطة المعرفة",     desc: "علاقات المعرفة الإسلامية" },
+      { href: "/knowledge-graph", Icon: Network,     title: "خارطة المعرفة التفاعلية",     desc: "علاقات المعرفة الإسلامية بالرسم البياني" },
+      { href: "/knowledge-map",   Icon: Map,         title: "الخريطة المعرفية 2.0",         desc: "١٤ علماً إسلامياً مترابطاً" },
+    ],
+  },
+  {
+    id: "quran-hub",
+    Icon: BookMarked,
+    label: "القرآن الكريم",
+    items: [
+      { href: "/quran-hub",            Icon: BookMarked, title: "مركز القرآن",       desc: "جميع أقسام القرآن في مكان واحد" },
+      { href: "/quran",                Icon: BookOpen,   title: "المصحف الشريف",     desc: "٦٠٤ صفحة كاملة برواية حفص" },
+      { href: "/quran/surah-stories",  Icon: Star,       title: "قصص القرآن",        desc: "أسباب النزول و١١٤ سورة" },
+      { href: "/quran/tajweed",        Icon: Mic2,       title: "علم التجويد",        desc: "أحكام التجويد الشاملة" },
+      { href: "/quran-radio",          Icon: Radio,      title: "إذاعات القرآن",      desc: "بث مستمر من كبار القراء" },
+      { href: "/quran-circles",        Icon: Layers,     title: "حلقات القرآن",       desc: "حلقات الحفظ والمراجعة" },
     ],
   },
   {
