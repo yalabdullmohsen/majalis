@@ -1,7 +1,7 @@
 import { Globe, GraduationCap, MapPin } from "lucide-react";
 import { Link } from "wouter";
 import type { University } from "@/lib/universities-service";
-import { ACCREDITATION_LABELS, ACCREDITATION_COLOR } from "@/lib/universities-service";
+import { ACCREDITATION_LABELS } from "@/lib/universities-service";
 import { useCompare } from "./CompareContext";
 
 interface Props {
@@ -17,7 +17,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
   const degrees  = [...new Set(programs.map((p) => p.degree_level))];
   const modes    = [...new Set(programs.map((p) => p.study_mode))];
   const hasScholarship = programs.some((p) => p.has_scholarship);
-  const accColor = ACCREDITATION_COLOR[u.accreditation_status] || "var(--majalis-line)";
+  const accMod = `univ-acc--${u.accreditation_status}`;
 
   return (
     <div dir="rtl" className="univ-card">
@@ -48,7 +48,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
 
         {/* الاعتماد */}
         <div className="flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full flex-shrink-0 univ-card__acc-dot" style={{ "--univ-acc": accColor } as React.CSSProperties} />
+          <span className={`w-2 h-2 rounded-full flex-shrink-0 univ-card__acc-dot ${accMod}`} />
           <span className="text-xs univ-card__meta">
             {ACCREDITATION_LABELS[u.accreditation_status]}
           </span>

@@ -6,7 +6,6 @@ import {
   fetchUniversity,
   groupProgramsByDegree,
   ACCREDITATION_LABELS,
-  ACCREDITATION_COLOR,
   type University,
   type UniversityProgram,
 } from "@/lib/universities-service";
@@ -127,7 +126,6 @@ function ProgramCard({ program: p }: { program: UniversityProgram }) {
 function DetailContent({ university: u }: { university: University }) {
   const { addToCompare, removeFromCompare, isInCompare, canAdd } = useCompare();
   const inCompare = isInCompare(u.slug);
-  const accColor  = ACCREDITATION_COLOR[u.accreditation_status];
   const programsByDegree = groupProgramsByDegree(
     (u.university_programs || []).filter((p) => p.is_active)
   );
@@ -162,8 +160,7 @@ function DetailContent({ university: u }: { university: University }) {
                 <span className="bg-white/20 px-2.5 py-0.5 rounded-full flex items-center gap-1">
                   <MapPin size={12} aria-hidden="true" /> {u.city ? `${u.city}، ` : ""}{u.country}
                 </span>
-                <span className="px-2.5 py-0.5 rounded-full text-white text-xs font-medium udp-acc-badge"
-                  style={{ "--acc-color": accColor } as React.CSSProperties}>
+                <span className={`px-2.5 py-0.5 rounded-full text-white text-xs font-medium udp-acc-badge univ-acc--${u.accreditation_status}`}>
                   {ACCREDITATION_LABELS[u.accreditation_status]}
                 </span>
                 {u.is_verified && (

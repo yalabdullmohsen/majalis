@@ -1,13 +1,20 @@
 import { displayText } from "@/lib/display-text";
 import { isDemoId } from "@/lib/demo-content";
-import { C, QA_RULING_COLORS } from "@/lib/theme";
 import { HighlightedContentCard } from "@/components/reading/HighlightedContentCard";
 import { getQaViewCount } from "@/lib/qa-utils";
 
+const QA_RULING_MOD: Record<string, string> = {
+  "حلال":  "qa-ruling--halal",
+  "مباح":  "qa-ruling--mubah",
+  "سنة":   "qa-ruling--sunna",
+  "مندوب": "qa-ruling--mandub",
+  "مكروه": "qa-ruling--makruh",
+  "حرام":  "qa-ruling--haram",
+};
+
 function RulingBadge({ ruling }: { ruling: string }) {
-  const c = QA_RULING_COLORS[ruling] || { bg: C.parchmentDeep, text: C.inkSoft };
   return (
-    <span className="qa-badge" style={{ "--qa-badge-bg": c.bg, "--qa-badge-color": c.text } as React.CSSProperties}>
+    <span className={`qa-badge ${QA_RULING_MOD[ruling] ?? ""}`}>
       {ruling}
     </span>
   );

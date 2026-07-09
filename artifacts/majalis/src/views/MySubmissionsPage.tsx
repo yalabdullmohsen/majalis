@@ -6,10 +6,10 @@ import { formatFileSize, type UserSubmission, type SubmissionStatus } from "@/li
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 
-const STATUS_META: Record<SubmissionStatus, { Icon: LucideIcon; label: string; bg: string; color: string; border: string }> = {
-  pending:  { Icon: Clock,         label: "قيد المراجعة",  bg: "#F0F9FF", color: "#0369A1", border: "#A7F3D0" },
-  approved: { Icon: CheckCircle2,  label: "مقبول",          bg: "#f0fdf4", color: "var(--majalis-emerald)", border: "#86efac" },
-  rejected: { Icon: XCircle,       label: "مرفوض",          bg: "#fef2f2", color: "var(--msk-red, #C1595A)", border: "#fca5a5" },
+const STATUS_META: Record<SubmissionStatus, { Icon: LucideIcon; label: string; mod: string }> = {
+  pending:  { Icon: Clock,        label: "قيد المراجعة", mod: "msr-status--pending"  },
+  approved: { Icon: CheckCircle2, label: "مقبول",         mod: "msr-status--approved" },
+  rejected: { Icon: XCircle,      label: "مرفوض",         mod: "msr-status--rejected" },
 };
 
 const TYPE_ICON: Record<string, LucideIcon> = { adhan: Mic2, lesson: GraduationCap };
@@ -37,10 +37,7 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
   }
 
   return (
-    <div
-      className="msr-card"
-      style={{ "--msr-border": sm.border, "--msr-bg": sm.bg, "--msr-color": sm.color } as React.CSSProperties}
-    >
+    <div className={`msr-card ${sm.mod}`}>
       {/* Status bar */}
       <div className="msr-card__status-bar">
         <span aria-hidden="true"><sm.Icon size={15} strokeWidth={2} /></span>

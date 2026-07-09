@@ -366,12 +366,12 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
         <h3 className="qzg-lifelines-h3"><Zap size={14} className="inline ml-1" />وسائل المساعدة (لكل فريق 3 وسائل)</h3>
         <div className="qzg-lifelines-grid">
           {([
-            ["#FFB347", "خصم نقاط", "تُخصم نقاط الخلية من رصيد الخصم"],
-            ["#9B59B6", "استبعاد لاعب", "يُستبعد لاعب من الفريق المنافس"],
-            ["#2E86C1", "تمرير السؤال", "يُحوَّل السؤال للفريق المنافس"],
-          ] as [string, string, string][]).map(([color, title, desc]) => (
+            ["qzg-ll--score",    "خصم نقاط",     "تُخصم نقاط الخلية من رصيد الخصم"],
+            ["qzg-ll--exclude",  "استبعاد لاعب", "يُستبعد لاعب من الفريق المنافس"],
+            ["qzg-ll--transfer", "تمرير السؤال", "يُحوَّل السؤال للفريق المنافس"],
+          ] as [string, string, string][]).map(([llMod, title, desc]) => (
             <div key={title} className="qzg-lifeline-info">
-              <div className="qzg-lifeline-info__title" style={{ "--qzg-ll-info-color": color } as React.CSSProperties}>{title}</div>
+              <div className={`qzg-lifeline-info__title ${llMod}`}>{title}</div>
               <div className="qzg-lifeline-info__desc">{desc}</div>
             </div>
           ))}

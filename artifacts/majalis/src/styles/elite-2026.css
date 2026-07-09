@@ -1827,6 +1827,12 @@ html {
   border-color: var(--elite-border-green) !important;
 }
 
+.qa-ruling--halal  { --qa-badge-bg: #D1FAE5; --qa-badge-color: #065F46; }
+.qa-ruling--mubah  { --qa-badge-bg: #DBEAFE; --qa-badge-color: #1E40AF; }
+.qa-ruling--sunna,
+.qa-ruling--mandub { --qa-badge-bg: rgba(14,110,82,0.08); --qa-badge-color: #0A5040; }
+.qa-ruling--makruh { --qa-badge-bg: #FFEDD5; --qa-badge-color: #9A3412; }
+.qa-ruling--haram  { --qa-badge-bg: #FEE2E2; --qa-badge-color: #991B1B; }
 .qa-badge {
   display: inline-flex;
   align-items: center;
@@ -1834,8 +1840,8 @@ html {
   border-radius: 9999px;
   font-size: 0.7rem;
   font-weight: 600;
-  background: var(--majalis-parchment-deep);
-  color: var(--majalis-ink-soft);
+  background: var(--qa-badge-bg, var(--majalis-parchment-deep));
+  color: var(--qa-badge-color, var(--majalis-ink-soft));
 }
 .qa-badge--published { background: var(--majalis-sage); color: var(--majalis-emerald-deep); }
 .qa-badge--draft     { background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
@@ -6078,6 +6084,9 @@ button.primary:hover {
 .msp-cta__text { font-size: 0.82rem; color: var(--majalis-ink-muted, #9BA3B5); margin-bottom: 1rem; }
 
 /* ─ Submission row card (msr-*) ─ */
+.msr-status--pending  { --msr-bg: #F0F9FF; --msr-color: #0369A1; --msr-border: #A7F3D0; }
+.msr-status--approved { --msr-bg: #f0fdf4; --msr-color: var(--majalis-emerald); --msr-border: #86efac; }
+.msr-status--rejected { --msr-bg: #fef2f2; --msr-color: var(--msk-red, #C1595A); --msr-border: #fca5a5; }
 .msr-card { background: var(--majalis-panel, rgba(255,255,255,0.08)); border-radius: 1rem; border: 1.5px solid var(--msr-border, #86efac); overflow: hidden; margin-bottom: 0.875rem; }
 .msr-card__status-bar { background: var(--msr-bg, #f0f5f2); padding: 0.5rem 1rem; display: flex; align-items: center; gap: 0.4rem; border-bottom: 1px solid var(--msr-border, #86efac); }
 .msr-card__status-label { font-size: 0.78rem; font-weight: 700; color: var(--msr-color, var(--majalis-emerald)); }
@@ -11399,6 +11408,10 @@ button, .btn {
 .univ-card__location { color: var(--majalis-ink-soft); }
 .univ-card__meta     { color: var(--majalis-ink-soft); }
 .univ-card__updated  { color: var(--majalis-line); }
+.univ-acc--accredited  { --acc-color: #15803d; --univ-acc: #15803d; }
+.univ-acc--provisional { --acc-color: #1F4D3A; --univ-acc: #1F4D3A; }
+.univ-acc--unverified  { --acc-color: #6b7280; --univ-acc: #6b7280; }
+.univ-acc--unknown     { --acc-color: #9ca3af; --univ-acc: #9ca3af; }
 .univ-card__acc-dot  { background: var(--univ-acc, var(--majalis-line)); }
 /* ── §193 — AdhanNotificationBar ───────────────────────────────────────────── */
 .anb-stack {
@@ -11607,7 +11620,10 @@ button, .btn {
 .qzg-lifelines-h3 { margin: 0 0 0.75rem; color: var(--majalis-brass); font-size: 0.88rem; font-weight: 700; }
 .qzg-lifelines-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; font-size: 0.78rem; }
 .qzg-lifeline-info { padding: 0.6rem; border-radius: var(--ds-radius, 0.5rem); background: var(--ds-card, var(--majalis-panel)); text-align: center; border: 1px solid var(--ds-line-color); }
-.qzg-lifeline-info__title { color: var(--qzg-ll-info-color); font-weight: 700; margin-bottom: 0.25rem; font-size: 0.82rem; }
+.qzg-ll--score    { --qzg-ll-info-color: #FFB347; }
+.qzg-ll--exclude  { --qzg-ll-info-color: #9B59B6; }
+.qzg-ll--transfer { --qzg-ll-info-color: #2E86C1; }
+.qzg-lifeline-info__title { color: var(--qzg-ll-info-color, var(--majalis-emerald)); font-weight: 700; margin-bottom: 0.25rem; font-size: 0.82rem; }
 .qzg-lifeline-info__desc  { color: var(--majalis-ink-soft); line-height: 1.5; }
 
 /* Board Phase */
