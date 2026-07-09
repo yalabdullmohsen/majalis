@@ -112,10 +112,10 @@ export default function JannaNaarPage() {
       <section
         className="jn-hero"
         style={{
-          background: activeTab === "naar"
+          "--jn-hero-bg": activeTab === "naar"
             ? "linear-gradient(145deg, #1A0000, #7B1010, #9B1C1C)"
             : "linear-gradient(145deg, #0A1628, #1a2e20, #1F4D3A)",
-        }}
+        } as { [k: string]: string }}
       >
         <div className="jn-hero__inner">
           <div className="jn-hero__badge">الدار الآخرة</div>
@@ -213,11 +213,11 @@ export default function JannaNaarPage() {
 
 function Section({ title, cards, color }: { title: string; cards: DescCard[]; color: string }) {
   return (
-    <div className="jn-section">
-      <h2 className="jn-section__title" style={{ color }}>{title}</h2>
+    <div className="jn-section" style={{ "--jn-section-color": color } as { [k: string]: string }}>
+      <h2 className="jn-section__title">{title}</h2>
       <div className="jn-cards-grid">
         {cards.map((c, i) => (
-          <div key={i} className="jn-desc-card" style={{ borderTopColor: color }}>
+          <div key={i} className="jn-desc-card">
             <h3 className="jn-desc-card__title">{c.title}</h3>
             <p className="jn-desc-card__text">{c.text}</p>
             {c.ref && <p className="jn-desc-card__ref">{c.ref}</p>}

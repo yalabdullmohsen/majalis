@@ -136,7 +136,7 @@ export default function SalahGuidePage() {
             { name: "المغرب", rakat: "3", color: "#7c3aed" },
             { name: "العشاء", rakat: "4", color: "#1e3a5f" },
           ].map((p) => (
-            <div key={p.name} className="sg-salah-chip" style={{ background: p.color }}>
+            <div key={p.name} className="sg-salah-chip" style={{ "--sg-chip-color": p.color } as { [k: string]: string }}>
               <span className="sg-salah-chip__name">{p.name}</span>
               <span className="sg-salah-chip__rakat">{p.rakat} ركعات</span>
             </div>

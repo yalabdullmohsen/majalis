@@ -256,7 +256,7 @@ export default function AlamatSaahPage() {
             <div className="as-status-legend">
               {["وقعت","جارية","لم تقع"].map(s => (
                 <span key={s} className="as-legend-item">
-                  <span className="as-dot" style={{ background: STATUS_COLORS[s] }} />
+                  <span className="as-dot" style={{ "--as-status-color": STATUS_COLORS[s] } as { [k: string]: string }} />
                   {s}
                 </span>
               ))}
@@ -269,7 +269,7 @@ export default function AlamatSaahPage() {
                     {a.status && (
                       <span
                         className="as-alama-card__status"
-                        style={{ background: STATUS_COLORS[a.status] + "1A", color: STATUS_COLORS[a.status] }}
+                        style={{ "--as-status-color": STATUS_COLORS[a.status], "--as-status-bg": STATUS_COLORS[a.status] + "1A" } as { [k: string]: string }}
                       >{a.status}</span>
                     )}
                   </div>

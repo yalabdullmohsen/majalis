@@ -244,7 +244,7 @@ export default function WasayaNabawiyyaPage() {
                     </div>
                     <div className="wn-card__right">
                       {w.category && (
-                        <span className="wn-card__cat" style={{ background: (CATS_COLORS[w.category] ?? "#1F4D3A") + "1A", color: CATS_COLORS[w.category] ?? "#1F4D3A" }}>
+                        <span className="wn-card__cat" style={{ "--wn-cat-color": CATS_COLORS[w.category] ?? "#1F4D3A", "--wn-cat-bg": (CATS_COLORS[w.category] ?? "#1F4D3A") + "1A" } as { [k: string]: string }}>
                           {w.category}
                         </span>
                       )}
@@ -317,7 +317,7 @@ export default function WasayaNabawiyyaPage() {
             <div className="wn-pick-grid">
               {WASAYA_KABIRA.filter(w => w.category).map((w, i) => (
                 <div key={i} className="wn-pick-card">
-                  <div className="wn-pick-cat" style={{ color: CATS_COLORS[w.category!] ?? "#1F4D3A" }}>
+                  <div className="wn-pick-cat" style={{ "--wn-cat-color": CATS_COLORS[w.category!] ?? "#1F4D3A" } as { [k: string]: string }}>
                     {w.category}
                   </div>
                   <h4 className="wn-pick-title">{w.title}</h4>
