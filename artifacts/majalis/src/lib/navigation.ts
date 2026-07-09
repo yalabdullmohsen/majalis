@@ -65,6 +65,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/islam-stats",       label: "الإسلام في أرقام" },
   { href: "/islamic-glossary",  label: "المصطلحات الإسلامية" },
   { href: "/adab-talab-ilm",   label: "آداب طالب العلم" },
+  { href: "/anbiya",            label: "قصص الأنبياء والرسل" },
   { href: "/tawba",             label: "التوبة والاستغفار" },
   { href: "/ulum-quran",        label: "علوم القرآن" },
   { href: "/mawarith",          label: "المواريث والفرائض" },

@@ -130,6 +130,7 @@ const ShimaelPage = lazy(() => import("@/views/ShimaelPage"));
 const IslamStatsPage = lazy(() => import("@/views/IslamStatsPage"));
 const IslamicGlossaryPage = lazy(() => import("@/views/IslamicGlossaryPage"));
 const AdabTalabIlmPage = lazy(() => import("@/views/AdabTalabIlmPage"));
+const AnbiyaPage = lazy(() => import("@/views/AnbiyaPage"));
 const SunanYawmiyyaPage = lazy(() => import("@/views/SunanYawmiyyaPage"));
 const HikamSalafPage = lazy(() => import("@/views/HikamSalafPage"));
 const ZakatPage = lazy(() => import("@/views/ZakatPage"));
@@ -321,6 +322,7 @@ function Router() {
       <Route path="/islam-stats"><SafeLazyRoute component={IslamStatsPage} /></Route>
       <Route path="/islamic-glossary"><SafeLazyRoute component={IslamicGlossaryPage} /></Route>
       <Route path="/adab-talab-ilm"><SafeLazyRoute component={AdabTalabIlmPage} /></Route>
+      <Route path="/anbiya"><SafeLazyRoute component={AnbiyaPage} /></Route>
       <Route path="/sunan-yawmiyya"><SafeLazyRoute component={SunanYawmiyyaPage} /></Route>
       <Route path="/hikam-salaf"><SafeLazyRoute component={HikamSalafPage} /></Route>
       <Route path="/zakat"><SafeLazyRoute component={ZakatPage} /></Route>

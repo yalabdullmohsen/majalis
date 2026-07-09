@@ -50,6 +50,7 @@ const SHEET_SECTIONS = [
     { href: "/islam-stats",        label: "الإسلام في أرقام",  Icon: BarChart3 },
     { href: "/islamic-glossary",   label: "المصطلحات الإسلامية", Icon: BookOpen },
     { href: "/adab-talab-ilm",    label: "آداب طالب العلم",     Icon: GraduationCap },
+    { href: "/anbiya",            label: "الأنبياء والرسل",     Icon: Star },
     { href: "/prophetic-medicine", label: "الطب النبوي",       Icon: Stethoscope },
   ]},
   { group: "الأحكام والفقه", items: [
