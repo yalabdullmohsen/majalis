@@ -305,11 +305,11 @@ export default function IslamicKnowledgeMapPage() {
                 key={domain.id}
                 className={[
                   "ikm-card",
+                  `ikm-dom--${domain.id}`,
                   isSelected ? "ikm-card--selected" : "",
                   isConnected ? "ikm-card--connected" : "",
                   isDimmed ? "ikm-card--dimmed" : "",
                 ].filter(Boolean).join(" ")}
-                style={{ "--ikm-bg": domain.bg } as React.CSSProperties}
                 onClick={() => setSelected(selected === domain.id ? null : domain.id)}
                 aria-pressed={isSelected}
               >
@@ -346,7 +346,7 @@ export default function IslamicKnowledgeMapPage() {
       {selectedDomain && (
         <section className="ikm-detail">
           <div className="ikm-detail__inner">
-            <div className="ikm-detail__left" style={{ "--ikm-domain-bg": selectedDomain.bg } as { [k: string]: string }}>
+            <div className={`ikm-detail__left ikm-dom--${selectedDomain.id}`}>
               <selectedDomain.icon size={40} className="ikm-detail__icon" />
               <h2 className="ikm-detail__title">{selectedDomain.title}</h2>
               <p className="ikm-detail__sub">{selectedDomain.subtitle}</p>
@@ -372,7 +372,7 @@ export default function IslamicKnowledgeMapPage() {
                   );
                   return (
                     <div key={cid} className="ikm-rel-item">
-                      <div className="ikm-rel-dot" style={{ "--ikm-domain-bg": cd.bg } as { [k: string]: string }} />
+                      <div className={`ikm-rel-dot ikm-dom--${cid}`} />
                       <div className="ikm-rel-text">
                         <span className="ikm-rel-name">{cd.title}</span>
                         {connInfo && (
@@ -410,8 +410,7 @@ export default function IslamicKnowledgeMapPage() {
             return (
               <div key={i} className="ikm-conn-item">
                 <button
-                  className="ikm-conn-node"
-                  style={{ "--ikm-domain-bg": da.bg } as { [k: string]: string }}
+                  className={`ikm-conn-node ikm-dom--${c.a}`}
                   onClick={() => setSelected(c.a)}
                 >
                   {da.title}
@@ -421,8 +420,7 @@ export default function IslamicKnowledgeMapPage() {
                   <ArrowLeftRight size={16} className="ikm-conn-arrow" />
                 </div>
                 <button
-                  className="ikm-conn-node"
-                  style={{ "--ikm-domain-bg": db.bg } as { [k: string]: string }}
+                  className={`ikm-conn-node ikm-dom--${c.b}`}
                   onClick={() => setSelected(c.b)}
                 >
                   {db.title}

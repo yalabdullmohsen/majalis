@@ -15394,6 +15394,22 @@ img[loading="lazy"]:not([src=""]) {
   margin-bottom: 1rem;
 }
 
+/* Domain color tokens — set both vars so any consumer works */
+.ikm-dom--quran,
+.ikm-dom--scholars,
+.ikm-dom--adhkar,
+.ikm-dom--books       { --ikm-bg: #062B20; --ikm-domain-bg: #062B20; }
+.ikm-dom--hadith,
+.ikm-dom--stories,
+.ikm-dom--seerah,
+.ikm-dom--universities { --ikm-bg: #0A5040; --ikm-domain-bg: #0A5040; }
+.ikm-dom--fiqh,
+.ikm-dom--fatwa,
+.ikm-dom--lessons      { --ikm-bg: #1F4D3A; --ikm-domain-bg: #1F4D3A; }
+.ikm-dom--tafsir,
+.ikm-dom--tajweed,
+.ikm-dom--rulings      { --ikm-bg: #145C46; --ikm-domain-bg: #145C46; }
+
 /* Cards grid */
 .ikm-grid {
   display: grid;
