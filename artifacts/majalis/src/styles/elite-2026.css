@@ -10756,6 +10756,8 @@ body {
 .had-countdown__name { font-size: 1.6rem; font-weight: 800; }
 .had-countdown__time { font-size: 1.1rem; font-weight: 700; opacity: 0.9; font-variant-numeric: tabular-nums; }
 .had-countdown__exact { font-size: 0.72rem; opacity: 0.65; margin-top: 0.15rem; }
+.had-countdown__label--elapsed { opacity: 0.85; font-weight: 600; }
+.had-countdown__elapsed { font-size: 1.6rem; font-weight: 800; font-variant-numeric: tabular-nums; }
 .had-prayers-row { display: flex; gap: 0.5rem; overflow-x: auto; margin-bottom: 1rem; padding-bottom: 0.25rem; }
 .had-prayer-cell {
   flex-shrink: 0; background: rgba(255,255,255,0.08); border-radius: 0.6rem;

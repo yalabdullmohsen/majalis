@@ -53,15 +53,33 @@ export function HomeAdhanWidget() {
         </div>
 
         <div className="had-countdown">
-          <div className="had-countdown__label">الصلاة القادمة</div>
-          <div className="had-countdown__row">
-            <span className="had-countdown__name">
-              {PRAYER_ARABIC[nextPrayer.key as keyof typeof PRAYER_ARABIC] ?? nextPrayer.name}
-            </span>
-            <span className="had-countdown__time">{remaining}</span>
-          </div>
-          {nextPrayer.time && (
-            <div className="had-countdown__exact">في تمام الساعة {nextPrayer.time}</div>
+          {countdown?.sinceSeconds != null ? (
+            <>
+              <div className="had-countdown__label had-countdown__label--elapsed">
+                مضى على أذان {PRAYER_ARABIC[nextPrayer.key as keyof typeof PRAYER_ARABIC] ?? nextPrayer.name}
+              </div>
+              <div className="had-countdown__row">
+                <span className="had-countdown__elapsed" dir="ltr">
+                  {Math.floor(countdown.sinceSeconds / 60)} دقيقة
+                </span>
+              </div>
+              {remaining && (
+                <div className="had-countdown__exact">الصلاة التالية بعد {remaining}</div>
+              )}
+            </>
+          ) : (
+            <>
+              <div className="had-countdown__label">الصلاة القادمة</div>
+              <div className="had-countdown__row">
+                <span className="had-countdown__name">
+                  {PRAYER_ARABIC[nextPrayer.key as keyof typeof PRAYER_ARABIC] ?? nextPrayer.name}
+                </span>
+                <span className="had-countdown__time">{remaining}</span>
+              </div>
+              {nextPrayer.time && (
+                <div className="had-countdown__exact">في تمام الساعة {nextPrayer.time}</div>
+              )}
+            </>
           )}
         </div>
 
