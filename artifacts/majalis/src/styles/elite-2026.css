@@ -22329,6 +22329,11 @@ img[loading="lazy"]:not([src=""]) {
 .jn-sabab-text { font-size: .83rem; color: #334155; line-height: 1.7; margin: 0; }
 .jn-ref { font-size: .72rem; color: #94A3B8; margin: 0; }
 
+.jn-intro--naar { background: rgba(155,28,28,.05); border-right-color: #9B1C1C; }
+.jn-intro--naar p { color: #7F1D1D; }
+.jn-sabab-card--naar { border-color: rgba(155,28,28,.15); }
+.jn-sabab-num--naar { background: #9B1C1C; }
+
 .jn-duas-list { display: flex; flex-direction: column; gap: .8rem; }
 .jn-dua-card {
   background: #fff; border: 1px solid #E5E7EB; border-right: 4px solid #1F4D3A;
