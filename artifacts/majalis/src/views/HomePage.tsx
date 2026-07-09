@@ -22,7 +22,7 @@ import { HomeQuizCard } from "@/components/home/HomeQuizCard";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import {
-  BookMarked, BookOpen, Bot, Building2, CalendarDays, Car, Check, Clock,
+  BookMarked, BookOpen, Bot, CalendarDays, Car, Check, Clock,
   Compass, Droplets, FlaskConical, GraduationCap, Heart, HelpCircle, Landmark, Layers,
   Lightbulb, Map, Mic2, Monitor, Moon, Network, Newspaper,
   Radio, RotateCw, Scale, Scroll, Sparkles, Star, Target, Upload, Users, Wrench,
@@ -105,17 +105,6 @@ const FEATURE_CATS: FeatureCat[] = [
       { href: "/fiqh-qawaid",         Icon: Scale,        title: "القواعد الفقهية الكبرى", desc: "القواعد الخمس الكبرى وفروعها وضوابطها وتطبيقاتها المعاصرة" },
       { href: "/scholarly-research", Icon: FlaskConical, title: "الباحث الشرعي",     desc: "بحث بالذكاء الاصطناعي" },
       { href: "/academic-research",  Icon: GraduationCap, title: "الأبحاث العلمية", desc: "رسائل وأبحاث أكاديمية" },
-    ],
-  },
-  {
-    id: "haramain",
-    Icon: Building2,
-    label: "الحرمان الشريفان",
-    items: [
-      { href: "/lessons?filter=haramain", Icon: Building2,    title: "دروس المسجد الحرام",  desc: "دروس مكة المكرمة والمسجد الحرام" },
-      { href: "/lessons?filter=nabawi",   Icon: Landmark,     title: "دروس المسجد النبوي",  desc: "دروس المدينة المنورة والمسجد النبوي" },
-      { href: "/fiqh-council",            Icon: Scale,        title: "المجمع الفقهي",        desc: "قرارات المجامع الفقهية الكبرى" },
-      { href: "/annual-courses",          Icon: GraduationCap, title: "الدورات العلمية",     desc: "دورات العلماء والمؤسسات الشرعية" },
     ],
   },
   {
