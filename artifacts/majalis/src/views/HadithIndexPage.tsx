@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, BadgeCheck, AlertTriangle, Ban } from "lucide-react";

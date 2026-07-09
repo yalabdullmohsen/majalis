@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { ArrowRight, Rocket } from "lucide-react";

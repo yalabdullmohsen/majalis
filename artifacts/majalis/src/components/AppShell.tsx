@@ -1,5 +1,3 @@
-"use client";
-
 import dynamic from "next/dynamic";
 import type { ReactNode } from "react";
 import { AuthProvider } from "@/components/AuthProvider";

@@ -1,5 +1,3 @@
-"use client";
-
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { type Lang, readLang, writeLang } from "@/lib/language-preference";
 import { ar } from "@/locales/ar";

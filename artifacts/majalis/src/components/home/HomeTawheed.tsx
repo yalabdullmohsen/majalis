@@ -1,5 +1,3 @@
-"use client";
-
 type HadithRef = {
   text: string;
   source: string;

@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import { AlertTriangle, Bird, BookOpen, Castle, Compass, Flower2, Gem, Landmark, Leaf, Lightbulb, Map as MapIcon, Moon, Ruler, Sailboat, Scale, Search, Shield, Star, Sun, Sword, Users } from "lucide-react";
 import type { LucideIcon } from "lucide-react";

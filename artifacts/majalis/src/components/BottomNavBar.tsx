@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { BookMarked, GraduationCap, Home, LayoutGrid, Sunset } from "lucide-react";

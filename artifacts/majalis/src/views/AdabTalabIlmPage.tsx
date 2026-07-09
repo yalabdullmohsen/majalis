@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { BookOpen, ChevronDown, ChevronUp, GraduationCap, Lightbulb, Scale, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";

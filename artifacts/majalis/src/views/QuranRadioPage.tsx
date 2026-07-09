@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { RADIO_STATIONS, LIVE_CHANNELS, saveLastRadioId } from "@/lib/quran-radio";

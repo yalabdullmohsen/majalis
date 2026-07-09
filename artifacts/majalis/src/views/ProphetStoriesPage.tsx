@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useCallback, useEffect, useRef } from "react";
 import { CalendarDays, Heart, HelpCircle, LayoutList, Link2 } from "lucide-react";
 import { Link } from "wouter";

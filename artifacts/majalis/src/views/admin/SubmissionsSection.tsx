@@ -1,5 +1,3 @@
-"use client";
-
 import { useCallback, useEffect, useState } from "react";
 import { useAdminShell } from "@/views/admin/AdminShell";
 import { SubmissionsReviewPanel } from "@/components/admin/SubmissionsReviewPanel";

@@ -1,5 +1,3 @@
-"use client";
-
 import MiraclesPage from "@/views/MiraclesPage";
 
 export default function MiraclesPageClient({

@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link } from "wouter";

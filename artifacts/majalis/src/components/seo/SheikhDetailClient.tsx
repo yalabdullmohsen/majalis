@@ -1,5 +1,3 @@
-"use client";
-
 import { Link } from "wouter";
 import { PageHeader, Empty } from "@/components/ui-common";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";

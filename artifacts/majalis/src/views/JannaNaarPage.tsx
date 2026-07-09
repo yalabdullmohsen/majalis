@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";

@@ -1,5 +1,3 @@
-"use client";
-
 import { Suspense, lazy, type ComponentType } from "react";
 import { BookOpen } from "lucide-react";
 import { Redirect, Route, Switch, useLocation } from "wouter";

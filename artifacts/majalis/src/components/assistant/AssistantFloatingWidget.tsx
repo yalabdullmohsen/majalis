@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Sparkles, X } from "lucide-react";

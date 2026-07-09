@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { HelpCircle, Lightbulb, RotateCw, Scroll } from "lucide-react";

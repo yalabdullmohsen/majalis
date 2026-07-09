@@ -1,5 +1,3 @@
-"use client";
-
 import { HIJRI_MONTHS } from "@/lib/hijri-utils";
 
 export type HijriMonthSelectProps = {

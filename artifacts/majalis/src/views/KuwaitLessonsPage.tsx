@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useRef } from "react";
 import { KUWAIT_SHEIKHS } from "@/lib/kuwait-sheikhs";
 import { applyPageSeo } from "@/lib/seo";

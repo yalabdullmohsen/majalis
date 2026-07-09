@@ -1,5 +1,3 @@
-"use client";
-
 import LessonsPage from "@/views/LessonsPage";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
