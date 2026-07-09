@@ -18414,6 +18414,7 @@ img[loading="lazy"]:not([src=""]) {
 .sw-body { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem; }
 .sw-section { display: flex; flex-direction: column; gap: .75rem; }
 .sw-section__title { font-size: 1.05rem; font-weight: 700; color: var(--majalis-emerald, #1F4D3A); margin: 0 0 .5rem; padding-right: .6rem; border-right: 3px solid var(--majalis-emerald, #1F4D3A); }
+.sw-section__title--mt { margin-top: 2rem; }
 .sw-section__intro { background: #EFF6F3; border-right: 3px solid var(--majalis-emerald, #1F4D3A); border-radius: .5rem; padding: .85rem 1rem; font-size: .9rem; line-height: 1.7; color: #1a1a1a; margin-bottom: .5rem; }
 
 /* accordion cards */
@@ -18843,6 +18844,8 @@ img[loading="lazy"]:not([src=""]) {
   width: fit-content;
 }
 
+.hj-info-box--mt { margin-top: 1.5rem; }
+.hj-section__title--mt { margin-top: 1.5rem; }
 .hj-info-box {
   background: #ECFDF5;
   border: 1px solid #A7F3D0;
@@ -19099,6 +19102,7 @@ img[loading="lazy"]:not([src=""]) {
 .th-naqidh-card__desc { font-size: .78rem; color: #374151; line-height: 1.5; margin: 0; }
 
 /* info box */
+.th-info-box--mt { margin-top: 1rem; }
 .th-info-box {
   background: #ECFDF5;
   border: 1px solid #A7F3D0;
@@ -19504,6 +19508,7 @@ img[loading="lazy"]:not([src=""]) {
   margin: .3rem 0 .3rem;
 }
 
+.jn-info--mt { margin-top: .5rem; }
 .jn-info {
   background: #ECFDF5;
   border: 1px solid #A7F3D0;
@@ -20216,6 +20221,8 @@ img[loading="lazy"]:not([src=""]) {
 @keyframes uq-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .uq-lead    { font-size: .88rem; color: #374151; line-height: 1.7; margin: 0 0 1.2rem; border-right: 3px solid var(--majalis-emerald,#1F4D3A); padding-right: .75rem; }
 .uq-subhead { font-size: 1rem; font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.uq-subhead--mt { margin-top: 1.5rem; }
+.uq-info-box--mt { margin-top: 1.2rem; }
 
 /* facts grid */
 .uq-facts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-bottom: 1.5rem; }
@@ -20611,6 +20618,7 @@ img[loading="lazy"]:not([src=""]) {
 @keyframes sg-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .sg-lead    { font-size: .88rem; color: #374151; line-height: 1.7; margin: 0 0 1.2rem; border-right: 3px solid var(--majalis-emerald,#1F4D3A); padding-right: .75rem; }
 .sg-subhead { font-size: 1rem; font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.sg-subhead--mt { margin-top: 1.5rem; }
 
 /* شروط */
 .sg-shurut-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
@@ -21331,11 +21339,11 @@ img[loading="lazy"]:not([src=""]) {
 /* stats grid */
 .is-stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
 .is-stat-card {
-  background: #fff; border-top: 3px solid #1F4D3A; border-radius: .9rem;
+  background: #fff; border-top: 3px solid var(--is-card-color, #1F4D3A); border-radius: .9rem;
   padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .3rem;
   box-shadow: 0 1px 6px rgba(0,0,0,.06);
 }
-.is-stat-card__val { font-size: 1.5rem; font-weight: 900; line-height: 1; }
+.is-stat-card__val { font-size: 1.5rem; font-weight: 900; line-height: 1; color: var(--is-card-color, #1F4D3A); }
 .is-stat-card__lbl { font-size: .82rem; font-weight: 700; color: #1E293B; }
 .is-stat-card__sub { font-size: .72rem; color: #94A3B8; line-height: 1.4; }
 
@@ -21353,7 +21361,7 @@ img[loading="lazy"]:not([src=""]) {
 .is-bar__track {
   flex: 1; height: 10px; background: #E2E8F0; border-radius: 999px; overflow: hidden;
 }
-.is-bar__fill { height: 100%; border-radius: 999px; }
+.is-bar__fill { height: 100%; border-radius: 999px; background: var(--is-bar-color, #0E6E52); width: var(--is-bar-w, 0%); transition: width 0.8s ease; }
 .is-bar__val { width: 3rem; font-size: .78rem; font-weight: 700; color: #475569; flex-shrink: 0; }
 
 /* note */

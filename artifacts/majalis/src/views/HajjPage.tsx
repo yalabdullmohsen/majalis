@@ -435,7 +435,7 @@ export default function HajjPage() {
               ))}
             </div>
 
-            <div className="hj-info-box" style={{ marginTop: "1.5rem" }}>
+            <div className="hj-info-box hj-info-box--mt">
               <span className="hj-info-box__icon">📌</span>
               <p>
                 <strong>العمرة في رمضان:</strong> «عمرة في رمضان تعدل حجة — أو حجة معي»
@@ -443,7 +443,7 @@ export default function HajjPage() {
               </p>
             </div>
 
-            <h2 className="hj-section__title" style={{ marginTop: "1.5rem" }}>محظورات الإحرام</h2>
+            <h2 className="hj-section__title hj-section__title--mt">محظورات الإحرام</h2>
             <div className="hj-mahzurat-grid">
               {[
                 { icon: "✂️", text: "حلق الشعر أو قصّه" },

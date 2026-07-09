@@ -177,7 +177,7 @@ export default function SalahGuidePage() {
               ))}
             </div>
 
-            <h2 className="sg-subhead" style={{ marginTop: "1.5rem" }}>أركان الصلاة (13 ركناً)</h2>
+            <h2 className="sg-subhead sg-subhead--mt">أركان الصلاة (13 ركناً)</h2>
             <div className="sg-arkan-list">
               {ARKAN.map((r) => (
                 <div key={r.num} className="sg-rukn-row">
@@ -249,7 +249,7 @@ export default function SalahGuidePage() {
               ))}
             </div>
 
-            <h2 className="sg-subhead" style={{ marginTop: "1.5rem" }}>مكروهات الصلاة</h2>
+            <h2 className="sg-subhead sg-subhead--mt">مكروهات الصلاة</h2>
             <ul className="sg-makruhat-list">
               {MAKRUHAT.map((m, i) => (
                 <li key={i} className="sg-makruh-item">{m}</li>
@@ -303,7 +303,7 @@ export default function SalahGuidePage() {
               ))}
             </div>
 
-            <h2 className="sg-subhead" style={{ marginTop: "1.5rem" }}>من السنة النبوية</h2>
+            <h2 className="sg-subhead sg-subhead--mt">من السنة النبوية</h2>
             <div className="sg-ahadith-list">
               {AHADITH_FAWAID.map((h, i) => (
                 <div key={i} className="sg-hadith-item">

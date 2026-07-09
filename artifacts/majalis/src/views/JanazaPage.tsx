@@ -216,7 +216,7 @@ export default function JanazaPage() {
               <cite className="jn-dua-box__ref">متفق عليه</cite>
             </div>
 
-            <div className="jn-info" style={{ marginTop: ".5rem" }}>
+            <div className="jn-info jn-info--mt">
               <span className="jn-info__icon">💡</span>
               <p>
                 من فاتته التكبيرة الأولى يدخل مع الإمام ثم يقضي ما فاته بعد التسليم.

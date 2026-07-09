@@ -471,7 +471,7 @@ export default function SawmPage() {
               ))}
             </div>
 
-            <h2 className="sw-section__title" style={{ marginTop: "2rem" }}>أركان الصيام</h2>
+            <h2 className="sw-section__title sw-section__title--mt">أركان الصيام</h2>
             <div className="sw-grid-2">
               {SAWM_ARKAAN.map((a) => (
                 <div key={a.title} className="sw-cond-card sw-cond-card--rukn">

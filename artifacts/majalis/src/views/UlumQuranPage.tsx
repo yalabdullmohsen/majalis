@@ -306,7 +306,7 @@ export default function UlumQuranPage() {
               ))}
             </div>
 
-            <h2 className="uq-subhead" style={{ marginTop: "1.5rem" }}>الناسخ والمنسوخ</h2>
+            <h2 className="uq-subhead uq-subhead--mt">الناسخ والمنسوخ</h2>
             <p className="uq-lead">النسخ لغةً: الإزالة. اصطلاحاً: رفع حكم شرعي متقدم بحكم متأخر — وللنسخ ثلاثة أنواع:</p>
             <div className="uq-naskh-list">
               {NASKH_TYPES.map((n, i) => (
@@ -321,7 +321,7 @@ export default function UlumQuranPage() {
               ))}
             </div>
 
-            <div className="uq-info-box" style={{ marginTop: "1.2rem" }}>
+            <div className="uq-info-box uq-info-box--mt">
               <span className="uq-info-box__icon">📌</span>
               <p>آيات الأحكام في القرآن تُقدَّر بـ 500 آية — بعض العلماء يقدّرها بـ 200 آية آية صريحة الحكم.</p>
             </div>

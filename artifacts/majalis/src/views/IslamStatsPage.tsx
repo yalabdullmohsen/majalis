@@ -157,7 +157,7 @@ function AnimatedBar({ item, delay }: { item: BarItem; delay: number }) {
       <div className="is-bar__track">
         <div
           className="is-bar__fill"
-          style={{ width: `${width}%`, background: item.color, transition: "width 0.8s ease" }}
+          style={{ "--is-bar-w": `${width}%`, "--is-bar-color": item.color } as { [k: string]: string }}
         />
       </div>
       <div className="is-bar__val">{item.value}{item.unit}</div>
@@ -221,8 +221,8 @@ export default function IslamStatsPage() {
           <div className="is-section">
             <div className="is-stats-grid">
               {GLOBAL_STATS.map((s, i) => (
-                <div key={i} className="is-stat-card" style={{ borderTopColor: s.color }}>
-                  <span className="is-stat-card__val" style={{ color: s.color }}>{s.value}</span>
+                <div key={i} className="is-stat-card" style={{ "--is-card-color": s.color } as { [k: string]: string }}>
+                  <span className="is-stat-card__val">{s.value}</span>
                   <span className="is-stat-card__lbl">{s.label}</span>
                   {s.sub && <span className="is-stat-card__sub">{s.sub}</span>}
                 </div>
@@ -256,8 +256,8 @@ export default function IslamStatsPage() {
             </div>
             <div className="is-stats-grid">
               {QURAN_STATS.map((s, i) => (
-                <div key={i} className="is-stat-card" style={{ borderTopColor: s.color }}>
-                  <span className="is-stat-card__val" style={{ color: s.color }}>{s.value}</span>
+                <div key={i} className="is-stat-card" style={{ "--is-card-color": s.color } as { [k: string]: string }}>
+                  <span className="is-stat-card__val">{s.value}</span>
                   <span className="is-stat-card__lbl">{s.label}</span>
                   {s.sub && <span className="is-stat-card__sub">{s.sub}</span>}
                 </div>
@@ -274,8 +274,8 @@ export default function IslamStatsPage() {
           <div className="is-section">
             <div className="is-stats-grid">
               {HISTORY_ACHIEVEMENTS.map((s, i) => (
-                <div key={i} className="is-stat-card" style={{ borderTopColor: s.color }}>
-                  <span className="is-stat-card__val" style={{ color: s.color }}>{s.value}</span>
+                <div key={i} className="is-stat-card" style={{ "--is-card-color": s.color } as { [k: string]: string }}>
+                  <span className="is-stat-card__val">{s.value}</span>
                   <span className="is-stat-card__lbl">{s.label}</span>
                   {s.sub && <span className="is-stat-card__sub">{s.sub}</span>}
                 </div>

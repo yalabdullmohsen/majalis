@@ -289,7 +289,7 @@ export default function TaharaPage() {
               ))}
             </div>
 
-            <div className="th-info-box" style={{ marginTop: "1rem" }}>
+            <div className="th-info-box th-info-box--mt">
               <span>📌</span>
               <p>
                 <strong>نواقض التيمم:</strong> ينتقض التيمم بوجود الماء وبكل ما ينقض الوضوء.
