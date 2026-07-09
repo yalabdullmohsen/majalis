@@ -10,17 +10,11 @@ interface Props {
   onMarkDone?: (bookId: string) => void;
 }
 
-const DIFFICULTY_COLORS = {
-  easy:   "text-[var(--majalis-emerald)] bg-[var(--majalis-emerald-muted)]",
-  medium: "text-[var(--majalis-emerald)] bg-[var(--majalis-emerald-muted)]",
-  hard:   "text-[var(--majalis-ink-soft)] bg-[var(--majalis-parchment-deep)]",
-};
-
 export function BookCard({ book, scienceColor = "var(--majalis-emerald, #1F4D3A)", progress, onMarkDone }: Props) {
   const status = progress?.status ?? "not_started";
 
   return (
-    <div className="bg-[var(--majalis-panel)] rounded-2xl border border-[var(--majalis-line)] overflow-hidden hover:shadow-md transition-all duration-200">
+    <div className="bc-card">
       {/* غلاف الكتاب أو تدرج لوني */}
       <div
         className={`h-24 relative flex items-center justify-center${book.cover_image_url ? "" : " bc-cover--gradient"}`}
@@ -37,34 +31,28 @@ export function BookCard({ book, scienceColor = "var(--majalis-emerald, #1F4D3A)
           <span className="text-4xl opacity-60"><BookOpen size={40} strokeWidth={1.3} /></span>
         )}
         {/* شارة الحالة */}
-        <span
-          className={`absolute top-2 left-2 text-xs font-medium px-2 py-0.5 rounded-full bc-status-badge bc-status-badge--${status}`}
-        >
+        <span className={`absolute top-2 left-2 text-xs font-medium px-2 py-0.5 rounded-full bc-status-badge bc-status-badge--${status}`}>
           {status === "completed" ? "✓ مكتمل" : status === "in_progress" ? <><Clock size={11} className="inline ml-0.5" />جارٍ</> : "لم يبدأ"}
         </span>
       </div>
 
       <div className="p-4">
         <Link href={`/learning-path/book/${book.id}`}>
-          <h3 className="font-bold text-[var(--majalis-ink)] text-sm leading-snug mb-1 hover:text-[var(--majalis-emerald)] cursor-pointer line-clamp-2">
-            {book.title}
-          </h3>
+          <h3 className="bc-title line-clamp-2">{book.title}</h3>
         </Link>
         {book.author && (
-          <p className="text-xs text-[var(--majalis-ink-soft)] mb-2">{book.author}</p>
+          <p className="bc-author">{book.author}</p>
         )}
 
         <div className="flex flex-wrap gap-1.5 mb-3">
-          <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${DIFFICULTY_COLORS[book.difficulty]}`}>
+          <span className={`text-xs font-medium px-2 py-0.5 rounded-full bc-difficulty--${book.difficulty}`}>
             {DIFFICULTY_LABELS[book.difficulty]}
           </span>
           {book.estimated_hours > 0 && (
-            <span className="text-xs text-[var(--majalis-ink-soft)] bg-[var(--majalis-parchment)] px-2 py-0.5 rounded-full">
-              ⏱ {book.estimated_hours}س
-            </span>
+            <span className="bc-meta-tag">⏱ {book.estimated_hours}س</span>
           )}
           {book.pages_count > 0 && (
-            <span className="text-xs text-[var(--majalis-ink-soft)] bg-[var(--majalis-parchment)] px-2 py-0.5 rounded-full">
+            <span className="bc-meta-tag">
               <FileText size={11} className="inline ml-0.5" />{book.pages_count}ص
             </span>
           )}
@@ -72,9 +60,9 @@ export function BookCard({ book, scienceColor = "var(--majalis-emerald, #1F4D3A)
 
         {onMarkDone && status !== "completed" && (
           <button
-                    type="button"
+            type="button"
             onClick={(e) => { e.preventDefault(); onMarkDone(book.id); }}
-            className="w-full text-xs font-medium py-1.5 rounded-xl border border-[var(--majalis-emerald)] text-[var(--majalis-emerald)] hover:bg-[var(--majalis-emerald-muted)] transition-colors"
+            className="bc-action-btn"
           >
             {status === "in_progress" ? "✓ تم الإنجاز" : "▶ ابدأ الكتاب"}
           </button>

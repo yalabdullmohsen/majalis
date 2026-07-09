@@ -8,7 +8,7 @@ interface Props {
 export function AchievementBadges({ achievements }: Props) {
   if (achievements.length === 0) {
     return (
-      <div className="text-center py-8 text-[var(--majalis-ink-soft)] opacity-60">
+      <div className="ach-empty">
         <div className="text-4xl mb-2"><Sprout size={40} strokeWidth={1.3} /></div>
         <p className="text-sm">أكمل كتابك الأول لتحصل على أول وسام!</p>
       </div>
@@ -24,8 +24,8 @@ export function AchievementBadges({ achievements }: Props) {
           style={{ "--ach-bc-border": `${a.badge_color}40`, "--ach-bc-bg": `${a.badge_color}08` } as React.CSSProperties}
         >
           <span className="text-3xl">{a.badge_icon}</span>
-          <span className="text-xs font-semibold text-[var(--majalis-ink-soft)]">{a.badge_name}</span>
-          <span className="text-xs text-[var(--majalis-ink-soft)] opacity-60">
+          <span className="ach-badge-name">{a.badge_name}</span>
+          <span className="ach-badge-date">
             {new Date(a.earned_at).toLocaleDateString("ar-KW", { day: "numeric", month: "short" })}
           </span>
         </div>

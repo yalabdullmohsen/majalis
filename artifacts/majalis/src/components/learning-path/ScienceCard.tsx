@@ -24,7 +24,7 @@ export function ScienceCard({ science, progressCount = 0, totalBooks = 0 }: Prop
   return (
     <Link href={`/learning-path/${science.slug}`}>
       <div
-        className="group relative bg-[var(--majalis-panel)] rounded-2xl border border-[var(--majalis-line)] p-5 hover:shadow-lg transition-all duration-200 cursor-pointer overflow-hidden sc-card"
+        className="group relative sc-card p-5 hover:shadow-lg transition-all duration-200 cursor-pointer overflow-hidden"
         style={{ "--sc-color": science.color } as React.CSSProperties}
       >
         {/* خلفية زخرفية */}
@@ -33,24 +33,20 @@ export function ScienceCard({ science, progressCount = 0, totalBooks = 0 }: Prop
         <div className="flex items-start gap-3">
           <span className="text-3xl flex-shrink-0 leading-none mt-0.5"><ScienceIconEl name={science.icon} /></span>
           <div className="flex-1 min-w-0">
-            <h3 className="font-bold text-[var(--majalis-ink)] text-base leading-snug mb-1">
-              {science.name}
-            </h3>
+            <h3 className="sc-card__title">{science.name}</h3>
             {science.description && (
-              <p className="text-xs text-[var(--majalis-ink-soft)] line-clamp-2 leading-relaxed">
-                {science.description}
-              </p>
+              <p className="sc-card__desc">{science.description}</p>
             )}
           </div>
         </div>
 
         {totalBooks > 0 && (
           <div className="mt-4">
-            <div className="flex items-center justify-between text-xs text-[var(--majalis-ink-soft)] mb-1">
+            <div className="sc-card__progress-row">
               <span>{progressCount} / {totalBooks} كتاب</span>
               <span>{pct}%</span>
             </div>
-            <div className="h-1.5 bg-[var(--majalis-parchment-deep)] rounded-full overflow-hidden">
+            <div className="sc-card__prog-track">
               <div
                 className="h-full rounded-full transition-all duration-500 sc-card__prog"
                 style={{ "--sc-prog-w": `${pct}%` } as React.CSSProperties}
@@ -60,9 +56,7 @@ export function ScienceCard({ science, progressCount = 0, totalBooks = 0 }: Prop
         )}
 
         <div className="mt-3 flex items-center justify-end">
-          <span className="text-xs font-medium text-[var(--majalis-ink-soft)] opacity-70 group-hover:text-[var(--majalis-emerald)] group-hover:opacity-100 transition-colors">
-            استعرض المسار ←
-          </span>
+          <span className="sc-card__cta">استعرض المسار ←</span>
         </div>
       </div>
     </Link>

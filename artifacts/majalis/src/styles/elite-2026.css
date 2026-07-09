@@ -11517,9 +11517,20 @@ button, .btn {
 .spc-channel-link:hover { background: rgba(255,255,255,0.12); }
 
 /* ── ScienceCard (sc-card-*) ─────────────────────────────────────────────────── */
-.sc-card        { border-top: 3px solid var(--sc-color, var(--majalis-emerald)); }
+.sc-card {
+  background: var(--majalis-panel);
+  border: 1px solid var(--majalis-line);
+  border-top: 3px solid var(--sc-color, var(--majalis-emerald));
+  border-radius: 1rem;
+}
 .sc-card__glow  { background: radial-gradient(circle at 70% 20%, var(--sc-color, var(--majalis-emerald)), transparent 60%); }
 .sc-card__prog  { background: var(--sc-color, var(--majalis-emerald)); width: var(--sc-prog-w, 0%); }
+.sc-card__title { font-weight: 700; color: var(--majalis-ink); font-size: 1rem; line-height: 1.35; margin-bottom: .25rem; }
+.sc-card__desc  { font-size: .75rem; color: var(--majalis-ink-soft); line-height: 1.6; }
+.sc-card__progress-row { display: flex; align-items: center; justify-content: space-between; font-size: .75rem; color: var(--majalis-ink-soft); margin-bottom: .25rem; }
+.sc-card__prog-track { height: .375rem; background: var(--majalis-parchment-deep, #f0ece4); border-radius: 9999px; overflow: hidden; }
+.sc-card__cta { font-size: .75rem; font-weight: 500; color: var(--majalis-ink-soft); opacity: .7; transition: color .2s, opacity .2s; }
+.sc-card:hover .sc-card__cta { color: var(--majalis-emerald); opacity: 1; }
 
 /* ── LevelTimeline (lt-*) ────────────────────────────────────────────────────── */
 .lt-dot           { background: var(--lt-dot-bg, var(--majalis-line)); }
@@ -11529,6 +11540,46 @@ button, .btn {
 .lt-prog-fill     { width: var(--lt-prog-w, 0%); background: var(--lt-color, var(--majalis-emerald)); }
 .lt-status-done     { background: var(--lt-color, var(--majalis-emerald)); }
 .lt-status-progress { border-color: var(--lt-color, var(--majalis-emerald)); background: color-mix(in srgb, var(--lt-color, var(--majalis-emerald)) 13%, transparent); }
+
+/* ── LevelTimeline extensions ─────────────────────────────────────────────── */
+.lt-spine { position: absolute; right: 1.5rem; top: 1.5rem; bottom: 1.5rem; width: 2px; background: var(--majalis-line); display: none; }
+@media (min-width: 768px) { .lt-spine { display: block; } }
+.lt-level-name { font-weight: 700; color: var(--majalis-ink); }
+.lt-level-count { font-size: .75rem; color: var(--majalis-ink-soft); }
+.lt-prog-track { height: .25rem; background: var(--majalis-parchment-deep, #f0ece4); }
+.lt-empty { font-size: .875rem; color: var(--majalis-ink-soft); opacity: .6; grid-column: span 2; text-align: center; padding: 1rem 0; margin: 0; }
+.lt-book-item { display: flex; align-items: flex-start; gap: .75rem; padding: .75rem; border-radius: .75rem; border: 1px solid var(--majalis-line); transition: border-color .15s, background .15s; cursor: pointer; }
+.lt-book-item:hover { border-color: var(--majalis-emerald); background: var(--majalis-emerald-muted, rgba(31,77,58,.1)); }
+.lt-book-title { font-size: .875rem; font-weight: 500; color: var(--majalis-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: color .15s; }
+.lt-book-item:hover .lt-book-title { color: var(--majalis-emerald); }
+.lt-book-author { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; margin-top: .125rem; }
+.lt-book-meta { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; }
+.lt-status-empty { flex-shrink: 0; width: 1.25rem; height: 1.25rem; border-radius: 9999px; border: 2px solid var(--majalis-line); margin-top: .125rem; }
+
+/* ── BookCard extensions ─────────────────────────────────────────────────── */
+.bc-card { background: var(--majalis-panel); border-radius: 1rem; border: 1px solid var(--majalis-line); overflow: hidden; transition: box-shadow .2s; }
+.bc-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+.bc-title { font-weight: 700; color: var(--majalis-ink); font-size: .875rem; line-height: 1.35; margin-bottom: .25rem; cursor: pointer; text-decoration: none; display: block; }
+.bc-title:hover { color: var(--majalis-emerald); }
+.bc-author { font-size: .75rem; color: var(--majalis-ink-soft); margin-bottom: .5rem; }
+.bc-meta-tag { font-size: .75rem; color: var(--majalis-ink-soft); background: var(--majalis-parchment); padding: .125rem .5rem; border-radius: 9999px; }
+.bc-difficulty--easy, .bc-difficulty--medium { color: var(--majalis-emerald); background: var(--majalis-emerald-muted, rgba(31,77,58,.12)); }
+.bc-difficulty--hard { color: var(--majalis-ink-soft); background: var(--majalis-parchment-deep, #f0ece4); }
+.bc-action-btn { width: 100%; font-size: .75rem; font-weight: 500; padding: .375rem 0; border-radius: .75rem; border: 1px solid var(--majalis-emerald); color: var(--majalis-emerald); background: none; cursor: pointer; transition: background .15s; }
+.bc-action-btn:hover { background: var(--majalis-emerald-muted, rgba(31,77,58,.12)); }
+
+/* ── AchievementBadges extensions ─────────────────────────────────────────── */
+.ach-empty { text-align: center; padding: 2rem 0; color: var(--majalis-ink-soft); opacity: .6; }
+.ach-badge-name { font-size: .75rem; font-weight: 600; color: var(--majalis-ink-soft); }
+.ach-badge-date { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; }
+
+/* ── StreakCounter extensions ─────────────────────────────────────────────── */
+.streak-current { flex: 1; background: var(--majalis-emerald-muted, rgba(31,77,58,.12)); border-radius: 1rem; padding: 1rem; text-align: center; border: 1px solid var(--majalis-emerald); }
+.streak-longest { flex: 1; background: var(--majalis-parchment-deep, #f0ece4); border-radius: 1rem; padding: 1rem; text-align: center; border: 1px solid var(--majalis-line); }
+.streak-number--active { font-size: 1.875rem; font-weight: 700; color: var(--majalis-emerald); }
+.streak-number { font-size: 1.875rem; font-weight: 700; color: var(--majalis-ink); }
+.streak-label--active { font-size: .75rem; color: var(--majalis-emerald); margin-top: .25rem; }
+.streak-label { font-size: .75rem; color: var(--majalis-ink-soft); margin-top: .25rem; }
 
 /* ── §199 — KnowledgeRelatedItems (kri-*) ────────────────────────────────────── */
 .kri-aside { margin-top: 2rem; direction: rtl; }

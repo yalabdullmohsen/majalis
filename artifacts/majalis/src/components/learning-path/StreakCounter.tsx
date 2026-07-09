@@ -10,13 +10,13 @@ export function StreakCounter({ streak }: Props) {
 
   return (
     <div className="flex gap-3">
-      <div className="flex-1 bg-[var(--majalis-emerald-muted)] rounded-2xl p-4 text-center border border-[var(--majalis-emerald)]">
-        <div className="text-3xl font-bold text-[var(--majalis-emerald)]">{current_streak}</div>
-        <div className="text-xs text-[var(--majalis-emerald)] mt-1"><Flame size={12} className="inline ml-1" />أيام متتالية</div>
+      <div className="streak-current">
+        <div className="streak-number--active">{current_streak}</div>
+        <div className="streak-label--active"><Flame size={12} className="inline ml-1" />أيام متتالية</div>
       </div>
-      <div className="flex-1 bg-[var(--majalis-parchment-deep)] rounded-2xl p-4 text-center border border-[var(--majalis-line)]">
-        <div className="text-3xl font-bold text-[var(--majalis-ink)]">{longest_streak}</div>
-        <div className="text-xs text-[var(--majalis-ink-soft)] mt-1"><Medal size={12} className="inline ml-1" />الأعلى</div>
+      <div className="streak-longest">
+        <div className="streak-number">{longest_streak}</div>
+        <div className="streak-label"><Medal size={12} className="inline ml-1" />الأعلى</div>
       </div>
     </div>
   );
