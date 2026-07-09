@@ -17,6 +17,7 @@ import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
 import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
 import { HomePrayerRanks } from "@/components/home/HomePrayerRanks";
+import { HomeFeaturedLibrary } from "@/components/home/HomeFeaturedLibrary";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import {
@@ -357,6 +358,11 @@ export default function HomePage() {
         {/* آخر التحديثات */}
         <SafeHomeSection name="آخر التحديثات">
           <HomeLatestUpdates />
+        </SafeHomeSection>
+
+        {/* المكتبة العلمية */}
+        <SafeHomeSection name="المكتبة العلمية">
+          <HomeFeaturedLibrary />
         </SafeHomeSection>
 
         {/* الركن اليومي — مدمج */}
