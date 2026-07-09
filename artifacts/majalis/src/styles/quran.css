@@ -35,7 +35,7 @@
 }
 .qs-subnav__link:hover,
 .qs-subnav__link.is-active {
-  background: var(--majalis-emerald, #164E3C);
+  background: var(--majalis-emerald, #1F4D3A);
   color: #fff;
 }
 
@@ -102,7 +102,7 @@
   direction: rtl;
 }
 .qs-search-input:focus {
-  outline: 2px solid var(--majalis-gold, #0E6E52);
+  outline: 2px solid var(--majalis-gold, #1F4D3A);
   border-color: transparent;
 }
 .qs-surah-items {
@@ -133,8 +133,8 @@
   background: var(--bg-hover, #f3f0eb);
 }
 .qs-surah-item.is-active {
-  background: var(--majalis-emerald-soft, #EBF5F0);
-  color: var(--majalis-emerald, #164E3C);
+  background: var(--majalis-emerald-soft, #F0F5F2);
+  color: var(--majalis-emerald, #1F4D3A);
   font-weight: 700;
 }
 .qs-surah-num {
@@ -176,7 +176,7 @@
 }
 .qs-surah-header__ornament {
   font-size: 2rem;
-  color: var(--majalis-gold, #0E6E52);
+  color: var(--majalis-gold, #1F4D3A);
   line-height: 1;
   margin-bottom: .5rem;
 }
@@ -195,7 +195,7 @@
   font-weight: 700;
   direction: rtl;
   margin: .25rem 0;
-  color: var(--majalis-emerald, #164E3C);
+  color: var(--majalis-emerald, #1F4D3A);
 }
 
 /* ── Ayah display — Mushaf flowing layout ── */
@@ -223,7 +223,7 @@
 
 /* Playing ayah: تغيير اللون فقط — لا صندوق يقطع السطر */
 .qs-ayah-inline--playing .qs-ayah-inline__text {
-  color: var(--majalis-emerald-deep, #0A5040);
+  color: var(--majalis-emerald-deep, #173A2C);
   text-decoration: underline;
   text-decoration-color: rgba(22, 78, 60, 0.4);
   text-underline-offset: 3px;
@@ -232,7 +232,7 @@
 
 /* Target ayah (jump destination) */
 .qs-ayah-inline--target .qs-ayah-inline__text {
-  color: var(--majalis-emerald, #0E6E52);
+  color: var(--majalis-emerald, #1F4D3A);
 }
 
 /* Ayah text span — inline, cursor pointer for tap-to-select */
@@ -251,7 +251,7 @@
   display: inline;
   font-family: "Amiri Quran", "Scheherazade New", serif;
   font-size: .72em;
-  color: var(--majalis-gold, #0E6E52);
+  color: var(--majalis-gold, #1F4D3A);
   margin: 0 .15em;
   line-height: inherit;
   vertical-align: baseline;
@@ -278,13 +278,13 @@
   color: var(--text-muted, #6b7280);
 }
 .qs-ayah-inline__play:hover:not(:disabled) {
-  background: var(--majalis-emerald, #164E3C);
-  border-color: var(--majalis-emerald, #164E3C);
+  background: var(--majalis-emerald, #1F4D3A);
+  border-color: var(--majalis-emerald, #1F4D3A);
   color: #fff;
 }
 .qs-ayah-inline__play.is-playing {
-  background: var(--majalis-gold, #0E6E52);
-  border-color: var(--majalis-gold, #0E6E52);
+  background: var(--majalis-gold, #1F4D3A);
+  border-color: var(--majalis-gold, #1F4D3A);
   color: #fff;
 }
 .qs-ayah-inline__play:disabled {
@@ -322,8 +322,8 @@
   border-color: var(--majalis-line);
 }
 .qs-ayah-inline__share--img:hover:not(:disabled) {
-  background: var(--majalis-gold, #0E6E52);
-  border-color: var(--majalis-gold, #0E6E52);
+  background: var(--majalis-gold, #1F4D3A);
+  border-color: var(--majalis-gold, #1F4D3A);
   color: #fff;
 }
 .qs-ayah-inline__share:disabled { opacity: .4; cursor: default; }
@@ -361,7 +361,7 @@
   font-size: .9rem;
   min-width: 4rem;
   text-align: center;
-  color: var(--majalis-emerald, #164E3C);
+  color: var(--majalis-emerald, #1F4D3A);
 }
 .qs-player-bar__status {
   display: flex;
@@ -374,7 +374,7 @@
   color: var(--text-muted, #6b7280);
 }
 .qs-pb-state-label--active {
-  color: var(--majalis-emerald, #164E3C);
+  color: var(--majalis-emerald, #1F4D3A);
   font-weight: 600;
 }
 .qs-pb-ayah-info {
@@ -409,12 +409,12 @@
   cursor: default;
 }
 .qs-pb-btn--primary {
-  background: var(--majalis-emerald, #164E3C);
+  background: var(--majalis-emerald, #1F4D3A);
   color: #fff;
-  border-color: var(--majalis-emerald, #164E3C);
+  border-color: var(--majalis-emerald, #1F4D3A);
 }
 .qs-pb-btn--primary:hover:not(:disabled) {
-  background: var(--majalis-emerald-deep, #0A5040);
+  background: var(--majalis-emerald-deep, #173A2C);
 }
 .qs-pb-font-ctrl {
   display: flex;
@@ -462,9 +462,9 @@
   background: var(--bg-hover, #f3f0eb);
 }
 .qs-reciter-option.is-selected {
-  color: var(--majalis-emerald, #164E3C);
+  color: var(--majalis-emerald, #1F4D3A);
   font-weight: 700;
-  background: var(--majalis-emerald-soft, #EBF5F0);
+  background: var(--majalis-emerald-soft, #F0F5F2);
 }
 
 /* ── Search panel ── */
@@ -490,12 +490,12 @@
   background: var(--bg-base, #faf9f6);
 }
 .qs-search__input:focus {
-  outline: 2px solid var(--majalis-gold, #0E6E52);
+  outline: 2px solid var(--majalis-gold, #1F4D3A);
   border-color: transparent;
 }
 .qs-search__btn {
   padding: .5rem 1rem;
-  background: var(--majalis-emerald, #164E3C);
+  background: var(--majalis-emerald, #1F4D3A);
   color: #fff;
   border: none;
   border-radius: .5rem;
@@ -534,11 +534,11 @@
   transition: background .1s;
 }
 .qs-search__result:hover {
-  background: var(--majalis-emerald-soft, #EBF5F0);
+  background: var(--majalis-emerald-soft, #F0F5F2);
 }
 .qs-search__result-ref {
   font-size: .76rem;
-  color: var(--majalis-emerald, #164E3C);
+  color: var(--majalis-emerald, #1F4D3A);
   font-weight: 700;
 }
 .qs-search__result-text {
@@ -558,7 +558,7 @@
     align-items: center;
     gap: .4rem;
     padding: .4rem .8rem;
-    background: var(--majalis-emerald, #164E3C);
+    background: var(--majalis-emerald, #1F4D3A);
     color: #fff;
     border: none;
     border-radius: .4rem;
@@ -628,16 +628,16 @@
 }
 .qs-tafsir__source-btn:hover,
 .qs-tafsir__source-btn.is-active {
-  background: var(--majalis-emerald, #164E3C);
+  background: var(--majalis-emerald, #1F4D3A);
   color: #fff;
-  border-color: var(--majalis-emerald, #164E3C);
+  border-color: var(--majalis-emerald, #1F4D3A);
 }
 .qs-tafsir__ayah {
   margin-bottom: 1.25rem;
 }
 .qs-tafsir__ayah-ref {
   font-size: .76rem;
-  color: var(--majalis-gold, #0E6E52);
+  color: var(--majalis-gold, #1F4D3A);
   font-weight: 700;
   margin-bottom: .25rem;
 }
@@ -671,8 +671,8 @@
   flex-wrap: wrap;
 }
 .qs-radio-card.is-active {
-  border-color: var(--majalis-emerald, #0E6E52);
-  background: var(--majalis-emerald-soft, #EBF5F0);
+  border-color: var(--majalis-emerald, #1F4D3A);
+  background: var(--majalis-emerald-soft, #F0F5F2);
 }
 .qs-radio-card__info {
   display: flex;
@@ -700,8 +700,8 @@
   color: var(--text-muted, #6b7280);
 }
 .qs-radio-status--live {
-  background: var(--majalis-emerald-soft, #EBF5F0);
-  color: var(--majalis-emerald-deep, #0A5040);
+  background: var(--majalis-emerald-soft, #F0F5F2);
+  color: var(--majalis-emerald-deep, #173A2C);
 }
 .qs-radio-status--error {
   background: var(--majalis-danger-muted, rgba(155,28,28,.08));
@@ -710,7 +710,7 @@
 .qs-radio-play-btn {
   padding: .35rem .85rem;
   border-radius: .4rem;
-  background: var(--majalis-emerald, #164E3C);
+  background: var(--majalis-emerald, #1F4D3A);
   color: #fff;
   border: none;
   font-size: .85rem;
@@ -718,7 +718,7 @@
   cursor: pointer;
 }
 .qs-radio-play-btn:hover {
-  background: var(--majalis-emerald-deep, #0A5040);
+  background: var(--majalis-emerald-deep, #173A2C);
 }
 .qs-live-section {
   margin-top: 2rem;
@@ -764,7 +764,7 @@
   flex: 1;
   min-width: 80px;
   max-width: 180px;
-  accent-color: var(--majalis-emerald, #164E3C);
+  accent-color: var(--majalis-emerald, #1F4D3A);
 }
 
 /* ── Source note ── */
@@ -800,7 +800,7 @@
   transition: background .15s, color .15s;
 }
 .qs-view-tab.is-active {
-  background: var(--majalis-emerald, #164E3C);
+  background: var(--majalis-emerald, #1F4D3A);
   color: #fff;
 }
 
@@ -828,11 +828,11 @@
 }
 .qs-ctrl-btn:hover { background: var(--bg-hover, #f5f3ef); }
 .qs-ctrl-btn--accent {
-  background: var(--majalis-emerald, #164E3C);
+  background: var(--majalis-emerald, #1F4D3A);
   color: #fff;
-  border-color: var(--majalis-emerald, #164E3C);
+  border-color: var(--majalis-emerald, #1F4D3A);
 }
-.qs-ctrl-btn--accent:hover { background: var(--majalis-emerald-deep, #0A5040); }
+.qs-ctrl-btn--accent:hover { background: var(--majalis-emerald-deep, #173A2C); }
 
 /* ── Qiraat selector ── */
 .qs-qiraat-row {
@@ -862,7 +862,7 @@
   justify-content: space-between;
   gap: .75rem;
   padding: .6rem 1rem;
-  background: var(--majalis-emerald-soft, #EBF5F0);
+  background: var(--majalis-emerald-soft, #F0F5F2);
   border-radius: .625rem;
   margin-bottom: 1rem;
   direction: rtl;
@@ -924,7 +924,7 @@
   cursor: pointer;
   transition: background .15s;
 }
-.qs-page-nav__btn:hover:not(:disabled) { background: var(--majalis-emerald-soft, #EBF5F0); }
+.qs-page-nav__btn:hover:not(:disabled) { background: var(--majalis-emerald-soft, #F0F5F2); }
 .qs-page-nav__btn:disabled {
   opacity: .4;
   cursor: not-allowed;
@@ -943,7 +943,7 @@
   align-items: center;
   gap: .5rem;
   padding: .5rem .875rem;
-  background: var(--majalis-emerald-soft, #EBF5F0);
+  background: var(--majalis-emerald-soft, #F0F5F2);
   border-radius: 2rem;
   margin: .75rem 0;
   font-size: .82rem;
@@ -1026,13 +1026,13 @@
   transition: background .15s;
   text-align: right;
 }
-.qs-context-sheet__btn:hover { background: var(--majalis-emerald-soft, #EBF5F0); }
+.qs-context-sheet__btn:hover { background: var(--majalis-emerald-soft, #F0F5F2); }
 .qs-context-sheet__btn--primary {
-  background: var(--majalis-emerald, #164E3C);
+  background: var(--majalis-emerald, #1F4D3A);
   color: #fff;
-  border-color: var(--majalis-emerald, #164E3C);
+  border-color: var(--majalis-emerald, #1F4D3A);
 }
-.qs-context-sheet__btn--primary:hover { background: var(--majalis-emerald-deep, #0A5040); }
+.qs-context-sheet__btn--primary:hover { background: var(--majalis-emerald-deep, #173A2C); }
 .qs-context-sheet__btn--close {
   background: transparent;
   color: var(--text-muted, #6b7280);
@@ -1064,7 +1064,7 @@
   cursor: pointer;
   transition: background .15s;
 }
-.qs-page-view__nav-btn:hover:not(:disabled):not(.is-disabled) { background: var(--majalis-emerald-soft, #EBF5F0); }
+.qs-page-view__nav-btn:hover:not(:disabled):not(.is-disabled) { background: var(--majalis-emerald-soft, #F0F5F2); }
 .qs-page-view__nav-btn:disabled,
 .qs-page-view__nav-btn.is-disabled { opacity: .4; cursor: not-allowed; }
 .qs-page-view__counter {
@@ -1113,7 +1113,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 3px solid var(--majalis-emerald, #0E6E52);
+  border: 3px solid var(--majalis-emerald, #1F4D3A);
   border-top-color: transparent;
   animation: spin .9s linear infinite;
 }
@@ -1130,7 +1130,7 @@
 .qs-page-view__retry-btn {
   padding: .5rem 1.25rem;
   border-radius: 2rem;
-  background: var(--majalis-emerald, #164E3C);
+  background: var(--majalis-emerald, #1F4D3A);
   color: #fff;
   border: none;
   font-size: .88rem;
@@ -1158,11 +1158,11 @@
 }
 .qs-verse-card {
   background: var(--qs-parchment, #F8F2E4);
-  border: 1px solid var(--mf-gold-soft, rgba(14,110,82,0.35));
+  border: 1px solid var(--mf-gold-soft, rgba(31,77,58,0.35));
   box-shadow:
     inset 0 0 0 5px var(--qs-parchment, #F8F2E4),
-    inset 0 0 0 6px var(--mf-gold-faint, rgba(14,110,82,0.15)),
-    0 6px 40px rgba(14,110,82,0.12),
+    inset 0 0 0 6px var(--mf-gold-faint, rgba(31,77,58,0.15)),
+    0 6px 40px rgba(31,77,58,0.12),
     0 2px 10px rgba(0,0,0,0.06);
   border-radius: 3px;
   padding: 2.5rem 2rem;
@@ -1198,7 +1198,7 @@
   align-items: center;
   margin-bottom: .625rem;
 }
-.qs-verse-tafsir__title { font-weight: 700; font-size: .88rem; color: var(--majalis-emerald, #164E3C); }
+.qs-verse-tafsir__title { font-weight: 700; font-size: .88rem; color: var(--majalis-emerald, #1F4D3A); }
 .qs-verse-tafsir__sources { display: flex; gap: .3rem; }
 .qs-verse-tafsir__body { margin: 0; font-size: .95rem; line-height: 1.9; color: var(--text-base, #1a1a1a); }
 .qs-verse-view__jump {
@@ -1235,17 +1235,17 @@
   transition: background .15s;
 }
 .qs-juz-btn.is-active {
-  background: var(--majalis-emerald, #164E3C);
+  background: var(--majalis-emerald, #1F4D3A);
   color: #fff;
-  border-color: var(--majalis-emerald, #164E3C);
+  border-color: var(--majalis-emerald, #1F4D3A);
   font-weight: 700;
 }
 .qs-juz-progress { margin-bottom: .875rem; direction: rtl; }
 .qs-juz-progress__labels { display: flex; justify-content: space-between; font-size: .72rem; color: var(--text-muted, #6b7280); margin-bottom: .25rem; }
 .qs-juz-progress__bar { height: 6px; background: var(--border, #e5e3dd); border-radius: 999px; overflow: hidden; }
-.qs-juz-progress__fill { height: 100%; background: var(--majalis-emerald, #164E3C); border-radius: 999px; transition: width .2s; }
+.qs-juz-progress__fill { height: 100%; background: var(--majalis-emerald, #1F4D3A); border-radius: 999px; transition: width .2s; }
 .qs-juz-surah-header {
-  background: var(--majalis-emerald-soft, #EBF5F0);
+  background: var(--majalis-emerald-soft, #F0F5F2);
   border: 1px solid var(--majalis-line, rgba(0,0,0,0.07));
   border-radius: .625rem;
   padding: .625rem 1rem;
@@ -1253,12 +1253,12 @@
   text-align: center;
   font-size: 1rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #164E3C);
+  color: var(--majalis-emerald, #1F4D3A);
 }
 .qs-juz-ayah { display: flex; gap: .75rem; margin-bottom: .5rem; align-items: flex-start; direction: rtl; }
 .qs-juz-ayah__num {
   flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
-  background: var(--majalis-emerald-soft, #EBF5F0); color: var(--majalis-emerald, #0E6E52);
+  background: var(--majalis-emerald-soft, #F0F5F2); color: var(--majalis-emerald, #1F4D3A);
   font-size: .65rem; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
@@ -1825,11 +1825,11 @@
 .qs-mushaf-frame {
   position: relative;
   background: var(--qs-parchment, #F8F2E4);
-  border: 1.5px solid var(--mf-gold, #0E6E52);
+  border: 1.5px solid var(--mf-gold, #1F4D3A);
   border-radius: 1px;
   margin: 0.5rem 0;
   padding: 0;
-  box-shadow: 0 2px 16px rgba(14,110,82,0.10);
+  box-shadow: 0 2px 16px rgba(31,77,58,0.10);
 }
 /* الحد الذهبي الداخلي الثاني — يكمّل الإطار المزدوج */
 .qs-mushaf-frame::before {
@@ -1837,7 +1837,7 @@
   display: block;
   position: absolute;
   inset: 4px;
-  border: 1px solid var(--mf-gold-soft, rgba(14,110,82,0.40));
+  border: 1px solid var(--mf-gold-soft, rgba(31,77,58,0.40));
   pointer-events: none;
   z-index: 0;
 }
@@ -1851,7 +1851,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--mf-gold, #0E6E52);
+  color: var(--mf-gold, #1F4D3A);
   font-size: 9px;
   line-height: 1;
   user-select: none;
@@ -1875,7 +1875,7 @@
   color: var(--mf-ink, #1A1610);
   direction: rtl;
   font-family: "Tajawal", "IBM Plex Sans Arabic", system-ui, sans-serif;
-  border-bottom: 1px solid var(--mf-gold-faint, rgba(14,110,82,0.15));
+  border-bottom: 1px solid var(--mf-gold-faint, rgba(31,77,58,0.15));
   user-select: none;
 }
 
@@ -1887,7 +1887,7 @@
   gap: 0.55rem;
   margin: 0.8rem auto 0.4rem;
   padding: 0.28rem 1.2rem;
-  border: 1px solid var(--mf-gold-soft, rgba(14,110,82,0.35));
+  border: 1px solid var(--mf-gold-soft, rgba(31,77,58,0.35));
   width: fit-content;
   min-width: 48%;
   direction: rtl;
@@ -1900,7 +1900,7 @@
   color: var(--mf-ink, #1A1610);
 }
 .qs-surah-name-box__orn {
-  color: var(--mf-gold, #0E6E52);
+  color: var(--mf-gold, #1F4D3A);
   font-size: 0.72rem;
   flex-shrink: 0;
   opacity: 0.8;
@@ -1933,7 +1933,7 @@
   background-repeat: no-repeat;
   font-size:   0.56em;
   font-weight: 700;
-  color: var(--majalis-emerald-deep, #0A5040); /* حبر زمردي داكن — تباين عالٍ على العاجي */
+  color: var(--majalis-emerald-deep, #173A2C); /* حبر زمردي داكن — تباين عالٍ على العاجي */
   vertical-align: middle;
   margin: 0 0.22em;
   user-select: none;
@@ -1951,14 +1951,14 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 0.4rem 1rem;
-  border-top: 1px solid var(--mf-gold-faint, rgba(14,110,82,0.15));
+  border-top: 1px solid var(--mf-gold-faint, rgba(31,77,58,0.15));
   user-select: none;
 }
 .qs-mushaf-footer-row__line {
   flex: 1;
   max-width: 2.5rem;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--mf-gold-soft, rgba(14,110,82,0.35)), transparent);
+  background: linear-gradient(90deg, transparent, var(--mf-gold-soft, rgba(31,77,58,0.35)), transparent);
 }
 .qs-mushaf-footer-row__page {
   font-size: 0.63rem;
@@ -1982,7 +1982,7 @@
 
 /* ── لافتة الاستئناف — ألوان منسجمة ── */
 .qs-resume-banner {
-  border: 1px solid rgba(14,110,82,0.20);
+  border: 1px solid rgba(31,77,58,0.20);
   background: linear-gradient(135deg, #f8f5ec, #f2ead8);
 }
 
@@ -1992,33 +1992,33 @@
 /* ── وضع ليلي ── */
 .quran-shell--night .qs-mushaf-frame {
   background: #111009;
-  border-color: rgba(14,110,82,0.40);
+  border-color: rgba(31,77,58,0.40);
   box-shadow: 0 2px 16px rgba(0,0,0,0.3);
 }
 .quran-shell--night .qs-mushaf-frame::before {
-  border-color: rgba(14,110,82,0.18);
+  border-color: rgba(31,77,58,0.18);
 }
 .quran-shell--night .qs-mushaf-frame .qs-mushaf-body {
   color: #e8d5b0;
 }
 .quran-shell--night .qs-surah-header::after {
-  background: linear-gradient(90deg, transparent, rgba(14,110,82,0.22), transparent);
+  background: linear-gradient(90deg, transparent, rgba(31,77,58,0.22), transparent);
 }
 .quran-shell--night .qs-surah-header__title { color: #6ee7b7; text-shadow: none; }
 .quran-shell--night .qs-mushaf-header-row {
   color: #c8b48a;
-  border-bottom-color: rgba(14,110,82,0.10);
+  border-bottom-color: rgba(31,77,58,0.10);
 }
 .quran-shell--night .qs-surah-name-box {
-  border-color: rgba(14,110,82,0.20);
+  border-color: rgba(31,77,58,0.20);
 }
 .quran-shell--night .qs-surah-name-box__title { color: #e8d5b0; }
-.quran-shell--night .qs-surah-name-box__orn   { color: rgba(14,110,82,0.45); }
+.quran-shell--night .qs-surah-name-box__orn   { color: rgba(31,77,58,0.45); }
 .quran-shell--night .qs-mushaf-footer-row {
-  border-top-color: rgba(14,110,82,0.10);
+  border-top-color: rgba(31,77,58,0.10);
 }
 .quran-shell--night .qs-mushaf-footer-row__page { color: #c8b48a; }
-.quran-shell--night .qs-mushaf-corner { color: rgba(14,110,82,0.35); }
+.quran-shell--night .qs-mushaf-corner { color: rgba(31,77,58,0.35); }
 .quran-shell--night .qs-ayah-num {
   background-color: #111009;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,6 62,22 81,19 78,39 94,50 78,62 81,81 62,78 50,94 38,78 19,81 22,62 6,50 22,39 19,19 38,22' fill='%230E6E52' opacity='0.55'/%3E%3Ccircle cx='50' cy='50' r='19' fill='%23111009'/%3E%3C/svg%3E");
@@ -2029,21 +2029,21 @@
 /* ── وضع دافئ ── */
 .quran-shell--warm .qs-mushaf-frame {
   background: #fdf0d8;
-  border-color: #0E6E52;
+  border-color: #1F4D3A;
 }
 .quran-shell--warm .qs-mushaf-frame::before {
-  border-color: rgba(14,110,82,0.30);
+  border-color: rgba(31,77,58,0.30);
 }
 .quran-shell--warm .qs-mushaf-frame .qs-mushaf-body { color: #1a2e1c; }
-.quran-shell--warm .qs-surah-header__title { color: var(--majalis-emerald-deep, #0A5040); }
-.quran-shell--warm .qs-mushaf-header-row { color: var(--majalis-emerald, #0E6E52); }
-.quran-shell--warm .qs-surah-name-box { border-color: rgba(14,110,82,0.40); }
-.quran-shell--warm .qs-surah-name-box__title { color: var(--majalis-emerald-deep, #0A5040); }
-.quran-shell--warm .qs-mushaf-footer-row__page { color: var(--majalis-emerald, #0E6E52); }
+.quran-shell--warm .qs-surah-header__title { color: var(--majalis-emerald-deep, #173A2C); }
+.quran-shell--warm .qs-mushaf-header-row { color: var(--majalis-emerald, #1F4D3A); }
+.quran-shell--warm .qs-surah-name-box { border-color: rgba(31,77,58,0.40); }
+.quran-shell--warm .qs-surah-name-box__title { color: var(--majalis-emerald-deep, #173A2C); }
+.quran-shell--warm .qs-mushaf-footer-row__page { color: var(--majalis-emerald, #1F4D3A); }
 .quran-shell--warm .qs-ayah-num {
   background-color: #fdf0d8;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,6 62,22 81,19 78,39 94,50 78,62 81,81 62,78 50,94 38,78 19,81 22,62 6,50 22,39 19,19 38,22' fill='%230E6E52'/%3E%3Ccircle cx='50' cy='50' r='19' fill='%23fdf0d8'/%3E%3C/svg%3E");
-  color: var(--majalis-emerald, #0E6E52);
+  color: var(--majalis-emerald, #1F4D3A);
 }
 .quran-shell--warm .qs-bismillah { color: #1a2e1c; }
 
