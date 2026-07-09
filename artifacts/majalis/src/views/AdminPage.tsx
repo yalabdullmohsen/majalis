@@ -38,7 +38,6 @@ import { UniversitiesSection } from "@/views/admin/UniversitiesAdminPage";
 import { ProphetStoriesSection } from "@/views/admin/ProphetStoriesSection";
 import { IslamicStoriesSection } from "@/views/admin/IslamicStoriesSection";
 import { ImageImportSection } from "@/views/admin/ImageImportSection";
-import { HaramainLessonsSection } from "@/views/admin/HaramainLessonsSection";
 
 export default function AdminPage() {
   const [location] = useLocation();
@@ -107,7 +106,6 @@ export default function AdminPage() {
       {section === "rulings" && <RulingsSection />}
       {section === "annual-courses" && <AnnualCoursesSection />}
       {section === "updates" && <UpdatesSection />}
-      {section === "haramain-lessons" && <HaramainLessonsSection />}
     </AdminShell>
   );
 }

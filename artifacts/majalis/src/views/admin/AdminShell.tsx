@@ -49,7 +49,7 @@ export type AdminSection =
   | "prophet-stories"
   | "islamic-stories"
   | "image-import"
-  | "haramain-lessons";
+;
 
 type NavItem = { key: AdminSection; label: string; Icon: LucideIcon };
 
@@ -99,7 +99,6 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
       { key: "telegram",         label: "Telegram",          Icon: Send },
       { key: "prophet-stories",  label: "قصص الأنبياء",     Icon: BookOpen },
       { key: "islamic-stories",  label: "القصص الإسلامية",  Icon: Building2 },
-      { key: "haramain-lessons", label: "دروس الحرمين",     Icon: Landmark },
       { key: "updates",          label: "المستجدات",        Icon: Radio },
       { key: "universities",     label: "دليل الجامعات",    Icon: School },
     ],
