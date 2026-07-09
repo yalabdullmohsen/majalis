@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "wouter";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -104,7 +105,7 @@ export default function TermsPage() {
         </p>
         <p>
           أو عبر صفحة{" "}
-          <a href="/contact">تواصل معنا</a>{" "}
+          <Link href="/contact">تواصل معنا</Link>{" "}
           داخل المنصة. نسعى للرد على جميع الاستفسارات خلال 3 أيام عمل.
         </p>
       </LegalSection>

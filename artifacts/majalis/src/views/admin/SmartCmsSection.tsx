@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { Link } from "wouter";
 import { invalidateLessonsCache } from "@/lib/lessons-service";
 import {
   approveContentDraft,
@@ -290,9 +291,9 @@ export function SmartCmsSection() {
                 Vision + OCR — يستخرج الذكاء الاصطناعي النص والبيانات تلقائياً
               </p>
             </div>
-            <a href="/admin/content-import/image" className="scm-image-link">
+            <Link href="/admin/content-import/image" className="scm-image-link">
               واجهة الاستيراد من الصورة المتقدمة ←
-            </a>
+            </Link>
           </div>
         )}
       </section>

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "wouter";
 import {
   adminGetAllFiqhCouncilItems,
   adminUpsertFiqhCouncilItem,
@@ -361,8 +362,8 @@ export function FiqhCouncilSection() {
       <div className="fcs-header">
         <h2 className="fcs-title">المجمع الفقهي الإسلامي ({filtered.length})</h2>
         <div className="fcs-header-actions">
-          <a href="/admin/fiqh-review" className="fcs-link">المراجعة العلمية</a>
-          <a href="/admin/fiqh-quality" className="fcs-link">جودة البيانات</a>
+          <Link href="/admin/fiqh-review" className="fcs-link">المراجعة العلمية</Link>
+          <Link href="/admin/fiqh-quality" className="fcs-link">جودة البيانات</Link>
           <button
             onClick={() => { setForm({ ...EMPTY }); setOpen(true); }}
             className="fcs-add-btn"

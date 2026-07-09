@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import { Link } from "wouter";
 import { AlertTriangle, BookOpen, Download, FlaskConical, Inbox, Save, Search } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 import { ResearchAnswer } from "@/components/rag/ResearchAnswer";
@@ -286,7 +287,7 @@ export default function ScholarlyResearchPage() {
             {!isLoggedIn && (
               <div className="bg-[var(--majalis-emerald-muted)] border border-[var(--majalis-emerald)]
                 rounded-xl p-4 text-sm text-[var(--majalis-emerald)] text-center">
-                يجب <a href="/login" className="underline font-medium">تسجيل الدخول</a> لعرض مكتبتك البحثية الخاصة.
+                يجب <Link href="/login" className="underline font-medium">تسجيل الدخول</Link> لعرض مكتبتك البحثية الخاصة.
               </div>
             )}
 
