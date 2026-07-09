@@ -38,6 +38,7 @@ const FOOTER_GROUPS = [
       { href: "/alamat-saah",    label: "علامات الساعة" },
       { href: "/malaika",       label: "الملائكة في الإسلام" },
       { href: "/wasaya-nabawiyya", label: "الوصايا النبوية" },
+      { href: "/raqaiq",           label: "الرقائق والزهد" },
       { href: "/tawba",          label: "التوبة والاستغفار" },
       { href: "/ulum-quran",     label: "علوم القرآن" },
       { href: "/qa",             label: "الأسئلة" },
