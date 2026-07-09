@@ -10562,6 +10562,15 @@ body {
 .rcw-title__icon { font-size: 1.1rem; }
 .rcw-grid { display: grid; gap: 0.5rem; }
 .rcw-link { text-decoration: none; }
+.rcw-nt--quran-ayah    { --rcw-color: #065f46; }
+.rcw-nt--hadith        { --rcw-color: #1d4ed8; }
+.rcw-nt--fatwa         { --rcw-color: #7c3aed; }
+.rcw-nt--scholar,
+.rcw-nt--book          { --rcw-color: #1F4D3A; }
+.rcw-nt--lesson        { --rcw-color: #0369a1; }
+.rcw-nt--benefit       { --rcw-color: #047857; }
+.rcw-nt--prophet-story { --rcw-color: #dc2626; }
+.rcw-nt--term          { --rcw-color: #6b7280; }
 .rcw-card {
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
@@ -10584,8 +10593,8 @@ body {
   padding: 2px 8px;
   margin-top: 2px;
   white-space: nowrap;
-  background: var(--rcw-badge-bg);
-  color: var(--rcw-badge-color);
+  background: color-mix(in srgb, var(--rcw-color, var(--majalis-emerald-deep)) 9%, transparent);
+  color: var(--rcw-color, var(--majalis-emerald-deep));
 }
 .rcw-body { flex: 1; min-width: 0; }
 .rcw-body__title {
@@ -11643,6 +11652,18 @@ button, .btn {
 .qzg-game-title { color: var(--majalis-brass); font-weight: 700; }
 
 /* ── Shared dynamic color utility ───────────────────────────────────────────── */
+.rw-type--lesson     { --rw-color: var(--majalis-emerald, #1F4D3A); }
+.rw-type--hadith     { --rw-color: #1d4ed8; }
+.rw-type--fatwa,
+.rw-type--book,
+.rw-type--dhikr,
+.rw-type--quran-ayah { --rw-color: var(--majalis-emerald, #1F4D3A); }
+.rw-type--benefit    { --rw-color: var(--majalis-emerald-deep, #0A5040); }
+.rw-type--scholar    { --rw-color: #7c3aed; }
+.rw-type--qa         { --rw-color: #0369a1; }
+.rw-type--ruling     { --rw-color: var(--majalis-ink-soft, #4A4A4A); }
+.rw-type--story      { --rw-color: var(--majalis-danger, #9B1C1C); }
+.rw-type--miracle    { --rw-color: #0c4a6e; }
 .rw-color-bg { background: var(--rw-color, #065f46); }
 
 /* ── SheikhsPageClient (spc-*) ────────────────────────────────────────────────── */

@@ -4,7 +4,6 @@ import {
   type RecContentType,
   type RecContext,
   type RecommendedItem,
-  CONTENT_TYPE_COLOR,
   CONTENT_TYPE_LABEL,
   fetchRecommendations,
   fetchRelated,
@@ -13,10 +12,13 @@ import {
   trackEvent,
 } from "@/lib/recommendation-service";
 
+function rwTypeMod(ct: RecContentType | string): string {
+  return `rw-type--${String(ct).replace(/_/g, "-")}`;
+}
+
 // ── مكوّن بطاقة توصية مفردة ────────────────────────────────────────────────
 
 function RecCard({ item }: { item: RecommendedItem }) {
-  const color = CONTENT_TYPE_COLOR[item.content_type] || "#065f46";
   const label = CONTENT_TYPE_LABEL[item.content_type] || item.content_type;
   const title = getItemTitle(item);
   const href = getItemHref(item);
@@ -26,8 +28,7 @@ function RecCard({ item }: { item: RecommendedItem }) {
   };
 
   return (
-    <Link href={href} onClick={handleClick} className="block group"
-      style={{ "--rw-color": color } as React.CSSProperties}>
+    <Link href={href} onClick={handleClick} className={`block group ${rwTypeMod(item.content_type)}`}>
       <div className="rw-card">
         {/* شريط ملوَّن */}
         <div className="absolute top-0 right-0 h-full w-1 rounded-r-xl rw-color-bg" />
@@ -153,7 +154,6 @@ export function RecommendationWidget({
       {layout === "list" && (
         <div className="space-y-2">
           {items.map((item) => {
-            const color = CONTENT_TYPE_COLOR[item.content_type] || "#065f46";
             const label = CONTENT_TYPE_LABEL[item.content_type] || "";
             const itemTitle = getItemTitle(item);
             const href = getItemHref(item);
@@ -162,8 +162,7 @@ export function RecommendationWidget({
                 key={`${item.id}::${item.content_type}`}
                 href={href}
                 onClick={() => trackEvent({ event_type: "view", content_id: item.id, content_type: item.content_type })}
-                className="rw-list-item"
-                style={{ "--rw-color": color } as React.CSSProperties}
+                className={`rw-list-item ${rwTypeMod(item.content_type)}`}
               >
                 <span className="w-2 h-2 rounded-full flex-shrink-0 rw-color-bg" />
                 <p className="rw-list-item__title">{itemTitle}</p>

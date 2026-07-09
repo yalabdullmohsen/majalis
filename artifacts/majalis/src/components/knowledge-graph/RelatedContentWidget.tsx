@@ -15,7 +15,6 @@ import {
   fetchKnNode,
   fetchKnNodes,
   getNodeHref,
-  NODE_TYPE_COLOR,
   NODE_TYPE_LABEL,
   REL_TYPE_LABEL,
   type KnEdge,
@@ -99,22 +98,13 @@ export function RelatedContentWidget({
 
       <div className="rcw-grid">
         {items.map(({ node, edge }) => {
-          const color = NODE_TYPE_COLOR[node.node_type] ?? "var(--majalis-emerald-deep)";
           const href  = getNodeHref(node);
+          const ntMod = `rcw-nt--${node.node_type.replace(/_/g, "-")}`;
 
           return (
             <Link key={edge.id} href={href} className="rcw-link">
-              <div
-                className="rcw-card"
-                style={{ "--rcw-color": color } as React.CSSProperties}
-              >
-                <span
-                  className="rcw-badge"
-                  style={{
-                    "--rcw-badge-bg":    `${color}18`,
-                    "--rcw-badge-color": color,
-                  } as React.CSSProperties}
-                >
+              <div className={`rcw-card ${ntMod}`}>
+                <span className="rcw-badge">
                   {NODE_TYPE_LABEL[node.node_type] ?? node.node_type}
                 </span>
 
