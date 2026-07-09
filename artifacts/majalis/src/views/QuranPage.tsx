@@ -570,7 +570,7 @@ export default function QuranPage() {
               {navTab === "surahs" && (
                 <div className="mshf-surah-list">
                   {filteredSurahs.length === 0 ? (
-                    <p className="mshf-empty" style={{ gridColumn: "1/-1" }}>لا نتائج</p>
+                    <p className="mshf-empty mshf-empty--full-row">لا نتائج</p>
                   ) : filteredSurahs.map(({ 0: name, 1: ayahCount, idx }) => (
                     <button
                       type="button"
