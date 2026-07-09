@@ -358,7 +358,7 @@ export default function SunanYawmiyyaPage() {
           <div className="sy-progress__bar-wrap">
             <div
               className="sy-progress__bar"
-              style={{ width: filtered.length ? `${(doneCount / filtered.length) * 100}%` : "0%" }}
+              style={{ "--sy-prog-w": filtered.length ? `${(doneCount / filtered.length) * 100}%` : "0%" } as { [k: string]: string }}
             />
           </div>
         </div>

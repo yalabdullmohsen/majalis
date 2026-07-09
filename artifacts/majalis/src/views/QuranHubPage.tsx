@@ -130,7 +130,7 @@ export default function QuranHubPage() {
         <div className="quran-hub-grid">
           {QURAN_SECTIONS.map(s => (
             <Link key={s.href} href={s.href} className="quran-hub-card">
-              <div className="quran-hub-card__header" style={{ background: s.accent }}>
+              <div className="quran-hub-card__header" style={{ "--qhc-accent": s.accent } as { [k: string]: string }}>
                 <s.Icon size={28} className="quran-hub-card__icon" />
                 <span className="quran-hub-card__tag">{s.tag}</span>
               </div>

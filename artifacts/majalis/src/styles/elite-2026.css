@@ -14947,6 +14947,7 @@ img[loading="lazy"]:not([src=""]) {
   justify-content: space-between;
   padding: 1.25rem 1.25rem 1rem;
   position: relative;
+  background: var(--qhc-accent, var(--clr-primary));
 }
 .quran-hub-card__icon {
   color: #FFFFFF;
@@ -17799,7 +17800,7 @@ img[loading="lazy"]:not([src=""]) {
   font-weight: 600;
 }
 .sy-progress__bar-wrap { height: 6px; background: rgba(255,255,255,0.2); border-radius: 99px; overflow: hidden; }
-.sy-progress__bar { height: 100%; background: #FFFFFF; border-radius: 99px; transition: width 0.3s ease; min-width: 2px; }
+.sy-progress__bar { height: 100%; background: #FFFFFF; border-radius: 99px; transition: width 0.3s ease; min-width: 2px; width: var(--sy-prog-w, 0%); }
 
 /* تحكم */
 .sy-controls { margin-bottom: 1.25rem; }
@@ -21551,6 +21552,8 @@ img[loading="lazy"]:not([src=""]) {
 .gl-term__cat {
   font-size: .65rem; font-weight: 800; border-radius: 999px;
   padding: .15rem .55rem; letter-spacing: .04em;
+  background: var(--gl-cat-bg, rgba(31,77,58,.1));
+  color: var(--gl-cat-color, #1F4D3A);
 }
 .gl-term__def-preview {
   font-size: .82rem; color: #475569; margin: 0; line-height: 1.6;

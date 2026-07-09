@@ -365,7 +365,7 @@ export default function IslamicGlossaryPage() {
                     {term.plural && <span className="gl-term__plural">(ج: {term.plural})</span>}
                     <span
                       className="gl-term__cat"
-                      style={{ background: cat.color + "1A", color: cat.color }}
+                      style={{ "--gl-cat-bg": cat.color + "1A", "--gl-cat-color": cat.color } as { [k: string]: string }}
                     >
                       {cat.label}
                     </span>
