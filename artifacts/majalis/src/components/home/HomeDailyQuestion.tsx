@@ -29,6 +29,8 @@ export function HomeDailyQuestion() {
       .finally(() => setLoading(false));
   }, []);
 
+  if (!loading && !question) return null;
+
   return (
     <section className="home-section home-daily-single home-daily-qa" aria-labelledby="daily-qa-heading">
       <div className="home-section-head">
