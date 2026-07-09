@@ -27,16 +27,7 @@ export function IslamicLoader({ size = 48, color = "var(--majalis-emerald, #1F4D
       role="img"
       className="igd-loader-svg"
     >
-      <style>{`
-        @keyframes islamic-rotate {
-          0%   { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .il-star { animation: none !important; opacity: 0.5; }
-        }
-      `}</style>
-      <g style={{ "--il-cx": `${cx}px`, transformOrigin: "var(--il-cx) var(--il-cx)", animation: "islamic-rotate 2s linear infinite" } as React.CSSProperties} className="il-star">
+<g style={{ "--il-cx": `${cx}px`, transformOrigin: "var(--il-cx) var(--il-cx)", animation: "islamic-rotate 2s linear infinite" } as React.CSSProperties} className="il-star">
         <polygon
           points={star8Points(cx, cx, r1, r2)}
           fill="none"

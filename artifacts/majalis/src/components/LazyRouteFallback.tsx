@@ -11,11 +11,7 @@ function IslamicStar({ size = 44 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true"
       className="ds-loader-svg">
-      <style>{`
-        @keyframes lrf-rotate{to{transform:rotate(360deg)}}
-        @media(prefers-reduced-motion:reduce){svg{animation:none!important;opacity:.4}}
-      `}</style>
-      <polygon points={pts} fill="none" stroke="var(--majalis-emerald,#1F4D3A)"
+<polygon points={pts} fill="none" stroke="var(--majalis-emerald,#1F4D3A)"
         strokeWidth="1.6" strokeLinejoin="round" opacity="0.85" />
       <circle cx={cx} cy={cx} r={size * 0.09} fill="var(--majalis-emerald,#1F4D3A)" opacity="0.6" />
     </svg>

@@ -102,7 +102,6 @@ function Spinner() {
   return (
     <div className="tgm-spinner">
       <div className="tgm-spinner-ring" />
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   );
 }

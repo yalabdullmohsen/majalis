@@ -25268,3 +25268,20 @@ img[loading="lazy"]:not([src=""]) {
 }
 .ps-cancel-btn:hover { background: #f1f5f9; color: #1e293b; }
 .ps-edit-hint { font-size: 0.75rem; color: #94a3b8; }
+
+
+/* ════════════════════════════════════════════════════════════
+   §KF. Global @keyframes (مُحوَّلة من <style> مضمَّن)
+   ════════════════════════════════════════════════════════════ */
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes ui-common-rotate { to { transform: rotate(360deg); } }
+@keyframes lrf-rotate { to { transform: rotate(360deg); } }
+@keyframes islamic-rotate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .il-star { animation: none !important; opacity: 0.5; }
+  .ds-loader-svg { animation: none !important; }
+  .igd-loader-svg { animation: none !important; }
+}

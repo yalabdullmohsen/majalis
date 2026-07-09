@@ -136,8 +136,6 @@ function IslamicLoaderInline() {
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true"
       className="ds-loader-svg">
-      <style>{`@keyframes ui-common-rotate{to{transform:rotate(360deg)}}
-        @media(prefers-reduced-motion:reduce){svg[aria-hidden]{animation:none!important}}`}</style>
       <polygon points={pts} fill="none" stroke="var(--majalis-emerald,#1F4D3A)" strokeWidth="1.6"
         strokeLinejoin="round" opacity="0.85" />
       <circle cx={cx} cy={cx} r={size * 0.09} fill="var(--majalis-emerald,#1F4D3A)" opacity="0.6" />
