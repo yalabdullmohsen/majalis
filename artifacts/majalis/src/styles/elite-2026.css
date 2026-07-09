@@ -17696,3 +17696,184 @@ img[loading="lazy"]:not([src=""]) {
 }
 
 /* ── نهاية §224 ─────────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════════════════
+   §225 — صفحة السنن النبوية اليومية (.sy-*)
+   ══════════════════════════════════════════════════════════ */
+
+.sy-page { max-width: 820px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+/* هيرو */
+.sy-hero {
+  background: linear-gradient(135deg, #0A5040 0%, #0E6E52 58%, #16634A 100%);
+  border-radius: 1.25rem;
+  padding: 2.5rem 1.5rem 2rem;
+  color: #FFFFFF;
+  text-align: center;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 4px 24px rgba(14,110,82,0.18);
+}
+.sy-hero__badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #FFFFFF;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.25rem 0.85rem;
+  border-radius: 99px;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.04em;
+}
+.sy-hero__title { font-size: 1.9rem; font-weight: 900; color: #FFFFFF; margin: 0 0 0.65rem; }
+.sy-hero__sub { font-size: 0.9rem; color: rgba(255,255,255,0.87); max-width: 520px; margin: 0 auto 1.5rem; line-height: 1.7; }
+
+/* مؤشر التقدم */
+.sy-progress { max-width: 400px; margin: 0 auto; }
+.sy-progress__text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.83rem;
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+.sy-progress__bar-wrap { height: 6px; background: rgba(255,255,255,0.2); border-radius: 99px; overflow: hidden; }
+.sy-progress__bar { height: 100%; background: #FFFFFF; border-radius: 99px; transition: width 0.3s ease; min-width: 2px; }
+
+/* تحكم */
+.sy-controls { margin-bottom: 1.25rem; }
+.sy-search-wrap { position: relative; margin-bottom: 0.75rem; }
+.sy-search-icon { position: absolute; right: 0.85rem; top: 50%; transform: translateY(-50%); color: #6B9E86; pointer-events: none; }
+.sy-search {
+  width: 100%;
+  padding: 0.65rem 2.4rem 0.65rem 2rem;
+  border: 1.5px solid #D4E3DB;
+  border-radius: 0.75rem;
+  font-size: 0.88rem;
+  color: #052E16;
+  background: #FFFFFF;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+  font-family: inherit;
+  direction: rtl;
+}
+.sy-search:focus { border-color: #0E6E52; }
+.sy-search-clear {
+  position: absolute;
+  left: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6B9E86;
+  display: flex;
+  padding: 0.2rem;
+}
+.sy-cats { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.sy-cat-chip {
+  padding: 0.32rem 0.85rem;
+  border-radius: 99px;
+  border: 1.5px solid #D4E3DB;
+  background: #FFFFFF;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #2D4A3C;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.sy-cat-chip:hover { border-color: #0E6E52; color: #0E6E52; }
+.sy-cat-chip--active { background: #0E6E52; border-color: #0E6E52; color: #FFFFFF; }
+
+/* قائمة السنن */
+.sy-list { display: flex; flex-direction: column; gap: 0.7rem; }
+
+/* بطاقة السنة */
+.sy-card {
+  display: flex;
+  gap: 0.75rem;
+  background: #FFFFFF;
+  border: 1.5px solid #D4E3DB;
+  border-radius: 0.9rem;
+  padding: 1rem 1.1rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.sy-card--done { border-color: #0E6E52; background: rgba(14,110,82,0.03); }
+.sy-card__check {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #D4E3DB;
+  background: #FFFFFF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.15rem;
+  transition: all 0.15s;
+  color: #FFFFFF;
+}
+.sy-card--done .sy-card__check { background: #0E6E52; border-color: #0E6E52; }
+.sy-card__check:hover { border-color: #0E6E52; }
+
+.sy-card__body { flex: 1; min-width: 0; }
+.sy-card__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.4rem; }
+.sy-card__title { font-size: 0.95rem; font-weight: 800; color: #052E16; }
+.sy-card__time { font-size: 0.72rem; color: #6B9E86; white-space: nowrap; flex-shrink: 0; margin-top: 0.15rem; }
+.sy-card__text { font-size: 0.86rem; color: #1E4A38; line-height: 1.7; margin: 0 0 0.4rem; }
+.sy-card__source { font-size: 0.73rem; color: #4A7563; font-weight: 600; margin-bottom: 0.4rem; }
+.sy-card__reward {
+  font-size: 0.81rem;
+  color: #0A5040;
+  background: rgba(14,110,82,0.07);
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.65rem;
+  margin-bottom: 0.35rem;
+  line-height: 1.55;
+}
+.sy-card__howto {
+  font-size: 0.8rem;
+  color: #2D4A3C;
+  background: #F8FBF9;
+  border: 1px solid #D4E3DB;
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.65rem;
+  line-height: 1.55;
+}
+.sy-card__howto-label { font-weight: 700; color: #0E6E52; margin-left: 0.3rem; }
+
+/* فارغ */
+.sy-empty { text-align: center; padding: 2.5rem 1rem; color: #6B9E86; font-size: 0.9rem; }
+
+/* ذات صلة */
+.sy-related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1.5px solid #E8F2EE; }
+.sy-related__title { font-size: 1rem; font-weight: 700; color: #052E16; margin-bottom: 0.75rem; }
+.sy-related__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; }
+.sy-related__link {
+  display: block;
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid #D4E3DB;
+  border-radius: 0.65rem;
+  text-decoration: none;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: #052E16;
+  background: #FFFFFF;
+  transition: all 0.15s;
+  text-align: center;
+}
+.sy-related__link:hover { border-color: #0E6E52; background: rgba(14,110,82,0.05); color: #0E6E52; }
+
+@media (max-width: 600px) {
+  .sy-hero__title { font-size: 1.55rem; }
+  .sy-card { padding: 0.85rem 0.9rem; }
+  .sy-related__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── نهاية §225 ─────────────────────────────────────────── */

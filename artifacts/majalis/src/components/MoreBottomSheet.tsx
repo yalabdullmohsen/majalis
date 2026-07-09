@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { Link, useLocation } from "wouter";
 import { useEffect } from "react";
 import {
-  Activity, BarChart3, BookOpen, Bot, Building2, Calendar, Compass, CreditCard,
+  Activity, BarChart3, BookOpen, Bot, Building2, Calendar, CheckCircle2, Compass, CreditCard,
   FileText, GraduationCap, Heart, HelpCircle, Info, Landmark, Library, Layers,
   Mic, Network, Radio, RefreshCw, Repeat2, Scale, ScrollText, Search, Settings,
   Shield, Sparkles, Star, Stethoscope, Tv, Users, X, Zap,
@@ -55,6 +55,7 @@ const SHEET_SECTIONS = [
   ]},
   { group: "العبادة والأذكار", items: [
     { href: "/adhkar",           label: "الأذكار",             Icon: Repeat2 },
+    { href: "/sunan-yawmiyya",   label: "السنن اليومية",       Icon: CheckCircle2 },
     { href: "/duas",             label: "الأدعية الشرعية",    Icon: Repeat2 },
     { href: "/tasbih",           label: "التسبيح",             Icon: Repeat2 },
     { href: "/prayer-countdown", label: "عداد الصلاة",         Icon: Activity },

@@ -22,7 +22,7 @@ import { HomeQuizCard } from "@/components/home/HomeQuizCard";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import {
-  BookMarked, BookOpen, Bot, Building2, CalendarDays, Car, Clock,
+  BookMarked, BookOpen, Bot, Building2, CalendarDays, Car, Check, Clock,
   Compass, FlaskConical, GraduationCap, Heart, HelpCircle, Landmark, Layers,
   Lightbulb, Map, Mic2, Monitor, Moon, Network, Newspaper,
   Radio, RotateCw, Scale, Scroll, Star, Target, Upload, Wrench,
@@ -107,7 +107,8 @@ const FEATURE_CATS: FeatureCat[] = [
     Icon: RotateCw,
     label: "العبادة والأذكار",
     items: [
-      { href: "/adhkar",      Icon: Star,        title: "الأذكار",              desc: "أذكار الصباح والمساء" },
+      { href: "/adhkar",          Icon: Star,        title: "الأذكار",              desc: "أذكار الصباح والمساء" },
+      { href: "/sunan-yawmiyya",  Icon: Check,       title: "السنن النبوية",        desc: "25+ سنة يومية مع تتبع التطبيق" },
       { href: "/duas",        Icon: Heart,       title: "الأدعية الشرعية",    desc: "25 دعاءً موثقاً مع المعنى والمصدر" },
       { href: "/fawaid",      Icon: Lightbulb,   title: "الفوائد الدينية",      desc: "فوائد علمية منتقاة" },
       { href: "/car-mode",    Icon: Car,         title: "وضع السيارة",          desc: "تلاوات أثناء القيادة" },
