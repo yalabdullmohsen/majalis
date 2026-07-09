@@ -133,13 +133,13 @@ export default function SalahGuidePage() {
         </p>
         <div className="sg-times-row">
           {[
-            { name: "الفجر", rakat: "2", color: "#1e3a5f" },
-            { name: "الظهر", rakat: "4", color: "#b45309" },
-            { name: "العصر", rakat: "4", color: "#1F4D3A" },
-            { name: "المغرب", rakat: "3", color: "#7c3aed" },
-            { name: "العشاء", rakat: "4", color: "#1e3a5f" },
+            { name: "الفجر",   rakat: "2", mod: "sg-chip--fajr"    },
+            { name: "الظهر",   rakat: "4", mod: "sg-chip--dhuhr"   },
+            { name: "العصر",   rakat: "4", mod: "sg-chip--asr"     },
+            { name: "المغرب",  rakat: "3", mod: "sg-chip--maghrib" },
+            { name: "العشاء",  rakat: "4", mod: "sg-chip--isha"    },
           ].map((p) => (
-            <div key={p.name} className="sg-salah-chip" style={{ "--sg-chip-color": p.color } as { [k: string]: string }}>
+            <div key={p.name} className={`sg-salah-chip ${p.mod}`}>
               <span className="sg-salah-chip__name">{p.name}</span>
               <span className="sg-salah-chip__rakat">{p.rakat} ركعات</span>
             </div>

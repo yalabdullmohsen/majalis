@@ -14905,6 +14905,16 @@ img[loading="lazy"]:not([src=""]) {
 
 .tj-grid { display: grid; gap: 0.75rem; margin-bottom: 2rem; }
 
+/* Tajweed rule color modifiers — set --tj-accent per category group */
+.tj-card--izhar-halqi, .tj-card--idgham-bighunnah, .tj-card--idgham-bila-ghunnah,
+.tj-card--iqlab, .tj-card--ikhfa-haqiqi               { --tj-accent: #0A5040; }
+.tj-card--izhar-shafawi, .tj-card--idgham-shafawi,
+.tj-card--ikhfa-shafawi                                { --tj-accent: #155241; }
+.tj-card--madd-tabii, .tj-card--madd-muttasil, .tj-card--madd-munfasil,
+.tj-card--madd-lazim, .tj-card--madd-arid, .tj-card--madd-leen,
+.tj-card--madd-badal                                   { --tj-accent: #1A3A2E; }
+.tj-card--qalqalah, .tj-card--tafkhim-tarqiq,
+.tj-card--waqf, .tj-card--ghunnah                     { --tj-accent: #0D2B22; }
 .tj-card {
   border-radius: 0.875rem;
   border: 1px solid rgba(31,77,58,0.12);
@@ -15118,6 +15128,9 @@ img[loading="lazy"]:not([src=""]) {
   border-color: rgba(10,80,64,0.3);
   text-decoration: none;
 }
+.qhc-accent--deep { --qhc-accent: #0A5040; }
+.qhc-accent--mid  { --qhc-accent: #145C46; }
+.qhc-accent--base { --qhc-accent: #1F4D3A; }
 .quran-hub-card__header {
   display: flex;
   align-items: center;
@@ -20787,6 +20800,11 @@ img[loading="lazy"]:not([src=""]) {
 .sg-hero__sub   { font-size: .9rem; opacity: .88; margin: 0 0 1.4rem; line-height: 1.6; color: #fff; }
 
 .sg-times-row { display: flex; justify-content: center; gap: .45rem; flex-wrap: wrap; }
+.sg-chip--fajr    { --sg-chip-color: #1e3a5f; }
+.sg-chip--dhuhr   { --sg-chip-color: #b45309; }
+.sg-chip--asr     { --sg-chip-color: #1F4D3A; }
+.sg-chip--maghrib { --sg-chip-color: #7c3aed; }
+.sg-chip--isha    { --sg-chip-color: #1e3a5f; }
 .sg-salah-chip {
   border-radius: .6rem; padding: .4rem .7rem; min-width: 3.5rem;
   display: flex; flex-direction: column; align-items: center; gap: .1rem;
@@ -22581,6 +22599,11 @@ img[loading="lazy"]:not([src=""]) {
   border-radius: .75rem; padding: 1rem 1.1rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
 }
+.wn-cat--akhlaq   { --wn-cat-color: #1F4D3A; --wn-cat-bg: rgba(31,77,58,.1); }
+.wn-cat--ibada    { --wn-cat-color: #1a3a5c; --wn-cat-bg: rgba(26,58,92,.1); }
+.wn-cat--tawhid   { --wn-cat-color: #7c3aed; --wn-cat-bg: rgba(124,58,237,.1); }
+.wn-cat--muamalat { --wn-cat-color: #b45309; --wn-cat-bg: rgba(180,83,9,.1); }
+.wn-cat--hayah    { --wn-cat-color: #0f766e; --wn-cat-bg: rgba(15,118,110,.1); }
 .wn-pick-cat   { font-size: .8rem; font-weight: 700; margin-bottom: .3rem; color: var(--wn-cat-color, #1F4D3A); }
 .wn-pick-title { font-size: .93rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .4rem; }
 .wn-pick-text  { font-size: .85rem; line-height: 1.7; color: var(--clr-text-2); margin: 0 0 .4rem; }
@@ -24130,6 +24153,19 @@ img[loading="lazy"]:not([src=""]) {
 }
 
 /* ── Detail Panel ── */
+/* Seerah phase color modifiers — set both --phase-color and --panel-color */
+.seerah-phase--lineage-birth,
+.seerah-phase--youth,
+.seerah-phase--prophethood,
+.seerah-phase--hijra,
+.seerah-phase--hudaybiyya-mecca { --phase-color: #18362A; --panel-color: #18362A; }
+.seerah-phase--childhood,
+.seerah-phase--farewell          { --phase-color: #153025; --panel-color: #153025; }
+.seerah-phase--secret-dawah,
+.seerah-phase--death             { --phase-color: #1E4A37; --panel-color: #1E4A37; }
+.seerah-phase--open-dawah        { --phase-color: #9B1C1C; --panel-color: #9B1C1C; }
+.seerah-phase--year-of-sorrow    { --phase-color: #2A3E50; --panel-color: #2A3E50; }
+.seerah-phase--ghazawat          { --phase-color: #5C1C2A; --panel-color: #5C1C2A; }
 .seerah-panel {
   flex: 1;
   background: #fff;

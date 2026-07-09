@@ -186,7 +186,7 @@ function RuleCard({ rule }: { rule: TajweedRule }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <article className="tj-card" style={{ "--tj-accent": rule.color } as React.CSSProperties}>
+    <article className={`tj-card tj-card--${rule.id}`}>
       <button
         type="button"
         className="tj-card__header"

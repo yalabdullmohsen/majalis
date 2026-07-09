@@ -75,6 +75,12 @@ const QURAN_SECTIONS = [
   },
 ];
 
+function qhcAccentMod(a: string) {
+  if (a === "#0A5040") return "qhc-accent--deep";
+  if (a === "#145C46") return "qhc-accent--mid";
+  return "qhc-accent--base";
+}
+
 /* ── إحصائيات سريعة ───────────────────────────────────────── */
 const STATS = [
   { label: "سورة", value: "١١٤" },
@@ -130,7 +136,7 @@ export default function QuranHubPage() {
         <div className="quran-hub-grid">
           {QURAN_SECTIONS.map(s => (
             <Link key={s.href} href={s.href} className="quran-hub-card">
-              <div className="quran-hub-card__header" style={{ "--qhc-accent": s.accent } as { [k: string]: string }}>
+              <div className={`quran-hub-card__header ${qhcAccentMod(s.accent)}`}>
                 <s.Icon size={28} className="quran-hub-card__icon" />
                 <span className="quran-hub-card__tag">{s.tag}</span>
               </div>

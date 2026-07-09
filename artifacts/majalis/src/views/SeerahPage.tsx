@@ -206,9 +206,8 @@ export default function SeerahPage() {
               <button
                 key={phase.id}
                 type="button"
-                className={`seerah-timeline__item${activeId === phase.id ? " seerah-timeline__item--active" : ""}`}
+                className={`seerah-timeline__item seerah-phase--${phase.id}${activeId === phase.id ? " seerah-timeline__item--active" : ""}`}
                 onClick={() => goTo(phase.id)}
-                style={{ "--phase-color": phase.color } as React.CSSProperties}
                 aria-current={activeId === phase.id ? "true" : undefined}
                 aria-label={`المرحلة ${phase.num}: ${phase.title}`}
               >
@@ -224,7 +223,7 @@ export default function SeerahPage() {
           </nav>
 
           {/* Detail Panel */}
-          <div className="seerah-panel" id="seerah-panel" style={{ "--panel-color": active.color } as React.CSSProperties}>
+          <div className={`seerah-panel seerah-phase--${active.id}`} id="seerah-panel">
             <div className="seerah-panel__header">
               <span className="seerah-panel__icon">{(() => { const I = active.Icon; return <I size={28} strokeWidth={1.3} />; })()}</span>
               <div className="seerah-panel__header-body">

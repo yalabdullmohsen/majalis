@@ -167,12 +167,12 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "amal",         label: "كيف تطبِّق؟" },
 ];
 
-const CATS_COLORS: Record<string, string> = {
-  الأخلاق: "#1F4D3A",
-  العبادة: "#1a3a5c",
-  التوحيد: "#7c3aed",
-  المعاملات: "#b45309",
-  الحياة: "#0f766e",
+const CATS_MOD: Record<string, string> = {
+  الأخلاق:   "wn-cat--akhlaq",
+  العبادة:    "wn-cat--ibada",
+  التوحيد:   "wn-cat--tawhid",
+  المعاملات: "wn-cat--muamalat",
+  الحياة:    "wn-cat--hayah",
 };
 
 export default function WasayaNabawiyyaPage() {
@@ -243,7 +243,7 @@ export default function WasayaNabawiyyaPage() {
                     </div>
                     <div className="wn-card__right">
                       {w.category && (
-                        <span className="wn-card__cat" style={{ "--wn-cat-color": CATS_COLORS[w.category] ?? "#1F4D3A", "--wn-cat-bg": (CATS_COLORS[w.category] ?? "#1F4D3A") + "1A" } as { [k: string]: string }}>
+                        <span className={`wn-card__cat ${CATS_MOD[w.category] ?? "wn-cat--akhlaq"}`}>
                           {w.category}
                         </span>
                       )}
@@ -316,7 +316,7 @@ export default function WasayaNabawiyyaPage() {
             <div className="wn-pick-grid">
               {WASAYA_KABIRA.filter(w => w.category).map((w, i) => (
                 <div key={i} className="wn-pick-card">
-                  <div className="wn-pick-cat" style={{ "--wn-cat-color": CATS_COLORS[w.category!] ?? "#1F4D3A" } as { [k: string]: string }}>
+                  <div className={`wn-pick-cat ${CATS_MOD[w.category!] ?? "wn-cat--akhlaq"}`}>
                     {w.category}
                   </div>
                   <h4 className="wn-pick-title">{w.title}</h4>
