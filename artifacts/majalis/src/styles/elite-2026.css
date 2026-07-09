@@ -6007,6 +6007,32 @@ button.primary:hover {
   border-top: 1px solid var(--majalis-line);
 }
 
+/* miracle-item — category palette modifiers (--mk-bg / --mk-accent) */
+.mk-cat--alkawn    { --mk-bg: #12281F; --mk-accent: #BEC7C3; }
+.mk-cat--alfalak   { --mk-bg: #0E2019; --mk-accent: #BEC7C3; }
+.mk-cat--aljibaal  { --mk-bg: #153025; --mk-accent: #97A59F; }
+.mk-cat--albihaar  { --mk-bg: #153025; --mk-accent: #BEC7C3; }
+.mk-cat--alajinna  { --mk-bg: #12281F; --mk-accent: #97A59F; }
+.mk-cat--alnabaat  { --mk-bg: #18362A; --mk-accent: #97A59F; }
+.mk-cat--alhayawan { --mk-bg: #153025; --mk-accent: #97A59F; }
+.mk-cat--altib     { --mk-bg: #0E2019; --mk-accent: #BEC7C3; }
+.mk-cat--almiyaah  { --mk-bg: #0E2019; --mk-accent: #BEC7C3; }
+.mk-cat--alhadeed  { --mk-bg: #1a3020; --mk-accent: #97A59F; }
+.mk-cat--alriyaah  { --mk-bg: #12281F; --mk-accent: #BEC7C3; }
+.mk-cat--alsahaab  { --mk-bg: #153025; --mk-accent: #BEC7C3; }
+.mk-cat--alhasharat { --mk-bg: #18362A; --mk-accent: #97A59F; }
+.mk-cat--alarth    { --mk-bg: #153025; --mk-accent: #97A59F; }
+.mk-cat--alzaman   { --mk-bg: #12281F; --mk-accent: #BEC7C3; }
+.mk-cat--althaw    { --mk-bg: #1a3a1a; --mk-accent: #d4e8a0; }
+.mk-cat--aljild    { --mk-bg: #1e2a1e; --mk-accent: #BEC7C3; }
+.mk-cat--alithaam  { --mk-bg: #1a3020; --mk-accent: #d4c8a0; }
+.mk-cat--alnujoom  { --mk-bg: #0a1a30; --mk-accent: #c8d4e8; }
+.mk-cat--aldam     { --mk-bg: #2a1010; --mk-accent: #e8a0a0; }
+
+/* miracle-item — source type modifiers (--mk-border) */
+.mk-src--quran { --mk-border: #1a5c35; }
+.mk-src--sunna { --mk-border: #153025; }
+
 /* ═══════════════════════════════════════════════════════════════
    §54  Quran Radio Page  (qrp-*)
    ═══════════════════════════════════════════════════════════════ */
@@ -10849,6 +10875,22 @@ body {
 }
 .hmb-dot--active { background: var(--hmb-accent); width: 18px; }
 .hmb-dot-counter { margin-inline-start: auto; font-size: 0.62rem; color: color-mix(in srgb, var(--hmb-accent) 50%, transparent); font-weight: 500; }
+
+/* hmb-period modifiers (--hmb-accent) */
+.hmb-period--ramadan  { --hmb-accent: #7C3AED; }
+.hmb-period--muharram { --hmb-accent: #1D4ED8; }
+.hmb-period--shaban   { --hmb-accent: #6D28D9; }
+.hmb-period--emerald  { --hmb-accent: var(--majalis-emerald, #1F4D3A); }
+.hmb-period--regular  { --hmb-accent: var(--majalis-emerald-deep, #0A5040); }
+
+/* hmb-type modifiers (--hmb-type-color) */
+.hmb-type--fasting { --hmb-type-color: #2563EB; }
+.hmb-type--prayer  { --hmb-type-color: var(--majalis-emerald, #1F4D3A); }
+.hmb-type--quran   { --hmb-type-color: #7C3AED; }
+.hmb-type--dhikr   { --hmb-type-color: #0891B2; }
+.hmb-type--charity { --hmb-type-color: var(--majalis-emerald, #1F4D3A); }
+.hmb-type--hajj    { --hmb-type-color: var(--majalis-emerald, #1F4D3A); }
+.hmb-type--general { --hmb-type-color: #4B5563; }
 
 /* ── §178 — CitationActionBar, progress bars ─────────────────────────────── */
 .cab-type-bar { background: var(--cab-type-color, var(--majalis-emerald-deep)); }

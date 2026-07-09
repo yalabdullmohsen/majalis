@@ -16,20 +16,9 @@ type Reminder = {
 
 type Period = {
   title: string;
-  accent: string;
+  kind: string;
   reminders: Reminder[];
   countdown?: { days: number; label: string };
-};
-
-// ─── ألوان أنواع العبادات ──────────────────────────────────────────────────
-const TYPE_COLOR: Record<ReminderType, string> = {
-  fasting:  "#2563EB",
-  prayer:   "var(--majalis-emerald, #1F4D3A)",
-  quran:    "#7C3AED",
-  dhikr:    "#0891B2",
-  charity:  "var(--majalis-emerald, #1F4D3A)",
-  hajj:     "var(--majalis-emerald, #1F4D3A)",
-  general:  "#4B5563",
 };
 
 // ─── بيانات الفترات ───────────────────────────────────────────────────────────
@@ -46,7 +35,7 @@ function getPeriod(month: number, day: number, year: number): Period {
     if (day >= 21) {
       return {
         title: `العشر الأواخر — رمضان ${year}هـ`,
-        accent: "#7C3AED",
+        kind: "ramadan",
         countdown: day <= 27 ? { days: 27 - day, label: "حتى ليلة ٢٧" } : undefined,
         reminders: [
           { Icon: Star,    label: "ليلة القدر", body: "ابحث عن ليلة القدر في الوتر — خير من ألف شهر.", type: "general", urgent: true },
@@ -57,12 +46,12 @@ function getPeriod(month: number, day: number, year: number): Period {
         ],
       };
     }
-    return { title: `رمضان المبارك ${year}هـ`, accent: "#7C3AED", reminders: base };
+    return { title: `رمضان المبارك ${year}هـ`, kind: "ramadan", reminders: base };
   }
 
   if (month === 12 && day <= 13) {
     if (day === 9) return {
-      title: `يوم عرفة — ${day} ذو الحجة ${year}هـ`, accent: "var(--majalis-emerald, #1F4D3A)",
+      title: `يوم عرفة — ${day} ذو الحجة ${year}هـ`, kind: "emerald",
       reminders: [
         { Icon: Moon,    label: "يوم عرفة", body: "صيامه يُكفّر سنتين — الماضية والقادمة لغير الحاج.", type: "fasting", urgent: true },
         { Icon: RotateCw, label: "الدعاء",  body: "خير الدعاء دعاء يوم عرفة — أكثر منه الآن.", type: "dhikr", urgent: true },
@@ -70,7 +59,7 @@ function getPeriod(month: number, day: number, year: number): Period {
       ],
     };
     if (day === 10) return {
-      title: `عيد الأضحى المبارك — ${year}هـ`, accent: "var(--majalis-emerald, #1F4D3A)",
+      title: `عيد الأضحى المبارك — ${year}هـ`, kind: "emerald",
       reminders: [
         { Icon: Star,    label: "الأضحية", body: "الأضحية سنّة مؤكدة — لا تُفوّت أجرها إن استطعت.", type: "general", urgent: true },
         { Icon: RotateCw, label: "التكبير", body: "أكثر من التكبير تعظيماً لله في يوم العيد.", type: "dhikr" },
@@ -78,7 +67,7 @@ function getPeriod(month: number, day: number, year: number): Period {
       ],
     };
     if (day >= 11 && day <= 13) return {
-      title: `أيام التشريق — ذو الحجة ${year}هـ`, accent: "var(--majalis-emerald, #1F4D3A)",
+      title: `أيام التشريق — ذو الحجة ${year}هـ`, kind: "emerald",
       reminders: [
         { Icon: RotateCw, label: "التكبير", body: "أيام التشريق أيام أكل وشرب وذكر لله.", type: "dhikr" },
         { Icon: Heart,   label: "الصدقة",  body: "شارك لحم الأضحية مع المحتاجين.", type: "charity" },
@@ -86,7 +75,7 @@ function getPeriod(month: number, day: number, year: number): Period {
       ],
     };
     return {
-      title: `العشر الأُوَل من ذي الحجة ${year}هـ`, accent: "var(--majalis-emerald, #1F4D3A)",
+      title: `العشر الأُوَل من ذي الحجة ${year}هـ`, kind: "emerald",
       countdown: { days: 9 - day, label: "حتى يوم عرفة" },
       reminders: [
         { Icon: Star,    label: "أفضل الأيام", body: "ما من أيام العمل الصالح فيها أحبُّ إلى الله من هذه.", type: "general", urgent: true },
@@ -101,7 +90,7 @@ function getPeriod(month: number, day: number, year: number): Period {
 
   if (month === 1) {
     if (day === 10) return {
-      title: `يوم عاشوراء — ${year}هـ`, accent: "#1D4ED8",
+      title: `يوم عاشوراء — ${year}هـ`, kind: "muharram",
       reminders: [
         { Icon: Moon,    label: "عاشوراء",   body: "صيام عاشوراء يُكفّر السنة الماضية — لا تُفوّته.", type: "fasting", urgent: true },
         { Icon: RotateCw, label: "الدعاء",  body: "أكثر من الدعاء والاستغفار في هذا اليوم المبارك.", type: "dhikr" },
@@ -109,7 +98,7 @@ function getPeriod(month: number, day: number, year: number): Period {
       ],
     };
     if (day < 10) return {
-      title: `شهر محرَّم ${year}هـ`, accent: "#1D4ED8",
+      title: `شهر محرَّم ${year}هـ`, kind: "muharram",
       countdown: { days: 10 - day, label: "حتى عاشوراء" },
       reminders: [
         { Icon: Moon,    label: "الصيام",    body: "أفضل الصيام بعد رمضان صيام شهر الله المحرَّم.", type: "fasting" },
@@ -118,7 +107,7 @@ function getPeriod(month: number, day: number, year: number): Period {
       ],
     };
     return {
-      title: `شهر محرَّم ${year}هـ`, accent: "#1D4ED8",
+      title: `شهر محرَّم ${year}هـ`, kind: "muharram",
       reminders: [
         { Icon: Moon,    label: "الصيام",    body: "أفضل الصيام بعد رمضان صيام شهر الله المحرَّم.", type: "fasting" },
         { Icon: RotateCw, label: "الاستغفار", body: "أكثر من الاستغفار — فالتوبة في بداية السنة بركة.", type: "dhikr" },
@@ -128,7 +117,7 @@ function getPeriod(month: number, day: number, year: number): Period {
   }
 
   if (month === 7) return {
-    title: `رَجَب الأصمّ ${year}هـ — شهر حرام`, accent: "var(--majalis-emerald, #1F4D3A)",
+    title: `رَجَب الأصمّ ${year}هـ — شهر حرام`, kind: "emerald",
     reminders: [
       { Icon: Moon,    label: "الصيام",    body: "رجب من الأشهر الحُرُم — أكثر من صيام النوافل.", type: "fasting" },
       { Icon: RotateCw, label: "الاستغفار", body: "اللهم بارك لنا في رجب وشعبان وبلّغنا رمضان.", type: "dhikr" },
@@ -140,7 +129,7 @@ function getPeriod(month: number, day: number, year: number): Period {
   if (month === 8) {
     const daysToRamadan = 30 - day;
     return {
-      title: `شَعبان ${year}هـ — استعداد لرمضان`, accent: "#6D28D9",
+      title: `شَعبان ${year}هـ — استعداد لرمضان`, kind: "shaban",
       countdown: daysToRamadan > 0 ? { days: daysToRamadan, label: "حتى رمضان" } : undefined,
       reminders: [
         { Icon: BookOpen, label: "القرآن", body: "أتمم ختم القرآن قبل رمضان — فرمضان قريب.", type: "quran", urgent: true },
@@ -152,7 +141,7 @@ function getPeriod(month: number, day: number, year: number): Period {
   }
 
   if (month === 10 && day <= 6) return {
-    title: `ست شوال ${year}هـ — لا تُفوّتها`, accent: "var(--majalis-emerald, #1F4D3A)",
+    title: `ست شوال ${year}هـ — لا تُفوّتها`, kind: "emerald",
     countdown: { days: 6 - day, label: "حتى تنتهي الفرصة" },
     reminders: [
       { Icon: Moon,    label: "ست شوال",  body: "من صام رمضان وأتبعه ستاً من شوال كصيام الدهر.", type: "fasting", urgent: true },
@@ -162,7 +151,7 @@ function getPeriod(month: number, day: number, year: number): Period {
   };
 
   if (month === 11) return {
-    title: `ذو القَعدة ${year}هـ — شهر حرام`, accent: "var(--majalis-emerald, #1F4D3A)",
+    title: `ذو القَعدة ${year}هـ — شهر حرام`, kind: "emerald",
     reminders: [
       { Icon: Building2, label: "استعداد للحج", body: "ذو القعدة من أشهر الحج — تهيّأ للحج أو العمرة.", type: "hajj" },
       { Icon: Moon,      label: "الصيام",       body: "الأشهر الحرم من أفضل أوقات صيام النوافل.", type: "fasting" },
@@ -193,7 +182,7 @@ function getPeriod(month: number, day: number, year: number): Period {
   const slice = DAILY.slice(start, start + 5);
   return {
     title: `${MONTH_NAMES[month] ?? "هذا الشهر"} ${year}هـ`,
-    accent: "var(--majalis-emerald-deep, #0A5040)",
+    kind: "regular",
     reminders: slice.length >= 3 ? slice : DAILY.slice(0, 5),
   };
 }
@@ -224,15 +213,12 @@ export function HijriSacredMonthBanner() {
   if (!info || !period || dismissed) return null;
 
   const current = reminders[index % reminders.length];
-  const accent  = period.accent;
-  const typeColor = TYPE_COLOR[current.type];
 
   return (
     <div
       role="complementary"
       aria-label="تذكير إسلامي"
-      className="hmb-wrap"
-      style={{ "--hmb-accent": accent, "--hmb-type-color": typeColor } as React.CSSProperties}
+      className={`hmb-wrap hmb-period--${period.kind} hmb-type--${current.type}`}
     >
       {/* ── الصف الأول: العنوان + الشارات ── */}
       <div className="hmb-row">

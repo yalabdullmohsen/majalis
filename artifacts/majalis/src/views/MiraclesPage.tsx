@@ -46,28 +46,52 @@ const CATEGORY_PATTERN: Record<string, PatternType> = {
   "الدم":     "circles",
 };
 
-// ألوان رأس البطاقة حسب الفئة — سُلَّم Emerald
-const CATEGORY_PALETTE: Record<string, { bg: string; accent: string }> = {
-  "الكون":    { bg: "#12281F", accent: "#BEC7C3" },
-  "الفلك":    { bg: "#0E2019", accent: "#BEC7C3" },
-  "الجبال":   { bg: "#153025", accent: "#97A59F" },
-  "البحار":   { bg: "#153025", accent: "#BEC7C3" },
-  "الأجنة":   { bg: "#12281F", accent: "#97A59F" },
-  "النبات":   { bg: "#18362A", accent: "#97A59F" },
-  "الحيوان":  { bg: "#153025", accent: "#97A59F" },
-  "الطب":     { bg: "#0E2019", accent: "#BEC7C3" },
-  "المياه":   { bg: "#0E2019", accent: "#BEC7C3" },
-  "الحديد":   { bg: "#1a3020", accent: "#97A59F" },
-  "الرياح":   { bg: "#12281F", accent: "#BEC7C3" },
-  "السحاب":   { bg: "#153025", accent: "#BEC7C3" },
-  "الحشرات":  { bg: "#18362A", accent: "#97A59F" },
-  "الأرض":    { bg: "#153025", accent: "#97A59F" },
-  "الزمن":    { bg: "#12281F", accent: "#BEC7C3" },
-  "الضوء":    { bg: "#1a3a1a", accent: "#d4e8a0" },
-  "الجلد":    { bg: "#1e2a1e", accent: "#BEC7C3" },
-  "العظام":   { bg: "#1a3020", accent: "#d4c8a0" },
-  "النجوم":   { bg: "#0a1a30", accent: "#c8d4e8" },
-  "الدم":     { bg: "#2a1010", accent: "#e8a0a0" },
+// مُعدِّلات CSS لرأس البطاقة حسب الفئة
+const MK_CAT_MOD: Record<string, string> = {
+  "الكون":    "mk-cat--alkawn",
+  "الفلك":    "mk-cat--alfalak",
+  "الجبال":   "mk-cat--aljibaal",
+  "البحار":   "mk-cat--albihaar",
+  "الأجنة":   "mk-cat--alajinna",
+  "النبات":   "mk-cat--alnabaat",
+  "الحيوان":  "mk-cat--alhayawan",
+  "الطب":     "mk-cat--altib",
+  "المياه":   "mk-cat--almiyaah",
+  "الحديد":   "mk-cat--alhadeed",
+  "الرياح":   "mk-cat--alriyaah",
+  "السحاب":   "mk-cat--alsahaab",
+  "الحشرات":  "mk-cat--alhasharat",
+  "الأرض":    "mk-cat--alarth",
+  "الزمن":    "mk-cat--alzaman",
+  "الضوء":    "mk-cat--althaw",
+  "الجلد":    "mk-cat--aljild",
+  "العظام":   "mk-cat--alithaam",
+  "النجوم":   "mk-cat--alnujoom",
+  "الدم":     "mk-cat--aldam",
+};
+
+// لون accent لمكوّن GeometricPattern (prop وليس inline style)
+const MK_CAT_ACCENT: Record<string, string> = {
+  "الكون":    "#BEC7C3",
+  "الفلك":    "#BEC7C3",
+  "الجبال":   "#97A59F",
+  "البحار":   "#BEC7C3",
+  "الأجنة":   "#97A59F",
+  "النبات":   "#97A59F",
+  "الحيوان":  "#97A59F",
+  "الطب":     "#BEC7C3",
+  "المياه":   "#BEC7C3",
+  "الحديد":   "#97A59F",
+  "الرياح":   "#BEC7C3",
+  "السحاب":   "#BEC7C3",
+  "الحشرات":  "#97A59F",
+  "الأرض":    "#97A59F",
+  "الزمن":    "#BEC7C3",
+  "الضوء":    "#d4e8a0",
+  "الجلد":    "#BEC7C3",
+  "العظام":   "#d4c8a0",
+  "النجوم":   "#c8d4e8",
+  "الدم":     "#e8a0a0",
 };
 
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
@@ -93,9 +117,9 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
   "الدم":     Droplets,
 };
 
-const SOURCE_COLORS: Record<string, string> = {
-  "قرآن": "#1a5c35",
-  "سنة":  "#153025",
+const MK_SRC_MOD: Record<string, string> = {
+  "قرآن": "mk-src--quran",
+  "سنة":  "mk-src--sunna",
 };
 
 const DISCLAIMER =
@@ -186,21 +210,21 @@ export default function MiraclesPage({
         <div className="ds-grid">
           {items.map((item: any) => {
             const ItemIcon: LucideIcon = CATEGORY_ICONS[item.category] ?? Sparkles;
-            const borderColor = SOURCE_COLORS[item.source_type] ?? "#1F4D3A";
-            const palette     = CATEGORY_PALETTE[item.category] ?? { bg: "#1a5c35", accent: "#86efac" };
-            const pattern     = CATEGORY_PATTERN[item.category] ?? "stars";
+            const catMod    = MK_CAT_MOD[item.category]    ?? "mk-cat--alkawn";
+            const catAccent = MK_CAT_ACCENT[item.category] ?? "#86efac";
+            const srcMod    = MK_SRC_MOD[item.source_type] ?? "mk-src--quran";
+            const pattern   = CATEGORY_PATTERN[item.category] ?? "stars";
             const isExpanded  = expanded === item.id;
             const bodyText: string = item.body ?? "";
             const preview = bodyText.slice(0, 220);
             return (
               <article
                 key={item.id}
-                className="miracle-item"
-                style={{ "--mk-bg": palette.bg, "--mk-accent": palette.accent, "--mk-border": borderColor } as React.CSSProperties}
+                className={`miracle-item ${catMod} ${srcMod}`}
               >
                 {/* رأس ملوّن بنمط موضوعي */}
                 <div className="miracle-item__head">
-                  <GeometricPattern pattern={pattern} color={palette.accent} opacity={0.15} />
+                  <GeometricPattern pattern={pattern} color={catAccent} opacity={0.15} />
                   <div className="miracle-item__head-row">
                     <span className="miracle-item__icon" aria-hidden="true"><ItemIcon size={22} strokeWidth={1.5} /></span>
                     <div className="miracle-item__head-info">
