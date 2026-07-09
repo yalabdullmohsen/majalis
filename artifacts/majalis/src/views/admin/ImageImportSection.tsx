@@ -76,10 +76,10 @@ const STATUS_META: Record<JobStatus, { label: string; css: string; dot: string }
 // ── مؤشر الثقة ─────────────────────────────────────────────────────────
 function ConfidenceBar({ score }: { score: number }) {
   const pct  = Math.round(score * 100);
-  const color = pct >= 75 ? "#22c55e" : pct >= 45 ? "#1F4D3A" : "#ef4444";
+  const colorMod = pct >= 75 ? " ii-conf--high" : pct >= 45 ? " ii-conf--mid" : " ii-conf--low";
   const label = pct >= 75 ? "ثقة عالية" : pct >= 45 ? "تحقق مطلوب" : "غير موثوق";
   return (
-    <div className="ii-conf" style={{ "--iis-pct": `${pct}%`, "--iis-color": color } as React.CSSProperties}>
+    <div className={`ii-conf${colorMod}`} style={{ "--iis-pct": `${pct}%` } as React.CSSProperties}>
       <div className="ii-conf__bar" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
         <div className="ii-conf__fill" />
       </div>
@@ -93,7 +93,7 @@ function StatusChip({ status }: { status: JobStatus }) {
   const m = STATUS_META[status];
   return (
     <span className={`ii-chip ${m.css}`}>
-      <span className="ii-chip__dot" style={{ "--iis-dot": m.dot } as React.CSSProperties} aria-hidden="true" />
+      <span className="ii-chip__dot" aria-hidden="true" />
       {m.label}
     </span>
   );
@@ -847,12 +847,12 @@ export function ImageImportSection() {
         </div>
         {stats.total > 0 && (
           <div className="ii-stats">
-            {stats.waiting   > 0 && <StatPill n={stats.waiting}   label="انتظار"  color="#64748b" />}
-            {stats.analyzing > 0 && <StatPill n={stats.analyzing} label="يُحلَّل"  color="#3b82f6" />}
-            {stats.review    > 0 && <StatPill n={stats.review}    label="مراجعة"  color="#1F4D3A" />}
-            {stats.done      > 0 && <StatPill n={stats.done}      label="جاهز"    color="#22c55e" />}
-            {stats.approved  > 0 && <StatPill n={stats.approved}  label="منشور"   color="#10b981" />}
-            {stats.failed    > 0 && <StatPill n={stats.failed}    label="فشل"     color="#ef4444" />}
+            {stats.waiting   > 0 && <StatPill n={stats.waiting}   label="انتظار"  mod="ii-stat-pill--waiting" />}
+            {stats.analyzing > 0 && <StatPill n={stats.analyzing} label="يُحلَّل"  mod="ii-stat-pill--analyzing" />}
+            {stats.review    > 0 && <StatPill n={stats.review}    label="مراجعة"  mod="ii-stat-pill--review" />}
+            {stats.done      > 0 && <StatPill n={stats.done}      label="جاهز"    mod="ii-stat-pill--done" />}
+            {stats.approved  > 0 && <StatPill n={stats.approved}  label="منشور"   mod="ii-stat-pill--approved" />}
+            {stats.failed    > 0 && <StatPill n={stats.failed}    label="فشل"     mod="ii-stat-pill--failed" />}
           </div>
         )}
       </div>
@@ -919,9 +919,9 @@ export function ImageImportSection() {
 }
 
 // ── مساعد صغير ─────────────────────────────────────────────────────────
-function StatPill({ n, label, color }: { n: number; label: string; color: string }) {
+function StatPill({ n, label, mod }: { n: number; label: string; mod: string }) {
   return (
-    <span className="ii-stat-pill" style={{ "--pill-color": color } as React.CSSProperties}>
+    <span className={`ii-stat-pill ${mod}`}>
       <span className="ii-stat-pill__dot" aria-hidden="true" />
       {n} {label}
     </span>
