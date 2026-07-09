@@ -17505,3 +17505,121 @@ body.has-assistant-fab .app-main {
   font-size: 0.8rem;
   gap: 0.3rem;
 }
+
+/* ── فضائل الصلاة وإصلاحها (prv-*) ── */
+.prv-section {
+  margin-top: 2.5rem;
+}
+
+.prv-section-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--majalis-ink, #1a2e26);
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--majalis-emerald-soft, #EBF5F0);
+}
+
+.prv-virtues-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 0.875rem;
+}
+
+.prv-virtue-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.prv-virtue-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--majalis-emerald-deep, #0A5040);
+  margin: 0;
+}
+
+.prv-virtue-text {
+  font-family: "Amiri Quran", "Scheherazade New", serif;
+  font-size: 0.92rem;
+  line-height: 1.9;
+  color: var(--majalis-ink, #1a2e26);
+  margin: 0;
+  direction: rtl;
+  flex: 1;
+}
+
+.prv-virtue-foot {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+.prv-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.3rem;
+}
+
+.prv-badge--sahih {
+  background: var(--majalis-emerald-soft, #EBF5F0);
+  color: var(--majalis-emerald, #0E6E52);
+}
+
+.prv-badge--quran {
+  background: rgba(124,58,237,0.10);
+  color: #7C3AED;
+}
+
+.prv-badge--other {
+  background: var(--majalis-emerald-soft, #EBF5F0);
+  color: var(--majalis-ink-soft, #5D726A);
+}
+
+.prv-virtue-narrator,
+.prv-virtue-source {
+  font-size: 0.73rem;
+  color: var(--majalis-ink-soft, #5D726A);
+}
+
+.prv-virtue-narrator::before { content: "·"; margin-left: 0.3rem; }
+
+.prv-tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.prv-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--majalis-line, #d4e6de);
+  border-radius: 0.65rem;
+  padding: 0.75rem 1rem;
+}
+
+.prv-tip-num {
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--majalis-emerald, #0E6E52);
+  color: #fff;
+  font-weight: 900;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.prv-tip-text {
+  font-size: 0.86rem;
+  color: var(--majalis-ink, #1a2e26);
+  line-height: 1.6;
+  margin: 0;
+}
