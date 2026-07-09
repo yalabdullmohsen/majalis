@@ -20,7 +20,6 @@ const PROPHET_HUE: Record<string, string> = {
 };
 
 const GOLD = "#BEC7C3";
-const GOLD_LIGHT = "#E1E5E3";
 
 function prophetColor(slug: string) { return PROPHET_HUE[slug] || GOLD; }
 
