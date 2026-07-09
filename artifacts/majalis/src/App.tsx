@@ -48,8 +48,11 @@ const MiraclesPage = lazy(() => import("@/views/MiraclesPage"));
 const PropheticMedicinePage = lazy(() => import("@/views/PropheticMedicinePage"));
 const FawaidPage = lazy(() => import("@/views/FawaidPage"));
 const HadithPage = lazy(() => import("@/views/HadithPage"));
+const HadithIndexPage = lazy(() => import("@/views/HadithIndexPage"));
 const HadithDaifPage = lazy(() => import("@/views/HadithDaifPage"));
 const HadithMawduPage = lazy(() => import("@/views/HadithMawduPage"));
+const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
+const QuranCirclesPage = lazy(() => import("@/views/QuranCirclesPage"));
 const TawhidPage = lazy(() => import("@/views/TawhidPage"));
 const StoriesPage = lazy(() => import("@/views/StoriesPage"));
 const AdhkarPage = lazy(() => import("@/views/AdhkarPage"));
@@ -260,12 +263,12 @@ function Router() {
       <Route path="/library"><SafeLazyRoute component={LibraryPage} /></Route>
       <Route path="/miracles"><SafeLazyRoute component={MiraclesPage} /></Route>
       <Route path="/prophetic-medicine"><SafeLazyRoute component={PropheticMedicinePage} /></Route>
-      <Route path="/quran-circles" component={QuranComingSoon} />
+      <Route path="/quran-circles"><SafeLazyRoute component={QuranCirclesPage} /></Route>
       <Route path="/fawaid"><SafeLazyRoute component={FawaidPage} /></Route>
       <Route path="/hadith/sahih"><SafeLazyRoute component={HadithPage} /></Route>
       <Route path="/hadith/daif"><SafeLazyRoute component={HadithDaifPage} /></Route>
       <Route path="/hadith/mawdu"><SafeLazyRoute component={HadithMawduPage} /></Route>
-      <Route path="/hadith"><SafeLazyRoute component={HadithPage} /></Route>
+      <Route path="/hadith"><SafeLazyRoute component={HadithIndexPage} /></Route>
       <Route path="/stories"><SafeLazyRoute component={StoriesPage} /></Route>
       <Route path="/prophets/:slug"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
       <Route path="/prophets"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
@@ -325,7 +328,7 @@ function Router() {
           </Suspense>
         </ErrorBoundary>
       </Route>
-      <Route path="/quran-radio" component={QuranComingSoon} />
+      <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
       <Route path="/quran-live" component={QuranComingSoon} />
       <Route path="/tajweed" component={QuranComingSoon} />
       <Route path="/surah-stories" component={QuranComingSoon} />
