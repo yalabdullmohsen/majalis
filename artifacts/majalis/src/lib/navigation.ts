@@ -53,6 +53,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/hadith-science",    label: "مصطلح الحديث" },
   { href: "/madhahib",          label: "المذاهب الفقهية" },
   { href: "/sunan-yawmiyya",    label: "السنن النبوية اليومية" },
+  { href: "/hikam-salaf",       label: "حكم السلف الصالح" },
   { href: "/universities",       label: "دليل الجامعات" },
   { href: "/learning-path",      label: "خارطة طالب العلم" },
   // القرآن
@@ -295,6 +296,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/hadith-science", title: "مصطلح الحديث",       description: "30+ مصطلح في علوم الحديث: أنواع الأحاديث والسند والراوي والجرح والتعديل والكتب الستة" },
   { href: "/madhahib",        title: "المذاهب الفقهية",    description: "المذاهب الأربعة: الحنفي والمالكي والشافعي والحنبلي — مناهجها ومصادرها وانتشارها وأبرز مصنفاتها" },
   { href: "/sunan-yawmiyya",  title: "السنن اليومية",       description: "دليل عملي لتطبيق 25+ سنة نبوية في الحياة اليومية مع مؤشر تتبع التقدم" },
+  { href: "/hikam-salaf",     title: "حكم السلف",           description: "40+ حكمة من أقوال الحسن البصري وابن تيمية وابن القيم والشافعي وغيرهم — بحث وحفظ ونسخ" },
   { href: "/knowledge-map", title: "الخريطة المعرفية",   description: "14 حقلاً علمياً بروابط تفاعلية ومحركات البحث" },
   { href: "/quran-hub",    title: "مركز القرآن",          description: "بوابتك الشاملة للمصحف والتجويد والإذاعات والبث المباشر" },
 ] as const;

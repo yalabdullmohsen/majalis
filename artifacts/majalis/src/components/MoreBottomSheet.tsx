@@ -34,6 +34,7 @@ const SHEET_SECTIONS = [
     { href: "/hadith-science",     label: "مصطلح الحديث",       Icon: BookOpen },
     { href: "/arbaeen-nawawi",     label: "الأربعون النووية",  Icon: FileText },
     { href: "/fawaid",             label: "الفوائد",           Icon: Heart },
+    { href: "/hikam-salaf",        label: "حكم السلف",         Icon: BookOpen },
     { href: "/updates",            label: "آخر المستجدات",     Icon: RefreshCw },
     { href: "/stories",            label: "القصص الإسلامية",   Icon: BookOpen },
     { href: "/islamic-stories",    label: "صحابة وفتوحات",     Icon: BookOpen },
