@@ -86,6 +86,9 @@ const LearningPathPage = lazy(() => import("@/views/LearningPathPage"));
 const UniversitiesPage = lazy(() => import("@/views/UniversitiesPage"));
 const FeaturesInProgressPage = lazy(() => import("@/views/FeaturesInProgressPage"));
 const ProphetStoriesPage = lazy(() => import("@/views/ProphetStoriesPage"));
+const QuranLivePage = lazy(() => import("@/views/QuranLivePage"));
+const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
+const QuranTajweedPage = lazy(() => import("@/views/QuranTajweedPage"));
 
 function SeoManager() {
   const [location] = useLocation();
@@ -161,11 +164,11 @@ export default function AppRoutes() {
             </Suspense>
           </ErrorBoundary>
         </Route>
-        <Route path="/quran-live" component={QuranComingSoon} />
-        <Route path="/quran/tajweed" component={QuranComingSoon} />
+        <Route path="/quran-live"><SafeLazyRoute component={QuranLivePage} /></Route>
+        <Route path="/quran/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
         <Route path="/quran/surah-stories/:number" component={QuranComingSoon} />
         <Route path="/quran/surah-stories" component={QuranComingSoon} />
-        <Route path="/quran-radio" component={QuranComingSoon} />
+        <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
         <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>
         <Route path="/prayer-times"><SafeLazyRoute component={PrayerTimesPage} /></Route>
         <Route path="/prayer-ranks"><Redirect to="/prayer-times?tab=ranks" /></Route>
