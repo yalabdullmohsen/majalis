@@ -368,6 +368,7 @@ export default function TawhidPage() {
         </h2>
         <div className="tawheed-related-grid">
           {[
+            { href: "/asma-husna",label: "الأسماء الحسنى",    desc: "99 اسماً لله بمعانيها وآياتها" },
             { href: "/hadith",   label: "الأحاديث النبوية",  desc: "صحيحة وضعيفة وموضوعة" },
             { href: "/rulings",  label: "الأحكام الشرعية",   desc: "موسوعة بالأحكام الفقهية" },
             { href: "/fatwa",    label: "الفتاوى",            desc: "فتاوى مُحقَّقة ومُصنَّفة" },

@@ -23,7 +23,7 @@ import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import {
   BookMarked, BookOpen, Bot, Building2, CalendarDays, Car, Clock,
-  Compass, FlaskConical, GraduationCap, HelpCircle, Landmark, Layers,
+  Compass, FlaskConical, GraduationCap, Heart, HelpCircle, Landmark, Layers,
   Lightbulb, Map, Mic2, Monitor, Moon, Network, Newspaper,
   Radio, RotateCw, Scale, Scroll, Star, Target, Upload, Wrench,
 } from "lucide-react";
@@ -82,6 +82,7 @@ const FEATURE_CATS: FeatureCat[] = [
       { href: "/rulings",            Icon: Scale,        title: "الأحكام الشرعية",   desc: "موسوعة الفقه والعبادات" },
       { href: "/tawhid",             Icon: BookMarked,   title: "التوحيد",            desc: "العقيدة الإسلامية" },
       { href: "/asma-husna",         Icon: Star,         title: "الأسماء الحسنى",    desc: "99 اسماً لله بمعانيها ومنافعها" },
+      { href: "/akhlaq",             Icon: Heart,        title: "الأخلاق الإسلامية", desc: "مكارم الأخلاق مع الآيات والأحاديث" },
       { href: "/scholarly-research", Icon: FlaskConical, title: "الباحث الشرعي",     desc: "بحث بالذكاء الاصطناعي" },
       { href: "/academic-research",  Icon: GraduationCap, title: "الأبحاث العلمية", desc: "رسائل وأبحاث أكاديمية" },
     ],
