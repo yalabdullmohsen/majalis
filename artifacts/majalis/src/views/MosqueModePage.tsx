@@ -50,6 +50,9 @@ export default function MosqueModePage() {
 
   const next = countdown?.next;
   const secondsLeft = Math.floor((countdown?.remainingMs ?? 0) / 1000);
+  const sinceSeconds = countdown?.sinceSeconds;
+  const inGrace = sinceSeconds != null;
+  const sinceMinutes = inGrace ? Math.floor(sinceSeconds / 60) : 0;
 
   return (
     <div className="mosque-mode" dir="rtl">
@@ -77,14 +80,26 @@ export default function MosqueModePage() {
       {/* Prayer countdown */}
       <div className="mosque-mode__prayer-box">
         {next ? (
-          <>
-            <p className="mosque-mode__prayer-label">الصلاة القادمة</p>
-            <h2 className="mosque-mode__prayer-name">{next.name}</h2>
-            <div className="mosque-mode__countdown">
-              {secondsLeft > 0 ? formatCountdown(secondsLeft) : "حان الآن"}
-            </div>
-            <p className="mosque-mode__prayer-time">{next.time}</p>
-          </>
+          inGrace ? (
+            <>
+              <p className="mosque-mode__prayer-label">مضى على أذان {next.name}</p>
+              <div className="mosque-mode__countdown mosque-mode__countdown--elapsed" aria-live="polite">
+                {sinceMinutes} دقيقة
+              </div>
+              {secondsLeft > 0 && (
+                <p className="mosque-mode__prayer-time">الصلاة التالية بعد {formatCountdown(secondsLeft)}</p>
+              )}
+            </>
+          ) : (
+            <>
+              <p className="mosque-mode__prayer-label">الصلاة القادمة</p>
+              <h2 className="mosque-mode__prayer-name">{next.name}</h2>
+              <div className="mosque-mode__countdown">
+                {secondsLeft > 0 ? formatCountdown(secondsLeft) : "حان الآن"}
+              </div>
+              <p className="mosque-mode__prayer-time">{next.time}</p>
+            </>
+          )
         ) : (
           <p className="mosque-mode__prayer-label">جارٍ تحميل مواقيت الصلاة…</p>
         )}

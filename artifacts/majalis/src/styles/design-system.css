@@ -3162,6 +3162,7 @@ hr.decorative,
   letter-spacing: 0.05em;
 }
 .mosque-mode__prayer-time { font-size: 1rem; opacity: 0.7; }
+.mosque-mode__countdown--elapsed { font-size: clamp(2.5rem, 10vw, 3.5rem); opacity: 0.9; }
 
 .mosque-mode__grid {
   display: grid;
