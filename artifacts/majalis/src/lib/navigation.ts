@@ -231,8 +231,8 @@ export const HOME_FEATURE_CARDS = [
   },
   {
     href: "/hadith",
-    title: "الأحاديث الصحيحة",
-    description: "أحاديث نبوية محققة",
+    title: "الأحاديث النبوية",
+    description: "صحيحة وضعيفة وموضوعة",
     icon: "scroll-text",
   },
   {
@@ -251,7 +251,10 @@ export const HOME_FEATURE_CARDS = [
 
 export const HOME_MORE_SECTIONS = [
   { href: "/lessons", title: "الدروس", description: "دروس ودورات علمية" },
-  { href: "/hadith", title: "الأحاديث الصحيحة", description: "أحاديث نبوية محققة من مصادر موثوقة" },
+  { href: "/hadith", title: "الأحاديث النبوية", description: "أحاديث صحيحة وضعيفة وموضوعة مصنّفة ومفصولة" },
+  { href: "/tawhid", title: "التوحيد والعقيدة", description: "أنواع التوحيد وأركان الإيمان والأسماء الحسنى" },
+  { href: "/daily-wird", title: "الورد اليومي", description: "تتبع صفحات القرآن اليومية مع السلسلة المتواصلة" },
+  { href: "/prayer-ranks", title: "فضائل الصلاة ومراتبها", description: "المراتب الخمسة في الصلاة وفضائلها من القرآن والسنة" },
   { href: "/stories", title: "القصص الإسلامية", description: "قصص من السيرة النبوية والأنبياء والصحابة" },
   { href: "/prophets", title: "قصص الأنبياء", description: "الأنبياء الخمسة والعشرون في القرآن — نبذات وعبر" },
   { href: "/fiqh", title: "الفقه الإسلامي", description: "الفتاوى والأحكام والمجمع الفقهي" },
