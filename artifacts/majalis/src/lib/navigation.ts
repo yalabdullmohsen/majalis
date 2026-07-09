@@ -57,6 +57,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/quran/surah-stories", label: "قصص القرآن" },
   // الأذكار
   { href: "/adhkar",        label: "الأذكار" },
+  { href: "/duas",          label: "الأدعية الشرعية" },
   { href: "/tasbih",        label: "التسبيح" },
   // الأدوات
   { href: "/prayer-times",  label: "مواقيت الصلاة" },

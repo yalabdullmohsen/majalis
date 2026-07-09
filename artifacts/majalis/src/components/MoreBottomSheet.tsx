@@ -51,6 +51,7 @@ const SHEET_SECTIONS = [
   ]},
   { group: "العبادة والأذكار", items: [
     { href: "/adhkar",           label: "الأذكار",             Icon: Repeat2 },
+    { href: "/duas",             label: "الأدعية الشرعية",    Icon: Repeat2 },
     { href: "/tasbih",           label: "التسبيح",             Icon: Repeat2 },
     { href: "/prayer-countdown", label: "عداد الصلاة",         Icon: Activity },
     { href: "/prayer-times",     label: "مواقيت الصلاة",       Icon: Calendar },

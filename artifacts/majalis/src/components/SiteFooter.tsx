@@ -41,6 +41,7 @@ const FOOTER_GROUPS = [
       { href: "/quran/surah-stories", label: "قصص القرآن" },
       { href: "/quran/tajweed",       label: "علم التجويد" },
       { href: "/adhkar",              label: "الأذكار" },
+      { href: "/duas",                label: "الأدعية الشرعية" },
       { href: "/prayer-times",        label: "مواقيت الصلاة" },
       { href: "/tasbih",              label: "التسبيح" },
       { href: "/daily-wird",          label: "الورد اليومي" },
