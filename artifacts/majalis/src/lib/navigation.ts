@@ -44,6 +44,8 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/rulings",            label: "الأحكام الشرعية" },
   { href: "/seerah",             label: "السيرة النبوية" },
   { href: "/scholarly-research", label: "الباحث الشرعي" },
+  { href: "/scholars",          label: "أعلام الإسلام" },
+  { href: "/knowledge-map",     label: "الخريطة المعرفية" },
   { href: "/universities",       label: "دليل الجامعات" },
   { href: "/learning-path",      label: "خارطة طالب العلم" },
   // القرآن
