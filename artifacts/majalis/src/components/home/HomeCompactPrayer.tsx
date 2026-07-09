@@ -55,6 +55,7 @@ function useCompactPrayer() {
   const [nextKey, setNextKey] = useState<string | null>(null);
   const [countdown, setCountdown] = useState("");
   const [sinceSeconds, setSinceSeconds] = useState<number | null>(null);
+  const [graceNextHms, setGraceNextHms] = useState<string | null>(null);
 
   useEffect(() => {
     fetchPrayerTimes().then(setData).catch(() => {});
@@ -67,17 +68,18 @@ function useCompactPrayer() {
       setNextKey(cd.next?.key ?? null);
       setCountdown(cd.remainingHms ?? "");
       setSinceSeconds(cd.sinceSeconds);
+      setGraceNextHms(cd.graceNextHms ?? null);
     };
     tick();
     const t = setInterval(tick, 1000);
     return () => clearInterval(t);
   }, [data]);
 
-  return { data, nextKey, countdown, sinceSeconds };
+  return { data, nextKey, countdown, sinceSeconds, graceNextHms };
 }
 
 export function HomeCompactPrayer() {
-  const { data, nextKey, countdown, sinceSeconds } = useCompactPrayer();
+  const { data, nextKey, countdown, sinceSeconds, graceNextHms } = useCompactPrayer();
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [selectedCountdown, setSelectedCountdown] = useState<string>("");
 
@@ -141,10 +143,10 @@ export function HomeCompactPrayer() {
                   aria-hidden="true"
                 />
               </span>
-              {actualNextPrayer && countdown && (
+              {actualNextPrayer && graceNextHms && (
                 <span className="hcp-next-hint">
                   {actualNextPrayer.name} بعد{" "}
-                  <span dir="ltr">{countdown}</span>
+                  <span dir="ltr">{graceNextHms}</span>
                 </span>
               )}
             </span>

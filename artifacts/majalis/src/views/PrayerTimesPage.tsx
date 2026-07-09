@@ -154,6 +154,9 @@ export default function PrayerTimesPage() {
     const { seconds, isTomorrow: tmrw } = secondsUntilPrayer(displayItem?.minutes ?? null);
     displayHms = formatHms(seconds);
     isTomorrow = tmrw;
+  } else if (inGrace && countdown.graceNextHms) {
+    displayHms = countdown.graceNextHms;
+    isTomorrow = (displayItem?.minutes ?? Infinity) < nowInfo.totalMinutes;
   } else {
     displayHms = countdown.remainingHms ?? "--:--:--";
   }

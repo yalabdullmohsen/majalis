@@ -63,8 +63,8 @@ export function HomeAdhanWidget() {
                   {Math.floor(countdown.sinceSeconds / 60)} دقيقة
                 </span>
               </div>
-              {remaining && (
-                <div className="had-countdown__exact">الصلاة التالية بعد {remaining}</div>
+              {countdown.graceNextHms && (
+                <div className="had-countdown__exact">الصلاة التالية بعد {countdown.graceNextHms}</div>
               )}
             </>
           ) : (

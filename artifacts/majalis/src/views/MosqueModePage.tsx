@@ -53,6 +53,7 @@ export default function MosqueModePage() {
   const sinceSeconds = countdown?.sinceSeconds;
   const inGrace = sinceSeconds != null;
   const sinceMinutes = inGrace ? Math.floor(sinceSeconds / 60) : 0;
+  const graceNextHms = countdown?.graceNextHms ?? null;
 
   return (
     <div className="mosque-mode" dir="rtl">
@@ -86,8 +87,8 @@ export default function MosqueModePage() {
               <div className="mosque-mode__countdown mosque-mode__countdown--elapsed" aria-live="polite">
                 {sinceMinutes} دقيقة
               </div>
-              {secondsLeft > 0 && (
-                <p className="mosque-mode__prayer-time">الصلاة التالية بعد {formatCountdown(secondsLeft)}</p>
+              {graceNextHms && (
+                <p className="mosque-mode__prayer-time">الصلاة التالية بعد {graceNextHms}</p>
               )}
             </>
           ) : (
