@@ -29,7 +29,6 @@ import {
   Layers,
   Library,
   Lightbulb,
-  ListChecks,
   LogIn,
   Map,
   Mic,
