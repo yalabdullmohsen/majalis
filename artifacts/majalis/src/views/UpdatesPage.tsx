@@ -66,6 +66,7 @@ export default function UpdatesPage() {
             type="button"
             onClick={() => setFilter(t)}
             className={filter === t ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+            aria-pressed={filter === t}
           >
             {t}
           </button>

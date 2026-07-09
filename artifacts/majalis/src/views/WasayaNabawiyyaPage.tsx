@@ -215,6 +215,7 @@ export default function WasayaNabawiyyaPage() {
             type="button"
             className={`wn-tab${activeTab === t.id ? " wn-tab--active" : ""}`}
             onClick={() => { setActiveTab(t.id); setOpenIdx(null); }}
+            aria-pressed={activeTab === t.id}
           >{t.label}</button>
         ))}
       </div>

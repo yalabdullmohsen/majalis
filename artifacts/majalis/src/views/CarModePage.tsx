@@ -217,6 +217,7 @@ export default function CarModePage() {
             type="button"
             className={`car-mode__playlist-item${idx === currentIdx ? " car-mode__playlist-item--active" : ""}`}
             onClick={() => selectLesson(idx)}
+            aria-pressed={idx === currentIdx}
           >
             <span className="car-mode__playlist-num">{idx + 1}</span>
             <span className="car-mode__playlist-title">{lesson.title}</span>
