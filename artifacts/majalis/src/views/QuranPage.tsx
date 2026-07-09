@@ -3,11 +3,12 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import {
-  Bookmark, BookOpen, ChevronLeft, ChevronRight, List,
-  Moon, Search, Sun, X, ZoomIn, ZoomOut,
+  Bookmark, BookOpen, ChevronLeft, ChevronRight, FileImage,
+  List, Moon, Search, Sun, Type, X, ZoomIn, ZoomOut,
 } from "lucide-react";
 import "@/styles/mushaf.css";
 import { applyPageSeo } from "@/lib/seo";
+import { getMushafPageUrl, getMushafPageFallbackUrl } from "@/lib/quran-api";
 
 /* ══════════════════════════════════════════════════════════════════
    ثوابت
@@ -17,9 +18,11 @@ const PAGE_KEY     = "mj-mushaf-page-v4";
 const BM_KEY       = "mj-mushaf-bm-v4";
 const ZOOM_KEY     = "mj-mushaf-zoom-v4";
 const MODE_KEY     = "mj-mushaf-mode-v4";
-const BASE_FONT    = 1.9; // rem — مطابق لمتغير CSS --qs-font-size
+const VIEW_KEY     = "mj-mushaf-view-v5"; // "text" | "image" — v5 يعيد الافتراضي لـ image
+const BASE_FONT    = 1.9; // rem
 const API_BASE     = "https://api.alquran.cloud/v1/page";
 const EDITION      = "quran-uthmani";
+type ViewMode = "text" | "image";
 
 type ReadMode = "day" | "night" | "sepia";
 
@@ -106,26 +109,6 @@ function groupBySurah(ayahs: Ayah[]) {
   return result;
 }
 
-/*
- * فصل البسملة عن نص الآية الأولى في طبقة العرض فقط —
- * API quran-uthmani يدمج البسملة في نص الآية الأولى لكل سورة
- * (عدا الفاتحة حيث البسملة آية مستقلة، والتوبة لا بسملة لها).
- * نبحث عن نهاية البسملة "ٱلرَّحِيمِ" ونبدأ العرض بعدها.
- * النص المصدري لا يُمسّ — هذا تعديل عرض بحت.
- */
-function stripBasmalaFromDisplay(text: string): string {
-  const END_MARKER = "ٱلرَّحِيمِ";
-  const idx = text.indexOf(END_MARKER);
-  if (idx === -1) return text;
-  const after = idx + END_MARKER.length;
-  // تخطّي أي مسافات بيضاء بعد البسملة
-  let start = after;
-  while (start < text.length && (text[start] === " " || text.charCodeAt(start) === 0x200C || text.charCodeAt(start) === 0x200D)) {
-    start++;
-  }
-  return start < text.length ? text.slice(start) : text;
-}
-
 /* ══════════════════════════════════════════════════════════════════
    المكون الرئيسي
    ══════════════════════════════════════════════════════════════════ */
@@ -133,6 +116,9 @@ export default function QuranPage() {
   /* ── حالة ── */
   const [page, setPage]       = useState<number>(() => lsGet(PAGE_KEY, 1));
   const [mode, setMode]       = useState<ReadMode>(() => lsGet(MODE_KEY, "day"));
+  const [viewMode, setViewMode] = useState<ViewMode>(() => lsGet<ViewMode>(VIEW_KEY, "image"));
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [imgErr, setImgErr]     = useState(false);
   const [zoom, setZoom]       = useState<number>(() => {
     const v = lsGet(ZOOM_KEY, BASE_FONT);
     return v < 1.0 ? BASE_FONT : v; // ترحيل: القيم القديمة (مقاييس الصور) تُعاد للافتراضي
@@ -156,6 +142,9 @@ export default function QuranPage() {
   const [loading, setLoading] = useState(true);
   const [fetchErr, setFetchErr] = useState(false);
   const [retryKey, setRetryKey] = useState(0);
+
+  /* إعادة تعيين حالة تحميل الصورة عند تغيير الصفحة */
+  useEffect(() => { setImgLoaded(false); setImgErr(false); }, [page]);
 
   /* ── refs ── */
   const uiTimer   = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -371,6 +360,22 @@ export default function QuranPage() {
           >
             <ModeIcon size={17} strokeWidth={2} aria-hidden="true" />
           </button>
+          {/* وضع العرض: نص / صورة مصحف */}
+          <button
+            type="button"
+            className={`mshf-icon-btn${viewMode === "image" ? " active" : ""}`}
+            onClick={e => {
+              e.stopPropagation();
+              const next: ViewMode = viewMode === "text" ? "image" : "text";
+              setViewMode(next);
+              lsSet(VIEW_KEY, next);
+            }}
+            aria-label={viewMode === "image" ? "وضع النص" : "وضع صورة المصحف"}
+            title={viewMode === "image" ? "التبديل لوضع النص" : "التبديل لوضع صورة المصحف"}
+          >
+            {viewMode === "image" ? <Type size={17} strokeWidth={2} aria-hidden="true" /> : <FileImage size={17} strokeWidth={2} aria-hidden="true" />}
+          </button>
+
           <button
             type="button"
             className="mshf-icon-btn"
@@ -403,22 +408,59 @@ export default function QuranPage() {
         </div>
       </header>
 
-      {/* ══ منطقة القراءة — نص قرآني ══ */}
+      {/* ══ منطقة القراءة ══ */}
       <div
         ref={readerRef}
-        className={`mshf-page-container qs-reader-area${anim ? ` ${anim}` : ""}`}
+        className={`mshf-page-container${viewMode === "image" ? " mshf-img-mode" : " qs-reader-area"}${anim ? ` ${anim}` : ""}`}
         style={{ "--qs-font-size": `${zoom}rem` } as React.CSSProperties}
       >
-        {/* مؤشر التحميل */}
-        {loading && (
+        {/* ━━ وضع صورة المصحف ━━ */}
+        {viewMode === "image" && (
+          <>
+            {!imgLoaded && !imgErr && (
+              <div className="mshf-loading" aria-live="polite">
+                <div className="mshf-spinner" />
+                <span>جاري تحميل الصفحة {page.toLocaleString("ar-EG")}…</span>
+              </div>
+            )}
+            {imgErr && (
+              <div className="mshf-err">
+                <BookOpen size={52} strokeWidth={1} style={{ opacity: 0.25 }} aria-hidden="true" />
+                <p>تعذّر تحميل صورة الصفحة {page.toLocaleString("ar-EG")}</p>
+                <p className="mshf-err-sub">تحقق من اتصالك بالإنترنت ثم أعد المحاولة</p>
+                <button type="button" className="mshf-err-btn" onClick={() => { setImgErr(false); setImgLoaded(false); }}>
+                  إعادة المحاولة
+                </button>
+              </div>
+            )}
+            <img
+              key={page}
+              src={getMushafPageUrl(page)}
+              alt={`صفحة ${page} من المصحف الشريف`}
+              className={`mshf-page-img${imgLoaded ? " loaded" : ""}${mode !== "day" ? ` ${mode}` : ""}`}
+              style={{ transform: `scale(${(zoom / 1.9).toFixed(2)})`, transformOrigin: "top center" }}
+              onLoad={() => setImgLoaded(true)}
+              onError={() => {
+                // محاولة الـ fallback قبل إظهار الخطأ
+                const img = document.querySelector<HTMLImageElement>(`img.mshf-page-img[src="${getMushafPageUrl(page)}"]`);
+                if (img) { img.src = getMushafPageFallbackUrl(page); }
+                else setImgErr(true);
+              }}
+              draggable={false}
+            />
+          </>
+        )}
+
+        {/* ━━ وضع النص — مؤشر التحميل ━━ */}
+        {viewMode === "text" && loading && (
           <div className="mshf-loading" aria-live="polite">
             <div className="mshf-spinner" />
             <span>جاري تحميل الصفحة {page.toLocaleString("ar-EG")}…</span>
           </div>
         )}
 
-        {/* خطأ الجلب */}
-        {fetchErr && !loading && (
+        {/* خطأ الجلب في وضع النص */}
+        {viewMode === "text" && fetchErr && !loading && (
           <div className="mshf-err">
             <BookOpen size={52} strokeWidth={1} style={{ opacity: 0.25 }} aria-hidden="true" />
             <p>تعذّر تحميل الصفحة {page.toLocaleString("ar-EG")}</p>
@@ -433,8 +475,8 @@ export default function QuranPage() {
           </div>
         )}
 
-        {/* النص القرآني */}
-        {!loading && !fetchErr && groups.map(group => (
+        {/* النص القرآني — يُعرض في وضع النص فقط */}
+        {viewMode === "text" && !loading && !fetchErr && groups.map(group => (
           <div key={group.num} className="qs-surah">
             {/* رأس السورة — يظهر عند بداية السورة */}
             {group.isFirst && (
@@ -447,23 +489,11 @@ export default function QuranPage() {
               </div>
             )}
 
-            {/* البسملة — لكل سورة جديدة ما عدا الفاتحة (آيتها الأولى هي البسملة) والتوبة */}
-            {group.isFirst && group.num !== 1 && group.num !== 9 && (
-              <div className="qs-basmala" lang="ar" dir="rtl">
-                بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ
-              </div>
-            )}
-
             {/* الآيات */}
             <div className="qs-ayahs" lang="ar" dir="rtl">
-              {group.ayahs.map(ayah => {
-                /* فصل البسملة في طبقة العرض فقط: آية 1 من كل سورة عدا الفاتحة والتوبة */
-                const displayText = (group.isFirst && ayah.numberInSurah === 1 && group.num !== 1 && group.num !== 9)
-                  ? stripBasmalaFromDisplay(ayah.text)
-                  : ayah.text;
-                return (
+              {group.ayahs.map(ayah => (
                   <span key={ayah.number} className="qs-ayah">
-                    <span className="qs-ayah__text">{displayText}</span>
+                    <span className="qs-ayah__text">{ayah.text}</span>
                     <span
                       className="qs-ayah__num"
                       aria-label={`آية ${ayah.numberInSurah}`}
@@ -472,8 +502,7 @@ export default function QuranPage() {
                       {ayah.numberInSurah.toLocaleString("ar-EG")}
                     </span>
                   </span>
-                );
-              })}
+                ))}
             </div>
           </div>
         ))}

@@ -256,23 +256,32 @@
 @keyframes mshf-out-left  { 0% { transform: translateX(0); opacity: 1; } 100% { transform: translateX(-6%); opacity: 0; } }
 @keyframes mshf-out-right { 0% { transform: translateX(0); opacity: 1; } 100% { transform: translateX(6%);  opacity: 0; } }
 
+/* ── حاوية وضع صورة المصحف ── */
+.mshf-img-mode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1rem 0.5rem;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* ── صورة الصفحة ── */
 .mshf-page-img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto; /* auto أكثر أماناً من 100% في سياق flex */
-  object-fit: contain;
+  width: 100%;
+  max-width: min(600px, 100%);
+  height: auto;
   display: block;
   opacity: 0;
-  transition: opacity 0.3s ease, filter 0.35s ease;
+  transition: opacity 0.35s ease, filter 0.35s ease, transform 0.2s ease;
   -webkit-user-drag: none;
   user-drag: none;
-  border-radius: 4px;
-  box-shadow: var(--mshf-frame-shadow);
-  border: 1px solid var(--mshf-frame-border);
-  background: transparent;
-  transform-origin: center center;
+  border-radius: 6px;
+  box-shadow: var(--mshf-frame-shadow, 0 4px 24px rgba(0,0,0,0.18));
+  border: 1px solid var(--mshf-frame-border, rgba(31,77,58,0.1));
+  transform-origin: top center;
 }
 .mshf-page-img.loaded { opacity: 1; }
 .mshf-page-img.night  { filter: var(--mshf-img-filter); }
@@ -944,7 +953,7 @@
 .qs-ayah__text {
   font-size: var(--qs-font-size, 1.9rem);
   color: var(--mshf-ink);
-  font-family: "Scheherazade New", "Amiri Quran", "KFGQPC Uthmanic Script HAFS", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  font-family: "Amiri Quran", "Scheherazade New", "KFGQPC Uthmanic Script HAFS", "Noto Naskh Arabic", "Traditional Arabic", serif;
   transition: color 0.3s, font-size 0.15s ease;
   cursor: default;
   line-height: inherit;
