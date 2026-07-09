@@ -35,6 +35,12 @@ export const RADIO_STATIONS: RadioStation[] = [
   { id: "mustafa-ismail", reciterName: "مصطفى إسماعيل", readingType: "مجوّد", streamUrl: "https://qurango.net/radio/mustafa_ismail" },
   { id: "shashae", reciterName: "عبد الفتاح الشعشاعي", readingType: "مجوّد", streamUrl: "https://qurango.net/radio/abdelfattah_elshaeshae" },
   { id: "bahtimi", reciterName: "كامل يوسف البهتيمي", readingType: "مجوّد", streamUrl: "https://qurango.net/radio/kamil_yusuf_albahtimi" },
+  { id: "sudais", reciterName: "عبد الرحمن السديس", readingType: "مرتل", streamUrl: "https://qurango.net/radio/abdurrahman_as-sudais" },
+  { id: "ajmy", reciterName: "أحمد العجمي", readingType: "مرتل", streamUrl: "https://qurango.net/radio/ahmed_ibn_ali_al-ajamy" },
+  { id: "alafasy", reciterName: "مشاري راشد العفاسي", readingType: "مرتل", streamUrl: "https://qurango.net/radio/mishari_rashid_alafasy" },
+  { id: "ayyub", reciterName: "أبو بكر الشاطري", readingType: "مرتل", streamUrl: "https://qurango.net/radio/abu_bakr_al-shatri" },
+  { id: "juhany", reciterName: "علي الجهني", readingType: "مرتل", streamUrl: "https://qurango.net/radio/ali_aljuhany" },
+  { id: "luhaidan", reciterName: "صالح اللحيدان", readingType: "مرتل", streamUrl: "https://qurango.net/radio/salah_alahmadi" },
 ];
 
 export const LIVE_CHANNELS: LiveChannel[] = [
