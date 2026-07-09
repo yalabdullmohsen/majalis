@@ -139,7 +139,7 @@ function ProphetCard({
         aria-label={isBookmarked ? "إزالة من المفضلة" : "إضافة للمفضلة"}
         title={isBookmarked ? "إزالة من المفضلة" : "إضافة للمفضلة"}
       >
-        {isBookmarked ? <Heart size={16} className="fill-[var(--majalis-danger,#dc2626)] text-[var(--majalis-danger,#dc2626)]" /> : <Heart size={16} />}
+        {isBookmarked ? <Heart size={16} className="icon-danger--filled" /> : <Heart size={16} />}
       </button>
 
       {/* حد خارجي ذهبي */}
@@ -223,7 +223,7 @@ function ProphetDetailView({
             onClick={onBookmark}
             title={isBookmarked ? "إزالة من المفضلة" : "حفظ في المفضلة"}
           >
-            {isBookmarked ? <><Heart size={13} className="inline fill-[var(--majalis-danger,#dc2626)] text-[var(--majalis-danger,#dc2626)] ml-1" />محفوظ</> : <><Heart size={13} className="inline ml-1" />احفظ</>}
+            {isBookmarked ? <><Heart size={13} className="inline icon-danger--filled ml-1" />محفوظ</> : <><Heart size={13} className="inline ml-1" />احفظ</>}
           </button>
           <button type="button" className="prophet-action-btn" onClick={share} title="مشاركة">
             <Link2 size={13} className="inline ml-1" /> شارك

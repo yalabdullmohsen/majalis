@@ -63,7 +63,7 @@ function MuezzinCard({ muezzin, onPreview, previewing, isFav, onToggleFav }: {
             className={`mzp-fav-btn${isFav ? " is-fav" : ""}`}
             title={isFav ? "إزالة من المفضلة" : "إضافة للمفضلة"}
           >
-            {isFav ? <Heart size={16} className="fill-[var(--majalis-danger,#dc2626)] text-[var(--majalis-danger,#dc2626)]" /> : <Heart size={16} />}
+            {isFav ? <Heart size={16} className="icon-danger--filled" /> : <Heart size={16} />}
           </button>
           <span className={`mzp-style-badge mzp-style-badge--${styleMod}`}>{muezzin.style}</span>
         </div>

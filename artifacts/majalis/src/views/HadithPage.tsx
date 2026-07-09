@@ -188,7 +188,7 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
           onClick={handleSave}
           aria-label="حفظ في المفضلة"
         >
-          {saved ? <Star size={15} className="fill-[var(--majalis-emerald)] text-[var(--majalis-emerald)]" /> : <Star size={15} />}
+          {saved ? <Star size={15} className="icon-star--filled" /> : <Star size={15} />}
         </button>
         <button
           type="button"

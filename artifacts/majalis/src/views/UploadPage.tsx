@@ -68,7 +68,7 @@ function FileDropZone({ accept, maxMb, onFile, file, hint }: {
         />
         {file ? (
           <div>
-            <div className="ulp-dropzone__success-icon"><CheckCircle2 size={36} strokeWidth={1.3} className="text-[var(--majalis-emerald)]" /></div>
+            <div className="ulp-dropzone__success-icon"><CheckCircle2 size={36} strokeWidth={1.3} className="icon-emerald" /></div>
             <div className="ulp-dropzone__filename">{file.name}</div>
             <div className="ulp-dropzone__filesize">
               {(file.size / (1024 * 1024)).toFixed(2)} MB

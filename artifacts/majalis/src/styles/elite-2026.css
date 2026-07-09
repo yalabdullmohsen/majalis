@@ -23079,3 +23079,18 @@ img[loading="lazy"]:not([src=""]) {
 .ra-badge--full { background:var(--mn-surface-active,#d4e9dc); color:var(--mn-text-active,#173A2C); }
 .ra-badge--partial { background:var(--majalis-emerald-muted,rgba(31,77,58,.12)); color:var(--majalis-emerald); }
 .ra-badge--dim { background:var(--majalis-parchment-deep,#f0ece4); color:var(--majalis-ink-soft); }
+
+/* ══════════════════════════════════════════════
+   §ICON-UTIL. أيقونات — كلاسات لونية مشتركة
+   ══════════════════════════════════════════════ */
+.icon-emerald   { color: var(--majalis-emerald); }
+.icon-ink-soft  { color: var(--majalis-ink-soft); }
+.icon-danger    { color: var(--majalis-danger, #dc2626); }
+.icon-danger--filled { color: var(--majalis-danger, #dc2626); fill: var(--majalis-danger, #dc2626); }
+.icon-star--filled   { color: var(--majalis-emerald); fill: var(--majalis-emerald); }
+
+/* ══════════════════════════════════════════════
+   §LP-EXT2. LearningPathPage extras
+   ══════════════════════════════════════════════ */
+.lp-page-bg { min-height: 100svh; background: var(--majalis-parchment); padding-bottom: 6rem; direction: rtl; }
+.lp-error { text-align: center; padding: 2.5rem 0; color: var(--majalis-danger, #dc2626); }

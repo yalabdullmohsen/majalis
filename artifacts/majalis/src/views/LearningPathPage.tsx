@@ -54,7 +54,7 @@ export default function LearningPathPage() {
   const totalProgress  = progress.length;
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-24">
+    <div className="lp-page-bg">
 
       {/* Hero */}
       <div className="lpth-hero">
@@ -132,7 +132,7 @@ export default function LearningPathPage() {
         </h2>
 
         {error && (
-          <div className="text-center py-10 text-[var(--majalis-danger,#dc2626)]">{error}</div>
+          <div className="lp-error">{error}</div>
         )}
 
         {loading ? (

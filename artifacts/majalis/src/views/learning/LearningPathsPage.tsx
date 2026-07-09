@@ -136,9 +136,9 @@ export default function LearningPathsPage() {
 
       {/* Level legend */}
       <div className="lpp-legend">
-        <span className="lpp-legend-item"><Sprout size={14} className="text-[var(--majalis-emerald)]" /> مبتدئ</span>
-        <span className="lpp-legend-item"><BookOpen size={14} className="text-[var(--majalis-emerald)]" /> متوسط</span>
-        <span className="lpp-legend-item"><Trophy size={14} className="text-[var(--majalis-ink-soft)]" /> متقدم</span>
+        <span className="lpp-legend-item"><Sprout size={14} className="icon-emerald" /> مبتدئ</span>
+        <span className="lpp-legend-item"><BookOpen size={14} className="icon-emerald" /> متوسط</span>
+        <span className="lpp-legend-item"><Trophy size={14} className="icon-ink-soft" /> متقدم</span>
       </div>
 
       {/* Category filter */}
