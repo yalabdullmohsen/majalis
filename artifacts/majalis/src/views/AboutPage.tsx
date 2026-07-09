@@ -113,7 +113,7 @@ export default function AboutPage() {
           <li><strong>74+</strong> فتوى موثّقة و53 حكماً شرعياً</li>
           <li><strong>680+</strong> سؤال في المسابقة التعليمية</li>
           <li><strong>49+</strong> دورة علمية مجدولة</li>
-          <li><strong>55+</strong> موضوع في الإعجاز العلمي</li>
+          <li><strong>64+</strong> موضوع في الإعجاز العلمي</li>
           <li><strong>330+</strong> فائدة علمية منتقاة</li>
           <li><strong>42</strong> حديثاً نووياً مشروحاً</li>
           <li><strong>30</strong> قاعدة تجويدية مفصّلة</li>
