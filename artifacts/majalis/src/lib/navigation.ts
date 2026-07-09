@@ -63,6 +63,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/sahabah",           label: "أعلام الصحابة" },
   { href: "/shamael",           label: "الشمائل المحمدية" },
   { href: "/islam-stats",       label: "الإسلام في أرقام" },
+  { href: "/islamic-glossary",  label: "المصطلحات الإسلامية" },
   { href: "/tawba",             label: "التوبة والاستغفار" },
   { href: "/ulum-quran",        label: "علوم القرآن" },
   { href: "/mawarith",          label: "المواريث والفرائض" },
