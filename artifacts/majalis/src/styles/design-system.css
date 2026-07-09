@@ -265,7 +265,10 @@ html {
 /* ── Bottom sheet ── */
 .ds-sheet-backdrop {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 200;
   background: rgba(0, 0, 0, 0.4);
   display: flex;
@@ -1831,7 +1834,10 @@ hr.decorative,
 /* SVG ring */
 .tc-ring-svg {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   overflow: visible;
@@ -2865,7 +2871,10 @@ hr.decorative,
 .fc-card__front,
 .fc-card__back {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   backface-visibility: hidden;
   border-radius: var(--ds-radius-lg, 0.625rem);
   border: 1.5px solid var(--ds-line-color);
@@ -3417,7 +3426,10 @@ hr.decorative,
 .sr-timer--rest .sr-timer__ring-fill { stroke: var(--ds-emerald-deep, #134a3a); }
 .sr-timer__content {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3843,7 +3855,10 @@ hr.decorative,
 /* Modal */
 .vault-modal-backdrop {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: rgba(0,0,0,0.45);
   display: flex;
   align-items: center;
@@ -4643,7 +4658,10 @@ h1, h2, h3 {
 .majalis-geo-bg::before {
   content: "";
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-image:
     repeating-linear-gradient(
       45deg,

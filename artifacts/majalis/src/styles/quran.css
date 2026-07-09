@@ -67,7 +67,10 @@
 @media (max-width: 860px) {
   .qs-sidebar {
     position: fixed;
-    inset: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     z-index: 200;
     height: 100dvh;
     transform: translateX(100%);
@@ -571,7 +574,10 @@
 .qs-sidebar-backdrop {
   display: none;
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: rgba(0,0,0,.4);
   z-index: 199;
 }
@@ -971,7 +977,10 @@
 /* ── Long press context sheet ── */
 .qs-context-overlay {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: rgba(0, 0, 0, .45);
   z-index: 900;
   animation: qs-fade-in .15s ease;
@@ -1275,7 +1284,10 @@
 /* ── Shell ──────────────────────────────────────────────────────────────── */
 .mf-shell {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 200;
   display: flex;
   flex-direction: column;
@@ -1291,7 +1303,8 @@
 .mf-header {
   position: absolute;
   top: 0;
-  inset-inline: 0;
+  left: 0;
+  right: 0;
   z-index: 10;
   display: flex;
   align-items: center;
@@ -1383,7 +1396,10 @@
 /* ── Loading skeleton ────────────────────────────────────────────────────── */
 .mf-skeleton {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1405,7 +1421,10 @@
 /* ── Error state ─────────────────────────────────────────────────────────── */
 .mf-error {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1435,7 +1454,8 @@
 .mf-footer {
   position: absolute;
   bottom: 0;
-  inset-inline: 0;
+  left: 0;
+  right: 0;
   z-index: 10;
   display: flex;
   align-items: center;
@@ -1510,7 +1530,10 @@
 /* ── Surah index overlay + bottom sheet ──────────────────────────────────── */
 .mf-overlay {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 20;
   background: rgba(0,0,0,0.55);
   backdrop-filter: blur(3px);
@@ -1519,7 +1542,8 @@
 .mf-index-sheet {
   position: fixed;
   bottom: 0;
-  inset-inline: 0;
+  left: 0;
+  right: 0;
   z-index: 21;
   max-height: 78dvh;
   background: #0e2018;
@@ -1620,8 +1644,8 @@
 @media (min-width: 768px) {
   .mf-index-sheet {
     max-width: 460px;
-    inset-inline: unset;
     left: 50%;
+    right: unset;
     transform: translateX(-50%);
     border-radius: 1.25rem;
     bottom: 1rem;
@@ -1706,7 +1730,10 @@
 .mf-page-wrapper::before {
   content: '';
   position: absolute;
-  inset: 4px;
+  top: 4px;
+  right: 4px;
+  bottom: 4px;
+  left: 4px;
   border: 1px solid var(--mf-gold-faint);
   border-radius: 1px;
   pointer-events: none;
@@ -1836,7 +1863,10 @@
   content: '';
   display: block;
   position: absolute;
-  inset: 4px;
+  top: 4px;
+  right: 4px;
+  bottom: 4px;
+  left: 4px;
   border: 1px solid var(--mf-gold-soft, rgba(31,77,58,0.40));
   pointer-events: none;
   z-index: 0;

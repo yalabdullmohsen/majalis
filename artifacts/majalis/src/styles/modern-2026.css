@@ -945,7 +945,10 @@ td {
 .text-on-image-overlay::before {
   content: "";
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.20) 50%, transparent 100%);
   border-radius: inherit;
   pointer-events: none;
@@ -1305,7 +1308,10 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 /* Bottom Sheet */
 .adhkar-sheet-overlay {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: rgba(0,0,0,.45);
   z-index: 1000;
   display: flex;

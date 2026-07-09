@@ -111,7 +111,7 @@ export default function AboutPage() {
           <li><strong>604</strong> صفحة من المصحف الشريف مع أسباب تسمية ١١٤ سورة وقصصها وفضائلها</li>
           <li><strong>121</strong> كتاب في المكتبة الشرعية</li>
           <li><strong>76+</strong> عالماً وشيخاً في قاعدة بيانات العلماء</li>
-          <li><strong>74+</strong> فتوى موثّقة و53 حكماً شرعياً</li>
+          <li><strong>87+</strong> فتوى موثّقة و53 حكماً شرعياً</li>
           <li><strong>730+</strong> سؤال في المسابقة التعليمية</li>
           <li><strong>49+</strong> دورة علمية مجدولة</li>
           <li><strong>64+</strong> موضوع في الإعجاز العلمي</li>

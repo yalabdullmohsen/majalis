@@ -339,7 +339,10 @@ body {
 .home-hero--v3::before {
   content: '' !important;
   position: absolute !important;
-  inset: 0 !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
   background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,0.04) 0%, transparent 70%) !important;
   pointer-events: none !important;
 }
@@ -348,7 +351,8 @@ body {
   content: '' !important;
   position: absolute !important;
   bottom: 0 !important;
-  inset-inline: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
   height: 30% !important;
   background: linear-gradient(to top, rgba(24,54,42,0.6), transparent) !important;
   pointer-events: none !important;
@@ -535,7 +539,10 @@ body {
 .home-feature-strip-card::before {
   content: '' !important;
   position: absolute !important;
-  inset: 0 !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
   background: linear-gradient(135deg, var(--elite-sage-2, #F0F5F2) 0%, transparent 60%) !important;
   opacity: 0 !important;
   transition: opacity var(--elite-base) var(--elite-ease) !important;
@@ -601,7 +608,10 @@ body {
 .elite-stats-section::before {
   content: '' !important;
   position: absolute !important;
-  inset: 0 !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
   background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(255,255,255,0.04), transparent) !important;
   pointer-events: none !important;
 }
@@ -5459,7 +5469,10 @@ button.primary:hover {
 }
 .mzd-hero__pattern {
   position: absolute;
-  inset: 0;
+  top: 0None;
+  right: 0None;
+  bottom: 0None;
+  left: 0None;
   opacity: 0.05;
   background-image: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%);
   background-size: 12px 12px;
@@ -9532,7 +9545,10 @@ body {
 /* ── §163 — GlobalSearchModal (gsm-*) ───────────────────────────────────── */
 .gsm-overlay {
   position: fixed;
-  inset: 0;
+  top: 0None;
+  right: 0None;
+  bottom: 0None;
+  left: 0None;
   z-index: 10000;
   display: flex;
   align-items: flex-start;
@@ -10000,7 +10016,10 @@ body {
 /* ── §169 — ExploreAyahPanel (eap-*) ────────────────────────────────────── */
 .eap-backdrop {
   position: fixed;
-  inset: 0;
+  top: 0None;
+  right: 0None;
+  bottom: 0None;
+  left: 0None;
   z-index: 9000;
   background: rgba(0,0,0,0.45);
 }
@@ -10308,7 +10327,10 @@ body {
 /* ── §171 — KhatmahPanel (kht-*) & QuranBookmarksPanel (qbp-*) shared ───── */
 .kht-backdrop, .qbp-backdrop {
   position: fixed;
-  inset: 0;
+  top: 0None;
+  right: 0None;
+  bottom: 0None;
+  left: 0None;
   background: rgba(0,0,0,0.4);
 }
 .kht-backdrop { z-index: 8800; }
@@ -11359,7 +11381,10 @@ button, .btn {
 /* ── §191 — MuezzinPicker bottom-sheet ─────────────────────────────────────── */
 .mzp-overlay {
   position: fixed;
-  inset: 0;
+  top: 0None;
+  right: 0None;
+  bottom: 0None;
+  left: 0None;
   z-index: 3000;
   background: rgba(0,0,0,0.65);
   display: flex;
@@ -12217,7 +12242,10 @@ a:focus-visible {
 .hp-featured-card::before {
   content: "" !important;
   position: absolute !important;
-  inset: 0 !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
   background: linear-gradient(135deg, rgba(31,77,58,0.04) 0%, transparent 60%) !important;
   opacity: 0 !important;
   transition: opacity 0.2s !important;
@@ -12398,7 +12426,10 @@ a:focus-visible {
 .sheikh-avatar-wrap::after {
   content: "";
   position: absolute;
-  inset: -2px;
+  top: -2pxNone;
+  right: -2pxNone;
+  bottom: -2pxNone;
+  left: -2pxNone;
   border-radius: 50%;
   border: 2.5px solid var(--majalis-emerald);
   opacity: 0;
@@ -13141,7 +13172,10 @@ a:focus-visible {
 
 .vault-modal-backdrop {
   position: fixed !important;
-  inset: 0 !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
   background: rgba(0,0,0,0.45) !important;
   z-index: 9000 !important;
   display: flex !important;
@@ -13872,7 +13906,10 @@ a:focus-visible {
 .home-hero--v3::before {
   content: "" !important;
   position: absolute !important;
-  inset: 0 !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
   background:
     radial-gradient(ellipse 60% 50% at 20% 80%, rgba(255,255,255,0.06) 0%, transparent 70%),
     radial-gradient(ellipse 40% 40% at 80% 20%, rgba(255,255,255,0.04) 0%, transparent 70%) !important;
@@ -14900,7 +14937,10 @@ img[loading="lazy"]:not([src=""]) {
 .bottom-sheet__head::before {
   content: "";
   position: absolute;
-  inset: 0;
+  top: 0None;
+  right: 0None;
+  bottom: 0None;
+  left: 0None;
   background-image:
     radial-gradient(circle at 15% 50%, rgba(255,255,255,0.04) 0%, transparent 50%),
     radial-gradient(circle at 85% 50%, rgba(255,255,255,0.03) 0%, transparent 45%);
@@ -15025,7 +15065,10 @@ img[loading="lazy"]:not([src=""]) {
 .tj-hero::before {
   content: "";
   position: absolute;
-  inset: 0;
+  top: 0None;
+  right: 0None;
+  bottom: 0None;
+  left: 0None;
   background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06) 0%, transparent 50%),
                     radial-gradient(circle at 80% 70%, rgba(255,255,255,0.04) 0%, transparent 45%);
   pointer-events: none;
@@ -15160,7 +15203,10 @@ img[loading="lazy"]:not([src=""]) {
 .quran-hub-hero::before {
   content: "";
   position: absolute;
-  inset: 0;
+  top: 0None;
+  right: 0None;
+  bottom: 0None;
+  left: 0None;
   background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.04) 0%, transparent 50%),
                     radial-gradient(circle at 80% 70%, rgba(255,255,255,0.03) 0%, transparent 50%);
   pointer-events: none;
@@ -15460,7 +15506,10 @@ img[loading="lazy"]:not([src=""]) {
 .ikm-hero::before {
   content: "";
   position: absolute;
-  inset: 0;
+  top: 0None;
+  right: 0None;
+  bottom: 0None;
+  left: 0None;
   background-image:
     radial-gradient(circle at 15% 25%, rgba(255,255,255,0.05) 0%, transparent 45%),
     radial-gradient(circle at 85% 75%, rgba(255,255,255,0.04) 0%, transparent 45%);
@@ -16671,7 +16720,10 @@ img[loading="lazy"]:not([src=""]) {
 /* Modal */
 .ah-modal-backdrop {
   position: fixed;
-  inset: 0;
+  top: 0None;
+  right: 0None;
+  bottom: 0None;
+  left: 0None;
   background: rgba(0,0,0,0.55);
   z-index: 1000;
   display: flex;
@@ -24144,7 +24196,10 @@ img[loading="lazy"]:not([src=""]) {
 .seerah-hero::before {
   content: '';
   position: absolute;
-  inset: 0;
+  top: 0None;
+  right: 0None;
+  bottom: 0None;
+  left: 0None;
   background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(255,255,255,0.04), transparent);
   pointer-events: none;
 }
