@@ -45,6 +45,7 @@ const SHEET_SECTIONS = [
     { href: "/prophets",           label: "قصص الأنبياء",      Icon: Layers },
     { href: "/seerah",             label: "السيرة النبوية",    Icon: Shield },
     { href: "/sahabah",            label: "أعلام الصحابة",     Icon: Users },
+    { href: "/shamael",            label: "الشمائل المحمدية",  Icon: Star },
     { href: "/miracles",           label: "الإعجاز العلمي",    Icon: Sparkles },
     { href: "/prophetic-medicine", label: "الطب النبوي",       Icon: Stethoscope },
   ]},

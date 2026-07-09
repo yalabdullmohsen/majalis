@@ -61,6 +61,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/fadail-aamal",     label: "فضائل الأعمال" },
   { href: "/janaza",            label: "أحكام الجنائز" },
   { href: "/sahabah",           label: "أعلام الصحابة" },
+  { href: "/shamael",           label: "الشمائل المحمدية" },
   { href: "/tawba",             label: "التوبة والاستغفار" },
   { href: "/ulum-quran",        label: "علوم القرآن" },
   { href: "/mawarith",          label: "المواريث والفرائض" },
