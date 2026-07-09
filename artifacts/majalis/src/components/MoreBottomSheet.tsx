@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { Link, useLocation } from "wouter";
 import { useEffect } from "react";
 import {
-  Activity, BarChart3, BookOpen, Bot, Building2, Calendar, CheckCircle2, Compass, CreditCard,
+  Activity, BarChart3, BookOpen, Bot, Building2, Calculator, Calendar, CheckCircle2, Compass, CreditCard,
   FileText, GraduationCap, Heart, HelpCircle, Info, Landmark, Library, Layers,
   Mic, Network, Radio, RefreshCw, Repeat2, Scale, ScrollText, Search, Settings,
   Shield, Sparkles, Star, Stethoscope, Tv, Users, X, Zap,
@@ -46,6 +46,7 @@ const SHEET_SECTIONS = [
   { group: "الأحكام والفقه", items: [
     { href: "/qa",                  label: "الأسئلة",         Icon: HelpCircle },
     { href: "/madhahib",            label: "المذاهب الأربعة",  Icon: Scale },
+    { href: "/zakat",               label: "الزكاة وأحكامها",  Icon: Calculator },
     { href: "/fiqh",                label: "الفقه",           Icon: Scale },
     { href: "/fatwa",               label: "الفتاوى",         Icon: Scale },
     { href: "/rulings",             label: "الأحكام",         Icon: Scale },

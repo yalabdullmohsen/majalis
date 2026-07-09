@@ -1,0 +1,279 @@
+import { useEffect, useState } from "react";
+import { Link } from "wouter";
+import { Calculator, ChevronDown, ChevronUp, Info } from "lucide-react";
+import { applyPageSeo } from "@/lib/seo";
+
+/* ─── بيانات الأصناف ─── */
+type ZakatKind = {
+  id: string;
+  icon: string;
+  title: string;
+  nisab: string;
+  rate: string;
+  condition: string;
+  detail: string;
+  dalil: string;
+  dalilRef: string;
+  mustahiq: string[];
+  hasCalc?: boolean;
+};
+
+const KINDS: ZakatKind[] = [
+  {
+    id: "gold",
+    icon: "💍",
+    title: "زكاة الذهب والفضة",
+    nisab: "نصاب الذهب: 85 غراماً. نصاب الفضة: 595 غراماً",
+    rate: "2.5% (ربع العشر) من قيمة ما تملكه",
+    condition: "أن يبلغ النصاب، وأن يمر عليه حول هجري كامل",
+    detail: "تجب الزكاة في الذهب والفضة سواء كانا مدَّخرَين أو حلياً للاستخدام (عند جمهور العلماء). أما الفضة فنصابها أقل قيمةً من الذهب، والعبرة بالأقل في مصلحة الفقراء.",
+    dalil: "وَالَّذِينَ يَكْنِزُونَ الذَّهَبَ وَالْفِضَّةَ وَلَا يُنفِقُونَهَا فِي سَبِيلِ اللَّهِ فَبَشِّرْهُم بِعَذَابٍ أَلِيمٍ",
+    dalilRef: "التوبة: 34",
+    mustahiq: ["الفقراء", "المساكين", "العاملون عليها", "المؤلفة قلوبهم", "في الرقاب", "الغارمون", "في سبيل الله", "ابن السبيل"],
+    hasCalc: true,
+  },
+  {
+    id: "money",
+    icon: "💵",
+    title: "زكاة المال النقدي",
+    nisab: "ما يعادل قيمة 85 غرام ذهب (أو 595 غرام فضة)",
+    rate: "2.5% من المبلغ الكلي",
+    condition: "حولان الحول الهجري على المبلغ وهو بالغ النصاب",
+    detail: "تشمل النقود في المصارف والمحافظ والودائع الادخارية. يُخرَج منها ربع العشر إذا بلغت النصاب ومضى عليها حول. الديون المستحقة يُزكَّى عنها على الصحيح.",
+    dalil: "خُذْ مِنْ أَمْوَالِهِمْ صَدَقَةً تُطَهِّرُهُمْ وَتُزَكِّيهِم بِهَا",
+    dalilRef: "التوبة: 103",
+    mustahiq: ["الفقراء", "المساكين", "الغارمون", "ابن السبيل"],
+    hasCalc: true,
+  },
+  {
+    id: "trade",
+    icon: "🏪",
+    title: "زكاة عروض التجارة",
+    nisab: "ما يعادل 85 غرام ذهب من قيمة البضاعة",
+    rate: "2.5% من إجمالي قيمة المخزون",
+    condition: "نية التجارة + بلوغ النصاب + حولان الحول",
+    detail: "تشمل جميع البضائع المعدة للبيع. يُقوِّم التاجر بضاعته في نهاية الحول بسعر السوق ثم يُخرج 2.5%. ويجمع معها النقد والديون المرجوة، ويطرح الديون عليه.",
+    dalil: "يَا أَيُّهَا الَّذِينَ آمَنُوا أَنفِقُوا مِن طَيِّبَاتِ مَا كَسَبْتُمْ وَمِمَّا أَخْرَجْنَا لَكُم مِّنَ الْأَرْضِ",
+    dalilRef: "البقرة: 267",
+    mustahiq: ["الفقراء", "المساكين", "العاملون على الزكاة"],
+  },
+  {
+    id: "crops",
+    icon: "🌾",
+    title: "زكاة الزروع والثمار",
+    nisab: "5 أوسق = 653 كيلوغراماً",
+    rate: "10% إن سُقيت بمطر أو نهر، و5% إن سُقيت بآلة",
+    condition: "بلوغ النصاب، ولا يُشترط الحول — تُخرَج عند الحصاد",
+    detail: "تجب في الحبوب المقتاتة: القمح والشعير والأرز والتمر والزبيب. أما الخضار والفواكه فلا زكاة فيها إلا إذا اتُّجر بها (زكاة تجارة). وتُخرَج فور الحصاد.",
+    dalil: "وَآتُوا حَقَّهُ يَوْمَ حَصَادِهِ",
+    dalilRef: "الأنعام: 141",
+    mustahiq: ["الفقراء والمساكين في البلد"],
+  },
+  {
+    id: "livestock",
+    icon: "🐄",
+    title: "زكاة الأنعام",
+    nisab: "5 إبل · 30 بقرة · 40 شاة",
+    rate: "تتفاوت حسب العدد وفق جداول شرعية مفصلة",
+    condition: "أن ترعى الحول، وأن تبلغ النصاب، وأن لا تكون عوامل (مستخدمة في الحرث)",
+    detail: "الإبل: من 5 شياه حتى 25 ففيها بنت مخاض... البقر: من 30 تبيع حتى 60 مسنة... الغنم: من 40 واحدة حتى 120 شاة... وتختلف التفاصيل بحسب أعداد القطيع.",
+    dalil: "وَفِي كُلِّ سَائِمَةِ إبِلٍ في كُلِّ خَمْسٍ شَاةٌ",
+    dalilRef: "حديث أنس في صحيح البخاري",
+    mustahiq: ["الفقراء والمساكين"],
+  },
+  {
+    id: "rikaz",
+    icon: "⚗️",
+    title: "الركاز والمعادن",
+    nisab: "لا يُشترط له نصاب",
+    rate: "الخمس (20%) فوراً",
+    condition: "وجود كنز جاهلي مدفون في الأرض",
+    detail: "الركاز: الكنوز المدفونة من الجاهلية، ففيه الخمس يُخرَج فوراً دون اشتراط حول. أما المعادن المستخرجة فعند جمهور الفقهاء فيها ربع العشر بعد بلوغ النصاب.",
+    dalil: "«وفي الركاز الخمس»",
+    dalilRef: "رواه البخاري ومسلم",
+    mustahiq: ["مصارف الزكاة الثمانية"],
+  },
+  {
+    id: "fitar",
+    icon: "🌙",
+    title: "زكاة الفطر",
+    nisab: "تجب على كل مسلم قادر",
+    rate: "صاع من غالب قوت البلد ≈ 2.5 كغ أو ما يعادله نقداً",
+    condition: "أن يُدرك آخر رمضان وأول شوال، وأن يكون قادراً",
+    detail: "تُخرَج قبل صلاة عيد الفطر، وتجوز من أول رمضان. يُخرجها عن نفسه ومن يعول. مصرفها الفقراء تحديداً، والحكمة طُهرة للصائم وإغناء الفقراء عن السؤال يوم العيد.",
+    dalil: "«فرض رسول الله ﷺ زكاة الفطر صاعاً من تمر أو صاعاً من شعير على العبد والحر والذكر والأنثى والصغير والكبير من المسلمين»",
+    dalilRef: "رواه البخاري ومسلم",
+    mustahiq: ["الفقراء", "المساكين"],
+  },
+];
+
+/* ─── حاسبة مبسطة ─── */
+function ZakatCalc() {
+  const [gold, setGold] = useState("");
+  const [silver, setSilver] = useState("");
+  const [cash, setCash] = useState("");
+  const [result, setResult] = useState<number | null>(null);
+
+  /* سعر تقريبي: 1 غرام ذهب ≈ 220 دينار كويتي (يتغير) */
+  const GOLD_PRICE_PER_GRAM = 220;
+  const NISAB_GOLD_GRAMS = 85;
+  const NISAB_VALUE = NISAB_GOLD_GRAMS * GOLD_PRICE_PER_GRAM;
+
+  function calculate() {
+    const g = parseFloat(gold) || 0;
+    const s = parseFloat(silver) || 0;
+    const c = parseFloat(cash) || 0;
+    const goldValue = g * GOLD_PRICE_PER_GRAM;
+    const silverValue = s * 0.9; /* سعر تقريبي للجرام فضة */
+    const total = goldValue + silverValue + c;
+    if (total < NISAB_VALUE) { setResult(0); return; }
+    setResult(Math.round(total * 0.025 * 100) / 100);
+  }
+
+  return (
+    <div className="zk-calc">
+      <div className="zk-calc__head">
+        <Calculator size={18} aria-hidden="true" />
+        <span>حاسبة الزكاة التقريبية</span>
+      </div>
+      <p className="zk-calc__note">
+        <Info size={13} aria-hidden="true" />
+        الأسعار تقريبية. راجع العالم الشرعي لدقة الحساب.
+      </p>
+      <div className="zk-calc__fields">
+        <label className="zk-calc__field">
+          <span>الذهب (غرام)</span>
+          <input type="number" min="0" value={gold} onChange={(e) => setGold(e.target.value)} placeholder="0" className="zk-calc__input" />
+        </label>
+        <label className="zk-calc__field">
+          <span>الفضة (غرام)</span>
+          <input type="number" min="0" value={silver} onChange={(e) => setSilver(e.target.value)} placeholder="0" className="zk-calc__input" />
+        </label>
+        <label className="zk-calc__field">
+          <span>النقود (دينار كويتي)</span>
+          <input type="number" min="0" value={cash} onChange={(e) => setCash(e.target.value)} placeholder="0" className="zk-calc__input" />
+        </label>
+      </div>
+      <button type="button" className="zk-calc__btn" onClick={calculate}>احسب الزكاة</button>
+      {result !== null && (
+        <div className={`zk-calc__result${result === 0 ? " zk-calc__result--no" : ""}`}>
+          {result === 0
+            ? "المجموع لم يبلغ النصاب — لا زكاة"
+            : `الزكاة المستحقة ≈ ${result.toFixed(2)} دينار كويتي`}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function ZakatPage() {
+  const [openId, setOpenId] = useState<string | null>(null);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/zakat",
+      title: "الزكاة وأحكامها | المجلس العلمي",
+      description: "دليل شامل لأحكام الزكاة: أنواعها وشروطها ونصابها ومصارفها — مع حاسبة مبسطة وأدلة من القرآن والسنة.",
+      keywords: ["زكاة", "أحكام الزكاة", "نصاب الزكاة", "زكاة المال", "زكاة الفطر", "حاسبة زكاة"],
+    });
+  }, []);
+
+  function toggle(id: string) {
+    setOpenId((prev) => (prev === id ? null : id));
+  }
+
+  return (
+    <main className="zk-page" dir="rtl">
+      {/* هيرو */}
+      <section className="zk-hero">
+        <div className="zk-hero__badge">الركن الثالث</div>
+        <h1 className="zk-hero__title">الزكاة وأحكامها</h1>
+        <p className="zk-hero__sub">
+          الزكاة ركن من أركان الإسلام الخمسة، فريضة واجبة طُهرةً للمال وعطاءً للمحتاجين
+        </p>
+        <div className="zk-hero__stats">
+          <div className="zk-hero__stat"><strong>8</strong><span>مصارف شرعية</span></div>
+          <div className="zk-hero__stat"><strong>7</strong><span>أنواع الزكاة</span></div>
+          <div className="zk-hero__stat"><strong>2.5%</strong><span>المال والذهب</span></div>
+        </div>
+      </section>
+
+      {/* المصارف الثمانية */}
+      <section className="zk-mustahiq">
+        <h2 className="zk-mustahiq__title">مصارف الزكاة الثمانية</h2>
+        <p className="zk-mustahiq__dalil">
+          ﴿إِنَّمَا الصَّدَقَاتُ لِلْفُقَرَاءِ وَالْمَسَاكِينِ وَالْعَامِلِينَ عَلَيْهَا وَالْمُؤَلَّفَةِ قُلُوبُهُمْ وَفِي الرِّقَابِ وَالْغَارِمِينَ وَفِي سَبِيلِ اللَّهِ وَابْنِ السَّبِيلِ﴾ — التوبة: 60
+        </p>
+        <div className="zk-mustahiq__grid">
+          {["الفقراء", "المساكين", "العاملون عليها", "المؤلفة قلوبهم", "في الرقاب", "الغارمون", "في سبيل الله", "ابن السبيل"].map((m, i) => (
+            <div key={m} className="zk-mustahiq__item">
+              <span className="zk-mustahiq__num">{i + 1}</span>
+              <span>{m}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* حاسبة الزكاة */}
+      <ZakatCalc />
+
+      {/* أنواع الزكاة */}
+      <section className="zk-kinds">
+        <h2 className="zk-kinds__title">أنواع الزكاة وأحكامها</h2>
+        <div className="zk-list">
+          {KINDS.map((k) => {
+            const isOpen = openId === k.id;
+            return (
+              <article key={k.id} className={`zk-card${isOpen ? " zk-card--open" : ""}`}>
+                <button
+                  type="button"
+                  className="zk-card__header"
+                  onClick={() => toggle(k.id)}
+                  aria-expanded={isOpen}
+                >
+                  <span className="zk-card__icon">{k.icon}</span>
+                  <div className="zk-card__header-text">
+                    <div className="zk-card__title">{k.title}</div>
+                    <div className="zk-card__rate">{k.rate}</div>
+                  </div>
+                  {isOpen ? <ChevronUp size={18} className="zk-card__chevron" /> : <ChevronDown size={18} className="zk-card__chevron" />}
+                </button>
+                {isOpen && (
+                  <div className="zk-card__body">
+                    <div className="zk-row"><span className="zk-label">النصاب:</span><span>{k.nisab}</span></div>
+                    <div className="zk-row"><span className="zk-label">الشرط:</span><span>{k.condition}</span></div>
+                    <p className="zk-detail">{k.detail}</p>
+                    <div className="zk-dalil">
+                      <div className="zk-dalil__text">﴿{k.dalil}﴾</div>
+                      <div className="zk-dalil__ref">{k.dalilRef}</div>
+                    </div>
+                    <div className="zk-mustahiq-inline">
+                      <span className="zk-label">المستحقون:</span>
+                      {k.mustahiq.map((m) => <span key={m} className="zk-chip">{m}</span>)}
+                    </div>
+                  </div>
+                )}
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ذات صلة */}
+      <section className="zk-related">
+        <h2 className="zk-related__title">استكشف أيضاً</h2>
+        <div className="zk-related__grid">
+          {[
+            { href: "/arkan",          label: "أركان الإسلام" },
+            { href: "/prayer-ranks",   label: "فضائل الصلاة" },
+            { href: "/fiqh",           label: "الفقه الإسلامي" },
+            { href: "/rulings",        label: "الأحكام الشرعية" },
+            { href: "/sunan-yawmiyya", label: "السنن اليومية" },
+          ].map(({ href, label }) => (
+            <Link key={href} href={href} className="zk-related__link">{label}</Link>
+          ))}
+        </div>
+      </section>
+    </main>
+  );
+}
