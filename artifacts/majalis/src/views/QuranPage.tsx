@@ -19,6 +19,13 @@ const BM_KEY     = "mj-mushaf-bm-v4";
 const ZOOM_KEY   = "mj-mushaf-zoom-v4";
 const MODE_KEY   = "mj-mushaf-mode-v4";
 
+/* مصادر صور المصحف مرتبة حسب الأولوية — عند فشل مصدر تنتقل للتالي */
+const CDN_SOURCES = [
+  (n: string) => `https://evkur.net/sites/default/files/mushaf/hafs/hafs-${n}.png`,
+  (n: string) => `https://qurancdn.com/images/pages/jpg/p${n}.jpg`,
+  (n: string) => `https://www.searchtruth.com/quran/images/pages/${n}.jpg`,
+];
+
 type ReadMode = "day" | "night" | "sepia";
 
 /* بيانات السور: [الاسم، أول صفحة] */
@@ -83,6 +90,7 @@ export default function QuranPage() {
   const [bookmarks, setBookmarks] = useState<number[]>(() => lsGet(BM_KEY, []));
   const [imgLoaded, setImgLoaded] = useState(false);
   const [imgError, setImgError]   = useState(false);
+  const [cdnIdx, setCdnIdx]       = useState(0);
   const [navOpen, setNavOpen]     = useState(false);
   const [navTab, setNavTab]       = useState<"surahs" | "bookmarks">("surahs");
   const [search, setSearch]       = useState("");
@@ -125,6 +133,7 @@ export default function QuranPage() {
         lsSet(PAGE_KEY, p);
         setImgLoaded(false);
         setImgError(false);
+        setCdnIdx(0);
         setAnim("");
       }, 180);
     } else {
@@ -132,6 +141,7 @@ export default function QuranPage() {
       lsSet(PAGE_KEY, p);
       setImgLoaded(false);
       setImgError(false);
+      setCdnIdx(0);
     }
     bump();
   }, [page, bump]);
@@ -196,7 +206,8 @@ export default function QuranPage() {
   const modeClass = mode === "night" ? " mshf-night" : mode === "sepia" ? " mshf-sepia" : "";
   const ModeIcon  = mode === "night" ? Moon : Sun;
 
-  const imgSrc = `https://qurancdn.com/images/pages/jpg/p${padPage(page)}.jpg`;
+  const imgSrc = CDN_SOURCES[cdnIdx]?.(padPage(page)) ?? CDN_SOURCES[0](padPage(page));
+  const allCdnsFailed = cdnIdx >= CDN_SOURCES.length;
 
   /* ══════════════════════════════════════════════════════════════════
      JSX
@@ -265,44 +276,57 @@ export default function QuranPage() {
       {/* ══ صفحة المصحف ══ */}
       <div className={`mshf-page-container${anim ? ` ${anim}` : ""}`}>
         {/* مؤشر التحميل */}
-        {!imgLoaded && !imgError && (
+        {!imgLoaded && !allCdnsFailed && (
           <div className="mshf-loading" aria-live="polite">
             <div className="mshf-spinner" />
-            <span>جاري تحميل الصفحة {page.toLocaleString("ar-EG")}…</span>
+            <span>
+              جاري تحميل الصفحة {page.toLocaleString("ar-EG")}
+              {cdnIdx > 0 ? ` (مصدر ${(cdnIdx + 1).toLocaleString("ar-EG")})` : ""}
+              …
+            </span>
           </div>
         )}
 
-        {/* خطأ التحميل */}
-        {imgError && (
+        {/* خطأ التحميل — بعد انتهاء جميع المصادر */}
+        {allCdnsFailed && (
           <div className="mshf-err">
             <BookOpen size={52} strokeWidth={1} style={{ opacity: 0.25 }} aria-hidden="true" />
             <p>تعذّر تحميل الصفحة {page.toLocaleString("ar-EG")}</p>
-            <p className="mshf-err-sub">تحقق من اتصالك بالإنترنت</p>
+            <p className="mshf-err-sub">تحقق من اتصالك بالإنترنت ثم أعد المحاولة</p>
             <button
               type="button"
               className="mshf-err-btn"
-              onClick={() => { setImgError(false); setImgLoaded(false); }}
+              onClick={() => { setImgError(false); setImgLoaded(false); setCdnIdx(0); }}
             >
               إعادة المحاولة
             </button>
           </div>
         )}
 
-        {/* الصورة */}
-        <img
-          key={page}
-          src={imgSrc}
-          alt={`صفحة ${page} من القرآن الكريم — ${surahName}`}
-          className={`mshf-page-img${imgLoaded ? " loaded" : ""}${mode === "night" ? " night" : ""}`}
-          style={{
-            transform: zoom !== 1 ? `scale(${zoom})` : undefined,
-            transformOrigin: "top center",
-            display: imgError ? "none" : "block",
-          }}
-          onLoad={() => setImgLoaded(true)}
-          onError={() => setImgError(true)}
-          draggable={false}
-        />
+        {/* الصورة — تجرب كل CDN بالترتيب */}
+        {!allCdnsFailed && (
+          <img
+            key={`${page}-${cdnIdx}`}
+            src={imgSrc}
+            alt={`صفحة ${page} من القرآن الكريم — ${surahName}`}
+            className={`mshf-page-img${imgLoaded ? " loaded" : ""}${mode === "night" ? " night" : ""}`}
+            style={{
+              transform: zoom !== 1 ? `scale(${zoom})` : undefined,
+              transformOrigin: "top center",
+            }}
+            onLoad={() => { setImgLoaded(true); setImgError(false); }}
+            onError={() => {
+              if (cdnIdx + 1 < CDN_SOURCES.length) {
+                setCdnIdx(idx => idx + 1);
+                setImgLoaded(false);
+              } else {
+                setImgError(true);
+                setCdnIdx(CDN_SOURCES.length);
+              }
+            }}
+            draggable={false}
+          />
+        )}
       </div>
 
       {/* ══ شريط سفلي ══ */}
