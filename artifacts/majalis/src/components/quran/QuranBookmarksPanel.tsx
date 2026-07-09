@@ -20,11 +20,11 @@ type Props = {
   onClose: () => void;
 };
 
-const HIFZ_STATUS_LABELS: Record<string, { label: string; color: string }> = {
-  not_started: { label: "لم يُبدأ",   color: "var(--majalis-ink-soft)" },
-  memorizing:  { label: "جارٍ الحفظ", color: "var(--majalis-emerald, #1F4D3A)" },
-  memorized:   { label: "محفوظ ✓",    color: "var(--majalis-emerald-deep, #0A5040)" },
-  reviewing:   { label: "مراجعة",     color: "#1E40AF" },
+const HIFZ_STATUS_LABELS: Record<string, { label: string; mod: string }> = {
+  not_started: { label: "لم يُبدأ",   mod: "qbp-hifz--not-started" },
+  memorizing:  { label: "جارٍ الحفظ", mod: "qbp-hifz--memorizing"  },
+  memorized:   { label: "محفوظ ✓",    mod: "qbp-hifz--memorized"   },
+  reviewing:   { label: "مراجعة",     mod: "qbp-hifz--reviewing"   },
 };
 
 function HifzList() {
@@ -45,12 +45,12 @@ function HifzList() {
     <div>
       {progress.map((h) => {
         const pct    = h.totalAyahs > 0 ? Math.round((h.memorizedAyahs / h.totalAyahs) * 100) : 0;
-        const status = HIFZ_STATUS_LABELS[h.status] ?? { label: h.status, color: "var(--majalis-ink-soft)" };
+        const status = HIFZ_STATUS_LABELS[h.status] ?? { label: h.status, mod: "qbp-hifz--not-started" };
         return (
           <div key={h.surahNum} className="qbp-hifz-row">
             <div className="qbp-hifz-head">
               <span className="qbp-hifz-name">سورة رقم {h.surahNum}</span>
-              <span className="qbp-hifz-status" style={{ "--qbp-hifz-status-color": status.color } as React.CSSProperties}>{status.label}</span>
+              <span className={`qbp-hifz-status ${status.mod}`}>{status.label}</span>
             </div>
             <div className="qbp-hifz-bar-wrap">
               <div className="qbp-hifz-bar">

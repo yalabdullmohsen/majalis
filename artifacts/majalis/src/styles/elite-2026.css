@@ -10534,6 +10534,10 @@ body {
 .qbp-hifz-row { padding: 0.75rem 1rem; border-bottom: 1px solid var(--majalis-line); }
 .qbp-hifz-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; }
 .qbp-hifz-name { font-weight: 600; color: var(--majalis-ink); font-size: 0.9rem; }
+.qbp-hifz--not-started { --qbp-hifz-status-color: var(--majalis-ink-soft); }
+.qbp-hifz--memorizing  { --qbp-hifz-status-color: var(--majalis-emerald, #1F4D3A); }
+.qbp-hifz--memorized   { --qbp-hifz-status-color: var(--majalis-emerald-deep, #0A5040); }
+.qbp-hifz--reviewing   { --qbp-hifz-status-color: #1E40AF; }
 .qbp-hifz-status { font-size: 0.72rem; font-weight: 700; color: var(--qbp-hifz-status-color, var(--majalis-ink-soft)); }
 .qbp-hifz-bar-wrap { display: flex; align-items: center; gap: 0.5rem; }
 .qbp-hifz-bar { flex: 1; height: 6px; background: #e5e3dd; border-radius: 3px; overflow: hidden; }
@@ -10922,7 +10926,7 @@ body {
 .rec-mini-card__badge {
   font-size: 0.75rem; color: #fff; padding: 0.125rem 0.5rem;
   border-radius: 0.25rem; font-weight: 500;
-  background: var(--rec-badge-bg, var(--majalis-emerald-deep));
+  background: var(--rw-color, var(--majalis-emerald-deep));
 }
 .rec-mini-card__cat { font-size: 0.75rem; margin-top: auto; color: var(--majalis-ink-soft); }
 .ds-skeleton--card { height: 6rem; border-radius: 0.75rem; }
@@ -11442,6 +11446,19 @@ button, .btn {
 .anb-btn:hover { background: rgba(255,255,255,0.22); }
 
 /* ── §194 — SourceCard color helpers ───────────────────────────────────────── */
+.src-type--quran-verse   { --sc-color: #1e7e34; }
+.src-type--hadith        { --sc-color: #856404; }
+.src-type--tafsir,
+.src-type--dhikr         { --sc-color: #155724; }
+.src-type--fatwa         { --sc-color: #721c24; }
+.src-type--fiqh-decision { --sc-color: #004085; }
+.src-type--book,
+.src-type--story         { --sc-color: #383d41; }
+.src-type--lesson        { --sc-color: #0c5460; }
+.src-type--benefit       { --sc-color: #533f03; }
+.src-type--article       { --sc-color: #3d1a78; }
+.src-type--ruling        { --sc-color: #856404; }
+.src-type--quote         { --sc-color: #212529; }
 .sc-color-bar { background: var(--sc-color, #374151); }
 .sc-color-bg  { background: var(--sc-color, #374151); }
 

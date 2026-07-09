@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import {
   type RecommendedItem,
-  CONTENT_TYPE_COLOR,
   CONTENT_TYPE_LABEL,
   fetchRecommendations,
   getItemHref,
@@ -12,10 +11,10 @@ import {
 import { useAuth } from "@/components/AuthProvider";
 
 function RecMiniCard({ item }: { item: RecommendedItem }) {
-  const color = CONTENT_TYPE_COLOR[item.content_type] || "var(--majalis-emerald, #1F4D3A)";
   const label = CONTENT_TYPE_LABEL[item.content_type] || "";
   const title = getItemTitle(item);
   const href = getItemHref(item);
+  const typeMod = `rw-type--${String(item.content_type).replace(/_/g, "-")}`;
 
   return (
     <Link
@@ -24,10 +23,7 @@ function RecMiniCard({ item }: { item: RecommendedItem }) {
       className="rec-mini-card group"
     >
       <div className="flex items-center justify-between">
-        <span
-          className="rec-mini-card__badge"
-          style={{ "--rec-badge-bg": color } as React.CSSProperties}
-        >
+        <span className={`rec-mini-card__badge ${typeMod}`}>
           {label}
         </span>
         <span className="rec-mini-card__arrow">←</span>
