@@ -1,10 +1,23 @@
 import { Link } from "wouter";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 
+const OBLIGATORY_KEYS = new Set(["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"]);
+
 export function HomePrayerTimes() {
   const { data, countdown, loading } = usePrayerCountdown();
   const obligatory = data?.prayers.filter((p) => p.obligatory) || [];
   const sunrise = data?.prayers.find((p) => p.key === "Sunrise") || null;
+
+  // أثناء فترة السماح: أحسب الصلاة التالية الفعلية واسمها
+  const inGrace = !!countdown && countdown.sinceSeconds != null;
+  const graceActualNext = (() => {
+    if (!inGrace || !countdown?.next || !data) return null;
+    const obl = data.prayers.filter((p) => OBLIGATORY_KEYS.has(p.key));
+    const idx = obl.findIndex((p) => p.key === countdown.next?.key);
+    return idx >= 0 ? obl[(idx + 1) % obl.length] : null;
+  })();
+  const displayHms = inGrace && countdown?.graceNextHms ? countdown.graceNextHms : (countdown?.remainingHms ?? "--:--:--");
+  const nextPrayerName = inGrace && graceActualNext ? graceActualNext.name : (countdown?.next?.name || "غير محدد");
 
   return (
     <section className="home-section" aria-labelledby="home-prayer-heading">
@@ -27,10 +40,10 @@ export function HomePrayerTimes() {
       ) : data && countdown ? (
         <div className="home-prayer-widget">
           <div className="prayer-status-card ui-card">
-            <p className="prayer-status-card__label">الصلاة القادمة</p>
-            <h3>{countdown.next?.name || "غير محدد"}</h3>
-            <p className="prayer-status-card__countdown prayer-countdown-hms" aria-live="polite">
-              {countdown.remainingHms}
+            <p className="prayer-status-card__label">{inGrace ? "جاري الأذان — الصلاة القادمة" : "الصلاة القادمة"}</p>
+            <h3>{nextPrayerName}</h3>
+            <p className="prayer-status-card__countdown prayer-countdown-hms" aria-live="polite" dir="ltr">
+              {displayHms}
             </p>
             {countdown.current && (
               <p className="prayer-status-card__current">الوقت الحالي: {countdown.current.name}</p>

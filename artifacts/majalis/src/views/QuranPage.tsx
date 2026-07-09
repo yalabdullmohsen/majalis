@@ -198,6 +198,7 @@ export default function QuranPage() {
   /* ── لوحة المفاتيح ── */
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
+      if (e.key === "Escape") { setNavOpen(false); return; }
       if (navOpen) return;
       if (e.key === "ArrowLeft")       goPage(page + 1, "left");
       else if (e.key === "ArrowRight") goPage(page - 1, "right");
