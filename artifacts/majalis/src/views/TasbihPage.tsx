@@ -208,6 +208,7 @@ export default function TasbihPage() {
             value={newPhrase}
             onChange={(e) => setNewPhrase(e.target.value)}
             placeholder="مثال: لا حول ولا قوة إلا بالله"
+            aria-label="نص الورد"
             onKeyDown={(e) => e.key === "Enter" && addWird()}
           />
           <input

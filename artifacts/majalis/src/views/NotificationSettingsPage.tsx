@@ -199,10 +199,11 @@ export default function NotificationSettingsPage() {
       <div className="notif-card">
         <h3 className="notif-card__title">وقت التذكير اليومي</h3>
         <div className="notif-time">
-          <label className="notif-time__label">الساعة</label>
-          <input type="number" className="notif-time__input" min={0} max={23} value={prefs.reminderHour} onChange={e => update({ reminderHour: Math.min(23, Math.max(0, Number(e.target.value))) })} disabled={!canToggle} />
-          <span className="notif-time__sep">:</span>
-          <input type="number" className="notif-time__input" min={0} max={59} value={prefs.reminderMinute} onChange={e => update({ reminderMinute: Math.min(59, Math.max(0, Number(e.target.value))) })} disabled={!canToggle} />
+          <label htmlFor="notif-hour" className="notif-time__label">الساعة</label>
+          <input id="notif-hour" type="number" className="notif-time__input" min={0} max={23} value={prefs.reminderHour} onChange={e => update({ reminderHour: Math.min(23, Math.max(0, Number(e.target.value))) })} disabled={!canToggle} />
+          <span className="notif-time__sep" aria-hidden="true">:</span>
+          <label htmlFor="notif-minute" className="notif-time__label">الدقيقة</label>
+          <input id="notif-minute" type="number" className="notif-time__input" min={0} max={59} value={prefs.reminderMinute} onChange={e => update({ reminderMinute: Math.min(59, Math.max(0, Number(e.target.value))) })} disabled={!canToggle} />
         </div>
         <p className="notif-time__hint">التذكيرات تعمل فقط عندما يكون المتصفح مفتوحاً.</p>
       </div>

@@ -349,6 +349,7 @@ export default function FadailAamalPage() {
             type="search"
             className="fa-search"
             placeholder="ابحث في الأحاديث..."
+            aria-label="بحث في أحاديث فضائل الأعمال"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
