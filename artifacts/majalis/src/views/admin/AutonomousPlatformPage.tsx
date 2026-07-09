@@ -49,24 +49,24 @@ type Dashboard = {
   cronSchedules?: Record<string, { schedule?: string }>;
 };
 
-function scoreColor(v: number) {
-  return v >= 80 ? "#065F46" : v >= 50 ? "#1F4D3A" : "#991B1B";
+function scoreMod(v: number) {
+  return v >= 80 ? " aup-score__val--high" : v >= 50 ? " aup-score__val--mid" : " aup-score__val--low";
 }
 
 function Score({ value, label }: { value?: number; label: string }) {
   const v = value ?? 0;
   return (
     <div className="aup-score">
-      <div className="aup-score__val" style={{ "--aup-sv-color": scoreColor(v) } as React.CSSProperties}>{v}</div>
+      <div className={`aup-score__val${scoreMod(v)}`}>{v}</div>
       <div className="aup-score__label">{label}</div>
     </div>
   );
 }
 
-function Stat({ label, value, color }: { label: string; value: string | number; color?: string }) {
+function Stat({ label, value, mod }: { label: string; value: string | number; mod?: string }) {
   return (
     <div className="aup-stat">
-      <div className="aup-stat__val" style={color ? { "--aup-stat-color": color } as React.CSSProperties : undefined}>{value}</div>
+      <div className={`aup-stat__val${mod ? ` ${mod}` : ""}`}>{value}</div>
       <div className="aup-stat__label">{label}</div>
     </div>
   );
@@ -84,24 +84,8 @@ function Panel({ title, children, action }: { title: string; children: React.Rea
   );
 }
 
-function statusColor(s: string) {
-  if (s === "available") return "#065F46";
-  if (s === "slow") return "#1F4D3A";
-  if (s === "dead" || s === "blocked") return "#991B1B";
-  if (s === "unauthorized") return "#7C3AED";
-  return "var(--majalis-ink-soft)";
-}
-
 function StatusBadge({ status }: { status: string }) {
-  const c = statusColor(status);
-  return (
-    <span
-      className="aup-sb"
-      style={{ "--aup-sb-bg": c + "22", "--aup-sb-color": c } as React.CSSProperties}
-    >
-      {status}
-    </span>
-  );
+  return <span className={`aup-sb aup-sb--${status}`}>{status}</span>;
 }
 
 function fmtMs(ms?: number | null) {
@@ -118,13 +102,7 @@ function fmtDt(iso?: string | null) {
 
 function RunBtn({ label, busy, onClick }: { label: string; busy?: boolean; onClick: () => void }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={busy}
-      className="aup-run-btn"
-      style={busy ? { "--aup-rb-bg": "var(--majalis-line)" } as React.CSSProperties : undefined}
-    >
+    <button type="button" onClick={onClick} disabled={busy} className="aup-run-btn">
       {busy ? "جاري..." : label}
     </button>
   );
@@ -235,12 +213,12 @@ function AutonomousPlatformContent() {
       </div>
 
       <div className="aup-stats-row">
-        <Stat label="نشر اليوم" value={counts?.published ?? 0} color="#065F46" />
+        <Stat label="نشر اليوم" value={counts?.published ?? 0} mod="aup-stat__val--positive" />
         <Stat label="مصادر نشطة" value={`${counts?.sourcesHealthy ?? 0}/${counts?.sources ?? 0}`} />
-        <Stat label="مصادر معطلة" value={counts?.sourcesDead ?? 0} color={(counts?.sourcesDead ?? 0) > 0 ? "#991B1B" : undefined} />
-        <Stat label="قيد المراجعة" value={counts?.reviewPending ?? 0} color={(counts?.reviewPending ?? 0) > 0 ? "#1F4D3A" : undefined} />
-        <Stat label="DLQ" value={counts?.dlq ?? 0} color={(counts?.dlq ?? 0) > 0 ? "#991B1B" : undefined} />
-        <Stat label="تنبيهات مفتوحة" value={counts?.alerts ?? 0} color={(counts?.alerts ?? 0) > 0 ? "#1F4D3A" : undefined} />
+        <Stat label="مصادر معطلة" value={counts?.sourcesDead ?? 0} mod={(counts?.sourcesDead ?? 0) > 0 ? "aup-stat__val--danger" : undefined} />
+        <Stat label="قيد المراجعة" value={counts?.reviewPending ?? 0} mod={(counts?.reviewPending ?? 0) > 0 ? "aup-stat__val--warn" : undefined} />
+        <Stat label="DLQ" value={counts?.dlq ?? 0} mod={(counts?.dlq ?? 0) > 0 ? "aup-stat__val--danger" : undefined} />
+        <Stat label="تنبيهات مفتوحة" value={counts?.alerts ?? 0} mod={(counts?.alerts ?? 0) > 0 ? "aup-stat__val--warn" : undefined} />
         <Stat label="مكررات اليوم" value={counts?.duplicates ?? 0} />
         <Stat label="قائمة الانتظار" value={counts?.queuePending ?? 0} />
         <Stat label="إعادة المحاولة" value={counts?.retryPending ?? 0} />
@@ -261,12 +239,7 @@ function AutonomousPlatformContent() {
             key={t.key}
             type="button"
             onClick={() => setTab(t.key)}
-            className="aup-tab"
-            style={{
-              "--aup-tab-bg": tab === t.key ? "var(--majalis-emerald-deep)" : "transparent",
-              "--aup-tab-color": tab === t.key ? "#fff" : "var(--majalis-ink-soft)",
-              "--aup-tab-fw": tab === t.key ? "700" : "400",
-            } as React.CSSProperties}
+            className={`aup-tab${tab === t.key ? " aup-tab--active" : ""}`}
           >
             {t.label}
           </button>
@@ -281,17 +254,17 @@ function AutonomousPlatformContent() {
             <div className="aup-pipeline-grid">
               {Object.entries(dashboard?.pipelines || {}).map(([type, p]) => {
                 const pct = p.quota ? Math.round(((p.publishedToday || 0) / p.quota) * 100) : 0;
-                const color = pct >= 80 ? "#065F46" : pct >= 40 ? "#1F4D3A" : "var(--majalis-ink-soft)";
+                const pctMod = pct >= 80 ? " aup-pipeline-card--high" : pct >= 40 ? " aup-pipeline-card--mid" : "";
                 return (
-                  <div key={type} className="aup-pipeline-card">
+                  <div key={type} className={`aup-pipeline-card${pctMod}`}>
                     <div className="aup-pipeline-name">{p.label || type}</div>
-                    <div className="aup-pipeline-count" style={{ "--aup-pc-color": color } as React.CSSProperties}>
+                    <div className="aup-pipeline-count">
                       {p.publishedToday ?? 0} <span className="aup-pipeline-sub">/ {p.quota ?? "—"}</span>
                     </div>
                     <div className="aup-pipeline-bar">
-                      <div className="aup-pipeline-fill" style={{ "--aup-pf-w": `${Math.min(100, pct)}%`, "--aup-pf-color": color } as React.CSSProperties} />
+                      <div className="aup-pipeline-fill" style={{ "--aup-pf-w": `${Math.min(100, pct)}%` } as React.CSSProperties} />
                     </div>
-                    <div className="aup-pipeline-pct" style={{ "--aup-pc-color": color } as React.CSSProperties}>{pct}%</div>
+                    <div className="aup-pipeline-pct">{pct}%</div>
                     <div className="aup-pipeline-sub">{p.quotaPeriod || "daily"}</div>
                     <div className="aup-pipeline-run-wrap">
                       <RunBtn label="تشغيل" busy={busy === type} onClick={() => run(type)} />
@@ -400,18 +373,10 @@ function AutonomousPlatformContent() {
           ) : (
             <div className="aup-grid-gap">
               {alerts.map((alert) => {
-                const sevColor = alert.severity === "critical" ? "#991B1B" : alert.severity === "error" ? "#DC2626" : alert.severity === "warning" ? "#1F4D3A" : "var(--majalis-emerald-deep)";
                 return (
-                  <div
-                    key={alert.id}
-                    className="aup-alert-card"
-                    style={{ "--aup-al-border": `${sevColor}44`, "--aup-al-bg": `${sevColor}08` } as React.CSSProperties}
-                  >
+                  <div key={alert.id} className={`aup-alert-card aup-alert-card--${alert.severity}`}>
                     <div className="aup-alert-head">
-                      <span
-                        className="aup-alert-sev"
-                        style={{ "--aup-als-bg": sevColor + "22", "--aup-als-color": sevColor } as React.CSSProperties}
-                      >
+                      <span className={`aup-alert-sev aup-alert-sev--${alert.severity}`}>
                         {alert.severity}
                       </span>
                       <strong className="aup-alert-title">{alert.title}</strong>
