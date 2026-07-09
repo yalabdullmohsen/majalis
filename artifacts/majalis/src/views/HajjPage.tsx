@@ -259,6 +259,7 @@ export default function HajjPage() {
               type="button"
               className={`hj-tab${tab === t.id ? " hj-tab--active" : ""}`}
               onClick={() => setTab(t.id)}
+              aria-pressed={tab === t.id}
             >
               <span className="hj-tab__icon">{t.icon}</span>
               <span className="hj-tab__label">{t.label}</span>

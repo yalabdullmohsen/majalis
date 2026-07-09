@@ -132,6 +132,7 @@ export function FiqhCouncilFilters({
                 type="button"
                 onClick={() => onType(t)}
                 className={type === t ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+                aria-pressed={type === t}
               >
                 {t === "الكل" ? "الكل" : FIQH_ITEM_TYPE_LABELS[t as FiqhItemType]}
               </button>
@@ -147,6 +148,7 @@ export function FiqhCouncilFilters({
               type="button"
               onClick={() => onCategory(cat)}
               className={category === cat ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+              aria-pressed={category === cat}
             >
               {cat}
             </button>

@@ -303,6 +303,7 @@ export default function AnbiyaPage() {
             type="button"
             className={`nb-tab${activeTab === t.id ? " nb-tab--active" : ""}`}
             onClick={() => setActiveTab(t.id)}
+            aria-pressed={activeTab === t.id}
           >{t.label}</button>
         ))}
       </div>

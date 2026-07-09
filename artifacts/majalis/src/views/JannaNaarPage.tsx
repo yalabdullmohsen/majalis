@@ -141,6 +141,7 @@ export default function JannaNaarPage() {
             className={`jn-tab${activeTab === t.id ? " jn-tab--active" : ""}`}
             style={activeTab === t.id ? { background: t.color, borderColor: t.color } : {}}
             onClick={() => setActiveTab(t.id)}
+            aria-pressed={activeTab === t.id}
           >{t.label}</button>
         ))}
       </div>

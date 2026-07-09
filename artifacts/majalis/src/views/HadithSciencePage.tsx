@@ -367,6 +367,7 @@ export default function HadithSciencePage() {
               role="listitem"
               className={`hs-cat-chip${category === cat ? " hs-cat-chip--active" : ""}`}
               onClick={() => setCategory(cat)}
+              aria-pressed={category === cat}
             >
               {cat}
             </button>

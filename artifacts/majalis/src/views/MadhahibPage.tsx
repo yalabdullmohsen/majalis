@@ -177,6 +177,7 @@ export default function MadhahibPage() {
               type="button"
               className={`mdb-hero__nav-btn${openId === m.id ? " mdb-hero__nav-btn--active" : ""}`}
               onClick={() => toggle(m.id)}
+              aria-pressed={openId === m.id}
             >
               <span className="mdb-hero__nav-icon">{m.icon}</span>
               <span className="mdb-hero__nav-name">{m.name}</span>

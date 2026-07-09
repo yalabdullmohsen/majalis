@@ -121,6 +121,7 @@ export default function JanazaPage() {
               type="button"
               className={`jn-tab${tab === t.id ? " jn-tab--active" : ""}`}
               onClick={() => setTab(t.id)}
+              aria-pressed={tab === t.id}
             >
               <span className="jn-tab__icon">{t.icon}</span>
               <span className="jn-tab__label">{t.label}</span>

@@ -192,6 +192,7 @@ export default function MalaikaPage() {
             type="button"
             className={`mk-tab${activeTab === t.id ? " mk-tab--active" : ""}`}
             onClick={() => setActiveTab(t.id)}
+            aria-pressed={activeTab === t.id}
           >{t.label}</button>
         ))}
       </div>

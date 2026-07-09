@@ -214,6 +214,7 @@ export default function MawarithPage() {
             type="button"
             className={`mw-tab${tab === t.id ? " mw-tab--active" : ""}`}
             onClick={() => setTab(t.id)}
+            aria-pressed={tab === t.id}
           >
             <span>{t.icon}</span>
             <span>{t.label}</span>

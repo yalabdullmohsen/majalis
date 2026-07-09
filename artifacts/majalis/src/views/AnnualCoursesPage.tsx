@@ -72,6 +72,7 @@ export default function AnnualCoursesPage() {
             type="button"
             onClick={() => setCourseType(t)}
             className={courseType === t ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+            aria-pressed={courseType === t}
           >
             {t}
           </button>

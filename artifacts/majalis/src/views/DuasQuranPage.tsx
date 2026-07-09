@@ -191,6 +191,7 @@ export default function DuasQuranPage() {
               type="button"
               className={`dq-cat-btn${activeCat === cat ? " dq-cat-btn--active" : ""}`}
               onClick={() => setActiveCat(cat)}
+              aria-pressed={activeCat === cat}
             >
               {cat}
             </button>

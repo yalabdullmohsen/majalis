@@ -600,6 +600,7 @@ export default function ProphetStoriesPage() {
                 type="button"
                 className={`prophets-lux-tab ${view === v ? "prophets-lux-tab--active" : ""}`}
                 onClick={() => setView(v)}
+                aria-pressed={view === v}
               >
                 {v === "grid" && <><LayoutList size={15} strokeWidth={1.8} aria-hidden="true" /> القائمة</>}
                 {v === "timeline" && <><CalendarDays size={15} strokeWidth={1.8} aria-hidden="true" /> الخط الزمني</>}

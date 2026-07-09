@@ -269,8 +269,10 @@ export default function IslamicScholarsPage() {
             {ERAS.map(e => (
               <button
                 key={e}
+                type="button"
                 className={["sch-filter-btn", era === e ? "sch-filter-btn--active" : ""].join(" ")}
                 onClick={() => setEra(e)}
+                aria-pressed={era === e}
               >
                 {e}
               </button>
@@ -281,8 +283,10 @@ export default function IslamicScholarsPage() {
             {SPECIALTIES.map(s => (
               <button
                 key={s}
+                type="button"
                 className={["sch-filter-btn", specialty === s ? "sch-filter-btn--active" : ""].join(" ")}
                 onClick={() => setSpecialty(s)}
+                aria-pressed={specialty === s}
               >
                 {s}
               </button>
