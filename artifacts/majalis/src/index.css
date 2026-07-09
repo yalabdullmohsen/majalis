@@ -15438,7 +15438,7 @@ body.has-assistant-fab .app-main {
 .univ-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .univ-btn--primary       { background: var(--majalis-emerald); color: #fff; }
 .univ-btn--ghost         { background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
-.univ-btn--compare-active { background: rgba(251, 146, 60, 0.15); color: #c2410c; }
+.univ-btn--compare-active { background: var(--majalis-emerald-soft, #EBF5F0); color: var(--majalis-emerald-deep, #0A5040); }
 
 /* شريط المقارنة */
 .compare-bar {
