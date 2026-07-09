@@ -134,6 +134,7 @@ const AnbiyaPage = lazy(() => import("@/views/AnbiyaPage"));
 const JannaNaarPage = lazy(() => import("@/views/JannaNaarPage"));
 const AlamatSaahPage = lazy(() => import("@/views/AlamatSaahPage"));
 const MalaikaPage = lazy(() => import("@/views/MalaikaPage"));
+const WasayaNabawiyyaPage = lazy(() => import("@/views/WasayaNabawiyyaPage"));
 const SunanYawmiyyaPage = lazy(() => import("@/views/SunanYawmiyyaPage"));
 const HikamSalafPage = lazy(() => import("@/views/HikamSalafPage"));
 const ZakatPage = lazy(() => import("@/views/ZakatPage"));
@@ -329,6 +330,7 @@ function Router() {
       <Route path="/janna-naar"><SafeLazyRoute component={JannaNaarPage} /></Route>
       <Route path="/alamat-saah"><SafeLazyRoute component={AlamatSaahPage} /></Route>
       <Route path="/malaika"><SafeLazyRoute component={MalaikaPage} /></Route>
+      <Route path="/wasaya-nabawiyya"><SafeLazyRoute component={WasayaNabawiyyaPage} /></Route>
       <Route path="/sunan-yawmiyya"><SafeLazyRoute component={SunanYawmiyyaPage} /></Route>
       <Route path="/hikam-salaf"><SafeLazyRoute component={HikamSalafPage} /></Route>
       <Route path="/zakat"><SafeLazyRoute component={ZakatPage} /></Route>

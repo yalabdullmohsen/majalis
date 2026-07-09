@@ -54,6 +54,7 @@ const SHEET_SECTIONS = [
     { href: "/janna-naar",        label: "الجنة والنار",         Icon: Sparkles },
     { href: "/alamat-saah",      label: "علامات الساعة",        Icon: Star },
     { href: "/malaika",         label: "الملائكة في الإسلام",  Icon: Sparkles },
+    { href: "/wasaya-nabawiyya", label: "الوصايا النبوية",     Icon: ScrollText },
     { href: "/prophetic-medicine", label: "الطب النبوي",       Icon: Stethoscope },
   ]},
   { group: "الأحكام والفقه", items: [
