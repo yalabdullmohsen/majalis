@@ -63,7 +63,7 @@ export function SettingsSection() {
           <div className="set-seo-grid">
             {publicRoutes.map((r) => (
               <div key={r.path} className="set-seo-row">
-                <Link href={r.path} target="_blank" className="set-preview-link">معاينة</Link>
+                <Link href={r.path} target="_blank" rel="noopener noreferrer" className="set-preview-link">معاينة</Link>
                 <span className="set-route-title">{r.title}</span>
                 <code className="set-route-path">{r.path}</code>
               </div>

@@ -348,8 +348,7 @@ export default function FeatureStatusPage() {
                           {f.routes?.[0] && (
                             <a
                               href={`https://www.majlisilm.com${f.routes[0]}`}
-                              target="_blank"
-                              rel="noreferrer"
+                              target="_blank" rel="noopener noreferrer"
                               className="ui-card-btn ui-card-btn--compact"
                             >
                               فتح

@@ -188,7 +188,7 @@ function ReviewContent() {
                     <a href={item.source_url} target="_blank" rel="noopener noreferrer">فتح المصدر</a>
                   )}
                   {item.status === "published" && verification.canPublish && (
-                    <Link href={fiqhItemHref(item.slug)} target="_blank">معاينة عامة</Link>
+                    <Link href={fiqhItemHref(item.slug)} target="_blank" rel="noopener noreferrer">معاينة عامة</Link>
                   )}
                 </div>
               </article>
