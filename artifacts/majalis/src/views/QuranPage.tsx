@@ -94,16 +94,36 @@ function lsSet<T>(k: string, v: T) {
 
 /* تجميع الآيات حسب السورة */
 function groupBySurah(ayahs: Ayah[]) {
-  const result: { num: number; name: string; isFirst: boolean; ayahs: Ayah[] }[] = [];
+  const result: { num: number; name: string; revelationType: string; isFirst: boolean; ayahs: Ayah[] }[] = [];
   for (const a of ayahs) {
     const last = result[result.length - 1];
     if (!last || last.num !== a.surah.number) {
-      result.push({ num: a.surah.number, name: a.surah.name, isFirst: a.numberInSurah === 1, ayahs: [a] });
+      result.push({ num: a.surah.number, name: a.surah.name, revelationType: a.surah.revelationType, isFirst: a.numberInSurah === 1, ayahs: [a] });
     } else {
       last.ayahs.push(a);
     }
   }
   return result;
+}
+
+/*
+ * فصل البسملة عن نص الآية الأولى في طبقة العرض فقط —
+ * API quran-uthmani يدمج البسملة في نص الآية الأولى لكل سورة
+ * (عدا الفاتحة حيث البسملة آية مستقلة، والتوبة لا بسملة لها).
+ * نبحث عن نهاية البسملة "ٱلرَّحِيمِ" ونبدأ العرض بعدها.
+ * النص المصدري لا يُمسّ — هذا تعديل عرض بحت.
+ */
+function stripBasmalaFromDisplay(text: string): string {
+  const END_MARKER = "ٱلرَّحِيمِ";
+  const idx = text.indexOf(END_MARKER);
+  if (idx === -1) return text;
+  const after = idx + END_MARKER.length;
+  // تخطّي أي مسافات بيضاء بعد البسملة
+  let start = after;
+  while (start < text.length && (text[start] === " " || text.charCodeAt(start) === 0x200C || text.charCodeAt(start) === 0x200D)) {
+    start++;
+  }
+  return start < text.length ? text.slice(start) : text;
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -422,7 +442,7 @@ export default function QuranPage() {
                 <span className="qs-surah-ornament" aria-hidden="true">❧</span>
                 <h2 className="qs-surah-name">{group.name}</h2>
                 <p className="qs-surah-meta">
-                  سورة رقم {group.num.toLocaleString("ar-EG")} — {group.num <= 86 ? "مكية" : "مدنية"}
+                  سورة رقم {group.num.toLocaleString("ar-EG")} — {group.revelationType === "Meccan" ? "مكية" : "مدنية"}
                 </p>
               </div>
             )}
@@ -436,18 +456,24 @@ export default function QuranPage() {
 
             {/* الآيات */}
             <div className="qs-ayahs" lang="ar" dir="rtl">
-              {group.ayahs.map(ayah => (
-                <span key={ayah.number} className="qs-ayah">
-                  <span className="qs-ayah__text">{ayah.text}</span>
-                  <span
-                    className="qs-ayah__num"
-                    aria-label={`آية ${ayah.numberInSurah}`}
-                    role="img"
-                  >
-                    {ayah.numberInSurah.toLocaleString("ar-EG")}
+              {group.ayahs.map(ayah => {
+                /* فصل البسملة في طبقة العرض فقط: آية 1 من كل سورة عدا الفاتحة والتوبة */
+                const displayText = (group.isFirst && ayah.numberInSurah === 1 && group.num !== 1 && group.num !== 9)
+                  ? stripBasmalaFromDisplay(ayah.text)
+                  : ayah.text;
+                return (
+                  <span key={ayah.number} className="qs-ayah">
+                    <span className="qs-ayah__text">{displayText}</span>
+                    <span
+                      className="qs-ayah__num"
+                      aria-label={`آية ${ayah.numberInSurah}`}
+                      role="img"
+                    >
+                      {ayah.numberInSurah.toLocaleString("ar-EG")}
+                    </span>
                   </span>
-                </span>
-              ))}
+                );
+              })}
             </div>
           </div>
         ))}

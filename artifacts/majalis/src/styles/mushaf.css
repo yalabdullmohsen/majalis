@@ -944,7 +944,7 @@
 .qs-ayah__text {
   font-size: var(--qs-font-size, 1.9rem);
   color: var(--mshf-ink);
-  font-family: "Scheherazade New", "KFGQPC Uthmanic Script HAFS", "Traditional Arabic", serif;
+  font-family: "Scheherazade New", "Amiri Quran", "KFGQPC Uthmanic Script HAFS", "Noto Naskh Arabic", "Traditional Arabic", serif;
   transition: color 0.3s, font-size 0.15s ease;
   cursor: default;
   line-height: inherit;
