@@ -950,21 +950,37 @@
   line-height: inherit;
 }
 
-/* رقم الآية */
+/* رقم الآية — دائرة زخرفية */
 .qs-ayah__num {
   display: inline-block;
-  font-size: 0.65em;
-  font-family: inherit;
+  width:   calc(var(--qs-font-size, 1.9rem) * 0.72);
+  height:  calc(var(--qs-font-size, 1.9rem) * 0.72);
+  font-size: calc(var(--qs-font-size, 1.9rem) * 0.28);
+  font-family: "Amiri", "Scheherazade New", serif;
+  font-weight: 800;
+  text-align: center;
+  line-height: calc(var(--qs-font-size, 1.9rem) * 0.72);
+  border-radius: 50%;
+  border: 1.5px solid var(--mshf-emerald, #1F4D3A);
   color: var(--mshf-emerald, #1F4D3A);
-  font-weight: 700;
-  opacity: 0.75;
-  vertical-align: super;
-  line-height: 1;
-  margin: 0 0.1em;
+  background: rgba(31, 77, 58, 0.07);
+  vertical-align: middle;
+  margin: 0 0.3rem;
   direction: ltr;
   unicode-bidi: embed;
+  white-space: nowrap;
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
 }
-.mshf-night .qs-ayah__num { color: var(--mshf-active-color, #70D4A0); }
+.mshf-night .qs-ayah__num {
+  color: var(--mshf-active-color, #70D4A0);
+  border-color: var(--mshf-active-color, #70D4A0);
+  background: rgba(100, 200, 150, 0.08);
+}
+.mshf-sepia .qs-ayah__num {
+  color: #6B4E2A;
+  border-color: #6B4E2A;
+  background: rgba(107, 78, 42, 0.07);
+}
 
 /* زر العلامة */
 .qs-ayah__bm-btn {
@@ -998,4 +1014,91 @@
 @media (min-width: 700px) {
   .qs-surah { padding: 2rem 2rem 4rem; }
   .qs-ayahs { line-height: 2.6; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   نتائج البحث في الآيات (mshf-vsr-*)
+   ══════════════════════════════════════════════════════════════════════ */
+.mshf-vsr-list { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.mshf-vsr-count {
+  font-size: 0.7rem;
+  color: var(--mshf-ink-soft);
+  text-align: center;
+  padding: 0.1rem 0 0.3rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.mshf-vsr-row {
+  border: 1.5px solid var(--mshf-sheet-border);
+  border-radius: 1rem;
+  background: var(--mshf-sheet-item);
+  padding: 0.7rem 0.9rem;
+  cursor: pointer;
+  transition: background 0.14s, border-color 0.14s, transform 0.1s;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  -webkit-tap-highlight-color: transparent;
+  width: 100%;
+  font-family: inherit;
+}
+.mshf-vsr-row:hover {
+  background: var(--mshf-sheet-active);
+  border-color: var(--mshf-emerald, #1F4D3A);
+  transform: translateY(-1px);
+}
+
+.mshf-vsr-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.mshf-vsr-surah {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--mshf-emerald, #1F4D3A);
+}
+.mshf-night .mshf-vsr-surah { color: var(--mshf-active-color, #70D4A0); }
+
+.mshf-vsr-page {
+  font-size: 0.65rem;
+  color: var(--mshf-ink-soft);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.mshf-vsr-text {
+  font-size: 0.95rem;
+  color: var(--mshf-item-text);
+  line-height: 1.85;
+  font-family: "Scheherazade New", "KFGQPC Uthmanic Script HAFS", "Traditional Arabic", serif;
+  direction: rtl;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-align: right;
+}
+
+.mshf-vsr-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+  gap: 0.75rem;
+  color: var(--mshf-ink-soft);
+  font-size: 0.82rem;
+}
+
+.mshf-vsr-err {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--mshf-ink-soft);
+  font-size: 0.85rem;
+  line-height: 1.6;
 }

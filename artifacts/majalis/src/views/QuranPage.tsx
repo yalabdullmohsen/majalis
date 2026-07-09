@@ -32,6 +32,14 @@ interface Ayah {
   sajda: boolean | object;
 }
 
+interface SearchResult {
+  number: number;
+  text: string;
+  surah: { number: number; name: string };
+  numberInSurah: number;
+  page: number;
+}
+
 /* كاش في الذاكرة — يمنع إعادة الجلب عند التنقل بين الصفحات */
 const pageCache = new Map<number, Ayah[]>();
 
@@ -111,8 +119,15 @@ export default function QuranPage() {
   });
   const [bookmarks, setBookmarks] = useState<number[]>(() => lsGet(BM_KEY, []));
   const [navOpen, setNavOpen]  = useState(false);
-  const [navTab, setNavTab]    = useState<"surahs" | "bookmarks">("surahs");
+  const [navTab, setNavTab]    = useState<"surahs" | "bookmarks" | "search">("surahs");
   const [search, setSearch]    = useState("");
+
+  /* ── بحث نص الآيات ── */
+  const [vsearch, setVsearch]       = useState("");
+  const [vsLoading, setVsLoading]   = useState(false);
+  const [vsErr, setVsErr]           = useState(false);
+  const [vsResults, setVsResults]   = useState<SearchResult[]>([]);
+  const [vsTotal, setVsTotal]       = useState(0);
   const [uiOn, setUiOn]        = useState(true);
   const [anim, setAnim]        = useState<"" | "anim-left" | "anim-right">("");
 
@@ -124,7 +139,8 @@ export default function QuranPage() {
 
   /* ── refs ── */
   const uiTimer   = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const searchRef = useRef<HTMLInputElement>(null);
+  const searchRef  = useRef<HTMLInputElement>(null);
+  const vsearchRef = useRef<HTMLInputElement>(null);
   const touchX    = useRef<number | null>(null);
   const readerRef = useRef<HTMLDivElement>(null);
 
@@ -180,6 +196,31 @@ export default function QuranPage() {
 
   useEffect(() => { bump(); }, [page, bump]);
   useEffect(() => () => { if (uiTimer.current) clearTimeout(uiTimer.current); }, []);
+
+  /* ── بحث في نصوص الآيات — debounced 700ms ── */
+  useEffect(() => {
+    if (navTab !== "search") return;
+    if (vsearch.trim().length < 2) { setVsResults([]); setVsTotal(0); return; }
+    const t = setTimeout(() => {
+      setVsLoading(true);
+      setVsErr(false);
+      fetch(
+        `https://api.alquran.cloud/v1/search/${encodeURIComponent(vsearch.trim())}/all/quran-uthmani`,
+      )
+        .then(r => r.json())
+        .then((d: { code: number; data: { count: number; matches: SearchResult[] } }) => {
+          if (d.code === 200) {
+            setVsResults(d.data.matches.slice(0, 30));
+            setVsTotal(d.data.count);
+          } else {
+            setVsErr(true);
+          }
+        })
+        .catch(() => setVsErr(true))
+        .finally(() => setVsLoading(false));
+    }, 700);
+    return () => clearTimeout(t);
+  }, [vsearch, navTab]);
 
   /* ── التنقل بين الصفحات ── */
   const goPage = useCallback((n: number, dir: "left" | "right" | "" = "") => {
@@ -315,6 +356,21 @@ export default function QuranPage() {
             className="mshf-icon-btn"
             onClick={e => {
               e.stopPropagation();
+              setVsearch(""); setVsResults([]); setVsTotal(0);
+              setNavOpen(true);
+              setNavTab("search");
+              setTimeout(() => vsearchRef.current?.focus(), 80);
+            }}
+            aria-label="بحث في القرآن"
+          >
+            <Search size={17} strokeWidth={2} aria-hidden="true" />
+          </button>
+
+          <button
+            type="button"
+            className="mshf-icon-btn"
+            onClick={e => {
+              e.stopPropagation();
               setSearch("");
               setNavOpen(true);
               setNavTab("surahs");
@@ -386,8 +442,9 @@ export default function QuranPage() {
                   <span
                     className="qs-ayah__num"
                     aria-label={`آية ${ayah.numberInSurah}`}
+                    role="img"
                   >
-                    ﴿{ayah.numberInSurah.toLocaleString("ar-EG")}﴾
+                    {ayah.numberInSurah.toLocaleString("ar-EG")}
                   </span>
                 </span>
               ))}
@@ -479,14 +536,18 @@ export default function QuranPage() {
 
             <div className="mshf-sheet-head">
               <div className="mshf-sheet-tabs">
-                {(["surahs", "bookmarks"] as const).map(id => (
+                {(["surahs", "bookmarks", "search"] as const).map(id => (
                   <button
                     key={id}
                     type="button"
                     className={`mshf-sheet-tab${navTab === id ? " active" : ""}`}
-                    onClick={() => { setNavTab(id); setSearch(""); }}
+                    onClick={() => {
+                      setNavTab(id);
+                      if (id !== "search") setSearch("");
+                      if (id === "search") setTimeout(() => vsearchRef.current?.focus(), 80);
+                    }}
                   >
-                    {id === "surahs" ? "السور" : "العلامات"}
+                    {id === "surahs" ? "السور" : id === "bookmarks" ? "العلامات" : "بحث"}
                   </button>
                 ))}
               </div>
@@ -523,7 +584,89 @@ export default function QuranPage() {
               </div>
             )}
 
+            {/* بحث في نصوص الآيات */}
+            {navTab === "search" && (
+              <div className="mshf-search-bar">
+                <Search size={14} strokeWidth={2} aria-hidden="true" />
+                <input
+                  ref={vsearchRef}
+                  className="mshf-search-input"
+                  placeholder="ابحث في القرآن الكريم…"
+                  value={vsearch}
+                  onChange={e => setVsearch(e.target.value)}
+                  aria-label="بحث في نصوص الآيات"
+                  type="search"
+                  dir="rtl"
+                  autoComplete="off"
+                />
+                {vsearch && (
+                  <button
+                    type="button"
+                    className="mshf-search-clear"
+                    onClick={() => { setVsearch(""); setVsResults([]); setVsTotal(0); }}
+                    aria-label="مسح"
+                  >✕</button>
+                )}
+              </div>
+            )}
+
             <div className="mshf-sheet-body">
+
+              {/* نتائج البحث في الآيات */}
+              {navTab === "search" && (
+                <div>
+                  {vsLoading && (
+                    <div className="mshf-vsr-loading">
+                      <div className="mshf-spinner" aria-hidden="true" />
+                      <span>جاري البحث…</span>
+                    </div>
+                  )}
+                  {vsErr && !vsLoading && (
+                    <div className="mshf-vsr-err">
+                      تعذّر البحث — تحقق من اتصالك وأعد المحاولة
+                    </div>
+                  )}
+                  {!vsLoading && !vsErr && vsResults.length > 0 && (
+                    <div className="mshf-vsr-list">
+                      {vsTotal > 0 && (
+                        <p className="mshf-vsr-count">
+                          {vsTotal.toLocaleString("ar-EG")} نتيجة — يُعرض {vsResults.length.toLocaleString("ar-EG")}
+                        </p>
+                      )}
+                      {vsResults.map(r => (
+                        <button
+                          key={r.number}
+                          type="button"
+                          className="mshf-vsr-row"
+                          onClick={() => { goPage(r.page); setNavOpen(false); setVsearch(""); setVsResults([]); }}
+                        >
+                          <div className="mshf-vsr-meta">
+                            <span className="mshf-vsr-surah">
+                              {r.surah.name} : {r.numberInSurah.toLocaleString("ar-EG")}
+                            </span>
+                            <span className="mshf-vsr-page">صفحة {r.page.toLocaleString("ar-EG")}</span>
+                          </div>
+                          <div className="mshf-vsr-text" lang="ar" dir="rtl">{r.text}</div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  {!vsLoading && !vsErr && vsearch.trim().length >= 2 && vsResults.length === 0 && (
+                    <div className="mshf-empty mshf-empty--center">
+                      <Search size={36} strokeWidth={1.2} aria-hidden="true" />
+                      <p>لا نتائج لـ «{vsearch}»</p>
+                    </div>
+                  )}
+                  {!vsLoading && !vsErr && vsearch.trim().length < 2 && (
+                    <div className="mshf-empty mshf-empty--center">
+                      <Search size={36} strokeWidth={1.2} aria-hidden="true" />
+                      <p>ابحث بكلمة أو عبارة قرآنية</p>
+                      <p className="mshf-empty-sub">مثال: الرحمن الرحيم</p>
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* السور */}
               {navTab === "surahs" && (
                 <div className="mshf-surah-list">
