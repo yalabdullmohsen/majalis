@@ -98,16 +98,17 @@ export default function ContentActions({ contentType, contentId }: Props) {
   };
 
   return (
-    <div dir="rtl" className="flex flex-wrap items-center gap-3 p-4 bg-[var(--majalis-parchment)] rounded-xl border border-[var(--majalis-line)]">
-      <div className="flex items-center gap-1">
+    <div className="ca-root">
+      <div className="ca-stars">
         {[1, 2, 3, 4, 5].map((star) => (
           <button
             key={star}
             type="button"
             onClick={() => handleRating(star)}
-            className={`text-2xl transition-transform hover:scale-110 ${rating >= star ? "text-[var(--majalis-emerald)]" : "text-[var(--majalis-line)]"}`}
+            className={`ca-star${rating >= star ? " ca-star--active" : ""}`}
+            aria-label={`تقييم ${star} من 5`}
           >
-            
+            ★
           </button>
         ))}
       </div>
@@ -115,8 +116,7 @@ export default function ContentActions({ contentType, contentId }: Props) {
       <button
         type="button"
         onClick={handleBookmark}
-        className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-all border
-          ${bookmarked ? "bg-[var(--majalis-emerald-muted)] border-[var(--majalis-emerald)] text-[var(--majalis-emerald)]" : "bg-[var(--majalis-panel)] border-[var(--majalis-line)] text-[var(--majalis-ink-soft)] hover:border-[var(--majalis-emerald)]"}`}
+        className={`ca-bookmark-btn${bookmarked ? " ca-bookmark-btn--saved" : ""}`}
       >
         {bookmarked ? "محفوظ" : "احفظ"}
       </button>
@@ -124,22 +124,21 @@ export default function ContentActions({ contentType, contentId }: Props) {
       <button
         type="button"
         onClick={() => setShowReport(!showReport)}
-        className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium border bg-[var(--majalis-panel)] border-[var(--majalis-line)] text-[var(--majalis-ink-soft)] hover:border-[var(--majalis-danger)] hover:text-[var(--majalis-danger)] transition-all"
+        className="ca-report-btn"
       >
         إبلاغ
       </button>
 
       {showReport && (
-        <div className="w-full mt-3 p-4 bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-danger)] space-y-3">
-          <h4 className="font-medium text-[var(--majalis-ink-soft)]">نوع الخطأ</h4>
-          <div className="flex flex-wrap gap-2">
+        <div className="ca-report-panel">
+          <h4 className="ca-report-title">نوع الخطأ</h4>
+          <div className="ca-report-types">
             {REPORT_TYPES.map((type) => (
               <button
                 key={type}
                 type="button"
                 onClick={() => setReportType(type)}
-                className={`px-3 py-1 rounded-lg text-sm border transition-all
-                  ${reportType === type ? "bg-[var(--majalis-danger)] text-white border-[var(--majalis-danger)]" : "border-[var(--majalis-line)] text-[var(--majalis-ink-soft)] hover:border-[var(--majalis-danger)]"}`}
+                className={`ca-report-chip${reportType === type ? " ca-report-chip--active" : ""}`}
               >
                 {type.replace("_", " ")}
               </button>
@@ -150,13 +149,13 @@ export default function ContentActions({ contentType, contentId }: Props) {
             onChange={(e) => setReportDesc(e.target.value)}
             rows={2}
             placeholder="تفاصيل إضافية (اختياري)..."
-            className="w-full border border-[var(--majalis-line)] bg-[var(--majalis-parchment)] text-[var(--majalis-ink)] rounded-lg px-3 py-2 text-sm text-right focus:ring-2 focus:ring-[var(--majalis-danger)] outline-none resize-none"
+            className="ca-report-textarea"
           />
           <button
             type="button"
             onClick={submitReport}
             disabled={!reportType || submitting}
-            className="bg-[var(--majalis-danger,#dc2626)] text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 disabled:opacity-50"
+            className="ca-report-submit"
           >
             {submitting ? "جاري الإرسال..." : "إرسال البلاغ"}
           </button>
