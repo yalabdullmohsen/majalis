@@ -24391,23 +24391,41 @@ img[loading="lazy"]:not([src=""]) {
   font-weight: 500;
 }
 
-.seerah-panel__coming {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.8rem;
-  color: var(--majalis-emerald);
-  background: var(--majalis-emerald-muted, rgba(31,77,58,.06));
-  border: 1px solid color-mix(in srgb, var(--majalis-emerald) 30%, transparent);
-  padding: 0.6rem 1rem;
-  border-radius: 8px;
+/* key events list (replaces coming-soon banner) */
+.seerah-panel__events {
   margin-bottom: 1.5rem;
 }
-.seerah-panel__coming-dot {
-  width: 8px; height: 8px;
+.seerah-panel__events-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--majalis-emerald);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.6rem;
+}
+.seerah-panel__events-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.seerah-panel__event-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--majalis-ink);
+}
+.seerah-panel__event-dot {
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: var(--majalis-emerald);
   flex-shrink: 0;
+  margin-top: 0.42em;
 }
 
 .seerah-panel__nav {
