@@ -11851,9 +11851,9 @@ a:focus-visible {
   border-radius: 1rem;
   font-size: 0.7rem;
   font-weight: 600;
-  background: color-mix(in srgb, var(--majalis-gold) 15%, transparent);
-  color: #7c5e1b;
-  border: 1px solid color-mix(in srgb, var(--majalis-gold) 35%, transparent);
+  background: var(--majalis-emerald-soft, #EBF5F0);
+  color: var(--majalis-emerald-deep, #0A5040);
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald) 35%, transparent);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════

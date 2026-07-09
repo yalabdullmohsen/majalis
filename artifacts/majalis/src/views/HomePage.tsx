@@ -10,6 +10,11 @@ import { HomeCompactPrayer } from "@/components/home/HomeCompactPrayer";
 import { HomeAboutSection } from "@/components/home/HomeAboutSection";
 import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
 import { HomeDailyCorner } from "@/components/home/HomeDailyCorner";
+import { HomeSunnahByTime } from "@/components/home/HomeSunnahByTime";
+import { HomeIslamicOccasions } from "@/components/home/HomeIslamicOccasions";
+import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
+import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
+import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import {
@@ -273,6 +278,16 @@ export default function HomePage() {
           <HomeCompactPrayer />
         </SafeHomeSection>
 
+        {/* التقدم اليومي */}
+        <SafeHomeSection name="التقدم اليومي">
+          <HomeDailyProgress />
+        </SafeHomeSection>
+
+        {/* سنن الوقت */}
+        <SafeHomeSection name="سنن الوقت">
+          <HomeSunnahByTime />
+        </SafeHomeSection>
+
         {/* ══ استكشف المنصة — تسويقي ══ */}
         <section className="hp-features" aria-labelledby="features-heading">
           <div className="hp-features__head">
@@ -321,6 +336,21 @@ export default function HomePage() {
             </div>
           ))}
         </section>
+
+        {/* مواسم التعلم */}
+        <SafeHomeSection name="مواسم التعلم">
+          <HomeLearningSeasonsWidget />
+        </SafeHomeSection>
+
+        {/* المناسبات الإسلامية */}
+        <SafeHomeSection name="المناسبات الإسلامية">
+          <HomeIslamicOccasions />
+        </SafeHomeSection>
+
+        {/* آخر التحديثات */}
+        <SafeHomeSection name="آخر التحديثات">
+          <HomeLatestUpdates />
+        </SafeHomeSection>
 
         {/* الركن اليومي — مدمج */}
         <SafeHomeSection name="الركن اليومي">

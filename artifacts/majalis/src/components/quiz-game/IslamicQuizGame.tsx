@@ -262,7 +262,7 @@ function ScoreBar({ teams, activeTeam }: { teams: [Team, Team]; activeTeam: Team
     <div className="qzg-score-row">
       {teams.map((t) => {
         const active = t.id === activeTeam;
-        const activeBg = t.id === "team1" ? S.emerald : "#8B4515";
+        const activeBg = t.id === "team1" ? S.emerald : "var(--majalis-danger, #9B1C1C)";
         return (
           <div
             key={t.id}
