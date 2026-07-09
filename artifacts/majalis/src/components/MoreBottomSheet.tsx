@@ -49,6 +49,7 @@ const SHEET_SECTIONS = [
     { href: "/miracles",           label: "الإعجاز العلمي",    Icon: Sparkles },
     { href: "/islam-stats",        label: "الإسلام في أرقام",  Icon: BarChart3 },
     { href: "/islamic-glossary",   label: "المصطلحات الإسلامية", Icon: BookOpen },
+    { href: "/adab-talab-ilm",    label: "آداب طالب العلم",     Icon: GraduationCap },
     { href: "/prophetic-medicine", label: "الطب النبوي",       Icon: Stethoscope },
   ]},
   { group: "الأحكام والفقه", items: [

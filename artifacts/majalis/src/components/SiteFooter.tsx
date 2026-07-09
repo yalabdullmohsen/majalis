@@ -32,6 +32,7 @@ const FOOTER_GROUPS = [
       { href: "/sahabah",        label: "أعلام الصحابة" },
       { href: "/shamael",          label: "الشمائل المحمدية" },
       { href: "/islamic-glossary", label: "المصطلحات الإسلامية" },
+      { href: "/adab-talab-ilm",  label: "آداب طالب العلم" },
       { href: "/tawba",          label: "التوبة والاستغفار" },
       { href: "/ulum-quran",     label: "علوم القرآن" },
       { href: "/qa",             label: "الأسئلة" },
