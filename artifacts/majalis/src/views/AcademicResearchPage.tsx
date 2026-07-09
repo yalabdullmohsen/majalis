@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import {
-  BookOpen, Briefcase, Building2, ExternalLink, FlaskConical, Globe,
-  GraduationCap, Landmark, Layers, Library, Moon, PenLine, Scale, ScrollText, Search,
+  Briefcase, Building2, ExternalLink, Globe,
+  GraduationCap, Landmark, Library, PenLine, Search,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
