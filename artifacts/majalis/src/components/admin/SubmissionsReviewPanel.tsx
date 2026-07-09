@@ -19,12 +19,6 @@ const STATUS_LABEL: Record<SubmissionStatus, string> = {
   rejected: "مرفوض",
 };
 
-const STATUS_COLOR: Record<SubmissionStatus, { bg: string; text: string; border: string }> = {
-  pending:  { bg: "#F0F9FF",                             text: "#0369A1",                            border: "#BAE6FD" },
-  approved: { bg: "var(--majalis-emerald-soft,#EBF5F0)", text: "var(--majalis-emerald-deep,#0A5040)", border: "rgba(14,110,82,0.25)" },
-  rejected: { bg: "var(--majalis-danger-muted,rgba(155,28,28,0.07))", text: "var(--majalis-danger,#9B1C1C)", border: "rgba(155,28,28,0.2)" },
-};
-
 const TYPE_ICON: Record<SubmissionType, string> = {
   adhan:  "أذان",
   lesson: "درس",
@@ -55,8 +49,7 @@ function AudioPreview({ url }: { url: string }) {
     <button
       type="button"
       onClick={toggle}
-      className="srp-audio-btn"
-      style={{ "--srp-audio-bg": playing ? "var(--majalis-danger,#9B1C1C)" : "var(--majalis-emerald-deep,#0A5040)" } as React.CSSProperties}
+      className={`srp-audio-btn${playing ? " srp-audio-btn--playing" : ""}`}
     >
       {playing ? "⏹ إيقاف" : "▶ استمع"}
     </button>
@@ -73,8 +66,6 @@ function SubmissionCard({ sub, onReview }: {
   const [publishing, setPublishing] = useState(false);
   const [published, setPublished]   = useState(false);
   const [publishError, setPublishError] = useState("");
-  const sc = STATUS_COLOR[sub.status];
-
   async function handle(status: "approved" | "rejected") {
     setLoading(true);
     await onReview(sub.id, status, note);
@@ -86,13 +77,11 @@ function SubmissionCard({ sub, onReview }: {
 
   return (
     <div
-      className="srp-card"
-      style={{ "--srp-card-border": sub.status === "pending" ? "#e5e7eb" : sc.border } as React.CSSProperties}
+      className={`srp-card srp-card--${sub.status}`}
     >
       {/* Header */}
       <div
-        className="srp-card-header"
-        style={{ "--srp-card-header-bg": sub.status !== "pending" ? sc.bg : "#fff" } as React.CSSProperties}
+        className={`srp-card-header${sub.status !== "pending" ? ` srp-card-header--${sub.status}` : ""}`}
         onClick={() => setExpanded((v) => !v)}
       >
         <div className="srp-card-icon">{TYPE_ICON[sub.type]}</div>
@@ -101,12 +90,7 @@ function SubmissionCard({ sub, onReview }: {
           <div className="srp-card-title-row">
             <span className="srp-card-title">{sub.title}</span>
             <span
-              className="srp-card-status-badge"
-              style={{
-                "--srp-badge-bg":     sc.bg,
-                "--srp-badge-text":   sc.text,
-                "--srp-badge-border": sc.border,
-              } as React.CSSProperties}
+              className={`srp-card-status-badge srp-card-status-badge--${sub.status}`}
             >
               {STATUS_LABEL[sub.status]}
             </span>
@@ -201,7 +185,6 @@ function SubmissionCard({ sub, onReview }: {
                     }
                   }}
                   className="srp-publish-btn"
-                  style={{ "--srp-pub-bg": publishing ? "#9ca3af" : "var(--majalis-emerald-deep,#0A5040)", "--srp-pub-cursor": publishing ? "not-allowed" : "pointer" } as React.CSSProperties}
                 >
                   {publishing ? "جارٍ النشر..." : <><Rocket size={13} className="inline ml-1" />نشر في مكتبة المؤذنين</>}
                 </button>
@@ -234,8 +217,7 @@ function SubmissionCard({ sub, onReview }: {
                       setPublishing(false);
                     }
                   }}
-                  className="srp-publish-btn"
-                  style={{ "--srp-pub-bg": publishing ? "#9ca3af" : "#1d4ed8", "--srp-pub-cursor": publishing ? "not-allowed" : "pointer" } as React.CSSProperties}
+                  className="srp-publish-btn srp-publish-btn--lesson"
                 >
                   {publishing ? "جارٍ الإضافة..." : <><PenLine size={13} className="inline ml-1" />إضافة كمسودة</>}
                 </button>
@@ -325,16 +307,15 @@ export function SubmissionsReviewPanel() {
       {stats && (
         <div className="srp-stats-grid">
           {[
-            { label: "الكل",    val: stats.total,    bg: "#f3f4f6",                             color: "#374151" },
-            { label: "معلق",   val: stats.pending,  bg: "#F0F9FF",                             color: "#0369A1" },
-            { label: "مقبول",  val: stats.approved, bg: "var(--majalis-emerald-soft,#EBF5F0)", color: "var(--majalis-emerald-deep,#0A5040)" },
-            { label: "مرفوض",  val: stats.rejected, bg: "var(--majalis-danger-muted,rgba(155,28,28,0.07))", color: "var(--majalis-danger,#9B1C1C)" },
-            { label: "أذان / درس",      val: `${stats.adhan}/${stats.lesson}`, bg: "#eff6ff", color: "#1d4ed8" },
+            { label: "الكل",       val: stats.total,                       mod: "" },
+            { label: "معلق",       val: stats.pending,                     mod: "srp-stat-card--pending" },
+            { label: "مقبول",      val: stats.approved,                    mod: "srp-stat-card--approved" },
+            { label: "مرفوض",      val: stats.rejected,                    mod: "srp-stat-card--rejected" },
+            { label: "أذان / درس", val: `${stats.adhan}/${stats.lesson}`,  mod: "srp-stat-card--split" },
           ].map((s) => (
             <div
               key={s.label}
-              className="srp-stat-card"
-              style={{ "--srp-stat-bg": s.bg, "--srp-stat-color": s.color } as React.CSSProperties}
+              className={`srp-stat-card${s.mod ? ` ${s.mod}` : ""}`}
             >
               <div className="srp-stat-val">{s.val}</div>
               <div className="srp-stat-label">{s.label}</div>
@@ -350,12 +331,7 @@ export function SubmissionsReviewPanel() {
             key={s}
             type="button"
             onClick={() => setFStatus(s)}
-            className="srp-filter-btn"
-            style={{
-              "--srp-filter-border": filterStatus === s ? "var(--majalis-emerald-deep,#0A5040)" : "#e5e7eb",
-              "--srp-filter-bg":     filterStatus === s ? "var(--majalis-emerald-deep,#0A5040)" : "#fff",
-              "--srp-filter-color":  filterStatus === s ? "#fff" : "#374151",
-            } as React.CSSProperties}
+            className={`srp-filter-btn${filterStatus === s ? " srp-filter-btn--active" : ""}`}
           >
             {{ all: "الكل", pending: "قيد المراجعة", approved: "مقبول", rejected: "مرفوض" }[s]}
           </button>
@@ -366,12 +342,7 @@ export function SubmissionsReviewPanel() {
             key={t}
             type="button"
             onClick={() => setFType(t)}
-            className="srp-filter-btn"
-            style={{
-              "--srp-filter-border": filterType === t ? "#7c3aed" : "#e5e7eb",
-              "--srp-filter-bg":     filterType === t ? "#7c3aed" : "#fff",
-              "--srp-filter-color":  filterType === t ? "#fff" : "#374151",
-            } as React.CSSProperties}
+            className={`srp-filter-btn${filterType === t ? " srp-filter-btn--active-type" : ""}`}
           >
             {{ all: "كل الأنواع", adhan: "أذان", lesson: "درس" }[t]}
           </button>
