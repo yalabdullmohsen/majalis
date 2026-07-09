@@ -101,7 +101,7 @@ export function HomeLearningSeasonsWidget() {
       </div>
 
       {/* Featured season card */}
-      <div className="lsw-featured" style={{ "--lsw-color": featured.color } as React.CSSProperties}>
+      <div className={`lsw-featured lsw--${featured.id}`}>
         <div className="lsw-featured__header">
           <div>
             <span className="lsw-featured__name">

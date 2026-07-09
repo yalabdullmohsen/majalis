@@ -10891,6 +10891,10 @@ body {
   direction: rtl;
 }
 .hadith-badge__grade { font-weight: 700; color: var(--hdb-color); font-size: 0.68rem; }
+.hadith-badge--sahih { --hdb-color: var(--majalis-emerald, #1F4D3A); }
+.hadith-badge--hasan { --hdb-color: var(--majalis-emerald-deep, #0A5040); }
+.hadith-badge--daif  { --hdb-color: var(--majalis-danger, #9B1C1C); }
+.hadith-badge--mawdu { --hdb-color: var(--majalis-danger, #9B1C1C); }
 .tawheed-principle-card__hadith { margin-top: 0.35rem; }
 
 /* ── §182 — HomeRecommendations & HomeLearningSeasonsWidget ─────────────── */
@@ -10902,7 +10906,11 @@ body {
 .rec-mini-card__cat { font-size: 0.75rem; margin-top: auto; color: var(--majalis-ink-soft); }
 .ds-skeleton--card { height: 6rem; border-radius: 0.75rem; }
 
-/* lsw — Learning Seasons Widget */
+/* lsw — Learning Seasons Widget — per-season color tokens */
+.lsw--rajab-1448      { --lsw-color: #1e4d8a; }
+.lsw--shaban-1448     { --lsw-color: #7c3aed; }
+.lsw--ramadan-1448    { --lsw-color: var(--majalis-emerald-deep, #0A5040); }
+.lsw--dhul-hijja-1448 { --lsw-color: var(--majalis-emerald, #1F4D3A); }
 .lsw-featured { border-color: var(--lsw-color, var(--majalis-emerald)); }
 .lsw-featured__name { color: var(--lsw-color, var(--majalis-emerald)); }
 .lsw-featured__now { background: var(--lsw-color, var(--majalis-emerald)); }
@@ -11341,6 +11349,9 @@ button, .btn {
   color: var(--mzp-style-color, var(--majalis-ink-soft));
   font-weight: 600;
 }
+.mzp-style--emerald { --mzp-style-color: var(--majalis-emerald, #1F4D3A); }
+.mzp-style--blue    { --mzp-style-color: #60A5FA; }
+.mzp-style--purple  { --mzp-style-color: #A78BFA; }
 .mzp-preview-btn {
   flex-shrink: 0;
   width: 34px;

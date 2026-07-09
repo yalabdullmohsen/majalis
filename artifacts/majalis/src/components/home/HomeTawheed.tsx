@@ -7,19 +7,17 @@ type HadithRef = {
   extra?: string;
 };
 
-const GRADE_COLOR: Record<HadithRef["grade"], string> = {
-  صحيح:  "var(--majalis-emerald, #1F4D3A)",
-  حسن:   "var(--majalis-emerald-deep, #0A5040)",
-  ضعيف:  "var(--majalis-danger, #9B1C1C)",
-  موضوع: "var(--majalis-danger, #9B1C1C)",
+const GRADE_MOD: Record<HadithRef["grade"], string> = {
+  صحيح:  "hadith-badge--sahih",
+  حسن:   "hadith-badge--hasan",
+  ضعيف:  "hadith-badge--daif",
+  موضوع: "hadith-badge--mawdu",
 };
 
 function HadithBadge({ h }: { h: HadithRef }) {
-  const color = GRADE_COLOR[h.grade];
   return (
     <span
-      className="hadith-badge"
-      style={{ "--hdb-color": color } as React.CSSProperties}
+      className={`hadith-badge ${GRADE_MOD[h.grade]}`}
       title={h.extra}
     >
       <span className="hadith-badge__grade">{h.grade}</span>

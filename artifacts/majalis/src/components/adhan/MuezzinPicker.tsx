@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { MUEZZINS, previewAdhan, stopAdhan, type Muezzin } from "@/lib/adhan-audio";
 
-const STYLE_COLOR: Record<string, string> = {
-  "خاشع":    "var(--majalis-emerald, #2E8B67)",
-  "رسمي":    "#60A5FA",
-  "تقليدي":  "#A78BFA",
-  "كلاسيكي": "var(--majalis-emerald, #2E8B67)",
+const STYLE_MOD: Record<string, string> = {
+  "خاشع":    "mzp-style--emerald",
+  "رسمي":    "mzp-style--blue",
+  "تقليدي":  "mzp-style--purple",
+  "كلاسيكي": "mzp-style--emerald",
 };
 
 type Props = {
@@ -59,7 +59,7 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
           {MUEZZINS.map((m) => {
             const isSelected = selected === m.id;
             const isPlaying = previewing === m.id;
-            const styleColor = STYLE_COLOR[m.style] ?? "var(--majalis-ink-soft)";
+            const styleMod = STYLE_MOD[m.style] ?? "";
             return (
               <div
                 key={m.id}
@@ -74,10 +74,7 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
                   <div className="mzp-name">{m.name}</div>
                   <div className="mzp-origin">
                     {m.origin}
-                    <span
-                      className="mzp-style-badge"
-                      style={{ "--mzp-style-color": styleColor } as React.CSSProperties}
-                    >
+                    <span className={`mzp-style-badge ${styleMod}`}>
                       {m.style}
                     </span>
                   </div>
