@@ -308,7 +308,7 @@ export default function DuasPage() {
       await navigator.clipboard.writeText(dua.arabic);
       setCopied(dua.id);
       setTimeout(() => setCopied(null), 2000);
-    } catch (_) { /* clipboard unavailable */ }
+    } catch { /* clipboard unavailable */ }
   };
 
   return (

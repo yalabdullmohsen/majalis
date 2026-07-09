@@ -58,6 +58,7 @@ const FOOTER_GROUPS = [
       { href: "/rulings",      label: "الأحكام الشرعية" },
       { href: "/fiqh-council", label: "المجمع الفقهي" },
       { href: "/tawhid",       label: "التوحيد" },
+      { href: "/arkan",        label: "أركان الإسلام" },
       { href: "/asma-husna",   label: "الأسماء الحسنى" },
       { href: "/akhlaq",       label: "الأخلاق الإسلامية" },
       { href: "/scholars",     label: "أعلام الإسلام" },

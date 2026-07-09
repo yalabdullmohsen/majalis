@@ -16898,3 +16898,242 @@ img[loading="lazy"]:not([src=""]) {
 }
 
 /* ── نهاية §220 ─────────────────────────────────────────── */
+
+/* ─────────────────────────────────────────────────────────── */
+/* §221 — صفحة أركان الإسلام (.arkan-*)                      */
+/* ─────────────────────────────────────────────────────────── */
+
+.arkan-hero {
+  background: linear-gradient(135deg, #052E16 0%, #0A5040 45%, #0E6E52 100%);
+  border-radius: 1.25rem;
+  padding: 2.5rem 1.5rem 2rem;
+  text-align: center;
+  color: #FFFFFF;
+  margin-bottom: 1.5rem;
+}
+.arkan-hero__hadith {
+  font-family: var(--font-quran, serif);
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.82);
+  margin-bottom: 0.65rem;
+  letter-spacing: 0.01em;
+}
+.arkan-hero__title {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0 0 0.5rem;
+}
+.arkan-hero__sub {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.8);
+  margin: 0 auto 1.25rem;
+  max-width: 500px;
+}
+.arkan-hero__icons {
+  display: flex;
+  justify-content: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+.arkan-hero__icon-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  background: rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: rgba(255,255,255,0.85);
+}
+.arkan-hero__icon-btn:hover { background: rgba(255,255,255,0.2); }
+.arkan-hero__icon-btn.is-active { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.5); }
+.arkan-hero__icon-emoji { font-size: 1.5rem; line-height: 1; }
+.arkan-hero__icon-num { font-size: 0.68rem; font-weight: 700; }
+
+/* List */
+.arkan-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+/* Card */
+.arkan-card {
+  background: #FFFFFF;
+  border: 1.5px solid #D4E3DB;
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: all 0.15s;
+}
+.arkan-card:hover { border-color: #9BC5B3; }
+.arkan-card--open { border-color: #0E6E52; box-shadow: 0 4px 20px rgba(14,110,82,0.12); }
+
+.arkan-card__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: right;
+  direction: rtl;
+}
+.arkan-card__emoji { font-size: 2rem; flex-shrink: 0; line-height: 1; }
+.arkan-card__info { flex: 1; text-align: right; }
+.arkan-card__num {
+  font-size: 0.7rem;
+  color: #0E6E52;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.arkan-card__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #052E16;
+  margin: 0.15rem 0;
+  line-height: 1.4;
+}
+.arkan-card__sub { font-size: 0.75rem; color: #6B9E8A; }
+.arkan-card__chevron { color: #0E6E52; flex-shrink: 0; }
+.arkan-card__summary {
+  padding: 0 1.25rem 1rem;
+  font-size: 0.88rem;
+  color: #2D4A3E;
+  line-height: 1.75;
+  margin: 0;
+}
+
+.arkan-card__body {
+  border-top: 1.5px solid #E8F2EE;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Sections */
+.arkan-section__title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0E6E52;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.65rem;
+}
+.arkan-dalil-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.arkan-dalil {
+  padding: 0.75rem 1rem;
+  border-radius: 0.65rem;
+}
+.arkan-dalil--quran {
+  background: rgba(14,110,82,0.05);
+  border-right: 3px solid #0E6E52;
+}
+.arkan-dalil--hadith {
+  background: rgba(5,46,22,0.04);
+  border-right: 3px solid #052E16;
+}
+.arkan-dalil__text {
+  font-family: var(--font-quran, serif);
+  font-size: 0.95rem;
+  color: #0A5040;
+  line-height: 1.9;
+  margin: 0 0 0.25rem;
+}
+.arkan-dalil--hadith .arkan-dalil__text {
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #1A2E24;
+  line-height: 1.7;
+}
+.arkan-dalil__ref {
+  font-size: 0.7rem;
+  color: #6B9E8A;
+  font-weight: 600;
+}
+
+/* Details */
+.arkan-details { display: flex; flex-direction: column; gap: 0.65rem; }
+.arkan-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.arkan-detail__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #0A5040;
+}
+.arkan-detail__body {
+  font-size: 0.83rem;
+  color: #1A2E24;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Scholar quote */
+.arkan-scholar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  background: rgba(124,58,237,0.04);
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-right: 3px solid #7C3AED;
+}
+.arkan-scholar__icon { color: #7C3AED; }
+.arkan-scholar__quote {
+  font-size: 0.88rem;
+  color: #1A2E24;
+  font-style: italic;
+  line-height: 1.7;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+.arkan-scholar__name {
+  font-size: 0.78rem;
+  color: #7C3AED;
+  font-weight: 700;
+}
+
+/* Related */
+.arkan-related { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1.5px solid #E8F2EE; }
+.arkan-related__title { font-size: 1rem; font-weight: 700; color: #052E16; margin-bottom: 0.85rem; }
+.arkan-related__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.5rem;
+}
+.arkan-related__link {
+  display: block;
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid #D4E3DB;
+  border-radius: 0.65rem;
+  text-decoration: none;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: #052E16;
+  background: #FFFFFF;
+  transition: all 0.15s;
+  text-align: center;
+}
+.arkan-related__link:hover { border-color: #0E6E52; background: rgba(14,110,82,0.05); color: #0E6E52; }
+
+@media (max-width: 600px) {
+  .arkan-hero__title { font-size: 1.7rem; }
+  .arkan-card__title { font-size: 0.92rem; }
+  .arkan-card__body { padding: 1rem; }
+  .arkan-related__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── نهاية §221 ─────────────────────────────────────────── */
