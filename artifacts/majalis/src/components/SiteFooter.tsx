@@ -70,6 +70,7 @@ const FOOTER_GROUPS = [
       { href: "/janaza",       label: "أحكام الجنائز" },
       { href: "/mawarith",     label: "المواريث والفرائض" },
       { href: "/salah-guide",  label: "دليل الصلاة الكامل" },
+      { href: "/fiqh-qawaid",  label: "القواعد الفقهية" },
       { href: "/fatwa",        label: "الفتاوى" },
       { href: "/rulings",      label: "الأحكام الشرعية" },
       { href: "/fiqh-council", label: "المجمع الفقهي" },

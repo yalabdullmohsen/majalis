@@ -58,6 +58,7 @@ const SHEET_SECTIONS = [
     { href: "/janaza",              label: "أحكام الجنائز",    Icon: ScrollText },
     { href: "/mawarith",            label: "المواريث",          Icon: Scale },
     { href: "/salah-guide",         label: "دليل الصلاة",       Icon: BookOpen },
+    { href: "/fiqh-qawaid",         label: "القواعد الفقهية",   Icon: Scale },
     { href: "/fiqh",                label: "الفقه",           Icon: Scale },
     { href: "/fatwa",               label: "الفتاوى",         Icon: Scale },
     { href: "/rulings",             label: "الأحكام",         Icon: Scale },
