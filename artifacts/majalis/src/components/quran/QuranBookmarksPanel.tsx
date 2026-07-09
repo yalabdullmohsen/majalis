@@ -199,7 +199,7 @@ export function QuranBookmarksPanel({ onGoTo, onClose }: Props) {
           <button type="button" onClick={onClose} aria-label="إغلاق" className="qbp-close">✕</button>
         </div>
 
-        <div className="qbp-tabs" role="tablist">
+        <div className="qbp-tabs" role="tablist" aria-label="أقسام لوحة القرآن">
           {TABS.map((t) => {
             const active = tab === t.id;
             return (

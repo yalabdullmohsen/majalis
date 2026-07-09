@@ -266,6 +266,9 @@ export function GlobalSearchModal({ onClose }: Props) {
       <div
         className={`gsm-card${isMobile ? " gsm-card--mobile" : ""}`}
         onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label="البحث الشامل"
       >
 
         {/* ── شريط البحث ─────────────────────────────────────────────── */}

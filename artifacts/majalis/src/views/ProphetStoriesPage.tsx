@@ -636,7 +636,7 @@ export default function ProphetStoriesPage() {
 
               {/* إحصاء */}
               {search && (
-                <p className="prophets-lux-count">{results.length} نتيجة</p>
+                <p className="prophets-lux-count" aria-live="polite" aria-atomic="true">{results.length} نتيجة</p>
               )}
 
               {/* شبكة البطاقات */}
