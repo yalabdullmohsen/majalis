@@ -31,6 +31,7 @@ const SHEET_SECTIONS = [
     { href: "/arkan",              label: "أركان الإسلام",      Icon: Landmark },
     { href: "/arkan-iman",         label: "أركان الإيمان",      Icon: Star },
     { href: "/hadith",             label: "الأحاديث",           Icon: ScrollText },
+    { href: "/hadith-science",     label: "مصطلح الحديث",       Icon: BookOpen },
     { href: "/arbaeen-nawawi",     label: "الأربعون النووية",  Icon: FileText },
     { href: "/fawaid",             label: "الفوائد",           Icon: Heart },
     { href: "/updates",            label: "آخر المستجدات",     Icon: RefreshCw },

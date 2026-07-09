@@ -17306,3 +17306,197 @@ img[loading="lazy"]:not([src=""]) {
 }
 
 /* ── نهاية §222 ─────────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════════════════
+   §223 — صفحة مصطلح الحديث (.hs-*)
+   ══════════════════════════════════════════════════════════ */
+
+.hs-page { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+/* هيرو */
+.hs-hero {
+  background: linear-gradient(135deg, #0A5040 0%, #0E6E52 55%, #176649 100%);
+  border-radius: 1.25rem;
+  padding: 2.5rem 1.5rem 2rem;
+  color: #FFFFFF;
+  text-align: center;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 4px 24px rgba(14,110,82,0.18);
+}
+.hs-hero__badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #FFFFFF;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.25rem 0.85rem;
+  border-radius: 99px;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.04em;
+}
+.hs-hero__title { font-size: 2rem; font-weight: 900; color: #FFFFFF; margin: 0 0 0.6rem; }
+.hs-hero__sub { font-size: 0.9rem; color: rgba(255,255,255,0.87); max-width: 520px; margin: 0 auto 1.5rem; line-height: 1.7; }
+
+/* إحصائيات */
+.hs-stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+.hs-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 0.85rem;
+  padding: 0.6rem 1.1rem;
+  min-width: 64px;
+}
+.hs-stat strong { font-size: 1.4rem; font-weight: 900; color: #FFFFFF; line-height: 1.1; }
+.hs-stat span { font-size: 0.72rem; color: rgba(255,255,255,0.78); margin-top: 0.15rem; }
+
+/* شريط التحكم */
+.hs-controls { margin-bottom: 1.25rem; }
+.hs-search-wrap { position: relative; margin-bottom: 0.85rem; }
+.hs-search-icon { position: absolute; right: 0.85rem; top: 50%; transform: translateY(-50%); color: #6B9E86; pointer-events: none; }
+.hs-search {
+  width: 100%;
+  padding: 0.7rem 2.5rem 0.7rem 2rem;
+  border: 1.5px solid #D4E3DB;
+  border-radius: 0.75rem;
+  font-size: 0.9rem;
+  color: #052E16;
+  background: #FFFFFF;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+  font-family: inherit;
+  direction: rtl;
+}
+.hs-search:focus { border-color: #0E6E52; }
+.hs-search-clear {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6B9E86;
+  padding: 0.2rem;
+  display: flex;
+  align-items: center;
+}
+.hs-cats { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.hs-cat-chip {
+  padding: 0.35rem 0.9rem;
+  border-radius: 99px;
+  border: 1.5px solid #D4E3DB;
+  background: #FFFFFF;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #2D4A3C;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.hs-cat-chip:hover { border-color: #0E6E52; color: #0E6E52; }
+.hs-cat-chip--active { background: #0E6E52; border-color: #0E6E52; color: #FFFFFF; }
+
+/* شبكة المصطلحات */
+.hs-grid { display: flex; flex-direction: column; gap: 0.6rem; }
+
+/* بطاقة */
+.hs-card {
+  background: #FFFFFF;
+  border: 1.5px solid #D4E3DB;
+  border-radius: 0.9rem;
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.hs-card--open { border-color: #0E6E52; box-shadow: 0 3px 14px rgba(14,110,82,0.1); }
+.hs-card--accepted { border-right: 3px solid #0E6E52; }
+.hs-card--rejected { border-right: 3px solid #C0392B; }
+.hs-card__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: right;
+  gap: 0.75rem;
+  transition: background 0.15s;
+}
+.hs-card__header:hover { background: rgba(14,110,82,0.04); }
+.hs-card__header-main { flex: 1; min-width: 0; }
+.hs-card__cat { font-size: 0.7rem; font-weight: 700; color: #0E6E52; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.18rem; }
+.hs-card__term { font-size: 0.97rem; font-weight: 800; color: #052E16; }
+
+/* شارة الحكم */
+.hs-grade {
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.22rem 0.65rem;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+.hs-grade--accepted { background: rgba(14,110,82,0.1); color: #0A5040; border: 1px solid rgba(14,110,82,0.25); }
+.hs-grade--rejected { background: rgba(192,57,43,0.1); color: #922B21; border: 1px solid rgba(192,57,43,0.25); }
+.hs-grade--neutral  { background: rgba(90,90,90,0.08); color: #444; border: 1px solid rgba(0,0,0,0.12); }
+
+/* محتوى البطاقة */
+.hs-card__body { padding: 0 1.1rem 1rem; border-top: 1.5px solid #E8F2EE; }
+.hs-card__def { font-size: 0.88rem; color: #1E4A38; line-height: 1.75; margin: 0.85rem 0 0.6rem; }
+.hs-card__example {
+  font-size: 0.82rem;
+  color: #2D4A3C;
+  background: rgba(14,110,82,0.05);
+  border-right: 3px solid #0E6E52;
+  border-radius: 0 0.5rem 0.5rem 0;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.6rem;
+}
+.hs-card__example-label { font-weight: 700; color: #0E6E52; margin-left: 0.3rem; }
+.hs-card__note {
+  font-size: 0.8rem;
+  color: #4A7563;
+  background: #F8FBF9;
+  border: 1px solid #D4E3DB;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  line-height: 1.6;
+}
+
+/* فارغ */
+.hs-empty { text-align: center; padding: 3rem 1rem; color: #6B9E86; }
+.hs-empty p { margin-top: 0.5rem; font-size: 0.9rem; }
+
+/* ذات صلة */
+.hs-related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1.5px solid #E8F2EE; }
+.hs-related__title { font-size: 1rem; font-weight: 700; color: #052E16; margin-bottom: 0.75rem; }
+.hs-related__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.5rem; }
+.hs-related__link {
+  display: block;
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid #D4E3DB;
+  border-radius: 0.65rem;
+  text-decoration: none;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: #052E16;
+  background: #FFFFFF;
+  transition: all 0.15s;
+  text-align: center;
+}
+.hs-related__link:hover { border-color: #0E6E52; background: rgba(14,110,82,0.05); color: #0E6E52; }
+
+@media (max-width: 600px) {
+  .hs-hero__title { font-size: 1.65rem; }
+  .hs-stats { gap: 0.6rem; }
+  .hs-stat { padding: 0.5rem 0.75rem; }
+  .hs-related__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── نهاية §223 ─────────────────────────────────────────── */

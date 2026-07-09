@@ -23,6 +23,7 @@ const FOOTER_GROUPS = [
       { href: "/annual-courses", label: "الدورات العلمية" },
       { href: "/library",        label: "المكتبة" },
       { href: "/hadith",         label: "الأحاديث" },
+      { href: "/hadith-science", label: "مصطلح الحديث" },
       { href: "/fawaid",         label: "الفوائد" },
       { href: "/stories",        label: "القصص الإسلامية" },
       { href: "/seerah",         label: "السيرة النبوية" },
