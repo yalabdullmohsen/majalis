@@ -10119,7 +10119,8 @@ body.side-nav-open {
 .site-footer-groups {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 1rem; margin-top: 1rem;
 }
-.site-footer-group p { margin: 0 0 0.35rem; font-weight: 700; color: var(--majalis-emerald-deep); font-size: 0.88rem; }
+.site-footer-group p,
+.site-footer-group__title { margin: 0 0 0.35rem; font-weight: 700; color: var(--majalis-emerald-deep); font-size: 0.88rem; }
 .site-footer-group nav { display: grid; gap: 0.25rem; }
 
 .prayer-status-card { padding: 1.25rem; margin-bottom: 1rem; text-align: center; }
@@ -13660,7 +13661,8 @@ body.has-assistant-fab .app-main {
   gap: 1.25rem;
 }
 
-.site-footer-group p {
+.site-footer-group p,
+.site-footer-group__title {
   padding-bottom: 0.5rem;
   border-bottom: 1px solid rgba(224, 215, 196, 0.4);
   margin-bottom: 0.5rem !important;

@@ -137,8 +137,8 @@ export function SiteFooter() {
         <div className="site-footer-groups">
           {FOOTER_GROUPS.map((group) => (
             <div key={group.title} className="site-footer-group">
-              <p>{group.title}</p>
-              <nav>
+              <h3 className="site-footer-group__title">{group.title}</h3>
+              <nav aria-label={group.title}>
                 {group.links.map((link) => (
                   <Link key={link.href} href={link.href} className="site-footer-link">
                     {link.label}
