@@ -1,5 +1,4 @@
 import { Suspense, useEffect, useRef, useState, type ComponentType } from "react";
-import { BookOpen } from "lucide-react";
 import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useParams } from "wouter";
 import { AuthProvider } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
