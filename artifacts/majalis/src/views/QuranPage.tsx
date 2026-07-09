@@ -1,6 +1,7 @@
 import {
   useCallback, useEffect, useMemo, useRef, useState,
 } from "react";
+import { createPortal } from "react-dom";
 import {
   Bookmark, BookOpen, ChevronLeft, ChevronRight, List,
   Moon, Search, Sun, X, ZoomIn, ZoomOut,
@@ -259,7 +260,7 @@ export default function QuranPage() {
   /* ══════════════════════════════════════════════════════════════════
      JSX
      ══════════════════════════════════════════════════════════════════ */
-  return (
+  return createPortal(
     <div
       className={`mshf-shell${modeClass}`}
       dir="rtl"
@@ -583,6 +584,7 @@ export default function QuranPage() {
           </div>
         </div>
       )}
-    </div>
+    </div>,
+    document.body
   );
 }
