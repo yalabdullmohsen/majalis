@@ -348,6 +348,7 @@ export default function DuasPage() {
               type="button"
               className={`duas-cat${category === c ? " duas-cat--active" : ""}`}
               onClick={() => setCategory(c)}
+              aria-pressed={category === c}
             >
               {c}
             </button>
@@ -369,6 +370,7 @@ export default function DuasPage() {
                     type="button"
                     className="dua-card__title-btn"
                     onClick={() => setExpanded(open ? null : dua.id)}
+                    aria-expanded={open}
                   >
                     <BookOpen size={14} className="dua-card__icon" aria-hidden="true" />
                     <span className="dua-card__title">{dua.title}</span>

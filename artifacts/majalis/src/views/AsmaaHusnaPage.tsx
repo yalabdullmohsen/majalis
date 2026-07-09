@@ -167,7 +167,7 @@ export default function AsmaaHusnaPage() {
         <div className="ah-hero__stats">
           <span>99 اسماً</span>
           <span className="ah-hero__dot">·</span>
-          <span>{filtered.length} ظاهر</span>
+          <span aria-live="polite" aria-atomic="true">{filtered.length} ظاهر</span>
           <span className="ah-hero__dot">·</span>
           <span>{favs.size} محفوظ</span>
         </div>

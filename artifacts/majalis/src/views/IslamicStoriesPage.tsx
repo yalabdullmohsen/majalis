@@ -285,7 +285,7 @@ export default function IslamicStoriesPage() {
             </div>
           </div>
 
-          <p className="isp-result-count">
+          <p className="isp-result-count" aria-live="polite" aria-atomic="true">
             {filtered.length} قصة
             {search && ` — نتائج البحث عن "${search}"`}
           </p>

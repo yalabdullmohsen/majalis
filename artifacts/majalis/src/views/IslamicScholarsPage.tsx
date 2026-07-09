@@ -292,7 +292,7 @@ export default function IslamicScholarsPage() {
       </div>
 
       {/* ── نتيجة البحث ────────────────────────────────────────── */}
-      <p className="sch-results-count">
+      <p className="sch-results-count" aria-live="polite" aria-atomic="true">
         {filtered.length === SCHOLARS.length
           ? `${SCHOLARS.length} عالماً`
           : `${filtered.length} من ${SCHOLARS.length} عالماً`}

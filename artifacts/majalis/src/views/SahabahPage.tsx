@@ -310,7 +310,7 @@ export default function SahabahPage() {
           ))}
         </div>
 
-        <p className="sb-count">{filtered.length} صحابي</p>
+        <p className="sb-count" aria-live="polite" aria-atomic="true">{filtered.length} صحابي</p>
 
         {/* cards */}
         <div className="sb-list">
