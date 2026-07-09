@@ -378,6 +378,9 @@ export type DailyWirdState = {
   completedToday: number;
   lastDate: string;
   monthlyTotal: number;
+  streak: number;
+  weeklyLogs: Record<string, number>;
+  totalPagesEver: number;
 };
 
 const WIRD_KEY = "mj-quran-wird-v3";
@@ -385,9 +388,40 @@ const WIRD_KEY = "mj-quran-wird-v3";
 export function getDailyWirdState(): DailyWirdState {
   try {
     const raw = localStorage.getItem(WIRD_KEY);
-    if (raw) return JSON.parse(raw) as DailyWirdState;
+    if (raw) {
+      const parsed = JSON.parse(raw) as Partial<DailyWirdState>;
+      return {
+        pagesPerDay: parsed.pagesPerDay ?? 2,
+        currentSurah: parsed.currentSurah ?? 1,
+        currentAyah: parsed.currentAyah ?? 1,
+        completedToday: parsed.completedToday ?? 0,
+        lastDate: parsed.lastDate ?? "",
+        monthlyTotal: parsed.monthlyTotal ?? 0,
+        streak: parsed.streak ?? 0,
+        weeklyLogs: parsed.weeklyLogs ?? {},
+        totalPagesEver: parsed.totalPagesEver ?? 0,
+      };
+    }
   } catch { /* ignore */ }
-  return { pagesPerDay: 2, currentSurah: 1, currentAyah: 1, completedToday: 0, lastDate: "", monthlyTotal: 0 };
+  return { pagesPerDay: 2, currentSurah: 1, currentAyah: 1, completedToday: 0, lastDate: "", monthlyTotal: 0, streak: 0, weeklyLogs: {}, totalPagesEver: 0 };
+}
+
+export function prevDateStr(dateStr: string): string {
+  const d = new Date(dateStr);
+  d.setDate(d.getDate() - 1);
+  return d.toISOString().slice(0, 10);
+}
+
+export function weeklyTotal(logs: Record<string, number>): number {
+  const today = new Date();
+  let total = 0;
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    const k = d.toISOString().slice(0, 10);
+    total += logs[k] ?? 0;
+  }
+  return total;
 }
 
 export function saveDailyWirdState(state: DailyWirdState) {

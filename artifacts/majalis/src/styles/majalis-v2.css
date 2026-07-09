@@ -109,7 +109,7 @@
 .btn-v2--gold {
   background: var(--v2-gold);
   color: #fff;
-  box-shadow: 0 2px 8px rgba(198,160,89,.3);
+  box-shadow: 0 2px 8px rgba(14,110,82,.3);
 }
 .btn-v2--gold:hover { filter: brightness(0.92); transform: translateY(-1px); }
 

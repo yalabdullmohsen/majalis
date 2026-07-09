@@ -4108,6 +4108,68 @@ button.primary:hover {
   opacity: 0.88;
 }
 
+.wird-streak-card {
+  padding: 1.25rem 1.5rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.6rem !important;
+}
+
+.wird-streak-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.wird-streak-num {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wird-streak-icon {
+  color: var(--majalis-emerald, #0E6E52);
+}
+
+.wird-streak-count {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--majalis-emerald, #0E6E52);
+  line-height: 1;
+}
+
+.wird-streak-label {
+  font-size: 0.82rem;
+  color: var(--majalis-ink-soft, #5D726A);
+  font-weight: 600;
+}
+
+.wird-khatm-est {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--majalis-ink-soft, #5D726A);
+  font-weight: 600;
+}
+
+.wird-khatm-est svg {
+  color: var(--majalis-emerald, #0E6E52);
+  flex-shrink: 0;
+}
+
+.wird-streak-msg {
+  margin: 0;
+  font-size: 0.83rem;
+  color: var(--majalis-emerald-deep, #0A5040);
+  font-weight: 600;
+  font-style: italic;
+  border-right: 2px solid var(--majalis-emerald, #0E6E52);
+  padding-right: 0.6rem;
+}
+
 /* ══════════════════════════════════════════════
    §45. Occasions Page — المناسبات الإسلامية
    ══════════════════════════════════════════════ */

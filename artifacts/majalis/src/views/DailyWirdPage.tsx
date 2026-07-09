@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
-import { BookOpen, Leaf } from "lucide-react";
+import { BookOpen, Flame, Leaf, TrendingUp } from "lucide-react";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
 import {
   getDailyWirdState,
   getSurahList,
+  prevDateStr,
   saveDailyWirdState,
+  weeklyTotal,
 } from "@/lib/quran-api";
 import { incrementTaskProgress } from "@/lib/daily-progress";
 import { applyPageSeo } from "@/lib/seo";
+
+const QURAN_PAGES = 604;
 
 function toAr(n: number): string {
   return n.toLocaleString("ar-EG", { useGrouping: false });
@@ -24,7 +28,7 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
       <circle
         cx="74" cy="74" r={r}
         fill="none"
-        stroke={done ? "var(--majalis-emerald, #0E6E52)" : "var(--majalis-emerald, #0E6E52)"}
+        stroke="var(--majalis-emerald, #0E6E52)"
         strokeWidth="9"
         strokeLinecap="round"
         strokeDasharray={circ}
@@ -49,6 +53,15 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
   );
 }
 
+function streakMsg(streak: number): string {
+  if (streak >= 30) return "ما شاء الله! ثلاثون يوماً من المداومة على القرآن";
+  if (streak >= 14) return "أسبوعان متواصلان — بارك الله فيك";
+  if (streak >= 7)  return "أسبوع كامل من المداومة، أحسنت";
+  if (streak >= 3)  return "مداومة مباركة — استمر";
+  if (streak === 1) return "بداية موفقة، داوم عليها";
+  return "";
+}
+
 export default function DailyWirdPage() {
   const [state, setState] = useState(getDailyWirdState);
   const surahs = getSurahList();
@@ -64,6 +77,7 @@ export default function DailyWirdPage() {
 
   const today = new Date().toISOString().slice(0, 10);
   const todayCompleted = state.lastDate === today ? state.completedToday : 0;
+  const weekly = weeklyTotal({ ...state.weeklyLogs, [today]: todayCompleted });
 
   const persist = (next: typeof state) => {
     setState(next);
@@ -76,19 +90,48 @@ export default function DailyWirdPage() {
     const prev = state.lastDate === today ? state.completedToday : 0;
     const next = prev + n;
     const justDone = next >= state.pagesPerDay && prev < state.pagesPerDay;
+
+    // Update streak: if yesterday was completed, continue; otherwise start at 1
+    let newStreak = state.streak;
+    if (justDone) {
+      const yesterday = prevDateStr(today);
+      const yesterdayDone = (state.weeklyLogs[yesterday] ?? 0) >= state.pagesPerDay;
+      if (state.lastDate === yesterday && yesterdayDone) {
+        newStreak = state.streak + 1;
+      } else if (state.lastDate !== today) {
+        newStreak = 1;
+      }
+    }
+
+    const updatedLogs = { ...state.weeklyLogs, [today]: next };
     persist({
       ...state,
       completedToday: next,
       lastDate: today,
-      monthlyTotal: state.monthlyTotal + n,
+      monthlyTotal: (state.lastDate === today ? state.monthlyTotal : state.monthlyTotal) + n,
+      totalPagesEver: state.totalPagesEver + n,
+      streak: newStreak,
+      weeklyLogs: updatedLogs,
     });
     if (justDone) incrementTaskProgress("wird", 1);
   };
 
-  const resetToday = () => update({ completedToday: 0 });
+  const resetToday = () => {
+    const diff = todayCompleted;
+    const logs = { ...state.weeklyLogs, [today]: 0 };
+    persist({
+      ...state,
+      completedToday: 0,
+      monthlyTotal: Math.max(0, state.monthlyTotal - diff),
+      totalPagesEver: Math.max(0, state.totalPagesEver - diff),
+      weeklyLogs: logs,
+    });
+  };
 
   const pct  = state.pagesPerDay > 0 ? todayCompleted / state.pagesPerDay : 0;
   const done = todayCompleted >= state.pagesPerDay && state.pagesPerDay > 0;
+  const remaining604 = Math.max(0, QURAN_PAGES - state.totalPagesEver);
+  const khatmDays = state.pagesPerDay > 0 ? Math.ceil(remaining604 / state.pagesPerDay) : null;
 
   return (
     <div className="page-shell narrow wird-page">
@@ -134,10 +177,42 @@ export default function DailyWirdPage() {
         {/* إحصائيات */}
         <div className="wird-stats-row">
           <div className="wird-stat">
+            <span>هذا الأسبوع</span>
+            <strong>{toAr(weekly)} صفحة</strong>
+          </div>
+          <div className="wird-stat">
             <span>هذا الشهر</span>
             <strong>{toAr(state.monthlyTotal)} صفحة</strong>
           </div>
+          <div className="wird-stat">
+            <span>المجموع الكلي</span>
+            <strong>{toAr(state.totalPagesEver)} صفحة</strong>
+          </div>
         </div>
+      </div>
+
+      {/* بطاقة السلسلة والختم */}
+      <div className="wird-streak-card ui-card">
+        <div className="wird-streak-row">
+          <div className="wird-streak-num">
+            <Flame size={18} strokeWidth={1.8} className="wird-streak-icon" aria-hidden="true" />
+            <span className="wird-streak-count">{toAr(state.streak)}</span>
+            <span className="wird-streak-label">يوم متواصل</span>
+          </div>
+          {khatmDays !== null && (
+            <div className="wird-khatm-est">
+              <TrendingUp size={16} strokeWidth={1.8} aria-hidden="true" />
+              <span>
+                {khatmDays <= 0
+                  ? "أكملت القرآن! ما شاء الله"
+                  : `الختم بعد نحو ${toAr(khatmDays)} يوم`}
+              </span>
+            </div>
+          )}
+        </div>
+        {state.streak > 0 && (
+          <p className="wird-streak-msg">{streakMsg(state.streak)}</p>
+        )}
       </div>
 
       {/* ضبط الورد */}
