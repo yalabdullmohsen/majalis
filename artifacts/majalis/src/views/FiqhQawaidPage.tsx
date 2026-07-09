@@ -367,7 +367,7 @@ export default function FiqhQawaidPage() {
                   onClick={() => setOpenKubra(openKubra === q.id ? null : q.id)}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={e => e.key === "Enter" && setOpenKubra(openKubra === q.id ? null : q.id)}
+                  onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenKubra(openKubra === q.id ? null : q.id)}
                   aria-expanded={openKubra === q.id}
                 >
                   <div className="fq-card__num-wrap">
@@ -485,7 +485,7 @@ export default function FiqhQawaidPage() {
                   onClick={() => setOpenDhaabit(openDhaabit === d.id ? null : d.id)}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={e => e.key === "Enter" && setOpenDhaabit(openDhaabit === d.id ? null : d.id)}
+                  onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenDhaabit(openDhaabit === d.id ? null : d.id)}
                   aria-expanded={openDhaabit === d.id}
                 >
                   <span className="fq-daabit__icon" aria-hidden="true">{d.icon}</span>
@@ -526,7 +526,7 @@ export default function FiqhQawaidPage() {
                   onClick={() => setOpenTatbiq(openTatbiq === i ? null : i)}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={e => e.key === "Enter" && setOpenTatbiq(openTatbiq === i ? null : i)}
+                  onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenTatbiq(openTatbiq === i ? null : i)}
                   aria-expanded={openTatbiq === i}
                 >
                   <span className="fq-tatbiq__num">{(i + 1).toLocaleString("ar-EG")}</span>

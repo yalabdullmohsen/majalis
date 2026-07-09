@@ -337,7 +337,7 @@ export default function AnbiyaPage() {
                     onClick={() => setOpenId(openId === nabi.id ? null : nabi.id)}
                     role="button"
                     tabIndex={0}
-                    onKeyDown={e => e.key === "Enter" && setOpenId(openId === nabi.id ? null : nabi.id)}
+                    onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenId(openId === nabi.id ? null : nabi.id)}
                     aria-expanded={openId === nabi.id}
                   >
                     <div className="nb-card__num">{nabi.id}</div>

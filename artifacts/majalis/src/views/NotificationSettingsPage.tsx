@@ -44,7 +44,7 @@ function ToggleRow({
         role="switch"
         aria-checked={checked}
         tabIndex={0}
-        onKeyDown={(e) => e.key === "Enter" && !disabled && onChange(!checked)}
+        onKeyDown={(e) => (e.key === " " || e.key === "Enter") && !disabled && onChange(!checked)}
       >
         <span className="notif-toggle__thumb" />
       </div>
@@ -69,7 +69,7 @@ function NotifRow({ rec, onRead, onArchive, onDelete }: {
       onClick={onRead}
       role="button"
       tabIndex={0}
-      onKeyDown={e => e.key === "Enter" && onRead()}
+      onKeyDown={e => (e.key === "Enter" || e.key === " ") && onRead()}
     >
       <div className="nh-row__dot" aria-hidden="true" />
       <div className="nh-row__body">

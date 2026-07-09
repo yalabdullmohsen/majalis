@@ -69,7 +69,7 @@ export default function SubmitContentPage() {
         onClick={() => setContentType("درس")}
         role="button"
         tabIndex={0}
-        onKeyDown={(e) => e.key === "Enter" && setContentType("درس")}
+        onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setContentType("درس")}
       >
         <div className="scp-banner__emoji" aria-hidden="true"><GraduationCap size={32} strokeWidth={1.4} /></div>
         <div>
