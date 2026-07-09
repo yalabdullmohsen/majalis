@@ -142,7 +142,7 @@ export default function QuranPage() {
   const [bookmarks, setBookmarks] = useState<BmEntry[]>(() => lsGet(BM_KEY, []));
 
   const [surahData, setSurahData] = useState<SurahData | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   const [navOpen, setNavOpen] = useState(false);
@@ -184,14 +184,18 @@ export default function QuranPage() {
     setLoading(true);
     setError(false);
     setSurahData(null);
+    const timeout = setTimeout(() => ctrl.abort(), 12000);
     try {
       const res = await fetch(`${API_BASE}/surah/${n}/${EDITION}`, { signal: ctrl.signal });
+      clearTimeout(timeout);
       if (!res.ok) throw new Error("HTTP " + res.status);
       const json = await res.json();
       const d = json.data as SurahData;
+      if (!d?.ayahs?.length) throw new Error("empty");
       cache.current.set(n, d);
       setSurahData(d);
     } catch (e: unknown) {
+      clearTimeout(timeout);
       if ((e as Error)?.name !== "AbortError") setError(true);
     } finally {
       setLoading(false);
@@ -379,11 +383,12 @@ export default function QuranPage() {
 
         {error && !loading && (
           <div className="mshf-err">
-            <p>تعذّر تحميل السورة. تحقق من الاتصال بالإنترنت.</p>
+            <p>تعذّر تحميل سورة {SURAHS_META[surahNum - 1][0]}.</p>
+            <p style={{ fontSize: "0.78rem" }}>تحقق من اتصالك بالإنترنت ثم أعد المحاولة.</p>
             <button
               type="button"
               className="mshf-err-btn"
-              onClick={() => fetchSurah(surahNum)}
+              onClick={() => { setError(false); fetchSurah(surahNum); }}
             >
               إعادة المحاولة
             </button>

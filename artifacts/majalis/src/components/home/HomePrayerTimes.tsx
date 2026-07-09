@@ -19,9 +19,9 @@ export function HomePrayerTimes() {
 
       {loading ? (
         <div className="home-prayer-skeleton" aria-hidden="true">
-          <div className="ds-skeleton" style={{ height: "5rem", borderRadius: "1rem" }} />
-          <div className="home-prayer-grid" style={{ marginTop: "0.75rem" }}>
-            {[1,2,3,4,5].map(i => <div key={i} className="ds-skeleton" style={{ height: "3.5rem", borderRadius: "0.75rem" }} />)}
+          <div className="ds-skeleton home-prayer-skel-banner" />
+          <div className="home-prayer-skel-grid">
+            {[1,2,3,4,5].map(i => <div key={i} className="ds-skeleton home-prayer-skel-cell" />)}
           </div>
         </div>
       ) : data && countdown ? (
