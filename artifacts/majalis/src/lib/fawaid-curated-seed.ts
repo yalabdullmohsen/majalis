@@ -293,6 +293,54 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── إضافات اللغة العربية ── */
   { text: "من أتقن العربية فتح له باب الفهم على الكتاب والسنة؛ ولغة القرآن ليست وسيلة فحسب بل هي من شريعته.", category: "اللغة العربية", source: "اقتضاء الصراط المستقيم — ابن تيمية", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
   { text: "أفصح البشر لساناً رسول الله ﷺ — أوتي جوامع الكلم: كلمات قليلة تحمل معاني غزيرة لا يُحيط بها شرح.", category: "اللغة العربية", source: "جوامع الكلم — دراسة حديثية", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "verified" },
+
+  /* ── الطب النبوي والصحة ── */
+  { text: "عليكم بهذا العود الهندي فإن فيه سبعة أشفية.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "الحجامة أو الفصد أو شربة عسل — ثلاثة في شفاء الجسم بإذن الله.", category: "الحديث", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "المعدة بيت الداء والحمية رأس كل دواء — وأعطِ كل جسم ما عوّدته.", category: "الحديث", source: "أثر يُنسب للحارث بن كلدة — ويُستشهد به في الطب النبوي", author_name: "الطب النبوي", status: "approved", verification_status: "needs_review" },
+  { text: "في كل صباح تصدق على كل سلامى منك؛ وصيام يوم سنة للمسلم.", category: "الحديث", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
+
+  /* ── المعاملات والأخلاق التجارية ── */
+  { text: "البيّعان بالخيار ما لم يتفرّقا؛ فإن صدقا وبيّنا بورك لهما، وإن كتما وكذبا مُحقت بركة بيعهما.", category: "الفقه", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "المسلم أخو المسلم — لا يحل لمسلم أن يبيع على بيع أخيه.", category: "الفقه", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "إن التجار يُبعثون يوم القيامة فجاراً إلا من اتقى الله وبرّ وصدق.", category: "الأخلاق", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "ثلاثة لا يكلمهم الله يوم القيامة: المُسبل والمنّان والمنفّق سلعته بالحلف الكاذب.", category: "الفقه", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
+
+  /* ── مواقف المؤمن من الابتلاء ── */
+  { text: "عجباً لأمر المؤمن إن أمره كله خير؛ إن أصابته سراء شكر فكان خيراً له، وإن أصابته ضراء صبر فكان خيراً له.", category: "العقيدة", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
+  { text: "ما يصيب المؤمن من وصب ولا نصب ولا سقم حتى الشوكة يُشاكها إلا كُفّر بها خطاياه.", category: "العقيدة", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "إن الله إذا أحب قوماً ابتلاهم؛ فمن رضي فله الرضا، ومن سخط فله السخط.", category: "العقيدة", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+
+  /* ── العلم والإبداع من منظور إسلامي ── */
+  { text: "العقل أكبر نعمة أنعمها الله على الإنسان؛ ومن لم يستعمله في خدمة الحق فقد أضاع أعز ما أُعطي.", category: "طلب العلم", source: "إحياء علوم الدين — الغزالي", author_name: "الإمام الغزالي", status: "approved", verification_status: "verified" },
+  { text: "الإسلام يأمر بالتعلم من المهد إلى اللحد؛ فالعلم لا يتوقف بنبل ولا جاه ولا سن.", category: "طلب العلم", source: "طلب العلم فريضة على كل مسلم — ابن ماجه", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
+  { text: "التفكر في خلق الله ساعة خير من عبادة سبعين سنة — فالتأمل في الكون طريق إلى معرفة الخالق.", category: "طلب العلم", source: "رواه أبو الشيخ — يُستشهد به في الفقه", author_name: "أبو الشيخ الأصبهاني", status: "approved", verification_status: "needs_review" },
+
+  /* ── الدعاء والتوسل ── */
+  { text: "ادعوا الله وأنتم موقنون بالإجابة؛ واعلموا أن الله لا يستجيب دعاءً من قلب غافل لاهٍ.", category: "الفقه", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "الدعاء هو العبادة — من تركه تكبّر، ومن واظب عليه قَرُب.", category: "الفقه", source: "وَقَالَ رَبُّكُمُ ادْعُونِي أَسْتَجِبْ لَكُمْ — غافر: 60", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
+  { text: "أقرب ما يكون العبد من ربه وهو ساجد؛ فأكثروا فيه الدعاء.", category: "الفقه", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
+
+  /* ── الصبر والثبات ── */
+  { text: "الصبر ثلاثة أنواع: صبر على الطاعة، وصبر عن المعصية، وصبر على المصيبة.", category: "الأخلاق", source: "عدة الصابرين — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "إن الله مع الصابرين — هذه المعية تعني النصر والتأييد والحفظ والتوفيق.", category: "العقيدة", source: "البقرة: 153، وتفسير ابن سعدي", author_name: "الإمام ابن سعدي", status: "approved", verification_status: "verified" },
+
+  /* ── الأسرة والمجتمع ── */
+  { text: "المجتمع المسلم كالجسد الواحد؛ إذا اشتكى منه عضو تداعى له سائر الجسد بالسهر والحمى.", category: "الحديث", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "المؤمن للمؤمن كالبنيان المرصوص يشد بعضه بعضاً — التماسك الاجتماعي فريضة إسلامية.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "من كان في حاجة أخيه كان الله في حاجته; ومن فرّج كربة فرّج الله عنه كربة من كرب يوم القيامة.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+
+  /* ── التوبة والمغفرة ── */
+  { text: "قل يا عبادي الذين أسرفوا على أنفسهم لا تقنطوا من رحمة الله — فالرحمة تسع كل ذنب.", category: "العقيدة", source: "الزمر: 53", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
+  { text: "التائب من الذنب كمن لا ذنب له — التوبة تمحو ما قبلها ولا تُبقي أثراً في سجل الأعمال.", category: "العقيدة", source: "رواه ابن ماجه — حسنه الألباني", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
+
+  /* ── الوقت والتخطيط ── */
+  { text: "نعمتان مغبون فيهما كثير من الناس: الصحة والفراغ — من عرف قدرهما ربح دنياه وآخرته.", category: "الحديث", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "اغتنم خمساً قبل خمس: شبابك قبل هرمك، وصحتك قبل سقمك، وغناك قبل فقرك، وفراغك قبل شغلك، وحياتك قبل موتك.", category: "الحديث", source: "رواه ابن المبارك في الزهد — حسن", author_name: "ابن المبارك", status: "approved", verification_status: "verified" },
+
+  /* ── ذكر الله وتلاوة القرآن ── */
+  { text: "ألا بذكر الله تطمئن القلوب — الذكر دواء القلوب وغذاؤها وقوتها في كل وقت.", category: "العقيدة", source: "الرعد: 28", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
+  { text: "الذاكرون الله كثيراً والذاكرات أعد الله لهم مغفرة وأجراً عظيماً — فأكثر من الذكر في كل حال.", category: "الحديث", source: "الأحزاب: 35", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
 ];
 
 export const FAWAID_CURATED_SEED: FawaidCuratedItem[] = curated.map((item, i) => ({

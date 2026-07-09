@@ -10964,6 +10964,181 @@ body {
 .hmb-type--hajj    { --hmb-type-color: var(--majalis-emerald, #1F4D3A); }
 .hmb-type--general { --hmb-type-color: #4B5563; }
 
+/* ── §177b — HomeAsmaCard ────────────────────────────────────────────────── */
+.hac { margin: 0; }
+.hac__eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+.hac__card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--hac-accent, #1F4D3A) 10%, #fff) 0%,
+    color-mix(in srgb, var(--hac-accent, #1F4D3A) 4%, #fff) 100%
+  );
+  border: 1px solid color-mix(in srgb, var(--hac-accent, #1F4D3A) 15%, transparent);
+  border-right: 4px solid var(--hac-accent, #1F4D3A);
+  padding: 1.1rem 1.1rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.hac__num-badge {
+  position: absolute;
+  top: 0.65rem;
+  left: 0.85rem;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--hac-accent, #1F4D3A) 45%, transparent);
+  letter-spacing: 0.03em;
+  direction: ltr;
+}
+.hac__body { display: flex; flex-direction: column; gap: 0.25rem; }
+.hac__arabic {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--hac-accent, #1F4D3A);
+  line-height: 1.2;
+  margin: 0 0 0.15rem;
+  letter-spacing: 0.02em;
+}
+.hac__transliteration {
+  font-size: 0.72rem;
+  color: color-mix(in srgb, var(--hac-accent, #1F4D3A) 55%, transparent);
+  font-style: italic;
+  margin: 0;
+  direction: ltr;
+  text-align: right;
+}
+.hac__meaning {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--majalis-ink, #1A2E26);
+  margin: 0.1rem 0 0;
+  line-height: 1.5;
+}
+.hac__divider {
+  height: 1px;
+  background: color-mix(in srgb, var(--hac-accent, #1F4D3A) 12%, transparent);
+  margin: 0.5rem 0 0.4rem;
+}
+.hac__benefit-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.hac__benefit-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--hac-accent, #1F4D3A);
+  background: color-mix(in srgb, var(--hac-accent, #1F4D3A) 10%, transparent);
+  border-radius: 4px;
+  padding: 0.1rem 0.4rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+.hac__benefit {
+  font-size: 0.82rem;
+  color: var(--majalis-ink-soft);
+  margin: 0;
+  line-height: 1.55;
+}
+.hac__category-badge {
+  position: absolute;
+  bottom: 0.65rem;
+  left: 0.85rem;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--hac-accent, #1F4D3A) 55%, transparent);
+  background: color-mix(in srgb, var(--hac-accent, #1F4D3A) 8%, transparent);
+  border-radius: 4px;
+  padding: 0.1rem 0.4rem;
+}
+
+/* ── §177c — HomeWeekStreak ──────────────────────────────────────────────── */
+.hws { margin: 0; }
+.hws__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.hws__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.hws__streak-badge {
+  font-size: 0.78rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FF6B35, #FF8C42);
+  color: #fff;
+  border-radius: 99px;
+  padding: 0.1rem 0.55rem;
+}
+.hws__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.35rem;
+  margin-bottom: 0.6rem;
+}
+.hws__day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+.hws__circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid rgba(31,77,58,0.18);
+  background: rgba(31,77,58,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: #1F4D3A;
+  transition: background 0.2s, border-color 0.2s;
+}
+.hws__day--done .hws__circle {
+  background: #1F4D3A;
+  border-color: #1F4D3A;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(31,77,58,0.25);
+}
+.hws__day--today .hws__circle {
+  border-color: #1F4D3A;
+  border-width: 2.5px;
+}
+.hws__label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: rgba(31,77,58,0.55);
+}
+.hws__day--today .hws__label {
+  color: #1F4D3A;
+  font-weight: 800;
+}
+.hws__tip {
+  font-size: 0.76rem;
+  color: rgba(31,77,58,0.5);
+  text-align: center;
+  margin: 0.25rem 0 0;
+}
+.hws__tip--congrats {
+  color: #1F4D3A;
+  font-weight: 700;
+}
+
 /* ── §178 — CitationActionBar, progress bars ─────────────────────────────── */
 .cab-type-bar { background: var(--cab-type-color, var(--majalis-emerald-deep)); }
 .home-progress-card__bar > span { width: var(--hdp-pct, 0%); display: block; height: 100%; border-radius: inherit; background: var(--majalis-emerald); transition: width 0.4s ease; }

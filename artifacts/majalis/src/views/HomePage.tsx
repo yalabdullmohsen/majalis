@@ -18,6 +18,8 @@ import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
 import { HomePrayerRanks } from "@/components/home/HomePrayerRanks";
 import { HomeFeaturedLibrary } from "@/components/home/HomeFeaturedLibrary";
 import { HomeQuizCard } from "@/components/home/HomeQuizCard";
+import { HomeAsmaCard } from "@/components/home/HomeAsmaCard";
+import { HomeWeekStreak } from "@/components/home/HomeWeekStreak";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import {
@@ -304,6 +306,16 @@ export default function HomePage() {
         {/* التقدم اليومي */}
         <SafeHomeSection name="التقدم اليومي">
           <HomeDailyProgress />
+        </SafeHomeSection>
+
+        {/* سجل الأسبوع */}
+        <SafeHomeSection name="سجل الأسبوع">
+          <HomeWeekStreak />
+        </SafeHomeSection>
+
+        {/* اسم الله اليومي */}
+        <SafeHomeSection name="اسم الله اليومي">
+          <HomeAsmaCard />
         </SafeHomeSection>
 
         {/* سنن الوقت */}
