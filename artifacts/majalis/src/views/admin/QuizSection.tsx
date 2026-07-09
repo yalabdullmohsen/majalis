@@ -42,17 +42,6 @@ const STATUS_LABELS: Record<string, string> = {
   draft: "مسودة",
 };
 
-const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
-  published: { bg: "#D1FAE5", text: "var(--majalis-emerald-deep)" },
-  draft: { bg: "#F3F4F6", text: "#6B7280" },
-};
-
-const LEVEL_COLORS: Record<string, { bg: string; text: string }> = {
-  beginner:     { bg: "#D1FAE5", text: "#065F46" },
-  intermediate: { bg: "rgba(14,110,82,0.08)", text: "#1F4D3A" },
-  advanced:     { bg: "#FEE2E2", text: "#991B1B" },
-};
-
 const LEVEL_LABELS: Record<string, string> = {
   beginner: "سهل",
   intermediate: "متوسط",
@@ -182,11 +171,11 @@ export function QuizSection() {
       <div className="qzs-stats-row">
         {[
           { label: "إجمالي", value: items.length, color: "var(--majalis-emerald-deep)" },
-          { label: "منشور", value: publishedCount, color: "var(--majalis-emerald-deep)" },
-          { label: "مُستخدَم", value: usedCount, color: "#dc2626" },
-          { label: "متاح", value: publishedCount - usedCount, color: "#059669" },
+          { label: "منشور",    value: publishedCount,              mod: "qzs-stat--published" },
+          { label: "مُستخدَم", value: usedCount,                    mod: "qzs-stat--used" },
+          { label: "متاح",     value: publishedCount - usedCount,  mod: "qzs-stat--available" },
         ].map((s) => (
-          <div key={s.label} className="qzs-stat" style={{ "--qzs-val-color": s.color } as React.CSSProperties}>
+          <div key={s.label} className={`qzs-stat ${s.mod}`}>
             <div className="qzs-stat__value">{s.value}</div>
             <div className="qzs-stat__label">{s.label}</div>
           </div>
@@ -225,29 +214,14 @@ export function QuizSection() {
       ) : (
         <div className="qzs-list">
           {filtered.map((item) => {
-            const lvl = LEVEL_COLORS[item.level] || { bg: "var(--majalis-panel)", text: "var(--majalis-ink)" };
-            const st = STATUS_COLORS[item.status] || { bg: "var(--majalis-panel)", text: "var(--majalis-ink)" };
             return (
-              <div
-                key={item.id}
-                className="qzs-item"
-                style={{
-                  "--qzs-item-bg": item.is_used ? "rgba(14,110,82,0.05)" : "var(--majalis-panel)",
-                  "--qzs-item-border": item.is_used ? "rgba(14,110,82,0.3)" : "var(--majalis-line)",
-                } as React.CSSProperties}
-              >
+              <div key={item.id} className={`qzs-item${item.is_used ? " qzs-item--used" : ""}`}>
                 <div className="qzs-item-body">
                   <div className="qzs-item-tags">
-                    <span
-                      className="qzs-tag"
-                      style={{ "--qzs-tag-bg": lvl.bg, "--qzs-tag-color": lvl.text } as React.CSSProperties}
-                    >
+                    <span className={`qzs-tag qzs-tag--${item.level}`}>
                       {LEVEL_LABELS[item.level] || item.level}
                     </span>
-                    <span
-                      className="qzs-tag"
-                      style={{ "--qzs-tag-bg": st.bg, "--qzs-tag-color": st.text } as React.CSSProperties}
-                    >
+                    <span className={`qzs-tag qzs-tag--${item.status}`}>
                       {STATUS_LABELS[item.status] || item.status}
                     </span>
                     {item.is_used && <span className="qzs-tag qzs-tag--used">مُستخدَم</span>}
