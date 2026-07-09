@@ -177,6 +177,7 @@ export default function RulingsPage() {
             type="button"
             className={category === "الكل" ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
             onClick={() => handleCategorySelect("الكل")}
+            aria-pressed={category === "الكل"}
           >
             {isAdmin ? `الكل (${encyclopediaTotal || total})` : "الكل"}
           </button>
@@ -191,6 +192,7 @@ export default function RulingsPage() {
                   category === cat.name ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"
                 }
                 onClick={() => handleCategorySelect(cat.name)}
+                aria-pressed={category === cat.name}
               >
                 <CatIcon name={cat.icon} />{cat.name}{isAdmin ? ` (${count})` : ""}
               </button>

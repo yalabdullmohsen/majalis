@@ -211,6 +211,7 @@ export default function QaPage({
               setSortMode(mode);
               if (mode === "random") handleRandom();
             }}
+            aria-pressed={sortMode === mode}
           >
             {QA_SORT_LABELS[mode]}
           </button>

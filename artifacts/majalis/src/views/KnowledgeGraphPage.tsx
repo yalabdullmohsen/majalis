@@ -307,6 +307,7 @@ export default function KnowledgeGraphPage() {
         {(["graph", "explore"] as Tab[]).map((t) => (
           <button key={t} type="button" onClick={() => setTab(t)}
             className={`kng-tab${tab === t ? " is-active" : ""}`}
+            aria-pressed={tab === t}
           >
             {t === "graph" ? "شبكة العلاقات" : "استكشاف الموضوعات"}
           </button>

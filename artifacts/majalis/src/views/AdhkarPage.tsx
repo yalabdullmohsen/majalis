@@ -203,12 +203,14 @@ export default function AdhkarPage() {
           type="button"
           className={`content-hub-chip${category === "all" ? " content-hub-chip--active" : ""}`}
           onClick={() => changeCategory("all")}
+          aria-pressed={category === "all"}
         >الكل</button>
         {FEATURED_CATEGORIES.map((cat) => (
           <button
             key={cat.id} type="button"
             className={`content-hub-chip${category === cat.id ? " content-hub-chip--active" : ""}`}
             onClick={() => changeCategory(cat.id)}
+            aria-pressed={category === cat.id}
           >{cat.name}</button>
         ))}
       </div>

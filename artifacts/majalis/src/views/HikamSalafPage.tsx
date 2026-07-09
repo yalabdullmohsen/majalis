@@ -428,6 +428,7 @@ export default function HikamSalafPage() {
               role="listitem"
               className={`hk-cat${category === cat ? " hk-cat--active" : ""}`}
               onClick={() => setCategory(cat)}
+              aria-pressed={category === cat}
             >
               {cat}
             </button>

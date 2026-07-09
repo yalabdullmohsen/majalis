@@ -498,6 +498,7 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
               type="button"
               onClick={() => setActiveCollection(c)}
               className={activeCollection === c ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+              aria-pressed={activeCollection === c}
             >
               {c === "الكل" ? "الكل" : collectionLabel(c)}
             </button>
@@ -566,6 +567,7 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
             type="button"
             className={`hadith-quick-cat ${activeCategory === cat.id ? "hadith-quick-cat--active" : ""}`}
             onClick={() => setActiveCategory(cat.id)}
+            aria-pressed={activeCategory === cat.id}
           >
             {cat.label}
           </button>

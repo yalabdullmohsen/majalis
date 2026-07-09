@@ -109,6 +109,7 @@ export default function FatwaPage() {
             type="button"
             onClick={() => setTab(key as typeof tab)}
             className={tab === key ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+            aria-pressed={tab === key}
           >
             {label}
           </button>
@@ -132,6 +133,7 @@ export default function FatwaPage() {
                 type="button"
                 onClick={() => setCategory(cat)}
                 className={category === cat ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+                aria-pressed={category === cat}
               >
                 {cat}
               </button>
@@ -145,6 +147,7 @@ export default function FatwaPage() {
                 type="button"
                 onClick={() => setFormat(val)}
                 className={format === val ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+                aria-pressed={format === val}
               >
                 {label}
               </button>

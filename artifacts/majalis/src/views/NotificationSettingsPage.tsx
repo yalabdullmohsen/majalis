@@ -259,10 +259,10 @@ export default function NotificationSettingsPage() {
 
         {/* تبويبات */}
         <div className="nh-tabs">
-          <button type="button" className={`nh-tab${histTab === "inbox" ? " nh-tab--active" : ""}`} onClick={() => setHistTab("inbox")}>
+          <button type="button" className={`nh-tab${histTab === "inbox" ? " nh-tab--active" : ""}`} onClick={() => setHistTab("inbox")} aria-pressed={histTab === "inbox"}>
             الصندوق {unread > 0 && `(${unread})`}
           </button>
-          <button type="button" className={`nh-tab${histTab === "archived" ? " nh-tab--active" : ""}`} onClick={() => setHistTab("archived")}>
+          <button type="button" className={`nh-tab${histTab === "archived" ? " nh-tab--active" : ""}`} onClick={() => setHistTab("archived")} aria-pressed={histTab === "archived"}>
             المؤرشف
           </button>
         </div>

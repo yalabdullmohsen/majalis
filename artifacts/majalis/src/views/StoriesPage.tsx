@@ -75,6 +75,7 @@ export default function StoriesPage() {
             type="button"
             onClick={() => setCategory(c)}
             className={category === c ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+            aria-pressed={category === c}
           >
             {c}
           </button>
