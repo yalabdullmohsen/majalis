@@ -61,6 +61,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/fadail-aamal",     label: "فضائل الأعمال" },
   { href: "/janaza",            label: "أحكام الجنائز" },
   { href: "/sahabah",           label: "أعلام الصحابة" },
+  { href: "/tawba",             label: "التوبة والاستغفار" },
   { href: "/universities",       label: "دليل الجامعات" },
   { href: "/learning-path",      label: "خارطة طالب العلم" },
   // القرآن
@@ -311,6 +312,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/fadail-aamal",   title: "فضائل الأعمال",      description: "30+ حديث صحيح وحسن في فضائل الصلاة والصيام والقرآن والذكر والصدقة والأخلاق" },
   { href: "/janaza",         title: "أحكام الجنائز",      description: "دليل شامل لما يجب على المسلمين تجاه موتاهم من الغسل والتكفين والصلاة والدفن" },
   { href: "/sahabah",        title: "أعلام الصحابة الكرام", description: "موسوعة كبار الصحابة رضي الله عنهم: سيرتهم وفضائلهم وإرثهم في الإسلام" },
+  { href: "/tawba",          title: "التوبة والاستغفار",   description: "شروط التوبة النصوح وأنواعها وأفضل صيغ الاستغفار المأثورة وآثارها العظيمة" },
   { href: "/knowledge-map", title: "الخريطة المعرفية",   description: "14 حقلاً علمياً بروابط تفاعلية ومحركات البحث" },
   { href: "/quran-hub",    title: "مركز القرآن",          description: "بوابتك الشاملة للمصحف والتجويد والإذاعات والبث المباشر" },
 ] as const;
