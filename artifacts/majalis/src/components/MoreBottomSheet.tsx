@@ -48,6 +48,7 @@ const SHEET_SECTIONS = [
     { href: "/madhahib",            label: "المذاهب الأربعة",  Icon: Scale },
     { href: "/zakat",               label: "الزكاة وأحكامها",  Icon: Calculator },
     { href: "/sawm",                label: "الصيام وأحكامه",   Icon: Moon },
+    { href: "/hajj",                label: "الحج والعمرة",     Icon: Landmark },
     { href: "/fiqh",                label: "الفقه",           Icon: Scale },
     { href: "/fatwa",               label: "الفتاوى",         Icon: Scale },
     { href: "/rulings",             label: "الأحكام",         Icon: Scale },
