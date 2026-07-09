@@ -6774,6 +6774,145 @@ button.primary:hover {
   font-size: 0.68rem;
 }
 
+/* § أركان الإيمان */
+.twh-section-intro {
+  font-family: "Amiri Quran", "Scheherazade New", serif;
+  font-size: 0.95rem;
+  line-height: 2;
+  color: var(--majalis-ink, #1a2e26);
+  background: var(--majalis-emerald-soft, #EBF5F0);
+  border-right: 3px solid var(--majalis-emerald, #0E6E52);
+  padding: 0.65rem 1rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  margin: 0 0 1.25rem;
+  direction: rtl;
+}
+
+.twh-source-ref {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--majalis-emerald-deep, #0A5040);
+  font-family: inherit;
+}
+
+.twh-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 0.875rem;
+}
+
+.twh-pillar-card {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  background: var(--majalis-panel, #ffffff);
+  border: 1px solid var(--majalis-line, #d4e6de);
+  border-radius: 0.75rem;
+  padding: 0.875rem 1rem;
+}
+
+.twh-pillar-num {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--majalis-emerald, #0E6E52);
+  color: #fff;
+  font-weight: 900;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.twh-pillar-body { flex: 1; min-width: 0; }
+
+.twh-pillar-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--majalis-ink, #1a2e26);
+  margin: 0 0 0.3rem;
+}
+
+.twh-pillar-desc {
+  font-size: 0.83rem;
+  color: var(--majalis-ink-soft, #5D726A);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* § الأسماء الحسنى */
+.twh-asma-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.twh-asma-card {
+  background: var(--majalis-panel, #ffffff);
+  border: 1px solid var(--majalis-line, #d4e6de);
+  border-radius: 0.75rem;
+  padding: 0.875rem 1rem;
+  text-align: center;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.twh-asma-card:hover {
+  border-color: var(--majalis-emerald, #0E6E52);
+  box-shadow: 0 4px 12px rgba(14,110,82,0.10);
+}
+
+.twh-asma-name {
+  font-family: "Amiri Quran", "Scheherazade New", serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep, #0A5040);
+  margin: 0 0 0.4rem;
+}
+
+.twh-asma-meaning {
+  font-size: 0.78rem;
+  color: var(--majalis-ink-soft, #5D726A);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* § كتب مقترحة */
+.twh-books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.875rem;
+}
+
+.twh-book-card {
+  background: var(--majalis-panel, #ffffff);
+  border: 1px solid var(--majalis-line, #d4e6de);
+  border-right: 3px solid var(--majalis-emerald, #0E6E52);
+  border-radius: 0.75rem;
+  padding: 0.875rem 1rem;
+}
+
+.twh-book-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--majalis-ink, #1a2e26);
+  margin: 0 0 0.2rem;
+}
+
+.twh-book-author {
+  font-size: 0.78rem;
+  color: var(--majalis-emerald-deep, #0A5040);
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+}
+
+.twh-book-desc {
+  font-size: 0.8rem;
+  color: var(--majalis-ink-soft, #5D726A);
+  line-height: 1.6;
+  margin: 0;
+}
+
 /* ============================================================
    §70 — DeveloperPage  (dvp-*)
    ============================================================ */

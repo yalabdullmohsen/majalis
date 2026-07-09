@@ -39,6 +39,97 @@ const TAWHEED_TYPES = [
   },
 ] as const;
 
+// ─── أركان الإيمان ────────────────────────────────────────────────────────
+
+const IMAN_PILLARS = [
+  {
+    num: "١",
+    title: "الإيمان بالله",
+    body: "الإيمان بوجود الله وربوبيته وألوهيته وأسمائه وصفاته الكاملة. وهو أصل الأصول وأساس الأركان.",
+  },
+  {
+    num: "٢",
+    title: "الإيمان بالملائكة",
+    body: "الإيمان بوجودهم وأنهم عباد الله المكرمون، يُنفّذون أوامره ولا يعصونه، ومن أشهرهم جبريل وميكائيل وإسرافيل ومالك.",
+  },
+  {
+    num: "٣",
+    title: "الإيمان بالكتب",
+    body: "الإيمان بجميع الكتب التي أنزلها الله على رسله: التوراة والإنجيل والزبور وصحف إبراهيم والقرآن الكريم الذي نسخها.",
+  },
+  {
+    num: "٤",
+    title: "الإيمان بالرسل",
+    body: "الإيمان بجميع الأنبياء والمرسلين من آدم حتى محمد ﷺ خاتمهم، وأنهم بلّغوا الرسالة وأدّوا الأمانة.",
+  },
+  {
+    num: "٥",
+    title: "الإيمان باليوم الآخر",
+    body: "الإيمان بكل ما أخبر الله ورسوله عن ما بعد الموت: من فتنة القبر وعذابه ونعيمه، والبعث والحشر والميزان والصراط والجنة والنار.",
+  },
+  {
+    num: "٦",
+    title: "الإيمان بالقدر",
+    body: "الإيمان بأن الله علم كل شيء وكتبه وشاءه وخلقه. وله أربع مراتب: العلم، والكتابة، والمشيئة، والخلق. والإيمان بهذا لا ينفي مسؤولية الإنسان.",
+  },
+] as const;
+
+// ─── من الأسماء الحسنى ───────────────────────────────────────────────────
+
+const ASMA_HUSNA = [
+  { name: "الله",     meaning: "اسمه الجامع لجميع صفات الكمال والجلال" },
+  { name: "الرحمن",  meaning: "ذو الرحمة الواسعة التي وسعت كل شيء" },
+  { name: "الرحيم",  meaning: "دائم الرحمة بعباده المؤمنين في الدنيا والآخرة" },
+  { name: "الملك",   meaning: "المالك لجميع الكون، الحاكم الذي لا حاكم سواه" },
+  { name: "القدوس",  meaning: "المنزّه عن كل نقص وعيب، البالغ في الطهارة والكمال" },
+  { name: "السلام",  meaning: "ذو السلامة من كل نقص، مصدر السلام لعباده" },
+  { name: "الغفّار", meaning: "الذي يغفر الذنوب مرةً بعد مرة لمن تاب واستغفر" },
+  { name: "الرزّاق", meaning: "الذي يتولى رزق جميع الخلق ويوسّع ويضيّق بحكمته" },
+  { name: "العليم",  meaning: "المحيط علمه بكل شيء في الأزل وإلى الأبد" },
+  { name: "القدير",  meaning: "الكامل القدرة على كل شيء، لا يعجزه شيء" },
+  { name: "الحكيم",  meaning: "الذي يضع كل شيء في موضعه اللائق به بالغاً في الحكمة" },
+  { name: "السميع",  meaning: "الذي يسمع كل صوت سرّاً وعلناً، لا يخفى عليه خافية" },
+  { name: "البصير",  meaning: "المحيط بصره بكل مرئي دقيق أو جليل" },
+  { name: "الحيّ",   meaning: "الحياة الكاملة الأزلية الأبدية التي لا تشبه حياة المخلوقين" },
+  { name: "القيّوم", meaning: "القائم بنفسه الذي يقوم غيره به، لا يحتاج إلى أحد" },
+  { name: "الكريم",  meaning: "ذو الكرم والعطاء الواسع والجود الذي لا ينقطع" },
+] as const;
+
+// ─── كتب مقترحة ──────────────────────────────────────────────────────────
+
+const RECOMMENDED_BOOKS = [
+  {
+    title: "كتاب التوحيد",
+    author: "الإمام محمد بن عبد الوهاب",
+    desc: "أصل متين في توحيد الألوهية مع الأدلة القرآنية والحديثية — أول كتاب في العقيدة للمبتدئ.",
+  },
+  {
+    title: "ثلاثة الأصول وأدلتها",
+    author: "الإمام محمد بن عبد الوهاب",
+    desc: "متن مختصر يجمع أصول الدين الثلاثة: معرفة الله، ودينه، ونبيه ﷺ.",
+  },
+  {
+    title: "العقيدة الواسطية",
+    author: "شيخ الإسلام ابن تيمية",
+    desc: "أجمع متن في عقيدة أهل السنة في الأسماء والصفات والإيمان باليوم الآخر.",
+  },
+  {
+    title: "لمعة الاعتقاد",
+    author: "ابن قدامة المقدسي",
+    desc: "متن حنبلي موجز في عقيدة السلف، مشروح شروحاً متعددة.",
+  },
+  {
+    title: "شرح أصول اعتقاد أهل السنة",
+    author: "الإمام اللالكائي",
+    desc: "من أوسع كتب توثيق أقوال السلف في العقيدة بالأسانيد.",
+  },
+  {
+    title: "الحموية والتدمرية",
+    author: "شيخ الإسلام ابن تيمية",
+    desc: "رسالتان في إثبات الصفات والرد على من عطّلها — للمتوسطين.",
+  },
+] as const;
+
 // ─── مسائل التوحيد ───────────────────────────────────────────────────────
 
 type HadithRef = {
@@ -139,7 +230,7 @@ export default function TawhidPage() {
       path: "/tawhid",
       title: "التوحيد — عقيدة أهل السنة والجماعة | المجلس العلمي",
       description:
-        "قسم التوحيد: أنواع التوحيد الثلاثة (الربوبية، الألوهية، الأسماء والصفات) مع أدلتها القرآنية والمسائل المهمة — معتمد على منهج أهل السنة والجماعة.",
+        "قسم التوحيد: أنواع التوحيد الثلاثة، أركان الإيمان الستة، الأسماء الحسنى، والمسائل المهمة — معتمد على منهج أهل السنة والجماعة.",
       ogType: "article",
     });
   }, []);
@@ -179,9 +270,7 @@ export default function TawhidPage() {
               className="tawheed-type-card"
               style={{ "--card-color": t.color } as React.CSSProperties}
             >
-              <div className="tawheed-type-card__num">
-                {t.num}
-              </div>
+              <div className="tawheed-type-card__num">{t.num}</div>
               <p className="tawheed-type-card__title">{t.title}</p>
               <p className="tawheed-type-card__subtitle">{t.subtitle}</p>
               <p className="tawheed-type-card__desc">{t.description}</p>
@@ -189,6 +278,28 @@ export default function TawhidPage() {
                 ﴿{t.ayah}﴾
                 <cite>{t.ref}</cite>
               </blockquote>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* أركان الإيمان الستة */}
+      <section aria-labelledby="iman-heading" className="twh-section">
+        <h2 id="iman-heading" className="tawheed-principles-heading">
+          أركان الإيمان الستة
+        </h2>
+        <p className="twh-section-intro">
+          قال ﷺ: «الإيمان أن تؤمن بالله وملائكته وكتبه ورسله واليوم الآخر وتؤمن بالقدر خيره وشرّه»
+          <span className="twh-source-ref"> — صحيح مسلم (٨)</span>
+        </p>
+        <div className="twh-pillars-grid">
+          {IMAN_PILLARS.map((p) => (
+            <div key={p.num} className="twh-pillar-card">
+              <div className="twh-pillar-num">{p.num}</div>
+              <div className="twh-pillar-body">
+                <p className="twh-pillar-title">{p.title}</p>
+                <p className="twh-pillar-desc">{p.body}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -215,6 +326,41 @@ export default function TawhidPage() {
         </div>
       </section>
 
+      {/* من الأسماء الحسنى */}
+      <section aria-labelledby="asma-heading" className="twh-section">
+        <h2 id="asma-heading" className="tawheed-principles-heading">
+          من الأسماء الحسنى
+        </h2>
+        <p className="twh-section-intro">
+          ﴿وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَى فَادْعُوهُ بِهَا﴾
+          <span className="twh-source-ref"> — الأعراف: ١٨٠</span>
+        </p>
+        <div className="twh-asma-grid">
+          {ASMA_HUSNA.map((a) => (
+            <div key={a.name} className="twh-asma-card">
+              <p className="twh-asma-name">{a.name}</p>
+              <p className="twh-asma-meaning">{a.meaning}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* كتب مقترحة */}
+      <section aria-labelledby="books-heading" className="twh-section">
+        <h2 id="books-heading" className="tawheed-principles-heading">
+          كتب مقترحة في العقيدة
+        </h2>
+        <div className="twh-books-grid">
+          {RECOMMENDED_BOOKS.map((b) => (
+            <div key={b.title} className="twh-book-card">
+              <p className="twh-book-title">{b.title}</p>
+              <p className="twh-book-author">{b.author}</p>
+              <p className="twh-book-desc">{b.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* أقسام ذات صلة */}
       <section aria-labelledby="related-heading" className="twh-section twh-section--mb3">
         <h2 id="related-heading" className="tawheed-principles-heading">
@@ -225,9 +371,11 @@ export default function TawhidPage() {
             { href: "/hadith",   label: "الأحاديث النبوية",  desc: "صحيحة وضعيفة وموضوعة" },
             { href: "/rulings",  label: "الأحكام الشرعية",   desc: "موسوعة بالأحكام الفقهية" },
             { href: "/fatwa",    label: "الفتاوى",            desc: "فتاوى مُحقَّقة ومُصنَّفة" },
-            { href: "/fiqh",     label: "الفقه الإسلامي",   desc: "مدخل منهجي لعلم الفقه" },
-            { href: "/miracles", label: "الإعجاز العلمي",   desc: "إعجاز القرآن والسنة" },
+            { href: "/fiqh",     label: "الفقه الإسلامي",    desc: "مدخل منهجي لعلم الفقه" },
+            { href: "/miracles", label: "الإعجاز العلمي",    desc: "إعجاز القرآن والسنة" },
             { href: "/adhkar",   label: "الأذكار",            desc: "أذكار الصباح والمساء" },
+            { href: "/seerah",   label: "السيرة النبوية",    desc: "سيرة النبي ﷺ مفصّلة" },
+            { href: "/library",  label: "المكتبة",            desc: "كتب العقيدة والفقه" },
           ].map(({ href, label, desc }) => (
             <Link key={href} href={href} className="tawheed-related-card">
               <strong className="tawheed-related-card__label">{label}</strong>
