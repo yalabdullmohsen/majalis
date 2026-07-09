@@ -38,6 +38,7 @@ import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedIt
 import { ScholarFollowButton } from "@/components/ScholarFollowButton";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { applyPageSeo } from "@/lib/seo";
+import { ContentMindMap } from "@/components/ContentMindMap";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   if (url?.includes("google.com/maps") || url?.includes("goo.gl/maps") || url?.includes("maps.app")) {
@@ -386,6 +387,17 @@ export default function LessonDetailPage({
             </div>
           </div>
         )}
+
+        {/* الخريطة الذهنية للدرس */}
+        <div className="lesson-detail-body">
+          <ContentMindMap
+            title={unified.title}
+            category={unified.category}
+            keywords={keywords}
+            author={sheikhName}
+            type="lesson"
+          />
+        </div>
 
         {unified.linkedLessons && unified.linkedLessons.length > 0 && (
           <div className="lesson-detail-body">

@@ -9,6 +9,7 @@ import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
 import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
+import { ContentMindMap } from "@/components/ContentMindMap";
 
 export default function LibraryDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<LibraryItem | null>(null);
@@ -95,6 +96,13 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
           </a>
         </div>
       )}
+      <ContentMindMap
+        title={item.title}
+        category={item.category}
+        keywords={item.keywords}
+        author={item.author}
+        type="book"
+      />
       {!isCatalogBookId(item.id) && (
         <p className="library-detail-note">
           <Link href="/library">← العودة إلى المكتبة</Link>
