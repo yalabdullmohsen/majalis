@@ -22460,3 +22460,53 @@ img[loading="lazy"]:not([src=""]) {
   .rq-aqwal-grid { grid-template-columns: 1fr; }
   .rq-tab { font-size: .82rem; padding: .4rem .85rem; }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   §250 — تذكير صيام الاثنين والخميس  (.sawm-reminder)
+   ══════════════════════════════════════════════════════════════════ */
+
+.sawm-reminder {
+  margin: 1rem 1.25rem;
+  background: linear-gradient(135deg, #1F4D3A 0%, #173A2C 100%);
+  border-radius: 1rem;
+  padding: 1.1rem 1.25rem 1rem;
+  color: #fff;
+  position: relative;
+  box-shadow: 0 4px 16px rgba(31,77,58,.25);
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.sawm-reminder__header {
+  display: flex; align-items: center; gap: .5rem; margin-bottom: .65rem; flex-wrap: wrap;
+}
+.sawm-reminder__icon   { font-size: 1.3rem; flex-shrink: 0; }
+.sawm-reminder__day    { font-size: 1.1rem; font-weight: 800; }
+.sawm-reminder__sub    { font-size: .9rem; opacity: .8; flex: 1; }
+.sawm-reminder__close  {
+  background: rgba(255,255,255,.15); border: none; color: #fff;
+  border-radius: 50%; width: 1.6rem; height: 1.6rem; cursor: pointer;
+  font-size: .75rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: background .15s;
+}
+.sawm-reminder__close:hover { background: rgba(255,255,255,.28); }
+
+.sawm-reminder__hadith {
+  font-size: .97rem; line-height: 1.8;
+  border-right: 3px solid rgba(255,255,255,.4);
+  padding-right: .85rem; margin: 0 0 .4rem;
+  font-style: normal; color: #fff;
+}
+.sawm-reminder__source {
+  font-size: .79rem; opacity: .65; margin: 0 0 .65rem;
+}
+.sawm-reminder__dua {
+  background: rgba(255,255,255,.12); border-radius: .5rem;
+  padding: .55rem .85rem; font-size: .88rem;
+  margin: 0;
+}
+.sawm-reminder__dua em { font-style: normal; font-weight: 700; }
+
+@media (max-width: 640px) {
+  .sawm-reminder { margin: .75rem; border-radius: .75rem; }
+}

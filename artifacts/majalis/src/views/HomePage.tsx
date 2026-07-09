@@ -11,6 +11,7 @@ import { HomeAboutSection } from "@/components/home/HomeAboutSection";
 import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
 import { HomeDailyCorner } from "@/components/home/HomeDailyCorner";
 import { HomeSunnahByTime } from "@/components/home/HomeSunnahByTime";
+import { HomeSawmReminder } from "@/components/home/HomeSawmReminder";
 import { HomeIslamicOccasions } from "@/components/home/HomeIslamicOccasions";
 import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
@@ -31,7 +32,6 @@ import type { LucideIcon } from "lucide-react";
 
 /* ── روابط الوصول السريع ── */
 const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string }[] = [
-  { href: "/quran",        Icon: BookMarked,    label: "القرآن" },
   { href: "/adhkar",       Icon: Star,          label: "الأذكار" },
   { href: "/prayer-times", Icon: Clock,         label: "أوقات الصلاة" },
   { href: "/lessons",      Icon: GraduationCap, label: "الدروس" },
@@ -51,7 +51,6 @@ const QUICK_SEARCHES = ["صلاة الفجر", "آية الكرسي", "دعاء 
 
 /* ── المميزات البارزة (4 بطاقات كبيرة) ── */
 const FEATURED: { href: string; Icon: LucideIcon; title: string; desc: string; cta: string }[] = [
-  { href: "/quran",   Icon: BookMarked,    title: "القرآن الكريم",    desc: "مصحف رقمي كامل برواية حفص — تصفح الصفحات ببساطة",         cta: "افتح المصحف" },
   { href: "/lessons", Icon: GraduationCap, title: "الدروس العلمية",   desc: "دروس ومحاضرات مجدولة لهذا الأسبوع من علماء الكويت",       cta: "شاهد الدروس" },
   { href: "/hadith",  Icon: Scroll,        title: "الأحاديث النبوية", desc: "أحاديث موثقة ومسندة مع الشرح والتخريج",                   cta: "تصفح الأحاديث" },
   { href: "/library", Icon: BookOpen,      title: "المكتبة العلمية",  desc: "كتب شرعية ومتون علمية في الفقه والعقيدة والتفسير والحديث", cta: "استعرض الكتب" },
@@ -148,7 +147,6 @@ const FEATURE_CATS: FeatureCat[] = [
     label: "القرآن الكريم",
     items: [
       { href: "/quran-hub",            Icon: BookMarked, title: "مركز القرآن",       desc: "جميع أقسام القرآن في مكان واحد" },
-      { href: "/quran",                Icon: BookOpen,   title: "المصحف الشريف",     desc: "٦٠٤ صفحة كاملة برواية حفص" },
       { href: "/quran/surah-stories",  Icon: Star,       title: "قصص القرآن",        desc: "أسباب النزول و١١٤ سورة" },
       { href: "/quran/tajweed",        Icon: Mic2,       title: "علم التجويد",        desc: "أحكام التجويد الشاملة" },
       { href: "/ulum-quran",           Icon: GraduationCap, title: "علوم القرآن",      desc: "النزول والجمع والإعجاز والتفسير" },
@@ -302,6 +300,9 @@ export default function HomePage() {
           ))}
         </div>
       </nav>
+
+      {/* ══ تذكير صيام الاثنين والخميس ══ */}
+      <HomeSawmReminder />
 
       {/* ══════════════════ Main Content ══════════════════ */}
       <main className="home-container home-main home-main--v3">

@@ -80,7 +80,6 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/universities",       label: "دليل الجامعات" },
   { href: "/learning-path",      label: "خارطة طالب العلم" },
   // القرآن
-  { href: "/quran",                label: "القرآن" },
   { href: "/quran-hub",           label: "مركز القرآن" },
   { href: "/quran-radio",         label: "إذاعة القرآن" },
   { href: "/quran/surah-stories", label: "قصص القرآن" },
@@ -105,7 +104,6 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
 export const PRIMARY_NAV_ITEMS: NavLink[] = [
   { href: "/",             label: "الرئيسية" },
   { href: "/lessons",      label: "الدروس" },
-  { href: "/quran",        label: "القرآن" },
   { href: "/library",      label: "المكتبة" },
   { href: "/adhkar",       label: "الأذكار" },
   { href: "/prayer-times", label: "الصلاة" },
@@ -148,7 +146,6 @@ export const NAV_GROUPS: NavGroup[] = [
     title: "القرآن",
     links: [
       { href: "/quran-hub",            label: "مركز القرآن" },
-      { href: "/quran",                label: "المصحف الشريف" },
       { href: "/quran/surah-stories",  label: "قصص القرآن" },
       { href: "/quran/tajweed",        label: "علم التجويد" },
       { href: "/quran-live",           label: "البث المباشر" },
@@ -176,7 +173,6 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
       { href: "/adhkar", label: "سنن مؤقتة" },
       { href: "/adhkar?cat=misc", label: "سنن غير مؤقتة" },
-      { href: "/quran", label: "فضائل القرآن" },
       { href: "/occasions", label: "اليوم النبوي" },
       { href: "/daily-wird", label: "متابعة النوافل" },
     ],
@@ -205,7 +201,6 @@ export const MOBILE_MORE_NAV = [
   { href: "/stories",          label: "القصص" },
   { href: "/prophets",         label: "قصص الأنبياء" },
   // القرآن
-  { href: "/quran",            label: "القرآن" },
   { href: "/quran-radio",      label: "إذاعة القرآن" },
   { href: "/quran-live",       label: "البث المباشر" },
   { href: "/quran/tajweed",    label: "التجويد" },
@@ -233,12 +228,6 @@ export const MOBILE_MORE_NAV = [
 ];
 
 export const HOME_FEATURE_CARDS = [
-  {
-    href: "/quran",
-    title: "القرآن الكريم",
-    description: "قراءة وتلاوة وبحث",
-    icon: "book-open",
-  },
   {
     href: "/adhkar",
     title: "الأذكار",

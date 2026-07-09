@@ -13,7 +13,6 @@ import {
 const SHEET_SECTIONS = [
   { group: "القرآن الكريم", items: [
     { href: "/quran-hub",           label: "مركز القرآن",      Icon: Layers },
-    { href: "/quran",               label: "المصحف",           Icon: BookOpen },
     { href: "/quran-circles",       label: "حلقات التحفيظ",    Icon: Users },
     { href: "/quran-radio",         label: "إذاعة القرآن",     Icon: Radio },
     { href: "/quran/surah-stories", label: "قصص القرآن",       Icon: BookOpen },

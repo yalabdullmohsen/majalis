@@ -207,7 +207,6 @@ const UniversitiesPage = lazy(() => import("@/views/UniversitiesPage"));
 const UniversityDetailPage = lazy(() => import("@/views/UniversityDetailPage"));
 const UniversitiesComparePage = lazy(() => import("@/views/UniversitiesComparePage"));
 const UniversitiesAdminPage = lazyWithRetry(() => import("@/views/admin/UniversitiesAdminPage"), "UniversitiesAdminPage");
-const QuranPage = lazy(() => import("@/views/QuranPage"));
 
 function SeoManager() {
   const [location] = useLocation();
@@ -410,7 +409,6 @@ function Router() {
       <Route path="/tawhid"><SafeLazyRoute component={TawhidPage} /></Route>
       <Route path="/fiqh"><SafeLazyRoute component={FiqhPage} /></Route>
       <Route path="/seerah"><SafeLazyRoute component={SeerahPage} /></Route>
-      <Route path="/quran"><Suspense fallback={<LazyRouteFallback />}><QuranPage /></Suspense></Route>
       <Route path="/quran/surah-stories/:number"><SafeLazyRoute component={SurahStoryDetailRoute} /></Route>
       <Route path="/quran/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
       <Route path="/prayer-times"><SafeLazyRoute component={PrayerTimesPage} /></Route>
