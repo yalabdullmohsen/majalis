@@ -139,11 +139,11 @@ type HadithRef = {
   extra?: string;
 };
 
-const GRADE_COLOR: Record<HadithRef["grade"], string> = {
-  صحيح: "var(--majalis-emerald, #1F4D3A)",
-  حسن:  "var(--majalis-emerald-deep, #0A5040)",
-  ضعيف: "var(--majalis-danger, #9B1C1C)",
-  موضوع: "var(--majalis-danger, #9B1C1C)",
+const GRADE_MOD: Record<HadithRef["grade"], string> = {
+  صحيح: "tawheed-hadith-badge--sahih",
+  حسن:  "tawheed-hadith-badge--hasan",
+  ضعيف: "tawheed-hadith-badge--daif",
+  موضوع: "tawheed-hadith-badge--mawdu",
 };
 
 type Principle = {
@@ -207,8 +207,7 @@ const PRINCIPLES: Principle[] = [
 function HadithBadge({ h }: { h: HadithRef }) {
   return (
     <span
-      className="tawheed-hadith-badge"
-      style={{ "--grade-color": GRADE_COLOR[h.grade] } as React.CSSProperties}
+      className={`tawheed-hadith-badge ${GRADE_MOD[h.grade]}`}
       title={h.extra}
     >
       <span className="tawheed-hadith-badge__grade">{h.grade}</span>
@@ -262,11 +261,10 @@ export default function TawhidPage() {
           أنواع التوحيد الثلاثة
         </h2>
         <div className="tawheed-types-grid">
-          {TAWHEED_TYPES.map((t) => (
+          {TAWHEED_TYPES.map((t, idx) => (
             <div
               key={t.num}
-              className="tawheed-type-card"
-              style={{ "--card-color": t.color } as React.CSSProperties}
+              className={`tawheed-type-card tawheed-type-card--${idx === 2 ? "purple" : "emerald"}`}
             >
               <div className="tawheed-type-card__num">{t.num}</div>
               <p className="tawheed-type-card__title">{t.title}</p>

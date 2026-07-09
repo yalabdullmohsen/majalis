@@ -196,10 +196,10 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "tahdhukat",  label: "الاستعداد" },
 ];
 
-const STATUS_COLORS: Record<string, string> = {
-  "وقعت": "#1F4D3A",
-  "جارية": "#1a3a5c",
-  "لم تقع": "#7c3aed",
+const STATUS_MOD: Record<string, string> = {
+  "وقعت":  "as-status--waqat",
+  "جارية": "as-status--jariya",
+  "لم تقع": "as-status--lam-taqaa",
 };
 
 export default function AlamatSaahPage() {
@@ -255,7 +255,7 @@ export default function AlamatSaahPage() {
             <div className="as-status-legend">
               {["وقعت","جارية","لم تقع"].map(s => (
                 <span key={s} className="as-legend-item">
-                  <span className="as-dot" style={{ "--as-status-color": STATUS_COLORS[s] } as { [k: string]: string }} />
+                  <span className={`as-dot ${STATUS_MOD[s]}`} />
                   {s}
                 </span>
               ))}
@@ -266,10 +266,7 @@ export default function AlamatSaahPage() {
                   <div className="as-alama-card__head">
                     <h3 className="as-alama-card__title">{a.title}</h3>
                     {a.status && (
-                      <span
-                        className="as-alama-card__status"
-                        style={{ "--as-status-color": STATUS_COLORS[a.status], "--as-status-bg": STATUS_COLORS[a.status] + "1A" } as { [k: string]: string }}
-                      >{a.status}</span>
+                      <span className={`as-alama-card__status ${STATUS_MOD[a.status] ?? ""}`}>{a.status}</span>
                     )}
                   </div>
                   <p className="as-alama-card__desc">{a.desc}</p>

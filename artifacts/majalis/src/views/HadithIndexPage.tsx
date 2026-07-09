@@ -84,7 +84,7 @@ export default function HadithIndexPage() {
           const count = counts[s.cls];
           const Icon = s.Icon;
           return (
-            <Link key={s.cls} href={s.href} className="hadith-index-card" style={{ "--hadith-accent": s.accent } as React.CSSProperties}>
+            <Link key={s.cls} href={s.href} className={`hadith-index-card hadith-index-card--${s.cls}`}>
               <span className="hadith-index-card__icon" aria-hidden="true">
                 <Icon size={22} strokeWidth={2} color="#fff" />
               </span>
