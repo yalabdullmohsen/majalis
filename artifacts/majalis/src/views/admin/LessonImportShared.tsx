@@ -11,13 +11,9 @@ export const labelStyle: React.CSSProperties = {};
 
 export function ConfidenceBadge({ score }: { score: number }) {
   const pct = Math.round(score * 100);
-  const bg = pct >= 75 ? "#D1FAE5" : pct >= 45 ? "rgba(14,110,82,0.08)" : "#FEE2E2";
-  const color = pct >= 75 ? "var(--majalis-emerald-deep)" : pct >= 45 ? "#1F4D3A" : "#991B1B";
+  const mod = pct >= 75 ? " lis-conf-badge--high" : pct >= 45 ? " lis-conf-badge--mid" : "";
   return (
-    <span
-      className="lis-conf-badge"
-      style={{ "--lis-cb-bg": bg, "--lis-cb-color": color } as React.CSSProperties}
-    >
+    <span className={`lis-conf-badge${mod}`}>
       \u062b\u0642\u0629 \u0627\u0644\u0627\u0633\u062a\u062e\u0631\u0627\u062c: {pct}%
     </span>
   );
@@ -26,19 +22,13 @@ export function ConfidenceBadge({ score }: { score: number }) {
 export function MissingBadge({ fields }: { fields: string[] }) {
   if (!fields.length) {
     return (
-      <span
-        className="lis-missing-badge"
-        style={{ "--lis-mb-bg": "#D1FAE5", "--lis-mb-color": "var(--majalis-emerald-deep)" } as React.CSSProperties}
-      >
+      <span className="lis-missing-badge lis-missing-badge--ok">
         \u2713 \u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0629 \u0645\u0643\u062a\u0645\u0644\u0629
       </span>
     );
   }
   return (
-    <span
-      className="lis-missing-badge"
-      style={{ "--lis-mb-bg": "#FEE2E2", "--lis-mb-color": "#991B1B" } as React.CSSProperties}
-    >
+    <span className="lis-missing-badge">
       \u2717 \u062a\u062d\u062a\u0627\u062c \u0645\u0631\u0627\u062c\u0639\u0629: {fields.map((f) => FIELD_LABELS[f] || f).join("\u060c ")}
     </span>
   );
@@ -64,14 +54,12 @@ export function FieldStatusGrid({
         const isOk = val && conf >= 0.5;
         const isWarn = val && conf < 0.5;
         const isMissing = !val;
-        const bg = isOk ? "#D1FAE5" : isWarn ? "rgba(14,110,82,0.08)" : "#FEE2E2";
-        const color = isOk ? "var(--majalis-emerald-deep)" : isWarn ? "#1F4D3A" : "#991B1B";
+        const cellMod = isOk ? " lis-field-cell--ok" : isWarn ? " lis-field-cell--warn" : " lis-field-cell--missing";
         const icon = isOk ? "\u2713" : isWarn ? "\u26a0" : "\u2717";
         return (
           <div
             key={field}
-            className="lis-field-cell"
-            style={{ "--lis-fc-bg": bg, "--lis-fc-border": color + "30", "--lis-fc-color": color } as React.CSSProperties}
+            className={`lis-field-cell${cellMod}`}
             title={reason || val || "\u063a\u064a\u0631 \u0645\u0648\u062c\u0648\u062f"}
           >
             <div className="lis-field-icon">{icon} {FIELD_LABELS[field] || field}</div>
@@ -98,8 +86,7 @@ export function DebugLogPanel({ log }: { log: DebugLog }) {
           {log.stages.map((s, i) => (
             <div
               key={i}
-              className="lis-debug-stage"
-              style={{ "--lis-ds-bg": s.ok === false ? "#FEE2E2" : "#fff" } as React.CSSProperties}
+              className={`lis-debug-stage${s.ok === false ? " lis-debug-stage--error" : ""}`}
             >
               <strong>{s.stage}</strong>
               {s.ms != null && <span className="lis-debug-ms">({s.ms}ms)</span>}
@@ -167,11 +154,7 @@ export function LessonImportForm({
             return (
               <label
                 key={d}
-                className={`lis-day-label${disabled ? " lis-day-label--disabled" : ""}`}
-                style={{
-                  "--lis-dl-fw": selected ? 700 : 400,
-                  "--lis-dl-color": selected ? "var(--majalis-emerald-deep)" : "inherit",
-                } as React.CSSProperties}
+                className={`lis-day-label${selected ? " lis-day-label--selected" : ""}${disabled ? " lis-day-label--disabled" : ""}`}
               >
                 <input
                   type="checkbox"
