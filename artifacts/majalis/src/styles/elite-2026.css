@@ -11139,6 +11139,66 @@ body {
   font-weight: 700;
 }
 
+/* ── §177d — HomeNawawiHadith (hnh-*) ─────────────────────────────────────── */
+.hnh { margin-bottom: 1.5rem; }
+.hnh__eyebrow { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
+.hnh__card {
+  padding: 1.25rem 1.4rem;
+  position: relative;
+  border-right: 4px solid var(--clr-primary, #1F4D3A);
+}
+.hnh__num {
+  position: absolute;
+  top: 0.75rem;
+  left: 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--clr-primary, #1F4D3A);
+  background: color-mix(in srgb, var(--clr-primary, #1F4D3A) 10%, transparent);
+  padding: 0.15rem 0.5rem;
+  border-radius: 99px;
+  letter-spacing: 0.03em;
+}
+.hnh__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--clr-primary, #1F4D3A);
+  margin: 0 0 0.6rem;
+  padding-top: 0.2rem;
+}
+.hnh__text {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--clr-text, #1a1a1a);
+  margin: 0 0 0.75rem;
+  font-style: normal;
+  quotes: none;
+}
+.hnh__footer { display: flex; flex-direction: column; gap: 0.4rem; }
+.hnh__source {
+  font-size: 0.75rem;
+  color: #5a7a6a;
+  font-weight: 600;
+}
+.hnh__benefit {
+  font-size: 0.82rem;
+  color: var(--clr-text, #1a1a1a);
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin: 0;
+}
+.hnh__benefit-label {
+  background: var(--clr-primary, #1F4D3A);
+  color: #FFFFFF;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.1rem 0.45rem;
+  border-radius: 99px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 /* ── §178 — CitationActionBar, progress bars ─────────────────────────────── */
 .cab-type-bar { background: var(--cab-type-color, var(--majalis-emerald-deep)); }
 .home-progress-card__bar > span { width: var(--hdp-pct, 0%); display: block; height: 100%; border-radius: inherit; background: var(--majalis-emerald); transition: width 0.4s ease; }

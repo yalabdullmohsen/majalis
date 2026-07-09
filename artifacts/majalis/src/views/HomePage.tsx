@@ -20,6 +20,7 @@ import { HomeFeaturedLibrary } from "@/components/home/HomeFeaturedLibrary";
 import { HomeQuizCard } from "@/components/home/HomeQuizCard";
 import { HomeAsmaCard } from "@/components/home/HomeAsmaCard";
 import { HomeWeekStreak } from "@/components/home/HomeWeekStreak";
+import { HomeNawawiHadith } from "@/components/home/HomeNawawiHadith";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import {
@@ -117,7 +118,7 @@ const FEATURE_CATS: FeatureCat[] = [
       { href: "/duas-quran",  Icon: BookOpen,    title: "أدعية القرآن",        desc: "12 دعاءً قرآنياً للأنبياء والمؤمنين" },
       { href: "/fawaid",       Icon: Lightbulb,   title: "الفوائد الدينية",      desc: "فوائد علمية منتقاة" },
       { href: "/hikam-salaf",  Icon: BookOpen,    title: "حكم السلف الصالح",     desc: "أقوال الأئمة والصحابة والتابعين" },
-      { href: "/fadail-aamal",      Icon: Star,      title: "فضائل الأعمال",         desc: "30+ حديث في فضائل العبادات والأخلاق" },
+      { href: "/fadail-aamal",      Icon: Star,      title: "فضائل الأعمال",         desc: "56+ حديث في فضائل العبادات والأخلاق" },
       { href: "/islamic-glossary",  Icon: BookOpen,       title: "المصطلحات الإسلامية",  desc: "قاموس شامل للمصطلحات في ستة علوم شرعية" },
       { href: "/adab-talab-ilm",   Icon: GraduationCap,  title: "آداب طالب العلم",      desc: "دليل طالب العلم من الفضل إلى الكتب المقررة" },
       { href: "/tawba",        Icon: RotateCw,    title: "التوبة والاستغفار",      desc: "شروط التوبة النصوح وأفضل صيغ الاستغفار" },
@@ -316,6 +317,11 @@ export default function HomePage() {
         {/* اسم الله اليومي */}
         <SafeHomeSection name="اسم الله اليومي">
           <HomeAsmaCard />
+        </SafeHomeSection>
+
+        {/* حديث اليوم من الأربعين النووية */}
+        <SafeHomeSection name="حديث اليوم">
+          <HomeNawawiHadith />
         </SafeHomeSection>
 
         {/* سنن الوقت */}
