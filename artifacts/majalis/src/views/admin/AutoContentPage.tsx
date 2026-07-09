@@ -26,7 +26,7 @@ const STATUS_FILTERS = [
 ] as const;
 
 const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
-  needs_review: { bg: "rgba(14,110,82,0.08)", text: "#0E6E52" },
+  needs_review: { bg: "rgba(14,110,82,0.08)", text: "#1F4D3A" },
   published: { bg: "#D1FAE5", text: "var(--majalis-emerald-deep)" },
   rejected: { bg: "#FEE2E2", text: "#991B1B" },
   running: { bg: "#DBEAFE", text: "#1D4ED8" },

@@ -6,14 +6,14 @@
 
 export const COLOR = {
   /* ── الأساس الزمردي ── */
-  emerald:     "#0E6E52",   // --msk-gold (النهار) / --majalis-emerald
+  emerald:     "#1F4D3A",   // --msk-gold (النهار) / --majalis-emerald
   emeraldDeep: "#0A5040",   // --msk-gold-deep
   emeraldSoft: "rgba(14,110,82,0.06)",   // hover خفيف
   emeraldMid:  "rgba(14,110,82,0.12)",   // تظليل ناعم
   emeraldBorder:"rgba(14,110,82,0.10)",  // --msk-border
 
   /* ── تدرّج البطاقة الرئيسية (hero) ── */
-  heroGradient: "linear-gradient(135deg, #0E6E52 0%, #0A4035 100%)",
+  heroGradient: "linear-gradient(135deg, #1F4D3A 0%, #0A4035 100%)",
 
   /* ── الخلفيات ── */
   canvas:   "#FFFFFF",   // --msk-canvas — خلفية البطاقات والصفحات

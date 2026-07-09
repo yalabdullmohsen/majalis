@@ -108,8 +108,8 @@ export function CitationActionBar({
 
 
   const typeColor = src
-    ? CONTENT_TYPE_COLOR[src.content_type] || "var(--majalis-emerald, #0E6E52)"
-    : (contentType ? CONTENT_TYPE_COLOR[contentType] || "var(--majalis-emerald, #0E6E52)" : "var(--majalis-emerald, #0E6E52)");
+    ? CONTENT_TYPE_COLOR[src.content_type] || "var(--majalis-emerald, #1F4D3A)"
+    : (contentType ? CONTENT_TYPE_COLOR[contentType] || "var(--majalis-emerald, #1F4D3A)" : "var(--majalis-emerald, #1F4D3A)");
 
   const openCite = useCallback((text = "", start?: number, end?: number) => {
     setSelectedText(text);

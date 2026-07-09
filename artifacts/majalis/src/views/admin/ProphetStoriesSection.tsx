@@ -48,7 +48,7 @@ const CSS = `
   font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem;
   border-radius: 9999px; letter-spacing: 0.03em;
 }
-.ps-badge.pending { background: rgba(14,110,82,0.08); color: #0E6E52; border: 1px solid rgba(24,54,42,0.3); }
+.ps-badge.pending { background: rgba(14,110,82,0.08); color: #1F4D3A; border: 1px solid rgba(24,54,42,0.3); }
 .ps-badge.done { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
 .ps-badge.edit-mode { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
 .ps-toggle { font-size: 0.8rem; color: #94a3b8; }

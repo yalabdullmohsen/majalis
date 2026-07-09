@@ -117,7 +117,7 @@ function AutomationCenterContent() {
             <StatCard label="منشور اليوم" value={stats?.todayPublished ?? 0} color="#065F46" />
             <StatCard label="مكرر" value={stats?.todayDuplicates ?? 0} />
             <StatCard label="أخطاء" value={stats?.todayErrors ?? 0} color="#991B1B" />
-            <StatCard label="صور قيد التحليل" value={stats?.pendingImages ?? 0} color="#0E6E52" />
+            <StatCard label="صور قيد التحليل" value={stats?.pendingImages ?? 0} color="#1F4D3A" />
             <StatCard label="سرعة (ms)" value={stats?.avgDurationMs ?? "—"} />
           </div>
 

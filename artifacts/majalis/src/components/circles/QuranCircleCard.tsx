@@ -9,7 +9,7 @@ const LEVEL_COLOR: Record<string, string> = {
 };
 const LEVEL_TEXT: Record<string, string> = {
   "مبتدئ": "var(--majalis-emerald-deep, #0A5040)",
-  "متوسط": "var(--majalis-emerald, #0E6E52)",
+  "متوسط": "var(--majalis-emerald, #1F4D3A)",
   "متقدم": "var(--majalis-danger, #9B1C1C)",
 };
 

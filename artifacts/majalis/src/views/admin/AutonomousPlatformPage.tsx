@@ -50,7 +50,7 @@ type Dashboard = {
 };
 
 function scoreColor(v: number) {
-  return v >= 80 ? "#065F46" : v >= 50 ? "#0E6E52" : "#991B1B";
+  return v >= 80 ? "#065F46" : v >= 50 ? "#1F4D3A" : "#991B1B";
 }
 
 function Score({ value, label }: { value?: number; label: string }) {
@@ -86,7 +86,7 @@ function Panel({ title, children, action }: { title: string; children: React.Rea
 
 function statusColor(s: string) {
   if (s === "available") return "#065F46";
-  if (s === "slow") return "#0E6E52";
+  if (s === "slow") return "#1F4D3A";
   if (s === "dead" || s === "blocked") return "#991B1B";
   if (s === "unauthorized") return "#7C3AED";
   return "var(--majalis-ink-soft)";
@@ -238,9 +238,9 @@ function AutonomousPlatformContent() {
         <Stat label="نشر اليوم" value={counts?.published ?? 0} color="#065F46" />
         <Stat label="مصادر نشطة" value={`${counts?.sourcesHealthy ?? 0}/${counts?.sources ?? 0}`} />
         <Stat label="مصادر معطلة" value={counts?.sourcesDead ?? 0} color={(counts?.sourcesDead ?? 0) > 0 ? "#991B1B" : undefined} />
-        <Stat label="قيد المراجعة" value={counts?.reviewPending ?? 0} color={(counts?.reviewPending ?? 0) > 0 ? "#0E6E52" : undefined} />
+        <Stat label="قيد المراجعة" value={counts?.reviewPending ?? 0} color={(counts?.reviewPending ?? 0) > 0 ? "#1F4D3A" : undefined} />
         <Stat label="DLQ" value={counts?.dlq ?? 0} color={(counts?.dlq ?? 0) > 0 ? "#991B1B" : undefined} />
-        <Stat label="تنبيهات مفتوحة" value={counts?.alerts ?? 0} color={(counts?.alerts ?? 0) > 0 ? "#0E6E52" : undefined} />
+        <Stat label="تنبيهات مفتوحة" value={counts?.alerts ?? 0} color={(counts?.alerts ?? 0) > 0 ? "#1F4D3A" : undefined} />
         <Stat label="مكررات اليوم" value={counts?.duplicates ?? 0} />
         <Stat label="قائمة الانتظار" value={counts?.queuePending ?? 0} />
         <Stat label="إعادة المحاولة" value={counts?.retryPending ?? 0} />
@@ -281,7 +281,7 @@ function AutonomousPlatformContent() {
             <div className="aup-pipeline-grid">
               {Object.entries(dashboard?.pipelines || {}).map(([type, p]) => {
                 const pct = p.quota ? Math.round(((p.publishedToday || 0) / p.quota) * 100) : 0;
-                const color = pct >= 80 ? "#065F46" : pct >= 40 ? "#0E6E52" : "var(--majalis-ink-soft)";
+                const color = pct >= 80 ? "#065F46" : pct >= 40 ? "#1F4D3A" : "var(--majalis-ink-soft)";
                 return (
                   <div key={type} className="aup-pipeline-card">
                     <div className="aup-pipeline-name">{p.label || type}</div>
@@ -400,7 +400,7 @@ function AutonomousPlatformContent() {
           ) : (
             <div className="aup-grid-gap">
               {alerts.map((alert) => {
-                const sevColor = alert.severity === "critical" ? "#991B1B" : alert.severity === "error" ? "#DC2626" : alert.severity === "warning" ? "#0E6E52" : "var(--majalis-emerald-deep)";
+                const sevColor = alert.severity === "critical" ? "#991B1B" : alert.severity === "error" ? "#DC2626" : alert.severity === "warning" ? "#1F4D3A" : "var(--majalis-emerald-deep)";
                 return (
                   <div
                     key={alert.id}

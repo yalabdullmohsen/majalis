@@ -17,7 +17,7 @@ const VARIANT_META: Record<
 > = {
   default:     { Icon: Bell,          accent: "var(--majalis-emerald)",      iconBg: "var(--majalis-emerald-muted)", iconColor: "var(--majalis-emerald)" },
   success:     { Icon: CheckCircle2,  accent: "var(--majalis-emerald)",      iconBg: "var(--majalis-emerald-muted)", iconColor: "var(--majalis-emerald)" },
-  warning:     { Icon: AlertTriangle, accent: "var(--majalis-emerald-deep,#0A5040)", iconBg: "var(--majalis-emerald-soft,#EBF5F0)", iconColor: "var(--majalis-emerald,#0E6E52)" },
+  warning:     { Icon: AlertTriangle, accent: "var(--majalis-emerald-deep,#0A5040)", iconBg: "var(--majalis-emerald-soft,#EBF5F0)", iconColor: "var(--majalis-emerald,#1F4D3A)" },
   destructive: { Icon: XCircle,       accent: "var(--majalis-danger,#9B1C1C)",     iconBg: "var(--majalis-danger-muted,rgba(155,28,28,0.08))", iconColor: "var(--majalis-danger,#9B1C1C)" },
   info:        { Icon: Info,          accent: "#2563EB",                     iconBg: "#DBEAFE",                      iconColor: "#1D4ED8"                  },
 }

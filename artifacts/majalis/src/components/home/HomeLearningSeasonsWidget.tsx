@@ -58,7 +58,7 @@ function getSeasons(): Season[] {
       description: "أفضل أيام الدنيا — العشر الأول من ذي الحجة 1448هـ",
       suggestion: "مراجعة أعمال اليوم العظيمة",
       href: "/adhkar",
-      color: "var(--majalis-emerald, #0E6E52)",
+      color: "var(--majalis-emerald, #1F4D3A)",
     },
   ];
 }

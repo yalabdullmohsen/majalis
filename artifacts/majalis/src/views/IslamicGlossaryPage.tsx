@@ -23,7 +23,7 @@ interface GlossaryTerm {
 }
 
 const CATEGORIES: { id: Category; label: string; color: string }[] = [
-  { id: "all",     label: "الكل",            color: "#0E6E52" },
+  { id: "all",     label: "الكل",            color: "#1F4D3A" },
   { id: "aqeedah", label: "العقيدة",         color: "#1a5a7a" },
   { id: "fiqh",    label: "الفقه",           color: "#7B3E0C" },
   { id: "hadith",  label: "علم الحديث",      color: "#312E81" },

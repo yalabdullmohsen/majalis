@@ -129,7 +129,7 @@ export function FeaturedCard({
 export function NumberedListCard({
   title,
   items,
-  accentColor = "var(--msk-gold, #0E6E52)",
+  accentColor = "var(--msk-gold, #1F4D3A)",
 }: {
   title: string;
   items: { num: number; label: string; desc?: string }[];

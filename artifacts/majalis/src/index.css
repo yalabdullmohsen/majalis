@@ -8766,7 +8766,7 @@ input, textarea, select { font-family: inherit; }
 .sci-ann-card__sheikh {
   margin: 0;
   font-weight: 700;
-  color: #9a6b2e;
+  color: var(--clr-primary, #1F4D3A);
   font-size: 0.92rem;
 }
 
@@ -8910,7 +8910,7 @@ input, textarea, select { font-family: inherit; }
 .sci-ann-detail__sheikh {
   margin: 0;
   font-weight: 700;
-  color: #9a6b2e;
+  color: var(--clr-primary, #1F4D3A);
 }
 
 .sci-ann-detail__block {

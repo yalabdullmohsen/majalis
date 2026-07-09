@@ -105,7 +105,7 @@ export const ACCREDITATION_LABELS: Record<AccreditationStatus, string> = {
 
 export const ACCREDITATION_COLOR: Record<AccreditationStatus, string> = {
   accredited:  "#15803d",
-  provisional: "#0E6E52",
+  provisional: "#1F4D3A",
   unverified:  "#6b7280",
   unknown:     "#9ca3af",
 };

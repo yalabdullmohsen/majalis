@@ -576,7 +576,7 @@ const SEERAH_CSS = `
   align-items: center;
   gap: 0.6rem;
   font-size: 0.8rem;
-  color: #0E6E52;
+  color: #1F4D3A;
   background: rgba(14,110,82,0.06);
   border: 1px solid rgba(24,54,42,0.3);
   padding: 0.6rem 1rem;

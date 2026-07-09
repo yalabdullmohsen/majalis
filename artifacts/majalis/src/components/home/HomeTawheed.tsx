@@ -10,7 +10,7 @@ type HadithRef = {
 };
 
 const GRADE_COLOR: Record<HadithRef["grade"], string> = {
-  صحيح:  "var(--majalis-emerald, #0E6E52)",
+  صحيح:  "var(--majalis-emerald, #1F4D3A)",
   حسن:   "var(--majalis-emerald-deep, #0A5040)",
   ضعيف:  "var(--majalis-danger, #9B1C1C)",
   موضوع: "var(--majalis-danger, #9B1C1C)",

@@ -28,7 +28,7 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
       <circle
         cx="74" cy="74" r={r}
         fill="none"
-        stroke="var(--majalis-emerald, #0E6E52)"
+        stroke="var(--majalis-emerald, #1F4D3A)"
         strokeWidth="9"
         strokeLinecap="round"
         strokeDasharray={circ}
@@ -37,7 +37,7 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
         className="dwd-ring-fill"
         opacity={done ? "1" : "0.7"}
       />
-      <text x="74" y="67" textAnchor="middle" fill="var(--majalis-emerald, #0E6E52)"
+      <text x="74" y="67" textAnchor="middle" fill="var(--majalis-emerald, #1F4D3A)"
         fontSize="24" fontWeight="800" fontFamily="inherit">
         {toAr(pages)}
       </text>
@@ -46,7 +46,7 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
         من {toAr(target)} صفحة
       </text>
       {done && (
-        <text x="74" y="100" textAnchor="middle" fill="var(--majalis-emerald, #0E6E52)"
+        <text x="74" y="100" textAnchor="middle" fill="var(--majalis-emerald, #1F4D3A)"
           fontSize="12" fontWeight="700" fontFamily="inherit">✓ اكتمل</text>
       )}
     </svg>

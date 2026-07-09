@@ -16,7 +16,7 @@ function star8Points(cx: number, cy: number, r1: number, r2: number): string {
 
 // ── مُحمَّل هندسي (بديل Spinner) ─────────────────────────────────────────
 
-export function IslamicLoader({ size = 48, color = "var(--majalis-emerald, #0E6E52)" }: { size?: number; color?: string }) {
+export function IslamicLoader({ size = 48, color = "var(--majalis-emerald, #1F4D3A)" }: { size?: number; color?: string }) {
   const cx = size / 2;
   const r1 = size * 0.42;
   const r2 = size * 0.22;
@@ -58,7 +58,7 @@ export function IslamicLoader({ size = 48, color = "var(--majalis-emerald, #0E6E
 export function IslamicDividerStar({
   label,
   color = "var(--majalis-line, rgba(14,110,82,0.15))",
-  starColor = "var(--majalis-emerald, #0E6E52)",
+  starColor = "var(--majalis-emerald, #1F4D3A)",
   style,
 }: {
   label?: string;
@@ -91,7 +91,7 @@ export function IslamicDividerStar({
 
 export function IslamicPatternBg({
   opacity = 0.045,
-  color = "var(--majalis-emerald, #0E6E52)",
+  color = "var(--majalis-emerald, #1F4D3A)",
   tileSize = 64,
   style,
   className,
@@ -134,7 +134,7 @@ export function IslamicPatternBg({
 
 export function AchievementFrame({
   size = 64,
-  color = "var(--v2-gold, #0E6E52)",
+  color = "var(--v2-gold, #1F4D3A)",
   children,
 }: {
   size?: number;

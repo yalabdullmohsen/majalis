@@ -82,7 +82,7 @@ export function GlobalReferenceSection() {
         <StatCard label="نسبة التوثيق" value={`${dashboard?.verification_pct ?? 0}%`} />
         <StatCard label="جودة متوسطة" value={dashboard?.avg_quality_score ?? 0} />
         <StatCard label="يحتاج مراجعة" value={dashboard?.counts?.needs_review ?? 0} color="#dc2626" />
-        <StatCard label="غير مكتمل" value={dashboard?.counts?.incomplete ?? 0} color="#0E6E52" />
+        <StatCard label="غير مكتمل" value={dashboard?.counts?.incomplete ?? 0} color="#1F4D3A" />
       </div>
 
       <div className="grs-panels-grid">

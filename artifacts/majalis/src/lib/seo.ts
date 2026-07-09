@@ -204,7 +204,7 @@ export function applyPageSeo(options: PageSeoOptions) {
   upsertMeta("name", "description", options.description);
   upsertMeta("name", "keywords", keywords);
   upsertMeta("name", "robots", robots);
-  upsertMeta("name", "theme-color", "#0E6E52");
+  upsertMeta("name", "theme-color", "#1F4D3A");
   upsertMeta("name", "author", seoData.siteName);
 
   upsertMeta("property", "og:site_name", seoData.siteName);

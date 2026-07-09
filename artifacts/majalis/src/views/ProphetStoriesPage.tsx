@@ -793,11 +793,11 @@ const PROPHETS_CSS = `
   white-space: nowrap;
   transition: all 0.2s;
 }
-.prophets-lux-tab:hover { border-color: ${GOLD}; color: #0E6E52; background: rgba(14,110,82,0.06); }
+.prophets-lux-tab:hover { border-color: ${GOLD}; color: #1F4D3A; background: rgba(14,110,82,0.06); }
 .prophets-lux-tab--active {
   background: ${GOLD}18;
   border-color: ${GOLD};
-  color: #0E6E52;
+  color: #1F4D3A;
   font-weight: 700;
 }
 
@@ -908,7 +908,7 @@ const PROPHETS_CSS = `
 .prophet-lux-card__quran {
   font-family: 'Amiri Quran', 'Amiri', serif;
   font-size: 0.8rem;
-  color: var(--msk-gold, #0E6E52);
+  color: var(--msk-gold, #1F4D3A);
   margin-bottom: 0.25rem;
   opacity: 0.85;
 }
@@ -1422,7 +1422,7 @@ const PROPHETS_CSS = `
   transition: all 0.2s;
   box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
-.prophet-quiz__opt:hover:not([disabled]) { border-color: ${GOLD}; background: rgba(14,110,82,0.06); color: #0E6E52; }
+.prophet-quiz__opt:hover:not([disabled]) { border-color: ${GOLD}; background: rgba(14,110,82,0.06); color: #1F4D3A; }
 .prophet-quiz__opt--correct { background: #dcfce7 !important; border-color: #16a34a !important; color: #14532d !important; }
 .prophet-quiz__opt--wrong { background: #fee2e2 !important; border-color: #dc2626 !important; color: #7f1d1d !important; }
 .prophet-quiz__done {
@@ -1433,15 +1433,15 @@ const PROPHETS_CSS = `
   gap: 1rem;
   padding: 2rem;
 }
-.prophet-quiz__done h2 { font-family: 'Amiri', serif; font-size: 2rem; color: #0E6E52; margin: 0; }
-.prophet-quiz__score { font-size: 1.5rem; color: #0E6E52; font-weight: 700; margin: 0; }
+.prophet-quiz__done h2 { font-family: 'Amiri', serif; font-size: 2rem; color: #1F4D3A; margin: 0; }
+.prophet-quiz__score { font-size: 1.5rem; color: #1F4D3A; font-weight: 700; margin: 0; }
 .prophet-quiz__remark { color: #6b7280; font-size: 1rem; margin: 0; }
 .prophet-quiz__btn {
   margin-top: 0.5rem;
   padding: 0.75rem 2rem;
   background: ${GOLD}20;
   border: 1px solid ${GOLD};
-  color: #0E6E52;
+  color: #1F4D3A;
   border-radius: 10px;
   cursor: pointer;
   font-family: 'Cairo', sans-serif;

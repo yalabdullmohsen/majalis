@@ -22,7 +22,7 @@ const QURAN_SECTIONS = [
     title: "قصص القرآن",
     desc: "أسباب النزول ومحاور ١١٤ سورة قرآنية مع العبر والفوائد",
     Icon: BookMarked,
-    accent: "#0E6E52",
+    accent: "#1F4D3A",
     tag: "١١٤ سورة",
   },
   {
@@ -46,7 +46,7 @@ const QURAN_SECTIONS = [
     title: "البث المباشر",
     desc: "بث مباشر من الحرمين الشريفين — مكة المكرمة والمدينة المنورة",
     Icon: Mic2,
-    accent: "#0E6E52",
+    accent: "#1F4D3A",
     tag: "٢٤ ساعة",
   },
   {
@@ -70,7 +70,7 @@ const QURAN_SECTIONS = [
     title: "أذكار القرآن",
     desc: "أذكار وأدعية مستمدة من القرآن الكريم والسنة النبوية",
     Icon: Sparkles,
-    accent: "#0E6E52",
+    accent: "#1F4D3A",
     tag: "أذكار",
   },
 ];

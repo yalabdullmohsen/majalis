@@ -135,7 +135,7 @@ export default function SalahGuidePage() {
           {[
             { name: "الفجر", rakat: "2", color: "#1e3a5f" },
             { name: "الظهر", rakat: "4", color: "#b45309" },
-            { name: "العصر", rakat: "4", color: "#0e6e52" },
+            { name: "العصر", rakat: "4", color: "#1F4D3A" },
             { name: "المغرب", rakat: "3", color: "#7c3aed" },
             { name: "العشاء", rakat: "4", color: "#1e3a5f" },
           ].map((p) => (

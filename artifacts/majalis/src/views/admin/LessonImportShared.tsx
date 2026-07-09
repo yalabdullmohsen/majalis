@@ -12,7 +12,7 @@ export const labelStyle: React.CSSProperties = {};
 export function ConfidenceBadge({ score }: { score: number }) {
   const pct = Math.round(score * 100);
   const bg = pct >= 75 ? "#D1FAE5" : pct >= 45 ? "rgba(14,110,82,0.08)" : "#FEE2E2";
-  const color = pct >= 75 ? "var(--majalis-emerald-deep)" : pct >= 45 ? "#0E6E52" : "#991B1B";
+  const color = pct >= 75 ? "var(--majalis-emerald-deep)" : pct >= 45 ? "#1F4D3A" : "#991B1B";
   return (
     <span
       className="lis-conf-badge"
@@ -65,7 +65,7 @@ export function FieldStatusGrid({
         const isWarn = val && conf < 0.5;
         const isMissing = !val;
         const bg = isOk ? "#D1FAE5" : isWarn ? "rgba(14,110,82,0.08)" : "#FEE2E2";
-        const color = isOk ? "var(--majalis-emerald-deep)" : isWarn ? "#0E6E52" : "#991B1B";
+        const color = isOk ? "var(--majalis-emerald-deep)" : isWarn ? "#1F4D3A" : "#991B1B";
         const icon = isOk ? "\u2713" : isWarn ? "\u26a0" : "\u2717";
         return (
           <div

@@ -48,7 +48,7 @@ interface ScienceCard {
 }
 
 const GLOBAL_STATS: StatCard[] = [
-  { value: "١.٩ مليار", label: "مسلم في العالم", sub: "٢٤٪ من سكان الأرض", color: "#0E6E52" },
+  { value: "١.٩ مليار", label: "مسلم في العالم", sub: "٢٤٪ من سكان الأرض", color: "#1F4D3A" },
   { value: "٢٠٥٠", label: "أكبر ديانة متوقعة", sub: "وفق تقديرات مركز بيو", color: "#1a5a7a" },
   { value: "٤٩", label: "دولة ذات أغلبية مسلمة", sub: "من أصل ١٩٥ دولة في العالم", color: "#7B3E0C" },
   { value: "٣٨٠٠", label: "لغة ينطق بها المسلمون", sub: "الإسلام يتجاوز الحدود اللغوية", color: "#312E81" },
@@ -57,7 +57,7 @@ const GLOBAL_STATS: StatCard[] = [
 ];
 
 const POPULATION_BARS: BarItem[] = [
-  { label: "إندونيسيا", value: 231, max: 270, unit: "م", color: "#0E6E52" },
+  { label: "إندونيسيا", value: 231, max: 270, unit: "م", color: "#1F4D3A" },
   { label: "باكستان",   value: 212, max: 270, unit: "م", color: "#1a5a7a" },
   { label: "بنغلاديش",  value: 153, max: 270, unit: "م", color: "#7B3E0C" },
   { label: "نيجيريا",   value: 99,  max: 270, unit: "م", color: "#312E81" },
@@ -68,7 +68,7 @@ const POPULATION_BARS: BarItem[] = [
 ];
 
 const QURAN_STATS: StatCard[] = [
-  { value: "١١٤",  label: "سورة",        sub: "منها ٨٦ مكية و٢٨ مدنية", color: "#0E6E52" },
+  { value: "١١٤",  label: "سورة",        sub: "منها ٨٦ مكية و٢٨ مدنية", color: "#1F4D3A" },
   { value: "٦٢٣٦", label: "آية",          sub: "في الرواية الأكثر شيوعاً", color: "#1a5a7a" },
   { value: "٣٠",   label: "جزءاً",        sub: "موزعة على ٦٠ حزباً", color: "#7B3E0C" },
   { value: "٧٧٤٣٩", label: "كلمة",       sub: "في المصحف الشريف", color: "#312E81" },
@@ -91,7 +91,7 @@ const HISTORY_TIMELINE: TimelineItem[] = [
 ];
 
 const HISTORY_ACHIEVEMENTS: StatCard[] = [
-  { value: "٨٠٠+", label: "طبيب وعالم مسلم", sub: "في العصور الوسطى أسهموا في الطب والعلوم", color: "#0E6E52" },
+  { value: "٨٠٠+", label: "طبيب وعالم مسلم", sub: "في العصور الوسطى أسهموا في الطب والعلوم", color: "#1F4D3A" },
   { value: "٤٠٠+", label: "كتاب لابن سينا", sub: "شاملة للطب والفلسفة والفلك", color: "#1a5a7a" },
   { value: "١٢٠٠+", label: "لفظ عربي في الإنجليزية", sub: "مثل: algebra, alcohol, coffee, sugar", color: "#7B3E0C" },
   { value: "٦٠٠ سنة", label: "القانون مرجعاً طبياً", sub: "كتاب ابن سينا في جامعات أوروبا", color: "#312E81" },

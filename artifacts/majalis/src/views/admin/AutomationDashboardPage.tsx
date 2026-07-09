@@ -71,7 +71,7 @@ function AutomationDashboardContent() {
           <div className="adp-stats-row">
             <StatCard label="المصادر" value={stats?.sourcesCount ?? 0} />
             <StatCard label="نشط" value={stats?.activeSources ?? 0} />
-            <StatCard label="بانتظار المراجعة" value={stats?.pendingReview ?? 0} color="#0E6E52" />
+            <StatCard label="بانتظار المراجعة" value={stats?.pendingReview ?? 0} color="#1F4D3A" />
             <StatCard label="منشور تلقائيًا" value={stats?.autoPublished ?? 0} />
             <StatCard label="مكرر" value={stats?.duplicates ?? 0} />
             <StatCard label="أخطاء" value={stats?.errors ?? 0} color="#991B1B" />

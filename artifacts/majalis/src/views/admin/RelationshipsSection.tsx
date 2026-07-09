@@ -280,7 +280,7 @@ export function RelationshipsSection() {
                     className="rel-verified-badge"
                     style={{
                       "--rel-vb-bg": r.is_verified ? "#d1fae5" : "#E6EDE9",
-                      "--rel-vb-color": r.is_verified ? "#065f46" : "#0E6E52",
+                      "--rel-vb-color": r.is_verified ? "#065f46" : "#1F4D3A",
                     } as React.CSSProperties}
                   >
                     {r.is_verified ? "\u0645\u062d\u0642\u0642\u0629" : "\u0642\u064a\u062f \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629"}

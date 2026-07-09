@@ -21368,7 +21368,7 @@ img[loading="lazy"]:not([src=""]) {
 .is-bar__track {
   flex: 1; height: 10px; background: #E2E8F0; border-radius: 999px; overflow: hidden;
 }
-.is-bar__fill { height: 100%; border-radius: 999px; background: var(--is-bar-color, #0E6E52); width: var(--is-bar-w, 0%); transition: width 0.8s ease; }
+.is-bar__fill { height: 100%; border-radius: 999px; background: var(--is-bar-color, #1F4D3A); width: var(--is-bar-w, 0%); transition: width 0.8s ease; }
 .is-bar__val { width: 3rem; font-size: .78rem; font-weight: 700; color: #475569; flex-shrink: 0; }
 
 /* note */
@@ -21925,11 +21925,11 @@ img[loading="lazy"]:not([src=""]) {
 .jn-sections { display: flex; flex-direction: column; gap: 2rem; }
 
 .jn-section {}
-.jn-section__title { font-size: 1.1rem; font-weight: 800; margin: 0 0 .85rem; border-right: 3px solid currentColor; padding-right: .7rem; color: var(--jn-section-color, #0E6E52); }
+.jn-section__title { font-size: 1.1rem; font-weight: 800; margin: 0 0 .85rem; border-right: 3px solid currentColor; padding-right: .7rem; color: var(--jn-section-color, #1F4D3A); }
 
 .jn-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .75rem; }
 .jn-desc-card {
-  background: #fff; border: 1px solid #E5E7EB; border-top: 3px solid var(--jn-section-color, #0E6E52);
+  background: #fff; border: 1px solid #E5E7EB; border-top: 3px solid var(--jn-section-color, #1F4D3A);
   border-radius: .9rem; padding: 1rem 1.1rem;
   display: flex; flex-direction: column; gap: .4rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);

@@ -106,7 +106,7 @@ export function QaSection() {
             {draftCount} مسودة
           </span>
           {reviewCount > 0 && (
-            <span className="qa-badge" style={{ "--qa-badge-bg": "rgba(14,110,82,0.08)", "--qa-badge-color": "#0E6E52" } as React.CSSProperties}>
+            <span className="qa-badge" style={{ "--qa-badge-bg": "rgba(14,110,82,0.08)", "--qa-badge-color": "#1F4D3A" } as React.CSSProperties}>
               {reviewCount} يحتاج مراجعة
             </span>
           )}
@@ -177,7 +177,7 @@ export function QaSection() {
                         className="qa-review-badge"
                         style={{
                           "--qa-rev-bg": approved ? "#D1FAE5" : "rgba(14,110,82,0.08)",
-                          "--qa-rev-color": approved ? "#065F46" : "#0E6E52",
+                          "--qa-rev-color": approved ? "#065F46" : "#1F4D3A",
                         } as React.CSSProperties}
                       >
                         {QA_REVIEW_LABELS[item.review_status] || item.review_status}

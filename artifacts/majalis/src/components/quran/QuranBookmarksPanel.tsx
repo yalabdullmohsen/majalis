@@ -22,7 +22,7 @@ type Props = {
 
 const HIFZ_STATUS_LABELS: Record<string, { label: string; color: string }> = {
   not_started: { label: "لم يُبدأ",   color: "var(--majalis-ink-soft)" },
-  memorizing:  { label: "جارٍ الحفظ", color: "var(--majalis-emerald, #0E6E52)" },
+  memorizing:  { label: "جارٍ الحفظ", color: "var(--majalis-emerald, #1F4D3A)" },
   memorized:   { label: "محفوظ ✓",    color: "var(--majalis-emerald-deep, #0A5040)" },
   reviewing:   { label: "مراجعة",     color: "#1E40AF" },
 };

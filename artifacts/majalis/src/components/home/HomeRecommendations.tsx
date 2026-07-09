@@ -12,7 +12,7 @@ import {
 import { useAuth } from "@/components/AuthProvider";
 
 function RecMiniCard({ item }: { item: RecommendedItem }) {
-  const color = CONTENT_TYPE_COLOR[item.content_type] || "var(--majalis-emerald, #0E6E52)";
+  const color = CONTENT_TYPE_COLOR[item.content_type] || "var(--majalis-emerald, #1F4D3A)";
   const label = CONTENT_TYPE_LABEL[item.content_type] || "";
   const title = getItemTitle(item);
   const href = getItemHref(item);

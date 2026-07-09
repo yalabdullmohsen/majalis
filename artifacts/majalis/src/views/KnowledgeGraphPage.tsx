@@ -56,9 +56,9 @@ const SVG_W       = 960;
 const SVG_H       = 580;
 
 const OLD_TYPE_COLOR: Record<KnowledgeSourceType, string> = {
-  scholar:  "#0E6E52",
+  scholar:  "#1F4D3A",
   lesson:   "#0369a1",
-  book:     "#0E6E52",
+  book:     "#1F4D3A",
   fatwa:    "#7c3aed",
   fawaid:   "#047857",
   question: "#6b7280",

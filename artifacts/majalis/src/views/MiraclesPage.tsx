@@ -186,7 +186,7 @@ export default function MiraclesPage({
         <div className="ds-grid">
           {items.map((item: any) => {
             const ItemIcon: LucideIcon = CATEGORY_ICONS[item.category] ?? Sparkles;
-            const borderColor = SOURCE_COLORS[item.source_type] ?? "#0E6E52";
+            const borderColor = SOURCE_COLORS[item.source_type] ?? "#1F4D3A";
             const palette     = CATEGORY_PALETTE[item.category] ?? { bg: "#1a5c35", accent: "#86efac" };
             const pattern     = CATEGORY_PATTERN[item.category] ?? "stars";
             const isExpanded  = expanded === item.id;

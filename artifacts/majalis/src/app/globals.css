@@ -205,7 +205,7 @@ html {
 }
 
 .surah-story-num {
-  color: #0E6E52;
+  color: var(--clr-primary, #1F4D3A);
   font-weight: 800;
 }
 

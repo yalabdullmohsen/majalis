@@ -138,9 +138,9 @@ function IslamicLoaderInline() {
       className="ds-loader-svg">
       <style>{`@keyframes ui-common-rotate{to{transform:rotate(360deg)}}
         @media(prefers-reduced-motion:reduce){svg[aria-hidden]{animation:none!important}}`}</style>
-      <polygon points={pts} fill="none" stroke="var(--majalis-emerald,#0E6E52)" strokeWidth="1.6"
+      <polygon points={pts} fill="none" stroke="var(--majalis-emerald,#1F4D3A)" strokeWidth="1.6"
         strokeLinejoin="round" opacity="0.85" />
-      <circle cx={cx} cy={cx} r={size * 0.09} fill="var(--majalis-emerald,#0E6E52)" opacity="0.6" />
+      <circle cx={cx} cy={cx} r={size * 0.09} fill="var(--majalis-emerald,#1F4D3A)" opacity="0.6" />
     </svg>
   );
 }

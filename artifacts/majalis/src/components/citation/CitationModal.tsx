@@ -127,7 +127,7 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
     setTimeout(() => setStatus(null), 3000);
   };
 
-  const typeColor = CONTENT_TYPE_COLOR[source.content_type] || "var(--majalis-emerald, #0E6E52)";
+  const typeColor = CONTENT_TYPE_COLOR[source.content_type] || "var(--majalis-emerald, #1F4D3A)";
   const typeLabel = CONTENT_TYPE_LABEL[source.content_type] || source.content_type;
 
   return (

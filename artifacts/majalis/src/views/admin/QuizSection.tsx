@@ -49,7 +49,7 @@ const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
 
 const LEVEL_COLORS: Record<string, { bg: string; text: string }> = {
   beginner:     { bg: "#D1FAE5", text: "#065F46" },
-  intermediate: { bg: "rgba(14,110,82,0.08)", text: "#0E6E52" },
+  intermediate: { bg: "rgba(14,110,82,0.08)", text: "#1F4D3A" },
   advanced:     { bg: "#FEE2E2", text: "#991B1B" },
 };
 

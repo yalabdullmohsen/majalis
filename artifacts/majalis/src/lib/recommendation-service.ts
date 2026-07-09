@@ -78,18 +78,18 @@ export const CONTENT_TYPE_HREF: Record<RecContentType, (id: string) => string> =
 };
 
 export const CONTENT_TYPE_COLOR: Record<RecContentType, string> = {
-  lesson:     "var(--majalis-emerald, #0E6E52)",
+  lesson:     "var(--majalis-emerald, #1F4D3A)",
   hadith:     "#1d4ed8",
-  fatwa:      "var(--majalis-emerald, #0E6E52)",
+  fatwa:      "var(--majalis-emerald, #1F4D3A)",
   benefit:    "var(--majalis-emerald-deep, #0A5040)",
-  book:       "var(--majalis-emerald, #0E6E52)",
+  book:       "var(--majalis-emerald, #1F4D3A)",
   scholar:    "#7c3aed",
   qa:         "#0369a1",
   ruling:     "var(--majalis-ink-soft, #4A4A4A)",
   story:      "var(--majalis-danger, #9B1C1C)",
   miracle:    "#0c4a6e",
-  dhikr:      "var(--majalis-emerald, #0E6E52)",
-  quran_ayah: "var(--majalis-emerald, #0E6E52)",
+  dhikr:      "var(--majalis-emerald, #1F4D3A)",
+  quran_ayah: "var(--majalis-emerald, #1F4D3A)",
 };
 
 // ── مساعدات ──────────────────────────────────────────────────────────────────
