@@ -16078,3 +16078,313 @@ img[loading="lazy"]:not([src=""]) {
 }
 
 /* ── نهاية §58 ───────────────────────────────────────────── */
+
+/* ─────────────────────────────────────────────────────────── */
+/* §218 — صفحة الأسماء الحسنى (.ah-*)                        */
+/* ─────────────────────────────────────────────────────────── */
+
+/* Hero */
+.ah-hero {
+  background: linear-gradient(160deg, #0A5040 0%, #0E6E52 60%, #126650 100%);
+  border-radius: 1.25rem;
+  padding: 2.5rem 1.5rem 2rem;
+  text-align: center;
+  color: #FFFFFF;
+  margin-bottom: 1.5rem;
+}
+.ah-hero__bismillah {
+  font-size: 1.25rem;
+  font-family: var(--font-quran, serif);
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.02em;
+}
+.ah-hero__title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0 0 0.75rem;
+  line-height: 1.2;
+}
+.ah-hero__sub {
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.8;
+  max-width: 600px;
+  margin: 0 auto 1rem;
+}
+.ah-hero__source {
+  display: inline-block;
+  margin-right: 0.5rem;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.65);
+  font-style: italic;
+}
+.ah-hero__stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.8);
+  font-weight: 600;
+}
+.ah-hero__dot { opacity: 0.4; }
+
+/* Controls */
+.ah-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.ah-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.ah-search-icon {
+  position: absolute;
+  right: 0.85rem;
+  color: #0E6E52;
+  pointer-events: none;
+}
+.ah-search {
+  width: 100%;
+  padding: 0.65rem 2.5rem 0.65rem 1rem;
+  border: 1.5px solid #C6D6CE;
+  border-radius: 0.75rem;
+  font-size: 0.92rem;
+  background: #FFFFFF;
+  color: #0C0C0C;
+  outline: none;
+  transition: border-color 0.2s;
+  direction: rtl;
+}
+.ah-search:focus { border-color: #0E6E52; }
+.ah-cat-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.ah-cat-chip {
+  padding: 0.35rem 0.85rem;
+  border-radius: 2rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid #C6D6CE;
+  background: #FFFFFF;
+  color: #0A5040;
+  transition: all 0.15s;
+}
+.ah-cat-chip:hover { border-color: #0E6E52; background: rgba(14,110,82,0.06); }
+.ah-cat-chip--active { background: #0E6E52; color: #FFFFFF; border-color: #0E6E52; }
+
+/* Grid */
+.ah-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+.ah-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1rem 0.75rem 0.85rem;
+  border-radius: 1rem;
+  border: 1.5px solid #D4E3DB;
+  background: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.18s;
+  gap: 0.25rem;
+  box-shadow: 0 1px 4px rgba(10,80,64,0.06);
+}
+.ah-card:hover {
+  border-color: #0E6E52;
+  box-shadow: 0 4px 16px rgba(14,110,82,0.14);
+  transform: translateY(-2px);
+}
+.ah-card__num {
+  font-size: 0.7rem;
+  color: #6B9E8A;
+  font-weight: 700;
+  background: rgba(14,110,82,0.08);
+  border-radius: 1rem;
+  padding: 0.1rem 0.45rem;
+  line-height: 1.4;
+}
+.ah-card__name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0A5040;
+  font-family: var(--font-quran, serif);
+  line-height: 1.3;
+}
+.ah-card__trans {
+  font-size: 0.7rem;
+  color: #5A8070;
+  font-style: italic;
+}
+.ah-card__meaning {
+  font-size: 0.72rem;
+  color: #3A5A4A;
+  line-height: 1.5;
+}
+.ah-card__fav {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #C0D4C8;
+  padding: 0.2rem;
+  border-radius: 50%;
+  transition: color 0.15s;
+  line-height: 1;
+}
+.ah-card__fav:hover { color: #E53E3E; }
+.ah-card__fav--active { color: #E53E3E; }
+
+/* Empty */
+.ah-empty {
+  text-align: center;
+  color: #6B9E8A;
+  padding: 2rem;
+  font-size: 0.95rem;
+}
+
+/* Modal */
+.ah-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.ah-modal {
+  background: #FFFFFF;
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  max-width: 480px;
+  width: 100%;
+  text-align: right;
+  direction: rtl;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.ah-modal__head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1.5px solid #E8F2EE;
+}
+.ah-modal__num {
+  font-size: 0.75rem;
+  color: #FFFFFF;
+  background: #0E6E52;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.ah-modal__name {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #0A5040;
+  font-family: var(--font-quran, serif);
+  margin: 0;
+  flex: 1;
+}
+.ah-modal__trans {
+  font-size: 0.8rem;
+  color: #6B9E8A;
+  font-style: italic;
+  white-space: nowrap;
+}
+.ah-modal__fav {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #C0D4C8;
+  padding: 0.3rem;
+  transition: color 0.15s;
+}
+.ah-modal__fav--active { color: #E53E3E; }
+.ah-modal__section {
+  margin-bottom: 1rem;
+}
+.ah-modal__label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #0E6E52;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.ah-modal__text {
+  font-size: 0.9rem;
+  color: #1A2E24;
+  line-height: 1.75;
+  margin: 0;
+}
+.ah-modal__text--quran {
+  font-family: var(--font-quran, serif);
+  font-size: 0.92rem;
+  color: #0A5040;
+  background: rgba(14,110,82,0.04);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border-right: 3px solid #0E6E52;
+}
+.ah-modal__cat-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: rgba(14,110,82,0.1);
+  color: #0A5040;
+  border-radius: 2rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.ah-modal__close {
+  width: 100%;
+  padding: 0.7rem;
+  background: #0E6E52;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.ah-modal__close:hover { background: #0A5040; }
+
+@media (max-width: 600px) {
+  .ah-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 0.5rem; }
+  .ah-card { padding: 0.75rem 0.5rem; }
+  .ah-card__name { font-size: 1.1rem; }
+  .ah-hero__title { font-size: 1.75rem; }
+  .ah-modal { padding: 1.25rem; }
+}
+
+/* ── نهاية §218 ────────────────────────────────────────────── */

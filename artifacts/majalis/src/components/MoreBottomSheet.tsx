@@ -26,6 +26,7 @@ const SHEET_SECTIONS = [
     { href: "/annual-courses",     label: "الدورات",           Icon: GraduationCap },
     { href: "/library",            label: "المكتبة",           Icon: Library },
     { href: "/scholars",           label: "أعلام الإسلام",     Icon: Users },
+    { href: "/asma-husna",         label: "الأسماء الحسنى",   Icon: Sparkles },
     { href: "/hadith",             label: "الأحاديث",          Icon: ScrollText },
     { href: "/arbaeen-nawawi",     label: "الأربعون النووية",  Icon: FileText },
     { href: "/fawaid",             label: "الفوائد",           Icon: Heart },
