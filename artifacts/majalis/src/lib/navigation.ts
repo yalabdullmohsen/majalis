@@ -64,6 +64,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/tawba",             label: "التوبة والاستغفار" },
   { href: "/ulum-quran",        label: "علوم القرآن" },
   { href: "/mawarith",          label: "المواريث والفرائض" },
+  { href: "/salah-guide",       label: "دليل الصلاة الكامل" },
   { href: "/universities",       label: "دليل الجامعات" },
   { href: "/learning-path",      label: "خارطة طالب العلم" },
   // القرآن
@@ -317,6 +318,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/tawba",          title: "التوبة والاستغفار",   description: "شروط التوبة النصوح وأنواعها وأفضل صيغ الاستغفار المأثورة وآثارها العظيمة" },
   { href: "/ulum-quran",    title: "علوم القرآن الكريم",  description: "النزول والجمع والتفسير والإعجاز والمحكم والمتشابه والناسخ والمنسوخ" },
   { href: "/mawarith",      title: "المواريث والفرائض",   description: "حصص الورثة الشرعية وأسباب الإرث وموانعه وأحكام العَصَبة والحجب والعَوْل والردّ" },
+  { href: "/salah-guide",   title: "دليل الصلاة الكامل",  description: "الشروط والأركان وكيفية الصلاة والمبطلات والخشوع وفضائل الصلاة الخمس" },
   { href: "/knowledge-map", title: "الخريطة المعرفية",   description: "14 حقلاً علمياً بروابط تفاعلية ومحركات البحث" },
   { href: "/quran-hub",    title: "مركز القرآن",          description: "بوابتك الشاملة للمصحف والتجويد والإذاعات والبث المباشر" },
 ] as const;
