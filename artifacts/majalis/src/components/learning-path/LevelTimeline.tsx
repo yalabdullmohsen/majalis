@@ -40,7 +40,7 @@ export function LevelTimeline({ levels, progress }: Props) {
               {/* نقطة الـ timeline */}
               <div className="flex-shrink-0 w-12 flex flex-col items-center relative z-10 hidden md:flex">
                 <div
-                  className="w-5 h-5 rounded-full border-2 border-[var(--majalis-panel)] shadow-sm mt-1 lt-dot"
+                  className="w-5 h-5 rounded-full border-2 shadow-sm mt-1 lt-dot lt-dot--panel-border"
                   style={{ "--lt-dot-bg": dotBg } as React.CSSProperties}
                 />
               </div>

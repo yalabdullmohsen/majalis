@@ -11534,6 +11534,7 @@ button, .btn {
 
 /* ── LevelTimeline (lt-*) ────────────────────────────────────────────────────── */
 .lt-dot           { background: var(--lt-dot-bg, var(--majalis-line)); }
+.lt-dot--panel-border { border-color: var(--majalis-panel); }
 .lt-level-card    { border-color: var(--lt-border, var(--majalis-line)); }
 .lt-level-head    { background: var(--lt-head-bg, var(--majalis-parchment)); }
 .lt-badge         { background: var(--lt-badge-bg, var(--majalis-ink-soft)); }
@@ -23504,6 +23505,7 @@ img[loading="lazy"]:not([src=""]) {
 .mcp-usage-count { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; margin-right: auto; }
 .mcp-empty-text { color: var(--majalis-ink-soft); font-size: .875rem; }
 .mcp-empty-hint { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; }
+.mcp-swatch--active { border-color: var(--majalis-ink); }
 
 /* ══════════════════════════════════════════════
    §UDP. UniversityDetailPage
@@ -23595,6 +23597,7 @@ img[loading="lazy"]:not([src=""]) {
 .udp-back-link { color: var(--majalis-emerald); font-size: .875rem; text-decoration: none; }
 .udp-back-link:hover { text-decoration: underline; }
 .udp-acc-badge { background-color: var(--acc-color, #888); }
+.udp-compare-active-btn { color: var(--majalis-emerald); font-weight: 600; }
 
 /* ══════════════════════════════════════════════
    §UAP. UniversitiesAdminPage

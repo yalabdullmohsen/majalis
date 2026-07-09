@@ -184,7 +184,7 @@ function DetailContent({ university: u }: { university: University }) {
               onClick={() => inCompare ? removeFromCompare(u.slug) : addToCompare(u)}
               disabled={!inCompare && !canAdd}
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
-                inCompare ? "bg-white text-[var(--majalis-emerald)] font-semibold" :
+                inCompare ? "bg-white udp-compare-active-btn" :
                 canAdd ? "bg-white/20 text-white hover:bg-white/30" :
                 "bg-white/10 text-white/50 cursor-not-allowed"
               }`}>
