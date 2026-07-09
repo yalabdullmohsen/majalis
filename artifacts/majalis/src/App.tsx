@@ -53,6 +53,15 @@ const HadithDaifPage = lazy(() => import("@/views/HadithDaifPage"));
 const HadithMawduPage = lazy(() => import("@/views/HadithMawduPage"));
 const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
 const QuranCirclesPage = lazy(() => import("@/views/QuranCirclesPage"));
+const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
+const SurahStoryDetailRoute = lazy(() =>
+  import("@/views/SurahStoriesPage").then(m => ({
+    default: ({ params }: { params?: Record<string, string> }) => {
+      const n = parseInt(params?.number ?? "1", 10);
+      return <m.SurahStoryDetailPage surahNumber={Number.isNaN(n) ? 1 : n} />;
+    },
+  }))
+);
 const TawhidPage = lazy(() => import("@/views/TawhidPage"));
 const StoriesPage = lazy(() => import("@/views/StoriesPage"));
 const AdhkarPage = lazy(() => import("@/views/AdhkarPage"));
@@ -331,7 +340,7 @@ function Router() {
       <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
       <Route path="/quran-live" component={QuranComingSoon} />
       <Route path="/tajweed" component={QuranComingSoon} />
-      <Route path="/surah-stories" component={QuranComingSoon} />
+      <Route path="/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
       <Route path="/quran/tajweed" component={QuranComingSoon} />
       {/* مسارات الاختصار — public redirects */}
       <Route path="/research"><Redirect to="/fiqh-council/research" /></Route>
@@ -340,8 +349,8 @@ function Router() {
       <Route path="/fiqh"><SafeLazyRoute component={FiqhPage} /></Route>
       <Route path="/seerah"><SafeLazyRoute component={SeerahPage} /></Route>
       <Route path="/quran"><Suspense fallback={<LazyRouteFallback />}><QuranPage /></Suspense></Route>
-      <Route path="/quran/surah-stories/:number" component={QuranComingSoon} />
-      <Route path="/quran/surah-stories" component={QuranComingSoon} />
+      <Route path="/quran/surah-stories/:number"><SafeLazyRoute component={SurahStoryDetailRoute} /></Route>
+      <Route path="/quran/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
       <Route path="/prayer-times"><SafeLazyRoute component={PrayerTimesPage} /></Route>
       <Route path="/prayer-countdown"><SafeLazyRoute component={PrayerCountdownPage} /></Route>
       <Route path="/prayer-ranks"><SafeLazyRoute component={PrayerRanksPage} /></Route>
