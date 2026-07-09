@@ -406,6 +406,7 @@ export default function SawmPage() {
               type="button"
               className={`sw-tab${tab === t.id ? " sw-tab--active" : ""}`}
               onClick={() => setTab(t.id)}
+              aria-pressed={tab === t.id}
             >
               <span className="sw-tab__icon">{t.icon}</span>
               <span className="sw-tab__label">{t.label}</span>

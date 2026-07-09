@@ -192,6 +192,7 @@ export default function ArkanImanPage() {
               type="button"
               className={`ai-hero__nav-btn${openId === r.num ? " ai-hero__nav-btn--active" : ""}`}
               onClick={() => toggle(r.num)}
+              aria-pressed={openId === r.num}
               aria-label={r.title}
             >
               <span className="ai-hero__nav-icon">{r.icon}</span>

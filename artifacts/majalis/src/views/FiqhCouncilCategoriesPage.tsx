@@ -80,6 +80,7 @@ export default function FiqhCouncilCategoriesPage() {
         <Link
           href="/fiqh-council/categories"
           className={selectedCat === "الكل" ? "fiqh-council-category-card fiqh-council-category-card--active" : "fiqh-council-category-card"}
+          aria-current={selectedCat === "الكل" ? "true" : undefined}
         >
           <span className="fiqh-council-category-name">الكل</span>
           <span className="fiqh-council-category-count">{Object.values(counts).reduce((a, b) => a + b, 0)} عنصر</span>
@@ -89,6 +90,7 @@ export default function FiqhCouncilCategoriesPage() {
             key={cat}
             href={`/fiqh-council/categories?cat=${encodeURIComponent(cat)}`}
             className={selectedCat === cat ? "fiqh-council-category-card fiqh-council-category-card--active" : "fiqh-council-category-card"}
+            aria-current={selectedCat === cat ? "true" : undefined}
           >
             <span className="fiqh-council-category-name">{cat}</span>
             <span className="fiqh-council-category-count">{counts[cat] || 0} عنصر</span>

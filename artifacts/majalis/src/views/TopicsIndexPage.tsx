@@ -136,6 +136,7 @@ export default function TopicsIndexPage() {
           type="button"
           className={activeCategory === ALL_CAT ? "tip-cat-btn tip-cat-btn--active" : "tip-cat-btn"}
           onClick={() => setActiveCategory(ALL_CAT)}
+          aria-pressed={activeCategory === ALL_CAT}
         >
           {ALL_CAT}
         </button>
@@ -147,6 +148,7 @@ export default function TopicsIndexPage() {
               type="button"
               className={activeCategory === cat ? "tip-cat-btn tip-cat-btn--active" : "tip-cat-btn"}
               onClick={() => setActiveCategory(cat)}
+              aria-pressed={activeCategory === cat}
             >
               <meta.Icon size={14} strokeWidth={1.8} aria-hidden="true" /> {meta.label}
             </button>

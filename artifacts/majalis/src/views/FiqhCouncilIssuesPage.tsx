@@ -52,6 +52,7 @@ export default function FiqhCouncilIssuesPage() {
             type="button"
             onClick={() => setCategory(cat)}
             className={category === cat ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+            aria-pressed={category === cat}
           >
             {cat}
           </button>

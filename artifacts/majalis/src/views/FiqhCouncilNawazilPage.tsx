@@ -51,6 +51,7 @@ export default function FiqhCouncilNawazilPage() {
           type="button"
           className={!activeTopic ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
           onClick={() => setActiveTopic(null)}
+          aria-pressed={!activeTopic}
         >
           الكل
         </button>
@@ -60,6 +61,7 @@ export default function FiqhCouncilNawazilPage() {
             type="button"
             className={activeTopic === topic.slug ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
             onClick={() => setActiveTopic(topic.slug)}
+            aria-pressed={activeTopic === topic.slug}
           >
             {topic.title}
           </button>

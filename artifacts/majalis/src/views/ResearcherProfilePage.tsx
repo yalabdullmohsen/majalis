@@ -28,6 +28,7 @@ function InterestTag({
       type="button"
       className={`rp-tag${selected ? " rp-tag--active" : ""}`}
       onClick={onToggle}
+      aria-pressed={selected}
     >
       {label}
     </button>

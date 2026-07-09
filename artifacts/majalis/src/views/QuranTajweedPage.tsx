@@ -278,6 +278,7 @@ export default function QuranTajweedPage() {
             type="button"
             className={`ds-chip${category === c ? " ds-chip--active" : ""}`}
             onClick={() => setCategory(c)}
+            aria-pressed={category === c}
           >
             {c}
           </button>

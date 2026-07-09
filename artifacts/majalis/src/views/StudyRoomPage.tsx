@@ -223,6 +223,7 @@ export default function StudyRoomPage() {
             type="button"
             className={`sr-preset${presetIdx === i ? " sr-preset--active" : ""}`}
             onClick={() => { setPresetIdx(i); reset(); }}
+            aria-pressed={presetIdx === i}
             disabled={phase !== "idle"}
           >
             {p.label}

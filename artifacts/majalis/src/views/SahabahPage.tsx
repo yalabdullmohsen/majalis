@@ -304,6 +304,7 @@ export default function SahabahPage() {
               type="button"
               className={`sb-cat-btn${activeCat === cat ? " sb-cat-btn--active" : ""}`}
               onClick={() => setActiveCat(cat)}
+              aria-pressed={activeCat === cat}
             >
               {cat}
             </button>

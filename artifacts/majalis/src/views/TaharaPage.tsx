@@ -150,6 +150,7 @@ export default function TaharaPage() {
               type="button"
               className={`th-tab${tab === t.id ? " th-tab--active" : ""}`}
               onClick={() => setTab(t.id)}
+              aria-pressed={tab === t.id}
             >
               <span className="th-tab__icon">{t.icon}</span>
               <span className="th-tab__label">{t.label}</span>

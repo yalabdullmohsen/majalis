@@ -239,6 +239,7 @@ export default function AlamatSaahPage() {
             type="button"
             className={`as-tab${activeTab === t.id ? " as-tab--active" : ""}`}
             onClick={() => setActiveTab(t.id)}
+            aria-pressed={activeTab === t.id}
           >{t.label}</button>
         ))}
       </div>

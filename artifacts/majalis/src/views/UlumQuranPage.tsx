@@ -155,6 +155,7 @@ export default function UlumQuranPage() {
             type="button"
             className={`uq-tab${tab === t.id ? " uq-tab--active" : ""}`}
             onClick={() => setTab(t.id)}
+            aria-pressed={tab === t.id}
           >
             <span>{t.icon}</span>
             <span>{t.label}</span>

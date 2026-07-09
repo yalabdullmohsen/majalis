@@ -175,6 +175,7 @@ export default function TawbaPage() {
             type="button"
             className={`tw-tab${tab === t.id ? " tw-tab--active" : ""}`}
             onClick={() => setTab(t.id)}
+            aria-pressed={tab === t.id}
           >
             <span className="tw-tab__icon">{t.icon}</span>
             <span className="tw-tab__label">{t.label}</span>

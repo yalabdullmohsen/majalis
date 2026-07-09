@@ -155,6 +155,7 @@ export default function SalahGuidePage() {
             type="button"
             className={`sg-tab${tab === t.id ? " sg-tab--active" : ""}`}
             onClick={() => setTab(t.id)}
+            aria-pressed={tab === t.id}
           >
             <span>{t.icon}</span>
             <span>{t.label}</span>

@@ -160,6 +160,7 @@ export default function RaqaiqPage() {
             type="button"
             className={`rq-tab${activeTab === t.id ? " rq-tab--active" : ""}`}
             onClick={() => { setActiveTab(t.id); setOpenIdx(null); }}
+            aria-pressed={activeTab === t.id}
           >{t.label}</button>
         ))}
       </div>
