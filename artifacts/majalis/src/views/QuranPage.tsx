@@ -13,20 +13,28 @@ import { applyPageSeo } from "@/lib/seo";
 /* ══════════════════════════════════════════════════════════════════
    ثوابت
    ══════════════════════════════════════════════════════════════════ */
-const TOTAL_PAGES = 604;
-const PAGE_KEY   = "mj-mushaf-page-v4";
-const BM_KEY     = "mj-mushaf-bm-v4";
-const ZOOM_KEY   = "mj-mushaf-zoom-v4";
-const MODE_KEY   = "mj-mushaf-mode-v4";
-
-/* مصادر صور المصحف مرتبة حسب الأولوية — عند فشل مصدر تنتقل للتالي */
-const CDN_SOURCES = [
-  (n: string) => `https://evkur.net/sites/default/files/mushaf/hafs/hafs-${n}.png`,
-  (n: string) => `https://qurancdn.com/images/pages/jpg/p${n}.jpg`,
-  (n: string) => `https://www.searchtruth.com/quran/images/pages/${n}.jpg`,
-];
+const TOTAL_PAGES  = 604;
+const PAGE_KEY     = "mj-mushaf-page-v4";
+const BM_KEY       = "mj-mushaf-bm-v4";
+const ZOOM_KEY     = "mj-mushaf-zoom-v4";
+const MODE_KEY     = "mj-mushaf-mode-v4";
+const BASE_FONT    = 1.9; // rem — مطابق لمتغير CSS --qs-font-size
+const API_BASE     = "https://api.alquran.cloud/v1/page";
+const EDITION      = "quran-uthmani";
 
 type ReadMode = "day" | "night" | "sepia";
+
+interface Ayah {
+  number: number;
+  text: string;
+  numberInSurah: number;
+  surah: { number: number; name: string; numberOfAyahs: number; revelationType: string };
+  juz: number;
+  sajda: boolean | object;
+}
+
+/* كاش في الذاكرة — يمنع إعادة الجلب عند التنقل بين الصفحات */
+const pageCache = new Map<number, Ayah[]>();
 
 /* بيانات السور: [الاسم، أول صفحة] */
 const SURAHS: [string, number][] = [
@@ -70,8 +78,6 @@ function pageToSurahName(page: number): string {
   return name;
 }
 
-function padPage(n: number) { return n.toString().padStart(3, "0"); }
-
 function lsGet<T>(k: string, fb: T): T {
   try { const v = localStorage.getItem(k); return v ? (JSON.parse(v) as T) : fb; } catch { return fb; }
 }
@@ -79,27 +85,49 @@ function lsSet<T>(k: string, v: T) {
   try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* */ }
 }
 
+/* تجميع الآيات حسب السورة */
+function groupBySurah(ayahs: Ayah[]) {
+  const result: { num: number; name: string; isFirst: boolean; ayahs: Ayah[] }[] = [];
+  for (const a of ayahs) {
+    const last = result[result.length - 1];
+    if (!last || last.num !== a.surah.number) {
+      result.push({ num: a.surah.number, name: a.surah.name, isFirst: a.numberInSurah === 1, ayahs: [a] });
+    } else {
+      last.ayahs.push(a);
+    }
+  }
+  return result;
+}
+
 /* ══════════════════════════════════════════════════════════════════
    المكون الرئيسي
    ══════════════════════════════════════════════════════════════════ */
 export default function QuranPage() {
   /* ── حالة ── */
-  const [page, setPage]         = useState<number>(() => lsGet(PAGE_KEY, 1));
-  const [mode, setMode]         = useState<ReadMode>(() => lsGet(MODE_KEY, "day"));
-  const [zoom, setZoom]         = useState<number>(() => lsGet(ZOOM_KEY, 1.0));
+  const [page, setPage]       = useState<number>(() => lsGet(PAGE_KEY, 1));
+  const [mode, setMode]       = useState<ReadMode>(() => lsGet(MODE_KEY, "day"));
+  const [zoom, setZoom]       = useState<number>(() => {
+    const v = lsGet(ZOOM_KEY, BASE_FONT);
+    return v < 1.0 ? BASE_FONT : v; // ترحيل: القيم القديمة (مقاييس الصور) تُعاد للافتراضي
+  });
   const [bookmarks, setBookmarks] = useState<number[]>(() => lsGet(BM_KEY, []));
-  const [imgLoaded, setImgLoaded] = useState(false);
-  const [cdnIdx, setCdnIdx]       = useState(0);
-  const [navOpen, setNavOpen]     = useState(false);
-  const [navTab, setNavTab]       = useState<"surahs" | "bookmarks">("surahs");
-  const [search, setSearch]       = useState("");
-  const [uiOn, setUiOn]           = useState(true);
-  const [anim, setAnim]           = useState<"" | "anim-left" | "anim-right">("");
+  const [navOpen, setNavOpen]  = useState(false);
+  const [navTab, setNavTab]    = useState<"surahs" | "bookmarks">("surahs");
+  const [search, setSearch]    = useState("");
+  const [uiOn, setUiOn]        = useState(true);
+  const [anim, setAnim]        = useState<"" | "anim-left" | "anim-right">("");
+
+  /* ── حالة API ── */
+  const [ayahs, setAyahs]     = useState<Ayah[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [fetchErr, setFetchErr] = useState(false);
+  const [retryKey, setRetryKey] = useState(0);
 
   /* ── refs ── */
   const uiTimer   = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const touchX    = useRef<number | null>(null);
+  const readerRef = useRef<HTMLDivElement>(null);
 
   /* ── SEO ── */
   useEffect(() => {
@@ -111,7 +139,40 @@ export default function QuranPage() {
     });
   }, []);
 
-  /* ── bump لإظهار واجهة التحكم ── */
+  /* ── جلب الصفحة من API ── */
+  useEffect(() => {
+    if (pageCache.has(page)) {
+      setAyahs(pageCache.get(page)!);
+      setLoading(false);
+      setFetchErr(false);
+      readerRef.current?.scrollTo({ top: 0 });
+      return;
+    }
+    setLoading(true);
+    setFetchErr(false);
+    const ctrl = new AbortController();
+    fetch(`${API_BASE}/${page}/${EDITION}`, { signal: ctrl.signal })
+      .then(r => r.json())
+      .then((data: { code: number; data: { ayahs: Ayah[] } }) => {
+        if (data.code === 200) {
+          pageCache.set(page, data.data.ayahs);
+          setAyahs(data.data.ayahs);
+          setLoading(false);
+          readerRef.current?.scrollTo({ top: 0 });
+        } else {
+          setFetchErr(true);
+          setLoading(false);
+        }
+      })
+      .catch((e: unknown) => {
+        if (e instanceof DOMException && e.name === "AbortError") return;
+        setFetchErr(true);
+        setLoading(false);
+      });
+    return () => ctrl.abort();
+  }, [page, retryKey]);
+
+  /* ── bump — إظهار واجهة التحكم لفترة ثم إخفاؤها ── */
   const bump = useCallback(() => {
     if (uiTimer.current) clearTimeout(uiTimer.current);
     setUiOn(true);
@@ -121,26 +182,15 @@ export default function QuranPage() {
   useEffect(() => { bump(); }, [page, bump]);
   useEffect(() => () => { if (uiTimer.current) clearTimeout(uiTimer.current); }, []);
 
-  /* ── الانتقال بين الصفحات بأنيمشن ── */
+  /* ── التنقل بين الصفحات ── */
   const goPage = useCallback((n: number, dir: "left" | "right" | "" = "") => {
     const p = Math.max(1, Math.min(TOTAL_PAGES, n));
     if (p === page) return;
     if (dir) {
       setAnim(dir === "left" ? "anim-left" : "anim-right");
-      setTimeout(() => {
-        setPage(p);
-        lsSet(PAGE_KEY, p);
-        setImgLoaded(false);
-        
-        setCdnIdx(0);
-        setAnim("");
-      }, 180);
+      setTimeout(() => { setPage(p); lsSet(PAGE_KEY, p); setAnim(""); }, 180);
     } else {
-      setPage(p);
-      lsSet(PAGE_KEY, p);
-      setImgLoaded(false);
-      
-      setCdnIdx(0);
+      setPage(p); lsSet(PAGE_KEY, p);
     }
     bump();
   }, [page, bump]);
@@ -156,7 +206,7 @@ export default function QuranPage() {
     return () => window.removeEventListener("keydown", h);
   }, [page, navOpen, goPage]);
 
-  /* ── لمس للجوال ── */
+  /* ── اللمس ── */
   const onTouchStart = (e: React.TouchEvent) => { touchX.current = e.touches[0].clientX; };
   const onTouchEnd   = (e: React.TouchEvent) => {
     if (touchX.current === null) return;
@@ -167,7 +217,7 @@ export default function QuranPage() {
     else         goPage(page - 1, "right");
   };
 
-  /* ── دورة الوضع ── */
+  /* ── دورة وضع القراءة ── */
   const cycleMode = useCallback(() => {
     setMode(cur => {
       const modes: ReadMode[] = ["day", "sepia", "night"];
@@ -178,7 +228,7 @@ export default function QuranPage() {
     bump();
   }, [bump]);
 
-  /* ── العلامات ── */
+  /* ── العلامات المرجعية ── */
   const isBm = bookmarks.includes(page);
   const toggleBm = useCallback(() => {
     setBookmarks(cur => {
@@ -190,11 +240,12 @@ export default function QuranPage() {
     });
   }, [page]);
 
-  /* ── حجم الخط (تكبير الصورة) ── */
-  const incZoom = () => { const n = Math.min(2.5, +(zoom + 0.15).toFixed(2)); setZoom(n); lsSet(ZOOM_KEY, n); };
-  const decZoom = () => { const n = Math.max(0.6, +(zoom - 0.15).toFixed(2)); setZoom(n); lsSet(ZOOM_KEY, n); };
+  /* ── حجم الخط ── */
+  const incZoom = () => { const n = Math.min(3.2, +(zoom + 0.2).toFixed(1)); setZoom(n); lsSet(ZOOM_KEY, n); };
+  const decZoom = () => { const n = Math.max(1.2, +(zoom - 0.2).toFixed(1)); setZoom(n); lsSet(ZOOM_KEY, n); };
+  const zoomPct = Math.round((zoom / BASE_FONT) * 100);
 
-  /* ── السور المفلترة ── */
+  /* ── قائمة السور المفلترة ── */
   const filteredSurahs = useMemo(
     () => SURAHS.map(([name, firstPage], i) => ({ name, firstPage, num: i + 1 }))
           .filter(s => !search || s.name.includes(search)),
@@ -202,11 +253,9 @@ export default function QuranPage() {
   );
 
   const surahName = useMemo(() => pageToSurahName(page), [page]);
+  const groups    = useMemo(() => groupBySurah(ayahs), [ayahs]);
   const modeClass = mode === "night" ? " mshf-night" : mode === "sepia" ? " mshf-sepia" : "";
   const ModeIcon  = mode === "night" ? Moon : Sun;
-
-  const imgSrc = CDN_SOURCES[cdnIdx]?.(padPage(page)) ?? CDN_SOURCES[0](padPage(page));
-  const allCdnsFailed = cdnIdx >= CDN_SOURCES.length;
 
   /* ══════════════════════════════════════════════════════════════════
      JSX
@@ -264,7 +313,13 @@ export default function QuranPage() {
           <button
             type="button"
             className="mshf-icon-btn"
-            onClick={e => { e.stopPropagation(); setSearch(""); setNavOpen(true); setNavTab("surahs"); setTimeout(() => searchRef.current?.focus(), 80); }}
+            onClick={e => {
+              e.stopPropagation();
+              setSearch("");
+              setNavOpen(true);
+              setNavTab("surahs");
+              setTimeout(() => searchRef.current?.focus(), 80);
+            }}
             aria-label="قائمة السور"
           >
             <List size={17} strokeWidth={2} aria-hidden="true" />
@@ -272,22 +327,22 @@ export default function QuranPage() {
         </div>
       </header>
 
-      {/* ══ صفحة المصحف ══ */}
-      <div className={`mshf-page-container${anim ? ` ${anim}` : ""}`}>
+      {/* ══ منطقة القراءة — نص قرآني ══ */}
+      <div
+        ref={readerRef}
+        className={`mshf-page-container qs-reader-area${anim ? ` ${anim}` : ""}`}
+        style={{ "--qs-font-size": `${zoom}rem` } as React.CSSProperties}
+      >
         {/* مؤشر التحميل */}
-        {!imgLoaded && !allCdnsFailed && (
+        {loading && (
           <div className="mshf-loading" aria-live="polite">
             <div className="mshf-spinner" />
-            <span>
-              جاري تحميل الصفحة {page.toLocaleString("ar-EG")}
-              {cdnIdx > 0 ? ` (مصدر ${(cdnIdx + 1).toLocaleString("ar-EG")})` : ""}
-              …
-            </span>
+            <span>جاري تحميل الصفحة {page.toLocaleString("ar-EG")}…</span>
           </div>
         )}
 
-        {/* خطأ التحميل — بعد انتهاء جميع المصادر */}
-        {allCdnsFailed && (
+        {/* خطأ الجلب */}
+        {fetchErr && !loading && (
           <div className="mshf-err">
             <BookOpen size={52} strokeWidth={1} style={{ opacity: 0.25 }} aria-hidden="true" />
             <p>تعذّر تحميل الصفحة {page.toLocaleString("ar-EG")}</p>
@@ -295,66 +350,79 @@ export default function QuranPage() {
             <button
               type="button"
               className="mshf-err-btn"
-              onClick={() => {  setImgLoaded(false); setCdnIdx(0); }}
+              onClick={() => setRetryKey(k => k + 1)}
             >
               إعادة المحاولة
             </button>
           </div>
         )}
 
-        {/* الصورة — تجرب كل CDN بالترتيب */}
-        {!allCdnsFailed && (
-          <img
-            key={`${page}-${cdnIdx}`}
-            src={imgSrc}
-            alt={`صفحة ${page} من القرآن الكريم — ${surahName}`}
-            className={`mshf-page-img${imgLoaded ? " loaded" : ""}${mode === "night" ? " night" : ""}`}
-            style={{
-              transform: zoom !== 1 ? `scale(${zoom})` : undefined,
-              transformOrigin: "top center",
-            }}
-            onLoad={() => { setImgLoaded(true);  }}
-            onError={() => {
-              if (cdnIdx + 1 < CDN_SOURCES.length) {
-                setCdnIdx(idx => idx + 1);
-                setImgLoaded(false);
-              } else {
-                
-                setCdnIdx(CDN_SOURCES.length);
-              }
-            }}
-            draggable={false}
-          />
-        )}
+        {/* النص القرآني */}
+        {!loading && !fetchErr && groups.map(group => (
+          <div key={group.num} className="qs-surah">
+            {/* رأس السورة — يظهر عند بداية السورة */}
+            {group.isFirst && (
+              <div className="qs-surah-header">
+                <span className="qs-surah-ornament" aria-hidden="true">❧</span>
+                <h2 className="qs-surah-name">{group.name}</h2>
+                <p className="qs-surah-meta">
+                  سورة رقم {group.num.toLocaleString("ar-EG")} — {group.num <= 86 ? "مكية" : "مدنية"}
+                </p>
+              </div>
+            )}
+
+            {/* البسملة — لكل سورة جديدة ما عدا الفاتحة (آيتها الأولى هي البسملة) والتوبة */}
+            {group.isFirst && group.num !== 1 && group.num !== 9 && (
+              <div className="qs-basmala" lang="ar" dir="rtl">
+                بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ
+              </div>
+            )}
+
+            {/* الآيات */}
+            <div className="qs-ayahs" lang="ar" dir="rtl">
+              {group.ayahs.map(ayah => (
+                <span key={ayah.number} className="qs-ayah">
+                  <span className="qs-ayah__text">{ayah.text}</span>
+                  <span
+                    className="qs-ayah__num"
+                    aria-label={`آية ${ayah.numberInSurah}`}
+                  >
+                    ﴿{ayah.numberInSurah.toLocaleString("ar-EG")}﴾
+                  </span>
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* ══ شريط سفلي ══ */}
       <footer className={`mshf-bot${uiOn ? " on" : ""}`}>
-        {/* تحكم التكبير */}
+        {/* تحكم حجم الخط */}
         <div className="mshf-zoom-ctrl">
           <button
             type="button"
             className="mshf-zoom-btn"
             onClick={decZoom}
-            disabled={zoom <= 0.6}
-            aria-label="تصغير"
+            disabled={zoom <= 1.2}
+            aria-label="تصغير الخط"
           >
             <ZoomOut size={14} strokeWidth={2.5} aria-hidden="true" />
           </button>
           <button
             type="button"
             className="mshf-zoom-btn mshf-zoom-btn--reset"
-            onClick={() => { setZoom(1.0); lsSet(ZOOM_KEY, 1.0); }}
-            title="إعادة الضبط"
+            onClick={() => { setZoom(BASE_FONT); lsSet(ZOOM_KEY, BASE_FONT); }}
+            title="إعادة الحجم الافتراضي"
           >
-            {Math.round(zoom * 100)}٪
+            {zoomPct}٪
           </button>
           <button
             type="button"
             className="mshf-zoom-btn"
             onClick={incZoom}
-            disabled={zoom >= 2.5}
-            aria-label="تكبير"
+            disabled={zoom >= 3.2}
+            aria-label="تكبير الخط"
           >
             <ZoomIn size={14} strokeWidth={2.5} aria-hidden="true" />
           </button>
