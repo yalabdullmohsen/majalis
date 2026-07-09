@@ -2141,6 +2141,51 @@ button.hcp-prayer-cell:focus-visible {
 }
 
 /* ══════════════════════════════════════════════
+   §53. Grace-period pill — مضى على الأذان
+   ══════════════════════════════════════════════ */
+.hcp-since-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  background: rgba(31, 77, 58, 0.08);
+  border: 1px solid rgba(31, 77, 58, 0.22);
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 0.1rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--elite-forest, #18362A);
+  gap: 0.25rem;
+}
+.hcp-since-pill__text {
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+/* شريط تقدم يمتلئ من اليمين إلى اليسار خلال 30 دقيقة */
+.hcp-since-pill__bar {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  background: rgba(31, 77, 58, 0.12);
+  transition: width 1s linear;
+  z-index: 0;
+}
+/* تلميح الصلاة التالية بجانب الأذان */
+.hcp-next-hint {
+  font-size: 0.67rem;
+  color: rgba(31, 77, 58, 0.65);
+  white-space: nowrap;
+  margin-inline-start: 0.3rem;
+}
+.hcp-strip__countdown--elapsed {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: nowrap;
+}
+
+/* ══════════════════════════════════════════════
    §54. Lesson Detail Hero — خلفية خضراء داكنة
    ══════════════════════════════════════════════ */
 

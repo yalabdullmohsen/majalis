@@ -41,6 +41,15 @@ function getRemainingForPrayer(prayerMinutes: number): string {
   return fmtHms(Math.max(0, rem));
 }
 
+const GRACE_MINUTES = 30;
+
+function getActualNextPrayer(obligatory: PrayerSlot[], currentKey: string | null): PrayerSlot | null {
+  if (!currentKey) return null;
+  const idx = obligatory.findIndex((p) => p.key === currentKey);
+  if (idx < 0) return null;
+  return obligatory[(idx + 1) % obligatory.length] ?? null;
+}
+
 function useCompactPrayer() {
   const [data, setData] = useState<PrayerTimesPayload | null>(null);
   const [nextKey, setNextKey] = useState<string | null>(null);
@@ -93,10 +102,16 @@ export function HomeCompactPrayer() {
   const obligatory = data.prayers.filter(
     (p: PrayerSlot) => p.obligatory || p.key === "Sunrise"
   );
-  const nextPrayer = obligatory.find((p) => p.key === nextKey);
-  const selectedPrayer = selectedKey
-    ? obligatory.find((p) => p.key === selectedKey)
-    : null;
+
+  // الصلاة التي أذّنت للتو (خلال نافذة 30 دقيقة)
+  const justRangPrayer = sinceSeconds != null ? obligatory.find((p) => p.key === nextKey) : null;
+  // الصلاة التالية الفعلية (التي لم تأتِ بعد)
+  const actualNextPrayer = sinceSeconds != null
+    ? getActualNextPrayer(obligatory, nextKey)
+    : obligatory.find((p) => p.key === nextKey);
+  const selectedPrayer = selectedKey ? obligatory.find((p) => p.key === selectedKey) : null;
+  const sinceMinutes = sinceSeconds != null ? Math.floor(sinceSeconds / 60) : 0;
+  const graceProgress = sinceSeconds != null ? Math.min(100, (sinceSeconds / (GRACE_MINUTES * 60)) * 100) : 0;
 
   return (
     <div className="hcp-strip" dir="rtl" role="complementary" aria-label="مواقيت الصلاة">
@@ -113,17 +128,30 @@ export function HomeCompactPrayer() {
                 {selectedCountdown || "—"}
               </span>
             </span>
-          ) : sinceSeconds != null && nextPrayer ? (
+          ) : sinceSeconds != null && justRangPrayer ? (
             <span className="hcp-strip__countdown hcp-strip__countdown--elapsed" aria-live="polite">
-              مضى على أذان {nextPrayer.name}{" "}
-              <span className="hcp-strip__countdown-time" dir="ltr">
-                {Math.floor(sinceSeconds / 60)} دقيقة
+              <span className="hcp-since-pill">
+                <span className="hcp-since-pill__text">
+                  مضى على أذان {justRangPrayer.name}:{" "}
+                  <span dir="ltr">{sinceMinutes} دقيقة</span>
+                </span>
+                <span
+                  className="hcp-since-pill__bar"
+                  style={{ width: `${graceProgress}%` }}
+                  aria-hidden="true"
+                />
               </span>
+              {actualNextPrayer && countdown && (
+                <span className="hcp-next-hint">
+                  {actualNextPrayer.name} بعد{" "}
+                  <span dir="ltr">{countdown}</span>
+                </span>
+              )}
             </span>
           ) : (
-            nextPrayer && countdown && (
+            actualNextPrayer && countdown && (
               <span className="hcp-strip__countdown" aria-live="off">
-                {nextPrayer.name} بعد{" "}
+                متبقٍّ على {actualNextPrayer.name}:{" "}
                 <span className="hcp-strip__countdown-time" dir="ltr">{countdown}</span>
               </span>
             )
