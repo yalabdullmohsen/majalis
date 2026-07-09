@@ -28,6 +28,8 @@ export function HomeIslamicOccasions() {
     };
   }, []);
 
+  if (!loading && items.length === 0) return null;
+
   return (
     <section className="home-section" aria-labelledby="occasions-heading">
       <div className="home-section-head">
