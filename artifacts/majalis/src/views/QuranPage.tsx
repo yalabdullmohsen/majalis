@@ -10,6 +10,7 @@ import {
 import { useSearch } from "wouter";
 import "@/styles/mushaf.css";
 import { applyPageSeo } from "@/lib/seo";
+import { QuranSearch } from "@/components/quran/QuranSearch";
 
 /* ══════════════════════════════════════════════════════════════════════
    ثوابت وأنواع
@@ -31,7 +32,7 @@ type SurahData = {
   ayahs: Ayah[];
 };
 type BmEntry = { surah: number; ayah: number; name: string };
-type NavTab = "surahs" | "bookmarks";
+type NavTab = "surahs" | "bookmarks" | "search";
 
 /* ══ بيانات السور (اسم + عدد الآيات) — محفوظة من التغيير ══ */
 const SURAHS_META: [string, number][] = [
@@ -360,6 +361,14 @@ export default function QuranPage() {
           <button
             type="button"
             className="mshf-icon-btn"
+            onClick={() => openNav("search")}
+            aria-label="البحث في القرآن"
+          >
+            <Search size={17} strokeWidth={2} aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            className="mshf-icon-btn"
             onClick={() => openNav("surahs")}
             aria-label="قائمة السور"
           >
@@ -520,6 +529,7 @@ export default function QuranPage() {
                 {([
                   ["surahs",    "السور"],
                   ["bookmarks", "العلامات"],
+                  ["search",    "بحث"],
                 ] as [NavTab, string][]).map(([id, label]) => (
                   <button
                     type="button"
@@ -584,6 +594,20 @@ export default function QuranPage() {
                     </button>
                   ))}
                 </div>
+              )}
+
+              {/* البحث */}
+              {navTab === "search" && (
+                <QuranSearch
+                  onGoToResult={(surah, ayah) => {
+                    goSurah(surah);
+                    setNavOpen(false);
+                    setTimeout(() => {
+                      document.getElementById(`ayah-${ayah}`)
+                        ?.scrollIntoView({ behavior: "smooth", block: "center" });
+                    }, 420);
+                  }}
+                />
               )}
 
               {/* العلامات */}
