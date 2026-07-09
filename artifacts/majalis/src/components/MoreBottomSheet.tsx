@@ -55,6 +55,7 @@ const SHEET_SECTIONS = [
     { href: "/hajj",                label: "الحج والعمرة",     Icon: Landmark },
     { href: "/tahara",              label: "الطهارة وأحكامها", Icon: Repeat2 },
     { href: "/janaza",              label: "أحكام الجنائز",    Icon: ScrollText },
+    { href: "/mawarith",            label: "المواريث",          Icon: Scale },
     { href: "/fiqh",                label: "الفقه",           Icon: Scale },
     { href: "/fatwa",               label: "الفتاوى",         Icon: Scale },
     { href: "/rulings",             label: "الأحكام",         Icon: Scale },

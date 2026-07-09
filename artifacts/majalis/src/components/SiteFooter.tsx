@@ -67,6 +67,7 @@ const FOOTER_GROUPS = [
       { href: "/hajj",         label: "الحج والعمرة" },
       { href: "/tahara",       label: "الطهارة وأحكامها" },
       { href: "/janaza",       label: "أحكام الجنائز" },
+      { href: "/mawarith",     label: "المواريث والفرائض" },
       { href: "/fatwa",        label: "الفتاوى" },
       { href: "/rulings",      label: "الأحكام الشرعية" },
       { href: "/fiqh-council", label: "المجمع الفقهي" },
