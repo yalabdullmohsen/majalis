@@ -107,7 +107,7 @@ function UniversitiesContent() {
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="ابحث عن جامعة أو تخصص…"
               aria-label="بحث عن جامعة أو تخصص"
-              className="flex-1 px-4 py-2.5 rounded-xl text-[#1E1E1E] text-sm focus:outline-none focus:ring-2 focus:ring-white/50"
+              className="flex-1 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-white/50 up-search-input"
             />
             <button type="submit"
               className="px-4 py-2.5 bg-white/20 hover:bg-white/30 text-white text-sm rounded-xl font-medium transition-colors">
