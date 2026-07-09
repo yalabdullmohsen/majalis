@@ -865,11 +865,16 @@
   overscroll-behavior: contain;
 }
 
-/* غلاف السورة */
-.qs-surah {
+/* غلاف الكتلة (بسملة + سورة) */
+.qs-surah-block {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
+}
+
+/* غلاف السورة */
+.qs-surah {
+  width: 100%;
   padding: 1.5rem 1.25rem 3rem;
 }
 
@@ -914,21 +919,35 @@
   letter-spacing: 0.04em;
 }
 
-/* البسملة */
+/* البسملة المنفصلة — خارج qs-surah، مرتفعة فوقه */
 .qs-basmala {
+  display: block;
   text-align: center;
   font-size: var(--qs-font-size, 1.9rem);
   font-family: "Amiri Quran", "Scheherazade New", "KFGQPC Uthmanic Script HAFS", "Noto Naskh Arabic", "Traditional Arabic", serif;
   font-weight: 400;
   color: var(--mshf-emerald, #1F4D3A);
-  margin: 0 0 1.25rem;
-  padding: 0.25rem 0;
-  line-height: 2.2;
+  margin: 2.5rem auto 0;
+  padding: 0.5rem 1.25rem;
+  line-height: 2.4;
   letter-spacing: 0;
   word-spacing: 0;
   direction: rtl;
+  position: relative;
+  z-index: 1;
+}
+/* فاصل رقيق تحت البسملة يصلها بالسورة */
+.qs-basmala::after {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 2px;
+  background: linear-gradient(to left, transparent, var(--mshf-emerald, #1F4D3A), transparent);
+  margin: 0.35rem auto 0;
+  opacity: 0.3;
 }
 .mshf-night .qs-basmala { color: var(--mshf-active-color, #70D4A0); }
+.mshf-night .qs-basmala::after { background: linear-gradient(to left, transparent, var(--mshf-active-color, #70D4A0), transparent); }
 
 /* حاوية الآيات — نص مسترسل */
 .qs-ayahs {

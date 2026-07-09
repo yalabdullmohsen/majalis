@@ -220,39 +220,41 @@ export function HijriSacredMonthBanner() {
       aria-label="تذكير إسلامي"
       className={`hmb-wrap hmb-period--${period.kind} hmb-type--${current.type}`}
     >
-      {/* ── الصف الأول: العنوان + الشارات ── */}
-      <div className="hmb-row">
+      {/* ── رأس: العنوان + العداد + زر الإغلاق ── */}
+      <div className="hmb-header">
         <span className="hmb-period-title">{period.title}</span>
-        <span className="hmb-type-badge">{current.label}</span>
-
         {period.countdown && period.countdown.days >= 0 && (
           <span className="hmb-countdown">
             {period.countdown.days === 0 ? period.countdown.label : `${period.countdown.days} يوم ${period.countdown.label}`}
           </span>
         )}
-
         <button
           type="button"
           onClick={() => setDismissed(true)}
           aria-label="إغلاق التذكير"
           className="hmb-dismiss-btn"
-        >
-          ×
-        </button>
+        >×</button>
       </div>
 
-      {/* ── نص التذكير مع حركة fade ── */}
+      <div className="hmb-divider" />
+
+      {/* ── محتوى التذكير مع حركة fade+slide ── */}
       <div
         key={index}
         className={`hmb-content${visible ? " hmb-content--visible" : " hmb-content--hidden"}`}
       >
-        <span className="hmb-icon"><current.Icon size={20} strokeWidth={1.8} aria-hidden="true" /></span>
-        <p className={`hmb-body${current.urgent ? " hmb-body--urgent" : ""}`}>
-          {current.body}
-        </p>
+        <div className="hmb-icon">
+          <current.Icon size={20} strokeWidth={1.8} aria-hidden="true" />
+        </div>
+        <div className="hmb-content-body">
+          <span className="hmb-type-badge">{current.label}</span>
+          <p className={`hmb-body${current.urgent ? " hmb-body--urgent" : ""}`}>
+            {current.body}
+          </p>
+        </div>
       </div>
 
-      {/* ── نقاط الترقيم (dots) ── */}
+      {/* ── نقاط التنقل ── */}
       {reminders.length > 1 && (
         <div className="hmb-dots">
           {reminders.map((_, i) => {

@@ -10828,75 +10828,125 @@ body {
 .hmb-wrap {
   direction: rtl;
   margin: 0.75rem 1rem 0;
-  border-radius: 0.9rem;
-  border: 1.5px solid color-mix(in srgb, var(--hmb-accent) 13%, transparent);
-  border-right: 4px solid var(--hmb-accent, var(--majalis-emerald));
-  background: linear-gradient(135deg, color-mix(in srgb, var(--hmb-accent) 10%, transparent) 0%, color-mix(in srgb, var(--hmb-accent) 5%, transparent) 60%, transparent 100%);
-  box-shadow: 0 2px 12px color-mix(in srgb, var(--hmb-accent) 7%, transparent), 0 1px 3px rgba(0,0,0,0.06);
-  padding: 0.75rem 0.9rem;
+  border-radius: 1.15rem;
+  border: 1px solid color-mix(in srgb, var(--hmb-accent) 16%, transparent);
+  background: color-mix(in srgb, var(--hmb-accent) 4%, var(--majalis-surface, #fff));
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--hmb-accent) 10%, transparent), 0 1px 4px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
   position: relative;
   overflow: hidden;
 }
-.hmb-row { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
-.hmb-period-title { font-weight: 800; font-size: 0.76rem; color: var(--hmb-accent); letter-spacing: 0.01em; flex-shrink: 0; }
-.hmb-type-badge {
-  font-size: 0.67rem;
-  font-weight: 700;
-  color: var(--hmb-type-color);
-  background: color-mix(in srgb, var(--hmb-type-color) 8%, transparent);
-  border: 1px solid color-mix(in srgb, var(--hmb-type-color) 21%, transparent);
-  border-radius: 99px;
-  padding: 0.06rem 0.55rem;
-  white-space: nowrap;
-  flex-shrink: 0;
+/* شريط علوي ملوّن بلون الفترة */
+.hmb-wrap::before {
+  content: "";
+  display: block;
+  height: 3px;
+  background: linear-gradient(to left, var(--hmb-accent), color-mix(in srgb, var(--hmb-accent) 35%, transparent));
+  position: absolute;
+  top: 0; left: 0; right: 0;
 }
+/* رأس البانر */
+.hmb-header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.7rem 0.9rem 0.4rem;
+  flex-wrap: wrap;
+}
+.hmb-period-title { font-weight: 800; font-size: 0.74rem; color: var(--hmb-accent); letter-spacing: 0.01em; flex: 1; min-width: 0; }
 .hmb-countdown {
-  font-size: 0.67rem;
+  font-size: 0.63rem;
   font-weight: 700;
   color: #fff;
   background: var(--hmb-accent);
   border-radius: 99px;
-  padding: 0.06rem 0.6rem;
+  padding: 0.08rem 0.6rem;
   white-space: nowrap;
   flex-shrink: 0;
 }
 .hmb-dismiss-btn {
-  margin-inline-start: auto;
   background: none;
   border: none;
-  color: var(--majalis-ink-muted, #9BA3B5);
-  font-size: 1rem;
+  color: color-mix(in srgb, var(--hmb-accent) 40%, transparent);
+  font-size: 1.15rem;
   line-height: 1;
   cursor: pointer;
-  padding: 0.1rem 0.3rem;
+  padding: 0.1rem 0.25rem;
   flex-shrink: 0;
-  border-radius: 4px;
-  transition: color 0.15s;
+  border-radius: 5px;
+  transition: color 0.15s, background 0.15s;
 }
-.hmb-dismiss-btn:hover { color: var(--majalis-ink); }
-.hmb-content { display: flex; align-items: flex-start; gap: 0.55rem; transition: opacity 0.28s ease, transform 0.28s ease; }
-.hmb-content--hidden { opacity: 0; transform: translateY(4px); }
-.hmb-content--visible { opacity: 1; transform: translateY(0); }
-.hmb-icon { font-size: 1.1rem; flex-shrink: 0; line-height: 1.2; margin-top: 0.05rem; }
-.hmb-body { margin: 0; font-size: 0.83rem; color: var(--majalis-ink-soft); line-height: 1.6; }
-.hmb-body--urgent { font-weight: 600; }
-.hmb-dots { display: flex; gap: 0.3rem; margin-top: 0.1rem; align-items: center; }
+.hmb-dismiss-btn:hover {
+  color: var(--hmb-accent);
+  background: color-mix(in srgb, var(--hmb-accent) 8%, transparent);
+}
+/* خط فاصل */
+.hmb-divider {
+  height: 1px;
+  background: color-mix(in srgb, var(--hmb-accent) 10%, transparent);
+  margin: 0 0.9rem;
+}
+/* منطقة المحتوى */
+.hmb-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 0.9rem 0.6rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.hmb-content--hidden { opacity: 0; transform: translateX(-5px); }
+.hmb-content--visible { opacity: 1; transform: translateX(0); }
+/* دائرة الأيقونة */
+.hmb-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--hmb-accent) 11%, transparent);
+  border: 1.5px solid color-mix(in srgb, var(--hmb-accent) 17%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--hmb-accent);
+  flex-shrink: 0;
+}
+/* جسم المحتوى */
+.hmb-content-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+.hmb-type-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: 0.63rem;
+  font-weight: 700;
+  color: var(--hmb-type-color);
+  background: color-mix(in srgb, var(--hmb-type-color) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--hmb-type-color) 22%, transparent);
+  border-radius: 99px;
+  padding: 0.06rem 0.55rem;
+  white-space: nowrap;
+}
+.hmb-body { margin: 0; font-size: 0.85rem; color: var(--majalis-ink-soft); line-height: 1.65; }
+.hmb-body--urgent { font-weight: 700; color: var(--majalis-ink, #1A2E26); }
+/* نقاط التنقل */
+.hmb-dots { display: flex; gap: 0.3rem; align-items: center; padding: 0 0.9rem 0.65rem; }
 .hmb-dot {
   height: 5px;
   border-radius: 99px;
   border: none;
-  background: color-mix(in srgb, var(--hmb-accent) 25%, transparent);
+  background: color-mix(in srgb, var(--hmb-accent) 22%, transparent);
   cursor: pointer;
   padding: 0;
-  transition: width 0.35s ease, background 0.25s ease;
+  transition: width 0.4s cubic-bezier(0.34,1.56,0.64,1), background 0.25s ease;
   flex-shrink: 0;
-  width: var(--hmb-dot-w, 6px);
+  width: 5px;
 }
-.hmb-dot--active { background: var(--hmb-accent); width: 18px; }
-.hmb-dot-counter { margin-inline-start: auto; font-size: 0.62rem; color: color-mix(in srgb, var(--hmb-accent) 50%, transparent); font-weight: 500; }
+.hmb-dot--active { background: var(--hmb-accent); width: 20px; }
+.hmb-dot-counter { margin-inline-start: auto; font-size: 0.6rem; color: color-mix(in srgb, var(--hmb-accent) 45%, transparent); font-weight: 600; }
 
 /* hmb-period modifiers (--hmb-accent) */
 .hmb-period--ramadan  { --hmb-accent: #7C3AED; }
