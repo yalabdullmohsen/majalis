@@ -64,7 +64,7 @@ export default function AboutPage() {
             بحسابات فلكية معتمدة، مع إشعارات وأذان قابل للتخصيص.
           </li>
           <li>
-            <strong>مكتبة شرعية شاملة:</strong> تضم 108 كتاب في التفسير والحديث والفقه
+            <strong>مكتبة شرعية شاملة:</strong> تضم 121 كتاب في التفسير والحديث والفقه
             والعقيدة والأصول والتزكية واللغة العربية والبلاغة والتاريخ الإسلامي، مع أدوات بحث وتصفية متقدمة.
           </li>
           <li>
@@ -108,7 +108,7 @@ export default function AboutPage() {
 
       <LegalSection title="بالأرقام">
         <ul>
-          <li><strong>108</strong> كتاب في المكتبة الشرعية</li>
+          <li><strong>121</strong> كتاب في المكتبة الشرعية</li>
           <li><strong>76+</strong> عالماً وشيخاً في قاعدة بيانات العلماء</li>
           <li><strong>74+</strong> فتوى موثّقة و43 حكماً شرعياً</li>
           <li><strong>680+</strong> سؤال في المسابقة التعليمية</li>
@@ -116,6 +116,7 @@ export default function AboutPage() {
           <li><strong>55+</strong> موضوع في الإعجاز العلمي</li>
           <li><strong>330+</strong> فائدة علمية منتقاة</li>
           <li><strong>42</strong> حديثاً نووياً مشروحاً</li>
+          <li><strong>30</strong> قاعدة تجويدية مفصّلة</li>
           <li><strong>15+</strong> إذاعة قرآنية بث مباشر</li>
         </ul>
       </LegalSection>
