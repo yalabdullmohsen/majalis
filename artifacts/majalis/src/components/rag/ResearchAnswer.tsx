@@ -28,11 +28,7 @@ function AnswerText({ text }: { text: string }) {
       {parts.map((part, i) => {
         if (/^\[\d+\]$/.test(part)) {
           const num = part.slice(1, -1);
-          return (
-            <sup key={i} className="text-[var(--majalis-emerald)] font-bold ml-0.5 cursor-default">
-              [{num}]
-            </sup>
-          );
+          return <sup key={i} className="ra-ref-sup">[{num}]</sup>;
         }
         return <span key={i}>{part}</span>;
       })}
@@ -43,14 +39,14 @@ function AnswerText({ text }: { text: string }) {
 /** شارة جودة الإجابة */
 function QualityBadge({ quality }: { quality: string }) {
   const config = {
-    full:       { label: "جواب مكتمل",  bg: "bg-[var(--mn-surface-active)] text-[var(--mn-text-active)]" },
-    partial:    { label: "جواب جزئي",   bg: "bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)]" },
-    no_sources: { label: "مصادر محدودة", bg: "bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink-soft)]" },
-    blocked:    { label: "توجيه مباشر",  bg: "bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink-soft)]" },
-  }[quality] || { label: quality, bg: "bg-[var(--majalis-parchment-deep)] text-[var(--majalis-ink-soft)]" };
+    full:       { label: "جواب مكتمل",   cls: "ra-badge--full" },
+    partial:    { label: "جواب جزئي",    cls: "ra-badge--partial" },
+    no_sources: { label: "مصادر محدودة", cls: "ra-badge--dim" },
+    blocked:    { label: "توجيه مباشر",  cls: "ra-badge--dim" },
+  }[quality] || { label: quality, cls: "ra-badge--dim" };
 
   return (
-    <span className={`text-xs px-2 py-0.5 rounded font-medium ${config.bg}`}>
+    <span className={`text-xs px-2 py-0.5 rounded font-medium ${config.cls}`}>
       {config.label}
     </span>
   );
@@ -76,35 +72,26 @@ export function ResearchAnswer({ result, onSave }: Props) {
   return (
     <div dir="rtl" className="space-y-4">
       {/* شريط الجودة */}
-      <div className="flex items-center gap-2 flex-wrap">
+      <div className="ra-meta-row">
         <QualityBadge quality={result.quality} />
         {result.sources?.length > 0 && (
-          <span className="text-xs text-[var(--majalis-ink-soft)] opacity-70">
-            {result.sources.length} مصدر مُسترجَع
-          </span>
+          <span className="ra-source-count">{result.sources.length} مصدر مُسترجَع</span>
         )}
-        {result.fromCache && (
-          <span className="text-xs text-[var(--majalis-emerald)]">من الذاكرة المؤقتة</span>
-        )}
+        {result.fromCache && <span className="ra-from-cache">من الذاكرة المؤقتة</span>}
         {result.durationMs && (
-          <span className="text-xs text-[var(--majalis-ink-soft)] opacity-40 mr-auto">
-            {(result.durationMs / 1000).toFixed(1)}ث
-          </span>
+          <span className="ra-duration">{(result.durationMs / 1000).toFixed(1)}ث</span>
         )}
       </div>
 
       {/* تبويبات */}
-      <div className="flex gap-1 overflow-x-auto pb-1 scrollbar-hide border-b border-[var(--majalis-line)]">
+      <div className="ra-tabs-bar">
         {visibleTabs.map((t) => (
           <button
             key={t.key}
             type="button"
             onClick={() => setActiveTab(t.key)}
-            className={`flex-shrink-0 px-3 py-1.5 text-sm rounded-t font-medium transition-colors ${
-              activeTab === t.key
-                ? "bg-[var(--majalis-emerald)] text-white"
-                : "text-[var(--majalis-ink-soft)] hover:bg-[var(--mn-surface-hover)]"
-            }`}
+            className={`ra-tab${activeTab === t.key ? " ra-tab--active" : ""}`}
+            aria-pressed={activeTab === t.key}
           >
             {t.label}
             {t.key !== "answer" && t.key !== "opinions" && t.types && (
@@ -122,7 +109,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
         {/* تبويب الجواب */}
         {activeTab === "answer" && (
           <div className="space-y-4">
-            <div className="bg-[var(--majalis-parchment)] border border-[var(--majalis-line)] rounded-xl p-5">
+            <div className="ra-answer-box">
               <AnswerText text={result.answer} />
             </div>
 
@@ -130,11 +117,8 @@ export function ResearchAnswer({ result, onSave }: Props) {
             <div className="flex gap-2 flex-wrap">
               <button
                 type="button"
-                onClick={() => {
-                  navigator.clipboard.writeText(result.answer).catch(() => {});
-                }}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-[var(--majalis-parchment-deep)]
-                  text-[var(--majalis-ink)] rounded-lg hover:bg-[var(--mn-surface-hover)] transition-colors"
+                onClick={() => { navigator.clipboard.writeText(result.answer).catch(() => {}); }}
+                className="ra-action-btn"
               >
                 <ClipboardCopy size={14} className="inline ml-1" />نسخ الجواب
               </button>
@@ -152,9 +136,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
             {/* المصادر الأصلية (مختصرة) */}
             {result.sources?.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-[var(--majalis-ink-soft)] mb-2 uppercase tracking-wide">
-                  المصادر الأصلية
-                </p>
+                <p className="ra-sources-label">المصادر الأصلية</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {result.sources.slice(0, 4).map((s) => (
                     <SourceCard key={`${s.content_type}:${s.index}`} source={s} compact />
@@ -164,7 +146,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
                   <button
                     type="button"
                     onClick={() => setActiveTab("all")}
-                    className="mt-2 text-sm text-[var(--majalis-emerald)] hover:underline"
+                    className="ra-show-all"
                   >
                     عرض جميع المصادر ({result.sources.length}) ←
                   </button>
@@ -177,27 +159,22 @@ export function ResearchAnswer({ result, onSave }: Props) {
         {/* تبويب آراء متعددة */}
         {activeTab === "opinions" && (
           <div className="space-y-3">
-            <div className="bg-[var(--majalis-emerald-muted)] border border-[var(--majalis-emerald)]
-              rounded-xl p-4 text-sm text-[var(--majalis-emerald)]">
+            <div className="ra-opinions-note">
               <Scale size={13} className="inline ml-1" />تعدّدت آراء العلماء في هذه المسألة. يعرض النظام الأقوال بمصادرها ولا يُرجِّح بنفسه.
             </div>
             <div className="space-y-3">
               {result.opinions?.map((op, i) => (
-                <div key={i} className="border border-[var(--majalis-line)] rounded-xl p-4">
+                <div key={i} className="ra-opinion-card">
                   <div className="flex items-start gap-3">
-                    <span className="text-lg font-bold text-[var(--majalis-emerald)] flex-shrink-0">
-                      {i + 1}.
-                    </span>
+                    <span className="ra-opinion-num">{i + 1}.</span>
                     <div className="min-w-0 flex-1">
-                      <p className="font-semibold text-[var(--majalis-ink)] text-sm mb-1">{op.title}</p>
-                      <p className="text-sm text-[var(--majalis-ink-soft)] leading-relaxed mb-2 line-clamp-4">
-                        {op.excerpt}
-                      </p>
-                      <p className="text-xs text-[var(--majalis-ink-soft)] opacity-70">
+                      <p className="ra-opinion-title">{op.title}</p>
+                      <p className="ra-opinion-excerpt">{op.excerpt}</p>
+                      <p className="ra-opinion-source">
                         <Library size={11} className="inline ml-1" />{op.source}
                         {op.source_url && (
                           <a href={op.source_url} target="_blank" rel="noopener noreferrer"
-                            className="mr-2 text-[var(--majalis-emerald)] hover:underline">
+                            className="ra-opinion-link">
                             المصدر الأصلي ↗
                           </a>
                         )}
@@ -210,13 +187,11 @@ export function ResearchAnswer({ result, onSave }: Props) {
           </div>
         )}
 
-        {/* تبويبات المصادر (حديث / فقه / دروس / كتب) */}
+        {/* تبويبات المصادر */}
         {["hadith", "fiqh", "lessons", "books", "all"].includes(activeTab) && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {getSourcesForTab(activeTab).length === 0 ? (
-              <div className="col-span-full text-center text-[var(--majalis-ink-soft)] opacity-60 py-8">
-                لا توجد نتائج في هذا التصنيف
-              </div>
+              <div className="ra-empty">لا توجد نتائج في هذا التصنيف</div>
             ) : (
               getSourcesForTab(activeTab).map((s) => (
                 <SourceCard key={`${s.content_type}:${s.index}`} source={s} />

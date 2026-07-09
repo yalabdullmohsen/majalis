@@ -13,11 +13,7 @@ export function SourceCard({ source, compact = false }: Props) {
   const grade = source.metadata?.grade as string | undefined;
 
   const card = (
-    <div
-      className={`relative bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-line)]
-        hover:border-[var(--majalis-emerald)] hover:shadow-md transition-all
-        ${compact ? "p-3" : "p-4"}`}
-    >
+    <div className={`src-card${compact ? " src-card--compact" : ""}`}>
       {/* شريط ملوَّن جانبي */}
       <div
         className="absolute top-0 right-0 h-full w-1 rounded-r-xl sc-color-bar"
@@ -41,33 +37,24 @@ export function SourceCard({ source, compact = false }: Props) {
             {source.type_label}
           </span>
           {/* درجة الحديث */}
-          {grade && (
-            <span className="text-xs bg-[var(--majalis-emerald-muted)] text-[var(--majalis-emerald)] px-2 py-0.5 rounded font-medium">
-              {grade}
-            </span>
-          )}
+          {grade && <span className="src-grade-badge">{grade}</span>}
           {/* مؤشر الموثوقية */}
-          <span className="text-xs text-[var(--majalis-ink-soft)] opacity-70 mr-auto">
-            {source.authority}% موثوقية
-          </span>
+          <span className="src-authority">{source.authority}% موثوقية</span>
         </div>
 
         {/* العنوان */}
-        <p className={`font-semibold text-[var(--majalis-ink)] leading-snug mb-1
-          ${compact ? "text-sm line-clamp-1" : "text-sm line-clamp-2"}`}>
+        <p className={`src-title${compact ? " src-title--compact" : ""}`}>
           {source.title}
         </p>
 
         {/* المقتطف */}
         {!compact && source.excerpt && (
-          <p className="text-sm text-[var(--majalis-ink-soft)] leading-relaxed line-clamp-3 mb-2">
-            {source.excerpt}
-          </p>
+          <p className="src-excerpt">{source.excerpt}</p>
         )}
 
         {/* المصدر */}
         {source.source_ref && (
-          <p className="text-xs text-[var(--majalis-ink-soft)] opacity-70">
+          <p className="src-ref">
             <Library size={11} className="inline ml-1" />{source.source_ref}
           </p>
         )}
