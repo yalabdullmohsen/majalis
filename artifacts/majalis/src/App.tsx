@@ -54,6 +54,7 @@ const HadithMawduPage = lazy(() => import("@/views/HadithMawduPage"));
 const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
 const QuranCirclesPage = lazy(() => import("@/views/QuranCirclesPage"));
 const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
+const QuranTajweedPage = lazy(() => import("@/views/QuranTajweedPage"));
 const SurahStoryDetailRoute = lazy(() =>
   import("@/views/SurahStoriesPage").then(m => ({
     default: ({ params }: { params?: Record<string, string> }) => {
@@ -339,9 +340,9 @@ function Router() {
       </Route>
       <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
       <Route path="/quran-live" component={QuranComingSoon} />
-      <Route path="/tajweed" component={QuranComingSoon} />
+      <Route path="/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
       <Route path="/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
-      <Route path="/quran/tajweed" component={QuranComingSoon} />
+      <Route path="/quran/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
       {/* مسارات الاختصار — public redirects */}
       <Route path="/research"><Redirect to="/fiqh-council/research" /></Route>
       {/* الفقه الإسلامي الموحّد + السيرة النبوية */}
