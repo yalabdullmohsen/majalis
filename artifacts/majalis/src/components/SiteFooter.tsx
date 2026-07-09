@@ -35,7 +35,8 @@ const FOOTER_GROUPS = [
     title: "القرآن والعبادة",
     links: [
       { href: "/quran",        label: "المصحف الشريف" },
-      { href: "/quran-radio",  label: "إذاعة القرآن" },
+      { href: "/quran-radio",        label: "إذاعة القرآن" },
+      { href: "/quran/surah-stories", label: "قصص القرآن" },
       { href: "/adhkar",       label: "الأذكار" },
       { href: "/prayer-times", label: "مواقيت الصلاة" },
       { href: "/tasbih",       label: "التسبيح" },

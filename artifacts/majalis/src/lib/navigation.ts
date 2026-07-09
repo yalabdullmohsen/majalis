@@ -47,8 +47,9 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/universities",       label: "دليل الجامعات" },
   { href: "/learning-path",      label: "خارطة طالب العلم" },
   // القرآن
-  { href: "/quran",         label: "القرآن" },
-  { href: "/quran-radio",   label: "إذاعة القرآن" },
+  { href: "/quran",                label: "القرآن" },
+  { href: "/quran-radio",         label: "إذاعة القرآن" },
+  { href: "/quran/surah-stories", label: "قصص القرآن" },
   // الأذكار
   { href: "/adhkar",        label: "الأذكار" },
   { href: "/tasbih",        label: "التسبيح" },
@@ -110,12 +111,12 @@ export const NAV_GROUPS: NavGroup[] = [
     id: "quran",
     title: "القرآن",
     links: [
-      { href: "/quran", label: "المصحف الشريف" },
-      { href: "/quran/tajweed", label: "علم التجويد" },
-      { href: "/quran/surah-stories", label: "قصص القرآن" },
-      { href: "/quran-live", label: "البث المباشر" },
-      { href: "/quran-radio", label: "إذاعات القرآن" },
-      { href: "/daily-wird", label: "الورد اليومي" },
+      { href: "/quran",                label: "المصحف الشريف" },
+      { href: "/quran/surah-stories",  label: "قصص القرآن" },
+      { href: "/quran/tajweed",        label: "علم التجويد" },
+      { href: "/quran-live",           label: "البث المباشر" },
+      { href: "/quran-radio",          label: "إذاعات القرآن" },
+      { href: "/daily-wird",           label: "الورد اليومي" },
     ],
   },
   {
@@ -250,7 +251,8 @@ export const HOME_FEATURE_CARDS = [
 ] as const;
 
 export const HOME_MORE_SECTIONS = [
-  { href: "/lessons", title: "الدروس", description: "دروس ودورات علمية" },
+  { href: "/lessons",               title: "الدروس",                description: "دروس ودورات علمية" },
+  { href: "/quran/surah-stories",  title: "قصص القرآن",            description: "أسباب نزول ومحاور وقصص ١١٤ سورة قرآنية" },
   { href: "/hadith", title: "الأحاديث النبوية", description: "أحاديث صحيحة وضعيفة وموضوعة مصنّفة ومفصولة" },
   { href: "/tawhid", title: "التوحيد والعقيدة", description: "أنواع التوحيد وأركان الإيمان والأسماء الحسنى" },
   { href: "/daily-wird", title: "الورد اليومي", description: "تتبع صفحات القرآن اليومية مع السلسلة المتواصلة" },

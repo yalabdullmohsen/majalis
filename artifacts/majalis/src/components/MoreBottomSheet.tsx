@@ -15,6 +15,7 @@ const SHEET_SECTIONS = [
     { href: "/quran",            label: "المصحف",          Icon: BookOpen },
     { href: "/quran-circles",    label: "حلقات التحفيظ",   Icon: Users },
     { href: "/quran-radio",      label: "إذاعة القرآن",    Icon: Radio },
+    { href: "/quran/surah-stories", label: "قصص القرآن",   Icon: BookOpen },
     { href: "/quran-live",       label: "البث المباشر",    Icon: Tv },
     { href: "/quran/tajweed",    label: "التجويد",         Icon: GraduationCap },
     { href: "/muezzins",         label: "مكتبة المؤذنين",  Icon: Mic },
