@@ -7175,6 +7175,7 @@ button.primary:hover {
   font-family: inherit;
 }
 .lcd-footer-link { margin-top: 2rem; font-size: 0.875rem; }
+.lcd-empty { text-align: center; padding: 2rem 1rem; color: var(--ink-soft); font-size: 0.9375rem; }
 
 /* ============================================================
    §73 — FlashCardsPage  (flc-*)
@@ -22588,4 +22589,196 @@ img[loading="lazy"]:not([src=""]) {
 
 @media (max-width: 640px) {
   .sawm-reminder { margin: .75rem; border-radius: .75rem; }
+}
+
+/* ══════════════════════════════════════════════
+   §CPP. صفحة الاقتباس العام (CitationPublicPage)
+   ══════════════════════════════════════════════ */
+.cpp-root {
+  min-height: 100svh;
+  background: var(--majalis-parchment);
+  display: flex;
+  flex-direction: column;
+  direction: rtl;
+}
+.cpp-loading {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--majalis-parchment);
+  direction: rtl;
+}
+.cpp-loading__spinner {
+  width: 2.5rem; height: 2.5rem;
+  color: var(--majalis-emerald);
+}
+.cpp-error {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  background: var(--majalis-parchment);
+  padding: 1.5rem;
+  direction: rtl;
+}
+.cpp-error__text {
+  color: var(--majalis-ink-soft);
+  font-size: 1.125rem;
+}
+.cpp-error__link,
+.cpp-link {
+  color: var(--majalis-emerald);
+  text-decoration: none;
+}
+.cpp-error__link:hover,
+.cpp-link:hover { text-decoration: underline; }
+
+/* شريط التنقل */
+.cpp-nav {
+  background: var(--majalis-panel);
+  border-bottom: 1px solid var(--majalis-line);
+  padding: .75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cpp-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  color: var(--majalis-emerald);
+  font-weight: 700;
+  font-size: 1.125rem;
+  text-decoration: none;
+}
+.cpp-nav__tagline {
+  font-size: .75rem;
+  color: var(--majalis-ink-soft);
+  opacity: .6;
+}
+
+/* المنطقة الرئيسية */
+.cpp-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.cpp-content {
+  width: 100%;
+  max-width: 36rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* بطاقة الاقتباس */
+.cpp-card {
+  background: var(--majalis-panel);
+  border-radius: 1rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,.12);
+  overflow: hidden;
+  border: 1px solid var(--majalis-line);
+}
+.cpp-card__body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+
+.cpp-type-header {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+.cpp-source-title {
+  font-size: .875rem;
+  font-weight: 600;
+  color: var(--majalis-ink-soft);
+}
+
+.cpp-blockquote {
+  border-right: 4px solid var(--majalis-emerald);
+  padding-right: 1rem;
+  margin: 0;
+}
+.cpp-quote-text {
+  color: var(--majalis-ink);
+  font-size: 1.125rem;
+  line-height: 1.8;
+  font-family: var(--font-arabic, inherit);
+  margin: 0;
+}
+
+.cpp-source-meta {
+  font-size: .875rem;
+  color: var(--majalis-ink-soft);
+  display: flex;
+  flex-direction: column;
+  gap: .125rem;
+}
+.cpp-source-meta p { margin: 0; }
+
+/* أزرار الإجراءات */
+.cpp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  justify-content: center;
+}
+.cpp-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  padding: .5rem 1rem;
+  font-size: .875rem;
+  background: var(--majalis-panel);
+  border: 1px solid var(--majalis-line);
+  border-radius: .75rem;
+  color: var(--majalis-ink-soft);
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  box-shadow: 0 1px 3px rgba(0,0,0,.07);
+  text-decoration: none;
+}
+.cpp-action-btn:hover { border-color: var(--majalis-emerald); }
+.cpp-action-btn--saved {
+  background: var(--majalis-emerald-muted, rgba(31,77,58,.12));
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-emerald);
+  cursor: default;
+}
+
+/* QR Code */
+.cpp-qr-wrap { display: flex; justify-content: center; }
+.cpp-qr-box {
+  background: var(--majalis-panel);
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,.08);
+  border: 1px solid var(--majalis-line);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.cpp-qr-img { width: 12rem; height: 12rem; display: block; margin: 0 auto; }
+.cpp-qr-url {
+  font-size: .75rem;
+  color: var(--majalis-ink-soft);
+  opacity: .6;
+  margin: 0;
+  word-break: break-all;
+}
+
+/* رابط السياق والتذييل */
+.cpp-context { text-align: center; }
+.cpp-footer {
+  text-align: center;
+  font-size: .75rem;
+  color: var(--majalis-ink-soft);
+  opacity: .6;
+  padding-bottom: 1rem;
+  margin: 0;
 }

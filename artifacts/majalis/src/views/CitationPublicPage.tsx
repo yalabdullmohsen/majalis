@@ -26,6 +26,7 @@ export default function CitationPublicPage() {
       keywords: ["مقتطف علمي", "استشهاد أكاديمي", "نص إسلامي", "مشاركة علمية"],
     });
   }, []);
+
   const slug = params?.slug || "";
   const { user } = useAuth();
 
@@ -48,7 +49,6 @@ export default function CitationPublicPage() {
       .finally(() => setLoading(false));
   }, [slug]);
 
-  // التمييز التلقائي للنص عند التحميل (للـ deep-link)
   const contentRef = useRef<HTMLParagraphElement>(null);
   useEffect(() => {
     if (!citation || !contentRef.current) return;
@@ -76,19 +76,17 @@ export default function CitationPublicPage() {
 
   if (loading) {
     return (
-      <div dir="rtl" className="min-h-screen flex items-center justify-center bg-[var(--majalis-parchment)]">
-        <Spinner className="size-10 text-[var(--majalis-emerald)]" aria-label="جارٍ التحميل" />
+      <div className="cpp-loading">
+        <Spinner className="cpp-loading__spinner" aria-label="جارٍ التحميل" />
       </div>
     );
   }
 
   if (error || !citation) {
     return (
-      <div dir="rtl" className="min-h-screen flex flex-col items-center justify-center gap-6 bg-[var(--majalis-parchment)] p-6">
-        <p className="text-[var(--majalis-ink-soft)] text-lg">{error || "الاقتباس غير موجود"}</p>
-        <Link href="/" className="text-[var(--majalis-emerald)] hover:underline">
-          العودة للرئيسية
-        </Link>
+      <div className="cpp-error">
+        <p className="cpp-error__text">{error || "الاقتباس غير موجود"}</p>
+        <Link href="/" className="cpp-error__link">العودة للرئيسية</Link>
       </div>
     );
   }
@@ -96,11 +94,8 @@ export default function CitationPublicPage() {
   const src = citation.source;
   const typeColor = src ? CONTENT_TYPE_COLOR[src.content_type] || "#065f46" : "#065f46";
   const typeLabel = src ? CONTENT_TYPE_LABEL[src.content_type] || "" : "";
-
-  // رابط العودة للمصدر
   const sourceHref = src?.source_url || (src?.reference_id ? `/${src.content_type.replace("_", "-")}/${src.reference_id}` : "/");
 
-  // Meta الـ SEO ديناميكي
   useEffect(() => {
     if (!citation || !src) return;
     document.title = `"${citation.quoted_text.slice(0, 60)}..." — مجالس`;
@@ -112,53 +107,42 @@ export default function CitationPublicPage() {
   }, [citation, src, slug]);
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] flex flex-col">
+    <div className="cpp-root">
       {/* شريط التنقل */}
-      <nav aria-label="تنقل الصفحة" className="bg-[var(--majalis-panel)] border-b border-[var(--majalis-line)] px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 text-[var(--majalis-emerald)] font-bold text-lg">
-          مجالس
-        </Link>
-        <span className="text-xs text-[var(--majalis-ink-soft)] opacity-60">تطبيق العلم الشرعي</span>
+      <nav aria-label="تنقل الصفحة" className="cpp-nav">
+        <Link href="/" className="cpp-nav__brand">مجالس</Link>
+        <span className="cpp-nav__tagline">تطبيق العلم الشرعي</span>
       </nav>
 
-      {/* بطاقة الاقتباس الرئيسية */}
-      <main className="flex-1 flex items-center justify-center p-6">
-        <div className="w-full max-w-xl space-y-6">
+      {/* المحتوى الرئيسي */}
+      <main className="cpp-main">
+        <div className="cpp-content">
 
           {/* بطاقة الاقتباس */}
-          <div className="bg-[var(--majalis-panel)] rounded-2xl shadow-xl overflow-hidden border border-[var(--majalis-line)] "
-            style={{ "--cit-type-color": typeColor } as React.CSSProperties}>
-            {/* شريط ملوَّن */}
+          <div
+            className="cpp-card"
+            style={{ "--cit-type-color": typeColor } as React.CSSProperties}
+          >
             <div className="h-1.5 cit-type-bar" />
+            <div className="cpp-card__body">
 
-            <div className="p-6 space-y-4">
-              {/* نوع المحتوى والعنوان */}
               {src && (
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span
-                    className="px-2 py-0.5 rounded text-xs text-white font-medium cit-type-badge"
-                  >
+                <div className="cpp-type-header">
+                  <span className="px-2 py-0.5 rounded text-xs text-white font-medium cit-type-badge">
                     {typeLabel}
                   </span>
-                  <span className="text-sm font-semibold text-[var(--majalis-ink-soft)]">
-                    {src.title_ar}
-                  </span>
+                  <span className="cpp-source-title">{src.title_ar}</span>
                 </div>
               )}
 
-              {/* النص المقتبس */}
-              <blockquote className="border-r-4 border-[var(--majalis-emerald)] pr-4">
-                <p
-                  ref={contentRef}
-                  className="text-[var(--majalis-ink)] text-lg leading-relaxed font-arabic"
-                >
+              <blockquote className="cpp-blockquote">
+                <p ref={contentRef} className="cpp-quote-text">
                   {citation.quoted_text}
                 </p>
               </blockquote>
 
-              {/* بيانات المصدر */}
               {src && (
-                <div className="text-sm text-[var(--majalis-ink-soft)] space-y-0.5">
+                <div className="cpp-source-meta">
                   {src.author_name && <p>الكاتب/الشيخ: <span className="font-medium">{src.author_name}</span></p>}
                   {src.book_name && (
                     <p>
@@ -174,27 +158,20 @@ export default function CitationPublicPage() {
           </div>
 
           {/* أزرار الإجراءات */}
-          <div className="flex flex-wrap gap-2 justify-center">
-            <button
-              type="button"
-              onClick={copyLink}
-              className="flex items-center gap-1.5 px-4 py-2 text-sm bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-xl hover:border-[var(--majalis-emerald)] text-[var(--majalis-ink-soft)] transition-colors shadow-sm"
-            >
-              <Link2 size={14} strokeWidth={2} aria-hidden="true" /> {copied ? "تم النسخ ✓" : "نسخ الرابط"}
+          <div className="cpp-actions">
+            <button type="button" onClick={copyLink} className="cpp-action-btn">
+              <Link2 size={14} strokeWidth={2} aria-hidden="true" />
+              {copied ? "تم النسخ ✓" : "نسخ الرابط"}
             </button>
 
-            <button
-              type="button"
-              onClick={() => setShowQr(!showQr)}
-              className="flex items-center gap-1.5 px-4 py-2 text-sm bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-xl hover:border-[var(--majalis-emerald)] text-[var(--majalis-ink-soft)] transition-colors shadow-sm"
-            >
+            <button type="button" onClick={() => setShowQr(!showQr)} className="cpp-action-btn">
               <QrCode size={14} strokeWidth={2} aria-hidden="true" /> QR Code
             </button>
 
             <a
               href={getCitationImageUrl(slug)}
               download={`citation-${slug}.svg`}
-              className="flex items-center gap-1.5 px-4 py-2 text-sm bg-[var(--majalis-panel)] border border-[var(--majalis-line)] rounded-xl hover:border-[var(--majalis-emerald)] text-[var(--majalis-ink-soft)] transition-colors shadow-sm"
+              className="cpp-action-btn"
             >
               <Download size={14} strokeWidth={2} aria-hidden="true" /> تحميل بطاقة
             </a>
@@ -204,49 +181,37 @@ export default function CitationPublicPage() {
                 type="button"
                 onClick={handleSave}
                 disabled={saved}
-                className={`flex items-center gap-1.5 px-4 py-2 text-sm rounded-xl border transition-colors shadow-sm ${
-                  saved
-                    ? "bg-[var(--majalis-emerald-muted)] border-[var(--majalis-emerald)] text-[var(--majalis-emerald)]"
-                    : "bg-[var(--majalis-panel)] border-[var(--majalis-line)] text-[var(--majalis-ink-soft)] hover:border-[var(--majalis-emerald)]"
-                }`}
+                className={`cpp-action-btn${saved ? " cpp-action-btn--saved" : ""}`}
               >
-                <Star size={14} strokeWidth={2} aria-hidden="true" /> {saved ? "محفوظ" : "احفظ في مكتبتي"}
+                <Star size={14} strokeWidth={2} aria-hidden="true" />
+                {saved ? "محفوظ" : "احفظ في مكتبتي"}
               </button>
             )}
           </div>
 
           {/* QR Code */}
           {showQr && (
-            <div className="flex justify-center">
-              <div className="bg-[var(--majalis-panel)] p-4 rounded-2xl shadow border border-[var(--majalis-line)] text-center space-y-2">
-                <img
-                  src={getQrCodeUrl(slug)}
-                  alt="QR Code للاقتباس"
-                  className="w-48 h-48 mx-auto"
-                />
-                <p className="text-xs text-[var(--majalis-ink-soft)] opacity-60">{getShareUrl(slug)}</p>
+            <div className="cpp-qr-wrap">
+              <div className="cpp-qr-box">
+                <img src={getQrCodeUrl(slug)} alt="QR Code للاقتباس" className="cpp-qr-img" />
+                <p className="cpp-qr-url">{getShareUrl(slug)}</p>
               </div>
             </div>
           )}
 
           {/* رابط السياق الكامل */}
           {src && (
-            <div className="text-center">
-              <Link
-                href={sourceHref}
-                className="text-sm text-[var(--majalis-emerald)] hover:underline"
-              >
+            <div className="cpp-context">
+              <Link href={sourceHref} className="cpp-link" style={{ fontSize: ".875rem" }}>
                 شاهد السياق الكامل ←
               </Link>
             </div>
           )}
 
           {/* تذييل */}
-          <p className="text-center text-xs text-[var(--majalis-ink-soft)] opacity-60 pb-4">
+          <p className="cpp-footer">
             تم إنشاء هذا الاقتباس عبر{" "}
-            <Link href="/" className="text-[var(--majalis-emerald)] hover:underline">
-              منصة مجالس
-            </Link>
+            <Link href="/" className="cpp-link">منصة مجالس</Link>
           </p>
         </div>
       </main>
