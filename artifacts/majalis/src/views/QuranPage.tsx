@@ -384,7 +384,7 @@ export default function QuranPage() {
         {error && !loading && (
           <div className="mshf-err">
             <p>تعذّر تحميل سورة {SURAHS_META[surahNum - 1][0]}.</p>
-            <p style={{ fontSize: "0.78rem" }}>تحقق من اتصالك بالإنترنت ثم أعد المحاولة.</p>
+            <p className="mshf-err-sub">تحقق من اتصالك بالإنترنت ثم أعد المحاولة.</p>
             <button
               type="button"
               className="mshf-err-btn"

@@ -62,19 +62,19 @@ export function SkeletonPage() {
     <div role="status" aria-live="polite">
       <span className="sr-only">جارٍ التحميل…</span>
       <div className="sk-page sk-page--article" aria-hidden="true">
-        <div className="ds-skeleton sk-page__meta" style={{ width: "30%", height: "0.75rem" }} />
+        <div className="ds-skeleton sk-page__meta" />
         <div className="ds-skeleton sk-page__title" />
-        <div className="ds-skeleton sk-page__subtitle" style={{ width: "70%" }} />
+        <div className="ds-skeleton sk-page__subtitle" />
         <div className="ds-skeleton sk-page__divider" />
-        {Array.from({ length: 5 }).map((_, i) => (
+        {[95, 88, 93, 75, 82].map((w, i) => (
           <div key={i} className="ds-skeleton sk-page__line"
-            style={{ width: `${[95, 88, 93, 75, 82][i]}%`, height: "0.875rem", marginBottom: "0.6rem" }}
+            style={{ "--sk-lw": `${w}%` } as React.CSSProperties}
           />
         ))}
-        <div className="ds-skeleton sk-page__line" style={{ width: "40%", height: "0.875rem", marginTop: "1.5rem" }} />
-        {Array.from({ length: 4 }).map((_, i) => (
+        <div className="ds-skeleton sk-page__line sk-page__line--section" />
+        {[90, 83, 96, 60].map((w, i) => (
           <div key={i} className="ds-skeleton sk-page__line"
-            style={{ width: `${[90, 83, 96, 60][i]}%`, height: "0.875rem", marginBottom: "0.6rem" }}
+            style={{ "--sk-lw": `${w}%` } as React.CSSProperties}
           />
         ))}
       </div>

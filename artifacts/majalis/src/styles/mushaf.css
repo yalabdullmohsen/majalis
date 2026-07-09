@@ -307,6 +307,7 @@
   color: var(--mshf-ink-soft);
 }
 .mshf-err p { margin: 0; font-size: 0.9rem; }
+.mshf-err-sub { font-size: 0.78rem !important; }
 .mshf-err-btn {
   padding: 0.5rem 1.5rem;
   border: 1.5px solid var(--mshf-emerald, #0E6E52);
