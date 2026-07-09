@@ -511,6 +511,11 @@ export default function SunanYawmiyyaPage() {
     });
   }
 
+  function resetAll() {
+    setChecked(new Set());
+    try { localStorage.removeItem("sunan_checked"); } catch { /* storage unavailable */ }
+  }
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return SUNAN.filter((s) => {
@@ -535,12 +540,17 @@ export default function SunanYawmiyyaPage() {
         <div className="sy-progress">
           <div className="sy-progress__text">
             <CheckCircle2 size={16} aria-hidden="true" />
-            <span>{doneCount} من {filtered.length} سنة مطبَّقة اليوم</span>
+            <span>{doneCount} من {SUNAN.length} سنة مطبَّقة اليوم</span>
+            {doneCount > 0 && (
+              <button type="button" className="sy-reset-btn" onClick={resetAll} aria-label="مسح الكل">
+                مسح
+              </button>
+            )}
           </div>
           <div className="sy-progress__bar-wrap">
             <div
               className="sy-progress__bar"
-              style={{ "--sy-prog-w": filtered.length ? `${(doneCount / filtered.length) * 100}%` : "0%" } as { [k: string]: string }}
+              style={{ "--sy-prog-w": SUNAN.length ? `${(doneCount / SUNAN.length) * 100}%` : "0%" } as { [k: string]: string }}
             />
           </div>
         </div>

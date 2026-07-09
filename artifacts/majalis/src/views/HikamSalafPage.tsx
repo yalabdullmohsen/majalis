@@ -475,6 +475,162 @@ const HIKAM: Hikma[] = [
     died: "32ه",
     category: "القرآن والذكر",
   },
+
+  /* ─── الإيمان والتوحيد — إضافية ─── */
+  {
+    id: "i8",
+    text: "من عرف نفسه بالعبودية عرف ربه بالربوبية، ومن جهل نفسه جهل ربه.",
+    scholar: "ابن القيم",
+    died: "751ه",
+    category: "الإيمان والتوحيد",
+    source: "مدارج السالكين",
+  },
+  {
+    id: "i9",
+    text: "لا يجد العبد طعم الإيمان حتى يعلم أن ما أصابه لم يكن ليخطئه، وما أخطأه لم يكن ليصيبه.",
+    scholar: "ابن مسعود",
+    died: "32ه",
+    category: "الإيمان والتوحيد",
+  },
+  {
+    id: "i10",
+    text: "أصل كل خير في الدنيا والآخرة: معرفة الله ومحبته، والاشتياق إلى لقائه.",
+    scholar: "ابن القيم",
+    died: "751ه",
+    category: "الإيمان والتوحيد",
+    source: "مفتاح دار السعادة",
+  },
+
+  /* ─── العلم والعمل — إضافية ─── */
+  {
+    id: "e10",
+    text: "العلم يُكسب صاحبه الخشية من الله، ومن خشي الله رُزق العقل والحكمة.",
+    scholar: "الإمام الشافعي",
+    died: "204ه",
+    category: "العلم والعمل",
+  },
+  {
+    id: "e11",
+    text: "العلم بلا عمل كالشجر بلا ثمر، والعمل بلا علم كالشجر بلا أصل.",
+    scholar: "ابن عبد البر",
+    died: "463ه",
+    category: "العلم والعمل",
+    source: "جامع بيان العلم",
+  },
+  {
+    id: "e12",
+    text: "تعلَّم الصمت كما تتعلم الكلام، فإن كان الكلام يهديك فإن الصمت يقيك.",
+    scholar: "ابن رجب الحنبلي",
+    died: "795ه",
+    category: "العلم والعمل",
+    source: "جامع العلوم والحكم",
+  },
+
+  /* ─── الدنيا والزهد — إضافية ─── */
+  {
+    id: "d9",
+    text: "انظر إلى من هو دونك في الدنيا تشكر الله، ولا تنظر إلى من هو فوقك فتزدري نعمة الله.",
+    scholar: "أبو ذر الغفاري",
+    died: "32ه",
+    category: "الدنيا والزهد",
+  },
+  {
+    id: "d10",
+    text: "الدنيا قنطرة فاعبروها ولا تعمروها.",
+    scholar: "علي بن أبي طالب",
+    died: "40ه",
+    category: "الدنيا والزهد",
+  },
+
+  /* ─── التوبة والاستغفار — إضافية ─── */
+  {
+    id: "t8",
+    text: "الندم توبة، والإصرار كفر بالنعمة.",
+    scholar: "ابن مسعود",
+    died: "32ه",
+    category: "التوبة والاستغفار",
+  },
+  {
+    id: "t9",
+    text: "أنين المذنبين أحب إلى الله من تسبيح المغترين بأعمالهم.",
+    scholar: "الحسن البصري",
+    died: "110ه",
+    category: "التوبة والاستغفار",
+  },
+
+  /* ─── الصبر والشكر — إضافية ─── */
+  {
+    id: "s8",
+    text: "إذا لم تصبر على مرارة التعلم والعبادة، صبرت على مرارة الجهل والعقوبة.",
+    scholar: "الإمام الشافعي",
+    died: "204ه",
+    category: "الصبر والشكر",
+  },
+  {
+    id: "s9",
+    text: "أصبر على نفسك أكثر مما تصبر على عدوك، فنفسك أشد عليك.",
+    scholar: "ابن القيم",
+    died: "751ه",
+    category: "الصبر والشكر",
+    source: "الفوائد",
+  },
+  {
+    id: "s10",
+    text: "الشاكر لله في السراء والضراء معاً، هو الذي أدرك سر الشكر الحقيقي.",
+    scholar: "ابن تيمية",
+    died: "728ه",
+    category: "الصبر والشكر",
+    source: "مجموع الفتاوى",
+  },
+
+  /* ─── الأخلاق — إضافية ─── */
+  {
+    id: "a9",
+    text: "أحسن إلى من أساء إليك ولا تجازِ السيئة بمثلها، فإن الإحسان أعظم انتقاماً.",
+    scholar: "الإمام الشافعي",
+    died: "204ه",
+    category: "الأخلاق",
+  },
+  {
+    id: "a10",
+    text: "النصيحة في السر خيرٌ من التوبيخ على الملأ، ومن أدَّب أخاه علناً أهانه.",
+    scholar: "الإمام أحمد",
+    died: "241ه",
+    category: "الأخلاق",
+  },
+
+  /* ─── الموت والآخرة — إضافية ─── */
+  {
+    id: "m8",
+    text: "استعد للموت قبل أن يأتيك بغتة؛ فالموت لا يُعلَم وقته ولا يُسأَل عن استعداد صاحبه.",
+    scholar: "عمر بن الخطاب",
+    died: "23ه",
+    category: "الموت والآخرة",
+  },
+  {
+    id: "m9",
+    text: "لو لم يكن في الموت إلا أنه يُساوي بين الجبار والمستضعف لكفى بذلك عبرة.",
+    scholar: "الحسن البصري",
+    died: "110ه",
+    category: "الموت والآخرة",
+  },
+
+  /* ─── القرآن والذكر — إضافية ─── */
+  {
+    id: "q9",
+    text: "تدبر آية واحدة خير من قراءة القرآن كله بلا تدبر.",
+    scholar: "ابن القيم",
+    died: "751ه",
+    category: "القرآن والذكر",
+    source: "مفتاح دار السعادة",
+  },
+  {
+    id: "q10",
+    text: "انظر إلى القرآن كأنه أُنزل إليك وحدك، ففيه رسالة الله إلى كل مؤمن.",
+    scholar: "الحسن البصري",
+    died: "110ه",
+    category: "القرآن والذكر",
+  },
 ];
 
 export default function HikamSalafPage() {
@@ -487,6 +643,7 @@ export default function HikamSalafPage() {
     } catch { return new Set(); }
   });
   const [copied, setCopied] = useState<string | null>(null);
+  const [showFavsOnly, setShowFavsOnly] = useState(false);
 
   useEffect(() => {
     applyPageSeo({
@@ -521,9 +678,10 @@ export default function HikamSalafPage() {
     return HIKAM.filter((h) => {
       const matchCat = category === "الكل" || h.category === category;
       const matchQ = !q || h.text.includes(q) || h.scholar.includes(q);
-      return matchCat && matchQ;
+      const matchFav = !showFavsOnly || favorites.has(h.id);
+      return matchCat && matchQ && matchFav;
     });
-  }, [query, category]);
+  }, [query, category, showFavsOnly, favorites]);
 
   return (
     <main className="hk-page" dir="rtl">
@@ -568,12 +726,23 @@ export default function HikamSalafPage() {
               type="button"
               role="listitem"
               className={`hk-cat${category === cat ? " hk-cat--active" : ""}`}
-              onClick={() => setCategory(cat)}
+              onClick={() => { setCategory(cat); setShowFavsOnly(false); }}
               aria-pressed={category === cat}
             >
               {cat}
             </button>
           ))}
+          {favorites.size > 0 && (
+            <button
+              type="button"
+              role="listitem"
+              className={`hk-cat hk-cat--fav-filter${showFavsOnly ? " hk-cat--active" : ""}`}
+              onClick={() => { setShowFavsOnly((v) => !v); setCategory("الكل"); }}
+              aria-pressed={showFavsOnly}
+            >
+              ❤️ المحفوظات ({favorites.size})
+            </button>
+          )}
         </div>
       </div>
 

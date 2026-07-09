@@ -18429,6 +18429,18 @@ img[loading="lazy"]:not([src=""]) {
 }
 .sy-progress__bar-wrap { height: 6px; background: rgba(255,255,255,0.2); border-radius: 99px; overflow: hidden; }
 .sy-progress__bar { height: 100%; background: #FFFFFF; border-radius: 99px; transition: width 0.3s ease; min-width: 2px; width: var(--sy-prog-w, 0%); }
+.sy-reset-btn {
+  margin-inline-start: 0.4rem;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.72rem;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 99px;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.sy-reset-btn:hover { background: rgba(255,255,255,0.28); }
 
 /* تحكم */
 .sy-controls { margin-bottom: 1.25rem; }
@@ -18642,6 +18654,8 @@ img[loading="lazy"]:not([src=""]) {
 }
 .hk-cat:hover { border-color: #1F4D3A; color: #1F4D3A; }
 .hk-cat--active { background: #1F4D3A; border-color: #1F4D3A; color: #FFFFFF; }
+.hk-cat--fav-filter { border-color: #b45309; color: #b45309; }
+.hk-cat--fav-filter.hk-cat--active { background: #b45309; border-color: #b45309; color: #FFFFFF; }
 
 /* شبكة الحكم */
 .hk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
