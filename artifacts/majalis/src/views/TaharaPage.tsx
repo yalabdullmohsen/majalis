@@ -342,7 +342,7 @@ export default function TaharaPage() {
         )}
 
         {/* related */}
-        <nav className="th-related">
+        <nav className="th-related" aria-label="مواضيع ذات صلة">
           <h2 className="th-related__title">استكشف أيضاً</h2>
           <div className="th-related__grid">
             {[

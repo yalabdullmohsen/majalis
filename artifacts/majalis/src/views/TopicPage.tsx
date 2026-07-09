@@ -90,7 +90,7 @@ export default function TopicPage() {
 
   return (
     <div className="page-shell narrow search-page">
-      <nav className="tpc-breadcrumb">
+      <nav className="tpc-breadcrumb" aria-label="مسار التنقل">
         <Link href="/topics">الموضوعات العلمية</Link>
         <span className="tpc-sep">/</span>
         <span>{topic.title}</span>

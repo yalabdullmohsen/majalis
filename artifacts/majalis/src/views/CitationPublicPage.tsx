@@ -114,7 +114,7 @@ export default function CitationPublicPage() {
   return (
     <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] flex flex-col">
       {/* شريط التنقل */}
-      <nav className="bg-[var(--majalis-panel)] border-b border-[var(--majalis-line)] px-4 py-3 flex items-center justify-between">
+      <nav aria-label="تنقل الصفحة" className="bg-[var(--majalis-panel)] border-b border-[var(--majalis-line)] px-4 py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 text-[var(--majalis-emerald)] font-bold text-lg">
           مجالس
         </Link>

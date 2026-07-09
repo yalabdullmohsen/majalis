@@ -96,7 +96,7 @@ export default function LearningQuizPage() {
 
   return (
     <div className="page-shell narrow">
-      <nav className="lqp-breadcrumb">
+      <nav className="lqp-breadcrumb" aria-label="مسار التنقل">
         <Link href={`/learning/paths/${slug}`}>المسار</Link> / {quiz.title}
       </nav>
 

@@ -239,7 +239,7 @@ export default function MyCitationsPage() {
         {/* الشريط الجانبي */}
         <aside className="lg:w-56 print:hidden space-y-3">
           {/* التبويبات */}
-          <nav className="bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-line)] overflow-hidden">
+          <nav aria-label="تصنيفات الاقتباسات" className="bg-[var(--majalis-panel)] rounded-xl border border-[var(--majalis-line)] overflow-hidden">
             {TABS.map((t) => (
               <button
                 key={t}

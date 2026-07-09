@@ -108,7 +108,7 @@ export default function LearningPathBookPage() {
   return (
     <div dir="rtl" className="lpb-shell">
       {/* Breadcrumb */}
-      <nav className="lpb-breadcrumb">
+      <nav className="lpb-breadcrumb" aria-label="مسار التنقل">
         <div className="lpb-breadcrumb__inner">
           <Link href="/learning-path">
             <span className="lpb-breadcrumb__link">الخارطة</span>

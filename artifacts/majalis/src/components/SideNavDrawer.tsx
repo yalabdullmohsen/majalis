@@ -187,7 +187,7 @@ export function SideNavDrawer({ open, onClose, lang = "ar", onLangToggle, onLogo
           {DRAWER_GROUPS.map((group) => (
             <div key={group.id} className="side-nav-group side-nav-group--v2">
               <p className="side-nav-group__title">{group.title}</p>
-              <nav>
+              <nav aria-label={group.title}>
                 {group.items.map(({ href, label, Icon }) => (
                   <Link
                     key={href}
@@ -206,7 +206,7 @@ export function SideNavDrawer({ open, onClose, lang = "ar", onLangToggle, onLogo
           {/* Account group */}
           <div className="side-nav-group side-nav-group--v2">
             <p className="side-nav-group__title">الحساب</p>
-            <nav>
+            <nav aria-label="الحساب">
               {isLoggedIn ? (
                 <>
                   {user?.profile?.full_name || user?.email ? (

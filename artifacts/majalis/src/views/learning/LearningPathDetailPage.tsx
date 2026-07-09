@@ -74,7 +74,7 @@ export default function LearningPathDetailPage() {
 
   return (
     <div className="page-shell narrow">
-      <nav className="lpd-breadcrumb">
+      <nav className="lpd-breadcrumb" aria-label="مسار التنقل">
         <Link href="/learning/paths">المسارات</Link> / {path.title}
       </nav>
 

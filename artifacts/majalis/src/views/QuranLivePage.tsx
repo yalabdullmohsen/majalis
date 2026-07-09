@@ -104,7 +104,7 @@ export default function QuranLivePage() {
         <p className="qlive-hero__sub">
           استمع وشاهد البث المباشر من الحرمين الشريفين والإذاعات القرآنية العالمية
         </p>
-        <nav className="qlive-subnav">
+        <nav className="qlive-subnav" aria-label="تنقل البث">
           <Link href="/quran-hub" className="qlive-subnav__link">مركز القرآن</Link>
           <span className="qlive-subnav__sep">›</span>
           <Link href="/quran-radio" className="qlive-subnav__link">الإذاعات</Link>
