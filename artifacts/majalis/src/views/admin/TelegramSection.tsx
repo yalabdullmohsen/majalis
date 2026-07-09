@@ -113,8 +113,7 @@ function EmptyState({ text }: { text: string }) {
 function Badge({ ok, label }: { ok: boolean; label: string }) {
   return (
     <span
-      className="tgm-badge"
-      style={{ "--tgm-badge-bg": ok ? "#dcfce7" : "#fee2e2", "--tgm-badge-color": ok ? "#166534" : "#991b1b" } as React.CSSProperties}
+      className={`tgm-badge tgm-badge--${ok ? "ok" : "error"}`}
     >
       {ok ? "✓" : "✗"} {label}
     </span>
@@ -173,20 +172,12 @@ function Btn({
   small?: boolean;
   className?: string;
 }) {
-  const bg = variant === "primary" ? "var(--majalis-emerald-deep)" : variant === "danger" ? "#dc2626" : "var(--majalis-line)";
-  const color = variant === "secondary" ? "var(--majalis-ink)" : "#fff";
   return (
     <button
       type="button"
       onClick={onClick}
       disabled={loading}
-      className={`tgm-btn${extraClass ? ` ${extraClass}` : ""}`}
-      style={{
-        "--tgm-btn-pad": small ? "0.3rem 0.65rem" : "0.45rem 1rem",
-        "--tgm-btn-fs": small ? "0.78rem" : "0.85rem",
-        "--tgm-btn-bg": loading ? "var(--majalis-line)" : bg,
-        "--tgm-btn-color": loading ? "var(--majalis-ink-soft)" : color,
-      } as React.CSSProperties}
+      className={`tgm-btn tgm-btn--${variant}${small ? " tgm-btn--small" : ""}${extraClass ? ` ${extraClass}` : ""}`}
     >
       {loading ? "…" : children}
     </button>
@@ -348,8 +339,7 @@ function ChannelsTab() {
           {channels.map((ch) => (
             <div key={ch.id} className="tgm-ch-card">
               <span
-                className="tgm-ch-dot"
-                style={{ "--tgm-dot-bg": ch.is_active ? "#16a34a" : "#9ca3af" } as React.CSSProperties}
+                className={`tgm-ch-dot${ch.is_active ? " tgm-ch-dot--active" : ""}`}
               />
               <div className="tgm-ch-info">
                 <div className="tgm-ch-name">
@@ -449,12 +439,9 @@ function ReviewTab() {
         {["all", "complete", "needs_review", "incomplete"].map((q) => (
           <button
             key={q}
+            type="button"
             onClick={() => setQualityFilter(q)}
-            className="tgm-filter-btn"
-            style={{
-              "--tgm-fb-bg": qualityFilter === q ? "var(--majalis-emerald-deep)" : "var(--majalis-line)",
-              "--tgm-fb-color": qualityFilter === q ? "#fff" : "var(--majalis-ink)",
-            } as React.CSSProperties}
+            className={`tgm-filter-btn${qualityFilter === q ? " tgm-filter-btn--active" : ""}`}
           >
             {q === "all" ? "الكل" : QUALITY_AR[q] || q}
           </button>
@@ -477,8 +464,7 @@ function ReviewTab() {
             return (
               <div
                 key={lesson.id}
-                className="tgm-lesson-card"
-                style={{ "--tgm-lc-border": selected.has(lesson.id) ? "var(--majalis-emerald)" : "var(--majalis-line)" } as React.CSSProperties}
+                className={`tgm-lesson-card${selected.has(lesson.id) ? " tgm-lesson-card--selected" : ""}`}
               >
                 <div className="tgm-lesson-header">
                   <input
@@ -662,13 +648,9 @@ export function TelegramSection() {
         {TABS.map((t) => (
           <button
             key={t.key}
+            type="button"
             onClick={() => setTab(t.key)}
-            className="tgm-tab"
-            style={{
-              "--tgm-tab-fw": tab === t.key ? "700" : "400",
-              "--tgm-tab-color": tab === t.key ? "var(--majalis-emerald-deep)" : "var(--majalis-ink-soft)",
-              "--tgm-tab-border": tab === t.key ? "3px solid var(--majalis-emerald-deep)" : "3px solid transparent",
-            } as React.CSSProperties}
+            className={`tgm-tab${tab === t.key ? " tgm-tab--active" : ""}`}
           >
             {t.label}
           </button>

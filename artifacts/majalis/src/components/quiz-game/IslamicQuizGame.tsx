@@ -281,13 +281,13 @@ function ScoreBar({ teams, activeTeam }: { teams: [Team, Team]; activeTeam: Team
             <p className="qzg-team-card__unit">نقطة</p>
             <div className="qzg-team-card__lifelines">
               {t.lifelines.penalize && (
-                <span className="qzg-lifeline" style={{ "--qzg-ll-border": "var(--majalis-danger,#9B1C1C)", "--qzg-ll-color": active ? "var(--majalis-danger,#9B1C1C)" : "var(--majalis-danger,#9B1C1C)" } as React.CSSProperties}>خصم</span>
+                <span className="qzg-lifeline qzg-lifeline--penalize">خصم</span>
               )}
               {t.lifelines.eliminate && (
-                <span className="qzg-lifeline" style={{ "--qzg-ll-border": "#9B59B6", "--qzg-ll-color": active ? "#C080FF" : "#7D3C98" } as React.CSSProperties}>استبعاد</span>
+                <span className="qzg-lifeline qzg-lifeline--eliminate">استبعاد</span>
               )}
               {t.lifelines.pass && (
-                <span className="qzg-lifeline" style={{ "--qzg-ll-border": "#2E86C1", "--qzg-ll-color": active ? "#80C0FF" : "#1A5276" } as React.CSSProperties}>تمرير</span>
+                <span className="qzg-lifeline qzg-lifeline--pass">تمرير</span>
               )}
             </div>
           </div>
@@ -555,22 +555,19 @@ function QuestionPhase({
         <div className="qzg-lifelines-flex">
           {activeTeamObj.lifelines.penalize && (
             <button type="button" onClick={() => dispatch({ type: "USE_LIFELINE_PENALIZE" })}
-              className="qzg-ll-btn"
-              style={{ "--qzg-ll-bg": "var(--majalis-danger-muted,rgba(155,28,28,.08))", "--qzg-ll-c": "var(--majalis-danger,#9B1C1C)", "--qzg-ll-border": "var(--majalis-danger,#9B1C1C)" } as React.CSSProperties}>
+              className="qzg-ll-btn qzg-ll-btn--penalize">
               خصم {activeCell.points} من الخصم
             </button>
           )}
           {activeTeamObj.lifelines.eliminate && (
             <button type="button" onClick={() => dispatch({ type: "USE_LIFELINE_ELIMINATE" })}
-              className="qzg-ll-btn"
-              style={{ "--qzg-ll-bg": "#F5EEF8", "--qzg-ll-c": "#9B59B6", "--qzg-ll-border": "#9B59B6" } as React.CSSProperties}>
+              className="qzg-ll-btn qzg-ll-btn--eliminate">
               استبعاد لاعب
             </button>
           )}
           {activeTeamObj.lifelines.pass && !passedToOpponent && (
             <button type="button" onClick={() => dispatch({ type: "PASS_QUESTION" })}
-              className="qzg-ll-btn"
-              style={{ "--qzg-ll-bg": "#EBF5FB", "--qzg-ll-c": "#2E86C1", "--qzg-ll-border": "#2E86C1" } as React.CSSProperties}>
+              className="qzg-ll-btn qzg-ll-btn--pass">
               تمرير للخصم (وسيلة)
             </button>
           )}
@@ -600,11 +597,10 @@ function WinnerPhase({ teams, onReset }: { teams: [Team, Team]; onReset: () => v
       <div className="qzg-winner-grid">
         {[a, b].map((team, i) => (
           <div key={team.id}
-            className="qzg-section-card qzg-winner-card"
-            style={{ "--qzg-wc-border": i === 0 ? "var(--majalis-brass)" : "var(--ds-line-color)" } as React.CSSProperties}>
+            className={`qzg-section-card qzg-winner-card${i === 0 ? " qzg-winner-card--first" : ""}`}>
             <div className="qzg-winner-rank">{i === 0 ? (isDraw ? <Handshake size={24} /> : <Trophy size={24} />) : <Award size={24} />}</div>
             <p className="qzg-winner-name">{team.name}</p>
-            <p className="qzg-winner-score" style={{ "--qzg-winner-score-color": i === 0 ? "var(--majalis-brass)" : "var(--majalis-ink-soft)" } as React.CSSProperties}>
+            <p className={`qzg-winner-score${i === 0 ? " qzg-winner-score--first" : ""}`}>
               {team.score.toLocaleString("ar-EG")}
             </p>
             <p className="qzg-winner-unit">نقطة</p>
