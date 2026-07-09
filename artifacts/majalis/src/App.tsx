@@ -132,6 +132,7 @@ const SawmPage = lazy(() => import("@/views/SawmPage"));
 const HajjPage = lazy(() => import("@/views/HajjPage"));
 const TaharaPage = lazy(() => import("@/views/TaharaPage"));
 const FadailAamalPage = lazy(() => import("@/views/FadailAamalPage"));
+const JanazaPage = lazy(() => import("@/views/JanazaPage"));
 const AdminPage = lazyWithRetry(() => import("@/views/AdminPage"), "AdminPage");
 const LessonImportImagePage = lazyWithRetry(() => import("@/views/admin/LessonImportImagePage"), "LessonImportImagePage");
 const LessonImportUrlPage = lazyWithRetry(() => import("@/views/admin/LessonImportUrlPage"), "LessonImportUrlPage");
@@ -311,6 +312,7 @@ function Router() {
       <Route path="/hajj"><SafeLazyRoute component={HajjPage} /></Route>
       <Route path="/tahara"><SafeLazyRoute component={TaharaPage} /></Route>
       <Route path="/fadail-aamal"><SafeLazyRoute component={FadailAamalPage} /></Route>
+      <Route path="/janaza"><SafeLazyRoute component={JanazaPage} /></Route>
       <Route path="/submit"><SafeLazyRoute component={SubmitContentPage} /></Route>
       <Route path="/upload"><SafeLazyRoute component={UploadPage} /></Route>
       <Route path="/my-submissions"><SafeLazyRoute component={MySubmissionsPage} /></Route>
