@@ -183,7 +183,7 @@ export function IslamicStoriesSection() {
                     <div className="is-summary">{story.summary}</div>
 
                     {/* Full content */}
-                    <button className="is-full-toggle" onClick={() => toggleFull(story.id)}>
+                    <button type="button" className="is-full-toggle" onClick={() => toggleFull(story.id)}>
                       {isFullShown ? "▲ إخفاء التفاصيل الكاملة" : "▼ عرض التفاصيل الكاملة"}
                     </button>
                     {isFullShown && (

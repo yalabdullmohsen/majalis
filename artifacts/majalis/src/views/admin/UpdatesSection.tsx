@@ -24,15 +24,15 @@ export function UpdatesSection() {
     <div>
       <div className="adm-section-hdr">
         <h2 className="adm-section-h2">آخر المستجدات ({items.length})</h2>
-        <button onClick={() => { setForm({ ...EMPTY }); setOpen(true); }} className="adm-btn-add">+ إضافة</button>
+        <button type="button" onClick={() => { setForm({ ...EMPTY }); setOpen(true); }} className="adm-btn-add">+ إضافة</button>
       </div>
       {loading ? <SkeletonCardGrid count={6} /> : items.map((item) => (
         <div key={item.id} className="adm-item-card">
           <span className="adm-type-badge">{item.update_type}</span>
           <strong className="adm-block-title">{item.title}</strong>
           <div className="adm-item-actions">
-            <button onClick={() => { setForm({ ...item }); setOpen(true); }} className="adm-btn-sm">تعديل</button>
-            <button onClick={() => { if (confirm("حذف؟")) adminDeleteUpdate(item.id).then(load).catch(() => showError("تعذّر الحذف.")); }} className="adm-btn-del">حذف</button>
+            <button type="button" onClick={() => { setForm({ ...item }); setOpen(true); }} className="adm-btn-sm">تعديل</button>
+            <button type="button" onClick={() => { if (confirm("حذف؟")) adminDeleteUpdate(item.id).then(load).catch(() => showError("تعذّر الحذف.")); }} className="adm-btn-del">حذف</button>
           </div>
         </div>
       ))}

@@ -127,7 +127,7 @@ export function QaSection() {
             }}
             onDone={load}
           />
-          <button onClick={openAdd} className="qa-add-btn">+ إضافة سؤال</button>
+          <button type="button" onClick={openAdd} className="qa-add-btn">+ إضافة سؤال</button>
         </div>
       </div>
 
@@ -198,8 +198,8 @@ export function QaSection() {
                     </td>
                     <td className="qa-td">
                       <div className="qa-cell-actions">
-                        <button onClick={() => openEdit(item)} className="qa-btn-edit">تعديل</button>
-                        <button onClick={() => handleDelete(item.id, item.question)} className="qa-btn-del">حذف</button>
+                        <button type="button" onClick={() => openEdit(item)} className="qa-btn-edit">تعديل</button>
+                        <button type="button" onClick={() => handleDelete(item.id, item.question)} className="qa-btn-del">حذف</button>
                       </div>
                     </td>
                   </tr>

@@ -169,13 +169,13 @@ export function QuizSection() {
       <div className="qzs-header">
         <h2 className="qzs-title">أسئلة المسابقة ({items.length})</h2>
         <div className="qzs-btn-group">
-          <button className="qzs-btn qzs-btn--warn" onClick={handleResetUsed} disabled={resetting}>
+          <button type="button" className="qzs-btn qzs-btn--warn" onClick={handleResetUsed} disabled={resetting}>
             {resetting ? "جاري الإعادة..." : "إعادة تعيين المُستخدَمة"}
           </button>
-          <button className="qzs-btn qzs-btn--warn" onClick={handleSyncSeed} disabled={syncing}>
+          <button type="button" className="qzs-btn qzs-btn--warn" onClick={handleSyncSeed} disabled={syncing}>
             {syncing ? "جاري الرفع..." : "رفع Seed → DB"}
           </button>
-          <button className="qzs-btn qzs-btn--primary" onClick={openAdd}>+ سؤال جديد</button>
+          <button type="button" className="qzs-btn qzs-btn--primary" onClick={openAdd}>+ سؤال جديد</button>
         </div>
       </div>
 
@@ -260,11 +260,11 @@ export function QuizSection() {
                   {item.hint && <div className="qzs-item-hint"><Lightbulb size={13} className="inline ml-1" />{item.hint}</div>}
                 </div>
                 <div className="qzs-item-actions">
-                  <button className="qzs-btn" onClick={() => openEdit(item)}>تعديل</button>
-                  <button className="qzs-btn" onClick={() => handleToggleStatus(item)}>
+                  <button type="button" className="qzs-btn" onClick={() => openEdit(item)}>تعديل</button>
+                  <button type="button" className="qzs-btn" onClick={() => handleToggleStatus(item)}>
                     {item.status === "published" ? "إخفاء" : "نشر"}
                   </button>
-                  <button className="qzs-btn qzs-btn--danger" onClick={() => handleDelete(item.id, item.question)}>حذف</button>
+                  <button type="button" className="qzs-btn qzs-btn--danger" onClick={() => handleDelete(item.id, item.question)}>حذف</button>
                 </div>
               </div>
             );

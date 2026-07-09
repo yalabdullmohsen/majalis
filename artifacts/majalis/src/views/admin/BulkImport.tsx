@@ -54,13 +54,13 @@ export function BulkImport({ title, template, hint, importRow, onDone }: BulkImp
 
   return (
     <>
-      <button onClick={() => setOpen(true)} className="blk-trigger-btn">⇪ استيراد جماعي</button>
+      <button type="button" onClick={() => setOpen(true)} className="blk-trigger-btn">⇪ استيراد جماعي</button>
 
       {open && (
         <div className="adm-modal__overlay" onClick={close}>
           <div className="blk-dialog" onClick={e => e.stopPropagation()}>
             <div className="blk-header">
-              <button onClick={close} className="blk-close" aria-label="إغلاق">×</button>
+              <button type="button" onClick={close} className="blk-close" aria-label="إغلاق">×</button>
               <h2 className="blk-title">{title}</h2>
             </div>
 
@@ -70,8 +70,8 @@ export function BulkImport({ title, template, hint, importRow, onDone }: BulkImp
                 {hint ? ` ${hint}` : ""}
               </p>
               <div className="blk-tool-row">
-                <button onClick={fillTemplate} className="blk-tmpl-btn">إدراج نموذج جاهز</button>
-                <button onClick={() => setText("")} className="blk-clear-btn">مسح</button>
+                <button type="button" onClick={fillTemplate} className="blk-tmpl-btn">إدراج نموذج جاهز</button>
+                <button type="button" onClick={() => setText("")} className="blk-clear-btn">مسح</button>
               </div>
               <textarea
                 className="blk-mono-textarea"
@@ -109,10 +109,10 @@ export function BulkImport({ title, template, hint, importRow, onDone }: BulkImp
             </div>
 
             <div className="blk-footer">
-              <button onClick={run} disabled={running || !text.trim()} className="blk-run-btn">
+              <button type="button" onClick={run} disabled={running || !text.trim()} className="blk-run-btn">
                 {running ? "جارٍ الاستيراد…" : "بدء الاستيراد"}
               </button>
-              <button onClick={close} disabled={running} className="blk-cancel-btn">
+              <button type="button" onClick={close} disabled={running} className="blk-cancel-btn">
                 {result ? "إغلاق" : "إلغاء"}
               </button>
             </div>

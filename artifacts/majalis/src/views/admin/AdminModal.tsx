@@ -26,15 +26,15 @@ export function AdminModal({ title, open, onClose, onSave, saving, children }: A
     <div className="adm-modal__overlay" onClick={onClose}>
       <div className="adm-modal__dialog" onClick={(e) => e.stopPropagation()}>
         <div className="adm-modal__header">
-          <button onClick={onClose} className="adm-modal__close" aria-label="إغلاق">×</button>
+          <button type="button" onClick={onClose} className="adm-modal__close" aria-label="إغلاق">×</button>
           <h2 className="adm-modal__title">{title}</h2>
         </div>
         <div className="adm-modal__body">{children}</div>
         <div className="adm-modal__footer">
-          <button onClick={onSave} disabled={saving} className={`adm-modal__save${saving ? " adm-modal__save--saving" : ""}`}>
+          <button type="button" onClick={onSave} disabled={saving} className={`adm-modal__save${saving ? " adm-modal__save--saving" : ""}`}>
             {saving ? "جارٍ الحفظ..." : "حفظ التغييرات"}
           </button>
-          <button onClick={onClose} disabled={saving} className="adm-modal__cancel">إلغاء</button>
+          <button type="button" onClick={onClose} disabled={saving} className="adm-modal__cancel">إلغاء</button>
         </div>
       </div>
     </div>

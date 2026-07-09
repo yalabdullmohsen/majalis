@@ -122,7 +122,7 @@ export function SheikhsSection() {
             })}
             onDone={load}
           />
-          <button onClick={openAdd} className="skh-add-btn">+ إضافة شيخ</button>
+          <button type="button" onClick={openAdd} className="skh-add-btn">+ إضافة شيخ</button>
         </div>
       </div>
       <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في المشايخ..." className="adm-input skh-search" />
@@ -159,8 +159,8 @@ export function SheikhsSection() {
                   <td className="skh-td skh-td--center">{item.years_experience ?? "—"}</td>
                   <td className="skh-td">
                     <div className="skh-cell-actions">
-                      <button onClick={() => openEdit(item)} className="skh-btn-edit">تعديل</button>
-                      <button onClick={() => handleDelete(item.id, item.name)} className="skh-btn-del">حذف</button>
+                      <button type="button" onClick={() => openEdit(item)} className="skh-btn-edit">تعديل</button>
+                      <button type="button" onClick={() => handleDelete(item.id, item.name)} className="skh-btn-del">حذف</button>
                     </div>
                   </td>
                 </tr>

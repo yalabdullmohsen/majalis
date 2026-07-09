@@ -24,14 +24,14 @@ export function AnnualCoursesSection() {
     <div>
       <div className="adm-section-hdr">
         <h2 className="adm-section-h2">الدورات العلمية ({items.length})</h2>
-        <button onClick={() => { setForm({ ...EMPTY }); setOpen(true); }} className="adm-btn-add">+ إضافة</button>
+        <button type="button" onClick={() => { setForm({ ...EMPTY }); setOpen(true); }} className="adm-btn-add">+ إضافة</button>
       </div>
       {loading ? <SkeletonCardGrid count={6} /> : items.map((item, idx) => (
         <div key={item.id ?? item.title ?? idx} className="adm-item-card">
           <strong>{item.title}</strong> — {item.course_type}
           <div className="adm-item-actions">
-            <button onClick={() => { setForm({ ...item }); setOpen(true); }} className="adm-btn-sm">تعديل</button>
-            <button onClick={() => { if (!item.id) return; if (confirm("حذف؟")) adminDeleteAnnualCourse(item.id).then(load); }} className="adm-btn-del">حذف</button>
+            <button type="button" onClick={() => { setForm({ ...item }); setOpen(true); }} className="adm-btn-sm">تعديل</button>
+            <button type="button" onClick={() => { if (!item.id) return; if (confirm("حذف؟")) adminDeleteAnnualCourse(item.id).then(load); }} className="adm-btn-del">حذف</button>
           </div>
         </div>
       ))}

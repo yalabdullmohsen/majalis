@@ -198,7 +198,7 @@ export default function QuranLivePage() {
         )}
 
         {!playing && (
-          <button className="qlive-play-btn" onClick={() => setPlaying(true)}>
+          <button type="button" className="qlive-play-btn" onClick={() => setPlaying(true)}>
             <Volume2 size={20} /> ابدأ الاستماع
           </button>
         )}

@@ -224,10 +224,10 @@ export function LessonsSection() {
           <Link href="/admin/review-center" className="les-link-btn les-link-btn--pink">مركز المراجعة</Link>
           <Link href="/admin/content-import/image" className="les-link-btn les-link-btn--blue">إضافة درس من صورة</Link>
           <Link href="/admin/content-import/url" className="les-link-btn les-link-btn--purple">إضافة درس من رابط</Link>
-          <button onClick={handleSyncSeed} disabled={syncing} className="les-sync-btn">
+          <button type="button" onClick={handleSyncSeed} disabled={syncing} className="les-sync-btn">
             {syncing ? "جاري المزامنة…" : "⬆ مزامنة الكتالوج مع DB"}
           </button>
-          <button onClick={openAdd} className="les-add-btn">+ إضافة درس</button>
+          <button type="button" onClick={openAdd} className="les-add-btn">+ إضافة درس</button>
         </div>
       </div>
       {syncMsg && (
@@ -288,8 +288,8 @@ export function LessonsSection() {
                     </td>
                     <td className="les-td">
                       <div className="les-cell-actions">
-                        <button onClick={() => openEdit(item)} className="les-btn-edit">تعديل</button>
-                        <button onClick={() => handleDelete(item.id, item.title)} className="les-btn-del">حذف</button>
+                        <button type="button" onClick={() => openEdit(item)} className="les-btn-edit">تعديل</button>
+                        <button type="button" onClick={() => handleDelete(item.id, item.title)} className="les-btn-del">حذف</button>
                       </div>
                     </td>
                   </tr>

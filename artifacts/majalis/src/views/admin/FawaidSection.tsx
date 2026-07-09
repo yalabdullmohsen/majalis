@@ -67,7 +67,7 @@ export function FawaidSection() {
             importRow={(row) => adminUpsertFawaid({ status: "approved", ...row })}
             onDone={load}
           />
-          <button onClick={openAdd} className="faw-add-btn">+ إضافة فائدة</button>
+          <button type="button" onClick={openAdd} className="faw-add-btn">+ إضافة فائدة</button>
         </div>
       </div>
 
@@ -103,22 +103,22 @@ export function FawaidSection() {
                 <div className="faw-card__footer">
                   <div className="faw-card__actions">
                     {item.status !== "approved" && (
-                      <button onClick={() => moderate(item.id, "approved")} className="faw-approve-btn">
+                      <button type="button" onClick={() => moderate(item.id, "approved")} className="faw-approve-btn">
                         قبول
                       </button>
                     )}
                     {item.status !== "rejected" && (
-                      <button onClick={() => moderate(item.id, "rejected")} className="faw-reject-btn">
+                      <button type="button" onClick={() => moderate(item.id, "rejected")} className="faw-reject-btn">
                         رفض
                       </button>
                     )}
                     {item.status === "approved" && (
-                      <button onClick={() => moderate(item.id, "pending")} className="faw-pending-btn">
+                      <button type="button" onClick={() => moderate(item.id, "pending")} className="faw-pending-btn">
                         إعادة للانتظار
                       </button>
                     )}
-                    <button onClick={() => openEdit(item)} className="faw-edit-btn">تعديل</button>
-                    <button onClick={() => handleDelete(item.id)} className="faw-del-btn">حذف</button>
+                    <button type="button" onClick={() => openEdit(item)} className="faw-edit-btn">تعديل</button>
+                    <button type="button" onClick={() => handleDelete(item.id)} className="faw-del-btn">حذف</button>
                   </div>
                   <div className="faw-card__meta">
                     {item.author_name && <span>{item.author_name} · </span>}

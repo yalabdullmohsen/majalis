@@ -280,7 +280,7 @@ export default function IslamicKnowledgeMapPage() {
           aria-label="بحث في العلوم"
         />
         {selected && (
-          <button className="ikm-clear-btn" onClick={() => setSelected(null)}>
+          <button type="button" className="ikm-clear-btn" onClick={() => setSelected(null)}>
             إلغاء التصفية
           </button>
         )}

@@ -336,23 +336,23 @@ export function FiqhCouncilSection() {
       </p>
       <FiqhCompletionBarFromItem item={item} className="fiqh-admin-item-completion" />
       <div className="fcs-item-actions">
-        <button onClick={() => { setForm({ ...item, tags: (item.tags || []).join("، "), evidence: formatEvidence(item.evidence) }); setOpen(true); }} className="fcs-btn">تعديل</button>
+        <button type="button" onClick={() => { setForm({ ...item, tags: (item.tags || []).join("، "), evidence: formatEvidence(item.evidence) }); setOpen(true); }} className="fcs-btn">تعديل</button>
         {item.status !== "published" && (
           <>
-            <button onClick={() => handleApprove(item.id)} className="fcs-btn">اعتماد</button>
-            <button onClick={() => handlePublish(item.id)} className="fcs-btn">نشر</button>
-            <button onClick={() => handleReject(item.id)} className="fcs-btn--danger">رفض</button>
+            <button type="button" onClick={() => handleApprove(item.id)} className="fcs-btn">اعتماد</button>
+            <button type="button" onClick={() => handlePublish(item.id)} className="fcs-btn">نشر</button>
+            <button type="button" onClick={() => handleReject(item.id)} className="fcs-btn--danger">رفض</button>
           </>
         )}
         {item.status === "published" && (
-          <button onClick={() => handleStatus(item.id, "draft")} className="fcs-btn">إلغاء النشر</button>
+          <button type="button" onClick={() => handleStatus(item.id, "draft")} className="fcs-btn">إلغاء النشر</button>
         )}
         {item.status !== "archived" && (
-          <button onClick={() => handleArchive(item.id)} className="fcs-btn">أرشفة</button>
+          <button type="button" onClick={() => handleArchive(item.id)} className="fcs-btn">أرشفة</button>
         )}
-        <button onClick={() => setPreviewSlug(item.slug)} className="fcs-btn">معاينة</button>
+        <button type="button" onClick={() => setPreviewSlug(item.slug)} className="fcs-btn">معاينة</button>
         <a href={fiqhItemHref(item.slug)} target="_blank" rel="noopener noreferrer" className="fcs-a">فتح</a>
-        <button onClick={() => handleDelete(item.id)} className="fcs-btn--danger">حذف</button>
+        <button type="button" onClick={() => handleDelete(item.id)} className="fcs-btn--danger">حذف</button>
       </div>
     </div>
   );
@@ -457,8 +457,8 @@ export function FiqhCouncilSection() {
                 {(dup.match_reasons || []).join(" · ")}
               </p>
               <div className="fcs-dup-actions">
-                <button onClick={() => handleResolveDup(dup.id, "merged")} className="fcs-btn">دمج</button>
-                <button onClick={() => handleResolveDup(dup.id, "ignored")} className="fcs-btn">تجاهل</button>
+                <button type="button" onClick={() => handleResolveDup(dup.id, "merged")} className="fcs-btn">دمج</button>
+                <button type="button" onClick={() => handleResolveDup(dup.id, "ignored")} className="fcs-btn">تجاهل</button>
               </div>
             </div>
           ))}

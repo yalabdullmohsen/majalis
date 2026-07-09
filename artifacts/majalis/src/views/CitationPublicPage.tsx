@@ -202,7 +202,7 @@ export default function CitationPublicPage() {
           {/* رابط السياق الكامل */}
           {src && (
             <div className="cpp-context">
-              <Link href={sourceHref} className="cpp-link" style={{ fontSize: ".875rem" }}>
+              <Link href={sourceHref} className="cpp-link">
                 شاهد السياق الكامل ←
               </Link>
             </div>

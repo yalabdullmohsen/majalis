@@ -352,7 +352,7 @@ export default function IslamicScholarsPage() {
                     </ul>
                   </div>
                   <p className="sch-card__region">📍 {s.region}</p>
-                  <button className="sch-card__close" onClick={() => setExpanded(null)}>
+                  <button type="button" className="sch-card__close" onClick={() => setExpanded(null)}>
                     إغلاق التفاصيل
                   </button>
                 </div>
@@ -366,7 +366,7 @@ export default function IslamicScholarsPage() {
         <div className="sch-empty">
           <Search size={40} />
           <p>لا توجد نتائج للبحث عن «{query}»</p>
-          <button onClick={() => { setQuery(""); setEra("الكل"); setSpecialty("الكل"); }}>
+          <button type="button" onClick={() => { setQuery(""); setEra("الكل"); setSpecialty("الكل"); }}>
             مسح التصفية
           </button>
         </div>
