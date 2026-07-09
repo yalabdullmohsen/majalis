@@ -75,10 +75,16 @@ function eventsForDate(date: Date, events: CalendarEvent[]): CalendarEvent[] {
 }
 
 function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => void }) {
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [onClose]);
+
   return (
     <div className="cal-modal-backdrop" onClick={onClose} role="presentation">
-      <div className="cal-modal ui-card" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
-        <h3>{event.title}</h3>
+      <div className="cal-modal ui-card" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="cal-modal-title">
+        <h3 id="cal-modal-title">{event.title}</h3>
         <dl className="cal-modal-meta">
           <div><dt>الشيخ</dt><dd>{event.sheikh}</dd></div>
           <div><dt>المكان</dt><dd>{event.mosque}</dd></div>

@@ -257,6 +257,13 @@ export default function LessonsPage({
     }
   }, [isLoggedIn, user]);
 
+  useEffect(() => {
+    if (!filtersOpen) return;
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") setFiltersOpen(false); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [filtersOpen]);
+
   const tabLessons = useMemo(() => filterByTab(activeLessons, tab), [activeLessons, tab]);
 
   const options = useMemo(() => extractFilterOptions(tabLessons), [tabLessons]);

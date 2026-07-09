@@ -293,6 +293,7 @@ export default function AkhlaqPage() {
               type="button"
               className={`akl-cat${category === c ? " akl-cat--active" : ""}`}
               onClick={() => setCategory(c)}
+              aria-pressed={category === c}
             >
               {c}
             </button>

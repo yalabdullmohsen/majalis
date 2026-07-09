@@ -1,12 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
-
-applyPageSeo({
-  path: "/fadail-aamal",
-  title: "فضائل الأعمال — المجلس العلمي",
-  description: "فضائل العبادات والأعمال الصالحة من الأحاديث النبوية الصحيحة",
-  keywords: ["فضائل الأعمال", "فضل الصلاة", "فضل الصيام", "الأجر والثواب", "الأحاديث النبوية"],
-});
 
 interface Fadila {
   id: string;
@@ -303,6 +296,15 @@ const FADAIL: Fadila[] = [
 export default function FadailAamalPage() {
   const [activeCategory, setActiveCategory] = useState("الكل");
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/fadail-aamal",
+      title: "فضائل الأعمال — المجلس العلمي",
+      description: "فضائل العبادات والأعمال الصالحة من الأحاديث النبوية الصحيحة",
+      keywords: ["فضائل الأعمال", "فضل الصلاة", "فضل الصيام", "الأجر والثواب", "الأحاديث النبوية"],
+    });
+  }, []);
 
   const filtered = FADAIL.filter((f) => {
     const matchCat = activeCategory === "الكل" || f.category === activeCategory;

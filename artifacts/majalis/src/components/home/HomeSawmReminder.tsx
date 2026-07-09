@@ -63,7 +63,7 @@ export function HomeSawmReminder() {
   const h = HADITHS[hadithIdx];
 
   return (
-    <div className="sawm-reminder" dir="rtl" role="alert">
+    <div className="sawm-reminder" dir="rtl" role="region" aria-label="تذكير صيام النافلة">
       <div className="sawm-reminder__header">
         <span className="sawm-reminder__icon">🌙</span>
         <span className="sawm-reminder__day">اليوم {dayName}</span>

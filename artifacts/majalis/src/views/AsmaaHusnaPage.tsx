@@ -192,6 +192,7 @@ export default function AsmaaHusnaPage() {
               type="button"
               className={`ah-cat-chip${category === c ? " ah-cat-chip--active" : ""}`}
               onClick={() => setCategory(c)}
+              aria-pressed={category === c}
             >
               {c}
             </button>
@@ -205,11 +206,13 @@ export default function AsmaaHusnaPage() {
       ) : (
         <div className="ah-grid">
           {filtered.map((a) => (
-            <button
+            <div
               key={a.num}
-              type="button"
+              role="button"
+              tabIndex={0}
               className="ah-card"
               onClick={() => setSelected(a)}
+              onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setSelected(a)}
               aria-label={`${a.arabic} — ${a.meaning}`}
             >
               <span className="ah-card__num">{a.num}</span>
@@ -224,7 +227,7 @@ export default function AsmaaHusnaPage() {
               >
                 <Heart size={13} strokeWidth={2} />
               </button>
-            </button>
+            </div>
           ))}
         </div>
       )}
@@ -235,17 +238,18 @@ export default function AsmaaHusnaPage() {
           className="ah-modal-backdrop"
           onClick={() => setSelected(null)}
           role="presentation"
+          onKeyDown={(e) => e.key === "Escape" && setSelected(null)}
         >
           <div
             className="ah-modal"
             role="dialog"
             aria-modal="true"
-            aria-label={selected.arabic}
+            aria-labelledby="ah-modal-name"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="ah-modal__head">
               <span className="ah-modal__num">{selected.num}</span>
-              <h2 className="ah-modal__name">{selected.arabic}</h2>
+              <h2 id="ah-modal-name" className="ah-modal__name">{selected.arabic}</h2>
               <span className="ah-modal__trans">{selected.transliteration}</span>
               <button
                 type="button"
