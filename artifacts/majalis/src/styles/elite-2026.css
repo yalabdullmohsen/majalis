@@ -7350,26 +7350,39 @@ button.primary:hover {
 /* ============================================================
    §79 — KnowledgeGraphPage  (kng-* additions)
    ============================================================ */
+/* Node-type color tokens — set --kng-nc on the element */
+.kng-nt--quran_ayah    { --kng-nc: #065f46; }
+.kng-nt--hadith        { --kng-nc: #1d4ed8; }
+.kng-nt--fatwa         { --kng-nc: #7c3aed; }
+.kng-nt--scholar       { --kng-nc: #1F4D3A; }
+.kng-nt--book          { --kng-nc: #1F4D3A; }
+.kng-nt--lesson        { --kng-nc: #0369a1; }
+.kng-nt--benefit       { --kng-nc: #047857; }
+.kng-nt--prophet_story { --kng-nc: #dc2626; }
+.kng-nt--term          { --kng-nc: #6b7280; }
+.kng-nt--fawaid        { --kng-nc: #047857; }
+.kng-nt--question      { --kng-nc: #6b7280; }
+.kng-nt--all           { --kng-nc: #6b7280; }
 .kng-filter-chip--typed.is-active {
-  background: var(--chip-color, var(--majalis-emerald));
-  border-color: var(--chip-color, var(--majalis-emerald));
+  background: var(--kng-nc, var(--majalis-emerald));
+  border-color: var(--kng-nc, var(--majalis-emerald));
   color: #fff;
 }
-.kng-legend-dot { background: var(--lg-color, #6b7280); }
-.kng-panel { border-color: var(--panel-color, var(--majalis-line)); }
+.kng-legend-dot { background: var(--kng-nc, #6b7280); }
+.kng-panel { border-color: var(--kng-nc, var(--majalis-line)); }
 .kng-type-badge {
-  background: color-mix(in srgb, var(--panel-color, var(--majalis-emerald)) 9%, transparent);
-  color: var(--panel-color, var(--majalis-emerald));
+  background: color-mix(in srgb, var(--kng-nc, var(--majalis-emerald)) 9%, transparent);
+  color: var(--kng-nc, var(--majalis-emerald));
 }
 .kng-result-badge {
-  background: color-mix(in srgb, var(--rcard-color, #6b7280) 9%, transparent);
-  color: var(--rcard-color, #6b7280);
+  background: color-mix(in srgb, var(--kng-nc, #6b7280) 9%, transparent);
+  color: var(--kng-nc, #6b7280);
 }
-.kng-result-card:hover { border-color: var(--rcard-color, var(--majalis-emerald)); }
+.kng-result-card:hover { border-color: var(--kng-nc, var(--majalis-emerald)); }
 .kng-type-chip {
-  border-color: var(--tc-color);
-  background: color-mix(in srgb, var(--tc-color) 6%, transparent);
-  color: var(--tc-color);
+  border-color: var(--kng-nc, #6b7280);
+  background: color-mix(in srgb, var(--kng-nc, #6b7280) 6%, transparent);
+  color: var(--kng-nc, #6b7280);
 }
 
 /* ============================================================
