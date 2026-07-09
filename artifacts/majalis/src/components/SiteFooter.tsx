@@ -31,6 +31,7 @@ const FOOTER_GROUPS = [
       { href: "/seerah",         label: "السيرة النبوية" },
       { href: "/sahabah",        label: "أعلام الصحابة" },
       { href: "/tawba",          label: "التوبة والاستغفار" },
+      { href: "/ulum-quran",     label: "علوم القرآن" },
       { href: "/qa",             label: "الأسئلة" },
       { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
       { href: "/updates",        label: "آخر المستجدات" },
