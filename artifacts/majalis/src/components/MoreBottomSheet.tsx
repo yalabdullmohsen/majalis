@@ -7,7 +7,7 @@ import {
   Activity, BarChart3, BookOpen, Bot, Building2, Calendar, Compass, CreditCard,
   FileText, GraduationCap, Heart, HelpCircle, Info, Landmark, Library, Layers,
   Mic, Network, Radio, RefreshCw, Repeat2, Scale, ScrollText, Search, Settings,
-  Shield, Sparkles, Stethoscope, Tv, Users, X, Zap,
+  Shield, Sparkles, Star, Stethoscope, Tv, Users, X, Zap,
 } from "lucide-react";
 
 const SHEET_SECTIONS = [
@@ -29,6 +29,7 @@ const SHEET_SECTIONS = [
     { href: "/asma-husna",         label: "الأسماء الحسنى",   Icon: Sparkles },
     { href: "/akhlaq",             label: "الأخلاق الإسلامية", Icon: Heart },
     { href: "/arkan",              label: "أركان الإسلام",      Icon: Landmark },
+    { href: "/arkan-iman",         label: "أركان الإيمان",      Icon: Star },
     { href: "/hadith",             label: "الأحاديث",           Icon: ScrollText },
     { href: "/arbaeen-nawawi",     label: "الأربعون النووية",  Icon: FileText },
     { href: "/fawaid",             label: "الفوائد",           Icon: Heart },

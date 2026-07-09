@@ -59,6 +59,7 @@ const FOOTER_GROUPS = [
       { href: "/fiqh-council", label: "المجمع الفقهي" },
       { href: "/tawhid",       label: "التوحيد" },
       { href: "/arkan",        label: "أركان الإسلام" },
+      { href: "/arkan-iman",   label: "أركان الإيمان" },
       { href: "/asma-husna",   label: "الأسماء الحسنى" },
       { href: "/akhlaq",       label: "الأخلاق الإسلامية" },
       { href: "/scholars",     label: "أعلام الإسلام" },

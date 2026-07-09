@@ -259,6 +259,7 @@ export default function ArkanIslamPage() {
         <h2 className="arkan-related__title">استكشف أيضاً</h2>
         <div className="arkan-related__grid">
           {[
+            { href: "/arkan-iman", label: "أركان الإيمان الستة" },
             { href: "/tawhid",     label: "التوحيد والعقيدة" },
             { href: "/asma-husna", label: "الأسماء الحسنى" },
             { href: "/akhlaq",     label: "الأخلاق الإسلامية" },
