@@ -132,7 +132,18 @@ export default function PrayerTimesPage() {
   const prayers: PrayerSlot[] = (data?.prayers ?? []).filter((p) => p.time);
   const nowInfo = kuwaitNowSeconds();
 
-  const displayKey  = pinnedKey ?? countdown.next.key;
+  const inGrace = !pinnedKey && countdown.sinceSeconds != null;
+  const sinceMinutes = inGrace ? Math.floor((countdown.sinceSeconds ?? 0) / 60) : 0;
+
+  // During grace: find the actual next prayer (after the one that rang)
+  const ranKey = countdown.next.key;
+  const OBLIGATORY_KEYS = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+  const ranIdx = OBLIGATORY_KEYS.indexOf(ranKey);
+  const actualNextKey = inGrace
+    ? (ranIdx >= 0 ? OBLIGATORY_KEYS[(ranIdx + 1) % OBLIGATORY_KEYS.length] : null)
+    : null;
+
+  const displayKey  = pinnedKey ?? (inGrace && actualNextKey ? actualNextKey : countdown.next.key);
   const displayItem = prayers.find((p) => p.key === displayKey);
   const displayName = PRAYER_AR[displayKey] ?? countdown.next.name;
   const displayTime = displayItem?.time ?? countdown.next.time;
@@ -168,7 +179,11 @@ export default function PrayerTimesPage() {
       {/* ── العداد الرئيسي ── */}
       <section className="pt-hero" aria-label="العداد التنازلي">
         <div className="pt-hero__label">
-          {pinnedKey && pinnedKey !== countdown.next.key ? "الوقت المتبقي لـ" : "الصلاة القادمة"}
+          {pinnedKey && pinnedKey !== countdown.next.key
+            ? "الوقت المتبقي لـ"
+            : inGrace
+              ? `مضى على أذان ${PRAYER_AR[ranKey] ?? countdown.next.name} ${sinceMinutes} دقيقة · الصلاة القادمة`
+              : "الصلاة القادمة"}
         </div>
         <h1 className="pt-hero__name" key={displayKey}>
           <span className="pt-hero__icon" aria-hidden="true">
