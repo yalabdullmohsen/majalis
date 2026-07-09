@@ -15765,3 +15765,316 @@ img[loading="lazy"]:not([src=""]) {
 }
 
 /* ── نهاية §57 ───────────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════
+   §58. Islamic Scholars Page — أعلام الإسلام
+   ══════════════════════════════════════════════ */
+.sch-page {
+  min-height: 100vh;
+  background: var(--elite-white, #FAF8F2);
+  color: var(--elite-ink, #0C0C0C);
+  padding-bottom: 5rem;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.sch-hero {
+  background: linear-gradient(160deg, #062B20, #0A5040);
+  margin: 0 -1rem;
+  padding: 2.5rem 2rem 2rem;
+  text-align: center;
+  color: #FFFFFF;
+}
+.sch-hero__title {
+  font-family: "Amiri", serif;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+.sch-hero__sub {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.75);
+  max-width: 28rem;
+  margin: 0 auto 1.25rem;
+  line-height: 1.65;
+}
+.sch-hero__stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.6);
+  flex-wrap: wrap;
+}
+.sch-hero__stats strong { color: #FFFFFF; font-size: 1.2rem; display: block; }
+
+/* Controls */
+.sch-controls {
+  padding: 1.5rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.sch-search-wrap {
+  position: relative;
+  max-width: 28rem;
+}
+.sch-search-icon {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  color: #6B7280;
+  pointer-events: none;
+}
+.sch-search-input {
+  width: 100%;
+  padding: 0.6rem 2.5rem 0.6rem 1rem;
+  border: 1.5px solid rgba(10,80,64,0.2);
+  border-radius: 2rem;
+  background: #FFFFFF;
+  color: var(--elite-ink, #0C0C0C);
+  font-size: 0.9rem;
+  outline: none;
+}
+.sch-search-input:focus { border-color: #0A5040; }
+.sch-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.sch-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+  color: #6B7280;
+}
+.sch-filter-btn {
+  padding: 0.25rem 0.65rem;
+  border: 1px solid rgba(10,80,64,0.2);
+  border-radius: 2rem;
+  background: #FFFFFF;
+  color: #374151;
+  font-size: 0.76rem;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.sch-filter-btn:hover { border-color: #0A5040; color: #0A5040; }
+.sch-filter-btn--active {
+  background: #0A5040 !important;
+  color: #FFFFFF !important;
+  border-color: #0A5040 !important;
+}
+.sch-results-count {
+  font-size: 0.8rem;
+  color: #6B7280;
+  margin: 0.75rem 0 1rem;
+}
+
+/* Grid */
+.sch-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.sch-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(10,80,64,0.1);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: box-shadow 0.18s;
+}
+.sch-card:hover { box-shadow: 0 6px 24px rgba(10,80,64,0.12); }
+.sch-card--open { border-color: rgba(10,80,64,0.25); }
+.sch-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem;
+  cursor: pointer;
+}
+.sch-card__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0A5040, #0E6E52);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.sch-card__initial {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  font-family: "Amiri", serif;
+}
+.sch-card__meta { flex: 1; }
+.sch-card__name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--elite-forest, #052E16);
+  margin: 0 0 0.15rem;
+}
+.sch-card__fullname {
+  font-size: 0.78rem;
+  color: #6B7280;
+  margin: 0 0 0.4rem;
+}
+.sch-card__tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.sch-tag {
+  font-size: 0.68rem;
+  padding: 0.12rem 0.4rem;
+  border-radius: 1rem;
+  background: rgba(10,80,64,0.08);
+  color: #0A5040;
+  border: 1px solid rgba(10,80,64,0.12);
+}
+.sch-tag--madhhab {
+  background: rgba(100,50,200,0.08);
+  color: #5b21b6;
+  border-color: rgba(100,50,200,0.12);
+}
+.sch-card__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+.sch-card__era {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #0A5040;
+  background: rgba(10,80,64,0.08);
+  padding: 0.15rem 0.5rem;
+  border-radius: 1rem;
+  white-space: nowrap;
+}
+.sch-card__died {
+  font-size: 0.72rem;
+  color: #9CA3AF;
+  white-space: nowrap;
+}
+.sch-card__bio {
+  font-size: 0.86rem;
+  color: #374151;
+  line-height: 1.65;
+  margin: 0;
+  padding: 0 1.25rem 1rem;
+}
+.sch-card__details {
+  border-top: 1px solid rgba(10,80,64,0.1);
+  padding: 1rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  background: rgba(10,80,64,0.02);
+}
+.sch-card__quote {
+  font-family: "Amiri", serif;
+  font-size: 0.95rem;
+  color: #0A5040;
+  border-right: 3px solid #0A5040;
+  padding: 0.5rem 0.85rem;
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  background: rgba(10,80,64,0.04);
+  border-radius: 0 0.5rem 0.5rem 0;
+  line-height: 1.7;
+}
+.sch-card__quote-icon { color: #0A5040; flex-shrink: 0; margin-top: 0.2rem; }
+.sch-card__works-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--elite-forest, #052E16);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 0.4rem;
+}
+.sch-card__works-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.sch-card__works-list li {
+  font-size: 0.8rem;
+  background: #FFFFFF;
+  border: 1px solid rgba(10,80,64,0.12);
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.5rem;
+  color: var(--elite-ink, #0C0C0C);
+}
+.sch-card__region {
+  font-size: 0.78rem;
+  color: #6B7280;
+  margin: 0;
+}
+.sch-card__close {
+  background: none;
+  border: 1px solid rgba(10,80,64,0.2);
+  color: #0A5040;
+  font-size: 0.78rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  align-self: flex-start;
+}
+.sch-card__close:hover { background: rgba(10,80,64,0.05); }
+
+/* Empty state */
+.sch-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #9CA3AF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+.sch-empty button {
+  background: none;
+  border: 1px solid rgba(10,80,64,0.3);
+  color: #0A5040;
+  padding: 0.45rem 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+/* Related */
+.sch-related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 2rem 0 0;
+}
+.sch-related-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #FFFFFF;
+  border: 1.5px solid rgba(10,80,64,0.2);
+  color: #0A5040;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  text-decoration: none;
+}
+.sch-related-link:hover {
+  background: rgba(10,80,64,0.05);
+  text-decoration: none;
+}
+
+/* ── نهاية §58 ───────────────────────────────────────────── */
