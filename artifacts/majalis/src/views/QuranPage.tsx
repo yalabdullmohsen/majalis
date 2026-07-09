@@ -89,7 +89,6 @@ export default function QuranPage() {
   const [zoom, setZoom]         = useState<number>(() => lsGet(ZOOM_KEY, 1.0));
   const [bookmarks, setBookmarks] = useState<number[]>(() => lsGet(BM_KEY, []));
   const [imgLoaded, setImgLoaded] = useState(false);
-  const [imgError, setImgError]   = useState(false);
   const [cdnIdx, setCdnIdx]       = useState(0);
   const [navOpen, setNavOpen]     = useState(false);
   const [navTab, setNavTab]       = useState<"surahs" | "bookmarks">("surahs");
@@ -132,7 +131,7 @@ export default function QuranPage() {
         setPage(p);
         lsSet(PAGE_KEY, p);
         setImgLoaded(false);
-        setImgError(false);
+        
         setCdnIdx(0);
         setAnim("");
       }, 180);
@@ -140,7 +139,7 @@ export default function QuranPage() {
       setPage(p);
       lsSet(PAGE_KEY, p);
       setImgLoaded(false);
-      setImgError(false);
+      
       setCdnIdx(0);
     }
     bump();
@@ -296,7 +295,7 @@ export default function QuranPage() {
             <button
               type="button"
               className="mshf-err-btn"
-              onClick={() => { setImgError(false); setImgLoaded(false); setCdnIdx(0); }}
+              onClick={() => {  setImgLoaded(false); setCdnIdx(0); }}
             >
               إعادة المحاولة
             </button>
@@ -314,13 +313,13 @@ export default function QuranPage() {
               transform: zoom !== 1 ? `scale(${zoom})` : undefined,
               transformOrigin: "top center",
             }}
-            onLoad={() => { setImgLoaded(true); setImgError(false); }}
+            onLoad={() => { setImgLoaded(true);  }}
             onError={() => {
               if (cdnIdx + 1 < CDN_SOURCES.length) {
                 setCdnIdx(idx => idx + 1);
                 setImgLoaded(false);
               } else {
-                setImgError(true);
+                
                 setCdnIdx(CDN_SOURCES.length);
               }
             }}

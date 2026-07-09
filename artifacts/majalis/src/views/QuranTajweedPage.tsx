@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
-import { PageHeader } from "@/components/ui-common";
-
 /* ══ بيانات قواعد التجويد ══ */
 type TajweedRule = {
   id: string;

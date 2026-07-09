@@ -226,15 +226,6 @@ function SafeLazyRoute({ component: Component }: { component: ComponentType<any>
   );
 }
 
-function QuranComingSoon() {
-  return (
-    <div className="coming-soon-wrap">
-      <span className="coming-soon-wrap__icon"><BookOpen size={48} strokeWidth={1.2} /></span>
-      <h2 className="coming-soon-wrap__title">قريباً</h2>
-      <p className="coming-soon-wrap__body">قسم القرآن الكريم قيد التطوير</p>
-    </div>
-  );
-}
 
 function AdminLazyRoute({ component: Component }: { component: ComponentType }) {
   return (
