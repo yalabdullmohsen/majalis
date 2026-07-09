@@ -222,7 +222,7 @@ export default function TranscribePage() {
         <p className="mb-8 text-[#5B5446]">حوّل الصوت والفيديو إلى نص مع تلخيص ذكي واستخراج الفوائد</p>
 
         {!isLoggedIn && (
-          <div className="mb-6 rounded-xl border border-[var(--majalis-emerald)] bg-[var(--majalis-emerald-muted)] p-4 text-[var(--majalis-emerald)]">
+          <div className="trp-login-notice">
             يجب <Link href="/login?next=/transcribe" className="font-bold underline">تسجيل الدخول</Link> لاستخدام التفريغ.
           </div>
         )}
@@ -326,7 +326,7 @@ export default function TranscribePage() {
           )}
 
           {errorMessage && (
-            <p className="rounded-lg bg-[var(--majalis-emerald-muted)] p-3 text-sm text-[var(--majalis-emerald)]" role="alert">
+            <p className="trp-alert" role="alert">
               {errorMessage}
             </p>
           )}
@@ -357,16 +357,14 @@ export default function TranscribePage() {
                 </h2>
                 <div className="space-y-3">
                   {result.benefits.map((b, i) => (
-                    <div key={i} className="flex gap-3 rounded-xl border border-[var(--majalis-emerald)] bg-[var(--majalis-emerald-muted)] p-4">
+                    <div key={i} className="trp-benefit-card">
                       {b.timestamp && (
-                        <span className="mt-1 shrink-0 text-sm font-bold text-[var(--majalis-emerald)]">{b.timestamp}</span>
+                        <span className="trp-benefit-timestamp">{b.timestamp}</span>
                       )}
                       <div className="flex-1">
-                        <p className="text-[var(--majalis-ink)]">{b.benefit}</p>
+                        <p className="trp-benefit-text">{b.benefit}</p>
                         {b.category && (
-                          <span className="mt-1 inline-block rounded-full bg-[var(--majalis-emerald)] px-2 py-0.5 text-xs text-white">
-                            {b.category}
-                          </span>
+                          <span className="trp-benefit-category">{b.category}</span>
                         )}
                       </div>
                     </div>

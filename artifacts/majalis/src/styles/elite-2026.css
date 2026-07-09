@@ -23094,3 +23094,99 @@ img[loading="lazy"]:not([src=""]) {
    ══════════════════════════════════════════════ */
 .lp-page-bg { min-height: 100svh; background: var(--majalis-parchment); padding-bottom: 6rem; direction: rtl; }
 .lp-error { text-align: center; padding: 2.5rem 0; color: var(--majalis-danger, #dc2626); }
+
+/* ══════════════════════════════════════════════
+   §TRP. TranscribePage
+   ══════════════════════════════════════════════ */
+.trp-login-notice {
+  margin-bottom: 1.5rem;
+  border-radius: .75rem;
+  border: 1px solid var(--majalis-emerald);
+  background: var(--majalis-emerald-muted, rgba(31,77,58,.1));
+  padding: 1rem;
+  color: var(--majalis-emerald);
+}
+.trp-alert {
+  border-radius: .5rem;
+  background: var(--majalis-emerald-muted, rgba(31,77,58,.1));
+  padding: .75rem;
+  font-size: .875rem;
+  color: var(--majalis-emerald);
+}
+.trp-benefit-card {
+  display: flex;
+  gap: .75rem;
+  border-radius: .75rem;
+  border: 1px solid var(--majalis-emerald);
+  background: var(--majalis-emerald-muted, rgba(31,77,58,.1));
+  padding: 1rem;
+}
+.trp-benefit-timestamp {
+  margin-top: .25rem;
+  flex-shrink: 0;
+  font-size: .875rem;
+  font-weight: 700;
+  color: var(--majalis-emerald);
+}
+.trp-benefit-text { color: var(--majalis-ink); margin: 0; }
+.trp-benefit-category {
+  margin-top: .25rem;
+  display: inline-block;
+  border-radius: 9999px;
+  background: var(--majalis-emerald);
+  padding: .125rem .5rem;
+  font-size: .75rem;
+  color: #fff;
+}
+
+/* ══════════════════════════════════════════════
+   §FQP. FiqhPage
+   ══════════════════════════════════════════════ */
+.fqp-root { min-height: 100svh; background: var(--majalis-parchment); direction: rtl; }
+.fqp-tabs-nav {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--majalis-panel);
+  border-bottom: 1px solid var(--majalis-line);
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.fqp-tab {
+  display: inline-flex; align-items: center; gap: .375rem;
+  padding: .875rem 1.25rem; font-size: .875rem; font-weight: 500;
+  white-space: nowrap; border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+  color: var(--majalis-ink-soft); background: none; border-top: none;
+  border-left: none; border-right: none; cursor: pointer;
+}
+.fqp-tab:hover { color: var(--majalis-ink); }
+.fqp-tab--active { border-bottom-color: var(--mn-border-active, var(--majalis-emerald)); color: var(--mn-text-active, var(--majalis-emerald-deep)); }
+.fqp-section-title { font-size: 1.25rem; font-weight: 700; color: var(--majalis-ink); display: flex; align-items: center; gap: .5rem; }
+.fqp-section-desc { font-size: .875rem; color: var(--majalis-ink-soft); }
+.fqp-see-all { font-size: .875rem; color: var(--majalis-emerald); text-decoration: none; cursor: pointer; }
+.fqp-see-all:hover { text-decoration: underline; }
+.fqp-card {
+  background: var(--majalis-panel); border: 1px solid var(--majalis-line);
+  border-radius: .75rem; padding: 1rem;
+  transition: box-shadow .2s, border-color .2s; cursor: pointer;
+}
+.fqp-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+.fqp-card--hover-border:hover { border-color: var(--majalis-emerald); }
+.fqp-card--center { text-align: center; }
+.fqp-card__title { font-weight: 600; color: var(--majalis-ink); font-size: .875rem; line-height: 1.35; margin-bottom: .25rem; }
+.fqp-card__title--mb2 { margin-bottom: .5rem; }
+.fqp-card__icon { font-size: 1.5rem; margin-bottom: .25rem; }
+.fqp-cat-badge {
+  display: inline-block; font-size: .75rem;
+  background: var(--majalis-emerald-muted, rgba(31,77,58,.1));
+  color: var(--majalis-emerald); padding: .125rem .5rem;
+  border-radius: 9999px;
+}
+.fqp-cat-chip {
+  display: inline-block; padding: .375rem .75rem; font-size: .75rem;
+  font-weight: 500; background: var(--majalis-emerald-muted, rgba(31,77,58,.1));
+  color: var(--majalis-emerald); border-radius: 9999px;
+  cursor: pointer; transition: opacity .15s;
+}
+.fqp-cat-chip:hover { opacity: .8; }
+.fqp-council-label { font-weight: 600; color: var(--majalis-ink); font-size: .875rem; }
+.fqp-council-desc { font-size: .75rem; color: var(--majalis-ink-soft); margin-top: .125rem; }
+.fqp-arrow { color: var(--majalis-ink-soft); opacity: .6; font-size: 1.125rem; flex-shrink: 0; }
