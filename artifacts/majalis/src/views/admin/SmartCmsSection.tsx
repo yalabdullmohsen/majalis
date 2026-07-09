@@ -162,8 +162,7 @@ export function SmartCmsSection() {
         {(["text", "url", "image"] as InputMode[]).map((m) => (
           <button
             key={m}
-            className="scm-tab"
-            style={{ "--scm-tab-bg": mode === m ? "var(--majalis-emerald)" : "rgba(255,255,255,0.06)", "--scm-tab-color": mode === m ? "#fff" : "var(--majalis-ink-soft)" } as React.CSSProperties}
+            className={`scm-tab${mode === m ? " scm-tab--active" : ""}`}
             onClick={() => setMode(m)}
           >
             {TAB_LABELS[m]}
@@ -184,13 +183,7 @@ export function SmartCmsSection() {
                     key={h}
                     type="button"
                     onClick={() => setHint(hint === h ? "" : h)}
-                    className="scm-hint-btn"
-                    style={{
-                      "--scm-hb-border": hint === h ? "var(--majalis-emerald)" : "rgba(255,255,255,0.12)",
-                      "--scm-hb-bg": hint === h ? "rgba(46,139,103,0.15)" : "transparent",
-                      "--scm-hb-color": hint === h ? "var(--majalis-emerald)" : "var(--majalis-ink-muted)",
-                      "--scm-hb-fw": hint === h ? "700" : "400",
-                    } as React.CSSProperties}
+                    className={`scm-hint-btn${hint === h ? " scm-hint-btn--active" : ""}`}
                   >
                     {h}
                   </button>
@@ -223,7 +216,6 @@ export function SmartCmsSection() {
                     onClick={onTextAnalyze}
                     disabled={busy || !rawText.trim()}
                     className="scm-analyze-btn"
-                    style={(!busy && rawText.trim()) ? { "--scm-ab-bg": "var(--majalis-emerald)" } as React.CSSProperties : undefined}
                   >
                     {busy ? "جارٍ التحليل…" : "تحليل بالذكاء الاصطناعي"}
                   </button>
@@ -256,18 +248,10 @@ export function SmartCmsSection() {
               </button>
             </div>
             <div className="scm-url-links">
-              <a
-                href="/admin/automation/sources"
-                className="scm-url-link"
-                style={{ "--scm-ul-bg": "rgba(14,110,82,0.10)", "--scm-ul-color": "var(--majalis-emerald)" } as React.CSSProperties}
-              >
+              <a href="/admin/automation/sources" className="scm-url-link scm-url-link--automation">
                 مصادر المراقبة التلقائية
               </a>
-              <a
-                href="/admin/content-import/url"
-                className="scm-url-link"
-                style={{ "--scm-ul-bg": "rgba(91,33,182,0.10)", "--scm-ul-color": "#8B5CF6" } as React.CSSProperties}
-              >
+              <a href="/admin/content-import/url" className="scm-url-link scm-url-link--advanced">
                 واجهة الاستيراد المتقدمة
               </a>
             </div>
