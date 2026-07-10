@@ -3,6 +3,7 @@ import { Award, BookMarked, BookOpen, BookText, Bookmark, FileText, Flame, Gem, 
 import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { ShareButtons } from "@/components/ContentActions";
 import { PageHeader } from "@/components/ui-common";
 import {
   getUserProfileStats,
@@ -401,6 +402,10 @@ export default function UserStatsPage() {
         <Link href="/tasbih" className="profile-quick-link"><RotateCw size={15} strokeWidth={1.8} aria-hidden="true" /> التسبيح</Link>
         <Link href="/adhkar" className="profile-quick-link"><Leaf size={15} strokeWidth={1.8} aria-hidden="true" /> الأذكار</Link>
       </nav>
+
+      <div className="twh-share">
+        <ShareButtons title="إحصاءات التعلم — المجلس العلمي" url="https://majlisilm.com/my-stats" />
+      </div>
     </div>
   );
 }

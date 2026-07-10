@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Coffee, Pause, Target } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { ShareButtons } from "@/components/ContentActions";
 import { PageHeader } from "@/components/ui-common";
 import {
   logStudySession,
@@ -296,6 +297,10 @@ export default function StudyRoomPage() {
           <Link href="/login?next=/study-room">سجّل الدخول</Link> لحفظ جلسات دراستك وعرض إحصاءاتك.
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="غرفة الدراسة — المجلس العلمي" url="https://majlisilm.com/study-room" />
+      </div>
     </div>
   );
 }

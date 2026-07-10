@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { GeometricPattern } from "@/components/design/GeometricPattern";
+import { ShareButtons } from "@/components/ContentActions";
 import type { PrayerSlot } from "@/lib/prayer-times";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -104,6 +105,10 @@ export default function PrayerCountdownPage() {
       <p className="pcp-city-label">
         {data.city} · {data.source}
       </p>
+
+      <div className="twh-share">
+        <ShareButtons title="العد التنازلي للصلاة — المجلس العلمي" url="https://majlisilm.com/prayer-countdown" />
+      </div>
     </div>
   );
 }

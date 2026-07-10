@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import { ShareButtons } from "@/components/ContentActions";
 import {
   BookOpen, Scroll, Scale, BookMarked, Users, Star, GraduationCap,
   Heart, Compass, Globe, Layers, ChevronLeft, ArrowLeftRight,
@@ -430,6 +431,10 @@ export default function IslamicKnowledgeMapPage() {
           })}
         </div>
       </section>
+
+      <div className="twh-share">
+        <ShareButtons title="خريطة المعرفة الإسلامية — المجلس العلمي" url="https://majlisilm.com/islamic-knowledge-map" />
+      </div>
     </div>
   );
 }

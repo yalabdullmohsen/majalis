@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { useAuth } from "@/components/AuthProvider";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { ShareButtons } from "@/components/ContentActions";
 import { useEffect, useMemo, useState } from "react";
 import { getLibrary } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
@@ -116,6 +117,9 @@ export default function LibraryPage({
         <AdminQuickEdit section="library" />
         </div>
       </PageLoadingGuard>
+      <div className="twh-share">
+        <ShareButtons title="المكتبة الإسلامية — المجلس العلمي" url="https://majlisilm.com/library" />
+      </div>
     </ContentHubLayout>
   );
 }
