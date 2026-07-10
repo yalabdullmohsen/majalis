@@ -1201,3 +1201,39 @@
   font-size: 0.85rem;
   line-height: 1.6;
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   تحسينات الخط العثماني على iOS/Android (Phase 3)
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* تفعيل خصائص OpenType للخطوط العثمانية */
+.qs-ayah__text,
+.qs-basmala {
+  -webkit-font-feature-settings: "calt" 1, "kern" 1, "liga" 1, "mark" 1, "mkmk" 1, "curs" 1;
+  font-feature-settings: "calt" 1, "kern" 1, "liga" 1, "mark" 1, "mkmk" 1, "curs" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+/* تحسين رسم النصوص العربية على Retina/HDPI */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .qs-ayah__text,
+  .qs-basmala {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* إصلاح مشكلة الانقطاع في السطر على iOS */
+.qs-ayahs {
+  -webkit-overflow-scrolling: touch;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+/* وسم lang الصحيح يُفعّل محرك النصوص العربي في WebKit/Blink */
+.qs-ayahs[lang="ar"],
+.qs-basmala[lang="ar"] {
+  unicode-bidi: embed;
+}

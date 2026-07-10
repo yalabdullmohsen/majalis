@@ -152,17 +152,31 @@ function groupBySurah(ayahs: Ayah[]) {
   return result;
 }
 
-/* يفصل البسملة المدمجة في نص الآية الأولى من API في طبقة العرض فقط */
+/* يفصل البسملة المدمجة في نص الآية الأولى من API في طبقة العرض فقط.
+   يُعالج جميع ترميزات Unicode الممكنة (ألف الوصل + الألف العادية + بدون تشكيل) */
 function stripBasmalaFromDisplay(text: string): string {
-  const END_MARKER = "ٱلرَّحِيمِ";
-  const idx = text.indexOf(END_MARKER);
-  if (idx === -1) return text;
-  const after = idx + END_MARKER.length;
-  let start = after;
-  while (start < text.length && (text[start] === " " || text.charCodeAt(start) === 0x200C || text.charCodeAt(start) === 0x200D)) {
-    start++;
+  const END_MARKERS = [
+    "ٱلرَّحِيمِ",  // الرسم العثماني — ألف الوصل مع التشكيل
+    "الرَّحِيمِ",  // ألف عادية مع التشكيل
+    "ٱلرحيم",      // ألف الوصل بدون تشكيل
+    "الرحيم",      // ألف عادية بدون تشكيل
+  ];
+  for (const marker of END_MARKERS) {
+    const idx = text.indexOf(marker);
+    if (idx === -1) continue;
+    const after = idx + marker.length;
+    let start = after;
+    while (start < text.length) {
+      const code = text.charCodeAt(start);
+      if (code <= 0x20 || code === 0x200C || code === 0x200D || code === 0x06DD || code === 0x06DE) {
+        start++;
+      } else {
+        break;
+      }
+    }
+    return start < text.length ? text.slice(start) : text;
   }
-  return start < text.length ? text.slice(start) : text;
+  return text;
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -630,7 +644,12 @@ export default function QuranPage() {
                 <span className="qs-surah-ornament" aria-hidden="true">❧</span>
                 <h2 className="qs-surah-name">{group.name}</h2>
                 <p className="qs-surah-meta">
-                  سورة رقم {group.num.toLocaleString("ar-EG")}، {group.revelationType === "Meccan" ? "مكية" : "مدنية"}
+                  سورة رقم {group.num.toLocaleString("ar-EG")}
+                  {" · "}
+                  {group.revelationType === "Meccan" ? "مكية" : group.revelationType === "Medinan" ? "مدنية" : ""}
+                  {group.ayahs[0]?.surah.numberOfAyahs
+                    ? ` · ${group.ayahs[0].surah.numberOfAyahs.toLocaleString("ar-EG")} آية`
+                    : ""}
                 </p>
               </div>
             )}
