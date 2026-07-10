@@ -407,7 +407,6 @@ function Router() {
       <Route path="/universities/:slug"><SafeLazyRoute component={UniversityDetailPage} /></Route>
       <Route path="/universities"><SafeLazyRoute component={UniversitiesPage} /></Route>
       <Route path="/condolences"><Redirect to="/" /></Route>
-      <Route path="/janaza"><Redirect to="/" /></Route>
       <Route path="/transcribe">
         <ErrorBoundary>
           <Suspense fallback={<LazyRouteFallback />}>
