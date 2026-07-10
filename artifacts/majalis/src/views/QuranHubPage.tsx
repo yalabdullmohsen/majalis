@@ -74,6 +74,30 @@ const QURAN_SECTIONS = [
     accent: "#1F4D3A",
     tag: "أذكار",
   },
+  {
+    href: "/ulum-quran",
+    title: "علوم القرآن",
+    desc: "النزول والجمع والتدوين والتفسير وطبقات المفسِّرين عبر القرون",
+    Icon: Layers,
+    accent: "#0A5040",
+    tag: "علم",
+  },
+  {
+    href: "/duas-quran",
+    title: "أدعية القرآن الكريم",
+    desc: "٣٠+ دعاءً قرآنياً مصنَّفاً بحسب النبي والمناسبة والفائدة",
+    Icon: Star,
+    accent: "#1F4D3A",
+    tag: "دعاء",
+  },
+  {
+    href: "/miracles",
+    title: "إعجاز القرآن ومعجزاته",
+    desc: "المعجزات النبوية والإعجاز العلمي والبياني في القرآن الكريم",
+    Icon: Heart,
+    accent: "#145C46",
+    tag: "إعجاز",
+  },
 ];
 
 function qhcAccentMod(a: string) {
@@ -92,10 +116,12 @@ const STATS = [
 
 /* ── مميزات خاصة ─────────────────────────────────────────── */
 const FEATURES = [
-  { Icon: Layers,     text: "تصفح جميع السور مع ترتيب صفحاتها" },
-  { Icon: Headphones, text: "تلاوة وإذاعات القرآن بجودة عالية" },
-  { Icon: Star,       text: "أسباب النزول والتفسير الميسَّر" },
-  { Icon: Heart,      text: "احفظ آياتك المفضلة وتتبع وردك اليومي" },
+  { Icon: Layers,        text: "تصفح جميع السور مع ترتيب صفحاتها" },
+  { Icon: Headphones,    text: "تلاوة وإذاعات القرآن بجودة عالية" },
+  { Icon: Star,          text: "أسباب النزول والتفسير الميسَّر" },
+  { Icon: Heart,         text: "احفظ آياتك المفضلة وتتبع وردك اليومي" },
+  { Icon: GraduationCap, text: "تعلَّم أحكام التجويد خطوةً بخطوة" },
+  { Icon: BookMarked,    text: "استكشف قصص القرآن وعبر السور" },
 ];
 
 export default function QuranHubPage() {
