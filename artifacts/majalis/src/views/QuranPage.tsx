@@ -45,18 +45,18 @@ const pageCache = new Map<number, Ayah[]>();
 
 /* القراء المتاحون */
 const RECITERS = [
-  { id: "ar.alafasy",            name: "المشاري راشد العفاسي",   flag: "🇰🇼" },
-  { id: "ar.maheralmuaiqly",     name: "ماهر المعيقلي",          flag: "🇸🇦" },
-  { id: "ar.abdulbasitmurattal", name: "عبد الباسط عبد الصمد",  flag: "🇪🇬" },
-  { id: "ar.husary",             name: "محمود خليل الحصري",      flag: "🇪🇬" },
-  { id: "ar.minshawi",           name: "محمد صديق المنشاوي",    flag: "🇪🇬" },
-  { id: "ar.abdullahbasfar",     name: "عبد الله بصفر",          flag: "🇸🇦" },
-  { id: "ar.saoodshuraym",       name: "سعود الشريم",            flag: "🇸🇦" },
-  { id: "ar.yasseraldosari",     name: "ياسر الدوسري",           flag: "🇸🇦" },
-  { id: "ar.ahmedajamy",         name: "أحمد العجمي",            flag: "🇸🇦" },
-  { id: "ar.muhammadayyoub",     name: "محمد أيوب",              flag: "🇸🇦" },
-  { id: "ar.abdurrahmaansudais", name: "عبد الرحمن السديس",      flag: "🇸🇦" },
-  { id: "ar.muhammadjibreel",    name: "محمد جبريل",             flag: "🇸🇦" },
+  { id: "ar.alafasy",            name: "المشاري راشد العفاسي"   },
+  { id: "ar.maheralmuaiqly",     name: "ماهر المعيقلي"          },
+  { id: "ar.abdulbasitmurattal", name: "عبد الباسط عبد الصمد"  },
+  { id: "ar.husary",             name: "محمود خليل الحصري"      },
+  { id: "ar.minshawi",           name: "محمد صديق المنشاوي"    },
+  { id: "ar.abdullahbasfar",     name: "عبد الله بصفر"          },
+  { id: "ar.saoodshuraym",       name: "سعود الشريم"            },
+  { id: "ar.yasseraldosari",     name: "ياسر الدوسري"           },
+  { id: "ar.ahmedajamy",         name: "أحمد العجمي"            },
+  { id: "ar.muhammadayyoub",     name: "محمد أيوب"              },
+  { id: "ar.abdurrahmaansudais", name: "عبد الرحمن السديس"      },
+  { id: "ar.muhammadjibreel",    name: "محمد جبريل"             },
 ];
 
 /* بيانات السور: [الاسم، أول صفحة] */
@@ -863,10 +863,7 @@ export default function QuranPage() {
                     }}
                     aria-label={`${isPlaying ? "إيقاف" : "تشغيل"} ${r.name}`}
                   >
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                      <span style={{ fontSize: "1.1rem" }}>{r.flag}</span>
-                      <span style={{ fontWeight: 700, fontSize: "0.85rem" }}>{r.name}</span>
-                    </div>
+                    <span style={{ fontWeight: 700, fontSize: "0.85rem" }}>{r.name}</span>
                     <span style={{
                       display: "flex", alignItems: "center", justifyContent: "center",
                       width: 32, height: 32, borderRadius: "50%",
