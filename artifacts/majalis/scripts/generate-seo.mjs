@@ -111,6 +111,35 @@ function siteJsonLdScript() {
   return `<script type="application/ld+json">${JSON.stringify([org, site])}</script>`;
 }
 
+function bookJsonLdScript(row) {
+  const payload = {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    name: row.title,
+    author: { "@type": "Person", name: row.author },
+    description: row.description || row.title,
+    inLanguage: "ar",
+    genre: row.category || "فقه إسلامي",
+    url: absoluteUrl(`/library/${row.id}`),
+    publisher: { "@type": "Organization", name: seoConfig.siteName, url: seoConfig.siteUrl },
+  };
+  return `<script type="application/ld+json">${JSON.stringify(payload)}</script>`;
+}
+
+function courseJsonLdScript(row) {
+  const payload = {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: row.title || row.name,
+    description: row.description || row.title || row.name,
+    inLanguage: "ar",
+    url: absoluteUrl(`/annual-courses/${row.id}`),
+    provider: { "@type": "Organization", name: seoConfig.siteName, url: seoConfig.siteUrl },
+    ...(row.instructor ? { instructor: { "@type": "Person", name: row.instructor } } : {}),
+  };
+  return `<script type="application/ld+json">${JSON.stringify(payload)}</script>`;
+}
+
 function fatwaQaJsonLdScript(row) {
   const payload = {
     "@context": "https://schema.org",
@@ -140,6 +169,20 @@ function fatwaListFaqJsonLdScript(fatwas) {
     }));
   if (!items.length) return "";
   const payload = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: items };
+  return `<script type="application/ld+json">${JSON.stringify(payload)}</script>`;
+}
+
+function breadcrumbJsonLdScript(items) {
+  const payload = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      item: absoluteUrl(item.path),
+    })),
+  };
   return `<script type="application/ld+json">${JSON.stringify(payload)}</script>`;
 }
 
@@ -177,6 +220,17 @@ function prerenderHtml(route, extraJsonLd = "") {
     <meta name="twitter:description" content="${escapeHtml(route.description)}" />
     <meta name="twitter:image" content="${escapeHtml(image)}" />
     ${route.path === "/" ? siteJsonLdScript() : `<script type="application/ld+json">${JSON.stringify({"@context":"https://schema.org","@type":"WebPage","name":route.title.replace(/ \| [^|]+$/,""),"description":route.description,"url":canonical,"inLanguage":"ar","publisher":{"@type":"Organization","name":seoConfig.siteName,"url":seoConfig.siteUrl,"logo":{"@type":"ImageObject","url":absoluteUrl(seoConfig.defaultImage)}}})}</script>`}
+    ${route.path !== "/" ? (() => {
+      const segs = route.path.split("/").filter(Boolean);
+      const items = [{ name: "الرئيسية", path: "/" }];
+      let cur = "";
+      for (const seg of segs) {
+        cur += `/${seg}`;
+        const matched = seoConfig.routes.find(r => r.path === cur);
+        items.push({ name: matched ? matched.title.split(" | ")[0] : (route.title.split(" | ")[0] || seg), path: cur });
+      }
+      return breadcrumbJsonLdScript(items);
+    })() : ""}
     ${extraJsonLd}
   </head>
   <body>
@@ -359,6 +413,7 @@ await writeFile(resolve(publicDir, "robots.txt"), robots, "utf8");
 await writeFile(resolve(publicDir, "feed.xml"), feed, "utf8");
 
 const fatwaFaqScript = fatwaListFaqJsonLdScript(PLATFORM_SEED.fatwas || []);
+const qaFaqScript = fatwaListFaqJsonLdScript(PLATFORM_SEED.qa_items || []);
 
 for (const route of staticRoutes) {
   const routeDir =
@@ -366,7 +421,9 @@ for (const route of staticRoutes) {
       ? seoPrerenderDir
       : resolve(seoPrerenderDir, route.path.slice(1));
   await mkdir(routeDir, { recursive: true });
-  const staticExtraJsonLd = route.path === "/fatwa" ? fatwaFaqScript : "";
+  const staticExtraJsonLd =
+    route.path === "/fatwa" ? fatwaFaqScript :
+    route.path === "/qa" ? qaFaqScript : "";
   await writeFile(resolve(routeDir, "index.html"), prerenderHtml(route, staticExtraJsonLd), "utf8");
 
   if (route.path !== "/") {
@@ -442,10 +499,11 @@ const platformPrerender = [
     dir: resolve(seoPrerenderDir, "annual-courses", row.id),
     route: {
       path: `/annual-courses/${row.id}`,
-      title: `${row.title} | ${seoConfig.siteName}`,
-      description: row.title,
+      title: `${row.title || row.name} | ${seoConfig.siteName}`,
+      description: row.description || row.title || row.name,
       ogType: "website",
     },
+    extraJsonLd: courseJsonLdScript(row),
   })),
   ...LIBRARY_CATALOG.map((row) => ({
     dir: resolve(seoPrerenderDir, "library", row.id),
@@ -453,8 +511,9 @@ const platformPrerender = [
       path: `/library/${row.id}`,
       title: `${row.title} | المكتبة العلمية — ${seoConfig.siteName}`,
       description: row.description || row.title,
-      ogType: "article",
+      ogType: "book",
     },
+    extraJsonLd: bookJsonLdScript(row),
   })),
 ];
 
