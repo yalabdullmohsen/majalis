@@ -70,6 +70,13 @@ const FIQH_TOPICS: FiqhTopic[] = [
   { emoji: "💍", title: "النكاح والطلاق",   desc: "أحكام عقد الزواج والفراق",         href: "/rulings?cat=النكاح", color: "#7C3AED" },
   { emoji: "🤝", title: "المعاملات",        desc: "البيع والإجارة والشركات",           href: "/rulings?cat=المعاملات", color: "#0F766E" },
   { emoji: "🥩", title: "الأطعمة",          desc: "الحلال والحرام والذبائح",           href: "/rulings?cat=الأطعمة", color: "#DC2626" },
+  { emoji: "🏥", title: "الفقه الطبي",      desc: "أحكام العلاج والأدوية والعمليات",   href: "/rulings?cat=الصحة",  color: "#065F46" },
+  { emoji: "🏦", title: "المال الإسلامي",   desc: "أحكام البنوك والتأمين والاستثمار",  href: "/rulings?cat=المعاملات", color: "#1F4D3A" },
+  { emoji: "🕊️", title: "الوقف والهبة",    desc: "أحكام الوقف والصدقة الجارية والهبة", href: "/rulings?cat=الوقف", color: "#0F5132" },
+  { emoji: "📖", title: "أصول الفقه",      desc: "مصادر التشريع وطرق الاستنباط",      href: "/fiqh-qawaid",    color: "#7C3AED" },
+  { emoji: "⚡", title: "النوازل المعاصرة", desc: "مسائل العصر ومستجداته الفقهية",    href: "/fiqh-council/nawazil", color: "#374151" },
+  { emoji: "🔐", title: "الحدود والجنايات", desc: "أحكام الحدود والقصاص والديات",     href: "/rulings",        color: "#991B1B" },
+  { emoji: "🌍", title: "فقه الأقليات",    desc: "أحكام المسلمين في غير ديار الإسلام", href: "/fiqh-council/nawazil", color: "#1F4D3A" },
 ];
 
 export default function FiqhPage() {
