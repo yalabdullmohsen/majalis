@@ -1659,9 +1659,8 @@
       "title": "قصص الأنبياء والرسل | المجلس العلمي",
       "description": "سيرة الأنبياء والرسل من آدم إلى محمد صلى الله عليه وسلم مع الدروس والعبر.",
       "keywords": ["الأنبياء", "قصص الأنبياء", "الرسل", "سيرة الأنبياء"],
-      "sitemap": true,
-      "changefreq": "monthly",
-      "priority": 0.75
+      "sitemap": false,
+      "robots": "noindex, follow"
     },
     {
       "path": "/auth/callback",
