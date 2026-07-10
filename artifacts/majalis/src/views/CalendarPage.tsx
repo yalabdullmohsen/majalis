@@ -119,7 +119,7 @@ export default function CalendarPage() {
     applyPageSeo({
       path: "/calendar",
       title: "التقويم الإسلامي والدروس | المجلس العلمي",
-      description: "تقويم الدروس والمناسبات الإسلامية — عرض شهري وأسبوعي ويومي مع الأحداث والحلقات العلمية.",
+      description: "تقويم الدروس والمناسبات الإسلامية، عرض شهري وأسبوعي ويومي مع الأحداث والحلقات العلمية.",
       keywords: ["تقويم إسلامي", "مواعيد دروس", "التقويم الهجري", "الأحداث الإسلامية", "جدول الدروس"],
     });
   }, []);
@@ -217,7 +217,7 @@ export default function CalendarPage() {
                         dayEvents.length > 0 ? "has-events" : "",
                       ].filter(Boolean).join(" ")}
                       onClick={() => { setSelected(day); setView("day"); }}
-                      aria-label={`${format(day, "d MMMM", { locale: arSA })}${dayEvents.length > 0 ? ` — ${dayEvents.length} درس` : ""}`}
+                      aria-label={`${format(day, "d MMMM", { locale: arSA })}${dayEvents.length > 0 ? `، ${dayEvents.length} درس` : ""}`}
                     >
                       <div className="cal-cell-head">
                         <span className="cal-cell-num">{format(day, "d")}</span>

@@ -18,7 +18,7 @@ const STATUS_LABEL: Record<FeatureStatus, string> = {
   planned: "قادم",
 };
 
-// خارطة الطريق — يعدّلها المشرف حسب ما يجري تطويره فعلياً.
+// خارطة الطريق، يعدّلها المشرف حسب ما يجري تطويره فعلياً.
 const FEATURES: RoadmapFeature[] = [
   {
     title: "المصحف الرقمي الاحترافي",
@@ -58,7 +58,7 @@ const FEATURES: RoadmapFeature[] = [
   },
   {
     title: "صفحة التوحيد والعقيدة",
-    description: "أنواع التوحيد الثلاثة، أركان الإيمان الستة، الأسماء الحسنى، مسائل العقيدة، وكتب مقترحة — معتمد على منهج أهل السنة.",
+    description: "أنواع التوحيد الثلاثة، أركان الإيمان الستة، الأسماء الحسنى، مسائل العقيدة، وكتب مقترحة، معتمد على منهج أهل السنة.",
     progress: 95,
     status: "beta",
   },
@@ -156,7 +156,7 @@ const FEATURES: RoadmapFeature[] = [
 
 export default function FeaturesInProgressPage() {
   useEffect(() => {
-    // صفحة تطويرية — noindex حفاظاً على SEO
+    // صفحة تطويرية، noindex حفاظاً على SEO
     applyPageSeo({
       path: "/features-in-progress",
       title: "مميزات قيد التطوير | المجلس العلمي",

@@ -63,7 +63,7 @@ function AdhanToast({ event, onDismiss }: { event: ActiveEvent; onDismiss: () =>
         </p>
         <p className="anb-toast__sub">
           {isAdhan
-            ? "حي على الصلاة — حي على الفلاح"
+            ? "حي على الصلاة، حي على الفلاح"
             : `${event.prayerName} بعد ${event.minutesBefore} دقيقة`}
         </p>
       </div>

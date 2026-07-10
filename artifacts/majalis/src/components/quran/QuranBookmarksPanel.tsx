@@ -1,5 +1,5 @@
 /**
- * QuranBookmarksPanel — إشارات مرجعية وملاحظات وتقدم الحفظ
+ * QuranBookmarksPanel، إشارات مرجعية وملاحظات وتقدم الحفظ
  */
 import { useCallback, useEffect, useState } from "react";
 import { BookOpen, BookmarkCheck, Brain, PenLine } from "lucide-react";

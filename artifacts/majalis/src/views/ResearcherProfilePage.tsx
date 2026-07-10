@@ -111,7 +111,7 @@ export default function ResearcherProfilePage() {
     applyPageSeo({
       path: "/researcher-profile",
       title: "الملف الشخصي للباحث | المجلس العلمي",
-      description: "أنشئ ملفك الشخصي كباحث إسلامي — تخصصاتك واهتماماتك ومنشوراتك العلمية.",
+      description: "أنشئ ملفك الشخصي كباحث إسلامي، تخصصاتك واهتماماتك ومنشوراتك العلمية.",
       keywords: ["باحث إسلامي", "ملف أكاديمي", "بحث شرعي", "باحث شرعي"],
       robots: "noindex, follow",
     });

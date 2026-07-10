@@ -25,7 +25,7 @@ export function HomeDailyProgress() {
         <div>
           <p className="home-eyebrow">متابعة يومية</p>
           <h2 id="daily-progress-heading">تقدمك اليومي</h2>
-          <p>تتبع وردك وأذكارك ونوافلك — يُحفظ على جهازك.</p>
+          <p>تتبع وردك وأذكارك ونوافلك، يُحفظ على جهازك.</p>
         </div>
         <Link href="/daily-wird" className="home-section-link">الورد</Link>
       </div>

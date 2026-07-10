@@ -39,7 +39,7 @@ export default function ScientificAnnouncementDetailPage({
     applyPageSeo({
       path: "/scientific-announcements",
       title: `${item?.announcementTitle || "إعلان علمي"} | المجلس العلمي`,
-      description: `${item?.announcementTitle || "إعلان علمي"} — تفاصيل الإعلان العلمي والمؤتمرات والدورات الإسلامية.`,
+      description: `${item?.announcementTitle || "إعلان علمي"}، تفاصيل الإعلان العلمي والمؤتمرات والدورات الإسلامية.`,
       keywords: ["إعلانات علمية", "مؤتمرات إسلامية", "دورات علمية", "فعاليات شرعية"],
     });
   }, [item?.announcementTitle]);
@@ -61,7 +61,7 @@ export default function ScientificAnnouncementDetailPage({
       if (timerRef.current) clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => setCopied(false), 2000);
     } catch {
-      alert("تعذّر النسخ — انسخ النص يدوياً.");
+      alert("تعذّر النسخ، انسخ النص يدوياً.");
     }
   }, [item, shareText]);
 
@@ -160,7 +160,7 @@ export default function ScientificAnnouncementDetailPage({
             )}
             {!item.mapUrl && (
               <p className="sci-ann-detail__muted">
-                خريطة تقريبية — راجع العنوان في التفاصيل للتأكد.
+                خريطة تقريبية، راجع العنوان في التفاصيل للتأكد.
               </p>
             )}
             <div className="sci-ann-detail__map">

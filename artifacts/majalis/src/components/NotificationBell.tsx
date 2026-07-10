@@ -48,7 +48,7 @@ export default function NotificationBell() {
           await supabase.from("notifications").insert({
             user_id: user.id,
             title: "درس جديد أُضيف تلقائياً",
-            body: `"${String(lesson.title || "درس جديد")}" — ${String(lesson.mosque || lesson.governorate || "").trim()}`.replace(/ — $/, ""),
+            body: [String(lesson.title || "درس جديد"), String(lesson.mosque || lesson.governorate || "").trim()].filter(Boolean).join(" · "),
             is_read: false,
           });
         })

@@ -135,7 +135,7 @@ function DetailContent({ university: u }: { university: University }) {
       {/* شريط التحديث */}
       <div className="udp-update-bar">
         <AlertTriangle size={12} aria-hidden="true" className="inline ml-1" />
-        آخر تحديث: {new Date(u.last_updated_at).toLocaleDateString("ar-SA")} — تحقق من الموقع الرسمي للجامعة قبل اتخاذ أي قرار.
+        آخر تحديث: {new Date(u.last_updated_at).toLocaleDateString("ar-SA")}، تحقق من الموقع الرسمي للجامعة قبل اتخاذ أي قرار.
       </div>
 
       {/* Header */}
@@ -270,7 +270,7 @@ export default function UniversityDetailPage() {
       applyPageSeo({
         path: `/universities/${slug}`,
         title: `${university.name_ar} | المجلس العلمي`,
-        description: university.about || `تفاصيل ${university.name_ar} — البرامج الأكاديمية والتخصصات والاعتمادات.`,
+        description: university.about || `تفاصيل ${university.name_ar}، البرامج الأكاديمية والتخصصات والاعتمادات.`,
         keywords: ["جامعة إسلامية", university.name_ar, "دراسة شرعية", "تعليم ديني"],
       });
     }

@@ -84,7 +84,7 @@ export default function FiqhPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fiqh",
-      title: "الفقه الإسلامي — فتاوى وأحكام وأسئلة | المجلس العلمي",
+      title: "الفقه الإسلامي، فتاوى وأحكام وأسئلة | المجلس العلمي",
       description: "مرجع شامل في الفقه الإسلامي: فتاوى موثقة، أحكام شرعية، أسئلة وأجوبة، وقرارات المجمع الفقهي.",
       keywords: ["فقه إسلامي", "فتاوى", "أحكام شرعية", "الفقه الحنفي", "أسئلة شرعية"],
     });
@@ -131,7 +131,7 @@ export default function FiqhPage() {
         <p className="fqh-hub-hero__eyebrow">الفقه الإسلامي الشامل</p>
         <h1 className="fqh-hub-hero__title">الفقه والأحكام</h1>
         <p className="fqh-hub-hero__sub">
-          مرجع موحّد للفتاوى والعبادات والأحكام وقرارات المجامع الفقهية — كل شيء من مصادر موثقة ومعتمدة
+          مرجع موحّد للفتاوى والعبادات والأحكام وقرارات المجامع الفقهية، كل شيء من مصادر موثقة ومعتمدة
         </p>
       </header>
 
@@ -159,7 +159,7 @@ export default function FiqhPage() {
       {/* فاصل */}
       <hr style={{ border: "none", borderTop: "1px solid var(--majalis-line, #E2EAE6)", margin: "1.5rem 0" }} />
 
-      {/* Tabs — للمحتوى الديناميكي */}
+      {/* Tabs، للمحتوى الديناميكي */}
       <div className="fqp-tabs-nav" style={{ background: "none", boxShadow: "none" }}>
         <div className="flex gap-1 overflow-x-auto" style={{ paddingBottom: "0.5rem" }}>
           {TABS.map((t) => (
@@ -314,7 +314,7 @@ export default function FiqhPage() {
             <div className="mb-6">
               <h2 className="fqp-section-title mb-2"><Landmark size={20} />المجمع الفقهي الإسلامي</h2>
               <p className="fqp-section-desc">
-                قرارات وبيانات وفتاوى المجامع الفقهية المعتمدة — موثقة بمصادرها
+                قرارات وبيانات وفتاوى المجامع الفقهية المعتمدة، موثقة بمصادرها
               </p>
             </div>
 

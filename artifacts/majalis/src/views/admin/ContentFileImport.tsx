@@ -188,7 +188,7 @@ async function pollJobUntilDone(
         skipped: 0,
         failed: 0,
         import_errors: [
-          "انتهت مهلة انتظار الاستيراد (120 ثانية). حاول مرة أخرى — إذا تكرّر، تحقق من إعدادات الخادم.",
+          "انتهت مهلة انتظار الاستيراد (120 ثانية). حاول مرة أخرى، إذا تكرّر، تحقق من إعدادات الخادم.",
         ],
       };
       return { job: fallback, timedOut: true };
@@ -250,8 +250,8 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
       const detail =
         msgs[0] ||
         (rejected > 0
-          ? `لم يُستورد أي صف — ${rejected} صف مرفوض`
-          : "اكتملت المهمة دون استيراد أي صف — تحقق من محتوى الملف أو سجلات الخادم");
+          ? `لم يُستورد أي صف، ${rejected} صف مرفوض`
+          : "اكتملت المهمة دون استيراد أي صف، تحقق من محتوى الملف أو سجلات الخادم");
       setError(detail);
       setCanRetry(true);
       return;
@@ -359,7 +359,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
           commitJson.error ||
             syncJob.import_errors?.[0] ||
             syncJob.validation_errors?.[0] ||
-            "اكتملت المهمة دون استيراد أي صف — تحقق من أعمدة CSV (مطلوب: text)",
+            "اكتملت المهمة دون استيراد أي صف، تحقق من أعمدة CSV (مطلوب: text)",
         );
       }
       return;
@@ -384,7 +384,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
       throw new Error(
         finalJob.import_errors?.[0] ||
           finalJob.validation_errors?.[0] ||
-          "اكتملت المهمة دون استيراد أي صف — تحقق من أعمدة CSV (مطلوب: text)",
+          "اكتملت المهمة دون استيراد أي صف، تحقق من أعمدة CSV (مطلوب: text)",
       );
     }
   };
@@ -444,7 +444,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
           <div className="cfi-dialog" onClick={(e) => e.stopPropagation()}>
             <h2 className="cfi-title">استيراد من ملف (JSON / CSV)</h2>
             <p className="cfi-desc">
-              يُحلَّل الملف محليًا ثم تُرفع الدفعات إلى مهمة استيراد — الملفات الصغيرة تُعالَج فورًا،
+              يُحلَّل الملف محليًا ثم تُرفع الدفعات إلى مهمة استيراد، الملفات الصغيرة تُعالَج فورًا،
               والكبيرة في الخلفية مع تتبع التقدّم كل ثانية.
             </p>
 
@@ -500,7 +500,7 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
             {report && (
               <div className={`cfi-report${report.ok ? " cfi-report--ok" : " cfi-report--fail"}`}>
                 <p className="cfi-report__hd">
-                  {report.ok ? "✓ نجح الاستيراد" : "✗ اكتمل مع أخطاء"} — {report.label || type}
+                  {report.ok ? "✓ نجح الاستيراد" : "✗ اكتمل مع أخطاء"}، {report.label || type}
                 </p>
                 {report.jobId && (
                   <p className="cfi-report__meta">

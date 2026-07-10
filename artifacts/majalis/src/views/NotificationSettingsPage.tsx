@@ -99,7 +99,7 @@ export default function NotificationSettingsPage() {
     applyPageSeo({
       path: "/notification-settings",
       title: "إعدادات الإشعارات | المجلس العلمي",
-      description: "إدارة إشعارات المجلس العلمي — صلاة الأذان والتذكيرات الشرعية والأحداث العلمية.",
+      description: "إدارة إشعارات المجلس العلمي، صلاة الأذان والتذكيرات الشرعية والأحداث العلمية.",
       keywords: ["إشعارات", "إعدادات أذان", "تذكيرات إسلامية"],
       robots: "noindex, follow",
     });

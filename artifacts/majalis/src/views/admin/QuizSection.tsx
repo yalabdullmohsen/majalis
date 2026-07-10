@@ -126,7 +126,7 @@ export function QuizSection() {
     setSyncing(true);
     const { ok, synced, error } = await upsertQuizSeedToDb();
     setSyncing(false);
-    if (ok) { showSuccess(`تمت المزامنة — ${synced} سؤال`); load(); }
+    if (ok) { showSuccess(`تمت المزامنة، ${synced} سؤال`); load(); }
     else showError(`فشل: ${error || "خطأ غير معروف"}`);
   };
 
@@ -135,7 +135,7 @@ export function QuizSection() {
     setResetting(true);
     const { ok, error } = await adminResetAllQuizIsUsed();
     setResetting(false);
-    if (ok) { showSuccess("تم إعادة التعيين — يمكن للجميع استخدام الأسئلة مجدداً"); load(); }
+    if (ok) { showSuccess("تم إعادة التعيين، يمكن للجميع استخدام الأسئلة مجدداً"); load(); }
     else { showError(`فشل: ${error || "خطأ غير معروف"}`); resetAllUsedQuizIds(); }
   };
 

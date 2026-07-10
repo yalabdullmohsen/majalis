@@ -13,20 +13,20 @@ import { SkeletonCardGrid } from "@/components/ui-common";
 import { useAdminShell } from "./AdminShell";
 
 const ERROR_MESSAGES: Record<string, string> = {
-  unknown_action:    "تعذّر تحليل المحتوى — يُرجى المحاولة مرة أخرى.",
+  unknown_action:    "تعذّر تحليل المحتوى، يُرجى المحاولة مرة أخرى.",
   missing_text:      "يُرجى إدخال نص قبل التحليل.",
   missing_image:     "يُرجى رفع صورة.",
   missing_url:       "يُرجى إدخال رابط صحيح.",
   draft_not_found:   "لم يُعثر على المسودة.",
-  extraction_failed: "تعذّر تحليل المحتوى — يُرجى المحاولة مرة أخرى.",
-  credit_exhausted:  "رصيد API منتهٍ — يُرجى التواصل مع المشرف.",
-  invalid_api_key:   "مفتاح API غير صالح — يُرجى التواصل مع المشرف.",
+  extraction_failed: "تعذّر تحليل المحتوى، يُرجى المحاولة مرة أخرى.",
+  credit_exhausted:  "رصيد API منتهٍ، يُرجى التواصل مع المشرف.",
+  invalid_api_key:   "مفتاح API غير صالح، يُرجى التواصل مع المشرف.",
   rate_limit:        "تجاوزت حد الطلبات، انتظر دقيقة ثم أعد المحاولة.",
-  timeout:           "انتهت مهلة الاتصال — يُرجى المحاولة مرة أخرى.",
-  no_key:            "خدمة الذكاء الاصطناعي غير مضبوطة — تواصل مع المشرف.",
-  network_error:     "تعذّر الاتصال بالخادم — تحقق من الشبكة وأعد المحاولة.",
-  server_error:      "خطأ مؤقت في الخادم — يُرجى المحاولة مرة أخرى.",
-  supabase_admin_missing: "تعذّر حفظ المسودة — تعذّر الاتصال بقاعدة البيانات.",
+  timeout:           "انتهت مهلة الاتصال، يُرجى المحاولة مرة أخرى.",
+  no_key:            "خدمة الذكاء الاصطناعي غير مضبوطة، تواصل مع المشرف.",
+  network_error:     "تعذّر الاتصال بالخادم، تحقق من الشبكة وأعد المحاولة.",
+  server_error:      "خطأ مؤقت في الخادم، يُرجى المحاولة مرة أخرى.",
+  supabase_admin_missing: "تعذّر حفظ المسودة، تعذّر الاتصال بقاعدة البيانات.",
 };
 
 function translateError(raw?: string): string {
@@ -85,7 +85,7 @@ export function SmartCmsSection() {
     setPreview(ext);
     setPreviewJson(JSON.stringify(ext, null, 2));
     setPreviewDraftId(String(res.draft?.id || ""));
-    showSuccess("تم التحليل — راجع المسودة وأكملها ثم اعتمدها");
+    showSuccess("تم التحليل، راجع المسودة وأكملها ثم اعتمدها");
     load();
     return true;
   };
@@ -129,7 +129,7 @@ export function SmartCmsSection() {
         ? (() => { try { return JSON.parse(previewJson); } catch { return preview; } })()
         : preview;
       const res = await approveContentDraft(draftId, data || undefined);
-      if (!res.ok) { showError(res.validation?.errors?.map((e: { message: string }) => e.message).join(" — ") || translateError(res.error) || "تعذّر الاعتماد"); return; }
+      if (!res.ok) { showError(res.validation?.errors?.map((e: { message: string }) => e.message).join("، ") || translateError(res.error) || "تعذّر الاعتماد"); return; }
       invalidateLessonsCache();
       setPreview(null); setPreviewDraftId(null); setPreviewEditing(false);
       showSuccess("تم اعتماد المحتوى ونشره");
@@ -154,7 +154,7 @@ export function SmartCmsSection() {
       <div className="scm-header">
         <h2 className="scm-title">المساعد الذكي لإدارة المحتوى</h2>
         <p className="scm-subtitle">
-          الصق أي نص أو أدخل رابطاً أو ارفع صورة — يحلّل المحتوى تلقائياً ويعبّئ جميع الحقول، ثم أكمل المراجعة واعتمده.
+          الصق أي نص أو أدخل رابطاً أو ارفع صورة، يحلّل المحتوى تلقائياً ويعبّئ جميع الحقول، ثم أكمل المراجعة واعتمده.
         </p>
       </div>
 
@@ -175,7 +175,7 @@ export function SmartCmsSection() {
           <div className="scm-input-group">
             <div>
               <label className="scm-hint-label">
-                نوع المحتوى (اختياري — يُساعد الذكاء الاصطناعي على التحليل)
+                نوع المحتوى (اختياري، يُساعد الذكاء الاصطناعي على التحليل)
               </label>
               <div className="scm-hints-row">
                 {CONTENT_HINTS.map((h) => (
@@ -272,7 +272,7 @@ export function SmartCmsSection() {
                 className="scm-image-input"
               />
               <p className="scm-image-hint">
-                Vision + OCR — يستخرج الذكاء الاصطناعي النص والبيانات تلقائياً
+                Vision + OCR، يستخرج الذكاء الاصطناعي النص والبيانات تلقائياً
               </p>
             </div>
             <Link href="/admin/content-import/image" className="scm-image-link">

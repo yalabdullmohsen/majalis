@@ -107,7 +107,7 @@ function BadgeGrid({ earned }: { earned: Set<string> }) {
                 <div
                   key={def.key}
                   className={`profile-badge${isEarned ? " profile-badge--earned" : ""}`}
-                  title={`${def.titleAr} — ${def.descAr}`}
+                  title={`${def.titleAr}، ${def.descAr}`}
                 >
                   <span className="profile-badge__icon"><BadgeIcon name={def.icon} /></span>
                   <span className="profile-badge__title">{def.titleAr}</span>
@@ -231,7 +231,7 @@ export default function UserStatsPage() {
     applyPageSeo({
       path: "/my-profile",
       title: "إحصائياتي | المجلس العلمي",
-      description: "إحصائياتي وشاراتي وسجل تعلمي في المجلس العلمي — تابع تقدمك في رحلتك العلمية.",
+      description: "إحصائياتي وشاراتي وسجل تعلمي في المجلس العلمي، تابع تقدمك في رحلتك العلمية.",
       keywords: ["إحصائيات", "شارات", "نشاط المستخدم", "تقدم علمي", "المجلس العلمي"],
       robots: "noindex, follow",
     });

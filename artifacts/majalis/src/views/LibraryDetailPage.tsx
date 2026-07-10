@@ -33,7 +33,7 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
     const path = `/library/${item.id}`;
     applyPageSeo({
       path,
-      title: `${item.title} | المكتبة العلمية — المجلس العلمي`,
+      title: `${item.title} | المكتبة العلمية، المجلس العلمي`,
       description: item.description || item.title,
       keywords: [...(item.keywords || []), item.category, item.author, "مكتبة", "كتب"],
       ogType: "article",

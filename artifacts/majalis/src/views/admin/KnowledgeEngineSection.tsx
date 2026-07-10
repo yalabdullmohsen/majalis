@@ -158,7 +158,7 @@ export function KnowledgeEngineSection() {
             <div className="ken-panel">
               <h3 className="ken-panel-h3">صحة Connectors</h3>
               {(stats?.connectors_health || []).length === 0 ? (
-                <p className="ken-panel-empty">لا بيانات — شغّل Migration ثم Pipeline.</p>
+                <p className="ken-panel-empty">لا بيانات، شغّل Migration ثم Pipeline.</p>
               ) : (
                 (stats?.connectors_health || []).map((c) => (
                   <div
@@ -184,7 +184,7 @@ export function KnowledgeEngineSection() {
               ) : (
                 (stats?.runs_recent as Array<Record<string, unknown>>).slice(0, 8).map((r) => (
                   <div key={String(r.id)} className="ken-run-row">
-                    {String(r.status)} — {String(r.fetched_count ?? 0)} مجلبة، {String(r.published_count ?? 0)} منشورة
+                    {String(r.status)}، {String(r.fetched_count ?? 0)} مجلبة، {String(r.published_count ?? 0)} منشورة
                     {r.duration_ms ? ` · ${Math.round(Number(r.duration_ms) / 1000)}ث` : ""}
                   </div>
                 ))
@@ -195,7 +195,7 @@ export function KnowledgeEngineSection() {
           <div className="ken-policy-note">
             <strong>سياسة النشر التلقائي:</strong>{" "}
             المصادر الرسمية (ثقة ≥ 4) تجتاز Quality Gate تُنشر تلقائياً في القسم المناسب.
-            AI يستخرج metadata فقط — لا يُنشئ فتاوى ولا أحاديث.
+            AI يستخرج metadata فقط، لا يُنشئ فتاوى ولا أحاديث.
             <br />
             <strong>Crons:</strong> knowledge-sync + auto-knowledge-sync كل 6h · connector-health كل 1h · maintenance أسبوعي.
           </div>

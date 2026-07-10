@@ -22,7 +22,7 @@ export default function LearningPathDashboardPage() {
     applyPageSeo({
       path: "/learning-path/dashboard",
       title: "لوحة تقدم التعلم | المجلس العلمي",
-      description: "تابع تقدمك في مسارات التعلم الشرعي — إنجازاتك وسلسلة الأيام ونشاطك في الدراسة الإسلامية.",
+      description: "تابع تقدمك في مسارات التعلم الشرعي، إنجازاتك وسلسلة الأيام ونشاطك في الدراسة الإسلامية.",
       keywords: ["لوحة تعلم", "تقدم شرعي", "إنجازات علمية", "مسار تعليمي", "تعلم إسلامي"],
       robots: "noindex, follow",
     });

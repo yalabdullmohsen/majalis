@@ -68,7 +68,7 @@ export function InstagramManualAssistPanel({ source, onDone }: Props) {
   return (
     <div className="igp-panel">
       <button type="button" onClick={() => setOpen(!open)} className="igp-toggle-btn">
-        {open ? "▾" : "▸"} Manual Assist — رفع إعلان يدويًا
+        {open ? "▾" : "▸"} Manual Assist، رفع إعلان يدويًا
       </button>
       {open && (
         <div className="igp-body">

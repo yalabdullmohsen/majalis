@@ -33,7 +33,7 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
     const path = `/updates/auto/${item.slug}`;
     applyPageSeo({
       path,
-      title: item.seo_title || `${item.title} | المستجدات — المجلس العلمي`,
+      title: item.seo_title || `${item.title} | المستجدات، المجلس العلمي`,
       description: item.seo_description || item.summary || item.title,
       keywords: [...(item.tags || []), item.category || "", "مستجدات", "علوم شرعية"].filter(Boolean),
       ogType: "article",

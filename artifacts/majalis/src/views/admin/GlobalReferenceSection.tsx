@@ -30,7 +30,7 @@ export function GlobalReferenceSection() {
     setReviewRunning(true);
     try {
       const result = await runReferenceReview();
-      showSuccess(`اكتملت المراجعة — ${result.cycle?.issues_found || 0} مشكلة`);
+      showSuccess(`اكتملت المراجعة، ${result.cycle?.issues_found || 0} مشكلة`);
       const d = await fetchReferenceDashboard();
       setDashboard(d);
     } catch {
@@ -43,7 +43,7 @@ export function GlobalReferenceSection() {
   const handleReport = async () => {
     try {
       const report = await generateReferenceReport();
-      if (report) showSuccess(`التقرير جاهز — اكتمال ${report.completion_pct}%`);
+      if (report) showSuccess(`التقرير جاهز، اكتمال ${report.completion_pct}%`);
       else showError("تعذر إنشاء التقرير");
     } catch {
       showError("تعذر إنشاء التقرير");
@@ -54,7 +54,7 @@ export function GlobalReferenceSection() {
     try {
       const results = await auditSources();
       const broken = results.filter((r: any) => !r.ok).length;
-      showSuccess(`فُحص ${results.length} مصدر — ${broken} معطل`);
+      showSuccess(`فُحص ${results.length} مصدر، ${broken} معطل`);
     } catch {
       showError("فشل فحص المصادر");
     }

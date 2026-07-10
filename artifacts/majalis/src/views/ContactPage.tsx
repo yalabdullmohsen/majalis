@@ -41,7 +41,7 @@ export default function ContactPage() {
     applyPageSeo({
       path: "/contact",
       title: "تواصل معنا | المجلس العلمي",
-      description: "تواصل مع فريق المجلس العلمي — تقرير خطأ، اقتراح محتوى، شراكات مؤسسية، أو طلبات تقنية.",
+      description: "تواصل مع فريق المجلس العلمي، تقرير خطأ، اقتراح محتوى، شراكات مؤسسية، أو طلبات تقنية.",
       keywords: ["تواصل", "المجلس العلمي", "الدعم", "اقتراح محتوى", "إبلاغ عن خطأ"],
     });
   }, []);
@@ -68,7 +68,7 @@ export default function ContactPage() {
           <div className="contact-channel">
             <p className="contact-channel__label">تصحيح المحتوى العلمي</p>
             <a href="mailto:yalabdullmohsen1@gmail.com?subject=تصحيح محتوى" className="contact-channel__link">
-              يالبدالمحسن — بريد التصحيح
+              يالبدالمحسن، بريد التصحيح
             </a>
             <p className="contact-channel__note">خطأ في حديث / فتوى / معلومة شرعية</p>
           </div>

@@ -24,7 +24,7 @@ export default function CertificateVerifyPage() {
     applyPageSeo({
       path: "/learning/certificate-verify",
       title: "التحقق من الشهادة | المجلس العلمي",
-      description: "تحقق من صحة الشهادة العلمية الصادرة من المجلس العلمي — أدخل رمز الشهادة للتحقق منها.",
+      description: "تحقق من صحة الشهادة العلمية الصادرة من المجلس العلمي، أدخل رمز الشهادة للتحقق منها.",
       keywords: ["تحقق شهادة", "شهادة علمية", "اعتماد علمي", "المجلس العلمي"],
     });
   }, []);

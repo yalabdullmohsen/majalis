@@ -72,7 +72,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
     const description = item.summary || item.title;
     applyPageSeo({
       path,
-      title: `${item.title} | المجمع الفقهي — المجلس العلمي`,
+      title: `${item.title} | المجمع الفقهي، المجلس العلمي`,
       description,
       keywords: [...(item.tags || []), item.category, "المجمع الفقهي", "قرارات فقهية"],
       ogType: "article",
@@ -157,7 +157,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
                 <td>
                   {item.session_number}
                   {FIQH_SESSION_NUMBER_MAP[item.session_number] && (
-                    <> — <Link href={fiqhSessionHref(FIQH_SESSION_NUMBER_MAP[item.session_number])}>صفحة الجلسة</Link></>
+                    <>، <Link href={fiqhSessionHref(FIQH_SESSION_NUMBER_MAP[item.session_number])}>صفحة الجلسة</Link></>
                   )}
                 </td>
               </tr>
@@ -213,9 +213,9 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
               <li key={i}>
                 {ref.type && <strong>{ref.type}: </strong>}
                 {ref.text}
-                {ref.source && <> — <em>{ref.source}</em></>}
+                {ref.source && <>، <em>{ref.source}</em></>}
                 {ref.url && (
-                  <> — <a href={ref.url} target="_blank" rel="noopener noreferrer">رابط</a></>
+                  <>، <a href={ref.url} target="_blank" rel="noopener noreferrer">رابط</a></>
                 )}
               </li>
             ))}
@@ -228,7 +228,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
           <p>
             {item.source_name}
             {item.source_url && (
-              <> — <a href={item.source_url} target="_blank" rel="noopener noreferrer">الرابط الأصلي</a></>
+              <>، <a href={item.source_url} target="_blank" rel="noopener noreferrer">الرابط الأصلي</a></>
             )}
           </p>
         </DetailSection>
@@ -236,7 +236,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
 
       {item.council_name && item.session_number && (
         <DetailSection title="المجلس">
-          <p>{item.council_name} — الجلسة {item.session_number}</p>
+          <p>{item.council_name}، الجلسة {item.session_number}</p>
         </DetailSection>
       )}
 

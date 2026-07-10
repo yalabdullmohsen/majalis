@@ -72,7 +72,7 @@ export default function AdhanSettingsPage() {
     applyPageSeo({
       path: "/adhan-settings",
       title: "إعدادات الأذان | المجلس العلمي",
-      description: "خصّص إعدادات الأذان — اختر المؤذن والمحافظة وأوقات التنبيه لكل صلاة.",
+      description: "خصّص إعدادات الأذان، اختر المؤذن والمحافظة وأوقات التنبيه لكل صلاة.",
       keywords: ["إعدادات أذان", "تنبيه الصلاة", "أوقات الصلاة", "مؤذن", "الكويت"],
       robots: "noindex, follow",
     });
@@ -178,7 +178,7 @@ export default function AdhanSettingsPage() {
         </div>
         <div className="ads-card__body">
           <p className="ads-adhan-desc">
-            المؤذن الافتراضي — يُستخدم لجميع الصلوات ما لم تخصّص مؤذناً لكل صلاة.
+            المؤذن الافتراضي، يُستخدم لجميع الصلوات ما لم تخصّص مؤذناً لكل صلاة.
           </p>
 
           <div className="ads-row">
@@ -226,7 +226,7 @@ export default function AdhanSettingsPage() {
 
           {!prefs.globalEnabled && (
             <div className="ads-global-disabled">
-              الإشعارات معطلة — لن يُشغَّل أذان ولن تصل تنبيهات.
+              الإشعارات معطلة، لن يُشغَّل أذان ولن تصل تنبيهات.
             </div>
           )}
 

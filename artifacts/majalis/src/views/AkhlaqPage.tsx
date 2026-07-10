@@ -368,8 +368,8 @@ export default function AkhlaqPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/akhlaq",
-      title: "الأخلاق الإسلامية — القيم والآداب | مجالس",
-      description: "موسوعة الأخلاق الإسلامية: التواضع، الصدق، الأمانة، الصبر، الكرم — مع الآيات والأحاديث وأقوال العلماء.",
+      title: "الأخلاق الإسلامية، القيم والآداب | مجالس",
+      description: "موسوعة الأخلاق الإسلامية: التواضع، الصدق، الأمانة، الصبر، الكرم، مع الآيات والأحاديث وأقوال العلماء.",
       keywords: ["أخلاق إسلامية", "قيم", "آداب", "تواضع", "صدق", "أمانة", "صبر"],
     });
   }, []);
@@ -393,7 +393,7 @@ export default function AkhlaqPage() {
         <h1 className="akl-hero__title">مكارم الأخلاق</h1>
         <p className="akl-hero__sub">
           «إِنَّمَا بُعِثْتُ لِأُتَمِّمَ مَكَارِمَ الْأَخْلَاقِ»
-          <span className="akl-hero__source">رواه أحمد — النبي محمد ﷺ</span>
+          <span className="akl-hero__source">رواه أحمد، النبي محمد ﷺ</span>
         </p>
         <div className="akl-hero__badges">
           <span><Heart size={13} /> {AKHLAQ.length} خلقاً</span>

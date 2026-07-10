@@ -12,7 +12,7 @@ const QURAN_SECTIONS = [
   {
     href: "/quran",
     title: "المصحف الشريف",
-    desc: "اقرأ المصحف صفحةً بصفحة — ٦٠٤ صفحة بصورة واضحة",
+    desc: "اقرأ المصحف صفحةً بصفحة، ٦٠٤ صفحة بصورة واضحة",
     Icon: BookOpen,
     accent: "#0A5040",
     tag: "الأكثر زيارةً",
@@ -44,7 +44,7 @@ const QURAN_SECTIONS = [
   {
     href: "/quran-live",
     title: "البث المباشر",
-    desc: "بث مباشر من الحرمين الشريفين — مكة المكرمة والمدينة المنورة",
+    desc: "بث مباشر من الحرمين الشريفين، مكة المكرمة والمدينة المنورة",
     Icon: Mic2,
     accent: "#1F4D3A",
     tag: "٢٤ ساعة",
@@ -99,7 +99,7 @@ const FEATURES = [
 
 export default function QuranHubPage() {
   useEffect(() => {
-    applyPageSeo({ path: "/quran-hub", title: "مركز القرآن الكريم | مجالس", description: "مركز القرآن الكريم — مصحف، تجويد، قصص، إذاعات وأكثر" });
+    applyPageSeo({ path: "/quran-hub", title: "مركز القرآن الكريم | مجالس", description: "مركز القرآن الكريم، مصحف، تجويد، قصص، إذاعات وأكثر" });
   }, []);
 
   return (
@@ -109,7 +109,7 @@ export default function QuranHubPage() {
         <div className="quran-hub-hero__ornament" aria-hidden="true">﴿ اقْرَأْ بِاسْمِ رَبِّكَ ﴾</div>
         <h1 className="quran-hub-hero__title">القرآن الكريم</h1>
         <p className="quran-hub-hero__sub">
-          كتاب الله العزيز — اقرأ، استمع، تعلّم، وتدبَّر
+          كتاب الله العزيز، اقرأ، استمع، تعلّم، وتدبَّر
         </p>
 
         {/* إحصائيات */}

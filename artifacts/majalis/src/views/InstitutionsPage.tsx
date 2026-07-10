@@ -131,7 +131,7 @@ const INSTITUTIONS: Institution[] = [
   },
   {
     id: "maktabah-shamila",
-    name: "الموسوعة الشاملة — المكتبة الشاملة",
+    name: "الموسوعة الشاملة، المكتبة الشاملة",
     type: "library",
     city: "عبر الإنترنت",
     country: "عالمي",
@@ -168,7 +168,7 @@ const INSTITUTIONS: Institution[] = [
     website: "https://www.iifa-aifi.org",
     mapQuery: "مجمع الفقه الإسلامي جدة",
   },
-  // إضافات — مساجد
+  // إضافات، مساجد
   {
     id: "masjid-kabir-kuwait",
     name: "المسجد الكبير",
@@ -180,7 +180,7 @@ const INSTITUTIONS: Institution[] = [
   },
   {
     id: "masjid-ali-kuwait",
-    name: "مسجد علي بن أبي طالب — الروضة",
+    name: "مسجد علي بن أبي طالب، الروضة",
     type: "mosque",
     city: "الكويت",
     country: "الكويت",
@@ -205,10 +205,10 @@ const INSTITUTIONS: Institution[] = [
     description: "ثالث أكبر مساجد العالم، يضم مئذنة بارتفاع 210م، وقاعات تعليمية ومركزاً ثقافياً.",
     mapQuery: "مسجد الحسن الثاني الدار البيضاء",
   },
-  // إضافات — جامعات
+  // إضافات، جامعات
   {
     id: "kuwait-univ-sharia",
-    name: "كلية الشريعة والدراسات الإسلامية — جامعة الكويت",
+    name: "كلية الشريعة والدراسات الإسلامية، جامعة الكويت",
     type: "university",
     city: "الكويت",
     country: "الكويت",
@@ -228,7 +228,7 @@ const INSTITUTIONS: Institution[] = [
   },
   {
     id: "jordan-univ-sharia",
-    name: "كلية الشريعة — الجامعة الأردنية",
+    name: "كلية الشريعة، الجامعة الأردنية",
     type: "university",
     city: "عمّان",
     country: "الأردن",
@@ -236,7 +236,7 @@ const INSTITUTIONS: Institution[] = [
     website: "https://www.ju.edu.jo",
     mapQuery: "الجامعة الأردنية عمان",
   },
-  // إضافات — مراكز
+  // إضافات، مراكز
   {
     id: "darul-ifta-egypt",
     name: "دار الإفتاء المصرية",
@@ -249,7 +249,7 @@ const INSTITUTIONS: Institution[] = [
   },
   {
     id: "kuwait-awqaf",
-    name: "وزارة الأوقاف والشؤون الإسلامية — الكويت",
+    name: "وزارة الأوقاف والشؤون الإسلامية، الكويت",
     type: "center",
     city: "الكويت",
     country: "الكويت",
@@ -257,10 +257,10 @@ const INSTITUTIONS: Institution[] = [
     website: "https://www.islam.gov.kw",
     mapQuery: "وزارة الأوقاف الكويت",
   },
-  // إضافات — مكتبات
+  // إضافات، مكتبات
   {
     id: "haj-library-mecca",
-    name: "مكتبة الحج — وزارة الشؤون الإسلامية",
+    name: "مكتبة الحج، وزارة الشؤون الإسلامية",
     type: "library",
     city: "مكة المكرمة",
     country: "المملكة العربية السعودية",
@@ -351,7 +351,7 @@ export default function InstitutionsPage() {
     applyPageSeo({
       path: "/institutions",
       title: "المؤسسات الإسلامية | المجلس العلمي",
-      description: "دليل المؤسسات الإسلامية والمراكز الشرعية — مساجد ومعاهد وجامعات وهيئات إسلامية.",
+      description: "دليل المؤسسات الإسلامية والمراكز الشرعية، مساجد ومعاهد وجامعات وهيئات إسلامية.",
       keywords: ["مؤسسات إسلامية", "مراكز إسلامية", "معاهد شرعية", "جامعات إسلامية", "هيئات دينية"],
     });
   }, []);

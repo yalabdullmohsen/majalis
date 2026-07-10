@@ -198,7 +198,7 @@ function StoryCard({
                 <span className="ps-approved-info">
                   ✓ معتمدة
                   {story.approved_at
-                    ? ` — ${new Date(story.approved_at).toLocaleDateString("ar-SA")}`
+                    ? `، ${new Date(story.approved_at).toLocaleDateString("ar-SA")}`
                     : ""}
                 </span>
                 <button type="button" className="ps-revoke-btn" onClick={handleRevoke} disabled={busy}>
@@ -300,7 +300,7 @@ export function ProphetStoriesSection() {
     <div className="ps-wrap">
 
       <div className="ps-header">
-        <h2 className="ps-title flex items-center gap-2"><BookOpen size={18} strokeWidth={1.6} aria-hidden="true" /> قصص الأنبياء — مراجعة الاعتماد</h2>
+        <h2 className="ps-title flex items-center gap-2"><BookOpen size={18} strokeWidth={1.6} aria-hidden="true" /> قصص الأنبياء، مراجعة الاعتماد</h2>
         <p className="ps-subtitle">
           كل قصة محفوظة كمسودة (is_approved = false) ولا تظهر للمستخدمين حتى تعتمدها يدوياً
         </p>
@@ -314,7 +314,7 @@ export function ProphetStoriesSection() {
       <div className="ps-warning">
         <AlertTriangle size={13} className="inline ml-1" aria-hidden="true" /> <strong>تنبيه ديني:</strong> كل قصة مصدرها «قصص الأنبياء» لابن كثير والآيات القرآنية المذكورة.
         اقرأ الاستشهادات أولاً، ثم النص الكامل إن أردت، ثم اضغط «اعتماد» إذا اقتنعت بدقّتها.
-        لا تُنشر قصة واحدة تلقائياً — الاعتماد قرارك وحدك.
+        لا تُنشر قصة واحدة تلقائياً، الاعتماد قرارك وحدك.
       </div>
 
       {loading && <div className="ps-loading">جاري التحميل…</div>}

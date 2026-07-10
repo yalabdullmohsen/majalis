@@ -88,9 +88,9 @@ function AutomationCenterContent() {
     <div>
       <div className="acc-header">
         <div>
-          <h2 className="acc-title">Automation Center — Phase 6</h2>
+          <h2 className="acc-title">Automation Center، Phase 6</h2>
           <p className="acc-desc">
-            Lesson Intelligence Engine — اكتشاف وجمع وتحليل ونشر الدروس من جميع المصادر الرسمية.
+            Lesson Intelligence Engine، اكتشاف وجمع وتحليل ونشر الدروس من جميع المصادر الرسمية.
           </p>
         </div>
         <div className="acc-nav">
@@ -147,7 +147,7 @@ function AutomationCenterContent() {
             <h3 className="acc-section-h3">آخر استخراجات</h3>
             <div className="acc-items-grid">
               {(stats?.recentExtractions || []).length === 0 && (
-                <p className="acc-empty">لا سجلات — طبّق migration `lesson_intelligence_v6.sql`.</p>
+                <p className="acc-empty">لا سجلات، طبّق migration `lesson_intelligence_v6.sql`.</p>
               )}
               {(stats?.recentExtractions || []).map((e, i) => (
                 <div key={i} className="acc-extraction-item">

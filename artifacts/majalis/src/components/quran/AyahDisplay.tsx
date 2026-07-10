@@ -104,7 +104,7 @@ export function AyahDisplay({
   const visibleAyahs = ayahs.slice(page * AYAHS_PER_PAGE, (page + 1) * AYAHS_PER_PAGE);
   const isSurahWithoutBismillah = surahNum === 1 || surahNum === 9;
 
-  // بيانات بصرية فقط — لا تعديل على النص
+  // بيانات بصرية فقط، لا تعديل على النص
   const juzNum  = visibleAyahs[0]?.juz  ?? null;
   const pageNum = visibleAyahs[0]?.page ?? null;
 
@@ -193,7 +193,7 @@ export function AyahDisplay({
         <p className="qs-surah-header__hint">اضغط مطوّلاً على أي آية للخيارات</p>
       </header>
 
-      {/* ── إطار المصحف الذهبي — بصري خالص — النص داخله لا يُمس مطلقاً ── */}
+      {/* ── إطار المصحف الذهبي، بصري خالص، النص داخله لا يُمس مطلقاً ── */}
       <div className="qs-mushaf-frame">
 
         {/* زخارف الزوايا الأربع */}
@@ -210,14 +210,14 @@ export function AyahDisplay({
           </div>
         )}
 
-        {/* صندوق اسم السورة — مستطيل بحد ذهبي */}
+        {/* صندوق اسم السورة، مستطيل بحد ذهبي */}
         <div className="qs-surah-name-box" aria-hidden="true" dir="rtl">
           <span className="qs-surah-name-box__orn">❖</span>
           <span className="qs-surah-name-box__title">{surahName}</span>
           <span className="qs-surah-name-box__orn">❖</span>
         </div>
 
-        {/* البسملة — فوق النص مباشرة، داخل الإطار */}
+        {/* البسملة، فوق النص مباشرة، داخل الإطار */}
         {!isSurahWithoutBismillah && (
           <p className="qs-bismillah" lang="ar" dir="rtl" aria-label="بسم الله الرحمن الرحيم">
             بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِيمِ
@@ -311,7 +311,7 @@ export function AyahDisplay({
           <span className="qs-now-playing__label">
             {playerState === "loading" && "جاري تحميل الصوت…"}
             {playerState === "playing" && `يُشغَّل الآية ${currentPlayingAyah}`}
-            {playerState === "paused" && `متوقف مؤقتاً — الآية ${currentPlayingAyah}`}
+            {playerState === "paused" && `متوقف مؤقتاً، الآية ${currentPlayingAyah}`}
             {playerState === "error" && "خطأ في تحميل الصوت"}
           </span>
         </div>
@@ -333,7 +333,7 @@ export function AyahDisplay({
           >
             <div className="qs-context-sheet__handle" aria-hidden="true" />
             <p className="qs-context-sheet__ref">
-              سورة {surahName} — آية {contextAyah.numberInSurah}
+              سورة {surahName}، آية {contextAyah.numberInSurah}
             </p>
 
             {/* Note form inline */}

@@ -105,7 +105,7 @@ function DebugLogPanel({ log }: { log: DebugLog }) {
         onClick={() => setOpen((o) => !o)}
         className="lis-debug-btn"
       >
-        <span>تفاصيل الاستخراج (Debug) — {log.total_ms ?? 0} ms</span>
+        <span>تفاصيل الاستخراج (Debug)، {log.total_ms ?? 0} ms</span>
         <span>{open ? "▲" : "▼"}</span>
       </button>
       {open && (
@@ -351,7 +351,7 @@ function LessonImportImageContent() {
     try {
       const res = await extractLessonFromImageUpload(file, { sourceUrl: sourceUrl.trim() || undefined, notes: notes.trim() || undefined });
       if (!res.ok) {
-        const msg = res.error || "تعذر معالجة الصورة — يُرجى المحاولة مرة أخرى.";
+        const msg = res.error || "تعذر معالجة الصورة، يُرجى المحاولة مرة أخرى.";
         setLastError(msg);
         showError(msg);
         return;
@@ -359,14 +359,14 @@ function LessonImportImageContent() {
       setLastError(null);
       applyResponse(res);
       if (res.storage_error) {
-        showError("تعذر رفع الصورة للتخزين — البيانات المستخرجة متاحة للمراجعة.");
+        showError("تعذر رفع الصورة للتخزين، البيانات المستخرجة متاحة للمراجعة.");
       } else if (res.vision_enabled === false) {
-        showSuccess("تم رفع الصورة — أدخل البيانات يدويًا");
+        showSuccess("تم رفع الصورة، أدخل البيانات يدويًا");
       } else {
-        showSuccess("تم استخراج البيانات — راجعها ثم اعتمد");
+        showSuccess("تم استخراج البيانات، راجعها ثم اعتمد");
       }
     } catch {
-      const msg = "تعذر رفع الصورة — تحقق من اتصال الإنترنت وحاول مجدداً.";
+      const msg = "تعذر رفع الصورة، تحقق من اتصال الإنترنت وحاول مجدداً.";
       setLastError(msg);
       showError(msg);
     } finally {
@@ -402,19 +402,19 @@ function LessonImportImageContent() {
 
   const onApprove = async () => {
     if (!draftId) {
-      showError("لا توجد مسودة — ارفع صورة أولًا");
+      showError("لا توجد مسودة، ارفع صورة أولًا");
       return;
     }
     setBusy(true);
     try {
       const res = await approveLessonImportDraft(draftId, parsed);
       if (!res.ok) {
-        const msgs = res.validation?.errors?.map((e) => e.message).join(" — ");
+        const msgs = res.validation?.errors?.map((e) => e.message).join("، ");
         showError(msgs || res.error || "تعذر الاعتماد");
         return;
       }
       invalidateLessonsCache();
-      showSuccess("تم اعتماد الدرس — يظهر الآن في المنصة");
+      showSuccess("تم اعتماد الدرس، يظهر الآن في المنصة");
       setDraftId(null);
       setImageUrl(null);
       setExtractedText("");
@@ -527,7 +527,7 @@ function LessonImportImageContent() {
         {lastError && (
           <p role="alert" className="lip-error-msg">{lastError}</p>
         )}
-        <p className="lip-upload-hint">JPEG / PNG / WebP — حتى 5 ميغابايت</p>
+        <p className="lip-upload-hint">JPEG / PNG / WebP، حتى 5 ميغابايت</p>
       </section>
 
       {hasDraft && (

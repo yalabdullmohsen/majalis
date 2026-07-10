@@ -65,7 +65,7 @@ export function OpenPlatformSection() {
       const result = await createApiKey(newKeyName || "API Key");
       if (result.key) {
         setCreatedKey(result.key);
-        showSuccess("تم إنشاء المفتاح — انسخه الآن");
+        showSuccess("تم إنشاء المفتاح، انسخه الآن");
         refresh();
       } else {
         showError("تعذّر إنشاء المفتاح.");
@@ -103,7 +103,7 @@ export function OpenPlatformSection() {
   const handleReport = async () => {
     try {
       const report = await generateOpenPlatformReport();
-      if (report) showSuccess(`التقرير جاهز — ${report.api_endpoints} endpoint`);
+      if (report) showSuccess(`التقرير جاهز، ${report.api_endpoints} endpoint`);
       else showError("تعذر إنشاء التقرير");
     } catch {
       showError("تعذر إنشاء التقرير");
@@ -115,7 +115,7 @@ export function OpenPlatformSection() {
   return (
     <div>
       <div className="ops-header">
-        <h2 className="ops-title">Open Islamic Platform — لوحة المطورين</h2>
+        <h2 className="ops-title">Open Islamic Platform، لوحة المطورين</h2>
         <div className="ops-btn-group">
           <a href="/api/v1/docs?format=html" target="_blank" rel="noreferrer" className="ops-docs-link">
             التوثيق
@@ -147,9 +147,9 @@ export function OpenPlatformSection() {
           {API_VERSIONS.map((v) => (
             <div key={v} className="ops-api-row">
               <a href={`/api/${v}/docs?format=html`} target="_blank" rel="noreferrer"><code>/api/{v}</code></a>
-              {v === "v1" && " — Stable"}
-              {v === "v2" && " — Enhanced metadata"}
-              {v === "v3" && " — Relations + semantic"}
+              {v === "v1" && "، Stable"}
+              {v === "v2" && "، Enhanced metadata"}
+              {v === "v3" && "، Relations + semantic"}
             </div>
           ))}
         </Panel>
@@ -192,7 +192,7 @@ export function OpenPlatformSection() {
         <Panel title="الأقسام المغطاة">
           {(dashboard?.resources || []).slice(0, 12).map((r) => (
             <div key={r.id} className="ops-resource-row">
-              <code>GET /api/v1/{r.id}</code> — {r.label}
+              <code>GET /api/v1/{r.id}</code>، {r.label}
             </div>
           ))}
         </Panel>
@@ -200,7 +200,7 @@ export function OpenPlatformSection() {
         <Panel title="سجل الطلبات">
           {logs.slice(0, 8).map((l) => (
             <div key={l.id} className="ops-log-row">
-              {l.method} {l.path} — {l.status_code} ({l.response_ms}ms)
+              {l.method} {l.path}، {l.status_code} ({l.response_ms}ms)
             </div>
           ))}
           {!logs.length && <p className="ii-muted">لا سجلات بعد</p>}

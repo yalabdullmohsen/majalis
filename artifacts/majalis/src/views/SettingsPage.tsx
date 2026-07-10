@@ -41,7 +41,7 @@ export default function SettingsPage() {
     applyPageSeo({
       path: "/settings",
       title: "الإعدادات | المجلس العلمي",
-      description: "إعدادات حساب المجلس العلمي — اللغة والخط والوضع الليلي وتفضيلات الأذان.",
+      description: "إعدادات حساب المجلس العلمي، اللغة والخط والوضع الليلي وتفضيلات الأذان.",
       keywords: ["إعدادات", "المجلس العلمي", "تفضيلات"],
       robots: "noindex, follow",
     });

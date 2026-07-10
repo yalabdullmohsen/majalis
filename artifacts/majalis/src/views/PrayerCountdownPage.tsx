@@ -20,7 +20,7 @@ export default function PrayerCountdownPage() {
     applyPageSeo({
       path: "/prayer-countdown",
       title: "العد التنازلي للصلاة | المجلس العلمي",
-      description: "عد تنازلي لوقت الصلاة القادمة — الفجر والظهر والعصر والمغرب والعشاء في الكويت.",
+      description: "عد تنازلي لوقت الصلاة القادمة، الفجر والظهر والعصر والمغرب والعشاء في الكويت.",
       keywords: ["عد تنازلي صلاة", "وقت الصلاة", "الصلاة القادمة", "مواقيت الكويت", "أذان"],
     });
   }, []);
@@ -36,7 +36,7 @@ export default function PrayerCountdownPage() {
   if (!data?.prayers?.length || !countdown) {
     return (
       <div className="prayer-countdown-page" dir="rtl">
-        <p className="pcp-error-msg">تعذّر تحميل مواقيت الصلاة — تحقق من الاتصال.</p>
+        <p className="pcp-error-msg">تعذّر تحميل مواقيت الصلاة، تحقق من الاتصال.</p>
       </div>
     );
   }

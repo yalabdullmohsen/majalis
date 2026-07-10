@@ -15,7 +15,7 @@ function RelationGroup({ title, items }: { title: string; items: { slug: string;
         {items.map((item) => (
           <li key={item.slug}>
             <Link href={fiqhItemHref(item.slug)}>{item.title}</Link>
-            {item.meta && <span className="fiqh-relations-meta"> — {item.meta}</span>}
+            {item.meta && <span className="fiqh-relations-meta">، {item.meta}</span>}
           </li>
         ))}
       </ul>

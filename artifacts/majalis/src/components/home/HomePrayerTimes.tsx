@@ -40,7 +40,7 @@ export function HomePrayerTimes() {
       ) : data && countdown ? (
         <div className="home-prayer-widget">
           <div className="prayer-status-card ui-card">
-            <p className="prayer-status-card__label">{inGrace ? "جاري الأذان — الصلاة القادمة" : "الصلاة القادمة"}</p>
+            <p className="prayer-status-card__label">{inGrace ? "جاري الأذان، الصلاة القادمة" : "الصلاة القادمة"}</p>
             <h3>{nextPrayerName}</h3>
             <p className="prayer-status-card__countdown prayer-countdown-hms" aria-live="polite" dir="ltr">
               {displayHms}

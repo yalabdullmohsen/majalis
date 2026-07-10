@@ -121,7 +121,7 @@ function DropZone({ onFiles, busy }: { onFiles: (f: File[]) => void; busy: boole
       role="button"
       tabIndex={0}
       onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") inputRef.current?.click(); }}
-      aria-label="منطقة رفع الصور — اسحب وأفلت أو انقر للاختيار"
+      aria-label="منطقة رفع الصور، اسحب وأفلت أو انقر للاختيار"
     >
       <input
         ref={inputRef}
@@ -139,7 +139,7 @@ function DropZone({ onFiles, busy }: { onFiles: (f: File[]) => void; busy: boole
         </p>
         <p className="ii-drop__sub">أو <strong>انقر للاختيار</strong> · دعم متعدد الملفات</p>
         <p className="ii-drop__hint">
-          JPEG · PNG · WebP · HEIC — حتى {fmt(MAX_BYTES)} لكل صورة
+          JPEG · PNG · WebP · HEIC، حتى {fmt(MAX_BYTES)} لكل صورة
         </p>
       </div>
     </div>
@@ -435,7 +435,7 @@ function JobDetail({
             <span>
               درس مكرر محتمل
               {job.duplicateTitle && `: «${job.duplicateTitle}»`}
-              — راجع قبل الاعتماد
+             ، راجع قبل الاعتماد
             </span>
           </div>
         )}
@@ -711,8 +711,8 @@ export function ImageImportSection() {
     (files: File[]) => {
       const r = addFiles(files);
       if (!r) return;
-      if (r.added)    showSuccess(`تم إضافة ${r.added} صورة للطابور — بدأت المعالجة تلقائياً`);
-      if (r.rejected.length) showError(`تجاهل ${r.rejected.length} ملف — ${r.rejected[0]}`);
+      if (r.added)    showSuccess(`تم إضافة ${r.added} صورة للطابور، بدأت المعالجة تلقائياً`);
+      if (r.rejected.length) showError(`تجاهل ${r.rejected.length} ملف، ${r.rejected[0]}`);
     },
     [addFiles, showSuccess, showError],
   );
@@ -733,11 +733,11 @@ export function ImageImportSection() {
           draftId = save.draft_id;
           if (draftId) updateJob(jobId, { draftId });
         }
-        if (!draftId) { showError("لا توجد مسودة — حاول مجدداً"); return; }
+        if (!draftId) { showError("لا توجد مسودة، حاول مجدداً"); return; }
 
         const res = await approveLessonImportDraft(draftId, parsed);
         if (!res.ok) {
-          const msgs = res.validation?.errors?.map((e) => e.message).join(" — ");
+          const msgs = res.validation?.errors?.map((e) => e.message).join("، ");
           showError(msgs || res.error || "تعذر الاعتماد");
           return;
         }
@@ -842,7 +842,7 @@ export function ImageImportSection() {
           <p className="ii-header__eyebrow">استخلاص ذكي · AI Vision</p>
           <h2 className="ii-header__title">استخلاص الدروس من الصور</h2>
           <p className="ii-header__sub">
-            ارفع إعلانات الدروس (ستوري، منشور، ملصق…) — يحللها الذكاء الاصطناعي ويستخرج جميع البيانات تلقائياً.
+            ارفع إعلانات الدروس (ستوري، منشور، ملصق…)، يحللها الذكاء الاصطناعي ويستخرج جميع البيانات تلقائياً.
           </p>
         </div>
         {stats.total > 0 && (

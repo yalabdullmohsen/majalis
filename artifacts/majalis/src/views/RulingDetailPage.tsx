@@ -34,7 +34,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
     const path = `/rulings/${item.id}`;
     applyPageSeo({
       path,
-      title: `${item.title} | موسوعة الأحكام — المجلس العلمي`,
+      title: `${item.title} | موسوعة الأحكام، المجلس العلمي`,
       description: item.summary || item.body?.slice(0, 160) || item.title,
       keywords: [...(item.keywords || []), item.category, item.subcategory || "", "أحكام شرعية", "فقه"],
       ogType: "article",

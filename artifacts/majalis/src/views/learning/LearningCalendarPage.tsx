@@ -30,7 +30,7 @@ export default function LearningCalendarPage() {
     applyPageSeo({
       path: "/learning/calendar",
       title: "تقويم الدروس والدورات | المجلس العلمي",
-      description: "تقويم الأحداث والدروس والدورات الإسلامية القادمة — اشترك وتابع المواعيد العلمية.",
+      description: "تقويم الأحداث والدروس والدورات الإسلامية القادمة، اشترك وتابع المواعيد العلمية.",
       keywords: ["تقويم دروس", "دورات إسلامية", "مواعيد علمية", "أحداث شرعية", "دورات قرآنية"],
     });
   }, []);
@@ -52,7 +52,7 @@ export default function LearningCalendarPage() {
       <PageHeader title="التقويم العلمي" subtitle="الدروس والدورات والمناسبات" />
 
       {events.length === 0 ? (
-        <p className="lcd-empty">لا توجد أحداث قادمة حالياً — تابع لاحقاً.</p>
+        <p className="lcd-empty">لا توجد أحداث قادمة حالياً، تابع لاحقاً.</p>
       ) : (
         <div className="lcd-grid">
           {events.map((ev) => (

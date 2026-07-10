@@ -84,7 +84,7 @@ export function RulingsSection() {
 
   const handleSave = async () => {
     const validation = validateRuling(form, items);
-    if (!validation.valid) return showError(validation.errors.join(" — "));
+    if (!validation.valid) return showError(validation.errors.join("، "));
 
     const similar = findSimilarRulings(form, items);
     if (similar.length > 0 && !confirm(`يوجد ${similar.length} حكم مشابه. متابعة الحفظ؟`)) return;
@@ -200,14 +200,14 @@ export function RulingsSection() {
         <>
         {filtered.length > 100 && (
           <p className="rls-hint">
-            عرض 100 من {filtered.length.toLocaleString("ar")} — استخدم البحث لتضييق النتائج.
+            عرض 100 من {filtered.length.toLocaleString("ar")}، استخدم البحث لتضييق النتائج.
           </p>
         )}
         {filtered.slice(0, 100).map((item) => (
           <div key={item.id} className="adm-item-card">
             <strong>{item.title}</strong>{" "}
             <StatusBadge status={item.verification_status} />
-            {" — "}
+            {"، "}
             <span className="rls-item-cat">
               {item.category}
               {item.subcategory ? ` / ${item.subcategory}` : ""}

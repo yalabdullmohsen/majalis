@@ -22,7 +22,7 @@ export default function LearningPathBookPage() {
     applyPageSeo({
       path: "/learning-path/book",
       title: "كتاب في مسار التعلم | المجلس العلمي",
-      description: "تصفّح محتوى الكتاب في مسار التعلم الشرعي — شروح وملاحظات وتتبع تقدمك في القراءة.",
+      description: "تصفّح محتوى الكتاب في مسار التعلم الشرعي، شروح وملاحظات وتتبع تقدمك في القراءة.",
       keywords: ["كتاب شرعي", "مسار تعلم", "قراءة علمية", "شرح كتاب", "تعليم إسلامي"],
     });
   }, []);
@@ -125,7 +125,7 @@ export default function LearningPathBookPage() {
       <div className="lpb-body">
         <div className="lpb-grid">
 
-          {/* العمود الجانبي — معلومات الكتاب */}
+          {/* العمود الجانبي، معلومات الكتاب */}
           <div className="lpb-sidebar">
             {/* غلاف */}
             <div

@@ -104,9 +104,9 @@ export function IslamicStoriesSection() {
     <>
       <div className="is-wrap">
         <div className="is-header">
-          <h2 className="is-title"><BookOpen size={20} className="inline ml-2" />القصص الإسلامية — مراجعة واعتماد</h2>
+          <h2 className="is-title"><BookOpen size={20} className="inline ml-2" />القصص الإسلامية، مراجعة واعتماد</h2>
           <p className="is-subtitle">
-            جميع القصص محفوظة بـ is_approved = false — اعتمادك قرارك وحدك.
+            جميع القصص محفوظة بـ is_approved = false، اعتمادك قرارك وحدك.
             لا تُنشر قصة للمستخدمين قبل موافقتك.
           </p>
           <div className="is-stats">

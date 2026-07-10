@@ -1,11 +1,11 @@
 /**
- * QuranSearch — بحث فوري في القرآن الكريم
+ * QuranSearch، بحث فوري في القرآن الكريم
  * - بحث فوري (live) بـ 300ms debounce
  * - تطبيع عربي: تشكيل، همزة، تاء مربوطة، ألف مقصورة
  * - تظليل الكلمة المطابقة
  * - فلاتر: سورة، نوع (مع/بدون تشكيل)
  * - سجل بحث محلي
- * - المصدر: AlQuran Cloud API فقط — لا توليد AI
+ * - المصدر: AlQuran Cloud API فقط، لا توليد AI
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AlertTriangle, Clock, Search } from "lucide-react";

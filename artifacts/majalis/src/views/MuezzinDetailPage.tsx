@@ -67,7 +67,7 @@ export default function MuezzinDetailPage() {
     applyPageSeo({
       path: "/muezzins",
       title: `${muezzin?.name || "مؤذن"} | أذان | المجلس العلمي`,
-      description: `استمع لتلاوات ${muezzin?.name || "المؤذن"} — أذان مباشر وتسجيلات إسلامية متنوعة.`,
+      description: `استمع لتلاوات ${muezzin?.name || "المؤذن"}، أذان مباشر وتسجيلات إسلامية متنوعة.`,
       keywords: ["أذان", "مؤذن", "تلاوات أذان", "صوت مؤذن", "أذان إسلامي"],
     });
   }, [muezzin?.name]);

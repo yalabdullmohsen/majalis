@@ -46,7 +46,7 @@ function nearestDeadline(programs: UniversityProgram[]): string {
 }
 
 const COMPARE_ROWS: { label: string; fn: (u: University) => string }[] = [
-  { label: "الدولة والمدينة",   fn: (u) => `${u.country}${u.city ? ` — ${u.city}` : ""}` },
+  { label: "الدولة والمدينة",   fn: (u) => `${u.country}${u.city ? `، ${u.city}` : ""}` },
   { label: "حالة الاعتماد",     fn: (u) => ACCREDITATION_LABELS[u.accreditation_status] },
   { label: "الدرجات العلمية",   fn: (u) => degrees(u.university_programs ?? []) },
   { label: "لغة الدراسة",       fn: (u) => languages(u.university_programs ?? []) },
@@ -91,7 +91,7 @@ function CompareContent() {
       <div className="max-w-5xl mx-auto px-2 py-6 overflow-x-auto">
         {/* تنبيه */}
         <div className="ucp-alert">
-          <AlertTriangle size={13} className="inline ml-1" />البيانات تجريبية — تحقق من الموقع الرسمي لكل جامعة قبل التقديم.
+          <AlertTriangle size={13} className="inline ml-1" />البيانات تجريبية، تحقق من الموقع الرسمي لكل جامعة قبل التقديم.
         </div>
 
         {/* جدول المقارنة */}
@@ -159,7 +159,7 @@ export default function UniversitiesComparePage() {
     applyPageSeo({
       path: "/universities/compare",
       title: "مقارنة الجامعات الإسلامية | المجلس العلمي",
-      description: "قارن بين الجامعات الإسلامية — التخصصات والاعتمادات والبرامج الأكاديمية جنباً إلى جنب.",
+      description: "قارن بين الجامعات الإسلامية، التخصصات والاعتمادات والبرامج الأكاديمية جنباً إلى جنب.",
       keywords: ["مقارنة جامعات", "جامعات إسلامية", "دراسة شرعية", "اعتماد أكاديمي", "مقارنة برامج"],
     });
   }, []);

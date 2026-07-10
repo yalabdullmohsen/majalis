@@ -39,7 +39,7 @@ export default function TasbihPage() {
     applyPageSeo({
       path: "/tasbih",
       title: "التسبيح الرقمي | المجلس العلمي",
-      description: "عداد التسبيح الرقمي مع أوراد قابلة للتخصيص — سبّح بحمد الله واذكر الله في أي وقت مع متابعة تقدمك اليومي.",
+      description: "عداد التسبيح الرقمي مع أوراد قابلة للتخصيص، سبّح بحمد الله واذكر الله في أي وقت مع متابعة تقدمك اليومي.",
       keywords: ["تسبيح", "ذكر الله", "عداد تسبيح", "أوراد", "أذكار"],
     });
   }, []);
@@ -184,7 +184,7 @@ export default function TasbihPage() {
           />
           {activeStats && (
             <p className="tasbih-progress-label">
-              هذا الورد — اليوم: {activeStats.today} · الأسبوع: {activeStats.week} · الشهر: {activeStats.month}
+              هذا الورد، اليوم: {activeStats.today} · الأسبوع: {activeStats.week} · الشهر: {activeStats.month}
             </p>
           )}
           <div className="tasbih-actions-grid">

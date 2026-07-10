@@ -56,7 +56,7 @@ export function SettingsSection() {
         </section>
 
         <section className="set-section">
-          <h3 className="set-section-h3">SEO — معاينة الصفحات العامة</h3>
+          <h3 className="set-section-h3">SEO، معاينة الصفحات العامة</h3>
           <p className="set-seo-info">
             {publicRoutes.length} صفحة مفهرسة · robots.txt و sitemap.xml يُولَّدان تلقائيًا عند البناء
           </p>
@@ -75,7 +75,7 @@ export function SettingsSection() {
           <h3 className="set-section-h3">التحديث التلقائي</h3>
           <p className="set-notice">
             يعمل cron يوميًا على: مواقيت الصلاة، المناسبات، أرشفة الدروس المنتهية، وفحص الروابط.
-            المسار: <code>/api/cron/sync-data</code> — يتطلب <code>CRON_SECRET</code> في الإنتاج.
+            المسار: <code>/api/cron/sync-data</code>، يتطلب <code>CRON_SECRET</code> في الإنتاج.
           </p>
           <p className="set-notice set-notice--sm">
             سؤال اليوم والحديث والفوائد تُدوّر تلقائيًا حسب تاريخ الكويت. المحتوى الجديد يُضاف من لوحة الإدارة ثم يُعتمد قبل النشر.
@@ -87,7 +87,7 @@ export function SettingsSection() {
           <ul className="set-security-ul">
             <li>صفحات الإدارة محمية بـ AdminRouteGuard</li>
             <li>مفاتيح API سرية على الخادم فقط (لا NEXT_PUBLIC)</li>
-            <li>رسائل الخطأ آمنة — لا stack trace للمستخدم</li>
+            <li>رسائل الخطأ آمنة، لا stack trace للمستخدم</li>
             <li>صفحات /admin و /login غير مفهرسة (noindex)</li>
           </ul>
         </section>

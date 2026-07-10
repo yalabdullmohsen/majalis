@@ -23,7 +23,7 @@ export default function FiqhCouncilNawazilPage() {
     applyPageSeo({
       path: "/fiqh-council/nawazil",
       title: "النوازل المعاصرة | المجمع الفقهي | المجلس العلمي",
-      description: "النوازل الفقهية المعاصرة — مسائل العصر الحديث من التقنية والاقتصاد الرقمي والطب والبيئة.",
+      description: "النوازل الفقهية المعاصرة، مسائل العصر الحديث من التقنية والاقتصاد الرقمي والطب والبيئة.",
       keywords: ["نوازل معاصرة", "مسائل معاصرة", "فقه معاصر", "نوازل فقهية", "مستجدات فقهية"],
     });
   }, []);
@@ -41,7 +41,7 @@ export default function FiqhCouncilNawazilPage() {
       <PageHeader
         eyebrow="الفقه المعاصر"
         title="فقه النوازل"
-        subtitle="قضايا معاصرة مرتبطة بقرارات وفتاوى موثّقة — دون إصدار أحكام مستقلة."
+        subtitle="قضايا معاصرة مرتبطة بقرارات وفتاوى موثّقة، دون إصدار أحكام مستقلة."
       />
 
       <FiqhCouncilSubnav />

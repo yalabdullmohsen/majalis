@@ -101,7 +101,7 @@ export function HomeWeekStreak() {
         <p className="hws__tip">أتمم وردك اليوم لتبدأ سلسلة التواصل</p>
       )}
       {streak >= 7 && (
-        <p className="hws__tip hws__tip--congrats">أسبوع كامل من التواصل — بارك الله فيك!</p>
+        <p className="hws__tip hws__tip--congrats">أسبوع كامل من التواصل، بارك الله فيك!</p>
       )}
     </section>
   );

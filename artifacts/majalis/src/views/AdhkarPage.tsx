@@ -105,7 +105,7 @@ export default function AdhkarPage() {
     applyPageSeo({
       path: "/adhkar",
       title: "الأذكار والأدعية الإسلامية | المجلس العلمي",
-      description: "أذكار الصباح والمساء وما بعد الصلاة وسائر الأذكار المأثورة — مع التسبيح التفاعلي وعداد الذكر.",
+      description: "أذكار الصباح والمساء وما بعد الصلاة وسائر الأذكار المأثورة، مع التسبيح التفاعلي وعداد الذكر.",
       keywords: ["أذكار", "أدعية", "أذكار الصباح", "أذكار المساء", "ذكر الله", "أذكار إسلامية"],
     });
   }, []);
@@ -245,7 +245,7 @@ export default function AdhkarPage() {
                 type="button"
                 className={`adhkar-tapper${done ? " adhkar-tapper--done" : ""}`}
                 onClick={handleTap}
-                aria-label={done ? "اكتمل الذكر" : `اضغط للعدّ — ${toAr(tapCount)} من ${toAr(target)}`}
+                aria-label={done ? "اكتمل الذكر" : `اضغط للعدّ، ${toAr(tapCount)} من ${toAr(target)}`}
               >
                 <RingProgress pct={ringPct} />
                 <div className="adhkar-tapper__inner">
@@ -268,7 +268,7 @@ export default function AdhkarPage() {
               )}
             </div>
           ) : (
-            /* ذكر مرة واحدة — لا داعي للعداد */
+            /* ذكر مرة واحدة، لا داعي للعداد */
             <p className="adhkar-focus-count">مرة واحدة</p>
           )}
 

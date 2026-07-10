@@ -38,7 +38,7 @@ export function UsersSection() {
     try {
       const { error } = await adminUpdateUserRole(userId, newRole);
       if (error) {
-        showError("تعذّر تغيير الصلاحية — تحقّق من صلاحياتك (RLS).");
+        showError("تعذّر تغيير الصلاحية، تحقّق من صلاحياتك (RLS).");
         return;
       }
       const governanceRole = LEGACY_ROLE_MAP[newRole] || "read_only";

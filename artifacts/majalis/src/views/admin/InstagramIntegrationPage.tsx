@@ -61,7 +61,7 @@ function InstagramIntegrationContent() {
     <div>
       <div className="igst-header">
         <div>
-          <h2 className="igst-title">Instagram Graph API — Phase 7</h2>
+          <h2 className="igst-title">Instagram Graph API، Phase 7</h2>
           <p className="igst-desc">
             ربط Meta Business لجلب المنشورات تلقائيًا. بدون ربط: Manual Assist Mode من{" "}
             <Link href="/admin/sources" className="igst-link">/admin/sources</Link>.
@@ -77,7 +77,7 @@ function InstagramIntegrationContent() {
             <div className="igst-info-grid">
               <div>الحالة: <StatusBadge ok={status?.configured ?? false} label={status?.configured ? "Graph API مُعدّ" : "Instagram connector not configured"} /></div>
               {status?.manualAssistMode && (
-                <div className="igst-manual-note">Manual Assist Mode نشط — ارفع الإعلانات يدويًا من صفحة المصادر.</div>
+                <div className="igst-manual-note">Manual Assist Mode نشط، ارفع الإعلانات يدويًا من صفحة المصادر.</div>
               )}
               <div>App ID: {status?.appId || "—"}</div>
               <div>Business Account ID: {status?.businessAccountId || "—"}</div>

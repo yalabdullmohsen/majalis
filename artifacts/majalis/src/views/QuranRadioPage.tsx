@@ -20,7 +20,7 @@ export default function QuranRadioPage() {
     applyPageSeo({
       path: "/quran-radio",
       title: "راديو القرآن الكريم | المجلس العلمي",
-      description: "استمع إلى القرآن الكريم عبر الإنترنت — محطات إذاعية متنوعة وبث مباشر للتلاوات القرآنية.",
+      description: "استمع إلى القرآن الكريم عبر الإنترنت، محطات إذاعية متنوعة وبث مباشر للتلاوات القرآنية.",
       keywords: ["راديو قرآن", "بث قرآن", "تلاوة قرآنية", "استماع قرآن", "إذاعة إسلامية"],
     });
   }, []);
@@ -45,7 +45,7 @@ export default function QuranRadioPage() {
             <h1 id="radio-heading" className="ds-section__title">إذاعات القرآن الكريم</h1>
           </div>
           <p className="qrp-intro">
-            بث مستمر لقرّاء موثوقين — المصدر: qurango.net. كل إذاعة بصوت القارئ المسمّى.
+            بث مستمر لقرّاء موثوقين، المصدر: qurango.net. كل إذاعة بصوت القارئ المسمّى.
           </p>
 
           <ol className="qs-radio-list" aria-label="قائمة إذاعات القرآن">
@@ -124,7 +124,7 @@ export default function QuranRadioPage() {
             <h2 id="live-heading" className="ds-section__title">البث المباشر</h2>
           </div>
           <p className="qrp-intro">
-            بث مباشر HLS من قنوات رسمية — افتح الرابط في مشغّل الفيديو المدمج أو انسخه لأي مشغّل خارجي.
+            بث مباشر HLS من قنوات رسمية، افتح الرابط في مشغّل الفيديو المدمج أو انسخه لأي مشغّل خارجي.
           </p>
 
           <div className="qs-live-cards">

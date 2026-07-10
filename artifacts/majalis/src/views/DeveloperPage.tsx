@@ -101,7 +101,7 @@ export default function DeveloperPage() {
     applyPageSeo({
       path: "/developer",
       title: "واجهة برمجة التطبيقات | مجالس للمطورين",
-      description: "وثائق API مجالس — دمج المحتوى الإسلامي في تطبيقاتك بسهولة عبر REST API مفتوح.",
+      description: "وثائق API مجالس، دمج المحتوى الإسلامي في تطبيقاتك بسهولة عبر REST API مفتوح.",
       keywords: ["API إسلامي", "واجهة برمجية", "مطورون", "مجالس API", "بيانات إسلامية"],
     });
   }, []);
@@ -111,7 +111,7 @@ export default function DeveloperPage() {
 
       <header className="dvp-hero">
         <p className="dvp-eyebrow">للمطوّرين</p>
-        <h1 className="dvp-title">المجلس العلمي — Open Islamic API</h1>
+        <h1 className="dvp-title">المجلس العلمي، Open Islamic API</h1>
         <p className="dvp-intro">
           واجهة برمجية مفتوحة للوصول إلى المحتوى العلمي الإسلامي الموثَّق:
           القرآن الكريم، الأحاديث النبوية، الفتاوى، الأذكار، مواقيت الصلاة، الدروس، وأكثر من 22 قسماً.
@@ -162,17 +162,17 @@ curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI..." \\
         <h2 className="dvp-section-title">إصدارات API</h2>
         <div className="dvp-versions">
           <div className="dvp-version dvp-version--stable">
-            <span className="dvp-version-tag">v1 — Stable</span>
+            <span className="dvp-version-tag">v1، Stable</span>
             <p>البحث، الأحاديث، الأذكار، الفتاوى، الدروس، العلماء، الكتب، مواقيت الصلاة، صور المصحف.</p>
             <code>/api/v1/</code>
           </div>
           <div className="dvp-version">
-            <span className="dvp-version-tag">v2 — Enhanced</span>
+            <span className="dvp-version-tag">v2، Enhanced</span>
             <p>البيانات الوصفية المُعززة، التحقق من مصادر الأحاديث، علاقات العلماء بمؤلفاتهم.</p>
             <code>/api/v2/</code>
           </div>
           <div className="dvp-version">
-            <span className="dvp-version-tag">v3 — Semantic</span>
+            <span className="dvp-version-tag">v3، Semantic</span>
             <p>البحث الدلالي بالذكاء الاصطناعي، رسم معرفي للمفاهيم الشرعية، توصيات المحتوى.</p>
             <code>/api/v3/</code>
           </div>

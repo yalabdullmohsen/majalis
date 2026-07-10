@@ -25,7 +25,7 @@ function looksLikeTopic(name: string): boolean {
 function parseVenueFromMosque(mosque: string): { type: string; name: string } {
   const raw = (mosque || "").trim();
   for (const t of VENUE_TYPES) {
-    if (t !== "مسجد" && raw.startsWith(`${t} — `)) {
+    if (t !== "مسجد" && raw.startsWith(`${t}، `)) {
       return { type: t, name: raw.slice(t.length + 3) };
     }
   }
@@ -142,12 +142,12 @@ export function LessonsSection() {
     if (!form.title?.trim()) {
       form.title = form.speaker_name?.trim()
         ? `درس الشيخ ${form.speaker_name.trim()}`
-        : `درس — ${new Date().toLocaleDateString("ar-SA")}`;
+        : `درس، ${new Date().toLocaleDateString("ar-SA")}`;
     }
     setSaving(true);
     const venueName = (form.mosque || "").trim();
     const combinedMosque = form.venue_type && form.venue_type !== "مسجد" && venueName
-      ? `${form.venue_type} — ${venueName}`
+      ? `${form.venue_type}، ${venueName}`
       : venueName;
     const dayOfWeek = Array.isArray(form.days_of_week) && form.days_of_week.length > 0
       ? form.days_of_week.join("،")
@@ -181,7 +181,7 @@ export function LessonsSection() {
     const { ok, synced, error } = await upsertSeedLessonsToDb();
     setSyncing(false);
     if (ok) {
-      setSyncMsg(`✓ تمت المزامنة — ${synced} درس`);
+      setSyncMsg(`✓ تمت المزامنة، ${synced} درس`);
       invalidateLessonsCache();
       load();
     } else {
@@ -297,7 +297,7 @@ export function LessonsSection() {
               })}
             </tbody>
           </table>
-          {filtered.length === 0 && <p className="les-empty">{search || statusFilter !== "all" ? "لا توجد دروس مطابقة" : "لا توجد دروس — ابدأ بإضافة أول درس"}</p>}
+          {filtered.length === 0 && <p className="les-empty">{search || statusFilter !== "all" ? "لا توجد دروس مطابقة" : "لا توجد دروس، ابدأ بإضافة أول درس"}</p>}
         </div>
       )}
 
@@ -403,8 +403,8 @@ export function LessonsSection() {
             {origTime && (
               <span className="les-time-note">
                 {form.lesson_time
-                  ? `القيمة السابقة «${origTime}» حُوِّلت تلقائياً — عدّلها إن احتجت`
-                  : `القيمة السابقة «${origTime}» — تعذّر تحويلها، حدّد الوقت من المنتقي`}
+                  ? `القيمة السابقة «${origTime}» حُوِّلت تلقائياً، عدّلها إن احتجت`
+                  : `القيمة السابقة «${origTime}»، تعذّر تحويلها، حدّد الوقت من المنتقي`}
               </span>
             )}
           </Field>

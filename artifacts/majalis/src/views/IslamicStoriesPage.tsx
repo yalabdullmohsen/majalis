@@ -165,7 +165,7 @@ export default function IslamicStoriesPage() {
     applyPageSeo({
       path: "/islamic-stories",
       title: "قصص الصحابة والفتوحات الإسلامية | المجلس العلمي",
-      description: "قصص الصحابة الكرام والفتوحات الإسلامية والأحداث التاريخية — من الهجرة النبوية إلى فتح مكة وما بعدها من عصور الإسلام.",
+      description: "قصص الصحابة الكرام والفتوحات الإسلامية والأحداث التاريخية، من الهجرة النبوية إلى فتح مكة وما بعدها من عصور الإسلام.",
       keywords: ["قصص إسلامية", "الصحابة", "الفتوحات الإسلامية", "التاريخ الإسلامي", "السيرة"],
     });
   }, []);
@@ -287,7 +287,7 @@ export default function IslamicStoriesPage() {
 
           <p className="isp-result-count" aria-live="polite" aria-atomic="true">
             {filtered.length} قصة
-            {search && ` — نتائج البحث عن "${search}"`}
+            {search && `، نتائج البحث عن "${search}"`}
           </p>
         </div>
       )}

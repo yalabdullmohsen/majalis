@@ -55,7 +55,7 @@ function QiblaCompass({
     <svg
       viewBox="0 0 200 200"
       className="qibla-svg"
-      aria-label={`وصلة القبلة — الزاوية ${Math.round(bearing)} درجة`}
+      aria-label={`وصلة القبلة، الزاوية ${Math.round(bearing)} درجة`}
     >
       {/* دائرة الخلفية */}
       <circle cx="100" cy="100" r="97" fill="var(--qibla-bg, #F0FDF4)" stroke="rgba(22,163,74,0.18)" strokeWidth="1.5" />
@@ -123,7 +123,7 @@ export default function QiblaPage() {
     applyPageSeo({
       path: "/qibla",
       title: "اتجاه القبلة | المجلس العلمي",
-      description: "حدد اتجاه القبلة من موقعك الحالي بدقة — بوصلة رقمية تعتمد على GPS للمسلمين في كل مكان.",
+      description: "حدد اتجاه القبلة من موقعك الحالي بدقة، بوصلة رقمية تعتمد على GPS للمسلمين في كل مكان.",
       keywords: ["اتجاه القبلة", "قبلة", "بوصلة إسلامية", "اتجاه مكة", "صلاة"],
     });
   }, []);

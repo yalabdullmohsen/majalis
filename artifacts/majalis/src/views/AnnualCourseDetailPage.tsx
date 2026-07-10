@@ -42,7 +42,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
     const path = `/annual-courses/${item.id}`;
     applyPageSeo({
       path,
-      title: `${item.title} | الدورات العلمية — المجلس العلمي`,
+      title: `${item.title} | الدورات العلمية، المجلس العلمي`,
       description: item.summary || item.title,
       keywords: [...(item.keywords || []), item.course_type, "دورات شرعية", "طلب العلم"],
       ogType: "website",
@@ -133,7 +133,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
       {(item.venue_name || item.venue_city) && (
         <section className="ui-card content-detail-section">
           <h2>مكان الإقامة</h2>
-          <p>{[item.venue_name, item.venue_address, item.venue_city].filter(Boolean).join(" — ")}</p>
+          <p>{[item.venue_name, item.venue_address, item.venue_city].filter(Boolean).join("، ")}</p>
           {mapEmbed && (
             <iframe
               title="خريطة مكان الدورة"

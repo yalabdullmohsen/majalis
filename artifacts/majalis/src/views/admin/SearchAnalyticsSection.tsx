@@ -21,7 +21,7 @@ export function SearchAnalyticsSection() {
     try {
       const report = await generateIntelligenceReport();
       if (report) {
-        showSuccess(`تم إنشاء التقرير — اكتمال المحرك: ${report.completion_pct}%`);
+        showSuccess(`تم إنشاء التقرير، اكتمال المحرك: ${report.completion_pct}%`);
       } else {
         showError("تعذر إنشاء التقرير");
       }

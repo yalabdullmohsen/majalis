@@ -170,7 +170,7 @@ export function FiqhCouncilSection() {
         ...(jobsData.some((j: FiqhSyncJob) => j.status === "failed") ? [{ id: "local-sync-fail", title: "فشل في آخر مزامنة", alert_type: "sync_failed", severity: "error", is_read: false }] : []),
       ];
       setAlerts([...computedAlerts, ...(alertsRes.data || [])]);
-      if (allRes.error && allRes.usingSeed) showError("تعذّر تحميل البيانات — عرض البذور المحلية.");
+      if (allRes.error && allRes.usingSeed) showError("تعذّر تحميل البيانات، عرض البذور المحلية.");
     }).catch(() => showError("تعذّر تحميل بيانات المجمع الفقهي.")).finally(() => setLoading(false));
   };
 
@@ -402,7 +402,7 @@ export function FiqhCouncilSection() {
             {alerts.filter((a) => !a.is_read).slice(0, 8).map((alert) => (
               <div key={alert.id} className="fiqh-sync-job fcs-text-sm">
                 <strong>{alert.title}</strong>
-                {alert.message && <span className="fcs-muted"> — {alert.message}</span>}
+                {alert.message && <span className="fcs-muted">، {alert.message}</span>}
                 {!String(alert.id).startsWith("local-") && (
                   <button type="button" className="fcs-btn--ms" onClick={() => adminMarkFiqhAlertRead(alert.id).then(loadItems)}>تم</button>
                 )}
@@ -480,7 +480,7 @@ export function FiqhCouncilSection() {
           </div>
 
           {suggestedRelations.length === 0 && localRelationScan.length === 0 ? (
-            <p className="fcs-empty">لا توجد علاقات مقترحة — شغّل الفحص.</p>
+            <p className="fcs-empty">لا توجد علاقات مقترحة، شغّل الفحص.</p>
           ) : (
             <div className="fcs-grid-gap-md">
               {(suggestedRelations.length ? suggestedRelations : localRelationScan.map((row, i) => ({
@@ -540,7 +540,7 @@ export function FiqhCouncilSection() {
               <div className="fcs-grid-gap">
                 {researchAnalytics.top_queries.map((row: any) => (
                   <div key={row.query} className="fiqh-sync-job fcs-text-sm">
-                    {row.query} — {row.cnt} مرة
+                    {row.query}، {row.cnt} مرة
                   </div>
                 ))}
               </div>
@@ -553,7 +553,7 @@ export function FiqhCouncilSection() {
               <div className="fcs-grid-gap">
                 {researchAnalytics.top_categories.map((row: any) => (
                   <div key={row.category} className="fiqh-sync-job fcs-text-sm">
-                    {row.category} — {row.cnt} مرة
+                    {row.category}، {row.cnt} مرة
                   </div>
                 ))}
               </div>
@@ -566,7 +566,7 @@ export function FiqhCouncilSection() {
               <div className="fcs-grid-gap">
                 {researchAnalytics.top_keywords.map((row: any) => (
                   <div key={row.keyword} className="fiqh-sync-job fcs-text-sm">
-                    {row.keyword} — {row.cnt} مرة
+                    {row.keyword}، {row.cnt} مرة
                   </div>
                 ))}
               </div>
@@ -622,7 +622,7 @@ export function FiqhCouncilSection() {
             <div className="fcs-logs-grid">
               {researchLogs.map((log: any) => (
                 <div key={log.id} className="fiqh-sync-job fcs-text-xs">
-                  {log.query} — {log.result_count} نتيجة · {log.retrieval_mode}
+                  {log.query}، {log.result_count} نتيجة · {log.retrieval_mode}
                   {log.created_at && <> · {new Date(log.created_at).toLocaleString("ar")}</>}
                 </div>
               ))}
@@ -632,10 +632,10 @@ export function FiqhCouncilSection() {
       ) : tab === "sessions" ? (
         <div className="fcs-grid-gap-lg">
           <p className="fcs-text-sm">
-            إدارة جلسات المجمع — لا تُنشر للعامة إلا بعد التوثيق والاعتماد.
+            إدارة جلسات المجمع، لا تُنشر للعامة إلا بعد التوثيق والاعتماد.
           </p>
           {sessions.length === 0 ? (
-            <p className="fcs-empty">لا توجد جلسات — أضف من Supabase أو migration v10.</p>
+            <p className="fcs-empty">لا توجد جلسات، أضف من Supabase أو migration v10.</p>
           ) : (
             <div className="fcs-grid-gap-md">
               {sessions.map((s: any) => (
@@ -676,7 +676,7 @@ export function FiqhCouncilSection() {
           <section>
             <h3 className="fcs-h3">المصادر الرسمية</h3>
             {sources.length === 0 ? (
-              <p className="fcs-text-sm">لا توجد مصادر — نفّذ migration v6 على Supabase.</p>
+              <p className="fcs-text-sm">لا توجد مصادر، نفّذ migration v6 على Supabase.</p>
             ) : (
               <div className="fcs-grid-gap-sm">
                 {sources.map((src) => (
@@ -786,7 +786,7 @@ export function FiqhCouncilSection() {
         <Field label="الملخص"><textarea className="adm-textarea" value={form.summary || ""} onChange={(e) => set("summary", e.target.value)} rows={2} /></Field>
         <Field label="المحتوى"><textarea className="adm-textarea" value={form.content || ""} onChange={(e) => set("content", e.target.value)} rows={5} /></Field>
         <Field label="نص الحكم / الفتوى"><textarea className="adm-textarea" value={form.ruling_text || ""} onChange={(e) => set("ruling_text", e.target.value)} rows={3} /></Field>
-        <Field label="الأدلة (نوع|نص|مصدر — سطر لكل دليل)">
+        <Field label="الأدلة (نوع|نص|مصدر، سطر لكل دليل)">
           <textarea className="adm-textarea" value={form.evidence || ""} onChange={(e) => set("evidence", e.target.value)} rows={3} placeholder="قرآن|يَا أَيُّهَا..." />
         </Field>
         <Field label="المصدر"><input className="adm-input" value={form.source_name || ""} onChange={(e) => set("source_name", e.target.value)} /></Field>

@@ -12,7 +12,7 @@ export default function SurahStoriesPage() {
     applyPageSeo({
       path: "/surah-stories",
       title: "قصص سور القرآن | المجلس العلمي",
-      description: "قصص وأسباب نزول سور القرآن الكريم — تعرّف على مناسبات النزول والقصص المرتبطة بكل سورة.",
+      description: "قصص وأسباب نزول سور القرآن الكريم، تعرّف على مناسبات النزول والقصص المرتبطة بكل سورة.",
       keywords: ["قصص القرآن", "أسباب النزول", "سور القرآن", "قصص إسلامية", "تفسير قرآني"],
     });
   }, []);
@@ -68,7 +68,7 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
           <section><h2>سبب التسمية</h2><p>{story.namingReason}</p></section>
         </SectionErrorBoundary>
         <SectionErrorBoundary name="زمان النزول">
-          <section><h2>زمان ومكان النزول</h2><p>{story.revelationTime} — {story.revelationPlace}</p></section>
+          <section><h2>زمان ومكان النزول</h2><p>{story.revelationTime}، {story.revelationPlace}</p></section>
         </SectionErrorBoundary>
         <section><h2>عدد الآيات</h2><p>{story.ayahCount} آية</p></section>
         {story.mainThemes.length > 0 && (

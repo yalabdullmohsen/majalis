@@ -55,9 +55,9 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
 
 function streakMsg(streak: number): string {
   if (streak >= 30) return "ما شاء الله! ثلاثون يوماً من المداومة على القرآن";
-  if (streak >= 14) return "أسبوعان متواصلان — بارك الله فيك";
+  if (streak >= 14) return "أسبوعان متواصلان، بارك الله فيك";
   if (streak >= 7)  return "أسبوع كامل من المداومة، أحسنت";
-  if (streak >= 3)  return "مداومة مباركة — استمر";
+  if (streak >= 3)  return "مداومة مباركة، استمر";
   if (streak === 1) return "بداية موفقة، داوم عليها";
   return "";
 }
@@ -70,7 +70,7 @@ export default function DailyWirdPage() {
     applyPageSeo({
       path: "/daily-wird",
       title: "الورد اليومي من القرآن | المجلس العلمي",
-      description: "تتبّع وردك اليومي من القرآن الكريم — حدّد هدفك اليومي من الصفحات وتابع تقدمك نحو ختم القرآن.",
+      description: "تتبّع وردك اليومي من القرآن الكريم، حدّد هدفك اليومي من الصفحات وتابع تقدمك نحو ختم القرآن.",
       keywords: ["ورد يومي", "ختم القرآن", "قراءة قرآن", "حفظ قرآن", "مصحف يومي"],
     });
   }, []);
@@ -141,7 +141,7 @@ export default function DailyWirdPage() {
         subtitle="تابع قراءتك اليومية وموضع الوقوف."
       />
 
-      {/* البطاقة الرئيسية — الحلقة والأزرار */}
+      {/* البطاقة الرئيسية، الحلقة والأزرار */}
       <div className="wird-hero ui-card">
         <WirdRing pct={pct} pages={todayCompleted} target={state.pagesPerDay} />
 

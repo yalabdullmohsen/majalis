@@ -3,7 +3,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ARBAEEN_NAWAWI } from "@/lib/arbaeen-nawawi-seed";
 
 /* ══════════════════════════════════════════════════════════════════
-   §178b — الأربعون النووية (.an-*)
+   §178b، الأربعون النووية (.an-*)
    ══════════════════════════════════════════════════════════════════ */
 
 type Category = "الكل" | "العقيدة والأصول" | "الأخلاق والمعاملات" | "الزهد والآخرة";
@@ -56,8 +56,8 @@ export default function ArbaeenNawawiPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/arbaeen-nawawi",
-      title: "الأربعون النووية — أحاديث نووية مشروحة | المجالس العلمية",
-      description: "الأربعون حديثاً النووية مع شرح موجز وفوائد ومصدر لكل حديث — مرجع حديثي مختصر لطالب العلم.",
+      title: "الأربعون النووية، أحاديث نووية مشروحة | المجالس العلمية",
+      description: "الأربعون حديثاً النووية مع شرح موجز وفوائد ومصدر لكل حديث، مرجع حديثي مختصر لطالب العلم.",
       keywords: ["الأربعون النووية", "أحاديث نووية", "شرح الأحاديث", "الحديث النبوي", "نووي"],
     });
   }, []);
@@ -98,7 +98,7 @@ export default function ArbaeenNawawiPage() {
       <header className="an-hero">
         <p className="an-hero__eyebrow">السنة النبوية</p>
         <h1 className="an-hero__title">الأربعون النووية</h1>
-        <p className="an-hero__sub">أربعون حديثاً جامعاً مع شرح وفوائد — متجدد يومياً</p>
+        <p className="an-hero__sub">أربعون حديثاً جامعاً مع شرح وفوائد، متجدد يومياً</p>
 
         {/* تقدم القراءة */}
         <div className="an-hero__progress">
@@ -181,7 +181,7 @@ export default function ArbaeenNawawiPage() {
 
       {/* ── قائمة الأحاديث ── */}
       {filtered.length === 0 ? (
-        <p className="an-empty">لا توجد نتائج — جرب بحثاً مختلفاً</p>
+        <p className="an-empty">لا توجد نتائج، جرب بحثاً مختلفاً</p>
       ) : (
         <div className="an-grid">
           {filtered.map((h) => {

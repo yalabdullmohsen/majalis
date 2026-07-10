@@ -28,7 +28,7 @@ function CompareColumn({ item }: { item: FiqhCouncilItem }) {
           <strong>الأدلة</strong>
           <ul>
             {item.evidence.map((e, i) => (
-              <li key={i}>{e.type && `${e.type}: `}{e.text}{e.source && ` — ${e.source}`}</li>
+              <li key={i}>{e.type && `${e.type}: `}{e.text}{e.source && `، ${e.source}`}</li>
             ))}
           </ul>
         </div>
@@ -67,7 +67,7 @@ export default function FiqhCouncilComparePage() {
     applyPageSeo({
       path: "/fiqh-council/compare",
       title: "مقارنة قرارات المجمع الفقهي | المجلس العلمي",
-      description: "قارن بين قرارات وفتاوى مجلس الفقه الإسلامي جنباً إلى جنب — أداة تحليلية للباحثين والدارسين.",
+      description: "قارن بين قرارات وفتاوى مجلس الفقه الإسلامي جنباً إلى جنب، أداة تحليلية للباحثين والدارسين.",
       keywords: ["مقارنة فقهية", "قرارات فقهية", "مجمع فقهي", "تحليل فقهي", "مقارنة الفتاوى"],
     });
   }, []);

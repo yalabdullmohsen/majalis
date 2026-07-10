@@ -1,5 +1,5 @@
 /**
- * KnowledgeGraphPage — صفحة استكشاف الرسم البياني المعرفي الإسلامي
+ * KnowledgeGraphPage، صفحة استكشاف الرسم البياني المعرفي الإسلامي
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -175,7 +175,7 @@ export default function KnowledgeGraphPage() {
     applyPageSeo({
       path: "/knowledge-graph",
       title: "الرسم البياني المعرفي | المجلس العلمي",
-      description: "استكشف العلاقات بين المفاهيم الإسلامية — رسم بياني تفاعلي يربط العلماء والكتب والمسائل الفقهية.",
+      description: "استكشف العلاقات بين المفاهيم الإسلامية، رسم بياني تفاعلي يربط العلماء والكتب والمسائل الفقهية.",
       keywords: ["رسم بياني معرفي", "علاقات إسلامية", "استكشاف المعرفة", "خريطة علمية", "علم الشبكات"],
     });
   }, []);

@@ -40,7 +40,7 @@ interface SearchResult {
   page: number;
 }
 
-/* كاش في الذاكرة — يمنع إعادة الجلب عند التنقل بين الصفحات */
+/* كاش في الذاكرة، يمنع إعادة الجلب عند التنقل بين الصفحات */
 const pageCache = new Map<number, Ayah[]>();
 
 /* بيانات السور: [الاسم، أول صفحة] */
@@ -162,7 +162,7 @@ export default function QuranPage() {
     applyPageSeo({
       path: "/quran",
       title: "القرآن الكريم | المجلس العلمي",
-      description: "اقرأ المصحف الشريف — 604 صفحة بخط عثماني عالي الجودة مع حفظ الموضع والإشارات المرجعية.",
+      description: "اقرأ المصحف الشريف، 604 صفحة بخط عثماني عالي الجودة مع حفظ الموضع والإشارات المرجعية.",
       keywords: ["قرآن كريم", "مصحف", "تلاوة", "سور القرآن"],
     });
   }, []);
@@ -200,7 +200,7 @@ export default function QuranPage() {
     return () => ctrl.abort();
   }, [page, retryKey]);
 
-  /* ── bump — إظهار واجهة التحكم لفترة ثم إخفاؤها ── */
+  /* ── bump، إظهار واجهة التحكم لفترة ثم إخفاؤها ── */
   const bump = useCallback(() => {
     if (uiTimer.current) clearTimeout(uiTimer.current);
     setUiOn(true);
@@ -210,7 +210,7 @@ export default function QuranPage() {
   useEffect(() => { bump(); }, [page, bump]);
   useEffect(() => () => { if (uiTimer.current) clearTimeout(uiTimer.current); }, []);
 
-  /* ── بحث في نصوص الآيات — debounced 700ms ── */
+  /* ── بحث في نصوص الآيات، debounced 700ms ── */
   useEffect(() => {
     if (navTab !== "search") return;
     if (vsearch.trim().length < 2) { setVsResults([]); setVsTotal(0); return; }
@@ -342,7 +342,7 @@ export default function QuranPage() {
         <div className="mshf-title-wrap">
           <span className="mshf-title-main">القرآن الكريم</span>
           <span className="mshf-title-sub">
-            ص {page.toLocaleString("ar-EG")} — {surahName}
+            ص {page.toLocaleString("ar-EG")}، {surahName}
           </span>
         </div>
 
@@ -429,7 +429,7 @@ export default function QuranPage() {
         {/* النص القرآني بالرسم العثماني */}
         {!loading && !fetchErr && groups.map(group => (
           <div key={group.num} className="qs-surah-block">
-            {/* البسملة منفصلة فوق السورة — لكل سورة جديدة ما عدا الفاتحة والتوبة */}
+            {/* البسملة منفصلة فوق السورة، لكل سورة جديدة ما عدا الفاتحة والتوبة */}
             {group.isFirst && group.num !== 1 && group.num !== 9 && (
               <div className="qs-basmala" lang="ar" dir="rtl">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ</div>
             )}
@@ -441,7 +441,7 @@ export default function QuranPage() {
                 <span className="qs-surah-ornament" aria-hidden="true">❧</span>
                 <h2 className="qs-surah-name">{group.name}</h2>
                 <p className="qs-surah-meta">
-                  سورة رقم {group.num.toLocaleString("ar-EG")} — {group.revelationType === "Meccan" ? "مكية" : "مدنية"}
+                  سورة رقم {group.num.toLocaleString("ar-EG")}، {group.revelationType === "Meccan" ? "مكية" : "مدنية"}
                 </p>
               </div>
             )}
@@ -540,7 +540,7 @@ export default function QuranPage() {
         </button>
       </footer>
 
-      {/* ══ Bottom Sheet — السور والعلامات ══ */}
+      {/* ══ Bottom Sheet، السور والعلامات ══ */}
       {navOpen && (
         <div className="mshf-sheet-overlay" role="presentation" onClick={() => setNavOpen(false)}>
           <div
@@ -641,14 +641,14 @@ export default function QuranPage() {
                   )}
                   {vsErr && !vsLoading && (
                     <div className="mshf-vsr-err">
-                      تعذّر البحث — تحقق من اتصالك وأعد المحاولة
+                      تعذّر البحث، تحقق من اتصالك وأعد المحاولة
                     </div>
                   )}
                   {!vsLoading && !vsErr && vsResults.length > 0 && (
                     <div className="mshf-vsr-list">
                       {vsTotal > 0 && (
                         <p className="mshf-vsr-count">
-                          {vsTotal.toLocaleString("ar-EG")} نتيجة — يُعرض {vsResults.length.toLocaleString("ar-EG")}
+                          {vsTotal.toLocaleString("ar-EG")} نتيجة، يُعرض {vsResults.length.toLocaleString("ar-EG")}
                         </p>
                       )}
                       {vsResults.map(r => (

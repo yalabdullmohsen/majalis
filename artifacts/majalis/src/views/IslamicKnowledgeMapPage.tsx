@@ -40,7 +40,7 @@ const DOMAINS: Domain[] = [
   {
     id: "hadith",
     title: "الحديث النبوي",
-    subtitle: "الأصل الثاني — السنة المطهرة",
+    subtitle: "الأصل الثاني، السنة المطهرة",
     icon: Scroll,
     color: "#FFFFFF",
     bg: "#0A5040",
@@ -235,7 +235,7 @@ export default function IslamicKnowledgeMapPage() {
     applyPageSeo({
       path: "/knowledge-map",
       title: "الخريطة المعرفية الإسلامية | مجالس",
-      description: "استكشف ترابط العلوم الإسلامية — القرآن والحديث والفقه والتفسير والسيرة والأذكار ومئات المصادر",
+      description: "استكشف ترابط العلوم الإسلامية، القرآن والحديث والفقه والتفسير والسيرة والأذكار ومئات المصادر",
     });
   }, []);
 
@@ -286,12 +286,12 @@ export default function IslamicKnowledgeMapPage() {
         )}
       </div>
 
-      {/* ── الخريطة — شبكة العلوم ────────────────────────────── */}
+      {/* ── الخريطة، شبكة العلوم ────────────────────────────── */}
       <section className="ikm-grid-section">
         <h2 className="ikm-section-title">
           {selected
             ? `علوم مرتبطة بـ «${selectedDomain?.title}»`
-            : "علوم الإسلام — اضغط لعرض الروابط"}
+            : "علوم الإسلام، اضغط لعرض الروابط"}
         </h2>
         <div className="ikm-grid">
           {filtered.map(domain => {

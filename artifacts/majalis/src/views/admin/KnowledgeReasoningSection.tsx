@@ -61,7 +61,7 @@ export function KnowledgeReasoningSection() {
   const handleQualityScan = async () => {
     try {
       const result = await scanReasoningQuality();
-      showSuccess(`فُحص الجودة — ${result.count ?? 0} مشكلة`);
+      showSuccess(`فُحص الجودة، ${result.count ?? 0} مشكلة`);
     } catch {
       showError("فشل فحص الجودة.");
     }
@@ -84,7 +84,7 @@ export function KnowledgeReasoningSection() {
         <div>
           <h2 className="krs-title">محرك الاستدلال الإسلامي</h2>
           <p className="krs-subtitle">
-            Knowledge Graph + Reasoning — إجابات موثقة من قاعدة المعرفة فقط
+            Knowledge Graph + Reasoning، إجابات موثقة من قاعدة المعرفة فقط
           </p>
         </div>
         <div className="krs-btn-group">
@@ -133,7 +133,7 @@ export function KnowledgeReasoningSection() {
       <h3 className="krs-section-h3">أكثر الكيانات ارتباطاً</h3>
       <div className="krs-linked-list">
         {topLinked.length === 0 ? (
-          <p className="krs-linked-empty">لا توجد علاقات بعد — شغّل دورة الاستدلال</p>
+          <p className="krs-linked-empty">لا توجد علاقات بعد، شغّل دورة الاستدلال</p>
         ) : (
           topLinked.map((item) => (
             <div key={item.ref_id} className="krs-linked-row">

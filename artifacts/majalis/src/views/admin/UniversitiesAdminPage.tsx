@@ -315,7 +315,7 @@ function AdminContent() {
                     {u.is_verified && <span className="uap-verified-badge">✓ موثقة</span>}
                     {!u.is_published && <span className="uap-unpublished-badge">غير منشورة</span>}
                   </div>
-                  <p className="uap-uni-meta">{u.country}{u.city ? ` — ${u.city}` : ""} | {u.university_programs?.length || 0} برنامج</p>
+                  <p className="uap-uni-meta">{u.country}{u.city ? `، ${u.city}` : ""} | {u.university_programs?.length || 0} برنامج</p>
                   <p className="uap-uni-date">آخر تحديث: {new Date(u.last_updated_at).toLocaleDateString("ar-SA")}</p>
                 </div>
                 <div className="flex gap-1.5 flex-shrink-0">
@@ -363,7 +363,7 @@ function AdminContent() {
       {section === "reminders" && (
         <div className="space-y-3">
           <p className="uap-note">
-            هذه تذكيرات للمراجعة البشرية — لا يُحدَّث أي محتوى تلقائياً.
+            هذه تذكيرات للمراجعة البشرية، لا يُحدَّث أي محتوى تلقائياً.
           </p>
           {reminders.length === 0 && (
             <div className="uap-empty">لا توجد تذكيرات معلّقة. ✅</div>

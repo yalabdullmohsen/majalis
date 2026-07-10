@@ -20,7 +20,7 @@ export function DigitalLearningSection() {
     setReportLoading(true);
     try {
       const report = await generateLearningReport();
-      if (report) showSuccess(`التقرير جاهز — اكتمال النظام: ${report.completion_pct}%`);
+      if (report) showSuccess(`التقرير جاهز، اكتمال النظام: ${report.completion_pct}%`);
       else showError("تعذر إنشاء التقرير");
     } catch {
       showError("تعذر إنشاء التقرير");

@@ -69,7 +69,7 @@ function UniversitiesContent() {
     applyPageSeo({
       path: "/universities",
       title: "دليل الجامعات الإسلامية | المجلس العلمي",
-      description: "دليل شامل للجامعات والمعاهد الإسلامية حول العالم — ابحث وقارن بين الجامعات حسب التخصص والمستوى وطريقة الدراسة.",
+      description: "دليل شامل للجامعات والمعاهد الإسلامية حول العالم، ابحث وقارن بين الجامعات حسب التخصص والمستوى وطريقة الدراسة.",
       keywords: ["جامعات إسلامية", "كليات شريعة", "دراسة شرعية", "جامعة إسلامية", "معهد ديني"],
     });
   }, []);
@@ -154,7 +154,7 @@ function UniversitiesContent() {
         <div className="flex items-center justify-between">
           <p className="up-count-text">
             {loading ? "جارٍ التحميل…" : `${universities.length} جامعة`}
-            {search && ` — نتائج "${search}"`}
+            {search && `، نتائج "${search}"`}
           </p>
           {Object.values(filters).some(Boolean) || search ? (
             <button type="button"

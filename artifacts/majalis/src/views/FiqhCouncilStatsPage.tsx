@@ -15,7 +15,7 @@ export default function FiqhCouncilStatsPage() {
     applyPageSeo({
       path: "/fiqh-council/stats",
       title: "إحصائيات المجمع الفقهي | المجلس العلمي",
-      description: "إحصائيات المجمع الفقهي — عدد القرارات والفتاوى والبحوث وأكثر التصنيفات والمواد قراءة.",
+      description: "إحصائيات المجمع الفقهي، عدد القرارات والفتاوى والبحوث وأكثر التصنيفات والمواد قراءة.",
       keywords: ["إحصائيات فقهية", "المجمع الفقهي"],
       jsonLd: [
         breadcrumbJsonLd([
@@ -79,7 +79,7 @@ export default function FiqhCouncilStatsPage() {
           <h2>أكثر التصنيفات</h2>
           <ul className="fiqh-stats-list">
             {s.top_categories.map((row) => (
-              <li key={row.category}>{row.category} — {row.cnt}</li>
+              <li key={row.category}>{row.category}، {row.cnt}</li>
             ))}
           </ul>
         </section>
@@ -92,7 +92,7 @@ export default function FiqhCouncilStatsPage() {
             {s.top_viewed.map((row) => (
               <li key={row.slug}>
                 <Link href={fiqhItemHref(row.slug)}>{row.title}</Link>
-                <span> — {row.views_count?.toLocaleString("ar")} مشاهدة</span>
+                <span>، {row.views_count?.toLocaleString("ar")} مشاهدة</span>
               </li>
             ))}
           </ul>
@@ -106,7 +106,7 @@ export default function FiqhCouncilStatsPage() {
             {s.latest.map((row) => (
               <li key={row.slug}>
                 <Link href={fiqhItemHref(row.slug)}>{row.title}</Link>
-                <span> — {FIQH_ITEM_TYPE_LABELS[row.type as keyof typeof FIQH_ITEM_TYPE_LABELS]}</span>
+                <span>، {FIQH_ITEM_TYPE_LABELS[row.type as keyof typeof FIQH_ITEM_TYPE_LABELS]}</span>
               </li>
             ))}
           </ul>
@@ -118,7 +118,7 @@ export default function FiqhCouncilStatsPage() {
           <h2>أكثر المصادر</h2>
           <ul className="fiqh-stats-list">
             {s.top_sources.map((row) => (
-              <li key={row.source_name}>{row.source_name} — {row.cnt}</li>
+              <li key={row.source_name}>{row.source_name}، {row.cnt}</li>
             ))}
           </ul>
         </section>

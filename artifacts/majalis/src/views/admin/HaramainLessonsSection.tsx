@@ -77,7 +77,7 @@ export function HaramainLessonsSection() {
         <div>
           <h2 className="hrm-title"><Landmark size={20} className="inline ml-2" />دروس الحرمين الشريفين</h2>
           <p className="hrm-subtitle">
-            {HARAMAIN_LESSONS.length} درس — المسجد الحرام والمسجد النبوي · يظهر {lessons.length} درس
+            {HARAMAIN_LESSONS.length} درس، المسجد الحرام والمسجد النبوي · يظهر {lessons.length} درس
           </p>
         </div>
         <div className="hrm-actions">

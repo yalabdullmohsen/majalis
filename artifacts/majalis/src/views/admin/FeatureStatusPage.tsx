@@ -147,7 +147,7 @@ export default function FeatureStatusPage() {
       <header className="admin-feature-status__head ui-card">
         <div>
           <p className="admin-feature-status__eyebrow">Production Activation</p>
-          <h1>حالة المنصة — Platform Health</h1>
+          <h1>حالة المنصة، Platform Health</h1>
           <p className="admin-feature-status__intro">
             Release Gate يعتمد على فحوصات حقيقية: جداول DB، Secrets، APIs، Cron، MKE، والأتمتة.
           </p>
@@ -220,7 +220,7 @@ export default function FeatureStatusPage() {
                 <ul>
                   {(health.bootstrap?.ownerActions || health.bootstrapDetail?.ownerActions || []).map((a) => (
                     <li key={a.secret}>
-                      <code>{a.secret}</code> — {a.hint}
+                      <code>{a.secret}</code>، {a.hint}
                       <br />
                       <small>{a.addTo}</small>
                     </li>
@@ -237,7 +237,7 @@ export default function FeatureStatusPage() {
           </section>
 
           <section className="ui-card admin-feature-status__deploy">
-            <h2>Release Gate — {health?.ok ? <><CheckCircle2 size={16} className="inline text-green-600 ml-1" />Operational</> : <><Ban size={16} className="inline text-red-500 ml-1" />BLOCKED</>}</h2>
+            <h2>Release Gate، {health?.ok ? <><CheckCircle2 size={16} className="inline text-green-600 ml-1" />Operational</> : <><Ban size={16} className="inline text-red-500 ml-1" />BLOCKED</>}</h2>
             {health?.at && <p>آخر فحص: {health.at}</p>}
             {health?.blockers?.length ? (
               <ul>
@@ -246,7 +246,7 @@ export default function FeatureStatusPage() {
                 ))}
               </ul>
             ) : (
-              <p>لا توجد عوائق — جميع الفحوصات الأساسية ناجحة.</p>
+              <p>لا توجد عوائق، جميع الفحوصات الأساسية ناجحة.</p>
             )}
           </section>
 
@@ -369,7 +369,7 @@ export default function FeatureStatusPage() {
               <ul>
                 {Object.entries(health.apiChecks).map(([k, v]) => (
                   <li key={k}>
-                    {v.ok ? <CheckCircle2 size={13} className="inline text-green-600 ml-1" /> : <XCircle size={13} className="inline text-red-500 ml-1" />}{k} — HTTP {v.status}
+                    {v.ok ? <CheckCircle2 size={13} className="inline text-green-600 ml-1" /> : <XCircle size={13} className="inline text-red-500 ml-1" />}{k}، HTTP {v.status}
                   </li>
                 ))}
               </ul>

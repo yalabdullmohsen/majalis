@@ -43,7 +43,7 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
     const path = fiqhIssueHref(issue.slug);
     applyPageSeo({
       path,
-      title: `${issue.title} | المسائل الفقهية — المجلس العلمي`,
+      title: `${issue.title} | المسائل الفقهية، المجلس العلمي`,
       description: issue.summary || issue.title,
       keywords: [issue.category, "مسألة فقهية", "المجمع الفقهي"],
       ogType: "article",

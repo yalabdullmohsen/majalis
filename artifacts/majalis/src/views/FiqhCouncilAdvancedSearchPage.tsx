@@ -48,7 +48,7 @@ export default function FiqhCouncilAdvancedSearchPage() {
     applyPageSeo({
       path: "/fiqh-council/advanced-search",
       title: "البحث المتقدم في المجمع الفقهي | المجلس العلمي",
-      description: "بحث متقدم في قرارات وفتاوى وبحوث المجمع الفقهي — تصفية حسب النوع والتصنيف والسنة والمصدر.",
+      description: "بحث متقدم في قرارات وفتاوى وبحوث المجمع الفقهي، تصفية حسب النوع والتصنيف والسنة والمصدر.",
       keywords: ["بحث متقدم فقهي", "بحث في الفتاوى", "مجمع فقهي", "تصفية فقهية", "محرك بحث إسلامي"],
     });
   }, []);
@@ -76,7 +76,7 @@ export default function FiqhCouncilAdvancedSearchPage() {
       <PageHeader
         eyebrow="البحث الفقهي"
         title="البحث المتقدم"
-        subtitle="ابحث في العناوين والنصوص والأدلة والمصادر والتصنيفات — مع فلاتر دقيقة."
+        subtitle="ابحث في العناوين والنصوص والأدلة والمصادر والتصنيفات، مع فلاتر دقيقة."
       />
 
       <FiqhCouncilSubnav />

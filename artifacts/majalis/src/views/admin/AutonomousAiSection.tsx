@@ -37,7 +37,7 @@ export function AutonomousAiSection() {
     setRunning(true);
     try {
       const result = await runAutonomousPipeline({ mode: "full", checkLinks: true });
-      showSuccess(`اكتملت الدورة — ${result.itemsPublished || 0} عنصر منشور`);
+      showSuccess(`اكتملت الدورة، ${result.itemsPublished || 0} عنصر منشور`);
       refresh();
     } catch {
       showError("فشل تشغيل المنظومة");
@@ -59,7 +59,7 @@ export function AutonomousAiSection() {
   const handleReport = async () => {
     try {
       const report = await generateAutonomousReport();
-      if (report) showSuccess(`التقرير جاهز — أتمتة ${report.automation_pct}%`);
+      if (report) showSuccess(`التقرير جاهز، أتمتة ${report.automation_pct}%`);
       else showError("تعذر إنشاء التقرير");
     } catch {
       showError("تعذر إنشاء التقرير");
@@ -145,18 +145,18 @@ export function AutonomousAiSection() {
                 >{ev.success ? "✓" : "✗"}</span>
                 {" "}
                 <strong>{PIPELINE_STAGE_LABELS[ev.stage] || ev.stage}</strong>
-                {" — "}
+                {"، "}
                 {ev.message}
               </div>
             ))}
           </div>
         ) : (
-          <p className="aai-muted">لا توجد عمليات مسجلة بعد — شغّل الدورة الكاملة</p>
+          <p className="aai-muted">لا توجد عمليات مسجلة بعد، شغّل الدورة الكاملة</p>
         )}
       </Panel>
 
       <p className="aai-footer-note">
-        AI يُقيَّد بـ metadata-only — لا يُنشئ أحاديث أو آيات أو فتاوى. جميع المحتوى من مصادر موثقة.
+        AI يُقيَّد بـ metadata-only، لا يُنشئ أحاديث أو آيات أو فتاوى. جميع المحتوى من مصادر موثقة.
       </p>
     </div>
   );

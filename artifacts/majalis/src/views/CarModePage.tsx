@@ -33,8 +33,8 @@ export default function CarModePage() {
   useEffect(() => {
     applyPageSeo({
       path: "/car-mode",
-      title: "وضع السيارة — الاستماع أثناء القيادة | المجلس العلمي",
-      description: "استمع إلى الدروس العلمية والقرآن الكريم أثناء القيادة — واجهة مبسطة آمنة للاستخدام في السيارة.",
+      title: "وضع السيارة، الاستماع أثناء القيادة | المجلس العلمي",
+      description: "استمع إلى الدروس العلمية والقرآن الكريم أثناء القيادة، واجهة مبسطة آمنة للاستخدام في السيارة.",
       keywords: ["وضع السيارة", "استماع أثناء القيادة", "دروس صوتية", "قيادة وتعلم"],
     });
   }, []);
@@ -112,7 +112,7 @@ export default function CarModePage() {
     saveLastLesson(lessons[idx]?.id ?? "");
   };
 
-  // Sync audio element when current changes — resume if was playing
+  // Sync audio element when current changes، resume if was playing
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio || !audioSrc) return;

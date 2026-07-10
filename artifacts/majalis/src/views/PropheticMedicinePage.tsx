@@ -37,7 +37,7 @@ export default function PropheticMedicinePage() {
     applyPageSeo({
       path: "/prophetic-medicine",
       title: "الطب النبوي | المجلس العلمي",
-      description: "موسوعة الطب النبوي — هدي النبي ﷺ في الصحة والتداوي بالأغذية والأعشاب والرقية الشرعية.",
+      description: "موسوعة الطب النبوي، هدي النبي ﷺ في الصحة والتداوي بالأغذية والأعشاب والرقية الشرعية.",
       keywords: ["طب نبوي", "هدي النبي", "تداوي", "أعشاب إسلامية", "رقية شرعية"],
     });
   }, []);
@@ -69,7 +69,7 @@ export default function PropheticMedicinePage() {
         <p className="pmp-hero__eyebrow">صحة وإيمان</p>
         <h1 className="pmp-hero__title">الطب النبوي</h1>
         <p className="pmp-hero__subtitle">
-          ما ثبت عن النبي ﷺ في التداوي والوقاية — موثَّقاً بالأحاديث الصحيحة
+          ما ثبت عن النبي ﷺ في التداوي والوقاية، موثَّقاً بالأحاديث الصحيحة
         </p>
       </div>
 
@@ -82,7 +82,7 @@ export default function PropheticMedicinePage() {
         <FilterToggle onClick={() => setFiltersOpen(true)} label="تصفية" />
       </div>
 
-      {/* الفلاتر — سطح المكتب */}
+      {/* الفلاتر، سطح المكتب */}
       <div className="ds-filters-panel--desktop pmp-desktop-filters">{filterPanel}</div>
 
       {/* الشبكة */}

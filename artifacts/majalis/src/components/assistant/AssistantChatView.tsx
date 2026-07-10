@@ -78,7 +78,7 @@ function safetyLabel(classification: string): string {
     case "fiqh_answer": return "إجابة فقهية مستندة";
     case "requires_scholar": return "تحتاج أهل العلم";
     case "insufficient_sources": return "جرى توجيهك للمصادر";
-    case "blocked_sensitive_fatwa": return "مسألة شخصية — راجع عالماً";
+    case "blocked_sensitive_fatwa": return "مسألة شخصية، راجع عالماً";
     default: return "إرشاد عام";
   }
 }

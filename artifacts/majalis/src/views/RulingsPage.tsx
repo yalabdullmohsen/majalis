@@ -90,7 +90,7 @@ export default function RulingsPage() {
     applyPageSeo({
       path: "/rulings",
       title: "الأحكام الشرعية | المجلس العلمي",
-      description: "موسوعة الأحكام الشرعية في الفقه الإسلامي — استعرض الأحكام مرتّبةً حسب الأبواب الفقهية والتصنيفات.",
+      description: "موسوعة الأحكام الشرعية في الفقه الإسلامي، استعرض الأحكام مرتّبةً حسب الأبواب الفقهية والتصنيفات.",
       keywords: ["أحكام شرعية", "فقه إسلامي", "الأحكام الفقهية", "حكم شرعي", "موسوعة فقهية"],
     });
   }, []);
@@ -235,7 +235,7 @@ export default function RulingsPage() {
             dbState.needsSeed
               ? "قاعدة البيانات جاهزة لكن لم تُستورد الأحكام بعد. شغّل Production Activation من لوحة الإدارة."
               : dbState.dbError === "table_missing"
-                ? "جدول sharia_rulings غير موجود — طبّق migrations التفعيل أولاً."
+                ? "جدول sharia_rulings غير موجود، طبّق migrations التفعيل أولاً."
                 : dbState.dbError
                   ? `تعذّر تحميل الأحكام: ${dbState.dbError}`
                   : "لا توجد أحكام مطابقة."

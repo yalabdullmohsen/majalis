@@ -30,7 +30,7 @@ export default function FatwaDetailPage({ params }: { params: { id: string } }) 
     const path = `/fatwa/${item.id}`;
     applyPageSeo({
       path,
-      title: `${item.question} | الفتاوى — المجلس العلمي`,
+      title: `${item.question} | الفتاوى، المجلس العلمي`,
       description: item.summary || item.answer?.slice(0, 160) || item.question,
       keywords: [...(item.keywords || []), item.category, "فتوى", "فقه"],
       ogType: "article",

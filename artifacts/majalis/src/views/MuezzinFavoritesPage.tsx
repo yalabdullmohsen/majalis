@@ -27,7 +27,7 @@ export default function MuezzinFavoritesPage() {
     applyPageSeo({
       path: "/muezzins/favorites",
       title: "المؤذنون المفضلون | المجلس العلمي",
-      description: "أذان مؤذنيك المفضلين — استمع، قيّم، واختر الصوت الافتراضي للأذان في إعداداتك.",
+      description: "أذان مؤذنيك المفضلين، استمع، قيّم، واختر الصوت الافتراضي للأذان في إعداداتك.",
       keywords: ["مؤذنون مفضلون", "أذان مفضل", "تفضيلات أذان", "أصوات إسلامية"],
     });
   }, []);
@@ -79,7 +79,7 @@ export default function MuezzinFavoritesPage() {
       <p className="mzf-subtitle">
         {favList.length > 0
           ? `${favList.length} مؤذن في قائمة مفضلتك`
-          : "لا يوجد مؤذنون مفضلون بعد — اضغط على القلب في الصفحة الرئيسية لإضافتهم."}
+          : "لا يوجد مؤذنون مفضلون بعد، اضغط على القلب في الصفحة الرئيسية لإضافتهم."}
       </p>
 
       {savedDefault && (

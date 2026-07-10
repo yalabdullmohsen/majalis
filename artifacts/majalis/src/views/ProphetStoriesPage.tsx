@@ -26,12 +26,12 @@ type Supplement = { mentioned: number; miracle?: string; book?: string; quranRef
 const SUPPLEMENT: Record<string, Supplement> = {
   adam:        { mentioned: 25, miracle: "خُلق من طين وعُلِّم الأسماء كلها",                    quranRef: "البقرة: ٣٠-٣٩، طه: ١١٥-١٢٣" },
   idris:       { mentioned: 2,  miracle: "رُفع إلى السماء مكاناً علياً",                         quranRef: "مريم: ٥٦-٥٧، الأنبياء: ٨٥" },
-  nuh:         { mentioned: 43, miracle: "السفينة والطوفان — أنجاه الله والمؤمنين",               quranRef: "هود: ٢٥-٤٨، نوح: ١-٢٨" },
+  nuh:         { mentioned: 43, miracle: "السفينة والطوفان، أنجاه الله والمؤمنين",               quranRef: "هود: ٢٥-٤٨، نوح: ١-٢٨" },
   hud:         { mentioned: 7,  miracle: "نجاه الله من الريح العقيم التي أهلكت عاداً",            quranRef: "هود: ٥٠-٦٠، الأحقاف: ٢١-٢٦" },
-  salih:       { mentioned: 9,  miracle: "ناقة الله — خرجت من صخرة صمّاء",                      quranRef: "الأعراف: ٧٣-٧٩، هود: ٦١-٦٨" },
-  ibrahim:     { mentioned: 69, miracle: "لم تحرقه نار نمرود — ﴿كُونِي بَرْدًا وَسَلَامًا﴾",   book: "الصحف", quranRef: "البقرة: ١٢٤-١٣٢، الأنبياء: ٥١-٧١" },
+  salih:       { mentioned: 9,  miracle: "ناقة الله، خرجت من صخرة صمّاء",                      quranRef: "الأعراف: ٧٣-٧٩، هود: ٦١-٦٨" },
+  ibrahim:     { mentioned: 69, miracle: "لم تحرقه نار نمرود، ﴿كُونِي بَرْدًا وَسَلَامًا﴾",   book: "الصحف", quranRef: "البقرة: ١٢٤-١٣٢، الأنبياء: ٥١-٧١" },
   lut:         { mentioned: 27, miracle: "نجاه الله وقلب المدينة على أهلها",                     quranRef: "هود: ٧٧-٨٣، الحجر: ٥٨-٧٧" },
-  ismail:      { mentioned: 12, miracle: "الذبح العظيم — فداه الله بكبش",                        quranRef: "الصافات: ١٠١-١١١، إبراهيم: ٣٧" },
+  ismail:      { mentioned: 12, miracle: "الذبح العظيم، فداه الله بكبش",                        quranRef: "الصافات: ١٠١-١١١، إبراهيم: ٣٧" },
   "is-haq":    { mentioned: 17,                                                                   quranRef: "هود: ٧١، الصافات: ١١٢-١١٣" },
   yaqub:       { mentioned: 16,                                                                   quranRef: "يوسف: ٤-٨٣" },
   yusuf:       { mentioned: 27, miracle: "أُوتي تأويل الأحاديث وحسن الخُلق",                     quranRef: "سورة يوسف كاملة" },
@@ -48,23 +48,23 @@ const SUPPLEMENT: Record<string, Supplement> = {
   zakariyya:   { mentioned: 7,  miracle: "وُهب له يحيى وهو شيخ وامرأته عاقر",                  quranRef: "آل عمران: ٣٧-٤١، مريم: ١-١١" },
   yahya:       { mentioned: 2,                                                                    quranRef: "مريم: ١٢-١٥، آل عمران: ٣٩" },
   isa:         { mentioned: 25, miracle: "إبراء الأكمه والأبرص وإحياء الموتى والكلام في المهد", book: "الإنجيل", quranRef: "آل عمران: ٤٥-٥٩، مريم: ١٦-٣٤" },
-  muhammad:    { mentioned: 4,  miracle: "القرآن الكريم — المعجزة الخالدة الباقية",              book: "القرآن الكريم", quranRef: "الأحزاب: ٤٠، الأنبياء: ١٠٧" },
+  muhammad:    { mentioned: 4,  miracle: "القرآن الكريم، المعجزة الخالدة الباقية",              book: "القرآن الكريم", quranRef: "الأحزاب: ٤٠، الأنبياء: ١٠٧" },
 };
 
 const ULUL_AZM_SLUGS = ["nuh", "ibrahim", "musa", "isa", "muhammad"];
 
 const MIRACLES_LIST = [
-  { nabi: "محمد ﷺ",   miracle: "القرآن الكريم — المعجزة الخالدة",                ayah: "البقرة: ٢٣" },
+  { nabi: "محمد ﷺ",   miracle: "القرآن الكريم، المعجزة الخالدة",                ayah: "البقرة: ٢٣" },
   { nabi: "موسى ﷺ",   miracle: "انفلاق البحر الأحمر لبني إسرائيل",               ayah: "الشعراء: ٦٣" },
   { nabi: "عيسى ﷺ",   miracle: "إحياء الموتى وإبراء الأكمه والأبرص",             ayah: "آل عمران: ٤٩" },
-  { nabi: "إبراهيم ﷺ", miracle: "النار لم تحرقه — ﴿كُونِي بَرْدًا وَسَلَامًا﴾", ayah: "الأنبياء: ٦٩" },
+  { nabi: "إبراهيم ﷺ", miracle: "النار لم تحرقه، ﴿كُونِي بَرْدًا وَسَلَامًا﴾", ayah: "الأنبياء: ٦٩" },
   { nabi: "صالح ﷺ",   miracle: "الناقة من الصخرة الصمّاء",                       ayah: "الأعراف: ٧٣" },
   { nabi: "سليمان ﷺ", miracle: "تسخير الجن والريح وفهم لغة الطير",               ayah: "الأنبياء: ٨١" },
   { nabi: "يونس ﷺ",   miracle: "الحياة في بطن الحوت ثم النجاة",                  ayah: "الأنبياء: ٨٧" },
   { nabi: "داود ﷺ",   miracle: "تليين الحديد بيديه والزبور",                      ayah: "سبأ: ١٠" },
   { nabi: "زكريا ﷺ",  miracle: "الولد من زوجة عاقر على كبر السن",                ayah: "مريم: ٨" },
   { nabi: "يعقوب ﷺ",  miracle: "عودة البصر من قميص يوسف",                        ayah: "يوسف: ٩٦" },
-  { nabi: "نوح ﷺ",    miracle: "السفينة والطوفان — نجاة المؤمنين",               ayah: "هود: ٤٠" },
+  { nabi: "نوح ﷺ",    miracle: "السفينة والطوفان، نجاة المؤمنين",               ayah: "هود: ٤٠" },
   { nabi: "آدم ﷺ",    miracle: "خُلق من طين وعُلِّم الأسماء كلها",               ayah: "البقرة: ٣١" },
 ];
 
@@ -254,7 +254,7 @@ function ProphetDetailView({
   const isUlulAzm = ULUL_AZM_SLUGS.includes(p.slug);
 
   const share = async () => {
-    const text = `${p.arabicName} عليه السلام — ${p.title}\n${p.briefBio.slice(0, 200)}…\n\nمن قصص الأنبياء في المجالس العلمية`;
+    const text = `${p.arabicName} عليه السلام، ${p.title}\n${p.briefBio.slice(0, 200)}…\n\nمن قصص الأنبياء في المجالس العلمية`;
     const url = `https://majlisilm.com/prophets/${p.slug}`;
     try {
       if (navigator.share) {
@@ -713,7 +713,7 @@ export default function ProphetStoriesPage() {
     applyPageSeo({
       path: "/prophets",
       title: "الأنبياء والرسل | المجالس العلمية",
-      description: "قصص ٢٥ نبياً ورسولاً مذكورين في القرآن الكريم — سِيَرهم ومعجزاتهم وأقوامهم والدروس المستفادة، مع خط زمني ومقارنة وأولو العزم.",
+      description: "قصص ٢٥ نبياً ورسولاً مذكورين في القرآن الكريم، سِيَرهم ومعجزاتهم وأقوامهم والدروس المستفادة، مع خط زمني ومقارنة وأولو العزم.",
       keywords: ["قصص الأنبياء", "الأنبياء في القرآن", "معجزات الأنبياء", "أولو العزم", "أنبياء الإسلام"],
     });
   }, []);
@@ -768,7 +768,7 @@ export default function ProphetStoriesPage() {
           <GeometricBorder color={IVORY} size={24} />
           <h1 className="prophets-lux-hero__title">الأنبياء والرسل</h1>
           <p className="prophets-lux-hero__subtitle">
-            أحسن القصص — ٢٥ نبياً مذكوراً في القرآن الكريم
+            أحسن القصص، ٢٥ نبياً مذكوراً في القرآن الكريم
           </p>
           <div className="prophets-lux-hero__stats">
             <span>{PROPHETS.length} نبياً</span>
@@ -878,7 +878,7 @@ export default function ProphetStoriesPage() {
                         <div className="prophets-seerah-bridge__eyebrow">التسلسل التاريخي · الفصل الأخير</div>
                         <h3 className="prophets-seerah-bridge__title">بداية السيرة النبوية الشريفة</h3>
                         <p className="prophets-seerah-bridge__desc">
-                          امتداداً لرسالة الأنبياء، وُلد خاتم النبيين محمد ﷺ — اقرأ سيرته من النسب إلى الرسالة والهجرة والفتح.
+                          امتداداً لرسالة الأنبياء، وُلد خاتم النبيين محمد ﷺ، اقرأ سيرته من النسب إلى الرسالة والهجرة والفتح.
                         </p>
                       </div>
                       <div className="prophets-seerah-bridge__arrow" aria-hidden="true">←</div>

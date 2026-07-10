@@ -1,5 +1,5 @@
 /**
- * KhatmahPanel — خطط الختمة وسلاسل القراءة والإحصائيات
+ * KhatmahPanel، خطط الختمة وسلاسل القراءة والإحصائيات
  */
 import { useState } from "react";
 import { CalendarDays, CheckCircle2, Flame, Star } from "lucide-react";

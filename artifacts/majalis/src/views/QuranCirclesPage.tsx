@@ -42,7 +42,7 @@ export default function QuranCirclesPage() {
     applyPageSeo({
       path: "/quran-circles",
       title: "حلقات القرآن الكريم | المجلس العلمي",
-      description: "اعثر على حلقات تحفيظ القرآن الكريم المناسبة — حلقات مختلطة وللرجال وللنساء بمستويات متدرجة.",
+      description: "اعثر على حلقات تحفيظ القرآن الكريم المناسبة، حلقات مختلطة وللرجال وللنساء بمستويات متدرجة.",
       keywords: ["حلقات قرآن", "تحفيظ قرآن", "حلقة قرآنية", "حفظ القرآن", "تجويد"],
     });
   }, []);
@@ -60,7 +60,7 @@ export default function QuranCirclesPage() {
 
     getQuranCircles(filters)
       .then(setCircles)
-      .catch(() => setError("تعذّر تحميل الحلقات — تحقق من الاتصال وحاول مجدداً."))
+      .catch(() => setError("تعذّر تحميل الحلقات، تحقق من الاتصال وحاول مجدداً."))
       .finally(() => setLoading(false));
   }, [level, track, mode]);
 
@@ -69,7 +69,7 @@ export default function QuranCirclesPage() {
       <header className="qcp-header">
         <p className="qcp-eyebrow">حفظ القرآن الكريم</p>
         <h1 className="qcp-title">حلقات التحفيظ</h1>
-        <p className="qcp-subtitle">ابحث عن حلقة تناسبك وانضم إليها — مستويات ومسارات متعددة.</p>
+        <p className="qcp-subtitle">ابحث عن حلقة تناسبك وانضم إليها، مستويات ومسارات متعددة.</p>
       </header>
 
       <div className="qcp-filters">

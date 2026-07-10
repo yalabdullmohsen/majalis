@@ -60,7 +60,7 @@ export function IslamicIntelligenceSection() {
     setRunning(true);
     try {
       const result = await runIntelligencePlatform("full");
-      showSuccess(`اكتملت الدورة — ${result.agents_run?.length || 0} وكيل`);
+      showSuccess(`اكتملت الدورة، ${result.agents_run?.length || 0} وكيل`);
       refresh();
     } catch {
       showError("فشل تشغيل المنصة");
@@ -85,7 +85,7 @@ export function IslamicIntelligenceSection() {
   const handleReport = async () => {
     try {
       const report = await generateIntelligenceReport();
-      if (report) showSuccess(`التقرير جاهز — أتمتة ${report.automation_pct}%`);
+      if (report) showSuccess(`التقرير جاهز، أتمتة ${report.automation_pct}%`);
       else showError("تعذر إنشاء التقرير");
     } catch {
       showError("تعذر إنشاء التقرير");

@@ -56,7 +56,7 @@ export function PushPrompt() {
     <div className="push-prompt">
       <div className="push-prompt__text">
         <strong>إشعارات الدروس</strong>
-        <span>{subscribed ? "مفعّلة — ستصلك تذكيرات بمواعيد الدروس" : "غير مفعّلة"}</span>
+        <span>{subscribed ? "مفعّلة، ستصلك تذكيرات بمواعيد الدروس" : "غير مفعّلة"}</span>
       </div>
       <button
         type="button"

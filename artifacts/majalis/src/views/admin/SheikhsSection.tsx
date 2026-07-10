@@ -167,7 +167,7 @@ export function SheikhsSection() {
               ))}
             </tbody>
           </table>
-          {filtered.length === 0 && <p className="skh-empty">{search ? "لا يوجد مشايخ مطابقون" : "لا يوجد مشايخ — ابدأ بإضافة أول شيخ"}</p>}
+          {filtered.length === 0 && <p className="skh-empty">{search ? "لا يوجد مشايخ مطابقون" : "لا يوجد مشايخ، ابدأ بإضافة أول شيخ"}</p>}
         </div>
       )}
 
@@ -213,7 +213,7 @@ export function SheikhsSection() {
               {(imagePreview || resolveSheikhImageUrl(form)) && (
                 <button type="button" className="skh-btn-del" onClick={handleRemoveImage}>حذف الصورة</button>
               )}
-              <span className="skh-img-hint">معاينة قبل الحفظ — تُرفع عند الضغط على «حفظ»</span>
+              <span className="skh-img-hint">معاينة قبل الحفظ، تُرفع عند الضغط على «حفظ»</span>
             </div>
           </div>
         </Field>

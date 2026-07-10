@@ -19,7 +19,7 @@ export default function MyLearningPage() {
     applyPageSeo({
       path: "/my-learning",
       title: "تعلمي | المجلس العلمي",
-      description: "مركز التعلم الشخصي — إحصائياتك وشهاداتك ومكتبتك وملاحظاتك في المجلس العلمي.",
+      description: "مركز التعلم الشخصي، إحصائياتك وشهاداتك ومكتبتك وملاحظاتك في المجلس العلمي.",
       keywords: ["تعلمي", "تقدم التعلم", "شهادات إسلامية", "إحصائيات تعليمية"],
       robots: "noindex, follow",
     });
@@ -53,7 +53,7 @@ export default function MyLearningPage() {
   return (
     <div className="page-shell">
       <h1 className="myl-title">لوحتي التعليمية</h1>
-      <p className="myl-subtitle">تقدمك في طلب العلم — إحصاءات، إنجازات، ومكتبتك الشخصية</p>
+      <p className="myl-subtitle">تقدمك في طلب العلم، إحصاءات، إنجازات، ومكتبتك الشخصية</p>
 
       {stats && (
         <div className="myl-stats-grid">
@@ -72,7 +72,7 @@ export default function MyLearningPage() {
           {progress?.enrollments && Object.keys(progress.enrollments).length > 0 ? (
             Object.entries(progress.enrollments).map(([slug, e]: [string, any]) => (
               <Link key={slug} href={`/learning/paths/${slug}`} className="myl-path-link">
-                {slug} — {e.progress_pct || 0}%
+                {slug}، {e.progress_pct || 0}%
               </Link>
             ))
           ) : (

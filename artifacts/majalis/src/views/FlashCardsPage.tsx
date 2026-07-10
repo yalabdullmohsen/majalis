@@ -101,7 +101,7 @@ function SessionComplete({
     <div className="fc-complete">
       <div className="fc-complete__icon"><PartyPopper size={40} strokeWidth={1.3} /></div>
       <h2 className="fc-complete__title">انتهت جلسة المراجعة!</h2>
-      <p className="fc-complete__sub">راجعت {reviewed} بطاقة اليوم — أحسنت!</p>
+      <p className="fc-complete__sub">راجعت {reviewed} بطاقة اليوم، أحسنت!</p>
       <div className="fc-complete__actions">
         <button type="button" className="fc-complete__btn fc-complete__btn--primary" onClick={onRestart}>
           ↺ مراجعة مجدداً
@@ -176,7 +176,7 @@ export default function FlashCardsPage() {
     applyPageSeo({
       path: "/flashcards",
       title: "بطاقات المراجعة التعليمية | المجلس العلمي",
-      description: "بطاقات مراجعة تعتمد نظام التكرار المتباعد لتثبيت المعلومات الشرعية في الذاكرة — مثالية لطلاب العلم.",
+      description: "بطاقات مراجعة تعتمد نظام التكرار المتباعد لتثبيت المعلومات الشرعية في الذاكرة، مثالية لطلاب العلم.",
       keywords: ["بطاقات مراجعة", "تعلم", "مراجعة شرعية", "حفظ", "تكرار متباعد"],
       robots: "noindex, follow",
     });

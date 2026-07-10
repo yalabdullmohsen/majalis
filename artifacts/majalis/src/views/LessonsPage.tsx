@@ -229,7 +229,7 @@ export default function LessonsPage({
     applyPageSeo({
       path: "/lessons",
       title: "الدروس الشرعية والعلمية | المجلس العلمي",
-      description: "دروس شرعية وعلمية من أئمة وعلماء الكويت والعالم — فقه وعقيدة وقرآن وسيرة ولغة عربية.",
+      description: "دروس شرعية وعلمية من أئمة وعلماء الكويت والعالم، فقه وعقيدة وقرآن وسيرة ولغة عربية.",
       keywords: ["دروس شرعية", "دروس دينية", "دروس علمية", "علماء الكويت", "حلقات علمية"],
     });
   }, []);
@@ -319,7 +319,7 @@ export default function LessonsPage({
     return { upcoming, popular, featured };
   }, [tabLessons]);
 
-  // الدروس المعروضة في الأقسام المميزة — لاستبعادها من القائمة الرئيسية
+  // الدروس المعروضة في الأقسام المميزة، لاستبعادها من القائمة الرئيسية
   const featuredIds = useMemo(() => {
     const showFeatured = !filters.search && filters.governorate === "كل المحافظات";
     if (!showFeatured) return new Set<string>();
@@ -429,7 +429,7 @@ export default function LessonsPage({
 
   return (
     <div className="page-shell lessons-page-v2 ds-page">
-      {/* نمط هندسي إسلامي — أطباق نجمية كلاسيكية */}
+      {/* نمط هندسي إسلامي، أطباق نجمية كلاسيكية */}
       <div className="lessons-geo-banner" aria-hidden="true">
         <svg className="lessons-geo-banner__pattern" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
           <defs>

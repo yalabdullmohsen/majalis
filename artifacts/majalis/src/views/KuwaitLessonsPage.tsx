@@ -92,7 +92,7 @@ export default function KuwaitLessonsPage() {
     applyPageSeo({
       path: "/kuwait-lessons",
       title: "دروس مشايخ الكويت | المجلس العلمي",
-      description: "جميع الدروس العلمية القادمة لمشايخ الكويت — محدَّثة تلقائياً من مصادر معتمدة.",
+      description: "جميع الدروس العلمية القادمة لمشايخ الكويت، محدَّثة تلقائياً من مصادر معتمدة.",
       keywords: ["دروس الكويت", "مشايخ الكويت", "دروس كويتية", "علماء الكويت", "حلقات علمية"],
     });
   }, []);
@@ -105,7 +105,7 @@ export default function KuwaitLessonsPage() {
           <p className="kuwait-lessons-eyebrow">الكويت</p>
           <h1 className="kuwait-lessons-title">دروس المشايخ القادمة</h1>
           <p className="kuwait-lessons-subtitle">
-            جميع الدروس العلمية القادمة لمشايخ الكويت — محدَّثة تلقائياً عبر موقع{" "}
+            جميع الدروس العلمية القادمة لمشايخ الكويت، محدَّثة تلقائياً عبر موقع{" "}
             <a href="https://drosq8.com" target="_blank" rel="noopener noreferrer" className="kuwait-lessons-source-link">
               دروس الكويت
             </a>
@@ -114,7 +114,7 @@ export default function KuwaitLessonsPage() {
         <span className="kuwait-lessons-live-badge">● تحديث تلقائي</span>
       </div>
 
-      {/* Twitter feed — @drosq8 */}
+      {/* Twitter feed، @drosq8 */}
       <section className="kuwait-lessons-feed-section">
         <h2 className="kuwait-lessons-section-title">آخر إعلانات الدروس</h2>
         <p className="kuwait-lessons-feed-note">

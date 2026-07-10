@@ -92,7 +92,7 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
           </div>
         )}
 
-        {/* Rejected — encourage resubmit */}
+        {/* Rejected، encourage resubmit */}
         {sub.status === "rejected" && (
           <div className="msr-card__resubmit">
             <Link href="/upload">
@@ -112,7 +112,7 @@ export default function MySubmissionsPage() {
     applyPageSeo({
       path: "/my-submissions",
       title: "مقدّماتي | المجلس العلمي",
-      description: "تتبع حالة المحتوى الذي أرسلته للمجلس العلمي — قيد المراجعة، مقبول، أو مرفوض.",
+      description: "تتبع حالة المحتوى الذي أرسلته للمجلس العلمي، قيد المراجعة، مقبول، أو مرفوض.",
       keywords: ["مقدماتي", "تقديم محتوى", "متابعة مقدمة", "المجلس العلمي"],
       robots: "noindex, follow",
     });

@@ -124,7 +124,7 @@ function ReviewContent() {
       <FiqhAdminSubnav active="/admin/fiqh-review" />
       <header className="fiqh-admin-page-header">
         <h1>المراجعة العلمية</h1>
-        <p>مراجعة المواد قبل النشر — لا تُعرض للعامة إلا بعد التحقق والاعتماد.</p>
+        <p>مراجعة المواد قبل النشر، لا تُعرض للعامة إلا بعد التحقق والاعتماد.</p>
       </header>
 
       <div className="fiqh-review-filters">

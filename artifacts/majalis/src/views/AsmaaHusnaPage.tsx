@@ -130,8 +130,8 @@ export default function AsmaaHusnaPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/asma-husna",
-      title: "الأسماء الحسنى — أسماء الله التسعة والتسعون | مجالس",
-      description: "أسماء الله الحسنى التسعة والتسعون — كل اسم بمعناه وآيته ومنفعته وذكره.",
+      title: "الأسماء الحسنى، أسماء الله التسعة والتسعون | مجالس",
+      description: "أسماء الله الحسنى التسعة والتسعون، كل اسم بمعناه وآيته ومنفعته وذكره.",
       keywords: ["أسماء الله الحسنى", "الله", "الرحمن", "الرحيم", "الأسماء الحسنى", "99 اسم"],
     });
   }, []);
@@ -213,7 +213,7 @@ export default function AsmaaHusnaPage() {
               className="ah-card"
               onClick={() => setSelected(a)}
               onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setSelected(a)}
-              aria-label={`${a.arabic} — ${a.meaning}`}
+              aria-label={`${a.arabic}، ${a.meaning}`}
             >
               <span className="ah-card__num">{a.num}</span>
               <span className="ah-card__name">{a.arabic}</span>

@@ -22,7 +22,7 @@ export default function CitationPublicPage() {
     applyPageSeo({
       path: "/c",
       title: "مقتطف علمي مشترك | المجلس العلمي",
-      description: "مقتطف علمي من المجلس العلمي — استشهادات أكاديمية بأسلوب مفهرس وجاهز للمشاركة والنشر.",
+      description: "مقتطف علمي من المجلس العلمي، استشهادات أكاديمية بأسلوب مفهرس وجاهز للمشاركة والنشر.",
       keywords: ["مقتطف علمي", "استشهاد أكاديمي", "نص إسلامي", "مشاركة علمية"],
     });
   }, []);
@@ -98,7 +98,7 @@ export default function CitationPublicPage() {
 
   useEffect(() => {
     if (!citation || !src) return;
-    document.title = `"${citation.quoted_text.slice(0, 60)}..." — مجالس`;
+    document.title = `"${citation.quoted_text.slice(0, 60)}..."، مجالس`;
     const meta = (n: string) => document.querySelector(`meta[name="${n}"],meta[property="${n}"]`) as HTMLMetaElement | null;
     if (meta("description")) meta("description")!.content = citation.quoted_text;
     if (meta("og:title")) meta("og:title")!.content = `اقتباس: ${src.title_ar}`;
@@ -144,8 +144,8 @@ export default function CitationPublicPage() {
                   {src.book_name && (
                     <p>
                       المصدر: <span className="font-medium">{src.book_name}</span>
-                      {src.volume && ` — ج${src.volume}`}
-                      {src.page_number && ` — ص${src.page_number}`}
+                      {src.volume && `، ج${src.volume}`}
+                      {src.page_number && `، ص${src.page_number}`}
                     </p>
                   )}
                   {src.publish_year && <p>السنة: {src.publish_year}</p>}

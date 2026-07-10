@@ -29,7 +29,7 @@ export default function MyCitationsPage() {
     applyPageSeo({
       path: "/my-citations",
       title: "استشهاداتي | المجلس العلمي",
-      description: "مجموعة استشهاداتي ومقتطفاتي العلمية المحفوظة — نظّمها في مجلدات وشاركها مع الآخرين.",
+      description: "مجموعة استشهاداتي ومقتطفاتي العلمية المحفوظة، نظّمها في مجلدات وشاركها مع الآخرين.",
       keywords: ["استشهادات", "مقتطفات علمية", "حفظ نصوص", "مكتبة شخصية", "أكاديمية إسلامية"],
       robots: "noindex, follow",
     });
@@ -340,7 +340,7 @@ export default function MyCitationsPage() {
 
                       {(src?.author_name || src?.book_name) && (
                         <p className="mcp-source-meta">
-                          {src.author_name}{src.author_name && src.book_name && " — "}{src.book_name}
+                          {src.author_name}{src.author_name && src.book_name && "، "}{src.book_name}
                         </p>
                       )}
 

@@ -46,7 +46,7 @@ export function GovernanceSection() {
   const handleBackup = async () => {
     try {
       const backup = await runBackupCheck();
-      showSuccess(`النسخ الاحتياطي — ${backup.snapshots?.length || 0} جدول`);
+      showSuccess(`النسخ الاحتياطي، ${backup.snapshots?.length || 0} جدول`);
       refresh();
     } catch {
       showError("فشل النسخ الاحتياطي");
@@ -56,7 +56,7 @@ export function GovernanceSection() {
   const handleReport = async () => {
     try {
       const report = await generateGovernanceReport();
-      if (report) showSuccess(`التقرير جاهز — جاهزية ${report.production_readiness_pct}%`);
+      if (report) showSuccess(`التقرير جاهز، جاهزية ${report.production_readiness_pct}%`);
       else showError("تعذر إنشاء التقرير");
     } catch {
       showError("تعذر إنشاء التقرير");
@@ -117,7 +117,7 @@ export function GovernanceSection() {
         <Panel title="سجل التدقيق">
           {(dashboard?.recent_audit || []).slice(0, 8).map((a, i) => (
             <div key={i} className="gov-list-item--sm">
-              {a.action} — {a.actor_id} ({a.outcome})
+              {a.action}، {a.actor_id} ({a.outcome})
             </div>
           ))}
           {!dashboard?.recent_audit?.length && (
@@ -139,7 +139,7 @@ export function GovernanceSection() {
         <Panel title="Queue المراجعة">
           {(dashboard?.review_queue || []).slice(0, 6).map((r, i) => (
             <div key={i} className="gov-list-item">
-              {r.content_kind}/{r.content_id} — {r.status}
+              {r.content_kind}/{r.content_id}، {r.status}
             </div>
           ))}
           {!dashboard?.review_queue?.length && (

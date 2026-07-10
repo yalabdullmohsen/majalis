@@ -70,7 +70,7 @@ export default function CardsPage() {
     applyPageSeo({
       path: "/cards",
       title: "بطاقات الاقتباسات الإسلامية | المجلس العلمي",
-      description: "أنشئ بطاقات اقتباسات إسلامية جميلة قابلة للمشاركة — اختر القالب والحجم وصدّر بجودة عالية.",
+      description: "أنشئ بطاقات اقتباسات إسلامية جميلة قابلة للمشاركة، اختر القالب والحجم وصدّر بجودة عالية.",
       keywords: ["بطاقات إسلامية", "اقتباسات إسلامية", "بطاقات دينية", "صور إسلامية", "بطاقات قرآنية"],
     });
   }, []);
@@ -121,7 +121,7 @@ export default function CardsPage() {
           المجلس العلمي
         </Link>
         <h1 className="cards-page-title">البطاقات الدعوية</h1>
-        <p className="cond-page-desc">صمّم بطاقة للمشاركة على واتساب وإنستغرام — بدون حقوق أو شعار افتراضي.</p>
+        <p className="cond-page-desc">صمّم بطاقة للمشاركة على واتساب وإنستغرام، بدون حقوق أو شعار افتراضي.</p>
 
         <div className="cards-layout">
           <div className="cards-controls">
@@ -137,7 +137,7 @@ export default function CardsPage() {
               <input
                 value={source}
                 onChange={(e) => setSource(e.target.value)}
-                placeholder="المصدر — مثال: رواه البخاري"
+                placeholder="المصدر، مثال: رواه البخاري"
                 className="cards-input"
               />
             </div>

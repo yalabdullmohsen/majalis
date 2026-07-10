@@ -95,8 +95,8 @@ export default function PrayerTimesPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/prayer-times",
-      title: "مواقيت الصلاة — الكويت | المجلس العلمي",
-      description: "مواقيت صلاة دقيقة لجميع مناطق الكويت — الفجر والظهر والعصر والمغرب والعشاء مع العد التنازلي.",
+      title: "مواقيت الصلاة، الكويت | المجلس العلمي",
+      description: "مواقيت صلاة دقيقة لجميع مناطق الكويت، الفجر والظهر والعصر والمغرب والعشاء مع العد التنازلي.",
       keywords: ["مواقيت الصلاة", "صلاة الكويت", "أوقات الصلاة", "الفجر", "الأذان"],
     });
   }, []);
@@ -122,7 +122,7 @@ export default function PrayerTimesPage() {
   if (!countdown?.next) {
     return (
       <div className="pt-wrap" dir="rtl">
-        <p className="pt-error">تعذّر تحميل مواقيت الصلاة — تحقق من الاتصال.</p>
+        <p className="pt-error">تعذّر تحميل مواقيت الصلاة، تحقق من الاتصال.</p>
       </div>
     );
   }
@@ -231,7 +231,7 @@ export default function PrayerTimesPage() {
               ].filter(Boolean).join(" ")}
               onClick={() => setPinnedKey(p.key === pinnedKey ? null : p.key)}
               aria-pressed={isPinned(p.key)}
-              aria-label={`صلاة ${PRAYER_AR[p.key] ?? p.name} — ${p.time}`}
+              aria-label={`صلاة ${PRAYER_AR[p.key] ?? p.name}، ${p.time}`}
             >
               <span className="pt-prayer__icon" aria-hidden="true">
                 {(() => { const I = PRAYER_ICON[p.key] ?? Sunset; return <I size={20} strokeWidth={1.6} />; })()}

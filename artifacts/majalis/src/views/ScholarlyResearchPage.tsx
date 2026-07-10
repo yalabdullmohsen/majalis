@@ -25,7 +25,7 @@ export default function ScholarlyResearchPage() {
     applyPageSeo({
       path: "/scholarly-research",
       title: "البحث العلمي الشرعي | المجلس العلمي",
-      description: "محرك بحث شرعي ذكي بتقنية RAG — ابحث في المصادر الإسلامية واحصل على إجابات دقيقة موثّقة.",
+      description: "محرك بحث شرعي ذكي بتقنية RAG، ابحث في المصادر الإسلامية واحصل على إجابات دقيقة موثّقة.",
       keywords: ["بحث علمي شرعي", "ذكاء اصطناعي إسلامي", "محرك بحث فقهي", "RAG إسلامي", "إجابات شرعية"],
     });
   }, []);
@@ -122,7 +122,7 @@ export default function ScholarlyResearchPage() {
       "",
       "## المصادر",
       ...(result.sources || []).map(
-        (s, i) => `${i + 1}. **${s.title}** — ${s.source_ref}${s.source_url ? `  \n   ${s.source_url}` : ""}`
+        (s, i) => `${i + 1}. **${s.title}**، ${s.source_ref}${s.source_url ? `  \n   ${s.source_url}` : ""}`
       ),
     ].join("\n");
     const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
@@ -143,7 +143,7 @@ export default function ScholarlyResearchPage() {
             <FlaskConical size={22} strokeWidth={1.6} aria-hidden="true" /> الباحث الشرعي
           </h1>
           <p className="text-white/85 text-sm leading-relaxed max-w-xl mx-auto">
-            يُجيب من المصادر الموثّقة فقط — آيات وأحاديث وقرارات مجامع وفتاوى علماء.
+            يُجيب من المصادر الموثّقة فقط، آيات وأحاديث وقرارات مجامع وفتاوى علماء.
             لا يُصدر فتاوى شخصية ولا يُصنّف الأحاديث بنفسه.
           </p>
         </div>

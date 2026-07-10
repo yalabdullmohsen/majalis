@@ -52,9 +52,9 @@ function AutomationDashboardContent() {
     <div>
       <div className="adp-header">
         <div>
-          <h2 className="adp-title">لوحة مراقبة الأتمتة — Phase 5</h2>
+          <h2 className="adp-title">لوحة مراقبة الأتمتة، Phase 5</h2>
           <p className="adp-desc">
-            أضف مصدرًا وانسَ — النظام يتابع كل 15 دقيقة ويستخرج وينشر تلقائيًا.
+            أضف مصدرًا وانسَ، النظام يتابع كل 15 دقيقة ويستخرج وينشر تلقائيًا.
           </p>
         </div>
         <div className="adp-nav-links">
@@ -85,7 +85,7 @@ function AutomationDashboardContent() {
           <section>
             <h3 className="adp-section-h3">آخر خطوات Pipeline</h3>
             <div className="adp-steps-grid">
-              {steps.length === 0 && <p className="adp-steps-empty">لا سجلات بعد — طبّق migration Phase 5.</p>}
+              {steps.length === 0 && <p className="adp-steps-empty">لا سجلات بعد، طبّق migration Phase 5.</p>}
               {steps.map((s, i) => (
                 <div key={i} className="adp-step">
                   <strong>{s.step}</strong> · {s.status} · {s.detail?.slice(0, 80) || ""}

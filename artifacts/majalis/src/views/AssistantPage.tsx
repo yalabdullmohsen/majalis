@@ -30,7 +30,7 @@ export default function AssistantPage() {
     applyPageSeo({
       path: "/assistant",
       title: "المساعد العلمي الذكي | المجلس العلمي",
-      description: "مساعد شرعي ذكي يجيب على أسئلتك في الفقه والعقيدة والقرآن والحديث — مدعوم بالذكاء الاصطناعي.",
+      description: "مساعد شرعي ذكي يجيب على أسئلتك في الفقه والعقيدة والقرآن والحديث، مدعوم بالذكاء الاصطناعي.",
       keywords: ["مساعد إسلامي", "مساعد شرعي", "أسئلة شرعية", "الذكاء الاصطناعي الإسلامي"],
     });
   }, []);
@@ -92,7 +92,7 @@ export default function AssistantPage() {
       </section>
 
       <footer className="asp-footer">
-        <AlertTriangle size={13} className="inline ml-1" />الإجابات مولَّدة آليًا وتحتمل الخطأ — راجع أهل العلم في المسائل الشخصية الدقيقة.
+        <AlertTriangle size={13} className="inline ml-1" />الإجابات مولَّدة آليًا وتحتمل الخطأ، راجع أهل العلم في المسائل الشخصية الدقيقة.
       </footer>
     </div>
   );

@@ -207,9 +207,9 @@ export default function TawhidPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/tawhid",
-      title: "العقيدة والتوحيد — أقسام وموضوعات كاملة | المجلس العلمي",
+      title: "العقيدة والتوحيد، أقسام وموضوعات كاملة | المجلس العلمي",
       description:
-        "بوابة العقيدة والتوحيد: أنواع التوحيد، أركان الإيمان، الأسماء الحسنى، الجنة والنار، علامات الساعة، الملائكة، والإعجاز العلمي — منهج أهل السنة والجماعة.",
+        "بوابة العقيدة والتوحيد: أنواع التوحيد، أركان الإيمان، الأسماء الحسنى، الجنة والنار، علامات الساعة، الملائكة، والإعجاز العلمي، منهج أهل السنة والجماعة.",
       ogType: "article",
     });
   }, []);
@@ -229,11 +229,11 @@ export default function TawhidPage() {
           <p className="home-eyebrow">عقيدة أهل السنة والجماعة</p>
           <h1 className="twh-hub-hero__title">العقيدة والتوحيد</h1>
           <p className="twh-hub-hero__sub">
-            أقسام العقيدة كاملةً — من التوحيد وأركان الإيمان حتى الغيبيات وعلامات الساعة
+            أقسام العقيدة كاملةً، من التوحيد وأركان الإيمان حتى الغيبيات وعلامات الساعة
           </p>
           <blockquote className="twh-hub-hero__ayah">
             ﴿وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ﴾
-            <cite> — الذاريات: ٥٦</cite>
+            <cite>، الذاريات: ٥٦</cite>
           </blockquote>
         </div>
       </header>
@@ -294,7 +294,7 @@ export default function TawhidPage() {
         <h2 id="iman-heading" className="tawheed-principles-heading">أركان الإيمان الستة</h2>
         <p className="twh-section-intro">
           قال ﷺ: «الإيمان أن تؤمن بالله وملائكته وكتبه ورسله واليوم الآخر وتؤمن بالقدر خيره وشرّه»
-          <span className="twh-source-ref"> — صحيح مسلم (٨)</span>
+          <span className="twh-source-ref">، صحيح مسلم (٨)</span>
         </p>
         <div className="twh-pillars-grid twh-pillars-grid--6">
           {IMAN_PILLARS.map((p) => (
@@ -339,7 +339,7 @@ export default function TawhidPage() {
         <h2 id="asma-heading" className="tawheed-principles-heading">من الأسماء الحسنى</h2>
         <p className="twh-section-intro">
           ﴿وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَى فَادْعُوهُ بِهَا﴾
-          <span className="twh-source-ref"> — الأعراف: ١٨٠</span>
+          <span className="twh-source-ref">، الأعراف: ١٨٠</span>
         </p>
         <div className="twh-asma-grid">
           {ASMA_HUSNA.map((a) => (

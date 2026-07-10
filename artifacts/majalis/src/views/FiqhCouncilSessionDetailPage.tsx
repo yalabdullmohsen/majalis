@@ -40,8 +40,8 @@ export default function FiqhCouncilSessionDetailPage({ params }: { params: { slu
 
     applyPageSeo({
       path,
-      title: `${session.session_title} | المجمع الفقهي — المجلس العلمي`,
-      description: `جلسة ${session.session_number || ""} — ${FIQH_SESSION_STATUS_LABELS[session.status]}`,
+      title: `${session.session_title} | المجمع الفقهي، المجلس العلمي`,
+      description: `جلسة ${session.session_number || ""}، ${FIQH_SESSION_STATUS_LABELS[session.status]}`,
       canonicalPath: path,
       robots,
       ogType: "article",

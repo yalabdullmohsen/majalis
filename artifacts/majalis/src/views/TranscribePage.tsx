@@ -36,7 +36,7 @@ export default function TranscribePage() {
     applyPageSeo({
       path: "/transcribe",
       title: "تفريغ الدروس والمحاضرات | المجلس العلمي",
-      description: "أداة تفريغ الدروس والمحاضرات الإسلامية تلقائياً — حمّل ملفاً صوتياً أو رابط يوتيوب واحصل على ملخص وفوائد منظّمة.",
+      description: "أداة تفريغ الدروس والمحاضرات الإسلامية تلقائياً، حمّل ملفاً صوتياً أو رابط يوتيوب واحصل على ملخص وفوائد منظّمة.",
       keywords: ["تفريغ دروس", "تفريغ محاضرات", "تلخيص درس", "ذكاء اصطناعي إسلامي", "استخراج فوائد"],
     });
   }, []);
@@ -161,7 +161,7 @@ export default function TranscribePage() {
           .eq("id", record.id);
         setProgress(100);
         setStatus("done");
-        setErrorMessage("تم حفظ رابط يوتيوب. التفريغ التلقائي قيد التطوير — استخدم تبويب «نص مباشر» للتحليل الآن.");
+        setErrorMessage("تم حفظ رابط يوتيوب. التفريغ التلقائي قيد التطوير، استخدم تبويب «نص مباشر» للتحليل الآن.");
         return;
       }
 
@@ -265,7 +265,7 @@ export default function TranscribePage() {
               ) : (
                 <>
                   <p className="trp-drop-hint">اسحب الملف هنا أو اضغط للاختيار</p>
-                  <p className="trp-drop-hint-sub">MP3, MP4, WAV, M4A — حتى 500MB</p>
+                  <p className="trp-drop-hint-sub">MP3, MP4, WAV, M4A، حتى 500MB</p>
                 </>
               )}
             </div>

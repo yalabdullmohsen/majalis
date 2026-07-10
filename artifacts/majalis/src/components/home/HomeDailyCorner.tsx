@@ -114,7 +114,7 @@ export function HomeDailyCorner() {
             <blockquote className="hdc__quote">{hadith.text}</blockquote>
             <p className="hdc__meta">
               <strong>الراوي:</strong> {hadith.narrator}
-              {hadith.source ? ` — ${hadith.source}` : ""}
+              {hadith.source ? `، ${hadith.source}` : ""}
               {hadith.grade  ? ` (${hadith.grade})` : ""}
             </p>
             {hadith.meaning && <p className="hdc__meaning">{hadith.meaning}</p>}

@@ -115,7 +115,7 @@ export function AggregatorSection() {
         <p className="agg-last-import">
           {stats.lastImportAt && (
             <>
-              آخر استيراد: {stats.lastImportType || "—"} — {stats.lastImportStatus || "—"}
+              آخر استيراد: {stats.lastImportType || "—"}، {stats.lastImportStatus || "—"}
               {stats.lastImportImported != null ? ` (${stats.lastImportImported} صف)` : ""}
               {" · "}
               {new Date(stats.lastImportAt).toLocaleString("ar")}
@@ -171,7 +171,7 @@ export function AggregatorSection() {
               {jobs.map((j) => (
                 <li key={j.id}>
                   {CMS_KIND_LABELS[j.content_kind as CmsContentKind] || j.content_kind}
-                  {j.filename ? ` (${j.filename})` : ""} — {j.status} ({j.inserted_count} استورد · {j.updated_count} تخطى)
+                  {j.filename ? ` (${j.filename})` : ""}، {j.status} ({j.inserted_count} استورد · {j.updated_count} تخطى)
                   {j.total_rows != null ? ` / ${j.total_rows} صف` : ""}
                 </li>
               ))}
@@ -186,7 +186,7 @@ export function AggregatorSection() {
           ) : (
             <ul className="agg-panel-ul">
               {audit.map((a) => (
-                <li key={a.id}>{a.action} — {a.table_name}</li>
+                <li key={a.id}>{a.action}، {a.table_name}</li>
               ))}
             </ul>
           )}

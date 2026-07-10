@@ -17,11 +17,11 @@ import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
 import { LessonImportReviewPanel, labelStyle } from "@/views/admin/LessonImportShared";
 
 const PLATFORM_HINTS = [
-  "Instagram — instagram.com/p/...",
-  "X — x.com/.../status/...",
-  "YouTube — youtube.com/watch?v=...",
-  "Telegram — t.me/channel/123",
-  "صفحة ويب — أي رابط HTTPS",
+  "Instagram، instagram.com/p/...",
+  "X، x.com/.../status/...",
+  "YouTube، youtube.com/watch?v=...",
+  "Telegram، t.me/channel/123",
+  "صفحة ويب، أي رابط HTTPS",
 ];
 
 function LessonImportUrlContent() {
@@ -63,8 +63,8 @@ function LessonImportUrlContent() {
     if (res.platform_label) setPlatformLabel(String(res.platform_label));
     const dup = res.duplicate as { isDuplicate?: boolean; draft?: { status?: string }; lesson?: { title?: string } } | undefined;
     if (dup?.isDuplicate) {
-      if (dup.lesson?.title) setDuplicateMessage(`رابط مكرر — درس: ${dup.lesson.title}`);
-      else if (dup.draft?.status) setDuplicateMessage(`رابط مكرر — مسودة (${dup.draft.status})`);
+      if (dup.lesson?.title) setDuplicateMessage(`رابط مكرر، درس: ${dup.lesson.title}`);
+      else if (dup.draft?.status) setDuplicateMessage(`رابط مكرر، مسودة (${dup.draft.status})`);
       else setDuplicateMessage("رابط مكرر");
     } else {
       setDuplicateMessage("");
@@ -90,11 +90,11 @@ function LessonImportUrlContent() {
       }
       applyResponse(res);
       if (res.extraction_failed || res.partial) {
-        showSuccess("تعذر الاستخراج الكامل — أكمل البيانات يدويًا");
+        showSuccess("تعذر الاستخراج الكامل، أكمل البيانات يدويًا");
       } else if (res.vision_enabled === false) {
-        showSuccess("تم جلب الرابط — أكمل البيانات يدويًا");
+        showSuccess("تم جلب الرابط، أكمل البيانات يدويًا");
       } else {
-        showSuccess("تم استخراج البيانات — راجعها ثم اعتمد");
+        showSuccess("تم استخراج البيانات، راجعها ثم اعتمد");
       }
     } catch {
       showError("تعذر استيراد الرابط");
@@ -128,19 +128,19 @@ function LessonImportUrlContent() {
 
   const onApprove = async () => {
     if (!draftId) {
-      showError("لا توجد مسودة — استورد الرابط أولًا");
+      showError("لا توجد مسودة، استورد الرابط أولًا");
       return;
     }
     setBusy(true);
     try {
       const res = await approveLessonImportFromUrl(draftId, parsed);
       if (!res.ok) {
-        const msgs = res.validation?.errors?.map((e) => e.message).join(" — ");
+        const msgs = res.validation?.errors?.map((e) => e.message).join("، ");
         showError(msgs || res.error || "تعذر الاعتماد");
         return;
       }
       invalidateLessonsCache();
-      showSuccess("تم اعتماد الدرس — يظهر الآن في المنصة");
+      showSuccess("تم اعتماد الدرس، يظهر الآن في المنصة");
       setDraftId(null);
       setImageUrl(null);
       setSourceUrl(null);

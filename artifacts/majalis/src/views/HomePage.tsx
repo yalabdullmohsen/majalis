@@ -21,6 +21,8 @@ import { HomeQuizCard } from "@/components/home/HomeQuizCard";
 import { HomeAsmaCard } from "@/components/home/HomeAsmaCard";
 import { HomeWeekStreak } from "@/components/home/HomeWeekStreak";
 import { HomeNawawiHadith } from "@/components/home/HomeNawawiHadith";
+import { HomeInterestingTopics } from "@/components/home/HomeInterestingTopics";
+import { HomeMindMapSection } from "@/components/home/HomeMindMapSection";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import {
@@ -202,7 +204,7 @@ export default function HomePage() {
   useEffect(() => {
     applyPageSeo({
       path: "/",
-      title: "المجلس العلمي — منصة العلوم الإسلامية",
+      title: "المجلس العلمي، منصة العلوم الإسلامية",
       description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم، الأذكار، الدروس العلمية، الفتاوى، والفقه المعاصر.",
       keywords: ["المجلس العلمي", "علوم إسلامية", "قرآن كريم", "أذكار", "فتاوى", "دروس علمية"],
     });
@@ -329,7 +331,7 @@ export default function HomePage() {
           <HomeSunnahByTime />
         </SafeHomeSection>
 
-        {/* ══ استكشف المنصة — تسويقي ══ */}
+        {/* ══ استكشف المنصة، تسويقي ══ */}
         <section className="hp-features" aria-labelledby="features-heading">
           <div className="hp-features__head">
             <p className="home-eyebrow">استكشف المنصة</p>
@@ -403,7 +405,7 @@ export default function HomePage() {
           <HomeQuizCard />
         </SafeHomeSection>
 
-        {/* الركن اليومي — مدمج */}
+        {/* الركن اليومي، مدمج */}
         <SafeHomeSection name="الركن اليومي">
           <HomeDailyCorner />
         </SafeHomeSection>
@@ -411,6 +413,16 @@ export default function HomePage() {
         {/* مراتب الناس في الصلاة */}
         <SafeHomeSection name="مراتب الصلاة">
           <HomePrayerRanks />
+        </SafeHomeSection>
+
+        {/* مواضيع مشوقة */}
+        <SafeHomeSection name="مواضيع مشوقة">
+          <HomeInterestingTopics />
+        </SafeHomeSection>
+
+        {/* الخرائط الذهنية */}
+        <SafeHomeSection name="الخرائط الذهنية">
+          <HomeMindMapSection />
         </SafeHomeSection>
 
         <SafeHomeSection name="عن المجلس العلمي">

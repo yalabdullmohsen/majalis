@@ -1,9 +1,9 @@
 /**
- * ExploreAyahPanel — الميزة الفريدة لمجالس
+ * ExploreAyahPanel، الميزة الفريدة لمجالس
  * تعرض كل ما يرتبط بالآية المحددة من محتوى المنصة:
  * دروس، فتاوى، أسئلة، فوائد، قصص أنبياء، الرسم البياني المعرفي.
  *
- * المصدر: intelligentSearch() — نص الآية كاستعلام بحث.
+ * المصدر: intelligentSearch()، نص الآية كاستعلام بحث.
  */
 import { useCallback, useEffect, useState } from "react";
 import { Bell, BookOpen, Brain, ClipboardList, FileText, GraduationCap, HelpCircle, Landmark, Library, Lightbulb, Link2, Scale, ScrollText, Search, Sparkles, Tag } from "lucide-react";

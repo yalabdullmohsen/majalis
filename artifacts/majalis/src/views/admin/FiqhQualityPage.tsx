@@ -53,7 +53,7 @@ function QualityContent() {
     const result = await adminTriggerFiqhLinkCheck();
     setCheckingLinks(false);
     if (result.ok) {
-      showSuccess(`تم فحص ${result.result?.checked || 0} رابط — معطل: ${result.result?.broken || 0}`);
+      showSuccess(`تم فحص ${result.result?.checked || 0} رابط، معطل: ${result.result?.broken || 0}`);
       await load();
     } else {
       showError(result.error || "فشل فحص الروابط");
@@ -110,7 +110,7 @@ function QualityContent() {
                 {log.from_status && log.to_status && <> · {log.from_status} → {log.to_status}</>}
                 {log.actor_email && <> · {log.actor_email}</>}
                 {log.created_at && <> · {new Date(log.created_at).toLocaleString("ar")}</>}
-                {log.notes && <span className="adm-empty-msg"> — {log.notes}</span>}
+                {log.notes && <span className="adm-empty-msg">، {log.notes}</span>}
               </li>
             ))}
           </ul>

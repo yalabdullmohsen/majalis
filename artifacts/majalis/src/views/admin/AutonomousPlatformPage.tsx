@@ -190,7 +190,7 @@ function AutonomousPlatformContent() {
       <div className="aup-header">
         <div>
           <h2 className="aup-title">
-            منصة المعرفة الذاتية — v{dashboard?.platformVersion || "2.0"}
+            منصة المعرفة الذاتية، v{dashboard?.platformVersion || "2.0"}
           </h2>
           <p className="aup-subtitle">
             {dashboard?.date} · تعمل 24/7 · {counts?.sources || 0} مصدر · {Object.keys(dashboard?.pipelines || {}).length} خط إنتاج
@@ -250,7 +250,7 @@ function AutonomousPlatformContent() {
 
       {!loading && tab === "overview" && (
         <>
-          <Panel title="خطوط الإنتاج — إنجاز اليوم">
+          <Panel title="خطوط الإنتاج، إنجاز اليوم">
             <div className="aup-pipeline-grid">
               {Object.entries(dashboard?.pipelines || {}).map(([type, p]) => {
                 const pct = p.quota ? Math.round(((p.publishedToday || 0) / p.quota) * 100) : 0;
@@ -277,7 +277,7 @@ function AutonomousPlatformContent() {
 
           <Panel title="آخر تشغيلات Pipeline">
             {(dashboard?.pipelineRuns || []).length === 0 ? (
-              <p className="aup-empty">لا سجلات بعد — شغّل المنصة أولاً.</p>
+              <p className="aup-empty">لا سجلات بعد، شغّل المنصة أولاً.</p>
             ) : (
               <div className="aup-runs-grid">
                 {(dashboard?.pipelineRuns || []).slice(0, 10).map((r) => (
@@ -310,7 +310,7 @@ function AutonomousPlatformContent() {
       {!loading && tab === "sources" && (
         <Panel title="حالة المصادر">
           {(dashboard?.sourceStatuses || []).length === 0 ? (
-            <p className="aup-empty">لا مصادر — شغّل bootstrap أولاً.</p>
+            <p className="aup-empty">لا مصادر، شغّل bootstrap أولاً.</p>
           ) : (
             <div className="aup-sources-grid">
               {(dashboard?.sourceStatuses || []).map((s) => (
@@ -338,7 +338,7 @@ function AutonomousPlatformContent() {
           action={<RunBtn label="تحديث" busy={false} onClick={loadReview} />}
         >
           {reviewItems.length === 0 ? (
-            <p className="aup-empty">لا عناصر قيد المراجعة — المنصة تعمل بسلاسة.</p>
+            <p className="aup-empty">لا عناصر قيد المراجعة، المنصة تعمل بسلاسة.</p>
           ) : (
             <div className="aup-grid-gap">
               {reviewItems.map((item) => (
@@ -369,7 +369,7 @@ function AutonomousPlatformContent() {
           action={<RunBtn label="تحديث" busy={false} onClick={loadAlerts} />}
         >
           {alerts.length === 0 ? (
-            <p className="aup-ok">لا تنبيهات — كل شيء يعمل بشكل طبيعي.</p>
+            <p className="aup-ok">لا تنبيهات، كل شيء يعمل بشكل طبيعي.</p>
           ) : (
             <div className="aup-grid-gap">
               {alerts.map((alert) => {

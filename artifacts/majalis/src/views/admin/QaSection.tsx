@@ -193,7 +193,7 @@ export function QaSection() {
               })}
             </tbody>
           </table>
-          {filtered.length === 0 && <p className="qa-empty">لا توجد أسئلة مطابقة — أضف سؤالًا جديدًا</p>}
+          {filtered.length === 0 && <p className="qa-empty">لا توجد أسئلة مطابقة، أضف سؤالًا جديدًا</p>}
         </div>
       )}
 

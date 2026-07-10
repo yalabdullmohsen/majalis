@@ -24,7 +24,7 @@ const LIVE_CHANNELS: LiveChannel[] = [
     id: "makkah",
     name: "قناة مكة المكرمة",
     location: "المسجد الحرام",
-    description: "البث المباشر من قلب المسجد الحرام — مكة المكرمة",
+    description: "البث المباشر من قلب المسجد الحرام، مكة المكرمة",
     streamUrl: "https://www.youtube.com/embed/live_stream?channel=UCsnvbFLXnfKHNPMsFqrqtew&autoplay=1",
     isActive: true,
     lang: "ar",
@@ -34,7 +34,7 @@ const LIVE_CHANNELS: LiveChannel[] = [
     id: "madinah",
     name: "قناة المدينة المنورة",
     location: "المسجد النبوي",
-    description: "البث المباشر من المسجد النبوي الشريف — المدينة المنورة",
+    description: "البث المباشر من المسجد النبوي الشريف، المدينة المنورة",
     streamUrl: "https://www.youtube.com/embed/live_stream?channel=UC7TRvJiLXGkGXqEO3O9Z9GQ&autoplay=1",
     isActive: true,
     lang: "ar",
@@ -88,7 +88,7 @@ export default function QuranLivePage() {
     applyPageSeo({
       path: "/quran-live",
       title: "البث المباشر للقرآن الكريم | مجالس",
-      description: "بث مباشر من الحرمين الشريفين والإذاعات القرآنية — مكة والمدينة ٢٤ ساعة",
+      description: "بث مباشر من الحرمين الشريفين والإذاعات القرآنية، مكة والمدينة ٢٤ ساعة",
     });
   }, []);
 
@@ -175,7 +175,7 @@ export default function QuranLivePage() {
           </div>
         )}
 
-        {/* للحرمين — رابط YouTube */}
+        {/* للحرمين، رابط YouTube */}
         {(activeChannel.id === "makkah" || activeChannel.id === "madinah") && (
           <div className="qlive-youtube-notice">
             <BookOpen size={20} />

@@ -243,7 +243,7 @@ function LessonForm() {
         </span>
       </div>
 
-      <Field label="ملف الدرس (اختياري — صوت أو فيديو)">
+      <Field label="ملف الدرس (اختياري، صوت أو فيديو)">
         <FileDropZone accept="audio/*,video/*" maxMb={MAX_VIDEO_MB} onFile={setFile} file={file} hint="MP3, MP4, M4A, WebM" />
       </Field>
 
@@ -297,7 +297,7 @@ export default function UploadPage() {
     applyPageSeo({
       path: "/upload",
       title: "رفع أذان أو درس | المجلس العلمي",
-      description: "أرسل تسجيل أذان أو درس علمي للمجلس العلمي — شارك العلم وأسهم في إثراء المكتبة الإسلامية.",
+      description: "أرسل تسجيل أذان أو درس علمي للمجلس العلمي، شارك العلم وأسهم في إثراء المكتبة الإسلامية.",
       keywords: ["رفع أذان", "تسجيل درس", "رفع ملف صوتي", "مشاركة علمية", "المجلس العلمي"],
     });
   }, []);
