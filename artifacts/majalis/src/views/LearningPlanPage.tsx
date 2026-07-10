@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { BookOpen, ClipboardList, Gem, Landmark, Lock, Moon, Repeat2, ScrollText, Sprout, Timer, Trophy } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
+import { ShareButtons } from "@/components/ContentActions";
 import { PageHeader } from "@/components/ui-common";
 import {
   getUserLearningPlan,
@@ -371,6 +372,10 @@ export default function LearningPlanPage() {
           }}
         />
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="خطة التعلم الشخصية — المجلس العلمي" url="https://majlisilm.com/learning-plan" />
+      </div>
     </div>
   );
 }

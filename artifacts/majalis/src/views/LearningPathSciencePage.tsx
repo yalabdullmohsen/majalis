@@ -3,6 +3,7 @@ import { BookMarked, BookOpen, FlaskConical, GraduationCap, Landmark, Lightbulb,
 import type { LucideIcon } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { supabase } from "@/lib/supabase";
 import type { LPScience, LPLevel, LPProgress } from "@/lib/learning-path-service";
@@ -152,6 +153,10 @@ export default function LearningPathSciencePage() {
             />
           </Suspense>
         )}
+
+        <div className="twh-share">
+          <ShareButtons title={`${science.name} — مسار التعلم | المجلس العلمي`} url={`https://majlisilm.com/learning-path/${science.slug}`} />
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { Globe, Heart, MapPin, Mic2, Palette, Search, Star, Upload, Users } from "lucide-react";
 import { Link } from "wouter";
+import { ShareButtons } from "@/components/ContentActions";
 import { useAuth } from "@/components/AuthProvider";
 import { MUEZZINS, previewAdhan, stopAdhan, type Muezzin, type MuezzinStyle } from "@/lib/adhan-audio";
 import { patchAdhanPrefs, loadAdhanPrefs } from "@/lib/adhan-preferences";
@@ -325,6 +326,10 @@ export default function MuezzinsPage() {
         <Link href="/adhan-settings">
           <span className="mzp-settings-link">إعدادات الأذان التفصيلية ←</span>
         </Link>
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="مكتبة المؤذنين — المجلس العلمي" url="https://majlisilm.com/muezzins" />
       </div>
     </div>
   );

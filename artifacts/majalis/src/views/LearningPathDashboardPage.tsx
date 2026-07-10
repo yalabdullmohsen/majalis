@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect, useState } from "react";
 import { BookOpen, Clock, Flame, Lock, Medal } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { supabase } from "@/lib/supabase";
 import type { LPProgress, LPAchievement, LPStreak } from "@/lib/learning-path-service";
@@ -162,6 +163,10 @@ export default function LearningPathDashboardPage() {
             </div>
           </>
         )}
+
+        <div className="twh-share">
+          <ShareButtons title="لوحة مسار التعلم — المجلس العلمي" url="https://majlisilm.com/learning-path/dashboard" />
+        </div>
       </div>
     </div>
   );

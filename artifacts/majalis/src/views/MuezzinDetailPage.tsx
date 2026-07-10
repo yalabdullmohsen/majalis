@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { BookOpen, Building2, CloudMoon, CloudSun, Cog, Heart, MapPin, Mic2, Moon, Music2, Star, Sun, Sunset, Tag } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link, useRoute } from "wouter";
+import { ShareButtons } from "@/components/ContentActions";
 import {
   getMuezzin,
   playAdhan,
@@ -311,6 +312,10 @@ export default function MuezzinDetailPage() {
           </div>
         </Section>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title={`${muezzin.name} — مكتبة المؤذنين | المجلس العلمي`} url={`https://majlisilm.com/muezzins/${muezzin.id}`} />
+      </div>
     </div>
   );
 }
