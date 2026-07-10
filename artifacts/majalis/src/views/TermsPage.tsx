@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 export default function TermsPage() {
   useEffect(() => {
@@ -110,6 +111,9 @@ export default function TermsPage() {
         </p>
       </LegalSection>
 
+      <div className="twh-share">
+        <ShareButtons title="شروط الاستخدام — المجلس العلمي" url="https://majlisilm.com/terms" />
+      </div>
       <LegalBackLink />
     </LegalPageLayout>
   );

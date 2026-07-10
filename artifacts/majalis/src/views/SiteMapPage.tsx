@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 const SECTIONS = [
   {
@@ -71,15 +72,19 @@ const SECTIONS = [
     links: [
       { href: "/adhkar",            label: "الأذكار",              desc: "الصباح والمساء والنوم" },
       { href: "/duas",              label: "الأدعية الشرعية",      desc: "أدعية مصنفة" },
+      { href: "/duas-quran",        label: "أدعية القرآن",         desc: "الأدعية القرآنية المختارة" },
       { href: "/tasbih",            label: "التسبيح",              desc: "عداد التسبيح الرقمي" },
       { href: "/sunan-yawmiyya",    label: "السنن اليومية",        desc: "السنن مع تتبع إتمامها" },
       { href: "/prayer-ranks",      label: "فضائل الصلاة",         desc: "أحاديث وآيات فضل الصلاة" },
       { href: "/fadail-aamal",      label: "فضائل الأعمال",        desc: "أحاديث في الفضائل" },
       { href: "/prayer-times",      label: "مواقيت الصلاة",        desc: "أوقات الصلاة بموقعك" },
+      { href: "/prayer-countdown",  label: "عداد الصلاة",          desc: "الوقت المتبقي حتى الصلاة التالية" },
       { href: "/qibla",             label: "اتجاه القبلة",         desc: "البوصلة نحو مكة" },
       { href: "/tawba",             label: "التوبة والاستغفار",    desc: "فضل التوبة وأدعيتها" },
       { href: "/raqaiq",            label: "الرقائق والزهد",       desc: "تزكية النفس" },
       { href: "/occasions",         label: "المناسبات الإسلامية",  desc: "أذكار المناسبات" },
+      { href: "/adab-talab-ilm",    label: "آداب طالب العلم",      desc: "شروط طلب العلم وآدابه" },
+      { href: "/akhlaq",            label: "الأخلاق الإسلامية",    desc: "مكارم الأخلاق" },
     ],
   },
   {
@@ -110,10 +115,41 @@ const SECTIONS = [
       { href: "/mind-map",         label: "الخرائط الذهنية",      desc: "تنظيم المعلومات مرئياً" },
       { href: "/calendar",         label: "التقويم الهجري",      desc: "التقويم والمناسبات" },
       { href: "/hikam-salaf",      label: "حكم السلف الصالح",     desc: "أقوال الأئمة والصحابة" },
-      { href: "/akhlaq",           label: "الأخلاق الإسلامية",    desc: "مكارم الأخلاق" },
       { href: "/fawaid",           label: "الفوائد العلمية",      desc: "فوائد ومنقولات موثقة" },
       { href: "/islamic-glossary", label: "المصطلحات الإسلامية",  desc: "معجم المصطلحات" },
+      { href: "/hadith-science",   label: "مصطلح الحديث",         desc: "54+ مصطلح في علوم الحديث" },
       { href: "/universities",     label: "دليل الجامعات",        desc: "الجامعات الإسلامية" },
+      { href: "/academic-research",label: "البحث الأكاديمي",      desc: "موارد البحث العلمي الشرعي" },
+      { href: "/institutions",     label: "المؤسسات الإسلامية",   desc: "المراكز والمجامع العلمية" },
+      { href: "/islam-stats",      label: "إحصائيات الإسلام",     desc: "أرقام وحقائق عن الإسلام" },
+    ],
+  },
+  {
+    title: "الأدوات الشخصية",
+    emoji: "⚙️",
+    links: [
+      { href: "/my-citations",       label: "اقتباساتي",           desc: "اقتباساتك المحفوظة" },
+      { href: "/vault",              label: "خزانتي",              desc: "المحفوظات الشخصية" },
+      { href: "/my-submissions",     label: "مشاركاتي",            desc: "محتواك المُرسَل للمراجعة" },
+      { href: "/submit-content",     label: "ارسل محتوى",          desc: "شارك معلومة أو فائدة" },
+      { href: "/researcher-profile", label: "ملف الباحث",          desc: "ملفك الشخصي البحثي" },
+      { href: "/study-room",         label: "غرفة الدراسة",        desc: "بيئة مراجعة منظمة" },
+      { href: "/transcribe",         label: "نسخ المحاضرات",       desc: "تحويل المحاضرات إلى نص" },
+      { href: "/cards",              label: "البطاقات الدعوية",    desc: "صانع البطاقات الإسلامية" },
+      { href: "/user-stats",         label: "إحصائياتي",           desc: "إحصائيات نشاطك" },
+      { href: "/settings",           label: "الإعدادات",           desc: "إعدادات الحساب والتطبيق" },
+    ],
+  },
+  {
+    title: "المعلومات",
+    emoji: "ℹ️",
+    links: [
+      { href: "/about",    label: "عن المجلس",       desc: "رسالتنا وأهدافنا" },
+      { href: "/contact",  label: "تواصل معنا",      desc: "للملاحظات والاقتراحات" },
+      { href: "/privacy",  label: "سياسة الخصوصية", desc: "كيف نحمي بياناتك" },
+      { href: "/terms",    label: "الشروط والأحكام", desc: "شروط استخدام المنصة" },
+      { href: "/features-in-progress", label: "المميزات القادمة", desc: "خارطة الطريق" },
+      { href: "/updates",  label: "آخر التحديثات",   desc: "مستجدات المنصة" },
     ],
   },
 ];
@@ -154,6 +190,9 @@ export default function SiteMapPage() {
           </section>
         ))}
       </main>
+      <div className="twh-share">
+        <ShareButtons title="دليل أقسام المجلس العلمي" url="https://majlisilm.com/sitemap" />
+      </div>
     </div>
   );
 }
