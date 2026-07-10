@@ -27,7 +27,8 @@ export default function NotFound() {
   return (
     <div className="nf-page">
       <section className="nf-card">
-        <p className="nf-code">404</p>
+        <p className="nf-icon" aria-hidden="true">🕌</p>
+        <p className="nf-code" aria-label="خطأ 404">404</p>
         <h1 className="nf-title">الصفحة غير موجودة</h1>
         <p className="nf-desc">
           يبدو أن الرابط غير صحيح أو أن الصفحة نُقلت. يمكنك الرجوع للرئيسية
