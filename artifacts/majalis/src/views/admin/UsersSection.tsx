@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { adminGetUsers, adminUpdateUserRole } from "@/lib/supabase";
 import { assignGovernanceRole, syncLegacyRoles, LEGACY_ROLE_MAP } from "@/lib/governance-service";
 import { SkeletonCardGrid } from "@/components/ui-common";
@@ -58,7 +59,7 @@ export function UsersSection() {
 
   const filtered = users
     .filter(u => filter === "all" || u.role === filter)
-    .filter(u => !search || (u.full_name || "").includes(search) || (u.city || "").includes(search));
+    .filter(u => arabicMatchAny([u.full_name ?? "", u.city ?? ""], search));
 
   const counts = {
     all: users.length,

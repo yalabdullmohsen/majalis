@@ -9,6 +9,7 @@ import {
   User, Users, Flame,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { adminGetDashboardStats, adminResolveReport } from "@/lib/supabase";
 import { getCmsDashboardStats } from "@/lib/cms/supabase-cms";
 import { getTopSearchQueries } from "@/lib/search-history";
@@ -441,15 +442,9 @@ export function DashboardSection() {
 
   // فلترة الأقسام
   const filteredCards = useMemo(() => {
-    const q = search.trim().toLowerCase();
     return SECTION_CATALOG.filter((c) => {
       if (activeGroup !== "الكل" && c.group !== activeGroup) return false;
-      if (!q) return true;
-      return (
-        c.label.includes(q) ||
-        c.description.toLowerCase().includes(q) ||
-        c.group.includes(q)
-      );
+      return arabicMatchAny([c.label, c.description, c.group], search);
     });
   }, [search, activeGroup]);
 

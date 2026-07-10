@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
 import { SkeletonCardGrid } from "@/components/ui-common";
 import {
@@ -91,16 +92,10 @@ function AutoContentAdmin() {
     return () => clearInterval(interval);
   }, [load]);
 
-  const filtered = useMemo(() => {
-    const q = search.trim();
-    if (!q) return items;
-    return items.filter(
-      (i) =>
-        (i.title ?? "").includes(q) ||
-        (i.source_name ?? "").includes(q) ||
-        (i.category || "").includes(q),
-    );
-  }, [items, search]);
+  const filtered = useMemo(
+    () => items.filter((i) => arabicMatchAny([i.title ?? "", i.source_name ?? "", i.category ?? ""], search)),
+    [items, search],
+  );
 
   const errorLogs = useMemo(
     () => logs.filter((l) => l.status === "failed" || l.error_details),
