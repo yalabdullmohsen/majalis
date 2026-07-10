@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { BookOpen, ChevronDown, ChevronUp, GraduationCap, Lightbulb, Scale, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
+import { ShareButtons } from "@/components/ContentActions";
 
 /* ══════════════════════════════════════════════════════════════════
    §243، آداب طالب العلم  (.atl-*)
@@ -455,6 +456,10 @@ export default function AdabTalabIlmPage() {
             </div>
           </div>
         )}
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="آداب طالب العلم — المجلس العلمي" url="https://majlisilm.com/adab-talab-ilm" />
       </div>
     </div>
   );

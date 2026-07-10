@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { ARBAEEN_NAWAWI } from "@/lib/arbaeen-nawawi-seed";
+import { ShareButtons } from "@/components/ContentActions";
 
 /* ══════════════════════════════════════════════════════════════════
    §178b، الأربعون النووية (.an-*)
@@ -240,6 +241,10 @@ export default function ArbaeenNawawiPage() {
           })}
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="الأربعون النووية — المجلس العلمي" url="https://majlisilm.com/arbaeen-nawawi" />
+      </div>
     </div>
   );
 }

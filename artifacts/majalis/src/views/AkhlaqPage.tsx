@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Heart, Star, Users, BookOpen, ChevronDown, ChevronUp } from "lucide-react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 /* ─── بيانات الأخلاق ─── */
 type AkhlaqEntry = {
@@ -497,6 +498,10 @@ export default function AkhlaqPage() {
       {filtered.length === 0 && (
         <p className="akl-empty">لا يوجد خلق مطابق للبحث.</p>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="الأخلاق الإسلامية — المجلس العلمي" url="https://majlisilm.com/akhlaq" />
+      </div>
 
       {/* روابط ذات صلة */}
       <div className="akl-related">

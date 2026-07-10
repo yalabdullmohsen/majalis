@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 
 type DuaCategory = "الكل" | "الأنبياء" | "الرزق والهداية" | "المغفرة" | "الأسرة" | "الدنيا والآخرة" | "الصبر والنصر";
@@ -359,6 +360,10 @@ export default function DuasQuranPage() {
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="twh-share">
+          <ShareButtons title="أدعية القرآن الكريم — المجلس العلمي" url="https://majlisilm.com/duas-quran" />
         </div>
 
         {/* related */}
