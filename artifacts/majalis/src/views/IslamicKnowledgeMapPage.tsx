@@ -7,6 +7,7 @@ import {
   FileText, Mic2, Shield,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ── بنية العلوم الإسلامية ─────────────────────────────────── */
 
@@ -252,11 +253,7 @@ export default function IslamicKnowledgeMapPage() {
   const connectedIds = selectedDomain ? selectedDomain.connections : [];
 
   const filtered = searchTerm.trim()
-    ? DOMAINS.filter(d =>
-        d.title.includes(searchTerm) ||
-        d.subtitle.includes(searchTerm) ||
-        d.tags.some(t => t.includes(searchTerm))
-      )
+    ? DOMAINS.filter(d => arabicMatchAny([d.title, d.subtitle, ...d.tags], searchTerm))
     : DOMAINS;
 
   return (

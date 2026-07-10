@@ -1,6 +1,7 @@
 // بيانات الأنبياء المذكورين في القرآن الكريم بالاسم (25 نبياً)
 // المصدر: القرآن الكريم وكتب التفسير والسيرة الموثوقة
 // ⚠️ يتطلب مراجعة شرعية قبل التعديل أو النشر
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 export type ProphetRecord = {
   id: number;
@@ -375,14 +376,8 @@ export function getProphet(slug: string): ProphetRecord | undefined {
 }
 
 export function searchProphets(query: string): ProphetRecord[] {
-  const q = query.trim().toLowerCase();
-  if (!q) return PROPHETS;
-  return PROPHETS.filter(
-    (p) =>
-      p.arabicName.includes(q) ||
-      p.title.includes(q) ||
-      p.peopleOrPlace.includes(q) ||
-      p.keyAttributes.some((a) => a.includes(q)) ||
-      p.briefBio.includes(q),
+  if (!query.trim()) return PROPHETS;
+  return PROPHETS.filter((p) =>
+    arabicMatchAny([p.arabicName, p.title, p.peopleOrPlace, p.briefBio, ...p.keyAttributes], query),
   );
 }
