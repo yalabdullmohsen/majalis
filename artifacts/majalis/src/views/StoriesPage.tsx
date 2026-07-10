@@ -7,6 +7,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 function useDebouncedValue<T>(value: T, delayMs = 350): T {
   const [debounced, setDebounced] = useState(value);
@@ -121,6 +122,7 @@ export default function StoriesPage() {
                 {s.category && <span className="story-card__category">{s.category}</span>}
                 {s.source_name && <span><strong>المصدر:</strong> {s.source_name}</span>}
               </div>
+              <ShareButtons title={s.title} url="https://majlisilm.com/stories" />
             </article>
           ))}
         </div>

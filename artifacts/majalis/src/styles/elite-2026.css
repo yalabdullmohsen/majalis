@@ -13753,6 +13753,10 @@ a:focus-visible {
   gap: 0.4rem !important;
   flex-wrap: wrap !important;
 }
+.isp-detail__share {
+  padding-top: 0.5rem !important;
+  border-top: 1px solid var(--majalis-line) !important;
+}
 
 /* حالات خاصة */
 .isp-skeleton {

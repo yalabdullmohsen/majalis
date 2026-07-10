@@ -7,6 +7,7 @@ import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { ISLAMIC_STORIES_SEED } from "@/lib/islamic-stories-seed";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 const STORY_ICON_MAP: Record<string, LucideIcon> = {
   Star, Scale, Sword, Landmark, Bird, Compass, Gem, BookOpen, Moon, Castle,
@@ -147,6 +148,9 @@ function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => voi
           ))}
         </div>
       )}
+      <div className="isp-detail__share">
+        <ShareButtons title={story.title} url={`https://majlisilm.com/islamic-stories`} />
+      </div>
     </div>
   );
 }

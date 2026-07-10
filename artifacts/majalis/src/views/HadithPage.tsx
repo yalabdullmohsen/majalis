@@ -9,6 +9,7 @@ import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { CitationActionBar } from "@/components/citation/CitationActionBar";
+import { ShareButtons } from "@/components/ContentActions";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -208,6 +209,10 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
         >
           ↗
         </button>
+        <ShareButtons
+          title={h.title || "حديث نبوي شريف"}
+          url="https://majlisilm.com/hadith"
+        />
       </div>
     </article>
   );

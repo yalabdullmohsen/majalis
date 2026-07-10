@@ -4,6 +4,7 @@ import { Breadcrumbs } from "./Breadcrumbs";
 import { AdminInlineEdit, type InlineEditContentType } from "@/components/AdminInlineEdit";
 import { ReadingProgressBar } from "@/components/ReadingProgressBar";
 import { Clock } from "lucide-react";
+import { ShareButtons } from "@/components/ContentActions";
 
 function estimateReadMinutes(text?: string): number | null {
   if (!text || text.length < 200) return null;
@@ -69,11 +70,7 @@ function ShareCopyBar({
           نسخ
         </button>
       )}
-      {(copyText || shareUrl) && (
-        <button type="button" onClick={handleShare} className="content-detail-action-btn">
-          مشاركة
-        </button>
-      )}
+      <ShareButtons title={title} url={shareUrl || (typeof window !== "undefined" ? window.location.href : "")} />
       {adminEdit && (
         <AdminInlineEdit
           contentType={adminEdit.contentType}
