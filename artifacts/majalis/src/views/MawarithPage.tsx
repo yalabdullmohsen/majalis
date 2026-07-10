@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 
 type MawTab = "varasa" | "huquq" | "asab" | "hajb" | "masail";
@@ -249,6 +250,10 @@ export default function MawarithPage() {
 
   const [tab, setTab] = useState<MawTab>("varasa");
   const [openWarith, setOpenWarith] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+  const filteredMasail = useMemo(() =>
+    search.trim() ? MASAIL.filter(m => arabicMatchAny([m.title, m.desc, m.formula], search)) : MASAIL,
+  [search]);
 
   return (
     <main className="mw-page" dir="rtl">
@@ -452,8 +457,18 @@ export default function MawarithPage() {
         {tab === "masail" && (
           <div className="mw-section">
             <p className="mw-lead">مسائل فقهية مشهورة في علم الفرائض، تُبيّن دقة المنهج وعمق الفقه الإسلامي</p>
+            <div className="mw-search-wrap">
+              <input
+                type="search"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="ابحث في مسائل الفرائض..."
+                className="page-search-input mw-search-input"
+                aria-label="بحث في مسائل المواريث"
+              />
+            </div>
             <div className="mw-masail-list">
-              {MASAIL.map((m, i) => (
+              {filteredMasail.map((m, i) => (
                 <div key={i} className="mw-masala-card">
                   <div className="mw-masala-num">{i + 1}</div>
                   <div>

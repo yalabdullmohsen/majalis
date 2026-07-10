@@ -23879,6 +23879,12 @@ img[loading="lazy"]:not([src=""]) {
 .zk-search-input { width: 100%; }
 .sg-search-wrap { padding: .5rem 0 .75rem; }
 .sg-search-input { width: 100%; }
+.twh-search-wrap { padding: .75rem 0 .5rem; }
+.twh-search-input { width: 100%; }
+.uq-search-wrap { padding: .5rem 0 .75rem; }
+.uq-search-input { width: 100%; }
+.mw-search-wrap { padding: .5rem 0 .75rem; }
+.mw-search-input { width: 100%; }
 .wn-tab {
   padding: .45rem 1.1rem; border-radius: 999px;
   border: 1.5px solid var(--clr-border); background: #fff;

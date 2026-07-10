@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 // ─── أقسام العقيدة والتوحيد ──────────────────────────────────────────────────
 
@@ -276,6 +277,17 @@ function SectionLabel({ emoji, label }: { emoji: string; label: string }) {
 // ─── الصفحة ────────────────────────────────────────────────────────────────
 
 export default function TawhidPage() {
+  const [search, setSearch] = useState("");
+  const filteredPrinciples = useMemo(() =>
+    search.trim() ? PRINCIPLES.filter(p => arabicMatchAny([p.title, p.body, p.hadith?.text ?? "", p.hadith?.source ?? ""], search)) : PRINCIPLES,
+  [search]);
+  const filteredAsma = useMemo(() =>
+    search.trim() ? ASMA_HUSNA.filter(a => arabicMatchAny([a.name, a.meaning], search)) : ASMA_HUSNA,
+  [search]);
+  const filteredBooks = useMemo(() =>
+    search.trim() ? RECOMMENDED_BOOKS.filter(b => arabicMatchAny([b.title, b.author, b.desc, b.level], search)) : RECOMMENDED_BOOKS,
+  [search]);
+
   useEffect(() => {
     applyPageSeo({
       path: "/tawhid",
@@ -357,6 +369,17 @@ export default function TawhidPage() {
         <a href="#recommended"    className="twh-jumpnav__btn">كتب مقترحة</a>
       </nav>
 
+      <div className="twh-search-wrap">
+        <input
+          type="search"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="ابحث في مسائل التوحيد والأسماء الحسنى والكتب..."
+          className="page-search-input twh-search-input"
+          aria-label="بحث في صفحة التوحيد"
+        />
+      </div>
+
       {/* ══ أنواع التوحيد الثلاثة ══ */}
       <section id="tawhid-types" aria-labelledby="types-heading" className="twh-section">
         <SectionLabel emoji="🕌" label="أنواع التوحيد الثلاثة" />
@@ -404,7 +427,7 @@ export default function TawhidPage() {
         <SectionLabel emoji="📐" label="مسائل التوحيد" />
         <h2 id="principles-heading" className="tawheed-principles-heading">مسائل مهمة في التوحيد</h2>
         <div className="tawheed-principles-grid">
-          {PRINCIPLES.map((p) => (
+          {filteredPrinciples.map((p) => (
             <div key={p.title} className="tawheed-principle-card">
               <p className="tawheed-principle-card__title">{p.title}</p>
               <p className="tawheed-principle-card__body">{p.body}</p>
@@ -428,7 +451,7 @@ export default function TawhidPage() {
           <span className="twh-source-ref">، الأعراف: ١٨٠</span>
         </p>
         <div className="twh-asma-grid">
-          {ASMA_HUSNA.map((a) => (
+          {filteredAsma.map((a) => (
             <div key={a.name} className="twh-asma-card">
               <p className="twh-asma-name">{a.name}</p>
               <p className="twh-asma-meaning">{a.meaning}</p>
@@ -445,7 +468,7 @@ export default function TawhidPage() {
         <SectionLabel emoji="📚" label="كتب مقترحة" />
         <h2 id="books-heading" className="tawheed-principles-heading">كتب مقترحة في العقيدة</h2>
         <div className="twh-books-grid">
-          {RECOMMENDED_BOOKS.map((b) => (
+          {filteredBooks.map((b) => (
             <div key={b.title} className="twh-book-card">
               <span className={`twh-book-level twh-book-level--${b.level === "مبتدئ" ? "beginner" : b.level === "متوسط" ? "mid" : "adv"}`}>{b.level}</span>
               <p className="twh-book-title">{b.title}</p>
