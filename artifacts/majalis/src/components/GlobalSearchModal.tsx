@@ -78,21 +78,28 @@ function useIsMobile() {
 
 function Highlight({ text, query }: { text: string; query: string }) {
   if (!query.trim() || !text) return <>{text}</>;
-  const nText = normalizeArabic(text);
+  const nText  = normalizeArabic(text);
   const nQuery = normalizeArabic(query.trim());
-  if (!nQuery) return <>{text}</>;
-  const idx = nText.indexOf(nQuery);
-  if (idx === -1) return <>{text}</>;
-  const before = text.slice(0, idx);
-  const match  = text.slice(idx, idx + nQuery.length);
-  const after  = text.slice(idx + nQuery.length);
-  return (
-    <>
-      {before}
-      <mark className="gsm-highlight">{match}</mark>
-      {after}
-    </>
-  );
+  if (!nQuery || nQuery.length < 2) return <>{text}</>;
+
+  // إيجاد جميع المطابقات وإبرازها
+  const segments: React.ReactNode[] = [];
+  let pos = 0;
+  let searchFrom = 0;
+  while (searchFrom < nText.length) {
+    const idx = nText.indexOf(nQuery, searchFrom);
+    if (idx === -1) {
+      segments.push(text.slice(pos));
+      break;
+    }
+    if (idx > pos) segments.push(text.slice(pos, idx));
+    segments.push(
+      <mark key={idx} className="gsm-highlight">{text.slice(idx, idx + nQuery.length)}</mark>
+    );
+    pos = idx + nQuery.length;
+    searchFrom = pos;
+  }
+  return <>{segments}</>;
 }
 
 // ── بطاقة نتيجة واحدة ───────────────────────────────────────────────────────

@@ -5,7 +5,16 @@
 import { getSupabaseAdmin } from "./supabase-admin.mjs";
 
 function normalizeText(t) {
-  return String(t || "").replace(/[\u064B-\u065F\u0670]/g, "").toLowerCase().trim();
+  return String(t || "")
+    .replace(/[\u064B-\u065F\u0670\u0640]/g, "") // \u062A\u0634\u0643\u064A\u0644 + \u062A\u0637\u0648\u064A\u0644
+    .replace(/[\u0623\u0625\u0622\u0671]/g, "\u0627")                      // \u0647\u0645\u0632\u0627\u062A \u2192 \u0623\u0644\u0641
+    .replace(/[\u0624]/g, "\u0648")                          // \u0648\u0627\u0648 \u0647\u0645\u0632\u0629
+    .replace(/[\u0626]/g, "\u064A")                          // \u064A\u0627\u0621 \u0647\u0645\u0632\u0629
+    .replace(/[\u0629]/g, "\u0647")                          // \u062A\u0627\u0621 \u0645\u0631\u0628\u0648\u0637\u0629
+    .replace(/[\u0649]/g, "\u064A")                          // \u0623\u0644\u0641 \u0645\u0642\u0635\u0648\u0631\u0629
+    .replace(/\s+/g, " ")
+    .toLowerCase()
+    .trim();
 }
 
 function compactText(t) {
