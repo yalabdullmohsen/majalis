@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 /* ══ بيانات قواعد التجويد ══ */
 type TajweedRule = {
   id: string;
@@ -360,6 +361,7 @@ function RuleCard({ rule }: { rule: TajweedRule }) {
 
 export default function QuranTajweedPage() {
   const [category, setCategory] = useState("الكل");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     applyPageSeo({
@@ -387,7 +389,11 @@ export default function QuranTajweedPage() {
     });
   }, []);
 
-  const filtered = category === "الكل" ? RULES : RULES.filter(r => r.category === category);
+  const filtered = RULES.filter(r => {
+    const catOk = category === "الكل" || r.category === category;
+    const textOk = !search.trim() || arabicMatchAny([r.title, r.definition, r.example ?? "", r.category], search);
+    return catOk && textOk;
+  });
 
   return (
     <div className="page-shell ds-page tj-page">
@@ -432,6 +438,17 @@ export default function QuranTajweedPage() {
             {c}
           </button>
         ))}
+      </div>
+
+      <div className="tj-search-wrap">
+        <input
+          type="search"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="ابحث في قواعد التجويد..."
+          className="page-search-input tj-search-input"
+          aria-label="بحث في أحكام التجويد"
+        />
       </div>
 
       {/* البطاقات */}

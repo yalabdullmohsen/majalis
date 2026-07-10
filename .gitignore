@@ -6,3 +6,5 @@ dist/
 *.local
 .DS_Store
 .tsbuildinfo
+# Claude Code agent worktrees — must never be tracked as git submodules
+.claude/worktrees/

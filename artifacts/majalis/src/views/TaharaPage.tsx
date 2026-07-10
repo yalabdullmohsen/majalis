@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 
 type TaharaTab = "wudu" | "ghusl" | "tayammum" | "najasat";
@@ -159,6 +160,22 @@ export default function TaharaPage() {
   }, []);
 
   const [tab, setTab] = useState<TaharaTab>("wudu");
+  const [search, setSearch] = useState("");
+  const filteredWuduNawaqidh = useMemo(() =>
+    search.trim() ? WUDU_NAWAQIDH.filter(n => arabicMatchAny([n.title, n.desc], search)) : WUDU_NAWAQIDH,
+  [search]);
+  const filteredGhusulMujibat = useMemo(() =>
+    search.trim() ? GHUSL_MUJIBAT.filter(m => arabicMatchAny([m.title, m.desc], search)) : GHUSL_MUJIBAT,
+  [search]);
+  const filteredTayammumIbaha = useMemo(() =>
+    search.trim() ? TAYAMMUM_IBAHA.filter(i => arabicMatchAny([i.title, i.desc], search)) : TAYAMMUM_IBAHA,
+  [search]);
+  const filteredNajasat = useMemo(() => {
+    if (!search.trim()) return NAJASAT_ITEMS;
+    return NAJASAT_ITEMS
+      .map(g => ({ ...g, items: g.items.filter(i => arabicMatchAny([i.title, i.desc], search)) }))
+      .filter(g => g.items.length > 0);
+  }, [search]);
 
   return (
     <main className="th-page" dir="rtl">
@@ -195,6 +212,17 @@ export default function TaharaPage() {
       </section>
 
       <div className="th-body">
+        <div className="th-search-wrap">
+          <input
+            type="search"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="ابحث في أحكام الطهارة..."
+            className="page-search-input th-search-input"
+            aria-label="بحث في أحكام الطهارة"
+          />
+        </div>
+
         {/* ── الوضوء ── */}
         {tab === "wudu" && (
           <section className="th-section">
@@ -221,7 +249,7 @@ export default function TaharaPage() {
 
             <h2 className="th-section__title">نواقض الوضوء</h2>
             <div className="th-nawaqidh-grid">
-              {WUDU_NAWAQIDH.map((n) => (
+              {filteredWuduNawaqidh.map((n) => (
                 <div key={n.title} className="th-naqidh-card">
                   <span className="th-naqidh-card__icon">{n.icon}</span>
                   <div>
@@ -247,7 +275,7 @@ export default function TaharaPage() {
           <section className="th-section">
             <h2 className="th-section__title">موجبات الغسل</h2>
             <div className="th-mujibat-grid">
-              {GHUSL_MUJIBAT.map((m) => (
+              {filteredGhusulMujibat.map((m) => (
                 <div key={m.title} className="th-mujib-card">
                   <span className="th-mujib-card__icon">{m.icon}</span>
                   <div>
@@ -304,7 +332,7 @@ export default function TaharaPage() {
 
             <h2 className="th-section__title">مبيحات التيمم</h2>
             <div className="th-ibaha-grid">
-              {TAYAMMUM_IBAHA.map((item) => (
+              {filteredTayammumIbaha.map((item) => (
                 <div key={item.title} className="th-ibaha-card">
                   <span className="th-ibaha-card__icon">{item.icon}</span>
                   <div>
@@ -344,7 +372,7 @@ export default function TaharaPage() {
             <p className="th-section__intro">
               النجاسة: كل عين حكم الشارع بنجاستها. إزالتها شرط لصحة الصلاة.
             </p>
-            {NAJASAT_ITEMS.map((group) => (
+            {filteredNajasat.map((group) => (
               <div key={group.type} className="th-naj-group">
                 <h2 className={`th-naj-group__title th-naj-group__title--${group.color}`}>
                   {group.label}

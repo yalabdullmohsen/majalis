@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 
 type JanazaTab = "ghusl" | "takfin" | "salah" | "dafn" | "aadab";
@@ -154,6 +155,22 @@ export default function JanazaPage() {
   }, []);
 
   const [tab, setTab] = useState<JanazaTab>("ghusl");
+  const [search, setSearch] = useState("");
+  const filteredGhusulSteps = useMemo(() =>
+    search.trim() ? GHUSL_STEPS.filter(s => arabicMatchAny([s.title, s.desc], search)) : GHUSL_STEPS,
+  [search]);
+  const filteredTakfin = useMemo(() =>
+    search.trim() ? TAKFIN_ITEMS.filter(i => arabicMatchAny([i.title, i.desc, i.dalil], search)) : TAKFIN_ITEMS,
+  [search]);
+  const filteredSalahArkan = useMemo(() =>
+    search.trim() ? SALAH_ARKAN.filter(r => arabicMatchAny([r.title, r.desc], search)) : SALAH_ARKAN,
+  [search]);
+  const filteredDafn = useMemo(() =>
+    search.trim() ? DAFN_ITEMS.filter(d => arabicMatchAny([d.title, d.desc], search)) : DAFN_ITEMS,
+  [search]);
+  const filteredAadab = useMemo(() =>
+    search.trim() ? TAAZIYA_AADAB.filter(a => arabicMatchAny([a.title, a.desc], search)) : TAAZIYA_AADAB,
+  [search]);
 
   return (
     <main className="jn-page" dir="rtl">
@@ -189,6 +206,18 @@ export default function JanazaPage() {
       </section>
 
       <div className="jn-body">
+
+        <div className="jnz-search-wrap">
+          <input
+            type="search"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="ابحث في أحكام الجنائز..."
+            className="page-search-input jnz-search-input"
+            aria-label="بحث في أحكام الجنائز"
+          />
+        </div>
+
         {/* ── الغسل ── */}
         {tab === "ghusl" && (
           <section className="jn-section">
@@ -201,7 +230,7 @@ export default function JanazaPage() {
             </div>
 
             <div className="jn-steps">
-              {GHUSL_STEPS.map((s) => (
+              {filteredGhusulSteps.map((s) => (
                 <div key={s.num} className="jn-step">
                   <div className="jn-step__num">{s.num}</div>
                   <div className="jn-step__content">
@@ -231,7 +260,7 @@ export default function JanazaPage() {
                 ويُستحب أن يكون أبيض نظيفاً.
               </p>
             </div>
-            {TAKFIN_ITEMS.map((item) => (
+            {filteredTakfin.map((item) => (
               <div key={item.title} className="jn-takfin-card">
                 <div className="jn-takfin-card__head">
                   <span className="jn-takfin-card__icon">{item.icon}</span>
@@ -260,7 +289,7 @@ export default function JanazaPage() {
 
             <h2 className="jn-subtitle">أركان صلاة الجنازة</h2>
             <div className="jn-arkan-grid">
-              {SALAH_ARKAN.map((rk) => (
+              {filteredSalahArkan.map((rk) => (
                 <div key={rk.num} className="jn-rukn-card">
                   <span className="jn-rukn-card__num">{rk.num}</span>
                   <div>
@@ -299,7 +328,7 @@ export default function JanazaPage() {
               </p>
             </div>
             <div className="jn-dafn-grid">
-              {DAFN_ITEMS.map((d) => (
+              {filteredDafn.map((d) => (
                 <div key={d.title} className="jn-dafn-card">
                   <span className="jn-dafn-card__icon">{d.icon}</span>
                   <div>
@@ -322,7 +351,7 @@ export default function JanazaPage() {
                 قال النبي ﷺ: «مَا مِنْ مُؤْمِنٍ يُعَزِّي أَخَاهُ بِمُصِيبَةٍ إِلَّا كَسَاهُ اللَّهُ مِنْ حُلَلِ الْكَرَامَةِ يَوْمَ الْقِيَامَةِ». (سنن ابن ماجه، صحيح)
               </p>
             </div>
-            {TAAZIYA_AADAB.map((a) => (
+            {filteredAadab.map((a) => (
               <div key={a.title} className="jn-adab-card">
                 <span className="jn-adab-card__icon">{a.icon}</span>
                 <div>
