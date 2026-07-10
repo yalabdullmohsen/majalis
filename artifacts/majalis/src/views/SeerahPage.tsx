@@ -254,6 +254,21 @@ export default function SeerahPage() {
       title: "السيرة النبوية | المجلس العلمي",
       description: "السيرة النبوية الشريفة، تاريخ حياة النبي محمد ﷺ منذ الميلاد حتى الوفاة بمراحل مرتّبة.",
       keywords: ["السيرة النبوية", "سيرة النبي", "محمد ﷺ", "تاريخ الإسلام", "الهجرة النبوية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "مراحل السيرة النبوية",
+          description: "مراحل حياة النبي محمد ﷺ مرتّبة زمنياً",
+          numberOfItems: PHASES.length,
+          itemListElement: PHASES.map((p, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `${p.title} (${p.year})`,
+            url: `https://majlisilm.com/seerah#${p.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 

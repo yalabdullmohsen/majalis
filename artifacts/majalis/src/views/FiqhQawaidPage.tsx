@@ -370,6 +370,21 @@ export default function FiqhQawaidPage() {
       title: "القواعد الفقهية الكبرى | المجلس العلمي",
       description: "تعلّم القواعد الفقهية الخمس الكبرى وفروعها وتطبيقاتها المعاصرة بشرح موسّع وأمثلة عملية.",
       keywords: ["قواعد فقهية", "الأشباه والنظائر", "أصول الفقه", "الضوابط الفقهية", "فقه إسلامي"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "القواعد الفقهية الكبرى",
+          description: "القواعد الفقهية الخمس الكبرى وفروعها وتطبيقاتها",
+          numberOfItems: QAWAID_KUBRA.length,
+          itemListElement: QAWAID_KUBRA.map((q, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: q.text,
+            url: `https://majlisilm.com/fiqh-qawaid#qaaida-${q.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 

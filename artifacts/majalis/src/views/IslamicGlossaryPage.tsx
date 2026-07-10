@@ -816,6 +816,21 @@ export default function IslamicGlossaryPage() {
       title: "المصطلحات الإسلامية | المجلس العلمي",
       description: "قاموس المصطلحات الإسلامية الشامل، تعريفات دقيقة في العقيدة والفقه وعلم الحديث وعلوم القرآن والسيرة والتزكية.",
       keywords: ["مصطلحات إسلامية", "قاموس إسلامي", "مصطلحات فقهية", "مصطلحات الحديث", "علوم إسلامية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "المصطلحات الإسلامية",
+          description: "قاموس المصطلحات الإسلامية الشامل",
+          numberOfItems: TERMS.length,
+          itemListElement: TERMS.slice(0, 20).map((t, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `${t.term}: ${t.definition.slice(0, 60)}`,
+            url: `https://majlisilm.com/islamic-glossary#term-${t.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 
