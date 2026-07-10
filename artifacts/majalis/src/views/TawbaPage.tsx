@@ -196,11 +196,26 @@ const ATHAAR: { icon: string; title: string; desc: string; dalil?: string }[] = 
 
 export default function TawbaPage() {
   useEffect(() => {
-      applyPageSeo({
+    applyPageSeo({
       path: "/tawba",
       title: "التوبة والاستغفار، المجلس العلمي",
       description: "دليل شامل للتوبة النصوح: شروطها وأنواعها وآداب الاستغفار وأفضل أدعية المغفرة",
       keywords: ["التوبة", "الاستغفار", "التوبة النصوح", "شروط التوبة", "أدعية المغفرة"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "شروط التوبة الصحيحة",
+          description: "شروط التوبة النصوح الخمسة بالأدلة وأقوال العلماء",
+          numberOfItems: SHURUT.length,
+          itemListElement: SHURUT.map((s, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `الشرط ${s.num}: ${s.title}`,
+            url: `https://majlisilm.com/tawba#shart-${s.num}`,
+          })),
+        },
+      ],
     });
   }, []);
 

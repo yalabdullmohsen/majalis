@@ -321,6 +321,21 @@ export default function RaqaiqPage() {
       title: "الرقائق والزهد | المجلس العلمي",
       description: "مواعظ الرقائق والزهد من الكتاب والسنة وأقوال السلف، لتليين القلوب واستحضار الآخرة.",
       keywords: ["الرقائق", "الزهد", "مواعظ", "تزكية النفس", "الحسن البصري", "الفضيل بن عياض", "إبراهيم بن أدهم"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "مواعظ الرقائق والزهد",
+          description: "مواعظ الرقائق من الكتاب والسنة وأقوال السلف",
+          numberOfItems: RAQAIQ.length,
+          itemListElement: RAQAIQ.slice(0, 20).map((r, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: r.title,
+            url: `https://majlisilm.com/raqaiq#raqiqa-${i + 1}`,
+          })),
+        },
+      ],
     });
   }, []);
 

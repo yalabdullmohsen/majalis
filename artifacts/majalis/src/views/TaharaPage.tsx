@@ -135,11 +135,26 @@ const TABS: { id: TaharaTab; label: string; icon: string }[] = [
 
 export default function TaharaPage() {
   useEffect(() => {
-      applyPageSeo({
+    applyPageSeo({
       path: "/tahara",
       title: "الطهارة وأحكامها، المجلس العلمي",
       description: "دليل شامل لأحكام الطهارة: الوضوء والغسل والتيمم وأنواع المياه والنجاسات",
       keywords: ["الطهارة", "الوضوء", "الغسل", "التيمم", "أحكام الطهارة", "الفقه"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "فرائض الوضوء",
+          description: "فرائض الوضوء الستة مع الأدلة والأحكام",
+          numberOfItems: WUDU_FARDH.length,
+          itemListElement: WUDU_FARDH.map((w, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `${w.num}: ${w.title} — ${w.desc}`,
+            url: `https://majlisilm.com/tahara#wudu-fardh-${i + 1}`,
+          })),
+        },
+      ],
     });
   }, []);
 

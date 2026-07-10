@@ -130,11 +130,26 @@ const TABS: { id: JanazaTab; label: string; icon: string }[] = [
 
 export default function JanazaPage() {
   useEffect(() => {
-      applyPageSeo({
+    applyPageSeo({
       path: "/janaza",
       title: "أحكام الجنائز، المجلس العلمي",
       description: "دليل شامل لأحكام الجنائز: الغسل والتكفين والصلاة والدفن والتعزية والزيارة",
       keywords: ["الجنائز", "أحكام الجنازة", "صلاة الجنازة", "التكفين", "الدفن", "التعزية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "خطوات غسل الميت وتجهيزه",
+          description: "خطوات غسل الميت والتكفين والصلاة والدفن وفق أحكام الشريعة",
+          numberOfItems: GHUSL_STEPS.length,
+          itemListElement: GHUSL_STEPS.map((s, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `${s.num}: ${s.title} — ${s.desc}`,
+            url: `https://majlisilm.com/janaza#step-${i + 1}`,
+          })),
+        },
+      ],
     });
   }, []);
 
