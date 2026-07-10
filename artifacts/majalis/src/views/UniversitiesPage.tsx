@@ -72,6 +72,21 @@ function UniversitiesContent() {
       title: "دليل الجامعات الإسلامية | المجلس العلمي",
       description: "دليل شامل للجامعات والمعاهد الإسلامية حول العالم، ابحث وقارن بين الجامعات حسب التخصص والمستوى وطريقة الدراسة.",
       keywords: ["جامعات إسلامية", "كليات شريعة", "دراسة شرعية", "جامعة إسلامية", "معهد ديني"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "دليل الجامعات الإسلامية حول العالم",
+          description: "جامعات ومعاهد إسلامية في عشرات الدول العربية والإسلامية",
+          numberOfItems: COUNTRIES.length,
+          itemListElement: COUNTRIES.map((country, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `الجامعات الإسلامية في ${country}`,
+            url: `https://majlisilm.com/universities?country=${encodeURIComponent(country)}`,
+          })),
+        },
+      ],
     });
   }, []);
 

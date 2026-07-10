@@ -41,6 +41,16 @@ export default function ScientificAnnouncementDetailPage({
       title: `${item?.announcementTitle || "إعلان علمي"} | المجلس العلمي`,
       description: `${item?.announcementTitle || "إعلان علمي"}، تفاصيل الإعلان العلمي والمؤتمرات والدورات الإسلامية.`,
       keywords: ["إعلانات علمية", "مؤتمرات إسلامية", "دورات علمية", "فعاليات شرعية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Event",
+          name: item?.announcementTitle || "إعلان علمي",
+          url: "https://majlisilm.com/scientific-announcements",
+          description: `${item?.announcementTitle || "إعلان علمي"} — تفاصيل الحدث العلمي`,
+          organizer: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        },
+      ],
     });
   }, [item?.announcementTitle]);
   const [shared, setShared] = useState(false);

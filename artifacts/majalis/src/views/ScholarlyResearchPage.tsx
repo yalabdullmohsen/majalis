@@ -28,6 +28,18 @@ export default function ScholarlyResearchPage() {
       title: "البحث العلمي الشرعي | المجلس العلمي",
       description: "محرك بحث شرعي ذكي بتقنية RAG، ابحث في المصادر الإسلامية واحصل على إجابات دقيقة موثّقة.",
       keywords: ["بحث علمي شرعي", "ذكاء اصطناعي إسلامي", "محرك بحث فقهي", "RAG إسلامي", "إجابات شرعية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "البحث العلمي الشرعي",
+          url: "https://majlisilm.com/scholarly-research",
+          description: "محرك بحث شرعي ذكي بتقنية RAG للبحث في المصادر الإسلامية",
+          applicationCategory: "EducationalApplication",
+          inLanguage: "ar",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        },
+      ],
     });
   }, []);
 

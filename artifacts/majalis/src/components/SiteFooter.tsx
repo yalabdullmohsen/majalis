@@ -114,6 +114,7 @@ const FOOTER_GROUPS = [
       { href: "/features-in-progress", label: "قيد التطوير" },
       { href: "/privacy",              label: "الخصوصية" },
       { href: "/terms",                label: "الشروط" },
+      { href: "/account-deletion",     label: "حذف الحساب" },
       { href: "/submit",               label: "أضف محتوى" },
     ],
   },

@@ -2801,3 +2801,243 @@ table th {
 /* ══ نهاية شريط تصفية الدروس ════════════════════════════════════════════════ */
 
 /* ── نهاية الإصلاح الشامل ── */
+
+/* ══ عداد الصلاة في NavBar ══════════════════════════════════════════════════ */
+.navbar-prayer-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  background: rgba(14, 110, 82, 0.12);
+  border: 1px solid rgba(14, 110, 82, 0.25);
+  color: var(--majalis-emerald, #0E6E52);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+  cursor: pointer;
+}
+.navbar-prayer-chip:hover {
+  background: rgba(14, 110, 82, 0.2);
+  border-color: rgba(14, 110, 82, 0.4);
+  text-decoration: none;
+}
+.navbar-prayer-chip__name {
+  font-weight: 700;
+}
+.navbar-prayer-chip__hms {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+  font-size: 0.72rem;
+  direction: ltr;
+}
+/* وضع الليل */
+[data-theme="dark"] .navbar-prayer-chip,
+.dark .navbar-prayer-chip {
+  background: rgba(14, 110, 82, 0.18);
+  border-color: rgba(14, 110, 82, 0.35);
+  color: #5ECFA8;
+}
+/* ══ نهاية عداد الصلاة ══════════════════════════════════════════════════════ */
+
+/* ══ ودجت استمر من حيث توقفت (HomeContinueWidget) ══════════════════════════ */
+.hcw-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.875rem;
+}
+.hcw-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s, transform 0.15s;
+}
+.hcw-card:hover { transform: translateY(-2px); }
+.hcw-card__icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(14, 110, 82, 0.12);
+  color: #0E6E52;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hcw-card__body { flex: 1; min-width: 0; }
+.hcw-card__title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0.35rem;
+}
+.hcw-card__bar {
+  height: 4px;
+  background: rgba(14, 110, 82, 0.15);
+  border-radius: 2px;
+  margin-bottom: 0.25rem;
+  overflow: hidden;
+}
+.hcw-card__bar span {
+  display: block;
+  height: 100%;
+  background: #0E6E52;
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+.hcw-card__pct { font-size: 0.75rem; opacity: 0.65; }
+.hcw-card__go { flex-shrink: 0; opacity: 0.4; }
+.hcw-card--skeleton {
+  height: 76px;
+  background: rgba(0,0,0,0.06);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+[data-theme="dark"] .hcw-card__icon,
+.dark .hcw-card__icon { background: rgba(14,110,82,0.22); color: #5ECFA8; }
+[data-theme="dark"] .hcw-card__bar,
+.dark .hcw-card__bar { background: rgba(255,255,255,0.08); }
+[data-theme="dark"] .hcw-card--skeleton,
+.dark .hcw-card--skeleton { background: rgba(255,255,255,0.07); }
+/* ══ نهاية ودجت استمر ══════════════════════════════════════════════════════ */
+
+.sch-card__actions { display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; }
+.sch-card__profile-link { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.85rem; font-weight: 600; color: #0E6E52; text-decoration: none; }
+.sch-card__profile-link:hover { text-decoration: underline; }
+/* ══ صفحة بروفايل العالم (ScholarProfilePage) ══════════════════════════════ */
+.sch-profile-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  opacity: 0.7;
+  margin-bottom: 1.5rem;
+}
+.sch-profile-breadcrumb a { text-decoration: none; }
+.sch-profile-breadcrumb a:hover { text-decoration: underline; }
+
+.sch-profile-hero {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+.sch-profile-avatar {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0E6E52, #153025);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+}
+.sch-profile-hero__name { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.2rem; }
+.sch-profile-hero__fullname { opacity: 0.7; font-size: 0.9rem; margin-bottom: 0.75rem; }
+.sch-profile-hero__meta { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.5rem; }
+.sch-profile-hero__died { font-size: 0.82rem; opacity: 0.65; display: flex; align-items: center; gap: 0.3rem; }
+
+.sch-profile-section { margin-bottom: 1.75rem; }
+.sch-profile-section__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0E6E52;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.sch-profile-bio { line-height: 1.9; }
+
+.sch-profile-quote {
+  border-inline-start: 4px solid #0E6E52;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  background: rgba(14,110,82,0.06);
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+.sch-profile-quote__icon { color: #0E6E52; margin-bottom: 0.5rem; }
+.sch-profile-quote p { font-size: 1.05rem; line-height: 1.8; font-style: italic; }
+.sch-profile-quote footer { font-size: 0.82rem; opacity: 0.65; margin-top: 0.5rem; }
+
+.sch-profile-works { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.sch-profile-works li {
+  padding: 0.5rem 0.75rem;
+  background: rgba(14,110,82,0.06);
+  border-radius: 0.4rem;
+  font-size: 0.92rem;
+}
+.sch-profile-works li::before { content: "📖 "; }
+
+.sch-profile-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.sch-profile-pager__btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #0E6E52;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(14,110,82,0.3);
+  border-radius: 0.5rem;
+  transition: background 0.15s;
+}
+.sch-profile-pager__btn:hover { background: rgba(14,110,82,0.08); }
+.sch-profile-back { margin-top: 1rem; }
+.sch-profile-notfound { text-align: center; padding: 3rem 1rem; }
+/* ══ نهاية صفحة بروفايل العالم ══════════════════════════════════════════════ */
+
+/* ══ صفحة حذف الحساب (AccountDeletionPage) ═════════════════════════════════ */
+.accd-hero { text-align: center; padding: 2rem 1rem 1.5rem; }
+.accd-hero__icon { color: #DC2626; margin: 0 auto 1rem; display: block; }
+.accd-hero h1 { font-size: 1.5rem; color: #DC2626; }
+.accd-hero p { opacity: 0.65; margin-top: 0.4rem; }
+
+.accd-info { margin-bottom: 1.5rem; border: 1px solid rgba(220,38,38,0.2); }
+.accd-info__title { font-size: 1rem; font-weight: 700; color: #DC2626; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem; }
+.accd-info__list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.75rem; }
+.accd-info__list li { font-size: 0.9rem; padding-right: 0.75rem; }
+.accd-info__list li::before { content: "✗ "; color: #DC2626; }
+.accd-info__note { font-size: 0.82rem; opacity: 0.6; border-top: 1px solid var(--clr-border); padding-top: 0.5rem; }
+
+.accd-actions { display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-start; }
+.accd-actions__email { font-size: 0.9rem; opacity: 0.7; }
+.btn-danger { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.25rem; background: #DC2626; color: #fff; border: none; border-radius: 0.5rem; font-weight: 700; cursor: pointer; font-size: 0.92rem; }
+.btn-danger:hover { background: #B91C1C; }
+.btn-danger:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.accd-confirm { margin-bottom: 1.5rem; }
+.accd-confirm__warning { font-size: 0.92rem; margin-bottom: 1rem; }
+.accd-confirm__input { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid #DC2626; border-radius: 0.5rem; font-size: 1rem; text-align: right; }
+.accd-confirm__error { color: #DC2626; font-size: 0.85rem; margin-top: 0.5rem; }
+.accd-confirm__btns { display: flex; gap: 0.75rem; margin-top: 1rem; }
+
+.accd-deleting { text-align: center; padding: 2rem; }
+.accd-deleting__spinner { width: 40px; height: 40px; border: 3px solid rgba(14,110,82,0.2); border-top-color: #0E6E52; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.accd-done { text-align: center; padding: 3rem 1rem; }
+.accd-done__icon { color: #0E6E52; margin: 0 auto 1rem; display: block; }
+.accd-done h1 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+.accd-done p { opacity: 0.7; margin-bottom: 1.5rem; }
+
+.accd-login-prompt { padding: 1.5rem; background: rgba(14,110,82,0.06); border-radius: 0.75rem; text-align: center; margin-bottom: 1.5rem; }
+.accd-footer { display: flex; gap: 1.5rem; margin-top: 2rem; font-size: 0.85rem; opacity: 0.65; }
+/* ══ نهاية صفحة حذف الحساب ══════════════════════════════════════════════════ */

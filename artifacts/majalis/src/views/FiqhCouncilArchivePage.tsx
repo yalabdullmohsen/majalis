@@ -23,6 +23,7 @@ export default function FiqhCouncilArchivePage() {
       title: "أرشيف المجمع الفقهي | المجلس العلمي",
       description: "أرشيف القرارات والفتاوى التاريخية للمجمع الفقهي الإسلامي، وثائق وقرارات مؤرشفة.",
       keywords: ["أرشيف فقهي", "قرارات تاريخية", "مجمع فقهي", "وثائق إسلامية", "تاريخ الفقه"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "أرشيف المجمع الفقهي", url: "https://majlisilm.com/fiqh-council/archive", about: { "@type": "Thing", name: "الأرشيف التاريخي للقرارات الفقهية" } }],
     });
   }, []);
 

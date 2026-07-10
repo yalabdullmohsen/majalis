@@ -73,6 +73,18 @@ export default function DailyWirdPage() {
       title: "الورد اليومي من القرآن | المجلس العلمي",
       description: "تتبّع وردك اليومي من القرآن الكريم، حدّد هدفك اليومي من الصفحات وتابع تقدمك نحو ختم القرآن.",
       keywords: ["ورد يومي", "ختم القرآن", "قراءة قرآن", "حفظ قرآن", "مصحف يومي"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "الورد اليومي من القرآن الكريم",
+          url: "https://majlisilm.com/daily-wird",
+          description: "تتبّع وردك اليومي من القرآن الكريم وتابع تقدمك نحو ختم القرآن",
+          applicationCategory: "EducationalApplication",
+          inLanguage: "ar",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        },
+      ],
     });
   }, []);
 

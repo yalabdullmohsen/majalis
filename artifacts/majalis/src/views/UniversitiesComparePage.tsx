@@ -166,6 +166,16 @@ export default function UniversitiesComparePage() {
       title: "مقارنة الجامعات الإسلامية | المجلس العلمي",
       description: "قارن بين الجامعات الإسلامية، التخصصات والاعتمادات والبرامج الأكاديمية جنباً إلى جنب.",
       keywords: ["مقارنة جامعات", "جامعات إسلامية", "دراسة شرعية", "اعتماد أكاديمي", "مقارنة برامج"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "مقارنة الجامعات الإسلامية",
+          url: "https://majlisilm.com/universities/compare",
+          description: "مقارنة تفصيلية بين الجامعات الإسلامية في التخصصات والبرامج الأكاديمية",
+          about: { "@type": "Thing", name: "الجامعات الإسلامية والدراسة الشرعية" },
+        },
+      ],
     });
   }, []);
 

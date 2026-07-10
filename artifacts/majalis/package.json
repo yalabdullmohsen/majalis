@@ -1,6 +1,6 @@
 {
   "name": "@workspace/majalis",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -64,7 +64,10 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint src lib --ext .ts,.tsx --max-warnings 50",
     "test:sm2": "node scripts/test-sm2.mjs",
-    "generate:version": "node scripts/generate-version.mjs"
+    "generate:version": "node scripts/generate-version.mjs",
+    "mobile:sync": "npm run build && npx cap sync",
+    "mobile:android": "npm run build && npx cap sync && npx cap open android",
+    "mobile:ios": "npm run build && npx cap sync && npx cap open ios"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -141,6 +144,15 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.105.0",
+    "@capacitor/android": "^8.4.1",
+    "@capacitor/app": "^8.1.0",
+    "@capacitor/browser": "^8.0.3",
+    "@capacitor/cli": "^8.4.1",
+    "@capacitor/core": "^8.4.1",
+    "@capacitor/ios": "^8.4.1",
+    "@capacitor/keyboard": "^8.0.5",
+    "@capacitor/splash-screen": "^8.0.1",
+    "@capacitor/status-bar": "^8.0.2",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.108.2",
     "@upstash/ratelimit": "^2.0.8",

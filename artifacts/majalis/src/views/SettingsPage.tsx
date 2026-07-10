@@ -78,9 +78,11 @@ export default function SettingsPage() {
               <Link href="/register" className="page-action-btn page-action-btn--secondary">{t("settings_register")}</Link>
             </>
           )}
-          <button type="button" className="settings-danger-btn" disabled>
-            {t("settings_delete_account")}
-          </button>
+          {isLoggedIn && (
+            <Link href="/account-deletion" className="settings-danger-btn settings-danger-btn--link">
+              {t("settings_delete_account")}
+            </Link>
+          )}
         </div>
       </LegalSection>
 
@@ -196,6 +198,13 @@ export default function SettingsPage() {
 
       <LegalSection title={t("settings_privacy")}>
         <p>{t("settings_privacy_desc")}</p>
+        <div className="settings-legal-links">
+          <Link href="/privacy" className="settings-legal-link">سياسة الخصوصية</Link>
+          <Link href="/terms" className="settings-legal-link">الشروط والأحكام</Link>
+          {isLoggedIn && (
+            <Link href="/account-deletion" className="settings-legal-link settings-legal-link--danger">حذف الحساب نهائياً</Link>
+          )}
+        </div>
         <div className="settings-actions">
           <button type="button" className="ui-card-btn" onClick={() => {
             const blob = new Blob([JSON.stringify({ preferences, fontPreference }, null, 2)], { type: "application/json" });

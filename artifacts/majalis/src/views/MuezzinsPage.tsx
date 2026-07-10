@@ -117,6 +117,7 @@ export default function MuezzinsPage() {
       title: "الأذان والمؤذنون | المجلس العلمي",
       description: "استمع إلى الأذان بأصوات أشهر المؤذنين وخصّص إعدادات الأذان، مكتبة متنوعة من أصوات الأذان العالمية.",
       keywords: ["أذان", "مؤذنون", "صوت الأذان", "أذان اسلامي", "مواقيت الصلاة"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الأذان والمؤذنون", url: "https://majlisilm.com/muezzins", about: { "@type": "Thing", name: "مكتبة أصوات الأذان الإسلامي" } }],
     });
   }, []);
 

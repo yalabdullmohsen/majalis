@@ -4826,6 +4826,44 @@ button.primary:hover {
   cursor: not-allowed !important;
 }
 
+.settings-danger-btn--link {
+  display: inline-block !important;
+  text-decoration: none !important;
+  text-align: center !important;
+}
+
+.settings-legal-links {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.5rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.settings-legal-link {
+  display: inline-block !important;
+  padding: 0.35rem 0.75rem !important;
+  border: 1px solid rgba(14,110,82,0.25) !important;
+  border-radius: var(--elite-r-sm, 8px) !important;
+  color: var(--clr-primary, #0E6E52) !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  transition: background 0.15s !important;
+}
+
+.settings-legal-link:hover {
+  background: rgba(14,110,82,0.07) !important;
+}
+
+.settings-legal-link--danger {
+  border-color: rgba(192,57,43,0.25) !important;
+  color: #C0392B !important;
+}
+
+.settings-legal-link--danger:hover {
+  background: rgba(192,57,43,0.07) !important;
+}
+
 /* حقل الإعداد (label + input/select) */
 .settings-field {
   display: flex !important;
@@ -12202,87 +12240,149 @@ button, .btn {
 /* ── §193 — AdhanNotificationBar ───────────────────────────────────────────── */
 .anb-stack {
   position: fixed;
-  top: 4.5rem;
+  bottom: 5rem;           /* فوق شريط التنقل السفلي */
   inset-inline-start: 50%;
   transform: translateX(-50%);
   z-index: 9990;
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: min(92vw, 400px);
+  flex-direction: column-reverse;
+  gap: 0.6rem;
+  width: min(94vw, 420px);
   direction: rtl;
   pointer-events: none;
 }
+@media (min-width: 768px) {
+  .anb-stack {
+    inset-inline-start: auto;
+    inset-inline-end: 1.5rem;
+    transform: none;
+    bottom: 2rem;
+  }
+}
+@keyframes anb-rise {
+  from { opacity: 0; transform: translateY(24px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+@keyframes anb-glow-pulse {
+  0%,100% { box-shadow: 0 0 18px 0 rgba(14,110,82,.45), 0 8px 32px rgba(0,0,0,.28); }
+  50%      { box-shadow: 0 0 32px 4px rgba(14,110,82,.7), 0 8px 32px rgba(0,0,0,.28); }
+}
+
+/* ── base toast ── */
 .anb-toast {
   pointer-events: auto;
+  position: relative;
+  overflow: hidden;
   display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  padding: 0.75rem 0.875rem;
-  border-radius: 1rem;
-  box-shadow:
-    0 0 0 1px rgba(0,0,0,0.06),
-    0 4px 20px rgba(0,0,0,0.18),
-    0 1px 4px rgba(0,0,0,0.10);
-  animation: anb-slide-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  border-radius: 1.25rem;
+  animation: anb-rise 0.38s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
-@keyframes anb-slide-in {
-  from { opacity: 0; transform: translateY(-10px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
-}
+
+/* ── Adhan Toast — إشعار الأذان ── */
 .anb-toast--adhan {
-  background: rgba(15, 60, 40, 0.95);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(135deg, #0B4D35 0%, #0E6E52 55%, #133D2A 100%);
+  border: 1px solid rgba(255,255,255,0.12);
   color: #FFFFFF;
+  animation: anb-rise 0.38s cubic-bezier(0.34,1.4,0.64,1) both,
+             anb-glow-pulse 2.5s ease-in-out 0.4s infinite;
 }
+/* decorative arc */
+.anb-toast--adhan::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: -30px;
+  top: -30px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(255,255,255,.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Reminder Toast — تذكير ── */
 .anb-toast--reminder {
-  background: rgba(255,255,255,0.96);
-  border: 1px solid rgba(31, 77, 58, 0.12);
+  background: rgba(255,255,255,0.97);
+  border: 1.5px solid rgba(14,110,82,.18);
   color: #0C1A14;
+  box-shadow: 0 4px 24px rgba(0,0,0,.14), 0 1px 4px rgba(0,0,0,.08),
+              0 0 0 1px rgba(14,110,82,.06);
 }
+
+/* ── emoji badge ── */
 .anb-toast__emoji {
-  font-size: 1.375rem;
+  font-size: 1.7rem;
   flex-shrink: 0;
   line-height: 1;
+  margin-top: .1rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.25));
 }
-.anb-toast__body    { flex: 1; min-width: 0; }
-.anb-toast__title   {
-  font-weight: 700;
-  font-size: 0.875rem;
+
+/* ── text body ── */
+.anb-toast__body { flex: 1; min-width: 0; }
+.anb-toast__title {
+  font-weight: 800;
+  font-size: .95rem;
   line-height: 1.3;
-  margin: 0 0 0.1rem;
+  margin: 0 0 .2rem;
+  letter-spacing: -.01em;
 }
-.anb-toast--reminder .anb-toast__title { color: var(--majalis-emerald-deep, #1F4D3A); }
+.anb-toast--reminder .anb-toast__title { color: #0E6E52; }
 .anb-toast__sub {
-  font-size: 0.72rem;
-  opacity: 0.75;
+  font-size: .78rem;
+  opacity: .8;
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.5;
 }
-.anb-toast__actions { display: flex; align-items: center; gap: 0.3rem; flex-shrink: 0; }
+.anb-toast--adhan .anb-toast__sub {
+  opacity: .75;
+  font-size: .8rem;
+}
+
+/* ── progress bar under Adhan toast ── */
+.anb-toast--adhan::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  inset-inline-start: 0;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(255,255,255,.5) 0%, rgba(255,255,255,.15) 100%);
+  animation: anb-progress 60s linear forwards;
+}
+@keyframes anb-progress {
+  from { transform: scaleX(1);  transform-origin: right; }
+  to   { transform: scaleX(0);  transform-origin: right; }
+}
+
+/* ── actions ── */
+.anb-toast__actions { display: flex; align-items: center; gap: 0.35rem; flex-shrink: 0; margin-top: .1rem; }
 .anb-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border: none;
-  border-radius: 0.4rem;
+  border-radius: .5rem;
   cursor: pointer;
-  transition: background 0.14s ease;
+  transition: background .14s ease, transform .1s ease;
 }
-.anb-toast--adhan .anb-btn { background: rgba(255,255,255,0.12); color: #fff; }
-.anb-toast--adhan .anb-btn:hover { background: rgba(255,255,255,0.22); }
-.anb-toast--reminder .anb-btn { background: rgba(31,77,58,0.08); color: #1F4D3A; }
-.anb-toast--reminder .anb-btn:hover { background: rgba(31,77,58,0.16); }
+.anb-btn:active { transform: scale(.9); }
+.anb-toast--adhan  .anb-btn { background: rgba(255,255,255,.12); color: #fff; }
+.anb-toast--adhan  .anb-btn:hover { background: rgba(255,255,255,.24); }
+.anb-toast--reminder .anb-btn { background: rgba(14,110,82,.09); color: #0E6E52; }
+.anb-toast--reminder .anb-btn:hover { background: rgba(14,110,82,.18); }
 .anb-muted-tag {
-  font-size: 0.65rem;
-  padding: 0.15rem 0.4rem;
-  border-radius: 0.3rem;
-  background: rgba(255,255,255,0.15);
-  color: rgba(255,255,255,0.7);
+  font-size: .65rem;
+  padding: .15rem .45rem;
+  border-radius: .3rem;
+  background: rgba(255,255,255,.15);
+  color: rgba(255,255,255,.75);
+  font-weight: 600;
 }
 
 /* ── §194 — SourceCard color helpers ───────────────────────────────────────── */
@@ -22032,6 +22132,56 @@ img[loading="lazy"]:not([src=""]) {
 }
 .sg-reminder-box__title { font-size: .9rem; font-weight: 800; color: #fff; margin: 0 0 .4rem; }
 .sg-reminder-box__text  { font-size: .83rem; color: rgba(255,255,255,.9); line-height: 1.7; margin: 0; }
+
+/* intro note */
+.sg-intro-note {
+  font-size: .85rem; color: #555; background: rgba(14,110,82,.06);
+  border-right: 3px solid var(--clr-primary,#0E6E52); border-radius: 0 .5rem .5rem 0;
+  padding: .65rem .9rem; margin: 0 0 1rem; line-height: 1.7;
+}
+
+/* ── مراتب المصلين ── */
+.sg-ranks-list { display: flex; flex-direction: column; gap: .75rem; }
+.sg-rank-card { background: #fff; border: 1px solid #E5E7EB; border-radius: .75rem; padding: 1rem; }
+.sg-rank-card__header { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: .6rem; }
+.sg-rank-card__num {
+  width: 28px; height: 28px; background: var(--clr-primary,#0E6E52); color: #fff;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: .8rem; font-weight: 800; flex-shrink: 0;
+}
+.sg-rank-card__title { display: block; font-size: .9rem; font-weight: 700; color: #111; }
+.sg-rank-card__ruling {
+  display: inline-block; margin-top: .2rem; font-size: .72rem; font-weight: 600;
+  background: rgba(14,110,82,.1); color: var(--clr-primary,#0E6E52);
+  padding: .15rem .55rem; border-radius: 20px;
+}
+.sg-rank-card__ruling--high { background: rgba(14,110,82,.2); }
+.sg-rank-card__text { font-size: .83rem; color: #444; line-height: 1.7; margin: 0 0 .4rem; }
+.sg-rank-card__benefit { font-size: .78rem; color: #555; font-style: italic; margin: 0; }
+
+/* ── سور الصلاة والنوافل ── */
+.sg-suwar-grid { display: grid; grid-template-columns: 1fr; gap: .7rem; }
+@media (min-width:560px) { .sg-suwar-grid { grid-template-columns: repeat(2,1fr); } }
+.sg-suwar-card { background: #fff; border: 1px solid #E5E7EB; border-radius: .75rem; padding: .85rem 1rem; }
+.sg-suwar-card__top { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; margin-bottom: .5rem; }
+.sg-suwar-card__name { font-size: .92rem; font-weight: 800; color: #111; }
+.sg-suwar-card__rec {
+  font-size: .72rem; font-weight: 700; padding: .15rem .55rem; border-radius: 20px;
+}
+.sg-suwar-card__rec--jahr  { background: rgba(14,110,82,.12); color: var(--clr-primary,#0E6E52); }
+.sg-suwar-card__rec--sirr  { background: rgba(100,116,139,.12); color: #475569; }
+.sg-suwar-card__rakat { font-size: .72rem; color: #888; margin-right: auto; }
+.sg-suwar-card__note { font-size: .8rem; color: #555; line-height: 1.65; margin: 0; }
+
+.sg-nawafil-list { display: flex; flex-direction: column; gap: .65rem; }
+.sg-nawfil-card { background: #fff; border: 1px solid #E5E7EB; border-radius: .7rem; padding: .85rem 1rem; }
+.sg-nawfil-card__header { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; margin-bottom: .4rem; }
+.sg-nawfil-card__name { font-size: .88rem; font-weight: 700; color: #111; }
+.sg-nawfil-card__rakat {
+  font-size: .72rem; font-weight: 600; background: rgba(14,110,82,.1);
+  color: var(--clr-primary,#0E6E52); padding: .12rem .5rem; border-radius: 20px;
+}
+.sg-nawfil-card__note { font-size: .8rem; color: #555; line-height: 1.65; margin: 0; }
 
 /* related */
 .sg-related { margin-top: 2.5rem; }

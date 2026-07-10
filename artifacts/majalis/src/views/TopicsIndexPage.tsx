@@ -97,6 +97,7 @@ export default function TopicsIndexPage() {
       title: "الموضوعات العلمية الشرعية | المجلس العلمي",
       description: "استعرض المحتوى الشرعي مجمّعاً حسب الموضوع، فقه، عقيدة، أخلاق، قرآن، حديث، سيرة. آيات وأحاديث وفتاوى ودروس.",
       keywords: ["موضوعات إسلامية", "فقه إسلامي", "علوم شرعية", "تصنيف إسلامي", "محتوى شرعي"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الموضوعات العلمية الشرعية", url: "https://majlisilm.com/topics", about: { "@type": "Thing", name: "تصنيف المحتوى الإسلامي حسب الموضوع" } }],
     });
   }, []);
 

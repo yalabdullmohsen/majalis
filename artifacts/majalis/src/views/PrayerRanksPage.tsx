@@ -259,6 +259,7 @@ export default function PrayerRanksPage() {
       title: "فضائل الصلاة ومراتبها | المجلس العلمي",
       description: "مراتب الناس الخمسة في الصلاة بحسب ابن القيم، مع فضائل الصلاة من القرآن والسنة الصحيحة ووصايا في إصلاح الصلاة.",
       keywords: ["فضائل الصلاة", "مراتب الصلاة", "الصلاة في الإسلام", "أهمية الصلاة", "فقه الصلاة", "خشوع"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "فضائل الصلاة ومراتبها", url: "https://majlisilm.com/prayer-ranks", about: { "@type": "Thing", name: "فضائل الصلاة في الإسلام" } }],
     });
   }, []);
 

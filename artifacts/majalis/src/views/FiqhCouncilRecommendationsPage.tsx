@@ -9,6 +9,7 @@ export default function FiqhCouncilRecommendationsPage() {
       title: "توصيات المجمع الفقهي | المجلس العلمي",
       description: "التوصيات الرسمية الصادرة عن المجمع الفقهي الإسلامي في القضايا المعاصرة والشؤون الفقهية.",
       keywords: ["توصيات فقهية", "مجمع فقهي", "قرارات إسلامية", "فقه معاصر", "توصيات إسلامية"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "توصيات المجمع الفقهي", url: "https://majlisilm.com/fiqh-council/recommendations", about: { "@type": "Thing", name: "التوصيات الفقهية الجماعية" } }],
     });
   }, []);
 

@@ -23,6 +23,7 @@ export default function PrayerCountdownPage() {
       title: "العد التنازلي للصلاة | المجلس العلمي",
       description: "عد تنازلي لوقت الصلاة القادمة، الفجر والظهر والعصر والمغرب والعشاء في الكويت.",
       keywords: ["عد تنازلي صلاة", "وقت الصلاة", "الصلاة القادمة", "مواقيت الكويت", "أذان"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "العد التنازلي للصلاة", url: "https://majlisilm.com/prayer-countdown", about: { "@type": "Thing", name: "مواقيت الصلاة في الكويت" } }],
     });
   }, []);
 

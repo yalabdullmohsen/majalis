@@ -324,6 +324,18 @@ export default function QuranPage() {
       title: "القرآن الكريم | المجلس العلمي",
       description: "اقرأ المصحف الشريف، 604 صفحة بخط عثماني عالي الجودة مع حفظ الموضع والإشارات المرجعية.",
       keywords: ["قرآن كريم", "مصحف", "تلاوة", "سور القرآن"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Book",
+          name: "القرآن الكريم",
+          inLanguage: "ar",
+          description: "كتاب الله المنزّل على نبيه محمد ﷺ، ١١٤ سورة و٦٢٣٦ آية",
+          numberOfPages: 604,
+          genre: "كتاب مقدس",
+          url: "https://majlisilm.com/quran",
+        },
+      ],
     });
   }, []);
 

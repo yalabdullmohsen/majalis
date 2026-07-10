@@ -792,9 +792,14 @@ export default function IslamicScholarsPage() {
                     </ul>
                   </div>
                   <p className="sch-card__region">📍 {s.region}</p>
-                  <button type="button" className="sch-card__close" onClick={() => setExpanded(null)}>
-                    إغلاق التفاصيل
-                  </button>
+                  <div className="sch-card__actions">
+                    <Link href={`/scholars/${s.id}`} className="sch-card__profile-link">
+                      الصفحة الكاملة <ChevronLeft size={13} />
+                    </Link>
+                    <button type="button" className="sch-card__close" onClick={() => setExpanded(null)}>
+                      إغلاق التفاصيل
+                    </button>
+                  </div>
                 </div>
               )}
             </article>

@@ -13,6 +13,7 @@ import { HomeSawmReminder } from "@/components/home/HomeSawmReminder";
 import { HomeIslamicOccasions } from "@/components/home/HomeIslamicOccasions";
 import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
+import { HomeContinueWidget } from "@/components/home/HomeContinueWidget";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
 import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
 import { HomePrayerRanks } from "@/components/home/HomePrayerRanks";
@@ -25,7 +26,6 @@ import { HomeInterestingTopics } from "@/components/home/HomeInterestingTopics";
 import { HomeMindMapSection } from "@/components/home/HomeMindMapSection";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
-import { HomeTelegramBanner } from "@/components/home/HomeTelegramBanner";
 import {
   BookMarked, BookOpen, Bot, CalendarDays, Car, Check, Clock,
   Compass, Droplets, FlaskConical, GraduationCap, Heart, HelpCircle, Landmark, Layers,
@@ -443,11 +443,6 @@ export default function HomePage() {
         <HomeSawmReminder />
       </div>
 
-      {/* ══ تيليجرام ══ */}
-      <div style={{ maxWidth: 760, margin: "0.5rem auto 0", padding: "0 1rem" }}>
-        <HomeTelegramBanner />
-      </div>
-
       {/* ══ ابدأ من هنا ══ */}
       <StartHereSection />
 
@@ -463,6 +458,11 @@ export default function HomePage() {
         {/* مواقيت الصلاة */}
         <SafeHomeSection name="مواقيت الصلاة">
           <HomeCompactPrayer />
+        </SafeHomeSection>
+
+        {/* استمر من حيث توقفت */}
+        <SafeHomeSection name="استمر من حيث توقفت">
+          <HomeContinueWidget />
         </SafeHomeSection>
 
         {/* التقدم اليومي */}

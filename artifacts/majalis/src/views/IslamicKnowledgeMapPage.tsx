@@ -244,6 +244,7 @@ export default function IslamicKnowledgeMapPage() {
       path: "/knowledge-map",
       title: "الخريطة المعرفية الإسلامية | مجالس",
       description: "استكشف ترابط العلوم الإسلامية، القرآن والحديث والفقه والتفسير والسيرة والأذكار ومئات المصادر",
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الخريطة المعرفية الإسلامية", url: "https://majlisilm.com/knowledge-map", about: { "@type": "Thing", name: "ترابط العلوم الإسلامية" } }],
     });
   }, []);
 

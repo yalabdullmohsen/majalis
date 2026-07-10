@@ -88,6 +88,7 @@ const OccasionsPage = lazy(() => import("@/views/OccasionsPage"));
 const FeaturesInProgressPage = lazy(() => import("@/views/FeaturesInProgressPage"));
 const ArbaeenNawawiPage = lazy(() => import("@/views/ArbaeenNawawiPage"));
 const SettingsPage = lazy(() => import("@/views/SettingsPage"));
+const AccountDeletionPage = lazy(() => import("@/views/AccountDeletionPage"));
 const AnnualCoursesPage = lazy(() => import("@/views/AnnualCoursesPage"));
 const AnnualCourseDetailPage = lazy(() => import("@/views/AnnualCourseDetailPage"));
 const FiqhCouncilResolutionsPage = lazy(() => import("@/views/FiqhCouncilResolutionsPage"));
@@ -122,6 +123,7 @@ const IslamicKnowledgeMapPage = lazy(() => import("@/views/IslamicKnowledgeMapPa
 const MindMapPage = lazy(() => import("@/views/MindMapPage"));
 const QuranLivePage = lazy(() => import("@/views/QuranLivePage"));
 const IslamicScholarsPage = lazy(() => import("@/views/IslamicScholarsPage"));
+const ScholarProfilePage = lazy(() => import("@/views/ScholarProfilePage"));
 const AsmaaHusnaPage = lazy(() => import("@/views/AsmaaHusnaPage"));
 const AkhlaqPage = lazy(() => import("@/views/AkhlaqPage"));
 const DuasPage = lazy(() => import("@/views/DuasPage"));
@@ -293,7 +295,9 @@ function Router() {
       <Route path="/methodology"><SafeLazyRoute component={MethodologyPage} /></Route>
       <Route path="/sitemap"><SafeLazyRoute component={SiteMapPage} /></Route>
       <Route path="/privacy"><SafeLazyRoute component={PrivacyPage} /></Route>
+      <Route path="/privacy-policy"><Redirect to="/privacy" /></Route>
       <Route path="/terms"><SafeLazyRoute component={TermsPage} /></Route>
+      <Route path="/account-deletion"><SafeLazyRoute component={AccountDeletionPage} /></Route>
       <Route path="/contact"><SafeLazyRoute component={ContactPage} /></Route>
       <Route path="/settings"><SafeLazyRoute component={SettingsPage} /></Route>
       <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>
@@ -331,6 +335,7 @@ function Router() {
       <Route path="/knowledge-graph"><SafeLazyRoute component={KnowledgeGraphPage} /></Route>
       <Route path="/knowledge-map"><SafeLazyRoute component={IslamicKnowledgeMapPage} /></Route>
       <Route path="/mind-map"><SafeLazyRoute component={MindMapPage} /></Route>
+      <Route path="/scholars/:id"><SafeLazyRoute component={ScholarProfilePage} /></Route>
       <Route path="/scholars"><SafeLazyRoute component={IslamicScholarsPage} /></Route>
       <Route path="/asma-husna"><SafeLazyRoute component={AsmaaHusnaPage} /></Route>
       <Route path="/akhlaq"><SafeLazyRoute component={AkhlaqPage} /></Route>

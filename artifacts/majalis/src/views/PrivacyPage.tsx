@@ -11,6 +11,7 @@ export default function PrivacyPage() {
       title: "سياسة الخصوصية | المجلس العلمي",
       description: "سياسة خصوصية المجلس العلمي، كيف نجمع بياناتك ونحميها ونستخدمها.",
       keywords: ["خصوصية", "سياسة خصوصية", "المجلس العلمي", "حماية البيانات"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "سياسة الخصوصية", url: "https://majlisilm.com/privacy", about: { "@type": "Organization", name: "مجالس العلم" } }],
     });
   }, []);
 

@@ -33,6 +33,16 @@ export default function LearningCalendarPage() {
       title: "تقويم الدروس والدورات | المجلس العلمي",
       description: "تقويم الأحداث والدروس والدورات الإسلامية القادمة، اشترك وتابع المواعيد العلمية.",
       keywords: ["تقويم دروس", "دورات إسلامية", "مواعيد علمية", "أحداث شرعية", "دورات قرآنية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "تقويم الدروس والدورات الإسلامية",
+          url: "https://majlisilm.com/learning/calendar",
+          description: "تقويم الأحداث والدروس والدورات الإسلامية القادمة مع مواعيدها",
+          about: { "@type": "Thing", name: "الأحداث والدروس العلمية الإسلامية" },
+        },
+      ],
     });
   }, []);
 

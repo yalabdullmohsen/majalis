@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { X, VolumeX } from "lucide-react";
+import { X, Volume2 } from "lucide-react";
 import { ADHAN_EVENT_NAME, type AdhanEvent } from "@/lib/adhan-scheduler";
 import { stopAdhan } from "@/lib/adhan-audio";
 
@@ -35,7 +35,7 @@ export function AdhanNotificationBar() {
   if (events.length === 0) return null;
 
   return (
-    <div className="anb-stack">
+    <div className="anb-stack" role="region" aria-label="إشعارات الصلاة" aria-live="polite">
       {events.map((ev) => (
         <AdhanToast key={ev.id} event={ev} onDismiss={() => dismiss(ev.id)} />
       ))}
@@ -53,31 +53,48 @@ function AdhanToast({ event, onDismiss }: { event: ActiveEvent; onDismiss: () =>
   }
 
   return (
-    <div className={`anb-toast${isAdhan ? " anb-toast--adhan" : " anb-toast--reminder"}`}>
+    <div
+      className={`anb-toast${isAdhan ? " anb-toast--adhan" : " anb-toast--reminder"}`}
+      role="alert"
+    >
       <span className="anb-toast__emoji" aria-hidden="true">
         {isAdhan ? "🕌" : "⏰"}
       </span>
+
       <div className="anb-toast__body">
         <p className="anb-toast__title">
-          {isAdhan ? `حان وقت ${event.prayerName}` : `تنبيه: ${event.prayerName}`}
+          {isAdhan ? `حان وقت صلاة ${event.prayerName}` : `قريباً: ${event.prayerName}`}
         </p>
         <p className="anb-toast__sub">
           {isAdhan
-            ? "حي على الصلاة، حي على الفلاح"
-            : `${event.prayerName} بعد ${event.minutesBefore} دقيقة`}
+            ? "حيَّ على الصلاة • حيَّ على الفلاح"
+            : `موعد الصلاة بعد ${event.minutesBefore} دقيقة`}
         </p>
       </div>
+
       <div className="anb-toast__actions">
         {isAdhan && playing && (
-          <button type="button" onClick={handleStop} className="anb-btn anb-btn--mute" title="إيقاف الأذان">
-            <VolumeX size={16} strokeWidth={2} />
+          <button
+            type="button"
+            onClick={handleStop}
+            className="anb-btn anb-btn--mute"
+            title="إيقاف صوت الأذان"
+            aria-label="إيقاف صوت الأذان"
+          >
+            <Volume2 size={15} strokeWidth={2} />
           </button>
         )}
         {isAdhan && !playing && (
-          <span className="anb-muted-tag">صامت</span>
+          <span className="anb-muted-tag" aria-label="الأذان صامت">صامت</span>
         )}
-        <button type="button" onClick={onDismiss} className="anb-btn anb-btn--close" title="إغلاق">
-          <X size={16} strokeWidth={2.5} />
+        <button
+          type="button"
+          onClick={onDismiss}
+          className="anb-btn anb-btn--close"
+          title="إغلاق الإشعار"
+          aria-label="إغلاق الإشعار"
+        >
+          <X size={15} strokeWidth={2.5} />
         </button>
       </div>
     </div>

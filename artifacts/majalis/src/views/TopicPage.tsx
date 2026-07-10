@@ -60,6 +60,7 @@ export default function TopicPage() {
       title: `${topic?.title || "موضوع"} | المجلس العلمي`,
       description: `استعرض محتوى موضوع "${topic?.title || "الموضوع"}" من الدروس والفتاوى والأحاديث في المجلس العلمي.`,
       keywords: [topic?.title || "موضوع", "محتوى إسلامي", "فتاوى", "دروس", "أحاديث"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: topic?.title || "موضوع إسلامي", url: `https://majlisilm.com/topic/${topic?.slug || ""}`, about: { "@type": "Thing", name: topic?.title || "الموضوعات الإسلامية" } }],
     });
   }, [topic?.title]);
 

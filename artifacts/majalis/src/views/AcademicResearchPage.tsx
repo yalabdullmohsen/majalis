@@ -523,6 +523,7 @@ export default function AcademicResearchPage() {
       title: "الأبحاث العلمية الإسلامية | المجلس العلمي",
       description: "مستودع شامل للرسائل الجامعية وأبحاث المؤسسات والباحثين في العلوم الإسلامية، ماجستير ودكتوراه وبحوث متخصصة.",
       keywords: ["أبحاث إسلامية", "رسائل جامعية", "رسائل ماجستير", "رسائل دكتوراه", "بحوث شرعية"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الأبحاث العلمية الإسلامية", url: "https://majlisilm.com/academic-research", about: { "@type": "Thing", name: "مستودع الأبحاث والرسائل الجامعية الإسلامية" } }],
     });
   }, []);
 

@@ -26,6 +26,7 @@ export default function FiqhCouncilNawazilPage() {
       title: "النوازل المعاصرة | المجمع الفقهي | المجلس العلمي",
       description: "النوازل الفقهية المعاصرة، مسائل العصر الحديث من التقنية والاقتصاد الرقمي والطب والبيئة.",
       keywords: ["نوازل معاصرة", "مسائل معاصرة", "فقه معاصر", "نوازل فقهية", "مستجدات فقهية"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "النوازل المعاصرة", url: "https://majlisilm.com/fiqh-council/nawazil", about: { "@type": "Thing", name: "النوازل الفقهية والمستجدات المعاصرة" } }],
     });
   }, []);
 

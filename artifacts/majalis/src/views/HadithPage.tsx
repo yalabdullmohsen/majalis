@@ -647,6 +647,19 @@ export default function HadithPage() {
       title: "الأحاديث النبوية الشريفة | المجلس العلمي",
       description: "مكتبة الأحاديث النبوية الشريفة مع بيان درجة كل حديث، صحيح وضعيف وموضوع، بمصادر التخريج.",
       keywords: ["أحاديث نبوية", "الحديث الشريف", "صحيح البخاري", "صحيح مسلم", "الحديث الضعيف"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أقسام الأحاديث النبوية",
+          numberOfItems: 3,
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: HADITH_CLASS_META.sahih.title, description: HADITH_CLASS_META.sahih.subtitle, url: "https://majlisilm.com/hadith/sahih" },
+            { "@type": "ListItem", position: 2, name: HADITH_CLASS_META.daif.title, description: HADITH_CLASS_META.daif.subtitle, url: "https://majlisilm.com/hadith/daif" },
+            { "@type": "ListItem", position: 3, name: HADITH_CLASS_META.mawdu.title, description: HADITH_CLASS_META.mawdu.subtitle, url: "https://majlisilm.com/hadith/mawdu" },
+          ],
+        },
+      ],
     });
   }, []);
 
