@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useSearch } from "wouter";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { getFiqhCouncilItems, getFiqhCouncilCategoryCounts } from "@/lib/fiqh-council-service";
 import {
@@ -116,6 +117,10 @@ export default function FiqhCouncilCategoriesPage() {
           ))}
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="تصنيفات مجلس الفقه — المجلس العلمي" url="https://majlisilm.com/fiqh-council/categories" />
+      </div>
     </div>
   );
 }

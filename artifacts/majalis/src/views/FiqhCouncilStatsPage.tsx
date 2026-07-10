@@ -5,6 +5,7 @@ import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { getFiqhCouncilPublicStats } from "@/lib/fiqh-council-service";
 import { fiqhItemHref, FIQH_ITEM_TYPE_LABELS, type FiqhPublicStats } from "@/lib/fiqh-council-types";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 
 export default function FiqhCouncilStatsPage() {
@@ -129,6 +130,10 @@ export default function FiqhCouncilStatsPage() {
         {" · "}
         <Link href="/fiqh-council/index">الفهرس الموضوعي</Link>
       </p>
+
+      <div className="twh-share">
+        <ShareButtons title="إحصائيات مجلس الفقه — المجلس العلمي" url="https://majlisilm.com/fiqh-council/stats" />
+      </div>
     </div>
   );
 }

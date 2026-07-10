@@ -5,6 +5,7 @@ import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
 import { getAllNawazilItems, getNawazilTopicItems } from "@/lib/fiqh-council-service";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import { NAWAZIL_TOPICS } from "@/lib/fiqh-council-nawazil";
 import {
   FIQH_ITEM_TYPE_LABELS,
@@ -114,6 +115,10 @@ export default function FiqhCouncilNawazilPage() {
         المحتوى المعروض مستمد من قرارات وفتاوى رسمية منشورة. للمراجعة الكاملة، راجع
         {" "}<Link href="/fiqh-council">صفحة المجمع الفقهي</Link>.
       </p>
+
+      <div className="twh-share">
+        <ShareButtons title="نوازل فقهية معاصرة — المجلس العلمي" url="https://majlisilm.com/fiqh-council/nawazil" />
+      </div>
     </div>
   );
 }

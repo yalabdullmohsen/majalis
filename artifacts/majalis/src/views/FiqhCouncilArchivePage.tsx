@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { getArchivedFiqhCouncilItems } from "@/lib/fiqh-council-service";
 import {
@@ -61,6 +62,10 @@ export default function FiqhCouncilArchivePage() {
           ))}
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="أرشيف مجلس الفقه — المجلس العلمي" url="https://majlisilm.com/fiqh-council/archive" />
+      </div>
     </div>
   );
 }
