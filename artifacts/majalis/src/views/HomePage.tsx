@@ -243,9 +243,20 @@ export default function HomePage() {
               <h1 className="home-hero-title home-hero-title--v3">المجلس العلمي</h1>
             </div>
 
-            <span className="home-hero-badge">
-              نؤمن أن التقنية وسيلة، ورسالتنا أن نجعلها في خدمة الإسلام والمعرفة النافعة
-            </span>
+            <p className="home-hero-desc">
+              موسوعة علمية إسلامية شاملة — أحاديث موثّقة، دروس علماء الكويت، فوائد شرعية، قصص الأنبياء، مواقيت الصلاة، والأذكار — في مكان واحد.
+            </p>
+            <div className="home-hero-for-whom" aria-label="لمن هذه المنصة">
+              <span className="home-hero-chip">🎓 طالب العلم</span>
+              <span className="home-hero-chip">📿 المسلم اليومي</span>
+              <span className="home-hero-chip">👨‍👩‍👧 الأسرة المسلمة</span>
+              <span className="home-hero-chip">🕌 متابع حلقات الكويت</span>
+            </div>
+            <div className="home-hero-ctas">
+              <Link href="/lessons" className="home-hero-cta home-hero-cta--primary">ابدأ بالدروس</Link>
+              <Link href="/hadith" className="home-hero-cta home-hero-cta--ghost">تصفّح الأحاديث</Link>
+              <Link href="/about" className="home-hero-cta home-hero-cta--ghost">عن المنصة</Link>
+            </div>
 
             <form onSubmit={submitSearch} className="home-search home-search--v3" aria-label="البحث">
               <input
