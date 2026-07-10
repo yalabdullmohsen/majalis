@@ -8340,6 +8340,26 @@ input, textarea, select { font-family: inherit; }
   border-color: var(--majalis-emerald-deep);
 }
 
+.cal-ics-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid var(--msk-border, #E0DBD5);
+  background: transparent;
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--majalis-emerald-deep);
+}
+.cal-ics-btn:hover {
+  background: var(--clr-primary, #1F4D3A);
+  color: #fff;
+  border-color: var(--clr-primary, #1F4D3A);
+}
+
 .cal-month {
   padding: 1rem;
 }

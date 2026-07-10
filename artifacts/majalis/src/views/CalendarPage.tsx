@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import { Download } from "lucide-react";
 import { ShareButtons } from "@/components/ContentActions";
 import {
   addMonths,
@@ -107,6 +108,55 @@ function hijriDayNum(date: Date): string {
   return h ? String(h.day) : "";
 }
 
+function toIcsDate(date: Date, time?: string): string {
+  const d = format(date, "yyyyMMdd");
+  if (!time) return `${d}T060000`;
+  const [hh, mm] = time.replace(/[^\d:]/g, "").split(":").map(Number);
+  const h = String(hh || 6).padStart(2, "0");
+  const m = String(mm || 0).padStart(2, "0");
+  return `${d}T${h}${m}00`;
+}
+
+function generateIcs(monthEvents: { date: Date; ev: CalendarEvent }[], monthLabel: string): string {
+  const lines: string[] = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//majlisilm.com//Islamic Lessons Calendar//AR",
+    `X-WR-CALNAME:دروس المجلس العلمي — ${monthLabel}`,
+    "X-WR-TIMEZONE:Asia/Kuwait",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+  ];
+  for (const { date, ev } of monthEvents) {
+    const dtstart = toIcsDate(date, ev.time);
+    const dtend   = toIcsDate(date, ev.time ? ev.time.replace(/\d+/, (h) => String(Number(h) + 1)) : undefined);
+    const uid = `${ev.id}-${format(date, "yyyyMMdd")}@majlisilm.com`;
+    lines.push(
+      "BEGIN:VEVENT",
+      `UID:${uid}`,
+      `DTSTAMP:${format(new Date(), "yyyyMMdd'T'HHmmss")}`,
+      `DTSTART;TZID=Asia/Kuwait:${dtstart}`,
+      `DTEND;TZID=Asia/Kuwait:${dtend}`,
+      `SUMMARY:${ev.title}`,
+      `DESCRIPTION:${[ev.sheikh, ev.mosque, ev.description].filter(Boolean).join(" | ")}`,
+      `LOCATION:${ev.mosque || ""}`,
+      "END:VEVENT",
+    );
+  }
+  lines.push("END:VCALENDAR");
+  return lines.join("\r\n");
+}
+
+function downloadIcs(content: string, filename: string) {
+  const blob = new Blob([content], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export default function CalendarPage() {
   const today = new Date();
   const [view, setView] = useState<ViewMode>("month");
@@ -115,6 +165,20 @@ export default function CalendarPage() {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalEvent, setModalEvent] = useState<CalendarEvent | null>(null);
+
+  function handleIcsExport() {
+    const monthStart = startOfMonth(cursor);
+    const monthEnd   = endOfMonth(cursor);
+    const days = eachDayOfInterval({ start: monthStart, end: monthEnd });
+    const monthEvents: { date: Date; ev: CalendarEvent }[] = [];
+    for (const day of days) {
+      for (const ev of eventsForDate(day, events)) {
+        monthEvents.push({ date: day, ev });
+      }
+    }
+    const label = format(cursor, "yyyy-MM");
+    downloadIcs(generateIcs(monthEvents, format(cursor, "MMMM yyyy", { locale: arSA })), `majalis-${label}.ics`);
+  }
 
   useEffect(() => {
     applyPageSeo({
@@ -184,6 +248,16 @@ export default function CalendarPage() {
             </button>
           ))}
         </div>
+        <button
+          type="button"
+          className="cal-ics-btn"
+          onClick={handleIcsExport}
+          title="تحميل التقويم بصيغة ICS"
+          aria-label="تحميل دروس الشهر كملف تقويم"
+        >
+          <Download size={16} aria-hidden="true" />
+          <span>ICS</span>
+        </button>
       </div>
 
       {loading ? (
