@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { X, Volume2, VolumeX } from "lucide-react";
+import { X, VolumeX } from "lucide-react";
 import { ADHAN_EVENT_NAME, type AdhanEvent } from "@/lib/adhan-scheduler";
 import { stopAdhan } from "@/lib/adhan-audio";
 

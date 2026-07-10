@@ -1,5 +1,4 @@
 import { Link } from "wouter";
-import { BookOpen, Brain, FlaskConical, Heart, Lightbulb, Map, Scroll, Star, Waypoints } from "lucide-react";
 
 const TOPICS = [
   { href: "/miracles",       emoji: "🔬", label: "الإعجاز العلمي",        desc: "آيات كونية مذهلة في القرآن والسنة", color: "#0F766E" },
