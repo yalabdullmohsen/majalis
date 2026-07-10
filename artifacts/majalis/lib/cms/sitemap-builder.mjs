@@ -26,9 +26,28 @@ function escapeXml(s) {
     .replace(/"/g, "&quot;");
 }
 
+function loadStaticCatalog(filename) {
+  try {
+    return JSON.parse(readFileSync(join(APP_ROOT, `src/data/${filename}`), "utf8"));
+  } catch {
+    return [];
+  }
+}
+
 export async function fetchDynamicUrls() {
   const admin = getSupabaseAdmin();
   const urls = [];
+
+  // ── بيانات ثابتة: العلماء والكتب من JSON ──
+  const scholars = loadStaticCatalog("scholars-list.json");
+  for (const s of scholars) {
+    urls.push({ loc: `/scholars/${s.id}`, priority: 0.76, changefreq: "monthly" });
+  }
+
+  const books = loadStaticCatalog("library-catalog.json");
+  for (const b of books) {
+    urls.push({ loc: `/library/${b.id}`, priority: 0.72, changefreq: "weekly" });
+  }
 
   if (!admin) return urls;
 
@@ -50,18 +69,6 @@ export async function fetchDynamicUrls() {
   }
   for (const row of library.data || []) {
     urls.push({ loc: `/library/${row.id}`, lastmod: row.updated_at, priority: 0.72 });
-  }
-  if (!(library.data || []).length) {
-    try {
-      const catalog = JSON.parse(
-        readFileSync(join(APP_ROOT, "src/data/library-catalog.json"), "utf8"),
-      );
-      for (const book of catalog) {
-        urls.push({ loc: `/library/${book.id}`, priority: 0.72 });
-      }
-    } catch {
-      /* catalog snapshot optional */
-    }
   }
   for (const row of qa.data || []) {
     urls.push({ loc: `/qa/${row.id}`, lastmod: row.updated_at, priority: 0.72 });

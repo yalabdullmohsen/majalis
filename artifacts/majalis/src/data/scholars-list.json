@@ -1,0 +1,392 @@
+[
+  {
+    "id": "abu-hanifa",
+    "name": "أبو حنيفة النعمان",
+    "died": null
+  },
+  {
+    "id": "malik",
+    "name": "الإمام مالك",
+    "died": null
+  },
+  {
+    "id": "shafi",
+    "name": "الإمام الشافعي",
+    "died": null
+  },
+  {
+    "id": "ahmad",
+    "name": "الإمام أحمد",
+    "died": null
+  },
+  {
+    "id": "bukhari",
+    "name": "الإمام البخاري",
+    "died": null
+  },
+  {
+    "id": "muslim",
+    "name": "الإمام مسلم",
+    "died": null
+  },
+  {
+    "id": "ibn-taymiyya",
+    "name": "ابن تيمية",
+    "died": null
+  },
+  {
+    "id": "ibn-qayyim",
+    "name": "ابن القيم",
+    "died": null
+  },
+  {
+    "id": "nawawi",
+    "name": "الإمام النووي",
+    "died": null
+  },
+  {
+    "id": "ibn-hajar",
+    "name": "ابن حجر العسقلاني",
+    "died": null
+  },
+  {
+    "id": "shawkani",
+    "name": "الشوكاني",
+    "died": null
+  },
+  {
+    "id": "ibn-baz",
+    "name": "الشيخ ابن باز",
+    "died": null
+  },
+  {
+    "id": "ibn-uthaymeen",
+    "name": "الشيخ ابن عثيمين",
+    "died": null
+  },
+  {
+    "id": "albani",
+    "name": "الشيخ الألباني",
+    "died": null
+  },
+  {
+    "id": "qaradawi",
+    "name": "الشيخ القرضاوي",
+    "died": null
+  },
+  {
+    "id": "tirmidhi",
+    "name": "الإمام الترمذي",
+    "died": null
+  },
+  {
+    "id": "ibn-majah",
+    "name": "ابن ماجه",
+    "died": null
+  },
+  {
+    "id": "ghazali",
+    "name": "الإمام الغزالي",
+    "died": null
+  },
+  {
+    "id": "ibn-kathir",
+    "name": "ابن كثير",
+    "died": null
+  },
+  {
+    "id": "ibn-khaldun",
+    "name": "ابن خلدون",
+    "died": null
+  },
+  {
+    "id": "ibn-ashur",
+    "name": "ابن عاشور",
+    "died": null
+  },
+  {
+    "id": "fawzan",
+    "name": "الشيخ صالح الفوزان",
+    "died": null
+  },
+  {
+    "id": "al-suyuti",
+    "name": "الإمام السيوطي",
+    "died": null
+  },
+  {
+    "id": "abu-dawud",
+    "name": "أبو داود السجستاني",
+    "died": null
+  },
+  {
+    "id": "nasai",
+    "name": "الإمام النسائي",
+    "died": null
+  },
+  {
+    "id": "daraqutni",
+    "name": "الإمام الدارقطني",
+    "died": null
+  },
+  {
+    "id": "bayhaki",
+    "name": "الإمام البيهقي",
+    "died": null
+  },
+  {
+    "id": "ibn-juzayy",
+    "name": "ابن جزي الكلبي",
+    "died": null
+  },
+  {
+    "id": "shatbi",
+    "name": "الإمام الشاطبي",
+    "died": null
+  },
+  {
+    "id": "shanqiti",
+    "name": "الشنقيطي",
+    "died": null
+  },
+  {
+    "id": "bint-al-shati",
+    "name": "بنت الشاطئ",
+    "died": null
+  },
+  {
+    "id": "zuhayli",
+    "name": "الشيخ وهبة الزحيلي",
+    "died": null
+  },
+  {
+    "id": "abu-zayd",
+    "name": "الشيخ بكر أبو زيد",
+    "died": null
+  },
+  {
+    "id": "muhammad-ghazali",
+    "name": "الشيخ محمد الغزالي",
+    "died": null
+  },
+  {
+    "id": "mubarakfuri",
+    "name": "المباركفوري",
+    "died": null
+  },
+  {
+    "id": "tabari",
+    "name": "الطبري",
+    "died": null
+  },
+  {
+    "id": "ibn-jawzi",
+    "name": "ابن الجوزي",
+    "died": null
+  },
+  {
+    "id": "ibn-rajab",
+    "name": "ابن رجب الحنبلي",
+    "died": null
+  },
+  {
+    "id": "ibn-abd-al-barr",
+    "name": "ابن عبد البر",
+    "died": null
+  },
+  {
+    "id": "dhahabi",
+    "name": "الإمام الذهبي",
+    "died": null
+  },
+  {
+    "id": "izz-ibn-abd-al-salam",
+    "name": "العز بن عبد السلام",
+    "died": null
+  },
+  {
+    "id": "ibn-abd-al-wahhab",
+    "name": "الشيخ محمد بن عبد الوهاب",
+    "died": null
+  },
+  {
+    "id": "ibn-abidin",
+    "name": "ابن عابدين",
+    "died": null
+  },
+  {
+    "id": "rashid-rida",
+    "name": "رشيد رضا",
+    "died": null
+  },
+  {
+    "id": "muhammad-abdu",
+    "name": "الشيخ محمد عبده",
+    "died": null
+  },
+  {
+    "id": "ibn-badis",
+    "name": "عبد الحميد بن باديس",
+    "died": null
+  },
+  {
+    "id": "abu-yusuf",
+    "name": "الإمام أبو يوسف",
+    "died": null
+  },
+  {
+    "id": "shaybani",
+    "name": "الإمام محمد الشيباني",
+    "died": null
+  },
+  {
+    "id": "muzani",
+    "name": "الإمام المزني",
+    "died": null
+  },
+  {
+    "id": "ibn-hibban",
+    "name": "الإمام ابن حبان",
+    "died": null
+  },
+  {
+    "id": "ibn-khuzayma",
+    "name": "الإمام ابن خزيمة",
+    "died": null
+  },
+  {
+    "id": "hakim",
+    "name": "الإمام الحاكم",
+    "died": null
+  },
+  {
+    "id": "ibn-mubarak",
+    "name": "الإمام عبد الله بن المبارك",
+    "died": null
+  },
+  {
+    "id": "sufyan-thawri",
+    "name": "الإمام سفيان الثوري",
+    "died": null
+  },
+  {
+    "id": "awzai",
+    "name": "الإمام الأوزاعي",
+    "died": null
+  },
+  {
+    "id": "laith-ibn-sad",
+    "name": "الإمام الليث بن سعد",
+    "died": null
+  },
+  {
+    "id": "ibn-al-mundhir",
+    "name": "الإمام ابن المنذر",
+    "died": null
+  },
+  {
+    "id": "khattabi",
+    "name": "الإمام الخطابي",
+    "died": null
+  },
+  {
+    "id": "ibn-hajar-haytami",
+    "name": "ابن حجر الهيتمي",
+    "died": null
+  },
+  {
+    "id": "ali-tantawi",
+    "name": "الشيخ علي الطنطاوي",
+    "died": null
+  },
+  {
+    "id": "shaarawi",
+    "name": "الشيخ الشعراوي",
+    "died": null
+  },
+  {
+    "id": "ibn-ghudiyan",
+    "name": "الشيخ عبد الله بن غديان",
+    "died": null
+  },
+  {
+    "id": "afifi",
+    "name": "الشيخ عبد الرزاق عفيفي",
+    "died": null
+  },
+  {
+    "id": "sufyan-uyayna",
+    "name": "الإمام سفيان بن عيينة",
+    "died": null
+  },
+  {
+    "id": "muqbil",
+    "name": "الشيخ مقبل بن هادي الوادعي",
+    "died": null
+  },
+  {
+    "id": "ibn-mufli",
+    "name": "الإمام ابن مفلح",
+    "died": null
+  },
+  {
+    "id": "ibn-rushd",
+    "name": "ابن رشد",
+    "died": null
+  },
+  {
+    "id": "ibn-hazm",
+    "name": "ابن حزم الأندلسي",
+    "died": null
+  },
+  {
+    "id": "ibn-al-qayyim-alt",
+    "name": "السخاوي",
+    "died": null
+  },
+  {
+    "id": "ibn-asakir",
+    "name": "ابن عساكر",
+    "died": null
+  },
+  {
+    "id": "ibn-nujaym",
+    "name": "ابن نجيم",
+    "died": null
+  },
+  {
+    "id": "khatib-baghdadi",
+    "name": "الخطيب البغدادي",
+    "died": null
+  },
+  {
+    "id": "amir-al-san'ani",
+    "name": "الأمير الصنعاني",
+    "died": null
+  },
+  {
+    "id": "ibn-faris",
+    "name": "ابن فارس",
+    "died": null
+  },
+  {
+    "id": "zarkashi",
+    "name": "الزركشي",
+    "died": null
+  },
+  {
+    "id": "ibn-uthaymin-ext",
+    "name": "الشيخ ابن جبرين",
+    "died": null
+  },
+  {
+    "id": "syed-saabiq",
+    "name": "الشيخ سيد سابق",
+    "died": null
+  },
+  {
+    "id": "ibn-uthaymeen-older",
+    "name": "الشيخ عبد الكريم الخضير",
+    "died": null
+  }
+]
