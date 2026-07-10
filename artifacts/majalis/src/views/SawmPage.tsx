@@ -545,11 +545,26 @@ const KIND_CLASS: Record<string, string> = {
 /* ───────── component ───────── */
 export default function SawmPage() {
   useEffect(() => {
-      applyPageSeo({
+    applyPageSeo({
       path: "/sawm",
       title: "الصيام وأحكامه، المجلس العلمي",
       description: "دليل شامل لأحكام الصيام: أنواعه وشروطه ومفطراته والمعذورين وفضائل رمضان",
       keywords: ["الصيام", "رمضان", "أحكام الصيام", "مفطرات", "شروط الصيام", "فضل الصيام"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أنواع الصيام في الإسلام",
+          description: "أنواع الصيام: الفرض والواجب والمستحب مع الأدلة والأحكام",
+          numberOfItems: FAST_TYPES.length,
+          itemListElement: FAST_TYPES.map((f, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: f.title,
+            url: `https://majlisilm.com/sawm#${f.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 

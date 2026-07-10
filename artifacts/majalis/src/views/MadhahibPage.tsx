@@ -157,6 +157,21 @@ export default function MadhahibPage() {
       title: "المذاهب الفقهية الأربعة | المجلس العلمي",
       description: "تعرَّف على المذاهب الفقهية الأربعة: الحنفي والمالكي والشافعي والحنبلي، مؤسسوها ومناهجها ومصادرها وانتشارها.",
       keywords: ["مذاهب فقهية", "فقه إسلامي", "حنفي مالكي شافعي حنبلي", "أصول الفقه"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "المذاهب الفقهية الأربعة",
+          description: "المذاهب الفقهية الأربعة: الحنفي والمالكي والشافعي والحنبلي",
+          numberOfItems: MADHAHIB.length,
+          itemListElement: MADHAHIB.map((m, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `${m.fullName} — ${m.founder}`,
+            url: `https://majlisilm.com/madhahib#${m.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 

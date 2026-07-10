@@ -394,6 +394,21 @@ export default function AlamatSaahPage() {
       title: "علامات الساعة | المجلس العلمي",
       description: "علامات الساعة الصغرى والكبرى من الأحاديث الصحيحة، ما وقع وما هو جارٍ وما لم يقع بعد، مع الاستعداد للآخرة.",
       keywords: ["علامات الساعة", "أشراط الساعة", "الدجال", "يأجوج مأجوج", "نزول عيسى", "العلامات الكبرى"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "علامات الساعة الصغرى",
+          description: "علامات الساعة الصغرى من الأحاديث الصحيحة مع بيان ما وقع وما لم يقع",
+          numberOfItems: SUGHRA.length,
+          itemListElement: SUGHRA.slice(0, 20).map((a, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: a.title,
+            url: `https://majlisilm.com/alamat-saah#sughra-${i + 1}`,
+          })),
+        },
+      ],
     });
   }, []);
 

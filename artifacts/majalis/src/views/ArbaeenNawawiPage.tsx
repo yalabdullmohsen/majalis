@@ -60,6 +60,29 @@ export default function ArbaeenNawawiPage() {
       title: "الأربعون النووية، أحاديث نووية مشروحة | المجالس العلمية",
       description: "الأربعون حديثاً النووية مع شرح موجز وفوائد ومصدر لكل حديث، مرجع حديثي مختصر لطالب العلم.",
       keywords: ["الأربعون النووية", "أحاديث نووية", "شرح الأحاديث", "الحديث النبوي", "نووي"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Book",
+          name: "الأربعون النووية",
+          author: { "@type": "Person", name: "الإمام النووي" },
+          description: "الأربعون حديثاً النووية الجامعة لأحكام الإسلام",
+          url: "https://majlisilm.com/arbaeen-nawawi",
+          inLanguage: "ar",
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أحاديث الأربعون النووية",
+          numberOfItems: ARBAEEN_NAWAWI.length,
+          itemListElement: ARBAEEN_NAWAWI.slice(0, 40).map((h, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `الحديث ${h.id}: ${h.title}`,
+            url: `https://majlisilm.com/arbaeen-nawawi#hadith-${h.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 

@@ -155,6 +155,20 @@ export default function JannaNaarPage() {
       title: "صفة الجنة والنار | المجلس العلمي",
       description: "صفة الجنة وأبوابها وأنهارها ودرجاتها ونعيمها، وصفة النار وطبقاتها وعذابها، مع أسباب دخول الجنة وأدعية الآخرة.",
       keywords: ["صفة الجنة", "صفة النار", "نعيم الجنة", "عذاب النار", "أسباب دخول الجنة"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أبواب الجنة وصفاتها",
+          description: "صفة الجنة وأبوابها وأنهارها ودرجاتها ونعيمها",
+          itemListElement: JANNA_ABWAB.map((a, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: a.title,
+            url: `https://majlisilm.com/janna-naar#janna-${i + 1}`,
+          })),
+        },
+      ],
     });
   }, []);
 

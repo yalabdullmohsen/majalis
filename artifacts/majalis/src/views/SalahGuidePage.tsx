@@ -140,11 +140,26 @@ const AHADITH_FAWAID = [
 
 export default function SalahGuidePage() {
   useEffect(() => {
-      applyPageSeo({
+    applyPageSeo({
       path: "/salah-guide",
       title: "دليل الصلاة الكامل، المجلس العلمي",
       description: "الدليل الشامل للصلاة: شروطها وأركانها وواجباتها وسننها ومبطلاتها وكيفية الخشوع فيها",
       keywords: ["الصلاة", "كيفية الصلاة", "أركان الصلاة", "شروط الصلاة", "خشوع الصلاة"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أركان الصلاة",
+          description: "أركان الصلاة الثلاثة عشر مع الأدلة",
+          numberOfItems: ARKAN.length,
+          itemListElement: ARKAN.map((r, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `الركن ${r.num}: ${r.title} — ${r.desc}`,
+            url: `https://majlisilm.com/salah-guide#rukn-${r.num}`,
+          })),
+        },
+      ],
     });
   }, []);
 

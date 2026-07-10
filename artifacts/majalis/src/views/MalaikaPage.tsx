@@ -253,6 +253,21 @@ export default function MalaikaPage() {
       title: "الملائكة في الإسلام | المجلس العلمي",
       description: "الإيمان بالملائكة، أسماؤهم ومهامهم وصفاتهم وفضائلهم وكيفية تعاملهم مع بني آدم من الأدلة الصحيحة.",
       keywords: ["الملائكة", "جبريل", "ميكائيل", "إسرافيل", "ملَك الموت", "صفات الملائكة", "أسماء الملائكة"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "الملائكة المذكورون في القرآن والسنة",
+          description: "أسماء الملائكة ومهامهم وصفاتهم من الأدلة الصحيحة",
+          numberOfItems: MALAIKA.length,
+          itemListElement: MALAIKA.map((m, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `${m.name} — ${m.role}`,
+            url: `https://majlisilm.com/malaika#malak-${i + 1}`,
+          })),
+        },
+      ],
     });
   }, []);
 

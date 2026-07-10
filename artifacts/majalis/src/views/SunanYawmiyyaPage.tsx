@@ -618,6 +618,21 @@ export default function SunanYawmiyyaPage() {
       title: "السنن النبوية اليومية | المجلس العلمي",
       description: "دليلك لتطبيق السنن النبوية اليومية: سنن النوم والأكل والصلاة والذكر والتعامل مع الناس، مع المصادر والأجر.",
       keywords: ["سنن نبوية", "سنة نبوية", "سنن يومية", "اقتداء بالنبي", "هدي نبوي"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "السنن النبوية اليومية",
+          description: "السنن النبوية اليومية مع كيفية التطبيق والمصادر",
+          numberOfItems: SUNAN.length,
+          itemListElement: SUNAN.slice(0, 20).map((s, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: s.title,
+            url: `https://majlisilm.com/sunan-yawmiyya#${s.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 
