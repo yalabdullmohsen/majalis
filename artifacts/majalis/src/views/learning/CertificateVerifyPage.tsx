@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { GraduationCap } from "lucide-react";
 import { useParams, Link } from "wouter";
+import { ShareButtons } from "@/components/ContentActions";
 import { verifyLearningCertificate } from "@/lib/digital-learning-service";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -175,6 +176,9 @@ export default function CertificateVerifyPage() {
         <Link href="/learning-path" className="cvp-back-link">المسارات العلمية</Link>
         <Link href="/quiz" className="cvp-back-link">المسابقات التعليمية</Link>
         <Link href="/contact" className="cvp-back-link">تواصل معنا</Link>
+      </div>
+      <div className="twh-share">
+        <ShareButtons title="التحقق من الشهادة — المجلس العلمي" url="https://majlisilm.com/learning/certificate" />
       </div>
     </div>
   );
