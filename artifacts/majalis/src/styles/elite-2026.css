@@ -23865,6 +23865,10 @@ img[loading="lazy"]:not([src=""]) {
 .atl-search-input { width: 100%; }
 .sh-search-wrap { padding: .75rem 0 .5rem; }
 .sh-search-input { width: 100%; }
+.jn-search-wrap { padding: .5rem 0 .75rem; }
+.jn-search-input { width: 100%; }
+.tw-search-wrap { padding: .5rem 0 .75rem; }
+.tw-search-input { width: 100%; }
 .wn-tab {
   padding: .45rem 1.1rem; border-radius: 999px;
   border: 1.5px solid var(--clr-border); background: #fff;

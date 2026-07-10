@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ══════════════════════════════════════════════════════════════════
    §245، صفة الجنة والنار  (.jn-*)
@@ -148,6 +149,17 @@ const TABS: { id: Tab; label: string; color: string }[] = [
 
 export default function JannaNaarPage() {
   const [activeTab, setActiveTab] = useState<Tab>("janna");
+  const [search, setSearch] = useState("");
+
+  const filteredAsbabJanna = useMemo(() =>
+    search.trim() ? ASBAB_JANNA.filter(i => arabicMatchAny([i.title, i.text, i.ref ?? ""], search)) : ASBAB_JANNA,
+  [search]);
+  const filteredAsbabNaar = useMemo(() =>
+    search.trim() ? ASBAB_NAAR.filter(i => arabicMatchAny([i.title, i.text, i.ref ?? ""], search)) : ASBAB_NAAR,
+  [search]);
+  const filteredDuas = useMemo(() =>
+    search.trim() ? DUAS_LIST.filter(d => arabicMatchAny([d.text, d.source], search)) : DUAS_LIST,
+  [search]);
 
   useEffect(() => {
     applyPageSeo({
@@ -237,8 +249,13 @@ export default function JannaNaarPage() {
             <div className="jn-intro">
               <p>جمع العلماء أسباب دخول الجنة من الكتاب والسنة وهي كثيرة، وأبرزها على الإطلاق التوحيد والإيمان.</p>
             </div>
+            <div className="jn-search-wrap">
+              <input type="search" value={search} onChange={e => setSearch(e.target.value)}
+                placeholder="ابحث في الأسباب..." className="page-search-input jn-search-input"
+                aria-label="بحث في أسباب دخول الجنة" />
+            </div>
             <div className="jn-asbab-grid">
-              {ASBAB_JANNA.map((item, i) => (
+              {filteredAsbabJanna.map((item, i) => (
                 <div key={i} className="jn-sabab-card">
                   <div className="jn-sabab-num">{i + 1}</div>
                   <h3 className="jn-sabab-title">{item.title}</h3>
@@ -256,8 +273,13 @@ export default function JannaNaarPage() {
             <div className="jn-intro jn-intro--naar">
               <p>﴿وَاتَّقُوا النَّارَ الَّتِي أُعِدَّتْ لِلْكَافِرِينَ﴾، ذكر العلماء من الكتاب والسنة أسباباً كثيرة تُوقع في النار، هي في الحقيقة أعمال ومخالفات حذَّرنا منها الوحي.</p>
             </div>
+            <div className="jn-search-wrap">
+              <input type="search" value={search} onChange={e => setSearch(e.target.value)}
+                placeholder="ابحث في الأسباب..." className="page-search-input jn-search-input"
+                aria-label="بحث في أسباب دخول النار" />
+            </div>
             <div className="jn-asbab-grid">
-              {ASBAB_NAAR.map((item, i) => (
+              {filteredAsbabNaar.map((item, i) => (
                 <div key={i} className="jn-sabab-card jn-sabab-card--naar">
                   <div className="jn-sabab-num jn-sabab-num--naar">{i + 1}</div>
                   <h3 className="jn-sabab-title">{item.title}</h3>
@@ -276,7 +298,7 @@ export default function JannaNaarPage() {
               <p>من أعظم ما يتقرَّب به العبد إلى الله دعاؤه بالجنة والاستعاذة من النار. قال ﷺ: «من سأل الله الجنة ثلاثاً قالت الجنة: اللهم أدخله الجنة».</p>
             </div>
             <div className="jn-duas-list">
-              {DUAS_LIST.map((d, i) => (
+              {filteredDuas.map((d, i) => (
                 <div key={i} className="jn-dua-card">
                   <p className="jn-dua-text">{d.text}</p>
                   <p className="jn-dua-source">{d.source}</p>

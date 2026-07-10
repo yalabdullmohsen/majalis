@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 
 type TawbaTab = "shurut" | "anwaa" | "adhkar" | "mawani" | "athaar";
@@ -221,6 +222,17 @@ export default function TawbaPage() {
 
   const [tab, setTab] = useState<TawbaTab>("shurut");
   const [openDhikr, setOpenDhikr] = useState<number | null>(null);
+  const [search, setSearch] = useState("");
+
+  const filteredShurut = useMemo(() =>
+    search.trim() ? SHURUT.filter(s => arabicMatchAny([s.title, s.desc, s.dalil ?? ""], search)) : SHURUT,
+  [search]);
+  const filteredMawani = useMemo(() =>
+    search.trim() ? MAWANI.filter(m => arabicMatchAny([m.title, m.desc], search)) : MAWANI,
+  [search]);
+  const filteredAthaar = useMemo(() =>
+    search.trim() ? ATHAAR.filter(a => arabicMatchAny([a.title, a.desc, a.dalil ?? ""], search)) : ATHAAR,
+  [search]);
 
   return (
     <main className="tw-page" dir="rtl">
@@ -263,8 +275,13 @@ export default function TawbaPage() {
             <p className="tw-section-lead">
               اتفق العلماء على أن للتوبة شروطاً لا تصح إلا بها، وتزداد شرطاً إذا تعلّقت بحق آدمي
             </p>
+            <div className="tw-search-wrap">
+              <input type="search" value={search} onChange={e => setSearch(e.target.value)}
+                placeholder="ابحث في شروط التوبة..." className="page-search-input tw-search-input"
+                aria-label="بحث في شروط التوبة" />
+            </div>
             <div className="tw-shurut-list">
-              {SHURUT.map((s) => (
+              {filteredShurut.map((s) => (
                 <div key={s.num} className="tw-shart-card">
                   <div className="tw-shart-num">{s.num}</div>
                   <div className="tw-shart-content">
@@ -379,8 +396,13 @@ export default function TawbaPage() {
         {tab === "mawani" && (
           <div className="tw-section">
             <p className="tw-section-lead">أمور تحول دون قبول التوبة أو صحتها، يجب الحذر منها</p>
+            <div className="tw-search-wrap">
+              <input type="search" value={search} onChange={e => setSearch(e.target.value)}
+                placeholder="ابحث في الموانع..." className="page-search-input tw-search-input"
+                aria-label="بحث في موانع التوبة" />
+            </div>
             <div className="tw-mawani-list">
-              {MAWANI.map((m, i) => (
+              {filteredMawani.map((m, i) => (
                 <div key={i} className="tw-mani-card">
                   <div className="tw-mani-num">⛔</div>
                   <div>
@@ -406,7 +428,7 @@ export default function TawbaPage() {
           <div className="tw-section">
             <p className="tw-section-lead">ثمرات التوبة الصادقة وآثارها في الدنيا والآخرة</p>
             <div className="tw-athaar-grid">
-              {ATHAAR.map((a) => (
+              {filteredAthaar.map((a) => (
                 <div key={a.title} className="tw-athar-card">
                   <span className="tw-athar-icon">{a.icon}</span>
                   <h3 className="tw-athar-title">{a.title}</h3>
