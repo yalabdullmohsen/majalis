@@ -88,6 +88,7 @@ const OccasionsPage = lazy(() => import("@/views/OccasionsPage"));
 const FeaturesInProgressPage = lazy(() => import("@/views/FeaturesInProgressPage"));
 const ArbaeenNawawiPage = lazy(() => import("@/views/ArbaeenNawawiPage"));
 const SettingsPage = lazy(() => import("@/views/SettingsPage"));
+const AccountDeletionPage = lazy(() => import("@/views/AccountDeletionPage"));
 const AnnualCoursesPage = lazy(() => import("@/views/AnnualCoursesPage"));
 const AnnualCourseDetailPage = lazy(() => import("@/views/AnnualCourseDetailPage"));
 const FiqhCouncilResolutionsPage = lazy(() => import("@/views/FiqhCouncilResolutionsPage"));
@@ -294,7 +295,9 @@ function Router() {
       <Route path="/methodology"><SafeLazyRoute component={MethodologyPage} /></Route>
       <Route path="/sitemap"><SafeLazyRoute component={SiteMapPage} /></Route>
       <Route path="/privacy"><SafeLazyRoute component={PrivacyPage} /></Route>
+      <Route path="/privacy-policy"><Redirect to="/privacy" /></Route>
       <Route path="/terms"><SafeLazyRoute component={TermsPage} /></Route>
+      <Route path="/account-deletion"><SafeLazyRoute component={AccountDeletionPage} /></Route>
       <Route path="/contact"><SafeLazyRoute component={ContactPage} /></Route>
       <Route path="/settings"><SafeLazyRoute component={SettingsPage} /></Route>
       <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>

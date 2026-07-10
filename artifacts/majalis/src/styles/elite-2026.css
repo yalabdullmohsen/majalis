@@ -4826,6 +4826,44 @@ button.primary:hover {
   cursor: not-allowed !important;
 }
 
+.settings-danger-btn--link {
+  display: inline-block !important;
+  text-decoration: none !important;
+  text-align: center !important;
+}
+
+.settings-legal-links {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.5rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.settings-legal-link {
+  display: inline-block !important;
+  padding: 0.35rem 0.75rem !important;
+  border: 1px solid rgba(14,110,82,0.25) !important;
+  border-radius: var(--elite-r-sm, 8px) !important;
+  color: var(--clr-primary, #0E6E52) !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  transition: background 0.15s !important;
+}
+
+.settings-legal-link:hover {
+  background: rgba(14,110,82,0.07) !important;
+}
+
+.settings-legal-link--danger {
+  border-color: rgba(192,57,43,0.25) !important;
+  color: #C0392B !important;
+}
+
+.settings-legal-link--danger:hover {
+  background: rgba(192,57,43,0.07) !important;
+}
+
 /* حقل الإعداد (label + input/select) */
 .settings-field {
   display: flex !important;

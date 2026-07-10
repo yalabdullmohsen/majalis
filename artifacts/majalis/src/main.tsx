@@ -9,6 +9,7 @@ import { bootstrapSupabaseFromServer, resetSupabaseClient } from "./lib/supabase
 import { createAppQueryClient } from "./lib/query-client";
 import { PERF_SLOW_MS } from "./lib/performance-monitor";
 import { registerProductionServiceWorker } from "./lib/service-worker";
+import { setupStatusBar, setupKeyboard, isAndroid } from "./lib/capacitor-utils";
 import "./index.css";
 import "./styles/design-system.css";
 import "./styles/patterns.css";
@@ -50,3 +51,22 @@ async function mount() {
 void mount();
 
 registerProductionServiceWorker();
+
+// إعداد Capacitor Native (يُهمَل تلقائياً على الويب)
+void setupStatusBar();
+void setupKeyboard();
+
+// معالجة زر الرجوع في Android
+if (isAndroid) {
+  import("@capacitor/app").then(({ App: CapApp }) => {
+    CapApp.addListener("backButton", ({ canGoBack }) => {
+      if (canGoBack) {
+        window.history.back();
+      } else {
+        // في الصفحة الرئيسية — اعرض تأكيد الخروج
+        const confirmExit = window.confirm("هل تريد الخروج من التطبيق؟");
+        if (confirmExit) CapApp.exitApp();
+      }
+    });
+  }).catch(() => {});
+}

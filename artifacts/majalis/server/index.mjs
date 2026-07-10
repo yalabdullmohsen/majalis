@@ -54,6 +54,7 @@ import contentScoringHandler from "../lib/api-handlers/cron/content-scoring.js";
 import ragResearchHandler from "../lib/api-handlers/rag-research.js";
 import universitiesHandler from "../lib/api-handlers/universities.js";
 import universitiesReviewCron from "../lib/api-handlers/cron/universities-review.js";
+import accountDeleteHandler from "../lib/api-handlers/account-delete.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -142,6 +143,8 @@ app.delete("/api/admin/faqs/:id",            (req, res) => universitiesHandler(r
 app.get("/api/admin/reminders",              (req, res) => universitiesHandler(req, res, "admin-reminders"));
 app.put("/api/admin/reminders/:id",          express.json({ limit: "4kb" }),  (req, res) => universitiesHandler(req, res, "admin-reminder-update"));
 app.get("/api/cron/universities-review",     (req, res) => universitiesReviewCron(req, res));
+
+app.post("/api/account/delete", express.json({ limit: "1kb" }), runHandler(accountDeleteHandler, "account-delete"));
 
 app.get("/api/assistant/health", runHandler(assistantHealthHandler, "assistant-health"));
 app.get("/api/assistant", runHandler(assistantHandler, "assistant"));
