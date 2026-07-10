@@ -48,7 +48,7 @@ const pageCache = new Map<number, Ayah[]>();
 /* القراء المتاحون */
 const RECITERS = [
   { id: "ar.alafasy",            name: "المشاري راشد العفاسي"   },
-  { id: "ar.maheralmuaiqly",     name: "ماهر المعيقلي"          },
+  { id: "ar.mahermuaiqly",       name: "ماهر المعيقلي"          },
   { id: "ar.abdulbasitmurattal", name: "عبد الباسط عبد الصمد"  },
   { id: "ar.husary",             name: "محمود خليل الحصري"      },
   { id: "ar.minshawi",           name: "محمد صديق المنشاوي"    },
@@ -59,6 +59,10 @@ const RECITERS = [
   { id: "ar.muhammadayyoub",     name: "محمد أيوب"              },
   { id: "ar.abdurrahmaansudais", name: "عبد الرحمن السديس"      },
   { id: "ar.muhammadjibreel",    name: "محمد جبريل"             },
+  { id: "ar.hudhaify",           name: "علي الحذيفي"            },
+  { id: "ar.hanirifai",          name: "هاني الرفاعي"           },
+  { id: "ar.shaatree",           name: "أبو بكر الشاطري"        },
+  { id: "ar.aymanswoaid",        name: "أيمن سويد"              },
 ];
 
 /* بيانات السور: [الاسم، أول صفحة] */
