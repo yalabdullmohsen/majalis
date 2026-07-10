@@ -1,10 +1,11 @@
 import "@/styles/mind-map.css";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { Link } from "wouter";
 import { ChevronDown, ChevronLeft, ExternalLink, Map, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { MIND_MAPS, MIND_MAP_CATEGORIES, type MindMap, type MindMapNode } from "@/lib/mind-maps-data";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ═══════════════════════════════════════════════════
    مكوّن عقدة الخريطة الذهنية (قابلة للطيّ)
@@ -105,6 +106,7 @@ function MindMapCard({ map }: { map: MindMap }) {
 ═══════════════════════════════════════════════════ */
 export default function MindMapPage() {
   const [activeCategory, setActiveCategory] = useState<string>("الكل");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     applyPageSeo({
@@ -125,9 +127,11 @@ export default function MindMapPage() {
     });
   }, []);
 
-  const filtered = activeCategory === "الكل"
-    ? MIND_MAPS
-    : MIND_MAPS.filter(m => m.category === activeCategory);
+  const filtered = useMemo(() => {
+    let list = activeCategory === "الكل" ? MIND_MAPS : MIND_MAPS.filter(m => m.category === activeCategory);
+    if (search.trim()) list = list.filter(m => arabicMatchAny([m.title, m.category, m.description ?? ""], search));
+    return list;
+  }, [activeCategory, search]);
 
   return (
     <div className="mm-page">
@@ -156,6 +160,18 @@ export default function MindMapPage() {
             {cat}
           </button>
         ))}
+      </div>
+
+      {/* بحث */}
+      <div className="mm-search-wrap">
+        <input
+          type="search"
+          className="ds-input mm-search-input"
+          placeholder="ابحث في الخرائط الذهنية..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          aria-label="بحث في الخرائط الذهنية"
+        />
       </div>
 
       {/* قائمة الخرائط */}
