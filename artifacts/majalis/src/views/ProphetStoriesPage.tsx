@@ -620,9 +620,8 @@ function CompareView({ onSelect }: { onSelect: (slug: string) => void }) {
               return (
                 <tr
                   key={p.slug}
-                  className={isAzm ? "nb-table__row--azm" : ""}
+                  className={`${isAzm ? "nb-table__row--azm" : ""} nb-table__row--clickable`}
                   onClick={() => onSelect(p.slug)}
-                  style={{ cursor: "pointer" }}
                 >
                   <td>{p.id}</td>
                   <td className="nb-table__name">

@@ -137,7 +137,7 @@ export default function FiqhPage() {
 
       {/* شبكة أقسام الفقه */}
       <section aria-labelledby="fiqh-hub-heading">
-        <h2 id="fiqh-hub-heading" className="tawheed-principles-heading" style={{ marginBottom: "1rem" }}>
+        <h2 id="fiqh-hub-heading" className="tawheed-principles-heading fiqh-section-heading">
           أقسام الفقه والأحكام
         </h2>
         <div className="fqh-hub-grid">
@@ -157,11 +157,11 @@ export default function FiqhPage() {
       </section>
 
       {/* فاصل */}
-      <hr style={{ border: "none", borderTop: "1px solid var(--majalis-line, #E2EAE6)", margin: "1.5rem 0" }} />
+      <hr className="fiqh-section-divider" />
 
       {/* Tabs، للمحتوى الديناميكي */}
-      <div className="fqp-tabs-nav" style={{ background: "none", boxShadow: "none" }}>
-        <div className="flex gap-1 overflow-x-auto" style={{ paddingBottom: "0.5rem" }}>
+      <div className="fqp-tabs-nav fqp-tabs-nav--bare">
+        <div className="fqp-tabs-scroll">
           {TABS.map((t) => (
             <button
               key={t.key}
