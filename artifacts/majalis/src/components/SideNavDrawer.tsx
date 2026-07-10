@@ -210,7 +210,7 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
         {/* Header */}
         <div className="side-nav-drawer__head side-nav-drawer__head--v2">
           <div className="side-nav-drawer__brand">
-            <img src="/logo.png" alt="" width={36} height={36} />
+            <img src="/logo.png" alt="" width={36} height={36} loading="lazy" decoding="async" />
             <strong>المجالس العلمية</strong>
           </div>
           <button type="button" onClick={onClose} aria-label="إغلاق" className="side-nav-close">

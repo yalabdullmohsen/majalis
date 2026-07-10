@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
+import { visualizer } from "rollup-plugin-visualizer";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { majalisApiPlugin } from "./server/vite-plugin-api.mjs";
 
@@ -30,6 +31,7 @@ export default defineConfig({
     tailwindcss(),
     majalisApiPlugin(),
     runtimeErrorOverlay(),
+    ...(process.env.ANALYZE === "1" ? [visualizer({ open: false, filename: "dist/bundle-stats.html", gzipSize: true, brotliSize: true })] : []),
     ...(process.env.NODE_ENV !== "production" &&
     process.env.REPL_ID !== undefined
       ? [

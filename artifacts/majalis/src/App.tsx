@@ -16,7 +16,6 @@ import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
 import { AchievementToast } from "@/components/AchievementToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
 import { GlobalSearchModal } from "@/components/GlobalSearchModal";
-import HomePage from "@/views/HomePage";
 import NotFound from "@/views/not-found";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
@@ -30,6 +29,7 @@ import { recordRecentPage } from "@/lib/recent-pages";
 
 const lazy = lazyWithRetry;
 
+const HomePage = lazy(() => import("@/views/HomePage"));
 const AboutPage = lazy(() => import("@/views/AboutPage"));
 const SiteMapPage = lazy(() => import("@/views/SiteMapPage"));
 const PrivacyPage = lazy(() => import("@/views/PrivacyPage"));
