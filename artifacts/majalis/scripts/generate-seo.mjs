@@ -137,12 +137,14 @@ function prerenderHtml(route, extraJsonLd = "") {
     <meta property="og:description" content="${escapeHtml(route.description)}" />
     <meta property="og:url" content="${escapeHtml(canonical)}" />
     <meta property="og:image" content="${escapeHtml(image)}" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
     <meta property="og:image:alt" content="${escapeHtml(route.title)}" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(route.title)}" />
     <meta name="twitter:description" content="${escapeHtml(route.description)}" />
     <meta name="twitter:image" content="${escapeHtml(image)}" />
-    ${route.path === "/" ? siteJsonLdScript() : ""}
+    ${route.path === "/" ? siteJsonLdScript() : `<script type="application/ld+json">${JSON.stringify({"@context":"https://schema.org","@type":"WebPage","name":route.title.replace(/ \| [^|]+$/,""),"description":route.description,"url":canonical,"inLanguage":"ar","publisher":{"@type":"Organization","name":seoConfig.siteName,"url":seoConfig.siteUrl,"logo":{"@type":"ImageObject","url":absoluteUrl(seoConfig.defaultImage)}}})}</script>`}
     ${extraJsonLd}
   </head>
   <body>
@@ -264,29 +266,57 @@ Sitemap: ${seoConfig.siteUrl}/sitemap.xml
 # ${seoConfig.siteUrl}/feed.xml
 `;
 
+const BUILD_DATE = new Date().toUTCString();
 const rssItems = [
-  ...(PLATFORM_SEED.fiqh_decisions || []).slice(0, 5).map((row) => ({
-    title: row.title,
+  ...(PLATFORM_SEED.fiqh_decisions || []).slice(0, 6).map((row) => ({
+    title: `[قرار مجمعي] ${row.title}`,
     link: absoluteUrl(`/fiqh-council/${row.slug || row.id}`),
-    description: row.title,
+    description: `قرار فقهي جماعي: ${row.title} — ${row.category || "المجمع الفقهي الإسلامي"}`,
+    category: "قرارات فقهية",
   })),
   ...(PLATFORM_SEED.fatwas || []).slice(0, 5).map((row) => ({
     title: row.question,
     link: absoluteUrl(`/fatwa/${row.id}`),
-    description: row.question,
+    description: `فتوى شرعية في ${row.category || "الفقه الإسلامي"}: ${row.question}`,
+    category: "فتاوى شرعية",
   })),
-];
+  ...(PLATFORM_SEED.rulings || []).slice(0, 4).map((row) => ({
+    title: `[حكم شرعي] ${row.title}`,
+    link: absoluteUrl(`/rulings/${row.id}`),
+    description: `حكم شرعي موثق في ${row.category || "الفقه الإسلامي"}: ${row.title}`,
+    category: "أحكام شرعية",
+  })),
+  ...(PLATFORM_SEED.courses || []).slice(0, 3).map((row) => ({
+    title: `[دورة علمية] ${row.title || row.name || "دورة شرعية"}`,
+    link: absoluteUrl(`/annual-courses/${row.id}`),
+    description: `دورة علمية: ${row.title || row.name || "دورة شرعية"} — المجلس العلمي`,
+    category: "دورات علمية",
+  })),
+].filter(Boolean);
 
 const feed = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>${escapeXml(seoConfig.siteName)}</title>
     <link>${escapeXml(seoConfig.siteUrl)}</link>
-    <description>آخر المستجدات العلمية — قرارات وفتاوى ودورات</description>
+    <description>آخر المستجدات العلمية — قرارات وفتاوى وأحكام ودورات</description>
     <language>ar</language>
-    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+    <lastBuildDate>${BUILD_DATE}</lastBuildDate>
+    <managingEditor>yalabdullmohsen1@gmail.com (المجلس العلمي)</managingEditor>
+    <image>
+      <url>${escapeXml(absoluteUrl("/logo.png"))}</url>
+      <title>${escapeXml(seoConfig.siteName)}</title>
+      <link>${escapeXml(seoConfig.siteUrl)}</link>
+    </image>
     <atom:link href="${escapeXml(absoluteUrl("/feed.xml"))}" rel="self" type="application/rss+xml"/>
-    ${rssItems.map((item) => `<item><title>${escapeXml(item.title)}</title><link>${escapeXml(item.link)}</link><description>${escapeXml(item.description)}</description><pubDate>${new Date().toUTCString()}</pubDate></item>`).join("\n    ")}
+    ${rssItems.map((item) => `<item>
+      <title>${escapeXml(item.title)}</title>
+      <link>${escapeXml(item.link)}</link>
+      <description>${escapeXml(item.description)}</description>
+      <pubDate>${BUILD_DATE}</pubDate>
+      ${item.category ? `<dc:subject>${escapeXml(item.category)}</dc:subject>` : ""}
+      <guid isPermaLink="true">${escapeXml(item.link)}</guid>
+    </item>`).join("\n    ")}
   </channel>
 </rss>
 `;
