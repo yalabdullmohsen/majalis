@@ -6,6 +6,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { PageHeader } from "@/components/ui-common";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import {
   getVaultData,
   addNote,
@@ -239,13 +240,13 @@ export default function VaultPage() {
   }
 
   const filteredBookmarks = vaultData.bookmarks.filter((b) =>
-    !search || (b.title ?? "").includes(search) || b.content_type.includes(search),
+    arabicMatchAny([b.title ?? "", b.content_type], search),
   );
   const filteredResume = vaultData.resume.filter((r) =>
-    !search || (r.content_title ?? "").toLowerCase().includes(search.toLowerCase()),
+    arabicMatchAny([r.content_title ?? ""], search),
   );
   const filteredNotes = vaultData.notes.filter((n) =>
-    !search || n.note_text.includes(search),
+    arabicMatchAny([n.note_text], search),
   );
 
   const tabs: { key: Tab; label: string; count: number }[] = [

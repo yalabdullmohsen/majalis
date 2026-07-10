@@ -328,6 +328,8 @@ export default function SearchPage() {
       <form
         onSubmit={(e) => { e.preventDefault(); submitSearch(term); }}
         className="search-page-form"
+        aria-label="نموذج البحث الشامل"
+        role="search"
       >
         <SearchSuggestions
           value={term}
@@ -335,7 +337,7 @@ export default function SearchPage() {
           onSubmit={submitSearch}
           placeholder="ابحث في القرآن والحديث والفتاوى والدروس والكتب..."
         />
-        <button type="submit" className="search-page-submit ds-btn ds-btn--primary">بحث</button>
+        <button type="submit" className="search-page-submit ds-btn ds-btn--primary" aria-label="تنفيذ البحث">بحث</button>
       </form>
 
       {/* شريط الأدوات */}
@@ -344,9 +346,11 @@ export default function SearchPage() {
           type="button"
           className={`search-adv-toggle${showFilters ? " is-active" : ""}`}
           onClick={() => setShowFilters(!showFilters)}
+          aria-expanded={showFilters}
+          aria-controls="search-filters-panel"
         >
           {showFilters ? "إخفاء الفلاتر" : "بحث متقدم"}
-          {hasActiveFilter && <span className="search-adv-dot" />}
+          {hasActiveFilter && <span className="search-adv-dot" aria-hidden="true" />}
         </button>
         <Link href="/topics" className="search-toolbar-link">الموضوعات العلمية ←</Link>
         {responseMs !== null && q.trim() && (
@@ -356,7 +360,7 @@ export default function SearchPage() {
 
       {/* الفلاتر المتقدمة */}
       {showFilters && (
-        <div className="search-filters-panel ui-card">
+        <div id="search-filters-panel" className="search-filters-panel ui-card" role="region" aria-label="الفلاتر المتقدمة">
           <div className="search-filters-grid">
             <label className="search-filter-field">
               <span>نوع المحتوى</span>
@@ -401,8 +405,9 @@ export default function SearchPage() {
               type="button"
               className="search-filters-clear"
               onClick={() => setFilters({ type: "", author: "", status: "", language: "" })}
+              aria-label="مسح جميع الفلاتر"
             >
-              مسح الفلاتر ✕
+              مسح الفلاتر <span aria-hidden="true">✕</span>
             </button>
           )}
         </div>
@@ -464,16 +469,16 @@ export default function SearchPage() {
       ) : loading ? (
         <SearchSkeleton />
       ) : (
-        <>
+        <div aria-live="polite" aria-atomic="false">
           {total === 0 ? (
-            <div className="search-no-results">
+            <div className="search-no-results" role="status">
               <p className="search-no-results__msg">لا توجد نتائج مطابقة لـ «{q}»</p>
               <p className="search-no-results__hint">جرّب كلمات مختلفة أو تحقق من الإملاء.</p>
             </div>
           ) : (
             <>
               <div className="search-summary-row">
-                <p className="search-page-summary">
+                <p className="search-page-summary" role="status" aria-live="polite">
                   <strong>{total.toLocaleString("ar-EG")}</strong> نتيجة لـ «{q}»
                 </p>
                 {responseMs !== null && (
@@ -591,7 +596,7 @@ export default function SearchPage() {
               )}
             </>
           )}
-        </>
+        </div>
       )}
     </div>
   );
