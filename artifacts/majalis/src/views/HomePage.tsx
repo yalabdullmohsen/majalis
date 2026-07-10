@@ -13,6 +13,7 @@ import { HomeSawmReminder } from "@/components/home/HomeSawmReminder";
 import { HomeIslamicOccasions } from "@/components/home/HomeIslamicOccasions";
 import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
+import { HomeContinueWidget } from "@/components/home/HomeContinueWidget";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
 import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
 import { HomePrayerRanks } from "@/components/home/HomePrayerRanks";
@@ -463,6 +464,11 @@ export default function HomePage() {
         {/* مواقيت الصلاة */}
         <SafeHomeSection name="مواقيت الصلاة">
           <HomeCompactPrayer />
+        </SafeHomeSection>
+
+        {/* استمر من حيث توقفت */}
+        <SafeHomeSection name="استمر من حيث توقفت">
+          <HomeContinueWidget />
         </SafeHomeSection>
 
         {/* التقدم اليومي */}

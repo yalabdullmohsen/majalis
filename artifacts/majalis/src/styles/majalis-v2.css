@@ -2841,3 +2841,70 @@ table th {
   color: #5ECFA8;
 }
 /* ══ نهاية عداد الصلاة ══════════════════════════════════════════════════════ */
+
+/* ══ ودجت استمر من حيث توقفت (HomeContinueWidget) ══════════════════════════ */
+.hcw-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.875rem;
+}
+.hcw-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s, transform 0.15s;
+}
+.hcw-card:hover { transform: translateY(-2px); }
+.hcw-card__icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(14, 110, 82, 0.12);
+  color: #0E6E52;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hcw-card__body { flex: 1; min-width: 0; }
+.hcw-card__title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0.35rem;
+}
+.hcw-card__bar {
+  height: 4px;
+  background: rgba(14, 110, 82, 0.15);
+  border-radius: 2px;
+  margin-bottom: 0.25rem;
+  overflow: hidden;
+}
+.hcw-card__bar span {
+  display: block;
+  height: 100%;
+  background: #0E6E52;
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+.hcw-card__pct { font-size: 0.75rem; opacity: 0.65; }
+.hcw-card__go { flex-shrink: 0; opacity: 0.4; }
+.hcw-card--skeleton {
+  height: 76px;
+  background: rgba(0,0,0,0.06);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+[data-theme="dark"] .hcw-card__icon,
+.dark .hcw-card__icon { background: rgba(14,110,82,0.22); color: #5ECFA8; }
+[data-theme="dark"] .hcw-card__bar,
+.dark .hcw-card__bar { background: rgba(255,255,255,0.08); }
+[data-theme="dark"] .hcw-card--skeleton,
+.dark .hcw-card--skeleton { background: rgba(255,255,255,0.07); }
+/* ══ نهاية ودجت استمر ══════════════════════════════════════════════════════ */
