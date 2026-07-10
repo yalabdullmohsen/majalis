@@ -292,6 +292,20 @@ export function FiqhCouncilHubPage() {
       title: "المجمع الفقهي الإسلامي | المجلس العلمي",
       description: "مرجع المجمع الفقهي، قرارات وفتاوى وتوصيات وجلسات المجامع الفقهية الدولية وهيئات الإفتاء.",
       keywords: ["مجمع فقهي", "قرارات فقهية", "هيئة كبار العلماء", "المجمع الفقهي", "فتاوى المجامع"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أقسام المجمع الفقهي الإسلامي",
+          description: "قرارات وفتاوى وتوصيات وجلسات المجامع الفقهية الدولية",
+          itemListElement: SUBNAV_LINKS.filter(l => l.href !== "/fiqh-council").map((l, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: l.label,
+            url: `https://majlisilm.com${l.href}`,
+          })),
+        },
+      ],
     });
   }, []);
 

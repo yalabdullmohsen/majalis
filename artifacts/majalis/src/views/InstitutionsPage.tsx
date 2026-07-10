@@ -404,6 +404,21 @@ export default function InstitutionsPage() {
       title: "المؤسسات الإسلامية | المجلس العلمي",
       description: "دليل المؤسسات الإسلامية والمراكز الشرعية، مساجد ومعاهد وجامعات وهيئات إسلامية.",
       keywords: ["مؤسسات إسلامية", "مراكز إسلامية", "معاهد شرعية", "جامعات إسلامية", "هيئات دينية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "المؤسسات الإسلامية الكبرى",
+          description: "دليل المساجد والمعاهد والجامعات والهيئات الإسلامية",
+          numberOfItems: INSTITUTIONS.length,
+          itemListElement: INSTITUTIONS.slice(0, 20).map((inst, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `${inst.name} — ${inst.city}`,
+            url: `https://majlisilm.com/institutions#${inst.id}`,
+          })),
+        },
+      ],
     });
   }, []);
   const [search, setSearch] = useState("");

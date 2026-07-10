@@ -256,6 +256,34 @@ export default function HomePage() {
       title: "المجلس العلمي، منصة العلوم الإسلامية",
       description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم، الأذكار، الدروس العلمية، الفتاوى، والفقه المعاصر.",
       keywords: ["المجلس العلمي", "علوم إسلامية", "قرآن كريم", "أذكار", "فتاوى", "دروس علمية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "المجلس العلمي",
+          url: "https://majlisilm.com",
+          logo: "https://majlisilm.com/logo.png",
+          description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم والأذكار والدروس والفتاوى والفقه",
+          inLanguage: "ar",
+          areaServed: { "@type": "Country", name: "الكويت" },
+          sameAs: ["https://majlisilm.com"],
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "المجلس العلمي",
+          url: "https://majlisilm.com",
+          inLanguage: "ar",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: {
+              "@type": "EntryPoint",
+              urlTemplate: "https://majlisilm.com/search/{search_term_string}",
+            },
+            "query-input": "required name=search_term_string",
+          },
+        },
+      ],
     });
   }, []);
 
