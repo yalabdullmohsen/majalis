@@ -3,6 +3,7 @@ import { BookOpen, CheckCircle2, Clock, Download, Headphones, HelpCircle, Lightb
 import type { LucideIcon } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { supabase } from "@/lib/supabase";
 import type { LPBookDetail, LPExplanation, LPBenefit, LPQuiz, LPProgress } from "@/lib/learning-path-service";
@@ -277,6 +278,9 @@ export default function LearningPathBookPage() {
           />
         </Suspense>
       )}
+      <div className="twh-share">
+        <ShareButtons title="كتاب المسار التعليمي — المجلس العلمي" url="https://majlisilm.com/learning/books" />
+      </div>
     </div>
   );
 }

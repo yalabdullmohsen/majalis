@@ -21,6 +21,7 @@ import {
   type KnowledgeRelationship,
   type KnowledgeSourceType,
 } from "@/lib/supabase";
+import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -563,6 +564,9 @@ export default function KnowledgeGraphPage() {
           )}
         </div>
       )}
+      <div className="twh-share">
+        <ShareButtons title="الرسم البياني المعرفي الإسلامي — المجلس العلمي" url="https://majlisilm.com/knowledge-graph" />
+      </div>
     </div>
   );
 }

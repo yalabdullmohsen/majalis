@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "wouter";
 import { SkeletonPage } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
 import { fetchLearningQuiz, submitLearningQuiz, type QuizQuestion } from "@/lib/digital-learning-service";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -149,6 +150,9 @@ export default function LearningQuizPage() {
       >
         {index + 1 >= questions.length ? "إنهاء الاختبار" : "التالي"}
       </button>
+      <div className="twh-share">
+        <ShareButtons title="اختبار المسار التعليمي — المجلس العلمي" url="https://majlisilm.com/learning/quiz" />
+      </div>
     </div>
   );
 }
