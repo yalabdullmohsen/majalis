@@ -428,6 +428,21 @@ export default function ShimaelPage() {
       title: "الشمائل المحمدية | المجلس العلمي",
       description: "تعرّف على صفة النبي محمد ﷺ خَلقاً وخُلُقاً وهَديه في حياته من أصحِّ الروايات.",
       keywords: ["شمائل النبي", "صفة النبي", "الشمائل المحمدية", "سيرة نبوية", "حب النبي"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أبواب الشمائل المحمدية — الخَلق",
+          description: "صفة النبي ﷺ خَلقاً من أصح الروايات",
+          numberOfItems: ABWAB_KHALQ.length,
+          itemListElement: ABWAB_KHALQ.map((b, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: b.title,
+            url: `https://majlisilm.com/shamael#khalq-${b.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 

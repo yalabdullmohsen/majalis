@@ -137,11 +137,26 @@ const NASKH_TYPES = [
 
 export default function UlumQuranPage() {
   useEffect(() => {
-      applyPageSeo({
+    applyPageSeo({
       path: "/ulum-quran",
       title: "علوم القرآن الكريم، المجلس العلمي",
       description: "مقدمة شاملة في علوم القرآن: النزول والجمع والتفسير والإعجاز والمحكم والمتشابه والناسخ والمنسوخ",
       keywords: ["علوم القرآن", "أسباب النزول", "الناسخ والمنسوخ", "المحكم والمتشابه", "إعجاز القرآن"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "حقائق علوم القرآن الكريم",
+          description: "حقائق أساسية في علوم القرآن: نزوله وجمعه وتفسيره وإعجازه",
+          numberOfItems: NUZUL_FACTS.length,
+          itemListElement: NUZUL_FACTS.map((f, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `${f.label}: ${f.value}`,
+            url: `https://majlisilm.com/ulum-quran#fact-${i + 1}`,
+          })),
+        },
+      ],
     });
   }, []);
 

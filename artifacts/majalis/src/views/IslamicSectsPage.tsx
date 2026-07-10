@@ -560,6 +560,21 @@ export default function IslamicSectsPage() {
       title: "الفرق الإسلامية — نشأتها وعقائدها | مجالس",
       description: "موسوعة علمية تاريخية في الفرق والمذاهب الإسلامية: نشأة كل فرقة وأصولها العقدية وأبرز علمائها وكتبها وانتشارها",
       keywords: ["فرق إسلامية", "مذاهب", "أهل السنة", "الشيعة", "المعتزلة", "الخوارج", "تاريخ الإسلام"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "الفرق والمذاهب الإسلامية",
+          description: "موسوعة الفرق الإسلامية: نشأة كل فرقة وأصولها العقدية",
+          numberOfItems: SECTS.length,
+          itemListElement: SECTS.slice(0, 20).map((s, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: s.fullName || s.name,
+            url: `https://majlisilm.com/islamic-sects#${s.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 
