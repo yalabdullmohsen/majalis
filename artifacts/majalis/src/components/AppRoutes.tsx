@@ -1,5 +1,4 @@
 import { Suspense, lazy, type ComponentType } from "react";
-import { BookOpen } from "lucide-react";
 import { Redirect, Route, Switch, useLocation } from "wouter";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import AboutPage from "@/views/AboutPage";
@@ -24,6 +23,8 @@ const RegisterPage = lazy(() => import("@/views/RegisterPage"));
 const AuthCallbackPage = lazy(() => import("@/views/AuthCallbackPage"));
 const UserStatsPage = lazy(() => import("@/views/UserStatsPage"));
 const TranscribePage = lazy(() => import("@/views/TranscribePage"));
+const StartHerePage = lazy(() => import("@/views/StartHerePage"));
+const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
 const AssistantPage = lazy(() => import("@/views/AssistantPage"));
 const CardsPage = lazy(() => import("@/views/CardsPage"));
 const PrayerTimesPage = lazy(() => import("@/views/PrayerTimesPage"));
@@ -106,18 +107,6 @@ function SafeLazyRoute({ component: Component }: { component: ComponentType }) {
   );
 }
 
-function QuranComingSoon() {
-  return (
-    <div className="coming-soon-wrap">
-      <span className="coming-soon-wrap__icon"><BookOpen size={48} strokeWidth={1.2} /></span>
-      <h2 className="coming-soon-wrap__title">قريباً</h2>
-      <p className="coming-soon-wrap__body">
-        قسم القرآن الكريم قيد التطوير
-      </p>
-    </div>
-  );
-}
-
 /** Client routes not handled by App Router SEO pages. */
 export default function AppRoutes() {
   return (
@@ -166,8 +155,8 @@ export default function AppRoutes() {
         </Route>
         <Route path="/quran-live"><SafeLazyRoute component={QuranLivePage} /></Route>
         <Route path="/quran/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
-        <Route path="/quran/surah-stories/:number" component={QuranComingSoon} />
-        <Route path="/quran/surah-stories" component={QuranComingSoon} />
+        <Route path="/quran/surah-stories/:number"><SafeLazyRoute component={SurahStoriesPage} /></Route>
+        <Route path="/quran/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
         <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
         <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>
         <Route path="/prayer-times"><SafeLazyRoute component={PrayerTimesPage} /></Route>
@@ -215,6 +204,7 @@ export default function AppRoutes() {
         <Route path="/learning-path"><SafeLazyRoute component={LearningPathPage} /></Route>
         <Route path="/universities"><SafeLazyRoute component={UniversitiesPage} /></Route>
         <Route path="/features-in-progress"><SafeLazyRoute component={FeaturesInProgressPage} /></Route>
+        <Route path="/start-here"><SafeLazyRoute component={StartHerePage} /></Route>
         <Route path="/prophet-stories/:slug"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
         <Route path="/prophet-stories"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
         <Route path="/updates/auto/:slug"><SafeLazyRoute component={AutoContentDetailPage} /></Route>

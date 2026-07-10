@@ -24,6 +24,7 @@ import { HomeWeekStreak } from "@/components/home/HomeWeekStreak";
 import { HomeNawawiHadith } from "@/components/home/HomeNawawiHadith";
 import { HomeInterestingTopics } from "@/components/home/HomeInterestingTopics";
 import { HomeMindMapSection } from "@/components/home/HomeMindMapSection";
+import { HomeMajlisToday } from "@/components/home/HomeMajlisToday";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import {
@@ -402,6 +403,13 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ══ مجلس اليوم ══ */}
+      <div style={{ maxWidth: 760, margin: "1rem auto 0", padding: "0 1rem" }}>
+        <SectionErrorBoundary name="مجلس اليوم">
+          <HomeMajlisToday />
+        </SectionErrorBoundary>
+      </div>
 
       {/* ══ زرتَ مؤخراً ══ */}
       <RecentPagesBar />

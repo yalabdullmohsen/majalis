@@ -174,6 +174,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/mind-map",           label: "الخرائط الذهنية",    description: "15+ خريطة في العلوم الشرعية" },
       { href: "/islamic-glossary",   label: "المصطلحات الإسلامية", description: "91+ مصطلح مُعرَّف ومُوثَّق" },
       { href: "/hadith-science",     label: "مصطلح الحديث",       description: "علوم الحديث والجرح والتعديل" },
+      { href: "/start-here",         label: "ابدأ من هنا",        description: "مسار مرتّب للمبتدئ في طلب العلم الشرعي" },
       { href: "/learning/paths",     label: "المسارات العلمية",   description: "تعلّم منظم من المبتدئ للمتقدم" },
       { href: "/universities",       label: "دليل الجامعات",      description: "جامعات الشريعة في العالم" },
     ],
@@ -194,7 +195,10 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/daily-wird",         label: "الورد اليومي",       description: "تتبع القراءة اليومية" },
       { href: "/occasions",          label: "المناسبات",           description: "المناسبات الإسلامية" },
       { href: "/calendar",           label: "التقويم",             description: "التقويم الهجري" },
+      { href: "/learning/calendar",  label: "تقويم الدروس",        description: "مواعيد الدروس والدورات مع تصدير ICS" },
       { href: "/cards",              label: "البطاقات الدعوية",   description: "بطاقات اقتباسات بصرية" },
+      { href: "/study-room",         label: "غرفة الدراسة",        description: "مؤقت بومودورو وتتبع جلسات المذاكرة" },
+      { href: "/vault",              label: "مخزن المعرفة",         description: "المفضلات والملاحظات الشخصية" },
       { href: "/settings",           label: "الإعدادات",           description: "تخصيص تجربتك" },
       { href: "/notification-settings", label: "التنبيهات",       description: "مواقيت الصلاة والذكر" },
     ],
@@ -231,6 +235,10 @@ export const MOBILE_MORE_NAV = [
   { href: "/universities",     label: "دليل الجامعات" },
   { href: "/flashcards",       label: "بطاقات المراجعة" },
   { href: "/learning-plan",    label: "خطة التعلّم" },
+  // أدوات الطالب
+  { href: "/study-room",       label: "غرفة الدراسة" },
+  { href: "/vault",            label: "مخزن المعرفة" },
+  { href: "/learning/calendar", label: "تقويم الدروس" },
   // عام
   { href: "/settings",         label: "الإعدادات" },
   { href: "/upload",           label: "رفع أذان أو درس" },
@@ -335,6 +343,10 @@ export const HOME_MORE_SECTIONS = [
   { href: "/duas-quran",    title: "أدعية القرآن الكريم",  description: "12 دعاءً قرآنياً مأثوراً: دعاء الأنبياء والمؤمنين مع سياقها وفوائدها" },
   { href: "/knowledge-map", title: "الخريطة المعرفية",   description: "14 حقلاً علمياً بروابط تفاعلية ومحركات البحث" },
   { href: "/quran-hub",    title: "مركز القرآن",          description: "بوابتك الشاملة للمصحف والتجويد والإذاعات والبث المباشر" },
+  { href: "/study-room",   title: "غرفة الدراسة",         description: "مؤقت بومودورو وتتبع جلسات المذاكرة وإحصائيات التعلم" },
+  { href: "/vault",        title: "مخزن المعرفة",          description: "المفضلات والملاحظات الشخصية واستئناف القراءة" },
+  { href: "/learning/calendar", title: "تقويم الدروس",    description: "مواعيد الدروس والدورات الإسلامية القادمة مع تصدير ICS" },
+  { href: "/start-here",  title: "ابدأ من هنا",           description: "مسار مرتّب للمبتدئ في طلب العلم الشرعي" },
 ] as const;
 
 /** PRIMARY_NAV kept for legacy compatibility */

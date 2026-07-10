@@ -76,6 +76,7 @@ export default defineConfig({
             if (id.includes("mapbox") || id.includes("leaflet") || id.includes("maplibre")) return "maps";
           }
           if (id.includes("src/views/AdminPage") || id.includes("src/views/admin/")) return "admin";
+          if (id.includes("src/components/home/")) return "home-sections";
           if (id.includes("src/views/QuranCirclesPage") || id.includes("src/views/QuranPage") || id.includes("src/views/QuranRadioPage")) return "quran-pages";
           if (id.includes("src/views/Scholarly") || id.includes("scholarly-research")) return "scholarly";
           if (id.includes("src/lib/miracles-seed") || id.includes("src/lib/prophets-seed")) return "content-seed";
