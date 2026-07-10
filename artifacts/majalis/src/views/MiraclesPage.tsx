@@ -16,6 +16,7 @@ import { MIRACLE_CATEGORIES } from "@/lib/miracles-seed";
 import { safeLoadEffect } from "@/lib/safe-load";
 import { GeometricPattern } from "@/components/design/GeometricPattern";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 const CATEGORIES = MIRACLE_CATEGORIES;
 const SOURCE_TYPES = ["الكل", "قرآن", "سنة"];
@@ -267,6 +268,12 @@ export default function MiraclesPage({
                       <ScrollText size={12} strokeWidth={1.8} aria-hidden="true" /> {item.scholarly_source}
                     </p>
                   )}
+                </div>
+                <div className="mk-card__actions">
+                  <ShareButtons
+                    title={item.title}
+                    url={`https://majlisilm.com/miracles`}
+                  />
                 </div>
                 {isAdmin && <AdminQuickEdit section="miracles" searchTerm={item.title} />}
               </article>
