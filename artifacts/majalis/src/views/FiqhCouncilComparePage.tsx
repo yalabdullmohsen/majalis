@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useSearch } from "wouter";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
+import { ShareButtons } from "@/components/ContentActions";
 import { compareFiqhItems, getFiqhCouncilItems, getFiqhCouncilItemsBySlugs } from "@/lib/fiqh-council-service";
 import { applyPageSeo } from "@/lib/seo";
 import {
@@ -159,6 +160,10 @@ export default function FiqhCouncilComparePage() {
           </div>
         </>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="مقارنة مواد المجمع الفقهي — المجلس العلمي" url="https://majlisilm.com/fiqh-council/compare" />
+      </div>
     </div>
   );
 }

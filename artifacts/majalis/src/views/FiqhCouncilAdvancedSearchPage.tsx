@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { ShareButtons } from "@/components/ContentActions";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
@@ -157,6 +158,10 @@ export default function FiqhCouncilAdvancedSearchPage() {
           ))}
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="البحث المتقدم في المجمع الفقهي — المجلس العلمي" url="https://majlisilm.com/fiqh-council/search" />
+      </div>
     </div>
   );
 }
