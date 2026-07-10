@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import {
   type KnowledgeRelationship,
   type KnowledgeRelType,
@@ -130,12 +131,7 @@ export function RelationshipsSection() {
     if (filterVerified === "verified" && !r.is_verified) return false;
     if (filterVerified === "pending" && r.is_verified) return false;
     if (search) {
-      const s = search.toLowerCase();
-      return (
-        r.source_id.toLowerCase().includes(s) ||
-        r.target_id.toLowerCase().includes(s) ||
-        (r.label ?? "").toLowerCase().includes(s)
-      );
+      return arabicMatchAny([r.source_id, r.target_id, r.label ?? ""], search);
     }
     return true;
   });

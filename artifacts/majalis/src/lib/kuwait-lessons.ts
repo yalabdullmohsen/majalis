@@ -1,7 +1,7 @@
 import { GOVERNORATES } from "@/lib/theme";
 import { resolveLessonPosterUrl } from "@/lib/lesson-image";
 import { normalizeActivityType } from "@/lib/activity-label";
-import { arabicIncludes, normalizeArabic } from "@/lib/arabic-search";
+import { arabicIncludes, arabicMatchAny, normalizeArabic } from "@/lib/arabic-search";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { resolveGovernorateForUi, resolveRegion, displayGovernorate } from "@/lib/kuwait-regions";
 import { formatSheikhName, sheikhNameKey } from "@/lib/sheikh-name";
@@ -358,7 +358,7 @@ export function buildSearchSuggestions(lessons: KuwaitLessonRecord[], query: str
   }
 
   return Array.from(pool)
-    .filter((item) => normalizeText(item).includes(q))
+    .filter((item) => arabicMatchAny([item], q))
     .sort((a, b) => a.localeCompare(b, "ar"))
     .slice(0, limit);
 }
