@@ -171,6 +171,20 @@ export default function IslamicStoriesPage() {
       title: "قصص الصحابة والفتوحات الإسلامية | المجلس العلمي",
       description: "قصص الصحابة الكرام والفتوحات الإسلامية والأحداث التاريخية، من الهجرة النبوية إلى فتح مكة وما بعدها من عصور الإسلام.",
       keywords: ["قصص إسلامية", "الصحابة", "الفتوحات الإسلامية", "التاريخ الإسلامي", "السيرة"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أقسام القصص الإسلامية",
+          description: "قصص الصحابة والفتوحات والتاريخ الإسلامي عبر العصور",
+          itemListElement: CATEGORY_LABELS.filter(c => c !== "الكل").map((cat, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: cat,
+            url: `https://majlisilm.com/islamic-stories?cat=${encodeURIComponent(cat)}`,
+          })),
+        },
+      ],
     });
   }, []);
 

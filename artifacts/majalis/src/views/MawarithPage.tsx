@@ -224,11 +224,26 @@ const MASAIL = [
 
 export default function MawarithPage() {
   useEffect(() => {
-      applyPageSeo({
+    applyPageSeo({
       path: "/mawarith",
       title: "علم المواريث والفرائض، المجلس العلمي",
       description: "دليل شامل في علم الفرائض: الورثة وحصصهم وأسباب الإرث وموانعه وأحكام العَصَبة والحجب",
       keywords: ["المواريث", "الفرائض", "علم الإرث", "الورثة", "الحجب في الميراث"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "الورثة في الإسلام وأنصبتهم",
+          description: "الورثة وأنصبتهم وشروط إرثهم في الفقه الإسلامي",
+          numberOfItems: WARASA.length,
+          itemListElement: WARASA.map((w, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: w.name,
+            url: `https://majlisilm.com/mawarith#warith-${i + 1}`,
+          })),
+        },
+      ],
     });
   }, []);
 
