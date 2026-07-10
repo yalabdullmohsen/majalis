@@ -63,7 +63,11 @@ const POPULATION_BARS: BarItem[] = [
   { label: "مصر",       value: 87,  max: 270, unit: "م", color: "#065F46" },
   { label: "إيران",      value: 83,  max: 270, unit: "م", color: "#9B1C1C" },
   { label: "تركيا",     value: 75,  max: 270, unit: "م", color: "#4A2008" },
-  { label: "المغرب",    value: 36,  max: 270, unit: "م", color: "#1E3A5F" },
+  { label: "الجزائر",   value: 44,  max: 270, unit: "م", color: "#1E3A5F" },
+  { label: "المغرب",    value: 36,  max: 270, unit: "م", color: "#065F46" },
+  { label: "السودان",   value: 35,  max: 270, unit: "م", color: "#1a5a7a" },
+  { label: "السعودية",  value: 33,  max: 270, unit: "م", color: "#1F4D3A" },
+  { label: "الكويت",    value: 4,   max: 270, unit: "م", color: "#312E81" },
 ];
 
 const QURAN_STATS: StatCard[] = [
@@ -75,6 +79,10 @@ const QURAN_STATS: StatCard[] = [
   { value: "٢٣",   label: "سنة للنزول",  sub: "بدأ في رمضان ٦١٠م", color: "#9B1C1C" },
   { value: "٥",    label: "حفاظ في عهده ﷺ أشهرهم", sub: "عثمان، علي، ابن مسعود، زيد، أبيّ", color: "#4A2008" },
   { value: "١",    label: "مصدر للتشريع", sub: "أولاً وقبل كل شيء", color: "#1E3A5F" },
+  { value: "٧",    label: "أحرف أُنزل عليها", sub: "القراءات السبع المتواترة المعتمدة", color: "#1F4D3A" },
+  { value: "٥ آلاف+", label: "حافظ للقرآن يتولد يومياً", sub: "تشير الإحصاءات لنمو مستمر في عدد الحفاظ", color: "#065F46" },
+  { value: "١٨٠٠+", label: "لغة تُرجم إليها القرآن", sub: "وهو يتلى بالعربية كما أُنزل في كل أنحاء الأرض", color: "#312E81" },
+  { value: "٤٠٠٠+", label: "موضوع علمي في القرآن", sub: "يتناولها العلماء في التفسير الموضوعي", color: "#7B3E0C" },
 ];
 
 const HISTORY_TIMELINE: TimelineItem[] = [
@@ -98,6 +106,10 @@ const HISTORY_ACHIEVEMENTS: StatCard[] = [
   { value: "٤٠٠+", label: "كتاب لابن سينا", sub: "شاملة للطب والفلسفة والفلك", color: "#1a5a7a" },
   { value: "١٢٠٠+", label: "لفظ عربي في الإنجليزية", sub: "مثل: algebra, alcohol, coffee, sugar", color: "#7B3E0C" },
   { value: "٦٠٠ سنة", label: "القانون مرجعاً طبياً", sub: "كتاب ابن سينا في جامعات أوروبا", color: "#312E81" },
+  { value: "٨٠٠ م", label: "جبر الخوارزمي", sub: "مؤسس علم الجبر وأصل كلمة Algorithm", color: "#065F46" },
+  { value: "٢٠٠٠+", label: "اختراع إسلامي وصل أوروبا", sub: "في الكيمياء والبصريات والهندسة والفلك", color: "#9B1C1C" },
+  { value: "٨٣٦ م", label: "المستشفى الأول منظَّم", sub: "بيمارستان بغداد — أول مستشفى عام في التاريخ", color: "#1E3A5F" },
+  { value: "١١٢١ م", label: "الغزالي يُجدد الفقه", sub: "أحيا الإمام الغزالي علوم الدين بمنهج متكامل", color: "#4A2008" },
 ];
 
 const SCIENCE_CARDS: ScienceCard[] = [
