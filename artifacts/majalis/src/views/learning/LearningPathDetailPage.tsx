@@ -25,8 +25,19 @@ export default function LearningPathDetailPage() {
       title: "مسار تعليمي | المجلس العلمي",
       description: "تفاصيل مسار التعلم الإسلامي، الدروس والوحدات والاختبارات وشهادة الإتمام.",
       keywords: ["مسار تعليمي", "تعلم إسلامي", "وحدات دراسية", "شهادة إتمام"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Course",
+          name: "مسار تعليمي شرعي",
+          url: `https://majlisilm.com/learning/paths/${slug}`,
+          description: "تفاصيل مسار التعلم الإسلامي، الدروس والوحدات والاختبارات وشهادة الإتمام",
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          inLanguage: "ar",
+        },
+      ],
     });
-  }, []);
+  }, [slug]);
   const [path, setPath] = useState<any>(null);
   const [modules, setModules] = useState<LearningModule[]>([]);
   const [nextModule, setNextModule] = useState<LearningModule | null>(null);

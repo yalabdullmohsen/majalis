@@ -27,6 +27,16 @@ export default function CertificateVerifyPage() {
       title: "التحقق من الشهادة | المجلس العلمي",
       description: "تحقق من صحة الشهادة العلمية الصادرة من المجلس العلمي، أدخل رمز الشهادة للتحقق منها.",
       keywords: ["تحقق شهادة", "شهادة علمية", "اعتماد علمي", "المجلس العلمي"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "التحقق من الشهادة العلمية",
+          url: "https://majlisilm.com/learning/certificate-verify",
+          description: "التحقق من صحة الشهادات العلمية الصادرة من المجلس العلمي",
+          about: { "@type": "Thing", name: "الشهادات العلمية الإسلامية" },
+        },
+      ],
     });
   }, []);
   const [inputCode, setInputCode] = useState(params.code || "");

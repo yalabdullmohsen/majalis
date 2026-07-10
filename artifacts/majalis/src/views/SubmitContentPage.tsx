@@ -17,6 +17,16 @@ export default function SubmitContentPage() {
       title: "أضف محتوى | المجلس العلمي",
       description: "شارك في إثراء المجلس العلمي، أرسل درساً أو فائدة أو سؤالاً وساهم في نشر العلم الشرعي.",
       keywords: ["إضافة محتوى", "مشاركة علمية", "إرسال درس", "نشر العلم", "المجلس العلمي"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "إضافة محتوى — المجلس العلمي",
+          url: "https://majlisilm.com/submit",
+          description: "أرسل درساً أو فائدة أو سؤالاً وشارك في إثراء المجلس العلمي",
+          about: { "@type": "Thing", name: "نشر العلم الشرعي والمشاركة المجتمعية" },
+        },
+      ],
     });
   }, []);
   const [title, setTitle] = useState("");

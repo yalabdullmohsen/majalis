@@ -445,9 +445,9 @@ export default function QuranTajweedPage() {
       <div className="tj-related">
         <p className="tj-related-title">مراجع وكتب مقترحة</p>
         <div className="tj-related-list">
-          <a href="#" className="tj-related-link">متن الجزرية، ابن الجزري</a>
-          <a href="#" className="tj-related-link">التمهيد في علم التجويد، ابن الجزري</a>
-          <a href="#" className="tj-related-link">هداية القاري، عبد الفتاح المرصفي</a>
+          <span className="tj-related-link tj-related-link--ref">متن الجزرية، ابن الجزري</span>
+          <span className="tj-related-link tj-related-link--ref">التمهيد في علم التجويد، ابن الجزري</span>
+          <span className="tj-related-link tj-related-link--ref">هداية القاري، عبد الفتاح المرصفي</span>
           <Link href="/quran" className="tj-related-link">ابدأ القراءة من المصحف ←</Link>
         </div>
       </div>

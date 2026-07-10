@@ -30,6 +30,16 @@ export default function MuezzinFavoritesPage() {
       title: "المؤذنون المفضلون | المجلس العلمي",
       description: "أذان مؤذنيك المفضلين، استمع، قيّم، واختر الصوت الافتراضي للأذان في إعداداتك.",
       keywords: ["مؤذنون مفضلون", "أذان مفضل", "تفضيلات أذان", "أصوات إسلامية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "المؤذنون المفضلون",
+          url: "https://majlisilm.com/muezzins/favorites",
+          description: "أذان مؤذنيك المفضلين مع إمكانية الاستماع والتقييم واختيار الصوت الافتراضي",
+          about: { "@type": "Thing", name: "تلاوات الأذان الإسلامي" },
+        },
+      ],
     });
   }, []);
   const [previewing, setPreviewing] = useState<string | null>(null);

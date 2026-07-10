@@ -25,6 +25,17 @@ export default function LearningPathBookPage() {
       title: "كتاب في مسار التعلم | المجلس العلمي",
       description: "تصفّح محتوى الكتاب في مسار التعلم الشرعي، شروح وملاحظات وتتبع تقدمك في القراءة.",
       keywords: ["كتاب شرعي", "مسار تعلم", "قراءة علمية", "شرح كتاب", "تعليم إسلامي"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Book",
+          name: "كتاب في مسار التعلم الشرعي",
+          url: "https://majlisilm.com/learning-path/book",
+          description: "كتاب ضمن مسار التعلم الشرعي مع شروح وملاحظات وتتبع تقدم القراءة",
+          inLanguage: "ar",
+          publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        },
+      ],
     });
   }, []);
   const tokenRef = useRef<string | null>(null);

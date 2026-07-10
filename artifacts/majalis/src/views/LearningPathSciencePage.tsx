@@ -32,6 +32,17 @@ export default function LearningPathSciencePage() {
       title: "علم في مسار التعلم | المجلس العلمي",
       description: "استكشف مستويات العلم الشرعي في مسار التعلم الإسلامي، من المبتدئ إلى المتقدم.",
       keywords: ["علم شرعي", "مسار تعلم", "مستويات علمية", "تعليم إسلامي", "فقه ومذاهب"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Course",
+          name: "علم شرعي في مسار التعلم",
+          url: "https://majlisilm.com/learning-path/science",
+          description: "مسار تعليمي شرعي يتدرج من المبتدئ إلى المتقدم",
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          inLanguage: "ar",
+        },
+      ],
     });
   }, []);
   const [science, setScience]   = useState<LPScience | null>(null);
