@@ -18,16 +18,16 @@ type Flag =
 
 /** الصفحات مكتملة = true / في تطوير = false */
 const FEATURES_DEFAULT: Record<Flag, boolean> = {
-  study_room: false,
+  study_room: true,
   family_mode: false,
   car_mode: false,
   mosque_mode: false,
-  vault: false,
+  vault: true,
   transcribe: false,
   academic_research: false,
   flashcards_advanced: false,
   quran_layouts: false,
-  learning_calendar: false,
+  learning_calendar: true,
 };
 
 const LS_PREFIX = "mj-flag-";

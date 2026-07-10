@@ -148,6 +148,35 @@ export function OptimizedSheikhImage({
     objectPosition,
   };
 
+  const webpSrc = !isLogo && !failed && displaySrc.match(/\.(jpg|jpeg)$/i)
+    ? displaySrc.replace(/\.(jpg|jpeg)$/i, ".webp")
+    : undefined;
+
+  const imgEl = (
+    <img
+      src={displaySrc}
+      srcSet={srcSet}
+      sizes={srcSet ? imgSizes : undefined}
+      alt={name}
+      className="optimized-sheikh-image__img"
+      style={imgStyle}
+      loading={priority ? "eager" : "lazy"}
+      decoding="async"
+      width={cssSize ?? outputSize}
+      height={
+        cssSize !== undefined
+          ? variant === "avatar"
+            ? cssSize
+            : Math.round(cssSize / (4 / 5))
+          : variant === "avatar"
+            ? outputSize
+            : Math.round(outputSize / (4 / 5))
+      }
+      onLoad={() => setLoading(false)}
+      onError={handleError}
+    />
+  );
+
   return (
     <div
       className={rootClass}
@@ -162,28 +191,12 @@ export function OptimizedSheikhImage({
           <span className="optimized-sheikh-image__skeleton-shimmer" />
         </div>
       )}
-      <img
-        src={displaySrc}
-        srcSet={srcSet}
-        sizes={srcSet ? imgSizes : undefined}
-        alt={name}
-        className="optimized-sheikh-image__img"
-        style={imgStyle}
-        loading={priority ? "eager" : "lazy"}
-        decoding="async"
-        width={cssSize ?? outputSize}
-        height={
-          cssSize !== undefined
-            ? variant === "avatar"
-              ? cssSize
-              : Math.round(cssSize / (4 / 5))
-            : variant === "avatar"
-              ? outputSize
-              : Math.round(outputSize / (4 / 5))
-        }
-        onLoad={() => setLoading(false)}
-        onError={handleError}
-      />
+      {webpSrc ? (
+        <picture>
+          <source srcSet={webpSrc} type="image/webp" />
+          {imgEl}
+        </picture>
+      ) : imgEl}
     </div>
   );
 }
