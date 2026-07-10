@@ -7,6 +7,7 @@ import {
   sortOccasionsByUpcoming,
   type IslamicOccasionView,
 } from "@/lib/islamic-occasions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { HijriMonthSelect } from "@/components/HijriMonthSelect";
 import { getHijriMonthName, isSacredMonth } from "@/lib/hijri-utils";
 import { applyPageSeo } from "@/lib/seo";
@@ -25,6 +26,7 @@ export default function OccasionsPage() {
   const [occasions, setOccasions] = useState<IslamicOccasionView[]>([]);
   const [loading, setLoading] = useState(true);
   const [monthFilter, setMonthFilter] = useState<number | "">("");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     applyPageSeo({
@@ -68,10 +70,11 @@ export default function OccasionsPage() {
     };
   }, []);
 
-  const filtered = useMemo(
-    () => (monthFilter === "" ? occasions : occasions.filter((o) => o.hijriMonth === monthFilter)),
-    [occasions, monthFilter],
-  );
+  const filtered = useMemo(() => {
+    let list = monthFilter === "" ? occasions : occasions.filter((o) => o.hijriMonth === monthFilter);
+    if (search.trim()) list = list.filter((o) => arabicMatchAny([o.name, o.summary, o.evidence, ...o.deeds], search));
+    return list;
+  }, [occasions, monthFilter, search]);
 
   return (
     <div className="page-shell">
@@ -97,6 +100,18 @@ export default function OccasionsPage() {
             ({filtered.length.toLocaleString("ar-EG")})
           </span>
           <span className="occasions-filter__sacred-note"><Star size={13} strokeWidth={2} aria-hidden="true" /> شهر حرام</span>
+        </div>
+      )}
+      {!loading && (
+        <div className="ocp-search-wrap">
+          <input
+            type="search"
+            className="ds-input ocp-search-input"
+            placeholder="ابحث في المناسبات والأعمال..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            aria-label="بحث في المناسبات الإسلامية"
+          />
         </div>
       )}
 
