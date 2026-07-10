@@ -24,6 +24,7 @@ import { normalizeArabic } from "@/lib/arabic-search";
 const POPULAR_QUERIES = [
   "الصلاة", "الزكاة", "الصيام", "الحج", "الطهارة",
   "الإخلاص", "التوبة", "الدعاء", "فضل العلم", "صلة الرحم",
+  "التوحيد", "البر والتقوى", "الصبر", "التوكل", "الذكر",
 ];
 
 const KIND_META: Record<string, { label: string; Icon: LucideIcon; color: string }> = {
@@ -399,12 +400,18 @@ export function GlobalSearchModal({ onClose }: Props) {
                 <p className="gsm-section__label">تصفح</p>
                 <div className="gsm-quicklinks">
                   {[
-                    { href: "/quran",   label: "القرآن",  Icon: BookMarked },
-                    { href: "/adhkar",  label: "الأذكار", Icon: RotateCw },
-                    { href: "/lessons", label: "الدروس",  Icon: GraduationCap },
-                    { href: "/fatwa",   label: "الفتاوى", Icon: Scale },
-                    { href: "/library", label: "المكتبة", Icon: BookOpen },
-                    { href: "/qa",      label: "الأسئلة", Icon: HelpCircle },
+                    { href: "/quran",         label: "القرآن",       Icon: BookMarked },
+                    { href: "/adhkar",         label: "الأذكار",      Icon: RotateCw },
+                    { href: "/lessons",        label: "الدروس",       Icon: GraduationCap },
+                    { href: "/fatwa",          label: "الفتاوى",      Icon: Scale },
+                    { href: "/library",        label: "المكتبة",      Icon: BookOpen },
+                    { href: "/qa",             label: "الأسئلة",      Icon: HelpCircle },
+                    { href: "/hadith",         label: "الأحاديث",     Icon: Scroll },
+                    { href: "/mind-map",       label: "الخرائط",      Icon: Layers },
+                    { href: "/fawaid",         label: "الفوائد",      Icon: Lightbulb },
+                    { href: "/topics",         label: "الموضوعات",    Icon: Tag },
+                    { href: "/seerah",         label: "السيرة",       Icon: Star },
+                    { href: "/occasions",      label: "المناسبات",    Icon: Bell },
                   ].map((l) => (
                     <button
                       key={l.href}

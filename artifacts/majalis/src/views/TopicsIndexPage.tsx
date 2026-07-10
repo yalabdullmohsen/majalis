@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BookMarked, BookOpen, Leaf, Moon, Scale, ScrollText, Shapes } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
@@ -6,6 +6,7 @@ import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { fetchAllTopics } from "@/lib/scholarly-intelligence-service";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 // ── Static fallback topics per category ──────────────────────────────────────
 
@@ -90,6 +91,7 @@ export default function TopicsIndexPage() {
   const [topics, setTopics] = useState<Array<{ slug: string; title: string; category?: string }>>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState(ALL_CAT);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     applyPageSeo({
@@ -107,22 +109,25 @@ export default function TopicsIndexPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  // Merge API topics into static ones
-  const merged: Record<string, Array<{ slug: string; title: string }>> = { ...STATIC_TOPICS };
-  if (topics.length > 0) {
+  // Merge API topics into static ones, then apply category + text filter
+  const { allCategories, displayed } = useMemo(() => {
+    const m: Record<string, Array<{ slug: string; title: string }>> = {};
+    for (const [cat, items] of Object.entries(STATIC_TOPICS)) m[cat] = [...items];
     for (const t of topics) {
       const cat = t.category || "other";
-      if (!merged[cat]) merged[cat] = [];
-      if (!merged[cat].some((s) => s.slug === t.slug)) {
-        merged[cat].push({ slug: t.slug, title: t.title });
-      }
+      if (!m[cat]) m[cat] = [];
+      if (!m[cat].some((s) => s.slug === t.slug)) m[cat].push({ slug: t.slug, title: t.title });
     }
-  }
-
-  const allCategories = Object.keys(merged).filter((c) => merged[c].length > 0);
-  const displayed = activeCategory === ALL_CAT
-    ? merged
-    : { [activeCategory]: merged[activeCategory] ?? [] };
+    const cats = Object.keys(m).filter((c) => m[c].length > 0);
+    const base = activeCategory === ALL_CAT ? m : { [activeCategory]: m[activeCategory] ?? [] };
+    if (!search.trim()) return { allCategories: cats, displayed: base };
+    const result: Record<string, Array<{ slug: string; title: string }>> = {};
+    for (const [cat, items] of Object.entries(base)) {
+      const matched = items.filter(t => arabicMatchAny([t.title], search));
+      if (matched.length > 0) result[cat] = matched;
+    }
+    return { allCategories: cats, displayed: result };
+  }, [topics, activeCategory, search]);
 
   return (
     <div className="page-shell narrow tip-page">
@@ -158,7 +163,22 @@ export default function TopicsIndexPage() {
         })}
       </div>
 
+      <div className="tip-search-wrap">
+        <input
+          type="search"
+          className="ds-input tip-search-input"
+          placeholder="ابحث في الموضوعات..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          aria-label="بحث في الموضوعات الشرعية"
+        />
+      </div>
+
       {loading && <SkeletonCardGrid />}
+
+      {!loading && Object.entries(displayed).length === 0 && search.trim() && (
+        <p className="tip-footer-note">لا توجد موضوعات مطابقة لـ «{search}».</p>
+      )}
 
       {!loading && Object.entries(displayed).map(([category, items]) => {
         const meta = CATEGORY_META[category] ?? CATEGORY_META.other;

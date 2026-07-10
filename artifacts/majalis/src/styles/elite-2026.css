@@ -27534,3 +27534,7 @@ img[loading="lazy"]:not([src=""]) {
 .content-action-bar__btn--card:hover {
   background: rgba(14,110,82,.18);
 }
+.upd-search-wrap { padding: .5rem 0 .75rem; }
+.upd-search-input { width: 100%; }
+.tip-search-wrap { padding: .5rem 0 .75rem; }
+.tip-search-input { width: 100%; }

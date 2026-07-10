@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { getMergedPlatformUpdates } from "@/lib/auto-content-service";
@@ -7,6 +7,7 @@ import { usePageView } from "@/hooks/usePageView";
 import { ShareButtons } from "@/components/ContentActions";
 import type { MergedUpdateItem } from "@/lib/auto-content/auto-content-utils";
 import { applyPageSeo } from "@/lib/seo";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 const TYPE_COLORS: Record<string, string> = {
   قرار: "#164E3C",
@@ -31,6 +32,7 @@ export default function UpdatesPage() {
   const [items, setItems] = useState<MergedUpdateItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("الكل");
+  const [search, setSearch] = useState("");
 
   usePageView("updates", null);
 
@@ -60,7 +62,11 @@ export default function UpdatesPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const filtered = filter === "الكل" ? items : items.filter((i) => i.update_type === filter);
+  const filtered = useMemo(() => {
+    let list = filter === "الكل" ? items : items.filter((i) => i.update_type === filter);
+    if (search.trim()) list = list.filter((i) => arabicMatchAny([i.title, i.summary ?? "", i.source_name ?? "", i.update_type], search));
+    return list;
+  }, [items, filter, search]);
 
   return (
     <div className="page-shell narrow content-hub-page">
@@ -83,6 +89,19 @@ export default function UpdatesPage() {
           </button>
         ))}
       </div>
+
+      {!loading && (
+        <div className="upd-search-wrap">
+          <input
+            type="search"
+            className="ds-input upd-search-input"
+            placeholder="ابحث في المستجدات..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            aria-label="بحث في المستجدات"
+          />
+        </div>
+      )}
 
       {loading ? (
         <SkeletonCardGrid />
