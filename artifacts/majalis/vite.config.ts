@@ -68,10 +68,12 @@ export default defineConfig({
             if (id.includes("@radix-ui")) return "radix";
             if (id.includes("recharts") || id.includes("d3-") || id.includes("victory")) return "charts";
             if (id.includes("adhan")) return "adhan";
+            if (id.includes("@tanstack")) return "query";
             if (id.includes("react") || id.includes("wouter") || id.includes("scheduler")) return "vendor";
             if (id.includes("zod") || id.includes("react-hook-form") || id.includes("@hookform")) return "forms";
             if (id.includes("framer-motion") || id.includes("motion")) return "animation";
             if (id.includes("cmdk") || id.includes("vaul") || id.includes("sonner")) return "ui-extra";
+            if (id.includes("mapbox") || id.includes("leaflet") || id.includes("maplibre")) return "maps";
           }
           if (id.includes("src/views/AdminPage") || id.includes("src/views/admin/")) return "admin";
           if (id.includes("src/views/QuranCirclesPage") || id.includes("src/views/QuranPage") || id.includes("src/views/QuranRadioPage")) return "quran-pages";
@@ -82,6 +84,8 @@ export default defineConfig({
           if (id.includes("src/views/PropheticMedicine") || id.includes("src/views/Miracles")) return "science-pages";
           if (id.includes("src/views/FiqhCouncil")) return "fiqh-council";
           if (id.includes("src/views/Learning") || id.includes("src/views/learning/")) return "learning-pages";
+          if (id.includes("src/lib/mind-maps-data") || id.includes("src/lib/quiz-seed") || id.includes("src/lib/islamic-glossary")) return "content-data";
+          if (id.includes("src/lib/platform-content-service") || id.includes("src/lib/demo-content")) return "platform-services";
         },
       },
     },
