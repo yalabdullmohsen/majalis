@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ══════════════════════════════════════════════════════════════════
    §246، علامات الساعة  (.as-*)
@@ -387,6 +388,19 @@ const STATUS_MOD: Record<string, string> = {
 
 export default function AlamatSaahPage() {
   const [activeTab, setActiveTab] = useState<Tab>("sughra");
+  const [search, setSearch] = useState("");
+
+  const filteredSughra = useMemo(() =>
+    search.trim()
+      ? SUGHRA.filter(a => arabicMatchAny([a.title, a.desc, a.source ?? ""], search))
+      : SUGHRA,
+  [search]);
+
+  const filteredTahdhukat = useMemo(() =>
+    search.trim()
+      ? TAHDHUKAT.filter(a => arabicMatchAny([a.title, a.desc, a.source ?? ""], search))
+      : TAHDHUKAT,
+  [search]);
 
   useEffect(() => {
     applyPageSeo({
@@ -450,6 +464,16 @@ export default function AlamatSaahPage() {
             <div className="as-intro">
               <p>العلامات الصغرى هي المقدِّمات البعيدة للساعة، وقد وقع كثيرها وبعضها لا يزال جارياً. والصغرى لا تعني صغر خطورتها بل قِدَمها في الظهور قبل الكبرى.</p>
             </div>
+            <div className="as-search-wrap">
+              <input
+                type="search"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="ابحث في علامات الساعة..."
+                className="page-search-input as-search-input"
+                aria-label="بحث في علامات الساعة الصغرى"
+              />
+            </div>
             <div className="as-status-legend">
               {["وقعت","جارية","لم تقع"].map(s => (
                 <span key={s} className="as-legend-item">
@@ -459,7 +483,7 @@ export default function AlamatSaahPage() {
               ))}
             </div>
             <div className="as-list">
-              {SUGHRA.map((a, i) => (
+              {filteredSughra.map((a, i) => (
                 <div key={i} className="as-alama-card">
                   <div className="as-alama-card__head">
                     <h3 className="as-alama-card__title">{a.title}</h3>
@@ -535,7 +559,7 @@ export default function AlamatSaahPage() {
               <p>الإيمان بعلامات الساعة لا يعني الاستسلام والجمود، بل هو دافع للعمل الصالح والتمسك بالسنة قبل أن تُغلَق أبواب التوبة.</p>
             </div>
             <div className="as-list">
-              {TAHDHUKAT.map((a, i) => (
+              {filteredTahdhukat.map((a, i) => (
                 <div key={i} className="as-alama-card as-alama-card--tahdhu">
                   <div className="as-alama-card__num">{i + 1}</div>
                   <div>

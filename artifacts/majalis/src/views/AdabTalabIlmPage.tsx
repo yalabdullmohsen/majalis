@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { BookOpen, ChevronDown, ChevronUp, GraduationCap, Lightbulb, Scale, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ══════════════════════════════════════════════════════════════════
    §243، آداب طالب العلم  (.atl-*)
@@ -413,6 +414,23 @@ const KUTUB: MurtabaKitab[] = [
 export default function AdabTalabIlmPage() {
   const [activeTab, setActiveTab] = useState<TabType>("fadl");
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const [search, setSearch] = useState("");
+
+  const filteredFadl = useMemo(() =>
+    search.trim() ? FADL_ITEMS.filter(i => arabicMatchAny([i.title, i.text, i.source ?? ""], search)) : FADL_ITEMS,
+  [search]);
+
+  const filteredAdabNafs = useMemo(() =>
+    search.trim() ? ADAB_NAFS.filter(i => arabicMatchAny([i.title, i.text, i.source ?? ""], search)) : ADAB_NAFS,
+  [search]);
+
+  const filteredAdabSheikh = useMemo(() =>
+    search.trim() ? ADAB_SHEIKH.filter(i => arabicMatchAny([i.title, i.text, i.source ?? ""], search)) : ADAB_SHEIKH,
+  [search]);
+
+  const filteredAdabDars = useMemo(() =>
+    search.trim() ? ADAB_DARS.filter(i => arabicMatchAny([i.title, i.text, i.source ?? ""], search)) : ADAB_DARS,
+  [search]);
 
   useEffect(() => {
     applyPageSeo({
@@ -471,6 +489,19 @@ export default function AdabTalabIlmPage() {
         ))}
       </div>
 
+      {(activeTab === "fadl" || activeTab === "adab-nafs" || activeTab === "adab-sheikh" || activeTab === "adab-ilm") && (
+        <div className="atl-search-wrap">
+          <input
+            type="search"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="ابحث في الآداب..."
+            className="page-search-input atl-search-input"
+            aria-label="بحث في آداب طالب العلم"
+          />
+        </div>
+      )}
+
       <div className="atl-container">
         {/* فضل العلم */}
         {activeTab === "fadl" && (
@@ -482,7 +513,7 @@ export default function AdabTalabIlmPage() {
               </p>
             </div>
             <div className="atl-cards">
-              {FADL_ITEMS.map((item, i) => (
+              {filteredFadl.map((item, i) => (
                 <div key={i} className="atl-card atl-card--hadith">
                   <h3 className="atl-card__title">{item.title}</h3>
                   <p className="atl-card__text">{item.text}</p>
@@ -503,7 +534,7 @@ export default function AdabTalabIlmPage() {
               </p>
             </div>
             <div className="atl-accordion">
-              {ADAB_NAFS.map((item, i) => (
+              {filteredAdabNafs.map((item, i) => (
                 <div key={i} className={`atl-acc-item${openIdx === i ? " atl-acc-item--open" : ""}`}>
                   <button
                     type="button"
@@ -537,7 +568,7 @@ export default function AdabTalabIlmPage() {
               </p>
             </div>
             <div className="atl-accordion">
-              {ADAB_SHEIKH.map((item, i) => (
+              {filteredAdabSheikh.map((item, i) => (
                 <div key={i} className={`atl-acc-item${openIdx === i ? " atl-acc-item--open" : ""}`}>
                   <button
                     type="button"
@@ -571,7 +602,7 @@ export default function AdabTalabIlmPage() {
               </p>
             </div>
             <div className="atl-accordion">
-              {ADAB_DARS.map((item, i) => (
+              {filteredAdabDars.map((item, i) => (
                 <div key={i} className={`atl-acc-item${openIdx === i ? " atl-acc-item--open" : ""}`}>
                   <button
                     type="button"
