@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 
 type SahabiCategory = "الكل" | "الخلفاء" | "العشرة" | "النساء" | "العلماء" | "الفاتحون";
@@ -666,6 +667,10 @@ export default function SahabahPage() {
             <p>لا توجد نتائج مطابقة</p>
           </div>
         )}
+
+        <div className="twh-share">
+          <ShareButtons title="الصحابة الكرام — المجلس العلمي" url="https://majlisilm.com/sahabah" />
+        </div>
 
         {/* related */}
         <nav className="sb-related" aria-label="صفحات ذات صلة">

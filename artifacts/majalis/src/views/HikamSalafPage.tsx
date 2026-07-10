@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { Copy, Heart, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 /* ─── أنواع البيانات ─── */
 type Hikma = {
@@ -790,6 +791,10 @@ export default function HikamSalafPage() {
           })}
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="حكم السلف الصالح — المجلس العلمي" url="https://majlisilm.com/hikam-salaf" />
+      </div>
 
       {/* ذات صلة */}
       <section className="hk-related">

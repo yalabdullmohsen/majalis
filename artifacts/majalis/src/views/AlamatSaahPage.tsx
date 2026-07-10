@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
+import { ShareButtons } from "@/components/ContentActions";
 
 /* ══════════════════════════════════════════════════════════════════
    §246، علامات الساعة  (.as-*)
@@ -396,6 +397,10 @@ export default function AlamatSaahPage() {
           </div>
         )}
 
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="علامات الساعة — المجلس العلمي" url="https://majlisilm.com/alamat-saah" />
       </div>
     </div>
   );

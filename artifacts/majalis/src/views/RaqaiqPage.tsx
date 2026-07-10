@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
+import { ShareButtons } from "@/components/ContentActions";
 
 /* ══════════════════════════════════════════════════════════════════
    §249، الرقائق والزهد  (.rq-*)
@@ -315,6 +316,10 @@ export default function RaqaiqPage() {
           </div>
         )}
 
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="الرقائق والزهد — المجلس العلمي" url="https://majlisilm.com/raqaiq" />
       </div>
     </div>
   );

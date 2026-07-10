@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 
 type SalahTab = "shurut" | "kayfiyya" | "mubtilatat" | "khushuu" | "fawaid";
@@ -326,6 +327,10 @@ export default function SalahGuidePage() {
             </div>
           </div>
         )}
+
+        <div className="twh-share">
+          <ShareButtons title="دليل الصلاة — المجلس العلمي" url="https://majlisilm.com/salah-guide" />
+        </div>
 
         {/* related */}
         <nav className="sg-related" aria-label="صفحات ذات صلة">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 
 type UQTab = "nuzul" | "jam" | "tafsir" | "ijaz" | "ahkam";
@@ -331,6 +332,10 @@ export default function UlumQuranPage() {
             </div>
           </div>
         )}
+
+        <div className="twh-share">
+          <ShareButtons title="علوم القرآن الكريم — المجلس العلمي" url="https://majlisilm.com/ulum-quran" />
+        </div>
 
         {/* related */}
         <nav className="uq-related" aria-label="صفحات ذات صلة">

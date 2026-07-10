@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 interface Fadila {
   id: string;
@@ -643,6 +644,10 @@ export default function FadailAamalPage() {
             <p>لا توجد نتائج مطابقة</p>
           </div>
         )}
+
+        <div className="twh-share">
+          <ShareButtons title="فضائل الأعمال — المجلس العلمي" url="https://majlisilm.com/fadail-aamal" />
+        </div>
 
         {/* related */}
         <nav className="fa-related" aria-label="صفحات ذات صلة">

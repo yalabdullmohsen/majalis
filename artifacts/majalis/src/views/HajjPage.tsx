@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 
 /* ────── types ────── */
@@ -467,6 +468,10 @@ export default function HajjPage() {
             </div>
           </section>
         )}
+
+        <div className="twh-share">
+          <ShareButtons title="الحج والعمرة — المجلس العلمي" url="https://majlisilm.com/hajj" />
+        </div>
 
         {/* related */}
         <nav className="hj-related" aria-label="صفحات ذات صلة">

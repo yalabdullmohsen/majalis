@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { Check, CheckCircle2, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 /* ─── أنواع البيانات ─── */
 type Sunnah = {
@@ -633,6 +634,10 @@ export default function SunanYawmiyyaPage() {
           <p>لا توجد نتائج، جرِّب بحثاً آخر</p>
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="السنن اليومية — المجلس العلمي" url="https://majlisilm.com/sunan-yawmiyya" />
+      </div>
 
       {/* صفحات ذات صلة */}
       <section className="sy-related">

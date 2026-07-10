@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 
 /* ───────── types ───────── */
@@ -569,6 +570,10 @@ export default function SawmPage() {
             </div>
           </section>
         )}
+
+        <div className="twh-share">
+          <ShareButtons title="الصيام وأحكامه — المجلس العلمي" url="https://majlisilm.com/sawm" />
+        </div>
 
         {/* related */}
         <nav className="sw-related" aria-label="صفحات ذات صلة">

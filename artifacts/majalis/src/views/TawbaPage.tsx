@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 
 type TawbaTab = "shurut" | "anwaa" | "adhkar" | "mawani" | "athaar";
@@ -350,6 +351,10 @@ export default function TawbaPage() {
             </blockquote>
           </div>
         )}
+
+        <div className="twh-share">
+          <ShareButtons title="التوبة والاستغفار — المجلس العلمي" url="https://majlisilm.com/tawba" />
+        </div>
 
         {/* related */}
         <nav className="tw-related" aria-label="صفحات ذات صلة">

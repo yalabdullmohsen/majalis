@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 
 type TaharaTab = "wudu" | "ghusl" | "tayammum" | "najasat";
@@ -341,6 +342,10 @@ export default function TaharaPage() {
             </div>
           </section>
         )}
+
+        <div className="twh-share">
+          <ShareButtons title="الطهارة وأحكامها — المجلس العلمي" url="https://majlisilm.com/tahara" />
+        </div>
 
         {/* related */}
         <nav className="th-related" aria-label="مواضيع ذات صلة">

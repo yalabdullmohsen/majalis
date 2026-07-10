@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
+import { ShareButtons } from "@/components/ContentActions";
 
 /* ══════════════════════════════════════════════════════════════════
    §245، صفة الجنة والنار  (.jn-*)
@@ -236,6 +237,10 @@ export default function JannaNaarPage() {
           </div>
         )}
 
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="الجنة والنار — المجلس العلمي" url="https://majlisilm.com/janna-naar" />
       </div>
     </div>
   );
