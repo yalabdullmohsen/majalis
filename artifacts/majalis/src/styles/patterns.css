@@ -5,6 +5,60 @@
  */
 
 /* ══════════════════════════════════════════════════
+   زخرفة شاملة لجميع hero sections في الموقع
+   نمط نجوم هندسية خفيف على الخلفيات الداكنة
+   ══════════════════════════════════════════════════ */
+.pt-hero, .ar-hero, .wird-hero, .mzd-hero, .twh-hub-hero, .fqh-hub-hero,
+.dvp-hero, .lps-hero, .an-hero, .cvp-hero, .qlive-hero, .sch-hero,
+.ah-hero, .akl-hero, .duas-hero, .ai-hero, .hs-hero, .mdb-hero,
+.sy-hero, .hk-hero, .zk-hero, .sw-hero, .hj-hero, .th-hero,
+.jn-hero, .sb-hero, .uq-hero, .mw-hero, .fq-hero, .sh-hero,
+.is-hero, .gl-hero, .nb-hero, .as-hero, .mk-hero, .wn-hero,
+.sm-hero, .seerah-hero, .prophets-lux-hero,
+.page-hero-dark, .miracles-hero, .stories-hero, .prophets-hero,
+.timeline-hero, .lesson-detail-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.pt-hero::after, .ar-hero::after, .wird-hero::after, .mzd-hero::after,
+.twh-hub-hero::after, .fqh-hub-hero::after, .dvp-hero::after, .lps-hero::after,
+.an-hero::after, .cvp-hero::after, .qlive-hero::after, .sch-hero::after,
+.ah-hero::after, .akl-hero::after, .duas-hero::after, .ai-hero::after,
+.hs-hero::after, .mdb-hero::after, .sy-hero::after, .hk-hero::after,
+.zk-hero::after, .sw-hero::after, .hj-hero::after, .th-hero::after,
+.jn-hero::after, .sb-hero::after, .uq-hero::after, .mw-hero::after,
+.fq-hero::after, .sh-hero::after, .is-hero::after, .gl-hero::after,
+.nb-hero::after, .as-hero::after, .mk-hero::after, .wn-hero::after,
+.sm-hero::after, .seerah-hero::after, .prophets-lux-hero::after,
+.page-hero-dark::after, .miracles-hero::after, .stories-hero::after,
+.prophets-hero::after, .timeline-hero::after, .lesson-detail-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 5L36 20L51 15L46 30L60 30L46 36L51 45L36 40L30 55L24 40L9 45L14 36L0 30L14 24L9 15L24 20Z' fill='none' stroke='rgba(255,255,255,0.045)' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pt-hero > *, .ar-hero > *, .wird-hero > *, .mzd-hero > *,
+.twh-hub-hero > *, .fqh-hub-hero > *, .dvp-hero > *, .lps-hero > *,
+.an-hero > *, .cvp-hero > *, .qlive-hero > *, .sch-hero > *,
+.ah-hero > *, .akl-hero > *, .duas-hero > *, .ai-hero > *,
+.hs-hero > *, .mdb-hero > *, .sy-hero > *, .hk-hero > *,
+.zk-hero > *, .sw-hero > *, .hj-hero > *, .th-hero > *,
+.jn-hero > *, .sb-hero > *, .uq-hero > *, .mw-hero > *,
+.fq-hero > *, .sh-hero > *, .is-hero > *, .gl-hero > *,
+.nb-hero > *, .as-hero > *, .mk-hero > *, .wn-hero > *,
+.sm-hero > *, .seerah-hero > *, .prophets-lux-hero > *,
+.page-hero-dark > *, .miracles-hero > *, .stories-hero > *,
+.prophets-hero > *, .timeline-hero > *, .lesson-detail-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ══════════════════════════════════════════════════
    النمط 1: شبكة النجوم الثمانية — خفيفة جداً
    مثالية كخلفية للـ Hero أو الشاشة الرئيسية
    ══════════════════════════════════════════════════ */
