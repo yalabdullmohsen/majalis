@@ -286,6 +286,12 @@ export default function HomePage() {
               <span className="hp-quick-link__label">{label}</span>
             </Link>
           ))}
+          <Link href="/sitemap" className="hp-quick-link hp-quick-link--all" aria-label="كل الأقسام">
+            <span className="hp-quick-link__icon" aria-hidden="true">
+              <Layers size={20} strokeWidth={1.8} />
+            </span>
+            <span className="hp-quick-link__label">كل الأقسام</span>
+          </Link>
         </div>
       </nav>
 

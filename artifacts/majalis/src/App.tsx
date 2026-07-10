@@ -30,6 +30,7 @@ import { recordRecentPage } from "@/lib/recent-pages";
 const lazy = lazyWithRetry;
 
 const AboutPage = lazy(() => import("@/views/AboutPage"));
+const SiteMapPage = lazy(() => import("@/views/SiteMapPage"));
 const PrivacyPage = lazy(() => import("@/views/PrivacyPage"));
 const TermsPage = lazy(() => import("@/views/TermsPage"));
 const ContactPage = lazy(() => import("@/views/ContactPage"));
@@ -278,6 +279,7 @@ function Router() {
         <HomePage />
       </Route>
       <Route path="/about"><SafeLazyRoute component={AboutPage} /></Route>
+      <Route path="/sitemap"><SafeLazyRoute component={SiteMapPage} /></Route>
       <Route path="/privacy"><SafeLazyRoute component={PrivacyPage} /></Route>
       <Route path="/terms"><SafeLazyRoute component={TermsPage} /></Route>
       <Route path="/contact"><SafeLazyRoute component={ContactPage} /></Route>

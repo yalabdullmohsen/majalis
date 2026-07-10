@@ -1,0 +1,159 @@
+import { useEffect } from "react";
+import { Link } from "wouter";
+import { applyPageSeo } from "@/lib/seo";
+
+const SECTIONS = [
+  {
+    title: "القرآن الكريم",
+    emoji: "📖",
+    links: [
+      { href: "/quran-hub",          label: "مركز القرآن",        desc: "بوابة كل ما يتعلق بالقرآن" },
+      { href: "/quran",              label: "المصحف الشريف",      desc: "تصفّح القرآن سورةً سورة" },
+      { href: "/daily-wird",         label: "الورد اليومي",       desc: "ختمة متجددة يومياً" },
+      { href: "/quran/tajweed",      label: "علم التجويد",        desc: "أحكام التجويد بالأمثلة" },
+      { href: "/ulum-quran",         label: "علوم القرآن",        desc: "التفسير والناسخ والمنسوخ" },
+      { href: "/quran/surah-stories", label: "قصص السور",         desc: "أسباب النزول" },
+      { href: "/duas-quran",         label: "أدعية القرآن",       desc: "الأدعية القرآنية المختارة" },
+      { href: "/quran-radio",        label: "إذاعة القرآن",       desc: "استماع مباشر" },
+      { href: "/quran-circles",      label: "حلقات التحفيظ",      desc: "دليل حلقات القرآن" },
+      { href: "/muezzins",           label: "مكتبة القراء",       desc: "مقاطع صوتية للقراء" },
+    ],
+  },
+  {
+    title: "الحديث والسنة",
+    emoji: "📜",
+    links: [
+      { href: "/hadith",             label: "الأحاديث النبوية",   desc: "موسوعة الأحاديث" },
+      { href: "/arbaeen-nawawi",     label: "الأربعون النووية",   desc: "٤٠ حديثاً مع الشرح" },
+      { href: "/hadith-science",     label: "مصطلح الحديث",       desc: "السند والمتن والدرجات" },
+      { href: "/wasaya-nabawiyya",   label: "الوصايا النبوية",    desc: "خلاصة الوصايا الجامعة" },
+      { href: "/prophetic-medicine", label: "الطب النبوي",        desc: "هديه ﷺ في الصحة" },
+      { href: "/shamael",            label: "الشمائل المحمدية",   desc: "صفاته ﷺ خَلقاً وخُلقاً" },
+    ],
+  },
+  {
+    title: "العقيدة والتوحيد",
+    emoji: "🕌",
+    links: [
+      { href: "/tawhid",      label: "التوحيد والعقيدة",   desc: "أنواع التوحيد ومسائل العقيدة" },
+      { href: "/arkan",       label: "أركان الإسلام",      desc: "الشهادتان والصلاة والزكاة..." },
+      { href: "/arkan-iman",  label: "أركان الإيمان",      desc: "الإيمان بالله والملائكة..." },
+      { href: "/asma-husna",  label: "الأسماء الحسنى",     desc: "٩٩ اسماً بمعانيها وآياتها" },
+      { href: "/janna-naar",  label: "الجنة والنار",       desc: "صفة الجنة والنار من النصوص" },
+      { href: "/alamat-saah", label: "علامات الساعة",      desc: "الصغرى والكبرى" },
+      { href: "/malaika",     label: "الملائكة",           desc: "أسماؤهم ومهامهم" },
+      { href: "/miracles",    label: "الإعجاز العلمي",     desc: "إعجاز القرآن والكون" },
+    ],
+  },
+  {
+    title: "الفقه والأحكام",
+    emoji: "⚖️",
+    links: [
+      { href: "/fiqh",        label: "مدخل الفقه",          desc: "بوابة الفقه والفتاوى" },
+      { href: "/tahara",      label: "الطهارة",              desc: "الوضوء والغسل والتيمم" },
+      { href: "/salah-guide", label: "الصلاة",               desc: "دليل الصلاة كاملاً" },
+      { href: "/zakat",       label: "الزكاة",               desc: "أحكام الزكاة وحسابها" },
+      { href: "/sawm",        label: "الصيام",               desc: "أحكام رمضان والنوافل" },
+      { href: "/hajj",        label: "الحج والعمرة",         desc: "مناسك الحج والعمرة" },
+      { href: "/janaza",      label: "الجنائز",              desc: "أحكام الجنائز والتعزية" },
+      { href: "/mawarith",    label: "المواريث",             desc: "حاسبة الفرائض" },
+      { href: "/fiqh-qawaid", label: "القواعد الفقهية",      desc: "القواعد الخمس الكبرى" },
+      { href: "/madhahib",    label: "المذاهب الأربعة",      desc: "الحنفي والمالكي والشافعي والحنبلي" },
+      { href: "/qa",          label: "الأسئلة والأجوبة",     desc: "أسئلة وأجوبة شرعية" },
+      { href: "/fatwa",       label: "الفتاوى",              desc: "فتاوى مُحقَّقة" },
+      { href: "/rulings",     label: "الأحكام الشرعية",      desc: "موسوعة الأحكام" },
+      { href: "/fiqh-council", label: "المجمع الفقهي",       desc: "قرارات المجامع الفقهية" },
+    ],
+  },
+  {
+    title: "العبادة والأذكار",
+    emoji: "🤲",
+    links: [
+      { href: "/adhkar",            label: "الأذكار",              desc: "الصباح والمساء والنوم" },
+      { href: "/duas",              label: "الأدعية الشرعية",      desc: "أدعية مصنفة" },
+      { href: "/tasbih",            label: "التسبيح",              desc: "عداد التسبيح الرقمي" },
+      { href: "/sunan-yawmiyya",    label: "السنن اليومية",        desc: "السنن مع تتبع إتمامها" },
+      { href: "/prayer-ranks",      label: "فضائل الصلاة",         desc: "أحاديث وآيات فضل الصلاة" },
+      { href: "/fadail-aamal",      label: "فضائل الأعمال",        desc: "أحاديث في الفضائل" },
+      { href: "/prayer-times",      label: "مواقيت الصلاة",        desc: "أوقات الصلاة بموقعك" },
+      { href: "/qibla",             label: "اتجاه القبلة",         desc: "البوصلة نحو مكة" },
+      { href: "/tawba",             label: "التوبة والاستغفار",    desc: "فضل التوبة وأدعيتها" },
+      { href: "/raqaiq",            label: "الرقائق والزهد",       desc: "تزكية النفس" },
+      { href: "/occasions",         label: "المناسبات الإسلامية",  desc: "أذكار المناسبات" },
+    ],
+  },
+  {
+    title: "السيرة والتاريخ",
+    emoji: "🌙",
+    links: [
+      { href: "/seerah",           label: "السيرة النبوية",       desc: "من المولد حتى الوفاة ﷺ" },
+      { href: "/sahabah",          label: "الصحابة الكرام",       desc: "سِيَر الصحابة وفضائلهم" },
+      { href: "/prophets",         label: "الأنبياء والرسل",      desc: "٢٥ نبياً بقصصهم" },
+      { href: "/stories",          label: "القصص الإسلامية",      desc: "قصص إسلامية معبِّرة" },
+      { href: "/islamic-stories",  label: "صحابة وفتوحات",        desc: "قصص الصحابة والفتوحات" },
+    ],
+  },
+  {
+    title: "التعلّم والمكتبة",
+    emoji: "🎓",
+    links: [
+      { href: "/lessons",          label: "الدروس والمحاضرات",    desc: "دروس صوتية ومرئية" },
+      { href: "/annual-courses",   label: "الدورات العلمية",      desc: "برامج وكورسات منظمة" },
+      { href: "/library",          label: "المكتبة الشرعية",      desc: "كتب ومخطوطات إسلامية" },
+      { href: "/scholars",         label: "أعلام الإسلام",        desc: "تراجم العلماء" },
+      { href: "/quiz",             label: "المسابقة التعليمية",   desc: "اختبر معلوماتك" },
+      { href: "/flashcards",       label: "بطاقات المراجعة",      desc: "مراجعة ذكية" },
+      { href: "/assistant",        label: "المساعد الذكي",        desc: "استفسر عن أي مسألة" },
+      { href: "/learning-path",    label: "خارطة طالب العلم",    desc: "منهج التعلم التراكمي" },
+      { href: "/my-learning",      label: "لوحتي التعليمية",     desc: "إحصائياتك وتقدمك" },
+      { href: "/knowledge-graph",  label: "شبكة المعرفة",        desc: "العلاقات بين المفاهيم" },
+      { href: "/mind-map",         label: "الخرائط الذهنية",      desc: "تنظيم المعلومات مرئياً" },
+      { href: "/calendar",         label: "التقويم الهجري",      desc: "التقويم والمناسبات" },
+      { href: "/hikam-salaf",      label: "حكم السلف الصالح",     desc: "أقوال الأئمة والصحابة" },
+      { href: "/akhlaq",           label: "الأخلاق الإسلامية",    desc: "مكارم الأخلاق" },
+      { href: "/fawaid",           label: "الفوائد العلمية",      desc: "فوائد ومنقولات موثقة" },
+      { href: "/islamic-glossary", label: "المصطلحات الإسلامية",  desc: "معجم المصطلحات" },
+      { href: "/universities",     label: "دليل الجامعات",        desc: "الجامعات الإسلامية" },
+    ],
+  },
+];
+
+export default function SiteMapPage() {
+  useEffect(() => {
+    applyPageSeo({
+      path: "/sitemap",
+      title: "كل الأقسام | المجلس العلمي",
+      description: "دليل شامل بجميع أقسام المجلس العلمي من قرآن وحديث وفقه وعقيدة وسيرة وأدوات التعلم.",
+    });
+  }, []);
+
+  return (
+    <div className="page-shell sm-page">
+      {/* Hero */}
+      <header className="sm-hero">
+        <p className="sm-hero__eye">استكشف</p>
+        <h1 className="sm-hero__title">كل الأقسام</h1>
+        <p className="sm-hero__sub">دليل شامل بجميع أقسام ومحتويات المجلس العلمي</p>
+      </header>
+
+      <main className="sm-content">
+        {SECTIONS.map(({ title, emoji, links }) => (
+          <section key={title} className="sm-section">
+            <h2 className="sm-section__title">
+              <span aria-hidden="true">{emoji}</span>
+              {title}
+            </h2>
+            <div className="sm-grid">
+              {links.map(({ href, label, desc }) => (
+                <Link key={href} href={href} className="sm-card">
+                  <strong className="sm-card__label">{label}</strong>
+                  <span className="sm-card__desc">{desc}</span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        ))}
+      </main>
+    </div>
+  );
+}
