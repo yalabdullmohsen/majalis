@@ -667,6 +667,165 @@ export const MIND_MAPS: MindMap[] = [
       ],
     },
   },
+  {
+    id: "usul-fiqh",
+    title: "أصول الفقه",
+    category: "الفقه والأحكام",
+    description: "قواعد ومصادر الاستنباط الفقهي وطرق الاجتهاد",
+    root: {
+      id: "r-usul",
+      label: "أصول الفقه",
+      children: [
+        {
+          id: "masadir",
+          label: "مصادر التشريع",
+          children: [
+            { id: "ms-1", label: "القرآن الكريم" },
+            { id: "ms-2", label: "السنة النبوية" },
+            { id: "ms-3", label: "الإجماع" },
+            { id: "ms-4", label: "القياس" },
+          ],
+        },
+        {
+          id: "ahkam-shari",
+          label: "الأحكام الشرعية",
+          href: "/rulings",
+          children: [
+            { id: "ah-1", label: "الواجب والمستحب" },
+            { id: "ah-2", label: "المحرم والمكروه" },
+            { id: "ah-3", label: "المباح" },
+            { id: "ah-4", label: "الصحيح والفاسد والباطل" },
+          ],
+        },
+        {
+          id: "qawaid-usul",
+          label: "القواعد الأصولية",
+          children: [
+            { id: "qu-1", label: "الأمر للوجوب حتى يصرفه صارف" },
+            { id: "qu-2", label: "النهي للتحريم حتى يصرفه صارف" },
+            { id: "qu-3", label: "الأصل في الأشياء الإباحة" },
+            { id: "qu-4", label: "الاجتهاد لا يُنقض بالاجتهاد" },
+          ],
+        },
+        {
+          id: "ijtihad",
+          label: "الاجتهاد والتقليد",
+          children: [
+            { id: "ij-1", label: "شروط المجتهد" },
+            { id: "ij-2", label: "أنواع الاجتهاد" },
+            { id: "ij-3", label: "التقليد وشروطه" },
+            { id: "ij-4", label: "المذاهب الأربعة", href: "/fiqh" },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    id: "tajweed-sciences",
+    title: "علم التجويد",
+    category: "القرآن الكريم",
+    description: "أحكام تجويد القرآن الكريم ومخارج الحروف وصفاتها",
+    root: {
+      id: "r-tajweed",
+      label: "علم التجويد",
+      children: [
+        {
+          id: "makharij",
+          label: "مخارج الحروف",
+          children: [
+            { id: "mk-1", label: "الجوف — حروف المد" },
+            { id: "mk-2", label: "الحلق — الهمزة والهاء والعين والحاء والغين والخاء" },
+            { id: "mk-3", label: "اللسان — ١٨ حرفاً" },
+            { id: "mk-4", label: "الشفتان — الباء والميم والواو والفاء" },
+          ],
+        },
+        {
+          id: "ahkam-nun",
+          label: "أحكام النون الساكنة والتنوين",
+          children: [
+            { id: "an-1", label: "الإظهار الحلقي" },
+            { id: "an-2", label: "الإدغام بغنة وبغير غنة" },
+            { id: "an-3", label: "الإقلاب" },
+            { id: "an-4", label: "الإخفاء الحقيقي" },
+          ],
+        },
+        {
+          id: "madd",
+          label: "أحكام المد",
+          children: [
+            { id: "md-1", label: "المد الطبيعي — حرفان" },
+            { id: "md-2", label: "المد المتصل — واجب" },
+            { id: "md-3", label: "المد المنفصل — جائز" },
+            { id: "md-4", label: "المد العارض للسكون" },
+          ],
+        },
+        {
+          id: "sifat-huruf",
+          label: "صفات الحروف",
+          children: [
+            { id: "sf-1", label: "الصفات ذات الأضداد: الهمس/الجهر" },
+            { id: "sf-2", label: "الشدة والرخاوة والتوسط" },
+            { id: "sf-3", label: "الاستعلاء والاستفال" },
+            { id: "sf-4", label: "الإطباق والانفتاح" },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    id: "hadith-terminology",
+    title: "مصطلح الحديث",
+    category: "الحديث والسنة",
+    description: "علوم الحديث ومصطلحاته وأنواع الأسانيد والرواة",
+    root: {
+      id: "r-mustalah",
+      label: "مصطلح الحديث",
+      children: [
+        {
+          id: "anwa-hadith",
+          label: "أنواع الحديث",
+          href: "/hadith-science",
+          children: [
+            { id: "nh-1", label: "الصحيح والحسن — مقبول" },
+            { id: "nh-2", label: "الضعيف — مردود" },
+            { id: "nh-3", label: "الموضوع — مكذوب" },
+            { id: "nh-4", label: "المتواتر والآحاد" },
+          ],
+        },
+        {
+          id: "isnad-types",
+          label: "أنواع الإسناد",
+          children: [
+            { id: "is-1", label: "المرفوع — إلى النبي ﷺ" },
+            { id: "is-2", label: "الموقوف — إلى الصحابي" },
+            { id: "is-3", label: "المقطوع — إلى التابعي" },
+            { id: "is-4", label: "المرسل — انقطاع في الإسناد" },
+          ],
+        },
+        {
+          id: "jarh-tadil",
+          label: "الجرح والتعديل",
+          children: [
+            { id: "jt-1", label: "مراتب التعديل" },
+            { id: "jt-2", label: "مراتب الجرح" },
+            { id: "jt-3", label: "الثقة والمجهول والمتروك" },
+            { id: "jt-4", label: "أئمة الجرح والتعديل" },
+          ],
+        },
+        {
+          id: "kutub-hadith",
+          label: "كتب الحديث الكبرى",
+          href: "/hadith",
+          children: [
+            { id: "kh-1", label: "صحيح البخاري" },
+            { id: "kh-2", label: "صحيح مسلم" },
+            { id: "kh-3", label: "سنن الأربعة" },
+            { id: "kh-4", label: "موطأ مالك ومسند أحمد" },
+          ],
+        },
+      ],
+    },
+  },
 ];
 
 export const MIND_MAP_CATEGORIES = [
