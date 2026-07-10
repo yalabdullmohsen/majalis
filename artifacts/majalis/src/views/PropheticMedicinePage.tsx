@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { AlertTriangle, Apple, BedDouble, Beef, BookOpen, CalendarDays, Droplets, FlaskConical, Grape, Leaf, Moon, PersonStanding, Salad, ScrollText, ShowerHead, Sprout, Stethoscope, Sunrise, TreePalm, Utensils, Waves, Wheat } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import { Chip } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import {
@@ -137,6 +138,10 @@ export default function PropheticMedicinePage() {
             </article>
           );
         })}
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="الطب النبوي — المجلس العلمي" url="https://majlisilm.com/prophetic-medicine" />
       </div>
 
       <FilterBottomSheet

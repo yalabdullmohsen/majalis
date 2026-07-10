@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 type Madhhab = {
   id: string;
@@ -290,6 +291,10 @@ export default function MadhahibPage() {
           جميع المذاهب الأربعة مذاهب معتبرة في الإسلام، والاختلاف بينها رحمة ووسعة في الشريعة.
           المسلم يتبع مذهبه بعلم أو يسأل أهل العلم في بلده.
         </p>
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="المذاهب الفقهية الأربعة — المجلس العلمي" url="https://majlisilm.com/madhahib" />
       </div>
 
       {/* صفحات ذات صلة */}

@@ -4,6 +4,7 @@ import type { LucideIcon } from "lucide-react";
 import { Link, useSearch } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import { getFatwas } from "@/lib/platform-content-service";
 import { getLatestFatwas } from "@/lib/fatwa-seed";
 import { getRulingsEncyclopedia } from "@/lib/rulings-service";
@@ -341,6 +342,10 @@ export default function FiqhPage() {
             </div>
           </div>
         )}
+
+      <div className="twh-share">
+        <ShareButtons title="الفقه الإسلامي — المجلس العلمي" url="https://majlisilm.com/fiqh" />
+      </div>
 
       </div>
     </div>

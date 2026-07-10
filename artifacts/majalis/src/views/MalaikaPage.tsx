@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
+import { ShareButtons } from "@/components/ContentActions";
 
 /* ══════════════════════════════════════════════════════════════════
    §247، الملائكة في الإسلام  (.mk-*)
@@ -299,6 +300,10 @@ export default function MalaikaPage() {
             </div>
           </div>
         )}
+
+      <div className="twh-share">
+        <ShareButtons title="الملائكة في الإسلام — المجلس العلمي" url="https://majlisilm.com/malaikah" />
+      </div>
 
       </div>
     </div>

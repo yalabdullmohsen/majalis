@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ChevronDown, ChevronUp, Heart, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
+import { ShareButtons } from "@/components/ContentActions";
 
 /* ══════════════════════════════════════════════════════════════════
    §240، الشمائل المحمدية  (.sh-*)
@@ -472,6 +473,10 @@ export default function ShimaelPage() {
             </div>
           </div>
         )}
+
+      <div className="twh-share">
+        <ShareButtons title="الشمائل المحمدية — المجلس العلمي" url="https://majlisilm.com/shimail" />
+      </div>
       </div>
     </div>
   );

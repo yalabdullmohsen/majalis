@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { BookOpen, ChevronDown, ChevronUp, Layers, Scale, Search, Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
+import { ShareButtons } from "@/components/ContentActions";
 
 /* ══════════════════════════════════════════════════════════════════
    §239، القواعد الفقهية الكبرى  (.fq-*)
@@ -575,6 +576,10 @@ export default function FiqhQawaidPage() {
             ))}
           </div>
         </section>
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="القواعد الفقهية — المجلس العلمي" url="https://majlisilm.com/fiqh-qawaid" />
       </div>
     </div>
   );

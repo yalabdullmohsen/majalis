@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Search, Copy, Check, BookOpen, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 /* ─── بيانات الأدعية ─── */
 type DuaEntry = {
@@ -590,6 +591,10 @@ export default function DuasPage() {
           })}
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="الأدعية الشرعية — المجلس العلمي" url="https://majlisilm.com/duas" />
+      </div>
     </div>
   );
 }

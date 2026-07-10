@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 
 type JanazaTab = "ghusl" | "takfin" | "salah" | "dafn" | "aadab";
@@ -303,6 +304,10 @@ export default function JanazaPage() {
             </div>
           </section>
         )}
+
+        <div className="twh-share">
+          <ShareButtons title="أحكام الجنازة — المجلس العلمي" url="https://majlisilm.com/janaza" />
+        </div>
 
         {/* related */}
         <nav className="jn-related" aria-label="صفحات ذات صلة">
