@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Link } from "wouter";
 import { ChevronDown, ChevronLeft, ExternalLink, Map, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import { MIND_MAPS, MIND_MAP_CATEGORIES, type MindMap, type MindMapNode } from "@/lib/mind-maps-data";
 
 /* ═══════════════════════════════════════════════════
@@ -163,6 +164,9 @@ export default function MindMapPage() {
         انقر على أي بطاقة لفتح الخريطة الذهنية، واضغط على أي عقدة لطيّها أو توسيعها.
         أيقونة <ExternalLink size={11} strokeWidth={2} className="icon-inline" /> تفتح الصفحة المرتبطة مباشرة.
       </p>
+      <div className="twh-share">
+        <ShareButtons title="الخرائط الذهنية الإسلامية — المجلس العلمي" url="https://majlisilm.com/mind-map" />
+      </div>
     </div>
   );
 }

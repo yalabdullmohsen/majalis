@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { ArrowRight, Rocket } from "lucide-react";
+import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 
 type FeatureStatus = "in-progress" | "planned" | "beta";
@@ -152,6 +153,48 @@ const FEATURES: RoadmapFeature[] = [
     progress: 35,
     status: "planned",
   },
+  {
+    title: "الخرائط الذهنية الإسلامية",
+    description: "12+ خريطة ذهنية تفاعلية في العقيدة والفقه والحديث والتفسير والسيرة والبلاغة والزهد والفرائض، قابلة للطيّ والتوسيع.",
+    progress: 88,
+    status: "beta",
+  },
+  {
+    title: "قسم الرسم البياني المعرفي",
+    description: "استكشاف ديناميكي لعلاقات المصطلحات والعلوم الإسلامية بصورة بيانية تفاعلية.",
+    progress: 60,
+    status: "in-progress",
+  },
+  {
+    title: "موسوعة المصطلحات الإسلامية",
+    description: "63+ مصطلح في العقيدة والفقه والحديث والقرآن والسيرة، مع تعريفات دقيقة ومصادر موثّقة.",
+    progress: 82,
+    status: "beta",
+  },
+  {
+    title: "موسوعة علوم الحديث",
+    description: "34+ مصطلح في علوم الحديث، أنواع السند والراوي والجرح والتعديل وكتب الحديث الكبرى.",
+    progress: 85,
+    status: "beta",
+  },
+  {
+    title: "البطاقات الدعوية",
+    description: "صانع بطاقات اقتباسات إسلامية بأربعة قوالب وثلاثة أحجام (مربع/ستوري/أفقي) قابلة للتحميل بجودة عالية.",
+    progress: 90,
+    status: "beta",
+  },
+  {
+    title: "التحقق من الشهادات",
+    description: "نظام تحقق من شهادات إتمام المسارات التعليمية برمز فريد لكل شهادة.",
+    progress: 45,
+    status: "in-progress",
+  },
+  {
+    title: "ملف الباحث الشرعي",
+    description: "ملف شخصي لكل باحث يتضمن مجالات تخصصه وأبحاثه ومشاركاته في المجلس العلمي.",
+    progress: 50,
+    status: "in-progress",
+  },
 ];
 
 export default function FeaturesInProgressPage() {
@@ -219,6 +262,9 @@ export default function FeaturesInProgressPage() {
           <ArrowRight size={18} aria-hidden="true" />
           <span>العودة للرئيسية</span>
         </Link>
+      </div>
+      <div className="twh-share">
+        <ShareButtons title="مميزات قيد التطوير — المجلس العلمي" url="https://majlisilm.com/features-in-progress" />
       </div>
     </div>
   );

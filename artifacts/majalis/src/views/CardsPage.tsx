@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import html2canvas from "html2canvas";
+import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 
 type SizeKey = "square" | "story" | "wide";
@@ -226,6 +227,9 @@ export default function CardsPage() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="twh-share">
+        <ShareButtons title="البطاقات الدعوية — المجلس العلمي" url="https://majlisilm.com/cards" />
       </div>
     </div>
   );
