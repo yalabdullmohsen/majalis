@@ -323,11 +323,26 @@ const TABS: { id: HajjTab; label: string; icon: string }[] = [
 /* ────── component ────── */
 export default function HajjPage() {
   useEffect(() => {
-      applyPageSeo({
+    applyPageSeo({
       path: "/hajj",
       title: "الحج والعمرة، المجلس العلمي",
       description: "دليل شامل لأحكام الحج والعمرة: الأركان والواجبات والسنن والمشاعر والدعاء",
       keywords: ["الحج", "العمرة", "أركان الحج", "مناسك الحج", "أحكام الحج", "الإحرام"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أركان الحج",
+          description: "أركان الحج وأحكامه وخطواته التفصيلية",
+          numberOfItems: ARKAN.length,
+          itemListElement: ARKAN.map((r, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: r.title,
+            url: `https://majlisilm.com/hajj#${r.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 

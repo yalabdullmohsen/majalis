@@ -266,6 +266,21 @@ export default function ZakatPage() {
       title: "الزكاة وأحكامها | المجلس العلمي",
       description: "دليل شامل لأحكام الزكاة: أنواعها وشروطها ونصابها ومصارفها، مع حاسبة مبسطة وأدلة من القرآن والسنة.",
       keywords: ["زكاة", "أحكام الزكاة", "نصاب الزكاة", "زكاة المال", "زكاة الفطر", "حاسبة زكاة"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أنواع الزكاة وأحكامها",
+          description: "أنواع الزكاة المختلفة مع النصاب والشروط والأدلة الشرعية",
+          numberOfItems: KINDS.length,
+          itemListElement: KINDS.map((k, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: k.title,
+            url: `https://majlisilm.com/zakat#${k.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 

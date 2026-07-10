@@ -172,6 +172,21 @@ export default function ArkanImanPage() {
       title: "أركان الإيمان الستة | المجلس العلمي",
       description: "تعرَّف على أركان الإيمان الستة مع الأدلة القرآنية والنبوية وأقوال العلماء: الإيمان بالله والملائكة والكتب والرسل واليوم الآخر والقدر.",
       keywords: ["أركان الإيمان", "عقيدة", "الإيمان بالله", "الملائكة", "اليوم الآخر", "القدر"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أركان الإيمان الستة",
+          description: "أركان الإيمان الستة بالأدلة القرآنية والنبوية وأقوال العلماء",
+          numberOfItems: ARKAN_IMAN.length,
+          itemListElement: ARKAN_IMAN.map((r, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: r.title,
+            url: `https://majlisilm.com/arkan-iman#rukn-${r.num}`,
+          })),
+        },
+      ],
     });
   }, []);
 

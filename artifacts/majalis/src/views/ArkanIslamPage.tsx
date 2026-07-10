@@ -149,6 +149,21 @@ export default function ArkanIslamPage() {
       title: "أركان الإسلام الخمسة | مجالس",
       description: "شرح تفصيلي لأركان الإسلام الخمسة: الشهادتان، الصلاة، الزكاة، الصوم، الحج، مع الأدلة وأقوال العلماء.",
       keywords: ["أركان الإسلام", "الشهادتان", "الصلاة", "الزكاة", "رمضان", "الحج"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أركان الإسلام الخمسة",
+          description: "شرح أركان الإسلام الخمسة بالأدلة وأقوال العلماء",
+          numberOfItems: ARKAN.length,
+          itemListElement: ARKAN.map((r, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: r.title,
+            url: `https://majlisilm.com/arkan#rukn-${r.num}`,
+          })),
+        },
+      ],
     });
   }, []);
 

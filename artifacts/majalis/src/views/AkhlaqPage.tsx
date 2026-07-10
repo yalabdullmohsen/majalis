@@ -764,6 +764,21 @@ export default function AkhlaqPage() {
       title: "الأخلاق الإسلامية، القيم والآداب | مجالس",
       description: "موسوعة الأخلاق الإسلامية: التواضع، الصدق، الأمانة، الصبر، الكرم، مع الآيات والأحاديث وأقوال العلماء.",
       keywords: ["أخلاق إسلامية", "قيم", "آداب", "تواضع", "صدق", "أمانة", "صبر"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "الأخلاق الإسلامية",
+          description: "موسوعة الأخلاق والقيم والآداب الإسلامية مع الآيات والأحاديث",
+          numberOfItems: AKHLAQ.length,
+          itemListElement: AKHLAQ.slice(0, 20).map((a, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: a.title,
+            url: `https://majlisilm.com/akhlaq#${a.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 

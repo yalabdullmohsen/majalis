@@ -283,6 +283,20 @@ export default function TawhidPage() {
       description:
         "بوابة العقيدة والتوحيد: أنواع التوحيد، أركان الإيمان، الأسماء الحسنى، الجنة والنار، علامات الساعة، الملائكة، والإعجاز العلمي، منهج أهل السنة والجماعة.",
       ogType: "article",
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "موضوعات العقيدة والتوحيد",
+          description: "بوابة العقيدة والتوحيد: أنواع التوحيد وأركان الإيمان والأسماء الحسنى والجنة والنار",
+          itemListElement: AQEEDA_SECTIONS.map((s, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: s.title,
+            url: `https://majlisilm.com${s.href}`,
+          })),
+        },
+      ],
     });
   }, []);
 
