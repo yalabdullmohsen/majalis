@@ -302,7 +302,9 @@ export default function SearchPage() {
     }
   };
 
-  const localExtra = q.trim() ? searchLocalExtensions(q) : { occasions: [], nawawi: [], quran: [] };
+  const localExtra = q.trim()
+    ? searchLocalExtensions(q)
+    : { occasions: [], nawawi: [], quran: [], adhkar: [], surahStories: [], islamicStories: [] };
   const hasActiveFilter = Object.values(filters).some(Boolean);
 
   const intelligentTotal = intelligentResults.length;
@@ -313,7 +315,8 @@ export default function SearchPage() {
     (results.fatwas?.length || 0) + (results.rulings?.length || 0) +
     (results.courses?.length || 0) + (results.updates?.length || 0) +
     (results.hadith?.length || 0) + (results.stories?.length || 0) +
-    localExtra.occasions.length + localExtra.nawawi.length + localExtra.quran.length;
+    localExtra.occasions.length + localExtra.nawawi.length + localExtra.quran.length +
+    localExtra.adhkar.length + localExtra.surahStories.length + localExtra.islamicStories.length;
 
   const total = intelligentTotal > 0 ? intelligentTotal : legacyTotal;
 
@@ -541,6 +544,11 @@ export default function SearchPage() {
                   <Group title="الأذكار" id="adhkar" items={results.adhkar} render={(a) => (
                     <ResultRow key={a.id} href="/adhkar" kind="adhkar" title={displayText(a.text)} meta={a.category || a.source} />
                   )} />
+                  {results.adhkar.length === 0 && localExtra.adhkar.length > 0 && (
+                    <Group title="الأذكار" items={localExtra.adhkar} render={(a) => (
+                      <ResultRow key={a.id} href={a.href} kind="adhkar" title={a.title} meta={a.meta} />
+                    )} />
+                  )}
                   <Group title="المناسبات" items={localExtra.occasions} render={(o) => (
                     <ResultRow key={o.id} href={o.href} title={o.title} meta={o.meta} />
                   )} />
@@ -548,6 +556,14 @@ export default function SearchPage() {
                     <ResultRow key={h.id} href={h.href} kind="hadith" title={h.title} meta={h.meta} />
                   )} />
                   <Group title="القرآن" items={localExtra.quran} render={(s) => (
+                    <ResultRow key={s.id} href={s.href} kind="quran" title={s.title} meta={s.meta} />
+                  )} />
+                  {results.stories?.length === 0 && localExtra.islamicStories.length > 0 && (
+                    <Group title="القصص الإسلامية" items={localExtra.islamicStories} render={(s) => (
+                      <ResultRow key={s.id} href={s.href} kind="story" title={s.title} meta={s.meta} />
+                    )} />
+                  )}
+                  <Group title="قصص السور" items={localExtra.surahStories} render={(s) => (
                     <ResultRow key={s.id} href={s.href} kind="quran" title={s.title} meta={s.meta} />
                   )} />
                   {fiqhResults.length === 0 && (
