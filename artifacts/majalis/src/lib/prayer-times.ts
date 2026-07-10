@@ -145,18 +145,63 @@ function buildPayload(
   };
 }
 
-/**
- * أوقات صلاة تقريبية للكويت عند فشل جميع مصادر الشبكة.
- * المتوسطات السنوية الدقيقة (تختلف بين الشتاء والصيف بنحو ساعة).
- */
-function staticPrayerFallback(cityName = "الكويت – محافظة العاصمة"): PrayerTimesPayload {
-  const month = new Date().getMonth() + 1; // 1-12
-  const isSummer = month >= 5 && month <= 9; // مايو–سبتمبر
+function pad2(n: number) { return String(Math.floor(n)).padStart(2, "0"); }
+function toKuwaitTime(date: Date): string {
+  try {
+    const parts = new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Asia/Kuwait",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    }).formatToParts(date);
+    const h = parts.find((p) => p.type === "hour")?.value ?? "00";
+    const m = parts.find((p) => p.type === "minute")?.value ?? "00";
+    return `${h}:${m}`;
+  } catch {
+    const h = date.getUTCHours() + 3; // Kuwait UTC+3
+    const m = date.getUTCMinutes();
+    return `${pad2(h % 24)}:${pad2(m)}`;
+  }
+}
 
+async function computePrayerTimesLocal(
+  lat: number,
+  lon: number,
+  cityName: string,
+): Promise<PrayerTimesPayload> {
+  const { Coordinates, CalculationMethod, PrayerTimes, Madhab } = await import("adhan");
+  const coordinates = new Coordinates(lat, lon);
+  const params = CalculationMethod.Kuwait();
+  params.madhab = Madhab.Shafi;
+  const now = new Date();
+  const pt = new PrayerTimes(coordinates, now, params);
+  const timings: Record<string, string> = {
+    Fajr:    toKuwaitTime(pt.fajr),
+    Sunrise: toKuwaitTime(pt.sunrise),
+    Dhuhr:   toKuwaitTime(pt.dhuhr),
+    Asr:     toKuwaitTime(pt.asr),
+    Maghrib: toKuwaitTime(pt.maghrib),
+    Isha:    toKuwaitTime(pt.isha),
+  };
+  const readable = new Intl.DateTimeFormat("ar-KW", {
+    timeZone: "Asia/Kuwait",
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(now);
+  return {
+    ...buildPayload(timings, { timezone: "Asia/Kuwait" }, { readable }, cityName),
+    source: "حساب محلي (adhan-js، طريقة الكويت)",
+  };
+}
+
+function staticPrayerFallback(cityName = "الكويت – محافظة العاصمة"): PrayerTimesPayload {
+  const month = new Date().getMonth() + 1;
+  const isSummer = month >= 5 && month <= 9;
   const timings: Record<string, string> = isSummer
     ? { Fajr: "04:00", Sunrise: "05:30", Dhuhr: "12:05", Asr: "16:35", Maghrib: "19:10", Isha: "20:35" }
     : { Fajr: "05:10", Sunrise: "06:30", Dhuhr: "12:00", Asr: "15:05", Maghrib: "17:25", Isha: "18:45" };
-
   const readable = new Intl.DateTimeFormat("ar-KW", {
     timeZone: "Asia/Kuwait",
     weekday: "long",
@@ -164,7 +209,6 @@ function staticPrayerFallback(cityName = "الكويت – محافظة العا
     month: "long",
     day: "numeric",
   }).format(new Date());
-
   return {
     ...buildPayload(timings, { timezone: "Asia/Kuwait" }, { readable }, cityName),
     source: "تقديري (بدون اتصال)",
@@ -422,6 +466,12 @@ export async function fetchPrayerTimes(governorateId?: string): Promise<PrayerTi
 
   try {
     return await fetchAlAdhanDirect(gov.lat, gov.lon, cityName);
+  } catch {
+    /* API فشل — استخدم الحساب المحلي بدون اتصال */
+  }
+
+  try {
+    return await computePrayerTimesLocal(gov.lat, gov.lon, cityName);
   } catch {
     return staticPrayerFallback(cityName);
   }
