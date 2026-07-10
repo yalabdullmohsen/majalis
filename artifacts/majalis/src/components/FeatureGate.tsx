@@ -47,14 +47,9 @@ export function FeatureGate({ flag, children, label }: FeatureGateProps) {
 
       <p style={{ color: "#555", maxWidth: 380, lineHeight: 1.65, margin: 0, fontSize: "0.92rem" }}>
         نعمل على إتاحة هذه الميزة في أقرب وقت. تابع{" "}
-        <a
-          href="https://t.me/majlisilm"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: "#1F4D3A", fontWeight: 700 }}
-        >
-          قناتنا على تيليجرام
-        </a>{" "}
+        <Link href="/features-in-progress" style={{ color: "#1F4D3A", fontWeight: 700 }}>
+          خارطة التطوير
+        </Link>{" "}
         لمعرفة آخر التحديثات.
       </p>
 

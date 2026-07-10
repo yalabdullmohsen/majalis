@@ -19,16 +19,27 @@ import { applyPageSeo } from "@/lib/seo";
 export default function CitationPublicPage() {
   const [, params] = useRoute("/c/:slug");
 
+  const slug = params?.slug || "";
+
   useEffect(() => {
     applyPageSeo({
-      path: "/c",
+      path: `/c/${slug}`,
       title: "مقتطف علمي مشترك | المجلس العلمي",
       description: "مقتطف علمي من المجلس العلمي، استشهادات أكاديمية بأسلوب مفهرس وجاهز للمشاركة والنشر.",
       keywords: ["مقتطف علمي", "استشهاد أكاديمي", "نص إسلامي", "مشاركة علمية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          name: "مقتطف علمي",
+          url: `https://majlisilm.com/c/${slug}`,
+          description: "مقتطف علمي إسلامي جاهز للمشاركة والاستشهاد الأكاديمي",
+          publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          inLanguage: "ar",
+        },
+      ],
     });
-  }, []);
-
-  const slug = params?.slug || "";
+  }, [slug]);
   const { user } = useAuth();
 
   const [citation, setCitation] = useState<Citation | null>(null);

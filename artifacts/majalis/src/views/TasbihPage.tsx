@@ -42,6 +42,18 @@ export default function TasbihPage() {
       title: "التسبيح الرقمي | المجلس العلمي",
       description: "عداد التسبيح الرقمي مع أوراد قابلة للتخصيص، سبّح بحمد الله واذكر الله في أي وقت مع متابعة تقدمك اليومي.",
       keywords: ["تسبيح", "ذكر الله", "عداد تسبيح", "أوراد", "أذكار"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "عداد التسبيح الرقمي",
+          url: "https://majlisilm.com/tasbih",
+          description: "عداد تسبيح رقمي مع أوراد قابلة للتخصيص لذكر الله في أي وقت",
+          applicationCategory: "LifestyleApplication",
+          inLanguage: "ar",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        },
+      ],
     });
   }, []);
 

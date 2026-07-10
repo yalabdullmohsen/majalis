@@ -277,6 +277,16 @@ export default function UniversityDetailPage() {
         title: `${university.name_ar} | المجلس العلمي`,
         description: university.about || `تفاصيل ${university.name_ar}، البرامج الأكاديمية والتخصصات والاعتمادات.`,
         keywords: ["جامعة إسلامية", university.name_ar, "دراسة شرعية", "تعليم ديني"],
+        jsonLd: [
+          {
+            "@context": "https://schema.org",
+            "@type": "EducationalOrganization",
+            name: university.name_ar,
+            url: `https://majlisilm.com/universities/${slug}`,
+            description: university.about || `${university.name_ar} — بيانات وبرامج أكاديمية`,
+            ...(university.website_url ? { sameAs: university.website_url } : {}),
+          },
+        ],
       });
     }
   }, [university, slug]);

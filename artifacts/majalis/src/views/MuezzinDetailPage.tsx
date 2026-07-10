@@ -66,12 +66,22 @@ export default function MuezzinDetailPage() {
 
   useEffect(() => {
     applyPageSeo({
-      path: "/muezzins",
+      path: `/muezzins/${id}`,
       title: `${muezzin?.name || "مؤذن"} | أذان | المجلس العلمي`,
       description: `استمع لتلاوات ${muezzin?.name || "المؤذن"}، أذان مباشر وتسجيلات إسلامية متنوعة.`,
       keywords: ["أذان", "مؤذن", "تلاوات أذان", "صوت مؤذن", "أذان إسلامي"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: muezzin?.name || "مؤذن",
+          url: `https://majlisilm.com/muezzins/${id}`,
+          jobTitle: "مؤذن",
+          description: `تسجيلات أذان ${muezzin?.name || "المؤذن"} الإسلامية`,
+        },
+      ],
     });
-  }, [muezzin?.name]);
+  }, [muezzin?.name, id]);
 
   const [playState, setPlayState] = useState<PlayState>({ key: null });
   const [saved, setSaved] = useState(false);

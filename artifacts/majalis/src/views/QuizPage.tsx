@@ -10,6 +10,18 @@ export default function QuizPage() {
       title: "مسابقة المعلومات الإسلامية | المجلس العلمي",
       description: "اختبر معلوماتك الإسلامية في التاريخ والفقه والقرآن والسيرة النبوية، مسابقة تفاعلية بمستويات متدرجة.",
       keywords: ["مسابقة إسلامية", "اختبار معلومات", "أسئلة إسلامية", "تحدي قرآني", "مسابقة فقهية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Quiz",
+          name: "مسابقة المعلومات الإسلامية",
+          url: "https://majlisilm.com/quiz",
+          description: "اختبر معلوماتك الإسلامية في الفقه والقرآن والسيرة والتاريخ",
+          educationalLevel: "متعدد المستويات",
+          inLanguage: "ar",
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        },
+      ],
     });
   }, []);
 

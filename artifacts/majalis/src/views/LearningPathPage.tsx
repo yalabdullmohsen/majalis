@@ -23,6 +23,18 @@ export default function LearningPathPage() {
       title: "مسارات التعلم الشرعي | المجلس العلمي",
       description: "ابدأ رحلة التعلم الشرعي المنهجي، مسارات علمية منظمة في الفقه والعقيدة والتفسير والحديث.",
       keywords: ["مسارات تعلم", "تعلم شرعي", "تعليم إسلامي", "منهج علمي", "دراسة شرعية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "EducationalOccupationalProgram",
+          name: "مسارات التعلم الشرعي",
+          url: "https://majlisilm.com/learning-path",
+          description: "مسارات علمية منهجية في الفقه والعقيدة والتفسير والحديث",
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          inLanguage: "ar",
+          educationalLevel: "متعدد المستويات",
+        },
+      ],
     });
   }, []);
   const [progress, setProgress]   = useState<LPProgress[]>([]);
