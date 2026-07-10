@@ -111,6 +111,38 @@ function siteJsonLdScript() {
   return `<script type="application/ld+json">${JSON.stringify([org, site])}</script>`;
 }
 
+function fatwaQaJsonLdScript(row) {
+  const payload = {
+    "@context": "https://schema.org",
+    "@type": "QAPage",
+    mainEntity: {
+      "@type": "Question",
+      name: row.question,
+      text: row.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: row.answer || row.question,
+        upvoteCount: row.view_count || 1,
+      },
+    },
+  };
+  return `<script type="application/ld+json">${JSON.stringify(payload)}</script>`;
+}
+
+function fatwaListFaqJsonLdScript(fatwas) {
+  const items = fatwas
+    .filter((row) => row.answer)
+    .slice(0, 8)
+    .map((row) => ({
+      "@type": "Question",
+      name: row.question,
+      acceptedAnswer: { "@type": "Answer", text: row.answer },
+    }));
+  if (!items.length) return "";
+  const payload = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: items };
+  return `<script type="application/ld+json">${JSON.stringify(payload)}</script>`;
+}
+
 function prerenderHtml(route, extraJsonLd = "") {
   const canonical = absoluteUrl(route.path);
   const image = absoluteUrl(route.image || seoConfig.defaultImage);
@@ -326,13 +358,16 @@ await writeFile(resolve(publicDir, "sitemap.xml"), sitemap, "utf8");
 await writeFile(resolve(publicDir, "robots.txt"), robots, "utf8");
 await writeFile(resolve(publicDir, "feed.xml"), feed, "utf8");
 
+const fatwaFaqScript = fatwaListFaqJsonLdScript(PLATFORM_SEED.fatwas || []);
+
 for (const route of staticRoutes) {
   const routeDir =
     route.path === "/"
       ? seoPrerenderDir
       : resolve(seoPrerenderDir, route.path.slice(1));
   await mkdir(routeDir, { recursive: true });
-  await writeFile(resolve(routeDir, "index.html"), prerenderHtml(route), "utf8");
+  const staticExtraJsonLd = route.path === "/fatwa" ? fatwaFaqScript : "";
+  await writeFile(resolve(routeDir, "index.html"), prerenderHtml(route, staticExtraJsonLd), "utf8");
 
   if (route.path !== "/") {
     const legacyPublicDir = resolve(publicDir, route.path.slice(1));
@@ -379,9 +414,10 @@ const platformPrerender = [
     route: {
       path: `/fatwa/${row.id}`,
       title: `${row.question} | ${seoConfig.siteName}`,
-      description: row.question,
+      description: row.answer ? row.answer.slice(0, 160) : row.question,
       ogType: "article",
     },
+    extraJsonLd: fatwaQaJsonLdScript(row),
   })),
   ...verifiedFiqhSessions.map((row) => ({
     dir: resolve(seoPrerenderDir, "fiqh-council", "sessions", row.slug),
@@ -424,7 +460,7 @@ const platformPrerender = [
 
 for (const item of platformPrerender) {
   await mkdir(item.dir, { recursive: true });
-  await writeFile(resolve(item.dir, "index.html"), prerenderHtml(item.route), "utf8");
+  await writeFile(resolve(item.dir, "index.html"), prerenderHtml(item.route, item.extraJsonLd || ""), "utf8");
 }
 
 const totalUrls = staticRoutes.length + lessonRows.length + platformPrerender.length;

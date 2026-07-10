@@ -89,11 +89,24 @@ export default function QaPage({
   const items = useMemo(() => normalizeQaItems(rawItems), [rawItems]);
 
   useEffect(() => {
+    const topQa = DEMO_QA.filter((q: any) => q.answer).slice(0, 8);
+    const faqSchema = topQa.length
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: topQa.map((q) => ({
+            "@type": "Question",
+            name: q.question,
+            acceptedAnswer: { "@type": "Answer", text: q.answer },
+          })),
+        }
+      : undefined;
     applyPageSeo({
       path: "/qa",
       title: "الأسئلة والأجوبة الشرعية | المجلس العلمي",
       description: "أسئلة وأجوبة شرعية في الفقه والعقيدة والعبادات والمعاملات، موثقة من العلماء والمراجع الموثوقة.",
       keywords: ["أسئلة شرعية", "أجوبة شرعية", "فتاوى", "فقه إسلامي", "سؤال وجواب"],
+      ...(faqSchema ? { jsonLd: [faqSchema] } : {}),
     });
   }, []);
 

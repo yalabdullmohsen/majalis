@@ -1,32 +1,133 @@
 {
   "fiqh_decisions": [
-    { "id": "fiqh-crypto-2024", "slug": "fiqh-crypto-2024", "title": "حكم التعامل بالعملات الرقمية (المشفّرة)", "category": "الاقتصاد الإسلامي", "type": "resolution" },
-    { "id": "fiqh-organ-donation", "slug": "fiqh-organ-donation", "title": "حكم التبرع بالأعضاء بعد الوفاة", "category": "الطب والنوازل", "type": "recommendation" },
-    { "id": "fiqh-minorities-rights", "slug": "fiqh-minorities-rights", "title": "حقوق الأقليات المسلمة في البلدان غير الإسلامية", "category": "الأقليات المسلمة", "type": "ruling" },
-    { "id": "fiqh-marriage-contract", "slug": "fiqh-marriage-contract", "title": "ضوابط عقد النكاح الإلكتروني", "category": "الأسرة", "type": "research" },
-    { "id": "fiqh-zakat-stocks", "slug": "fiqh-zakat-stocks", "title": "زكاة الأسهم والصناديق الاستثمارية", "category": "الزكاة والوقف", "type": "resolution" },
-    { "id": "fiqh-collective-fatwa-hajj", "slug": "fiqh-collective-fatwa-hajj", "title": "فتوى جماعية: حكم تأخير الحج لمن استطاع مادياً", "category": "الحج والعمرة", "type": "fatwa" }
+    {
+      "id": "fiqh-crypto-2024",
+      "slug": "fiqh-crypto-2024",
+      "title": "حكم التعامل بالعملات الرقمية (المشفّرة)",
+      "category": "الاقتصاد الإسلامي",
+      "type": "resolution"
+    },
+    {
+      "id": "fiqh-organ-donation",
+      "slug": "fiqh-organ-donation",
+      "title": "حكم التبرع بالأعضاء بعد الوفاة",
+      "category": "الطب والنوازل",
+      "type": "recommendation"
+    },
+    {
+      "id": "fiqh-minorities-rights",
+      "slug": "fiqh-minorities-rights",
+      "title": "حقوق الأقليات المسلمة في البلدان غير الإسلامية",
+      "category": "الأقليات المسلمة",
+      "type": "ruling"
+    },
+    {
+      "id": "fiqh-marriage-contract",
+      "slug": "fiqh-marriage-contract",
+      "title": "ضوابط عقد النكاح الإلكتروني",
+      "category": "الأسرة",
+      "type": "research"
+    },
+    {
+      "id": "fiqh-zakat-stocks",
+      "slug": "fiqh-zakat-stocks",
+      "title": "زكاة الأسهم والصناديق الاستثمارية",
+      "category": "الزكاة والوقف",
+      "type": "resolution"
+    },
+    {
+      "id": "fiqh-collective-fatwa-hajj",
+      "slug": "fiqh-collective-fatwa-hajj",
+      "title": "فتوى جماعية: حكم تأخير الحج لمن استطاع مادياً",
+      "category": "الحج والعمرة",
+      "type": "fatwa"
+    }
   ],
   "fatwas": [
-    { "id": "fatwa-prayer-combine", "question": "هل يجوز الجمع بين الصلاتين للمسافر؟", "category": "الصلاة" },
-    { "id": "fatwa-zakat-gold", "question": "هل تجب الزكاة في الذهب المُدّخر للزينة؟", "category": "الزكاة" },
-    { "id": "fatwa-music-voice", "question": "ما حكم الاستماع إلى الأناشيد الإسلامية؟", "category": "فقه عام" },
-    { "id": "fatwa-fasting-travel", "question": "هل يجوز للمسافر الإفطار في رمضان؟", "category": "الصيام" },
-    { "id": "fatwa-inheritance-daughter", "question": "ما نصيب البنت من الميراث؟", "category": "النوازل" }
+    {
+      "id": "fatwa-prayer-combine",
+      "question": "هل يجوز الجمع بين الصلاتين للمسافر؟",
+      "category": "الصلاة",
+      "answer": "نعم، يجوز للمسافر جمع الظهر مع العصر والمغرب مع العشاء جمع تقديم أو تأخير إذا كانت المسافة قصر الصلاة."
+    },
+    {
+      "id": "fatwa-zakat-gold",
+      "question": "هل تجب الزكاة في الذهب المُدّخر للزينة؟",
+      "category": "الزكاة",
+      "answer": "تجب الزكاة في الذهب المُدّخر إذا بلغ النصاب (85 جراماً) وحال عليه الحول، بمقدار ربع العشر."
+    },
+    {
+      "id": "fatwa-music-voice",
+      "question": "ما حكم الاستماع إلى الأناشيد الإسلامية؟",
+      "category": "فقه عام",
+      "answer": "الأناشيد الإسلامية الخالية من الآلات الموسيقية المحرّمة جائزة عند جمهور العلماء بشرط حسن الكلمات وعدم الإلهاء."
+    },
+    {
+      "id": "fatwa-fasting-travel",
+      "question": "هل يجوز للمسافر الإفطار في رمضان؟",
+      "category": "الصيام",
+      "answer": "يجوز للمسافر الإفطار في رمضان ويُستحب عند المشقة، مع وجوب القضاء بعد انتهاء السفر."
+    },
+    {
+      "id": "fatwa-inheritance-daughter",
+      "question": "ما نصيب البنت من الميراث؟",
+      "category": "النوازل",
+      "answer": "للبنت نصف التركة إذا كانت وحدها، والثلثان إن كنّ اثنتين فأكثر، ومع الابن فلها نصف ما له."
+    }
   ],
   "rulings": [
-    { "id": "ruling-wudu-nullifiers", "title": "نواقض الوضوء", "category": "الطهارة" },
-    { "id": "ruling-prayer-pillars", "title": "أركان الصلاة", "category": "الصلاة" },
-    { "id": "ruling-zakat-conditions", "title": "شروط وجوب الزكاة", "category": "الزكاة" },
-    { "id": "ruling-hajj-pillars", "title": "أركان الحج", "category": "الحج" },
-    { "id": "ruling-trade-conditions", "title": "شروط صحة البيع", "category": "المعاملات" },
-    { "id": "ruling-inheritance-shares", "title": "أنصبة الميراث في القرآن", "category": "المواريث" }
+    {
+      "id": "ruling-wudu-nullifiers",
+      "title": "نواقض الوضوء",
+      "category": "الطهارة"
+    },
+    {
+      "id": "ruling-prayer-pillars",
+      "title": "أركان الصلاة",
+      "category": "الصلاة"
+    },
+    {
+      "id": "ruling-zakat-conditions",
+      "title": "شروط وجوب الزكاة",
+      "category": "الزكاة"
+    },
+    {
+      "id": "ruling-hajj-pillars",
+      "title": "أركان الحج",
+      "category": "الحج"
+    },
+    {
+      "id": "ruling-trade-conditions",
+      "title": "شروط صحة البيع",
+      "category": "المعاملات"
+    },
+    {
+      "id": "ruling-inheritance-shares",
+      "title": "أنصبة الميراث في القرآن",
+      "category": "المواريث"
+    }
   ],
   "courses": [
-    { "id": "course-ijazah-tahrir-2026", "title": "دورة الإجازة في التحرير — 1447هـ", "course_type": "سنوية" },
-    { "id": "course-ramadan-intensive", "title": "البرنامج العلمي الرمضاني", "course_type": "موسمية" },
-    { "id": "course-alfiqh-almuqaran", "title": "برنامج الفقه المقارن", "course_type": "برنامج" },
-    { "id": "mutoon-alfiyyah", "title": "متن الألفية في النحو", "course_type": "متن" }
+    {
+      "id": "course-ijazah-tahrir-2026",
+      "title": "دورة الإجازة في التحرير — 1447هـ",
+      "course_type": "سنوية"
+    },
+    {
+      "id": "course-ramadan-intensive",
+      "title": "البرنامج العلمي الرمضاني",
+      "course_type": "موسمية"
+    },
+    {
+      "id": "course-alfiqh-almuqaran",
+      "title": "برنامج الفقه المقارن",
+      "course_type": "برنامج"
+    },
+    {
+      "id": "mutoon-alfiyyah",
+      "title": "متن الألفية في النحو",
+      "course_type": "متن"
+    }
   ],
   "fiqh_sessions": [
     {

@@ -38,11 +38,16 @@ export default function FatwaDetailPage({ params }: { params: { id: string } }) 
       jsonLd: [
         {
           "@context": "https://schema.org",
-          "@type": "FAQPage",
+          "@type": "QAPage",
           mainEntity: {
             "@type": "Question",
             name: item.question,
-            acceptedAnswer: { "@type": "Answer", text: item.answer },
+            text: item.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: item.answer,
+              upvoteCount: item.view_count || 1,
+            },
           },
         },
         breadcrumbJsonLd([

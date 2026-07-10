@@ -59,11 +59,24 @@ export default function FatwaPage() {
   usePageView("fatwa", null);
 
   useEffect(() => {
+    const topFatwas = getMostReadFatwas(8).filter((f: any) => f.answer);
+    const faqSchema = topFatwas.length
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: topFatwas.map((f: any) => ({
+            "@type": "Question",
+            name: f.question,
+            acceptedAnswer: { "@type": "Answer", text: f.answer },
+          })),
+        }
+      : undefined;
     applyPageSeo({
       path: "/fatwa",
       title: "الفتاوى الشرعية | المجلس العلمي",
       description: "مكتبة الفتاوى الشرعية الموثقة، تصفح فتاوى أئمة وعلماء الشريعة الإسلامية في الفقه والعبادات والمعاملات.",
       keywords: ["فتاوى", "فتوى شرعية", "أحكام شرعية", "علماء مسلمون", "فقه إسلامي"],
+      ...(faqSchema ? { jsonLd: [faqSchema] } : {}),
     });
   }, []);
 
