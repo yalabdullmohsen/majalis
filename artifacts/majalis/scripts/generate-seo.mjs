@@ -131,7 +131,7 @@ function prerenderHtml(route, extraJsonLd = "") {
     <meta name="theme-color" content="#164E3C" />
     <link rel="canonical" href="${escapeHtml(canonical)}" />
     <meta property="og:site_name" content="${escapeHtml(seoConfig.siteName)}" />
-    <meta property="og:locale" content="ar_AR" />
+    <meta property="og:locale" content="ar_KW" />
     <meta property="og:type" content="${escapeHtml(ogType)}" />
     <meta property="og:title" content="${escapeHtml(route.title)}" />
     <meta property="og:description" content="${escapeHtml(route.description)}" />
@@ -146,12 +146,28 @@ function prerenderHtml(route, extraJsonLd = "") {
     ${extraJsonLd}
   </head>
   <body>
-    <header><a href="${escapeHtml(seoConfig.siteUrl)}">${escapeHtml(seoConfig.siteName)}</a></header>
+    <header>
+      <nav>
+        <a href="${escapeHtml(seoConfig.siteUrl)}">${escapeHtml(seoConfig.siteName)}</a>
+        <a href="${escapeHtml(seoConfig.siteUrl)}/lessons">الدروس</a>
+        <a href="${escapeHtml(seoConfig.siteUrl)}/quran">القرآن</a>
+        <a href="${escapeHtml(seoConfig.siteUrl)}/adhkar">الأذكار</a>
+        <a href="${escapeHtml(seoConfig.siteUrl)}/search">البحث</a>
+      </nav>
+    </header>
     <main>
-      <h1>${escapeHtml(route.title)}</h1>
-      <p>${escapeHtml(route.description)}</p>
-      <p><a href="${escapeHtml(canonical)}">عرض الصفحة</a></p>
+      <article>
+        <h1>${escapeHtml(route.title)}</h1>
+        <p>${escapeHtml(route.description)}</p>
+        <nav aria-label="التنقل">
+          <a href="${escapeHtml(seoConfig.siteUrl)}">الرئيسية</a>
+          ${route.path !== "/" ? `<a href="${escapeHtml(canonical)}">${escapeHtml(route.title.split(" | ")[0])}</a>` : ""}
+        </nav>
+      </article>
     </main>
+    <footer>
+      <p>© ${new Date().getFullYear()} ${escapeHtml(seoConfig.siteName)} — ${escapeHtml(seoConfig.siteUrl)}</p>
+    </footer>
   </body>
 </html>`;
 }

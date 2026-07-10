@@ -215,6 +215,8 @@ export function applyPageSeo(options: PageSeoOptions) {
   upsertMeta("property", "og:url", canonical);
   upsertMeta("property", "og:image", image);
   upsertMeta("property", "og:image:alt", options.title);
+  upsertMeta("property", "og:image:width", "1200");
+  upsertMeta("property", "og:image:height", "630");
 
   upsertMeta("name", "twitter:card", "summary_large_image");
   upsertMeta("name", "twitter:title", options.title);
