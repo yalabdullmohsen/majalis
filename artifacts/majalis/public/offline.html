@@ -10,8 +10,8 @@
     body {
       font-family: "Segoe UI", Tahoma, "Noto Naskh Arabic", sans-serif;
       min-height: 100svh;
-      background: #FAF7F0;
-      color: #1f1c17;
+      background: #F0F5F2;
+      color: #1F4D3A;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -22,37 +22,38 @@
 
     .offline-card {
       background: #fff;
-      border: 1px solid #e2ddd5;
-      border-radius: 1.2rem;
+      border: 1px solid rgba(31,77,58,0.15);
+      border-radius: 1.5rem;
       padding: 2.5rem 2rem;
-      max-width: 420px;
+      max-width: 440px;
       width: 100%;
-      box-shadow: 0 4px 24px rgba(0,0,0,.07);
+      box-shadow: 0 8px 32px rgba(31,77,58,0.1);
     }
 
     .offline-icon {
-      width: 64px;
-      height: 64px;
+      width: 72px;
+      height: 72px;
       margin: 0 auto 1.25rem;
-      background: #eef7f2;
+      background: #EEF7F2;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.8rem;
+      font-size: 2rem;
+      border: 2px solid rgba(31,77,58,0.12);
     }
 
     h1 {
       font-size: 1.3rem;
       font-weight: 800;
-      color: #134a3a;
+      color: #1F4D3A;
       margin-bottom: .6rem;
     }
 
     .subtitle {
       font-size: .92rem;
-      color: #5c564c;
-      line-height: 1.7;
+      color: #607D6E;
+      line-height: 1.75;
       margin-bottom: 1.75rem;
     }
 
@@ -64,31 +65,30 @@
 
     .btn {
       display: block;
-      padding: .7rem 1.25rem;
-      border-radius: .65rem;
+      padding: .75rem 1.25rem;
+      border-radius: .75rem;
       font-size: .9rem;
       font-weight: 700;
       text-decoration: none;
       cursor: pointer;
       border: none;
       font-family: inherit;
-      transition: opacity .15s;
+      transition: opacity .15s, transform .15s;
     }
-    .btn:hover { opacity: .88; }
-    .btn--primary  { background: #166534; color: #fff; }
-    .btn--secondary { background: #eef7f2; color: #134a3a; }
+    .btn:hover { opacity: .88; transform: translateY(-1px); }
+    .btn--primary  { background: #1F4D3A; color: #ffffff; }
+    .btn--secondary { background: #EEF7F2; color: #1F4D3A; border: 1px solid rgba(31,77,58,0.2); }
 
     .offline-cached {
       margin-top: 1.75rem;
       padding-top: 1.25rem;
-      border-top: 1px solid #e2ddd5;
+      border-top: 1px solid rgba(31,77,58,0.12);
     }
     .offline-cached p {
       font-size: .78rem;
       font-weight: 700;
-      text-transform: uppercase;
       letter-spacing: .06em;
-      color: #a19e96;
+      color: #607D6E;
       margin-bottom: .75rem;
     }
     .cached-links {
@@ -103,32 +103,33 @@
       border-radius: 999px;
       font-size: .82rem;
       font-weight: 600;
-      background: #f3ede2;
-      color: #134a3a;
+      background: #F0F5F2;
+      color: #1F4D3A;
       text-decoration: none;
-      border: 1px solid #e2ddd5;
+      border: 1px solid rgba(31,77,58,0.15);
+      transition: background .15s;
     }
-    .cached-link:hover { background: #eef7f2; }
+    .cached-link:hover { background: #EEF7F2; }
 
     .offline-footer {
       margin-top: 1.5rem;
       font-size: .75rem;
-      color: #a19e96;
+      color: #607D6E;
     }
   </style>
 </head>
 <body>
   <div class="offline-card">
-    <div class="offline-icon">📶</div>
+    <div class="offline-icon">📡</div>
     <h1>أنت غير متصل بالإنترنت</h1>
     <p class="subtitle">
-      تعذّر الاتصال بالمنصة. يمكنك الوصول إلى المحتوى المحفوظ مسبقاً على جهازك
+      تعذّر الاتصال بمنصة المجلس العلمي. يمكنك الوصول إلى المحتوى المحفوظ مسبقاً
       أو المحاولة مجدداً عند استعادة الاتصال.
     </p>
 
     <div class="offline-actions">
       <button class="btn btn--primary" onclick="window.location.reload()">
-        إعادة المحاولة
+        ↻ إعادة المحاولة
       </button>
       <a href="/" class="btn btn--secondary">العودة للرئيسية</a>
     </div>
@@ -136,15 +137,16 @@
     <div class="offline-cached">
       <p>متاح دون اتصال</p>
       <div class="cached-links">
-        <a href="/adhkar" class="cached-link">الأذكار</a>
-        <a href="/quran" class="cached-link">المصحف</a>
-        <a href="/prayer-times" class="cached-link">مواقيت الصلاة</a>
-        <a href="/tasbih" class="cached-link">التسبيح</a>
-        <a href="/daily-wird" class="cached-link">الورد اليومي</a>
+        <a href="/adhkar" class="cached-link">🤲 الأذكار</a>
+        <a href="/quran" class="cached-link">📖 المصحف</a>
+        <a href="/prayer-times" class="cached-link">🕌 مواقيت الصلاة</a>
+        <a href="/tasbih" class="cached-link">📿 التسبيح</a>
+        <a href="/daily-wird" class="cached-link">📅 الورد اليومي</a>
+        <a href="/sunan-yawmiyya" class="cached-link">☀️ السنن اليومية</a>
       </div>
     </div>
   </div>
 
-  <p class="offline-footer">المجلس العلمي — منصة العلوم الشرعية</p>
+  <p class="offline-footer">🕌 المجلس العلمي — منصة العلوم الشرعية</p>
 </body>
 </html>

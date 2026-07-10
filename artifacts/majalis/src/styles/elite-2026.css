@@ -19415,6 +19415,7 @@ img[loading="lazy"]:not([src=""]) {
 }
 
 /* ذات صلة */
+.zk-share { padding: 1rem 0; border-top: 1px solid rgba(31,77,58,0.1); border-bottom: 1px solid rgba(31,77,58,0.1); margin: 1.5rem 0; display: flex; justify-content: center; }
 .zk-related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1.5px solid #E8F2EE; }
 .zk-related__title { font-size: 1rem; font-weight: 700; color: #052E16; margin-bottom: 0.75rem; }
 .zk-related__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; }

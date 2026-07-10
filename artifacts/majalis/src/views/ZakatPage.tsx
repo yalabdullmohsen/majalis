@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Calculator, ChevronDown, ChevronUp, Info } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 /* ─── بيانات الأصناف ─── */
 type ZakatKind = {
@@ -258,6 +259,11 @@ export default function ZakatPage() {
           })}
         </div>
       </section>
+
+      {/* مشاركة */}
+      <div className="zk-share">
+        <ShareButtons title="الزكاة وأحكامها — المجلس العلمي" url="https://majlisilm.com/zakat" />
+      </div>
 
       {/* ذات صلة */}
       <section className="zk-related">
