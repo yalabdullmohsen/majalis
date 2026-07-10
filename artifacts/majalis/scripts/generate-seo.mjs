@@ -519,6 +519,79 @@ const learningPathsItemListScript = itemListJsonLdScript(
   LEARNING_PATHS_SEED.map((p) => ({ name: p.title, url: `/learning/paths/${p.slug}` }))
 );
 
+const ASMAA_HUSNA = [
+  { num:1,  arabic:"الله",       meaning:"الاسم الجامع لجميع صفات الألوهية" },
+  { num:2,  arabic:"الرحمن",    meaning:"واسع الرحمة لجميع الخلق" },
+  { num:3,  arabic:"الرحيم",    meaning:"خاصّ الرحمة بالمؤمنين" },
+  { num:4,  arabic:"الملك",     meaning:"المالك الحقيقي لكل شيء" },
+  { num:5,  arabic:"القدوس",    meaning:"المنزّه عن كل عيب ونقص" },
+  { num:6,  arabic:"السلام",    meaning:"ذو السلامة من كل نقص" },
+  { num:7,  arabic:"المؤمن",    meaning:"المصدق عباده، المؤمِّن من خوفه" },
+  { num:8,  arabic:"المهيمن",   meaning:"الرقيب الشاهد على كل شيء" },
+  { num:9,  arabic:"العزيز",    meaning:"الغالب الذي لا يُغلب" },
+  { num:10, arabic:"الجبار",    meaning:"القاهر الذي يجبر الكسر" },
+  { num:11, arabic:"المتكبر",   meaning:"المتعظّم الذي له الكبرياء" },
+  { num:12, arabic:"الخالق",    meaning:"المُبدع الموجد من العدم" },
+  { num:13, arabic:"البارئ",    meaning:"الخالق المميّز بين الخلق" },
+  { num:14, arabic:"المصوّر",   meaning:"واهب الصور والأشكال" },
+  { num:15, arabic:"الغفار",    meaning:"كثير المغفرة والعفو" },
+  { num:16, arabic:"القهار",    meaning:"الغالب لكل شيء بالقهر والقدرة" },
+  { num:17, arabic:"الوهاب",    meaning:"كثير العطاء بلا منّة" },
+  { num:18, arabic:"الرزاق",    meaning:"الضامن لأرزاق جميع الخلق" },
+  { num:19, arabic:"الفتّاح",   meaning:"فاتح أبواب الخير والرحمة" },
+  { num:20, arabic:"العليم",    meaning:"المحيط علمه بكل شيء" },
+];
+
+const DUAS_SEED = [
+  { id:"sabah-1",  title:"دعاء الصباح الأول" },
+  { id:"sabah-2",  title:"سيد الاستغفار في الصباح" },
+  { id:"masa-1",   title:"أذكار المساء، الآية الكريمة" },
+  { id:"salah-1",  title:"دعاء الاستفتاح" },
+  { id:"salah-2",  title:"دعاء الركوع" },
+  { id:"salah-3",  title:"دعاء السجود" },
+  { id:"salah-4",  title:"دعاء التشهد الأخير" },
+  { id:"safar-1",  title:"دعاء السفر" },
+  { id:"karb-1",   title:"دعاء الكرب" },
+  { id:"karb-2",   title:"دعاء الهمّ والحزن" },
+  { id:"nawm-1",   title:"دعاء النوم" },
+  { id:"nawm-2",   title:"دعاء الاستيقاظ" },
+  { id:"akl-1",    title:"دعاء الطعام" },
+  { id:"akl-2",    title:"دعاء الفراغ من الطعام" },
+  { id:"masjid-1", title:"دعاء دخول المسجد" },
+  { id:"masjid-2", title:"دعاء الخروج من المسجد" },
+  { id:"wudu-1",   title:"دعاء الوضوء" },
+  { id:"shifa-1",  title:"دعاء الشفاء" },
+  { id:"ziyara-1", title:"دعاء زيارة المريض" },
+  { id:"duha-1",   title:"دعاء صلاة الضحى" },
+];
+
+const asmaaItemListScript = `<script type="application/ld+json">${JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "أسماء الله الحسنى",
+  description: "أسماء الله الحسنى التسعة والتسعون مع المعنى",
+  numberOfItems: 99,
+  itemListElement: ASMAA_HUSNA.map((a, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: `${a.arabic} — ${a.meaning}`,
+    url: `https://majlisilm.com/asma-husna#name-${a.num}`,
+  })),
+})}</script>`;
+
+const duasItemListScript = `<script type="application/ld+json">${JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "الأدعية الشرعية الموثقة",
+  description: "مكتبة الأدعية الشرعية من القرآن والسنة مع المعنى والمصدر",
+  itemListElement: DUAS_SEED.map((d, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: d.title,
+    url: `https://majlisilm.com/duas#${d.id}`,
+  })),
+})}</script>`;
+
 for (const route of staticRoutes) {
   const routeDir =
     route.path === "/"
@@ -535,7 +608,9 @@ for (const route of staticRoutes) {
     route.path === "/adhkar" ? adhkarItemListScript :
     route.path === "/prophets" ? prophetsItemListScript :
     route.path === "/scholars" ? scholarsItemListScript :
-    route.path === "/learning/paths" ? learningPathsItemListScript : "";
+    route.path === "/learning/paths" ? learningPathsItemListScript :
+    route.path === "/asma-husna" ? asmaaItemListScript :
+    route.path === "/duas" ? duasItemListScript : "";
   await writeFile(resolve(routeDir, "index.html"), prerenderHtml(route, staticExtraJsonLd), "utf8");
 
   if (route.path !== "/") {

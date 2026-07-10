@@ -134,6 +134,21 @@ export default function AsmaaHusnaPage() {
       title: "الأسماء الحسنى، أسماء الله التسعة والتسعون | مجالس",
       description: "أسماء الله الحسنى التسعة والتسعون، كل اسم بمعناه وآيته ومنفعته وذكره.",
       keywords: ["أسماء الله الحسنى", "الله", "الرحمن", "الرحيم", "الأسماء الحسنى", "99 اسم"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أسماء الله الحسنى",
+          description: "التسعة والتسعون اسماً من أسماء الله الحسنى مع المعنى والمصدر",
+          numberOfItems: ASMAA.length,
+          itemListElement: ASMAA.map((a, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `${a.arabic} — ${a.meaning}`,
+            url: `https://majlisilm.com/asma-husna#name-${a.num}`,
+          })),
+        },
+      ],
     });
   }, []);
 

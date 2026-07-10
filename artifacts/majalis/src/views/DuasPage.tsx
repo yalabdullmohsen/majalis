@@ -697,6 +697,21 @@ export default function DuasPage() {
       title: "الأدعية الشرعية، أدعية من القرآن والسنة | مجالس",
       description: "مكتبة الأدعية الشرعية الموثقة: أدعية الصباح والمساء والصلاة والسفر والكرب مع المعنى والمصدر.",
       keywords: ["أدعية", "دعاء", "أذكار", "دعاء الكرب", "دعاء الصباح", "دعاء المساء"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "الأدعية الشرعية الموثقة",
+          description: "مكتبة الأدعية الشرعية من القرآن والسنة مع المعنى والمصدر",
+          numberOfItems: DUAS.length,
+          itemListElement: DUAS.slice(0, 20).map((d, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: d.title,
+            url: `https://majlisilm.com/duas#${d.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 
