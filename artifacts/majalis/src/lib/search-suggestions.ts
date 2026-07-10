@@ -3,13 +3,15 @@ import { ADHKAR_CATEGORIES, getAllAdhkarItems } from "@/lib/adhkar-seed";
 import { LESSONS_SEED } from "@/lib/lessons-seed";
 import { SEED_FAWAID } from "@/lib/fawaid-seed";
 import { SEED_QA } from "@/lib/qa-seed";
+import { ARBAEEN_NAWAWI } from "@/lib/arbaeen-nawawi-seed";
+import { SCHOLARS } from "@/lib/scholars-data";
 
 export type SearchSuggestion = {
   id: string;
   label: string;
   meta?: string;
   href: string;
-  group: "lessons" | "fawaid" | "qa" | "adhkar";
+  group: "lessons" | "fawaid" | "qa" | "adhkar" | "nawawi" | "scholars";
 };
 
 const MAX_PER_GROUP = 4;
@@ -85,6 +87,32 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
     if (results.filter((r) => r.group === "adhkar").length >= MAX_PER_GROUP) break;
   }
 
+  for (const h of ARBAEEN_NAWAWI) {
+    if (results.length >= limit) break;
+    if (!arabicMatchAny([h.title, h.text, h.explanation], q)) continue;
+    pushUnique(results, seen, {
+      id: String(h.id),
+      label: h.title,
+      meta: h.source,
+      href: `/arbaeen-nawawi?h=${h.id}`,
+      group: "nawawi",
+    });
+    if (results.filter((r) => r.group === "nawawi").length >= MAX_PER_GROUP) break;
+  }
+
+  for (const s of SCHOLARS) {
+    if (results.length >= limit) break;
+    if (!arabicMatchAny([s.name, s.fullName, s.bio, ...s.specialty], q)) continue;
+    pushUnique(results, seen, {
+      id: s.id,
+      label: s.name,
+      meta: s.specialty.slice(0, 2).join(" · "),
+      href: `/scholars/${s.id}`,
+      group: "scholars",
+    });
+    if (results.filter((r) => r.group === "scholars").length >= MAX_PER_GROUP) break;
+  }
+
   return results.slice(0, limit);
 }
 
@@ -93,4 +121,6 @@ export const SUGGESTION_GROUP_LABELS: Record<SearchSuggestion["group"], string> 
   fawaid: "فوائد",
   qa: "أسئلة",
   adhkar: "أذكار",
+  nawawi: "الأربعون النووية",
+  scholars: "العلماء",
 };
