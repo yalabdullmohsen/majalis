@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import { ShareButtons } from "@/components/ContentActions";
 import {
   addMonths,
   eachDayOfInterval,
@@ -290,6 +291,10 @@ export default function CalendarPage() {
       )}
 
       {modalEvent && <EventModal event={modalEvent} onClose={() => setModalEvent(null)} />}
+
+      <div className="twh-share">
+        <ShareButtons title="التقويم الهجري والمناسبات الإسلامية — المجلس العلمي" url="https://majlisilm.com/calendar" />
+      </div>
     </div>
   );
 }
