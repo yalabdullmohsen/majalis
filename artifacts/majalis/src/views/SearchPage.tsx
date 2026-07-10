@@ -412,14 +412,53 @@ export default function SearchPage() {
       {!q.trim() ? (
         <div className="search-empty-state">
           <p className="search-empty-hint">
-            اكتب سؤالك أو موضوعك، المحرك يفهم المعنى ويربط الآيات والأحاديث والفتاوى والدروس.
+            ابحث في القرآن والحديث والفتاوى والدروس والكتب — المحرك يفهم المعنى ويربط المصادر.
+          </p>
+          <p style={{ fontSize: "0.75rem", color: "var(--clr-ink-soft)", marginBottom: "0.75rem", textAlign: "center" }}>
+            💡 تلميح: اسحب للأسفل من أي صفحة لفتح البحث · أو Cmd+K
           </p>
           <div className="search-suggestion-chips">
-            {["الصلاة", "الزكاة", "الحج", "التوبة", "القرآن"].map((s) => (
+            {[
+              "الصلاة", "الزكاة", "الحج", "التوبة", "الصيام",
+              "أحكام الطهارة", "فضل الذكر", "صفة الوضوء",
+              "القرآن والسنة", "العقيدة",
+            ].map((s) => (
               <button key={s} type="button" className="search-suggestion-chip" onClick={() => submitSearch(s)}>
                 {s}
               </button>
             ))}
+          </div>
+
+          {/* وصول سريع للأقسام الرئيسية */}
+          <div style={{ marginTop: "1.5rem" }}>
+            <p style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--clr-primary, #1F4D3A)", marginBottom: "0.5rem", textAlign: "center" }}>أقسام يمكنك استكشافها</p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: "0.5rem" }}>
+              {[
+                { href: "/quran", icon: "📖", label: "القرآن الكريم" },
+                { href: "/hadith", icon: "📜", label: "الأحاديث النبوية" },
+                { href: "/adhkar", icon: "🤲", label: "الأذكار" },
+                { href: "/fatwa", icon: "⚖️", label: "الفتاوى" },
+                { href: "/lessons", icon: "🎧", label: "الدروس" },
+                { href: "/library", icon: "📚", label: "المكتبة" },
+                { href: "/miracles", icon: "🌌", label: "الإعجاز العلمي" },
+                { href: "/prayer-times", icon: "🕌", label: "مواقيت الصلاة" },
+              ].map(({ href, icon, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  style={{
+                    display: "flex", flexDirection: "column", alignItems: "center", gap: "0.3rem",
+                    padding: "0.65rem 0.4rem", background: "var(--clr-surface, #fff)",
+                    borderRadius: "0.75rem", border: "1.5px solid var(--clr-border, rgba(31,77,58,0.12))",
+                    textDecoration: "none", color: "var(--clr-ink, #1a1a1a)", fontSize: "0.75rem",
+                    fontWeight: 600, transition: "border-color 0.15s, transform 0.1s", textAlign: "center",
+                  }}
+                >
+                  <span style={{ fontSize: "1.4rem" }}>{icon}</span>
+                  <span>{label}</span>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       ) : loading ? (

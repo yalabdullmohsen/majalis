@@ -505,6 +505,7 @@ function AppShell() {
   const { dir, t } = useLanguage();
   const { newBadges, dismissBadges } = useAchievementCheck();
   const [searchOpen, setSearchOpen] = useState(false);
+  const pullTouchRef = useRef<{ y: number; triggered: boolean } | null>(null);
 
   useEffect(() => {
     const keyHandler = (e: KeyboardEvent) => {
@@ -522,9 +523,31 @@ function AppShell() {
     };
   }, []);
 
+  /* سحب للأسفل لفتح البحث (موبايل) */
+  const onTouchStart = (e: React.TouchEvent) => {
+    if (window.scrollY === 0 && e.touches[0]) {
+      pullTouchRef.current = { y: e.touches[0].clientY, triggered: false };
+    }
+  };
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (!pullTouchRef.current || pullTouchRef.current.triggered) return;
+    const dy = e.touches[0].clientY - pullTouchRef.current.y;
+    if (dy > 72 && window.scrollY === 0) {
+      pullTouchRef.current.triggered = true;
+      setSearchOpen(true);
+    }
+  };
+  const onTouchEnd = () => { pullTouchRef.current = null; };
+
   return (
     <WouterRouter base={(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}>
-      <div className="app-shell" style={{ "--app-dir": dir } as React.CSSProperties}>
+      <div
+        className="app-shell"
+        style={{ "--app-dir": dir } as React.CSSProperties}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
         <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
         <NavProgressBar />
         <SeoManager />
