@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Bird, BookOpen, Gem, Heart, Landmark, Lightbulb, Library, MapPin, Megaphone, Moon, ScrollText, Sparkles, Sprout, Swords } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { Link } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
@@ -247,6 +248,13 @@ const SOURCES = [
 export default function SeerahPage() {
   usePageView("seerah", null);
   const [activeId, setActiveId] = useState(PHASES[0].id);
+  const [search, setSearch] = useState("");
+
+  const filteredPhases = useMemo(() =>
+    search.trim()
+      ? PHASES.filter(p => arabicMatchAny([p.title, p.year, p.desc, ...p.topics, ...p.keyEvents], search))
+      : PHASES,
+  [search]);
 
   useEffect(() => {
     applyPageSeo({
@@ -322,8 +330,18 @@ export default function SeerahPage() {
 
           {/* Sidebar، قائمة المراحل */}
           <nav className="seerah-timeline" aria-label="مراحل السيرة النبوية">
+            <div className="sr-search-wrap">
+              <input
+                type="search"
+                className="ds-input sr-search-input"
+                placeholder="ابحث في السيرة..."
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                aria-label="بحث في مراحل السيرة النبوية"
+              />
+            </div>
             <div className="seerah-timeline__line" aria-hidden="true" />
-            {PHASES.map(phase => (
+            {filteredPhases.map(phase => (
               <button
                 key={phase.id}
                 type="button"
