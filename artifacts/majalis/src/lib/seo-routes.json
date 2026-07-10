@@ -1593,6 +1593,30 @@
       "keywords": ["إحصائياتي"],
       "sitemap": false,
       "robots": "noindex, follow"
+    },
+    {
+      "path": "/my-submissions",
+      "title": "مساهماتي | المجلس العلمي",
+      "description": "استعرض المحتوى الذي أرسلته للمراجعة على منصة المجلس العلمي.",
+      "keywords": ["مساهماتي", "محتوى مُرسَل"],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/my-citations",
+      "title": "اقتباساتي | المجلس العلمي",
+      "description": "الاقتباسات الإسلامية التي حفظتها من الدروس والفتاوى والأحاديث.",
+      "keywords": ["اقتباساتي", "حفظ الاقتباسات"],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/researcher-profile",
+      "title": "ملف الباحث | المجلس العلمي",
+      "description": "الملف الشخصي للباحث الشرعي على منصة المجلس العلمي.",
+      "keywords": ["ملف الباحث", "البحث الشرعي"],
+      "sitemap": false,
+      "robots": "noindex, follow"
     }
   ]
 }
