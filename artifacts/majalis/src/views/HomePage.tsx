@@ -222,6 +222,13 @@ const START_STEPS = [
     href: "/lessons",
     cta: "الدروس القادمة",
   },
+  {
+    num: "٤",
+    title: "دليل طالب العلم المبتدئ",
+    desc: "٨ محطات علمية مرتبة من العقيدة إلى التوسع — ٣ روابط لكل محطة",
+    href: "/start-here",
+    cta: "ابدأ من هنا",
+  },
 ];
 
 function StartHereSection() {
