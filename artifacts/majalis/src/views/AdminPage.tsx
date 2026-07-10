@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
+import "@/styles/admin.css";
 import { AdminShell, type AdminSection } from "@/views/admin/AdminShell";
 import { DashboardSection } from "@/views/admin/DashboardSection";
 import { LessonsSection } from "@/views/admin/LessonsSection";

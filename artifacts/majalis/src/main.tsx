@@ -14,8 +14,6 @@ import "./index.css";
 import "./styles/design-system.css";
 import "./styles/patterns.css";
 import "./styles/highlighted-content.css";
-import "./styles/rulings-encyclopedia.css";
-import "./styles/admin.css";
 import "./styles/majalis-v2.css";
 import "./styles/modern-2026.css";
 import "./styles/elite-2026.css";

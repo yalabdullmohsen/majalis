@@ -1,3 +1,4 @@
+import "@/styles/rulings-encyclopedia.css";
 import { useCallback, useEffect, useState } from "react";
 import { Banknote, BookOpen, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, MapPin, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
