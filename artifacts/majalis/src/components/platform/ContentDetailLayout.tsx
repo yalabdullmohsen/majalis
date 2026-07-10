@@ -48,19 +48,6 @@ function ShareCopyBar({
     }
   };
 
-  const handleShare = async () => {
-    const url = shareUrl || (typeof window !== "undefined" ? window.location.href : "");
-    if (navigator.share) {
-      try {
-        await navigator.share({ title, url });
-        return;
-      } catch {
-        /* fall through */
-      }
-    }
-    if (url) await navigator.clipboard.writeText(url);
-  };
-
   if (!copyText && !shareUrl && !adminEdit) return null;
 
   return (
