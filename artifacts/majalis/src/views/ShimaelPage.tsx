@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { ChevronDown, ChevronUp, Heart, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ══════════════════════════════════════════════════════════════════
    §240، الشمائل المحمدية  (.sh-*)
@@ -421,6 +422,7 @@ export default function ShimaelPage() {
   const [activeTab, setActiveTab] = useState<TabId>("khalq");
   const [openBab, setOpenBab] = useState<number | null>(null);
   const [openMahabbah, setOpenMahabbah] = useState<number | null>(null);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     applyPageSeo({
@@ -446,9 +448,18 @@ export default function ShimaelPage() {
     });
   }, []);
 
-  const khalqBabs = ABWAB_KHALQ;
-  const khuluqBabs = ABWAB_KHULUQ;
-  const siraBabs = ABWAB_SIRA;
+  const khalqBabs = useMemo(() =>
+    search.trim() ? ABWAB_KHALQ.filter(b => arabicMatchAny([b.title], search)) : ABWAB_KHALQ,
+  [search]);
+  const khuluqBabs = useMemo(() =>
+    search.trim() ? ABWAB_KHULUQ.filter(b => arabicMatchAny([b.title], search)) : ABWAB_KHULUQ,
+  [search]);
+  const siraBabs = useMemo(() =>
+    search.trim() ? ABWAB_SIRA.filter(b => arabicMatchAny([b.title], search)) : ABWAB_SIRA,
+  [search]);
+  const filteredMahabbah = useMemo(() =>
+    search.trim() ? MAHABBAH_ABWAB.filter(m => arabicMatchAny([m.title, m.text], search)) : MAHABBAH_ABWAB,
+  [search]);
 
   return (
     <div className="sh-page" dir="rtl">
@@ -490,6 +501,17 @@ export default function ShimaelPage() {
               {t.label}
             </button>
           ))}
+        </div>
+
+        <div className="sh-search-wrap">
+          <input
+            type="search"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="ابحث في الشمائل..."
+            className="page-search-input sh-search-input"
+            aria-label="بحث في الشمائل المحمدية"
+          />
         </div>
 
         {/* ── الخَلق ── */}
@@ -630,7 +652,7 @@ export default function ShimaelPage() {
               </p>
             </div>
             <div className="sh-mahabbah-list">
-              {MAHABBAH_ABWAB.map((m, i) => (
+              {filteredMahabbah.map((m, i) => (
                 <div key={i} className="sh-mahabbah-card">
                   <div
                     className="sh-mahabbah-card__head"
