@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { ArrowLeft, BadgeCheck, AlertTriangle, Ban } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import { getVerifiedHadith } from "@/lib/supabase";
 import { HADITH_CLASS_META, type HadithClass } from "./HadithPage";
 
@@ -99,6 +100,10 @@ export default function HadithIndexPage() {
             </Link>
           );
         })}
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="فهرس الأحاديث النبوية — المجلس العلمي" url="https://majlisilm.com/hadith-index" />
       </div>
     </div>
   );

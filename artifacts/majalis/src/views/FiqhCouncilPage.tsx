@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
+import { ShareButtons } from "@/components/ContentActions";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
@@ -562,6 +563,10 @@ export function FiqhCouncilHubPage() {
           </section>
         </>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="مجلس الفقه الإسلامي — المجلس العلمي" url="https://majlisilm.com/fiqh-council" />
+      </div>
     </div>
   );
 }

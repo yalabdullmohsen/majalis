@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
+import { ShareButtons } from "@/components/ContentActions";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
@@ -97,6 +98,10 @@ export default function AnnualCoursesPage() {
           ))}
         </div>
       )}
+      <div className="twh-share">
+        <ShareButtons title="الدورات العلمية السنوية — المجلس العلمي" url="https://majlisilm.com/annual-courses" />
+      </div>
+
       <AdminQuickEdit section="annual-courses" />
     </div>
   );

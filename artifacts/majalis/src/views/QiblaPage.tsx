@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Smartphone } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 const MECCA_LAT = 21.4225;
 const MECCA_LON = 39.8262;
@@ -240,6 +241,10 @@ export default function QiblaPage() {
             )}
           </>
         )}
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="اتجاه القبلة — المجلس العلمي" url="https://majlisilm.com/qibla" />
       </div>
     </div>
   );

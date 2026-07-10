@@ -3,6 +3,7 @@ import { BookOpen, ClipboardList, Leaf, Map as MapIcon } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import { supabase } from "@/lib/supabase";
 import type { LPScience, LPProgress } from "@/lib/learning-path-service";
 import { fetchSciences, fetchProgress } from "@/lib/learning-path-service";
@@ -155,6 +156,10 @@ export default function LearningPathPage() {
             </div>
           </Suspense>
         )}
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="المسار التعليمي الإسلامي — المجلس العلمي" url="https://majlisilm.com/learning-path" />
       </div>
     </div>
   );

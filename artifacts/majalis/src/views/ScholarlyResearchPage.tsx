@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import { ShareButtons } from "@/components/ContentActions";
 import { Link } from "wouter";
 import { AlertTriangle, BookOpen, Download, FlaskConical, Inbox, Save, Search } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
@@ -312,6 +313,10 @@ export default function ScholarlyResearchPage() {
             ))}
           </div>
         )}
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="الباحث الشرعي — المجلس العلمي" url="https://majlisilm.com/scholarly-research" />
       </div>
     </div>
   );
