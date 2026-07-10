@@ -1,8 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { readPreferences, writePreferences } from "@/lib/user-preferences";
 import { AdminInlineEdit, type InlineEditContentType } from "@/components/AdminInlineEdit";
+
+const FaidaImageCardModal = lazy(() =>
+  import("@/components/fawaid/FaidaImageCardModal").then((m) => ({ default: m.FaidaImageCardModal }))
+);
 
 type Props = {
   text: string;
@@ -12,6 +16,9 @@ type Props = {
   showSave?: boolean;
   showReadingMode?: boolean;
   showPrint?: boolean;
+  showImageCard?: boolean;
+  imageCardCategory?: string;
+  imageCardSource?: string;
   adminEdit?: { contentType: InlineEditContentType; initialData?: Record<string, unknown> };
 };
 
@@ -32,8 +39,12 @@ export function ContentActionBar({
   showSave = false,
   showReadingMode = true,
   showPrint = false,
+  showImageCard = false,
+  imageCardCategory,
+  imageCardSource,
   adminEdit,
 }: Props) {
+  const [showCardModal, setShowCardModal] = useState(false);
   const [copied, setCopied] = useState(false);
   const [readingMode, setReadingMode] = useState(() => readPreferences().readingMode);
   const [showShareMenu, setShowShareMenu] = useState(false);
@@ -138,6 +149,16 @@ export function ContentActionBar({
           وضع القراءة
         </button>
       )}
+      {showImageCard && (
+        <button
+          type="button"
+          className="content-action-bar__btn content-action-bar__btn--card"
+          onClick={() => setShowCardModal(true)}
+          title="مشاركة كبطاقة صورة"
+        >
+          🖼 بطاقة
+        </button>
+      )}
       {showPrint && (
         <button type="button" className="content-action-bar__btn" onClick={() => window.print()}>
           طباعة
@@ -146,6 +167,17 @@ export function ContentActionBar({
       <Link href="/settings" className="content-action-bar__btn content-action-bar__link">
         إعدادات
       </Link>
+
+      {showImageCard && showCardModal && (
+        <Suspense fallback={null}>
+          <FaidaImageCardModal
+            text={text}
+            source={imageCardSource}
+            category={imageCardCategory}
+            onClose={() => setShowCardModal(false)}
+          />
+        </Suspense>
+      )}
     </div>
   );
 }

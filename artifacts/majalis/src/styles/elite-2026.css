@@ -27397,3 +27397,89 @@ img[loading="lazy"]:not([src=""]) {
 .sh-cta__btn:hover { opacity: .88; }
 .sh-cta__btn--primary { background: var(--clr-primary,#0E6E52); color: #fff; }
 .sh-cta__btn--secondary { background: rgba(14,110,82,.1); color: var(--clr-primary,#0E6E52); border: 1px solid rgba(14,110,82,.2); }
+
+/* ═══════════════════════════════════════════════════════════
+   بطاقة مشاركة الفوائد — FaidaImageCardModal
+   ═══════════════════════════════════════════════════════════ */
+.fic-backdrop {
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(0,0,0,.62); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center; padding: 1rem;
+}
+.fic-shell {
+  position: relative; width: 100%; max-width: 420px;
+  background: #fff; border-radius: 1.25rem; padding: 1.25rem;
+  box-shadow: 0 24px 64px rgba(0,0,0,.3);
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.fic-close {
+  position: absolute; top: .75rem; left: .75rem;
+  width: 2rem; height: 2rem; border-radius: 50%; border: none;
+  background: #f3f4f6; color: #555; cursor: pointer; font-size: .95rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .14s;
+}
+.fic-close:hover { background: #e5e7eb; }
+
+/* البطاقة الفعلية المُصدَرة كصورة */
+.fic-card {
+  border-radius: 1rem; overflow: hidden;
+  background: linear-gradient(145deg, #0E6E52 0%, #153025 100%);
+  aspect-ratio: 1/1; width: 100%; position: relative;
+}
+.fic-card__inner {
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 1.75rem; height: 100%; box-sizing: border-box;
+}
+.fic-card__top {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.fic-card__logo {
+  font-size: .85rem; font-weight: 800; color: rgba(255,255,255,.75); letter-spacing: .04em;
+}
+.fic-card__cat {
+  font-size: .72rem; font-weight: 700; color: rgba(255,255,255,.6);
+  background: rgba(255,255,255,.12); border-radius: 999px;
+  padding: .2rem .65rem;
+}
+.fic-card__text {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  text-align: center; color: #fff; font-size: 1.15rem; line-height: 1.8;
+  font-weight: 600; margin: 1.25rem 0; padding: 0;
+}
+.fic-card__source {
+  text-align: center; color: rgba(255,255,255,.65); font-size: .78rem;
+  margin: 0; padding: 0;
+}
+.fic-card__footer {
+  display: flex; justify-content: center;
+  font-size: .65rem; color: rgba(255,255,255,.4); letter-spacing: .08em;
+  margin-top: .75rem;
+}
+
+/* أزرار التنزيل */
+.fic-actions {
+  display: flex; gap: .6rem;
+}
+.fic-btn {
+  flex: 1; padding: .7rem 1rem; border-radius: .7rem; border: none;
+  font-size: .9rem; font-weight: 700; cursor: pointer;
+  font-family: inherit; transition: opacity .14s;
+}
+.fic-btn:disabled { opacity: .55; cursor: not-allowed; }
+.fic-btn--primary { background: #0E6E52; color: #fff; }
+.fic-btn--primary:hover:not(:disabled) { opacity: .9; }
+.fic-btn--secondary { background: #f3f4f6; color: #333; }
+.fic-btn--secondary:hover:not(:disabled) { background: #e5e7eb; }
+.fic-hint { text-align: center; font-size: .82rem; margin: 0; }
+.fic-hint--ok { color: #0E6E52; }
+.fic-hint--err { color: #b91c1c; }
+
+/* زر البطاقة في شريط الإجراءات */
+.content-action-bar__btn--card {
+  background: linear-gradient(135deg, rgba(14,110,82,.12), rgba(14,110,82,.06));
+  color: #0E6E52; border: 1px solid rgba(14,110,82,.2);
+}
+.content-action-bar__btn--card:hover {
+  background: rgba(14,110,82,.18);
+}
