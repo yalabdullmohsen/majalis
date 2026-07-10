@@ -23875,6 +23875,10 @@ img[loading="lazy"]:not([src=""]) {
 .sw-search-input { width: 100%; }
 .hj-search-wrap { padding: .5rem 1.5rem .25rem; }
 .hj-search-input { width: 100%; }
+.zk-search-wrap { padding: .5rem 0 .75rem; }
+.zk-search-input { width: 100%; }
+.sg-search-wrap { padding: .5rem 0 .75rem; }
+.sg-search-input { width: 100%; }
 .wn-tab {
   padding: .45rem 1.1rem; border-radius: 999px;
   border: 1.5px solid var(--clr-border); background: #fff;

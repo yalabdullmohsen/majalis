@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link } from "wouter";
 import { Calculator, ChevronDown, ChevronUp, Info } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ─── بيانات الأصناف ─── */
 type ZakatKind = {
@@ -259,6 +260,11 @@ function ZakatCalc() {
 
 export default function ZakatPage() {
   const [openId, setOpenId] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+
+  const filteredKinds = useMemo(() =>
+    search.trim() ? KINDS.filter(k => arabicMatchAny([k.title, k.detail, k.nisab, k.condition], search)) : KINDS,
+  [search]);
 
   useEffect(() => {
     applyPageSeo({
@@ -356,8 +362,13 @@ export default function ZakatPage() {
       {/* أنواع الزكاة */}
       <section className="zk-kinds">
         <h2 className="zk-kinds__title">أنواع الزكاة وأحكامها</h2>
+        <div className="zk-search-wrap">
+          <input type="search" value={search} onChange={e => setSearch(e.target.value)}
+            placeholder="ابحث في أنواع الزكاة..." className="page-search-input zk-search-input"
+            aria-label="بحث في أنواع الزكاة" />
+        </div>
         <div className="zk-list">
-          {KINDS.map((k) => {
+          {filteredKinds.map((k) => {
             const isOpen = openId === k.id;
             return (
               <article key={k.id} className={`zk-card${isOpen ? " zk-card--open" : ""}`}>

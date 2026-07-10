@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { RANKS } from "@/views/PrayerRanksPage";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 
 type SalahTab = "shurut" | "kayfiyya" | "mubtilatat" | "khushuu" | "fawaid" | "maratib" | "suwar";
@@ -247,6 +248,23 @@ export default function SalahGuidePage() {
   };
   const [tab, setTab] = useState<SalahTab>(initialTab);
   const [openStep, setOpenStep] = useState<number | null>(null);
+  const [search, setSearch] = useState("");
+
+  const filteredMubtilatat = useMemo(() =>
+    search.trim() ? MUBTILATAT.filter(m => arabicMatchAny([m.title, m.desc], search)) : MUBTILATAT,
+  [search]);
+  const filteredMakruhat = useMemo(() =>
+    search.trim() ? MAKRUHAT.filter(m => arabicMatchAny([m], search)) : MAKRUHAT,
+  [search]);
+  const filteredKhushuu = useMemo(() =>
+    search.trim() ? KHUSHUU_WAYS.filter(k => arabicMatchAny([k.title, k.desc], search)) : KHUSHUU_WAYS,
+  [search]);
+  const filteredFawaid = useMemo(() =>
+    search.trim() ? FAWAID.filter(f => arabicMatchAny([f.ayah, f.ref, f.note], search)) : FAWAID,
+  [search]);
+  const filteredAhadith = useMemo(() =>
+    search.trim() ? AHADITH_FAWAID.filter(h => arabicMatchAny([h.text, h.source], search)) : AHADITH_FAWAID,
+  [search]);
 
   return (
     <main className="sg-page" dir="rtl">
@@ -366,9 +384,14 @@ export default function SalahGuidePage() {
         {/* ── المبطلات ── */}
         {tab === "mubtilatat" && (
           <div className="sg-section">
+            <div className="sg-search-wrap">
+              <input type="search" value={search} onChange={e => setSearch(e.target.value)}
+                placeholder="ابحث في المبطلات والمكروهات..." className="page-search-input sg-search-input"
+                aria-label="بحث في مبطلات الصلاة" />
+            </div>
             <h2 className="sg-subhead">مبطلات الصلاة</h2>
             <div className="sg-mubtilatat-list">
-              {MUBTILATAT.map((m, i) => (
+              {filteredMubtilatat.map((m, i) => (
                 <div key={i} className="sg-mubtil-card">
                   <span className="sg-mubtil-icon">✗</span>
                   <div>
@@ -381,7 +404,7 @@ export default function SalahGuidePage() {
 
             <h2 className="sg-subhead sg-subhead--mt">مكروهات الصلاة</h2>
             <ul className="sg-makruhat-list">
-              {MAKRUHAT.map((m, i) => (
+              {filteredMakruhat.map((m, i) => (
                 <li key={i} className="sg-makruh-item">{m}</li>
               ))}
             </ul>
@@ -396,12 +419,17 @@ export default function SalahGuidePage() {
         {/* ── الخشوع ── */}
         {tab === "khushuu" && (
           <div className="sg-section">
+            <div className="sg-search-wrap">
+              <input type="search" value={search} onChange={e => setSearch(e.target.value)}
+                placeholder="ابحث في أساليب الخشوع..." className="page-search-input sg-search-input"
+                aria-label="بحث في الخشوع" />
+            </div>
             <p className="sg-lead">
               الخشوع روح الصلاة، بلا خشوع تكون الصلاة قشراً بلا لبّ. قال تعالى:
               <strong> (وَإِنَّهَا لَكَبِيرَةٌ إِلَّا عَلَى الْخَاشِعِينَ)</strong>
             </p>
             <div className="sg-khushuu-grid">
-              {KHUSHUU_WAYS.map((k) => (
+              {filteredKhushuu.map((k) => (
                 <div key={k.title} className="sg-khushuu-card">
                   <span className="sg-khushuu-icon">{k.icon}</span>
                   <h3 className="sg-khushuu-title">{k.title}</h3>
@@ -422,9 +450,14 @@ export default function SalahGuidePage() {
         {/* ── فضائل الصلاة ── */}
         {tab === "fawaid" && (
           <div className="sg-section">
+            <div className="sg-search-wrap">
+              <input type="search" value={search} onChange={e => setSearch(e.target.value)}
+                placeholder="ابحث في فضائل الصلاة..." className="page-search-input sg-search-input"
+                aria-label="بحث في فضائل الصلاة" />
+            </div>
             <h2 className="sg-subhead">من القرآن الكريم</h2>
             <div className="sg-ayaat-list">
-              {FAWAID.map((f, i) => (
+              {filteredFawaid.map((f, i) => (
                 <div key={i} className="sg-ayah-card">
                   <p className="sg-ayah-card__text">{f.ayah}</p>
                   <cite className="sg-ayah-card__ref">{f.ref}</cite>
@@ -435,7 +468,7 @@ export default function SalahGuidePage() {
 
             <h2 className="sg-subhead sg-subhead--mt">من السنة النبوية</h2>
             <div className="sg-ahadith-list">
-              {AHADITH_FAWAID.map((h, i) => (
+              {filteredAhadith.map((h, i) => (
                 <div key={i} className="sg-hadith-item">
                   <p className="sg-hadith-item__text">{h.text}</p>
                   <cite className="sg-hadith-item__source">{h.source}</cite>
