@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { AlertTriangle, Globe } from "lucide-react";
 import { Link } from "wouter";
 import { CompareProvider, useCompare } from "@/components/universities/CompareContext";
+import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { ACCREDITATION_LABELS, ACCREDITATION_COLOR } from "@/lib/universities-service";
 import type { University, UniversityProgram } from "@/lib/universities-service";
@@ -149,6 +150,10 @@ function CompareContent() {
             ) : <div key={u.slug} />
           ))}
         </div>
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="مقارنة الجامعات الإسلامية — المجلس العلمي" url="https://majlisilm.com/universities/compare" />
       </div>
     </div>
   );

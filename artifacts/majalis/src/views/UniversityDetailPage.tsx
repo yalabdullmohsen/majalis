@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AlertTriangle, Calendar, ExternalLink, FileText, Globe, GraduationCap, Info, Landmark, MapPin } from "lucide-react";
 import { useRoute, Link } from "wouter";
+import { ShareButtons } from "@/components/ContentActions";
 import { Spinner } from "@/components/ui/spinner";
 import {
   fetchUniversity,
@@ -250,6 +251,10 @@ function DetailContent({ university: u }: { university: University }) {
         <div className="udp-disclaimer">
           <Info size={12} aria-hidden="true" className="inline ml-1" /> المعلومات أعلاه مُدخَلة يدوياً لأغراض توجيهية فقط. الرسوم والشروط وتواريخ القبول
           قد تتغير. تحقق دائماً من الموقع الرسمي للجامعة أو تواصل معها مباشرة قبل اتخاذ قرار.
+        </div>
+
+        <div className="twh-share">
+          <ShareButtons title={`${u.name_ar} — دليل الجامعات الإسلامية | المجلس العلمي`} url={`https://majlisilm.com/universities/${u.slug}`} />
         </div>
       </div>
 
