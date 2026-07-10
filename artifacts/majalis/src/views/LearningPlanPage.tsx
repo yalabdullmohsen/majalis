@@ -208,6 +208,19 @@ export default function LearningPlanPage() {
       title: "خطة التعلم الشخصية | المجلس العلمي",
       description: "أنشئ خطة تعلم شرعية مخصصة لك، حدد مستواك واهتماماتك وعدد الدقائق اليومية.",
       keywords: ["خطة تعلم", "تعلم شرعي", "منهج إسلامي شخصي", "تعليم إسلامي ذكي"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "EducationalOccupationalProgram",
+          name: "خطة التعلم الشرعي الشخصية",
+          url: "https://majlisilm.com/learning-plan",
+          description: "أنشئ خطة تعلم شرعية مخصصة مع تتبع التقدم اليومي",
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          inLanguage: "ar",
+          educationalLevel: "متعدد المستويات",
+          hasCourseInstance: { "@type": "CourseInstance", courseMode: "online" },
+        },
+      ],
     });
   }, []);
   const [level, setLevel] = useState<PlanLevel | "">("");
