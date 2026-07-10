@@ -277,6 +277,56 @@ const INSTITUTIONS: Institution[] = [
     description: "موسوعة إسلامية ضخمة تشمل الموسوعة الفقهية الكبرى وعشرات الآلاف من الفتاوى وشروح الأحاديث.",
     website: "https://dorar.net",
   },
+  // مراكز إسلامية إضافية
+  {
+    id: "rabitat-alam-islami",
+    name: "رابطة العالم الإسلامي",
+    type: "center",
+    city: "مكة المكرمة",
+    country: "المملكة العربية السعودية",
+    description: "منظمة إسلامية دولية تأسست عام 1382هـ، تضطلع بنشر الإسلام وتوحيد الجهود الإسلامية ودعم المسلمين في العالم.",
+    website: "https://www.themwl.org",
+    mapQuery: "رابطة العالم الإسلامي مكة",
+  },
+  {
+    id: "oxford-islamic-studies",
+    name: "مركز الدراسات الإسلامية، أكسفورد",
+    type: "center",
+    city: "أكسفورد",
+    country: "المملكة المتحدة",
+    description: "مركز أكاديمي رائد يتبع جامعة أكسفورد، يُجري أبحاثاً في الشريعة والحضارة الإسلامية ويعزز الحوار الثقافي.",
+    website: "https://www.oxfordislamicstudies.com",
+    mapQuery: "Oxford Centre for Islamic Studies",
+  },
+  {
+    id: "irshad-turkey",
+    name: "رئاسة الشؤون الدينية التركية (ديانت)",
+    type: "center",
+    city: "أنقرة",
+    country: "تركيا",
+    description: "أكبر مؤسسة إسلامية رسمية في العالم من حيث الميزانية والانتشار، تشرف على أكثر من ثمانين ألف مسجد وتُصدر الفتاوى.",
+    website: "https://www.diyanet.gov.tr",
+    mapQuery: "Diyanet İşleri Başkanlığı Ankara",
+  },
+  // مكتبات إضافية
+  {
+    id: "shamela",
+    name: "المكتبة الشاملة",
+    type: "library",
+    city: "عبر الإنترنت",
+    country: "عالمي",
+    description: "برنامج المكتبة الشاملة يحتوي على أكثر من ستة آلاف كتاب إسلامي رقمي قابل للبحث، ويُعدّ المرجع الرقمي الأول للباحثين.",
+    website: "https://shamela.ws",
+  },
+  {
+    id: "maktaba-islamiya-istanbul",
+    name: "مكتبة السليمانية، إسطنبول",
+    type: "library",
+    city: "إسطنبول",
+    country: "تركيا",
+    description: "أعظم مستودعات المخطوطات الإسلامية في العالم، تضم أكثر من مئة وثمانين ألف مخطوطة في مختلف علوم الشريعة واللغة والتاريخ.",
+    mapQuery: "Süleymaniye Kütüphanesi Istanbul",
+  },
 ];
 
 const TYPE_LABELS: Record<Institution["type"], string> = {
