@@ -416,6 +416,21 @@ export default function WasayaNabawiyyaPage() {
       title: "الوصايا النبوية | المجلس العلمي",
       description: "أجمل الوصايا النبوية الصحيحة، وصايا جامعة ووصايا خاصة بأفراد الصحابة ووصايا للأمة مع كيفية التطبيق.",
       keywords: ["الوصايا النبوية", "وصايا النبي", "أحاديث نبوية", "وصية لا تغضب", "وصية ابن عباس", "حديث معاذ"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "الوصايا النبوية الكبرى",
+          description: "أجمل الوصايا النبوية الصحيحة مع كيفية التطبيق",
+          numberOfItems: WASAYA_KABIRA.length,
+          itemListElement: WASAYA_KABIRA.slice(0, 20).map((w, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: w.title,
+            url: `https://majlisilm.com/wasaya-nabawiyya#wasiyya${w.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 

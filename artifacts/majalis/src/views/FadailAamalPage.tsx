@@ -803,6 +803,21 @@ export default function FadailAamalPage() {
       title: "فضائل الأعمال، المجلس العلمي",
       description: "فضائل العبادات والأعمال الصالحة من الأحاديث النبوية الصحيحة",
       keywords: ["فضائل الأعمال", "فضل الصلاة", "فضل الصيام", "الأجر والثواب", "الأحاديث النبوية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "فضائل الأعمال الصالحة",
+          description: "فضائل العبادات والأعمال الصالحة من الأحاديث النبوية الصحيحة",
+          numberOfItems: FADAIL.length,
+          itemListElement: FADAIL.slice(0, 20).map((f, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: f.title,
+            url: `https://majlisilm.com/fadail-aamal#${f.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 

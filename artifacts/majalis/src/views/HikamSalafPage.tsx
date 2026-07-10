@@ -912,6 +912,21 @@ export default function HikamSalafPage() {
       title: "حكم السلف الصالح | المجلس العلمي",
       description: "مختارات من حكم السلف الصالح وأقوال الأئمة: الحسن البصري وابن تيمية وابن القيم والشافعي وأحمد وغيرهم.",
       keywords: ["حكم السلف", "أقوال العلماء", "حكم إسلامية", "ابن القيم", "الحسن البصري"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "حكم السلف الصالح وأقوال الأئمة",
+          description: "مختارات من حكم السلف الصالح وأقوال الأئمة الكبار",
+          numberOfItems: HIKAM.length,
+          itemListElement: HIKAM.slice(0, 20).map((h, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `${h.scholar}: ${h.text.slice(0, 60)}`,
+            url: `https://majlisilm.com/hikam-salaf#${h.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 
