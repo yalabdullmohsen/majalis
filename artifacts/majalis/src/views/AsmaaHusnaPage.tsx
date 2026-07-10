@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Search, Star, BookOpen, Heart } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ─── بيانات الأسماء الحسنى ─── */
 type AsmaaEntry = {
@@ -162,10 +163,9 @@ export default function AsmaaHusnaPage() {
   };
 
   const filtered = useMemo(() => {
-    const q = search.trim().toLowerCase();
     return ASMAA.filter((a) => {
       const matchCat = category === "الكل" || a.category === category;
-      const matchQ = !q || a.arabic.includes(q) || a.transliteration.toLowerCase().includes(q) || a.meaning.includes(q);
+      const matchQ = arabicMatchAny([a.arabic, a.transliteration, a.meaning], search);
       return matchCat && matchQ;
     });
   }, [search, category]);

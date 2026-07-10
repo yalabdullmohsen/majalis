@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Check, CheckCircle2, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ─── أنواع البيانات ─── */
 type Sunnah = {
@@ -652,10 +653,9 @@ export default function SunanYawmiyyaPage() {
   }
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
     return SUNAN.filter((s) => {
       const matchCat = category === "الكل" || s.category === category;
-      const matchQ = !q || s.title.includes(q) || s.text.includes(q) || s.category.includes(q);
+      const matchQ = arabicMatchAny([s.title, s.text, s.category], query);
       return matchCat && matchQ;
     });
   }, [query, category]);

@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Copy, Heart, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ─── أنواع البيانات ─── */
 type Hikma = {
@@ -950,10 +951,9 @@ export default function HikamSalafPage() {
   }
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
     return HIKAM.filter((h) => {
       const matchCat = category === "الكل" || h.category === category;
-      const matchQ = !q || h.text.includes(q) || h.scholar.includes(q);
+      const matchQ = arabicMatchAny([h.text, h.scholar], query);
       const matchFav = !showFavsOnly || favorites.has(h.id);
       return matchCat && matchQ && matchFav;
     });

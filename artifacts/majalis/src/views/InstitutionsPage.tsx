@@ -4,6 +4,7 @@ import type { LucideIcon } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 // ─── Seed Data ────────────────────────────────────────────────────────────────
 
@@ -425,12 +426,7 @@ export default function InstitutionsPage() {
 
   const filtered = INSTITUTIONS.filter((inst) => {
     const matchType = filter === "all" || inst.type === filter;
-    const matchSearch =
-      !search ||
-      inst.name.includes(search) ||
-      inst.city.includes(search) ||
-      inst.country.includes(search) ||
-      inst.description.includes(search);
+    const matchSearch = arabicMatchAny([inst.name, inst.city, inst.country, inst.description], search);
     return matchType && matchSearch;
   });
 

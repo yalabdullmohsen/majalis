@@ -8,6 +8,7 @@ import { patchAdhanPrefs, loadAdhanPrefs } from "@/lib/adhan-preferences";
 import { toggleFavorite, loadFavorites } from "@/lib/muezzin-favorites";
 import { loadCommunityMuezzins, type CommunityMuezzin } from "@/lib/user-submissions-service";
 import { applyPageSeo } from "@/lib/seo";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 const STYLES: MuezzinStyle[] = ["خاشع", "رسمي", "تقليدي", "كلاسيكي"];
 const COUNTRIES = [...new Set(MUEZZINS.map((m) => m.country))];
@@ -139,13 +140,8 @@ export default function MuezzinsPage() {
   const filtered = useMemo(() => {
     let list = [...MUEZZINS];
     if (query.trim()) {
-      const q = query.trim().toLowerCase();
       list = list.filter((m) =>
-        m.name.includes(q) ||
-        m.origin.includes(q) ||
-        m.country.includes(q) ||
-        m.category.includes(q) ||
-        m.tags.some((t) => t.includes(q))
+        arabicMatchAny([m.name, m.origin, m.country, m.category, ...m.tags], query)
       );
     }
     if (styleFilter) list = list.filter((m) => m.style === styleFilter);

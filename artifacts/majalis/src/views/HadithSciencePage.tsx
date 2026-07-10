@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { BookOpen, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ─── أنواع البيانات ─── */
 type HadithTerm = {
@@ -651,10 +652,9 @@ export default function HadithSciencePage() {
   }, []);
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
     return TERMS.filter((t) => {
       const matchCat = category === "الكل" || t.category === category;
-      const matchQ = !q || t.term.includes(q) || t.definition.includes(q);
+      const matchQ = arabicMatchAny([t.term, t.definition], query);
       return matchCat && matchQ;
     });
   }, [query, category]);

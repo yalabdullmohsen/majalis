@@ -8,6 +8,7 @@ import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { ISLAMIC_STORIES_SEED } from "@/lib/islamic-stories-seed";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 const STORY_ICON_MAP: Record<string, LucideIcon> = {
   Star, Scale, Sword, Landmark, Bird, Compass, Gem, BookOpen, Moon, Castle,
@@ -216,12 +217,7 @@ export default function IslamicStoriesPage() {
     if (category !== "الكل" && s.category !== category) return false;
     if (era !== "الكل" && s.era !== era) return false;
     if (search.trim()) {
-      const q = search.toLowerCase();
-      return (
-        s.title.toLowerCase().includes(q) ||
-        s.summary.toLowerCase().includes(q) ||
-        s.tags.some((t) => t.toLowerCase().includes(q))
-      );
+      return arabicMatchAny([s.title, s.summary, ...s.tags], search);
     }
     return true;
   });

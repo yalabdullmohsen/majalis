@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Search, ChevronLeft, BookOpen, Star, Filter } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ── بيانات العلماء ──────────────────────────────────────── */
 type Scholar = {
@@ -666,12 +667,7 @@ export default function IslamicScholarsPage() {
   const filtered = SCHOLARS.filter(s => {
     const matchEra = era === "الكل" || s.era === era;
     const matchSpec = specialty === "الكل" || s.specialty.includes(specialty);
-    const q = query.trim();
-    const matchQ = !q ||
-      s.name.includes(q) ||
-      s.fullName.includes(q) ||
-      s.bio.includes(q) ||
-      s.specialty.some(sp => sp.includes(q));
+    const matchQ = arabicMatchAny([s.name, s.fullName, s.bio, ...s.specialty], query);
     return matchEra && matchSpec && matchQ;
   });
 

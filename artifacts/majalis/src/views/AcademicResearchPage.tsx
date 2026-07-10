@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import {
   Briefcase, Building2, ExternalLink, Globe,
   GraduationCap, Landmark, Library, PenLine, Search,
@@ -357,18 +358,10 @@ function ThesesTab() {
   const [specFilter, setSpecFilter] = useState<string>("الكل");
 
   const filtered = useMemo(() => {
-    const q = search.trim().toLowerCase();
     return THESES.filter(t => {
       if (degreeFilter !== "الكل" && t.degree !== degreeFilter) return false;
       if (specFilter !== "الكل" && t.specialization !== specFilter) return false;
-      if (!q) return true;
-      return (
-        t.title.includes(q) ||
-        t.author.includes(q) ||
-        t.university.includes(q) ||
-        t.abstract.includes(q) ||
-        t.specialization.includes(q)
-      );
+      return arabicMatchAny([t.title, t.author, t.university, t.abstract, t.specialization], search);
     });
   }, [search, degreeFilter, specFilter]);
 

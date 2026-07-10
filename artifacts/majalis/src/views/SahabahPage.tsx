@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 
 type SahabiCategory = "الكل" | "الخلفاء" | "العشرة" | "النساء" | "العلماء" | "الفاتحون";
@@ -875,8 +876,7 @@ export default function SahabahPage() {
 
   const filtered = SAHABAH.filter((s) => {
     const matchCat = activeCat === "الكل" || s.category.includes(activeCat);
-    const matchSearch = !search.trim() ||
-      s.name.includes(search) || (s.kunya?.includes(search) ?? false);
+    const matchSearch = arabicMatchAny([s.name, s.kunya ?? ""], search);
     return matchCat && matchSearch;
   });
 

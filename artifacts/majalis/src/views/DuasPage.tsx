@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Search, Copy, Check, BookOpen, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ─── بيانات الأدعية ─── */
 type DuaEntry = {
@@ -719,7 +720,7 @@ export default function DuasPage() {
     const q = search.trim();
     return DUAS.filter((d) => {
       const matchCat = category === "الكل" || d.category === category;
-      const matchQ = !q || d.title.includes(q) || d.arabic.includes(q) || d.occasion.includes(q);
+      const matchQ = arabicMatchAny([d.title, d.arabic, d.occasion], q);
       return matchCat && matchQ;
     });
   }, [category, search]);

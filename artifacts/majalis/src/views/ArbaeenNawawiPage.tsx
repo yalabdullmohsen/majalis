@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { ARBAEEN_NAWAWI } from "@/lib/arbaeen-nawawi-seed";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ══════════════════════════════════════════════════════════════════
    §178b، الأربعون النووية (.an-*)
@@ -104,10 +105,9 @@ export default function ArbaeenNawawiPage() {
   }
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
     return ARBAEEN_NAWAWI.filter((h) => {
       const matchCat = category === "الكل" || CATEGORY_MAP[h.id] === category;
-      const matchQ = !q || h.title.toLowerCase().includes(q) || h.text.toLowerCase().includes(q) || h.explanation.toLowerCase().includes(q);
+      const matchQ = arabicMatchAny([h.title, h.text, h.explanation], query);
       const matchRead = !showReadOnly || read.has(h.id);
       return matchCat && matchQ && matchRead;
     });

@@ -1,7 +1,7 @@
 import { GOVERNORATES } from "@/lib/theme";
 import { resolveLessonPosterUrl } from "@/lib/lesson-image";
 import { normalizeActivityType } from "@/lib/activity-label";
-import { arabicIncludes } from "@/lib/arabic-search";
+import { arabicIncludes, normalizeArabic } from "@/lib/arabic-search";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { resolveGovernorateForUi, resolveRegion, displayGovernorate } from "@/lib/kuwait-regions";
 import { formatSheikhName, sheikhNameKey } from "@/lib/sheikh-name";
@@ -97,7 +97,7 @@ export const ACTIVITY_TYPES = ["الكل", "درس", "دورة"] as const;
 export const CONTENT_KINDS = ["الكل", "دورة", "درس"] as const;
 
 function normalizeText(value: string) {
-  return String(value || "").trim().toLowerCase();
+  return normalizeArabic(String(value || "").trim());
 }
 
 function lessonDedupeKey(lesson: KuwaitLessonRecord) {

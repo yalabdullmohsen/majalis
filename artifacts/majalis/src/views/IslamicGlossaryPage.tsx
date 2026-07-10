@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { BookOpen, ChevronDown, ChevronUp, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import "@/styles/elite-2026.css";
 
 /* ══════════════════════════════════════════════════════════════════
@@ -838,12 +839,8 @@ export default function IslamicGlossaryPage() {
     let list = TERMS;
     if (activeCategory !== "all") list = list.filter(t => t.category === activeCategory);
     if (search.trim()) {
-      const q = search.trim();
       list = list.filter(t =>
-        t.term.includes(q) ||
-        t.definition.includes(q) ||
-        (t.detail ?? "").includes(q) ||
-        (t.plural ?? "").includes(q),
+        arabicMatchAny([t.term, t.definition, t.detail ?? "", t.plural ?? ""], search),
       );
     }
     if (alpha) list = list.filter(t => t.term.startsWith(alpha));

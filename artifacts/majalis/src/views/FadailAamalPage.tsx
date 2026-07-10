@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 interface Fadila {
   id: string;
@@ -823,10 +824,7 @@ export default function FadailAamalPage() {
 
   const filtered = FADAIL.filter((f) => {
     const matchCat = activeCategory === "الكل" || f.category === activeCategory;
-    const matchSearch = !search.trim() ||
-      f.title.includes(search) ||
-      f.text.includes(search) ||
-      f.source.includes(search);
+    const matchSearch = arabicMatchAny([f.title, f.text, f.source], search);
     return matchCat && matchSearch;
   });
 

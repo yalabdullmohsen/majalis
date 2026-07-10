@@ -3,6 +3,7 @@ import { Heart, Star, Users, BookOpen, ChevronDown, ChevronUp } from "lucide-rea
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ─── بيانات الأخلاق ─── */
 type AkhlaqEntry = {
@@ -786,7 +787,7 @@ export default function AkhlaqPage() {
     const q = search.trim();
     return AKHLAQ.filter((a) => {
       const matchCat = category === "الكل" || a.category === category;
-      const matchQ = !q || a.title.includes(q) || a.summary.includes(q);
+      const matchQ = arabicMatchAny([a.title, a.summary], q);
       return matchCat && matchQ;
     });
   }, [category, search]);
