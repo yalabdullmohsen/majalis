@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ══════════════════════════════════════════════════════════════════
    §249، الرقائق والزهد  (.rq-*)
@@ -312,8 +313,15 @@ const TABS: { id: Tab; label: string }[] = [
 export default function RaqaiqPage() {
   const [activeTab, setActiveTab] = useState<Tab>("raqaiq");
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const [search, setSearch] = useState("");
 
   const toggle = (i: number) => setOpenIdx(p => p === i ? null : i);
+
+  const filteredRaqaiq = useMemo(() =>
+    search.trim()
+      ? RAQAIQ.filter(r => arabicMatchAny([r.title, r.text, r.source ?? ""], search))
+      : RAQAIQ,
+  [search]);
 
   useEffect(() => {
     applyPageSeo({
@@ -377,8 +385,18 @@ export default function RaqaiqPage() {
             <div className="rq-intro">
               <p>الرقائق ما رقَّ من الكلام وأثَّر في القلب. هذه المواعظ من أصح ما نُقِل وأبلغه في تليين القلوب القاسية.</p>
             </div>
+            <div className="rq-search-wrap">
+              <input
+                type="search"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="ابحث في الرقائق..."
+                className="page-search-input rq-search-input"
+                aria-label="بحث في مواعظ الرقائق"
+              />
+            </div>
             <div className="rq-list">
-              {RAQAIQ.map((r, i) => (
+              {filteredRaqaiq.map((r, i) => (
                 <div key={i} className="rq-card">
                   <button type="button" className="rq-card__head" onClick={() => toggle(i)} aria-expanded={openIdx === i}>
                     <span className="rq-card__dot" />
