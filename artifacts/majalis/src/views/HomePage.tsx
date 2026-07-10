@@ -146,6 +146,7 @@ const FEATURE_CATS: FeatureCat[] = [
       { href: "/calendar",        Icon: CalendarDays, title: "التقويم الهجري",   desc: "التواريخ والأيام المميزة" },
       { href: "/knowledge-graph", Icon: Network,     title: "خارطة المعرفة التفاعلية",     desc: "علاقات المعرفة الإسلامية بالرسم البياني" },
       { href: "/knowledge-map",   Icon: Map,         title: "الخريطة المعرفية 2.0",         desc: "١٤ علماً إسلامياً مترابطاً" },
+      { href: "/mind-map",        Icon: Layers,      title: "الخرائط الذهنية",             desc: "23+ خريطة تفاعلية للعلوم الشرعية" },
     ],
   },
   {
