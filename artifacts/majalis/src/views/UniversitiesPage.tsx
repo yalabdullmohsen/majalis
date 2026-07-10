@@ -3,6 +3,7 @@ import { AlertTriangle, GraduationCap, Landmark, Search } from "lucide-react";
 import { CompareProvider } from "@/components/universities/CompareContext";
 import { CompareBar } from "@/components/universities/CompareBar";
 import { UniversityCard } from "@/components/universities/UniversityCard";
+import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import {
   fetchUniversities,
@@ -196,6 +197,10 @@ function UniversitiesContent() {
             ))}
           </div>
         )}
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="الجامعات الإسلامية — المجلس العلمي" url="https://majlisilm.com/universities" />
       </div>
 
       <CompareBar />

@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { RADIO_STATIONS, LIVE_CHANNELS, saveLastRadioId } from "@/lib/quran-radio";
 import { applyPageSeo } from "@/lib/seo";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
+import { ShareButtons } from "@/components/ContentActions";
 import "@/styles/quran.css";
 
 const RADIO_STATE_LABELS = {
@@ -145,6 +146,10 @@ export default function QuranRadioPage() {
             ))}
           </div>
         </section>
+
+        <div className="twh-share">
+          <ShareButtons title="إذاعات وقنوات القرآن الكريم — المجلس العلمي" url="https://majlisilm.com/quran-radio" />
+        </div>
       </div>
     </div>
   );

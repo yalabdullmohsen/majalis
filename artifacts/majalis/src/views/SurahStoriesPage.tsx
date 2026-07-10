@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
 import { getAllSurahStories, getSurahStory, searchSurahStories } from "@/lib/surah-stories";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 
@@ -114,6 +115,10 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
         )}
         <p className="quran-source-note">{story.trustNote}{story.lastReviewed ? ` · آخر مراجعة: ${story.lastReviewed}` : ""}</p>
         <Link href={`/quran?surah=${story.number}`} className="page-action-btn">قراءة السورة</Link>
+
+        <div className="twh-share">
+          <ShareButtons title={`${story.name} — قصص سور القرآن | المجلس العلمي`} url={`https://majlisilm.com/surah-stories/${story.number}`} />
+        </div>
       </article>
     </div>
   );

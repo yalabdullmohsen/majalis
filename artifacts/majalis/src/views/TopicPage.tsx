@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "wouter";
 import { SearchSkeleton } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
 import { displayText } from "@/lib/display-text";
 import {
   fetchTopicContent,
@@ -127,6 +128,10 @@ export default function TopicPage() {
           </div>
         </aside>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="موضوعات المجلس العلمي" url="https://majlisilm.com/topics" />
+      </div>
     </div>
   );
 }

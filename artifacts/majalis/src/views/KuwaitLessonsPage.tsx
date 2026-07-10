@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { KUWAIT_SHEIKHS } from "@/lib/kuwait-sheikhs";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 declare global {
   interface Window { twttr?: { widgets?: { load: (el?: HTMLElement) => void } } }
@@ -160,6 +161,10 @@ export default function KuwaitLessonsPage() {
         <strong>المصدر:</strong>{" "}
         <a href="https://drosq8.com" target="_blank" rel="noopener noreferrer">drosq8.com</a>
         {" "}— موقع دروس الكويت. هذه الصفحة تعرض البيانات مباشرة من المصدر الرسمي دون تخزينها.
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="دروس الكويت — المجلس العلمي" url="https://majlisilm.com/kuwait-lessons" />
       </div>
     </div>
   );

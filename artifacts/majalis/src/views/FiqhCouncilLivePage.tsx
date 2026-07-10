@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { FiqhTrustBox } from "@/components/fiqh-council/FiqhTrustBox";
 import { getFiqhLiveData, unavailableLabel } from "@/lib/fiqh-council-sessions-service";
@@ -138,6 +139,10 @@ export default function FiqhCouncilLivePage() {
           )}
         </section>
       ))}
+
+      <div className="twh-share">
+        <ShareButtons title="جلسات المجمع الفقهي الحية — المجلس العلمي" url="https://majlisilm.com/fiqh-council/live" />
+      </div>
     </div>
   );
 }

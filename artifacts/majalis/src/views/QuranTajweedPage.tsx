@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 /* ══ بيانات قواعد التجويد ══ */
 type TajweedRule = {
   id: string;
@@ -395,6 +396,10 @@ export default function QuranTajweedPage() {
           <a href="#" className="tj-related-link">هداية القاري، عبد الفتاح المرصفي</a>
           <Link href="/quran" className="tj-related-link">ابدأ القراءة من المصحف ←</Link>
         </div>
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="أحكام التجويد — المجلس العلمي" url="https://majlisilm.com/quran-tajweed" />
       </div>
     </div>
   );

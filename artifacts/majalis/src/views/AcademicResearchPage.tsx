@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import {
   Briefcase, Building2, ExternalLink, Globe,
   GraduationCap, Landmark, Library, PenLine, Search,
@@ -594,6 +595,10 @@ export default function AcademicResearchPage() {
           <Search size={16} strokeWidth={2} aria-hidden="true" />
           البحث بالذكاء الاصطناعي في المصادر الشرعية
         </Link>
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="البحث الأكاديمي الإسلامي — المجلس العلمي" url="https://majlisilm.com/academic-research" />
       </div>
     </div>
   );

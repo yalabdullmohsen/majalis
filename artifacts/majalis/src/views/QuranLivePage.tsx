@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import { ShareButtons } from "@/components/ContentActions";
 import {
   Radio, Wifi, Volume2, ChevronLeft, Globe, Mic2,
   BookOpen, ExternalLink,
@@ -241,6 +242,10 @@ export default function QuranLivePage() {
       </section>
 
       {/* ── روابط ذات صلة ─────────────────────────────────── */}
+      <div className="twh-share">
+        <ShareButtons title="البث المباشر للقرآن الكريم — المجلس العلمي" url="https://majlisilm.com/quran-live" />
+      </div>
+
       <section className="qlive-related">
         <h2 className="qlive-section-title">استكشف أيضاً</h2>
         <div className="qlive-related-links">

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
 import { getIssuesForTopicSection } from "@/lib/fiqh-council-issues-service";
 import {
   FIQH_TOPIC_INDEX_SECTIONS,
@@ -107,6 +108,10 @@ export default function FiqhCouncilTopicIndexPage() {
           })}
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="الفهرس الموضوعي للمجمع الفقهي — المجلس العلمي" url="https://majlisilm.com/fiqh-council/index" />
+      </div>
     </div>
   );
 }
