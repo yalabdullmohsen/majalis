@@ -40,6 +40,21 @@ export default function PropheticMedicinePage() {
       title: "الطب النبوي | المجلس العلمي",
       description: "موسوعة الطب النبوي، هدي النبي ﷺ في الصحة والتداوي بالأغذية والأعشاب والرقية الشرعية.",
       keywords: ["طب نبوي", "هدي النبي", "تداوي", "أعشاب إسلامية", "رقية شرعية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "موسوعة الطب النبوي",
+          description: "هدي النبي ﷺ في الصحة والتداوي من الأغذية والأعشاب والرقية الشرعية",
+          numberOfItems: PROPHETIC_MEDICINE_ITEMS.length,
+          itemListElement: PROPHETIC_MEDICINE_ITEMS.slice(0, 20).map((item: { id: string; name: string }, i: number) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: item.name,
+            url: `https://majlisilm.com/prophetic-medicine#${item.id}`,
+          })),
+        },
+      ],
     });
   }, []);
   const [expanded, setExpanded] = useState<string | null>(null);

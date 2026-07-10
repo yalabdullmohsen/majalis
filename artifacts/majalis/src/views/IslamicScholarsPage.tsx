@@ -645,6 +645,21 @@ export default function IslamicScholarsPage() {
       path: "/scholars",
       title: "أعلام الإسلام، العلماء والمحدثون والفقهاء | مجالس",
       description: "سِيَر أبرز علماء الإسلام عبر القرون، الأئمة الأربعة، المحدثون، العلماء المعاصرون",
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أعلام الإسلام عبر القرون",
+          description: "سِيَر أبرز علماء الإسلام: الأئمة الأربعة والمحدثون والفقهاء والمعاصرون",
+          numberOfItems: SCHOLARS.length,
+          itemListElement: SCHOLARS.slice(0, 20).map((s, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: s.fullName || s.name,
+            url: `https://majlisilm.com/scholars#${s.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 

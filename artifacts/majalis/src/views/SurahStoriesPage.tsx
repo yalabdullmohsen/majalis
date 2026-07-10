@@ -10,11 +10,27 @@ export default function SurahStoriesPage() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
+    const allStories = getAllSurahStories();
     applyPageSeo({
       path: "/surah-stories",
       title: "قصص سور القرآن | المجلس العلمي",
       description: "قصص وأسباب نزول سور القرآن الكريم، تعرّف على مناسبات النزول والقصص المرتبطة بكل سورة.",
       keywords: ["قصص القرآن", "أسباب النزول", "سور القرآن", "قصص إسلامية", "تفسير قرآني"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "قصص سور القرآن الكريم",
+          description: "قصص وأسباب نزول ١١٤ سورة من سور القرآن الكريم",
+          numberOfItems: 114,
+          itemListElement: allStories.slice(0, 20).map((s, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `سورة ${s.name}`,
+            url: `https://majlisilm.com/surah-stories/${s.number}`,
+          })),
+        },
+      ],
     });
   }, []);
   const stories = search.trim() ? searchSurahStories(search) : getAllSurahStories();
