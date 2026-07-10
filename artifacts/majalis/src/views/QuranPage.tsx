@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import "@/styles/mushaf.css";
 import { applyPageSeo } from "@/lib/seo";
+import { useAuth } from "@/components/AuthProvider";
 
 /* ══════════════════════════════════════════════════════════════════
    ثوابت
@@ -17,6 +18,7 @@ const PAGE_KEY     = "mj-mushaf-page-v4";
 const BM_KEY       = "mj-mushaf-bm-v4";
 const ZOOM_KEY     = "mj-mushaf-zoom-v4";
 const MODE_KEY     = "mj-mushaf-mode-v4";
+const FAV_KEY      = "mj-mushaf-fav-v4";
 const BASE_FONT    = 1.9; // rem
 const API_BASE     = "https://api.alquran.cloud/v1/page";
 const EDITION      = "quran-uthmani";
@@ -92,6 +94,29 @@ const SURAHS: [string, number][] = [
   ["الفلق",604],["الناس",604],
 ];
 
+/* الأجزاء الثلاثون — رقم الجزء → أول صفحة */
+const JUZS: [string, number][] = [
+  ["الجزء الأول",1],["الجزء الثاني",22],["الجزء الثالث",42],
+  ["الجزء الرابع",62],["الجزء الخامس",82],["الجزء السادس",102],
+  ["الجزء السابع",121],["الجزء الثامن",142],["الجزء التاسع",162],
+  ["الجزء العاشر",182],["الجزء الحادي عشر",201],["الجزء الثاني عشر",222],
+  ["الجزء الثالث عشر",242],["الجزء الرابع عشر",262],["الجزء الخامس عشر",282],
+  ["الجزء السادس عشر",302],["الجزء السابع عشر",322],["الجزء الثامن عشر",342],
+  ["الجزء التاسع عشر",362],["الجزء العشرون",382],["الجزء الحادي والعشرون",402],
+  ["الجزء الثاني والعشرون",422],["الجزء الثالث والعشرون",442],["الجزء الرابع والعشرون",462],
+  ["الجزء الخامس والعشرون",482],["الجزء السادس والعشرون",502],["الجزء السابع والعشرون",522],
+  ["الجزء الثامن والعشرون",542],["الجزء التاسع والعشرون",562],["الجزء الثلاثون",582],
+];
+
+function pageToJuzNum(page: number): number {
+  let juz = 1;
+  for (let i = 0; i < JUZS.length; i++) {
+    if (JUZS[i][1] <= page) juz = i + 1;
+    else break;
+  }
+  return juz;
+}
+
 function pageToSurahName(page: number): string {
   let name = SURAHS[0][0];
   for (const [n, p] of SURAHS) {
@@ -139,6 +164,8 @@ function stripBasmalaFromDisplay(text: string): string {
    المكون الرئيسي
    ══════════════════════════════════════════════════════════════════ */
 export default function QuranPage() {
+  const { isAdmin } = useAuth();
+
   /* ── حالة ── */
   const [page, setPage]       = useState<number>(() => lsGet(PAGE_KEY, 1));
   const [mode, setMode]       = useState<ReadMode>(() => lsGet(MODE_KEY, "day"));
@@ -147,9 +174,14 @@ export default function QuranPage() {
     return v < 1.0 ? BASE_FONT : v;
   });
   const [bookmarks, setBookmarks] = useState<number[]>(() => lsGet(BM_KEY, []));
+  /* الآيات المفضلة: مصفوفة أرقام الآيات (الترتيب المطلق في القرآن) */
+  const [favAyahs, setFavAyahs] = useState<number[]>(() => lsGet(FAV_KEY, []));
   const [navOpen, setNavOpen]  = useState(false);
-  const [navTab, setNavTab]    = useState<"surahs" | "bookmarks" | "search">("surahs");
+  const [navTab, setNavTab]    = useState<"surahs" | "juzs" | "bookmarks" | "favs" | "search">("surahs");
   const [search, setSearch]    = useState("");
+  /* تعديل رقم الصفحة مباشرة */
+  const [editPage, setEditPage] = useState(false);
+  const [editVal,  setEditVal]  = useState("");
 
   /* ── بحث نص الآيات ── */
   const [vsearch, setVsearch]       = useState("");
@@ -171,36 +203,114 @@ export default function QuranPage() {
   const [playingId, setPlayingId]   = useState<string | null>(null);
   const audioRef                    = useRef<HTMLAudioElement | null>(null);
 
-  /* ── refs ── */
-  const uiTimer   = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const searchRef  = useRef<HTMLInputElement>(null);
-  const vsearchRef = useRef<HTMLInputElement>(null);
-  const touchX    = useRef<number | null>(null);
-  const readerRef = useRef<HTMLDivElement>(null);
+  /* ── ميزة التكرار والتوقف بوقت محدد ── */
+  const [repeatMode,    setRepeatMode]    = useState<"none"|"verse"|"page"|"surah">("none");
+  const [stopAtTime,    setStopAtTime]    = useState(""); // "HH:MM"
+  const [timerActive,   setTimerActive]   = useState(false);
+  const repeatRef = useRef<"none"|"verse"|"page"|"surah">("none");
 
-  /* ── وظائف الصوت ── */
-  const playReciter = useCallback((reciterId: string, ayahNum: number) => {
-    const url = `https://cdn.islamic.network/quran/audio/128/${reciterId}/${ayahNum}.mp3`;
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.src = "";
-    }
-    if (playingId === reciterId) {
-      setPlayingId(null);
+  /* ── التفسير المختصر ── */
+  const [tafseer, setTafseer]       = useState<string | null>(null);
+  const [tafseerLoading, setTafseerLoading] = useState(false);
+  const stopTimeRef = useRef<string>("");
+  const timerCheckRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => { repeatRef.current = repeatMode; }, [repeatMode]);
+  useEffect(() => { stopTimeRef.current = stopAtTime; }, [stopAtTime]);
+
+  /* تحقق كل 15 ث إن كان الوقت تجاوز وقت التوقف */
+  useEffect(() => {
+    if (!timerActive || !stopAtTime) {
+      if (timerCheckRef.current) clearInterval(timerCheckRef.current);
+      timerCheckRef.current = null;
       return;
     }
+    timerCheckRef.current = setInterval(() => {
+      const now = new Date();
+      const [hh, mm] = stopTimeRef.current.split(":").map(Number);
+      if (!isNaN(hh) && !isNaN(mm)) {
+        if (now.getHours() > hh || (now.getHours() === hh && now.getMinutes() >= mm)) {
+          audioRef.current?.pause();
+          setPlayingId(null);
+          setTimerActive(false);
+          setRepeatMode("none");
+          clearInterval(timerCheckRef.current!);
+          timerCheckRef.current = null;
+        }
+      }
+    }, 15000);
+    return () => { if (timerCheckRef.current) clearInterval(timerCheckRef.current); };
+  }, [timerActive, stopAtTime]);
+
+  /* ── refs ── */
+  const uiTimer    = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const searchRef  = useRef<HTMLInputElement>(null);
+  const vsearchRef = useRef<HTMLInputElement>(null);
+  const pageEditRef = useRef<HTMLInputElement>(null);
+  const touchX     = useRef<number | null>(null);
+  const readerRef  = useRef<HTMLDivElement>(null);
+
+  /* ref لتخزين حالة التشغيل المتسلسل */
+  const repeatStateRef = useRef<{ reciterId: string; queue: number[]; idx: number } | null>(null);
+
+  /* تشغيل آية واحدة، مع منطق التكرار عند الانتهاء */
+  const playAyahDirect = useCallback((reciterId: string, ayahNum: number) => {
+    const url = `https://cdn.islamic.network/quran/audio/128/${reciterId}/${ayahNum}.mp3`;
+    if (audioRef.current) { audioRef.current.pause(); audioRef.current.src = ""; }
     const audio = new Audio(url);
     audioRef.current = audio;
     setPlayingId(reciterId);
     audio.play().catch(() => {});
-    audio.onended = () => setPlayingId(null);
-    audio.onerror = () => setPlayingId(null);
-  }, [playingId]);
+    audio.onended = () => {
+      const st = repeatStateRef.current;
+      if (!st || repeatRef.current === "none") { setPlayingId(null); return; }
+      let nextIdx = st.idx + 1;
+      if (nextIdx >= st.queue.length) nextIdx = 0;
+      repeatStateRef.current = { ...st, idx: nextIdx };
+      playAyahDirect(st.reciterId, st.queue[nextIdx]);
+    };
+    audio.onerror = () => { setPlayingId(null); repeatStateRef.current = null; };
+  }, []);
+
+  /* ── وظائف الصوت ── */
+  const playReciter = useCallback((reciterId: string, ayahNum: number) => {
+    if (audioRef.current) { audioRef.current.pause(); audioRef.current.src = ""; }
+    if (playingId === reciterId && repeatRef.current === "none") {
+      setPlayingId(null);
+      repeatStateRef.current = null;
+      return;
+    }
+    /* بناء قائمة الآيات حسب وضع التكرار */
+    const mode = repeatRef.current;
+    let queue: number[] = [ayahNum];
+    if (mode === "verse") {
+      queue = [ayahNum];
+    } else if (mode === "page" || mode === "surah") {
+      const currentAyah = ayahs.find(a => a.number === ayahNum);
+      if (currentAyah && mode === "surah") {
+        queue = ayahs.filter(a => a.surah.number === currentAyah.surah.number).map(a => a.number);
+      } else {
+        queue = ayahs.map(a => a.number);
+      }
+    }
+    const startIdx = queue.indexOf(ayahNum);
+    repeatStateRef.current = { reciterId, queue, idx: startIdx >= 0 ? startIdx : 0 };
+    playAyahDirect(reciterId, ayahNum);
+  }, [playingId, ayahs, playAyahDirect]);
 
   const closeReciterPanel = useCallback(() => {
     audioRef.current?.pause();
     setPlayingId(null);
     setSelAyah(null);
+  }, []);
+
+  /* ── تبديل الآيات المفضلة ── */
+  const toggleFav = useCallback((ayahNum: number) => {
+    setFavAyahs(cur => {
+      const next = cur.includes(ayahNum) ? cur.filter(n => n !== ayahNum) : [...cur, ayahNum];
+      lsSet(FAV_KEY, next);
+      return next;
+    });
   }, []);
 
   /* ── SEO ── */
@@ -245,6 +355,20 @@ export default function QuranPage() {
       });
     return () => ctrl.abort();
   }, [page, retryKey]);
+
+  /* ── جلب التفسير المختصر عند اختيار آية ── */
+  useEffect(() => {
+    if (!selAyah) { setTafseer(null); return; }
+    setTafseerLoading(true);
+    setTafseer(null);
+    fetch(`https://api.alquran.cloud/v1/ayah/${selAyah.number}/ar.jalalayn`)
+      .then(r => r.json())
+      .then((d: { code: number; data: { text: string } }) => {
+        if (d.code === 200) setTafseer(d.data.text);
+      })
+      .catch(() => {})
+      .finally(() => setTafseerLoading(false));
+  }, [selAyah]);
 
   /* ── bump، إظهار واجهة التحكم لفترة ثم إخفاؤها ── */
   const bump = useCallback(() => {
@@ -353,6 +477,7 @@ export default function QuranPage() {
   );
 
   const surahName = useMemo(() => pageToSurahName(page), [page]);
+  const juzNum    = useMemo(() => pageToJuzNum(page), [page]);
   const groups    = useMemo(() => groupBySurah(ayahs), [ayahs]);
   const modeClass = mode === "night" ? " mshf-night" : mode === "sepia" ? " mshf-sepia" : "";
   const ModeIcon  = mode === "night" ? Moon : Sun;
@@ -388,7 +513,8 @@ export default function QuranPage() {
         <div className="mshf-title-wrap">
           <span className="mshf-title-main">القرآن الكريم</span>
           <span className="mshf-title-sub">
-            ص {page.toLocaleString("ar-EG")}، {surahName}
+            {surahName} — ص {page.toLocaleString("ar-EG")}
+            {isAdmin && ` — ج ${juzNum.toLocaleString("ar-EG")}`}
           </span>
         </div>
 
@@ -495,6 +621,7 @@ export default function QuranPage() {
             {/* الآيات بالرسم العثماني */}
             <div className="qs-ayahs" lang="ar" dir="rtl">
               {group.ayahs.map(ayah => {
+                const isFav = favAyahs.includes(ayah.number);
                 const displayText = (group.isFirst && ayah.numberInSurah === 1 && group.num !== 1 && group.num !== 9)
                   ? stripBasmalaFromDisplay(ayah.text)
                   : ayah.text;
@@ -502,12 +629,13 @@ export default function QuranPage() {
                 return (
                   <span
                     key={ayah.number}
-                    className={`qs-ayah${isSelected ? " qs-ayah--selected" : ""}`}
+                    className={`qs-ayah${isSelected ? " qs-ayah--selected" : ""}${isFav ? " qs-ayah--fav" : ""}`}
                     onClick={e => { e.stopPropagation(); setSelAyah(isSelected ? null : ayah); if (isSelected) closeReciterPanel(); }}
                     title={`اضغط لسماع الآية ${ayah.numberInSurah}`}
                     style={{ cursor: "pointer" }}
                   >
                     <span className="qs-ayah__text">{displayText}</span>
+                    {isFav && <span className="qs-ayah__fav-dot" aria-hidden="true">⭐</span>}
                     <span
                       className="qs-ayah__num"
                       aria-label={`آية ${ayah.numberInSurah}`}
@@ -567,18 +695,50 @@ export default function QuranPage() {
           <ChevronRight size={20} strokeWidth={2.2} aria-hidden="true" />
         </button>
 
-        {/* رقم الصفحة */}
+        {/* رقم الصفحة — نقرة واحدة تفتح الإدخال المباشر */}
         <div className="mshf-pgnum">
-          <button
-            type="button"
-            className="mshf-pgnum-btn"
-            onClick={() => { setNavOpen(true); setNavTab("surahs"); }}
-            aria-label="اختيار سورة"
-          >
-            <span className="mshf-pgnum-cur">{page.toLocaleString("ar-EG")}</span>
-            <span className="mshf-pgnum-sep">/</span>
-            <span className="mshf-pgnum-tot">{TOTAL_PAGES}</span>
-          </button>
+          {editPage ? (
+            <input
+              ref={pageEditRef}
+              type="number"
+              className="mshf-pgnum-input"
+              value={editVal}
+              min={1}
+              max={TOTAL_PAGES}
+              onChange={e => setEditVal(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === "Enter") {
+                  const n = parseInt(editVal, 10);
+                  if (!isNaN(n)) goPage(n);
+                  setEditPage(false);
+                } else if (e.key === "Escape") {
+                  setEditPage(false);
+                }
+              }}
+              onBlur={() => {
+                const n = parseInt(editVal, 10);
+                if (!isNaN(n)) goPage(n);
+                setEditPage(false);
+              }}
+              aria-label="رقم الصفحة"
+            />
+          ) : (
+            <button
+              type="button"
+              className="mshf-pgnum-btn"
+              onClick={() => {
+                setEditVal(String(page));
+                setEditPage(true);
+                setTimeout(() => { pageEditRef.current?.select(); }, 60);
+              }}
+              aria-label="انقر لتحديد صفحة"
+              title="انقر لتحديد صفحة"
+            >
+              <span className="mshf-pgnum-cur">{page.toLocaleString("ar-EG")}</span>
+              <span className="mshf-pgnum-sep">/</span>
+              <span className="mshf-pgnum-tot">{TOTAL_PAGES}</span>
+            </button>
+          )}
         </div>
 
         {/* التالي */}
@@ -607,7 +767,7 @@ export default function QuranPage() {
 
             <div className="mshf-sheet-head">
               <div className="mshf-sheet-tabs">
-                {(["surahs", "bookmarks", "search"] as const).map(id => (
+                {(["surahs", "juzs", "favs", "bookmarks", "search"] as const).map(id => (
                   <button
                     key={id}
                     type="button"
@@ -618,7 +778,7 @@ export default function QuranPage() {
                       if (id === "search") setTimeout(() => vsearchRef.current?.focus(), 80);
                     }}
                   >
-                    {id === "surahs" ? "السور" : id === "bookmarks" ? "العلامات" : "بحث"}
+                    {id === "surahs" ? "السور" : id === "juzs" ? "الأجزاء" : id === "favs" ? "⭐ مفضلة" : id === "bookmarks" ? "علامات" : "بحث"}
                   </button>
                 ))}
               </div>
@@ -738,6 +898,28 @@ export default function QuranPage() {
                 </div>
               )}
 
+              {/* الأجزاء */}
+              {navTab === "juzs" && (
+                <div className="mshf-juz-grid">
+                  {JUZS.map(([name, firstPage], i) => {
+                    const num = i + 1;
+                    const isActive = juzNum === num;
+                    return (
+                      <button
+                        key={num}
+                        type="button"
+                        className={`mshf-juz-row${isActive ? " active" : ""}`}
+                        onClick={() => { goPage(firstPage); setNavOpen(false); }}
+                      >
+                        <span className="mshf-juz-num">{num.toLocaleString("ar-EG")}</span>
+                        <span className="mshf-juz-name">{name.replace("الجزء ", "")}</span>
+                        <span className="mshf-juz-page">ص {firstPage}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+
               {/* السور */}
               {navTab === "surahs" && (
                 <div className="mshf-surah-list">
@@ -755,6 +937,51 @@ export default function QuranPage() {
                       <span className="mshf-surah-page">ص {firstPage}</span>
                     </button>
                   ))}
+                </div>
+              )}
+
+              {/* الآيات المفضلة */}
+              {navTab === "favs" && (
+                <div className="mshf-bm-list">
+                  {favAyahs.length === 0 ? (
+                    <div className="mshf-empty mshf-empty--center">
+                      <span style={{ fontSize: "2.5rem", opacity: 0.25 }}>⭐</span>
+                      <p>لا توجد آيات مفضلة</p>
+                      <p className="mshf-empty-sub">انقر أي آية ثم اضغط ⭐ لإضافتها للمفضلة</p>
+                    </div>
+                  ) : favAyahs.map(ayahNum => {
+                    const cachedAyah = Array.from(pageCache.values()).flat().find(a => a.number === ayahNum);
+                    return (
+                      <div key={ayahNum} className="mshf-bm-row">
+                        <button
+                          type="button"
+                          className="mshf-bm-btn"
+                          onClick={() => {
+                            const pg = Array.from(pageCache.entries()).find(([, ayahs]) => ayahs.some(a => a.number === ayahNum))?.[0];
+                            if (pg) { goPage(pg); setNavOpen(false); }
+                          }}
+                        >
+                          <span style={{ fontSize: "0.85rem" }}>⭐</span>
+                          <div className="mshf-bm-info">
+                            <span className="mshf-bm-page" lang="ar" dir="rtl" style={{ fontFamily: "inherit", fontSize: "0.82rem", maxWidth: "200px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                              {cachedAyah ? `${cachedAyah.surah.name} : ${cachedAyah.numberInSurah}` : `آية ${ayahNum}`}
+                            </span>
+                            {cachedAyah && (
+                              <span className="mshf-bm-surah" lang="ar" dir="rtl" style={{ fontSize: "0.72rem", fontFamily: '"Scheherazade New", serif', maxWidth: "200px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                {cachedAyah.text.slice(0, 40)}…
+                              </span>
+                            )}
+                          </div>
+                        </button>
+                        <button
+                          type="button"
+                          className="mshf-bm-del"
+                          onClick={() => toggleFav(ayahNum)}
+                          aria-label="حذف من المفضلة"
+                        >✕</button>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
 
@@ -822,25 +1049,105 @@ export default function QuranPage() {
                 <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
                   <Volume2 size={16} strokeWidth={2} />
                   <span style={{ fontWeight: 700, fontSize: "0.9rem" }}>
-                    استماع — {selAyah.surah.name} : {selAyah.numberInSurah.toLocaleString("ar-EG")}
+                    {selAyah.surah.name} : {selAyah.numberInSurah.toLocaleString("ar-EG")}
                   </span>
                 </div>
-                <button
-                  type="button"
-                  className="mshf-sheet-close"
-                  onClick={closeReciterPanel}
-                  aria-label="إغلاق"
-                >
-                  <X size={16} strokeWidth={2.2} aria-hidden="true" />
-                </button>
+                <div style={{ display: "flex", gap: "0.3rem", alignItems: "center" }}>
+                  <button
+                    type="button"
+                    onClick={() => toggleFav(selAyah.number)}
+                    title={favAyahs.includes(selAyah.number) ? "إزالة من المفضلة" : "إضافة للمفضلة"}
+                    aria-label={favAyahs.includes(selAyah.number) ? "إزالة من المفضلة" : "إضافة للمفضلة"}
+                    style={{
+                      border: "none", background: "transparent",
+                      fontSize: "1.3rem", cursor: "pointer", lineHeight: 1,
+                      opacity: favAyahs.includes(selAyah.number) ? 1 : 0.35,
+                      transition: "opacity 0.15s",
+                    }}
+                  >⭐</button>
+                  <button
+                    type="button"
+                    className="mshf-sheet-close"
+                    onClick={closeReciterPanel}
+                    aria-label="إغلاق"
+                  >
+                    <X size={16} strokeWidth={2.2} aria-hidden="true" />
+                  </button>
+                </div>
               </div>
               {/* نص الآية */}
               <p style={{
-                fontSize: "0.95rem", lineHeight: 1.9, direction: "rtl",
+                fontSize: "1.05rem", lineHeight: 2, direction: "rtl",
                 color: "var(--mshf-ink, #1a1a1a)", padding: "0.25rem 0", margin: 0,
-                maxHeight: "4.5rem", overflow: "hidden",
-                display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical",
+                fontFamily: '"Scheherazade New","Amiri Quran",serif',
               }} lang="ar">{selAyah.text}</p>
+              {/* التفسير المختصر */}
+              {tafseerLoading && (
+                <p style={{ fontSize: "0.7rem", color: "rgba(31,77,58,0.5)", margin: 0, fontStyle: "italic" }}>جاري تحميل التفسير…</p>
+              )}
+              {tafseer && !tafseerLoading && (
+                <div style={{
+                  fontSize: "0.78rem", lineHeight: 1.7, color: "#1F4D3A",
+                  background: "rgba(31,77,58,0.05)", borderRight: "3px solid #1F4D3A",
+                  padding: "0.4rem 0.6rem", borderRadius: "0 0.4rem 0.4rem 0",
+                  margin: "0.2rem 0 0", direction: "rtl",
+                }}>
+                  <span style={{ fontWeight: 700, fontSize: "0.68rem", display: "block", opacity: 0.7, marginBottom: "0.15rem" }}>تفسير الجلالين</span>
+                  {tafseer}
+                </div>
+              )}
+            </div>
+
+            {/* خيارات التكرار والمؤقت */}
+            <div style={{ padding: "0.5rem 0.75rem 0", display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              {/* وضع التكرار */}
+              <div style={{ display: "flex", gap: "0.3rem", flexWrap: "wrap" }}>
+                {(["none","verse","page","surah"] as const).map(m => (
+                  <button
+                    key={m}
+                    type="button"
+                    onClick={() => { setRepeatMode(m); }}
+                    style={{
+                      padding: "0.3rem 0.7rem", fontSize: "0.72rem", fontFamily: "inherit",
+                      borderRadius: "999px", border: `1.5px solid ${repeatMode === m ? "#1F4D3A" : "#e8f0ec"}`,
+                      background: repeatMode === m ? "#1F4D3A" : "transparent",
+                      color: repeatMode === m ? "#fff" : "#1F4D3A",
+                      cursor: "pointer", fontWeight: 700, transition: "all 0.14s",
+                    }}
+                  >
+                    {m === "none" ? "⟳ إيقاف" : m === "verse" ? "🔁 آية" : m === "page" ? "📄 صفحة" : "📖 سورة"}
+                  </button>
+                ))}
+              </div>
+              {/* مؤقت التوقف */}
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <label style={{ fontSize: "0.7rem", color: "#1F4D3A", fontWeight: 700, whiteSpace: "nowrap" }}>🕐 توقف عند:</label>
+                <input
+                  type="time"
+                  value={stopAtTime}
+                  onChange={e => setStopAtTime(e.target.value)}
+                  style={{
+                    border: "1.5px solid #e8f0ec", borderRadius: "0.5rem", padding: "0.25rem 0.5rem",
+                    fontSize: "0.8rem", fontFamily: "inherit", background: "#f5f9f6", color: "#1F4D3A",
+                    outline: "none",
+                  }}
+                />
+                {stopAtTime && (
+                  <button
+                    type="button"
+                    onClick={() => { setTimerActive(v => !v); }}
+                    style={{
+                      padding: "0.25rem 0.7rem", fontSize: "0.7rem", fontFamily: "inherit",
+                      borderRadius: "999px", border: `1.5px solid ${timerActive ? "#1F4D3A" : "#cde6d8"}`,
+                      background: timerActive ? "#1F4D3A" : "transparent",
+                      color: timerActive ? "#fff" : "#1F4D3A",
+                      cursor: "pointer", fontWeight: 700,
+                    }}
+                  >
+                    {timerActive ? "✓ مفعّل" : "تفعيل"}
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* قائمة القراء */}

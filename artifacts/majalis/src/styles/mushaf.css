@@ -1042,15 +1042,77 @@
 .qs-ayah--bm .qs-ayah__bm-btn { color: var(--mshf-emerald, #1F4D3A); }
 .mshf-night .qs-ayah--bm .qs-ayah__bm-btn { color: var(--mshf-active-color, #70D4A0); }
 
+/* الآية المفضلة */
+.qs-ayah--fav .qs-ayah__text {
+  background: linear-gradient(transparent 60%, rgba(255, 200, 40, 0.15) 60%);
+  border-radius: 3px;
+}
+.qs-ayah__fav-dot {
+  display: inline;
+  font-size: calc(var(--qs-font-size, 1.9rem) * 0.26);
+  vertical-align: super;
+  opacity: 0.65;
+  margin: 0 0.1rem;
+}
+
+/* شبكة الأجزاء */
+.mshf-juz-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+}
+.mshf-juz-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.55rem 0.3rem 0.5rem;
+  border: 1.5px solid var(--mshf-sheet-border);
+  border-radius: 0.9rem;
+  background: var(--mshf-sheet-item);
+  cursor: pointer;
+  transition: background 0.14s, border-color 0.14s, transform 0.1s;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.mshf-juz-row:hover { background: var(--mshf-sheet-active); border-color: var(--mshf-emerald, #1F4D3A); transform: translateY(-1px); }
+.mshf-juz-row.active {
+  background: var(--mshf-emerald, #1F4D3A);
+  border-color: var(--mshf-emerald, #1F4D3A);
+  box-shadow: 0 2px 12px rgba(31,77,58,0.28);
+}
+.mshf-juz-num {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--mshf-emerald, #1F4D3A);
+  line-height: 1;
+}
+.mshf-juz-row.active .mshf-juz-num { color: #FFFFFF; }
+.mshf-juz-name {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--mshf-item-text);
+  line-height: 1.2;
+}
+.mshf-juz-row.active .mshf-juz-name { color: #FFFFFF; }
+.mshf-juz-page {
+  font-size: 0.55rem;
+  color: var(--mshf-item-sub);
+  font-variant-numeric: tabular-nums;
+}
+.mshf-juz-row.active .mshf-juz-page { color: rgba(255,255,255,0.65); }
+
 /* ══ استجابة ══ */
 @media (max-width: 480px) {
   .qs-surah { padding: 1rem 1rem 2.5rem; }
   .qs-surah-name { font-size: 1.35rem; }
   .qs-ayahs { line-height: 2.2; }
+  .mshf-juz-grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (min-width: 700px) {
   .qs-surah { padding: 2rem 2rem 4rem; }
   .qs-ayahs { line-height: 2.6; }
+  .mshf-juz-grid { grid-template-columns: repeat(5, 1fr); }
 }
 
 /* ══════════════════════════════════════════════════════════════════════
