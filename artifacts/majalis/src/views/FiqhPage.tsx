@@ -41,7 +41,9 @@ const COUNCIL_SECTIONS = [
   { href: "/fiqh-council/live",        label: "البيانات الحية",    desc: "آخر الجلسات والنشاطات" },
   { href: "/fiqh-council/index",       label: "الفهرس الموضوعي",  desc: "تصفح حسب الأبواب" },
   { href: "/fiqh-council/nawazil",     label: "النوازل المعاصرة",  desc: "مسائل العصر ومستجداته" },
-  { href: "/scholarly-research",       label: "الباحث الشرعي",    desc: "بحث وتوثيق بالمصادر" },
+  { href: "/fiqh-council/research",   label: "البحوث الفقهية",    desc: "دراسات معمّقة في القضايا" },
+  { href: "/fiqh-council/compare",    label: "المقارنة الفقهية",  desc: "قارن بين القرارات والفتاوى" },
+  { href: "/scholarly-research",      label: "الباحث الشرعي",     desc: "بحث وتوثيق بالمصادر" },
 ];
 
 const RULINGS_CATEGORIES = RULINGS_CATEGORY_TREE.slice(0, 8);
@@ -65,6 +67,9 @@ const FIQH_TOPICS: FiqhTopic[] = [
   { emoji: "🏛️", title: "المجمع الفقهي",    desc: "قرارات المجامع الفقهية",          href: "/fiqh-council", color: "#0F5132" },
   { emoji: "📋", title: "الأحكام الشرعية",   desc: "موسوعة الأحكام بالمذاهب",        href: "/rulings",      color: "#065F46" },
   { emoji: "🔬", title: "الباحث الشرعي",    desc: "بحث وتوثيق بالمصادر",             href: "/scholarly-research", color: "#374151" },
+  { emoji: "💍", title: "النكاح والطلاق",   desc: "أحكام عقد الزواج والفراق",         href: "/rulings?cat=النكاح", color: "#7C3AED" },
+  { emoji: "🤝", title: "المعاملات",        desc: "البيع والإجارة والشركات",           href: "/rulings?cat=المعاملات", color: "#0F766E" },
+  { emoji: "🥩", title: "الأطعمة",          desc: "الحلال والحرام والذبائح",           href: "/rulings?cat=الأطعمة", color: "#DC2626" },
 ];
 
 export default function FiqhPage() {
