@@ -45,6 +45,27 @@ const COUNCIL_SECTIONS = [
 
 const RULINGS_CATEGORIES = RULINGS_CATEGORY_TREE.slice(0, 8);
 
+// ─── أقسام الفقه والأحكام ────────────────────────────────────────────────────
+
+type FiqhTopic = { emoji: string; title: string; desc: string; href: string; color: string };
+
+const FIQH_TOPICS: FiqhTopic[] = [
+  { emoji: "🚿", title: "الطهارة",           desc: "الوضوء والغسل والتيمم",          href: "/tahara",       color: "#0F766E" },
+  { emoji: "🕌", title: "الصلاة",            desc: "أحكام الصلاة وأوقاتها",          href: "/salah-guide",  color: "#1F4D3A" },
+  { emoji: "💰", title: "الزكاة",            desc: "أحكام الزكاة وحسابها",           href: "/zakat",        color: "#0F5132" },
+  { emoji: "🌙", title: "الصيام",            desc: "أحكام رمضان والنوافل",           href: "/sawm",         color: "#5B21B6" },
+  { emoji: "🕋", title: "الحج والعمرة",       desc: "مناسك الحج والعمرة",             href: "/hajj",         color: "#92400E" },
+  { emoji: "🕯️", title: "الجنائز",           desc: "أحكام الجنائز والتعزية",         href: "/janaza",       color: "#374151" },
+  { emoji: "⚖️", title: "المواريث",          desc: "حاسبة الفرائض والتركات",         href: "/mawarith",     color: "#DC2626" },
+  { emoji: "📐", title: "القواعد الفقهية",   desc: "القواعد الخمس الكبرى وفروعها",   href: "/fiqh-qawaid",  color: "#1F4D3A" },
+  { emoji: "📚", title: "المذاهب الأربعة",   desc: "الحنفي والمالكي والشافعي والحنبلي", href: "/madhahib",  color: "#7C3AED" },
+  { emoji: "❓", title: "الأسئلة والأجوبة",  desc: "أسئلة شرعية موثقة",              href: "/qa",           color: "#0F766E" },
+  { emoji: "📜", title: "الفتاوى",           desc: "فتاوى مُحقَّقة ومُصنَّفة",       href: "/fatwa",        color: "#1F4D3A" },
+  { emoji: "🏛️", title: "المجمع الفقهي",    desc: "قرارات المجامع الفقهية",          href: "/fiqh-council", color: "#0F5132" },
+  { emoji: "📋", title: "الأحكام الشرعية",   desc: "موسوعة الأحكام بالمذاهب",        href: "/rulings",      color: "#065F46" },
+  { emoji: "🔬", title: "الباحث الشرعي",    desc: "بحث وتوثيق بالمصادر",             href: "/scholarly-research", color: "#374151" },
+];
+
 export default function FiqhPage() {
   const search = useSearch();
   const params = new URLSearchParams(search);
@@ -97,24 +118,50 @@ export default function FiqhPage() {
   const latestFatwas = useMemo(() => getLatestFatwas(6), []);
 
   return (
-    <div className="fqp-root">
-      {/* Hero */}
-      <div className="text-white px-4 py-10 ldb-hero">
-        <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 text-teal-100 text-sm px-4 py-1.5 rounded-full mb-4">
-            <Scale size={16} strokeWidth={1.8} />
-            <span>الفقه الإسلامي</span>
-          </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold mb-3">الفقه الإسلامي</h1>
-          <p className="text-teal-100 max-w-xl mx-auto text-sm leading-relaxed">
-            مرجع موحّد للفتاوى والأحكام الشرعية وقرارات المجامع الفقهية — كل شيء من مصادر موثقة ومعتمدة
-          </p>
-        </div>
-      </div>
+    <div className="fqp-root page-shell" dir="rtl">
+      {/* مسار التنقل */}
+      <nav className="tawheed-breadcrumb" aria-label="مسار التنقل">
+        <Link href="/">الرئيسية</Link>
+        <span aria-hidden="true"> / </span>
+        <span aria-current="page">الفقه والأحكام</span>
+      </nav>
 
-      {/* Tabs */}
-      <div className="fqp-tabs-nav">
-        <div className="max-w-5xl mx-auto px-4 flex gap-1 overflow-x-auto">
+      {/* رأس بوابة الفقه */}
+      <header className="fqh-hub-hero">
+        <p className="fqh-hub-hero__eyebrow">الفقه الإسلامي الشامل</p>
+        <h1 className="fqh-hub-hero__title">الفقه والأحكام</h1>
+        <p className="fqh-hub-hero__sub">
+          مرجع موحّد للفتاوى والعبادات والأحكام وقرارات المجامع الفقهية — كل شيء من مصادر موثقة ومعتمدة
+        </p>
+      </header>
+
+      {/* شبكة أقسام الفقه */}
+      <section aria-labelledby="fiqh-hub-heading">
+        <h2 id="fiqh-hub-heading" className="tawheed-principles-heading" style={{ marginBottom: "1rem" }}>
+          أقسام الفقه والأحكام
+        </h2>
+        <div className="fqh-hub-grid">
+          {FIQH_TOPICS.map((t) => (
+            <Link
+              key={t.href}
+              href={t.href}
+              className="fqh-hub-card"
+              style={{ "--fqh-clr": t.color } as React.CSSProperties}
+            >
+              <span className="fqh-hub-card__emoji" aria-hidden="true">{t.emoji}</span>
+              <p className="fqh-hub-card__title">{t.title}</p>
+              <p className="fqh-hub-card__desc">{t.desc}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* فاصل */}
+      <hr style={{ border: "none", borderTop: "1px solid var(--majalis-line, #E2EAE6)", margin: "1.5rem 0" }} />
+
+      {/* Tabs — للمحتوى الديناميكي */}
+      <div className="fqp-tabs-nav" style={{ background: "none", boxShadow: "none" }}>
+        <div className="flex gap-1 overflow-x-auto" style={{ paddingBottom: "0.5rem" }}>
           {TABS.map((t) => (
             <button
               key={t.key}
@@ -130,7 +177,7 @@ export default function FiqhPage() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 py-8">
+      <div className="fqp-tab-content">
 
         {/* تبويب الفتاوى */}
         {activeTab === "fatawa" && (
