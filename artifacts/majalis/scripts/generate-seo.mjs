@@ -172,6 +172,21 @@ function fatwaListFaqJsonLdScript(fatwas) {
   return `<script type="application/ld+json">${JSON.stringify(payload)}</script>`;
 }
 
+function itemListJsonLdScript(items) {
+  if (!items?.length) return "";
+  const payload = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: items.slice(0, 20).map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      url: absoluteUrl(item.url),
+    })),
+  };
+  return `<script type="application/ld+json">${JSON.stringify(payload)}</script>`;
+}
+
 function breadcrumbJsonLdScript(items) {
   const payload = {
     "@context": "https://schema.org",
@@ -415,6 +430,22 @@ await writeFile(resolve(publicDir, "feed.xml"), feed, "utf8");
 const fatwaFaqScript = fatwaListFaqJsonLdScript(PLATFORM_SEED.fatwas || []);
 const qaFaqScript = fatwaListFaqJsonLdScript(PLATFORM_SEED.qa_items || []);
 
+const libraryItemListScript = itemListJsonLdScript(
+  LIBRARY_CATALOG.map((b) => ({ name: b.title, url: `/library/${b.id}` }))
+);
+const fiqhDecisionsItemListScript = itemListJsonLdScript(
+  (PLATFORM_SEED.fiqh_decisions || []).map((r) => ({ name: r.title, url: `/fiqh-council/${r.slug || r.id}` }))
+);
+const fatwaItemListScript = itemListJsonLdScript(
+  (PLATFORM_SEED.fatwas || []).map((r) => ({ name: r.question, url: `/fatwa/${r.id}` }))
+);
+const rulingItemListScript = itemListJsonLdScript(
+  (PLATFORM_SEED.rulings || []).map((r) => ({ name: r.title, url: `/rulings/${r.id}` }))
+);
+const lessonItemListScript = itemListJsonLdScript(
+  LESSONS_SEED.slice(0, 20).map((r) => ({ name: r.title, url: `/lessons/${r.id}` }))
+);
+
 for (const route of staticRoutes) {
   const routeDir =
     route.path === "/"
@@ -422,8 +453,12 @@ for (const route of staticRoutes) {
       : resolve(seoPrerenderDir, route.path.slice(1));
   await mkdir(routeDir, { recursive: true });
   const staticExtraJsonLd =
-    route.path === "/fatwa" ? fatwaFaqScript :
-    route.path === "/qa" ? qaFaqScript : "";
+    route.path === "/fatwa" ? fatwaFaqScript + fatwaItemListScript :
+    route.path === "/qa" ? qaFaqScript :
+    route.path === "/library" ? libraryItemListScript :
+    route.path === "/fiqh-council" ? fiqhDecisionsItemListScript :
+    route.path === "/rulings" ? rulingItemListScript :
+    route.path === "/lessons" ? lessonItemListScript : "";
   await writeFile(resolve(routeDir, "index.html"), prerenderHtml(route, staticExtraJsonLd), "utf8");
 
   if (route.path !== "/") {
