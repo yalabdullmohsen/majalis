@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { BarChart3, Globe, Heart, Star, TrendingUp, Users } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import "@/styles/elite-2026.css";
 
 /* ══════════════════════════════════════════════════════════════════
@@ -255,6 +256,17 @@ function AnimatedBar({ item, delay }: { item: BarItem; delay: number }) {
 
 export default function IslamStatsPage() {
   const [activeTab, setActiveTab] = useState<TabId>("global");
+  const [search, setSearch] = useState("");
+
+  const filteredTimeline = useMemo(() =>
+    search.trim() ? HISTORY_TIMELINE.filter(i => arabicMatchAny([i.year, i.event, i.note ?? ""], search)) : HISTORY_TIMELINE,
+  [search]);
+  const filteredAchievements = useMemo(() =>
+    search.trim() ? HISTORY_ACHIEVEMENTS.filter(s => arabicMatchAny([s.value, s.label, s.sub ?? ""], search)) : HISTORY_ACHIEVEMENTS,
+  [search]);
+  const filteredScience = useMemo(() =>
+    search.trim() ? SCIENCE_CARDS.filter(c => arabicMatchAny([c.topic, c.ref, c.discovery], search)) : SCIENCE_CARDS,
+  [search]);
 
   useEffect(() => {
     applyPageSeo({
@@ -375,8 +387,18 @@ export default function IslamStatsPage() {
         {/* ── الحضارة الإسلامية ── */}
         {activeTab === "history" && (
           <div className="is-section">
+            <div className="is-search-wrap">
+              <input
+                type="search"
+                className="ds-input is-search-input"
+                placeholder="ابحث في الحضارة الإسلامية..."
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                aria-label="بحث في الحضارة الإسلامية"
+              />
+            </div>
             <div className="is-stats-grid">
-              {HISTORY_ACHIEVEMENTS.map((s, i) => (
+              {filteredAchievements.map((s, i) => (
                 <div key={i} className="is-stat-card" style={{ "--is-card-color": s.color } as { [k: string]: string }}>
                   <span className="is-stat-card__val">{s.value}</span>
                   <span className="is-stat-card__lbl">{s.label}</span>
@@ -390,7 +412,7 @@ export default function IslamStatsPage() {
               <h2>خط زمني للحضارة الإسلامية</h2>
             </div>
             <div className="is-timeline">
-              {HISTORY_TIMELINE.map((item, i) => (
+              {filteredTimeline.map((item, i) => (
                 <div key={i} className="is-timeline-item">
                   <div className="is-timeline-item__year">{item.year}</div>
                   <div className="is-timeline-item__dot" aria-hidden="true" />
@@ -413,8 +435,18 @@ export default function IslamStatsPage() {
                 الإعجاز العلمي في القرآن الكريم: آيات تحمل دلالات علمية اكتشفها العلم الحديث بعد قرون من نزول القرآن.
               </p>
             </div>
+            <div className="is-search-wrap">
+              <input
+                type="search"
+                className="ds-input is-search-input"
+                placeholder="ابحث في الإعجاز العلمي..."
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                aria-label="بحث في الإعجاز العلمي"
+              />
+            </div>
             <div className="is-science-grid">
-              {SCIENCE_CARDS.map((card, i) => (
+              {filteredScience.map((card, i) => (
                 <div key={i} className="is-science-card">
                   <div className="is-science-card__topic">{card.topic}</div>
                   <p className="is-science-card__ayah" lang="ar">
