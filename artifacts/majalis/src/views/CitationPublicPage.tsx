@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Download, Link2, QrCode, Star } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 import { Link, useRoute } from "wouter";
+import { ShareButtons } from "@/components/ContentActions";
 import {
   type Citation,
   CONTENT_TYPE_LABEL,
@@ -210,6 +211,9 @@ export default function CitationPublicPage() {
             تم إنشاء هذا الاقتباس عبر{" "}
             <Link href="/" className="cpp-link">منصة مجالس</Link>
           </p>
+          <div className="twh-share">
+            <ShareButtons title="اقتباس من المجلس العلمي" url={typeof window !== "undefined" ? window.location.href : "https://majlisilm.com"} />
+          </div>
         </div>
       </main>
     </div>

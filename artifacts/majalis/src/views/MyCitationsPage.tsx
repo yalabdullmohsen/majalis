@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ClipboardList, Download, FileText, Flame, FolderOpen, Link2, Pencil, Printer, Star } from "lucide-react";
 import { Link } from "wouter";
+import { ShareButtons } from "@/components/ContentActions";
 import { Spinner } from "@/components/ui/spinner";
 import {
   type CitationFolder,
@@ -394,6 +395,9 @@ export default function MyCitationsPage() {
             </div>
           )}
         </main>
+      </div>
+      <div className="twh-share">
+        <ShareButtons title="اقتباساتي — المجلس العلمي" url="https://majlisilm.com/my-citations" />
       </div>
     </div>
   );
