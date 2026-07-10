@@ -551,7 +551,8 @@
         "تلخيص دروس",
         "فوائد علمية"
       ],
-      "sitemap": true,
+      "sitemap": false,
+      "robots": "noindex, follow",
       "changefreq": "weekly",
       "priority": 0.72
     },
@@ -1143,7 +1144,8 @@
         "مذاكرة",
         "طلب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
+      "robots": "noindex, follow",
       "changefreq": "monthly",
       "priority": 0.7
     },
@@ -1534,14 +1536,14 @@
       "title": "البحث الأكاديمي الإسلامي | المجلس العلمي",
       "description": "أدوات البحث الأكاديمي في العلوم الإسلامية — البحث في المصادر الشرعية والمراجع العلمية.",
       "keywords": ["البحث الأكاديمي الإسلامي", "أدوات البحث الشرعي", "المصادر الإسلامية"],
-      "sitemap": true, "changefreq": "monthly", "priority": 0.7
+      "sitemap": false, "robots": "noindex, follow", "changefreq": "monthly", "priority": 0.7
     },
     {
       "path": "/learning/calendar",
       "title": "تقويم الدروس والدورات الإسلامية | المجلس العلمي",
       "description": "تقويم الأحداث والدروس والدورات الإسلامية القادمة، تابع المواعيد العلمية لعلماء الكويت.",
       "keywords": ["تقويم دروس", "دورات إسلامية", "مواعيد علمية", "أحداث شرعية"],
-      "sitemap": true, "changefreq": "daily", "priority": 0.75
+      "sitemap": false, "robots": "noindex, follow", "changefreq": "daily", "priority": 0.75
     },
     {
       "path": "/learning/quiz",
@@ -1576,7 +1578,14 @@
       "title": "وضع الأسرة المسلمة | المجلس العلمي",
       "description": "محتوى إسلامي مناسب للعائلة — أذكار ومحفوظات وقصص للأطفال في بيئة آمنة.",
       "keywords": ["وضع الأسرة", "إسلام الأطفال", "محتوى إسلامي عائلي"],
-      "sitemap": true, "changefreq": "weekly", "priority": 0.68
+      "sitemap": false, "robots": "noindex, follow", "changefreq": "weekly", "priority": 0.68
+    },
+    {
+      "path": "/start-here",
+      "title": "ابدأ من هنا — طريقك لطالب العلم | المجلس العلمي",
+      "description": "مسار تعريفي مرتّب لطالب العلم المبتدئ: العقيدة، الصلاة، السيرة، القرآن، الأذكار، الفقه، الدروس. ٨ خطوات واضحة.",
+      "keywords": ["ابدأ من هنا", "طالب العلم المبتدئ", "كيف أبدأ بطلب العلم", "مسار إسلامي", "المجلس العلمي"],
+      "sitemap": true, "changefreq": "monthly", "priority": 0.85
     },
     {
       "path": "/adhan-settings",

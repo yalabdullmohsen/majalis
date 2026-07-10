@@ -174,6 +174,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/mind-map",           label: "الخرائط الذهنية",    description: "15+ خريطة في العلوم الشرعية" },
       { href: "/islamic-glossary",   label: "المصطلحات الإسلامية", description: "91+ مصطلح مُعرَّف ومُوثَّق" },
       { href: "/hadith-science",     label: "مصطلح الحديث",       description: "علوم الحديث والجرح والتعديل" },
+      { href: "/start-here",         label: "ابدأ من هنا",        description: "مسار مرتّب للمبتدئ في طلب العلم الشرعي" },
       { href: "/learning/paths",     label: "المسارات العلمية",   description: "تعلّم منظم من المبتدئ للمتقدم" },
       { href: "/universities",       label: "دليل الجامعات",      description: "جامعات الشريعة في العالم" },
     ],

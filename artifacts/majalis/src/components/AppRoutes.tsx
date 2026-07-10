@@ -24,6 +24,7 @@ const RegisterPage = lazy(() => import("@/views/RegisterPage"));
 const AuthCallbackPage = lazy(() => import("@/views/AuthCallbackPage"));
 const UserStatsPage = lazy(() => import("@/views/UserStatsPage"));
 const TranscribePage = lazy(() => import("@/views/TranscribePage"));
+const StartHerePage = lazy(() => import("@/views/StartHerePage"));
 const AssistantPage = lazy(() => import("@/views/AssistantPage"));
 const CardsPage = lazy(() => import("@/views/CardsPage"));
 const PrayerTimesPage = lazy(() => import("@/views/PrayerTimesPage"));
@@ -215,6 +216,7 @@ export default function AppRoutes() {
         <Route path="/learning-path"><SafeLazyRoute component={LearningPathPage} /></Route>
         <Route path="/universities"><SafeLazyRoute component={UniversitiesPage} /></Route>
         <Route path="/features-in-progress"><SafeLazyRoute component={FeaturesInProgressPage} /></Route>
+        <Route path="/start-here"><SafeLazyRoute component={StartHerePage} /></Route>
         <Route path="/prophet-stories/:slug"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
         <Route path="/prophet-stories"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
         <Route path="/updates/auto/:slug"><SafeLazyRoute component={AutoContentDetailPage} /></Route>
