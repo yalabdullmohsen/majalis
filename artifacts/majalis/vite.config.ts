@@ -73,11 +73,7 @@ export default defineConfig({
             if (id.includes("framer-motion") || id.includes("motion")) return "animation";
             if (id.includes("cmdk") || id.includes("vaul") || id.includes("sonner")) return "ui-extra";
           }
-          if (id.includes("src/views/admin/Automation") || id.includes("src/views/admin/Autonomous") || id.includes("src/views/admin/ContentProduction")) return "admin-automation";
-          if (id.includes("src/views/admin/Fiqh") || id.includes("src/views/admin/FiqhCouncil") || id.includes("src/views/admin/Fatwa") || id.includes("src/views/admin/ScholarlyVer")) return "admin-fiqh";
-          if (id.includes("src/views/admin/Lessons") || id.includes("src/views/admin/LessonImport") || id.includes("src/views/admin/Haramain") || id.includes("src/views/admin/AnnualCourses") || id.includes("src/views/admin/Digital")) return "admin-lessons";
-          if (id.includes("src/views/admin/Knowledge") || id.includes("src/views/admin/Majlis") || id.includes("src/views/admin/Smart") || id.includes("src/views/admin/Aggregator")) return "admin-knowledge";
-          if (id.includes("src/views/AdminPage") || id.includes("src/views/admin/")) return "admin-page";
+          if (id.includes("src/views/AdminPage") || id.includes("src/views/admin/")) return "admin";
           if (id.includes("src/views/QuranCirclesPage") || id.includes("src/views/QuranPage") || id.includes("src/views/QuranRadioPage")) return "quran-pages";
           if (id.includes("src/views/Scholarly") || id.includes("scholarly-research")) return "scholarly";
           if (id.includes("src/lib/miracles-seed") || id.includes("src/lib/prophets-seed")) return "content-seed";
