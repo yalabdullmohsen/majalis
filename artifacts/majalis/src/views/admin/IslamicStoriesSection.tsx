@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { BookOpen, Library } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/components/AuthProvider";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 type IslamicStory = {
   id: number;
@@ -80,8 +81,7 @@ export function IslamicStoriesSection() {
     if (filterStatus === "معتمد" && !s.is_approved) return false;
     if (filterStatus === "قيد المراجعة" && s.is_approved) return false;
     if (search.trim()) {
-      const q = search.toLowerCase();
-      return s.title.toLowerCase().includes(q) || s.category.includes(q) || s.era.includes(q);
+      return arabicMatchAny([s.title, s.category, s.era], search);
     }
     return true;
   });

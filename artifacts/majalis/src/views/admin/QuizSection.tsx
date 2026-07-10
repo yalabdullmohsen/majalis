@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { Lightbulb } from "lucide-react";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import {
   adminGetQuizQuestions,
   adminUpsertQuizQuestion,
@@ -143,10 +144,8 @@ export function QuizSection() {
     if (sectionFilter !== "الكل" && item.section !== sectionFilter) return false;
     if (levelFilter !== "الكل" && item.level !== levelFilter) return false;
     if (statusFilter !== "الكل" && item.status !== statusFilter) return false;
-    const q = search.trim();
-    if (!q) return true;
     const answerText = item.answer || item.correct_answer || "";
-    return `${item.question} ${answerText} ${item.section || item.category || ""}`.includes(q);
+    return arabicMatchAny([item.question, answerText, item.section || "", item.category || ""], search);
   });
 
   const usedCount = items.filter((i) => i.is_used).length;

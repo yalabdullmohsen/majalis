@@ -3,6 +3,7 @@ import {
   ADHKAR_CATEGORIES,
   type AdhkarItem,
 } from "@/lib/adhkar-seed";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import {
   deleteAdhkarItem,
   getAllAdhkarForAdmin,
@@ -36,12 +37,9 @@ export function AdhkarSection() {
   const reload = () => setItems(getAllAdhkarForAdmin());
 
   const filtered = useMemo(() => {
-    const q = search.trim();
     return items.filter((item) => {
       if (category !== "all" && item.categoryId !== category) return false;
-      if (!q) return true;
-      const hay = `${item.text} ${item.source ?? ""} ${item.reference ?? ""} ${(item.keywords ?? []).join(" ")}`;
-      return hay.includes(q);
+      return arabicMatchAny([item.text, item.source ?? "", item.reference ?? "", ...(item.keywords ?? [])], search);
     });
   }, [items, search, category]);
 

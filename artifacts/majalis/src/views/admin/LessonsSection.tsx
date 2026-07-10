@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AlertTriangle } from "lucide-react";
 import { Link } from "wouter";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { adminGetAllLessons, adminUpsertLesson, adminDeleteLesson, adminGetSheikhs, upsertSeedLessonsToDb } from "@/lib/supabase";
 import { parseTimeToMinutes } from "@/lib/lesson-time";
 import { invalidateLessonsCache } from "@/lib/lessons-service";
@@ -191,10 +192,7 @@ export function LessonsSection() {
 
   const filtered = items.filter((item) => {
     if (statusFilter !== "all" && item.status !== statusFilter) return false;
-    const q = search.trim();
-    if (!q) return true;
-    const hay = `${item.title} ${item.sheikhs?.name ?? ""} ${item.category ?? ""} ${item.city ?? ""} ${item.mosque ?? ""}`;
-    return hay.includes(q);
+    return arabicMatchAny([item.title, item.sheikhs?.name ?? "", item.category ?? "", item.city ?? "", item.mosque ?? ""], search);
   });
 
   return (

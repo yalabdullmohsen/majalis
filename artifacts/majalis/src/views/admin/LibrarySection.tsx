@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { adminGetLibrary, adminUpsertLibraryItem, adminDeleteLibraryItem } from "@/lib/supabase";
 import { sanitizeText } from "@/lib/sanitize";
 import { SkeletonCardGrid } from "@/components/ui-common";
@@ -28,11 +29,9 @@ export function LibrarySection() {
     load();
   }, []);
 
-  const filtered = items.filter((item) => {
-    const q = search.trim();
-    if (!q) return true;
-    return `${item.title} ${item.author ?? ""} ${item.category ?? ""}`.includes(q);
-  });
+  const filtered = items.filter((item) =>
+    arabicMatchAny([item.title, item.author ?? "", item.category ?? ""], search),
+  );
 
   const handleSave = async () => {
     if (!form.title.trim()) return alert("عنوان المادة مطلوب");

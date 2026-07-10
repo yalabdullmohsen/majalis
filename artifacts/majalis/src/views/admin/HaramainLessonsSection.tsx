@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { Calendar, CheckCircle2, Clock, Landmark, Link2, RefreshCw, User, Users, XCircle } from "lucide-react";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import {
   HARAMAIN_LESSONS,
   getHaramainLessonsByType,
@@ -26,13 +27,8 @@ export function HaramainLessonsSection() {
     let list = baseLessons;
     if (category !== "الكل") list = list.filter((l) => l.category === category);
     if (search.trim()) {
-      const q = search.trim().toLowerCase();
-      list = list.filter(
-        (l) =>
-          l.title.toLowerCase().includes(q) ||
-          l.speaker_name.toLowerCase().includes(q) ||
-          l.category.toLowerCase().includes(q) ||
-          l.keywords.some((k) => k.toLowerCase().includes(q))
+      list = list.filter((l) =>
+        arabicMatchAny([l.title, l.speaker_name, l.category, ...l.keywords], search)
       );
     }
     return list;

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { adminGetSheikhs, adminUpsertSheikh, adminDeleteSheikh, uploadSheikhImage, deleteSheikhImage } from "@/lib/supabase";
 import { GOVERNORATES } from "@/lib/theme";
 import { SkeletonCardGrid } from "@/components/ui-common";
@@ -98,12 +99,9 @@ export function SheikhsSection() {
   };
   const set = (k: string, v: any) => setForm((f: any) => ({ ...f, [k]: v }));
 
-  const filtered = items.filter((item) => {
-    const q = search.trim();
-    if (!q) return true;
-    const hay = `${item.name} ${item.city ?? ""} ${(item.specialties || []).join(" ")}`;
-    return hay.includes(q);
-  });
+  const filtered = items.filter((item) =>
+    arabicMatchAny([item.name, item.city ?? "", ...(item.specialties || [])], search),
+  );
 
   return (
     <div>
