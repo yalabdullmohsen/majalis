@@ -103,7 +103,20 @@ export default function StudyRoomPage() {
       title: "غرفة المذاكرة | المجلس العلمي",
       description: "غرفة المذاكرة الإسلامية، مؤقت بومودورو للمذاكرة وتسجيل جلسات الدراسة الشرعية.",
       keywords: ["غرفة مذاكرة", "مذاكرة إسلامية", "بومودورو إسلامي", "جلسة دراسة", "تعلم شرعي"],
-      robots: "noindex, follow",
+      robots: "index, follow",
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "غرفة الدراسة — المجلس العلمي",
+          url: "https://majlisilm.com/study-room",
+          description: "بيئة مذاكرة مركّزة مع مؤقت Pomodoro وتتبع جلسات الدراسة الشرعية",
+          applicationCategory: "EducationalApplication",
+          operatingSystem: "Web",
+          inLanguage: "ar",
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        },
+      ],
     });
   }, []);
 
