@@ -73,6 +73,19 @@ export default function CardsPage() {
       title: "بطاقات الاقتباسات الإسلامية | المجلس العلمي",
       description: "أنشئ بطاقات اقتباسات إسلامية جميلة قابلة للمشاركة، اختر القالب والحجم وصدّر بجودة عالية.",
       keywords: ["بطاقات إسلامية", "اقتباسات إسلامية", "بطاقات دينية", "صور إسلامية", "بطاقات قرآنية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "صانع البطاقات الإسلامية",
+          url: "https://majlisilm.com/cards",
+          description: "أنشئ بطاقات اقتباسات إسلامية جميلة قابلة للمشاركة",
+          applicationCategory: "ReligiousApplication",
+          operatingSystem: "Web",
+          inLanguage: "ar",
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        },
+      ],
     });
   }, []);
   const [source, setSource] = useState(DEFAULT_SOURCE);
