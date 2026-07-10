@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ══════════════════════════════════════════════════════════════════
    §248، الوصايا النبوية  (.wn-*)
@@ -407,8 +408,21 @@ const CATS_MOD: Record<string, string> = {
 export default function WasayaNabawiyyaPage() {
   const [activeTab, setActiveTab] = useState<Tab>("kabira");
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const [search, setSearch] = useState("");
 
   const toggleItem = (i: number) => setOpenIdx(prev => (prev === i ? null : i));
+
+  const filteredKabira = useMemo(() =>
+    search.trim()
+      ? WASAYA_KABIRA.filter(w => arabicMatchAny([w.title, w.text, w.category ?? ""], search))
+      : WASAYA_KABIRA,
+  [search]);
+
+  const filteredUmma = useMemo(() =>
+    search.trim()
+      ? WASAYA_UMMA.filter(w => arabicMatchAny([w.title, w.text], search))
+      : WASAYA_UMMA,
+  [search]);
 
   useEffect(() => {
     applyPageSeo({
@@ -464,6 +478,19 @@ export default function WasayaNabawiyyaPage() {
         ))}
       </div>
 
+      {(activeTab === "kabira" || activeTab === "lil-umma") && (
+        <div className="wn-search-wrap">
+          <input
+            type="search"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="ابحث في الوصايا..."
+            className="page-search-input wn-search-input"
+            aria-label="بحث في الوصايا النبوية"
+          />
+        </div>
+      )}
+
       <div className="wn-container">
 
         {/* الوصايا الكبرى */}
@@ -473,7 +500,7 @@ export default function WasayaNabawiyyaPage() {
               <p>هذه وصايا جامعة أوصى بها ﷺ أصحابه في مواقف مختلفة، كل وصية كانت دواءً دقيقاً لحاجة تلك اللحظة، وهي في مجموعها دستور أخلاقي للمؤمن.</p>
             </div>
             <div className="wn-list">
-              {WASAYA_KABIRA.map((w, i) => (
+              {filteredKabira.map((w, i) => (
                 <div key={w.id} className="wn-card">
                   <button
                     type="button"
@@ -537,7 +564,7 @@ export default function WasayaNabawiyyaPage() {
               <p>في خطبة الوداع وغيرها من المواطن الكبرى، أوصى ﷺ الأمة جمعاء بوصايا تحفظ تماسكها ووحدتها ودينها.</p>
             </div>
             <div className="wn-umma-list">
-              {WASAYA_UMMA.map((w, i) => (
+              {filteredUmma.map((w, i) => (
                 <div key={i} className="wn-umma-card">
                   <div className="wn-umma-num">{i + 1}</div>
                   <div>

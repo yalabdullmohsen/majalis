@@ -23855,6 +23855,8 @@ img[loading="lazy"]:not([src=""]) {
   background: var(--clr-surface);
   position: sticky; top: 0; z-index: 10;
 }
+.wn-search-wrap { padding: .75rem 1.25rem 0; }
+.wn-search-input { width: 100%; }
 .wn-tab {
   padding: .45rem 1.1rem; border-radius: 999px;
   border: 1.5px solid var(--clr-border); background: #fff;
