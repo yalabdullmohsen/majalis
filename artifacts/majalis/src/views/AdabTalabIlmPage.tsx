@@ -420,6 +420,21 @@ export default function AdabTalabIlmPage() {
       title: "آداب طالب العلم | المجلس العلمي",
       description: "دليل طالب العلم الشرعي، فضل العلم وآداب التعلم ومراتب طالب العلم والكتب المقررة في كل مستوى.",
       keywords: ["آداب طالب العلم", "فضل العلم", "طلب العلم", "الطريق إلى العلم", "كتب العلم"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "فضائل العلم وآداب طالب العلم",
+          description: "فضائل العلم الشرعي وآداب طالب العلم من القرآن والسنة وأقوال العلماء",
+          numberOfItems: FADL_ITEMS.length,
+          itemListElement: FADL_ITEMS.map((f, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: f.title,
+            url: `https://majlisilm.com/adab-talab-ilm#fadl-${i + 1}`,
+          })),
+        },
+      ],
     });
     setOpenIdx(null);
   }, [activeTab]);

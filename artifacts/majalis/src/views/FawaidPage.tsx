@@ -57,6 +57,20 @@ export default function FawaidPage({
       title: "الفوائد العلمية | المجلس العلمي",
       description: "منصة لنشر ومشاركة الفوائد العلمية والشرعية، فوائد قرآنية وحديثية وعقدية وفقهية وتربوية.",
       keywords: ["فوائد علمية", "فوائد شرعية", "فوائد قرآنية", "فوائد حديثية", "الفوائد الإسلامية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أقسام الفوائد العلمية",
+          description: "أقسام الفوائد العلمية والشرعية على المنصة",
+          itemListElement: FAWAID_CATEGORIES.map((cat, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: cat,
+            url: `https://majlisilm.com/fawaid?cat=${encodeURIComponent(cat)}`,
+          })),
+        },
+      ],
     });
   }, []);
 

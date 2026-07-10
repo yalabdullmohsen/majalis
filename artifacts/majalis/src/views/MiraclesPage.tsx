@@ -100,6 +100,20 @@ export default function MiraclesPage({
       title: "الإعجاز العلمي في القرآن والسنة | المجلس العلمي",
       description: "موضوعات الإعجاز العلمي في القرآن الكريم والسنة النبوية، إعجاز طبي وكوني وعددي وبيولوجي موثّق بالأدلة العلمية.",
       keywords: ["إعجاز علمي", "إعجاز قرآني", "معجزات", "علم وإسلام"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أقسام الإعجاز العلمي",
+          description: "أقسام ومجالات الإعجاز العلمي في القرآن الكريم والسنة النبوية",
+          itemListElement: CATEGORIES.filter(c => c !== "الكل").map((cat, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: cat,
+            url: `https://majlisilm.com/miracles?cat=${encodeURIComponent(cat)}`,
+          })),
+        },
+      ],
     });
   }, []);
 
