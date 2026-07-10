@@ -121,10 +121,10 @@ html {
   --color-parchment:     var(--msk-canvas,   #FFFFFF);
   --color-line:          var(--msk-border,   rgba(31,77,58,0.10));
 
-  /* ── الخطوط — Cairo للواجهة (محمَّل)، Amiri Quran للقرآن فقط ── */
-  --font-primary:  "Cairo", "Almarai", "Tajawal", system-ui, sans-serif;
+  /* ── الخطوط — Cairo للواجهة، Amiri Quran للقرآن ── */
+  --font-primary:  "Cairo", system-ui, sans-serif;
   --font-ui:       var(--font-primary);
-  --font-display:  "Cairo", "Almarai", serif;
+  --font-display:  "Cairo", serif;
   --font-reading:  var(--font-primary);
   --font-body:     var(--font-primary);
   --font-quran:    "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
