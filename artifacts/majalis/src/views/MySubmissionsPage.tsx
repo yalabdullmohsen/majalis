@@ -4,6 +4,7 @@ import type { LucideIcon } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { formatFileSize, type UserSubmission, type SubmissionStatus } from "@/lib/user-submissions-service";
 import { Link } from "wouter";
+import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 
 const STATUS_META: Record<SubmissionStatus, { Icon: LucideIcon; label: string; mod: string }> = {
@@ -239,6 +240,9 @@ export default function MySubmissionsPage() {
           </Link>
         </div>
       )}
+      <div className="twh-share">
+        <ShareButtons title="مساهماتي — المجلس العلمي" url="https://majlisilm.com/my-submissions" />
+      </div>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { getMergedPlatformUpdates } from "@/lib/auto-content-service";
 import { UPDATE_TYPES } from "@/lib/platform-types";
 import { usePageView } from "@/hooks/usePageView";
+import { ShareButtons } from "@/components/ContentActions";
 import type { MergedUpdateItem } from "@/lib/auto-content/auto-content-utils";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -112,6 +113,9 @@ export default function UpdatesPage() {
           ))}
         </div>
       )}
+      <div className="twh-share">
+        <ShareButtons title="آخر التحديثات — المجلس العلمي" url="https://majlisilm.com/updates" />
+      </div>
     </div>
   );
 }

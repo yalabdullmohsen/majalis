@@ -3,6 +3,7 @@ import { BookOpen, Building2, Leaf, Library, Moon, PenLine, Scale, ScrollText, S
 import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
 import { fetchLearningPaths, levelLabel, type LearningPath } from "@/lib/digital-learning-service";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -241,6 +242,9 @@ export default function LearningPathsPage() {
           </div>
         </div>
       </section>
+      <div className="twh-share">
+        <ShareButtons title="المسارات التعليمية الشرعية — المجلس العلمي" url="https://majlisilm.com/learning/paths" />
+      </div>
     </div>
   );
 }

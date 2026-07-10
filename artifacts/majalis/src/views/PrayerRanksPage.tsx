@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { PageHeader } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 
 // ─── مراتب المصلين ───────────────────────────────────────────────────────
@@ -196,6 +197,9 @@ export function PrayerRanksContent() {
           <li>الصلاة في جماعة أفضل من صلاة الفذّ بسبع وعشرين درجة، فاحرص على المسجد.</li>
         </ul>
       </section>
+      <div className="twh-share">
+        <ShareButtons title="فضائل الصلاة ومراتبها — المجلس العلمي" url="https://majlisilm.com/prayer-ranks" />
+      </div>
     </div>
   );
 }

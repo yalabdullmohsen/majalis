@@ -5,6 +5,7 @@ import { MUEZZINS, previewAdhan, stopAdhan } from "@/lib/adhan-audio";
 import { loadFavorites, toggleFavorite } from "@/lib/muezzin-favorites";
 import { patchAdhanPrefs, loadAdhanPrefs } from "@/lib/adhan-preferences";
 import { useEffect } from "react";
+import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 
 const STYLE_CLASS: Record<string, string> = {
@@ -157,6 +158,9 @@ export default function MuezzinFavoritesPage() {
           </div>
         </div>
       )}
+      <div className="twh-share">
+        <ShareButtons title="المؤذنون المفضلون — المجلس العلمي" url="https://majlisilm.com/muezzins/favorites" />
+      </div>
     </div>
   );
 }

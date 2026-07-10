@@ -11,6 +11,7 @@ import {
   moduleLabel,
   type LearningModule,
 } from "@/lib/digital-learning-service";
+import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 
 export default function LearningPathDetailPage() {
@@ -138,6 +139,9 @@ export default function LearningPathDetailPage() {
           <p className="lpd-insights__disclaimer">{insights.disclaimer}</p>
         </aside>
       )}
+      <div className="twh-share">
+        <ShareButtons title="تفاصيل المسار التعليمي — المجلس العلمي" url="https://majlisilm.com/learning/paths" />
+      </div>
     </div>
   );
 }

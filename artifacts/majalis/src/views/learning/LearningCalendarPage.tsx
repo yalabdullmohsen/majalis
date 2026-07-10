@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { format } from "date-fns";
 import { arSA } from "date-fns/locale";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
 import { fetchLearningCalendar, subscribeLearningEvent } from "@/lib/digital-learning-service";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -76,6 +77,9 @@ export default function LearningCalendarPage() {
       <p className="lcd-footer-link">
         <Link href="/calendar">تقويم الدروس الكامل</Link>
       </p>
+      <div className="twh-share">
+        <ShareButtons title="تقويم الدروس الشرعية — المجلس العلمي" url="https://majlisilm.com/learning/calendar" />
+      </div>
     </div>
   );
 }

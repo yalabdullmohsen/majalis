@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { SkeletonCardGrid } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import {
   fetchUserLearningStats,
@@ -131,6 +132,9 @@ export default function MyLearningPage() {
           </div>
         </section>
       )}
+      <div className="twh-share">
+        <ShareButtons title="مساري التعليمي — المجلس العلمي" url="https://majlisilm.com/my-learning" />
+      </div>
     </div>
   );
 }
