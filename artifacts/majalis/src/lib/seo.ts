@@ -129,6 +129,90 @@ function routeForPath(path: string) {
     };
   }
 
+  if (normalized.startsWith("/library/")) {
+    return {
+      ...requiredRoute("/library"),
+      title: "كتاب شرعي | المجلس العلمي",
+      description: "تفاصيل الكتاب — المؤلف، التصنيف، ملخص المحتوى، وروابط التحميل.",
+      ogType: "book",
+    };
+  }
+
+  if (normalized.startsWith("/topics/")) {
+    const slug = decodeURIComponent(normalized.slice("/topics/".length));
+    return {
+      ...requiredRoute("/topics"),
+      title: `موضوع: ${slug} | المجلس العلمي`,
+      description: `موضوع ${slug} — مقالات وروابط ومحتوى ذو صلة من المجلس العلمي.`,
+    };
+  }
+
+  if (normalized.startsWith("/universities/") && normalized !== "/universities/compare") {
+    return {
+      ...requiredRoute("/universities"),
+      title: "جامعة إسلامية | المجلس العلمي",
+      description: "ملف الجامعة — التخصصات، شروط القبول، معلومات التواصل.",
+    };
+  }
+
+  if (normalized.startsWith("/muezzins/")) {
+    return {
+      ...requiredRoute("/muezzins"),
+      title: "ملف المؤذن | المجلس العلمي",
+      description: "ملف المؤذن — تلاوات، تقييمات، مناطق الخدمة على المجلس العلمي.",
+    };
+  }
+
+  if (normalized.startsWith("/learning/paths/")) {
+    return {
+      ...requiredRoute("/learning/paths"),
+      title: "مسار التعلم | المجلس العلمي",
+      description: "مسار تعلم مفصّل — المراحل والكتب والاختبارات وشهادة الإتمام.",
+    };
+  }
+
+  if (normalized.startsWith("/learning/quiz/")) {
+    return {
+      ...requiredRoute("/learning/quiz"),
+      title: "اختبار علمي | المجلس العلمي",
+      description: "اختبار في مسار التعلم — أسئلة متدرجة الصعوبة لتقييم مستواك.",
+    };
+  }
+
+  if (normalized.startsWith("/learning/certificates/")) {
+    return {
+      ...requiredRoute("/learning"),
+      title: "التحقق من الشهادة | المجلس العلمي",
+      description: "التحقق من صحة شهادة إتمام مسار التعلم الشرعي.",
+    };
+  }
+
+  if (normalized.startsWith("/learning-path/")) {
+    return {
+      ...requiredRoute("/learning-path"),
+      title: "خارطة طالب العلم | المجلس العلمي",
+      description: "مسار التعلم الشرعي التراكمي — الكتب والمتون والمستويات.",
+    };
+  }
+
+  if (normalized.startsWith("/quran/surah-stories/")) {
+    return {
+      ...requiredRoute("/quran/surah-stories"),
+      title: "قصة سورة | المجلس العلمي",
+      description: "تفاصيل سورة قرآنية — سبب النزول، المحاور، والفوائد.",
+      ogType: "article",
+    };
+  }
+
+  if (normalized.startsWith("/c/")) {
+    return {
+      ...requiredRoute("/fiqh-council"),
+      title: "مقالة علمية | المجلس العلمي",
+      description: "مقالة شرعية موثقة من المجلس العلمي.",
+      ogType: "article",
+    };
+  }
+
   if (normalized === "/prophets") {
     return requiredRoute("/prophets");
   }
