@@ -66,7 +66,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   font-size: 0.7rem;
-  color: var(--majalis-brass, #9A6D1A);
+  color: var(--clr-primary, #1F4D3A);
   background: var(--majalis-parchment, #F9F6EF);
   padding: 0 0.5rem;
   line-height: 1;
@@ -77,7 +77,7 @@
    يستخدم للإنجازات وشاشات الترحيب
    ══════════════════════════════════════════════════ */
 .geo-frame {
-  border: 2px solid color-mix(in srgb, var(--majalis-brass, #9A6D1A) 30%, transparent);
+  border: 2px solid color-mix(in srgb, var(--clr-primary, #1F4D3A) 30%, transparent);
   border-radius: 1rem;
   position: relative;
 }
@@ -88,7 +88,7 @@
   position: absolute;
   width: 1.25rem;
   height: 1.25rem;
-  border: 2px solid var(--majalis-brass, #9A6D1A);
+  border: 2px solid var(--clr-primary, #1F4D3A);
 }
 
 .geo-frame::before {
@@ -113,11 +113,11 @@
 .geo-hero-gradient {
   background:
     radial-gradient(ellipse 120% 80% at 50% -10%,
-      color-mix(in srgb, var(--majalis-emerald, #166048) 12%, transparent),
+      rgba(31, 77, 58, 0.12),
       transparent 70%
     ),
     radial-gradient(ellipse 60% 40% at 90% 20%,
-      color-mix(in srgb, var(--majalis-brass, #9A6D1A) 8%, transparent),
+      rgba(31, 77, 58, 0.06),
       transparent 60%
     ),
     var(--majalis-parchment, #F9F6EF);
@@ -131,6 +131,231 @@
    SVG pattern — قابل للإدراج inline كـ data URL
    ══════════════════════════════════════════════════ */
 :root {
-  --geo-star-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 5L61 35L93 35L68 55L78 85L50 65L22 85L32 55L7 35L39 35Z' fill='%23166048' opacity='0.06'/%3E%3C/svg%3E");
-  --geo-hex-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 115'%3E%3Cpolygon points='50,5 95,30 95,85 50,110 5,85 5,30' fill='none' stroke='%23166048' stroke-opacity='0.07' stroke-width='2'/%3E%3C/svg%3E");
+  --geo-star-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 5L61 35L93 35L68 55L78 85L50 65L22 85L32 55L7 35L39 35Z' fill='%231F4D3A' opacity='0.06'/%3E%3C/svg%3E");
+  --geo-hex-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 115'%3E%3Cpolygon points='50,5 95,30 95,85 50,110 5,85 5,30' fill='none' stroke='%231F4D3A' stroke-opacity='0.07' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+/* ══════════════════════════════════════════════════
+   عناصر زخرفة SVG مضمّنة في الصفحات
+   ══════════════════════════════════════════════════ */
+
+/* نجمة إسلامية ثمانية في الزاوية */
+.geo-corner-ornament {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  opacity: 0.05;
+  pointer-events: none;
+}
+.geo-corner-ornament--tl { top: -20px; right: -20px; }
+.geo-corner-ornament--br { bottom: -20px; left: -20px; transform: rotate(180deg); }
+
+/* شريط نمط إسلامي أفقي */
+.geo-pattern-strip {
+  width: 100%;
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--clr-primary, #1F4D3A) 0,
+    var(--clr-primary, #1F4D3A) 6px,
+    transparent 6px,
+    transparent 12px,
+    rgba(31,77,58,0.4) 12px,
+    rgba(31,77,58,0.4) 14px,
+    transparent 14px,
+    transparent 20px
+  );
+  border-radius: 3px;
+}
+
+/* دائرة زخرفية خلفية كبيرة */
+.geo-bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  border: 1px solid rgba(31,77,58,0.08);
+}
+.geo-bg-circle--lg {
+  width: 320px; height: 320px;
+  top: -60px; left: -80px;
+}
+.geo-bg-circle--md {
+  width: 180px; height: 180px;
+  bottom: -40px; right: -40px;
+}
+
+/* خطوط هندسية مائلة كخلفية للأبطال */
+.geo-hero-lines {
+  background-image:
+    repeating-linear-gradient(
+      -55deg,
+      transparent 0,
+      transparent 18px,
+      rgba(255,255,255,0.03) 18px,
+      rgba(255,255,255,0.03) 19px
+    );
+}
+
+/* إطار مزخرف لبطاقات الاقتباس */
+.geo-quote-frame {
+  position: relative;
+  padding: 1.5rem 1.5rem 1.5rem 2rem;
+}
+.geo-quote-frame::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    var(--clr-primary, #1F4D3A),
+    rgba(31,77,58,0.3)
+  );
+  border-radius: 2px;
+}
+.geo-quote-frame::after {
+  content: "❝";
+  position: absolute;
+  top: -8px; right: 12px;
+  font-size: 2.5rem;
+  color: rgba(31,77,58,0.12);
+  font-family: serif;
+  line-height: 1;
+}
+
+/* نقاط زخرفية */
+.geo-dots-pattern {
+  background-image: radial-gradient(
+    circle,
+    rgba(31,77,58,0.08) 1px,
+    transparent 1px
+  );
+  background-size: 18px 18px;
+}
+
+/* شريط زخرفي علوي للصفحات */
+.geo-page-top-bar {
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--clr-primary, #1F4D3A) 20%,
+    rgba(31,77,58,0.5) 50%,
+    var(--clr-primary, #1F4D3A) 80%,
+    transparent
+  );
+  margin-bottom: 0;
+}
+
+/* ══════════════════════════════════════════════════
+   زخارف تلقائية على مستوى الموقع
+   ══════════════════════════════════════════════════ */
+
+/* خط زخرفي أسفل كل عنوان h2 في الصفحات العلمية */
+.atl-container h2::after,
+.rq-container h2::after,
+.sg-body h2::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 2px;
+  background: var(--clr-primary, #1F4D3A);
+  margin: .4rem auto 0;
+  border-radius: 1px;
+  opacity: 0.5;
+}
+
+/* نجمة صغيرة في بداية بطاقات الرقائق */
+.rq-card::before {
+  content: "✦";
+  position: absolute;
+  top: .8rem;
+  left: .8rem;
+  font-size: .55rem;
+  color: rgba(31,77,58,0.2);
+  pointer-events: none;
+}
+.rq-card { position: relative; }
+
+/* شريط زمردي رقيق يسار بطاقات الأذكار والأحاديث */
+.atl-card--hadith {
+  border-right: 3px solid rgba(31,77,58,0.35) !important;
+}
+
+/* نمط نقطي خلف قسم الشروط والأركان */
+.sg-shurut-grid {
+  background-image: radial-gradient(circle, rgba(31,77,58,0.06) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: 0 0;
+  padding: 1rem;
+  border-radius: .75rem;
+}
+
+/* فاصل هندسي بين الأقسام */
+.sg-subhead--mt {
+  position: relative;
+  padding-top: 1.5rem;
+}
+.sg-subhead--mt::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 60px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(31,77,58,0.3), transparent);
+}
+
+/* زخرفة بطاقات الفضائل (آيات الصلاة) */
+.sg-ayah-card {
+  position: relative;
+  overflow: hidden;
+}
+.sg-ayah-card::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(to bottom, #1F4D3A, rgba(31,77,58,0.2));
+  border-radius: 0 .5rem .5rem 0;
+}
+
+/* نجمة هندسية خلف شارات الأقسام */
+.sg-hero__badge::before,
+.atl-hero__badge::before,
+.rq-hero__badge::before {
+  content: "✦ ";
+  opacity: 0.6;
+}
+
+/* خطوط هندسية خلف شبكة التبويبات */
+.sg-tabs-bar,
+.atl-tabs-bar,
+.rq-tabs {
+  position: relative;
+}
+.sg-tabs-bar::before,
+.atl-tabs-bar::before,
+.rq-tabs::before {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(31,77,58,0.15) 20%, rgba(31,77,58,0.15) 80%, transparent);
+  pointer-events: none;
+}
+
+/* إضافة نمط نجمي على بطاقات الخشوع */
+.sg-khushuu-card {
+  position: relative;
+  overflow: hidden;
+}
+.sg-khushuu-card::after {
+  content: "✦";
+  position: absolute;
+  bottom: .4rem;
+  left: .5rem;
+  font-size: .6rem;
+  color: rgba(31,77,58,0.12);
+  pointer-events: none;
 }

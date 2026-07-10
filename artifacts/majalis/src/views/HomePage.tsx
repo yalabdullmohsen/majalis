@@ -28,7 +28,7 @@ import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import {
   BookMarked, BookOpen, Bot, CalendarDays, Car, Check, Clock,
   Compass, Droplets, FlaskConical, GraduationCap, Heart, HelpCircle, Landmark, Layers,
-  Lightbulb, Map, Mic2, Monitor, Moon, Network, Newspaper,
+  Lightbulb, Map, Mic2, Monitor, Moon, Network,
   Radio, RotateCw, Scale, Scroll, Sparkles, Star, Target, Upload, Users, Wrench,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -48,12 +48,11 @@ const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc: string
   { href: "/quiz",           Icon: Target,        label: "المسابقات",         desc: "اختبار المعلومات" },
   { href: "/muezzins",       Icon: Mic2,          label: "المؤذنون",          desc: "أجمل الأصوات" },
   { href: "/library",        Icon: BookOpen,      label: "المكتبة",           desc: "كتب ومتون علمية" },
-  { href: "/prayer-times",   Icon: Compass,       label: "القِبلة",           desc: "اتجاه الكعبة" },
+  { href: "/qibla",          Icon: Compass,       label: "القِبلة",           desc: "اتجاه الكعبة" },
   { href: "/salah-guide",    Icon: Scroll,        label: "دليل الصلاة",       desc: "للمبتدئ والمتقن" },
   { href: "/calendar",       Icon: CalendarDays,  label: "التقويم",           desc: "التاريخ الهجري" },
 ];
 
-const QUICK_SEARCHES = ["صلاة الفجر", "آية الكرسي", "دعاء القنوت", "أذكار الصباح", "صيام الاثنين", "حديث النية", "أركان الإسلام", "زكاة المال"];
 
 /* ── المميزات البارزة (4 بطاقات كبيرة) ── */
 const FEATURED: { href: string; Icon: LucideIcon; title: string; desc: string; cta: string }[] = [
@@ -202,7 +201,6 @@ function RecentPagesBar() {
 export default function HomePage() {
   const [term, setTerm] = useState("");
   const [, navigate] = useLocation();
-  const quickSearch = (q: string) => { navigate(`/search/${encodeURIComponent(q)}`); };
 
   useEffect(() => {
     applyPageSeo({

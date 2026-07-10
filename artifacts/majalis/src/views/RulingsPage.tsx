@@ -200,7 +200,7 @@ export default function RulingsPage() {
             );
           })}
           <button type="button" className="content-hub-chip" onClick={() => setShowAdvanced(true)}>
-            المزيد...
+            كل الأبواب...
           </button>
         </div>
       )}

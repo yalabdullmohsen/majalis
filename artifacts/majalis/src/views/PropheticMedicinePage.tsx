@@ -132,7 +132,7 @@ export default function PropheticMedicinePage() {
                   onClick={() => setExpanded(isOpen ? null : item.id)}
                   className="pmp-toggle-btn"
                 >
-                  {isOpen ? "▲ أقل" : "▼ اقرأ المزيد"}
+                  {isOpen ? "▲ إخفاء الوصفة" : "▼ عرض الوصفة والاستخدامات"}
                 </button>
               </div>
             </article>

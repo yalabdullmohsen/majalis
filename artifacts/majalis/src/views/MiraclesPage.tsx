@@ -258,7 +258,7 @@ export default function MiraclesPage({
                           className="mk-expand-btn"
                           onClick={() => setExpanded(isExpanded ? null : item.id)}
                         >
-                          {isExpanded ? "▲ عرض أقل" : "▼ اقرأ المزيد"}
+                          {isExpanded ? "▲ طوِّ التفاصيل" : "▼ تفاصيل المعجزة"}
                         </button>
                       )}
                     </>
