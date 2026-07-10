@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import { Send } from "lucide-react";
 
 function IslamicStarFooter() {
   const cx = 16, r1 = 13, r2 = 7;
@@ -150,6 +151,13 @@ export function SiteFooter() {
           ))}
         </div>
 
+        <div className="site-footer-telegram">
+          <Send size={15} aria-hidden="true" />
+          <span>تابع قناتنا على تيليجرام</span>
+          <a href="https://t.me/majlisilm" target="_blank" rel="noopener noreferrer" className="site-footer-telegram__link">
+            @majlisilm
+          </a>
+        </div>
         <p className="site-footer-copy">© {new Date().getFullYear()} المجلس العلمي</p>
       </div>
     </footer>
