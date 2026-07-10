@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { AlertTriangle, Code2, Lock, Plus, Settings2, Users2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
+import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 
 const FAQ = [
@@ -125,6 +126,9 @@ export default function ContactPage() {
         </div>
       </LegalSection>
 
+      <div className="twh-share">
+        <ShareButtons title="تواصل مع المجلس العلمي" url="https://majlisilm.com/contact" />
+      </div>
       <LegalBackLink />
     </LegalPageLayout>
   );

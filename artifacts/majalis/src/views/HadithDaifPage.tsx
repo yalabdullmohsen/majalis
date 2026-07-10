@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { HadithSection } from "./HadithPage";
+import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 
 export default function HadithDaifPage() {
@@ -12,5 +13,12 @@ export default function HadithDaifPage() {
     });
   }, []);
 
-  return <HadithSection authenticityClass="daif" />;
+  return (
+    <>
+      <HadithSection authenticityClass="daif" />
+      <div className="twh-share">
+        <ShareButtons title="الأحاديث الضعيفة — المجلس العلمي" url="https://majlisilm.com/hadith/daif" />
+      </div>
+    </>
+  );
 }

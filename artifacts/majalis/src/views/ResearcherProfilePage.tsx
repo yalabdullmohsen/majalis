@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Link2, Lock } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
 import {
   getResearcherProfile,
   saveResearcherProfile,
@@ -313,6 +314,9 @@ export default function ResearcherProfilePage() {
             {saving ? "جارٍ الحفظ…" : "حفظ الملف"}
           </button>
         </div>
+      </div>
+      <div className="twh-share">
+        <ShareButtons title="ملف الباحث الشرعي — المجلس العلمي" url="https://majlisilm.com/researcher-profile" />
       </div>
     </div>
   );

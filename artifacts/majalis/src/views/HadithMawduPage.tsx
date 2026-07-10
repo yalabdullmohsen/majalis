@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { HadithSection } from "./HadithPage";
+import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 
 export default function HadithMawduPage() {
@@ -12,5 +13,12 @@ export default function HadithMawduPage() {
     });
   }, []);
 
-  return <HadithSection authenticityClass="mawdu" />;
+  return (
+    <>
+      <HadithSection authenticityClass="mawdu" />
+      <div className="twh-share">
+        <ShareButtons title="الأحاديث الموضوعة والمكذوبة — المجلس العلمي" url="https://majlisilm.com/hadith/mawdu" />
+      </div>
+    </>
+  );
 }
