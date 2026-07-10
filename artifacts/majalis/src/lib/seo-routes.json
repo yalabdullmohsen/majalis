@@ -1617,6 +1617,123 @@
       "keywords": ["ملف الباحث", "البحث الشرعي"],
       "sitemap": false,
       "robots": "noindex, follow"
+    },
+    {
+      "path": "/quran-circles",
+      "title": "حلقات القرآن الكريم | المجلس العلمي",
+      "description": "انضم إلى حلقات القرآن الكريم المباشرة — حفظ وتجويد وتفسير مع مشايخ متخصصين.",
+      "keywords": ["حلقات القرآن", "حفظ القرآن", "تجويد", "حلق علمية", "كويت"],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/tajweed",
+      "title": "تعلم التجويد | المجلس العلمي",
+      "description": "دروس شاملة في أحكام التجويد من مخارج الحروف والصفات إلى أحكام المد والوقف.",
+      "keywords": ["تجويد", "أحكام التجويد", "تعلم التجويد", "مخارج الحروف"],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.75
+    },
+    {
+      "path": "/surah-stories",
+      "title": "قصص سور القرآن | المجلس العلمي",
+      "description": "استعرض قصص وأسباب نزول سور القرآن الكريم مع التفسير الموجز لكل سورة.",
+      "keywords": ["قصص القرآن", "أسباب النزول", "سور القرآن", "تفسير"],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.75
+    },
+    {
+      "path": "/universities/compare",
+      "title": "مقارنة الجامعات الإسلامية | المجلس العلمي",
+      "description": "قارن بين الجامعات الإسلامية في العالم من حيث التخصصات والمناهج وشروط القبول.",
+      "keywords": ["مقارنة جامعات إسلامية", "جامعات شريعة", "دراسة الشريعة"],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.65
+    },
+    {
+      "path": "/anbiya",
+      "title": "قصص الأنبياء والرسل | المجلس العلمي",
+      "description": "سيرة الأنبياء والرسل من آدم إلى محمد صلى الله عليه وسلم مع الدروس والعبر.",
+      "keywords": ["الأنبياء", "قصص الأنبياء", "الرسل", "سيرة الأنبياء"],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.75
+    },
+    {
+      "path": "/auth/callback",
+      "title": "تسجيل الدخول | المجلس العلمي",
+      "description": "إتمام تسجيل الدخول إلى منصة المجلس العلمي.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/auth/register",
+      "title": "إنشاء حساب | المجلس العلمي",
+      "description": "إنشاء حساب جديد على منصة المجلس العلمي.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/learning",
+      "title": "مسارات التعلم | المجلس العلمي",
+      "description": "اكتشف مسارات التعلم المتاحة على منصة المجلس العلمي.",
+      "keywords": ["مسارات تعلم", "طلب العلم"],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/learning-path/dashboard",
+      "title": "لوحة تتبع المسار | المجلس العلمي",
+      "description": "تتبع تقدمك في مسارات طلب العلم الشرعي.",
+      "keywords": ["لوحة التعلم", "تتبع التعلم"],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/muezzins/favorites",
+      "title": "المؤذنون المفضلون | المجلس العلمي",
+      "description": "قائمة المؤذنين المفضلين لديك على منصة المجلس العلمي.",
+      "keywords": ["مؤذنون", "أذان"],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/profile",
+      "title": "الملف الشخصي | المجلس العلمي",
+      "description": "إحصائياتك وإنجازاتك في منصة المجلس العلمي.",
+      "keywords": ["ملف شخصي", "إحصائيات"],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/researcher",
+      "title": "ملف الباحث | المجلس العلمي",
+      "description": "ملف الباحث الشرعي ومساهماته العلمية على منصة المجلس العلمي.",
+      "keywords": ["باحث شرعي", "بحث علمي"],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/research",
+      "title": "البحث الشرعي | المجلس العلمي",
+      "description": "البحوث والدراسات الشرعية المتاحة على منصة المجلس العلمي.",
+      "keywords": ["بحث شرعي", "دراسات إسلامية"],
+      "sitemap": false,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/upload",
+      "title": "رفع ملف | المجلس العلمي",
+      "description": "رفع ملفات ومحتوى علمي إلى منصة المجلس العلمي.",
+      "keywords": ["رفع ملف", "مشاركة محتوى"],
+      "sitemap": false,
+      "robots": "noindex, follow"
     }
   ]
 }
