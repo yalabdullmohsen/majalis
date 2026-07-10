@@ -321,6 +321,7 @@ function Router() {
       <Route path="/hadith/mawdu"><SafeLazyRoute component={HadithMawduPage} /></Route>
       <Route path="/hadith"><SafeLazyRoute component={HadithIndexPage} /></Route>
       <Route path="/stories"><SafeLazyRoute component={StoriesPage} /></Route>
+      <Route path="/prophet-stories"><Redirect to="/prophets" /></Route>
       <Route path="/prophets/:slug"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
       <Route path="/prophets"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
       <Route path="/islamic-stories"><SafeLazyRoute component={IslamicStoriesPage} /></Route>
