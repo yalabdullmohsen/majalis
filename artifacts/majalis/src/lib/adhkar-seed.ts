@@ -1,4 +1,5 @@
 import importBundle from "./content-import-bundle.json";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 export type AdhkarCategory = {
   id: string;
@@ -3585,17 +3586,12 @@ export function getAdhkarByCategory(categoryId: string): AdhkarItem[] {
 }
 
 export function filterAdhkar(search: string, categoryId?: string): AdhkarItem[] {
-  const q = search.trim().toLowerCase();
   let items = getAllAdhkarItems();
   if (categoryId && categoryId !== "all") {
     items = items.filter((a) => a.categoryId === categoryId);
   }
-  if (!q) return items;
-  return items.filter(
-    (a) =>
-      a.text.includes(q) ||
-      a.keywords.some((k) => k.includes(q)) ||
-      a.source?.includes(q) ||
-      a.reference?.includes(q),
+  if (!search.trim()) return items;
+  return items.filter((a) =>
+    arabicMatchAny([a.text, a.source ?? "", a.reference ?? "", ...a.keywords], search),
   );
 }

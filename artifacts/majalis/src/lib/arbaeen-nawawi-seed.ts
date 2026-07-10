@@ -1,3 +1,5 @@
+import { arabicMatchAny } from "@/lib/arabic-search";
+
 export type NawawiHadith = {
   id: number;
   title: string;
@@ -351,12 +353,6 @@ export function getNawawiHadith(id: number) {
 }
 
 export function searchNawawi(query: string) {
-  const q = query.trim().toLowerCase();
-  if (!q) return ARBAEEN_NAWAWI;
-  return ARBAEEN_NAWAWI.filter(
-    (h) =>
-      h.title.includes(q) ||
-      h.text.includes(q) ||
-      h.explanation.includes(q),
-  );
+  if (!query.trim()) return ARBAEEN_NAWAWI;
+  return ARBAEEN_NAWAWI.filter((h) => arabicMatchAny([h.title, h.text, h.explanation], query));
 }

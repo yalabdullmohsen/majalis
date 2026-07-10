@@ -3,6 +3,8 @@
  * مصدر: كتب السيرة والتاريخ الإسلامي الموثقة
  */
 
+import { arabicMatchAny } from "@/lib/arabic-search";
+
 export type IslamicStorySeed = {
   id: number;
   slug: string;
@@ -1334,12 +1336,8 @@ export function filterIslamicStoriesSeed(opts?: {
     items = items.filter((s) => s.era === opts.era);
   }
   if (opts?.search?.trim()) {
-    const q = opts.search.toLowerCase();
-    items = items.filter(
-      (s) =>
-        s.title.toLowerCase().includes(q) ||
-        s.summary.toLowerCase().includes(q) ||
-        s.tags.some((t) => t.toLowerCase().includes(q)),
+    items = items.filter((s) =>
+      arabicMatchAny([s.title, s.summary, ...s.tags], opts.search!),
     );
   }
   return items;

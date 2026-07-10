@@ -1,4 +1,5 @@
 // تاريخ الإشعارات — تخزين محلي مع قراءة/أرشفة/حذف
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 const HISTORY_KEY = "majalis_notif_history_v1";
 const MAX_RECORDS = 200;
@@ -73,10 +74,9 @@ export function unreadCount(): number {
 }
 
 export function searchHistory(query: string, includeArchived = false): NotifRecord[] {
-  const q = query.trim().toLowerCase();
   return loadHistory().filter(r => {
     if (!includeArchived && r.isArchived) return false;
-    if (!q) return !r.isArchived || includeArchived;
-    return r.title.toLowerCase().includes(q) || (r.body ?? "").toLowerCase().includes(q);
+    if (!query.trim()) return !r.isArchived || includeArchived;
+    return arabicMatchAny([r.title, r.body ?? ""], query);
   });
 }

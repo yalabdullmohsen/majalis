@@ -1,4 +1,5 @@
 import { getSurahMeta, type StaticSurahMeta as SurahMeta } from "./quran-api";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 export type SurahStory = {
   number: number;
@@ -258,12 +259,8 @@ export function getAllSurahStories(): SurahStory[] {
 }
 
 export function searchSurahStories(query: string): SurahStory[] {
-  const q = query.trim();
-  if (!q) return getAllSurahStories();
-  return getAllSurahStories().filter(
-    (s) =>
-      s.name.includes(q) ||
-      s.namingReason.includes(q) ||
-      s.keywords.some((k) => k.includes(q)),
+  if (!query.trim()) return getAllSurahStories();
+  return getAllSurahStories().filter((s) =>
+    arabicMatchAny([s.name, s.namingReason, ...s.keywords], query),
   );
 }

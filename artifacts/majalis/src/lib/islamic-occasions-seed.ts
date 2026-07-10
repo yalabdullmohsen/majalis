@@ -1,3 +1,5 @@
+import { arabicMatchAny } from "@/lib/arabic-search";
+
 export type IslamicOccasion = {
   id: string;
   name: string;
@@ -472,12 +474,8 @@ export function daysUntilOccasion(occasion: IslamicOccasion, today = estimateHij
 }
 
 export function filterOccasions(query: string) {
-  const q = query.trim().toLowerCase();
-  if (!q) return ISLAMIC_OCCASIONS;
-  return ISLAMIC_OCCASIONS.filter(
-    (o) =>
-      o.name.includes(q) ||
-      o.summary.includes(q) ||
-      o.deeds.some((d) => d.includes(q)),
+  if (!query.trim()) return ISLAMIC_OCCASIONS;
+  return ISLAMIC_OCCASIONS.filter((o) =>
+    arabicMatchAny([o.name, o.summary, ...o.deeds], query),
   );
 }
