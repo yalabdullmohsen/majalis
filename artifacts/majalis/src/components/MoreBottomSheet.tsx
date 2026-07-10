@@ -56,6 +56,7 @@ const SHEET_SECTIONS = [
     { href: "/rulings",            label: "الأحكام الشرعية",    Icon: Gavel },
     { href: "/fiqh-council",       label: "المجمع الفقهي",      Icon: Users },
     { href: "/madhahib",           label: "المذاهب الأربعة",    Icon: Scale },
+    { href: "/islamic-sects",      label: "الفرق الإسلامية",    Icon: Scale },
     { href: "/fiqh-qawaid",        label: "القواعد الفقهية",    Icon: Scale },
     { href: "/tahara",             label: "الطهارة وأحكامها",   Icon: Repeat2 },
     { href: "/salah-guide",        label: "دليل الصلاة الكامل", Icon: BookOpen },

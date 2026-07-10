@@ -128,6 +128,7 @@ const ArkanIslamPage = lazy(() => import("@/views/ArkanIslamPage"));
 const ArkanImanPage = lazy(() => import("@/views/ArkanImanPage"));
 const HadithSciencePage = lazy(() => import("@/views/HadithSciencePage"));
 const MadhahibPage = lazy(() => import("@/views/MadhahibPage"));
+const IslamicSectsPage = lazy(() => import("@/views/IslamicSectsPage"));
 const FiqhQawaidPage = lazy(() => import("@/views/FiqhQawaidPage"));
 const ShimaelPage = lazy(() => import("@/views/ShimaelPage"));
 const IslamStatsPage = lazy(() => import("@/views/IslamStatsPage"));
@@ -326,6 +327,7 @@ function Router() {
       <Route path="/arkan-iman"><SafeLazyRoute component={ArkanImanPage} /></Route>
       <Route path="/hadith-science"><SafeLazyRoute component={HadithSciencePage} /></Route>
       <Route path="/madhahib"><SafeLazyRoute component={MadhahibPage} /></Route>
+      <Route path="/islamic-sects"><SafeLazyRoute component={IslamicSectsPage} /></Route>
       <Route path="/fiqh-qawaid"><SafeLazyRoute component={FiqhQawaidPage} /></Route>
       <Route path="/shamael"><SafeLazyRoute component={ShimaelPage} /></Route>
       <Route path="/islam-stats"><SafeLazyRoute component={IslamStatsPage} /></Route>

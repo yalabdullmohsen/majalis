@@ -94,6 +94,7 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/mawarith",           label: "المواريث",             Icon: Scale,      desc: "حاسبة الفرائض والمواريث" },
       { href: "/fiqh-qawaid",        label: "القواعد الفقهية",      Icon: Scale,      desc: "القواعد الخمس الكبرى وفروعها" },
       { href: "/madhahib",           label: "المذاهب الأربعة",      Icon: Scale,      desc: "الحنفي والمالكي والشافعي والحنبلي" },
+      { href: "/islamic-sects",      label: "الفرق الإسلامية",      Icon: Scale,      desc: "نشأة الفرق وعقائدها وانتشارها" },
       { href: "/qa",                 label: "الأسئلة والأجوبة",     Icon: HelpCircle, desc: "أسئلة وأجوبة شرعية موثقة" },
       { href: "/fatwa",              label: "الفتاوى",              Icon: Scale,      desc: "فتاوى مُحقَّقة ومُصنَّفة" },
       { href: "/rulings",            label: "الأحكام الشرعية",      Icon: Gavel,      desc: "موسوعة الأحكام بالمذاهب" },
