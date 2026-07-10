@@ -25,6 +25,7 @@ const AuthCallbackPage = lazy(() => import("@/views/AuthCallbackPage"));
 const UserStatsPage = lazy(() => import("@/views/UserStatsPage"));
 const TranscribePage = lazy(() => import("@/views/TranscribePage"));
 const StartHerePage = lazy(() => import("@/views/StartHerePage"));
+const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
 const AssistantPage = lazy(() => import("@/views/AssistantPage"));
 const CardsPage = lazy(() => import("@/views/CardsPage"));
 const PrayerTimesPage = lazy(() => import("@/views/PrayerTimesPage"));
@@ -167,8 +168,8 @@ export default function AppRoutes() {
         </Route>
         <Route path="/quran-live"><SafeLazyRoute component={QuranLivePage} /></Route>
         <Route path="/quran/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
-        <Route path="/quran/surah-stories/:number" component={QuranComingSoon} />
-        <Route path="/quran/surah-stories" component={QuranComingSoon} />
+        <Route path="/quran/surah-stories/:number"><SafeLazyRoute component={SurahStoriesPage} /></Route>
+        <Route path="/quran/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
         <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
         <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>
         <Route path="/prayer-times"><SafeLazyRoute component={PrayerTimesPage} /></Route>
