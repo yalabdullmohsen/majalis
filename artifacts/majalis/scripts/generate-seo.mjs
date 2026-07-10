@@ -440,6 +440,24 @@ const ADHKAR_CATEGORIES = [
   { id: "istighfar", name: "أذكار الاستغفار" },
 ];
 
+const ISLAMIC_SCHOLARS = [
+  { id: "abu-hanifa", name: "أبو حنيفة النعمان" },
+  { id: "malik", name: "الإمام مالك" },
+  { id: "shafi", name: "الإمام الشافعي" },
+  { id: "ahmad", name: "الإمام أحمد" },
+  { id: "bukhari", name: "الإمام البخاري" },
+  { id: "muslim", name: "الإمام مسلم" },
+  { id: "ibn-taymiyya", name: "ابن تيمية" },
+  { id: "ibn-qayyim", name: "ابن القيم" },
+  { id: "nawawi", name: "الإمام النووي" },
+  { id: "ibn-hajar", name: "ابن حجر العسقلاني" },
+  { id: "ibn-baz", name: "الشيخ ابن باز" },
+  { id: "ibn-uthaymeen", name: "الشيخ ابن عثيمين" },
+  { id: "albani", name: "الشيخ الألباني" },
+  { id: "ghazali", name: "الإمام الغزالي" },
+  { id: "ibn-kathir", name: "ابن كثير" },
+];
+
 const PROPHETS_NAMES = [
   { slug: "adam", name: "آدم" }, { slug: "idris", name: "إدريس" }, { slug: "nuh", name: "نوح" },
   { slug: "hud", name: "هود" }, { slug: "salih", name: "صالح" }, { slug: "ibrahim", name: "إبراهيم" },
@@ -476,6 +494,9 @@ const adhkarItemListScript = itemListJsonLdScript(
 const prophetsItemListScript = itemListJsonLdScript(
   PROPHETS_NAMES.map((p) => ({ name: `قصة نبي الله ${p.name} عليه السلام`, url: `/prophets/${p.slug}` }))
 );
+const scholarsItemListScript = itemListJsonLdScript(
+  ISLAMIC_SCHOLARS.map((s) => ({ name: s.name, url: `/scholars#${s.id}` }))
+);
 
 for (const route of staticRoutes) {
   const routeDir =
@@ -491,7 +512,8 @@ for (const route of staticRoutes) {
     route.path === "/rulings" ? rulingItemListScript :
     route.path === "/lessons" ? lessonItemListScript :
     route.path === "/adhkar" ? adhkarItemListScript :
-    route.path === "/prophets" ? prophetsItemListScript : "";
+    route.path === "/prophets" ? prophetsItemListScript :
+    route.path === "/scholars" ? scholarsItemListScript : "";
   await writeFile(resolve(routeDir, "index.html"), prerenderHtml(route, staticExtraJsonLd), "utf8");
 
   if (route.path !== "/") {

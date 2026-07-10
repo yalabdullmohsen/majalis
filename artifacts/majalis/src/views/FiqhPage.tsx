@@ -88,11 +88,24 @@ export default function FiqhPage() {
   usePageView("fiqh", null);
 
   useEffect(() => {
+    const topQa = SEED_QA.filter((q: any) => q.answer).slice(0, 5);
+    const faqSchema = topQa.length
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: topQa.map((q: any) => ({
+            "@type": "Question",
+            name: q.question,
+            acceptedAnswer: { "@type": "Answer", text: q.answer },
+          })),
+        }
+      : undefined;
     applyPageSeo({
       path: "/fiqh",
       title: "الفقه الإسلامي، فتاوى وأحكام وأسئلة | المجلس العلمي",
       description: "مرجع شامل في الفقه الإسلامي: فتاوى موثقة، أحكام شرعية، أسئلة وأجوبة، وقرارات المجمع الفقهي.",
       keywords: ["فقه إسلامي", "فتاوى", "أحكام شرعية", "الفقه الحنفي", "أسئلة شرعية"],
+      ...(faqSchema ? { jsonLd: [faqSchema] } : {}),
     });
   }, []);
 
