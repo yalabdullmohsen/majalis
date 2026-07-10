@@ -4,7 +4,7 @@ import {
 import { createPortal } from "react-dom";
 import {
   Bookmark, BookOpen, ChevronLeft, ChevronRight,
-  List, Moon, Search, Sun, X, ZoomIn, ZoomOut,
+  List, Moon, Pause, Play, Search, Sun, Volume2, X, ZoomIn, ZoomOut,
 } from "lucide-react";
 import "@/styles/mushaf.css";
 import { applyPageSeo } from "@/lib/seo";
@@ -42,6 +42,22 @@ interface SearchResult {
 
 /* كاش في الذاكرة، يمنع إعادة الجلب عند التنقل بين الصفحات */
 const pageCache = new Map<number, Ayah[]>();
+
+/* القراء المتاحون */
+const RECITERS = [
+  { id: "ar.alafasy",            name: "المشاري راشد العفاسي",   flag: "🇰🇼" },
+  { id: "ar.maheralmuaiqly",     name: "ماهر المعيقلي",          flag: "🇸🇦" },
+  { id: "ar.abdulbasitmurattal", name: "عبد الباسط عبد الصمد",  flag: "🇪🇬" },
+  { id: "ar.husary",             name: "محمود خليل الحصري",      flag: "🇪🇬" },
+  { id: "ar.minshawi",           name: "محمد صديق المنشاوي",    flag: "🇪🇬" },
+  { id: "ar.abdullahbasfar",     name: "عبد الله بصفر",          flag: "🇸🇦" },
+  { id: "ar.saoodshuraym",       name: "سعود الشريم",            flag: "🇸🇦" },
+  { id: "ar.yasseraldosari",     name: "ياسر الدوسري",           flag: "🇸🇦" },
+  { id: "ar.ahmedajamy",         name: "أحمد العجمي",            flag: "🇸🇦" },
+  { id: "ar.muhammadayyoub",     name: "محمد أيوب",              flag: "🇸🇦" },
+  { id: "ar.abdurrahmaansudais", name: "عبد الرحمن السديس",      flag: "🇸🇦" },
+  { id: "ar.muhammadjibreel",    name: "محمد جبريل",             flag: "🇸🇦" },
+];
 
 /* بيانات السور: [الاسم، أول صفحة] */
 const SURAHS: [string, number][] = [
@@ -128,7 +144,7 @@ export default function QuranPage() {
   const [mode, setMode]       = useState<ReadMode>(() => lsGet(MODE_KEY, "day"));
   const [zoom, setZoom]       = useState<number>(() => {
     const v = lsGet(ZOOM_KEY, BASE_FONT);
-    return v < 1.0 ? BASE_FONT : v; // ترحيل: القيم القديمة (مقاييس الصور) تُعاد للافتراضي
+    return v < 1.0 ? BASE_FONT : v;
   });
   const [bookmarks, setBookmarks] = useState<number[]>(() => lsGet(BM_KEY, []));
   const [navOpen, setNavOpen]  = useState(false);
@@ -150,12 +166,42 @@ export default function QuranPage() {
   const [fetchErr, setFetchErr] = useState(false);
   const [retryKey, setRetryKey] = useState(0);
 
+  /* ── حالة لوحة القراء ── */
+  const [selAyah, setSelAyah]       = useState<Ayah | null>(null);
+  const [playingId, setPlayingId]   = useState<string | null>(null);
+  const audioRef                    = useRef<HTMLAudioElement | null>(null);
+
   /* ── refs ── */
   const uiTimer   = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searchRef  = useRef<HTMLInputElement>(null);
   const vsearchRef = useRef<HTMLInputElement>(null);
   const touchX    = useRef<number | null>(null);
   const readerRef = useRef<HTMLDivElement>(null);
+
+  /* ── وظائف الصوت ── */
+  const playReciter = useCallback((reciterId: string, ayahNum: number) => {
+    const url = `https://cdn.islamic.network/quran/audio/128/${reciterId}/${ayahNum}.mp3`;
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = "";
+    }
+    if (playingId === reciterId) {
+      setPlayingId(null);
+      return;
+    }
+    const audio = new Audio(url);
+    audioRef.current = audio;
+    setPlayingId(reciterId);
+    audio.play().catch(() => {});
+    audio.onended = () => setPlayingId(null);
+    audio.onerror = () => setPlayingId(null);
+  }, [playingId]);
+
+  const closeReciterPanel = useCallback(() => {
+    audioRef.current?.pause();
+    setPlayingId(null);
+    setSelAyah(null);
+  }, []);
 
   /* ── SEO ── */
   useEffect(() => {
@@ -452,8 +498,15 @@ export default function QuranPage() {
                 const displayText = (group.isFirst && ayah.numberInSurah === 1 && group.num !== 1 && group.num !== 9)
                   ? stripBasmalaFromDisplay(ayah.text)
                   : ayah.text;
+                const isSelected = selAyah?.number === ayah.number;
                 return (
-                  <span key={ayah.number} className="qs-ayah">
+                  <span
+                    key={ayah.number}
+                    className={`qs-ayah${isSelected ? " qs-ayah--selected" : ""}`}
+                    onClick={e => { e.stopPropagation(); setSelAyah(isSelected ? null : ayah); if (isSelected) closeReciterPanel(); }}
+                    title={`اضغط لسماع الآية ${ayah.numberInSurah}`}
+                    style={{ cursor: "pointer" }}
+                  >
                     <span className="qs-ayah__text">{displayText}</span>
                     <span
                       className="qs-ayah__num"
@@ -741,6 +794,93 @@ export default function QuranPage() {
                   ))}
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+      {/* ══ لوحة القراء — Bottom Sheet ══ */}
+      {selAyah && (
+        <div
+          className="mshf-sheet-overlay"
+          role="presentation"
+          onClick={closeReciterPanel}
+          style={{ zIndex: 900 }}
+        >
+          <div
+            className="mshf-sheet"
+            role="dialog"
+            aria-modal="true"
+            aria-label="الاستماع للآية"
+            onClick={e => e.stopPropagation()}
+            style={{ maxHeight: "55vh" }}
+          >
+            <div className="mshf-sheet-handle" />
+
+            {/* رأس اللوحة */}
+            <div className="mshf-sheet-head" style={{ alignItems: "flex-start", flexDirection: "column", gap: "0.35rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", width: "100%", alignItems: "center" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  <Volume2 size={16} strokeWidth={2} />
+                  <span style={{ fontWeight: 700, fontSize: "0.9rem" }}>
+                    استماع — {selAyah.surah.name} : {selAyah.numberInSurah.toLocaleString("ar-EG")}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  className="mshf-sheet-close"
+                  onClick={closeReciterPanel}
+                  aria-label="إغلاق"
+                >
+                  <X size={16} strokeWidth={2.2} aria-hidden="true" />
+                </button>
+              </div>
+              {/* نص الآية */}
+              <p style={{
+                fontSize: "0.95rem", lineHeight: 1.9, direction: "rtl",
+                color: "var(--mshf-ink, #1a1a1a)", padding: "0.25rem 0", margin: 0,
+                maxHeight: "4.5rem", overflow: "hidden",
+                display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical",
+              }} lang="ar">{selAyah.text}</p>
+            </div>
+
+            {/* قائمة القراء */}
+            <div className="mshf-sheet-body" style={{ padding: "0.5rem 0.75rem" }}>
+              {RECITERS.map(r => {
+                const isPlaying = playingId === r.id;
+                return (
+                  <button
+                    key={r.id}
+                    type="button"
+                    onClick={() => playReciter(r.id, selAyah.number)}
+                    style={{
+                      display: "flex", alignItems: "center", justifyContent: "space-between",
+                      width: "100%", padding: "0.65rem 0.75rem", marginBottom: "0.4rem",
+                      borderRadius: "0.6rem", border: `2px solid ${isPlaying ? "#1F4D3A" : "#e8f0ec"}`,
+                      background: isPlaying ? "#1F4D3A" : "#fff",
+                      color: isPlaying ? "#fff" : "#1a1a1a",
+                      cursor: "pointer", fontFamily: "inherit", textAlign: "right",
+                      transition: "all 0.15s",
+                    }}
+                    aria-label={`${isPlaying ? "إيقاف" : "تشغيل"} ${r.name}`}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <span style={{ fontSize: "1.1rem" }}>{r.flag}</span>
+                      <span style={{ fontWeight: 700, fontSize: "0.85rem" }}>{r.name}</span>
+                    </div>
+                    <span style={{
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      width: 32, height: 32, borderRadius: "50%",
+                      background: isPlaying ? "rgba(255,255,255,0.2)" : "#f0f7f4",
+                      color: isPlaying ? "#fff" : "#1F4D3A",
+                      flexShrink: 0,
+                    }}>
+                      {isPlaying
+                        ? <Pause size={14} fill="currentColor" strokeWidth={0} />
+                        : <Play size={14} fill="currentColor" strokeWidth={0} />}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>

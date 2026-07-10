@@ -34,20 +34,23 @@ import {
 import type { LucideIcon } from "lucide-react";
 
 /* ── روابط الوصول السريع ── */
-const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string }[] = [
-  { href: "/adhkar",       Icon: Star,          label: "الأذكار" },
-  { href: "/prayer-times", Icon: Clock,         label: "أوقات الصلاة" },
-  { href: "/lessons",      Icon: GraduationCap, label: "الدروس" },
-  { href: "/hadith",       Icon: Scroll,        label: "الأحاديث" },
-  { href: "/fawaid",       Icon: Lightbulb,     label: "الفوائد" },
-  { href: "/qa",           Icon: HelpCircle,    label: "الأسئلة" },
-  { href: "/tasbih",       Icon: Layers,        label: "التسبيح" },
-  { href: "/seerah",       Icon: Moon,          label: "السيرة" },
-  { href: "/fatwa",        Icon: Scale,         label: "الفتاوى" },
-  { href: "/quiz",         Icon: Target,        label: "المسابقات" },
-  { href: "/muezzins",     Icon: Mic2,          label: "المؤذنون" },
-  { href: "/updates",      Icon: Newspaper,     label: "المستجدات" },
-  { href: "/library",      Icon: BookOpen,      label: "المكتبة" },
+const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc: string }[] = [
+  { href: "/adhkar",         Icon: Star,          label: "الأذكار",         desc: "صباح ومساء ونوم" },
+  { href: "/prayer-times",   Icon: Clock,         label: "أوقات الصلاة",    desc: "الكويت لحظياً" },
+  { href: "/lessons",        Icon: GraduationCap, label: "الدروس",           desc: "علماء الكويت" },
+  { href: "/hadith",         Icon: Scroll,        label: "الأحاديث",         desc: "صحيح وضعيف" },
+  { href: "/quran",          Icon: BookMarked,    label: "القرآن",            desc: "مصحف رقمي كامل" },
+  { href: "/fawaid",         Icon: Lightbulb,     label: "الفوائد",          desc: "فوائد منتقاة" },
+  { href: "/qa",             Icon: HelpCircle,    label: "الأسئلة",           desc: "فتاوى موثّقة" },
+  { href: "/tasbih",         Icon: RotateCw,      label: "التسبيح",          desc: "عداد إلكتروني" },
+  { href: "/seerah",         Icon: Moon,          label: "السيرة",            desc: "حياته ﷺ كاملة" },
+  { href: "/fatwa",          Icon: Scale,         label: "الفتاوى",           desc: "أحكام معاصرة" },
+  { href: "/quiz",           Icon: Target,        label: "المسابقات",         desc: "اختبار المعلومات" },
+  { href: "/muezzins",       Icon: Mic2,          label: "المؤذنون",          desc: "أجمل الأصوات" },
+  { href: "/library",        Icon: BookOpen,      label: "المكتبة",           desc: "كتب ومتون علمية" },
+  { href: "/prayer-times",   Icon: Compass,       label: "القِبلة",           desc: "اتجاه الكعبة" },
+  { href: "/salah-guide",    Icon: Scroll,        label: "دليل الصلاة",       desc: "للمبتدئ والمتقن" },
+  { href: "/calendar",       Icon: CalendarDays,  label: "التقويم",           desc: "التاريخ الهجري" },
 ];
 
 const QUICK_SEARCHES = ["صلاة الفجر", "آية الكرسي", "دعاء القنوت", "أذكار الصباح", "صيام الاثنين", "حديث النية", "أركان الإسلام", "زكاة المال"];
@@ -231,161 +234,138 @@ export default function HomePage() {
         aria-label="الصفحة الرئيسية"
         style={{
           background: "linear-gradient(160deg, #1F4D3A 0%, #163728 55%, #0e2619 100%)",
-          padding: "2.5rem 1rem 2rem",
+          padding: "2rem 1rem 1.75rem",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* زخرفة هندسية */}
         <div aria-hidden="true" style={{
-          position: "absolute", inset: 0, opacity: 0.06,
+          position: "absolute", inset: 0, opacity: 0.05,
           backgroundImage: "repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%)",
           backgroundSize: "20px 20px",
           pointerEvents: "none",
         }} />
 
-        <div style={{ maxWidth: 680, margin: "0 auto", position: "relative", textAlign: "center" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto", position: "relative", textAlign: "center" }}>
           {/* الشعار والاسم */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "1rem" }}>
-            <img src="/logo.png" alt="" width={56} height={56} loading="eager" aria-hidden="true"
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.65rem", marginBottom: "0.75rem" }}>
+            <img src="/logo.png" alt="" width={50} height={50} loading="eager" aria-hidden="true"
               style={{ borderRadius: "50%", border: "2px solid rgba(255,255,255,0.25)" }} />
-            <h1 style={{ color: "#fff", fontSize: "clamp(1.6rem, 5vw, 2.4rem)", fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>
+            <h1 style={{ color: "#fff", fontSize: "clamp(1.5rem, 5vw, 2.2rem)", fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>
               المجلس العلمي
             </h1>
           </div>
 
-          <p style={{ color: "rgba(255,255,255,0.82)", fontSize: "clamp(0.9rem, 2.5vw, 1.05rem)", lineHeight: 1.7, marginBottom: "1.25rem", maxWidth: 560, margin: "0 auto 1.25rem" }}>
-            موسوعة إسلامية شاملة — أحاديث موثّقة، دروس علماء الكويت، فقه وفتاوى، أذكار، وأدوات يومية — كل ما تحتاجه في مكان واحد
+          <p style={{ color: "rgba(255,255,255,0.85)", fontSize: "clamp(0.85rem, 2.2vw, 0.97rem)", lineHeight: 1.65, maxWidth: 520, margin: "0 auto 1rem" }}>
+            منصة علمية إسلامية للقرآن الكريم، الأحاديث النبوية الموثّقة، دروس علماء الكويت، الفقه والفتاوى، والأذكار اليومية
           </p>
 
-          {/* شريحات الجمهور */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem", justifyContent: "center", marginBottom: "1.5rem" }}>
-            {["🎓 طالب العلم", "📿 المسلم اليومي", "👨‍👩‍👧 الأسرة المسلمة", "🕌 علماء الكويت"].map(chip => (
-              <span key={chip} style={{
-                background: "rgba(255,255,255,0.12)", color: "#fff",
-                padding: "0.3rem 0.8rem", borderRadius: "999px",
-                fontSize: "0.78rem", fontWeight: 600, backdropFilter: "blur(4px)",
-                border: "1px solid rgba(255,255,255,0.18)"
-              }}>{chip}</span>
+          {/* شريحات الجمهور — تصميم جديد */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center", marginBottom: "1.25rem" }}>
+            {[
+              { emoji: "🎓", label: "طالب العلم",      bg: "rgba(255,255,255,0.15)" },
+              { emoji: "🕌", label: "المسلم اليومي",   bg: "rgba(255,255,255,0.10)" },
+              { emoji: "👨‍👩‍👧", label: "الأسرة المسلمة", bg: "rgba(255,255,255,0.10)" },
+              { emoji: "📖", label: "العالم والباحث",  bg: "rgba(255,255,255,0.10)" },
+            ].map(({ emoji, label, bg }) => (
+              <span key={label} style={{
+                background: bg, color: "#fff",
+                padding: "0.35rem 0.9rem", borderRadius: "999px",
+                fontSize: "0.8rem", fontWeight: 700,
+                border: "1px solid rgba(255,255,255,0.22)",
+                display: "inline-flex", alignItems: "center", gap: "0.35rem",
+              }}>
+                <span style={{ fontSize: "1rem" }}>{emoji}</span>{label}
+              </span>
             ))}
           </div>
 
-          {/* شريط البحث */}
+          {/* خانة البحث — مصغّرة وموضوعة بشكل ثانوي */}
           <form onSubmit={submitSearch} style={{
-            display: "flex", gap: "0", borderRadius: "0.75rem", overflow: "hidden",
-            boxShadow: "0 4px 24px rgba(0,0,0,0.3)", marginBottom: "0.85rem",
+            display: "flex", gap: "0", borderRadius: "0.6rem", overflow: "hidden",
+            boxShadow: "0 2px 12px rgba(0,0,0,0.25)", maxWidth: 460, margin: "0 auto 1.1rem",
           }} aria-label="البحث">
             <input
               value={term}
               onChange={(e) => setTerm(e.target.value)}
-              placeholder="ابحث في القرآن والأحاديث والفوائد..."
+              placeholder="ابحث في المنصة..."
               aria-label="البحث"
               style={{
-                flex: 1, padding: "0.8rem 1rem", border: "none", outline: "none",
-                fontSize: "0.95rem", direction: "rtl", fontFamily: "inherit",
-                background: "rgba(255,255,255,0.97)"
+                flex: 1, padding: "0.6rem 0.85rem", border: "none", outline: "none",
+                fontSize: "0.88rem", direction: "rtl", fontFamily: "inherit",
+                background: "rgba(255,255,255,0.96)"
               }}
             />
             <button type="submit" style={{
               background: "#2d7a5a", color: "#fff", border: "none", cursor: "pointer",
-              padding: "0.8rem 1.25rem", fontWeight: 700, fontSize: "0.9rem", fontFamily: "inherit",
+              padding: "0.6rem 1rem", fontWeight: 700, fontSize: "0.84rem", fontFamily: "inherit",
               whiteSpace: "nowrap"
             }}>بحث</button>
           </form>
 
-          {/* بحث سريع */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", justifyContent: "center" }}>
-            {QUICK_SEARCHES.map((q) => (
-              <button key={q} type="button" onClick={() => quickSearch(q)} style={{
-                background: "rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.85)",
-                border: "1px solid rgba(255,255,255,0.2)", borderRadius: "999px",
-                padding: "0.25rem 0.65rem", fontSize: "0.73rem", cursor: "pointer",
-                fontFamily: "inherit", transition: "background 0.15s"
-              }}>{q}</button>
-            ))}
-          </div>
-
           {/* أزرار الإجراء */}
-          <div style={{ display: "flex", gap: "0.6rem", justifyContent: "center", marginTop: "1.25rem", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: "0.55rem", justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/lessons" style={{
-              background: "#fff", color: "#1F4D3A", padding: "0.65rem 1.4rem",
-              borderRadius: "0.6rem", fontWeight: 800, fontSize: "0.92rem",
-              textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.35rem"
-            }}>🎓 ابدأ بالدروس</Link>
+              background: "#fff", color: "#1F4D3A", padding: "0.6rem 1.3rem",
+              borderRadius: "0.55rem", fontWeight: 800, fontSize: "0.88rem",
+              textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.3rem"
+            }}>🎓 الدروس</Link>
+            <Link href="/quran" style={{
+              background: "rgba(255,255,255,0.12)", color: "#fff", padding: "0.6rem 1.1rem",
+              borderRadius: "0.55rem", fontWeight: 700, fontSize: "0.88rem",
+              textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)"
+            }}>📖 القرآن</Link>
             <Link href="/adhkar" style={{
-              background: "rgba(255,255,255,0.12)", color: "#fff", padding: "0.65rem 1.2rem",
-              borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.92rem",
+              background: "rgba(255,255,255,0.12)", color: "#fff", padding: "0.6rem 1.1rem",
+              borderRadius: "0.55rem", fontWeight: 700, fontSize: "0.88rem",
               textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)"
             }}>📿 الأذكار</Link>
             <Link href="/prayer-times" style={{
-              background: "rgba(255,255,255,0.12)", color: "#fff", padding: "0.65rem 1.2rem",
-              borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.92rem",
+              background: "rgba(255,255,255,0.12)", color: "#fff", padding: "0.6rem 1.1rem",
+              borderRadius: "0.55rem", fontWeight: 700, fontSize: "0.88rem",
               textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)"
-            }}>🕐 مواقيت الصلاة</Link>
+            }}>🕐 الصلاة</Link>
           </div>
         </div>
       </section>
 
-      {/* ══ إحصائيات سريعة ══ */}
-      <div style={{
-        display: "flex", justifyContent: "center", gap: "0", flexWrap: "wrap",
-        background: "#fff", borderBottom: "1px solid #e8f0ec",
-        boxShadow: "0 2px 8px rgba(31,77,58,0.06)"
-      }}>
-        {[
-          { num: "50+",  label: "قسماً علمياً" },
-          { num: "100+", label: "حديثاً نبوياً" },
-          { num: "22",   label: "فرقة إسلامية" },
-          { num: "48",   label: "عالماً وإماماً" },
-          { num: "103+", label: "حكمة سلفية" },
-        ].map(({ num, label }) => (
-          <div key={label} style={{
-            textAlign: "center", padding: "0.75rem 1.25rem",
-            borderLeft: "1px solid #e8f0ec", minWidth: 90,
-          }}>
-            <div style={{ color: "#1F4D3A", fontWeight: 800, fontSize: "1.15rem" }}>{num}</div>
-            <div style={{ color: "#555", fontSize: "0.73rem", marginTop: 2 }}>{label}</div>
-          </div>
-        ))}
-      </div>
-
       {/* ══ زرتَ مؤخراً ══ */}
       <RecentPagesBar />
 
-      {/* ══ وصول سريع — شبكة ══ */}
-      <nav aria-label="وصول سريع" style={{ maxWidth: 720, margin: "1.25rem auto 0", padding: "0 1rem" }}>
-        <p style={{ color: "#888", fontSize: "0.75rem", fontWeight: 700, marginBottom: "0.6rem", letterSpacing: "0.05em" }}>وصول سريع</p>
+      {/* ══ وصول سريع — شبكة مفصّلة ══ */}
+      <nav aria-label="وصول سريع" style={{ maxWidth: 760, margin: "1.25rem auto 0", padding: "0 1rem" }}>
+        <p style={{ color: "#666", fontSize: "0.75rem", fontWeight: 700, marginBottom: "0.6rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>وصول سريع</p>
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(88px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))",
           gap: "0.5rem",
         }}>
-          {[...QUICK_LINKS, { href: "/sitemap", Icon: Layers, label: "كل الأقسام" }].map(({ href, Icon, label }) => (
-            <Link key={href} href={href} aria-label={label} style={{
-              display: "flex", flexDirection: "column", alignItems: "center", gap: "0.35rem",
-              padding: "0.65rem 0.4rem",
+          {[...QUICK_LINKS, { href: "/sitemap", Icon: Layers, label: "كل الأقسام", desc: "خريطة الموقع" }].map(({ href, Icon: Ico, label, desc }) => (
+            <Link key={label + href} href={href} aria-label={label} style={{
+              display: "flex", alignItems: "center", gap: "0.55rem",
+              padding: "0.6rem 0.7rem",
               background: "#fff",
               border: "1px solid #e8f0ec",
-              borderRadius: "0.75rem",
+              borderRadius: "0.7rem",
               textDecoration: "none",
-              color: "#1F4D3A",
-              fontSize: "0.73rem",
-              fontWeight: 700,
-              transition: "all 0.15s",
+              transition: "border-color 0.13s, box-shadow 0.13s",
               cursor: "pointer",
-              textAlign: "center",
+              boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
             }}>
-              <span style={{ background: "#f0f7f4", padding: "0.45rem", borderRadius: "0.5rem", display: "flex" }}>
-                <Icon size={18} strokeWidth={1.8} />
+              <span style={{ background: "#f0f7f4", color: "#1F4D3A", padding: "0.4rem", borderRadius: "0.4rem", display: "flex", flexShrink: 0 }}>
+                <Ico size={15} strokeWidth={2} />
               </span>
-              {label}
+              <div style={{ minWidth: 0 }}>
+                <div style={{ color: "#1a1a1a", fontSize: "0.78rem", fontWeight: 700, lineHeight: 1.2 }}>{label}</div>
+                <div style={{ color: "#888", fontSize: "0.68rem", lineHeight: 1.3, marginTop: 1 }}>{desc}</div>
+              </div>
             </Link>
           ))}
         </div>
       </nav>
 
       {/* ══ تذكير صيام ══ */}
-      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 1rem" }}>
+      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 1rem" }}>
         <HomeSawmReminder />
       </div>
 

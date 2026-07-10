@@ -967,6 +967,14 @@
   background: linear-gradient(transparent 60%, rgba(31,77,58,0.14) 60%);
   border-radius: 3px;
 }
+.qs-ayah--selected .qs-ayah__text {
+  background: linear-gradient(transparent 55%, rgba(31,77,58,0.22) 55%);
+  border-radius: 3px;
+}
+.qs-ayah:hover .qs-ayah__text {
+  background: linear-gradient(transparent 60%, rgba(31,77,58,0.08) 60%);
+  border-radius: 3px;
+}
 .mshf-night .qs-ayah--bm .qs-ayah__text {
   background: linear-gradient(transparent 60%, rgba(100,200,150,0.15) 60%);
 }
