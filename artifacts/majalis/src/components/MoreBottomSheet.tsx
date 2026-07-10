@@ -87,8 +87,7 @@ const SHEET_SECTIONS = [
   { group: "السيرة والتاريخ", items: [
     { href: "/seerah",          label: "السيرة النبوية",         Icon: BookUser },
     { href: "/sahabah",         label: "الصحابة الكرام",         Icon: Users },
-    { href: "/anbiya",          label: "الأنبياء والرسل",        Icon: Star },
-    { href: "/prophets",        label: "قصص الأنبياء",           Icon: BookText },
+    { href: "/prophets",        label: "الأنبياء والرسل",         Icon: Star },
     { href: "/stories",         label: "القصص الإسلامية",        Icon: BookOpen },
     { href: "/islamic-stories", label: "صحابة وفتوحات",          Icon: Waypoints },
   ]},

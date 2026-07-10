@@ -33,7 +33,7 @@ const FOOTER_GROUPS = [
       { href: "/shamael",          label: "الشمائل المحمدية" },
       { href: "/islamic-glossary", label: "المصطلحات الإسلامية" },
       { href: "/adab-talab-ilm",  label: "آداب طالب العلم" },
-      { href: "/anbiya",          label: "الأنبياء والرسل" },
+      { href: "/prophets",        label: "الأنبياء والرسل" },
       { href: "/janna-naar",      label: "صفة الجنة والنار" },
       { href: "/alamat-saah",    label: "علامات الساعة" },
       { href: "/malaika",       label: "الملائكة في الإسلام" },
