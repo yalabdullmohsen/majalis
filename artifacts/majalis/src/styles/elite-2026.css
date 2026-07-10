@@ -11199,6 +11199,76 @@ body {
   flex-shrink: 0;
 }
 
+/* ── §178b — ArbaeenNawawiPage (.an-*) ────────────────────────────────────── */
+.an-page { padding-bottom: 3rem; }
+
+/* Hero */
+.an-hero { text-align: center; padding: 2.4rem 1.2rem 1.6rem; }
+.an-hero__eyebrow { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--majalis-emerald); margin-bottom: 0.4rem; }
+.an-hero__title { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; color: #0f2a1e; margin-bottom: 0.4rem; }
+.an-hero__sub { font-size: 0.9rem; color: #4b5563; margin-bottom: 1.2rem; }
+
+/* Progress bar */
+.an-hero__progress { display: flex; align-items: center; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
+.an-prog { flex: 0 0 180px; height: 7px; background: #e5e7eb; border-radius: 99px; overflow: hidden; }
+.an-prog__bar { height: 100%; width: var(--an-pct, 0%); background: var(--majalis-emerald); border-radius: inherit; transition: width 0.5s ease; }
+.an-prog__label { font-size: 0.78rem; color: #6b7280; }
+.an-reset-btn { font-size: 0.72rem; padding: 0.2rem 0.7rem; border-radius: 99px; border: 1px solid #d1d5db; background: transparent; color: #6b7280; cursor: pointer; transition: background 0.15s, color 0.15s; }
+.an-reset-btn:hover { background: #f3f4f6; color: #374151; }
+
+/* Today's hadith */
+.an-today { margin: 0 auto 2rem; max-width: 680px; padding: 0 1rem; }
+.an-today__badge { display: inline-block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #FFFFFF; background: var(--majalis-emerald); padding: 0.25rem 0.9rem; border-radius: 99px; margin-bottom: 0.8rem; }
+.an-today__card { background: linear-gradient(135deg, var(--majalis-emerald-deep) 0%, #183d28 100%); border-radius: 1.1rem; padding: 1.6rem; color: #FFFFFF; position: relative; overflow: hidden; }
+.an-today__card::before { content: ""; position: absolute; inset-inline-end: -30px; top: -30px; width: 140px; height: 140px; border-radius: 50%; background: rgba(255,255,255,0.05); pointer-events: none; }
+.an-today__num { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; color: rgba(255,255,255,0.6); display: block; margin-bottom: 0.5rem; }
+.an-today__title { font-size: 1.15rem; font-weight: 700; color: #FFFFFF; margin-bottom: 0.8rem; }
+.an-today__text { font-size: 1rem; line-height: 1.85; color: rgba(255,255,255,0.92); font-family: var(--font-quran, serif); border: none; padding: 0; margin: 0 0 0.7rem; }
+.an-today__source { font-size: 0.75rem; color: rgba(255,255,255,0.55); margin-bottom: 0.8rem; }
+.an-today__expl { font-size: 0.85rem; line-height: 1.75; color: rgba(255,255,255,0.8); border-inline-start: 2px solid rgba(255,255,255,0.25); padding-inline-start: 0.8rem; margin-bottom: 1rem; }
+
+/* Read button */
+.an-read-btn { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.45rem 1.1rem; border-radius: 99px; border: 1.5px solid rgba(255,255,255,0.5); background: transparent; color: #FFFFFF; font-size: 0.8rem; cursor: pointer; transition: background 0.15s, border-color 0.15s; }
+.an-read-btn:hover { background: rgba(255,255,255,0.15); }
+.an-read-btn--done { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.8); font-weight: 600; }
+.an-read-btn--sm { padding: 0.3rem 0.75rem; font-size: 0.75rem; border: 1px solid #d1d5db; background: transparent; color: #374151; }
+.an-read-btn--sm:hover { background: #f3f4f6; }
+.an-read-btn--sm.an-read-btn--done { background: #ecfdf5; border-color: #6ee7b7; color: #065f46; font-weight: 600; }
+
+/* Filters */
+.an-filters { max-width: 860px; margin: 0 auto 1.5rem; padding: 0 1rem; display: flex; flex-direction: column; gap: 0.8rem; }
+.an-search { width: 100%; padding: 0.65rem 1rem; border: 1.5px solid #d1d5db; border-radius: 0.6rem; font-size: 0.9rem; background: #fff; color: #111827; outline: none; transition: border-color 0.15s; }
+.an-search:focus { border-color: var(--majalis-emerald); }
+.an-cats { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.an-cat { padding: 0.35rem 0.9rem; border-radius: 99px; border: 1.5px solid #d1d5db; background: transparent; font-size: 0.8rem; color: #374151; cursor: pointer; transition: background 0.15s, border-color 0.15s, color 0.15s; }
+.an-cat:hover { background: #f9fafb; }
+.an-cat--active { background: var(--majalis-emerald); border-color: var(--majalis-emerald); color: #FFFFFF; }
+.an-cat--read { border-color: #059669; color: #059669; }
+.an-cat--read.an-cat--active { background: #059669; color: #FFFFFF; }
+
+/* Grid */
+.an-grid { max-width: 860px; margin: 0 auto; padding: 0 1rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.an-empty { text-align: center; color: #9ca3af; padding: 3rem 1rem; font-size: 0.9rem; }
+
+/* Card */
+.an-card { background: #fff; border-radius: 0.9rem; padding: 1.1rem; border: 1.5px solid #e5e7eb; border-inline-start: 4px solid var(--majalis-emerald); transition: box-shadow 0.15s, border-color 0.15s; }
+.an-card:hover { box-shadow: 0 4px 16px rgba(31,77,58,0.1); }
+.an-card--read { border-inline-start-color: #6ee7b7; background: #f0fdf4; }
+.an-card--today { border-color: var(--majalis-emerald); box-shadow: 0 0 0 2px rgba(31,77,58,0.15); }
+.an-card__header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
+.an-card__num { font-size: 0.7rem; font-weight: 700; color: #FFFFFF; background: var(--majalis-emerald); border-radius: 50%; width: 1.6rem; height: 1.6rem; display: grid; place-items: center; flex-shrink: 0; }
+.an-card__title { font-size: 0.9rem; font-weight: 700; color: #111827; flex: 1; }
+.an-card__today-badge { font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 99px; background: var(--majalis-emerald); color: #FFFFFF; flex-shrink: 0; }
+.an-card__text { font-size: 0.85rem; line-height: 1.8; color: #374151; font-family: var(--font-quran, serif); border: none; padding: 0; margin: 0 0 0.6rem; }
+.an-card__expl { font-size: 0.8rem; line-height: 1.7; color: #4b5563; border-inline-start: 2px solid #d1fae5; padding-inline-start: 0.7rem; margin-bottom: 0.6rem; }
+.an-card__benefit { display: flex; gap: 0.5rem; font-size: 0.78rem; color: #065f46; background: #ecfdf5; border-radius: 0.4rem; padding: 0.5rem 0.7rem; margin-bottom: 0.6rem; align-items: flex-start; }
+.an-card__benefit-label { font-weight: 700; flex-shrink: 0; color: #047857; }
+.an-card__footer { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; flex-wrap: wrap; }
+.an-card__source { font-size: 0.7rem; color: #9ca3af; }
+.an-card__actions { display: flex; gap: 0.4rem; align-items: center; }
+.an-expand-btn { font-size: 0.75rem; padding: 0.25rem 0.65rem; border-radius: 99px; border: 1px solid #d1d5db; background: transparent; color: #6b7280; cursor: pointer; transition: background 0.15s; }
+.an-expand-btn:hover { background: #f3f4f6; }
+
 /* ── §178 — CitationActionBar, progress bars ─────────────────────────────── */
 .cab-type-bar { background: var(--cab-type-color, var(--majalis-emerald-deep)); }
 .home-progress-card__bar > span { width: var(--hdp-pct, 0%); display: block; height: 100%; border-radius: inherit; background: var(--majalis-emerald); transition: width 0.4s ease; }
