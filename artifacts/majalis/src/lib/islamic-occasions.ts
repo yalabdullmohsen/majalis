@@ -5,6 +5,7 @@ import {
   type IslamicOccasion,
 } from "@/lib/islamic-occasions-seed";
 import { getIslamicOccasionsCacheFromDb } from "@/lib/supabase";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 export type IslamicOccasionView = IslamicOccasion & {
   daysRemaining: number | null;
@@ -47,10 +48,5 @@ export async function filterOccasionsWithCache(query: string): Promise<IslamicOc
   const q = query.trim().toLowerCase();
   const items = await loadIslamicOccasions();
   if (!q) return items;
-  return items.filter(
-    (o) =>
-      o.name.includes(q) ||
-      o.summary.includes(q) ||
-      o.deeds.some((d) => d.includes(q)),
-  );
+  return items.filter((o) => arabicMatchAny([o.name, o.summary, ...o.deeds], q));
 }
