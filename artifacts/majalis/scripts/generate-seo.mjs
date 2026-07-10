@@ -427,6 +427,31 @@ await writeFile(resolve(publicDir, "sitemap.xml"), sitemap, "utf8");
 await writeFile(resolve(publicDir, "robots.txt"), robots, "utf8");
 await writeFile(resolve(publicDir, "feed.xml"), feed, "utf8");
 
+const ADHKAR_CATEGORIES = [
+  { id: "morning", name: "أذكار الصباح" },
+  { id: "evening", name: "أذكار المساء" },
+  { id: "sleep", name: "أذكار النوم" },
+  { id: "wakeup", name: "أذكار الاستيقاظ" },
+  { id: "mosque", name: "أذكار المسجد" },
+  { id: "salah", name: "أذكار الصلاة" },
+  { id: "after-salah", name: "أذكار بعد الصلاة" },
+  { id: "travel", name: "أذكار السفر" },
+  { id: "distress", name: "أذكار الكرب" },
+  { id: "istighfar", name: "أذكار الاستغفار" },
+];
+
+const PROPHETS_NAMES = [
+  { slug: "adam", name: "آدم" }, { slug: "idris", name: "إدريس" }, { slug: "nuh", name: "نوح" },
+  { slug: "hud", name: "هود" }, { slug: "salih", name: "صالح" }, { slug: "ibrahim", name: "إبراهيم" },
+  { slug: "lut", name: "لوط" }, { slug: "ismail", name: "إسماعيل" }, { slug: "is-haq", name: "إسحاق" },
+  { slug: "yaqub", name: "يعقوب" }, { slug: "yusuf", name: "يوسف" }, { slug: "ayyub", name: "أيوب" },
+  { slug: "shuayb", name: "شعيب" }, { slug: "musa", name: "موسى" }, { slug: "harun", name: "هارون" },
+  { slug: "dhul-kifl", name: "ذو الكفل" }, { slug: "dawud", name: "داود" }, { slug: "sulayman", name: "سليمان" },
+  { slug: "ilyas", name: "إلياس" }, { slug: "al-yasa", name: "اليسع" }, { slug: "yunus", name: "يونس" },
+  { slug: "zakariyya", name: "زكريا" }, { slug: "yahya", name: "يحيى" }, { slug: "isa", name: "عيسى" },
+  { slug: "muhammad", name: "محمد ﷺ" },
+];
+
 const fatwaFaqScript = fatwaListFaqJsonLdScript(PLATFORM_SEED.fatwas || []);
 const qaFaqScript = fatwaListFaqJsonLdScript(PLATFORM_SEED.qa_items || []);
 
@@ -445,6 +470,12 @@ const rulingItemListScript = itemListJsonLdScript(
 const lessonItemListScript = itemListJsonLdScript(
   LESSONS_SEED.slice(0, 20).map((r) => ({ name: r.title, url: `/lessons/${r.id}` }))
 );
+const adhkarItemListScript = itemListJsonLdScript(
+  ADHKAR_CATEGORIES.map((c) => ({ name: c.name, url: `/adhkar?cat=${c.id}` }))
+);
+const prophetsItemListScript = itemListJsonLdScript(
+  PROPHETS_NAMES.map((p) => ({ name: `قصة نبي الله ${p.name} عليه السلام`, url: `/prophets/${p.slug}` }))
+);
 
 for (const route of staticRoutes) {
   const routeDir =
@@ -458,7 +489,9 @@ for (const route of staticRoutes) {
     route.path === "/library" ? libraryItemListScript :
     route.path === "/fiqh-council" ? fiqhDecisionsItemListScript :
     route.path === "/rulings" ? rulingItemListScript :
-    route.path === "/lessons" ? lessonItemListScript : "";
+    route.path === "/lessons" ? lessonItemListScript :
+    route.path === "/adhkar" ? adhkarItemListScript :
+    route.path === "/prophets" ? prophetsItemListScript : "";
   await writeFile(resolve(routeDir, "index.html"), prerenderHtml(route, staticExtraJsonLd), "utf8");
 
   if (route.path !== "/") {
