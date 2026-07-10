@@ -11,6 +11,7 @@ import SiteFooter from "@/components/SiteFooter";
 import { BottomNavBar } from "@/components/BottomNavBar";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { AssistantFloatingWidget } from "@/components/assistant/AssistantFloatingWidget";
+import { AdminSiteEditBar } from "@/components/AdminSiteEditBar";
 import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
 import { AchievementToast } from "@/components/AchievementToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
@@ -528,6 +529,7 @@ function AppShell() {
         </main>
         <SiteFooter />
         <AssistantFloatingWidget />
+        <AdminSiteEditBar />
         <ScrollToTop />
         <BottomNavBar />
         {newBadges.length > 0 && (
