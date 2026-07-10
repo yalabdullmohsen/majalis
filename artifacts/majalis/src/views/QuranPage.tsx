@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import "@/styles/mushaf.css";
 import { applyPageSeo } from "@/lib/seo";
+import { arabicIncludes } from "@/lib/arabic-search";
 import { useAuth } from "@/components/AuthProvider";
 
 /* ══════════════════════════════════════════════════════════════════
@@ -488,7 +489,7 @@ export default function QuranPage() {
   /* ── قائمة السور المفلترة ── */
   const filteredSurahs = useMemo(
     () => SURAHS.map(([name, firstPage], i) => ({ name, firstPage, num: i + 1 }))
-          .filter(s => !search || s.name.includes(search)),
+          .filter(s => arabicIncludes(s.name, search)),
     [search],
   );
 
