@@ -108,6 +108,44 @@ const KINDS: ZakatKind[] = [
   },
 ];
 
+/* ─── فضائل الزكاة ─── */
+const ZAKAT_FADAIL = [
+  {
+    title: "تطهير المال وتزكية النفس",
+    text: "قال تعالى: ﴿خُذْ مِنْ أَمْوَالِهِمْ صَدَقَةً تُطَهِّرُهُمْ وَتُزَكِّيهِم بِهَا﴾. الزكاة طهارة للمال من الشُّح والتعلق، وتزكية للنفس من البخل.",
+    ref: "التوبة: ١٠٣",
+  },
+  {
+    title: "ضمان البركة في الباقي",
+    text: "قال ﷺ: «ما نقصت صدقة من مال». المال المُزكَّى يبارك الله فيه ويُنمِّيه. وقال: «ما فتح رجل باب عطية يريد بها صلة إلا زاده الله بها كثرة».",
+    ref: "مسلم: ٢٥٨٨",
+  },
+  {
+    title: "الأجر المضاعف يوم القيامة",
+    text: "قال تعالى: ﴿مَثَلُ الَّذِينَ يُنفِقُونَ أَمْوَالَهُمْ فِي سَبِيلِ اللَّهِ كَمَثَلِ حَبَّةٍ أَنبَتَتْ سَبْعَ سَنَابِلَ فِي كُلِّ سُنبُلَةٍ مِّائَةُ حَبَّةٍ وَاللَّهُ يُضَاعِفُ لِمَن يَشَاءُ﴾.",
+    ref: "البقرة: ٢٦١",
+  },
+  {
+    title: "وقاية من النار",
+    text: "قال ﷺ: «اتقوا النار ولو بشق تمرة». والزكاة الواجبة حاجز يحمي صاحبها من النار يوم القيامة، ومن حُرمَ أجرها عُذِّب بماله.",
+    ref: "البخاري: ١٤١٣، مسلم: ١٠١٦",
+  },
+  {
+    title: "الزكاة عنوان صحة الإسلام",
+    text: "ارتبطت الزكاة بالصلاة في القرآن في أكثر من ثمانية وعشرين موضعاً، مما يدل على أنها من علامات صحة الإسلام. وقاتل أبو بكر مانعيها لأنها فريضة لا تُهاوَن.",
+    ref: "البخاري: ١٣٩٩",
+  },
+];
+
+/* ─── شروط وجوب الزكاة ─── */
+const ZAKAT_SHURUT = [
+  { num: "١", shart: "الإسلام", detail: "لا تجب الزكاة على غير المسلم." },
+  { num: "٢", shart: "الحرية", detail: "لا زكاة على المملوك عند الجمهور لأنه لا يملك." },
+  { num: "٣", shart: "ملك النصاب", detail: "أن يملك مالاً بالغاً الحدَّ الأدنى المُقرَّر شرعاً." },
+  { num: "٤", shart: "حولان الحول", detail: "مرور سنة هجرية كاملة على المال — إلا في الزروع والمعادن." },
+  { num: "٥", shart: "الملك التام", detail: "أن يكون المال ملكاً خالصاً للمزكِّي يتصرف فيه كيف شاء." },
+];
+
 /* ─── حاسبة مبسطة ─── */
 function ZakatCalc() {
   const [gold, setGold] = useState("");
@@ -210,6 +248,36 @@ export default function ZakatPage() {
             <div key={m} className="zk-mustahiq__item">
               <span className="zk-mustahiq__num">{i + 1}</span>
               <span>{m}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* فضائل الزكاة */}
+      <section className="zk-fadail">
+        <h2 className="zk-fadail__title">فضائل الزكاة</h2>
+        <div className="zk-fadail__grid">
+          {ZAKAT_FADAIL.map((f, i) => (
+            <div key={i} className="zk-fadl-card">
+              <h3 className="zk-fadl-card__title">{f.title}</h3>
+              <p className="zk-fadl-card__text">{f.text}</p>
+              <p className="zk-fadl-card__ref">{f.ref}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* شروط وجوب الزكاة */}
+      <section className="zk-shurut">
+        <h2 className="zk-shurut__title">شروط وجوب الزكاة</h2>
+        <div className="zk-shurut__list">
+          {ZAKAT_SHURUT.map((s) => (
+            <div key={s.num} className="zk-shart-item">
+              <span className="zk-shart-num">{s.num}</span>
+              <div>
+                <strong className="zk-shart-name">{s.shart}</strong>
+                <p className="zk-shart-detail">{s.detail}</p>
+              </div>
             </div>
           ))}
         </div>
