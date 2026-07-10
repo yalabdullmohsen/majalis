@@ -261,6 +261,16 @@ body {
   background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
   color: var(--elite-white, #FAF8F2) !important;
+  border-top: 3px solid rgba(255,255,255,0.12) !important;
+  position: relative !important;
+}
+.ds-page-header::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 0; left: 0; right: 0 !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12) 30%, rgba(255,255,255,0.12) 70%, transparent) !important;
+  pointer-events: none !important;
 }
 .ds-page-header__eyebrow {
   color: rgba(255,255,255,0.82) !important;
