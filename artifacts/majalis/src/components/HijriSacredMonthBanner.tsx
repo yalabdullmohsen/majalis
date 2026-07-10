@@ -187,85 +187,125 @@ function getPeriod(month: number, day: number, year: number): Period {
 export function HijriSacredMonthBanner() {
   const [dismissed, setDismissed] = useState(false);
   const [index, setIndex]         = useState(0);
-  const [visible, setVisible]     = useState(true);
+  const [dir, setDir]             = useState<"next" | "prev">("next");
+  const [animating, setAnimating] = useState(false);
 
-  const info    = getCurrentHijriInfo();
-  const period  = info ? getPeriod(info.month, info.day, info.year) : null;
+  const info      = getCurrentHijriInfo();
+  const period    = info ? getPeriod(info.month, info.day, info.year) : null;
   const reminders = period?.reminders ?? [];
+
+  const goTo = (i: number, d: "next" | "prev" = "next") => {
+    if (animating) return;
+    setDir(d);
+    setAnimating(true);
+    setTimeout(() => {
+      setIndex(i);
+      setAnimating(false);
+    }, 320);
+  };
 
   useEffect(() => {
     if (reminders.length <= 1) return;
     const id = setInterval(() => {
-      setVisible(false);
+      setDir("next");
+      setAnimating(true);
       setTimeout(() => {
         setIndex((i) => (i + 1) % reminders.length);
-        setVisible(true);
-      }, 280);
-    }, 7000);
+        setAnimating(false);
+      }, 320);
+    }, 8000);
     return () => clearInterval(id);
   }, [reminders.length]);
 
   if (!info || !period || dismissed) return null;
 
   const current = reminders[index % reminders.length];
+  const n       = reminders.length;
 
   return (
     <div
       role="complementary"
       aria-label="تذكير إسلامي"
-      className={`hmb-wrap hmb-period--${period.kind} hmb-type--${current.type}`}
+      className={`hmb-wrap hmb-period--${period.kind}`}
     >
-      <div className="hmb-header">
-        <span className="hmb-period-title">{period.title}</span>
-        {period.countdown && period.countdown.days >= 0 && (
-          <span className="hmb-countdown">
-            {period.countdown.days === 0 ? period.countdown.label : `${period.countdown.days} يوم ${period.countdown.label}`}
-          </span>
-        )}
-        <button
-          type="button"
-          onClick={() => setDismissed(true)}
-          aria-label="إغلاق التذكير"
-          className="hmb-dismiss-btn"
-        >×</button>
+      {/* لوحة الأيقونة */}
+      <div className="hmb-icon-panel" aria-hidden="true">
+        <div className="hmb-icon-circle">
+          <current.Icon size={22} strokeWidth={1.7} />
+        </div>
       </div>
 
-      <div className="hmb-divider" />
-
-      <div
-        key={index}
-        className={`hmb-content${visible ? " hmb-content--visible" : " hmb-content--hidden"}`}
-      >
-        <div className="hmb-icon">
-          <current.Icon size={20} strokeWidth={1.8} aria-hidden="true" />
+      {/* المحتوى الرئيسي */}
+      <div className="hmb-main">
+        {/* رأس البانر */}
+        <div className="hmb-header">
+          <span className="hmb-period-title">{period.title}</span>
+          <div className="hmb-header-actions">
+            {period.countdown && period.countdown.days >= 0 && (
+              <span className="hmb-countdown">
+                {period.countdown.days === 0
+                  ? period.countdown.label
+                  : `${period.countdown.days} يوم ${period.countdown.label}`}
+              </span>
+            )}
+            {n > 1 && (
+              <span className="hmb-counter">{index + 1}/{n}</span>
+            )}
+            <button
+              type="button"
+              onClick={() => setDismissed(true)}
+              aria-label="إغلاق التذكير"
+              className="hmb-dismiss-btn"
+            >✕</button>
+          </div>
         </div>
-        <div className="hmb-content-body">
-          <span className="hmb-type-badge">{current.label}</span>
+
+        {/* نص التذكير مع أنيميشن */}
+        <div
+          key={index}
+          className={`hmb-content hmb-anim--${animating ? dir : "idle"}`}
+        >
+          <span className={`hmb-type-badge${current.urgent ? " hmb-type-badge--urgent" : ""}`}>
+            {current.urgent && <span className="hmb-urgent-dot" aria-hidden="true" />}
+            {current.label}
+          </span>
           <p className={`hmb-body${current.urgent ? " hmb-body--urgent" : ""}`}>
             {current.body}
           </p>
         </div>
-      </div>
 
-      {reminders.length > 1 && (
-        <div className="hmb-dots">
-          {reminders.map((_, i) => {
-            const active = i === index % reminders.length;
-            return (
+        {/* شريط التقدم */}
+        {n > 1 && (
+          <div className="hmb-progress-bar" role="navigation" aria-label="تنقل بين التذكيرات">
+            {reminders.map((_, i) => (
               <button
                 key={i}
                 type="button"
                 aria-label={`تذكير ${i + 1}`}
-                onClick={() => {
-                  setVisible(false);
-                  setTimeout(() => { setIndex(i); setVisible(true); }, 280);
-                }}
-                className={`hmb-dot${active ? " hmb-dot--active" : ""}`}
-                aria-pressed={active}
+                aria-current={i === index ? "true" : undefined}
+                onClick={() => goTo(i, i > index ? "next" : "prev")}
+                className={`hmb-seg${i === index ? " hmb-seg--active" : ""}`}
               />
-            );
-          })}
-          <span className="hmb-dot-counter">{index + 1}/{reminders.length}</span>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* سهما التنقل */}
+      {n > 1 && (
+        <div className="hmb-nav-arrows">
+          <button
+            type="button"
+            aria-label="التذكير السابق"
+            onClick={() => goTo((index - 1 + n) % n, "prev")}
+            className="hmb-arrow-btn"
+          >‹</button>
+          <button
+            type="button"
+            aria-label="التذكير التالي"
+            onClick={() => goTo((index + 1) % n, "next")}
+            className="hmb-arrow-btn"
+          >›</button>
         </div>
       )}
     </div>
