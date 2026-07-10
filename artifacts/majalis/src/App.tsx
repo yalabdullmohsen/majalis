@@ -220,6 +220,14 @@ function SeoManager() {
   return null;
 }
 
+function ScrollResetOnNav() {
+  const [location] = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [location]);
+  return null;
+}
+
 function IslamicReminderBootstrap() {
   const fired = useRef(false);
   useEffect(() => {
@@ -520,6 +528,7 @@ function AppShell() {
         <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
         <NavProgressBar />
         <SeoManager />
+        <ScrollResetOnNav />
         <IslamicReminderBootstrap />
         <AdhanSchedulerBootstrap />
         <AdhanNotificationBar />

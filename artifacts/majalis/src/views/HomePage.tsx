@@ -217,7 +217,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="home-page home-page--v3">
+    <div className="home-page home-page--v4" dir="rtl">
       <HijriSacredMonthBanner />
       {isMaintenanceMode() && (
         <div role="status" className="home-maintenance-banner">
@@ -226,88 +226,168 @@ export default function HomePage() {
       )}
 
       {/* ══════════════════ Hero ══════════════════ */}
-      <section className="home-hero home-hero--v3" aria-label="الصفحة الرئيسية">
-        <div className="home-container home-hero-grid home-hero-grid--v3">
-          <div className="home-hero-copy home-hero-copy--v3">
-            <div className="home-hero-identity">
-              <img
-                src="/logo.png"
-                alt=""
-                className="home-hero-logo"
-                width={52}
-                height={52}
-                loading="eager"
-                decoding="async"
-                aria-hidden="true"
-              />
-              <h1 className="home-hero-title home-hero-title--v3">المجلس العلمي</h1>
-            </div>
+      <section
+        className="hpv4-hero"
+        aria-label="الصفحة الرئيسية"
+        style={{
+          background: "linear-gradient(160deg, #1F4D3A 0%, #163728 55%, #0e2619 100%)",
+          padding: "2.5rem 1rem 2rem",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        {/* زخرفة هندسية */}
+        <div aria-hidden="true" style={{
+          position: "absolute", inset: 0, opacity: 0.06,
+          backgroundImage: "repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%)",
+          backgroundSize: "20px 20px",
+          pointerEvents: "none",
+        }} />
 
-            <p className="home-hero-desc">
-              موسوعة علمية إسلامية شاملة — أحاديث موثّقة، دروس علماء الكويت، فوائد شرعية، قصص الأنبياء، مواقيت الصلاة، والأذكار — في مكان واحد.
-            </p>
-            <div className="home-hero-for-whom" aria-label="لمن هذه المنصة">
-              <span className="home-hero-chip">🎓 طالب العلم</span>
-              <span className="home-hero-chip">📿 المسلم اليومي</span>
-              <span className="home-hero-chip">👨‍👩‍👧 الأسرة المسلمة</span>
-              <span className="home-hero-chip">🕌 متابع حلقات الكويت</span>
-            </div>
-            <div className="home-hero-ctas">
-              <Link href="/lessons" className="home-hero-cta home-hero-cta--primary">ابدأ بالدروس</Link>
-              <Link href="/hadith" className="home-hero-cta home-hero-cta--ghost">تصفّح الأحاديث</Link>
-              <Link href="/about" className="home-hero-cta home-hero-cta--ghost">عن المنصة</Link>
-            </div>
+        <div style={{ maxWidth: 680, margin: "0 auto", position: "relative", textAlign: "center" }}>
+          {/* الشعار والاسم */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "1rem" }}>
+            <img src="/logo.png" alt="" width={56} height={56} loading="eager" aria-hidden="true"
+              style={{ borderRadius: "50%", border: "2px solid rgba(255,255,255,0.25)" }} />
+            <h1 style={{ color: "#fff", fontSize: "clamp(1.6rem, 5vw, 2.4rem)", fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>
+              المجلس العلمي
+            </h1>
+          </div>
 
-            <form onSubmit={submitSearch} className="home-search home-search--v3" aria-label="البحث">
-              <input
-                value={term}
-                onChange={(e) => setTerm(e.target.value)}
-                placeholder="ابحث في القرآن والأحاديث والفوائد..."
-                aria-label="البحث في التطبيق"
-              />
-              <button type="submit">بحث</button>
-            </form>
-            <div className="home-quick-searches" aria-label="بحث سريع">
-              {QUICK_SEARCHES.map((q) => (
-                <button
-                  key={q}
-                  type="button"
-                  onClick={() => quickSearch(q)}
-                  className="home-quick-search-chip"
-                >
-                  {q}
-                </button>
-              ))}
-            </div>
+          <p style={{ color: "rgba(255,255,255,0.82)", fontSize: "clamp(0.9rem, 2.5vw, 1.05rem)", lineHeight: 1.7, marginBottom: "1.25rem", maxWidth: 560, margin: "0 auto 1.25rem" }}>
+            موسوعة إسلامية شاملة — أحاديث موثّقة، دروس علماء الكويت، فقه وفتاوى، أذكار، وأدوات يومية — كل ما تحتاجه في مكان واحد
+          </p>
+
+          {/* شريحات الجمهور */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem", justifyContent: "center", marginBottom: "1.5rem" }}>
+            {["🎓 طالب العلم", "📿 المسلم اليومي", "👨‍👩‍👧 الأسرة المسلمة", "🕌 علماء الكويت"].map(chip => (
+              <span key={chip} style={{
+                background: "rgba(255,255,255,0.12)", color: "#fff",
+                padding: "0.3rem 0.8rem", borderRadius: "999px",
+                fontSize: "0.78rem", fontWeight: 600, backdropFilter: "blur(4px)",
+                border: "1px solid rgba(255,255,255,0.18)"
+              }}>{chip}</span>
+            ))}
+          </div>
+
+          {/* شريط البحث */}
+          <form onSubmit={submitSearch} style={{
+            display: "flex", gap: "0", borderRadius: "0.75rem", overflow: "hidden",
+            boxShadow: "0 4px 24px rgba(0,0,0,0.3)", marginBottom: "0.85rem",
+          }} aria-label="البحث">
+            <input
+              value={term}
+              onChange={(e) => setTerm(e.target.value)}
+              placeholder="ابحث في القرآن والأحاديث والفوائد..."
+              aria-label="البحث"
+              style={{
+                flex: 1, padding: "0.8rem 1rem", border: "none", outline: "none",
+                fontSize: "0.95rem", direction: "rtl", fontFamily: "inherit",
+                background: "rgba(255,255,255,0.97)"
+              }}
+            />
+            <button type="submit" style={{
+              background: "#2d7a5a", color: "#fff", border: "none", cursor: "pointer",
+              padding: "0.8rem 1.25rem", fontWeight: 700, fontSize: "0.9rem", fontFamily: "inherit",
+              whiteSpace: "nowrap"
+            }}>بحث</button>
+          </form>
+
+          {/* بحث سريع */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", justifyContent: "center" }}>
+            {QUICK_SEARCHES.map((q) => (
+              <button key={q} type="button" onClick={() => quickSearch(q)} style={{
+                background: "rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.85)",
+                border: "1px solid rgba(255,255,255,0.2)", borderRadius: "999px",
+                padding: "0.25rem 0.65rem", fontSize: "0.73rem", cursor: "pointer",
+                fontFamily: "inherit", transition: "background 0.15s"
+              }}>{q}</button>
+            ))}
+          </div>
+
+          {/* أزرار الإجراء */}
+          <div style={{ display: "flex", gap: "0.6rem", justifyContent: "center", marginTop: "1.25rem", flexWrap: "wrap" }}>
+            <Link href="/lessons" style={{
+              background: "#fff", color: "#1F4D3A", padding: "0.65rem 1.4rem",
+              borderRadius: "0.6rem", fontWeight: 800, fontSize: "0.92rem",
+              textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.35rem"
+            }}>🎓 ابدأ بالدروس</Link>
+            <Link href="/adhkar" style={{
+              background: "rgba(255,255,255,0.12)", color: "#fff", padding: "0.65rem 1.2rem",
+              borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.92rem",
+              textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)"
+            }}>📿 الأذكار</Link>
+            <Link href="/prayer-times" style={{
+              background: "rgba(255,255,255,0.12)", color: "#fff", padding: "0.65rem 1.2rem",
+              borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.92rem",
+              textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)"
+            }}>🕐 مواقيت الصلاة</Link>
           </div>
         </div>
       </section>
 
+      {/* ══ إحصائيات سريعة ══ */}
+      <div style={{
+        display: "flex", justifyContent: "center", gap: "0", flexWrap: "wrap",
+        background: "#fff", borderBottom: "1px solid #e8f0ec",
+        boxShadow: "0 2px 8px rgba(31,77,58,0.06)"
+      }}>
+        {[
+          { num: "50+",  label: "قسماً علمياً" },
+          { num: "100+", label: "حديثاً نبوياً" },
+          { num: "22",   label: "فرقة إسلامية" },
+          { num: "48",   label: "عالماً وإماماً" },
+          { num: "103+", label: "حكمة سلفية" },
+        ].map(({ num, label }) => (
+          <div key={label} style={{
+            textAlign: "center", padding: "0.75rem 1.25rem",
+            borderLeft: "1px solid #e8f0ec", minWidth: 90,
+          }}>
+            <div style={{ color: "#1F4D3A", fontWeight: 800, fontSize: "1.15rem" }}>{num}</div>
+            <div style={{ color: "#555", fontSize: "0.73rem", marginTop: 2 }}>{label}</div>
+          </div>
+        ))}
+      </div>
+
       {/* ══ زرتَ مؤخراً ══ */}
       <RecentPagesBar />
 
-      {/* ══ وصول سريع ══ */}
-      <nav className="hp-quick-nav" aria-label="وصول سريع">
-        <div className="hp-quick-nav__track">
-          {QUICK_LINKS.map(({ href, Icon, label }) => (
-            <Link key={href} href={href} className="hp-quick-link" aria-label={label}>
-              <span className="hp-quick-link__icon" aria-hidden="true">
-                <Icon size={20} strokeWidth={1.8} />
+      {/* ══ وصول سريع — شبكة ══ */}
+      <nav aria-label="وصول سريع" style={{ maxWidth: 720, margin: "1.25rem auto 0", padding: "0 1rem" }}>
+        <p style={{ color: "#888", fontSize: "0.75rem", fontWeight: 700, marginBottom: "0.6rem", letterSpacing: "0.05em" }}>وصول سريع</p>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(88px, 1fr))",
+          gap: "0.5rem",
+        }}>
+          {[...QUICK_LINKS, { href: "/sitemap", Icon: Layers, label: "كل الأقسام" }].map(({ href, Icon, label }) => (
+            <Link key={href} href={href} aria-label={label} style={{
+              display: "flex", flexDirection: "column", alignItems: "center", gap: "0.35rem",
+              padding: "0.65rem 0.4rem",
+              background: "#fff",
+              border: "1px solid #e8f0ec",
+              borderRadius: "0.75rem",
+              textDecoration: "none",
+              color: "#1F4D3A",
+              fontSize: "0.73rem",
+              fontWeight: 700,
+              transition: "all 0.15s",
+              cursor: "pointer",
+              textAlign: "center",
+            }}>
+              <span style={{ background: "#f0f7f4", padding: "0.45rem", borderRadius: "0.5rem", display: "flex" }}>
+                <Icon size={18} strokeWidth={1.8} />
               </span>
-              <span className="hp-quick-link__label">{label}</span>
+              {label}
             </Link>
           ))}
-          <Link href="/sitemap" className="hp-quick-link hp-quick-link--all" aria-label="كل الأقسام">
-            <span className="hp-quick-link__icon" aria-hidden="true">
-              <Layers size={20} strokeWidth={1.8} />
-            </span>
-            <span className="hp-quick-link__label">كل الأقسام</span>
-          </Link>
         </div>
       </nav>
 
-      {/* ══ تذكير صيام الاثنين والخميس ══ */}
-      <HomeSawmReminder />
+      {/* ══ تذكير صيام ══ */}
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 1rem" }}>
+        <HomeSawmReminder />
+      </div>
 
       {/* ══════════════════ Main Content ══════════════════ */}
       <main className="home-container home-main home-main--v3">
@@ -348,47 +428,77 @@ export default function HomePage() {
           <HomeSunnahByTime />
         </SafeHomeSection>
 
-        {/* ══ استكشف المنصة، تسويقي ══ */}
-        <section className="hp-features" aria-labelledby="features-heading">
-          <div className="hp-features__head">
-            <p className="home-eyebrow">استكشف المنصة</p>
-            <h2 id="features-heading">ما يقدمه المجلس العلمي</h2>
+        {/* ══ استكشف المنصة ══ */}
+        <section aria-labelledby="features-heading" style={{ marginTop: "2rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}>
+            <div style={{ width: 3, height: 22, background: "#1F4D3A", borderRadius: 2 }} />
+            <h2 id="features-heading" style={{ fontSize: "1.1rem", fontWeight: 800, color: "#1a1a1a", margin: 0 }}>
+              استكشف المنصة
+            </h2>
           </div>
 
-          {/* مميزات بارزة */}
-          <div className="hp-featured-grid">
+          {/* بطاقات بارزة */}
+          <div style={{
+            display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "0.75rem",
+            marginBottom: "2rem"
+          }}>
             {FEATURED.map(({ href, Icon, title, desc, cta }) => (
-              <Link key={href} href={href} className="hp-featured-card" aria-label={title}>
-                <div className="hp-featured-card__icon" aria-hidden="true">
-                  <Icon size={28} strokeWidth={1.6} />
-                </div>
-                <div className="hp-featured-card__body">
-                  <strong className="hp-featured-card__title">{title}</strong>
-                  <p className="hp-featured-card__desc">{desc}</p>
-                </div>
-                <span className="hp-featured-card__cta" aria-hidden="true">{cta} ←</span>
+              <Link key={href} href={href} aria-label={title} style={{
+                display: "flex", flexDirection: "column", gap: "0.6rem",
+                padding: "1.1rem 1rem", borderRadius: "1rem", textDecoration: "none",
+                background: "linear-gradient(135deg, #1F4D3A 0%, #2d7a5a 100%)",
+                color: "#fff", transition: "transform 0.15s, box-shadow 0.15s",
+                boxShadow: "0 2px 8px rgba(31,77,58,0.2)"
+              }}>
+                <Icon size={24} strokeWidth={1.6} style={{ opacity: 0.9 }} />
+                <strong style={{ fontSize: "0.97rem", fontWeight: 800 }}>{title}</strong>
+                <p style={{ fontSize: "0.8rem", opacity: 0.82, lineHeight: 1.5, margin: 0 }}>{desc}</p>
+                <span style={{ fontSize: "0.78rem", fontWeight: 700, opacity: 0.9, marginTop: "auto" }}>{cta} ←</span>
               </Link>
             ))}
           </div>
 
-          {/* أقسام بالتصنيف */}
+          {/* أقسام بالتصنيف — تصميم جديد */}
           {FEATURE_CATS.map(cat => (
-            <div key={cat.id} className="hp-cat">
-              <div className="hp-cat__head">
-                <span className="hp-cat__icon" aria-hidden="true">
-                  <cat.Icon size={18} strokeWidth={1.8} />
+            <div key={cat.id} style={{ marginBottom: "1.75rem" }}>
+              <div style={{
+                display: "flex", alignItems: "center", gap: "0.5rem",
+                marginBottom: "0.75rem", paddingBottom: "0.5rem",
+                borderBottom: "2px solid #f0f7f4"
+              }}>
+                <span style={{
+                  background: "#1F4D3A", color: "#fff", padding: "0.35rem",
+                  borderRadius: "0.4rem", display: "flex"
+                }}>
+                  <cat.Icon size={15} strokeWidth={2} />
                 </span>
-                <h3 className="hp-cat__title">{cat.label}</h3>
+                <h3 style={{ fontSize: "0.97rem", fontWeight: 800, color: "#1F4D3A", margin: 0 }}>{cat.label}</h3>
               </div>
-              <div className="hp-cat__grid">
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(175px, 1fr))",
+                gap: "0.5rem"
+              }}>
                 {cat.items.map(({ href, Icon: ItemIcon, title, desc }) => (
-                  <Link key={href} href={href} className="hp-cat-card">
-                    <span className="hp-cat-card__icon" aria-hidden="true">
-                      <ItemIcon size={18} strokeWidth={1.8} />
+                  <Link key={href} href={href} style={{
+                    display: "flex", alignItems: "center", gap: "0.65rem",
+                    padding: "0.7rem 0.8rem", borderRadius: "0.75rem",
+                    textDecoration: "none", background: "#fff",
+                    border: "1px solid #e8f0ec",
+                    transition: "border-color 0.15s, box-shadow 0.15s, transform 0.12s",
+                    cursor: "pointer",
+                    boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
+                  }}>
+                    <span style={{
+                      background: "#f0f7f4", color: "#1F4D3A",
+                      padding: "0.4rem", borderRadius: "0.45rem",
+                      display: "flex", flexShrink: 0
+                    }}>
+                      <ItemIcon size={15} strokeWidth={2} />
                     </span>
-                    <div className="hp-cat-card__body">
-                      <strong className="hp-cat-card__title">{title}</strong>
-                      <span className="hp-cat-card__desc">{desc}</span>
+                    <div style={{ minWidth: 0 }}>
+                      <strong style={{ display: "block", fontSize: "0.82rem", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.3 }}>{title}</strong>
+                      <span style={{ fontSize: "0.71rem", color: "#777", lineHeight: 1.4, display: "block" }}>{desc}</span>
                     </div>
                   </Link>
                 ))}
@@ -422,7 +532,7 @@ export default function HomePage() {
           <HomeQuizCard />
         </SafeHomeSection>
 
-        {/* الركن اليومي، مدمج */}
+        {/* الركن اليومي */}
         <SafeHomeSection name="الركن اليومي">
           <HomeDailyCorner />
         </SafeHomeSection>
