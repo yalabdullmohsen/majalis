@@ -498,6 +498,27 @@ const scholarsItemListScript = itemListJsonLdScript(
   ISLAMIC_SCHOLARS.map((s) => ({ name: s.name, url: `/scholars#${s.id}` }))
 );
 
+const LEARNING_PATHS_SEED = [
+  { slug: "tawhid-basics", title: "مدخل إلى التوحيد" },
+  { slug: "aqeedah-wasitiyya", title: "شرح العقيدة الواسطية" },
+  { slug: "fiqh-ibadah", title: "فقه العبادات الأساسية" },
+  { slug: "fiqh-muamalat", title: "فقه المعاملات المالية" },
+  { slug: "fiqh-usul", title: "مدخل إلى أصول الفقه" },
+  { slug: "tajwid-level1", title: "أحكام التجويد للمبتدئين" },
+  { slug: "tafsir-juz-amma", title: "تفسير جزء عمّ" },
+  { slug: "ulum-quran-intro", title: "مدخل في علوم القرآن" },
+  { slug: "arbaeen-study", title: "دراسة الأربعون النووية" },
+  { slug: "mustalah-hadith", title: "مصطلح الحديث" },
+  { slug: "akhlaq-islamiyya", title: "الأخلاق الإسلامية" },
+  { slug: "tazkiyah-nafs", title: "تزكية النفس" },
+  { slug: "seerah-mukhtasara", title: "السيرة النبوية المختصرة" },
+  { slug: "ghazawat", title: "غزوات النبي ﷺ" },
+  { slug: "tarbiyah-dhati", title: "التربية الذاتية لطالب العلم" },
+];
+const learningPathsItemListScript = itemListJsonLdScript(
+  LEARNING_PATHS_SEED.map((p) => ({ name: p.title, url: `/learning/paths/${p.slug}` }))
+);
+
 for (const route of staticRoutes) {
   const routeDir =
     route.path === "/"
@@ -513,7 +534,8 @@ for (const route of staticRoutes) {
     route.path === "/lessons" ? lessonItemListScript :
     route.path === "/adhkar" ? adhkarItemListScript :
     route.path === "/prophets" ? prophetsItemListScript :
-    route.path === "/scholars" ? scholarsItemListScript : "";
+    route.path === "/scholars" ? scholarsItemListScript :
+    route.path === "/learning/paths" ? learningPathsItemListScript : "";
   await writeFile(resolve(routeDir, "index.html"), prerenderHtml(route, staticExtraJsonLd), "utf8");
 
   if (route.path !== "/") {
