@@ -333,7 +333,7 @@ function AdminContent() {
                       <span className="uap-prog-dot">•</span>
                       <span>{p.program_name}</span>
                       <span className="uap-deg-badge">{p.degree_level}</span>
-                      {!p.is_active && <span className="icon-danger" style={{ opacity: .75 }}>(غير نشط)</span>}
+                      {!p.is_active && <span className="icon-danger icon-ghost">(غير نشط)</span>}
                     </div>
                   ))}
                 </div>

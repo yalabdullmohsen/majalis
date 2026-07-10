@@ -139,7 +139,7 @@ export function HomeCompactPrayer() {
                 </span>
                 <span
                   className="hcp-since-pill__bar"
-                  style={{ width: `${graceProgress}%` }}
+                  style={{ "--hcp-bar-w": `${graceProgress}%` } as React.CSSProperties}
                   aria-hidden="true"
                 />
               </span>

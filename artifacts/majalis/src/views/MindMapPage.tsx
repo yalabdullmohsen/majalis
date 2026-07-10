@@ -161,7 +161,7 @@ export default function MindMapPage() {
       {/* نصيحة */}
       <p className="mm-tip">
         انقر على أي بطاقة لفتح الخريطة الذهنية، واضغط على أي عقدة لطيّها أو توسيعها.
-        أيقونة <ExternalLink size={11} strokeWidth={2} style={{ display: "inline", verticalAlign: "middle" }} /> تفتح الصفحة المرتبطة مباشرة.
+        أيقونة <ExternalLink size={11} strokeWidth={2} className="icon-inline" /> تفتح الصفحة المرتبطة مباشرة.
       </p>
     </div>
   );

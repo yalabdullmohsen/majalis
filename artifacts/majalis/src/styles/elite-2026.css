@@ -2159,10 +2159,13 @@ button.hcp-prayer-cell:focus-visible {
   position: absolute;
   inset-block: 0;
   inset-inline-start: 0;
+  width: var(--hcp-bar-w, 0%);
   background: rgba(31, 77, 58, 0.12);
   transition: width 1s linear;
   z-index: 0;
 }
+.icon-inline { display: inline; vertical-align: middle; }
+.icon-ghost  { opacity: 0.25; }
 /* تلميح الصلاة التالية بجانب الأذان */
 .hcp-next-hint {
   font-size: 0.67rem;

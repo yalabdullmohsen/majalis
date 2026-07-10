@@ -413,7 +413,7 @@ export default function QuranPage() {
         {/* خطأ الجلب */}
         {fetchErr && !loading && (
           <div className="mshf-err">
-            <BookOpen size={52} strokeWidth={1} style={{ opacity: 0.25 }} aria-hidden="true" />
+            <BookOpen size={52} strokeWidth={1} className="icon-ghost" aria-hidden="true" />
             <p>تعذّر تحميل الصفحة {page.toLocaleString("ar-EG")}</p>
             <p className="mshf-err-sub">تحقق من اتصالك بالإنترنت ثم أعد المحاولة</p>
             <button
