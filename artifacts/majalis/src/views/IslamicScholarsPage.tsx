@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Search, ChevronLeft, BookOpen, Star, Filter } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 /* ── بيانات العلماء ──────────────────────────────────────── */
 type Scholar = {
@@ -476,6 +477,10 @@ export default function IslamicScholarsPage() {
       )}
 
       {/* ── روابط ذات صلة ─────────────────────────────────────── */}
+      <div className="twh-share">
+        <ShareButtons title="العلماء المسلمون — المجلس العلمي" url="https://majlisilm.com/scholars" />
+      </div>
+
       <div className="sch-related">
         <Link href="/lessons" className="sch-related-link">
           <BookOpen size={16} /> دروس المشايخ <ChevronLeft size={14} />

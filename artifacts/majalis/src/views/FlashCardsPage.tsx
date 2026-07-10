@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { BookOpen, CheckCircle2, Lock, PartyPopper, RotateCw } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { ShareButtons } from "@/components/ContentActions";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import {
@@ -274,6 +275,10 @@ export default function FlashCardsPage() {
           </Link>
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="البطاقات التعليمية الإسلامية — المجلس العلمي" url="https://majlisilm.com/flashcards" />
+      </div>
     </div>
   );
 }

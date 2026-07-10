@@ -9,6 +9,7 @@ import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { useAuth } from "@/components/AuthProvider";
 import { FaidahCard } from "@/components/fawaid/FaidahCard";
+import { ShareButtons } from "@/components/ContentActions";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 const LEGACY_CATEGORIES = [
@@ -201,6 +202,10 @@ export default function FawaidPage({
         </div>
         {filtersPanel}
       </aside>
+
+      <div className="twh-share">
+        <ShareButtons title="الفوائد العلمية — المجلس العلمي" url="https://majlisilm.com/fawaid" />
+      </div>
 
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}

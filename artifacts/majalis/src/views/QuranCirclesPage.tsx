@@ -3,6 +3,7 @@ import { AlertTriangle, Building2 } from "lucide-react";
 import { QuranCircleCard } from "@/components/circles/QuranCircleCard";
 import { getQuranCircles, type QuranCircle, type CircleFilters } from "@/lib/quran-circles-service";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import { IslamicDivider } from "@/components/design/IslamicDivider";
 
 const LEVEL_OPTIONS = ["الكل", "مبتدئ", "متوسط", "متقدم"];
@@ -124,6 +125,10 @@ export default function QuranCirclesPage() {
           {circles.map((c) => <QuranCircleCard key={c.id} circle={c} />)}
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="حلقات القرآن الكريم — المجلس العلمي" url="https://majlisilm.com/quran-circles" />
+      </div>
     </div>
   );
 }

@@ -11,6 +11,7 @@ import {
 } from "@/lib/quran-api";
 import { incrementTaskProgress } from "@/lib/daily-progress";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 const QURAN_PAGES = 604;
 
@@ -252,6 +253,10 @@ export default function DailyWirdPage() {
         <Link href={`/quran?surah=${state.currentSurah}`} className="wird-quran-link">
           <BookOpen size={15} strokeWidth={1.8} aria-hidden="true" /> فتح المصحف من هذا الموضع
         </Link>
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="الورد اليومي — المجلس العلمي" url="https://majlisilm.com/daily-wird" />
       </div>
     </div>
   );

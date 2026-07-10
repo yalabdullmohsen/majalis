@@ -3,6 +3,7 @@ import { Scale } from "lucide-react";
 import { Link } from "wouter";
 import { getQaCategories, getQaQuestions } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 const FIQH_HUB_TABS = [
   { key: "fatawa",  label: "الفتاوى",         href: "/fatwa" },
@@ -304,6 +305,10 @@ export default function QaPage({
         </div>
         {filtersPanel}
       </aside>
+
+      <div className="twh-share">
+        <ShareButtons title="الأسئلة والأجوبة الشرعية — المجلس العلمي" url="https://majlisilm.com/qa" />
+      </div>
 
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}

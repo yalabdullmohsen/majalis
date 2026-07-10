@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { Pencil, Trash2 } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
+import { ShareButtons } from "@/components/ContentActions";
 import { useLocation } from "wouter";
 import { PageHeader } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
@@ -606,6 +607,9 @@ export default function LessonsPage({
         </div>
       )}
 
+      <div className="twh-share">
+        <ShareButtons title="الدروس العلمية — المجلس العلمي" url="https://majlisilm.com/lessons" />
+      </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import { Link } from "wouter";
 import { Compass, Moon, RotateCw, Star, Sun, SunDim, Sunset, Sunrise } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -272,6 +273,9 @@ export default function PrayerTimesPage() {
         </Link>
       </div>
 
+      <div className="twh-share">
+        <ShareButtons title="مواقيت الصلاة — المجلس العلمي" url="https://majlisilm.com/prayer-times" />
+      </div>
     </div>
   );
 }

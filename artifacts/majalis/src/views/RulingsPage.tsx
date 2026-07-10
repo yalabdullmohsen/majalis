@@ -3,6 +3,7 @@ import { Banknote, BookOpen, Droplets, FileSignature, Flame, FlaskConical, Gradu
 import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
+import { ShareButtons } from "@/components/ContentActions";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
@@ -279,6 +280,10 @@ export default function RulingsPage() {
         </div>
         {filtersPanel}
       </aside>
+
+      <div className="twh-share">
+        <ShareButtons title="الأحكام الشرعية — المجلس العلمي" url="https://majlisilm.com/rulings" />
+      </div>
 
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}

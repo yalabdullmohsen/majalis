@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { BookOpen, ChevronDown, ChevronUp, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import "@/styles/elite-2026.css";
 
 /* ══════════════════════════════════════════════════════════════════
@@ -543,6 +544,10 @@ export default function IslamicGlossaryPage() {
             );
           })}
         </div>
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="المعجم الإسلامي — المجلس العلمي" url="https://majlisilm.com/islamic-glossary" />
       </div>
     </div>
   );

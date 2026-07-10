@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Star } from "lucide-react";
 import { SkeletonCardGrid, PageHeader } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
 import {
   loadIslamicOccasions,
   sortOccasionsByUpcoming,
@@ -123,6 +124,10 @@ export default function OccasionsPage() {
           ))}
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="المناسبات الإسلامية — المجلس العلمي" url="https://majlisilm.com/occasions" />
+      </div>
     </div>
   );
 }

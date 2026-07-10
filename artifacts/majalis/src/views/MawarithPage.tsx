@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 
 type MawTab = "varasa" | "huquq" | "asab" | "hajb" | "masail";
@@ -417,6 +418,10 @@ export default function MawarithPage() {
         )}
 
         {/* related */}
+        <div className="twh-share">
+          <ShareButtons title="علم المواريث — المجلس العلمي" url="https://majlisilm.com/mawarith" />
+        </div>
+
         <nav className="mw-related" aria-label="صفحات ذات صلة">
           <h2 className="mw-related__title">استكشف أيضاً</h2>
           <div className="mw-related__grid">

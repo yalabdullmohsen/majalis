@@ -3,6 +3,7 @@ import { CalendarDays, Heart, HelpCircle, LayoutList } from "lucide-react";
 import { Link } from "wouter";
 import { PROPHETS, getProphet, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import { prophetArticleJsonLd, breadcrumbJsonLd, defaultSiteJsonLd } from "@/lib/seo-structured-data";
 import { supabase } from "@/lib/supabase";
 
@@ -910,6 +911,10 @@ export default function ProphetStoriesPage() {
             )}
           </div>
         )}
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="قصص الأنبياء — المجلس العلمي" url="https://majlisilm.com/prophet-stories" />
       </div>
     </div>
   );

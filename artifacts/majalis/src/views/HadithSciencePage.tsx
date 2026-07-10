@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { BookOpen, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 /* ─── أنواع البيانات ─── */
 type HadithTerm = {
@@ -420,6 +421,10 @@ export default function HadithSciencePage() {
           })}
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="علوم الحديث — المجلس العلمي" url="https://majlisilm.com/hadith-science" />
+      </div>
 
       {/* مصادر للمزيد */}
       <section className="hs-related">
