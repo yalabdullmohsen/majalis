@@ -12,7 +12,6 @@ type Props = {
   showSave?: boolean;
   showReadingMode?: boolean;
   showPrint?: boolean;
-  /** لتفعيل زر التعديل المباشر */
   adminEdit?: { contentType: InlineEditContentType; initialData?: Record<string, unknown> };
 };
 
@@ -37,6 +36,7 @@ export function ContentActionBar({
 }: Props) {
   const [copied, setCopied] = useState(false);
   const [readingMode, setReadingMode] = useState(() => readPreferences().readingMode);
+  const [showShareMenu, setShowShareMenu] = useState(false);
   const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => () => { if (copyTimerRef.current) clearTimeout(copyTimerRef.current); }, []);
@@ -51,17 +51,35 @@ export function ContentActionBar({
   }, [text]);
 
   const handleShare = useCallback(async () => {
-    const payload = { title, text };
+    const pageUrl = window.location.href;
+    const payload = { title, text, url: pageUrl };
     if (navigator.share) {
       try {
         await navigator.share(payload);
         return;
       } catch {
-        /* cancelled */
+        /* cancelled or not supported */
       }
     }
-    await handleCopy();
-  }, [text, title, handleCopy]);
+    setShowShareMenu((v) => !v);
+  }, [text, title]);
+
+  const shareToWhatsApp = useCallback(() => {
+    const pageUrl = window.location.href;
+    const msg = `${title}\n${text.slice(0, 300)}\n\n${pageUrl}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+    setShowShareMenu(false);
+  }, [text, title]);
+
+  const shareToTelegram = useCallback(() => {
+    const pageUrl = window.location.href;
+    window.open(
+      `https://t.me/share/url?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(title)}`,
+      "_blank",
+      "noopener",
+    );
+    setShowShareMenu(false);
+  }, [title]);
 
   const toggleReadingMode = useCallback(() => {
     const next = !readingMode;
@@ -79,9 +97,26 @@ export function ContentActionBar({
       >
         {copied ? "✓ تم النسخ" : "نسخ"}
       </button>
-      <button type="button" className="content-action-bar__btn" onClick={handleShare}>
-        مشاركة
-      </button>
+
+      <div className="content-action-bar__share-wrap">
+        <button type="button" className="content-action-bar__btn" onClick={handleShare}>
+          مشاركة
+        </button>
+        {showShareMenu && (
+          <div className="content-action-bar__share-menu">
+            <button type="button" className="cab-share-item cab-share-item--wa" onClick={shareToWhatsApp}>
+              📱 واتساب
+            </button>
+            <button type="button" className="cab-share-item cab-share-item--tg" onClick={shareToTelegram}>
+              ✈️ تيليجرام
+            </button>
+            <button type="button" className="cab-share-item" onClick={() => { handleCopy(); setShowShareMenu(false); }}>
+              🔗 نسخ الرابط
+            </button>
+          </div>
+        )}
+      </div>
+
       {adminEdit && contentId && (
         <AdminInlineEdit
           contentType={adminEdit.contentType}

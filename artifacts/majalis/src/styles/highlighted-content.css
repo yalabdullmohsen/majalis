@@ -134,6 +134,44 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
   padding-top: 0.5rem;
   border-top: 1px solid color-mix(in srgb, var(--majalis-line) 75%, transparent);
 }
+.content-action-bar__share-wrap {
+  position: relative;
+}
+.content-action-bar__share-menu {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  inset-inline-start: 0;
+  z-index: 120;
+  background: var(--majalis-panel);
+  border: 1px solid var(--majalis-line);
+  border-radius: .75rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+  padding: .375rem;
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  min-width: 9rem;
+  white-space: nowrap;
+}
+.cab-share-item {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem .75rem;
+  border-radius: .5rem;
+  border: none;
+  background: none;
+  font-size: .8125rem;
+  font-weight: 600;
+  color: var(--majalis-ink);
+  cursor: pointer;
+  text-align: right;
+  font-family: inherit;
+  transition: background .12s;
+}
+.cab-share-item:hover { background: var(--majalis-line); }
+.cab-share-item--wa:hover  { background: rgba(37,211,102,.15); }
+.cab-share-item--tg:hover  { background: rgba(38,165,228,.15); }
 
 .content-action-bar__btn,
 .content-action-bar__link {

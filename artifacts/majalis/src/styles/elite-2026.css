@@ -24007,6 +24007,44 @@ img[loading="lazy"]:not([src=""]) {
 .ca-report-submit:disabled { opacity: .5; cursor: default; }
 
 /* ══════════════════════════════════════════════
+   §CA-SHARE. Share Buttons — واتساب، تيليجرام، نسخ
+   ══════════════════════════════════════════════ */
+.share-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  width: 100%;
+  margin-bottom: .25rem;
+}
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  padding: .4rem .875rem;
+  border-radius: 999px;
+  font-size: .8125rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity .15s, transform .1s;
+  line-height: 1;
+  white-space: nowrap;
+  color: #fff;
+}
+.share-btn:hover { opacity: .88; transform: translateY(-1px); }
+.share-btn--wa   { background: #25D366; }
+.share-btn--tg   { background: #26A5E4; }
+.share-btn--copy { background: var(--majalis-emerald); }
+.ca-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .75rem;
+  width: 100%;
+}
+
+/* ══════════════════════════════════════════════
    §SRC. SourceCard component
    ══════════════════════════════════════════════ */
 .src-card {
