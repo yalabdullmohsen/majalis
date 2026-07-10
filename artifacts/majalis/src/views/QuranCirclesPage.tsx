@@ -45,6 +45,7 @@ export default function QuranCirclesPage() {
       title: "حلقات القرآن الكريم | المجلس العلمي",
       description: "اعثر على حلقات تحفيظ القرآن الكريم المناسبة، حلقات مختلطة وللرجال وللنساء بمستويات متدرجة.",
       keywords: ["حلقات قرآن", "تحفيظ قرآن", "حلقة قرآنية", "حفظ القرآن", "تجويد"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "حلقات القرآن الكريم", url: "https://majlisilm.com/quran-circles", about: { "@type": "Thing", name: "حلقات تحفيظ وتجويد القرآن الكريم" } }],
     });
   }, []);
   const [level, setLevel]     = useState("الكل");

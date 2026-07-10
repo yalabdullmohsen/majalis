@@ -178,6 +178,7 @@ export default function KnowledgeGraphPage() {
       title: "الرسم البياني المعرفي | المجلس العلمي",
       description: "استكشف العلاقات بين المفاهيم الإسلامية، رسم بياني تفاعلي يربط العلماء والكتب والمسائل الفقهية.",
       keywords: ["رسم بياني معرفي", "علاقات إسلامية", "استكشاف المعرفة", "خريطة علمية", "علم الشبكات"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الرسم البياني المعرفي الإسلامي", url: "https://majlisilm.com/knowledge-graph", about: { "@type": "Thing", name: "شبكة المعرفة الإسلامية التفاعلية" } }],
     });
   }, []);
   const [source, setSource] = useState<DataSource>("new");

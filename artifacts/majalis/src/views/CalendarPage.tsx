@@ -186,6 +186,7 @@ export default function CalendarPage() {
       title: "التقويم الإسلامي والدروس | المجلس العلمي",
       description: "تقويم الدروس والمناسبات الإسلامية، عرض شهري وأسبوعي ويومي مع الأحداث والحلقات العلمية.",
       keywords: ["تقويم إسلامي", "مواعيد دروس", "التقويم الهجري", "الأحداث الإسلامية", "جدول الدروس"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "التقويم الإسلامي والدروس", url: "https://majlisilm.com/calendar", about: { "@type": "Thing", name: "التقويم الهجري والمناسبات الإسلامية" } }],
     });
   }, []);
 

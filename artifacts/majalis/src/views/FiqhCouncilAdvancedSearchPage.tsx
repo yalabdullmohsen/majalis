@@ -51,6 +51,7 @@ export default function FiqhCouncilAdvancedSearchPage() {
       title: "البحث المتقدم في المجمع الفقهي | المجلس العلمي",
       description: "بحث متقدم في قرارات وفتاوى وبحوث المجمع الفقهي، تصفية حسب النوع والتصنيف والسنة والمصدر.",
       keywords: ["بحث متقدم فقهي", "بحث في الفتاوى", "مجمع فقهي", "تصفية فقهية", "محرك بحث إسلامي"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "البحث المتقدم في المجمع الفقهي", url: "https://majlisilm.com/fiqh-council/advanced-search", about: { "@type": "Thing", name: "محرك البحث الفقهي المتقدم" } }],
     });
   }, []);
 

@@ -23,6 +23,7 @@ export default function QuranRadioPage() {
       title: "راديو القرآن الكريم | المجلس العلمي",
       description: "استمع إلى القرآن الكريم عبر الإنترنت، محطات إذاعية متنوعة وبث مباشر للتلاوات القرآنية.",
       keywords: ["راديو قرآن", "بث قرآن", "تلاوة قرآنية", "استماع قرآن", "إذاعة إسلامية"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "راديو القرآن الكريم", url: "https://majlisilm.com/quran-radio", about: { "@type": "Thing", name: "إذاعات وبث القرآن الكريم" } }],
     });
   }, []);
   useEffect(() => {

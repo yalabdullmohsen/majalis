@@ -70,6 +70,7 @@ export default function FiqhCouncilComparePage() {
       title: "مقارنة قرارات المجمع الفقهي | المجلس العلمي",
       description: "قارن بين قرارات وفتاوى مجلس الفقه الإسلامي جنباً إلى جنب، أداة تحليلية للباحثين والدارسين.",
       keywords: ["مقارنة فقهية", "قرارات فقهية", "مجمع فقهي", "تحليل فقهي", "مقارنة الفتاوى"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "مقارنة قرارات المجمع الفقهي", url: "https://majlisilm.com/fiqh-council/compare", about: { "@type": "Thing", name: "تحليل ومقارنة الفتاوى الفقهية" } }],
     });
   }, []);
 

@@ -20,6 +20,7 @@ export default function FiqhCouncilResearchAssistantPage() {
       title: "مساعد البحث الفقهي | المجلس العلمي",
       description: "مساعد بحث ذكي في قرارات المجمع الفقهي، ابحث وصنّف واستشهد بالمصادر الفقهية الموثوقة.",
       keywords: ["مساعد بحث فقهي", "ذكاء اصطناعي فقهي", "بحث إسلامي", "مجمع فقهي", "استشهاد علمي"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "مساعد البحث الفقهي", url: "https://majlisilm.com/fiqh-council/assistant", about: { "@type": "Thing", name: "أدوات البحث الفقهي الذكية" } }],
     });
   }, []);
   const [category, setCategory] = useState("الكل");

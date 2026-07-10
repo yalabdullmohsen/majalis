@@ -90,6 +90,7 @@ export default function QuranLivePage() {
       path: "/quran-live",
       title: "البث المباشر للقرآن الكريم | مجالس",
       description: "بث مباشر من الحرمين الشريفين والإذاعات القرآنية، مكة والمدينة ٢٤ ساعة",
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "البث المباشر للقرآن الكريم", url: "https://majlisilm.com/quran-live", about: { "@type": "Thing", name: "البث المباشر من الحرمين الشريفين" } }],
     });
   }, []);
 

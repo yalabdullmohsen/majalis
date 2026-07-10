@@ -33,6 +33,7 @@ export default function FiqhCouncilCategoriesPage() {
       title: "الفهرس الموضوعي للمجمع الفقهي | المجلس العلمي",
       description: "تصفح قرارات وفتاوى المجمع الفقهي حسب الموضوع والتصنيف، العبادات والمعاملات والأسرة والمعاصر.",
       keywords: ["فهرس فقهي", "تصنيف فقهي", "أبواب الفقه", "مجمع فقهي", "قرارات فقهية"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الفهرس الموضوعي للمجمع الفقهي", url: "https://majlisilm.com/fiqh-council/index", about: { "@type": "Thing", name: "تصنيف الفقه الإسلامي المعاصر" } }],
     });
   }, []);
 

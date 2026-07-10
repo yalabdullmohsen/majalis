@@ -161,6 +161,7 @@ export default function SiteMapPage() {
       path: "/sitemap",
       title: "كل الأقسام | المجلس العلمي",
       description: "دليل شامل بجميع أقسام المجلس العلمي من قرآن وحديث وفقه وعقيدة وسيرة وأدوات التعلم.",
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "دليل أقسام مجالس العلم", url: "https://majlisilm.com/sitemap", about: { "@type": "WebSite", name: "مجالس العلم", url: "https://majlisilm.com" } }],
     });
   }, []);
 
