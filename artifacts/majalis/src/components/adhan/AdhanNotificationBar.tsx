@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Clock, Landmark } from "lucide-react";
+import { X, Volume2, VolumeX } from "lucide-react";
 import { ADHAN_EVENT_NAME, type AdhanEvent } from "@/lib/adhan-scheduler";
 import { stopAdhan } from "@/lib/adhan-audio";
 
@@ -54,27 +54,30 @@ function AdhanToast({ event, onDismiss }: { event: ActiveEvent; onDismiss: () =>
 
   return (
     <div className={`anb-toast${isAdhan ? " anb-toast--adhan" : " anb-toast--reminder"}`}>
-      <span className="anb-toast__icon">
-        {isAdhan ? <Landmark size={20} strokeWidth={1.5} /> : <Clock size={20} strokeWidth={1.5} />}
+      <span className="anb-toast__emoji" aria-hidden="true">
+        {isAdhan ? "🕌" : "⏰"}
       </span>
       <div className="anb-toast__body">
-        <div className="anb-toast__title">
+        <p className="anb-toast__title">
           {isAdhan ? `حان وقت ${event.prayerName}` : `تنبيه: ${event.prayerName}`}
-        </div>
-        <div className="anb-toast__sub">
+        </p>
+        <p className="anb-toast__sub">
           {isAdhan
-            ? "الله أكبر — حي على الصلاة"
+            ? "حي على الصلاة — حي على الفلاح"
             : `${event.prayerName} بعد ${event.minutesBefore} دقيقة`}
-        </div>
+        </p>
       </div>
       <div className="anb-toast__actions">
         {isAdhan && playing && (
-          <button type="button" onClick={handleStop} className="anb-btn" title="إيقاف الأذان">
-            ⏹
+          <button type="button" onClick={handleStop} className="anb-btn anb-btn--mute" title="إيقاف الأذان">
+            <VolumeX size={16} strokeWidth={2} />
           </button>
         )}
-        <button type="button" onClick={onDismiss} className="anb-btn" title="إغلاق">
-          ✕
+        {isAdhan && !playing && (
+          <span className="anb-muted-tag">صامت</span>
+        )}
+        <button type="button" onClick={onDismiss} className="anb-btn anb-btn--close" title="إغلاق">
+          <X size={16} strokeWidth={2.5} />
         </button>
       </div>
     </div>
