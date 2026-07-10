@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { PageHeader } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 // ─── مراتب المصلين ───────────────────────────────────────────────────────
 
@@ -160,6 +161,18 @@ function GradeBadge({ grade }: { grade: string }) {
 // ─── محتوى الصفحة ───────────────────────────────────────────────────────
 
 export function PrayerRanksContent() {
+  const [search, setSearch] = useState("");
+
+  const filteredRanks = useMemo(() =>
+    search.trim() ? RANKS.filter(r => arabicMatchAny([r.title, r.label, r.ruling, r.text, r.benefit], search)) : RANKS,
+  [search]);
+  const filteredVirtues = useMemo(() =>
+    search.trim() ? PRAYER_VIRTUES.filter(v => arabicMatchAny([v.title, v.text, v.source, v.narrator], search)) : PRAYER_VIRTUES,
+  [search]);
+  const filteredTips = useMemo(() =>
+    search.trim() ? PRAYER_TIPS.filter(t => arabicMatchAny([t.tip], search)) : PRAYER_TIPS,
+  [search]);
+
   const share = async () => {
     const url = window.location.href;
     if (navigator.share) {
@@ -184,8 +197,19 @@ export function PrayerRanksContent() {
         </p>
       </section>
 
+      <div className="prv-search-wrap">
+        <input
+          type="search"
+          className="ds-input prv-search-input"
+          placeholder="ابحث في المراتب والفضائل والوصايا..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          aria-label="بحث في فضائل الصلاة"
+        />
+      </div>
+
       <div className="prayer-ranks-timeline">
-        {RANKS.map((rank, index) => (
+        {filteredRanks.map((rank, index) => (
           <article key={rank.title} className="ui-card prayer-rank-card">
             <span className="prayer-rank-card__num">{index + 1}</span>
             <div>
@@ -205,7 +229,7 @@ export function PrayerRanksContent() {
       <section className="prv-section" aria-labelledby="virtues-heading">
         <h2 id="virtues-heading" className="prv-section-title">فضائل الصلاة</h2>
         <div className="prv-virtues-grid">
-          {PRAYER_VIRTUES.map((v) => (
+          {filteredVirtues.map((v) => (
             <div key={v.title} className="prv-virtue-card ui-card">
               <p className="prv-virtue-title">{v.title}</p>
               <p className="prv-virtue-text">
@@ -227,7 +251,7 @@ export function PrayerRanksContent() {
       <section className="prv-section" aria-labelledby="tips-heading">
         <h2 id="tips-heading" className="prv-section-title">وصايا في إصلاح الصلاة</h2>
         <div className="prv-tips-list">
-          {PRAYER_TIPS.map((t) => (
+          {filteredTips.map((t) => (
             <div key={t.num} className="prv-tip">
               <span className="prv-tip-num">{t.num}</span>
               <p className="prv-tip-text">{t.tip}</p>
