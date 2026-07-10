@@ -5,6 +5,7 @@ import {
   Moon, Heart, Sparkles,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import { useEffect } from "react";
 
 /* ── بيانات أقسام القرآن ──────────────────────────────────── */
@@ -172,6 +173,10 @@ export default function QuranHubPage() {
         </p>
         <span className="quran-hub-closing__ref">الإسراء: ٩</span>
       </section>
+
+      <div className="twh-share">
+        <ShareButtons title="مركز القرآن الكريم — المجلس العلمي" url="https://majlisilm.com/quran-hub" />
+      </div>
     </div>
   );
 }

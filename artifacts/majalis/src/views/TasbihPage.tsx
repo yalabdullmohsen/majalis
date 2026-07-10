@@ -5,6 +5,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { TasbeehCounter } from "@/components/reading/TasbeehCounter";
 import { setTaskProgress } from "@/lib/daily-progress";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import {
   computeStreakDays,
   computeTasbeehStats,
@@ -227,6 +228,10 @@ export default function TasbihPage() {
         {isLoggedIn
           ? "يُحفظ محلياً ويُزامَن مع حسابك عند التحديث."
           : "يُحفظ في هذا الجهاز. سجّل الدخول للمزامنة مع حسابك."}
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="التسبيح الرقمي — المجلس العلمي" url="https://majlisilm.com/tasbih" />
       </div>
     </div>
   );

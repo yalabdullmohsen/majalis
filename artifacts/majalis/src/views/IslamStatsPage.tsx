@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { BarChart3, Globe, Heart, Star, TrendingUp, Users } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import "@/styles/elite-2026.css";
 
 /* ══════════════════════════════════════════════════════════════════
@@ -329,6 +330,10 @@ export default function IslamStatsPage() {
             </div>
           </div>
         )}
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="الإسلام في أرقام — المجلس العلمي" url="https://majlisilm.com/islam-stats" />
       </div>
     </div>
   );

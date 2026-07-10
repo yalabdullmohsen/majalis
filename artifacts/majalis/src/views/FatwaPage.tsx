@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Scale } from "lucide-react";
 import { Link } from "wouter";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
+import { ShareButtons } from "@/components/ContentActions";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
@@ -174,6 +175,10 @@ export default function FatwaPage() {
           ))}
         </div>
       )}
+      <div className="twh-share">
+        <ShareButtons title="الفتاوى الشرعية — المجلس العلمي" url="https://majlisilm.com/fatwa" />
+      </div>
+
       <AdminQuickEdit section="fatwa" />
     </div>
   );

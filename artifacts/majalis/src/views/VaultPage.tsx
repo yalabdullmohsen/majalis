@@ -4,6 +4,7 @@ import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import { PageHeader } from "@/components/ui-common";
 import {
   getVaultData,
@@ -370,6 +371,10 @@ export default function VaultPage() {
       {showAddNote && (
         <AddNoteModal onSave={handleAddNote} onClose={() => setShowAddNote(false)} />
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="مخزن المعرفة — المجلس العلمي" url="https://majlisilm.com/vault" />
+      </div>
     </div>
   );
 }

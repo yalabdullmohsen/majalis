@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
+import { ShareButtons } from "@/components/ContentActions";
 import { useAuth } from "@/components/AuthProvider";
 import { getAkpStories } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
@@ -7,7 +8,6 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { applyPageSeo } from "@/lib/seo";
-import { ShareButtons } from "@/components/ContentActions";
 
 function useDebouncedValue<T>(value: T, delayMs = 350): T {
   const [debounced, setDebounced] = useState(value);
@@ -134,6 +134,10 @@ export default function StoriesPage() {
         </div>
         {filtersPanel}
       </aside>
+
+      <div className="twh-share">
+        <ShareButtons title="القصص الإسلامية — المجلس العلمي" url="https://majlisilm.com/stories" />
+      </div>
 
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}

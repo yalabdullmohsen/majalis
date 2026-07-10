@@ -3,6 +3,7 @@ import { BookOpen, Building2, GraduationCap, Globe, Library, MapPin, Search } fr
 import type { LucideIcon } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 // ─── Seed Data ────────────────────────────────────────────────────────────────
 
@@ -435,6 +436,10 @@ export default function InstitutionsPage() {
         <p className="inst-disclaimer">
           * هذا الدليل مرجعي تعريفي. للتحقق من المعلومات يُرجى مراجعة المواقع الرسمية لكل مؤسسة.
         </p>
+
+        <div className="twh-share">
+          <ShareButtons title="المؤسسات الإسلامية — المجلس العلمي" url="https://majlisilm.com/institutions" />
+        </div>
       </div>
     </div>
   );

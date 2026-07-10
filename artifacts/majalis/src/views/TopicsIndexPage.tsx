@@ -5,6 +5,7 @@ import { Link } from "wouter";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { fetchAllTopics } from "@/lib/scholarly-intelligence-service";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 // ── Static fallback topics per category ──────────────────────────────────────
 
@@ -181,6 +182,10 @@ export default function TopicsIndexPage() {
       <div className="tip-footer-note">
         <p>المحتوى محدَّث باستمرار. لا يجد موضوعاً؟</p>
         <Link href="/search" className="tip-footer-link">استخدم البحث الشامل</Link>
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="فهرس المواضيع الإسلامية — المجلس العلمي" url="https://majlisilm.com/topics" />
       </div>
     </div>
   );
