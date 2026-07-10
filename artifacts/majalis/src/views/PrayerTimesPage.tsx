@@ -99,6 +99,22 @@ export default function PrayerTimesPage() {
       title: "مواقيت الصلاة، الكويت | المجلس العلمي",
       description: "مواقيت صلاة دقيقة لجميع مناطق الكويت، الفجر والظهر والعصر والمغرب والعشاء مع العد التنازلي.",
       keywords: ["مواقيت الصلاة", "صلاة الكويت", "أوقات الصلاة", "الفجر", "الأذان"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "مواقيت الصلاة في الكويت",
+          url: "https://majlisilm.com/prayer-times",
+          description: "مواقيت الصلوات الخمس لجميع مناطق الكويت محسوبة فلكياً",
+          about: {
+            "@type": "Thing",
+            name: "مواقيت الصلاة",
+            description: "أوقات الصلوات الخمس الفجر والظهر والعصر والمغرب والعشاء",
+          },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          areaServed: { "@type": "Country", name: "الكويت" },
+        },
+      ],
     });
   }, []);
   const { data, countdown, loading } = usePrayerCountdown(govId);

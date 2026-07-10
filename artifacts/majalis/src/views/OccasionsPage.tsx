@@ -32,6 +32,25 @@ export default function OccasionsPage() {
       title: "المناسبات الإسلامية والمواسم | المجلس العلمي",
       description: "تقويم المناسبات الإسلامية والأعياد والمواسم الدينية، رمضان وعيد الفطر وعيد الأضحى والمواسم الهجرية.",
       keywords: ["مناسبات إسلامية", "أعياد إسلامية", "رمضان", "عيد الأضحى", "المواسم الدينية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "المناسبات والمواسم الإسلامية",
+          description: "تقويم الأعياد والمناسبات الدينية في الشهور الهجرية",
+          numberOfItems: 12,
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "شهر رمضان المبارك", url: "https://majlisilm.com/occasions?month=9" },
+            { "@type": "ListItem", position: 2, name: "عيد الفطر المبارك", url: "https://majlisilm.com/occasions?month=10" },
+            { "@type": "ListItem", position: 3, name: "عيد الأضحى المبارك", url: "https://majlisilm.com/occasions?month=12" },
+            { "@type": "ListItem", position: 4, name: "ذكرى الهجرة النبوية", url: "https://majlisilm.com/occasions?month=1" },
+            { "@type": "ListItem", position: 5, name: "ليلة القدر", url: "https://majlisilm.com/occasions?month=9" },
+            { "@type": "ListItem", position: 6, name: "يوم عرفة", url: "https://majlisilm.com/occasions?month=12" },
+            { "@type": "ListItem", position: 7, name: "الأشهر الحرم", url: "https://majlisilm.com/occasions" },
+            { "@type": "ListItem", position: 8, name: "النصف من شعبان", url: "https://majlisilm.com/occasions?month=8" },
+          ],
+        },
+      ],
     });
   }, []);
 

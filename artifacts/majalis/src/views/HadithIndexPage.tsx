@@ -52,6 +52,22 @@ export default function HadithIndexPage() {
       path: "/hadith",
       title: "الأحاديث النبوية، صحيحة وضعيفة وموضوعة | المجلس العلمي",
       description: "قسم الأحاديث النبوية في المجلس العلمي: الأحاديث الصحيحة، والأحاديث الضعيفة، والأحاديث الموضوعة والمكذوبة، مصنّفة ومفصولة لمنع الاختلاط.",
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أقسام الأحاديث النبوية",
+          description: "تصنيف الأحاديث النبوية إلى صحيح وضعيف وموضوع",
+          numberOfItems: SECTIONS.length,
+          itemListElement: SECTIONS.map((s, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: HADITH_CLASS_META[s.cls]?.title ?? s.cls,
+            description: s.description,
+            url: `https://majlisilm.com${s.href}`,
+          })),
+        },
+      ],
     });
   }, []);
 

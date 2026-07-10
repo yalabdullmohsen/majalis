@@ -126,7 +126,28 @@ const FEATURES = [
 
 export default function QuranHubPage() {
   useEffect(() => {
-    applyPageSeo({ path: "/quran-hub", title: "مركز القرآن الكريم | مجالس", description: "مركز القرآن الكريم، مصحف، تجويد، قصص، إذاعات وأكثر" });
+    applyPageSeo({
+      path: "/quran-hub",
+      title: "مركز القرآن الكريم | المجلس العلمي",
+      description: "مركز القرآن الكريم الشامل: مصحف، تجويد، قصص السور، إذاعات قرآنية وأكثر.",
+      keywords: ["القرآن الكريم", "مصحف", "تجويد", "قصص القرآن", "إذاعة قرآنية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أقسام مركز القرآن الكريم",
+          description: "خدمات القرآن الكريم في المجلس العلمي",
+          numberOfItems: QURAN_SECTIONS.length,
+          itemListElement: QURAN_SECTIONS.map((s, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: s.title,
+            description: s.desc,
+            url: `https://majlisilm.com${s.href}`,
+          })),
+        },
+      ],
+    });
   }, []);
 
   return (

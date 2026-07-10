@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, Search, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
@@ -10,6 +10,32 @@ import { MobileMoreMenu } from "./MobileMoreMenu";
 
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
+import { fetchPrayerTimes, computePrayerCountdown, type PrayerCountdown } from "@/lib/prayer-times";
+
+function PrayerChip() {
+  const [cd, setCd] = useState<PrayerCountdown | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    let prayers: Parameters<typeof computePrayerCountdown>[0] = [];
+    fetchPrayerTimes()
+      .then((payload) => {
+        prayers = payload.prayers;
+        setCd(computePrayerCountdown(prayers));
+        intervalRef.current = setInterval(() => setCd(computePrayerCountdown(prayers)), 1000);
+      })
+      .catch(() => {});
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+  }, []);
+
+  if (!cd?.next) return null;
+  return (
+    <Link href="/prayer-times" className="navbar-prayer-chip" aria-label={`الصلاة القادمة: ${cd.next.name}`}>
+      <span className="navbar-prayer-chip__name">{cd.next.name}</span>
+      <span className="navbar-prayer-chip__hms" aria-live="off">{cd.remainingHms}</span>
+    </Link>
+  );
+}
 
 function useIsMobile() {
   const [mobile, setMobile] = useState(typeof window !== "undefined" ? window.innerWidth <= 879 : false);
@@ -163,6 +189,8 @@ export default function NavBar() {
           )}
 
           <div className="navbar-v3__end">
+            {/* عداد الصلاة التالية — سطح المكتب فقط */}
+            {!isMobile && <PrayerChip />}
             {/* زر البحث الشامل */}
             <button
               type="button"

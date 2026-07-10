@@ -95,6 +95,36 @@ export default function KuwaitLessonsPage() {
       title: "دروس مشايخ الكويت | المجلس العلمي",
       description: "جميع الدروس العلمية القادمة لمشايخ الكويت، محدَّثة تلقائياً من مصادر معتمدة.",
       keywords: ["دروس الكويت", "مشايخ الكويت", "دروس كويتية", "علماء الكويت", "حلقات علمية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "دروس مشايخ الكويت القادمة",
+          description: "قائمة الدروس الشرعية القادمة لعلماء ومشايخ الكويت",
+          url: "https://majlisilm.com/kuwait-lessons",
+          about: {
+            "@type": "Country",
+            name: "الكويت",
+          },
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Event",
+          name: "الدروس العلمية الأسبوعية في الكويت",
+          description: "دروس شرعية منتظمة في مساجد ومراكز الكويت العلمية",
+          location: {
+            "@type": "Country",
+            name: "الكويت",
+          },
+          organizer: {
+            "@type": "Organization",
+            name: "المجلس العلمي",
+            url: "https://majlisilm.com",
+          },
+          url: "https://majlisilm.com/kuwait-lessons",
+          inLanguage: "ar",
+        },
+      ],
     });
   }, []);
 

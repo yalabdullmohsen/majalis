@@ -232,6 +232,25 @@ export default function LessonsPage({
       title: "الدروس الشرعية والعلمية | المجلس العلمي",
       description: "دروس شرعية وعلمية من أئمة وعلماء الكويت والعالم، فقه وعقيدة وقرآن وسيرة ولغة عربية.",
       keywords: ["دروس شرعية", "دروس دينية", "دروس علمية", "علماء الكويت", "حلقات علمية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "الدروس الشرعية والدورات العلمية",
+          description: "دروس ودورات علمية من أئمة وعلماء الكويت في الفقه والعقيدة والقرآن والسيرة",
+          numberOfItems: 8,
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "الدروس الشرعية", url: "https://majlisilm.com/lessons?tab=lessons" },
+            { "@type": "ListItem", position: 2, name: "الدورات العلمية", url: "https://majlisilm.com/lessons?tab=courses" },
+            { "@type": "ListItem", position: 3, name: "الفقه وأصوله", url: "https://majlisilm.com/lessons?topic=فقه" },
+            { "@type": "ListItem", position: 4, name: "العقيدة الإسلامية", url: "https://majlisilm.com/lessons?topic=عقيدة" },
+            { "@type": "ListItem", position: 5, name: "علوم القرآن والتفسير", url: "https://majlisilm.com/lessons?topic=قرآن" },
+            { "@type": "ListItem", position: 6, name: "السيرة النبوية", url: "https://majlisilm.com/lessons?topic=سيرة" },
+            { "@type": "ListItem", position: 7, name: "الحديث الشريف", url: "https://majlisilm.com/lessons?topic=حديث" },
+            { "@type": "ListItem", position: 8, name: "اللغة العربية", url: "https://majlisilm.com/lessons?topic=لغة" },
+          ],
+        },
+      ],
     });
   }, []);
 

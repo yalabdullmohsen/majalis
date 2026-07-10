@@ -2801,3 +2801,43 @@ table th {
 /* ══ نهاية شريط تصفية الدروس ════════════════════════════════════════════════ */
 
 /* ── نهاية الإصلاح الشامل ── */
+
+/* ══ عداد الصلاة في NavBar ══════════════════════════════════════════════════ */
+.navbar-prayer-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  background: rgba(14, 110, 82, 0.12);
+  border: 1px solid rgba(14, 110, 82, 0.25);
+  color: var(--majalis-emerald, #0E6E52);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+  cursor: pointer;
+}
+.navbar-prayer-chip:hover {
+  background: rgba(14, 110, 82, 0.2);
+  border-color: rgba(14, 110, 82, 0.4);
+  text-decoration: none;
+}
+.navbar-prayer-chip__name {
+  font-weight: 700;
+}
+.navbar-prayer-chip__hms {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+  font-size: 0.72rem;
+  direction: ltr;
+}
+/* وضع الليل */
+[data-theme="dark"] .navbar-prayer-chip,
+.dark .navbar-prayer-chip {
+  background: rgba(14, 110, 82, 0.18);
+  border-color: rgba(14, 110, 82, 0.35);
+  color: #5ECFA8;
+}
+/* ══ نهاية عداد الصلاة ══════════════════════════════════════════════════════ */

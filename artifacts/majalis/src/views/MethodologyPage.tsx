@@ -46,6 +46,36 @@ export default function MethodologyPage() {
       title: "منهجيتنا في التوثيق | المجلس العلمي",
       description: "مصادر التحقق، منهجية المراجعة البشرية، وضمانات الجودة في المجلس العلمي.",
       keywords: ["منهجية التوثيق", "مصادر علمية موثوقة", "مراجعة بشرية", "المجلس العلمي"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "منهجيتنا في التوثيق",
+          url: "https://majlisilm.com/methodology",
+          description: "منهجية المجلس العلمي في مراجعة المحتوى الديني وضمان دقته قبل نشره",
+          publisher: {
+            "@type": "Organization",
+            name: "المجلس العلمي",
+            url: "https://majlisilm.com",
+          },
+          about: {
+            "@type": "Thing",
+            name: "التحقق من المحتوى الديني الإسلامي",
+          },
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "المصادر العلمية المعتمدة",
+          numberOfItems: SOURCES.length,
+          itemListElement: SOURCES.map((s, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: s.name,
+            description: s.desc,
+          })),
+        },
+      ],
     });
   }, []);
 

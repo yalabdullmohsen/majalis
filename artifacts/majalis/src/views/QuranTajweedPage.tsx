@@ -367,6 +367,23 @@ export default function QuranTajweedPage() {
       title: "علم التجويد | المجلس العلمي",
       description: "قواعد علم التجويد الكاملة، أحكام النون الساكنة والتنوين، الميم الساكنة، المدود، صفات الحروف ومخارجها.",
       keywords: ["تجويد", "قواعد التجويد", "أحكام التجويد", "النون الساكنة", "المدود", "مخارج الحروف"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Course",
+          name: "علم التجويد",
+          description: "قواعد تجويد القرآن الكريم من أحكام النون الساكنة إلى المدود وصفات الحروف",
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          url: "https://majlisilm.com/quran/tajweed",
+          inLanguage: "ar",
+          about: { "@type": "Thing", name: "تجويد القرآن الكريم" },
+          hasCourseInstance: CATEGORIES.filter((c) => c !== "الكل").map((cat) => ({
+            "@type": "CourseInstance",
+            name: cat,
+            url: `https://majlisilm.com/quran/tajweed?cat=${encodeURIComponent(cat)}`,
+          })),
+        },
+      ],
     });
   }, []);
 

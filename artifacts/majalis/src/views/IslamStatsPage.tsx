@@ -262,6 +262,21 @@ export default function IslamStatsPage() {
       title: "الإسلام في أرقام | المجلس العلمي",
       description: "إحصاءات وأرقام مثيرة عن الإسلام في العالم: المسلمون، القرآن، الحضارة الإسلامية، والإعجاز العلمي.",
       keywords: ["الإسلام في أرقام", "إحصاءات المسلمين", "الإعجاز القرآني", "الحضارة الإسلامية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "إحصاءات الإسلام في العالم",
+          description: "حقائق وإحصاءات موثقة عن الإسلام من انتشاره إلى إعجاز القرآن والحضارة الإسلامية",
+          numberOfItems: TABS.length,
+          itemListElement: TABS.map((tab, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: tab.label,
+            url: `https://majlisilm.com/islam-stats#${tab.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 

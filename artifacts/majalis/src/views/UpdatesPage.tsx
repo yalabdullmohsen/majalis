@@ -40,6 +40,16 @@ export default function UpdatesPage() {
       title: "آخر المستجدات | المجلس العلمي",
       description: "آخر المستجدات العلمية والإضافات الجديدة في المجلس العلمي، قرارات وفتاوى ودروس ودورات حديثة.",
       keywords: ["مستجدات إسلامية", "أخبار علمية", "جديد المجلس", "تحديثات شرعية", "أخبار فقهية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "آخر المستجدات العلمية",
+          url: "https://majlisilm.com/updates",
+          description: "مستجدات وتحديثات المجلس العلمي من دروس ودورات وفتاوى وقرارات حديثة",
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        },
+      ],
     });
   }, []);
 

@@ -33,6 +33,21 @@ export default function StoriesPage() {
       title: "القصص الإلهامية | المجلس العلمي",
       description: "قصص إلهامية إسلامية تجمع الحكمة والعبرة من سير الصالحين والعلماء وأهل الفضل.",
       keywords: ["قصص إسلامية", "قصص إلهامية", "قصص الصالحين", "حكايات علماء", "عبر إسلامية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "القصص الإسلامية الإلهامية",
+          description: "قصص من سير الصالحين والعلماء والصحابة والأنبياء",
+          numberOfItems: 4,
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "قصص الصحابة الكرام", url: "https://majlisilm.com/stories?cat=صحابة" },
+            { "@type": "ListItem", position: 2, name: "قصص العلماء والفقهاء", url: "https://majlisilm.com/stories?cat=علماء" },
+            { "@type": "ListItem", position: 3, name: "قصص الصالحين والأولياء", url: "https://majlisilm.com/stories?cat=صالحون" },
+            { "@type": "ListItem", position: 4, name: "عبر وحكم إسلامية", url: "https://majlisilm.com/stories?cat=عبر" },
+          ],
+        },
+      ],
     });
   }, []);
 

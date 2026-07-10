@@ -93,6 +93,17 @@ export default function RulingsPage() {
       title: "الأحكام الشرعية | المجلس العلمي",
       description: "موسوعة الأحكام الشرعية في الفقه الإسلامي، استعرض الأحكام مرتّبةً حسب الأبواب الفقهية والتصنيفات.",
       keywords: ["أحكام شرعية", "فقه إسلامي", "الأحكام الفقهية", "حكم شرعي", "موسوعة فقهية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "موسوعة الأحكام الشرعية",
+          url: "https://majlisilm.com/rulings",
+          description: "أحكام الفقه الإسلامي مرتّبةً حسب الأبواب والتصنيفات الفقهية",
+          about: { "@type": "Thing", name: "الأحكام الشرعية في الفقه الإسلامي" },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        },
+      ],
     });
   }, []);
 
