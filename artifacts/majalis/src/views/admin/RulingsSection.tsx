@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { adminGetAllRulings, adminUpsertRuling, adminDeleteRuling } from "@/lib/platform-supabase";
 import { getAllRulingsForAdmin } from "@/lib/rulings-service";
 import { RULING_CATEGORIES } from "@/lib/platform-types";
@@ -74,13 +75,10 @@ export function RulingsSection() {
     };
   }, [items]);
 
-  const filtered = useMemo(() => {
-    if (!filter.trim()) return items;
-    const q = filter.trim().toLowerCase();
-    return items.filter(
-      (i) => (i.title ?? "").toLowerCase().includes(q) || (i.category ?? "").toLowerCase().includes(q),
-    );
-  }, [items, filter]);
+  const filtered = useMemo(
+    () => items.filter((i) => arabicMatchAny([i.title ?? "", i.category ?? ""], filter)),
+    [items, filter],
+  );
 
   const handleSave = async () => {
     const validation = validateRuling(form, items);

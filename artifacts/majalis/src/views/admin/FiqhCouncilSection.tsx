@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import {
   adminGetAllFiqhCouncilItems,
   adminUpsertFiqhCouncilItem,
@@ -190,9 +191,7 @@ export function FiqhCouncilSection() {
       if (filterStatus !== "الكل" && item.status !== filterStatus) return false;
       if (filterType !== "الكل" && item.type !== filterType) return false;
       if (adminSearch.trim()) {
-        const q = adminSearch.trim();
-        const hay = [item.title, item.summary, item.slug, item.category, ...(item.tags || [])].join(" ");
-        if (!hay.includes(q)) return false;
+        if (!arabicMatchAny([item.title, item.summary, item.slug, item.category, ...(item.tags || [])], adminSearch)) return false;
       }
       return true;
     });

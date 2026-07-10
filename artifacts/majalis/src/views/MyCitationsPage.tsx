@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ClipboardList, Download, FileText, Flame, FolderOpen, Link2, Pencil, Printer, Star } from "lucide-react";
 import { Link } from "wouter";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { ShareButtons } from "@/components/ContentActions";
 import { Spinner } from "@/components/ui/spinner";
 import {
@@ -143,11 +144,10 @@ export default function MyCitationsPage() {
 
   const displayed = saved.filter((item) => {
     if (!searchQuery) return true;
-    const q = searchQuery.toLowerCase();
-    const citText = item.citation?.quoted_text?.toLowerCase() || "";
-    const noteText = item.personal_note?.toLowerCase() || "";
-    const srcTitle = (item.citation?.source as { title_ar?: string })?.title_ar?.toLowerCase() || "";
-    return citText.includes(q) || noteText.includes(q) || srcTitle.includes(q);
+    const citText = item.citation?.quoted_text || "";
+    const noteText = item.personal_note || "";
+    const srcTitle = (item.citation?.source as { title_ar?: string })?.title_ar || "";
+    return arabicMatchAny([citText, noteText, srcTitle], searchQuery);
   });
 
   if (authLoading) {

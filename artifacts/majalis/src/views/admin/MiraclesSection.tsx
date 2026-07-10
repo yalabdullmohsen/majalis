@@ -4,6 +4,7 @@ import { sanitizeText } from "@/lib/sanitize";
 import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminModal, Field } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 const EMPTY: any = { title: "", category: "", body: "", status: "approved" };
 
@@ -27,11 +28,9 @@ export function MiraclesSection() {
     load();
   }, []);
 
-  const filtered = items.filter((item) => {
-    const q = search.trim();
-    if (!q) return true;
-    return `${item.title} ${item.category ?? ""} ${item.body ?? item.summary ?? ""}`.includes(q);
-  });
+  const filtered = items.filter((item) =>
+    arabicMatchAny([item.title, item.category ?? "", item.body ?? item.summary ?? ""], search),
+  );
 
   const handleSave = async () => {
     if (!form.title.trim()) return alert("العنوان مطلوب");

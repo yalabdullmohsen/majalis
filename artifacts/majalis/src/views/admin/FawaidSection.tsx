@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { adminGetAllFawaid, moderateFawaid, adminDeleteFawaid, adminUpsertFawaid } from "@/lib/supabase";
 import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminModal, Field } from "./AdminModal";
@@ -44,11 +45,7 @@ export function FawaidSection() {
 
   const filtered = items
     .filter((i) => filter === "all" || i.status === filter)
-    .filter((i) => {
-      const q = search.trim();
-      if (!q) return true;
-      return `${i.text} ${i.author_name ?? ""}`.includes(q);
-    });
+    .filter((i) => arabicMatchAny([i.text, i.author_name ?? ""], search));
   const pendingCount = items.filter(i => i.status === "pending").length;
 
   return (
