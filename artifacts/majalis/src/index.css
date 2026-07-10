@@ -8565,24 +8565,6 @@ input, textarea, select { font-family: inherit; }
   line-height: 1.7;
 }
 
-.site-footer-telegram {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 0.875rem;
-  margin-bottom: 0.75rem;
-  background: rgba(31,77,58,0.06);
-  border-radius: 0.6rem;
-  font-size: 0.82rem;
-  color: var(--msk-text-2, #555);
-  flex-wrap: wrap;
-}
-.site-footer-telegram__link {
-  color: var(--majalis-emerald-deep, #0E6E52);
-  font-weight: 700;
-  text-decoration: none;
-}
-.site-footer-telegram__link:hover { text-decoration: underline; }
 
 .site-footer-nav {
   display: flex;
