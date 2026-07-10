@@ -6514,6 +6514,9 @@ button.primary:hover {
 .pmp-count { margin: 0; }
 .pmp-desktop-filters { margin-bottom: 1rem; }
 .pmp-filter-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.pmp-search-wrap { position: relative; margin-bottom: 1rem; }
+.pmp-search-icon { position: absolute; right: 0.875rem; top: 50%; transform: translateY(-50%); color: var(--msk-text-2); pointer-events: none; }
+.pmp-search-input { padding-right: 2.5rem !important; }
 
 /* ─ Card ─ */
 .pmp-cat--ilaj    { --pm-bg: #18362A; --pm-accent: #BEC7C3; }

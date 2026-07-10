@@ -1,10 +1,11 @@
 import { useEffect, useState, useMemo } from "react";
-import { AlertTriangle, Apple, BedDouble, Beef, BookOpen, CalendarDays, Droplets, FlaskConical, Grape, Leaf, Moon, PersonStanding, Salad, ScrollText, ShowerHead, Sprout, Stethoscope, Sunrise, TreePalm, Utensils, Waves, Wheat } from "lucide-react";
+import { AlertTriangle, Apple, BedDouble, Beef, BookOpen, CalendarDays, Droplets, FlaskConical, Grape, Leaf, Moon, PersonStanding, Salad, ScrollText, Search, ShowerHead, Sprout, Stethoscope, Sunrise, TreePalm, Utensils, Waves, Wheat } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { Chip } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import {
   PROPHETIC_MEDICINE_ITEMS,
   PM_CATEGORIES,
@@ -33,6 +34,7 @@ const PM_CAT_MOD: Record<string, string> = {
 
 export default function PropheticMedicinePage() {
   const [category, setCategory] = useState<PropheticMedicineCategory>("الكل");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     applyPageSeo({
@@ -60,13 +62,17 @@ export default function PropheticMedicinePage() {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
-  const items = useMemo(
-    () =>
-      category === "الكل"
-        ? PROPHETIC_MEDICINE_ITEMS
-        : PROPHETIC_MEDICINE_ITEMS.filter((i) => i.category === category),
-    [category],
-  );
+  const items = useMemo(() => {
+    let result = category === "الكل"
+      ? PROPHETIC_MEDICINE_ITEMS
+      : PROPHETIC_MEDICINE_ITEMS.filter((i) => i.category === category);
+    if (search.trim()) {
+      result = result.filter((i) =>
+        arabicMatchAny([i.name, i.arabicName, ...i.benefits], search),
+      );
+    }
+    return result;
+  }, [category, search]);
 
   const filterPanel = (
     <div className="pmp-filter-chips">
@@ -91,6 +97,19 @@ export default function PropheticMedicinePage() {
 
       {/* تنبيه */}
       <div className="pmp-disclaimer"><AlertTriangle size={13} className="inline ml-1" />{DISCLAIMER}</div>
+
+      {/* بحث */}
+      <div className="pmp-search-wrap">
+        <Search size={16} className="pmp-search-icon" aria-hidden="true" />
+        <input
+          type="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="ابحث في الطب النبوي..."
+          className="page-search-input pmp-search-input"
+          aria-label="بحث في موسوعة الطب النبوي"
+        />
+      </div>
 
       {/* شريط الفلتر */}
       <div className="ds-section__head">
