@@ -1,16 +1,91 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { RANKS } from "@/views/PrayerRanksPage";
 
 
-type SalahTab = "shurut" | "kayfiyya" | "mubtilatat" | "khushuu" | "fawaid";
+type SalahTab = "shurut" | "kayfiyya" | "mubtilatat" | "khushuu" | "fawaid" | "maratib" | "suwar";
 
 const TABS: { id: SalahTab; label: string; icon: string }[] = [
-  { id: "shurut",      label: "الشروط والأركان", icon: "📋" },
-  { id: "kayfiyya",    label: "كيفية الصلاة",    icon: "🕌" },
+  { id: "shurut",      label: "الشروط والأركان",   icon: "📋" },
+  { id: "kayfiyya",    label: "كيفية الصلاة",       icon: "🕌" },
   { id: "mubtilatat",  label: "المبطلات والمكروهات", icon: "⛔" },
-  { id: "khushuu",     label: "الخشوع",          icon: "🤲" },
-  { id: "fawaid",      label: "فضائل الصلاة",    icon: "⭐" },
+  { id: "khushuu",     label: "الخشوع",             icon: "🤲" },
+  { id: "fawaid",      label: "فضائل الصلاة",       icon: "⭐" },
+  { id: "maratib",     label: "مراتب المصلين",      icon: "🏆" },
+  { id: "suwar",       label: "سور الصلاة والنوافل", icon: "📖" },
+];
+
+/* ── سور الصلاة والنوافل (بيانات هيكلية — المحتوى التفصيلي يُضاف عبر إدارة الفتاوى) ── */
+const SUWAR_SALAH = [
+  {
+    prayer: "الفجر",
+    recitation: "جهر",
+    note: "يُستحَب إطالة القراءة. في فجر الجمعة: الم تنزيل السجدة (ركعة أولى) وهل أتى على الإنسان (ركعة ثانية).",
+    rakat: 2,
+  },
+  {
+    prayer: "الظهر",
+    recitation: "إسرار",
+    note: "القراءة سرية. يُستحَب الإطالة نسبياً في الركعتين الأوليين وتقصير الأخيرتين.",
+    rakat: 4,
+  },
+  {
+    prayer: "العصر",
+    recitation: "إسرار",
+    note: "القراءة سرية. القدر مشابه للظهر أو أقصر منه.",
+    rakat: 4,
+  },
+  {
+    prayer: "المغرب",
+    recitation: "جهر",
+    note: "يُستحَب قصار السور. ومن الثابت قراءة الأعراف والطور والمرسلات وقصار المفصّل.",
+    rakat: 3,
+  },
+  {
+    prayer: "العشاء",
+    recitation: "جهر",
+    note: "يُستحَب أوساط المفصَّل. ومنه: سورة الشمس وقريب منها.",
+    rakat: 4,
+  },
+];
+
+const NAWAFIL = [
+  {
+    name: "سنة الفجر القبلية",
+    rakat: 2,
+    note: "ركعتان خفيفتان قبل صلاة الفجر، من آكد السنن. يُستحَب فيهما: الكافرون في الأولى والإخلاص في الثانية، أو آيتا البقرة 136 وآل عمران 64.",
+  },
+  {
+    name: "السنة الراتبة للظهر",
+    rakat: "4 قبلية + 2 بعدية",
+    note: "أربع ركعات قبل الظهر وركعتان بعده. تُقضى إن فاتت.",
+  },
+  {
+    name: "السنة الراتبة للمغرب",
+    rakat: "2 بعدية",
+    note: "ركعتان بعد المغرب. يُستحَب قراءة الكافرون والإخلاص.",
+  },
+  {
+    name: "السنة الراتبة للعشاء",
+    rakat: "2 بعدية",
+    note: "ركعتان بعد العشاء.",
+  },
+  {
+    name: "صلاة الضحى",
+    rakat: "2 فأكثر",
+    note: "وقتها من ارتفاع الشمس قيد رمح إلى قُبيل الظهر. أدناها ركعتان وأكثرها ثمان أو اثنا عشر.",
+  },
+  {
+    name: "صلاة الوتر",
+    rakat: "1 أو 3 أو 5 أو 7",
+    note: "يُؤدى بعد العشاء وآخره قُبيل الفجر. يُستحَب في الوتر: سبح اسم ربك الأعلى، والكافرون، والإخلاص.",
+  },
+  {
+    name: "قيام الليل / التهجد",
+    rakat: "مثنى مثنى",
+    note: "أفضل القيام ما كان في الثلث الأخير من الليل. يختم بوتر.",
+  },
 ];
 
 /* ── الشروط والأركان ── */
@@ -143,8 +218,8 @@ export default function SalahGuidePage() {
     applyPageSeo({
       path: "/salah-guide",
       title: "دليل الصلاة الكامل، المجلس العلمي",
-      description: "الدليل الشامل للصلاة: شروطها وأركانها وواجباتها وسننها ومبطلاتها وكيفية الخشوع فيها",
-      keywords: ["الصلاة", "كيفية الصلاة", "أركان الصلاة", "شروط الصلاة", "خشوع الصلاة"],
+      description: "الدليل الشامل للصلاة: شروطها وأركانها وسورها ومراتب المصلين والنوافل والخشوع",
+      keywords: ["الصلاة", "كيفية الصلاة", "أركان الصلاة", "شروط الصلاة", "مراتب الصلاة", "سور الصلاة", "النوافل", "السنن الرواتب"],
       jsonLd: [
         {
           "@context": "https://schema.org",
@@ -163,7 +238,14 @@ export default function SalahGuidePage() {
     });
   }, []);
 
-  const [tab, setTab] = useState<SalahTab>("shurut");
+  const VALID_TABS: SalahTab[] = ["shurut", "kayfiyya", "mubtilatat", "khushuu", "fawaid", "maratib", "suwar"];
+  const initialTab = (): SalahTab => {
+    try {
+      const q = new URLSearchParams(window.location.search).get("tab");
+      return VALID_TABS.includes(q as SalahTab) ? (q as SalahTab) : "shurut";
+    } catch { return "shurut"; }
+  };
+  const [tab, setTab] = useState<SalahTab>(initialTab);
   const [openStep, setOpenStep] = useState<number | null>(null);
 
   return (
@@ -367,6 +449,70 @@ export default function SalahGuidePage() {
                 الصلاة أول ما يُحاسَب عليه العبد يوم القيامة، إن صلحت صلح سائر عمله وإن فسدت فسد سائر عمله.
                 خمس صلوات في اليوم تساوي 17 ركعة، كل ركعة وقفة بين يدي الله.
               </p>
+            </div>
+          </div>
+        )}
+
+        {/* ── مراتب المصلين ── */}
+        {tab === "maratib" && (
+          <div className="sg-section">
+            <h2 className="sg-subhead">مراتب الناس في الصلاة (خمس مراتب)</h2>
+            <p className="sg-intro-note">قال ابن القيم رحمه الله في كتاب الصلاة: الناس في الصلاة على خمس مراتب.</p>
+            <div className="sg-ranks-list">
+              {RANKS.map((r, i) => (
+                <div key={i} className="sg-rank-card">
+                  <div className="sg-rank-card__header">
+                    <span className="sg-rank-card__num">{i + 1}</span>
+                    <div>
+                      <strong className="sg-rank-card__title">{r.label}</strong>
+                      <span className={`sg-rank-card__ruling ${i === 4 ? "sg-rank-card__ruling--high" : ""}`}>{r.ruling}</span>
+                    </div>
+                  </div>
+                  <p className="sg-rank-card__text">{r.text}</p>
+                  {r.benefit && <p className="sg-rank-card__benefit">💡 {r.benefit}</p>}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── سور الصلاة والنوافل ── */}
+        {tab === "suwar" && (
+          <div className="sg-section">
+            <h2 className="sg-subhead">القراءة في الصلوات الخمس</h2>
+            <p className="sg-intro-note">
+              الفاتحة ركن في كل ركعة. ويُستحب قراءة سورة أو آيات بعدها في الأوليين.
+              الجهر في: الفجر والمغرب والعشاء. الإسرار في: الظهر والعصر.
+            </p>
+            <div className="sg-suwar-grid">
+              {SUWAR_SALAH.map((p) => (
+                <div key={p.prayer} className="sg-suwar-card">
+                  <div className="sg-suwar-card__top">
+                    <strong className="sg-suwar-card__name">{p.prayer}</strong>
+                    <span className={`sg-suwar-card__rec ${p.recitation === "جهر" ? "sg-suwar-card__rec--jahr" : "sg-suwar-card__rec--sirr"}`}>
+                      {p.recitation}
+                    </span>
+                    <span className="sg-suwar-card__rakat">{p.rakat} ركعات</span>
+                  </div>
+                  <p className="sg-suwar-card__note">{p.note}</p>
+                </div>
+              ))}
+            </div>
+
+            <h2 className="sg-subhead sg-subhead--mt">النوافل والسنن الرواتب</h2>
+            <p className="sg-intro-note">
+              السنن الرواتب المؤكدة اثنتا عشرة ركعة في اليوم: أربع قبل الظهر وركعتان بعده، وركعتان بعد المغرب، وركعتان بعد العشاء، وركعتا الفجر.
+            </p>
+            <div className="sg-nawafil-list">
+              {NAWAFIL.map((n, i) => (
+                <div key={i} className="sg-nawfil-card">
+                  <div className="sg-nawfil-card__header">
+                    <strong className="sg-nawfil-card__name">{n.name}</strong>
+                    <span className="sg-nawfil-card__rakat">{n.rakat} ركعة</span>
+                  </div>
+                  <p className="sg-nawfil-card__note">{n.note}</p>
+                </div>
+              ))}
             </div>
           </div>
         )}

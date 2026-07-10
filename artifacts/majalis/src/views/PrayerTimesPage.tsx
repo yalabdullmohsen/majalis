@@ -287,6 +287,12 @@ export default function PrayerTimesPage() {
         <Link href="/tasbih" className="pt-quick-link">
           <RotateCw size={16} strokeWidth={1.8} aria-hidden="true" /> التسبيح
         </Link>
+        <Link href="/salah-guide?tab=maratib" className="pt-quick-link">
+          <Star size={16} strokeWidth={1.8} aria-hidden="true" /> مراتب المصلين
+        </Link>
+        <Link href="/salah-guide?tab=suwar" className="pt-quick-link">
+          <Moon size={16} strokeWidth={1.8} aria-hidden="true" /> سور الصلاة والنوافل
+        </Link>
       </div>
 
       <div className="twh-share">
