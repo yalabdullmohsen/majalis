@@ -46,7 +46,7 @@ export default function SettingsPage() {
       robots: "noindex, follow",
     });
   }, []);
-  const { lang, setLang, t } = useLanguage();
+  const { t } = useLanguage();
   const { preference: fontPreference, setPreference: setFontPreference } = useFontPreference();
   const { preferences, updatePreferences } = useUserPreferences();
   const { prefs: quranPrefs, setPref: setQuranPref, bumpFont } = useQuranPreferences();
@@ -91,17 +91,6 @@ export default function SettingsPage() {
             <option>صغير</option>
             <option>متوسط</option>
             <option>كبير</option>
-          </select>
-        </label>
-        <label className="settings-field">
-          <span>{t("settings_language")}</span>
-          <select
-            name="interface-language"
-            value={lang}
-            onChange={(e) => setLang(e.target.value as "ar" | "en")}
-          >
-            <option value="ar">العربية</option>
-            <option value="en">English</option>
           </select>
         </label>
       </LegalSection>

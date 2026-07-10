@@ -59,7 +59,7 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
 
 export default function NavBar() {
   const { isAdmin, isLoggedIn, user, logout } = useAuth();
-  const { lang, setLang, t } = useLanguage();
+  const { t } = useLanguage();
   const [location, navigate] = useLocation();
   const isMobile = useIsMobile();
   const { isMenuOpen, moreOpen, toggleMenu, openMenu, closeMenu, closeMore, closeAll } = useMobileNavState();
@@ -148,7 +148,7 @@ export default function NavBar() {
 
           {/* Desktop tabs */}
           {!isMobile && (
-            <nav className="navbar-v3__tabs" aria-label={lang === "en" ? "Main navigation" : "التنقل الرئيسي"}>
+            <nav className="navbar-v3__tabs" aria-label="التنقل الرئيسي">
               {PRIMARY_NAV_ITEMS.map((item) => (
                 <Link key={item.href} href={item.href} className={tabCls(isActive(item.href))} aria-current={isActive(item.href) ? "page" : undefined}>
                   {item.label}
@@ -178,17 +178,6 @@ export default function NavBar() {
             {/* Desktop: search + auth + lang */}
             {!isMobile && <SearchBox />}
             {!isMobile && desktopAuthLinks}
-            {!isMobile && (
-              <button
-                type="button"
-                className="navbar-lang-btn"
-                onClick={() => setLang(lang === "ar" ? "en" : "ar")}
-                aria-label={lang === "ar" ? "Switch to English" : "التبديل إلى العربية"}
-                title={lang === "ar" ? "EN" : "عر"}
-              >
-                {lang === "ar" ? "EN" : "عر"}
-              </button>
-            )}
 
             {/* Mobile: single auth icon only (no more / lang — those are in bottom nav + side nav) */}
             {isMobile && isAdmin && <NotificationBell />}
@@ -199,8 +188,6 @@ export default function NavBar() {
       <SideNavDrawer
         open={isMenuOpen}
         onClose={closeMenu}
-        lang={lang}
-        onLangToggle={() => setLang(lang === "ar" ? "en" : "ar")}
         onLogout={handleLogout}
       />
 

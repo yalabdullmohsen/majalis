@@ -1276,6 +1276,154 @@ body {
   text-transform: uppercase !important;
 }
 
+/* ── §19b. Side Drawer v2 — Collapsible Groups ── */
+.side-nav-drawer__head--v2 {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 1.1rem 1rem 0.9rem !important;
+  border-bottom: 1px solid var(--elite-border, rgba(0,0,0,0.07)) !important;
+  flex-shrink: 0 !important;
+}
+.side-nav-drawer__brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.6rem !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  color: var(--elite-forest, #052E16) !important;
+}
+.side-nav-close {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 2rem !important;
+  height: 2rem !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  color: var(--elite-ink-soft, #4A4A4A) !important;
+  transition: background var(--elite-fast) !important;
+}
+.side-nav-close:hover { background: var(--elite-sage-2, #F0F5F2) !important; }
+
+.side-nav-drawer__body {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  padding: 0.5rem 0.75rem 1.5rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.25rem !important;
+}
+
+.side-nav-group--v2 {
+  border-radius: var(--elite-r-md, 12px) !important;
+  overflow: hidden !important;
+}
+.side-nav-group--has-active > .side-nav-group__toggle {
+  background: var(--elite-sage-2, #F0F5F2) !important;
+}
+.side-nav-group__toggle {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0.55rem 0.6rem !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  border-radius: var(--elite-r-md, 12px) !important;
+  transition: background var(--elite-fast) !important;
+  text-align: start !important;
+}
+.side-nav-group__toggle:hover { background: var(--elite-sage-2, #F0F5F2) !important; }
+.side-nav-group__toggle-label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.45rem !important;
+}
+.side-nav-group__emoji {
+  font-size: 1rem !important;
+  line-height: 1 !important;
+  flex-shrink: 0 !important;
+}
+.side-nav-group__title {
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  color: var(--elite-forest, #052E16) !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+}
+.side-nav-group__toggle svg { color: var(--elite-ink-faint, #919191) !important; flex-shrink: 0 !important; }
+
+.side-nav-group__items {
+  padding: 0.15rem 0 0.25rem 0.5rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.1rem !important;
+}
+
+.side-nav-link--v2 {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.6rem !important;
+  padding: 0.45rem 0.55rem !important;
+  border-radius: var(--elite-r-md, 12px) !important;
+  text-decoration: none !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  width: 100% !important;
+  text-align: start !important;
+  transition: all var(--elite-fast) var(--elite-ease) !important;
+}
+.side-nav-link--v2 svg { color: var(--elite-ink-faint, #919191) !important; flex-shrink: 0 !important; transition: color var(--elite-fast) !important; }
+.side-nav-link--v2:hover {
+  background: var(--elite-sage-2, #F0F5F2) !important;
+  color: var(--elite-green, #166534) !important;
+}
+.side-nav-link--v2:hover svg { color: var(--elite-green, #166534) !important; }
+.side-nav-link--v2.is-active {
+  background: var(--elite-sage, #D4E9DC) !important;
+  color: var(--elite-forest, #052E16) !important;
+  font-weight: 700 !important;
+}
+.side-nav-link--v2.is-active svg { color: var(--elite-forest, #052E16) !important; }
+.side-nav-link--danger { color: #DC2626 !important; }
+.side-nav-link--danger svg { color: #DC2626 !important; }
+.side-nav-link--danger:hover { background: #FEF2F2 !important; }
+
+.side-nav-link__content {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.08rem !important;
+  min-width: 0 !important;
+}
+.side-nav-link__label {
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: inherit !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+.side-nav-link__desc {
+  font-size: 0.7rem !important;
+  color: var(--elite-ink-faint, #919191) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+.side-nav-link--v2.is-active .side-nav-link__desc { color: var(--elite-forest, #052E16) !important; opacity: 0.6 !important; }
+
+.side-nav-user-info {
+  padding: 0.4rem 0.55rem !important;
+  font-size: 0.8rem !important;
+  color: var(--elite-ink-soft, #4A4A4A) !important;
+}
+.side-nav-user-name { font-weight: 600 !important; }
+
 /* ══════════════════════════════════════════════
    §20. Prayer Times Page
    ══════════════════════════════════════════════ */
@@ -7045,6 +7193,170 @@ button.primary:hover {
   line-height: 1.6;
   margin: 0;
 }
+
+/* §69b — TawhidPage Hub (twh-hub-*, twh-tabs-*, twh-goto-*) */
+.twh-hub-hero {
+  background: linear-gradient(135deg, #1F4D3A 0%, #0F2E22 100%);
+  border-radius: 1.25rem;
+  padding: 2.25rem 1.75rem;
+  margin-bottom: 2rem;
+  color: #FFFFFF;
+}
+.twh-hub-hero__inner { max-width: 640px; }
+.twh-hub-hero__title {
+  font-size: clamp(1.6rem, 5vw, 2.5rem);
+  font-weight: 900;
+  color: #FFFFFF;
+  margin: 0.35rem 0 0.5rem;
+  font-family: var(--font-display, serif);
+}
+.twh-hub-hero__sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.85);
+  margin: 0 0 1rem;
+  line-height: 1.7;
+}
+.twh-hub-hero__ayah {
+  font-size: 1.05rem;
+  font-family: var(--font-quran, serif);
+  color: rgba(255,255,255,0.95);
+  border-right: 3px solid rgba(255,255,255,0.4);
+  padding-right: 0.85rem;
+  margin: 0;
+  font-style: normal;
+}
+.twh-hub-hero__ayah cite { font-size: 0.78rem; color: rgba(255,255,255,0.65); font-style: normal; display: block; margin-top: 0.25rem; }
+
+.twh-hub-sections-title { margin-bottom: 1.25rem !important; }
+
+.twh-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.twh-hub-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  border-radius: 1rem;
+  border: 1.5px solid rgba(0,0,0,0.07);
+  background: #FFFFFF;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.18s ease;
+  position: relative;
+  cursor: pointer;
+}
+.twh-hub-card:hover {
+  border-color: var(--twh-hub-clr, #1F4D3A);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  transform: translateY(-2px);
+}
+.twh-hub-card--current {
+  background: linear-gradient(135deg, rgba(31,77,58,0.06) 0%, rgba(31,77,58,0.02) 100%);
+  border-color: var(--twh-hub-clr, #1F4D3A);
+}
+.twh-hub-card__emoji {
+  font-size: 1.75rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+.twh-hub-card__body { flex: 1; min-width: 0; }
+.twh-hub-card__title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--majalis-ink, #0C1A14);
+  margin: 0 0 0.3rem;
+}
+.twh-hub-card:hover .twh-hub-card__title { color: var(--twh-hub-clr, #1F4D3A); }
+.twh-hub-card__desc {
+  font-size: 0.775rem;
+  color: var(--majalis-ink-soft, #5D726A);
+  line-height: 1.5;
+  margin: 0;
+}
+.twh-hub-card__badge {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: var(--twh-hub-clr, #1F4D3A);
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  align-self: flex-start;
+  flex-shrink: 0;
+}
+.twh-hub-card__current-tag {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.75rem;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--twh-hub-clr, #1F4D3A);
+  letter-spacing: 0.04em;
+}
+
+/* Tabs */
+.twh-tabs-bar {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--majalis-line, #E2EAE6);
+  padding-bottom: 0;
+}
+.twh-tab {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  border-bottom: 2.5px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  color: var(--majalis-ink-soft, #5D726A);
+  border-radius: 0;
+  transition: all 0.15s;
+  white-space: nowrap;
+  margin-bottom: -1px;
+}
+.twh-tab:hover { color: var(--majalis-emerald, #1F4D3A); }
+.twh-tab--active {
+  color: var(--majalis-emerald, #1F4D3A);
+  border-bottom-color: var(--majalis-emerald, #1F4D3A);
+  font-weight: 700;
+}
+.twh-tabpanel { animation: twh-fade-in 0.2s ease; }
+@keyframes twh-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* Sub-section link */
+.twh-subsection-link { margin-top: 1.5rem; text-align: center; }
+.twh-goto-btn {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  border: 1.5px solid var(--majalis-emerald, #1F4D3A);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--majalis-emerald, #1F4D3A);
+  text-decoration: none;
+  transition: all 0.17s;
+}
+.twh-goto-btn:hover { background: var(--majalis-emerald, #1F4D3A); color: #FFFFFF; }
+
+/* Book level badges */
+.twh-book-level {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+.twh-book-level--beginner { background: #D1FAE5; color: #065F46; }
+.twh-book-level--mid      { background: #FEF3C7; color: #92400E; }
+.twh-book-level--adv      { background: #EDE9FE; color: #5B21B6; }
 
 /* ============================================================
    §70 — DeveloperPage  (dvp-*)
