@@ -23871,6 +23871,10 @@ img[loading="lazy"]:not([src=""]) {
 .tw-search-input { width: 100%; }
 .mk-search-wrap { padding: .5rem 0 .75rem; }
 .mk-search-input { width: 100%; }
+.sw-search-wrap { padding: .5rem 1.5rem .25rem; }
+.sw-search-input { width: 100%; }
+.hj-search-wrap { padding: .5rem 1.5rem .25rem; }
+.hj-search-input { width: 100%; }
 .wn-tab {
   padding: .45rem 1.1rem; border-radius: 999px;
   border: 1.5px solid var(--clr-border); background: #fff;

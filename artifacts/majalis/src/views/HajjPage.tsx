@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 
 /* ────── types ────── */
@@ -348,6 +349,20 @@ export default function HajjPage() {
 
   const [tab, setTab] = useState<HajjTab>("overview");
   const [openRukn, setOpenRukn] = useState<string | null>("ihram");
+  const [search, setSearch] = useState("");
+
+  const filteredArkan = useMemo(() =>
+    search.trim() ? ARKAN.filter(r => arabicMatchAny([r.title, r.subtitle, r.dalil], search)) : ARKAN,
+  [search]);
+  const filteredWajibat = useMemo(() =>
+    search.trim() ? WAJIBAT.filter(w => arabicMatchAny([w.title, w.description, w.penalty], search)) : WAJIBAT,
+  [search]);
+  const filteredMashaer = useMemo(() =>
+    search.trim() ? MASHAER.filter(m => arabicMatchAny([m.name, m.desc, m.dua ?? ""], search)) : MASHAER,
+  [search]);
+  const filteredUmraSteps = useMemo(() =>
+    search.trim() ? UMRA_STEPS.filter(s => arabicMatchAny([s.title, s.desc], search)) : UMRA_STEPS,
+  [search]);
 
   return (
     <main className="hj-page" dir="rtl">
@@ -382,6 +397,14 @@ export default function HajjPage() {
           ))}
         </nav>
       </section>
+
+      {tab !== "overview" && (
+        <div className="hj-search-wrap">
+          <input type="search" value={search} onChange={e => setSearch(e.target.value)}
+            placeholder="ابحث في مناسك الحج..." className="page-search-input hj-search-input"
+            aria-label="بحث في أحكام الحج" />
+        </div>
+      )}
 
       <div className="hj-body">
         {/* ── نظرة عامة ── */}
@@ -450,7 +473,7 @@ export default function HajjPage() {
             <p className="hj-section__intro">
               أركان الحج هي ما لا يصح الحج بدونها ولا تجبر بالدم. من ترك ركناً لم يتم حجّه.
             </p>
-            {ARKAN.map((rk) => {
+            {filteredArkan.map((rk) => {
               const isOpen = openRukn === rk.id;
               return (
                 <article key={rk.id} className={`hj-card${isOpen ? " hj-card--open" : ""}`}>
@@ -494,7 +517,7 @@ export default function HajjPage() {
             <p className="hj-section__intro">
               واجبات الحج هي ما يلزم فعله، ومن تركه أثم ويجبره بدم (ذبح شاة)، لكن حجّه صحيح.
             </p>
-            {WAJIBAT.map((w) => (
+            {filteredWajibat.map((w) => (
               <div key={w.id} className="hj-wajib-card">
                 <span className="hj-wajib-card__icon">{w.icon}</span>
                 <div className="hj-wajib-card__content">
@@ -514,7 +537,7 @@ export default function HajjPage() {
         {/* ── المشاعر ── */}
         {tab === "mashaer" && (
           <section className="hj-section">
-            {MASHAER.map((m) => (
+            {filteredMashaer.map((m) => (
               <div key={m.id} className="hj-mashar-card">
                 <div className="hj-mashar-card__head">
                   <span className="hj-mashar-card__icon">{m.icon}</span>
@@ -544,7 +567,7 @@ export default function HajjPage() {
             </p>
 
             <div className="hj-umra-steps">
-              {UMRA_STEPS.map((s) => (
+              {filteredUmraSteps.map((s) => (
                 <div key={s.num} className="hj-umra-step">
                   <div className="hj-umra-step__num">{s.num}</div>
                   <div className="hj-umra-step__icon">{s.icon}</div>

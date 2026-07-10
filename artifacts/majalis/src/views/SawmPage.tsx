@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 
 /* ───────── types ───────── */
@@ -570,6 +571,20 @@ export default function SawmPage() {
 
   const [tab, setTab] = useState<SawmTab>("types");
   const [openType, setOpenType] = useState<string | null>("ramadan");
+  const [search, setSearch] = useState("");
+
+  const filteredFastTypes = useMemo(() =>
+    search.trim() ? FAST_TYPES.filter(f => arabicMatchAny([f.title, f.subtitle, f.description], search)) : FAST_TYPES,
+  [search]);
+  const filteredMuftirat = useMemo(() =>
+    search.trim() ? MUFTIRAT.filter(m => arabicMatchAny([m.title, m.description, m.dalil ?? ""], search)) : MUFTIRAT,
+  [search]);
+  const filteredExemptions = useMemo(() =>
+    search.trim() ? EXEMPTIONS.filter(e => arabicMatchAny([e.title, e.ruling, e.details], search)) : EXEMPTIONS,
+  [search]);
+  const filteredVirtues = useMemo(() =>
+    search.trim() ? VIRTUES.filter(v => arabicMatchAny([v.title, v.text, v.source], search)) : VIRTUES,
+  [search]);
 
   return (
     <main className="sw-page" dir="rtl">
@@ -607,11 +622,19 @@ export default function SawmPage() {
         </nav>
       </section>
 
+      {tab !== "conditions" && (
+        <div className="sw-search-wrap">
+          <input type="search" value={search} onChange={e => setSearch(e.target.value)}
+            placeholder="ابحث في أحكام الصيام..." className="page-search-input sw-search-input"
+            aria-label="بحث في أحكام الصيام" />
+        </div>
+      )}
+
       <div className="sw-body">
         {/* ── أنواع الصيام ── */}
         {tab === "types" && (
           <section className="sw-section">
-            {FAST_TYPES.map((ft) => {
+            {filteredFastTypes.map((ft) => {
               const isOpen = openType === ft.id;
               return (
                 <article key={ft.id} className={`sw-card${isOpen ? " sw-card--open" : ""}`}>
@@ -697,7 +720,7 @@ export default function SawmPage() {
               المفطرات هي الأشياء التي تُبطل الصيام إذا فُعلت في نهار رمضان عمداً
               مع العلم والإرادة. أما الجاهل والناسي والمُكرَه فلا يُفطر بها في الجملة.
             </p>
-            {MUFTIRAT.map((m) => (
+            {filteredMuftirat.map((m) => (
               <div key={m.id} className={`sw-muf-card sw-muf-card--${m.type}`}>
                 <span className="sw-muf-card__icon">{m.icon}</span>
                 <div className="sw-muf-card__content">
@@ -728,7 +751,7 @@ export default function SawmPage() {
               رفع الإسلام الحرج عن أصحاب الأعذار، وأباح لهم الفطر مع وجوب القضاء أو الفدية
               حسب كل حالة.
             </p>
-            {EXEMPTIONS.map((ex) => (
+            {filteredExemptions.map((ex) => (
               <div key={ex.id} className="sw-ex-card">
                 <span className="sw-ex-card__icon">{ex.icon}</span>
                 <div className="sw-ex-card__content">
@@ -750,7 +773,7 @@ export default function SawmPage() {
               حثّ النبي ﷺ على الصيام وبيّن عظيم أجره وفضله، وفيما يلي جملة من الأحاديث الصحيحة.
             </p>
             <div className="sw-virtues-grid">
-              {VIRTUES.map((v) => (
+              {filteredVirtues.map((v) => (
                 <div key={v.id} className="sw-virtue-card">
                   <span className="sw-virtue-card__icon">{v.icon}</span>
                   <h3 className="sw-virtue-card__title">{v.title}</h3>
