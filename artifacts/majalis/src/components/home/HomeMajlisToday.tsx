@@ -3,7 +3,7 @@ import { Link } from "wouter";
 import { BookOpen, Lightbulb, Star } from "lucide-react";
 import { getDailyFaida } from "@/lib/daily-content";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
-import { computeNextOccurrenceMs, getKuwaitClock } from "@/lib/lesson-time";
+import { computeNextOccurrenceMs } from "@/lib/lesson-time";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { getSelectedGovernorate } from "@/lib/prayer-times";
 import { RequestManager } from "@/lib/request-manager";
