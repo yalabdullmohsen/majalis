@@ -107,6 +107,21 @@ export default function AdhkarPage() {
       title: "الأذكار والأدعية الإسلامية | المجلس العلمي",
       description: "أذكار الصباح والمساء وما بعد الصلاة وسائر الأذكار المأثورة، مع التسبيح التفاعلي وعداد الذكر.",
       keywords: ["أذكار", "أدعية", "أذكار الصباح", "أذكار المساء", "ذكر الله", "أذكار إسلامية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أقسام الأذكار الإسلامية",
+          description: "أذكار الصباح والمساء والصلاة والسفر والنوم وسائر المناسبات",
+          numberOfItems: ADHKAR_CATEGORIES.length,
+          itemListElement: ADHKAR_CATEGORIES.map((c, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: c.name,
+            url: `https://majlisilm.com/adhkar?cat=${c.slug}`,
+          })),
+        },
+      ],
     });
   }, []);
 

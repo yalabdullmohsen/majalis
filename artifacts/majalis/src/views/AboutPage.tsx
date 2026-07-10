@@ -11,6 +11,20 @@ export default function AboutPage() {
       title: "من نحن | المجلس العلمي",
       description: "تعرف على المجلس العلمي، منصة شرعية رقمية كويتية تجمع المصحف الرقمي والأذكار والدروس والفتاوى والمكتبة والتوحيد وإذاعة القرآن في مرجع موثوق.",
       keywords: ["المجلس العلمي", "منصة إسلامية", "منصة شرعية", "الكويت", "تعريف"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "المجلس العلمي",
+          url: "https://majlisilm.com",
+          logo: "https://majlisilm.com/logo.png",
+          description: "منصة شرعية رقمية كويتية تجمع الدروس والفتاوى والمكتبة والقرآن والأذكار في مرجع موثوق",
+          foundingDate: "2024",
+          areaServed: { "@type": "Country", name: "الكويت" },
+          inLanguage: "ar",
+          sameAs: ["https://majlisilm.com"],
+        },
+      ],
     });
   }, []);
 

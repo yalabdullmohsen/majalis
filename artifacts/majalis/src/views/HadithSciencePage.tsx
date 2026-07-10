@@ -632,6 +632,21 @@ export default function HadithSciencePage() {
       title: "مصطلح الحديث | المجلس العلمي",
       description: "مرجع شامل لمصطلح الحديث وعلومه: أنواع الأحاديث والسند والرجال والجرح والتعديل وكتب الحديث.",
       keywords: ["مصطلح الحديث", "علوم الحديث", "الحديث الصحيح", "الجرح والتعديل", "الإسناد"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "مصطلحات علوم الحديث",
+          description: "مرجع مصطلح الحديث وعلومه: أنواع الأحاديث والسند والجرح والتعديل",
+          numberOfItems: TERMS.length,
+          itemListElement: TERMS.slice(0, 20).map((t, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `${t.term}: ${t.definition.slice(0, 60)}`,
+            url: `https://majlisilm.com/hadith-science#${t.id}`,
+          })),
+        },
+      ],
     });
   }, []);
 
