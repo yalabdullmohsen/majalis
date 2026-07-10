@@ -23869,6 +23869,8 @@ img[loading="lazy"]:not([src=""]) {
 .jn-search-input { width: 100%; }
 .tw-search-wrap { padding: .5rem 0 .75rem; }
 .tw-search-input { width: 100%; }
+.mk-search-wrap { padding: .5rem 0 .75rem; }
+.mk-search-input { width: 100%; }
 .wn-tab {
   padding: .45rem 1.1rem; border-radius: 999px;
   border: 1.5px solid var(--clr-border); background: #fff;

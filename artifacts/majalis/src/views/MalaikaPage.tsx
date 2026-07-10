@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ══════════════════════════════════════════════════════════════════
    §247، الملائكة في الإسلام  (.mk-*)
@@ -246,6 +247,20 @@ const AMAL_ITEMS: { title: string; text: string }[] = [
 
 export default function MalaikaPage() {
   const [activeTab, setActiveTab] = useState<Tab>("aqida");
+  const [search, setSearch] = useState("");
+
+  const filteredMalaika = useMemo(() =>
+    search.trim() ? MALAIKA.filter(m => arabicMatchAny([m.name, m.arabicTitle ?? "", m.role, m.detail], search)) : MALAIKA,
+  [search]);
+  const filteredAwsaf = useMemo(() =>
+    search.trim() ? AWSAF.filter(w => arabicMatchAny([w.title, w.text, w.ayah ?? ""], search)) : AWSAF,
+  [search]);
+  const filteredFadail = useMemo(() =>
+    search.trim() ? FADAIL.filter(f => arabicMatchAny([f.title, f.text, f.ref ?? ""], search)) : FADAIL,
+  [search]);
+  const filteredAmal = useMemo(() =>
+    search.trim() ? AMAL_ITEMS.filter(a => arabicMatchAny([a.title, a.text], search)) : AMAL_ITEMS,
+  [search]);
 
   useEffect(() => {
     applyPageSeo({
@@ -301,6 +316,14 @@ export default function MalaikaPage() {
         ))}
       </div>
 
+      {activeTab !== "aqida" && (
+        <div className="mk-search-wrap">
+          <input type="search" value={search} onChange={e => setSearch(e.target.value)}
+            placeholder="ابحث في الملائكة..." className="page-search-input mk-search-input"
+            aria-label="بحث في الملائكة" />
+        </div>
+      )}
+
       <div className="mk-container">
 
         {/* العقيدة */}
@@ -330,7 +353,7 @@ export default function MalaikaPage() {
               <p>من الملائكة من عرَّفنا الله باسمه ومهمته، ومنهم من لا نعلم عنهم إلا عمومهم. نؤمن بالجميع ونعرف الخصائص التالية:</p>
             </div>
             <div className="mk-malaika-grid">
-              {MALAIKA.map((m, i) => (
+              {filteredMalaika.map((m, i) => (
                 <div key={i} className="mk-malak-card">
                   <div className="mk-malak-num">{i + 1}</div>
                   <div className="mk-malak-body">
@@ -355,7 +378,7 @@ export default function MalaikaPage() {
               <p>الملائكة عالَم غيبي لا يدرك بالحواس، وكل ما نعرفه عنهم جاء من الوحي. ومن صفاتهم الثابتة:</p>
             </div>
             <div className="mk-awsaf-list">
-              {AWSAF.map((w, i) => (
+              {filteredAwsaf.map((w, i) => (
                 <div key={i} className="mk-wasf-card">
                   <div className="mk-wasf-icon">✦</div>
                   <div>
@@ -376,7 +399,7 @@ export default function MalaikaPage() {
               <p>للملائكة حضور ومشهد مع المؤمنين في أفضل أحوالهم، في الذكر والعلم والصلاة والصوم. هذه اللمسات الغيبية دافع للمراقبة والإخلاص.</p>
             </div>
             <div className="mk-fadail-list">
-              {FADAIL.map((f, i) => (
+              {filteredFadail.map((f, i) => (
                 <div key={i} className="mk-fadl-card">
                   <h3 className="mk-fadl-title">{f.title}</h3>
                   <p className="mk-fadl-text">{f.text}</p>
@@ -394,7 +417,7 @@ export default function MalaikaPage() {
               <p>للملائكة تعاملات مع بني آدم في مواقف دقيقة لا تدركها الأعين عادةً. هي محطات تذكِّرنا بالغيب القريب منا في كل لحظة.</p>
             </div>
             <div className="mk-amal-grid">
-              {AMAL_ITEMS.map((a, i) => (
+              {filteredAmal.map((a, i) => (
                 <div key={i} className="mk-amal-card">
                   <h3 className="mk-amal-title">{a.title}</h3>
                   <p className="mk-amal-text">{a.text}</p>

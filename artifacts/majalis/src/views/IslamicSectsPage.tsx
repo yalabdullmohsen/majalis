@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 type Sect = {
   id: string;
@@ -553,6 +554,7 @@ export default function IslamicSectsPage() {
   const [category, setCategory] = useState("الكل");
   const [statusF, setStatusF] = useState("الكل");
   const [selected, setSelected] = useState<Sect | null>(null);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     applyPageSeo({
@@ -581,7 +583,8 @@ export default function IslamicSectsPage() {
   const filtered = SECTS.filter((s) => {
     const catOk = category === "الكل" || s.category === category;
     const stOk = statusF === "الكل" || s.status === statusF;
-    return catOk && stOk;
+    const textOk = !search.trim() || arabicMatchAny([s.name, s.fullName, s.founder, s.origin, s.foundingCause], search);
+    return catOk && stOk && textOk;
   });
 
   return (
@@ -627,6 +630,19 @@ export default function IslamicSectsPage() {
         }}
       >
         <strong>ملاحظة منهجية:</strong> هذه الصفحة استعراض علمي تاريخي وفق ما دوّنه العلماء في كتب الملل والنحل والفرق، ولا تمثل فتوى شرعية. الحكم التفصيلي على الفرق يُرجع فيه إلى علماء أهل السنة المعتمدين.
+      </div>
+
+      {/* Search */}
+      <div style={{ maxWidth: "900px", margin: "0 auto 1rem", padding: "0 1rem" }}>
+        <input
+          type="search"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="ابحث في الفرق والمذاهب..."
+          className="page-search-input"
+          aria-label="بحث في الفرق الإسلامية"
+          style={{ width: "100%" }}
+        />
       </div>
 
       {/* Filters */}
