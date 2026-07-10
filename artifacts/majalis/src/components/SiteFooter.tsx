@@ -109,6 +109,7 @@ const FOOTER_GROUPS = [
     title: "التطبيق",
     links: [
       { href: "/about",                label: "من نحن" },
+      { href: "/methodology",          label: "منهجية التوثيق" },
       { href: "/contact",              label: "تواصل معنا" },
       { href: "/features-in-progress", label: "قيد التطوير" },
       { href: "/privacy",              label: "الخصوصية" },

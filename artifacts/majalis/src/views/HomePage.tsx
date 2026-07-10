@@ -25,6 +25,7 @@ import { HomeInterestingTopics } from "@/components/home/HomeInterestingTopics";
 import { HomeMindMapSection } from "@/components/home/HomeMindMapSection";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
+import { HomeTelegramBanner } from "@/components/home/HomeTelegramBanner";
 import {
   BookMarked, BookOpen, Bot, CalendarDays, Car, Check, Clock,
   Compass, Droplets, FlaskConical, GraduationCap, Heart, HelpCircle, Landmark, Layers,
@@ -365,6 +366,11 @@ export default function HomePage() {
       {/* ══ تذكير صيام ══ */}
       <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 1rem" }}>
         <HomeSawmReminder />
+      </div>
+
+      {/* ══ تيليجرام ══ */}
+      <div style={{ maxWidth: 760, margin: "0.5rem auto 0", padding: "0 1rem" }}>
+        <HomeTelegramBanner />
       </div>
 
       {/* ══════════════════ Main Content ══════════════════ */}

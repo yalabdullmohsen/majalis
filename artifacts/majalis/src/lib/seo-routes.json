@@ -1234,6 +1234,20 @@
       "sitemap": true,
       "changefreq": "monthly",
       "priority": 0.72
+    },
+    {
+      "path": "/methodology",
+      "title": "منهجيتنا في التوثيق | المجلس العلمي",
+      "description": "مصادر التحقق، منهجية المراجعة البشرية، وضمانات جودة المحتوى الشرعي في المجلس العلمي.",
+      "keywords": [
+        "منهجية التوثيق",
+        "مصادر علمية",
+        "مراجعة بشرية",
+        "توثيق شرعي"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.7
     }
   ]
 }

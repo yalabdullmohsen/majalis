@@ -205,6 +205,7 @@ const AuthCallbackPage = lazy(() => import("@/views/AuthCallbackPage"));
 const ProphetStoriesPage = lazy(() => import("@/views/ProphetStoriesPage"));
 const IslamicStoriesPage = lazy(() => import("@/views/IslamicStoriesPage"));
 const CitationPublicPage = lazy(() => import("@/views/CitationPublicPage"));
+const MethodologyPage = lazy(() => import("@/views/MethodologyPage"));
 const MyCitationsPage = lazy(() => import("@/views/MyCitationsPage"));
 const ScholarlyResearchPage = lazy(() => import("@/views/ScholarlyResearchPage"));
 const AcademicResearchPage  = lazy(() => import("@/views/AcademicResearchPage"));
@@ -289,6 +290,7 @@ function Router() {
         <HomePage />
       </Route>
       <Route path="/about"><SafeLazyRoute component={AboutPage} /></Route>
+      <Route path="/methodology"><SafeLazyRoute component={MethodologyPage} /></Route>
       <Route path="/sitemap"><SafeLazyRoute component={SiteMapPage} /></Route>
       <Route path="/privacy"><SafeLazyRoute component={PrivacyPage} /></Route>
       <Route path="/terms"><SafeLazyRoute component={TermsPage} /></Route>

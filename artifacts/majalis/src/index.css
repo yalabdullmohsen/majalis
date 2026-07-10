@@ -17694,3 +17694,122 @@ body.has-assistant-fab .app-main {
   line-height: 1.6;
   margin: 0;
 }
+
+/* ══ صفحة المنهجية ══ */
+.mtd-page { max-width: 760px; margin: 0 auto; padding: 2rem 1rem; }
+.mtd-head { text-align: center; margin-bottom: 2rem; }
+.mtd-head__icon {
+  width: 4rem; height: 4rem;
+  background: linear-gradient(135deg, #0E6E52, #153025);
+  color: #fff; border-radius: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1rem;
+}
+.mtd-head__title { font-size: 1.6rem; font-weight: 800; color: var(--majalis-ink, #1a2e26); margin-bottom: 0.5rem; }
+.mtd-head__sub { font-size: 0.95rem; color: var(--majalis-muted, #5a7a6a); max-width: 560px; margin: 0 auto; line-height: 1.7; }
+.mtd-section { margin-bottom: 2rem; }
+.mtd-section--highlight {
+  background: var(--majalis-panel, #f5f9f6);
+  border: 1px solid var(--majalis-line, #d4e6de);
+  border-radius: 0.75rem; padding: 1.25rem;
+}
+.mtd-section__title { font-size: 1.1rem; font-weight: 700; color: #0E6E52; margin-bottom: 0.85rem; }
+.mtd-section__body { font-size: 0.92rem; line-height: 1.8; color: var(--majalis-ink, #1a2e26); }
+.mtd-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.85rem; }
+.mtd-step {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--majalis-line, #d4e6de);
+  border-radius: 0.65rem; padding: 0.85rem 1rem;
+}
+.mtd-step__num {
+  width: 1.6rem; height: 1.6rem; border-radius: 50%;
+  background: #0E6E52; color: #fff;
+  font-weight: 900; font-size: 0.72rem;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.mtd-step__icon { color: #0E6E52; flex-shrink: 0; margin-top: 0.1rem; }
+.mtd-step__body { flex: 1; }
+.mtd-step__title { font-size: 0.9rem; font-weight: 700; color: var(--majalis-ink, #1a2e26); display: block; margin-bottom: 0.2rem; }
+.mtd-step__desc { font-size: 0.82rem; color: var(--majalis-muted, #5a7a6a); margin: 0; line-height: 1.6; }
+.mtd-sources { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.mtd-source {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  background: var(--majalis-panel, #fff); border: 1px solid var(--majalis-line, #d4e6de);
+  border-radius: 0.5rem;
+}
+.mtd-source__name { font-weight: 700; font-size: 0.85rem; color: #0E6E52; min-width: 130px; }
+.mtd-source__desc { font-size: 0.8rem; color: var(--majalis-muted, #5a7a6a); }
+.mtd-guarantees { padding-right: 1.25rem; margin: 0; }
+.mtd-guarantees li { font-size: 0.88rem; line-height: 1.7; color: var(--majalis-ink, #1a2e26); margin-bottom: 0.4rem; }
+.mtd-back { margin-top: 2rem; }
+
+/* ══ banner تيليجرام ══ */
+.tg-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, #0E6E52 0%, #153025 100%);
+  border-radius: 0.85rem;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+  position: relative;
+  color: #fff;
+}
+.tg-banner__icon {
+  flex-shrink: 0;
+  width: 2.2rem;
+  height: 2.2rem;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tg-banner__body { flex: 1; min-width: 0; }
+.tg-banner__title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin: 0 0 0.15rem;
+  color: #fff;
+}
+.tg-banner__sub {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.8);
+  margin: 0;
+  line-height: 1.4;
+}
+.tg-banner__cta {
+  flex-shrink: 0;
+  background: #fff;
+  color: #0E6E52;
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.tg-banner__cta:hover { opacity: 0.88; }
+.tg-banner__dismiss {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  border-radius: 50%;
+  width: 1.4rem;
+  height: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  padding: 0;
+}
+@media (max-width: 480px) {
+  .tg-banner { flex-wrap: wrap; }
+  .tg-banner__cta { width: 100%; text-align: center; }
+}

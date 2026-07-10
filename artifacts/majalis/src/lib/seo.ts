@@ -208,7 +208,7 @@ export function applyPageSeo(options: PageSeoOptions) {
   upsertMeta("name", "author", seoData.siteName);
 
   upsertMeta("property", "og:site_name", seoData.siteName);
-  upsertMeta("property", "og:locale", "ar_AR");
+  upsertMeta("property", "og:locale", "ar_KW");
   upsertMeta("property", "og:type", ogType);
   upsertMeta("property", "og:title", options.title);
   upsertMeta("property", "og:description", options.description);
