@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { ChevronDown, ChevronUp, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 /* ─── بيانات أركان الإيمان ─── */
 type RuknIman = {
@@ -299,6 +300,9 @@ export default function ArkanImanPage() {
           ))}
         </div>
       </section>
+      <div className="zk-share">
+        <ShareButtons title="أركان الإيمان الستة — المجلس العلمي" url="https://majlisilm.com/arkan-iman" />
+      </div>
     </main>
   );
 }

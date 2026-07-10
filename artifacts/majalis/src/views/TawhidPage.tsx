@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 
 // ─── أقسام العقيدة والتوحيد ──────────────────────────────────────────────────
 
@@ -369,6 +370,10 @@ export default function TawhidPage() {
           ))}
         </div>
       </section>
+
+      <div className="twh-share">
+        <ShareButtons title="العقيدة والتوحيد — المجلس العلمي" url="https://majlisilm.com/tawhid" />
+      </div>
     </div>
   );
 }

@@ -6964,6 +6964,7 @@ button.primary:hover {
 }
 
 /* § كتب مقترحة */
+.twh-share { padding: 1rem 0; margin: 1.5rem 0; border-top: 1px solid var(--majalis-line); display: flex; justify-content: center; }
 .twh-books-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
