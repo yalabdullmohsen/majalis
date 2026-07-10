@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Bone, BookOpen, Bug, Clock, Cloud, Cog, Dna,
   Droplets, Globe, Globe2, Leaf, Lightbulb, Microscope,
@@ -16,6 +16,7 @@ import { MIRACLE_CATEGORIES } from "@/lib/miracles-seed";
 import { safeLoadEffect } from "@/lib/safe-load";
 import { GeometricPattern } from "@/components/design/GeometricPattern";
 import { applyPageSeo } from "@/lib/seo";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { ShareButtons } from "@/components/ContentActions";
 
 const CATEGORIES = MIRACLE_CATEGORIES;
@@ -93,6 +94,12 @@ export default function MiraclesPage({
   const [expanded, setExpanded] = useState<string | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
+  const [search, setSearch] = useState("");
+
+  const displayed = useMemo(() => {
+    if (!search.trim()) return items;
+    return items.filter((i) => arabicMatchAny([i.title ?? "", i.body ?? "", i.category ?? "", i.scholarly_source ?? ""], search));
+  }, [items, search]);
 
   useEffect(() => {
     applyPageSeo({
@@ -204,11 +211,24 @@ export default function MiraclesPage({
         </div>
         <div className="mk-toolbar__right">
           {!loading && status === "success" && (
-            <span className="mk-count">{items.length} موضوع</span>
+            <span className="mk-count">{displayed.length} موضوع</span>
           )}
           <FilterToggle onClick={() => setFiltersOpen(true)} label="فلاتر" />
         </div>
       </div>
+
+      {status === "success" && (
+        <div className="prefix-search-wrap">
+          <input
+            type="search"
+            className="ds-input prefix-search-input"
+            placeholder="ابحث في موضوعات الإعجاز..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            aria-label="بحث في الإعجاز العلمي"
+          />
+        </div>
+      )}
 
       {/* ══ شبكة المحتوى ══ */}
       <AsyncDataView
@@ -218,7 +238,7 @@ export default function MiraclesPage({
         emptyText="لا توجد بيانات حالياً"
       >
         <div className="mk-grid">
-          {items.map((item: any) => {
+          {displayed.map((item: any) => {
             const ItemIcon: LucideIcon = CATEGORY_ICONS[item.category] ?? Sparkles;
             const catMod    = MK_CAT_MOD[item.category]    ?? "mk-cat--alkawn";
             const catAccent = MK_CAT_ACCENT[item.category] ?? "#86efac";
