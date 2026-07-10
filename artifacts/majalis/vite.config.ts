@@ -87,7 +87,6 @@ export default defineConfig({
           if (id.includes("src/lib/mind-maps-data") || id.includes("src/lib/quiz-seed") || id.includes("src/lib/islamic-glossary")) return "content-data";
           if (id.includes("src/lib/fatwa-seed") || id.includes("src/lib/rulings-seed")) return "fatwa-rulings-seed";
           if (id.includes("src/lib/annual-courses-seed") || id.includes("src/lib/updates-seed")) return "courses-updates-seed";
-          if (id.includes("src/lib/fiqh-council-service") || id.includes("src/lib/fiqh-council-seed")) return "fiqh-council-data";
           if (id.includes("src/lib/platform-content-service") || id.includes("src/lib/demo-content")) return "platform-services";
         },
       },
