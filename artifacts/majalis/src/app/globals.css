@@ -5,6 +5,7 @@
   --reading-font-size: 20px;
   --quran-font-size: 22px;
   --reading-line-height: 2.1;
+  --color-ink-soft: #607D6E;
 }
 
 html {
@@ -26,7 +27,7 @@ html {
   padding: 0.45rem 0.85rem;
   border-radius: 999px;
   text-decoration: none;
-  color: var(--color-ink-soft, #5B5446);
+  color: var(--color-ink-soft, #607D6E);
   font-size: 0.875rem;
   font-weight: 600;
   transition: background 0.2s, color 0.2s;
@@ -85,7 +86,7 @@ html {
   padding-top: 0.5rem;
   border-top: 1px dashed rgba(31, 110, 84, 0.2);
   font-size: 0.85em;
-  color: var(--color-ink-soft, #5B5446);
+  color: var(--color-ink-soft, #607D6E);
   line-height: 1.8;
 }
 
@@ -211,7 +212,7 @@ html {
 
 .surah-story-meta {
   font-size: 0.82rem;
-  color: var(--color-ink-soft, #5B5446);
+  color: var(--color-ink-soft, #607D6E);
 }
 
 /* Mobile side nav v2 */
@@ -267,7 +268,7 @@ html {
   border: none;
   background: transparent;
   cursor: pointer;
-  color: var(--color-ink-soft, #5B5446);
+  color: var(--color-ink-soft, #607D6E);
   padding: 0.35rem;
 }
 
@@ -284,7 +285,7 @@ html {
   padding: 0.65rem 0.75rem;
   border-radius: 0.5rem;
   text-decoration: none;
-  color: var(--color-ink-soft, #5B5446);
+  color: var(--color-ink-soft, #607D6E);
   font-weight: 600;
   transition: background 0.15s, color 0.15s;
 }
