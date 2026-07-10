@@ -45,6 +45,26 @@ export default function AnnualCoursesPage() {
       .finally(() => setLoading(false));
   }, [courseType, debouncedSearch]);
 
+  useEffect(() => {
+    if (items.length === 0 || courseType !== "الكل" || debouncedSearch) return;
+    applyPageSeo({
+      path: "/annual-courses",
+      title: "البرامج السنوية والدورات العلمية | المجلس العلمي",
+      description: "دورات علمية سنوية في الفقه والعقيدة والقرآن والسيرة، تصفح البرامج واشترك في طلب العلم المنظم.",
+      keywords: ["دورات علمية", "برامج سنوية", "طلب العلم", "دورات فقه", "دورات قرآن"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        itemListElement: items.slice(0, 20).map((c: any, i: number) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: c.title || c.name,
+          url: `https://majlisilm.com/annual-courses/${c.id}`,
+        })),
+      }],
+    });
+  }, [items, courseType, debouncedSearch]);
+
   return (
     <div className="page-shell narrow content-hub-page">
       <PageHeader
