@@ -3,6 +3,7 @@ import { CalendarDays, Heart, HelpCircle, LayoutList } from "lucide-react";
 import { Link } from "wouter";
 import { PROPHETS, getProphet, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
 import { applyPageSeo } from "@/lib/seo";
+import { prophetArticleJsonLd, breadcrumbJsonLd, defaultSiteJsonLd } from "@/lib/seo-structured-data";
 import { supabase } from "@/lib/supabase";
 
 type Citation = { surah: string; ayahs: string; note: string };
@@ -225,6 +226,27 @@ function ProphetDetailView({
   const nextProphet = p && p.id < PROPHETS.length ? PROPHETS[p.id] : null;
 
   useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [slug]);
+
+  useEffect(() => {
+    if (!p) return;
+    const jsonLd = [
+      prophetArticleJsonLd({ name: p.arabicName, slug: p.slug, description: p.briefBio }),
+      breadcrumbJsonLd([
+        { name: "الرئيسية", path: "/" },
+        { name: "قصص الأنبياء", path: "/prophets" },
+        { name: p.arabicName, path: `/prophets/${p.slug}` },
+      ]),
+      ...defaultSiteJsonLd(),
+    ];
+    applyPageSeo({
+      path: `/prophets/${p.slug}`,
+      title: `قصة ${p.arabicName} عليه السلام | المجلس العلمي`,
+      description: p.briefBio?.slice(0, 160) || `قصة نبي الله ${p.arabicName} عليه السلام من القرآن والسنة.`,
+      keywords: ["قصص الأنبياء", p.arabicName, "أنبياء الإسلام", "معجزات الأنبياء"],
+      ogType: "article",
+      jsonLd,
+    });
+  }, [slug, p]);
 
   useEffect(() => {
     setDbStory(null);

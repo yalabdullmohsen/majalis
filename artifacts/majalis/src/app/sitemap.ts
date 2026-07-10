@@ -13,6 +13,13 @@ type SeoRoute = {
   priority?: number;
 };
 
+const PROPHET_SLUGS = [
+  "adam", "idris", "nuh", "hud", "salih", "ibrahim", "lut", "ismail",
+  "is-haq", "yaqub", "yusuf", "ayyub", "shuayb", "musa", "harun",
+  "dhul-kifl", "dawud", "sulayman", "ilyas", "al-yasa", "yunus",
+  "zakariyya", "yahya", "isa", "muhammad",
+];
+
 function buildStaticRoutes(buildDate: Date): MetadataRoute.Sitemap {
   return (seoRoutes.routes as SeoRoute[])
     .filter((route) => route.sitemap)
@@ -28,8 +35,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const buildDate = new Date();
   const staticRoutes = buildStaticRoutes(buildDate);
 
+  const prophetRoutes: MetadataRoute.Sitemap = PROPHET_SLUGS.map((slug) => ({
+    url: `${SITE_URL}/prophets/${slug}`,
+    lastModified: buildDate,
+    changeFrequency: "monthly" as const,
+    priority: 0.82,
+  }));
+
   try {
-    const { lessonIds, sheikhIds, libraryIds } = await fetchSitemapEntries();
+    const { lessonIds, sheikhIds, libraryIds, storyIds } = await fetchSitemapEntries();
 
     const lessonRoutes = lessonIds.map((id) => ({
       url: `${SITE_URL}/lessons/${id}`,
@@ -52,9 +66,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.68,
     }));
 
-    return [...staticRoutes, ...lessonRoutes, ...sheikhRoutes, ...libraryRoutes];
+    const storyRoutes = storyIds.map((id) => ({
+      url: `${SITE_URL}/stories/${id}`,
+      lastModified: buildDate,
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    }));
+
+    return [
+      ...staticRoutes,
+      ...prophetRoutes,
+      ...lessonRoutes,
+      ...sheikhRoutes,
+      ...libraryRoutes,
+      ...storyRoutes,
+    ];
   } catch (error) {
     console.error("[majalis:sitemap] Falling back to static routes only", error);
-    return staticRoutes;
+    return [...staticRoutes, ...prophetRoutes];
   }
 }

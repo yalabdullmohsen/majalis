@@ -283,21 +283,36 @@ export async function fetchMiraclesForServer() {
   return data;
 }
 
+export async function fetchAllStoryIds(): Promise<string[]> {
+  if (!isSupabaseConfiguredServer()) return [];
+
+  const supabase = createStaticClient();
+  const { data, error } = await supabase
+    .from("akp_stories")
+    .select("id")
+    .order("created_at", { ascending: false });
+
+  if (error || !data?.length) return [];
+  return data.map((row) => String(row.id));
+}
+
 export async function fetchSitemapEntries(): Promise<{
   lessonIds: string[];
   sheikhIds: string[];
   libraryIds: string[];
+  storyIds: string[];
 }> {
   try {
-    const [lessonIds, sheikhIds, libraryIds] = await Promise.all([
+    const [lessonIds, sheikhIds, libraryIds, storyIds] = await Promise.all([
       fetchAllLessonIds(),
       fetchAllSheikhIds(),
       fetchAllLibraryIds(),
+      fetchAllStoryIds(),
     ]);
 
-    return { lessonIds, sheikhIds, libraryIds };
+    return { lessonIds, sheikhIds, libraryIds, storyIds };
   } catch (error) {
     console.error("[majalis:sitemap] Failed to fetch dynamic sitemap entries", error);
-    return { lessonIds: [], sheikhIds: [], libraryIds: [] };
+    return { lessonIds: [], sheikhIds: [], libraryIds: [], storyIds: [] };
   }
 }
