@@ -8,6 +8,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import type { MergedUpdateItem } from "@/lib/auto-content/auto-content-utils";
 import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const TYPE_COLORS: Record<string, string> = {
   قرار: "#164E3C",
@@ -144,6 +145,9 @@ export default function UpdatesPage() {
       )}
       <div className="twh-share">
         <ShareButtons title="آخر التحديثات — المجلس العلمي" url="https://majlisilm.com/updates" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في التاريخ الإسلامي والفقه" count={4} />
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { Link, useParams } from "wouter";
 import { SearchSkeleton } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
 import { displayText } from "@/lib/display-text";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   fetchTopicContent,
   SECTION_LABELS,
@@ -132,6 +133,9 @@ export default function TopicPage() {
 
       <div className="twh-share">
         <ShareButtons title="موضوعات المجلس العلمي" url="https://majlisilm.com/topics" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["fiqh", "aqeeda", "hadith"]} title="اختبر معلوماتك في هذا الموضوع" count={4} />
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { PageHeader } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { arabicMatchAny } from "@/lib/arabic-search";
 
 // ─── مراتب المصلين ───────────────────────────────────────────────────────
@@ -271,6 +272,9 @@ export function PrayerRanksContent() {
       </section>
       <div className="twh-share">
         <ShareButtons title="فضائل الصلاة ومراتبها — المجلس العلمي" url="https://majlisilm.com/prayer-ranks" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في فقه الصلاة" count={4} />
       </div>
     </div>
   );

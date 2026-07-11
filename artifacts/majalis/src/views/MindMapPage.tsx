@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { ChevronDown, ChevronLeft, ExternalLink, Map, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { MIND_MAPS, MIND_MAP_CATEGORIES, type MindMap, type MindMapNode } from "@/lib/mind-maps-data";
 import { arabicMatchAny } from "@/lib/arabic-search";
 
@@ -192,6 +193,9 @@ export default function MindMapPage() {
       </p>
       <div className="twh-share">
         <ShareButtons title="الخرائط الذهنية الإسلامية — المجلس العلمي" url="https://majlisilm.com/mind-map" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["quran", "hadith", "fiqh", "aqeeda"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { Link } from "wouter";
 import { Compass, Moon, RotateCw, Star, Sun, SunDim, Sunset, Sunrise } from "lucide-react";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import type { LucideIcon } from "lucide-react";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import {
@@ -297,6 +298,9 @@ export default function PrayerTimesPage() {
 
       <div className="twh-share">
         <ShareButtons title="مواقيت الصلاة — المجلس العلمي" url="https://majlisilm.com/prayer-times" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في أحكام الصلاة" count={4} />
       </div>
     </div>
   );

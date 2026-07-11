@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   ArrowLeft,
   BookMarked,
@@ -242,6 +243,9 @@ export default function StartHerePage() {
         <Link href="/adhkar" className="sh-cta__btn sh-cta__btn--secondary">
           ابدأ بالأذكار الآن
         </Link>
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["aqeeda", "fiqh", "akhlaq"]} title="اختبر معلوماتك الشرعية" count={4} />
       </div>
     </div>
   );
