@@ -8,6 +8,7 @@ import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
 import { advancedSearchFiqhCouncil } from "@/lib/fiqh-council-service";
 import { FIQH_CATEGORY_TREE } from "@/lib/fiqh-council-categories";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   FIQH_COUNCIL_CATEGORIES,
   FIQH_ITEM_TYPES,
@@ -162,6 +163,9 @@ export default function FiqhCouncilAdvancedSearchPage() {
 
       <div className="twh-share">
         <ShareButtons title="البحث المتقدم في المجمع الفقهي — المجلس العلمي" url="https://majlisilm.com/fiqh-council/search" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
       </div>
     </div>
   );

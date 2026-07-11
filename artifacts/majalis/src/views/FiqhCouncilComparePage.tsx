@@ -5,6 +5,7 @@ import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
 import { ShareButtons } from "@/components/ContentActions";
 import { compareFiqhItems, getFiqhCouncilItems, getFiqhCouncilItemsBySlugs } from "@/lib/fiqh-council-service";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   fiqhCompareHref,
   fiqhItemHref,
@@ -164,6 +165,9 @@ export default function FiqhCouncilComparePage() {
 
       <div className="twh-share">
         <ShareButtons title="مقارنة مواد المجمع الفقهي — المجلس العلمي" url="https://majlisilm.com/fiqh-council/compare" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
       </div>
     </div>
   );

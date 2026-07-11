@@ -16,6 +16,7 @@ import { usePageView } from "@/hooks/usePageView";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
 import { applyPageSeo } from "@/lib/seo";
 import { FIQH_CATEGORY_TREE } from "@/lib/fiqh-council-categories";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 export default function FiqhCouncilCategoriesPage() {
   const search = useSearch();
@@ -121,6 +122,9 @@ export default function FiqhCouncilCategoriesPage() {
 
       <div className="twh-share">
         <ShareButtons title="تصنيفات مجلس الفقه — المجلس العلمي" url="https://majlisilm.com/fiqh-council/categories" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في أبواب الفقه" count={4} />
       </div>
     </div>
   );
