@@ -26,7 +26,6 @@ import { HomeInterestingTopics } from "@/components/home/HomeInterestingTopics";
 import { HomeMindMapSection } from "@/components/home/HomeMindMapSection";
 import { HomeMajlisToday } from "@/components/home/HomeMajlisToday";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
-import { CornerOrnament, IslamicDivider } from "@/components/IslamicDecorations";
 import {
   BookMarked, BookOpen, Bot, CalendarDays, Car, Check, Clock,
   Compass, Droplets, FlaskConical, GraduationCap, Heart, HelpCircle, Landmark, Layers,
@@ -322,77 +321,102 @@ export default function HomePage() {
           overflow: "hidden",
         }}
       >
-        {/* خط عاجي علوي */}
+        {/* خط عاجي علوي مُتدرّج */}
         <div aria-hidden="true" style={{
-          position: "absolute", top: 0, left: 0, right: 0, height: "3px",
-          background: "linear-gradient(90deg, transparent 0%, rgba(250,248,242,0.25) 25%, rgba(250,248,242,0.55) 50%, rgba(250,248,242,0.25) 75%, transparent 100%)",
+          position: "absolute", top: 0, left: 0, right: 0, height: "2px",
+          background: "linear-gradient(90deg, transparent 0%, rgba(250,248,242,0.15) 15%, rgba(250,248,242,0.65) 50%, rgba(250,248,242,0.15) 85%, transparent 100%)",
         }} />
 
-        {/* نمط هندسي إسلامي */}
+        {/* نمط هندسي إسلامي — نجمة 12 رأساً */}
         <div className="home-hero-pattern" aria-hidden="true" style={{ pointerEvents: "none" }} />
 
-        {/* زخرفة الزوايا */}
-        <div aria-hidden="true" style={{ position: "absolute", top: 0, right: 0, pointerEvents: "none" }}>
-          <CornerOrnament size={80} color="rgba(255,255,255,0.5)" opacity={0.4} />
-        </div>
-        <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
-          <CornerOrnament size={80} color="rgba(255,255,255,0.5)" opacity={0.4} flip />
-        </div>
+        {/* زخرفة الزاوية اليمنى — نجمة 8 أطراف */}
+        <svg aria-hidden="true" width="90" height="90" viewBox="0 0 90 90" style={{
+          position: "absolute", top: 0, right: 0, opacity: 0.18, pointerEvents: "none",
+        }}>
+          <g transform="translate(0,0)">
+            <polygon points="45,5 55,25 75,15 65,35 85,45 65,55 75,75 55,65 45,85 35,65 15,75 25,55 5,45 25,35 15,15 35,25" fill="none" stroke="white" strokeWidth="0.8"/>
+            <polygon points="45,20 52,35 67,30 57,42 68,55 52,50 45,65 38,50 22,55 33,42 23,30 38,35" fill="none" stroke="white" strokeWidth="0.5"/>
+            <circle cx="45" cy="45" r="10" fill="none" stroke="white" strokeWidth="0.5"/>
+          </g>
+        </svg>
+
+        {/* زخرفة الزاوية اليسرى — نجمة 6 أطراف */}
+        <svg aria-hidden="true" width="90" height="90" viewBox="0 0 90 90" style={{
+          position: "absolute", top: 0, left: 0, opacity: 0.18, pointerEvents: "none",
+          transform: "scaleX(-1)",
+        }}>
+          <g transform="translate(0,0)">
+            <polygon points="45,5 55,25 75,15 65,35 85,45 65,55 75,75 55,65 45,85 35,65 15,75 25,55 5,45 25,35 15,15 35,25" fill="none" stroke="white" strokeWidth="0.8"/>
+            <polygon points="45,20 52,35 67,30 57,42 68,55 52,50 45,65 38,50 22,55 33,42 23,30 38,35" fill="none" stroke="white" strokeWidth="0.5"/>
+            <circle cx="45" cy="45" r="10" fill="none" stroke="white" strokeWidth="0.5"/>
+          </g>
+        </svg>
 
         <div style={{ maxWidth: 640, margin: "0 auto", position: "relative", textAlign: "center" }}>
           {/* الشعار والاسم */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.7rem", marginBottom: "0.6rem" }}>
-            <img src="/logo.png" alt="" width={52} height={52} loading="eager" aria-hidden="true"
-              style={{ borderRadius: "50%", border: "2px solid rgba(255,255,255,0.35)", boxShadow: "0 2px 14px rgba(0,0,0,0.35)" }} />
-            <h1 style={{ color: "#FAF8F2", fontSize: "clamp(1.6rem, 5.5vw, 2.4rem)", fontWeight: 800, margin: 0, letterSpacing: "-0.01em" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "0.55rem" }}>
+            <img src="/logo.png" alt="" width={56} height={56} loading="eager" aria-hidden="true"
+              style={{
+                borderRadius: "50%", border: "2px solid rgba(255,255,255,0.35)",
+                boxShadow: "0 0 0 4px rgba(255,255,255,0.08), 0 4px 18px rgba(0,0,0,0.4)",
+              }} />
+            <h1 style={{ color: "#FAF8F2", fontSize: "clamp(1.7rem, 5.5vw, 2.6rem)", fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>
               المجلس العلمي
             </h1>
           </div>
 
           {/* الشعار الفلسفي */}
           <p style={{
-            color: "rgba(250,248,242,0.5)", fontSize: "clamp(0.72rem, 1.8vw, 0.82rem)",
-            letterSpacing: "0.12em", fontWeight: 600, margin: "0 0 0.85rem", textTransform: "uppercase",
+            color: "rgba(250,248,242,0.45)", fontSize: "clamp(0.7rem, 1.8vw, 0.8rem)",
+            letterSpacing: "0.15em", fontWeight: 600, margin: "0 0 0.9rem", textTransform: "uppercase",
           }}>
             رسالةٌ عظيمة، ووسائل تتجدد
           </p>
 
-          {/* فاصل هندسي */}
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.9rem", opacity: 0.5 }}>
-            <IslamicDivider width={260} color="rgba(255,255,255,0.9)" opacity={0.5} />
+          {/* فاصل هندسي مُحسَّن — ماسة وخطوط */}
+          <div aria-hidden="true" style={{ display: "flex", justifyContent: "center", marginBottom: "1rem", opacity: 0.45 }}>
+            <svg width="280" height="20" viewBox="0 0 280 20">
+              <line x1="0" y1="10" x2="118" y2="10" stroke="rgba(255,255,255,0.8)" strokeWidth="0.7"/>
+              <polygon points="130,4 140,10 130,16 120,10" fill="rgba(255,255,255,0.9)"/>
+              <polygon points="150,7 157,10 150,13 143,10" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="0.5"/>
+              <polygon points="130,4 140,10 130,16 120,10" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="0.4" transform="translate(20,0) scale(0.7) translate(-140,-10)"/>
+              <line x1="162" y1="10" x2="280" y2="10" stroke="rgba(255,255,255,0.8)" strokeWidth="0.7"/>
+            </svg>
           </div>
 
           {/* الوصف */}
-          <p style={{ color: "rgba(255,255,255,0.84)", fontSize: "clamp(0.83rem, 2.2vw, 0.95rem)", lineHeight: 1.75, maxWidth: 520, margin: "0 auto 1rem" }}>
+          <p style={{ color: "rgba(255,255,255,0.82)", fontSize: "clamp(0.84rem, 2.2vw, 0.96rem)", lineHeight: 1.8, maxWidth: 510, margin: "0 auto 1.1rem" }}>
             بوّابتك الشاملة إلى العلوم الشرعية: القرآن الكريم، السنة النبوية الموثّقة، دروس علماء الكويت، الفقه والفتاوى المعاصرة، والأذكار اليومية
           </p>
 
           {/* شريحات الجمهور */}
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem", justifyContent: "center", marginBottom: "1.1rem" }}>
             {[
-              { emoji: "🎓", label: "طالب العلم",      href: "/lessons",  bg: "rgba(255,255,255,0.18)" },
-              { emoji: "🕌", label: "المسلم اليومي",   href: "/adhkar",   bg: "rgba(255,255,255,0.1)" },
-              { emoji: "👨‍👩‍👧‍👦", label: "الأسرة المسلمة", href: "/qa",       bg: "rgba(255,255,255,0.1)" },
-              { emoji: "🔬", label: "العالم والباحث",  href: "/library",  bg: "rgba(255,255,255,0.1)" },
-            ].map(({ emoji, label, href, bg }) => (
+              { emoji: "🎓", label: "طالب العلم",      href: "/lessons" },
+              { emoji: "🕌", label: "المسلم اليومي",   href: "/adhkar" },
+              { emoji: "👨‍👩‍👧‍👦", label: "الأسرة المسلمة", href: "/qa" },
+              { emoji: "🔬", label: "العالم والباحث",  href: "/library" },
+            ].map(({ emoji, label, href }, i) => (
               <Link key={label} href={href} style={{
-                background: bg, color: "#fff",
-                padding: "0.35rem 0.9rem", borderRadius: "999px",
-                fontSize: "0.78rem", fontWeight: 700,
-                border: "1px solid rgba(255,255,255,0.25)",
+                background: i === 0 ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.08)",
+                color: "#FAF8F2",
+                padding: "0.32rem 0.85rem", borderRadius: "999px",
+                fontSize: "0.77rem", fontWeight: 700,
+                border: `1px solid ${i === 0 ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.18)"}`,
                 display: "inline-flex", alignItems: "center", gap: "0.3rem",
                 textDecoration: "none",
               }}>
-                <span style={{ fontSize: "1rem" }}>{emoji}</span>{label}
+                <span style={{ fontSize: "0.95rem" }}>{emoji}</span>{label}
               </Link>
             ))}
           </div>
 
           {/* خانة البحث */}
           <form onSubmit={submitSearch} style={{
-            display: "flex", borderRadius: "0.65rem", overflow: "hidden",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.35)", maxWidth: 460, margin: "0 auto 1rem",
-            border: "1px solid rgba(255,255,255,0.15)",
+            display: "flex", borderRadius: "0.75rem", overflow: "hidden",
+            boxShadow: "0 6px 24px rgba(0,0,0,0.4)", maxWidth: 460, margin: "0 auto 1rem",
+            border: "1px solid rgba(255,255,255,0.18)",
           }} aria-label="البحث">
             <input
               value={term}
@@ -400,62 +424,65 @@ export default function HomePage() {
               placeholder="ابحث في المنصة..."
               aria-label="البحث"
               style={{
-                flex: 1, padding: "0.7rem 1rem", border: "none", outline: "none",
+                flex: 1, padding: "0.75rem 1rem", border: "none", outline: "none",
                 fontSize: "0.88rem", direction: "rtl", fontFamily: "inherit",
-                background: "#fff", color: "#1a1a1a",
+                background: "rgba(255,255,255,0.97)", color: "#1a1a1a",
               }}
             />
             <button type="submit" style={{
-              background: "#2d7a5a", color: "#fff", border: "none", cursor: "pointer",
-              padding: "0.7rem 1.2rem", fontWeight: 700, fontSize: "0.84rem", fontFamily: "inherit",
-              whiteSpace: "nowrap", transition: "background 0.15s",
+              background: "linear-gradient(135deg,#2d7a5a,#1F4D3A)", color: "#FAF8F2", border: "none", cursor: "pointer",
+              padding: "0.75rem 1.3rem", fontWeight: 800, fontSize: "0.85rem", fontFamily: "inherit",
+              whiteSpace: "nowrap",
             }}>بحث</button>
           </form>
 
-          {/* أزرار الإجراء */}
-          <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center", flexWrap: "wrap" }}>
+          {/* أزرار الإجراء — شبكة 2×2 */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,auto)", gap: "0.45rem", justifyContent: "center" }}>
             <Link href="/lessons" style={{
-              background: "#FAF8F2", color: "#1F4D3A", padding: "0.6rem 1.3rem",
-              borderRadius: "0.55rem", fontWeight: 800, fontSize: "0.87rem",
+              background: "#FAF8F2", color: "#1F4D3A", padding: "0.6rem 1.2rem",
+              borderRadius: "0.6rem", fontWeight: 800, fontSize: "0.86rem",
               textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.3rem",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+              boxShadow: "0 2px 10px rgba(0,0,0,0.25)",
             }}>🎓 الدروس</Link>
             <Link href="/quran" style={{
-              background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1.1rem",
-              borderRadius: "0.55rem", fontWeight: 700, fontSize: "0.87rem",
-              textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)",
+              background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1rem",
+              borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.86rem",
+              textDecoration: "none", border: "1px solid rgba(255,255,255,0.28)",
+              display: "inline-flex", alignItems: "center", gap: "0.3rem",
             }}>📖 القرآن</Link>
             <Link href="/adhkar" style={{
-              background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1.1rem",
-              borderRadius: "0.55rem", fontWeight: 700, fontSize: "0.87rem",
-              textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)",
+              background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1rem",
+              borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.86rem",
+              textDecoration: "none", border: "1px solid rgba(255,255,255,0.28)",
+              display: "inline-flex", alignItems: "center", gap: "0.3rem",
             }}>📿 الأذكار</Link>
             <Link href="/prayer-times" style={{
-              background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1.1rem",
-              borderRadius: "0.55rem", fontWeight: 700, fontSize: "0.87rem",
-              textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)",
+              background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1rem",
+              borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.86rem",
+              textDecoration: "none", border: "1px solid rgba(255,255,255,0.28)",
+              display: "inline-flex", alignItems: "center", gap: "0.3rem",
             }}>🕌 الصلاة</Link>
           </div>
 
-          {/* إحصائيات المنصة */}
+          {/* إحصائيات المنصة — تصميم جديد */}
           <div style={{
-            display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center",
-            marginTop: "1.4rem", paddingTop: "1.1rem",
-            borderTop: "1px solid rgba(255,255,255,0.12)",
+            display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.45rem",
+            marginTop: "1.5rem", paddingTop: "1.2rem",
+            borderTop: "1px solid rgba(255,255,255,0.1)",
           }}>
             {[
-              { num: "٩٦+", label: "عالماً في الأرشيف" },
-              { num: "٣٧٣+", label: "سؤال اختباري" },
-              { num: "٤٠٠+", label: "فائدة علمية" },
-              { num: "١٠٠+", label: "كتاب علمي" },
-            ].map(({ num, label }) => (
+              { num: "٩٩+",  label: "عالم مرجعي",   icon: "👤" },
+              { num: "٣٧٣+", label: "سؤال اختباري", icon: "🧠" },
+              { num: "٤١٣+", label: "فائدة علمية",  icon: "💡" },
+              { num: "١٠٠+", label: "كتاب علمي",    icon: "📚" },
+            ].map(({ num, label, icon }) => (
               <div key={label} style={{
-                background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.13)",
-                borderRadius: "0.6rem", padding: "0.55rem 1rem", textAlign: "center",
-                minWidth: "90px",
+                background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: "0.65rem", padding: "0.65rem 0.4rem", textAlign: "center",
               }}>
-                <div style={{ color: "#FAF8F2", fontSize: "1.15rem", fontWeight: 800, lineHeight: 1.1 }}>{num}</div>
-                <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.68rem", marginTop: "0.2rem", lineHeight: 1.3 }}>{label}</div>
+                <div style={{ fontSize: "1rem", marginBottom: "0.15rem", lineHeight: 1 }}>{icon}</div>
+                <div style={{ color: "#FAF8F2", fontSize: "1.1rem", fontWeight: 800, lineHeight: 1.1 }}>{num}</div>
+                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.62rem", marginTop: "0.18rem", lineHeight: 1.3 }}>{label}</div>
               </div>
             ))}
           </div>
