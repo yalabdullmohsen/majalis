@@ -5,7 +5,7 @@
  */
 const base = process.argv.find((a) => a.startsWith("--base="))?.slice(7)
   || process.env.MAJALIS_PRODUCTION_URL
-  || "https://www.majlisilm.com";
+  || "https://majlisilm.com";
 
 const routes = ["/adhkar", "/tasbih", "/qa", "/fawaid"];
 

@@ -176,6 +176,14 @@
       "schedule": "0 2 * * 1"
     }
   ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.majlisilm.com" }],
+      "destination": "https://majlisilm.com/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/sitemap.xml",

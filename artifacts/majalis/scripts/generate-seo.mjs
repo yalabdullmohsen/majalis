@@ -201,12 +201,25 @@ function breadcrumbJsonLdScript(items) {
   return `<script type="application/ld+json">${JSON.stringify(payload)}</script>`;
 }
 
-function prerenderHtml(route, extraJsonLd = "") {
+function prerenderHtml(route, extraJsonLd = "", bodyHtml = "") {
   const canonical = absoluteUrl(route.path);
   const image = absoluteUrl(route.image || seoConfig.defaultImage);
-  const keywords = [...new Set([...(route.keywords || []), ...seoConfig.defaultKeywords])].join(", ");
+  // keywords فريدة لكل صفحة — لا نُضيف defaultKeywords الموحدة لكل الصفحات
+  const pageKeywords = route.keywords?.length
+    ? [...new Set([...route.keywords, "المجلس العلمي", "majlisilm.com"])]
+    : seoConfig.defaultKeywords;
+  const keywords = pageKeywords.join(", ");
   const robots = route.robots || "index, follow";
   const ogType = route.ogType || "website";
+
+  const defaultBody = `<article>
+        <h1>${escapeHtml(route.title)}</h1>
+        <p>${escapeHtml(route.description)}</p>
+        <nav aria-label="التنقل">
+          <a href="${escapeHtml(seoConfig.siteUrl)}">الرئيسية</a>
+          ${route.path !== "/" ? `<a href="${escapeHtml(canonical)}">${escapeHtml(route.title.split(" | ")[0])}</a>` : ""}
+        </nav>
+      </article>`;
 
   return `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -259,14 +272,7 @@ function prerenderHtml(route, extraJsonLd = "") {
       </nav>
     </header>
     <main>
-      <article>
-        <h1>${escapeHtml(route.title)}</h1>
-        <p>${escapeHtml(route.description)}</p>
-        <nav aria-label="التنقل">
-          <a href="${escapeHtml(seoConfig.siteUrl)}">الرئيسية</a>
-          ${route.path !== "/" ? `<a href="${escapeHtml(canonical)}">${escapeHtml(route.title.split(" | ")[0])}</a>` : ""}
-        </nav>
-      </article>
+      ${bodyHtml || defaultBody}
     </main>
     <footer>
       <p>© ${new Date().getFullYear()} ${escapeHtml(seoConfig.siteName)} — ${escapeHtml(seoConfig.siteUrl)}</p>
@@ -470,6 +476,251 @@ const PROPHETS_NAMES = [
   { slug: "muhammad", name: "محمد ﷺ" },
 ];
 
+// ─── دوال توليد محتوى غني لكل نوع صفحة ─────────────────────────────────────
+
+function richBodyLessons(lessons, route) {
+  const top = lessons.slice(0, 40);
+  const listItems = top.map(r => {
+    const speaker = r.speaker_name ? ` — <span>${escapeHtml(r.speaker_name)}</span>` : "";
+    const mosque = r.mosque ? ` — <span>${escapeHtml(r.mosque)}</span>` : "";
+    return `<li><a href="${absoluteUrl(`/lessons/${r.id}`)}">${escapeHtml(r.title)}</a>${speaker}${mosque}</li>`;
+  }).join("\n          ");
+  return `<article>
+      <h1>${escapeHtml(route.title)}</h1>
+      <p>${escapeHtml(route.description)}</p>
+      <section>
+        <h2>أحدث الدروس والمحاضرات الشرعية</h2>
+        <ul>${listItems}</ul>
+      </section>
+      <nav aria-label="التنقل السريع">
+        <a href="${seoConfig.siteUrl}">الرئيسية</a>
+        <a href="${absoluteUrl("/lessons")}">جميع الدروس</a>
+        <a href="${absoluteUrl("/annual-courses")}">الدورات العلمية</a>
+        <a href="${absoluteUrl("/scholars")}">العلماء والفقهاء</a>
+      </nav>
+    </article>`;
+}
+
+function richBodyLibrary(catalog, route) {
+  const listItems = catalog.slice(0, 40).map(b =>
+    `<li><a href="${absoluteUrl(`/library/${b.id}`)}">${escapeHtml(b.title)}</a>${b.author ? ` — <span>${escapeHtml(b.author)}</span>` : ""}</li>`
+  ).join("\n          ");
+  return `<article>
+      <h1>${escapeHtml(route.title)}</h1>
+      <p>${escapeHtml(route.description)}</p>
+      <section>
+        <h2>الكتب والمؤلفات العلمية</h2>
+        <ul>${listItems}</ul>
+      </section>
+      <nav aria-label="التنقل السريع">
+        <a href="${seoConfig.siteUrl}">الرئيسية</a>
+        <a href="${absoluteUrl("/library")}">المكتبة العلمية</a>
+        <a href="${absoluteUrl("/lessons")}">الدروس الشرعية</a>
+      </nav>
+    </article>`;
+}
+
+function richBodyFatwa(fatwas, route) {
+  const listItems = (fatwas || []).slice(0, 30).map(f =>
+    `<li><a href="${absoluteUrl(`/fatwa/${f.id}`)}">${escapeHtml(f.question)}</a></li>`
+  ).join("\n          ");
+  return `<article>
+      <h1>${escapeHtml(route.title)}</h1>
+      <p>${escapeHtml(route.description)}</p>
+      <section>
+        <h2>الفتاوى الشرعية الحديثة</h2>
+        <ul>${listItems}</ul>
+      </section>
+      <nav aria-label="التنقل السريع">
+        <a href="${seoConfig.siteUrl}">الرئيسية</a>
+        <a href="${absoluteUrl("/fatwa")}">الفتاوى</a>
+        <a href="${absoluteUrl("/rulings")}">الأحكام الشرعية</a>
+      </nav>
+    </article>`;
+}
+
+function richBodyRulings(rulings, route) {
+  const listItems = (rulings || []).slice(0, 30).map(r =>
+    `<li><a href="${absoluteUrl(`/rulings/${r.id}`)}">${escapeHtml(r.title)}</a>${r.category ? ` — <span>${escapeHtml(r.category)}</span>` : ""}</li>`
+  ).join("\n          ");
+  return `<article>
+      <h1>${escapeHtml(route.title)}</h1>
+      <p>${escapeHtml(route.description)}</p>
+      <section>
+        <h2>الأحكام الشرعية الموثقة</h2>
+        <ul>${listItems}</ul>
+      </section>
+      <nav aria-label="التنقل السريع">
+        <a href="${seoConfig.siteUrl}">الرئيسية</a>
+        <a href="${absoluteUrl("/rulings")}">الأحكام الشرعية</a>
+        <a href="${absoluteUrl("/fatwa")}">الفتاوى</a>
+      </nav>
+    </article>`;
+}
+
+function richBodyFiqhCouncil(decisions, route) {
+  const listItems = (decisions || []).slice(0, 20).map(d =>
+    `<li><a href="${absoluteUrl(`/fiqh-council/${d.slug || d.id}`)}">${escapeHtml(d.title)}</a>${d.category ? ` — <span>${escapeHtml(d.category)}</span>` : ""}</li>`
+  ).join("\n          ");
+  return `<article>
+      <h1>${escapeHtml(route.title)}</h1>
+      <p>${escapeHtml(route.description)}</p>
+      <section>
+        <h2>قرارات المجمع الفقهي</h2>
+        <ul>${listItems}</ul>
+      </section>
+      <nav aria-label="التنقل السريع">
+        <a href="${seoConfig.siteUrl}">الرئيسية</a>
+        <a href="${absoluteUrl("/fiqh-council")}">المجمع الفقهي</a>
+        <a href="${absoluteUrl("/fatwa")}">الفتاوى</a>
+      </nav>
+    </article>`;
+}
+
+function richBodyScholars(scholars, route) {
+  const listItems = scholars.map(s =>
+    `<li><a href="${absoluteUrl(`/scholars#${s.id}`)}">${escapeHtml(s.name)}</a></li>`
+  ).join("\n          ");
+  return `<article>
+      <h1>${escapeHtml(route.title)}</h1>
+      <p>${escapeHtml(route.description)}</p>
+      <section>
+        <h2>أعلام الفقه والحديث والتفسير</h2>
+        <ul>${listItems}</ul>
+      </section>
+      <nav aria-label="التنقل السريع">
+        <a href="${seoConfig.siteUrl}">الرئيسية</a>
+        <a href="${absoluteUrl("/scholars")}">العلماء والفقهاء</a>
+        <a href="${absoluteUrl("/lessons")}">الدروس الشرعية</a>
+      </nav>
+    </article>`;
+}
+
+function richBodyProphets(prophets, route) {
+  const listItems = prophets.map(p =>
+    `<li><a href="${absoluteUrl(`/prophets/${p.slug}`)}">${escapeHtml(`قصة نبي الله ${p.name} عليه السلام`)}</a></li>`
+  ).join("\n          ");
+  return `<article>
+      <h1>${escapeHtml(route.title)}</h1>
+      <p>${escapeHtml(route.description)}</p>
+      <section>
+        <h2>قصص الأنبياء والمرسلين</h2>
+        <ul>${listItems}</ul>
+      </section>
+      <nav aria-label="التنقل السريع">
+        <a href="${seoConfig.siteUrl}">الرئيسية</a>
+        <a href="${absoluteUrl("/prophets")}">الأنبياء والمرسلون</a>
+        <a href="${absoluteUrl("/lessons")}">الدروس الشرعية</a>
+      </nav>
+    </article>`;
+}
+
+function richBodyAdhkar(categories, route) {
+  const listItems = categories.map(c =>
+    `<li><a href="${absoluteUrl(`/adhkar?cat=${c.id}`)}">${escapeHtml(c.name)}</a></li>`
+  ).join("\n          ");
+  return `<article>
+      <h1>${escapeHtml(route.title)}</h1>
+      <p>${escapeHtml(route.description)}</p>
+      <section>
+        <h2>أبواب الأذكار والأدعية</h2>
+        <ul>${listItems}</ul>
+      </section>
+      <nav aria-label="التنقل السريع">
+        <a href="${seoConfig.siteUrl}">الرئيسية</a>
+        <a href="${absoluteUrl("/adhkar")}">الأذكار والأدعية</a>
+        <a href="${absoluteUrl("/duas")}">الأدعية الشرعية</a>
+      </nav>
+    </article>`;
+}
+
+function richBodyCourses(courses, route) {
+  const listItems = (courses || []).slice(0, 20).map(c =>
+    `<li><a href="${absoluteUrl(`/annual-courses/${c.id}`)}">${escapeHtml(c.title || c.name)}</a>${c.instructor ? ` — <span>${escapeHtml(c.instructor)}</span>` : ""}</li>`
+  ).join("\n          ");
+  return `<article>
+      <h1>${escapeHtml(route.title)}</h1>
+      <p>${escapeHtml(route.description)}</p>
+      <section>
+        <h2>الدورات العلمية المتاحة</h2>
+        <ul>${listItems}</ul>
+      </section>
+      <nav aria-label="التنقل السريع">
+        <a href="${seoConfig.siteUrl}">الرئيسية</a>
+        <a href="${absoluteUrl("/annual-courses")}">الدورات العلمية</a>
+        <a href="${absoluteUrl("/lessons")}">الدروس الشرعية</a>
+      </nav>
+    </article>`;
+}
+
+function richBodyLesson(row, route) {
+  const items = [
+    row.speaker_name ? `<dt>الشيخ</dt><dd>${escapeHtml(row.speaker_name)}</dd>` : "",
+    row.mosque ? `<dt>المسجد</dt><dd>${escapeHtml(row.mosque)}</dd>` : "",
+    row.region ? `<dt>المنطقة</dt><dd>${escapeHtml(row.region)}</dd>` : "",
+    row.category ? `<dt>التصنيف</dt><dd>${escapeHtml(row.category)}</dd>` : "",
+    row.schedule ? `<dt>الجدول</dt><dd>${escapeHtml(row.schedule)}</dd>` : "",
+  ].filter(Boolean).join("\n      ");
+  return `<article>
+      <h1>${escapeHtml(route.title)}</h1>
+      <p>${escapeHtml(route.description || lessonDescription(row))}</p>
+      ${items ? `<dl>${items}</dl>` : ""}
+      <nav aria-label="التنقل">
+        <a href="${seoConfig.siteUrl}">الرئيسية</a>
+        <a href="${absoluteUrl("/lessons")}">الدروس الشرعية</a>
+        <a href="${absoluteUrl(`/lessons/${row.id}`)}">${escapeHtml(row.title)}</a>
+      </nav>
+    </article>`;
+}
+
+function richBodyBook(row, route) {
+  return `<article>
+      <h1>${escapeHtml(route.title)}</h1>
+      <p>${escapeHtml(row.description || row.title)}</p>
+      <dl>
+        ${row.author ? `<dt>المؤلف</dt><dd>${escapeHtml(row.author)}</dd>` : ""}
+        ${row.category ? `<dt>التصنيف</dt><dd>${escapeHtml(row.category)}</dd>` : ""}
+        ${row.pages ? `<dt>عدد الصفحات</dt><dd>${escapeHtml(String(row.pages))}</dd>` : ""}
+      </dl>
+      <nav aria-label="التنقل">
+        <a href="${seoConfig.siteUrl}">الرئيسية</a>
+        <a href="${absoluteUrl("/library")}">المكتبة العلمية</a>
+        <a href="${absoluteUrl(`/library/${row.id}`)}">${escapeHtml(row.title)}</a>
+      </nav>
+    </article>`;
+}
+
+function richBodyFatwaItem(row, route) {
+  return `<article>
+      <h1>${escapeHtml(route.title)}</h1>
+      <section>
+        <h2>السؤال</h2>
+        <p>${escapeHtml(row.question)}</p>
+      </section>
+      ${row.answer ? `<section><h2>الجواب</h2><p>${escapeHtml(row.answer.slice(0, 500))}</p></section>` : ""}
+      <nav aria-label="التنقل">
+        <a href="${seoConfig.siteUrl}">الرئيسية</a>
+        <a href="${absoluteUrl("/fatwa")}">الفتاوى الشرعية</a>
+        <a href="${absoluteUrl(`/fatwa/${row.id}`)}">${escapeHtml(row.question.slice(0, 60))}</a>
+      </nav>
+    </article>`;
+}
+
+function richBodyRulingItem(row, route) {
+  return `<article>
+      <h1>${escapeHtml(route.title)}</h1>
+      <p>${escapeHtml(row.title)}</p>
+      ${row.category ? `<p>التصنيف: ${escapeHtml(row.category)}</p>` : ""}
+      <nav aria-label="التنقل">
+        <a href="${seoConfig.siteUrl}">الرئيسية</a>
+        <a href="${absoluteUrl("/rulings")}">الأحكام الشرعية</a>
+        <a href="${absoluteUrl(`/rulings/${row.id}`)}">${escapeHtml(row.title)}</a>
+      </nav>
+    </article>`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 const fatwaFaqScript = fatwaListFaqJsonLdScript(PLATFORM_SEED.fatwas || []);
 const qaFaqScript = fatwaListFaqJsonLdScript(PLATFORM_SEED.qa_items || []);
 
@@ -611,7 +862,20 @@ for (const route of staticRoutes) {
     route.path === "/learning/paths" ? learningPathsItemListScript :
     route.path === "/asma-husna" ? asmaaItemListScript :
     route.path === "/duas" ? duasItemListScript : "";
-  await writeFile(resolve(routeDir, "index.html"), prerenderHtml(route, staticExtraJsonLd), "utf8");
+
+  // محتوى غني فريد لكل صفحة قائمة رئيسية
+  const staticBodyHtml =
+    route.path === "/lessons"       ? richBodyLessons(lessonRows, route) :
+    route.path === "/library"       ? richBodyLibrary(LIBRARY_CATALOG, route) :
+    route.path === "/fatwa"         ? richBodyFatwa(PLATFORM_SEED.fatwas, route) :
+    route.path === "/rulings"       ? richBodyRulings(PLATFORM_SEED.rulings, route) :
+    route.path === "/fiqh-council"  ? richBodyFiqhCouncil(PLATFORM_SEED.fiqh_decisions, route) :
+    route.path === "/scholars"      ? richBodyScholars(ISLAMIC_SCHOLARS, route) :
+    route.path === "/prophets"      ? richBodyProphets(PROPHETS_NAMES, route) :
+    route.path === "/adhkar"        ? richBodyAdhkar(ADHKAR_CATEGORIES, route) :
+    route.path === "/annual-courses"? richBodyCourses(PLATFORM_SEED.courses, route) : "";
+
+  await writeFile(resolve(routeDir, "index.html"), prerenderHtml(route, staticExtraJsonLd, staticBodyHtml), "utf8");
 
   if (route.path !== "/") {
     const legacyPublicDir = resolve(publicDir, route.path.slice(1));
@@ -630,7 +894,7 @@ for (const row of lessonRows) {
     path: `/lessons/${row.id}`,
     title: `${row.title} | ${seoConfig.siteName}`,
     description: lessonDescription(row) || `${row.title} — درس شرعي على ${seoConfig.siteName}`,
-    keywords: [row.title, row.speaker_name, row.category, "دروس شرعية", "محاضرات إسلامية", "دورات شرعية"],
+    keywords: [row.title, row.speaker_name, row.category, row.mosque, "دروس شرعية", "محاضرات إسلامية"].filter(Boolean),
     image: row.sheikh_image_url || row.poster_image_url || seoConfig.defaultImage,
     ogType: "article",
   };
@@ -638,7 +902,7 @@ for (const row of lessonRows) {
   await mkdir(routeDir, { recursive: true });
   await writeFile(
     resolve(routeDir, "index.html"),
-    prerenderHtml(lessonRoute, lessonJsonLdScript(row)),
+    prerenderHtml(lessonRoute, lessonJsonLdScript(row), richBodyLesson(row, lessonRoute)),
     "utf8",
   );
 }
@@ -659,9 +923,11 @@ const platformPrerender = [
       path: `/fatwa/${row.id}`,
       title: `${row.question} | ${seoConfig.siteName}`,
       description: row.answer ? row.answer.slice(0, 160) : row.question,
+      keywords: [row.question.slice(0, 40), row.category, "فتوى شرعية"].filter(Boolean),
       ogType: "article",
     },
     extraJsonLd: fatwaQaJsonLdScript(row),
+    bodyHtml: richBodyFatwaItem(row, { title: `${row.question} | ${seoConfig.siteName}`, description: row.answer ? row.answer.slice(0, 160) : row.question }),
   })),
   ...verifiedFiqhSessions.map((row) => ({
     dir: resolve(seoPrerenderDir, "fiqh-council", "sessions", row.slug),
@@ -679,8 +945,10 @@ const platformPrerender = [
       path: `/rulings/${row.id}`,
       title: `${row.title} | ${seoConfig.siteName}`,
       description: row.title,
+      keywords: [row.title.slice(0, 40), row.category, "حكم شرعي", "فقه إسلامي"].filter(Boolean),
       ogType: "article",
     },
+    bodyHtml: richBodyRulingItem(row, { title: `${row.title} | ${seoConfig.siteName}` }),
   })),
   ...(PLATFORM_SEED.courses || []).map((row) => ({
     dir: resolve(seoPrerenderDir, "annual-courses", row.id),
@@ -698,15 +966,17 @@ const platformPrerender = [
       path: `/library/${row.id}`,
       title: `${row.title} | المكتبة العلمية — ${seoConfig.siteName}`,
       description: row.description || row.title,
+      keywords: [row.title, row.author, row.category, "كتاب إسلامي", "المكتبة العلمية"].filter(Boolean),
       ogType: "book",
     },
     extraJsonLd: bookJsonLdScript(row),
+    bodyHtml: richBodyBook(row, { title: `${row.title} | المكتبة العلمية — ${seoConfig.siteName}` }),
   })),
 ];
 
 for (const item of platformPrerender) {
   await mkdir(item.dir, { recursive: true });
-  await writeFile(resolve(item.dir, "index.html"), prerenderHtml(item.route, item.extraJsonLd || ""), "utf8");
+  await writeFile(resolve(item.dir, "index.html"), prerenderHtml(item.route, item.extraJsonLd || "", item.bodyHtml || ""), "utf8");
 }
 
 const totalUrls = staticRoutes.length + lessonRows.length + platformPrerender.length;
