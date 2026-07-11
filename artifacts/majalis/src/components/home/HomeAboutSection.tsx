@@ -94,7 +94,8 @@ export function HomeAboutSection() {
           display: "inline-flex", alignItems: "center", gap: "0.3rem",
           boxShadow: "0 2px 8px rgba(15,50,30,0.22)",
         }}>
-          🎓 ابدأ من هنا ←
+          <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 3 1 7l8 4 8-4-8-4z"/><path d="M5 9.5v3.5a4 4 0 0 0 8 0V9.5"/></svg>
+          ابدأ من هنا ←
         </Link>
         <Link href="/sitemap" style={{
           background: "#edf6f1", color: "#1F4D3A",

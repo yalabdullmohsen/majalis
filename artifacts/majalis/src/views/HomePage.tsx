@@ -457,25 +457,37 @@ export default function HomePage() {
               borderRadius: "0.6rem", fontWeight: 800, fontSize: "0.86rem",
               textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.3rem",
               boxShadow: "0 2px 10px rgba(0,0,0,0.25)",
-            }}>🎓 الدروس</Link>
+            }}>
+              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 3 1 7l8 4 8-4-8-4z"/><path d="M5 9.5v3.5a4 4 0 0 0 8 0V9.5"/></svg>
+              الدروس
+            </Link>
             <Link href="/quran" style={{
               background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1rem",
               borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.86rem",
               textDecoration: "none", border: "1px solid rgba(255,255,255,0.28)",
               display: "inline-flex", alignItems: "center", gap: "0.3rem",
-            }}>📖 القرآن</Link>
+            }}>
+              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 15V4C8 2.5 6 2 3 2.5v12c3-.5 5 0 6 1.5z"/><path d="M9 15V4c1-1.5 3-2 6-1.5v12c-3-.5-5 0-6 1.5z"/></svg>
+              القرآن
+            </Link>
             <Link href="/adhkar" style={{
               background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1rem",
               borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.86rem",
               textDecoration: "none", border: "1px solid rgba(255,255,255,0.28)",
               display: "inline-flex", alignItems: "center", gap: "0.3rem",
-            }}>📿 الأذكار</Link>
+            }}>
+              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="9" cy="9" r="2"/><path d="M9 2v2M9 14v2M2 9h2M14 9h2"/><path d="M4.2 4.2l1.4 1.4M12.4 12.4l1.4 1.4M4.2 13.8l1.4-1.4M12.4 5.6l1.4-1.4"/></svg>
+              الأذكار
+            </Link>
             <Link href="/prayer-times" style={{
               background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1rem",
               borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.86rem",
               textDecoration: "none", border: "1px solid rgba(255,255,255,0.28)",
               display: "inline-flex", alignItems: "center", gap: "0.3rem",
-            }}>🕌 الصلاة</Link>
+            }}>
+              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M1 17h16"/><path d="M3 17v-6a6 6 0 0 1 12 0v6"/><path d="M9 5V3"/><path d="M7.5 8h3"/></svg>
+              الصلاة
+            </Link>
           </div>
 
           {/* إحصائيات المنصة — للمشرف فقط */}
