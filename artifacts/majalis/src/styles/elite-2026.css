@@ -27980,3 +27980,190 @@ html[data-theme="dark"] .sq-card--wrong   { background: #2e0d0d; border-color: #
 html[data-theme="dark"] .sq-question { color: #E8DED4; }
 html[data-theme="dark"] .sq-answer-text { color: #C8D8D0; }
 html[data-theme="dark"] .sq-hint { color: #8AA89E; }
+
+/* ══════════════════════════════════════════════
+   §HB — HadithBooksPage — الكتب الحديثية الكاملة
+   ══════════════════════════════════════════════ */
+
+/* صفحة كاملة */
+.hb-page { padding: 1.25rem 1rem 3rem; max-width: 1200px; margin: 0 auto; }
+
+/* مسار التنقل */
+.hb-breadcrumb { display: flex; align-items: center; gap: .35rem; font-size: .82rem;
+  color: var(--elite-ink-soft); margin-bottom: 1.25rem; direction: rtl; }
+.hb-breadcrumb__link { color: var(--ds-emerald, #0E6E52); text-decoration: none; }
+.hb-breadcrumb__link:hover { text-decoration: underline; }
+.hb-breadcrumb__sep { color: var(--elite-ink-muted); flex-shrink: 0; }
+
+/* رأس */
+.hb-header { text-align: center; margin-bottom: 1.5rem; }
+.hb-header__icon { color: var(--ds-emerald, #0E6E52); margin-bottom: .5rem; display: inline-block; }
+.hb-header__title { font-size: 1.55rem; font-weight: 700;
+  color: var(--elite-ink, #122019); margin: .25rem 0 .5rem; }
+.hb-header__subtitle { font-size: .92rem; color: var(--elite-ink-soft); max-width: 600px; margin: 0 auto .5rem; line-height: 1.55; }
+.hb-header__source { font-size: .78rem; color: var(--elite-ink-muted); }
+.hb-header__source-link { color: var(--ds-emerald, #0E6E52); text-decoration: none; }
+.hb-header__source-link:hover { text-decoration: underline; }
+
+/* إشعار */
+.hb-notice { background: rgba(14,110,82,.06); border: 1px solid rgba(14,110,82,.2);
+  border-radius: 8px; padding: .7rem 1rem; font-size: .83rem; color: var(--elite-ink-soft);
+  margin-bottom: 1.5rem; line-height: 1.55; }
+.hb-notice__link { color: var(--ds-emerald, #0E6E52); font-weight: 600; text-decoration: none; }
+.hb-notice__link:hover { text-decoration: underline; }
+
+/* تبويبات المجموعات */
+.hb-tabs-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; margin-bottom: 1.5rem; }
+.hb-tabs-wrap::-webkit-scrollbar { display: none; }
+.hb-tabs { display: flex; gap: .4rem; padding-bottom: .15rem; min-width: max-content; }
+.hb-tab { display: flex; flex-direction: column; align-items: center;
+  gap: .1rem; padding: .5rem .85rem; border-radius: 8px;
+  border: 1.5px solid var(--elite-border-2, rgba(24,54,42,.15));
+  background: var(--elite-cream, #F1F3F2); cursor: pointer; transition: all .18s;
+  font-family: inherit; color: var(--elite-ink-soft); white-space: nowrap; }
+.hb-tab__name { font-size: .82rem; font-weight: 600; }
+.hb-tab__total { font-size: .72rem; color: var(--elite-ink-muted); }
+.hb-tab:hover { background: rgba(14,110,82,.06); border-color: rgba(14,110,82,.3); color: var(--ds-emerald, #0E6E52); }
+.hb-tab--active { background: var(--ds-emerald, #0E6E52); border-color: var(--ds-emerald, #0E6E52);
+  color: #fff; }
+.hb-tab--active .hb-tab__total { color: rgba(255,255,255,.7); }
+
+/* حالة التحميل */
+.hb-loading { text-align: center; padding: 3rem 1rem; color: var(--elite-ink-soft); }
+.hb-loading__icon { display: inline-block; animation: spin .8s linear infinite; margin-bottom: .75rem; color: var(--ds-emerald, #0E6E52); }
+.hb-loading__note { font-size: .8rem; color: var(--elite-ink-muted); margin-top: .35rem; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* حالة الخطأ */
+.hb-error { background: rgba(185,28,28,.06); border: 1px solid rgba(185,28,28,.25);
+  border-radius: 8px; padding: 1rem; color: #9B1C1C; font-size: .88rem; }
+
+/* رأس المتصفح */
+.hb-browser__head { display: flex; align-items: flex-start; justify-content: space-between;
+  flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; direction: rtl; }
+.hb-browser__title { font-size: 1.2rem; font-weight: 700; color: var(--elite-ink); margin: 0 0 .15rem; }
+.hb-browser__author { font-size: .8rem; color: var(--elite-ink-soft); margin: 0; }
+.hb-browser__stats { display: flex; gap: .6rem; font-size: .78rem; color: var(--elite-ink-muted); }
+
+/* البحث */
+.hb-search-wrap { position: relative; margin-bottom: 1.25rem; }
+.hb-search__icon { position: absolute; right: .75rem; top: 50%; transform: translateY(-50%);
+  color: var(--elite-ink-muted); pointer-events: none; }
+.hb-search-input { width: 100%; padding: .55rem .75rem .55rem 2.2rem;
+  border: 1.5px solid var(--elite-border-2); border-radius: 8px;
+  font-size: .88rem; font-family: inherit; background: var(--elite-white);
+  color: var(--elite-ink); direction: rtl; outline: none; transition: border .18s; }
+.hb-search-input:focus { border-color: var(--ds-emerald, #0E6E52); }
+.hb-search__clear { position: absolute; left: .75rem; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer; color: var(--elite-ink-muted);
+  display: flex; align-items: center; padding: .15rem; }
+.hb-search__clear:hover { color: var(--elite-ink); }
+
+/* تخطيط sidebar + main */
+.hb-layout { display: flex; gap: 1.25rem; align-items: flex-start; direction: rtl; }
+.hb-sidebar { width: 220px; flex-shrink: 0; background: var(--elite-cream);
+  border-radius: 10px; border: 1px solid var(--elite-border-2); padding: .75rem .5rem;
+  max-height: 70vh; overflow-y: auto; scrollbar-width: thin; }
+.hb-sidebar::-webkit-scrollbar { width: 4px; }
+.hb-sidebar::-webkit-scrollbar-thumb { background: var(--elite-mist); border-radius: 4px; }
+.hb-sidebar__label { font-size: .73rem; font-weight: 600; color: var(--elite-ink-muted);
+  padding: 0 .5rem .4rem; text-transform: uppercase; letter-spacing: .04em; }
+.hb-sidebar__more { width: 100%; background: none; border: none; cursor: pointer;
+  font-size: .78rem; color: var(--ds-emerald, #0E6E52); padding: .5rem; margin-top: .35rem;
+  font-family: inherit; }
+
+/* قائمة الفصول */
+.hb-chapter-list { display: flex; flex-direction: column; gap: .1rem; }
+.hb-chapter-item { display: flex; justify-content: space-between; align-items: center;
+  width: 100%; padding: .4rem .55rem; border-radius: 6px; border: none;
+  background: none; cursor: pointer; font-size: .78rem; font-family: inherit;
+  color: var(--elite-ink-soft); text-align: right; transition: background .15s; gap: .35rem; }
+.hb-chapter-item:hover { background: rgba(14,110,82,.07); color: var(--ds-emerald, #0E6E52); }
+.hb-chapter-item--active { background: rgba(14,110,82,.12); color: var(--ds-emerald, #0E6E52); font-weight: 600; }
+.hb-chapter-item__name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hb-chapter-item__count { font-size: .7rem; color: var(--elite-ink-muted); flex-shrink: 0; }
+.hb-chapter-item--active .hb-chapter-item__count { color: var(--ds-emerald, #0E6E52); }
+
+/* المحتوى الرئيسي */
+.hb-main { flex: 1; min-width: 0; }
+.hb-chapter-title { font-size: 1rem; font-weight: 600; color: var(--ds-emerald, #0E6E52);
+  margin: 0 0 .85rem; padding-bottom: .5rem; border-bottom: 1px solid var(--elite-border-2); }
+
+/* عداد الأحاديث */
+.hb-hadith-viewer__count { font-size: .8rem; color: var(--elite-ink-muted); margin-bottom: .6rem; }
+
+/* قائمة الأحاديث */
+.hb-hadith-list { display: flex; flex-direction: column; gap: .4rem; }
+
+/* صف الحديث */
+.hb-hadith-row { border: 1px solid var(--elite-border-2); border-radius: 8px;
+  padding: .7rem .9rem; cursor: pointer; background: var(--elite-white);
+  transition: border-color .18s, box-shadow .18s; outline: none; }
+.hb-hadith-row:focus-visible { outline: 2px solid var(--ds-emerald, #0E6E52); outline-offset: 2px; }
+.hb-hadith-row:hover, .hb-hadith-row--expanded { border-color: rgba(14,110,82,.3);
+  box-shadow: 0 2px 8px rgba(14,110,82,.06); }
+.hb-hadith-row__head { display: flex; gap: .65rem; align-items: flex-start; direction: rtl; }
+.hb-hadith-row__num { flex-shrink: 0; width: 1.6rem; height: 1.6rem;
+  border-radius: 50%; background: rgba(14,110,82,.1);
+  color: var(--ds-emerald, #0E6E52); font-size: .7rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; margin-top: .05rem; }
+.hb-hadith-row__preview { flex: 1; font-size: .88rem; line-height: 1.6;
+  color: var(--elite-ink); text-align: right; font-family: 'Noto Naskh Arabic', serif; }
+.hb-hadith-row__chevron { flex-shrink: 0; color: var(--elite-ink-muted);
+  transition: transform .2s; margin-top: .2rem; }
+.hb-hadith-row__chevron--open { transform: rotate(90deg); }
+
+/* تفاصيل الحديث */
+.hb-hadith-row__detail { padding-top: .6rem; border-top: 1px solid var(--elite-border);
+  margin-top: .55rem; display: flex; gap: .75rem; align-items: center;
+  justify-content: space-between; direction: rtl; }
+.hb-hadith-row__meta { display: flex; gap: .45rem; flex-wrap: wrap; align-items: center; }
+.hb-hadith-row__chapter { font-size: .75rem; color: var(--elite-ink-soft);
+  background: var(--elite-cream); padding: .15rem .4rem; border-radius: 4px; }
+.hb-hadith-row__badge { font-size: .72rem; color: var(--ds-emerald, #0E6E52);
+  font-weight: 600; }
+.hb-hadith-row__copy { font-size: .75rem; padding: .25rem .55rem;
+  background: rgba(14,110,82,.08); border: none; border-radius: 5px;
+  color: var(--ds-emerald, #0E6E52); cursor: pointer; font-family: inherit;
+  flex-shrink: 0; transition: background .15s; }
+.hb-hadith-row__copy:hover { background: rgba(14,110,82,.15); }
+
+/* الترقيم */
+.hb-pagination { display: flex; align-items: center; justify-content: center;
+  gap: .75rem; margin-top: 1.25rem; direction: rtl; }
+.hb-pagination__btn { padding: .4rem .85rem; border: 1.5px solid var(--elite-border-2);
+  border-radius: 7px; background: var(--elite-white); cursor: pointer;
+  font-size: .82rem; font-family: inherit; color: var(--elite-ink-soft);
+  transition: all .16s; }
+.hb-pagination__btn:hover:not(:disabled) { border-color: var(--ds-emerald, #0E6E52);
+  color: var(--ds-emerald, #0E6E52); }
+.hb-pagination__btn:disabled { opacity: .4; cursor: not-allowed; }
+.hb-pagination__info { font-size: .82rem; color: var(--elite-ink-muted); }
+
+/* بطاقة الكتب في فهرس الحديث */
+.hadith-index-card--books { background: linear-gradient(135deg, #0E6E52 0%, #153025 100%); }
+.hadith-index-card--books .hadith-index-card__title { color: #fff; }
+.hadith-index-card--books .hadith-index-card__desc  { color: rgba(255,255,255,.82); }
+.hadith-index-card--books .hadith-index-card__count { color: rgba(255,255,255,.65); }
+.hadith-index-card--books .hadith-index-card__go    { color: rgba(255,255,255,.9); }
+.hadith-index-card--books .hadith-index-card__icon  { background: rgba(255,255,255,.15); }
+
+/* موبايل */
+@media (max-width: 700px) {
+  .hb-layout { flex-direction: column; }
+  .hb-sidebar { width: 100%; max-height: 220px; }
+  .hb-tabs { gap: .3rem; }
+  .hb-tab { padding: .4rem .65rem; }
+  .hb-tab__name { font-size: .75rem; }
+}
+
+/* وضع مظلم */
+html[data-theme="dark"] .hb-tab { background: #0f1f17; border-color: rgba(92,196,154,.2); color: #C8D8D0; }
+html[data-theme="dark"] .hb-tab--active { background: var(--ds-emerald, #0E6E52); color: #fff; }
+html[data-theme="dark"] .hb-sidebar { background: #0d1f17; border-color: rgba(92,196,154,.15); }
+html[data-theme="dark"] .hb-hadith-row { background: #0f1f17; border-color: rgba(92,196,154,.15); color: #E8DED4; }
+html[data-theme="dark"] .hb-hadith-row:hover, html[data-theme="dark"] .hb-hadith-row--expanded { border-color: rgba(14,110,82,.4); }
+html[data-theme="dark"] .hb-hadith-row__preview { color: #E8DED4; }
+html[data-theme="dark"] .hb-search-input { background: #0d1f17; border-color: rgba(92,196,154,.2); color: #E8DED4; }
+html[data-theme="dark"] .hb-notice { background: rgba(14,110,82,.08); }

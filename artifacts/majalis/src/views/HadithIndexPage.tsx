@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, BadgeCheck, AlertTriangle, Ban } from "lucide-react";
+import { ArrowLeft, BadgeCheck, AlertTriangle, Ban, BookOpen } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -94,6 +94,21 @@ export default function HadithIndexPage() {
         title="الأحاديث النبوية"
         subtitle="ثلاثة أقسام مستقلة ومفصولة: الصحيحة، ثم الضعيفة، ثم الموضوعة والمكذوبة، لمنع أي اختلاط."
       />
+
+      {/* بطاقة الكتب الكاملة */}
+      <Link href="/hadith/books" className="hadith-index-card hadith-index-card--books">
+        <span className="hadith-index-card__icon" aria-hidden="true">
+          <BookOpen size={22} strokeWidth={2} color="#fff" />
+        </span>
+        <h2 className="hadith-index-card__title">الكتب الحديثية الكاملة</h2>
+        <p className="hadith-index-card__desc">
+          تصفّح صحيح البخاري (7563) ومسلم (3033) والأربعين النووية والقدسية والسنن الأربعة — بحث وتصفح بالكتاب والباب.
+        </p>
+        <span className="hadith-index-card__count">35,000+ حديث</span>
+        <span className="hadith-index-card__go">
+          تصفّح الكتب <ArrowLeft size={16} aria-hidden="true" />
+        </span>
+      </Link>
 
       <div className="hadith-index-grid">
         {SECTIONS.map((s) => {
