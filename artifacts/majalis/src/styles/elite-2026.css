@@ -27771,6 +27771,118 @@ html[data-theme="dark"] .mobile-nav-backdrop {
 }
 
 /* ══════════════════════════════════════════════════════════════════
+   §QCP-EXT — QuranCirclesPage additions
+   ══════════════════════════════════════════════════════════════════ */
+.qcp-stats-row {
+  display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
+  margin-top: .75rem;
+}
+.qcp-stat {
+  font-size: .85rem; color: var(--ds-ink-soft, #5A5A5A);
+  background: rgba(14,110,82,.07); padding: .35rem .85rem;
+  border-radius: 99px;
+}
+.qcp-stat strong { color: var(--ds-emerald, #0E6E52); }
+.qcp-section-header {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .65rem 0 .5rem; margin-bottom: .75rem;
+  border-bottom: 2px solid var(--ds-emerald, #0E6E52);
+  direction: rtl;
+}
+.qcp-section-header__icon { color: var(--ds-emerald, #0E6E52); }
+.qcp-section-header__title {
+  font-size: 1rem; font-weight: 700; color: var(--ds-ink, #1C1C1C);
+  margin: 0; flex: 1;
+}
+.qcp-section-header__count {
+  font-size: .78rem; color: var(--ds-ink-soft); background: rgba(14,110,82,.08);
+  padding: .2rem .65rem; border-radius: 99px; font-weight: 600;
+}
+.qcp-reg-banner {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: .75rem;
+  background: linear-gradient(135deg, #0E6E52 0%, #153025 100%);
+  color: #fff; border-radius: .85rem; padding: .85rem 1.2rem;
+  margin: 1rem 0; direction: rtl;
+}
+.qcp-reg-banner__content { font-size: .88rem; flex: 1; }
+.qcp-reg-banner__desc { opacity: .85; }
+.qcp-reg-banner__btn {
+  display: inline-block; padding: .45rem 1.2rem;
+  background: #fff; color: #0E6E52;
+  border-radius: .5rem; font-weight: 700; font-size: .85rem;
+  text-decoration: none; white-space: nowrap; transition: opacity .15s;
+}
+.qcp-reg-banner__btn:hover { opacity: .9; }
+html[data-theme="dark"] .qcp-section-header__title { color: #E8DED4; }
+html[data-theme="dark"] .qcp-stat { background: rgba(92,196,154,.10); }
+
+/* ══════════════════════════════════════════════════════════════════
+   §QC-EXT — QuranCircleCard extensions
+   ══════════════════════════════════════════════════════════════════ */
+.qc-card__footer--multi {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  padding: .75rem 1rem;
+  border-top: 1px solid var(--ds-line-color, #D5CBBF);
+  align-items: center;
+}
+.qc-card__reg-btn {
+  display: inline-flex; align-items: center; gap: .35rem;
+  padding: .42rem 1rem; border-radius: .5rem;
+  background: var(--ds-emerald, #0E6E52); color: #fff;
+  font-size: .82rem; font-weight: 700; text-decoration: none;
+  transition: background .15s;
+}
+.qc-card__reg-btn:hover { background: #0a5a42; }
+.qc-card__join-btn {
+  display: inline-flex; align-items: center; gap: .35rem;
+  padding: .42rem 1rem; border-radius: .5rem;
+  background: #1e40af; color: #fff;
+  font-size: .82rem; font-weight: 600; text-decoration: none;
+  transition: background .15s;
+}
+.qc-card__join-btn:hover { background: #1730a0; }
+.qc-card__site-btn {
+  display: inline-flex; align-items: center; gap: .35rem;
+  padding: .38rem .85rem; border-radius: .5rem;
+  border: 1.5px solid var(--ds-emerald, #0E6E52);
+  color: var(--ds-emerald, #0E6E52);
+  font-size: .8rem; font-weight: 600; text-decoration: none;
+  transition: background .15s;
+}
+.qc-card__site-btn:hover { background: rgba(14,110,82,.07); }
+.qc-card__contact-row {
+  display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+}
+.qc-card__contact-link {
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-size: .82rem; color: var(--ds-ink, #1C1C1C);
+  text-decoration: none; direction: ltr;
+}
+.qc-card__contact-link:hover { text-decoration: underline; }
+.qc-card__wa-link {
+  display: inline-block; padding: .18rem .6rem;
+  border-radius: 99px; background: #22c55e;
+  color: #fff; font-size: .72rem; font-weight: 700;
+  text-decoration: none;
+}
+.qc-badge--gov {
+  background: rgba(14,110,82,.10);
+  color: var(--ds-emerald, #0E6E52);
+  font-size: .7rem; border-radius: 99px; padding: .15rem .55rem;
+  font-weight: 600;
+}
+.qc-badge--mode-inperson { background: #d1fae5; color: #065f46; }
+.qc-badge--mode-remote   { background: #dbeafe; color: #1e40af; }
+.qc-badge--mode-hybrid   { background: #ede9fe; color: #4f46e5; }
+
+/* dark */
+html[data-theme="dark"] .qc-card__contact-link { color: #C8D8D0; }
+html[data-theme="dark"] .qc-badge--gov { background: rgba(92,196,154,.15); color: #5cc49a; }
+
+/* ══════════════════════════════════════════════════════════════════
    §SQ — SectionQuiz — اختبار نهاية القسم
    ══════════════════════════════════════════════════════════════════ */
 .sq-section {
