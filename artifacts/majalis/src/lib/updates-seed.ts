@@ -985,6 +985,33 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-07-11T07:00:00Z",
     status: "approved",
   },
+  {
+    id: "update-quiz-872",
+    title: "تحديث: بنك الأسئلة يبلغ 872 سؤالاً",
+    summary: "إضافة 16 سؤالاً تاريخياً وجغرافياً في فئات الأندلس (5 أسئلة)، الخلفاء، العلماء، المعارك، والفتوحات.",
+    update_type: "إعلان",
+    source_url: "/quiz",
+    published_at: "2026-07-11T12:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-topics-12",
+    title: "تحديث: شبكة المواضيع المشوقة — 12 موضوعاً",
+    summary: "إضافة 4 مواضيع جديدة للصفحة الرئيسية: الشمائل المحمدية، الجنة والنار، فضائل الأعمال، وآداب طالب العلم.",
+    update_type: "إعلان",
+    source_url: "/",
+    published_at: "2026-07-11T11:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-sunnah-time-enriched",
+    title: "تحديث: سنة اليوم — اقتراحات أكثر ثراءً",
+    summary: "توسيع مقترحات سنة اليوم من 3 إلى 4-5 اقتراحات لكل وقت صلاة، تشمل: الفوائد، الرقائق، حكم السلف، الوصايا، والدروس.",
+    update_type: "إعلان",
+    source_url: "/",
+    published_at: "2026-07-11T10:00:00Z",
+    status: "approved",
+  },
 ];
 
 export function getSortedUpdates(limit?: number) {
