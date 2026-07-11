@@ -121,12 +121,12 @@ html {
   --color-parchment:     var(--msk-canvas,   #FFFFFF);
   --color-line:          var(--msk-border,   rgba(31,77,58,0.10));
 
-  /* ── الخطوط — IBM Plex Sans Arabic (نص) + Amiri للعناوين + Amiri Quran (مصحف) ── */
-  --font-primary:  "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
-  --font-ui:       "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
-  --font-display:  "Amiri", "IBM Plex Sans Arabic", serif;
-  --font-reading:  "Noto Naskh Arabic", "IBM Plex Sans Arabic", serif;
-  --font-body:     "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
+  /* ── الخطوط — Cairo (نص) + Amiri للعناوين + Amiri Quran (مصحف) ── */
+  --font-primary:  "Cairo", system-ui, sans-serif;
+  --font-ui:       "Cairo", system-ui, sans-serif;
+  --font-display:  "Amiri", "Cairo", serif;
+  --font-reading:  "Noto Naskh Arabic", "Cairo", serif;
+  --font-body:     "Cairo", system-ui, sans-serif;
   --font-quran:    "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
 
   /* ── الحركة — تلاشٍ وهبوط (لا ارتداد) ── */

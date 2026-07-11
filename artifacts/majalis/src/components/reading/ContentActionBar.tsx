@@ -82,15 +82,20 @@ export function ContentActionBar({
     setShowShareMenu(false);
   }, [text, title]);
 
-  const shareToTelegram = useCallback(() => {
+  const shareToSnapchat = useCallback(async () => {
     const pageUrl = window.location.href;
-    window.open(
-      `https://t.me/share/url?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(title)}`,
-      "_blank",
-      "noopener",
-    );
+    const shareText = `${title}\n${text.slice(0, 200)}\n\n${pageUrl}`;
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share({ title, text: shareText, url: pageUrl });
+        setShowShareMenu(false);
+        return;
+      } catch { /* cancelled */ }
+    }
+    await navigator.clipboard.writeText(shareText);
     setShowShareMenu(false);
-  }, [title]);
+    alert("تم النسخ — افتح سناب شات وألصق في قصتك");
+  }, [title, text]);
 
   const toggleReadingMode = useCallback(() => {
     const next = !readingMode;
@@ -118,8 +123,8 @@ export function ContentActionBar({
             <button type="button" className="cab-share-item cab-share-item--wa" onClick={shareToWhatsApp}>
               📱 واتساب
             </button>
-            <button type="button" className="cab-share-item cab-share-item--tg" onClick={shareToTelegram}>
-              ✈️ تيليجرام
+            <button type="button" className="cab-share-item cab-share-item--snap" onClick={shareToSnapchat}>
+              👻 سناب شات
             </button>
             <button type="button" className="cab-share-item" onClick={() => { handleCopy(); setShowShareMenu(false); }}>
               🔗 نسخ الرابط

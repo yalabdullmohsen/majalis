@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link2, Send } from "lucide-react";
+import { Link2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 interface Props {
@@ -19,12 +19,15 @@ export function ShareButtons({ title, url }: { title?: string; url?: string }) {
   const toWhatsApp = () => {
     window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, "_blank", "noopener");
   };
-  const toTelegram = () => {
-    window.open(
-      `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(title || "")}`,
-      "_blank",
-      "noopener",
-    );
+  const toSnapchat = async () => {
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share({ title: title || "", text: shareText, url: shareUrl });
+        return;
+      } catch { /* cancelled */ }
+    }
+    await navigator.clipboard.writeText(shareText);
+    alert("تم النسخ — افتح سناب شات وألصق في قصتك");
   };
   const copyLink = async () => {
     await navigator.clipboard.writeText(shareUrl);
@@ -41,9 +44,11 @@ export function ShareButtons({ title, url }: { title?: string; url?: string }) {
         </svg>
         <span>واتساب</span>
       </button>
-      <button type="button" onClick={toTelegram} className="share-btn share-btn--tg" aria-label="مشاركة عبر تيليجرام">
-        <Send size={14} strokeWidth={1.8} aria-hidden="true" />
-        <span>تيليجرام</span>
+      <button type="button" onClick={toSnapchat} className="share-btn share-btn--snap" aria-label="مشاركة عبر سناب شات">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12.017 2c1.563.008 4.146.453 5.71 3.156.534.93.482 2.5.44 3.638l-.005.16c-.003.1.056.147.14.175.244.082.603.114 1.022.082.424-.033.796-.173.962-.173.25 0 .714.14.714.56 0 .338-.266.61-.797.817-.133.05-.367.1-.604.173-.48.143-.673.344-.673.594 0 .12.033.252.1.39.218.448.648 1.283.648 2.57 0 2.57-1.93 6.013-7.07 6.013-.224 0-.44-.01-.648-.029-.218.35-.48.664-.79.92-.937.762-2.145.9-3.09.9-.945 0-2.153-.138-3.09-.9a4.24 4.24 0 0 1-.789-.92c-.208.019-.424.029-.648.029-5.14 0-7.07-3.443-7.07-6.012 0-1.288.43-2.123.648-2.57.067-.139.1-.271.1-.39 0-.25-.193-.451-.672-.594-.238-.072-.471-.123-.604-.172-.53-.208-.797-.48-.797-.817 0-.42.463-.56.714-.56.165 0 .537.14.962.173.41.032.768 0 1.022-.082.084-.028.143-.076.14-.175l-.005-.16c-.042-1.138-.094-2.707.44-3.637C7.854 2.453 10.437 2.008 12 2h.017z"/>
+        </svg>
+        <span>سناب شات</span>
       </button>
       <button type="button" onClick={copyLink} className="share-btn share-btn--copy" aria-label="نسخ الرابط">
         <Link2 size={14} strokeWidth={1.8} aria-hidden="true" />
