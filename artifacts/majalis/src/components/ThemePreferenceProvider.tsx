@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   applyThemePreference,
   readThemePreference,
@@ -11,20 +11,47 @@ type ThemePreferenceContextValue = {
   preference: ThemePreference;
   resolvedTheme: "light" | "dark";
   setPreference: (preference: ThemePreference) => void;
+  toggleDark: () => void;
 };
 
 const ThemePreferenceContext = createContext<ThemePreferenceContextValue | null>(null);
 
 export function ThemePreferenceProvider({ children }: { children: ReactNode }) {
-  applyThemePreference("light");
+  const [preference, setPreferenceState] = useState<ThemePreference>(() => readThemePreference());
+  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">(() => resolveTheme(readThemePreference()));
 
-  const value = useMemo<ThemePreferenceContextValue>(() => ({
-    preference: readThemePreference(),
-    resolvedTheme: resolveTheme("light"),
-    setPreference: (next) => {
-      writeThemePreference(next);
-    },
-  }), []);
+  // Apply on mount and whenever preference changes
+  useEffect(() => {
+    applyThemePreference(preference);
+    setResolvedTheme(resolveTheme(preference));
+  }, [preference]);
+
+  // Listen for system theme changes in "auto" mode
+  useEffect(() => {
+    if (preference !== "auto") return;
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const handler = () => {
+      applyThemePreference("auto");
+      setResolvedTheme(resolveTheme("auto"));
+    };
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, [preference]);
+
+  const setPreference = useCallback((next: ThemePreference) => {
+    writeThemePreference(next);
+    setPreferenceState(next);
+    setResolvedTheme(resolveTheme(next));
+  }, []);
+
+  const toggleDark = useCallback(() => {
+    setPreference(resolveTheme(preference) === "dark" ? "light" : "dark");
+  }, [preference, setPreference]);
+
+  const value = useMemo<ThemePreferenceContextValue>(
+    () => ({ preference, resolvedTheme, setPreference, toggleDark }),
+    [preference, resolvedTheme, setPreference, toggleDark],
+  );
 
   return (
     <ThemePreferenceContext.Provider value={value}>

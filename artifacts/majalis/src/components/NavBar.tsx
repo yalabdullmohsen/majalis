@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, Search, X } from "lucide-react";
+import { Menu, Moon, Search, Sun, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { useLanguage } from "./LanguageProvider";
 import NotificationBell from "./NotificationBell";
 import { SearchSuggestions } from "./SearchSuggestions";
 import { SideNavDrawer } from "./SideNavDrawer";
 import { MobileMoreMenu } from "./MobileMoreMenu";
+import { useThemePreference } from "./ThemePreferenceProvider";
 
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
@@ -86,6 +87,7 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
 export default function NavBar() {
   const { isAdmin, isLoggedIn, user, logout } = useAuth();
   const { t } = useLanguage();
+  const { resolvedTheme, toggleDark } = useThemePreference();
   const [location, navigate] = useLocation();
   const isMobile = useIsMobile();
   const { isMenuOpen, moreOpen, toggleMenu, openMenu, closeMenu, closeMore, closeAll } = useMobileNavState();
@@ -191,6 +193,19 @@ export default function NavBar() {
           <div className="navbar-v3__end">
             {/* عداد الصلاة التالية — سطح المكتب فقط */}
             {!isMobile && <PrayerChip />}
+            {/* زر الوضع الليلي */}
+            <button
+              type="button"
+              onClick={toggleDark}
+              aria-label={resolvedTheme === "dark" ? "التحويل إلى الوضع النهاري" : "التحويل إلى الوضع الليلي"}
+              title={resolvedTheme === "dark" ? "وضع نهاري" : "وضع ليلي"}
+              className="navbar-theme-toggle"
+            >
+              {resolvedTheme === "dark"
+                ? <Sun size={17} strokeWidth={1.6} aria-hidden="true" />
+                : <Moon size={17} strokeWidth={1.6} aria-hidden="true" />
+              }
+            </button>
             {/* زر البحث الشامل */}
             <button
               type="button"

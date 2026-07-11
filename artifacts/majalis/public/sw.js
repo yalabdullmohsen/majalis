@@ -1,7 +1,7 @@
-/** PWA service worker v15 — network-first for app shell, cache-first for static Quran/lesson data. */
+/** PWA service worker v16 — network-first for app shell, cache-first for static Quran/lesson data. */
 
-const SHELL_CACHE   = "majalis-shell-v15";
-const DATA_CACHE    = "majalis-data-v15";
+const SHELL_CACHE   = "majalis-shell-v16";
+const DATA_CACHE    = "majalis-data-v16";
 const VERSION_CACHE = "majalis-version";
 const FETCH_TIMEOUT = 8000;
 
@@ -16,6 +16,9 @@ const CACHEABLE_API_PATHS = [
   "/api/lessons",
   "/api/fawaid",
   "/api/prayer",
+  "/api/adhkar",
+  "/api/quiz",
+  "/api/library",
 ];
 
 const SHELL_ROUTES = [
@@ -31,6 +34,16 @@ const SHELL_ROUTES = [
   "/fawaid",
   "/duas",
   "/asma-husna",
+  "/lessons",
+  "/library",
+  "/scholars",
+  "/quiz",
+  "/fatwa",
+  "/glossary",
+  "/hadith-science",
+  "/stories",
+  "/fiqh",
+  "/tajweed",
 ];
 
 self.addEventListener("install", (event) => {

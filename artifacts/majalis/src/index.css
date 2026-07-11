@@ -255,6 +255,117 @@ html {
   --v2-shadow-4:     0 24px 64px rgba(28,26,24,.13);
 }
 
+/* ══ الوضع الليلي — Night Reading Mode ══ */
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --msk-canvas:        #0D1A14;
+  --msk-canvas-1:      #122019;
+  --msk-canvas-2:      #1A2E21;
+  --msk-canvas-glass:  rgba(13,26,20,.93);
+  --msk-manuscript:    #182A1D;
+  --msk-manuscript-2:  #1F3526;
+  --msk-gold:          #5CC49A;
+  --msk-gold-deep:     #4BA882;
+  --msk-gold-dim:      rgba(92,196,154,.14);
+  --msk-gold-glow:     rgba(92,196,154,.18);
+  --msk-gold-border:   rgba(92,196,154,.22);
+  --msk-sky:           #64BEDA;
+  --msk-sky-dim:       rgba(100,190,218,.12);
+  --msk-text:          #E8DED4;
+  --msk-text-2:        #A8BDB6;
+  --msk-text-3:        #6E8E84;
+  --msk-green:         #5CC49A;
+  --msk-red:           #EF9898;
+  --msk-red-dim:       rgba(239,152,152,.12);
+  --msk-border:        rgba(92,196,154,.10);
+  --msk-border-strong: #253D30;
+  --msk-divider:       rgba(255,255,255,.05);
+  --msk-shadow-sm:     0 1px 2px rgba(0,0,0,.40);
+  --msk-shadow:        0 4px 12px rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.35);
+  --msk-shadow-lg:     0 12px 32px rgba(0,0,0,.55);
+  --msk-shadow-gold:   0 0 24px rgba(92,196,154,.15);
+
+  --majalis-ink:           #E8DED4;
+  --majalis-ink-soft:      #A8BDB6;
+  --majalis-ink-muted:     #6E8E84;
+  --majalis-charcoal:      #F0EBE4;
+  --majalis-parchment:     #122019;
+  --majalis-parchment-deep:#0D1A14;
+  --majalis-panel:         #122019;
+  --majalis-panel-raised:  #1A2E21;
+  --majalis-emerald:       #5CC49A;
+  --majalis-emerald-deep:  #4BA882;
+  --majalis-emerald-muted: rgba(92,196,154,.14);
+  --majalis-emerald-soft:  rgba(92,196,154,.08);
+  --majalis-blue:          #64BEDA;
+  --majalis-blue-deep:     #4EA8C4;
+  --majalis-blue-soft:     rgba(100,190,218,.10);
+  --majalis-brass:         #5CC49A;
+  --majalis-brass-deep:    #4BA882;
+  --majalis-brass-soft:    rgba(92,196,154,.08);
+  --majalis-sage:          #1A2E21;
+  --majalis-danger:        #EF9898;
+  --majalis-danger-muted:  rgba(239,152,152,.12);
+  --majalis-success:       #5CC49A;
+  --majalis-warning:       #5CC49A;
+  --majalis-line:          rgba(92,196,154,.12);
+  --majalis-line-strong:   #253D30;
+  --majalis-shadow:        0 4px 12px rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.35);
+  --majalis-shadow-sm:     0 1px 2px rgba(0,0,0,.40);
+  --majalis-shadow-lg:     0 12px 32px rgba(0,0,0,.55);
+  --majalis-shadow-xl:     0 24px 64px rgba(0,0,0,.65);
+  --majalis-gold:          #5CC49A;
+  --majalis-gold-light:    rgba(92,196,154,.18);
+  --majalis-ivory:         #122019;
+
+  --clr-bg:          #0D1A14;
+  --clr-surface:     #122019;
+  --clr-border:      rgba(92,196,154,.12);
+  --clr-divider:     rgba(255,255,255,.05);
+  --clr-text-1:      #E8DED4;
+  --clr-text-2:      #A8BDB6;
+
+  --bg-card:   #122019;
+  --bg-base:   #0D1A14;
+  --text-base: #E8DED4;
+  --text-body: #A8BDB6;
+  --text-muted:#6E8E84;
+
+  --v2-green:        #5CC49A;
+  --v2-green-deep:   #4BA882;
+  --v2-green-soft:   rgba(92,196,154,.08);
+  --v2-green-mid:    rgba(92,196,154,.40);
+  --v2-gold:         #5CC49A;
+  --v2-gold-soft:    rgba(92,196,154,.08);
+  --v2-ink:          #E8DED4;
+  --v2-ink-2:        #A8BDB6;
+  --v2-ink-3:        #6E8E84;
+  --v2-surface-0:    #0D1A14;
+  --v2-surface-1:    #122019;
+  --v2-surface-2:    #1A2E21;
+  --v2-border:       rgba(92,196,154,.12);
+  --v2-border-soft:  rgba(255,255,255,.05);
+  --v2-shadow-1:     0 1px 2px rgba(0,0,0,.40);
+  --v2-shadow-2:     0 4px 12px rgba(0,0,0,.45);
+  --v2-shadow-3:     0 12px 32px rgba(0,0,0,.55);
+  --v2-shadow-4:     0 24px 64px rgba(0,0,0,.65);
+
+  --color-parchment: #122019;
+  --color-line:      rgba(92,196,154,.12);
+  --majalis-accent:  #5CC49A;
+  --majalis-surface-2: #122019;
+  --majalis-surface-hover: rgba(92,196,154,.06);
+  --majalis-surface-muted: #122019;
+  --ds-surface-2: #122019;
+  --mark-green: #5CC49A;
+}
+
+html[data-theme="dark"] body {
+  background-color: #0D1A14;
+  color: #E8DED4;
+}
+
 html[data-font="default"] {
   --font-body: var(--font-primary);
 }

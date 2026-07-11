@@ -36,32 +36,42 @@
       "src": "/favicon.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "shortcuts": [
     {
-      "name": "الدروس",
+      "name": "القرآن الكريم",
+      "short_name": "القرآن",
+      "url": "/quran?source=pwa",
+      "description": "المصحف الرقمي الاحترافي",
+      "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
+    },
+    {
+      "name": "الدروس العلمية",
       "short_name": "الدروس",
       "url": "/lessons?source=pwa",
+      "description": "دروس ومحاضرات شرعية",
       "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
     },
     {
       "name": "أوقات الصلاة",
       "short_name": "الصلاة",
       "url": "/prayer-times?source=pwa",
+      "description": "مواقيت الصلاة الدقيقة",
       "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
     },
     {
       "name": "الأذكار",
       "short_name": "الأذكار",
       "url": "/adhkar?source=pwa",
-      "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
-    },
-    {
-      "name": "الأسئلة",
-      "short_name": "الأسئلة",
-      "url": "/qa?source=pwa",
+      "description": "أذكار الصباح والمساء",
       "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
     }
   ]

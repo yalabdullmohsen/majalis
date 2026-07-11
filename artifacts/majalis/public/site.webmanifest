@@ -10,7 +10,7 @@
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui"],
   "background_color": "#FAF8F5",
-  "theme_color": "#166534",
+  "theme_color": "#0E6E52",
   "orientation": "portrait-primary",
   "categories": ["education", "books", "lifestyle"],
   "prefer_related_applications": false,
@@ -37,7 +37,13 @@
       "src": "/favicon.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "shortcuts": [
