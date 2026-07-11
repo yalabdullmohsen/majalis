@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   BookOpen, Scroll, Scale, BookMarked, Users, Star, GraduationCap,
   Heart, Compass, Globe, Layers, ChevronLeft, ArrowLeftRight,
@@ -517,6 +518,9 @@ export default function IslamicKnowledgeMapPage() {
 
       <div className="twh-share">
         <ShareButtons title="خريطة المعرفة الإسلامية — المجلس العلمي" url="https://majlisilm.com/islamic-knowledge-map" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["aqeeda", "hadith", "fiqh"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
       </div>
     </div>
   );
