@@ -3,6 +3,7 @@ import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
 import { useAuth } from "@/components/AuthProvider";
 import { getAkpStories } from "@/lib/supabase";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
@@ -158,6 +159,9 @@ export default function StoriesPage() {
         {filtersPanel}
       </FilterBottomSheet>
       <AdminQuickEdit section="islamic-stories" />
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["anbiya", "tarikh"]} title="اختبر معلوماتك في القصص والتاريخ" count={4} />
+      </div>
     </div>
   );
 }

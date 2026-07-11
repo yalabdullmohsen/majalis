@@ -3,6 +3,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { getAllSurahStories, getSurahStory, searchSurahStories } from "@/lib/surah-stories";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 
@@ -134,6 +135,9 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
 
         <div className="twh-share">
           <ShareButtons title={`${story.name} — قصص سور القرآن | المجلس العلمي`} url={`https://majlisilm.com/surah-stories/${story.number}`} />
+        </div>
+        <div className="px-4 pb-6 mt-4">
+          <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />
         </div>
       </article>
     </div>

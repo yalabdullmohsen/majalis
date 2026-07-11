@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 
 type UQTab = "nuzul" | "jam" | "tafsir" | "ijaz" | "ahkam";
@@ -439,6 +440,9 @@ export default function UlumQuranPage() {
             ))}
           </div>
         </nav>
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="quran" title="اختبر معلوماتك في علوم القرآن" count={4} />
       </div>
     </main>
   );
