@@ -19,6 +19,7 @@ import {
   type PlanItem,
 } from "@/lib/learning-plan-service";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const INTEREST_ICON_MAP: Record<string, LucideIcon> = {
   Landmark, ScrollText, Repeat2, BookOpen, Moon, Gem,
@@ -388,6 +389,9 @@ export default function LearningPlanPage() {
 
       <div className="twh-share">
         <ShareButtons title="خطة التعلم الشخصية — المجلس العلمي" url="https://majlisilm.com/learning-plan" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["aqeeda", "hadith"]} title="اختبر معلوماتك في العلم الشرعي" count={4} />
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { supabase } from "@/lib/supabase";
 import type { LPScience, LPLevel, LPProgress } from "@/lib/learning-path-service";
 import { fetchScienceDetail, fetchProgress } from "@/lib/learning-path-service";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const LevelTimeline = lazy(() =>
   import("@/components/learning-path/LevelTimeline").then((m) => ({ default: m.LevelTimeline }))
@@ -167,6 +168,9 @@ export default function LearningPathSciencePage() {
 
         <div className="twh-share">
           <ShareButtons title={`${science.name} — مسار التعلم | المجلس العلمي`} url={`https://majlisilm.com/learning-path/${science.slug}`} />
+        </div>
+        <div className="px-4 pb-6 mt-4">
+          <SectionQuiz categoryId={["quran", "hadith", "fiqh"]} title="اختبر معلوماتك في أصول العلوم الشرعية" count={4} />
         </div>
       </div>
     </div>
