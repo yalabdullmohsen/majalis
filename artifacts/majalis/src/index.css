@@ -4007,6 +4007,16 @@ input, textarea, select { font-family: inherit; }
   flex-shrink: 0;
 }
 
+.navbar-logo--calligraphy {
+  height: 42px;
+  max-height: 42px;
+  max-width: 180px;
+  width: auto;
+  border-radius: 6px;
+  object-fit: contain;
+  object-position: center;
+}
+
 .site-brand-name {
   font-family: "Cairo", "IBM Plex Sans Arabic", system-ui, sans-serif;
   font-weight: 700;
@@ -8687,6 +8697,16 @@ input, textarea, select { font-family: inherit; }
   flex-shrink: 0;
 }
 
+.site-footer-logo--calligraphy {
+  height: 48px;
+  max-height: 48px;
+  width: auto;
+  max-width: 200px;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 8px;
+}
+
 .site-footer-brand strong {
   display: block;
   color: var(--majalis-emerald-deep);
@@ -12627,6 +12647,14 @@ svg {
     flex-shrink: 0;
     object-fit: contain;
     object-position: center;
+  }
+
+  .navbar-logo--calligraphy {
+    height: 34px;
+    max-height: 34px;
+    max-width: 140px;
+    width: auto;
+    border-radius: 5px;
   }
 
   .navbar-menu-btn,
