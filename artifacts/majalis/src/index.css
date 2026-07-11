@@ -745,13 +745,23 @@ input, textarea, select { font-family: inherit; }
   z-index: -1;
 }
 
-/* مشربية — النمط الهندسي الإسلامي الوحيد في مِشكاة */
+/* مشربية إسلامية راقية — نجمة ثمانية محاطة بمضلعات */
 .home-hero-pattern {
   position: absolute;
   inset: 0;
-  opacity: 0.065;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect fill='none' stroke='white' stroke-width='0.7' x='0.4' y='0.4' width='47.2' height='47.2'/%3E%3Cpolygon points='14,0.4 34,0.4 47.6,14 47.6,34 34,47.6 14,47.6 0.4,34 0.4,14' fill='none' stroke='white' stroke-width='0.7'/%3E%3Crect fill='none' stroke='white' stroke-width='0.45' x='14' y='14' width='20' height='20'/%3E%3Ccircle cx='24' cy='24' r='3.5' fill='none' stroke='white' stroke-width='0.45'/%3E%3C/svg%3E");
-  background-size: 48px 48px;
+  opacity: 0.072;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3C!-- outer octagon --%3E%3Cpolygon points='21,0.5 51,0.5 71.5,21 71.5,51 51,71.5 21,71.5 0.5,51 0.5,21' fill='none' stroke='white' stroke-width='0.7'/%3E%3C!-- 8-pointed star --%3E%3Cpolygon points='36,8 40.5,26 57.5,22.5 45,35.5 58,53 40,47 36,65 32,47 14,53 27,35.5 14.5,22.5 31.5,26' fill='none' stroke='white' stroke-width='0.8'/%3E%3C!-- inner square 45deg --%3E%3Cpolygon points='36,22 50,36 36,50 22,36' fill='none' stroke='white' stroke-width='0.5'/%3E%3C!-- center circle --%3E%3Ccircle cx='36' cy='36' r='5' fill='none' stroke='white' stroke-width='0.5'/%3E%3C!-- corner dots --%3E%3Ccircle cx='0.5' cy='0.5' r='1.2' fill='white'/%3E%3Ccircle cx='71.5' cy='0.5' r='1.2' fill='white'/%3E%3Ccircle cx='0.5' cy='71.5' r='1.2' fill='white'/%3E%3Ccircle cx='71.5' cy='71.5' r='1.2' fill='white'/%3E%3C/svg%3E");
+  background-size: 72px 72px;
+}
+
+/* طبقة ثانية: نمط الماسات الدقيق خلف النمط الرئيسي */
+.home-hero-pattern::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Cpolygon points='18,3 33,18 18,33 3,18' fill='none' stroke='white' stroke-width='0.4'/%3E%3C/svg%3E");
+  background-size: 36px 36px;
 }
 
 .home-hero-grid {

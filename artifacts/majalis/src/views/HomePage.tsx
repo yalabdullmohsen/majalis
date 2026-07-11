@@ -26,7 +26,7 @@ import { HomeInterestingTopics } from "@/components/home/HomeInterestingTopics";
 import { HomeMindMapSection } from "@/components/home/HomeMindMapSection";
 import { HomeMajlisToday } from "@/components/home/HomeMajlisToday";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
-import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
+import { CornerOrnament, IslamicDivider } from "@/components/IslamicDecorations";
 import {
   BookMarked, BookOpen, Bot, CalendarDays, Car, Check, Clock,
   Compass, Droplets, FlaskConical, GraduationCap, Heart, HelpCircle, Landmark, Layers,
@@ -304,7 +304,6 @@ export default function HomePage() {
 
   return (
     <div className="home-page home-page--v4" dir="rtl">
-      <HijriSacredMonthBanner />
       {isMaintenanceMode() && (
         <div role="status" className="home-maintenance-banner">
           {getSiteSettings().maintenanceMessage}
@@ -322,51 +321,71 @@ export default function HomePage() {
           overflow: "hidden",
         }}
       >
-        <div aria-hidden="true" style={{
-          position: "absolute", inset: 0, opacity: 0.05,
-          backgroundImage: "repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%)",
-          backgroundSize: "20px 20px",
-          pointerEvents: "none",
-        }} />
+        {/* نمط هندسي إسلامي */}
+        <div className="home-hero-pattern" aria-hidden="true" style={{ pointerEvents: "none" }} />
+
+        {/* زخرفة الزوايا */}
+        <div aria-hidden="true" style={{ position: "absolute", top: 0, right: 0, pointerEvents: "none" }}>
+          <CornerOrnament size={72} color="rgba(255,255,255,0.55)" opacity={0.45} />
+        </div>
+        <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
+          <CornerOrnament size={72} color="rgba(255,255,255,0.55)" opacity={0.45} flip />
+        </div>
+        <div aria-hidden="true" style={{ position: "absolute", bottom: 0, right: 0, pointerEvents: "none", transform: "scaleY(-1)" }}>
+          <CornerOrnament size={56} color="rgba(255,255,255,0.3)" opacity={0.3} />
+        </div>
+        <div aria-hidden="true" style={{ position: "absolute", bottom: 0, left: 0, pointerEvents: "none", transform: "scale(-1,-1)" }}>
+          <CornerOrnament size={56} color="rgba(255,255,255,0.3)" opacity={0.3} flip />
+        </div>
 
         <div style={{ maxWidth: 640, margin: "0 auto", position: "relative", textAlign: "center" }}>
           {/* الشعار والاسم */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.65rem", marginBottom: "0.75rem" }}>
             <img src="/logo.png" alt="" width={50} height={50} loading="eager" aria-hidden="true"
-              style={{ borderRadius: "50%", border: "2px solid rgba(255,255,255,0.25)" }} />
+              style={{ borderRadius: "50%", border: "2px solid rgba(255,255,255,0.3)", boxShadow: "0 2px 12px rgba(0,0,0,0.3)" }} />
             <h1 style={{ color: "#fff", fontSize: "clamp(1.5rem, 5vw, 2.2rem)", fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>
               المجلس العلمي
             </h1>
           </div>
 
-          <p style={{ color: "rgba(255,255,255,0.85)", fontSize: "clamp(0.85rem, 2.2vw, 0.97rem)", lineHeight: 1.65, maxWidth: 520, margin: "0 auto 1rem" }}>
-            منصة علمية إسلامية للقرآن الكريم، الأحاديث النبوية الموثّقة، دروس علماء الكويت، الفقه والفتاوى، والأذكار اليومية
+          <p style={{ color: "rgba(255,255,255,0.88)", fontSize: "clamp(0.85rem, 2.2vw, 0.97rem)", lineHeight: 1.7, maxWidth: 540, margin: "0 auto 0.65rem" }}>
+            بوّابتك الشاملة إلى العلوم الشرعية — القرآن الكريم، السنة النبوية الموثّقة، دروس علماء الكويت، الفقه والفتاوى المعاصرة، والأذكار اليومية
           </p>
 
-          {/* شريحات الجمهور — تصميم جديد */}
+          {/* فاصل هندسي */}
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: "1rem", opacity: 0.6 }}>
+            <IslamicDivider width={280} color="rgba(255,255,255,0.9)" opacity={0.55} />
+          </div>
+
+          {/* شريحات الجمهور — قابلة للنقر */}
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center", marginBottom: "1.25rem" }}>
             {[
-              { emoji: "🎓", label: "طالب العلم",      bg: "rgba(255,255,255,0.15)" },
-              { emoji: "🕌", label: "المسلم اليومي",   bg: "rgba(255,255,255,0.10)" },
-              { emoji: "👨‍👩‍👧", label: "الأسرة المسلمة", bg: "rgba(255,255,255,0.10)" },
-              { emoji: "📖", label: "العالم والباحث",  bg: "rgba(255,255,255,0.10)" },
-            ].map(({ emoji, label, bg }) => (
-              <span key={label} style={{
+              { emoji: "🎓", label: "طالب العلم",      href: "/lessons",      bg: "rgba(255,255,255,0.18)" },
+              { emoji: "🕌", label: "المسلم اليومي",   href: "/adhkar",       bg: "rgba(255,255,255,0.11)" },
+              { emoji: "👨‍👩‍👧‍👦", label: "الأسرة المسلمة", href: "/qa",           bg: "rgba(255,255,255,0.11)" },
+              { emoji: "🔬", label: "العالم والباحث",  href: "/library",      bg: "rgba(255,255,255,0.11)" },
+            ].map(({ emoji, label, href, bg }) => (
+              <Link key={label} href={href} style={{
                 background: bg, color: "#fff",
-                padding: "0.35rem 0.9rem", borderRadius: "999px",
+                padding: "0.38rem 1rem", borderRadius: "999px",
                 fontSize: "0.8rem", fontWeight: 700,
-                border: "1px solid rgba(255,255,255,0.22)",
+                border: "1px solid rgba(255,255,255,0.28)",
                 display: "inline-flex", alignItems: "center", gap: "0.35rem",
-              }}>
-                <span style={{ fontSize: "1rem" }}>{emoji}</span>{label}
-              </span>
+                textDecoration: "none",
+                transition: "background 0.18s, border-color 0.18s",
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.28)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = bg; }}
+              >
+                <span style={{ fontSize: "1.05rem" }}>{emoji}</span>{label}
+              </Link>
             ))}
           </div>
 
-          {/* خانة البحث — مصغّرة وموضوعة بشكل ثانوي */}
+          {/* خانة البحث */}
           <form onSubmit={submitSearch} style={{
             display: "flex", gap: "0", borderRadius: "0.6rem", overflow: "hidden",
-            boxShadow: "0 2px 12px rgba(0,0,0,0.25)", maxWidth: 460, margin: "0 auto 1.1rem",
+            boxShadow: "0 4px 16px rgba(0,0,0,0.3)", maxWidth: 460, margin: "0 auto 1.1rem",
           }} aria-label="البحث">
             <input
               value={term}
@@ -374,14 +393,14 @@ export default function HomePage() {
               placeholder="ابحث في المنصة..."
               aria-label="البحث"
               style={{
-                flex: 1, padding: "0.6rem 0.85rem", border: "none", outline: "none",
+                flex: 1, padding: "0.65rem 0.9rem", border: "none", outline: "none",
                 fontSize: "0.88rem", direction: "rtl", fontFamily: "inherit",
-                background: "rgba(255,255,255,0.96)"
+                background: "rgba(255,255,255,0.97)"
               }}
             />
             <button type="submit" style={{
               background: "#2d7a5a", color: "#fff", border: "none", cursor: "pointer",
-              padding: "0.6rem 1rem", fontWeight: 700, fontSize: "0.84rem", fontFamily: "inherit",
+              padding: "0.65rem 1.1rem", fontWeight: 700, fontSize: "0.84rem", fontFamily: "inherit",
               whiteSpace: "nowrap"
             }}>بحث</button>
           </form>
@@ -389,25 +408,26 @@ export default function HomePage() {
           {/* أزرار الإجراء */}
           <div style={{ display: "flex", gap: "0.55rem", justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/lessons" style={{
-              background: "#fff", color: "#1F4D3A", padding: "0.6rem 1.3rem",
+              background: "#fff", color: "#1F4D3A", padding: "0.62rem 1.35rem",
               borderRadius: "0.55rem", fontWeight: 800, fontSize: "0.88rem",
-              textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.3rem"
+              textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.3rem",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.18)"
             }}>🎓 الدروس</Link>
             <Link href="/quran" style={{
-              background: "rgba(255,255,255,0.12)", color: "#fff", padding: "0.6rem 1.1rem",
+              background: "rgba(255,255,255,0.12)", color: "#fff", padding: "0.62rem 1.15rem",
               borderRadius: "0.55rem", fontWeight: 700, fontSize: "0.88rem",
-              textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)"
+              textDecoration: "none", border: "1px solid rgba(255,255,255,0.32)"
             }}>📖 القرآن</Link>
             <Link href="/adhkar" style={{
-              background: "rgba(255,255,255,0.12)", color: "#fff", padding: "0.6rem 1.1rem",
+              background: "rgba(255,255,255,0.12)", color: "#fff", padding: "0.62rem 1.15rem",
               borderRadius: "0.55rem", fontWeight: 700, fontSize: "0.88rem",
-              textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)"
+              textDecoration: "none", border: "1px solid rgba(255,255,255,0.32)"
             }}>📿 الأذكار</Link>
             <Link href="/prayer-times" style={{
-              background: "rgba(255,255,255,0.12)", color: "#fff", padding: "0.6rem 1.1rem",
+              background: "rgba(255,255,255,0.12)", color: "#fff", padding: "0.62rem 1.15rem",
               borderRadius: "0.55rem", fontWeight: 700, fontSize: "0.88rem",
-              textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)"
-            }}>🕐 الصلاة</Link>
+              textDecoration: "none", border: "1px solid rgba(255,255,255,0.32)"
+            }}>🕌 الصلاة</Link>
           </div>
         </div>
       </section>
