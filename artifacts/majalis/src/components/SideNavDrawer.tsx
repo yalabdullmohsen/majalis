@@ -28,13 +28,80 @@ type NavItem = {
 type NavGroup = {
   id: string;
   title: string;
-  emoji: string;
+  icon: React.ReactNode;
   items: NavItem[];
 };
 
+/* ── أيقونات SVG للأقسام ── */
+const IcoHome = () => (
+  <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M1.5 8L9 2l7.5 6v8.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V8z"/>
+    <path d="M6.5 17V11h5v6"/>
+  </svg>
+);
+const IcoQuran = () => (
+  <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M9 15V4C8 2.5 6 2 3 2.5v12c3-.5 5 0 6 1.5z"/>
+    <path d="M9 15V4c1-1.5 3-2 6-1.5v12c-3-.5-5 0-6 1.5z"/>
+    <line x1="9" y1="4" x2="9" y2="15"/>
+  </svg>
+);
+const IcoHadith = () => (
+  <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M4 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
+    <line x1="6" y1="7" x2="12" y2="7"/>
+    <line x1="6" y1="10" x2="12" y2="10"/>
+    <line x1="6" y1="13" x2="9" y2="13"/>
+    <path d="M12 2v3l2-1-2-2z"/>
+  </svg>
+);
+const IcoCrescent = () => (
+  <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true">
+    <path d="M14.5 10.5a6.5 6.5 0 1 1-7-7 5.5 5.5 0 0 0 7 7z"/>
+    <circle cx="13" cy="4" r="1" fill="currentColor" stroke="none"/>
+  </svg>
+);
+const IcoScale = () => (
+  <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <line x1="9" y1="2" x2="9" y2="16"/>
+    <line x1="5.5" y1="16" x2="12.5" y2="16"/>
+    <line x1="3" y1="6" x2="15" y2="6"/>
+    <path d="M3 6 1.5 10a2.5 2.5 0 0 0 3 0L3 6z"/>
+    <path d="M15 6l-1.5 4a2.5 2.5 0 0 0 3 0L15 6z"/>
+  </svg>
+);
+const IcoMosque = () => (
+  <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M1 17h16"/>
+    <path d="M3 17v-6a6 6 0 0 1 12 0v6"/>
+    <path d="M9 5V3"/>
+    <path d="M7.5 8h3"/>
+    <path d="M6 11h6"/>
+  </svg>
+);
+const IcoCompass = () => (
+  <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="9" cy="9" r="7"/>
+    <path d="M12 6l-2 5-5 2 2-5 5-2z"/>
+  </svg>
+);
+const IcoGradCap = () => (
+  <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M9 3 1 7l8 4 8-4-8-4z"/>
+    <path d="M5 9.5v3.5a4 4 0 0 0 8 0V9.5"/>
+    <line x1="16" y1="7" x2="16" y2="12"/>
+  </svg>
+);
+const IcoUser = () => (
+  <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="9" cy="6" r="4"/>
+    <path d="M2 17c0-3.866 3.134-7 7-7s7 3.134 7 7"/>
+  </svg>
+);
+
 const DRAWER_GROUPS: NavGroup[] = [
   {
-    id: "home", title: "الرئيسية", emoji: "🏠",
+    id: "home", title: "الرئيسية", icon: <IcoHome />,
     items: [
       { href: "/",        label: "الصفحة الرئيسية", Icon: Home },
       { href: "/search",  label: "البحث الشامل",     Icon: Search },
@@ -42,7 +109,28 @@ const DRAWER_GROUPS: NavGroup[] = [
     ],
   },
   {
-    id: "quran", title: "القرآن الكريم", emoji: "📖",
+    id: "learn", title: "التعلّم والمكتبة", icon: <IcoGradCap />,
+    items: [
+      { href: "/lessons",          label: "الدروس والمحاضرات",    Icon: GraduationCap, desc: "دروس صوتية ومرئية" },
+      { href: "/annual-courses",   label: "الدورات العلمية",      Icon: BookMarked,    desc: "برامج وكورسات منظمة" },
+      { href: "/library",          label: "المكتبة الشرعية",      Icon: Library,       desc: "كتب ومخطوطات إسلامية" },
+      { href: "/scholars",         label: "أعلام الإسلام",        Icon: BookUser,      desc: "تراجم العلماء والمشايخ" },
+      { href: "/quiz",             label: "المسابقة التعليمية",   Icon: Zap,           desc: "اختبر معلوماتك" },
+      { href: "/flashcards",       label: "بطاقات المراجعة",      Icon: CreditCard,    desc: "راجع المعلومات بطاقةً بطاقة" },
+      { href: "/assistant",        label: "المساعد الذكي",        Icon: Bot,           desc: "استفسر عن أي مسألة" },
+      { href: "/learning-path",    label: "خارطة طالب العلم",    Icon: Network,       desc: "منهج التعلم التراكمي" },
+      { href: "/my-learning",      label: "لوحتي التعليمية",     Icon: BarChart3,     desc: "إحصائياتك وتقدمك" },
+      { href: "/knowledge-graph",  label: "شبكة المعرفة",        Icon: GitBranch,     desc: "العلاقات بين المفاهيم" },
+      { href: "/calendar",         label: "التقويم الهجري",      Icon: Calendar,      desc: "التقويم والمناسبات الإسلامية" },
+      { href: "/mind-map",         label: "الخرائط الذهنية",      Icon: Map,          desc: "تنظيم المعلومات مرئياً" },
+      { href: "/hikam-salaf",      label: "حكم السلف الصالح",     Icon: Star,         desc: "حكم وأقوال مأثورة" },
+      { href: "/akhlaq",           label: "الأخلاق الإسلامية",    Icon: Heart,        desc: "فضائل الأخلاق ومحاسنها" },
+      { href: "/islamic-glossary", label: "المصطلحات الإسلامية",  Icon: BookOpen,     desc: "معجم المصطلحات الفقهية" },
+      { href: "/universities",     label: "دليل الجامعات",        Icon: Building2,    desc: "الجامعات الإسلامية حول العالم" },
+    ],
+  },
+  {
+    id: "quran", title: "القرآن الكريم", icon: <IcoQuran />,
     items: [
       { href: "/quran-hub",           label: "مركز القرآن",        Icon: Layers,      desc: "بوابة كل ما يتعلق بالقرآن" },
       { href: "/quran",               label: "المصحف الشريف",      Icon: BookOpen,    desc: "تصفّح القرآن سورةً سورة" },
@@ -58,7 +146,7 @@ const DRAWER_GROUPS: NavGroup[] = [
     ],
   },
   {
-    id: "hadith", title: "الحديث والسنة", emoji: "📜",
+    id: "hadith", title: "الحديث والسنة", icon: <IcoHadith />,
     items: [
       { href: "/hadith",             label: "الأحاديث النبوية",    Icon: ScrollText,  desc: "موسوعة الأحاديث بالتصنيف" },
       { href: "/arbaeen-nawawi",     label: "الأربعون النووية",    Icon: FileText,    desc: "٤٠ حديثاً مع شرح وتتبع" },
@@ -69,7 +157,7 @@ const DRAWER_GROUPS: NavGroup[] = [
     ],
   },
   {
-    id: "aqeeda", title: "العقيدة والتوحيد", emoji: "🕌",
+    id: "aqeeda", title: "العقيدة والتوحيد", icon: <IcoCrescent />,
     items: [
       { href: "/tawhid",      label: "التوحيد والعقيدة",      Icon: Shield,    desc: "أنواع التوحيد ومسائل العقيدة" },
       { href: "/arkan",       label: "أركان الإسلام",         Icon: Landmark,  desc: "الشهادتان والصلاة والزكاة..." },
@@ -82,7 +170,7 @@ const DRAWER_GROUPS: NavGroup[] = [
     ],
   },
   {
-    id: "fiqh", title: "الفقه والأحكام", emoji: "⚖️",
+    id: "fiqh", title: "الفقه والأحكام", icon: <IcoScale />,
     items: [
       { href: "/fiqh",               label: "مدخل الفقه",          Icon: BookText,   desc: "بوابة الفقه والفتاوى والأحكام" },
       { href: "/tahara",             label: "الطهارة",              Icon: Repeat2,    desc: "الوضوء والغسل والتيمم" },
@@ -103,7 +191,7 @@ const DRAWER_GROUPS: NavGroup[] = [
     ],
   },
   {
-    id: "ibadah", title: "العبادة والأذكار", emoji: "🤲",
+    id: "ibadah", title: "العبادة والأذكار", icon: <IcoMosque />,
     items: [
       { href: "/adhkar",            label: "الأذكار",              Icon: Repeat2,     desc: "الصباح والمساء والنوم والصلاة" },
       { href: "/duas",              label: "الأدعية الشرعية",      Icon: BookMarked,  desc: "أدعية مصنفة بالمناسبات" },
@@ -120,34 +208,13 @@ const DRAWER_GROUPS: NavGroup[] = [
     ],
   },
   {
-    id: "seerah", title: "السيرة والتاريخ", emoji: "🌙",
+    id: "seerah", title: "السيرة والتاريخ", icon: <IcoCompass />,
     items: [
       { href: "/seerah",           label: "السيرة النبوية",        Icon: BookUser,  desc: "من المولد حتى الوفاة ﷺ" },
       { href: "/sahabah",          label: "الصحابة الكرام",        Icon: Users,     desc: "سِيَر الصحابة وفضائلهم" },
       { href: "/prophets",         label: "الأنبياء والرسل",       Icon: Star,      desc: "٢٥ نبياً بقصصهم ومعجزاتهم" },
       { href: "/stories",          label: "القصص الإسلامية",       Icon: BookOpen,  desc: "قصص إسلامية مؤثرة ومعبِّرة" },
       { href: "/islamic-stories",  label: "صحابة وفتوحات",         Icon: Waypoints, desc: "قصص الصحابة والفتوحات" },
-    ],
-  },
-  {
-    id: "learn", title: "التعلّم والمكتبة", emoji: "🎓",
-    items: [
-      { href: "/lessons",          label: "الدروس والمحاضرات",    Icon: GraduationCap, desc: "دروس صوتية ومرئية" },
-      { href: "/annual-courses",   label: "الدورات العلمية",      Icon: BookMarked,    desc: "برامج وكورسات منظمة" },
-      { href: "/library",          label: "المكتبة الشرعية",      Icon: Library,       desc: "كتب ومخطوطات إسلامية" },
-      { href: "/scholars",         label: "أعلام الإسلام",        Icon: BookUser,      desc: "تراجم العلماء والمشايخ" },
-      { href: "/quiz",             label: "المسابقة التعليمية",   Icon: Zap,           desc: "اختبر معلوماتك" },
-      { href: "/flashcards",       label: "بطاقات المراجعة",      Icon: CreditCard,    desc: "راجع المعلومات بطاقةً بطاقة" },
-      { href: "/assistant",        label: "المساعد الذكي",        Icon: Bot,           desc: "استفسر عن أي مسألة" },
-      { href: "/learning-path",    label: "خارطة طالب العلم",    Icon: Network,       desc: "منهج التعلم التراكمي" },
-      { href: "/my-learning",      label: "لوحتي التعليمية",     Icon: BarChart3,     desc: "إحصائياتك وتقدمك" },
-      { href: "/knowledge-graph",  label: "شبكة المعرفة",        Icon: GitBranch,     desc: "العلاقات بين المفاهيم" },
-      { href: "/calendar",         label: "التقويم الهجري",      Icon: Calendar,      desc: "التقويم والمناسبات الإسلامية" },
-      { href: "/mind-map",         label: "الخرائط الذهنية",      Icon: Map,          desc: "تنظيم المعلومات مرئياً" },
-      { href: "/hikam-salaf",      label: "حكم السلف الصالح",     Icon: Star,         desc: "حكم وأقوال مأثورة" },
-      { href: "/akhlaq",           label: "الأخلاق الإسلامية",    Icon: Heart,        desc: "فضائل الأخلاق ومحاسنها" },
-      { href: "/islamic-glossary", label: "المصطلحات الإسلامية",  Icon: BookOpen,     desc: "معجم المصطلحات الفقهية" },
-      { href: "/universities",     label: "دليل الجامعات",        Icon: Building2,    desc: "الجامعات الإسلامية حول العالم" },
     ],
   },
 ];
@@ -211,8 +278,13 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
         {/* Header */}
         <div className="side-nav-drawer__head side-nav-drawer__head--v2">
           <div className="side-nav-drawer__brand">
-            <img src="/logo.png" alt="" width={36} height={36} loading="lazy" decoding="async" />
-            <strong>المجالس العلمية</strong>
+            <img
+              src="/logo-calligraphy.png"
+              alt="المجلس العلمي"
+              style={{ height: 36, maxWidth: 150, width: "auto", objectFit: "contain", borderRadius: 5 }}
+              loading="lazy"
+              decoding="async"
+            />
           </div>
           <button type="button" onClick={onClose} aria-label="إغلاق" className="side-nav-close">
             <X size={22} aria-hidden="true" />
@@ -233,7 +305,7 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
                   aria-controls={`nav-group-${group.id}`}
                 >
                   <span className="side-nav-group__toggle-label">
-                    <span className="side-nav-group__emoji" aria-hidden="true">{group.emoji}</span>
+                    <span className="side-nav-group__emoji" aria-hidden="true">{group.icon}</span>
                     <span className="side-nav-group__title">{group.title}</span>
                   </span>
                   {isOpen
@@ -272,7 +344,7 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
               aria-expanded={openGroups.has("account")}
             >
               <span className="side-nav-group__toggle-label">
-                <span className="side-nav-group__emoji" aria-hidden="true">👤</span>
+                <span className="side-nav-group__emoji" aria-hidden="true"><IcoUser /></span>
                 <span className="side-nav-group__title">الحساب</span>
               </span>
               {openGroups.has("account")

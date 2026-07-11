@@ -10341,6 +10341,17 @@ body.mobile-nav-body-lock {
   font-size: 0.9375rem;
   line-height: 1;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: var(--majalis-emerald-deep, #1F4D3A);
+  opacity: 0.82;
+}
+
+.side-nav-group__emoji svg {
+  display: block;
 }
 .side-nav-group__title {
   font-size: 0.8125rem;
