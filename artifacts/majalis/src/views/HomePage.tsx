@@ -471,9 +471,9 @@ export default function HomePage() {
             borderTop: "1px solid rgba(255,255,255,0.1)",
           }}>
             {[
-              { num: "١١٠+", label: "عالم مرجعي",   icon: "👤" },
+              { num: "١١٥+", label: "عالم مرجعي",   icon: "👤" },
               { num: "٤٤٠+", label: "سؤال اختباري", icon: "🧠" },
-              { num: "٤٤٥+", label: "فائدة علمية",  icon: "💡" },
+              { num: "٤٥٥+", label: "فائدة علمية",  icon: "💡" },
               { num: "١٠٠+", label: "كتاب علمي",    icon: "📚" },
             ].map(({ num, label, icon }) => (
               <div key={label} style={{
