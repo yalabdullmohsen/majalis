@@ -9,6 +9,7 @@ import { getAnnualCourses } from "@/lib/platform-content-service";
 import { COURSE_TYPES } from "@/lib/platform-types";
 import { usePageView } from "@/hooks/usePageView";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 function useDebouncedValue<T>(value: T, delayMs = 350): T {
   const [debounced, setDebounced] = useState(value);
@@ -121,7 +122,9 @@ export default function AnnualCoursesPage() {
       <div className="twh-share">
         <ShareButtons title="الدورات العلمية السنوية — المجلس العلمي" url="https://majlisilm.com/annual-courses" />
       </div>
-
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["fiqh", "akhlaq"]} title="اختبر معلوماتك في العلم الشرعي" count={4} />
+      </div>
       <AdminQuickEdit section="annual-courses" />
     </div>
   );

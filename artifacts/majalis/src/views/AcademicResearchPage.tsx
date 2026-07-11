@@ -8,6 +8,7 @@ import {
   GraduationCap, Landmark, Library, PenLine, Search,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 // ── أنواع ────────────────────────────────────────────────────────────────────
 
@@ -691,6 +692,9 @@ export default function AcademicResearchPage() {
 
       <div className="twh-share">
         <ShareButtons title="البحث الأكاديمي الإسلامي — المجلس العلمي" url="https://majlisilm.com/academic-research" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["tarikh", "hadith"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
       </div>
     </div>
   );

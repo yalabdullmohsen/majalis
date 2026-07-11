@@ -15,6 +15,7 @@ import {
 } from "@/lib/rag-service";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 type View = "search" | "library";
 
@@ -329,6 +330,9 @@ export default function ScholarlyResearchPage() {
 
       <div className="twh-share">
         <ShareButtons title="الباحث الشرعي — المجلس العلمي" url="https://majlisilm.com/scholarly-research" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["hadith", "fiqh"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </div>
   );
