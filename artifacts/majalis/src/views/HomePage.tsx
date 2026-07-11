@@ -473,7 +473,7 @@ export default function HomePage() {
             {[
               { num: "١٠٠",  label: "عالم مرجعي",   icon: "👤" },
               { num: "٤٠٠+", label: "سؤال اختباري", icon: "🧠" },
-              { num: "٤٢٠+", label: "فائدة علمية",  icon: "💡" },
+              { num: "٤٢٥+", label: "فائدة علمية",  icon: "💡" },
               { num: "١٠٠+", label: "كتاب علمي",    icon: "📚" },
             ].map(({ num, label, icon }) => (
               <div key={label} style={{
