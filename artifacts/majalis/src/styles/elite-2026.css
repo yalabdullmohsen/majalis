@@ -4347,6 +4347,89 @@ button.primary:hover {
   padding-right: 0.6rem;
 }
 
+/* ── بطاقة تقدم الختمة ── */
+.khatma-progress-card {
+  padding: 1.25rem;
+}
+.khatma-progress-body {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.khatma-ring {
+  flex-shrink: 0;
+}
+.khatma-progress-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex: 1;
+  min-width: 150px;
+}
+.khatma-stat span {
+  font-size: 0.78rem;
+  color: var(--majalis-ink-soft, #5C5550);
+}
+.khatma-stat strong {
+  font-size: 0.92rem;
+  color: var(--majalis-emerald, #1F4D3A);
+  font-weight: 700;
+}
+.khatma-bar-wrap {
+  height: 7px;
+  background: var(--majalis-emerald-muted, rgba(31,77,58,.10));
+  border-radius: 999px;
+  overflow: hidden;
+}
+.khatma-bar-fill {
+  height: 100%;
+  background: var(--majalis-emerald, #1F4D3A);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+.khatma-celebration {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.875rem;
+  background: linear-gradient(135deg, rgba(245,158,11,.12), rgba(245,158,11,.06));
+  border: 1px solid rgba(245,158,11,.25);
+  color: #92400E;
+  animation: khatma-pop 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.khatma-celebration strong {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+.khatma-celebration p {
+  margin: 0;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+.khatma-celebration svg {
+  color: #D97706;
+  flex-shrink: 0;
+}
+@keyframes khatma-pop {
+  0%   { transform: scale(0.92); opacity: 0; }
+  60%  { transform: scale(1.02); }
+  100% { transform: scale(1);    opacity: 1; }
+}
+html[data-theme="dark"] .khatma-celebration {
+  background: linear-gradient(135deg, rgba(245,158,11,.15), rgba(245,158,11,.06));
+  border-color: rgba(245,158,11,.22);
+  color: #FCD34D;
+}
+html[data-theme="dark"] .khatma-celebration svg { color: #FCD34D; }
+html[data-theme="dark"] .khatma-bar-fill {
+  background: #5CC49A;
+}
+
 /* ══════════════════════════════════════════════
    §45. Occasions Page — المناسبات الإسلامية
    ══════════════════════════════════════════════ */

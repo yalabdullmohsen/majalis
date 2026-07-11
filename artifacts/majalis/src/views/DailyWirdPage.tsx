@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { BookOpen, Flame, Leaf, TrendingUp } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Award, BookOpen, Flame, Leaf, TrendingUp } from "lucide-react";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
 import {
@@ -17,6 +17,41 @@ const QURAN_PAGES = 604;
 
 function toAr(n: number): string {
   return n.toLocaleString("ar-EG", { useGrouping: false });
+}
+
+/** حلقة تقدم الختمة الكاملة (0→604 صفحة) */
+function KhatmaRing({ pagesInKhatma, khatmasCompleted }: { pagesInKhatma: number; khatmasCompleted: number }) {
+  const r = 46;
+  const circ = 2 * Math.PI * r;
+  const pct = Math.min(pagesInKhatma / QURAN_PAGES, 1);
+  const done = pagesInKhatma >= QURAN_PAGES;
+  return (
+    <svg width="124" height="124" viewBox="0 0 124 124" className="wird-ring khatma-ring" aria-hidden="true">
+      <circle cx="62" cy="62" r={r} fill="none" stroke="var(--majalis-emerald-muted, rgba(14,110,82,.12))" strokeWidth="8" />
+      <circle
+        cx="62" cy="62" r={r} fill="none"
+        stroke={done ? "#F59E0B" : "var(--majalis-emerald, #1F4D3A)"}
+        strokeWidth="8" strokeLinecap="round"
+        strokeDasharray={circ}
+        strokeDashoffset={circ * (1 - pct)}
+        transform="rotate(-90 62 62)"
+        opacity={done ? "1" : "0.75"}
+      />
+      {khatmasCompleted > 0 && (
+        <text x="62" y="55" textAnchor="middle" fill={done ? "#F59E0B" : "var(--majalis-emerald)"} fontSize="20" fontWeight="800" fontFamily="inherit">
+          {toAr(khatmasCompleted)}
+        </text>
+      )}
+      <text x="62" y={khatmasCompleted > 0 ? "70" : "66"} textAnchor="middle" fill="var(--majalis-ink-soft, rgba(14,110,82,.45))" fontSize="9" fontWeight="600" fontFamily="inherit">
+        {khatmasCompleted > 0 ? "ختمة كاملة" : "ص " + toAr(pagesInKhatma) + " / ٦٠٤"}
+      </text>
+      {khatmasCompleted > 0 && (
+        <text x="62" y="85" textAnchor="middle" fill="var(--majalis-ink-soft)" fontSize="8.5" fontWeight="600" fontFamily="inherit">
+          ص {toAr(pagesInKhatma)} من ختمة جديدة
+        </text>
+      )}
+    </svg>
+  );
 }
 
 function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: number }) {
@@ -65,6 +100,8 @@ function streakMsg(streak: number): string {
 
 export default function DailyWirdPage() {
   const [state, setState] = useState(getDailyWirdState);
+  const [khatmaCelebration, setKhatmaCelebration] = useState(false);
+  const prevKhatmasRef = useRef(Math.floor(getDailyWirdState().totalPagesEver / QURAN_PAGES));
   const surahs = getSurahList();
 
   useEffect(() => {
@@ -104,7 +141,6 @@ export default function DailyWirdPage() {
     const next = prev + n;
     const justDone = next >= state.pagesPerDay && prev < state.pagesPerDay;
 
-    // Update streak: if yesterday was completed, continue; otherwise start at 1
     let newStreak = state.streak;
     if (justDone) {
       const yesterday = prevDateStr(today);
@@ -116,17 +152,26 @@ export default function DailyWirdPage() {
       }
     }
 
+    const newTotalEver = state.totalPagesEver + n;
     const updatedLogs = { ...state.weeklyLogs, [today]: next };
     persist({
       ...state,
       completedToday: next,
       lastDate: today,
       monthlyTotal: state.monthlyTotal + n,
-      totalPagesEver: state.totalPagesEver + n,
+      totalPagesEver: newTotalEver,
       streak: newStreak,
       weeklyLogs: updatedLogs,
     });
     if (justDone) incrementTaskProgress("wird", 1);
+
+    // احتفال بإتمام الختمة
+    const newKhatmas = Math.floor(newTotalEver / QURAN_PAGES);
+    if (newKhatmas > prevKhatmasRef.current) {
+      prevKhatmasRef.current = newKhatmas;
+      setKhatmaCelebration(true);
+      setTimeout(() => setKhatmaCelebration(false), 5000);
+    }
   };
 
   const resetToday = () => {
@@ -143,8 +188,12 @@ export default function DailyWirdPage() {
 
   const pct  = state.pagesPerDay > 0 ? todayCompleted / state.pagesPerDay : 0;
   const done = todayCompleted >= state.pagesPerDay && state.pagesPerDay > 0;
-  const remaining604 = Math.max(0, QURAN_PAGES - state.totalPagesEver);
-  const khatmDays = state.pagesPerDay > 0 ? Math.ceil(remaining604 / state.pagesPerDay) : null;
+
+  // حساب الختمات
+  const khatmasCompleted = Math.floor(state.totalPagesEver / QURAN_PAGES);
+  const pagesInCurrentKhatma = state.totalPagesEver % QURAN_PAGES;
+  const remainingInKhatma = QURAN_PAGES - pagesInCurrentKhatma;
+  const khatmDays = state.pagesPerDay > 0 ? Math.ceil(remainingInKhatma / state.pagesPerDay) : null;
 
   return (
     <div className="page-shell narrow wird-page">
@@ -204,7 +253,7 @@ export default function DailyWirdPage() {
         </div>
       </div>
 
-      {/* بطاقة السلسلة والختم */}
+      {/* بطاقة السلسلة */}
       <div className="wird-streak-card ui-card">
         <div className="wird-streak-row">
           <div className="wird-streak-num">
@@ -216,9 +265,9 @@ export default function DailyWirdPage() {
             <div className="wird-khatm-est">
               <TrendingUp size={16} strokeWidth={1.8} aria-hidden="true" />
               <span>
-                {khatmDays <= 0
-                  ? "أكملت القرآن! ما شاء الله"
-                  : `الختم بعد نحو ${toAr(khatmDays)} يوم`}
+                {remainingInKhatma <= 0
+                  ? "أكملت الختمة! ما شاء الله"
+                  : `الختمة بعد نحو ${toAr(khatmDays)} يوم`}
               </span>
             </div>
           )}
@@ -226,6 +275,40 @@ export default function DailyWirdPage() {
         {state.streak > 0 && (
           <p className="wird-streak-msg">{streakMsg(state.streak)}</p>
         )}
+      </div>
+
+      {/* بطاقة تقدم الختمة */}
+      {khatmaCelebration && (
+        <div className="khatma-celebration" role="alert" aria-live="polite">
+          <Award size={28} strokeWidth={1.6} aria-hidden="true" />
+          <div>
+            <strong>ما شاء الله! أكملت ختمة كاملة للقرآن الكريم</strong>
+            <p>تقبّل الله منك وبارك في وقتك</p>
+          </div>
+        </div>
+      )}
+      <div className="khatma-progress-card ui-card">
+        <h2 className="wird-settings__title">تقدم الختمة</h2>
+        <div className="khatma-progress-body">
+          <KhatmaRing pagesInKhatma={pagesInCurrentKhatma} khatmasCompleted={khatmasCompleted} />
+          <div className="khatma-progress-stats">
+            <div className="wird-stat khatma-stat">
+              <span>صفحات الختمة الحالية</span>
+              <strong>{toAr(pagesInCurrentKhatma)} / ٦٠٤</strong>
+            </div>
+            <div className="wird-stat khatma-stat">
+              <span>ختمات مكتملة</span>
+              <strong>{khatmasCompleted > 0 ? toAr(khatmasCompleted) : "لم تكتمل بعد"}</strong>
+            </div>
+            <div className="wird-stat khatma-stat">
+              <span>متبقٍ للختمة</span>
+              <strong>{toAr(remainingInKhatma)} صفحة</strong>
+            </div>
+          </div>
+        </div>
+        <div className="khatma-bar-wrap" role="progressbar" aria-valuenow={pagesInCurrentKhatma} aria-valuemin={0} aria-valuemax={QURAN_PAGES} aria-label="تقدم الختمة">
+          <div className="khatma-bar-fill" style={{ width: `${Math.min((pagesInCurrentKhatma / QURAN_PAGES) * 100, 100).toFixed(1)}%` }} />
+        </div>
       </div>
 
       {/* ضبط الورد */}
