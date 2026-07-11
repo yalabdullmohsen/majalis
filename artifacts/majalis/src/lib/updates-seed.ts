@@ -895,6 +895,24 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-07-12T07:00:00Z",
     status: "approved",
   },
+  {
+    id: "update-fiqh-council-26",
+    title: "تحديث: قرارات المجمع الفقهي — 26+ قرار",
+    summary: "إضافة 3 قرارات: القتل الرحيم والإيثانازيا، الوصية الإلكترونية الرقمية، زكاة التطبيقات التلقائية.",
+    update_type: "قرار",
+    source_url: "/fiqh-council",
+    published_at: "2026-07-12T09:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-qa-330",
+    title: "تحديث: الأسئلة والأجوبة — 330+ سؤال",
+    summary: "إضافة 10 أسئلة في: الصلاة، الصيام في السفر، الاجتهاد والتقليد، علم الإسناد، الزكاة، حج المرأة، أركان الإيمان.",
+    update_type: "إعلان",
+    source_url: "/qa",
+    published_at: "2026-07-12T10:00:00Z",
+    status: "approved",
+  },
 ];
 
 export function getSortedUpdates(limit?: number) {
