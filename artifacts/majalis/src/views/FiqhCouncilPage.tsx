@@ -45,7 +45,7 @@ const SUBNAV_LINKS = [
 export function FiqhCouncilSubnav() {
   const [location] = useLocation();
   return (
-    <nav className="fiqh-council-subnav" aria-label="أقسام المجمع الفقهي">
+    <nav className="fiqh-council-subnav" aria-label="أقسام الهيئات الإسلامية">
       {SUBNAV_LINKS.map(({ href, label }) => (
         <Link
           key={href}
@@ -289,15 +289,15 @@ export function FiqhCouncilHubPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fiqh-council",
-      title: "المجمع الفقهي الإسلامي | المجلس العلمي",
-      description: "مرجع المجمع الفقهي، قرارات وفتاوى وتوصيات وجلسات المجامع الفقهية الدولية وهيئات الإفتاء.",
-      keywords: ["مجمع فقهي", "قرارات فقهية", "هيئة كبار العلماء", "المجمع الفقهي", "فتاوى المجامع"],
+      title: "الهيئات والمنظمات الإسلامية | المجلس العلمي",
+      description: "مرجع قرارات وفتاوى وتوصيات المجامع الفقهية وهيئة كبار العلماء ودور الإفتاء ورابطة العالم الإسلامي.",
+      keywords: ["مجمع فقهي", "قرارات فقهية", "هيئة كبار العلماء", "رابطة العالم الإسلامي", "دار الإفتاء", "فتاوى المجامع"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
-          name: "أقسام المجمع الفقهي الإسلامي",
-          description: "قرارات وفتاوى وتوصيات وجلسات المجامع الفقهية الدولية",
+          name: "الهيئات والمنظمات الإسلامية",
+          description: "قرارات وفتاوى وتوصيات المجامع الفقهية وهيئات الإفتاء الإسلامية المعتمدة",
           itemListElement: SUBNAV_LINKS.filter(l => l.href !== "/fiqh-council").map((l, i) => ({
             "@type": "ListItem",
             position: i + 1,
@@ -349,7 +349,7 @@ export function FiqhCouncilHubPage() {
     <div className="page-shell narrow content-hub-page fiqh-council-page fiqh-council-hub">
       <PageHeader
         eyebrow="الفقه المعاصر"
-        title="المجمع الفقهي الإسلامي"
+        title="الهيئات والمنظمات الإسلامية"
         subtitle={FIQH_COUNCIL_INTRO}
       />
 
