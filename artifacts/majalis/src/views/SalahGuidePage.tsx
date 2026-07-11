@@ -5,16 +5,81 @@ import { RANKS } from "@/views/PrayerRanksPage";
 import { arabicMatchAny } from "@/lib/arabic-search";
 
 
-type SalahTab = "shurut" | "kayfiyya" | "mubtilatat" | "khushuu" | "fawaid" | "maratib" | "suwar";
+type SalahTab = "shurut" | "wajibaat" | "kayfiyya" | "mubtilatat" | "khushuu" | "fawaid" | "maratib" | "suwar";
 
 const TABS: { id: SalahTab; label: string; icon: string }[] = [
   { id: "shurut",      label: "الشروط والأركان",   icon: "📋" },
+  { id: "wajibaat",    label: "واجبات الصلاة",      icon: "✅" },
   { id: "kayfiyya",    label: "كيفية الصلاة",       icon: "🕌" },
   { id: "mubtilatat",  label: "المبطلات والمكروهات", icon: "⛔" },
   { id: "khushuu",     label: "الخشوع",             icon: "🤲" },
   { id: "fawaid",      label: "فضائل الصلاة",       icon: "⭐" },
   { id: "maratib",     label: "مراتب المصلين",      icon: "🏆" },
   { id: "suwar",       label: "سور الصلاة والنوافل", icon: "📖" },
+];
+
+/* ── واجبات الصلاة ── */
+interface Wajib {
+  num: number;
+  title: string;
+  dhikr?: string;
+  desc: string;
+  note?: string;
+}
+const WAJIBAAT: Wajib[] = [
+  {
+    num: 1,
+    title: "التكبيرات الانتقالية",
+    dhikr: "الله أكبر",
+    desc: "كل تكبير بين أركان الصلاة ما عدا تكبيرة الإحرام التي هي ركن. يشمل التكبير عند الركوع والسجود والرفع منه والجلوس بين السجدتين.",
+    note: "إن تركها عمداً بطلت الصلاة عند أكثر الفقهاء، وإن نسيها جبرها بسجود السهو.",
+  },
+  {
+    num: 2,
+    title: "قول «سمع الله لمن حمده» عند الرفع من الركوع",
+    dhikr: "سمع الله لمن حمده",
+    desc: "يقولها الإمام والمنفرد، لا المأموم. دليلها: «وإذا قال سمع الله لمن حمده فقولوا ربنا ولك الحمد» — متفق عليه.",
+  },
+  {
+    num: 3,
+    title: "قول «ربنا ولك الحمد» عند الاعتدال",
+    dhikr: "ربنا ولك الحمد حمداً كثيراً طيباً مباركاً فيه",
+    desc: "يقولها الإمام والمأموم والمنفرد جميعاً في حال الاعتدال من الركوع. الزيادة «حمداً كثيراً...» مستحبة لمن أمكنه.",
+  },
+  {
+    num: 4,
+    title: "التسبيح في الركوع",
+    dhikr: "سبحان ربي العظيم",
+    desc: "يقالها مرة واحدة على أقل الكمال، والسنة ثلاث مرات. دليلها: «فأما الركوع فعظِّموا فيه الرب» — مسلم.",
+    note: "الحد الأدنى مرة، والسنة ثلاث، ويُستحب الإطالة للمنفرد.",
+  },
+  {
+    num: 5,
+    title: "التسبيح في السجود",
+    dhikr: "سبحان ربي الأعلى",
+    desc: "يقالها مرة واحدة على أقل الكمال، والسنة ثلاث مرات. السجود أقرب ما يكون العبد من ربه فيُستحب الإكثار من الدعاء فيه — مسلم.",
+    note: "للمنفرد إطالة السجود والإكثار من الدعاء فيه ما شاء.",
+  },
+  {
+    num: 6,
+    title: "قول «رب اغفر لي» بين السجدتين",
+    dhikr: "رب اغفر لي، رب اغفر لي",
+    desc: "يقال في الجلسة بين السجدتين. دليلها: حديث حذيفة أن النبي ﷺ كان يقول بين السجدتين «رب اغفر لي» — أبو داود، صحيح.",
+  },
+  {
+    num: 7,
+    title: "التشهد الأول",
+    dhikr: "التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله وأشهد أن محمداً عبده ورسوله",
+    desc: "في الصلاة الثلاثية (المغرب) وفي الصلاة الرباعية (الظهر والعصر والعشاء) في الركعة الثانية. أما الصلاة الثنائية (الفجر والنوافل) فليس فيها تشهد أول.",
+    note: "إن نسيه ولم يستتم قائماً رجع وجلس. وإن استتم قائماً أكمل وسجد للسهو في آخر صلاته.",
+  },
+  {
+    num: 8,
+    title: "الجلوس للتشهد الأول",
+    dhikr: "",
+    desc: "الجلوس الذي يُؤدَّى فيه التشهد الأول واجب مستقل بذاته لمداومة النبي ﷺ عليه. وهو مرتبط بالتشهد الأول لكن يُعدّ واجباً قائماً بنفسه.",
+    note: "إن نسيه وقام ولم يستتم رجع. وإن استتم قياماً مضى وسجد للسهو.",
+  },
 ];
 
 /* ── سور الصلاة والنوافل (بيانات هيكلية — المحتوى التفصيلي يُضاف عبر إدارة الفتاوى) ── */
@@ -239,7 +304,7 @@ export default function SalahGuidePage() {
     });
   }, []);
 
-  const VALID_TABS: SalahTab[] = ["shurut", "kayfiyya", "mubtilatat", "khushuu", "fawaid", "maratib", "suwar"];
+  const VALID_TABS: SalahTab[] = ["shurut", "wajibaat", "kayfiyya", "mubtilatat", "khushuu", "fawaid", "maratib", "suwar"];
   const initialTab = (): SalahTab => {
     try {
       const q = new URLSearchParams(window.location.search).get("tab");
@@ -336,6 +401,60 @@ export default function SalahGuidePage() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── واجبات الصلاة ── */}
+        {tab === "wajibaat" && (
+          <div className="sg-section">
+            <div className="sg-info-box sg-info-box--intro">
+              <span>📘</span>
+              <div>
+                <p>
+                  <strong>الفرق بين الأركان والواجبات:</strong> الأركان لا تسقط بحال، ومن ترك ركناً عمداً أو سهواً بطلت صلاته ما لم يتداركه.
+                  أما الواجبات فمن تركها عمداً بطلت صلاته، ومن تركها سهواً وجب عليه سجود السهو في آخر صلاته ولا تبطل.
+                </p>
+                <p className="sg-wajib-note-sub">
+                  الواجبات الثمانية المذكورة هي المعتمدة في المذهب الحنبلي. وتتفاوت المذاهب في عدّ بعضها واجباً أو سنةً.
+                </p>
+              </div>
+            </div>
+
+            <h2 className="sg-subhead">الواجبات الثمانية للصلاة</h2>
+            <div className="sg-wajibaat-list">
+              {WAJIBAAT.map((w) => (
+                <div key={w.num} className="sg-wajib-card">
+                  <div className="sg-wajib-card__header">
+                    <span className="sg-wajib-num">{w.num}</span>
+                    <span className="sg-wajib-title">{w.title}</span>
+                  </div>
+                  {w.dhikr && (
+                    <div className="sg-dhikr-box sg-dhikr-box--wajib">
+                      <span className="sg-dhikr-box__label">الذكر:</span>
+                      <span className="sg-dhikr-box__text">{w.dhikr}</span>
+                    </div>
+                  )}
+                  <p className="sg-wajib-desc">{w.desc}</p>
+                  {w.note && (
+                    <div className="sg-step-note">
+                      <span>📌</span>
+                      <span>{w.note}</span>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div className="sg-info-box sg-info-box--sujud">
+              <span>🙏</span>
+              <div>
+                <strong>سجود السهو</strong>
+                <p>
+                  يُشرع سجود السهو في ثلاثة مواضع: الزيادة في الصلاة، والنقصان منها (بترك واجب)، والشك في عدد الركعات.
+                  وهو سجدتان قبل التسليم في الغالب، وبعده في حالات الزيادة عند بعض الفقهاء.
+                </p>
+              </div>
             </div>
           </div>
         )}
