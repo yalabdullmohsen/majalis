@@ -101,8 +101,8 @@ const FEATURES: RoadmapFeature[] = [
   },
   {
     title: "الوضع دون اتصال (PWA)",
-    description: "تثبيت التطبيق على الجهاز وتصفح الأذكار والقرآن والفتاوى والمكتبة دون إنترنت. Service Worker v16 يُخزِّن 22+ مساراً، manifest موحَّد مع icons maskable وshortcuts لـ6 أقسام.",
-    progress: 85,
+    description: "تثبيت التطبيق على الجهاز وتصفح الأذكار والقرآن والفتاوى والمكتبة دون إنترنت. Service Worker v17 يُخزِّن 22+ مساراً والأصول المُبعثرة، manifest موحَّد مع icons maskable وshortcuts لـ6 أقسام.",
+    progress: 92,
     status: "beta",
   },
   {
@@ -161,9 +161,9 @@ const FEATURES: RoadmapFeature[] = [
   },
   {
     title: "تطبيق الجوال المحلي",
-    description: "تطبيق iOS/Android بأداء أفضل وميزات خاصة بالهاتف.",
-    progress: 20,
-    status: "planned",
+    description: "تطبيق iOS/Android بأداء أفضل وميزات خاصة بالهاتف. جاهز مبدئياً عبر Capacitor ويدعم iOS و Android.",
+    progress: 55,
+    status: "in-progress",
   },
   {
     title: "خرائط المساجد والحلقات",
@@ -253,6 +253,18 @@ const FEATURES: RoadmapFeature[] = [
     title: "الإعجاز العلمي القرآني",
     description: "90+ معجزة موثّقة من القرآن والسنة في الفلك والطب والحيوان والبحار والأجنة والنبات والرياح والمياه والأرض والإنسان والنحل والنمل وتوسع الكون وأصل الحديد، مع المراجع العلمية والتنبيه المنهجي على حدود الاستدلال.",
     progress: 85,
+    status: "beta",
+  },
+  {
+    title: "أداء الموقع وتحسين السرعة",
+    description: "تقليل حزمة JavaScript الرئيسية بنسبة 80%، حِزم منفصلة للأذكار والفتاوى والمجمع الفقهي وق&اعدة الأسئلة، تحميل خطوط غير معيق، تحسين Service Worker v17 مع cache-first لأصول الموقع المُبعثرة.",
+    progress: 88,
+    status: "beta",
+  },
+  {
+    title: "تحسين محركات البحث (SEO)",
+    description: "372 صفحة مُعالَجة مسبقاً بمحتوى HTML كامل للزواحف، metadata مخصصة لكل صفحة، JSON-LD لـ100+ عالم و156+ كتاب وأكثر من 50+ مسار محتوى، sitemap يشمل 362+ رابطاً.",
+    progress: 93,
     status: "beta",
   },
 ];
