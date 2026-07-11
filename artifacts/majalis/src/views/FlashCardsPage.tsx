@@ -13,6 +13,7 @@ import {
   type FlashCardStats,
 } from "@/lib/flashcard-service";
 import { QUALITY_OPTIONS, type ReviewQuality } from "@/lib/spaced-repetition";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 // ─── Card face ────────────────────────────────────────────────────────────────
 
@@ -278,6 +279,9 @@ export default function FlashCardsPage() {
 
       <div className="twh-share">
         <ShareButtons title="البطاقات التعليمية الإسلامية — المجلس العلمي" url="https://majlisilm.com/flashcards" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["quran", "hadith", "fiqh"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </div>
   );

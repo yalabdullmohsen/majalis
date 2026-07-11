@@ -23,6 +23,7 @@ import {
 } from "@/lib/supabase";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -567,6 +568,9 @@ export default function KnowledgeGraphPage() {
       )}
       <div className="twh-share">
         <ShareButtons title="الرسم البياني المعرفي الإسلامي — المجلس العلمي" url="https://majlisilm.com/knowledge-graph" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["aqeeda", "tarikh", "fiqh"]} title="اختبر معلوماتك في المعرفة الإسلامية" count={4} />
       </div>
     </div>
   );

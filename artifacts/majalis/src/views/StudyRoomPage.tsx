@@ -12,6 +12,7 @@ import {
   type StudySession,
 } from "@/lib/study-session-service";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 // ─── Pomodoro config ──────────────────────────────────────────────────────────
 
@@ -313,6 +314,9 @@ export default function StudyRoomPage() {
 
       <div className="twh-share">
         <ShareButtons title="غرفة الدراسة — المجلس العلمي" url="https://majlisilm.com/study-room" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["quran", "hadith"]} title="اختبر معلوماتك أثناء الدراسة" count={4} />
       </div>
     </div>
   );
