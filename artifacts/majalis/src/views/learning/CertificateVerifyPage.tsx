@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { GraduationCap } from "lucide-react";
 import { useParams, Link } from "wouter";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { verifyLearningCertificate } from "@/lib/digital-learning-service";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -189,6 +190,9 @@ export default function CertificateVerifyPage() {
       </div>
       <div className="twh-share">
         <ShareButtons title="التحقق من الشهادة — المجلس العلمي" url="https://majlisilm.com/learning/certificate" />
+      </div>
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 1rem 1.5rem" }}>
+        <SectionQuiz categoryId={["fiqh","aqeeda","hadith"]} title="اختبر معلوماتك الشرعية" count={3} />
       </div>
     </div>
   );

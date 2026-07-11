@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import { ArrowRight, Rocket } from "lucide-react";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { applyPageSeo } from "@/lib/seo";
 
 type FeatureStatus = "in-progress" | "planned" | "beta";
@@ -337,6 +338,9 @@ export default function FeaturesInProgressPage() {
       </div>
       <div className="twh-share">
         <ShareButtons title="مميزات قيد التطوير — المجلس العلمي" url="https://majlisilm.com/features-in-progress" />
+      </div>
+      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 1rem 1.5rem" }}>
+        <SectionQuiz categoryId={["quran","hadith","fiqh","aqeeda"]} title="اختبر معلوماتك أثناء الانتظار" count={4} />
       </div>
     </div>
   );
