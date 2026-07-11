@@ -850,6 +850,24 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-07-12T04:00:00Z",
     status: "approved",
   },
+  {
+    id: "update-quiz-822",
+    title: "تحديث: مسابقة الاختبار الإسلامي — 822+ سؤال",
+    summary: "إضافة 20 سؤالاً في: الصحابة الكرام، العلماء والأئمة، التاريخ الإسلامي، الفقه، القرآن، العقيدة، الفتوحات، الأنبياء، الأذكار.",
+    update_type: "إعلان",
+    source_url: "/quiz",
+    published_at: "2026-07-12T05:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-fawaid-377",
+    title: "تحديث: الفوائد العلمية — 377+ فائدة",
+    summary: "إضافة 15 فائدة في: الصبر والتوكل، الدعاء للأخ، فضل التواضع، العلم والخشية، الرحمة، الصحبة الصالحة، ليلة القدر، الاستغفار، شكر الناس.",
+    update_type: "إعلان",
+    source_url: "/fawaid",
+    published_at: "2026-07-12T06:00:00Z",
+    status: "approved",
+  },
 ];
 
 export function getSortedUpdates(limit?: number) {
