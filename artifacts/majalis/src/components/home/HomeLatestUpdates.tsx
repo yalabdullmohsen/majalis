@@ -54,9 +54,15 @@ export function HomeLatestUpdates() {
   return (
     <section className="home-section" aria-labelledby="latest-updates-heading">
       <div className="home-section-head">
-        <div>
-          <p className="home-eyebrow">محتوى موثّق</p>
-          <h2 id="latest-updates-heading">آخر التحديثات من المصادر الرسمية</h2>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16">
+            <polygon points="8,1 10,6 15.5,6 11,9.5 13,15 8,11.5 3,15 5,9.5 0.5,6 6,6" fill="none" stroke="#1F4D3A" strokeWidth="1.2"/>
+            <circle cx="8" cy="8" r="2.2" fill="#2d7a5a" opacity="0.4"/>
+          </svg>
+          <div>
+            <p className="home-eyebrow">محتوى موثّق</p>
+            <h2 id="latest-updates-heading">آخر التحديثات من المصادر الرسمية</h2>
+          </div>
         </div>
         <Link href="/updates" className="home-section-link">جميع التحديثات</Link>
       </div>
