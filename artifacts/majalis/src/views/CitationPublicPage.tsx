@@ -3,6 +3,7 @@ import { Download, Link2, QrCode, Star } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 import { Link, useRoute } from "wouter";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   type Citation,
   CONTENT_TYPE_LABEL,
@@ -224,6 +225,9 @@ export default function CitationPublicPage() {
           </p>
           <div className="twh-share">
             <ShareButtons title="اقتباس من المجلس العلمي" url={typeof window !== "undefined" ? window.location.href : "https://majlisilm.com"} />
+          </div>
+          <div className="px-4 pb-6 mt-4">
+            <SectionQuiz categoryId={["hadith", "quran"]} title="اختبر معلوماتك في القرآن والحديث" count={4} />
           </div>
         </div>
       </main>

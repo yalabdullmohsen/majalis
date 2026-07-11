@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { applyPageSeo } from "@/lib/seo";
 
 export default function AboutPage() {
@@ -233,6 +234,9 @@ export default function AboutPage() {
 
       <div className="twh-share">
         <ShareButtons title="عن المجلس العلمي" url="https://majlisilm.com/about" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["aqeeda", "akhlaq", "fiqh"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
       </div>
       <LegalBackLink />
     </LegalPageLayout>

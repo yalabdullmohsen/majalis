@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { GeometricPattern } from "@/components/design/GeometricPattern";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import type { PrayerSlot } from "@/lib/prayer-times";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -109,6 +110,9 @@ export default function PrayerCountdownPage() {
 
       <div className="twh-share">
         <ShareButtons title="العد التنازلي للصلاة — المجلس العلمي" url="https://majlisilm.com/prayer-countdown" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في فقه الصلاة" count={4} />
       </div>
     </div>
   );

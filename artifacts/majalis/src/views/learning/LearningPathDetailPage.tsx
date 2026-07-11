@@ -12,6 +12,7 @@ import {
   type LearningModule,
 } from "@/lib/digital-learning-service";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { applyPageSeo } from "@/lib/seo";
 
 export default function LearningPathDetailPage() {
@@ -152,6 +153,9 @@ export default function LearningPathDetailPage() {
       )}
       <div className="twh-share">
         <ShareButtons title="تفاصيل المسار التعليمي — المجلس العلمي" url="https://majlisilm.com/learning/paths" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["fiqh", "aqeeda", "hadith"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { arSA } from "date-fns/locale";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { fetchLearningCalendar, subscribeLearningEvent } from "@/lib/digital-learning-service";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -89,6 +90,9 @@ export default function LearningCalendarPage() {
       </p>
       <div className="twh-share">
         <ShareButtons title="تقويم الدروس الشرعية — المجلس العلمي" url="https://majlisilm.com/learning/calendar" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["hadith", "fiqh"]} title="اختبر معلوماتك في الحديث والفقه" count={4} />
       </div>
     </div>
   );

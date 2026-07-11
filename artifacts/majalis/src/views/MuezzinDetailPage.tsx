@@ -3,6 +3,7 @@ import { BookOpen, Building2, CloudMoon, CloudSun, Cog, Heart, MapPin, Mic2, Moo
 import type { LucideIcon } from "lucide-react";
 import { Link, useRoute } from "wouter";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   getMuezzin,
   playAdhan,
@@ -325,6 +326,9 @@ export default function MuezzinDetailPage() {
 
       <div className="twh-share">
         <ShareButtons title={`${muezzin.name} — مكتبة المؤذنين | المجلس العلمي`} url={`https://majlisilm.com/muezzins/${muezzin.id}`} />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />
       </div>
     </div>
   );

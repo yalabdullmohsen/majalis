@@ -3,6 +3,7 @@ import { AlertTriangle, Globe } from "lucide-react";
 import { Link } from "wouter";
 import { CompareProvider, useCompare } from "@/components/universities/CompareContext";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { applyPageSeo } from "@/lib/seo";
 import { ACCREDITATION_LABELS, ACCREDITATION_COLOR } from "@/lib/universities-service";
 import type { University, UniversityProgram } from "@/lib/universities-service";
@@ -154,6 +155,9 @@ function CompareContent() {
 
       <div className="twh-share">
         <ShareButtons title="مقارنة الجامعات الإسلامية — المجلس العلمي" url="https://majlisilm.com/universities/compare" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في الفقه والتاريخ" count={4} />
       </div>
     </div>
   );

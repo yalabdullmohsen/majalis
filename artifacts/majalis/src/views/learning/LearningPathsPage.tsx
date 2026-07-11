@@ -4,6 +4,7 @@ import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { fetchLearningPaths, levelLabel, type LearningPath } from "@/lib/digital-learning-service";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -254,6 +255,9 @@ export default function LearningPathsPage() {
       </section>
       <div className="twh-share">
         <ShareButtons title="المسارات التعليمية الشرعية — المجلس العلمي" url="https://majlisilm.com/learning/paths" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["fiqh", "aqeeda", "akhlaq"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
       </div>
     </div>
   );
