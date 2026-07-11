@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const SUGGESTIONS = [
   { href: "/quran",        label: "المصحف الشريف" },
@@ -45,6 +46,9 @@ export default function NotFound() {
               <Link key={href} href={href} className="nf-suggestion-item">{label}</Link>
             ))}
           </div>
+        </div>
+        <div style={{ marginTop: "1.5rem" }}>
+          <SectionQuiz categoryId={["quran","hadith","fiqh","aqeeda"]} title="اختبر معلوماتك أثناء تصفّحك" count={3} />
         </div>
       </section>
     </div>
