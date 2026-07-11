@@ -1039,6 +1039,15 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-07-11T15:00:00Z",
     status: "approved",
   },
+  {
+    id: "update-akhlaq-37",
+    title: "تحديث قسم الأخلاق والصحابة — 37 سؤالاً",
+    summary: "إضافة 15 سؤالاً جديداً في قسم «الأخلاق والصحابة»: صفات الصحابة وسيرهم (أبو هريرة، فاطمة الزهراء، عبد الرحمن بن عوف، أبو عبيدة، ابن مسعود)، والأخلاق النبوية (الصدق، الحياء، الورع، الكبر، الرضا).",
+    update_type: "إعلان",
+    source_url: "/quiz",
+    published_at: "2026-07-11T16:00:00Z",
+    status: "approved",
+  },
 ];
 
 export function getSortedUpdates(limit?: number) {
