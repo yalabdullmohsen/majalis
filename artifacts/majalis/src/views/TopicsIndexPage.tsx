@@ -7,6 +7,7 @@ import { fetchAllTopics } from "@/lib/scholarly-intelligence-service";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 // ── Static fallback topics per category ──────────────────────────────────────
 
@@ -207,6 +208,9 @@ export default function TopicsIndexPage() {
 
       <div className="twh-share">
         <ShareButtons title="فهرس المواضيع الإسلامية — المجلس العلمي" url="https://majlisilm.com/topics" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["quran", "hadith", "fiqh", "aqeeda"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </div>
   );

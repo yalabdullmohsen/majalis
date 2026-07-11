@@ -5,6 +5,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 import { ShareButtons } from "@/components/ContentActions";
 import "@/styles/quran.css";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const RADIO_STATE_LABELS = {
   idle: "جاهز",
@@ -164,6 +165,9 @@ export default function QuranRadioPage() {
 
         <div className="twh-share">
           <ShareButtons title="إذاعات وقنوات القرآن الكريم — المجلس العلمي" url="https://majlisilm.com/quran-radio" />
+        </div>
+        <div className="px-4 pb-6 mt-4">
+          <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />
         </div>
       </div>
     </div>
