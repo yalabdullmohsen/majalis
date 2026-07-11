@@ -471,7 +471,7 @@ export default function HomePage() {
             borderTop: "1px solid rgba(255,255,255,0.1)",
           }}>
             {[
-              { num: "٩٩+",  label: "عالم مرجعي",   icon: "👤" },
+              { num: "١٠٠",  label: "عالم مرجعي",   icon: "👤" },
               { num: "٣٨٤+", label: "سؤال اختباري", icon: "🧠" },
               { num: "٤١٣+", label: "فائدة علمية",  icon: "💡" },
               { num: "١٠٠+", label: "كتاب علمي",    icon: "📚" },
