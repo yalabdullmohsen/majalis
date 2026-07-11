@@ -14,6 +14,9 @@ const TOPICS = [
   { href: "/fadail-aamal",     emoji: "🏆", label: "فضائل الأعمال",          desc: "أحاديث صحيحة في ثواب الأعمال",          color: "#0F5132" },
   { href: "/adab-talab-ilm",   emoji: "📚", label: "آداب طالب العلم",        desc: "فضل العلم وآداب الطالب مع شيخه",         color: "#1F4D3A" },
   { href: "/amr-bil-maruf",   emoji: "⚖️", label: "الأمر بالمعروف",         desc: "مراتبه الثلاث وشروطه وأحكامه",           color: "#145C46" },
+  { href: "/malaika",         emoji: "✨", label: "الملائكة في الإسلام",    desc: "أسماؤهم ومهامهم وصفاتهم من الوحي",       color: "#0A5040" },
+  { href: "/sahabah",         emoji: "🌠", label: "أعلام الصحابة",          desc: "12 صحابياً بالسيرة والإرث والفضل",        color: "#0F5132" },
+  { href: "/fiqh-qawaid",    emoji: "🏛️", label: "القواعد الفقهية الكبرى", desc: "القواعد الخمس وفروعها وتطبيقاتها",       color: "#1F4D3A" },
 ];
 
 export function HomeInterestingTopics() {
