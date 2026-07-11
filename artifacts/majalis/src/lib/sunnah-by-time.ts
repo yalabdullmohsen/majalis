@@ -18,7 +18,9 @@ const PERIODS: Record<string, SunnahPeriod> = {
     suggestions: [
       { label: "أذكار الصباح", href: "/adhkar?cat=morning" },
       { label: "ركعتا الإشراق", href: "/adhkar?cat=salah" },
-      { label: "ورد القرآن", href: "/daily-wird" },
+      { label: "ورد القرآن اليومي", href: "/daily-wird" },
+      { label: "فائدة علمية", href: "/fawaid" },
+      { label: "حكمة السلف", href: "/hikam-salaf" },
     ],
   },
   beforeDhuhr: {
@@ -27,7 +29,8 @@ const PERIODS: Record<string, SunnahPeriod> = {
     suggestions: [
       { label: "صلاة الضحى", href: "/adhkar?cat=salah" },
       { label: "قراءة القرآن", href: "/quran" },
-      { label: "الدعاء", href: "/adhkar?cat=distress" },
+      { label: "الأسئلة الشرعية", href: "/qa" },
+      { label: "دروس الأسبوع", href: "/lessons" },
     ],
   },
   afterDhuhr: {
@@ -37,6 +40,7 @@ const PERIODS: Record<string, SunnahPeriod> = {
       { label: "سنة الظهر البعدية", href: "/adhkar?cat=salah" },
       { label: "أذكار ما بعد الصلاة", href: "/adhkar?cat=after-salah" },
       { label: "قراءة القرآن", href: "/quran" },
+      { label: "فوائد علمية", href: "/fawaid" },
     ],
   },
   afterAsr: {
@@ -45,7 +49,8 @@ const PERIODS: Record<string, SunnahPeriod> = {
     suggestions: [
       { label: "أذكار المساء", href: "/adhkar?cat=evening" },
       { label: "قراءة القرآن", href: "/quran" },
-      { label: "صلة الرحم", href: "/fawaid" },
+      { label: "قصص الأنبياء", href: "/prophets" },
+      { label: "الرقائق والزهد", href: "/raqaiq" },
     ],
   },
   afterMaghrib: {
@@ -53,8 +58,9 @@ const PERIODS: Record<string, SunnahPeriod> = {
     title: "بعد المغرب",
     suggestions: [
       { label: "أذكار المساء", href: "/adhkar?cat=evening" },
-      { label: "أذكار النوم", href: "/adhkar?cat=sleep" },
       { label: "قراءة سورة الملك", href: "/quran?surah=67" },
+      { label: "الفوائد العلمية", href: "/fawaid" },
+      { label: "الوصايا النبوية", href: "/wasaya-nabawiyya" },
     ],
   },
   afterIsha: {
@@ -64,6 +70,7 @@ const PERIODS: Record<string, SunnahPeriod> = {
       { label: "الوتر", href: "/adhkar?cat=after-salah" },
       { label: "أذكار النوم", href: "/adhkar?cat=sleep" },
       { label: "قيام الليل", href: "/adhkar?cat=salah" },
+      { label: "الرقائق والمواعظ", href: "/raqaiq" },
     ],
   },
 };
