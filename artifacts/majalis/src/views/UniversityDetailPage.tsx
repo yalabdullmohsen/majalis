@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { AlertTriangle, Calendar, ExternalLink, FileText, Globe, GraduationCap, Info, Landmark, MapPin } from "lucide-react";
 import { useRoute, Link } from "wouter";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { Spinner } from "@/components/ui/spinner";
 import {
   fetchUniversity,
@@ -255,6 +256,9 @@ function DetailContent({ university: u }: { university: University }) {
 
         <div className="twh-share">
           <ShareButtons title={`${u.name_ar} — دليل الجامعات الإسلامية | المجلس العلمي`} url={`https://majlisilm.com/universities/${u.slug}`} />
+        </div>
+        <div className="px-4 pb-6 mt-4">
+          <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
         </div>
       </div>
 

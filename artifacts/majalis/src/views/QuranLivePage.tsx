@@ -6,6 +6,7 @@ import {
   BookOpen, ExternalLink,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 /* ── قنوات البث المباشر ──────────────────────────────────── */
 type LiveChannel = {
@@ -245,6 +246,9 @@ export default function QuranLivePage() {
       {/* ── روابط ذات صلة ─────────────────────────────────── */}
       <div className="twh-share">
         <ShareButtons title="البث المباشر للقرآن الكريم — المجلس العلمي" url="https://majlisilm.com/quran-live" />
+      </div>
+      <div className="px-4 pb-4 mt-4">
+        <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />
       </div>
 
       <section className="qlive-related">

@@ -5,6 +5,7 @@ import { Link, useParams } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { supabase } from "@/lib/supabase";
 import type { LPBookDetail, LPExplanation, LPBenefit, LPQuiz, LPProgress } from "@/lib/learning-path-service";
 import { fetchBook, fetchProgress, updateProgress, DIFFICULTY_LABELS } from "@/lib/learning-path-service";
@@ -291,6 +292,9 @@ export default function LearningPathBookPage() {
       )}
       <div className="twh-share">
         <ShareButtons title="كتاب المسار التعليمي — المجلس العلمي" url="https://majlisilm.com/learning/books" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["fiqh", "aqeeda", "hadith"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </div>
   );
