@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 type Madhhab = {
   id: string;
@@ -332,6 +333,9 @@ export default function MadhahibPage() {
           ))}
         </div>
       </section>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في المذاهب الفقهية" count={4} />
+      </div>
     </main>
   );
 }

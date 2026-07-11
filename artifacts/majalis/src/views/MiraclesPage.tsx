@@ -17,6 +17,7 @@ import { safeLoadEffect } from "@/lib/safe-load";
 import { GeometricPattern } from "@/components/design/GeometricPattern";
 import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ShareButtons } from "@/components/ContentActions";
 
 const CATEGORIES = MIRACLE_CATEGORIES;
@@ -325,6 +326,9 @@ export default function MiraclesPage({
         {filterPanel}
       </FilterBottomSheet>
       {isAdmin && <AdminQuickEdit section="miracles" />}
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة والإعجاز" count={4} />
+      </div>
     </div>
   );
 }

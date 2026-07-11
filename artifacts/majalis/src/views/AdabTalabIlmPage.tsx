@@ -3,6 +3,7 @@ import { BookOpen, ChevronDown, ChevronUp, GraduationCap, Lightbulb, Scale, Star
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ══════════════════════════════════════════════════════════════════
@@ -695,6 +696,9 @@ export default function AdabTalabIlmPage() {
 
       <div className="twh-share">
         <ShareButtons title="آداب طالب العلم — المجلس العلمي" url="https://majlisilm.com/adab-talab-ilm" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأخلاق والآداب" count={4} />
       </div>
     </div>
   );

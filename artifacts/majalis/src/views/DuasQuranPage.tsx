@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 
 type DuaCategory = "الكل" | "الأنبياء" | "الرزق والهداية" | "المغفرة" | "الأسرة" | "الدنيا والآخرة" | "الصبر والنصر";
@@ -500,6 +501,9 @@ export default function DuasQuranPage() {
             ))}
           </div>
         </nav>
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />
       </div>
     </main>
   );

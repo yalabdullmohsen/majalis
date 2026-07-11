@@ -3,6 +3,7 @@ import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 /* ══════════════════════════════════════════════════════════════════
    §248، الوصايا النبوية  (.wn-*)
@@ -626,6 +627,9 @@ export default function WasayaNabawiyyaPage() {
 
       <div className="twh-share">
         <ShareButtons title="الوصايا النبوية — المجلس العلمي" url="https://majlisilm.com/wasaya-nabawiyya" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في الحديث النبوي" count={4} />
       </div>
     </div>
   );

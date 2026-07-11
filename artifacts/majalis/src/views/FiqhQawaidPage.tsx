@@ -4,6 +4,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 /* ══════════════════════════════════════════════════════════════════
    §239، القواعد الفقهية الكبرى  (.fq-*)
@@ -660,6 +661,9 @@ export default function FiqhQawaidPage() {
 
       <div className="twh-share">
         <ShareButtons title="القواعد الفقهية — المجلس العلمي" url="https://majlisilm.com/fiqh-qawaid" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه والقواعد" count={4} />
       </div>
     </div>
   );

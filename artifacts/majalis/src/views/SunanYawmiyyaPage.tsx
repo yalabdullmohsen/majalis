@@ -4,6 +4,7 @@ import { Check, CheckCircle2, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 /* ─── أنواع البيانات ─── */
 type Sunnah = {
@@ -869,6 +870,9 @@ export default function SunanYawmiyyaPage() {
           ))}
         </div>
       </section>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["fiqh", "akhlaq"]} title="اختبر معلوماتك في السنن والفقه" count={4} />
+      </div>
     </main>
   );
 }

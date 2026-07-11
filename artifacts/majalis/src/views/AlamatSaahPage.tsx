@@ -3,6 +3,7 @@ import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 /* ══════════════════════════════════════════════════════════════════
    §246، علامات الساعة  (.as-*)
@@ -577,6 +578,9 @@ export default function AlamatSaahPage() {
 
       <div className="twh-share">
         <ShareButtons title="علامات الساعة — المجلس العلمي" url="https://majlisilm.com/alamat-saah" />
+      </div>
+      <div className="px-4 pb-6 mt-6">
+        <SectionQuiz categoryId={["aqeeda", "tarikh"]} title="اختبر معلوماتك في العقيدة والتاريخ" count={4} />
       </div>
     </div>
   );

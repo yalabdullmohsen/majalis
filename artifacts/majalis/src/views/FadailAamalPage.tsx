@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 interface Fadila {
   id: string;
@@ -1006,6 +1007,9 @@ export default function FadailAamalPage() {
             ))}
           </div>
         </nav>
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["hadith", "akhlaq"]} title="اختبر معلوماتك في فضائل الأعمال" count={4} />
       </div>
     </main>
   );

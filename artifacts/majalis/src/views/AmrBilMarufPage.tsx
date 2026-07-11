@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { IslamicDivider, StarKhatam } from "@/components/IslamicDecorations";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   AMR_BIL_MARUF_LEVELS,
   AMR_BIL_MARUF_CONDITIONS,
@@ -388,6 +389,9 @@ export default function AmrBilMarufPage() {
           ))}
         </ul>
       </section>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأمر بالمعروف" count={4} />
+      </div>
     </div>
   );
 }

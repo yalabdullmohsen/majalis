@@ -6,6 +6,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { Chip } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   PROPHETIC_MEDICINE_ITEMS,
   PM_CATEGORIES,
@@ -185,6 +186,9 @@ export default function PropheticMedicinePage() {
       >
         {filterPanel}
       </FilterBottomSheet>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في الطب النبوي" count={4} />
+      </div>
     </div>
   );
 }

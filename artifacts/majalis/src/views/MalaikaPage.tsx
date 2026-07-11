@@ -3,6 +3,7 @@ import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 /* ══════════════════════════════════════════════════════════════════
    §247، الملائكة في الإسلام  (.mk-*)
@@ -429,6 +430,10 @@ export default function MalaikaPage() {
 
       <div className="twh-share">
         <ShareButtons title="الملائكة في الإسلام — المجلس العلمي" url="https://majlisilm.com/malaikah" />
+      </div>
+
+      <div className="px-4 pb-6 mt-6">
+        <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة" count={4} />
       </div>
 
       </div>

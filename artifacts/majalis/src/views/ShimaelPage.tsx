@@ -3,6 +3,7 @@ import { ChevronDown, ChevronUp, Heart, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { arabicMatchAny } from "@/lib/arabic-search";
 
 /* ══════════════════════════════════════════════════════════════════
@@ -699,6 +700,9 @@ export default function ShimaelPage() {
 
       <div className="twh-share">
         <ShareButtons title="الشمائل المحمدية — المجلس العلمي" url="https://majlisilm.com/shimail" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="sira" title="اختبر معلوماتك في السيرة النبوية" count={4} />
       </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
 import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { DEMO_FAWAID, FAWAID_CATEGORIES } from "@/lib/demo-content";
 import { canSubmitForm } from "@/lib/form-rate-limit";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
@@ -224,6 +225,9 @@ export default function FawaidPage({
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}
       </FilterBottomSheet>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في الحديث والفوائد" count={4} />
+      </div>
     </div>
   );
 }

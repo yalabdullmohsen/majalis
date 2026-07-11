@@ -6,6 +6,7 @@ import { usePublishedAdhkarItems } from "@/lib/adhkar-service";
 import { PageHeader, Empty } from "@/components/ui-common";
 import { ShareButton } from "@/components/ShareButton";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const FEATURED_CATEGORY_SLUGS = new Set([
   "morning", "evening", "sleep", "wakeup", "home-in", "home-out",
@@ -326,6 +327,9 @@ export default function AdhkarPage() {
       {showSheet && current && (
         <DhikrSheet item={current} onClose={() => setShowSheet(false)} />
       )}
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأخلاق والآداب" count={4} />
+      </div>
     </div>
   );
 }

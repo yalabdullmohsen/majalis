@@ -3,6 +3,7 @@ import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { RANKS } from "@/views/PrayerRanksPage";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 
 type SalahTab = "shurut" | "wajibaat" | "kayfiyya" | "mubtilatat" | "khushuu" | "fawaid" | "maratib" | "suwar";
@@ -689,6 +690,9 @@ export default function SalahGuidePage() {
             ))}
           </div>
         </nav>
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه" count={4} />
       </div>
     </main>
   );

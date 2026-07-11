@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { ChevronDown, ChevronUp, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 /* ─── بيانات أركان الإيمان ─── */
 type RuknIman = {
@@ -320,6 +321,9 @@ export default function ArkanImanPage() {
       </section>
       <div className="zk-share">
         <ShareButtons title="أركان الإيمان الستة — المجلس العلمي" url="https://majlisilm.com/arkan-iman" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة" count={4} />
       </div>
     </main>
   );

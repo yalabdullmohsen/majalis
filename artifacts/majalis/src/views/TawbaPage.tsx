@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 
 type TawbaTab = "shurut" | "anwaa" | "adhkar" | "mawani" | "athaar";
@@ -466,6 +467,9 @@ export default function TawbaPage() {
             ))}
           </div>
         </nav>
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأخلاق والتزكية" count={4} />
       </div>
     </main>
   );
