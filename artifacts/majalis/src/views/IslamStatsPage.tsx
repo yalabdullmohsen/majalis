@@ -3,6 +3,7 @@ import { BarChart3, Globe, Heart, Star, TrendingUp, Users } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/elite-2026.css";
 
 /* ══════════════════════════════════════════════════════════════════
@@ -485,6 +486,9 @@ export default function IslamStatsPage() {
 
       <div className="twh-share">
         <ShareButtons title="الإسلام في أرقام — المجلس العلمي" url="https://majlisilm.com/islam-stats" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["tarikh", "aqeeda"]} title="اختبر معلوماتك في الإسلام والتاريخ" count={4} />
       </div>
     </div>
   );

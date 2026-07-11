@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Star } from "lucide-react";
 import { SkeletonCardGrid, PageHeader } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   loadIslamicOccasions,
   sortOccasionsByUpcoming,
@@ -161,6 +162,9 @@ export default function OccasionsPage() {
 
       <div className="twh-share">
         <ShareButtons title="المناسبات الإسلامية — المجلس العلمي" url="https://majlisilm.com/occasions" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="tarikh" title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
       </div>
     </div>
   );
