@@ -310,6 +310,90 @@ export default function HomePage() {
         </div>
       )}
 
+      {/* ══════════════════ شعار المنصة ══════════════════ */}
+      <div
+        role="banner"
+        aria-label="شعار المنصة"
+        style={{
+          background: "linear-gradient(160deg, #0a1f12 0%, #132b1c 60%, #0a1f12 100%)",
+          borderBottom: "1px solid rgba(255,255,255,0.08)",
+          padding: "clamp(1.75rem, 5vw, 2.75rem) 1rem clamp(1.5rem, 4vw, 2.25rem)",
+          textAlign: "center",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        {/* خط ذهبي علوي */}
+        <div aria-hidden="true" style={{
+          position: "absolute", top: 0, left: 0, right: 0, height: "3px",
+          background: "linear-gradient(90deg, transparent 0%, rgba(250,248,242,0.35) 30%, rgba(250,248,242,0.6) 50%, rgba(250,248,242,0.35) 70%, transparent 100%)",
+        }} />
+
+        {/* نمط هندسي خفيف */}
+        <div aria-hidden="true" style={{
+          position: "absolute", inset: 0, opacity: 0.04,
+          backgroundImage: "radial-gradient(circle at 20% 50%, rgba(255,255,255,0.6) 1px, transparent 1px), radial-gradient(circle at 80% 50%, rgba(255,255,255,0.6) 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+          pointerEvents: "none",
+        }} />
+
+        {/* المحتوى المركزي */}
+        <div style={{ position: "relative", maxWidth: 640, margin: "0 auto" }}>
+          {/* فاصل إسلامي علوي */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "1.1rem", opacity: 0.45 }}>
+            <span style={{ height: "1px", width: 56, background: "rgba(250,248,242,0.6)", display: "block" }} />
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(250,248,242,0.8)" aria-hidden="true">
+              <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.3L12 17l-6.2 4.2 2.4-7.3L2 9.4h7.6z"/>
+            </svg>
+            <span style={{ height: "1px", width: 56, background: "rgba(250,248,242,0.6)", display: "block" }} />
+          </div>
+
+          {/* الجملة الرئيسية */}
+          <p style={{
+            color: "#FAF8F2",
+            fontSize: "clamp(1.7rem, 5.5vw, 2.6rem)",
+            fontWeight: 800,
+            margin: "0 0 0.55rem",
+            lineHeight: 1.35,
+            letterSpacing: "0.01em",
+          }}>
+            رسالةٌ عظيمة
+            <span style={{
+              display: "inline-block",
+              color: "rgba(250,248,242,0.6)",
+              fontWeight: 300,
+              margin: "0 0.45rem",
+              fontSize: "clamp(1.2rem, 3.5vw, 1.8rem)",
+            }}>،</span>
+            <span style={{ color: "rgba(250,248,242,0.82)", fontWeight: 600 }}>ووسائل تتجدد</span>
+          </p>
+
+          {/* السطر الداعم */}
+          <p style={{
+            color: "rgba(250,248,242,0.55)",
+            fontSize: "clamp(0.82rem, 2.2vw, 0.95rem)",
+            lineHeight: 1.7,
+            maxWidth: 480,
+            margin: "0 auto 1.1rem",
+          }}>
+            رسالة الإسلام باقيةٌ ثابتةٌ، وهذه المنصة أداةٌ متجددة في خدمتها
+          </p>
+
+          {/* فاصل إسلامي سفلي */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", opacity: 0.35 }}>
+            <span style={{ height: "1px", width: 40, background: "rgba(250,248,242,0.6)", display: "block" }} />
+            <span style={{ color: "rgba(250,248,242,0.6)", fontSize: "0.65rem", letterSpacing: "0.3em", fontWeight: 600 }}>المجلس العلمي</span>
+            <span style={{ height: "1px", width: 40, background: "rgba(250,248,242,0.6)", display: "block" }} />
+          </div>
+        </div>
+
+        {/* خط سفلي */}
+        <div aria-hidden="true" style={{
+          position: "absolute", bottom: 0, left: 0, right: 0, height: "1px",
+          background: "linear-gradient(90deg, transparent, rgba(250,248,242,0.15), transparent)",
+        }} />
+      </div>
+
       {/* ══════════════════ Hero ══════════════════ */}
       <section
         className="hpv4-hero"
