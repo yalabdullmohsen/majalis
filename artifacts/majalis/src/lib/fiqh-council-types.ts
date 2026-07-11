@@ -404,8 +404,8 @@ export const FIQH_PUBLIC_STATUSES: FiqhItemStatus[] = ["published"];
 export const FIQH_REVIEW_STATUSES: FiqhItemStatus[] = ["imported", "needs_review", "review", "approved"];
 
 export const FIQH_COUNCIL_INTRO =
-  "مرجع منظم لقرارات وفتاوى وتوصيات الهيئات والمنظمات الإسلامية السنية المعتمدة — " +
-  "المجامع الفقهية الدولية، هيئة كبار العلماء، دور الإفتاء، ورابطة العالم الإسلامي — " +
+  "مرجع منظم لقرارات وفتاوى وتوصيات الهيئات والمنظمات الإسلامية السنية المعتمدة، " +
+  "يشمل: المجامع الفقهية الدولية، هيئة كبار العلماء، دور الإفتاء، ورابطة العالم الإسلامي، " +
   "معنيٌّ بنوازل العصر مع الالتزام بضوابط الفقه الإسلامي والمراجع الموثّقة.";
 
 export function fiqhItemHref(slug: string) {
