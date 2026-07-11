@@ -39,6 +39,7 @@ import { ScholarFollowButton } from "@/components/ScholarFollowButton";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { applyPageSeo } from "@/lib/seo";
 import { ContentMindMap } from "@/components/ContentMindMap";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   if (url?.includes("google.com/maps") || url?.includes("goo.gl/maps") || url?.includes("maps.app")) {
@@ -532,6 +533,9 @@ export default function LessonDetailPage({
           />
         </SectionErrorBoundary>
       )}
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["fiqh","aqeeda","hadith","quran"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
+      </div>
     </div>
   );
 }
