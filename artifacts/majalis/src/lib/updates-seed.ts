@@ -1012,6 +1012,24 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-07-11T10:00:00Z",
     status: "approved",
   },
+  {
+    id: "update-quiz-886",
+    title: "بنك الأسئلة يبلغ 886 سؤالاً",
+    summary: "إضافة 14 سؤالاً تاريخياً وعلمياً: 8 أسئلة في العلماء والأئمة (البخاري، النووي، الغزالي، ابن تيمية، الشافعي، ابن حجر، الأئمة الأربعة، ابن القيم)، و6 أسئلة في الأسماء الحسنى.",
+    update_type: "إعلان",
+    source_url: "/quiz",
+    published_at: "2026-07-11T14:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-sitemap-amr",
+    title: "تحديث خريطة الموقع",
+    summary: "إضافة صفحة «الأمر بالمعروف والنهي عن المنكر» لخريطة الموقع، وإضافة موسمَي محرم 1448 وربيع الأول 1448 لويدجت مواسم التعلم.",
+    update_type: "إعلان",
+    source_url: "/site-map",
+    published_at: "2026-07-11T13:00:00Z",
+    status: "approved",
+  },
 ];
 
 export function getSortedUpdates(limit?: number) {
