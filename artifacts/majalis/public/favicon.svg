@@ -1,30 +1,97 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 260" width="240" height="240" role="img" aria-label="المجلس العلمي">
   <defs>
-    <linearGradient id="fg-emerald" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#2E6A36"/>
-      <stop offset="100%" stop-color="#1A4826"/>
+    <!-- تدرج زمردي -->
+    <linearGradient id="grad-green" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#1F6840"/>
+      <stop offset="100%" stop-color="#0E3D22"/>
     </linearGradient>
-    <linearGradient id="fg-gold" x1="0%" y1="0%" x2="0%" y2="100%">
+    <!-- تدرج عاجي ذهبي دافئ -->
+    <linearGradient id="grad-ivory" x1="0.6" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#D4AF75"/>
+      <stop offset="100%" stop-color="#A8883A"/>
+    </linearGradient>
+    <!-- تدرج كتاب -->
+    <linearGradient id="grad-book-l" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1F6840"/>
+      <stop offset="100%" stop-color="#0E3D22"/>
+    </linearGradient>
+    <linearGradient id="grad-book-r" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#C8A55A"/>
-      <stop offset="100%" stop-color="#795B25"/>
+      <stop offset="100%" stop-color="#957030"/>
     </linearGradient>
   </defs>
-  <!-- خلفية عاجية -->
-  <rect width="100" height="100" rx="20" fill="#F4F3EE"/>
-  <!-- الشريط الأخضر للقوس (يسار) -->
-  <path d="M18,88 Q18,42 50,18" fill="none" stroke="url(#fg-emerald)" stroke-width="7" stroke-linecap="round"/>
-  <!-- الشريط الذهبي للقوس (يمين) -->
-  <path d="M82,88 Q82,42 50,18" fill="none" stroke="url(#fg-gold)" stroke-width="5" stroke-linecap="round"/>
-  <!-- نقطة الذروة -->
-  <circle cx="50" cy="18" r="3.5" fill="#A78747"/>
-  <!-- كتاب مفتوح -->
-  <path d="M24,80 Q50,72 76,80" fill="none" stroke="url(#fg-emerald)" stroke-width="3" stroke-linecap="round"/>
-  <path d="M50,72 L50,84" stroke="#A78747" stroke-width="1.5" opacity="0.7"/>
-  <!-- حرف م (مجالس) -->
-  <text x="50" y="62"
-        font-family="serif"
-        font-size="28"
-        font-weight="700"
-        text-anchor="middle"
-        fill="#795B25">م</text>
+
+  <!-- خلفية عاجية كريمية -->
+  <rect width="240" height="260" fill="#F5F0E8"/>
+
+  <!-- ═══ القوس الخارجي الأيسر — الشريط الزمردي ═══ -->
+  <path d="
+    M 12,212
+    C 12,148 36,62 120,8
+    L 120,20
+    C 48,68 28,150 28,212
+    Z
+  " fill="url(#grad-green)"/>
+
+  <!-- ═══ القوس الخارجي الأيمن — الشريط العاجي الذهبي ═══ -->
+  <path d="
+    M 228,212
+    C 228,148 204,62 120,8
+    L 120,20
+    C 192,68 212,150 212,212
+    Z
+  " fill="url(#grad-ivory)"/>
+
+  <!-- ═══ القوس الداخلي — الزمردي ═══ -->
+  <path d="
+    M 44,205
+    C 46,154 64,82 120,36
+    L 120,48
+    C 68,88 58,158 58,205
+    Z
+  " fill="#1A5433"/>
+
+  <!-- ═══ برج الكويت — المركزي ═══ -->
+  <!-- عمود أساسي -->
+  <rect x="117" y="120" width="6" height="76" fill="#C8A55A" rx="1.5"/>
+  <!-- القُبة الكروية الكبيرة (على ارتفاع متوسط) -->
+  <ellipse cx="120" cy="145" rx="11" ry="7.5" fill="#C8A55A"/>
+  <ellipse cx="120" cy="145" rx="6" ry="4" fill="#F5F0E8" opacity="0.35"/>
+  <!-- القُبة العلوية الصغيرة -->
+  <ellipse cx="120" cy="120" rx="8" ry="5.5" fill="#C8A55A"/>
+  <!-- السارية فوق القمة -->
+  <rect x="119" y="96" width="2" height="24" fill="#A8883A" rx="0.5"/>
+  <!-- رأس السارية -->
+  <circle cx="120" cy="95" r="2" fill="#C8A55A"/>
+
+  <!-- ═══ البرج الأيسر ═══ -->
+  <rect x="94" y="138" width="5" height="58" fill="#C8A55A" rx="1" opacity="0.75"/>
+  <ellipse cx="96.5" cy="134" rx="7" ry="4.5" fill="#C8A55A" opacity="0.75"/>
+  <rect x="95.5" y="110" width="2" height="24" fill="#A8883A" rx="0.5" opacity="0.7"/>
+
+  <!-- ═══ البرج الأيمن ═══ -->
+  <rect x="141" y="132" width="5" height="64" fill="#C8A55A" rx="1" opacity="0.65"/>
+  <ellipse cx="143.5" cy="128" rx="7" ry="4.5" fill="#C8A55A" opacity="0.65"/>
+  <rect x="142.5" y="105" width="2" height="23" fill="#A8883A" rx="0.5" opacity="0.6"/>
+
+  <!-- ═══ موج / أفق ═══ -->
+  <path d="M 66,196 Q 80,192 94,196 Q 108,200 120,196 Q 132,192 146,196 Q 160,200 174,196"
+        fill="none" stroke="#1A5433" stroke-width="1.8" opacity="0.55" stroke-linecap="round"/>
+
+  <!-- ═══ طيور صغيرة (يمين) ═══ -->
+  <path d="M 163,106 Q 167,103 171,106" fill="none" stroke="#1A5433" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+  <path d="M 170,99  Q 174,96  178,99"  fill="none" stroke="#1A5433" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- ═══ الكتاب المفتوح (أسفل القوس) ═══ -->
+  <!-- نصف يساري أخضر -->
+  <path d="M 28,216 Q 66,206 120,210 L 120,224 Q 62,220 26,228 Z"
+        fill="url(#grad-book-l)"/>
+  <!-- نصف يميني عاجي ذهبي -->
+  <path d="M 212,216 Q 174,206 120,210 L 120,224 Q 178,220 214,228 Z"
+        fill="url(#grad-book-r)"/>
+  <!-- الحافة البيضاء الداخلية للكتاب -->
+  <line x1="120" y1="209" x2="120" y2="225" stroke="#F5F0E8" stroke-width="2.5"/>
+  <!-- حافة علوية لامعة للكتاب -->
+  <path d="M 32,216 Q 76,209 120,210 Q 164,211 208,218"
+        fill="none" stroke="#F5F0E8" stroke-width="1" opacity="0.6"/>
 </svg>
