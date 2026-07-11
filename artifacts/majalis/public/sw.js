@@ -1,7 +1,8 @@
-/** PWA service worker v16 — network-first for app shell, cache-first for static Quran/lesson data. */
+/** PWA service worker v17 — network-first for app shell, cache-first for static Quran/lesson data. */
 
-const SHELL_CACHE   = "majalis-shell-v16";
-const DATA_CACHE    = "majalis-data-v16";
+const SHELL_CACHE   = "majalis-shell-v17";
+const DATA_CACHE    = "majalis-data-v17";
+const ASSETS_CACHE  = "majalis-assets-v17";
 const VERSION_CACHE = "majalis-version";
 const FETCH_TIMEOUT = 8000;
 
@@ -68,7 +69,7 @@ self.addEventListener("activate", (event) => {
       const keys = await caches.keys();
       await Promise.all(
         keys
-          .filter((k) => k !== SHELL_CACHE && k !== DATA_CACHE && k !== VERSION_CACHE)
+          .filter((k) => k !== SHELL_CACHE && k !== DATA_CACHE && k !== ASSETS_CACHE && k !== VERSION_CACHE)
           .map((k) => caches.delete(k)),
       );
 
@@ -147,11 +148,9 @@ self.addEventListener("fetch", (event) => {
   // Only handle same-origin from here
   if (url.origin !== self.location.origin) return;
 
-  // Hashed JS/CSS bundles: always network (stale chunks break lazy routes)
+  // Hashed JS/CSS bundles: cache-first (immutable by hash — لا تتغير بدون hash جديد)
   if (url.pathname.startsWith("/assets/")) {
-    event.respondWith(
-      fetchWithTimeout(req).catch(() => caches.match(req) || Promise.reject()),
-    );
+    event.respondWith(cacheFirst(req, ASSETS_CACHE));
     return;
   }
 

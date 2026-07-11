@@ -33,18 +33,18 @@
     <link rel="icon" type="image/png" href="/favicon.png" sizes="512x512" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- DNS prefetch for external assets -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="dns-prefetch" href="https://ngmvmlulzacrlicuagyp.supabase.co" />
-    <!-- مجالس — خطوط الواجهة: Cairo (نص) + Amiri Quran (مصحف) -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Amiri+Quran&display=swap" rel="stylesheet" />
+    <!-- Cairo — الخط الرئيسي، font-display:swap لمنع FOIT -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" /></noscript>
+    <!-- Amiri Quran — مؤجل، يُحمَّل عند الحاجة فقط (صفحات القرآن) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri+Quran&display=optional" media="print" onload="this.media='all'" />
     <!-- خطوط العناوين والقراءة — مؤجلة حتى أول تفاعل -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Scheherazade+New:wght@400;700&family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" media="print" onload="this.media='all'" />
-    <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
-    </noscript>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",

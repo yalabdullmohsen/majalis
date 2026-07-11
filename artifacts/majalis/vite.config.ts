@@ -77,21 +77,40 @@ export default defineConfig({
             if (id.includes("cmdk") || id.includes("vaul") || id.includes("sonner")) return "ui-extra";
             if (id.includes("mapbox") || id.includes("leaflet") || id.includes("maplibre")) return "maps";
           }
+          // admin — فقط لصفحات الإدارة
           if (id.includes("src/views/AdminPage") || id.includes("src/views/admin/")) return "admin";
+          // واجهات المنزل
           if (id.includes("src/components/home/")) return "home-sections";
+          // صفحات القرآن
           if (id.includes("src/views/QuranCirclesPage") || id.includes("src/views/QuranPage") || id.includes("src/views/QuranRadioPage")) return "quran-pages";
-          if (id.includes("src/views/Scholarly") || id.includes("scholarly-research")) return "scholarly";
-          if (id.includes("src/lib/miracles-seed") || id.includes("src/lib/prophets-seed")) return "content-seed";
-          if (id.includes("src/lib/lessons-seed") || id.includes("src/lib/lesson-ads") || id.includes("src/lib/lessons-catalog")) return "lessons-seed-data";
-          if (id.includes("src/lib/adhkar-seed") || id.includes("src/lib/fawaid-seed")) return "adhkar-fawaid-seed";
-          if (id.includes("src/views/PropheticMedicine") || id.includes("src/views/Miracles")) return "science-pages";
-          if (id.includes("src/views/FiqhCouncil")) return "fiqh-council";
-          if (id.includes("src/views/Learning") || id.includes("src/views/learning/")) return "learning-pages";
+          // البحث العلمي
+          if (id.includes("src/views/Scholarly") || id.includes("scholarly-research") || id.includes("src/lib/scholars-data")) return "scholarly";
+          // بيانات المسابقات والمعجم والخرائط الذهنية
           if (id.includes("src/lib/mind-maps-data") || id.includes("src/lib/quiz-seed") || id.includes("src/lib/islamic-glossary")) return "content-data";
+          // بيانات الأسئلة والأجوبة — chunk مستقل (203 kB)
+          if (id.includes("src/lib/qa-seed") || id.includes("src/lib/rulings-relations") || id.includes("src/lib/search-suggestions")) return "qa-data";
+          // بيانات الموسوعة الفقهية المُولَّدة — chunk مستقل (286 kB)
+          if (id.includes("src/lib/rulings-encyclopedia-seed") || id.includes("src/lib/rulings-data-loader")) return "rulings-encyclopedia";
+          // الأذكار والفوائد
+          if (id.includes("src/lib/adhkar-seed") || id.includes("src/lib/fawaid-seed") || id.includes("src/lib/fawaid-curated-seed") || id.includes("src/lib/content-quality")) return "adhkar-fawaid-seed";
+          // الفتاوى والأحكام
           if (id.includes("src/lib/fatwa-seed") || id.includes("src/lib/rulings-seed")) return "fatwa-rulings-seed";
+          // مجلس الفقه — البيانات + الخدمات
+          if (id.includes("src/lib/fiqh-council-seed") || id.includes("src/lib/fiqh-council-nawazil") || id.includes("src/lib/fiqh-council-categories") || id.includes("src/lib/fiqh-council-trust") || id.includes("src/lib/fiqh-issues-seed") || id.includes("src/lib/fiqh-council-service") || id.includes("src/lib/fiqh-council-issues-service") || id.includes("src/lib/fiqh-research-assistant") || id.includes("src/lib/fiqh-global-search")) return "fiqh-council-data";
+          // صفحات مجلس الفقه
+          if (id.includes("src/views/FiqhCouncil")) return "fiqh-council";
+          // بيانات الدروس والشيوخ والإعلانات
+          if (id.includes("src/lib/lessons-seed") || id.includes("src/lib/lesson-ads") || id.includes("src/lib/lessons-catalog") || id.includes("src/lib/sheikhs-seed") || id.includes("src/lib/scientific-announcements")) return "lessons-seed-data";
+          // الدورات السنوية والتحديثات
           if (id.includes("src/lib/annual-courses-seed") || id.includes("src/lib/updates-seed")) return "courses-updates-seed";
-          if (id.includes("src/lib/fiqh-council-seed") || id.includes("src/lib/fiqh-council-nawazil") || id.includes("src/lib/fiqh-council-categories") || id.includes("src/lib/fiqh-council-trust")) return "fiqh-council-data";
-          if (id.includes("src/lib/platform-content-service") || id.includes("src/lib/demo-content")) return "platform-services";
+          // العلوم والطب النبوي والمعجزات
+          if (id.includes("src/lib/prophetic-medicine-seed") || id.includes("src/views/PropheticMedicine") || id.includes("src/views/Miracles")) return "science-pages";
+          // المعجزات وقصص الأنبياء — البيانات
+          if (id.includes("src/lib/miracles-seed") || id.includes("src/lib/prophets-seed") || id.includes("src/lib/islamic-stories-seed")) return "content-seed";
+          // مسارات التعلم
+          if (id.includes("src/views/Learning") || id.includes("src/views/learning/")) return "learning-pages";
+          // خدمات المنصة + المحتوى التجريبي
+          if (id.includes("src/lib/platform-content-service") || id.includes("src/lib/demo-content") || id.includes("src/lib/auto-content-service") || id.includes("src/lib/platform-search")) return "platform-services";
         },
       },
     },
