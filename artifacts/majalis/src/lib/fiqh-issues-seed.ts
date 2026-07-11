@@ -1099,6 +1099,66 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
     updated_at: "2025-11-01T09:00:00Z",
     created_at: "2025-11-01T09:00:00Z",
   },
+  {
+    id: "seed-issue-metaverse-prayer",
+    slug: "metaverse-prayer-virtual",
+    title: "حكم الصلاة الجماعية في الميتافيرس",
+    summary: "مسألة معاصرة في حكم إقامة الصلاة الجماعية عبر بيئات الواقع الافتراضي (Metaverse).",
+    description:
+      "مع تطور تقنيات الواقع الافتراضي وظهور بيئات الميتافيرس، بدأ بعض المسلمين يتساءلون عن إقامة الصلاة الجماعية فيها باستخدام أفاتار (صورة افتراضية). هل تصح وتُجزئ؟",
+    category: "العبادات والصلاة",
+    subcategory: "الصلاة",
+    ruling_summary:
+      "لا تصح الصلاة الجماعية في الميتافيرس، إذ تشترط الشريعة التقاء الأجساد الحقيقية في مكان واحد أو تواصل الصفوف. المأموم يشترط فيه إمكانية المتابعة الحقيقية لا الافتراضية.",
+    evidence_summary:
+      "اشتراط اتصال الصفوف وإمكانية المتابعة للإمام في فقه الجماعة، وقياس المسألة على الصلاة بالبث المرئي المحرّمة عند الجمهور.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 870,
+    published_at: "2025-12-01T09:00:00Z",
+    updated_at: "2025-12-01T09:00:00Z",
+    created_at: "2025-12-01T09:00:00Z",
+  },
+  {
+    id: "seed-issue-biometric-auth-banking",
+    slug: "biometric-authentication-banking",
+    title: "البصمة البيولوجية في العقود المصرفية الإسلامية",
+    summary: "حكم توقيع العقود المصرفية وعقود البيع بالبصمة الإلكترونية (بصمة الإصبع أو الوجه).",
+    description:
+      "باتت التعاملات المصرفية تعتمد التحقق عبر البصمة البيولوجية بدلاً من التوقيع اليدوي. هل يُعدّ هذا عقداً صحيحاً شرعاً؟ وهل تترتب عليه مسؤولية قانونية كاملة؟",
+    category: "المعاملات المالية",
+    subcategory: "المعاملات",
+    ruling_summary:
+      "تصح العقود الموثقة بالبصمة البيولوجية وهي في حكم التوقيع الرسمي لأنها أكثر دقة وتحقيقاً للهوية من التوقيع اليدوي. والعبرة في العقود بالمقاصد والمعاني.",
+    evidence_summary:
+      "قاعدة «العبرة في العقود بالمقاصد والمعاني لا بالألفاظ والمباني»، وأن كل ما يحقق التعريف الكامل ويمنع الجحود معتبَر شرعاً.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 650,
+    published_at: "2026-01-15T09:00:00Z",
+    updated_at: "2026-01-15T09:00:00Z",
+    created_at: "2026-01-15T09:00:00Z",
+  },
+  {
+    id: "seed-issue-carbon-credits-trading",
+    slug: "carbon-credits-islamic-ruling",
+    title: "حكم تداول شهادات الكربون (Carbon Credits)",
+    summary: "مسألة في حكم شراء وبيع شهادات الكربون البيئية في أسواق الطاقة والاستدامة.",
+    description:
+      "شهادات الكربون هي حقوق انبعاثات تُتداول في أسواق دولية؛ تشتريها شركات لتعويض انبعاثاتها الكربونية. هل يجوز تداولها في الاقتصاد الإسلامي؟",
+    category: "الاقتصاد الإسلامي",
+    subcategory: "الاقتصاد",
+    ruling_summary:
+      "تداول شهادات الكربون جائز إذا كانت مُقابِلة لجهود بيئية حقيقية (تشجير، طاقة متجددة)، لأنها في حكم عروض التجارة المباحة ولا غرر فيها. أما إن كانت مجردة عن أصل حقيقي فتدخل في الغرر المنهي عنه.",
+    evidence_summary:
+      "أحكام البيع الشرعي: الجهالة والغرر والمعدوم، وقرارات مجمع الفقه في التعاملات البيئية.",
+    documentation_level: "official_verified",
+    status: "published",
+    views_count: 490,
+    published_at: "2026-02-10T09:00:00Z",
+    updated_at: "2026-02-10T09:00:00Z",
+    created_at: "2026-02-10T09:00:00Z",
+  },
 ];
 
 /** ربط المسائل بعناصر البذور عبر slug */
@@ -1387,6 +1447,33 @@ export const FIQH_ISSUE_TIMELINE_SEED: Record<string, Omit<FiqhTimelineEvent, "i
       title: "قرار المجمع في زكاة أسهم التقنية والسيارات الكهربائية",
       description: "بيان وعاء زكاة الأسهم الاستثمارية في شركات التقنية والسيارات الكهربائية.",
       event_date: "2025-11-01",
+      sort_order: 1,
+    },
+  ],
+  "metaverse-prayer-virtual": [
+    {
+      event_type: "statement",
+      title: "بيان المجمع في الصلاة الجماعية الافتراضية",
+      description: "تأكيد اشتراط الحضور الجسدي الحقيقي في صلاة الجماعة.",
+      event_date: "2025-12-01",
+      sort_order: 1,
+    },
+  ],
+  "biometric-authentication-banking": [
+    {
+      event_type: "first_resolution",
+      title: "قرار المجمع في العقود البيومترية",
+      description: "اعتماد البصمة البيولوجية توقيعاً شرعياً معتبراً في العقود.",
+      event_date: "2026-01-15",
+      sort_order: 1,
+    },
+  ],
+  "carbon-credits-islamic-ruling": [
+    {
+      event_type: "first_research",
+      title: "بحث المجمع في شهادات الكربون",
+      description: "دراسة فقهية في حكم تداول شهادات الكربون البيئية.",
+      event_date: "2026-02-10",
       sort_order: 1,
     },
   ],
