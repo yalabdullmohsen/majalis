@@ -8,6 +8,7 @@ import {
   getScientificAnnouncementById,
 } from "@/lib/scientific-announcements";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 function safeHref(url?: string): string | undefined {
   if (!url) return undefined;
@@ -247,6 +248,9 @@ export default function ScientificAnnouncementDetailPage({
           <button type="button" className="sci-ann-btn sci-ann-btn--secondary" onClick={handleCopy}>
             {copied ? "تم النسخ" : "نسخ التفاصيل"}
           </button>
+        </div>
+        <div style={{ marginTop: "1.5rem" }}>
+          <SectionQuiz categoryId={["fiqh","aqeeda","hadith"]} title="اختبر معلوماتك في العلوم الشرعية" count={3} />
         </div>
       </article>
     </div>
