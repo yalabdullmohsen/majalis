@@ -19,17 +19,6 @@ export function StarKhatam({
   const cx = size / 2;
   const cy = size / 2;
   const r = size * 0.42;
-  // 8 points of the outer star
-  const outerPts = Array.from({ length: 8 }, (_, i) => {
-    const angle = (i * Math.PI) / 4 - Math.PI / 8;
-    return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`;
-  }).join(" ");
-  const innerPts = Array.from({ length: 8 }, (_, i) => {
-    const angle = (i * Math.PI) / 4 + Math.PI / 8;
-    const ri = r * 0.38;
-    return `${cx + ri * Math.cos(angle)},${cy + ri * Math.sin(angle)}`;
-  }).join(" ");
-  // interleave outer and inner
   const starPts = Array.from({ length: 8 }, (_, i) => {
     const outerAngle = (i * Math.PI) / 4 - Math.PI / 8;
     const innerAngle = (i * Math.PI) / 4 + Math.PI / 8;
