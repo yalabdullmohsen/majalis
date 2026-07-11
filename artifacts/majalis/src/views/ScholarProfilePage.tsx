@@ -4,6 +4,7 @@ import { ArrowRight, BookOpen, MapPin, Star, ChevronLeft } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SCHOLARS, findScholarById } from "@/lib/scholars-data";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 export default function ScholarProfilePage() {
   const { id } = useParams<{ id: string }>();
@@ -125,6 +126,9 @@ export default function ScholarProfilePage() {
         )}
       </nav>
 
+      <div className="px-4 pb-4 mt-2">
+        <SectionQuiz categoryId={["tarikh", "akhlaq"]} title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
+      </div>
       <div className="sch-profile-back">
         <Link href="/scholars" className="sch-related-link">
           <BookOpen size={16} /> كل العلماء <ChevronLeft size={14} />

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { HadithSection } from "./HadithPage";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 export default function HadithDaifPage() {
   useEffect(() => {
@@ -28,6 +29,9 @@ export default function HadithDaifPage() {
       <HadithSection authenticityClass="daif" />
       <div className="twh-share">
         <ShareButtons title="الأحاديث الضعيفة — المجلس العلمي" url="https://majlisilm.com/hadith/daif" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في علوم الحديث" count={4} />
       </div>
     </>
   );
