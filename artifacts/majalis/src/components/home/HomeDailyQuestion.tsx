@@ -34,9 +34,14 @@ export function HomeDailyQuestion() {
   return (
     <section className="home-section home-daily-single home-daily-qa" aria-labelledby="daily-qa-heading">
       <div className="home-section-head">
-        <div>
-          <p className="home-eyebrow">فوائد سريعة</p>
-          <h2 id="daily-qa-heading">سؤال اليوم</h2>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16">
+            <polygon points="8,1 10,6 15.5,6 11,9.5 13,15 8,11.5 3,15 5,9.5 0.5,6 6,6" fill="#1F4D3A" opacity="0.8"/>
+          </svg>
+          <div>
+            <p className="home-eyebrow">فوائد سريعة</p>
+            <h2 id="daily-qa-heading">سؤال اليوم</h2>
+          </div>
         </div>
         <Link href="/qa" className="home-section-link">كل الأسئلة</Link>
       </div>

@@ -70,9 +70,15 @@ export function HomeDailyCorner() {
   return (
     <section className="hdc" aria-labelledby="hdc-heading">
       <div className="hdc__head">
-        <div>
-          <p className="home-eyebrow">ورد يومي</p>
-          <h2 id="hdc-heading" className="hdc__title">الركن اليومي</h2>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
+            <polygon points="9,1 11.5,6.5 18,6.5 13,10.5 15,17 9,13 3,17 5,10.5 0,6.5 6.5,6.5" fill="#1F4D3A"/>
+            <circle cx="9" cy="9" r="2.5" fill="none" stroke="#2d7a5a" strokeWidth="0.8"/>
+          </svg>
+          <div>
+            <p className="home-eyebrow">ورد يومي</p>
+            <h2 id="hdc-heading" className="hdc__title">الركن اليومي</h2>
+          </div>
         </div>
         <Link href={active.link} className="home-section-link">{active.linkLabel}</Link>
       </div>

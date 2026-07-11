@@ -23,9 +23,14 @@ export function HomeInterestingTopics() {
   return (
     <section className="home-section hit-section" aria-labelledby="hit-heading">
       <div className="home-section-head">
-        <div>
-          <p className="home-eyebrow">استكشف</p>
-          <h2 id="hit-heading">مواضيع مشوّقة</h2>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
+            <polygon points="9,1 11,6.5 17,6.5 12.5,10 14.5,16 9,12.5 3.5,16 5.5,10 1,6.5 7,6.5" fill="#1F4D3A" opacity="0.85"/>
+          </svg>
+          <div>
+            <p className="home-eyebrow">استكشف</p>
+            <h2 id="hit-heading">مواضيع مشوّقة</h2>
+          </div>
         </div>
         <Link href="/fawaid" className="home-section-link">الكل</Link>
       </div>
