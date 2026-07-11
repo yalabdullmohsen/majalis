@@ -1,6 +1,7 @@
 import { SEED_FAWAID } from "./fawaid-seed";
 import { filterQualityFawaid } from "./content-quality";
 import { ADHKAR_ITEMS } from "./adhkar-seed";
+import { ARBAEEN_NAWAWI } from "./arbaeen-nawawi-seed";
 
 export type DailyHadithEntry = {
   id: string;
@@ -104,6 +105,13 @@ export const DAILY_HADITH_POOL: DailyHadithEntry[] = [
     grade: "صحيح",
     meaning: "السعي في طلب العلم سبب لتيسير طريق الجنة.",
   },
+  ...ARBAEEN_NAWAWI.map((h) => ({
+    id: `nawawi-${h.id}`,
+    text: h.text,
+    narrator: h.title,
+    source: h.source,
+    meaning: h.benefits,
+  })),
 ];
 
 export const DAILY_AYAH_POOL: DailyAyahEntry[] = [

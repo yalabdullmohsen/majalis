@@ -1030,6 +1030,15 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-07-11T13:00:00Z",
     status: "approved",
   },
+  {
+    id: "update-daily-hadith-pool",
+    title: "تحديث الركن اليومي — أحاديث الأربعين النووية",
+    summary: "توسيع مجموعة «حديث اليوم» في الركن اليومي من 7 أحاديث إلى 47 حديثاً بإضافة الأربعين النووية الكاملة، مما يوفر تنوعاً أسبوعياً أكبر.",
+    update_type: "إعلان",
+    source_url: "/arbaeen-nawawi",
+    published_at: "2026-07-11T15:00:00Z",
+    status: "approved",
+  },
 ];
 
 export function getSortedUpdates(limit?: number) {
