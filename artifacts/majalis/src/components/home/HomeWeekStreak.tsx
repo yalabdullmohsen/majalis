@@ -67,16 +67,21 @@ export function HomeWeekStreak() {
   return (
     <section className="hws" aria-labelledby="hws-heading">
       <div className="hws__head">
-        <div>
-          <p className="home-eyebrow">الاتساق الأسبوعي</p>
-          <h2 id="hws-heading" className="hws__title">
-            سجل الأسبوع
-            {streak > 0 && (
-              <span className="hws__streak-badge" aria-label={`${streak} أيام متتالية`}>
-                🔥 {streak}
-              </span>
-            )}
-          </h2>
+        <div style={{ display: "flex", alignItems: "flex-start", gap: "0.45rem" }}>
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" style={{ marginTop: "0.3rem", flexShrink: 0 }}>
+            <polygon points="8,1 10,6 15.5,6 11,9.5 13,15 8,11.5 3,15 5,9.5 0.5,6 6,6" fill="none" stroke="#1F4D3A" strokeWidth="1.2"/>
+          </svg>
+          <div>
+            <p className="home-eyebrow">الاتساق الأسبوعي</p>
+            <h2 id="hws-heading" className="hws__title">
+              سجل الأسبوع
+              {streak > 0 && (
+                <span className="hws__streak-badge" aria-label={`${streak} أيام متتالية`}>
+                  🔥 {streak}
+                </span>
+              )}
+            </h2>
+          </div>
         </div>
         <Link href="/daily-wird" className="home-section-link">الورد</Link>
       </div>
