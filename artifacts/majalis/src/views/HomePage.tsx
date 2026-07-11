@@ -445,7 +445,7 @@ export default function HomePage() {
           }}>
             {[
               { num: "٩٦+", label: "عالماً في الأرشيف" },
-              { num: "٣٨٠+", label: "سؤال اختباري" },
+              { num: "٣٧٣+", label: "سؤال اختباري" },
               { num: "٤٠٠+", label: "فائدة علمية" },
               { num: "١٠٠+", label: "كتاب علمي" },
             ].map(({ num, label }) => (
