@@ -444,9 +444,9 @@ export default function HomePage() {
             borderTop: "1px solid rgba(255,255,255,0.12)",
           }}>
             {[
-              { num: "٩٠+", label: "عالماً في الأرشيف" },
-              { num: "٣٥٢+", label: "سؤال اختباري" },
-              { num: "٣٠٠+", label: "حديث موثّق" },
+              { num: "٩١+", label: "عالماً في الأرشيف" },
+              { num: "٣٧٥+", label: "سؤال اختباري" },
+              { num: "٤٠٠+", label: "فائدة علمية" },
               { num: "١٠٠+", label: "كتاب علمي" },
             ].map(({ num, label }) => (
               <div key={label} style={{
