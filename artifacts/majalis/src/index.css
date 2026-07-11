@@ -121,12 +121,12 @@ html {
   --color-parchment:     var(--msk-canvas,   #FFFFFF);
   --color-line:          var(--msk-border,   rgba(31,77,58,0.10));
 
-  /* ── الخطوط — Cairo للواجهة، Amiri Quran للقرآن ── */
-  --font-primary:  "Cairo", system-ui, sans-serif;
-  --font-ui:       var(--font-primary);
-  --font-display:  "Cairo", serif;
-  --font-reading:  var(--font-primary);
-  --font-body:     var(--font-primary);
+  /* ── الخطوط — IBM Plex Sans Arabic (نص) + Amiri للعناوين + Amiri Quran (مصحف) ── */
+  --font-primary:  "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
+  --font-ui:       "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
+  --font-display:  "Amiri", "IBM Plex Sans Arabic", serif;
+  --font-reading:  "Noto Naskh Arabic", "IBM Plex Sans Arabic", serif;
+  --font-body:     "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
   --font-quran:    "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
 
   /* ── الحركة — تلاشٍ وهبوط (لا ارتداد) ── */
@@ -178,10 +178,10 @@ html {
 
 /* ══ وضع النهار — الزمرد الإسلامي ══ */
 html {
-  --msk-canvas:        #FFFFFF;
-  --msk-canvas-1:      #F7FBF9;
-  --msk-canvas-2:      #F0EDE8;
-  --msk-canvas-glass:  rgba(255,255,255,.94);
+  --msk-canvas:        #FAF8F4;
+  --msk-canvas-1:      #F3F7F4;
+  --msk-canvas-2:      #EAE6DF;
+  --msk-canvas-glass:  rgba(250,248,244,.95);
   --msk-gold:          #1F4D3A;
   --msk-gold-deep:     #173A2C;
   --msk-gold-dim:      rgba(31,77,58,.12);
@@ -207,10 +207,10 @@ html {
   --majalis-ink-soft:      #5C5550;
   --majalis-ink-muted:     #918A85;
   --majalis-charcoal:      #0F0E0D;
-  --majalis-parchment:     #FFFFFF;
-  --majalis-parchment-deep:#F7FBF9;
-  --majalis-panel:         #FFFFFF;
-  --majalis-panel-raised:  #F0EDE8;
+  --majalis-parchment:     #FAF8F4;
+  --majalis-parchment-deep:#F3F7F4;
+  --majalis-panel:         #FAF8F4;
+  --majalis-panel-raised:  #EAE6DF;
   --majalis-emerald:       #1F4D3A;
   --majalis-emerald-deep:  #173A2C;
   --majalis-emerald-muted: rgba(31,77,58,.10);
@@ -469,14 +469,16 @@ body {
   font-weight: 400;
   background: var(--msk-canvas);
   color: var(--msk-text);
-  line-height: 1.7;
+  line-height: 1.75;
   letter-spacing: 0;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   word-break: break-word;
   overflow-wrap: anywhere;
   overflow-x: hidden;
   max-width: 100%;
+  font-feature-settings: "kern" 1;
 }
 
 /* في وضع الليل (افتراضي) — الصور تعمل بشكل طبيعي على الخلفية الداكنة */
@@ -966,9 +968,9 @@ input, textarea, select { font-family: inherit; }
 .home-fawaid-card,
 .home-qa-card,
 .home-empty-card {
-  border: 1px solid rgba(224, 215, 196, 0.86);
-  background: rgba(255, 255, 255, 0.86);
-  box-shadow: 0 16px 48px rgba(36, 31, 24, 0.08);
+  border: 1px solid rgba(31,77,58,0.09);
+  background: var(--msk-canvas, #FAF8F4);
+  box-shadow: 0 2px 12px rgba(31,77,58,0.06), 0 1px 3px rgba(31,77,58,0.04);
 }
 
 .home-stat-card {
@@ -1007,7 +1009,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .home-feature-card:nth-child(odd) {
-  background: linear-gradient(180deg, #fff, #f9f3e7);
+  background: var(--msk-canvas, #FAF8F4);
 }
 
 .home-feature-icon {
@@ -13964,20 +13966,12 @@ body.has-assistant-fab .app-main {
 }
 
 /* ─── Phase 2: Navbar polish ──────────────────────────────── */
-/* مِشكاة navbar — زجاج ليلي بافتراضي */
 .navbar-v3 {
   background: var(--msk-canvas-glass) !important;
-  backdrop-filter: blur(18px) saturate(1.6) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(1.6) !important;
-  border-bottom: 1px solid var(--msk-border) !important;
-  box-shadow: 0 1px 20px rgba(0,0,0,.28) !important;
-}
-
-
-.navbar-v3 {
-  background: rgba(255,255,255,.96) !important;
-  border-color: rgba(31,77,58,0.12) !important;
-  box-shadow: 0 1px 12px rgba(31,77,58,0.06) !important;
+  backdrop-filter: blur(20px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+  border-bottom: 1px solid rgba(31,77,58,0.10) !important;
+  box-shadow: 0 1px 16px rgba(31,77,58,0.07) !important;
 }
 
 /* ─── Phase 3: Islamic Decorative Elements ─────────────────── */
@@ -15187,10 +15181,10 @@ body.has-assistant-fab .app-main {
     height: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px));
     padding-bottom: env(safe-area-inset-bottom, 0px);
     background: var(--msk-canvas-glass);
-    backdrop-filter: blur(16px) saturate(1.4);
-    -webkit-backdrop-filter: blur(16px) saturate(1.4);
-    border-top: 1px solid var(--msk-border);
-    box-shadow: 0 -2px 20px rgba(0,0,0,.28);
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    border-top: 1px solid rgba(31,77,58,0.10);
+    box-shadow: 0 -4px 24px rgba(31,77,58,0.08), 0 -1px 4px rgba(31,77,58,0.05);
   }
 
   /* ── Tab item ── */
@@ -15221,7 +15215,11 @@ body.has-assistant-fab .app-main {
     width: 44px;
     height: 28px;
     border-radius: 14px;
-    transition: background 0.15s;
+    transition: background 0.18s ease, transform 0.18s ease;
+  }
+
+  .bottom-nav__tab.is-active .bottom-nav__tab-icon {
+    transform: translateY(-1px);
   }
 
   .bottom-nav__tab-label {
@@ -18040,3 +18038,159 @@ body.has-assistant-fab .app-main {
   text-decoration: none;
 }
 .hsh-step__cta:hover { text-decoration: underline; }
+
+/* ══════════════════════════════════════════════════════════════════
+   مجالس — تحسينات إعادة التصميم الشامل v4 — 2026
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Hero section: نمط هندسي إسلامي خفيف ── */
+.hpv4-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.03) 39px, rgba(255,255,255,0.03) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.03) 39px, rgba(255,255,255,0.03) 40px);
+  pointer-events: none;
+}
+
+/* ── الروابط السريعة في الرئيسية — تجاوز الخلفية البيضاء ── */
+.home-page--v4 nav[aria-label="وصول سريع"] a {
+  background: var(--msk-canvas, #FAF8F4) !important;
+  border-color: rgba(31,77,58,0.09) !important;
+  transition: background 0.18s, border-color 0.18s, transform 0.18s, box-shadow 0.18s !important;
+}
+
+.home-page--v4 nav[aria-label="وصول سريع"] a:hover {
+  background: rgba(31,77,58,0.05) !important;
+  border-color: rgba(31,77,58,0.18) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(31,77,58,0.10) !important;
+}
+
+/* ── شريط اللحظ السريع — اللون الخلفي العاجي ── */
+.hp-recent-bar {
+  background: var(--msk-canvas-1, #F3F7F4) !important;
+}
+
+/* ── البطاقة الرئيسية: تأثير دخول سلس ── */
+.home-page--v4 {
+  animation: home-fade-in 0.3s ease-out both;
+}
+
+@keyframes home-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── قسم "ابدأ من هنا" — خلفية أكثر دفئاً ── */
+.home-start-here {
+  background: var(--msk-canvas-1, #F3F7F4) !important;
+}
+
+/* ── بطاقات مجلس اليوم وأقسام الرئيسية ── */
+.home-container > * {
+  animation: section-slide-up 0.3s ease-out both;
+}
+
+@keyframes section-slide-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-page--v4,
+  .home-container > * {
+    animation: none;
+  }
+}
+
+/* ── التسلسل الطباعي: عنوان الصفحة الرئيسية ── */
+.hpv4-hero h1 {
+  font-family: "Amiri", "IBM Plex Sans Arabic", serif !important;
+  letter-spacing: -0.01em !important;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.25) !important;
+}
+
+/* ── أزرار الرئيسية — تحسين الأزرار الثانوية الشفافة ── */
+.hpv4-hero a[style*="rgba(255,255,255,0.12)"] {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* ── NavBar: خلفية العاجي الدافئ على النهار ── */
+html:not([data-theme="dark"]) .navbar-v3 {
+  background: rgba(250,248,244,0.96) !important;
+}
+
+/* ── تذييل التنقل السفلي: خلفية عاجية دافئة على النهار ── */
+html:not([data-theme="dark"]) .bottom-nav {
+  background: rgba(250,248,244,0.97) !important;
+}
+
+/* ── فواصل أقسام دقيقة بين عناصر الصفحة الرئيسية ── */
+.home-main > *:not(:last-child) {
+  border-bottom: 1px solid rgba(31,77,58,0.04);
+}
+
+/* ── السبحة — عداد Tasbih: تنسيق أفضل ── */
+.tasbih-counter {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ── بطاقات الفوائد والقصص — تجانس أعمق ── */
+.faid-card,
+.story-card,
+.hadith-card,
+.fatwa-card,
+.ruling-card {
+  background: var(--majalis-panel, #FAF8F4) !important;
+  border: 1px solid rgba(31,77,58,0.08) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.faid-card:hover,
+.story-card:hover,
+.hadith-card:hover,
+.fatwa-card:hover,
+.ruling-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(31,77,58,0.10) !important;
+  border-color: rgba(31,77,58,0.15) !important;
+}
+
+/* ── أيقونة القسم في البطاقات: لون خلفية عاجية ── */
+.home-feature-icon {
+  background: rgba(31,77,58,0.08) !important;
+  color: var(--majalis-emerald, #1F4D3A) !important;
+}
+
+/* ── حالة الـ focus المرئية الراقية ── */
+:focus-visible {
+  outline: 2px solid rgba(31,77,58,0.40);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── تحسين خط الأذكار والأدعية ── */
+.adhkar-text,
+.dua-text,
+.hadith-text,
+.quran-verse {
+  line-height: 1.9 !important;
+}
+
+/* ── الوضع الليلي: تحسينات إضافية ── */
+html[data-theme="dark"] .home-feature-card,
+html[data-theme="dark"] .home-lesson-card,
+html[data-theme="dark"] .home-library-card {
+  background: var(--majalis-panel, #122019) !important;
+  border-color: rgba(92,196,154,0.08) !important;
+}
+
+html[data-theme="dark"] .hpv4-hero::before {
+  opacity: 0.03;
+}
+
+/* ═══ نهاية تحسينات إعادة التصميم ═══ */
