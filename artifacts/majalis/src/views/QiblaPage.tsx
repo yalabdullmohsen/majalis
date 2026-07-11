@@ -3,6 +3,7 @@ import { Smartphone } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const MECCA_LAT = 21.4225;
 const MECCA_LON = 39.8262;
@@ -246,6 +247,9 @@ export default function QiblaPage() {
 
       <div className="twh-share">
         <ShareButtons title="اتجاه القبلة — المجلس العلمي" url="https://majlisilm.com/qibla" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في أحكام القبلة والصلاة" count={4} />
       </div>
     </div>
   );
