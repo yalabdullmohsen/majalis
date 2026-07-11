@@ -787,6 +787,33 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-07-11T22:00:00Z",
     status: "approved",
   },
+  {
+    id: "update-sheikhs-86",
+    title: "تحديث: قاعدة العلماء — 86 عالماً",
+    summary: "إضافة 5 علماء: الإمام الذهبي، الإمام السيوطي، ابن حجر العسقلاني، الكاساني، الشوكاني.",
+    update_type: "إعلان",
+    source_url: "/sheikhs",
+    published_at: "2026-07-11T23:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-miracles-77",
+    title: "تحديث: الإعجاز العلمي — 77 معجزة",
+    summary: "إضافة 5 معجزات: إعجاز النحل والعسل، الناصية مركز القرار، الدخان وتكوّن الكون، الأزواج في كل شيء، بصمات الأصابع.",
+    update_type: "إعلان",
+    source_url: "/miracles",
+    published_at: "2026-07-11T23:30:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-prophetic-medicine-80",
+    title: "تحديث: الطب النبوي — 80 موضوع",
+    summary: "إضافة 4 موضوعات: الرمان وفوائده القرآنية، الصيام الصحي وجائزة نوبل 2016، السواك ومضادات البكتيريا.",
+    update_type: "إعلان",
+    source_url: "/prophetic-medicine",
+    published_at: "2026-07-12T00:00:00Z",
+    status: "approved",
+  },
 ];
 
 export function getSortedUpdates(limit?: number) {
