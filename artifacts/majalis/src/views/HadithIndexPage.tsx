@@ -6,6 +6,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { getVerifiedHadith } from "@/lib/supabase";
 import { HADITH_CLASS_META, type HadithClass } from "./HadithPage";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 type SectionDef = {
   cls: HadithClass;
@@ -135,6 +136,9 @@ export default function HadithIndexPage() {
 
       <div className="twh-share">
         <ShareButtons title="فهرس الأحاديث النبوية — المجلس العلمي" url="https://majlisilm.com/hadith-index" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في الحديث الشريف" count={4} />
       </div>
     </div>
   );

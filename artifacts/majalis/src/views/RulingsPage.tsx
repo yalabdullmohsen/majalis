@@ -8,6 +8,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const RULINGS_ICON_MAP: Record<string, LucideIcon> = {
   Landmark, Droplets, Banknote, Moon, MapPin, Handshake, Utensils, Shirt, Users,
@@ -296,7 +297,9 @@ export default function RulingsPage() {
       <div className="twh-share">
         <ShareButtons title="الأحكام الشرعية — المجلس العلمي" url="https://majlisilm.com/rulings" />
       </div>
-
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الأحكام الشرعية" count={4} />
+      </div>
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}
       </FilterBottomSheet>

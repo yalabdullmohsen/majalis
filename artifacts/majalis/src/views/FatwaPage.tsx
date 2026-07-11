@@ -8,6 +8,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { getFatwas } from "@/lib/platform-content-service";
 import { getLatestFatwas, getMostReadFatwas, getMostSearchedFatwas } from "@/lib/fatwa-seed";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { FATWA_CATEGORIES } from "@/lib/platform-types";
 import { usePageView } from "@/hooks/usePageView";
 
@@ -191,7 +192,9 @@ export default function FatwaPage() {
       <div className="twh-share">
         <ShareButtons title="الفتاوى الشرعية — المجلس العلمي" url="https://majlisilm.com/fatwa" />
       </div>
-
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
+      </div>
       <AdminQuickEdit section="fatwa" />
     </div>
   );

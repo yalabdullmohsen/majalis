@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 // ─── Seed Data ────────────────────────────────────────────────────────────────
 
@@ -500,6 +501,9 @@ export default function InstitutionsPage() {
 
         <div className="twh-share">
           <ShareButtons title="المؤسسات الإسلامية — المجلس العلمي" url="https://majlisilm.com/institutions" />
+        </div>
+        <div className="px-4 pb-6 mt-4">
+          <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
         </div>
       </div>
     </div>
