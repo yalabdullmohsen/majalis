@@ -8,6 +8,7 @@ import { patchAdhanPrefs, loadAdhanPrefs } from "@/lib/adhan-preferences";
 import { toggleFavorite, loadFavorites } from "@/lib/muezzin-favorites";
 import { loadCommunityMuezzins, type CommunityMuezzin } from "@/lib/user-submissions-service";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { arabicMatchAny } from "@/lib/arabic-search";
 
 const STYLES: MuezzinStyle[] = ["خاشع", "رسمي", "تقليدي", "كلاسيكي"];
@@ -327,6 +328,9 @@ export default function MuezzinsPage() {
 
       <div className="twh-share">
         <ShareButtons title="مكتبة المؤذنين — المجلس العلمي" url="https://majlisilm.com/muezzins" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في أحكام الأذان" count={4} />
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import { supabase } from "@/lib/supabase";
 import type { LPScience, LPProgress } from "@/lib/learning-path-service";
 import { fetchSciences, fetchProgress } from "@/lib/learning-path-service";
 import { SkeletonCardGrid } from "@/components/ui-common";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const ScienceCard = lazy(() =>
   import("@/components/learning-path/ScienceCard").then((m) => ({ default: m.ScienceCard }))
@@ -172,6 +173,9 @@ export default function LearningPathPage() {
 
       <div className="twh-share">
         <ShareButtons title="المسار التعليمي الإسلامي — المجلس العلمي" url="https://majlisilm.com/learning-path" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["aqeeda", "fiqh"]} title="اختبر معلوماتك في أصول العلم الشرعي" count={4} />
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { supabase } from "@/lib/supabase";
 import type { LPProgress, LPAchievement, LPStreak } from "@/lib/learning-path-service";
 import { fetchProgress, fetchAchievements, fetchStreak } from "@/lib/learning-path-service";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const AchievementBadges = lazy(() =>
   import("@/components/learning-path/AchievementBadges").then((m) => ({ default: m.AchievementBadges }))
@@ -166,6 +167,9 @@ export default function LearningPathDashboardPage() {
 
         <div className="twh-share">
           <ShareButtons title="لوحة مسار التعلم — المجلس العلمي" url="https://majlisilm.com/learning-path/dashboard" />
+        </div>
+        <div className="px-4 pb-6 mt-4">
+          <SectionQuiz categoryId={["quran", "hadith"]} title="اختبر معلوماتك في القرآن والحديث" count={4} />
         </div>
       </div>
     </div>
