@@ -5,6 +5,7 @@ import { AdminInlineEdit, type InlineEditContentType } from "@/components/AdminI
 import { ReadingProgressBar } from "@/components/ReadingProgressBar";
 import { Clock } from "lucide-react";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 function estimateReadMinutes(text?: string): number | null {
   if (!text || text.length < 200) return null;
@@ -147,6 +148,10 @@ export function ContentDetailLayout({
           {related}
         </section>
       )}
+
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["fiqh", "aqeeda", "hadith"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
+      </div>
     </div>
   );
 }
