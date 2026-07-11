@@ -502,8 +502,10 @@ export default function HomePage() {
       {/* ══ وصول سريع ══ */}
       <nav aria-label="وصول سريع" style={{ maxWidth: 760, margin: "1.5rem auto 0", padding: "0 1rem" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.7rem" }}>
-          <div style={{ width: 3, height: 18, background: "#1F4D3A", borderRadius: 2 }} />
-          <p style={{ color: "#374151", fontSize: "0.8rem", fontWeight: 800, margin: 0, letterSpacing: "0.04em" }}>وصول سريع</p>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
+            <polygon points="9,1 12,7 18,7 13,11 15,17 9,13 3,17 5,11 0,7 6,7" fill="#2d7a5a" opacity="0.85"/>
+          </svg>
+          <p style={{ color: "#1F4D3A", fontSize: "0.82rem", fontWeight: 800, margin: 0, letterSpacing: "0.03em" }}>وصول سريع</p>
         </div>
         <div style={{
           display: "grid",
@@ -591,7 +593,11 @@ export default function HomePage() {
         {/* ══ استكشف المنصة ══ */}
         <section aria-labelledby="features-heading" style={{ marginTop: "2rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.1rem" }}>
-            <div style={{ width: 3, height: 22, background: "linear-gradient(180deg,#1F4D3A,#2d7a5a)", borderRadius: 2 }} />
+            {/* أيقونة هندسية للعنوان */}
+            <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+              <polygon points="11,1 13.5,8 21,8 15,13 17.5,20 11,16 4.5,20 7,13 1,8 8.5,8" fill="none" stroke="#1F4D3A" strokeWidth="1.2"/>
+              <circle cx="11" cy="11" r="3.5" fill="none" stroke="#2d7a5a" strokeWidth="0.8"/>
+            </svg>
             <h2 id="features-heading" style={{ fontSize: "1.1rem", fontWeight: 800, color: "#1a1a1a", margin: 0 }}>
               استكشف المنصة
             </h2>
@@ -606,24 +612,27 @@ export default function HomePage() {
               <Link key={href} href={href} aria-label={title} style={{
                 display: "flex", flexDirection: "column", gap: "0.65rem",
                 padding: "1.2rem 1.1rem", borderRadius: "1.1rem", textDecoration: "none",
-                background: "linear-gradient(145deg, #153025 0%, #1F4D3A 50%, #2d7a5a 100%)",
+                background: "linear-gradient(145deg, #112a1e 0%, #1a3d2b 40%, #1F4D3A 80%, #2d7a5a 100%)",
                 color: "#fff",
-                boxShadow: "0 3px 12px rgba(15,50,30,0.22), inset 0 1px 0 rgba(255,255,255,0.08)",
-                border: "1px solid rgba(255,255,255,0.1)",
+                boxShadow: "0 4px 16px rgba(15,50,30,0.28), inset 0 1px 0 rgba(255,255,255,0.1)",
+                border: "1px solid rgba(255,255,255,0.12)",
                 position: "relative", overflow: "hidden",
               }}>
-                <div style={{
-                  position: "absolute", top: "-18px", left: "-18px",
-                  width: "80px", height: "80px", borderRadius: "50%",
-                  background: "rgba(255,255,255,0.04)", pointerEvents: "none",
-                }} aria-hidden="true" />
-                <Icon size={22} strokeWidth={1.5} style={{ opacity: 0.9, position: "relative" }} />
-                <strong style={{ fontSize: "0.97rem", fontWeight: 800, position: "relative" }}>{title}</strong>
-                <p style={{ fontSize: "0.79rem", opacity: 0.78, lineHeight: 1.55, margin: 0, position: "relative" }}>{desc}</p>
+                {/* زخرفة هندسية في الخلفية */}
+                <svg aria-hidden="true" style={{
+                  position: "absolute", top: "-10px", left: "-10px", opacity: 0.07, pointerEvents: "none",
+                }} width="80" height="80" viewBox="0 0 80 80">
+                  <polygon points="40,5 55,25 75,20 65,40 75,60 55,55 40,75 25,55 5,60 15,40 5,20 25,25" fill="none" stroke="white" strokeWidth="1"/>
+                  <circle cx="40" cy="40" r="15" fill="none" stroke="white" strokeWidth="0.6"/>
+                </svg>
+                <Icon size={22} strokeWidth={1.5} style={{ opacity: 0.92, position: "relative" }} />
+                <strong style={{ fontSize: "0.97rem", fontWeight: 800, position: "relative", lineHeight: 1.3 }}>{title}</strong>
+                <p style={{ fontSize: "0.79rem", opacity: 0.75, lineHeight: 1.6, margin: 0, position: "relative" }}>{desc}</p>
                 <span style={{
-                  fontSize: "0.77rem", fontWeight: 700, opacity: 0.88, marginTop: "auto",
+                  fontSize: "0.76rem", fontWeight: 700, marginTop: "auto",
                   display: "inline-flex", alignItems: "center", gap: "0.3rem",
-                  color: "rgba(250,248,242,0.95)", position: "relative",
+                  color: "rgba(210,240,225,0.95)", position: "relative",
+                  borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "0.5rem",
                 }}>{cta} ←</span>
               </Link>
             ))}
@@ -633,21 +642,21 @@ export default function HomePage() {
           {FEATURE_CATS.map(cat => (
             <div key={cat.id} style={{ marginBottom: "2rem" }}>
               <div style={{
-                display: "flex", alignItems: "center", gap: "0.55rem",
-                marginBottom: "0.8rem", paddingBottom: "0.6rem",
-                borderBottom: "1.5px solid #e8f2ec",
+                display: "flex", alignItems: "center", gap: "0.6rem",
+                marginBottom: "0.85rem", paddingBottom: "0.7rem",
+                borderBottom: "1.5px solid #ddeee5",
               }}>
-                <span style={{
-                  background: "linear-gradient(135deg,#153025,#1F4D3A)", color: "#FAF8F2", padding: "0.38rem",
-                  borderRadius: "0.45rem", display: "flex",
-                  boxShadow: "0 1px 4px rgba(0,0,0,0.15)",
-                }}>
-                  <cat.Icon size={15} strokeWidth={2} />
-                </span>
+                {/* زخرفة هندسية بدل المربع */}
+                <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" style={{ flexShrink: 0 }}>
+                  <polygon points="14,2 20,9 27,9 22,16 25,24 14,20 3,24 6,16 1,9 8,9" fill="#1F4D3A"/>
+                  <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="#2d7a5a" opacity="0.6"/>
+                  <circle cx="14" cy="14" r="3" fill="#FAF8F2"/>
+                </svg>
                 <h3 style={{ fontSize: "0.98rem", fontWeight: 800, color: "#1F4D3A", margin: 0 }}>{cat.label}</h3>
                 <span style={{
-                  marginRight: "auto", fontSize: "0.69rem", color: "#999", fontWeight: 600,
-                  background: "#f0f7f4", padding: "0.15rem 0.5rem", borderRadius: "999px",
+                  marginRight: "auto", fontSize: "0.68rem", color: "#2d7a5a", fontWeight: 700,
+                  background: "#e8f4ed", padding: "0.15rem 0.6rem", borderRadius: "999px",
+                  border: "1px solid #c8e6d5",
                 }}>{cat.items.length} قسم</span>
               </div>
               <div style={{
@@ -659,21 +668,21 @@ export default function HomePage() {
                   <Link key={href} href={href} style={{
                     display: "flex", alignItems: "flex-start", gap: "0.6rem",
                     padding: "0.75rem 0.8rem", borderRadius: "0.8rem",
-                    textDecoration: "none", background: "#fff",
-                    border: "1px solid #e8f0ec",
+                    textDecoration: "none", background: "#fafcfb",
+                    border: "1px solid #e2ede8",
                     boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
-                    transition: "border-color 0.15s, box-shadow 0.15s",
                   }}>
                     <span style={{
-                      background: "#edf6f1", color: "#1F4D3A",
+                      background: "linear-gradient(135deg,#1F4D3A,#2d7a5a)", color: "#FAF8F2",
                       padding: "0.38rem", borderRadius: "0.4rem",
                       display: "flex", flexShrink: 0, marginTop: "0.05rem",
+                      boxShadow: "0 1px 3px rgba(15,50,30,0.2)",
                     }}>
                       <ItemIcon size={14} strokeWidth={2} />
                     </span>
                     <div style={{ minWidth: 0 }}>
                       <strong style={{ display: "block", fontSize: "0.81rem", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.35 }}>{title}</strong>
-                      <span style={{ fontSize: "0.7rem", color: "#888", lineHeight: 1.45, display: "block", marginTop: "0.1rem" }}>{desc}</span>
+                      <span style={{ fontSize: "0.7rem", color: "#666", lineHeight: 1.45, display: "block", marginTop: "0.1rem" }}>{desc}</span>
                     </div>
                   </Link>
                 ))}
