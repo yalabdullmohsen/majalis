@@ -814,6 +814,42 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-07-12T00:00:00Z",
     status: "approved",
   },
+  {
+    id: "update-fiqh-issues-56",
+    title: "تحديث: مجمع الفقه — 56 مسألة معاصرة",
+    summary: "إضافة 3 مسائل: حكم الاستفتاء من الذكاء الاصطناعي، عقد النكاح عبر الإنترنت، زكاة أسهم التقنية والسيارات الكهربائية.",
+    update_type: "فتوى",
+    source_url: "/fiqh-council",
+    published_at: "2026-07-12T01:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-sheikhs-91",
+    title: "تحديث: قاعدة العلماء — 91 عالماً",
+    summary: "إضافة 5 علماء معاصرين وكلاسيكيين: ابن باز، ابن عثيمين، الألباني، ابن جبرين، ابن القيم الجوزية.",
+    update_type: "إعلان",
+    source_url: "/sheikhs",
+    published_at: "2026-07-12T02:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-fatwa-108",
+    title: "تحديث: الفتاوى — 108+ فتوى",
+    summary: "إضافة 3 فتاوى: حكم البيتكوين والعملات الرقمية، تطبيقات أوقات الصلاة، التقسيط عبر تابي وتمارا.",
+    update_type: "فتوى",
+    source_url: "/fatwas",
+    published_at: "2026-07-12T03:00:00Z",
+    status: "approved",
+  },
+  {
+    id: "update-stories-52",
+    title: "تحديث: القصص الإسلامية — 52 قصة",
+    summary: "إضافة قصتين: خالد بن الوليد (سيف الله المسلول)، وعمر بن الخطاب (الفاروق).",
+    update_type: "إعلان",
+    source_url: "/stories",
+    published_at: "2026-07-12T04:00:00Z",
+    status: "approved",
+  },
 ];
 
 export function getSortedUpdates(limit?: number) {
