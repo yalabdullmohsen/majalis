@@ -12,6 +12,7 @@ import {
 import { incrementTaskProgress } from "@/lib/daily-progress";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const QURAN_PAGES = 604;
 
@@ -352,6 +353,9 @@ export default function DailyWirdPage() {
 
       <div className="twh-share">
         <ShareButtons title="الورد اليومي — المجلس العلمي" url="https://majlisilm.com/daily-wird" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["quran", "akhlaq"]} title="اختبر معلوماتك في القرآن والأخلاق" count={4} />
       </div>
     </div>
   );

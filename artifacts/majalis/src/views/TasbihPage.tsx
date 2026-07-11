@@ -6,6 +6,7 @@ import { TasbeehCounter } from "@/components/reading/TasbeehCounter";
 import { setTaskProgress } from "@/lib/daily-progress";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   computeStreakDays,
   computeTasbeehStats,
@@ -244,6 +245,9 @@ export default function TasbihPage() {
 
       <div className="twh-share">
         <ShareButtons title="التسبيح الرقمي — المجلس العلمي" url="https://majlisilm.com/tasbih" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأذكار والأخلاق" count={4} />
       </div>
     </div>
   );

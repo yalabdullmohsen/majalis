@@ -21,6 +21,7 @@ import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import { getHijriDateString, gregorianToHijri } from "@/lib/hijri-utils";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 type ViewMode = "month" | "week" | "day";
 
@@ -369,6 +370,9 @@ export default function CalendarPage() {
 
       <div className="twh-share">
         <ShareButtons title="التقويم الهجري والمناسبات الإسلامية — المجلس العلمي" url="https://majlisilm.com/calendar" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="tarikh" title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
       </div>
     </div>
   );
