@@ -1,7 +1,7 @@
 import { Lightbulb } from "lucide-react";
 import { Link } from "wouter";
 
-// Approximate Gregorian dates for upcoming Islamic seasons (July 2026 onward)
+// Approximate Gregorian dates for Islamic seasons (1448 هـ)
 type Season = {
   id: string;
   name: string;
@@ -16,6 +16,28 @@ type Season = {
 
 function getSeasons(): Season[] {
   return [
+    {
+      id: "muharram-1448",
+      name: "Muharram",
+      arabicName: "محرم",
+      startDate: new Date("2026-07-01"),
+      endDate: new Date("2026-07-29"),
+      description: "رأس السنة الهجرية 1448هـ — شهر الله المحرم",
+      suggestion: "تجديد النية واستحضار نعمة الهجرة",
+      href: "/raqaiq",
+      color: "#145C46",
+    },
+    {
+      id: "rabi-awwal-1448",
+      name: "Rabi al-Awwal",
+      arabicName: "ربيع الأول",
+      startDate: new Date("2026-09-25"),
+      endDate: new Date("2026-10-24"),
+      description: "ربيع الأول 1448هـ — ذكرى مولد النبي ﷺ",
+      suggestion: "قراءة السيرة النبوية والشمائل المحمدية",
+      href: "/shamael",
+      color: "#0A5040",
+    },
     {
       id: "rajab-1448",
       name: "Rajab",

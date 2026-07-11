@@ -82,6 +82,7 @@ const SECTIONS = [
       { href: "/prayer-countdown",  label: "عداد الصلاة",          desc: "الوقت المتبقي حتى الصلاة التالية" },
       { href: "/qibla",             label: "اتجاه القبلة",         desc: "البوصلة نحو مكة" },
       { href: "/tawba",             label: "التوبة والاستغفار",    desc: "فضل التوبة وأدعيتها" },
+      { href: "/amr-bil-maruf",     label: "الأمر بالمعروف",       desc: "شروطه ومراتبه ومعرفة المعروف والمنكر" },
       { href: "/raqaiq",            label: "الرقائق والزهد",       desc: "تزكية النفس" },
       { href: "/occasions",         label: "المناسبات الإسلامية",  desc: "أذكار المناسبات" },
       { href: "/adab-talab-ilm",    label: "آداب طالب العلم",      desc: "شروط طلب العلم وآدابه" },

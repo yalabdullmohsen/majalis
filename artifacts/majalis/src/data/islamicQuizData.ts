@@ -378,6 +378,12 @@ const SECTION_TO_CATEGORY: Record<string, string> = {
   "العقيدة": "aqeedah",
   "الحديث": "hadith",
   "السنة": "hadith",
+  "التاريخ الإسلامي": "tarikh",
+  "الأندلس": "tarikh",
+  "الخلفاء": "tarikh",
+  "العلماء": "tarikh",
+  "المعارك": "tarikh",
+  "الفتوحات": "tarikh",
 };
 
 const LEVEL_TO_POINTS: Record<string, PointValue> = {
