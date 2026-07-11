@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const SECTIONS = [
   {
@@ -201,6 +202,9 @@ export default function SiteMapPage() {
       </main>
       <div className="twh-share">
         <ShareButtons title="دليل أقسام المجلس العلمي" url="https://majlisilm.com/sitemap" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["quran", "hadith", "fiqh", "aqeeda"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
       </div>
     </div>
   );
