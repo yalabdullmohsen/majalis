@@ -472,7 +472,7 @@ export default function HomePage() {
           }}>
             {[
               { num: "٩٩+",  label: "عالم مرجعي",   icon: "👤" },
-              { num: "٣٧٣+", label: "سؤال اختباري", icon: "🧠" },
+              { num: "٣٨٤+", label: "سؤال اختباري", icon: "🧠" },
               { num: "٤١٣+", label: "فائدة علمية",  icon: "💡" },
               { num: "١٠٠+", label: "كتاب علمي",    icon: "📚" },
             ].map(({ num, label, icon }) => (
