@@ -28167,3 +28167,25 @@ html[data-theme="dark"] .hb-hadith-row:hover, html[data-theme="dark"] .hb-hadith
 html[data-theme="dark"] .hb-hadith-row__preview { color: #E8DED4; }
 html[data-theme="dark"] .hb-search-input { background: #0d1f17; border-color: rgba(92,196,154,.2); color: #E8DED4; }
 html[data-theme="dark"] .hb-notice { background: rgba(14,110,82,.08); }
+
+/* بانر الكتب الحديثية الكاملة (في HadithPage) */
+.hadith-books-banner { display: flex; align-items: flex-start; gap: .85rem;
+  background: linear-gradient(135deg, rgba(14,110,82,.06) 0%, rgba(21,48,37,.04) 100%);
+  border: 1px solid rgba(14,110,82,.2); border-radius: 12px;
+  padding: 1rem 1.25rem; margin: 1.5rem 1rem 0; direction: rtl; }
+.hadith-books-banner__icon { color: var(--ds-emerald, #0E6E52); flex-shrink: 0; margin-top: .1rem; }
+.hadith-books-banner > div { flex: 1; min-width: 0; }
+.hadith-books-banner strong { display: block; font-size: .9rem; font-weight: 700;
+  color: var(--elite-ink); margin-bottom: .2rem; }
+.hadith-books-banner p { font-size: .8rem; color: var(--elite-ink-soft); line-height: 1.5; margin: 0; }
+.hadith-books-banner__btn { flex-shrink: 0; padding: .45rem .85rem;
+  background: var(--ds-emerald, #0E6E52); color: #fff; border-radius: 7px;
+  font-size: .82rem; font-weight: 600; text-decoration: none;
+  white-space: nowrap; align-self: center; transition: opacity .15s; }
+.hadith-books-banner__btn:hover { opacity: .88; }
+@media (max-width: 600px) {
+  .hadith-books-banner { flex-wrap: wrap; }
+  .hadith-books-banner__btn { width: 100%; text-align: center; }
+}
+html[data-theme="dark"] .hadith-books-banner {
+  background: rgba(14,110,82,.1); border-color: rgba(14,110,82,.25); }

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { AlertTriangle, Star } from "lucide-react";
+import { AlertTriangle, BookOpen, Star } from "lucide-react";
+import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { getVerifiedHadith } from "@/lib/supabase";
@@ -11,6 +12,7 @@ import { RecommendationWidget } from "@/components/recommendations/Recommendatio
 import { CitationActionBar } from "@/components/citation/CitationActionBar";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { fetchAllHadiths, type CdnHadith } from "@/lib/hadith-cdn-service";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -29,6 +31,24 @@ type HadithItem = {
   metadata: Record<string, string | number | boolean | null> | null;
   created_at: string;
 };
+
+function cdnToHadithItems(hadiths: CdnHadith[], collection: string, sourceName: string): HadithItem[] {
+  return hadiths.map((h) => ({
+    id: `cdn-${collection}-${h.hadithnumber}`,
+    title: null,
+    text: h.text,
+    narrator: null,
+    source_name: sourceName,
+    grade: "صحيح",
+    collection,
+    chapter: (h as any).chapter ?? null,
+    explanation: null,
+    keywords: null,
+    hadith_number: String(h.hadithnumber),
+    metadata: null,
+    created_at: new Date().toISOString(),
+  }));
+}
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -445,7 +465,23 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
   useEffect(() => {
     setLoading(true);
     RequestManager.run(`hadith:list:${authenticityClass}`, () => getVerifiedHadith({ limit: 500, authenticityClass }))
-      .then(({ data }) => setItems((data as HadithItem[]) ?? []))
+      .then(async ({ data }) => {
+        const rows = (data as HadithItem[]) ?? [];
+        if (rows.length > 0) { setItems(rows); return; }
+        if (authenticityClass === "sahih") {
+          // Fallback: الأربعون النووية + القدسية من CDN عند فراغ قاعدة البيانات
+          const [nawawi, qudsi] = await Promise.all([
+            fetchAllHadiths("nawawi"),
+            fetchAllHadiths("qudsi"),
+          ]);
+          setItems([
+            ...cdnToHadithItems(nawawi, "nawawi40", "الأربعون النووية"),
+            ...cdnToHadithItems(qudsi, "qudsi", "الأحاديث القدسية"),
+          ]);
+        } else {
+          setItems([]);
+        }
+      })
       .catch(() => setItems([]))
       .finally(() => setLoading(false));
   }, [authenticityClass]);
@@ -685,6 +721,18 @@ export default function HadithPage() {
         layout="row"
         className="mt-8"
       />
+
+      {/* بانر الكتب الكاملة */}
+      <div className="hadith-books-banner" dir="rtl">
+        <BookOpen size={20} className="hadith-books-banner__icon" aria-hidden="true" />
+        <div>
+          <strong>الكتب الحديثية الكاملة</strong>
+          <p>تصفّح صحيح البخاري (7563 حديثاً) ومسلم (3033) والسنن الأربعة بالكامل مع البحث والتصفح بالكتاب والباب.</p>
+        </div>
+        <Link href="/hadith/books" className="hadith-books-banner__btn">
+          تصفّح الكتب ←
+        </Link>
+      </div>
 
       <div className="px-4 pb-6">
         <SectionQuiz
