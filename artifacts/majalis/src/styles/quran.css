@@ -755,6 +755,24 @@
   color: var(--text-muted, #6b7280);
   margin-top: .5rem;
 }
+.qs-youtube-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  background: #ff0000;
+  color: #fff;
+  font-size: .82rem;
+  font-weight: 600;
+  padding: .45rem .9rem;
+  border-radius: .5rem;
+  text-decoration: none;
+  margin-bottom: .75rem;
+  transition: background 180ms ease, transform 120ms ease;
+}
+.qs-youtube-btn:hover {
+  background: #cc0000;
+  transform: translateY(-1px);
+}
 .qs-volume-row {
   display: flex;
   align-items: center;
