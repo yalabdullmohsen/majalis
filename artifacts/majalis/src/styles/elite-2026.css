@@ -28189,3 +28189,11 @@ html[data-theme="dark"] .hb-notice { background: rgba(14,110,82,.08); }
 }
 html[data-theme="dark"] .hadith-books-banner {
   background: rgba(14,110,82,.1); border-color: rgba(14,110,82,.25); }
+
+/* متفق عليه info box */
+.hb-mutafaq-info { background: rgba(14,110,82,.05); border: 1px solid rgba(14,110,82,.18);
+  border-radius: 8px; padding: .8rem 1rem; margin-bottom: 1rem; font-size: .82rem;
+  color: var(--elite-ink-soft); line-height: 1.6; direction: rtl; }
+.hb-mutafaq-info strong { color: var(--ds-emerald, #0E6E52); }
+.hb-mutafaq-info p { margin: .35rem 0 0; }
+html[data-theme="dark"] .hb-mutafaq-info { background: rgba(14,110,82,.09); border-color: rgba(14,110,82,.22); }

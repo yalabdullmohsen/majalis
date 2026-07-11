@@ -21,7 +21,8 @@ export type HadithCollection =
   | "ara-tirmidhi"
   | "ara-nasai"
   | "ara-ibnmajah"
-  | "ara-malik";
+  | "ara-malik"
+  | "mutafaq"; // مجموعة افتراضية: البخاري + مسلم معاً
 
 export interface CdnHadith {
   hadithnumber: number;
@@ -44,16 +45,37 @@ export interface CdnCollectionMeta {
 }
 
 export const HADITH_COLLECTIONS: CdnCollectionMeta[] = [
-  { id: "ara-bukhari",  name: "صحيح البخاري",     arabicName: "الإمام محمد بن إسماعيل البخاري", authenticityClass: "sahih", totalHadiths: 7563 },
-  { id: "ara-muslim",   name: "صحيح مسلم",        arabicName: "الإمام مسلم بن الحجاج",          authenticityClass: "sahih", totalHadiths: 3033 },
-  { id: "nawawi",       name: "الأربعون النووية",  arabicName: "الإمام يحيى بن شرف النووي",      authenticityClass: "sahih", totalHadiths: 42   },
-  { id: "qudsi",        name: "الأحاديث القدسية",  arabicName: "أحاديث عن الله تعالى",           authenticityClass: "sahih", totalHadiths: 40   },
-  { id: "ara-abudawud", name: "سنن أبي داود",      arabicName: "الإمام أبو داود السجستاني",       authenticityClass: "hasan", totalHadiths: 5274 },
-  { id: "ara-tirmidhi", name: "جامع الترمذي",      arabicName: "الإمام محمد بن عيسى الترمذي",    authenticityClass: "hasan", totalHadiths: 3956 },
-  { id: "ara-nasai",    name: "سنن النسائي",       arabicName: "الإمام أحمد بن شعيب النسائي",    authenticityClass: "hasan", totalHadiths: 5761 },
-  { id: "ara-ibnmajah", name: "سنن ابن ماجه",      arabicName: "الإمام محمد بن يزيد ابن ماجه",   authenticityClass: "hasan", totalHadiths: 4341 },
+  { id: "mutafaq",      name: "المتفق عليه",        arabicName: "ما رواه البخاري ومسلم معاً",      authenticityClass: "sahih", totalHadiths: 10596 },
+  { id: "ara-bukhari",  name: "صحيح البخاري",       arabicName: "الإمام محمد بن إسماعيل البخاري", authenticityClass: "sahih", totalHadiths: 7563 },
+  { id: "ara-muslim",   name: "صحيح مسلم",          arabicName: "الإمام مسلم بن الحجاج",          authenticityClass: "sahih", totalHadiths: 3033 },
+  { id: "nawawi",       name: "الأربعون النووية",   arabicName: "الإمام يحيى بن شرف النووي",      authenticityClass: "sahih", totalHadiths: 42   },
+  { id: "qudsi",        name: "الأحاديث القدسية",   arabicName: "أحاديث عن الله تعالى",           authenticityClass: "sahih", totalHadiths: 40   },
+  { id: "ara-abudawud", name: "سنن أبي داود",       arabicName: "الإمام أبو داود السجستاني",      authenticityClass: "hasan", totalHadiths: 5274 },
+  { id: "ara-tirmidhi", name: "جامع الترمذي",       arabicName: "الإمام محمد بن عيسى الترمذي",   authenticityClass: "hasan", totalHadiths: 3956 },
+  { id: "ara-nasai",    name: "سنن النسائي",        arabicName: "الإمام أحمد بن شعيب النسائي",   authenticityClass: "hasan", totalHadiths: 5761 },
+  { id: "ara-ibnmajah", name: "سنن ابن ماجه",       arabicName: "الإمام محمد بن يزيد ابن ماجه",  authenticityClass: "hasan", totalHadiths: 4341 },
   { id: "ara-malik",    name: "موطأ الإمام مالك",   arabicName: "الإمام مالك بن أنس",             authenticityClass: "sahih", totalHadiths: 1832 },
 ];
+
+/** جلب مجموعة المتفق عليه: البخاري + مسلم معاً (مُوسَّمة بـ source) */
+export async function fetchMutafaqAlayhHadiths(): Promise<CdnHadith[]> {
+  const key = cacheKey("mutafaq");
+  const cached = readCache<CdnHadith[]>(key);
+  if (cached) return cached;
+
+  const [bukhari, muslim] = await Promise.all([
+    fetchAllHadiths("ara-bukhari"),
+    fetchAllHadiths("ara-muslim"),
+  ]);
+
+  const combined: CdnHadith[] = [
+    ...bukhari.map((h) => ({ ...h, hadithnumber: h.hadithnumber, _source: "البخاري" } as CdnHadith)),
+    ...muslim.map((h)  => ({ ...h, hadithnumber: h.hadithnumber + 100000, _source: "مسلم" } as CdnHadith)),
+  ];
+
+  writeCache(key, combined);
+  return combined;
+}
 
 function cacheKey(collection: string, chapter?: number): string {
   return `${CACHE_PREFIX}${collection}${chapter != null ? `_ch${chapter}` : "_all"}`;

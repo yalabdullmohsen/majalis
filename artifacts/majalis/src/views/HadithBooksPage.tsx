@@ -5,6 +5,7 @@ import { applyPageSeo } from "@/lib/seo";
 import {
   HADITH_COLLECTIONS,
   fetchAllHadiths,
+  fetchMutafaqAlayhHadiths,
   type CdnHadith,
   type HadithCollection,
   type CdnCollectionMeta,
@@ -122,7 +123,10 @@ function HadithRow({ h, index }: { h: CdnHadith; index: number }) {
         <div className="hb-hadith-row__detail" onClick={(e) => e.stopPropagation()}>
           <div className="hb-hadith-row__meta">
             {chapter && <span className="hb-hadith-row__chapter">{chapter}</span>}
-            <span className="hb-hadith-row__badge">حديث {h.hadithnumber}</span>
+            {(h as any)._source && (
+              <span className="hb-hadith-row__chapter">{(h as any)._source}</span>
+            )}
+            <span className="hb-hadith-row__badge">حديث {h.hadithnumber > 100000 ? h.hadithnumber - 100000 : h.hadithnumber}</span>
           </div>
           <button
             type="button"
@@ -217,12 +221,18 @@ function CollectionBrowser({ meta }: { meta: CdnCollectionMeta }) {
     setActiveChapter(null);
     setSearch("");
 
-    fetchAllHadiths(meta.id)
+    const fetchFn = meta.id === "mutafaq"
+      ? fetchMutafaqAlayhHadiths()
+      : fetchAllHadiths(meta.id);
+
+    fetchFn
       .then((data) => {
         setHadiths(data);
-        const chs = buildChapters(data);
-        setChapters(chs);
-        if (chs.length > 0) setActiveChapter(chs[0].no);
+        if (meta.id !== "mutafaq") {
+          const chs = buildChapters(data);
+          setChapters(chs);
+          if (chs.length > 0) setActiveChapter(chs[0].no);
+        }
       })
       .catch(() => setError(true))
       .finally(() => setLoading(false));
@@ -268,6 +278,18 @@ function CollectionBrowser({ meta }: { meta: CdnCollectionMeta }) {
           {chapters.length > 1 && <span>{chapters.length} كتاباً</span>}
         </div>
       </div>
+
+      {/* توضيح مفهوم المتفق عليه */}
+      {meta.id === "mutafaq" && (
+        <div className="hb-mutafaq-info" role="note">
+          <strong>ما هو المتفق عليه؟</strong>
+          <p>
+            الحديث المتفق عليه هو ما اتفق على روايته البخاري ومسلم في صحيحَيهما — وهو من أعلى درجات الصحة لأن كلا الإمامَين اشترطا الصحة العالية.
+            هذه الصفحة تعرض كامل أحاديث البخاري وأحاديث مسلم بحسب مصدر كل حديث.
+            العلامة <strong>البخاري</strong> أو <strong>مسلم</strong> تظهر في تفاصيل كل حديث.
+          </p>
+        </div>
+      )}
 
       {/* البحث */}
       <div className="hb-search-wrap">
