@@ -3,6 +3,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
 import { useLocation } from "wouter";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { PageHeader } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { useAuth } from "@/components/AuthProvider";
@@ -628,6 +629,9 @@ export default function LessonsPage({
 
       <div className="twh-share">
         <ShareButtons title="الدروس العلمية — المجلس العلمي" url="https://majlisilm.com/lessons" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["hadith", "fiqh"]} title="اختبر معلوماتك في الدروس الشرعية" count={4} />
       </div>
     </div>
   );

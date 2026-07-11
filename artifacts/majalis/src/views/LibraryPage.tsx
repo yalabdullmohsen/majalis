@@ -6,6 +6,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { useEffect, useMemo, useState } from "react";
 import { getLibrary } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { LIBRARY_CATEGORIES } from "@/lib/library-catalog";
 import { Chip } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
@@ -134,6 +135,9 @@ export default function LibraryPage({
       </PageLoadingGuard>
       <div className="twh-share">
         <ShareButtons title="المكتبة الإسلامية — المجلس العلمي" url="https://majlisilm.com/library" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["quran", "hadith"]} title="اختبر معلوماتك في علوم الكتاب والسنة" count={4} />
       </div>
     </ContentHubLayout>
   );

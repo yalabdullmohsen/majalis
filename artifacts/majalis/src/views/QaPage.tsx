@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { getQaCategories, getQaQuestions } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const FIQH_HUB_TABS = [
   { key: "fatawa",  label: "الفتاوى",         href: "/fatwa" },
@@ -326,6 +327,9 @@ export default function QaPage({
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}
       </FilterBottomSheet>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه والأسئلة الشرعية" count={4} />
+      </div>
     </div>
   );
 }
