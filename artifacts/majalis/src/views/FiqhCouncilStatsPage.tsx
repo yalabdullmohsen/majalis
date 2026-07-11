@@ -7,6 +7,7 @@ import { fiqhItemHref, FIQH_ITEM_TYPE_LABELS, type FiqhPublicStats } from "@/lib
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 export default function FiqhCouncilStatsPage() {
   const [stats, setStats] = useState<FiqhPublicStats | null>(null);
@@ -133,6 +134,9 @@ export default function FiqhCouncilStatsPage() {
 
       <div className="twh-share">
         <ShareButtons title="إحصائيات مجلس الفقه — المجلس العلمي" url="https://majlisilm.com/fiqh-council/stats" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["fiqh", "tarikh"]} title="اختبر معلوماتك في الفقه والتاريخ" count={4} />
       </div>
     </div>
   );

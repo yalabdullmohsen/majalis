@@ -7,6 +7,7 @@ import { getAllNawazilItems, getNawazilTopicItems } from "@/lib/fiqh-council-ser
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { NAWAZIL_TOPICS } from "@/lib/fiqh-council-nawazil";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   FIQH_ITEM_TYPE_LABELS,
   fiqhItemHref,
@@ -119,6 +120,9 @@ export default function FiqhCouncilNawazilPage() {
 
       <div className="twh-share">
         <ShareButtons title="نوازل فقهية معاصرة — المجلس العلمي" url="https://majlisilm.com/fiqh-council/nawazil" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في النوازل الفقهية" count={4} />
       </div>
     </div>
   );

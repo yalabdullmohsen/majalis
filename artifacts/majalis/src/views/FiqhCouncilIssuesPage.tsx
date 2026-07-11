@@ -6,6 +6,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { getFiqhIssues } from "@/lib/fiqh-council-issues-service";
 import { FIQH_COUNCIL_CATEGORIES, fiqhIssueHref, type FiqhCouncilIssue } from "@/lib/fiqh-council-types";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 
 export default function FiqhCouncilIssuesPage() {
@@ -86,6 +87,9 @@ export default function FiqhCouncilIssuesPage() {
 
       <div className="twh-share">
         <ShareButtons title="المسائل الفقهية — المجمع الفقهي | المجلس العلمي" url="https://majlisilm.com/fiqh-council/issues" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في المسائل الفقهية" count={4} />
       </div>
     </div>
   );
