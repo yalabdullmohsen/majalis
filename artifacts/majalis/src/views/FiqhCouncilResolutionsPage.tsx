@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { FiqhCouncilListPage } from "./FiqhCouncilPage";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 export default function FiqhCouncilResolutionsPage() {
   useEffect(() => {
@@ -14,11 +15,16 @@ export default function FiqhCouncilResolutionsPage() {
   }, []);
 
   return (
-    <FiqhCouncilListPage
-      typeFilter="resolution"
-      title="قرارات المجمع الفقهي"
-      subtitle="قرارات المجمع الفقهي الإسلامي في القضايا المعاصرة، مع تصنيف ومراجع."
-      showTypeFilter={false}
-    />
+    <>
+      <FiqhCouncilListPage
+        typeFilter="resolution"
+        title="قرارات المجمع الفقهي"
+        subtitle="قرارات المجمع الفقهي الإسلامي في القضايا المعاصرة، مع تصنيف ومراجع."
+        showTypeFilter={false}
+      />
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الأحكام الفقهية" count={4} />
+      </div>
+    </>
   );
 }

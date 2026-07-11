@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { FiqhCouncilListPage } from "./FiqhCouncilPage";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 export default function FiqhCouncilFatwasPage() {
   useEffect(() => {
@@ -14,11 +15,16 @@ export default function FiqhCouncilFatwasPage() {
   }, []);
 
   return (
-    <FiqhCouncilListPage
-      typeFilter="fatwa"
-      title="الفتاوى الجماعية"
-      subtitle="فتاوى جماعية صادرة عن المجمع الفقهي الإسلامي، مع أدلة ومراجع."
-      showTypeFilter={false}
-    />
+    <>
+      <FiqhCouncilListPage
+        typeFilter="fatwa"
+        title="الفتاوى الجماعية"
+        subtitle="فتاوى جماعية صادرة عن المجمع الفقهي الإسلامي، مع أدلة ومراجع."
+        showTypeFilter={false}
+      />
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
+      </div>
+    </>
   );
 }
