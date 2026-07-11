@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import { ArrowRight, CheckCircle2, Shield, Users, BookOpen, AlertTriangle, Globe } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const SOURCES = [
   { name: "dorar.net", desc: "موسوعة الدرر السنية للأحاديث والآثار" },
@@ -148,6 +149,9 @@ export default function MethodologyPage() {
         </ul>
       </section>
 
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة والمنهج" count={4} />
+      </div>
       <div className="mtd-back">
         <Link href="/" className="uc-back">
           <ArrowRight size={18} aria-hidden="true" />
