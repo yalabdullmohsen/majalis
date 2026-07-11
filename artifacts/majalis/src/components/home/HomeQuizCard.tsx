@@ -34,7 +34,7 @@ export function HomeQuizCard() {
           <span className="ds-quiz-home-card__badge">تنافسي • جماعي</span>
           <h2 className="ds-quiz-home-card__title">لعبة سؤال وجواب الإسلامية</h2>
           <p className="ds-quiz-home-card__desc">
-            فريقان يتنافسان في 400 سؤال إسلامي من 8 فئات، اختبر معلوماتك في القرآن والحديث والسيرة والفقه والعقيدة والتاريخ والأخلاق
+            فريقان يتنافسان في 440 سؤال إسلامي من 8 فئات، اختبر معلوماتك في القرآن والحديث والسيرة والفقه والعقيدة والتاريخ والأخلاق
           </p>
           <Link href="/quiz" className="ds-quiz-home-card__btn">ابدأ اللعبة</Link>
         </div>
