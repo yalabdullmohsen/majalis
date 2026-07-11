@@ -366,6 +366,20 @@ html[data-theme="dark"] body {
   color: #E8DED4;
 }
 
+/* WCAG AA — focus-visible في الوضع الليلي */
+html[data-theme="dark"] :focus-visible {
+  outline-color: #5CC49A !important;
+  outline-offset: 3px !important;
+}
+
+/* تحسين تباين روابط الملاحة في dark mode */
+html[data-theme="dark"] a {
+  color: #7DD4B0;
+}
+html[data-theme="dark"] a:hover {
+  color: #5CC49A;
+}
+
 html[data-font="default"] {
   --font-body: var(--font-primary);
 }
