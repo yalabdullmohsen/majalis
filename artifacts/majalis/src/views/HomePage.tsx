@@ -311,166 +311,88 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* ══════════════════ شعار المنصة ══════════════════ */}
-      <div
-        role="banner"
-        aria-label="شعار المنصة"
-        style={{
-          background: "linear-gradient(160deg, #0a1f12 0%, #132b1c 60%, #0a1f12 100%)",
-          borderBottom: "1px solid rgba(255,255,255,0.08)",
-          padding: "clamp(1.75rem, 5vw, 2.75rem) 1rem clamp(1.5rem, 4vw, 2.25rem)",
-          textAlign: "center",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        {/* خط ذهبي علوي */}
-        <div aria-hidden="true" style={{
-          position: "absolute", top: 0, left: 0, right: 0, height: "3px",
-          background: "linear-gradient(90deg, transparent 0%, rgba(250,248,242,0.35) 30%, rgba(250,248,242,0.6) 50%, rgba(250,248,242,0.35) 70%, transparent 100%)",
-        }} />
-
-        {/* نمط هندسي خفيف */}
-        <div aria-hidden="true" style={{
-          position: "absolute", inset: 0, opacity: 0.04,
-          backgroundImage: "radial-gradient(circle at 20% 50%, rgba(255,255,255,0.6) 1px, transparent 1px), radial-gradient(circle at 80% 50%, rgba(255,255,255,0.6) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-          pointerEvents: "none",
-        }} />
-
-        {/* المحتوى المركزي */}
-        <div style={{ position: "relative", maxWidth: 640, margin: "0 auto" }}>
-          {/* فاصل إسلامي علوي */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "1.1rem", opacity: 0.45 }}>
-            <span style={{ height: "1px", width: 56, background: "rgba(250,248,242,0.6)", display: "block" }} />
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(250,248,242,0.8)" aria-hidden="true">
-              <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.3L12 17l-6.2 4.2 2.4-7.3L2 9.4h7.6z"/>
-            </svg>
-            <span style={{ height: "1px", width: 56, background: "rgba(250,248,242,0.6)", display: "block" }} />
-          </div>
-
-          {/* الجملة الرئيسية */}
-          <p style={{
-            color: "#FAF8F2",
-            fontSize: "clamp(1.7rem, 5.5vw, 2.6rem)",
-            fontWeight: 800,
-            margin: "0 0 0.55rem",
-            lineHeight: 1.35,
-            letterSpacing: "0.01em",
-          }}>
-            رسالةٌ عظيمة
-            <span style={{
-              display: "inline-block",
-              color: "rgba(250,248,242,0.6)",
-              fontWeight: 300,
-              margin: "0 0.45rem",
-              fontSize: "clamp(1.2rem, 3.5vw, 1.8rem)",
-            }}>،</span>
-            <span style={{ color: "rgba(250,248,242,0.82)", fontWeight: 600 }}>ووسائل تتجدد</span>
-          </p>
-
-          {/* السطر الداعم */}
-          <p style={{
-            color: "rgba(250,248,242,0.55)",
-            fontSize: "clamp(0.82rem, 2.2vw, 0.95rem)",
-            lineHeight: 1.7,
-            maxWidth: 480,
-            margin: "0 auto 1.1rem",
-          }}>
-            رسالة الإسلام باقيةٌ ثابتةٌ، وهذه المنصة أداةٌ متجددة في خدمتها
-          </p>
-
-          {/* فاصل إسلامي سفلي */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", opacity: 0.35 }}>
-            <span style={{ height: "1px", width: 40, background: "rgba(250,248,242,0.6)", display: "block" }} />
-            <span style={{ color: "rgba(250,248,242,0.6)", fontSize: "0.65rem", letterSpacing: "0.3em", fontWeight: 600 }}>المجلس العلمي</span>
-            <span style={{ height: "1px", width: 40, background: "rgba(250,248,242,0.6)", display: "block" }} />
-          </div>
-        </div>
-
-        {/* خط سفلي */}
-        <div aria-hidden="true" style={{
-          position: "absolute", bottom: 0, left: 0, right: 0, height: "1px",
-          background: "linear-gradient(90deg, transparent, rgba(250,248,242,0.15), transparent)",
-        }} />
-      </div>
-
-      {/* ══════════════════ Hero ══════════════════ */}
+      {/* ══════════════════ Hero الموحّد ══════════════════ */}
       <section
         className="hpv4-hero"
         aria-label="الصفحة الرئيسية"
         style={{
-          background: "linear-gradient(160deg, #1F4D3A 0%, #163728 55%, #0e2619 100%)",
-          padding: "2rem 1rem 1.75rem",
+          background: "linear-gradient(165deg, #0c2318 0%, #1a3d2b 40%, #163728 70%, #0e2619 100%)",
+          padding: "clamp(2rem,5vw,3rem) 1rem clamp(1.75rem,4vw,2.5rem)",
           position: "relative",
           overflow: "hidden",
         }}
       >
+        {/* خط عاجي علوي */}
+        <div aria-hidden="true" style={{
+          position: "absolute", top: 0, left: 0, right: 0, height: "3px",
+          background: "linear-gradient(90deg, transparent 0%, rgba(250,248,242,0.25) 25%, rgba(250,248,242,0.55) 50%, rgba(250,248,242,0.25) 75%, transparent 100%)",
+        }} />
+
         {/* نمط هندسي إسلامي */}
         <div className="home-hero-pattern" aria-hidden="true" style={{ pointerEvents: "none" }} />
 
         {/* زخرفة الزوايا */}
         <div aria-hidden="true" style={{ position: "absolute", top: 0, right: 0, pointerEvents: "none" }}>
-          <CornerOrnament size={72} color="rgba(255,255,255,0.55)" opacity={0.45} />
+          <CornerOrnament size={80} color="rgba(255,255,255,0.5)" opacity={0.4} />
         </div>
         <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
-          <CornerOrnament size={72} color="rgba(255,255,255,0.55)" opacity={0.45} flip />
-        </div>
-        <div aria-hidden="true" style={{ position: "absolute", bottom: 0, right: 0, pointerEvents: "none", transform: "scaleY(-1)" }}>
-          <CornerOrnament size={56} color="rgba(255,255,255,0.3)" opacity={0.3} />
-        </div>
-        <div aria-hidden="true" style={{ position: "absolute", bottom: 0, left: 0, pointerEvents: "none", transform: "scale(-1,-1)" }}>
-          <CornerOrnament size={56} color="rgba(255,255,255,0.3)" opacity={0.3} flip />
+          <CornerOrnament size={80} color="rgba(255,255,255,0.5)" opacity={0.4} flip />
         </div>
 
         <div style={{ maxWidth: 640, margin: "0 auto", position: "relative", textAlign: "center" }}>
           {/* الشعار والاسم */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.65rem", marginBottom: "0.75rem" }}>
-            <img src="/logo.png" alt="" width={50} height={50} loading="eager" aria-hidden="true"
-              style={{ borderRadius: "50%", border: "2px solid rgba(255,255,255,0.3)", boxShadow: "0 2px 12px rgba(0,0,0,0.3)" }} />
-            <h1 style={{ color: "#fff", fontSize: "clamp(1.5rem, 5vw, 2.2rem)", fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.7rem", marginBottom: "0.6rem" }}>
+            <img src="/logo.png" alt="" width={52} height={52} loading="eager" aria-hidden="true"
+              style={{ borderRadius: "50%", border: "2px solid rgba(255,255,255,0.35)", boxShadow: "0 2px 14px rgba(0,0,0,0.35)" }} />
+            <h1 style={{ color: "#FAF8F2", fontSize: "clamp(1.6rem, 5.5vw, 2.4rem)", fontWeight: 800, margin: 0, letterSpacing: "-0.01em" }}>
               المجلس العلمي
             </h1>
           </div>
 
-          <p style={{ color: "rgba(255,255,255,0.88)", fontSize: "clamp(0.85rem, 2.2vw, 0.97rem)", lineHeight: 1.7, maxWidth: 540, margin: "0 auto 0.65rem" }}>
-            بوّابتك الشاملة إلى العلوم الشرعية: القرآن الكريم، السنة النبوية الموثّقة، دروس علماء الكويت، الفقه والفتاوى المعاصرة، والأذكار اليومية
+          {/* الشعار الفلسفي */}
+          <p style={{
+            color: "rgba(250,248,242,0.5)", fontSize: "clamp(0.72rem, 1.8vw, 0.82rem)",
+            letterSpacing: "0.12em", fontWeight: 600, margin: "0 0 0.85rem", textTransform: "uppercase",
+          }}>
+            رسالةٌ عظيمة، ووسائل تتجدد
           </p>
 
           {/* فاصل هندسي */}
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: "1rem", opacity: 0.6 }}>
-            <IslamicDivider width={280} color="rgba(255,255,255,0.9)" opacity={0.55} />
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.9rem", opacity: 0.5 }}>
+            <IslamicDivider width={260} color="rgba(255,255,255,0.9)" opacity={0.5} />
           </div>
 
-          {/* شريحات الجمهور — قابلة للنقر */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center", marginBottom: "1.25rem" }}>
+          {/* الوصف */}
+          <p style={{ color: "rgba(255,255,255,0.84)", fontSize: "clamp(0.83rem, 2.2vw, 0.95rem)", lineHeight: 1.75, maxWidth: 520, margin: "0 auto 1rem" }}>
+            بوّابتك الشاملة إلى العلوم الشرعية: القرآن الكريم، السنة النبوية الموثّقة، دروس علماء الكويت، الفقه والفتاوى المعاصرة، والأذكار اليومية
+          </p>
+
+          {/* شريحات الجمهور */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem", justifyContent: "center", marginBottom: "1.1rem" }}>
             {[
-              { emoji: "🎓", label: "طالب العلم",      href: "/lessons",      bg: "rgba(255,255,255,0.18)" },
-              { emoji: "🕌", label: "المسلم اليومي",   href: "/adhkar",       bg: "rgba(255,255,255,0.11)" },
-              { emoji: "👨‍👩‍👧‍👦", label: "الأسرة المسلمة", href: "/qa",           bg: "rgba(255,255,255,0.11)" },
-              { emoji: "🔬", label: "العالم والباحث",  href: "/library",      bg: "rgba(255,255,255,0.11)" },
+              { emoji: "🎓", label: "طالب العلم",      href: "/lessons",  bg: "rgba(255,255,255,0.18)" },
+              { emoji: "🕌", label: "المسلم اليومي",   href: "/adhkar",   bg: "rgba(255,255,255,0.1)" },
+              { emoji: "👨‍👩‍👧‍👦", label: "الأسرة المسلمة", href: "/qa",       bg: "rgba(255,255,255,0.1)" },
+              { emoji: "🔬", label: "العالم والباحث",  href: "/library",  bg: "rgba(255,255,255,0.1)" },
             ].map(({ emoji, label, href, bg }) => (
               <Link key={label} href={href} style={{
                 background: bg, color: "#fff",
-                padding: "0.38rem 1rem", borderRadius: "999px",
-                fontSize: "0.8rem", fontWeight: 700,
-                border: "1px solid rgba(255,255,255,0.28)",
-                display: "inline-flex", alignItems: "center", gap: "0.35rem",
+                padding: "0.35rem 0.9rem", borderRadius: "999px",
+                fontSize: "0.78rem", fontWeight: 700,
+                border: "1px solid rgba(255,255,255,0.25)",
+                display: "inline-flex", alignItems: "center", gap: "0.3rem",
                 textDecoration: "none",
-                transition: "background 0.18s, border-color 0.18s",
-              }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.28)"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = bg; }}
-              >
-                <span style={{ fontSize: "1.05rem" }}>{emoji}</span>{label}
+              }}>
+                <span style={{ fontSize: "1rem" }}>{emoji}</span>{label}
               </Link>
             ))}
           </div>
 
           {/* خانة البحث */}
           <form onSubmit={submitSearch} style={{
-            display: "flex", gap: "0", borderRadius: "0.6rem", overflow: "hidden",
-            boxShadow: "0 4px 16px rgba(0,0,0,0.3)", maxWidth: 460, margin: "0 auto 1.1rem",
+            display: "flex", borderRadius: "0.65rem", overflow: "hidden",
+            boxShadow: "0 4px 20px rgba(0,0,0,0.35)", maxWidth: 460, margin: "0 auto 1rem",
+            border: "1px solid rgba(255,255,255,0.15)",
           }} aria-label="البحث">
             <input
               value={term}
@@ -478,41 +400,64 @@ export default function HomePage() {
               placeholder="ابحث في المنصة..."
               aria-label="البحث"
               style={{
-                flex: 1, padding: "0.65rem 0.9rem", border: "none", outline: "none",
+                flex: 1, padding: "0.7rem 1rem", border: "none", outline: "none",
                 fontSize: "0.88rem", direction: "rtl", fontFamily: "inherit",
-                background: "rgba(255,255,255,0.97)"
+                background: "#fff", color: "#1a1a1a",
               }}
             />
             <button type="submit" style={{
               background: "#2d7a5a", color: "#fff", border: "none", cursor: "pointer",
-              padding: "0.65rem 1.1rem", fontWeight: 700, fontSize: "0.84rem", fontFamily: "inherit",
-              whiteSpace: "nowrap"
+              padding: "0.7rem 1.2rem", fontWeight: 700, fontSize: "0.84rem", fontFamily: "inherit",
+              whiteSpace: "nowrap", transition: "background 0.15s",
             }}>بحث</button>
           </form>
 
           {/* أزرار الإجراء */}
-          <div style={{ display: "flex", gap: "0.55rem", justifyContent: "center", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/lessons" style={{
-              background: "#fff", color: "#1F4D3A", padding: "0.62rem 1.35rem",
-              borderRadius: "0.55rem", fontWeight: 800, fontSize: "0.88rem",
+              background: "#FAF8F2", color: "#1F4D3A", padding: "0.6rem 1.3rem",
+              borderRadius: "0.55rem", fontWeight: 800, fontSize: "0.87rem",
               textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.3rem",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.18)"
+              boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
             }}>🎓 الدروس</Link>
             <Link href="/quran" style={{
-              background: "rgba(255,255,255,0.12)", color: "#fff", padding: "0.62rem 1.15rem",
-              borderRadius: "0.55rem", fontWeight: 700, fontSize: "0.88rem",
-              textDecoration: "none", border: "1px solid rgba(255,255,255,0.32)"
+              background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1.1rem",
+              borderRadius: "0.55rem", fontWeight: 700, fontSize: "0.87rem",
+              textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)",
             }}>📖 القرآن</Link>
             <Link href="/adhkar" style={{
-              background: "rgba(255,255,255,0.12)", color: "#fff", padding: "0.62rem 1.15rem",
-              borderRadius: "0.55rem", fontWeight: 700, fontSize: "0.88rem",
-              textDecoration: "none", border: "1px solid rgba(255,255,255,0.32)"
+              background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1.1rem",
+              borderRadius: "0.55rem", fontWeight: 700, fontSize: "0.87rem",
+              textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)",
             }}>📿 الأذكار</Link>
             <Link href="/prayer-times" style={{
-              background: "rgba(255,255,255,0.12)", color: "#fff", padding: "0.62rem 1.15rem",
-              borderRadius: "0.55rem", fontWeight: 700, fontSize: "0.88rem",
-              textDecoration: "none", border: "1px solid rgba(255,255,255,0.32)"
+              background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1.1rem",
+              borderRadius: "0.55rem", fontWeight: 700, fontSize: "0.87rem",
+              textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)",
             }}>🕌 الصلاة</Link>
+          </div>
+
+          {/* إحصائيات المنصة */}
+          <div style={{
+            display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center",
+            marginTop: "1.4rem", paddingTop: "1.1rem",
+            borderTop: "1px solid rgba(255,255,255,0.12)",
+          }}>
+            {[
+              { num: "٩٠+", label: "عالماً في الأرشيف" },
+              { num: "٣٥٢+", label: "سؤال اختباري" },
+              { num: "٣٠٠+", label: "حديث موثّق" },
+              { num: "١٠٠+", label: "كتاب علمي" },
+            ].map(({ num, label }) => (
+              <div key={label} style={{
+                background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.13)",
+                borderRadius: "0.6rem", padding: "0.55rem 1rem", textAlign: "center",
+                minWidth: "90px",
+              }}>
+                <div style={{ color: "#FAF8F2", fontSize: "1.15rem", fontWeight: 800, lineHeight: 1.1 }}>{num}</div>
+                <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.68rem", marginTop: "0.2rem", lineHeight: 1.3 }}>{label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -527,32 +472,37 @@ export default function HomePage() {
       {/* ══ زرتَ مؤخراً ══ */}
       <RecentPagesBar />
 
-      {/* ══ وصول سريع — شبكة مفصّلة ══ */}
-      <nav aria-label="وصول سريع" style={{ maxWidth: 760, margin: "1.25rem auto 0", padding: "0 1rem" }}>
-        <p style={{ color: "#666", fontSize: "0.75rem", fontWeight: 700, marginBottom: "0.6rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>وصول سريع</p>
+      {/* ══ وصول سريع ══ */}
+      <nav aria-label="وصول سريع" style={{ maxWidth: 760, margin: "1.5rem auto 0", padding: "0 1rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.7rem" }}>
+          <div style={{ width: 3, height: 18, background: "#1F4D3A", borderRadius: 2 }} />
+          <p style={{ color: "#374151", fontSize: "0.8rem", fontWeight: 800, margin: 0, letterSpacing: "0.04em" }}>وصول سريع</p>
+        </div>
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))",
-          gap: "0.5rem",
+          gridTemplateColumns: "repeat(auto-fill, minmax(126px, 1fr))",
+          gap: "0.45rem",
         }}>
           {[...QUICK_LINKS, { href: "/sitemap", Icon: Layers, label: "كل الأقسام", desc: "خريطة الموقع" }].map(({ href, Icon: Ico, label, desc }) => (
             <Link key={label + href} href={href} aria-label={label} style={{
-              display: "flex", alignItems: "center", gap: "0.55rem",
-              padding: "0.6rem 0.7rem",
+              display: "flex", alignItems: "center", gap: "0.5rem",
+              padding: "0.6rem 0.65rem",
               background: "#fff",
-              border: "1px solid #e8f0ec",
-              borderRadius: "0.7rem",
+              border: "1px solid #e5efea",
+              borderRadius: "0.75rem",
               textDecoration: "none",
-              transition: "border-color 0.13s, box-shadow 0.13s",
-              cursor: "pointer",
-              boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+              boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
             }}>
-              <span style={{ background: "#f0f7f4", color: "#1F4D3A", padding: "0.4rem", borderRadius: "0.4rem", display: "flex", flexShrink: 0 }}>
-                <Ico size={15} strokeWidth={2} />
+              <span style={{
+                background: "linear-gradient(135deg,#edf6f1,#daf0e8)",
+                color: "#1F4D3A", padding: "0.38rem", borderRadius: "0.4rem",
+                display: "flex", flexShrink: 0,
+              }}>
+                <Ico size={14} strokeWidth={2} />
               </span>
               <div style={{ minWidth: 0 }}>
-                <div style={{ color: "#1a1a1a", fontSize: "0.78rem", fontWeight: 700, lineHeight: 1.2 }}>{label}</div>
-                <div style={{ color: "#888", fontSize: "0.68rem", lineHeight: 1.3, marginTop: 1 }}>{desc}</div>
+                <div style={{ color: "#111827", fontSize: "0.77rem", fontWeight: 700, lineHeight: 1.25 }}>{label}</div>
+                <div style={{ color: "#9ca3af", fontSize: "0.66rem", lineHeight: 1.3, marginTop: 1 }}>{desc}</div>
               </div>
             </Link>
           ))}
@@ -613,8 +563,8 @@ export default function HomePage() {
 
         {/* ══ استكشف المنصة ══ */}
         <section aria-labelledby="features-heading" style={{ marginTop: "2rem" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}>
-            <div style={{ width: 3, height: 22, background: "#1F4D3A", borderRadius: 2 }} />
+          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.1rem" }}>
+            <div style={{ width: 3, height: 22, background: "linear-gradient(180deg,#1F4D3A,#2d7a5a)", borderRadius: 2 }} />
             <h2 id="features-heading" style={{ fontSize: "1.1rem", fontWeight: 800, color: "#1a1a1a", margin: 0 }}>
               استكشف المنصة
             </h2>
@@ -622,66 +572,81 @@ export default function HomePage() {
 
           {/* بطاقات بارزة */}
           <div style={{
-            display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "0.75rem",
-            marginBottom: "2rem"
+            display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "0.8rem",
+            marginBottom: "2.25rem",
           }}>
             {FEATURED.map(({ href, Icon, title, desc, cta }) => (
               <Link key={href} href={href} aria-label={title} style={{
-                display: "flex", flexDirection: "column", gap: "0.6rem",
-                padding: "1.1rem 1rem", borderRadius: "1rem", textDecoration: "none",
-                background: "linear-gradient(135deg, #1F4D3A 0%, #2d7a5a 100%)",
-                color: "#fff", transition: "transform 0.15s, box-shadow 0.15s",
-                boxShadow: "0 2px 8px rgba(31,77,58,0.2)"
+                display: "flex", flexDirection: "column", gap: "0.65rem",
+                padding: "1.2rem 1.1rem", borderRadius: "1.1rem", textDecoration: "none",
+                background: "linear-gradient(145deg, #153025 0%, #1F4D3A 50%, #2d7a5a 100%)",
+                color: "#fff",
+                boxShadow: "0 3px 12px rgba(15,50,30,0.22), inset 0 1px 0 rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                position: "relative", overflow: "hidden",
               }}>
-                <Icon size={24} strokeWidth={1.6} style={{ opacity: 0.9 }} />
-                <strong style={{ fontSize: "0.97rem", fontWeight: 800 }}>{title}</strong>
-                <p style={{ fontSize: "0.8rem", opacity: 0.82, lineHeight: 1.5, margin: 0 }}>{desc}</p>
-                <span style={{ fontSize: "0.78rem", fontWeight: 700, opacity: 0.9, marginTop: "auto" }}>{cta} ←</span>
+                <div style={{
+                  position: "absolute", top: "-18px", left: "-18px",
+                  width: "80px", height: "80px", borderRadius: "50%",
+                  background: "rgba(255,255,255,0.04)", pointerEvents: "none",
+                }} aria-hidden="true" />
+                <Icon size={22} strokeWidth={1.5} style={{ opacity: 0.9, position: "relative" }} />
+                <strong style={{ fontSize: "0.97rem", fontWeight: 800, position: "relative" }}>{title}</strong>
+                <p style={{ fontSize: "0.79rem", opacity: 0.78, lineHeight: 1.55, margin: 0, position: "relative" }}>{desc}</p>
+                <span style={{
+                  fontSize: "0.77rem", fontWeight: 700, opacity: 0.88, marginTop: "auto",
+                  display: "inline-flex", alignItems: "center", gap: "0.3rem",
+                  color: "rgba(250,248,242,0.95)", position: "relative",
+                }}>{cta} ←</span>
               </Link>
             ))}
           </div>
 
-          {/* أقسام بالتصنيف — تصميم جديد */}
+          {/* أقسام بالتصنيف */}
           {FEATURE_CATS.map(cat => (
-            <div key={cat.id} style={{ marginBottom: "1.75rem" }}>
+            <div key={cat.id} style={{ marginBottom: "2rem" }}>
               <div style={{
-                display: "flex", alignItems: "center", gap: "0.5rem",
-                marginBottom: "0.75rem", paddingBottom: "0.5rem",
-                borderBottom: "2px solid #f0f7f4"
+                display: "flex", alignItems: "center", gap: "0.55rem",
+                marginBottom: "0.8rem", paddingBottom: "0.6rem",
+                borderBottom: "1.5px solid #e8f2ec",
               }}>
                 <span style={{
-                  background: "#1F4D3A", color: "#fff", padding: "0.35rem",
-                  borderRadius: "0.4rem", display: "flex"
+                  background: "linear-gradient(135deg,#153025,#1F4D3A)", color: "#FAF8F2", padding: "0.38rem",
+                  borderRadius: "0.45rem", display: "flex",
+                  boxShadow: "0 1px 4px rgba(0,0,0,0.15)",
                 }}>
                   <cat.Icon size={15} strokeWidth={2} />
                 </span>
-                <h3 style={{ fontSize: "0.97rem", fontWeight: 800, color: "#1F4D3A", margin: 0 }}>{cat.label}</h3>
+                <h3 style={{ fontSize: "0.98rem", fontWeight: 800, color: "#1F4D3A", margin: 0 }}>{cat.label}</h3>
+                <span style={{
+                  marginRight: "auto", fontSize: "0.69rem", color: "#999", fontWeight: 600,
+                  background: "#f0f7f4", padding: "0.15rem 0.5rem", borderRadius: "999px",
+                }}>{cat.items.length} قسم</span>
               </div>
               <div style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(175px, 1fr))",
-                gap: "0.5rem"
+                gridTemplateColumns: "repeat(auto-fill, minmax(165px, 1fr))",
+                gap: "0.5rem",
               }}>
                 {cat.items.map(({ href, Icon: ItemIcon, title, desc }) => (
                   <Link key={href} href={href} style={{
-                    display: "flex", alignItems: "center", gap: "0.65rem",
-                    padding: "0.7rem 0.8rem", borderRadius: "0.75rem",
+                    display: "flex", alignItems: "flex-start", gap: "0.6rem",
+                    padding: "0.75rem 0.8rem", borderRadius: "0.8rem",
                     textDecoration: "none", background: "#fff",
                     border: "1px solid #e8f0ec",
-                    transition: "border-color 0.15s, box-shadow 0.15s, transform 0.12s",
-                    cursor: "pointer",
-                    boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
+                    boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+                    transition: "border-color 0.15s, box-shadow 0.15s",
                   }}>
                     <span style={{
-                      background: "#f0f7f4", color: "#1F4D3A",
-                      padding: "0.4rem", borderRadius: "0.45rem",
-                      display: "flex", flexShrink: 0
+                      background: "#edf6f1", color: "#1F4D3A",
+                      padding: "0.38rem", borderRadius: "0.4rem",
+                      display: "flex", flexShrink: 0, marginTop: "0.05rem",
                     }}>
-                      <ItemIcon size={15} strokeWidth={2} />
+                      <ItemIcon size={14} strokeWidth={2} />
                     </span>
                     <div style={{ minWidth: 0 }}>
-                      <strong style={{ display: "block", fontSize: "0.82rem", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.3 }}>{title}</strong>
-                      <span style={{ fontSize: "0.71rem", color: "#777", lineHeight: 1.4, display: "block" }}>{desc}</span>
+                      <strong style={{ display: "block", fontSize: "0.81rem", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.35 }}>{title}</strong>
+                      <span style={{ fontSize: "0.7rem", color: "#888", lineHeight: 1.45, display: "block", marginTop: "0.1rem" }}>{desc}</span>
                     </div>
                   </Link>
                 ))}
