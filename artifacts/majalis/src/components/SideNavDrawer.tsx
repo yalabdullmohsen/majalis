@@ -98,7 +98,8 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/qa",                 label: "الأسئلة والأجوبة",     Icon: HelpCircle, desc: "أسئلة وأجوبة شرعية موثقة" },
       { href: "/fatwa",              label: "الفتاوى",              Icon: Scale,      desc: "فتاوى مُحقَّقة ومُصنَّفة" },
       { href: "/rulings",            label: "الأحكام الشرعية",      Icon: Gavel,      desc: "موسوعة الأحكام بالمذاهب" },
-      { href: "/fiqh-council",       label: "المجمع الفقهي",        Icon: Users,      desc: "قرارات المجامع الفقهية" },
+      { href: "/fiqh-council",       label: "الهيئات الإسلامية",    Icon: Users,      desc: "قرارات المجامع وهيئات الإفتاء" },
+      { href: "/amr-bil-maruf",      label: "الأمر بالمعروف",       Icon: Scale,      desc: "مراتبه الثلاث وشروطه وأحكامه" },
     ],
   },
   {

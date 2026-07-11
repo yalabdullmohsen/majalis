@@ -90,6 +90,7 @@ const ProphetStoriesPage = lazy(() => import("@/views/ProphetStoriesPage"));
 const QuranLivePage = lazy(() => import("@/views/QuranLivePage"));
 const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
 const QuranTajweedPage = lazy(() => import("@/views/QuranTajweedPage"));
+const AmrBilMarufPage = lazy(() => import("@/views/AmrBilMarufPage"));
 
 function SeoManager() {
   const [location] = useLocation();
@@ -195,6 +196,7 @@ export default function AppRoutes() {
         <Route path="/library/:id"><SafeLazyRoute component={LibraryDetailPage} /></Route>
         <Route path="/library"><SafeLazyRoute component={LibraryPage} /></Route>
         <Route path="/hadith"><SafeLazyRoute component={HadithPage} /></Route>
+        <Route path="/amr-bil-maruf"><SafeLazyRoute component={AmrBilMarufPage} /></Route>
         <Route path="/fawaid"><SafeLazyRoute component={FawaidPage} /></Route>
         <Route path="/stories"><SafeLazyRoute component={StoriesPage} /></Route>
         <Route path="/seerah"><SafeLazyRoute component={SeerahPage} /></Route>
