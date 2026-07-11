@@ -10,6 +10,7 @@ import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBotto
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { CitationActionBar } from "@/components/citation/CitationActionBar";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -684,6 +685,14 @@ export default function HadithPage() {
         layout="row"
         className="mt-8"
       />
+
+      <div className="px-4 pb-6">
+        <SectionQuiz
+          categoryId="hadith"
+          title="اختبر معلوماتك في علوم الحديث"
+          count={4}
+        />
+      </div>
     </div>
   );
 }

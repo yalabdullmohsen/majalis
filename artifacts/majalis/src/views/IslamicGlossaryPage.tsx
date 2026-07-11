@@ -3,6 +3,7 @@ import { BookOpen, ChevronDown, ChevronUp, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/elite-2026.css";
 
 /* ══════════════════════════════════════════════════════════════════
@@ -1292,6 +1293,12 @@ export default function IslamicGlossaryPage() {
           })}
         </div>
       </div>
+
+      <SectionQuiz
+        categoryId={["quran", "fiqh", "aqeeda"]}
+        title="اختبر معلوماتك في مصطلحات الشريعة"
+        count={4}
+      />
 
       <div className="twh-share">
         <ShareButtons title="المعجم الإسلامي — المجلس العلمي" url="https://majlisilm.com/islamic-glossary" />

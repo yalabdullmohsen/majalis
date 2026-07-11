@@ -3,6 +3,7 @@ import { Search, Star, BookOpen, Heart } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 /* ─── بيانات الأسماء الحسنى ─── */
 type AsmaaEntry = {
@@ -247,6 +248,12 @@ export default function AsmaaHusnaPage() {
           ))}
         </div>
       )}
+
+      <SectionQuiz
+        categoryId="aqeeda"
+        title="اختبر معلوماتك في العقيدة والأسماء الحسنى"
+        count={4}
+      />
 
       <div className="twh-share">
         <ShareButtons title="الأسماء الحسنى — المجلس العلمي" url="https://majlisilm.com/asma-husna" />

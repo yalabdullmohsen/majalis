@@ -6,6 +6,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { prophetArticleJsonLd, breadcrumbJsonLd, defaultSiteJsonLd } from "@/lib/seo-structured-data";
 import { supabase } from "@/lib/supabase";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 type Citation = { surah: string; ayahs: string; note: string };
 
@@ -912,6 +913,12 @@ export default function ProphetStoriesPage() {
           </div>
         )}
       </div>
+
+      <SectionQuiz
+        categoryId={["anbiya", "sira"]}
+        title="اختبر معلوماتك في قصص الأنبياء"
+        count={4}
+      />
 
       <div className="twh-share">
         <ShareButtons title="قصص الأنبياء — المجلس العلمي" url="https://majlisilm.com/prophet-stories" />

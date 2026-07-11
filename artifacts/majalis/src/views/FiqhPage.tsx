@@ -14,6 +14,7 @@ import { getQaQuestions } from "@/lib/supabase";
 import { SEED_QA, QA_CATEGORIES } from "@/lib/qa-seed";
 import { RequestManager } from "@/lib/request-manager";
 import type { ShariaRulingExtended } from "@/lib/rulings-types";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 type Tab = "fatawa" | "rulings" | "qa" | "council";
 
@@ -367,6 +368,12 @@ export default function FiqhPage() {
             </div>
           </div>
         )}
+
+      <SectionQuiz
+        categoryId="fiqh"
+        title="اختبر معلوماتك في الفقه الإسلامي"
+        count={4}
+      />
 
       <div className="twh-share">
         <ShareButtons title="الفقه الإسلامي — المجلس العلمي" url="https://majlisilm.com/fiqh" />

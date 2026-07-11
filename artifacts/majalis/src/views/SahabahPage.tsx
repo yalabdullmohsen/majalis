@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 
 type SahabiCategory = "الكل" | "الخلفاء" | "العشرة" | "النساء" | "العلماء" | "الفاتحون";
@@ -1277,6 +1278,12 @@ export default function SahabahPage() {
             <p>لا توجد نتائج مطابقة</p>
           </div>
         )}
+
+        <SectionQuiz
+          categoryId={["sira", "akhlaq"]}
+          title="اختبر معلوماتك في الصحابة والسيرة"
+          count={4}
+        />
 
         <div className="twh-share">
           <ShareButtons title="الصحابة الكرام — المجلس العلمي" url="https://majlisilm.com/sahabah" />

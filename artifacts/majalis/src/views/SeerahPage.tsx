@@ -7,6 +7,7 @@ import { Link } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButton } from "@/components/ShareButton";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const PHASES: { id: string; num: number; title: string; year: string; Icon: LucideIcon; color: string; desc: string; topics: string[]; keyEvents: string[] }[] = [
   {
@@ -443,6 +444,15 @@ export default function SeerahPage() {
         </div>
 
       </div>
+
+      <div className="page-shell narrow">
+        <SectionQuiz
+          categoryId="sira"
+          title="اختبر معلوماتك في السيرة النبوية"
+          count={4}
+        />
+      </div>
+
       <AdminQuickEdit section="prophet-stories" />
     </>
   );

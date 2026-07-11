@@ -9,6 +9,7 @@ import { ISLAMIC_STORIES_SEED } from "@/lib/islamic-stories-seed";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const STORY_ICON_MAP: Record<string, LucideIcon> = {
   Star, Scale, Sword, Landmark, Bird, Compass, Gem, BookOpen, Moon, Castle,
@@ -335,6 +336,14 @@ export default function IslamicStoriesPage() {
             />
           ))}
         </div>
+      )}
+
+      {!loading && (
+        <SectionQuiz
+          categoryId={["tarikh", "sira", "akhlaq"]}
+          title="اختبر معلوماتك في التاريخ الإسلامي"
+          count={4}
+        />
       )}
     </div>
   );

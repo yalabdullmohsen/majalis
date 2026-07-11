@@ -4,6 +4,7 @@ import { Search, ChevronLeft, BookOpen, Star, Filter } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 /* ── بيانات العلماء ──────────────────────────────────────── */
 type Scholar = {
@@ -1283,6 +1284,12 @@ export default function IslamicScholarsPage() {
           </button>
         </div>
       )}
+
+      <SectionQuiz
+        categoryId={["akhlaq", "tarikh"]}
+        title="اختبر معلوماتك في تاريخ العلماء والصحابة"
+        count={4}
+      />
 
       {/* ── روابط ذات صلة ─────────────────────────────────────── */}
       <div className="twh-share">

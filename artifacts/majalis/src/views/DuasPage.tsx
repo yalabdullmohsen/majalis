@@ -3,6 +3,7 @@ import { Search, Copy, Check, BookOpen, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 /* ─── بيانات الأدعية ─── */
 type DuaEntry = {
@@ -991,6 +992,12 @@ export default function DuasPage() {
           })}
         </div>
       )}
+
+      <SectionQuiz
+        categoryId="hadith"
+        title="اختبر معلوماتك في الحديث الشريف"
+        count={4}
+      />
 
       <div className="twh-share">
         <ShareButtons title="الأدعية الشرعية — المجلس العلمي" url="https://majlisilm.com/duas" />

@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 // ─── أقسام العقيدة والتوحيد ──────────────────────────────────────────────────
 
@@ -502,6 +503,12 @@ export default function TawhidPage() {
           ))}
         </div>
       </section>
+
+      <SectionQuiz
+        categoryId="aqeeda"
+        title="اختبر معلوماتك في العقيدة والتوحيد"
+        count={4}
+      />
 
       <div className="twh-share">
         <ShareButtons title="العقيدة والتوحيد — المجلس العلمي" url="https://majlisilm.com/tawhid" />

@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 /* ─── بيانات الأخلاق ─── */
 type AkhlaqEntry = {
@@ -991,6 +992,12 @@ export default function AkhlaqPage() {
       {filtered.length === 0 && (
         <p className="akl-empty">لا يوجد خلق مطابق للبحث.</p>
       )}
+
+      <SectionQuiz
+        categoryId="akhlaq"
+        title="اختبر معلوماتك في الأخلاق والصحابة"
+        count={4}
+      />
 
       <div className="twh-share">
         <ShareButtons title="الأخلاق الإسلامية — المجلس العلمي" url="https://majlisilm.com/akhlaq" />
