@@ -394,22 +394,34 @@ export default function HomePage() {
 
           {/* شريحات الجمهور */}
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem", justifyContent: "center", marginBottom: "1.1rem" }}>
-            {[
-              { emoji: "🎓", label: "طالب العلم",      href: "/lessons" },
-              { emoji: "🕌", label: "المسلم اليومي",   href: "/adhkar" },
-              { emoji: "👨‍👩‍👧‍👦", label: "الأسرة المسلمة", href: "/qa" },
-              { emoji: "🔬", label: "العالم والباحث",  href: "/library" },
-            ].map(({ emoji, label, href }, i) => (
+            {([
+              {
+                icon: <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 3 1 7l8 4 8-4-8-4z"/><path d="M5 9.5v3.5a4 4 0 0 0 8 0V9.5"/></svg>,
+                label: "طالب العلم", href: "/lessons",
+              },
+              {
+                icon: <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M1 17h16"/><path d="M3 17v-6a6 6 0 0 1 12 0v6"/><path d="M9 5V3"/><path d="M7.5 8h3"/></svg>,
+                label: "المسلم اليومي", href: "/adhkar",
+              },
+              {
+                icon: <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="7" cy="6" r="3"/><path d="M1 17c0-3 2.7-5 6-5s6 2 6 5"/><circle cx="14" cy="6" r="2"/><path d="M14 11c1.7 0 3 1.3 3 4"/></svg>,
+                label: "الأسرة المسلمة", href: "/qa",
+              },
+              {
+                icon: <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M9 12v3"/><path d="M6 15h6"/><path d="M12 5l2-3"/><path d="M6 5 4 2"/></svg>,
+                label: "العالم والباحث", href: "/library",
+              },
+            ] as { icon: React.ReactNode; label: string; href: string }[]).map(({ icon, label, href }, i) => (
               <Link key={label} href={href} style={{
                 background: i === 0 ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.08)",
                 color: "#FAF8F2",
                 padding: "0.32rem 0.85rem", borderRadius: "999px",
                 fontSize: "0.77rem", fontWeight: 700,
                 border: `1px solid ${i === 0 ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.18)"}`,
-                display: "inline-flex", alignItems: "center", gap: "0.3rem",
+                display: "inline-flex", alignItems: "center", gap: "0.35rem",
                 textDecoration: "none",
               }}>
-                <span style={{ fontSize: "0.95rem" }}>{emoji}</span>{label}
+                {icon}{label}
               </Link>
             ))}
           </div>

@@ -63,7 +63,11 @@ export function HomeSawmReminder() {
   return (
     <div className="sawm-reminder" dir="rtl" role="region" aria-label="تذكير صيام النافلة">
       <div className="sawm-reminder__header">
-        <span className="sawm-reminder__icon">🌙</span>
+        <span className="sawm-reminder__icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true">
+            <path d="M14.5 10.5a6.5 6.5 0 1 1-7-7 5.5 5.5 0 0 0 7 7z"/>
+          </svg>
+        </span>
         <span className="sawm-reminder__day">اليوم {dayName}</span>
         <span className="sawm-reminder__sub">— يوم صيام سنة</span>
         <button

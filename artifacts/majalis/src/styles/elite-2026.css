@@ -27105,6 +27105,19 @@ img[loading="lazy"]:not([src=""]) {
 .hit-card__emoji {
   font-size: 1.625rem;
   line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--hit-clr, #1F4D3A) 12%, transparent);
+  color: var(--hit-clr, #1F4D3A);
+  flex-shrink: 0;
+}
+
+.hit-card__emoji svg {
+  display: block;
 }
 .hit-card__label {
   font-size: 0.8125rem;
