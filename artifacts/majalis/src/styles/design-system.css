@@ -112,18 +112,19 @@ html {
 /* ── Cards ── */
 .ui-card,
 .ds-card {
-  background: var(--majalis-panel, #fff);
+  background: var(--majalis-panel, #FAF8F4);
   border: 1px solid var(--ds-line-color);
   border-radius: var(--ds-radius-lg);
   padding: var(--ds-space-3);
-  box-shadow: var(--ds-shadow-sm);
-  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  box-shadow: 0 1px 4px rgba(31,77,58,0.05), 0 2px 8px rgba(31,77,58,0.04);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .ui-card:hover,
 .ds-card:hover {
-  box-shadow: var(--ds-shadow);
-  border-color: rgba(26, 107, 82, 0.18);
+  box-shadow: 0 4px 16px rgba(31,77,58,0.10), 0 2px 6px rgba(31,77,58,0.06);
+  border-color: rgba(31,77,58,0.18);
+  transform: translateY(-1px);
 }
 
 /* ── Buttons ── */
@@ -4772,6 +4773,148 @@ h1, h2, h3 {
 .lesson-card h3 {
   color: var(--ds-ink);
   font-weight: 700;
+}
+
+/* ══════════════════════════════════════════════════════════════════ */
+
+/* ── 21. نظام القراءة العميقة — line-height للنصوص الطويلة ── */
+.reading-prose,
+.full-content,
+.story-content,
+.lesson-content,
+.fatwa-content,
+.hadith-content {
+  font-family: var(--font-reading, "Noto Naskh Arabic", serif);
+  font-size: clamp(1rem, 2.5vw, 1.0625rem);
+  line-height: 1.9;
+  color: var(--ds-ink);
+  max-width: 68ch;
+}
+
+.reading-prose p,
+.full-content p {
+  margin-bottom: 1.1em;
+}
+
+/* ── 22. زر رئيسي موحّد — حالات كاملة ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  background: var(--majalis-emerald, #1F4D3A);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.15s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px rgba(31,77,58,0.20);
+}
+
+.btn-primary:hover {
+  background: var(--majalis-emerald-deep, #173A2C);
+  box-shadow: 0 4px 14px rgba(31,77,58,0.28);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(31,77,58,0.18);
+}
+
+.btn-primary:focus-visible {
+  outline: 3px solid rgba(31,77,58,0.35);
+  outline-offset: 2px;
+}
+
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── 23. زر ثانوي موحّد ── */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  background: transparent;
+  color: var(--majalis-emerald, #1F4D3A);
+  border: 1.5px solid rgba(31,77,58,0.25);
+  border-radius: 0.5rem;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, transform 0.15s;
+}
+
+.btn-secondary:hover {
+  background: rgba(31,77,58,0.06);
+  border-color: rgba(31,77,58,0.40);
+  transform: translateY(-1px);
+}
+
+/* ── 24. حالات الإدخال — focus راقٍ ── */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid rgba(31,77,58,0.35);
+  outline-offset: 1px;
+  border-color: var(--majalis-emerald, #1F4D3A) !important;
+}
+
+/* ── 25. تأثير الانتقال الصفحي (page-enter) ── */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: page-enter 0.25s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter {
+    animation: none;
+  }
+}
+
+/* ── 26. فاصل زخرفي إسلامي دقيق ── */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  color: rgba(31,77,58,0.25);
+  user-select: none;
+  pointer-events: none;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(31,77,58,0.15), transparent);
+}
+
+.section-divider__gem {
+  width: 8px;
+  height: 8px;
+  background: rgba(31,77,58,0.20);
+  transform: rotate(45deg);
+  flex-shrink: 0;
 }
 
 /* ══════════════════════════════════════════════════════════════════ */
