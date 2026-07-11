@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { KUWAIT_SHEIKHS } from "@/lib/kuwait-sheikhs";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 declare global {
   interface Window { twttr?: { widgets?: { load: (el?: HTMLElement) => void } } }
@@ -195,6 +196,9 @@ export default function KuwaitLessonsPage() {
 
       <div className="twh-share">
         <ShareButtons title="دروس الكويت — المجلس العلمي" url="https://majlisilm.com/kuwait-lessons" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["hadith", "akhlaq"]} title="اختبر معلوماتك في العلم الشرعي" count={4} />
       </div>
     </div>
   );

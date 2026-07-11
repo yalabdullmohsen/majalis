@@ -8,6 +8,7 @@ import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { FiqhCouncilSearchBox } from "@/components/fiqh-council/FiqhCouncilSearchBox";
 import { getFiqhCouncilItems, getFiqhCouncilCategoryCounts, getMostViewedFiqhCouncilItems, getAllNawazilItems, getPublicFiqhSources } from "@/lib/fiqh-council-service";
 import { getFiqhIssues } from "@/lib/fiqh-council-issues-service";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { getFiqhLiveData, unavailableLabel } from "@/lib/fiqh-council-sessions-service";
 import {
   FIQH_COUNCIL_CATEGORIES,
@@ -580,6 +581,9 @@ export function FiqhCouncilHubPage() {
 
       <div className="twh-share">
         <ShareButtons title="مجلس الفقه الإسلامي — المجلس العلمي" url="https://majlisilm.com/fiqh-council" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
       </div>
     </div>
   );
