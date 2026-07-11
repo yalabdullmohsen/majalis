@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
-import { HelpCircle, Lightbulb, RotateCw, Scroll } from "lucide-react";
+import { BookOpen, HelpCircle, Lightbulb, RotateCw, Scroll } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { getDailyDhikr, getDailyFaida, getDailyHadith, getDailyQa } from "@/lib/daily-content";
+import { getDailyAyah, getDailyDhikr, getDailyFaida, getDailyHadith, getDailyQa } from "@/lib/daily-content";
 import { cleanDisplayText, displayText } from "@/lib/display-text";
 import { RequestManager } from "@/lib/request-manager";
 import { getQaQuestions } from "@/lib/supabase";
 import { ShareButton } from "@/components/ShareButton";
 
-type TabId = "dhikr" | "hadith" | "faida" | "question";
+type TabId = "dhikr" | "ayah" | "hadith" | "faida" | "question";
 
 const TABS: { id: TabId; label: string; Icon: LucideIcon; link: string; linkLabel: string }[] = [
   { id: "dhikr",    label: "ذكر",   Icon: RotateCw,  link: "/adhkar", linkLabel: "الأذكار" },
+  { id: "ayah",     label: "آية",   Icon: BookOpen,  link: "/quran",  linkLabel: "القرآن"  },
   { id: "hadith",   label: "حديث",  Icon: Scroll,    link: "/hadith", linkLabel: "الأحاديث" },
   { id: "faida",    label: "فائدة", Icon: Lightbulb, link: "/fawaid", linkLabel: "الفوائد" },
   { id: "question", label: "سؤال",  Icon: HelpCircle, link: "/qa",   linkLabel: "الأسئلة" },
@@ -27,6 +28,7 @@ export function HomeDailyCorner() {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const dhikr  = getDailyDhikr();
+  const ayah   = getDailyAyah();
   const hadith = getDailyHadith();
   const faida  = getDailyFaida();
 
@@ -106,6 +108,16 @@ export function HomeDailyCorner() {
             <p className="hdc__text">{displayText(dhikr.text)}</p>
             {dhikr.source && <p className="hdc__meta">{dhikr.source}</p>}
             <ShareButton title="ذكر اليوم" text={`${displayText(dhikr.text)}${dhikr.source ? `\n— ${dhikr.source}` : ""}`} size="sm" className="hdc__share" />
+          </div>
+        )}
+
+        {tab === "ayah" && (
+          <div className="hdc__body">
+            <span className="page-tag">{ayah.surah} — الآية {ayah.ayahNumber}</span>
+            <blockquote className="hdc__quote hdc__quote--quran" dir="rtl" lang="ar">{ayah.text}</blockquote>
+            <p className="hdc__meta">{ayah.reference}</p>
+            {ayah.meaning && <p className="hdc__meaning">{ayah.meaning}</p>}
+            <ShareButton title="آية اليوم" text={`${ayah.text}\n— ${ayah.surah}، الآية ${ayah.ayahNumber}`} size="sm" className="hdc__share" />
           </div>
         )}
 
