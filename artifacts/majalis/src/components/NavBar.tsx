@@ -159,9 +159,13 @@ export default function NavBar() {
               <span className="navbar-menu-btn__label">{isMenuOpen ? t("nav_close") : t("nav_menu")}</span>
             </button>
             <Link href="/" className="navbar-brand" aria-label="المجلس العلمي">
-              <span className="site-brand-logotype">
-                <strong className="site-brand-logotype__main">المجلس العلمي</strong>
-              </span>
+              <img
+                src="/logo-calligraphy.png"
+                alt="المجلس العلمي"
+                className="navbar-logo navbar-logo--calligraphy"
+                loading="eager"
+                decoding="async"
+              />
             </Link>
           </div>
 

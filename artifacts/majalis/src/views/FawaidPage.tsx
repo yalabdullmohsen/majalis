@@ -88,7 +88,15 @@ export default function FawaidPage({
       .finally(() => setLoading(false));
   }, [initialFawaid]);
 
-  const normalized = useMemo(() => fawaid, [fawaid]);
+  const normalized = useMemo(() => {
+    const arr = [...fawaid];
+    const seed = Date.now();
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(((seed * (i + 1)) % 2147483647) / 2147483647 * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }, [fawaid]);
 
   const displayItems = useMemo(() => {
     let items = normalized;

@@ -127,7 +127,13 @@ export function SiteFooter() {
         <div className="site-footer-brand">
           <IslamicStarFooter />
           <div>
-            <strong className="site-footer-brand-name">المجلس العلمي</strong>
+            <img
+              src="/logo-calligraphy.png"
+              alt="المجلس العلمي"
+              className="site-footer-logo site-footer-logo--calligraphy"
+              loading="lazy"
+              decoding="async"
+            />
             <p>تطبيق علمي شرعي للدروس والعبادة والمحتوى اليومي.</p>
             <p className="site-footer-email">
               <a href="mailto:yalabdullmohsen1@gmail.com">yalabdullmohsen1@gmail.com</a>

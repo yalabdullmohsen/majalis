@@ -1,6 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link, useLocation } from "wouter";
+import { useAuth } from "@/components/AuthProvider";
 import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
 import { History } from "lucide-react";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
@@ -258,6 +259,7 @@ function StartHereSection() {
 export default function HomePage() {
   const [term, setTerm] = useState("");
   const [, navigate] = useLocation();
+  const { isAdmin } = useAuth();
 
   useEffect(() => {
     applyPageSeo({
@@ -464,28 +466,30 @@ export default function HomePage() {
             }}>🕌 الصلاة</Link>
           </div>
 
-          {/* إحصائيات المنصة — تصميم جديد */}
-          <div style={{
-            display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.45rem",
-            marginTop: "1.5rem", paddingTop: "1.2rem",
-            borderTop: "1px solid rgba(255,255,255,0.1)",
-          }}>
-            {[
-              { num: "١١٥+", label: "عالم مرجعي",   icon: "👤" },
-              { num: "٤٤٠+", label: "سؤال اختباري", icon: "🧠" },
-              { num: "٤٥٥+", label: "فائدة علمية",  icon: "💡" },
-              { num: "١٠٠+", label: "كتاب علمي",    icon: "📚" },
-            ].map(({ num, label, icon }) => (
-              <div key={label} style={{
-                background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
-                borderRadius: "0.65rem", padding: "0.65rem 0.4rem", textAlign: "center",
-              }}>
-                <div style={{ fontSize: "1rem", marginBottom: "0.15rem", lineHeight: 1 }}>{icon}</div>
-                <div style={{ color: "#FAF8F2", fontSize: "1.1rem", fontWeight: 800, lineHeight: 1.1 }}>{num}</div>
-                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.62rem", marginTop: "0.18rem", lineHeight: 1.3 }}>{label}</div>
-              </div>
-            ))}
-          </div>
+          {/* إحصائيات المنصة — للمشرف فقط */}
+          {isAdmin && (
+            <div style={{
+              display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.45rem",
+              marginTop: "1.5rem", paddingTop: "1.2rem",
+              borderTop: "1px solid rgba(255,255,255,0.1)",
+            }}>
+              {[
+                { num: "١١٥+", label: "عالم مرجعي",   icon: "👤" },
+                { num: "٤٤٠+", label: "سؤال اختباري", icon: "🧠" },
+                { num: "٤٥٥+", label: "فائدة علمية",  icon: "💡" },
+                { num: "١٠٠+", label: "كتاب علمي",    icon: "📚" },
+              ].map(({ num, label, icon }) => (
+                <div key={label} style={{
+                  background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: "0.65rem", padding: "0.65rem 0.4rem", textAlign: "center",
+                }}>
+                  <div style={{ fontSize: "1rem", marginBottom: "0.15rem", lineHeight: 1 }}>{icon}</div>
+                  <div style={{ color: "#FAF8F2", fontSize: "1.1rem", fontWeight: 800, lineHeight: 1.1 }}>{num}</div>
+                  <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.62rem", marginTop: "0.18rem", lineHeight: 1.3 }}>{label}</div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
