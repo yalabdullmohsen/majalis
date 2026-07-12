@@ -1118,6 +1118,18 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
   background: rgba(255,255,255,0.90) !important;
 }
 
+/* ⑪ عناصر hcw-card داخل الحاويات الداكنة — أيقونة وشريط التقدم */
+.home-main--v3 .ui-card .hcw-card__icon {
+  background: rgba(255,255,255,0.12) !important;
+  color: rgba(255,255,255,0.88) !important;
+}
+.home-main--v3 .ui-card .hcw-card__bar {
+  background: rgba(255,255,255,0.12) !important;
+}
+.home-main--v3 .ui-card .hcw-card__bar span {
+  background: rgba(255,255,255,0.70) !important;
+}
+
 .home-section {
   padding: 2rem 0 !important;
 }
