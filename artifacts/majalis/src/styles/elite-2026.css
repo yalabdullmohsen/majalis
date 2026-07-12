@@ -22031,6 +22031,30 @@ img[loading="lazy"]:not([src=""]) {
 .tw-ayah__text { font-family: var(--font-quran,'Scheherazade New',serif); font-size: 1.1rem; line-height: 2.1; color: #fff; margin: 0 0 .3rem; }
 .tw-ayah__ref  { font-size: .72rem; opacity: .7; color: #fff; font-style: normal; }
 
+/* ── ذكر التوبة اليوم (.twod-card) ── */
+.twod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.55rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 0;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.twod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px;
+}
+.twod-card__arabic {
+  font-family: var(--font-quran,'Scheherazade New',serif);
+  font-size: 1.15rem; line-height: 2; color: #FFFFFF; margin: 0; max-width: 580px;
+}
+.twod-card__reward { font-size: 0.88rem; line-height: 1.75; color: rgba(255,255,255,0.92); margin: 0; max-width: 520px; }
+.twod-card__meta { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; justify-content: center; }
+.twod-card__source { font-size: 0.75rem; color: rgba(255,255,255,0.7); }
+.twod-card__times  { font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.15); border-radius: 100px; padding: 0.2rem 0.6rem; }
+
 /* tabs */
 .tw-tabs-bar {
   display: flex;

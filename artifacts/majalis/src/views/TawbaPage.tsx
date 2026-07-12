@@ -1,5 +1,6 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -237,6 +238,12 @@ export default function TawbaPage() {
     });
   }, []);
 
+  const todayDhikr = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return ADHKAR[(day - 1 + ADHKAR.length) % ADHKAR.length];
+  }, []);
   const [tab, setTab] = useState<TawbaTab>("shurut");
   const [openDhikr, setOpenDhikr] = useState<number | null>(null);
   const [search, setSearch] = useState("");
@@ -268,6 +275,17 @@ export default function TawbaPage() {
           <cite className="tw-ayah__ref">الزمر: 53</cite>
         </div>
       </section>
+
+      {/* ذكر التوبة اليوم */}
+      <div className="twod-card">
+        <div className="twod-card__badge"><Sparkles size={11} aria-hidden="true" /> ذكر التوبة اليوم</div>
+        <p className="twod-card__arabic">{todayDhikr.arabic}</p>
+        <p className="twod-card__reward">{todayDhikr.reward}</p>
+        <div className="twod-card__meta">
+          <span className="twod-card__source">{todayDhikr.source}</span>
+          <span className="twod-card__times">{todayDhikr.times}</span>
+        </div>
+      </div>
 
       {/* tabs */}
       <div className="tw-tabs-bar">
