@@ -507,6 +507,17 @@ export default function QuranPage() {
     [search],
   );
 
+  /* ── شارة استئناف القراءة ── */
+  const [showResume, setShowResume] = useState<boolean>(() => lsGet(PAGE_KEY, 1) > 1);
+  const resumePage = useMemo(() => lsGet(PAGE_KEY, 1), []);
+  const resumeSurah = useMemo(() => pageToSurahName(resumePage), [resumePage]);
+  // إخفاء الشارة تلقائياً بعد 6 ثوانٍ
+  useEffect(() => {
+    if (!showResume) return;
+    const t = setTimeout(() => setShowResume(false), 6000);
+    return () => clearTimeout(t);
+  }, [showResume]);
+
   const surahName = useMemo(() => pageToSurahName(page), [page]);
   const juzNum    = useMemo(() => pageToJuzNum(page), [page]);
   const groups    = useMemo(() => groupBySurah(ayahs), [ayahs]);
@@ -529,6 +540,25 @@ export default function QuranPage() {
         className="mshf-progress"
         style={{ "--mshf-pct": `${((page - 1) / (TOTAL_PAGES - 1)) * 100}%` } as React.CSSProperties}
       />
+
+      {/* شارة استئناف القراءة */}
+      {showResume && resumePage > 1 && (
+        <div className="mshf-resume-banner" role="status" aria-live="polite">
+          <button
+            type="button"
+            className="mshf-resume-btn"
+            onClick={() => { goPage(resumePage); setShowResume(false); }}
+          >
+            استئناف: {resumeSurah} — ص {resumePage.toLocaleString("ar-EG")}
+          </button>
+          <button
+            type="button"
+            className="mshf-resume-close"
+            onClick={() => setShowResume(false)}
+            aria-label="إغلاق"
+          >×</button>
+        </div>
+      )}
 
       {/* ══ رأس ══ */}
       <header className={`mshf-top${uiOn ? " on" : ""}`}>
