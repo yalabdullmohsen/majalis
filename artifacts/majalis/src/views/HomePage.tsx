@@ -501,7 +501,7 @@ export default function HomePage() {
               {[
                 { num: "١٢٣+", label: "عالم مرجعي",   icon: "👤" },
                 { num: "٤٨٠+", label: "سؤال اختباري", icon: "🧠" },
-                { num: "٤٨٥+", label: "فائدة علمية",  icon: "💡" },
+                { num: "٤٩٥+", label: "فائدة علمية",  icon: "💡" },
                 { num: "١٠٠+", label: "كتاب علمي",    icon: "📚" },
               ].map(({ num, label, icon }) => (
                 <div key={label} style={{
