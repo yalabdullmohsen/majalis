@@ -23251,6 +23251,30 @@ img[loading="lazy"]:not([src=""]) {
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .dq-page { max-width: 780px; margin: 0 auto; padding: 0 0 6rem; }
 
+/* of-the-day card */
+.dqod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.45rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.dqod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; margin-bottom: 0.2rem;
+}
+.dqod-card__prophet { font-size: 0.78rem; color: rgba(255,255,255,0.68); }
+.dqod-card__name { font-size: 1.15rem; font-weight: 800; margin: 0; color: #FFFFFF; }
+.dqod-card__arabic {
+  font-family: var(--font-quran, 'Amiri Quran', serif); font-size: 1.15rem; line-height: 2;
+  color: rgba(255,255,255,0.95); max-width: 500px; margin: 0;
+}
+.dqod-card__ref { font-size: 0.75rem; color: rgba(255,255,255,0.65); font-style: normal; }
+.dqod-card__context { font-size: 0.84rem; color: rgba(255,255,255,0.78); max-width: 440px; margin: 0.1rem 0 0; line-height: 1.65; }
+
 /* hero */
 .dq-hero {
   background: linear-gradient(160deg, #0c1a2e 0%, #1a2e4a 50%, #0e3a5f 100%);
