@@ -56,9 +56,10 @@ export type Certificate = {
 };
 
 const LEVEL_LABELS: Record<string, string> = {
-  beginner: "مبتدئ",
+  foundation:   "تأسيسي",
+  beginner:     "مبتدئ",
   intermediate: "متوسط",
-  advanced: "متقدم",
+  advanced:     "متقدم",
 };
 
 export function levelLabel(level: string) {

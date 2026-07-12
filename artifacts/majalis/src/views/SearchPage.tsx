@@ -1,4 +1,4 @@
-import { SectionIcon } from "@/components/ui/SectionIcon";
+import { BookMarked, BookOpen, Clock, FlaskConical, GraduationCap, Heart, Scale, Scroll } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link, useParams, useLocation } from "wouter";
@@ -11,7 +11,7 @@ import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { searchLocalExtensions } from "@/lib/local-search-ext";
 import { lessonRecordToSearchRow, searchUnifiedLessons } from "@/lib/lessons-service";
-import { addSearchHistory } from "@/lib/search-history";
+import { addSearchHistory, getSearchHistory, clearSearchHistory } from "@/lib/search-history";
 import { trackSearchQuery } from "@/lib/content-analytics";
 import {
   searchFiqhCouncilForGlobal,
@@ -215,6 +215,11 @@ export default function SearchPage() {
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({ type: "", author: "", status: "", language: "" });
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+
+  /* تحميل السجل عند الفتح وبعد كل بحث */
+  const refreshHistory = () => setRecentSearches(getSearchHistory().slice(0, 6));
+  useEffect(refreshHistory, []);
 
   const runSearch = async (rawQuery: string) => {
     if (!rawQuery.trim()) {
@@ -227,6 +232,7 @@ export default function SearchPage() {
 
     setLoading(true);
     addSearchHistory(rawQuery);
+    refreshHistory();
     void trackSearchQuery(rawQuery);
 
     try {
@@ -442,9 +448,40 @@ export default function SearchPage() {
           <p className="search-empty-hint">
             ابحث في القرآن والحديث والفتاوى والدروس والكتب — المحرك يفهم المعنى ويربط المصادر.
           </p>
-          <p style={{ fontSize: "0.75rem", color: "var(--clr-ink-soft)", marginBottom: "0.75rem", textAlign: "center" }}>
-            💡 تلميح: اسحب للأسفل من أي صفحة لفتح البحث · أو Cmd+K
-          </p>
+
+          {/* ── عمليات البحث الأخيرة ── */}
+          {recentSearches.length > 0 && (
+            <div className="srch-history-wrap">
+              <div className="srch-history-head">
+                <span className="srch-history-label">
+                  <Clock size={13} aria-hidden="true" /> عمليات البحث الأخيرة
+                </span>
+                <button
+                  type="button"
+                  className="srch-history-clear"
+                  onClick={() => { clearSearchHistory(); setRecentSearches([]); }}
+                  aria-label="مسح سجل البحث"
+                >
+                  مسح الكل
+                </button>
+              </div>
+              <div className="srch-history-chips">
+                {recentSearches.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    className="srch-history-chip"
+                    onClick={() => submitSearch(s)}
+                  >
+                    <Clock size={11} aria-hidden="true" />
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ── مقترحات البحث ── */}
           <div className="search-suggestion-chips">
             {[
               "الصلاة", "الزكاة", "الحج", "التوبة", "الصيام",
@@ -457,32 +494,22 @@ export default function SearchPage() {
             ))}
           </div>
 
-          {/* وصول سريع للأقسام الرئيسية */}
-          <div style={{ marginTop: "1.5rem" }}>
-            <p style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--clr-primary, #1F4D3A)", marginBottom: "0.5rem", textAlign: "center" }}>أقسام يمكنك استكشافها</p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: "0.5rem" }}>
-              {[
-                { href: "/quran", icon: "📖", label: "القرآن الكريم" },
-                { href: "/hadith", icon: "📜", label: "الأحاديث النبوية" },
-                { href: "/adhkar", icon: "🤲", label: "الأذكار" },
-                { href: "/fatwa", icon: "⚖️", label: "الفتاوى" },
-                { href: "/lessons", icon: "🎧", label: "الدروس" },
-                { href: "/library", icon: "📚", label: "المكتبة" },
-                { href: "/miracles", icon: "🌌", label: "الإعجاز العلمي" },
-                { href: "/prayer-times", icon: "🕌", label: "مواقيت الصلاة" },
-              ].map(({ href, icon, label }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  style={{
-                    display: "flex", flexDirection: "column", alignItems: "center", gap: "0.3rem",
-                    padding: "0.65rem 0.4rem", background: "var(--clr-surface, #fff)",
-                    borderRadius: "0.75rem", border: "1.5px solid var(--clr-border, rgba(31,77,58,0.12))",
-                    textDecoration: "none", color: "var(--clr-ink, #1a1a1a)", fontSize: "0.75rem",
-                    fontWeight: 600, transition: "border-color 0.15s, transform 0.1s", textAlign: "center",
-                  }}
-                >
-                  <span><SectionIcon name={icon} size={24} /></span>
+          {/* ── وصول سريع للأقسام الرئيسية ── */}
+          <div className="srch-quick-sections">
+            <p className="srch-quick-sections__title">أقسام يمكنك استكشافها</p>
+            <div className="srch-quick-grid">
+              {([
+                { href: "/quran",        Icon: BookOpen,      label: "القرآن الكريم" },
+                { href: "/hadith",       Icon: Scroll,        label: "الأحاديث النبوية" },
+                { href: "/adhkar",       Icon: Heart,         label: "الأذكار" },
+                { href: "/fatwa",        Icon: Scale,         label: "الفتاوى" },
+                { href: "/lessons",      Icon: GraduationCap, label: "الدروس" },
+                { href: "/library",      Icon: BookMarked,    label: "المكتبة" },
+                { href: "/miracles",     Icon: FlaskConical,  label: "الإعجاز العلمي" },
+                { href: "/prayer-times", Icon: Clock,         label: "مواقيت الصلاة" },
+              ] as const).map(({ href, Icon, label }) => (
+                <Link key={href} href={href} className="srch-quick-card">
+                  <Icon size={20} strokeWidth={1.6} aria-hidden="true" />
                   <span>{label}</span>
                 </Link>
               ))}

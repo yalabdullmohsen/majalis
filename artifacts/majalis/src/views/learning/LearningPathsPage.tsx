@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BookOpen, Building2, Leaf, Library, Moon, PenLine, Scale, ScrollText, Sprout, Target, Trophy } from "lucide-react";
+import { BookOpen, Building2, Leaf, Library, Moon, PenLine, Scale, ScrollText, Sprout, Star, Target, Trophy } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
@@ -11,6 +11,11 @@ import { applyPageSeo } from "@/lib/seo";
 // ── Static fallback paths ─────────────────────────────────────────────────────
 
 const STATIC_PATHS: LearningPath[] = [
+  // ── تأسيسي (Foundation) ──
+  { slug: "islam-intro",           title: "مدخل إلى الإسلام",                 description: "لماذا الإسلام؟ الأركان الخمسة، وأرقام الإيمان الستة باختصار وافٍ.",           level: "foundation", category: "aqeedah",  estimated_hours: 4  },
+  { slug: "fatiha-qisar",          title: "تعلّم الفاتحة وقصار السور",         description: "حفظ الفاتحة وخمس عشرة سورة قصيرة مع تفسير مبسّط لكل سورة.",                  level: "foundation", category: "quran",    estimated_hours: 5  },
+  { slug: "arkan-islam-basics",    title: "أركان الإسلام الخمسة",              description: "معنى كل ركن وشروطه وفضله بأسلوب مبسّط للمبتدئ الجديد.",                      level: "foundation", category: "fiqh",     estimated_hours: 4  },
+  { slug: "adhkar-daily-basics",   title: "الأذكار اليومية الأساسية",           description: "أذكار الصباح والمساء والنوم والدخول والخروج، مع حفظ ١٠ أدعية أساسية.",       level: "foundation", category: "tarbiyah", estimated_hours: 3  },
   // عقيدة
   { slug: "tawhid-basics",        title: "مدخل إلى التوحيد",                description: "أسس عقيدة أهل السنة والجماعة في التوحيد وأقسامه الثلاثة.",            level: "beginner",     category: "aqeedah", estimated_hours: 8  },
   { slug: "aqeedah-wasitiyya",    title: "شرح العقيدة الواسطية",            description: "شرح متن الواسطية لشيخ الإسلام ابن تيمية دراسةً وافيةً.",             level: "intermediate", category: "aqeedah", estimated_hours: 20 },
@@ -49,7 +54,7 @@ const CATEGORY_META: Record<string, { label: string; Icon: LucideIcon }> = {
 };
 
 const LEVEL_ICON: Record<string, LucideIcon> = {
-  beginner: Sprout, intermediate: BookOpen, advanced: Trophy,
+  foundation: Star, beginner: Sprout, intermediate: BookOpen, advanced: Trophy,
 };
 
 const ALL_CAT = "الكل";
@@ -123,7 +128,7 @@ export default function LearningPathsPage() {
         </div>
         <div className="lpp-stat-divider" />
         <div className="lpp-stat">
-          <strong>٣</strong>
+          <strong>٤</strong>
           <span>مستويات</span>
         </div>
         <div className="lpp-stat-divider" />
@@ -148,9 +153,10 @@ export default function LearningPathsPage() {
 
       {/* Level legend */}
       <div className="lpp-legend">
-        <span className="lpp-legend-item"><Sprout size={14} className="icon-emerald" /> مبتدئ</span>
-        <span className="lpp-legend-item"><BookOpen size={14} className="icon-emerald" /> متوسط</span>
-        <span className="lpp-legend-item"><Trophy size={14} className="icon-ink-soft" /> متقدم</span>
+        <span className="lpp-legend-item"><Star size={13} className="icon-emerald" /> تأسيسي</span>
+        <span className="lpp-legend-item"><Sprout size={13} className="icon-emerald" /> مبتدئ</span>
+        <span className="lpp-legend-item"><BookOpen size={13} className="icon-emerald" /> متوسط</span>
+        <span className="lpp-legend-item"><Trophy size={13} className="icon-ink-soft" /> متقدم</span>
       </div>
 
       {/* Category filter */}
