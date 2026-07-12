@@ -118,8 +118,32 @@ function QiblaCompass({
   );
 }
 
+/* ── قائمة مدن شائعة للاستخدام اليدوي ── */
+const CITIES = [
+  { name: "الكويت",        lat: 29.3759, lon: 47.9774 },
+  { name: "مكة المكرمة",   lat: 21.3891, lon: 39.8579 },
+  { name: "الرياض",        lat: 24.6877, lon: 46.7219 },
+  { name: "دبي",           lat: 25.2048, lon: 55.2708 },
+  { name: "القاهرة",       lat: 30.0444, lon: 31.2357 },
+  { name: "إسطنبول",       lat: 41.0082, lon: 28.9784 },
+  { name: "كراتشي",        lat: 24.8607, lon: 67.0011 },
+  { name: "جاكرتا",        lat: -6.2088, lon: 106.8456 },
+  { name: "لندن",          lat: 51.5074, lon: -0.1278 },
+  { name: "باريس",         lat: 48.8566, lon:  2.3522 },
+  { name: "نيويورك",       lat: 40.7128, lon: -74.0060 },
+  { name: "كوالالمبور",    lat:  3.1390, lon: 101.6869 },
+  { name: "المدينة المنورة", lat: 24.4684, lon: 39.6142 },
+  { name: "أبوظبي",        lat: 24.4539, lon: 54.3773 },
+  { name: "بيروت",         lat: 33.8938, lon: 35.5018 },
+  { name: "عمّان",         lat: 31.9539, lon: 35.9106 },
+  { name: "بغداد",         lat: 33.3152, lon: 44.3661 },
+  { name: "الدار البيضاء", lat: 33.5731, lon: -7.5898 },
+  { name: "لاهور",         lat: 31.5204, lon: 74.3587 },
+  { name: "أنقرة",         lat: 39.9334, lon: 32.8597 },
+] as const;
+
 export default function QiblaPage() {
-  const [bearing,  setBearing]  = useState<number | null>(null);
+  const [bearing,    setBearing]    = useState<number | null>(null);
 
   useEffect(() => {
     applyPageSeo({
@@ -130,14 +154,17 @@ export default function QiblaPage() {
       jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "اتجاه القبلة", url: "https://majlisilm.com/qibla", about: { "@type": "Thing", name: "بوصلة القبلة للمسلمين" } }],
     });
   }, []);
-  const [heading,  setHeading]  = useState<number | null>(null);
-  const [dist,     setDist]     = useState<number | null>(null);
-  const [error,    setError]    = useState("");
-  const [permReq,  setPermReq]  = useState(false);
+  const [heading,    setHeading]    = useState<number | null>(null);
+  const [dist,       setDist]       = useState<number | null>(null);
+  const [error,      setError]      = useState("");
+  const [permReq,    setPermReq]    = useState(false);
+  const [manualMode, setManualMode] = useState(false);
+  const [selectedCity, setSelectedCity] = useState<string>(CITIES[0].name);
 
   useEffect(() => {
     if (!navigator.geolocation) {
-      setError("المتصفح لا يدعم تحديد الموقع.");
+      setError("المتصفح لا يدعم تحديد الموقع التلقائي.");
+      setManualMode(true);
       return;
     }
     navigator.geolocation.getCurrentPosition(
@@ -145,11 +172,24 @@ export default function QiblaPage() {
         const { latitude: lat, longitude: lon } = pos.coords;
         setBearing(qiblaBearing(lat, lon));
         setDist(distanceKm(lat, lon));
+        setError("");
+        setManualMode(false);
       },
-      () => setError("فعّل إذن الموقع لحساب اتجاه القبلة."),
+      () => {
+        setError("لم يُمنح إذن تحديد الموقع. اختر مدينتك يدوياً:");
+        setManualMode(true);
+      },
       { enableHighAccuracy: true, timeout: 10000 },
     );
   }, []);
+
+  function applyManualCity(cityName: string) {
+    const city = CITIES.find((c) => c.name === cityName);
+    if (!city) return;
+    setBearing(qiblaBearing(city.lat, city.lon));
+    setDist(distanceKm(city.lat, city.lon));
+    setError("");
+  }
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -195,11 +235,39 @@ export default function QiblaPage() {
       />
 
       <div className="qibla-wrap">
-        {error ? (
-          <p className="qibla-error">{error}</p>
-        ) : bearing == null ? (
+        {/* اختيار المدينة اليدوي — يظهر عند رفض الإذن أو عدم دعم الجهاز */}
+        {manualMode && (
+          <div className="qibla-manual" role="region" aria-label="اختيار المدينة يدوياً">
+            {error && <p className="qibla-error">{error}</p>}
+            <label htmlFor="qibla-city-select" className="qibla-manual-label">
+              اختر مدينتك:
+            </label>
+            <div className="qibla-manual-row">
+              <select
+                id="qibla-city-select"
+                className="qibla-city-select"
+                value={selectedCity}
+                onChange={(e) => setSelectedCity(e.target.value)}
+                dir="rtl"
+              >
+                {CITIES.map((c) => (
+                  <option key={c.name} value={c.name}>{c.name}</option>
+                ))}
+              </select>
+              <button
+                type="button"
+                className="qibla-manual-btn"
+                onClick={() => applyManualCity(selectedCity)}
+              >
+                احسب القبلة
+              </button>
+            </div>
+          </div>
+        )}
+        {!manualMode && bearing == null && (
           <p className="qibla-loading">جارٍ تحديد موقعك…</p>
-        ) : (
+        )}
+        {bearing != null && (
           <>
             <QiblaCompass bearing={bearing} heading={heading} aligned={aligned} />
 
