@@ -22754,36 +22754,36 @@ img[loading="lazy"]:not([src=""]) {
    §240 — الشمائل المحمدية  (.sh-*)
    ══════════════════════════════════════════════════════════════════════ */
 
-.sh-page { background: #FDF6EE; min-height: 100vh; }
+.sh-page { background: #FAF8F2; min-height: 100vh; }
 
 /* hero */
 .sh-hero {
   position: relative; overflow: hidden;
-  background: linear-gradient(160deg, #1A0A00 0%, #4A2008 50%, #7B3E0C 100%);
+  background: linear-gradient(160deg, #153025 0%, #0E6E52 60%, #1a9e75 100%);
   padding: 3.5rem 1.25rem 3rem; text-align: center; color: #fff;
 }
 .sh-hero__glow {
   position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
   width: 500px; height: 500px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(200,130,40,.25) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(14,110,82,.30) 0%, transparent 70%);
   pointer-events: none;
 }
 .sh-hero__inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
 .sh-hero__badge {
-  display: inline-block; background: rgba(200,130,40,.25); color: #F5C97A;
-  border: 1px solid rgba(200,130,40,.35); border-radius: 999px;
+  display: inline-block; background: rgba(250,248,242,.18); color: #FAF8F2;
+  border: 1px solid rgba(250,248,242,.30); border-radius: 999px;
   padding: .25rem .9rem; font-size: .75rem; font-weight: 700; letter-spacing: .06em;
   margin-bottom: .9rem;
 }
 .sh-hero__title { font-size: 2rem; font-weight: 900; margin: 0 0 .3rem; line-height: 1.2; }
-.sh-hero__sallam { color: #F5C97A; font-size: 1.6rem; }
-.sh-hero__sub { font-size: .9rem; color: rgba(245,200,150,.7); margin: 0 0 1.75rem; line-height: 1.7; }
+.sh-hero__sallam { color: #FAF8F2; font-size: 1.6rem; }
+.sh-hero__sub { font-size: .9rem; color: rgba(250,248,242,.7); margin: 0 0 1.75rem; line-height: 1.7; }
 .sh-hero__stats {
   display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap;
 }
 .sh-stat { display: flex; flex-direction: column; align-items: center; gap: .1rem; }
-.sh-stat__val { font-size: 1.2rem; font-weight: 900; color: #F5C97A; }
-.sh-stat__lbl { font-size: .68rem; color: rgba(245,200,150,.55); }
+.sh-stat__val { font-size: 1.2rem; font-weight: 900; color: #FAF8F2; }
+.sh-stat__lbl { font-size: .68rem; color: rgba(250,248,242,.55); }
 
 /* container */
 .sh-container { max-width: 860px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
@@ -22791,86 +22791,86 @@ img[loading="lazy"]:not([src=""]) {
 /* tabs */
 .sh-tabs {
   display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 1.75rem;
-  background: #fff; border: 1px solid #E5D8C8; border-radius: 1rem; padding: .35rem;
+  background: #fff; border: 1px solid rgba(14,110,82,.15); border-radius: 1rem; padding: .35rem;
 }
 .sh-tab {
   flex: 1; min-width: max-content; padding: .55rem .7rem;
   border: none; border-radius: .7rem; background: transparent;
-  color: #78716C; font-family: inherit; font-size: .8rem; font-weight: 600;
+  color: #6B7280; font-family: inherit; font-size: .8rem; font-weight: 600;
   cursor: pointer; transition: background .15s, color .15s; white-space: nowrap;
 }
-.sh-tab--active { background: #7B3E0C; color: #fff; }
+.sh-tab--active { background: #0E6E52; color: #fff; }
 
 /* section */
 .sh-section { display: flex; flex-direction: column; gap: 1rem; }
 .sh-intro-box {
   display: flex; align-items: flex-start; gap: .6rem;
-  background: rgba(200,130,40,.08); border-right: 3px solid #C8823A;
+  background: rgba(14,110,82,.06); border-right: 3px solid #0E6E52;
   border-radius: .5rem; padding: .85rem 1rem;
-  font-size: .875rem; color: #4A2008; line-height: 1.7;
-  color: #5C3317;
+  font-size: .875rem; line-height: 1.7;
+  color: #153025;
 }
 .sh-intro-box p { margin: 0; }
-.sh-intro-box svg { color: #C8823A; flex-shrink: 0; margin-top: .15rem; }
+.sh-intro-box svg { color: #0E6E52; flex-shrink: 0; margin-top: .15rem; }
 
 /* باب */
 .sh-bab {
-  background: #fff; border: 1px solid #E5D8C8; border-radius: 1rem; overflow: hidden;
+  background: #fff; border: 1px solid rgba(14,110,82,.15); border-radius: 1rem; overflow: hidden;
   transition: box-shadow .15s;
 }
-.sh-bab:hover { box-shadow: 0 2px 16px rgba(123,62,12,.1); }
+.sh-bab:hover { box-shadow: 0 2px 16px rgba(14,110,82,.1); }
 .sh-bab__head {
   display: flex; align-items: center; gap: .75rem;
   padding: .9rem 1.1rem; cursor: pointer; user-select: none;
 }
 .sh-bab__icon { font-size: 1.4rem; flex-shrink: 0; }
-.sh-bab__title { flex: 1; font-size: .95rem; font-weight: 700; color: #1C0A00; }
+.sh-bab__title { flex: 1; font-size: .95rem; font-weight: 700; color: #153025; }
 .sh-bab__count {
-  font-size: .68rem; color: #C8823A; font-weight: 700;
-  background: rgba(200,130,40,.1); padding: .2rem .65rem; border-radius: 999px; flex-shrink: 0;
+  font-size: .68rem; color: #0E6E52; font-weight: 700;
+  background: rgba(14,110,82,.1); padding: .2rem .65rem; border-radius: 999px; flex-shrink: 0;
 }
-.sh-bab__chevron { color: #A8A29E; flex-shrink: 0; display: flex; }
+.sh-bab__chevron { color: #9CA3AF; flex-shrink: 0; display: flex; }
 
 .sh-bab__body {
-  border-top: 1px solid #F5EDE4; padding: 1rem 1.1rem;
+  border-top: 1px solid rgba(14,110,82,.08); padding: 1rem 1.1rem;
   display: flex; flex-direction: column; gap: .75rem;
 }
 
 /* حديث */
 .sh-hadith {
-  background: #FFFBF5; border: 1px solid #F0E2D0; border-radius: .75rem;
+  background: #FAF8F2; border: 1px solid rgba(14,110,82,.12); border-radius: .75rem;
   padding: .85rem 1rem; display: flex; flex-direction: column; gap: .5rem;
 }
 .sh-hadith__text {
   font-family: "Amiri","Traditional Arabic",serif;
-  font-size: 1.05rem; color: #1C0A00; line-height: 1.9; margin: 0;
+  font-size: 1.05rem; color: #153025; line-height: 1.9; margin: 0;
 }
 .sh-hadith__meta {
   display: flex; align-items: center; gap: .75rem; flex-wrap: wrap;
 }
 .sh-hadith__rawi {
-  font-size: .75rem; color: #7B3E0C; font-weight: 700;
-  background: rgba(123,62,12,.08); padding: .15rem .6rem; border-radius: 999px;
+  font-size: .75rem; color: #0E6E52; font-weight: 700;
+  background: rgba(14,110,82,.08); padding: .15rem .6rem; border-radius: 999px;
 }
-.sh-hadith__src { font-size: .72rem; color: #A8A29E; font-style: italic; }
+.sh-hadith__src { font-size: .72rem; color: #9CA3AF; font-style: italic; }
 
 /* محبة */
 .sh-mahabbah-intro {
   display: flex; flex-direction: column; align-items: center; gap: .65rem;
-  background: linear-gradient(135deg, #7B3E0C, #4A2008);
+  background: linear-gradient(135deg, #153025, #0E6E52);
   border-radius: 1.25rem; padding: 2rem 1.5rem; color: #fff; text-align: center;
   margin-bottom: .5rem;
 }
-.sh-mahabbah-intro__icon { color: #F5C97A; opacity: .9; }
+.sh-mahabbah-intro__icon { color: #FAF8F2; opacity: .9; }
 .sh-mahabbah-intro__title { font-size: 1.5rem; font-weight: 900; margin: 0; }
 .sh-mahabbah-intro__text {
-  font-size: .88rem; color: rgba(245,200,150,.75); margin: 0; line-height: 1.7;
+  font-size: .88rem; color: rgba(250,248,242,.75); margin: 0; line-height: 1.7;
   max-width: 560px;
 }
 
 .sh-mahabbah-list { display: flex; flex-direction: column; gap: .75rem; }
 .sh-mahabbah-card {
-  background: #fff; border: 1px solid #E5D8C8; border-radius: 1rem; overflow: hidden;
+  background: #fff; border: 1px solid rgba(14,110,82,.15); border-radius: 1rem; overflow: hidden;
 }
 .sh-mahabbah-card__head {
   display: flex; align-items: center; gap: .75rem; padding: .85rem 1.1rem;
@@ -22878,18 +22878,18 @@ img[loading="lazy"]:not([src=""]) {
 }
 .sh-mahabbah-card__num {
   width: 2rem; height: 2rem; border-radius: 50%;
-  background: rgba(200,130,40,.12); color: #C8823A;
+  background: rgba(14,110,82,.12); color: #0E6E52;
   display: flex; align-items: center; justify-content: center;
   font-size: .8rem; font-weight: 900; flex-shrink: 0;
 }
-.sh-mahabbah-card__title { flex: 1; font-size: .95rem; font-weight: 700; color: #1C0A00; }
+.sh-mahabbah-card__title { flex: 1; font-size: .95rem; font-weight: 700; color: #153025; }
 .sh-mahabbah-card__body {
-  border-top: 1px solid #F5EDE4; padding: .9rem 1.1rem;
+  border-top: 1px solid rgba(14,110,82,.08); padding: .9rem 1.1rem;
   display: flex; flex-direction: column; gap: .5rem;
 }
 .sh-mahabbah-card__text {
   font-family: "Amiri","Traditional Arabic",serif;
-  font-size: 1.05rem; color: #1C0A00; line-height: 1.9; margin: 0;
+  font-size: 1.05rem; color: #153025; line-height: 1.9; margin: 0;
 }
 
 /* صلاة */
@@ -23178,11 +23178,11 @@ img[loading="lazy"]:not([src=""]) {
 .gl-term__plural { font-size: .78rem; color: #64748B; }
 .gl-cat--all     { --gl-cat-bg: rgba(31,77,58,.1);   --gl-cat-color: #1F4D3A; }
 .gl-cat--aqeedah { --gl-cat-bg: rgba(26,90,122,.1);  --gl-cat-color: #1a5a7a; }
-.gl-cat--fiqh    { --gl-cat-bg: rgba(123,62,12,.1);  --gl-cat-color: #7B3E0C; }
+.gl-cat--fiqh    { --gl-cat-bg: rgba(14,110,82,.1);  --gl-cat-color: #0E6E52; }
 .gl-cat--hadith  { --gl-cat-bg: rgba(49,46,129,.1);  --gl-cat-color: #312E81; }
 .gl-cat--quran   { --gl-cat-bg: rgba(6,95,70,.1);    --gl-cat-color: #065F46; }
 .gl-cat--seerah  { --gl-cat-bg: rgba(155,28,28,.1);  --gl-cat-color: #9B1C1C; }
-.gl-cat--tazkiya { --gl-cat-bg: rgba(74,32,8,.1);    --gl-cat-color: #4A2008; }
+.gl-cat--tazkiya { --gl-cat-bg: rgba(21,48,37,.1);   --gl-cat-color: #153025; }
 .gl-term__cat {
   font-size: .65rem; font-weight: 800; border-radius: 999px;
   padding: .15rem .55rem; letter-spacing: .04em;
