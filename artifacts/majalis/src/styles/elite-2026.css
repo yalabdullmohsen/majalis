@@ -147,7 +147,7 @@ body {
 .site-brand-gold-shimmer {
   background: linear-gradient(
     100deg,
-    #1F4D3A 0%, #1a9e75 28%, #e8f5f0 50%, #1a9e75 72%, #1F4D3A 100%
+    #123F36 0%, #176B57 28%, #E8F2EE 50%, #176B57 72%, #123F36 100%
   ) !important;
   background-size: 300% 100% !important;
   -webkit-background-clip: text !important;
@@ -32005,4 +32005,204 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
   .navbar-v3, .bottom-nav, .site-footer, [class*="sidebar"], [class*="filter"] { display: none !important; }
   .ui-card { box-shadow: none !important; border: 1px solid #ccc !important; }
   a[href]::after { content: " (" attr(href) ")" !important; font-size: 0.75em !important; color: #666 !important; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   §77w — تحديث ألوان المكونات الأساسية إلى نظام 2026
+   (يتجاوز القيم الصلبة القديمة #1F4D3A / #052E16 / #18362A)
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* بطاقة الدرس الرئيسية */
+.lesson-unified-card__header {
+  background-color: var(--color-primary-deep, #123F36) !important;
+}
+
+/* زر أساسي من النظام القديم */
+.ds-btn--primary,
+.btn-v2--primary,
+.btn-primary,
+[class*="btn"][class*="primary"] {
+  background: var(--color-primary, #176B57) !important;
+  border-color: var(--color-primary, #176B57) !important;
+  color: #fff !important;
+  box-shadow: 0 1px 3px rgba(23,107,87,.20), 0 3px 10px rgba(23,107,87,.10) !important;
+}
+.ds-btn--primary:hover,
+.btn-v2--primary:hover,
+.btn-primary:hover {
+  background: var(--color-primary-hover, #125746) !important;
+  border-color: var(--color-primary-hover, #125746) !important;
+  box-shadow: 0 4px 18px rgba(23,107,87,.28) !important;
+}
+
+/* بطاقة مسار التعلم */
+.home-learning-path-card {
+  background-color: var(--color-primary-deep, #123F36) !important;
+}
+
+/* بطاقات الدروس المميزة (today/featured) */
+.lesson-unified-card--today .lesson-unified-card__header,
+.lesson-unified-card--featured .lesson-unified-card__header,
+.lesson-unified-card--hero .lesson-unified-card__header {
+  background-color: var(--color-primary-deep, #123F36) !important;
+}
+
+/* Tabs الرئيسي */
+.nav-tab--active,
+.filter-tab--active,
+[class*="tab"][class*="active"] {
+  color: var(--color-primary, #176B57) !important;
+  border-color: var(--color-primary, #176B57) !important;
+}
+
+/* أزرار الكارد القديمة */
+.lesson-unified-card__btn--primary {
+  background: var(--color-primary, #176B57) !important;
+  border-color: var(--color-primary, #176B57) !important;
+  color: #fff !important;
+}
+.lesson-unified-card__btn--primary:hover {
+  background: var(--color-primary-hover, #125746) !important;
+}
+
+/* شارة الفئة في بطاقة الدرس */
+.lesson-unified-card__category {
+  color: rgba(255,255,255,.85) !important;
+  font-weight: 600 !important;
+}
+
+/* أيقونات وشارات خضراء */
+.page-icon-bg,
+.sch-icon-bg,
+[class*="icon-bg"],
+[class*="badge-green"] {
+  background: var(--color-primary-soft, #E8F2EE) !important;
+  color: var(--color-primary, #176B57) !important;
+}
+
+/* Hero section في الصفحة الرئيسية */
+.home-hero,
+[class*="hero"][class*="section"],
+.page-hero-wrap {
+  background: var(--color-primary-deep, #123F36) !important;
+}
+.home-hero::before,
+[class*="hero"]::before {
+  opacity: 0.07 !important;
+}
+
+/* رأس صفحة محدّد */
+.lessons-page-header,
+.scholars-page-header,
+.courses-page-header,
+.library-page-header,
+.quran-page-header,
+.fiqh-page-header,
+.fatwas-page-header,
+.hadith-page-header,
+.adhkar-page-header {
+  background: var(--color-primary-deep, #123F36) !important;
+  color: #fff !important;
+  border-radius: 0 0 var(--elite-r-xl, 20px) var(--elite-r-xl, 20px) !important;
+}
+
+/* Footer الرئيسي */
+.site-footer,
+footer,
+[class*="footer-wrap"] {
+  background: var(--color-primary-deep, #123F36) !important;
+}
+
+/* عناوين الأقسام */
+.section-title,
+.page-section-title,
+.ds-section-heading {
+  color: var(--color-primary-deep, #123F36) !important;
+  font-weight: 800 !important;
+}
+
+/* أزرار الفلتر / Chips الإدخال */
+.filter-chip,
+.filter-btn,
+[class*="filter-chip"] {
+  background: var(--color-surface-sec, #F2F1EC) !important;
+  color: var(--color-text-2, #5E6964) !important;
+  border: 1px solid var(--color-border, #E2E6E3) !important;
+  border-radius: var(--elite-r-pill) !important;
+  font-size: 0.8125rem !important;
+  padding: 0.3rem 0.75rem !important;
+  font-weight: 500 !important;
+  transition: background 120ms, border-color 120ms, color 120ms !important;
+}
+.filter-chip.active, .filter-chip--active,
+.filter-btn.active, .filter-btn--active {
+  background: var(--color-primary-soft, #E8F2EE) !important;
+  color: var(--color-primary, #176B57) !important;
+  border-color: rgba(23,107,87,.20) !important;
+  font-weight: 600 !important;
+}
+
+/* Search results highlight */
+mark.srch-hl {
+  background: rgba(23,107,87,.12) !important;
+  color: var(--color-primary-deep, #123F36) !important;
+  border-radius: 3px !important;
+  padding: 0.05em 0.15em !important;
+}
+
+/* avatar الشيخ — ring لوني */
+.sch-avatar-ring,
+[class*="avatar"][class*="ring"] {
+  border: 2px solid rgba(23,107,87,.25) !important;
+}
+
+/* Progress bars */
+progress,
+[class*="progress-bar"],
+[class*="progress__fill"] {
+  accent-color: var(--color-primary, #176B57) !important;
+  background-color: var(--color-primary, #176B57) !important;
+}
+
+/* Scrollbar RTL */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(23,107,87,.20); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(23,107,87,.35); }
+
+/* ═══ Dark Mode overrides لمكونات §77w ═══ */
+html[data-theme="dark"] .lesson-unified-card__header,
+html[data-theme="dark"] .home-learning-path-card,
+html[data-theme="dark"] .home-hero,
+html[data-theme="dark"] .lessons-page-header,
+html[data-theme="dark"] .scholars-page-header,
+html[data-theme="dark"] .courses-page-header,
+html[data-theme="dark"] .library-page-header,
+html[data-theme="dark"] .quran-page-header {
+  background-color: #0E1B17 !important;
+}
+html[data-theme="dark"] .section-title,
+html[data-theme="dark"] .page-section-title,
+html[data-theme="dark"] .ds-section-heading {
+  color: #3BAD8A !important;
+}
+html[data-theme="dark"] .filter-chip,
+html[data-theme="dark"] .filter-btn {
+  background: rgba(255,255,255,.06) !important;
+  border-color: rgba(255,255,255,.10) !important;
+  color: #8BABA3 !important;
+}
+html[data-theme="dark"] .filter-chip.active,
+html[data-theme="dark"] .filter-chip--active,
+html[data-theme="dark"] .filter-btn.active {
+  background: rgba(59,173,138,.12) !important;
+  color: #3BAD8A !important;
+  border-color: rgba(59,173,138,.20) !important;
+}
+html[data-theme="dark"] mark.srch-hl {
+  background: rgba(59,173,138,.15) !important;
+  color: #3BAD8A !important;
+}
+html[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(59,173,138,.25) !important;
 }
