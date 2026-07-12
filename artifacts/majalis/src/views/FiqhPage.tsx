@@ -78,6 +78,9 @@ const FIQH_TOPICS: FiqhTopic[] = [
   { emoji: "⚡", title: "النوازل المعاصرة", desc: "مسائل العصر ومستجداته الفقهية",    href: "/fiqh-council/nawazil", color: "#374151" },
   { emoji: "🔐", title: "الحدود والجنايات", desc: "أحكام الحدود والقصاص والديات",     href: "/rulings",        color: "#991B1B" },
   { emoji: "🌍", title: "فقه الأقليات",    desc: "أحكام المسلمين في غير ديار الإسلام", href: "/fiqh-council/nawazil", color: "#1F4D3A" },
+  { emoji: "💻", title: "فقه التقنية",     desc: "أحكام الإنترنت والذكاء الاصطناعي والألعاب",  href: "/fiqh-council/nawazil", color: "#0F766E" },
+  { emoji: "🩺", title: "فقه العبادات للمرضى", desc: "أحكام الصلاة والصيام والطهارة للمرضى",   href: "/rulings?cat=الصحة",  color: "#374151" },
+  { emoji: "🏦", title: "التمويل الإسلامي", desc: "الصيرفة والتكافل والاستثمار الحلال",        href: "/rulings?cat=المعاملات", color: "#065F46" },
 ];
 
 export default function FiqhPage() {
