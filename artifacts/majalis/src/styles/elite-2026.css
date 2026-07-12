@@ -986,7 +986,9 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
    النهج: تجاوز متغيرات CSS + القيم المشفرة
    ══════════════════════════════════════════════ */
 
-/* ① تجاوز متغيرات ألوان النص على كل الحاويات الخضراء الداكنة */
+/* ① تجاوز متغيرات ألوان النص على كل الحاويات ذات الخلفية الداكنة
+   ملاحظة حرجة: .hmb-wrap مُستثنى لأن خلفيته فاتحة دائماً (EEF2FF/F5F0FF...)
+   وليست داكنة — فقط .hmb-icon-panel داخله هي الداكنة */
 .home-main--v3 .ui-card,
 .home-main--v3 .ds-card,
 .home-main--v3 .hit-card,
@@ -995,9 +997,7 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
 .myt-card,
 .hdc__card,
 .ds-page-header,
-.la-page-hero,
-.hmb-wrap,
-.home-assistant {
+.la-page-hero {
   --clr-text-1:            rgba(255,255,255,0.93);
   --clr-text:              rgba(255,255,255,0.93);
   --clr-text-2:            rgba(255,255,255,0.72);
@@ -1017,7 +1017,8 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
   color: #fff;
 }
 
-/* ② فرض الأبيض على عناصر p (لتجاوز قاعدة p { !important } العامة) */
+/* ② فرض الأبيض على عناصر p (لتجاوز قاعدة p { !important } العامة)
+   sawm-reminder مُدرج هنا لأن خلفيته داكنة لكنه لم يكن ضمن ① */
 .home-main--v3 .ui-card p,
 .home-main--v3 .ds-card p,
 .home-main--v3 .hit-card p,
@@ -1027,7 +1028,7 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
 .hdc__card p,
 .ds-page-header p,
 .la-page-hero p,
-.hmb-wrap p {
+.sawm-reminder p {
   color: rgba(255,255,255,0.93) !important;
 }
 
