@@ -19272,6 +19272,28 @@ img[loading="lazy"]:not([src=""]) {
 
 .hs-page { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
 
+/* of-the-day card */
+.hsod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.hsod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; margin-bottom: 0.2rem;
+}
+.hsod-card__cat { font-size: 0.75rem; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.05em; }
+.hsod-card__term { font-size: 1.3rem; font-weight: 800; margin: 0; color: #FFFFFF; }
+.hsod-card__def { font-size: 0.88rem; color: rgba(255,255,255,0.87); max-width: 480px; margin: 0; line-height: 1.65; }
+.hsod-card__ex { font-size: 0.82rem; color: rgba(255,255,255,0.75); max-width: 480px; margin: 0; }
+.hsod-card__ex-label { font-weight: 700; }
+.hsod-card__note { font-size: 0.8rem; color: rgba(255,255,255,0.65); max-width: 460px; margin: 0; font-style: italic; }
+
 /* هيرو */
 .hs-hero {
   background: linear-gradient(135deg, #123F36 0%, #176B57 55%, #176649 100%);
@@ -22668,6 +22690,30 @@ img[loading="lazy"]:not([src=""]) {
    §236 — MawarithPage (.mw-*)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .mw-page { max-width: 780px; margin: 0 auto; padding: 0 0 6rem; }
+
+/* of-the-day card */
+.mwod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.mwod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; margin-bottom: 0.2rem;
+}
+.mwod-card__title { font-size: 1.2rem; font-weight: 800; margin: 0; color: #FFFFFF; }
+.mwod-card__desc { font-size: 0.88rem; color: rgba(255,255,255,0.87); max-width: 460px; margin: 0; line-height: 1.65; }
+.mwod-card__formula {
+  display: inline-block;
+  font-family: var(--font-mono, monospace); font-size: 0.82rem; direction: ltr;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.9); padding: 0.3rem 0.75rem; border-radius: 6px; margin-top: 0.25rem;
+}
 
 /* hero */
 .mw-hero {
