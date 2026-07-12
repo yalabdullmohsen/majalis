@@ -58,7 +58,7 @@ const MADHAHIB: Madhhab[] = [
   },
   {
     id: "maliki",
-    color: "#0A5040",
+    color: "#123F36",
     icon: "🌿",
     name: "المالكي",
     fullName: "المذهب المالكي",

@@ -493,7 +493,7 @@ export default function HomePage() {
               }}
             />
             <button type="submit" style={{
-              background: "linear-gradient(135deg,#2d7a5a,#176B57)", color: "#FAF8F2", border: "none", cursor: "pointer",
+              background: "linear-gradient(135deg,#176B57,#176B57)", color: "#FAF8F2", border: "none", cursor: "pointer",
               padding: "0.75rem 1.3rem", fontWeight: 800, fontSize: "0.85rem", fontFamily: "inherit",
               whiteSpace: "nowrap",
             }}>بحث</button>
@@ -585,7 +585,7 @@ export default function HomePage() {
       <nav aria-label="وصول سريع" style={{ maxWidth: 760, margin: "1.5rem auto 0", padding: "0 1rem" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.7rem" }}>
           <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
-            <polygon points="9,1 12,7 18,7 13,11 15,17 9,13 3,17 5,11 0,7 6,7" fill="#2d7a5a" opacity="0.85"/>
+            <polygon points="9,1 12,7 18,7 13,11 15,17 9,13 3,17 5,11 0,7 6,7" fill="#176B57" opacity="0.85"/>
           </svg>
           <p style={{ color: "#176B57", fontSize: "0.82rem", fontWeight: 800, margin: 0, letterSpacing: "0.03em" }}>وصول سريع</p>
         </div>
@@ -685,7 +685,7 @@ export default function HomePage() {
             {/* أيقونة هندسية للعنوان */}
             <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
               <polygon points="11,1 13.5,8 21,8 15,13 17.5,20 11,16 4.5,20 7,13 1,8 8.5,8" fill="none" stroke="#176B57" strokeWidth="1.2"/>
-              <circle cx="11" cy="11" r="3.5" fill="none" stroke="#2d7a5a" strokeWidth="0.8"/>
+              <circle cx="11" cy="11" r="3.5" fill="none" stroke="#176B57" strokeWidth="0.8"/>
             </svg>
             <h2 id="features-heading" style={{ fontSize: "1.1rem", fontWeight: 800, color: "#1a1a1a", margin: 0 }}>
               استكشف المنصة
@@ -701,7 +701,7 @@ export default function HomePage() {
               <Link key={href} href={href} aria-label={title} style={{
                 display: "flex", flexDirection: "column", gap: "0.65rem",
                 padding: "1.2rem 1.1rem", borderRadius: "1.1rem", textDecoration: "none",
-                background: "linear-gradient(145deg, #112a1e 0%, #1a3d2b 40%, #176B57 80%, #2d7a5a 100%)",
+                background: "linear-gradient(145deg, #112a1e 0%, #1a3d2b 40%, #176B57 80%, #176B57 100%)",
                 color: "#fff",
                 boxShadow: "0 4px 16px rgba(15,50,30,0.28), inset 0 1px 0 rgba(255,255,255,0.1)",
                 border: "1px solid rgba(255,255,255,0.12)",
@@ -738,12 +738,12 @@ export default function HomePage() {
                 {/* زخرفة هندسية بدل المربع */}
                 <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" style={{ flexShrink: 0 }}>
                   <polygon points="14,2 20,9 27,9 22,16 25,24 14,20 3,24 6,16 1,9 8,9" fill="#176B57"/>
-                  <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="#2d7a5a" opacity="0.6"/>
+                  <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="#176B57" opacity="0.6"/>
                   <circle cx="14" cy="14" r="3" fill="#FAF8F2"/>
                 </svg>
                 <h3 style={{ fontSize: "0.98rem", fontWeight: 800, color: "#176B57", margin: 0 }}>{cat.label}</h3>
                 <span style={{
-                  marginRight: "auto", fontSize: "0.68rem", color: "#2d7a5a", fontWeight: 700,
+                  marginRight: "auto", fontSize: "0.68rem", color: "#176B57", fontWeight: 700,
                   background: "#e8f4ed", padding: "0.15rem 0.6rem", borderRadius: "999px",
                   border: "1px solid #c8e6d5",
                 }}>{cat.items.length} قسم</span>
@@ -762,7 +762,7 @@ export default function HomePage() {
                     boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
                   }}>
                     <span style={{
-                      background: "linear-gradient(135deg,#176B57,#2d7a5a)", color: "#FAF8F2",
+                      background: "linear-gradient(135deg,#176B57,#176B57)", color: "#FAF8F2",
                       padding: "0.38rem", borderRadius: "0.4rem",
                       display: "flex", flexShrink: 0, marginTop: "0.05rem",
                       boxShadow: "0 1px 3px rgba(15,50,30,0.2)",

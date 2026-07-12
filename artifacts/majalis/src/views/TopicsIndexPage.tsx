@@ -82,7 +82,7 @@ const CATEGORY_META: Record<string, { label: string; Icon: LucideIcon; color: st
   akhlaq:  { label: "الأخلاق",          Icon: Leaf,       color: "#2d6a4f" },
   quran:   { label: "القرآن الكريم",   Icon: BookMarked, color: "#1e40af" },
   hadith:  { label: "الحديث النبوي",  Icon: ScrollText,  color: "#7c3aed" },
-  seerah:  { label: "السيرة النبوية",  Icon: Moon,       color: "var(--majalis-emerald-deep, #0A5040)" },
+  seerah:  { label: "السيرة النبوية",  Icon: Moon,       color: "var(--majalis-emerald-deep, #123F36)" },
   other:   { label: "أخرى",            Icon: BookOpen,   color: "var(--majalis-ink-soft)" },
 };
 

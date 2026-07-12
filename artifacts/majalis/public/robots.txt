@@ -7,7 +7,6 @@ Disallow: /admin
 Disallow: /admin/
 Disallow: /login
 Disallow: /api/
-Disallow: /search/
 
 User-agent: Googlebot
 Allow: /
