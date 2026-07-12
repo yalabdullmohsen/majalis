@@ -7,13 +7,14 @@ export default function DurusMutanawwiaPage() {
   const [openId, setOpenId] = useState<string | null>(null);
   const toggle = (id: string) => setOpenId((prev) => (prev === id ? null : id));
   const totalLessons = DURUS_MUTANAWWIA.reduce((s, sec) => s + sec.lessons.length, 0);
+  const avgLessons = Math.round(totalLessons / DURUS_MUTANAWWIA.length);
 
   return (
     <div className="page-shell" dir="rtl">
       <PageHeader
         eyebrow="المحتوى التعليمي"
         title="دروس متنوعة"
-        subtitle={`فهرس شامل — ${DURUS_MUTANAWWIA.length} بابًا · ${totalLessons} درسًا`}
+        subtitle={`فهرس شامل — ${DURUS_MUTANAWWIA.length} بابًا · ${totalLessons}+ درسًا`}
       />
 
       {/* إحصاء */}
@@ -21,7 +22,7 @@ export default function DurusMutanawwiaPage() {
         <div className="grid grid-cols-3 gap-3">
           <StatBox value={DURUS_MUTANAWWIA.length} label="باب" color="#16a34a" />
           <StatBox value={totalLessons} label="درس" color="#0284c7" />
-          <StatBox value={5} label="سلاسل" color="#b45309" />
+          <StatBox value={avgLessons} label="درس/باب" color="#b45309" />
         </div>
       </div>
 
