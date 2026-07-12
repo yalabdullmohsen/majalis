@@ -950,10 +950,10 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
 }
 .myt-moon { font-size: 1.1rem; line-height: 1; }
 .myt-block__content { flex: 1; min-width: 0; }
-.myt-block__label { font-size: .68rem; font-weight: 700; color: rgba(255,255,255,.55); margin: 0 0 .2rem; letter-spacing: .02em; }
-.myt-block__text { font-size: .85rem; font-weight: 600; color: #fff; margin: 0; line-height: 1.5; }
+.myt-block__label { font-size: .68rem; font-weight: 700; color: rgba(255,255,255,.55) !important; margin: 0 0 .2rem; letter-spacing: .02em; }
+.myt-block__text { font-size: .85rem; font-weight: 600; color: #fff !important; margin: 0; line-height: 1.5; }
 .myt-block__text--lesson { font-size: .82rem; }
-.myt-block__source { font-size: .72rem; color: rgba(255,255,255,.55); margin: .15rem 0 0; }
+.myt-block__source { font-size: .72rem; color: rgba(255,255,255,.55) !important; margin: .15rem 0 0; }
 .myt-prayer-time { margin-inline-start: .5rem; font-weight: 800; font-size: .95rem; }
 .myt-block__link {
   display: flex;
