@@ -112,6 +112,15 @@ export default function FatwaPage() {
 
       <FiqhHubStrip current="fatawa" />
 
+      {/* شريط المنهجية */}
+      <div className="ai-disclaimer-bar" role="note" dir="rtl">
+        <Scale size={14} className="ai-disclaimer-bar__icon" aria-hidden="true" />
+        <span>
+          الفتاوى مصدرها علماء وجهات إفتاء معتمدة — للمسائل الشخصية الحساسة استشر عالماً مختصاً.{" "}
+          <a href="/methodology" className="font-semibold underline" style={{ color: "#0E6E52" }}>منهجيتنا العلمية</a>
+        </span>
+      </div>
+
       <div className="content-hub-chips">
         {[
           ["all", "جميع الفتاوى"],

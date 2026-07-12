@@ -6,6 +6,8 @@ import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
 import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
+import { ScholarlyTrustBadge, type TrustData } from "@/components/ScholarlyTrustBadge";
+import { SensitiveContentWarning } from "@/components/SensitiveContentWarning";
 
 export default function FatwaDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<any>(null);
@@ -64,12 +66,31 @@ export default function FatwaDetailPage({ params }: { params: { id: string } }) 
 
   const copyText = `السؤال: ${item.question}\n\nالجواب: ${item.answer}`;
 
+  const trustData: TrustData = {
+    mufti:       item.mufti_name     || null,
+    author:      item.author         || null,
+    source:      item.source_name    || null,
+    book:        item.book_name      || null,
+    volume:      item.volume         || null,
+    page:        item.page_ref       || null,
+    verifiedBy:  item.verified_by    || null,
+    isApproved:  item.is_approved    ?? null,
+    publishedAt: item.published_at   || item.created_at || null,
+    updatedAt:   item.updated_at     || null,
+    contentType: "فتوى",
+    madhab:      item.madhab         || null,
+    hasKhilaf:   item.has_khilaf     ?? null,
+    sourceUrl:   item.source_url     || (item.source_urls?.[0]) || null,
+  };
+
+  const questionText = item.question || "";
+
   return (
     <ContentDetailLayout
       breadcrumbs={[
         { label: "الرئيسية", href: "/" },
         { label: "الفتاوى", href: "/fatwa" },
-        { label: item.question.slice(0, 50) + (item.question.length > 50 ? "…" : "") },
+        { label: questionText.slice(0, 50) + (questionText.length > 50 ? "…" : "") },
       ]}
       title={item.question}
       subtitle={item.summary}
@@ -89,6 +110,13 @@ export default function FatwaDetailPage({ params }: { params: { id: string } }) 
         />
       }
     >
+      {/* تنبيه المسائل الحساسة */}
+      <SensitiveContentWarning
+        topic={questionText}
+        referralUrl="https://www.dar-alifta.org/ar/ViewFatawa"
+      />
+
+      {/* الفتوى الصوتية */}
       {item.audio_url && (item.format === "audio" || item.format === "both") && (
         <section className="content-detail-audio ui-card">
           <h2>الفتوى الصوتية</h2>
@@ -97,6 +125,10 @@ export default function FatwaDetailPage({ params }: { params: { id: string } }) 
           </audio>
         </section>
       )}
+
+      {/* بطاقة التوثيق العلمي */}
+      <ScholarlyTrustBadge data={trustData} />
+
       <KnowledgeRelatedItems sourceType="fatwa" sourceId={String(item.id)} />
     </ContentDetailLayout>
   );

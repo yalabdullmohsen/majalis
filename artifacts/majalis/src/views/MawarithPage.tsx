@@ -289,6 +289,13 @@ export default function MawarithPage() {
         </div>
       </section>
 
+      {/* تنبيه تعليمي */}
+      <div className="maw-disclaimer" role="note">
+        <strong>تنبيه:</strong> المعلومات الواردة هنا ذات طابع <strong>تعليمي</strong> وتوضيحي للقواعد الشرعية العامة.
+        قضايا المواريث الواقعية تحتاج إلى <strong>عالم شرعي متخصص</strong> أو جهة قضائية معتمدة مطّلعة على
+        تفاصيل كل حالة، خاصةً عند وجود ديون أو وصايا أو حالات غير عادية.
+      </div>
+
       {/* tabs */}
       <div className="mw-tabs-bar">
         {TABS.map((t) => (

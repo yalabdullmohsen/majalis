@@ -386,6 +386,13 @@ export default function ScholarlyResearchPage() {
             {result && !loading && (
               <div ref={answerRef} className="srp-result-box">
                 <ResearchAnswer result={result} onSave={handleSave} />
+                <div className="ai-disclaimer-bar" role="note">
+                  <AlertTriangle size={13} className="ai-disclaimer-bar__icon" aria-hidden="true" />
+                  <span>
+                    هذه الإجابة ذات طابع <strong>تعليمي</strong> مبنية على مصادر موثّقة، وليست فتوى شخصية.
+                    للمسائل الشخصية الحساسة يُرجى استشارة عالم متخصص.
+                  </span>
+                </div>
               </div>
             )}
           </>
