@@ -25,8 +25,8 @@
   --ds-text-xl: 1.25rem;
   --ds-text-2xl: 1.375rem;
   --ds-line: 1.55;
-  --ds-emerald:      var(--msk-gold,      #1F4D3A);
-  --ds-emerald-deep: var(--msk-gold-deep, #0A5040);
+  --ds-emerald:      var(--msk-gold,      #176B57);
+  --ds-emerald-deep: var(--msk-gold-deep, #123F36);
   --ds-emerald-soft: var(--majalis-sage,  #EAF3EF);
   --ds-parchment:    var(--msk-canvas,    #FAF8F5);
   --ds-parchment-deep:var(--msk-canvas-2, #F0EDE8);
@@ -82,7 +82,7 @@ html {
 .ds-page-header__eyebrow {
   font-size: var(--ds-text-xs);
   font-weight: 700;
-  color: var(--majalis-brass-deep, #0A5040);
+  color: var(--majalis-brass-deep, #123F36);
   margin: 0 0 var(--ds-space-1);
   letter-spacing: 0.02em;
 }
@@ -895,7 +895,7 @@ p, li {
 
 .miracle-item__ref {
   font-size: var(--ds-text-xs);
-  color: var(--majalis-brass-deep, #0A5040);
+  color: var(--majalis-brass-deep, #123F36);
   font-style: italic;
   margin: var(--ds-space-1) 0;
 }
@@ -1077,7 +1077,7 @@ p, li {
 .surah-story-num {
   font-size: var(--ds-text-xs);
   font-weight: 800;
-  color: var(--majalis-brass-deep, #0A5040);
+  color: var(--majalis-brass-deep, #123F36);
 }
 
 .surah-story-meta {
@@ -1246,11 +1246,11 @@ p, li {
   --ds-shadow-lg: 0 20px 25px -5px rgba(26,23,20,.07), 0 10px 10px -5px rgba(26,23,20,.03);
 
   /* ── Colors — مرتبطة بـ msk tokens من index.css ── */
-  --ds-emerald:        var(--msk-gold,        #1F4D3A);
-  --ds-emerald-deep:   var(--msk-gold-deep,   #0A5040);
+  --ds-emerald:        var(--msk-gold,        #176B57);
+  --ds-emerald-deep:   var(--msk-gold-deep,   #123F36);
   --ds-emerald-soft:   var(--majalis-sage,    #EAF3EF);
   --ds-emerald-muted:  var(--msk-gold-dim,    rgba(14,110,82,.12));
-  --ds-gold:           var(--msk-gold,        #1F4D3A);
+  --ds-gold:           var(--msk-gold,        #176B57);
   --ds-gold-soft:      var(--majalis-sage,    #EAF3EF);
   --ds-parchment:      var(--msk-canvas,      #FAF8F5);
   --ds-parchment-deep: var(--msk-canvas-2,    #F0EDE8);
@@ -1564,7 +1564,7 @@ hr.decorative,
   display: inline-block;
   padding: 0.2rem 0.625rem;
   background: rgba(14, 110, 82, 0.12);
-  color: var(--clr-primary, #1F4D3A);
+  color: var(--clr-primary, #176B57);
   border-radius: 999px;
   font-size: 0.73rem;
   font-weight: 700;
@@ -1626,7 +1626,7 @@ hr.decorative,
 
 .ds-quiz-home-card__cat svg {
   flex-shrink: 0;
-  color: var(--clr-primary, #1F4D3A);
+  color: var(--clr-primary, #176B57);
 }
 
 @media (max-width: 600px) {
@@ -1669,7 +1669,7 @@ hr.decorative,
 
 .hcp-strip__link {
   font-size: 0.73rem;
-  color: var(--clr-primary, #1F4D3A);
+  color: var(--clr-primary, #176B57);
   text-decoration: none;
   font-weight: 600;
 }
@@ -1733,7 +1733,7 @@ hr.decorative,
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.07em;
-  color: var(--clr-primary, #1F4D3A);
+  color: var(--clr-primary, #176B57);
   text-transform: uppercase;
   margin: 0 0 0.45rem;
 }
@@ -1768,7 +1768,7 @@ hr.decorative,
 }
 
 .site-footer-email a:hover {
-  color: var(--majalis-emerald, #1F4D3A);
+  color: var(--majalis-emerald, #176B57);
 }
 
 /* ── Compact Prayer countdown row ───────────────────────── */
@@ -1857,7 +1857,7 @@ hr.decorative,
 }
 
 .tc-ring-fill--done {
-  stroke: var(--majalis-emerald, #1F4D3A);
+  stroke: var(--majalis-emerald, #176B57);
 }
 
 
@@ -1877,7 +1877,7 @@ hr.decorative,
 .tc-ring-rounds {
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #1F4D3A);
+  color: var(--majalis-emerald, #176B57);
   letter-spacing: 0.04em;
   line-height: 1;
 }
@@ -1891,7 +1891,7 @@ hr.decorative,
 }
 
 .tc-ring-btn--done .tc-ring-count {
-  color: var(--majalis-emerald, #1F4D3A);
+  color: var(--majalis-emerald, #176B57);
 }
 
 .tc-ring-total {
@@ -1909,7 +1909,7 @@ hr.decorative,
 }
 
 .tc-ring-btn--done .tc-ring-hint {
-  color: var(--majalis-emerald, #1F4D3A);
+  color: var(--majalis-emerald, #176B57);
 }
 
 
@@ -2130,7 +2130,7 @@ hr.decorative,
 
 /* Streak stat cell */
 .tasbih-stat--streak strong {
-  color: var(--majalis-emerald, #1F4D3A);
+  color: var(--majalis-emerald, #176B57);
 }
 
 /* Danger button variant */
@@ -4115,7 +4115,7 @@ hr.decorative,
 }
 .inst-card__link:hover { opacity: 0.8; }
 .inst-card__link--web { background: var(--ds-emerald-soft); color: var(--ds-emerald-deep); }
-.inst-card__link--map { background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent); color: var(--majalis-emerald, #1F4D3A); }
+.inst-card__link--map { background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent); color: var(--majalis-emerald, #176B57); }
 
 .inst-disclaimer {
   font-size: 0.78rem;
@@ -4134,7 +4134,7 @@ hr.decorative,
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
   background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent);
-  color: var(--majalis-emerald, #1F4D3A);
+  color: var(--majalis-emerald, #176B57);
   font-weight: 600;
 }
 
@@ -4267,7 +4267,7 @@ hr.decorative,
 .tawheed-type-card__ayah {
   margin: 0.5rem 0 0;
   padding: 0.6rem 0.75rem;
-  border-right: 3px solid var(--majalis-emerald, #1F4D3A);
+  border-right: 3px solid var(--majalis-emerald, #176B57);
   background: var(--bg-base, #faf9f6);
   border-radius: 0 0.375rem 0.375rem 0;
   font-family: "Amiri Quran", "Scheherazade New", serif;
@@ -4280,7 +4280,7 @@ hr.decorative,
   display: block;
   font-style: normal;
   font-size: 0.7rem;
-  color: var(--majalis-emerald, #1F4D3A);
+  color: var(--majalis-emerald, #176B57);
   font-weight: 700;
   margin-top: 0.25rem;
   font-family: inherit;
@@ -4802,7 +4802,7 @@ h1, h2, h3 {
   align-items: center;
   gap: 0.4rem;
   padding: 0.5rem 1.1rem;
-  background: var(--majalis-emerald, #1F4D3A);
+  background: var(--majalis-emerald, #176B57);
   color: #fff;
   border: none;
   border-radius: 0.5rem;
@@ -4815,7 +4815,7 @@ h1, h2, h3 {
 }
 
 .btn-primary:hover {
-  background: var(--majalis-emerald-deep, #173A2C);
+  background: var(--majalis-emerald-deep, #123F36);
   box-shadow: 0 4px 14px rgba(31,77,58,0.28);
   transform: translateY(-1px);
 }
@@ -4843,7 +4843,7 @@ h1, h2, h3 {
   gap: 0.4rem;
   padding: 0.5rem 1.1rem;
   background: transparent;
-  color: var(--majalis-emerald, #1F4D3A);
+  color: var(--majalis-emerald, #176B57);
   border: 1.5px solid rgba(31,77,58,0.25);
   border-radius: 0.5rem;
   font-family: inherit;
@@ -4865,7 +4865,7 @@ textarea:focus-visible,
 select:focus-visible {
   outline: 2px solid rgba(31,77,58,0.35);
   outline-offset: 1px;
-  border-color: var(--majalis-emerald, #1F4D3A) !important;
+  border-color: var(--majalis-emerald, #176B57) !important;
 }
 
 /* ── 25. تأثير الانتقال الصفحي (page-enter) ── */
