@@ -92,6 +92,7 @@ export default defineConfig({
           if (id.includes("src/lib/annual-courses-seed") || id.includes("src/lib/updates-seed")) return "courses-updates-seed";
           if (id.includes("src/lib/fiqh-council-seed") || id.includes("src/lib/fiqh-council-nawazil") || id.includes("src/lib/fiqh-council-categories") || id.includes("src/lib/fiqh-council-trust")) return "fiqh-council-data";
           if (id.includes("src/lib/platform-content-service") || id.includes("src/lib/demo-content")) return "platform-services";
+          if (id.includes("src/lib/sheikhs-seed") || id.includes("src/lib/library-service") || id.includes("src/lib/qa-seed") || id.includes("src/lib/fawaid-curated-seed")) return "content-catalog";
         },
       },
     },

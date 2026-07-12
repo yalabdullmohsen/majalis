@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { PROPHETS_LINEAGE, type LineageNode } from "@/lib/prophets-lineage";
-import { ZoomIn, ZoomOut, RotateCcw, Info } from "lucide-react";
+import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
 
 // ── ثوابت التخطيط ──────────────────────────────────────────────────────────
 const NODE_W  = 110;
@@ -57,9 +57,8 @@ function layoutTree(
 
 // ── مكوّن العقدة ────────────────────────────────────────────────────────────
 
-function NodeBox({ placed, scale, onClick }: {
+function NodeBox({ placed, onClick }: {
   placed: PlacedNode;
-  scale: number;
   onClick: (id: string) => void;
 }) {
   const { node, x, y } = placed;
@@ -311,7 +310,6 @@ export default function ProphetsFamilyTreePage() {
               <NodeBox
                 key={p.node.id}
                 placed={p}
-                scale={scale}
                 onClick={(id) => setSelected(s => s === id ? null : id)}
               />
             ))}

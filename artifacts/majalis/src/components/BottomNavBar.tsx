@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { BookOpen, GraduationCap, Home, LayoutGrid, Library, Search, Sunset, User } from "lucide-react";
+import { BookOpen, GraduationCap, Home, LayoutGrid, Search, Sunset, User } from "lucide-react";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 
