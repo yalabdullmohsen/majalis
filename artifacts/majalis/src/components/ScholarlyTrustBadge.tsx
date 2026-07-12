@@ -5,6 +5,7 @@
  */
 import { BookOpen, Calendar, CheckCircle2, Clock, User, XCircle } from "lucide-react";
 import { Link } from "wouter";
+import { ContentReportButton } from "@/components/ContentReportButton";
 
 export type TrustData = {
   author?: string | null;
@@ -25,6 +26,8 @@ export type TrustData = {
   hasKhilaf?: boolean | null;
   sourceUrl?: string | null;
   methodologyPath?: string;
+  reportContentType?: string;
+  reportContentId?: string | number;
 };
 
 type Props = {
@@ -124,6 +127,12 @@ export function ScholarlyTrustBadge({ data, compact = false }: Props) {
         <Link href={data.methodologyPath || "/methodology"} className="stb-methodology-link">
           منهجيتنا العلمية
         </Link>
+        {data.reportContentType && data.reportContentId != null && (
+          <ContentReportButton
+            contentType={data.reportContentType}
+            contentId={data.reportContentId}
+          />
+        )}
       </div>
     </aside>
   );

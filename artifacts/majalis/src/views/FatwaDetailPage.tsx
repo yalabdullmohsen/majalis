@@ -67,20 +67,22 @@ export default function FatwaDetailPage({ params }: { params: { id: string } }) 
   const copyText = `السؤال: ${item.question}\n\nالجواب: ${item.answer}`;
 
   const trustData: TrustData = {
-    mufti:       item.mufti_name     || null,
-    author:      item.author         || null,
-    source:      item.source_name    || null,
-    book:        item.book_name      || null,
-    volume:      item.volume         || null,
-    page:        item.page_ref       || null,
-    verifiedBy:  item.verified_by    || null,
-    isApproved:  item.is_approved    ?? null,
-    publishedAt: item.published_at   || item.created_at || null,
-    updatedAt:   item.updated_at     || null,
-    contentType: "فتوى",
-    madhab:      item.madhab         || null,
-    hasKhilaf:   item.has_khilaf     ?? null,
-    sourceUrl:   item.source_url     || (item.source_urls?.[0]) || null,
+    mufti:             item.mufti_name     || null,
+    author:            item.author         || null,
+    source:            item.source_name    || null,
+    book:              item.book_name      || null,
+    volume:            item.volume         || null,
+    page:              item.page_ref       || null,
+    verifiedBy:        item.verified_by    || null,
+    isApproved:        item.is_approved    ?? null,
+    publishedAt:       item.published_at   || item.created_at || null,
+    updatedAt:         item.updated_at     || null,
+    contentType:       "فتوى",
+    madhab:            item.madhab         || null,
+    hasKhilaf:         item.has_khilaf     ?? null,
+    sourceUrl:         item.source_url     || (item.source_urls?.[0]) || null,
+    reportContentType: "fatwa",
+    reportContentId:   item.id,
   };
 
   const questionText = item.question || "";

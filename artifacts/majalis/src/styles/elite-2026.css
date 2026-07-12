@@ -31168,3 +31168,20 @@ html[data-theme="dark"] .page-search-input {
   body { color: #000; background: #fff; }
   a[href]::after { content: " (" attr(href) ")"; font-size: 0.75em; color: #666; }
 }
+
+/* ── ContentReportButton (crb-*) ── */
+.crb-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.73rem;
+  font-weight: 600;
+  color: var(--clr-ink-soft, #9ca3af);
+  text-decoration: none;
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 999px;
+  padding: 0.18rem 0.55rem;
+  transition: color .15s, border-color .15s;
+}
+.crb-btn:hover { color: #dc2626; border-color: rgba(220,38,38,.2); }
+html[data-theme="dark"] .crb-btn { border-color: rgba(255,255,255,.1); color: rgba(232,245,238,.5); }
