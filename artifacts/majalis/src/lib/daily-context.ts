@@ -46,13 +46,13 @@ export interface DailyContext {
 // ── جدول التحيّات حسب وقت اليوم ─────────────────────────────────────────────
 
 const TIME_GREETINGS: Record<TimeOfDay, { main: string; sub: string; icon: DailyContext["timeIcon"] }> = {
-  fajr:    { main: "صبَّحك الله بالخير والعافية",  sub: "أهلاً بك في ساعة الفجر المبارك",   icon: "dawn"   },
-  duha:    { main: "صبَّحك الله بالخير والبركة",  sub: "أهلاً بك في وقت الضحى المبارك",     icon: "sun"    },
-  zuhr:    { main: "صبَّحك الله بالخير والنعمة",  sub: "أهلاً بك في وقت الظهر",             icon: "sun"    },
-  asr:     { main: "صبَّحك الله بالخير والتوفيق", sub: "أهلاً بك في وقت العصر المبارك",     icon: "sun"    },
-  maghrib: { main: "مسَّاك الله بالخير والرحمة",  sub: "أهلاً بك في ساعة المغرب الكريمة",   icon: "sunset" },
-  isha:    { main: "مسَّاك الله بالخير والسلامة", sub: "أهلاً بك في وقت العشاء",             icon: "sunset" },
-  layl:    { main: "مسَّاك الله بالخير والهدوء",  sub: "أهلاً بك في جوف الليل المبارك",     icon: "moon"   },
+  fajr:    { main: "صبَّحك الله بالخير", sub: "", icon: "dawn"   },
+  duha:    { main: "صبَّحك الله بالخير", sub: "", icon: "sun"    },
+  zuhr:    { main: "صبَّحك الله بالخير", sub: "", icon: "sun"    },
+  asr:     { main: "صبَّحك الله بالخير", sub: "", icon: "sun"    },
+  maghrib: { main: "مسَّاك الله بالخير", sub: "", icon: "sunset" },
+  isha:    { main: "مسَّاك الله بالخير", sub: "", icon: "sunset" },
+  layl:    { main: "مسَّاك الله بالخير", sub: "", icon: "moon"   },
 };
 
 // ── الأيام الهجرية المميّزة ──────────────────────────────────────────────────

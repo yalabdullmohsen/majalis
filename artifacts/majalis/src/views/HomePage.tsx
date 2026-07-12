@@ -381,13 +381,15 @@ export default function HomePage() {
             }}>
               {dailyCtx.greeting}
             </p>
-            <p style={{
-              color: "rgba(250,248,242,0.55)",
-              fontSize: "clamp(0.72rem, 1.9vw, 0.82rem)",
-              margin: 0,
-            }}>
-              {dailyCtx.subGreeting}
-            </p>
+            {dailyCtx.subGreeting && (
+              <p style={{
+                color: "rgba(250,248,242,0.55)",
+                fontSize: "clamp(0.72rem, 1.9vw, 0.82rem)",
+                margin: 0,
+              }}>
+                {dailyCtx.subGreeting}
+              </p>
+            )}
             {dailyCtx.event && (
               <div style={{
                 display: "inline-flex",

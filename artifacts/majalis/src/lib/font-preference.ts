@@ -1,6 +1,6 @@
 export type FontPreference = "default" | "naskh";
 
-export const FONT_STORAGE_KEY = "majalis-font-preference";
+export const FONT_STORAGE_KEY = "majalis-font-preference-v2";
 
 export const FONT_OPTIONS: {
   id: FontPreference;
@@ -16,9 +16,9 @@ export function isFontPreference(value: string | null | undefined): value is Fon
 }
 
 export function readFontPreference(): FontPreference {
-  if (typeof window === "undefined") return "default";
+  if (typeof window === "undefined") return "naskh";
   const stored = window.localStorage.getItem(FONT_STORAGE_KEY);
-  return isFontPreference(stored) ? stored : "default";
+  return isFontPreference(stored) ? stored : "naskh";
 }
 
 export function writeFontPreference(preference: FontPreference) {

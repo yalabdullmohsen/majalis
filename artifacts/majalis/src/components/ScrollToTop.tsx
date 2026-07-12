@@ -25,19 +25,20 @@ export function ScrollToTop() {
       aria-label={`العودة إلى الأعلى — ${progress}%`}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
     >
-      <svg className="stt-ring" viewBox="0 0 44 44" aria-hidden="true">
-        <circle cx="22" cy="22" r={R} fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="2.2" />
-        <circle
-          cx="22" cy="22" r={R}
-          fill="none"
-          stroke="rgba(255,255,255,0.88)"
-          strokeWidth="2.2"
-          strokeLinecap="round"
-          strokeDasharray={C}
-          strokeDashoffset={offset}
-          transform="rotate(-90 22 22)"
-        />
-      </svg>
+      {progress > 3 && (
+        <svg className="stt-ring" viewBox="0 0 44 44" aria-hidden="true">
+          <circle
+            cx="22" cy="22" r={R}
+            fill="none"
+            stroke="rgba(255,255,255,0.80)"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeDasharray={C}
+            strokeDashoffset={offset}
+            transform="rotate(-90 22 22)"
+          />
+        </svg>
+      )}
       <ChevronUp size={17} strokeWidth={2.4} aria-hidden="true" className="stt-icon" />
     </button>
   );
