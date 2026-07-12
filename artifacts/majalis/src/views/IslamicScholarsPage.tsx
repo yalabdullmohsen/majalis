@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useScrollRestore } from "@/hooks/useScrollRestore";
 import { Link } from "wouter";
-import { Search, ChevronLeft, BookOpen, Star, Filter } from "lucide-react";
+import { Search, ChevronLeft, BookOpen, Star, Filter, Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -1276,6 +1276,12 @@ const SPECIALTIES = ["الكل", "فقه", "حديث", "عقيدة", "تفسير
 
 export default function IslamicScholarsPage() {
   useScrollRestore("/scholars");
+  const todayScholar = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return SCHOLARS[(day - 1 + SCHOLARS.length) % SCHOLARS.length];
+  }, []);
   const [era, setEra] = useState("الكل");
   const [specialty, setSpecialty] = useState("الكل");
   const [query, setQuery] = useState("");
@@ -1325,6 +1331,19 @@ export default function IslamicScholarsPage() {
           <span><strong>١٤٠٠</strong> سنة من العلم</span>
         </div>
       </section>
+
+      {/* عالم اليوم */}
+      <div className="schod-card">
+        <div className="schod-card__badge"><Sparkles size={11} aria-hidden="true" /> عالم اليوم</div>
+        <div className="schod-card__era">{todayScholar.era} · {todayScholar.region}</div>
+        <h2 className="schod-card__name">{todayScholar.name}</h2>
+        <div className="schod-card__fullname">{todayScholar.fullName} (ت {todayScholar.died})</div>
+        <p className="schod-card__bio">{todayScholar.bio}</p>
+        {todayScholar.quote && <p className="schod-card__quote">«{todayScholar.quote}»</p>}
+        <div className="schod-card__tags">
+          {todayScholar.specialty.map(s => <span key={s} className="schod-card__tag">{s}</span>)}
+        </div>
+      </div>
 
       {/* ── بحث وتصفية ────────────────────────────────────────── */}
       <div className="sch-controls">

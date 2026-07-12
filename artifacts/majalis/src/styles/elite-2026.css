@@ -17436,6 +17436,37 @@ img[loading="lazy"]:not([src=""]) {
 }
 .sch-hero__stats strong { color: #FFFFFF; font-size: 1.2rem; display: block; }
 
+/* ── عالم اليوم (.schod-card) ── */
+.schod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 1.25rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.schod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px;
+}
+.schod-card__era      { font-size: 0.75rem; color: rgba(255,255,255,0.65); }
+.schod-card__name     { font-size: 1.15rem; font-weight: 800; color: #FFFFFF; margin: 0; }
+.schod-card__fullname { font-size: 0.8rem; color: rgba(255,255,255,0.75); }
+.schod-card__bio      { font-size: 0.88rem; line-height: 1.8; color: rgba(255,255,255,0.92); margin: 0; max-width: 540px; }
+.schod-card__quote    {
+  font-size: 0.85rem; font-style: italic; color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.1); border-radius: 0.65rem; padding: 0.5rem 1rem; margin: 0;
+}
+.schod-card__tags     { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center; }
+.schod-card__tag      {
+  font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 100px; padding: 0.15rem 0.6rem;
+}
+
 /* Controls */
 .sch-controls {
   padding: 1.5rem 0 0;
