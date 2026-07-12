@@ -23930,6 +23930,27 @@ img[loading="lazy"]:not([src=""]) {
   .atl-kutub-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* ── أدب اليوم (.atod-card) ── */
+.atod-card {
+  display: flex; flex-direction: column; gap: 0.55rem;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 1.25rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF; text-align: center;
+}
+.atod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; width: fit-content; margin: 0 auto;
+}
+.atod-card__cat { font-size: 0.78rem; color: rgba(255,255,255,0.72); }
+.atod-card__title { font-size: 1.05rem; font-weight: 700; color: #FFFFFF; margin: 0; }
+.atod-card__text { font-size: 0.92rem; line-height: 1.85; color: rgba(255,255,255,0.93); margin: 0; }
+.atod-card__source { font-size: 0.75rem; color: rgba(255,255,255,0.65); font-style: italic; }
+
 /* ══════════════════════════════════════════════════════════════════
    §244 — AnbiyaPage  (.nb-*)
    ══════════════════════════════════════════════════════════════════ */
@@ -24477,6 +24498,32 @@ img[loading="lazy"]:not([src=""]) {
   .mk-amal-grid    { grid-template-columns: 1fr; }
   .mk-tab { font-size: .82rem; padding: .4rem .85rem; }
 }
+
+/* ── ملَك اليوم (.mkod-card) ── */
+.mkod-card {
+  display: flex; flex-direction: column; gap: 0.55rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 1.25rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.mkod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; width: fit-content; margin: 0 auto;
+}
+.mkod-card__title-ar { font-size: 0.82rem; color: rgba(255,255,255,0.75); }
+.mkod-card__name { font-size: 1.2rem; font-weight: 800; color: #FFFFFF; margin: 0; }
+.mkod-card__role {
+  display: inline-block; padding: 0.2rem 0.7rem; border-radius: 100px;
+  font-size: 0.75rem; font-weight: 600; background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2); color: #FFFFFF;
+}
+.mkod-card__detail { font-size: 0.9rem; line-height: 1.8; color: rgba(255,255,255,0.9); margin: 0; }
+.mkod-card__ref { font-size: 0.75rem; color: rgba(255,255,255,0.6); font-style: italic; }
 
 /* ══════════════════════════════════════════════════════════════════
    §248 — الوصايا النبوية  (.wn-*)
