@@ -101,10 +101,17 @@
    ══════════════════════════════════════════════ */
 body {
   background: var(--elite-cream, #FAFAF9) !important;
-  font-family: var(--font-body) !important;
+  font-family: "Noto Naskh Arabic", "Cairo", system-ui, serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+}
+/* الخط الافتراضي (Cairo) — فقط عند طلب صريح */
+[data-font="default"] body {
+  font-family: "Cairo", "IBM Plex Sans Arabic", system-ui, sans-serif !important;
+}
+[data-font="naskh"] body {
+  font-family: "Noto Naskh Arabic", "Cairo", system-ui, serif !important;
 }
 
 /* ══════════════════════════════════════════════
