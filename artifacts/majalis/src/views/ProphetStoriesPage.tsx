@@ -69,6 +69,10 @@ const MIRACLES_LIST = [
   { nabi: "يعقوب ﷺ",  miracle: "عودة البصر من قميص يوسف",                        ayah: "يوسف: ٩٦" },
   { nabi: "نوح ﷺ",    miracle: "السفينة والطوفان، نجاة المؤمنين",               ayah: "هود: ٤٠" },
   { nabi: "آدم ﷺ",    miracle: "خُلق من طين وعُلِّم الأسماء كلها",               ayah: "البقرة: ٣١" },
+  { nabi: "يوسف ﷺ",  miracle: "تأويل الأحلام وإخبار بالغيب",                    ayah: "يوسف: ٤٣-٤٩" },
+  { nabi: "لوط ﷺ",   miracle: "النجاة من العذاب مع أهله إلا زوجته",             ayah: "هود: ٨١" },
+  { nabi: "شعيب ﷺ",  miracle: "نجاته مع المؤمنين من حجارة الصيحة",              ayah: "هود: ٩٤" },
+  { nabi: "إلياس ﷺ", miracle: "رفعه إلى السماء وإهلاك قومه الكافرين",           ayah: "الصافات: ١٢٤" },
 ];
 
 function prophetColor(slug: string) { return PROPHET_HUE[slug] || IVORY; }
