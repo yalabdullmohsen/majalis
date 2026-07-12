@@ -980,24 +980,98 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
   background: var(--elite-forest, #18362A) !important;
   border-color: rgba(255,255,255,0.08) !important;
 }
+
+/* ══════════════════════════════════════════════
+   §DARK-BG-TEXT — نصوص بيضاء على كل خلفية خضراء داكنة
+   النهج: تجاوز متغيرات CSS + القيم المشفرة
+   ══════════════════════════════════════════════ */
+
+/* ① تجاوز متغيرات ألوان النص على كل الحاويات الخضراء الداكنة */
+.home-main--v3 .ui-card,
+.home-main--v3 .ds-card,
+.home-main--v3 .hit-card,
+.home-main--v3 .hmm-card,
+.home-main--v3 .ds-quiz-home-card,
+.myt-card,
+.hdc__card,
+.ds-page-header,
+.la-page-hero,
+.hmb-wrap,
+.home-assistant {
+  --clr-text-1:            rgba(255,255,255,0.93);
+  --clr-text:              rgba(255,255,255,0.93);
+  --clr-text-2:            rgba(255,255,255,0.72);
+  --clr-text-muted:        rgba(255,255,255,0.55);
+  --elite-ink:             rgba(255,255,255,0.93);
+  --elite-ink-soft:        rgba(255,255,255,0.72);
+  --elite-muted:           rgba(255,255,255,0.55);
+  --majalis-ink:           rgba(255,255,255,0.93);
+  --majalis-ink-soft:      rgba(255,255,255,0.72);
+  --majalis-brass-deep:    rgba(255,255,255,0.72);
+  --majalis-emerald-deep:  #7ED4B5;
+  --majalis-emerald:       #5CC49A;
+  --clr-primary:           #7ED4B5;
+  --color-primary:         #7ED4B5;
+  --txt-primary:           rgba(255,255,255,0.93);
+  --txt-secondary:         rgba(255,255,255,0.70);
+  color: #fff;
+}
+
+/* ② فرض الأبيض على عناصر p (لتجاوز قاعدة p { !important } العامة) */
 .home-main--v3 .ui-card p,
 .home-main--v3 .ds-card p,
 .home-main--v3 .hit-card p,
 .home-main--v3 .hmm-card p,
-.home-main--v3 .ds-quiz-home-card p {
+.home-main--v3 .ds-quiz-home-card p,
+.myt-card p,
+.hdc__card p,
+.ds-page-header p,
+.la-page-hero p,
+.hmb-wrap p {
   color: rgba(255,255,255,0.93) !important;
 }
-.home-main--v3 .ui-card h2,
-.home-main--v3 .ui-card h3,
-.home-main--v3 .ui-card h4,
-.home-main--v3 .ds-card h2,
-.home-main--v3 .ds-card h3 {
+
+/* ③ العناوين */
+.home-main--v3 .ui-card h1, .home-main--v3 .ui-card h2,
+.home-main--v3 .ui-card h3, .home-main--v3 .ui-card h4,
+.home-main--v3 .ui-card h5, .home-main--v3 .ui-card h6,
+.home-main--v3 .ds-card h1, .home-main--v3 .ds-card h2,
+.home-main--v3 .ds-card h3,
+.ds-page-header h1, .ds-page-header h2, .ds-page-header h3,
+.la-page-hero h1, .la-page-hero h2, .la-page-hero h3 {
   color: #fff !important;
 }
-.home-main--v3 .ui-card span:not(.page-tag):not(.badge):not([class*="tag"]),
+
+/* ④ span — مع استثناء العلامات التي لها خلفيات خاصة */
+.home-main--v3 .ui-card span:not(.page-tag):not(.badge):not([class*="pill"]),
 .home-main--v3 .hit-card span,
 .home-main--v3 .hmm-card span {
-  color: rgba(255,255,255,0.82) !important;
+  color: rgba(255,255,255,0.88) !important;
+}
+
+/* ⑤ قيم مشفرة — hnh__source يستخدم #5a7a6a */
+.home-main--v3 .ui-card .hnh__source,
+.home-main--v3 .ui-card .hnh__benefit { color: rgba(255,255,255,0.72) !important; }
+
+/* ⑥ بطاقة السنن — الروابط داخل الخلفية الداكنة */
+.home-main--v3 .ui-card .home-sunnah-card__link {
+  background: rgba(255,255,255,0.10) !important;
+  color: #fff !important;
+}
+.home-main--v3 .ui-card .home-sunnah-card__period { color: rgba(255,255,255,0.75) !important; }
+
+/* ⑦ strong / em / blockquote / cite / small / a */
+.home-main--v3 .ui-card strong,
+.home-main--v3 .ui-card em,
+.home-main--v3 .ui-card blockquote,
+.home-main--v3 .ui-card cite,
+.home-main--v3 .ui-card small,
+.home-main--v3 .ui-card li,
+.home-main--v3 .ds-card strong,
+.home-main--v3 .ds-card em,
+.myt-card strong,
+.hdc__card strong {
+  color: rgba(255,255,255,0.90) !important;
 }
 
 .home-section {
