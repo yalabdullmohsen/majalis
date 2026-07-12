@@ -58,7 +58,7 @@ const FIQH_TOPICS: FiqhTopic[] = [
   { emoji: "🕌", title: "الصلاة",            desc: "أحكام الصلاة وأوقاتها",          href: "/salah-guide",  color: "#1F4D3A" },
   { emoji: "💰", title: "الزكاة",            desc: "أحكام الزكاة وحسابها",           href: "/zakat",        color: "#0F5132" },
   { emoji: "🌙", title: "الصيام",            desc: "أحكام رمضان والنوافل",           href: "/sawm",         color: "#5B21B6" },
-  { emoji: "🕋", title: "الحج والعمرة",       desc: "مناسك الحج والعمرة",             href: "/hajj",         color: "#92400E" },
+  { emoji: "🕋", title: "الحج والعمرة",       desc: "مناسك الحج والعمرة",             href: "/hajj",         color: "#0E6E52" },
   { emoji: "🕯️", title: "الجنائز",           desc: "أحكام الجنائز والتعزية",         href: "/janaza",       color: "#374151" },
   { emoji: "⚖️", title: "المواريث",          desc: "حاسبة الفرائض والتركات",         href: "/mawarith",     color: "#DC2626" },
   { emoji: "📐", title: "القواعد الفقهية",   desc: "القواعد الخمس الكبرى وفروعها",   href: "/fiqh-qawaid",  color: "#1F4D3A" },

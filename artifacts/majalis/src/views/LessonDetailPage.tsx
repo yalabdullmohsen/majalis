@@ -4,7 +4,7 @@ import { AdminInlineEdit } from "@/components/AdminInlineEdit";
 import { getLessonById, getSheikhs } from "@/lib/supabase";
 import { SkeletonPage, Empty } from "@/components/ui-common";
 import ContentActions from "@/components/ContentActions";
-import { isDemoId } from "@/lib/demo-content";
+import { isDemoId } from "@/lib/demo-id";
 import { extractLessonSchedule, hasValue } from "@/lib/lesson-display";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { OptimizedSheikhImage } from "@/components/sheikh/OptimizedSheikhImage";

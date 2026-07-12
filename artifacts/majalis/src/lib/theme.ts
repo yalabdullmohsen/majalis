@@ -38,7 +38,7 @@ export const QA_RULING_COLORS: Record<string, { bg: string; text: string }> = {
   "مباح": { bg: "#DBEAFE", text: "#1E40AF" },
   "سنة": { bg: "rgba(14,110,82,0.08)", text: "#0A5040" },
   "مندوب": { bg: "rgba(14,110,82,0.08)", text: "#0A5040" },
-  "مكروه": { bg: "#FFEDD5", text: "#9A3412" },
+  "مكروه": { bg: "rgba(21,48,37,0.08)", text: "#153025" },
   "حرام": { bg: "#FEE2E2", text: "#991B1B" },
 };
 

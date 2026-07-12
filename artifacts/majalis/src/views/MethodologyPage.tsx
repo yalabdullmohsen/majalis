@@ -10,6 +10,9 @@ const SOURCES = [
   { name: "islamweb.net", desc: "مكتبة الفتاوى والبحوث الشرعية" },
   { name: "aladhan.com", desc: "خدمة حسابات مواقيت الصلاة والتقويم" },
   { name: "alquran.cloud", desc: "بيانات القرآن الكريم بالرسم العثماني" },
+  { name: "shamela.ws", desc: "المكتبة الشاملة — أكبر مكتبة إسلامية رقمية للتراث" },
+  { name: "dar-alifta.net", desc: "دار الإفتاء المصرية — فتاوى رسمية معتمدة" },
+  { name: "binbaz.org.sa", desc: "موقع الشيخ ابن باز — أحكام وفتاوى محقَّقة" },
 ];
 
 const STEPS = [

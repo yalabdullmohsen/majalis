@@ -40,6 +40,7 @@ export type AdhanPreferences = {
   globalEnabled: boolean;           // master on/off
   defaultMuezzinId: string;         // fallback muezzin for all prayers
   prayers: Record<PrayerKey, PerPrayerPrefs>;
+  fridayBannerEnabled: boolean;     // show Friday Jumuah banner
 };
 
 const DEFAULT_ADVANCE: Record<PrayerKey, AdvanceMinutes> = {
@@ -63,6 +64,7 @@ function defaultPrefs(): AdhanPreferences {
     globalEnabled: true,
     defaultMuezzinId: DEFAULT_MUEZZIN_ID,
     prayers,
+    fridayBannerEnabled: true,
   };
 }
 
@@ -76,6 +78,7 @@ export function loadAdhanPrefs(): AdhanPreferences {
       globalEnabled: parsed.globalEnabled ?? base.globalEnabled,
       defaultMuezzinId: parsed.defaultMuezzinId ?? base.defaultMuezzinId,
       prayers: { ...base.prayers, ...parsed.prayers },
+      fridayBannerEnabled: parsed.fridayBannerEnabled ?? base.fridayBannerEnabled,
     };
   } catch {
     return defaultPrefs();

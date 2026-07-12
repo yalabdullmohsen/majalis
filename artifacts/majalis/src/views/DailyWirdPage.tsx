@@ -31,7 +31,7 @@ function KhatmaRing({ pagesInKhatma, khatmasCompleted }: { pagesInKhatma: number
       <circle cx="62" cy="62" r={r} fill="none" stroke="var(--majalis-emerald-muted, rgba(14,110,82,.12))" strokeWidth="8" />
       <circle
         cx="62" cy="62" r={r} fill="none"
-        stroke={done ? "#F59E0B" : "var(--majalis-emerald, #1F4D3A)"}
+        stroke={done ? "#0E6E52" : "var(--majalis-emerald, #1F4D3A)"}
         strokeWidth="8" strokeLinecap="round"
         strokeDasharray={circ}
         strokeDashoffset={circ * (1 - pct)}
@@ -39,7 +39,7 @@ function KhatmaRing({ pagesInKhatma, khatmasCompleted }: { pagesInKhatma: number
         opacity={done ? "1" : "0.75"}
       />
       {khatmasCompleted > 0 && (
-        <text x="62" y="55" textAnchor="middle" fill={done ? "#F59E0B" : "var(--majalis-emerald)"} fontSize="20" fontWeight="800" fontFamily="inherit">
+        <text x="62" y="55" textAnchor="middle" fill={done ? "#0E6E52" : "var(--majalis-emerald)"} fontSize="20" fontWeight="800" fontFamily="inherit">
           {toAr(khatmasCompleted)}
         </text>
       )}

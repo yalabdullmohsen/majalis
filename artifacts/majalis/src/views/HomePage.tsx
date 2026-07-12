@@ -26,6 +26,7 @@ import { HomeNawawiHadith } from "@/components/home/HomeNawawiHadith";
 import { HomeInterestingTopics } from "@/components/home/HomeInterestingTopics";
 import { HomeMindMapSection } from "@/components/home/HomeMindMapSection";
 import { HomeMajlisToday } from "@/components/home/HomeMajlisToday";
+import { FridayBanner } from "@/components/FridayBanner";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import {
   BookMarked, BookOpen, Bot, CalendarDays, Car, Check, Clock,
@@ -120,7 +121,7 @@ const FEATURE_CATS: FeatureCat[] = [
     items: [
       { href: "/adhkar",          Icon: Star,        title: "الأذكار",              desc: "أذكار الصباح والمساء" },
       { href: "/sunan-yawmiyya",  Icon: Check,       title: "السنن النبوية",        desc: "25+ سنة يومية مع تتبع التطبيق" },
-      { href: "/duas",        Icon: Heart,       title: "الأدعية الشرعية",    desc: "25 دعاءً موثقاً مع المعنى والمصدر" },
+      { href: "/duas",        Icon: Heart,       title: "الأدعية الشرعية",    desc: "٨٠+ دعاءً موثقاً بالمصدر في ٨ أبواب" },
       { href: "/duas-quran",  Icon: BookOpen,    title: "أدعية القرآن",        desc: "12 دعاءً قرآنياً للأنبياء والمؤمنين" },
       { href: "/fawaid",       Icon: Lightbulb,   title: "الفوائد الدينية",      desc: "فوائد علمية منتقاة" },
       { href: "/hikam-salaf",  Icon: BookOpen,    title: "حكم السلف الصالح",     desc: "أقوال الأئمة والصحابة والتابعين" },
@@ -500,7 +501,7 @@ export default function HomePage() {
               {[
                 { num: "١٢٣+", label: "عالم مرجعي",   icon: "👤" },
                 { num: "٤٨٠+", label: "سؤال اختباري", icon: "🧠" },
-                { num: "٤٦٥+", label: "فائدة علمية",  icon: "💡" },
+                { num: "٥١٠+", label: "فائدة علمية",  icon: "💡" },
                 { num: "١٠٠+", label: "كتاب علمي",    icon: "📚" },
               ].map(({ num, label, icon }) => (
                 <div key={label} style={{
@@ -565,6 +566,13 @@ export default function HomePage() {
           ))}
         </div>
       </nav>
+
+      {/* ══ بانر يوم الجمعة ══ */}
+      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 1rem" }}>
+        <SafeHomeSection name="FridayBanner">
+          <FridayBanner />
+        </SafeHomeSection>
+      </div>
 
       {/* ══ تذكير صيام ══ */}
       <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 1rem" }}>

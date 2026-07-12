@@ -100,7 +100,11 @@ export function SectionQuiz({ categoryId, title = "اختبر معلوماتك",
 
   if (pool.length === 0) return null;
 
-  const toggle = () => setExpanded((e) => !e);
+  const toggle = () =>
+    setExpanded((e) => {
+      if (!e) setSeed((s) => s + 1);
+      return !e;
+    });
 
   return (
     <section className="sq-section" dir="rtl" aria-label={title}>

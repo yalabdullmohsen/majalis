@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CloudMoon, CloudSun, MapPin, Moon, Music, Bell, ChevronLeft, Sunrise, Sun, Sunset } from "lucide-react";
+import { CloudMoon, CloudSun, MapPin, Moon, Music, Bell, ChevronLeft, Sunrise, Sun, Sunset, Star } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import {
@@ -23,6 +23,7 @@ import {
 } from "@/lib/prayer-times";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { applyPageSeo } from "@/lib/seo";
+import { undismissFridayBanner } from "@/lib/friday-prayer";
 
 const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 20, 30];
 
@@ -51,6 +52,31 @@ function Toggle({
       <span className="ads-toggle__thumb" />
     </button>
   );
+}
+
+type PermissionState = "granted" | "denied" | "default" | "unsupported";
+
+function PermissionBadge({ value }: { value: PermissionState }) {
+  const MAP: Record<PermissionState, { label: string; cls: string }> = {
+    granted:     { label: "مفعّل ✓",        cls: "ads-perm--ok" },
+    denied:      { label: "محجوب ✕",         cls: "ads-perm--err" },
+    default:     { label: "لم يُطلب بعد",    cls: "ads-perm--warn" },
+    unsupported: { label: "غير مدعوم",       cls: "ads-perm--muted" },
+  };
+  const { label, cls } = MAP[value];
+  return <span className={`ads-perm-badge ${cls}`}>{label}</span>;
+}
+
+function LocationPermBadge() {
+  const [state, setState] = useState<PermissionState>("default");
+  useEffect(() => {
+    if (!navigator.permissions) { setState("unsupported"); return; }
+    navigator.permissions.query({ name: "geolocation" }).then((res) => {
+      setState(res.state as PermissionState);
+      res.onchange = () => setState(res.state as PermissionState);
+    }).catch(() => setState("unsupported"));
+  }, []);
+  return <PermissionBadge value={state} />;
 }
 
 export default function AdhanSettingsPage() {
@@ -295,6 +321,60 @@ export default function AdhanSettingsPage() {
               </div>
             );
           })}
+        </div>
+      </div>
+
+      {/* ══ تذكير يوم الجمعة ══ */}
+      <div className="ads-card">
+        <div className="ads-card__head">
+          <Star size={15} strokeWidth={2} />
+          <span>تذكير يوم الجمعة</span>
+        </div>
+        <div className="ads-card__body">
+          <div className="ads-row-sep">
+            <div>
+              <div className="ads-global-label">عرض إعلان ليلة الجمعة ويومها</div>
+              <div className="ads-global-desc">
+                يظهر شعار الآية الكريمة من مغرب الخميس حتى مغرب الجمعة
+              </div>
+            </div>
+            <Toggle
+              checked={prefs.fridayBannerEnabled}
+              onChange={(v) => {
+                const next = patchAdhanPrefs({ ...prefs, fridayBannerEnabled: v });
+                setPrefs(next);
+                // إذا أُعيد التفعيل نمسح الإغلاق السابق للجلسة
+                if (v) undismissFridayBanner();
+              }}
+              id="friday-banner-toggle"
+            />
+          </div>
+          <p className="ads-adhan-desc">
+            الآية المعروضة: «إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ ۚ يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا» — الأحزاب: ٥٦
+          </p>
+        </div>
+      </div>
+
+      {/* ══ حالة الأذونات ══ */}
+      <div className="ads-card">
+        <div className="ads-card__head">
+          <Bell size={15} strokeWidth={2} />
+          <span>حالة الأذونات</span>
+        </div>
+        <div className="ads-card__body">
+          <div className="ads-row-sep">
+            <span className="ads-adhan-desc">إذن الإشعارات</span>
+            <PermissionBadge value={
+              "Notification" in window
+                ? Notification.permission === "granted" ? "granted"
+                : Notification.permission === "denied" ? "denied" : "default"
+                : "unsupported"
+            } />
+          </div>
+          <div className="ads-row">
+            <span className="ads-adhan-desc">إذن الموقع الجغرافي</span>
+            <LocationPermBadge />
+          </div>
         </div>
       </div>
 
