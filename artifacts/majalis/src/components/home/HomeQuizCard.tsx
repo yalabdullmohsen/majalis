@@ -22,7 +22,7 @@ export function HomeQuizCard() {
       <svg aria-hidden="true" style={{
         position: "absolute", top: "-20px", left: "-20px", opacity: 0.05, pointerEvents: "none",
       }} width="120" height="120" viewBox="0 0 120 120">
-        <polygon points="60,5 75,40 112,40 82,62 95,97 60,75 25,97 38,62 8,40 45,40" fill="#1F4D3A"/>
+        <polygon points="60,5 75,40 112,40 82,62 95,97 60,75 25,97 38,62 8,40 45,40" fill="#176B57"/>
       </svg>
       <svg aria-hidden="true" style={{
         position: "absolute", bottom: "-15px", right: "-15px", opacity: 0.04, pointerEvents: "none",

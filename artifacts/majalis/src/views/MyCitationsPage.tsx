@@ -20,7 +20,7 @@ const TABS = ["الكل", "المجلدات", "المفضلة", "الأكثر ا
 type Tab = (typeof TABS)[number];
 
 const FOLDER_COLORS = [
-  "#065f46", "#1d4ed8", "#7c3aed", "#1F4D3A",
+  "#065f46", "#1d4ed8", "#7c3aed", "#176B57",
   "#dc2626", "#0369a1", "#047857", "#6b7280",
 ];
 

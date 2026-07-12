@@ -26,7 +26,7 @@ const TOPICS: { href: string; icon: string; label: string; desc: string; color: 
     icon: '<path d="M11 2a5 5 0 0 1 5 5c0 2.4-1.5 4.5-3.5 5.4V14H9.5v-1.6C7.5 11.5 6 9.4 6 7a5 5 0 0 1 5-5z"/><line x1="9.5" y1="17" x2="12.5" y2="17"/><line x1="10" y1="20" x2="12" y2="20"/>',
     label: "الفوائد العلمية",
     desc: "لآلئ ودرر من كلام العلماء",
-    color: "#1F4D3A",
+    color: "#176B57",
   },
   {
     href: "/raqaiq",
@@ -40,7 +40,7 @@ const TOPICS: { href: string; icon: string; label: string; desc: string; color: 
     icon: '<path d="M4 4h6v8H4z"/><path d="M12 4h6v8h-6z"/><line x1="4" y1="16" x2="18" y2="16"/><line x1="7" y1="19" x2="15" y2="19"/>',
     label: "القصص الإسلامية",
     desc: "وقائع وعِبَر من التاريخ الإسلامي",
-    color: "#1F4D3A",
+    color: "#176B57",
   },
   {
     href: "/hikam-salaf",
@@ -68,7 +68,7 @@ const TOPICS: { href: string; icon: string; label: string; desc: string; color: 
     icon: '<path d="M11 19c-5-3.5-8-7-8-10a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 3-3 6.5-8 10z"/>',
     label: "الأخلاق الإسلامية",
     desc: "مكارم الأخلاق من الوحي",
-    color: "#1F4D3A",
+    color: "#176B57",
   },
   {
     href: "/shamael",
@@ -96,7 +96,7 @@ const TOPICS: { href: string; icon: string; label: string; desc: string; color: 
     icon: '<rect x="3" y="5" width="6" height="10" rx="1"/><rect x="9" y="3" width="6" height="12" rx="1"/><rect x="15" y="6" width="4" height="9" rx="1"/><line x1="3" y1="18" x2="19" y2="18"/>',
     label: "آداب طالب العلم",
     desc: "فضل العلم وآداب الطالب مع شيخه",
-    color: "#1F4D3A",
+    color: "#176B57",
   },
   {
     href: "/amr-bil-maruf",
@@ -124,7 +124,7 @@ const TOPICS: { href: string; icon: string; label: string; desc: string; color: 
     icon: '<rect x="2" y="16" width="18" height="3" rx="1"/><rect x="5" y="10" width="3" height="6"/><rect x="9.5" y="7" width="3" height="9"/><rect x="14" y="12" width="3" height="4"/>',
     label: "القواعد الفقهية الكبرى",
     desc: "القواعد الخمس وفروعها وتطبيقاتها",
-    color: "#1F4D3A",
+    color: "#176B57",
   },
 ];
 
@@ -136,7 +136,7 @@ export function HomeInterestingTopics() {
       <div className="home-section-head">
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
-            <polygon points="9,1 11,6.5 17,6.5 12.5,10 14.5,16 9,12.5 3.5,16 5.5,10 1,6.5 7,6.5" fill="#1F4D3A" opacity="0.85"/>
+            <polygon points="9,1 11,6.5 17,6.5 12.5,10 14.5,16 9,12.5 3.5,16 5.5,10 1,6.5 7,6.5" fill="#176B57" opacity="0.85"/>
           </svg>
           <div>
             <p className="home-eyebrow">استكشف</p>

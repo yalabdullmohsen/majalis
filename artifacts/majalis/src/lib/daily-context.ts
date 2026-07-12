@@ -81,7 +81,7 @@ const HIJRI_EVENTS: HijriEvent[] = [
 
 const DAY_EVENTS: Partial<Record<DayOfWeek, { label: string; color: string }>> = {
   friday:   { label: "يوم الجمعة المبارك — يوم العيد الأسبوعي", color: "#0E6E52" },
-  saturday: { label: "بداية أسبوع مثمر بإذن الله",             color: "#1F4D3A" },
+  saturday: { label: "بداية أسبوع مثمر بإذن الله",             color: "#176B57" },
   monday:   { label: "يوم الإثنين — يوم صيام مستحب",           color: "#0F5132" },
   thursday: { label: "يوم الخميس — يوم صيام مستحب",            color: "#0F5132" },
 };
@@ -101,7 +101,7 @@ const TIME_SUGGESTIONS: Record<TimeOfDay, string> = {
 // ── الألوان الافتراضية حسب الوقت ────────────────────────────────────────────
 
 const TIME_COLORS: Record<TimeOfDay, string> = {
-  fajr:    "#1F4D3A",
+  fajr:    "#176B57",
   duha:    "#0E6E52",
   zuhr:    "#0F766E",
   asr:     "#0E6E52",

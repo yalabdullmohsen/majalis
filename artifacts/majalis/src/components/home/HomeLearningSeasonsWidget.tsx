@@ -80,7 +80,7 @@ function getSeasons(): Season[] {
       description: "أفضل أيام الدنيا، العشر الأول من ذي الحجة 1448هـ",
       suggestion: "مراجعة أعمال اليوم العظيمة",
       href: "/adhkar",
-      color: "var(--majalis-emerald, #1F4D3A)",
+      color: "var(--majalis-emerald, #176B57)",
     },
   ];
 }
@@ -120,7 +120,7 @@ export function HomeLearningSeasonsWidget() {
       <div className="ds-section__head">
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20">
-            <polygon points="10,1 12.5,7 19,7 14,11 16,18 10,14 4,18 6,11 1,7 7.5,7" fill="none" stroke="#1F4D3A" strokeWidth="1.3"/>
+            <polygon points="10,1 12.5,7 19,7 14,11 16,18 10,14 4,18 6,11 1,7 7.5,7" fill="none" stroke="#176B57" strokeWidth="1.3"/>
             <circle cx="10" cy="10" r="3" fill="none" stroke="#2d7a5a" strokeWidth="0.9"/>
           </svg>
           <h2 className="ds-section__title">مواسم التعلّم</h2>

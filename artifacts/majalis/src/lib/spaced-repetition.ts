@@ -44,7 +44,7 @@ export function qualityLabel(q: ReviewQuality): string {
 
 export const QUALITY_OPTIONS: { value: ReviewQuality; label: string; color: string }[] = [
   { value: 0, label: "لم أتذكر", color: "#dc2626" },
-  { value: 2, label: "صعب", color: "#1F4D3A" },
+  { value: 2, label: "صعب", color: "#176B57" },
   { value: 4, label: "عرفته", color: "#16a34a" },
   { value: 5, label: "سهل", color: "#0284c7" },
 ];

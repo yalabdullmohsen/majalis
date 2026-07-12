@@ -17,7 +17,7 @@ export function HomeSunnahByTime() {
       <div className="home-sunnah-card__head">
         <div style={{ display: "flex", alignItems: "flex-start", gap: "0.45rem" }}>
           <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" style={{ marginTop: "0.2rem", flexShrink: 0 }}>
-            <polygon points="8,1 10,6 15.5,6 11,9.5 13,15 8,11.5 3,15 5,9.5 0.5,6 6,6" fill="#1F4D3A" opacity="0.7"/>
+            <polygon points="8,1 10,6 15.5,6 11,9.5 13,15 8,11.5 3,15 5,9.5 0.5,6 6,6" fill="#176B57" opacity="0.7"/>
           </svg>
           <div>
             <p className="home-eyebrow">حسب وقتك</p>

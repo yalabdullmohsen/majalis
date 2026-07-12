@@ -9,8 +9,8 @@ function IslamicStarFooter() {
   }).join(" ");
   return (
     <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" className="footer-star">
-      <polygon points={pts} fill="none" stroke="var(--majalis-emerald,#1F4D3A)" strokeWidth="1.2" strokeLinejoin="round" opacity="0.7" />
-      <circle cx={cx} cy={cx} r="2.5" fill="var(--majalis-emerald,#1F4D3A)" opacity="0.7" />
+      <polygon points={pts} fill="none" stroke="var(--majalis-emerald,#176B57)" strokeWidth="1.2" strokeLinejoin="round" opacity="0.7" />
+      <circle cx={cx} cy={cx} r="2.5" fill="var(--majalis-emerald,#176B57)" opacity="0.7" />
     </svg>
   );
 }

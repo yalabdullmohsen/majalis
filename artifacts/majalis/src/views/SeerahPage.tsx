@@ -16,7 +16,7 @@ const PHASES: { id: string; num: number; title: string; year: string; Icon: Luci
     title: "النسب والمولد",
     year: "عام الفيل، 571م",
     Icon: Moon,
-    color: "#18362A",
+    color: "#123F36",
     desc: "وُلد النبي ﷺ في مكة المكرمة عام الفيل، من نسب قريشي شريف يمتد إلى إبراهيم الخليل عليه السلام. وفي ذلك العام حمى الله الكعبة المشرفة من أبرهة وجنده.",
     topics: ["نسبه الشريف ﷺ", "مولده في مكة", "حادثة الفيل"],
     keyEvents: [
@@ -50,7 +50,7 @@ const PHASES: { id: string; num: number; title: string; year: string; Icon: Luci
     title: "الشباب قبل البعثة",
     year: "576–610م",
     Icon: ScrollText,
-    color: "#18362A",
+    color: "#123F36",
     desc: "عُرف ﷺ في قومه بالصادق الأمين، شارك في حلف الفضول لنصرة المظلومين، عمل بالتجارة، وتزوج خديجة رضي الله عنها، وكان يتحنث في غار حراء.",
     topics: ["الصادق الأمين", "حلف الفضول", "زواجه من خديجة ﷢", "تحنّثه في حراء"],
     keyEvents: [
@@ -69,7 +69,7 @@ const PHASES: { id: string; num: number; title: string; year: string; Icon: Luci
     title: "البعثة",
     year: "610م",
     Icon: Sparkles,
-    color: "#18362A",
+    color: "#123F36",
     desc: "نزل جبريل عليه السلام على النبي ﷺ في غار حراء بأوائل سورة العلق، فكانت بداية الوحي والرسالة المحمدية الخاتمة.",
     topics: ["نزول الوحي الأول", "غار حراء", "أوائل المؤمنين"],
     keyEvents: [
@@ -141,7 +141,7 @@ const PHASES: { id: string; num: number; title: string; year: string; Icon: Luci
     title: "الهجرة إلى المدينة",
     year: "622م",
     Icon: MapPin,
-    color: "#18362A",
+    color: "#123F36",
     desc: "أذن الله بالهجرة إلى يثرب، فخرج النبي ﷺ مع أبي بكر رضي الله عنه وآثرا غار ثور مأوىً، ثم وصل المدينة فاستُقبل بالفرح والترحيب. كانت هذه الهجرة بداية التقويم الهجري.",
     topics: ["مغادرة مكة", "الوصول للمدينة", "بناء المسجد النبوي", "الأخوّة بين المهاجرين والأنصار"],
     keyEvents: [
@@ -179,7 +179,7 @@ const PHASES: { id: string; num: number; title: string; year: string; Icon: Luci
     title: "الحديبية وفتح مكة",
     year: "628–630م",
     Icon: Landmark,
-    color: "#18362A",
+    color: "#123F36",
     desc: "كان صلح الحديبية فتحاً مبيناً مهّد لانتشار الإسلام أفواجاً. تُوّج ذلك بدخول مكة المكرمة عام ثمانية للهجرة بلا قتال، وعفا النبي ﷺ عمن آذاه.",
     topics: ["صلح الحديبية", "فتح مكة", "العفو العام"],
     keyEvents: [

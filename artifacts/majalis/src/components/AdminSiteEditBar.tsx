@@ -204,7 +204,7 @@ export function AdminSiteEditBar() {
         body.site-edit-mode blockquote,
         body.site-edit-mode td,
         body.site-edit-mode th {
-          outline: 1.5px dashed #1F4D3A !important;
+          outline: 1.5px dashed #176B57 !important;
           cursor: text !important;
           border-radius: 2px;
         }
@@ -249,7 +249,7 @@ export function AdminSiteEditBar() {
           transition: background 0.2s;
         }
         .ase-bar__toggle--off {
-          background: #1F4D3A;
+          background: #176B57;
           color: #fff;
         }
         .ase-bar__toggle--on {
@@ -274,7 +274,7 @@ export function AdminSiteEditBar() {
           color: #555;
           line-height: 1.5;
         }
-        .ase-bar__info strong { color: #1F4D3A; }
+        .ase-bar__info strong { color: #176B57; }
         .ase-bar__clear {
           font-size: 0.72rem;
           color: #d32f2f;
@@ -292,7 +292,7 @@ export function AdminSiteEditBar() {
           left: 0;
           right: 0;
           z-index: 9991;
-          background: #1F4D3A;
+          background: #176B57;
           color: #fff;
           font-size: 0.82rem;
           text-align: center;
@@ -330,7 +330,7 @@ export function AdminSiteEditBar() {
           gap: 0.5rem;
         }
         .ase-dialog__tag {
-          background: #1F4D3A;
+          background: #176B57;
           color: #fff;
           font-size: 0.65rem;
           font-weight: 700;
@@ -366,7 +366,7 @@ export function AdminSiteEditBar() {
           direction: rtl;
           box-sizing: border-box;
         }
-        .ase-dialog__ta:focus { outline: 2px solid #1F4D3A; border-color: #1F4D3A; }
+        .ase-dialog__ta:focus { outline: 2px solid #176B57; border-color: #176B57; }
         .ase-dialog__hint {
           font-size: 0.72rem;
           color: #888;
@@ -391,7 +391,7 @@ export function AdminSiteEditBar() {
           transition: background 0.15s;
           font-family: inherit;
         }
-        .ase-btn--primary { background: #1F4D3A; color: #fff; }
+        .ase-btn--primary { background: #176B57; color: #fff; }
         .ase-btn--primary:hover { background: #2d7a5a; }
         .ase-btn--ghost { background: #f5f5f5; color: #333; }
         .ase-btn--ghost:hover { background: #e8e8e8; }

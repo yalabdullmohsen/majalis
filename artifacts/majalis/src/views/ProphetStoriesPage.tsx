@@ -14,12 +14,12 @@ type Citation = { surah: string; ayahs: string; note: string };
 
 const PROPHET_HUE: Record<string, string> = {
   adam: "#5D726A", idris: "#4A6B6B", nuh: "#3D6560", hud: "#5A7066",
-  salih: "#5B6B60", ibrahim: "#18362A", lut: "#3A6A4A", ismail: "#2A5E42",
+  salih: "#5B6B60", ibrahim: "#123F36", lut: "#3A6A4A", ismail: "#2A5E42",
   "is-haq": "#3D6050", yaqub: "#356055", yusuf: "#2D5545", ayyub: "#4A6055",
-  shuayb: "#25504A", musa: "#18362A", harun: "#1E4A38", "dhul-kifl": "#354A42",
+  shuayb: "#25504A", musa: "#123F36", harun: "#1E4A38", "dhul-kifl": "#354A42",
   dawud: "#2A3E35", sulayman: "#153025", ilyas: "#3A5548", "al-yasa": "#266050",
   yunus: "#1A5555", zakariyya: "#2A503C", yahya: "#205540", isa: "#1E3F50",
-  muhammad: "#18362A",
+  muhammad: "#123F36",
 };
 
 const IVORY = "#BEC7C3";

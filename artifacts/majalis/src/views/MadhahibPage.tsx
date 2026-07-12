@@ -28,7 +28,7 @@ type Madhhab = {
 const MADHAHIB: Madhhab[] = [
   {
     id: "hanafi",
-    color: "#1F4D3A",
+    color: "#176B57",
     icon: "🕌",
     name: "الحنفي",
     fullName: "المذهب الحنفي",

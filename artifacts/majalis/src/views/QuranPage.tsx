@@ -1153,8 +1153,8 @@ export default function QuranPage() {
               )}
               {tafseer && !tafseerLoading && (
                 <div style={{
-                  fontSize: "0.78rem", lineHeight: 1.7, color: "#1F4D3A",
-                  background: "rgba(31,77,58,0.05)", borderRight: "3px solid #1F4D3A",
+                  fontSize: "0.78rem", lineHeight: 1.7, color: "#176B57",
+                  background: "rgba(31,77,58,0.05)", borderRight: "3px solid #176B57",
                   padding: "0.4rem 0.6rem", borderRadius: "0 0.4rem 0.4rem 0",
                   margin: "0.2rem 0 0", direction: "rtl",
                 }}>
@@ -1175,9 +1175,9 @@ export default function QuranPage() {
                     onClick={() => { setRepeatMode(m); }}
                     style={{
                       padding: "0.3rem 0.7rem", fontSize: "0.72rem", fontFamily: "inherit",
-                      borderRadius: "999px", border: `1.5px solid ${repeatMode === m ? "#1F4D3A" : "#e8f0ec"}`,
-                      background: repeatMode === m ? "#1F4D3A" : "transparent",
-                      color: repeatMode === m ? "#fff" : "#1F4D3A",
+                      borderRadius: "999px", border: `1.5px solid ${repeatMode === m ? "#176B57" : "#e8f0ec"}`,
+                      background: repeatMode === m ? "#176B57" : "transparent",
+                      color: repeatMode === m ? "#fff" : "#176B57",
                       cursor: "pointer", fontWeight: 700, transition: "all 0.14s",
                     }}
                   >
@@ -1187,14 +1187,14 @@ export default function QuranPage() {
               </div>
               {/* مؤقت التوقف */}
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <label style={{ fontSize: "0.7rem", color: "#1F4D3A", fontWeight: 700, whiteSpace: "nowrap" }}>🕐 توقف عند:</label>
+                <label style={{ fontSize: "0.7rem", color: "#176B57", fontWeight: 700, whiteSpace: "nowrap" }}>🕐 توقف عند:</label>
                 <input
                   type="time"
                   value={stopAtTime}
                   onChange={e => setStopAtTime(e.target.value)}
                   style={{
                     border: "1.5px solid #e8f0ec", borderRadius: "0.5rem", padding: "0.25rem 0.5rem",
-                    fontSize: "0.8rem", fontFamily: "inherit", background: "#f5f9f6", color: "#1F4D3A",
+                    fontSize: "0.8rem", fontFamily: "inherit", background: "#f5f9f6", color: "#176B57",
                     outline: "none",
                   }}
                 />
@@ -1204,9 +1204,9 @@ export default function QuranPage() {
                     onClick={() => { setTimerActive(v => !v); }}
                     style={{
                       padding: "0.25rem 0.7rem", fontSize: "0.7rem", fontFamily: "inherit",
-                      borderRadius: "999px", border: `1.5px solid ${timerActive ? "#1F4D3A" : "#cde6d8"}`,
-                      background: timerActive ? "#1F4D3A" : "transparent",
-                      color: timerActive ? "#fff" : "#1F4D3A",
+                      borderRadius: "999px", border: `1.5px solid ${timerActive ? "#176B57" : "#cde6d8"}`,
+                      background: timerActive ? "#176B57" : "transparent",
+                      color: timerActive ? "#fff" : "#176B57",
                       cursor: "pointer", fontWeight: 700,
                     }}
                   >
@@ -1228,8 +1228,8 @@ export default function QuranPage() {
                     style={{
                       display: "flex", alignItems: "center", justifyContent: "space-between",
                       width: "100%", padding: "0.65rem 0.75rem", marginBottom: "0.4rem",
-                      borderRadius: "0.6rem", border: `2px solid ${isPlaying ? "#1F4D3A" : "#e8f0ec"}`,
-                      background: isPlaying ? "#1F4D3A" : "#fff",
+                      borderRadius: "0.6rem", border: `2px solid ${isPlaying ? "#176B57" : "#e8f0ec"}`,
+                      background: isPlaying ? "#176B57" : "#fff",
                       color: isPlaying ? "#fff" : "#1a1a1a",
                       cursor: "pointer", fontFamily: "inherit", textAlign: "right",
                       transition: "all 0.15s",
@@ -1241,7 +1241,7 @@ export default function QuranPage() {
                       display: "flex", alignItems: "center", justifyContent: "center",
                       width: 32, height: 32, borderRadius: "50%",
                       background: isPlaying ? "rgba(255,255,255,0.2)" : "#f0f7f4",
-                      color: isPlaying ? "#fff" : "#1F4D3A",
+                      color: isPlaying ? "#fff" : "#176B57",
                       flexShrink: 0,
                     }}>
                       {isPlaying
