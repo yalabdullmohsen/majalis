@@ -21862,6 +21862,46 @@ img[loading="lazy"]:not([src=""]) {
   .sb-hero__title { font-size: 1.35rem; }
 }
 
+/* ── صحابي اليوم (.sbod-card) ── */
+.sbod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 1.5rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.sbod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px;
+}
+.sbod-card__icon {
+  font-size: 2.25rem; line-height: 1; background: rgba(255,255,255,0.12);
+  width: 3.5rem; height: 3.5rem; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.sbod-card__name { font-size: 1.2rem; font-weight: 800; color: #FFFFFF; margin: 0; }
+.sbod-card__kunya { font-size: 0.82rem; color: rgba(255,255,255,0.75); }
+.sbod-card__cats { display: flex; gap: 0.35rem; flex-wrap: wrap; justify-content: center; }
+.sbod-card__cat {
+  padding: 0.2rem 0.65rem; border-radius: 100px; font-size: 0.7rem; font-weight: 600;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); color: #FFFFFF;
+}
+.sbod-card__meta {
+  display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center;
+  font-size: 0.78rem; color: rgba(255,255,255,0.72);
+}
+.sbod-card__fadl { font-size: 0.88rem; line-height: 1.75; color: rgba(255,255,255,0.9); margin: 0; }
+.sbod-card__quote {
+  font-size: 0.85rem; line-height: 1.75; color: rgba(255,255,255,0.88);
+  margin: 0; border: none; padding: 0.6rem 0.9rem;
+  background: rgba(255,255,255,0.08); border-radius: 0.625rem;
+  font-style: italic;
+}
+
 /* ── نهاية §233 ─────────────────────────────────────────── */
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
