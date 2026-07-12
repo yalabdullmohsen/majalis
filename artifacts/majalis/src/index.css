@@ -1,3 +1,5 @@
+/* ══ IBM Plex Sans Arabic + Noto Naskh Arabic ══ */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap&subset=arabic');
 /* ══ خط Amiri للعناوين الرئيسية ══ */
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -60,58 +62,83 @@ html {
   --icon-nav-size:     20px;
   --icon-card-size:    24px;
 
-  --clr-primary:     #1F4D3A;
-  --clr-primary-hov: #173A2C;
-  --clr-primary-act: #133024;
-  --clr-bg:          #FFFFFF;
-  --clr-surface:     #F8F9FA;
-  --clr-border:      #E5E7EB;
-  --clr-divider:     #ECECEC;
-  --clr-text-1:      #1F2937;
-  --clr-text-2:      #6B7280;
-  --clr-text-on-pri: #FFFFFF;
+  --clr-primary:       var(--emerald-500, #176B57);
+  --clr-primary-deep:  var(--emerald-deep, #123F36);
+  --clr-primary-hov:   var(--emerald-600, #125746);
+  --clr-primary-act:   var(--emerald-700, #0E4437);
+  --clr-primary-soft:  #E8F2EE;
+  --clr-primary-subtle:#F3F8F6;
+  --clr-bg:            var(--ivory, #F8F7F3);
+  --clr-surface:       #FFFFFF;
+  --clr-surface-sec:   #F2F1EC;
+  --clr-border:        #E2E6E3;
+  --clr-border-strong: #CBD2CE;
+  --clr-divider:       rgba(23,107,87,.07);
+  --clr-text-1:        var(--ink, #17201D);
+  --clr-text-2:        #5E6964;
+  --clr-text-muted:    #89928E;
+  --clr-text-on-pri:   #FFFFFF;
+  --clr-accent:        var(--sand, #C7A96B);
+  --clr-accent-soft:   var(--sand-soft, #F4EEDF);
+  --clr-emerald:       var(--emerald-500, #176B57);
+  --clr-ink:           var(--ink, #17201D);
+  --clr-ink-soft:      #5E6964;
+  --clr-ink-muted:     #89928E;
 
-  /* ── سُلَّم Emerald الكامل (محدَّث) ── */
-  --emerald-50:  #F0F5F2;
-  --emerald-100: #D8E8E1;
-  --emerald-200: #B0CEBF;
-  --emerald-300: #7AA898;
-  --emerald-400: #4E7D6A;
-  --emerald-500: #1F4D3A;
-  --emerald-600: #173A2C;
-  --emerald-700: #133024;
-  --emerald-800: #0E2419;
-  --emerald-900: #0A1A12;
-  --emerald-950: #06100B;
+  /* ── سُلَّم Emerald المحدَّث 2026 ── */
+  --emerald-50:  #EFF7F4;
+  --emerald-100: #D4EDE6;
+  --emerald-200: #A4D3C5;
+  --emerald-300: #6BB3A1;
+  --emerald-400: #3A8E78;
+  --emerald-500: #176B57;  /* اللون الأساسي الجديد */
+  --emerald-600: #125746;  /* Hover */
+  --emerald-700: #0E4437;
+  --emerald-800: #0A3327;
+  --emerald-900: #071E18;
+  --emerald-950: #040F0C;
+  /* Deep Emerald للبطل والعناوين الكبيرة */
+  --emerald-deep: #123F36;
 
-  /* ── عاج وحبر ── */
-  --ivory:      #FAF8F2;
-  --ink:        #122019;
-  --mark-green: #005424;
+  /* ── عاج دافئ وحبر ── */
+  --ivory:      #F8F7F3;  /* خلفية دافئة هادئة */
+  --ink:        #17201D;  /* نص رئيسي */
+  --mark-green: #248A62;  /* تمييز نجاح */
+
+  /* ── رمل/ذهب خفيف (Accent) ── */
+  --sand:       #C7A96B;
+  --sand-soft:  #F4EEDF;
+  --sand-dim:   rgba(199,169,107,.12);
+
+  /* ── حالات النظام ── */
+  --sys-success: #248A62;
+  --sys-warning: #B98232;
+  --sys-error:   #B94A48;
+  --sys-info:    #1E7A9A;
 
   /* ── لوحة مجالس الأساسية (النهار — الوضع الافتراضي) ── */
   --msk-canvas:        var(--ivory);
   --msk-canvas-1:      var(--emerald-50);
   --msk-canvas-2:      var(--emerald-100);
-  --msk-canvas-glass:  rgba(250,248,242,.94);
+  --msk-canvas-glass:  rgba(248,247,243,.94);
   --msk-manuscript:    #F5EFE0;
   --msk-manuscript-2:  #EDE3CA;
   --msk-gold:          var(--emerald-500);
-  --msk-gold-deep:     var(--emerald-600);
-  --msk-gold-dim:      rgba(24,54,42,.12);
-  --msk-gold-glow:     rgba(24,54,42,.15);
-  --msk-gold-border:   rgba(24,54,42,.22);
+  --msk-gold-deep:     var(--emerald-deep);
+  --msk-gold-dim:      rgba(23,107,87,.12);
+  --msk-gold-glow:     rgba(23,107,87,.15);
+  --msk-gold-border:   rgba(23,107,87,.22);
   --msk-sky:           #1E7A9A;
   --msk-sky-dim:       rgba(30,122,154,.10);
   --msk-text:          var(--ink);
-  --msk-text-2:        var(--emerald-400);
-  --msk-text-3:        var(--emerald-300);
+  --msk-text-2:        #5E6964;
+  --msk-text-3:        #89928E;
   --msk-green:         var(--emerald-500);
-  --msk-red:           #9B1C1C;
-  --msk-red-dim:       rgba(155,28,28,.08);
-  --msk-border:        rgba(24,54,42,0.12);
+  --msk-red:           #B94A48;
+  --msk-red-dim:       rgba(185,74,72,.08);
+  --msk-border:        rgba(23,107,87,0.10);
   --msk-border-strong: var(--emerald-200);
-  --msk-divider:       rgba(24,54,42,.07);
+  --msk-divider:       rgba(23,107,87,.06);
   --msk-shadow-sm:     0 1px 2px rgba(18,32,25,.06);
   --msk-shadow:        0 4px 12px rgba(18,32,25,.08), 0 1px 3px rgba(18,32,25,.05);
   --msk-shadow-lg:     0 12px 32px rgba(18,32,25,.10);
@@ -165,12 +192,12 @@ html {
   --color-parchment:     var(--msk-canvas,   #FFFFFF);
   --color-line:          var(--msk-border,   rgba(31,77,58,0.10));
 
-  /* ── الخطوط — Cairo (نص) + Amiri للعناوين + Amiri Quran (مصحف) ── */
-  --font-primary:  "Cairo", system-ui, sans-serif;
-  --font-ui:       "Cairo", system-ui, sans-serif;
-  --font-display:  "Amiri", "Cairo", serif;
-  --font-reading:  "Noto Naskh Arabic", "Cairo", serif;
-  --font-body:     "Cairo", system-ui, sans-serif;
+  /* ── الخطوط ── IBM Plex Sans Arabic + Cairo (احتياطي) + Amiri ── */
+  --font-primary:  "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
+  --font-ui:       "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
+  --font-body:     "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
+  --font-display:  "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
+  --font-reading:  "Noto Naskh Arabic", "IBM Plex Sans Arabic", serif;
   --font-quran:    "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
 
   /* ── الحركة — تلاشٍ وهبوط (لا ارتداد) ── */
