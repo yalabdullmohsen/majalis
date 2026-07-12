@@ -15907,7 +15907,7 @@ img[loading="lazy"]:not([src=""]) {
   background: #FFF5F5 !important;
 }
 .msk-toast--warning {
-  --toast-accent: #EA580C !important;
+  --toast-accent: #0E6E52 !important;
   --toast-icon-bg: var(--majalis-emerald-soft, #EBF5F0) !important;
   --toast-icon-color: var(--majalis-emerald, #1F4D3A) !important;
 }
