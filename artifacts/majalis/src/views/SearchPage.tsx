@@ -22,7 +22,7 @@ import {
   trackSearchClick,
   type IntelligentSearchResult,
 } from "@/lib/scholarly-intelligence-service";
-import { normalizeArabic } from "@/lib/arabic-search";
+import { normalizeArabic } from "@/shared/arabic-normalize";
 
 const EMPTY: SearchResults = {
   lessons: [],
@@ -154,6 +154,25 @@ function ResultRow({
             {kind && <KindBadge kind={kind} />}
           </div>
           {meta && <span className="search-result-meta">{meta}</span>}
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+/** عرض نتيجة آية قرآنية — النص بخط Amiri Quran حرفياً + مرجع + زر للمصحف */
+function QuranAyahResultRow({ title, meta, href }: { title: string; meta?: string; href: string }) {
+  return (
+    <Link href={href} className="search-result-link">
+      <div className="search-result-row search-result-row--quran">
+        <div className="search-result-copy">
+          <div className="search-result-title-row">
+            {/* النص القرآني يُعرض حرفياً بخط Amiri Quran بدون أي تعديل */}
+            <span className="search-result-title quran-text" dir="rtl" lang="ar">{title}</span>
+            <KindBadge kind="quran" />
+          </div>
+          {meta && <span className="search-result-meta">{meta}</span>}
+          <span className="search-result-quran-link">◀ اقرأ في المصحف</span>
         </div>
       </div>
     </Link>
@@ -555,8 +574,8 @@ export default function SearchPage() {
                   <Group title="الأربعون النووية" items={localExtra.nawawi} render={(h) => (
                     <ResultRow key={h.id} href={h.href} kind="hadith" title={h.title} meta={h.meta} />
                   )} />
-                  <Group title="القرآن" items={localExtra.quran} render={(s) => (
-                    <ResultRow key={s.id} href={s.href} kind="quran" title={s.title} meta={s.meta} />
+                  <Group title="القرآن الكريم" items={localExtra.quran} render={(s) => (
+                    <QuranAyahResultRow key={s.id} href={s.href} title={s.title} meta={s.meta} />
                   )} />
                   {results.stories?.length === 0 && localExtra.islamicStories.length > 0 && (
                     <Group title="القصص الإسلامية" items={localExtra.islamicStories} render={(s) => (

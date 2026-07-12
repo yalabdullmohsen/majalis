@@ -17,7 +17,7 @@ import {
   getSearchHistory,
   getTopSearchQueries,
 } from "@/lib/search-history";
-import { normalizeArabic } from "@/lib/arabic-search";
+import { normalizeArabic } from "@/shared/arabic-normalize";
 
 // ── ثوابت ───────────────────────────────────────────────────────────────────
 

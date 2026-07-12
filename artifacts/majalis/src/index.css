@@ -12246,6 +12246,27 @@ body.assistant-panel-open {
   border-inline-start: 3px solid var(--emerald, #1b5e3b);
 }
 
+/* ── نتائج القرآن الكريم ─────────────────────────────────────── */
+.search-result-row--quran {
+  border-inline-start: 3px solid var(--clr-primary, #0E6E52);
+  background: rgba(14, 110, 82, 0.03);
+}
+
+.search-result-row--quran .search-result-title {
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", serif);
+  font-size: 1.15rem;
+  line-height: 2;
+  direction: rtl;
+}
+
+.search-result-quran-link {
+  display: inline-block;
+  margin-top: 0.2rem;
+  font-size: 0.72rem;
+  color: var(--clr-primary, #0E6E52);
+  font-weight: 600;
+}
+
 .fiqh-search-verified-badge {
   display: inline-block;
   margin-inline-start: 0.5rem;
