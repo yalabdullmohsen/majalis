@@ -29,7 +29,7 @@ type DraftRow = {
 const DECISION_COLORS: Record<string, { bg: string; text: string }> = {
   approved: { bg: "#D1FAE5", text: "var(--majalis-emerald-deep)" },
   pending_review: { bg: "rgba(14,110,82,0.08)", text: "#1F4D3A" },
-  duplicate: { bg: "#FFEDD5", text: "#C2410C" },
+  duplicate: { bg: "rgba(14,110,82,.10)", text: "#0E6E52" },
   rejected: { bg: "#FEE2E2", text: "#991B1B" },
 };
 

@@ -1921,7 +1921,7 @@ html {
 .qa-ruling--mubah  { --qa-badge-bg: #DBEAFE; --qa-badge-color: #1E40AF; }
 .qa-ruling--sunna,
 .qa-ruling--mandub { --qa-badge-bg: rgba(14,110,82,0.08); --qa-badge-color: #0A5040; }
-.qa-ruling--makruh { --qa-badge-bg: #FFEDD5; --qa-badge-color: #9A3412; }
+.qa-ruling--makruh { --qa-badge-bg: rgba(21,48,37,0.08); --qa-badge-color: #153025; }
 .qa-ruling--haram  { --qa-badge-bg: #FEE2E2; --qa-badge-color: #991B1B; }
 .qa-badge {
   display: inline-flex;
@@ -1942,7 +1942,7 @@ html {
 .qa-ruling-badge--mubah  { background: #DBEAFE; color: #1E40AF; }
 .qa-ruling-badge--sunnah,
 .qa-ruling-badge--mandub { background: rgba(14,110,82,0.08); color: #0A5040; }
-.qa-ruling-badge--makruh { background: #FFEDD5; color: #9A3412; }
+.qa-ruling-badge--makruh { background: rgba(21,48,37,0.08); color: #153025; }
 .qa-ruling-badge--haram  { background: #FEE2E2; color: #991B1B; }
 
 .qa-review-badge          { display: inline-block; font-size: 0.68rem; font-weight: 700; padding: 0.15rem 0.55rem; border-radius: 999px; background: rgba(14,110,82,0.08); color: #1F4D3A; }
@@ -4395,9 +4395,9 @@ button.primary:hover {
   gap: 0.875rem;
   padding: 1rem 1.25rem;
   border-radius: 0.875rem;
-  background: linear-gradient(135deg, rgba(245,158,11,.12), rgba(245,158,11,.06));
-  border: 1px solid rgba(245,158,11,.25);
-  color: #92400E;
+  background: linear-gradient(135deg, rgba(14,110,82,.12), rgba(14,110,82,.06));
+  border: 1px solid rgba(14,110,82,.25);
+  color: #0E6E52;
   animation: khatma-pop 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .khatma-celebration strong {
@@ -4412,7 +4412,7 @@ button.primary:hover {
   opacity: 0.8;
 }
 .khatma-celebration svg {
-  color: #D97706;
+  color: #0E6E52;
   flex-shrink: 0;
 }
 @keyframes khatma-pop {
@@ -4934,8 +4934,8 @@ html[data-theme="dark"] .khatma-bar-fill {
 }
 
 .search-kind-badge--lesson      { background: #EFF6FF; color: #1D4ED8; border-color: rgba(29,78,216,0.2); }
-.search-kind-badge--fatwa       { background: #FFF7ED; color: #C2410C; border-color: rgba(194,65,12,0.2); }
-.search-kind-badge--ruling      { background: #FFF7ED; color: #C2410C; border-color: rgba(194,65,12,0.2); }
+.search-kind-badge--fatwa       { background: rgba(14,110,82,.10); color: #0E6E52; border-color: rgba(14,110,82,.2); }
+.search-kind-badge--ruling      { background: rgba(14,110,82,.10); color: #0E6E52; border-color: rgba(14,110,82,.2); }
 .search-kind-badge--qa          { background: #F5F3FF; color: #6D28D9; border-color: rgba(109,40,217,0.2); }
 .search-kind-badge--fawaid      { background: #e8f5f0; color: #1F4D3A; border-color: rgba(31,77,58,0.2); }
 .search-kind-badge--adhkar      { background: #F0F5F2; color: #15803D; border-color: rgba(21,128,61,0.2); }
@@ -4943,7 +4943,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 .search-kind-badge--hadith      { background: #FFF1F2; color: #BE123C; border-color: rgba(190,18,60,0.2); }
 .search-kind-badge--quran       { background: #F0F5F2; color: #15803D; border-color: rgba(21,128,61,0.2); }
 .search-kind-badge--story,
-.search-kind-badge--stories     { background: #FFF7ED; color: #C2410C; border-color: rgba(194,65,12,0.2); }
+.search-kind-badge--stories     { background: rgba(14,110,82,.10); color: #0E6E52; border-color: rgba(14,110,82,.2); }
 .search-kind-badge--fiqh-council,
 .search-kind-badge--fiqh-decision { background: #EFF6FF; color: #1D4ED8; border-color: rgba(29,78,216,0.2); }
 .search-kind-badge--miracle,
@@ -7441,7 +7441,7 @@ html[data-theme="dark"] .khatma-bar-fill {
   margin-bottom: 0.5rem;
 }
 .twh-book-level--beginner { background: #D1FAE5; color: #065F46; }
-.twh-book-level--mid      { background: #FEF3C7; color: #92400E; }
+.twh-book-level--mid      { background: rgba(14,110,82,.12); color: #0E6E52; }
 .twh-book-level--adv      { background: #EDE9FE; color: #5B21B6; }
 
 /* §69c — FiqhPage Hub (fqh-hub-*) */
@@ -9389,7 +9389,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 .lis-missing-badge       { padding: 0.25rem 0.625rem; border-radius: 999px; background: #FEE2E2; color: #991B1B; font-size: 0.75rem; }
 .lis-missing-badge--ok   { background: #D1FAE5; color: var(--majalis-emerald-deep); }
 .lis-platform-badge      { padding: 0.25rem 0.625rem; border-radius: 999px; background: #EDE9FE; color: #5B21B6; font-size: 0.75rem; }
-.lis-duplicate-badge     { padding: 0.25rem 0.625rem; border-radius: 999px; background: #FFEDD5; color: #C2410C; font-size: 0.75rem; }
+.lis-duplicate-badge     { padding: 0.25rem 0.625rem; border-radius: 999px; background: rgba(14,110,82,.10); color: #0E6E52; font-size: 0.75rem; }
 .lis-hint-badge          { padding: 0.25rem 0.625rem; border-radius: 999px; background: #DBEAFE; color: #1D4ED8; font-size: 0.75rem; }
 .lis-badges-row          { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
 .lis-field-grid          { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.4rem; margin-bottom: 0.75rem; }
@@ -19550,8 +19550,8 @@ img[loading="lazy"]:not([src=""]) {
 }
 .hk-cat:hover { border-color: #1F4D3A; color: #1F4D3A; }
 .hk-cat--active { background: #1F4D3A; border-color: #1F4D3A; color: #FFFFFF; }
-.hk-cat--fav-filter { border-color: #b45309; color: #b45309; }
-.hk-cat--fav-filter.hk-cat--active { background: #b45309; border-color: #b45309; color: #FFFFFF; }
+.hk-cat--fav-filter { border-color: #0E6E52; color: #0E6E52; }
+.hk-cat--fav-filter.hk-cat--active { background: #0E6E52; border-color: #0E6E52; color: #FFFFFF; }
 
 /* شبكة الحكم */
 .hk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
@@ -19999,7 +19999,7 @@ img[loading="lazy"]:not([src=""]) {
   flex-shrink: 0;
 }
 .sw-badge--fard { background: #FEF2F2; color: #B91C1C; }
-.sw-badge--wajib { background: #FFF7ED; color: #C2410C; }
+.sw-badge--wajib { background: rgba(14,110,82,.10); color: #0E6E52; }
 .sw-badge--nafl { background: #F0F5F2; color: #15803D; }
 
 /* dalil */
@@ -20375,8 +20375,8 @@ img[loading="lazy"]:not([src=""]) {
 .hj-wajib-card__desc { font-size: .84rem; color: #374151; line-height: 1.6; margin: 0; }
 .hj-wajib-card__penalty {
   font-size: .75rem;
-  color: #B45309;
-  background: #FEF3C7;
+  color: #0E6E52;
+  background: rgba(14,110,82,.10);
   border-radius: 999px;
   padding: .15rem .6rem;
   display: inline-block;
@@ -20935,7 +20935,7 @@ img[loading="lazy"]:not([src=""]) {
   border-radius: 999px;
 }
 .fa-card__grade--sahih { background: #D4E9DC; color: #173A2C; }
-.fa-card__grade--hasan { background: #FEF3C7; color: #92400E; }
+.fa-card__grade--hasan { background: rgba(14,110,82,.12); color: #0E6E52; }
 
 .fa-card__title { font-size: .92rem; font-weight: 700; color: #111; margin: 0; }
 .fa-card__text {
@@ -22164,7 +22164,7 @@ img[loading="lazy"]:not([src=""]) {
 
 .sg-times-row { display: flex; justify-content: center; gap: .45rem; flex-wrap: wrap; }
 .sg-chip--fajr    { --sg-chip-color: #1e3a5f; }
-.sg-chip--dhuhr   { --sg-chip-color: #b45309; }
+.sg-chip--dhuhr   { --sg-chip-color: #0E6E52; }
 .sg-chip--asr     { --sg-chip-color: #1F4D3A; }
 .sg-chip--maghrib { --sg-chip-color: #7c3aed; }
 .sg-chip--isha    { --sg-chip-color: #1e3a5f; }
@@ -22464,7 +22464,7 @@ img[loading="lazy"]:not([src=""]) {
 .dq-card__title-wrap { flex: 1; min-width: 0; }
 .dq-card__name    { display: block; font-weight: 700; font-size: .88rem; color: #111; margin-bottom: .15rem; }
 .dq-card__ref     { font-size: .72rem; color: #1E40AF; font-style: normal; font-weight: 600; display: block; margin-bottom: .1rem; }
-.dq-card__prophet { font-size: .7rem; color: #D97706; font-weight: 600; background: #FEF3C7; padding: .1rem .4rem; border-radius: .3rem; display: inline-block; }
+.dq-card__prophet { font-size: .7rem; color: #0E6E52; font-weight: 600; background: rgba(14,110,82,.10); padding: .1rem .4rem; border-radius: .3rem; display: inline-block; }
 .dq-card__tags    { display: flex; flex-wrap: wrap; gap: .3rem; align-items: flex-start; }
 
 .dq-tag {
@@ -22620,13 +22620,13 @@ img[loading="lazy"]:not([src=""]) {
   font-size: .7rem; font-weight: 800; color: var(--majalis-emerald,#1F4D3A);
   text-transform: uppercase; letter-spacing: .06em;
 }
-.fq-label--warn { color: #B45309 !important; }
+.fq-label--warn { color: #153025 !important; }
 
 /* lists */
 .fq-list { margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: .35rem; }
 .fq-list li { font-size: .88rem; color: #374151; line-height: 1.6; }
 .fq-list--faraa li { color: #173A2C; font-weight: 600; font-style: italic; }
-.fq-list--exception li { color: #92400E; }
+.fq-list--exception li { color: #153025; }
 
 /* أمثلة */
 .fq-examples { display: flex; flex-direction: column; gap: .5rem; }
@@ -24105,7 +24105,7 @@ img[loading="lazy"]:not([src=""]) {
 .wn-cat--akhlaq   { --wn-cat-color: #1F4D3A; --wn-cat-bg: rgba(31,77,58,.1); }
 .wn-cat--ibada    { --wn-cat-color: #1a3a5c; --wn-cat-bg: rgba(26,58,92,.1); }
 .wn-cat--tawhid   { --wn-cat-color: #7c3aed; --wn-cat-bg: rgba(124,58,237,.1); }
-.wn-cat--muamalat { --wn-cat-color: #b45309; --wn-cat-bg: rgba(180,83,9,.1); }
+.wn-cat--muamalat { --wn-cat-color: #0E6E52; --wn-cat-bg: rgba(14,110,82,.10); }
 .wn-cat--hayah    { --wn-cat-color: #0f766e; --wn-cat-bg: rgba(15,118,110,.1); }
 .wn-pick-cat   { font-size: .8rem; font-weight: 700; margin-bottom: .3rem; color: var(--wn-cat-color, #1F4D3A); }
 .wn-pick-title { font-size: .93rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .4rem; }
@@ -28319,7 +28319,7 @@ html[data-theme="dark"] .frb-wrap {
 }
 .ads-perm--ok   { background: rgba(14,110,82,.1); color: #0E6E52; border: 1px solid rgba(14,110,82,.25); }
 .ads-perm--err  { background: rgba(239,68,68,.08); color: #b91c1c; border: 1px solid rgba(239,68,68,.2); }
-.ads-perm--warn { background: rgba(245,158,11,.08); color: #92400e; border: 1px solid rgba(245,158,11,.2); }
+.ads-perm--warn { background: rgba(14,110,82,.08); color: #0E6E52; border: 1px solid rgba(14,110,82,.2); }
 .ads-perm--muted{ background: rgba(0,0,0,.04); color: #6b7280; border: 1px solid rgba(0,0,0,.08); }
 
 /* ── §UQ-Qiraat — القراءات السبع (UlumQuranPage) ───────────────────────── */
