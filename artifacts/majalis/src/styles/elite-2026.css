@@ -31185,3 +31185,55 @@ html[data-theme="dark"] .page-search-input {
 }
 .crb-btn:hover { color: #dc2626; border-color: rgba(220,38,38,.2); }
 html[data-theme="dark"] .crb-btn { border-color: rgba(255,255,255,.1); color: rgba(232,245,238,.5); }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   §76 — Search Highlight (srch-hl) + Lesson Attendance (lat-*)
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* تمييز مصطلح البحث */
+mark.srch-hl {
+  background: rgba(14,110,82,.15);
+  color: var(--clr-emerald, #0E6E52);
+  border-radius: 2px;
+  padding: 0 2px;
+  font-weight: 700;
+}
+html[data-theme="dark"] mark.srch-hl {
+  background: rgba(14,110,82,.28);
+  color: #5ccca8;
+}
+@media (prefers-reduced-motion: no-preference) {
+  mark.srch-hl { text-decoration-color: rgba(14,110,82,.4); }
+}
+
+/* الدرس الآن — شارة حية */
+.lesson-now-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  background: #dc2626;
+  color: #fff;
+  font-size: .65rem;
+  font-weight: 700;
+  padding: .12rem .45rem;
+  border-radius: 999px;
+  animation: now-pulse 1.4s ease-in-out infinite;
+}
+@keyframes now-pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(220,38,38,.4); }
+  50%      { box-shadow: 0 0 0 5px rgba(220,38,38,0); }
+}
+
+/* درس قادم قريباً */
+.lesson-soon-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .28rem;
+  background: rgba(14,110,82,.12);
+  color: var(--clr-emerald);
+  font-size: .65rem;
+  font-weight: 600;
+  padding: .1rem .4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(14,110,82,.25);
+}

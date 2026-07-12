@@ -9,6 +9,7 @@ import { PageHeader } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { useAuth } from "@/components/AuthProvider";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
+import { computeNextOccurrenceMs, isLessonInProgress } from "@/lib/lesson-time";
 import { supabase } from "@/lib/supabase";
 import {
   DEFAULT_KUWAIT_FILTERS,
@@ -323,9 +324,15 @@ export default function LessonsPage({
 
   const featuredSections = useMemo(() => {
     const sorted = sortKuwaitLessons(tabLessons);
+    const now    = Date.now();
+    const THRESHOLD_MS = 36 * 60 * 60 * 1000; // 36 ساعة
 
-    // كل قسم يستبعد ما ظهر في الأقسام السابقة
-    const upcoming = sorted.slice(0, 4);
+    // "الأقرب موعدًا": فقط الدروس الجارية الآن أو التي تبدأ خلال 36 ساعة
+    const upcoming = sorted.filter((l) =>
+      isLessonInProgress(l.day, l.time) ||
+      computeNextOccurrenceMs(l.day, l.time) - now <= THRESHOLD_MS
+    ).slice(0, 4);
+
     const upcomingIds = new Set(upcoming.map((l) => l.id));
 
     const popular = [...tabLessons]
@@ -552,10 +559,16 @@ export default function LessonsPage({
             <>
               {!filters.search && filters.governorate === "كل المحافظات" && (
                 <>
-                  <section className="lessons-v2-section">
-                    <h2 className="lessons-v2-section__title">الأقرب موعدًا</h2>
-                    {renderGrid(featuredSections.upcoming)}
-                  </section>
+                  {featuredSections.upcoming.length > 0 && (
+                    <section className="lessons-v2-section">
+                      <h2 className="lessons-v2-section__title">
+                        {featuredSections.upcoming.some(l => isLessonInProgress(l.day, l.time))
+                          ? "جارٍ الآن"
+                          : "الأقرب موعدًا"}
+                      </h2>
+                      {renderGrid(featuredSections.upcoming)}
+                    </section>
+                  )}
                   {featuredSections.featured.length > 0 && (
                     <section className="lessons-v2-section">
                       <h2 className="lessons-v2-section__title">المميز: بث مباشر</h2>

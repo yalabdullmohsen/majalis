@@ -313,6 +313,23 @@ export function isLessonTimePassedToday(day: string, time: string, now = new Dat
   return targetDay === clock.weekday && nowMinutes >= timeMinutes;
 }
 
+/** مدة الدرس الافتراضية (دقيقة) — نافذة "الآن" */
+const LESSON_DURATION_MIN = 90;
+
+/**
+ * هل الدرس قائم الآن (بدأ ولم تنته نافذته الافتراضية البالغة 90 دقيقة)؟
+ */
+export function isLessonInProgress(day: string, time: string, now = new Date()): boolean {
+  const targetDay = resolveDayIndex(day);
+  if (targetDay == null) return false;
+  const clock       = getKuwaitClock(now);
+  if (clock.weekday !== targetDay) return false;
+  const timeMinutes = parseTimeToMinutes(time);
+  if (timeMinutes == null) return false;
+  const nowMinutes  = clock.hour * 60 + clock.minute;
+  return nowMinutes >= timeMinutes && nowMinutes < timeMinutes + LESSON_DURATION_MIN;
+}
+
 export function formatGregorianDate(date: Date): string {
   return new Intl.DateTimeFormat("ar-KW", {
     timeZone: KUWAIT_TZ,

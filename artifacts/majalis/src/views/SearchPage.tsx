@@ -8,6 +8,41 @@ import { displayText } from "@/lib/display-text";
 import { SearchSkeleton, PageHeader } from "@/components/ui-common";
 import { SearchSuggestions } from "@/components/SearchSuggestions";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
+
+/* ── تمييز مصطلح البحث في النصوص ── */
+const ARABIC_DIACRITICS_RE = /[ؐ-ًؚ-ٰٟٓ-ٕ]/;
+
+function buildHighlightPattern(query: string): RegExp | null {
+  const words = query.trim().split(/\s+/).filter(w => w.length >= 2);
+  if (!words.length) return null;
+  const alts = words.map(w => {
+    const n = normalizeArabic(w)
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+      .replace(/ه/g, "[هة]")
+      .replace(/ي/g, "[يى]")
+      .replace(/ا/g, "[اأإآٱ]")
+      .replace(/و/g, "[وؤ]");
+    return `(${n})`;
+  });
+  try { return new RegExp(alts.join("|"), "g"); }
+  catch { return null; }
+}
+
+function highlightText(text: string, query: string): React.ReactNode {
+  if (!text || !query.trim() || ARABIC_DIACRITICS_RE.test(text)) return text;
+  const pat = buildHighlightPattern(query);
+  if (!pat) return text;
+  const parts: React.ReactNode[] = [];
+  let last = 0;
+  let m: RegExpExecArray | null;
+  while ((m = pat.exec(text)) !== null) {
+    if (m.index > last) parts.push(text.slice(last, m.index));
+    parts.push(<mark key={m.index} className="srch-hl">{m[0]}</mark>);
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return parts.length > 1 ? parts : text;
+}
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { searchLocalExtensions } from "@/lib/local-search-ext";
 import { lessonRecordToSearchRow, searchUnifiedLessons } from "@/lib/lessons-service";
@@ -100,6 +135,7 @@ function Group({ title, items, render, id }: { title: string; items: any[]; rend
 }
 
 function IntelligentResultRow({ item, query }: { item: IntelligentSearchResult; query: string }) {
+  const title = displayText(item.title);
   return (
     <Link
       href={item.href}
@@ -109,7 +145,7 @@ function IntelligentResultRow({ item, query }: { item: IntelligentSearchResult; 
       <div className="search-result-row">
         <div className="search-result-copy">
           <div className="search-result-title-row">
-            <span className="search-result-title">{displayText(item.title)}</span>
+            <span className="search-result-title">{highlightText(title, query)}</span>
             <KindBadge kind={item.kind} />
           </div>
           <span className="search-result-meta">
@@ -135,6 +171,7 @@ function ResultRow({
   kind,
   avatarSrc,
   avatarName,
+  query,
 }: {
   href: string;
   title: string;
@@ -142,6 +179,7 @@ function ResultRow({
   kind?: string;
   avatarSrc?: string;
   avatarName?: string;
+  query?: string;
 }) {
   return (
     <Link href={href} className="search-result-link">
@@ -151,10 +189,10 @@ function ResultRow({
         )}
         <div className="search-result-copy">
           <div className="search-result-title-row">
-            <span className="search-result-title">{title}</span>
+            <span className="search-result-title">{query ? highlightText(title, query) : title}</span>
             {kind && <KindBadge kind={kind} />}
           </div>
-          {meta && <span className="search-result-meta">{meta}</span>}
+          {meta && <span className="search-result-meta">{query ? highlightText(meta, query) : meta}</span>}
         </div>
       </div>
     </Link>
@@ -569,7 +607,7 @@ export default function SearchPage() {
                     />
                   )}
                   <Group title="الدروس" items={results.lessons} render={(l) => (
-                    <ResultRow key={l.id} href={`/lessons/${l.id}`} kind="lesson"
+                    <ResultRow key={l.id} href={`/lessons/${l.id}`} kind="lesson" query={q}
                       title={displayText(l.title)}
                       meta={l.searchMeta || l.speaker_name || l.sheikhs?.name || l.category}
                       avatarSrc={resolveLessonSheikhImage(l)}
@@ -577,81 +615,81 @@ export default function SearchPage() {
                     />
                   )} />
                   <Group title="الفوائد" items={results.fawaid} render={(f) => (
-                    <ResultRow key={f.id} href="/fawaid" kind="fawaid" title={displayText(f.text)} meta={f.author_name} />
+                    <ResultRow key={f.id} href="/fawaid" kind="fawaid" query={q} title={displayText(f.text)} meta={f.author_name} />
                   )} />
                   <Group title="المكتبة" items={results.library} render={(book) => (
-                    <ResultRow key={book.id} href={`/library/${book.id}`} kind="library"
+                    <ResultRow key={book.id} href={`/library/${book.id}`} kind="library" query={q}
                       title={displayText(book.title)}
                       meta={[book.author || book.author_name, book.category].filter(Boolean).join(" · ")}
                     />
                   )} />
                   <Group title="الأسئلة والأجوبة" items={results.qa} render={(x) => (
-                    <ResultRow key={x.id} href="/qa" kind="qa" title={displayText(x.question)} meta={x.qa_categories?.name} />
+                    <ResultRow key={x.id} href="/qa" kind="qa" query={q} title={displayText(x.question)} meta={x.qa_categories?.name} />
                   )} />
                   <Group title="الأذكار" id="adhkar" items={results.adhkar} render={(a) => (
-                    <ResultRow key={a.id} href="/adhkar" kind="adhkar" title={displayText(a.text)} meta={a.category || a.source} />
+                    <ResultRow key={a.id} href="/adhkar" kind="adhkar" query={q} title={displayText(a.text)} meta={a.category || a.source} />
                   )} />
                   {results.adhkar.length === 0 && localExtra.adhkar.length > 0 && (
                     <Group title="الأذكار" items={localExtra.adhkar} render={(a) => (
-                      <ResultRow key={a.id} href={a.href} kind="adhkar" title={a.title} meta={a.meta} />
+                      <ResultRow key={a.id} href={a.href} kind="adhkar" query={q} title={a.title} meta={a.meta} />
                     )} />
                   )}
                   <Group title="المناسبات" items={localExtra.occasions} render={(o) => (
-                    <ResultRow key={o.id} href={o.href} title={o.title} meta={o.meta} />
+                    <ResultRow key={o.id} href={o.href} query={q} title={o.title} meta={o.meta} />
                   )} />
                   <Group title="الأربعون النووية" items={localExtra.nawawi} render={(h) => (
-                    <ResultRow key={h.id} href={h.href} kind="hadith" title={h.title} meta={h.meta} />
+                    <ResultRow key={h.id} href={h.href} kind="hadith" query={q} title={h.title} meta={h.meta} />
                   )} />
                   <Group title="القرآن الكريم" items={localExtra.quran} render={(s) => (
                     <QuranAyahResultRow key={s.id} href={s.href} title={s.title} meta={s.meta} />
                   )} />
                   {results.stories?.length === 0 && localExtra.islamicStories.length > 0 && (
                     <Group title="القصص الإسلامية" items={localExtra.islamicStories} render={(s) => (
-                      <ResultRow key={s.id} href={s.href} kind="story" title={s.title} meta={s.meta} />
+                      <ResultRow key={s.id} href={s.href} kind="story" query={q} title={s.title} meta={s.meta} />
                     )} />
                   )}
                   <Group title="قصص السور" items={localExtra.surahStories} render={(s) => (
-                    <ResultRow key={s.id} href={s.href} kind="quran" title={s.title} meta={s.meta} />
+                    <ResultRow key={s.id} href={s.href} kind="quran" query={q} title={s.title} meta={s.meta} />
                   )} />
                   {fiqhResults.length === 0 && (
                     <Group title="المجمع الفقهي" items={results.fiqh_decisions || []} render={(d) => (
-                      <ResultRow key={d.id} href={`/fiqh-council/${d.slug || d.id}`} kind="fiqh_decision"
+                      <ResultRow key={d.id} href={`/fiqh-council/${d.slug || d.id}`} kind="fiqh_decision" query={q}
                         title={displayText(d.title)} meta={d.searchMeta || d.category}
                       />
                     )} />
                   )}
                   <Group title="الفتاوى" items={results.fatwas || []} render={(f) => (
-                    <ResultRow key={f.id} href={`/fatwa/${f.id}`} kind="fatwa"
+                    <ResultRow key={f.id} href={`/fatwa/${f.id}`} kind="fatwa" query={q}
                       title={displayText(f.question)} meta={f.searchMeta || f.category}
                     />
                   )} />
                   <Group title="الأحكام الشرعية" items={results.rulings || []} render={(r) => (
-                    <ResultRow key={r.id} href={`/rulings/${r.id}`} kind="ruling"
+                    <ResultRow key={r.id} href={`/rulings/${r.id}`} kind="ruling" query={q}
                       title={displayText(r.title)} meta={r.searchMeta || r.category}
                     />
                   )} />
                   <Group title="الدورات العلمية" items={results.courses || []} render={(c) => (
-                    <ResultRow key={c.id} href={`/annual-courses/${c.id}`} kind="course"
+                    <ResultRow key={c.id} href={`/annual-courses/${c.id}`} kind="course" query={q}
                       title={displayText(c.title)} meta={c.searchMeta || c.course_type}
                     />
                   )} />
                   <Group title="آخر المستجدات" items={results.updates || []} render={(u) => (
-                    <ResultRow key={u.id} href="/updates" kind="update"
+                    <ResultRow key={u.id} href="/updates" kind="update" query={q}
                       title={displayText(u.title)} meta={u.searchMeta || u.update_type}
                     />
                   )} />
                   <Group title="الأحاديث الصحيحة" items={results.hadith || []} render={(h) => (
-                    <ResultRow key={h.id} href="/hadith" kind="hadith"
+                    <ResultRow key={h.id} href="/hadith" kind="hadith" query={q}
                       title={displayText(h.title || h.text)} meta={h.narrator || h.collection}
                     />
                   )} />
                   <Group title="القصص الإسلامية" items={results.stories || []} render={(s) => (
-                    <ResultRow key={s.id} href="/stories" kind="story"
+                    <ResultRow key={s.id} href="/stories" kind="story" query={q}
                       title={displayText(s.title)} meta={s.category || s.topic}
                     />
                   )} />
                   <Group title="الإعجاز العلمي" items={results.miracles} render={(m) => (
-                    <ResultRow key={m.id} href="/miracles" kind="miracle"
+                    <ResultRow key={m.id} href="/miracles" kind="miracle" query={q}
                       title={displayText(m.title)} meta={m.category}
                     />
                   )} />
