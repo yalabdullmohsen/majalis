@@ -1147,6 +1147,22 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
   background: rgba(255,255,255,0.15) !important;
 }
 
+/* ⑬ ds-quiz-home-card — --ds-emerald-deep لم يُتجاوز في ① فيبقى داكناً على خلفية داكنة */
+.home-main--v3 .ds-quiz-home-card .ds-quiz-home-card__title {
+  color: #fff !important;
+}
+.home-main--v3 .ds-quiz-home-card .ds-quiz-home-card__badge {
+  color: rgba(255,255,255,0.90) !important;
+  background: rgba(255,255,255,0.12) !important;
+}
+.home-main--v3 .ds-quiz-home-card .ds-quiz-home-card__cat {
+  color: rgba(255,255,255,0.80) !important;
+  background: rgba(255,255,255,0.08) !important;
+}
+.home-main--v3 .ds-quiz-home-card .ds-quiz-home-card__cat svg {
+  color: rgba(255,255,255,0.70) !important;
+}
+
 .home-section {
   padding: 2rem 0 !important;
 }
