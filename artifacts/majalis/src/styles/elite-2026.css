@@ -1130,6 +1130,23 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
   background: rgba(255,255,255,0.70) !important;
 }
 
+/* ⑫ عناصر hac__card (اسم الله) داخل الحاويات الداكنة
+   color-mix() تستخدم --hac-accent الداكن مما يُخفي النص على خلفية داكنة */
+.home-main--v3 .ui-card .hac__num-badge {
+  color: rgba(255,255,255,0.50) !important;
+}
+.home-main--v3 .ui-card .hac__category-badge {
+  color: rgba(255,255,255,0.55) !important;
+  background: rgba(255,255,255,0.10) !important;
+}
+.home-main--v3 .ui-card .hac__benefit-label {
+  color: rgba(255,255,255,0.90) !important;
+  background: rgba(255,255,255,0.12) !important;
+}
+.home-main--v3 .ui-card .hac__divider {
+  background: rgba(255,255,255,0.15) !important;
+}
+
 .home-section {
   padding: 2rem 0 !important;
 }
