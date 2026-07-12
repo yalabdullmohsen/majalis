@@ -26954,6 +26954,28 @@ img[loading="lazy"]:not([src=""]) {
   background: var(--msk-canvas, #FAF8F5);
 }
 
+/* ── معجزة اليوم (.psod-card) ── */
+.psod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.psod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px;
+}
+.psod-card__nabi    { font-size: 0.85rem; font-weight: 700; color: rgba(255,255,255,0.75); }
+.psod-card__miracle { font-size: 1.05rem; font-weight: 700; color: #FFFFFF; margin: 0; }
+.psod-card__ayah    {
+  font-size: 0.78rem; color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.12); border-radius: 100px; padding: 0.2rem 0.8rem;
+}
+
 /* ── Hero ── */
 .prophets-lux-hero {
   position: relative;

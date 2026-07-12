@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect, useRef } from "react";
-import { CalendarDays, Heart, HelpCircle, LayoutList } from "lucide-react";
+import { useState, useCallback, useEffect, useMemo, useRef } from "react";
+import { CalendarDays, Heart, HelpCircle, LayoutList, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { PROPHETS, getProphet, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
 import { applyPageSeo } from "@/lib/seo";
@@ -737,6 +737,12 @@ const TABS: { id: View; label: string }[] = [
 ];
 
 export default function ProphetStoriesPage() {
+  const todayMiracle = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return MIRACLES_LIST[(day - 1 + MIRACLES_LIST.length) % MIRACLES_LIST.length];
+  }, []);
   const [search, setSearch] = useState("");
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [view, setView] = useState<View>("grid");
@@ -813,6 +819,14 @@ export default function ProphetStoriesPage() {
           </div>
           <GeometricBorder color={IVORY} size={24} />
         </div>
+      </div>
+
+      {/* معجزة اليوم */}
+      <div className="psod-card">
+        <div className="psod-card__badge"><Sparkles size={11} aria-hidden="true" /> معجزة اليوم</div>
+        <div className="psod-card__nabi">{todayMiracle.nabi}</div>
+        <h2 className="psod-card__miracle">{todayMiracle.miracle}</h2>
+        <div className="psod-card__ayah">{todayMiracle.ayah}</div>
       </div>
 
       {/* تبويبات العرض */}
