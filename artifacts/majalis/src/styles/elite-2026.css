@@ -18382,6 +18382,47 @@ img[loading="lazy"]:not([src=""]) {
   .akl-related__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* ── خُلُق اليوم (.klod-card) ── */
+.klod-card {
+  display: flex; flex-direction: column; gap: 0.6rem;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 1.5rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.klod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; width: fit-content;
+}
+.klod-card__cat {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.78rem; color: rgba(255,255,255,0.72);
+}
+.klod-card__title { font-size: 1.2rem; font-weight: 800; color: #FFFFFF; margin: 0; }
+.klod-card__summary { font-size: 0.88rem; line-height: 1.75; color: rgba(255,255,255,0.88); margin: 0; }
+.klod-card__ayah {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 0.625rem; padding: 0.65rem 0.85rem; display: flex; flex-direction: column; gap: 0.2rem;
+}
+.klod-card__ayah-text { font-size: 1rem; color: #FFFFFF; font-family: var(--font-quran, serif); line-height: 1.7; }
+.klod-card__ayah-ref { font-size: 0.72rem; color: rgba(255,255,255,0.6); font-style: italic; }
+.klod-card__hadith {
+  font-size: 0.88rem; line-height: 1.8; color: rgba(255,255,255,0.9);
+  margin: 0; border-right: 2px solid rgba(255,255,255,0.35); padding-right: 0.75rem;
+}
+.klod-card__hadith footer { font-size: 0.72rem; color: rgba(255,255,255,0.6); margin-top: 0.25rem; }
+.klod-card__scholar { display: flex; flex-direction: column; gap: 0.15rem; }
+.klod-card__scholar-quote { font-size: 0.85rem; color: rgba(255,255,255,0.85); font-style: italic; line-height: 1.65; }
+.klod-card__scholar-name { font-size: 0.75rem; color: rgba(255,255,255,0.6); font-weight: 600; }
+.klod-card__practices {
+  margin: 0; padding-right: 1.25rem; display: flex; flex-direction: column; gap: 0.3rem;
+}
+.klod-card__practices li { font-size: 0.83rem; color: rgba(255,255,255,0.85); line-height: 1.55; }
+
 /* ── نهاية §219 ─────────────────────────────────────────── */
 
 /* ─────────────────────────────────────────────────────────── */
@@ -21322,6 +21363,42 @@ img[loading="lazy"]:not([src=""]) {
   .fa-grid { grid-template-columns: 1fr; }
   .fa-related__grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ── فضيلة اليوم (.fod-card) ── */
+.fod-card {
+  display: flex; flex-direction: column; gap: 0.55rem;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 1.5rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF; text-align: center;
+}
+.fod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; width: fit-content; margin: 0 auto;
+}
+.fod-card__cat {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.78rem; color: rgba(255,255,255,0.75); justify-content: center;
+}
+.fod-card__title { font-size: 1.1rem; font-weight: 700; color: #FFFFFF; margin: 0; }
+.fod-card__text {
+  font-size: 0.95rem; line-height: 1.85; color: rgba(255,255,255,0.93);
+  margin: 0; border: none; padding: 0; font-family: var(--font-quran, serif);
+}
+.fod-card__source {
+  display: inline-flex; align-items: center; gap: 0.4rem; justify-content: center;
+  font-size: 0.78rem; color: rgba(255,255,255,0.65);
+}
+.fod-card__grade {
+  padding: 0.15rem 0.55rem; border-radius: 100px; font-size: 0.68rem; font-weight: 700;
+  background: rgba(255,255,255,0.2); color: #FFFFFF;
+}
+.fod-card__grade--sahih { background: rgba(102,210,151,0.3); }
+.fod-card__grade--hasan { background: rgba(255,198,79,0.3); }
 
 /* ── نهاية §231 ─────────────────────────────────────────── */
 

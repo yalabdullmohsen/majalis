@@ -1,5 +1,6 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -1140,9 +1141,36 @@ const FADAIL: Fadila[] = [
   },
 ];
 
+/* ─── فضيلة اليوم ─── */
+function todaysFadila(): Fadila {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return FADAIL[(dayOfYear - 1 + FADAIL.length) % FADAIL.length];
+}
+
+function FadilaOfDayCard({ fadila }: { fadila: Fadila }) {
+  return (
+    <div className="fod-card">
+      <div className="fod-card__badge"><Sparkles size={11} aria-hidden="true" /> فضيلة اليوم</div>
+      <div className="fod-card__cat">
+        <SectionIcon name={fadila.icon} size={16} />
+        {fadila.category}
+      </div>
+      <h2 className="fod-card__title">{fadila.title}</h2>
+      <blockquote className="fod-card__text">«{fadila.text}»</blockquote>
+      <div className="fod-card__source">
+        <span className={`fod-card__grade fod-card__grade--${fadila.grade}`}>{fadila.grade === "sahih" ? "صحيح" : "حسن"}</span>
+        {fadila.source}
+      </div>
+    </div>
+  );
+}
+
 export default function FadailAamalPage() {
   const [activeCategory, setActiveCategory] = useState("الكل");
   const [search, setSearch] = useState("");
+  const todayFadila = useMemo(() => todaysFadila(), []);
 
   useEffect(() => {
     applyPageSeo({
@@ -1200,6 +1228,9 @@ export default function FadailAamalPage() {
           </div>
         </div>
       </section>
+
+      {/* فضيلة اليوم */}
+      <FadilaOfDayCard fadila={todayFadila} />
 
       <div className="fa-body">
         {/* search */}
