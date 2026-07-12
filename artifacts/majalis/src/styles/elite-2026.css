@@ -1106,6 +1106,18 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
   color: rgba(255,255,255,0.80) !important;
 }
 
+/* ⑩ .page-tag داخل الحاويات الداكنة — نعيدها للنص الداكن على الخلفية الفاتحة
+   السبب: ① تُغيّر --color-primary إلى #7ED4B5 (فاتح) فيظهر التباين ضعيفاً على خلفية #E8F2EE */
+.home-main--v3 .ui-card .page-tag,
+.home-main--v3 .ds-card .page-tag,
+.home-main--v3 .hit-card .page-tag,
+.home-main--v3 .hmm-card .page-tag,
+.myt-card .page-tag,
+.hdc__card .page-tag {
+  color: #0F5132 !important;
+  background: rgba(255,255,255,0.90) !important;
+}
+
 .home-section {
   padding: 2rem 0 !important;
 }
