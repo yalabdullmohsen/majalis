@@ -1,82 +1,87 @@
 {
   "version": 1,
-  "generated_at": "2026-07-07T23:16:01.203Z",
-  "total": 381,
+  "generated_at": "2026-07-12T00:30:02.891Z",
+  "total": 967,
   "chunks": [
     {
       "category": "الطهارة",
       "file": "chunks/الطهارة.json",
-      "count": 33
+      "count": 84
     },
     {
       "category": "الصلاة",
       "file": "chunks/الصلاة.json",
-      "count": 51
+      "count": 123
     },
     {
       "category": "الزكاة",
       "file": "chunks/الزكاة.json",
-      "count": 33
+      "count": 82
     },
     {
       "category": "الحج",
       "file": "chunks/الحج.json",
-      "count": 5
+      "count": 36
     },
     {
       "category": "المعاملات",
       "file": "chunks/المعاملات.json",
-      "count": 11
+      "count": 68
     },
     {
       "category": "المواريث",
       "file": "chunks/المواريث.json",
-      "count": 6
-    },
-    {
-      "category": "طلب العلم والدعوة",
-      "file": "chunks/طلب-العلم-والدعوة.json",
-      "count": 74
-    },
-    {
-      "category": "العقيدة",
-      "file": "chunks/العقيدة.json",
-      "count": 24
+      "count": 22
     },
     {
       "category": "الصيام",
       "file": "chunks/الصيام.json",
+      "count": 68
+    },
+    {
+      "category": "الأسرة",
+      "file": "chunks/الأسرة.json",
+      "count": 56
+    },
+    {
+      "category": "النوازل",
+      "file": "chunks/النوازل.json",
+      "count": 57
+    },
+    {
+      "category": "طلب العلم والدعوة",
+      "file": "chunks/طلب-العلم-والدعوة.json",
+      "count": 143
+    },
+    {
+      "category": "العقيدة",
+      "file": "chunks/العقيدة.json",
       "count": 27
     },
     {
       "category": "الحج والعمرة",
       "file": "chunks/الحج-والعمرة.json",
-      "count": 26
+      "count": 28
     },
     {
       "category": "القرآن والحديث",
       "file": "chunks/القرآن-والحديث.json",
-      "count": 41
+      "count": 49
     },
     {
       "category": "الأذكار والدعاء",
       "file": "chunks/الأذكار-والدعاء.json",
-      "count": 23
+      "count": 27
     },
     {
       "category": "الأخلاق والآداب",
       "file": "chunks/الأخلاق-والآداب.json",
-      "count": 18
+      "count": 31
     },
     {
       "category": "النوازل المعاصرة",
       "file": "chunks/النوازل-المعاصرة.json",
-      "count": 6
-    },
-    {
-      "category": "الأسرة",
-      "file": "chunks/الأسرة.json",
-      "count": 3
+      "count": 66
     }
   ]
 }

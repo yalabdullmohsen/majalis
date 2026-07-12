@@ -45,7 +45,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.193Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-prayer-pillars",
@@ -84,7 +84,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-zakat-conditions",
@@ -123,7 +123,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-hajj-pillars",
@@ -162,7 +162,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
     "id": "ruling-trade-conditions",
@@ -201,7 +201,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
     "id": "ruling-inheritance-shares",
@@ -240,7 +240,2703 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-wudu-conditions",
+    "external_key": "ruling-wudu-conditions",
+    "title": "شروط صحة الوضوء",
+    "summary": "الشروط الواجب توافرها لصحة الوضوء.",
+    "body": "**شروط صحة الوضوء:**\n1. الإسلام.\n2. العقل والتمييز.\n3. النية عند ابتداء الغسل.\n4. استعمال الماء الطهور.\n5. إزالة ما يمنع وصول الماء إلى البشرة.\n6. الموالاة بين أعضاء الوضوء (عند المالكية والحنابلة).\n7. انقطاع الحدث.\n\n**ملاحظة:** يُستحب الترتيب بين الأعضاء وهو واجب عند الشافعية والحنابلة.",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا قُمْتُمْ إِلَى الصَّلَاةِ فَاغْسِلُوا وُجُوهَكُمْ",
+        "source": "سورة المائدة: 6"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفقه الإسلامي وأدلته للزحيلي",
+        "source": "باب الطهارة"
+      }
+    ],
+    "keywords": [
+      "وضوء",
+      "شروط",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 2900,
+    "view_count": 2900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-02-10T08:00:00Z",
+    "created_at": "2024-02-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-ghusl-obligations",
+    "external_key": "ruling-ghusl-obligations",
+    "title": "موجبات الغسل",
+    "summary": "الأسباب التي توجب الاغتسال شرعاً.",
+    "body": "**موجبات الغسل:**\n1. **الجنابة:** وتكون بإيلاج أو إنزال المني باحتلام أو غيره.\n2. **انقطاع الحيض:** يجب على المرأة الاغتسال بعد انقطاع دم الحيض.\n3. **انقطاع النفاس:** دم ما بعد الولادة.\n4. **الموت:** يُغسَّل الميت المسلم.\n5. **إسلام الكافر:** على خلاف بين العلماء في وجوبه.\n\n**الدليل:** قوله تعالى: ﴿وَإِن كُنتُمْ جُنُبًا فَاطَّهَّرُوا﴾.",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَإِن كُنتُمْ جُنُبًا فَاطَّهَّرُوا",
+        "source": "سورة المائدة: 6"
+      },
+      {
+        "type": "حديث",
+        "text": "إذا التقى الختانان وجب الغسل",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الطهارة، باب الغسل"
+      }
+    ],
+    "keywords": [
+      "غسل",
+      "جنابة",
+      "حيض",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 3100,
+    "view_count": 3100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-02-15T08:00:00Z",
+    "created_at": "2024-02-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-istinja",
+    "external_key": "ruling-istinja",
+    "title": "أحكام الاستنجاء والاستجمار",
+    "summary": "كيفية إزالة النجاسة بعد قضاء الحاجة.",
+    "body": "**أحكام الاستنجاء:**\n1. **الاستنجاء بالماء:** أفضل وأكمل، ويكون بإسباغ الماء حتى تزول النجاسة وأثرها.\n2. **الاستجمار بالأحجار أو ما يقوم مقامها:** يجزئ بشرط ثلاث مسحات فأكثر حتى تنقى المحل.\n3. **الجمع بينهما:** أفضل الأحوال.\n\n**شروط الاستجمار:**\n- ألا يكون المسح بعظم أو روث.\n- ألا تتجاوز النجاسة موضعها المعتاد.\n- ثلاث مسحات على الأقل منقية.",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يستنجي أحدكم بأقل من ثلاثة أحجار",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "الشرح الممتع لابن عثيمين",
+        "source": "كتاب الطهارة"
+      }
+    ],
+    "keywords": [
+      "استنجاء",
+      "استجمار",
+      "طهارة",
+      "نجاسة"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 1750,
+    "view_count": 1750,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-02-20T08:00:00Z",
+    "created_at": "2024-02-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-najasah-purification",
+    "external_key": "ruling-najasah-purification",
+    "title": "النجاسات وطرق تطهيرها",
+    "summary": "أنواع النجاسات والكيفية الشرعية لإزالتها.",
+    "body": "**أنواع النجاسات:**\n- **مغلظة:** نجاسة الكلب والخنزير، وتُطهَّر بسبع غسلات إحداها بالتراب.\n- **مخففة:** بول الصبي الذي لم يأكل الطعام، ويكفي فيها الرش.\n- **متوسطة:** سائر النجاسات كالبول والدم والغائط.\n\n**طرق التطهير:**\n1. غسل المحل بالماء الطهور حتى تزول عين النجاسة وأثرها.\n2. الأرض تطهر بالشمس والريح والجفاف عند بعض العلماء.\n3. الخمر تطهر بالتخليل عند بعض الفقهاء.",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "إذا وطئ أحدكم بنعليه الأذى فإن التراب له طهور",
+        "source": "رواه أبو داود"
+      },
+      {
+        "type": "حديث",
+        "text": "طهور إناء أحدكم إذا ولغ فيه الكلب أن يغسله سبع مرات",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "بداية المجتهد لابن رشد",
+        "source": "كتاب الطهارة"
+      }
+    ],
+    "keywords": [
+      "نجاسة",
+      "تطهير",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 2200,
+    "view_count": 2200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-01T08:00:00Z",
+    "created_at": "2024-03-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-conditions",
+    "external_key": "ruling-prayer-conditions",
+    "title": "شروط صحة الصلاة",
+    "summary": "ما يجب توافره قبل الدخول في الصلاة.",
+    "body": "**شروط صحة الصلاة:**\n1. الإسلام والعقل والتمييز.\n2. دخول الوقت.\n3. الطهارة من الحدث الأصغر والأكبر.\n4. طهارة البدن والثوب والمكان.\n5. ستر العورة.\n6. استقبال القبلة.\n7. النية.\n\n**تنبيه:** من عجز عن شرط بسبب مرض أو سفر أو إكراه فإنه يُصلي على حسب حاله ولا تسقط الصلاة.",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا تقبل صلاة بغير طهور",
+        "source": "رواه مسلم"
+      },
+      {
+        "type": "قرآن",
+        "text": "وَقُومُوا لِلَّهِ قَانِتِينَ",
+        "source": "سورة البقرة: 238"
+      }
+    ],
+    "references": [
+      {
+        "text": "المجموع للنووي",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "شروط",
+      "طهارة",
+      "قبلة"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 4100,
+    "view_count": 4100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-10T08:00:00Z",
+    "created_at": "2024-03-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-sunnah",
+    "external_key": "ruling-prayer-sunnah",
+    "title": "سنن الصلاة",
+    "summary": "المستحبات في الصلاة التي إن تُركت لا تبطلها.",
+    "body": "**سنن الصلاة الأبعاض (يجبر تركها بسجود السهو):**\n1. التشهد الأول.\n2. الجلوس للتشهد الأول.\n3. الصلاة على النبي ﷺ في التشهد الأول.\n4. القنوت في صلاة الوتر والصبح (عند الشافعية).\n\n**سنن الهيئات (لا تجبر بسجود):**\n1. رفع اليدين عند التكبير والركوع والرفع منه.\n2. وضع اليمين على الشمال.\n3. النظر إلى موضع السجود.\n4. الاستفتاح بدعاء الاستفتاح.\n5. قراءة سورة بعد الفاتحة.",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "صلوا كما رأيتموني أصلي",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الروض المربع للبهوتي",
+        "source": "باب السنن والمستحبات"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "سنن",
+      "مستحبات"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 2600,
+    "view_count": 2600,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-15T08:00:00Z",
+    "created_at": "2024-03-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-makruhat",
+    "external_key": "ruling-prayer-makruhat",
+    "title": "مكروهات الصلاة",
+    "summary": "الأفعال المكروهة أثناء الصلاة التي تنقص ثوابها.",
+    "body": "**مكروهات الصلاة:**\n1. الالتفات من غير حاجة.\n2. رفع البصر إلى السماء.\n3. الإقعاء في الجلوس (كالكلب).\n4. افتراش الذراعين في السجود.\n5. التخصر (وضع اليد على الخاصرة).\n6. العبث بالثياب أو الجسد.\n7. مسابقة الإمام.\n8. كثرة الحركة من غير حاجة.\n9. التثاؤب.\n10. الصلاة وهو حاقن (محتاج لقضاء الحاجة).",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يرفع أحدكم بصره إلى السماء في الصلاة",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفروع لابن مفلح",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "مكروهات",
+      "آداب"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 1900,
+    "view_count": 1900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-20T08:00:00Z",
+    "created_at": "2024-03-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-voluntary-prayer",
+    "external_key": "ruling-voluntary-prayer",
+    "title": "صلاة التطوع وأنواعها",
+    "summary": "النوافل المسنونة وأنواعها وأحكامها.",
+    "body": "**أنواع صلاة التطوع:**\n1. **السنن الرواتب:** 12 ركعة في اليوم (ركعتان قبل الفجر، وأربع قبل الظهر، وركعتان بعده، وركعتان بعد المغرب، وركعتان بعد العشاء).\n2. **قيام الليل (التهجد):** من أفضل النوافل.\n3. **صلاة الضحى:** ركعتان فأكثر حتى ثماني ركعات.\n4. **صلاة الوتر:** سنة مؤكدة، أدناه ركعة وأكثره إحدى عشرة.\n5. **صلاة التراويح:** في رمضان جماعة وفرادى.\n\n**فضلها:** قال ﷺ: \"من صلى اثنتي عشرة ركعة في اليوم والليلة بني له بيت في الجنة\".",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "من صلى اثنتي عشرة ركعة في اليوم والليلة بني له بيت في الجنة",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "زاد المعاد لابن القيم",
+        "source": "فصل في هدي النبي ﷺ في النوافل"
+      }
+    ],
+    "keywords": [
+      "تطوع",
+      "نوافل",
+      "سنن",
+      "صلاة"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 3300,
+    "view_count": 3300,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-01T08:00:00Z",
+    "created_at": "2024-04-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fasting-breakers",
+    "external_key": "ruling-fasting-breakers",
+    "title": "مفطرات الصيام",
+    "summary": "الأشياء التي تفطر الصائم وتوجب القضاء أو الكفارة.",
+    "body": "**المفطرات المتفق عليها:**\n1. الأكل والشرب عمداً.\n2. الجماع عمداً (يوجب الكفارة الكبرى).\n3. التقيؤ عمداً.\n4. الحيض والنفاس.\n\n**المفطرات المختلف فيها:**\n- الحقنة الوريدية المغذية (جمهور: مفطرة).\n- السواك الرطب.\n- ابتلاع الريق المختلط بالدم.\n- بخاخ الربو (خلاف).\n\n**الناسي:** من أكل أو شرب ناسياً فليتم صومه ولا قضاء عليه.",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "من نسي وهو صائم فأكل أو شرب فليتم صومه فإنما أطعمه الله وسقاه",
+        "source": "رواه البخاري ومسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الصيام"
+      }
+    ],
+    "keywords": [
+      "صيام",
+      "مفطرات",
+      "رمضان"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 5800,
+    "view_count": 5800,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-10T08:00:00Z",
+    "created_at": "2024-04-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fasting-qada",
+    "external_key": "ruling-fasting-qada",
+    "title": "أحكام قضاء الصيام",
+    "summary": "من وجب عليه قضاء رمضان وكيفيته.",
+    "body": "**من يجب عليه القضاء:**\n1. المريض الذي أفطر بسبب المرض إذا شُفي.\n2. المسافر الذي أفطر في سفره.\n3. الحائض والنفساء.\n4. من أفطر عمداً بغير الجماع.\n\n**كيفية القضاء:**\n- يجوز أن يكون متتابعاً أو متفرقاً.\n- يجب قضاؤه قبل رمضان القادم.\n- من فرّط حتى جاء رمضان آخر وجب عليه القضاء والفدية معاً (إطعام مسكين عن كل يوم).\n\n**الفدية:** إطعام مسكين واحد عن كل يوم بمقدار مُدّ من الطعام.",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "فَمَن كَانَ مِنكُم مَّرِيضًا أَوْ عَلَىٰ سَفَرٍ فَعِدَّةٌ مِّنْ أَيَّامٍ أُخَرَ",
+        "source": "سورة البقرة: 184"
+      }
+    ],
+    "references": [
+      {
+        "text": "فتح الباري لابن حجر",
+        "source": "كتاب الصوم"
+      }
+    ],
+    "keywords": [
+      "صيام",
+      "قضاء",
+      "رمضان"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 3700,
+    "view_count": 3700,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-15T08:00:00Z",
+    "created_at": "2024-04-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-laylat-alqadr",
+    "external_key": "ruling-laylat-alqadr",
+    "title": "فضل ليلة القدر وأحكامها",
+    "summary": "فضل ليلة القدر وما يُستحب فيها.",
+    "body": "**فضل ليلة القدر:**\n- قال تعالى: ﴿لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ﴾.\n- العبادة فيها خير من العبادة في ألف شهر.\n\n**وقتها:**\n- في العشر الأواخر من رمضان، وأرجحها ليالي الوتر (21، 23، 25، 27، 29).\n- الليلة السابعة والعشرون أرجاها عند جمهور العلماء.\n\n**ما يُستحب فيها:**\n1. قيام الليل بالصلاة.\n2. الإكثار من الدعاء، ومنه: \"اللهم إنك عفو تحب العفو فاعف عني\".\n3. قراءة القرآن.\n4. الاعتكاف في المسجد.",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ",
+        "source": "سورة القدر: 3"
+      },
+      {
+        "type": "حديث",
+        "text": "تحروا ليلة القدر في الوتر من العشر الأواخر من رمضان",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "لطائف المعارف لابن رجب",
+        "source": "فصل ليلة القدر"
+      }
+    ],
+    "keywords": [
+      "ليلة القدر",
+      "رمضان",
+      "صيام",
+      "عبادة"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 6200,
+    "view_count": 6200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-20T08:00:00Z",
+    "created_at": "2024-04-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fidyah-fasting",
+    "external_key": "ruling-fidyah-fasting",
+    "title": "فدية الصيام",
+    "summary": "أحكام الفدية لمن لا يستطيع الصيام.",
+    "body": "**من تجب عليه الفدية دون القضاء:**\n1. الشيخ الكبير العاجز عن الصيام.\n2. المريض مرضاً مزمناً لا يُرجى شفاؤه.\n3. الحامل والمرضع (إذا أفطرتا خوفاً على الولد فقط عند بعض العلماء).\n\n**مقدار الفدية:**\n- إطعام مسكين واحد عن كل يوم.\n- المقدار: مُدّ من الطعام الغالب في البلد (نحو 750 غراماً).\n- يجوز الدفع نقداً بما يعادل قيمة الطعام.\n\n**الفرق بين الفدية والكفارة:** الفدية تكفير لتفويت الصيام، والكفارة عقوبة على الجماع في نهار رمضان.",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَعَلَى الَّذِينَ يُطِيقُونَهُ فِدْيَةٌ طَعَامُ مِسْكِينٍ",
+        "source": "سورة البقرة: 184"
+      }
+    ],
+    "references": [
+      {
+        "text": "الشرح الكبير لابن قدامة",
+        "source": "كتاب الصيام"
+      }
+    ],
+    "keywords": [
+      "فدية",
+      "صيام",
+      "إطعام",
+      "عجز"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 2400,
+    "view_count": 2400,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-01T08:00:00Z",
+    "created_at": "2024-05-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-zakat-alfitrah",
+    "external_key": "ruling-zakat-alfitrah",
+    "title": "زكاة الفطر",
+    "summary": "أحكام زكاة الفطر ومقدارها ووقت إخراجها.",
+    "body": "**زكاة الفطر:**\n- فرض على كل مسلم قادر عن نفسه وعمّن يعول.\n- مقدارها: صاع من طعام البلد (نحو 2.5 كغ أو 3 كغ).\n- أجاز جمهور العلماء إخراجها من التمر أو الشعير أو القمح أو الزبيب.\n- أجاز بعض العلماء إخراج القيمة نقداً لمصلحة الفقير.\n\n**وقت إخراجها:**\n- يجوز قبل العيد بيوم أو يومين.\n- وقت الوجوب: غروب شمس آخر يوم من رمضان.\n- وقت الأداء المستحب: قبل صلاة العيد.\n- يحرم تأخيرها إلى ما بعد صلاة العيد.",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "فرض رسول الله ﷺ زكاة الفطر صاعاً من تمر أو صاعاً من شعير",
+        "source": "رواه البخاري ومسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "سبل السلام للصنعاني",
+        "source": "كتاب الزكاة"
+      }
+    ],
+    "keywords": [
+      "زكاة الفطر",
+      "رمضان",
+      "إطعام"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 4500,
+    "view_count": 4500,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-10T08:00:00Z",
+    "created_at": "2024-05-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-zakat-animals",
+    "external_key": "ruling-zakat-animals",
+    "title": "نصاب زكاة الإبل والبقر",
+    "summary": "مقادير الزكاة الواجبة في الإبل والبقر.",
+    "body": "**زكاة الإبل:**\n| العدد | الواجب |\n|-------|--------|\n| 5–9 | شاة |\n| 10–14 | شاتان |\n| 15–19 | ثلاث شياه |\n| 20–24 | أربع شياه |\n| 25–35 | بنت مخاض |\n| 36–45 | بنت لبون |\n| 46–60 | حُقّة |\n| 61–75 | جذعة |\n| 76–90 | بنتا لبون |\n| 91–120 | حُقّتان |\n\n**زكاة البقر:**\n- في كل ثلاثين: تبيع (عجل عمره سنة).\n- في كل أربعين: مُسنّة (بقرة عمرها سنتان).\n- لا زكاة فيما دون ثلاثين.",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "في خمس من الإبل شاة",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الزكاة، باب زكاة الإبل"
+      }
+    ],
+    "keywords": [
+      "زكاة",
+      "إبل",
+      "بقر",
+      "نصاب",
+      "ماشية"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 1800,
+    "view_count": 1800,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-15T08:00:00Z",
+    "created_at": "2024-05-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-zakat-recipients",
+    "external_key": "ruling-zakat-recipients",
+    "title": "مصارف الزكاة الثمانية",
+    "summary": "الأصناف الثمانية المستحقة للزكاة.",
+    "body": "**مصارف الزكاة بنص القرآن الكريم:**\n1. **الفقراء:** من لا مال له أو يملك أقل من نصف كفايته.\n2. **المساكين:** من يملك نصف الكفاية فأقل.\n3. **العاملون عليها:** الجباة والإداريون المكلفون بجمعها وتوزيعها.\n4. **المؤلفة قلوبهم:** من يُرجى إسلامهم أو تثبيت قلوبهم.\n5. **في الرقاب:** تحرير العبيد وفداء الأسرى المسلمين.\n6. **الغارمون:** من ركبهم الدين لأنفسهم أو لإصلاح ذات البين.\n7. **في سبيل الله:** المجاهدون وما فيه نفع عام للإسلام.\n8. **ابن السبيل:** المسافر المنقطع عن ماله.",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "إِنَّمَا الصَّدَقَاتُ لِلْفُقَرَاءِ وَالْمَسَاكِينِ وَالْعَامِلِينَ عَلَيْهَا",
+        "source": "سورة التوبة: 60"
+      }
+    ],
+    "references": [
+      {
+        "text": "تفسير ابن كثير",
+        "source": "سورة التوبة، الآية 60"
+      }
+    ],
+    "keywords": [
+      "زكاة",
+      "مصارف",
+      "فقراء",
+      "توزيع"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 3900,
+    "view_count": 3900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-20T08:00:00Z",
+    "created_at": "2024-05-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-zakat-debt",
+    "external_key": "ruling-zakat-debt",
+    "title": "الدَّين وأثره على الزكاة",
+    "summary": "هل يُخصم الدَّين من المال قبل احتساب الزكاة.",
+    "body": "**مسألة الدَّين والزكاة:**\n\n**مذهب الحنفية والمالكية والحنابلة:**\n- الدَّين يُسقط الزكاة أو يُنقصها إذا لم يكن لديه ما يسد الدين سواها.\n\n**مذهب الشافعية:**\n- الدَّين لا يمنع وجوب الزكاة إذا بلغ المال نصاباً.\n\n**الراجح:**\n- إذا كان للشخص دين يستغرق ماله أو أنقصه عن النصاب فلا زكاة، أخذاً بمبدأ أن الزكاة في الفاضل عن الحاجات الأصلية.\n- الديون المؤجلة طويلة الأجل محل خلاف، والأحوط احتساب الزكاة مع نية الرجوع على المدين.",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا زكاة في مال حتى يحول عليه الحول",
+        "source": "رواه الترمذي"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفقه على المذاهب الأربعة للجزيري",
+        "source": "كتاب الزكاة"
+      }
+    ],
+    "keywords": [
+      "زكاة",
+      "دَّين",
+      "نصاب"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 2100,
+    "view_count": 2100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-06-01T08:00:00Z",
+    "created_at": "2024-06-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-child-custody",
+    "external_key": "ruling-child-custody",
+    "title": "أحكام حضانة الأطفال",
+    "summary": "من أحق بحضانة الطفل عند انفصال الوالدين.",
+    "body": "**أحكام الحضانة:**\n1. **الأم أحق بالحضانة** في الصغر: عند الحنفية حتى سبع سنوات للذكر وتسع للأنثى، وعند الشافعية والحنابلة حتى التمييز.\n2. **شروط الحاضنة:** الإسلام، العقل، الأمانة، القدرة على التربية، خلو الوقت للطفل.\n3. **سقوط الحضانة:** تسقط بالزواج من أجنبي (على خلاف)، أو الفسق، أو العجز.\n4. **الحضانة بعد التمييز:** يُخيَّر الطفل بين أبويه عند الشافعية والحنابلة.\n5. **حق الزيارة:** يثبت للوالد غير الحاضن لصون العلاقة بالأطفال.",
+    "category": "الأسرة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "أنت أحق به ما لم تنكحي",
+        "source": "رواه أبو داود"
+      }
+    ],
+    "references": [
+      {
+        "text": "بدائع الصنائع للكاساني",
+        "source": "كتاب الحضانة"
+      }
+    ],
+    "keywords": [
+      "حضانة",
+      "أطفال",
+      "أسرة",
+      "طلاق"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 4200,
+    "view_count": 4200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-06-05T08:00:00Z",
+    "created_at": "2024-06-05T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-wife-nafaqah",
+    "external_key": "ruling-wife-nafaqah",
+    "title": "نفقة الزوجة",
+    "summary": "ما يجب للزوجة من نفقة وكسوة وسكن.",
+    "body": "**وجوب النفقة:**\n- النفقة واجبة على الزوج لزوجته بالكتاب والسنة والإجماع.\n\n**ما تشمله النفقة:**\n1. الطعام والشراب بما يكفيها ويُشبعها.\n2. الكسوة المناسبة للموسم والعرف.\n3. السكن اللائق المستقل (في رأي جمهور العلماء).\n4. خادمة إن كانت من أهل الخدمة.\n5. أدوات التنظيف والصحة الشخصية.\n\n**شروط استحقاق النفقة:**\n- أن يكون عقد الزواج صحيحاً.\n- أن تُمكّن الزوجة زوجها من نفسها.\n- لا تسقط بيُسر الزوجة أو بعمل خارج البيت.",
+    "category": "الأسرة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَعَلَى الْمَوْلُودِ لَهُ رِزْقُهُنَّ وَكِسْوَتُهُنَّ بِالْمَعْرُوفِ",
+        "source": "سورة البقرة: 233"
+      },
+      {
+        "type": "حديث",
+        "text": "ولهن عليكم رزقهن وكسوتهن بالمعروف",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المهذب للشيرازي",
+        "source": "كتاب النفقات"
+      }
+    ],
+    "keywords": [
+      "نفقة",
+      "زوجة",
+      "أسرة",
+      "حقوق"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 3600,
+    "view_count": 3600,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-06-10T08:00:00Z",
+    "created_at": "2024-06-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-parents-obedience",
+    "external_key": "ruling-parents-obedience",
+    "title": "طاعة الوالدين",
+    "summary": "وجوب بر الوالدين وطاعتهما وحدود ذلك.",
+    "body": "**وجوب طاعة الوالدين:**\n- بر الوالدين فريضة بعد التوحيد مباشرة في القرآن الكريم.\n- واجبة في المباح والمعروف، وتسقط في المعصية.\n\n**صور البر:**\n1. طاعتهما في المعروف.\n2. الإنفاق عليهما عند الحاجة.\n3. لين القول وخفض الجناح.\n4. زيارتهما والاهتمام بهما.\n5. الدعاء لهما حياً وميتاً.\n6. صلة أصدقائهما وأرحامهما.\n\n**حدود الطاعة:**\n- لا طاعة لمخلوق في معصية الخالق.\n- إذا أمرا بالكفر أو الشرك أو ترك الفريضة وجب رفضه برفق.",
+    "category": "الأسرة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا",
+        "source": "سورة الإسراء: 23"
+      },
+      {
+        "type": "حديث",
+        "text": "رضا الله في رضا الوالدين وسخط الله في سخط الوالدين",
+        "source": "رواه الترمذي"
+      }
+    ],
+    "references": [
+      {
+        "text": "إحياء علوم الدين للغزالي",
+        "source": "ربع العادات، كتاب آداب الصحبة"
+      }
+    ],
+    "keywords": [
+      "والدين",
+      "طاعة",
+      "بر",
+      "أسرة"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 5500,
+    "view_count": 5500,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-06-15T08:00:00Z",
+    "created_at": "2024-06-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-parents-disobedience",
+    "external_key": "ruling-parents-disobedience",
+    "title": "عقوق الوالدين وأحكامه",
+    "summary": "تعريف عقوق الوالدين وحكمه ومظاهره.",
+    "body": "**تعريف العقوق:**\nإيذاء الوالدين أو أحدهما قولاً أو فعلاً أو تركاً مما فيه أذى ظاهر.\n\n**حكمه:**\n- من كبائر الذنوب باتفاق العلماء.\n- قرنه النبي ﷺ بالإشراك بالله وشهادة الزور.\n\n**مظاهر العقوق:**\n1. إهانتهما بالقول أو الفعل.\n2. ترك الإنفاق عليهما مع القدرة.\n3. هجرهما أو إهمالهما.\n4. إيثار الزوجة أو الأولاد بما يُلحق الضرر بهما.\n5. إسماعهما ما يؤلمهما.\n\n**الكفارة والتوبة:**\n- التوبة الصادقة، والاستسماح منهما، وصلة الرحم من بعدهما.",
+    "category": "الأسرة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "ألا أنبئكم بأكبر الكبائر؟ الإشراك بالله وعقوق الوالدين",
+        "source": "رواه البخاري ومسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "الكبائر للذهبي",
+        "source": "الكبيرة الثانية: عقوق الوالدين"
+      }
+    ],
+    "keywords": [
+      "عقوق",
+      "والدين",
+      "كبائر",
+      "أسرة"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 4000,
+    "view_count": 4000,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-06-20T08:00:00Z",
+    "created_at": "2024-06-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-riba-prohibition",
+    "external_key": "ruling-riba-prohibition",
+    "title": "تحريم الربا وأنواعه",
+    "summary": "حكم الربا وأقسامه في الفقه الإسلامي.",
+    "body": "**حكم الربا:**\n- حرام بنص القرآن والسنة والإجماع، وهو من كبائر الذنوب.\n\n**أنواع الربا:**\n1. **ربا النسيئة (الجاهلية):** الزيادة في الدَّين مقابل تأجيل السداد.\n2. **ربا الفضل:** بيع الجنس الواحد بتفاضل (ذهب بذهب متفاضلاً).\n3. **ربا اليد:** التفرق قبل التقابض في الأموال الربوية.\n\n**الأموال الربوية الستة:** الذهب، الفضة، القمح، الشعير، التمر، الملح (نص الحديث).\n\n**البديل الشرعي:** المرابحة، الإجارة، المشاركة، السلم.",
+    "category": "المعاملات",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا",
+        "source": "سورة البقرة: 275"
+      },
+      {
+        "type": "حديث",
+        "text": "الذهب بالذهب والفضة بالفضة والبر بالبر والشعير بالشعير والتمر بالتمر والملح بالملح مثلاً بمثل سواء بسواء يداً بيد",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المبسوط للسرخسي",
+        "source": "كتاب البيوع"
+      }
+    ],
+    "keywords": [
+      "ربا",
+      "بيع",
+      "معاملات",
+      "تحريم"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 6100,
+    "view_count": 6100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-07-01T08:00:00Z",
+    "created_at": "2024-07-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-ijarah",
+    "external_key": "ruling-ijarah",
+    "title": "عقد الإجارة وأحكامه",
+    "summary": "تعريف الإجارة وشروطها وما يترتب عليها.",
+    "body": "**تعريف الإجارة:**\nعقد على منفعة معلومة بعوض معلوم لمدة محددة.\n\n**أنواع الإجارة:**\n1. **إجارة الأعيان:** تأجير العقارات والمركبات والآلات.\n2. **إجارة الأشخاص:** استئجار العمال والمهنيين.\n\n**شروط صحة الإجارة:**\n1. رضا الطرفين.\n2. معلومية المنفعة والمدة والأجرة.\n3. أن تكون المنفعة مباحة.\n4. إمكانية تسليم المأجور.\n\n**حقوق المستأجر والمؤجر:**\n- المستأجر: الانتفاع بالعين طوال المدة دون الإضرار بها.\n- المؤجر: قبض الأجرة في وقتها.\n- العيب الطارئ: يُخيَّر المستأجر بين الفسخ والإبقاء مع التعويض.",
+    "category": "المعاملات",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "أعطوا الأجير أجره قبل أن يجف عرقه",
+        "source": "رواه ابن ماجه"
+      }
+    ],
+    "references": [
+      {
+        "text": "المهذب للشيرازي",
+        "source": "كتاب الإجارة"
+      }
+    ],
+    "keywords": [
+      "إجارة",
+      "إيجار",
+      "عقد",
+      "معاملات"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 2700,
+    "view_count": 2700,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-07-05T08:00:00Z",
+    "created_at": "2024-07-05T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-hibah-wasiyyah",
+    "external_key": "ruling-hibah-wasiyyah",
+    "title": "أحكام الهبة والوصية",
+    "summary": "الهبة والوصية وشروطهما وما يترتب عليهما.",
+    "body": "**الهبة:**\n- تمليك عين بلا عوض في الحياة.\n- تلزم بالقبض عند الجمهور.\n- يُستحب التسوية بين الأبناء في الهبة.\n- يجوز الرجوع في الهبة قبل القبض، وبعده في هبة الأب لابنه عند بعض العلماء.\n\n**الوصية:**\n- تمليك مضاف إلى ما بعد الموت.\n- مستحبة لغير الورثة، ومكروهة إن أضرت بهم.\n- لا وصية لوارث إلا بإجازة بقية الورثة.\n- **حدها الأقصى:** ثلث التركة (بالاتفاق).\n\n**الفرق الجوهري:** الهبة تُنجز في الحياة وتلزم بالقبض، والوصية لا تُنفذ إلا بعد الوفاة ومن الثلث.",
+    "category": "المعاملات",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "الثلث والثلث كثير",
+        "source": "رواه البخاري ومسلم"
+      },
+      {
+        "type": "حديث",
+        "text": "لا وصية لوارث",
+        "source": "رواه الترمذي"
+      }
+    ],
+    "references": [
+      {
+        "text": "الكافي لابن قدامة",
+        "source": "كتاب الهبة والوصية"
+      }
+    ],
+    "keywords": [
+      "هبة",
+      "وصية",
+      "تركة",
+      "معاملات"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 2300,
+    "view_count": 2300,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-07-10T08:00:00Z",
+    "created_at": "2024-07-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-ghusl-faraid",
+    "external_key": "ruling-ghusl-faraid",
+    "title": "موجبات الغسل وفرائضه",
+    "summary": "الأمور التي توجب الغسل وما يجب فعله فيه.",
+    "body": "**موجبات الغسل:**\n1. الجنابة بإيلاج أو إنزال.\n2. انقطاع الحيض والنفاس.\n3. الموت (الغسل على الميت المسلم).\n4. إسلام الكافر (عند جمهور العلماء).\n\n**فرائض الغسل:**\n1. **النية:** لقوله ﷺ: «إنما الأعمال بالنيات».\n2. **تعميم الماء على الجسد:** حتى يصل إلى جميع الأجزاء الظاهرة.\n3. **إزالة ما يمنع وصول الماء** كالعجين والشمع.\n\n**السنن:** الوضوء قبل الغسل، والبداءة بميامن البدن وإمرار اليد على الجسد.",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَإِن كُنتُمْ جُنُبًا فَاطَّهَّرُوا",
+        "source": "المائدة: 6"
+      },
+      {
+        "type": "حديث",
+        "text": "إنما الأعمال بالنيات",
+        "source": "رواه البخاري ومسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الطهارة"
+      }
+    ],
+    "keywords": [
+      "غسل",
+      "طهارة",
+      "جنابة",
+      "حيض"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 3100,
+    "view_count": 3100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-08-01T08:00:00Z",
+    "created_at": "2024-08-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-tayammum",
+    "external_key": "ruling-tayammum",
+    "title": "التيمم — أحكامه وشروطه",
+    "summary": "طهارة التراب عند تعذر استعمال الماء وكيفيتها.",
+    "body": "**شروط التيمم:**\n1. تعذر استعمال الماء لعدمه أو خوف الضرر بالبرد أو المرض.\n2. دخول وقت الصلاة.\n3. التراب الطاهر المباح.\n4. النية.\n\n**كيفيته:**\nضربة واحدة على التراب، ثم مسح الوجه واليدين إلى الرسغين، وهو قول جمهور الحنفية والشافعية والمالكية.\n\n**ما يُبطله:**\n1. وجود الماء والقدرة على استعماله.\n2. ما يُبطل الوضوء.\n3. الردة.\n\n**القاعدة:** يُصلى بالتيمم الواحد أكثر من صلاة ما لم يُوجد الماء أو يحدث ناقض.",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "فَتَيَمَّمُوا صَعِيدًا طَيِّبًا",
+        "source": "النساء: 43"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفقه على المذاهب الأربعة — الجزيري",
+        "source": "كتاب الطهارة"
+      }
+    ],
+    "keywords": [
+      "تيمم",
+      "طهارة",
+      "تراب",
+      "مرض"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 2600,
+    "view_count": 2600,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-08-05T08:00:00Z",
+    "created_at": "2024-08-05T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-hajj-wajibat",
+    "external_key": "ruling-hajj-wajibat",
+    "title": "أركان الحج وواجباته",
+    "summary": "الأركان التي لا يصح الحج إلا بها والواجبات التي يُجبر تركها بدم.",
+    "body": "**أركان الحج (لا يصح بدونها):**\n1. **الإحرام** بنية الحج.\n2. **الوقوف بعرفة** بأي وقت من يوم عرفة وليلة النحر.\n3. **طواف الإفاضة** (الزيارة) يوم العيد أو بعده.\n4. **السعي** بين الصفا والمروة.\n\n**واجبات الحج (يُجبر تركها بدم):**\n1. الإحرام من الميقات.\n2. المبيت بمزدلفة ليلة النحر.\n3. رمي الجمرات.\n4. الحلق أو التقصير.\n5. المبيت بمنى ليالي التشريق.\n6. طواف الوداع (لغير المكيين).\n\n**الفرق:** ترك الركن يُبطل الحج، وترك الواجب يُوجب الدم ولا يُبطل.",
+    "category": "الحج",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَلِلَّهِ عَلَى النَّاسِ حِجُّ الْبَيْتِ",
+        "source": "آل عمران: 97"
+      },
+      {
+        "type": "حديث",
+        "text": "خذوا عني مناسككم",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الحج"
+      }
+    ],
+    "keywords": [
+      "حج",
+      "أركان",
+      "واجبات",
+      "عرفة",
+      "طواف"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 4200,
+    "view_count": 4200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-08-10T08:00:00Z",
+    "created_at": "2024-08-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-divorce-types",
+    "external_key": "ruling-divorce-types",
+    "title": "أنواع الطلاق وأحكامه",
+    "summary": "أقسام الطلاق من حيث العدد والأثر والسنة والبدعة.",
+    "body": "**الطلاق من حيث عدد المرات:**\n- **الطلاق الرجعي:** الأول والثاني؛ يحق للزوج المراجعة دون عقد جديد ما دامت في العدة.\n- **الطلاق البائن بينونة صغرى:** انقضاء العدة دون مراجعة؛ يجوز التزاوج بعقد جديد.\n- **الطلاق البائن بينونة كبرى:** الثلاث المجموعة أو المتفرقة؛ لا تحل للأول حتى تنكح زوجاً غيره.\n\n**الطلاق من حيث الحكم الشرعي:**\n- **السني:** طلاق الزوجة في طهر لم يقع فيه جماع.\n- **البدعي:** طلاقها في الحيض أو في طهر جامعها فيه — حرام وإن وقع.\n\n**العدة:** ثلاثة قروء للمدخول بها من أهل الحيض، وثلاثة أشهر لغير المحيض، وحتى الوضع للحامل.",
+    "category": "الأسرة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "الطَّلَاقُ مَرَّتَانِ ۖ فَإِمْسَاكٌ بِمَعْرُوفٍ أَوْ تَسْرِيحٌ بِإِحْسَانٍ",
+        "source": "البقرة: 229"
+      }
+    ],
+    "references": [
+      {
+        "text": "الكافي لابن قدامة",
+        "source": "كتاب الطلاق"
+      }
+    ],
+    "keywords": [
+      "طلاق",
+      "أسرة",
+      "عدة",
+      "رجعة"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 5100,
+    "view_count": 5100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-08-15T08:00:00Z",
+    "created_at": "2024-08-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-sale-contract-conditions",
+    "external_key": "ruling-sale-contract-conditions",
+    "title": "شروط صحة عقد البيع",
+    "summary": "الشروط الشرعية الواجب توافرها لصحة عقود البيع والشراء.",
+    "body": "**شروط صحة البيع:**\n**أولاً — شروط العاقدين:**\n1. البلوغ والعقل (أهلية التصرف).\n2. الرضا والاختيار (لا إكراه).\n3. الولاية على المبيع (المالك أو وكيله).\n\n**ثانياً — شروط المبيع:**\n1. طهارته وإباحة الانتفاع به.\n2. إمكانية التسليم.\n3. معلومية المبيع جنساً وقدراً وصفةً.\n4. أن يكون ملكاً للبائع.\n\n**ثالثاً — شروط الثمن:**\n1. معلومية الثمن جنساً ومقداراً.\n2. أن يكون الثمن مباحاً.\n\n**المفسدات الشائعة:**\n- الغرر الفاحش (مجهولية الصفة).\n- الجهالة (الثمن غير المحدد).\n- بيع ما لا يملك (إلا في السلم والاستصناع بشروط).",
+    "category": "المعاملات",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا تبع ما ليس عندك",
+        "source": "رواه الترمذي"
+      },
+      {
+        "type": "حديث",
+        "text": "نهى عن بيع الغرر",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب البيع"
+      }
+    ],
+    "keywords": [
+      "بيع",
+      "شراء",
+      "معاملات",
+      "عقد",
+      "غرر"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 3800,
+    "view_count": 3800,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-08-20T08:00:00Z",
+    "created_at": "2024-08-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-mortgage-bank",
+    "external_key": "ruling-mortgage-bank",
+    "title": "حكم القروض العقارية البنكية بالفائدة",
+    "summary": "حكم الاقتراض من البنوك لشراء العقارات بفائدة ربوية.",
+    "body": "**الحكم:** القروض العقارية بفائدة ربوية محرمة تحريماً قاطعاً.\n\n**التأصيل:**\nقال تعالى: ﴿وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا﴾ [البقرة: 275].\nوالزيادة المشروطة على أصل الدَّين هي عين الربا المنهي عنه.\n\n**البدائل الشرعية:**\n- المرابحة للآمر بالشراء (البنوك الإسلامية).\n- الإجارة المنتهية بالتمليك.\n- المشاركة المتناقصة (المساهمة التدريجية).\n\n**تنبيه:** لا يُباح القرض الربوي بحجة الضرورة إلا عند تعذّر البدائل الشرعية كلياً وتحقق الضرورة بشروطها.",
+    "category": "المعاملات",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا",
+        "source": "البقرة: 275"
+      },
+      {
+        "type": "قرآن",
+        "text": "يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَذَرُوا مَا بَقِيَ مِنَ الرِّبَا",
+        "source": "البقرة: 278"
+      }
+    ],
+    "references": [
+      {
+        "text": "قرار مجمع الفقه الإسلامي رقم 13",
+        "source": "مجلة المجمع"
+      }
+    ],
+    "keywords": [
+      "ربا",
+      "قرض",
+      "عقار",
+      "بنك",
+      "فائدة",
+      "تمويل"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 5100,
+    "view_count": 5100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-09-01T08:00:00Z",
+    "created_at": "2024-09-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-zakat-salary",
+    "external_key": "ruling-zakat-salary",
+    "title": "زكاة الراتب الشهري",
+    "summary": "حكم إخراج الزكاة على الرواتب والمداخيل الدورية.",
+    "body": "**المسألة:** هل تجب الزكاة على الراتب الشهري مباشرةً عند قبضه؟\n\n**الأقوال:**\n1. **قول جماعة من المعاصرين (ابن باز، ابن عثيمين):** لا تجب إلا بعد تمام الحول على المال المجتمع إذا بلغ النصاب.\n2. **قول الشيخ يوسف القرضاوي وغيره:** يُزكَّى عند قبضه بنسبة 2.5% لأنه دخل، قياساً على زكاة الزروع عند الحصاد.\n\n**الراجح:** الضم إلى ما عنده من نقود، وإخراج الزكاة عند تمام الحول إذا بلغ المجموع نصاباً (85 غراماً من الذهب أو ما يعادله).\n\n**النصاب:** 85 غراماً ذهباً أو 595 غراماً فضةً، والمعمول به اليوم حساب النصاب بسعر الذهب.",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "ليس في مال زكاة حتى يحول عليه الحول",
+        "source": "رواه أبو داود والترمذي"
+      }
+    ],
+    "references": [
+      {
+        "text": "فقه الزكاة للقرضاوي",
+        "source": "ج2"
+      },
+      {
+        "text": "مجموع فتاوى ابن باز",
+        "source": "ج14"
+      }
+    ],
+    "keywords": [
+      "زكاة",
+      "راتب",
+      "دخل",
+      "نصاب",
+      "حول",
+      "نقود"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 4700,
+    "view_count": 4700,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-09-05T08:00:00Z",
+    "created_at": "2024-09-05T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-friday-prayer-conditions",
+    "external_key": "ruling-friday-prayer-conditions",
+    "title": "شروط وجوب صلاة الجمعة",
+    "summary": "من تجب عليه صلاة الجمعة وما يُسقطها من الأعذار.",
+    "body": "**شروط الوجوب:**\n1. الإسلام — فلا تجب على الكافر.\n2. البلوغ — فلا تجب على الصبي.\n3. العقل — فلا تجب على المجنون.\n4. الذكورية — فلا تجب على المرأة (وإن أدّتها صحّت).\n5. الإقامة — فلا تجب على المسافر سفر قصر.\n6. السلامة من الأعذار: المرض الشديد، الخوف، المطر الغزير.\n\n**حكم تاركها:**\nمن تركها ثلاثاً متواليات بلا عذر طُبع على قلبه.\n\n**العدد المشترط:** ذهب الحنابلة إلى أن أدنى ما تنعقد به 40 رجلاً، والصحيح أنها تنعقد باثنين فأكثر.",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا نُودِيَ لِلصَّلَاةِ مِن يَوْمِ الْجُمُعَةِ فَاسْعَوْا إِلَىٰ ذِكْرِ اللَّهِ",
+        "source": "الجمعة: 9"
+      },
+      {
+        "type": "حديث",
+        "text": "من ترك ثلاث جمع تهاوناً طبع الله على قلبه",
+        "source": "رواه أبو داود والترمذي"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الجمعة"
+      }
+    ],
+    "keywords": [
+      "جمعة",
+      "صلاة",
+      "وجوب",
+      "شروط",
+      "عذر",
+      "إقامة"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 4300,
+    "view_count": 4300,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-09-10T08:00:00Z",
+    "created_at": "2024-09-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-iddah-types",
+    "external_key": "ruling-iddah-types",
+    "title": "أنواع العِدَّة وأحكامها",
+    "summary": "أنواع عِدَّة المرأة المطلقة والمتوفى عنها وأحكامها الشرعية.",
+    "body": "**تعريف العِدَّة:** مدة تمكث فيها المرأة بعد الفراق لمعرفة براءة الرحم وصون الأنساب.\n\n**أنواعها:**\n1. **عِدَّة المطلقة ذات الحيض:** ثلاثة قروء (حيضات أو أطهار — خلاف).\n2. **عِدَّة الآيسة والصغيرة:** ثلاثة أشهر.\n3. **عِدَّة الحامل:** بوضع الحمل ولو بعد ساعات من الطلاق أو الوفاة.\n4. **عِدَّة المتوفى عنها:** أربعة أشهر وعشرة أيام (إن لم تكن حاملاً).\n\n**أحكامها:**\n- لا يحل للمعتدة أن تتزوج في أثناء عدتها.\n- يلتزم المطلِّق رجعياً بالسكن والنفقة.\n- تبدأ العِدَّة من وقت الطلاق لا من وقت العلم به.",
+    "category": "الأسرة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَالْمُطَلَّقَاتُ يَتَرَبَّصْنَ بِأَنفُسِهِنَّ ثَلَاثَةَ قُرُوءٍ",
+        "source": "البقرة: 228"
+      },
+      {
+        "type": "قرآن",
+        "text": "وَالَّذِينَ يُتَوَفَّوْنَ مِنكُمْ وَيَذَرُونَ أَزْوَاجاً يَتَرَبَّصْنَ بِأَنفُسِهِنَّ أَرْبَعَةَ أَشْهُرٍ وَعَشْراً",
+        "source": "البقرة: 234"
+      }
+    ],
+    "references": [
+      {
+        "text": "الكافي في فقه الإمام أحمد",
+        "source": "كتاب العِدَّة"
+      }
+    ],
+    "keywords": [
+      "عدة",
+      "طلاق",
+      "وفاة",
+      "قروء",
+      "حمل",
+      "أسرة"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 3500,
+    "view_count": 3500,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-09-15T08:00:00Z",
+    "created_at": "2024-09-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-mirath-asabaat",
+    "external_key": "ruling-mirath-asabaat",
+    "title": "أحكام التعصيب في الميراث",
+    "summary": "من هم العصبة وكيف يرثون في الفقه الإسلامي.",
+    "body": "**تعريف العَصَبة:** كل وارث يأخذ ما بقي بعد أصحاب الفروض، وإن انفرد أخذ الكل.\n\n**أنواع العصبة:**\n1. **العصبة بالنفس:** الذكور من الورثة المنتسبين للميت بلا واسطة أنثى (الابن، الأخ الشقيق، العم...).\n2. **العصبة بالغير:** الأنثى التي تعصّبت بذكر من درجتها (البنت مع الابن، الأخت الشقيقة مع الأخ الشقيق).\n3. **العصبة مع الغير:** الأخت الشقيقة أو لأب مع البنت أو بنت الابن.\n\n**قاعدة:** للذكر مثل حظ الأنثيين عند الاجتماع.\n\n**الحجب:** يحجب الابنُ الأخَ، والأبُ يحجب الجدَّ وسائر الإخوة.",
+    "category": "المواريث",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "يُوصِيكُمُ اللَّهُ فِي أَوْلَادِكُمْ ۖ لِلذَّكَرِ مِثْلُ حَظِّ الْأُنثَيَيْنِ",
+        "source": "النساء: 11"
+      },
+      {
+        "type": "حديث",
+        "text": "ألحقوا الفرائض بأهلها فما بقي فلأولى رجل ذكر",
+        "source": "متفق عليه"
+      }
+    ],
+    "references": [
+      {
+        "text": "الرحبية في علم الفرائض",
+        "source": "المحقق للرحبي"
+      }
+    ],
+    "keywords": [
+      "ميراث",
+      "عصبة",
+      "فرائض",
+      "تركة",
+      "وارث",
+      "حجب"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 3200,
+    "view_count": 3200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-09-20T08:00:00Z",
+    "created_at": "2024-09-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-congregational-prayer",
+    "external_key": "ruling-congregational-prayer",
+    "title": "أحكام صلاة الجماعة",
+    "summary": "حكم صلاة الجماعة وشروطها وصفة الاقتداء بالإمام.",
+    "body": "**حكم صلاة الجماعة:**\nالجماعة واجبة على الرجال القادرين القريبين من المسجد عند جمهور الفقهاء، وهي شعيرة ظاهرة لا يُرخَّص في تركها إلا بعذر.\n\n**شروط صحة الاقتداء:**\n1. نية الاقتداء بالإمام.\n2. علم المأموم بصلاة الإمام.\n3. توافق صلاتيهما في الجنس.\n4. تأخر المأموم عن الإمام أو محاذاته.\n5. عدم تقدم المأموم على الإمام مكاناً.\n\n**صفة الاقتداء:** يتابع المأموم الإمام في أفعال الصلاة، ولا يسبقه إلى الأركان.\n\n**إدراك الركعة:** بإدراك الإمام راكعاً قبل رفعه، ويقرأ الفاتحة في السرية.",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "صلاة الجماعة تفضل صلاة الفذّ بسبع وعشرين درجة",
+        "source": "متفق عليه"
+      },
+      {
+        "type": "قرآن",
+        "text": "وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ الرَّاكِعِينَ",
+        "source": "البقرة: 43"
+      }
+    ],
+    "references": [
+      {
+        "text": "الشرح الممتع — ابن عثيمين",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "جماعة",
+      "إمام",
+      "مأموم",
+      "اقتداء"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 4200,
+    "view_count": 4200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-10-05T08:00:00Z",
+    "created_at": "2024-10-05T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-backbiting-prohibition",
+    "external_key": "ruling-backbiting-prohibition",
+    "title": "تحريم الغيبة والنميمة",
+    "summary": "حكم الغيبة والنميمة وضوابط الكلام المحرم في الإسلام.",
+    "body": "**تعريف الغيبة:** ذكرك أخاك بما يكره وهو غائب، سواء كان بالقول أو الإشارة أو الكتابة.\n\n**قال ﷺ:** «أتدرون ما الغيبة؟ قالوا: الله ورسوله أعلم. قال: ذكرك أخاك بما يكره. قيل: أفرأيت إن كان في أخي ما أقول؟ قال: إن كان فيه ما تقول فقد اغتبته، وإن لم يكن فيه فقد بهتَّه».\n\n**تعريف النميمة:** نقل الكلام بين الناس بقصد الإيقاع والإفساد.\n\n**الاستثناءات الشرعية:** يُباح الكلام في شخص معين عند:\n1. التظلم عند القاضي.\n2. الاستفتاء والنصيحة في أمر المصاهرة أو الشراكة.\n3. تحذير المسلمين من شر معروف.\n4. الجرح والتعديل في رواة الحديث.",
+    "category": "النوازل",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَلَا يَغْتَب بَّعْضُكُم بَعْضًا ۚ أَيُحِبُّ أَحَدُكُمْ أَن يَأْكُلَ لَحْمَ أَخِيهِ مَيْتًا",
+        "source": "الحجرات: 12"
+      },
+      {
+        "type": "حديث",
+        "text": "لا يدخل الجنة نمّام",
+        "source": "متفق عليه"
+      }
+    ],
+    "references": [
+      {
+        "text": "رياض الصالحين — الإمام النووي",
+        "source": "باب تحريم الغيبة"
+      }
+    ],
+    "keywords": [
+      "غيبة",
+      "نميمة",
+      "كلام",
+      "لسان",
+      "تحريم"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 3800,
+    "view_count": 3800,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-10-15T08:00:00Z",
+    "created_at": "2024-10-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-missed-prayers-qada",
+    "external_key": "ruling-missed-prayers-qada",
+    "title": "قضاء الصلوات الفائتة",
+    "summary": "حكم من ترك صلاة متعمداً أو نسياناً وكيفية قضائها.",
+    "body": "**حكم القضاء:**\nمن ترك الصلاة نسياناً أو نوماً وجب عليه قضاؤها فور الذكر أو الاستيقاظ — لحديث: «من نام عن صلاة أو نسيها فليصلها إذا ذكرها».\n\n**من تركها متعمداً:** ذهب الجمهور إلى وجوب القضاء مع التوبة، وإن كان الإثم أعظم.\n\n**الترتيب في القضاء:**\nيُستحب قضاء الفوائت مرتبةً — الأقدم ثم ما بعده — ما لم يضق الوقت عن الحاضرة.\n\n**من فاتته صلوات كثيرة:** يبدأ القضاء فوراً بلا تحديد لعددها، ويستمر حتى يُكملها.",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "من نام عن صلاة أو نسيها فليصلها إذا ذكرها",
+        "source": "متفق عليه"
+      }
+    ],
+    "references": [
+      {
+        "text": "المجموع — الإمام النووي",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "قضاء",
+      "فائتة",
+      "ترك الصلاة",
+      "نسيان"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 2900,
+    "view_count": 2900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-11-01T08:00:00Z",
+    "created_at": "2024-11-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-hajj-istita-ah",
+    "external_key": "ruling-hajj-istita-ah",
+    "title": "شروط الاستطاعة في الحج",
+    "summary": "الشروط التي يجب توافرها ليجب الحج على المسلم.",
+    "body": "**شروط وجوب الحج:**\n1. **الإسلام:** لا يجب على كافر.\n2. **العقل:** لا يجب على المجنون.\n3. **البلوغ:** لا يجب على الصغير، وإن حجّ صح وأُجزئ عن النفل.\n4. **الحرية:** لا يجب على العبد.\n5. **الاستطاعة:** ماليةً وبدنيةً وأمنياً.\n\n**الاستطاعة المالية:** وجود زاد وراحلة فاضلَين عن حوائجه الأصلية وحوائج من يعولهم.\n\n**الاستطاعة البدنية:** القدرة على أداء المناسك ولو بالاستعانة بغيره.\n\n**حج النيابة:** يجوز لمن عجز بدنياً عجزاً مستمراً أن يُنيب عنه غيره بعد أن يتحمل نفقات النائب.",
+    "category": "الحج",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَلِلَّهِ عَلَى النَّاسِ حِجُّ الْبَيْتِ مَنِ اسْتَطَاعَ إِلَيْهِ سَبِيلًا",
+        "source": "آل عمران: 97"
+      },
+      {
+        "type": "حديث",
+        "text": "الزاد والراحلة",
+        "source": "رواه الترمذي وحسّنه"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني — ابن قدامة",
+        "source": "كتاب الحج"
+      }
+    ],
+    "keywords": [
+      "حج",
+      "استطاعة",
+      "فريضة",
+      "نيابة",
+      "شروط"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 2600,
+    "view_count": 2600,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-11-10T08:00:00Z",
+    "created_at": "2024-11-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-ihram-prohibitions",
+    "external_key": "ruling-ihram-prohibitions",
+    "title": "محظورات الإحرام وفدية مخالفتها",
+    "summary": "ما يحرم على المحرم فعله، وما يجب عليه لو ارتكب شيئاً من المحظورات.",
+    "body": "**محظورات الإحرام:**\nتنقسم إلى قسمين:\n\n**أولاً — محظورات مشتركة بين الرجل والمرأة:**\n1. حلق الشعر أو قصّه.\n2. تقليم الأظافر.\n3. استعمال الطيب في البدن أو الثياب.\n4. قتل صيد البر.\n5. عقد النكاح — لحديث: «لا يَنكِحُ المُحرِمُ ولا يُنكَح» (رواه مسلم).\n6. المباشرة والجماع.\n\n**ثانياً — محظورات خاصة بالرجل:**\n7. لبس المخيط (الثياب المفصَّلة).\n8. تغطية الرأس.\n\n**ثالثاً — محظورات خاصة بالمرأة:**\n9. تغطية الوجه واليدين بالنقاب والقفازين (لا بالثوب المرسَل).\n\n**الفدية:**\nمن ارتكب محظوراً بعذر أو بغيره فعليه فدية: **صيام ثلاثة أيام، أو إطعام ستة مساكين، أو ذبح شاة** — لقوله تعالى: ﴿فَمَن كَانَ مِنكُم مَّرِيضًا أَوْ بِهِ أَذًى مِّن رَّأْسِهِ فَفِدْيَةٌ مِّن صِيَامٍ أَوْ صَدَقَةٍ أَوْ نُسُكٍ﴾ [البقرة: 196].",
+    "category": "الحج",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "فَمَن كَانَ مِنكُم مَّرِيضًا أَوْ بِهِ أَذًى مِّن رَّأْسِهِ فَفِدْيَةٌ مِّن صِيَامٍ أَوْ صَدَقَةٍ أَوْ نُسُكٍ",
+        "source": "البقرة: 196"
+      },
+      {
+        "type": "حديث",
+        "text": "لا يَنكِحُ المُحرِمُ ولا يُنكَح ولا يَخطُب",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني — ابن قدامة",
+        "source": "كتاب الحج، باب محظورات الإحرام"
+      },
+      {
+        "text": "الشرح الممتع — ابن عثيمين",
+        "source": "كتاب الحج"
+      }
+    ],
+    "keywords": [
+      "إحرام",
+      "محظورات",
+      "فدية",
+      "حج",
+      "صيد",
+      "طيب",
+      "مخيط"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 3100,
+    "view_count": 3100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-11-15T08:00:00Z",
+    "created_at": "2024-11-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-inheritance-spouses",
+    "external_key": "ruling-inheritance-spouses",
+    "title": "ميراث الزوجين",
+    "summary": "نصيب الزوج من زوجته والزوجة من زوجها في الميراث الشرعي.",
+    "body": "**ميراث الزوج من زوجته:**\n- **النصف (½):** إذا لم يكن للزوجة فرع وارث (ولد أو ولد ابن).\n- **الربع (¼):** إذا كان للزوجة فرع وارث.\n\n**ميراث الزوجة من زوجها:**\n- **الربع (¼):** إذا لم يكن للزوج فرع وارث.\n- **الثمن (⅛):** إذا كان للزوج فرع وارث.\n\n**تعدد الزوجات:**\nإذا خلّف الزوج أكثر من زوجة تشتركن في النصيب (الربع أو الثمن) بالتساوي بينهن.\n\n**ملاحظات فقهية:**\n- الزوجية المعتدّة بطلاق رجعي ترث كالزوجة الرسمية ما دامت في العدة.\n- الزواج الذي لم تتحقق أركانه الشرعية لا يُورَث به.",
+    "category": "المواريث",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَلَكُمْ نِصْفُ مَا تَرَكَ أَزْوَاجُكُمْ إِن لَّمْ يَكُن لَّهُنَّ وَلَدٌ ۚ فَإِن كَانَ لَهُنَّ وَلَدٌ فَلَكُمُ الرُّبُعُ مِمَّا تَرَكْنَ",
+        "source": "النساء: 12"
+      }
+    ],
+    "references": [
+      {
+        "text": "الرحبية — الإمام الرحبي (مع شرح ابن عثيمين)",
+        "source": "باب ميراث الزوجين"
+      },
+      {
+        "text": "المغني — ابن قدامة",
+        "source": "كتاب الفرائض"
+      }
+    ],
+    "keywords": [
+      "ميراث",
+      "زوج",
+      "زوجة",
+      "فرائض",
+      "تركة",
+      "نصف",
+      "ربع",
+      "ثمن"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 2800,
+    "view_count": 2800,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-11-20T08:00:00Z",
+    "created_at": "2024-11-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-wasiyya",
+    "external_key": "ruling-wasiyya",
+    "title": "أحكام الوصية",
+    "summary": "حكم الوصية وشروطها وحدودها الشرعية وما يجب مراعاته فيها.",
+    "body": "**تعريف الوصية:**\nتمليك مضاف إلى ما بعد الموت بطريق التبرع.\n\n**حكمها:**\n- **مستحبة** لمن عنده مال كثير وله أقارب محتاجون لا يرثون.\n- **واجبة** على من عليه حقوق شرعية (دين، أمانة) لم توثَّق رسمياً.\n- **محرمة** إذا كانت للوارث أو تجاوزت الثلث إضراراً بالورثة.\n\n**الحد الشرعي:**\nلا تزيد الوصية على ثلث التركة بعد سداد الديون — لحديث سعد بن أبي وقاص: «الثلث، والثلث كثير» (متفق عليه).\n\n**الوصية للوارث:**\nلا تجوز الوصية لوارث إلا بإجازة بقية الورثة بعد الوفاة — لحديث: «لا وصية لوارث» (رواه أبو داود والترمذي وحسّنه).\n\n**الرجوع في الوصية:**\nيجوز للموصي الرجوع في وصيته أو تعديلها ما دام حياً.",
+    "category": "المواريث",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "الثلث، والثلث كثير؛ إنك أن تَدَع ورثتك أغنياء خير من أن تدعهم عالةً يتكففون الناس",
+        "source": "متفق عليه — حديث سعد بن أبي وقاص"
+      },
+      {
+        "type": "حديث",
+        "text": "لا وصية لوارث",
+        "source": "رواه أبو داود والترمذي وحسّنه، وصحّحه الألباني"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني — ابن قدامة",
+        "source": "كتاب الوصايا"
+      },
+      {
+        "text": "الشرح الممتع — ابن عثيمين",
+        "source": "كتاب الوصية"
+      }
+    ],
+    "keywords": [
+      "وصية",
+      "ثلث",
+      "ميراث",
+      "تركة",
+      "ورثة",
+      "مال"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 3200,
+    "view_count": 3200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-11-25T08:00:00Z",
+    "created_at": "2024-11-25T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-commercial-insurance",
+    "external_key": "ruling-commercial-insurance",
+    "title": "حكم التأمين التجاري",
+    "summary": "حكم التأمين التجاري (الصحي والسيارات وغيره) من منظور الفقه الإسلامي المعاصر.",
+    "body": "**أنواع التأمين:**\n1. **التأمين التعاوني (الإسلامي):** جائز — يقوم على التبرع المشترك بين المشتركين وإدارة صندوق الوقف.\n2. **التأمين التجاري:** محل خلاف؛ وذهب جمهور الفقهاء المعاصرين إلى تحريمه.\n\n**أسباب تحريم التأمين التجاري:**\n- **الغرر الفاحش:** لا يعلم المستأمن هل سيحصل على شيء أم لا، ولا يعلم قيمة ما سيأخذ.\n- **الربا:** شركة التأمين قد تستثمر الأقساط في محافظ ربوية.\n- **القمار:** أشبه بالمراهنة — إذا لم تقع الحادثة ضاع المال، وإذا وقعت أخذ أضعاف ما دفع.\n\n**قرار المجمع الفقهي الإسلامي:**\nقرّر المجمع الفقهي الإسلامي برابطة العالم الإسلامي (القرار الثاني، مكة 1397هـ) تحريم التأمين التجاري وإباحة التأمين التعاوني.\n\n**الاضطرار والإلزام:**\nمن أُلزم بالتأمين قانوناً (كتأمين السيارات الإلزامي) فلا إثم عليه في الأخذ بقدر الضرورة، مع الحرص على التأمين الإسلامي البديل إن وُجد.",
+    "category": "النوازل",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "نهى النبي ﷺ عن بيع الغرر",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "قرار المجمع الفقهي الإسلامي",
+        "source": "برابطة العالم الإسلامي، القرار الثاني 1397هـ"
+      },
+      {
+        "text": "الفقه الإسلامي وأدلته — وهبة الزحيلي",
+        "source": "مبحث التأمين"
+      }
+    ],
+    "keywords": [
+      "تأمين",
+      "تجاري",
+      "إسلامي",
+      "تعاوني",
+      "غرر",
+      "ربا",
+      "نوازل"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 4500,
+    "view_count": 4500,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-12-01T08:00:00Z",
+    "created_at": "2024-12-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-cryptocurrency",
+    "external_key": "ruling-cryptocurrency",
+    "title": "حكم التعامل بالعملات الرقمية المشفرة",
+    "summary": "الحكم الشرعي في شراء وبيع وتداول العملات المشفرة كالبيتكوين وغيرها.",
+    "body": "**صورة المسألة:**\nالعملات الرقمية المشفرة (Bitcoin وما شابهها) عملات افتراضية لا تصدرها دولة ولا تضمنها هيئة مركزية، وتقوم على تقنية البلوك تشين اللامركزية.\n\n**الأقوال الفقهية المعاصرة:**\n- **القول بالتحريم:** وهو قرار دار الإفتاء المصرية وعدد من هيئات الإفتاء؛ لما تنطوي عليه من غرر فاحش وجهالة شديدة في القيمة.\n- **القول بالإباحة (بضوابط):** ذهب إليه عدد من الباحثين المعاصرين؛ إذ يرون أن الأصل في المعاملات الإباحة، وأن التنظيم القانوني يمكن أن يضبطها.\n- **التوقف:** هو موقف عدد من العلماء ريثما تستقر الأوضاع ويتضح الأمر.\n\n**المحاذير الشرعية التي تستوجب الحذر:**\n1. الغرر الشديد وتقلب القيمة.\n2. احتمال استخدامها في المحرمات.\n3. عدم اعتراف بعض الدول بها مما يعرّض الملكية للمصادرة.\n\n**الخلاصة:** المسألة محل اجتهاد ولا يُجزم بقول دون استفتاء عالم موثوق يعرف حال التعامل وظروفه.",
+    "category": "النوازل",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "نهى النبي ﷺ عن بيع الغرر",
+        "source": "رواه مسلم"
+      },
+      {
+        "type": "قرآن",
+        "text": "وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا",
+        "source": "البقرة: 275"
+      }
+    ],
+    "references": [
+      {
+        "text": "فتوى دار الإفتاء المصرية",
+        "source": "في حكم العملات الرقمية، 2018م"
+      },
+      {
+        "text": "بحث مجمع الفقه الإسلامي الدولي",
+        "source": "حول العملات الرقمية"
+      }
+    ],
+    "keywords": [
+      "عملات رقمية",
+      "بيتكوين",
+      "تشفير",
+      "بلوك تشين",
+      "نوازل",
+      "غرر",
+      "معاملات"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 5100,
+    "view_count": 5100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-12-05T08:00:00Z",
+    "created_at": "2024-12-05T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-online-jumuah",
+    "external_key": "ruling-online-jumuah",
+    "title": "حكم صلاة الجماعة عبر الإنترنت",
+    "summary": "هل تصح صلاة الجمعة أو الجماعة عبر البث المباشر على الإنترنت؟",
+    "body": "**المسألة:**\nظهرت هذه المسألة بشكل حاد في أزمة كوفيد-19 (2020م) حين أُغلقت المساجد وبثّ بعض الأئمة صلواتهم مباشرة على الإنترنت.\n\n**حكم صلاة الجماعة عبر الإنترنت:**\nذهب جمهور العلماء المعاصرين إلى **عدم صحتها**؛ لأن:\n1. اشتراط الاقتران والتلاقي المكاني من شروط القدوة.\n2. الإمام ومن يأتم به لا يجمعهم مكان واحد.\n3. اتصال الصفوف شرط لصحة الاقتداء.\n\n**حكم صلاة الجمعة عبر الإنترنت:**\n**لا تصح** بالإجماع تقريباً — لأن صلاة الجمعة تشترط:\n- إقامتها في مكان واحد.\n- حضور العدد المشترَط فيه معاً.\n- سماع الخطبة حضورياً.\n\n**الفتوى الراجحة:**\nأفتت لجنة الفتوى في الكويت ومصر والمملكة ودار الإفتاء في الإمارات بعدم صحة الاقتداء عبر الإنترنت، وأن من أدركه الوقت خارج المسجد يُصلي ظهراً.",
+    "category": "النوازل",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "إنما جُعل الإمام ليؤتمّ به",
+        "source": "متفق عليه"
+      }
+    ],
+    "references": [
+      {
+        "text": "فتاوى اللجنة الدائمة للبحوث العلمية والإفتاء — المملكة العربية السعودية",
+        "source": "باب الجماعة والقدوة"
+      },
+      {
+        "text": "الشرح الممتع — ابن عثيمين",
+        "source": "كتاب الصلاة، شروط القدوة"
+      }
+    ],
+    "keywords": [
+      "جمعة",
+      "جماعة",
+      "إنترنت",
+      "بث مباشر",
+      "اقتداء",
+      "نوازل",
+      "كوفيد"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 3900,
+    "view_count": 3900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-12-10T08:00:00Z",
+    "created_at": "2024-12-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-photography",
+    "external_key": "ruling-photography",
+    "title": "حكم التصوير الفوتوغرافي والرقمي",
+    "summary": "حكم التقاط الصور بالكاميرا أو الهاتف للإنسان والحيوان، وما يتعلق بذلك من تفاصيل.",
+    "body": "**تحرير محل النزاع:**\nالنزاع في التصوير ينقسم إلى:\n1. **تصوير ذي الروح بالرسم اليدوي:** محرّم بنص الأحاديث الصحيحة.\n2. **التصوير الفوتوغرافي والرقمي:** مسألة اجتهادية.\n\n**القول بالتحريم:**\nذهب إليه جماعة من العلماء كالشيخ ابن باز والشيخ الألباني (في البداية)؛ إذ رأوا أنه داخل في عموم النهي عن التصوير.\n\n**القول بالجواز:**\nذهب إليه كثير من العلماء المعاصرين كالشيخ ابن عثيمين وابن جبرين وجمهور الفقهاء المعاصرين؛ بحجة أن التصوير الفوتوغرافي مجرد انعكاس ضوئي لا إيجاد لصورة حقيقية بيد الإنسان.\n\n**الضوابط المتفق عليها:**\n- تحرم صور المرأة الأجنبية أو الصور الإباحية مطلقاً.\n- يُكره تعليق صور ذوات الأرواح في البيوت دون غرض.\n- تجوز الصور للتعريف والهوية والأدلة القانونية والعلم والطب.",
+    "category": "النوازل",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "إن أشدّ الناس عذاباً يوم القيامة المصوِّرون",
+        "source": "متفق عليه"
+      },
+      {
+        "type": "حديث",
+        "text": "من صوَّر صورةً كُلِّف يوم القيامة أن ينفخ فيها الروح وليس بنافخ",
+        "source": "متفق عليه"
+      }
+    ],
+    "references": [
+      {
+        "text": "الشرح الممتع — ابن عثيمين",
+        "source": "كتاب البيوع، مسألة التصوير"
+      },
+      {
+        "text": "مجموع الفتاوى — ابن باز",
+        "source": "حكم التصوير"
+      }
+    ],
+    "keywords": [
+      "تصوير",
+      "كاميرا",
+      "صور",
+      "ذو الروح",
+      "نوازل",
+      "فوتوغرافي"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 4200,
+    "view_count": 4200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-12-15T08:00:00Z",
+    "created_at": "2024-12-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-music-singing",
+    "external_key": "ruling-music-singing",
+    "title": "حكم الموسيقى والغناء",
+    "summary": "الحكم الشرعي في سماع الموسيقى والغناء والمعازف، وما ورد في المسألة من أدلة وأقوال.",
+    "body": "**أقوال العلماء:**\n\n**أولاً — القول بالتحريم (الجمهور):**\nذهب إليه الحنفية والمالكية والشافعية والحنابلة؛ استناداً إلى:\n- قوله تعالى: ﴿وَمِنَ النَّاسِ مَن يَشْتَرِي لَهْوَ الْحَدِيثِ﴾ — فسّرها ابن مسعود وابن عباس بالغناء.\n- حديث: «ليكونَنَّ من أمتي أقوام يستحلون الحِرَ والحرير والخمر والمعازف» (رواه البخاري).\n\n**ثانياً — القول بالجواز (الأقل):**\nذهب ابن حزم وعدد من المعاصرين إلى جواز الغناء المحتشم الخالي من المحرمات وآلاته.\n\n**الغناء الجائز بالاتفاق:**\n- نشيد الأفراح والأعراس (بضوابط الاحتشام).\n- أناشيد الحرب والتشجيع.\n- الحدو في السفر (الهَدَى).\n\n**المحرّم باتفاق:**\n- الغناء المثير للشهوة والفاحشة.\n- ما اقترن بخمر أو اختلاط محرّم.\n- ما صرف عن الصلاة والواجبات.",
+    "category": "النوازل",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَمِنَ النَّاسِ مَن يَشْتَرِي لَهْوَ الْحَدِيثِ لِيُضِلَّ عَن سَبِيلِ اللَّهِ بِغَيْرِ عِلْمٍ وَيَتَّخِذَهَا هُزُوًا",
+        "source": "لقمان: 6"
+      },
+      {
+        "type": "حديث",
+        "text": "ليكونَنَّ من أمتي أقوام يستحلون الحِرَ والحرير والخمر والمعازف",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "إغاثة اللهفان — ابن القيم",
+        "source": "مبحث الغناء والمعازف"
+      },
+      {
+        "text": "الفقه الإسلامي وأدلته — وهبة الزحيلي",
+        "source": "مبحث المحرمات"
+      }
+    ],
+    "keywords": [
+      "موسيقى",
+      "غناء",
+      "معازف",
+      "لهو",
+      "نشيد",
+      "نوازل"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 5800,
+    "view_count": 5800,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-12-20T08:00:00Z",
+    "created_at": "2024-12-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-social-media-rules",
+    "external_key": "ruling-social-media-rules",
+    "title": "ضوابط استخدام وسائل التواصل الاجتماعي",
+    "summary": "الحكم الشرعي في استخدام منصات التواصل الاجتماعي وما يجب مراعاته من ضوابط.",
+    "body": "**الأصل في استخدام وسائل التواصل:**\nالأصل الإباحة؛ فهي وسيلة تقنية كالهاتف والإذاعة، والحكم على الوسيلة يتبع استخدامها.\n\n**الاستخدام الجائز بل المستحب:**\n- نشر العلم الشرعي الصحيح والدعوة إلى الله.\n- التواصل مع الأقارب وصلة الرحم.\n- التجارة المشروعة والتسويق الحلال.\n- الإخبار بالمباح واطلاع الناس على أحوال العالم.\n\n**الاستخدام المحرم:**\n- نشر الكذب والغيبة والنميمة.\n- عرض الصور والمقاطع الفاضحة.\n- التشهير بالأشخاص وإيذاء المسلمين.\n- الاحتيال والنصب والتدليس.\n- إضاعة الصلوات والواجبات بالانشغال بها.\n\n**ضابط قاعدي:**\n«الوسائل لها أحكام المقاصد» — فما أدّى إلى محرّم حُرِّم، وما أدى إلى مستحب استُحب.",
+    "category": "النوازل",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "كل كلام ابن آدم عليه لا له إلا أمر بمعروف أو نهي عن منكر أو ذكر الله",
+        "source": "رواه الترمذي وحسّنه"
+      },
+      {
+        "type": "قرآن",
+        "text": "وَلَا تَقْفُ مَا لَيْسَ لَكَ بِهِ عِلْمٌ",
+        "source": "الإسراء: 36"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفتاوى الشبكية — إسلام ويب",
+        "source": "باب وسائل التواصل الاجتماعي"
+      }
+    ],
+    "keywords": [
+      "تواصل اجتماعي",
+      "إنترنت",
+      "يوتيوب",
+      "تويتر",
+      "نوازل",
+      "وسائل",
+      "ضوابط"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 4700,
+    "view_count": 4700,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-12-25T08:00:00Z",
+    "created_at": "2024-12-25T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-health-insurance",
+    "external_key": "ruling-health-insurance",
+    "title": "حكم التأمين الصحي والتجاري",
+    "summary": "الحكم الشرعي في التأمين الصحي الإلزامي والتجاري وفرق التأمين التكافلي عن التقليدي.",
+    "body": "**أنواع التأمين:**\n\n**أولاً: التأمين التكافلي (جائز):**\n- يقوم على التبرع والمشاركة بين أعضاء المجموعة لا على المعاوضة المجهولة.\n- أجازه المجمع الفقهي الإسلامي والأكاديمية الملكية في فتاوى متعددة.\n- يُنصح به كبديل شرعي عن التأمين التجاري.\n\n**ثانياً: التأمين التجاري التقليدي (محل خلاف):**\n- يرى جمهور المعاصرين كراهته أو تحريمه لاشتماله على الغرر وعنصر القمار.\n- يرى فريق آخر جوازه للضرورة والحاجة العامة لا سيما التأمين الصحي الإلزامي.\n\n**ثالثاً: التأمين الإلزامي (رخصة):**\n- ما فرضه القانون كالتأمين على السيارات والصحة يجوز الامتثال له مع الكراهة.\n- الضرر المترتب على تركه (الغرامة، المرض) يُسوّغ فيه الرخصة بلا شك.",
+    "category": "المعاملات",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَلَا تُلْقُوا بِأَيْدِيكُمْ إِلَى التَّهْلُكَةِ",
+        "source": "البقرة: 195"
+      },
+      {
+        "type": "حديث",
+        "text": "نهى النبي ﷺ عن بيع الغرر",
+        "source": "مسلم: ١٥١٣"
+      }
+    ],
+    "references": [
+      {
+        "text": "قرار مجمع الفقه الإسلامي الدولي رقم 9/2 في التأمين التجاري",
+        "source": "1985م"
+      },
+      {
+        "text": "الفقه الإسلامي وأدلته — د. وهبة الزحيلي",
+        "source": "مبحث التأمين"
+      }
+    ],
+    "keywords": [
+      "تأمين",
+      "تأمين صحي",
+      "تكافل",
+      "غرر",
+      "معاملات"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 4200,
+    "view_count": 4200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-01-10T08:00:00Z",
+    "created_at": "2025-01-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-national-celebrations",
+    "external_key": "ruling-national-celebrations",
+    "title": "حكم الاحتفال بالأعياد الوطنية والمناسبات المدنية",
+    "summary": "الحكم الشرعي في المشاركة في الاحتفالات الوطنية وأعياد المؤسسات والمناسبات المدنية.",
+    "body": "**الضابط الفقهي:**\nالاحتفالات الوطنية لا تندرج في «الأعياد الدينية» المنهي عن التشبه بأهلها؛ إذ هي مناسبات مدنية تعبّر عن الهوية الوطنية.\n\n**ما يجوز:**\n- المشاركة في الفرح والاحتفاء بذكرى التأسيس أو الاستقلال دون منكر.\n- إظهار الانتماء للوطن والدعاء لله بالحفظ والرقي.\n- حضور التجمعات الرسمية الخالية من المحرمات.\n\n**ما لا يجوز:**\n- الاحتفال الذي يشتمل على اختلاط محرم أو خمر أو موسيقى محرمة.\n- إحياء مناسبات ذات طابع ديني عند غير المسلمين (أعياد دينية كريستمس ونحوها) بنية التعبد أو الاحتفاء بعقائد غير إسلامية.\n\n**الخلاصة:**\nالمناسبات الوطنية المدنية لا تدخل في النهي عن أعياد الكفار، والعبرة بالمحتوى لا بالاسم.",
+    "category": "النوازل",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "إن لكل قوم عيداً وهذا عيدنا",
+        "source": "البخاري: ٩٥٢، مسلم: ٨٩٢"
+      },
+      {
+        "type": "قاعدة فقهية",
+        "text": "الوسائل لها أحكام المقاصد",
+        "source": "الأشباه والنظائر"
+      }
+    ],
+    "references": [
+      {
+        "text": "اقتضاء الصراط المستقيم — ابن تيمية",
+        "source": "مبحث أعياد المشركين"
+      },
+      {
+        "text": "فتاوى المجلس الأوروبي للإفتاء",
+        "source": "باب الأعياد الوطنية"
+      }
+    ],
+    "keywords": [
+      "أعياد وطنية",
+      "احتفال",
+      "مناسبات",
+      "نوازل",
+      "تشبه"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 3600,
+    "view_count": 3600,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-02-15T08:00:00Z",
+    "created_at": "2025-02-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-following-prayer-online",
+    "external_key": "ruling-following-prayer-online",
+    "title": "حكم الاقتداء بالإمام عبر البث المباشر",
+    "summary": "هل تصح صلاة من يتابع إمام المسجد عبر شاشة أو راديو أو بث مباشر؟",
+    "body": "**المسألة:**\nقد يُبث إمام مسجد بعيد (كإمام المسجد الحرام) عبر شاشات المصليات أو الإنترنت. فهل يصح الاقتداء به؟\n\n**الحكم الراجح:**\nلا يصح الاقتداء بإمام عبر شاشة أو بث مباشر أو راديو إذا كان المقتدي خارج المسجد الذي يصلي فيه الإمام.\n\n**الأدلة والتعليل:**\n1. اشتراط اتحاد المكان في الاقتداء؛ فلا يصح الاقتداء من مكان آخر.\n2. الاتصال الحسي بين الإمام والمأموم شرط في صحة القدوة.\n3. لو صحّ الاقتداء عن بُعد لجاز الاقتداء من بلد آخر وهذا باطل بالإجماع.\n\n**الاستثناء:**\nمن كان داخل المسجد الذي يُصلي فيه الإمام (ولو في الفناء المتصل) فصلاته صحيحة.\n\n**التطبيق:**\nمن فاتته صلاة الجمعة فلا يصح له أن يتابع خطبتها عبر البث ثم يصلي الجمعة؛ بل يصلي ظهراً.",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "إنما جُعل الإمام ليُؤتم به",
+        "source": "البخاري: ٦٨٨"
+      },
+      {
+        "type": "قاعدة فقهية",
+        "text": "الأصل في الصلاة اتحاد المكان بين الإمام والمأموم",
+        "source": "المغني — ابن قدامة"
+      }
+    ],
+    "references": [
+      {
+        "text": "المجموع شرح المهذب — النووي",
+        "source": "كتاب الصلاة — باب الجماعة"
+      },
+      {
+        "text": "فتاوى اللجنة الدائمة للبحوث العلمية",
+        "source": "رقم ٥٤٦٦"
+      }
+    ],
+    "keywords": [
+      "اقتداء",
+      "بث مباشر",
+      "صلاة",
+      "إمام",
+      "الجمعة",
+      "إنترنت"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 5100,
+    "view_count": 5100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-03-01T08:00:00Z",
+    "created_at": "2025-03-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-hajj-debt",
+    "external_key": "ruling-hajj-debt",
+    "title": "حكم الحج على المديون",
+    "summary": "هل يجب الحج على من عليه ديون؟",
+    "body": "**المسألة:**\nمن عليه ديون، هل يلزمه الحج قبل سداد ديونه؟\n\n**الحكم الراجح:**\nلا يجب الحج على من كانت ديونه تستغرق ما لديه من المال المُعدّ للحج، أو كانت حالّة يطالبه بها الدائنون.\n\n**التفصيل:**\n1. **الديون الحالّة المطالَب بها:** لا يجوز الحج قبل سدادها، لأن الحج فرض على المستطيع والمديون ليس مستطيعاً.\n2. **الديون المؤجلة (بتراضٍ):** إن أذن الدائن بالحج صحّ، وإلا فالأولى تأخيره.\n3. **دين المضمون (كالراتب المؤجل):** إن ثقة بالسداد وأذن الدائن جاز.\n\n**قاعدة جامعة:**\nحق الآدمي مقدّم على حق الله تعالى لأن الله يقبل التوبة ويعفو، والآدمي لا يملك العفو عن حقه إلا باختياره.\n\n**النصيحة العملية:**\nتفاهم مع دائنيك وأخّر الحج حتى تسدد، أو خذ إذنهم قبل الحج.",
+    "category": "الحج",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَلِلَّهِ عَلَى النَّاسِ حِجُّ الْبَيْتِ مَنِ اسْتَطَاعَ إِلَيْهِ سَبِيلاً",
+        "source": "آل عمران: 97"
+      },
+      {
+        "type": "قاعدة فقهية",
+        "text": "حقوق الآدميين مقدّمة لحاجتهم وتضررهم",
+        "source": "القواعد الفقهية"
+      }
+    ],
+    "references": [
+      {
+        "text": "المجموع شرح المهذب — النووي",
+        "source": "كتاب الحج"
+      },
+      {
+        "text": "الشرح الممتع — ابن عثيمين",
+        "source": "كتاب الحج"
+      }
+    ],
+    "keywords": [
+      "حج",
+      "دين",
+      "استطاعة",
+      "مديون",
+      "سداد"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 4300,
+    "view_count": 4300,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-04-01T08:00:00Z",
+    "created_at": "2025-04-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fasting-diabetes",
+    "external_key": "ruling-fasting-diabetes",
+    "title": "حكم صيام مريض السكري",
+    "summary": "هل يُلزَم مريض السكري بالصيام وما البدائل؟",
+    "body": "**المسألة:**\nالصيام واجب على كل بالغ عاقل قادر. أما مريض السكري فحكمه يتفاوت بحسب نوع مرضه وشدّته.\n\n**الحكم التفصيلي:**\n1. **السكري النوع الأول (المعتمد على الإنسولين):** يُعذر في الغالب، ويُفطر ويُطعم عن كل يوم مسكيناً إن لم يُرجَ شفاؤه.\n2. **السكري النوع الثاني (المتحكَّم فيه دوائياً):** إن أفتى الطبيب بأن الصيام يضره فله الفطر والقضاء لاحقاً.\n3. **إذا صام بلا ضرر:** صيامه صحيح ومجزئ.\n\n**الضابط:** قال تعالى: {وَمَن كَانَ مَرِيضاً أَوْ عَلَىٰ سَفَرٍ فَعِدَّةٌ مِّنْ أَيَّامٍ أُخَرَ}. فكل مرض يُخشى منه الضرر جائز معه الفطر.\n\n**النصيحة:**\nاستشر طبيبك واستفتِ عالماً بتفاصيل حالتك؛ المسألة تتعلق بصحتك وعبادتك معاً.",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَمَن كَانَ مَرِيضاً أَوْ عَلَىٰ سَفَرٍ فَعِدَّةٌ مِّنْ أَيَّامٍ أُخَرَ",
+        "source": "البقرة: 185"
+      },
+      {
+        "type": "قاعدة فقهية",
+        "text": "لا ضرر ولا ضرار",
+        "source": "الأربعون النووية"
+      }
+    ],
+    "references": [
+      {
+        "text": "فتاوى اللجنة الدائمة",
+        "source": "المجلد العاشر — الصيام"
+      },
+      {
+        "text": "فتاوى ابن عثيمين",
+        "source": "كتاب الصيام"
+      }
+    ],
+    "keywords": [
+      "سكري",
+      "صيام",
+      "مرض",
+      "فطر",
+      "إنسولين"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 6800,
+    "view_count": 6800,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-04-05T08:00:00Z",
+    "created_at": "2025-04-05T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-inheritance-missing-person",
+    "external_key": "ruling-inheritance-missing-person",
+    "title": "ميراث المفقود",
+    "summary": "كيف يُتعامل مع ميراث المفقود الذي انقطعت أخباره؟",
+    "body": "**التعريف:**\nالمفقود: من غاب وانقطعت أخباره ولا يُعلم أحيٌّ هو أم ميت.\n\n**حكمه في الميراث:**\n1. **المفقود لا يرث ميتاً جديداً:** يُوقف نصيبه حتى يتبيّن أمره.\n2. **من مات وله وارث مفقود:** يُوقف نصيب المفقود من الميراث، ويُقسَّم الباقي على الورثة الموجودين، فإن تبيّن وفاته قبل المتوفى: لا يرث، وإن ظهر حياً: يأخذ نصيبه.\n\n**مدة انتظار الحكم:**\nاختلف العلماء في مدة انتظار الحكم بموته وأكثرهم على أن للقاضي تقديرها بحسب الحال، وقدّرها بعضهم بـ 4 سنوات لغائب الحرب وأكثر لغيره.\n\n**الحكم اليوم:**\nالقضاء يصدر حكماً بالوفاة الحكمية بعد فترة محددة يحكم فيها القاضي بحسب الدليل والقرائن.",
+    "category": "المواريث",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قاعدة فقهية",
+        "text": "اليقين لا يزول بالشك",
+        "source": "القواعد الفقهية"
+      },
+      {
+        "type": "إجماع",
+        "text": "الأصل في المفقود الحياة حتى يثبت موته",
+        "source": "ابن قدامة — المغني"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني — ابن قدامة",
+        "source": "كتاب الميراث — باب المفقود"
+      },
+      {
+        "text": "بدائع الصنائع — الكاساني",
+        "source": "كتاب الميراث"
+      }
+    ],
+    "keywords": [
+      "مفقود",
+      "ميراث",
+      "غائب",
+      "وقف الميراث",
+      "حكم القاضي"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 3200,
+    "view_count": 3200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-05-01T08:00:00Z",
+    "created_at": "2025-05-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-zakah-gold-jewelry",
+    "external_key": "ruling-zakah-gold-jewelry",
+    "title": "زكاة الذهب والمجوهرات المستعملة",
+    "summary": "هل تجب الزكاة على الذهب الذي تلبسه المرأة للزينة؟",
+    "body": "**المسألة:**\nاختلف العلماء في وجوب زكاة حلي الذهب المعدّ للزينة والاستعمال.\n\n**الأقوال:**\n1. **وجوب الزكاة (مالك، الحنفية، رواية عن أحمد):** الذهب والفضة المملوكان تجب فيهما الزكاة سواء استُعملا أم لا؛ لعموم الأدلة.\n2. **عدم الوجوب (الشافعية، الحنابلة في الأصح):** الحلي المستعمل في الزينة المباحة لا زكاة فيه؛ لأن الزكاة إنما تجب في المال النامي.\n\n**الراجح:**\nقول جمهور المحدثين — وجوب الزكاة، احتياطاً وعملاً بظاهر الأدلة.\n\n**النصاب والمقدار:**\n- نصاب الذهب: 85 غراماً (20 مثقالاً).\n- نسبة الزكاة: ربع العشر (2.5%).\n- الحول: بلوغ النصاب وانقضاء حول هجري كامل.",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَالَّذِينَ يَكْنِزُونَ الذَّهَبَ وَالْفِضَّةَ وَلَا يُنفِقُونَهَا فِي سَبِيلِ اللَّهِ فَبَشِّرْهُم بِعَذَابٍ أَلِيمٍ",
+        "source": "التوبة: 34"
+      },
+      {
+        "type": "حديث",
+        "text": "في الرقة ربع العشر",
+        "source": "رواه أبو داود والترمذي"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني — ابن قدامة",
+        "source": "كتاب الزكاة"
+      },
+      {
+        "text": "فتاوى اللجنة الدائمة",
+        "source": "المجلد التاسع — الزكاة"
+      }
+    ],
+    "keywords": [
+      "زكاة",
+      "ذهب",
+      "مجوهرات",
+      "حلي",
+      "نصاب"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 4500,
+    "view_count": 4500,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-06-01T08:00:00Z",
+    "created_at": "2025-06-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-tattooing-hukm",
+    "external_key": "ruling-tattooing-hukm",
+    "title": "حكم الوشم الدائم والمؤقت",
+    "summary": "ما حكم الوشم على الجسم في الإسلام؟ وهل المؤقت كالدائم؟",
+    "body": "**التعريف:**\nالوشم: إدخال مادة ملوّنة تحت الجلد بإبرة أو نحوها ليظهر رسم أو كتابة دائمة.\n\n**حكم الوشم الدائم:**\nمحرّم بالإجماع؛ لقوله ﷺ: «لعن الله الواشمات والمستوشمات» (متفق عليه). وهو تغيير لخلق الله ويشتمل على الأذى الجسدي.\n\n**حكم الوشم المؤقت:**\n- ما يُزال بماء أو بعد أيام (كالحنّاء): جائز للنساء.\n- ما يثبت أياماً طويلة دون أن يدخل تحت الجلد: مختلف فيه، والأقرب إلى الجواز إن لم يضر.\n\n**حكم من وشم جاهلاً:**\nإن تاب وكان في إزالته ضرر: عُفي عنه. وإن أمكن إزالته بلا ضرر: وجبت الإزالة.\n\n**مسألة الوشم الطبي:**\nالوشم لأغراض طبية (مثل التعليم على مواضع الإشعاع في علاج السرطان) يجوز للضرورة.",
+    "category": "النوازل",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لعن الله الواشمات والمستوشمات والمتنمصات والمتفلجات للحسن المغيرات خلق الله",
+        "source": "متفق عليه"
+      }
+    ],
+    "references": [
+      {
+        "text": "فتاوى ابن عثيمين",
+        "source": "مجموع الفتاوى والرسائل"
+      },
+      {
+        "text": "موسوعة الفقه الإسلامي",
+        "source": "قسم الآداب والأخلاق"
+      }
+    ],
+    "keywords": [
+      "وشم",
+      "تاتو",
+      "تغيير الخلقة",
+      "محرم",
+      "هنّاء"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 5100,
+    "view_count": 5100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-06-15T08:00:00Z",
+    "created_at": "2025-06-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-1",
@@ -284,7 +2980,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.193Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-2",
@@ -328,7 +3024,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.193Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-3",
@@ -372,7 +3068,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.193Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-4",
@@ -416,7 +3112,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.193Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-5",
@@ -460,7 +3156,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.193Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-prayer-pillars-part-1",
@@ -499,7 +3195,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-prayer-pillars-part-2",
@@ -538,7 +3234,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-prayer-pillars-part-3",
@@ -577,7 +3273,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-prayer-pillars-part-4",
@@ -616,7 +3312,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-prayer-pillars-part-5",
@@ -655,7 +3351,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-prayer-pillars-part-6",
@@ -694,7 +3390,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-prayer-pillars-part-7",
@@ -733,7 +3429,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-prayer-pillars-part-8",
@@ -772,7 +3468,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-prayer-pillars-part-9",
@@ -811,7 +3507,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-prayer-pillars-part-10",
@@ -850,7 +3546,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-prayer-pillars-part-11",
@@ -889,7 +3585,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-prayer-pillars-part-12",
@@ -928,7 +3624,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-zakat-conditions-part-1",
@@ -967,7 +3663,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-zakat-conditions-part-2",
@@ -1006,7 +3702,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-zakat-conditions-part-3",
@@ -1045,7 +3741,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-zakat-conditions-part-4",
@@ -1084,7 +3780,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-zakat-conditions-part-5",
@@ -1123,7 +3819,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-zakat-conditions-part-6",
@@ -1162,7 +3858,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.878Z"
   },
   {
     "id": "ruling-hajj-pillars-part-1",
@@ -1201,7 +3897,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
     "id": "ruling-hajj-pillars-part-2",
@@ -1240,7 +3936,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
     "id": "ruling-hajj-pillars-part-3",
@@ -1279,7 +3975,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
     "id": "ruling-hajj-pillars-part-4",
@@ -1318,7 +4014,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
     "id": "ruling-trade-conditions-part-1",
@@ -1357,7 +4053,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
     "id": "ruling-trade-conditions-part-2",
@@ -1396,7 +4092,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
     "id": "ruling-trade-conditions-part-3",
@@ -1435,7 +4131,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
     "id": "ruling-trade-conditions-part-4",
@@ -1474,7 +4170,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
     "id": "ruling-trade-conditions-part-5",
@@ -1513,7 +4209,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
     "id": "ruling-inheritance-shares-part-1",
@@ -1552,7 +4248,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
     "id": "ruling-inheritance-shares-part-2",
@@ -1591,7 +4287,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
     "id": "ruling-inheritance-shares-part-3",
@@ -1630,7 +4326,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
     "id": "ruling-inheritance-shares-part-4",
@@ -1669,7 +4365,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
     "id": "ruling-inheritance-shares-part-5",
@@ -1708,7429 +4404,4721 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-07T23:16:01.194Z"
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "issue-ruling-crypto-currency",
-    "external_key": "issue-ruling-crypto-currency",
-    "title": "التعامل بالعملات الرقمية (المشفّرة)",
-    "summary": "لا تُعدّ العملات الرقمية غير المُغطّاة بأصول حقيقية نقوداً شرعية؛ والتداول المضاربي فيها فيه غرر وجهالة.",
-    "body": "تتناول هذه المسألة حكم التعامل بالعملات الرقمية من حيث كونها نقوداً شرعية، والتداول والاستثمار فيها، وما يترتب على ذلك من أحكام.\n\n**الحكم:** لا تُعدّ العملات الرقمية غير المُغطّاة بأصول حقيقية نقوداً شرعية؛ والتداول المضاربي فيها فيه غرر وجهالة.\n\n**الأدلة:** الاستدلال من نهي أكل المال بالباطل، وأحكام البيع والغرر في المعاملات.",
-    "category": "النوازل المعاصرة",
-    "subcategory": "الاقتصاد",
-    "subcategories": [
-      "الاقتصاد"
-    ],
+    "id": "ruling-wudu-conditions-part-1",
+    "external_key": "ruling-wudu-conditions-part-1",
+    "title": "شروط صحة الوضوء: الإسلام.",
+    "summary": "الإسلام.",
+    "body": "الإسلام.\n\n**من:** شروط صحة الوضوء",
+    "category": "الطهارة",
+    "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
     "scholar_opinions": [],
-    "evidence": [],
-    "references": [
+    "evidence": [
       {
-        "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الاقتصاد الإسلامي"
+        "type": "قرآن",
+        "text": "يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا قُمْتُمْ إِلَى الصَّلَاةِ فَاغْسِلُوا وُجُوهَكُمْ",
+        "source": "سورة المائدة: 6"
       }
     ],
-    "keywords": [
-      "الاقتصاد الإسلامي",
-      "الاقتصاد"
-    ],
-    "benefits": [],
-    "importance_score": 78,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-issues-seed",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [
-      "seed-issue-crypto"
-    ],
-    "published_at": "2026-07-07T23:16:01.201Z",
-    "created_at": "2026-07-07T23:16:01.201Z",
-    "updated_at": "2026-07-07T23:16:01.201Z"
-  },
-  {
-    "id": "issue-ruling-organ-donation",
-    "external_key": "issue-ruling-organ-donation",
-    "title": "التبرع بالأعضاء بعد الوفاة",
-    "summary": "يجوز التبرع بالأعضاء بعد الوفاة عند تحقق الشروط الشرعية والطبية.",
-    "body": "مسألة فقهية حول جواز التبرع بالأعضاء لإنقاذ حياة المرضى وفق ضوابط شرعية وطبية.\n\n**الحكم:** يجوز التبرع بالأعضاء بعد الوفاة عند تحقق الشروط الشرعية والطبية.\n\n**الأدلة:** الاستدلال بمقصد إحياء النفس وحفظ الكرامة الإنسانية.",
-    "category": "النوازل المعاصرة",
-    "subcategory": "الطب",
-    "subcategories": [
-      "الطب"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [],
     "references": [
       {
-        "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الطب والنوازل"
-      }
-    ],
-    "keywords": [
-      "الطب والنوازل",
-      "الطب"
-    ],
-    "benefits": [],
-    "importance_score": 78,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-issues-seed",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [
-      "seed-issue-organ-donation"
-    ],
-    "published_at": "2026-07-07T23:16:01.201Z",
-    "created_at": "2026-07-07T23:16:01.201Z",
-    "updated_at": "2026-07-07T23:16:01.201Z"
-  },
-  {
-    "id": "issue-ruling-muslim-minorities-rights",
-    "external_key": "issue-ruling-muslim-minorities-rights",
-    "title": "حقوق الأقليات المسلمة",
-    "summary": "للمسلمين حق ممارسة العبادات مع الالتزام بعقودهم وعهودهم مع الدول التي يقيمون فيها.",
-    "body": "مسألة فقهية حول حقوق المسلمين في البلدان غير الإسلامية وممارسة شعائرهم.\n\n**الحكم:** للمسلمين حق ممارسة العبادات مع الالتزام بعقودهم وعهودهم مع الدول التي يقيمون فيها.\n\n**الأدلة:** ",
-    "category": "النوازل المعاصرة",
-    "subcategory": "التقنية",
-    "subcategories": [
-      "التقنية"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [],
-    "references": [
-      {
-        "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الأقليات المسلمة"
-      }
-    ],
-    "keywords": [
-      "الأقليات المسلمة"
-    ],
-    "benefits": [],
-    "importance_score": 78,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-issues-seed",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [
-      "seed-issue-minorities"
-    ],
-    "published_at": "2026-07-07T23:16:01.201Z",
-    "created_at": "2026-07-07T23:16:01.201Z",
-    "updated_at": "2026-07-07T23:16:01.201Z"
-  },
-  {
-    "id": "issue-ruling-zakat-stocks",
-    "external_key": "issue-ruling-zakat-stocks",
-    "title": "زكاة الأسهم والصناديق الاستثمارية",
-    "summary": "تُزكّى الأسهم التجارية بقيمتها السوقية؛ والاستثمارية أرباحها عند بلوغ النصاب.",
-    "body": "مسألة فقهية في كيفية إخراج زكاة الأسهم والصناديق الاستثمارية.\n\n**الحكم:** تُزكّى الأسهم التجارية بقيمتها السوقية؛ والاستثمارية أرباحها عند بلوغ النصاب.\n\n**الأدلة:** ",
-    "category": "النوازل المعاصرة",
-    "subcategory": "التقنية",
-    "subcategories": [
-      "التقنية"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [],
-    "references": [
-      {
-        "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الزكاة والوقف"
-      }
-    ],
-    "keywords": [
-      "الزكاة والوقف"
-    ],
-    "benefits": [],
-    "importance_score": 78,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-issues-seed",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [
-      "seed-issue-zakat-stocks"
-    ],
-    "published_at": "2026-07-07T23:16:01.201Z",
-    "created_at": "2026-07-07T23:16:01.201Z",
-    "updated_at": "2026-07-07T23:16:01.201Z"
-  },
-  {
-    "id": "issue-ruling-hajj-delay",
-    "external_key": "issue-ruling-hajj-delay",
-    "title": "تأخير الحج لمن استطاع مادياً",
-    "summary": "الحج واجب على الفور لمن استطاع إليه سبيلاً بلا عذر شرعي.",
-    "body": "مسألة فقهية في وجوب الحج على الفور لمن توفرت شروطه.\n\n**الحكم:** الحج واجب على الفور لمن استطاع إليه سبيلاً بلا عذر شرعي.\n\n**الأدلة:** ",
-    "category": "النوازل المعاصرة",
-    "subcategory": "التقنية",
-    "subcategories": [
-      "التقنية"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [],
-    "references": [
-      {
-        "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الحج والعمرة"
-      }
-    ],
-    "keywords": [
-      "الحج والعمرة"
-    ],
-    "benefits": [],
-    "importance_score": 78,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-issues-seed",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [
-      "seed-issue-hajj"
-    ],
-    "published_at": "2026-07-07T23:16:01.201Z",
-    "created_at": "2026-07-07T23:16:01.201Z",
-    "updated_at": "2026-07-07T23:16:01.201Z"
-  },
-  {
-    "id": "fatwa-ruling-fatwa-prayer-combine",
-    "external_key": "fatwa-ruling-fatwa-prayer-combine",
-    "title": "هل يجوز الجمع بين الصلاتين للمسافر؟",
-    "summary": "يجوز للمسافر جمع الصلاتين جمع تقديم أو تأخير.",
-    "body": "نعم، يجوز للمسافر جمع الظهر مع العصر، والمغرب مع العشاء، جمع تقديم أو تأخير.\n\n**الدليل:** فعل النبي ﷺ في غزو تبوك، وقوله: «إن الله لم يفرض عليكم صلاة إلا هذه الصلوات».\n\n**الشروط:**\n- أن يكون السفر مسافة القصر (حوالي 80 كم).\n- أن يكون السفر غير معصية.\n- يُفضّل الجمع عند الحاجة كالسفر أو المطر الشديد.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [],
-    "references": [
-      {
-        "text": "اللجنة الدائمة للفتوى",
-        "source": "فتوى معتمدة"
-      }
-    ],
-    "keywords": [
-      "جمع",
-      "صلاة",
-      "مسافر",
-      "قصر"
-    ],
-    "benefits": [],
-    "importance_score": 75,
-    "popularity_score": 4520,
-    "view_count": 4520,
-    "search_count": 890,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fatwa-seed",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [
-      "fatwa-prayer-combine"
-    ],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.200Z",
-    "created_at": "2026-07-07T23:16:01.200Z",
-    "updated_at": "2026-07-07T23:16:01.200Z"
-  },
-  {
-    "id": "fatwa-ruling-fatwa-zakat-gold",
-    "external_key": "fatwa-ruling-fatwa-zakat-gold",
-    "title": "هل تجب الزكاة في الذهب المُدّخر للزينة؟",
-    "summary": "تجب الزكاة في الذهب المُدّخر إذا بلغ النصاب.",
-    "body": "تجب الزكاة في الذهب والفضة إذا بلغا النصاب (85 جراماً للذهب) وحال عليه الحول.\n\n**الراجح:** الذهب المُدّخر للزينة يُزكّى إذا بلغ النصاب، لقوله ﷺ: «في كل أربعين ديناراً دينار».\n\n**الاستثناء:** ما يُستخدم يومياً للزينة المعتادة ولا يُعدّ ادّخاراً.",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن باز رحمه الله",
-        "source": "فتوى معتمدة"
-      }
-    ],
-    "keywords": [
-      "زكاة",
-      "ذهب",
-      "نصاب"
-    ],
-    "benefits": [],
-    "importance_score": 75,
-    "popularity_score": 3200,
-    "view_count": 3200,
-    "search_count": 720,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fatwa-seed",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [
-      "fatwa-zakat-gold"
-    ],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.200Z",
-    "created_at": "2026-07-07T23:16:01.200Z",
-    "updated_at": "2026-07-07T23:16:01.200Z"
-  },
-  {
-    "id": "fatwa-ruling-fatwa-music-voice",
-    "external_key": "fatwa-ruling-fatwa-music-voice",
-    "title": "ما حكم الاستماع إلى الأناشيد الإسلامية؟",
-    "summary": "الأناشيد الإسلامية الخالية من الآلات جائزة بشروط.",
-    "body": "الأناشيد الإسلامية التي لا تشتمل على آلات موسيقية محرّمة، ولا تُشبه أغاني الفسق، جائزة عند كثير من أهل العلم.\n\n**الشروط:**\n- أن تكون الكلمات حسنة.\n- ألا تشتمل على آلات موسيقية.\n- ألا تُلهي عن ذكر الله أو الصلاة.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "آداب الفتوى",
-    "subcategories": [
-      "آداب الفتوى"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن عثيمين رحمه الله",
-        "source": "فتوى معتمدة"
-      }
-    ],
-    "keywords": [
-      "أناشيد",
-      "موسيقى",
-      "استماع"
-    ],
-    "benefits": [],
-    "importance_score": 75,
-    "popularity_score": 2800,
-    "view_count": 2800,
-    "search_count": 650,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fatwa-seed",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [
-      "fatwa-music-voice"
-    ],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.200Z",
-    "created_at": "2026-07-07T23:16:01.200Z",
-    "updated_at": "2026-07-07T23:16:01.200Z"
-  },
-  {
-    "id": "fatwa-ruling-fatwa-fasting-travel",
-    "external_key": "fatwa-ruling-fatwa-fasting-travel",
-    "title": "هل يجوز للمسافر الإفطار في رمضان؟",
-    "summary": "يجوز للمسافر الإفطار في رمضان مع وجوب القضاء.",
-    "body": "نعم، يجوز للمسافر الإفطار في رمضان، ويُستحب له الإفطار تيسيراً على نفسه.\n\n**الدليل:** قوله تعالى: «فَمَنْ كَانَ مِنْكُمْ مَرِيضًا أَوْ عَلَى سَفَرٍ فَعِدَّةٌ مِنْ أَيَّامٍ أُخَرَ».\n\nيجب عليه قضاء ما أفطر من أيام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "آداب الفتوى",
-    "subcategories": [
-      "آداب الفتوى"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [],
-    "references": [
-      {
-        "text": "اللجنة الدائمة",
-        "source": "فتوى معتمدة"
-      }
-    ],
-    "keywords": [
-      "صيام",
-      "سفر",
-      "إفطار",
-      "رمضان"
-    ],
-    "benefits": [],
-    "importance_score": 75,
-    "popularity_score": 5100,
-    "view_count": 5100,
-    "search_count": 1100,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fatwa-seed",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [
-      "fatwa-fasting-travel"
-    ],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.200Z",
-    "created_at": "2026-07-07T23:16:01.200Z",
-    "updated_at": "2026-07-07T23:16:01.200Z"
-  },
-  {
-    "id": "fatwa-ruling-fatwa-inheritance-daughter",
-    "external_key": "fatwa-ruling-fatwa-inheritance-daughter",
-    "title": "ما نصيب البنت من الميراث؟",
-    "summary": "نصيب البنت نصف نصيب الابن في الميراث.",
-    "body": "البنت لها نصف ما للابن، فإن لم يكن ابن فلها النصف إن كانت واحدة، أو الثلثان إن كنّ اثنتين فأكثر.\n\n**الدليل:** قوله تعالى: «وَلِلْإِنْثَىٰ نِصْفُ مَا لِلذَّكَرِ».\n\nيُراعى الوصية والدين قبل توزيع الميراث.",
-    "category": "النوازل المعاصرة",
-    "subcategory": "التقنية",
-    "subcategories": [
-      "التقنية"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن قدامة رحمه الله",
-        "source": "فتوى معتمدة"
-      }
-    ],
-    "keywords": [
-      "ميراث",
-      "بنت",
-      "مواريث"
-    ],
-    "benefits": [],
-    "importance_score": 75,
-    "popularity_score": 1900,
-    "view_count": 1900,
-    "search_count": 420,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fatwa-seed",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [
-      "fatwa-inheritance-daughter"
-    ],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.200Z",
-    "created_at": "2026-07-07T23:16:01.200Z",
-    "updated_at": "2026-07-07T23:16:01.200Z"
-  },
-  {
-    "id": "fatwa-ruling-fatwa-wudu-touching-quran",
-    "external_key": "fatwa-ruling-fatwa-wudu-touching-quran",
-    "title": "هل يُشترط الوضوء لمس المصحف؟",
-    "summary": "يشترط جمهور العلماء الطهارة لمس المصحف.",
-    "body": "جمهور الفقهاء على اشتراط الطهارة لمس المصحف، استناداً لقوله تعالى: «لَا يَمَسُّهُ إِلَّا الْمُطَهَّرُونَ».\n\n**الراجح:** لا يجوز للمحدث حدثاً أصغر أو أكبر مس المصحف بدون حائل. أما التلاوة بدون مس فجائزة.\n\n**الاستثناء:** يجوز للمعلم والطفل المتعلم مس المصحف للضرورة التعليمية عند بعض العلماء.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "آداب الفتوى",
-    "subcategories": [
-      "آداب الفتوى"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [],
-    "references": [
-      {
-        "text": "اللجنة الدائمة للفتوى",
-        "source": "فتوى معتمدة"
+        "text": "الفقه الإسلامي وأدلته للزحيلي",
+        "source": "باب الطهارة"
       }
     ],
     "keywords": [
       "وضوء",
-      "مصحف",
-      "قرآن",
+      "شروط",
       "طهارة"
     ],
     "benefits": [],
-    "importance_score": 75,
-    "popularity_score": 6200,
-    "view_count": 6200,
-    "search_count": 1400,
+    "importance_score": 80,
+    "popularity_score": 2900,
+    "view_count": 2900,
+    "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fatwa-seed",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
-    "linked_fatwa_ids": [
-      "fatwa-wudu-touching-quran"
-    ],
+    "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.200Z",
-    "created_at": "2026-07-07T23:16:01.200Z",
-    "updated_at": "2026-07-07T23:16:01.200Z"
+    "published_at": "2024-02-10T08:00:00Z",
+    "created_at": "2024-02-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "fatwa-ruling-fatwa-zakat-savings",
-    "external_key": "fatwa-ruling-fatwa-zakat-savings",
-    "title": "هل تجب الزكاة في المدخرات البنكية؟",
-    "summary": "تجب الزكاة في المدخرات البنكية إذا بلغت النصاب وحال الحول.",
-    "body": "نعم، تجب الزكاة في النقود والمدخرات البنكية إذا بلغت النصاب وحال عليها الحول.\n\n**النصاب:** ما يعادل 85 جراماً من الذهب أو 595 جراماً من الفضة بأسعار اليوم.\n\n**الحساب:** تُحسب جميع الأموال السائلة (نقد + حسابات بنكية + ديون مرجوة الوفاء) ويُخرج 2.5%.",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
+    "id": "ruling-wudu-conditions-part-2",
+    "external_key": "ruling-wudu-conditions-part-2",
+    "title": "شروط صحة الوضوء: العقل والتمييز.",
+    "summary": "العقل والتمييز.",
+    "body": "العقل والتمييز.\n\n**من:** شروط صحة الوضوء",
+    "category": "الطهارة",
+    "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
     "scholar_opinions": [],
-    "evidence": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا قُمْتُمْ إِلَى الصَّلَاةِ فَاغْسِلُوا وُجُوهَكُمْ",
+        "source": "سورة المائدة: 6"
+      }
+    ],
     "references": [
       {
-        "text": "ابن باز رحمه الله",
-        "source": "فتوى معتمدة"
+        "text": "الفقه الإسلامي وأدلته للزحيلي",
+        "source": "باب الطهارة"
       }
     ],
     "keywords": [
-      "زكاة",
-      "مدخرات",
-      "بنك",
-      "نصاب"
+      "وضوء",
+      "شروط",
+      "طهارة"
     ],
     "benefits": [],
-    "importance_score": 75,
-    "popularity_score": 7800,
-    "view_count": 7800,
-    "search_count": 2100,
+    "importance_score": 80,
+    "popularity_score": 2900,
+    "view_count": 2900,
+    "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fatwa-seed",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
-    "linked_fatwa_ids": [
-      "fatwa-zakat-savings"
-    ],
+    "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.200Z",
-    "created_at": "2026-07-07T23:16:01.200Z",
-    "updated_at": "2026-07-07T23:16:01.200Z"
+    "published_at": "2024-02-10T08:00:00Z",
+    "created_at": "2024-02-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "fatwa-ruling-fatwa-prayer-missed",
-    "external_key": "fatwa-ruling-fatwa-prayer-missed",
-    "title": "كيف تُقضى الصلوات الفائتة؟",
-    "summary": "الصلاة الفائتة تُقضى فور الذكر أو الاستيقاظ.",
-    "body": "تُقضى الصلوات الفائتة على الفور إذا ذُكرت أو استيقظ منامها.\n\n**الدليل:** قوله ﷺ: «من نسي صلاة أو نام عنها فليصلّها إذا ذكرها».\n\n**الطريقة:** تُصلى كما فاتت — ظهراً إن فاتت ظهراً — بالترتيب ما لم يكثر الفائت.\n\nمن فاتته صلوات كثيرة يُكثر من القضاء حتى يُتمّها دون إلزام بترتيب مع كثرتها عند بعض العلماء.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
+    "id": "ruling-wudu-conditions-part-3",
+    "external_key": "ruling-wudu-conditions-part-3",
+    "title": "شروط صحة الوضوء: النية عند ابتداء الغسل.",
+    "summary": "النية عند ابتداء الغسل.",
+    "body": "النية عند ابتداء الغسل.\n\n**من:** شروط صحة الوضوء",
+    "category": "الطهارة",
+    "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
     "scholar_opinions": [],
-    "evidence": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا قُمْتُمْ إِلَى الصَّلَاةِ فَاغْسِلُوا وُجُوهَكُمْ",
+        "source": "سورة المائدة: 6"
+      }
+    ],
     "references": [
       {
-        "text": "ابن عثيمين رحمه الله",
-        "source": "فتوى معتمدة"
+        "text": "الفقه الإسلامي وأدلته للزحيلي",
+        "source": "باب الطهارة"
       }
     ],
     "keywords": [
-      "صلاة",
-      "قضاء",
-      "فائتة",
-      "نوم"
+      "وضوء",
+      "شروط",
+      "طهارة"
     ],
     "benefits": [],
-    "importance_score": 75,
-    "popularity_score": 9100,
-    "view_count": 9100,
-    "search_count": 2800,
+    "importance_score": 80,
+    "popularity_score": 2900,
+    "view_count": 2900,
+    "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fatwa-seed",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
-    "linked_fatwa_ids": [
-      "fatwa-prayer-missed"
-    ],
+    "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.200Z",
-    "created_at": "2026-07-07T23:16:01.200Z",
-    "updated_at": "2026-07-07T23:16:01.200Z"
+    "published_at": "2024-02-10T08:00:00Z",
+    "created_at": "2024-02-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "fatwa-ruling-fatwa-friday-shower",
-    "external_key": "fatwa-ruling-fatwa-friday-shower",
-    "title": "ما حكم غسل الجمعة؟",
-    "summary": "غسل الجمعة سنة مؤكدة وقيل واجب.",
-    "body": "غسل الجمعة سنة مؤكدة عند جمهور العلماء، وذهب بعضهم إلى وجوبه.\n\n**الدليل:** قوله ﷺ: «غسل يوم الجمعة واجب على كل محتلم».\n\n**وقته:** من الفجر إلى ذهابه للصلاة، والأفضل عند التهيؤ للخروج.\n\n**حكمته:** النظافة ولقاء المسلمين في يوم مجمعهم الأسبوعي.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "آداب الفتوى",
-    "subcategories": [
-      "آداب الفتوى"
-    ],
+    "id": "ruling-wudu-conditions-part-4",
+    "external_key": "ruling-wudu-conditions-part-4",
+    "title": "شروط صحة الوضوء: استعمال الماء الطهور.",
+    "summary": "استعمال الماء الطهور.",
+    "body": "استعمال الماء الطهور.\n\n**من:** شروط صحة الوضوء",
+    "category": "الطهارة",
+    "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
     "scholar_opinions": [],
-    "evidence": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا قُمْتُمْ إِلَى الصَّلَاةِ فَاغْسِلُوا وُجُوهَكُمْ",
+        "source": "سورة المائدة: 6"
+      }
+    ],
     "references": [
       {
-        "text": "النووي رحمه الله",
-        "source": "فتوى معتمدة"
+        "text": "الفقه الإسلامي وأدلته للزحيلي",
+        "source": "باب الطهارة"
       }
     ],
     "keywords": [
-      "جمعة",
+      "وضوء",
+      "شروط",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2900,
+    "view_count": 2900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-02-10T08:00:00Z",
+    "created_at": "2024-02-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-wudu-conditions-part-5",
+    "external_key": "ruling-wudu-conditions-part-5",
+    "title": "شروط صحة الوضوء: إزالة ما يمنع وصول الماء إلى البشرة.",
+    "summary": "إزالة ما يمنع وصول الماء إلى البشرة.",
+    "body": "إزالة ما يمنع وصول الماء إلى البشرة.\n\n**من:** شروط صحة الوضوء",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا قُمْتُمْ إِلَى الصَّلَاةِ فَاغْسِلُوا وُجُوهَكُمْ",
+        "source": "سورة المائدة: 6"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفقه الإسلامي وأدلته للزحيلي",
+        "source": "باب الطهارة"
+      }
+    ],
+    "keywords": [
+      "وضوء",
+      "شروط",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2900,
+    "view_count": 2900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-02-10T08:00:00Z",
+    "created_at": "2024-02-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-wudu-conditions-part-6",
+    "external_key": "ruling-wudu-conditions-part-6",
+    "title": "شروط صحة الوضوء: الموالاة بين أعضاء الوضوء (عند المالكية والحنابلة).",
+    "summary": "الموالاة بين أعضاء الوضوء (عند المالكية والحنابلة).",
+    "body": "الموالاة بين أعضاء الوضوء (عند المالكية والحنابلة).\n\n**من:** شروط صحة الوضوء",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا قُمْتُمْ إِلَى الصَّلَاةِ فَاغْسِلُوا وُجُوهَكُمْ",
+        "source": "سورة المائدة: 6"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفقه الإسلامي وأدلته للزحيلي",
+        "source": "باب الطهارة"
+      }
+    ],
+    "keywords": [
+      "وضوء",
+      "شروط",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2900,
+    "view_count": 2900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-02-10T08:00:00Z",
+    "created_at": "2024-02-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-wudu-conditions-part-7",
+    "external_key": "ruling-wudu-conditions-part-7",
+    "title": "شروط صحة الوضوء: انقطاع الحدث.",
+    "summary": "انقطاع الحدث.",
+    "body": "انقطاع الحدث.\n\n**من:** شروط صحة الوضوء",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا قُمْتُمْ إِلَى الصَّلَاةِ فَاغْسِلُوا وُجُوهَكُمْ",
+        "source": "سورة المائدة: 6"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفقه الإسلامي وأدلته للزحيلي",
+        "source": "باب الطهارة"
+      }
+    ],
+    "keywords": [
+      "وضوء",
+      "شروط",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2900,
+    "view_count": 2900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-02-10T08:00:00Z",
+    "created_at": "2024-02-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-ghusl-obligations-part-1",
+    "external_key": "ruling-ghusl-obligations-part-1",
+    "title": "موجبات الغسل: **الجنابة:** وتكون بإيلاج أو إنزال المني باحتلام أو غيره.",
+    "summary": "**الجنابة:** وتكون بإيلاج أو إنزال المني باحتلام أو غيره.",
+    "body": "**الجنابة:** وتكون بإيلاج أو إنزال المني باحتلام أو غيره.\n\n**من:** موجبات الغسل",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَإِن كُنتُمْ جُنُبًا فَاطَّهَّرُوا",
+        "source": "سورة المائدة: 6"
+      },
+      {
+        "type": "حديث",
+        "text": "إذا التقى الختانان وجب الغسل",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الطهارة، باب الغسل"
+      }
+    ],
+    "keywords": [
       "غسل",
+      "جنابة",
+      "حيض",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 3100,
+    "view_count": 3100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-02-15T08:00:00Z",
+    "created_at": "2024-02-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-ghusl-obligations-part-2",
+    "external_key": "ruling-ghusl-obligations-part-2",
+    "title": "موجبات الغسل: **انقطاع الحيض:** يجب على المرأة الاغتسال بعد انقطاع دم الحي",
+    "summary": "**انقطاع الحيض:** يجب على المرأة الاغتسال بعد انقطاع دم الحيض.",
+    "body": "**انقطاع الحيض:** يجب على المرأة الاغتسال بعد انقطاع دم الحيض.\n\n**من:** موجبات الغسل",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَإِن كُنتُمْ جُنُبًا فَاطَّهَّرُوا",
+        "source": "سورة المائدة: 6"
+      },
+      {
+        "type": "حديث",
+        "text": "إذا التقى الختانان وجب الغسل",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الطهارة، باب الغسل"
+      }
+    ],
+    "keywords": [
+      "غسل",
+      "جنابة",
+      "حيض",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 3100,
+    "view_count": 3100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-02-15T08:00:00Z",
+    "created_at": "2024-02-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-ghusl-obligations-part-3",
+    "external_key": "ruling-ghusl-obligations-part-3",
+    "title": "موجبات الغسل: **انقطاع النفاس:** دم ما بعد الولادة.",
+    "summary": "**انقطاع النفاس:** دم ما بعد الولادة.",
+    "body": "**انقطاع النفاس:** دم ما بعد الولادة.\n\n**من:** موجبات الغسل",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَإِن كُنتُمْ جُنُبًا فَاطَّهَّرُوا",
+        "source": "سورة المائدة: 6"
+      },
+      {
+        "type": "حديث",
+        "text": "إذا التقى الختانان وجب الغسل",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الطهارة، باب الغسل"
+      }
+    ],
+    "keywords": [
+      "غسل",
+      "جنابة",
+      "حيض",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 3100,
+    "view_count": 3100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-02-15T08:00:00Z",
+    "created_at": "2024-02-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-ghusl-obligations-part-4",
+    "external_key": "ruling-ghusl-obligations-part-4",
+    "title": "موجبات الغسل: **الموت:** يُغسَّل الميت المسلم.",
+    "summary": "**الموت:** يُغسَّل الميت المسلم.",
+    "body": "**الموت:** يُغسَّل الميت المسلم.\n\n**من:** موجبات الغسل",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَإِن كُنتُمْ جُنُبًا فَاطَّهَّرُوا",
+        "source": "سورة المائدة: 6"
+      },
+      {
+        "type": "حديث",
+        "text": "إذا التقى الختانان وجب الغسل",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الطهارة، باب الغسل"
+      }
+    ],
+    "keywords": [
+      "غسل",
+      "جنابة",
+      "حيض",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 3100,
+    "view_count": 3100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-02-15T08:00:00Z",
+    "created_at": "2024-02-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-ghusl-obligations-part-5",
+    "external_key": "ruling-ghusl-obligations-part-5",
+    "title": "موجبات الغسل: **إسلام الكافر:** على خلاف بين العلماء في وجوبه.",
+    "summary": "**إسلام الكافر:** على خلاف بين العلماء في وجوبه.",
+    "body": "**إسلام الكافر:** على خلاف بين العلماء في وجوبه.\n\n**من:** موجبات الغسل",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَإِن كُنتُمْ جُنُبًا فَاطَّهَّرُوا",
+        "source": "سورة المائدة: 6"
+      },
+      {
+        "type": "حديث",
+        "text": "إذا التقى الختانان وجب الغسل",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الطهارة، باب الغسل"
+      }
+    ],
+    "keywords": [
+      "غسل",
+      "جنابة",
+      "حيض",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 3100,
+    "view_count": 3100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-02-15T08:00:00Z",
+    "created_at": "2024-02-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-istinja-part-1",
+    "external_key": "ruling-istinja-part-1",
+    "title": "أحكام الاستنجاء والاستجمار: **الاستنجاء بالماء:** أفضل وأكمل، ويكون بإسباغ الماء حتى تزو",
+    "summary": "**الاستنجاء بالماء:** أفضل وأكمل، ويكون بإسباغ الماء حتى تزول النجاسة وأثرها.",
+    "body": "**الاستنجاء بالماء:** أفضل وأكمل، ويكون بإسباغ الماء حتى تزول النجاسة وأثرها.\n\n**من:** أحكام الاستنجاء والاستجمار",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يستنجي أحدكم بأقل من ثلاثة أحجار",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "الشرح الممتع لابن عثيمين",
+        "source": "كتاب الطهارة"
+      }
+    ],
+    "keywords": [
+      "استنجاء",
+      "استجمار",
       "طهارة",
-      "اغتسال"
+      "نجاسة"
     ],
     "benefits": [],
-    "importance_score": 75,
-    "popularity_score": 3400,
-    "view_count": 3400,
-    "search_count": 780,
+    "importance_score": 80,
+    "popularity_score": 1750,
+    "view_count": 1750,
+    "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fatwa-seed",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
-    "linked_fatwa_ids": [
-      "fatwa-friday-shower"
-    ],
+    "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.200Z",
-    "created_at": "2026-07-07T23:16:01.200Z",
-    "updated_at": "2026-07-07T23:16:01.200Z"
+    "published_at": "2024-02-20T08:00:00Z",
+    "created_at": "2024-02-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "fatwa-ruling-fatwa-working-ribaa-bank",
-    "external_key": "fatwa-ruling-fatwa-working-ribaa-bank",
-    "title": "ما حكم العمل في البنوك الربوية؟",
-    "summary": "العمل في أقسام الربا محرم، وما عداه فيه خلاف.",
-    "body": "العمل في البنوك الربوية فيه تفصيل:\n\n**محرّم:** العمل في أقسام الربا مباشرة (إقراض، فوائد، صياغة عقود ربوية).\n\n**الخلاف:** العمل في الأقسام الإدارية والتقنية التي لا تتصل بالربا مباشرة — حرّمه كثير من العلماء، وأجازه عند الضرورة بعضهم.\n\n**الأصل:** تجنب العمل في البنوك الربوية، والبحث عن بديل حلال.",
-    "category": "المعاملات",
-    "subcategory": "البيع",
-    "subcategories": [
-      "البيع"
-    ],
+    "id": "ruling-istinja-part-2",
+    "external_key": "ruling-istinja-part-2",
+    "title": "أحكام الاستنجاء والاستجمار: **الاستجمار بالأحجار أو ما يقوم مقامها:** يجزئ بشرط ثلاث مسح",
+    "summary": "**الاستجمار بالأحجار أو ما يقوم مقامها:** يجزئ بشرط ثلاث مسحات فأكثر حتى تنقى المحل.",
+    "body": "**الاستجمار بالأحجار أو ما يقوم مقامها:** يجزئ بشرط ثلاث مسحات فأكثر حتى تنقى المحل.\n\n**من:** أحكام الاستنجاء والاستجمار",
+    "category": "الطهارة",
+    "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
     "scholar_opinions": [],
-    "evidence": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يستنجي أحدكم بأقل من ثلاثة أحجار",
+        "source": "رواه مسلم"
+      }
+    ],
     "references": [
       {
-        "text": "ابن باز رحمه الله",
-        "source": "فتوى معتمدة"
+        "text": "الشرح الممتع لابن عثيمين",
+        "source": "كتاب الطهارة"
       }
     ],
     "keywords": [
-      "بنك",
-      "ربا",
-      "عمل",
-      "فائدة"
+      "استنجاء",
+      "استجمار",
+      "طهارة",
+      "نجاسة"
     ],
     "benefits": [],
-    "importance_score": 75,
-    "popularity_score": 5600,
-    "view_count": 5600,
-    "search_count": 1350,
+    "importance_score": 80,
+    "popularity_score": 1750,
+    "view_count": 1750,
+    "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fatwa-seed",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
-    "linked_fatwa_ids": [
-      "fatwa-working-ribaa-bank"
-    ],
+    "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.200Z",
-    "created_at": "2026-07-07T23:16:01.200Z",
-    "updated_at": "2026-07-07T23:16:01.200Z"
+    "published_at": "2024-02-20T08:00:00Z",
+    "created_at": "2024-02-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "fatwa-ruling-fatwa-hajj-obligation",
-    "external_key": "fatwa-ruling-fatwa-hajj-obligation",
-    "title": "متى يجب الحج؟",
-    "summary": "يجب الحج مرة على القادر ماليًا وبدنيًا وأمنيًا.",
-    "body": "الحج فريضة على كل مسلم بالغ عاقل قادر مرة في العمر.\n\n**شروط الوجوب:**\n1. الإسلام.\n2. البلوغ والعقل.\n3. الاستطاعة: مالياً (توافر نفقة الذهاب والإياب وما يُخلّف لمن تلزمه نفقته) وبدنياً وأمنياً.\n\n**وقت الأداء:** فور الاستطاعة دون تأخير إلا لعذر معتبر.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "آداب الفتوى",
-    "subcategories": [
-      "آداب الفتوى"
-    ],
+    "id": "ruling-istinja-part-3",
+    "external_key": "ruling-istinja-part-3",
+    "title": "أحكام الاستنجاء والاستجمار: **الجمع بينهما:** أفضل الأحوال.",
+    "summary": "**الجمع بينهما:** أفضل الأحوال.",
+    "body": "**الجمع بينهما:** أفضل الأحوال.\n\n**من:** أحكام الاستنجاء والاستجمار",
+    "category": "الطهارة",
+    "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
     "scholar_opinions": [],
-    "evidence": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يستنجي أحدكم بأقل من ثلاثة أحجار",
+        "source": "رواه مسلم"
+      }
+    ],
     "references": [
       {
-        "text": "اللجنة الدائمة",
-        "source": "فتوى معتمدة"
+        "text": "الشرح الممتع لابن عثيمين",
+        "source": "كتاب الطهارة"
       }
     ],
     "keywords": [
-      "حج",
-      "استطاعة",
-      "فريضة",
-      "شروط"
+      "استنجاء",
+      "استجمار",
+      "طهارة",
+      "نجاسة"
     ],
     "benefits": [],
-    "importance_score": 75,
-    "popularity_score": 4200,
-    "view_count": 4200,
-    "search_count": 970,
+    "importance_score": 80,
+    "popularity_score": 1750,
+    "view_count": 1750,
+    "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fatwa-seed",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
-    "linked_fatwa_ids": [
-      "fatwa-hajj-obligation"
-    ],
+    "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.200Z",
-    "created_at": "2026-07-07T23:16:01.200Z",
-    "updated_at": "2026-07-07T23:16:01.200Z"
+    "published_at": "2024-02-20T08:00:00Z",
+    "created_at": "2024-02-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "fatwa-ruling-fatwa-prayer-congregation",
-    "external_key": "fatwa-ruling-fatwa-prayer-congregation",
-    "title": "ما حكم صلاة الجماعة؟",
-    "summary": "صلاة الجماعة واجبة عند كثير من العلماء.",
-    "body": "صلاة الجماعة واجبة على الرجل القادر في أصح قولَي العلماء.\n\n**الدليل:** قوله ﷺ: «والذي نفسي بيده لقد هممت أن آمر بحطب فيُحطب، ثم آمر بالصلاة فيُؤذَّن لها، ثم آمر رجلاً فيؤمّ الناس، ثم أخالف إلى رجال فأحرّق عليهم بيوتهم».\n\n**أقوال العلماء:** واجبة عند الحنابلة وابن تيمية، سنة مؤكدة عند الحنفية والمالكية والشافعية.",
+    "id": "ruling-istinja-part-4",
+    "external_key": "ruling-istinja-part-4",
+    "title": "أحكام الاستنجاء والاستجمار: ألا يكون المسح بعظم أو روث.",
+    "summary": "ألا يكون المسح بعظم أو روث.",
+    "body": "ألا يكون المسح بعظم أو روث.\n\n**من:** أحكام الاستنجاء والاستجمار",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يستنجي أحدكم بأقل من ثلاثة أحجار",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "الشرح الممتع لابن عثيمين",
+        "source": "كتاب الطهارة"
+      }
+    ],
+    "keywords": [
+      "استنجاء",
+      "استجمار",
+      "طهارة",
+      "نجاسة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 1750,
+    "view_count": 1750,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-02-20T08:00:00Z",
+    "created_at": "2024-02-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-istinja-part-5",
+    "external_key": "ruling-istinja-part-5",
+    "title": "أحكام الاستنجاء والاستجمار: ألا تتجاوز النجاسة موضعها المعتاد.",
+    "summary": "ألا تتجاوز النجاسة موضعها المعتاد.",
+    "body": "ألا تتجاوز النجاسة موضعها المعتاد.\n\n**من:** أحكام الاستنجاء والاستجمار",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يستنجي أحدكم بأقل من ثلاثة أحجار",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "الشرح الممتع لابن عثيمين",
+        "source": "كتاب الطهارة"
+      }
+    ],
+    "keywords": [
+      "استنجاء",
+      "استجمار",
+      "طهارة",
+      "نجاسة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 1750,
+    "view_count": 1750,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-02-20T08:00:00Z",
+    "created_at": "2024-02-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-istinja-part-6",
+    "external_key": "ruling-istinja-part-6",
+    "title": "أحكام الاستنجاء والاستجمار: ثلاث مسحات على الأقل منقية.",
+    "summary": "ثلاث مسحات على الأقل منقية.",
+    "body": "ثلاث مسحات على الأقل منقية.\n\n**من:** أحكام الاستنجاء والاستجمار",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يستنجي أحدكم بأقل من ثلاثة أحجار",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "الشرح الممتع لابن عثيمين",
+        "source": "كتاب الطهارة"
+      }
+    ],
+    "keywords": [
+      "استنجاء",
+      "استجمار",
+      "طهارة",
+      "نجاسة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 1750,
+    "view_count": 1750,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-02-20T08:00:00Z",
+    "created_at": "2024-02-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-najasah-purification-part-1",
+    "external_key": "ruling-najasah-purification-part-1",
+    "title": "النجاسات وطرق تطهيرها: **مغلظة:** نجاسة الكلب والخنزير، وتُطهَّر بسبع غسلات إحداها ",
+    "summary": "**مغلظة:** نجاسة الكلب والخنزير، وتُطهَّر بسبع غسلات إحداها بالتراب.",
+    "body": "**مغلظة:** نجاسة الكلب والخنزير، وتُطهَّر بسبع غسلات إحداها بالتراب.\n\n**من:** النجاسات وطرق تطهيرها",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "إذا وطئ أحدكم بنعليه الأذى فإن التراب له طهور",
+        "source": "رواه أبو داود"
+      },
+      {
+        "type": "حديث",
+        "text": "طهور إناء أحدكم إذا ولغ فيه الكلب أن يغسله سبع مرات",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "بداية المجتهد لابن رشد",
+        "source": "كتاب الطهارة"
+      }
+    ],
+    "keywords": [
+      "نجاسة",
+      "تطهير",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2200,
+    "view_count": 2200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-01T08:00:00Z",
+    "created_at": "2024-03-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-najasah-purification-part-2",
+    "external_key": "ruling-najasah-purification-part-2",
+    "title": "النجاسات وطرق تطهيرها: **مخففة:** بول الصبي الذي لم يأكل الطعام، ويكفي فيها الرش.",
+    "summary": "**مخففة:** بول الصبي الذي لم يأكل الطعام، ويكفي فيها الرش.",
+    "body": "**مخففة:** بول الصبي الذي لم يأكل الطعام، ويكفي فيها الرش.\n\n**من:** النجاسات وطرق تطهيرها",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "إذا وطئ أحدكم بنعليه الأذى فإن التراب له طهور",
+        "source": "رواه أبو داود"
+      },
+      {
+        "type": "حديث",
+        "text": "طهور إناء أحدكم إذا ولغ فيه الكلب أن يغسله سبع مرات",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "بداية المجتهد لابن رشد",
+        "source": "كتاب الطهارة"
+      }
+    ],
+    "keywords": [
+      "نجاسة",
+      "تطهير",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2200,
+    "view_count": 2200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-01T08:00:00Z",
+    "created_at": "2024-03-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-najasah-purification-part-3",
+    "external_key": "ruling-najasah-purification-part-3",
+    "title": "النجاسات وطرق تطهيرها: **متوسطة:** سائر النجاسات كالبول والدم والغائط.",
+    "summary": "**متوسطة:** سائر النجاسات كالبول والدم والغائط.",
+    "body": "**متوسطة:** سائر النجاسات كالبول والدم والغائط.\n\n**من:** النجاسات وطرق تطهيرها",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "إذا وطئ أحدكم بنعليه الأذى فإن التراب له طهور",
+        "source": "رواه أبو داود"
+      },
+      {
+        "type": "حديث",
+        "text": "طهور إناء أحدكم إذا ولغ فيه الكلب أن يغسله سبع مرات",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "بداية المجتهد لابن رشد",
+        "source": "كتاب الطهارة"
+      }
+    ],
+    "keywords": [
+      "نجاسة",
+      "تطهير",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2200,
+    "view_count": 2200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-01T08:00:00Z",
+    "created_at": "2024-03-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-najasah-purification-part-4",
+    "external_key": "ruling-najasah-purification-part-4",
+    "title": "النجاسات وطرق تطهيرها: غسل المحل بالماء الطهور حتى تزول عين النجاسة وأثرها.",
+    "summary": "غسل المحل بالماء الطهور حتى تزول عين النجاسة وأثرها.",
+    "body": "غسل المحل بالماء الطهور حتى تزول عين النجاسة وأثرها.\n\n**من:** النجاسات وطرق تطهيرها",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "إذا وطئ أحدكم بنعليه الأذى فإن التراب له طهور",
+        "source": "رواه أبو داود"
+      },
+      {
+        "type": "حديث",
+        "text": "طهور إناء أحدكم إذا ولغ فيه الكلب أن يغسله سبع مرات",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "بداية المجتهد لابن رشد",
+        "source": "كتاب الطهارة"
+      }
+    ],
+    "keywords": [
+      "نجاسة",
+      "تطهير",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2200,
+    "view_count": 2200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-01T08:00:00Z",
+    "created_at": "2024-03-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-najasah-purification-part-5",
+    "external_key": "ruling-najasah-purification-part-5",
+    "title": "النجاسات وطرق تطهيرها: الأرض تطهر بالشمس والريح والجفاف عند بعض العلماء.",
+    "summary": "الأرض تطهر بالشمس والريح والجفاف عند بعض العلماء.",
+    "body": "الأرض تطهر بالشمس والريح والجفاف عند بعض العلماء.\n\n**من:** النجاسات وطرق تطهيرها",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "إذا وطئ أحدكم بنعليه الأذى فإن التراب له طهور",
+        "source": "رواه أبو داود"
+      },
+      {
+        "type": "حديث",
+        "text": "طهور إناء أحدكم إذا ولغ فيه الكلب أن يغسله سبع مرات",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "بداية المجتهد لابن رشد",
+        "source": "كتاب الطهارة"
+      }
+    ],
+    "keywords": [
+      "نجاسة",
+      "تطهير",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2200,
+    "view_count": 2200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-01T08:00:00Z",
+    "created_at": "2024-03-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-najasah-purification-part-6",
+    "external_key": "ruling-najasah-purification-part-6",
+    "title": "النجاسات وطرق تطهيرها: الخمر تطهر بالتخليل عند بعض الفقهاء.",
+    "summary": "الخمر تطهر بالتخليل عند بعض الفقهاء.",
+    "body": "الخمر تطهر بالتخليل عند بعض الفقهاء.\n\n**من:** النجاسات وطرق تطهيرها",
+    "category": "الطهارة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "إذا وطئ أحدكم بنعليه الأذى فإن التراب له طهور",
+        "source": "رواه أبو داود"
+      },
+      {
+        "type": "حديث",
+        "text": "طهور إناء أحدكم إذا ولغ فيه الكلب أن يغسله سبع مرات",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "بداية المجتهد لابن رشد",
+        "source": "كتاب الطهارة"
+      }
+    ],
+    "keywords": [
+      "نجاسة",
+      "تطهير",
+      "طهارة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2200,
+    "view_count": 2200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-01T08:00:00Z",
+    "created_at": "2024-03-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-conditions-part-1",
+    "external_key": "ruling-prayer-conditions-part-1",
+    "title": "شروط صحة الصلاة: الإسلام والعقل والتمييز.",
+    "summary": "الإسلام والعقل والتمييز.",
+    "body": "الإسلام والعقل والتمييز.\n\n**من:** شروط صحة الصلاة",
     "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
+    "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
     "scholar_opinions": [],
-    "evidence": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا تقبل صلاة بغير طهور",
+        "source": "رواه مسلم"
+      },
+      {
+        "type": "قرآن",
+        "text": "وَقُومُوا لِلَّهِ قَانِتِينَ",
+        "source": "سورة البقرة: 238"
+      }
+    ],
     "references": [
       {
-        "text": "ابن تيمية رحمه الله",
-        "source": "فتوى معتمدة"
+        "text": "المجموع للنووي",
+        "source": "كتاب الصلاة"
       }
     ],
     "keywords": [
-      "جماعة",
       "صلاة",
-      "مسجد",
-      "واجب"
+      "شروط",
+      "طهارة",
+      "قبلة"
     ],
     "benefits": [],
-    "importance_score": 75,
-    "popularity_score": 8200,
-    "view_count": 8200,
-    "search_count": 2400,
+    "importance_score": 80,
+    "popularity_score": 4100,
+    "view_count": 4100,
+    "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fatwa-seed",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
-    "linked_fatwa_ids": [
-      "fatwa-prayer-congregation"
-    ],
+    "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.200Z",
-    "created_at": "2026-07-07T23:16:01.200Z",
-    "updated_at": "2026-07-07T23:16:01.200Z"
+    "published_at": "2024-03-10T08:00:00Z",
+    "created_at": "2024-03-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "fatwa-ruling-fatwa-fasting-caffeine",
-    "external_key": "fatwa-ruling-fatwa-fasting-caffeine",
-    "title": "هل يُفطر الحقن والإبر الطبية في رمضان؟",
-    "summary": "الحقن الطبية لا تُفطر، أما المغذيات فتُفطر.",
-    "body": "الحقن والإبر الطبية على أنواع:\n\n**لا تُفطر:** حقن العلاج في العضل أو الوريد لعلاج مرض لأنها لا تُعد أكلاً ولا شرباً.\n\n**تُفطر:** حقن المغذيات (الغلوكوز والمحاليل الغذائية) لأنها تُغني عن الأكل والشرب.\n\n**الراجح** عند جمهور المعاصرين: الحقن الطبية غير المغذية لا تُفطر.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "آداب الفتوى",
-    "subcategories": [
-      "آداب الفتوى"
-    ],
+    "id": "ruling-prayer-conditions-part-2",
+    "external_key": "ruling-prayer-conditions-part-2",
+    "title": "شروط صحة الصلاة: دخول الوقت.",
+    "summary": "دخول الوقت.",
+    "body": "دخول الوقت.\n\n**من:** شروط صحة الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
     "scholar_opinions": [],
-    "evidence": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا تقبل صلاة بغير طهور",
+        "source": "رواه مسلم"
+      },
+      {
+        "type": "قرآن",
+        "text": "وَقُومُوا لِلَّهِ قَانِتِينَ",
+        "source": "سورة البقرة: 238"
+      }
+    ],
     "references": [
       {
-        "text": "ابن عثيمين رحمه الله",
-        "source": "فتوى معتمدة"
+        "text": "المجموع للنووي",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "شروط",
+      "طهارة",
+      "قبلة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 4100,
+    "view_count": 4100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-10T08:00:00Z",
+    "created_at": "2024-03-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-conditions-part-3",
+    "external_key": "ruling-prayer-conditions-part-3",
+    "title": "شروط صحة الصلاة: الطهارة من الحدث الأصغر والأكبر.",
+    "summary": "الطهارة من الحدث الأصغر والأكبر.",
+    "body": "الطهارة من الحدث الأصغر والأكبر.\n\n**من:** شروط صحة الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا تقبل صلاة بغير طهور",
+        "source": "رواه مسلم"
+      },
+      {
+        "type": "قرآن",
+        "text": "وَقُومُوا لِلَّهِ قَانِتِينَ",
+        "source": "سورة البقرة: 238"
+      }
+    ],
+    "references": [
+      {
+        "text": "المجموع للنووي",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "شروط",
+      "طهارة",
+      "قبلة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 4100,
+    "view_count": 4100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-10T08:00:00Z",
+    "created_at": "2024-03-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-conditions-part-4",
+    "external_key": "ruling-prayer-conditions-part-4",
+    "title": "شروط صحة الصلاة: طهارة البدن والثوب والمكان.",
+    "summary": "طهارة البدن والثوب والمكان.",
+    "body": "طهارة البدن والثوب والمكان.\n\n**من:** شروط صحة الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا تقبل صلاة بغير طهور",
+        "source": "رواه مسلم"
+      },
+      {
+        "type": "قرآن",
+        "text": "وَقُومُوا لِلَّهِ قَانِتِينَ",
+        "source": "سورة البقرة: 238"
+      }
+    ],
+    "references": [
+      {
+        "text": "المجموع للنووي",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "شروط",
+      "طهارة",
+      "قبلة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 4100,
+    "view_count": 4100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-10T08:00:00Z",
+    "created_at": "2024-03-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-conditions-part-5",
+    "external_key": "ruling-prayer-conditions-part-5",
+    "title": "شروط صحة الصلاة: ستر العورة.",
+    "summary": "ستر العورة.",
+    "body": "ستر العورة.\n\n**من:** شروط صحة الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا تقبل صلاة بغير طهور",
+        "source": "رواه مسلم"
+      },
+      {
+        "type": "قرآن",
+        "text": "وَقُومُوا لِلَّهِ قَانِتِينَ",
+        "source": "سورة البقرة: 238"
+      }
+    ],
+    "references": [
+      {
+        "text": "المجموع للنووي",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "شروط",
+      "طهارة",
+      "قبلة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 4100,
+    "view_count": 4100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-10T08:00:00Z",
+    "created_at": "2024-03-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-conditions-part-6",
+    "external_key": "ruling-prayer-conditions-part-6",
+    "title": "شروط صحة الصلاة: استقبال القبلة.",
+    "summary": "استقبال القبلة.",
+    "body": "استقبال القبلة.\n\n**من:** شروط صحة الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا تقبل صلاة بغير طهور",
+        "source": "رواه مسلم"
+      },
+      {
+        "type": "قرآن",
+        "text": "وَقُومُوا لِلَّهِ قَانِتِينَ",
+        "source": "سورة البقرة: 238"
+      }
+    ],
+    "references": [
+      {
+        "text": "المجموع للنووي",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "شروط",
+      "طهارة",
+      "قبلة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 4100,
+    "view_count": 4100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-10T08:00:00Z",
+    "created_at": "2024-03-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-conditions-part-7",
+    "external_key": "ruling-prayer-conditions-part-7",
+    "title": "شروط صحة الصلاة: النية.",
+    "summary": "النية.",
+    "body": "النية.\n\n**من:** شروط صحة الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا تقبل صلاة بغير طهور",
+        "source": "رواه مسلم"
+      },
+      {
+        "type": "قرآن",
+        "text": "وَقُومُوا لِلَّهِ قَانِتِينَ",
+        "source": "سورة البقرة: 238"
+      }
+    ],
+    "references": [
+      {
+        "text": "المجموع للنووي",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "شروط",
+      "طهارة",
+      "قبلة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 4100,
+    "view_count": 4100,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-10T08:00:00Z",
+    "created_at": "2024-03-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-sunnah-part-1",
+    "external_key": "ruling-prayer-sunnah-part-1",
+    "title": "سنن الصلاة: التشهد الأول.",
+    "summary": "التشهد الأول.",
+    "body": "التشهد الأول.\n\n**من:** سنن الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "صلوا كما رأيتموني أصلي",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الروض المربع للبهوتي",
+        "source": "باب السنن والمستحبات"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "سنن",
+      "مستحبات"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2600,
+    "view_count": 2600,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-15T08:00:00Z",
+    "created_at": "2024-03-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-sunnah-part-2",
+    "external_key": "ruling-prayer-sunnah-part-2",
+    "title": "سنن الصلاة: الجلوس للتشهد الأول.",
+    "summary": "الجلوس للتشهد الأول.",
+    "body": "الجلوس للتشهد الأول.\n\n**من:** سنن الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "صلوا كما رأيتموني أصلي",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الروض المربع للبهوتي",
+        "source": "باب السنن والمستحبات"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "سنن",
+      "مستحبات"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2600,
+    "view_count": 2600,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-15T08:00:00Z",
+    "created_at": "2024-03-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-sunnah-part-3",
+    "external_key": "ruling-prayer-sunnah-part-3",
+    "title": "سنن الصلاة: الصلاة على النبي ﷺ في التشهد الأول.",
+    "summary": "الصلاة على النبي ﷺ في التشهد الأول.",
+    "body": "الصلاة على النبي ﷺ في التشهد الأول.\n\n**من:** سنن الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "صلوا كما رأيتموني أصلي",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الروض المربع للبهوتي",
+        "source": "باب السنن والمستحبات"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "سنن",
+      "مستحبات"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2600,
+    "view_count": 2600,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-15T08:00:00Z",
+    "created_at": "2024-03-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-sunnah-part-4",
+    "external_key": "ruling-prayer-sunnah-part-4",
+    "title": "سنن الصلاة: القنوت في صلاة الوتر والصبح (عند الشافعية).",
+    "summary": "القنوت في صلاة الوتر والصبح (عند الشافعية).",
+    "body": "القنوت في صلاة الوتر والصبح (عند الشافعية).\n\n**من:** سنن الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "صلوا كما رأيتموني أصلي",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الروض المربع للبهوتي",
+        "source": "باب السنن والمستحبات"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "سنن",
+      "مستحبات"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2600,
+    "view_count": 2600,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-15T08:00:00Z",
+    "created_at": "2024-03-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-sunnah-part-5",
+    "external_key": "ruling-prayer-sunnah-part-5",
+    "title": "سنن الصلاة: رفع اليدين عند التكبير والركوع والرفع منه.",
+    "summary": "رفع اليدين عند التكبير والركوع والرفع منه.",
+    "body": "رفع اليدين عند التكبير والركوع والرفع منه.\n\n**من:** سنن الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "صلوا كما رأيتموني أصلي",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الروض المربع للبهوتي",
+        "source": "باب السنن والمستحبات"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "سنن",
+      "مستحبات"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2600,
+    "view_count": 2600,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-15T08:00:00Z",
+    "created_at": "2024-03-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-sunnah-part-6",
+    "external_key": "ruling-prayer-sunnah-part-6",
+    "title": "سنن الصلاة: وضع اليمين على الشمال.",
+    "summary": "وضع اليمين على الشمال.",
+    "body": "وضع اليمين على الشمال.\n\n**من:** سنن الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "صلوا كما رأيتموني أصلي",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الروض المربع للبهوتي",
+        "source": "باب السنن والمستحبات"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "سنن",
+      "مستحبات"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2600,
+    "view_count": 2600,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-15T08:00:00Z",
+    "created_at": "2024-03-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-sunnah-part-7",
+    "external_key": "ruling-prayer-sunnah-part-7",
+    "title": "سنن الصلاة: النظر إلى موضع السجود.",
+    "summary": "النظر إلى موضع السجود.",
+    "body": "النظر إلى موضع السجود.\n\n**من:** سنن الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "صلوا كما رأيتموني أصلي",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الروض المربع للبهوتي",
+        "source": "باب السنن والمستحبات"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "سنن",
+      "مستحبات"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2600,
+    "view_count": 2600,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-15T08:00:00Z",
+    "created_at": "2024-03-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-sunnah-part-8",
+    "external_key": "ruling-prayer-sunnah-part-8",
+    "title": "سنن الصلاة: الاستفتاح بدعاء الاستفتاح.",
+    "summary": "الاستفتاح بدعاء الاستفتاح.",
+    "body": "الاستفتاح بدعاء الاستفتاح.\n\n**من:** سنن الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "صلوا كما رأيتموني أصلي",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الروض المربع للبهوتي",
+        "source": "باب السنن والمستحبات"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "سنن",
+      "مستحبات"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2600,
+    "view_count": 2600,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-15T08:00:00Z",
+    "created_at": "2024-03-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-sunnah-part-9",
+    "external_key": "ruling-prayer-sunnah-part-9",
+    "title": "سنن الصلاة: قراءة سورة بعد الفاتحة.",
+    "summary": "قراءة سورة بعد الفاتحة.",
+    "body": "قراءة سورة بعد الفاتحة.\n\n**من:** سنن الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "صلوا كما رأيتموني أصلي",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الروض المربع للبهوتي",
+        "source": "باب السنن والمستحبات"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "سنن",
+      "مستحبات"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2600,
+    "view_count": 2600,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-15T08:00:00Z",
+    "created_at": "2024-03-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-makruhat-part-1",
+    "external_key": "ruling-prayer-makruhat-part-1",
+    "title": "مكروهات الصلاة: الالتفات من غير حاجة.",
+    "summary": "الالتفات من غير حاجة.",
+    "body": "الالتفات من غير حاجة.\n\n**من:** مكروهات الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يرفع أحدكم بصره إلى السماء في الصلاة",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفروع لابن مفلح",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "مكروهات",
+      "آداب"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 1900,
+    "view_count": 1900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-20T08:00:00Z",
+    "created_at": "2024-03-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-makruhat-part-2",
+    "external_key": "ruling-prayer-makruhat-part-2",
+    "title": "مكروهات الصلاة: رفع البصر إلى السماء.",
+    "summary": "رفع البصر إلى السماء.",
+    "body": "رفع البصر إلى السماء.\n\n**من:** مكروهات الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يرفع أحدكم بصره إلى السماء في الصلاة",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفروع لابن مفلح",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "مكروهات",
+      "آداب"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 1900,
+    "view_count": 1900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-20T08:00:00Z",
+    "created_at": "2024-03-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-makruhat-part-3",
+    "external_key": "ruling-prayer-makruhat-part-3",
+    "title": "مكروهات الصلاة: الإقعاء في الجلوس (كالكلب).",
+    "summary": "الإقعاء في الجلوس (كالكلب).",
+    "body": "الإقعاء في الجلوس (كالكلب).\n\n**من:** مكروهات الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يرفع أحدكم بصره إلى السماء في الصلاة",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفروع لابن مفلح",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "مكروهات",
+      "آداب"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 1900,
+    "view_count": 1900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-20T08:00:00Z",
+    "created_at": "2024-03-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-makruhat-part-4",
+    "external_key": "ruling-prayer-makruhat-part-4",
+    "title": "مكروهات الصلاة: افتراش الذراعين في السجود.",
+    "summary": "افتراش الذراعين في السجود.",
+    "body": "افتراش الذراعين في السجود.\n\n**من:** مكروهات الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يرفع أحدكم بصره إلى السماء في الصلاة",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفروع لابن مفلح",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "مكروهات",
+      "آداب"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 1900,
+    "view_count": 1900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-20T08:00:00Z",
+    "created_at": "2024-03-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-makruhat-part-5",
+    "external_key": "ruling-prayer-makruhat-part-5",
+    "title": "مكروهات الصلاة: التخصر (وضع اليد على الخاصرة).",
+    "summary": "التخصر (وضع اليد على الخاصرة).",
+    "body": "التخصر (وضع اليد على الخاصرة).\n\n**من:** مكروهات الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يرفع أحدكم بصره إلى السماء في الصلاة",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفروع لابن مفلح",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "مكروهات",
+      "آداب"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 1900,
+    "view_count": 1900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-20T08:00:00Z",
+    "created_at": "2024-03-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-makruhat-part-6",
+    "external_key": "ruling-prayer-makruhat-part-6",
+    "title": "مكروهات الصلاة: العبث بالثياب أو الجسد.",
+    "summary": "العبث بالثياب أو الجسد.",
+    "body": "العبث بالثياب أو الجسد.\n\n**من:** مكروهات الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يرفع أحدكم بصره إلى السماء في الصلاة",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفروع لابن مفلح",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "مكروهات",
+      "آداب"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 1900,
+    "view_count": 1900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-20T08:00:00Z",
+    "created_at": "2024-03-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-makruhat-part-7",
+    "external_key": "ruling-prayer-makruhat-part-7",
+    "title": "مكروهات الصلاة: مسابقة الإمام.",
+    "summary": "مسابقة الإمام.",
+    "body": "مسابقة الإمام.\n\n**من:** مكروهات الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يرفع أحدكم بصره إلى السماء في الصلاة",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفروع لابن مفلح",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "مكروهات",
+      "آداب"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 1900,
+    "view_count": 1900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-20T08:00:00Z",
+    "created_at": "2024-03-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-makruhat-part-8",
+    "external_key": "ruling-prayer-makruhat-part-8",
+    "title": "مكروهات الصلاة: كثرة الحركة من غير حاجة.",
+    "summary": "كثرة الحركة من غير حاجة.",
+    "body": "كثرة الحركة من غير حاجة.\n\n**من:** مكروهات الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يرفع أحدكم بصره إلى السماء في الصلاة",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفروع لابن مفلح",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "مكروهات",
+      "آداب"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 1900,
+    "view_count": 1900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-20T08:00:00Z",
+    "created_at": "2024-03-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-makruhat-part-9",
+    "external_key": "ruling-prayer-makruhat-part-9",
+    "title": "مكروهات الصلاة: التثاؤب.",
+    "summary": "التثاؤب.",
+    "body": "التثاؤب.\n\n**من:** مكروهات الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يرفع أحدكم بصره إلى السماء في الصلاة",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفروع لابن مفلح",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "مكروهات",
+      "آداب"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 1900,
+    "view_count": 1900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-20T08:00:00Z",
+    "created_at": "2024-03-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-prayer-makruhat-part-10",
+    "external_key": "ruling-prayer-makruhat-part-10",
+    "title": "مكروهات الصلاة: الصلاة وهو حاقن (محتاج لقضاء الحاجة).",
+    "summary": "الصلاة وهو حاقن (محتاج لقضاء الحاجة).",
+    "body": "الصلاة وهو حاقن (محتاج لقضاء الحاجة).\n\n**من:** مكروهات الصلاة",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "لا يرفع أحدكم بصره إلى السماء في الصلاة",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "الفروع لابن مفلح",
+        "source": "كتاب الصلاة"
+      }
+    ],
+    "keywords": [
+      "صلاة",
+      "مكروهات",
+      "آداب"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 1900,
+    "view_count": 1900,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-03-20T08:00:00Z",
+    "created_at": "2024-03-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-voluntary-prayer-part-1",
+    "external_key": "ruling-voluntary-prayer-part-1",
+    "title": "صلاة التطوع وأنواعها: **السنن الرواتب:** 12 ركعة في اليوم (ركعتان قبل الفجر، وأربع",
+    "summary": "**السنن الرواتب:** 12 ركعة في اليوم (ركعتان قبل الفجر، وأربع قبل الظهر، وركعتان بعده، وركعتان بعد المغرب، وركعتان بعد العشاء).",
+    "body": "**السنن الرواتب:** 12 ركعة في اليوم (ركعتان قبل الفجر، وأربع قبل الظهر، وركعتان بعده، وركعتان بعد المغرب، وركعتان بعد العشاء).\n\n**من:** صلاة التطوع وأنواعها",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "من صلى اثنتي عشرة ركعة في اليوم والليلة بني له بيت في الجنة",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "زاد المعاد لابن القيم",
+        "source": "فصل في هدي النبي ﷺ في النوافل"
+      }
+    ],
+    "keywords": [
+      "تطوع",
+      "نوافل",
+      "سنن",
+      "صلاة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 3300,
+    "view_count": 3300,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-01T08:00:00Z",
+    "created_at": "2024-04-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-voluntary-prayer-part-2",
+    "external_key": "ruling-voluntary-prayer-part-2",
+    "title": "صلاة التطوع وأنواعها: **قيام الليل (التهجد):** من أفضل النوافل.",
+    "summary": "**قيام الليل (التهجد):** من أفضل النوافل.",
+    "body": "**قيام الليل (التهجد):** من أفضل النوافل.\n\n**من:** صلاة التطوع وأنواعها",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "من صلى اثنتي عشرة ركعة في اليوم والليلة بني له بيت في الجنة",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "زاد المعاد لابن القيم",
+        "source": "فصل في هدي النبي ﷺ في النوافل"
+      }
+    ],
+    "keywords": [
+      "تطوع",
+      "نوافل",
+      "سنن",
+      "صلاة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 3300,
+    "view_count": 3300,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-01T08:00:00Z",
+    "created_at": "2024-04-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-voluntary-prayer-part-3",
+    "external_key": "ruling-voluntary-prayer-part-3",
+    "title": "صلاة التطوع وأنواعها: **صلاة الضحى:** ركعتان فأكثر حتى ثماني ركعات.",
+    "summary": "**صلاة الضحى:** ركعتان فأكثر حتى ثماني ركعات.",
+    "body": "**صلاة الضحى:** ركعتان فأكثر حتى ثماني ركعات.\n\n**من:** صلاة التطوع وأنواعها",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "من صلى اثنتي عشرة ركعة في اليوم والليلة بني له بيت في الجنة",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "زاد المعاد لابن القيم",
+        "source": "فصل في هدي النبي ﷺ في النوافل"
+      }
+    ],
+    "keywords": [
+      "تطوع",
+      "نوافل",
+      "سنن",
+      "صلاة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 3300,
+    "view_count": 3300,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-01T08:00:00Z",
+    "created_at": "2024-04-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-voluntary-prayer-part-4",
+    "external_key": "ruling-voluntary-prayer-part-4",
+    "title": "صلاة التطوع وأنواعها: **صلاة الوتر:** سنة مؤكدة، أدناه ركعة وأكثره إحدى عشرة.",
+    "summary": "**صلاة الوتر:** سنة مؤكدة، أدناه ركعة وأكثره إحدى عشرة.",
+    "body": "**صلاة الوتر:** سنة مؤكدة، أدناه ركعة وأكثره إحدى عشرة.\n\n**من:** صلاة التطوع وأنواعها",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "من صلى اثنتي عشرة ركعة في اليوم والليلة بني له بيت في الجنة",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "زاد المعاد لابن القيم",
+        "source": "فصل في هدي النبي ﷺ في النوافل"
+      }
+    ],
+    "keywords": [
+      "تطوع",
+      "نوافل",
+      "سنن",
+      "صلاة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 3300,
+    "view_count": 3300,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-01T08:00:00Z",
+    "created_at": "2024-04-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-voluntary-prayer-part-5",
+    "external_key": "ruling-voluntary-prayer-part-5",
+    "title": "صلاة التطوع وأنواعها: **صلاة التراويح:** في رمضان جماعة وفرادى.",
+    "summary": "**صلاة التراويح:** في رمضان جماعة وفرادى.",
+    "body": "**صلاة التراويح:** في رمضان جماعة وفرادى.\n\n**من:** صلاة التطوع وأنواعها",
+    "category": "الصلاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "من صلى اثنتي عشرة ركعة في اليوم والليلة بني له بيت في الجنة",
+        "source": "رواه مسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "زاد المعاد لابن القيم",
+        "source": "فصل في هدي النبي ﷺ في النوافل"
+      }
+    ],
+    "keywords": [
+      "تطوع",
+      "نوافل",
+      "سنن",
+      "صلاة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 3300,
+    "view_count": 3300,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-01T08:00:00Z",
+    "created_at": "2024-04-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fasting-breakers-part-1",
+    "external_key": "ruling-fasting-breakers-part-1",
+    "title": "مفطرات الصيام: الأكل والشرب عمداً.",
+    "summary": "الأكل والشرب عمداً.",
+    "body": "الأكل والشرب عمداً.\n\n**من:** مفطرات الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "من نسي وهو صائم فأكل أو شرب فليتم صومه فإنما أطعمه الله وسقاه",
+        "source": "رواه البخاري ومسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الصيام"
       }
     ],
     "keywords": [
       "صيام",
-      "حقن",
-      "إبر",
-      "طبية",
+      "مفطرات",
       "رمضان"
     ],
     "benefits": [],
-    "importance_score": 75,
-    "popularity_score": 6800,
-    "view_count": 6800,
-    "search_count": 1900,
+    "importance_score": 80,
+    "popularity_score": 5800,
+    "view_count": 5800,
+    "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fatwa-seed",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
-    "linked_fatwa_ids": [
-      "fatwa-fasting-caffeine"
-    ],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.200Z",
-    "created_at": "2026-07-07T23:16:01.200Z",
-    "updated_at": "2026-07-07T23:16:01.200Z"
-  },
-  {
-    "id": "fatwa-ruling-fatwa-mortgage-bank",
-    "external_key": "fatwa-ruling-fatwa-mortgage-bank",
-    "title": "ما حكم شراء البيت عبر قرض بنكي بفوائد؟",
-    "summary": "القرض البنكي بفوائد محرم، والبديل المرابحة الإسلامية.",
-    "body": "القرض البنكي بالفوائد ربا محرم بالكتاب والسنة والإجماع.\n\n**قال الله تعالى:** «وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا».\n\n**البديل الشرعي:** التمويل الإسلامي عبر عقود المرابحة أو الإجارة المنتهية بالتمليك.\n\n**حالة الضرورة:** ذهب بعض المعاصرين إلى جوازه لمن احتاج للسكن ولم يجد بديلاً إسلامياً متاحاً، والأحوط التجنب.",
-    "category": "المعاملات",
-    "subcategory": "البيع",
-    "subcategories": [
-      "البيع"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [],
-    "references": [
-      {
-        "text": "اللجنة الدائمة",
-        "source": "فتوى معتمدة"
-      }
-    ],
-    "keywords": [
-      "قرض",
-      "بنك",
-      "ربا",
-      "عقار",
-      "سكن"
-    ],
-    "benefits": [],
-    "importance_score": 75,
-    "popularity_score": 11200,
-    "view_count": 11200,
-    "search_count": 3600,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fatwa-seed",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [
-      "fatwa-mortgage-bank"
-    ],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.200Z",
-    "created_at": "2026-07-07T23:16:01.200Z",
-    "updated_at": "2026-07-07T23:16:01.200Z"
-  },
-  {
-    "id": "fatwa-ruling-fatwa-digital-quran-wudu",
-    "external_key": "fatwa-ruling-fatwa-digital-quran-wudu",
-    "title": "هل يُشترط الوضوء لمس الهاتف الذي فيه القرآن؟",
-    "summary": "الراجح جواز مس الهاتف بالقرآن بدون وضوء، والأفضل الطهارة.",
-    "body": "الهاتف الذكي ليس مصحفاً في ذاته، والمعتمد عند أكثر العلماء المعاصرين أنه يجوز مس الهاتف للمحدث لأن الآية الكريمة «لا يمسه إلا المطهرون» وردت في المصحف لا في كل ما يُعرض عليه القرآن.\n\n**الاحتياط:** استحباب الطهارة عند تلاوة القرآن من الهاتف.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "آداب الفتوى",
-    "subcategories": [
-      "آداب الفتوى"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [],
-    "references": [
-      {
-        "text": "دار الإفتاء المصرية",
-        "source": "فتوى معتمدة"
-      }
-    ],
-    "keywords": [
-      "هاتف",
-      "قرآن",
-      "وضوء",
-      "تطبيق"
-    ],
-    "benefits": [],
-    "importance_score": 75,
-    "popularity_score": 14500,
-    "view_count": 14500,
-    "search_count": 4200,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fatwa-seed",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [
-      "fatwa-digital-quran-wudu"
-    ],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.200Z",
-    "created_at": "2026-07-07T23:16:01.200Z",
-    "updated_at": "2026-07-07T23:16:01.200Z"
-  },
-  {
-    "id": "fatwa-ruling-fatwa-beard-ruling",
-    "external_key": "fatwa-ruling-fatwa-beard-ruling",
-    "title": "ما حكم إعفاء اللحية؟",
-    "summary": "إعفاء اللحية واجب وحلقها محرم عند الجمهور.",
-    "body": "إعفاء اللحية وإرخاؤها واجب عند جمهور الفقهاء وحرام حلقها.\n\n**الدليل:** قوله ﷺ: «أحفوا الشوارب وأعفوا اللحى».\n\n**التعريف:** الإعفاء تركها دون قص أو حلق. أما أخذ ما زاد على القبضة فأباحه بعض أهل العلم.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "آداب الفتوى",
-    "subcategories": [
-      "آداب الفتوى"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن باز رحمه الله",
-        "source": "فتوى معتمدة"
-      }
-    ],
-    "keywords": [
-      "لحية",
-      "إعفاء",
-      "سنة",
-      "حلق"
-    ],
-    "benefits": [],
-    "importance_score": 75,
-    "popularity_score": 4900,
-    "view_count": 4900,
-    "search_count": 1100,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fatwa-seed",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [
-      "fatwa-beard-ruling"
-    ],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.200Z",
-    "created_at": "2026-07-07T23:16:01.200Z",
-    "updated_at": "2026-07-07T23:16:01.200Z"
-  },
-  {
-    "id": "fatwa-ruling-fatwa-istikhara-prayer",
-    "external_key": "fatwa-ruling-fatwa-istikhara-prayer",
-    "title": "كيف تُؤدى صلاة الاستخارة؟",
-    "summary": "صلاة الاستخارة ركعتان ثم دعاء مأثور للأمور المهمة.",
-    "body": "صلاة الاستخارة سنة ثابتة لكل أمر يهمّ المسلم.\n\n**كيفيتها:** يُصلي ركعتين من غير الفريضة، ثم يدعو بدعاء الاستخارة الوارد.\n\n**دعاء الاستخارة:** «اللهم إني أستخيرك بعلمك وأستقدرك بقدرتك...».\n\n**تنبيهات:** لا يُشترط رؤية منام بعدها، والعلامة هي انشراح الصدر أو انقباضه، وتُكرر عند الحاجة.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن عثيمين رحمه الله",
-        "source": "فتوى معتمدة"
-      }
-    ],
-    "keywords": [
-      "استخارة",
-      "دعاء",
-      "صلاة",
-      "قرار"
-    ],
-    "benefits": [],
-    "importance_score": 75,
-    "popularity_score": 12300,
-    "view_count": 12300,
-    "search_count": 3800,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fatwa-seed",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [
-      "fatwa-istikhara-prayer"
-    ],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.200Z",
-    "created_at": "2026-07-07T23:16:01.200Z",
-    "updated_at": "2026-07-07T23:16:01.200Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-42",
-    "external_key": "qa-ruling-seed-qa-42",
-    "title": "حكم من نسي مسح رأسه في الوضوء؟",
-    "summary": "لا يصح وضوؤه؛ فمسح الرأس ركنٌ من أركان الوضوء باتفاق المذاهب الأربعة، ومن نسيه وجب عليه إعادة الوضوء.",
-    "body": "**السؤال:** ما حكم من نسي مسح رأسه في الوضوء؟\n\n**الجواب:** لا يصح وضوؤه؛ فمسح الرأس ركنٌ من أركان الوضوء باتفاق المذاهب الأربعة، ومن نسيه وجب عليه إعادة الوضوء.",
-    "category": "الطهارة",
-    "subcategory": "أحكام الطهارة",
-    "subcategories": [
-      "أحكام الطهارة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "واجب",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "السنة",
-        "source": "متفق عليه"
-      }
-    ],
-    "references": [
-      {
-        "text": "متفق عليه",
-        "source": "متفق عليه"
-      }
-    ],
-    "keywords": [
-      "أحكام الطهارة",
-      "tahara",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 109,
-    "view_count": 109,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-42"
-    ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
+    "published_at": "2024-04-10T08:00:00Z",
+    "created_at": "2024-04-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "qa-ruling-seed-qa-43",
-    "external_key": "qa-ruling-seed-qa-43",
-    "title": "يجوز الوضوء بماء مغلوب عليه؟",
-    "summary": "نعم؛ ما لم يتغير اسمه أو صفته.",
-    "body": "**السؤال:** هل يجوز الوضوء بماء مغلوب عليه؟\n\n**الجواب:** نعم؛ ما لم يتغير اسمه أو صفته.",
-    "category": "الطهارة",
-    "subcategory": "أحكام الطهارة",
-    "subcategories": [
-      "أحكام الطهارة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "جائز",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "الإجماع",
-        "source": "الفقه العام"
-      }
-    ],
-    "references": [
-      {
-        "text": "الفقه العام",
-        "source": "الفقه العام"
-      }
-    ],
-    "keywords": [
-      "أحكام الطهارة",
-      "tahara",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 469,
-    "view_count": 469,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-43"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-44",
-    "external_key": "qa-ruling-seed-qa-44",
-    "title": "حكم ترك غسل جزء من الوجه في الوضوء؟",
-    "summary": "لا يصح الوضوء حتى يُغسل الجزء.",
-    "body": "**السؤال:** ما حكم ترك غسل جزء من الوجه في الوضوء؟\n\n**الجواب:** لا يصح الوضوء حتى يُغسل الجزء.",
-    "category": "الطهارة",
-    "subcategory": "أحكام الطهارة",
-    "subcategories": [
-      "أحكام الطهارة"
-    ],
-    "quran_evidence": [
-      {
-        "type": "قرآن",
-        "text": "القرآن والسنة",
-        "source": "الفقه"
-      }
-    ],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "واجب",
-    "evidence": [
-      {
-        "type": "قرآن",
-        "text": "القرآن والسنة",
-        "source": "الفقه"
-      }
-    ],
-    "references": [
-      {
-        "text": "الفقه",
-        "source": "الفقه"
-      }
-    ],
-    "keywords": [
-      "أحكام الطهارة",
-      "tahara",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 335,
-    "view_count": 335,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-44"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-45",
-    "external_key": "qa-ruling-seed-qa-45",
-    "title": "يجوز التيمم قبل وقت الصلاة؟",
-    "summary": "نعم عند فقد الماء أو العجز عن استعماله.",
-    "body": "**السؤال:** هل يجوز التيمم قبل وقت الصلاة؟\n\n**الجواب:** نعم عند فقد الماء أو العجز عن استعماله.",
-    "category": "الطهارة",
-    "subcategory": "أحكام الطهارة",
-    "subcategories": [
-      "أحكام الطهارة"
-    ],
-    "quran_evidence": [
-      {
-        "type": "قرآن",
-        "text": "القرآن",
-        "source": "سورة المائدة"
-      }
-    ],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "جائز",
-    "evidence": [
-      {
-        "type": "قرآن",
-        "text": "القرآن",
-        "source": "سورة المائدة"
-      }
-    ],
-    "references": [
-      {
-        "text": "سورة المائدة",
-        "source": "سورة المائدة"
-      }
-    ],
-    "keywords": [
-      "أحكام الطهارة",
-      "tahara",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 247,
-    "view_count": 247,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-45"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-46",
-    "external_key": "qa-ruling-seed-qa-46",
-    "title": "حكم من شك في عدد غسلات الوضوء؟",
-    "summary": "يبني على اليقين؛ وهو الأقل.",
-    "body": "**السؤال:** ما حكم من شك في عدد غسلات الوضوء؟\n\n**الجواب:** يبني على اليقين؛ وهو الأقل.",
-    "category": "الطهارة",
-    "subcategory": "أحكام الطهارة",
-    "subcategories": [
-      "أحكام الطهارة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "واجب",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "السنة",
-        "source": "البيهقي"
-      }
-    ],
-    "references": [
-      {
-        "text": "البيهقي",
-        "source": "البيهقي"
-      }
-    ],
-    "keywords": [
-      "أحكام الطهارة",
-      "tahara",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 297,
-    "view_count": 297,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-46"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-144",
-    "external_key": "qa-ruling-seed-qa-144",
-    "title": "حكم قول «سبحان الله» بعد الصلاة؟",
-    "summary": "سنة مؤكدة؛ ثلاثاً وثلاثين.",
-    "body": "**السؤال:** ما حكم قول «سبحان الله» بعد الصلاة؟\n\n**الجواب:** سنة مؤكدة؛ ثلاثاً وثلاثين.",
-    "category": "الأذكار والدعاء",
-    "subcategory": "الأذكار",
-    "subcategories": [
-      "الأذكار"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "سنة",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "البخاري ومسلم",
-        "source": "صحيح مسلم"
-      }
-    ],
-    "references": [
-      {
-        "text": "صحيح مسلم",
-        "source": "صحيح مسلم"
-      }
-    ],
-    "keywords": [
-      "الأذكار",
-      "adhkar",
-      "الأذكار"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 259,
-    "view_count": 259,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-144"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.198Z",
-    "created_at": "2026-07-07T23:16:01.198Z",
-    "updated_at": "2026-07-07T23:16:01.198Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-145",
-    "external_key": "qa-ruling-seed-qa-145",
-    "title": "أفضل ذكر بعد الفجر؟",
-    "summary": "قراءة آية الكرسي والمعوذات.",
-    "body": "**السؤال:** ما أفضل ذكر بعد الفجر؟\n\n**الجواب:** قراءة آية الكرسي والمعوذات.",
-    "category": "الأذكار والدعاء",
-    "subcategory": "الأذكار",
-    "subcategories": [
-      "الأذكار"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "سنة",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "السنة",
-        "source": "أبو داود"
-      }
-    ],
-    "references": [
-      {
-        "text": "أبو داود",
-        "source": "أبو داود"
-      }
-    ],
-    "keywords": [
-      "الأذكار",
-      "adhkar",
-      "الأذكار"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 226,
-    "view_count": 226,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-145"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.198Z",
-    "created_at": "2026-07-07T23:16:01.198Z",
-    "updated_at": "2026-07-07T23:16:01.198Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-146",
-    "external_key": "qa-ruling-seed-qa-146",
-    "title": "يجوز الجهر بالأذكار بعد الصلاة؟",
-    "summary": "جائز، والجهر ثابت بالسنة كما في حديث ابن عباس: (كان رفع الصوت بالذكر حين ينصرف الناس من المكتوبة على عهد النبي ﷺ) — متفق عليه، والسر جائز أيضاً.",
-    "body": "**السؤال:** هل يجوز الجهر بالأذكار بعد الصلاة؟\n\n**الجواب:** جائز، والجهر ثابت بالسنة كما في حديث ابن عباس: (كان رفع الصوت بالذكر حين ينصرف الناس من المكتوبة على عهد النبي ﷺ) — متفق عليه، والسر جائز أيضاً.",
-    "category": "الأذكار والدعاء",
-    "subcategory": "الأذكار",
-    "subcategories": [
-      "الأذكار"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "جائز",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "السنة",
-        "source": "الفقه"
-      }
-    ],
-    "references": [
-      {
-        "text": "الفقه",
-        "source": "الفقه"
-      }
-    ],
-    "keywords": [
-      "الأذكار",
-      "adhkar",
-      "الأذكار"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 123,
-    "view_count": 123,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-146"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.198Z",
-    "created_at": "2026-07-07T23:16:01.198Z",
-    "updated_at": "2026-07-07T23:16:01.198Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-147",
-    "external_key": "qa-ruling-seed-qa-147",
-    "title": "حكم من ترك أذكار الصباح والمساء؟",
-    "summary": "فاته خير كثير؛ وليس كبيرة إذا لم يُهمل عمداً.",
-    "body": "**السؤال:** ما حكم من ترك أذكار الصباح والمساء؟\n\n**الجواب:** فاته خير كثير؛ وليس كبيرة إذا لم يُهمل عمداً.",
-    "category": "الأذكار والدعاء",
-    "subcategory": "الأذكار",
-    "subcategories": [
-      "الأذكار"
-    ],
+    "id": "ruling-fasting-breakers-part-2",
+    "external_key": "ruling-fasting-breakers-part-2",
+    "title": "مفطرات الصيام: الجماع عمداً (يوجب الكفارة الكبرى).",
+    "summary": "الجماع عمداً (يوجب الكفارة الكبرى).",
+    "body": "الجماع عمداً (يوجب الكفارة الكبرى).\n\n**من:** مفطرات الصيام",
+    "category": "الصيام",
+    "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
     "scholar_opinions": [],
     "evidence": [
-      {
-        "type": "دليل",
-        "text": "السنة",
-        "source": "الأذكار النبوية"
-      }
-    ],
-    "references": [
-      {
-        "text": "الأذكار النبوية",
-        "source": "الأذكار النبوية"
-      }
-    ],
-    "keywords": [
-      "الأذكار",
-      "adhkar",
-      "الأذكار"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 237,
-    "view_count": 237,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-147"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.198Z",
-    "created_at": "2026-07-07T23:16:01.198Z",
-    "updated_at": "2026-07-07T23:16:01.198Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-148",
-    "external_key": "qa-ruling-seed-qa-148",
-    "title": "فائدة الاستغفار في الأذكار؟",
-    "summary": "مغفرة الذنوب وفرج الهم.",
-    "body": "**السؤال:** ما فائدة الاستغفار في الأذكار؟\n\n**الجواب:** مغفرة الذنوب وفرج الهم.",
-    "category": "الأذكار والدعاء",
-    "subcategory": "الأذكار",
-    "subcategories": [
-      "الأذكار"
-    ],
-    "quran_evidence": [
-      {
-        "type": "قرآن",
-        "text": "القرآن",
-        "source": "سورة نوح"
-      }
-    ],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "مستحب",
-    "evidence": [
-      {
-        "type": "قرآن",
-        "text": "القرآن",
-        "source": "سورة نوح"
-      }
-    ],
-    "references": [
-      {
-        "text": "سورة نوح",
-        "source": "سورة نوح"
-      }
-    ],
-    "keywords": [
-      "الأذكار",
-      "adhkar",
-      "الأذكار"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 451,
-    "view_count": 451,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-148"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.198Z",
-    "created_at": "2026-07-07T23:16:01.198Z",
-    "updated_at": "2026-07-07T23:16:01.198Z"
-  },
-  {
-    "id": "curriculum-1",
-    "external_key": "curriculum-1",
-    "title": "وجوب الوضوء للصلاة",
-    "summary": "الوضوء شرط لصحة الصلاة لقوله تعالى: {ya ayyuha alladhina amanu idha qumtum ila al-salati faghsilu}.",
-    "body": "الوضوء شرط لصحة الصلاة لقوله تعالى: {ya ayyuha alladhina amanu idha qumtum ila al-salati faghsilu}.",
-    "category": "الطهارة",
-    "subcategory": "الوضوء",
-    "subcategories": [
-      "الوضوء"
-    ],
-    "quran_evidence": [
-      {
-        "type": "قرآن",
-        "text": "إذا قمتم إلى الصلاة فاغسلوا ووجوهكم وأيديكم",
-        "source": "سورة المائدة: 6"
-      }
-    ],
-    "sunnah_evidence": [
       {
         "type": "حديث",
-        "text": "لا صلاة لمن لا وضوء له",
-        "source": "رواه مسلم"
+        "text": "من نسي وهو صائم فأكل أو شرب فليتم صومه فإنما أطعمه الله وسقاه",
+        "source": "رواه البخاري ومسلم"
       }
     ],
-    "scholar_opinions": [],
-    "prevailing_view": "الواجب",
-    "evidence": [],
     "references": [
       {
-        "text": "ابن قدامة — المغني، كتاب الطهارة",
-        "source": "ابن قدامة — المغني، كتاب الطهارة"
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الصيام"
       }
     ],
     "keywords": [
-      "الوضوء",
-      "الطهارة"
+      "صيام",
+      "مفطرات",
+      "رمضان"
     ],
     "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
+    "importance_score": 80,
+    "popularity_score": 5800,
+    "view_count": 5800,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.202Z",
-    "created_at": "2026-07-07T23:16:01.202Z",
-    "updated_at": "2026-07-07T23:16:01.202Z"
+    "published_at": "2024-04-10T08:00:00Z",
+    "created_at": "2024-04-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "curriculum-2",
-    "external_key": "curriculum-2",
-    "title": "سنن الوضوء",
-    "summary": "من سنن الوضوء: التسمية، والسواك، وغسل الكفين، والمضمضة، والاستنشاق، ومسح الرأس، وتخليل اللحية والأصابع.",
-    "body": "من سنن الوضوء: التسمية، والسواك، وغسل الكفين، والمضمضة، والاستنشاق، ومسح الرأس، وتخليل اللحية والأصابع.",
-    "category": "الطهارة",
-    "subcategory": "الوضوء",
-    "subcategories": [
-      "الوضوء"
-    ],
+    "id": "ruling-fasting-breakers-part-3",
+    "external_key": "ruling-fasting-breakers-part-3",
+    "title": "مفطرات الصيام: التقيؤ عمداً.",
+    "summary": "التقيؤ عمداً.",
+    "body": "التقيؤ عمداً.\n\n**من:** مفطرات الصيام",
+    "category": "الصيام",
+    "subcategories": [],
     "quran_evidence": [],
-    "sunnah_evidence": [
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
       {
         "type": "حديث",
-        "text": "كان ﷺ إذا توضأ غسل كفيه ثلاث مرات",
+        "text": "من نسي وهو صائم فأكل أو شرب فليتم صومه فإنما أطعمه الله وسقاه",
+        "source": "رواه البخاري ومسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الصيام"
+      }
+    ],
+    "keywords": [
+      "صيام",
+      "مفطرات",
+      "رمضان"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 5800,
+    "view_count": 5800,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-10T08:00:00Z",
+    "created_at": "2024-04-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fasting-breakers-part-4",
+    "external_key": "ruling-fasting-breakers-part-4",
+    "title": "مفطرات الصيام: الحيض والنفاس.",
+    "summary": "الحيض والنفاس.",
+    "body": "الحيض والنفاس.\n\n**من:** مفطرات الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "من نسي وهو صائم فأكل أو شرب فليتم صومه فإنما أطعمه الله وسقاه",
+        "source": "رواه البخاري ومسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الصيام"
+      }
+    ],
+    "keywords": [
+      "صيام",
+      "مفطرات",
+      "رمضان"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 5800,
+    "view_count": 5800,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-10T08:00:00Z",
+    "created_at": "2024-04-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fasting-breakers-part-5",
+    "external_key": "ruling-fasting-breakers-part-5",
+    "title": "مفطرات الصيام: الحقنة الوريدية المغذية (جمهور: مفطرة).",
+    "summary": "الحقنة الوريدية المغذية (جمهور: مفطرة).",
+    "body": "الحقنة الوريدية المغذية (جمهور: مفطرة).\n\n**من:** مفطرات الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "من نسي وهو صائم فأكل أو شرب فليتم صومه فإنما أطعمه الله وسقاه",
+        "source": "رواه البخاري ومسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الصيام"
+      }
+    ],
+    "keywords": [
+      "صيام",
+      "مفطرات",
+      "رمضان"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 5800,
+    "view_count": 5800,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-10T08:00:00Z",
+    "created_at": "2024-04-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fasting-breakers-part-6",
+    "external_key": "ruling-fasting-breakers-part-6",
+    "title": "مفطرات الصيام: السواك الرطب.",
+    "summary": "السواك الرطب.",
+    "body": "السواك الرطب.\n\n**من:** مفطرات الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "من نسي وهو صائم فأكل أو شرب فليتم صومه فإنما أطعمه الله وسقاه",
+        "source": "رواه البخاري ومسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الصيام"
+      }
+    ],
+    "keywords": [
+      "صيام",
+      "مفطرات",
+      "رمضان"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 5800,
+    "view_count": 5800,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-10T08:00:00Z",
+    "created_at": "2024-04-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fasting-breakers-part-7",
+    "external_key": "ruling-fasting-breakers-part-7",
+    "title": "مفطرات الصيام: ابتلاع الريق المختلط بالدم.",
+    "summary": "ابتلاع الريق المختلط بالدم.",
+    "body": "ابتلاع الريق المختلط بالدم.\n\n**من:** مفطرات الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "من نسي وهو صائم فأكل أو شرب فليتم صومه فإنما أطعمه الله وسقاه",
+        "source": "رواه البخاري ومسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الصيام"
+      }
+    ],
+    "keywords": [
+      "صيام",
+      "مفطرات",
+      "رمضان"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 5800,
+    "view_count": 5800,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-10T08:00:00Z",
+    "created_at": "2024-04-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fasting-breakers-part-8",
+    "external_key": "ruling-fasting-breakers-part-8",
+    "title": "مفطرات الصيام: بخاخ الربو (خلاف).",
+    "summary": "بخاخ الربو (خلاف).",
+    "body": "بخاخ الربو (خلاف).\n\n**من:** مفطرات الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "من نسي وهو صائم فأكل أو شرب فليتم صومه فإنما أطعمه الله وسقاه",
+        "source": "رواه البخاري ومسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الصيام"
+      }
+    ],
+    "keywords": [
+      "صيام",
+      "مفطرات",
+      "رمضان"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 5800,
+    "view_count": 5800,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-10T08:00:00Z",
+    "created_at": "2024-04-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fasting-qada-part-1",
+    "external_key": "ruling-fasting-qada-part-1",
+    "title": "أحكام قضاء الصيام: المريض الذي أفطر بسبب المرض إذا شُفي.",
+    "summary": "المريض الذي أفطر بسبب المرض إذا شُفي.",
+    "body": "المريض الذي أفطر بسبب المرض إذا شُفي.\n\n**من:** أحكام قضاء الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "فَمَن كَانَ مِنكُم مَّرِيضًا أَوْ عَلَىٰ سَفَرٍ فَعِدَّةٌ مِّنْ أَيَّامٍ أُخَرَ",
+        "source": "سورة البقرة: 184"
+      }
+    ],
+    "references": [
+      {
+        "text": "فتح الباري لابن حجر",
+        "source": "كتاب الصوم"
+      }
+    ],
+    "keywords": [
+      "صيام",
+      "قضاء",
+      "رمضان"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 3700,
+    "view_count": 3700,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-15T08:00:00Z",
+    "created_at": "2024-04-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fasting-qada-part-2",
+    "external_key": "ruling-fasting-qada-part-2",
+    "title": "أحكام قضاء الصيام: المسافر الذي أفطر في سفره.",
+    "summary": "المسافر الذي أفطر في سفره.",
+    "body": "المسافر الذي أفطر في سفره.\n\n**من:** أحكام قضاء الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "فَمَن كَانَ مِنكُم مَّرِيضًا أَوْ عَلَىٰ سَفَرٍ فَعِدَّةٌ مِّنْ أَيَّامٍ أُخَرَ",
+        "source": "سورة البقرة: 184"
+      }
+    ],
+    "references": [
+      {
+        "text": "فتح الباري لابن حجر",
+        "source": "كتاب الصوم"
+      }
+    ],
+    "keywords": [
+      "صيام",
+      "قضاء",
+      "رمضان"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 3700,
+    "view_count": 3700,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-15T08:00:00Z",
+    "created_at": "2024-04-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fasting-qada-part-3",
+    "external_key": "ruling-fasting-qada-part-3",
+    "title": "أحكام قضاء الصيام: الحائض والنفساء.",
+    "summary": "الحائض والنفساء.",
+    "body": "الحائض والنفساء.\n\n**من:** أحكام قضاء الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "فَمَن كَانَ مِنكُم مَّرِيضًا أَوْ عَلَىٰ سَفَرٍ فَعِدَّةٌ مِّنْ أَيَّامٍ أُخَرَ",
+        "source": "سورة البقرة: 184"
+      }
+    ],
+    "references": [
+      {
+        "text": "فتح الباري لابن حجر",
+        "source": "كتاب الصوم"
+      }
+    ],
+    "keywords": [
+      "صيام",
+      "قضاء",
+      "رمضان"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 3700,
+    "view_count": 3700,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-15T08:00:00Z",
+    "created_at": "2024-04-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fasting-qada-part-4",
+    "external_key": "ruling-fasting-qada-part-4",
+    "title": "أحكام قضاء الصيام: من أفطر عمداً بغير الجماع.",
+    "summary": "من أفطر عمداً بغير الجماع.",
+    "body": "من أفطر عمداً بغير الجماع.\n\n**من:** أحكام قضاء الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "فَمَن كَانَ مِنكُم مَّرِيضًا أَوْ عَلَىٰ سَفَرٍ فَعِدَّةٌ مِّنْ أَيَّامٍ أُخَرَ",
+        "source": "سورة البقرة: 184"
+      }
+    ],
+    "references": [
+      {
+        "text": "فتح الباري لابن حجر",
+        "source": "كتاب الصوم"
+      }
+    ],
+    "keywords": [
+      "صيام",
+      "قضاء",
+      "رمضان"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 3700,
+    "view_count": 3700,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-15T08:00:00Z",
+    "created_at": "2024-04-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fasting-qada-part-5",
+    "external_key": "ruling-fasting-qada-part-5",
+    "title": "أحكام قضاء الصيام: يجوز أن يكون متتابعاً أو متفرقاً.",
+    "summary": "يجوز أن يكون متتابعاً أو متفرقاً.",
+    "body": "يجوز أن يكون متتابعاً أو متفرقاً.\n\n**من:** أحكام قضاء الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "فَمَن كَانَ مِنكُم مَّرِيضًا أَوْ عَلَىٰ سَفَرٍ فَعِدَّةٌ مِّنْ أَيَّامٍ أُخَرَ",
+        "source": "سورة البقرة: 184"
+      }
+    ],
+    "references": [
+      {
+        "text": "فتح الباري لابن حجر",
+        "source": "كتاب الصوم"
+      }
+    ],
+    "keywords": [
+      "صيام",
+      "قضاء",
+      "رمضان"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 3700,
+    "view_count": 3700,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-15T08:00:00Z",
+    "created_at": "2024-04-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fasting-qada-part-6",
+    "external_key": "ruling-fasting-qada-part-6",
+    "title": "أحكام قضاء الصيام: يجب قضاؤه قبل رمضان القادم.",
+    "summary": "يجب قضاؤه قبل رمضان القادم.",
+    "body": "يجب قضاؤه قبل رمضان القادم.\n\n**من:** أحكام قضاء الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "فَمَن كَانَ مِنكُم مَّرِيضًا أَوْ عَلَىٰ سَفَرٍ فَعِدَّةٌ مِّنْ أَيَّامٍ أُخَرَ",
+        "source": "سورة البقرة: 184"
+      }
+    ],
+    "references": [
+      {
+        "text": "فتح الباري لابن حجر",
+        "source": "كتاب الصوم"
+      }
+    ],
+    "keywords": [
+      "صيام",
+      "قضاء",
+      "رمضان"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 3700,
+    "view_count": 3700,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-15T08:00:00Z",
+    "created_at": "2024-04-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fasting-qada-part-7",
+    "external_key": "ruling-fasting-qada-part-7",
+    "title": "أحكام قضاء الصيام: من فرّط حتى جاء رمضان آخر وجب عليه القضاء والفدية معاً (إطعا",
+    "summary": "من فرّط حتى جاء رمضان آخر وجب عليه القضاء والفدية معاً (إطعام مسكين عن كل يوم).",
+    "body": "من فرّط حتى جاء رمضان آخر وجب عليه القضاء والفدية معاً (إطعام مسكين عن كل يوم).\n\n**من:** أحكام قضاء الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "فَمَن كَانَ مِنكُم مَّرِيضًا أَوْ عَلَىٰ سَفَرٍ فَعِدَّةٌ مِّنْ أَيَّامٍ أُخَرَ",
+        "source": "سورة البقرة: 184"
+      }
+    ],
+    "references": [
+      {
+        "text": "فتح الباري لابن حجر",
+        "source": "كتاب الصوم"
+      }
+    ],
+    "keywords": [
+      "صيام",
+      "قضاء",
+      "رمضان"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 3700,
+    "view_count": 3700,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-15T08:00:00Z",
+    "created_at": "2024-04-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-laylat-alqadr-part-1",
+    "external_key": "ruling-laylat-alqadr-part-1",
+    "title": "فضل ليلة القدر وأحكامها: قال تعالى: ﴿لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ﴾.",
+    "summary": "قال تعالى: ﴿لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ﴾.",
+    "body": "قال تعالى: ﴿لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ﴾.\n\n**من:** فضل ليلة القدر وأحكامها",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ",
+        "source": "سورة القدر: 3"
+      },
+      {
+        "type": "حديث",
+        "text": "تحروا ليلة القدر في الوتر من العشر الأواخر من رمضان",
         "source": "رواه البخاري"
       }
     ],
-    "scholar_opinions": [],
-    "prevailing_view": "السنة",
-    "evidence": [],
     "references": [
       {
-        "text": "اللجنة الدائمة — فتاوى الطهارة",
-        "source": "اللجنة الدائمة — فتاوى الطهارة"
+        "text": "لطائف المعارف لابن رجب",
+        "source": "فصل ليلة القدر"
       }
     ],
     "keywords": [
-      "الوضوء",
-      "الطهارة"
+      "ليلة القدر",
+      "رمضان",
+      "صيام",
+      "عبادة"
     ],
     "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
+    "importance_score": 80,
+    "popularity_score": 6200,
+    "view_count": 6200,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.202Z",
-    "created_at": "2026-07-07T23:16:01.202Z",
-    "updated_at": "2026-07-07T23:16:01.202Z"
+    "published_at": "2024-04-20T08:00:00Z",
+    "created_at": "2024-04-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "curriculum-3",
-    "external_key": "curriculum-3",
-    "title": "نواقض الوضوء — خروج ما من السبيلين",
-    "summary": "من نواقض الوضوء: خروج البول أو الغائط أو الريح من الدبر.",
-    "body": "من نواقض الوضوء: خروج البول أو الغائط أو الريح من الدبر.",
-    "category": "الطهارة",
-    "subcategory": "الوضوء",
-    "subcategories": [
-      "الوضوء"
-    ],
+    "id": "ruling-laylat-alqadr-part-2",
+    "external_key": "ruling-laylat-alqadr-part-2",
+    "title": "فضل ليلة القدر وأحكامها: العبادة فيها خير من العبادة في ألف شهر.",
+    "summary": "العبادة فيها خير من العبادة في ألف شهر.",
+    "body": "العبادة فيها خير من العبادة في ألف شهر.\n\n**من:** فضل ليلة القدر وأحكامها",
+    "category": "الصيام",
+    "subcategories": [],
     "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "الوضوء مما خرج من السبيلين",
-        "source": "رواه مسلم"
-      }
-    ],
+    "sunnah_evidence": [],
     "scholar_opinions": [],
-    "prevailing_view": "الإجماع",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن قدامة — المغني",
-        "source": "ابن قدامة — المغني"
-      }
-    ],
-    "keywords": [
-      "الوضوء",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.202Z",
-    "created_at": "2026-07-07T23:16:01.202Z",
-    "updated_at": "2026-07-07T23:16:01.202Z"
-  },
-  {
-    "id": "curriculum-4",
-    "external_key": "curriculum-4",
-    "title": "نواقض الوضوء — النوم",
-    "summary": "النوم ينقض الوضوء عند جمهور أهل العلم لأنه يلزم منه الاسترخاء.",
-    "body": "النوم ينقض الوضوء عند جمهور أهل العلم لأنه يلزم منه الاسترخاء.",
-    "category": "الطهارة",
-    "subcategory": "الوضوء",
-    "subcategories": [
-      "الوضوء"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "العينان وكيالان يسقيان الدم",
-        "source": "رواه أبو داود"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "الراجح",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن عثيمين — الشرح الممتع",
-        "source": "ابن عثيمين — الشرح الممتع"
-      }
-    ],
-    "keywords": [
-      "الوضوء",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.202Z",
-    "created_at": "2026-07-07T23:16:01.202Z",
-    "updated_at": "2026-07-07T23:16:01.202Z"
-  },
-  {
-    "id": "curriculum-5",
-    "external_key": "curriculum-5",
-    "title": "وجوب الغسل عند الجنابة",
-    "summary": "يستحب الغسل عند الجنابة قبل الصلاة؛ وهو واجب لمن أراد الصلاة أو الطواف أو قراءة القرآن (عند من يرى تحريم قراءته).",
-    "body": "يستحب الغسل عند الجنابة قبل الصلاة؛ وهو واجب لمن أراد الصلاة أو الطواف أو قراءة القرآن (عند من يرى تحريم قراءته).",
-    "category": "الطهارة",
-    "subcategory": "الغسل",
-    "subcategories": [
-      "الغسل"
-    ],
-    "quran_evidence": [
+    "evidence": [
       {
         "type": "قرآن",
-        "text": "وإن كنتم جنباً فاطهروا",
-        "source": "سورة المائدة: 6"
-      }
-    ],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "الواجب للصلاة",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن باز — مجموع الفتاوى",
-        "source": "ابن باز — مجموع الفتاوى"
-      }
-    ],
-    "keywords": [
-      "الغسل",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.202Z",
-    "created_at": "2026-07-07T23:16:01.202Z",
-    "updated_at": "2026-07-07T23:16:01.202Z"
-  },
-  {
-    "id": "curriculum-6",
-    "external_key": "curriculum-6",
-    "title": "حكم التيمم",
-    "summary": "يجوز التيمم عند عدم وجود الماء أو العجز عن استعماله.",
-    "body": "يجوز التيمم عند عدم وجود الماء أو العجز عن استعماله.",
-    "category": "الطهارة",
-    "subcategory": "التيمم",
-    "subcategories": [
-      "التيمم"
-    ],
-    "quran_evidence": [
-      {
-        "type": "قرآن",
-        "text": "فلم تجدوا ماء فتيمموا صعيداً طيباً",
-        "source": "سورة المائدة: 6"
-      }
-    ],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "الجائز عند العذر",
-    "evidence": [],
-    "references": [
-      {
-        "text": "اللجنة الدائمة — فتاوى الطهارة",
-        "source": "اللجنة الدائمة — فتاوى الطهارة"
-      }
-    ],
-    "keywords": [
-      "التيمم",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.202Z",
-    "created_at": "2026-07-07T23:16:01.202Z",
-    "updated_at": "2026-07-07T23:16:01.202Z"
-  },
-  {
-    "id": "curriculum-7",
-    "external_key": "curriculum-7",
-    "title": "إزالة النجاسة قبل الصلاة",
-    "summary": "من شروط صحة الصلاة: طهارة البدن والثوب والمكان من النجاسة.",
-    "body": "من شروط صحة الصلاة: طهارة البدن والثوب والمكان من النجاسة.",
-    "category": "الطهارة",
-    "subcategory": "النجاسات",
-    "subcategories": [
-      "النجاسات"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "الواجب",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن قدامة — المغني",
-        "source": "ابن قدامة — المغني"
-      }
-    ],
-    "keywords": [
-      "النجاسات",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.202Z",
-    "created_at": "2026-07-07T23:16:01.202Z",
-    "updated_at": "2026-07-07T23:16:01.202Z"
-  },
-  {
-    "id": "curriculum-8",
-    "external_key": "curriculum-8",
-    "title": "تكبيرة الإحرام",
-    "summary": "تكبيرة الإحرام ركن من أركان الصلاة لا تصح بدونها.",
-    "body": "تكبيرة الإحرام ركن من أركان الصلاة لا تصح بدونها.",
-    "category": "الصلاة",
-    "subcategory": "أركان الصلاة",
-    "subcategories": [
-      "أركان الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
+        "text": "لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ",
+        "source": "سورة القدر: 3"
+      },
       {
         "type": "حديث",
-        "text": "افتتحوا صلاتكم بتكبيرة",
+        "text": "تحروا ليلة القدر في الوتر من العشر الأواخر من رمضان",
         "source": "رواه البخاري"
       }
     ],
-    "scholar_opinions": [],
-    "prevailing_view": "الركن",
-    "evidence": [],
     "references": [
       {
-        "text": "ابن عثيمين — الشرح الممتع",
-        "source": "ابن عثيمين — الشرح الممتع"
+        "text": "لطائف المعارف لابن رجب",
+        "source": "فصل ليلة القدر"
       }
     ],
     "keywords": [
-      "أركان الصلاة",
-      "الصلاة"
+      "ليلة القدر",
+      "رمضان",
+      "صيام",
+      "عبادة"
     ],
     "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
+    "importance_score": 80,
+    "popularity_score": 6200,
+    "view_count": 6200,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.202Z",
-    "created_at": "2026-07-07T23:16:01.202Z",
-    "updated_at": "2026-07-07T23:16:01.202Z"
+    "published_at": "2024-04-20T08:00:00Z",
+    "created_at": "2024-04-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "curriculum-9",
-    "external_key": "curriculum-9",
-    "title": "قراءة الفاتحة",
-    "summary": "قراءة سورة الفاتحة ركن في كل ركعة عند جمهور العلماء.",
-    "body": "قراءة سورة الفاتحة ركن في كل ركعة عند جمهور العلماء.",
-    "category": "الصلاة",
-    "subcategory": "أركان الصلاة",
-    "subcategories": [
-      "أركان الصلاة"
-    ],
+    "id": "ruling-laylat-alqadr-part-3",
+    "external_key": "ruling-laylat-alqadr-part-3",
+    "title": "فضل ليلة القدر وأحكامها: في العشر الأواخر من رمضان، وأرجحها ليالي الوتر (21، 23، 25، ",
+    "summary": "في العشر الأواخر من رمضان، وأرجحها ليالي الوتر (21، 23، 25، 27، 29).",
+    "body": "في العشر الأواخر من رمضان، وأرجحها ليالي الوتر (21، 23، 25، 27، 29).\n\n**من:** فضل ليلة القدر وأحكامها",
+    "category": "الصيام",
+    "subcategories": [],
     "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "لا صلاة لمن لم يقرأ بفاتحة الكتاب",
-        "source": "رواه البخاري"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "الركن",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن باز — فتاوى",
-        "source": "ابن باز — فتاوى"
-      }
-    ],
-    "keywords": [
-      "أركان الصلاة",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.202Z",
-    "created_at": "2026-07-07T23:16:01.202Z",
-    "updated_at": "2026-07-07T23:16:01.202Z"
-  },
-  {
-    "id": "curriculum-10",
-    "external_key": "curriculum-10",
-    "title": "الركوع",
-    "summary": "الركوع ركن؛ يقول فيه: سبحان ربي العظيم.",
-    "body": "الركوع ركن؛ يقول فيه: سبحان ربي العظيم.",
-    "category": "الصلاة",
-    "subcategory": "أركان الصلاة",
-    "subcategories": [
-      "أركان الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "ركع النبي ﷺ حتى استقر كل vertebra",
-        "source": "رواه مسلم"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "الركن",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن قدامة — المغني",
-        "source": "ابن قدامة — المغني"
-      }
-    ],
-    "keywords": [
-      "أركان الصلاة",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
-  },
-  {
-    "id": "curriculum-11",
-    "external_key": "curriculum-11",
-    "title": "السجود",
-    "summary": "السجود ركن؛ يسجد على سبعة أعضاء.",
-    "body": "السجود ركن؛ يسجد على سبعة أعضاء.",
-    "category": "الصلاة",
-    "subcategory": "أركان الصلاة",
-    "subcategories": [
-      "أركان الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "أمرت أن أسجد على سبعة أعضاء",
-        "source": "رواه البخاري"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "الركن",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن عثيمين — الشرح الممتع",
-        "source": "ابن عثيمين — الشرح الممتع"
-      }
-    ],
-    "keywords": [
-      "أركان الصلاة",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
-  },
-  {
-    "id": "curriculum-12",
-    "external_key": "curriculum-12",
-    "title": "وجوب الصلاة",
-    "summary": "الصلاة ركن من أركان الإسلام؛ وهي أول ما يُحاسب عليه العبد.",
-    "body": "الصلاة ركن من أركان الإسلام؛ وهي أول ما يُحاسب عليه العبد.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [
-      {
-        "type": "قرآن",
-        "text": "إن الصلاة كانت على المؤمنين كتاباً موقوتاً",
-        "source": "سورة النساء: 103"
-      }
-    ],
     "sunnah_evidence": [],
     "scholar_opinions": [],
-    "prevailing_view": "الواجب",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن باز — مجموع الفتاوى",
-        "source": "ابن باز — مجموع الفتاوى"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
-  },
-  {
-    "id": "curriculum-13",
-    "external_key": "curriculum-13",
-    "title": "وجوب صلاة الجمعة",
-    "summary": "صلاة الجمعة واجبة على كل مسلم بالغ عاقل ذكر مقيم.",
-    "body": "صلاة الجمعة واجبة على كل مسلم بالغ عاقل ذكر مقيم.",
-    "category": "الصلاة",
-    "subcategory": "الجمعة",
-    "subcategories": [
-      "الجمعة"
-    ],
-    "quran_evidence": [
+    "evidence": [
       {
         "type": "قرآن",
-        "text": "يا أيها الذين آمنوا إذا نودي للصلاة من يوم الجمعة",
-        "source": "سورة الجمعة: 9"
-      }
-    ],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "الواجب",
-    "evidence": [],
-    "references": [
-      {
-        "text": "اللجنة الدائمة",
-        "source": "اللجنة الدائمة"
-      }
-    ],
-    "keywords": [
-      "الجمعة",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
-  },
-  {
-    "id": "curriculum-14",
-    "external_key": "curriculum-14",
-    "title": "صلاة العيد",
-    "summary": "صلاة العيد سنة مؤكدة؛ يشرع فيها التكبير والخطبة.",
-    "body": "صلاة العيد سنة مؤكدة؛ يشرع فيها التكبير والخطبة.",
-    "category": "الصلاة",
-    "subcategory": "العيد",
-    "subcategories": [
-      "العيد"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
+        "text": "لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ",
+        "source": "سورة القدر: 3"
+      },
       {
         "type": "حديث",
-        "text": "كان ﷺ يصلي العيد ركعتين",
+        "text": "تحروا ليلة القدر في الوتر من العشر الأواخر من رمضان",
         "source": "رواه البخاري"
       }
     ],
-    "scholar_opinions": [],
-    "prevailing_view": "السنة المؤكدة",
-    "evidence": [],
     "references": [
       {
-        "text": "ابن عثيمين — الشرح الممتع",
-        "source": "ابن عثيمين — الشرح الممتع"
+        "text": "لطائف المعارف لابن رجب",
+        "source": "فصل ليلة القدر"
       }
     ],
     "keywords": [
-      "العيد",
-      "الصلاة"
+      "ليلة القدر",
+      "رمضان",
+      "صيام",
+      "عبادة"
     ],
     "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
+    "importance_score": 80,
+    "popularity_score": 6200,
+    "view_count": 6200,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
+    "published_at": "2024-04-20T08:00:00Z",
+    "created_at": "2024-04-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "curriculum-15",
-    "external_key": "curriculum-15",
-    "title": "صلاة الجنازة",
-    "summary": "صلاة الجنازة فريضة كفاية على المسلمين.",
-    "body": "صلاة الجنازة فريضة كفاية على المسلمين.",
-    "category": "الصلاة",
-    "subcategory": "صلاة الجنازة",
-    "subcategories": [
-      "صلاة الجنازة"
-    ],
+    "id": "ruling-laylat-alqadr-part-4",
+    "external_key": "ruling-laylat-alqadr-part-4",
+    "title": "فضل ليلة القدر وأحكامها: الليلة السابعة والعشرون أرجاها عند جمهور العلماء.",
+    "summary": "الليلة السابعة والعشرون أرجاها عند جمهور العلماء.",
+    "body": "الليلة السابعة والعشرون أرجاها عند جمهور العلماء.\n\n**من:** فضل ليلة القدر وأحكامها",
+    "category": "الصيام",
+    "subcategories": [],
     "quran_evidence": [],
-    "sunnah_evidence": [
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ",
+        "source": "سورة القدر: 3"
+      },
       {
         "type": "حديث",
-        "text": "من صلى عليه مسلم فبلغوا مئة فهو شفيع",
-        "source": "رواه مسلم"
+        "text": "تحروا ليلة القدر في الوتر من العشر الأواخر من رمضان",
+        "source": "رواه البخاري"
       }
     ],
-    "scholar_opinions": [],
-    "prevailing_view": "فرض كفاية",
-    "evidence": [],
     "references": [
       {
-        "text": "ابن قدامة — المغني",
-        "source": "ابن قدامة — المغني"
+        "text": "لطائف المعارف لابن رجب",
+        "source": "فصل ليلة القدر"
       }
     ],
     "keywords": [
-      "صلاة الجنازة",
-      "الصلاة"
+      "ليلة القدر",
+      "رمضان",
+      "صيام",
+      "عبادة"
     ],
     "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
+    "importance_score": 80,
+    "popularity_score": 6200,
+    "view_count": 6200,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
+    "published_at": "2024-04-20T08:00:00Z",
+    "created_at": "2024-04-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "curriculum-16",
-    "external_key": "curriculum-16",
-    "title": "الإسلام شرط لوجوب الزكاة",
-    "summary": "لا تجب الزكاة إلا على مسلم.",
-    "body": "لا تجب الزكاة إلا على مسلم.",
+    "id": "ruling-laylat-alqadr-part-5",
+    "external_key": "ruling-laylat-alqadr-part-5",
+    "title": "فضل ليلة القدر وأحكامها: قيام الليل بالصلاة.",
+    "summary": "قيام الليل بالصلاة.",
+    "body": "قيام الليل بالصلاة.\n\n**من:** فضل ليلة القدر وأحكامها",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ",
+        "source": "سورة القدر: 3"
+      },
+      {
+        "type": "حديث",
+        "text": "تحروا ليلة القدر في الوتر من العشر الأواخر من رمضان",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "لطائف المعارف لابن رجب",
+        "source": "فصل ليلة القدر"
+      }
+    ],
+    "keywords": [
+      "ليلة القدر",
+      "رمضان",
+      "صيام",
+      "عبادة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 6200,
+    "view_count": 6200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-20T08:00:00Z",
+    "created_at": "2024-04-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-laylat-alqadr-part-6",
+    "external_key": "ruling-laylat-alqadr-part-6",
+    "title": "فضل ليلة القدر وأحكامها: الإكثار من الدعاء، ومنه: \"اللهم إنك عفو تحب العفو فاعف عني\".",
+    "summary": "الإكثار من الدعاء، ومنه: \"اللهم إنك عفو تحب العفو فاعف عني\".",
+    "body": "الإكثار من الدعاء، ومنه: \"اللهم إنك عفو تحب العفو فاعف عني\".\n\n**من:** فضل ليلة القدر وأحكامها",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ",
+        "source": "سورة القدر: 3"
+      },
+      {
+        "type": "حديث",
+        "text": "تحروا ليلة القدر في الوتر من العشر الأواخر من رمضان",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "لطائف المعارف لابن رجب",
+        "source": "فصل ليلة القدر"
+      }
+    ],
+    "keywords": [
+      "ليلة القدر",
+      "رمضان",
+      "صيام",
+      "عبادة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 6200,
+    "view_count": 6200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-20T08:00:00Z",
+    "created_at": "2024-04-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-laylat-alqadr-part-7",
+    "external_key": "ruling-laylat-alqadr-part-7",
+    "title": "فضل ليلة القدر وأحكامها: قراءة القرآن.",
+    "summary": "قراءة القرآن.",
+    "body": "قراءة القرآن.\n\n**من:** فضل ليلة القدر وأحكامها",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ",
+        "source": "سورة القدر: 3"
+      },
+      {
+        "type": "حديث",
+        "text": "تحروا ليلة القدر في الوتر من العشر الأواخر من رمضان",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "لطائف المعارف لابن رجب",
+        "source": "فصل ليلة القدر"
+      }
+    ],
+    "keywords": [
+      "ليلة القدر",
+      "رمضان",
+      "صيام",
+      "عبادة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 6200,
+    "view_count": 6200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-20T08:00:00Z",
+    "created_at": "2024-04-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-laylat-alqadr-part-8",
+    "external_key": "ruling-laylat-alqadr-part-8",
+    "title": "فضل ليلة القدر وأحكامها: الاعتكاف في المسجد.",
+    "summary": "الاعتكاف في المسجد.",
+    "body": "الاعتكاف في المسجد.\n\n**من:** فضل ليلة القدر وأحكامها",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ",
+        "source": "سورة القدر: 3"
+      },
+      {
+        "type": "حديث",
+        "text": "تحروا ليلة القدر في الوتر من العشر الأواخر من رمضان",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "لطائف المعارف لابن رجب",
+        "source": "فصل ليلة القدر"
+      }
+    ],
+    "keywords": [
+      "ليلة القدر",
+      "رمضان",
+      "صيام",
+      "عبادة"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 6200,
+    "view_count": 6200,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-04-20T08:00:00Z",
+    "created_at": "2024-04-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fidyah-fasting-part-1",
+    "external_key": "ruling-fidyah-fasting-part-1",
+    "title": "فدية الصيام: الشيخ الكبير العاجز عن الصيام.",
+    "summary": "الشيخ الكبير العاجز عن الصيام.",
+    "body": "الشيخ الكبير العاجز عن الصيام.\n\n**من:** فدية الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَعَلَى الَّذِينَ يُطِيقُونَهُ فِدْيَةٌ طَعَامُ مِسْكِينٍ",
+        "source": "سورة البقرة: 184"
+      }
+    ],
+    "references": [
+      {
+        "text": "الشرح الكبير لابن قدامة",
+        "source": "كتاب الصيام"
+      }
+    ],
+    "keywords": [
+      "فدية",
+      "صيام",
+      "إطعام",
+      "عجز"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2400,
+    "view_count": 2400,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-01T08:00:00Z",
+    "created_at": "2024-05-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fidyah-fasting-part-2",
+    "external_key": "ruling-fidyah-fasting-part-2",
+    "title": "فدية الصيام: المريض مرضاً مزمناً لا يُرجى شفاؤه.",
+    "summary": "المريض مرضاً مزمناً لا يُرجى شفاؤه.",
+    "body": "المريض مرضاً مزمناً لا يُرجى شفاؤه.\n\n**من:** فدية الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَعَلَى الَّذِينَ يُطِيقُونَهُ فِدْيَةٌ طَعَامُ مِسْكِينٍ",
+        "source": "سورة البقرة: 184"
+      }
+    ],
+    "references": [
+      {
+        "text": "الشرح الكبير لابن قدامة",
+        "source": "كتاب الصيام"
+      }
+    ],
+    "keywords": [
+      "فدية",
+      "صيام",
+      "إطعام",
+      "عجز"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2400,
+    "view_count": 2400,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-01T08:00:00Z",
+    "created_at": "2024-05-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fidyah-fasting-part-3",
+    "external_key": "ruling-fidyah-fasting-part-3",
+    "title": "فدية الصيام: الحامل والمرضع (إذا أفطرتا خوفاً على الولد فقط عند بعض العلم",
+    "summary": "الحامل والمرضع (إذا أفطرتا خوفاً على الولد فقط عند بعض العلماء).",
+    "body": "الحامل والمرضع (إذا أفطرتا خوفاً على الولد فقط عند بعض العلماء).\n\n**من:** فدية الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَعَلَى الَّذِينَ يُطِيقُونَهُ فِدْيَةٌ طَعَامُ مِسْكِينٍ",
+        "source": "سورة البقرة: 184"
+      }
+    ],
+    "references": [
+      {
+        "text": "الشرح الكبير لابن قدامة",
+        "source": "كتاب الصيام"
+      }
+    ],
+    "keywords": [
+      "فدية",
+      "صيام",
+      "إطعام",
+      "عجز"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2400,
+    "view_count": 2400,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-01T08:00:00Z",
+    "created_at": "2024-05-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fidyah-fasting-part-4",
+    "external_key": "ruling-fidyah-fasting-part-4",
+    "title": "فدية الصيام: إطعام مسكين واحد عن كل يوم.",
+    "summary": "إطعام مسكين واحد عن كل يوم.",
+    "body": "إطعام مسكين واحد عن كل يوم.\n\n**من:** فدية الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَعَلَى الَّذِينَ يُطِيقُونَهُ فِدْيَةٌ طَعَامُ مِسْكِينٍ",
+        "source": "سورة البقرة: 184"
+      }
+    ],
+    "references": [
+      {
+        "text": "الشرح الكبير لابن قدامة",
+        "source": "كتاب الصيام"
+      }
+    ],
+    "keywords": [
+      "فدية",
+      "صيام",
+      "إطعام",
+      "عجز"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2400,
+    "view_count": 2400,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-01T08:00:00Z",
+    "created_at": "2024-05-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fidyah-fasting-part-5",
+    "external_key": "ruling-fidyah-fasting-part-5",
+    "title": "فدية الصيام: المقدار: مُدّ من الطعام الغالب في البلد (نحو 750 غراماً).",
+    "summary": "المقدار: مُدّ من الطعام الغالب في البلد (نحو 750 غراماً).",
+    "body": "المقدار: مُدّ من الطعام الغالب في البلد (نحو 750 غراماً).\n\n**من:** فدية الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَعَلَى الَّذِينَ يُطِيقُونَهُ فِدْيَةٌ طَعَامُ مِسْكِينٍ",
+        "source": "سورة البقرة: 184"
+      }
+    ],
+    "references": [
+      {
+        "text": "الشرح الكبير لابن قدامة",
+        "source": "كتاب الصيام"
+      }
+    ],
+    "keywords": [
+      "فدية",
+      "صيام",
+      "إطعام",
+      "عجز"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2400,
+    "view_count": 2400,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-01T08:00:00Z",
+    "created_at": "2024-05-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-fidyah-fasting-part-6",
+    "external_key": "ruling-fidyah-fasting-part-6",
+    "title": "فدية الصيام: يجوز الدفع نقداً بما يعادل قيمة الطعام.",
+    "summary": "يجوز الدفع نقداً بما يعادل قيمة الطعام.",
+    "body": "يجوز الدفع نقداً بما يعادل قيمة الطعام.\n\n**من:** فدية الصيام",
+    "category": "الصيام",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَعَلَى الَّذِينَ يُطِيقُونَهُ فِدْيَةٌ طَعَامُ مِسْكِينٍ",
+        "source": "سورة البقرة: 184"
+      }
+    ],
+    "references": [
+      {
+        "text": "الشرح الكبير لابن قدامة",
+        "source": "كتاب الصيام"
+      }
+    ],
+    "keywords": [
+      "فدية",
+      "صيام",
+      "إطعام",
+      "عجز"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 2400,
+    "view_count": 2400,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-01T08:00:00Z",
+    "created_at": "2024-05-01T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-zakat-alfitrah-part-1",
+    "external_key": "ruling-zakat-alfitrah-part-1",
+    "title": "زكاة الفطر: فرض على كل مسلم قادر عن نفسه وعمّن يعول.",
+    "summary": "فرض على كل مسلم قادر عن نفسه وعمّن يعول.",
+    "body": "فرض على كل مسلم قادر عن نفسه وعمّن يعول.\n\n**من:** زكاة الفطر",
     "category": "الزكاة",
-    "subcategory": "شروط الزكاة",
-    "subcategories": [
-      "شروط الزكاة"
-    ],
+    "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
     "scholar_opinions": [],
-    "prevailing_view": "الشرط",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن قدامة — المغني",
-        "source": "ابن قدامة — المغني"
-      }
-    ],
-    "keywords": [
-      "شروط الزكاة",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
-  },
-  {
-    "id": "curriculum-17",
-    "external_key": "curriculum-17",
-    "title": "بلوغ النصاب",
-    "summary": "تجب الزكاة إذا بلغ المال النصاب الشرعي.",
-    "body": "تجب الزكاة إذا بلغ المال النصاب الشرعي.",
-    "category": "الزكاة",
-    "subcategory": "شروط الزكاة",
-    "subcategories": [
-      "شروط الزكاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
+    "evidence": [
       {
         "type": "حديث",
-        "text": "لا زكاة في مال حتى يبلغ نصاباً",
-        "source": "رواه البخاري"
+        "text": "فرض رسول الله ﷺ زكاة الفطر صاعاً من تمر أو صاعاً من شعير",
+        "source": "رواه البخاري ومسلم"
       }
     ],
-    "scholar_opinions": [],
-    "prevailing_view": "الشرط",
-    "evidence": [],
     "references": [
       {
-        "text": "اللجنة الدائمة — فتاوى الزكاة",
-        "source": "اللجنة الدائمة — فتاوى الزكاة"
-      }
-    ],
-    "keywords": [
-      "شروط الزكاة",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
-  },
-  {
-    "id": "curriculum-18",
-    "external_key": "curriculum-18",
-    "title": "نسبة زكاة المال",
-    "summary": "زكاة المال النقدي والتجاري ربع العشر (2.5%).",
-    "body": "زكاة المال النقدي والتجاري ربع العشر (2.5%).",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [
-      {
-        "type": "قرآن",
-        "text": "خذ من أموالهم صدقة",
-        "source": "سورة التوبة: 103"
-      }
-    ],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "2.5%",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن باز — فتاوى",
-        "source": "ابن باز — فتاوى"
-      }
-    ],
-    "keywords": [
-      "زكاة المال",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
-  },
-  {
-    "id": "curriculum-19",
-    "external_key": "curriculum-19",
-    "title": "زكاة الفطر",
-    "summary": "زكاة الفطر واجبة على كل مسلم قبل صلاة عيد الفطر.",
-    "body": "زكاة الفطر واجبة على كل مسلم قبل صلاة عيد الفطر.",
-    "category": "الزكاة",
-    "subcategory": "زكاة الفطر",
-    "subcategories": [
-      "زكاة الفطر"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "فرض رسول الله ﷺ زكاة الفطر",
-        "source": "رواه أبو داود"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "الواجب",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن عثيمين — الشرح الممتع",
-        "source": "ابن عثيمين — الشرح الممتع"
+        "text": "سبل السلام للصنعاني",
+        "source": "كتاب الزكاة"
       }
     ],
     "keywords": [
       "زكاة الفطر",
-      "الزكاة"
+      "رمضان",
+      "إطعام"
     ],
     "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
+    "importance_score": 80,
+    "popularity_score": 4500,
+    "view_count": 4500,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
+    "published_at": "2024-05-10T08:00:00Z",
+    "created_at": "2024-05-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "curriculum-20",
-    "external_key": "curriculum-20",
-    "title": "مصارف الزكاة الثمانية",
-    "summary": "تُصرف الزكاة في المصارف الثمانية المذكورة في سورة التوبة.",
-    "body": "تُصرف الزكاة في المصارف الثمانية المذكورة في سورة التوبة.",
+    "id": "ruling-zakat-alfitrah-part-2",
+    "external_key": "ruling-zakat-alfitrah-part-2",
+    "title": "زكاة الفطر: مقدارها: صاع من طعام البلد (نحو 2.5 كغ أو 3 كغ).",
+    "summary": "مقدارها: صاع من طعام البلد (نحو 2.5 كغ أو 3 كغ).",
+    "body": "مقدارها: صاع من طعام البلد (نحو 2.5 كغ أو 3 كغ).\n\n**من:** زكاة الفطر",
     "category": "الزكاة",
-    "subcategory": "مصارف الزكاة",
-    "subcategories": [
-      "مصارف الزكاة"
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "فرض رسول الله ﷺ زكاة الفطر صاعاً من تمر أو صاعاً من شعير",
+        "source": "رواه البخاري ومسلم"
+      }
     ],
-    "quran_evidence": [
+    "references": [
+      {
+        "text": "سبل السلام للصنعاني",
+        "source": "كتاب الزكاة"
+      }
+    ],
+    "keywords": [
+      "زكاة الفطر",
+      "رمضان",
+      "إطعام"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 4500,
+    "view_count": 4500,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-10T08:00:00Z",
+    "created_at": "2024-05-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-zakat-alfitrah-part-3",
+    "external_key": "ruling-zakat-alfitrah-part-3",
+    "title": "زكاة الفطر: أجاز جمهور العلماء إخراجها من التمر أو الشعير أو القمح أو ال",
+    "summary": "أجاز جمهور العلماء إخراجها من التمر أو الشعير أو القمح أو الزبيب.",
+    "body": "أجاز جمهور العلماء إخراجها من التمر أو الشعير أو القمح أو الزبيب.\n\n**من:** زكاة الفطر",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "فرض رسول الله ﷺ زكاة الفطر صاعاً من تمر أو صاعاً من شعير",
+        "source": "رواه البخاري ومسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "سبل السلام للصنعاني",
+        "source": "كتاب الزكاة"
+      }
+    ],
+    "keywords": [
+      "زكاة الفطر",
+      "رمضان",
+      "إطعام"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 4500,
+    "view_count": 4500,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-10T08:00:00Z",
+    "created_at": "2024-05-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-zakat-alfitrah-part-4",
+    "external_key": "ruling-zakat-alfitrah-part-4",
+    "title": "زكاة الفطر: أجاز بعض العلماء إخراج القيمة نقداً لمصلحة الفقير.",
+    "summary": "أجاز بعض العلماء إخراج القيمة نقداً لمصلحة الفقير.",
+    "body": "أجاز بعض العلماء إخراج القيمة نقداً لمصلحة الفقير.\n\n**من:** زكاة الفطر",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "فرض رسول الله ﷺ زكاة الفطر صاعاً من تمر أو صاعاً من شعير",
+        "source": "رواه البخاري ومسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "سبل السلام للصنعاني",
+        "source": "كتاب الزكاة"
+      }
+    ],
+    "keywords": [
+      "زكاة الفطر",
+      "رمضان",
+      "إطعام"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 4500,
+    "view_count": 4500,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-10T08:00:00Z",
+    "created_at": "2024-05-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-zakat-alfitrah-part-5",
+    "external_key": "ruling-zakat-alfitrah-part-5",
+    "title": "زكاة الفطر: يجوز قبل العيد بيوم أو يومين.",
+    "summary": "يجوز قبل العيد بيوم أو يومين.",
+    "body": "يجوز قبل العيد بيوم أو يومين.\n\n**من:** زكاة الفطر",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "فرض رسول الله ﷺ زكاة الفطر صاعاً من تمر أو صاعاً من شعير",
+        "source": "رواه البخاري ومسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "سبل السلام للصنعاني",
+        "source": "كتاب الزكاة"
+      }
+    ],
+    "keywords": [
+      "زكاة الفطر",
+      "رمضان",
+      "إطعام"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 4500,
+    "view_count": 4500,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-10T08:00:00Z",
+    "created_at": "2024-05-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-zakat-alfitrah-part-6",
+    "external_key": "ruling-zakat-alfitrah-part-6",
+    "title": "زكاة الفطر: وقت الوجوب: غروب شمس آخر يوم من رمضان.",
+    "summary": "وقت الوجوب: غروب شمس آخر يوم من رمضان.",
+    "body": "وقت الوجوب: غروب شمس آخر يوم من رمضان.\n\n**من:** زكاة الفطر",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "فرض رسول الله ﷺ زكاة الفطر صاعاً من تمر أو صاعاً من شعير",
+        "source": "رواه البخاري ومسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "سبل السلام للصنعاني",
+        "source": "كتاب الزكاة"
+      }
+    ],
+    "keywords": [
+      "زكاة الفطر",
+      "رمضان",
+      "إطعام"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 4500,
+    "view_count": 4500,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-10T08:00:00Z",
+    "created_at": "2024-05-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-zakat-alfitrah-part-7",
+    "external_key": "ruling-zakat-alfitrah-part-7",
+    "title": "زكاة الفطر: وقت الأداء المستحب: قبل صلاة العيد.",
+    "summary": "وقت الأداء المستحب: قبل صلاة العيد.",
+    "body": "وقت الأداء المستحب: قبل صلاة العيد.\n\n**من:** زكاة الفطر",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "فرض رسول الله ﷺ زكاة الفطر صاعاً من تمر أو صاعاً من شعير",
+        "source": "رواه البخاري ومسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "سبل السلام للصنعاني",
+        "source": "كتاب الزكاة"
+      }
+    ],
+    "keywords": [
+      "زكاة الفطر",
+      "رمضان",
+      "إطعام"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 4500,
+    "view_count": 4500,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-10T08:00:00Z",
+    "created_at": "2024-05-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-zakat-alfitrah-part-8",
+    "external_key": "ruling-zakat-alfitrah-part-8",
+    "title": "زكاة الفطر: يحرم تأخيرها إلى ما بعد صلاة العيد.",
+    "summary": "يحرم تأخيرها إلى ما بعد صلاة العيد.",
+    "body": "يحرم تأخيرها إلى ما بعد صلاة العيد.\n\n**من:** زكاة الفطر",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "فرض رسول الله ﷺ زكاة الفطر صاعاً من تمر أو صاعاً من شعير",
+        "source": "رواه البخاري ومسلم"
+      }
+    ],
+    "references": [
+      {
+        "text": "سبل السلام للصنعاني",
+        "source": "كتاب الزكاة"
+      }
+    ],
+    "keywords": [
+      "زكاة الفطر",
+      "رمضان",
+      "إطعام"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 4500,
+    "view_count": 4500,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-10T08:00:00Z",
+    "created_at": "2024-05-10T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-zakat-animals-part-1",
+    "external_key": "ruling-zakat-animals-part-1",
+    "title": "نصاب زكاة الإبل والبقر: في كل ثلاثين: تبيع (عجل عمره سنة).",
+    "summary": "في كل ثلاثين: تبيع (عجل عمره سنة).",
+    "body": "في كل ثلاثين: تبيع (عجل عمره سنة).\n\n**من:** نصاب زكاة الإبل والبقر",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "في خمس من الإبل شاة",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الزكاة، باب زكاة الإبل"
+      }
+    ],
+    "keywords": [
+      "زكاة",
+      "إبل",
+      "بقر",
+      "نصاب",
+      "ماشية"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 1800,
+    "view_count": 1800,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-15T08:00:00Z",
+    "created_at": "2024-05-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-zakat-animals-part-2",
+    "external_key": "ruling-zakat-animals-part-2",
+    "title": "نصاب زكاة الإبل والبقر: في كل أربعين: مُسنّة (بقرة عمرها سنتان).",
+    "summary": "في كل أربعين: مُسنّة (بقرة عمرها سنتان).",
+    "body": "في كل أربعين: مُسنّة (بقرة عمرها سنتان).\n\n**من:** نصاب زكاة الإبل والبقر",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "في خمس من الإبل شاة",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الزكاة، باب زكاة الإبل"
+      }
+    ],
+    "keywords": [
+      "زكاة",
+      "إبل",
+      "بقر",
+      "نصاب",
+      "ماشية"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 1800,
+    "view_count": 1800,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-15T08:00:00Z",
+    "created_at": "2024-05-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-zakat-animals-part-3",
+    "external_key": "ruling-zakat-animals-part-3",
+    "title": "نصاب زكاة الإبل والبقر: لا زكاة فيما دون ثلاثين.",
+    "summary": "لا زكاة فيما دون ثلاثين.",
+    "body": "لا زكاة فيما دون ثلاثين.\n\n**من:** نصاب زكاة الإبل والبقر",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "في خمس من الإبل شاة",
+        "source": "رواه البخاري"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني لابن قدامة",
+        "source": "كتاب الزكاة، باب زكاة الإبل"
+      }
+    ],
+    "keywords": [
+      "زكاة",
+      "إبل",
+      "بقر",
+      "نصاب",
+      "ماشية"
+    ],
+    "benefits": [],
+    "importance_score": 80,
+    "popularity_score": 1800,
+    "view_count": 1800,
+    "search_count": 0,
+    "status": "approved",
+    "verification_status": "approved",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2024-05-15T08:00:00Z",
+    "created_at": "2024-05-15T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
+  },
+  {
+    "id": "ruling-zakat-recipients-part-1",
+    "external_key": "ruling-zakat-recipients-part-1",
+    "title": "مصارف الزكاة الثمانية: **الفقراء:** من لا مال له أو يملك أقل من نصف كفايته.",
+    "summary": "**الفقراء:** من لا مال له أو يملك أقل من نصف كفايته.",
+    "body": "**الفقراء:** من لا مال له أو يملك أقل من نصف كفايته.\n\n**من:** مصارف الزكاة الثمانية",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
       {
         "type": "قرآن",
-        "text": "إنما الصدقات للفقراء والمساكين...",
+        "text": "إِنَّمَا الصَّدَقَاتُ لِلْفُقَرَاءِ وَالْمَسَاكِينِ وَالْعَامِلِينَ عَلَيْهَا",
         "source": "سورة التوبة: 60"
       }
     ],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "محددة شرعاً",
-    "evidence": [],
     "references": [
       {
-        "text": "ابن قدامة — المغني",
-        "source": "ابن قدامة — المغني"
+        "text": "تفسير ابن كثير",
+        "source": "سورة التوبة، الآية 60"
       }
     ],
     "keywords": [
-      "مصارف الزكاة",
-      "الزكاة"
+      "زكاة",
+      "مصارف",
+      "فقراء",
+      "توزيع"
     ],
     "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
+    "importance_score": 80,
+    "popularity_score": 3900,
+    "view_count": 3900,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
+    "published_at": "2024-05-20T08:00:00Z",
+    "created_at": "2024-05-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "curriculum-21",
-    "external_key": "curriculum-21",
-    "title": "وجوب صيام رمضان",
-    "summary": "صيام رمضان ركن من أركان الإسلام.",
-    "body": "صيام رمضان ركن من أركان الإسلام.",
-    "category": "الصيام",
-    "subcategory": "صيام رمضان",
-    "subcategories": [
-      "صيام رمضان"
-    ],
-    "quran_evidence": [
+    "id": "ruling-zakat-recipients-part-2",
+    "external_key": "ruling-zakat-recipients-part-2",
+    "title": "مصارف الزكاة الثمانية: **المساكين:** من يملك نصف الكفاية فأقل.",
+    "summary": "**المساكين:** من يملك نصف الكفاية فأقل.",
+    "body": "**المساكين:** من يملك نصف الكفاية فأقل.\n\n**من:** مصارف الزكاة الثمانية",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
       {
         "type": "قرآن",
-        "text": "شهر رمضان الذي أنزل فيه القرآن",
-        "source": "سورة البقرة: 185"
+        "text": "إِنَّمَا الصَّدَقَاتُ لِلْفُقَرَاءِ وَالْمَسَاكِينِ وَالْعَامِلِينَ عَلَيْهَا",
+        "source": "سورة التوبة: 60"
       }
     ],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "الواجب",
-    "evidence": [],
     "references": [
       {
-        "text": "ابن باز — مجموع الفتاوى",
-        "source": "ابن باز — مجموع الفتاوى"
+        "text": "تفسير ابن كثير",
+        "source": "سورة التوبة، الآية 60"
       }
     ],
     "keywords": [
-      "صيام رمضان",
-      "الصيام"
+      "زكاة",
+      "مصارف",
+      "فقراء",
+      "توزيع"
     ],
     "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
+    "importance_score": 80,
+    "popularity_score": 3900,
+    "view_count": 3900,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
+    "published_at": "2024-05-20T08:00:00Z",
+    "created_at": "2024-05-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "curriculum-22",
-    "external_key": "curriculum-22",
-    "title": "الأكل والشرب ينقض الصيام",
-    "summary": "الأكل والشرب عمداً من المفطرات.",
-    "body": "الأكل والشرب عمداً من المفطرات.",
-    "category": "الصيام",
-    "subcategory": "مفطرات الصيام",
-    "subcategories": [
-      "مفطرات الصيام"
-    ],
+    "id": "ruling-zakat-recipients-part-3",
+    "external_key": "ruling-zakat-recipients-part-3",
+    "title": "مصارف الزكاة الثمانية: **العاملون عليها:** الجباة والإداريون المكلفون بجمعها وتوزيع",
+    "summary": "**العاملون عليها:** الجباة والإداريون المكلفون بجمعها وتوزيعها.",
+    "body": "**العاملون عليها:** الجباة والإداريون المكلفون بجمعها وتوزيعها.\n\n**من:** مصارف الزكاة الثمانية",
+    "category": "الزكاة",
+    "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
     "scholar_opinions": [],
-    "prevailing_view": "مفطر",
-    "evidence": [],
-    "references": [
-      {
-        "text": "اللجنة الدائمة",
-        "source": "اللجنة الدائمة"
-      }
-    ],
-    "keywords": [
-      "مفطرات الصيام",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
-  },
-  {
-    "id": "curriculum-23",
-    "external_key": "curriculum-23",
-    "title": "فضل قيام رمضان",
-    "summary": "قيام ليل رمضان سنة مؤكدة؛ والتراويح منه.",
-    "body": "قيام ليل رمضان سنة مؤكدة؛ والتراويح منه.",
-    "category": "الصيام",
-    "subcategory": "قيام الليل",
-    "subcategories": [
-      "قيام الليل"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "من قام رمضان إيماناً واحتساباً غفر له",
-        "source": "رواه البخاري"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "السنة",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن عثيمين — الشرح الممتع",
-        "source": "ابن عثيمين — الشرح الممتع"
-      }
-    ],
-    "keywords": [
-      "قيام الليل",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
-  },
-  {
-    "id": "curriculum-24",
-    "external_key": "curriculum-24",
-    "title": "حكم الاعتكاف",
-    "summary": "الاعتكاف في العشر الأواخر من رمضان سنة.",
-    "body": "الاعتكاف في العشر الأواخر من رمضان سنة.",
-    "category": "الصيام",
-    "subcategory": "الاعتكاف",
-    "subcategories": [
-      "الاعتكاف"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "كان ﷺ يعتكف العشر الأواخر",
-        "source": "رواه البخاري"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "السنة",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن باز — فتاوى",
-        "source": "ابن باز — فتاوى"
-      }
-    ],
-    "keywords": [
-      "الاعتكاف",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
-  },
-  {
-    "id": "curriculum-25",
-    "external_key": "curriculum-25",
-    "title": "وجوب الحج",
-    "summary": "الحج واجب مرة واحدة في العمر على المستطيع.",
-    "body": "الحج واجب مرة واحدة في العمر على المستطيع.",
-    "category": "الحج والعمرة",
-    "subcategory": "أحكام الحج",
-    "subcategories": [
-      "أحكام الحج"
-    ],
-    "quran_evidence": [
+    "evidence": [
       {
         "type": "قرآن",
-        "text": "ولله على الناس حج البيت",
-        "source": "سورة آل عمران: 97"
+        "text": "إِنَّمَا الصَّدَقَاتُ لِلْفُقَرَاءِ وَالْمَسَاكِينِ وَالْعَامِلِينَ عَلَيْهَا",
+        "source": "سورة التوبة: 60"
       }
     ],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "الواجب",
-    "evidence": [],
     "references": [
       {
-        "text": "ابن باز — مجموع الفتاوى",
-        "source": "ابن باز — مجموع الفتاوى"
+        "text": "تفسير ابن كثير",
+        "source": "سورة التوبة، الآية 60"
       }
     ],
     "keywords": [
-      "أحكام الحج",
-      "الحج والعمرة"
+      "زكاة",
+      "مصارف",
+      "فقراء",
+      "توزيع"
     ],
     "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
+    "importance_score": 80,
+    "popularity_score": 3900,
+    "view_count": 3900,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
+    "published_at": "2024-05-20T08:00:00Z",
+    "created_at": "2024-05-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "curriculum-26",
-    "external_key": "curriculum-26",
-    "title": "الوقوف بعرفة",
-    "summary": "الوقوف بعرفة ركن من أركان الحج.",
-    "body": "الوقوف بعرفة ركن من أركان الحج.",
-    "category": "الحج والعمرة",
-    "subcategory": "أحكام الحج",
-    "subcategories": [
-      "أحكام الحج"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "الحج عرفة",
-        "source": "رواه الترمذي"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "الركن",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن قدامة — المغني",
-        "source": "ابن قدامة — المغني"
-      }
-    ],
-    "keywords": [
-      "أحكام الحج",
-      "الحج والعمرة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
-  },
-  {
-    "id": "curriculum-27",
-    "external_key": "curriculum-27",
-    "title": "حكم العمرة",
-    "summary": "العمرة واجبة عند بعض العلماء، وسنة مؤكدة عند آخرين.",
-    "body": "العمرة واجبة عند بعض العلماء، وسنة مؤكدة عند آخرين.",
-    "category": "الحج والعمرة",
-    "subcategory": "العمرة",
-    "subcategories": [
-      "العمرة"
-    ],
+    "id": "ruling-zakat-recipients-part-4",
+    "external_key": "ruling-zakat-recipients-part-4",
+    "title": "مصارف الزكاة الثمانية: **المؤلفة قلوبهم:** من يُرجى إسلامهم أو تثبيت قلوبهم.",
+    "summary": "**المؤلفة قلوبهم:** من يُرجى إسلامهم أو تثبيت قلوبهم.",
+    "body": "**المؤلفة قلوبهم:** من يُرجى إسلامهم أو تثبيت قلوبهم.\n\n**من:** مصارف الزكاة الثمانية",
+    "category": "الزكاة",
+    "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
     "scholar_opinions": [],
-    "prevailing_view": "الخلاف معظم",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن عثيمين — الشرح الممتع",
-        "source": "ابن عثيمين — الشرح الممتع"
-      }
-    ],
-    "keywords": [
-      "العمرة",
-      "الحج والعمرة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
-  },
-  {
-    "id": "curriculum-28",
-    "external_key": "curriculum-28",
-    "title": "حكم الأضحية",
-    "summary": "الأضحية سنة مؤكدة لمن استطاع.",
-    "body": "الأضحية سنة مؤكدة لمن استطاع.",
-    "category": "الحج والعمرة",
-    "subcategory": "الأضحية",
-    "subcategories": [
-      "الأضحية"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "من كان له سعة فلا يدع أن يضحي",
-        "source": "رواه أحمد"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "السنة المؤكدة",
-    "evidence": [],
-    "references": [
-      {
-        "text": "اللجنة الدائمة",
-        "source": "اللجنة الدائمة"
-      }
-    ],
-    "keywords": [
-      "الأضحية",
-      "الحج والعمرة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
-  },
-  {
-    "id": "curriculum-29",
-    "external_key": "curriculum-29",
-    "title": "شروط صحة البيع",
-    "summary": "يشترط للبيع: الرضا، وعلم المبيع والثمن، وتحريم الغرر الفاحش.",
-    "body": "يشترط للبيع: الرضا، وعلم المبيع والثمن، وتحريم الغرر الفاحش.",
-    "category": "المعاملات",
-    "subcategory": "البيع",
-    "subcategories": [
-      "البيع"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "إنما البيع عن تراض",
-        "source": "رواه ابن ماجه"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "الشروط",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن تيمية — الفتاوى",
-        "source": "ابن تيمية — الفتاوى"
-      }
-    ],
-    "keywords": [
-      "البيع",
-      "المعاملات"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
-  },
-  {
-    "id": "curriculum-30",
-    "external_key": "curriculum-30",
-    "title": "تحريم الربا",
-    "summary": "الربا محرم بنص القرآن والسنة.",
-    "body": "الربا محرم بنص القرآن والسنة.",
-    "category": "المعاملات",
-    "subcategory": "الربا",
-    "subcategories": [
-      "الربا"
-    ],
-    "quran_evidence": [
+    "evidence": [
       {
         "type": "قرآن",
-        "text": "حرم الربا",
-        "source": "سورة البقرة: 275"
+        "text": "إِنَّمَا الصَّدَقَاتُ لِلْفُقَرَاءِ وَالْمَسَاكِينِ وَالْعَامِلِينَ عَلَيْهَا",
+        "source": "سورة التوبة: 60"
       }
     ],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "الحرام",
-    "evidence": [],
     "references": [
       {
-        "text": "ابن باز — فتاوى",
-        "source": "ابن باز — فتاوى"
+        "text": "تفسير ابن كثير",
+        "source": "سورة التوبة، الآية 60"
       }
     ],
     "keywords": [
-      "الربا",
-      "المعاملات"
+      "زكاة",
+      "مصارف",
+      "فقراء",
+      "توزيع"
     ],
     "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
+    "importance_score": 80,
+    "popularity_score": 3900,
+    "view_count": 3900,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
+    "published_at": "2024-05-20T08:00:00Z",
+    "created_at": "2024-05-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "curriculum-31",
-    "external_key": "curriculum-31",
-    "title": "صحة عقد الإجارة",
-    "summary": "الإجارة جائزة إذا علم المأجور وحدّد الأجر.",
-    "body": "الإجارة جائزة إذا علم المأجور وحدّد الأجر.",
-    "category": "المعاملات",
-    "subcategory": "الإجارة",
-    "subcategories": [
-      "الإجارة"
-    ],
+    "id": "ruling-zakat-recipients-part-5",
+    "external_key": "ruling-zakat-recipients-part-5",
+    "title": "مصارف الزكاة الثمانية: **في الرقاب:** تحرير العبيد وفداء الأسرى المسلمين.",
+    "summary": "**في الرقاب:** تحرير العبيد وفداء الأسرى المسلمين.",
+    "body": "**في الرقاب:** تحرير العبيد وفداء الأسرى المسلمين.\n\n**من:** مصارف الزكاة الثمانية",
+    "category": "الزكاة",
+    "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
     "scholar_opinions": [],
-    "prevailing_view": "الجائز",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن قدامة — المغني",
-        "source": "ابن قدامة — المغني"
-      }
-    ],
-    "keywords": [
-      "الإجارة",
-      "المعاملات"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
-  },
-  {
-    "id": "curriculum-32",
-    "external_key": "curriculum-32",
-    "title": "حكم النكاح",
-    "summary": "النكاح سنة لمن قدر؛ ويجب على من خاف الزنا.",
-    "body": "النكاح سنة لمن قدر؛ ويجب على من خاف الزنا.",
-    "category": "الأسرة",
-    "subcategory": "النكاح",
-    "subcategories": [
-      "النكاح"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "يا معشر الشباب من استطاع الباءة فليتزوج",
-        "source": "رواه البخاري"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "السنة/الواجب",
-    "evidence": [],
-    "references": [
-      {
-        "text": "ابن عثيمين — الشرح الممتع",
-        "source": "ابن عثيمين — الشرح الممتع"
-      }
-    ],
-    "keywords": [
-      "النكاح",
-      "الأسرة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
-  },
-  {
-    "id": "curriculum-33",
-    "external_key": "curriculum-33",
-    "title": "تحريم الطلاق في الحيض",
-    "summary": "لا يجوز الطلاق في حال الحيض عند جمهور العلماء.",
-    "body": "لا يجوز الطلاق في حال الحيض عند جمهور العلماء.",
-    "category": "الأسرة",
-    "subcategory": "الطلاق",
-    "subcategories": [
-      "الطلاق"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "لا طلاق ولا عتاق في إغلاق",
-        "source": "رواه مسلم"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "الحرام",
-    "evidence": [],
-    "references": [
-      {
-        "text": "اللجنة الدائمة",
-        "source": "اللجنة الدائمة"
-      }
-    ],
-    "keywords": [
-      "الطلاق",
-      "الأسرة"
-    ],
-    "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
-    "linked_qa_ids": [],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
-  },
-  {
-    "id": "curriculum-34",
-    "external_key": "curriculum-34",
-    "title": "وجوب تنفيذ الوصية بالعدل",
-    "summary": "المواريث مقدرة في القرآن ولا يجوز تعديها.",
-    "body": "المواريث مقدرة في القرآن ولا يجوز تعديها.",
-    "category": "الأسرة",
-    "subcategory": "الميراث",
-    "subcategories": [
-      "الميراث"
-    ],
-    "quran_evidence": [
+    "evidence": [
       {
         "type": "قرآن",
-        "text": "يوصيكم الله في أولادكم",
-        "source": "سورة النساء: 11"
+        "text": "إِنَّمَا الصَّدَقَاتُ لِلْفُقَرَاءِ وَالْمَسَاكِينِ وَالْعَامِلِينَ عَلَيْهَا",
+        "source": "سورة التوبة: 60"
       }
     ],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "الواجب",
-    "evidence": [],
     "references": [
       {
-        "text": "ابن قدامة — المغني",
-        "source": "ابن قدامة — المغني"
+        "text": "تفسير ابن كثير",
+        "source": "سورة التوبة، الآية 60"
       }
     ],
     "keywords": [
-      "الميراث",
-      "الأسرة"
+      "زكاة",
+      "مصارف",
+      "فقراء",
+      "توزيع"
     ],
     "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
+    "importance_score": 80,
+    "popularity_score": 3900,
+    "view_count": 3900,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
+    "published_at": "2024-05-20T08:00:00Z",
+    "created_at": "2024-05-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "curriculum-35",
-    "external_key": "curriculum-35",
-    "title": "توحيد الله",
-    "summary": "توحيد الله أساس الدين؛ وهو إفراد الله بالعبادة.",
-    "body": "توحيد الله أساس الدين؛ وهو إفراد الله بالعبادة.",
-    "category": "العقيدة",
-    "subcategory": "التوحيد",
-    "subcategories": [
-      "التوحيد"
-    ],
-    "quran_evidence": [
+    "id": "ruling-zakat-recipients-part-6",
+    "external_key": "ruling-zakat-recipients-part-6",
+    "title": "مصارف الزكاة الثمانية: **الغارمون:** من ركبهم الدين لأنفسهم أو لإصلاح ذات البين.",
+    "summary": "**الغارمون:** من ركبهم الدين لأنفسهم أو لإصلاح ذات البين.",
+    "body": "**الغارمون:** من ركبهم الدين لأنفسهم أو لإصلاح ذات البين.\n\n**من:** مصارف الزكاة الثمانية",
+    "category": "الزكاة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
       {
         "type": "قرآن",
-        "text": "واعبدوا الله ولا تشركوا به شيئاً",
-        "source": "سورة النساء: 36"
+        "text": "إِنَّمَا الصَّدَقَاتُ لِلْفُقَرَاءِ وَالْمَسَاكِينِ وَالْعَامِلِينَ عَلَيْهَا",
+        "source": "سورة التوبة: 60"
       }
     ],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "الأساس",
-    "evidence": [],
     "references": [
       {
-        "text": "ابن تيمية — العقيدة الواسطية",
-        "source": "ابن تيمية — العقيدة الواسطية"
+        "text": "تفسير ابن كثير",
+        "source": "سورة التوبة، الآية 60"
       }
     ],
     "keywords": [
-      "التوحيد",
-      "العقيدة"
+      "زكاة",
+      "مصارف",
+      "فقراء",
+      "توزيع"
     ],
     "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
+    "importance_score": 80,
+    "popularity_score": 3900,
+    "view_count": 3900,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
+    "published_at": "2024-05-20T08:00:00Z",
+    "created_at": "2024-05-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "curriculum-36",
-    "external_key": "curriculum-36",
-    "title": "تحذير من البدع",
-    "summary": "كل بدعة ضلالة.",
-    "body": "كل بدعة ضلالة.",
-    "category": "العقيدة",
-    "subcategory": "البدع",
-    "subcategories": [
-      "البدع"
-    ],
+    "id": "ruling-zakat-recipients-part-7",
+    "external_key": "ruling-zakat-recipients-part-7",
+    "title": "مصارف الزكاة الثمانية: **في سبيل الله:** المجاهدون وما فيه نفع عام للإسلام.",
+    "summary": "**في سبيل الله:** المجاهدون وما فيه نفع عام للإسلام.",
+    "body": "**في سبيل الله:** المجاهدون وما فيه نفع عام للإسلام.\n\n**من:** مصارف الزكاة الثمانية",
+    "category": "الزكاة",
+    "subcategories": [],
     "quran_evidence": [],
-    "sunnah_evidence": [
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
       {
-        "type": "حديث",
-        "text": "من أحدث في أمرنا هذا ما ليس منه فهو رد",
-        "source": "رواه البخاري"
+        "type": "قرآن",
+        "text": "إِنَّمَا الصَّدَقَاتُ لِلْفُقَرَاءِ وَالْمَسَاكِينِ وَالْعَامِلِينَ عَلَيْهَا",
+        "source": "سورة التوبة: 60"
       }
     ],
-    "scholar_opinions": [],
-    "prevailing_view": "التحريم",
-    "evidence": [],
     "references": [
       {
-        "text": "ابن باز — فتاوى",
-        "source": "ابن باز — فتاوى"
+        "text": "تفسير ابن كثير",
+        "source": "سورة التوبة، الآية 60"
       }
     ],
     "keywords": [
-      "البدع",
-      "العقيدة"
+      "زكاة",
+      "مصارف",
+      "فقراء",
+      "توزيع"
     ],
     "benefits": [],
-    "importance_score": 65,
-    "popularity_score": 0,
-    "view_count": 0,
+    "importance_score": 80,
+    "popularity_score": 3900,
+    "view_count": 3900,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "fiqh-curriculum-registry",
+    "source_origin": "rulings-seed",
     "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.203Z",
-    "created_at": "2026-07-07T23:16:01.203Z",
-    "updated_at": "2026-07-07T23:16:01.203Z"
+    "published_at": "2024-05-20T08:00:00Z",
+    "created_at": "2024-05-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   },
   {
-    "id": "qa-ruling-seed-qa-1",
-    "external_key": "qa-ruling-seed-qa-1",
-    "title": "أول الخلفاء الراشدين؟",
-    "summary": "أبو بكر الصديق.",
-    "body": "**السؤال:** من أول الخلفاء الراشدين؟\n\n**الجواب:** أبو بكر الصديق.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 501,
-    "view_count": 501,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-1"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.196Z",
-    "created_at": "2026-07-07T23:16:01.196Z",
-    "updated_at": "2026-07-07T23:16:01.196Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-2",
-    "external_key": "qa-ruling-seed-qa-2",
-    "title": "ثاني الخلفاء الراشدين؟",
-    "summary": "عمر بن الخطاب.",
-    "body": "**السؤال:** من ثاني الخلفاء الراشدين؟\n\n**الجواب:** عمر بن الخطاب.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 266,
-    "view_count": 266,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-2"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-3",
-    "external_key": "qa-ruling-seed-qa-3",
-    "title": "ثالث الخلفاء الراشدين؟",
-    "summary": "عثمان بن عفان.",
-    "body": "**السؤال:** من ثالث الخلفاء الراشدين؟\n\n**الجواب:** عثمان بن عفان.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 275,
-    "view_count": 275,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-3"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-4",
-    "external_key": "qa-ruling-seed-qa-4",
-    "title": "رابع الخلفاء الراشدين؟",
-    "summary": "علي بن أبي طالب.",
-    "body": "**السؤال:** من رابع الخلفاء الراشدين؟\n\n**الجواب:** علي بن أبي طالب.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 541,
-    "view_count": 541,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-4"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-5",
-    "external_key": "qa-ruling-seed-qa-5",
-    "title": "الصحابي الملقب بذي النورين؟",
-    "summary": "عثمان بن عفان.",
-    "body": "**السؤال:** من الصحابي الملقب بذي النورين؟\n\n**الجواب:** عثمان بن عفان.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 304,
-    "view_count": 304,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-5"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-6",
-    "external_key": "qa-ruling-seed-qa-6",
-    "title": "الصحابي الملقب بالفاروق؟",
-    "summary": "عمر بن الخطاب.",
-    "body": "**السؤال:** من الصحابي الملقب بالفاروق؟\n\n**الجواب:** عمر بن الخطاب.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 383,
-    "view_count": 383,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-6"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-7",
-    "external_key": "qa-ruling-seed-qa-7",
-    "title": "أكثر الصحابة رواية للحديث؟",
-    "summary": "أبو هريرة.",
-    "body": "**السؤال:** من أكثر الصحابة رواية للحديث؟\n\n**الجواب:** أبو هريرة.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 341,
-    "view_count": 341,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-7"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-8",
-    "external_key": "qa-ruling-seed-qa-8",
-    "title": "أول الرجال إسلاماً؟",
-    "summary": "أبو بكر الصديق.",
-    "body": "**السؤال:** من أول الرجال إسلاماً؟\n\n**الجواب:** أبو بكر الصديق.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
-    "subcategories": [
-      "الإيمان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 403,
-    "view_count": 403,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-8"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-9",
-    "external_key": "qa-ruling-seed-qa-9",
-    "title": "أول الصبيان إسلاماً؟",
-    "summary": "علي بن أبي طالب.",
-    "body": "**السؤال:** من أول الصبيان إسلاماً؟\n\n**الجواب:** علي بن أبي طالب.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
-    "subcategories": [
-      "الإيمان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 129,
-    "view_count": 129,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-9"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-10",
-    "external_key": "qa-ruling-seed-qa-10",
-    "title": "أم المؤمنين ابنة أبي بكر؟",
-    "summary": "عائشة رضي الله عنها.",
-    "body": "**السؤال:** من أم المؤمنين ابنة أبي بكر؟\n\n**الجواب:** عائشة رضي الله عنها.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
-    "subcategories": [
-      "الإيمان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 267,
-    "view_count": 267,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-10"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-11",
-    "external_key": "qa-ruling-seed-qa-11",
-    "title": "في أي غار نزل الوحي أول مرة؟",
-    "summary": "غار حراء.",
-    "body": "**السؤال:** في أي غار نزل الوحي أول مرة؟\n\n**الجواب:** غار حراء.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
-    "subcategories": [
-      "الإيمان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 236,
-    "view_count": 236,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-11"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-12",
-    "external_key": "qa-ruling-seed-qa-12",
-    "title": "أول من آمن من النساء؟",
-    "summary": "خديجة بنت خويلد.",
-    "body": "**السؤال:** من أول من آمن من النساء؟\n\n**الجواب:** خديجة بنت خويلد.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
-    "subcategories": [
-      "الإيمان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 557,
-    "view_count": 557,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-12"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-13",
-    "external_key": "qa-ruling-seed-qa-13",
-    "title": "إلى أي مدينة هاجر النبي صلى الله عليه وسلم؟",
-    "summary": "المدينة المنورة.",
-    "body": "**السؤال:** إلى أي مدينة هاجر النبي صلى الله عليه وسلم؟\n\n**الجواب:** المدينة المنورة.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
-    "subcategories": [
-      "الإيمان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 285,
-    "view_count": 285,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-13"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-14",
-    "external_key": "qa-ruling-seed-qa-14",
-    "title": "أول الرسل إلى أهل الأرض بعد آدم؟",
-    "summary": "نوح عليه السلام.",
-    "body": "**السؤال:** من أول الرسل إلى أهل الأرض بعد آدم؟\n\n**الجواب:** نوح عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 164,
-    "view_count": 164,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-14"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-15",
-    "external_key": "qa-ruling-seed-qa-15",
-    "title": "النبي الذي اتخذه الله خليلاً؟",
-    "summary": "إبراهيم عليه السلام.",
-    "body": "**السؤال:** من النبي الذي اتخذه الله خليلاً؟\n\n**الجواب:** إبراهيم عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 366,
-    "view_count": 366,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-15"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-16",
-    "external_key": "qa-ruling-seed-qa-16",
-    "title": "النبي الذي كلمه الله تكليماً؟",
-    "summary": "موسى عليه السلام.",
-    "body": "**السؤال:** من النبي الذي كلمه الله تكليماً؟\n\n**الجواب:** موسى عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 393,
-    "view_count": 393,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-16"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-17",
-    "external_key": "qa-ruling-seed-qa-17",
-    "title": "النبي الذي أرسل إلى قوم عاد؟",
-    "summary": "هود عليه السلام.",
-    "body": "**السؤال:** من النبي الذي أرسل إلى قوم عاد؟\n\n**الجواب:** هود عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 509,
-    "view_count": 509,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-17"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-18",
-    "external_key": "qa-ruling-seed-qa-18",
-    "title": "النبي الذي أرسل إلى قوم ثمود؟",
-    "summary": "صالح عليه السلام.",
-    "body": "**السؤال:** من النبي الذي أرسل إلى قوم ثمود؟\n\n**الجواب:** صالح عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 104,
-    "view_count": 104,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-18"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-19",
-    "external_key": "qa-ruling-seed-qa-19",
-    "title": "النبي الذي ابتلعه الحوت؟",
-    "summary": "يونس عليه السلام.",
-    "body": "**السؤال:** من النبي الذي ابتلعه الحوت؟\n\n**الجواب:** يونس عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 388,
-    "view_count": 388,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-19"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-20",
-    "external_key": "qa-ruling-seed-qa-20",
-    "title": "النبي الذي رفعه الله إليه؟",
-    "summary": "عيسى عليه السلام.",
-    "body": "**السؤال:** من النبي الذي رفعه الله إليه؟\n\n**الجواب:** عيسى عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 418,
-    "view_count": 418,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-20"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-21",
-    "external_key": "qa-ruling-seed-qa-21",
-    "title": "والد إسماعيل عليه السلام؟",
-    "summary": "إبراهيم عليه السلام.",
-    "body": "**السؤال:** من والد إسماعيل عليه السلام؟\n\n**الجواب:** إبراهيم عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 187,
-    "view_count": 187,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-21"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-22",
-    "external_key": "qa-ruling-seed-qa-22",
-    "title": "النبي الذي سخر الله له الريح؟",
-    "summary": "سليمان عليه السلام.",
-    "body": "**السؤال:** من النبي الذي سخر الله له الريح؟\n\n**الجواب:** سليمان عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 206,
-    "view_count": 206,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-22"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-23",
-    "external_key": "qa-ruling-seed-qa-23",
-    "title": "النبي الذي اشتهر بالصبر على البلاء؟",
-    "summary": "أيوب عليه السلام.",
-    "body": "**السؤال:** من النبي الذي اشتهر بالصبر على البلاء؟\n\n**الجواب:** أيوب عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 113,
-    "view_count": 113,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-23"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-24",
-    "external_key": "qa-ruling-seed-qa-24",
-    "title": "أول الخلفاء الراشدين؟",
-    "summary": "أبو بكر الصديق.",
-    "body": "**السؤال:** من أول الخلفاء الراشدين؟\n\n**الجواب:** أبو بكر الصديق.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 212,
-    "view_count": 212,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-24"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-25",
-    "external_key": "qa-ruling-seed-qa-25",
-    "title": "ثاني الخلفاء الراشدين؟",
-    "summary": "عمر بن الخطاب.",
-    "body": "**السؤال:** من ثاني الخلفاء الراشدين؟\n\n**الجواب:** عمر بن الخطاب.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 415,
-    "view_count": 415,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-25"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-26",
-    "external_key": "qa-ruling-seed-qa-26",
-    "title": "ثالث الخلفاء الراشدين؟",
-    "summary": "عثمان بن عفان.",
-    "body": "**السؤال:** من ثالث الخلفاء الراشدين؟\n\n**الجواب:** عثمان بن عفان.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "anbiya",
-      "الأنبياء"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 391,
-    "view_count": 391,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-26"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-27",
-    "external_key": "qa-ruling-seed-qa-27",
-    "title": "أول الخلفاء الراشدين؟",
-    "summary": "أبو بكر الصديق.",
-    "body": "**السؤال:** من أول الخلفاء الراشدين؟\n\n**الجواب:** أبو بكر الصديق.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 373,
-    "view_count": 373,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-27"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-28",
-    "external_key": "qa-ruling-seed-qa-28",
-    "title": "ثاني الخلفاء الراشدين؟",
-    "summary": "عمر بن الخطاب.",
-    "body": "**السؤال:** من ثاني الخلفاء الراشدين؟\n\n**الجواب:** عمر بن الخطاب.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 323,
-    "view_count": 323,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-28"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-29",
-    "external_key": "qa-ruling-seed-qa-29",
-    "title": "ثالث الخلفاء الراشدين؟",
-    "summary": "عثمان بن عفان.",
-    "body": "**السؤال:** من ثالث الخلفاء الراشدين؟\n\n**الجواب:** عثمان بن عفان.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 110,
-    "view_count": 110,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-29"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-30",
-    "external_key": "qa-ruling-seed-qa-30",
-    "title": "رابع الخلفاء الراشدين؟",
-    "summary": "علي بن أبي طالب.",
-    "body": "**السؤال:** من رابع الخلفاء الراشدين؟\n\n**الجواب:** علي بن أبي طالب.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 144,
-    "view_count": 144,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-30"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-31",
-    "external_key": "qa-ruling-seed-qa-31",
-    "title": "الصحابي الملقب بذي النورين؟",
-    "summary": "عثمان بن عفان.",
-    "body": "**السؤال:** من الصحابي الملقب بذي النورين؟\n\n**الجواب:** عثمان بن عفان.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 315,
-    "view_count": 315,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-31"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-32",
-    "external_key": "qa-ruling-seed-qa-32",
-    "title": "الصحابي الملقب بالفاروق؟",
-    "summary": "عمر بن الخطاب.",
-    "body": "**السؤال:** من الصحابي الملقب بالفاروق؟\n\n**الجواب:** عمر بن الخطاب.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 339,
-    "view_count": 339,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-32"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-33",
-    "external_key": "qa-ruling-seed-qa-33",
-    "title": "أكثر الصحابة رواية للحديث؟",
-    "summary": "أبو هريرة.",
-    "body": "**السؤال:** من أكثر الصحابة رواية للحديث؟\n\n**الجواب:** أبو هريرة.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 586,
-    "view_count": 586,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-33"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-34",
-    "external_key": "qa-ruling-seed-qa-34",
-    "title": "أول الرجال إسلاماً؟",
-    "summary": "أبو بكر الصديق.",
-    "body": "**السؤال:** من أول الرجال إسلاماً؟\n\n**الجواب:** أبو بكر الصديق.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 456,
-    "view_count": 456,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-34"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-35",
-    "external_key": "qa-ruling-seed-qa-35",
-    "title": "أول الصبيان إسلاماً؟",
-    "summary": "علي بن أبي طالب.",
-    "body": "**السؤال:** من أول الصبيان إسلاماً؟\n\n**الجواب:** علي بن أبي طالب.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 293,
-    "view_count": 293,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-35"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-36",
-    "external_key": "qa-ruling-seed-qa-36",
-    "title": "أم المؤمنين ابنة أبي بكر؟",
-    "summary": "عائشة رضي الله عنها.",
-    "body": "**السؤال:** من أم المؤمنين ابنة أبي بكر؟\n\n**الجواب:** عائشة رضي الله عنها.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 581,
-    "view_count": 581,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-36"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-37",
-    "external_key": "qa-ruling-seed-qa-37",
-    "title": "أول الرسل إلى أهل الأرض بعد آدم؟",
-    "summary": "نوح عليه السلام.",
-    "body": "**السؤال:** من أول الرسل إلى أهل الأرض بعد آدم؟\n\n**الجواب:** نوح عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 134,
-    "view_count": 134,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-37"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-38",
-    "external_key": "qa-ruling-seed-qa-38",
-    "title": "النبي الذي اتخذه الله خليلاً؟",
-    "summary": "إبراهيم عليه السلام.",
-    "body": "**السؤال:** من النبي الذي اتخذه الله خليلاً؟\n\n**الجواب:** إبراهيم عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 187,
-    "view_count": 187,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-38"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-39",
-    "external_key": "qa-ruling-seed-qa-39",
-    "title": "النبي الذي كلمه الله تكليماً؟",
-    "summary": "موسى عليه السلام.",
-    "body": "**السؤال:** من النبي الذي كلمه الله تكليماً؟\n\n**الجواب:** موسى عليه السلام.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 214,
-    "view_count": 214,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-39"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-40",
-    "external_key": "qa-ruling-seed-qa-40",
-    "title": "بماذا يتطهر المسلم عند عدم وجود الماء؟",
-    "summary": "التيمم.",
-    "body": "**السؤال:** بماذا يتطهر المسلم عند عدم وجود الماء؟\n\n**الجواب:** التيمم.",
-    "category": "الطهارة",
-    "subcategory": "أحكام الطهارة",
-    "subcategories": [
-      "أحكام الطهارة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "واجب",
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الطهارة",
-      "tahara",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 304,
-    "view_count": 304,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-40"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-41",
-    "external_key": "qa-ruling-seed-qa-41",
-    "title": "الطهارة المطلوبة قبل الصلاة؟",
-    "summary": "الوضوء.",
-    "body": "**السؤال:** ما الطهارة المطلوبة قبل الصلاة؟\n\n**الجواب:** الوضوء.",
-    "category": "الطهارة",
-    "subcategory": "أحكام الطهارة",
-    "subcategories": [
-      "أحكام الطهارة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "واجب",
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الطهارة",
-      "tahara",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 435,
-    "view_count": 435,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-41"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-47",
-    "external_key": "qa-ruling-seed-qa-47",
-    "title": "أول الرسل إلى أهل الأرض بعد آدم؟",
-    "summary": "نوح عليه السلام.",
-    "body": "**السؤال:** من أول الرسل إلى أهل الأرض بعد آدم؟\n\n**الجواب:** نوح عليه السلام.",
-    "category": "الطهارة",
-    "subcategory": "أحكام الطهارة",
-    "subcategories": [
-      "أحكام الطهارة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الطهارة",
-      "tahara",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 475,
-    "view_count": 475,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-47"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-48",
-    "external_key": "qa-ruling-seed-qa-48",
-    "title": "النبي الذي اتخذه الله خليلاً؟",
-    "summary": "إبراهيم عليه السلام.",
-    "body": "**السؤال:** من النبي الذي اتخذه الله خليلاً؟\n\n**الجواب:** إبراهيم عليه السلام.",
-    "category": "الطهارة",
-    "subcategory": "أحكام الطهارة",
-    "subcategories": [
-      "أحكام الطهارة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الطهارة",
-      "tahara",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 441,
-    "view_count": 441,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-48"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-49",
-    "external_key": "qa-ruling-seed-qa-49",
-    "title": "النبي الذي كلمه الله تكليماً؟",
-    "summary": "موسى عليه السلام.",
-    "body": "**السؤال:** من النبي الذي كلمه الله تكليماً؟\n\n**الجواب:** موسى عليه السلام.",
-    "category": "الطهارة",
-    "subcategory": "أحكام الطهارة",
-    "subcategories": [
-      "أحكام الطهارة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الطهارة",
-      "tahara",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 394,
-    "view_count": 394,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-49"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-50",
-    "external_key": "qa-ruling-seed-qa-50",
-    "title": "النبي الذي أرسل إلى قوم عاد؟",
-    "summary": "هود عليه السلام.",
-    "body": "**السؤال:** من النبي الذي أرسل إلى قوم عاد؟\n\n**الجواب:** هود عليه السلام.",
-    "category": "الطهارة",
-    "subcategory": "أحكام الطهارة",
-    "subcategories": [
-      "أحكام الطهارة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الطهارة",
-      "tahara",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 485,
-    "view_count": 485,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-50"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-51",
-    "external_key": "qa-ruling-seed-qa-51",
-    "title": "النبي الذي أرسل إلى قوم ثمود؟",
-    "summary": "صالح عليه السلام.",
-    "body": "**السؤال:** من النبي الذي أرسل إلى قوم ثمود؟\n\n**الجواب:** صالح عليه السلام.",
-    "category": "الطهارة",
-    "subcategory": "أحكام الطهارة",
-    "subcategories": [
-      "أحكام الطهارة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الطهارة",
-      "tahara",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 214,
-    "view_count": 214,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-51"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-52",
-    "external_key": "qa-ruling-seed-qa-52",
-    "title": "النبي الذي ابتلعه الحوت؟",
-    "summary": "يونس عليه السلام.",
-    "body": "**السؤال:** من النبي الذي ابتلعه الحوت؟\n\n**الجواب:** يونس عليه السلام.",
-    "category": "الطهارة",
-    "subcategory": "أحكام الطهارة",
-    "subcategories": [
-      "أحكام الطهارة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الطهارة",
-      "tahara",
-      "الطهارة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 467,
-    "view_count": 467,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-52"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-53",
-    "external_key": "qa-ruling-seed-qa-53",
-    "title": "أول ما يحاسب عليه العبد من عمله؟",
-    "summary": "الصلاة.",
-    "body": "**السؤال:** ما أول ما يحاسب عليه العبد من عمله؟\n\n**الجواب:** الصلاة.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "واجب",
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 352,
-    "view_count": 352,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-53"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-54",
-    "external_key": "qa-ruling-seed-qa-54",
-    "title": "كم عدد الصلوات المفروضة في اليوم والليلة؟",
-    "summary": "خمس صلوات.",
-    "body": "**السؤال:** كم عدد الصلوات المفروضة في اليوم والليلة؟\n\n**الجواب:** خمس صلوات.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "واجب",
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 148,
-    "view_count": 148,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-54"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-55",
-    "external_key": "qa-ruling-seed-qa-55",
-    "title": "القبلة التي يتجه إليها المسلمون في الصلاة؟",
-    "summary": "الكعبة.",
-    "body": "**السؤال:** ما القبلة التي يتجه إليها المسلمون في الصلاة؟\n\n**الجواب:** الكعبة.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "واجب",
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 222,
-    "view_count": 222,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-55"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-56",
-    "external_key": "qa-ruling-seed-qa-56",
-    "title": "أول الرسل إلى أهل الأرض بعد آدم؟",
-    "summary": "نوح عليه السلام.",
-    "body": "**السؤال:** من أول الرسل إلى أهل الأرض بعد آدم؟\n\n**الجواب:** نوح عليه السلام.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 133,
-    "view_count": 133,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-56"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-57",
-    "external_key": "qa-ruling-seed-qa-57",
-    "title": "النبي الذي اتخذه الله خليلاً؟",
-    "summary": "إبراهيم عليه السلام.",
-    "body": "**السؤال:** من النبي الذي اتخذه الله خليلاً؟\n\n**الجواب:** إبراهيم عليه السلام.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 137,
-    "view_count": 137,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-57"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-58",
-    "external_key": "qa-ruling-seed-qa-58",
-    "title": "النبي الذي كلمه الله تكليماً؟",
-    "summary": "موسى عليه السلام.",
-    "body": "**السؤال:** من النبي الذي كلمه الله تكليماً؟\n\n**الجواب:** موسى عليه السلام.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 269,
-    "view_count": 269,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-58"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-59",
-    "external_key": "qa-ruling-seed-qa-59",
-    "title": "النبي الذي أرسل إلى قوم عاد؟",
-    "summary": "هود عليه السلام.",
-    "body": "**السؤال:** من النبي الذي أرسل إلى قوم عاد؟\n\n**الجواب:** هود عليه السلام.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 449,
-    "view_count": 449,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-59"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-60",
-    "external_key": "qa-ruling-seed-qa-60",
-    "title": "النبي الذي أرسل إلى قوم ثمود؟",
-    "summary": "صالح عليه السلام.",
-    "body": "**السؤال:** من النبي الذي أرسل إلى قوم ثمود؟\n\n**الجواب:** صالح عليه السلام.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 277,
-    "view_count": 277,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-60"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-61",
-    "external_key": "qa-ruling-seed-qa-61",
-    "title": "النبي الذي ابتلعه الحوت؟",
-    "summary": "يونس عليه السلام.",
-    "body": "**السؤال:** من النبي الذي ابتلعه الحوت؟\n\n**الجواب:** يونس عليه السلام.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 195,
-    "view_count": 195,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-61"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-62",
-    "external_key": "qa-ruling-seed-qa-62",
-    "title": "النبي الذي رفعه الله إليه؟",
-    "summary": "عيسى عليه السلام.",
-    "body": "**السؤال:** من النبي الذي رفعه الله إليه؟\n\n**الجواب:** عيسى عليه السلام.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 173,
-    "view_count": 173,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-62"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-63",
-    "external_key": "qa-ruling-seed-qa-63",
-    "title": "والد إسماعيل عليه السلام؟",
-    "summary": "إبراهيم عليه السلام.",
-    "body": "**السؤال:** من والد إسماعيل عليه السلام؟\n\n**الجواب:** إبراهيم عليه السلام.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 397,
-    "view_count": 397,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-63"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-64",
-    "external_key": "qa-ruling-seed-qa-64",
-    "title": "النبي الذي سخر الله له الريح؟",
-    "summary": "سليمان عليه السلام.",
-    "body": "**السؤال:** من النبي الذي سخر الله له الريح؟\n\n**الجواب:** سليمان عليه السلام.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 330,
-    "view_count": 330,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-64"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-65",
-    "external_key": "qa-ruling-seed-qa-65",
-    "title": "النبي الذي اشتهر بالصبر على البلاء؟",
-    "summary": "أيوب عليه السلام.",
-    "body": "**السؤال:** من النبي الذي اشتهر بالصبر على البلاء؟\n\n**الجواب:** أيوب عليه السلام.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 365,
-    "view_count": 365,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-65"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-66",
-    "external_key": "qa-ruling-seed-qa-66",
-    "title": "العبادة المالية الواجبة على المال بشروطها؟",
-    "summary": "الزكاة.",
-    "body": "**السؤال:** ما العبادة المالية الواجبة على المال بشروطها؟\n\n**الجواب:** الزكاة.",
+    "id": "ruling-zakat-recipients-part-8",
+    "external_key": "ruling-zakat-recipients-part-8",
+    "title": "مصارف الزكاة الثمانية: **ابن السبيل:** المسافر المنقطع عن ماله.",
+    "summary": "**ابن السبيل:** المسافر المنقطع عن ماله.",
+    "body": "**ابن السبيل:** المسافر المنقطع عن ماله.\n\n**من:** مصارف الزكاة الثمانية",
     "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "واجب",
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "زكاة المال",
-      "zakat",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 131,
-    "view_count": 131,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-66"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-67",
-    "external_key": "qa-ruling-seed-qa-67",
-    "title": "أول الرسل إلى أهل الأرض بعد آدم؟",
-    "summary": "نوح عليه السلام.",
-    "body": "**السؤال:** من أول الرسل إلى أهل الأرض بعد آدم؟\n\n**الجواب:** نوح عليه السلام.",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
+    "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
     "scholar_opinions": [],
     "evidence": [
       {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
+        "type": "قرآن",
+        "text": "إِنَّمَا الصَّدَقَاتُ لِلْفُقَرَاءِ وَالْمَسَاكِينِ وَالْعَامِلِينَ عَلَيْهَا",
+        "source": "سورة التوبة: 60"
       }
     ],
     "references": [
       {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
+        "text": "تفسير ابن كثير",
+        "source": "سورة التوبة، الآية 60"
       }
     ],
     "keywords": [
-      "زكاة المال",
-      "zakat",
-      "الزكاة"
+      "زكاة",
+      "مصارف",
+      "فقراء",
+      "توزيع"
     ],
     "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 373,
-    "view_count": 373,
+    "importance_score": 80,
+    "popularity_score": 3900,
+    "view_count": 3900,
     "search_count": 0,
     "status": "approved",
     "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-67"
-    ],
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-68",
-    "external_key": "qa-ruling-seed-qa-68",
-    "title": "النبي الذي اتخذه الله خليلاً؟",
-    "summary": "إبراهيم عليه السلام.",
-    "body": "**السؤال:** من النبي الذي اتخذه الله خليلاً؟\n\n**الجواب:** إبراهيم عليه السلام.",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "زكاة المال",
-      "zakat",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 229,
-    "view_count": 229,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-68"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-69",
-    "external_key": "qa-ruling-seed-qa-69",
-    "title": "النبي الذي كلمه الله تكليماً؟",
-    "summary": "موسى عليه السلام.",
-    "body": "**السؤال:** من النبي الذي كلمه الله تكليماً؟\n\n**الجواب:** موسى عليه السلام.",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "زكاة المال",
-      "zakat",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 333,
-    "view_count": 333,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-69"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-70",
-    "external_key": "qa-ruling-seed-qa-70",
-    "title": "النبي الذي أرسل إلى قوم عاد؟",
-    "summary": "هود عليه السلام.",
-    "body": "**السؤال:** من النبي الذي أرسل إلى قوم عاد؟\n\n**الجواب:** هود عليه السلام.",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "زكاة المال",
-      "zakat",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 310,
-    "view_count": 310,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-70"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-71",
-    "external_key": "qa-ruling-seed-qa-71",
-    "title": "النبي الذي أرسل إلى قوم ثمود؟",
-    "summary": "صالح عليه السلام.",
-    "body": "**السؤال:** من النبي الذي أرسل إلى قوم ثمود؟\n\n**الجواب:** صالح عليه السلام.",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "زكاة المال",
-      "zakat",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 522,
-    "view_count": 522,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-71"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-72",
-    "external_key": "qa-ruling-seed-qa-72",
-    "title": "النبي الذي ابتلعه الحوت؟",
-    "summary": "يونس عليه السلام.",
-    "body": "**السؤال:** من النبي الذي ابتلعه الحوت؟\n\n**الجواب:** يونس عليه السلام.",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "زكاة المال",
-      "zakat",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 447,
-    "view_count": 447,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-72"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-73",
-    "external_key": "qa-ruling-seed-qa-73",
-    "title": "النبي الذي رفعه الله إليه؟",
-    "summary": "عيسى عليه السلام.",
-    "body": "**السؤال:** من النبي الذي رفعه الله إليه؟\n\n**الجواب:** عيسى عليه السلام.",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "زكاة المال",
-      "zakat",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 230,
-    "view_count": 230,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-73"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-74",
-    "external_key": "qa-ruling-seed-qa-74",
-    "title": "والد إسماعيل عليه السلام؟",
-    "summary": "إبراهيم عليه السلام.",
-    "body": "**السؤال:** من والد إسماعيل عليه السلام؟\n\n**الجواب:** إبراهيم عليه السلام.",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "زكاة المال",
-      "zakat",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 493,
-    "view_count": 493,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-74"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-75",
-    "external_key": "qa-ruling-seed-qa-75",
-    "title": "النبي الذي سخر الله له الريح؟",
-    "summary": "سليمان عليه السلام.",
-    "body": "**السؤال:** من النبي الذي سخر الله له الريح؟\n\n**الجواب:** سليمان عليه السلام.",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "زكاة المال",
-      "zakat",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 157,
-    "view_count": 157,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-75"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-76",
-    "external_key": "qa-ruling-seed-qa-76",
-    "title": "النبي الذي اشتهر بالصبر على البلاء؟",
-    "summary": "أيوب عليه السلام.",
-    "body": "**السؤال:** من النبي الذي اشتهر بالصبر على البلاء؟\n\n**الجواب:** أيوب عليه السلام.",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "زكاة المال",
-      "zakat",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 299,
-    "view_count": 299,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-76"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-77",
-    "external_key": "qa-ruling-seed-qa-77",
-    "title": "أول الخلفاء الراشدين؟",
-    "summary": "أبو بكر الصديق.",
-    "body": "**السؤال:** من أول الخلفاء الراشدين؟\n\n**الجواب:** أبو بكر الصديق.",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "زكاة المال",
-      "zakat",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 107,
-    "view_count": 107,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-77"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-78",
-    "external_key": "qa-ruling-seed-qa-78",
-    "title": "ثاني الخلفاء الراشدين؟",
-    "summary": "عمر بن الخطاب.",
-    "body": "**السؤال:** من ثاني الخلفاء الراشدين؟\n\n**الجواب:** عمر بن الخطاب.",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "زكاة المال",
-      "zakat",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 186,
-    "view_count": 186,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-78"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-79",
-    "external_key": "qa-ruling-seed-qa-79",
-    "title": "في أي شهر يصوم المسلمون؟",
-    "summary": "رمضان.",
-    "body": "**السؤال:** في أي شهر يصوم المسلمون؟\n\n**الجواب:** رمضان.",
-    "category": "الصيام",
-    "subcategory": "صيام رمضان",
-    "subcategories": [
-      "صيام رمضان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "واجب",
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "صيام رمضان",
-      "sawm",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 254,
-    "view_count": 254,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-79"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-80",
-    "external_key": "qa-ruling-seed-qa-80",
-    "title": "الوجبة التي تكون قبل الفجر للصائم؟",
-    "summary": "السحور، وهو سنة مؤكدة لقوله ﷺ: (تسحّروا فإن في السحور بركة) — متفق عليه.",
-    "body": "**السؤال:** ما الوجبة التي تكون قبل الفجر للصائم؟\n\n**الجواب:** السحور، وهو سنة مؤكدة لقوله ﷺ: (تسحّروا فإن في السحور بركة) — متفق عليه.",
-    "category": "الصيام",
-    "subcategory": "صيام رمضان",
-    "subcategories": [
-      "صيام رمضان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "مستحب",
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "صيام رمضان",
-      "sawm",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 204,
-    "view_count": 204,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-80"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-81",
-    "external_key": "qa-ruling-seed-qa-81",
-    "title": "أول الرسل إلى أهل الأرض بعد آدم؟",
-    "summary": "نوح عليه السلام.",
-    "body": "**السؤال:** من أول الرسل إلى أهل الأرض بعد آدم؟\n\n**الجواب:** نوح عليه السلام.",
-    "category": "الصيام",
-    "subcategory": "صيام رمضان",
-    "subcategories": [
-      "صيام رمضان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "صيام رمضان",
-      "sawm",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 108,
-    "view_count": 108,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-81"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-82",
-    "external_key": "qa-ruling-seed-qa-82",
-    "title": "النبي الذي اتخذه الله خليلاً؟",
-    "summary": "إبراهيم عليه السلام.",
-    "body": "**السؤال:** من النبي الذي اتخذه الله خليلاً؟\n\n**الجواب:** إبراهيم عليه السلام.",
-    "category": "الصيام",
-    "subcategory": "صيام رمضان",
-    "subcategories": [
-      "صيام رمضان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "صيام رمضان",
-      "sawm",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 217,
-    "view_count": 217,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-82"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-83",
-    "external_key": "qa-ruling-seed-qa-83",
-    "title": "النبي الذي كلمه الله تكليماً؟",
-    "summary": "موسى عليه السلام.",
-    "body": "**السؤال:** من النبي الذي كلمه الله تكليماً؟\n\n**الجواب:** موسى عليه السلام.",
-    "category": "الصيام",
-    "subcategory": "صيام رمضان",
-    "subcategories": [
-      "صيام رمضان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "صيام رمضان",
-      "sawm",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 160,
-    "view_count": 160,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-83"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-84",
-    "external_key": "qa-ruling-seed-qa-84",
-    "title": "النبي الذي أرسل إلى قوم عاد؟",
-    "summary": "هود عليه السلام.",
-    "body": "**السؤال:** من النبي الذي أرسل إلى قوم عاد؟\n\n**الجواب:** هود عليه السلام.",
-    "category": "الصيام",
-    "subcategory": "صيام رمضان",
-    "subcategories": [
-      "صيام رمضان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "صيام رمضان",
-      "sawm",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 316,
-    "view_count": 316,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-84"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-85",
-    "external_key": "qa-ruling-seed-qa-85",
-    "title": "النبي الذي أرسل إلى قوم ثمود؟",
-    "summary": "صالح عليه السلام.",
-    "body": "**السؤال:** من النبي الذي أرسل إلى قوم ثمود؟\n\n**الجواب:** صالح عليه السلام.",
-    "category": "الصيام",
-    "subcategory": "صيام رمضان",
-    "subcategories": [
-      "صيام رمضان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "صيام رمضان",
-      "sawm",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 444,
-    "view_count": 444,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-85"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-86",
-    "external_key": "qa-ruling-seed-qa-86",
-    "title": "النبي الذي ابتلعه الحوت؟",
-    "summary": "يونس عليه السلام.",
-    "body": "**السؤال:** من النبي الذي ابتلعه الحوت؟\n\n**الجواب:** يونس عليه السلام.",
-    "category": "الصيام",
-    "subcategory": "صيام رمضان",
-    "subcategories": [
-      "صيام رمضان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "صيام رمضان",
-      "sawm",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 348,
-    "view_count": 348,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-86"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-87",
-    "external_key": "qa-ruling-seed-qa-87",
-    "title": "النبي الذي رفعه الله إليه؟",
-    "summary": "عيسى عليه السلام.",
-    "body": "**السؤال:** من النبي الذي رفعه الله إليه؟\n\n**الجواب:** عيسى عليه السلام.",
-    "category": "الصيام",
-    "subcategory": "صيام رمضان",
-    "subcategories": [
-      "صيام رمضان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "صيام رمضان",
-      "sawm",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 429,
-    "view_count": 429,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-87"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-88",
-    "external_key": "qa-ruling-seed-qa-88",
-    "title": "والد إسماعيل عليه السلام؟",
-    "summary": "إبراهيم عليه السلام.",
-    "body": "**السؤال:** من والد إسماعيل عليه السلام؟\n\n**الجواب:** إبراهيم عليه السلام.",
-    "category": "الصيام",
-    "subcategory": "صيام رمضان",
-    "subcategories": [
-      "صيام رمضان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "صيام رمضان",
-      "sawm",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 280,
-    "view_count": 280,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-88"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-89",
-    "external_key": "qa-ruling-seed-qa-89",
-    "title": "النبي الذي سخر الله له الريح؟",
-    "summary": "سليمان عليه السلام.",
-    "body": "**السؤال:** من النبي الذي سخر الله له الريح؟\n\n**الجواب:** سليمان عليه السلام.",
-    "category": "الصيام",
-    "subcategory": "صيام رمضان",
-    "subcategories": [
-      "صيام رمضان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "صيام رمضان",
-      "sawm",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 519,
-    "view_count": 519,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-89"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-90",
-    "external_key": "qa-ruling-seed-qa-90",
-    "title": "النبي الذي اشتهر بالصبر على البلاء؟",
-    "summary": "أيوب عليه السلام.",
-    "body": "**السؤال:** من النبي الذي اشتهر بالصبر على البلاء؟\n\n**الجواب:** أيوب عليه السلام.",
-    "category": "الصيام",
-    "subcategory": "صيام رمضان",
-    "subcategories": [
-      "صيام رمضان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "صيام رمضان",
-      "sawm",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 218,
-    "view_count": 218,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-90"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-91",
-    "external_key": "qa-ruling-seed-qa-91",
-    "title": "أول الخلفاء الراشدين؟",
-    "summary": "أبو بكر الصديق.",
-    "body": "**السؤال:** من أول الخلفاء الراشدين؟\n\n**الجواب:** أبو بكر الصديق.",
-    "category": "الصيام",
-    "subcategory": "صيام رمضان",
-    "subcategories": [
-      "صيام رمضان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "صيام رمضان",
-      "sawm",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 279,
-    "view_count": 279,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-91"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-92",
-    "external_key": "qa-ruling-seed-qa-92",
-    "title": "الركن الأعظم في الحج؟",
-    "summary": "الوقوف بعرفة، لقوله ﷺ: (الحج عرفة) — وهو ركن لا يصح الحج بدونه.",
-    "body": "**السؤال:** ما الركن الأعظم في الحج؟\n\n**الجواب:** الوقوف بعرفة، لقوله ﷺ: (الحج عرفة) — وهو ركن لا يصح الحج بدونه.",
-    "category": "الحج والعمرة",
-    "subcategory": "أحكام الحج",
-    "subcategories": [
-      "أحكام الحج"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "ركن",
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الحج",
-      "hajj",
-      "الحج"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 148,
-    "view_count": 148,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-92"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-93",
-    "external_key": "qa-ruling-seed-qa-93",
-    "title": "البيت الذي يقصده المسلمون في الحج؟",
-    "summary": "الكعبة.",
-    "body": "**السؤال:** ما البيت الذي يقصده المسلمون في الحج؟\n\n**الجواب:** الكعبة.",
-    "category": "الحج والعمرة",
-    "subcategory": "أحكام الحج",
-    "subcategories": [
-      "أحكام الحج"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "واجب",
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الحج",
-      "hajj",
-      "الحج"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 120,
-    "view_count": 120,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-93"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-94",
-    "external_key": "qa-ruling-seed-qa-94",
-    "title": "أول الرسل إلى أهل الأرض بعد آدم؟",
-    "summary": "نوح عليه السلام.",
-    "body": "**السؤال:** من أول الرسل إلى أهل الأرض بعد آدم؟\n\n**الجواب:** نوح عليه السلام.",
-    "category": "الحج والعمرة",
-    "subcategory": "أحكام الحج",
-    "subcategories": [
-      "أحكام الحج"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجلس العلمي — الأسئلة والأجوبة",
-        "source": "qa-seed"
-      }
-    ],
-    "keywords": [
-      "أحكام الحج",
-      "hajj",
-      "الحج"
-    ],
-    "benefits": [],
-    "importance_score": 50,
-    "popularity_score": 365,
-    "view_count": 365,
-    "search_count": 0,
-    "status": "approved",
-    "verification_status": "approved",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-94"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-07T23:16:01.197Z",
-    "created_at": "2026-07-07T23:16:01.197Z",
-    "updated_at": "2026-07-07T23:16:01.197Z"
+    "published_at": "2024-05-20T08:00:00Z",
+    "created_at": "2024-05-20T08:00:00Z",
+    "updated_at": "2026-07-12T00:30:02.879Z"
   }
 ] as ShariaRulingExtended[];
 
-export const RULINGS_ENCYCLOPEDIA_TOTAL = 381;
+export const RULINGS_ENCYCLOPEDIA_TOTAL = 967;
