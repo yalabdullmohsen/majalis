@@ -10,6 +10,7 @@ import { usePageView } from "@/hooks/usePageView";
 import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { ContentMindMap } from "@/components/ContentMindMap";
+import { ScholarlyTrustBadge, type TrustData } from "@/components/ScholarlyTrustBadge";
 
 export default function LibraryDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<LibraryItem | null>(null);
@@ -62,6 +63,12 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
   const readUrl = item.external_url || item.file_url;
   const metaParts = [item.category, item.type, item.parts_label].filter(Boolean);
 
+  const trustData: TrustData = {
+    author:      item.author || null,
+    contentType: "نقل",
+    isApproved:  item.status === "approved" ? true : null,
+  };
+
   return (
     <ContentDetailLayout
       breadcrumbs={[
@@ -103,6 +110,7 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
         author={item.author}
         type="book"
       />
+      <ScholarlyTrustBadge data={trustData} compact />
       {!isCatalogBookId(item.id) && (
         <p className="library-detail-note">
           <Link href="/library">← العودة إلى المكتبة</Link>
