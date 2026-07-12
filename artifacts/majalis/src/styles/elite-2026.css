@@ -19008,6 +19008,34 @@ img[loading="lazy"]:not([src=""]) {
   .arkan-related__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* ── ركن الإسلام اليوم (.arod-card) ── */
+.arod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 1.25rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.arod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px;
+}
+.arod-card__icon { font-size: 2rem; line-height: 1; }
+.arod-card__num  { font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.7); letter-spacing: 0.05em; text-transform: uppercase; }
+.arod-card__title { font-size: 1.05rem; font-weight: 700; color: #FFFFFF; margin: 0; }
+.arod-card__sub   { font-size: 0.8rem; color: rgba(255,255,255,0.75); margin: 0; }
+.arod-card__summary { font-size: 0.9rem; line-height: 1.85; color: rgba(255,255,255,0.92); margin: 0; max-width: 560px; }
+.arod-card__quote {
+  font-size: 0.82rem; font-style: italic; color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 0.65rem; padding: 0.55rem 0.85rem; margin: 0;
+}
+.arod-card__scholar { font-style: normal; font-weight: 700; color: rgba(255,255,255,0.7); }
+
 /* ── نهاية §221 ─────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════
@@ -19176,6 +19204,34 @@ img[loading="lazy"]:not([src=""]) {
   .ai-card__body { padding: 0 1rem 1rem; }
   .ai-related__grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ── ركن الإيمان اليوم (.aiod-card) ── */
+.aiod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 1.25rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.aiod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px;
+}
+.aiod-card__icon { font-size: 2rem; line-height: 1; }
+.aiod-card__num  { font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.7); letter-spacing: 0.05em; }
+.aiod-card__title { font-size: 1.05rem; font-weight: 700; color: #FFFFFF; margin: 0; }
+.aiod-card__sub   { font-size: 0.8rem; color: rgba(255,255,255,0.75); margin: 0; }
+.aiod-card__summary { font-size: 0.9rem; line-height: 1.85; color: rgba(255,255,255,0.92); margin: 0; max-width: 560px; }
+.aiod-card__quote {
+  font-size: 0.82rem; font-style: italic; color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 0.65rem; padding: 0.55rem 0.85rem; margin: 0;
+}
+.aiod-card__scholar { font-style: normal; font-weight: 700; color: rgba(255,255,255,0.7); }
 
 /* ── نهاية §222 ─────────────────────────────────────────── */
 

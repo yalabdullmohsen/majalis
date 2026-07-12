@@ -1,7 +1,7 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link } from "wouter";
-import { ChevronDown, ChevronUp, Star } from "lucide-react";
+import { ChevronDown, ChevronUp, Sparkles, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -195,6 +195,13 @@ export default function ArkanImanPage() {
     });
   }, []);
 
+  const todayRukn = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return ARKAN_IMAN[(day - 1 + ARKAN_IMAN.length) % ARKAN_IMAN.length];
+  }, []);
+
   function toggle(num: number) {
     setOpenId((prev) => (prev === num ? null : num));
   }
@@ -225,6 +232,17 @@ export default function ArkanImanPage() {
           ))}
         </div>
       </section>
+
+      {/* ركن الإيمان اليوم */}
+      <div className="aiod-card">
+        <div className="aiod-card__badge"><Sparkles size={11} aria-hidden="true" /> ركن الإيمان اليوم</div>
+        <span className="aiod-card__icon"><SectionIcon name={todayRukn.icon} size={28} /></span>
+        <div className="aiod-card__num">{todayRukn.numAr}</div>
+        <h2 className="aiod-card__title">{todayRukn.title}</h2>
+        <p className="aiod-card__sub">{todayRukn.subtitle}</p>
+        <p className="aiod-card__summary">{todayRukn.summary}</p>
+        <p className="aiod-card__quote">«{todayRukn.scholarQuote.text}»<span className="aiod-card__scholar"> — {todayRukn.scholarQuote.scholar}</span></p>
+      </div>
 
       {/* قائمة الأركان */}
       <div className="ai-list">
