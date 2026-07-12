@@ -26,6 +26,7 @@ import { HomeNawawiHadith } from "@/components/home/HomeNawawiHadith";
 import { HomeInterestingTopics } from "@/components/home/HomeInterestingTopics";
 import { HomeMindMapSection } from "@/components/home/HomeMindMapSection";
 import { HomeMajlisToday } from "@/components/home/HomeMajlisToday";
+import { FridayBanner } from "@/components/FridayBanner";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import {
   BookMarked, BookOpen, Bot, CalendarDays, Car, Check, Clock,
@@ -565,6 +566,13 @@ export default function HomePage() {
           ))}
         </div>
       </nav>
+
+      {/* ══ بانر يوم الجمعة ══ */}
+      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 1rem" }}>
+        <SafeHomeSection name="FridayBanner">
+          <FridayBanner />
+        </SafeHomeSection>
+      </div>
 
       {/* ══ تذكير صيام ══ */}
       <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 1rem" }}>

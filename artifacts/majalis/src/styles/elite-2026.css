@@ -28210,3 +28210,231 @@ html[data-theme="dark"] .hadith-books-banner {
 .hb-mutafaq-info strong { color: var(--ds-emerald, #0E6E52); }
 .hb-mutafaq-info p { margin: .35rem 0 0; }
 html[data-theme="dark"] .hb-mutafaq-info { background: rgba(14,110,82,.09); border-color: rgba(14,110,82,.22); }
+
+/* ── §FRB — FridayBanner (تذكير يوم الجمعة) ────────────────────────────── */
+.frb-wrap {
+  position: relative;
+  background: linear-gradient(145deg, #0c2318 0%, #153025 55%, #1a3d2b 100%);
+  border: 1px solid rgba(250,248,242,0.12);
+  border-radius: 14px;
+  padding: 1.6rem 1.25rem 1.4rem;
+  margin: 1rem 0;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.04);
+}
+.frb-geo {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  pointer-events: none;
+}
+.frb-geo--bottom {
+  top: auto; bottom: 0.5rem; right: 1rem;
+  left: auto; width: 60px;
+}
+.frb-dismiss {
+  position: absolute;
+  top: 0.55rem;
+  left: 0.65rem;
+  background: transparent;
+  border: none;
+  color: rgba(250,248,242,0.35);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0.3rem 0.45rem;
+  border-radius: 6px;
+  line-height: 1;
+  transition: color 0.15s, background 0.15s;
+}
+.frb-dismiss:hover {
+  color: rgba(250,248,242,0.75);
+  background: rgba(255,255,255,0.06);
+}
+.frb-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+.frb-badge {
+  display: inline-block;
+  background: rgba(250,248,242,0.08);
+  border: 1px solid rgba(250,248,242,0.18);
+  color: rgba(250,248,242,0.75);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.75rem;
+  border-radius: 20px;
+  font-family: var(--font-body, Cairo, sans-serif);
+}
+.frb-ayah {
+  font-family: "Amiri Quran", "Amiri", "Scheherazade New", serif;
+  font-size: clamp(1.1rem, 4vw, 1.55rem);
+  font-weight: 400;
+  color: #FAF8F2;
+  line-height: 2;
+  margin: 0;
+  padding: 0.25rem 0;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+  direction: rtl;
+}
+.frb-ayah-pause {
+  color: rgba(250,248,242,0.45);
+  font-size: 0.9em;
+}
+.frb-ref {
+  display: block;
+  font-family: var(--font-body, Cairo, sans-serif);
+  font-size: 0.72rem;
+  color: rgba(250,248,242,0.45);
+  letter-spacing: 0.02em;
+}
+.frb-hadith {
+  font-family: var(--font-body, Cairo, sans-serif);
+  font-size: 0.82rem;
+  color: rgba(250,248,242,0.6);
+  margin: 0;
+  line-height: 1.65;
+  font-style: italic;
+}
+@media (max-width: 480px) {
+  .frb-wrap { padding: 1.3rem 1rem 1.2rem; border-radius: 10px; }
+  .frb-ayah { font-size: clamp(1rem, 5vw, 1.25rem); line-height: 2; }
+}
+html[data-theme="dark"] .frb-wrap {
+  border-color: rgba(250,248,242,0.09);
+}
+
+/* ── AdhanSettingsPage — permission badges ──────────────────────────────── */
+.ads-perm-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.22rem 0.65rem;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.ads-perm--ok   { background: rgba(14,110,82,.1); color: #0E6E52; border: 1px solid rgba(14,110,82,.25); }
+.ads-perm--err  { background: rgba(239,68,68,.08); color: #b91c1c; border: 1px solid rgba(239,68,68,.2); }
+.ads-perm--warn { background: rgba(245,158,11,.08); color: #92400e; border: 1px solid rgba(245,158,11,.2); }
+.ads-perm--muted{ background: rgba(0,0,0,.04); color: #6b7280; border: 1px solid rgba(0,0,0,.08); }
+
+/* ── §UQ-Qiraat — القراءات السبع (UlumQuranPage) ───────────────────────── */
+.uq-qiraat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+.uq-qiraat-card {
+  background: #fff;
+  border: 1px solid rgba(14,110,82,.14);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  transition: box-shadow 0.2s;
+}
+.uq-qiraat-card:hover { box-shadow: 0 4px 16px rgba(14,110,82,.1); }
+.uq-qiraat-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+.uq-qiraat-card__num {
+  flex-shrink: 0;
+  width: 1.8rem; height: 1.8rem;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #0E6E52, #153025);
+  color: #FAF8F2;
+  border-radius: 50%;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: var(--font-body, Cairo, sans-serif);
+}
+.uq-qiraat-card__name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #0E6E52;
+  margin: 0;
+  line-height: 1.35;
+}
+.uq-qiraat-card__imam {
+  font-size: 0.78rem;
+  color: #4b5563;
+  margin: 0;
+}
+.uq-qiraat-card__origin {
+  margin-right: auto;
+  font-size: 0.7rem;
+  color: #6b7280;
+  white-space: nowrap;
+  background: rgba(14,110,82,.07);
+  padding: 0.15rem 0.55rem;
+  border-radius: 8px;
+  align-self: flex-start;
+}
+.uq-qiraat-card__rawis {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.uq-qiraat-card__rawi-label {
+  font-size: 0.7rem;
+  color: #6b7280;
+}
+.uq-qiraat-card__rawi {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #153025;
+  background: rgba(21,48,37,.07);
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+}
+.uq-qiraat-card__sep { color: #9ca3af; font-size: 0.75rem; }
+.uq-qiraat-card__note {
+  font-size: 0.76rem;
+  color: #4b5563;
+  line-height: 1.55;
+  margin: 0;
+  border-top: 1px solid rgba(14,110,82,.08);
+  padding-top: 0.45rem;
+}
+
+.uq-qiraat-usul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  margin: 1rem 0;
+}
+.uq-usul-card {
+  background: rgba(14,110,82,.04);
+  border: 1px solid rgba(14,110,82,.12);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+}
+.uq-usul-card__title {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #0E6E52;
+  margin: 0 0 0.35rem;
+}
+.uq-usul-card__desc {
+  font-size: 0.77rem;
+  color: #374151;
+  line-height: 1.65;
+  margin: 0;
+}
+@media (max-width: 540px) {
+  .uq-qiraat-usul { grid-template-columns: 1fr; }
+  .uq-qiraat-grid { grid-template-columns: 1fr; }
+}
+html[data-theme="dark"] .uq-qiraat-card {
+  background: rgba(255,255,255,.04); border-color: rgba(14,110,82,.2);
+}
+html[data-theme="dark"] .uq-usul-card { background: rgba(14,110,82,.07); }

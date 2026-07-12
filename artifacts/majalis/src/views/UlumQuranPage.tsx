@@ -5,7 +5,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 
-type UQTab = "nuzul" | "jam" | "tafsir" | "ijaz" | "ahkam";
+type UQTab = "nuzul" | "jam" | "tafsir" | "ijaz" | "ahkam" | "qiraat";
 
 const TABS: { id: UQTab; label: string; icon: string }[] = [
   { id: "nuzul",  label: "النزول والتنجيم", icon: "🌙" },
@@ -13,6 +13,7 @@ const TABS: { id: UQTab; label: string; icon: string }[] = [
   { id: "tafsir", label: "التفسير وأنواعه",  icon: "🔍" },
   { id: "ijaz",   label: "الإعجاز القرآني",  icon: "✨" },
   { id: "ahkam",  label: "أحكام القرآن",     icon: "⚖️" },
+  { id: "qiraat", label: "القراءات السبع",   icon: "📖" },
 ];
 
 /* ── النزول ── */
@@ -130,6 +131,34 @@ const MUHKAM_MUTASHABIH = {
     ex: ["الم، حم، كهيعص", "الرحمن على العرش استوى", "يَدُ اللَّهِ فَوْقَ أَيْدِيهِمْ"],
   },
 };
+
+/* ── القراءات السبع ── */
+interface Qira {
+  name: string;
+  imam: string;
+  died: string;
+  origin: string;
+  rawi1: string;
+  rawi2: string;
+  note: string;
+}
+
+const QIRAAT_SABA: Qira[] = [
+  { name: "قراءة نافع",      imam: "نافع بن عبد الرحمن",   died: "ت 169هـ", origin: "المدينة المنورة", rawi1: "قالون",   rawi2: "ورش",   note: "أشيع القراءات في المغرب العربي وغرب أفريقيا (ورش) وليبيا وتونس (قالون)" },
+  { name: "قراءة ابن كثير",  imam: "عبدالله بن كثير",      died: "ت 120هـ", origin: "مكة المكرمة",    rawi1: "البزي",   rawi2: "قنبل",  note: "مكة المكرمة وإندونيسيا" },
+  { name: "قراءة أبي عمرو",  imam: "أبو عمرو بن العلاء",   died: "ت 154هـ", origin: "البصرة",         rawi1: "الدوري",  rawi2: "السوسي",note: "من أكثر القراءات توثيقاً في كتب الرواية، واسع الانتشار قديماً" },
+  { name: "قراءة ابن عامر",  imam: "عبدالله بن عامر",      died: "ت 118هـ", origin: "الشام",          rawi1: "هشام",    rawi2: "ابن ذكوان", note: "الشام والأردن وبعض بلدان المشرق" },
+  { name: "قراءة عاصم",      imam: "عاصم بن أبي النجود",   died: "ت 127هـ", origin: "الكوفة",         rawi1: "شعبة",    rawi2: "حفص",   note: "رواية حفص هي الأكثر انتشاراً في العالم الإسلامي (مصر، الخليج، تركيا، آسيا)" },
+  { name: "قراءة حمزة",      imam: "حمزة بن حبيب",         died: "ت 156هـ", origin: "الكوفة",         rawi1: "خلف",     rawi2: "خلاد",  note: "منتشرة في الكتب والدراسات العلمية المتخصصة" },
+  { name: "قراءة الكسائي",   imam: "علي بن حمزة الكسائي",  died: "ت 189هـ", origin: "الكوفة",         rawi1: "الليث",   rawi2: "الدوري",note: "إمام الكوفة ومن كبار أئمة النحو وعلوم العربية" },
+];
+
+const QIRAAT_USUL = [
+  { title: "شرط القبول",       desc: "اتفق العلماء على ثلاثة شروط للقراءة الصحيحة: (1) موافقة وجه في اللغة العربية، (2) موافقة رسم المصاحف العثمانية ولو احتمالاً، (3) صحة السند بالتواتر." },
+  { title: "القراءات المتواترة", desc: "القراءات السبع متواترة عند جمهور العلماء، وأضاف ابن الجزري إليها ثلاثاً أخرى فصارت العشر. وما عداها إما شاذ أو ضعيف." },
+  { title: "الأحرف السبعة",     desc: "الأحرف السبعة الواردة في الحديث ليست القراءات السبع، بل هي أوجه من التوسع اللغوي نزل بها القرآن. والعلاقة بينهما دقيقة وقد أطال العلماء في بيانها." },
+  { title: "وظيفة التجويد",     desc: "علم التجويد يُقعِّد أحكام قراءة القرآن كالمد والإدغام والإخفاء والقلقلة، وهو واجب عملي على كل قارئ. وقد ألّف فيه الإمام ابن الجزري متنه الشهير 'الجزرية'." },
+];
 
 const NASKH_TYPES = [
   { title: "نسخ الحكم والتلاوة", desc: "رُفع الحكم ورُفع النص معاً، وهو الأقل.", ex: "عشر رضعات معلومات كن يُحرّمن" },
@@ -416,6 +445,52 @@ export default function UlumQuranPage() {
             <div className="uq-info-box uq-info-box--mt">
               <span className="uq-info-box__icon">📌</span>
               <p>آيات الأحكام في القرآن تُقدَّر بـ 500 آية، بعض العلماء يقدّرها بـ 200 آية آية صريحة الحكم.</p>
+            </div>
+          </div>
+        )}
+
+        {/* ── القراءات السبع ── */}
+        {tab === "qiraat" && (
+          <div className="uq-section">
+            <p className="uq-lead">
+              القراءات السبع المتواترة هي طرق أداء القرآن الكريم المنقولة بالسند الصحيح عن النبي ﷺ، كل قراءة تتميز بخصائص أدائية وعلماء رواة محددين.
+            </p>
+
+            <div className="uq-qiraat-grid">
+              {QIRAAT_SABA.map((q, i) => (
+                <div key={i} className="uq-qiraat-card">
+                  <div className="uq-qiraat-card__head">
+                    <span className="uq-qiraat-card__num">{(i + 1).toLocaleString("ar-EG")}</span>
+                    <div>
+                      <h3 className="uq-qiraat-card__name">{q.name}</h3>
+                      <span className="uq-qiraat-card__imam">{q.imam} — {q.died}</span>
+                    </div>
+                    <span className="uq-qiraat-card__origin">{q.origin}</span>
+                  </div>
+                  <div className="uq-qiraat-card__rawis">
+                    <span className="uq-qiraat-card__rawi-label">الراويان:</span>
+                    <span className="uq-qiraat-card__rawi">{q.rawi1}</span>
+                    <span className="uq-qiraat-card__sep">·</span>
+                    <span className="uq-qiraat-card__rawi">{q.rawi2}</span>
+                  </div>
+                  <p className="uq-qiraat-card__note">{q.note}</p>
+                </div>
+              ))}
+            </div>
+
+            <h2 className="uq-subhead uq-subhead--mt">أصول علم القراءات</h2>
+            <div className="uq-qiraat-usul">
+              {QIRAAT_USUL.map((u, i) => (
+                <div key={i} className="uq-usul-card">
+                  <h3 className="uq-usul-card__title">{u.title}</h3>
+                  <p className="uq-usul-card__desc">{u.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="uq-info-box uq-info-box--mt">
+              <span className="uq-info-box__icon">📌</span>
+              <p>أشهر المراجع في القراءات: النشر في القراءات العشر لابن الجزري، والسبعة لابن مجاهد، وحرز الأماني الشاطبية للشاطبي.</p>
             </div>
           </div>
         )}
