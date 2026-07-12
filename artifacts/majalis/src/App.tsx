@@ -71,6 +71,15 @@ const SujoodSahwPage = lazy(() => import("@/views/SujoodSahwPage"));
 const AmradQalbiyyaPage = lazy(() => import("@/views/AmradQalbiyyaPage"));
 const DurusImaniyyaPage = lazy(() => import("@/views/DurusImaniyyaPage"));
 const DurusMutanawwiaPage = lazy(() => import("@/views/DurusMutanawwiaPage"));
+const ImanTopicsPage = lazy(() => import("@/views/ImanTopicsPage"));
+const QuranStudiesPage = lazy(() => import("@/views/QuranStudiesPage"));
+const SunnahStudiesPage = lazy(() => import("@/views/SunnahStudiesPage"));
+const TazkiyaTopicsPage = lazy(() => import("@/views/TazkiyaTopicsPage"));
+const TarikhIslamiPage = lazy(() => import("@/views/TarikhIslamiPage"));
+const UsraMujtamaPage = lazy(() => import("@/views/UsraMujtamaPage"));
+const FikrWaqiaPage = lazy(() => import("@/views/FikrWaqiaPage"));
+const MawsuaatPage = lazy(() => import("@/views/MawsuaatPage"));
+const MasaratPage = lazy(() => import("@/views/MasaratPage"));
 const SettingsPage = lazy(() => import("@/views/SettingsPage"));
 const AnnualCoursesPage = lazy(() => import("@/views/AnnualCoursesPage"));
 const AnnualCourseDetailPage = lazy(() => import("@/views/AnnualCourseDetailPage"));
@@ -324,6 +333,15 @@ function Router() {
       <Route path="/amrad-qalbiyya"><SafeLazyRoute component={AmradQalbiyyaPage} /></Route>
       <Route path="/durus-imaniyya"><SafeLazyRoute component={DurusImaniyyaPage} /></Route>
       <Route path="/durus-mutanawwia"><SafeLazyRoute component={DurusMutanawwiaPage} /></Route>
+      <Route path="/iman-topics"><SafeLazyRoute component={ImanTopicsPage} /></Route>
+      <Route path="/quran-studies"><SafeLazyRoute component={QuranStudiesPage} /></Route>
+      <Route path="/sunnah-studies"><SafeLazyRoute component={SunnahStudiesPage} /></Route>
+      <Route path="/tazkiya-topics"><SafeLazyRoute component={TazkiyaTopicsPage} /></Route>
+      <Route path="/tarikh-islami"><SafeLazyRoute component={TarikhIslamiPage} /></Route>
+      <Route path="/usra-mujtama"><SafeLazyRoute component={UsraMujtamaPage} /></Route>
+      <Route path="/fikr-waqia"><SafeLazyRoute component={FikrWaqiaPage} /></Route>
+      <Route path="/mawsuaat"><SafeLazyRoute component={MawsuaatPage} /></Route>
+      <Route path="/masarat"><SafeLazyRoute component={MasaratPage} /></Route>
       <Route path="/cards"><SafeLazyRoute component={CardsPage} /></Route>
       <Route path="/annual-courses/:id"><SafeLazyRoute component={AnnualCourseDetailPage} /></Route>
       <Route path="/annual-courses"><SafeLazyRoute component={AnnualCoursesPage} /></Route>

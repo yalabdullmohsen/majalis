@@ -49,6 +49,24 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/scholarly-research", label: "الباحث الشرعي" },
   { href: "/universities",       label: "دليل الجامعات" },
   { href: "/learning-path",      label: "خارطة طالب العلم" },
+  // الإيمان والعقيدة
+  { href: "/iman-topics",        label: "الإيمان والعقيدة" },
+  // الدراسات القرآنية
+  { href: "/quran-studies",      label: "الدراسات القرآنية" },
+  // دراسات السنة
+  { href: "/sunnah-studies",     label: "دراسات السنة" },
+  // تزكية النفس والأخلاق
+  { href: "/tazkiya-topics",     label: "تزكية النفس" },
+  // السيرة والتاريخ
+  { href: "/tarikh-islami",      label: "التاريخ الإسلامي" },
+  // الأسرة والمجتمع
+  { href: "/usra-mujtama",       label: "الأسرة والمجتمع" },
+  // الفكر والواقع
+  { href: "/fikr-waqia",         label: "الفكر والواقع" },
+  // الموسوعة العملية
+  { href: "/mawsuaat",           label: "الموسوعة العملية" },
+  // مسارات التعلم
+  { href: "/masarat",            label: "مسارات التعلم" },
   // القرآن
   { href: "/quran",         label: "القرآن" },
   { href: "/quran-radio",   label: "إذاعة القرآن" },
