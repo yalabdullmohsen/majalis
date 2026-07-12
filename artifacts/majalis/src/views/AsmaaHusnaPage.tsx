@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Search, Star, BookOpen, Heart } from "lucide-react";
+import { Search, Star, BookOpen, Heart, Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -120,11 +120,37 @@ const ASMAA: AsmaaEntry[] = [
   { num:99, arabic:"الرشيد",    transliteration:"Ar-Rashid",     meaning:"الموصل للخلق مقاصدهم",                            reference:"الحديث: تسعة وتسعون اسماً",                       benefit:"يطلب الرشاد في كل أمر",                         category:"العلم" },
 ];
 
+/* ─── اسم اليوم ─── */
+function todaysName(): AsmaaEntry {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return ASMAA[dayOfYear % ASMAA.length];
+}
+
+function NameOfDayCard({ entry, onOpen }: { entry: AsmaaEntry; onOpen: () => void }) {
+  return (
+    <div className="ah-name-of-day" onClick={onOpen} role="button" tabIndex={0}
+      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onOpen()}>
+      <div className="ah-nod-badge">
+        <Sparkles size={13} aria-hidden="true" />
+        اسم اليوم
+      </div>
+      <div className="ah-nod-num">{entry.num}</div>
+      <div className="ah-nod-arabic">{entry.arabic}</div>
+      <div className="ah-nod-trans">{entry.transliteration}</div>
+      <p className="ah-nod-meaning">{entry.meaning}</p>
+      <span className="ah-nod-cta">اقرأ التفاصيل ←</span>
+    </div>
+  );
+}
+
 /* ─── الصفحة ─── */
 export default function AsmaaHusnaPage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("الكل");
   const [selected, setSelected] = useState<AsmaaEntry | null>(null);
+  const todayName = useMemo(() => todaysName(), []);
   const [favs, setFavs] = useState<Set<number>>(() => {
     try { return new Set(JSON.parse(localStorage.getItem("ah-favs") || "[]")); }
     catch { return new Set(); }
@@ -189,6 +215,22 @@ export default function AsmaaHusnaPage() {
           <span>{favs.size} محفوظ</span>
         </div>
       </div>
+
+      {/* ═══ اسم اليوم ═══ */}
+      <NameOfDayCard entry={todayName} onOpen={() => setSelected(todayName)} />
+
+      {/* ═══ شريط تقدم المحفوظات ═══ */}
+      {favs.size > 0 && (
+        <div className="ah-progress-bar-wrap" aria-label={`حفظت ${favs.size} من 99 اسماً`}>
+          <div className="ah-progress-bar-labels">
+            <span>تقدمك في حفظ الأسماء</span>
+            <span>{favs.size} / 99</span>
+          </div>
+          <div className="ah-progress-bar-track" role="progressbar" aria-valuenow={favs.size} aria-valuemin={0} aria-valuemax={99}>
+            <div className="ah-progress-bar-fill" style={{ width: `${(favs.size / 99) * 100}%` }} />
+          </div>
+        </div>
+      )}
 
       {/* ═══ فلاتر ═══ */}
       <div className="ah-controls">
