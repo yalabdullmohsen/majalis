@@ -156,18 +156,18 @@ html {
   --majalis-emerald:       var(--msk-gold);
   --majalis-emerald-deep:  var(--msk-gold-deep);
   --majalis-emerald-muted: var(--msk-gold-dim);
-  --majalis-emerald-soft:  rgba(31,77,58,.06);
+  --majalis-emerald-soft:  rgba(23,107,87,.06);
   --majalis-blue:          var(--msk-sky);
   --majalis-blue-deep:     #145878;
   --majalis-blue-soft:     var(--msk-sky-dim);
   --majalis-brass:         var(--msk-gold);
   --majalis-brass-deep:    var(--msk-gold-deep);
-  --majalis-brass-soft:    rgba(31,77,58,.06);
+  --majalis-brass-soft:    rgba(23,107,87,.06);
   --majalis-sage:          #EAF3EF;
   --majalis-danger:        var(--msk-red);
   --majalis-danger-muted:  var(--msk-red-dim);
   --majalis-success:       var(--msk-green);
-  --majalis-warning:       #1F4D3A;
+  --majalis-warning:       var(--sys-warning, #B98232);
   --majalis-line:          var(--msk-border);
   --majalis-line-strong:   var(--msk-border-strong);
   --majalis-shadow:        var(--msk-shadow);
@@ -175,22 +175,22 @@ html {
   --majalis-shadow-lg:     var(--msk-shadow-lg);
   --majalis-shadow-xl:     0 24px 64px rgba(28,26,24,.13);
   --majalis-gold:          var(--msk-gold);
-  --majalis-gold-light:    rgba(31,77,58,.18);
+  --majalis-gold-light:    rgba(23,107,87,.18);
   --majalis-ivory:         var(--msk-canvas-1);
 
   /* ── جسر إرثي: متغيرات design-system.css القديمة ── */
   --bg-card:             var(--msk-canvas,   #FFFFFF);
-  --bg-base:             var(--msk-canvas-1, #F7FBF9);
-  --text-base:           var(--msk-text,     #1C1A18);
-  --text-body:           var(--msk-text-2,   #5C5550);
-  --text-muted:          var(--msk-text-3,   #918A85);
-  --majalis-accent:      var(--msk-gold,     #1F4D3A);
-  --majalis-surface-2:   var(--msk-canvas-1, #F7FBF9);
-  --majalis-surface-hover: rgba(31,77,58,0.04);
-  --majalis-surface-muted: var(--msk-canvas-1, #F7FBF9);
-  --ds-surface-2:        var(--msk-canvas-1, #F7FBF9);
+  --bg-base:             var(--msk-canvas-1, #F8F7F3);
+  --text-base:           var(--msk-text,     #17201D);
+  --text-body:           var(--msk-text-2,   #5E6964);
+  --text-muted:          var(--msk-text-3,   #89928E);
+  --majalis-accent:      var(--msk-gold,     #176B57);
+  --majalis-surface-2:   var(--msk-canvas-1, #F8F7F3);
+  --majalis-surface-hover: rgba(23,107,87,0.04);
+  --majalis-surface-muted: var(--msk-canvas-1, #F8F7F3);
+  --ds-surface-2:        var(--msk-canvas-1, #F8F7F3);
   --color-parchment:     var(--msk-canvas,   #FFFFFF);
-  --color-line:          var(--msk-border,   rgba(31,77,58,0.10));
+  --color-line:          var(--msk-border,   rgba(23,107,87,0.10));
 
   /* ── الخطوط ── IBM Plex Sans Arabic + Cairo (احتياطي) + Amiri ── */
   --font-primary:  "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
