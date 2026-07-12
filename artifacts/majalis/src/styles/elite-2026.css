@@ -1168,6 +1168,13 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
   color: rgba(255,255,255,0.70) !important;
 }
 
+/* ⑭ hnh__benefit-label داخل البطاقات الداكنة
+   القاعدة ① تُغيّر --clr-primary إلى #7ED4B5 (فاتح) فتصبح الخلفية فاتحة مع نص أبيض = تباين ضعيف */
+.home-main--v3 .ui-card .hnh__benefit-label {
+  background: rgba(255,255,255,0.15) !important;
+  color: #fff !important;
+}
+
 .home-section {
   padding: 2rem 0 !important;
 }
