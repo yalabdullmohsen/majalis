@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useScrollRestore } from "@/hooks/useScrollRestore";
 import { Link } from "wouter";
 import { Search, ChevronLeft, BookOpen, Star, Filter } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
@@ -1108,6 +1109,7 @@ const ERAS = ["الكل", "الأئمة الأربعة", "المحدثون", "ا
 const SPECIALTIES = ["الكل", "فقه", "حديث", "عقيدة", "تفسير", "أصول", "مقاصد", "لغة", "سيرة", "رجال"];
 
 export default function IslamicScholarsPage() {
+  useScrollRestore("/scholars");
   const [era, setEra] = useState("الكل");
   const [specialty, setSpecialty] = useState("الكل");
   const [query, setQuery] = useState("");
