@@ -326,6 +326,11 @@ const CONNECTIONS_MAP: { a: string; b: string; label: string }[] = [
   { a: "rulings",      b: "usul",      label: "الأحكام مبنية على أصول الفقه" },
   { a: "universities", b: "scholars",  label: "الجامعات حاضنة العلماء والبحث" },
   { a: "mindmaps",     b: "usul",      label: "الخرائط تُنظِّم مسائل الأصول" },
+  { a: "history",      b: "fiqh",      label: "تطور الفقه عبر الحقب التاريخية" },
+  { a: "seerah",       b: "aqidah",    label: "السيرة مصدر إثبات مسائل العقيدة" },
+  { a: "lessons",      b: "hadith",    label: "الدروس المتخصصة في شرح الحديث" },
+  { a: "arabic",       b: "maqasid",  label: "فهم اللغة شرط لاستيعاب مقاصد النص" },
+  { a: "books",        b: "aqidah",    label: "مؤلَّفات أهل السنة في تأصيل العقيدة" },
 ];
 
 export default function IslamicKnowledgeMapPage() {
