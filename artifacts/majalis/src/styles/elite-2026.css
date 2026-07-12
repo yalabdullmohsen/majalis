@@ -32671,3 +32671,150 @@ html[data-theme="dark"] tr:hover td {
   --ink:               #17201D;
   --sand:              #C7A96B;
 }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   §78 — نص أبيض على جميع الخلفيات الداكنة (بدون استثناء)
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/*
+   قائمة الحاويات ذات الخلفية الداكنة:
+   Hero / Page Headers / Card Headers / Footer / Learning Path / Dark Banners
+*/
+.hpv4-hero,
+.hpv4-hero *,
+.lesson-unified-card__header,
+.lesson-unified-card__header *,
+.ds-page-header,
+.ds-page-header *,
+.home-hero,
+.home-hero *,
+.home-learning-path-card,
+.home-learning-path-card *,
+.lessons-page-header,
+.lessons-page-header *,
+.scholars-page-header,
+.scholars-page-header *,
+.courses-page-header,
+.courses-page-header *,
+.library-page-header,
+.library-page-header *,
+.quran-page-header,
+.quran-page-header *,
+.fiqh-page-header,
+.fiqh-page-header *,
+.fatwas-page-header,
+.fatwas-page-header *,
+.hadith-page-header,
+.hadith-page-header *,
+.adhkar-page-header,
+.adhkar-page-header *,
+.site-footer,
+.site-footer *,
+footer,
+footer *,
+.page-hero-wrap,
+.page-hero-wrap *,
+[class*="page-header"][class*="dark"],
+[class*="page-header"][class*="dark"] *,
+[class*="-hero"],
+[class*="-hero"] *,
+.dark-section,
+.dark-section *,
+.dark-bg,
+.dark-bg *,
+/* Navbar dark elements */
+.navbar-v3 .site-brand-name,
+.navbar-v3 .site-brand-logotype__main,
+/* Prayer chip */
+.navbar-prayer-chip,
+.navbar-prayer-chip *,
+/* رأس صفحات أخرى بخلفية داكنة */
+.tawheed-page-header,
+.tawheed-page-header *,
+.seerah-page-header,
+.seerah-page-header *,
+.hadith-page-header,
+.hadith-page-header *,
+.adhkar-page-header,
+.adhkar-page-header *,
+.fiqh-page-header,
+.fiqh-page-header *,
+.quiz-page-header,
+.quiz-page-header * {
+  color: #FFFFFF !important;
+}
+
+/* تحديد الأيقونات ضمن الخلفيات الداكنة */
+.hpv4-hero svg,
+.lesson-unified-card__header svg,
+.ds-page-header svg,
+.home-learning-path-card svg,
+.lessons-page-header svg,
+.scholars-page-header svg,
+.courses-page-header svg,
+.library-page-header svg,
+.quran-page-header svg,
+.site-footer svg,
+footer svg {
+  color: #FFFFFF !important;
+  stroke: currentColor !important;
+}
+
+/* روابط ضمن الخلفيات الداكنة */
+.hpv4-hero a,
+.home-learning-path-card a,
+.ds-page-header a,
+.lessons-page-header a,
+.scholars-page-header a,
+.site-footer a,
+footer a {
+  color: rgba(255,255,255,0.85) !important;
+}
+.hpv4-hero a:hover,
+.home-learning-path-card a:hover,
+.site-footer a:hover,
+footer a:hover {
+  color: #FFFFFF !important;
+}
+
+/* أزرار داخل الخلفيات الداكنة */
+.hpv4-hero .btn--primary,
+.hpv4-hero .ds-btn--primary,
+.home-learning-path-card .btn--primary,
+.home-learning-path-card .ds-btn--primary {
+  background: rgba(255,255,255,0.15) !important;
+  border-color: rgba(255,255,255,0.30) !important;
+  color: #FFFFFF !important;
+}
+.hpv4-hero .btn--primary:hover,
+.home-learning-path-card .btn--primary:hover {
+  background: rgba(255,255,255,0.25) !important;
+  border-color: rgba(255,255,255,0.50) !important;
+}
+
+/* نص شبه شفاف على الخلفيات الداكنة (مساعد) */
+.hpv4-hero p,
+.ds-page-header p,
+.home-learning-path-card p,
+.lessons-page-header p,
+.scholars-page-header p {
+  color: rgba(255,255,255,0.80) !important;
+}
+
+/* placeholder ضمن الخلفيات الداكنة */
+.hpv4-hero input::placeholder,
+.ds-page-header input::placeholder {
+  color: rgba(255,255,255,0.55) !important;
+}
+
+/* dark mode: تأكيد النص الأبيض */
+html[data-theme="dark"] .hpv4-hero,
+html[data-theme="dark"] .hpv4-hero *,
+html[data-theme="dark"] .lesson-unified-card__header,
+html[data-theme="dark"] .lesson-unified-card__header *,
+html[data-theme="dark"] .home-learning-path-card,
+html[data-theme="dark"] .home-learning-path-card *,
+html[data-theme="dark"] .site-footer,
+html[data-theme="dark"] .site-footer * {
+  color: #FFFFFF !important;
+}
