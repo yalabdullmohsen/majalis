@@ -1552,36 +1552,38 @@ body > #root > div {
 }
 @keyframes hdc-progress { from { width: 0; } to { width: 100%; } }
 
-/* بطاقة المحتوى */
+/* بطاقة المحتوى — خلفية زمردية داكنة ونص أبيض */
 .hdc__card {
   min-height: 130px;
   padding: 1.25rem 1.25rem 1rem !important;
+  background: var(--elite-forest, #18362A) !important;
+  border-color: rgba(255,255,255,0.08) !important;
 }
 .hdc__body { display: flex; flex-direction: column; gap: 0.6rem; }
 .hdc__text {
   font-size: 1rem; line-height: 1.75;
-  color: var(--elite-ink, #0C0C0C);
+  color: rgba(255,255,255,0.93) !important;
   font-family: var(--font-quran, inherit);
 }
 .hdc__quote {
   margin: 0; padding: 0;
   font-size: 1rem; line-height: 1.75;
-  color: var(--elite-ink, #0C0C0C);
+  color: rgba(255,255,255,0.93) !important;
   font-family: var(--font-quran, inherit);
   border: none;
   font-style: normal;
 }
 .hdc__meta {
-  font-size: 0.78rem; color: var(--elite-muted, #6b7280);
+  font-size: 0.78rem; color: rgba(255,255,255,0.55) !important;
   margin: 0; line-height: 1.5;
 }
 .hdc__meaning {
-  font-size: 0.84rem; color: var(--elite-muted, #6b7280);
+  font-size: 0.84rem; color: rgba(255,255,255,0.65) !important;
   margin: 0; line-height: 1.6;
-  border-right: 2px solid var(--elite-forest, #18362A);
+  border-right: 2px solid rgba(255,255,255,0.25) !important;
   padding-right: 0.65rem;
 }
-.hdc__loading { font-size: 0.85rem; color: var(--elite-muted); margin: 0; }
+.hdc__loading { font-size: 0.85rem; color: rgba(255,255,255,0.5) !important; margin: 0; }
 .hdc__share { margin-top: 0.25rem; align-self: flex-start; }
 .hdc__qa-link {
   display: flex; flex-direction: column; gap: 0.5rem;
@@ -1589,11 +1591,11 @@ body > #root > div {
 }
 .hdc__question {
   font-size: 1rem; font-weight: 600;
-  color: var(--elite-ink); line-height: 1.6; margin: 0;
+  color: rgba(255,255,255,0.93) !important; line-height: 1.6; margin: 0;
 }
 .hdc__qa-cta {
   font-size: 0.78rem; font-weight: 600;
-  color: var(--elite-forest, #18362A);
+  color: rgba(255,255,255,0.6) !important;
 }
 
 /* ══════════════════════════════════════════════
