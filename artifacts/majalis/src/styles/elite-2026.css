@@ -19664,6 +19664,50 @@ img[loading="lazy"]:not([src=""]) {
   .sy-related__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* ── سنة اليوم (.sod-card) ── */
+.sod-card {
+  display: flex; flex-direction: column; gap: 0.55rem;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 1.5rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.sod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; width: fit-content;
+}
+.sod-card__cat { font-size: 0.78rem; color: rgba(255,255,255,0.72); }
+.sod-card__title { font-size: 1.1rem; font-weight: 700; color: #FFFFFF; margin: 0; }
+.sod-card__text { font-size: 0.95rem; line-height: 1.85; color: rgba(255,255,255,0.93); margin: 0; }
+.sod-card__source { font-size: 0.78rem; color: rgba(255,255,255,0.65); font-style: italic; }
+.sod-card__reward {
+  font-size: 0.85rem; color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 0.625rem; padding: 0.5rem 0.75rem;
+}
+.sod-card__howto {
+  font-size: 0.85rem; color: rgba(255,255,255,0.88);
+  background: rgba(255,255,255,0.08); border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem; display: flex; gap: 0.5rem;
+}
+.sod-card__howto-label {
+  font-weight: 700; color: rgba(255,255,255,0.95); white-space: nowrap;
+}
+.sod-card__apply {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-size: 0.82rem; font-weight: 600; cursor: pointer;
+  border: 1.5px solid rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.12); color: #FFFFFF;
+  border-radius: 100px; padding: 0.45rem 1.1rem;
+  width: fit-content; transition: background 0.18s, border-color 0.18s;
+}
+.sod-card__apply:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.7); }
+.sod-card__apply[aria-pressed="true"] { background: rgba(255,255,255,0.28); border-color: rgba(255,255,255,0.8); }
+
 /* ── نهاية §225 ─────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════
@@ -24545,6 +24589,36 @@ img[loading="lazy"]:not([src=""]) {
   .rq-aqwal-grid { grid-template-columns: 1fr; }
   .rq-tab { font-size: .82rem; padding: .4rem .85rem; }
 }
+
+/* ── رقيقة اليوم (.rod-card) ── */
+.rod-card {
+  display: flex; flex-direction: column; gap: 0.55rem;
+  padding: 1.5rem 1.25rem 1.25rem; margin: 0 0 1.5rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF; text-align: center;
+}
+.rod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; width: fit-content; margin: 0 auto;
+}
+.rod-card__title { font-size: 1.1rem; font-weight: 700; color: #FFFFFF; margin: 0; }
+.rod-card__quote { margin: 0; border: none; padding: 0; }
+.rod-card__text { font-size: 0.95rem; line-height: 1.9; color: rgba(255,255,255,0.93); margin: 0 0 0.4rem; }
+.rod-card__source { font-size: 0.78rem; color: rgba(255,255,255,0.65); font-style: italic; }
+.rod-card__copy {
+  display: inline-flex; align-items: center; gap: 0.45rem; margin: 0.25rem auto 0;
+  font-size: 0.82rem; font-weight: 600; cursor: pointer;
+  border: 1.5px solid rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.12); color: #FFFFFF;
+  border-radius: 100px; padding: 0.45rem 1.1rem;
+  transition: background 0.18s, border-color 0.18s;
+}
+.rod-card__copy:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.7); }
 
 /* ══════════════════════════════════════════════════════════════════
    §250 — تذكير صيام الاثنين والخميس  (.sawm-reminder)

@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { Copy, Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
@@ -395,6 +396,31 @@ const MUSAB_AWLIYA: Raqiqa[] = [
   },
 ];
 
+/* ─── رقيقة اليوم ─── */
+function todaysRaqiqa(): Raqiqa {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return RAQAIQ[(dayOfYear - 1 + RAQAIQ.length) % RAQAIQ.length];
+}
+
+function RaqiqaOfDayCard({ raqiqa, onCopy, copied }: { raqiqa: Raqiqa; onCopy: () => void; copied: boolean }) {
+  return (
+    <div className="rod-card">
+      <div className="rod-card__badge"><Sparkles size={11} aria-hidden="true" /> رقيقة اليوم</div>
+      <h2 className="rod-card__title">{raqiqa.title}</h2>
+      <blockquote className="rod-card__quote">
+        <p className="rod-card__text">{raqiqa.text}</p>
+        {raqiqa.source && <footer className="rod-card__source">{raqiqa.source}</footer>}
+      </blockquote>
+      <button type="button" className="rod-card__copy" onClick={onCopy} aria-label="نسخ الرقيقة">
+        <Copy size={13} aria-hidden="true" />
+        {copied ? "تم النسخ ✓" : "نسخ الرقيقة"}
+      </button>
+    </div>
+  );
+}
+
 const TABS: { id: Tab; label: string }[] = [
   { id: "raqaiq",   label: "مواعظ الرقائق" },
   { id: "zuhd",     label: "أقوال الزاهدين" },
@@ -407,6 +433,8 @@ export default function RaqaiqPage() {
   const [activeTab, setActiveTab] = useState<Tab>("raqaiq");
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [search, setSearch] = useState("");
+  const [rodCopied, setRodCopied] = useState(false);
+  const todayRaqiqa = useMemo(() => todaysRaqiqa(), []);
 
   const toggle = (i: number) => setOpenIdx(p => p === i ? null : i);
 
@@ -456,6 +484,18 @@ export default function RaqaiqPage() {
           </div>
         </div>
       </section>
+
+      {/* رقيقة اليوم */}
+      <RaqiqaOfDayCard
+        raqiqa={todayRaqiqa}
+        onCopy={() => {
+          navigator.clipboard.writeText(`${todayRaqiqa.title}\n\n${todayRaqiqa.text}${todayRaqiqa.source ? `\n— ${todayRaqiqa.source}` : ""}`).then(() => {
+            setRodCopied(true);
+            setTimeout(() => setRodCopied(false), 2000);
+          });
+        }}
+        copied={rodCopied}
+      />
 
       {/* Tabs */}
       <div className="rq-tabs">
