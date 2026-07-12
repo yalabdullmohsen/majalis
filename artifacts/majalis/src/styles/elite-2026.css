@@ -1155,6 +1155,11 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
   color: rgba(255,255,255,0.90) !important;
   background: rgba(255,255,255,0.12) !important;
 }
+.home-main--v3 .ds-quiz-home-card .ds-quiz-home-card__btn {
+  background: rgba(255,255,255,0.15) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,0.25) !important;
+}
 .home-main--v3 .ds-quiz-home-card .ds-quiz-home-card__cat {
   color: rgba(255,255,255,0.80) !important;
   background: rgba(255,255,255,0.08) !important;
