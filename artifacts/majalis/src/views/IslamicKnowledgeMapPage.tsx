@@ -320,7 +320,12 @@ const CONNECTIONS_MAP: { a: string; b: string; label: string }[] = [
   { a: "tajweed",  b: "quran",   label: "التجويد مدخل لتلاوة القرآن" },
   { a: "seerah",   b: "fiqh",    label: "السيرة مصدر أحكام وشواهد" },
   { a: "aqidah",   b: "history", label: "الأحداث التاريخية تُثبت العقيدة" },
-  { a: "adhkar",   b: "fiqh",    label: "الأذكار ذات أحكام شرعية" },
+  { a: "adhkar",       b: "fiqh",      label: "الأذكار ذات أحكام شرعية" },
+  /* ── إضافي ── */
+  { a: "fatwa",        b: "fiqh",      label: "الفتوى تطبيق عملي للفقه" },
+  { a: "rulings",      b: "usul",      label: "الأحكام مبنية على أصول الفقه" },
+  { a: "universities", b: "scholars",  label: "الجامعات حاضنة العلماء والبحث" },
+  { a: "mindmaps",     b: "usul",      label: "الخرائط تُنظِّم مسائل الأصول" },
 ];
 
 export default function IslamicKnowledgeMapPage() {
