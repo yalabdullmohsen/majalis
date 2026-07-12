@@ -969,6 +969,37 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
 }
 .myt-block__link:hover { color: rgba(255,255,255,.9); }
 
+/* ══════════════════════════════════════════════
+   §10b. الصفحة الرئيسية — جميع البطاقات داكنة/أبيض
+   ══════════════════════════════════════════════ */
+.home-main--v3 .ui-card,
+.home-main--v3 .ds-card,
+.home-main--v3 .hit-card,
+.home-main--v3 .hmm-card,
+.home-main--v3 .ds-quiz-home-card {
+  background: var(--elite-forest, #18362A) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+.home-main--v3 .ui-card p,
+.home-main--v3 .ds-card p,
+.home-main--v3 .hit-card p,
+.home-main--v3 .hmm-card p,
+.home-main--v3 .ds-quiz-home-card p {
+  color: rgba(255,255,255,0.93) !important;
+}
+.home-main--v3 .ui-card h2,
+.home-main--v3 .ui-card h3,
+.home-main--v3 .ui-card h4,
+.home-main--v3 .ds-card h2,
+.home-main--v3 .ds-card h3 {
+  color: #fff !important;
+}
+.home-main--v3 .ui-card span:not(.page-tag):not(.badge):not([class*="tag"]),
+.home-main--v3 .hit-card span,
+.home-main--v3 .hmm-card span {
+  color: rgba(255,255,255,0.82) !important;
+}
+
 .home-section {
   padding: 2rem 0 !important;
 }
