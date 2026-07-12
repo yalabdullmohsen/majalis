@@ -25,6 +25,7 @@ import { startAdhanScheduler } from "@/lib/adhan-scheduler";
 import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
 import { NavProgressBar } from "@/components/NavProgressBar";
 import { recordRecentPage } from "@/lib/recent-pages";
+import { OfflineBanner } from "@/components/OfflineBanner";
 
 const lazy = lazyWithRetry;
 
@@ -559,6 +560,7 @@ function AppShell() {
         onTouchEnd={onTouchEnd}
       >
         <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
+        <OfflineBanner />
         <NavProgressBar />
         <SeoManager />
         <ScrollResetOnNav />

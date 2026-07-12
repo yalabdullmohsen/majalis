@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { BookMarked, Home, LayoutGrid, Repeat2, Sunset } from "lucide-react";
+import { BookMarked, GraduationCap, Home, LayoutGrid, Repeat2, Search, Sunset } from "lucide-react";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 
@@ -11,9 +11,11 @@ type NavTab = {
 };
 
 const NAV_TABS: NavTab[] = [
-  { href: "/",       label: "الرئيسية", Icon: Home },
-  { href: "/quran",  label: "المصحف",   Icon: BookMarked },
-  { href: "/adhkar", label: "الأذكار",  Icon: Repeat2 },
+  { href: "/",        label: "الرئيسية", Icon: Home },
+  { href: "/quran",   label: "المصحف",   Icon: BookMarked },
+  { href: "/adhkar",  label: "الأذكار",  Icon: Repeat2 },
+  { href: "/lessons", label: "الدروس",   Icon: GraduationCap },
+  { href: "/search",  label: "البحث",    Icon: Search },
 ];
 
 export function BottomNavBar() {
@@ -26,8 +28,6 @@ export function BottomNavBar() {
     return location === href || location.startsWith(href + "/");
   };
 
-  const prayerActive =
-    location.startsWith("/prayer-countdown") || location.startsWith("/prayer-times");
   const next = countdown?.next;
 
   return (
@@ -43,31 +43,14 @@ export function BottomNavBar() {
               aria-current={active ? "page" : undefined}
             >
               <span className="bottom-nav__tab-icon">
-                <Icon size={24} strokeWidth={active ? 2.4 : 1.6} aria-hidden={true} />
+                <Icon size={22} strokeWidth={active ? 2.4 : 1.6} aria-hidden={true} />
               </span>
               <span className="bottom-nav__tab-label">{label}</span>
             </Link>
           );
         })}
 
-        {/* تبويب الصلاة مع العداد */}
-        <Link
-          href="/prayer-times"
-          className={`bottom-nav__tab${prayerActive ? " is-active" : ""}`}
-          aria-current={prayerActive ? "page" : undefined}
-          aria-label={next ? `الصلاة القادمة: ${next.name} ${next.time}` : "مواقيت الصلاة"}
-        >
-          <span className="bottom-nav__tab-icon bottom-nav__tab-icon--prayer">
-            <Sunset size={24} strokeWidth={prayerActive ? 2.4 : 1.6} aria-hidden={true} />
-            {next && (
-              <span className="bottom-nav__prayer-badge" aria-hidden="true">
-                {next.time}
-              </span>
-            )}
-          </span>
-          <span className="bottom-nav__tab-label">الصلاة</span>
-        </Link>
-
+        {/* تبويب المزيد */}
         <button
           type="button"
           className={`bottom-nav__tab${moreOpen ? " is-active" : ""}`}
@@ -77,11 +60,19 @@ export function BottomNavBar() {
           aria-expanded={moreOpen}
         >
           <span className="bottom-nav__tab-icon">
-            <LayoutGrid size={24} strokeWidth={moreOpen ? 2.4 : 1.6} aria-hidden={true} />
+            <LayoutGrid size={22} strokeWidth={moreOpen ? 2.4 : 1.6} aria-hidden={true} />
           </span>
           <span className="bottom-nav__tab-label">المزيد</span>
         </button>
       </nav>
+
+      {/* شارة الصلاة القادمة — تظهر فوق تبويب الدروس عند الحاجة */}
+      {next && (
+        <div className="bottom-nav__prayer-float" aria-hidden="true">
+          <Sunset size={12} />
+          <span>{next.name} · {next.time}</span>
+        </div>
+      )}
 
       <MoreBottomSheet open={moreOpen} onClose={() => setMoreOpen(false)} />
     </>

@@ -89,6 +89,34 @@ function DhikrSheet({ item, onClose }: { item: AdhkarItem; onClose: () => void }
   );
 }
 
+/* ── مساعدات sessionStorage للتقدم ── */
+function ssKey(cat: string) { return `adhkar_progress_${cat}`; }
+function ssGet(cat: string): { currentIndex: number; tapCount: number } | null {
+  try {
+    const v = sessionStorage.getItem(ssKey(cat));
+    return v ? JSON.parse(v) : null;
+  } catch { return null; }
+}
+function ssSave(cat: string, currentIndex: number, tapCount: number) {
+  try { sessionStorage.setItem(ssKey(cat), JSON.stringify({ currentIndex, tapCount })); } catch { /* */ }
+}
+
+/* ── اهتزاز مع إعداد التحكم ── */
+function hapticsLight() {
+  try {
+    const enabled = localStorage.getItem("adhkar_haptics_enabled");
+    if (enabled === "false") return;
+    if (navigator.vibrate) navigator.vibrate(18);
+  } catch { /* */ }
+}
+function hapticsComplete() {
+  try {
+    const enabled = localStorage.getItem("adhkar_haptics_enabled");
+    if (enabled === "false") return;
+    if (navigator.vibrate) navigator.vibrate([30, 60, 30]);
+  } catch { /* */ }
+}
+
 /* ══ الصفحة الرئيسية ══ */
 export default function AdhkarPage() {
   const [location] = useLocation();
@@ -167,19 +195,32 @@ export default function AdhkarPage() {
     }
   }
 
+  /* ── حفظ التقدم في sessionStorage عند كل تغيير ── */
+  useEffect(() => {
+    ssSave(category, currentIndex, tapCount);
+  }, [category, currentIndex, tapCount]);
+
+  /* ── استعادة التقدم عند تغيير الفئة ── */
+  useEffect(() => {
+    const saved = ssGet(category);
+    if (saved) {
+      setCurrentIndex(Math.max(0, saved.currentIndex));
+      setTapCount(Math.max(0, saved.tapCount));
+    }
+  }, [category]);
+
   /* ── النقر للعدّ ── */
   const handleTap = useCallback(() => {
     if (!current || done) return;
     const target = current.count || 1;
 
-    /* اهتزاز خفيف */
-    try { if (navigator.vibrate) navigator.vibrate(18); } catch { /* */ }
+    hapticsLight();
 
     setTapCount((c) => {
       const next = c + 1;
       if (next >= target) {
         setDone(true);
-        try { if (navigator.vibrate) navigator.vibrate([30, 60, 30]); } catch { /* */ }
+        hapticsComplete();
         /* انتقال تلقائي بعد 700ms */
         advanceTimer.current = setTimeout(() => {
           setCurrentIndex((i) => {
