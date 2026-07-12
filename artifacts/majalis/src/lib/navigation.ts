@@ -36,6 +36,8 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/miracles",      label: "المعجزات" },
   { href: "/qa",            label: "الأسئلة" },
   { href: "/arbaeen-nawawi",label: "الأربعون النووية" },
+  { href: "/sujood-sahw",   label: "سجود السهو" },
+  { href: "/amrad-qalbiyya",label: "الأمراض القلبية" },
   { href: "/updates",       label: "المستجدات" },
   { href: "/fiqh",               label: "الفقه الإسلامي" },
   { href: "/fiqh-council",       label: "المجمع الفقهي" },
@@ -132,6 +134,8 @@ export const NAV_GROUPS: NavGroup[] = [
     links: [
       { href: "/hadith", label: "الأحاديث الصحيحة" },
       { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
+      { href: "/sujood-sahw",    label: "سجود السهو" },
+      { href: "/amrad-qalbiyya", label: "الأمراض القلبية" },
       { href: "/adhkar", label: "سنن مؤقتة" },
       { href: "/adhkar?cat=misc", label: "سنن غير مؤقتة" },
       { href: "/quran", label: "فضائل القرآن" },

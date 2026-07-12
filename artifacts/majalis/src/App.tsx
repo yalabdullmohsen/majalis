@@ -67,6 +67,8 @@ const TasbihPage = lazy(() => import("@/views/TasbihPage"));
 const DailyWirdPage = lazy(() => import("@/views/DailyWirdPage"));
 const OccasionsPage = lazy(() => import("@/views/OccasionsPage"));
 const ArbaeenNawawiPage = lazy(() => import("@/views/ArbaeenNawawiPage"));
+const SujoodSahwPage = lazy(() => import("@/views/SujoodSahwPage"));
+const AmradQalbiyyaPage = lazy(() => import("@/views/AmradQalbiyyaPage"));
 const SettingsPage = lazy(() => import("@/views/SettingsPage"));
 const AnnualCoursesPage = lazy(() => import("@/views/AnnualCoursesPage"));
 const AnnualCourseDetailPage = lazy(() => import("@/views/AnnualCourseDetailPage"));
@@ -316,6 +318,8 @@ function Router() {
       <Route path="/daily-wird"><SafeLazyRoute component={DailyWirdPage} /></Route>
       <Route path="/occasions"><SafeLazyRoute component={OccasionsPage} /></Route>
       <Route path="/arbaeen-nawawi"><SafeLazyRoute component={ArbaeenNawawiPage} /></Route>
+      <Route path="/sujood-sahw"><SafeLazyRoute component={SujoodSahwPage} /></Route>
+      <Route path="/amrad-qalbiyya"><SafeLazyRoute component={AmradQalbiyyaPage} /></Route>
       <Route path="/cards"><SafeLazyRoute component={CardsPage} /></Route>
       <Route path="/annual-courses/:id"><SafeLazyRoute component={AnnualCourseDetailPage} /></Route>
       <Route path="/annual-courses"><SafeLazyRoute component={AnnualCoursesPage} /></Route>
