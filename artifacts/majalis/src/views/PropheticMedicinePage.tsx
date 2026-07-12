@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { AlertTriangle, Apple, BedDouble, Beef, BookOpen, CalendarDays, Droplets, FlaskConical, Grape, Leaf, Moon, PersonStanding, Salad, ScrollText, Search, ShowerHead, Sprout, Stethoscope, Sunrise, TreePalm, Utensils, Waves, Wheat } from "lucide-react";
+import { AlertTriangle, Apple, BedDouble, Beef, BookOpen, CalendarDays, Droplets, FlaskConical, Grape, Leaf, Moon, PersonStanding, Salad, ScrollText, Search, ShowerHead, Sparkles, Sprout, Stethoscope, Sunrise, TreePalm, Utensils, Waves, Wheat } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -11,6 +11,7 @@ import {
   PROPHETIC_MEDICINE_ITEMS,
   PM_CATEGORIES,
   type PropheticMedicineCategory,
+  type PropheticMedicineItem,
 } from "@/lib/prophetic-medicine-seed";
 
 const PM_ICON_MAP: Record<string, LucideIcon> = {
@@ -33,9 +34,33 @@ const PM_CAT_MOD: Record<string, string> = {
   "النظافة والوقاية": "pmp-cat--nathafa",
 };
 
+/* ─── موضوع الطب اليوم ─── */
+function todaysPMItem(): PropheticMedicineItem {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return PROPHETIC_MEDICINE_ITEMS[(dayOfYear - 1 + PROPHETIC_MEDICINE_ITEMS.length) % PROPHETIC_MEDICINE_ITEMS.length];
+}
+
+function PMOfDayCard({ item }: { item: PropheticMedicineItem }) {
+  return (
+    <div className="pmod-card">
+      <div className="pmod-card__badge"><Sparkles size={11} aria-hidden="true" /> موضوع الطب اليوم</div>
+      <div className="pmod-card__cat">{item.category} · {item.arabicName}</div>
+      <h2 className="pmod-card__name">{item.name}</h2>
+      <blockquote className="pmod-card__hadith">«{item.hadith}»</blockquote>
+      <div className="pmod-card__source">{item.hadithSource}</div>
+      <div className="pmod-card__benefits">
+        {item.benefits.map((b: string) => <span key={b} className="pmod-card__benefit">{b}</span>)}
+      </div>
+    </div>
+  );
+}
+
 export default function PropheticMedicinePage() {
   const [category, setCategory] = useState<PropheticMedicineCategory>("الكل");
   const [search, setSearch] = useState("");
+  const todayItem = useMemo(() => todaysPMItem(), []);
 
   useEffect(() => {
     applyPageSeo({
@@ -95,6 +120,9 @@ export default function PropheticMedicinePage() {
           ما ثبت عن النبي ﷺ في التداوي والوقاية، موثَّقاً بالأحاديث الصحيحة
         </p>
       </div>
+
+      {/* موضوع اليوم */}
+      <PMOfDayCard item={todayItem} />
 
       {/* تنبيه */}
       <div className="pmp-disclaimer"><AlertTriangle size={13} className="inline ml-1" />{DISCLAIMER}</div>

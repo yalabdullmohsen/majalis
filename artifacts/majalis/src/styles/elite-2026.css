@@ -6637,7 +6637,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 .pmp-cat--ibada   { --pm-bg: #12281F; --pm-accent: #BEC7C3; }
 .pmp-cat--nathafa { --pm-bg: #0E2019; --pm-accent: #97A59F; }
 .pmp-card { border: 1px solid var(--msk-border); border-radius: 1rem; overflow: hidden; background: var(--msk-canvas-1, var(--msk-canvas)); display: flex; flex-direction: column; }
-.pmp-card__head { background: var(--pm-bg, #18362A); background-image: url("/star-pattern.svg"); background-size: 100px 100px; padding: 1rem 1rem 0.875rem; display: flex; align-items: center; gap: 0.75rem; }
+.pmp-card__head { background: var(--pm-bg, #123F36); background-image: url("/star-pattern.svg"); background-size: 100px 100px; padding: 1rem 1rem 0.875rem; display: flex; align-items: center; gap: 0.75rem; }
 .pmp-card__icon { font-size: 1.75rem; line-height: 1; flex-shrink: 0; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.35)); }
 .pmp-card__head-info { flex: 1; }
 .pmp-card__name { font-weight: 800; font-size: 1rem; color: #FAF8F2; margin: 0 0 0.2rem; }
@@ -6663,6 +6663,35 @@ html[data-theme="dark"] .khatma-bar-fill {
 .pmp-body-text { font-size: 0.875rem; line-height: 1.75; color: var(--msk-text); margin: 0; }
 .pmp-item-disclaimer { font-size: 0.75rem; color: var(--msk-text-2); margin: 0; font-style: italic; border-top: 1px solid var(--msk-border); padding-top: 0.5rem; }
 .pmp-toggle-btn { color: var(--msk-gold); background: none; border: none; cursor: pointer; font-size: 0.82rem; font-weight: 600; padding: 0.2rem 0; align-self: flex-start; font-family: inherit; }
+
+/* ── موضوع الطب اليوم (.pmod-card) ── */
+.pmod-card {
+  display: flex; flex-direction: column; gap: 0.55rem;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 1.25rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.pmod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; width: fit-content;
+}
+.pmod-card__cat { font-size: 0.78rem; color: rgba(255,255,255,0.72); }
+.pmod-card__name { font-size: 1.15rem; font-weight: 800; color: #FFFFFF; margin: 0; }
+.pmod-card__hadith {
+  font-size: 0.95rem; line-height: 1.85; color: rgba(255,255,255,0.93);
+  margin: 0; border: none; padding: 0; font-family: var(--font-quran, serif);
+}
+.pmod-card__source { font-size: 0.75rem; color: rgba(255,255,255,0.65); font-style: italic; }
+.pmod-card__benefits { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.pmod-card__benefit {
+  padding: 0.25rem 0.65rem; border-radius: 100px; font-size: 0.72rem; font-weight: 600;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); color: #FFFFFF;
+}
 
 /* ══════════════════════════════════════════════════════
    §62  Learning Path Detail Page  (lpd-*)
@@ -11818,7 +11847,7 @@ body {
 /* Today's hadith */
 .an-today { margin: 0 auto 2rem; max-width: 680px; padding: 0 1rem; }
 .an-today__badge { display: inline-block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #FFFFFF; background: var(--majalis-emerald); padding: 0.25rem 0.9rem; border-radius: 99px; margin-bottom: 0.8rem; }
-.an-today__card { background: linear-gradient(135deg, var(--majalis-emerald-deep) 0%, #183d28 100%); border-radius: 1.1rem; padding: 1.6rem; color: #FFFFFF; position: relative; overflow: hidden; }
+.an-today__card { background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%); border-radius: 1.1rem; padding: 1.6rem; color: #FFFFFF; position: relative; overflow: hidden; }
 .an-today__card::before { content: ""; position: absolute; inset-inline-end: -30px; top: -30px; width: 140px; height: 140px; border-radius: 50%; background: rgba(255,255,255,0.05); pointer-events: none; }
 .an-today__num { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; color: rgba(255,255,255,0.6); display: block; margin-bottom: 0.5rem; }
 .an-today__title { font-size: 1.15rem; font-weight: 700; color: #FFFFFF; margin-bottom: 0.8rem; }
@@ -24447,6 +24476,42 @@ img[loading="lazy"]:not([src=""]) {
   .wn-pick-grid { grid-template-columns: 1fr; }
   .wn-tab { font-size: .82rem; padding: .4rem .85rem; }
 }
+
+/* ── وصية اليوم (.wod-card) ── */
+.wod-card {
+  display: flex; flex-direction: column; gap: 0.55rem;
+  padding: 1.5rem 1.25rem 1.25rem; margin: 0 0 1.5rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF; text-align: center;
+}
+.wod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; width: fit-content; margin: 0 auto;
+}
+.wod-card__cat { font-size: 0.78rem; color: rgba(255,255,255,0.72); }
+.wod-card__title { font-size: 1.1rem; font-weight: 700; color: #FFFFFF; margin: 0; }
+.wod-card__quote { margin: 0; border: none; padding: 0; }
+.wod-card__text { font-size: 0.98rem; line-height: 1.9; color: rgba(255,255,255,0.95); margin: 0 0 0.35rem; font-family: var(--font-quran, serif); }
+.wod-card__source { font-size: 0.78rem; color: rgba(255,255,255,0.65); font-style: italic; }
+.wod-card__benefit {
+  font-size: 0.85rem; line-height: 1.75; color: rgba(255,255,255,0.88);
+  background: rgba(255,255,255,0.08); border-radius: 0.625rem;
+  padding: 0.55rem 0.85rem; border: 1px solid rgba(255,255,255,0.12);
+}
+.wod-card__copy {
+  display: inline-flex; align-items: center; gap: 0.45rem; margin: 0.25rem auto 0;
+  font-size: 0.82rem; font-weight: 600; cursor: pointer;
+  border: 1.5px solid rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.12); color: #FFFFFF;
+  border-radius: 100px; padding: 0.45rem 1.1rem;
+  transition: background 0.18s, border-color 0.18s;
+}
+.wod-card__copy:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.7); }
 
 /* ══════════════════════════════════════════════════════════════════
    §249 — الرقائق والزهد  (.rq-*)
