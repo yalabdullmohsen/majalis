@@ -4421,11 +4421,11 @@ button.primary:hover {
   100% { transform: scale(1);    opacity: 1; }
 }
 html[data-theme="dark"] .khatma-celebration {
-  background: linear-gradient(135deg, rgba(245,158,11,.15), rgba(245,158,11,.06));
-  border-color: rgba(245,158,11,.22);
-  color: #FCD34D;
+  background: linear-gradient(135deg, rgba(14,110,82,.2), rgba(14,110,82,.08));
+  border-color: rgba(14,110,82,.3);
+  color: #6ab58e;
 }
-html[data-theme="dark"] .khatma-celebration svg { color: #FCD34D; }
+html[data-theme="dark"] .khatma-celebration svg { color: #6ab58e; }
 html[data-theme="dark"] .khatma-bar-fill {
   background: #5CC49A;
 }
@@ -20074,7 +20074,7 @@ img[loading="lazy"]:not([src=""]) {
   box-shadow: 0 1px 3px rgba(0,0,0,.05);
 }
 .sw-muf-card--major { border-right: 4px solid #EF4444; }
-.sw-muf-card--detail { border-right: 4px solid #F59E0B; }
+.sw-muf-card--detail { border-right: 4px solid #0E6E52; }
 .sw-muf-card__icon { font-size: 1.5rem; flex-shrink: 0; }
 .sw-muf-card__content { flex: 1; display: flex; flex-direction: column; gap: .4rem; }
 .sw-muf-card__title { font-size: .9rem; font-weight: 700; color: #111; }
@@ -20361,7 +20361,7 @@ img[loading="lazy"]:not([src=""]) {
 .hj-wajib-card {
   background: #fff;
   border: 1px solid #E5E7EB;
-  border-right: 4px solid #F59E0B;
+  border-right: 4px solid #0E6E52;
   border-radius: .7rem;
   padding: .9rem 1rem;
   display: flex;
@@ -20922,7 +20922,7 @@ img[loading="lazy"]:not([src=""]) {
 }
 .fa-card:hover { box-shadow: 0 4px 14px rgba(31,77,58,.1); }
 .fa-card--sahih { border-top: 3px solid var(--majalis-emerald, #1F4D3A); }
-.fa-card--hasan { border-top: 3px solid #F59E0B; }
+.fa-card--hasan { border-top: 3px solid #0E6E52; }
 
 .fa-card__head { display: flex; justify-content: space-between; align-items: center; }
 .fa-card__icon { font-size: 1.7rem; }
