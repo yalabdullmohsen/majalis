@@ -113,6 +113,7 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/seerah",             label: "السيرة النبوية",  Icon: Star },
       { href: "/amrad-qalbiyya",    label: "الأمراض القلبية",           Icon: Heart },
       { href: "/durus-imaniyya",   label: "الدروس الإيمانية والتربوية", Icon: BookOpen },
+      { href: "/durus-mutanawwia", label: "دروس متنوعة",                Icon: Sparkles },
       { href: "/knowledge-graph",    label: "خارطة المعرفة",  Icon: Globe },
       { href: "/universities",       label: "دليل الجامعات",  Icon: GraduationCap },
       { href: "/institutions",       label: "دليل المؤسسات",  Icon: BookMarked },
