@@ -7473,6 +7473,32 @@ html[data-theme="dark"] .khatma-bar-fill {
 .twh-book-level--mid      { background: rgba(14,110,82,.12); color: #0E6E52; }
 .twh-book-level--adv      { background: #EDE9FE; color: #5B21B6; }
 
+/* ── مسألة التوحيد اليوم (.tpod-card) ── */
+.tpod-card {
+  display: flex; flex-direction: column; gap: 0.6rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 1.25rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.tpod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; width: fit-content; margin: 0 auto;
+}
+.tpod-card__title { font-size: 1.1rem; font-weight: 700; color: #FFFFFF; margin: 0; }
+.tpod-card__body  { font-size: 0.9rem; line-height: 1.85; color: rgba(255,255,255,0.92); margin: 0; }
+.tpod-card__hadith {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 0.75rem; padding: 0.65rem 0.9rem;
+  display: flex; flex-direction: column; gap: 0.3rem;
+}
+.tpod-card__hadith-text { font-size: 0.9rem; font-style: italic; color: rgba(255,255,255,0.95); margin: 0; }
+.tpod-card__hadith-meta { font-size: 0.72rem; color: rgba(255,255,255,0.65); }
+
 /* §69c — FiqhPage Hub (fqh-hub-*) */
 .fqh-hub-hero {
   background: linear-gradient(135deg, #0F5132 0%, #176B57 60%, #0C3322 100%);
