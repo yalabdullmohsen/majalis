@@ -22347,6 +22347,32 @@ img[loading="lazy"]:not([src=""]) {
 .uq-stat__num   { display: block; font-size: 1.2rem; font-weight: 800; color: #fff; }
 .uq-stat__label { display: block; font-size: .68rem; color: rgba(255,255,255,.8); margin-top: .1rem; }
 
+/* ── قراءة اليوم (.uqod-card) ── */
+.uqod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 0;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.uqod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px;
+}
+.uqod-card__name  { font-size: 1.15rem; font-weight: 800; color: #FFFFFF; margin: 0; }
+.uqod-card__meta  { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; font-size: 0.8rem; color: rgba(255,255,255,0.8); }
+.uqod-card__sep   { color: rgba(255,255,255,0.45); }
+.uqod-card__rawi  {
+  font-size: 0.82rem; color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.12); border-radius: 100px; padding: 0.2rem 0.85rem;
+  display: flex; gap: 0.4rem;
+}
+.uqod-card__rawi-label { font-weight: 700; color: rgba(255,255,255,0.7); }
+.uqod-card__note  { font-size: 0.88rem; line-height: 1.75; color: rgba(255,255,255,0.88); margin: 0; max-width: 500px; }
+
 /* tabs */
 .uq-tabs-bar {
   display: flex; overflow-x: auto; gap: 0;
