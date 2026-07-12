@@ -5,10 +5,14 @@ interface Props {
   levels: LPLevel[];
   _scienceSlug?: string;
   progress: LPProgress[];
+  // provided in static mode — if set, show inline action buttons instead of navigation links
+  onStartBook?: (bookId: string) => void;
+  onOpenQuiz?: (bookId: string, bookTitle: string) => void;
 }
 
-export function LevelTimeline({ levels, progress }: Props) {
+export function LevelTimeline({ levels, progress, onStartBook, onOpenQuiz }: Props) {
   const progressMap = new Map(progress.map((p) => [p.book_id, p]));
+  const staticMode = !!(onStartBook && onOpenQuiz);
 
   return (
     <div className="relative">
@@ -18,14 +22,13 @@ export function LevelTimeline({ levels, progress }: Props) {
       <div className="space-y-8">
         {levels.map((level, idx) => {
           const levelBooks = level.books ?? [];
-          const completed = levelBooks.filter((b) => progressMap.get(b.id)?.status === "completed").length;
+          const completed  = levelBooks.filter((b) => progressMap.get(b.id)?.status === "completed").length;
           const inProgress = levelBooks.filter((b) => progressMap.get(b.id)?.status === "in_progress").length;
-          const pct = levelBooks.length > 0 ? Math.round((completed / levelBooks.length) * 100) : 0;
+          const pct        = levelBooks.length > 0 ? Math.round((completed / levelBooks.length) * 100) : 0;
           const isUnlocked = idx === 0 || (() => {
-            const prev = levels[idx - 1];
+            const prev      = levels[idx - 1];
             const prevBooks = prev?.books ?? [];
-            const prevCompleted = prevBooks.filter((b) => progressMap.get(b.id)?.status === "completed").length;
-            return prevCompleted > 0;
+            return prevBooks.filter((b) => progressMap.get(b.id)?.status === "completed").length > 0;
           })();
 
           return (
@@ -71,9 +74,7 @@ export function LevelTimeline({ levels, progress }: Props) {
                           {pct > 0 && ` (${pct}%)`}
                         </span>
                       )}
-                      {!isUnlocked && (
-                        <span className="text-gray-400 text-sm">🔒</span>
-                      )}
+                      {!isUnlocked && <span className="text-gray-400 text-sm">🔒</span>}
                     </div>
                   </div>
 
@@ -95,8 +96,69 @@ export function LevelTimeline({ levels, progress }: Props) {
                       </p>
                     ) : (
                       levelBooks.map((book) => {
-                        const prog = progressMap.get(book.id);
+                        const prog   = progressMap.get(book.id);
                         const status = prog?.status ?? "not_started";
+
+                        if (staticMode) {
+                          return (
+                            <div
+                              key={book.id}
+                              className="flex flex-col gap-2 p-3 rounded-xl border border-gray-100 dark:border-gray-700"
+                              style={{ borderRight: `3px solid ${level.color}` }}
+                            >
+                              <div className="flex items-start gap-3">
+                                <StatusDot status={status} color={level.color} />
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-sm font-semibold text-gray-800 dark:text-gray-200 leading-snug">
+                                    {book.title}
+                                  </p>
+                                  {book.author && (
+                                    <p className="text-xs text-gray-400 mt-0.5">{book.author}</p>
+                                  )}
+                                  <div className="flex gap-2 mt-1">
+                                    {book.estimated_hours > 0 && (
+                                      <span className="text-xs text-gray-400">⏱ {book.estimated_hours}س</span>
+                                    )}
+                                    {book.pages_count > 0 && (
+                                      <span className="text-xs text-gray-400">📄 {book.pages_count}ص</span>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* أزرار الإجراءات */}
+                              <div className="flex gap-2 pt-1">
+                                {status === "not_started" && (
+                                  <button
+                                    type="button"
+                                    onClick={() => onStartBook!(book.id)}
+                                    className="flex-1 text-xs font-medium py-1.5 px-2 rounded-lg border border-emerald-200 text-emerald-700 hover:bg-emerald-50 transition-colors"
+                                    style={{ borderColor: `${level.color}66`, color: level.color }}
+                                  >
+                                    ▶ ابدأ القراءة
+                                  </button>
+                                )}
+                                {status === "in_progress" && (
+                                  <button
+                                    type="button"
+                                    onClick={() => onOpenQuiz!(book.id, book.title)}
+                                    className="flex-1 text-xs font-bold py-1.5 px-2 rounded-lg text-white transition-colors"
+                                    style={{ background: level.color }}
+                                  >
+                                    📝 اختبر نفسك
+                                  </button>
+                                )}
+                                {status === "completed" && (
+                                  <span className="flex-1 text-center text-xs font-bold py-1.5 px-2 rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400">
+                                    ✓ اجتزت المقرر
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        }
+
+                        // API / navigable mode
                         return (
                           <Link key={book.id} href={`/learning-path/book/${book.id}`}>
                             <div className="flex items-start gap-3 p-3 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-emerald-200 dark:hover:border-emerald-800 hover:bg-emerald-50 dark:hover:bg-emerald-900/10 transition-all cursor-pointer group">
