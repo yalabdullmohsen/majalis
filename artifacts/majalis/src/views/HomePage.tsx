@@ -54,6 +54,9 @@ const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc: string
   { href: "/qibla",          Icon: Compass,       label: "القِبلة",           desc: "اتجاه الكعبة" },
   { href: "/salah-guide",    Icon: Scroll,        label: "دليل الصلاة",       desc: "للمبتدئ والمتقن" },
   { href: "/calendar",       Icon: CalendarDays,  label: "التقويم",           desc: "التاريخ الهجري" },
+  { href: "/mawarith",       Icon: Scale,         label: "المواريث",          desc: "الفرائض والتركات" },
+  { href: "/knowledge-map",  Icon: Map,           label: "خريطة المعرفة",     desc: "٢١ علماً مترابطاً" },
+  { href: "/scholars",       Icon: Users,         label: "العلماء",            desc: "رواد الفقه والحديث" },
 ];
 
 
@@ -149,6 +152,9 @@ const FEATURE_CATS: FeatureCat[] = [
       { href: "/knowledge-graph", Icon: Network,     title: "خارطة المعرفة التفاعلية",     desc: "علاقات المعرفة الإسلامية بالرسم البياني" },
       { href: "/knowledge-map",   Icon: Map,         title: "الخريطة المعرفية 2.0",         desc: "١٤ علماً إسلامياً مترابطاً" },
       { href: "/mind-map",        Icon: Layers,      title: "الخرائط الذهنية",             desc: "23+ خريطة تفاعلية للعلوم الشرعية" },
+      { href: "/islam-stats",     Icon: Star,        title: "إحصائيات الإسلام",             desc: "أرقام وحضارة وعلماء — في بيانات مرئية" },
+      { href: "/institutions",    Icon: Landmark,    title: "المؤسسات الإسلامية",            desc: "المجامع والجامعات والمراكز البحثية الكبرى" },
+      { href: "/scholars",        Icon: Users,       title: "أعلام العلماء",                desc: "مئات العلماء عبر التاريخ بالتخصص والحقبة" },
     ],
   },
   {
