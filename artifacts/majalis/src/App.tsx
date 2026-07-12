@@ -207,6 +207,7 @@ const ResearcherProfilePage = lazy(() => import("@/views/ResearcherProfilePage")
 const InstitutionsPage = lazy(() => import("@/views/InstitutionsPage"));
 const AuthCallbackPage = lazy(() => import("@/views/AuthCallbackPage"));
 const ProphetStoriesPage = lazy(() => import("@/views/ProphetStoriesPage"));
+const ProphetsFamilyTreePage = lazy(() => import("@/views/ProphetsFamilyTreePage"));
 const IslamicStoriesPage = lazy(() => import("@/views/IslamicStoriesPage"));
 const CitationPublicPage = lazy(() => import("@/views/CitationPublicPage"));
 const MethodologyPage = lazy(() => import("@/views/MethodologyPage"));
@@ -329,6 +330,7 @@ function Router() {
       <Route path="/hadith"><SafeLazyRoute component={HadithIndexPage} /></Route>
       <Route path="/stories"><SafeLazyRoute component={StoriesPage} /></Route>
       <Route path="/prophet-stories"><Redirect to="/prophets" /></Route>
+      <Route path="/prophets/tree"><SafeLazyRoute component={ProphetsFamilyTreePage} /></Route>
       <Route path="/prophets/:slug"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
       <Route path="/prophets"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
       <Route path="/islamic-stories"><SafeLazyRoute component={IslamicStoriesPage} /></Route>
