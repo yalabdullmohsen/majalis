@@ -104,10 +104,12 @@
       try {
         /* مِشكاة: تطبيق الوضع (ليل/نهار) فوراً لمنع الوميض */
         /* ترحيل v4-light-2026: إعادة تعيين التفضيل عند أول تشغيل بعد تغيير الهوية */
-        var _dsv = "v4-light-2026";
+        var _dsv = "v4-light-2026-naskh";
         if (localStorage.getItem("majalis-design-v") !== _dsv) {
           localStorage.setItem("majalis-design-v", _dsv);
           localStorage.removeItem("majalis-theme-preference");
+          localStorage.removeItem("majalis-font-preference");
+          localStorage.removeItem("majalis-font-preference-v2");
         }
         var storedTheme = localStorage.getItem("majalis-theme-preference");
         var resolved = storedTheme === "light" ? "light"
@@ -117,11 +119,11 @@
         document.documentElement.classList.toggle("dark", resolved === "dark");
         document.documentElement.style.colorScheme = resolved === "light" ? "light" : "dark";
 
-        var storedFont = localStorage.getItem("majalis-font-preference");
+        var storedFont = localStorage.getItem("majalis-font-preference-v2");
         document.documentElement.dataset.font =
-          storedFont === "ruqaa" || storedFont === "naskh" || storedFont === "default"
+          storedFont === "naskh" || storedFont === "default"
             ? storedFont
-            : "default";
+            : "naskh";
         document.body.classList.remove("side-nav-open", "navbar-more-open", "mobile-nav-body-lock");
         document.body.style.removeProperty("overflow");
         document.body.style.removeProperty("touch-action");
