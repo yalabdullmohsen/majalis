@@ -23694,6 +23694,34 @@ img[loading="lazy"]:not([src=""]) {
   .gl-cat { font-size: .73rem; padding: .3rem .7rem; }
 }
 
+/* ── مصطلح اليوم (.glod-card) ── */
+.glod-card {
+  display: flex; flex-direction: column; gap: 0.55rem;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 1.25rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.glod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; width: fit-content;
+}
+.glod-card__cat { font-size: 0.78rem; color: rgba(255,255,255,0.72); }
+.glod-card__term { font-size: 1.25rem; font-weight: 800; color: #FFFFFF; margin: 0; }
+.glod-card__plural { font-size: 0.8rem; color: rgba(255,255,255,0.7); font-style: italic; }
+.glod-card__definition { font-size: 0.92rem; line-height: 1.8; color: rgba(255,255,255,0.93); margin: 0; }
+.glod-card__detail { font-size: 0.85rem; line-height: 1.75; color: rgba(255,255,255,0.82); margin: 0; }
+.glod-card__source { font-size: 0.75rem; color: rgba(255,255,255,0.6); font-style: italic; }
+.glod-card__related { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: rgba(255,255,255,0.72); }
+.glod-card__rel-tag {
+  padding: 0.18rem 0.6rem; border-radius: 100px; font-size: 0.72rem;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); color: #FFFFFF;
+}
+
 /* ══════════════════════════════════════════════════════════════════
    §243 — AdabTalabIlmPage  (.atl-*)
    ══════════════════════════════════════════════════════════════════ */
