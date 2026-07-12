@@ -8,6 +8,7 @@ import type { ShariaRulingExtended } from "@/lib/rulings-types";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
+import { ScholarlyTrustBadge, type TrustData } from "@/components/ScholarlyTrustBadge";
 
 export default function RulingDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<ShariaRulingExtended | null>(null);
@@ -62,6 +63,17 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
   const copyText = [item.title, item.summary, item.body].filter(Boolean).join("\n\n");
   const relations = buildRulingRelations(item);
 
+  const trustData: TrustData = {
+    source:      item.source_origin || null,
+    hadithGrade: item.hadith_grade  || null,
+    isApproved:  item.verification_status === "approved" ? true
+                 : item.verification_status === "pending" ? false : null,
+    publishedAt: item.published_at  || item.created_at || null,
+    updatedAt:   item.updated_at    || null,
+    contentType: "شرح",
+    hasKhilaf:   !!(item.scholar_opinions && item.scholar_opinions.length > 1),
+  };
+
   return (
     <ContentDetailLayout
       breadcrumbs={[
@@ -88,6 +100,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
       }
     >
       <RulingDetailSections ruling={item} relations={relations} />
+      <ScholarlyTrustBadge data={trustData} />
     </ContentDetailLayout>
   );
 }
