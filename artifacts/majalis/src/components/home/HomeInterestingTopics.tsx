@@ -75,14 +75,14 @@ const TOPICS: { href: string; icon: string; label: string; desc: string; color: 
     icon: '<circle cx="11" cy="11" r="4"/><line x1="11" y1="2" x2="11" y2="4"/><line x1="11" y1="18" x2="11" y2="20"/><line x1="2" y1="11" x2="4" y2="11"/><line x1="18" y1="11" x2="20" y2="11"/><line x1="4.9" y1="4.9" x2="6.3" y2="6.3"/><line x1="15.7" y1="15.7" x2="17.1" y2="17.1"/><line x1="4.9" y1="17.1" x2="6.3" y2="15.7"/><line x1="15.7" y1="6.3" x2="17.1" y2="4.9"/>',
     label: "الشمائل المحمدية",
     desc: "صفاته ﷺ خَلقاً وخُلقاً وهَديه",
-    color: "#145C46",
+    color: "#176B57",
   },
   {
     href: "/janna-naar",
     icon: '<path d="M11 2l2 5h5l-4 3 1.5 5.5L11 13l-4.5 2.5L8 10 4 7h5z"/>',
     label: "الجنة والنار",
     desc: "صفة الجنة وأسباب دخولها وأدعية الآخرة",
-    color: "#0A5040",
+    color: "#123F36",
   },
   {
     href: "/fadail-aamal",
@@ -103,14 +103,14 @@ const TOPICS: { href: string; icon: string; label: string; desc: string; color: 
     icon: '<line x1="11" y1="2" x2="11" y2="20"/><line x1="6" y1="20" x2="16" y2="20"/><line x1="3" y1="7" x2="19" y2="7"/><path d="M3 7 1.5 12a3.2 3.2 0 0 0 3 0L3 7z"/><path d="M19 7l-1.5 5a3.2 3.2 0 0 0 3 0L19 7z"/>',
     label: "الأمر بالمعروف",
     desc: "مراتبه الثلاث وشروطه وأحكامه",
-    color: "#145C46",
+    color: "#176B57",
   },
   {
     href: "/malaika",
     icon: '<path d="M11 3a3 3 0 0 1 3 3v1l3-2-2 4h2l-3 4-2-1v4h-2v-4l-2 1-3-4h2L5 5l3 2V6a3 3 0 0 1 3-3z"/>',
     label: "الملائكة في الإسلام",
     desc: "أسماؤهم ومهامهم وصفاتهم من الوحي",
-    color: "#0A5040",
+    color: "#123F36",
   },
   {
     href: "/sahabah",

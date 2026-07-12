@@ -7,7 +7,7 @@ export function HomePrayerRanks() {
       <div className="home-section-head">
         <div style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
           <svg aria-hidden="true" width="17" height="17" viewBox="0 0 17 17" style={{ marginTop: "0.1rem", flexShrink: 0 }}>
-            <polygon points="8.5,1 10.5,6.5 16.5,6.5 12,10 14,16 8.5,12.5 3,16 5,10 0.5,6.5 6.5,6.5" fill="#2d7a5a" opacity="0.8"/>
+            <polygon points="8.5,1 10.5,6.5 16.5,6.5 12,10 14,16 8.5,12.5 3,16 5,10 0.5,6.5 6.5,6.5" fill="#176B57" opacity="0.8"/>
           </svg>
           <div>
             <p className="home-eyebrow">الصلاة</p>

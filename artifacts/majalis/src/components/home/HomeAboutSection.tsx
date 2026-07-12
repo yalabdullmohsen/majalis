@@ -31,7 +31,7 @@ export function HomeAboutSection() {
         <div style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
           <svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20">
             <polygon points="10,1 13,7 20,7 15,12 17,19 10,15 3,19 5,12 0,7 7,7" fill="#176B57"/>
-            <polygon points="10,4 12.5,8.5 17.5,8.5 13.5,12 15,17 10,14 5,17 6.5,12 2.5,8.5 7.5,8.5" fill="#2d7a5a" opacity="0.5"/>
+            <polygon points="10,4 12.5,8.5 17.5,8.5 13.5,12 15,17 10,14 5,17 6.5,12 2.5,8.5 7.5,8.5" fill="#176B57" opacity="0.5"/>
           </svg>
           <div>
             <p className="home-about__eyebrow home-eyebrow">من نحن</p>
@@ -73,7 +73,7 @@ export function HomeAboutSection() {
               <polygon points="30,3 40,20 57,20 45,33 50,50 30,41 10,50 15,33 3,20 20,20" fill="#176B57"/>
             </svg>
             <span style={{
-              background: "linear-gradient(135deg,#176B57,#2d7a5a)", color: "#FAF8F2",
+              background: "linear-gradient(135deg,#176B57,#176B57)", color: "#FAF8F2",
               padding: "0.4rem", borderRadius: "0.45rem",
               display: "inline-flex", width: "fit-content",
               boxShadow: "0 2px 6px rgba(15,50,30,0.2)",
@@ -88,7 +88,7 @@ export function HomeAboutSection() {
 
       <div style={{ display: "flex", gap: "0.65rem", marginTop: "1.25rem", flexWrap: "wrap" }}>
         <Link href="/start-here" style={{
-          background: "linear-gradient(135deg,#176B57,#2d7a5a)", color: "#FAF8F2",
+          background: "linear-gradient(135deg,#176B57,#176B57)", color: "#FAF8F2",
           padding: "0.55rem 1.2rem", borderRadius: "0.55rem",
           fontWeight: 700, fontSize: "0.83rem", textDecoration: "none",
           display: "inline-flex", alignItems: "center", gap: "0.3rem",

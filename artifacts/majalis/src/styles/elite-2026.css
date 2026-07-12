@@ -33269,3 +33269,256 @@ progress,
 .tag-new {
   color: #FFFFFF !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   §80 — Library Page 2026 — بطاقات المكتبة مع الغلاف والترتيب
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── شريط الأدوات (ترتيب + عرض) ─────────────────────────────── */
+.lib-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0 0.75rem;
+  border-bottom: 1px solid var(--clr-border, rgba(23,107,87,0.10));
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+.lib-toolbar__sort {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  flex-wrap: wrap;
+}
+.lib-toolbar__label {
+  font-size: 0.8rem;
+  color: var(--clr-text-2, #5E6964);
+  font-weight: 500;
+  margin-inline-end: 0.25rem;
+}
+.lib-sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  border: 1px solid var(--clr-border, rgba(23,107,87,0.12));
+  background: transparent;
+  font-size: 0.8rem;
+  color: var(--clr-text-2, #5E6964);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.lib-sort-btn:hover {
+  background: var(--clr-primary-soft, rgba(23,107,87,0.06));
+  color: var(--clr-primary, #176B57);
+  border-color: var(--clr-primary, #176B57);
+}
+.lib-sort-btn--active {
+  background: var(--clr-primary, #176B57) !important;
+  color: #FFFFFF !important;
+  border-color: var(--clr-primary, #176B57) !important;
+  font-weight: 600;
+}
+.lib-toolbar__view {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.lib-view-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--clr-border, rgba(23,107,87,0.12));
+  background: transparent;
+  color: var(--clr-text-2, #5E6964);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.lib-view-btn:hover {
+  background: var(--clr-primary-soft, rgba(23,107,87,0.07));
+  color: var(--clr-primary, #176B57);
+}
+.lib-view-btn--active {
+  background: var(--clr-primary, #176B57) !important;
+  color: #FFFFFF !important;
+  border-color: var(--clr-primary, #176B57) !important;
+}
+
+/* ── الشبكة ──────────────────────────────────────────────────── */
+.lib-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+.lib-grid--grid {
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+}
+.lib-grid--list {
+  grid-template-columns: 1fr;
+}
+
+/* ── بطاقة الكتاب ─────────────────────────────────────────────── */
+.lib-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  background: var(--clr-canvas, #FFFFFF);
+  border: 1px solid var(--clr-border, rgba(23,107,87,0.09));
+  box-shadow: 0 1px 4px rgba(22,78,60,0.05);
+  text-decoration: none;
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.lib-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(23,107,87,0.10);
+  border-color: var(--clr-primary, #176B57);
+}
+.lib-card--list {
+  flex-direction: row;
+  align-items: stretch;
+  min-height: 120px;
+}
+
+/* ── غلاف الكتاب ────────────────────────────────────────────── */
+.lib-card-cover-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+.lib-card--grid .lib-card-cover-wrap {
+  width: 100%;
+  aspect-ratio: 2/3;
+}
+.lib-card--list .lib-card-cover-wrap {
+  width: 90px;
+  min-height: 120px;
+}
+.lib-card-cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.lib-card-cover--placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #176B57 0%, #123F36 100%);
+  gap: 0.375rem;
+  padding: 0.5rem;
+  height: 100%;
+}
+.lib-card-cover__initials {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1;
+}
+.lib-card-cover__cat {
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.75);
+  text-align: center;
+  line-height: 1.3;
+}
+.lib-card-parts-badge {
+  position: absolute;
+  bottom: 6px;
+  inset-inline-start: 6px;
+  background: rgba(18,63,54,0.85);
+  color: #FFFFFF;
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  backdrop-filter: blur(3px);
+}
+
+/* ── جسم البطاقة ────────────────────────────────────────────── */
+.lib-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.75rem;
+  flex: 1;
+}
+.lib-card-category {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: none;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--clr-primary-soft, rgba(23,107,87,0.08));
+  color: var(--clr-primary, #176B57);
+  align-self: flex-start;
+}
+.lib-card-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--clr-text, #17201D);
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.lib-card--list .lib-card-title {
+  font-size: 1rem;
+}
+.lib-card-author {
+  font-size: 0.78rem;
+  color: var(--clr-text-2, #5E6964);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.lib-card-desc {
+  font-size: 0.78rem;
+  color: var(--clr-text-2, #5E6964);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+}
+.lib-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--clr-primary, #176B57);
+  margin-top: auto;
+  padding-top: 0.35rem;
+}
+
+/* ── الوضع الداكن ───────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  .lib-card {
+    background: var(--clr-canvas-1, #1A2120);
+    border-color: rgba(255,255,255,0.07);
+  }
+  .lib-card-title { color: var(--clr-text, #E5F0EC); }
+  .lib-card-author,
+  .lib-card-desc,
+  .lib-toolbar__label { color: var(--clr-text-2, #8AA09A); }
+  .lib-sort-btn { color: #8AA09A; border-color: rgba(255,255,255,0.09); }
+  .lib-view-btn { color: #8AA09A; border-color: rgba(255,255,255,0.09); }
+}
+
+/* ── موبايل ──────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .lib-grid--grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.875rem;
+  }
+  .lib-card-title { font-size: 0.82rem; }
+  .lib-toolbar { padding: 0.375rem 0 0.625rem; }
+}

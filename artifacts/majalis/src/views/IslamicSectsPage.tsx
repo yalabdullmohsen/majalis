@@ -901,7 +901,7 @@ export default function IslamicSectsPage() {
       {/* Hero */}
       <div
         className="page-hero"
-        style={{ background: "linear-gradient(135deg, #176B57 0%, #2d7a5a 100%)" }}
+        style={{ background: "linear-gradient(135deg, #176B57 0%, #176B57 100%)" }}
       >
         <div className="page-hero-content">
           <div className="page-hero-icon" style={{ fontSize: "3rem" }}>🕌</div>
@@ -988,9 +988,9 @@ export default function IslamicSectsPage() {
                 border: "1px solid",
                 fontSize: "0.82rem",
                 cursor: "pointer",
-                background: statusF === s ? "#2d7a5a" : "transparent",
-                color: statusF === s ? "#fff" : "#2d7a5a",
-                borderColor: "#2d7a5a",
+                background: statusF === s ? "#176B57" : "transparent",
+                color: statusF === s ? "#fff" : "#176B57",
+                borderColor: "#176B57",
                 fontFamily: "inherit",
               }}
             >

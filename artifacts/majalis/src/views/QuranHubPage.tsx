@@ -16,7 +16,7 @@ const QURAN_SECTIONS = [
     title: "المصحف الشريف",
     desc: "اقرأ المصحف صفحةً بصفحة، ٦٠٤ صفحة بصورة واضحة",
     Icon: BookOpen,
-    accent: "#0A5040",
+    accent: "#123F36",
     tag: "الأكثر زيارةً",
   },
   {
@@ -32,7 +32,7 @@ const QURAN_SECTIONS = [
     title: "علم التجويد",
     desc: "أحكام التجويد الشاملة مصنَّفة في ستة أبواب رئيسية",
     Icon: GraduationCap,
-    accent: "#145C46",
+    accent: "#176B57",
     tag: "١٤ حكماً",
   },
   {
@@ -40,7 +40,7 @@ const QURAN_SECTIONS = [
     title: "إذاعات القرآن",
     desc: "استمع للقرآن الكريم من كبار القراء حول العالم",
     Icon: Radio,
-    accent: "#0A5040",
+    accent: "#123F36",
     tag: "مباشر",
   },
   {
@@ -56,7 +56,7 @@ const QURAN_SECTIONS = [
     title: "حلقات القرآن",
     desc: "انضم لحلقات الحفظ والمراجعة وتلاوة القرآن الكريم",
     Icon: Circle,
-    accent: "#145C46",
+    accent: "#176B57",
     tag: "مجتمع",
   },
   {
@@ -64,7 +64,7 @@ const QURAN_SECTIONS = [
     title: "الورد اليومي",
     desc: "تتبع ورد قراءة القرآن اليومي مع السلسلة المتواصلة",
     Icon: Moon,
-    accent: "#0A5040",
+    accent: "#123F36",
     tag: "يومي",
   },
   {
@@ -80,7 +80,7 @@ const QURAN_SECTIONS = [
     title: "علوم القرآن",
     desc: "النزول والجمع والتدوين والتفسير وطبقات المفسِّرين عبر القرون",
     Icon: Layers,
-    accent: "#0A5040",
+    accent: "#123F36",
     tag: "علم",
   },
   {
@@ -96,14 +96,13 @@ const QURAN_SECTIONS = [
     title: "إعجاز القرآن ومعجزاته",
     desc: "المعجزات النبوية والإعجاز العلمي والبياني في القرآن الكريم",
     Icon: Heart,
-    accent: "#145C46",
+    accent: "#176B57",
     tag: "إعجاز",
   },
 ];
 
 function qhcAccentMod(a: string) {
-  if (a === "#0A5040") return "qhc-accent--deep";
-  if (a === "#145C46") return "qhc-accent--mid";
+  if (a === "#123F36") return "qhc-accent--deep";
   return "qhc-accent--base";
 }
 

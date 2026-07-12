@@ -5,31 +5,32 @@
  */
 
 export const COLOR = {
-  /* ── الأساس الزمردي ── */
-  emerald:     "#176B57",   // --msk-gold (النهار) / --majalis-emerald
-  emeraldDeep: "#0A5040",   // --msk-gold-deep
-  emeraldSoft: "rgba(14,110,82,0.06)",   // hover خفيف
-  emeraldMid:  "rgba(14,110,82,0.12)",   // تظليل ناعم
-  emeraldBorder:"rgba(14,110,82,0.10)",  // --msk-border
+  /* ── الأساس الزمردي 2026 ── */
+  emerald:      "#176B57",              // --clr-primary
+  emeraldDeep:  "#123F36",             // --clr-primary-deep
+  emeraldHov:   "#125746",             // --clr-primary-hov
+  emeraldSoft:  "rgba(23,107,87,0.06)", // hover خفيف
+  emeraldMid:   "rgba(23,107,87,0.12)", // تظليل ناعم
+  emeraldBorder:"rgba(23,107,87,0.10)", // --msk-border
 
   /* ── تدرّج البطاقة الرئيسية (hero) ── */
-  heroGradient: "linear-gradient(135deg, #176B57 0%, #0A4035 100%)",
+  heroGradient: "linear-gradient(135deg, #176B57 0%, #123F36 100%)",
 
   /* ── الخلفيات ── */
-  canvas:   "#FFFFFF",   // --msk-canvas — خلفية البطاقات والصفحات
-  canvas1:  "#F7FBF9",   // --msk-canvas-1 — خلفية ثانوية
+  canvas:   "#FFFFFF",   // --msk-canvas
+  canvas1:  "#F8F7F3",   // --msk-canvas-1
 
   /* ── النصوص ── */
-  ink:      "#1C1A18",   // --msk-text — النص الرئيسي
-  inkSoft:  "#5C5550",   // --msk-text-2 — النص الثانوي
-  inkMuted: "#918A85",   // --msk-text-3 — النص المخفَّف
+  ink:      "#17201D",   // --msk-text
+  inkSoft:  "#5E6964",   // --msk-text-2
+  inkMuted: "#89928E",   // --msk-text-3
 
   /* ── الوضع الداكن ── */
   dark: {
-    gold:    "#1a9e75",
-    canvas:  "#171C2E",
-    canvas1: "#1F2540",
-    ink:     "#E8E3DC",
+    gold:    "#3BAD8A",
+    canvas:  "#111714",
+    canvas1: "#1A2120",
+    ink:     "#E5F0EC",
   },
 } as const;
 
@@ -58,9 +59,9 @@ export const SHADOW = {
 } as const;
 
 export const FONT = {
-  ui:     '"Almarai", "Cairo", "Tajawal", system-ui, sans-serif',
+  ui:     '"IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif',
   quran:  '"Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif',
-  display:'"Amiri Quran", "Amiri", serif',
+  display:'"IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif',
 } as const;
 
 /**
@@ -95,8 +96,8 @@ export const QURAN_QUOTE_STYLE = {
  * ألوان درجات تصنيف الحديث
  */
 export const HADITH_GRADE_COLOR = {
-  "صحيح":  "#15803d",
-  "حسن":   COLOR.emerald,
-  "ضعيف":  "#dc2626",
+  "صحيح":  COLOR.emerald,
+  "حسن":   COLOR.emeraldHov,
+  "ضعيف":  "#B94A48",
   "موضوع": "#7f1d1d",
 } as const;

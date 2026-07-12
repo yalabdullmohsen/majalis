@@ -27,7 +27,7 @@ export function HomeQuizCard() {
       <svg aria-hidden="true" style={{
         position: "absolute", bottom: "-15px", right: "-15px", opacity: 0.04, pointerEvents: "none",
       }} width="100" height="100" viewBox="0 0 100 100">
-        <polygon points="50,5 63,37 97,37 71,57 81,89 50,68 19,89 29,57 3,37 37,37" fill="#2d7a5a"/>
+        <polygon points="50,5 63,37 97,37 71,57 81,89 50,68 19,89 29,57 3,37 37,37" fill="#176B57"/>
       </svg>
       <div className="ds-quiz-home-card__content">
         <div className="ds-quiz-home-card__text">

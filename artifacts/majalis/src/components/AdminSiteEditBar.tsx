@@ -220,7 +220,7 @@ export function AdminSiteEditBar() {
         body.site-edit-mode td:hover,
         body.site-edit-mode th:hover {
           background: rgba(31,77,58,0.06) !important;
-          outline-color: #2d7a5a !important;
+          outline-color: #176B57 !important;
           outline-width: 2px !important;
         }
         /* Floating bar */
@@ -256,7 +256,7 @@ export function AdminSiteEditBar() {
           background: #d32f2f;
           color: #fff;
         }
-        .ase-bar__toggle--off:hover { background: #2d7a5a; }
+        .ase-bar__toggle--off:hover { background: #176B57; }
         .ase-bar__toggle--on:hover  { background: #b71c1c; }
         .ase-bar__panel {
           background: #fff;
@@ -392,7 +392,7 @@ export function AdminSiteEditBar() {
           font-family: inherit;
         }
         .ase-btn--primary { background: #176B57; color: #fff; }
-        .ase-btn--primary:hover { background: #2d7a5a; }
+        .ase-btn--primary:hover { background: #176B57; }
         .ase-btn--ghost { background: #f5f5f5; color: #333; }
         .ase-btn--ghost:hover { background: #e8e8e8; }
       `}</style>
