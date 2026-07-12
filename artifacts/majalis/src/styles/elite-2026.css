@@ -32206,3 +32206,253 @@ html[data-theme="dark"] mark.srch-hl {
 html[data-theme="dark"] ::-webkit-scrollbar-thumb {
   background: rgba(59,173,138,.25) !important;
 }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   §77x — Phase 6+7: Responsive & Accessibility Polish
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── تحسين RTL/Arabic خاص بالمنصة ── */
+[dir="rtl"], html[dir="rtl"], body {
+  text-align: right;
+}
+
+/* منع تجاوز العناصر الأفقي على الموبايل */
+.home-page, .page-shell, [class*="page-wrap"], [class*="page-container"] {
+  overflow-x: hidden !important;
+}
+
+/* ── Touch Target Size (WCAG 2.5.5) ── */
+@media (max-width: 768px) {
+  button:not([class*="navbar"]):not([class*="bottom-nav"]),
+  a[class*="btn"],
+  [role="button"],
+  .filter-chip,
+  .filter-btn,
+  .nav-tab,
+  .bottom-nav__tab {
+    min-height: 44px !important;
+    min-width: 44px !important;
+  }
+}
+
+/* ── الشبكة الاستجابية لبطاقات الصفحة الرئيسية ── */
+@media (max-width: 480px) {
+  .home-quick-links-grid,
+  .home-grid-2,
+  [class*="home-grid"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .home-page--v4 .hpv4-hero {
+    padding: 1.5rem 0.875rem 1.25rem !important;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .home-quick-links-grid,
+  [class*="home-grid"] {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .home-quick-links-grid,
+  [class*="home-grid"] {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+/* ── Lesson Cards Grid Responsive ── */
+@media (max-width: 640px) {
+  .lesson-unified-card,
+  .card-v2 {
+    border-radius: var(--elite-r-md, 12px) !important;
+  }
+  .lesson-unified-card__header {
+    padding: 0.875rem 1rem !important;
+  }
+  .lesson-unified-card__body {
+    padding: 0.875rem 1rem !important;
+  }
+  .lesson-unified-card__actions {
+    flex-wrap: wrap !important;
+    gap: 0.4rem !important;
+  }
+  .lesson-unified-card__btn {
+    flex: 1 1 auto !important;
+    min-width: 6rem !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* ── Scholar & Library Card ── */
+@media (max-width: 640px) {
+  .sch-profile-card,
+  .lib-book-card,
+  [class*="scholar-card"],
+  [class*="book-card"] {
+    flex-direction: column !important;
+  }
+}
+
+/* ── Page Header Responsive ── */
+@media (max-width: 640px) {
+  .ds-page-header,
+  .lessons-page-header,
+  .scholars-page-header,
+  .quran-page-header {
+    border-radius: 0 0 var(--elite-r-lg, 16px) var(--elite-r-lg, 16px) !important;
+    padding: 1.25rem 1rem !important;
+  }
+  .ds-page-header__title {
+    font-size: 1.3rem !important;
+  }
+}
+
+/* ── Accessibility: WCAG AA Contrast ── */
+
+/* هذه العناصر يجب أن تحقق نسبة تباين 4.5:1 على الأقل */
+.lesson-unified-card__category {
+  /* أبيض على #123F36 — نسبة 9.1:1 ✓ */
+  color: rgba(255,255,255,0.92) !important;
+}
+.lesson-unified-card__status {
+  /* أبيض على خلفية شفافة — OK */
+  color: rgba(255,255,255,0.92) !important;
+}
+.lesson-unified-card__title {
+  /* #17201D على أبيض — نسبة 14.8:1 ✓ */
+  color: var(--color-text, #17201D) !important;
+  font-weight: 600 !important;
+}
+.lesson-unified-card__sheikh {
+  /* #5E6964 على أبيض — نسبة 5.3:1 ✓ */
+  color: var(--color-text-2, #5E6964) !important;
+}
+.lesson-unified-card__meta-label {
+  color: var(--color-text-muted, #89928E) !important;
+  font-size: 0.75rem !important;
+}
+
+/* link contrast في البطاقات */
+.lesson-unified-card__btn--secondary,
+.lesson-unified-card__btn--ghost {
+  color: var(--color-text-2, #5E6964) !important;
+}
+.lesson-unified-card__btn--secondary:hover,
+.lesson-unified-card__btn--ghost:hover {
+  color: var(--color-primary, #176B57) !important;
+}
+
+/* ── Skip Navigation Link (WCAG 2.4.1) ── */
+.skip-nav-link {
+  position: absolute !important;
+  top: -100% !important;
+  left: 1rem !important;
+  right: auto !important;
+  z-index: 9999 !important;
+  background: var(--color-primary, #176B57) !important;
+  color: #fff !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 0 0 var(--elite-r-md, 12px) var(--elite-r-md, 12px) !important;
+  font-weight: 700 !important;
+  font-size: 0.875rem !important;
+  text-decoration: none !important;
+  transition: top 120ms !important;
+}
+.skip-nav-link:focus {
+  top: 0 !important;
+}
+
+/* ── Keyboard Focus Enhancement ── */
+.bottom-nav__tab:focus-visible {
+  background: rgba(23,107,87,.08) !important;
+  outline: 2px solid var(--color-primary, #176B57) !important;
+  outline-offset: -2px !important;
+  border-radius: 8px !important;
+}
+.nav-tab:focus-visible {
+  outline: 2px solid var(--color-primary, #176B57) !important;
+  outline-offset: 2px !important;
+  border-radius: 6px !important;
+}
+.lesson-unified-card__btn:focus-visible,
+.btn:focus-visible,
+.ds-btn:focus-visible {
+  outline: 2px solid var(--color-primary, #176B57) !important;
+  outline-offset: 2px !important;
+}
+
+/* ── ARIA live region styling ── */
+[role="status"], [role="alert"] {
+  position: relative;
+}
+[role="alert"] {
+  background: rgba(185,74,72,.08) !important;
+  border-right: 3px solid var(--sys-error, #B94A48) !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: var(--elite-r-md) !important;
+  color: var(--sys-error, #B94A48) !important;
+  font-weight: 500 !important;
+}
+[role="status"]:not(.lesson-now-badge) {
+  color: var(--color-text-muted, #89928E) !important;
+  font-size: 0.875rem !important;
+}
+
+/* ── Loader & Spinner ── */
+[class*="spinner"], [class*="loader"] {
+  color: var(--color-primary, #176B57) !important;
+  border-color: rgba(23,107,87,.15) !important;
+  border-top-color: var(--color-primary, #176B57) !important;
+}
+
+/* ── Tabs Component Accessibility ── */
+[role="tablist"] {
+  border-bottom: 1px solid var(--color-border, #E2E6E3) !important;
+  display: flex !important;
+  gap: 0 !important;
+}
+[role="tab"] {
+  padding: 0.6rem 1rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: var(--color-text-2, #5E6964) !important;
+  border-bottom: 2px solid transparent !important;
+  cursor: pointer !important;
+  transition: color 120ms, border-color 120ms !important;
+  background: none !important;
+  border-radius: 0 !important;
+}
+[role="tab"][aria-selected="true"] {
+  color: var(--color-primary, #176B57) !important;
+  border-bottom-color: var(--color-primary, #176B57) !important;
+  font-weight: 700 !important;
+}
+[role="tab"]:hover {
+  color: var(--color-primary, #176B57) !important;
+  background: var(--color-primary-soft, #E8F2EE) !important;
+}
+
+/* ── Image alt text accessibility ── */
+img {
+  max-width: 100% !important;
+}
+img:not([alt]) {
+  outline: 3px solid #B94A48 !important;
+}
+
+/* ── Dark Mode Accessibility Contrast Enhancement ── */
+html[data-theme="dark"] [role="alert"] {
+  background: rgba(239,152,152,.10) !important;
+  border-color: #EF9898 !important;
+  color: #EF9898 !important;
+}
+html[data-theme="dark"] [role="tab"][aria-selected="true"] {
+  color: #3BAD8A !important;
+  border-bottom-color: #3BAD8A !important;
+}
+html[data-theme="dark"] [role="tab"]:hover {
+  background: rgba(59,173,138,.08) !important;
+  color: #3BAD8A !important;
+}
