@@ -20767,8 +20767,8 @@ img[loading="lazy"]:not([src=""]) {
   display: inline-block;
 }
 .th-naj-group__title--red { background: #FEE2E2; color: #991B1B; }
-.th-naj-group__title--amber { background: #FEF3C7; color: #92400E; }
-.th-naj-group__title--orange { background: #FFEDD5; color: #9A3412; }
+.th-naj-group__title--amber  { background: rgba(14,110,82,.12); color: #0E6E52; }
+.th-naj-group__title--orange { background: rgba(21,48,37,.1);   color: #153025; }
 
 .th-naj-card {
   background: #fff;
