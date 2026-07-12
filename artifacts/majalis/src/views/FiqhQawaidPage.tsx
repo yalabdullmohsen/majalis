@@ -411,7 +411,7 @@ export default function FiqhQawaidPage() {
             <div className="fq-stat"><span className="fq-stat__num">٥</span><span className="fq-stat__label">قواعد كبرى</span></div>
             <div className="fq-stat"><span className="fq-stat__num">١٩</span><span className="fq-stat__label">قاعدة فرعية</span></div>
             <div className="fq-stat"><span className="fq-stat__num">٤</span><span className="fq-stat__label">ضوابط تخصصية</span></div>
-            <div className="fq-stat"><span className="fq-stat__num">٩</span><span className="fq-stat__label">تطبيق معاصر</span></div>
+            <div className="fq-stat"><span className="fq-stat__num">١٤</span><span className="fq-stat__label">تطبيق معاصر</span></div>
           </div>
         </div>
       </section>
