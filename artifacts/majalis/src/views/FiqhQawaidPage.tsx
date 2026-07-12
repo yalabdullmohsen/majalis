@@ -382,12 +382,41 @@ const TATBIQAT: TatbiqMasala[] = [
   },
 ];
 
+/* ─── قاعدة اليوم ─── */
+function todaysQaaida(): Qaaida {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return QAWAID_KUBRA[(dayOfYear - 1 + QAWAID_KUBRA.length) % QAWAID_KUBRA.length];
+}
+
+function QaaidaOfDayCard({ q }: { q: Qaaida }) {
+  return (
+    <div className="fqod-card">
+      <div className="fqod-card__badge"><Sparkles size={11} aria-hidden="true" /> قاعدة اليوم</div>
+      <h2 className="fqod-card__text">«{q.text}»</h2>
+      <p className="fqod-card__meaning">{q.meaning}</p>
+      <div className="fqod-card__origin">{q.origin}</div>
+      {q.faraa.length > 0 && (
+        <div className="fqod-card__faraa">
+          <div className="fqod-card__faraa-title">من فروعها</div>
+          <ul className="fqod-card__faraa-list">
+            {q.faraa.slice(0, 3).map(f => <li key={f}>{f}</li>)}
+          </ul>
+        </div>
+      )}
+      {q.scholars && <div className="fqod-card__scholars">العلماء: {q.scholars}</div>}
+    </div>
+  );
+}
+
 export default function FiqhQawaidPage() {
   const [activeTab, setActiveTab] = useState<TabId>("kubra");
   const [openKubra, setOpenKubra] = useState<number | null>(null);
   const [openDhaabit, setOpenDhaabit] = useState<number | null>(null);
   const [search, setSearch] = useState("");
   const [openTatbiq, setOpenTatbiq] = useState<number | null>(null);
+  const todayQaaida = useMemo(() => todaysQaaida(), []);
 
   useEffect(() => {
     applyPageSeo({
@@ -438,6 +467,9 @@ export default function FiqhQawaidPage() {
           </div>
         </div>
       </section>
+
+      {/* قاعدة اليوم */}
+      <QaaidaOfDayCard q={todayQaaida} />
 
       {/* ══ التبويبات ══ */}
       <div className="fq-container">

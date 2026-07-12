@@ -23209,6 +23209,34 @@ img[loading="lazy"]:not([src=""]) {
   .fq-ref__grid { grid-template-columns: 1fr; }
 }
 
+/* ── قاعدة اليوم (.fqod-card) ── */
+.fqod-card {
+  display: flex; flex-direction: column; gap: 0.6rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 1.25rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.fqod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; width: fit-content; margin: 0 auto;
+}
+.fqod-card__text { font-size: 1.35rem; font-weight: 900; color: #FFFFFF; margin: 0; font-style: italic; }
+.fqod-card__meaning { font-size: 0.9rem; line-height: 1.8; color: rgba(255,255,255,0.9); margin: 0; }
+.fqod-card__origin { font-size: 0.8rem; color: rgba(255,255,255,0.7); line-height: 1.65; }
+.fqod-card__faraa {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 0.625rem; padding: 0.65rem 0.85rem; text-align: start;
+}
+.fqod-card__faraa-title { font-size: 0.78rem; font-weight: 700; color: rgba(255,255,255,0.8); margin-bottom: 0.3rem; }
+.fqod-card__faraa-list { margin: 0; padding-right: 1.1rem; display: flex; flex-direction: column; gap: 0.2rem; }
+.fqod-card__faraa-list li { font-size: 0.82rem; color: rgba(255,255,255,0.85); }
+.fqod-card__scholars { font-size: 0.75rem; color: rgba(255,255,255,0.65); font-style: italic; }
+
 /* ══════════════════════════════════════════════════════════════════════
    §240 — الشمائل المحمدية  (.sh-*)
    ══════════════════════════════════════════════════════════════════════ */
