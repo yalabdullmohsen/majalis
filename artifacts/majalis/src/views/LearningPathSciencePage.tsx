@@ -4,6 +4,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { supabase } from "@/lib/supabase";
 import type { LPScience, LPLevel, LPProgress } from "@/lib/learning-path-service";
 import { fetchScienceDetail, fetchProgress } from "@/lib/learning-path-service";
+import { STATIC_SCIENCE_DETAILS } from "@/lib/learning-path-static-data";
 
 const LevelTimeline = lazy(() =>
   import("@/components/learning-path/LevelTimeline").then((m) => ({ default: m.LevelTimeline }))
@@ -33,7 +34,11 @@ export default function LearningPathSciencePage() {
 
     Promise.all([detailP, progressP])
       .then(([d, p]) => { setScience(d.science); setLevels(d.levels); setProgress(p); })
-      .catch(() => setNotFound(true))
+      .catch(() => {
+        const fallback = STATIC_SCIENCE_DETAILS[scienceSlug];
+        if (fallback) { setScience(fallback.science); setLevels(fallback.levels); }
+        else setNotFound(true);
+      })
       .finally(() => setLoading(false));
   }, [scienceSlug, isLoggedIn]);
 

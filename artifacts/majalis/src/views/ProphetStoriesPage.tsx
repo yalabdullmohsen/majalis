@@ -10,6 +10,7 @@ import {
   searchProphets,
   type ProphetRecord,
 } from "@/lib/prophets-data";
+import { ProphetGenealogyTree } from "@/components/ProphetGenealogyTree";
 
 // ─── Detail view ─────────────────────────────────────────────────────────────
 
@@ -160,10 +161,13 @@ function ProphetCard({ prophet, onClick }: { prophet: ProphetRecord; onClick: ()
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
+type TabView = "grid" | "tree";
+
 export default function ProphetStoriesPage() {
   const { isAdmin } = useAuth();
   const [search, setSearch] = useState("");
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const [tab, setTab] = useState<TabView>("grid");
 
   const results = searchProphets(search);
 
@@ -190,38 +194,66 @@ export default function ProphetStoriesPage() {
         </p>
       </div>
 
-      {/* Search */}
-      <input
-        className="prophets-search"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="ابحث في الأنبياء..."
-        aria-label="بحث في قصص الأنبياء"
-      />
-
-      <div className="prophets-stats">
-        {isAdmin && <span>{results.length} من 25 نبياً</span>}
-        {search && (
-          <button type="button" className="prophets-clear-btn" onClick={() => setSearch("")}>
-            مسح البحث ✕
-          </button>
-        )}
+      {/* Tabs */}
+      <div className="prophets-tabs" role="tablist" aria-label="طريقة العرض">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tab === "grid"}
+          className={`prophets-tab${tab === "grid" ? " prophets-tab--active" : ""}`}
+          onClick={() => setTab("grid")}
+        >
+          📋 قائمة الأنبياء
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tab === "tree"}
+          className={`prophets-tab${tab === "tree" ? " prophets-tab--active" : ""}`}
+          onClick={() => setTab("tree")}
+        >
+          🌳 شجرة النسب
+        </button>
       </div>
 
-      {results.length === 0 ? (
-        <div className="prophets-empty">
-          <p>لا توجد نتائج لـ «{search}»</p>
-        </div>
+      {tab === "tree" ? (
+        <ProphetGenealogyTree />
       ) : (
-        <div className="prophets-grid">
-          {results.map((p) => (
-            <ProphetCard
-              key={p.slug}
-              prophet={p}
-              onClick={() => setSelectedSlug(p.slug)}
-            />
-          ))}
-        </div>
+        <>
+          {/* Search */}
+          <input
+            className="prophets-search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="ابحث في الأنبياء..."
+            aria-label="بحث في قصص الأنبياء"
+          />
+
+          <div className="prophets-stats">
+            {isAdmin && <span>{results.length} من 25 نبياً</span>}
+            {search && (
+              <button type="button" className="prophets-clear-btn" onClick={() => setSearch("")}>
+                مسح البحث ✕
+              </button>
+            )}
+          </div>
+
+          {results.length === 0 ? (
+            <div className="prophets-empty">
+              <p>لا توجد نتائج لـ «{search}»</p>
+            </div>
+          ) : (
+            <div className="prophets-grid">
+              {results.map((p) => (
+                <ProphetCard
+                  key={p.slug}
+                  prophet={p}
+                  onClick={() => setSelectedSlug(p.slug)}
+                />
+              ))}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

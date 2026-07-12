@@ -4,6 +4,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { supabase } from "@/lib/supabase";
 import type { LPScience, LPProgress } from "@/lib/learning-path-service";
 import { fetchSciences, fetchProgress } from "@/lib/learning-path-service";
+import { STATIC_SCIENCES } from "@/lib/learning-path-static-data";
 
 const ScienceCard = lazy(() =>
   import("@/components/learning-path/ScienceCard").then((m) => ({ default: m.ScienceCard }))
@@ -36,8 +37,8 @@ export default function LearningPathPage() {
       : Promise.resolve([] as LPProgress[]);
 
     Promise.all([sciencesP, progressP])
-      .then(([s, p]) => { setSciences(s); setProgress(p); })
-      .catch(() => setError("حدث خطأ في تحميل البيانات"))
+      .then(([s, p]) => { setSciences(s.length > 0 ? s : STATIC_SCIENCES); setProgress(p); })
+      .catch(() => { setSciences(STATIC_SCIENCES); setError(null); })
       .finally(() => setLoading(false));
   }, [isLoggedIn]);
 
@@ -147,11 +148,6 @@ export default function LearningPathPage() {
 
         {loading ? (
           <LoadingSkeleton />
-        ) : sciences.length === 0 ? (
-          <div className="text-center py-16 text-gray-400">
-            <div className="text-4xl mb-2">📚</div>
-            <p>لا توجد علوم متاحة بعد</p>
-          </div>
         ) : (
           <Suspense fallback={<LoadingSkeleton />}>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
