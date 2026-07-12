@@ -46,7 +46,7 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
   {
     emoji: "⏳", title: "علامات الساعة",
     desc: "العلامات الصغرى والكبرى مرتبةً بالأدلة",
-    href: "/alamat-saah", badge: "صغرى وكبرى", color: "#92400E",
+    href: "/alamat-saah", badge: "صغرى وكبرى", color: "#0E6E52",
   },
   {
     emoji: "👼", title: "الملائكة في الإسلام",
