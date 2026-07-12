@@ -20704,6 +20704,34 @@ img[loading="lazy"]:not([src=""]) {
 
 .hj-page { min-height: 100vh; background: #F9FAFB; padding-bottom: 4rem; }
 
+/* of-the-day card */
+.hjod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.45rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 0;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.hjod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; margin-bottom: 0.25rem;
+}
+.hjod-card__icon { font-size: 2rem; line-height: 1; }
+.hjod-card__num {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+.hjod-card__title { font-size: 1.35rem; font-weight: 800; margin: 0; color: #FFFFFF; }
+.hjod-card__sub { font-size: 0.88rem; color: rgba(255,255,255,0.82); margin: 0; max-width: 360px; }
+.hjod-card__dalil {
+  font-family: var(--font-quran, 'Amiri Quran', serif); font-size: 1rem; line-height: 1.7;
+  color: rgba(255,255,255,0.92); max-width: 400px; margin: 0.25rem 0 0;
+}
+.hjod-card__ref { font-family: inherit; font-size: 0.78rem; color: rgba(255,255,255,0.6); }
+
 /* hero */
 .hj-hero {
   background: linear-gradient(160deg, #123F36 0%, #176B57 60%, #1A8A68 100%);

@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -349,6 +350,12 @@ export default function HajjPage() {
     });
   }, []);
 
+  const todayRukn = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return ARKAN[(day - 1 + ARKAN.length) % ARKAN.length];
+  }, []);
   const [tab, setTab] = useState<HajjTab>("overview");
   const [openRukn, setOpenRukn] = useState<string | null>("ihram");
   const [search, setSearch] = useState("");
@@ -399,6 +406,16 @@ export default function HajjPage() {
           ))}
         </nav>
       </section>
+
+      {/* ركن الحج اليوم */}
+      <div className="hjod-card">
+        <div className="hjod-card__badge"><Sparkles size={11} aria-hidden="true" /> ركن الحج اليوم</div>
+        <span className="hjod-card__icon">{todayRukn.icon}</span>
+        <div className="hjod-card__num">الركن {todayRukn.num}</div>
+        <h2 className="hjod-card__title">{todayRukn.title}</h2>
+        <p className="hjod-card__sub">{todayRukn.subtitle}</p>
+        <p className="hjod-card__dalil">«{todayRukn.dalil}»<span className="hjod-card__ref"> — {todayRukn.dalilRef}</span></p>
+      </div>
 
       {tab !== "overview" && (
         <div className="hj-search-wrap">
