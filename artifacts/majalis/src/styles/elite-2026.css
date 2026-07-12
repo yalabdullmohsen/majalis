@@ -32456,3 +32456,218 @@ html[data-theme="dark"] [role="tab"]:hover {
   background: rgba(59,173,138,.08) !important;
   color: #3BAD8A !important;
 }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   §77y — Phase 8: Performance Optimization
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Contain paint لحاويات الشبكة ── */
+.lesson-unified-card,
+.ui-card,
+.card-v2,
+.ds-card,
+[class*="scholar-card"],
+[class*="book-card"] {
+  contain: layout style paint !important;
+}
+
+/* ── will-change للعناصر المتحركة فقط ── */
+.navbar-v3 {
+  will-change: transform;
+}
+.ui-card--clickable,
+.lesson-unified-card {
+  will-change: transform, box-shadow;
+}
+/* إلغاء will-change بعد الـ hover لتجنب استهلاك ذاكرة زائدة */
+.ui-card--clickable:not(:hover),
+.lesson-unified-card:not(:hover) {
+  will-change: auto;
+}
+
+/* ── Lazy image defaults ── */
+img[loading="lazy"] {
+  content-visibility: auto !important;
+}
+
+/* ── أيقونات SVG inline: منع التطاول ── */
+svg:not([class*="pattern"]):not([class*="geo"]):not([class*="star"]) {
+  overflow: visible;
+  vertical-align: middle;
+}
+
+/* ── font-display swap (هذا في CSS لا في Google Fonts، تأكيد) ── */
+@font-face {
+  font-family: "IBM Plex Sans Arabic";
+  font-display: swap;
+  src: local("IBM Plex Sans Arabic");
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891;
+}
+
+/* ── CSS Containment لصفحات ذات محتوى كثير ── */
+.page-shell > section,
+.home-page > section,
+[class*="page"] > [class*="section"] {
+  contain: layout style;
+}
+
+/* ── تحسين Scrolling Performance ── */
+.bottom-nav,
+.navbar-v3 {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ── تحديد content-visibility للمقاطع التي خارج الشاشة ── */
+.hpv4-section:not(:first-child) {
+  content-visibility: auto;
+  contain-intrinsic-height: 400px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   §77z — Phase 9 QA: Final Polish & Edge Cases
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── صفحات فارغة ── */
+.page-empty-state {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 40vh !important;
+  text-align: center !important;
+  padding: 2rem 1rem !important;
+  color: var(--color-text-muted, #89928E) !important;
+  gap: 1rem !important;
+}
+
+/* ── Error states ── */
+.error-state-wrap {
+  text-align: center !important;
+  padding: 3rem 1rem !important;
+  color: var(--sys-error, #B94A48) !important;
+}
+
+/* ── رسالة "لا يوجد نتائج" في البحث ── */
+.search-no-results {
+  text-align: center !important;
+  padding: 2.5rem 1rem !important;
+  color: var(--color-text-muted, #89928E) !important;
+}
+.search-no-results__icon {
+  font-size: 2.5rem !important;
+  margin-bottom: 0.75rem !important;
+}
+.search-no-results__title {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  color: var(--color-text, #17201D) !important;
+  margin-bottom: 0.35rem !important;
+}
+
+/* ── Maintenance Banner ── */
+.home-maintenance-banner {
+  background: rgba(185,74,72,.08) !important;
+  border: 1px solid rgba(185,74,72,.20) !important;
+  border-radius: var(--elite-r-md) !important;
+  color: var(--sys-error, #B94A48) !important;
+  padding: 0.75rem 1rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  margin-bottom: 1rem !important;
+  text-align: center !important;
+}
+
+/* ── Image fallback ── */
+img[src=""],
+img:not([src]) {
+  background: var(--color-surface-sec, #F2F1EC) !important;
+  color: transparent !important;
+}
+
+/* ── Quran text override (لا يمس النصوص الشرعية) ── */
+.quran-text,
+.ayah-text,
+.hadith-text,
+[class*="quran-verse"],
+[class*="ayah"] {
+  font-family: "Noto Naskh Arabic", "Scheherazade New", serif !important;
+  font-size: 1.2em !important;
+  line-height: 2 !important;
+  color: var(--color-text, #17201D) !important;
+  direction: rtl !important;
+  unicode-bidi: plaintext !important;
+}
+
+/* ── لا يمس النصوص العربية التراثية ── */
+.mushaf-text,
+[class*="mushaf"],
+.arabic-text--classical {
+  font-family: "Amiri Quran", "Amiri", "Noto Naskh Arabic", serif !important;
+}
+
+/* ── Table responsive ── */
+.responsive-table-wrap {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+table {
+  border-collapse: collapse !important;
+  width: 100% !important;
+}
+th {
+  background: var(--color-primary-soft, #E8F2EE) !important;
+  color: var(--color-primary-deep, #123F36) !important;
+  font-weight: 700 !important;
+  padding: 0.7rem 0.9rem !important;
+  text-align: right !important;
+}
+td {
+  padding: 0.6rem 0.9rem !important;
+  border-bottom: 1px solid var(--color-border, #E2E6E3) !important;
+  color: var(--color-text, #17201D) !important;
+}
+tr:hover td {
+  background: var(--color-primary-soft, #E8F2EE) !important;
+}
+
+html[data-theme="dark"] th {
+  background: rgba(59,173,138,.12) !important;
+  color: #3BAD8A !important;
+}
+html[data-theme="dark"] td {
+  border-color: rgba(255,255,255,.07) !important;
+  color: #E5F0EC !important;
+}
+html[data-theme="dark"] tr:hover td {
+  background: rgba(59,173,138,.06) !important;
+}
+
+/* ── Tag "جديد" / "قريباً" ── */
+.tag-new {
+  background: var(--color-primary, #176B57) !important;
+  color: #fff !important;
+  border-radius: var(--elite-r-pill) !important;
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
+  padding: 0.1rem 0.4rem !important;
+}
+.tag-soon {
+  background: var(--sand, #C7A96B) !important;
+  color: #fff !important;
+  border-radius: var(--elite-r-pill) !important;
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
+  padding: 0.1rem 0.4rem !important;
+}
+
+/* ── النهاية: إعادة تعيين قيم اللون لأي تعريف خانئ ── */
+:root {
+  /* التأكيد النهائي على القيم الصحيحة */
+  --clr-primary:       #176B57;
+  --clr-primary-deep:  #123F36;
+  --clr-primary-hov:   #125746;
+  --ivory:             #F8F7F3;
+  --ink:               #17201D;
+  --sand:              #C7A96B;
+}
