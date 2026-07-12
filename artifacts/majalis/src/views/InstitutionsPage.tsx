@@ -310,6 +310,16 @@ const INSTITUTIONS: Institution[] = [
     website: "https://www.diyanet.gov.tr",
     mapQuery: "Diyanet İşleri Başkanlığı Ankara",
   },
+  {
+    id: "qarawiyyin",
+    name: "جامعة القرويين",
+    type: "university",
+    city: "فاس",
+    country: "المغرب",
+    description: "أقدم جامعة في العالم لا تزال تعمل بلا انقطاع، تأسست عام 859م (245هـ) على يد فاطمة الفهرية، تختص بالفقه المالكي واللغة العربية.",
+    website: "https://www.uqa.ma",
+    mapQuery: "جامعة القرويين فاس",
+  },
   // مكتبات إضافية
   {
     id: "shamela",
