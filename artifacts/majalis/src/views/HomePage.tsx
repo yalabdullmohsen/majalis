@@ -29,6 +29,8 @@ import { HomeMindMapSection } from "@/components/home/HomeMindMapSection";
 import { HomeMajlisToday } from "@/components/home/HomeMajlisToday";
 import { HomePersonalDashboard } from "@/components/home/HomePersonalDashboard";
 import { FridayBanner } from "@/components/FridayBanner";
+import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
+import { getHijriDateString } from "@/lib/hijri-utils";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import {
   BookMarked, BookOpen, Bot, CalendarDays, Car, Check, Clock,
@@ -403,6 +405,24 @@ export default function HomePage() {
                 ✦ {dailyCtx.event}
               </div>
             )}
+            {/* التاريخ الهجري */}
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: "0.35rem",
+              marginTop: "0.45rem",
+              background: "rgba(255,255,255,0.1)",
+              border: "1px solid rgba(255,255,255,0.22)",
+              color: "rgba(250,248,242,0.75)",
+              padding: "0.18rem 0.75rem",
+              borderRadius: "999px",
+              fontSize: "0.72rem",
+              fontWeight: 600,
+              letterSpacing: "0.02em",
+            }}>
+              <svg width="11" height="11" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+                <circle cx="9" cy="9" r="7"/><path d="M9 2C6.5 4 5 6.3 5 9s1.5 5 4 7"/><path d="M9 2c2.5 2 4 4.3 4 7s-1.5 5-4 7"/><path d="M2 9h14"/>
+              </svg>
+              {getHijriDateString()}
+            </div>
           </div>
 
           {/* الشعار والاسم */}
@@ -630,6 +650,13 @@ export default function HomePage() {
       {/* ══ تذكير صيام ══ */}
       <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 1rem" }}>
         <HomeSawmReminder />
+      </div>
+
+      {/* ══ تذكير الشهر الهجري ══ */}
+      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 1rem" }}>
+        <SafeHomeSection name="HijriSacredMonthBanner">
+          <HijriSacredMonthBanner />
+        </SafeHomeSection>
       </div>
 
       {/* ══ ابدأ من هنا ══ */}

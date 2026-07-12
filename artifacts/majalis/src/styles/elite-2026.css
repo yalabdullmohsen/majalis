@@ -14626,6 +14626,16 @@ a:focus-visible {
 }
 .scroll-to-top:hover { opacity: 1; background: var(--majalis-emerald-deep, #123F36); transform: translateY(-2px); }
 .scroll-to-top:active { transform: scale(.93); }
+.stt-ring {
+  position: absolute;
+  top: -4px; left: -4px;
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
+  pointer-events: none;
+  overflow: visible;
+}
+.stt-ring circle:last-child { transition: stroke-dashoffset 0.35s ease; }
+.stt-icon { position: relative; z-index: 1; flex-shrink: 0; }
 @media (min-width: 880px) {
   .scroll-to-top { bottom: 1.5rem; }
 }
