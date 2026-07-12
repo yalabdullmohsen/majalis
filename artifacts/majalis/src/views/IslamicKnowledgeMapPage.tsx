@@ -297,6 +297,10 @@ const STATS = [
   { val: "٦+", lbl: "مذاهب ومدارس" },
   { val: "+٤٠٠٠", lbl: "عالم مؤثر في التاريخ" },
   { val: "+١٠٠", lbl: "موسوعة ومعجم معتمد" },
+  { val: "+٥٠٠", lbl: "مؤلَّف في علوم القرآن" },
+  { val: "+٣٠٠٠", lbl: "محدِّث في تاريخ الإسلام" },
+  { val: "+٢٠", lbl: "علماً من علوم الحديث" },
+  { val: "+١٥٠", lbl: "معجم في علوم الرجال" },
 ];
 
 /* ── روابط العلوم الكبرى ────────────────────────────────── */
@@ -313,6 +317,10 @@ const CONNECTIONS_MAP: { a: string; b: string; label: string }[] = [
   { a: "arabic",   b: "quran",   label: "اللغة مفتاح التفسير" },
   { a: "hadith",   b: "usul",    label: "علوم الحديث أصل الاستدلال" },
   { a: "books",    b: "tafsir",  label: "مدارس التفسير عبر القرون" },
+  { a: "tajweed",  b: "quran",   label: "التجويد مدخل لتلاوة القرآن" },
+  { a: "seerah",   b: "fiqh",    label: "السيرة مصدر أحكام وشواهد" },
+  { a: "aqidah",   b: "history", label: "الأحداث التاريخية تُثبت العقيدة" },
+  { a: "adhkar",   b: "fiqh",    label: "الأذكار ذات أحكام شرعية" },
 ];
 
 export default function IslamicKnowledgeMapPage() {
