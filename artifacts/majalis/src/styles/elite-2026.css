@@ -19513,6 +19513,32 @@ img[loading="lazy"]:not([src=""]) {
 
 .mdb-page { max-width: 820px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
 
+/* of-the-day card */
+.mdbod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.mdbod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; margin-bottom: 0.25rem;
+}
+.mdbod-card__icon { font-size: 2.2rem; line-height: 1; }
+.mdbod-card__name { font-size: 1.35rem; font-weight: 800; margin: 0; color: #FFFFFF; }
+.mdbod-card__founder { font-size: 0.8rem; color: rgba(255,255,255,0.72); }
+.mdbod-card__origin { font-size: 0.76rem; color: rgba(255,255,255,0.6); }
+.mdbod-card__summary { font-size: 0.88rem; color: rgba(255,255,255,0.87); max-width: 500px; margin: 0.2rem 0 0; line-height: 1.65; }
+.mdbod-card__quote {
+  font-size: 0.85rem; color: rgba(255,255,255,0.8); max-width: 460px;
+  margin: 0.25rem 0 0; font-style: italic; line-height: 1.6;
+}
+.mdbod-card__quote-src { color: rgba(255,255,255,0.6); font-style: normal; font-size: 0.78rem; }
+
 /* هيرو */
 .mdb-hero {
   background: linear-gradient(135deg, #123F36 0%, #176B57 60%, #155E45 100%);
