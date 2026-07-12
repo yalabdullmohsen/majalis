@@ -101,13 +101,14 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/methodology",   label: "منهجية التوثيق" },
 ];
 
-/** القائمة العلوية (top navbar) — 4 مجموعات رئيسية + الرئيسية */
+/** القائمة العلوية (top navbar) — 6 أقسام رئيسية */
 export const PRIMARY_NAV_ITEMS: NavLink[] = [
-  { href: "/",              label: "الرئيسية" },
-  { href: "/lessons",       label: "المكتبة",      description: "دروس · دورات · مكتبة · فتاوى" },
-  { href: "/quran",         label: "القرآن",        description: "مصحف · أذكار · ورد يومي" },
-  { href: "/seerah",        label: "المعرفة",       description: "سيرة · أنبياء · خرائط معرفية" },
-  { href: "/prayer-times",  label: "أدواتي",        description: "صلاة · بحث · تقدمي" },
+  { href: "/",             label: "الرئيسية" },
+  { href: "/lessons",      label: "تعلّم",      description: "حديث · عقيدة · فقه · سيرة" },
+  { href: "/quran-hub",    label: "القرآن",      description: "مصحف · تجويد · قراء · إذاعة" },
+  { href: "/search",       label: "ابحث",        description: "البحث الشامل في المحتوى" },
+  { href: "/library",      label: "المكتبة",     description: "كتب · دورات · علماء · مؤسسات" },
+  { href: "/my-learning",  label: "حسابي",       description: "لوحتي · مساراتي · إعداداتي" },
 ];
 
 /**

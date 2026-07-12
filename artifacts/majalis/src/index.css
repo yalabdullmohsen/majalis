@@ -10441,6 +10441,48 @@ body.mobile-nav-body-lock {
 .side-nav-link--danger svg { color: #DC2626; }
 .side-nav-link--danger:hover { background: #FEF2F2; }
 
+/* ── Subgroups inside "تعلّم" ── */
+.side-nav-subgroups-wrap {
+  padding: 0.1rem 0 0.15rem 0;
+}
+.side-nav-subgroup {
+  margin-bottom: 0.08rem;
+}
+.side-nav-subgroup__toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.28rem 0.55rem;
+  border: none;
+  border-radius: 0.45rem;
+  background: rgba(14, 110, 82, 0.055);
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--majalis-emerald, #0E6E52);
+  text-align: start;
+  letter-spacing: 0.01em;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.13s ease;
+  margin: 0.1rem 0.25rem;
+}
+.side-nav-subgroup__toggle:hover {
+  background: rgba(14, 110, 82, 0.1);
+}
+.side-nav-subgroup__toggle svg {
+  color: var(--majalis-emerald, #0E6E52);
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+.side-nav-subgroup__items {
+  padding: 0.05rem 0 0.05rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.03rem;
+}
+
 /* ── User info block ── */
 .side-nav-user-info {
   padding: 0.3rem 0.6rem;
