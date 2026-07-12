@@ -26353,6 +26353,33 @@ img[loading="lazy"]:not([src=""]) {
   line-height: 1.7;
 }
 
+/* ── مرحلة السيرة اليوم (.srod-card) ── */
+.srod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.55rem; text-align: center;
+  max-width: 920px; margin: 0 auto 1.25rem; padding: 1.5rem 1.25rem 1.25rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.srod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px;
+}
+.srod-card__icon { color: rgba(255,255,255,0.85); }
+.srod-card__year { font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.65); }
+.srod-card__title { font-size: 1.1rem; font-weight: 700; color: #FFFFFF; margin: 0; }
+.srod-card__desc { font-size: 0.9rem; line-height: 1.85; color: rgba(255,255,255,0.92); margin: 0; max-width: 600px; }
+.srod-card__events { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.35rem; width: 100%; max-width: 600px; }
+.srod-card__event {
+  font-size: 0.82rem; color: rgba(255,255,255,0.88);
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 0.6rem; padding: 0.4rem 0.85rem; text-align: right;
+}
+
 /* ── Notice ── */
 .seerah-notice {
   max-width: 920px;

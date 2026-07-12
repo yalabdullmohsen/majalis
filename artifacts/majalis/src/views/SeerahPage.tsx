@@ -254,6 +254,12 @@ export default function SeerahPage() {
   usePageView("seerah", null);
   const [activeId, setActiveId] = useState(PHASES[0].id);
   const [search, setSearch] = useState("");
+  const todayPhase = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return PHASES[(day - 1 + PHASES.length) % PHASES.length];
+  }, []);
 
   const filteredPhases = useMemo(() =>
     search.trim()
@@ -323,6 +329,22 @@ export default function SeerahPage() {
           <p className="seerah-hero__sub">
             امتداداً لرسالة الأنبياء، حياة خاتمهم محمد ﷺ من المولد إلى الوفاة في 12 مرحلة
           </p>
+        </div>
+
+        {/* مرحلة السيرة اليوم */}
+        <div className="srod-card">
+          <div className="srod-card__badge"><Sparkles size={11} aria-hidden="true" /> مرحلة السيرة اليوم</div>
+          <span className="srod-card__icon"><todayPhase.Icon size={26} aria-hidden="true" /></span>
+          <div className="srod-card__year">{todayPhase.year}</div>
+          <h2 className="srod-card__title">{todayPhase.title}</h2>
+          <p className="srod-card__desc">{todayPhase.desc}</p>
+          {todayPhase.keyEvents.length > 0 && (
+            <ul className="srod-card__events">
+              {todayPhase.keyEvents.slice(0, 2).map((ev, i) => (
+                <li key={i} className="srod-card__event">{ev}</li>
+              ))}
+            </ul>
+          )}
         </div>
 
         {/* Notice */}
