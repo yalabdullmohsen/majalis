@@ -1,7 +1,7 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { Link } from "wouter";
-import { Calculator, ChevronDown, ChevronUp, Info } from "lucide-react";
+import { Calculator, ChevronDown, ChevronUp, Info, Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -273,6 +273,12 @@ function ZakatCalc() {
 }
 
 export default function ZakatPage() {
+  const todayKind = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return KINDS[(day - 1 + KINDS.length) % KINDS.length];
+  }, []);
   const [openId, setOpenId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
 
@@ -323,6 +329,17 @@ export default function ZakatPage() {
           <div className="zk-hero__stat"><strong>2.5%</strong><span>المال والذهب</span></div>
         </div>
       </section>
+
+      {/* نوع الزكاة اليوم */}
+      <div className="zkod-card">
+        <div className="zkod-card__badge"><Sparkles size={11} aria-hidden="true" /> نوع الزكاة اليوم</div>
+        <span className="zkod-card__icon"><SectionIcon name={todayKind.icon} size={28} /></span>
+        <h2 className="zkod-card__title">{todayKind.title}</h2>
+        <div className="zkod-card__nisab">{todayKind.nisab}</div>
+        <div className="zkod-card__rate">{todayKind.rate}</div>
+        <p className="zkod-card__detail">{todayKind.detail}</p>
+        <div className="zkod-card__dalil">﴿{todayKind.dalil}﴾ — {todayKind.dalilRef}</div>
+      </div>
 
       {/* المصارف الثمانية */}
       <section className="zk-mustahiq">

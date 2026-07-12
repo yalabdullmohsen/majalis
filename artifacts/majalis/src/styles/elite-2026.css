@@ -20151,6 +20151,33 @@ img[loading="lazy"]:not([src=""]) {
 .zk-hero__stat strong { font-size: 1.6rem; font-weight: 900; color: #FFFFFF; line-height: 1.1; }
 .zk-hero__stat span { font-size: 0.72rem; color: rgba(255,255,255,0.78); margin-top: 0.15rem; }
 
+/* ── نوع الزكاة اليوم (.zkod-card) ── */
+.zkod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 1.25rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.zkod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px;
+}
+.zkod-card__icon  { font-size: 2rem; line-height: 1; }
+.zkod-card__title { font-size: 1.05rem; font-weight: 700; color: #FFFFFF; margin: 0; }
+.zkod-card__nisab { font-size: 0.8rem; color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.12); border-radius: 100px; padding: 0.2rem 0.8rem; }
+.zkod-card__rate  { font-size: 0.82rem; font-weight: 700; color: rgba(255,255,255,0.95); }
+.zkod-card__detail { font-size: 0.88rem; line-height: 1.8; color: rgba(255,255,255,0.92); margin: 0; max-width: 540px; }
+.zkod-card__dalil {
+  font-family: var(--font-quran,'Scheherazade New',serif);
+  font-size: 0.85rem; color: rgba(255,255,255,0.85); line-height: 1.8;
+  background: rgba(255,255,255,0.1); border-radius: 0.65rem; padding: 0.45rem 0.9rem; margin: 0;
+}
+
 /* المصارف الثمانية */
 .zk-mustahiq { margin-bottom: 1.75rem; }
 .zk-mustahiq__title { font-size: 1.05rem; font-weight: 800; color: #052E16; margin-bottom: 0.65rem; }
