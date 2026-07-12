@@ -24205,6 +24205,26 @@ img[loading="lazy"]:not([src=""]) {
   .jn-asbab-grid { grid-template-columns: 1fr; }
 }
 
+/* ── من أسباب دخول الجنة (.jnod-card) ── */
+.jnod-card {
+  display: flex; flex-direction: column; gap: 0.55rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 1.25rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.jnod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; width: fit-content; margin: 0 auto;
+}
+.jnod-card__title { font-size: 1.1rem; font-weight: 700; color: #FFFFFF; margin: 0; }
+.jnod-card__text { font-size: 0.92rem; line-height: 1.85; color: rgba(255,255,255,0.92); margin: 0; }
+.jnod-card__ref { font-size: 0.75rem; color: rgba(255,255,255,0.65); font-style: italic; }
+
 /* ══════════════════════════════════════════════════════════════════
    §246 — علامات الساعة  (.as-*)
    ══════════════════════════════════════════════════════════════════ */
@@ -24358,6 +24378,30 @@ img[loading="lazy"]:not([src=""]) {
   .as-kubra-grid { grid-template-columns: 1fr; }
   .as-tab { font-size: .82rem; padding: .4rem .85rem; }
 }
+
+/* ── علامة اليوم (.asod-card) ── */
+.asod-card {
+  display: flex; flex-direction: column; gap: 0.55rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 1.25rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.asod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; width: fit-content; margin: 0 auto;
+}
+.asod-card__status {
+  display: inline-block; padding: 0.2rem 0.7rem; border-radius: 100px;
+  font-size: 0.72rem; font-weight: 700; color: #FFFFFF;
+}
+.asod-card__title { font-size: 1.1rem; font-weight: 700; color: #FFFFFF; margin: 0; }
+.asod-card__desc { font-size: 0.9rem; line-height: 1.85; color: rgba(255,255,255,0.92); margin: 0; }
+.asod-card__source { font-size: 0.75rem; color: rgba(255,255,255,0.65); font-style: italic; }
 
 /* ══════════════════════════════════════════════════════════════════
    §247 — الملائكة في الإسلام  (.mk-*)

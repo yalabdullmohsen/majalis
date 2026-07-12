@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
@@ -387,9 +388,40 @@ const STATUS_MOD: Record<string, string> = {
   "لم تقع": "as-status--lam-taqaa",
 };
 
+/* ─── علامة اليوم ─── */
+function todaysAlama(): Alama {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return SUGHRA[(dayOfYear - 1 + SUGHRA.length) % SUGHRA.length];
+}
+
+const STATUS_COLOR: Record<string, string> = {
+  "وقعت": "rgba(102,210,151,0.3)",
+  "جارية": "rgba(255,198,79,0.3)",
+  "لم تقع": "rgba(200,200,200,0.2)",
+};
+
+function AlamaOfDayCard({ alama }: { alama: Alama }) {
+  return (
+    <div className="asod-card">
+      <div className="asod-card__badge"><Sparkles size={11} aria-hidden="true" /> علامة اليوم</div>
+      {alama.status && (
+        <span className="asod-card__status" style={{ background: STATUS_COLOR[alama.status] ?? "rgba(255,255,255,0.15)" }}>
+          {alama.status}
+        </span>
+      )}
+      <h2 className="asod-card__title">{alama.title}</h2>
+      <p className="asod-card__desc">{alama.desc}</p>
+      {alama.source && <div className="asod-card__source">{alama.source}</div>}
+    </div>
+  );
+}
+
 export default function AlamatSaahPage() {
   const [activeTab, setActiveTab] = useState<Tab>("sughra");
   const [search, setSearch] = useState("");
+  const todayAlama = useMemo(() => todaysAlama(), []);
 
   const filteredSughra = useMemo(() =>
     search.trim()
@@ -443,6 +475,9 @@ export default function AlamatSaahPage() {
           </div>
         </div>
       </section>
+
+      {/* علامة اليوم */}
+      <AlamaOfDayCard alama={todayAlama} />
 
       {/* Tabs */}
       <div className="as-tabs">
