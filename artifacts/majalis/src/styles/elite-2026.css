@@ -21619,6 +21619,30 @@ img[loading="lazy"]:not([src=""]) {
 
 .jn-page { min-height: 100vh; background: #F9FAFB; padding-bottom: 4rem; }
 
+/* of-the-day card */
+.jnod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.45rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.jnod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; margin-bottom: 0.25rem;
+}
+.jnod-card__icon { font-size: 2rem; line-height: 1; }
+.jnod-card__title { font-size: 1.2rem; font-weight: 800; margin: 0; color: #FFFFFF; }
+.jnod-card__desc { font-size: 0.88rem; color: rgba(255,255,255,0.85); margin: 0; max-width: 420px; line-height: 1.65; }
+.jnod-card__dalil {
+  font-family: var(--font-quran, 'Amiri Quran', serif); font-size: 0.95rem; line-height: 1.7;
+  color: rgba(255,255,255,0.9); max-width: 420px; margin: 0.2rem 0 0;
+}
+.jnod-card__ref { font-family: inherit; font-size: 0.76rem; color: rgba(255,255,255,0.6); }
+
 .jn-hero {
   background: linear-gradient(155deg, #123F36 0%, #176B57 70%, #124E3B 100%);
   color: #fff;
@@ -24929,6 +24953,32 @@ img[loading="lazy"]:not([src=""]) {
 .is-search-input { width: 100%; }
 .sr-search-wrap { padding: .5rem .25rem .75rem; }
 .sr-search-input { width: 100%; }
+/* PrayerRanksPage of-the-day */
+.prvod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.45rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.prvod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; margin-bottom: 0.25rem;
+}
+.prvod-card__title { font-size: 1.2rem; font-weight: 800; margin: 0; color: #FFFFFF; }
+.prvod-card__text {
+  font-family: var(--font-quran, 'Amiri Quran', serif); font-size: 1rem; line-height: 1.7;
+  color: rgba(255,255,255,0.92); max-width: 440px; margin: 0;
+}
+.prvod-card__meta {
+  display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: center;
+  margin-top: 0.25rem;
+}
+.prvod-card__narrator { font-size: 0.78rem; color: rgba(255,255,255,0.7); }
+.prvod-card__source { font-size: 0.78rem; color: rgba(255,255,255,0.6); }
 .prv-search-wrap { padding: .5rem 0 .75rem; }
 .prv-search-input { width: 100%; }
 .mm-search-wrap { padding: .5rem 0 .75rem; }
