@@ -75,6 +75,14 @@ export default function ScholarProfilePage() {
         </div>
       </header>
 
+      {/* ملاحظة مصادر الترجمة */}
+      <div className="stb-wrap stb-wrap--compact stb-wrap--empty" role="note" dir="rtl">
+        <p className="stb-missing" style={{ fontSize: "0.8rem", color: "var(--clr-ink-soft)" }}>
+          المعلومات الواردة نُقلت من مصادر التراجم المعتمدة (طبقات ابن سعد، سير أعلام النبلاء، وفيات الأعيان).
+          عند وجود نقص أو خطأ يُرجى الإبلاغ.
+        </p>
+      </div>
+
       {/* Bio */}
       <section className="sch-profile-section" aria-labelledby="bio-heading">
         <h2 id="bio-heading" className="sch-profile-section__title">نبذة تعريفية</h2>

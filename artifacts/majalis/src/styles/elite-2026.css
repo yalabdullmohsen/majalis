@@ -31014,3 +31014,157 @@ select:focus-visible {
 }
 .ai-disclaimer-bar__icon { color: #0E6E52; flex-shrink: 0; margin-top: 0.1rem; }
 html[data-theme="dark"] .ai-disclaimer-bar { background: rgba(14,110,82,.1); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   §74  GLOBAL DESIGN CONSISTENCY & UX POLISH
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Loading skeleton shimmer enhancement ── */
+.ds-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(0,0,0,.06) 25%,
+    rgba(0,0,0,.10) 50%,
+    rgba(0,0,0,.06) 75%
+  );
+  background-size: 200% 100%;
+  animation: sk-shimmer 1.4s ease-in-out infinite;
+}
+@keyframes sk-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+html[data-theme="dark"] .ds-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,.05) 25%,
+    rgba(255,255,255,.10) 50%,
+    rgba(255,255,255,.05) 75%
+  );
+  background-size: 200% 100%;
+}
+
+/* ── Empty state improvements ── */
+.ds-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--clr-ink-soft, #6b7280);
+}
+.ds-empty svg { opacity: 0.4; }
+.ds-empty p { font-size: 0.88rem; margin: 0; max-width: 300px; }
+
+/* ── Page shell consistency ── */
+.page-shell { max-width: 1080px; margin-inline: auto; padding: 1.5rem 1rem; }
+.page-shell.narrow { max-width: 680px; }
+
+/* ── Content hub search input ── */
+.page-search-input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1.5px solid var(--clr-border, rgba(0,0,0,.12));
+  border-radius: 0.75rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  background: var(--clr-surface, #fff);
+  color: var(--clr-ink, #1a1a1a);
+  text-align: right;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+  box-sizing: border-box;
+  margin-bottom: 0.75rem;
+}
+.page-search-input:focus {
+  border-color: #0E6E52;
+  box-shadow: 0 0 0 3px rgba(14,110,82,.12);
+}
+html[data-theme="dark"] .page-search-input {
+  background: rgba(255,255,255,.04);
+  border-color: rgba(255,255,255,.1);
+  color: #e8f5ee;
+}
+
+/* ── Content hub chips ── */
+.content-hub-chip {
+  padding: 0.38rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1.5px solid var(--clr-border, rgba(0,0,0,.1));
+  background: transparent;
+  color: var(--clr-ink-soft, #6b7280);
+  cursor: pointer;
+  transition: background .12s, color .12s, border-color .12s;
+  white-space: nowrap;
+}
+.content-hub-chip:hover { border-color: #0E6E52; color: #0E6E52; }
+.content-hub-chip--active { background: rgba(14,110,82,.1); color: #0E6E52; border-color: rgba(14,110,82,.2); }
+
+/* ── Page header improvements ── */
+.page-header-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #0E6E52;
+  margin-bottom: 0.3rem;
+}
+.page-header-title { font-size: 1.5rem; font-weight: 800; margin: 0 0 0.4rem; color: var(--clr-ink, #1a1a1a); }
+.page-header-subtitle { font-size: 0.88rem; color: var(--clr-ink-soft, #6b7280); line-height: 1.65; margin: 0; }
+
+/* ── Breadcrumb */
+.breadcrumb-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.76rem;
+  color: var(--clr-ink-soft, #6b7280);
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.breadcrumb-nav a { color: #0E6E52; text-decoration: none; font-weight: 600; }
+.breadcrumb-nav a:hover { text-decoration: underline; }
+.breadcrumb-nav__sep { opacity: 0.4; }
+
+/* ── Card hover state consistency ── */
+.ui-card:hover,
+.platform-card:hover,
+.content-card:hover {
+  box-shadow: 0 4px 16px rgba(14,110,82,.1);
+  border-color: rgba(14,110,82,.25);
+}
+
+/* ── Responsive table wrapper ── */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 0.75rem;
+}
+
+/* ── Mobile safe area ── */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .bottom-nav-bar { padding-bottom: calc(0.5rem + env(safe-area-inset-bottom)); }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Print improvements ── */
+@media print {
+  .skip-link, nav, footer, .scroll-to-top,
+  .bottom-nav-bar, .offline-banner { display: none !important; }
+  body { color: #000; background: #fff; }
+  a[href]::after { content: " (" attr(href) ")"; font-size: 0.75em; color: #666; }
+}
