@@ -1,5 +1,6 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { RANKS } from "@/views/PrayerRanksPage";
@@ -321,6 +322,12 @@ export default function SalahGuidePage() {
     });
   }, []);
 
+  const todayWajib = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return WAJIBAAT[(day - 1 + WAJIBAAT.length) % WAJIBAAT.length];
+  }, []);
   const VALID_TABS: SalahTab[] = ["shurut", "wajibaat", "kayfiyya", "mubtilatat", "khushuu", "fawaid", "maratib", "suwar"];
   const initialTab = (): SalahTab => {
     try {
@@ -372,6 +379,16 @@ export default function SalahGuidePage() {
           ))}
         </div>
       </section>
+
+      {/* واجب الصلاة اليوم */}
+      <div className="sgod-card">
+        <div className="sgod-card__badge"><Sparkles size={11} aria-hidden="true" /> واجب الصلاة اليوم</div>
+        <div className="sgod-card__num">واجب #{todayWajib.num}</div>
+        <h2 className="sgod-card__title">{todayWajib.title}</h2>
+        {todayWajib.dhikr && <p className="sgod-card__dhikr">{todayWajib.dhikr}</p>}
+        <p className="sgod-card__desc">{todayWajib.desc}</p>
+        {todayWajib.note && <p className="sgod-card__note">{todayWajib.note}</p>}
+      </div>
 
       {/* tabs */}
       <div className="sg-tabs-bar">

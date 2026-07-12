@@ -22741,6 +22741,35 @@ img[loading="lazy"]:not([src=""]) {
 .sg-salah-chip__name  { font-size: .75rem; font-weight: 700; color: #fff; }
 .sg-salah-chip__rakat { font-size: .62rem; color: rgba(255,255,255,.8); }
 
+/* ── واجب الصلاة اليوم (.sgod-card) ── */
+.sgod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 0;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.sgod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px;
+}
+.sgod-card__num   { font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.65); }
+.sgod-card__title { font-size: 1.05rem; font-weight: 700; color: #FFFFFF; margin: 0; }
+.sgod-card__dhikr {
+  font-family: var(--font-quran,'Scheherazade New',serif);
+  font-size: 1.1rem; color: #FFFFFF; margin: 0;
+  background: rgba(255,255,255,0.12); border-radius: 0.65rem; padding: 0.45rem 1rem;
+}
+.sgod-card__desc  { font-size: 0.88rem; line-height: 1.8; color: rgba(255,255,255,0.92); margin: 0; max-width: 520px; }
+.sgod-card__note  {
+  font-size: 0.8rem; color: rgba(255,255,255,0.78); margin: 0;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 0.6rem; padding: 0.4rem 0.85rem; max-width: 520px;
+}
+
 /* tabs */
 .sg-tabs-bar {
   display: flex; overflow-x: auto; gap: 0; background: #F9FAFB;
