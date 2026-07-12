@@ -1069,9 +1069,40 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
 .home-main--v3 .ui-card li,
 .home-main--v3 .ds-card strong,
 .home-main--v3 .ds-card em,
+.home-main--v3 .hit-card strong,
+.home-main--v3 .hmm-card strong,
 .myt-card strong,
 .hdc__card strong {
   color: rgba(255,255,255,0.90) !important;
+}
+
+/* ⑧ hit-card — color-mix() مُشفَّرة في hit-card__label تحتاج تجاوزاً صريحاً */
+.home-main--v3 .hit-card .hit-card__label {
+  color: #fff !important;
+}
+.home-main--v3 .hit-card .hit-card__desc {
+  color: rgba(255,255,255,0.75) !important;
+}
+.home-main--v3 .hit-card .hit-card__emoji svg {
+  stroke: rgba(255,255,255,0.85) !important;
+}
+
+/* ⑨ hmm-card — قيم مشفرة في hmm-card__title / hmm-card__arrow / hmm-card__tag */
+.home-main--v3 .hmm-card .hmm-card__title {
+  color: #fff !important;
+}
+.home-main--v3 .hmm-card .hmm-card__desc {
+  color: rgba(255,255,255,0.80) !important;
+}
+.home-main--v3 .hmm-card .hmm-card__arrow {
+  color: rgba(255,255,255,0.65) !important;
+}
+.home-main--v3 .hmm-card .hmm-card__tag {
+  color: rgba(255,255,255,0.55) !important;
+  background: rgba(255,255,255,0.10) !important;
+}
+.home-main--v3 .hmm-card .hmm-card__icon {
+  color: rgba(255,255,255,0.80) !important;
 }
 
 .home-section {
