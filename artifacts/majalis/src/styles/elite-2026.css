@@ -23374,6 +23374,31 @@ img[loading="lazy"]:not([src=""]) {
   .sh-hadith__text { font-size: .95rem; }
 }
 
+/* ── شميلة اليوم (.shod-card) ── */
+.shod-card {
+  display: flex; flex-direction: column; gap: 0.55rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 1.25rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.shod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px; width: fit-content; margin: 0 auto;
+}
+.shod-card__bab { font-size: 0.82rem; color: rgba(255,255,255,0.72); font-weight: 600; }
+.shod-card__text {
+  font-size: 1rem; line-height: 1.9; color: rgba(255,255,255,0.95);
+  margin: 0; border: none; padding: 0; font-family: var(--font-quran, serif);
+}
+.shod-card__footer { display: flex; flex-direction: column; gap: 0.15rem; align-items: center; }
+.shod-card__rawi { font-size: 0.82rem; color: rgba(255,255,255,0.85); font-weight: 600; }
+.shod-card__source { font-size: 0.74rem; color: rgba(255,255,255,0.6); font-style: italic; }
+
 /* ══════════════════════════════════════════════════════════════════════
    §241 — الإسلام في أرقام  (.is-*)
    ══════════════════════════════════════════════════════════════════════ */

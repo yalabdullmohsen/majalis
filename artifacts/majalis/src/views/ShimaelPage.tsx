@@ -1,6 +1,6 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
-import { ChevronDown, ChevronUp, Heart, Star } from "lucide-react";
+import { ChevronDown, ChevronUp, Heart, Sparkles, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
@@ -439,11 +439,42 @@ const MAWLID_STATS = [
   { label: "مُرضِعاته الشريفات", value: "ثُوَيبة مولاة أبي لهب، ثم حليمة السعدية" },
 ];
 
+/* ─── شميلة اليوم ─── */
+type FlatHadith = { babTitle: string; text: string; rawi: string; source: string };
+
+const ALL_HADITHS: FlatHadith[] = [
+  ...ABWAB_KHALQ.flatMap(b => b.hadiths.map(h => ({ babTitle: b.title, ...h }))),
+  ...ABWAB_KHULUQ.flatMap(b => b.hadiths.map(h => ({ babTitle: b.title, ...h }))),
+  ...ABWAB_SIRA.flatMap(b => b.hadiths.map(h => ({ babTitle: b.title, ...h }))),
+];
+
+function todaysHadith(): FlatHadith {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return ALL_HADITHS[(dayOfYear - 1 + ALL_HADITHS.length) % ALL_HADITHS.length];
+}
+
+function ShamilaOfDayCard({ hadith }: { hadith: FlatHadith }) {
+  return (
+    <div className="shod-card">
+      <div className="shod-card__badge"><Sparkles size={11} aria-hidden="true" /> شميلة اليوم</div>
+      <div className="shod-card__bab">{hadith.babTitle}</div>
+      <blockquote className="shod-card__text">«{hadith.text}»</blockquote>
+      <div className="shod-card__footer">
+        <span className="shod-card__rawi">{hadith.rawi}</span>
+        <span className="shod-card__source">{hadith.source}</span>
+      </div>
+    </div>
+  );
+}
+
 export default function ShimaelPage() {
   const [activeTab, setActiveTab] = useState<TabId>("khalq");
   const [openBab, setOpenBab] = useState<number | null>(null);
   const [openMahabbah, setOpenMahabbah] = useState<number | null>(null);
   const [search, setSearch] = useState("");
+  const todayHadith = useMemo(() => todaysHadith(), []);
 
   useEffect(() => {
     applyPageSeo({
@@ -506,6 +537,9 @@ export default function ShimaelPage() {
           </div>
         </div>
       </section>
+
+      {/* شميلة اليوم */}
+      <ShamilaOfDayCard hadith={todayHadith} />
 
       <div className="sh-container">
         {/* ══ التبويبات ══ */}
