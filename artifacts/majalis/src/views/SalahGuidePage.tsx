@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -382,7 +383,7 @@ export default function SalahGuidePage() {
             onClick={() => setTab(t.id)}
             aria-pressed={tab === t.id}
           >
-            <span>{t.icon}</span>
+            <span><SectionIcon name={t.icon} size={22} /></span>
             <span>{t.label}</span>
           </button>
         ))}
@@ -566,7 +567,7 @@ export default function SalahGuidePage() {
             <div className="sg-khushuu-grid">
               {filteredKhushuu.map((k) => (
                 <div key={k.title} className="sg-khushuu-card">
-                  <span className="sg-khushuu-icon">{k.icon}</span>
+                  <span className="sg-khushuu-icon"><SectionIcon name={k.icon} size={22} /></span>
                   <h3 className="sg-khushuu-title">{k.title}</h3>
                   <p className="sg-khushuu-desc">{k.desc}</p>
                 </div>

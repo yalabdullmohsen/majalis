@@ -3,6 +3,7 @@ import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 
 
 type TaharaTab = "wudu" | "ghusl" | "tayammum" | "najasat";
@@ -207,7 +208,7 @@ export default function TaharaPage() {
               onClick={() => setTab(t.id)}
               aria-pressed={tab === t.id}
             >
-              <span className="th-tab__icon">{t.icon}</span>
+              <span className="th-tab__icon"><SectionIcon name={t.icon} size={24} /></span>
               <span className="th-tab__label">{t.label}</span>
             </button>
           ))}
@@ -235,7 +236,7 @@ export default function TaharaPage() {
                 <div key={f.num} className="th-fardh-card">
                   <div className="th-fardh-card__head">
                     <span className="th-fardh-card__num">{f.num}</span>
-                    <span className="th-fardh-card__icon">{f.icon}</span>
+                    <span className="th-fardh-card__icon"><SectionIcon name={f.icon} size={24} /></span>
                     <strong className="th-fardh-card__title">{f.title}</strong>
                   </div>
                   <p className="th-fardh-card__desc">{f.desc}</p>
@@ -254,7 +255,7 @@ export default function TaharaPage() {
             <div className="th-nawaqidh-grid">
               {filteredWuduNawaqidh.map((n) => (
                 <div key={n.title} className="th-naqidh-card">
-                  <span className="th-naqidh-card__icon">{n.icon}</span>
+                  <span className="th-naqidh-card__icon"><SectionIcon name={n.icon} size={24} /></span>
                   <div>
                     <strong className="th-naqidh-card__title">{n.title}</strong>
                     <p className="th-naqidh-card__desc">{n.desc}</p>
@@ -280,7 +281,7 @@ export default function TaharaPage() {
             <div className="th-mujibat-grid">
               {filteredGhusulMujibat.map((m) => (
                 <div key={m.title} className="th-mujib-card">
-                  <span className="th-mujib-card__icon">{m.icon}</span>
+                  <span className="th-mujib-card__icon"><SectionIcon name={m.icon} size={24} /></span>
                   <div>
                     <strong className="th-mujib-card__title">{m.title}</strong>
                     <p className="th-mujib-card__desc">{m.desc}</p>
@@ -293,7 +294,7 @@ export default function TaharaPage() {
             <div className="th-faraidh-grid">
               {GHUSL_FARAIDH.map((f) => (
                 <div key={f.title} className="th-faridh-card">
-                  <span className="th-faridh-card__icon">{f.icon}</span>
+                  <span className="th-faridh-card__icon"><SectionIcon name={f.icon} size={24} /></span>
                   <div>
                     <strong className="th-faridh-card__title">{f.title}</strong>
                     <p className="th-faridh-card__desc">{f.desc}</p>
@@ -337,7 +338,7 @@ export default function TaharaPage() {
             <div className="th-ibaha-grid">
               {filteredTayammumIbaha.map((item) => (
                 <div key={item.title} className="th-ibaha-card">
-                  <span className="th-ibaha-card__icon">{item.icon}</span>
+                  <span className="th-ibaha-card__icon"><SectionIcon name={item.icon} size={24} /></span>
                   <div>
                     <strong className="th-ibaha-card__title">{item.title}</strong>
                     <p className="th-ibaha-card__desc">{item.desc}</p>
@@ -382,7 +383,7 @@ export default function TaharaPage() {
                 </h2>
                 {group.items.map((item) => (
                   <div key={item.title} className="th-naj-card">
-                    <span className="th-naj-card__icon">{item.icon}</span>
+                    <span className="th-naj-card__icon"><SectionIcon name={item.icon} size={24} /></span>
                     <div>
                       <strong className="th-naj-card__title">{item.title}</strong>
                       <p className="th-naj-card__desc">{item.desc}</p>

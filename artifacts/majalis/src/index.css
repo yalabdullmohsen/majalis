@@ -16,6 +16,11 @@ html {
      ══════════════════════════════════════════════════ */
 
   /* ══ Design Tokens الموحَّدة — نظام لون واحد ══ */
+  /* ── نظام الأيقونات الموحَّد ── */
+  --icon-section-size: 22px;
+  --icon-nav-size:     20px;
+  --icon-card-size:    24px;
+
   --clr-primary:     #1F4D3A;
   --clr-primary-hov: #173A2C;
   --clr-primary-act: #133024;

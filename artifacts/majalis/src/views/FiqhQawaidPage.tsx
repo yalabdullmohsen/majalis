@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useMemo, useState } from "react";
 import { BookOpen, ChevronDown, ChevronUp, Layers, Scale, Search, Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
@@ -590,7 +591,7 @@ export default function FiqhQawaidPage() {
                   onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenDhaabit(openDhaabit === d.id ? null : d.id)}
                   aria-expanded={openDhaabit === d.id}
                 >
-                  <span className="fq-daabit__icon" aria-hidden="true">{d.icon}</span>
+                  <span className="fq-daabit__icon" aria-hidden="true"><SectionIcon name={d.icon} size={22} /></span>
                   <span className="fq-daabit__science">{d.science}</span>
                   <span className="fq-daabit__count">{d.rules.length} ضوابط</span>
                   <span className="fq-card__chevron" aria-hidden="true">

@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -474,7 +475,7 @@ export default function DuasQuranPage() {
               { icon: "🔄", text: "الإلحاح والتكرار دون استعجال الإجابة" },
             ].map((a) => (
               <div key={a.text} className="dq-adab-item">
-                <span className="dq-adab-item__icon">{a.icon}</span>
+                <span className="dq-adab-item__icon"><SectionIcon name={a.icon} size={22} /></span>
                 <span className="dq-adab-item__text">{a.text}</span>
               </div>
             ))}

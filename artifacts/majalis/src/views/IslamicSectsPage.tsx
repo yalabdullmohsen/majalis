@@ -3,6 +3,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 
 type Sect = {
   id: string;
@@ -1026,7 +1027,7 @@ export default function IslamicSectsPage() {
           >
             {/* Header */}
             <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.75rem" }}>
-              <span style={{ fontSize: "2rem" }}>{sect.icon}</span>
+              <span style={{ fontSize: "2rem" }}><SectionIcon name={sect.icon} size={24} /></span>
               <div>
                 <div style={{ fontWeight: "700", fontSize: "1rem", color: "#1F4D3A" }}>{sect.name}</div>
                 <div style={{ fontSize: "0.78rem", color: "#888" }}>{sect.era}</div>

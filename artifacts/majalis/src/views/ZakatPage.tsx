@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { Link } from "wouter";
 import { Calculator, ChevronDown, ChevronUp, Info } from "lucide-react";
@@ -391,7 +392,7 @@ export default function ZakatPage() {
                   onClick={() => toggle(k.id)}
                   aria-expanded={isOpen}
                 >
-                  <span className="zk-card__icon">{k.icon}</span>
+                  <span className="zk-card__icon"><SectionIcon name={k.icon} size={24} /></span>
                   <div className="zk-card__header-text">
                     <div className="zk-card__title">{k.title}</div>
                     <div className="zk-card__rate">{k.rate}</div>

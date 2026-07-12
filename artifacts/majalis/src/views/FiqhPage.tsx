@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Banknote, BookOpen, Building2, ClipboardList, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, Library, MapPin, MessageCircle, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import type { LucideIcon } from "lucide-react";
 import { Link, useSearch } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
@@ -178,7 +179,7 @@ export default function FiqhPage() {
               className="fqh-hub-card"
               style={{ "--fqh-clr": t.color } as React.CSSProperties}
             >
-              <span className="fqh-hub-card__emoji" aria-hidden="true">{t.emoji}</span>
+              <span className="fqh-hub-card__emoji" aria-hidden="true"><SectionIcon name={t.emoji} size={28} /></span>
               <p className="fqh-hub-card__title">{t.title}</p>
               <p className="fqh-hub-card__desc">{t.desc}</p>
             </Link>

@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useRef, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link, useParams, useLocation } from "wouter";
@@ -481,7 +482,7 @@ export default function SearchPage() {
                     fontWeight: 600, transition: "border-color 0.15s, transform 0.1s", textAlign: "center",
                   }}
                 >
-                  <span style={{ fontSize: "1.4rem" }}>{icon}</span>
+                  <span><SectionIcon name={icon} size={24} /></span>
                   <span>{label}</span>
                 </Link>
               ))}

@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -298,7 +299,7 @@ export default function MawarithPage() {
             onClick={() => setTab(t.id)}
             aria-pressed={tab === t.id}
           >
-            <span>{t.icon}</span>
+            <span><SectionIcon name={t.icon} size={22} /></span>
             <span>{t.label}</span>
           </button>
         ))}

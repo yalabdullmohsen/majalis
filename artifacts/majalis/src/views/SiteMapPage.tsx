@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
@@ -186,7 +187,7 @@ export default function SiteMapPage() {
         {SECTIONS.map(({ title, emoji, links }) => (
           <section key={title} className="sm-section">
             <h2 className="sm-section__title">
-              <span aria-hidden="true">{emoji}</span>
+              <span aria-hidden="true"><SectionIcon name={emoji} size={22} /></span>
               {title}
             </h2>
             <div className="sm-grid">

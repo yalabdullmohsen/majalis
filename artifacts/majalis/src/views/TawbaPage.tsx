@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -278,7 +279,7 @@ export default function TawbaPage() {
             onClick={() => setTab(t.id)}
             aria-pressed={tab === t.id}
           >
-            <span className="tw-tab__icon">{t.icon}</span>
+            <span className="tw-tab__icon"><SectionIcon name={t.icon} size={20} /></span>
             <span className="tw-tab__label">{t.label}</span>
           </button>
         ))}
@@ -330,7 +331,7 @@ export default function TawbaPage() {
               {ANWAA.map((n) => (
                 <div key={n.title} className="tw-nawaa-card">
                   <div className="tw-nawaa-head">
-                    <span className="tw-nawaa-icon">{n.icon}</span>
+                    <span className="tw-nawaa-icon"><SectionIcon name={n.icon} size={24} /></span>
                     <div>
                       <span className="tw-nawaa-title">{n.title}</span>
                       <span className={`tw-nawaa-hukm tw-nawaa-hukm--${n.hukm.includes("واجب") ? "wajib" : "mustahabb"}`}>{n.hukm}</span>
@@ -446,7 +447,7 @@ export default function TawbaPage() {
             <div className="tw-athaar-grid">
               {filteredAthaar.map((a) => (
                 <div key={a.title} className="tw-athar-card">
-                  <span className="tw-athar-icon">{a.icon}</span>
+                  <span className="tw-athar-icon"><SectionIcon name={a.icon} size={22} /></span>
                   <h3 className="tw-athar-title">{a.title}</h3>
                   <p className="tw-athar-desc">{a.desc}</p>
                 </div>

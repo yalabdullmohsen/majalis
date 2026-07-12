@@ -3,6 +3,7 @@ import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 
 
 /* ────── types ────── */
@@ -392,7 +393,7 @@ export default function HajjPage() {
               onClick={() => setTab(t.id)}
               aria-pressed={tab === t.id}
             >
-              <span className="hj-tab__icon">{t.icon}</span>
+              <span className="hj-tab__icon"><SectionIcon name={t.icon} size={24} /></span>
               <span className="hj-tab__label">{t.label}</span>
             </button>
           ))}
@@ -419,7 +420,7 @@ export default function HajjPage() {
                 { icon: "📖", label: "الدليل", value: "وَلِلَّهِ عَلَى النَّاسِ حِجُّ الْبَيْتِ (آل عمران: 97)" },
               ].map((item) => (
                 <div key={item.label} className="hj-stat-card">
-                  <span className="hj-stat-card__icon">{item.icon}</span>
+                  <span className="hj-stat-card__icon"><SectionIcon name={item.icon} size={24} /></span>
                   <span className="hj-stat-card__label">{item.label}</span>
                   <span className="hj-stat-card__value">{item.value}</span>
                 </div>
@@ -445,7 +446,7 @@ export default function HajjPage() {
                 { icon: "🤲", text: "دعاء الحاج مستجاب، والحاج يشفع لسبعمئة من أهله", ref: "ابن ماجه، حسن" },
               ].map((f) => (
                 <div key={f.text} className="hj-fadl-card">
-                  <span className="hj-fadl-card__icon">{f.icon}</span>
+                  <span className="hj-fadl-card__icon"><SectionIcon name={f.icon} size={24} /></span>
                   <p className="hj-fadl-card__text">{f.text}</p>
                   <cite className="hj-fadl-card__ref">{f.ref}</cite>
                 </div>
@@ -485,7 +486,7 @@ export default function HajjPage() {
                     aria-expanded={isOpen}
                   >
                     <span className="hj-card__num">{rk.num}</span>
-                    <span className="hj-card__icon">{rk.icon}</span>
+                    <span className="hj-card__icon"><SectionIcon name={rk.icon} size={24} /></span>
                     <div className="hj-card__info">
                       <span className="hj-card__title">{rk.title}</span>
                       <span className="hj-card__sub">{rk.subtitle}</span>
@@ -520,7 +521,7 @@ export default function HajjPage() {
             </p>
             {filteredWajibat.map((w) => (
               <div key={w.id} className="hj-wajib-card">
-                <span className="hj-wajib-card__icon">{w.icon}</span>
+                <span className="hj-wajib-card__icon"><SectionIcon name={w.icon} size={24} /></span>
                 <div className="hj-wajib-card__content">
                   <strong className="hj-wajib-card__title">{w.title}</strong>
                   <p className="hj-wajib-card__desc">{w.description}</p>
@@ -541,7 +542,7 @@ export default function HajjPage() {
             {filteredMashaer.map((m) => (
               <div key={m.id} className="hj-mashar-card">
                 <div className="hj-mashar-card__head">
-                  <span className="hj-mashar-card__icon">{m.icon}</span>
+                  <span className="hj-mashar-card__icon"><SectionIcon name={m.icon} size={24} /></span>
                   <div>
                     <strong className="hj-mashar-card__name">{m.name}</strong>
                     <span className="hj-mashar-card__day">{m.day}</span>
@@ -571,7 +572,7 @@ export default function HajjPage() {
               {filteredUmraSteps.map((s) => (
                 <div key={s.num} className="hj-umra-step">
                   <div className="hj-umra-step__num">{s.num}</div>
-                  <div className="hj-umra-step__icon">{s.icon}</div>
+                  <div className="hj-umra-step__icon"><SectionIcon name={s.icon} size={24} /></div>
                   <div className="hj-umra-step__content">
                     <strong className="hj-umra-step__title">{s.title}</strong>
                     <p className="hj-umra-step__desc">{s.desc}</p>
@@ -601,7 +602,7 @@ export default function HajjPage() {
                 { icon: "💒", text: "عقد النكاح" },
               ].map((item) => (
                 <div key={item.text} className="hj-mahzur-item">
-                  <span className="hj-mahzur-item__icon">{item.icon}</span>
+                  <span className="hj-mahzur-item__icon"><SectionIcon name={item.icon} size={24} /></span>
                   <span className="hj-mahzur-item__text">{item.text}</span>
                 </div>
               ))}

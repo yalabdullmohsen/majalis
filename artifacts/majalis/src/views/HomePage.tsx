@@ -1,6 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link, useLocation } from "wouter";
+import { resolveDailyContext, type DailyContext } from "@/lib/daily-context";
 import { useAuth } from "@/components/AuthProvider";
 import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
 import { History } from "lucide-react";
@@ -267,6 +268,7 @@ export default function HomePage() {
   const [term, setTerm] = useState("");
   const [, navigate] = useLocation();
   const { isAdmin } = useAuth();
+  const [dailyCtx] = useState<DailyContext>(() => resolveDailyContext());
 
   useEffect(() => {
     applyPageSeo({
@@ -363,6 +365,45 @@ export default function HomePage() {
         </svg>
 
         <div style={{ maxWidth: 640, margin: "0 auto", position: "relative", textAlign: "center" }}>
+
+          {/* ── التحية اليومية الديناميكية ── */}
+          <div style={{ marginBottom: "1.1rem" }}>
+            <p style={{
+              color: "rgba(250,248,242,0.92)",
+              fontSize: "clamp(0.88rem, 2.4vw, 1.05rem)",
+              fontWeight: 700,
+              letterSpacing: "0.01em",
+              lineHeight: 1.5,
+              margin: "0 0 0.35rem",
+            }}>
+              {dailyCtx.greeting}
+            </p>
+            <p style={{
+              color: "rgba(250,248,242,0.55)",
+              fontSize: "clamp(0.72rem, 1.9vw, 0.82rem)",
+              margin: 0,
+            }}>
+              {dailyCtx.subGreeting}
+            </p>
+            {dailyCtx.event && (
+              <div style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                marginTop: "0.5rem",
+                background: `${dailyCtx.accentColor}33`,
+                border: `1px solid ${dailyCtx.accentColor}66`,
+                color: "#FAF8F2",
+                padding: "0.22rem 0.9rem",
+                borderRadius: "999px",
+                fontSize: "0.75rem",
+                fontWeight: 700,
+              }}>
+                ✦ {dailyCtx.event}
+              </div>
+            )}
+          </div>
+
           {/* الشعار والاسم */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "0.55rem" }}>
             <img src="/logo.png" alt="" width={56} height={56} loading="eager" aria-hidden="true"

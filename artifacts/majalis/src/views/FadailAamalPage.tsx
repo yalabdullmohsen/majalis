@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -1237,7 +1238,7 @@ export default function FadailAamalPage() {
           {filtered.map((f) => (
             <article key={f.id} className={`fa-card fa-card--${f.grade}`}>
               <div className="fa-card__head">
-                <span className="fa-card__icon">{f.icon}</span>
+                <span className="fa-card__icon"><SectionIcon name={f.icon} size={24} /></span>
                 <div className="fa-card__meta">
                   <span className="fa-card__cat">{f.category}</span>
                   <span className={`fa-card__grade fa-card__grade--${f.grade}`}>

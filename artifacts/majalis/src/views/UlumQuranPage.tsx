@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -256,7 +257,7 @@ export default function UlumQuranPage() {
             onClick={() => setTab(t.id)}
             aria-pressed={tab === t.id}
           >
-            <span>{t.icon}</span>
+            <span><SectionIcon name={t.icon} size={22} /></span>
             <span>{t.label}</span>
           </button>
         ))}
@@ -320,7 +321,7 @@ export default function UlumQuranPage() {
                       className="uq-jam-head"
                       onClick={() => setOpenJam(isOpen ? null : i)}
                     >
-                      <span className="uq-jam-num">{s.icon}</span>
+                      <span className="uq-jam-num"><SectionIcon name={s.icon} size={22} /></span>
                       <span className="uq-jam-title">{s.stage}</span>
                       <span className={`uq-jam-chevron${isOpen ? " uq-jam-chevron--open" : ""}`}>▾</span>
                     </button>
@@ -359,7 +360,7 @@ export default function UlumQuranPage() {
             <div className="uq-tafsir-types">
               {filteredTafsirTypes.map((t) => (
                 <div key={t.title} className="uq-tafsir-card">
-                  <span className="uq-tafsir-icon">{t.icon}</span>
+                  <span className="uq-tafsir-icon"><SectionIcon name={t.icon} size={22} /></span>
                   <div>
                     <h3 className="uq-tafsir-title">{t.title}</h3>
                     <p className="uq-tafsir-desc">{t.desc}</p>
@@ -403,7 +404,7 @@ export default function UlumQuranPage() {
             <div className="uq-ijaz-grid">
               {filteredIjaz.map((j) => (
                 <div key={j.title} className="uq-ijaz-card">
-                  <span className="uq-ijaz-icon">{j.icon}</span>
+                  <span className="uq-ijaz-icon"><SectionIcon name={j.icon} size={22} /></span>
                   <h3 className="uq-ijaz-title">{j.title}</h3>
                   <p className="uq-ijaz-desc">{j.desc}</p>
                 </div>

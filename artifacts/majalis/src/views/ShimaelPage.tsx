@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { ChevronDown, ChevronUp, Heart, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
@@ -551,7 +552,7 @@ export default function ShimaelPage() {
                   onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenBab(openBab === bab.id ? null : bab.id)}
                   aria-expanded={openBab === bab.id}
                 >
-                  <span className="sh-bab__icon" aria-hidden="true">{bab.icon}</span>
+                  <span className="sh-bab__icon" aria-hidden="true"><SectionIcon name={bab.icon} size={24} /></span>
                   <span className="sh-bab__title">{bab.title}</span>
                   <span className="sh-bab__count">{bab.hadiths.length} روايات</span>
                   <span className="sh-bab__chevron" aria-hidden="true">
@@ -593,7 +594,7 @@ export default function ShimaelPage() {
                   onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenBab(openBab === bab.id + 100 ? null : bab.id + 100)}
                   aria-expanded={openBab === bab.id + 100}
                 >
-                  <span className="sh-bab__icon" aria-hidden="true">{bab.icon}</span>
+                  <span className="sh-bab__icon" aria-hidden="true"><SectionIcon name={bab.icon} size={24} /></span>
                   <span className="sh-bab__title">{bab.title}</span>
                   <span className="sh-bab__count">{bab.hadiths.length} روايات</span>
                   <span className="sh-bab__chevron" aria-hidden="true">
@@ -635,7 +636,7 @@ export default function ShimaelPage() {
                   onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenBab(openBab === bab.id + 200 ? null : bab.id + 200)}
                   aria-expanded={openBab === bab.id + 200}
                 >
-                  <span className="sh-bab__icon" aria-hidden="true">{bab.icon}</span>
+                  <span className="sh-bab__icon" aria-hidden="true"><SectionIcon name={bab.icon} size={24} /></span>
                   <span className="sh-bab__title">{bab.title}</span>
                   <span className="sh-bab__count">{bab.hadiths.length} روايات</span>
                   <span className="sh-bab__chevron" aria-hidden="true">

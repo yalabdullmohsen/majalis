@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
@@ -200,7 +201,7 @@ export default function MadhahibPage() {
               onClick={() => toggle(m.id)}
               aria-pressed={openId === m.id}
             >
-              <span className="mdb-hero__nav-icon">{m.icon}</span>
+              <span className="mdb-hero__nav-icon"><SectionIcon name={m.icon} size={22} /></span>
               <span className="mdb-hero__nav-name">{m.name}</span>
             </button>
           ))}
@@ -221,7 +222,7 @@ export default function MadhahibPage() {
                 aria-expanded={isOpen}
               >
                 <div className="mdb-card__header-left">
-                  <span className="mdb-card__icon">{m.icon}</span>
+                  <span className="mdb-card__icon"><SectionIcon name={m.icon} size={24} /></span>
                   <div>
                     <div className="mdb-card__name">{m.fullName}</div>
                     <div className="mdb-card__founder">الإمام {m.founder} ({m.born}–{m.died})</div>

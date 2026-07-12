@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { ChevronDown, ChevronUp, Star } from "lucide-react";
@@ -190,7 +191,7 @@ export default function ArkanIslamPage() {
               onClick={() => setExpanded(expanded === r.num ? null : r.num)}
               title={r.title}
             >
-              <span className="arkan-hero__icon-emoji">{r.icon}</span>
+              <span className="arkan-hero__icon-emoji"><SectionIcon name={r.icon} size={28} /></span>
               <span className="arkan-hero__icon-num">{r.numAr}</span>
             </button>
           ))}
@@ -209,7 +210,7 @@ export default function ArkanIslamPage() {
                 onClick={() => setExpanded(open ? null : r.num)}
                 aria-expanded={open}
               >
-                <span className="arkan-card__emoji" aria-hidden="true">{r.icon}</span>
+                <span className="arkan-card__emoji" aria-hidden="true"><SectionIcon name={r.icon} size={26} /></span>
                 <div className="arkan-card__info">
                   <span className="arkan-card__num">الركن {r.numAr}</span>
                   <h2 className="arkan-card__title">{r.title}</h2>

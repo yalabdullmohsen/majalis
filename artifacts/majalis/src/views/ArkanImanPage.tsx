@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { ChevronDown, ChevronUp, Star } from "lucide-react";
@@ -218,7 +219,7 @@ export default function ArkanImanPage() {
               aria-pressed={openId === r.num}
               aria-label={r.title}
             >
-              <span className="ai-hero__nav-icon">{r.icon}</span>
+              <span className="ai-hero__nav-icon"><SectionIcon name={r.icon} size={22} /></span>
               <span className="ai-hero__nav-label">{r.numAr}</span>
             </button>
           ))}
@@ -238,7 +239,7 @@ export default function ArkanImanPage() {
                 aria-expanded={isOpen}
               >
                 <div className="ai-card__header-right">
-                  <span className="ai-card__icon">{rukn.icon}</span>
+                  <span className="ai-card__icon"><SectionIcon name={rukn.icon} size={24} /></span>
                   <div>
                     <div className="ai-card__num">{rukn.numAr}</div>
                     <div className="ai-card__title">{rukn.title}</div>

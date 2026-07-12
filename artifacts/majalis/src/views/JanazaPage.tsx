@@ -3,6 +3,7 @@ import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 
 
 type JanazaTab = "ghusl" | "takfin" | "salah" | "dafn" | "aadab";
@@ -215,7 +216,7 @@ export default function JanazaPage() {
               onClick={() => setTab(t.id)}
               aria-pressed={tab === t.id}
             >
-              <span className="jn-tab__icon">{t.icon}</span>
+              <span className="jn-tab__icon"><SectionIcon name={t.icon} size={24} /></span>
               <span className="jn-tab__label">{t.label}</span>
             </button>
           ))}
@@ -280,7 +281,7 @@ export default function JanazaPage() {
             {filteredTakfin.map((item) => (
               <div key={item.title} className="jn-takfin-card">
                 <div className="jn-takfin-card__head">
-                  <span className="jn-takfin-card__icon">{item.icon}</span>
+                  <span className="jn-takfin-card__icon"><SectionIcon name={item.icon} size={24} /></span>
                   <strong className="jn-takfin-card__title">{item.title}</strong>
                 </div>
                 <p className="jn-takfin-card__desc">{item.desc}</p>
@@ -347,7 +348,7 @@ export default function JanazaPage() {
             <div className="jn-dafn-grid">
               {filteredDafn.map((d) => (
                 <div key={d.title} className="jn-dafn-card">
-                  <span className="jn-dafn-card__icon">{d.icon}</span>
+                  <span className="jn-dafn-card__icon"><SectionIcon name={d.icon} size={24} /></span>
                   <div>
                     <strong className="jn-dafn-card__title">{d.title}</strong>
                     <p className="jn-dafn-card__desc">{d.desc}</p>
@@ -370,7 +371,7 @@ export default function JanazaPage() {
             </div>
             {filteredAadab.map((a) => (
               <div key={a.title} className="jn-adab-card">
-                <span className="jn-adab-card__icon">{a.icon}</span>
+                <span className="jn-adab-card__icon"><SectionIcon name={a.icon} size={24} /></span>
                 <div>
                   <strong className="jn-adab-card__title">{a.title}</strong>
                   <p className="jn-adab-card__desc">{a.desc}</p>

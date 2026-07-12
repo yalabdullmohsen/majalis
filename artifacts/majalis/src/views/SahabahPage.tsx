@@ -3,6 +3,7 @@ import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 
 
 type SahabiCategory = "الكل" | "الخلفاء" | "العشرة" | "النساء" | "العلماء" | "الفاتحون";
@@ -1331,7 +1332,7 @@ export default function SahabahPage() {
                   onClick={() => setOpenId(isOpen ? null : s.id)}
                   aria-expanded={isOpen}
                 >
-                  <span className="sb-card__icon">{s.icon}</span>
+                  <span className="sb-card__icon"><SectionIcon name={s.icon} size={24} /></span>
                   <div className="sb-card__info">
                     <span className="sb-card__name">{s.name}</span>
                     {s.kunya && <span className="sb-card__kunya">{s.kunya}</span>}

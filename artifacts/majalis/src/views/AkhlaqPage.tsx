@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useMemo, useState } from "react";
 import { Heart, Star, Users, BookOpen, ChevronDown, ChevronUp } from "lucide-react";
 import { Link } from "wouter";
@@ -1207,7 +1208,7 @@ export default function AkhlaqPage() {
                 onClick={() => toggle(a.id)}
                 aria-expanded={open}
               >
-                <span className="akl-card__icon" aria-hidden="true">{a.icon}</span>
+                <span className="akl-card__icon" aria-hidden="true"><SectionIcon name={a.icon} size={24} /></span>
                 <div className="akl-card__title-wrap">
                   <h2 className="akl-card__title">{a.title}</h2>
                   <span className="akl-card__cat">{a.category}</span>

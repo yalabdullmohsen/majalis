@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
@@ -315,7 +316,7 @@ function HadithBadge({ h }: { h: HadithRef }) {
 function SectionLabel({ emoji, label }: { emoji: string; label: string }) {
   return (
     <div className="twh-section-label">
-      <span className="twh-section-label__emoji" aria-hidden="true">{emoji}</span>
+      <span className="twh-section-label__emoji" aria-hidden="true"><SectionIcon name={emoji} size={20} /></span>
       <span>{label}</span>
     </div>
   );
@@ -395,7 +396,7 @@ export default function TawhidPage() {
               style={{ "--twh-hub-clr": s.color } as React.CSSProperties}
               aria-current={s.isCurrent ? "page" : undefined}
             >
-              <span className="twh-hub-card__emoji" aria-hidden="true">{s.emoji}</span>
+              <span className="twh-hub-card__emoji" aria-hidden="true"><SectionIcon name={s.emoji} size={26} /></span>
               <div className="twh-hub-card__body">
                 <p className="twh-hub-card__title">{s.title}</p>
                 <p className="twh-hub-card__desc">{s.desc}</p>
@@ -457,7 +458,7 @@ export default function TawhidPage() {
             <div key={p.num} className="twh-pillar-card">
               <div className="twh-pillar-num">{p.num}</div>
               <div className="twh-pillar-body">
-                <span className="twh-pillar-icon" aria-hidden="true">{p.icon}</span>
+                <span className="twh-pillar-icon" aria-hidden="true"><SectionIcon name={p.icon} size={22} /></span>
                 <p className="twh-pillar-title">{p.title}</p>
                 <p className="twh-pillar-desc">{p.body}</p>
               </div>

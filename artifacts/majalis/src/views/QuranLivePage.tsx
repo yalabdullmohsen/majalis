@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { ShareButtons } from "@/components/ContentActions";
@@ -233,7 +234,7 @@ export default function QuranLivePage() {
         <div className="qlive-schedule-list">
           {SCHEDULE.map(s => (
             <div key={s.time} className="qlive-schedule-item">
-              <span className="qlive-schedule-emoji">{s.icon}</span>
+              <span className="qlive-schedule-emoji"><SectionIcon name={s.icon} size={22} /></span>
               <div className="qlive-schedule-info">
                 <span className="qlive-schedule-time">{s.time}</span>
                 <span className="qlive-schedule-name">{s.name}</span>
