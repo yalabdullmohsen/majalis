@@ -254,39 +254,41 @@ export default function AdhkarPage() {
             <p className="adhkar-focus-text" lang="ar" dir="rtl">{current.text}</p>
           </div>
 
-          {/* زر النقر للعدّ (التسبيح) */}
-          {target > 1 ? (
-            <div className="adhkar-tapper-wrap">
-              <button
-                type="button"
-                className={`adhkar-tapper${done ? " adhkar-tapper--done" : ""}`}
-                onClick={handleTap}
-                aria-label={done ? "اكتمل الذكر" : `اضغط للعدّ، ${toAr(tapCount)} من ${toAr(target)}`}
-              >
-                <RingProgress pct={ringPct} />
-                <div className="adhkar-tapper__inner">
-                  {done ? (
-                    <span className="adhkar-tapper__check" aria-hidden="true">✓</span>
-                  ) : (
-                    <>
-                      <span className="adhkar-tapper__cur">{toAr(tapCount)}</span>
-                      <span className="adhkar-tapper__sep">/</span>
-                      <span className="adhkar-tapper__tot">{toAr(target)}</span>
-                    </>
-                  )}
-                </div>
-              </button>
-              {!done && (
-                <p className="adhkar-tapper__hint">اضغط للعدّ</p>
-              )}
-              {done && isLast && (
-                <p className="adhkar-tapper__complete"><Leaf size={15} strokeWidth={1.8} aria-hidden="true" /> أكملت جميع الأذكار</p>
-              )}
-            </div>
-          ) : (
-            /* ذكر مرة واحدة، لا داعي للعداد */
-            <p className="adhkar-focus-count">مرة واحدة</p>
-          )}
+          {/* زر النقر للعدّ (التسبيح) — المنطقة بارتفاع ثابت لإبقاء الأزرار في مكانها */}
+          <div className="adhkar-tapper-zone">
+            {target > 1 ? (
+              <div className="adhkar-tapper-wrap">
+                <button
+                  type="button"
+                  className={`adhkar-tapper${done ? " adhkar-tapper--done" : ""}`}
+                  onClick={handleTap}
+                  aria-label={done ? "اكتمل الذكر" : `اضغط للعدّ، ${toAr(tapCount)} من ${toAr(target)}`}
+                >
+                  <RingProgress pct={ringPct} />
+                  <div className="adhkar-tapper__inner">
+                    {done ? (
+                      <span className="adhkar-tapper__check" aria-hidden="true">✓</span>
+                    ) : (
+                      <>
+                        <span className="adhkar-tapper__cur">{toAr(tapCount)}</span>
+                        <span className="adhkar-tapper__sep">/</span>
+                        <span className="adhkar-tapper__tot">{toAr(target)}</span>
+                      </>
+                    )}
+                  </div>
+                </button>
+                {!done && (
+                  <p className="adhkar-tapper__hint">اضغط للعدّ</p>
+                )}
+                {done && isLast && (
+                  <p className="adhkar-tapper__complete"><Leaf size={15} strokeWidth={1.8} aria-hidden="true" /> أكملت جميع الأذكار</p>
+                )}
+              </div>
+            ) : (
+              /* ذكر مرة واحدة، لا داعي للعداد */
+              <p className="adhkar-focus-count">مرة واحدة</p>
+            )}
+          </div>
 
           {/* أزرار التنقل */}
           <div className="adhkar-focus-nav">
