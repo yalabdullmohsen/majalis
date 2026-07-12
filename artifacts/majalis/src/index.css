@@ -16,6 +16,45 @@ html {
      ══════════════════════════════════════════════════ */
 
   /* ══ Design Tokens الموحَّدة — نظام لون واحد ══ */
+  /* ── سُلَّم المسافات (Design System — Spacing Scale) ── */
+  --sp-1:  0.25rem;   /* 4px  */
+  --sp-2:  0.5rem;    /* 8px  */
+  --sp-3:  0.75rem;   /* 12px */
+  --sp-4:  1rem;      /* 16px */
+  --sp-5:  1.25rem;   /* 20px */
+  --sp-6:  1.5rem;    /* 24px */
+  --sp-8:  2rem;      /* 32px */
+  --sp-10: 2.5rem;    /* 40px */
+  --sp-12: 3rem;      /* 48px */
+  --sp-16: 4rem;      /* 64px */
+
+  /* ── سُلَّم الطباعة (Design System — Typography Scale) ── */
+  --text-xs:   0.6875rem;  /* 11px */
+  --text-sm:   0.8125rem;  /* 13px */
+  --text-base: 0.9375rem;  /* 15px */
+  --text-lg:   1.0625rem;  /* 17px */
+  --text-xl:   1.25rem;    /* 20px */
+  --text-2xl:  1.5rem;     /* 24px */
+  --text-3xl:  1.875rem;   /* 30px */
+  --text-4xl:  2.25rem;    /* 36px */
+
+  /* ── نصف القطر (Design System — Radius Scale) ── */
+  --radius-sm:   0.375rem; /* 6px  */
+  --radius-md:   0.625rem; /* 10px */
+  --radius-lg:   0.875rem; /* 14px */
+  --radius-xl:   1.25rem;  /* 20px */
+  --radius-2xl:  1.75rem;  /* 28px */
+  --radius-pill: 9999px;
+
+  /* ── ترتيب الطبقات (Design System — Z-Index Scale) ── */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-sticky:  100;
+  --z-nav:     200;
+  --z-drawer:  300;
+  --z-modal:   400;
+  --z-toast:   500;
+
   /* ── نظام الأيقونات الموحَّد ── */
   --icon-section-size: 22px;
   --icon-nav-size:     20px;
