@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useScrollRestore } from "@/hooks/useScrollRestore";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
 import { RequestManager } from "@/lib/request-manager";
@@ -39,6 +40,7 @@ export default function FawaidPage({
 }: {
   initialFawaid?: any[];
 } = {}) {
+  useScrollRestore("/fawaid");
   const [fawaid, setFawaid] = useState<any[]>(initialFawaid ?? []);
   const [loading, setLoading] = useState(!initialFawaid);
   const [category, setCategory] = useState("الكل");
