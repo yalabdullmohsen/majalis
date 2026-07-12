@@ -11,6 +11,7 @@ import { DEFAULT_PREFERENCES, type UserPreferences } from "@/lib/user-preference
 import { useQuranPreferences, type QuranFontId } from "@/hooks/useQuranPreferences";
 import { PushPrompt } from "@/components/PushPrompt";
 import { useLanguage } from "@/components/LanguageProvider";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 function ToggleRow({
   label,
@@ -87,6 +88,11 @@ export default function SettingsPage() {
       </LegalSection>
 
       <LegalSection title={t("settings_interface")}>
+        {/* محوّل اللغة */}
+        <div className="settings-field settings-field--lang">
+          <span>{t("settings_language")}</span>
+          <LanguageSwitcher />
+        </div>
         <label className="settings-field">
           <span>{t("settings_font_size")}</span>
           <select name="interface-font-size" value={preferences.fontSize} onChange={(e) => update("fontSize", e.target.value as UserPreferences["fontSize"])}>
