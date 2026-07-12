@@ -37,16 +37,7 @@ export const DEMO_QA = SEED_QA;
 
 export const DEMO_QA_CATEGORIES = [{ id: "all", name: "الكل" }, ...QA_CATEGORIES];
 
-export function isDemoId(id: string) {
-  return (
-    id.startsWith("demo-") ||
-    id.startsWith("seed-") ||
-    id.startsWith("fawaid-curated-") ||
-    id.startsWith("lib-") ||
-    id.startsWith("sheikh-") ||
-    id.startsWith("miracle-")
-  );
-}
+export { isDemoId } from "./demo-id";
 
 export type DemoSearchResults = {
   lessons: typeof DEMO_LESSONS;

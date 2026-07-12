@@ -1,5 +1,5 @@
 import { displayText } from "@/lib/display-text";
-import { isDemoId } from "@/lib/demo-content";
+import { isDemoId } from "@/lib/demo-id";
 import { HighlightedContentCard } from "@/components/reading/HighlightedContentCard";
 
 type FaidahLike = {
