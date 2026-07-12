@@ -27,6 +27,7 @@ import { HomeNawawiHadith } from "@/components/home/HomeNawawiHadith";
 import { HomeInterestingTopics } from "@/components/home/HomeInterestingTopics";
 import { HomeMindMapSection } from "@/components/home/HomeMindMapSection";
 import { HomeMajlisToday } from "@/components/home/HomeMajlisToday";
+import { HomePersonalDashboard } from "@/components/home/HomePersonalDashboard";
 import { FridayBanner } from "@/components/FridayBanner";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import {
@@ -574,6 +575,11 @@ export default function HomePage() {
 
       {/* ══ زرتَ مؤخراً ══ */}
       <RecentPagesBar />
+
+      {/* ══ لوحة المستخدم الشخصية — للمسجلين فقط ══ */}
+      <SectionErrorBoundary name="PersonalDashboard">
+        <HomePersonalDashboard />
+      </SectionErrorBoundary>
 
       {/* ══ وصول سريع ══ */}
       <nav aria-label="وصول سريع" style={{ maxWidth: 760, margin: "1.5rem auto 0", padding: "0 1rem" }}>
