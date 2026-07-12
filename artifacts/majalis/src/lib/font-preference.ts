@@ -7,8 +7,8 @@ export const FONT_OPTIONS: {
   label: string;
   description: string;
 }[] = [
-  { id: "default", label: "Cairo", description: "الخط الرسمي — Cairo SemiBold" },
-  { id: "naskh", label: "نسخ", description: "خط نسخ للقراءة الطويلة" },
+  { id: "naskh", label: "نسخ (افتراضي)", description: "خط Noto Naskh Arabic — الافتراضي الجديد للموقع" },
+  { id: "default", label: "Cairo", description: "الخط الحديث Cairo SemiBold" },
 ];
 
 export function isFontPreference(value: string | null | undefined): value is FontPreference {

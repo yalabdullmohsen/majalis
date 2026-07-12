@@ -75,11 +75,25 @@
   --elite-base:   220ms;
   --elite-slow:   380ms;
 
-  /* الخطوط */
-  --font-display:  "Cairo", "IBM Plex Sans Arabic", "Noto Naskh Arabic", system-ui, sans-serif;
-  --font-body:     "Cairo", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  /* الخطوط — النسخ كخط افتراضي */
+  --font-display:  "Noto Naskh Arabic", "Cairo", "IBM Plex Sans Arabic", system-ui, serif;
+  --font-body:     "Noto Naskh Arabic", "Cairo", "IBM Plex Sans Arabic", system-ui, serif;
   --font-serif:    "Noto Naskh Arabic", "Amiri", "Georgia", serif;
-  --font-brand:    "Katibeh", "Cairo", serif;
+  --font-brand:    "Noto Naskh Arabic", "Cairo", serif;
+}
+
+/* ══════════════════════════════════════════════
+   §2b. تفضيل الخط — data-font overrides
+   ══════════════════════════════════════════════ */
+:root[data-font="default"] {
+  --font-display: "Cairo", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-body:    "Cairo", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-brand:   "Cairo", serif;
+}
+:root[data-font="naskh"] {
+  --font-display: "Noto Naskh Arabic", "Cairo", system-ui, serif;
+  --font-body:    "Noto Naskh Arabic", "Cairo", system-ui, serif;
+  --font-brand:   "Noto Naskh Arabic", "Cairo", serif;
 }
 
 /* ══════════════════════════════════════════════
