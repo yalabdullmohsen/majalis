@@ -21084,6 +21084,26 @@ img[loading="lazy"]:not([src=""]) {
 .th-tab__icon { font-size: 1.1rem; }
 .th-tab__label { white-space: nowrap; }
 
+/* ── فرض الوضوء اليوم (.thod-card) ── */
+.thod-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center;
+  padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 0;
+  background: linear-gradient(145deg, #123F36 0%, #176B57 60%, #146248 100%);
+  box-shadow: 0 4px 20px rgba(23,107,87,0.22);
+  color: #FFFFFF;
+}
+.thod-card__badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #FFFFFF; background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.7rem; border-radius: 100px;
+}
+.thod-card__icon  { font-size: 1.8rem; line-height: 1; }
+.thod-card__num   { font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.65); }
+.thod-card__title { font-size: 1.05rem; font-weight: 700; color: #FFFFFF; margin: 0; }
+.thod-card__desc  { font-size: 0.9rem; line-height: 1.8; color: rgba(255,255,255,0.92); margin: 0; max-width: 500px; }
+
 .th-body { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem; }
 .th-section { display: flex; flex-direction: column; gap: .85rem; }
 .th-section__title {

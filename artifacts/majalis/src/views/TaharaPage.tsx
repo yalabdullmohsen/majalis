@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -163,6 +164,12 @@ export default function TaharaPage() {
     });
   }, []);
 
+  const todayFardh = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return WUDU_FARDH[(day - 1 + WUDU_FARDH.length) % WUDU_FARDH.length];
+  }, []);
   const [tab, setTab] = useState<TaharaTab>("wudu");
   const [search, setSearch] = useState("");
   const filteredWuduNawaqidh = useMemo(() =>
@@ -214,6 +221,15 @@ export default function TaharaPage() {
           ))}
         </nav>
       </section>
+
+      {/* فرض الوضوء اليوم */}
+      <div className="thod-card">
+        <div className="thod-card__badge"><Sparkles size={11} aria-hidden="true" /> فرض الوضوء اليوم</div>
+        <span className="thod-card__icon"><SectionIcon name={todayFardh.icon} size={26} /></span>
+        <div className="thod-card__num">الفرض {todayFardh.num}</div>
+        <h2 className="thod-card__title">{todayFardh.title}</h2>
+        <p className="thod-card__desc">{todayFardh.desc}</p>
+      </div>
 
       <div className="th-body">
         <div className="th-search-wrap">
