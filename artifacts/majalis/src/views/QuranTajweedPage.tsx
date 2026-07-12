@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -381,6 +382,12 @@ function RuleCard({ rule }: { rule: TajweedRule }) {
 }
 
 export default function QuranTajweedPage() {
+  const todayRule = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return RULES[(day - 1 + RULES.length) % RULES.length];
+  }, []);
   const [category, setCategory] = useState("الكل");
   const [search, setSearch] = useState("");
 
@@ -444,6 +451,15 @@ export default function QuranTajweedPage() {
         <p className="tj-hadith" lang="ar">
           قال النبي ﷺ: «زَيِّنُوا الْقُرْآنَ بِأَصْوَاتِكُمْ»، رواه أبو داود وابن ماجه
         </p>
+      </div>
+
+      {/* حكم التجويد اليوم */}
+      <div className="tjod-card">
+        <div className="tjod-card__badge"><Sparkles size={11} aria-hidden="true" /> حكم التجويد اليوم</div>
+        <div className="tjod-card__cat">{todayRule.category}</div>
+        <h2 className="tjod-card__title">{todayRule.title}</h2>
+        <p className="tjod-card__def">{todayRule.definition}</p>
+        {todayRule.example && <p className="tjod-card__ex"><span className="tjod-card__ex-label">مثال: </span>{todayRule.example}</p>}
       </div>
 
       {/* فلتر الأحكام */}
