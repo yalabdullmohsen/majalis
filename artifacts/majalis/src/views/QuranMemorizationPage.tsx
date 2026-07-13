@@ -51,18 +51,20 @@ function QuestionCard({
   const [isCorrect, setIsCorrect] = useState(false);
   const [adjacentAyah, setAdjacentAyah] = useState<string | null>(null);
   const [isListening, setIsListening] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<{ stop: () => void } | null>(null);
 
-  const hasSpeechSupport = typeof window !== "undefined" &&
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ("SpeechRecognition" in window || "webkitSpeechRecognition" in (window as any));
+  const w = typeof window !== "undefined" ? (window as unknown as Record<string, unknown>) : {};
+  const hasSpeechSupport = "SpeechRecognition" in w || "webkitSpeechRecognition" in w;
 
   const toggleVoice = () => {
     if (!hasSpeechSupport) return;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const w = window as any;
-    const SR = w.SpeechRecognition || w.webkitSpeechRecognition;
+    const SR = (w["SpeechRecognition"] || w["webkitSpeechRecognition"]) as (new () => {
+      lang: string; continuous: boolean; interimResults: boolean;
+      onresult: ((e: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void) | null;
+      onend: (() => void) | null;
+      onerror: (() => void) | null;
+      start: () => void; stop: () => void;
+    }) | undefined;
     if (!SR) return;
     if (isListening) {
       recognitionRef.current?.stop();
@@ -73,10 +75,8 @@ function QuestionCard({
     rec.lang = "ar-SA";
     rec.continuous = false;
     rec.interimResults = false;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    rec.onresult = (e: any) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const transcript = Array.from(e.results).map((r: any) => r[0].transcript).join("");
+    rec.onresult = (e) => {
+      const transcript = Array.from(e.results).map((r) => r[0].transcript).join("");
       setTextInput((prev) => prev + transcript);
     };
     rec.onend = () => setIsListening(false);
