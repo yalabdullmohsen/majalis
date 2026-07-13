@@ -22,7 +22,7 @@ const KIND_LABELS: Record<string, { label: string; icon: string }> = {
 };
 
 const QUICK_LINKS = [
-  { href: "/quran",   label: "القرآن الكريم",   icon: "📗" },
+  { href: "/quran-studies", label: "الدراسات القرآنية", icon: "📗" },
   { href: "/adhkar",  label: "الأذكار",          icon: "📿" },
   { href: "/lessons", label: "الدروس",           icon: "📚" },
   { href: "/hadith",  label: "الأحاديث",         icon: "🔍" },

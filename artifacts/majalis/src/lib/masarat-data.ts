@@ -126,7 +126,7 @@ export const MASARAT: Masar[] = [
       { id: "n3", title: "تعلم الصلاة خطوة بخطوة", href: "/sujood-sahw" },
       { id: "n4", title: "أذكار يومية أساسية", href: "/adhkar?cat=morning" },
       { id: "n5", title: "تعرف على النبي ﷺ وسيرته", href: "/seerah" },
-      { id: "n6", title: "مدخل إلى القرآن الكريم", href: "/quran" },
+      { id: "n6", title: "مدخل إلى القرآن الكريم", href: "/quran-studies" },
       { id: "n7", title: "تصحيح مفاهيم شائعة عن الإسلام", href: "/tazkiya-topics" },
       { id: "n8", title: "بناء مجتمعك المسلم", href: "/usra-mujtama" },
     ],

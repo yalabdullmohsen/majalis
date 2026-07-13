@@ -135,15 +135,6 @@ const INSTITUTIONS: Institution[] = [
     description: "أكبر مكتبة إسلامية رقمية مجانية، تضم آلاف الكتب والمتون الشرعية المُحققة.",
     website: "https://shamela.ws",
   },
-  {
-    id: "islamweb-library",
-    name: "مكتبة إسلام ويب",
-    type: "library",
-    city: "الدوحة",
-    country: "قطر",
-    description: "مكتبة رقمية إسلامية شاملة تتبع منظومة قطر للشؤون الدينية.",
-    website: "https://www.islamweb.net",
-  },
   // مراكز بحثية
   {
     id: "ifta-saudi",

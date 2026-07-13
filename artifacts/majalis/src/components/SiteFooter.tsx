@@ -14,7 +14,7 @@ const FOOTER_GROUPS = [
   {
     title: "العبادة",
     links: [
-      { href: "/quran", label: "القرآن" },
+      { href: "/quran-studies", label: "الدراسات القرآنية" },
       { href: "/adhkar", label: "الأذكار" },
       { href: "/prayer-times", label: "مواقيت الصلاة" },
       { href: "/tasbih", label: "التسابيح" },

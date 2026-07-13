@@ -46,7 +46,7 @@ function HomeQuranCirclesPreview() {
 }
 
 const QUICK_LINKS = [
-  { href: "/quran",        label: "القرآن",              meta: "مصحف وتلاوة" },
+  { href: "/quran-studies",label: "الدراسات القرآنية",   meta: "تدبر وفهم" },
   { href: "/lessons",      label: "الدروس",              meta: "أحدث وقادمة" },
   { href: "/qa",           label: "الأسئلة التعليمية",   meta: "فتاوى وإجابات" },
   { href: "/rulings",      label: "الأحكام",             meta: "موسوعة شرعية" },

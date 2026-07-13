@@ -67,9 +67,6 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/mawsuaat",           label: "الموسوعة العملية" },
   // مسارات التعلم
   { href: "/masarat",            label: "مسارات التعلم" },
-  // القرآن
-  { href: "/quran",         label: "القرآن" },
-  { href: "/quran-radio",   label: "إذاعة القرآن" },
   // الأذكار
   { href: "/adhkar",        label: "الأذكار" },
   { href: "/tasbih",        label: "التسبيح" },
@@ -90,7 +87,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
 export const PRIMARY_NAV_ITEMS: NavLink[] = [
   { href: "/",             label: "الرئيسية" },
   { href: "/lessons",      label: "الدروس" },
-  { href: "/quran",        label: "القرآن" },
+  { href: "/quran-studies",label: "القرآن" },
   { href: "/library",      label: "المكتبة" },
   { href: "/adhkar",       label: "الأذكار" },
   { href: "/prayer-times", label: "الصلاة" },
@@ -130,11 +127,8 @@ export const NAV_GROUPS: NavGroup[] = [
     id: "quran",
     title: "القرآن",
     links: [
-      { href: "/quran", label: "المصحف الشريف" },
-      { href: "/quran/tajweed", label: "علم التجويد" },
+      { href: "/quran-studies", label: "الدراسات القرآنية" },
       { href: "/quran/surah-stories", label: "قصص القرآن" },
-      { href: "/quran-live", label: "البث المباشر" },
-      { href: "/quran-radio", label: "إذاعات القرآن" },
       { href: "/daily-wird", label: "الورد اليومي" },
     ],
   },
@@ -160,7 +154,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/durus-mutanawwia", label: "دروس متنوعة" },
       { href: "/adhkar", label: "سنن مؤقتة" },
       { href: "/adhkar?cat=misc", label: "سنن غير مؤقتة" },
-      { href: "/quran", label: "فضائل القرآن" },
+      { href: "/quran-studies", label: "فضائل القرآن" },
       { href: "/occasions", label: "اليوم النبوي" },
       { href: "/daily-wird", label: "متابعة النوافل" },
     ],
@@ -189,10 +183,7 @@ export const MOBILE_MORE_NAV = [
   { href: "/stories",          label: "القصص" },
   { href: "/prophets",         label: "قصص الأنبياء" },
   // القرآن
-  { href: "/quran",            label: "القرآن" },
-  { href: "/quran-radio",      label: "إذاعة القرآن" },
-  { href: "/quran-live",       label: "البث المباشر" },
-  { href: "/quran/tajweed",    label: "التجويد" },
+  { href: "/quran-studies",       label: "الدراسات القرآنية" },
   { href: "/quran/surah-stories", label: "قصص القرآن" },
   // الأذكار والأدوات
   { href: "/adhkar",           label: "الأذكار" },
@@ -217,9 +208,9 @@ export const MOBILE_MORE_NAV = [
 
 export const HOME_FEATURE_CARDS = [
   {
-    href: "/quran",
-    title: "القرآن الكريم",
-    description: "قراءة وتلاوة وبحث",
+    href: "/quran-studies",
+    title: "الدراسات القرآنية",
+    description: "تدبر وفهم القرآن الكريم",
     icon: "book-open",
   },
   {
@@ -245,12 +236,6 @@ export const HOME_FEATURE_CARDS = [
     title: "التسابيح",
     description: "مسبحة إلكترونية",
     icon: "circle-dot",
-  },
-  {
-    href: "/quran-radio",
-    title: "إذاعة القرآن",
-    description: "بث مباشر للقرآن",
-    icon: "radio",
   },
   {
     href: "/hadith",

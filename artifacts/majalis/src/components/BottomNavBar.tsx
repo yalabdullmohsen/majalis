@@ -6,7 +6,7 @@ import { BookOpen, GraduationCap, Home, Menu, Moon } from "lucide-react";
 const TABS = [
   { href: "/",                 label: "الرئيسية", Icon: Home },
   { href: "/lessons",          label: "الدروس",   Icon: GraduationCap },
-  { href: "/quran",            label: "القرآن",   Icon: BookOpen },
+  { href: "/quran-studies",    label: "القرآن",   Icon: BookOpen },
   { href: "/prayer-countdown", label: "الصلاة",   Icon: Moon },
 ] as const;
 

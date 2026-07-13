@@ -8,9 +8,7 @@ import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { useUserPreferences } from "@/components/UserPreferencesProvider";
 import { FONT_OPTIONS, type FontPreference } from "@/lib/font-preference";
 import { THEME_OPTIONS, type ThemePreference } from "@/lib/theme-preference";
-import { clearQuranCache } from "@/lib/quran-api";
 import { DEFAULT_PREFERENCES, type UserPreferences } from "@/lib/user-preferences";
-import { useQuranPreferences, type QuranFontId } from "@/hooks/useQuranPreferences";
 import { PushPrompt } from "@/components/PushPrompt";
 import { useLanguage } from "@/components/LanguageProvider";
 
@@ -42,7 +40,6 @@ export default function SettingsPage() {
   const { preference: fontPreference, setPreference: setFontPreference } = useFontPreference();
   const { preference: themePreference, resolvedTheme, setPreference: setThemePreference } = useThemePreference();
   const { preferences, updatePreferences } = useUserPreferences();
-  const { prefs: quranPrefs, setPref: setQuranPref, bumpFont } = useQuranPreferences();
 
   const update = <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => {
     updatePreferences({ [key]: value });
@@ -148,42 +145,6 @@ export default function SettingsPage() {
           </select>
         </label>
         <ToggleRow label={t("settings_reading_mode")} checked={preferences.readingMode} onChange={(value) => update("readingMode", value)} />
-      </LegalSection>
-
-      <LegalSection title={t("settings_quran")}>
-        <label className="settings-field">
-          <span>{t("settings_quran_font_size")}</span>
-          <input
-            type="range"
-            min="18"
-            max="40"
-            value={quranPrefs.fontScale}
-            onChange={(e) => setQuranPref("fontScale", Number(e.target.value))}
-          />
-          <strong>{quranPrefs.fontScale}px</strong>
-        </label>
-        <label className="settings-field">
-          <span>{t("settings_quran_font")}</span>
-          <select
-            value={quranPrefs.fontId}
-            onChange={(e) => setQuranPref("fontId", e.target.value as QuranFontId)}
-          >
-            <option value="uthmani">عثماني</option>
-            <option value="naskh">نسخ</option>
-            <option value="amiri">أميري</option>
-          </select>
-        </label>
-        <ToggleRow label={t("settings_ayah_numbers")} checked={quranPrefs.showAyahNumbers} onChange={(v) => setQuranPref("showAyahNumbers", v)} />
-        <ToggleRow label={t("settings_night_mode")} checked={quranPrefs.nightMode} onChange={(v) => setQuranPref("nightMode", v)} />
-        <div className="settings-actions">
-          <button type="button" className="ds-btn ds-btn--ghost" onClick={() => bumpFont(2)}>{t("settings_quran_font_up")}</button>
-          <button type="button" className="ds-btn ds-btn--ghost" onClick={() => bumpFont(-2)}>{t("settings_quran_font_down")}</button>
-        </div>
-        <label className="settings-field">
-          <span>{t("settings_radio_volume")}</span>
-          <input type="range" min="0" max="100" value={preferences.radioVolume} onChange={(e) => update("radioVolume", e.target.value)} />
-        </label>
-        <button type="button" className="ui-card-btn" onClick={() => clearQuranCache()}>{t("settings_clear_quran_cache")}</button>
       </LegalSection>
 
       <LegalSection title={t("settings_media")}>
