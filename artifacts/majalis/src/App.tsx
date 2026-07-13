@@ -26,6 +26,7 @@ import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { startAdhanScheduler } from "@/lib/adhan-scheduler";
+import { setPrayerTimesCache } from "@/lib/lesson-time";
 
 const lazy = lazyWithRetry;
 
@@ -177,7 +178,10 @@ function AdhanSchedulerBootstrap() {
   const { data } = usePrayerCountdown();
   const started = useRef(false);
   useEffect(() => {
-    if (!data || started.current) return;
+    if (!data) return;
+    // Update lesson-time prayer cache with live seasonal times on every fetch.
+    setPrayerTimesCache(data.prayers);
+    if (started.current) return;
     started.current = true;
     startAdhanScheduler(data).catch(() => {});
   }, [data]);

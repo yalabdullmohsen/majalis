@@ -20,14 +20,45 @@ const EN_WEEKDAY_TO_INDEX: Record<string, number> = {
   Saturday: 6,
 };
 
-const PRAYER_TIME_MINUTES: Record<string, number> = {
-  الفجر: 5 * 60,
-  الشروق: 6 * 60 + 30,
-  الظهر: 12 * 60 + 15,
-  العصر: 15 * 60 + 45,
-  المغرب: 18 * 60 + 30,
-  العشاء: 20 * 60,
+// Mutable cache — updated at runtime from the real prayer times API.
+// Defaults are coarse annual-average fallbacks used before the first API response.
+const prayerCache: Record<string, number> = {
+  الفجر:  3 * 60 + 45,
+  الشروق: 5 * 60 + 10,
+  الظهر:  12 * 60,
+  العصر:  15 * 60 + 30,
+  المغرب: 19 * 60 + 15,
+  العشاء: 20 * 60 + 45,
 };
+
+// Maps Aladhan API prayer keys to the Arabic names used in prayerCache.
+const API_KEY_MAP: Record<string, string> = {
+  Fajr:    "الفجر",
+  Sunrise: "الشروق",
+  Dhuhr:   "الظهر",
+  Asr:     "العصر",
+  Maghrib: "المغرب",
+  Isha:    "العشاء",
+};
+
+/**
+ * Update prayer-time cache from live API data.
+ * Call once after `fetchPrayerTimes()` resolves so lesson countdowns
+ * use accurate seasonal times rather than hardcoded averages.
+ */
+export function setPrayerTimesCache(
+  prayers: Array<{ key: string; minutes: number | null }>,
+): void {
+  for (const { key, minutes } of prayers) {
+    const arabic = API_KEY_MAP[key];
+    if (arabic && minutes != null && minutes > 0) {
+      prayerCache[arabic] = minutes;
+    }
+  }
+}
+
+// Kept for legacy callers that reference PRAYER_TIME_MINUTES directly.
+const PRAYER_TIME_MINUTES = prayerCache;
 
 export type KuwaitClock = {
   year: number;
@@ -94,15 +125,18 @@ export function getKuwaitClock(date = new Date()): KuwaitClock {
   };
 }
 
-// Prayer roots (without definite article) for robust matching
-const PRAYER_ROOTS: Array<[RegExp, number]> = [
-  [/فجر/u,  5 * 60],
-  [/شروق/u, 6 * 60 + 30],
-  [/ظهر/u,  12 * 60 + 15],
-  [/عصر/u,  15 * 60 + 45],
-  [/مغرب/u, 18 * 60 + 30],
-  [/عشاء/u, 20 * 60],
-];
+// Prayer roots — reads from the live cache so seasonal times are always accurate.
+// Evaluated lazily at call time (via function) rather than captured once at module load.
+function getPrayerRoots(): Array<[RegExp, number]> {
+  return [
+    [/فجر/u,  prayerCache.الفجر],
+    [/شروق/u, prayerCache.الشروق],
+    [/ظهر/u,  prayerCache.الظهر],
+    [/عصر/u,  prayerCache.العصر],
+    [/مغرب/u, prayerCache.المغرب],
+    [/عشاء/u, prayerCache.العشاء],
+  ];
+}
 
 export function parseTimeToMinutes(timeRaw: string): number | null {
   const time = cleanTimeText(timeRaw);
@@ -145,7 +179,7 @@ export function parseTimeToMinutes(timeRaw: string): number | null {
   }
 
   // Prayer-relative times (بعد المغرب، قبل الفجر، …)
-  for (const [root, minutes] of PRAYER_ROOTS) {
+  for (const [root, minutes] of getPrayerRoots()) {
     if (root.test(time)) {
       if (/بعد/u.test(time)) return minutes + 20;
       if (/قبل/u.test(time)) return Math.max(0, minutes - 60);
