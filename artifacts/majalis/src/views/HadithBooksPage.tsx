@@ -45,6 +45,10 @@ function CollectionTab({
   return (
     <button
       type="button"
+      role="tab"
+      id={`hb-tab-${meta.id}`}
+      aria-selected={active}
+      aria-controls={`hb-panel-${meta.id}`}
       onClick={onClick}
       className={`hb-tab${active ? " hb-tab--active" : ""}`}
     >
@@ -442,7 +446,12 @@ export default function HadithBooksPage() {
       </div>
 
       {/* متصفح المجموعة */}
-      <div className="hb-content">
+      <div
+        className="hb-content"
+        role="tabpanel"
+        id={`hb-panel-${activeId}`}
+        aria-labelledby={`hb-tab-${activeId}`}
+      >
         <CollectionBrowser key={activeId} meta={activeMeta} />
       </div>
 
