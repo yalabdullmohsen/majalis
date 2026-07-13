@@ -34450,6 +34450,29 @@ body .hb-chapter-item--active {
   color: var(--ds-emerald, #0E6E52) !important;
 }
 
+/* .nav-tab--active — color-mix 10% شبه-شفاف فاتح */
+body .nav-tab--active {
+  color: var(--majalis-emerald-deep, #123F36) !important;
+}
+
+/* .related-knowledge__item:hover — color-mix 4% شبه-شفاف فاتح */
+body .related-knowledge__item:hover {
+  color: inherit !important;
+}
+
+/* .search-kind-badge--fatwa/ruling/story/stories — rgba(.10) فاتح */
+body .search-kind-badge--fatwa,
+body .search-kind-badge--ruling,
+body .search-kind-badge--story,
+body .search-kind-badge--stories {
+  color: #0E6E52 !important;
+}
+
+/* .dvp-cta .dvp-btn--primary — خلفية #fff داخل قسم داكن */
+body .dvp-cta .dvp-btn--primary {
+  color: var(--majalis-emerald-deep, #123F36) !important;
+}
+
 /* تحديد الأيقونات ضمن الخلفيات الداكنة */
 .hpv4-hero svg,
 .lesson-unified-card__header svg,
