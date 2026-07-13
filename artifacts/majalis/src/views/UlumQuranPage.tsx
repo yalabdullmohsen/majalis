@@ -545,7 +545,6 @@ export default function UlumQuranPage() {
           <h2 className="uq-related__title">استكشف أيضاً</h2>
           <div className="uq-related__grid">
             {[
-              { href: "/quran", label: "المصحف الشريف" },
               { href: "/quran/tajweed", label: "علم التجويد" },
               { href: "/quran-hub", label: "مركز القرآن" },
               { href: "/hadith-science", label: "مصطلح الحديث" },

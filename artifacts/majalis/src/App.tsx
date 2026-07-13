@@ -53,7 +53,6 @@ const HadithIndexPage = lazy(() => import("@/views/HadithIndexPage"));
 const HadithDaifPage = lazy(() => import("@/views/HadithDaifPage"));
 const HadithMawduPage = lazy(() => import("@/views/HadithMawduPage"));
 const HadithBooksPage = lazy(() => import("@/views/HadithBooksPage"));
-const QuranPage = lazy(() => import("@/views/QuranPage"));
 const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
 const QuranCirclesPage = lazy(() => import("@/views/QuranCirclesPage"));
 const QuranHubPage = lazy(() => import("@/views/QuranHubPage"));
@@ -440,8 +439,8 @@ function Router() {
           </Suspense>
         </ErrorBoundary>
       </Route>
-      <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>
-      <Route path="/mushaf"><Redirect to="/quran" /></Route>
+      <Route path="/quran"><Redirect to="/quran-hub" /></Route>
+      <Route path="/mushaf"><Redirect to="/quran-hub" /></Route>
       <Route path="/quran-hub"><SafeLazyRoute component={QuranHubPage} /></Route>
       <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
       <Route path="/quran-live"><SafeLazyRoute component={QuranLivePage} /></Route>

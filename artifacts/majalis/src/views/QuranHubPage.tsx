@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import {
-  BookOpen, Radio, Mic2, Layers, Circle, Star,
+  Radio, Mic2, Layers, Circle, Star,
   ChevronLeft, BookMarked, Headphones, GraduationCap,
   Moon, Heart, Sparkles,
 } from "lucide-react";
@@ -11,14 +11,6 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 /* ── بيانات أقسام القرآن ──────────────────────────────────── */
 const QURAN_SECTIONS = [
-  {
-    href: "/quran",
-    title: "المصحف الشريف",
-    desc: "اقرأ المصحف صفحةً بصفحة، ٦٠٤ صفحة بصورة واضحة",
-    Icon: BookOpen,
-    accent: "#123F36",
-    tag: "الأكثر زيارةً",
-  },
   {
     href: "/quran/surah-stories",
     title: "قصص القرآن",
@@ -129,8 +121,8 @@ export default function QuranHubPage() {
     applyPageSeo({
       path: "/quran-hub",
       title: "مركز القرآن الكريم | المجلس العلمي",
-      description: "مركز القرآن الكريم الشامل: مصحف، تجويد، قصص السور، إذاعات قرآنية وأكثر.",
-      keywords: ["القرآن الكريم", "مصحف", "تجويد", "قصص القرآن", "إذاعة قرآنية"],
+      description: "مركز القرآن الكريم الشامل: تجويد، قصص السور، إذاعات قرآنية، حلقات، وأكثر.",
+      keywords: ["القرآن الكريم", "تجويد", "قصص القرآن", "إذاعة قرآنية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
@@ -169,13 +161,6 @@ export default function QuranHubPage() {
             </div>
           ))}
         </div>
-
-        {/* زر رئيسي */}
-        <Link href="/quran" className="quran-hub-cta">
-          <BookOpen size={20} />
-          افتح المصحف الشريف
-          <ChevronLeft size={16} />
-        </Link>
       </section>
 
       {/* ── أقسام القرآن ─────────────────────────────────────── */}

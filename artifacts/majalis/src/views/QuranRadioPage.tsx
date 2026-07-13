@@ -37,7 +37,7 @@ export default function QuranRadioPage() {
     <div className="page-shell qs-radio-page">
       {/* Subnav */}
       <nav className="qs-subnav" aria-label="أقسام القرآن">
-        <Link href="/quran" className="qs-subnav__link">المصحف</Link>
+        <Link href="/quran-hub" className="qs-subnav__link">مركز القرآن</Link>
         <Link href="/quran-radio" className="qs-subnav__link is-active">الإذاعة والبث</Link>
       </nav>
 

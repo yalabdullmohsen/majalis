@@ -259,8 +259,8 @@ export default function QuranLivePage() {
             <Radio size={16} /> إذاعات القرآن
             <ChevronLeft size={14} />
           </Link>
-          <Link href="/quran" className="qlive-related-link">
-            <BookOpen size={16} /> المصحف الشريف
+          <Link href="/quran-hub" className="qlive-related-link">
+            <BookOpen size={16} /> مركز القرآن
             <ChevronLeft size={14} />
           </Link>
           <Link href="/muezzins" className="qlive-related-link">

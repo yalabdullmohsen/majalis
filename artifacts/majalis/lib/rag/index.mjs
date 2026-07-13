@@ -46,7 +46,7 @@ function buildHref(doc) {
     case "hadith":        return "/hadith";
     case "book":          return doc.content_id ? `/library/${doc.content_id}` : "";
     case "benefit":       return "/fawaid";
-    case "quran_verse":   return "/quran";
+    case "quran_verse":   return "/quran-hub";
     default:              return doc.source_url || "";
   }
 }

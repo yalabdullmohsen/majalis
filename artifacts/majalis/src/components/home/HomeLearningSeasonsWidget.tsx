@@ -57,7 +57,7 @@ function getSeasons(): Season[] {
       endDate: new Date("2027-02-27"),
       description: "شهر شعبان، تُرفع فيه الأعمال",
       suggestion: "استعد لرمضان بمراجعة القرآن",
-      href: "/quran",
+      href: "/quran-hub",
       color: "#7c3aed",
     },
     {

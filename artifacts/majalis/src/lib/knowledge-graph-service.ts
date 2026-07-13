@@ -107,7 +107,7 @@ export const REL_TYPE_LABEL: Record<KnRelType, string> = {
 export function getNodeHref(node: KnNode): string {
   const ref = node.reference_id;
   switch (node.node_type) {
-    case "quran_ayah":    return "/quran";
+    case "quran_ayah":    return "/quran-hub";
     case "hadith":        return "/hadith";
     case "fatwa":         return ref ? `/fatwa/${ref}` : "/fatwa";
     case "scholar":       return "/lessons";

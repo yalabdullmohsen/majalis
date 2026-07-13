@@ -18,7 +18,7 @@ function formatCountdown(seconds: number): string {
 }
 
 const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string }[] = [
-  { href: "/quran",        Icon: BookMarked, label: "القرآن الكريم" },
+  { href: "/quran-hub",    Icon: BookMarked, label: "القرآن الكريم" },
   { href: "/adhkar",       Icon: RotateCw,   label: "الأذكار" },
   { href: "/qibla",        Icon: Compass,    label: "القبلة" },
   { href: "/prayer-times", Icon: Building2,  label: "مواقيت الصلاة" },

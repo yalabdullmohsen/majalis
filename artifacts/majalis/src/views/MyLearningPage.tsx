@@ -370,7 +370,7 @@ export default function MyLearningPage() {
           <Link href="/lessons"  className="myl2-btn myl2-btn--primary">
             <GraduationCap size={14} aria-hidden="true" /> الدروس
           </Link>
-          <Link href="/quran"    className="myl2-btn">
+          <Link href="/quran-hub" className="myl2-btn">
             <BookOpen size={14} aria-hidden="true" /> القرآن
           </Link>
           <Link href="/library"  className="myl2-btn">

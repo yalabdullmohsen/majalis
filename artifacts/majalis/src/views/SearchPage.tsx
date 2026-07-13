@@ -538,7 +538,7 @@ export default function SearchPage() {
             <p className="srch-quick-sections__title">أقسام يمكنك استكشافها</p>
             <div className="srch-quick-grid">
               {([
-                { href: "/quran",        Icon: BookOpen,      label: "القرآن الكريم" },
+                { href: "/quran-hub",    Icon: BookOpen,      label: "القرآن الكريم" },
                 { href: "/hadith",       Icon: Scroll,        label: "الأحاديث النبوية" },
                 { href: "/adhkar",       Icon: Heart,         label: "الأذكار" },
                 { href: "/fatwa",        Icon: Scale,         label: "الفتاوى" },

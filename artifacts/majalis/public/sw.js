@@ -1,7 +1,7 @@
-/** PWA service worker v17 — network-first for app shell, cache-first for static Quran/lesson data. */
+/** PWA service worker v18 — network-first for app shell, cache-first for static Quran/lesson data. */
 
-const SHELL_CACHE   = "majalis-shell-v17";
-const DATA_CACHE    = "majalis-data-v17";
+const SHELL_CACHE   = "majalis-shell-v18";
+const DATA_CACHE    = "majalis-data-v18";
 const VERSION_CACHE = "majalis-version";
 const FETCH_TIMEOUT = 8000;
 
@@ -30,7 +30,7 @@ const SHELL_ROUTES = [
   "/tasbih",
   "/daily-wird",
   "/sunan-yawmiyya",
-  "/quran",
+  "/quran-hub",
   "/fawaid",
   "/duas",
   "/asma-husna",

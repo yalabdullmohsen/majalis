@@ -12,7 +12,7 @@ type TabId = "dhikr" | "ayah" | "hadith" | "faida" | "question";
 
 const TABS: { id: TabId; label: string; Icon: LucideIcon; link: string; linkLabel: string }[] = [
   { id: "dhikr",    label: "ذكر",   Icon: RotateCw,  link: "/adhkar", linkLabel: "الأذكار" },
-  { id: "ayah",     label: "آية",   Icon: BookOpen,  link: "/quran",  linkLabel: "القرآن"  },
+  { id: "ayah",     label: "آية",   Icon: BookOpen,  link: "/quran-hub",  linkLabel: "القرآن"  },
   { id: "hadith",   label: "حديث",  Icon: Scroll,    link: "/hadith", linkLabel: "الأحاديث" },
   { id: "faida",    label: "فائدة", Icon: Lightbulb, link: "/fawaid", linkLabel: "الفوائد" },
   { id: "question", label: "سؤال",  Icon: HelpCircle, link: "/qa",   linkLabel: "الأسئلة" },

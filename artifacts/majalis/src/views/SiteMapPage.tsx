@@ -11,7 +11,6 @@ const SECTIONS = [
     emoji: "📖",
     links: [
       { href: "/quran-hub",          label: "مركز القرآن",        desc: "بوابة كل ما يتعلق بالقرآن" },
-      { href: "/quran",              label: "المصحف الشريف",      desc: "تصفّح القرآن سورةً سورة" },
       { href: "/daily-wird",         label: "الورد اليومي",       desc: "ختمة متجددة يومياً" },
       { href: "/quran/tajweed",      label: "علم التجويد",        desc: "أحكام التجويد بالأمثلة" },
       { href: "/ulum-quran",         label: "علوم القرآن",        desc: "التفسير والناسخ والمنسوخ" },

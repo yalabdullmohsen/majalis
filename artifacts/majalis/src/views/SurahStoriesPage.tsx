@@ -45,7 +45,7 @@ export default function SurahStoriesPage() {
       />
 
       <nav className="quran-subnav" aria-label="أقسام القرآن">
-        <Link href="/quran" className="quran-subnav__link">المصحف</Link>
+        <Link href="/quran-hub" className="quran-subnav__link">مركز القرآن</Link>
         <Link href="/quran/tajweed" className="quran-subnav__link">التجويد</Link>
         <Link href="/quran/surah-stories" className="quran-subnav__link is-active">قصص القرآن</Link>
         <Link href="/quran-live" className="quran-subnav__link">البث المباشر</Link>

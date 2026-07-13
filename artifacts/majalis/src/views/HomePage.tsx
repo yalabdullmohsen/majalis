@@ -46,7 +46,7 @@ const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc: string
   { href: "/prayer-times",   Icon: Clock,         label: "أوقات الصلاة",    desc: "الكويت لحظياً" },
   { href: "/lessons",        Icon: GraduationCap, label: "الدروس",           desc: "علماء الكويت" },
   { href: "/hadith",         Icon: Scroll,        label: "الأحاديث",         desc: "صحيح وضعيف" },
-  { href: "/quran",          Icon: BookMarked,    label: "القرآن",            desc: "مصحف رقمي كامل" },
+  { href: "/quran-hub",      Icon: BookMarked,    label: "القرآن",            desc: "تجويد، تلاوة، وأكثر" },
   { href: "/fawaid",         Icon: Lightbulb,     label: "الفوائد",          desc: "فوائد منتقاة" },
   { href: "/qa",             Icon: HelpCircle,    label: "الأسئلة",           desc: "فتاوى موثّقة" },
   { href: "/tasbih",         Icon: RotateCw,      label: "التسبيح",          desc: "عداد إلكتروني" },
@@ -529,7 +529,7 @@ export default function HomePage() {
               <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 3 1 7l8 4 8-4-8-4z"/><path d="M5 9.5v3.5a4 4 0 0 0 8 0V9.5"/></svg>
               الدروس
             </Link>
-            <Link href="/quran" style={{
+            <Link href="/quran-hub" style={{
               background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1rem",
               borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.86rem",
               textDecoration: "none", border: "1px solid rgba(255,255,255,0.28)",

@@ -7,13 +7,6 @@ import { chromium, devices } from "playwright";
 
 const base = process.argv.find((a) => a.startsWith("--base="))?.slice(7) || "http://127.0.0.1:24216";
 
-const ROUTES = [
-  { path: "/quran", label: "Quran" },
-  { path: "/quran/surah-stories", label: "Surah stories" },
-  { path: "/qa", label: "QA" },
-  { path: "/lessons", label: "Lessons" },
-];
-
 async function checkPage(page, { path, label }) {
   const url = new URL(path, base).toString();
   await page.goto(url, { waitUntil: "networkidle", timeout: 30_000 });
@@ -34,13 +27,11 @@ async function checkPage(page, { path, label }) {
   return bodyText;
 }
 
-async function checkQuran(page) {
-  await checkPage(page, { path: "/quran", label: "Quran" });
-  const toolbar = page.locator(".quran-v2-toolbar, .quran-toolbar");
-  await toolbar.first().waitFor({ state: "visible", timeout: 10_000 });
-  const ayahList = page.locator(".quran-v2-ayah-list, .quran-ayah-list, .quran-v2");
-  await ayahList.first().waitFor({ state: "visible", timeout: 10_000 });
-  console.log("✓ Quran: toolbar + content visible, no overflow");
+async function checkQuranHub(page) {
+  await checkPage(page, { path: "/quran-hub", label: "Quran hub" });
+  const grid = page.locator(".quran-hub-grid");
+  await grid.first().waitFor({ state: "visible", timeout: 10_000 });
+  console.log("✓ Quran hub: content visible, no overflow");
 }
 
 async function checkSurahStories(page) {
@@ -102,13 +93,13 @@ async function checkLessons(page) {
 }
 
 async function checkAssistantFab(page) {
-  for (const path of ["/quran", "/lessons"]) {
+  for (const path of ["/quran-hub", "/lessons"]) {
     await page.goto(new URL(path, base).toString(), { waitUntil: "networkidle" });
     const fab = page.locator(".assistant-fab");
     if (!(await fab.count())) continue;
     const overlap = await page.evaluate(() => {
       const fab = document.querySelector(".assistant-fab");
-      const cards = [...document.querySelectorAll(".lesson-unified-card, .quran-v2-ayah-card, .ui-card-btn, .quran-story-card")];
+      const cards = [...document.querySelectorAll(".lesson-unified-card, .quran-hub-card, .ui-card-btn, .quran-story-card")];
       if (!fab) return false;
       const fr = fab.getBoundingClientRect();
       for (const el of cards.slice(0, 8)) {
@@ -132,7 +123,7 @@ try {
   const context = await browser.newContext({ ...iphone });
   const page = await context.newPage();
 
-  await checkQuran(page);
+  await checkQuranHub(page);
   await checkSurahStories(page);
   await checkQa(page);
   await checkLessons(page);

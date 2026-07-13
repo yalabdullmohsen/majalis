@@ -35,7 +35,7 @@ export const PRODUCTION_BASE =
 
 export const USER_FACING_ROUTES = [
   "/",
-  "/quran",
+  "/quran-hub",
   "/quran/surah-stories",
   "/rulings",
   "/qa",

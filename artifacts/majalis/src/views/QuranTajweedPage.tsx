@@ -435,7 +435,7 @@ export default function QuranTajweedPage() {
 
       {/* تنقل أقسام القرآن */}
       <nav className="quran-subnav" aria-label="أقسام القرآن">
-        <Link href="/quran"               className="quran-subnav__link">المصحف</Link>
+        <Link href="/quran-hub"            className="quran-subnav__link">مركز القرآن</Link>
         <Link href="/quran/tajweed"        className="quran-subnav__link is-active">التجويد</Link>
         <Link href="/quran/surah-stories"  className="quran-subnav__link">قصص القرآن</Link>
         <Link href="/quran-live"           className="quran-subnav__link">البث المباشر</Link>
@@ -503,7 +503,7 @@ export default function QuranTajweedPage() {
           <span className="tj-related-link tj-related-link--ref">متن الجزرية، ابن الجزري</span>
           <span className="tj-related-link tj-related-link--ref">التمهيد في علم التجويد، ابن الجزري</span>
           <span className="tj-related-link tj-related-link--ref">هداية القاري، عبد الفتاح المرصفي</span>
-          <Link href="/quran" className="tj-related-link">ابدأ القراءة من المصحف ←</Link>
+          <Link href="/quran-hub" className="tj-related-link">استكشف مركز القرآن ←</Link>
         </div>
       </div>
 

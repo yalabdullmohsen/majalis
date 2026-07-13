@@ -28,7 +28,7 @@ const PERIODS: Record<string, SunnahPeriod> = {
     title: "قبل الظهر",
     suggestions: [
       { label: "صلاة الضحى", href: "/adhkar?cat=salah" },
-      { label: "قراءة القرآن", href: "/quran" },
+      { label: "قراءة القرآن", href: "/quran-hub" },
       { label: "الأسئلة الشرعية", href: "/qa" },
       { label: "دروس الأسبوع", href: "/lessons" },
     ],
@@ -39,7 +39,7 @@ const PERIODS: Record<string, SunnahPeriod> = {
     suggestions: [
       { label: "سنة الظهر البعدية", href: "/adhkar?cat=salah" },
       { label: "أذكار ما بعد الصلاة", href: "/adhkar?cat=after-salah" },
-      { label: "قراءة القرآن", href: "/quran" },
+      { label: "قراءة القرآن", href: "/quran-hub" },
       { label: "فوائد علمية", href: "/fawaid" },
     ],
   },
@@ -48,7 +48,7 @@ const PERIODS: Record<string, SunnahPeriod> = {
     title: "بعد العصر",
     suggestions: [
       { label: "أذكار المساء", href: "/adhkar?cat=evening" },
-      { label: "قراءة القرآن", href: "/quran" },
+      { label: "قراءة القرآن", href: "/quran-hub" },
       { label: "قصص الأنبياء", href: "/prophets" },
       { label: "الرقائق والزهد", href: "/raqaiq" },
     ],

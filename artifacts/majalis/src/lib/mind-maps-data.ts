@@ -191,9 +191,8 @@ export const MIND_MAPS: MindMap[] = [
         },
         {
           id: "quran-tools",
-          label: "أدوات المصحف",
+          label: "أدوات القرآن",
           children: [
-            { id: "qt-1", label: "المصحف الشريف", href: "/quran" },
             { id: "qt-2", label: "الورد اليومي", href: "/daily-wird" },
             { id: "qt-3", label: "أدعية القرآن", href: "/duas-quran" },
           ],

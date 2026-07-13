@@ -208,7 +208,7 @@ export default function AboutPage() {
           {" · "}
           <Link href="/lessons?tab=courses">الدورات العلمية</Link>
           {" · "}
-          <Link href="/quran">المصحف الرقمي</Link>
+          <Link href="/quran-hub">مركز القرآن</Link>
           {" · "}
           <Link href="/quran-radio">إذاعة القرآن</Link>
           {" · "}

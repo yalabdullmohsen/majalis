@@ -214,7 +214,7 @@ async function searchQuranIndex(supabase, normQuery, limit) {
     title: r.ayah_text,
     summary: "",
     meta: [r.surah_name, r.source_reference].filter(Boolean).join(" · "),
-    href: "/quran",
+    href: "/quran-hub",
     verbatim: true, // يشير للواجهة أن هذا النص يُعرض حرفياً
   }));
 }

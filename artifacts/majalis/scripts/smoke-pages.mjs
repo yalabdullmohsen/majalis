@@ -12,7 +12,7 @@ const PAGES = [
   "/sheikhs",
   "/library",
   "/qa",
-  "/quran",
+  "/quran-hub",
   "/quran-live",
   "/quran-radio",
   "/quran/tajweed",

@@ -408,7 +408,7 @@ export function GlobalSearchModal({ onClose }: Props) {
                 <p className="gsm-section__label">تصفح</p>
                 <div className="gsm-quicklinks">
                   {[
-                    { href: "/quran",         label: "القرآن",       Icon: BookMarked },
+                    { href: "/quran-hub",     label: "القرآن",       Icon: BookMarked },
                     { href: "/adhkar",         label: "الأذكار",      Icon: RotateCw },
                     { href: "/lessons",        label: "الدروس",       Icon: GraduationCap },
                     { href: "/fatwa",          label: "الفتاوى",      Icon: Scale },

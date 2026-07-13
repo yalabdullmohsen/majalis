@@ -249,7 +249,14 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "") {
       let cur = "";
       for (const seg of segs) {
         cur += `/${seg}`;
+        const isLast = cur === route.path;
         const matched = seoConfig.routes.find(r => r.path === cur);
+        // "/quran" لم يعد صفحة قائمة بذاتها (حُذف قارئ المصحف)؛ أي مسار فرعي
+        // تحته (مثل /quran/tajweed) يُشير في فتات الخبز إلى مركز القرآن بدلاً منه.
+        if (!matched && !isLast && cur === "/quran") {
+          items.push({ name: "القرآن الكريم", path: "/quran-hub" });
+          continue;
+        }
         items.push({ name: matched ? matched.title.split(" | ")[0] : (route.title.split(" | ")[0] || seg), path: cur });
       }
       return breadcrumbJsonLdScript(items);
@@ -608,25 +615,6 @@ for (const route of noindexRoutes) {
 }
 
 // محتوى غني لصفحات رئيسية (روابط فعلية لمحركات البحث والمستخدمين بدون JS)
-const SURAH_NAMES = [
-  "الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس",
-  "هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه",
-  "الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم",
-  "لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر",
-  "فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق",
-  "الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة",
-  "الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج",
-  "نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس",
-  "التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد",
-  "الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات",
-  "القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر",
-  "المسد","الإخلاص","الفلق","الناس",
-];
-const quranRichBody = `<h2>سور القرآن الكريم</h2>
-<ul style="column-count:3">
-  ${SURAH_NAMES.map((n, i) => `<li><a href="${absoluteUrl("/quran")}#surah-${i+1}">${i+1}. سورة ${escapeHtml(n)}</a></li>`).join("\n  ")}
-</ul>`;
-
 const lessonsRichBody = `<h2>أبرز الدروس والدورات</h2>
 <ul>
   ${dedupeLessons(LESSONS_SEED).slice(0, 15).map(r => `<li><a href="${absoluteUrl(`/lessons/${r.id}`)}">${escapeHtml(r.title)}</a>${r.speaker_name ? ` — ${escapeHtml(r.speaker_name)}` : ""}</li>`).join("\n  ")}
@@ -658,7 +646,6 @@ const prophetsRichBody = `<h2>قصص الأنبياء</h2>
 </ul>`;
 
 const RICH_BODY_MAP = {
-  "/quran": quranRichBody,
   "/lessons": lessonsRichBody,
   "/library": libraryRichBody,
   "/adhkar": adhkarRichBody,

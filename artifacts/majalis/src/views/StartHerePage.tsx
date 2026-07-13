@@ -68,7 +68,7 @@ const STEPS: Step[] = [
     desc: "تلاوة القرآن يومياً مع الفهم. ابدأ بصفحتين يومياً واستخدم الورد اليومي للمتابعة.",
     Icon: BookOpen,
     links: [
-      { href: "/quran",       label: "المصحف الرقمي" },
+      { href: "/quran-hub",   label: "مركز القرآن" },
       { href: "/daily-wird",  label: "الورد اليومي" },
       { href: "/quran/tajweed", label: "أحكام التجويد" },
     ],

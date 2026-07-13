@@ -5,7 +5,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const SUGGESTIONS = [
-  { href: "/quran",        label: "المصحف الشريف",    Icon: BookOpen   },
+  { href: "/quran-hub",    label: "مركز القرآن",       Icon: BookOpen   },
   { href: "/adhkar",       label: "الأذكار",           Icon: Scroll     },
   { href: "/lessons",      label: "الدروس",            Icon: BookText   },
   { href: "/hadith",       label: "الأحاديث",          Icon: BookMarked },
