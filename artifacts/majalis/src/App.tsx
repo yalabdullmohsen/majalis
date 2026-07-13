@@ -394,8 +394,10 @@ function Router() {
       <Route path="/notification-settings"><SafeLazyRoute component={NotificationSettingsPage} /></Route>
       <Route path="/study-room"><SafeLazyRoute component={StudyRoomPage} /></Route>
       <Route path="/family"><SafeLazyRoute component={FamilyModePage} /></Route>
+      <Route path="/family-mode"><Redirect to="/family" /></Route>
       <Route path="/vault"><SafeLazyRoute component={VaultPage} /></Route>
       <Route path="/researcher"><SafeLazyRoute component={ResearcherProfilePage} /></Route>
+      <Route path="/researcher-profile"><SafeLazyRoute component={ResearcherProfilePage} /></Route>
       <Route path="/institutions"><SafeLazyRoute component={InstitutionsPage} /></Route>
       <Route path="/auth/callback"><SafeLazyRoute component={AuthCallbackPage} /></Route>
       <Route path="/learning/paths/:slug"><SafeLazyRoute component={LearningPathDetailPage} /></Route>
