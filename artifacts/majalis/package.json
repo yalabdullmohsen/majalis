@@ -155,6 +155,7 @@
     "@capacitor/status-bar": "^8.0.2",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.108.2",
+    "@types/leaflet": "^1.9.21",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.38.0",
     "@vercel/functions": "^2.0.0",
@@ -165,11 +166,13 @@
     "hls.js": "^1.6.16",
     "html-to-image": "^1.11.13",
     "html2canvas": "^1.4.1",
+    "leaflet": "^1.9.4",
     "next": "^15.1.0",
     "pg": "^8.16.0",
     "qrcode": "^1.5.4",
     "react": "catalog:",
     "react-dom": "catalog:",
+    "react-leaflet": "^5.0.0",
     "wouter": "^3.3.5"
   }
 }

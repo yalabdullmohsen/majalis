@@ -191,6 +191,7 @@ const LABEL_MAP: Record<string, string> = {
   "/sitemap":                       "خريطة الموقع",
   "/features-in-progress":          "الميزات قيد التطوير",
   "/c":                             "محتوى",
+  "/islamic-landmarks":             "المشاهد الإسلامية والمساجد التاريخية",
 };
 
 /**
