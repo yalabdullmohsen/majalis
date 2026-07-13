@@ -438,7 +438,7 @@ export default function KnowledgeGraphPage() {
                 <div className="kng-panel__actions">
                   {source === "new" && (
                     <>
-                      <select value={expandDepth} onChange={(e) => setExpandDepth(Number(e.target.value))} className="kng-expand-select">
+                      <select value={expandDepth} onChange={(e) => setExpandDepth(Number(e.target.value))} className="kng-expand-select" aria-label="عمق التوسيع">
                         <option value={1}>عمق 1</option>
                         <option value={2}>عمق 2</option>
                         <option value={3}>عمق 3</option>

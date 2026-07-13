@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import "@/styles/admin.css";
+import { applyPageSeo } from "@/lib/seo";
 import { AdminShell, type AdminSection } from "@/views/admin/AdminShell";
 import { DashboardSection } from "@/views/admin/DashboardSection";
 import { LessonsSection } from "@/views/admin/LessonsSection";
@@ -44,14 +45,12 @@ export default function AdminPage() {
   const [location] = useLocation();
 
   useEffect(() => {
-    document.title = "لوحة الإدارة | المجلس العلمي";
-    const meta = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null;
-    if (meta) meta.content = "noindex, nofollow";
-    else {
-      const m = document.createElement("meta");
-      m.name = "robots"; m.content = "noindex, nofollow";
-      document.head.appendChild(m);
-    }
+    applyPageSeo({
+      path: "/admin",
+      title: "لوحة الإدارة | المجلس العلمي",
+      description: "لوحة إدارة محتوى منصة المجلس العلمي — للمديرين المعتمدين فقط.",
+      robots: "noindex, nofollow",
+    });
   }, []);
 
   const initialSection = (() => {
