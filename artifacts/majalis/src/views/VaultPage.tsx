@@ -52,8 +52,8 @@ function AddNoteModal({
   };
 
   return (
-    <div className="vault-modal-backdrop" onClick={onClose}>
-      <div className="vault-modal" onClick={(e) => e.stopPropagation()}>
+    <div className="vault-modal-backdrop" onClick={onClose} role="presentation">
+      <div className="vault-modal" role="dialog" aria-modal="true" aria-label="إضافة ملاحظة" onClick={(e) => e.stopPropagation()}>
         <div className="vault-modal__head">
           <h3 className="vault-modal__title">إضافة ملاحظة</h3>
           <button type="button" className="vault-modal__close" onClick={onClose} aria-label="إغلاق">✕</button>
