@@ -316,6 +316,50 @@
   gap: 0.5rem;
 }
 
+.qmem-input-row {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+
+.qmem-input-row .qmem-answer-input {
+  flex: 1;
+}
+
+.qmem-voice-btn {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ds-border, #e5e7eb);
+  background: var(--ds-surface, #fff);
+  color: var(--ds-text-2, #6b7280);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  margin-top: 0.4rem;
+}
+
+.qmem-voice-btn:hover {
+  border-color: var(--majalis-emerald, #0E6E52);
+  color: var(--majalis-emerald, #0E6E52);
+}
+
+.qmem-voice-btn--active {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #dc2626;
+  animation: qmem-pulse 1s ease infinite;
+}
+
+@keyframes qmem-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
 .qmem-answer-input {
   width: 100%;
   padding: 0.75rem 1rem;

@@ -1,5 +1,5 @@
 import "@/styles/quran-memorization.css";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { fetchSurahList, type SurahSummary } from "@/lib/quran-api";
 import {
@@ -16,7 +16,7 @@ import {
   type QuizQuestion,
   type AyahCard,
 } from "@/lib/quran-memorization";
-import { BookOpen, ChevronLeft, RotateCcw } from "lucide-react";
+import { BookOpen, ChevronLeft, Mic, MicOff, RotateCcw } from "lucide-react";
 
 const ALL_TEST_TYPES: TestType[] = [
   "complete-ayah",
@@ -50,6 +50,41 @@ function QuestionCard({
   const [textInput, setTextInput] = useState("");
   const [isCorrect, setIsCorrect] = useState(false);
   const [adjacentAyah, setAdjacentAyah] = useState<string | null>(null);
+  const [isListening, setIsListening] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const recognitionRef = useRef<any>(null);
+
+  const hasSpeechSupport = typeof window !== "undefined" &&
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ("SpeechRecognition" in window || "webkitSpeechRecognition" in (window as any));
+
+  const toggleVoice = () => {
+    if (!hasSpeechSupport) return;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const w = window as any;
+    const SR = w.SpeechRecognition || w.webkitSpeechRecognition;
+    if (!SR) return;
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+      return;
+    }
+    const rec = new SR();
+    rec.lang = "ar-SA";
+    rec.continuous = false;
+    rec.interimResults = false;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    rec.onresult = (e: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const transcript = Array.from(e.results).map((r: any) => r[0].transcript).join("");
+      setTextInput((prev) => prev + transcript);
+    };
+    rec.onend = () => setIsListening(false);
+    rec.onerror = () => setIsListening(false);
+    recognitionRef.current = rec;
+    rec.start();
+    setIsListening(true);
+  };
 
   const isTextInput = ["complete-ayah", "fill-blank", "next-ayah", "prev-ayah", "order-ayahs"].includes(question.type);
   const isAutoReveal = ["next-ayah", "prev-ayah", "order-ayahs"].includes(question.type);
@@ -136,15 +171,28 @@ function QuestionCard({
             </div>
           ) : (
             <>
-              <textarea
-                className="qmem-answer-input"
-                rows={3}
-                placeholder="أدخل إجابتك..."
-                value={textInput}
-                onChange={(e) => setTextInput(e.target.value)}
-                disabled={answered}
-                dir="rtl"
-              />
+              <div className="qmem-input-row">
+                <textarea
+                  className="qmem-answer-input"
+                  rows={3}
+                  placeholder="أدخل إجابتك..."
+                  value={textInput}
+                  onChange={(e) => setTextInput(e.target.value)}
+                  disabled={answered}
+                  dir="rtl"
+                />
+                {hasSpeechSupport && !answered && (
+                  <button
+                    type="button"
+                    className={`qmem-voice-btn${isListening ? " qmem-voice-btn--active" : ""}`}
+                    onClick={toggleVoice}
+                    aria-label={isListening ? "إيقاف التسجيل" : "إدخال صوتي"}
+                    title={isListening ? "إيقاف التسجيل" : "إدخال صوتي"}
+                  >
+                    {isListening ? <MicOff size={16} /> : <Mic size={16} />}
+                  </button>
+                )}
+              </div>
               {!answered && (
                 <button
                   type="button"

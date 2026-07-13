@@ -138,6 +138,7 @@ const LABEL_MAP: Record<string, string> = {
   "/scholarly-research":            "البحث الأكاديمي",
   "/academic-research":             "البحث الأكاديمي",
   "/researcher":                    "صفحة الباحث",
+  "/researcher-profile":            "صفحة الباحث",
   "/mawarith":                      "المواريث",
 
   // ─── الأخلاق والرقائق ─────────────────────────────────────────────
