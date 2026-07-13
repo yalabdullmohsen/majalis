@@ -401,16 +401,20 @@ export default function KnowledgeGraphPage() {
               </p>
             </div>
           ) : (
-            <div style={{ border: `1px solid ${C.line}`, borderRadius: "0.75rem", overflow: "hidden", background: "#f9fafb" }}>
+            <div className="knowledge-graph-wrap">
               <svg
                 ref={svgRef}
                 viewBox={`0 0 ${SVG_W} ${SVG_H}`}
-                style={{ width: "100%", maxHeight: "580px", display: "block" }}
+                style={{ width: "100%", maxHeight: "580px", display: "block", background: "var(--mindmap-surface, #faf8f2)" }}
+                aria-label="الرسم البياني المعرفي الإسلامي"
               >
                 <defs>
                   <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-                    <polygon points="0 0, 8 3, 0 6" fill="#9ca3af" />
+                    <polygon points="0 0, 8 3, 0 6" fill="var(--mindmap-edge-solid, #8a9e8f)" />
                   </marker>
+                  <filter id="kg-shadow">
+                    <feDropShadow dx="0" dy="1.5" stdDeviation="2.5" floodOpacity="0.15" />
+                  </filter>
                 </defs>
 
                 {/* الحواف */}
@@ -424,8 +428,8 @@ export default function KnowledgeGraphPage() {
                     <g key={i}>
                       <line
                         x1={src.x} y1={src.y} x2={tgt.x} y2={tgt.y}
-                        stroke="#d1d5db" strokeWidth={Math.max(1, e.strength * 2.5)}
-                        markerEnd="url(#arr)" opacity={0.7}
+                        stroke="var(--mindmap-edge-solid, #8a9e8f)" strokeWidth={Math.max(1, e.strength * 2)}
+                        markerEnd="url(#arr)" opacity={0.6}
                       />
                       <text x={mx} y={my - 5} textAnchor="middle"
                         fontSize="9" fill="#9ca3af" fontFamily="inherit" style={{ pointerEvents: "none" }}>
@@ -440,22 +444,48 @@ export default function KnowledgeGraphPage() {
                   const isSel  = selected?.id === node.id;
                   const color  = getColor(node.nodeType);
                   const isCenter = node.id === centerNodeId;
+                  const r = isSel ? NODE_RADIUS + 5 : isCenter ? NODE_RADIUS + 3 : NODE_RADIUS;
                   return (
-                    <g key={node.id} style={{ cursor: "pointer" }}
-                      onClick={() => setSelected(isSel ? null : node)}>
+                    <g
+                      key={node.id}
+                      className="knowledge-graph-node"
+                      tabIndex={0}
+                      role="button"
+                      aria-label={`${node.label} — ${getTypeLabel(node.nodeType)}`}
+                      aria-pressed={isSel}
+                      onClick={() => setSelected(isSel ? null : node)}
+                      onKeyDown={(e) => e.key === "Enter" && setSelected(isSel ? null : node)}
+                    >
+                      {/* Outer ring for center node */}
+                      {isCenter && (
+                        <circle
+                          cx={node.x} cy={node.y} r={r + 6}
+                          fill="none" stroke={color} strokeWidth={1.5}
+                          strokeDasharray="4 3" opacity={0.5}
+                        />
+                      )}
                       <circle
-                        cx={node.x} cy={node.y}
-                        r={isSel ? NODE_RADIUS + 4 : (isCenter ? NODE_RADIUS + 2 : NODE_RADIUS)}
-                        fill={isSel ? color : `${color}22`}
+                        cx={node.x} cy={node.y} r={r}
+                        fill={isSel ? color : `${color}28`}
                         stroke={color}
-                        strokeWidth={isSel ? 3 : (isCenter ? 2.5 : 1.5)}
+                        strokeWidth={isSel ? 2.5 : isCenter ? 2 : 1.5}
+                        filter={isSel ? "url(#kg-shadow)" : undefined}
                       />
+                      {/* Specular highlight */}
+                      {isSel && (
+                        <ellipse
+                          cx={node.x - r * 0.2} cy={node.y - r * 0.3}
+                          rx={r * 0.4} ry={r * 0.22}
+                          fill="rgba(255,255,255,0.18)"
+                          style={{ pointerEvents: "none" }}
+                        />
+                      )}
                       <text
                         x={node.x} y={node.y + 4}
                         textAnchor="middle" fontSize={isSel ? "10" : "9"}
                         fill={isSel ? "#fff" : color}
-                        fontFamily="inherit" fontWeight={isSel ? 700 : 500}
-                        style={{ pointerEvents: "none" }}
+                        fontFamily="'Noto Sans Arabic', Cairo, inherit" fontWeight={isSel ? 800 : 600}
+                        style={{ pointerEvents: "none", userSelect: "none" }}
                       >
                         {node.label}
                       </text>

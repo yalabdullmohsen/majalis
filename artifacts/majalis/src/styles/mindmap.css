@@ -1,0 +1,557 @@
+/**
+ * Mind Map Design System — Islamic visual identity
+ * Tokens: Islamic deep green + muted gold on ivory/parchment
+ * RTL-first, WCAG 2.2 AA, mobile-first
+ */
+
+/* ── Design Tokens ────────────────────────────────────────────────────────── */
+:root {
+  /* Core palette */
+  --mindmap-primary:       #1A3D2B;   /* Islamic deep green */
+  --mindmap-primary-mid:   #1e5c3e;   /* mid-green */
+  --mindmap-primary-light: #2d7a55;   /* light green */
+  --mindmap-gold:          #B08934;   /* muted Islamic gold */
+  --mindmap-gold-light:    #c9a04e;   /* lighter gold */
+  --mindmap-gold-soft:     #e8d9a8;   /* very light gold tint */
+  --mindmap-surface:       #faf8f2;   /* ivory parchment */
+  --mindmap-surface-alt:   #f3ede0;   /* deeper parchment */
+  --mindmap-ink:           #1c1810;   /* dark ink */
+  --mindmap-ink-soft:      #5a5040;   /* soft ink */
+  --mindmap-ink-muted:     #8a7d6a;   /* muted ink */
+  --mindmap-line:          #d6cdb8;   /* connector lines */
+
+  /* Branch colors — 6-color system for lineage/taxonomy */
+  --mindmap-branch-1:  #1A3D2B;   /* root / ancestor — deep green */
+  --mindmap-branch-2:  #2E6B44;   /* primary — mid green */
+  --mindmap-branch-3:  #B08934;   /* highlight — muted gold */
+  --mindmap-branch-4:  #7C4A00;   /* secondary — warm brown */
+  --mindmap-branch-5:  #1A4A6B;   /* alternate — deep blue */
+  --mindmap-branch-6:  #5A2D82;   /* variant — deep violet */
+
+  /* Connectors */
+  --mindmap-edge-solid:   #8a9e8f;
+  --mindmap-edge-dashed:  #b8cabb;
+  --mindmap-edge-width:   1.8px;
+
+  /* Node sizing */
+  --mindmap-node-r:        32px;
+  --mindmap-node-r-sm:     26px;
+  --mindmap-node-r-lg:     36px;
+  --mindmap-node-r-root:   40px;
+
+  /* Typography */
+  --mindmap-font:          'Noto Sans Arabic', 'Cairo', 'IBM Plex Arabic', Arial, sans-serif;
+  --mindmap-font-size:     12px;
+  --mindmap-font-weight:   700;
+
+  /* Elevation & interaction */
+  --mindmap-shadow:        0 2px 10px rgba(26, 61, 43, 0.12);
+  --mindmap-shadow-hover:  0 6px 20px rgba(26, 61, 43, 0.22);
+  --mindmap-focus-ring:    0 0 0 3px rgba(176, 137, 52, 0.45);
+
+  /* Transitions */
+  --mindmap-transition:    all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --mindmap-surface:       #162217;
+    --mindmap-surface-alt:   #1e2f22;
+    --mindmap-ink:           #eae6d8;
+    --mindmap-ink-soft:      #b0a890;
+    --mindmap-ink-muted:     #786b58;
+    --mindmap-line:          #2e3d30;
+    --mindmap-edge-solid:    #3d5642;
+    --mindmap-edge-dashed:   #2e4033;
+    --mindmap-gold-soft:     #3a2e10;
+    --mindmap-shadow:        0 2px 12px rgba(0, 0, 0, 0.45);
+    --mindmap-shadow-hover:  0 6px 24px rgba(0, 0, 0, 0.6);
+  }
+}
+
+:root[data-theme="dark"] {
+  --mindmap-surface:       #162217;
+  --mindmap-surface-alt:   #1e2f22;
+  --mindmap-ink:           #eae6d8;
+  --mindmap-ink-soft:      #b0a890;
+  --mindmap-ink-muted:     #786b58;
+  --mindmap-line:          #2e3d30;
+  --mindmap-edge-solid:    #3d5642;
+  --mindmap-edge-dashed:   #2e4033;
+  --mindmap-gold-soft:     #3a2e10;
+  --mindmap-shadow:        0 2px 12px rgba(0, 0, 0, 0.45);
+  --mindmap-shadow-hover:  0 6px 24px rgba(0, 0, 0, 0.6);
+}
+
+:root[data-theme="light"] {
+  --mindmap-surface:       #faf8f2;
+  --mindmap-surface-alt:   #f3ede0;
+  --mindmap-ink:           #1c1810;
+  --mindmap-ink-soft:      #5a5040;
+  --mindmap-ink-muted:     #8a7d6a;
+  --mindmap-line:          #d6cdb8;
+  --mindmap-edge-solid:    #8a9e8f;
+  --mindmap-edge-dashed:   #b8cabb;
+  --mindmap-gold-soft:     #e8d9a8;
+  --mindmap-shadow:        0 2px 10px rgba(26, 61, 43, 0.12);
+  --mindmap-shadow-hover:  0 6px 20px rgba(26, 61, 43, 0.22);
+}
+
+/* ── Prophet Genealogy Tree ──────────────────────────────────────────────── */
+
+.prophet-tree-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  direction: rtl;
+}
+
+.prophet-tree-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--mindmap-surface);
+  border: 1px solid var(--mindmap-line);
+  border-radius: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--mindmap-ink-soft);
+}
+
+.prophet-tree-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.prophet-tree-legend__dot {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 1.5px rgba(255,255,255,0.3) inset;
+}
+
+.prophet-tree-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--mindmap-line) transparent;
+  border-radius: 0.5rem;
+  background: var(--mindmap-surface);
+  border: 1px solid var(--mindmap-line);
+  box-shadow: var(--mindmap-shadow);
+  padding: 0.5rem;
+}
+
+.prophet-tree-svg {
+  display: block;
+  min-width: 600px;
+}
+
+.prophet-tree-node {
+  cursor: pointer;
+  transition: var(--mindmap-transition);
+}
+
+.prophet-tree-node:focus {
+  outline: none;
+}
+
+.prophet-tree-node:focus circle {
+  filter: drop-shadow(0 0 5px rgba(176, 137, 52, 0.7));
+}
+
+.prophet-tree-node:hover circle {
+  filter: brightness(1.12) drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prophet-tree-node {
+    transition: none;
+  }
+}
+
+.prophet-tree-note {
+  font-size: 0.75rem;
+  color: var(--mindmap-ink-muted);
+  background: var(--mindmap-gold-soft);
+  border: 1px solid rgba(176, 137, 52, 0.25);
+  border-radius: 0.4rem;
+  padding: 0.6rem 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Knowledge Graph Page ────────────────────────────────────────────────── */
+
+.knowledge-graph-wrap {
+  background: var(--mindmap-surface);
+  border: 1px solid var(--mindmap-line);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: var(--mindmap-shadow);
+}
+
+.knowledge-graph-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: grab;
+}
+
+.knowledge-graph-svg:active {
+  cursor: grabbing;
+}
+
+.knowledge-graph-node {
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.knowledge-graph-node:hover {
+  filter: brightness(1.15) drop-shadow(0 2px 5px rgba(0,0,0,0.25));
+}
+
+.knowledge-graph-node:focus {
+  outline: none;
+  filter: drop-shadow(0 0 6px rgba(176, 137, 52, 0.65));
+}
+
+/* ── MindMap shared component ────────────────────────────────────────────── */
+
+.mindmap-root {
+  font-family: var(--mindmap-font);
+  direction: rtl;
+}
+
+.mindmap-controls {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: var(--mindmap-surface);
+  border-bottom: 1px solid var(--mindmap-line);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.mindmap-controls__btn {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid var(--mindmap-line);
+  border-radius: 0.35rem;
+  background: transparent;
+  color: var(--mindmap-ink-soft);
+  cursor: pointer;
+  transition: var(--mindmap-transition);
+  font-family: var(--mindmap-font);
+}
+
+.mindmap-controls__btn:hover {
+  background: var(--mindmap-surface-alt);
+  border-color: var(--mindmap-primary-light);
+  color: var(--mindmap-primary);
+}
+
+.mindmap-controls__btn.is-active {
+  background: var(--mindmap-primary);
+  color: #fff;
+  border-color: var(--mindmap-primary);
+}
+
+.mindmap-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  padding: 0.6rem 0.75rem;
+  background: var(--mindmap-surface-alt);
+  border-top: 1px solid var(--mindmap-line);
+  font-size: 0.72rem;
+  color: var(--mindmap-ink-muted);
+}
+
+.mindmap-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.mindmap-legend__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Level Timeline ──────────────────────────────────────────────────────── */
+
+.level-timeline {
+  position: relative;
+}
+
+.level-timeline__track {
+  position: absolute;
+  right: 1.5rem;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--mindmap-primary-light), var(--mindmap-line));
+  border-radius: 1px;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .level-timeline__track {
+    display: block;
+  }
+}
+
+.level-timeline__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.level-timeline__item {
+  display: flex;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .level-timeline__item {
+    gap: 1.5rem;
+  }
+}
+
+.level-timeline__dot-col {
+  flex-shrink: 0;
+  width: 3rem;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .level-timeline__dot-col {
+    display: flex;
+  }
+}
+
+.level-timeline__dot {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  border: 2px solid var(--mindmap-surface);
+  box-shadow: var(--mindmap-shadow);
+  margin-top: 0.4rem;
+  transition: transform 0.2s ease;
+}
+
+.level-timeline__dot--complete {
+  box-shadow: 0 0 0 3px rgba(26, 61, 43, 0.2);
+}
+
+.level-timeline__dot--progress {
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 2px transparent; }
+  50%       { box-shadow: 0 0 0 4px rgba(176, 137, 52, 0.3); }
+}
+
+.level-timeline__card {
+  flex: 1;
+  border-radius: 0.875rem;
+  border: 1px solid var(--mindmap-line);
+  overflow: hidden;
+  background: var(--mindmap-surface);
+  transition: box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.level-timeline__card:hover {
+  box-shadow: var(--mindmap-shadow);
+}
+
+.level-timeline__card--locked {
+  opacity: 0.72;
+}
+
+.level-timeline__card-head {
+  padding: 0.7rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.level-timeline__progress-bar {
+  height: 3px;
+  background: var(--mindmap-line);
+}
+
+.level-timeline__progress-fill {
+  height: 100%;
+  transition: width 0.5s ease;
+  border-radius: 0 0 1px 1px;
+}
+
+.level-timeline__books {
+  padding: 0.75rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+@media (min-width: 540px) {
+  .level-timeline__books {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.level-timeline__book {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.625rem;
+  border: 1px solid var(--mindmap-line);
+  background: #fff;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+@media (prefers-color-scheme: dark) {
+  .level-timeline__book {
+    background: var(--mindmap-surface-alt);
+  }
+}
+
+:root[data-theme="dark"] .level-timeline__book {
+  background: var(--mindmap-surface-alt);
+}
+
+/* ── Masarat Cards ───────────────────────────────────────────────────────── */
+
+.masarat-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 540px) {
+  .masarat-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.masar-card {
+  border-radius: 1rem;
+  border: 1px solid var(--mindmap-line);
+  overflow: hidden;
+  background: var(--mindmap-surface);
+  box-shadow: var(--mindmap-shadow);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.masar-card:hover {
+  box-shadow: var(--mindmap-shadow-hover);
+  transform: translateY(-1px);
+}
+
+.masar-card__header {
+  padding: 1.1rem 1.25rem 0.9rem;
+}
+
+.masar-card__steps {
+  padding: 0.9rem 1.25rem;
+  flex: 1;
+  border-top: 1px solid var(--mindmap-line);
+}
+
+.masar-card__step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.35rem 0;
+}
+
+.masar-card__step-num {
+  flex-shrink: 0;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  margin-top: 0.1rem;
+}
+
+.masar-card__footer {
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--mindmap-line);
+}
+
+/* ── Learning Path Sciences ──────────────────────────────────────────────── */
+
+.science-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .science-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .science-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.science-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.75rem;
+  border: 1px solid var(--mindmap-line);
+  background: var(--mindmap-surface);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  box-shadow: var(--mindmap-shadow);
+}
+
+.science-card:hover {
+  box-shadow: var(--mindmap-shadow-hover);
+  border-color: var(--mindmap-primary-light);
+  transform: translateY(-2px);
+}
+
+.science-card:focus-visible {
+  outline: 2px solid var(--mindmap-gold);
+  outline-offset: 2px;
+}
+
+/* Print */
+@media print {
+  .prophet-tree-scroll { overflow: visible; }
+  .mindmap-controls { display: none; }
+  .prophet-tree-note { border: 1px solid #ccc; }
+
+  :root {
+    --mindmap-surface: #fff;
+    --mindmap-ink: #000;
+  }
+}

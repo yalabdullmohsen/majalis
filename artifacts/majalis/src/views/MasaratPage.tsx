@@ -11,8 +11,8 @@ export default function MasaratPage() {
         subtitle="اختر مسارًا يناسب هدفك، وسيرشدك خطوة بخطوة"
       />
 
-      <div className="max-w-4xl mx-auto px-4 pb-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div style={{ maxWidth: "52rem", margin: "0 auto", padding: "0 1rem 5rem" }}>
+        <div className="masarat-grid">
           {MASARAT.map((masar) => (
             <MasarCard key={masar.id} masar={masar} />
           ))}
@@ -24,58 +24,73 @@ export default function MasaratPage() {
 
 function MasarCard({ masar }: { masar: Masar }) {
   return (
-    <div
-      className="rounded-2xl border overflow-hidden bg-white dark:bg-gray-900 shadow-sm flex flex-col"
-      style={{ borderColor: `${masar.color}40` }}
+    <article
+      className="masar-card"
+      style={{ borderTop: `3px solid ${masar.color}` }}
     >
       {/* Header */}
       <div
-        className="px-5 pt-5 pb-4"
-        style={{ background: `${masar.color}0e` }}
+        className="masar-card__header"
+        style={{ background: `${masar.color}0c` }}
       >
-        <div className="flex items-start justify-between gap-3 mb-2">
-          <span className="text-3xl">{masar.icon}</span>
-          <div className="flex gap-2 flex-shrink-0">
-            <span
-              className="text-xs px-2 py-0.5 rounded-full font-medium"
-              style={{ background: `${masar.color}20`, color: masar.color }}
-            >
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "0.75rem", marginBottom: "0.6rem" }}>
+          <span style={{ fontSize: "2rem", lineHeight: 1 }} aria-hidden="true">{masar.icon}</span>
+          <div style={{ display: "flex", gap: "0.4rem", flexShrink: 0 }}>
+            <span style={{
+              fontSize: "0.7rem",
+              padding: "0.2rem 0.55rem",
+              borderRadius: "1rem",
+              fontWeight: 700,
+              background: `${masar.color}22`,
+              color: masar.color,
+              border: `1px solid ${masar.color}40`,
+            }}>
               {masar.level}
             </span>
-            <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-gray-100 dark:bg-gray-800 text-gray-500">
+            <span style={{
+              fontSize: "0.7rem",
+              padding: "0.2rem 0.55rem",
+              borderRadius: "1rem",
+              fontWeight: 600,
+              background: "var(--mindmap-surface-alt, #f3ede0)",
+              color: "var(--mindmap-ink-soft, #5a5040)",
+              border: "1px solid var(--mindmap-line, #d6cdb8)",
+            }}>
               {masar.duration}
             </span>
           </div>
         </div>
-        <h2
-          className="text-lg font-extrabold leading-tight"
-          style={{ color: masar.color }}
-        >
+        <h2 style={{ margin: "0 0 0.3rem", fontSize: "1.05rem", fontWeight: 900, lineHeight: 1.35, color: masar.color }}>
           {masar.title}
         </h2>
-        <p className="text-sm text-gray-500 mt-1 leading-snug">{masar.subtitle}</p>
+        <p style={{ margin: 0, fontSize: "0.82rem", color: "var(--mindmap-ink-soft, #5a5040)", lineHeight: 1.55 }}>
+          {masar.subtitle}
+        </p>
       </div>
 
       {/* Steps */}
-      <div className="px-5 py-4 flex-1">
-        <ol className="space-y-2">
+      <div className="masar-card__steps">
+        <ol style={{ margin: 0, padding: 0, listStyle: "none" }}>
           {masar.steps.map((step, idx) => (
-            <li key={step.id} className="flex items-start gap-3">
+            <li key={step.id} className="masar-card__step">
               <span
-                className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-white text-xs font-bold mt-0.5"
-                style={{ background: masar.color, opacity: 0.8 }}
+                className="masar-card__step-num"
+                style={{ background: masar.color }}
+                aria-hidden="true"
               >
                 {idx + 1}
               </span>
               {step.href ? (
                 <Link
                   href={step.href}
-                  className="text-sm text-gray-700 dark:text-gray-300 hover:underline leading-snug"
+                  style={{ fontSize: "0.82rem", color: "var(--mindmap-ink, #1c1810)", lineHeight: 1.55, textDecoration: "none" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = masar.color; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "var(--mindmap-ink, #1c1810)"; }}
                 >
                   {step.title}
                 </Link>
               ) : (
-                <span className="text-sm text-gray-700 dark:text-gray-300 leading-snug">
+                <span style={{ fontSize: "0.82rem", color: "var(--mindmap-ink-soft, #5a5040)", lineHeight: 1.55 }}>
                   {step.title}
                 </span>
               )}
@@ -85,19 +100,27 @@ function MasarCard({ masar }: { masar: Masar }) {
       </div>
 
       {/* CTA */}
-      <div className="px-5 pb-5">
-        <div
-          className="h-px mb-4 rounded-full"
-          style={{ background: `${masar.color}20` }}
-        />
+      <div className="masar-card__footer">
         <Link
           href={masar.steps[0]?.href ?? "#"}
-          className="block w-full text-center text-sm font-bold py-2.5 rounded-xl text-white transition-opacity hover:opacity-90"
-          style={{ background: masar.color }}
+          style={{
+            display: "block",
+            textAlign: "center",
+            fontSize: "0.85rem",
+            fontWeight: 800,
+            padding: "0.65rem 1rem",
+            borderRadius: "0.625rem",
+            color: "#fff",
+            background: masar.color,
+            textDecoration: "none",
+            transition: "opacity 0.15s ease",
+          }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "0.9"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "1"; }}
         >
           ابدأ المسار ←
         </Link>
       </div>
-    </div>
+    </article>
   );
 }

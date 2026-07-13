@@ -5,7 +5,6 @@ interface Props {
   levels: LPLevel[];
   _scienceSlug?: string;
   progress: LPProgress[];
-  // provided in static mode — if set, show inline action buttons instead of navigation links
   onStartBook?: (bookId: string) => void;
   onOpenQuiz?: (bookId: string, bookTitle: string) => void;
 }
@@ -15,11 +14,11 @@ export function LevelTimeline({ levels, progress, onStartBook, onOpenQuiz }: Pro
   const staticMode = !!(onStartBook && onOpenQuiz);
 
   return (
-    <div className="relative">
-      {/* الخط الرأسي */}
-      <div className="absolute right-6 top-6 bottom-6 w-0.5 bg-gray-200 dark:bg-gray-700 hidden md:block" />
+    <div className="level-timeline">
+      {/* Vertical track line */}
+      <div className="level-timeline__track" aria-hidden="true" />
 
-      <div className="space-y-8">
+      <div className="level-timeline__list">
         {levels.map((level, idx) => {
           const levelBooks = level.books ?? [];
           const completed  = levelBooks.filter((b) => progressMap.get(b.id)?.status === "completed").length;
@@ -31,160 +30,210 @@ export function LevelTimeline({ levels, progress, onStartBook, onOpenQuiz }: Pro
             return prevBooks.filter((b) => progressMap.get(b.id)?.status === "completed").length > 0;
           })();
 
+          const dotColor = completed === levelBooks.length && levelBooks.length > 0
+            ? level.color
+            : inProgress > 0
+            ? `${level.color}88`
+            : "var(--mindmap-line, #d6cdb8)";
+
           return (
-            <div key={level.id} className="flex gap-4 md:gap-6">
-              {/* نقطة الـ timeline */}
-              <div className="flex-shrink-0 w-12 flex flex-col items-center relative z-10 hidden md:flex">
+            <div key={level.id} className="level-timeline__item">
+              {/* Dot */}
+              <div className="level-timeline__dot-col" aria-hidden="true">
                 <div
-                  className="w-5 h-5 rounded-full border-2 border-white dark:border-gray-800 shadow-sm mt-1"
-                  style={{
-                    background: completed === levelBooks.length && levelBooks.length > 0
-                      ? level.color
-                      : inProgress > 0
-                      ? `${level.color}88`
-                      : "#e5e7eb",
-                  }}
+                  className={`level-timeline__dot${completed === levelBooks.length && levelBooks.length > 0 ? " level-timeline__dot--complete" : inProgress > 0 ? " level-timeline__dot--progress" : ""}`}
+                  style={{ background: dotColor }}
                 />
               </div>
 
-              {/* بطاقة المستوى */}
-              <div className="flex-1">
+              {/* Card */}
+              <div
+                className={`level-timeline__card${!isUnlocked ? " level-timeline__card--locked" : ""}`}
+                style={{ borderColor: isUnlocked ? `${level.color}38` : "var(--mindmap-line, #d6cdb8)" }}
+              >
+                {/* Header */}
                 <div
-                  className="rounded-2xl border overflow-hidden"
-                  style={{ borderColor: isUnlocked ? `${level.color}40` : "#e5e7eb" }}
+                  className="level-timeline__card-head"
+                  style={{ background: isUnlocked ? `${level.color}0e` : "var(--mindmap-surface-alt, #f3ede0)" }}
                 >
-                  {/* رأس المستوى */}
-                  <div
-                    className="px-5 py-3 flex items-center justify-between"
-                    style={{ background: isUnlocked ? `${level.color}12` : "#f9fafb" }}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span
-                        className="text-xs font-bold px-2.5 py-0.5 rounded-full text-white"
-                        style={{ background: isUnlocked ? level.color : "#9ca3af" }}
-                      >
-                        المستوى {idx + 1}
-                      </span>
-                      <h3 className="font-bold text-gray-800 dark:text-white">{level.name}</h3>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {levelBooks.length > 0 && (
-                        <span className="text-xs text-gray-500">
-                          {completed}/{levelBooks.length}
-                          {pct > 0 && ` (${pct}%)`}
-                        </span>
-                      )}
-                      {!isUnlocked && <span className="text-gray-400 text-sm">🔒</span>}
-                    </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
+                    <span
+                      style={{
+                        fontSize: "0.7rem",
+                        fontWeight: 800,
+                        padding: "0.2rem 0.6rem",
+                        borderRadius: "1rem",
+                        color: "#fff",
+                        background: isUnlocked ? level.color : "var(--mindmap-ink-muted, #8a7d6a)",
+                      }}
+                    >
+                      المستوى {idx + 1}
+                    </span>
+                    <h3 style={{ margin: 0, fontWeight: 800, fontSize: "0.9rem", color: "var(--mindmap-ink, #1c1810)" }}>
+                      {level.name}
+                    </h3>
                   </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexShrink: 0 }}>
+                    {levelBooks.length > 0 && (
+                      <span style={{ fontSize: "0.72rem", color: "var(--mindmap-ink-muted, #8a7d6a)", fontVariantNumeric: "tabular-nums" }}>
+                        {completed}/{levelBooks.length}{pct > 0 ? ` (${pct}%)` : ""}
+                      </span>
+                    )}
+                    {!isUnlocked && <span aria-label="مقفل" style={{ fontSize: "0.9rem" }}>🔒</span>}
+                  </div>
+                </div>
 
-                  {/* شريط التقدم */}
-                  {levelBooks.length > 0 && (
-                    <div className="h-1 bg-gray-100 dark:bg-gray-700">
-                      <div
-                        className="h-full transition-all duration-500"
-                        style={{ width: `${pct}%`, background: level.color }}
-                      />
-                    </div>
-                  )}
+                {/* Progress bar */}
+                {levelBooks.length > 0 && (
+                  <div className="level-timeline__progress-bar" aria-hidden="true">
+                    <div
+                      className="level-timeline__progress-fill"
+                      style={{ width: `${pct}%`, background: level.color }}
+                    />
+                  </div>
+                )}
 
-                  {/* قائمة الكتب */}
-                  <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {levelBooks.length === 0 ? (
-                      <p className="text-sm text-gray-400 col-span-2 text-center py-4">
-                        لا توجد كتب في هذا المستوى بعد
-                      </p>
-                    ) : (
-                      levelBooks.map((book) => {
-                        const prog   = progressMap.get(book.id);
-                        const status = prog?.status ?? "not_started";
+                {/* Books */}
+                <div className="level-timeline__books">
+                  {levelBooks.length === 0 ? (
+                    <p style={{ fontSize: "0.82rem", color: "var(--mindmap-ink-muted, #8a7d6a)", textAlign: "center", padding: "1rem 0", gridColumn: "1 / -1", margin: 0 }}>
+                      لا توجد كتب في هذا المستوى بعد
+                    </p>
+                  ) : (
+                    levelBooks.map((book) => {
+                      const prog   = progressMap.get(book.id);
+                      const status = prog?.status ?? "not_started";
 
-                        if (staticMode) {
-                          return (
-                            <div
-                              key={book.id}
-                              className="flex flex-col gap-2 p-3 rounded-xl border border-gray-100 dark:border-gray-700"
-                              style={{ borderRight: `3px solid ${level.color}` }}
-                            >
-                              <div className="flex items-start gap-3">
-                                <StatusDot status={status} color={level.color} />
-                                <div className="flex-1 min-w-0">
-                                  <p className="text-sm font-semibold text-gray-800 dark:text-gray-200 leading-snug">
-                                    {book.title}
-                                  </p>
-                                  {book.author && (
-                                    <p className="text-xs text-gray-400 mt-0.5">{book.author}</p>
-                                  )}
-                                  <div className="flex gap-2 mt-1">
-                                    {book.estimated_hours > 0 && (
-                                      <span className="text-xs text-gray-400">⏱ {book.estimated_hours}س</span>
-                                    )}
-                                    {book.pages_count > 0 && (
-                                      <span className="text-xs text-gray-400">📄 {book.pages_count}ص</span>
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-
-                              {/* أزرار الإجراءات */}
-                              <div className="flex gap-2 pt-1">
-                                {status === "not_started" && (
-                                  <button
-                                    type="button"
-                                    onClick={() => onStartBook!(book.id)}
-                                    className="flex-1 text-xs font-medium py-1.5 px-2 rounded-lg border border-emerald-200 text-emerald-700 hover:bg-emerald-50 transition-colors"
-                                    style={{ borderColor: `${level.color}66`, color: level.color }}
-                                  >
-                                    ▶ ابدأ القراءة
-                                  </button>
-                                )}
-                                {status === "in_progress" && (
-                                  <button
-                                    type="button"
-                                    onClick={() => onOpenQuiz!(book.id, book.title)}
-                                    className="flex-1 text-xs font-bold py-1.5 px-2 rounded-lg text-white transition-colors"
-                                    style={{ background: level.color }}
-                                  >
-                                    📝 اختبر نفسك
-                                  </button>
-                                )}
-                                {status === "completed" && (
-                                  <span className="flex-1 text-center text-xs font-bold py-1.5 px-2 rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400">
-                                    ✓ اجتزت المقرر
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          );
-                        }
-
-                        // API / navigable mode
+                      if (staticMode) {
                         return (
-                          <Link key={book.id} href={`/learning-path/book/${book.id}`}>
-                            <div className="flex items-start gap-3 p-3 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-emerald-200 dark:hover:border-emerald-800 hover:bg-emerald-50 dark:hover:bg-emerald-900/10 transition-all cursor-pointer group">
+                          <div
+                            key={book.id}
+                            className="level-timeline__book"
+                            style={{ borderRight: `3px solid ${level.color}` }}
+                          >
+                            <div style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
                               <StatusDot status={status} color={level.color} />
-                              <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium text-gray-800 dark:text-gray-200 line-clamp-1 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
+                              <div style={{ flex: 1, minWidth: 0 }}>
+                                <p style={{ margin: "0 0 0.2rem", fontSize: "0.82rem", fontWeight: 700, color: "var(--mindmap-ink, #1c1810)", lineHeight: 1.4 }}>
                                   {book.title}
                                 </p>
                                 {book.author && (
-                                  <p className="text-xs text-gray-400 mt-0.5">{book.author}</p>
+                                  <p style={{ margin: 0, fontSize: "0.72rem", color: "var(--mindmap-ink-muted, #8a7d6a)" }}>{book.author}</p>
                                 )}
-                                <div className="flex gap-2 mt-1">
+                                <div style={{ display: "flex", gap: "0.6rem", marginTop: "0.2rem" }}>
                                   {book.estimated_hours > 0 && (
-                                    <span className="text-xs text-gray-400">⏱ {book.estimated_hours}س</span>
+                                    <span style={{ fontSize: "0.72rem", color: "var(--mindmap-ink-muted, #8a7d6a)" }}>⏱ {book.estimated_hours}س</span>
                                   )}
                                   {book.pages_count > 0 && (
-                                    <span className="text-xs text-gray-400">📄 {book.pages_count}ص</span>
+                                    <span style={{ fontSize: "0.72rem", color: "var(--mindmap-ink-muted, #8a7d6a)" }}>📄 {book.pages_count}ص</span>
                                   )}
                                 </div>
                               </div>
                             </div>
-                          </Link>
+
+                            <div style={{ display: "flex", gap: "0.4rem" }}>
+                              {status === "not_started" && (
+                                <button
+                                  type="button"
+                                  onClick={() => onStartBook!(book.id)}
+                                  style={{
+                                    flex: 1,
+                                    fontSize: "0.75rem",
+                                    fontWeight: 700,
+                                    padding: "0.4rem 0.5rem",
+                                    borderRadius: "0.45rem",
+                                    border: `1px solid ${level.color}66`,
+                                    color: level.color,
+                                    background: "transparent",
+                                    cursor: "pointer",
+                                    transition: "background 0.15s",
+                                  }}
+                                  onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = `${level.color}14`; }}
+                                  onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
+                                >
+                                  ▶ ابدأ القراءة
+                                </button>
+                              )}
+                              {status === "in_progress" && (
+                                <button
+                                  type="button"
+                                  onClick={() => onOpenQuiz!(book.id, book.title)}
+                                  style={{
+                                    flex: 1,
+                                    fontSize: "0.75rem",
+                                    fontWeight: 800,
+                                    padding: "0.4rem 0.5rem",
+                                    borderRadius: "0.45rem",
+                                    border: "none",
+                                    color: "#fff",
+                                    background: level.color,
+                                    cursor: "pointer",
+                                  }}
+                                >
+                                  📝 اختبر نفسك
+                                </button>
+                              )}
+                              {status === "completed" && (
+                                <span style={{
+                                  flex: 1,
+                                  textAlign: "center",
+                                  fontSize: "0.75rem",
+                                  fontWeight: 800,
+                                  padding: "0.4rem 0.5rem",
+                                  borderRadius: "0.45rem",
+                                  background: `${level.color}18`,
+                                  color: level.color,
+                                }}>
+                                  ✓ اجتزت المقرر
+                                </span>
+                              )}
+                            </div>
+                          </div>
                         );
-                      })
-                    )}
-                  </div>
+                      }
+
+                      // Navigable mode
+                      return (
+                        <Link key={book.id} href={`/learning-path/book/${book.id}`} style={{ textDecoration: "none" }}>
+                          <div
+                            className="level-timeline__book"
+                            style={{
+                              borderRight: `3px solid ${level.color}`,
+                              cursor: "pointer",
+                            }}
+                            onMouseEnter={(e) => {
+                              (e.currentTarget as HTMLDivElement).style.borderColor = level.color;
+                              (e.currentTarget as HTMLDivElement).style.background = `${level.color}0a`;
+                            }}
+                            onMouseLeave={(e) => {
+                              (e.currentTarget as HTMLDivElement).style.borderColor = "";
+                              (e.currentTarget as HTMLDivElement).style.background = "";
+                            }}
+                          >
+                            <div style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
+                              <StatusDot status={status} color={level.color} />
+                              <div style={{ flex: 1, minWidth: 0 }}>
+                                <p style={{ margin: "0 0 0.15rem", fontSize: "0.82rem", fontWeight: 600, color: "var(--mindmap-ink, #1c1810)", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+                                  {book.title}
+                                </p>
+                                {book.author && (
+                                  <p style={{ margin: 0, fontSize: "0.72rem", color: "var(--mindmap-ink-muted, #8a7d6a)" }}>{book.author}</p>
+                                )}
+                                <div style={{ display: "flex", gap: "0.6rem", marginTop: "0.2rem" }}>
+                                  {book.estimated_hours > 0 && (
+                                    <span style={{ fontSize: "0.72rem", color: "var(--mindmap-ink-muted, #8a7d6a)" }}>⏱ {book.estimated_hours}س</span>
+                                  )}
+                                  {book.pages_count > 0 && (
+                                    <span style={{ fontSize: "0.72rem", color: "var(--mindmap-ink-muted, #8a7d6a)" }}>📄 {book.pages_count}ص</span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
+                      );
+                    })
+                  )}
                 </div>
               </div>
             </div>
@@ -198,17 +247,54 @@ export function LevelTimeline({ levels, progress, onStartBook, onOpenQuiz }: Pro
 function StatusDot({ status, color }: { status: string; color: string }) {
   if (status === "completed") {
     return (
-      <span className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-white text-xs mt-0.5"
-        style={{ background: color }}>✓</span>
+      <span
+        style={{
+          flexShrink: 0,
+          width: "1.2rem",
+          height: "1.2rem",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#fff",
+          fontSize: "0.65rem",
+          fontWeight: 800,
+          marginTop: "0.1rem",
+          background: color,
+        }}
+        aria-label="مكتمل"
+      >
+        ✓
+      </span>
     );
   }
   if (status === "in_progress") {
     return (
-      <span className="flex-shrink-0 w-5 h-5 rounded-full border-2 mt-0.5"
-        style={{ borderColor: color, background: `${color}22` }} />
+      <span
+        style={{
+          flexShrink: 0,
+          width: "1.2rem",
+          height: "1.2rem",
+          borderRadius: "50%",
+          border: `2px solid ${color}`,
+          background: `${color}22`,
+          marginTop: "0.1rem",
+        }}
+        aria-label="قيد التقدم"
+      />
     );
   }
   return (
-    <span className="flex-shrink-0 w-5 h-5 rounded-full border-2 border-gray-200 dark:border-gray-600 mt-0.5" />
+    <span
+      style={{
+        flexShrink: 0,
+        width: "1.2rem",
+        height: "1.2rem",
+        borderRadius: "50%",
+        border: "2px solid var(--mindmap-line, #d6cdb8)",
+        marginTop: "0.1rem",
+      }}
+      aria-label="لم يبدأ"
+    />
   );
 }
