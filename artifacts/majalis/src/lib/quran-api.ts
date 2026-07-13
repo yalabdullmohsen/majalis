@@ -442,7 +442,13 @@ export function savePosition(surah: number, ayah: number) {
 export function loadPosition(): { surah: number; ayah: number } | null {
   try {
     const raw = localStorage.getItem(POS_KEY);
-    return raw ? JSON.parse(raw) : null;
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    const surah = Number(parsed?.surah);
+    const ayah = Number(parsed?.ayah);
+    if (!Number.isFinite(surah) || surah < 1 || surah > 114) return null;
+    if (!Number.isFinite(ayah) || ayah < 1) return null;
+    return { surah, ayah };
   } catch {
     return null;
   }

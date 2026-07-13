@@ -141,6 +141,7 @@ export const API_ROUTES = [
   { prefix: "/api/transcribe", module: "./api-handlers/transcribe.js", rateLimit: transcribeRateLimit },
   { prefix: "/api/submissions", module: "./api-handlers/submissions.js", exact: true },
   { prefix: "/api/admin/submissions", module: "./api-handlers/admin/submissions.js", allowGet: true },
+  { prefix: "/api/account/delete", module: "./api-handlers/account/delete.js", exact: true },
   // ── الباحث الشرعي (RAG) ────────────────────────────────────────────────────
   { prefix: "/api/rag", module: "./api-handlers/rag-research.js", allowGet: true, rateLimit: ragRateLimit },
   // ── نظام الاقتباسات ────────────────────────────────────────────────────────

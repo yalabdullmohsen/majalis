@@ -186,7 +186,10 @@ export default function QuranPage() {
   const { isAdmin } = useAuth();
 
   /* ── حالة ── */
-  const [page, setPage]       = useState<number>(() => lsGet(PAGE_KEY, 1));
+  const [page, setPage]       = useState<number>(() => {
+    const saved = lsGet(PAGE_KEY, 1);
+    return Number.isFinite(saved) ? Math.max(1, Math.min(TOTAL_PAGES, saved)) : 1;
+  });
   const [mode, setMode]       = useState<ReadMode>(() => lsGet(MODE_KEY, "day"));
   const [zoom, setZoom]       = useState<number>(() => {
     const v = lsGet(ZOOM_KEY, BASE_FONT);

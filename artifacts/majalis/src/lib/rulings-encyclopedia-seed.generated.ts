@@ -45,7 +45,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.652Z"
+    "updated_at": "2026-07-13T16:06:11.524Z"
   },
   {
     "id": "ruling-prayer-pillars",
@@ -84,7 +84,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-zakat-conditions",
@@ -123,7 +123,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-hajj-pillars",
@@ -162,7 +162,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-trade-conditions",
@@ -201,7 +201,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-inheritance-shares",
@@ -240,7 +240,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-wudu-conditions",
@@ -284,7 +284,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-10T08:00:00Z",
     "created_at": "2024-02-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-ghusl-obligations",
@@ -334,7 +334,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-15T08:00:00Z",
     "created_at": "2024-02-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-istinja",
@@ -379,7 +379,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-20T08:00:00Z",
     "created_at": "2024-02-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-najasah-purification",
@@ -428,7 +428,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-01T08:00:00Z",
     "created_at": "2024-03-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-conditions",
@@ -478,7 +478,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-10T08:00:00Z",
     "created_at": "2024-03-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-sunnah",
@@ -522,7 +522,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-15T08:00:00Z",
     "created_at": "2024-03-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-makruhat",
@@ -566,7 +566,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-20T08:00:00Z",
     "created_at": "2024-03-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-voluntary-prayer",
@@ -611,7 +611,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-01T08:00:00Z",
     "created_at": "2024-04-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-breakers",
@@ -655,7 +655,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-10T08:00:00Z",
     "created_at": "2024-04-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-qada",
@@ -699,7 +699,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-15T08:00:00Z",
     "created_at": "2024-04-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-laylat-alqadr",
@@ -749,7 +749,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-20T08:00:00Z",
     "created_at": "2024-04-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fidyah-fasting",
@@ -794,7 +794,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-01T08:00:00Z",
     "created_at": "2024-05-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-alfitrah",
@@ -838,7 +838,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-10T08:00:00Z",
     "created_at": "2024-05-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-animals",
@@ -884,7 +884,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-15T08:00:00Z",
     "created_at": "2024-05-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-recipients",
@@ -929,7 +929,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-20T08:00:00Z",
     "created_at": "2024-05-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-debt",
@@ -973,7 +973,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-06-01T08:00:00Z",
     "created_at": "2024-06-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-child-custody",
@@ -1018,7 +1018,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-06-05T08:00:00Z",
     "created_at": "2024-06-05T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-wife-nafaqah",
@@ -1068,7 +1068,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-06-10T08:00:00Z",
     "created_at": "2024-06-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-parents-obedience",
@@ -1118,7 +1118,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-06-15T08:00:00Z",
     "created_at": "2024-06-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-parents-disobedience",
@@ -1163,7 +1163,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-06-20T08:00:00Z",
     "created_at": "2024-06-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-riba-prohibition",
@@ -1213,7 +1213,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-07-01T08:00:00Z",
     "created_at": "2024-07-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-ijarah",
@@ -1258,7 +1258,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-07-05T08:00:00Z",
     "created_at": "2024-07-05T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-hibah-wasiyyah",
@@ -1308,7 +1308,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-07-10T08:00:00Z",
     "created_at": "2024-07-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-ghusl-faraid",
@@ -1358,7 +1358,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-08-01T08:00:00Z",
     "created_at": "2024-08-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-tayammum",
@@ -1403,7 +1403,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-08-05T08:00:00Z",
     "created_at": "2024-08-05T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-hajj-wajibat",
@@ -1454,7 +1454,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-08-10T08:00:00Z",
     "created_at": "2024-08-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-divorce-types",
@@ -1499,7 +1499,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-08-15T08:00:00Z",
     "created_at": "2024-08-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-sale-contract-conditions",
@@ -1550,7 +1550,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-08-20T08:00:00Z",
     "created_at": "2024-08-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-mortgage-bank",
@@ -1602,7 +1602,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-09-01T08:00:00Z",
     "created_at": "2024-09-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-salary",
@@ -1653,7 +1653,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-09-05T08:00:00Z",
     "created_at": "2024-09-05T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-friday-prayer-conditions",
@@ -1705,7 +1705,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-09-10T08:00:00Z",
     "created_at": "2024-09-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-iddah-types",
@@ -1757,7 +1757,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-09-15T08:00:00Z",
     "created_at": "2024-09-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-mirath-asabaat",
@@ -1809,7 +1809,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-09-20T08:00:00Z",
     "created_at": "2024-09-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-congregational-prayer",
@@ -1860,7 +1860,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-10-05T08:00:00Z",
     "created_at": "2024-10-05T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-backbiting-prohibition",
@@ -1911,7 +1911,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-10-15T08:00:00Z",
     "created_at": "2024-10-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-missed-prayers-qada",
@@ -1957,7 +1957,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-11-01T08:00:00Z",
     "created_at": "2024-11-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-hajj-istita-ah",
@@ -2008,7 +2008,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-11-10T08:00:00Z",
     "created_at": "2024-11-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-ihram-prohibitions",
@@ -2065,7 +2065,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-11-15T08:00:00Z",
     "created_at": "2024-11-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-inheritance-spouses",
@@ -2118,7 +2118,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-11-20T08:00:00Z",
     "created_at": "2024-11-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-wasiyya",
@@ -2174,7 +2174,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-11-25T08:00:00Z",
     "created_at": "2024-11-25T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-commercial-insurance",
@@ -2226,7 +2226,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-12-01T08:00:00Z",
     "created_at": "2024-12-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-cryptocurrency",
@@ -2283,7 +2283,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-12-05T08:00:00Z",
     "created_at": "2024-12-05T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-online-jumuah",
@@ -2335,7 +2335,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-12-10T08:00:00Z",
     "created_at": "2024-12-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-photography",
@@ -2391,7 +2391,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-12-15T08:00:00Z",
     "created_at": "2024-12-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-music-singing",
@@ -2447,7 +2447,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-12-20T08:00:00Z",
     "created_at": "2024-12-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-social-media-rules",
@@ -2500,7 +2500,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-12-25T08:00:00Z",
     "created_at": "2024-12-25T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-health-insurance",
@@ -2555,7 +2555,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-01-10T08:00:00Z",
     "created_at": "2025-01-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-national-celebrations",
@@ -2610,7 +2610,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-02-15T08:00:00Z",
     "created_at": "2025-02-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-following-prayer-online",
@@ -2666,7 +2666,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-03-01T08:00:00Z",
     "created_at": "2025-03-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-hajj-debt",
@@ -2721,7 +2721,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-04-01T08:00:00Z",
     "created_at": "2025-04-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-diabetes",
@@ -2776,7 +2776,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-04-05T08:00:00Z",
     "created_at": "2025-04-05T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-inheritance-missing-person",
@@ -2831,7 +2831,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-05-01T08:00:00Z",
     "created_at": "2025-05-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakah-gold-jewelry",
@@ -2886,7 +2886,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-06-01T08:00:00Z",
     "created_at": "2025-06-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-tattooing-hukm",
@@ -2936,7 +2936,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-06-15T08:00:00Z",
     "created_at": "2025-06-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-friday-prayer-validity-conditions",
@@ -2991,7 +2991,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-07-01T08:00:00Z",
     "created_at": "2025-07-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-1",
@@ -3035,7 +3035,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.652Z"
+    "updated_at": "2026-07-13T16:06:11.524Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-2",
@@ -3079,7 +3079,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.652Z"
+    "updated_at": "2026-07-13T16:06:11.524Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-3",
@@ -3123,7 +3123,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.652Z"
+    "updated_at": "2026-07-13T16:06:11.524Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-4",
@@ -3167,7 +3167,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.652Z"
+    "updated_at": "2026-07-13T16:06:11.524Z"
   },
   {
     "id": "ruling-wudu-nullifiers-part-5",
@@ -3211,7 +3211,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.652Z"
+    "updated_at": "2026-07-13T16:06:11.524Z"
   },
   {
     "id": "ruling-prayer-pillars-part-1",
@@ -3250,7 +3250,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-pillars-part-2",
@@ -3289,7 +3289,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-pillars-part-3",
@@ -3328,7 +3328,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-pillars-part-4",
@@ -3367,7 +3367,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-pillars-part-5",
@@ -3406,7 +3406,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-pillars-part-6",
@@ -3445,7 +3445,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-pillars-part-7",
@@ -3484,7 +3484,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-pillars-part-8",
@@ -3523,7 +3523,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-pillars-part-9",
@@ -3562,7 +3562,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-pillars-part-10",
@@ -3601,7 +3601,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-pillars-part-11",
@@ -3640,7 +3640,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-pillars-part-12",
@@ -3679,7 +3679,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-zakat-conditions-part-1",
@@ -3718,7 +3718,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-zakat-conditions-part-2",
@@ -3757,7 +3757,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-zakat-conditions-part-3",
@@ -3796,7 +3796,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-zakat-conditions-part-4",
@@ -3835,7 +3835,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-zakat-conditions-part-5",
@@ -3874,7 +3874,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-zakat-conditions-part-6",
@@ -3913,7 +3913,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-hajj-pillars-part-1",
@@ -3952,7 +3952,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-hajj-pillars-part-2",
@@ -3991,7 +3991,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-hajj-pillars-part-3",
@@ -4030,7 +4030,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-hajj-pillars-part-4",
@@ -4069,7 +4069,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-trade-conditions-part-1",
@@ -4108,7 +4108,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-trade-conditions-part-2",
@@ -4147,7 +4147,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-trade-conditions-part-3",
@@ -4186,7 +4186,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-trade-conditions-part-4",
@@ -4225,7 +4225,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-trade-conditions-part-5",
@@ -4264,7 +4264,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-inheritance-shares-part-1",
@@ -4303,7 +4303,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-inheritance-shares-part-2",
@@ -4342,7 +4342,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-inheritance-shares-part-3",
@@ -4381,7 +4381,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-inheritance-shares-part-4",
@@ -4420,7 +4420,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-inheritance-shares-part-5",
@@ -4459,7 +4459,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-wudu-conditions-part-1",
@@ -4503,7 +4503,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-10T08:00:00Z",
     "created_at": "2024-02-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-wudu-conditions-part-2",
@@ -4547,7 +4547,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-10T08:00:00Z",
     "created_at": "2024-02-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-wudu-conditions-part-3",
@@ -4591,7 +4591,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-10T08:00:00Z",
     "created_at": "2024-02-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-wudu-conditions-part-4",
@@ -4635,7 +4635,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-10T08:00:00Z",
     "created_at": "2024-02-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-wudu-conditions-part-5",
@@ -4679,7 +4679,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-10T08:00:00Z",
     "created_at": "2024-02-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-wudu-conditions-part-6",
@@ -4723,7 +4723,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-10T08:00:00Z",
     "created_at": "2024-02-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-wudu-conditions-part-7",
@@ -4767,7 +4767,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-10T08:00:00Z",
     "created_at": "2024-02-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-ghusl-obligations-part-1",
@@ -4817,7 +4817,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-15T08:00:00Z",
     "created_at": "2024-02-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-ghusl-obligations-part-2",
@@ -4867,7 +4867,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-15T08:00:00Z",
     "created_at": "2024-02-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-ghusl-obligations-part-3",
@@ -4917,7 +4917,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-15T08:00:00Z",
     "created_at": "2024-02-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-ghusl-obligations-part-4",
@@ -4967,7 +4967,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-15T08:00:00Z",
     "created_at": "2024-02-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-ghusl-obligations-part-5",
@@ -5017,7 +5017,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-15T08:00:00Z",
     "created_at": "2024-02-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-istinja-part-1",
@@ -5062,7 +5062,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-20T08:00:00Z",
     "created_at": "2024-02-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-istinja-part-2",
@@ -5107,7 +5107,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-20T08:00:00Z",
     "created_at": "2024-02-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-istinja-part-3",
@@ -5152,7 +5152,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-20T08:00:00Z",
     "created_at": "2024-02-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-istinja-part-4",
@@ -5197,7 +5197,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-20T08:00:00Z",
     "created_at": "2024-02-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-istinja-part-5",
@@ -5242,7 +5242,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-20T08:00:00Z",
     "created_at": "2024-02-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-istinja-part-6",
@@ -5287,7 +5287,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-20T08:00:00Z",
     "created_at": "2024-02-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-najasah-purification-part-1",
@@ -5336,7 +5336,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-01T08:00:00Z",
     "created_at": "2024-03-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-najasah-purification-part-2",
@@ -5385,7 +5385,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-01T08:00:00Z",
     "created_at": "2024-03-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-najasah-purification-part-3",
@@ -5434,7 +5434,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-01T08:00:00Z",
     "created_at": "2024-03-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-najasah-purification-part-4",
@@ -5483,7 +5483,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-01T08:00:00Z",
     "created_at": "2024-03-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-najasah-purification-part-5",
@@ -5532,7 +5532,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-01T08:00:00Z",
     "created_at": "2024-03-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-najasah-purification-part-6",
@@ -5581,7 +5581,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-01T08:00:00Z",
     "created_at": "2024-03-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-conditions-part-1",
@@ -5631,7 +5631,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-10T08:00:00Z",
     "created_at": "2024-03-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-conditions-part-2",
@@ -5681,7 +5681,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-10T08:00:00Z",
     "created_at": "2024-03-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-conditions-part-3",
@@ -5731,7 +5731,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-10T08:00:00Z",
     "created_at": "2024-03-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-conditions-part-4",
@@ -5781,7 +5781,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-10T08:00:00Z",
     "created_at": "2024-03-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-conditions-part-5",
@@ -5831,7 +5831,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-10T08:00:00Z",
     "created_at": "2024-03-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-conditions-part-6",
@@ -5881,7 +5881,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-10T08:00:00Z",
     "created_at": "2024-03-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-conditions-part-7",
@@ -5931,7 +5931,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-10T08:00:00Z",
     "created_at": "2024-03-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-sunnah-part-1",
@@ -5975,7 +5975,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-15T08:00:00Z",
     "created_at": "2024-03-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-sunnah-part-2",
@@ -6019,7 +6019,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-15T08:00:00Z",
     "created_at": "2024-03-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-sunnah-part-3",
@@ -6063,7 +6063,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-15T08:00:00Z",
     "created_at": "2024-03-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-sunnah-part-4",
@@ -6107,7 +6107,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-15T08:00:00Z",
     "created_at": "2024-03-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-sunnah-part-5",
@@ -6151,7 +6151,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-15T08:00:00Z",
     "created_at": "2024-03-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-sunnah-part-6",
@@ -6195,7 +6195,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-15T08:00:00Z",
     "created_at": "2024-03-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-sunnah-part-7",
@@ -6239,7 +6239,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-15T08:00:00Z",
     "created_at": "2024-03-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-sunnah-part-8",
@@ -6283,7 +6283,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-15T08:00:00Z",
     "created_at": "2024-03-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-sunnah-part-9",
@@ -6327,7 +6327,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-15T08:00:00Z",
     "created_at": "2024-03-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-makruhat-part-1",
@@ -6371,7 +6371,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-20T08:00:00Z",
     "created_at": "2024-03-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-makruhat-part-2",
@@ -6415,7 +6415,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-20T08:00:00Z",
     "created_at": "2024-03-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-makruhat-part-3",
@@ -6459,7 +6459,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-20T08:00:00Z",
     "created_at": "2024-03-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-makruhat-part-4",
@@ -6503,7 +6503,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-20T08:00:00Z",
     "created_at": "2024-03-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-makruhat-part-5",
@@ -6547,7 +6547,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-20T08:00:00Z",
     "created_at": "2024-03-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-makruhat-part-6",
@@ -6591,7 +6591,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-20T08:00:00Z",
     "created_at": "2024-03-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-makruhat-part-7",
@@ -6635,7 +6635,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-20T08:00:00Z",
     "created_at": "2024-03-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-makruhat-part-8",
@@ -6679,7 +6679,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-20T08:00:00Z",
     "created_at": "2024-03-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-makruhat-part-9",
@@ -6723,7 +6723,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-20T08:00:00Z",
     "created_at": "2024-03-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-prayer-makruhat-part-10",
@@ -6767,7 +6767,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-20T08:00:00Z",
     "created_at": "2024-03-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.653Z"
+    "updated_at": "2026-07-13T16:06:11.525Z"
   },
   {
     "id": "ruling-voluntary-prayer-part-1",
@@ -6812,7 +6812,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-01T08:00:00Z",
     "created_at": "2024-04-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-voluntary-prayer-part-2",
@@ -6857,7 +6857,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-01T08:00:00Z",
     "created_at": "2024-04-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-voluntary-prayer-part-3",
@@ -6902,7 +6902,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-01T08:00:00Z",
     "created_at": "2024-04-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-voluntary-prayer-part-4",
@@ -6947,7 +6947,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-01T08:00:00Z",
     "created_at": "2024-04-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-voluntary-prayer-part-5",
@@ -6992,7 +6992,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-01T08:00:00Z",
     "created_at": "2024-04-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-breakers-part-1",
@@ -7036,7 +7036,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-10T08:00:00Z",
     "created_at": "2024-04-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-breakers-part-2",
@@ -7080,7 +7080,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-10T08:00:00Z",
     "created_at": "2024-04-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-breakers-part-3",
@@ -7124,7 +7124,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-10T08:00:00Z",
     "created_at": "2024-04-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-breakers-part-4",
@@ -7168,7 +7168,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-10T08:00:00Z",
     "created_at": "2024-04-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-breakers-part-5",
@@ -7212,7 +7212,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-10T08:00:00Z",
     "created_at": "2024-04-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-breakers-part-6",
@@ -7256,7 +7256,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-10T08:00:00Z",
     "created_at": "2024-04-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-breakers-part-7",
@@ -7300,7 +7300,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-10T08:00:00Z",
     "created_at": "2024-04-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-breakers-part-8",
@@ -7344,7 +7344,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-10T08:00:00Z",
     "created_at": "2024-04-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-qada-part-1",
@@ -7388,7 +7388,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-15T08:00:00Z",
     "created_at": "2024-04-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-qada-part-2",
@@ -7432,7 +7432,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-15T08:00:00Z",
     "created_at": "2024-04-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-qada-part-3",
@@ -7476,7 +7476,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-15T08:00:00Z",
     "created_at": "2024-04-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-qada-part-4",
@@ -7520,7 +7520,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-15T08:00:00Z",
     "created_at": "2024-04-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-qada-part-5",
@@ -7564,7 +7564,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-15T08:00:00Z",
     "created_at": "2024-04-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-qada-part-6",
@@ -7608,7 +7608,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-15T08:00:00Z",
     "created_at": "2024-04-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fasting-qada-part-7",
@@ -7652,7 +7652,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-15T08:00:00Z",
     "created_at": "2024-04-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-laylat-alqadr-part-1",
@@ -7702,7 +7702,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-20T08:00:00Z",
     "created_at": "2024-04-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-laylat-alqadr-part-2",
@@ -7752,7 +7752,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-20T08:00:00Z",
     "created_at": "2024-04-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-laylat-alqadr-part-3",
@@ -7802,7 +7802,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-20T08:00:00Z",
     "created_at": "2024-04-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-laylat-alqadr-part-4",
@@ -7852,7 +7852,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-20T08:00:00Z",
     "created_at": "2024-04-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-laylat-alqadr-part-5",
@@ -7902,7 +7902,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-20T08:00:00Z",
     "created_at": "2024-04-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-laylat-alqadr-part-6",
@@ -7952,7 +7952,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-20T08:00:00Z",
     "created_at": "2024-04-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-laylat-alqadr-part-7",
@@ -8002,7 +8002,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-20T08:00:00Z",
     "created_at": "2024-04-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-laylat-alqadr-part-8",
@@ -8052,7 +8052,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-20T08:00:00Z",
     "created_at": "2024-04-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fidyah-fasting-part-1",
@@ -8097,7 +8097,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-01T08:00:00Z",
     "created_at": "2024-05-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fidyah-fasting-part-2",
@@ -8142,7 +8142,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-01T08:00:00Z",
     "created_at": "2024-05-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fidyah-fasting-part-3",
@@ -8187,7 +8187,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-01T08:00:00Z",
     "created_at": "2024-05-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fidyah-fasting-part-4",
@@ -8232,7 +8232,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-01T08:00:00Z",
     "created_at": "2024-05-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fidyah-fasting-part-5",
@@ -8277,7 +8277,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-01T08:00:00Z",
     "created_at": "2024-05-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-fidyah-fasting-part-6",
@@ -8322,7 +8322,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-01T08:00:00Z",
     "created_at": "2024-05-01T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-alfitrah-part-1",
@@ -8366,7 +8366,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-10T08:00:00Z",
     "created_at": "2024-05-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-alfitrah-part-2",
@@ -8410,7 +8410,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-10T08:00:00Z",
     "created_at": "2024-05-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-alfitrah-part-3",
@@ -8454,7 +8454,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-10T08:00:00Z",
     "created_at": "2024-05-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-alfitrah-part-4",
@@ -8498,7 +8498,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-10T08:00:00Z",
     "created_at": "2024-05-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-alfitrah-part-5",
@@ -8542,7 +8542,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-10T08:00:00Z",
     "created_at": "2024-05-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-alfitrah-part-6",
@@ -8586,7 +8586,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-10T08:00:00Z",
     "created_at": "2024-05-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-alfitrah-part-7",
@@ -8630,7 +8630,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-10T08:00:00Z",
     "created_at": "2024-05-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-alfitrah-part-8",
@@ -8674,7 +8674,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-10T08:00:00Z",
     "created_at": "2024-05-10T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-animals-part-1",
@@ -8720,7 +8720,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-15T08:00:00Z",
     "created_at": "2024-05-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-animals-part-2",
@@ -8766,7 +8766,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-15T08:00:00Z",
     "created_at": "2024-05-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-animals-part-3",
@@ -8812,7 +8812,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-15T08:00:00Z",
     "created_at": "2024-05-15T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-recipients-part-1",
@@ -8857,7 +8857,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-20T08:00:00Z",
     "created_at": "2024-05-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-recipients-part-2",
@@ -8902,7 +8902,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-20T08:00:00Z",
     "created_at": "2024-05-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-recipients-part-3",
@@ -8947,7 +8947,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-20T08:00:00Z",
     "created_at": "2024-05-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-recipients-part-4",
@@ -8992,7 +8992,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-20T08:00:00Z",
     "created_at": "2024-05-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-recipients-part-5",
@@ -9037,7 +9037,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-20T08:00:00Z",
     "created_at": "2024-05-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-recipients-part-6",
@@ -9082,7 +9082,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-20T08:00:00Z",
     "created_at": "2024-05-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   },
   {
     "id": "ruling-zakat-recipients-part-7",
@@ -9127,7 +9127,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-20T08:00:00Z",
     "created_at": "2024-05-20T08:00:00Z",
-    "updated_at": "2026-07-13T15:47:35.654Z"
+    "updated_at": "2026-07-13T16:06:11.526Z"
   }
 ] as ShariaRulingExtended[];
 
