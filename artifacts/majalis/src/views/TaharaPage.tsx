@@ -210,11 +210,13 @@ export default function TaharaPage() {
           {TABS.map((t) => (
             <button
               key={t.id}
+              id={`thr-tab-${t.id}`}
               type="button"
               role="tab"
               className={`th-tab${tab === t.id ? " th-tab--active" : ""}`}
               onClick={() => setTab(t.id)}
               aria-selected={tab === t.id}
+              aria-controls={`thr-panel-${t.id}`}
             >
               <span className="th-tab__icon"><SectionIcon name={t.icon} size={24} /></span>
               <span className="th-tab__label">{t.label}</span>
@@ -246,7 +248,7 @@ export default function TaharaPage() {
 
         {/* ── الوضوء ── */}
         {tab === "wudu" && (
-          <section className="th-section">
+          <section role="tabpanel" id="thr-panel-wudu" aria-labelledby="thr-tab-wudu" className="th-section">
             <h2 className="th-section__title">فرائض الوضوء</h2>
             <div className="th-fardh-grid">
               {WUDU_FARDH.map((f) => (
@@ -293,7 +295,7 @@ export default function TaharaPage() {
 
         {/* ── الغسل ── */}
         {tab === "ghusl" && (
-          <section className="th-section">
+          <section role="tabpanel" id="thr-panel-ghusl" aria-labelledby="thr-tab-ghusl" className="th-section">
             <h2 className="th-section__title">موجبات الغسل</h2>
             <div className="th-mujibat-grid">
               {filteredGhusulMujibat.map((m) => (
@@ -342,7 +344,7 @@ export default function TaharaPage() {
 
         {/* ── التيمم ── */}
         {tab === "tayammum" && (
-          <section className="th-section">
+          <section role="tabpanel" id="thr-panel-tayammum" aria-labelledby="thr-tab-tayammum" className="th-section">
             <div className="th-ayah th-ayah--body">
               <p className="th-ayah__text">
                 وَإِن كُنتُم مَّرْضَىٰ أَوْ عَلَىٰ سَفَرٍ أَوْ جَاءَ أَحَدٌ مِّنكُم مِّنَ الْغَائِطِ
@@ -389,7 +391,7 @@ export default function TaharaPage() {
 
         {/* ── النجاسات ── */}
         {tab === "najasat" && (
-          <section className="th-section">
+          <section role="tabpanel" id="thr-panel-najasat" aria-labelledby="thr-tab-najasat" className="th-section">
             <p className="th-section__intro">
               النجاسة: كل عين حكم الشارع بنجاستها. إزالتها شرط لصحة الصلاة.
             </p>

@@ -395,11 +395,13 @@ export default function HajjPage() {
           {TABS.map((t) => (
             <button
               key={t.id}
+              id={`hjp-tab-${t.id}`}
               role="tab"
               type="button"
               className={`hj-tab${tab === t.id ? " hj-tab--active" : ""}`}
               onClick={() => setTab(t.id)}
               aria-selected={tab === t.id}
+              aria-controls={`hjp-panel-${t.id}`}
             >
               <span className="hj-tab__icon"><SectionIcon name={t.icon} size={24} /></span>
               <span className="hj-tab__label">{t.label}</span>
@@ -429,7 +431,7 @@ export default function HajjPage() {
       <div className="hj-body">
         {/* ── نظرة عامة ── */}
         {tab === "overview" && (
-          <section className="hj-section">
+          <section role="tabpanel" id="hjp-panel-overview" aria-labelledby="hjp-tab-overview" className="hj-section">
             <div className="hj-overview-grid">
               {[
                 { icon: "☪️", label: "الفريضة", value: "مرة في العمر لمن استطاع" },
@@ -489,7 +491,7 @@ export default function HajjPage() {
 
         {/* ── الأركان ── */}
         {tab === "arkan" && (
-          <section className="hj-section">
+          <section role="tabpanel" id="hjp-panel-arkan" aria-labelledby="hjp-tab-arkan" className="hj-section">
             <p className="hj-section__intro">
               أركان الحج هي ما لا يصح الحج بدونها ولا تجبر بالدم. من ترك ركناً لم يتم حجّه.
             </p>
@@ -533,7 +535,7 @@ export default function HajjPage() {
 
         {/* ── الواجبات ── */}
         {tab === "wajibat" && (
-          <section className="hj-section">
+          <section role="tabpanel" id="hjp-panel-wajibat" aria-labelledby="hjp-tab-wajibat" className="hj-section">
             <p className="hj-section__intro">
               واجبات الحج هي ما يلزم فعله، ومن تركه أثم ويجبره بدم (ذبح شاة)، لكن حجّه صحيح.
             </p>
@@ -556,7 +558,7 @@ export default function HajjPage() {
 
         {/* ── المشاعر ── */}
         {tab === "mashaer" && (
-          <section className="hj-section">
+          <section role="tabpanel" id="hjp-panel-mashaer" aria-labelledby="hjp-tab-mashaer" className="hj-section">
             {filteredMashaer.map((m) => (
               <div key={m.id} className="hj-mashar-card">
                 <div className="hj-mashar-card__head">
@@ -580,7 +582,7 @@ export default function HajjPage() {
 
         {/* ── العمرة ── */}
         {tab === "umra" && (
-          <section className="hj-section">
+          <section role="tabpanel" id="hjp-panel-umra" aria-labelledby="hjp-tab-umra" className="hj-section">
             <p className="hj-section__intro">
               العمرة سنة مؤكدة يمكن أداؤها في أي وقت من السنة ما عدا أيام الحج عند بعض العلماء.
               تتكون من أربعة خطوات أساسية.

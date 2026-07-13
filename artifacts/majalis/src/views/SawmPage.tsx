@@ -619,11 +619,13 @@ export default function SawmPage() {
           {TABS.map((t) => (
             <button
               key={t.id}
+              id={`swm-tab-${t.id}`}
               role="tab"
               type="button"
               className={`sw-tab${tab === t.id ? " sw-tab--active" : ""}`}
               onClick={() => setTab(t.id)}
               aria-selected={tab === t.id}
+              aria-controls={`swm-panel-${t.id}`}
             >
               <span className="sw-tab__icon"><SectionIcon name={t.icon} size={24} /></span>
               <span className="sw-tab__label">{t.label}</span>
@@ -652,7 +654,7 @@ export default function SawmPage() {
       <div className="sw-body">
         {/* ── أنواع الصيام ── */}
         {tab === "types" && (
-          <section className="sw-section">
+          <section role="tabpanel" id="swm-panel-types" aria-labelledby="swm-tab-types" className="sw-section">
             {filteredFastTypes.map((ft) => {
               const isOpen = openType === ft.id;
               return (
@@ -695,7 +697,7 @@ export default function SawmPage() {
 
         {/* ── الشروط والأركان ── */}
         {tab === "conditions" && (
-          <section className="sw-section">
+          <section role="tabpanel" id="swm-panel-conditions" aria-labelledby="swm-tab-conditions" className="sw-section">
             <h2 className="sw-section__title">شروط صحة الصيام</h2>
             <div className="sw-grid-2">
               {SAWM_CONDITIONS.map((c) => (
@@ -734,7 +736,7 @@ export default function SawmPage() {
 
         {/* ── المفطرات ── */}
         {tab === "muftirat" && (
-          <section className="sw-section">
+          <section role="tabpanel" id="swm-panel-muftirat" aria-labelledby="swm-tab-muftirat" className="sw-section">
             <p className="sw-section__intro">
               المفطرات هي الأشياء التي تُبطل الصيام إذا فُعلت في نهار رمضان عمداً
               مع العلم والإرادة. أما الجاهل والناسي والمُكرَه فلا يُفطر بها في الجملة.
@@ -765,7 +767,7 @@ export default function SawmPage() {
 
         {/* ── المعذورون ── */}
         {tab === "exemptions" && (
-          <section className="sw-section">
+          <section role="tabpanel" id="swm-panel-exemptions" aria-labelledby="swm-tab-exemptions" className="sw-section">
             <p className="sw-section__intro">
               رفع الإسلام الحرج عن أصحاب الأعذار، وأباح لهم الفطر مع وجوب القضاء أو الفدية
               حسب كل حالة.
@@ -787,7 +789,7 @@ export default function SawmPage() {
 
         {/* ── الفضائل ── */}
         {tab === "virtues" && (
-          <section className="sw-section">
+          <section role="tabpanel" id="swm-panel-virtues" aria-labelledby="swm-tab-virtues" className="sw-section">
             <p className="sw-section__intro">
               حثّ النبي ﷺ على الصيام وبيّن عظيم أجره وفضله، وفيما يلي جملة من الأحاديث الصحيحة.
             </p>

@@ -484,11 +484,13 @@ export default function AlamatSaahPage() {
         {TABS.map(t => (
           <button
             key={t.id}
+            id={`als-tab-${t.id}`}
             type="button"
             role="tab"
             className={`as-tab${activeTab === t.id ? " as-tab--active" : ""}`}
             onClick={() => setActiveTab(t.id)}
             aria-selected={activeTab === t.id}
+              aria-controls={`als-panel-${t.id}`}
           >{t.label}</button>
         ))}
       </div>
@@ -497,7 +499,7 @@ export default function AlamatSaahPage() {
 
         {/* العلامات الصغرى */}
         {activeTab === "sughra" && (
-          <div>
+          <div role="tabpanel" id="als-panel-sughra" aria-labelledby="als-tab-sughra">
             <div className="as-intro">
               <p>العلامات الصغرى هي المقدِّمات البعيدة للساعة، وقد وقع كثيرها وبعضها لا يزال جارياً. والصغرى لا تعني صغر خطورتها بل قِدَمها في الظهور قبل الكبرى.</p>
             </div>
@@ -538,7 +540,7 @@ export default function AlamatSaahPage() {
 
         {/* العلامات الكبرى */}
         {activeTab === "kubra" && (
-          <div>
+          <div role="tabpanel" id="als-panel-kubra" aria-labelledby="als-tab-kubra">
             <div className="as-intro">
               <p>
                 العلامات الكبرى عشر، جاءت في حديث واحد جامع: «لا تقوم الساعة حتى تروا عشر آيات: الدخان، والدجال، والدابة، وطلوع الشمس من مغربها، ونزول عيسى بن مريم، ويأجوج ومأجوج، وثلاثة خسوف، وآخر ذلك نار تخرج من اليمن تطرد الناس إلى محشرهم».
@@ -559,7 +561,7 @@ export default function AlamatSaahPage() {
 
         {/* الأشراط والترتيب */}
         {activeTab === "ashrat" && (
-          <div>
+          <div role="tabpanel" id="als-panel-ashrat" aria-labelledby="als-tab-ashrat">
             <div className="as-intro">
               <p>جاء في الأحاديث ترتيب بعض العلامات الكبرى وتتابعها. وقد ذهب ابن حجر في الفتح وغيره إلى تحديد الترتيب المرجَّح.</p>
             </div>
@@ -591,7 +593,7 @@ export default function AlamatSaahPage() {
 
         {/* الاستعداد */}
         {activeTab === "tahdhukat" && (
-          <div>
+          <div role="tabpanel" id="als-panel-tahdhukat" aria-labelledby="als-tab-tahdhukat">
             <div className="as-intro">
               <p>الإيمان بعلامات الساعة لا يعني الاستسلام والجمود، بل هو دافع للعمل الصالح والتمسك بالسنة قبل أن تُغلَق أبواب التوبة.</p>
             </div>

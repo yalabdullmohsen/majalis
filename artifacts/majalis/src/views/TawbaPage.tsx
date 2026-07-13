@@ -292,11 +292,13 @@ export default function TawbaPage() {
         {TABS.map((t) => (
           <button
             key={t.id}
+            id={`twb-tab-${t.id}`}
             type="button"
             role="tab"
             className={`tw-tab${tab === t.id ? " tw-tab--active" : ""}`}
             onClick={() => setTab(t.id)}
             aria-selected={tab === t.id}
+              aria-controls={`twb-panel-${t.id}`}
           >
             <span className="tw-tab__icon"><SectionIcon name={t.icon} size={20} /></span>
             <span className="tw-tab__label">{t.label}</span>
@@ -307,7 +309,7 @@ export default function TawbaPage() {
       <div className="tw-body">
         {/* ── شروط التوبة ── */}
         {tab === "shurut" && (
-          <div className="tw-section">
+          <div role="tabpanel" id="twb-panel-shurut" aria-labelledby="twb-tab-shurut" className="tw-section">
             <p className="tw-section-lead">
               اتفق العلماء على أن للتوبة شروطاً لا تصح إلا بها، وتزداد شرطاً إذا تعلّقت بحق آدمي
             </p>
@@ -345,7 +347,7 @@ export default function TawbaPage() {
 
         {/* ── أنواع وأحكام ── */}
         {tab === "anwaa" && (
-          <div className="tw-section">
+          <div role="tabpanel" id="twb-panel-anwaa" aria-labelledby="twb-tab-anwaa" className="tw-section">
             <div className="tw-anwaa-grid">
               {ANWAA.map((n) => (
                 <div key={n.title} className="tw-nawaa-card">
@@ -376,7 +378,7 @@ export default function TawbaPage() {
 
         {/* ── أذكار الاستغفار ── */}
         {tab === "adhkar" && (
-          <div className="tw-section">
+          <div role="tabpanel" id="twb-panel-adhkar" aria-labelledby="twb-tab-adhkar" className="tw-section">
             <p className="tw-section-lead">أفضل صيغ الاستغفار المأثورة عن النبي ﷺ</p>
             <div className="tw-dhikr-list">
               {ADHKAR.map((d, i) => {
@@ -430,7 +432,7 @@ export default function TawbaPage() {
 
         {/* ── موانع التوبة ── */}
         {tab === "mawani" && (
-          <div className="tw-section">
+          <div role="tabpanel" id="twb-panel-mawani" aria-labelledby="twb-tab-mawani" className="tw-section">
             <p className="tw-section-lead">أمور تحول دون قبول التوبة أو صحتها، يجب الحذر منها</p>
             <div className="tw-search-wrap">
               <input type="search" value={search} onChange={e => setSearch(e.target.value)}
@@ -461,7 +463,7 @@ export default function TawbaPage() {
 
         {/* ── آثار التوبة ── */}
         {tab === "athaar" && (
-          <div className="tw-section">
+          <div role="tabpanel" id="twb-panel-athaar" aria-labelledby="twb-tab-athaar" className="tw-section">
             <p className="tw-section-lead">ثمرات التوبة الصادقة وآثارها في الدنيا والآخرة</p>
             <div className="tw-athaar-grid">
               {filteredAthaar.map((a) => (

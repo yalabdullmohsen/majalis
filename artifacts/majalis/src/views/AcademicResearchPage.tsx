@@ -711,11 +711,13 @@ export default function AcademicResearchPage() {
           return (
             <button
               key={t.id}
+              id={`ar-tab-${t.id}`}
               type="button"
               role="tab"
               className={`ar-tab-btn${activeTab === t.id ? " ar-tab-btn--active" : ""}`}
               onClick={() => setActiveTab(t.id)}
               aria-selected={activeTab === t.id}
+              aria-controls={`ar-panel-${t.id}`}
             >
               <span className="ar-tab-btn__icon" aria-hidden="true"><I size={16} strokeWidth={1.6} /></span>
               <span className="ar-tab-btn__label">{t.label}</span>
@@ -727,9 +729,21 @@ export default function AcademicResearchPage() {
 
       {/* محتوى */}
       <div className="ar-content">
-        {activeTab === "theses"       && <ThesesTab />}
-        {activeTab === "institutions" && <InstitutionsTab />}
-        {activeTab === "personal"     && <PersonalTab />}
+        {activeTab === "theses" && (
+          <div role="tabpanel" id="ar-panel-theses" aria-labelledby="ar-tab-theses">
+            <ThesesTab />
+          </div>
+        )}
+        {activeTab === "institutions" && (
+          <div role="tabpanel" id="ar-panel-institutions" aria-labelledby="ar-tab-institutions">
+            <InstitutionsTab />
+          </div>
+        )}
+        {activeTab === "personal" && (
+          <div role="tabpanel" id="ar-panel-personal" aria-labelledby="ar-tab-personal">
+            <PersonalTab />
+          </div>
+        )}
       </div>
 
       {/* رابط الباحث الشرعي */}

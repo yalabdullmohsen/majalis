@@ -277,11 +277,13 @@ export default function UlumQuranPage() {
         {TABS.map((t) => (
           <button
             key={t.id}
+            id={`ulq-tab-${t.id}`}
             type="button"
             role="tab"
             className={`uq-tab${tab === t.id ? " uq-tab--active" : ""}`}
             onClick={() => setTab(t.id)}
             aria-selected={tab === t.id}
+              aria-controls={`ulq-panel-${t.id}`}
           >
             <span><SectionIcon name={t.icon} size={22} /></span>
             <span>{t.label}</span>
@@ -293,7 +295,7 @@ export default function UlumQuranPage() {
 
         {/* ── النزول ── */}
         {tab === "nuzul" && (
-          <div className="uq-section">
+          <div role="tabpanel" id="ulq-panel-nuzul" aria-labelledby="ulq-tab-nuzul" className="uq-section">
             <div className="uq-search-wrap">
               <input
                 type="search"
@@ -333,7 +335,7 @@ export default function UlumQuranPage() {
 
         {/* ── الجمع ── */}
         {tab === "jam" && (
-          <div className="uq-section">
+          <div role="tabpanel" id="ulq-panel-jam" aria-labelledby="ulq-tab-jam" className="uq-section">
             <p className="uq-lead">
               مرّ جمع القرآن وتدوينه بثلاث مراحل تاريخية متتالية ضمنت حفظه من الضياع والتحريف
             </p>
@@ -372,7 +374,7 @@ export default function UlumQuranPage() {
 
         {/* ── التفسير ── */}
         {tab === "tafsir" && (
-          <div className="uq-section">
+          <div role="tabpanel" id="ulq-panel-tafsir" aria-labelledby="ulq-tab-tafsir" className="uq-section">
             <div className="uq-search-wrap">
               <input
                 type="search"
@@ -416,7 +418,7 @@ export default function UlumQuranPage() {
 
         {/* ── الإعجاز ── */}
         {tab === "ijaz" && (
-          <div className="uq-section">
+          <div role="tabpanel" id="ulq-panel-ijaz" aria-labelledby="ulq-tab-ijaz" className="uq-section">
             <div className="uq-search-wrap">
               <input
                 type="search"
@@ -449,7 +451,7 @@ export default function UlumQuranPage() {
 
         {/* ── أحكام القرآن ── */}
         {tab === "ahkam" && (
-          <div className="uq-section">
+          <div role="tabpanel" id="ulq-panel-ahkam" aria-labelledby="ulq-tab-ahkam" className="uq-section">
             <h2 className="uq-subhead">المحكم والمتشابه</h2>
             <div className="uq-mm-grid">
               {[MUHKAM_MUTASHABIH.muhkam, MUHKAM_MUTASHABIH.mutashabih].map((m) => (
@@ -490,7 +492,7 @@ export default function UlumQuranPage() {
 
         {/* ── القراءات السبع ── */}
         {tab === "qiraat" && (
-          <div className="uq-section">
+          <div role="tabpanel" id="ulq-panel-qiraat" aria-labelledby="ulq-tab-qiraat" className="uq-section">
             <p className="uq-lead">
               القراءات السبع المتواترة هي طرق أداء القرآن الكريم المنقولة بالسند الصحيح عن النبي ﷺ، كل قراءة تتميز بخصائص أدائية وعلماء رواة محددين.
             </p>

@@ -316,11 +316,13 @@ export default function MawarithPage() {
         {TABS.map((t) => (
           <button
             key={t.id}
+            id={`mwr-tab-${t.id}`}
             type="button"
             role="tab"
             className={`mw-tab${tab === t.id ? " mw-tab--active" : ""}`}
             onClick={() => setTab(t.id)}
             aria-selected={tab === t.id}
+              aria-controls={`mwr-panel-${t.id}`}
           >
             <span><SectionIcon name={t.icon} size={22} /></span>
             <span>{t.label}</span>
@@ -332,7 +334,7 @@ export default function MawarithPage() {
 
         {/* ── الورثة ── */}
         {tab === "varasa" && (
-          <div className="mw-section">
+          <div role="tabpanel" id="mwr-panel-varasa" aria-labelledby="mwr-tab-varasa" className="mw-section">
             <p className="mw-lead">حصص الورثة المنصوص عليها في القرآن الكريم وسنة النبي ﷺ</p>
 
             <div className="mw-shares-legend">
@@ -391,7 +393,7 @@ export default function MawarithPage() {
 
         {/* ── الحقوق ── */}
         {tab === "huquq" && (
-          <div className="mw-section">
+          <div role="tabpanel" id="mwr-panel-huquq" aria-labelledby="mwr-tab-huquq" className="mw-section">
             <p className="mw-lead">قبل توزيع التركة تُؤدَّى أربعة حقوق بالترتيب التالي</p>
             <div className="mw-huquq-timeline">
               {HUQUQ.map((h) => (
@@ -433,7 +435,7 @@ export default function MawarithPage() {
 
         {/* ── العصبة ── */}
         {tab === "asab" && (
-          <div className="mw-section">
+          <div role="tabpanel" id="mwr-panel-asab" aria-labelledby="mwr-tab-asab" className="mw-section">
             <p className="mw-lead">العَصَبة: من يأخذ ما بقي من التركة بعد أصحاب الفروض، وثلاثة أنواع</p>
             <div className="mw-asab-list">
               {ASAB_TYPES.map((a, i) => (
@@ -461,7 +463,7 @@ export default function MawarithPage() {
 
         {/* ── الحجب ── */}
         {tab === "hajb" && (
-          <div className="mw-section">
+          <div role="tabpanel" id="mwr-panel-hajb" aria-labelledby="mwr-tab-hajb" className="mw-section">
             <p className="mw-lead">الحجب: منع وارث من الميراث كله أو جزء منه بوجود وارث آخر</p>
             <div className="mw-hajb-list">
               {HAJB_TYPES.map((h, i) => (
@@ -495,7 +497,7 @@ export default function MawarithPage() {
 
         {/* ── مسائل ── */}
         {tab === "masail" && (
-          <div className="mw-section">
+          <div role="tabpanel" id="mwr-panel-masail" aria-labelledby="mwr-tab-masail" className="mw-section">
             <p className="mw-lead">مسائل فقهية مشهورة في علم الفرائض، تُبيّن دقة المنهج وعمق الفقه الإسلامي</p>
             <div className="mw-search-wrap">
               <input

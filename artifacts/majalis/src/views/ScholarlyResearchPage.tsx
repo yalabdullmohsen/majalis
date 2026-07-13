@@ -238,12 +238,16 @@ export default function ScholarlyResearchPage() {
       </div>
 
       {/* ── Subnav ── */}
-      <div className="srp-subnav">
+      <div className="srp-subnav" role="tablist" aria-label="تبويبات البحث العلمي">
         <div className="srp-subnav__inner">
           {(["search", "library"] as View[]).map((v) => (
             <button
               key={v}
+              id={`srp-tab-${v}`}
               type="button"
+              role="tab"
+              aria-selected={view === v}
+              aria-controls={`srp-panel-${v}`}
               onClick={() => setView(v)}
               className={`srp-tab${view === v ? " srp-tab--active" : ""}`}
             >
@@ -260,7 +264,7 @@ export default function ScholarlyResearchPage() {
 
         {/* ══════════════════════════ SEARCH VIEW */}
         {view === "search" && (
-          <>
+          <div role="tabpanel" id="srp-panel-search" aria-labelledby="srp-tab-search">
             {/* نموذج البحث */}
             <form onSubmit={handleSubmit} className="srp-form" aria-label="البحث العلمي">
               <div className="srp-textarea-wrap">
@@ -397,12 +401,12 @@ export default function ScholarlyResearchPage() {
                 </div>
               </div>
             )}
-          </>
+          </div>
         )}
 
         {/* ══════════════════════════ LIBRARY VIEW */}
         {view === "library" && (
-          <div className="srp-library">
+          <div role="tabpanel" id="srp-panel-library" aria-labelledby="srp-tab-library" className="srp-library">
             {!isLoggedIn && (
               <div className="srp-login-notice">
                 يجب <Link href="/login" className="underline font-medium">تسجيل الدخول</Link> لعرض مكتبتك البحثية الخاصة.

@@ -395,11 +395,13 @@ export default function SalahGuidePage() {
         {TABS.map((t) => (
           <button
             key={t.id}
+            id={`sgp-tab-${t.id}`}
             type="button"
             role="tab"
             className={`sg-tab${tab === t.id ? " sg-tab--active" : ""}`}
             onClick={() => setTab(t.id)}
             aria-selected={tab === t.id}
+              aria-controls={`sgp-panel-${t.id}`}
           >
             <span><SectionIcon name={t.icon} size={22} /></span>
             <span>{t.label}</span>
@@ -411,7 +413,7 @@ export default function SalahGuidePage() {
 
         {/* ── الشروط والأركان ── */}
         {tab === "shurut" && (
-          <div className="sg-section">
+          <div role="tabpanel" id="sgp-panel-shurut" aria-labelledby="sgp-tab-shurut" className="sg-section">
             <h2 className="sg-subhead">شروط صحة الصلاة (9 شروط)</h2>
             <div className="sg-shurut-grid">
               {SHURUT.map((s, i) => (
@@ -442,7 +444,7 @@ export default function SalahGuidePage() {
 
         {/* ── واجبات الصلاة ── */}
         {tab === "wajibaat" && (
-          <div className="sg-section">
+          <div role="tabpanel" id="sgp-panel-wajibaat" aria-labelledby="sgp-tab-wajibaat" className="sg-section">
             <div className="sg-info-box sg-info-box--intro">
               <span>📘</span>
               <div>
@@ -496,7 +498,7 @@ export default function SalahGuidePage() {
 
         {/* ── كيفية الصلاة ── */}
         {tab === "kayfiyya" && (
-          <div className="sg-section">
+          <div role="tabpanel" id="sgp-panel-kayfiyya" aria-labelledby="sgp-tab-kayfiyya" className="sg-section">
             <p className="sg-lead">خطوات الصلاة بالترتيب، اضغط على كل خطوة لمزيد من التفاصيل</p>
             <div className="sg-steps-list">
               {KAYFIYYA.map((s) => {
@@ -537,7 +539,7 @@ export default function SalahGuidePage() {
 
         {/* ── المبطلات ── */}
         {tab === "mubtilatat" && (
-          <div className="sg-section">
+          <div role="tabpanel" id="sgp-panel-mubtilatat" aria-labelledby="sgp-tab-mubtilatat" className="sg-section">
             <div className="sg-search-wrap">
               <input type="search" value={search} onChange={e => setSearch(e.target.value)}
                 placeholder="ابحث في المبطلات والمكروهات..." className="page-search-input sg-search-input"
@@ -572,7 +574,7 @@ export default function SalahGuidePage() {
 
         {/* ── الخشوع ── */}
         {tab === "khushuu" && (
-          <div className="sg-section">
+          <div role="tabpanel" id="sgp-panel-khushuu" aria-labelledby="sgp-tab-khushuu" className="sg-section">
             <div className="sg-search-wrap">
               <input type="search" value={search} onChange={e => setSearch(e.target.value)}
                 placeholder="ابحث في أساليب الخشوع..." className="page-search-input sg-search-input"
@@ -603,7 +605,7 @@ export default function SalahGuidePage() {
 
         {/* ── فضائل الصلاة ── */}
         {tab === "fawaid" && (
-          <div className="sg-section">
+          <div role="tabpanel" id="sgp-panel-fawaid" aria-labelledby="sgp-tab-fawaid" className="sg-section">
             <div className="sg-search-wrap">
               <input type="search" value={search} onChange={e => setSearch(e.target.value)}
                 placeholder="ابحث في فضائل الصلاة..." className="page-search-input sg-search-input"
@@ -642,7 +644,7 @@ export default function SalahGuidePage() {
 
         {/* ── مراتب المصلين ── */}
         {tab === "maratib" && (
-          <div className="sg-section">
+          <div role="tabpanel" id="sgp-panel-maratib" aria-labelledby="sgp-tab-maratib" className="sg-section">
             <h2 className="sg-subhead">مراتب الناس في الصلاة (خمس مراتب)</h2>
             <p className="sg-intro-note">قال ابن القيم رحمه الله في كتاب الصلاة: الناس في الصلاة على خمس مراتب.</p>
             <div className="sg-ranks-list">
@@ -665,7 +667,7 @@ export default function SalahGuidePage() {
 
         {/* ── سور الصلاة والنوافل ── */}
         {tab === "suwar" && (
-          <div className="sg-section">
+          <div role="tabpanel" id="sgp-panel-suwar" aria-labelledby="sgp-tab-suwar" className="sg-section">
             <h2 className="sg-subhead">القراءة في الصلوات الخمس</h2>
             <p className="sg-intro-note">
               الفاتحة ركن في كل ركعة. ويُستحب قراءة سورة أو آيات بعدها في الأوليين.

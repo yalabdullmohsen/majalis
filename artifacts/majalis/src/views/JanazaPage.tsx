@@ -218,11 +218,13 @@ export default function JanazaPage() {
           {TABS.map((t) => (
             <button
               key={t.id}
+              id={`jnz-tab-${t.id}`}
               type="button"
               role="tab"
               className={`jn-tab${tab === t.id ? " jn-tab--active" : ""}`}
               onClick={() => setTab(t.id)}
               aria-selected={tab === t.id}
+              aria-controls={`jnz-panel-${t.id}`}
             >
               <span className="jn-tab__icon"><SectionIcon name={t.icon} size={24} /></span>
               <span className="jn-tab__label">{t.label}</span>
@@ -255,7 +257,7 @@ export default function JanazaPage() {
 
         {/* ── الغسل ── */}
         {tab === "ghusl" && (
-          <section className="jn-section">
+          <section role="tabpanel" id="jnz-panel-ghusl" aria-labelledby="jnz-tab-ghusl" className="jn-section">
             <div className="jn-info">
               <span className="jn-info__icon">📌</span>
               <p>
@@ -287,7 +289,7 @@ export default function JanazaPage() {
 
         {/* ── التكفين ── */}
         {tab === "takfin" && (
-          <section className="jn-section">
+          <section role="tabpanel" id="jnz-panel-takfin" aria-labelledby="jnz-tab-takfin" className="jn-section">
             <div className="jn-info">
               <span className="jn-info__icon">📌</span>
               <p>
@@ -313,7 +315,7 @@ export default function JanazaPage() {
 
         {/* ── الصلاة ── */}
         {tab === "salah" && (
-          <section className="jn-section">
+          <section role="tabpanel" id="jnz-panel-salah" aria-labelledby="jnz-tab-salah" className="jn-section">
             <div className="jn-info">
               <span className="jn-info__icon">📌</span>
               <p>
@@ -354,7 +356,7 @@ export default function JanazaPage() {
 
         {/* ── الدفن ── */}
         {tab === "dafn" && (
-          <section className="jn-section">
+          <section role="tabpanel" id="jnz-panel-dafn" aria-labelledby="jnz-tab-dafn" className="jn-section">
             <div className="jn-info">
               <span className="jn-info__icon">📌</span>
               <p>
@@ -378,7 +380,7 @@ export default function JanazaPage() {
 
         {/* ── التعزية والآداب ── */}
         {tab === "aadab" && (
-          <section className="jn-section">
+          <section role="tabpanel" id="jnz-panel-aadab" aria-labelledby="jnz-tab-aadab" className="jn-section">
             <div className="jn-info">
               <span className="jn-info__icon">📌</span>
               <p>

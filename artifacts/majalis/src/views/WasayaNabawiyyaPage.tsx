@@ -692,11 +692,13 @@ export default function WasayaNabawiyyaPage() {
         {TABS.map(t => (
           <button
             key={t.id}
+            id={`wsy-tab-${t.id}`}
             type="button"
             role="tab"
             className={`wn-tab${activeTab === t.id ? " wn-tab--active" : ""}`}
             onClick={() => { setActiveTab(t.id); setOpenIdx(null); }}
             aria-selected={activeTab === t.id}
+              aria-controls={`wsy-panel-${t.id}`}
           >{t.label}</button>
         ))}
       </div>
@@ -718,7 +720,7 @@ export default function WasayaNabawiyyaPage() {
 
         {/* الوصايا الكبرى */}
         {activeTab === "kabira" && (
-          <div>
+          <div role="tabpanel" id="wsy-panel-kabira" aria-labelledby="wsy-tab-kabira">
             <div className="wn-intro">
               <p>هذه وصايا جامعة أوصى بها ﷺ أصحابه في مواقف مختلفة، كل وصية كانت دواءً دقيقاً لحاجة تلك اللحظة، وهي في مجموعها دستور أخلاقي للمؤمن.</p>
             </div>
@@ -764,7 +766,7 @@ export default function WasayaNabawiyyaPage() {
 
         {/* وصايا خاصة بأفراد */}
         {activeTab === "khasisa" && (
-          <div>
+          <div role="tabpanel" id="wsy-panel-khasisa" aria-labelledby="wsy-tab-khasisa">
             <div className="wn-intro">
               <p>خصَّ النبي ﷺ كل صحابي بوصية تناسب حاله وحاجته، فكان طبيب القلوب يُعطي كل قلب دواءه.</p>
             </div>
@@ -803,7 +805,7 @@ export default function WasayaNabawiyyaPage() {
 
         {/* وصايا فردية */}
         {activeTab === "lishakhsiyya" && (
-          <div>
+          <div role="tabpanel" id="wsy-panel-lishakhsiyya" aria-labelledby="wsy-tab-lishakhsiyya">
             <div className="wn-intro">
               <p>اختر وصيةً واحدةً تناسبك الآن من وصايا النبي ﷺ، واجعلها برنامجك لهذا الشهر:</p>
             </div>
@@ -824,7 +826,7 @@ export default function WasayaNabawiyyaPage() {
 
         {/* كيف تطبِّق؟ */}
         {activeTab === "amal" && (
-          <div>
+          <div role="tabpanel" id="wsy-panel-amal" aria-labelledby="wsy-tab-amal">
             <div className="wn-intro">
               <p>الوصية تصبح عادة حين تتحول إلى خطوات. هذه طريقة عملية لتحويل الوصايا النبوية من كلمات تُحفَظ إلى سلوك يُعاش.</p>
             </div>

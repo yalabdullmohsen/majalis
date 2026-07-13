@@ -835,11 +835,13 @@ export default function ProphetStoriesPage() {
           {TABS.map(t => (
             <button
               key={t.id}
+              id={`pst-tab-${t.id}`}
               type="button"
               role="tab"
               className={`prophets-lux-tab ${view === t.id ? "prophets-lux-tab--active" : ""}`}
               onClick={() => setView(t.id)}
               aria-selected={view === t.id}
+              aria-controls={`pst-panel-${t.id}`}
             >
               {t.id === "grid"      && <><LayoutList size={14} strokeWidth={1.8} aria-hidden="true" /> {t.label}</>}
               {t.id === "timeline"  && <><CalendarDays size={14} strokeWidth={1.8} aria-hidden="true" /> {t.label}</>}
@@ -852,7 +854,7 @@ export default function ProphetStoriesPage() {
 
         {/* Xط الزمني */}
         {view === "timeline" && (
-          <div className="prophets-lux-container">
+          <div role="tabpanel" id="pst-panel-timeline" aria-labelledby="pst-tab-timeline" className="prophets-lux-container">
             <TimelineView onSelect={setSelectedSlug} />
           </div>
         )}
@@ -866,14 +868,14 @@ export default function ProphetStoriesPage() {
 
         {/* المعجزات */}
         {view === "miracles" && (
-          <div className="prophets-lux-container nb-container">
+          <div role="tabpanel" id="pst-panel-miracles" aria-labelledby="pst-tab-miracles" className="prophets-lux-container nb-container">
             <MiraclesView />
           </div>
         )}
 
         {/* مقارنة */}
         {view === "compare" && (
-          <div className="prophets-lux-container nb-container">
+          <div role="tabpanel" id="pst-panel-compare" aria-labelledby="pst-tab-compare" className="prophets-lux-container nb-container">
             <CompareView onSelect={setSelectedSlug} />
           </div>
         )}
