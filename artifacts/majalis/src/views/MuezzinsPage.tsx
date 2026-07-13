@@ -210,7 +210,7 @@ export default function MuezzinsPage() {
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="ابحث بالاسم أو الدولة أو الأسلوب..."
+          aria-label="ابحث بالاسم أو الدولة أو الأسلوب" placeholder="ابحث بالاسم أو الدولة أو الأسلوب..."
           className="mzp-search-input"
         />
       </div>

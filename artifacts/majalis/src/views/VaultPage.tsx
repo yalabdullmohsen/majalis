@@ -66,7 +66,7 @@ function AddNoteModal({
         </div>
         <textarea
           className="vault-modal__textarea"
-          placeholder="اكتب ملاحظتك هنا…"
+          aria-label="اكتب ملاحظتك هنا…" placeholder="اكتب ملاحظتك هنا…"
           value={text}
           onChange={(e) => setText(e.target.value)}
           rows={5}

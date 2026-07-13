@@ -67,7 +67,7 @@ export default function FiqhCouncilResearchAssistantPage() {
           </label>
           <label className="fiqh-council-select-label">
             المصدر
-            <input value={source} onChange={(e) => setSource(e.target.value)} className="fiqh-council-source-input" placeholder="اسم المصدر" />
+            <input value={source} onChange={(e) => setSource(e.target.value)} className="fiqh-council-source-input" aria-label="اسم المصدر" placeholder="اسم المصدر" />
           </label>
         </div>
       </div>

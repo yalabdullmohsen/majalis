@@ -146,13 +146,13 @@ export default function CardsPage() {
                 value={quote}
                 onChange={(e) => setQuote(e.target.value)}
                 rows={4}
-                placeholder="أدخل الاقتباس أو الفائدة..."
+                aria-label="أدخل الاقتباس أو الفائدة" placeholder="أدخل الاقتباس أو الفائدة..."
                 className="cards-textarea"
               />
               <input
                 value={source}
                 onChange={(e) => setSource(e.target.value)}
-                placeholder="المصدر، مثال: رواه البخاري"
+                aria-label="المصدر، مثال: رواه البخاري" placeholder="المصدر، مثال: رواه البخاري"
                 className="cards-input"
               />
             </div>

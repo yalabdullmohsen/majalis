@@ -269,7 +269,7 @@ function ChildView({ userId }: { userId: string }) {
         <input
           type="text"
           className="fm-code-input"
-          placeholder="ABC123"
+          aria-label="ABC123" placeholder="ABC123"
           value={code}
           onChange={(e) => setCode(e.target.value.toUpperCase().slice(0, 6))}
           maxLength={6}

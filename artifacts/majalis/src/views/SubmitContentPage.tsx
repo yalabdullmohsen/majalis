@@ -119,7 +119,7 @@ export default function SubmitContentPage() {
             required
             minLength={3}
             maxLength={500}
-            placeholder="اكتب عنواناً مختصراً للموضوع"
+            aria-label="اكتب عنواناً مختصراً للموضوع" placeholder="اكتب عنواناً مختصراً للموضوع"
             className="scp-input"
           />
         </label>
@@ -133,7 +133,7 @@ export default function SubmitContentPage() {
             minLength={3}
             maxLength={8000}
             rows={6}
-            placeholder="اكتب التفاصيل هنا..."
+            aria-label="اكتب التفاصيل هنا" placeholder="اكتب التفاصيل هنا..."
             className="scp-input scp-input--textarea"
           />
         </label>
@@ -145,7 +145,7 @@ export default function SubmitContentPage() {
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
             maxLength={200}
-            placeholder="للنسب الصحيح"
+            aria-label="للنسب الصحيح" placeholder="للنسب الصحيح"
             className="scp-input"
           />
         </label>

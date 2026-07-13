@@ -1334,7 +1334,7 @@ export default function SahabahPage() {
         <input
           type="search"
           className="sb-search"
-          placeholder="ابحث بالاسم..."
+          aria-label="ابحث بالاسم" placeholder="ابحث بالاسم..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />

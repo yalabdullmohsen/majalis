@@ -249,15 +249,15 @@ function ZakatCalc() {
       <div className="zk-calc__fields">
         <label className="zk-calc__field">
           <span>الذهب (غرام)</span>
-          <input type="number" min="0" value={gold} onChange={(e) => setGold(e.target.value)} placeholder="0" className="zk-calc__input" />
+          <input type="number" min="0" value={gold} onChange={(e) => setGold(e.target.value)} aria-label="0" placeholder="0" className="zk-calc__input" />
         </label>
         <label className="zk-calc__field">
           <span>الفضة (غرام)</span>
-          <input type="number" min="0" value={silver} onChange={(e) => setSilver(e.target.value)} placeholder="0" className="zk-calc__input" />
+          <input type="number" min="0" value={silver} onChange={(e) => setSilver(e.target.value)} aria-label="0" placeholder="0" className="zk-calc__input" />
         </label>
         <label className="zk-calc__field">
           <span>النقود (دينار كويتي)</span>
-          <input type="number" min="0" value={cash} onChange={(e) => setCash(e.target.value)} placeholder="0" className="zk-calc__input" />
+          <input type="number" min="0" value={cash} onChange={(e) => setCash(e.target.value)} aria-label="0" placeholder="0" className="zk-calc__input" />
         </label>
       </div>
       <button type="button" className="zk-calc__btn" onClick={calculate}>احسب الزكاة</button>

@@ -263,7 +263,7 @@ export default function IslamicStoriesPage() {
         <div className="isp-controls">
           <input
             className="isp-search"
-            placeholder="ابحث في القصص…"
+            aria-label="ابحث في القصص…" placeholder="ابحث في القصص…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />

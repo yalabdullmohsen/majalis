@@ -445,7 +445,7 @@ export default function SearchPage() {
               <span>العالم / المؤلف</span>
               <input
                 type="text"
-                placeholder="اسم العالم..."
+                aria-label="اسم العالم" placeholder="اسم العالم..."
                 value={filters.author}
                 onChange={(e) => setFilters({ ...filters, author: e.target.value })}
               />

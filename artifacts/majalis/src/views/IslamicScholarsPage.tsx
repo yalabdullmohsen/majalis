@@ -1352,7 +1352,7 @@ export default function IslamicScholarsPage() {
           <input
             className="sch-search-input"
             type="search"
-            placeholder="ابحث في العلماء..."
+            aria-label="ابحث في العلماء" placeholder="ابحث في العلماء..."
             value={query}
             onChange={e => setQuery(e.target.value)}
           />

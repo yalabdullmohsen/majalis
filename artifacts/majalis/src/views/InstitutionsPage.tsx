@@ -453,7 +453,7 @@ export default function InstitutionsPage() {
           <input
             type="text"
             className="vault-search"
-            placeholder="ابحث باسم المؤسسة أو البلد أو المدينة…"
+            aria-label="ابحث باسم المؤسسة أو البلد أو المدينة…" placeholder="ابحث باسم المؤسسة أو البلد أو المدينة…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             dir="rtl"

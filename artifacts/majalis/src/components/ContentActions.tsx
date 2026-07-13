@@ -231,7 +231,7 @@ export default function ContentActions({ contentType, contentId, shareTitle, sha
             value={reportDesc}
             onChange={(e) => setReportDesc(e.target.value)}
             rows={2}
-            placeholder="تفاصيل إضافية (اختياري)..."
+            aria-label="تفاصيل إضافية (اختياري)" placeholder="تفاصيل إضافية (اختياري)..."
             className="ca-report-textarea"
           />
           <button

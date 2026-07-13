@@ -148,23 +148,23 @@ function AdhanForm() {
 
       <div className="ulp-row2">
         <Field label="اسمك / اسم المؤذن *">
-          <input value={name} onChange={(e) => setName(e.target.value)} required className="ulp-inp" placeholder="مثال: أحمد الكويتي" />
+          <input value={name} onChange={(e) => setName(e.target.value)} required className="ulp-inp" aria-label="مثال: أحمد الكويتي" placeholder="مثال: أحمد الكويتي" />
         </Field>
         <Field label="البريد الإلكتروني (اختياري)">
-          <input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} className="ulp-inp" placeholder="للتواصل عند القبول" />
+          <input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} className="ulp-inp" aria-label="للتواصل عند القبول" placeholder="للتواصل عند القبول" />
         </Field>
       </div>
 
       <Field label="عنوان الأذان *">
-        <input value={title} onChange={(e) => setTitle(e.target.value)} required className="ulp-inp" placeholder="مثال: أذان فجر خاشع" />
+        <input value={title} onChange={(e) => setTitle(e.target.value)} required className="ulp-inp" aria-label="مثال: أذان فجر خاشع" placeholder="مثال: أذان فجر خاشع" />
       </Field>
 
       <div className="ulp-row2">
         <Field label="الدولة *">
-          <input value={country} onChange={(e) => setCountry(e.target.value)} required className="ulp-inp" placeholder="مثال: الكويت" />
+          <input value={country} onChange={(e) => setCountry(e.target.value)} required className="ulp-inp" aria-label="مثال: الكويت" placeholder="مثال: الكويت" />
         </Field>
         <Field label="المدينة">
-          <input value={origin} onChange={(e) => setOrigin(e.target.value)} className="ulp-inp" placeholder="مثال: الكويت العاصمة" />
+          <input value={origin} onChange={(e) => setOrigin(e.target.value)} className="ulp-inp" aria-label="مثال: الكويت العاصمة" placeholder="مثال: الكويت العاصمة" />
         </Field>
       </div>
 
@@ -182,7 +182,7 @@ function AdhanForm() {
       </div>
 
       <Field label="وصف إضافي (اختياري)">
-        <textarea value={desc} onChange={(e) => setDesc(e.target.value)} rows={3} className="ulp-inp ulp-inp--textarea" placeholder="معلومات إضافية عن التسجيل..." />
+        <textarea value={desc} onChange={(e) => setDesc(e.target.value)} rows={3} className="ulp-inp ulp-inp--textarea" aria-label="معلومات إضافية عن التسجيل" placeholder="معلومات إضافية عن التسجيل..." />
       </Field>
 
       <Feedback state={uploadState} message={message} />
@@ -249,23 +249,23 @@ function LessonForm() {
 
       <div className="ulp-row2">
         <Field label="اسمك *">
-          <input value={name} onChange={(e) => setName(e.target.value)} required className="ulp-inp" placeholder="الاسم الكامل" />
+          <input value={name} onChange={(e) => setName(e.target.value)} required className="ulp-inp" aria-label="الاسم الكامل" placeholder="الاسم الكامل" />
         </Field>
         <Field label="البريد الإلكتروني (اختياري)">
-          <input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} className="ulp-inp" placeholder="للتواصل" />
+          <input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} className="ulp-inp" aria-label="للتواصل" placeholder="للتواصل" />
         </Field>
       </div>
 
       <Field label="عنوان الدرس *">
-        <input value={title} onChange={(e) => setTitle(e.target.value)} required className="ulp-inp" placeholder="مثال: شرح حديث إنما الأعمال بالنيات" />
+        <input value={title} onChange={(e) => setTitle(e.target.value)} required className="ulp-inp" aria-label="مثال: شرح حديث إنما الأعمال بالنيات" placeholder="مثال: شرح حديث إنما الأعمال بالنيات" />
       </Field>
 
       <div className="ulp-row2">
         <Field label="اسم الشيخ / المحاضر *">
-          <input value={sheikh} onChange={(e) => setSheikh(e.target.value)} required className="ulp-inp" placeholder="مثال: الشيخ محمد العثيمين" />
+          <input value={sheikh} onChange={(e) => setSheikh(e.target.value)} required className="ulp-inp" aria-label="مثال: الشيخ محمد العثيمين" placeholder="مثال: الشيخ محمد العثيمين" />
         </Field>
         <Field label="المدة (بالدقائق)">
-          <input type="number" min="1" max="600" value={duration} onChange={(e) => setDuration(e.target.value)} className="ulp-inp" placeholder="مثال: 45" />
+          <input type="number" min="1" max="600" value={duration} onChange={(e) => setDuration(e.target.value)} className="ulp-inp" aria-label="مثال: 45" placeholder="مثال: 45" />
         </Field>
       </div>
 
@@ -276,12 +276,12 @@ function LessonForm() {
           </select>
         </Field>
         <Field label="رابط المصدر (اختياري)">
-          <input type="url" value={sourceUrl} onChange={(e) => setSourceUrl(e.target.value)} className="ulp-inp" placeholder="https://..." />
+          <input type="url" value={sourceUrl} onChange={(e) => setSourceUrl(e.target.value)} className="ulp-inp" aria-label="https://" placeholder="https://..." />
         </Field>
       </div>
 
       <Field label="وصف الدرس *">
-        <textarea value={desc} onChange={(e) => setDesc(e.target.value)} required rows={4} className="ulp-inp ulp-inp--textarea" placeholder="اكتب ملخصاً للدرس ومحتواه..." />
+        <textarea value={desc} onChange={(e) => setDesc(e.target.value)} required rows={4} className="ulp-inp ulp-inp--textarea" aria-label="اكتب ملخصاً للدرس ومحتواه" placeholder="اكتب ملخصاً للدرس ومحتواه..." />
       </Field>
 
       <Feedback state={uploadState} message={message} />

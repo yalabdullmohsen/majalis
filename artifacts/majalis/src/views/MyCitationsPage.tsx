@@ -203,7 +203,7 @@ export default function MyCitationsPage() {
               type="search"
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
-              placeholder="ابحث في اقتباساتك وملاحظاتك..."
+              aria-label="ابحث في اقتباساتك وملاحظاتك" placeholder="ابحث في اقتباساتك وملاحظاتك..."
               className="mcp-search-input"
               dir="rtl"
             />
@@ -245,7 +245,7 @@ export default function MyCitationsPage() {
                   type="text"
                   value={newFolderName}
                   onChange={(e) => setNewFolderName(e.target.value)}
-                  placeholder="اسم المجلد..."
+                  aria-label="اسم المجلد" placeholder="اسم المجلد..."
                   className="mcp-folder-name-input"
                   dir="rtl"
                   onKeyDown={(e) => { if (e.key === "Enter") handleCreateFolder(); }}

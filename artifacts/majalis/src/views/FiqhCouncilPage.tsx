@@ -173,7 +173,7 @@ export function FiqhCouncilFilters({
             <input
               value={source}
               onChange={(e) => onSource(e.target.value)}
-              placeholder="اسم المصدر"
+              aria-label="اسم المصدر" placeholder="اسم المصدر"
               className="fiqh-council-source-input"
             />
           </label>

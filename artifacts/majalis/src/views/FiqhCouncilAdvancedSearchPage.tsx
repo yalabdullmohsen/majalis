@@ -128,11 +128,11 @@ export default function FiqhCouncilAdvancedSearchPage() {
         <div className="fiqh-council-filter-row">
           <label className="fiqh-council-select-label">
             المصدر
-            <input value={source} onChange={(e) => setSource(e.target.value)} className="fiqh-council-source-input" placeholder="اسم المصدر" />
+            <input value={source} onChange={(e) => setSource(e.target.value)} className="fiqh-council-source-input" aria-label="اسم المصدر" placeholder="اسم المصدر" />
           </label>
           <label className="fiqh-council-select-label">
             رقم القرار
-            <input value={decisionNumber} onChange={(e) => setDecisionNumber(e.target.value)} className="fiqh-council-source-input" placeholder="رقم القرار أو الجلسة" />
+            <input value={decisionNumber} onChange={(e) => setDecisionNumber(e.target.value)} className="fiqh-council-source-input" aria-label="رقم القرار أو الجلسة" placeholder="رقم القرار أو الجلسة" />
           </label>
         </div>
       </div>

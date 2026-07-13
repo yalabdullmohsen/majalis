@@ -501,7 +501,7 @@ export default function KnowledgeGraphPage() {
                 value={searchTag}
                 onChange={(e) => setSearchTag(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleTagSearch()}
-                placeholder="مثال: عقيدة، صلاة، زكاة، السيرة..."
+                aria-label="مثال: عقيدة، صلاة، زكاة، السيرة" placeholder="مثال: عقيدة، صلاة، زكاة، السيرة..."
                 className="kng-search-input"
               />
               <button type="button" onClick={handleTagSearch} disabled={tagLoading} className="kng-search-btn">

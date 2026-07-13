@@ -213,7 +213,7 @@ export default function FawaidPage({
               <input
                 value={authorName}
                 onChange={(e) => setAuthorName(e.target.value)}
-                placeholder="اسم الكاتب (اختياري)"
+                aria-label="اسم الكاتب (اختياري)" placeholder="اسم الكاتب (اختياري)"
               />
               <button type="submit" disabled={submitting || !text.trim()}>
                 {submitting ? "جارٍ الإرسال..." : "إرسال الفائدة"}

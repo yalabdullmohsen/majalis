@@ -402,7 +402,7 @@ export default function DuasQuranPage() {
         <input
           type="search"
           className="dq-search"
-          placeholder="ابحث بالاسم أو الآية..."
+          aria-label="ابحث بالاسم أو الآية" placeholder="ابحث بالاسم أو الآية..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />

@@ -251,7 +251,7 @@ export default function StudyRoomPage() {
       <input
         type="text"
         className="sr-goal-input"
-        placeholder="ما هدفك لهذه الجلسة؟ (اختياري)"
+        aria-label="ما هدفك لهذه الجلسة؟ (اختياري)" placeholder="ما هدفك لهذه الجلسة؟ (اختياري)"
         value={goal}
         onChange={(e) => setGoal(e.target.value)}
         disabled={phase !== "idle"}

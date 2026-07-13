@@ -175,7 +175,7 @@ function QuestionCard({
                 <textarea
                   className="qmem-answer-input"
                   rows={3}
-                  placeholder="أدخل إجابتك..."
+                  aria-label="أدخل إجابتك" placeholder="أدخل إجابتك..."
                   value={textInput}
                   onChange={(e) => setTextInput(e.target.value)}
                   disabled={answered}
