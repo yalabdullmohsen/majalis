@@ -34358,6 +34358,56 @@ body .tw-nawaa-hukm--mustahabb {
   color: #123F36 !important;
 }
 
+/* .sw-section__intro — خلفية #EFF6F3 فاتحة */
+body .sw-section__intro {
+  color: #1a1a1a !important;
+}
+
+/* .fq-intro — rgba(31,77,58,.05) شبه-شفاف فاتح */
+body .fq-intro {
+  color: #374151 !important;
+}
+
+/* .as-intro — var(--clr-surface) = #FFFFFF في الوضع الفاتح */
+body .as-intro {
+  color: var(--clr-text-1, #1A1A1A) !important;
+}
+
+/* .nf2-btn--outline — خلفية transparent، اللون الأصلي #0E6E52 */
+body .nf2-btn--outline {
+  color: #0E6E52 !important;
+}
+
+/* .hac__benefit-label — color-mix 10% شبه-شفاف فاتح */
+body .hac__benefit-label {
+  color: var(--hac-accent, #176B57) !important;
+}
+
+/* .hac__category-badge — color-mix 8% شبه-شفاف فاتح */
+body .hac__category-badge {
+  color: color-mix(in srgb, var(--hac-accent, #176B57) 55%, transparent) !important;
+}
+
+/* .hnh__num — color-mix 10% شبه-شفاف فاتح */
+body .hnh__num {
+  color: var(--clr-primary, #176B57) !important;
+}
+
+/* .th-naj-group__title--amber — rgba(14,110,82,.12) فاتح */
+body .th-naj-group__title--amber {
+  color: #0E6E52 !important;
+}
+
+/* .fa-card__grade--sahih — خلفية #D4E9DC فاتحة */
+body .fa-card__grade--sahih {
+  color: #123F36 !important;
+}
+
+/* .fa-card__grade--hasan — rgba(14,110,82,.12) فاتح */
+body .fa-card__grade--hasan {
+  color: #0E6E52 !important;
+}
+
 /* تحديد الأيقونات ضمن الخلفيات الداكنة */
 .hpv4-hero svg,
 .lesson-unified-card__header svg,
