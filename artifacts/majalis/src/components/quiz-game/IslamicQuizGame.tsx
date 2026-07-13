@@ -239,14 +239,17 @@ function TimerBar({ seconds, maxSeconds }: { seconds: number; maxSeconds: number
   const pct = maxSeconds > 0 ? seconds / maxSeconds : 0;
   const color = pct > 0.4 ? "#22c55e" : pct > 0.2 ? "#176B57" : "#ef4444";
   const label = seconds <= 0 ? "انتهى الوقت" : `${seconds}ث`;
+  const urgent = seconds > 0 && seconds <= 10;
   return (
     <div
       className="qzg-timer"
+      role="timer"
+      aria-label={`الوقت المتبقي: ${label}`}
       style={{ "--qzg-timer-color": color, "--qzg-timer-pct": `${Math.max(0, pct * 100)}%` } as React.CSSProperties}
     >
       <div className="qzg-timer__head">
         <span className="qzg-timer__label">⏱ الوقت</span>
-        <span className="qzg-timer__count">{label}</span>
+        <span className="qzg-timer__count" aria-live={urgent ? "assertive" : "off"} aria-atomic="true">{label}</span>
       </div>
       <div className="qzg-timer__track">
         <div className="qzg-timer__fill" />
@@ -493,7 +496,7 @@ function QuestionPhase({
 
       <div className="qzg-section-card qzg-section-card--brass qzg-section-card--mb-sm">
         <div className="qzg-q-header">
-          <span className="qzg-q-cat-label">{cat?.icon} {cat?.name}</span>
+          <span className="qzg-q-cat-label"><CategoryIcon name={cat?.icon ?? ""} size={14} /> {cat?.name}</span>
           <span className="qzg-q-points-badge">{activeCell.points} نقطة</span>
         </div>
 
