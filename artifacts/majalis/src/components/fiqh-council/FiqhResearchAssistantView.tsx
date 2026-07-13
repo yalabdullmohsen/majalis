@@ -58,10 +58,11 @@ export function FiqhResearchAssistantView({ filters = {} }: Props) {
         {loading && <p className="fiqh-research-hint">جارٍ البحث في المواد المنشورة...</p>}
       </div>
 
-      <form onSubmit={handleSubmit} className="fiqh-research-form">
+      <form onSubmit={handleSubmit} className="fiqh-research-form" aria-label="البحث الفقهي">
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          aria-label="سؤالك الفقهي"
           placeholder="اسأل عن قرار أو فتوى أو موضوع فقهي..."
           className="fiqh-research-input"
           rows={3}

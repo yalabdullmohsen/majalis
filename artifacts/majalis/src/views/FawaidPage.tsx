@@ -201,11 +201,12 @@ export default function FawaidPage({
           {submitted ? (
             <p className="content-submit-success">شكرًا. سيتم مراجعة الفائدة قبل نشرها.</p>
           ) : (
-            <form onSubmit={handleSubmit} className="content-submit-form">
+            <form onSubmit={handleSubmit} className="content-submit-form" aria-label="إرسال فائدة علمية">
               {submitError && <p className="content-submit-error" role="alert">{submitError}</p>}
               <textarea
                 value={text}
                 onChange={(e) => setText(e.target.value)}
+                aria-label="نص الفائدة"
                 placeholder="اكتب الفائدة هنا..."
                 rows={4}
               />

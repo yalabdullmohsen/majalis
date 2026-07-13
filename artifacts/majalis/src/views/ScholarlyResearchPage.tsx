@@ -262,7 +262,7 @@ export default function ScholarlyResearchPage() {
         {view === "search" && (
           <>
             {/* نموذج البحث */}
-            <form onSubmit={handleSubmit} className="srp-form">
+            <form onSubmit={handleSubmit} className="srp-form" aria-label="البحث العلمي">
               <div className="srp-textarea-wrap">
                 <textarea
                   ref={textareaRef}
@@ -272,6 +272,7 @@ export default function ScholarlyResearchPage() {
                   maxLength={MAX_CHAR}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={handleKeyDown}
+                  aria-label="سؤالك الشرعي"
                   placeholder="اكتب سؤالك الشرعي هنا… (Shift+Enter للسطر الجديد)"
                   className="srp-textarea"
                 />
