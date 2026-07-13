@@ -3,29 +3,6 @@ import { logSupabaseError } from "./supabase-config";
 
 const now = () => new Date().toISOString();
 
-// ─── Fiqh Council Admin ──────────────────────────────────────────────────────
-
-export async function adminGetAllFiqhDecisions() {
-  const { data, error } = await supabase
-    .from("fiqh_council_decisions")
-    .select("*")
-    .order("created_at", { ascending: false });
-  if (error) logSupabaseError("adminGetAllFiqhDecisions", error);
-  return { data: data || [], error };
-}
-
-export async function adminUpsertFiqhDecision(row: Record<string, unknown>) {
-  const payload = { ...row, updated_at: now() };
-  if (row.id) {
-    return await supabase.from("fiqh_council_decisions").update(payload).eq("id", row.id);
-  }
-  return await supabase.from("fiqh_council_decisions").insert(payload);
-}
-
-export async function adminDeleteFiqhDecision(id: string) {
-  return await supabase.from("fiqh_council_decisions").delete().eq("id", id);
-}
-
 // ─── Fatwa Admin ─────────────────────────────────────────────────────────────
 
 export async function adminGetAllFatwas() {

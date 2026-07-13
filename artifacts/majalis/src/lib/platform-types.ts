@@ -1,36 +1,5 @@
 export type PlatformContentStatus = "draft" | "pending" | "approved" | "archived" | "rejected";
 
-export type FiqhDecisionType = "قرار" | "بحث" | "توصية" | "بيان" | "فتوى جماعية";
-
-export type FiqhCategory =
-  | "العبادات"
-  | "المعاملات"
-  | "الأسرة"
-  | "الطب"
-  | "الاقتصاد"
-  | "قضايا معاصرة"
-  | "الأقليات المسلمة";
-
-export type FiqhDecision = {
-  id: string;
-  external_key?: string;
-  title: string;
-  summary?: string;
-  body?: string;
-  decision_type: FiqhDecisionType;
-  category: FiqhCategory;
-  session_number?: string;
-  decision_date?: string;
-  source_urls?: string[];
-  references?: EvidenceRef[];
-  keywords?: string[];
-  status?: PlatformContentStatus;
-  view_count?: number;
-  search_count?: number;
-  created_at?: string;
-  updated_at?: string;
-};
-
 export type FatwaFormat = "written" | "audio" | "both";
 
 export type Fatwa = {
@@ -144,24 +113,6 @@ export type EvidenceRef = {
   source?: string;
   url?: string;
 };
-
-export const FIQH_CATEGORIES: FiqhCategory[] = [
-  "العبادات",
-  "المعاملات",
-  "الأسرة",
-  "الطب",
-  "الاقتصاد",
-  "قضايا معاصرة",
-  "الأقليات المسلمة",
-];
-
-export const FIQH_DECISION_TYPES: FiqhDecisionType[] = [
-  "قرار",
-  "بحث",
-  "توصية",
-  "بيان",
-  "فتوى جماعية",
-];
 
 export const FATWA_CATEGORIES = [
   "العبادات",

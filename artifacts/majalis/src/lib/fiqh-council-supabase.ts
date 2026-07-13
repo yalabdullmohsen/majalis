@@ -632,10 +632,4 @@ export async function adminTriggerFiqhLinkCheck() {
   return { ok: true, result: json };
 }
 
-// Legacy wrappers for fiqh_council_decisions table (kept for other admin sections)
-export {
-  adminGetAllFiqhDecisions,
-  adminUpsertFiqhDecision,
-  adminDeleteFiqhDecision,
-  adminSetPlatformContentStatus,
-} from "./platform-supabase";
+export { adminSetPlatformContentStatus } from "./platform-supabase";
