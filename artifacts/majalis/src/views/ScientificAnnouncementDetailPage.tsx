@@ -131,7 +131,7 @@ export default function ScientificAnnouncementDetailPage({
       <article className="sci-ann-detail">
         {item.posterImage && (
           <figure className="sci-ann-detail__poster">
-            <img src={item.posterImage} alt={item.lessonTitle} loading="lazy" />
+            <img src={item.posterImage} alt={item.lessonTitle} loading="lazy" decoding="async" />
           </figure>
         )}
 

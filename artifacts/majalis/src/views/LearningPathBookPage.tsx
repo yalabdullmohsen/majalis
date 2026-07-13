@@ -144,7 +144,7 @@ export default function LearningPathBookPage() {
               style={{ "--book-color": book.science.color } as React.CSSProperties}
             >
               {book.cover_image_url ? (
-                <img src={book.cover_image_url} alt={book.title} loading="lazy" />
+                <img src={book.cover_image_url} alt={book.title} loading="lazy" decoding="async" />
               ) : (
                 <BookOpen size={56} strokeWidth={1.2} className="opacity-50" />
               )}

@@ -58,6 +58,7 @@ function SheikhCard({ sheikh }: { sheikh: (typeof KUWAIT_SHEIKHS)[number] }) {
                 if (sib) sib.style.display = "flex";
               }}
               loading="lazy"
+              decoding="async"
             />
             <span
               className="sheikh-avatar sheikh-avatar--initials sheikh-avatar--hidden"
