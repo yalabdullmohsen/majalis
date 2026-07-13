@@ -232,7 +232,7 @@ function StatusTab() {
         </InfoCard>
       )}
 
-      <InfoCard title="Webhook">
+      <InfoCard title="Webhook التيليغرام">
         <Row label="الرابط" value={data.webhook?.url || "غير مُعيَّن"} mono />
         {data.webhook?.pending_update_count !== undefined && (
           <Row label="طلبات معلقة" value={String(data.webhook.pending_update_count)} />

@@ -496,6 +496,13 @@
 
 .ilm-map-btn:hover { background: #123F36; }
 
+/* ── Share ─────────────────────────────────────────────────────── */
+.ilm-share-wrap {
+  padding: 1.5rem 1rem 3rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
 /* ── Empty ────────────────────────────────────────────────────── */
 .ilm-empty {
   grid-column: 1 / -1;

@@ -10,6 +10,7 @@ import {
   type IslamicLandmark,
 } from "@/lib/islamic-landmarks-data";
 import { MapPin, LayoutGrid, List, X, ExternalLink, Users, Maximize2 } from "lucide-react";
+import { ShareButtons } from "@/components/ContentActions";
 
 // Leaflet — تحميل كسول لتجنب مشاكل SSR
 const MapSection = lazy(() => import("@/components/landmarks/LandmarksMap"));
@@ -414,6 +415,10 @@ export default function IslamicLandmarksPage() {
           onClose={() => setSelected(null)}
         />
       )}
+
+      <div className="ilm-share-wrap">
+        <ShareButtons title="المواقع الإسلامية التاريخية | المجلس العلمي" url="https://majlisilm.com/islamic-landmarks" />
+      </div>
     </div>
   );
 }
