@@ -27,25 +27,6 @@ export default function LearningPathSciencePage() {
   const { scienceSlug } = useParams<{ scienceSlug: string }>();
   const { isLoggedIn } = useAuth();
 
-  useEffect(() => {
-    applyPageSeo({
-      path: "/learning-path/science",
-      title: "علم في مسار التعلم | المجلس العلمي",
-      description: "استكشف مستويات العلم الشرعي في مسار التعلم الإسلامي، من المبتدئ إلى المتقدم.",
-      keywords: ["علم شرعي", "مسار تعلم", "مستويات علمية", "تعليم إسلامي", "فقه ومذاهب"],
-      jsonLd: [
-        {
-          "@context": "https://schema.org",
-          "@type": "Course",
-          name: "علم شرعي في مسار التعلم",
-          url: "https://majlisilm.com/learning-path/science",
-          description: "مسار تعليمي شرعي يتدرج من المبتدئ إلى المتقدم",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
-          inLanguage: "ar",
-        },
-      ],
-    });
-  }, []);
   const [science, setScience]   = useState<LPScience | null>(null);
   const [levels, setLevels]     = useState<LPLevel[]>([]);
   const [progress, setProgress] = useState<LPProgress[]>([]);
@@ -66,7 +47,28 @@ export default function LearningPathSciencePage() {
       : Promise.resolve([] as LPProgress[]);
 
     Promise.all([detailP, progressP])
-      .then(([d, p]) => { setScience(d.science); setLevels(d.levels); setProgress(p); })
+      .then(([d, p]) => {
+        setScience(d.science);
+        setLevels(d.levels);
+        setProgress(p);
+        applyPageSeo({
+          path: `/learning-path/${scienceSlug}`,
+          title: `${d.science.name} — مسار التعلم الشرعي | المجلس العلمي`,
+          description: d.science.description
+            ?? `تعلم ${d.science.name} بطريقة منهجية متدرجة، من المبتدئ إلى المتقدم.`,
+          keywords: [d.science.name, "مسار تعلم", "علم شرعي", "تعليم إسلامي"],
+          jsonLd: [{
+            "@context": "https://schema.org",
+            "@type": "Course",
+            name: d.science.name,
+            url: `https://majlisilm.com/learning-path/${scienceSlug}`,
+            description: d.science.description ?? `مسار تعليمي في ${d.science.name}`,
+            provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+            inLanguage: "ar",
+            numberOfCredits: d.levels.reduce((acc, l) => acc + l.books.length, 0),
+          }],
+        });
+      })
       .catch(() => setNotFound(true))
       .finally(() => setLoading(false));
   }, [scienceSlug, isLoggedIn]);

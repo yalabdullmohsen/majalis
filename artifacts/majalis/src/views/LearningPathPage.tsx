@@ -57,13 +57,6 @@ export default function LearningPathPage() {
       .finally(() => setLoading(false));
   }, [isLoggedIn]);
 
-  const completedByScience = new Map<string, number>();
-  for (const p of progress) {
-    if (p.status === "completed") {
-      // العداد العام بدون scienceId مباشرة
-    }
-  }
-
   const totalCompleted = progress.filter((p) => p.status === "completed").length;
   const totalProgress  = progress.length;
 
@@ -163,7 +156,6 @@ export default function LearningPathPage() {
                 <ScienceCard
                   key={sci.id}
                   science={sci}
-                  progressCount={completedByScience.get(sci.id) ?? 0}
                 />
               ))}
             </div>
