@@ -140,23 +140,24 @@ export default function LearningQuizPage() {
 
   useEffect(() => {
     applyPageSeo({
-      path: "/learning/quiz",
+      path: `/learning/quiz/${slug}`,
       title: "اختبار المسار الشرعي | المجلس العلمي",
       description: "اختبر فهمك لمحتوى المسار الشرعي، أسئلة اختيار من متعدد مع نتيجة فورية وشهادة.",
       keywords: ["اختبار شرعي", "اختبار المسار", "تقييم علمي", "أسئلة إسلامية"],
+      robots: "noindex, follow",
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "Quiz",
           name: "اختبار المسار الشرعي",
-          url: "https://majlisilm.com/learning/quiz",
+          url: `https://majlisilm.com/learning/quiz/${slug}`,
           description: "اختبر فهمك لمحتوى المسار الشرعي بأسئلة اختيار من متعدد",
           educationalLevel: "متعدد المستويات",
           inLanguage: "ar",
         },
       ],
     });
-  }, []);
+  }, [slug]);
 
   const loadQuiz = () => {
     setPhase("loading");

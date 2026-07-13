@@ -52,12 +52,15 @@ export function QuizModal({ quizzes, token, onClose }: Props) {
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
       dir="rtl"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="qzm-title"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div className="rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden qzm-modal">
         {/* رأس النافذة */}
         <div className="px-6 py-4 flex items-center justify-between qzm-modal-head">
-          <h2 className="font-bold text-lg">اختبر نفسك <PenLine size={16} className="inline ml-1" /></h2>
+          <h2 id="qzm-title" className="font-bold text-lg">اختبر نفسك <PenLine size={16} className="inline ml-1" /></h2>
           <button type="button" onClick={onClose} className="text-xl leading-none opacity-80 hover:opacity-100" aria-label="إغلاق">✕</button>
         </div>
 
@@ -110,10 +113,12 @@ export function QuizModal({ quizzes, token, onClose }: Props) {
                   const isWrong    = result && opt === selected && !result.correct;
                   return (
                     <button
-                              type="button"
+                      type="button"
                       key={i}
                       onClick={() => handleAnswer(opt)}
                       disabled={!!selected || loading}
+                      aria-pressed={isSelected}
+                      aria-label={`${opt}${isCorrect ? " — صحيح" : isWrong ? " — خطأ" : ""}`}
                       className={`w-full text-right px-4 py-3 rounded-xl border text-sm font-medium transition-all
                         ${isCorrect ? "quiz-opt--correct"
                           : isWrong ? "quiz-opt--wrong"
