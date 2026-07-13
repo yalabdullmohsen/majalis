@@ -34215,6 +34215,17 @@ footer *,
   color: #FFFFFF !important;
 }
 
+/* استثناء زر الرجوع داخل ds-page-header — له خلفية فاتحة فيحتاج نصاً داكناً
+   §79 تُجبر جميع أبناء .ds-page-header على #fff فيصبح النص أبيض على خلفية الزر البيضاء */
+.ds-page-header .ds-page-back-btn {
+  color: #1a2e23 !important;
+  background: rgba(255,255,255,0.92) !important;
+}
+.ds-page-header .ds-page-back-btn:hover {
+  background: rgba(255,255,255,1.0) !important;
+  color: #0E6E52 !important;
+}
+
 /* تحديد الأيقونات ضمن الخلفيات الداكنة */
 .hpv4-hero svg,
 .lesson-unified-card__header svg,
