@@ -119,11 +119,16 @@ function LessonsFilterPanel({
           onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
           placeholder="ابحث: عنوان، شيخ، مسجد..."
           aria-label="بحث في الدروس"
+          role="combobox"
+          aria-expanded={showSuggestions && suggestions.length > 0}
+          aria-autocomplete="list"
+          aria-controls="lessons-search-listbox"
+          aria-haspopup="listbox"
         />
         {showSuggestions && suggestions.length > 0 && (
-          <ul className="lessons-search-suggestions" role="listbox">
+          <ul id="lessons-search-listbox" className="lessons-search-suggestions" role="listbox" aria-label="اقتراحات البحث">
             {suggestions.map((item) => (
-              <li key={item}>
+              <li key={item} role="option" aria-selected={false}>
                 <button type="button" onMouseDown={() => setFilter("search", item)}>
                   {item}
                 </button>
