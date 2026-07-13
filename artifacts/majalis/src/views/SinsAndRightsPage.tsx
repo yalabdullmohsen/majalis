@@ -6,10 +6,9 @@ import {
   SINS_CATEGORIES,
   RIGHTS_CATEGORY_LABELS,
   SIN_SEVERITY_LABELS,
-  SIN_TYPE_LABELS,
   WHAT_IF_QA,
 } from "@/lib/sins-rights-data";
-import type { RightsCategory, SinType } from "@/lib/sins-rights-types";
+import type { RightsCategory } from "@/lib/sins-rights-types";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 
 type Tab = "overview" | "allah" | "ibad" | "shared" | "guide" | "what-if" | "muhasaba" | "mindmap";
