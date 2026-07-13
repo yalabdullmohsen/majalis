@@ -217,15 +217,15 @@ export default function MuezzinsPage() {
 
       {/* Filters */}
       <div className="mzp-filters">
-        <select value={styleFilter} onChange={(e) => setStyleFilter(e.target.value as MuezzinStyle | "")} className="mzp-filter-select">
+        <select value={styleFilter} onChange={(e) => setStyleFilter(e.target.value as MuezzinStyle | "")} className="mzp-filter-select" aria-label="تصفية حسب الأسلوب">
           <option value="">كل الأساليب</option>
           {STYLES.map((s) => <option key={s} value={s}>{s}</option>)}
         </select>
-        <select value={countryFilter} onChange={(e) => setCountryFilter(e.target.value)} className="mzp-filter-select">
+        <select value={countryFilter} onChange={(e) => setCountryFilter(e.target.value)} className="mzp-filter-select" aria-label="تصفية حسب الدولة">
           <option value="">كل الدول</option>
           {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
-        <select value={sortKey} onChange={(e) => setSortKey(e.target.value as typeof sortKey)} className="mzp-filter-select">
+        <select value={sortKey} onChange={(e) => setSortKey(e.target.value as typeof sortKey)} className="mzp-filter-select" aria-label="ترتيب المؤذنين">
           <option value="rating">الأعلى تقييماً</option>
           <option value="followers">الأكثر متابعة</option>
           <option value="favorites">المفضلة فقط</option>

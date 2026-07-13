@@ -254,8 +254,9 @@ export default function TranscribePage() {
 
         <div className="trp-form-box">
           <div>
-            <label className="trp-label">عنوان الدرس *</label>
+            <label htmlFor="trp-title" className="trp-label">عنوان الدرس *</label>
             <input
+              id="trp-title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="مثال: شرح الأربعين النووية - الدرس الأول"
@@ -283,8 +284,9 @@ export default function TranscribePage() {
 
           {activeTab === "youtube" && (
             <div>
-              <label className="trp-label">رابط يوتيوب</label>
+              <label htmlFor="trp-youtube-url" className="trp-label">رابط يوتيوب</label>
               <input
+                id="trp-youtube-url"
                 value={youtubeUrl}
                 onChange={(e) => setYoutubeUrl(e.target.value)}
                 placeholder="https://youtube.com/watch?v=..."
@@ -295,8 +297,9 @@ export default function TranscribePage() {
 
           {activeTab === "text" && (
             <div>
-              <label className="trp-label">أدخل النص المُفرَّغ مسبقاً</label>
+              <label htmlFor="trp-manual-text" className="trp-label">أدخل النص المُفرَّغ مسبقاً</label>
               <textarea
+                id="trp-manual-text"
                 value={manualText}
                 onChange={(e) => setManualText(e.target.value)}
                 rows={8}

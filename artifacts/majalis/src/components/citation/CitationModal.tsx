@@ -194,8 +194,9 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
               {/* أسلوب التوثيق (للأبحاث والمقالات فقط) */}
               {["article", "research"].includes(source.content_type) && (
                 <div>
-                  <label className="block text-xs font-medium mb-1 cm-label">أسلوب التوثيق</label>
+                  <label htmlFor="cm-citation-style" className="block text-xs font-medium mb-1 cm-label">أسلوب التوثيق</label>
                   <select
+                    id="cm-citation-style"
                     value={style}
                     onChange={(e) => setStyle(e.target.value as CitationStyle)}
                     className="w-full rounded-lg px-3 py-2 text-sm outline-none cm-field"
@@ -244,9 +245,10 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
               {shareUrl ? (
                 <>
                   <div>
-                    <label className="block text-xs font-medium mb-1 cm-label">الرابط المباشر</label>
+                    <label htmlFor="cm-share-url" className="block text-xs font-medium mb-1 cm-label">الرابط المباشر</label>
                     <div className="flex gap-2">
                       <input
+                        id="cm-share-url"
                         readOnly
                         value={shareUrl}
                         className="flex-1 rounded-lg px-3 py-2 text-sm text-left font-mono outline-none cm-field cm-field--readonly"
@@ -319,8 +321,9 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
                 احفظ هذا الاقتباس في مكتبتك الشخصية مع ملاحظة اختيارية.
               </p>
               <div>
-                <label className="block text-xs font-medium mb-1 cm-label">ملاحظة شخصية (اختياري)</label>
+                <label htmlFor="cm-personal-note" className="block text-xs font-medium mb-1 cm-label">ملاحظة شخصية (اختياري)</label>
                 <textarea
+                  id="cm-personal-note"
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                   rows={3}

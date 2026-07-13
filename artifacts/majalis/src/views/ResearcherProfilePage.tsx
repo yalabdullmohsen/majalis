@@ -216,8 +216,9 @@ export default function ResearcherProfilePage() {
         <div className="rp-section">
           <h2 className="rp-section-title">المعلومات الأساسية</h2>
 
-          <label className="rp-label">الاسم العلمي</label>
+          <label htmlFor="rp-display-name" className="rp-label">الاسم العلمي</label>
           <input
+            id="rp-display-name"
             type="text"
             className="rp-input"
             placeholder="الاسم الذي تُعرَّف به في البحث العلمي"
@@ -225,8 +226,9 @@ export default function ResearcherProfilePage() {
             onChange={(e) => setProfile((p) => ({ ...p, display_name: e.target.value }))}
           />
 
-          <label className="rp-label">الجهة / المؤسسة</label>
+          <label htmlFor="rp-institution" className="rp-label">الجهة / المؤسسة</label>
           <input
+            id="rp-institution"
             type="text"
             className="rp-input"
             placeholder="الجامعة أو المعهد أو المركز البحثي"
@@ -234,8 +236,9 @@ export default function ResearcherProfilePage() {
             onChange={(e) => setProfile((p) => ({ ...p, institution: e.target.value }))}
           />
 
-          <label className="rp-label">التخصص</label>
+          <label htmlFor="rp-specialization" className="rp-label">التخصص</label>
           <select
+            id="rp-specialization"
             className="rp-input rp-select"
             value={profile.specialization ?? ""}
             onChange={(e) => setProfile((p) => ({ ...p, specialization: e.target.value }))}
@@ -246,8 +249,9 @@ export default function ResearcherProfilePage() {
             ))}
           </select>
 
-          <label className="rp-label">نبذة بحثية</label>
+          <label htmlFor="rp-bio" className="rp-label">نبذة بحثية</label>
           <textarea
+            id="rp-bio"
             className="rp-input rp-textarea"
             placeholder="تعريف موجز بمسارك البحثي وأهدافك العلمية…"
             value={profile.bio ?? ""}

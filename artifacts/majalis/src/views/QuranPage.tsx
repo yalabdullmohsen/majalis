@@ -1187,8 +1187,9 @@ export default function QuranPage() {
               </div>
               {/* مؤقت التوقف */}
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <label style={{ fontSize: "0.7rem", color: "#176B57", fontWeight: 700, whiteSpace: "nowrap" }}>🕐 توقف عند:</label>
+                <label htmlFor="qp-stop-time" style={{ fontSize: "0.7rem", color: "#176B57", fontWeight: 700, whiteSpace: "nowrap" }}>🕐 توقف عند:</label>
                 <input
+                  id="qp-stop-time"
                   type="time"
                   value={stopAtTime}
                   onChange={e => setStopAtTime(e.target.value)}
