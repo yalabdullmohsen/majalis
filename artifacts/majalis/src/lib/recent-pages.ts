@@ -192,6 +192,7 @@ const LABEL_MAP: Record<string, string> = {
   "/features-in-progress":          "الميزات قيد التطوير",
   "/c":                             "محتوى",
   "/islamic-landmarks":             "المشاهد الإسلامية والمساجد التاريخية",
+  "/quran-memorization":            "اختبارات الحفظ القرآني",
 };
 
 /**

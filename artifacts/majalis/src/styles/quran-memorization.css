@@ -1,0 +1,520 @@
+/* ══════════════════════════════════════════════════════
+   Quran Memorization — نظام اختبارات الحفظ القرآني
+   ══════════════════════════════════════════════════════ */
+
+.qmem-page { padding: 0 0 5rem; }
+
+/* ── Hero ─────────────────────────────────────────────────────── */
+.qmem-hero {
+  padding: 2.5rem 1.25rem 2rem;
+  text-align: center;
+  background: linear-gradient(160deg, #0d2d22 0%, #153025 60%, #1a4535 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.qmem-hero::before {
+  content: "﴿ اقۡرَأۡ بِاسۡمِ رَبِّكَ ﴾";
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 4rem;
+  color: rgba(255,255,255,0.03);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.qmem-hero__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 0.75rem;
+  font-size: 1.75rem;
+}
+
+.qmem-hero__title {
+  font-size: clamp(1.4rem, 4vw, 2.1rem);
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 0.4rem;
+}
+
+.qmem-hero__sub {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.65);
+  max-width: 500px;
+  margin: 0 auto 1.5rem;
+}
+
+/* ── Stats bar ────────────────────────────────────────────────── */
+.qmem-stats {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.qmem-stat {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.09);
+  border: 1px solid rgba(255,255,255,0.12);
+  text-align: center;
+  min-width: 90px;
+}
+
+.qmem-stat__num {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+}
+
+.qmem-stat__lbl {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.6);
+}
+
+/* ── Mode selection ───────────────────────────────────────────── */
+.qmem-body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+.qmem-section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ds-text-1, #1a1a1a);
+  margin: 0 0 0.75rem;
+}
+
+/* ── Test Types Grid ──────────────────────────────────────────── */
+.qmem-types {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.qmem-type-card {
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1.5px solid var(--ds-border, #e5e7eb);
+  background: var(--ds-surface, #fff);
+  cursor: pointer;
+  text-align: right;
+  transition: all 0.18s;
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.qmem-type-card:hover,
+.qmem-type-card--active {
+  border-color: var(--majalis-emerald, #0E6E52);
+  background: rgba(14,110,82,0.05);
+  box-shadow: 0 4px 12px rgba(14,110,82,0.1);
+}
+
+.qmem-type-card__num {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--majalis-emerald, #0E6E52);
+  letter-spacing: 0.05em;
+}
+
+.qmem-type-card__name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ds-text-1, #1a1a1a);
+}
+
+.qmem-type-card__desc {
+  font-size: 0.76rem;
+  color: var(--ds-text-2, #6b7280);
+  line-height: 1.5;
+}
+
+/* ── Surah picker ─────────────────────────────────────────────── */
+.qmem-surah-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.qmem-surah-select {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.5rem 0.85rem;
+  border-radius: 10px;
+  border: 1.5px solid var(--ds-border, #e5e7eb);
+  background: var(--ds-surface, #fff);
+  color: var(--ds-text-1, #1a1a1a);
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+.qmem-surah-select:focus {
+  outline: none;
+  border-color: var(--majalis-emerald, #0E6E52);
+}
+
+.qmem-start-btn {
+  padding: 0.6rem 1.5rem;
+  border-radius: 10px;
+  background: var(--majalis-emerald, #0E6E52);
+  color: #fff;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.qmem-start-btn:hover { background: #123F36; }
+.qmem-start-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+
+/* ── Quiz Session ─────────────────────────────────────────────── */
+.qmem-quiz {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.qmem-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.qmem-progress__bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--ds-border, #e5e7eb);
+  overflow: hidden;
+}
+
+.qmem-progress__fill {
+  height: 100%;
+  background: var(--majalis-emerald, #0E6E52);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.qmem-progress__text {
+  font-size: 0.78rem;
+  color: var(--ds-text-2, #6b7280);
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.qmem-card {
+  border-radius: 16px;
+  border: 1.5px solid var(--ds-border, #e5e7eb);
+  background: var(--ds-surface, #fff);
+  padding: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.qmem-card__type {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--majalis-emerald, #0E6E52);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.qmem-card__prompt {
+  font-size: 1rem;
+  color: var(--ds-text-1, #1a1a1a);
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+  white-space: pre-line;
+  direction: rtl;
+}
+
+.qmem-ayah-text {
+  font-family: "Amiri Quran", "Scheherazade New", serif;
+  font-size: 1.25rem;
+  line-height: 2;
+  color: var(--ds-text-1, #1a1a1a);
+  background: rgba(14,110,82,0.04);
+  border-right: 3px solid var(--majalis-emerald, #0E6E52);
+  padding: 0.75rem 1rem;
+  border-radius: 0 8px 8px 0;
+  direction: rtl;
+}
+
+/* options */
+.qmem-options {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 480px) {
+  .qmem-options { grid-template-columns: 1fr; }
+}
+
+.qmem-option {
+  padding: 0.65rem 0.9rem;
+  border-radius: 10px;
+  border: 1.5px solid var(--ds-border, #e5e7eb);
+  background: var(--ds-surface, #fff);
+  color: var(--ds-text-1, #1a1a1a);
+  font-size: 0.88rem;
+  font-family: "Amiri Quran", "Scheherazade New", serif;
+  line-height: 1.6;
+  text-align: right;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-weight: 600;
+  direction: rtl;
+}
+
+.qmem-option:hover:not(:disabled) {
+  border-color: var(--majalis-emerald, #0E6E52);
+  background: rgba(14,110,82,0.05);
+}
+
+.qmem-option--correct {
+  background: #d1fae5 !important;
+  border-color: #059669 !important;
+  color: #065f46 !important;
+}
+
+.qmem-option--wrong {
+  background: #fee2e2 !important;
+  border-color: #dc2626 !important;
+  color: #7f1d1d !important;
+}
+
+.qmem-option:disabled { cursor: default; }
+
+/* text input */
+.qmem-input-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.qmem-answer-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1.5px solid var(--ds-border, #e5e7eb);
+  background: var(--ds-surface, #fff);
+  color: var(--ds-text-1, #1a1a1a);
+  font-size: 1rem;
+  font-family: "Amiri Quran", "Scheherazade New", serif;
+  direction: rtl;
+  line-height: 1.7;
+}
+
+.qmem-answer-input:focus {
+  outline: none;
+  border-color: var(--majalis-emerald, #0E6E52);
+}
+
+.qmem-submit-btn {
+  align-self: flex-start;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  background: var(--majalis-emerald, #0E6E52);
+  color: #fff;
+  border: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* result */
+.qmem-result {
+  padding: 1rem;
+  border-radius: 10px;
+  margin-top: 0.75rem;
+}
+
+.qmem-result--correct {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.qmem-result--wrong {
+  background: #fee2e2;
+  color: #7f1d1d;
+  border: 1px solid #fecaca;
+}
+
+.qmem-result__label { font-weight: 700; font-size: 0.9rem; }
+.qmem-result__answer { font-size: 0.85rem; margin-top: 0.3rem; }
+.qmem-result__full { font-size: 0.82rem; margin-top: 0.3rem; opacity: 0.8; }
+
+/* rating buttons */
+.qmem-rating {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.qmem-rating__label {
+  font-size: 0.8rem;
+  color: var(--ds-text-2, #6b7280);
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+
+.qmem-rating-btn {
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 0.15s;
+}
+
+.qmem-rating-btn--0 { background: #fee2e2; color: #7f1d1d; }
+.qmem-rating-btn--1 { background: #fef3c7; color: #78350f; }
+.qmem-rating-btn--3 { background: #dbeafe; color: #1e40af; }
+.qmem-rating-btn--5 { background: #d1fae5; color: #065f46; }
+
+.qmem-rating-btn:hover { opacity: 0.8; }
+
+/* next button */
+.qmem-next-btn {
+  display: block;
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 10px;
+  background: var(--majalis-emerald, #0E6E52);
+  color: #fff;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.qmem-next-btn:hover { background: #123F36; }
+
+/* ── Session End ──────────────────────────────────────────────── */
+.qmem-end {
+  text-align: center;
+  padding: 2.5rem 1rem;
+}
+
+.qmem-end__icon { font-size: 3rem; margin-bottom: 1rem; }
+
+.qmem-end__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ds-text-1, #1a1a1a);
+  margin-bottom: 0.5rem;
+}
+
+.qmem-end__sub {
+  font-size: 0.9rem;
+  color: var(--ds-text-2, #6b7280);
+  margin-bottom: 1.5rem;
+}
+
+.qmem-end__score {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--majalis-emerald, #0E6E52);
+}
+
+.qmem-end__score-lbl {
+  font-size: 0.85rem;
+  color: var(--ds-text-2, #6b7280);
+}
+
+.qmem-end__actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+/* ── Review Queue ─────────────────────────────────────────────── */
+.qmem-review-section {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  border-radius: 14px;
+  border: 1.5px solid var(--ds-border, #e5e7eb);
+  background: var(--ds-surface, #fff);
+}
+
+.qmem-review-list {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.qmem-review-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0.85rem;
+  border-radius: 8px;
+  background: var(--ds-surface-2, #f9fafb);
+  font-size: 0.82rem;
+}
+
+.qmem-review-item__text {
+  font-family: "Amiri Quran", serif;
+  font-size: 0.9rem;
+  direction: rtl;
+  color: var(--ds-text-1, #1a1a1a);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.qmem-review-item__meta { font-size: 0.72rem; color: var(--ds-text-2, #6b7280); }
+
+.qmem-due-badge {
+  padding: 0.15rem 0.5rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: rgba(14,110,82,0.1);
+  color: var(--majalis-emerald, #0E6E52);
+}
+
+/* ── Dark ─────────────────────────────────────────────────────── */
+[data-theme="dark"] .qmem-card { background: var(--ds-surface, #1a2120); border-color: rgba(255,255,255,0.08); }
+[data-theme="dark"] .qmem-option { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); color: rgba(255,255,255,0.9); }
+[data-theme="dark"] .qmem-type-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+[data-theme="dark"] .qmem-review-section { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+[data-theme="dark"] .qmem-review-item { background: rgba(255,255,255,0.04); }
+[data-theme="dark"] .qmem-surah-select,
+[data-theme="dark"] .qmem-answer-input { background: rgba(255,255,255,0.06); color: #fff; border-color: rgba(255,255,255,0.1); }
