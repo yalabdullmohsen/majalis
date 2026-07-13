@@ -139,42 +139,55 @@ function getPrayerRoots(): Array<[RegExp, number]> {
 }
 
 export function parseTimeToMinutes(timeRaw: string): number | null {
-  const time = cleanTimeText(timeRaw);
+  // Normalize Arabic-Indic numerals (٠١٢٣٤٥٦٧٨٩) to ASCII so all regexes work.
+  const time = cleanTimeText(timeRaw).replace(
+    /[٠-٩]/gu,
+    (d) => String("٠١٢٣٤٥٦٧٨٩".indexOf(d)),
+  );
   if (!time) return null;
 
-  // HH:MM with optional Arabic/Latin AM/PM suffix
+  // --- Context signals read from the full string BEFORE any early return ---
+  // Evening prayers → this time is PM regardless of explicit م/ص marker.
+  const hasPMContext =
+    /عشاء|مغرب|عصر|ظهر|مساء/u.test(time) || /pm/i.test(time);
+  // Morning prayers → this time is AM.
+  const hasAMContext =
+    /فجر|شروق|صباح/u.test(time) || /am/i.test(time);
+
+  // HH:MM (handles "8:50", "8:50م", "8:50 بعد صلاة العشاء", etc.)
   const explicit = time.match(/(\d{1,2})\s*[:٫]\s*(\d{2})/u);
   if (explicit) {
     let hour = Number(explicit[1]);
     const minute = Number(explicit[2]);
-    // Look at what comes directly after the matched digits — that's where م/ص lives.
-    // We cannot use \b for Arabic chars because they are \W in JS regex, so \b
-    // only fires when Arabic is adjacent to an ASCII word-char (rare). Instead we
-    // slice the tail and test the first char directly.
     const tail = time.slice((explicit.index ?? 0) + explicit[0].length).trimStart();
-    // PM: م alone or مساء (not followed by another Arabic letter like in مسجد)
-    const isPM =
-      /^م(?![؀-ۿ])/u.test(tail) || // م then non-Arabic (end/space/dash/…)
-      /^مساء/u.test(tail) ||                  // مساءً مساء
-      /مساء/u.test(time) ||                   // مساء anywhere in string
-      /pm/i.test(time);
-    // AM: ص alone or صباح
-    const isAM =
-      /^ص(?![؀-ۿ])/u.test(tail) ||
-      /^صباح/u.test(tail) ||
-      /صباح/u.test(time) ||
-      /am/i.test(time);
+
+    // Explicit suffix beats context; context beats the Kuwait-hours heuristic.
+    const explicitPM =
+      /^م(?![؀-ۿ])/u.test(tail) || /^مساء/u.test(tail);
+    const explicitAM =
+      /^ص(?![؀-ۿ])/u.test(tail) || /^صباح/u.test(tail);
+
+    const isPM = explicitPM || (!explicitAM && hasPMContext);
+    const isAM = explicitAM || (!explicitPM && hasAMContext);
+
     if (isPM && hour < 12) hour += 12;
-    if (isAM && hour === 12) hour = 0;
+    else if (isAM && hour === 12) hour = 0;
+    // Heuristic for Kuwait lesson schedules: hours 1–9 with no marker and no
+    // prayer context are always PM — no lesson in Kuwait happens at 1–9 AM.
+    else if (!isPM && !isAM && hour >= 1 && hour <= 9) hour += 12;
+
     return hour * 60 + minute;
   }
 
-  // H + AM/PM only (e.g. "8م", "8مساء", "8 مساءً")
+  // H + explicit AM/PM suffix only (e.g. "8م", "8مساء", "8 مساءً")
   const hourOnly = time.match(/(\d{1,2})\s*(م(?:ساء[ًا]?)?|ص(?:باح[ًا]?)?)/u);
   if (hourOnly) {
     let hour = Number(hourOnly[1]);
-    if (/^م/u.test(hourOnly[2]) && hour < 12) hour += 12;
-    if (/^ص/u.test(hourOnly[2]) && hour === 12) hour = 0;
+    const suffix = hourOnly[2];
+    if (/^م/u.test(suffix) && hour < 12) hour += 12;
+    else if (/^ص/u.test(suffix) && hour === 12) hour = 0;
+    // Apply Kuwait heuristic here too when suffix is ambiguous.
+    else if (hour >= 1 && hour <= 9 && hasPMContext) hour += 12;
     return hour * 60;
   }
 
