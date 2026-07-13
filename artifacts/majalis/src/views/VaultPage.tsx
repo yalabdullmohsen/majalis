@@ -42,6 +42,12 @@ function AddNoteModal({
   const [text, setText] = useState("");
   const [saving, setSaving] = useState(false);
 
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [onClose]);
+
   const handleSave = async () => {
     const trimmed = text.trim();
     if (!trimmed) return;

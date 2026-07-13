@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import {
   Activity, BarChart3, BookMarked, BookOpen, BookText, BookUser,
@@ -328,6 +328,13 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
       return next;
     });
   }
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [open, onClose]);
 
   if (!open || typeof document === "undefined") return null;
 

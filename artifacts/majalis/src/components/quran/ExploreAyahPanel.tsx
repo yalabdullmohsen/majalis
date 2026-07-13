@@ -103,6 +103,12 @@ export function ExploreAyahPanel({ ayahNum, surahName, ayahText, onClose }: Prop
 
   useEffect(() => { load(); }, [load]);
 
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [onClose]);
+
   const groups = groupResults(results);
   const total = results.length;
 

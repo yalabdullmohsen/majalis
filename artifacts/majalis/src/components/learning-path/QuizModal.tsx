@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BookOpen, CheckCircle2, PenLine, Trophy, XCircle } from "lucide-react";
 import type { LPQuiz } from "@/lib/learning-path-service";
 import { submitQuizAnswer } from "@/lib/learning-path-service";
@@ -18,6 +18,12 @@ export function QuizModal({ quizzes, token, onClose }: Props) {
   const [done, setDone]       = useState(false);
 
   const current = quizzes[idx];
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [onClose]);
 
   async function handleAnswer(answer: string) {
     if (selected || !current) return;

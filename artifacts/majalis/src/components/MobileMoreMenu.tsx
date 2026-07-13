@@ -1,4 +1,5 @@
 import { createPortal } from "react-dom";
+import { useEffect } from "react";
 import { Link } from "wouter";
 import { MOBILE_MORE_NAV } from "@/lib/navigation";
 
@@ -27,6 +28,13 @@ export function MobileMoreMenu({
   searchBox,
   location,
 }: Props) {
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [open, onClose]);
+
   if (!open || typeof document === "undefined") return null;
 
   const menu = (

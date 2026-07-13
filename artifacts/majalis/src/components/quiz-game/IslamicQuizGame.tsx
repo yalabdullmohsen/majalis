@@ -328,12 +328,12 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
         <h2 className="qzg-section-h2"><Trophy size={18} className="inline ml-1" />أسماء الفريقين</h2>
         <div className="qzg-teams-grid">
           <div>
-            <label className="qzg-team-label">الفريق الأول</label>
-            <input value={name1} onChange={(e) => setName1(e.target.value)} maxLength={20} className="qzg-input" />
+            <label htmlFor="qzg-team1" className="qzg-team-label">الفريق الأول</label>
+            <input id="qzg-team1" value={name1} onChange={(e) => setName1(e.target.value)} maxLength={20} className="qzg-input" />
           </div>
           <div>
-            <label className="qzg-team-label">الفريق الثاني</label>
-            <input value={name2} onChange={(e) => setName2(e.target.value)} maxLength={20} className="qzg-input" />
+            <label htmlFor="qzg-team2" className="qzg-team-label">الفريق الثاني</label>
+            <input id="qzg-team2" value={name2} onChange={(e) => setName2(e.target.value)} maxLength={20} className="qzg-input" />
           </div>
         </div>
       </section>

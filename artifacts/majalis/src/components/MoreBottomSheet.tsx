@@ -144,8 +144,13 @@ export function MoreBottomSheet({ open, onClose }: Props) {
     if (!open) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
-  }, [open]);
+    const keyHandler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", keyHandler);
+    return () => {
+      document.body.style.overflow = prev;
+      document.removeEventListener("keydown", keyHandler);
+    };
+  }, [open, onClose]);
 
   if (!open || typeof document === "undefined") return null;
 

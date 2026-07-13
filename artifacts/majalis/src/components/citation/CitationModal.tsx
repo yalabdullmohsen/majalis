@@ -276,6 +276,7 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
                         <img
                           src={getQrCodeUrl(citation.deep_link_slug)}
                           alt="QR Code"
+                          loading="lazy"
                           className="cm-qr-img"
                         />
                         <a
