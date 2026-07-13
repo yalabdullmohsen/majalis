@@ -34408,6 +34408,32 @@ body .fa-card__grade--hasan {
   color: #0E6E52 !important;
 }
 
+/* .igst-badge--ok — خلفية #ECFDF5 فاتحة */
+body .igst-badge--ok {
+  color: #123F36 !important;
+}
+
+/* .tgm-badge--ok — خلفية #dcfce7 فاتحة */
+body .tgm-badge--ok {
+  color: #166534 !important;
+}
+
+/* .ads-perm--ok و .ads-perm--warn — rgba فاتح */
+body .ads-perm--ok,
+body .ads-perm--warn {
+  color: #0E6E52 !important;
+}
+
+/* .lsw-option--active — rgba(14,110,82,.1) فاتح */
+body .lsw-option--active {
+  color: #0E6E52 !important;
+}
+
+/* .ftw-type-badge--fatwa — rgba(14,110,82,.1) فاتح */
+body .ftw-type-badge--fatwa {
+  color: #0E6E52 !important;
+}
+
 /* تحديد الأيقونات ضمن الخلفيات الداكنة */
 .hpv4-hero svg,
 .lesson-unified-card__header svg,
