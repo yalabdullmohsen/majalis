@@ -24,6 +24,11 @@ function absoluteUrl(path) {
   return new URL(path, seoConfig.siteUrl).toString();
 }
 
+function padDesc(text, suffix) {
+  if (!text) return suffix;
+  return text.length >= 50 ? text : `${text}، ${suffix}`;
+}
+
 function escapeXml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
@@ -54,10 +59,11 @@ function dedupeLessons(rows) {
 function lessonDescription(row) {
   const sheikh = row.speaker_name || "";
   const place = row.mosque || row.region || "";
-  return [sheikh ? `الشيخ: ${sheikh}` : "", place ? `المكان: ${place}` : "", row.schedule || ""]
+  const base = [sheikh ? `الشيخ: ${sheikh}` : "", place ? `المكان: ${place}` : "", row.schedule || ""]
     .filter(Boolean)
     .join(" — ")
     .slice(0, 160);
+  return base || `${row.title} — درس شرعي على منصة المجلس العلمي`;
 }
 
 function lessonJsonLdScript(row) {
@@ -300,39 +306,39 @@ const platformEntries = [
   ...(PLATFORM_SEED.fiqh_decisions || []).map((row) => ({
     path: `/fiqh-council/${row.slug || row.id}`,
     title: `${row.title} | ${seoConfig.siteName}`,
-    description: row.title,
+    description: padDesc(row.title, "قرار من المجمع الفقهي الإسلامي الدولي"),
     priority: 0.7,
     robots: "index, follow",
   })),
   ...(PLATFORM_SEED.fatwas || []).map((row) => ({
     path: `/fatwa/${row.id}`,
     title: `${row.question} | ${seoConfig.siteName}`,
-    description: row.question,
+    description: padDesc(row.question, "فتوى شرعية من المجلس العلمي"),
     priority: 0.71,
   })),
   ...(PLATFORM_SEED.rulings || []).map((row) => ({
     path: `/rulings/${row.id}`,
     title: `${row.title} | ${seoConfig.siteName}`,
-    description: row.title,
+    description: padDesc(row.title, "حكم شرعي من الموسوعة الفقهية"),
     priority: 0.69,
   })),
   ...(PLATFORM_SEED.courses || []).map((row) => ({
     path: `/annual-courses/${row.id}`,
     title: `${row.title} | ${seoConfig.siteName}`,
-    description: row.title,
+    description: padDesc(row.title, "دورة علمية شرعية من المجلس العلمي"),
     priority: 0.68,
   })),
   ...verifiedFiqhSessions.map((row) => ({
     path: `/fiqh-council/sessions/${row.slug}`,
     title: `${row.title} | ${seoConfig.siteName}`,
-    description: row.title,
+    description: padDesc(row.title, "دورة من دورات المجمع الفقهي الإسلامي"),
     priority: 0.69,
     robots: "index, follow",
   })),
   ...LIBRARY_CATALOG.map((row) => ({
     path: `/library/${row.id}`,
     title: `${row.title} | المكتبة العلمية — ${seoConfig.siteName}`,
-    description: row.description || row.title,
+    description: padDesc(row.description || row.title, "كتاب من المكتبة الشرعية في المجلس العلمي"),
     priority: 0.7,
   })),
 ].map((row) => {
@@ -642,7 +648,7 @@ for (const row of lessonRows) {
   const lessonRoute = {
     path: `/lessons/${row.id}`,
     title: `${row.title} | ${seoConfig.siteName}`,
-    description: lessonDescription(row) || `${row.title} — درس شرعي على ${seoConfig.siteName}`,
+    description: padDesc(lessonDescription(row), "درس شرعي على منصة المجلس العلمي"),
     keywords: [row.title, row.speaker_name, row.category, "دروس شرعية", "محاضرات إسلامية", "دورات شرعية"],
     image: row.sheikh_image_url || row.poster_image_url || seoConfig.defaultImage,
     ogType: "article",
@@ -662,7 +668,7 @@ const platformPrerender = [
     route: {
       path: `/fiqh-council/${row.slug || row.id}`,
       title: `${row.title} | ${seoConfig.siteName}`,
-      description: row.title,
+      description: padDesc(row.title, "قرار من المجمع الفقهي الإسلامي الدولي"),
       ogType: "article",
     },
   })),
@@ -671,7 +677,7 @@ const platformPrerender = [
     route: {
       path: `/fatwa/${row.id}`,
       title: `${row.question} | ${seoConfig.siteName}`,
-      description: row.answer ? row.answer.slice(0, 160) : row.question,
+      description: padDesc(row.answer ? row.answer.slice(0, 160) : row.question, "فتوى شرعية من المجلس العلمي"),
       ogType: "article",
     },
     extraJsonLd: fatwaQaJsonLdScript(row),
@@ -681,7 +687,7 @@ const platformPrerender = [
     route: {
       path: `/fiqh-council/sessions/${row.slug}`,
       title: `${row.title} | ${seoConfig.siteName}`,
-      description: row.title,
+      description: padDesc(row.title, "جلسة فقهية في المجمع الفقهي الإسلامي الدولي"),
       ogType: "article",
       robots: "index, follow",
     },
@@ -691,7 +697,7 @@ const platformPrerender = [
     route: {
       path: `/rulings/${row.id}`,
       title: `${row.title} | ${seoConfig.siteName}`,
-      description: row.title,
+      description: padDesc(row.title, "حكم شرعي موثّق من الموسوعة الفقهية للمجلس العلمي"),
       ogType: "article",
     },
   })),
@@ -700,7 +706,7 @@ const platformPrerender = [
     route: {
       path: `/annual-courses/${row.id}`,
       title: `${row.title || row.name} | ${seoConfig.siteName}`,
-      description: row.description || row.title || row.name,
+      description: padDesc(row.description || row.title || row.name, "دورة علمية شرعية من المجلس العلمي"),
       ogType: "website",
     },
     extraJsonLd: courseJsonLdScript(row),
@@ -710,7 +716,7 @@ const platformPrerender = [
     route: {
       path: `/library/${row.id}`,
       title: `${row.title} | المكتبة العلمية — ${seoConfig.siteName}`,
-      description: row.description || row.title,
+      description: padDesc(row.description || row.title, "كتاب من المكتبة الشرعية في المجلس العلمي"),
       ogType: "book",
     },
     extraJsonLd: bookJsonLdScript(row),
