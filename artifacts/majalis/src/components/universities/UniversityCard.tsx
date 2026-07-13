@@ -25,7 +25,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
       <div className="univ-card__head">
         {u.logo_url ? (
           <img src={u.logo_url} alt={u.name_ar} loading="lazy" decoding="async"
-            className="w-10 h-10 rounded-full object-contain univ-card__logo" />
+            className="w-10 h-10 rounded-full object-contain univ-card__logo" width="40" height="40" />
         ) : (
           <div className="univ-card__head-avatar">{u.name_ar[0]}</div>
         )}

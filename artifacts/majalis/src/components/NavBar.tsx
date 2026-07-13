@@ -167,6 +167,8 @@ export default function NavBar() {
                 className="navbar-logo navbar-logo--calligraphy"
                 loading="eager"
                 decoding="async"
+                width="2044"
+                height="788"
               />
             </Link>
           </div>

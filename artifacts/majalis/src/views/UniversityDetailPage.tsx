@@ -150,7 +150,7 @@ function DetailContent({ university: u }: { university: University }) {
             {u.logo_url ? (
               <img src={u.logo_url} alt={u.name_ar}
                 className="w-16 h-16 rounded-2xl bg-white object-contain flex-shrink-0"
-                loading="lazy" decoding="async" />
+                loading="lazy" decoding="async" width="64" height="64" />
             ) : (
               <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-3xl font-bold flex-shrink-0">
                 {u.name_ar[0]}

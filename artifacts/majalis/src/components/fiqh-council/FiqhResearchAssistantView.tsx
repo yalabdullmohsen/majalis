@@ -40,7 +40,7 @@ export function FiqhResearchAssistantView({ filters = {} }: Props) {
         </div>
       )}
 
-      <div className="fiqh-research-messages">
+      <div className="fiqh-research-messages" aria-live="polite" aria-busy={loading}>
         {messages.map((msg) => (
           <div
             key={msg.id}

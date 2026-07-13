@@ -44,6 +44,8 @@ function BookCard({ item, view }: { item: any; view: ViewMode }) {
             className="lib-card-cover lib-card-cover--img"
             loading="lazy"
             decoding="async"
+            width="200"
+            height="280"
           />
         ) : (
           <BookCoverPlaceholder title={item.title} category={item.category} />

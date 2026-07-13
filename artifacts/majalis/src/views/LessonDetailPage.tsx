@@ -492,7 +492,7 @@ export default function LessonDetailPage({
 
         {unified.qrCodeUrl && (
           <div className="lesson-detail-qr">
-            <img src={unified.qrCodeUrl} alt={`رمز QR للدرس: ${unified.title}`} title={unified.title} loading="lazy" decoding="async" />
+            <img src={unified.qrCodeUrl} alt={`رمز QR للدرس: ${unified.title}`} loading="lazy" decoding="async" width="200" height="200" />
           </div>
         )}
       </article>

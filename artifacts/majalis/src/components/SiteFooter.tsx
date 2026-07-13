@@ -133,6 +133,8 @@ export function SiteFooter() {
               className="site-footer-logo site-footer-logo--calligraphy"
               loading="lazy"
               decoding="async"
+              width="2044"
+              height="788"
             />
             <p>تطبيق علمي شرعي للدروس والعبادة والمحتوى اليومي.</p>
             <p className="site-footer-email">

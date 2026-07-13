@@ -193,7 +193,7 @@ export default function CitationPublicPage() {
           {showQr && (
             <div className="cpp-qr-wrap">
               <div className="cpp-qr-box">
-                <img src={getQrCodeUrl(slug)} alt="QR Code للاقتباس" className="cpp-qr-img" loading="lazy" decoding="async" />
+                <img src={getQrCodeUrl(slug)} alt="QR Code للاقتباس" className="cpp-qr-img" loading="lazy" decoding="async" width="200" height="200" />
                 <p className="cpp-qr-url">{getShareUrl(slug)}</p>
               </div>
             </div>
