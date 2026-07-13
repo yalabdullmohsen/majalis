@@ -4,6 +4,8 @@
  * تحدد: التحية، الحدث، واللون بناءً على الوقت والتاريخ.
  */
 
+import { useState, useEffect } from "react";
+
 // ── أوقات الصلاة التقريبية (بتوقيت السعودية للنموذج) ──────────────────────
 // الاستخدام الحقيقي يستفيد من API الأوقات، لكن للعرض نستخدم معيار ثابت.
 
@@ -152,6 +154,29 @@ export function toHijri(date: Date, offsetDays = 0): HijriDate {
 }
 
 // ── المحرّك الرئيسي ───────────────────────────────────────────────────────────
+
+// ── hook تفاعلي — يتحدث تلقائيًا عند تغيُّر فترة اليوم ────────────────────
+
+/**
+ * useDailyContext — hook يُعيد سياق اليوم ويُحدِّثه تلقائيًا.
+ * يفحص الوقت كل 60 ثانية؛ عند انتقال فترة اليوم (فجر→ضحى→...) يُحدِّث
+ * الحالة مباشرةً بدون إعادة تحميل الصفحة.
+ */
+export function useDailyContext(hijriOffset = 0): DailyContext {
+  const [ctx, setCtx] = useState<DailyContext>(() =>
+    resolveDailyContext(new Date(), hijriOffset)
+  );
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      const fresh = resolveDailyContext(new Date(), hijriOffset);
+      setCtx((prev) => (prev.timeOfDay === fresh.timeOfDay ? prev : fresh));
+    }, 60_000);
+    return () => clearInterval(id);
+  }, [hijriOffset]);
+
+  return ctx;
+}
 
 /**
  * resolveDailyContext — دالة نقية تأخذ وقتاً وتُعيد سياق اليوم.

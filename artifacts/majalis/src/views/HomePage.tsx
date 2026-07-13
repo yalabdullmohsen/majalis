@@ -1,7 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link, useLocation } from "wouter";
-import { resolveDailyContext, type DailyContext } from "@/lib/daily-context";
+import { useDailyContext, type DailyContext } from "@/lib/daily-context";
 import { useAuth } from "@/components/AuthProvider";
 import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
 import { History } from "lucide-react";
@@ -271,7 +271,7 @@ export default function HomePage() {
   const [term, setTerm] = useState("");
   const [, navigate] = useLocation();
   const { isAdmin } = useAuth();
-  const [dailyCtx] = useState<DailyContext>(() => resolveDailyContext());
+  const dailyCtx = useDailyContext();
 
   useEffect(() => {
     applyPageSeo({
