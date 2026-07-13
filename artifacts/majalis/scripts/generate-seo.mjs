@@ -220,6 +220,8 @@ function prerenderHtml(route, extraJsonLd = "") {
     <meta name="author" content="${escapeHtml(seoConfig.siteName)}" />
     <meta name="theme-color" content="#164E3C" />
     <link rel="canonical" href="${escapeHtml(canonical)}" />
+    <link rel="alternate" hreflang="ar" href="${escapeHtml(canonical)}" />
+    <link rel="alternate" hreflang="x-default" href="${escapeHtml(canonical)}" />
     <meta property="og:site_name" content="${escapeHtml(seoConfig.siteName)}" />
     <meta property="og:locale" content="ar_KW" />
     <meta property="og:type" content="${escapeHtml(ogType)}" />
@@ -591,6 +593,17 @@ const duasItemListScript = `<script type="application/ld+json">${JSON.stringify(
     url: `https://majlisilm.com/duas#${d.id}`,
   })),
 })}</script>`;
+
+// مسارات noindex: لا تظهر في sitemap لكن تُحدَّث prerender بالمتا الصحيح
+const noindexRoutes = seoConfig.routes.filter(
+  (r) => !r.sitemap && r.robots && r.robots.includes("noindex") && !r.path.includes(":"),
+);
+
+for (const route of noindexRoutes) {
+  const routeDir = resolve(seoPrerenderDir, route.path.slice(1));
+  await mkdir(routeDir, { recursive: true });
+  await writeFile(resolve(routeDir, "index.html"), prerenderHtml(route), "utf8");
+}
 
 for (const route of staticRoutes) {
   const routeDir =

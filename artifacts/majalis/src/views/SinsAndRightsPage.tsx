@@ -9,7 +9,7 @@ import {
   SIN_TYPE_LABELS,
   WHAT_IF_QA,
 } from "@/lib/sins-rights-data";
-import type { RightsCategory, SinType, SelfAccountabilityItem } from "@/lib/sins-rights-types";
+import type { RightsCategory, SinType } from "@/lib/sins-rights-types";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 
 type Tab = "overview" | "allah" | "ibad" | "shared" | "guide" | "what-if" | "muhasaba" | "mindmap";
@@ -214,18 +214,6 @@ function sinSeverityBadge(sev: string) {
   return <span className={`snr-badge snr-badge--${cls}`}>{SIN_SEVERITY_LABELS[key]}</span>;
 }
 
-function sinTypeBadge(type: string | string[]) {
-  const types = Array.isArray(type) ? type : [type];
-  return (
-    <>
-      {types.map((t) => (
-        <span key={t} className="snr-badge snr-badge--shared" style={{ fontSize: "0.72rem" }}>
-          {SIN_TYPE_LABELS[t as SinType]}
-        </span>
-      ))}
-    </>
-  );
-}
 
 function TopicsGrid({ category }: { category: RightsCategory }) {
   const topics = SINS_TOPICS.filter((t) => t.rightsCategory === category);

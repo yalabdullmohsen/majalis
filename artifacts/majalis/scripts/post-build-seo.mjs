@@ -44,7 +44,7 @@ function extractSpaAssets(spaHead) {
 function extractSeoTags(prerenderHead) {
   const titleM = prerenderHead.match(/<title[^>]*>[\s\S]*?<\/title>/i);
   const metas = [...prerenderHead.matchAll(/<meta[^>]+\/?>/gi)].map(m => m[0]);
-  const links = [...prerenderHead.matchAll(/<link[^>]+(?:rel="canonical")[^>]*\/?>/gi)].map(m => m[0]);
+  const links = [...prerenderHead.matchAll(/<link[^>]+(?:rel="canonical"|rel="alternate"|hreflang)[^>]*\/?>/gi)].map(m => m[0]);
   const jsonld = [...prerenderHead.matchAll(/<script type="application\/ld\+json">[\s\S]*?<\/script>/gi)].map(m => m[0]);
 
   return [

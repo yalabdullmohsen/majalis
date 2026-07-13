@@ -63,6 +63,7 @@
     "serve": "vite preview --config vite.config.ts --host 0.0.0.0 --port ${PORT:-24216}",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint src lib --ext .ts,.tsx --max-warnings 50",
+    "test:seo": "node scripts/test-seo.mjs",
     "test:sm2": "node scripts/test-sm2.mjs",
     "generate:version": "node scripts/generate-version.mjs",
     "mobile:sync": "npm run build && npx cap sync",
