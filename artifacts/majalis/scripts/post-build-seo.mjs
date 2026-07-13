@@ -66,8 +66,8 @@ function buildMergedHtml(seoTags, spaAssets, prerenderBody, spaBody) {
     ${spaAssets}
   </head>
   <body>
-    <!-- محتوى SEO للزواحف (يُخفى بعد تشغيل React) -->
-    <div id="seo-shell" style="display:none" aria-hidden="true">
+    <!-- محتوى SEO للزواحف — مخفي بصريًا لكن مفهرس من محركات البحث -->
+    <div id="seo-shell" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">
       ${prerenderBody}
     </div>
     <!-- جذر React -->
