@@ -306,11 +306,14 @@ export default function KnowledgeGraphPage() {
       </div>
 
       {/* Tabs */}
-      <div className="kng-tabs">
+      <div className="kng-tabs" role="tablist" aria-label="أوضاع عرض الرسم البياني">
         {(["graph", "explore"] as Tab[]).map((t) => (
           <button key={t} type="button" onClick={() => setTab(t)}
+            role="tab"
             className={`kng-tab${tab === t ? " is-active" : ""}`}
-            aria-pressed={tab === t}
+            aria-selected={tab === t}
+            id={`kng-tab-${t}`}
+            aria-controls={`kng-panel-${t}`}
           >
             {t === "graph" ? "شبكة العلاقات" : "استكشاف الموضوعات"}
           </button>
@@ -330,7 +333,7 @@ export default function KnowledgeGraphPage() {
 
       {/* ══ Graph Tab ══ */}
       {tab === "graph" && (
-        <>
+        <div role="tabpanel" id="kng-panel-graph" aria-labelledby="kng-tab-graph">
           {/* Filter chips */}
           <div className="kng-filter-chips">
             {(["all", ...allTypes]).map((t) => (
@@ -482,12 +485,12 @@ export default function KnowledgeGraphPage() {
           <p className="kng-note">
             جميع العلاقات المعروضة موثقة بمصدر معتمد. يمكن إضافة علاقات من لوحة الإدارة.
           </p>
-        </>
+        </div>
       )}
 
       {/* ══ Explore Tab ══ */}
       {tab === "explore" && (
-        <div className="kng-explore">
+        <div role="tabpanel" id="kng-panel-explore" aria-labelledby="kng-tab-explore" className="kng-explore">
           <div className="kng-explore__search-section">
             <h2 className="kng-explore__title">استكشاف الموضوعات</h2>
             <p className="kng-explore__desc">ابحث بوسم موضوعي (عقيدة، فقه، سيرة...) لاستكشاف العقد المرتبطة.</p>
