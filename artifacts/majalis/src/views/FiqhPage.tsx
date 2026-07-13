@@ -196,11 +196,13 @@ export default function FiqhPage() {
           {TABS.map((t) => (
             <button
               key={t.key}
+              id={`fqp-tab-${t.key}`}
               type="button"
               role="tab"
               onClick={() => setActiveTab(t.key)}
               className={`fqp-tab${activeTab === t.key ? " fqp-tab--active" : ""}`}
               aria-selected={activeTab === t.key}
+              aria-controls={`fqp-panel-${t.key}`}
             >
               <t.Icon size={15} strokeWidth={1.8} aria-hidden="true" />
               {t.label}
@@ -213,7 +215,7 @@ export default function FiqhPage() {
 
         {/* تبويب الفتاوى */}
         {activeTab === "fatawa" && (
-          <div>
+          <div role="tabpanel" id="fqp-panel-fatawa" aria-labelledby="fqp-tab-fatawa">
             <div className="flex items-center justify-between mb-6">
               <h2 className="fqp-section-title"><ScrollText size={20} />الفتاوى الشرعية</h2>
               <Link href="/fatwa"><span className="fqp-see-all">عرض الكل ←</span></Link>
@@ -247,7 +249,7 @@ export default function FiqhPage() {
 
         {/* تبويب الأحكام الشرعية */}
         {activeTab === "rulings" && (
-          <div>
+          <div role="tabpanel" id="fqp-panel-rulings" aria-labelledby="fqp-tab-rulings">
             <div className="flex items-center justify-between mb-6">
               <h2 className="fqp-section-title"><Library size={20} />الأحكام الشرعية</h2>
               <Link href="/rulings"><span className="fqp-see-all">عرض الكل ←</span></Link>
@@ -293,7 +295,7 @@ export default function FiqhPage() {
 
         {/* تبويب الأسئلة والأجوبة */}
         {activeTab === "qa" && (
-          <div>
+          <div role="tabpanel" id="fqp-panel-qa" aria-labelledby="fqp-tab-qa">
             <div className="flex items-center justify-between mb-6">
               <h2 className="fqp-section-title"><MessageCircle size={20} />الأسئلة والأجوبة الشرعية</h2>
               <Link href="/qa"><span className="fqp-see-all">عرض الكل ←</span></Link>
@@ -342,7 +344,7 @@ export default function FiqhPage() {
 
         {/* تبويب المجمع الفقهي */}
         {activeTab === "council" && (
-          <div>
+          <div role="tabpanel" id="fqp-panel-council" aria-labelledby="fqp-tab-council">
             <div className="mb-6">
               <h2 className="fqp-section-title mb-2"><Landmark size={20} />المجمع الفقهي الإسلامي</h2>
               <p className="fqp-section-desc">

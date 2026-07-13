@@ -375,11 +375,13 @@ export default function MalaikaPage() {
         {TABS.map(t => (
           <button
             key={t.id}
+            id={`mlk-tab-${t.id}`}
             type="button"
             role="tab"
             className={`mk-tab${activeTab === t.id ? " mk-tab--active" : ""}`}
             onClick={() => setActiveTab(t.id)}
             aria-selected={activeTab === t.id}
+              aria-controls={`mlk-panel-${t.id}`}
           >{t.label}</button>
         ))}
       </div>
@@ -396,7 +398,7 @@ export default function MalaikaPage() {
 
         {/* العقيدة */}
         {activeTab === "aqida" && (
-          <div>
+          <div role="tabpanel" id="mlk-panel-aqida" aria-labelledby="mlk-tab-aqida">
             <div className="mk-intro">
               <p>الإيمان بالملائكة ركن ثانٍ من أركان الإيمان الستة، وهو واجب بالكتاب والسنة والإجماع. جاء الأمر به في أكثر من موضع في القرآن مقروناً بالإيمان بالله.</p>
             </div>
@@ -416,7 +418,7 @@ export default function MalaikaPage() {
 
         {/* الأسماء والمهام */}
         {activeTab === "asma" && (
-          <div>
+          <div role="tabpanel" id="mlk-panel-asma" aria-labelledby="mlk-tab-asma">
             <div className="mk-intro">
               <p>من الملائكة من عرَّفنا الله باسمه ومهمته، ومنهم من لا نعلم عنهم إلا عمومهم. نؤمن بالجميع ونعرف الخصائص التالية:</p>
             </div>
@@ -441,7 +443,7 @@ export default function MalaikaPage() {
 
         {/* الصفات */}
         {activeTab === "awsaf" && (
-          <div>
+          <div role="tabpanel" id="mlk-panel-awsaf" aria-labelledby="mlk-tab-awsaf">
             <div className="mk-intro">
               <p>الملائكة عالَم غيبي لا يدرك بالحواس، وكل ما نعرفه عنهم جاء من الوحي. ومن صفاتهم الثابتة:</p>
             </div>
@@ -462,7 +464,7 @@ export default function MalaikaPage() {
 
         {/* الفضائل */}
         {activeTab === "fadail" && (
-          <div>
+          <div role="tabpanel" id="mlk-panel-fadail" aria-labelledby="mlk-tab-fadail">
             <div className="mk-intro">
               <p>للملائكة حضور ومشهد مع المؤمنين في أفضل أحوالهم، في الذكر والعلم والصلاة والصوم. هذه اللمسات الغيبية دافع للمراقبة والإخلاص.</p>
             </div>
@@ -480,7 +482,7 @@ export default function MalaikaPage() {
 
         {/* التعامل مع البشر */}
         {activeTab === "amal" && (
-          <div>
+          <div role="tabpanel" id="mlk-panel-amal" aria-labelledby="mlk-tab-amal">
             <div className="mk-intro">
               <p>للملائكة تعاملات مع بني آدم في مواقف دقيقة لا تدركها الأعين عادةً. هي محطات تذكِّرنا بالغيب القريب منا في كل لحظة.</p>
             </div>

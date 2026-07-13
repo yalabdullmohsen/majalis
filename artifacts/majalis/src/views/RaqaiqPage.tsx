@@ -502,11 +502,13 @@ export default function RaqaiqPage() {
         {TABS.map(t => (
           <button
             key={t.id}
+            id={`raq-tab-${t.id}`}
             type="button"
             role="tab"
             className={`rq-tab${activeTab === t.id ? " rq-tab--active" : ""}`}
             onClick={() => { setActiveTab(t.id); setOpenIdx(null); }}
             aria-selected={activeTab === t.id}
+              aria-controls={`raq-panel-${t.id}`}
           >{t.label}</button>
         ))}
       </div>
@@ -515,7 +517,7 @@ export default function RaqaiqPage() {
 
         {/* مواعظ الرقائق */}
         {activeTab === "raqaiq" && (
-          <div>
+          <div role="tabpanel" id="raq-panel-raqaiq" aria-labelledby="raq-tab-raqaiq">
             <div className="rq-intro">
               <p>الرقائق ما رقَّ من الكلام وأثَّر في القلب. هذه المواعظ من أصح ما نُقِل وأبلغه في تليين القلوب القاسية.</p>
             </div>
@@ -551,7 +553,7 @@ export default function RaqaiqPage() {
 
         {/* أقوال الزاهدين */}
         {activeTab === "zuhd" && (
-          <div>
+          <div role="tabpanel" id="raq-panel-zuhd" aria-labelledby="raq-tab-zuhd">
             <div className="rq-intro">
               <p>أقوال العلماء والزاهدين خلاصة تجارب قضوا أعمارهم في تهذيبها. كل قول منها يستحق تأملاً طويلاً.</p>
             </div>
@@ -568,7 +570,7 @@ export default function RaqaiqPage() {
 
         {/* المحاسبة اليومية */}
         {activeTab === "muhasaba" && (
-          <div>
+          <div role="tabpanel" id="raq-panel-muhasaba" aria-labelledby="raq-tab-muhasaba">
             <div className="rq-intro">
               <p>المحاسبة تُطهِّر الروح وتُنبِّه العقل لما فات. اجلس بعد صلاة العشاء دقيقتين وأجِب عن هذه الأسئلة بصدق.</p>
             </div>
@@ -588,7 +590,7 @@ export default function RaqaiqPage() {
 
         {/* نماذج زهد الأولياء */}
         {activeTab === "musab" && (
-          <div>
+          <div role="tabpanel" id="raq-panel-musab" aria-labelledby="raq-tab-musab">
             <div className="rq-intro">
               <p>التاريخ الإسلامي مليء بنماذج حيَّة كانت الزهد واقعاً معاشاً، لا كلاماً يُكتَب. هذه نماذج مضيئة.</p>
             </div>
@@ -606,7 +608,7 @@ export default function RaqaiqPage() {
 
         {/* ما هو الزهد الحق؟ */}
         {activeTab === "awliya" && (
-          <div>
+          <div role="tabpanel" id="raq-panel-awliya" aria-labelledby="raq-tab-awliya">
             <div className="rq-intro">
               <p>الزهد كثيراً ما يُساء فهمه. إليك التعريف الدقيق الذي اتفق عليه علماء أهل السنة.</p>
             </div>

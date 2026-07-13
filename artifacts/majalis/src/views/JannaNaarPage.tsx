@@ -254,6 +254,7 @@ export default function JannaNaarPage() {
             className={`jn-tab jn-tab--${t.id}${activeTab === t.id ? " jn-tab--active" : ""}`}
             onClick={() => setActiveTab(t.id)}
             aria-selected={activeTab === t.id}
+              aria-controls={`jnn-panel-${t.id}`}
           >{t.label}</button>
         ))}
       </div>
@@ -262,7 +263,7 @@ export default function JannaNaarPage() {
 
         {/* صفة الجنة */}
         {activeTab === "janna" && (
-          <div className="jn-sections">
+          <div role="tabpanel" id="jnn-panel-janna" aria-labelledby="jnn-tab-janna" className="jn-sections">
             <Section title="أبواب الجنة" cards={JANNA_ABWAB} tabId={activeTab} />
             <Section title="أنهار الجنة" cards={JANNA_ANHAR} tabId={activeTab} />
             <Section title="درجات الجنة" cards={JANNA_DARAJAT} tabId={activeTab} />
@@ -272,7 +273,7 @@ export default function JannaNaarPage() {
 
         {/* صفة النار */}
         {activeTab === "naar" && (
-          <div className="jn-sections">
+          <div role="tabpanel" id="jnn-panel-naar" aria-labelledby="jnn-tab-naar" className="jn-sections">
             <div className="jn-naar-warn">
               ﴿وَاتَّقُوا النَّارَ الَّتِي أُعِدَّتْ لِلْكَافِرِينَ﴾، آل عمران: ١٣١
             </div>
@@ -331,7 +332,7 @@ export default function JannaNaarPage() {
 
         {/* الأدعية */}
         {activeTab === "duas" && (
-          <div>
+          <div role="tabpanel" id="jnn-panel-duas" aria-labelledby="jnn-tab-duas">
             <div className="jn-intro">
               <p>من أعظم ما يتقرَّب به العبد إلى الله دعاؤه بالجنة والاستعاذة من النار. قال ﷺ: «من سأل الله الجنة ثلاثاً قالت الجنة: اللهم أدخله الجنة».</p>
             </div>
