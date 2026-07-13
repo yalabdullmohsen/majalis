@@ -110,7 +110,7 @@ function siteJsonLdScript() {
     inLanguage: "ar",
     potentialAction: {
       "@type": "SearchAction",
-      target: `${seoConfig.siteUrl}/search/{search_term_string}`,
+      target: `${seoConfig.siteUrl}/search?q={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
   };

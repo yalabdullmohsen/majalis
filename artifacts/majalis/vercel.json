@@ -176,6 +176,18 @@
       "schedule": "0 2 * * 1"
     }
   ],
+  "redirects": [
+    {
+      "source": "/search/%7Bsearch_term_string%7D",
+      "destination": "/search",
+      "permanent": false
+    },
+    {
+      "source": "/search/%7Bsearch_term_string%7D(.*)",
+      "destination": "/search",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/sitemap.xml",

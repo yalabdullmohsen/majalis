@@ -239,8 +239,9 @@ function FiqhResultRow({ row }: { row: FiqhGlobalSearchRow }) {
 
 export default function SearchPage() {
   const params = useParams();
-  const [, navigate] = useLocation();
-  const q = params.q ? decodeURIComponent(params.q) : "";
+  const [location, navigate] = useLocation();
+  const queryParams = new URLSearchParams(location.split("?")[1] || "");
+  const q = params.q ? decodeURIComponent(params.q) : (queryParams.get("q") || "");
   const [term, setTerm] = useState(q);
   const [results, setResults] = useState<SearchResults>(EMPTY);
   const [intelligentResults, setIntelligentResults] = useState<IntelligentSearchResult[]>([]);
@@ -352,7 +353,7 @@ export default function SearchPage() {
 
   const submitSearch = (value: string) => {
     const t = value.trim();
-    if (t) navigate(`/search/${encodeURIComponent(t)}`);
+    if (t) navigate(`/search?q=${encodeURIComponent(t)}`);
   };
 
   const handleTermChange = (value: string) => {
