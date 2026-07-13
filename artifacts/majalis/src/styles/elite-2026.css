@@ -34226,6 +34226,24 @@ footer *,
   color: #0E6E52 !important;
 }
 
+/* استثناء Prayer Chip داخل NavBar — خلفيته شفافة-فاتحة على navbar أبيض
+   §79 تُجبره على color:#fff فيصبح النص غير مرئي على خلفية شبه-شفافة */
+.navbar-v3 .navbar-prayer-chip,
+.navbar-v3 .navbar-prayer-chip * {
+  color: var(--majalis-emerald, #0E6E52) !important;
+}
+.navbar-v3 .navbar-prayer-chip:hover,
+.navbar-v3 .navbar-prayer-chip:hover * {
+  color: var(--majalis-emerald-deep, #0A3D28) !important;
+}
+
+/* استثناء أيقونة زر القائمة — الزر له خلفية فاتحة (#F5F5F4) داخل navbar الداكن
+   §16434 يُجبر .navbar-v3 .navbar-menu-btn على color:white فترث الأيقونة الأبيض */
+.navbar-v3 .navbar-menu-btn svg,
+.navbar-v3 .navbar-menu-btn .navbar-menu-btn__icon {
+  color: var(--elite-ink, #1A1A1A) !important;
+}
+
 /* تحديد الأيقونات ضمن الخلفيات الداكنة */
 .hpv4-hero svg,
 .lesson-unified-card__header svg,
