@@ -143,7 +143,7 @@ export default function NotificationBell() {
 
           {/* تذييل */}
           <div className="nb-foot">
-            <Link href="/notifications" className="nb-foot__link" onClick={() => setOpen(false)}>
+            <Link href="/notification-settings" className="nb-foot__link" onClick={() => setOpen(false)}>
               <Settings2 size={14} strokeWidth={2} aria-hidden="true" />
               إعدادات الإشعارات
             </Link>

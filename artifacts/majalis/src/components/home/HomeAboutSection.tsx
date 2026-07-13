@@ -87,7 +87,7 @@ export function HomeAboutSection() {
       </div>
 
       <div style={{ display: "flex", gap: "0.65rem", marginTop: "1.25rem", flexWrap: "wrap" }}>
-        <Link href="/start-here" style={{
+        <Link href="/learning-path" style={{
           background: "linear-gradient(135deg,#176B57,#176B57)", color: "#FAF8F2",
           padding: "0.55rem 1.2rem", borderRadius: "0.55rem",
           fontWeight: 700, fontSize: "0.83rem", textDecoration: "none",

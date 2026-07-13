@@ -583,7 +583,7 @@ function ThesesTab() {
           <p className="ar-contribute-banner__title">هل لديك رسالة علمية؟</p>
           <p className="ar-contribute-banner__sub">شارك رسالتك مع مجتمع الباحثين في العلوم الإسلامية</p>
         </div>
-        <Link href="/submit-content" className="ar-contribute-banner__btn">إضافة رسالة</Link>
+        <Link href="/submit" className="ar-contribute-banner__btn">إضافة رسالة</Link>
       </div>
     </div>
   );
@@ -625,7 +625,7 @@ function InstitutionsTab() {
         <div className="ar-empty__icon"><Landmark size={44} strokeWidth={1.3} /></div>
         <p className="ar-empty__title">لا توجد أبحاث مؤسسية بعد</p>
         <p className="ar-empty__sub">نعمل على تجميع أبحاث المراكز والجامعات الإسلامية</p>
-        <Link href="/submit-content" className="ar-empty__btn">إرسال بحث</Link>
+        <Link href="/submit" className="ar-empty__btn">إرسال بحث</Link>
       </div>
     </div>
   );
@@ -641,7 +641,7 @@ function PersonalTab() {
         <div className="ar-submit-prompt__body">
           <p className="ar-submit-prompt__title">شارك بحثك مع المجتمع العلمي</p>
           <p className="ar-submit-prompt__sub">يمكنك نشر أبحاثك ودراساتك وتلخيصاتك لتستفيد منها المجتمع المسلم حول العالم.</p>
-          <Link href="/submit-content" className="ar-submit-prompt__btn">إضافة بحث</Link>
+          <Link href="/submit" className="ar-submit-prompt__btn">إضافة بحث</Link>
         </div>
       </div>
       <div className="ar-empty">
