@@ -373,11 +373,13 @@ export default function IslamStatsPage() {
           {TABS.map(t => (
             <button
               key={t.id}
+              id={`is-tab-${t.id}`}
               type="button"
               role="tab"
               className={`is-tab${activeTab === t.id ? " is-tab--active" : ""}`}
               onClick={() => setActiveTab(t.id)}
               aria-selected={activeTab === t.id}
+              aria-controls={`is-panel-${t.id}`}
             >
               <t.icon size={15} aria-hidden="true" />
               <span>{t.label}</span>
@@ -387,7 +389,7 @@ export default function IslamStatsPage() {
 
         {/* ── الإسلام في العالم ── */}
         {activeTab === "global" && (
-          <div className="is-section">
+          <div className="is-section" role="tabpanel" id="is-panel-global" aria-labelledby="is-tab-global">
             <div className="is-stats-grid">
               {GLOBAL_STATS.map((s, i) => (
                 <div key={i} className="is-stat-card" style={{ "--is-card-color": s.color } as { [k: string]: string }}>
@@ -416,7 +418,7 @@ export default function IslamStatsPage() {
 
         {/* ── القرآن الكريم ── */}
         {activeTab === "quran" && (
-          <div className="is-section">
+          <div className="is-section" role="tabpanel" id="is-panel-quran" aria-labelledby="is-tab-quran">
             <div className="is-quran-highlight">
               <p className="is-quran-highlight__text">
                 إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ
@@ -440,7 +442,7 @@ export default function IslamStatsPage() {
 
         {/* ── الحضارة الإسلامية ── */}
         {activeTab === "history" && (
-          <div className="is-section">
+          <div className="is-section" role="tabpanel" id="is-panel-history" aria-labelledby="is-tab-history">
             <div className="is-search-wrap">
               <input
                 type="search"
@@ -482,7 +484,7 @@ export default function IslamStatsPage() {
 
         {/* ── الإعجاز العلمي ── */}
         {activeTab === "science" && (
-          <div className="is-section">
+          <div className="is-section" role="tabpanel" id="is-panel-science" aria-labelledby="is-tab-science">
             <div className="is-science-intro">
               <BarChart3 size={20} aria-hidden="true" />
               <p>

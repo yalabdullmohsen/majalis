@@ -477,11 +477,13 @@ export default function FiqhQawaidPage() {
           {TABS.map(t => (
             <button
               key={t.id}
+              id={`fq-tab-${t.id}`}
               role="tab"
               type="button"
               className={`fq-tab${activeTab === t.id ? " fq-tab--active" : ""}`}
               onClick={() => setActiveTab(t.id)}
               aria-selected={activeTab === t.id}
+              aria-controls={`fq-panel-${t.id}`}
             >
               {t.label}
             </button>
@@ -490,7 +492,7 @@ export default function FiqhQawaidPage() {
 
         {/* ── القواعد الكبرى ── */}
         {activeTab === "kubra" && (
-          <div className="fq-section">
+          <div role="tabpanel" id="fq-panel-kubra" aria-labelledby="fq-tab-kubra" className="fq-section">
             <p className="fq-intro">
               اتفق العلماء على أن هذه القواعد الخمس هي أمهات القواعد الفقهية وأكثرها استيعاباً للجزئيات،
               وقد أُودعت في كتب «الأشباه والنظائر» للسيوطي وابن نجيم وابن الوكيل وغيرهم.
@@ -575,7 +577,7 @@ export default function FiqhQawaidPage() {
 
         {/* ── القواعد الفرعية ── */}
         {activeTab === "faraa" && (
-          <div className="fq-section">
+          <div role="tabpanel" id="fq-panel-faraa" aria-labelledby="fq-tab-faraa" className="fq-section">
             <div className="fq-search-bar">
               <Search size={15} aria-hidden="true" />
               <input
@@ -609,7 +611,7 @@ export default function FiqhQawaidPage() {
 
         {/* ── الضوابط الفقهية ── */}
         {activeTab === "dhawaabit" && (
-          <div className="fq-section">
+          <div role="tabpanel" id="fq-panel-dhawaabit" aria-labelledby="fq-tab-dhawaabit" className="fq-section">
             <p className="fq-intro">
               الضوابط الفقهية أخص من القواعد، تنحصر في فن بعينه كالعبادات أو المعاملات، وتجمع أحكاماً متشابهة في باب واحد.
             </p>
@@ -650,7 +652,7 @@ export default function FiqhQawaidPage() {
 
         {/* ── التطبيقات المعاصرة ── */}
         {activeTab === "tatbiq" && (
-          <div className="fq-section">
+          <div role="tabpanel" id="fq-panel-tatbiq" aria-labelledby="fq-tab-tatbiq" className="fq-section">
             <p className="fq-intro">
               القواعد الفقهية ليست حبيسة كتب التراث، بل هي المرجع الأول للعلماء حين تنزل بهم نوازل العصر وقضاياه المستجدة.
             </p>

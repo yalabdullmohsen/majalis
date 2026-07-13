@@ -294,6 +294,7 @@ export default function VaultPage() {
             type="button"
             role="tab"
             aria-selected={tab === t.key}
+              aria-controls={`vault-panel-${t.key}`}
             className={`vault-tab${tab === t.key ? " vault-tab--active" : ""}`}
             onClick={() => setTab(t.key)}
           >
@@ -311,7 +312,7 @@ export default function VaultPage() {
         <>
           {/* Bookmarks Tab */}
           {tab === "bookmarks" && (
-            <div className="vault-list">
+          <div role="tabpanel" id="vault-panel-bookmarks" aria-labelledby="vault-tab-bookmarks" className="vault-list">
               {filteredBookmarks.length === 0 && (
                 <div className="vault-empty">
                   <div className="vault-empty__icon"><BookmarkCheck size={32} strokeWidth={1.3} /></div>
@@ -335,7 +336,7 @@ export default function VaultPage() {
 
           {/* Resume Tab */}
           {tab === "resume" && (
-            <div className="vault-list">
+          <div role="tabpanel" id="vault-panel-resume" aria-labelledby="vault-tab-resume" className="vault-list">
               {filteredResume.length === 0 && (
                 <div className="vault-empty">
                   <div className="vault-empty__icon" aria-hidden="true"><BookOpen size={40} strokeWidth={1.3} /></div>
@@ -366,12 +367,14 @@ export default function VaultPage() {
 
           {/* Notes Tab */}
           {tab === "notes" && (
-            <NotesTab
-              notes={filteredNotes}
-              onAdd={() => setShowAddNote(true)}
-              onDelete={handleDeleteNote}
-              onEdit={handleEditNote}
-            />
+            <div role="tabpanel" id="vault-panel-notes" aria-labelledby="vault-tab-notes">
+              <NotesTab
+                notes={filteredNotes}
+                onAdd={() => setShowAddNote(true)}
+                onDelete={handleDeleteNote}
+                onEdit={handleEditNote}
+              />
+            </div>
           )}
         </>
       )}

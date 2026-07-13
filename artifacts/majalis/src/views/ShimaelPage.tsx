@@ -547,11 +547,13 @@ export default function ShimaelPage() {
           {TABS.map(t => (
             <button
               key={t.id}
+              id={`sh-tab-${t.id}`}
               type="button"
               role="tab"
               className={`sh-tab${activeTab === t.id ? " sh-tab--active" : ""}`}
               onClick={() => { setActiveTab(t.id); setOpenBab(null); }}
               aria-selected={activeTab === t.id}
+              aria-controls={`sh-panel-${t.id}`}
             >
               {t.label}
             </button>
@@ -571,7 +573,7 @@ export default function ShimaelPage() {
 
         {/* ── الخَلق ── */}
         {activeTab === "khalq" && (
-          <div className="sh-section">
+          <div role="tabpanel" id="sh-panel-khalq" aria-labelledby="sh-tab-khalq" className="sh-section">
             <div className="sh-intro-box">
               <Star size={16} aria-hidden="true" />
               <p>قال الإمام الترمذي رحمه الله: «باب ما جاء في خَلق رسول الله ﷺ»، وهذه أصحُّ ما وردَ في وصفِ صورتِه الشريفة.</p>
@@ -613,7 +615,7 @@ export default function ShimaelPage() {
 
         {/* ── الخُلُق ── */}
         {activeTab === "khuluq" && (
-          <div className="sh-section">
+          <div role="tabpanel" id="sh-panel-khuluq" aria-labelledby="sh-tab-khuluq" className="sh-section">
             <div className="sh-intro-box">
               <Heart size={16} aria-hidden="true" />
               <p>قال اللهُ تعالى: ﴿وَإِنَّكَ لَعَلَىٰ خُلُقٍ عَظِيمٍ﴾ [القلم: ٤]، وهذه أبوابُ ما وُصِفَ به النبيُّ ﷺ في أخلاقِه.</p>
@@ -655,7 +657,7 @@ export default function ShimaelPage() {
 
         {/* ── السيرة والهَدي ── */}
         {activeTab === "sira" && (
-          <div className="sh-section">
+          <div role="tabpanel" id="sh-panel-sira" aria-labelledby="sh-tab-sira" className="sh-section">
             <div className="sh-intro-box">
               <Star size={16} aria-hidden="true" />
               <p>كانَ هَدْيُه ﷺ في حياتِه كلِّها عِبادةً، حتى في أكلِه وشُربِه ونَومِه ولِباسِه وتعامُلِه مع الناس.</p>
@@ -697,7 +699,7 @@ export default function ShimaelPage() {
 
         {/* ── المحبة ── */}
         {activeTab === "mahabbah" && (
-          <div className="sh-section">
+          <div role="tabpanel" id="sh-panel-mahabbah" aria-labelledby="sh-tab-mahabbah" className="sh-section">
             <div className="sh-mahabbah-intro">
               <Heart size={40} className="sh-mahabbah-intro__icon" aria-hidden="true" />
               <h2 className="sh-mahabbah-intro__title">حبُّ النبيِّ ﷺ</h2>
