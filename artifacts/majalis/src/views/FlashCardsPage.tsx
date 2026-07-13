@@ -300,6 +300,16 @@ export default function FlashCardsPage() {
       description: "بطاقات مراجعة تعتمد نظام التكرار المتباعد لتثبيت المعلومات الشرعية في الذاكرة، مثالية لطلاب العلم.",
       keywords: ["بطاقات مراجعة", "تعلم", "مراجعة شرعية", "حفظ", "تكرار متباعد"],
       robots: "noindex, follow",
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "LearningResource",
+        name: "بطاقات المراجعة التعليمية",
+        description: "بطاقات مراجعة بنظام التكرار المتباعد لتثبيت المعلومات الشرعية.",
+        url: "https://majlisilm.com/flashcards",
+        inLanguage: "ar",
+        learningResourceType: "Flashcard",
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+      }],
     });
   }, []);
 

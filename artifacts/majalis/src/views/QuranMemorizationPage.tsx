@@ -243,6 +243,17 @@ export default function QuranMemorizationPage() {
       description:
         "12 نوعًا من اختبارات حفظ القرآن الكريم مع نظام المراجعة المتباعدة (Spaced Repetition). اختبر حفظك وتتبّع تقدمك سورةً سورة.",
       keywords: ["حفظ القرآن", "اختبار الحفظ", "مراجعة القرآن", "حفظ السور", "spaced repetition"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "LearningResource",
+        name: "اختبارات الحفظ القرآني",
+        description: "12 نوعًا من اختبارات حفظ القرآن الكريم مع نظام المراجعة المتباعدة.",
+        url: "https://majlisilm.com/quran-memorization",
+        inLanguage: "ar",
+        educationalLevel: "Beginner",
+        learningResourceType: "Quiz",
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+      }],
     });
 
     fetchSurahList()

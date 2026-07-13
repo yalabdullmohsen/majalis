@@ -133,6 +133,15 @@ export default function ProphetsFamilyTreePage() {
       title: "شجرة أنساب الأنبياء | المجلس العلمي",
       description: "رسم بياني تفاعلي لنسب الأنبياء الـ25 المذكورين في القرآن الكريم من آدم إلى محمد ﷺ",
       keywords: ["أنبياء", "شجرة نسب", "سيرة", "تاريخ إسلامي"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: "شجرة أنساب الأنبياء",
+        description: "رسم بياني تفاعلي لنسب الأنبياء الـ25 المذكورين في القرآن الكريم.",
+        url: "https://majlisilm.com/prophets/tree",
+        inLanguage: "ar",
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+      }],
     });
   }, []);
 

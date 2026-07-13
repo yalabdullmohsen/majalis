@@ -209,6 +209,16 @@ export default function MutashabihatPage() {
       description:
         "نظام متخصص لدراسة الآيات المتشابهات في القرآن الكريم مع نصوص الآيات وتلميحات الاختلاف الدقيق.",
       keywords: ["الآيات المتشابهات", "متشابه القرآن", "حفظ القرآن", "تلاوة القرآن"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: "الآيات المتشابهات في القرآن",
+        description: "نظام متخصص لدراسة الآيات المتشابهات في القرآن الكريم.",
+        url: "https://majlisilm.com/mutashabihat",
+        inLanguage: "ar",
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        about: { "@type": "Book", name: "القرآن الكريم", inLanguage: "ar" },
+      }],
     });
   }, []);
 
