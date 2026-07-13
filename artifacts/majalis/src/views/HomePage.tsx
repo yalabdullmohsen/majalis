@@ -1,7 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link, useLocation } from "wouter";
-import { useDailyContext, type DailyContext } from "@/lib/daily-context";
+import { useDailyContext } from "@/lib/daily-context";
 import { useAuth } from "@/components/AuthProvider";
 import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
 import { History } from "lucide-react";

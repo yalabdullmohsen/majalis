@@ -1,6 +1,6 @@
 import "@/styles/islamic-landmarks.css";
 import "leaflet/dist/leaflet.css";
-import { useEffect, useState, useMemo, lazy, Suspense, useRef } from "react";
+import { useEffect, useState, useMemo, lazy, Suspense } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import {
   ISLAMIC_LANDMARKS,
@@ -8,8 +8,6 @@ import {
   LANDMARK_ERAS,
   LANDMARK_TYPES,
   type IslamicLandmark,
-  type IslamicEra,
-  type LandmarkType,
 } from "@/lib/islamic-landmarks-data";
 import { MapPin, LayoutGrid, List, X, ExternalLink, Users, Maximize2 } from "lucide-react";
 
