@@ -207,7 +207,7 @@ function breadcrumbJsonLdScript(items) {
   return `<script type="application/ld+json">${JSON.stringify(payload)}</script>`;
 }
 
-function prerenderHtml(route, extraJsonLd = "") {
+function prerenderHtml(route, extraJsonLd = "", richBody = "") {
   const canonical = absoluteUrl(route.path);
   const image = absoluteUrl(route.image || seoConfig.defaultImage);
   const keywords = [...new Set([...(route.keywords || []), ...seoConfig.defaultKeywords])].join(", ");
@@ -270,6 +270,7 @@ function prerenderHtml(route, extraJsonLd = "") {
       <article>
         <h1>${escapeHtml(route.title)}</h1>
         <p>${escapeHtml(route.description)}</p>
+        ${richBody}
         <nav aria-label="التنقل">
           <a href="${escapeHtml(seoConfig.siteUrl)}">الرئيسية</a>
           ${route.path !== "/" ? `<a href="${escapeHtml(canonical)}">${escapeHtml(route.title.split(" | ")[0])}</a>` : ""}
@@ -361,12 +362,15 @@ Disallow: /admin
 Disallow: /admin/
 Disallow: /login
 Disallow: /api/
+Disallow: /search/
 
 User-agent: Googlebot
 Allow: /
+Disallow: /search/
 
 User-agent: Bingbot
 Allow: /
+Disallow: /search/
 
 Host: ${seoConfig.siteUrl.replace(/^https?:\/\//, "")}
 Sitemap: ${seoConfig.siteUrl}/sitemap.xml
@@ -611,6 +615,66 @@ for (const route of noindexRoutes) {
   await writeFile(resolve(routeDir, "index.html"), prerenderHtml(route), "utf8");
 }
 
+// محتوى غني لصفحات رئيسية (روابط فعلية لمحركات البحث والمستخدمين بدون JS)
+const SURAH_NAMES = [
+  "الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس",
+  "هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه",
+  "الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم",
+  "لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر",
+  "فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق",
+  "الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة",
+  "الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج",
+  "نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس",
+  "التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد",
+  "الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات",
+  "القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر",
+  "المسد","الإخلاص","الفلق","الناس",
+];
+const quranRichBody = `<h2>سور القرآن الكريم</h2>
+<ul style="column-count:3">
+  ${SURAH_NAMES.map((n, i) => `<li><a href="${absoluteUrl("/quran")}#surah-${i+1}">${i+1}. سورة ${escapeHtml(n)}</a></li>`).join("\n  ")}
+</ul>`;
+
+const lessonsRichBody = `<h2>أبرز الدروس والدورات</h2>
+<ul>
+  ${dedupeLessons(LESSONS_SEED).slice(0, 15).map(r => `<li><a href="${absoluteUrl(`/lessons/${r.id}`)}">${escapeHtml(r.title)}</a>${r.speaker_name ? ` — ${escapeHtml(r.speaker_name)}` : ""}</li>`).join("\n  ")}
+</ul>`;
+
+const libraryRichBody = `<h2>من الكتب المتاحة</h2>
+<ul>
+  ${LIBRARY_CATALOG.slice(0, 15).map(b => `<li><a href="${absoluteUrl(`/library/${b.id}`)}">${escapeHtml(b.title)}</a>${b.author ? ` — ${escapeHtml(b.author)}` : ""}</li>`).join("\n  ")}
+</ul>`;
+
+const adhkarRichBody = `<h2>أقسام الأذكار</h2>
+<ul>
+  ${ADHKAR_CATEGORIES.map(c => `<li><a href="${absoluteUrl(`/adhkar?cat=${c.id}`)}">${escapeHtml(c.name)}</a></li>`).join("\n  ")}
+</ul>`;
+
+const scholarsRichBody = `<h2>من علماء المسلمين</h2>
+<ul>
+  ${ISLAMIC_SCHOLARS.map(s => `<li><a href="${absoluteUrl(`/scholars#${s.id}`)}">${escapeHtml(s.name)}</a></li>`).join("\n  ")}
+</ul>`;
+
+const fatwaRichBody = `<h2>فتاوى شرعية</h2>
+<ul>
+  ${(PLATFORM_SEED.fatwas || []).slice(0, 12).map(f => `<li><a href="${absoluteUrl(`/fatwa/${f.id}`)}">${escapeHtml(f.question)}</a></li>`).join("\n  ")}
+</ul>`;
+
+const prophetsRichBody = `<h2>قصص الأنبياء</h2>
+<ul>
+  ${PROPHETS_NAMES.map(p => `<li><a href="${absoluteUrl(`/prophets/${p.slug}`)}">${escapeHtml(`نبي الله ${p.name} عليه السلام`)}</a></li>`).join("\n  ")}
+</ul>`;
+
+const RICH_BODY_MAP = {
+  "/quran": quranRichBody,
+  "/lessons": lessonsRichBody,
+  "/library": libraryRichBody,
+  "/adhkar": adhkarRichBody,
+  "/scholars": scholarsRichBody,
+  "/fatwa": fatwaRichBody,
+  "/prophets": prophetsRichBody,
+};
+
 for (const route of staticRoutes) {
   const routeDir =
     route.path === "/"
@@ -630,7 +694,8 @@ for (const route of staticRoutes) {
     route.path === "/learning/paths" ? learningPathsItemListScript :
     route.path === "/asma-husna" ? asmaaItemListScript :
     route.path === "/duas" ? duasItemListScript : "";
-  await writeFile(resolve(routeDir, "index.html"), prerenderHtml(route, staticExtraJsonLd), "utf8");
+  const staticRichBody = RICH_BODY_MAP[route.path] || "";
+  await writeFile(resolve(routeDir, "index.html"), prerenderHtml(route, staticExtraJsonLd, staticRichBody), "utf8");
 
   if (route.path !== "/") {
     const legacyPublicDir = resolve(publicDir, route.path.slice(1));
