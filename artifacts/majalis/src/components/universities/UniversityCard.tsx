@@ -105,7 +105,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
 
         <button
           type="button"
-          title={inCompare ? "إزالة من المقارنة" : canAdd ? "أضف للمقارنة" : "تعبأت المقارنة (4)"}
+          aria-label={inCompare ? "إزالة من المقارنة" : canAdd ? "أضف للمقارنة" : "تعبأت المقارنة (4 بحد أقصى)"}
           onClick={() => inCompare ? removeFromCompare(u.slug) : addToCompare(u)}
           className={`univ-btn ${inCompare ? "univ-btn--compare-active" : "univ-btn--ghost"}`}
           disabled={!inCompare && !canAdd}

@@ -229,7 +229,7 @@ export default function ProphetsFamilyTreePage() {
             { icon: <ZoomOut size={16}/>, fn: () => zoom(-1), title: "تصغير" },
             { icon: <RotateCcw size={16}/>, fn: reset,         title: "إعادة تعيين" },
           ].map(({ icon, fn, title }) => (
-            <button key={title} type="button" onClick={fn} title={title} style={{
+            <button key={title} type="button" onClick={fn} aria-label={title} style={{
               background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)",
               color: "#FAF8F2", borderRadius: "0.5rem", padding: "0.4rem 0.6rem",
               cursor: "pointer", display: "flex", alignItems: "center",

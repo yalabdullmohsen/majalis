@@ -181,7 +181,7 @@ function ResumeList({
             <button
               type="button"
               className="profile-resume__del"
-              title="إزالة"
+              aria-label="إزالة"
               onClick={() => {
                 deleteResumeItem(userId, item.content_type, item.content_id);
                 onDelete(item.content_type, item.content_id);

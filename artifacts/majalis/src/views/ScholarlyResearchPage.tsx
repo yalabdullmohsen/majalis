@@ -298,10 +298,10 @@ export default function ScholarlyResearchPage() {
                 </button>
                 {result && (
                   <>
-                    <button type="button" onClick={handleSave} title="حفظ في مكتبتي" className="srp-action-btn">
+                    <button type="button" onClick={handleSave} aria-label="حفظ في مكتبتي" className="srp-action-btn">
                       <Save size={15} aria-hidden="true" />
                     </button>
-                    <button type="button" onClick={handleExportMd} title="تصدير Markdown" className="srp-action-btn">
+                    <button type="button" onClick={handleExportMd} aria-label="تصدير Markdown" className="srp-action-btn">
                       <Download size={15} aria-hidden="true" />
                     </button>
                   </>

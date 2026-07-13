@@ -355,7 +355,7 @@ function AudioRow({ label, sublabel, duration, isPlaying, onPlay, icon, highligh
         type="button"
         onClick={onPlay}
         className={`mzd-audio-row__play${isPlaying ? " is-playing" : ""}`}
-        title={isPlaying ? "إيقاف" : "استمع"}
+        aria-label={isPlaying ? "إيقاف التشغيل" : "استمع للأذان"}
       >
         {isPlaying ? "⏹" : "▶"}
       </button>
