@@ -34473,6 +34473,16 @@ body .dvp-cta .dvp-btn--primary {
   color: var(--majalis-emerald-deep, #123F36) !important;
 }
 
+/* .kng-type-badge — color-mix 9% شبه-شفاف فاتح */
+body .kng-type-badge {
+  color: var(--kng-nc, var(--majalis-emerald, #0E6E52)) !important;
+}
+
+/* .nf-code — نص ضخم على خلفية var(--majalis-panel) فاتحة */
+body .nf-code {
+  color: var(--majalis-emerald, #0E6E52) !important;
+}
+
 /* تحديد الأيقونات ضمن الخلفيات الداكنة */
 .hpv4-hero svg,
 .lesson-unified-card__header svg,
