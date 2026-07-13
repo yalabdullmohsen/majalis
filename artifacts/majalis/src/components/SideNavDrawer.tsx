@@ -6,7 +6,7 @@ import {
   Bot, Building2, Calculator, Calendar, CheckCircle2, ChevronDown, ChevronUp,
   Clock, Compass, CreditCard, FileText, Gavel, GitBranch, GraduationCap,
   Heart, HelpCircle, Home, Landmark, Layers, Library, Lightbulb,
-  LogIn, Map, Mic, Mic2, Moon, Network, Radio, RefreshCw, Repeat2,
+  LogIn, Map, MapPin, Mic, Mic2, Moon, Network, Radio, RefreshCw, Repeat2,
   Rss, Scale, ScrollText, Search, Settings, Shield, Sparkles, Star, Stethoscope,
   Sun, Tv, Users, UserPlus, Waypoints, X, Zap,
 } from "lucide-react";
@@ -210,6 +210,7 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/quran-radio",         label: "إذاعة القرآن",       Icon: Radio,         desc: "استماع مباشر" },
       { href: "/quran-live",          label: "البث المباشر",       Icon: Tv,            desc: "من مكة والمدينة" },
       { href: "/quran-circles",       label: "حلقات التحفيظ",      Icon: Users,         desc: "دليل حلقات القرآن" },
+      { href: "/quran-memorization",  label: "اختبارات الحفظ",     Icon: Zap,           desc: "12 نوعًا من اختبارات الحفظ" },
       { href: "/muezzins",            label: "مكتبة القراء",       Icon: Mic,           desc: "مقاطع صوتية للقراء" },
     ],
   },
@@ -234,8 +235,9 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/annual-courses", label: "الدورات العلمية",    Icon: BookMarked, desc: "برامج وكورسات منظمة" },
       { href: "/scholars",      label: "أعلام الإسلام",       Icon: BookUser,   desc: "تراجم العلماء والمشايخ" },
       { href: "/universities",  label: "دليل الجامعات",       Icon: Building2,  desc: "الجامعات الإسلامية حول العالم" },
-      { href: "/institutions",  label: "المؤسسات الإسلامية",  Icon: Landmark,   desc: "مساجد · مكتبات · مراكز · جامعات" },
-      { href: "/learning-path", label: "خارطة طالب العلم",   Icon: Network,    desc: "منهج التعلم التراكمي" },
+      { href: "/institutions",       label: "المؤسسات الإسلامية",  Icon: Landmark,   desc: "مساجد · مكتبات · مراكز · جامعات" },
+      { href: "/islamic-landmarks",  label: "المشاهد والمساجد",    Icon: MapPin,     desc: "خريطة المشاهد الإسلامية التاريخية" },
+      { href: "/learning-path",      label: "خارطة طالب العلم",   Icon: Network,    desc: "منهج التعلم التراكمي" },
     ],
   },
 ];

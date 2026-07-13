@@ -23,6 +23,8 @@ const SHEET_SECTIONS = [
     { href: "/quran-radio",         label: "إذاعة القرآن",       Icon: Radio },
     { href: "/quran-live",          label: "البث المباشر",       Icon: Tv },
     { href: "/quran-circles",       label: "حلقات التحفيظ",      Icon: Users },
+    { href: "/quran-memorization",  label: "اختبارات الحفظ",     Icon: Zap },
+    { href: "/mutashabihat",        label: "الآيات المتشابهات",  Icon: GitBranch },
     { href: "/muezzins",            label: "مكتبة المؤذنين",     Icon: Mic },
   ]},
 
@@ -89,8 +91,9 @@ const SHEET_SECTIONS = [
     { href: "/seerah",          label: "السيرة النبوية",         Icon: BookUser },
     { href: "/sahabah",         label: "الصحابة الكرام",         Icon: Users },
     { href: "/prophets",        label: "الأنبياء والرسل",         Icon: Star },
-    { href: "/stories",         label: "القصص الإسلامية",        Icon: BookOpen },
-    { href: "/islamic-stories", label: "صحابة وفتوحات",          Icon: Waypoints },
+    { href: "/stories",            label: "القصص الإسلامية",     Icon: BookOpen },
+    { href: "/islamic-stories",    label: "صحابة وفتوحات",       Icon: Waypoints },
+    { href: "/islamic-landmarks",  label: "المشاهد والمساجد",    Icon: Landmark },
   ]},
 
   /* ── الدروس والمكتبة ── */
