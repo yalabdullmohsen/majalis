@@ -34244,6 +34244,75 @@ footer *,
   color: var(--elite-ink, #1A1A1A) !important;
 }
 
+/* استثناء .set-section--security — خلفية خضراء-فاتحة (#E8F5E9)
+   القائمة الكبيرة §74b تُجبره على color:#fff مما يُفقد النص التباين */
+.set-section.set-section--security,
+.set-section.set-section--security * {
+  color: var(--majalis-emerald-deep, #0A3D28) !important;
+}
+
+/* استثناء .asp-notice — خلفية نعناعية-فاتحة (#ECFDF5) مع نص داكن
+   القائمة الكبيرة §74b تُجبره على color:#fff (محددية 0,1,0)
+   نستخدم body .asp-notice (0,1,1) لنتغلب عليها */
+body .asp-notice,
+body .asp-notice * {
+  color: #123F36 !important;
+}
+
+/* استثناء بطاقات الأربعين النووية (an-card) — خلفية بيضاء (#fff)
+   القائمة الكبيرة §74b تُجبرها على color:#fff = نص أبيض على بطاقة بيضاء! */
+body .an-card,
+body .an-card *:not(.an-cat--active):not(.an-cat--active *) {
+  color: var(--majalis-ink, #1A1A1A) !important;
+}
+body .an-card--read,
+body .an-card--read * {
+  color: var(--majalis-ink, #1A1A1A) !important;
+}
+
+/* استثناء شارات جودة الإجابة (ra-badge) — خلفيات فاتحة
+   القائمة الكبيرة §74b تُجبرها على color:#fff */
+body .ra-badge--full {
+  color: var(--mn-text-active, #123F36) !important;
+}
+body .ra-badge--partial {
+  color: var(--majalis-emerald, #0E6E52) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   استثناءات العناصر ذات الخلفية الفاتحة (rgba شفاف منخفض الكثافة)
+   هذه عناصر أُضيفت للقائمة الكبيرة §74b خطأً — خلفياتها شبه-شفافة فاتحة
+   ══════════════════════════════════════════════════════════════════ */
+
+/* .sh-intro-box — rgba(14,110,82,.06) شبه-شفاف فاتح, color:#153025 مكتوب في الأصل */
+body .sh-intro-box,
+body .sh-intro-box *:not(svg) {
+  color: #153025 !important;
+}
+
+/* .jn-intro — rgba(31,77,58,.06) شبه-شفاف فاتح */
+body .jn-intro,
+body .jn-intro * {
+  color: #153025 !important;
+}
+
+/* .nb-intro-box — rgba(31,77,58,.06) شبه-شفاف فاتح */
+body .nb-intro-box,
+body .nb-intro-box * {
+  color: #1E293B !important;
+}
+
+/* .ra-opinions-note — rgba(31,77,58,.1) شبه-شفاف فاتح، نصه الأصلي زمردي */
+body .ra-opinions-note,
+body .ra-opinions-note * {
+  color: var(--majalis-emerald, #0E6E52) !important;
+}
+
+/* .p2t-btn--outline — خلفيته var(--majalis-panel) فاتحة */
+body .p2t-btn--outline {
+  color: var(--majalis-emerald-deep, #123F36) !important;
+}
+
 /* تحديد الأيقونات ضمن الخلفيات الداكنة */
 .hpv4-hero svg,
 .lesson-unified-card__header svg,
