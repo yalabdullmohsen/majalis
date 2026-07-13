@@ -231,14 +231,15 @@ export default function StudyRoomPage() {
       />
 
       {/* Preset selector */}
-      <div className="sr-presets">
+      <div className="sr-presets" role="tablist" aria-label="إعدادات مسبقة للجلسة">
         {PRESETS.map((p, i) => (
           <button
             key={p.label}
+            role="tab"
             type="button"
             className={`sr-preset${presetIdx === i ? " sr-preset--active" : ""}`}
             onClick={() => { setPresetIdx(i); reset(); }}
-            aria-pressed={presetIdx === i}
+            aria-selected={presetIdx === i}
             disabled={phase !== "idle"}
           >
             {p.label}

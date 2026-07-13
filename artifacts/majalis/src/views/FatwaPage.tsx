@@ -151,28 +151,30 @@ export default function FatwaPage() {
             aria-label="بحث في الفتاوى"
           />
 
-          <div className="content-hub-chips">
+          <div className="content-hub-chips" role="tablist" aria-label="تصفية تصنيف الفتوى">
             {["الكل", ...FATWA_CATEGORIES].map((cat) => (
               <button
                 key={cat}
+                role="tab"
                 type="button"
                 onClick={() => setCategory(cat)}
                 className={category === cat ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-                aria-pressed={category === cat}
+                aria-selected={category === cat}
               >
                 {cat}
               </button>
             ))}
           </div>
 
-          <div className="content-hub-chips ftp-chips-sub">
+          <div className="content-hub-chips ftp-chips-sub" role="tablist" aria-label="تصفية صيغة الفتوى">
             {[["الكل", "الكل"], ["written", "مكتوبة"], ["audio", "صوتية"]].map(([val, label]) => (
               <button
                 key={val}
+                role="tab"
                 type="button"
                 onClick={() => setFormat(val)}
                 className={format === val ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-                aria-pressed={format === val}
+                aria-selected={format === val}
               >
                 {label}
               </button>
