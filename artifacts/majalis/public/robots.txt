@@ -7,12 +7,15 @@ Disallow: /admin
 Disallow: /admin/
 Disallow: /login
 Disallow: /api/
+Disallow: /search/
 
 User-agent: Googlebot
 Allow: /
+Disallow: /search/
 
 User-agent: Bingbot
 Allow: /
+Disallow: /search/
 
 Host: majlisilm.com
 Sitemap: https://majlisilm.com/sitemap.xml

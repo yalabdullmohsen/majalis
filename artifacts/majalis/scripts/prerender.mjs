@@ -89,13 +89,43 @@ function replaceJsonLd(html, jsonLdArr) {
   return cleaned.replace("</head>", `${tag}\n</head>`);
 }
 function injectNoscript(html, route) {
-  const noscript = `<noscript><div dir="rtl" lang="ar"><h1>${esc(route.title.split(" | ")[0])}</h1><p>${esc(route.description)}</p><a href="${siteUrl}/">الرئيسية</a></div></noscript>`;
-  return html.replace('<div id="root">', `${noscript}<div id="root">`);
+  const h1 = esc(route.title.split(" | ")[0]);
+  const desc = esc(route.description);
+  const keywords = route.keywords ? route.keywords.slice(0, 5) : [];
+  const keywordLinks = keywords
+    .map(k => `<a href="${siteUrl}/search?q=${encodeURIComponent(k)}">${esc(k)}</a>`)
+    .join(" · ");
+  const noscript = [
+    `<noscript>`,
+    `<div dir="rtl" lang="ar" style="font-family:sans-serif;max-width:900px;margin:0 auto;padding:1rem">`,
+    `<h1>${h1}</h1>`,
+    `<p>${desc}</p>`,
+    keywordLinks ? `<p>${keywordLinks}</p>` : "",
+    `<nav><a href="${siteUrl}/">الرئيسية</a> · <a href="${siteUrl}/search">البحث</a></nav>`,
+    `</div>`,
+    `</noscript>`,
+  ].filter(Boolean).join("\n");
+  return html.replace('<div id="root">', `${noscript}\n<div id="root">`);
 }
+
+/**
+ * يُزيل الـnoscript الخاص بالصفحة الرئيسية من القالب قبل استخدامه للصفحات الفرعية.
+ * يمنع نقل محتوى الرئيسية (الدروس/المكتبة/العلماء...) إلى كل الصفحات.
+ */
+function stripHomeNoscript(html) {
+  // يزيل كتلة التعليق + noscript الكبيرة التابعة لها
+  return html
+    .replace(/<!--\s*محتوى للزواحف[^<]*-->\s*<noscript>[\s\S]*?<\/noscript>/gi, "")
+    .replace(/<noscript>\s*<\/noscript>/gi, ""); // يزيل الـnoscript الفارغة كذلك
+}
+
 function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
 
 // Skip noindex routes
 const SKIP_ROBOTS = ["noindex"];
+
+// نموذج HTML للصفحات الفرعية — بدون noscript الصفحة الرئيسية
+const baseHtmlForRoutes = stripHomeNoscript(baseHtml);
 
 let generated = 0;
 let skipped = 0;
@@ -109,7 +139,7 @@ for (const route of routes) {
   const desc = route.description;
   const ogType = route.ogType || "website";
 
-  let html = baseHtml;
+  let html = baseHtmlForRoutes;
   html = replaceTitle(html, title);
   html = replaceMeta(html, "name", "description", desc);
   html = replaceMeta(html, "property", "og:title", title);
