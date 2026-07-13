@@ -324,7 +324,7 @@ export default function UserStatsPage() {
       <PageHeader
         eyebrow="ملفك الشخصي"
         title={`أهلاً، ${displayName}`}
-        subtitle="إنجازاتك ومستواك وتقدمك في تطبيق المجالس."
+        subtitle="إنجازاتك ومستواك وتقدمك في المجلس العلمي."
       />
 
       {/* ── بطاقة الهوية ── */}
