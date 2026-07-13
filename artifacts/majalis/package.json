@@ -12,6 +12,7 @@
     "build:curriculum": "node scripts/build-curriculum-topics.mjs",
     "generate:rulings": "node scripts/build-curriculum-topics.mjs && node scripts/generate-rulings-encyclopedia.mjs",
     "verify:rulings": "node scripts/verify-rulings-encyclopedia.mjs",
+    "verify:fonts": "node scripts/verify-font-consistency.mjs",
     "import:content": "node scripts/import-content.mjs",
     "import:phase2-trial": "node scripts/import-phase2-trial.mjs",
     "verify:phase2-import": "node scripts/verify-phase2-import.mjs",

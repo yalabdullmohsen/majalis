@@ -179,8 +179,7 @@ html {
 /* ── Forms ── */
 .ds-input,
 .login-field input,
-.lessons-v2-search input,
-.quran-v2-toolbar__search {
+.lessons-v2-search input {
   width: 100%;
   min-height: 2.25rem;
   padding: 0.4rem 0.65rem;
@@ -444,26 +443,6 @@ html {
 
 .qa-v2-category-card {
   padding: var(--ds-space-3);
-}
-
-/* ── Quran toolbar minimal ── */
-.quran-v2-toolbar__tools {
-  display: none;
-}
-
-.quran-v2-toolbar__settings-link {
-  font-size: var(--ds-text-xs);
-  font-weight: 700;
-  color: var(--ds-emerald);
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.quran-v2-toolbar__search-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ds-space-2);
-  align-items: center;
 }
 
 /* ── Login ── */
