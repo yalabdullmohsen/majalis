@@ -310,7 +310,6 @@ export async function generateQuestion(
 
     case "multiple-choice": {
       const { answer } = hideSecondHalf(ayah.text);
-      const words = answer.split(" ").slice(0, 3).join(" ");
       const fakeEndings = ["وَهُوَ العَلِيمُ الحَكِيمُ", "إِنَّهُ هُوَ التَّوَّابُ الرَّحِيمُ", "وَاللَّهُ بِكُلِّ شَيءٍ عَلِيمٌ"];
       const options = [answer, ...fakeEndings.filter((f) => f !== answer)].slice(0, 4).sort(() => Math.random() - 0.5);
       const { prompt: half } = hideSecondHalf(ayah.text);

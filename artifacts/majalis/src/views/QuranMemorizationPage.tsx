@@ -16,7 +16,7 @@ import {
   type QuizQuestion,
   type AyahCard,
 } from "@/lib/quran-memorization";
-import { BookOpen, ChevronLeft, RotateCcw, Plus } from "lucide-react";
+import { BookOpen, ChevronLeft, RotateCcw } from "lucide-react";
 
 const ALL_TEST_TYPES: TestType[] = [
   "complete-ayah",
