@@ -95,8 +95,8 @@ function EditDialog({ el, path, onDone }: EditDialogProps) {
   }, [onDone, save]);
 
   return (
-    <div className="ase-overlay" onClick={(e) => { if (e.target === e.currentTarget) onDone(); }}>
-      <div className="ase-dialog" dir="rtl">
+    <div className="ase-overlay" onClick={(e) => { if (e.target === e.currentTarget) onDone(); }} aria-hidden="true">
+      <div className="ase-dialog" role="dialog" aria-modal="true" aria-label="تعديل النص" dir="rtl">
         <div className="ase-dialog__head">
           <span className="ase-dialog__tag">{el.tagName.toLowerCase()}</span>
           <p className="ase-dialog__title">تعديل النص</p>

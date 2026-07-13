@@ -136,6 +136,27 @@ export default function LessonDetailPage({
   const [loading, setLoading] = useState(!initialLesson);
 
   useEffect(() => {
+    if (!kuwaitLesson) return;
+    applyPageSeo({
+      path: `/lesson/${kuwaitLesson.id}`,
+      title: `${kuwaitLesson.title} | المجلس العلمي`,
+      description: kuwaitLesson.description || `درس ${kuwaitLesson.title} للشيخ ${kuwaitLesson.sheikhName} في ${kuwaitLesson.mosque}، ${kuwaitLesson.governorate}.`,
+      keywords: kuwaitLesson.keywords ?? ["درس شرعي", kuwaitLesson.category, kuwaitLesson.sheikhName],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "Event",
+        name: kuwaitLesson.title,
+        description: kuwaitLesson.description || `درس ${kuwaitLesson.title} للشيخ ${kuwaitLesson.sheikhName}`,
+        location: { "@type": "Place", name: kuwaitLesson.mosque, address: { "@type": "PostalAddress", addressLocality: kuwaitLesson.governorate, addressCountry: "KW" } },
+        organizer: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        performer: { "@type": "Person", name: kuwaitLesson.sheikhName },
+        ...(kuwaitLesson.startDate ? { startDate: kuwaitLesson.startDate } : {}),
+        inLanguage: "ar",
+      }],
+    });
+  }, [kuwaitLesson]);
+
+  useEffect(() => {
     if (initialLesson) {
       Promise.all([
         fetchRelatedLessons(initialLesson),
