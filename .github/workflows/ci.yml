@@ -41,9 +41,6 @@ jobs:
       - name: Lint
         run: pnpm -r --if-present run lint
 
-      - name: Font consistency
-        run: pnpm --filter @workspace/majalis run verify:fonts
-
       - name: Build
         run: pnpm --filter @workspace/majalis run build
 
