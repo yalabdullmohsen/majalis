@@ -219,8 +219,8 @@ function StatusTab() {
       <div className="tgm-badges-row">
         <Badge ok={data.tokenConfigured} label="Telegram Token" />
         <Badge ok={data.anthropicConfigured} label="Anthropic API" />
-        <Badge ok={!!data.bot} label="Bot Connected" />
-        <Badge ok={!!data.webhook?.url} label="Webhook Active" />
+        <Badge ok={!!data.bot} label="البوت متصل" />
+        <Badge ok={!!data.webhook?.url} label="Webhook نشط" />
       </div>
 
       {data.bot && (

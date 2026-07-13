@@ -277,15 +277,6 @@
       ]
     },
     {
-      "source": "/sw.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
-        }
-      ]
-    },
-    {
       "source": "/(logo\\.png|logo-icon\\.png|favicon\\.png|favicon\\.svg|opengraph\\.jpg)",
       "headers": [
         {

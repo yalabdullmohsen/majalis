@@ -23,6 +23,15 @@ export default function AmrBilMarufPage() {
       title: "الأمر بالمعروف والنهي عن المنكر | المجلس العلمي",
       description: "مراتب الأمر بالمعروف والنهي عن المنكر الثلاث وشروطها وأحكامها وفق المذاهب الفقهية الأربعة.",
       keywords: ["أمر بالمعروف", "نهي عن المنكر", "مراتب", "شروط", "فقه"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: "الأمر بالمعروف والنهي عن المنكر",
+        description: "مراتب الأمر بالمعروف والنهي عن المنكر الثلاث وشروطها وأحكامها وفق المذاهب الفقهية الأربعة.",
+        url: "https://majlisilm.com/amr-bil-maruf",
+        inLanguage: "ar",
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+      }],
     });
   }, []);
 

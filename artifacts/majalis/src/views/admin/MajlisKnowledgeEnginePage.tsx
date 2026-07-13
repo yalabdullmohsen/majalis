@@ -232,10 +232,10 @@ function MajlisKnowledgeEngineContent() {
             <h3 className="mke-section-h3">\u062d\u0627\u0644\u0629 \u0627\u0644\u062e\u062f\u0645\u0627\u062a</h3>
             <div className="mke-service-badges">
               <StatusBadge ok={stats?.vision?.visionEnabled ?? false} label="Vision AI" />
-              <StatusBadge ok={(stats?.subsystems?.vision as { visionEnabled?: boolean })?.visionEnabled ?? stats?.vision?.visionEnabled ?? false} label="Vision v2" />
-              <StatusBadge ok={stats?.database?.status === "connected"} label="Database" />
-              <StatusBadge ok={stats?.search?.embeddings ?? stats?.search?.status === "embeddings_ready"} label="Semantic Search" />
-              <StatusBadge ok={Boolean(stats?.subsystems?.notifications)} label="Notifications" />
+              <StatusBadge ok={(stats?.subsystems?.vision as { visionEnabled?: boolean })?.visionEnabled ?? stats?.vision?.visionEnabled ?? false} label="Vision AI v2" />
+              <StatusBadge ok={stats?.database?.status === "connected"} label="قاعدة البيانات" />
+              <StatusBadge ok={stats?.search?.embeddings ?? stats?.search?.status === "embeddings_ready"} label="البحث الدلالي" />
+              <StatusBadge ok={Boolean(stats?.subsystems?.notifications)} label="الإشعارات" />
             </div>
           </section>
 
