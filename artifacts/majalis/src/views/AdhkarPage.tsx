@@ -255,19 +255,20 @@ export default function AdhkarPage() {
       />
 
       {/* شريط التصنيفات */}
-      <div className="content-hub-chips adhkar-chips">
+      <div className="content-hub-chips adhkar-chips" role="tablist" aria-label="تصفية الأذكار">
         <button
+          role="tab"
           type="button"
           className={`content-hub-chip${category === "all" ? " content-hub-chip--active" : ""}`}
           onClick={() => changeCategory("all")}
-          aria-pressed={category === "all"}
+          aria-selected={category === "all"}
         >الكل</button>
         {FEATURED_CATEGORIES.map((cat) => (
           <button
-            key={cat.id} type="button"
+            key={cat.id} role="tab" type="button"
             className={`content-hub-chip${category === cat.id ? " content-hub-chip--active" : ""}`}
             onClick={() => changeCategory(cat.id)}
-            aria-pressed={category === cat.id}
+            aria-selected={category === cat.id}
           >{cat.name}</button>
         ))}
       </div>

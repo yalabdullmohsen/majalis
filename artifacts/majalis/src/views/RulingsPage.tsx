@@ -186,12 +186,13 @@ export default function RulingsPage() {
           onSelect={handleCategorySelect}
         />
       ) : (
-        <div className="content-hub-chips ruling-quick-chips">
+        <div className="content-hub-chips ruling-quick-chips" role="tablist" aria-label="تصفية الأحكام">
           <button
+            role="tab"
             type="button"
             className={category === "الكل" ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
             onClick={() => handleCategorySelect("الكل")}
-            aria-pressed={category === "الكل"}
+            aria-selected={category === "الكل"}
           >
             {isAdmin ? `الكل (${encyclopediaTotal || total})` : "الكل"}
           </button>
@@ -201,12 +202,13 @@ export default function RulingsPage() {
             return (
               <button
                 key={cat.slug}
+                role="tab"
                 type="button"
                 className={
                   category === cat.name ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"
                 }
                 onClick={() => handleCategorySelect(cat.name)}
-                aria-pressed={category === cat.name}
+                aria-selected={category === cat.name}
               >
                 <CatIcon name={cat.icon} />{cat.name}{isAdmin ? ` (${count})` : ""}
               </button>

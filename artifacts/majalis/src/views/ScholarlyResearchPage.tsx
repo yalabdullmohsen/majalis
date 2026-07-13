@@ -343,14 +343,15 @@ export default function ScholarlyResearchPage() {
             {/* ── الأسئلة المقترحة مع فلتر النية ── */}
             {!result && !loading && (
               <div className="srp-suggestions">
-                <div className="srp-intent-row" role="group" aria-label="تصفية الأسئلة">
+                <div className="srp-intent-row" role="tablist" aria-label="تصفية الأسئلة">
                   {INTENTS.map((it) => (
                     <button
                       key={it}
+                      role="tab"
                       type="button"
                       onClick={() => setIntent(it)}
                       className={`srp-intent-chip${intent === it ? " srp-intent-chip--active" : ""}`}
-                      aria-pressed={intent === it}
+                      aria-selected={intent === it}
                     >
                       {INTENT_LABELS[it]}
                     </button>

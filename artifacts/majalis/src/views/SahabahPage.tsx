@@ -1340,14 +1340,15 @@ export default function SahabahPage() {
         />
 
         {/* categories */}
-        <div className="sb-cats">
+        <div className="sb-cats" role="tablist" aria-label="تصفية الصحابة">
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
+              role="tab"
               type="button"
               className={`sb-cat-btn${activeCat === cat ? " sb-cat-btn--active" : ""}`}
               onClick={() => setActiveCat(cat)}
-              aria-pressed={activeCat === cat}
+              aria-selected={activeCat === cat}
             >
               {cat}
             </button>

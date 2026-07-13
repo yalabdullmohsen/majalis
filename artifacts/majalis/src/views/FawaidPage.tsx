@@ -146,14 +146,15 @@ export default function FawaidPage({
         className="page-search-input full content-hub-search"
         aria-label="بحث في الفوائد"
       />
-      <div className="content-hub-chips">
+      <div className="content-hub-chips" role="tablist" aria-label="تصفية الفوائد">
         {DISPLAY_CATEGORIES.map((cat) => (
           <button
             key={cat}
+            role="tab"
             type="button"
             onClick={() => setCategory(cat)}
             className={category === cat ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-            aria-pressed={category === cat}
+            aria-selected={category === cat}
           >
             {cat}
           </button>

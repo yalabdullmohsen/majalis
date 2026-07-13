@@ -139,12 +139,13 @@ export default function TopicsIndexPage() {
       />
 
       {/* Category tabs */}
-      <div className="tip-category-bar">
+      <div className="tip-category-bar" role="tablist" aria-label="تصفية الموضوعات">
         <button
+          role="tab"
           type="button"
           className={activeCategory === ALL_CAT ? "tip-cat-btn tip-cat-btn--active" : "tip-cat-btn"}
           onClick={() => setActiveCategory(ALL_CAT)}
-          aria-pressed={activeCategory === ALL_CAT}
+          aria-selected={activeCategory === ALL_CAT}
         >
           {ALL_CAT}
         </button>
@@ -153,10 +154,11 @@ export default function TopicsIndexPage() {
           return (
             <button
               key={cat}
+              role="tab"
               type="button"
               className={activeCategory === cat ? "tip-cat-btn tip-cat-btn--active" : "tip-cat-btn"}
               onClick={() => setActiveCategory(cat)}
-              aria-pressed={activeCategory === cat}
+              aria-selected={activeCategory === cat}
             >
               <meta.Icon size={14} strokeWidth={1.8} aria-hidden="true" /> {meta.label}
             </button>

@@ -533,14 +533,15 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
 
       <div className="hadith-filter-section">
         <p className="hadith-filter-label">المجموعة</p>
-        <div className="content-hub-chips">
+        <div className="content-hub-chips" role="tablist" aria-label="تصفية مجموعة الحديث">
           {collections.map((c) => (
             <button
               key={c}
+              role="tab"
               type="button"
               onClick={() => setActiveCollection(c)}
               className={activeCollection === c ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-              aria-pressed={activeCollection === c}
+              aria-selected={activeCollection === c}
             >
               {c === "الكل" ? "الكل" : collectionLabel(c)}
             </button>
@@ -602,14 +603,15 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
       </div>
 
       {/* Category chips (quick filter on desktop) */}
-      <div className="hadith-quick-cats">
+      <div className="hadith-quick-cats" role="tablist" aria-label="تصفية موضوع الحديث">
         {CATEGORIES.map((cat) => (
           <button
             key={cat.id}
+            role="tab"
             type="button"
             className={`hadith-quick-cat ${activeCategory === cat.id ? "hadith-quick-cat--active" : ""}`}
             onClick={() => setActiveCategory(cat.id)}
-            aria-pressed={activeCategory === cat.id}
+            aria-selected={activeCategory === cat.id}
           >
             {cat.label}
           </button>

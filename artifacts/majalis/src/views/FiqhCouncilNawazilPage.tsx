@@ -49,22 +49,24 @@ export default function FiqhCouncilNawazilPage() {
 
       <FiqhCouncilSubnav />
 
-      <div className="content-hub-chips fiqh-nawazil-chips">
+      <div className="content-hub-chips fiqh-nawazil-chips" role="tablist" aria-label="تصفية النوازل الفقهية">
         <button
+          role="tab"
           type="button"
           className={!activeTopic ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
           onClick={() => setActiveTopic(null)}
-          aria-pressed={!activeTopic}
+          aria-selected={!activeTopic}
         >
           الكل
         </button>
         {NAWAZIL_TOPICS.map((topic) => (
           <button
             key={topic.slug}
+            role="tab"
             type="button"
             className={activeTopic === topic.slug ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
             onClick={() => setActiveTopic(topic.slug)}
-            aria-pressed={activeTopic === topic.slug}
+            aria-selected={activeTopic === topic.slug}
           >
             {topic.title}
           </button>

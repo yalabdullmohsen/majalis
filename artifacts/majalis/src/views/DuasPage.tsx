@@ -1129,14 +1129,15 @@ export default function DuasPage() {
             aria-label="بحث"
           />
         </div>
-        <div className="duas-cats">
+        <div className="duas-cats" role="tablist" aria-label="تصفية الأدعية">
           {CATEGORIES.map((c) => (
             <button
               key={c}
+              role="tab"
               type="button"
               className={`duas-cat${category === c ? " duas-cat--active" : ""}`}
               onClick={() => setCategory(c)}
-              aria-pressed={category === c}
+              aria-selected={category === c}
             >
               {c}
             </button>

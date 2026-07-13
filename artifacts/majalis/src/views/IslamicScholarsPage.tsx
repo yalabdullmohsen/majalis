@@ -1358,30 +1358,32 @@ export default function IslamicScholarsPage() {
           />
         </div>
         <div className="sch-filters">
-          <div className="sch-filter-group">
+          <div className="sch-filter-group" role="tablist" aria-label="تصفية حسب الحقبة">
             <Filter size={13} />
             <span>الحقبة:</span>
             {ERAS.map(e => (
               <button
                 key={e}
+                role="tab"
                 type="button"
                 className={["sch-filter-btn", era === e ? "sch-filter-btn--active" : ""].join(" ")}
                 onClick={() => setEra(e)}
-                aria-pressed={era === e}
+                aria-selected={era === e}
               >
                 {e}
               </button>
             ))}
           </div>
-          <div className="sch-filter-group">
+          <div className="sch-filter-group" role="tablist" aria-label="تصفية حسب التخصص">
             <span>التخصص:</span>
             {SPECIALTIES.map(s => (
               <button
                 key={s}
+                role="tab"
                 type="button"
                 className={["sch-filter-btn", specialty === s ? "sch-filter-btn--active" : ""].join(" ")}
                 onClick={() => setSpecialty(s)}
-                aria-pressed={specialty === s}
+                aria-selected={specialty === s}
               >
                 {s}
               </button>

@@ -77,14 +77,15 @@ export default function UpdatesPage() {
         subtitle="قرارات وفتاوى ودروس ودورات وكتب وإعلانات، مرتّبة زمنياً. يُحدَّث تلقائياً كل 6 ساعات من مصادر موثوقة."
       />
 
-      <div className="content-hub-chips">
+      <div className="content-hub-chips" role="tablist" aria-label="تصفية المستجدات">
         {["الكل", ...UPDATE_TYPES].map((t) => (
           <button
             key={t}
+            role="tab"
             type="button"
             onClick={() => setFilter(t)}
             className={filter === t ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-            aria-pressed={filter === t}
+            aria-selected={filter === t}
           >
             {t}
           </button>

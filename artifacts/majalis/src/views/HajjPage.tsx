@@ -391,14 +391,15 @@ export default function HajjPage() {
         </div>
 
         {/* tabs */}
-        <nav className="hj-tabs" aria-label="أقسام الحج">
+        <nav className="hj-tabs" role="tablist" aria-label="أقسام الحج">
           {TABS.map((t) => (
             <button
               key={t.id}
+              role="tab"
               type="button"
               className={`hj-tab${tab === t.id ? " hj-tab--active" : ""}`}
               onClick={() => setTab(t.id)}
-              aria-pressed={tab === t.id}
+              aria-selected={tab === t.id}
             >
               <span className="hj-tab__icon"><SectionIcon name={t.icon} size={24} /></span>
               <span className="hj-tab__label">{t.label}</span>

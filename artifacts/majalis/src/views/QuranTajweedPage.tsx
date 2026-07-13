@@ -463,14 +463,15 @@ export default function QuranTajweedPage() {
       </div>
 
       {/* فلتر الأحكام */}
-      <div className="ds-filters-bar">
+      <div className="ds-filters-bar" role="tablist" aria-label="تصفية أحكام التجويد">
         {CATEGORIES.map(c => (
           <button
             key={c}
+            role="tab"
             type="button"
             className={`ds-chip${category === c ? " ds-chip--active" : ""}`}
             onClick={() => setCategory(c)}
-            aria-pressed={category === c}
+            aria-selected={category === c}
           >
             {c}
           </button>

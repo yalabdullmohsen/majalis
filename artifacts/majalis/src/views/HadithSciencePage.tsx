@@ -1090,15 +1090,15 @@ export default function HadithSciencePage() {
             </button>
           )}
         </div>
-        <div className="hs-cats" role="list" aria-label="تصفية حسب الباب">
+        <div className="hs-cats" role="tablist" aria-label="تصفية حسب الباب">
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
+              role="tab"
               type="button"
-              role="listitem"
               className={`hs-cat-chip${category === cat ? " hs-cat-chip--active" : ""}`}
               onClick={() => setCategory(cat)}
-              aria-pressed={category === cat}
+              aria-selected={category === cat}
             >
               {cat}
             </button>

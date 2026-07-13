@@ -87,14 +87,15 @@ export default function AnnualCoursesPage() {
         aria-label="بحث في الدورات العلمية"
       />
 
-      <div className="content-hub-chips">
+      <div className="content-hub-chips" role="tablist" aria-label="تصفية الدورات">
         {["الكل", ...COURSE_TYPES].map((t) => (
           <button
             key={t}
+            role="tab"
             type="button"
             onClick={() => setCourseType(t)}
             className={courseType === t ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-            aria-pressed={courseType === t}
+            aria-selected={courseType === t}
           >
             {t}
           </button>

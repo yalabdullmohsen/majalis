@@ -177,15 +177,15 @@ export default function ArbaeenNawawiPage() {
           onChange={(e) => setQuery(e.target.value)}
           aria-label="البحث في الأربعين النووية"
         />
-        <div className="an-cats" role="list">
+        <div className="an-cats" role="tablist" aria-label="تصفية الأربعين النووية">
           {CATS.map((c) => (
             <button
               key={c}
+              role="tab"
               type="button"
-              role="listitem"
               className={`an-cat${category === c ? " an-cat--active" : ""}`}
               onClick={() => setCategory(c)}
-              aria-pressed={category === c}
+              aria-selected={category === c}
             >
               {c}
             </button>
@@ -193,7 +193,6 @@ export default function ArbaeenNawawiPage() {
           {read.size > 0 && (
             <button
               type="button"
-              role="listitem"
               className={`an-cat an-cat--read${showReadOnly ? " an-cat--active" : ""}`}
               onClick={() => setShowReadOnly((v) => !v)}
               aria-pressed={showReadOnly}

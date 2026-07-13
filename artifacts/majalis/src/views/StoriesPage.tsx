@@ -85,14 +85,15 @@ export default function StoriesPage() {
         className="page-search-input full content-hub-search"
         aria-label="بحث في القصص"
       />
-      <div className="content-hub-chips">
+      <div className="content-hub-chips" role="tablist" aria-label="تصفية القصص">
         {categories.map((c) => (
           <button
             key={c}
+            role="tab"
             type="button"
             onClick={() => setCategory(c)}
             className={category === c ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-            aria-pressed={category === c}
+            aria-selected={category === c}
           >
             {c}
           </button>

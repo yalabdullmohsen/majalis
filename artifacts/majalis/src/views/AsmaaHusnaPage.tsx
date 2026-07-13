@@ -244,14 +244,15 @@ export default function AsmaaHusnaPage() {
             aria-label="بحث في الأسماء الحسنى"
           />
         </div>
-        <div className="ah-cat-chips">
+        <div className="ah-cat-chips" role="tablist" aria-label="تصفية الأسماء الحسنى">
           {CATEGORIES.map((c) => (
             <button
               key={c}
+              role="tab"
               type="button"
               className={`ah-cat-chip${category === c ? " ah-cat-chip--active" : ""}`}
               onClick={() => setCategory(c)}
-              aria-pressed={category === c}
+              aria-selected={category === c}
             >
               {c}
             </button>

@@ -1221,14 +1221,15 @@ export default function AkhlaqPage() {
           placeholder="ابحث في الأخلاق..."
           aria-label="بحث"
         />
-        <div className="akl-cats">
+        <div className="akl-cats" role="tablist" aria-label="تصفية الأخلاق">
           {CATEGORIES.map((c) => (
             <button
               key={c}
+              role="tab"
               type="button"
               className={`akl-cat${category === c ? " akl-cat--active" : ""}`}
               onClick={() => setCategory(c)}
-              aria-pressed={category === c}
+              aria-selected={category === c}
             >
               {c}
             </button>

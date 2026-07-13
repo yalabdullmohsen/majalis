@@ -408,14 +408,15 @@ export default function DuasQuranPage() {
         />
 
         {/* categories */}
-        <div className="dq-cats">
+        <div className="dq-cats" role="tablist" aria-label="تصفية أدعية القرآن">
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
+              role="tab"
               type="button"
               className={`dq-cat-btn${activeCat === cat ? " dq-cat-btn--active" : ""}`}
               onClick={() => setActiveCat(cat)}
-              aria-pressed={activeCat === cat}
+              aria-selected={activeCat === cat}
             >
               {cat}
             </button>

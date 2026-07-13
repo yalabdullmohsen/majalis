@@ -1422,15 +1422,15 @@ export default function HikamSalafPage() {
             </button>
           )}
         </div>
-        <div className="hk-cats" role="list">
+        <div className="hk-cats" role="tablist" aria-label="تصفية حكم السلف">
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
+              role="tab"
               type="button"
-              role="listitem"
               className={`hk-cat${category === cat ? " hk-cat--active" : ""}`}
               onClick={() => { setCategory(cat); setShowFavsOnly(false); }}
-              aria-pressed={category === cat}
+              aria-selected={category === cat}
             >
               {cat}
             </button>
@@ -1438,7 +1438,6 @@ export default function HikamSalafPage() {
           {favorites.size > 0 && (
             <button
               type="button"
-              role="listitem"
               className={`hk-cat hk-cat--fav-filter${showFavsOnly ? " hk-cat--active" : ""}`}
               onClick={() => { setShowFavsOnly((v) => !v); setCategory("الكل"); }}
               aria-pressed={showFavsOnly}

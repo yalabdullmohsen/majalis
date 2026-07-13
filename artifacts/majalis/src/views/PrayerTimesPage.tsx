@@ -265,14 +265,15 @@ export default function PrayerTimesPage() {
       {/* ── اختيار المحافظة ── */}
       <div className="pt-gov-section">
         <p className="pt-gov-label">المحافظة</p>
-        <div className="pt-gov-chips" role="group" aria-label="اختيار المحافظة">
+        <div className="pt-gov-chips" role="tablist" aria-label="اختيار المحافظة">
           {KUWAIT_GOVERNORATES.map((gov) => (
             <button
               key={gov.id}
+              role="tab"
               type="button"
               className={`pt-gov-chip${govId === gov.id ? " pt-gov-chip--active" : ""}`}
               onClick={() => handleGov(gov.id)}
-              aria-pressed={govId === gov.id}
+              aria-selected={govId === gov.id}
             >
               {gov.name}
             </button>

@@ -615,14 +615,15 @@ export default function SawmPage() {
         </div>
 
         {/* tabs */}
-        <nav className="sw-tabs" aria-label="أقسام الصيام">
+        <nav className="sw-tabs" role="tablist" aria-label="أقسام الصيام">
           {TABS.map((t) => (
             <button
               key={t.id}
+              role="tab"
               type="button"
               className={`sw-tab${tab === t.id ? " sw-tab--active" : ""}`}
               onClick={() => setTab(t.id)}
-              aria-pressed={tab === t.id}
+              aria-selected={tab === t.id}
             >
               <span className="sw-tab__icon"><SectionIcon name={t.icon} size={24} /></span>
               <span className="sw-tab__label">{t.label}</span>

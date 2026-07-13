@@ -47,14 +47,15 @@ export default function FiqhCouncilIssuesPage() {
 
       <FiqhCouncilSubnav />
 
-      <div className="content-hub-chips fci-chips-row">
+      <div className="content-hub-chips fci-chips-row" role="tablist" aria-label="تصفية مسائل مجلس الفقه">
         {["الكل", ...FIQH_COUNCIL_CATEGORIES].map((cat) => (
           <button
             key={cat}
+            role="tab"
             type="button"
             onClick={() => setCategory(cat)}
             className={category === cat ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-            aria-pressed={category === cat}
+            aria-selected={category === cat}
           >
             {cat}
           </button>

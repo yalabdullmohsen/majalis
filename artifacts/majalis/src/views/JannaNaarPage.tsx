@@ -245,14 +245,15 @@ export default function JannaNaarPage() {
       <JannaOfDayCard card={todayJanna} />
 
       {/* Tabs */}
-      <div className="jn-tabs">
+      <div className="jn-tabs" role="tablist" aria-label="الجنة والنار">
         {TABS.map(t => (
           <button
             key={t.id}
+            role="tab"
             type="button"
             className={`jn-tab jn-tab--${t.id}${activeTab === t.id ? " jn-tab--active" : ""}`}
             onClick={() => setActiveTab(t.id)}
-            aria-pressed={activeTab === t.id}
+            aria-selected={activeTab === t.id}
           >{t.label}</button>
         ))}
       </div>

@@ -216,17 +216,18 @@ export default function QaPage({
         className="page-search-input full content-hub-search qa-v2-search"
         aria-label="بحث في الأسئلة والأجوبة"
       />
-      <div className="qa-sort-row qa-v2-sort-row">
+      <div className="qa-sort-row qa-v2-sort-row" role="tablist" aria-label="ترتيب الأسئلة">
         {(Object.keys(QA_SORT_LABELS) as QaSortMode[]).map((mode) => (
           <button
             key={mode}
+            role="tab"
             type="button"
             className={`content-hub-chip${sortMode === mode ? " content-hub-chip--active" : ""}`}
             onClick={() => {
               setSortMode(mode);
               if (mode === "random") handleRandom();
             }}
-            aria-pressed={sortMode === mode}
+            aria-selected={sortMode === mode}
           >
             {QA_SORT_LABELS[mode]}
           </button>
