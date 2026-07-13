@@ -74,6 +74,7 @@ export default function MosqueModePage() {
             type="button"
             className="mosque-mode__silence-dismiss"
             onClick={() => setSilenceAlerted(false)}
+            aria-label="إغلاق التنبيه"
           >
             ✓
           </button>

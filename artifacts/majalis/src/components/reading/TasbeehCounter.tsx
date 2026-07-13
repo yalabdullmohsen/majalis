@@ -129,7 +129,7 @@ export function TasbeehCounter({
           </div>
         )}
         <div className="tasbeeh-counter__actions">
-          <button type="button" className="tasbeeh-counter__btn tasbeeh-counter__btn--primary" onClick={() => increment(1)}>
+          <button type="button" className="tasbeeh-counter__btn tasbeeh-counter__btn--primary" onClick={() => increment(1)} aria-label="إضافة ذكر واحد">
             +1
           </button>
           <button type="button" className="tasbeeh-counter__btn" disabled={!canUndo} onClick={undo}>تراجع</button>

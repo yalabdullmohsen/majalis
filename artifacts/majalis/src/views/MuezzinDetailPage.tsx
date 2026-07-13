@@ -216,7 +216,7 @@ export default function MuezzinDetailPage() {
                 onMouseLeave={() => setHoverStar(0)}
                 onClick={() => handleRate(star)}
                 className={`mzd-star-btn${star <= (hoverStar || userRating) ? " is-active" : ""}`}
-                title={`${star} نجوم`}
+                aria-label={`تقييم ${star} من 5 نجوم`}
               >
                 ★
               </button>
