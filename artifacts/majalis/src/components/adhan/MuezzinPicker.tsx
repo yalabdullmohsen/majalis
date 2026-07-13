@@ -84,7 +84,7 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
                   type="button"
                   onClick={(e) => { e.stopPropagation(); handlePreview(m); }}
                   className={`mzp-preview-btn${isPlaying ? " mzp-preview-btn--playing" : ""}`}
-                  title={isPlaying ? "إيقاف" : "معاينة 15 ثانية"}
+                  aria-label={isPlaying ? "إيقاف معاينة الأذان" : "معاينة الأذان (15 ثانية)"}
                 >
                   {isPlaying ? "⏹" : "▶"}
                 </button>

@@ -131,7 +131,7 @@ export default function MuezzinFavoritesPage() {
                     type="button"
                     onClick={() => handlePreview(m.id, m.audioUrl)}
                     className={`mzf-play-btn${isPlaying ? " is-playing" : ""}`}
-                    title={isPlaying ? "إيقاف" : "معاينة"}
+                    aria-label={isPlaying ? "إيقاف التشغيل" : "معاينة الأذان"}
                   >
                     {isPlaying ? "⏹" : "▶"}
                   </button>
@@ -139,7 +139,7 @@ export default function MuezzinFavoritesPage() {
                     type="button"
                     onClick={() => handleRemove(m.id)}
                     className="mzf-remove-btn"
-                    title="إزالة من المفضلة"
+                    aria-label="إزالة من المفضلة"
                   >
                     <Trash2 size={14} />
                   </button>
