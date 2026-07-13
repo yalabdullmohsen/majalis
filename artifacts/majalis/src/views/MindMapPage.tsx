@@ -70,30 +70,54 @@ function MindNode({
 }
 
 /* ═══════════════════════════════════════════════════
+   عدّ الفروع الكلي في الخريطة
+═══════════════════════════════════════════════════ */
+function countNodes(node: MindMapNode): number {
+  if (!node.children?.length) return 1;
+  return 1 + node.children.reduce((acc, c) => acc + countNodes(c), 0);
+}
+
+/* ═══════════════════════════════════════════════════
    بطاقة الخريطة الذهنية الموسّعة
 ═══════════════════════════════════════════════════ */
-function MindMapCard({ map }: { map: MindMap }) {
+function MindMapCard({ map, forceOpen, onInteract }: { map: MindMap; forceOpen?: boolean; onInteract?: () => void }) {
   const [expanded, setExpanded] = useState(false);
+  const nodeCount = useMemo(() => countNodes(map.root), [map.root]);
+  const isOpen = forceOpen !== undefined ? forceOpen : expanded;
+
+  const toggle = () => {
+    if (forceOpen !== undefined) {
+      setExpanded(!forceOpen);
+      onInteract?.();
+    } else {
+      setExpanded(e => !e);
+    }
+  };
 
   return (
-    <div className={`mm-card${expanded ? " mm-card--open" : ""}`}>
+    <div className={`mm-card${isOpen ? " mm-card--open" : ""}`}>
       <button
         type="button"
         className="mm-card__head"
-        onClick={() => setExpanded(e => !e)}
-        aria-expanded={expanded}
+        onClick={toggle}
+        aria-expanded={isOpen}
       >
         <div className="mm-card__meta">
-          <span className="mm-card__category">{map.category}</span>
+          <div style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
+            <span className="mm-card__category">{map.category}</span>
+            <span style={{ fontSize: "0.65rem", fontWeight: 700, color: "rgba(31,77,58,0.5)", background: "rgba(31,77,58,0.06)", borderRadius: "4px", padding: "0.1rem 0.4rem" }}>
+              {nodeCount} عقدة
+            </span>
+          </div>
           <h3 className="mm-card__title">{map.title}</h3>
           {map.description && <p className="mm-card__desc">{map.description}</p>}
         </div>
         <span className="mm-card__toggle" aria-hidden="true">
-          {expanded ? <X size={18} strokeWidth={2} /> : <ChevronDown size={18} strokeWidth={2} />}
+          {isOpen ? <X size={18} strokeWidth={2} /> : <ChevronDown size={18} strokeWidth={2} />}
         </span>
       </button>
 
-      {expanded && (
+      {isOpen && (
         <div className="mm-card__body">
           <MindNode node={map.root} depth={0} defaultOpen />
         </div>
@@ -108,6 +132,7 @@ function MindMapCard({ map }: { map: MindMap }) {
 export default function MindMapPage() {
   const [activeCategory, setActiveCategory] = useState<string>("الكل");
   const [search, setSearch] = useState("");
+  const [expandAll, setExpandAll] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
     applyPageSeo({
@@ -175,13 +200,42 @@ export default function MindMapPage() {
         />
       </div>
 
+      {/* أزرار التوسيع والطيّ */}
+      {filtered.length > 0 && (
+        <div className="mm-batch-btns">
+          <button
+            type="button"
+            className={`mm-batch-btn${expandAll === true ? " mm-batch-btn--active" : ""}`}
+            onClick={() => setExpandAll(true)}
+            aria-pressed={expandAll === true}
+          >
+            <ChevronDown size={14} strokeWidth={2.5} />
+            توسيع الكل
+          </button>
+          <button
+            type="button"
+            className={`mm-batch-btn${expandAll === false ? " mm-batch-btn--active" : ""}`}
+            onClick={() => setExpandAll(false)}
+            aria-pressed={expandAll === false}
+          >
+            <ChevronLeft size={14} strokeWidth={2.5} />
+            طيّ الكل
+          </button>
+        </div>
+      )}
+
       {/* قائمة الخرائط */}
       <div className="mm-list">
         {filtered.length === 0 ? (
           <p className="mm-empty">لا توجد خرائط في هذه الفئة حتى الآن</p>
         ) : (
           filtered.map(map => (
-            <MindMapCard key={map.id} map={map} />
+            <MindMapCard
+              key={map.id}
+              map={map}
+              forceOpen={expandAll}
+              onInteract={() => setExpandAll(undefined)}
+            />
           ))
         )}
       </div>

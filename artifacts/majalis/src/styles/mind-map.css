@@ -80,6 +80,32 @@
   color: #FFFFFF;
 }
 
+/* ── أزرار التوسيع/الطيّ الجماعي ── */
+.mm-batch-btns {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-bottom: 0.85rem;
+}
+.mm-batch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.75rem;
+  border: 1.5px solid rgba(31,77,58,0.18);
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(31,77,58,0.65);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.mm-batch-btn:hover { background: rgba(31,77,58,0.06); border-color: rgba(31,77,58,0.35); color: #176B57; }
+.mm-batch-btn--active { background: rgba(31,77,58,0.09); border-color: rgba(31,77,58,0.4); color: #176B57; }
+
 /* ── قائمة البطاقات ── */
 .mm-list {
   display: flex;
