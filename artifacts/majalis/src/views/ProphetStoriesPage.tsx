@@ -831,14 +831,15 @@ export default function ProphetStoriesPage() {
 
       {/* تبويبات العرض */}
       <div className="prophets-light-section">
-        <div className="prophets-lux-tabs">
+        <div className="prophets-lux-tabs" role="tablist" aria-label="طريقة عرض قصص الأنبياء">
           {TABS.map(t => (
             <button
               key={t.id}
               type="button"
+              role="tab"
               className={`prophets-lux-tab ${view === t.id ? "prophets-lux-tab--active" : ""}`}
               onClick={() => setView(t.id)}
-              aria-pressed={view === t.id}
+              aria-selected={view === t.id}
             >
               {t.id === "grid"      && <><LayoutList size={14} strokeWidth={1.8} aria-hidden="true" /> {t.label}</>}
               {t.id === "timeline"  && <><CalendarDays size={14} strokeWidth={1.8} aria-hidden="true" /> {t.label}</>}

@@ -480,14 +480,15 @@ export default function AlamatSaahPage() {
       <AlamaOfDayCard alama={todayAlama} />
 
       {/* Tabs */}
-      <div className="as-tabs">
+      <div className="as-tabs" role="tablist" aria-label="أقسام أشراط الساعة">
         {TABS.map(t => (
           <button
             key={t.id}
             type="button"
+            role="tab"
             className={`as-tab${activeTab === t.id ? " as-tab--active" : ""}`}
             onClick={() => setActiveTab(t.id)}
-            aria-pressed={activeTab === t.id}
+            aria-selected={activeTab === t.id}
           >{t.label}</button>
         ))}
       </div>

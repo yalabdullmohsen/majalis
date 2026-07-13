@@ -391,14 +391,15 @@ export default function SalahGuidePage() {
       </div>
 
       {/* tabs */}
-      <div className="sg-tabs-bar">
+      <div className="sg-tabs-bar" role="tablist" aria-label="أقسام دليل الصلاة">
         {TABS.map((t) => (
           <button
             key={t.id}
             type="button"
+            role="tab"
             className={`sg-tab${tab === t.id ? " sg-tab--active" : ""}`}
             onClick={() => setTab(t.id)}
-            aria-pressed={tab === t.id}
+            aria-selected={tab === t.id}
           >
             <span><SectionIcon name={t.icon} size={22} /></span>
             <span>{t.label}</span>
