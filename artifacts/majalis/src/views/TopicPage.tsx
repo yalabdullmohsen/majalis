@@ -57,7 +57,7 @@ export default function TopicPage() {
 
   useEffect(() => {
     applyPageSeo({
-      path: "/topic",
+      path: `/topic/${topic?.slug || slug}`,
       title: `${topic?.title || "موضوع"} | المجلس العلمي`,
       description: `استعرض محتوى موضوع "${topic?.title || "الموضوع"}" من الدروس والفتاوى والأحاديث في المجلس العلمي.`,
       keywords: [topic?.title || "موضوع", "محتوى إسلامي", "فتاوى", "دروس", "أحاديث"],
