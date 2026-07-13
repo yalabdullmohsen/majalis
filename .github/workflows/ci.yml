@@ -60,6 +60,44 @@ jobs:
       - name: Verify deploy output
         run: pnpm --filter @workspace/majalis run verify:deploy
 
+  e2e-smoke:
+    name: E2E smoke (public routes)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: |
+          cd artifacts/majalis
+          npx playwright install --with-deps chromium
+
+      - name: Run smoke + public routes E2E tests
+        run: |
+          cd artifacts/majalis
+          npx playwright test tests/00-public-routes.spec.ts tests/01-smoke.spec.ts --project=desktop
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: artifacts/majalis/playwright-report/
+          retention-days: 7
+
   production-bootstrap:
     name: Self Bootstrap after deploy
     needs: verify

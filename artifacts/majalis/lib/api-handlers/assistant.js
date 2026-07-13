@@ -693,6 +693,10 @@ async function handleAssistantRequest(req, res) {
     sendJson(res, 400, { ok: false, message: "اكتب سؤالك أولًا." });
     return;
   }
+  if (userMessage.length > 2000) {
+    sendJson(res, 400, { ok: false, message: "الرسالة طويلة جداً (الحد الأقصى 2000 حرف)." });
+    return;
+  }
 
   const conversationHistory = sanitizeMessages(body?.messages || []);
 

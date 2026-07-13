@@ -441,6 +441,7 @@ function Router() {
         </ErrorBoundary>
       </Route>
       <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>
+      <Route path="/mushaf"><Redirect to="/quran" /></Route>
       <Route path="/quran-hub"><SafeLazyRoute component={QuranHubPage} /></Route>
       <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
       <Route path="/quran-live"><SafeLazyRoute component={QuranLivePage} /></Route>

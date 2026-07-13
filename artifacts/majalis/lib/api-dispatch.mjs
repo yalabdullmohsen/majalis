@@ -36,6 +36,20 @@ const ragRateLimit = createRateLimiter({
   keyPrefix: "rag",
 });
 
+// مسارات تستدعي نماذج AI خارجية (OpenAI) وكانت بلا أي حد معدل طلبات —
+// كل طلب (حتى GET) يستهلك استدعاء API مدفوعًا خارجيًا بلا سقف.
+const digitalLearningRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 20,
+  keyPrefix: "digital-learning",
+});
+
+const globalReferenceRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 20,
+  keyPrefix: "global-reference",
+});
+
 /** Route table uses dynamic imports so Vercel bundles one lightweight function entrypoint. */
 export const API_ROUTES = [
   { prefix: "/api/healthz", module: "./api-handlers/healthz.js", allowGet: true, exact: true },
@@ -75,13 +89,13 @@ export const API_ROUTES = [
   { prefix: "/api/content-relations", module: "./api-handlers/content-relations.js", allowGet: true },
   { prefix: "/api/scholarly-search", module: "./api-handlers/scholarly-search.js", allowGet: true },
   { prefix: "/api/admin/search-analytics", module: "./api-handlers/admin/search-analytics.js", allowGet: true },
-  { prefix: "/api/digital-learning", module: "./api-handlers/digital-learning.js", allowGet: true },
+  { prefix: "/api/digital-learning", module: "./api-handlers/digital-learning.js", allowGet: true, rateLimit: digitalLearningRateLimit },
   { prefix: "/api/admin/digital-learning", module: "./api-handlers/admin/digital-learning.js", allowGet: true },
   { prefix: "/api/cron/autonomous-orchestrator", module: "./api-handlers/cron/autonomous-orchestrator.js", allowGet: true, exact: true },
   { prefix: "/api/admin/autonomous-ai", module: "./api-handlers/admin/autonomous-ai.js", allowGet: true },
   { prefix: "/api/admin/autonomous-platform", module: "./api-handlers/admin/autonomous-platform.js", allowGet: true },
   { prefix: "/api/daily-content", module: "./api-handlers/daily-content.js", allowGet: true },
-  { prefix: "/api/global-reference", module: "./api-handlers/global-reference.js", allowGet: true },
+  { prefix: "/api/global-reference", module: "./api-handlers/global-reference.js", allowGet: true, rateLimit: globalReferenceRateLimit },
   { prefix: "/api/admin/global-reference", module: "./api-handlers/admin/global-reference.js", allowGet: true },
   { prefix: "/api/cron/global-reference-review", module: "./api-handlers/cron/global-reference-review.js", allowGet: true, exact: true },
   { prefix: "/api/cron/islamic-intelligence", module: "./api-handlers/cron/islamic-intelligence.js", allowGet: true, exact: true },
@@ -270,13 +284,20 @@ export async function dispatchApiRequest(req, res) {
 
   if (req.method === "GET" && route.allowGet) {
     req.body = {};
-    try {
-      await invokeHandler(handler, req, res, route.prefix, route);
-    } catch (error) {
-      console.error(`${route.prefix} GET handler failed`, error);
-      if (!res.headersSent) {
-        sendJson(res, 500, { ok: false, message: "تعذر تنفيذ الطلب.", fallback: true });
+    const runGet = async () => {
+      try {
+        await invokeHandler(handler, req, res, route.prefix, route);
+      } catch (error) {
+        console.error(`${route.prefix} GET handler failed`, error);
+        if (!res.headersSent) {
+          sendJson(res, 500, { ok: false, message: "تعذر تنفيذ الطلب.", fallback: true });
+        }
       }
+    };
+    if (route.rateLimit) {
+      await route.rateLimit(req, res, runGet);
+    } else {
+      await runGet();
     }
     return;
   }

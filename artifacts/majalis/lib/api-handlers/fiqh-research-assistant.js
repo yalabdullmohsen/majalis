@@ -48,6 +48,10 @@ export default async function handler(req, res) {
   }
 
   const query = String(body.query || body.message || "").trim();
+  if (query.length > 2000) {
+    sendJson(res, 400, { ok: false, message: "السؤال طويل جداً (الحد الأقصى 2000 حرف)." });
+    return;
+  }
   const filters = body.filters || {};
   const sessionId = body.sessionId || sessionIdFromRequest(req);
 
