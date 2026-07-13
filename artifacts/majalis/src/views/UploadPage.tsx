@@ -299,6 +299,14 @@ export default function UploadPage() {
       title: "رفع أذان أو درس | المجلس العلمي",
       description: "أرسل تسجيل أذان أو درس علمي للمجلس العلمي، شارك العلم وأسهم في إثراء المكتبة الإسلامية.",
       keywords: ["رفع أذان", "تسجيل درس", "رفع ملف صوتي", "مشاركة علمية", "المجلس العلمي"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: "رفع أذان أو درس",
+        description: "أرسل تسجيل أذان أو درس علمي للمجلس العلمي.",
+        url: "https://majlisilm.com/upload",
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+      }],
     });
   }, []);
 

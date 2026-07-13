@@ -103,6 +103,15 @@ export default function DeveloperPage() {
       title: "واجهة برمجة التطبيقات | المجلس العلمي للمطورين",
       description: "وثائق API المجلس العلمي، دمج المحتوى الإسلامي في تطبيقاتك بسهولة عبر REST API مفتوح.",
       keywords: ["API إسلامي", "واجهة برمجية", "مطورون", "API المجلس العلمي", "بيانات إسلامية"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        headline: "توثيق واجهة برمجة التطبيقات — المجلس العلمي",
+        description: "وثائق API المجلس العلمي لدمج المحتوى الإسلامي في التطبيقات عبر REST API مفتوح.",
+        url: "https://majlisilm.com/developer",
+        inLanguage: "ar",
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+      }],
     });
   }, []);
 

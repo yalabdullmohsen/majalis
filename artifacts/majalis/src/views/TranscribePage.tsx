@@ -38,6 +38,16 @@ export default function TranscribePage() {
       title: "تفريغ الدروس والمحاضرات | المجلس العلمي",
       description: "أداة تفريغ الدروس والمحاضرات الإسلامية تلقائياً، حمّل ملفاً صوتياً أو رابط يوتيوب واحصل على ملخص وفوائد منظّمة.",
       keywords: ["تفريغ دروس", "تفريغ محاضرات", "تلخيص درس", "ذكاء اصطناعي إسلامي", "استخراج فوائد"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        name: "تفريغ الدروس والمحاضرات",
+        description: "أداة تفريغ الدروس والمحاضرات الإسلامية تلقائياً.",
+        url: "https://majlisilm.com/transcribe",
+        applicationCategory: "EducationApplication",
+        inLanguage: "ar",
+        provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+      }],
     });
   }, []);
 
