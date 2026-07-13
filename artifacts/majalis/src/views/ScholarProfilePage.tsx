@@ -14,7 +14,7 @@ export default function ScholarProfilePage() {
     if (!scholar) return;
     applyPageSeo({
       path: `/scholars/${scholar.id}`,
-      title: `${scholar.name} — سيرة العالم | مجالس`,
+      title: `${scholar.name} — سيرة العالم | المجلس العلمي`,
       description: scholar.bio,
       keywords: [scholar.name, scholar.fullName, scholar.era, ...scholar.specialty],
       jsonLd: [{
@@ -113,7 +113,7 @@ export default function ScholarProfilePage() {
       {/* Share */}
       <div className="twh-share">
         <ShareButtons
-          title={`${scholar.name} — مجالس العلم`}
+          title={`${scholar.name} — المجلس العلمي`}
           url={`https://majlisilm.com/scholars/${scholar.id}`}
         />
       </div>

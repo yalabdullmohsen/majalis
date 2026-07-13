@@ -1290,7 +1290,7 @@ export default function IslamicScholarsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/scholars",
-      title: "أعلام الإسلام، العلماء والمحدثون والفقهاء | مجالس",
+      title: "أعلام الإسلام، العلماء والمحدثون والفقهاء | المجلس العلمي",
       description: "سِيَر أبرز علماء الإسلام عبر القرون، الأئمة الأربعة، المحدثون، العلماء المعاصرون",
       jsonLd: [
         {

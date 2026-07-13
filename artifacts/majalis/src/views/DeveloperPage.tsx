@@ -100,7 +100,7 @@ export default function DeveloperPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/developer",
-      title: "واجهة برمجة التطبيقات | مجالس للمطورين",
+      title: "واجهة برمجة التطبيقات | المجلس العلمي للمطورين",
       description: "وثائق API مجالس، دمج المحتوى الإسلامي في تطبيقاتك بسهولة عبر REST API مفتوح.",
       keywords: ["API إسلامي", "واجهة برمجية", "مطورون", "مجالس API", "بيانات إسلامية"],
     });

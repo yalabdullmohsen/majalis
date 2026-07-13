@@ -340,7 +340,7 @@ export default function IslamicKnowledgeMapPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/knowledge-map",
-      title: "الخريطة المعرفية الإسلامية | مجالس",
+      title: "الخريطة المعرفية الإسلامية | المجلس العلمي",
       description: "استكشف ترابط العلوم الإسلامية، القرآن والحديث والفقه والتفسير والسيرة والأذكار ومئات المصادر",
       jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الخريطة المعرفية الإسلامية", url: "https://majlisilm.com/knowledge-map", about: { "@type": "Thing", name: "ترابط العلوم الإسلامية" } }],
     });

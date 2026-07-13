@@ -875,7 +875,7 @@ export default function IslamicSectsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/islamic-sects",
-      title: "الفرق الإسلامية — نشأتها وعقائدها | مجالس",
+      title: "الفرق الإسلامية — نشأتها وعقائدها | المجلس العلمي",
       description: "موسوعة علمية تاريخية في الفرق والمذاهب الإسلامية: نشأة كل فرقة وأصولها العقدية وأبرز علمائها وكتبها وانتشارها",
       keywords: ["فرق إسلامية", "مذاهب", "أهل السنة", "الشيعة", "المعتزلة", "الخوارج", "تاريخ الإسلام"],
       jsonLd: [
@@ -926,7 +926,7 @@ export default function IslamicSectsPage() {
             </span>
           </div>
           <div style={{ marginTop: "1rem" }}>
-            <ShareButtons title="الفرق الإسلامية — مجالس" />
+            <ShareButtons title="الفرق الإسلامية — المجلس العلمي" />
           </div>
         </div>
       </div>
