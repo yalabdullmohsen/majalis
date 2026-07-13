@@ -36,6 +36,14 @@ export default function MosqueModePage() {
       title: "وضع المسجد | المجلس العلمي",
       description: "وضع المسجد، عد تنازلي للصلاة مع تذكير بالصمت وإطفاء الصوت داخل المسجد.",
       keywords: ["وضع المسجد", "آداب المسجد", "صمت مسجد", "عد تنازلي صلاة"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: "وضع المسجد",
+        description: "وضع المسجد، عد تنازلي للصلاة مع تذكير بالصمت وإطفاء الصوت داخل المسجد.",
+        url: "https://majlisilm.com/mosque-mode",
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+      }],
     });
   }, []);
 
