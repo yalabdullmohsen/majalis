@@ -543,7 +543,7 @@ export default function ShimaelPage() {
 
       <div className="sh-container">
         {/* ══ التبويبات ══ */}
-        <div className="sh-tabs" role="tablist">
+        <div className="sh-tabs" role="tablist" aria-label="تبويبات الشمائل المحمدية">
           {TABS.map(t => (
             <button
               key={t.id}

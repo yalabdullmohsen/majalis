@@ -1724,7 +1724,7 @@ export default function IslamicGlossaryPage() {
 
       <div className="gl-container">
         {/* الفئات */}
-        <div className="gl-cats" role="tablist">
+        <div className="gl-cats" role="tablist" aria-label="تصنيفات المصطلحات الإسلامية">
           {CATEGORIES.map(c => (
             <button
               key={c.id}

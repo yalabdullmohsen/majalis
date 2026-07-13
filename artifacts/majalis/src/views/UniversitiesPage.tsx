@@ -136,7 +136,7 @@ function UniversitiesContent() {
 
       <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
         {/* تنبيه البيانات التجريبية */}
-        <div className="up-alert">
+        <div className="up-alert" role="note">
           <AlertTriangle size={14} aria-hidden="true" className="inline ml-1" />
           <strong>تنبيه:</strong> البيانات المعروضة تجريبية وتحتاج تحقق بشري. تأكد دائماً من الموقع
           الرسمي للجامعة قبل اتخاذ أي قرار.

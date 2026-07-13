@@ -369,7 +369,7 @@ export default function IslamStatsPage() {
 
       <div className="is-container">
         {/* ══ التبويبات ══ */}
-        <div className="is-tabs" role="tablist">
+        <div className="is-tabs" role="tablist" aria-label="تبويبات إحصائيات الإسلام">
           {TABS.map(t => (
             <button
               key={t.id}

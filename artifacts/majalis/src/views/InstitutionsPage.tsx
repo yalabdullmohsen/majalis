@@ -466,7 +466,7 @@ export default function InstitutionsPage() {
         </div>
 
         {/* Filter tabs */}
-        <div className="inst-filters" role="tablist">
+        <div className="inst-filters" role="tablist" aria-label="تصفية حسب نوع المؤسسة">
           {TYPE_FILTERS.map((f) => (
             <button
               key={f.key}

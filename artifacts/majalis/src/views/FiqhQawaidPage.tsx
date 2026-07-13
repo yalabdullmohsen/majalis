@@ -473,7 +473,7 @@ export default function FiqhQawaidPage() {
 
       {/* ══ التبويبات ══ */}
       <div className="fq-container">
-        <div className="fq-tabs" role="tablist">
+        <div className="fq-tabs" role="tablist" aria-label="تبويبات القواعد الفقهية">
           {TABS.map(t => (
             <button
               key={t.id}

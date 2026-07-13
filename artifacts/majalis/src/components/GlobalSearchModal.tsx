@@ -439,7 +439,7 @@ export function GlobalSearchModal({ onClose }: Props) {
           {!isEmpty && loading && !hasResults && <SkeletonResults />}
 
           {!isEmpty && error && !loading && (
-            <div className="gsm-error-state">
+            <div className="gsm-error-state" role="alert" aria-live="assertive">
               <p className="gsm-state-icon"><AlertTriangle size={32} strokeWidth={1.5} aria-hidden="true" /></p>
               <p className="gsm-state-title">تعذر الاتصال</p>
               <p className="gsm-state-hint">تحقق من الاتصال بالإنترنت وأعد المحاولة.</p>

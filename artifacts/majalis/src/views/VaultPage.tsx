@@ -287,7 +287,7 @@ export default function VaultPage() {
       </div>
 
       {/* Tabs */}
-      <div className="vault-tabs" role="tablist">
+      <div className="vault-tabs" role="tablist" aria-label="تبويبات مستودع المعرفة">
         {tabs.map((t) => (
           <button
             key={t.key}

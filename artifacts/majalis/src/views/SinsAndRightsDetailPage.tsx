@@ -186,7 +186,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
         </div>
 
         {topic.repentanceConditions.requiresRestitution && (
-          <div className="snr-restitution-alert">
+          <div className="snr-restitution-alert" role="note">
             <span className="snr-restitution-alert-icon">⚠️</span>
             <div>
               <div style={{ fontWeight: 700, marginBottom: "0.25rem" }}>يستلزم رد حق</div>
