@@ -111,7 +111,7 @@ export default function CitationPublicPage() {
 
   useEffect(() => {
     if (!citation || !src) return;
-    document.title = `"${citation.quoted_text.slice(0, 60)}..."، مجالس`;
+    document.title = `"${citation.quoted_text.slice(0, 60)}..."، المجلس العلمي`;
     const meta = (n: string) => document.querySelector(`meta[name="${n}"],meta[property="${n}"]`) as HTMLMetaElement | null;
     if (meta("description")) meta("description")!.content = citation.quoted_text;
     if (meta("og:title")) meta("og:title")!.content = `اقتباس: ${src.title_ar}`;
@@ -123,7 +123,7 @@ export default function CitationPublicPage() {
     <div className="cpp-root">
       {/* شريط التنقل */}
       <nav aria-label="تنقل الصفحة" className="cpp-nav">
-        <Link href="/" className="cpp-nav__brand">مجالس</Link>
+        <Link href="/" className="cpp-nav__brand">المجلس العلمي</Link>
         <span className="cpp-nav__tagline">تطبيق العلم الشرعي</span>
       </nav>
 
@@ -221,7 +221,7 @@ export default function CitationPublicPage() {
           {/* تذييل */}
           <p className="cpp-footer">
             تم إنشاء هذا الاقتباس عبر{" "}
-            <Link href="/" className="cpp-link">منصة مجالس</Link>
+            <Link href="/" className="cpp-link">المجلس العلمي</Link>
           </p>
           <div className="twh-share">
             <ShareButtons title="اقتباس من المجلس العلمي" url={typeof window !== "undefined" ? window.location.href : "https://majlisilm.com"} />

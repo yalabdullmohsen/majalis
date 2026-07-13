@@ -45,7 +45,7 @@ export function ShareButtons({ title, url }: { title?: string; url?: string }) {
       }
 
       if ("share" in navigator && typeof navigator.share === "function") {
-        const shareData: ShareData = { title: title || "مجالس", text: shareText, url: shareUrl };
+        const shareData: ShareData = { title: title || "المجلس العلمي", text: shareText, url: shareUrl };
         if (imageFile && canShareFiles && navigator.canShare({ files: [imageFile] })) {
           shareData.files = [imageFile];
         }

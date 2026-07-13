@@ -76,7 +76,9 @@ function NodeBox({ placed, onClick }: {
       transform={`translate(${x},${y})`}
       style={{ cursor: node.slug ? "pointer" : "default" }}
       onClick={() => node.slug && onClick(node.id)}
+      onKeyDown={(e) => { if ((e.key === "Enter" || e.key === " ") && node.slug) onClick(node.id); }}
       role="button"
+      tabIndex={node.slug ? 0 : -1}
       aria-label={node.name}
     >
       <rect
@@ -218,7 +220,7 @@ export default function ProphetsFamilyTreePage() {
             { icon: <ZoomOut size={16}/>, fn: () => zoom(-1), title: "تصغير" },
             { icon: <RotateCcw size={16}/>, fn: reset,         title: "إعادة تعيين" },
           ].map(({ icon, fn, title }) => (
-            <button key={title} onClick={fn} title={title} style={{
+            <button key={title} type="button" onClick={fn} title={title} style={{
               background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)",
               color: "#FAF8F2", borderRadius: "0.5rem", padding: "0.4rem 0.6rem",
               cursor: "pointer", display: "flex", alignItems: "center",
@@ -337,7 +339,7 @@ export default function ProphetsFamilyTreePage() {
                 </span>
               )}
             </h2>
-            <button onClick={() => setSelected(null)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.2rem", color: "#6B7280" }}>×</button>
+            <button type="button" onClick={() => setSelected(null)} aria-label="إغلاق" style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.2rem", color: "#6B7280" }}>×</button>
           </div>
           {selectedNode.era && (
             <p style={{ margin: "0.25rem 0", color: "#374151", fontSize: "0.85rem" }}>
