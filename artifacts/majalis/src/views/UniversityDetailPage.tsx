@@ -149,7 +149,8 @@ function DetailContent({ university: u }: { university: University }) {
           <div className="flex items-start gap-4">
             {u.logo_url ? (
               <img src={u.logo_url} alt={u.name_ar}
-                className="w-16 h-16 rounded-2xl bg-white object-contain flex-shrink-0" />
+                className="w-16 h-16 rounded-2xl bg-white object-contain flex-shrink-0"
+                loading="lazy" decoding="async" />
             ) : (
               <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-3xl font-bold flex-shrink-0">
                 {u.name_ar[0]}

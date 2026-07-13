@@ -110,7 +110,7 @@ export default function RegisterPage() {
     <div className="login-page">
       <div className="login-card">
         <div className="login-card__header">
-          <img src="/logo.png" alt="المجلس العلمي" className="login-logo" />
+          <img src="/logo.png" alt="المجلس العلمي" className="login-logo" loading="eager" decoding="async" />
           <p className="login-card__brand">المجلس العلمي</p>
           <h1 className="login-card__title">إنشاء حساب</h1>
           <p className="login-card__subtitle">انضم للتطبيق للمتابعة والوصول إلى المحتوى</p>
