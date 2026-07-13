@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "dev": "vite --config vite.config.ts --host 0.0.0.0",
-    "dev:next": "next dev --port ${PORT:-24216}",
     "generate:seo": "node scripts/generate-seo.mjs",
     "generate:sheikhs": "node scripts/generate-sheikh-portraits.mjs",
     "generate:quiz": "node scripts/generate-quiz-questions.mjs",
@@ -57,7 +56,6 @@
     "bootstrap:platform": "node scripts/run-platform-bootstrap.mjs",
     "bootstrap:platform:status": "node scripts/run-platform-bootstrap.mjs status",
     "build": "pnpm run generate:seo && pnpm run generate:rulings && vite build --config vite.config.ts && node scripts/generate-version.mjs && node scripts/prerender.mjs && node scripts/post-build-seo.mjs",
-    "build:next": "next build",
     "preview": "vite preview --config vite.config.ts --host 0.0.0.0",
     "start": "vite preview --config vite.config.ts --host 0.0.0.0 --port ${PORT:-24216}",
     "serve": "vite preview --config vite.config.ts --host 0.0.0.0 --port ${PORT:-24216}",

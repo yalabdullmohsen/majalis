@@ -9085,6 +9085,8 @@ html[data-theme="dark"] .khatma-bar-fill {
 .usr-filter-btn       { padding: 0.375rem 0.875rem; border-radius: 0.375rem; border: 1px solid var(--majalis-line); background: var(--majalis-panel); color: var(--majalis-ink-soft); cursor: pointer; font-size: 0.8125rem; font-family: inherit; }
 .usr-filter-btn--active { border-color: var(--majalis-emerald); background: var(--majalis-emerald); color: var(--majalis-parchment); }
 .usr-table-wrap       { overflow-x: auto; }
+.qa-table-wrap        { overflow-x: auto; }
+.content-detail-table, .fiqh-info-table { display: block; overflow-x: auto; width: 100%; }
 .usr-table            { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
 .usr-thead-row        { background: var(--majalis-parchment-deep); }
 .usr-th               { padding: 0.625rem 0.75rem; text-align: right; color: var(--majalis-emerald-deep); font-weight: 700; border-bottom: 1px solid var(--majalis-line); white-space: nowrap; }
@@ -26559,7 +26561,8 @@ img[loading="lazy"]:not([src=""]) {
 }
 .ucp-table-wrap {
   background: var(--majalis-panel); border-radius: 1rem;
-  border: 1px solid var(--majalis-line); overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  border: 1px solid var(--majalis-line); overflow-x: auto; overflow-y: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
 }
 .ucp-table-header-row { border-bottom: 1px solid var(--majalis-line); }
 .ucp-table-row { border-bottom: 1px solid var(--majalis-line); }
