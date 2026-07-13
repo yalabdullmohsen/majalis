@@ -537,6 +537,13 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
   min-width: 0 !important;
 }
 
+/* مؤشر تركيز واضح للوحة المفاتيح — يعمل بغض النظر عن أي خلفية hero
+   (فاتحة أو داكنة) لأن .home-search--v3 له أكثر من تعريف في هذا الملف */
+.home-search--v3 input:focus-visible {
+  outline: 2.5px solid #18362A !important;
+  outline-offset: 2px !important;
+}
+
 .home-search--v3 input::placeholder {
   color: var(--elite-ink-muted, #6B6B6B) !important;
 }

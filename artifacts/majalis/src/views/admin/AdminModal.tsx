@@ -1,3 +1,5 @@
+import * as React from "react";
+
 interface AdminModalProps {
   title: string;
   open: boolean;
@@ -8,10 +10,19 @@ interface AdminModalProps {
 }
 
 export function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  const autoId = React.useId();
+  const canLink = React.Children.count(children) === 1 && React.isValidElement(children);
+  const child = canLink
+    ? React.cloneElement(children as React.ReactElement<{ id?: string }>, {
+        id: (children as React.ReactElement<{ id?: string }>).props.id ?? autoId,
+      })
+    : children;
   return (
     <div className="adm-field">
-      <label className="adm-field__label">{label}</label>
-      {children}
+      <label className="adm-field__label" htmlFor={canLink ? ((children as React.ReactElement<{ id?: string }>).props.id ?? autoId) : undefined}>
+        {label}
+      </label>
+      {child}
     </div>
   );
 }

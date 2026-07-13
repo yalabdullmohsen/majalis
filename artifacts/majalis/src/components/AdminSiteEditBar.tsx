@@ -109,6 +109,7 @@ function EditDialog({ el, path, onDone }: EditDialogProps) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           rows={Math.max(3, Math.ceil(text.length / 60))}
+          aria-label="تعديل النص"
         />
         <p className="ase-dialog__hint">Ctrl+Enter للحفظ • Esc للإلغاء</p>
         <div className="ase-dialog__footer">

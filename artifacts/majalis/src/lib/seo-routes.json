@@ -274,12 +274,13 @@
         "تقدم دراسي"
       ],
       "sitemap": false,
+      "robots": "noindex, follow",
       "changefreq": "weekly",
       "priority": 0.65
     },
     {
       "path": "/announcements",
-      "title": "إعلانات الدروس | المجلس العلمي",
+      "title": "إعلانات الدروس (تحويل) | المجلس العلمي",
       "description": "الدروس والدورات الشرعية — جداول أسبوعية ومواقع وروابط.",
       "keywords": [
         "إعلانات دروس",
@@ -288,12 +289,13 @@
         "دورات علمية"
       ],
       "sitemap": false,
+      "robots": "noindex, follow",
       "changefreq": "daily",
       "priority": 0.3
     },
     {
       "path": "/lessons/current",
-      "title": "إعلانات الدروس | المجلس العلمي",
+      "title": "الدروس الحالية (تحويل) | المجلس العلمي",
       "description": "الدروس والدورات الشرعية — جداول أسبوعية محدّثة ومواعيد العلماء ومنهجية التعلم.",
       "keywords": [
         "إعلانات دروس",
@@ -301,6 +303,7 @@
         "جداول الدروس"
       ],
       "sitemap": false,
+      "robots": "noindex, follow",
       "changefreq": "daily",
       "priority": 0.3
     },

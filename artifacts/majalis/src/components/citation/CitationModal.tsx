@@ -179,10 +179,11 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
             <>
               {/* تعديل النص */}
               <div>
-                <label className="block text-xs font-medium mb-1 cm-label">
+                <label htmlFor="cm-quoted-text" className="block text-xs font-medium mb-1 cm-label">
                   النص المقتبس ({text.length}/{MAX_QUOTE_LENGTH} حرف)
                 </label>
                 <textarea
+                  id="cm-quoted-text"
                   value={text}
                   onChange={(e) => setText(e.target.value.slice(0, MAX_QUOTE_LENGTH))}
                   rows={4}
