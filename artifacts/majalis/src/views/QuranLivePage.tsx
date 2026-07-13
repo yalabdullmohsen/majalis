@@ -122,14 +122,15 @@ export default function QuranLivePage() {
         <h2 className="qlive-section-title">
           <Radio size={18} /> اختر القناة
         </h2>
-        <div className="qlive-channel-grid">
+        <div className="qlive-channel-grid" role="tablist" aria-label="اختيار قناة القرآن">
           {LIVE_CHANNELS.map(ch => (
             <button
               key={ch.id}
+              role="tab"
               type="button"
               className={["qlive-ch-card", activeChannel.id === ch.id ? "qlive-ch-card--active" : ""].join(" ")}
               onClick={() => { setActiveChannel(ch); setPlaying(true); }}
-              aria-pressed={activeChannel.id === ch.id}
+              aria-selected={activeChannel.id === ch.id}
             >
               <span className="qlive-ch-flag">{ch.flag}</span>
               <div className="qlive-ch-info">

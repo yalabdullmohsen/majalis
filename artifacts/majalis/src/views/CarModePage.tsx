@@ -218,14 +218,15 @@ export default function CarModePage() {
       </div>
 
       {/* Playlist (scrollable list below controls) */}
-      <div className="car-mode__playlist">
+      <div className="car-mode__playlist" role="tablist" aria-label="قائمة الدروس">
         {lessons.map((lesson, idx) => (
           <button
             key={lesson.id}
+            role="tab"
             type="button"
             className={`car-mode__playlist-item${idx === currentIdx ? " car-mode__playlist-item--active" : ""}`}
             onClick={() => selectLesson(idx)}
-            aria-pressed={idx === currentIdx}
+            aria-selected={idx === currentIdx}
           >
             <span className="car-mode__playlist-num">{idx + 1}</span>
             <span className="car-mode__playlist-title">{lesson.title}</span>

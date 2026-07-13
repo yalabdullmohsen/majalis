@@ -323,16 +323,17 @@ export function GlobalSearchModal({ onClose }: Props) {
         </div>
 
         {/* ── فلاتر النوع ────────────────────────────────────────────── */}
-        <div className="gsm-filters">
+        <div className="gsm-filters" role="tablist" aria-label="تصفية نتائج البحث">
           {FILTER_CHIPS.map((chip) => {
             const active = activeFilter === chip.key;
             return (
               <button
                 key={chip.key}
+                role="tab"
                 type="button"
                 onClick={() => setActiveFilter(chip.key)}
                 className={`gsm-chip${active ? " gsm-chip--active" : ""}`}
-                aria-pressed={active}
+                aria-selected={active}
               >
                 {chip.label}
               </button>

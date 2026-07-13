@@ -84,14 +84,15 @@ export function ResearchAnswer({ result, onSave }: Props) {
       </div>
 
       {/* تبويبات */}
-      <div className="ra-tabs-bar">
+      <div className="ra-tabs-bar" role="tablist" aria-label="أقسام نتائج البحث">
         {visibleTabs.map((t) => (
           <button
             key={t.key}
+            role="tab"
             type="button"
             onClick={() => setActiveTab(t.key)}
             className={`ra-tab${activeTab === t.key ? " ra-tab--active" : ""}`}
-            aria-pressed={activeTab === t.key}
+            aria-selected={activeTab === t.key}
           >
             {t.label}
             {t.key !== "answer" && t.key !== "opinions" && t.types && (
