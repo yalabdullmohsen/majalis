@@ -8,7 +8,7 @@
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 1rem 4rem;
-  font-family: var(--font-body, "IBM Plex Sans Arabic", system-ui, sans-serif);
+  font-family: var(--font-body);
 }
 
 .snr-hero {
@@ -758,7 +758,7 @@
   max-width: 820px;
   margin: 0 auto;
   padding: 0 1rem 4rem;
-  font-family: var(--font-body, "IBM Plex Sans Arabic", system-ui, sans-serif);
+  font-family: var(--font-body);
 }
 
 .snr-detail-breadcrumb {
@@ -862,7 +862,7 @@
   color: var(--elite-ink, #122019);
   line-height: 1.75;
   margin-bottom: 0.375rem;
-  font-family: "Noto Naskh Arabic", serif;
+  font-family: "Times New Roman", Times, serif;
 }
 
 [data-theme="dark"] .snr-evidence-text { color: var(--elite-sage, #E1E5E3); }

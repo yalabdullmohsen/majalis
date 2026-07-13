@@ -97,7 +97,7 @@ function injectNoscript(html, route) {
     .join(" · ");
   const noscript = [
     `<noscript>`,
-    `<div dir="rtl" lang="ar" style="font-family:sans-serif;max-width:900px;margin:0 auto;padding:1rem">`,
+    `<div dir="rtl" lang="ar" style="font-family:'Times New Roman',Times,serif;max-width:900px;margin:0 auto;padding:1rem">`,
     `<h1>${h1}</h1>`,
     `<p>${desc}</p>`,
     keywordLinks ? `<p>${keywordLinks}</p>` : "",

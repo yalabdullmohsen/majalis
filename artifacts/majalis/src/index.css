@@ -1,6 +1,4 @@
-/* ══ IBM Plex Sans Arabic + Noto Naskh Arabic ══ */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap&subset=arabic');
-/* ══ خط Amiri للعناوين الرئيسية ══ */
+/* ══ خط المنصة الموحَّد Times New Roman — يُحمَّل عبر index.html فقط للاستثناء القرآني (2026-07-13) ══ */
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -192,13 +190,23 @@ html {
   --color-parchment:     var(--msk-canvas,   #FFFFFF);
   --color-line:          var(--msk-border,   rgba(23,107,87,0.10));
 
-  /* ── الخطوط ── IBM Plex Sans Arabic + Cairo (احتياطي) + Amiri ── */
-  --font-primary:  "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
-  --font-ui:       "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
-  --font-body:     "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
-  --font-display:  "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
-  --font-reading:  "Noto Naskh Arabic", "IBM Plex Sans Arabic", serif;
+  /* ── الخطوط ── Times New Roman خط المنصة الموحَّد (2026-07-13) ──
+     استثناء وحيد: --font-quran (الرسم العثماني، خط متخصص لا يُستبدَل) ── */
+  --font-primary:  "Times New Roman", Times, serif;
+  --font-ui:       "Times New Roman", Times, serif;
+  --font-body:     "Times New Roman", Times, serif;
+  --font-display:  "Times New Roman", Times, serif;
+  --font-reading:  "Times New Roman", Times, serif;
   --font-quran:    "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
+
+  /* ── بنية جاهزة لتضمين ملف Times New Roman مرخَّص مستقبلاً ──
+     Times New Roman يُحمَّل حاليًا كخط نظام (iOS/macOS/Windows) بلا أي ملف مضمَّن،
+     تفاديًا لاستخدام ملف غير مرخَّص. عند توفر ترخيص فعلي لملف الخط:
+     1) ضَع ملفات الخط (woff2 أولوية) في public/fonts/times-new-roman/
+     2) أضف قاعدة @font-face هنا تُسجِّل "Times New Roman" (font-display: swap)
+        مع src: url("/fonts/times-new-roman/....woff2") format("woff2")
+     3) لا حاجة لتغيير أي شيء آخر — كل مكونات المنصة تشير بالفعل إلى
+        --font-primary/--font-body/... التي قيمتها الأولى "Times New Roman" */
 
   /* ── الحركة — تلاشٍ وهبوط (لا ارتداد) ── */
   --motion-fast:   120ms ease-out;
@@ -451,12 +459,13 @@ html[data-theme="dark"] a:hover {
   color: #5CC49A;
 }
 
-html[data-font="default"] {
-  --font-body: var(--font-primary);
-}
-
+/* Times New Roman هو الخط الموحَّد الوحيد للمنصة (2026-07-13) — كلا خياري
+   تفضيل القراءة السابقين (naskh/default) يُصيَّران لنفس الخط الأساسي كي لا
+   يبقى أي مسار يتجاوز الخط الموحَّد. الآلية (data-font) أُبقيت سليمة تقنيًا
+   لتفادي كسر مكوّن الإعدادات، لكنها لم تعد تُنتج فرقًا بصريًا. */
+html[data-font="default"],
 html[data-font="naskh"] {
-  --font-body: "Noto Naskh Arabic", "Cairo", "Tajawal", serif;
+  --font-body: var(--font-primary);
 }
 
 :root {
@@ -3306,7 +3315,7 @@ input, textarea, select { font-family: inherit; }
 .cond-card__intro,
 .cond-card__middle {
   margin: 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: calc(30px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.55;
@@ -3316,7 +3325,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-card__family {
   margin: calc(4px * var(--cond-scale)) 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: calc(var(--cond-family-size) * var(--cond-scale));
   font-weight: 700;
   line-height: 1.4;
@@ -3327,7 +3336,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-card__name {
   margin: calc(8px * var(--cond-scale)) 0 calc(6px * var(--cond-scale));
-  font-family: "Amiri Quran", "Amiri", "Aref Ruqaa", "Scheherazade New", serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: calc(var(--cond-name-size) * var(--cond-scale));
   font-weight: 700;
   line-height: 1.35;
@@ -3338,7 +3347,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-card__dua {
   margin: calc(6px * var(--cond-scale)) 0 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: calc(28px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.62;
@@ -3349,7 +3358,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-card__extra {
   margin: calc(6px * var(--cond-scale)) 0 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: calc(24px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.6;
@@ -3539,7 +3548,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-death__transition {
   margin: 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: calc(42px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.45;
@@ -3548,7 +3557,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-death__name {
   margin: calc(4px * var(--cond-scale)) 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: calc(var(--cond-death-name) * var(--cond-scale));
   font-weight: 700;
   line-height: 1.35;
@@ -3559,7 +3568,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-death__detail {
   margin: 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: calc(var(--cond-death-address) * var(--cond-scale));
   font-weight: 400;
   line-height: 1.55;
@@ -3570,7 +3579,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-death__phone {
   margin: calc(4px * var(--cond-scale)) 0 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: calc(44px * var(--cond-scale));
   font-weight: 700;
   line-height: 1.4;
@@ -3603,7 +3612,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-death__extra {
   margin: 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: calc(32px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.6;
@@ -4089,7 +4098,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .site-brand-name {
-  font-family: "Cairo", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  font-family: "Times New Roman", Times, serif;
   font-weight: 700;
   font-size: 1.0625rem;
   white-space: nowrap;
@@ -8782,7 +8791,7 @@ input, textarea, select { font-family: inherit; }
 .site-footer-brand-name {
   display: block;
   color: var(--majalis-emerald-deep);
-  font-family: "Scheherazade New", "Amiri", "Noto Naskh Arabic", serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: 1.2rem;
   font-weight: 700;
   margin-bottom: 0.35rem;
@@ -9909,7 +9918,7 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
 }
 
 .site-brand-logotype__main {
-  font-family: "Scheherazade New", "Amiri", "Noto Naskh Arabic", serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--majalis-emerald-deep, #1F4D3A);
@@ -14728,7 +14737,7 @@ body.has-assistant-fab .app-main {
   border: 1px solid var(--majalis-border, #e2e8f0);
   background: var(--majalis-surface, #fff);
   color: var(--majalis-ink, #0d1b2a);
-  font-family: 'Amiri', serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: 0.88rem;
   text-align: right;
   cursor: pointer;
@@ -14775,7 +14784,7 @@ body.has-assistant-fab .app-main {
 .cb-font-chip__name {
   font-size: 0.72rem;
   color: var(--majalis-ink-soft, #6b7280);
-  font-family: system-ui, sans-serif;
+  font-family: "Times New Roman", Times, serif;
 }
 
 /* ─── Range Sliders ───────────────────────────────────────────── */
@@ -17534,7 +17543,7 @@ body.has-assistant-fab .app-main {
   right: 0.75rem;
   font-size: 3.5rem;
   color: rgba(22, 96, 72, 0.06);
-  font-family: Georgia, serif;
+  font-family: "Times New Roman", Times, serif;
   line-height: 1;
   pointer-events: none;
 }
@@ -17957,7 +17966,7 @@ body.has-assistant-fab .app-main {
 }
 
 .prv-virtue-text {
-  font-family: "Amiri Quran", "Scheherazade New", serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: 0.92rem;
   line-height: 1.9;
   color: var(--majalis-ink, #1a2e26);
@@ -18310,7 +18319,7 @@ body.has-assistant-fab .app-main {
 
 /* ── التسلسل الطباعي: عنوان الصفحة الرئيسية ── */
 .hpv4-hero h1 {
-  font-family: "Amiri", "IBM Plex Sans Arabic", serif !important;
+  font-family: "Times New Roman", Times, serif !important;
   letter-spacing: -0.01em !important;
   text-shadow: 0 2px 20px rgba(0,0,0,0.25) !important;
 }

@@ -71,7 +71,7 @@ export function FaidaImageCardModal({ text, source, category, onClose }: Props) 
         <div
           ref={cardRef}
           className="fic-card"
-          style={{ fontFamily: "'Noto Naskh Arabic', 'Segoe UI', Tahoma, sans-serif" }}
+          style={{ fontFamily: "'Times New Roman', Times, serif" }}
         >
           <div className="fic-card__inner">
             <div className="fic-card__top">

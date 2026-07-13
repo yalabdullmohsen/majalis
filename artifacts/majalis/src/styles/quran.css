@@ -1922,7 +1922,7 @@
   font-weight: 600;
   color: var(--mf-ink, #1A1610);
   direction: rtl;
-  font-family: "Tajawal", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  font-family: "Times New Roman", Times, serif;
   border-bottom: 1px solid var(--mf-gold-faint, rgba(31,77,58,0.15));
   user-select: none;
 }
@@ -1986,7 +1986,7 @@
   margin: 0 0.22em;
   user-select: none;
   -webkit-user-select: none;
-  font-family: "Tajawal", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  font-family: "Times New Roman", Times, serif;
   line-height: 1;
 }
 .qs-ayah-num::before,
@@ -2012,7 +2012,7 @@
   font-size: 0.63rem;
   font-weight: 600;
   color: var(--mf-ink, #1A1610);
-  font-family: "Tajawal", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  font-family: "Times New Roman", Times, serif;
 }
 
 /* ── شريط التحكم — تحسين بصري ── */

@@ -424,7 +424,7 @@ ${cleaned}
   <meta name="description" content="${escapeHtml(description)}" />
   <style>
     :root { --text:#1a1a1a; --muted:#555; --accent:#0f5132; --bg:#faf9f6; --line:#ddd; }
-    body { font-family: 'Segoe UI', Tahoma, 'Noto Naskh Arabic', serif; background: var(--bg); color: var(--text); line-height: 1.9; margin: 0; }
+    body { font-family: 'Times New Roman', Times, serif; background: var(--bg); color: var(--text); line-height: 1.9; margin: 0; }
     .wrap { max-width: 52rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
     h1 { color: var(--accent); font-size: 1.75rem; margin-bottom: .25rem; }
     .meta { color: var(--muted); font-size: .9rem; margin-bottom: 1.5rem; }

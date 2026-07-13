@@ -141,7 +141,7 @@ function buildCitationSvg(citation, source, isDark = false) {
   const W = 600;
 
   const quoteTextEls = quoteLines
-    .map((line, i) => `<text x="300" y="${80 + i * lineHeight}" text-anchor="middle" font-size="18" fill="${textColor}" font-family="'Noto Naskh Arabic', 'Arial', sans-serif">${escSvg(line)}</text>`)
+    .map((line, i) => `<text x="300" y="${80 + i * lineHeight}" text-anchor="middle" font-size="18" fill="${textColor}" font-family="'Times New Roman', Times, serif">${escSvg(line)}</text>`)
     .join("\n");
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -149,18 +149,18 @@ function buildCitationSvg(citation, source, isDark = false) {
   <rect width="${W}" height="${totalH}" fill="${bg}" rx="16"/>
   <rect x="12" y="12" width="${W - 24}" height="${totalH - 24}" fill="none" stroke="${borderColor}" stroke-width="1.5" rx="12"/>
   <!-- شعار مجالس -->
-  <text x="300" y="40" text-anchor="middle" font-size="15" fill="${accentColor}" font-family="'Noto Naskh Arabic','Arial',sans-serif" font-weight="bold">مجالس — منصة العلم الشرعي</text>
+  <text x="300" y="40" text-anchor="middle" font-size="15" fill="${accentColor}" font-family="'Times New Roman', Times, serif" font-weight="bold">مجالس — منصة العلم الشرعي</text>
   <!-- خط فاصل -->
   <line x1="80" y1="52" x2="${W - 80}" y2="52" stroke="${accentColor}" stroke-width="1" opacity="0.4"/>
   <!-- علامة الاقتباس -->
-  <text x="530" y="88" font-size="52" fill="${accentColor}" opacity="0.18" font-family="Georgia,serif">&ldquo;</text>
+  <text x="530" y="88" font-size="52" fill="${accentColor}" opacity="0.18" font-family="'Times New Roman', Times, serif">&ldquo;</text>
   <!-- نص الاقتباس -->
   ${quoteTextEls}
   <!-- خط فاصل -->
   <line x1="80" y1="${quoteBlockH + 68}" x2="${W - 80}" y2="${quoteBlockH + 68}" stroke="${borderColor}" stroke-width="1"/>
   <!-- المصدر -->
-  <text x="300" y="${quoteBlockH + 90}" text-anchor="middle" font-size="13" fill="${accentColor}" font-family="'Noto Naskh Arabic','Arial',sans-serif" font-weight="bold">${escSvg(source.title_ar || "")}</text>
-  <text x="300" y="${quoteBlockH + 112}" text-anchor="middle" font-size="11" fill="${mutedColor}" font-family="'Noto Naskh Arabic','Arial',sans-serif">${escSvg(sourceRef)}</text>
+  <text x="300" y="${quoteBlockH + 90}" text-anchor="middle" font-size="13" fill="${accentColor}" font-family="'Times New Roman', Times, serif" font-weight="bold">${escSvg(source.title_ar || "")}</text>
+  <text x="300" y="${quoteBlockH + 112}" text-anchor="middle" font-size="11" fill="${mutedColor}" font-family="'Times New Roman', Times, serif">${escSvg(sourceRef)}</text>
   <!-- الرابط -->
   <text x="300" y="${quoteBlockH + 132}" text-anchor="middle" font-size="10" fill="${mutedColor}" font-family="monospace">${escSvg(platformLink)}</text>
 </svg>`;

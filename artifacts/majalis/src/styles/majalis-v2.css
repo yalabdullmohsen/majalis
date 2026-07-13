@@ -22,10 +22,10 @@
   --mj-ivory-100: #ECE9E0;
   --mj-surface:   #FFFFFF;
 
-  /* الخطوط */
-  --mj-font-display: "El Messiri", "Reem Kufi", "Amiri", serif;
-  --mj-font-seal:    "Reem Kufi", "Amiri", serif;
-  --mj-font-latin:   "Cinzel", "Georgia", serif;
+  /* الخطوط — Times New Roman خط المنصة الموحَّد (2026-07-13) */
+  --mj-font-display: "Times New Roman", Times, serif;
+  --mj-font-seal:    "Times New Roman", Times, serif;
+  --mj-font-latin:   "Times New Roman", Times, serif;
 }
 
 
@@ -813,7 +813,7 @@
   direction: rtl;
 }
 .msk-hadith-box__text {
-  font-family: "Almarai", "Cairo", system-ui, sans-serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: 0.95rem;
   line-height: 1.85;
   color: var(--msk-text, #1C1A18);
@@ -959,7 +959,7 @@
 
 /* ── اسم المجلس العلمي — خط ثلث ذهبي ── */
 .site-brand-name {
-  font-family: "Katibeh", "Aref Ruqaa", "Amiri", serif !important;
+  font-family: "Times New Roman", Times, serif !important;
   font-size: clamp(1.25rem, 4vw, 1.65rem) !important;
   font-weight: 700 !important;
   color: #176B57 !important;
@@ -1141,7 +1141,7 @@
 /* عناوين الأقسام */
 .ds-section__title {
   color: var(--majalis-emerald-deep, #123F36) !important;
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
 }
 .ds-section__head {
   border-bottom-color: rgba(14,110,82,0.15) !important;
@@ -1419,7 +1419,7 @@
   margin-bottom: 0.75rem;
 }
 .achievement-card__latin {
-  font-family: var(--mj-font-latin, "Cinzel", serif) !important;
+  font-family: var(--mj-font-latin) !important;
   font-size: 0.72rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -1488,7 +1488,7 @@
   opacity: 0;
 }
 .splash-screen__latin {
-  font-family: var(--mj-font-latin, "Cinzel", serif) !important;
+  font-family: var(--mj-font-latin) !important;
   font-size: 0.72rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -1521,7 +1521,7 @@
 .lessons-v2-section__title,
 .lessons-past-section__title {
   color: var(--majalis-emerald-deep, #123F36) !important;
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
 }
 
 /* الإحصائيات السفلية */
@@ -1550,7 +1550,7 @@
 /* لوحة التصفية */
 .lessons-v2-filters__head h2 {
   color: var(--majalis-emerald-deep, #123F36) !important;
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
 }
 .lessons-v2-filters__close {
   color: var(--msk-text-2, #5C5550) !important;
@@ -1604,7 +1604,7 @@
 .page-shell h2:not([class*="ds-page-header"]),
 .page-shell h3,
 .page-shell h4 {
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
   color: var(--majalis-emerald-deep, #123F36) !important;
 }
 /* ── 3. نماذج البحث العامة ── */
@@ -1626,7 +1626,7 @@
 }
 .qa-item__question {
   color: var(--majalis-emerald-deep, #123F36) !important;
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
 }
 .qa-item__answer {
   color: var(--msk-text, #1C1A18) !important;
@@ -1642,7 +1642,7 @@
 }
 .hadith-card__title {
   color: var(--majalis-emerald-deep, #123F36) !important;
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
 }
 .hadith-card__chapter {
   color: var(--msk-text-2, #5C5550) !important;
@@ -1659,7 +1659,7 @@
 }
 .home-library-card h3 {
   color: var(--majalis-emerald-deep, #123F36) !important;
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
 }
 
 /* ── 7. صفحة الفتاوى ── */
@@ -1667,7 +1667,7 @@
 .fatwa-card__title,
 .fatwa-question {
   color: var(--majalis-emerald-deep, #123F36) !important;
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
 }
 
 /* ── 8. صفحة الأذكار والفوائد ── */
@@ -1681,21 +1681,21 @@
 /* العداد والتصنيف */
 .adhkar-card__count {
   color: var(--majalis-emerald-deep, #123F36) !important;
-  font-family: var(--mj-font-seal, "Reem Kufi", serif) !important;
+  font-family: var(--mj-font-seal) !important;
 }
 
 /* الفوائد: عنوان البطاقة */
 .fawaid-card .page-card-header p,
 .fawaid-card-title {
   color: var(--majalis-emerald-deep, #123F36) !important;
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
 }
 
 /* ── 9. صفحة القرآن ── */
 .quran-surah-header h2,
 .quran-surah-name {
   color: var(--majalis-emerald-deep, #123F36) !important;
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
 }
 
 /* ── 10. صفحة القصص والسِّيَر ── */
@@ -1704,7 +1704,7 @@
 .prophet-card__name,
 .islamic-story-card__title {
   color: var(--majalis-emerald-deep, #123F36) !important;
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
 }
 
 /* ── 11. مجلس الفقه والموسوعة الشرعية ── */
@@ -1715,7 +1715,7 @@
 .rulings-card__title,
 .ruling-card-title {
   color: var(--majalis-emerald-deep, #123F36) !important;
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
 }
 
 /* ── 12. المشايخ والمؤسسات ── */
@@ -1723,7 +1723,7 @@
 .sheikh-name,
 .institution-card__name {
   color: var(--majalis-emerald-deep, #123F36) !important;
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
 }
 
 /* ── 13. الدورات والمسارات التعليمية ── */
@@ -1731,7 +1731,7 @@
 .learning-path-item__title,
 .annual-course-card__title {
   color: var(--majalis-emerald-deep, #123F36) !important;
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
 }
 
 /* ── 14. الصفحات التعريفية (عن المنصة، الاتصال) ── */
@@ -1741,7 +1741,7 @@
 .legal-page h2,
 .legal-page h3 {
   color: var(--majalis-emerald-deep, #123F36) !important;
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
 }
 
 /* ── 15. شارات الحكم الشرعي وعلامات التصفية ── */
@@ -1767,12 +1767,12 @@
 .announcement-card__title,
 .announcement-title {
   color: var(--majalis-emerald-deep, #123F36) !important;
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
 }
 
 /* ── 17. page-card-header: خط El Messiri لعناوين البطاقات العامة ── */
 .page-card-header p {
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
   color: var(--majalis-emerald-deep, #123F36) !important;
 }
 
@@ -1788,7 +1788,7 @@
 .tawheed-section-title,
 .tawheed-subsection h3,
 .home-section h2 {
-  font-family: var(--mj-font-display, "El Messiri", serif) !important;
+  font-family: var(--mj-font-display) !important;
   color: var(--majalis-emerald-deep, #123F36) !important;
 }
 
@@ -1923,7 +1923,7 @@
   padding: 0.5rem 1.1rem 0.5rem 0.85rem;
   font-size: 0.82rem;
   font-weight: 700;
-  font-family: var(--mj-font-display, "El Messiri", serif);
+  font-family: var(--mj-font-display);
   box-shadow: 0 4px 16px rgba(14,110,82,0.40), 0 1px 4px rgba(0,0,0,0.15);
   transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s;
   opacity: 0.88;
@@ -1989,7 +1989,7 @@
   padding: 0.45rem 1rem;
   font-size: 0.85rem;
   font-weight: 700;
-  font-family: var(--mj-font-display, "El Messiri", serif);
+  font-family: var(--mj-font-display);
   cursor: pointer;
   transition: opacity 0.18s, transform 0.15s, box-shadow 0.18s;
   box-shadow: 0 2px 8px rgba(14,110,82,0.30);
@@ -2053,7 +2053,7 @@
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--mj-emerald-800, #1A4826);
-  font-family: var(--mj-font-display, "El Messiri", serif);
+  font-family: var(--mj-font-display);
   margin: 0;
 }
 .aie-modal__close {
@@ -2087,7 +2087,7 @@
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--msk-text-2, #5C5550);
-  font-family: var(--mj-font-display, "El Messiri", serif);
+  font-family: var(--mj-font-display);
 }
 .aie-field__input {
   width: 100%;
@@ -2147,7 +2147,7 @@
   border-radius: 9px;
   font-size: 0.88rem;
   font-weight: 700;
-  font-family: var(--mj-font-display, "El Messiri", serif);
+  font-family: var(--mj-font-display);
   cursor: pointer;
   border: none;
   transition: opacity 0.15s, transform 0.12s;
@@ -2346,7 +2346,7 @@ table th {
   font-weight: 800;
   color: var(--majalis-ink, #EDE9DD);
   margin: 0;
-  font-family: "Katibeh", "Amiri", serif;
+  font-family: "Times New Roman", Times, serif;
   animation: pt-fade-in 0.3s ease;
 }
 .pt-hero__time {
@@ -2362,7 +2362,7 @@ table th {
   color: var(--majalis-emerald, #2E8B67);
   letter-spacing: 0.05em;
   font-variant-numeric: tabular-nums;
-  font-family: "Amiri", monospace;
+  font-family: "Times New Roman", Times, serif;
   line-height: 1.1;
   transition: opacity 0.2s;
   animation: pt-pulse 1s ease-in-out infinite;
@@ -2508,7 +2508,7 @@ table th {
   font-weight: 800;
   color: var(--majalis-ink, #EDE9DD);
   margin: 0 0 0.35rem;
-  font-family: "Katibeh", "Amiri", serif;
+  font-family: "Times New Roman", Times, serif;
 }
 .prophets-seerah-bridge__desc {
   font-size: 0.82rem;

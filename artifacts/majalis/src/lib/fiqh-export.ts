@@ -42,7 +42,7 @@ export function printFiqhItemPdf(item: FiqhCouncilItem) {
   <meta charset="utf-8" />
   <title>${item.title}</title>
   <style>
-    body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; padding: 2rem; line-height: 1.8; color: #1a1a1a; }
+    body { font-family: 'Times New Roman', Times, serif; padding: 2rem; line-height: 1.8; color: #1a1a1a; }
     h1 { font-size: 1.5rem; border-bottom: 2px solid #1b5e3b; padding-bottom: 0.5rem; }
     .meta { color: #555; font-size: 0.9rem; margin: 0.5rem 0 1.5rem; }
     h2 { font-size: 1.1rem; color: #1b5e3b; margin-top: 1.5rem; }

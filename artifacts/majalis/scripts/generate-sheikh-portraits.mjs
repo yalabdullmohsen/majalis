@@ -27,9 +27,9 @@ function svg({ label, initial }) {
   </defs>
   <rect width="320" height="400" rx="24" fill="url(#bg)" stroke="#E0D7C4" stroke-width="3"/>
   <circle cx="160" cy="130" r="72" fill="#164E3C"/>
-  <text x="160" y="148" text-anchor="middle" fill="#FAF5EA" font-family="Cairo, sans-serif" font-size="52" font-weight="700">${initial}</text>
+  <text x="160" y="148" text-anchor="middle" fill="#FAF5EA" font-family="Times New Roman, Times, serif" font-size="52" font-weight="700">${initial}</text>
   <rect x="88" y="210" width="144" height="120" rx="36" fill="#1F6E54"/>
-  <text x="160" y="360" text-anchor="middle" fill="#5B5446" font-family="Cairo, sans-serif" font-size="17">${label}</text>
+  <text x="160" y="360" text-anchor="middle" fill="#5B5446" font-family="Times New Roman, Times, serif" font-size="17">${label}</text>
 </svg>`;
 }
 

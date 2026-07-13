@@ -197,7 +197,7 @@ export function generateDocsHtml(version = "v1") {
   <meta charset="UTF-8">
   <title>Majalis API Docs v${version}</title>
   <style>
-    body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; }
+    body { font-family: "Times New Roman", Times, serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; }
     code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; }
     h1 { color: #1a472a; }
     .endpoint { margin: 0.5rem 0; }
