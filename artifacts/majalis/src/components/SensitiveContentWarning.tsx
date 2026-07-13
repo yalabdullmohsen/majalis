@@ -42,8 +42,7 @@ export function SensitiveContentWarning({ topic, forceShow, referralUrl }: Props
         {referralUrl && (
           <a
             href={referralUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            target="_blank" rel="noopener noreferrer"
             className="scw-banner__link"
           >
             استشر دار الإفتاء <ExternalLink size={11} aria-hidden="true" />

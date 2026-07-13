@@ -209,8 +209,7 @@ export default function ScientificAnnouncementDetailPage({
                 <a
                   key={link.url}
                   href={safeHref(link.url)}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target="_blank" rel="noopener noreferrer"
                   className="sci-ann-btn sci-ann-btn--secondary"
                 >
                   {link.label}

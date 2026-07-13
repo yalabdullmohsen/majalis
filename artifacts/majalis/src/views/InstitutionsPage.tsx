@@ -384,8 +384,7 @@ function InstitutionCard({ inst }: { inst: Institution }) {
           <a
             href={inst.website}
             className="inst-card__link inst-card__link--web"
-            target="_blank"
-            rel="noopener noreferrer"
+            target="_blank" rel="noopener noreferrer"
           >
             <Globe size={13} strokeWidth={1.8} aria-hidden="true" /> الموقع الرسمي
           </a>
@@ -394,8 +393,7 @@ function InstitutionCard({ inst }: { inst: Institution }) {
           <a
             href={`https://maps.google.com/?q=${encodeURIComponent(inst.mapQuery)}`}
             className="inst-card__link inst-card__link--map"
-            target="_blank"
-            rel="noopener noreferrer"
+            target="_blank" rel="noopener noreferrer"
           >
             <MapPin size={13} strokeWidth={1.8} aria-hidden="true" /> الموقع على الخريطة
           </a>

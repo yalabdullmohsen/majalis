@@ -185,8 +185,7 @@ export default function QuranCirclesPage() {
         </div>
         <a
           href="https://halakat.awqaf.gov.kw/Home/RegisterStudent"
-          target="_blank"
-          rel="noopener noreferrer"
+          target="_blank" rel="noopener noreferrer"
           className="qcp-reg-banner__btn"
         >
           سجّل الآن ←

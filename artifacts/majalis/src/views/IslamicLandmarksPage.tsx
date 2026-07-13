@@ -176,8 +176,7 @@ function LandmarkModal({
 
             <a
               href={mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              target="_blank" rel="noopener noreferrer"
               className="ilm-map-btn"
             >
               <Maximize2 size={15} />

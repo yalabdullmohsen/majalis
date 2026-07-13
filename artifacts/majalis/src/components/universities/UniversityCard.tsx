@@ -97,7 +97,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
             target="_blank"
             rel="noopener noreferrer"
             className="univ-btn univ-btn--ghost"
-            title="الموقع الرسمي"
+            aria-label={`الموقع الرسمي لـ ${u.name_ar}`}
           >
             <Globe size={13} className="inline ml-1" />الموقع
           </a>

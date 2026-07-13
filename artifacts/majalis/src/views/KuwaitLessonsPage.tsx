@@ -39,8 +39,7 @@ function SheikhCard({ sheikh }: { sheikh: (typeof KUWAIT_SHEIKHS)[number] }) {
   return (
     <a
       href={sheikh.drosq8Url}
-      target="_blank"
-      rel="noopener noreferrer"
+      target="_blank" rel="noopener noreferrer"
       className="sheikh-card"
       aria-label={`دروس ${sheikh.name} على موقع دروس الكويت`}
     >

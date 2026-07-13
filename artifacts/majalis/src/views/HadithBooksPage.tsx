@@ -408,8 +408,7 @@ export default function HadithBooksPage() {
           المصدر:{" "}
           <a
             href="https://github.com/fawazahmed0/hadith-api"
-            target="_blank"
-            rel="noopener noreferrer"
+            target="_blank" rel="noopener noreferrer"
             className="hb-header__source-link"
           >
             fawazahmed0/hadith-api

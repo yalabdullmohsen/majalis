@@ -138,8 +138,7 @@ export default function QuranRadioPage() {
                 {ch.youtubeUrl && (
                   <a
                     href={ch.youtubeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    target="_blank" rel="noopener noreferrer"
                     className="qs-youtube-btn"
                     aria-label={`مشاهدة ${ch.name} على يوتيوب`}
                   >

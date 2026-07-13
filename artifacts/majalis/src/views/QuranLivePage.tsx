@@ -192,8 +192,7 @@ export default function QuranLivePage() {
                     ? "https://www.youtube.com/@haramainlive"
                     : "https://www.youtube.com/@nabawi_tv"
                 }
-                target="_blank"
-                rel="noopener noreferrer"
+                target="_blank" rel="noopener noreferrer"
                 className="qlive-yt-btn"
               >
                 فتح في يوتيوب <ExternalLink size={14} />

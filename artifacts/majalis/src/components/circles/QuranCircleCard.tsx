@@ -116,8 +116,7 @@ export function QuranCircleCard({ circle: c }: Props) {
         {(c as any).registration_url && (
           <a
             href={(c as any).registration_url}
-            target="_blank"
-            rel="noopener noreferrer"
+            target="_blank" rel="noopener noreferrer"
             className="qc-card__reg-btn"
           >
             <UserCheck size={14} aria-hidden="true" />
@@ -129,8 +128,7 @@ export function QuranCircleCard({ circle: c }: Props) {
         {isRemote && c.meeting_link && !(c as any).registration_url && (
           <a
             href={c.meeting_link}
-            target="_blank"
-            rel="noopener noreferrer"
+            target="_blank" rel="noopener noreferrer"
             className="qc-card__join-btn"
           >
             <ExternalLink size={14} aria-hidden="true" />
@@ -142,8 +140,7 @@ export function QuranCircleCard({ circle: c }: Props) {
         {(c as any).website_url && (
           <a
             href={(c as any).website_url}
-            target="_blank"
-            rel="noopener noreferrer"
+            target="_blank" rel="noopener noreferrer"
             className="qc-card__site-btn"
             title="الموقع الإلكتروني"
           >
@@ -162,8 +159,7 @@ export function QuranCircleCard({ circle: c }: Props) {
             {c.contact_info.startsWith("+") && (
               <a
                 href={whatsappHref(c.contact_info)}
-                target="_blank"
-                rel="noopener noreferrer"
+                target="_blank" rel="noopener noreferrer"
                 className="qc-card__wa-link"
                 aria-label="واتساب"
               >
