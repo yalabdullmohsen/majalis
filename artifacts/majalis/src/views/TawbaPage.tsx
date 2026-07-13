@@ -288,14 +288,15 @@ export default function TawbaPage() {
       </div>
 
       {/* tabs */}
-      <div className="tw-tabs-bar">
+      <div className="tw-tabs-bar" role="tablist" aria-label="أقسام التوبة">
         {TABS.map((t) => (
           <button
             key={t.id}
             type="button"
+            role="tab"
             className={`tw-tab${tab === t.id ? " tw-tab--active" : ""}`}
             onClick={() => setTab(t.id)}
-            aria-pressed={tab === t.id}
+            aria-selected={tab === t.id}
           >
             <span className="tw-tab__icon"><SectionIcon name={t.icon} size={20} /></span>
             <span className="tw-tab__label">{t.label}</span>

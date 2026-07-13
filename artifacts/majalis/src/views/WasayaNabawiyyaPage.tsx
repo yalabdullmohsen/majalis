@@ -688,14 +688,15 @@ export default function WasayaNabawiyyaPage() {
       />
 
       {/* Tabs */}
-      <div className="wn-tabs">
+      <div className="wn-tabs" role="tablist" aria-label="أقسام الوصايا النبوية">
         {TABS.map(t => (
           <button
             key={t.id}
             type="button"
+            role="tab"
             className={`wn-tab${activeTab === t.id ? " wn-tab--active" : ""}`}
             onClick={() => { setActiveTab(t.id); setOpenIdx(null); }}
-            aria-pressed={activeTab === t.id}
+            aria-selected={activeTab === t.id}
           >{t.label}</button>
         ))}
       </div>

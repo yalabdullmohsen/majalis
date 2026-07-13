@@ -498,14 +498,15 @@ export default function RaqaiqPage() {
       />
 
       {/* Tabs */}
-      <div className="rq-tabs">
+      <div className="rq-tabs" role="tablist" aria-label="أقسام الرقائق">
         {TABS.map(t => (
           <button
             key={t.id}
             type="button"
+            role="tab"
             className={`rq-tab${activeTab === t.id ? " rq-tab--active" : ""}`}
             onClick={() => { setActiveTab(t.id); setOpenIdx(null); }}
-            aria-pressed={activeTab === t.id}
+            aria-selected={activeTab === t.id}
           >{t.label}</button>
         ))}
       </div>

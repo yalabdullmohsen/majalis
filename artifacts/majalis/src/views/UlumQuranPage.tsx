@@ -273,14 +273,15 @@ export default function UlumQuranPage() {
       </div>
 
       {/* tabs */}
-      <div className="uq-tabs-bar">
+      <div className="uq-tabs-bar" role="tablist" aria-label="أقسام علوم القرآن">
         {TABS.map((t) => (
           <button
             key={t.id}
             type="button"
+            role="tab"
             className={`uq-tab${tab === t.id ? " uq-tab--active" : ""}`}
             onClick={() => setTab(t.id)}
-            aria-pressed={tab === t.id}
+            aria-selected={tab === t.id}
           >
             <span><SectionIcon name={t.icon} size={22} /></span>
             <span>{t.label}</span>

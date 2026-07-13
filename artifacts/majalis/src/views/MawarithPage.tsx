@@ -312,14 +312,15 @@ export default function MawarithPage() {
       </div>
 
       {/* tabs */}
-      <div className="mw-tabs-bar">
+      <div className="mw-tabs-bar" role="tablist" aria-label="أقسام المواريث">
         {TABS.map((t) => (
           <button
             key={t.id}
             type="button"
+            role="tab"
             className={`mw-tab${tab === t.id ? " mw-tab--active" : ""}`}
             onClick={() => setTab(t.id)}
-            aria-pressed={tab === t.id}
+            aria-selected={tab === t.id}
           >
             <span><SectionIcon name={t.icon} size={22} /></span>
             <span>{t.label}</span>

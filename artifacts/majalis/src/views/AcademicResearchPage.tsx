@@ -705,16 +705,17 @@ export default function AcademicResearchPage() {
       </div>
 
       {/* تبويبات */}
-      <div className="ar-tabs-bar">
+      <div className="ar-tabs-bar" role="tablist" aria-label="أقسام البحث الأكاديمي">
         {TABS.map(t => {
           const I = t.Icon;
           return (
             <button
               key={t.id}
               type="button"
+              role="tab"
               className={`ar-tab-btn${activeTab === t.id ? " ar-tab-btn--active" : ""}`}
               onClick={() => setActiveTab(t.id)}
-              aria-pressed={activeTab === t.id}
+              aria-selected={activeTab === t.id}
             >
               <span className="ar-tab-btn__icon" aria-hidden="true"><I size={16} strokeWidth={1.6} /></span>
               <span className="ar-tab-btn__label">{t.label}</span>

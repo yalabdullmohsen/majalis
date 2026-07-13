@@ -371,14 +371,15 @@ export default function MalaikaPage() {
       <MalakOfDayCard malak={todayMalak} />
 
       {/* Tabs */}
-      <div className="mk-tabs">
+      <div className="mk-tabs" role="tablist" aria-label="أقسام الملائكة">
         {TABS.map(t => (
           <button
             key={t.id}
             type="button"
+            role="tab"
             className={`mk-tab${activeTab === t.id ? " mk-tab--active" : ""}`}
             onClick={() => setActiveTab(t.id)}
-            aria-pressed={activeTab === t.id}
+            aria-selected={activeTab === t.id}
           >{t.label}</button>
         ))}
       </div>

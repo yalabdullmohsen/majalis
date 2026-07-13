@@ -206,14 +206,15 @@ export default function TaharaPage() {
           <cite className="th-ayah__ref">البقرة: 222</cite>
         </div>
 
-        <nav className="th-tabs" aria-label="أقسام الطهارة">
+        <nav className="th-tabs" aria-label="أقسام الطهارة" role="tablist">
           {TABS.map((t) => (
             <button
               key={t.id}
               type="button"
+              role="tab"
               className={`th-tab${tab === t.id ? " th-tab--active" : ""}`}
               onClick={() => setTab(t.id)}
-              aria-pressed={tab === t.id}
+              aria-selected={tab === t.id}
             >
               <span className="th-tab__icon"><SectionIcon name={t.icon} size={24} /></span>
               <span className="th-tab__label">{t.label}</span>

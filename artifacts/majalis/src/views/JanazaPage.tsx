@@ -214,14 +214,15 @@ export default function JanazaPage() {
           <cite className="jn-ayah__ref">العنكبوت: 57</cite>
         </div>
 
-        <nav className="jn-tabs" aria-label="أقسام الجنائز">
+        <nav className="jn-tabs" aria-label="أقسام الجنائز" role="tablist">
           {TABS.map((t) => (
             <button
               key={t.id}
               type="button"
+              role="tab"
               className={`jn-tab${tab === t.id ? " jn-tab--active" : ""}`}
               onClick={() => setTab(t.id)}
-              aria-pressed={tab === t.id}
+              aria-selected={tab === t.id}
             >
               <span className="jn-tab__icon"><SectionIcon name={t.icon} size={24} /></span>
               <span className="jn-tab__label">{t.label}</span>

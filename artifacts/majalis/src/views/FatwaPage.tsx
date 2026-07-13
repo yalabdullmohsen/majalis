@@ -121,7 +121,7 @@ export default function FatwaPage() {
         </span>
       </div>
 
-      <div className="content-hub-chips">
+      <div className="content-hub-chips" role="tablist" aria-label="تصفية الفتاوى">
         {[
           ["all", "جميع الفتاوى"],
           ["latest", "أحدث الفتاوى"],
@@ -131,9 +131,10 @@ export default function FatwaPage() {
           <button
             key={key}
             type="button"
+            role="tab"
             onClick={() => setTab(key as typeof tab)}
             className={tab === key ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-            aria-pressed={tab === key}
+            aria-selected={tab === key}
           >
             {label}
           </button>

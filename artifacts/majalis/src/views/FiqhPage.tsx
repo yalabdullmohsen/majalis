@@ -192,14 +192,15 @@ export default function FiqhPage() {
 
       {/* Tabs، للمحتوى الديناميكي */}
       <div className="fqp-tabs-nav fqp-tabs-nav--bare">
-        <div className="fqp-tabs-scroll">
+        <div className="fqp-tabs-scroll" role="tablist" aria-label="أقسام الفقه">
           {TABS.map((t) => (
             <button
               key={t.key}
               type="button"
+              role="tab"
               onClick={() => setActiveTab(t.key)}
               className={`fqp-tab${activeTab === t.key ? " fqp-tab--active" : ""}`}
-              aria-pressed={activeTab === t.key}
+              aria-selected={activeTab === t.key}
             >
               <t.Icon size={15} strokeWidth={1.8} aria-hidden="true" />
               {t.label}
