@@ -17,6 +17,7 @@ import "./styles/highlighted-content.css";
 import "./styles/majalis-v2.css";
 import "./styles/modern-2026.css";
 import "./styles/elite-2026.css";
+import "./styles/sins-rights.css";
 
 const queryClient = createAppQueryClient();
 
