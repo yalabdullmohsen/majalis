@@ -34313,6 +34313,51 @@ body .p2t-btn--outline {
   color: var(--majalis-emerald-deep, #123F36) !important;
 }
 
+/* .is-stat-card — خلفية #fff */
+body .is-stat-card,
+body .is-stat-card *:not(svg) {
+  color: var(--majalis-ink, #1A1A1A) !important;
+}
+
+/* .is-science-intro — rgba(31,77,58,.06) فاتح */
+body .is-science-intro,
+body .is-science-intro * {
+  color: #153025 !important;
+}
+
+/* .jn-desc-card — خلفية #fff */
+body .jn-desc-card,
+body .jn-desc-card *:not(svg) {
+  color: var(--majalis-ink, #1A1A1A) !important;
+}
+
+/* .jn-dua-card — خلفية #fff */
+body .jn-dua-card,
+body .jn-dua-card *:not(svg) {
+  color: var(--majalis-ink, #1A1A1A) !important;
+}
+
+/* .atl-section-intro — rgba(31,77,58,.06) فاتح */
+body .atl-section-intro,
+body .atl-section-intro * {
+  color: #153025 !important;
+}
+
+/* .nb-badge--azm — rgba(31,77,58,.12) فاتح */
+body .nb-badge--azm {
+  color: var(--majalis-emerald-deep, #123F36) !important;
+}
+
+/* .sg-rank-card__ruling — rgba(14,110,82,.1) فاتح */
+body .sg-rank-card__ruling {
+  color: var(--majalis-emerald, #0E6E52) !important;
+}
+
+/* .tw-nawaa-hukm--mustahabb — خلفية #D4E9DC فاتحة */
+body .tw-nawaa-hukm--mustahabb {
+  color: #123F36 !important;
+}
+
 /* تحديد الأيقونات ضمن الخلفيات الداكنة */
 .hpv4-hero svg,
 .lesson-unified-card__header svg,
