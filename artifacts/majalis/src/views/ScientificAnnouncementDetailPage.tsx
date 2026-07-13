@@ -38,7 +38,7 @@ export default function ScientificAnnouncementDetailPage({
 
   useEffect(() => {
     applyPageSeo({
-      path: "/scientific-announcements",
+      path: `/scientific-announcements/${params.id}`,
       title: `${item?.announcementTitle || "إعلان علمي"} | المجلس العلمي`,
       description: `${item?.announcementTitle || "إعلان علمي"}، تفاصيل الإعلان العلمي والمؤتمرات والدورات الإسلامية.`,
       keywords: ["إعلانات علمية", "مؤتمرات إسلامية", "دورات علمية", "فعاليات شرعية"],
@@ -47,7 +47,7 @@ export default function ScientificAnnouncementDetailPage({
           "@context": "https://schema.org",
           "@type": "Event",
           name: item?.announcementTitle || "إعلان علمي",
-          url: "https://majlisilm.com/scientific-announcements",
+          url: `https://majlisilm.com/scientific-announcements/${params.id}`,
           description: `${item?.announcementTitle || "إعلان علمي"} — تفاصيل الحدث العلمي`,
           organizer: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
         },
