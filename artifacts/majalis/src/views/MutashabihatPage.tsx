@@ -5,9 +5,8 @@ import {
   MUTASHABIHAT,
   MUTASHABIHAT_CATEGORIES,
   type MutashabihatPair,
-  type MutashabihatCategory,
 } from "@/lib/mutashabihat-data";
-import { ChevronDown, X, Eye, EyeOff, BookOpen } from "lucide-react";
+import { ChevronDown, Eye, EyeOff, BookOpen } from "lucide-react";
 
 /* ─── CSS داخلي — يستخدم design-system المتاح ─────────────────── */
 const S = {
