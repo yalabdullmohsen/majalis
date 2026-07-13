@@ -161,6 +161,7 @@ export function SmartCmsSection() {
       <div className="scm-tabs">
         {(["text", "url", "image"] as InputMode[]).map((m) => (
           <button
+            type="button"
             key={m}
             className={`scm-tab${mode === m ? " scm-tab--active" : ""}`}
             onClick={() => setMode(m)}

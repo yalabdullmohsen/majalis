@@ -405,6 +405,7 @@ export default function IslamicKnowledgeMapPage() {
 
             return (
               <button
+                type="button"
                 key={domain.id}
                 className={[
                   "ikm-card",
@@ -513,6 +514,7 @@ export default function IslamicKnowledgeMapPage() {
             return (
               <div key={i} className="ikm-conn-item">
                 <button
+                  type="button"
                   className={`ikm-conn-node ikm-dom--${c.a}`}
                   onClick={() => setSelected(c.a)}
                 >
@@ -523,6 +525,7 @@ export default function IslamicKnowledgeMapPage() {
                   <ArrowLeftRight size={16} className="ikm-conn-arrow" />
                 </div>
                 <button
+                  type="button"
                   className={`ikm-conn-node ikm-dom--${c.b}`}
                   onClick={() => setSelected(c.b)}
                 >

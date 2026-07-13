@@ -100,7 +100,8 @@ function EditDialog({ el, path, onDone }: EditDialogProps) {
         <div className="ase-dialog__head">
           <span className="ase-dialog__tag">{el.tagName.toLowerCase()}</span>
           <p className="ase-dialog__title">تعديل النص</p>
-          <button className="ase-dialog__close" onClick={onDone} aria-label="إغلاق"><X size={14} /></button>
+          <button
+            type="button" className="ase-dialog__close" onClick={onDone} aria-label="إغلاق"><X size={14} /></button>
         </div>
         <textarea
           ref={ta}
@@ -111,10 +112,12 @@ function EditDialog({ el, path, onDone }: EditDialogProps) {
         />
         <p className="ase-dialog__hint">Ctrl+Enter للحفظ • Esc للإلغاء</p>
         <div className="ase-dialog__footer">
-          <button className="ase-btn ase-btn--ghost" onClick={reset} title="استعادة النص الأصلي">
+          <button
+            type="button" className="ase-btn ase-btn--ghost" onClick={reset} title="استعادة النص الأصلي">
             <RefreshCw size={13} /> استعادة
           </button>
-          <button className="ase-btn ase-btn--primary" onClick={save}>
+          <button
+            type="button" className="ase-btn ase-btn--primary" onClick={save}>
             <Check size={14} /> حفظ
           </button>
         </div>
@@ -417,7 +420,8 @@ export function AdminSiteEditBar() {
               ) : "لا توجد تعديلات محفوظة"}
             </p>
             {editCount > 0 && (
-              <button className="ase-bar__clear" onClick={clearAll}>
+              <button
+                type="button" className="ase-bar__clear" onClick={clearAll}>
                 <RefreshCw size={11} style={{ display: "inline", marginLeft: 3 }} />
                 استعادة النصوص الأصلية
               </button>
@@ -428,6 +432,7 @@ export function AdminSiteEditBar() {
         <div style={{ display: "flex", gap: "0.4rem" }}>
           {!editMode && (
             <button
+              type="button"
               className="ase-bar__toggle ase-bar__toggle--off"
               onClick={() => { setExpanded((v) => !v); }}
               title="أدوات المشرف"
@@ -438,6 +443,7 @@ export function AdminSiteEditBar() {
             </button>
           )}
           <button
+            type="button"
             className={`ase-bar__toggle ${editMode ? "ase-bar__toggle--on" : "ase-bar__toggle--off"}`}
             onClick={() => { setEditMode((v) => !v); setExpanded(false); }}
             title={editMode ? "إيقاف وضع التحرير" : "تفعيل وضع تحرير الصفحة"}

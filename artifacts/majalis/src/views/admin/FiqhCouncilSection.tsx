@@ -364,6 +364,7 @@ export function FiqhCouncilSection() {
           <Link href="/admin/fiqh-review" className="fcs-link">المراجعة العلمية</Link>
           <Link href="/admin/fiqh-quality" className="fcs-link">جودة البيانات</Link>
           <button
+            type="button"
             onClick={() => { setForm({ ...EMPTY }); setOpen(true); }}
             className="fcs-add-btn"
           >
@@ -661,6 +662,7 @@ export function FiqhCouncilSection() {
         <div className="fcs-grid-gap-lg">
           <div className="fcs-flex-header">
             <button
+              type="button"
               onClick={handleManualSync}
               disabled={syncing}
               className="fcs-sync-btn"

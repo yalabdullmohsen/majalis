@@ -977,6 +977,7 @@ export default function IslamicSectsPage() {
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
           {CATEGORIES.map((c) => (
             <button
+              type="button"
               key={c}
               onClick={() => setCategory(c)}
               style={{
@@ -998,6 +999,7 @@ export default function IslamicSectsPage() {
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
           {STATUS_FILTER.map((s) => (
             <button
+              type="button"
               key={s}
               onClick={() => setStatusF(s)}
               style={{

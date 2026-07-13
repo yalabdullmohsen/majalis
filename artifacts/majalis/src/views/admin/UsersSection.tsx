@@ -83,6 +83,7 @@ export function UsersSection() {
       <div className="usr-filter-row">
         {FILTERS.map(([v, l]) => (
           <button
+            type="button"
             key={v}
             onClick={() => setFilter(v)}
             className={`usr-filter-btn${filter === v ? " usr-filter-btn--active" : ""}`}

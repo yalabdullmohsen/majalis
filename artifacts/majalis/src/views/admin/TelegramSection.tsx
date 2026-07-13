@@ -507,6 +507,7 @@ function ReviewTab() {
 
                 {(raw?.raw_text || raw?.raw_caption || lesson.description) && (
                   <button
+                    type="button"
                     onClick={() => setExpanded(isExpanded ? null : lesson.id)}
                     className="tgm-expand-btn"
                   >

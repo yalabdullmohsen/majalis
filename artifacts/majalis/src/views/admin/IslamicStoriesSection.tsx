@@ -227,6 +227,7 @@ export function IslamicStoriesSection() {
                     <div className="is-actions">
                       {!story.is_approved ? (
                         <button
+                          type="button"
                           className={`is-btn approve${isWorking ? " disabled" : ""}`}
                           onClick={() => setApproval(story, true)}
                           disabled={isWorking}
@@ -235,6 +236,7 @@ export function IslamicStoriesSection() {
                         </button>
                       ) : (
                         <button
+                          type="button"
                           className={`is-btn revoke${isWorking ? " disabled" : ""}`}
                           onClick={() => setApproval(story, false)}
                           disabled={isWorking}

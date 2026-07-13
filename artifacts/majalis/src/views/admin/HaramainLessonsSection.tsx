@@ -78,6 +78,7 @@ export function HaramainLessonsSection() {
         </div>
         <div className="hrm-actions">
           <button
+            type="button"
             onClick={() => importAll(lessons)}
             disabled={importing || lessons.length === 0}
             className="hrm-import-btn"
@@ -87,6 +88,7 @@ export function HaramainLessonsSection() {
               : `استيراد الظاهر (${lessons.length})`}
           </button>
           <button
+            type="button"
             onClick={() => importAll(HARAMAIN_LESSONS)}
             disabled={importing}
             className="hrm-import-btn hrm-import-btn--all"
@@ -130,6 +132,7 @@ export function HaramainLessonsSection() {
         <div className="hrm-filters">
           {(["all", "مكة", "المدينة"] as const).map((t) => (
             <button
+              type="button"
               key={t}
               onClick={() => setFilter(t)}
               className="hrm-filter-btn"
@@ -146,6 +149,7 @@ export function HaramainLessonsSection() {
         <div className="hrm-filters hrm-filters--cats">
           {CATEGORIES.map((cat) => (
             <button
+              type="button"
               key={cat}
               onClick={() => setCategory(cat)}
               className="hrm-filter-btn hrm-filter-btn--sm"
@@ -202,6 +206,7 @@ export function HaramainLessonsSection() {
                 </a>
               )}
               <button
+                type="button"
                 onClick={() => importAll([lesson])}
                 disabled={importing}
                 className="hrm-card__import-btn"

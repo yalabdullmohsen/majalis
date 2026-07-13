@@ -73,6 +73,7 @@ export function FawaidSection() {
       <div className="faw-filter-row">
         {FILTERS.map(([v, l]) => (
           <button
+            type="button"
             key={v}
             onClick={() => setFilter(v)}
             className={`faw-filter-btn${filter === v ? " faw-filter-btn--active" : ""}`}
