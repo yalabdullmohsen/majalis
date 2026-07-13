@@ -463,7 +463,7 @@ export default function SearchPage() {
               <select value={filters.language} onChange={(e) => setFilters({ ...filters, language: e.target.value })}>
                 <option value="">الكل</option>
                 <option value="ar">العربية</option>
-                <option value="en">English</option>
+                <option value="en">الإنجليزية</option>
               </select>
             </label>
           </div>

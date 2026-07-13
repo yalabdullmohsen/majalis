@@ -173,7 +173,7 @@ export default function MySubmissionsPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            placeholder="example@email.com"
+            placeholder="بريدك@مثال.com"
             className="msp-email-input"
           />
           <button
