@@ -63,6 +63,7 @@ function FileDropZone({ accept, maxMb, onFile, file, hint }: {
           ref={inputRef}
           type="file"
           accept={accept}
+          aria-label="رفع ملف"
           onChange={handleChange}
           className="ulp-hidden"
         />

@@ -138,6 +138,7 @@ function NotesTab({
             {editing === note.id ? (
               <div className="vault-note-card__edit">
                 <textarea
+                  aria-label="تعديل النص"
                   className="vault-note-card__textarea"
                   value={editText}
                   onChange={(e) => setEditText(e.target.value)}

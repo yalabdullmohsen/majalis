@@ -269,7 +269,7 @@ export default function TranscribePage() {
               {...getRootProps()}
               className={isDragActive ? "trp-dropzone trp-dropzone--active" : "trp-dropzone"}
             >
-              <input {...getInputProps()} />
+              <input {...getInputProps()} aria-label="رفع ملف صوتي" />
               <div className="trp-drop-label">اسحب الملف هنا أو انقر للاختيار</div>
               {file ? (
                 <p className="trp-drop-filename">{file.name}</p>

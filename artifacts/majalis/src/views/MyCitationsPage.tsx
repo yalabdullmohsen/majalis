@@ -348,6 +348,7 @@ export default function MyCitationsPage() {
                       {editNoteId === item.id ? (
                         <div className="space-y-1">
                           <textarea
+                            aria-label="تعديل الملاحظة"
                             value={editNoteText}
                             onChange={(e) => setEditNoteText(e.target.value)}
                             rows={2}
