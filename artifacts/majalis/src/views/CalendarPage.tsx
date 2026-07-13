@@ -254,7 +254,6 @@ export default function CalendarPage() {
           type="button"
           className="cal-ics-btn"
           onClick={handleIcsExport}
-          title="تحميل التقويم بصيغة ICS"
           aria-label="تحميل دروس الشهر كملف تقويم"
         >
           <Download size={16} aria-hidden="true" />
@@ -369,10 +368,10 @@ export default function CalendarPage() {
       {modalEvent && <EventModal event={modalEvent} onClose={() => setModalEvent(null)} />}
 
       <div className="twh-share">
-        <ShareButtons title="التقويم الهجري والمناسبات الإسلامية — المجلس العلمي" url="https://majlisilm.com/calendar" />
+        <ShareButtons aria-label="التقويم الهجري والمناسبات الإسلامية — المجلس العلمي" url="https://majlisilm.com/calendar" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="tarikh" title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
+        <SectionQuiz categoryId="tarikh" aria-label="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
       </div>
     </div>
   );

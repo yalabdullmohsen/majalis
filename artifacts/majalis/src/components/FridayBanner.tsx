@@ -54,8 +54,7 @@ export function FridayBanner() {
         type="button"
         className="frb-dismiss"
         onClick={handleDismiss}
-        aria-label="إغلاق تذكير يوم الجمعة"
-        title="إغلاق"
+        aria-label="إغلاق"
       >
         ✕
       </button>

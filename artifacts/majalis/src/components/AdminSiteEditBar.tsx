@@ -113,7 +113,7 @@ function EditDialog({ el, path, onDone }: EditDialogProps) {
         <p className="ase-dialog__hint">Ctrl+Enter للحفظ • Esc للإلغاء</p>
         <div className="ase-dialog__footer">
           <button
-            type="button" className="ase-btn ase-btn--ghost" onClick={reset} title="استعادة النص الأصلي">
+            type="button" className="ase-btn ase-btn--ghost" onClick={reset} aria-label="استعادة النص الأصلي">
             <RefreshCw size={13} /> استعادة
           </button>
           <button
@@ -435,7 +435,7 @@ export function AdminSiteEditBar() {
               type="button"
               className="ase-bar__toggle ase-bar__toggle--off"
               onClick={() => { setExpanded((v) => !v); }}
-              title="أدوات المشرف"
+              aria-label="أدوات المشرف"
             >
               <Pencil size={13} />
               مشرف

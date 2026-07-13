@@ -439,7 +439,7 @@ export default function LessonsPage({
               <a
                 href={`/admin?edit=${lesson.id}`}
                 className="lesson-admin-btn lesson-admin-btn--edit"
-                title="تعديل"
+                aria-label="تعديل"
               >
                 <Pencil size={13} strokeWidth={1.4} aria-hidden="true" />
                 تعديل
@@ -448,7 +448,7 @@ export default function LessonsPage({
                 <button
                   type="button"
                   className="lesson-admin-btn lesson-admin-btn--delete"
-                  title="حذف"
+                  aria-label="حذف"
                   onClick={() => handleAdminDelete(lesson.id)}
                 >
                   <Trash2 size={13} strokeWidth={1.4} aria-hidden="true" />
@@ -648,10 +648,10 @@ export default function LessonsPage({
       )}
 
       <div className="twh-share">
-        <ShareButtons title="الدروس العلمية — المجلس العلمي" url="https://majlisilm.com/lessons" />
+        <ShareButtons aria-label="الدروس العلمية — المجلس العلمي" url="https://majlisilm.com/lessons" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["hadith", "fiqh"]} title="اختبر معلوماتك في الدروس الشرعية" count={4} />
+        <SectionQuiz categoryId={["hadith", "fiqh"]} aria-label="اختبر معلوماتك في الدروس الشرعية" count={4} />
       </div>
     </div>
   );

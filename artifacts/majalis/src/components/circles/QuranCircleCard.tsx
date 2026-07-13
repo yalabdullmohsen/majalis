@@ -142,7 +142,7 @@ export function QuranCircleCard({ circle: c }: Props) {
             href={(c as any).website_url}
             target="_blank" rel="noopener noreferrer"
             className="qc-card__site-btn"
-            title="الموقع الإلكتروني"
+            aria-label="الموقع الإلكتروني"
           >
             <Globe size={14} aria-hidden="true" />
             الموقع

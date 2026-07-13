@@ -215,7 +215,6 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
         <button
           type="button"
           className="hadith-action-btn"
-          title="نسخ"
           onClick={handleCopy}
           aria-label="نسخ الحديث"
         >
@@ -224,7 +223,6 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
         <button
           type="button"
           className="hadith-action-btn"
-          title="عرض التفاصيل"
           onClick={(e) => { e.stopPropagation(); onExpand(h); }}
           aria-label="عرض التفاصيل"
         >
@@ -645,7 +643,7 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
         </aside>
       )}
 
-      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
+      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} aria-label="بحث وتصفية">
         {filtersPanel}
       </FilterBottomSheet>
 
@@ -739,7 +737,7 @@ export default function HadithPage() {
       <div className="px-4 pb-6">
         <SectionQuiz
           categoryId="hadith"
-          title="اختبر معلوماتك في علوم الحديث"
+          aria-label="اختبر معلوماتك في علوم الحديث"
           count={4}
         />
       </div>

@@ -79,11 +79,11 @@ function NotifRow({ rec, onRead, onArchive, onDelete }: {
       </div>
       <div className="nh-row__actions" onClick={e => e.stopPropagation()}>
         {!rec.isArchived && (
-          <button type="button" className="nh-action" onClick={onArchive} title="أرشفة" aria-label="أرشفة">
+          <button type="button" className="nh-action" onClick={onArchive} aria-label="أرشفة">
             <Archive size={14} strokeWidth={2} aria-hidden="true" />
           </button>
         )}
-        <button type="button" className="nh-action nh-action--del" onClick={onDelete} title="حذف" aria-label="حذف">
+        <button type="button" className="nh-action nh-action--del" onClick={onDelete} aria-label="حذف">
           <Trash2 size={14} strokeWidth={2} aria-hidden="true" />
         </button>
       </div>
