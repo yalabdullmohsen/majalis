@@ -40,7 +40,7 @@ export function MobileMoreMenu({
   const menu = (
     <div className="mobile-nav-layer mobile-nav-layer--more" role="presentation">
       <button type="button" className="mobile-nav-backdrop" aria-label="إغلاق قائمة المزيد" onClick={onClose} />
-      <div id="navbar-mobile-more-panel" className="navbar-mobile-panel navbar-mobile-panel--portaled" role="dialog" aria-label="قائمة المزيد">
+      <div id="navbar-mobile-more-panel" className="navbar-mobile-panel navbar-mobile-panel--portaled" role="dialog" aria-modal="true" aria-label="قائمة المزيد">
         {searchBox}
         <nav aria-label="روابط المزيد">
           {MOBILE_MORE_NAV.map((item) => (

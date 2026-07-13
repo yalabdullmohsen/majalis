@@ -151,7 +151,7 @@ function AdhanForm() {
           <input value={name} onChange={(e) => setName(e.target.value)} required className="ulp-inp" placeholder="مثال: أحمد الكويتي" />
         </Field>
         <Field label="البريد الإلكتروني (اختياري)">
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="ulp-inp" placeholder="للتواصل عند القبول" />
+          <input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} className="ulp-inp" placeholder="للتواصل عند القبول" />
         </Field>
       </div>
 
@@ -252,7 +252,7 @@ function LessonForm() {
           <input value={name} onChange={(e) => setName(e.target.value)} required className="ulp-inp" placeholder="الاسم الكامل" />
         </Field>
         <Field label="البريد الإلكتروني (اختياري)">
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="ulp-inp" placeholder="للتواصل" />
+          <input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} className="ulp-inp" placeholder="للتواصل" />
         </Field>
       </div>
 

@@ -170,6 +170,7 @@ export default function MySubmissionsPage() {
         <form onSubmit={handleSearch} className="msp-search-form" role="search" aria-label="البحث عن المساهمات">
           <input
             type="email"
+            autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required

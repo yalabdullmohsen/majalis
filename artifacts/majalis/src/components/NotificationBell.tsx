@@ -107,7 +107,7 @@ export default function NotificationBell() {
 
       {/* ── اللوحة المنسدلة ── */}
       {open && (
-        <div dir="rtl" role="dialog" aria-label="الإشعارات" className="nb-panel">
+        <div dir="rtl" role="dialog" aria-modal="true" aria-label="الإشعارات" className="nb-panel">
 
           {/* رأس */}
           <div className="nb-head">
