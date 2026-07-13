@@ -62,12 +62,12 @@ CREATE POLICY "anyone_can_submit"
   WITH CHECK (true);
 
 -- المستخدم يرى طلباته فقط (إذا كان مسجلاً)
+-- ملاحظة أمان: الشرط "OR auth.uid() IS NULL" كان يفتح كل الصفوف للزوار
+-- المجهولين (auth.uid() = NULL خارج الجلسة المسجّلة)، وهو عكس القصد الموصوف
+-- في التعليق الأصلي. أُزيل نهائيًا — لا سبب شرعي لرؤية المجهول لأي طلب.
 CREATE POLICY "user_sees_own"
   ON user_submissions FOR SELECT
-  USING (
-    auth.uid() = user_id
-    OR auth.uid() IS NULL   -- يُعطل المجهولين من الاطلاع عبر هذه السياسة
-  );
+  USING (auth.uid() = user_id);
 
 -- الأدمن يرى ويعدّل كل الطلبات
 CREATE POLICY "admin_full_access"

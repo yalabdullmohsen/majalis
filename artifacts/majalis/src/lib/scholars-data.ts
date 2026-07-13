@@ -1159,7 +1159,7 @@ export const SCHOLARS: Scholar[] = [
     quote: "التحقيق في الحديث منهج لا يُتهاون فيه",
   },
   {
-    id: "ibn-rajab",
+    id: "ibn-rajab-2",
     name: "ابن رجب الحنبلي",
     fullName: "زين الدين عبد الرحمن بن أحمد بن رجب البغدادي الدمشقي",
     era: "العلماء الكبار",
@@ -1250,7 +1250,7 @@ export const SCHOLARS: Scholar[] = [
     quote: "لا تطلب من الله ما تريده واطلب منه ما يريده",
   },
   {
-    id: "ibn-hazm",
+    id: "ibn-hazm-2",
     name: "ابن حزم الأندلسي",
     fullName: "أبو محمد علي بن أحمد بن سعيد بن حزم الأندلسي القرطبي",
     era: "العلماء الكبار",
@@ -1289,7 +1289,7 @@ export const SCHOLARS: Scholar[] = [
     quote: "العلم بالدليل شرف والعمل به سعادة",
   },
   {
-    id: "ibn-qayyim",
+    id: "ibn-qayyim-2",
     name: "ابن القيم",
     fullName: "أبو عبد الله محمد بن أبي بكر ابن قيم الجوزية الدمشقي",
     era: "العلماء الكبار",
@@ -1315,7 +1315,7 @@ export const SCHOLARS: Scholar[] = [
     quote: "من لم يتقن التاريخ لم يتقن العلم",
   },
   {
-    id: "ibn-kathir",
+    id: "ibn-kathir-2",
     name: "ابن كثير",
     fullName: "أبو الفداء إسماعيل بن عمر بن كثير القرشي الدمشقي",
     era: "العلماء الكبار",
@@ -1354,7 +1354,7 @@ export const SCHOLARS: Scholar[] = [
     quote: "الجرح والتعديل أمانة والتساهل فيه خيانة",
   },
   {
-    id: "ibn-juzayy",
+    id: "ibn-juzayy-2",
     name: "ابن جزي",
     fullName: "أبو القاسم محمد بن أحمد بن محمد بن جزي الكلبي الغرناطي",
     era: "العلماء الكبار",
@@ -1419,7 +1419,7 @@ export const SCHOLARS: Scholar[] = [
     quote: "العالم إذا لم يعمل بعلمه أفسد بجهله",
   },
   {
-    id: "al-mizzi",
+    id: "al-mizzi-2",
     name: "المزي",
     fullName: "أبو الحجاج يوسف بن الزكي عبد الرحمن المزي",
     era: "العلماء الكبار",
@@ -1562,7 +1562,7 @@ export const SCHOLARS: Scholar[] = [
     quote: "المؤمن يرى ذنبه كالجبل فوق رأسه يخاف أن يقع عليه",
   },
   {
-    id: "al-mawardi",
+    id: "al-mawardi-2",
     name: "الماوردي",
     fullName: "أبو الحسن علي بن محمد بن حبيب الماوردي",
     era: "العلماء الكبار",
@@ -1575,7 +1575,7 @@ export const SCHOLARS: Scholar[] = [
     quote: "الدين أصل الدولة وحارسها، والدولة حارسة الدين ومؤيدتها",
   },
   {
-    id: "al-suyuti",
+    id: "al-suyuti-2",
     name: "السيوطي",
     fullName: "جلال الدين عبد الرحمن بن أبي بكر السيوطي",
     era: "العلماء الكبار",

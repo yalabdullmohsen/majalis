@@ -1035,6 +1035,16 @@ export default function IslamicSectsPage() {
           <div
             key={sect.id}
             onClick={() => setSelected(selected?.id === sect.id ? null : sect)}
+            role="button"
+            tabIndex={0}
+            aria-pressed={selected?.id === sect.id}
+            aria-label={`عرض تفاصيل ${sect.name}`}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setSelected(selected?.id === sect.id ? null : sect);
+              }
+            }}
             style={{
               background: "#fff",
               borderRadius: "1rem",

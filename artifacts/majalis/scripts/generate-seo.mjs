@@ -364,14 +364,6 @@ Disallow: /login
 Disallow: /api/
 Disallow: /search/
 
-User-agent: Googlebot
-Allow: /
-Disallow: /search/
-
-User-agent: Bingbot
-Allow: /
-Disallow: /search/
-
 Host: ${seoConfig.siteUrl.replace(/^https?:\/\//, "")}
 Sitemap: ${seoConfig.siteUrl}/sitemap.xml
 

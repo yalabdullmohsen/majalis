@@ -1475,8 +1475,8 @@ export const FATWA_SEED: Fatwa[] = [
     created_at: "2025-03-05T08:00:00Z",
   },
   {
-    id: "fatwa-music-ruling",
-    external_key: "fatwa-music-ruling",
+    id: "fatwa-music-songs-ruling",
+    external_key: "fatwa-music-songs-ruling",
     question: "ما حكم سماع الموسيقى والأغاني؟",
     answer: `**الحكم العام:** تحريم الموسيقى والأغاني الماجنة هو قول الجمهور.
 
@@ -1527,8 +1527,8 @@ export const FATWA_SEED: Fatwa[] = [
     created_at: "2025-04-05T08:00:00Z",
   },
   {
-    id: "fatwa-reading-quran-phone",
-    external_key: "fatwa-reading-quran-phone",
+    id: "fatwa-reading-quran-phone-wudu",
+    external_key: "fatwa-reading-quran-phone-wudu",
     question: "هل تجوز قراءة القرآن من الهاتف بدون وضوء؟",
     answer: `**الحكم:** الصحيح جواز قراءة القرآن من الهاتف بدون وضوء.
 
@@ -1551,8 +1551,8 @@ export const FATWA_SEED: Fatwa[] = [
     created_at: "2025-04-10T08:00:00Z",
   },
   {
-    id: "fatwa-ghusl-janaba",
-    external_key: "fatwa-ghusl-janaba",
+    id: "fatwa-ghusl-janaba-arkan",
+    external_key: "fatwa-ghusl-janaba-arkan",
     question: "ما فرائض غسل الجنابة وما سننه؟",
     answer: `**فرائض الغسل (الأركان):**
 1. النية.
@@ -1723,8 +1723,8 @@ export const FATWA_SEED: Fatwa[] = [
   },
   // ── المواريث ─────────────────────────────────────────────────────
   {
-    id: "fatwa-inheritance-daughter",
-    external_key: "fatwa-inheritance-daughter",
+    id: "fatwa-inheritance-daughter-only",
+    external_key: "fatwa-inheritance-daughter-only",
     question: "ما نصيب البنت من الميراث إذا كانت وحدها دون أخ؟",
     answer: `**الحكم:** للبنت الوحيدة نصف التركة فرضاً — لقوله تعالى: ﴿وَإِن كَانَت وَاحِدَةً فَلَهَا النِّصْفُ﴾ (النساء: 11).
 

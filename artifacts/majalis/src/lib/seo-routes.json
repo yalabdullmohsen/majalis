@@ -708,6 +708,182 @@
       "robots": "noindex, nofollow"
     },
     {
+      "path": "/admin/sources",
+      "title": "مصادر الاستيراد | لوحة التحكم",
+      "description": "إدارة مصادر استيراد المحتوى في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/automation/sources",
+      "title": "مصادر الأتمتة | لوحة التحكم",
+      "description": "إدارة مصادر الأتمتة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/automation/dashboard",
+      "title": "لوحة الأتمتة | لوحة التحكم",
+      "description": "لوحة متابعة عمليات الأتمتة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/automation/platform",
+      "title": "منصة الأتمتة | لوحة التحكم",
+      "description": "إعدادات منصة الأتمتة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/automation/center",
+      "title": "مركز الأتمتة | لوحة التحكم",
+      "description": "مركز التحكم بعمليات الأتمتة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/autonomous-platform",
+      "title": "المنصة الذاتية | لوحة التحكم",
+      "description": "إدارة المنصة ذاتية التشغيل في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/automation",
+      "title": "الأتمتة | لوحة التحكم",
+      "description": "إدارة عمليات الأتمتة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/integrations/instagram",
+      "title": "تكامل إنستغرام | لوحة التحكم",
+      "description": "إدارة تكامل إنستغرام في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/review-center",
+      "title": "مركز المراجعة | لوحة التحكم",
+      "description": "مركز مراجعة المحتوى في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/automation/review",
+      "title": "مراجعة الأتمتة | لوحة التحكم",
+      "description": "مراجعة نتائج الأتمتة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/content-import/url",
+      "title": "استيراد محتوى عبر رابط | لوحة التحكم",
+      "description": "استيراد محتوى من رابط خارجي في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/content-import/image",
+      "title": "استيراد محتوى عبر صورة | لوحة التحكم",
+      "description": "استيراد محتوى من صورة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/import",
+      "title": "استيراد المحتوى | لوحة التحكم",
+      "description": "أدوات استيراد المحتوى في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/content",
+      "title": "إدارة المحتوى | لوحة التحكم",
+      "description": "إدارة محتوى المنصة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/auto-content",
+      "title": "المحتوى الآلي | لوحة التحكم",
+      "description": "إدارة المحتوى المُولَّد آليًا في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/fiqh-review",
+      "title": "مراجعة الفقه | لوحة التحكم",
+      "description": "مراجعة المحتوى الفقهي في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/fiqh-quality",
+      "title": "جودة المحتوى الفقهي | لوحة التحكم",
+      "description": "مراقبة جودة المحتوى الفقهي في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/content-production",
+      "title": "إنتاج المحتوى | لوحة التحكم",
+      "description": "خط إنتاج المحتوى في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/automation/content-production",
+      "title": "إنتاج المحتوى الآلي | لوحة التحكم",
+      "description": "إنتاج المحتوى الآلي عبر الأتمتة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/feature-status",
+      "title": "حالة الميزات | لوحة التحكم",
+      "description": "متابعة حالة ميزات المنصة في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/users",
+      "title": "إدارة المستخدمين | لوحة التحكم",
+      "description": "إدارة حسابات المستخدمين في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
+      "path": "/admin/universities",
+      "title": "إدارة الجامعات | لوحة التحكم",
+      "description": "إدارة دليل الجامعات في لوحة الإدارة.",
+      "keywords": [],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
       "path": "/fiqh-council",
       "title": "المجمع الفقهي الإسلامي | المجلس العلمي",
       "description": "قرارات وبحوث وتوصيات وبيانات وفتاوى جماعية من المجمع الفقهي — مع تصنيف وبحث ومراجع.",

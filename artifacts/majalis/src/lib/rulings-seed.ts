@@ -1737,8 +1737,8 @@ export const RULINGS_SEED: ShariaRuling[] = [
     created_at: "2025-06-15T08:00:00Z",
   },
   {
-    id: "ruling-friday-prayer-conditions",
-    external_key: "ruling-friday-prayer-conditions",
+    id: "ruling-friday-prayer-validity-conditions",
+    external_key: "ruling-friday-prayer-validity-conditions",
     title: "شروط صحة صلاة الجمعة",
     summary: "ما الشروط التي يجب توافرها لصحة صلاة الجمعة؟",
     body: `**شروط صحة صلاة الجمعة:**

@@ -65,6 +65,16 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
                 key={m.id}
                 className={`mzp-item${isSelected ? " mzp-item--selected" : ""}`}
                 onClick={() => handleSelect(m.id)}
+                role="button"
+                tabIndex={0}
+                aria-pressed={isSelected}
+                aria-label={`اختيار المؤذن ${m.name}`}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleSelect(m.id);
+                  }
+                }}
               >
                 <div className={`mzp-radio${isSelected ? " mzp-radio--selected" : ""}`}>
                   {isSelected && <span className="mzp-check">✓</span>}

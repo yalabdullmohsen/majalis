@@ -757,9 +757,9 @@ const RAW_PUBLISHED_SEED: FiqhCouncilItem[] = [
     created_at: "2023-04-10T10:00:00Z",
   },
   {
-    id: "seed-fiqh-zakat-stocks",
-    slug: "fiqh-zakat-stocks",
-    external_id: "seed:fiqh-zakat-stocks",
+    id: "seed-fiqh-zakat-stocks-calculation",
+    slug: "fiqh-zakat-stocks-calculation",
+    external_id: "seed:fiqh-zakat-stocks-calculation",
     title: "زكاة الأسهم والصناديق الاستثمارية",
     summary: "بيان كيفية احتساب وإخراج زكاة أسهم الشركات والصناديق الاستثمارية المختلفة.",
     content: `**حكم الزكاة على الأسهم:**

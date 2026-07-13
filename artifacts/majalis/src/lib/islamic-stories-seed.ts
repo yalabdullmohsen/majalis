@@ -1769,7 +1769,7 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
   },
   {
     id: 52,
-    slug: "umar-ibn-khattab-justice",
+    slug: "umar-ibn-khattab-justice-caliph",
     title: "عمر بن الخطاب — عدل الخليفة الذي أرعب الشيطان",
     category: "صحابة",
     era: "راشدي",
