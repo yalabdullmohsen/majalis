@@ -20,25 +20,6 @@ export default function LearningPathBookPage() {
   const { bookId } = useParams<{ bookId: string }>();
   const { isLoggedIn } = useAuth();
 
-  useEffect(() => {
-    applyPageSeo({
-      path: "/learning-path/book",
-      title: "كتاب في مسار التعلم | المجلس العلمي",
-      description: "تصفّح محتوى الكتاب في مسار التعلم الشرعي، شروح وملاحظات وتتبع تقدمك في القراءة.",
-      keywords: ["كتاب شرعي", "مسار تعلم", "قراءة علمية", "شرح كتاب", "تعليم إسلامي"],
-      jsonLd: [
-        {
-          "@context": "https://schema.org",
-          "@type": "Book",
-          name: "كتاب في مسار التعلم الشرعي",
-          url: "https://majlisilm.com/learning-path/book",
-          description: "كتاب ضمن مسار التعلم الشرعي مع شروح وملاحظات وتتبع تقدم القراءة",
-          inLanguage: "ar",
-          publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
-        },
-      ],
-    });
-  }, []);
   const tokenRef = useRef<string | null>(null);
   const [book, setBook]             = useState<LPBookDetail | null>(null);
   const [explanations, setExp]      = useState<LPExplanation[]>([]);
@@ -73,6 +54,23 @@ export default function LearningPathBookPage() {
         setQuizzes(d.quizzes);
         const mine = p.find((x) => x.book_id === bookId) ?? null;
         setProgress(mine);
+        applyPageSeo({
+          path: `/learning-path/book/${bookId}`,
+          title: `${d.book.title} — مسار التعلم | المجلس العلمي`,
+          description: d.book.summary
+            ?? `تعلم كتاب ${d.book.title} في علم ${d.book.science.name} مع شروح وملاحظات وتتبع التقدم.`,
+          keywords: [d.book.title, d.book.science.name, "مسار تعلم", "كتاب شرعي"],
+          jsonLd: [{
+            "@context": "https://schema.org",
+            "@type": "Book",
+            name: d.book.title,
+            author: d.book.author ? { "@type": "Person", name: d.book.author } : undefined,
+            url: `https://majlisilm.com/learning-path/book/${bookId}`,
+            description: d.book.summary ?? `كتاب ${d.book.title} في ${d.book.science.name}`,
+            inLanguage: "ar",
+            publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          }],
+        });
       })
       .catch(() => setNotFound(true))
       .finally(() => setLoading(false));
