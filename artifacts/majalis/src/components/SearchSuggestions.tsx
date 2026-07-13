@@ -97,15 +97,18 @@ export function SearchSuggestions({
         onFocus={() => setOpen(true)}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
+        role="combobox"
         aria-label="كلمة البحث"
-        aria-expanded={open && suggestions.length > 0}
+        aria-expanded={open && (suggestions.length > 0 || history.length > 0)}
         aria-autocomplete="list"
+        aria-controls="search-suggestions-listbox"
+        aria-haspopup="listbox"
         className={inputClassName}
         autoComplete="off"
       />
 
       {open && value.trim().length < 2 && history.length > 0 && (
-        <div className="search-suggestions-panel" role="listbox" aria-label="سجل البحث">
+        <div id="search-suggestions-listbox" className="search-suggestions-panel" role="listbox" aria-label="سجل البحث">
           <div className="search-suggestions-group">
             <p className="search-suggestions-group-label">بحثت سابقًا</p>
             {history.map((item) => (
@@ -130,7 +133,7 @@ export function SearchSuggestions({
       )}
 
       {open && value.trim().length >= 2 && suggestions.length > 0 && (
-        <div className="search-suggestions-panel" role="listbox">
+        <div id="search-suggestions-listbox" className="search-suggestions-panel" role="listbox">
           {Array.from(grouped.entries()).map(([group, items]) => (
             <div key={group} className="search-suggestions-group">
               <p className="search-suggestions-group-label">{SUGGESTION_GROUP_LABELS[group]}</p>
