@@ -234,7 +234,7 @@ export default function CardsPage() {
                     {source}
                   </div>
                   {showLogo && (
-                    <img src="/logo.png" alt="" className="cards-export-logo" aria-hidden="true" />
+                    <img src="/logo.png" alt="" className="cards-export-logo" aria-hidden="true" loading="eager" decoding="sync" />
                   )}
                 </div>
               </div>
