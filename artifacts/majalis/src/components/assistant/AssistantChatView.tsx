@@ -209,10 +209,11 @@ export function AssistantChatView({
         <div ref={bottomRef} />
       </div>
 
-      <form onSubmit={onSubmit} className="assistant-form">
+      <form onSubmit={onSubmit} className="assistant-form" aria-label="نموذج طرح السؤال">
         <textarea
           value={input}
           onChange={(event) => onInputChange(event.target.value)}
+          aria-label="سؤالك الشرعي"
           placeholder="اكتب سؤالك الشرعي هنا..."
           rows={compact ? 2 : 3}
           disabled={loading}

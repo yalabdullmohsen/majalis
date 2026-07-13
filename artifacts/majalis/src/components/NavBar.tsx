@@ -64,6 +64,8 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
   };
   return (
     <form
+      role="search"
+      aria-label="البحث في المجلس العلمي"
       onSubmit={(e) => {
         e.preventDefault();
         submit(term);

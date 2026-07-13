@@ -167,7 +167,7 @@ export default function MySubmissionsPage() {
       {/* Search by email */}
       <div className="msp-search-box">
         <p className="msp-search-label"><Search size={13} className="inline ml-1" />ابحث بالبريد الإلكتروني الذي أدخلته عند الإرسال:</p>
-        <form onSubmit={handleSearch} className="msp-search-form">
+        <form onSubmit={handleSearch} className="msp-search-form" role="search" aria-label="البحث عن المساهمات">
           <input
             type="email"
             value={email}
