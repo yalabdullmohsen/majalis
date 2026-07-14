@@ -268,14 +268,14 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "") {
       <nav>
         <a href="${escapeHtml(seoConfig.siteUrl)}">${escapeHtml(seoConfig.siteName)}</a>
         <a href="${escapeHtml(seoConfig.siteUrl)}/lessons">الدروس</a>
-        <a href="${escapeHtml(seoConfig.siteUrl)}/quran">القرآن</a>
+        <a href="${escapeHtml(seoConfig.siteUrl)}/quran-hub">القرآن</a>
         <a href="${escapeHtml(seoConfig.siteUrl)}/adhkar">الأذكار</a>
         <a href="${escapeHtml(seoConfig.siteUrl)}/search">البحث</a>
       </nav>
     </header>
     <main>
       <article>
-        <h1>${escapeHtml(route.title)}</h1>
+        <h1>${escapeHtml(route.title.split(" | ")[0])}</h1>
         <p>${escapeHtml(route.description)}</p>
         ${richBody}
         <nav aria-label="التنقل">
@@ -645,6 +645,31 @@ const prophetsRichBody = `<h2>قصص الأنبياء</h2>
   ${PROPHETS_NAMES.map(p => `<li><a href="${absoluteUrl(`/prophets/${p.slug}`)}">${escapeHtml(`نبي الله ${p.name} عليه السلام`)}</a></li>`).join("\n  ")}
 </ul>`;
 
+const learningPathRichBody = `<h2>كيف تعمل خارطة طالب العلم؟</h2>
+<p>تنظّم الخارطة العلوم الشرعية عبر أربعة مستويات متدرجة: التمهيدي، ثم المبتدئ، ثم المتوسط، ثم المتقدم. كل علم يضم كتباً ودروساً مرتبة بحسب المستوى مع تقدير الوقت اللازم لكل كتاب، ويحفظ النظام تقدّم الطالب ويقترح الخطوة التالية المناسبة له.</p>
+<ul>
+  <li><a href="${absoluteUrl("/learning/paths")}">مسارات التعلّم المنظّمة</a></li>
+  <li><a href="${absoluteUrl("/my-learning")}">لوحتي التعليمية ومتابعة التقدّم</a></li>
+  <li><a href="${absoluteUrl("/lessons")}">الدروس الشرعية</a></li>
+  <li><a href="${absoluteUrl("/library")}">مكتبة الكتب الشرعية</a></li>
+</ul>`;
+
+const scholarlyResearchRichBody = `<h2>ما الباحث الشرعي؟</h2>
+<p>أداة بحث تعتمد على الذكاء الاصطناعي للإجابة عن الأسئلة الشرعية بالاستناد إلى مصادر موثّقة من محتوى المنصة (الكتب والفتاوى والدروس)، مع ذكر مصدر كل معلومة. لا تصدر الأداة فتوى شخصية في المسائل التي تحتاج تفصيلاً دقيقاً؛ عند الحاجة تُوجّه السائل لعالم مؤهل.</p>
+<ul>
+  <li><a href="${absoluteUrl("/fatwa")}">الفتاوى الشرعية الموثقة</a></li>
+  <li><a href="${absoluteUrl("/qa")}">الأسئلة والأجوبة</a></li>
+  <li><a href="${absoluteUrl("/library")}">مصادر المكتبة العلمية</a></li>
+</ul>`;
+
+const knowledgeGraphRichBody = `<h2>ما خريطة المعرفة؟</h2>
+<p>عرض بصري تفاعلي يربط بين مفاهيم العلوم الشرعية (كالفقه والعقيدة والحديث والتفسير) ويُظهر علاقاتها ببعضها، ليساعد طالب العلم على فهم كيف يتصل كل علم بغيره بدل دراسته منعزلاً.</p>
+<ul>
+  <li><a href="${absoluteUrl("/learning-path")}">خارطة طالب العلم</a></li>
+  <li><a href="${absoluteUrl("/fiqh")}">الفقه الإسلامي</a></li>
+  <li><a href="${absoluteUrl("/scholars")}">أعلام العلماء المسلمين</a></li>
+</ul>`;
+
 const RICH_BODY_MAP = {
   "/lessons": lessonsRichBody,
   "/library": libraryRichBody,
@@ -652,6 +677,9 @@ const RICH_BODY_MAP = {
   "/scholars": scholarsRichBody,
   "/fatwa": fatwaRichBody,
   "/prophets": prophetsRichBody,
+  "/learning-path": learningPathRichBody,
+  "/scholarly-research": scholarlyResearchRichBody,
+  "/knowledge-graph": knowledgeGraphRichBody,
 };
 
 for (const route of staticRoutes) {
