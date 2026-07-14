@@ -1884,8 +1884,8 @@ export const ANNUAL_COURSES_SEED: AnnualCourse[] = [
     created_at: "2026-07-12T10:00:00Z",
   },
   {
-    id: "course-hadith-arbain-nawawi-2026",
-    external_key: "course-hadith-arbain-nawawi-2026",
+    id: "course-arbain-nawawi-sharh-2026",
+    external_key: "course-arbain-nawawi-sharh-2026",
     title: "دورة شرح الأربعين النووية",
     summary: "شرح مفصّل للأربعين حديثاً النووية مع استخراج الفوائد الفقهية والعقدية والسلوكية من كل حديث.",
     body: `**عن الدورة:**

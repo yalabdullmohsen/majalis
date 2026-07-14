@@ -174,7 +174,7 @@ export default function FiqhPage() {
         <div className="fqh-hub-grid">
           {FIQH_TOPICS.map((t) => (
             <Link
-              key={t.href}
+              key={t.title}
               href={t.href}
               className="fqh-hub-card"
               style={{ "--fqh-clr": t.color } as React.CSSProperties}

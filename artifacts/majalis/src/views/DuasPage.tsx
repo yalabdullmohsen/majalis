@@ -833,7 +833,7 @@ const DUAS: DuaEntry[] = [
   },
   /* ── الأكل والشرب ── */
   {
-    id: "akl-6",
+    id: "akl-12",
     title: "دعاء الشرب",
     arabic: "بِسْمِ اللَّهِ",
     transliteration: "Bismillah",
@@ -844,7 +844,7 @@ const DUAS: DuaEntry[] = [
     virtue: "من سنن النبي ﷺ التسمية عند الشرب والحمد بعده",
   },
   {
-    id: "akl-7",
+    id: "akl-10",
     title: "دعاء الحمد بعد الشرب",
     arabic: "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ",
     transliteration: "Alhamdu lillahillathi at'amana wa saqana wa ja'alana muslimin",
@@ -867,7 +867,7 @@ const DUAS: DuaEntry[] = [
   },
   /* ── السفر ── */
   {
-    id: "safar-7",
+    id: "safar-10",
     title: "دعاء الرجوع من السفر",
     arabic: "آيِبُونَ تَائِبُونَ عَابِدُونَ، لِرَبِّنَا حَامِدُونَ",
     transliteration: "Ayibuna ta'ibuna 'abiduna, li-rabbina hamidun",
@@ -878,7 +878,7 @@ const DUAS: DuaEntry[] = [
     virtue: "كان النبي ﷺ يقوله كلما رجع من سفر",
   },
   {
-    id: "safar-8",
+    id: "safar-11",
     title: "دعاء المسافر لأهله",
     arabic: "أَسْتَوْدِعُكُمُ اللَّهَ الَّذِي لَا تَضِيعُ وَدَائِعُهُ",
     transliteration: "Astawdi'ukum Allaha alladhi la tadi'u wada'i'uh",
