@@ -110,6 +110,7 @@ const FOOTER_GROUPS = [
     links: [
       { href: "/about",                label: "من نحن" },
       { href: "/methodology",          label: "منهجية التوثيق" },
+      { href: "/sitemap",              label: "خريطة الموقع" },
       { href: "/contact",              label: "تواصل معنا" },
       { href: "/features-in-progress", label: "قيد التطوير" },
       { href: "/privacy",              label: "الخصوصية" },

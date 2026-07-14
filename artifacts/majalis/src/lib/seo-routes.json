@@ -1973,7 +1973,7 @@
         "خريطة الموقع",
         "أقسام المجلس العلمي"
       ],
-      "sitemap": false
+      "sitemap": true
     },
     {
       "path": "/features-in-progress",
