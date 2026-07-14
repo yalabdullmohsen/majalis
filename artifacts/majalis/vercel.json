@@ -183,6 +183,21 @@
       "permanent": true
     },
     {
+      "source": "/surah-stories",
+      "destination": "/quran/surah-stories",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/amir-al-san'ani",
+      "destination": "/scholars/amir-al-sanani",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/amir-al-san%27ani",
+      "destination": "/scholars/amir-al-sanani",
+      "permanent": true
+    },
+    {
       "source": "/scholars/ibn-al-qayyim-alt",
       "destination": "/scholars/al-sakhawi",
       "permanent": true

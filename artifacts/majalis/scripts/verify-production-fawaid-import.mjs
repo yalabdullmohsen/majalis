@@ -23,7 +23,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
 const production = process.argv.includes("--production");
 const dryRun = process.argv.includes("--dry-run");
-const PRODUCTION = process.env.MAJALIS_PRODUCTION_URL || "https://www.majlisilm.com";
+const PRODUCTION = process.env.MAJALIS_PRODUCTION_URL || "https://majlisilm.com";
 const CSV_PATH = join(root, "data/imports/fawaid_500.csv");
 
 function sleep(ms) {

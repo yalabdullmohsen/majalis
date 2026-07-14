@@ -360,7 +360,7 @@
     "died": "٤٦٣ هـ"
   },
   {
-    "id": "amir-al-san'ani",
+    "id": "amir-al-sanani",
     "name": "الأمير الصنعاني",
     "died": "١١٨٢ هـ"
   },
@@ -388,5 +388,95 @@
     "id": "abdulkarim-alkhudair",
     "name": "الشيخ عبد الكريم الخضير",
     "died": "معاصر"
+  },
+  {
+    "id": "ibn-qudama",
+    "name": "ابن قدامة المقدسي",
+    "died": "٦٢٠ هـ"
+  },
+  {
+    "id": "juwayny",
+    "name": "إمام الحرمين الجويني",
+    "died": "٤٧٨ هـ"
+  },
+  {
+    "id": "ibn-salah",
+    "name": "ابن الصلاح",
+    "died": "٦٤٣ هـ"
+  },
+  {
+    "id": "al-qarafi",
+    "name": "الإمام القرافي",
+    "died": "٦٨٤ هـ"
+  },
+  {
+    "id": "fakhr-razi",
+    "name": "الفخر الرازي",
+    "died": "٦٠٦ هـ"
+  },
+  {
+    "id": "al-mizzi",
+    "name": "الإمام المزي",
+    "died": "٧٤٢ هـ"
+  },
+  {
+    "id": "al-saadi",
+    "name": "الشيخ عبد الرحمن السعدي",
+    "died": "١٣٧٦ هـ"
+  },
+  {
+    "id": "ibn-aqil",
+    "name": "ابن عقيل الحنبلي",
+    "died": "٥١٣ هـ"
+  },
+  {
+    "id": "ahmad-shakir",
+    "name": "الشيخ أحمد محمد شاكر",
+    "died": "١٣٧٧ هـ"
+  },
+  {
+    "id": "al-mundhiri",
+    "name": "الحافظ المنذري",
+    "died": "٦٥٦ هـ"
+  },
+  {
+    "id": "ibn-daqiq",
+    "name": "ابن دقيق العيد",
+    "died": "٧٠٢ هـ"
+  },
+  {
+    "id": "ibn-battuta",
+    "name": "ابن بطوطة",
+    "died": "٧٧٠ هـ تقريباً"
+  },
+  {
+    "id": "al-mawardi",
+    "name": "الماوردي",
+    "died": "٤٥٠ هـ"
+  },
+  {
+    "id": "ibn-ata-allah",
+    "name": "ابن عطاء الله السكندري",
+    "died": "٧٠٩ هـ"
+  },
+  {
+    "id": "al-ajurri",
+    "name": "الآجري",
+    "died": "٣٦٠ هـ"
+  },
+  {
+    "id": "ibn-al-wazir",
+    "name": "ابن الوزير",
+    "died": "٨٤٠ هـ"
+  },
+  {
+    "id": "ibn-abi-shaybah",
+    "name": "ابن أبي شيبة",
+    "died": "٢٣٥ هـ"
+  },
+  {
+    "id": "al-qurtubi-scholar",
+    "name": "القرطبي",
+    "died": "٦٧١ هـ"
   }
 ]

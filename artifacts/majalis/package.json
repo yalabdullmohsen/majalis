@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --config vite.config.ts --host 0.0.0.0",
+    "sync:seo-data": "npx tsx scripts/sync-seo-data.ts",
+    "test:seo-data-sync": "npx tsx scripts/sync-seo-data.ts --check",
     "generate:seo": "node scripts/generate-seo.mjs",
     "generate:sheikhs": "node scripts/generate-sheikh-portraits.mjs",
     "generate:quiz": "node scripts/generate-quiz-questions.mjs",
@@ -56,7 +58,7 @@
     "smoke:production-loading": "node scripts/smoke-production-loading.mjs",
     "bootstrap:platform": "node scripts/run-platform-bootstrap.mjs",
     "bootstrap:platform:status": "node scripts/run-platform-bootstrap.mjs status",
-    "build": "pnpm run generate:seo && pnpm run generate:rulings && vite build --config vite.config.ts && node scripts/generate-version.mjs && node scripts/prerender.mjs && node scripts/post-build-seo.mjs",
+    "build": "pnpm run sync:seo-data && pnpm run generate:seo && pnpm run generate:rulings && vite build --config vite.config.ts && node scripts/generate-version.mjs && node scripts/prerender.mjs && node scripts/post-build-seo.mjs",
     "preview": "vite preview --config vite.config.ts --host 0.0.0.0",
     "start": "vite preview --config vite.config.ts --host 0.0.0.0 --port ${PORT:-24216}",
     "serve": "vite preview --config vite.config.ts --host 0.0.0.0 --port ${PORT:-24216}",
@@ -69,11 +71,15 @@
     "test:scholars-integrity": "npx tsx src/lib/__tests__/scholars-data-integrity.test.ts",
     "test:sheikhs-dedup": "npx tsx src/lib/__tests__/sheikhs-dedup.test.ts",
     "test:library-integrity": "npx tsx src/lib/__tests__/library-integrity.test.ts",
-    "test:regression": "pnpm run test:seo && pnpm run test:guardrails && pnpm run test:search-normalize && pnpm run test:scholars-integrity && pnpm run test:sheikhs-dedup && pnpm run test:library-integrity",
+    "test:data-quality": "npx tsx scripts/data-quality-audit.ts --ci",
+    "test:no-homepage-leak": "node scripts/test-no-homepage-leak.mjs",
+    "test:seo-html": "node scripts/test-seo-html.mjs",
+    "test:regression": "pnpm run test:seo && pnpm run test:guardrails && pnpm run test:search-normalize && pnpm run test:scholars-integrity && pnpm run test:sheikhs-dedup && pnpm run test:library-integrity && pnpm run test:seo-data-sync && pnpm run test:data-quality && pnpm run test:no-homepage-leak && pnpm run test:seo-html && pnpm run test:researcher-safety",
     "generate:version": "node scripts/generate-version.mjs",
     "mobile:sync": "npm run build && npx cap sync",
     "mobile:android": "npm run build && npx cap sync && npx cap open android",
-    "mobile:ios": "npm run build && npx cap sync && npx cap open ios"
+    "mobile:ios": "npm run build && npx cap sync && npx cap open ios",
+    "test:researcher-safety": "node lib/__tests__/researcher-safety.test.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

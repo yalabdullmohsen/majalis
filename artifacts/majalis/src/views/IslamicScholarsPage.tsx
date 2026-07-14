@@ -676,7 +676,7 @@ const SCHOLARS: Scholar[] = [
     quote: "أحسن الروايات ما أُتقنت فيه الأسانيد",
   },
   {
-    id: "amir-al-san'ani",
+    id: "amir-al-sanani",
     name: "الأمير الصنعاني",
     fullName: "محمد بن إسماعيل بن صلاح الأمير الصنعاني",
     era: "المجددون",

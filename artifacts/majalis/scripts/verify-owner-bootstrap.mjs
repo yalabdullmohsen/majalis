@@ -7,7 +7,7 @@ import { isBootstrapOwnerEmail, hasUnrestrictedAdminAccess } from "../lib/owner-
 import { hasPermission, canImportContent } from "../lib/admin-auth.mjs";
 
 const TARGET_EMAIL = (process.env.MAJALIS_OWNER_EMAILS || "").split(",")[0].trim().toLowerCase();
-const PRODUCTION = "https://www.majlisilm.com";
+const PRODUCTION = "https://majlisilm.com";
 
 const checks = [];
 
