@@ -22,7 +22,7 @@ const pages = [
   ['/rulings', 'p_rulings'],
   ['/lessons', 'p_lessons'],
   ['/library', 'p_library'],
-  ['/quran', 'p_quran'],
+  ['/quran-hub', 'p_quran'],
   ['/qa', 'p_qa'],
   ['/fawaid', 'p_fawaid'],
   ['/adhkar', 'p_adhkar'],
