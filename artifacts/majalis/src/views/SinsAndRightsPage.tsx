@@ -132,9 +132,9 @@ const MINDMAP_NODES = [
       { label: "الرياء", slug: "riyaa" },
       { label: "الكبر", slug: "kibr" },
       { label: "الحسد", slug: "hasad" },
-      { label: "ترك الصيام الواجب", slug: null },
-      { label: "شرب الخمر", slug: null },
-      { label: "النظر المحرم", slug: null },
+      { label: "ترك الصيام الواجب", slug: "tark-sawm" },
+      { label: "شرب الخمر", slug: "shurb-khamr" },
+      { label: "النظر المحرم", slug: "nazar-muharram" },
     ],
   },
   {
@@ -145,8 +145,8 @@ const MINDMAP_NODES = [
       { label: "السرقة", slug: "sariqa" },
       { label: "الغصب", slug: "ghasb" },
       { label: "الديون", slug: "dain" },
-      { label: "الغش والاحتيال", slug: null },
-      { label: "تأخير حقوق العمال", slug: null },
+      { label: "الغش والاحتيال", slug: "ghish-ihtiyal" },
+      { label: "تأخير حقوق العمال", slug: "takhir-huquq-ummal" },
     ],
   },
   {
@@ -158,7 +158,7 @@ const MINDMAP_NODES = [
       { label: "النميمة", slug: "namima" },
       { label: "القذف", slug: "qadhf" },
       { label: "الكذب", slug: "kadhib" },
-      { label: "التشهير والسخرية", slug: null },
+      { label: "التشهير والسخرية", slug: "tashhir-sukhriya" },
     ],
   },
   {
@@ -170,7 +170,7 @@ const MINDMAP_NODES = [
       { label: "قطع الرحم", slug: "qat-rahim" },
       { label: "خيانة الأمانة", slug: "khiyana-amana" },
       { label: "شهادة الزور", slug: "shahada-zur" },
-      { label: "ظلم الجار", slug: null },
+      { label: "ظلم الجار", slug: "dhulm-jar" },
     ],
   },
   {
@@ -180,8 +180,8 @@ const MINDMAP_NODES = [
     children: [
       { label: "سرقة المحتوى", slug: "sariqa-muhtawa" },
       { label: "نشر الصور دون إذن", slug: "nashr-suwar-bidun-idhn" },
-      { label: "التنمر الإلكتروني", slug: null },
-      { label: "انتحال الشخصية", slug: null },
+      { label: "التنمر الإلكتروني", slug: "tanammur-iliktruni" },
+      { label: "انتحال الشخصية", slug: "intihal-shakhsiya" },
     ],
   },
 ];
