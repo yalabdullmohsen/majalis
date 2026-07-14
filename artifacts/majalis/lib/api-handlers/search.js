@@ -23,10 +23,13 @@ import { createClient } from "@supabase/supabase-js";
 
 function getSupabase() {
   const url = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || "";
+  // نقطة نهاية عامة غير مصادَق عليها — نُفضّل مفتاح anon المحكوم بـ RLS
+  // على service_role (الذي يتجاوز RLS بالكامل) لتفادي تسريب صفوف غير
+  // منشورة إن نُسي فلتر status في دالة بحث جديدة مستقبلاً.
   const key =
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
     process.env.VITE_SUPABASE_ANON_KEY ||
     process.env.SUPABASE_ANON_KEY ||
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
     "";
   if (!url || !key) return null;
   return createClient(url, key, {
@@ -40,7 +43,7 @@ function normalizeArabic(text) {
   if (!text) return "";
   return text
     // التشكيل الكامل + علامات وقف قرآنية + الكشيدة
-    .replace(/[ً-ٟٓ-ٕؐ-ؚۖ-ۜ۟-ۤۧ-ٰۭـ]/g, "")
+    .replace(/[ً-ٟؐ-ؚۖ-ۜ۟-ۤۧ-ٰۭـ]/g, "")
     .replace(/[أإآٱ]/g, "ا")
     .replace(/ؤ/g, "و")
     .replace(/ئ/g, "ي")

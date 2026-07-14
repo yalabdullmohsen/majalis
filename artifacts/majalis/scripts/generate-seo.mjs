@@ -414,7 +414,7 @@ const feed = `<?xml version="1.0" encoding="UTF-8"?>
     <description>آخر المستجدات العلمية — قرارات وفتاوى وأحكام ودورات</description>
     <language>ar</language>
     <lastBuildDate>${BUILD_DATE}</lastBuildDate>
-    <managingEditor>yalabdullmohsen1@gmail.com (المجلس العلمي)</managingEditor>
+    <managingEditor>info@majlisilm.com (المجلس العلمي)</managingEditor>
     <image>
       <url>${escapeXml(absoluteUrl("/logo.png"))}</url>
       <title>${escapeXml(seoConfig.siteName)}</title>

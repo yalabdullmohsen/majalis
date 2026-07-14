@@ -50,6 +50,38 @@ const globalReferenceRateLimit = createRateLimiter({
   keyPrefix: "global-reference",
 });
 
+// نقاط كتابة مصادَق عليها كانت بلا حد معدل صريح — حماية من إساءة الاستخدام
+// (حساب مُخترَق أو مستخدم خبيث يستنزف قاعدة البيانات عبر طلبات متكررة).
+const citationsRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 30,
+  keyPrefix: "citations",
+});
+
+const universitiesWriteRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 20,
+  keyPrefix: "universities-write",
+});
+
+const accountDeleteRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 5,
+  keyPrefix: "account-delete",
+});
+
+const recommendationsRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 40,
+  keyPrefix: "recommendations",
+});
+
+const knowledgeGraphRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 30,
+  keyPrefix: "knowledge-graph",
+});
+
 /** Route table uses dynamic imports so Vercel bundles one lightweight function entrypoint. */
 export const API_ROUTES = [
   { prefix: "/api/healthz", module: "./api-handlers/healthz.js", allowGet: true, exact: true },
@@ -155,26 +187,26 @@ export const API_ROUTES = [
   { prefix: "/api/transcribe", module: "./api-handlers/transcribe.js", rateLimit: transcribeRateLimit },
   { prefix: "/api/submissions", module: "./api-handlers/submissions.js", exact: true },
   { prefix: "/api/admin/submissions", module: "./api-handlers/admin/submissions.js", allowGet: true },
-  { prefix: "/api/account/delete", module: "./api-handlers/account/delete.js", exact: true },
+  { prefix: "/api/account/delete", module: "./api-handlers/account/delete.js", exact: true, rateLimit: accountDeleteRateLimit },
   // ── الباحث الشرعي (RAG) ────────────────────────────────────────────────────
   { prefix: "/api/rag", module: "./api-handlers/rag-research.js", allowGet: true, rateLimit: ragRateLimit },
   // ── نظام الاقتباسات ────────────────────────────────────────────────────────
-  { prefix: "/api/user/citations", module: "./api-handlers/citations.js", allowGet: true },
-  { prefix: "/api/citations",      module: "./api-handlers/citations.js", allowGet: true },
+  { prefix: "/api/user/citations", module: "./api-handlers/citations.js", allowGet: true, rateLimit: citationsRateLimit },
+  { prefix: "/api/citations",      module: "./api-handlers/citations.js", allowGet: true, rateLimit: citationsRateLimit },
   // ── الرسم البياني المعرفي ──────────────────────────────────────────────────
-  { prefix: "/api/knowledge-graph", module: "./api-handlers/knowledge-graph.js", allowGet: true },
+  { prefix: "/api/knowledge-graph", module: "./api-handlers/knowledge-graph.js", allowGet: true, rateLimit: knowledgeGraphRateLimit },
   // ── التوصيات الذكية ───────────────────────────────────────────────────────
-  { prefix: "/api/recommendations", module: "./api-handlers/recommendations.js", allowGet: true },
+  { prefix: "/api/recommendations", module: "./api-handlers/recommendations.js", allowGet: true, rateLimit: recommendationsRateLimit },
   // ── خارطة طالب العلم ──────────────────────────────────────────────────────
   { prefix: "/api/learning-path", module: "./api-handlers/learning-path.js", allowGet: true },
   // ── دليل الجامعات ─────────────────────────────────────────────────────────
   { prefix: "/api/cron/universities-review", module: "./api-handlers/cron/universities-review.js", allowGet: true, exact: true },
   { prefix: "/api/cron/content-scoring",     module: "./api-handlers/cron/content-scoring.js",     allowGet: true, exact: true },
-  { prefix: "/api/admin/reminders",    module: "./api-handlers/universities-vercel.js", allowGet: true },
-  { prefix: "/api/admin/programs",     module: "./api-handlers/universities-vercel.js", allowGet: true },
-  { prefix: "/api/admin/requirements", module: "./api-handlers/universities-vercel.js", allowGet: true },
-  { prefix: "/api/admin/faqs",         module: "./api-handlers/universities-vercel.js", allowGet: true },
-  { prefix: "/api/admin/universities", module: "./api-handlers/universities-vercel.js", allowGet: true },
+  { prefix: "/api/admin/reminders",    module: "./api-handlers/universities-vercel.js", allowGet: true, rateLimit: universitiesWriteRateLimit },
+  { prefix: "/api/admin/programs",     module: "./api-handlers/universities-vercel.js", allowGet: true, rateLimit: universitiesWriteRateLimit },
+  { prefix: "/api/admin/requirements", module: "./api-handlers/universities-vercel.js", allowGet: true, rateLimit: universitiesWriteRateLimit },
+  { prefix: "/api/admin/faqs",         module: "./api-handlers/universities-vercel.js", allowGet: true, rateLimit: universitiesWriteRateLimit },
+  { prefix: "/api/admin/universities", module: "./api-handlers/universities-vercel.js", allowGet: true, rateLimit: universitiesWriteRateLimit },
   { prefix: "/api/universities",       module: "./api-handlers/universities-vercel.js", allowGet: true },
 ];
 

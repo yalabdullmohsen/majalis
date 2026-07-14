@@ -105,7 +105,7 @@ function MindMapCard({ map, forceOpen, onInteract }: { map: MindMap; forceOpen?:
         <div className="mm-card__meta">
           <div style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
             <span className="mm-card__category">{map.category}</span>
-            <span style={{ fontSize: "0.65rem", fontWeight: 700, color: "rgba(31,77,58,0.5)", background: "rgba(31,77,58,0.06)", borderRadius: "4px", padding: "0.1rem 0.4rem" }}>
+            <span style={{ fontSize: "0.65rem", fontWeight: 700, color: "var(--majalis-ink-soft)", background: "rgba(31,77,58,0.06)", borderRadius: "4px", padding: "0.1rem 0.4rem" }}>
               {nodeCount} عقدة
             </span>
           </div>

@@ -138,7 +138,7 @@ export function SiteFooter() {
             />
             <p>تطبيق علمي شرعي للدروس والعبادة والمحتوى اليومي.</p>
             <p className="site-footer-email">
-              <a href="mailto:yalabdullmohsen1@gmail.com">yalabdullmohsen1@gmail.com</a>
+              <a href="mailto:info@majlisilm.com">info@majlisilm.com</a>
             </p>
           </div>
         </div>

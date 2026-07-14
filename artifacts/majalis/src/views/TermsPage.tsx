@@ -103,7 +103,7 @@ export default function TermsPage() {
           إذن استخدام المحتوى، يمكنك مراسلتنا عبر البريد الإلكتروني:
         </p>
         <p>
-          <a href="mailto:yalabdullmohsen1@gmail.com">yalabdullmohsen1@gmail.com</a>
+          <a href="mailto:info@majlisilm.com">info@majlisilm.com</a>
         </p>
         <p>
           أو عبر صفحة{" "}

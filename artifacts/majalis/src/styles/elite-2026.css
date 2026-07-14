@@ -3190,7 +3190,7 @@ button.primary:hover {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  color: rgba(31,77,58,0.4) !important;
+  color: var(--majalis-ink-soft) !important;
   margin-bottom: 0.35rem !important;
   box-shadow: 0 2px 10px rgba(31,77,58,0.06) !important;
 }
@@ -12011,7 +12011,7 @@ body {
 .hws__label {
   font-size: 0.62rem;
   font-weight: 600;
-  color: rgba(31,77,58,0.55);
+  color: var(--majalis-ink-soft);
 }
 .hws__day--today .hws__label {
   color: #176B57;
@@ -12019,7 +12019,7 @@ body {
 }
 .hws__tip {
   font-size: 0.76rem;
-  color: rgba(31,77,58,0.5);
+  color: var(--majalis-ink-soft);
   text-align: center;
   margin: 0.25rem 0 0;
 }

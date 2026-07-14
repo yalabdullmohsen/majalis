@@ -62,15 +62,15 @@ export default function ContactPage() {
         <div className="contact-channels">
           <div className="contact-channel">
             <p className="contact-channel__label">البريد الإلكتروني الرسمي</p>
-            <a href="mailto:yalabdullmohsen1@gmail.com" className="contact-channel__link">
-              yalabdullmohsen1@gmail.com
+            <a href="mailto:info@majlisilm.com" className="contact-channel__link">
+              info@majlisilm.com
             </a>
             <p className="contact-channel__note">للمطوّرين والشراكات والطلبات العامة</p>
           </div>
           <div className="contact-channel">
             <p className="contact-channel__label">تصحيح المحتوى العلمي</p>
-            <a href="mailto:yalabdullmohsen1@gmail.com?subject=تصحيح محتوى" className="contact-channel__link">
-              يالبدالمحسن، بريد التصحيح
+            <a href="mailto:review@majlisilm.com?subject=تصحيح محتوى" className="contact-channel__link">
+              review@majlisilm.com
             </a>
             <p className="contact-channel__note">خطأ في حديث / فتوى / معلومة شرعية</p>
           </div>
