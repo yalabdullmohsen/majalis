@@ -239,6 +239,48 @@ if (withWarns.length > 0) {
   }
 }
 
+// ── فحص توحيد النطاق: index.html (جذر Vite، خارج seo-prerender لأن
+// prerender.mjs يتخطّى "/" عمدًا) وpublic/ يجب ألا يحملا نطاقًا مخالفًا لـsiteUrl.
+// اكتُشف فعليًا: index.html كان يحمل canonical/og:url/JSON-LD بالنطاق المجرّد
+// (majlisilm.com) بينما siteUrl الحقيقي www.majlisilm.com — كل زاحف يقرأ HTML
+// الرئيسية الخام (بلا JS) كان يرى canonical مخالفًا لما تعلنه بقية الموقع.
+{
+  const wrongDomainIssues = [];
+  const bareDomain = new URL(siteUrl).hostname.replace(/^www\./, "");
+  const wrongDomainPattern = new RegExp(`https?://(?!www\\.)${bareDomain.replace(/\./g, "\\.")}\\b`, "g");
+
+  const rootIndexPath = resolve(appRoot, "index.html");
+  const rootIndexHtml = await readFile(rootIndexPath, "utf8");
+  const rootMatches = rootIndexHtml.match(wrongDomainPattern);
+  if (rootMatches) {
+    wrongDomainIssues.push(`❌ [P0] index.html (جذر Vite) يحتوي ${rootMatches.length} رابطًا بالنطاق المجرّد بدل ${siteUrl}`);
+  }
+
+  async function scanPublicForWrongDomain(dir) {
+    let entries;
+    try { entries = await readdir(dir, { withFileTypes: true }); } catch { return; }
+    for (const entry of entries) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { await scanPublicForWrongDomain(full); continue; }
+      if (!entry.name.endsWith(".html") && !entry.name.endsWith(".xml")) continue;
+      const content = await readFile(full, "utf8");
+      if (wrongDomainPattern.test(content)) {
+        wrongDomainIssues.push(`❌ [P0] ${relative(appRoot, full)} يحتوي رابطًا بالنطاق المجرّد بدل ${siteUrl}`);
+      }
+      wrongDomainPattern.lastIndex = 0;
+    }
+  }
+  await scanPublicForWrongDomain(resolve(appRoot, "public"));
+
+  if (wrongDomainIssues.length > 0) {
+    console.log("\n═══════════════════════════════════════");
+    console.log("  ❌ توحيد النطاق");
+    console.log("═══════════════════════════════════════");
+    for (const issue of wrongDomainIssues) console.log(`   ${issue}`);
+    totalIssues += wrongDomainIssues.length;
+  }
+}
+
 // ── ملخص
 console.log("\n═══════════════════════════════════════");
 console.log("  📊 ملخص فحص SEO");
