@@ -65,6 +65,7 @@ function MuezzinCard({ muezzin, onPreview, previewing, isFav, onToggleFav }: {
             onClick={(e) => { e.preventDefault(); onToggleFav(muezzin.id); }}
             className={`mzp-fav-btn${isFav ? " is-fav" : ""}`}
             title={isFav ? "إزالة من المفضلة" : "إضافة للمفضلة"}
+            aria-label={isFav ? `إزالة ${muezzin.name} من المفضلة` : `إضافة ${muezzin.name} للمفضلة`}
           >
             {isFav ? <Heart size={16} className="icon-danger--filled" /> : <Heart size={16} />}
           </button>

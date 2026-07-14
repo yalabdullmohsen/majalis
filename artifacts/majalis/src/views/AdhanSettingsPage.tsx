@@ -35,16 +35,19 @@ function Toggle({
   checked,
   onChange,
   id,
+  label,
 }: {
   checked: boolean;
   onChange: (v: boolean) => void;
   id?: string;
+  label: string;
 }) {
   return (
     <button
       type="button"
       role="switch"
       aria-checked={checked}
+      aria-label={label}
       id={id}
       onClick={() => onChange(!checked)}
       className={`ads-toggle${checked ? " is-on" : ""}`}
@@ -250,7 +253,7 @@ export default function AdhanSettingsPage() {
               <div className="ads-global-label">تفعيل إشعارات الأذان</div>
               <div className="ads-global-desc">تشغيل الأذان وإرسال تنبيه عند كل وقت صلاة</div>
             </div>
-            <Toggle checked={prefs.globalEnabled} onChange={toggleGlobal} id="global-toggle" />
+            <Toggle checked={prefs.globalEnabled} onChange={toggleGlobal} id="global-toggle" label="تفعيل إشعارات الأذان" />
           </div>
 
           {!prefs.globalEnabled && (
@@ -276,7 +279,7 @@ export default function AdhanSettingsPage() {
                     {(() => { const I = PRAYER_ICON_MAP[PRAYER_ICON[key]] ?? Moon; return <I size={16} className="ads-prayer-icon" />; })()}
                     <span className="ads-prayer-name">{PRAYER_ARABIC[key]}</span>
                   </div>
-                  <Toggle checked={p.enabled} onChange={(v) => togglePrayer(key, v)} />
+                  <Toggle checked={p.enabled} onChange={(v) => togglePrayer(key, v)} label={`تفعيل أذان ${PRAYER_ARABIC[key]}`} />
                 </div>
 
                 {p.enabled && (
@@ -350,6 +353,7 @@ export default function AdhanSettingsPage() {
                 if (v) undismissFridayBanner();
               }}
               id="friday-banner-toggle"
+              label="عرض إعلان ليلة الجمعة ويومها"
             />
           </div>
           <p className="ads-adhan-desc">
