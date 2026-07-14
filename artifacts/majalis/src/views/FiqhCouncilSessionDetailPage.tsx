@@ -32,7 +32,17 @@ export default function FiqhCouncilSessionDetailPage({ params }: { params: { slu
   }, [params.slug]);
 
   useEffect(() => {
-    if (!session) return;
+    if (loading) return;
+    if (!session) {
+      applyPageSeo({
+        path: fiqhSessionHref(params.slug),
+        title: "الجلسة غير موجودة | المجلس العلمي",
+        description: "لم يُعثر على هذه الجلسة أو لم تُنشَر بعد.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     const path = fiqhSessionHref(session.slug);
     const robots = session.publish_status === "published" && session.verification_status === "verified"
       ? "index, follow"
@@ -65,7 +75,7 @@ export default function FiqhCouncilSessionDetailPage({ params }: { params: { slu
         ]),
       ],
     });
-  }, [session]);
+  }, [session, loading, params.slug]);
 
   if (loading) return <SkeletonCardGrid />;
   if (!session) return <Empty text="الجلسة غير موجودة أو غير منشورة." />;

@@ -56,7 +56,16 @@ export default function CitationPublicPage() {
               },
             ],
           });
-        } else setError(r.error || "الاقتباس غير موجود");
+        } else {
+          setError(r.error || "الاقتباس غير موجود");
+          applyPageSeo({
+            path: `/c/${slug}`,
+            title: "الاقتباس غير موجود | المجلس العلمي",
+            description: "لم يُعثر على هذا الاقتباس.",
+            robots: "noindex, follow",
+            jsonLd: [],
+          });
+        }
       })
       .catch(() => setError("خطأ في الاتصال"))
       .finally(() => setLoading(false));

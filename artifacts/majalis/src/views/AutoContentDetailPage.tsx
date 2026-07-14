@@ -29,7 +29,17 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
   }, [params.slug]);
 
   useEffect(() => {
-    if (!item) return;
+    if (loading) return;
+    if (!item) {
+      applyPageSeo({
+        path: `/updates/auto/${params.slug}`,
+        title: "المادة غير موجودة | المجلس العلمي",
+        description: "لم يُعثر على هذه المادة أو لم تُعتمد بعد.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     const path = `/updates/auto/${item.slug}`;
     applyPageSeo({
       path,
@@ -52,7 +62,7 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
         ]),
       ],
     });
-  }, [item]);
+  }, [item, loading, params.slug]);
 
   if (loading) return <SkeletonCardGrid />;
   if (!item) return <Empty text="المادة غير موجودة أو لم تُعتمد بعد." />;

@@ -30,7 +30,20 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
   usePageView("library", params.id);
 
   useEffect(() => {
-    if (!item) return;
+    if (loading) return;
+    if (!item) {
+      // كتاب غير موجود (حُذف من الكتالوج أو معرّف خاطئ) — لا يجوز ترك
+      // عنوان/ميتا الصفحة السابقة كما هي (كانت تُبقي عنوان الرئيسية أو صفحة
+      // أخرى ظاهراً للزواحف رغم أن الجسم الفعلي "الكتاب غير موجود").
+      applyPageSeo({
+        path: `/library/${params.id}`,
+        title: "الكتاب غير موجود | المجلس العلمي",
+        description: "لم يُعثر على هذا الكتاب في المكتبة العلمية.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     const path = `/library/${item.id}`;
     applyPageSeo({
       path,
@@ -55,7 +68,7 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
         ]),
       ],
     });
-  }, [item]);
+  }, [item, loading, params.id]);
 
   if (loading) return <SkeletonPage />;
   if (!item) return <Empty text="الكتاب غير موجود." />;

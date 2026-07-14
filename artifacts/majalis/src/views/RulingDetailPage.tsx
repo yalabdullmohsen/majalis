@@ -31,7 +31,17 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
   usePageView("rulings", params.id);
 
   useEffect(() => {
-    if (!item) return;
+    if (loading) return;
+    if (!item) {
+      applyPageSeo({
+        path: `/rulings/${params.id}`,
+        title: "الحكم غير موجود | المجلس العلمي",
+        description: "لم يُعثر على هذا الحكم الشرعي.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     const path = `/rulings/${item.id}`;
     applyPageSeo({
       path,
@@ -55,7 +65,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
         ]),
       ],
     });
-  }, [item]);
+  }, [item, loading, params.id]);
 
   if (loading) return <SkeletonPage />;
   if (!item) return <Empty text="الحكم غير موجود." />;

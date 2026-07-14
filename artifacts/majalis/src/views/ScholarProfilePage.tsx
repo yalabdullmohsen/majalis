@@ -142,7 +142,19 @@ export default function ScholarProfilePage() {
   const scholar = findScholarById(id ?? "");
 
   useEffect(() => {
-    if (!scholar) return;
+    if (!scholar) {
+      // معرّف غير موجود — لا يجوز ترك عنوان/ميتا الصفحة السابقة (غالباً الرئيسية)
+      // كما هي؛ هذا كان يجعل الزواحف التي تُنفّذ JS تفهرس هذه الصفحة بعنوان
+      // ومحتوى منظم (JSON-LD) خاطئين تماماً بينما الجسم الفعلي "غير موجود".
+      applyPageSeo({
+        path: `/scholars/${id ?? ""}`,
+        title: "العالم غير موجود | المجلس العلمي",
+        description: "لم يُعثر على هذا العالم في قاعدة بياناتنا.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     applyPageSeo({
       path: `/scholars/${scholar.id}`,
       title: `${scholar.name} — سيرة العالم | المجلس العلمي`,
@@ -158,7 +170,7 @@ export default function ScholarProfilePage() {
         url: `https://majlisilm.com/scholars/${scholar.id}`,
       }],
     });
-  }, [scholar]);
+  }, [scholar, id]);
 
   if (!scholar) {
     return (

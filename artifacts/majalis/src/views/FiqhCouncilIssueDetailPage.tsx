@@ -39,7 +39,17 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
   }, [params.slug]);
 
   useEffect(() => {
-    if (!issue) return;
+    if (loading) return;
+    if (!issue) {
+      applyPageSeo({
+        path: fiqhIssueHref(params.slug),
+        title: "المسألة غير موجودة | المجلس العلمي",
+        description: "لم يُعثر على هذه المسألة الفقهية أو لم تُنشَر بعد.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     const path = fiqhIssueHref(issue.slug);
     applyPageSeo({
       path,
@@ -68,7 +78,7 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
         ]),
       ],
     });
-  }, [issue]);
+  }, [issue, loading, params.slug]);
 
   if (loading) return <SkeletonCardGrid />;
   if (!issue) return <Empty text="المسألة غير موجودة أو غير منشورة." />;

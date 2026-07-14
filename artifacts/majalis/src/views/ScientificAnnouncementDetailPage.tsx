@@ -37,23 +37,33 @@ export default function ScientificAnnouncementDetailPage({
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
+    if (!item) {
+      applyPageSeo({
+        path: `/scientific-announcements/${params.id}`,
+        title: "الإعلان غير موجود | المجلس العلمي",
+        description: "لم يُعثر على هذا الإعلان العلمي.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     applyPageSeo({
       path: `/scientific-announcements/${params.id}`,
-      title: `${item?.announcementTitle || "إعلان علمي"} | المجلس العلمي`,
-      description: `${item?.announcementTitle || "إعلان علمي"}، تفاصيل الإعلان العلمي والمؤتمرات والدورات الإسلامية.`,
+      title: `${item.announcementTitle} | المجلس العلمي`,
+      description: `${item.announcementTitle}، تفاصيل الإعلان العلمي والمؤتمرات والدورات الإسلامية.`,
       keywords: ["إعلانات علمية", "مؤتمرات إسلامية", "دورات علمية", "فعاليات شرعية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "Event",
-          name: item?.announcementTitle || "إعلان علمي",
+          name: item.announcementTitle,
           url: `https://majlisilm.com/scientific-announcements/${params.id}`,
-          description: `${item?.announcementTitle || "إعلان علمي"} — تفاصيل الحدث العلمي`,
+          description: `${item.announcementTitle} — تفاصيل الحدث العلمي`,
           organizer: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
         },
       ],
     });
-  }, [item?.announcementTitle]);
+  }, [item, params.id]);
   const [shared, setShared] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);

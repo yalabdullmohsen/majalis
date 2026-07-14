@@ -72,7 +72,16 @@ export default function LearningPathBookPage() {
           }],
         });
       })
-      .catch(() => setNotFound(true))
+      .catch(() => {
+        setNotFound(true);
+        applyPageSeo({
+          path: `/learning-path/book/${bookId}`,
+          title: "الكتاب غير موجود | المجلس العلمي",
+          description: "لم يُعثر على هذا الكتاب.",
+          robots: "noindex, follow",
+          jsonLd: [],
+        });
+      })
       .finally(() => setLoading(false));
   }, [bookId, isLoggedIn]);
 

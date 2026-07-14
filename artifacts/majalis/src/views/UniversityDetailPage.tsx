@@ -276,6 +276,7 @@ export default function UniversityDetailPage() {
   const [notFound, setNotFound]     = useState(false);
 
   useEffect(() => {
+    if (loading) return;
     if (university) {
       applyPageSeo({
         path: `/universities/${slug}`,
@@ -293,8 +294,16 @@ export default function UniversityDetailPage() {
           },
         ],
       });
+    } else {
+      applyPageSeo({
+        path: `/universities/${slug}`,
+        title: "الجامعة غير موجودة | المجلس العلمي",
+        description: "لم يُعثر على هذه الجامعة.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
     }
-  }, [university, slug]);
+  }, [university, slug, loading]);
 
   useEffect(() => {
     if (!slug) return;

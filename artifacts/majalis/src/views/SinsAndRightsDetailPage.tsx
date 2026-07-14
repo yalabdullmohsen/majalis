@@ -17,11 +17,20 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
   const related = topic ? getRelatedTopics(params.slug) : [];
 
   useEffect(() => {
-    if (!topic) return;
+    if (!topic) {
+      applyPageSeo({
+        path: `/sins-and-rights/${params.slug}`,
+        title: "الموضوع غير موجود | المجلس العلمي",
+        description: "لم يُعثر على هذا الموضوع.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     const path = `/sins-and-rights/${topic.slug}`;
     applyPageSeo({
       path,
-      title: `${topic.title} | الذنوب والحقوق — المجلس العلمي`,
+      title: `${topic.title} | الذنوب والحقوق | المجلس العلمي`,
       description: topic.shortDescription,
       keywords: [topic.title, "التوبة", "الذنوب والحقوق", "المجلس العلمي", RIGHTS_CATEGORY_LABELS[topic.rightsCategory]],
       ogType: "article",
@@ -42,7 +51,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
         ]),
       ],
     });
-  }, [topic]);
+  }, [topic, params.slug]);
 
   if (!topic) {
     return (

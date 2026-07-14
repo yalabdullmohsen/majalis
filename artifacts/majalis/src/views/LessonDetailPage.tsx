@@ -269,7 +269,7 @@ export default function LessonDetailPage({
     };
   }, [kuwaitLesson, lesson, unified]);
 
-  useLessonSeo(seoLesson, `/lessons/${params.id}`);
+  useLessonSeo(seoLesson, `/lessons/${params.id}`, loading);
   usePageView("lesson", params.id);
 
   if (loading) return <SkeletonPage />;

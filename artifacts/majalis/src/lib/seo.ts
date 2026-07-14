@@ -361,9 +361,21 @@ export function usePageSeo(path: string) {
   }, [path]);
 }
 
-export function useLessonSeo(lesson: KuwaitLessonRecord | null, path: string) {
+export function useLessonSeo(lesson: KuwaitLessonRecord | null, path: string, loading = false) {
   useEffect(() => {
-    if (!lesson) return;
+    if (!lesson) {
+      // لا نضع عنوان/ميتا "غير موجود" أثناء التحميل — فقط بعد تأكّد الفشل،
+      // لتفادي وميض عنوان خاطئ قبل وصول البيانات.
+      if (loading) return;
+      applyPageSeo({
+        path,
+        title: "الدرس غير موجود | المجلس العلمي",
+        description: "لم يُعثر على هذا الدرس.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
 
     const meta = lessonSeoMeta(lesson);
     const breadcrumbs = breadcrumbJsonLd([
@@ -382,5 +394,5 @@ export function useLessonSeo(lesson: KuwaitLessonRecord | null, path: string) {
       canonicalPath: meta.canonicalPath,
       jsonLd: [lessonJsonLd(lesson), breadcrumbs, ...defaultSiteJsonLd()],
     });
-  }, [lesson, path]);
+  }, [lesson, path, loading]);
 }

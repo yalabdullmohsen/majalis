@@ -28,7 +28,17 @@ export default function FatwaDetailPage({ params }: { params: { id: string } }) 
   usePageView("fatwa", params.id);
 
   useEffect(() => {
-    if (!item) return;
+    if (loading) return;
+    if (!item) {
+      applyPageSeo({
+        path: `/fatwa/${params.id}`,
+        title: "الفتوى غير موجودة | المجلس العلمي",
+        description: "لم يُعثر على هذه الفتوى.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     const path = `/fatwa/${item.id}`;
     applyPageSeo({
       path,
@@ -59,7 +69,7 @@ export default function FatwaDetailPage({ params }: { params: { id: string } }) 
         ]),
       ],
     });
-  }, [item]);
+  }, [item, loading, params.id]);
 
   if (loading) return <SkeletonPage />;
   if (!item) return <Empty text="الفتوى غير موجودة." />;
