@@ -603,9 +603,13 @@ const duasItemListScript = `<script type="application/ld+json">${JSON.stringify(
   })),
 })}</script>`;
 
-// مسارات noindex: لا تظهر في sitemap لكن تُحدَّث prerender بالمتا الصحيح
+// مسارات غير مُدرَجة في sitemap (noindex صراحة أو بلا حقل robots) — تُحدَّث
+// prerender بالمتا الصحيح مثل بقية المسارات، وإلا بقيت seo-prerender/ لهذا
+// المسار ملفاً قديماً يتيماً يُدمَج لاحقاً في dist/ عبر post-build-seo.mjs
+// (اكتُشف هذا فعلياً في /courses: H1 غير مُقسَّم بقي متجمداً منذ آخر مرة
+// كان فيها sitemap:true رغم إصلاح منطق التقسيم لاحقاً في هذا الملف نفسه).
 const noindexRoutes = seoConfig.routes.filter(
-  (r) => !r.sitemap && r.robots && r.robots.includes("noindex") && !r.path.includes(":"),
+  (r) => !r.sitemap && !r.path.includes(":"),
 );
 
 for (const route of noindexRoutes) {
