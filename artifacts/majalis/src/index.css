@@ -2023,6 +2023,24 @@ input, textarea, select { font-family: inherit; }
   text-align: center;
 }
 
+.assistant-retry-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.6rem auto 0;
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  background: #b91c1c;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 140ms ease;
+}
+.assistant-retry-btn:hover:not(:disabled) { background: #991b1b; }
+.assistant-retry-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
 .assistant-message-assistant {
   align-self: flex-end;
   background: #fff;

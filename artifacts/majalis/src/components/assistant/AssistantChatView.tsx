@@ -1,5 +1,5 @@
 import type { RefObject } from "react";
-import { AlertTriangle, BookOpen, Globe, Landmark, Library, Scale, Users } from "lucide-react";
+import { AlertTriangle, BookOpen, Globe, Landmark, Library, RefreshCw, Scale, Users } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ChatMessage } from "@/hooks/useAssistantChat";
 import { AssistantReply } from "./AssistantReply";
@@ -13,6 +13,7 @@ type Props = {
   bottomRef: RefObject<HTMLDivElement | null>;
   compact?: boolean;
   onQuickPrompt?: (text: string) => void;
+  onRetry?: () => void;
   quickPrompts?: string[];
 };
 
@@ -110,6 +111,7 @@ export function AssistantChatView({
   bottomRef,
   compact = false,
   onQuickPrompt,
+  onRetry,
 }: Props) {
   const showSuggestions = onQuickPrompt && messages.length <= 1;
 
@@ -196,7 +198,19 @@ export function AssistantChatView({
                 </p>
               </>
             ) : (
-              <p>{message.content}</p>
+              <>
+                <p>{message.content}</p>
+                {message.isFailure && onRetry && (
+                  <button
+                    type="button"
+                    className="assistant-retry-btn"
+                    onClick={onRetry}
+                    disabled={loading}
+                  >
+                    <RefreshCw size={14} aria-hidden="true" /> إعادة المحاولة
+                  </button>
+                )}
+              </>
             )}
           </article>
         ))}
