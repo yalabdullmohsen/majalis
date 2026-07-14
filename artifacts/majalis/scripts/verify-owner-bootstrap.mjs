@@ -6,7 +6,7 @@
 import { isBootstrapOwnerEmail, hasUnrestrictedAdminAccess } from "../lib/owner-config.mjs";
 import { hasPermission, canImportContent } from "../lib/admin-auth.mjs";
 
-const TARGET_EMAIL = "yalabdullmohsen1@gmail.com";
+const TARGET_EMAIL = (process.env.MAJALIS_OWNER_EMAILS || "").split(",")[0].trim().toLowerCase();
 const PRODUCTION = "https://www.majlisilm.com";
 
 const checks = [];

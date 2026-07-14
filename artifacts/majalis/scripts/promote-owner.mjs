@@ -2,7 +2,7 @@
 /**
  * Promote bootstrap owner account(s) in Supabase.
  * Usage: pnpm --filter @workspace/majalis run promote:owner
- *        pnpm --filter @workspace/majalis run promote:owner -- yalabdullmohsen1@gmail.com
+ *        pnpm --filter @workspace/majalis run promote:owner -- owner@example.com
  */
 
 import { getSupabaseAdmin } from "../lib/supabase-admin.mjs";

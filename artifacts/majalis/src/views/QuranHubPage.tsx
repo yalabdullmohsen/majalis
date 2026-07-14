@@ -187,7 +187,7 @@ export default function QuranHubPage() {
 
       {/* ── مميزات ────────────────────────────────────────────── */}
       <section className="quran-hub-features">
-        <h2 className="quran-hub-features__title">ماذا يقدم مجالس للقرآن؟</h2>
+        <h2 className="quran-hub-features__title">ماذا يقدم المجلس العلمي للقرآن؟</h2>
         <div className="quran-hub-features__list">
           {FEATURES.map((f, i) => (
             <div key={i} className="quran-hub-feature-item">

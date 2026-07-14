@@ -1,8 +1,20 @@
-/** Client-side mirror of lib/owner-config.mjs — keep emails in sync. */
+/**
+ * Client-side mirror of lib/owner-config.mjs.
+ * The bootstrap owner allowlist is provided via the VITE_OWNER_EMAILS build-time
+ * environment variable (comma-separated) so no personal address is committed to the
+ * codebase or shipped in the client bundle. When unset, owner detection relies on the
+ * database profile role (is_owner / super_admin), which is the real source of truth.
+ */
 
-export const BOOTSTRAP_OWNER_EMAILS = [
-  "yalabdullmohsen1@gmail.com",
-] as const;
+function readOwnerEmailsFromEnv(): readonly string[] {
+  const raw = (import.meta.env.VITE_OWNER_EMAILS as string | undefined) || "";
+  return raw
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+export const BOOTSTRAP_OWNER_EMAILS = readOwnerEmailsFromEnv();
 
 export function normalizeOwnerEmail(email: string | null | undefined): string {
   return String(email || "").trim().toLowerCase();

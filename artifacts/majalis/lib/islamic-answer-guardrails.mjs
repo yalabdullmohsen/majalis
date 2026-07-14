@@ -143,11 +143,15 @@ export function buildInsufficientSourcesPayload(userQuery = "") {
       "📚 الدرر السنية: dorar.net" +
       suggestionsText +
       `\n\n${ISLAMIC_DISCLAIMER}`,
-    citations: [
-      { title: "إسلام سؤال وجواب", href: "https://islamqa.info/ar", source_name: "الشيخ محمد الدعيع", trust_score: 95 },
-      { title: "إسلام ويب — الفتاوى", href: "https://www.islamweb.net/ar/fatwa", source_name: "إسلام ويب", trust_score: 92 },
-      { title: "موقع الشيخ ابن باز", href: "https://binbaz.org.sa", source_name: "الشيخ ابن باز رحمه الله", trust_score: 98 },
+    // روابط مرجعية عامة موثوقة — ليست دليلًا على إجابة بعينها، ولا تحمل درجات ثقة
+    // مُختلَقة. الإشراف والنسبة مذكوران كما هي معروفة رسميًا للمصدر.
+    references: [
+      { title: "إسلام سؤال وجواب", href: "https://islamqa.info/ar", source_name: "بإشراف الشيخ محمد صالح المنجد" },
+      { title: "إسلام ويب — الفتاوى", href: "https://www.islamweb.net/ar/fatwa", source_name: "الشبكة الإسلامية (إسلام ويب)" },
+      { title: "موقع الشيخ ابن باز", href: "https://binbaz.org.sa", source_name: "موقع سماحة الشيخ عبد العزيز بن باز رحمه الله" },
+      { title: "الدرر السنية", href: "https://dorar.net", source_name: "مؤسسة الدرر السنية" },
     ],
+    citations: [],
     confidence: 0,
     safety_classification: "insufficient_sources",
     disclaimer: ISLAMIC_DISCLAIMER,

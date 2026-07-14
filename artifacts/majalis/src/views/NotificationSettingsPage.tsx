@@ -211,7 +211,7 @@ export default function NotificationSettingsPage() {
       {/* ── اختبار ── */}
       {isGranted && (
         <div className="notif-card">
-          <button type="button" className="notif-test-btn" onClick={() => sendLocalNotification("اختبار الإشعارات", { body: "هذا إشعار تجريبي من منصة المجالس." })}>
+          <button type="button" className="notif-test-btn" onClick={() => sendLocalNotification("اختبار الإشعارات", { body: "هذا إشعار تجريبي من المجلس العلمي." })}>
             إرسال إشعار تجريبي
           </button>
         </div>

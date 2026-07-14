@@ -165,19 +165,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     keywords: ["الأربعون النووية", "النووي", "حديث", "متن"],
     sort_order: 10,
   },
-  {
-    id: "book-bulugh",
-    title: "بلوغ المرام",
-    author: "الإمام ابن حجر العسقلاني",
-    type: "كتاب",
-    category: "فقه",
-    description: "جمع أحاديث الأحكام مع بيان درجة كل حديث ومصدره.",
-    parts_label: "16 بابًا",
-    external_url: "https://sunnah.com/bulugh",
-    status: "approved",
-    keywords: ["بلوغ المرام", "ابن حجر", "فقه", "أحكام", "حديث"],
-    sort_order: 11,
-  },
+
   {
     id: "book-umdat",
     title: "عمدة الأحكام",
@@ -401,18 +389,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     keywords: ["الرسالة القشيرية", "القشيري", "سلوك", "تزكية"],
     sort_order: 30,
   },
-  {
-    id: "book-madaarij",
-    title: "مدارج السالكين بين منازل إياك نعبد وإياك نستعين",
-    author: "ابن القيم الجوزية",
-    type: "كتاب",
-    category: "رقائق",
-    description: "شرح مستفيض لكتاب منازل السائرين يُعدّ من أجمع كتب السلوك والتزكية.",
-    parts_label: "3 أجزاء",
-    status: "approved",
-    keywords: ["مدارج السالكين", "ابن القيم", "تزكية", "سلوك", "منازل السالكين"],
-    sort_order: 31,
-  },
+
   // ── كتب السيرة ─────────────────────────────────────────────────────
   {
     id: "book-seerah-ibn-hisham",
@@ -485,17 +462,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     keywords: ["ألفية", "ابن مالك", "نحو", "صرف", "لغة"],
     sort_order: 37,
   },
-  {
-    id: "book-ajrumiyyah",
-    title: "متن الآجرومية في النحو",
-    author: "ابن آجروم الصنهاجي",
-    type: "متن",
-    category: "لغة",
-    description: "مقدمة مختصرة في علم النحو للمبتدئين؛ مدرَّسة في المعاهد الشرعية.",
-    status: "approved",
-    keywords: ["الآجرومية", "نحو", "مبتدئ", "لغة عربية"],
-    sort_order: 38,
-  },
+
   // ── عقيدة ───────────────────────────────────────────────────────────
   {
     id: "book-tahawiyyah",
@@ -521,18 +488,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     sort_order: 40,
   },
   // ── تفسير ───────────────────────────────────────────────────────────
-  {
-    id: "book-saadi",
-    title: "تيسير الكريم الرحمن — تفسير السعدي",
-    author: "الشيخ عبدالرحمن السعدي",
-    type: "كتاب",
-    category: "تفسير",
-    description: "تفسير ميسر بأسلوب سهل واضح يستهدف عموم القراء؛ من أكثر التفاسير رواجاً.",
-    external_url: "https://quran.ksu.edu.sa/tafseer/saadi/",
-    status: "approved",
-    keywords: ["تفسير السعدي", "السعدي", "تيسير الكريم", "تفسير ميسر"],
-    sort_order: 41,
-  },
+
   {
     id: "book-qurtubi",
     title: "الجامع لأحكام القرآن — تفسير القرطبي",
@@ -547,31 +503,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     sort_order: 42,
   },
   // ── تفسير (إضافة) ──────────────────────────────────────────────────
-  {
-    id: "book-tabari-tafsir",
-    title: "جامع البيان عن تأويل آي القرآن — تفسير الطبري",
-    author: "الإمام محمد بن جرير الطبري",
-    type: "كتاب",
-    category: "تفسير",
-    description: "أقدم وأضخم تفاسير القرآن الكريم بالمأثور، يجمع روايات الصحابة والتابعين مع ترجيح الطبري.",
-    parts_label: "30 جزءاً",
-    external_url: "https://quran.ksu.edu.sa/tafseer/tabary/",
-    status: "approved",
-    keywords: ["الطبري", "تفسير بالمأثور", "جامع البيان", "تفسير كلاسيكي"],
-    sort_order: 43,
-  },
-  {
-    id: "book-baghawi-tafsir",
-    title: "معالم التنزيل — تفسير البغوي",
-    author: "الإمام البغوي",
-    type: "كتاب",
-    category: "تفسير",
-    description: "تفسير بالمأثور موجز يُعدّ خلاصة من تفسير الثعلبي مع حذف الأحاديث الضعيفة.",
-    parts_label: "8 أجزاء",
-    status: "approved",
-    keywords: ["البغوي", "معالم التنزيل", "تفسير"],
-    sort_order: 44,
-  },
+
   {
     id: "book-razi-tafsir",
     title: "مفاتيح الغيب — تفسير الرازي",
@@ -750,17 +682,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     keywords: ["الآجرومية", "نحو", "لغة عربية", "متن", "مبتدئ"],
     sort_order: 70,
   },
-  {
-    id: "book-alfiyya",
-    title: "ألفية ابن مالك",
-    author: "الإمام ابن مالك الأندلسي",
-    type: "منظومة",
-    category: "لغة",
-    description: "ألف بيت في النحو والصرف، من أهم المنظومات اللغوية وأوسعها انتشاراً.",
-    status: "approved",
-    keywords: ["ألفية ابن مالك", "نحو", "صرف", "لغة عربية", "منظومة"],
-    sort_order: 71,
-  },
+
   {
     id: "book-sarf-mutah",
     title: "متن مراح الأرواح في علم الصرف",
@@ -773,17 +695,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     sort_order: 72,
   },
   // ── منطق وفلسفة (إضافة) ──────────────────────────────────────────
-  {
-    id: "book-muqaddimah",
-    title: "المقدمة",
-    author: "الإمام ابن خلدون",
-    type: "كتاب",
-    category: "منطق وفلسفة",
-    description: "مقدمة موسوعية لكتاب العبر، تؤسس لعلم الاجتماع والتاريخ ببنية فلسفية فريدة.",
-    status: "approved",
-    keywords: ["المقدمة", "ابن خلدون", "تاريخ", "اجتماع", "فلسفة"],
-    sort_order: 73,
-  },
+
   {
     id: "book-dara-at-taarus",
     title: "درء تعارض العقل والنقل",
@@ -854,17 +766,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     sort_order: 80,
   },
   // ── التفسير (توسعة) ───────────────────────────────────────────────
-  {
-    id: "book-tafsir-al-saadi",
-    title: "تيسير الكريم الرحمن في تفسير كلام المنان",
-    author: "الشيخ عبدالرحمن بن ناصر السعدي",
-    type: "كتاب",
-    category: "تفسير",
-    description: "تفسير ميسّر للقرآن الكريم بأسلوب واضح يُناسب عامة المسلمين وطلاب العلم، يُركّز على الهداية والاستنباط.",
-    status: "approved",
-    keywords: ["تفسير السعدي", "السعدي", "تفسير", "قرآن", "ميسّر"],
-    sort_order: 81,
-  },
+
   {
     id: "book-tafsir-al-baghawi",
     title: "معالم التنزيل في تفسير القرآن",
@@ -941,18 +843,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     sort_order: 92,
   },
   // ── أصول الفقه ────────────────────────────────────────────────────
-  {
-    id: "book-al-mustasfa-ghazali",
-    title: "المستصفى من علم الأصول",
-    author: "الإمام أبو حامد الغزالي",
-    type: "كتاب",
-    category: "أصول الفقه",
-    description: "أحد أمهات كتب أصول الفقه للإمام الغزالي، يعالج مصادر التشريع والاستنباط والقياس والاجتهاد بمنهج كلامي دقيق.",
-    parts_label: "جزآن",
-    status: "approved",
-    keywords: ["المستصفى", "الغزالي", "أصول الفقه", "قياس", "اجتهاد"],
-    sort_order: 93,
-  },
+
   {
     id: "book-al-ihkam-amidi",
     title: "الإحكام في أصول الأحكام",
@@ -1479,17 +1370,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     keywords: ["الموافقات", "الشاطبي", "مقاصد الشريعة", "أصول الفقه", "فلسفة الفقه"],
     sort_order: 149,
   },
-  {
-    id: "book-al-minhaj-nawawi",
-    title: "منهاج الطالبين وعمدة المفتين",
-    author: "الإمام يحيى بن شرف النووي",
-    type: "كتاب",
-    category: "فقه شافعي",
-    description: "أكثر متون الفقه الشافعي تداولاً في العالم الإسلامي؛ اختصر فيه النووي 'المحرر' للرافعي ونقّحه حتى صار المرجع الأساسي في الفتوى الشافعية.",
-    status: "approved",
-    keywords: ["منهاج الطالبين", "النووي", "فقه شافعي", "إفتاء", "متون"],
-    sort_order: 150,
-  },
+
   {
     id: "book-rawdatul-talibin",
     title: "روضة الطالبين وعمدة المفتين",

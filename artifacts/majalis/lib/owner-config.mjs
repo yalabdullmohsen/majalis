@@ -1,11 +1,22 @@
 /**
- * Permanent platform owners — bootstrap list retained even if DB roles are reset.
- * Server-only; mirror emails in src/lib/owner-config.ts for client guards.
+ * Permanent platform owners — bootstrap allowlist retained even if DB roles are reset.
+ * Server-only. Emails are provided via the MAJALIS_OWNER_EMAILS environment variable
+ * (comma-separated) so no personal address is committed to the codebase. When unset,
+ * owner detection falls back to the database role (is_owner / super_admin), which is
+ * the real source of truth.
  */
 
-export const BOOTSTRAP_OWNER_EMAILS = Object.freeze([
-  "yalabdullmohsen1@gmail.com",
-]);
+function readOwnerEmailsFromEnv() {
+  const raw = process.env.MAJALIS_OWNER_EMAILS || process.env.BOOTSTRAP_OWNER_EMAILS || "";
+  return Object.freeze(
+    raw
+      .split(",")
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean),
+  );
+}
+
+export const BOOTSTRAP_OWNER_EMAILS = readOwnerEmailsFromEnv();
 
 export function normalizeOwnerEmail(email) {
   return String(email || "").trim().toLowerCase();

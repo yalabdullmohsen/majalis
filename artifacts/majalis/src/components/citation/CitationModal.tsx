@@ -211,7 +211,7 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
 
               {/* بطاقة المعاينة */}
               <div ref={cardRef} dir="rtl" className="border rounded-xl p-5 space-y-3 cm-preview-card">
-                <p className="text-sm font-bold cm-preview-title">مجالس — منصة العلم الشرعي</p>
+                <p className="text-sm font-bold cm-preview-title">المجلس العلمي — منصة العلم الشرعي</p>
                 <p className="leading-relaxed text-base font-arabic pr-3 cm-preview-text">
                   {text || "أدخل النص المراد اقتباسه..."}
                 </p>

@@ -7,14 +7,14 @@ import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
 import { LESSONS_SEED } from "./lessons-seed";
 import { filterMiraclesSeed, searchMiraclesSeed } from "./miracles-seed";
 import { getLibraryCatalog } from "./library-service";
-import { SHEIKHS_SEED } from "./sheikhs-seed";
+import { SHEIKHS_SEED, dedupeSheikhs } from "./sheikhs-seed";
 
 export { FAWAID_CURATED_CATEGORIES as FAWAID_CATEGORIES, filterSeedFawaid };
 
 /** @deprecated استخدم LESSONS_SEED من lessons-seed.ts */
 export const DEMO_LESSONS = LESSONS_SEED;
 
-export const DEMO_SHEIKHS = SHEIKHS_SEED;
+export const DEMO_SHEIKHS = dedupeSheikhs(SHEIKHS_SEED);
 
 export const DEMO_LIBRARY = getLibraryCatalog();
 

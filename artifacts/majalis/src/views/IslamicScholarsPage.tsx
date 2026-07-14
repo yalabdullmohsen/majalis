@@ -6,6 +6,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SCHOLAR_PROFILE_IDS } from "@/lib/scholars-data";
 
 /* ── بيانات العلماء ──────────────────────────────────────── */
 type Scholar = {
@@ -623,7 +624,7 @@ const SCHOLARS: Scholar[] = [
     quote: "من يصبر على علم ولم يصبر على عمل فليرجع إلى علمه",
   },
   {
-    id: "ibn-al-qayyim-alt",
+    id: "al-sakhawi",
     name: "السخاوي",
     fullName: "محمد بن عبد الرحمن بن محمد السخاوي",
     era: "العلماء الكبار",
@@ -805,7 +806,7 @@ const SCHOLARS: Scholar[] = [
     quote: "العلم بعلوم القرآن يفتح أبواب التفسير من غير حصر",
   },
   {
-    id: "ibn-uthaymin-ext",
+    id: "ibn-jibreen",
     name: "الشيخ ابن جبرين",
     fullName: "عبد الله بن عبد الرحمن بن جبرين",
     era: "المعاصرون",
@@ -831,7 +832,7 @@ const SCHOLARS: Scholar[] = [
     quote: "الفقه نور والجهل به ظلام",
   },
   {
-    id: "ibn-uthaymeen-older",
+    id: "abdulkarim-alkhudair",
     name: "الشيخ عبد الكريم الخضير",
     fullName: "عبد الكريم بن عبد الله بن عبد الرحمن الخضير",
     era: "المعاصرون",
@@ -1091,7 +1092,7 @@ const SCHOLARS: Scholar[] = [
     quote: "العلم لا يُعطيك بعضه حتى تُعطيه كلَّك",
   },
   {
-    id: "fakhr-al-razi",
+    id: "fakhr-razi",
     name: "فخر الدين الرازي",
     fullName: "محمد بن عمر بن الحسين الرازي",
     era: "العلماء الكبار",
@@ -1117,7 +1118,7 @@ const SCHOLARS: Scholar[] = [
     quote: "من انفرد برأيه هلك — ومن شاور الرجال شاركهم في عقولهم",
   },
   {
-    id: "ibn-al-salah",
+    id: "ibn-salah",
     name: "ابن الصلاح",
     fullName: "عثمان بن عبدالرحمن الشهرزوري",
     era: "المحدثون",
@@ -1208,7 +1209,7 @@ const SCHOLARS: Scholar[] = [
     quote: "السنن ثلاث: سنة واجبة، وسنة فاضلة، وسنة مباحة",
   },
   {
-    id: "ibn-abi-shayba",
+    id: "ibn-abi-shaybah",
     name: "ابن أبي شيبة",
     fullName: "أبو بكر عبد الله بن محمد بن إبراهيم ابن أبي شيبة العبسي الكوفي",
     era: "المحدثون",
@@ -1437,9 +1438,11 @@ export default function IslamicScholarsPage() {
                   </div>
                   <p className="sch-card__region">📍 {s.region}</p>
                   <div className="sch-card__actions">
-                    <Link href={`/scholars/${s.id}`} className="sch-card__profile-link">
-                      الصفحة الكاملة <ChevronLeft size={13} />
-                    </Link>
+                    {SCHOLAR_PROFILE_IDS.has(s.id) && (
+                      <Link href={`/scholars/${s.id}`} className="sch-card__profile-link">
+                        الصفحة الكاملة <ChevronLeft size={13} />
+                      </Link>
+                    )}
                     <button type="button" className="sch-card__close" onClick={() => setExpanded(null)}>
                       إغلاق التفاصيل
                     </button>

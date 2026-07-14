@@ -183,6 +183,76 @@
       "permanent": true
     },
     {
+      "source": "/scholars/ibn-al-qayyim-alt",
+      "destination": "/scholars/al-sakhawi",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-uthaymin-ext",
+      "destination": "/scholars/ibn-jibreen",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-uthaymeen-older",
+      "destination": "/scholars/abdulkarim-alkhudair",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-madaarij",
+      "destination": "/library/book-madarij",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-saadi",
+      "destination": "/library/book-tafsir-saadi",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-tafsir-al-saadi",
+      "destination": "/library/book-tafsir-saadi",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-tabari-tafsir",
+      "destination": "/library/book-tafsir-tabari",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-baghawi-tafsir",
+      "destination": "/library/book-tafsir-al-baghawi",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-ajrumiyyah",
+      "destination": "/library/book-ajurrumiyya",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-alfiyya",
+      "destination": "/library/book-alfiyyah",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-al-mustasfa-ghazali",
+      "destination": "/library/book-mustasfa",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-bulugh",
+      "destination": "/library/book-bulugh-maram",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-al-minhaj-nawawi",
+      "destination": "/library/book-minhaj-talibin",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-muqaddimah",
+      "destination": "/library/book-muqaddima-ibn-khaldun",
+      "permanent": true
+    },
+    {
       "source": "/search/%7Bsearch_term_string%7D",
       "destination": "/search",
       "permanent": false
