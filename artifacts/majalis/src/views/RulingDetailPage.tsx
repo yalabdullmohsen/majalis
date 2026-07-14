@@ -73,14 +73,27 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
   const copyText = [item.title, item.summary, item.body].filter(Boolean).join("\n\n");
   const relations = buildRulingRelations(item);
 
+  // حقول الحوكمة قد لا تكون في النوع بعد — تُقرأ من البيانات كما هي، ولا تُخترع.
+  const meta = item as typeof item & {
+    reviewed_by?: string | null;
+    reviewed_at?: string | null;
+    content_type?: string | null;
+    provenance?: string | null;
+    source_url?: string | null;
+  };
+
   const trustData: TrustData = {
     source:      item.source_origin || null,
+    sourceUrl:   meta.source_url    || null,
     hadithGrade: item.hadith_grade  || null,
-    isApproved:  item.verification_status === "approved" ? true
-                 : item.verification_status === "pending" ? false : null,
+    verifiedBy:  meta.reviewed_by   || null,
+    reviewedAt:  meta.reviewed_at   || null,
+    isApproved:  item.verification_status === "approved" ? true : false,
+    provenance:  meta.provenance    || null,
     publishedAt: item.published_at  || item.created_at || null,
     updatedAt:   item.updated_at    || null,
-    contentType: "شرح",
+    // لا نوع مخترع: يأتي من البيانات أو لا يُعرض.
+    contentType: meta.content_type  || null,
     hasKhilaf:   !!(item.scholar_opinions && item.scholar_opinions.length > 1),
   };
 

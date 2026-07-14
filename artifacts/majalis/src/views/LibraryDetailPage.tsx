@@ -76,10 +76,26 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
   const readUrl = item.external_url || item.file_url;
   const metaParts = [item.category, item.type, item.parts_label].filter(Boolean);
 
+  // حقول الحوكمة قد لا تكون في نوع LibraryItem بعد — تُقرأ كما هي ولا تُخترع.
+  const meta = item as typeof item & {
+    reviewed_by?: string | null;
+    reviewed_at?: string | null;
+    content_type?: string | null;
+    provenance?: string | null;
+    source_name?: string | null;
+    source_url?: string | null;
+  };
+
   const trustData: TrustData = {
-    author:      item.author || null,
-    contentType: "نقل",
-    isApproved:  item.status === "approved" ? true : null,
+    author:      item.author       || null,
+    source:      meta.source_name  || null,
+    sourceUrl:   meta.source_url   || item.external_url || null,
+    // لا نوع مخترع: «نقل» كانت ثابتة لكل كتاب — تأتي الآن من البيانات أو لا تُعرض.
+    contentType: meta.content_type || null,
+    verifiedBy:  meta.reviewed_by  || null,
+    reviewedAt:  meta.reviewed_at  || null,
+    provenance:  meta.provenance   || null,
+    isApproved:  item.status === "approved",
   };
 
   return (

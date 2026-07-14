@@ -39,7 +39,9 @@ function cdnToHadithItems(hadiths: CdnHadith[], collection: string, sourceName: 
     text: h.text,
     narrator: null,
     source_name: sourceName,
-    grade: "صحيح",
+    // لا درجة من الـCDN: كان يُلصق "صحيح" بكل حديث بلا سند من المصدر.
+    // الدرجة تُعرض فقط إذا جاءت من المصدر نفسه.
+    grade: null,
     collection,
     chapter: (h as any).chapter ?? null,
     explanation: null,
@@ -109,10 +111,13 @@ const GRADE_CLASS: Record<string, string> = {
   ضعيف: "hadith-grade--daif",
 };
 
+/** لا نُلوّن درجة مجهولة بلون الصحيح — الدرجة غير المعروفة تبقى محايدة. */
 function gradeClass(grade: string | null): string {
-  if (!grade) return "hadith-grade--sahih";
-  return GRADE_CLASS[grade.trim()] ?? "hadith-grade--sahih";
+  if (!grade) return "hadith-grade--unknown";
+  return GRADE_CLASS[grade.trim()] ?? "hadith-grade--unknown";
 }
+
+const GRADE_UNKNOWN_LABEL = "الدرجة غير مثبتة في المصدر";
 
 // ─── HadithCard ──────────────────────────────────────────────────────────────
 
@@ -160,8 +165,10 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
             <span className="hadith-badge hadith-badge--num">#{h.hadith_number}</span>
           )}
         </div>
-        {h.grade && (
+        {h.grade ? (
           <span className={`hadith-grade ${gradeClass(h.grade)}`}>{h.grade}</span>
+        ) : (
+          <span className="hadith-grade hadith-grade--unknown">{GRADE_UNKNOWN_LABEL}</span>
         )}
       </header>
 
@@ -283,8 +290,10 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
             {h.hadith_number && (
               <span className="hadith-badge hadith-badge--num">حديث #{h.hadith_number}</span>
             )}
-            {h.grade && (
+            {h.grade ? (
               <span className={`hadith-grade ${gradeClass(h.grade)}`}>{h.grade}</span>
+            ) : (
+              <span className="hadith-grade hadith-grade--unknown">{GRADE_UNKNOWN_LABEL}</span>
             )}
           </div>
           <button
@@ -329,12 +338,14 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
               <span>{String(meta.takhrij)}</span>
             </div>
           )}
-          {h.grade && (
-            <div className="hadith-modal__meta-item">
-              <strong>درجة الحديث</strong>
+          <div className="hadith-modal__meta-item">
+            <strong>درجة الحديث</strong>
+            {h.grade ? (
               <span className={`hadith-grade ${gradeClass(h.grade)}`}>{h.grade}</span>
-            </div>
-          )}
+            ) : (
+              <span className="hadith-grade hadith-grade--unknown">{GRADE_UNKNOWN_LABEL}</span>
+            )}
+          </div>
           {h.chapter && (
             <div className="hadith-modal__meta-item">
               <strong>الباب</strong>

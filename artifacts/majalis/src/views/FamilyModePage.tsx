@@ -54,35 +54,47 @@ function ParentView({ userId }: { userId: string }) {
     const rows = (data ?? []) as FamilyLink[];
     setLinks(rows);
 
-    // Fetch stats for active links
+    // Fetch stats for active links — ٣ استعلامات مجمّعة إجمالًا بدل ٣ لكل ابن (N+1)
     const active = rows.filter((l) => l.status === "active" && l.child_id);
-    const stats = await Promise.all(
-      active.map(async (link) => {
-        const [lessonsRes, bookmarksRes, badgesRes] = await Promise.all([
-          supabase
-            .from("lesson_registrations")
-            .select("id", { count: "exact", head: true })
-            .eq("user_id", link.child_id!)
-            .eq("status", "completed"),
-          supabase
-            .from("bookmarks")
-            .select("id", { count: "exact", head: true })
-            .eq("user_id", link.child_id!),
-          supabase
-            .from("achievements")
-            .select("id", { count: "exact", head: true })
-            .eq("user_id", link.child_id!),
-        ]);
-        return {
-          child_id: link.child_id!,
-          invite_code: link.invite_code,
-          completedLessons: lessonsRes.count ?? 0,
-          savedItems: bookmarksRes.count ?? 0,
-          badgesCount: badgesRes.count ?? 0,
-        } as ChildStats;
-      }),
+    const childIds = [...new Set(active.map((l) => l.child_id!))];
+
+    if (childIds.length === 0) {
+      setChildStats([]);
+      setLoading(false);
+      return;
+    }
+
+    const [lessonsRes, bookmarksRes, badgesRes] = await Promise.all([
+      supabase
+        .from("lesson_registrations")
+        .select("user_id")
+        .in("user_id", childIds)
+        .eq("status", "completed"),
+      supabase.from("bookmarks").select("user_id").in("user_id", childIds),
+      supabase.from("achievements").select("user_id").in("user_id", childIds),
+    ]);
+
+    const tally = (res: { data: { user_id: string }[] | null }) => {
+      const map = new Map<string, number>();
+      for (const row of res.data ?? []) {
+        map.set(row.user_id, (map.get(row.user_id) ?? 0) + 1);
+      }
+      return map;
+    };
+
+    const lessonCounts = tally(lessonsRes as any);
+    const bookmarkCounts = tally(bookmarksRes as any);
+    const badgeCounts = tally(badgesRes as any);
+
+    setChildStats(
+      active.map((link) => ({
+        child_id: link.child_id!,
+        invite_code: link.invite_code,
+        completedLessons: lessonCounts.get(link.child_id!) ?? 0,
+        savedItems: bookmarkCounts.get(link.child_id!) ?? 0,
+        badgesCount: badgeCounts.get(link.child_id!) ?? 0,
+      })),
     );
-    setChildStats(stats);
     setLoading(false);
   };
 

@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import {
   buildSearchSuggestions,
+  ensureSuggestionIndex,
+  isSuggestionIndexReady,
   SUGGESTION_GROUP_LABELS,
   type SearchSuggestion,
 } from "@/lib/search-suggestions";
@@ -28,12 +30,39 @@ export function SearchSuggestions({
   const [activeIndex, setActiveIndex] = useState(-1);
   const rootRef = useRef<HTMLDivElement>(null);
 
+  // فهرس الاقتراحات (~٩٦٠KB بذور) يُحمَّل عند أول تفاعل مع المربّع فقط،
+  // لا مع تحميل الصفحة — NavBar موجود في كل صفحة.
+  const [indexReady, setIndexReady] = useState(() => isSuggestionIndexReady());
+  const [indexLoading, setIndexLoading] = useState(false);
+  const mountedRef = useRef(true);
+  useEffect(() => () => { mountedRef.current = false; }, []);
+
+  const loadIndex = () => {
+    if (indexReady || isSuggestionIndexReady()) {
+      if (!indexReady) setIndexReady(true);
+      return;
+    }
+    setIndexLoading(true);
+    ensureSuggestionIndex()
+      .then(() => {
+        if (!mountedRef.current) return;
+        setIndexReady(true);
+      })
+      .catch(() => undefined)
+      .finally(() => {
+        if (mountedRef.current) setIndexLoading(false);
+      });
+  };
+
   const suggestions = useMemo(
-    () => buildSearchSuggestions(value),
-    [value],
+    () => (indexReady ? buildSearchSuggestions(value) : []),
+    [value, indexReady],
   );
 
   const history = useMemo(() => getSearchHistory(), [open, value]);
+
+  const showLoadingHint =
+    open && value.trim().length >= 2 && !indexReady && indexLoading;
 
   useEffect(() => {
     setActiveIndex(-1);
@@ -91,10 +120,14 @@ export function SearchSuggestions({
       <input
         value={value}
         onChange={(e) => {
+          loadIndex();
           onChange(e.target.value);
           setOpen(true);
         }}
-        onFocus={() => setOpen(true)}
+        onFocus={() => {
+          loadIndex();
+          setOpen(true);
+        }}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         role="combobox"
@@ -128,6 +161,14 @@ export function SearchSuggestions({
             <button type="button" className="search-suggestions-clear" onClick={() => { clearSearchHistory(); setOpen(false); }}>
               مسح السجل
             </button>
+          </div>
+        </div>
+      )}
+
+      {showLoadingHint && (
+        <div className="search-suggestions-panel" role="status" aria-live="polite">
+          <div className="search-suggestions-group">
+            <p className="search-suggestions-group-label">جارٍ تحميل الاقتراحات…</p>
           </div>
         </div>
       )}

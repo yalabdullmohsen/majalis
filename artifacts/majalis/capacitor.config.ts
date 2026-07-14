@@ -2,7 +2,7 @@ import type { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
   appId: "com.majlisilm.app",
-  appName: "مجالس العلم",
+  appName: "المجلس العلمي",
   webDir: "dist",
   server: {
     androidScheme: "https",

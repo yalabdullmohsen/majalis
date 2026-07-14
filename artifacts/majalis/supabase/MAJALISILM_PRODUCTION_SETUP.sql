@@ -153,7 +153,9 @@ SECURITY DEFINER
 SET search_path = public
 AS $$
 BEGIN
-  IF NEW.is_owner = true OR NEW.is_super_admin = true OR NEW.role = 'super_admin' THEN
+  -- ⚠️ إصلاح أمني 2026-07-14: الإعفاء يُبنى على OLD (حالة الصف الفعلية) لا NEW (ما يطلبه المستدعي).
+  -- الصيغة القديمة كانت تفحص NEW فتُرجع الصف دون فحص لمن طلب لنفسه is_super_admin = true → تصعيد صلاحيات كامل.
+  IF OLD.is_owner = true OR OLD.is_super_admin = true OR OLD.role = 'super_admin' THEN
     RETURN NEW;
   END IF;
   IF NOT is_admin() AND NEW.role IS DISTINCT FROM OLD.role THEN

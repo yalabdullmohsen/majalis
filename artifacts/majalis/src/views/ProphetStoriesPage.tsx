@@ -289,7 +289,7 @@ function ProphetDetailView({
   const isUlulAzm = ULUL_AZM_SLUGS.includes(p.slug);
 
   const share = async () => {
-    const text = `${p.arabicName} عليه السلام، ${p.title}\n${p.briefBio.slice(0, 200)}…\n\nمن قصص الأنبياء في المجالس العلمية`;
+    const text = `${p.arabicName} عليه السلام، ${p.title}\n${p.briefBio.slice(0, 200)}…\n\nمن قصص الأنبياء في المجلس العلمي`;
     const url = `https://majlisilm.com/prophets/${p.slug}`;
     try {
       if (navigator.share) {

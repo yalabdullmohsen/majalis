@@ -300,9 +300,9 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
 }
 
 .tasbeeh-counter__preset.is-active {
-  border-color: var(--majalis-emerald);
-  color: var(--majalis-emerald-deep);
-  background: color-mix(in srgb, var(--majalis-emerald) 10%, var(--majalis-panel));
+  border-color: var(--color-accent-fg-on-soft);
+  color: var(--color-accent-fg-on-soft);
+  background: var(--color-accent-soft-bg);
 }
 
 .tasbeeh-counter__custom-target {

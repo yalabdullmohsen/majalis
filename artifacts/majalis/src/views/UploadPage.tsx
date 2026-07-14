@@ -316,7 +316,7 @@ export default function UploadPage() {
       <div className="ulp-header">
         <p className="ulp-eyebrow">المشاركة</p>
         <h1 className="ulp-title"><Upload size={22} strokeWidth={1.5} aria-hidden="true" /> رفع محتوى إسلامي</h1>
-        <p className="ulp-subtitle">شارك أذاناً أو درساً علمياً · يُراجَع من فريق المجالس قبل النشر.</p>
+        <p className="ulp-subtitle">شارك أذاناً أو درساً علمياً · يُراجَع من فريق المجلس العلمي قبل النشر.</p>
       </div>
 
       <div className="ulp-notice">

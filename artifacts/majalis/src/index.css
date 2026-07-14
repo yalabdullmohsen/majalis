@@ -10,6 +10,14 @@ html {
 }
 
 :root {
+  /* أزواج لون مضمونة التباين (WCAG 2.2 AA). القاعدة: لا تخلط مقدمة من عائلة مع خلفية من أخرى.
+     تُعرَّف هنا فقط، ولا يجوز لأي كتلة أخرى إعادة تعريفها — وإلا عاد «الأخضر على الأخضر». */
+  --color-accent-fg-on-soft: #176B57;  /* على --color-accent-soft-bg = 5.58:1 ✓ */
+  --color-accent-soft-bg:    #E6F2EC;
+  --color-success-fg:        #15803D;  /* على #DCFCE7 = 4.57:1 ✓ (بدل #16a34a = 3.00:1 ✗) */
+  --color-success-bg:        #DCFCE7;
+  --color-on-dark:           #FFFFFF;
+
   /* ══════════════════════════════════════════════════
      مجالس — هوية زمردية — الأخضر الغامق والعاج
      سُلَّم Emerald المستخرَج من الصور المرجعية
@@ -8919,7 +8927,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .page-soft-tag--active {
-  background: #d1fae5;
+  background: var(--color-accent-soft-bg);
   color: var(--majalis-emerald-deep);
 }
 
@@ -14364,8 +14372,8 @@ body.has-assistant-fab .app-main {
   gap: 0.3rem;
   font-size: 0.72rem;
   font-weight: 700;
-  color: #16a34a;
-  background: #dcfce7;
+  color: var(--color-success-fg);
+  background: var(--color-success-bg);
   padding: 0.3rem 0.7rem;
   border-radius: 100px;
   white-space: nowrap;

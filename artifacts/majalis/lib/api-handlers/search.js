@@ -224,10 +224,40 @@ async function searchQuranIndex(supabase, normQuery, limit) {
 
 // ─── Handler الرئيسي ────────────────────────────────────────────────────────
 
+// ─── CORS — مقيَّد بنطاق الموقع ─────────────────────────────────────────────
+// كان "*" يسمح لأي موقع باستهلاك واجهة البحث من متصفح المستخدم.
+// النطاقات مأخوذة من site.config.json (siteUrl + legacyOrigins)؛ عند تغيير
+// النطاق هناك حدِّث القائمة هنا أو مرِّر SITE_ORIGIN في البيئة.
+const ALLOWED_ORIGINS = new Set(
+  [
+    process.env.SITE_ORIGIN,
+    "https://www.majlisilm.com", // siteUrl المعتمد
+    "https://majlisilm.com",
+    "http://majlisilm.com",
+    "http://www.majlisilm.com",
+  ].filter(Boolean),
+);
+
+function applyCors(req, res) {
+  const origin = String(req.headers?.origin || "");
+  if (origin && ALLOWED_ORIGINS.has(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  } else {
+    // نطاق افتراضي واحد — لا "*"
+    res.setHeader("Access-Control-Allow-Origin", "https://www.majlisilm.com");
+  }
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Vary", "Origin, Accept-Encoding");
+}
+
 export default async function handler(req, res) {
-  // ── CORS ────────────────────────────────────────────────────────────────────
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Vary", "Accept-Encoding");
+  applyCors(req, res);
+
+  if (req.method === "OPTIONS") {
+    res.statusCode = 204;
+    res.end();
+    return;
+  }
 
   if (req.method !== "GET") {
     sendJson(res, 405, { ok: false, error: "GET only" });

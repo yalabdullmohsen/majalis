@@ -40,14 +40,8 @@ async function logVerification(supabase, payload) {
   }
 }
 
-async function logPublishing(supabase, payload) {
-  if (!supabase) return;
-  try {
-    await supabase.from("publishing_history").insert(payload);
-  } catch {
-    /* table may not exist pre-migration */
-  }
-}
+// أُزيلت logPublishing() — لم تعد هناك حالة نشر تلقائي تُسجَّل.
+// سجل النشر يُكتب عند اعتماد المراجِع البشري من لوحة الإدارة.
 
 async function cacheDuplicate(supabase, externalKey, title, sourceName) {
   if (!supabase) return;
@@ -127,13 +121,33 @@ function classifyFeedFailure(error, xml) {
   return error?.message || SKIP_REASONS.FETCH_FAILED;
 }
 
-function shouldAutoPublish(record, source) {
-  const trust = source.trust_level || 0;
-  return (
-    record.source_verified &&
-    record.quality_score >= MIN_AUTO_PUBLISH_QUALITY &&
-    trust >= MIN_AUTO_PUBLISH_TRUST
-  );
+/**
+ * حوكمة المحتوى الشرعي — لا نشر تلقائي إطلاقًا.
+ *
+ * كانت shouldAutoPublish() تضبط status="published" و verification_status="verified"
+ * بناءً على درجة جودة آلية ومستوى ثقة المصدر، بلا أي مراجعة بشرية، وتُشغَّل من كرون
+ * كل ٦ ساعات. المحتوى الشرعي لا يُوسم «موثّقًا» إلا بمراجعة إنسان مُسمّى.
+ *
+ * الاستيراد يبقى عاملًا: كل مادة تُحفظ بحالة needs_review / pending_review
+ * وتظهر في طابور المراجعة الإدارية، ولا تُنشر للعامة قبل اعتماد بشري.
+ */
+const AUTO_PUBLISH_DISABLED = true;
+
+/**
+ * درجة الجودة ومستوى الثقة يُحتسبان ويُسجّلان للمراجِع البشري (ترتيب الطابور)،
+ * لكنهما لا يمنحان النشر. تُعاد دائمًا false.
+ */
+function shouldAutoPublish() {
+  return false;
+}
+
+/**
+ * أي مادة مرّ ملخّصها أو تصنيفها على نموذج لغوي (aiAnalyzeContent في
+ * auto-content-utils.mjs) تُوسم provenance="ai_generated". النموذج يُستدعى فقط
+ * حين يكون OPENAI_API_KEY مضبوطًا — وبدونه يعود الملخّص من نص المصدر نفسه.
+ */
+function resolveProvenance() {
+  return process.env.OPENAI_API_KEY ? "ai_generated" : "source_extract";
 }
 
 async function ensureTrustedSources(supabase, logger) {
@@ -250,7 +264,8 @@ async function processRssItem(supabase, source, rssItem, runId, logger) {
     description: rssItem.description,
     sourceName: source.name,
   });
-  logger.log("ai", "AI Finished", { detail: { category: analysis.category } });
+  const provenance = resolveProvenance();
+  logger.log("ai", "AI Finished", { detail: { category: analysis.category, provenance } });
 
   logger.log("slug", "Generating unique slug...");
   const slug = await ensureUniqueSlug(supabase, rssItem.title);
@@ -283,67 +298,72 @@ async function processRssItem(supabase, source, rssItem, runId, logger) {
     seo_title: seoTitle,
     seo_description: seoDescription,
     structured_data: structuredData,
-    ai_analysis: analysis,
+    // provenance محفوظ داخل ai_analysis أيضًا حتى لو لم يوجد العمود المستقل في قاعدة البيانات
+    ai_analysis: { ...analysis, provenance },
+    provenance,
   };
 
   record.quality_score = calculateQualityScore(record);
 
+  // درجة البوابة العلمية تُحتسب وتُسجَّل لترتيب طابور المراجعة — ولا تمنح النشر.
   const scholarly = await applyScholarlyGateToAutoContentRecord(record, source, { checkLinks: false });
-  let autoPublish = scholarly.autoPublish && shouldAutoPublish(record, source);
-  if (autoPublish) {
-    record.status = "published";
-    record.verification_status = "verified";
-    record.pipeline_stage = "published";
-    record.published_at = new Date().toISOString();
-    logger.log("publish", "Auto-publish approved (quality + trust threshold met)");
-  } else {
-    record.verification_status = "needs_review";
-    record.status = "needs_review";
-    logger.log("publish", `Held for review — ${SKIP_REASONS.LOW_QUALITY} or trust below ${MIN_AUTO_PUBLISH_TRUST}`, {
-      detail: { quality: record.quality_score, trust: source.trust_level },
-    });
-  }
+  const autoPublish = !AUTO_PUBLISH_DISABLED && scholarly.autoPublish && shouldAutoPublish();
+
+  // المحتوى الشرعي: دائمًا قيد المراجعة البشرية — مهما بلغت درجة الجودة أو ثقة المصدر.
+  record.status = "needs_review";
+  record.verification_status = "pending_review";
+  record.pipeline_stage = "ready_for_review";
+  logger.log("publish", "Held for human review — auto-publish is disabled for religious content", {
+    detail: {
+      quality: record.quality_score,
+      trust: source.trust_level,
+      provenance,
+      thresholds: { quality: MIN_AUTO_PUBLISH_QUALITY, trust: MIN_AUTO_PUBLISH_TRUST },
+    },
+  });
 
   logger.log("save", "Saving to Supabase...");
-  const { data: inserted, error: insertError } = await supabase
+  let inserted;
+  let { data, error: insertError } = await supabase
     .from("auto_imported_content")
     .insert(record)
     .select("id, slug, status")
     .single();
 
+  // العمود provenance قد لا يكون موجودًا في قواعد بيانات لم تُهاجَر بعد — أعد
+  // المحاولة بدونه (تبقى القيمة محفوظة داخل ai_analysis.provenance).
+  if (insertError && /provenance/i.test(insertError.message || "")) {
+    logger.warn("save", "Column 'provenance' missing — retrying (value kept in ai_analysis.provenance)");
+    const { provenance: _omit, ...withoutProvenance } = record;
+    ({ data, error: insertError } = await supabase
+      .from("auto_imported_content")
+      .insert(withoutProvenance)
+      .select("id, slug, status")
+      .single());
+  }
+
   if (insertError) {
     logger.error("save", `Save failed: ${insertError.message}`);
     throw insertError;
   }
+  inserted = data;
 
   logger.log("save", `Saved Successfully (id: ${inserted.id})`);
-  if (autoPublish) {
-    logger.log("publish", `Published — visible at /updates/auto/${inserted.slug}`);
-    await logPublishing(supabase, {
-      content_id: inserted.id,
-      content_type: contentType,
-      slug: inserted.slug,
-      action: "auto_publish",
-      status: "published",
-      quality_score: record.quality_score,
-      trust_level: source.trust_level,
-      metadata: { source_name: source.name, external_key: externalKey },
-    });
-  }
 
   await logPipelineEvent(supabase, {
     run_id: runId,
     source_id: source.id,
-    status: autoPublish ? "published" : "success",
-    pipeline_stage: autoPublish ? "published" : "save",
-    message: autoPublish ? "تم النشر التلقائي" : "تم الاستيراد — بانتظار المراجعة",
+    status: "success",
+    pipeline_stage: "save",
+    message: "تم الاستيراد — بانتظار المراجعة البشرية (لا نشر تلقائي)",
     imported_count: 1,
     item_title: rssItem.title,
     item_external_key: externalKey,
   });
 
   return {
-    action: autoPublish ? "published" : "imported",
+    action: "imported",
+    autoPublish,
     externalKey,
     slug: inserted.slug,
     id: inserted.id,

@@ -1,3 +1,6 @@
+/** حالة التحقق من صحة الترجمة. الافتراضي pending_review لكل السجلات التي لا مصدر لها ولا مراجِع. */
+export type VerificationStatus = "draft" | "pending_review" | "reviewed" | "verified";
+
 export type Scholar = {
   id: string;
   name: string;
@@ -10,6 +13,11 @@ export type Scholar = {
   region: string;
   madhhab?: string;
   quote?: string;
+  /** مصادر الترجمة (سير أعلام النبلاء، الأعلام للزركلي…). فارغة = لم يُوثَّق بعد. */
+  sources?: string[];
+  verificationStatus: VerificationStatus;
+  reviewedBy?: string;
+  reviewedAt?: string;
 };
 
 export const SCHOLARS: Scholar[] = [
@@ -26,6 +34,8 @@ export const SCHOLARS: Scholar[] = [
     region: "الكوفة / بغداد",
     madhhab: "حنفي",
     quote: "العلم لا يُعطيك بعضه حتى تُعطيه كلّك",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "malik",
@@ -39,6 +49,8 @@ export const SCHOLARS: Scholar[] = [
     region: "المدينة المنورة",
     madhhab: "مالكي",
     quote: "لا يُفتي بهذا الأمر حتى تأتيه الآثار من ثلاثة وجوه",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "shafi",
@@ -52,6 +64,8 @@ export const SCHOLARS: Scholar[] = [
     region: "فلسطين / مصر",
     madhhab: "شافعي",
     quote: "كلما ازددتُ علماً ازددتُ علماً بجهلي",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ahmad",
@@ -65,6 +79,8 @@ export const SCHOLARS: Scholar[] = [
     region: "بغداد",
     madhhab: "حنبلي",
     quote: "المحنة ميزان بين المؤمن وأهل النفاق",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   // علماء الحديث
   {
@@ -78,6 +94,8 @@ export const SCHOLARS: Scholar[] = [
     died: "٢٥٦ هـ",
     region: "بخارى (أوزبكستان)",
     quote: "ما وضعتُ في الصحيح حديثاً إلا اغتسلتُ وصليتُ ركعتين",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "muslim",
@@ -91,6 +109,8 @@ export const SCHOLARS: Scholar[] = [
     region: "نيسابور / خراسان",
     madhhab: "شافعي",
     quote: "لا أعلم أحداً وصف الحديث في الصحة كما وصفه الإمام مسلم",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   // علماء العقيدة والتفسير
   {
@@ -104,6 +124,8 @@ export const SCHOLARS: Scholar[] = [
     died: "٧٢٨ هـ",
     region: "الشام (سوريا)",
     quote: "ما يصنع أعدائي بي؟ سجني خلوة، ونفيي سياحة، وقتلي شهادة",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-qayyim",
@@ -116,17 +138,30 @@ export const SCHOLARS: Scholar[] = [
     died: "٧٥١ هـ",
     region: "دمشق",
     quote: "القلوب الحية تُحيي بذكر الله كما تُحيي الأرض الميتة بالمطر",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "nawawi",
     name: "الإمام النووي",
-    fullName: "يحيى بن شرف النووي",
+    fullName: "أبو زكريا يحيى بن شرف النووي الدمشقي",
     era: "العلماء الكبار",
-    specialty: ["حديث", "فقه", "لغة"],
-    bio: "إمام الشافعية في عصره، ألّف في الحديث والفقه واللغة، عُرف بالزهد والتقوى",
-    key_works: ["الأذكار", "رياض الصالحين", "شرح صحيح مسلم", "الأربعون النووية"],
+    specialty: ["فقه", "حديث", "لغة", "زهد"],
+    bio: "فقيه شافعي محدث زاهد من أبرز علماء الإسلام؛ وصل إلى درجة الاجتهاد في المذهب الشافعي، عُرف بورعه الشديد وزهده رغم صغر سنه عند وفاته",
+    key_works: [
+      "شرح صحيح مسلم",
+      "رياض الصالحين",
+      "المجموع شرح المهذب",
+      "روضة الطالبين",
+      "الأذكار",
+      "الأربعون النووية",
+    ],
     died: "٦٧٦ هـ",
-    region: "نوى (سوريا)",
+    region: "نوى ودمشق، بلاد الشام",
+    madhhab: "شافعي",
+    quote: "من زهد في الدنيا أضاءت له الحكمة في قلبه وأجرى الله الحكمة على لسانه",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-hajar",
@@ -138,6 +173,8 @@ export const SCHOLARS: Scholar[] = [
     key_works: ["فتح الباري", "الإصابة في تمييز الصحابة", "تهذيب التهذيب"],
     died: "٨٥٢ هـ",
     region: "القاهرة",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "shawkani",
@@ -150,6 +187,8 @@ export const SCHOLARS: Scholar[] = [
     died: "١٢٥٠ هـ",
     region: "اليمن",
     quote: "الدليل لا يُعارَض بكثرة القائلين ولا بقِدَم المذاهب",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   // العلماء المعاصرون
   {
@@ -163,6 +202,8 @@ export const SCHOLARS: Scholar[] = [
     died: "١٤٢٠ هـ",
     region: "السعودية",
     quote: "العلم النافع يورث الخشية والإنابة والتواضع",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-uthaymeen",
@@ -175,6 +216,8 @@ export const SCHOLARS: Scholar[] = [
     died: "١٤٢١ هـ",
     region: "عنيزة، السعودية",
     quote: "أنعم الله علينا بنعمة الإسلام فاشكروا الله عليها",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "albani",
@@ -187,6 +230,8 @@ export const SCHOLARS: Scholar[] = [
     died: "١٤٢٠ هـ",
     region: "ألبانيا / الأردن",
     quote: "التمسك بالسنة هو الطريق الصحيح المأمون",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "qaradawi",
@@ -199,6 +244,8 @@ export const SCHOLARS: Scholar[] = [
     died: "١٤٤٣ هـ",
     region: "مصر / قطر",
     quote: "الإسلام هو الحل، لأنه دين ودنيا وعبادة وسياسة",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   // محدثون بارزون
   {
@@ -213,6 +260,8 @@ export const SCHOLARS: Scholar[] = [
     region: "ترمذ / خراسان",
     madhhab: "شافعي",
     quote: "ما وضعتُ في كتابي هذا حديثاً إلا وقد أخرجتُه إلى بغداد",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-majah",
@@ -225,6 +274,8 @@ export const SCHOLARS: Scholar[] = [
     died: "٢٧٣ هـ",
     region: "قزوين / إيران",
     quote: "كتبتُ عن رسول الله ﷺ ما لم يكتبه أحد قبلي",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ghazali",
@@ -238,6 +289,8 @@ export const SCHOLARS: Scholar[] = [
     region: "طوس / خراسان",
     madhhab: "شافعي",
     quote: "العلم بلا عمل جنون، والعمل بلا علم لا يكون",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-kathir",
@@ -251,6 +304,8 @@ export const SCHOLARS: Scholar[] = [
     region: "الشام / دمشق",
     madhhab: "شافعي",
     quote: "أصحّ ما يُفسَّر به القرآن القرآنُ ثم السنة ثم أقوال الصحابة",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-khaldun",
@@ -264,6 +319,8 @@ export const SCHOLARS: Scholar[] = [
     region: "تونس / الأندلس / مصر",
     madhhab: "مالكي",
     quote: "التاريخ في ظاهره لا يزيد على الإخبار عن الأيام والدول، وفي باطنه نظر وتحقيق",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-ashur",
@@ -277,6 +334,8 @@ export const SCHOLARS: Scholar[] = [
     region: "تونس",
     madhhab: "مالكي",
     quote: "الشريعة كلها مبنية على تحقيق مصالح العباد في العاجل والآجل",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "fawzan",
@@ -289,6 +348,8 @@ export const SCHOLARS: Scholar[] = [
     died: "—",
     region: "المملكة العربية السعودية",
     quote: "العلم الشرعي فريضة، والجهل به خطر على الفرد والمجتمع",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "al-suyuti",
@@ -302,6 +363,8 @@ export const SCHOLARS: Scholar[] = [
     region: "مصر / القاهرة",
     madhhab: "شافعي",
     quote: "أهل الحديث حملة الإسلام والمدافعون عنه إلى يوم القيامة",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "abu-dawud",
@@ -315,6 +378,8 @@ export const SCHOLARS: Scholar[] = [
     region: "سجستان / البصرة",
     madhhab: "حنبلي",
     quote: "انظروا كيف كانت أفعاله ﷺ فاتبعوه",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "nasai",
@@ -327,6 +392,8 @@ export const SCHOLARS: Scholar[] = [
     died: "٣٠٣ هـ",
     region: "نسا (تركمانستان) / مصر",
     quote: "الكذاب على رسول الله ﷺ يجب أن يُرد حديثه ويُكذَّب",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "daraqutni",
@@ -340,32 +407,49 @@ export const SCHOLARS: Scholar[] = [
     region: "بغداد / دار القطن",
     madhhab: "شافعي",
     quote: "السنن ثلاث: سنة واجبة، وسنة فاضلة، وسنة مباحة",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "bayhaki",
     name: "الإمام البيهقي",
-    fullName: "أحمد بن الحسين بن علي البيهقي",
+    fullName: "أبو بكر أحمد بن الحسين بن علي البيهقي الخراساني",
     era: "العلماء الكبار",
-    specialty: ["حديث", "فقه", "عقيدة"],
-    bio: "حافظ خراسان، صاحب السنن الكبرى أضخم موسوعة فقهية حديثية في التراث",
-    key_works: ["السنن الكبرى", "شعب الإيمان", "الاعتقاد والهداية"],
+    specialty: ["حديث", "فقه", "عقيدة", "أصول"],
+    bio: "محدث شافعي حافظ من كبار المحدثين، حافظ خراسان؛ جمع بين علوم الحديث والفقه جمعاً نادراً، واشتُهر بموسوعاته الحديثية الضخمة التي تُعدّ من أوسع المؤلفات في علوم السنة",
+    key_works: [
+      "السنن الكبرى",
+      "شعب الإيمان",
+      "دلائل النبوة",
+      "معرفة السنن والآثار",
+      "الاعتقاد والهداية",
+    ],
     died: "٤٥٨ هـ",
-    region: "بيهق / نيسابور",
+    region: "بيهق / نيسابور، خراسان",
     madhhab: "شافعي",
     quote: "من أراد أن يتفقه في الدين فليحفظ السنة",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-juzayy",
     name: "ابن جزي الكلبي",
-    fullName: "محمد بن أحمد بن محمد بن جزي الكلبي الغرناطي",
+    fullName: "أبو القاسم محمد بن أحمد بن محمد بن جزي الكلبي الغرناطي",
     era: "العلماء الكبار",
     specialty: ["تفسير", "فقه", "أصول"],
-    bio: "فقيه وأصولي أندلسي، صاحب القوانين الفقهية أحد أشهر المختصرات المالكية",
-    key_works: ["التسهيل لعلوم التنزيل", "القوانين الفقهية", "الكافي في الفقه"],
+    bio: "فقيه مالكي وأصولي أندلسي؛ اشتُهر بكتابه «القوانين الفقهية» الذي لخّص فيه الفقه المالكي بأسلوب مقارن مركّز وهو أحد أشهر المختصرات المالكية، وفي التفسير له «التسهيل لعلوم التنزيل»",
+    key_works: [
+      "التسهيل لعلوم التنزيل",
+      "القوانين الفقهية",
+      "الكافي في الفقه",
+      "تقريب الوصول إلى علم الأصول",
+    ],
     died: "٧٤١ هـ",
     region: "غرناطة / الأندلس",
     madhhab: "مالكي",
     quote: "الفقه علم بالأحكام الشرعية العملية المستنبطة من أدلتها التفصيلية",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "shatbi",
@@ -379,6 +463,8 @@ export const SCHOLARS: Scholar[] = [
     region: "غرناطة / الأندلس",
     madhhab: "مالكي",
     quote: "المقاصد الشرعية جاءت لحفظ الدين والنفس والعقل والنسل والمال",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "shanqiti",
@@ -391,6 +477,8 @@ export const SCHOLARS: Scholar[] = [
     died: "١٣٩٣ هـ",
     region: "موريتانيا / المدينة المنورة",
     quote: "أعظم ما يُفسَّر به القرآن القرآنُ ذاته",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "bint-al-shati",
@@ -403,6 +491,8 @@ export const SCHOLARS: Scholar[] = [
     died: "١٤١٩ هـ",
     region: "مصر",
     quote: "القرآن معجز ببيانه لا بمفرداته وحدها، والإعجاز البياني أعمق من الإعجاز اللغوي",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "zuhayli",
@@ -416,6 +506,8 @@ export const SCHOLARS: Scholar[] = [
     region: "دير عطية، سوريا",
     madhhab: "حنفي",
     quote: "الفقه الإسلامي ثروة بشرية ضخمة وتراث إنساني فريد لا نظير له في أي حضارة",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "abu-zayd",
@@ -428,6 +520,8 @@ export const SCHOLARS: Scholar[] = [
     died: "١٤٢٩ هـ",
     region: "القصيم، المملكة العربية السعودية",
     quote: "اللغة وعاء الهوية، والتهاون بها تهاون بالدين وبالأمة",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "muhammad-ghazali",
@@ -441,19 +535,23 @@ export const SCHOLARS: Scholar[] = [
     region: "مصر / السعودية",
     madhhab: "شافعي",
     quote: "الإسلام في أمة تجهله غريب كما كان في أول يوم جاء",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "mubarakfuri",
     name: "المباركفوري",
-    fullName: "محمد بن عبد الرحمن بن عبد الرحيم المباركفوري",
+    fullName: "أبو العلا محمد عبد الرحمن بن عبد الرحيم المباركفوري",
     era: "المجددون",
     specialty: ["حديث", "سيرة", "شروح"],
-    bio: "محدث هندي، صاحب أشهر شروح سنن الترمذي تحفة الأحوذي، كما كتب الرحيق المختوم",
-    key_works: ["تحفة الأحوذي شرح جامع الترمذي", "الرحيق المختوم"],
+    bio: "محدث هندي من أبرز علماء الحديث في شبه القارة الهندية في العصر الحديث؛ اشتُهر بشرحه الضخم على جامع الترمذي «تحفة الأحوذي» الذي أصبح مرجعاً أساسياً في شرح سنن الترمذي وبيان درجات أحاديثه",
+    key_works: ["تحفة الأحوذي شرح جامع الترمذي", "مختصر تحفة الأحوذي", "سيرة النبي ﷺ"],
     died: "١٣٥٣ هـ",
-    region: "الهند",
+    region: "مباركفور، الهند",
     madhhab: "أهل الحديث",
-    quote: "السيرة النبوية مدرسة كاملة للحياة في كل أبعادها",
+    quote: "خير ما شُغل به العمر تقييد السنة وخدمة الحديث",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "tabari",
@@ -467,6 +565,8 @@ export const SCHOLARS: Scholar[] = [
     region: "بغداد",
     madhhab: "اجتهادي",
     quote: "العالم لا يكون عالماً حتى يجمع بين الرواية والدراية",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-jawzi",
@@ -480,6 +580,8 @@ export const SCHOLARS: Scholar[] = [
     region: "بغداد",
     madhhab: "حنبلي",
     quote: "الوقت أعزّ الأشياء على المرء فلا يُضيّعه في ما لا ينفع",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-rajab",
@@ -493,6 +595,8 @@ export const SCHOLARS: Scholar[] = [
     region: "دمشق",
     madhhab: "حنبلي",
     quote: "طوبى لمن أخمل نفسه وأشغلها بمعرفة عيوبها",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-abd-al-barr",
@@ -506,6 +610,8 @@ export const SCHOLARS: Scholar[] = [
     region: "الأندلس",
     madhhab: "مالكي",
     quote: "العلم يزيد بالبحث ويُضعف الشك ويقوى باليقين",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "dhahabi",
@@ -519,19 +625,28 @@ export const SCHOLARS: Scholar[] = [
     region: "دمشق",
     madhhab: "شافعي",
     quote: "الرجل الثقة يُعدل بألف سواه، وتعديله للراوي يوجب خشية الله في نقل الحديث",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "izz-ibn-abd-al-salam",
     name: "العز بن عبد السلام",
-    fullName: "عبد العزيز بن عبد السلام السلمي الدمشقي",
+    fullName: "أبو محمد عز الدين عبد العزيز بن عبد السلام السلمي الدمشقي",
     era: "العلماء الكبار",
     specialty: ["فقه", "أصول", "مقاصد"],
-    bio: "سلطان العلماء، صاحب قواعد الأحكام في مصالح الأنام، وضع أسس الفقه المقاصدي",
-    key_works: ["قواعد الأحكام في مصالح الأنام", "الفوائد في مشكل القرآن", "شجرة المعارف والأحوال"],
+    bio: "سلطان العلماء وبائع الملوك، صاحب قواعد الأحكام في مصالح الأنام ومن واضعي أسس الفقه المقاصدي، فقيه شافعي واسع الأفق في المقاصد والاجتهاد، وصفه ابن دقيق العيد بأنه أحد مجتهدي العصر، عُرف بجرأته في الحق وقوله للملوك ما لا يقوله غيره",
+    key_works: [
+      "قواعد الأحكام في مصالح الأنام",
+      "الفوائد في مشكل القرآن",
+      "الفوائد في اختصار المقاصد",
+      "شجرة المعارف والأحوال",
+    ],
     died: "٦٦٠ هـ",
-    region: "دمشق / مصر",
+    region: "دمشق ثم القاهرة",
     madhhab: "شافعي",
     quote: "درء المفاسد مقدَّم على جلب المصالح عند التعارض",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-abd-al-wahhab",
@@ -545,6 +660,8 @@ export const SCHOLARS: Scholar[] = [
     region: "نجد، الجزيرة العربية",
     madhhab: "حنبلي",
     quote: "توحيد الله هو أعظم واجب وأجل مطلوب",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-abidin",
@@ -558,6 +675,8 @@ export const SCHOLARS: Scholar[] = [
     region: "دمشق",
     madhhab: "حنفي",
     quote: "التقليد لا يجوز في المسائل الاعتقادية، وإنما يجوز في الفروع الفقهية",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "rashid-rida",
@@ -571,6 +690,8 @@ export const SCHOLARS: Scholar[] = [
     region: "سوريا / مصر",
     madhhab: "حنفي / اجتهادي",
     quote: "الإسلام دين العقل والعلم، وهو أصلح نظام للبشر في كل زمان",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "muhammad-abdu",
@@ -584,6 +705,8 @@ export const SCHOLARS: Scholar[] = [
     region: "مصر",
     madhhab: "اجتهادي",
     quote: "جئتُ لأُحرّر العقل من قيد التقليد وأفهم الدين على طريقة السلف قبل ظهور الخلاف",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-badis",
@@ -597,6 +720,8 @@ export const SCHOLARS: Scholar[] = [
     region: "قسنطينة، الجزائر",
     madhhab: "مالكي",
     quote: "الإسلام ديننا والعربية لغتنا والجزائر وطننا",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   // ── علماء مضافون من IslamicScholarsPage ──
   {
@@ -611,6 +736,8 @@ export const SCHOLARS: Scholar[] = [
     region: "الكوفة / بغداد",
     madhhab: "حنفي",
     quote: "ما من شيء أبعد عن العلماء من صحبة السلطان",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "shaybani",
@@ -624,6 +751,8 @@ export const SCHOLARS: Scholar[] = [
     region: "الكوفة / بغداد / الري",
     madhhab: "حنفي",
     quote: "من لا يعرف الخلاف لا تشمّ أنفه رائحة الفقه",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "muzani",
@@ -637,6 +766,8 @@ export const SCHOLARS: Scholar[] = [
     region: "مصر",
     madhhab: "شافعي",
     quote: "فقه الشافعي محيط وأنا ناقل لا مستنبط",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-hibban",
@@ -650,6 +781,8 @@ export const SCHOLARS: Scholar[] = [
     region: "بُست / خراسان",
     madhhab: "شافعي",
     quote: "أقل ما يجب على طالب العلم أن يبحث حتى ييأس",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-khuzayma",
@@ -663,6 +796,8 @@ export const SCHOLARS: Scholar[] = [
     region: "نيسابور / خراسان",
     madhhab: "شافعي",
     quote: "ليس تحت أديم السماء أعلم بحديث رسول الله من أبي بكر بن خزيمة",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "hakim",
@@ -676,19 +811,23 @@ export const SCHOLARS: Scholar[] = [
     region: "نيسابور / خراسان",
     madhhab: "شافعي",
     quote: "كم من صحيح لم يُخرَّج وضعيف قد وُضِع",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-mubarak",
     name: "الإمام عبد الله بن المبارك",
-    fullName: "عبد الله بن المبارك المروزي",
+    fullName: "أبو عبد الرحمن عبد الله بن المبارك المروزي",
     era: "المحدثون",
-    specialty: ["حديث", "زهد", "جهاد"],
-    bio: "جمع بين الحديث والفقه والجهاد والزهد حتى كانوا يقولون إنه جمع فيه كل خصلة محمودة. اشتُهر بنشر الحديث وتحفيز الهمم نحو الجهاد والعلم",
+    specialty: ["حديث", "زهد", "جهاد", "فقه"],
+    bio: "إمام جليل من أئمة القرن الثاني الهجري؛ جمع بين الحديث والفقه والجهاد والزهد حتى كانوا يقولون إنه جمع فيه كل خصلة محمودة، وكان من أوسع الناس رواية في عصره مع تمييزه الفائق للرجال. قال فيه الإمام أحمد: «ما رأيت رجلاً أجمع لكل خير من ابن المبارك»",
     key_works: ["كتاب الزهد والرقائق", "المسند", "كتاب الجهاد"],
     died: "١٨١ هـ",
     region: "مرو / خراسان",
     madhhab: "اجتهادي",
     quote: "رُبَّ عمل صغير تُكثِّره النية، ورُبَّ عمل كبير تُصغِّره النية",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "sufyan-thawri",
@@ -702,6 +841,8 @@ export const SCHOLARS: Scholar[] = [
     region: "الكوفة / مكة",
     madhhab: "ثوري",
     quote: "ما أعددتُ للجنة عُدَّتها، ولا للنار جُنَّتها",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "awzai",
@@ -715,6 +856,8 @@ export const SCHOLARS: Scholar[] = [
     region: "الشام / بيروت",
     madhhab: "أوزاعي",
     quote: "تمسَّك بآثار من سلف وإن رفضك الناس",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "laith-ibn-sad",
@@ -728,6 +871,8 @@ export const SCHOLARS: Scholar[] = [
     region: "مصر",
     madhhab: "اجتهادي",
     quote: "الفقه في الأصول والمصالح لا في كثرة النقل",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-al-mundhir",
@@ -741,6 +886,8 @@ export const SCHOLARS: Scholar[] = [
     region: "مكة المكرمة",
     madhhab: "شافعي",
     quote: "الإجماع حجة والخلاف رحمة",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "khattabi",
@@ -754,19 +901,28 @@ export const SCHOLARS: Scholar[] = [
     region: "بُست / خراسان",
     madhhab: "شافعي",
     quote: "لا يُنتفَع بعلم بلا عمل كما لا يُنتفَع بسيف بلا يد",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-hajar-haytami",
     name: "ابن حجر الهيتمي",
-    fullName: "أحمد بن محمد بن علي بن حجر الهيتمي",
+    fullName: "أبو العباس أحمد بن محمد بن علي بن حجر الهيتمي",
     era: "العلماء الكبار",
-    specialty: ["فقه", "فتوى"],
-    bio: "كبير فقهاء الشافعية في عصره، مرجع الفتوى في مصر والحجاز وكثير من بلاد الإسلام، كتابه «تحفة المحتاج» من أمهات المذهب الشافعي المتأخر",
-    key_works: ["تحفة المحتاج بشرح المنهاج", "الزواجر عن اقتراف الكبائر", "الفتاوى الفقهية الكبرى"],
+    specialty: ["فقه", "حديث", "فتوى"],
+    bio: "كبير فقهاء الشافعية في عصره ومرجع الفتوى في مصر والحجاز وكثير من بلاد الإسلام؛ يُعدّ مرجعاً أساسياً للمذهب الشافعي المتأخر في المشرق والجزيرة العربية وجنوب شرق آسيا، وكتابه «تحفة المحتاج» من أمهات المذهب، وفتاواه الكبرى من أبرز موارد الفقه الشافعي",
+    key_works: [
+      "تحفة المحتاج بشرح المنهاج",
+      "الفتاوى الفقهية الكبرى",
+      "الزواجر عن اقتراف الكبائر",
+      "الصواعق المحرقة",
+    ],
     died: "٩٧٤ هـ",
-    region: "مصر / مكة المكرمة",
+    region: "مصر ثم مكة المكرمة",
     madhhab: "شافعي",
-    quote: "الفقه علم يُحيي القلوب ويُميت الهوى",
+    quote: "الفقيه الحق من يُفتي بما يُفضي إلى مصلحة الدارين",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ali-tantawi",
@@ -780,6 +936,8 @@ export const SCHOLARS: Scholar[] = [
     region: "دمشق / جدة",
     madhhab: "اجتهادي",
     quote: "لا أحسد الناس على شيء إلا على العلم الذي يُنفَع به",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "shaarawi",
@@ -793,6 +951,8 @@ export const SCHOLARS: Scholar[] = [
     region: "مصر",
     madhhab: "شافعي",
     quote: "القرآن ليس للحفظ فقط، بل للفهم والعمل",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-ghudiyan",
@@ -806,6 +966,8 @@ export const SCHOLARS: Scholar[] = [
     region: "الرياض، المملكة العربية السعودية",
     madhhab: "حنبلي",
     quote: "الفتوى أمانة والورع قبلها شرط",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "afifi",
@@ -819,6 +981,8 @@ export const SCHOLARS: Scholar[] = [
     region: "مصر / الرياض",
     madhhab: "حنبلي",
     quote: "صحيح السنة دستور المسلمين وحكم لا يُرَدّ",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "sufyan-uyayna",
@@ -832,6 +996,8 @@ export const SCHOLARS: Scholar[] = [
     region: "مكة المكرمة",
     madhhab: "اجتهادي",
     quote: "الزهد في الدنيا اليقين بالله وقِصَر الأمل",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "muqbil",
@@ -845,9 +1011,11 @@ export const SCHOLARS: Scholar[] = [
     region: "صعدة، اليمن",
     madhhab: "حنبلي",
     quote: "السنة واجبة الاتباع وإن خالفت القياس",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
-    id: "ibn-mufli",
+    id: "ibn-muflih",
     name: "الإمام ابن مفلح",
     fullName: "محمد بن مفلح بن محمد المقدسي",
     era: "العلماء الكبار",
@@ -858,6 +1026,8 @@ export const SCHOLARS: Scholar[] = [
     region: "الشام / مصر",
     madhhab: "حنبلي",
     quote: "العلم بلا عمل كالشجر بلا ثمر",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-rushd",
@@ -871,6 +1041,8 @@ export const SCHOLARS: Scholar[] = [
     region: "قرطبة، الأندلس",
     madhhab: "مالكي",
     quote: "الحق لا يضاده إلا الباطل",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-hazm",
@@ -884,19 +1056,8 @@ export const SCHOLARS: Scholar[] = [
     region: "قرطبة، الأندلس",
     madhhab: "ظاهري",
     quote: "من يصبر على علم ولم يصبر على عمل فليرجع إلى علمه",
-  },
-  {
-    id: "ibn-al-qayyim-alt",
-    name: "السخاوي",
-    fullName: "محمد بن عبد الرحمن بن محمد السخاوي",
-    era: "العلماء الكبار",
-    specialty: ["حديث", "رجال", "تاريخ"],
-    bio: "حافظ الإسلام في عصره، تلميذ ابن حجر العسقلاني، صاحب الضوء اللامع في أعلام القرن التاسع وأكثر من خمسمائة كتاب",
-    key_works: ["الضوء اللامع لأهل القرن التاسع", "فتح المغيث شرح ألفية الحديث", "المقاصد الحسنة"],
-    died: "٩٠٢ هـ",
-    region: "القاهرة / المدينة المنورة",
-    madhhab: "شافعي",
-    quote: "العلم نور والجهل ظلمة",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-asakir",
@@ -910,6 +1071,8 @@ export const SCHOLARS: Scholar[] = [
     region: "دمشق، الشام",
     madhhab: "شافعي",
     quote: "علم الإسناد ميزان الأمة",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-nujaym",
@@ -923,22 +1086,26 @@ export const SCHOLARS: Scholar[] = [
     region: "القاهرة، مصر",
     madhhab: "حنفي",
     quote: "الأمور بمقاصدها",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "khatib-baghdadi",
     name: "الخطيب البغدادي",
-    fullName: "أحمد بن علي بن ثابت، أبو بكر الخطيب البغدادي",
+    fullName: "أبو بكر أحمد بن علي بن ثابت الخطيب البغدادي",
     era: "المحدثون",
     specialty: ["حديث", "رجال", "تاريخ"],
-    bio: "حافظ العراق في عصره، صاحب تاريخ بغداد في أربعة عشر مجلداً، وضع كتاباً في اشتراطات الرواية وآداب الحديث يُعدّ مرجعاً فريداً",
+    bio: "حافظ العراق في عصره ومؤرخ بغداد الكبير، أُطلق عليه «حافظ الشرق»؛ تاريخه «تاريخ بغداد» في أربعة عشر مجلداً مرجع لا غنى عنه في تراجم العلماء ورجال الحديث، وكتابه «الكفاية في علم الرواية» أسّس لعلم مصطلح الحديث تأصيلاً منهجياً",
     key_works: ["تاريخ بغداد (14 مجلداً)", "الجامع لأخلاق الراوي وآداب السامع", "الكفاية في علم الرواية"],
     died: "٤٦٣ هـ",
     region: "بغداد، العراق",
     madhhab: "شافعي",
     quote: "أحسن الروايات ما أُتقنت فيه الأسانيد",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
-    id: "amir-al-san'ani",
+    id: "al-amir-al-sanani",
     name: "الأمير الصنعاني",
     fullName: "محمد بن إسماعيل بن صلاح الأمير الصنعاني",
     era: "المجددون",
@@ -949,6 +1116,8 @@ export const SCHOLARS: Scholar[] = [
     region: "صنعاء، اليمن",
     madhhab: "اجتهادي",
     quote: "العلماء ورثة الأنبياء، فمن كان أكثرهم علماً كان أكثرهم ورثةً",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-faris",
@@ -962,6 +1131,8 @@ export const SCHOLARS: Scholar[] = [
     region: "همذان / قزوين",
     madhhab: "مالكي",
     quote: "أصول العربية كلها ترجع إلى ثلاثة",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "zarkashi",
@@ -975,9 +1146,11 @@ export const SCHOLARS: Scholar[] = [
     region: "القاهرة، مصر",
     madhhab: "شافعي",
     quote: "العلم بعلوم القرآن يفتح أبواب التفسير من غير حصر",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
-    id: "ibn-uthaymin-ext",
+    id: "ibn-jibreen",
     name: "الشيخ ابن جبرين",
     fullName: "عبد الله بن عبد الرحمن بن جبرين",
     era: "المعاصرون",
@@ -988,6 +1161,8 @@ export const SCHOLARS: Scholar[] = [
     region: "الرياض، المملكة العربية السعودية",
     madhhab: "حنبلي",
     quote: "التعلم في الصغر كالنقش في الحجر",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "syed-saabiq",
@@ -1001,9 +1176,11 @@ export const SCHOLARS: Scholar[] = [
     region: "القاهرة، مصر",
     madhhab: "اجتهادي",
     quote: "الفقه نور والجهل به ظلام",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
-    id: "ibn-uthaymeen-older",
+    id: "abd-al-karim-al-khudair",
     name: "الشيخ عبد الكريم الخضير",
     fullName: "عبد الكريم بن عبد الله بن عبد الرحمن الخضير",
     era: "المعاصرون",
@@ -1014,6 +1191,8 @@ export const SCHOLARS: Scholar[] = [
     region: "الرياض، المملكة العربية السعودية",
     madhhab: "حنبلي",
     quote: "العلم الحقيقي هو الذي يخشع به الله",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-qudama",
@@ -1027,6 +1206,8 @@ export const SCHOLARS: Scholar[] = [
     region: "دمشق، الشام",
     madhhab: "حنبلي",
     quote: "العلم الذي لا يُعمل به وبالٌ على صاحبه",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "juwayny",
@@ -1040,6 +1221,8 @@ export const SCHOLARS: Scholar[] = [
     region: "نيسابور، خراسان",
     madhhab: "شافعي",
     quote: "من لم يتقن الأصول حُرم الوصول",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-salah",
@@ -1053,6 +1236,8 @@ export const SCHOLARS: Scholar[] = [
     region: "دمشق، الشام",
     madhhab: "شافعي",
     quote: "الحديث شعبة من شعب الوحي",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "al-qarafi",
@@ -1066,6 +1251,8 @@ export const SCHOLARS: Scholar[] = [
     region: "القاهرة، مصر",
     madhhab: "مالكي",
     quote: "الفرق بين المسائل هو الفقه الحقيقي",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "fakhr-razi",
@@ -1079,6 +1266,8 @@ export const SCHOLARS: Scholar[] = [
     region: "الري، خراسان",
     madhhab: "شافعي",
     quote: "الجهل داء والعلم دواء",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "al-mizzi",
@@ -1086,12 +1275,14 @@ export const SCHOLARS: Scholar[] = [
     fullName: "أبو الحجاج جمال الدين يوسف بن عبد الرحمن المزي",
     era: "العلماء الكبار",
     specialty: ["حديث", "رجال"],
-    bio: "حافظ الشام وإمام الجرح والتعديل في القرن الثامن، جمع تهذيب الكمال في أسماء الرجال على مدى سنوات طويلة، وهو إتقان لا يُجارى في علم الرجال حتى اليوم، كان ابن تيمية يُثني عليه كثيراً",
+    bio: "حافظ الشام وإمام الجرح والتعديل في القرن الثامن، جمع تهذيب الكمال في أسماء الرجال على مدى سنوات طويلة، وهو إتقان لا يُجارى في علم الرجال حتى اليوم؛ موسوعته من أضخم وأتقن كتب التراجم في رواة الكتب الستة، وتلميذه الذهبي هذّبها وزاد عليها، وكان ابن تيمية يُثني عليه كثيراً",
     key_works: ["تهذيب الكمال في أسماء الرجال (35 مجلداً)", "تحفة الأشراف بمعرفة الأطراف"],
     died: "٧٤٢ هـ",
     region: "دمشق، الشام",
     madhhab: "شافعي",
     quote: "لا تثق بحديث لم تعرف رواته",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "al-saadi",
@@ -1105,6 +1296,8 @@ export const SCHOLARS: Scholar[] = [
     region: "عُنيزة، القصيم، المملكة العربية السعودية",
     madhhab: "حنبلي",
     quote: "إذا أردت أن تعرف الرجل فانظر إلى عمله لا إلى قوله",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-aqil",
@@ -1118,6 +1311,8 @@ export const SCHOLARS: Scholar[] = [
     region: "بغداد، العراق",
     madhhab: "حنبلي",
     quote: "الزهد في العلم أشد من الزهد في الدنيا",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ahmad-shakir",
@@ -1131,6 +1326,8 @@ export const SCHOLARS: Scholar[] = [
     region: "القاهرة، مصر",
     madhhab: "اجتهادي",
     quote: "السنة هي الأساس بعد القرآن",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "al-mundhiri",
@@ -1144,6 +1341,8 @@ export const SCHOLARS: Scholar[] = [
     region: "القاهرة، مصر",
     madhhab: "شافعي",
     quote: "رغّب في الخير تحبُّه النفوس، وخوِّف من الشر تتركه",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-daqiq",
@@ -1157,21 +1356,10 @@ export const SCHOLARS: Scholar[] = [
     region: "القاهرة، مصر",
     madhhab: "شافعي/مالكي",
     quote: "التحقيق في الحديث منهج لا يُتهاون فيه",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   
-  {
-    id: "al-izz-ibn-abdes-salam",
-    name: "العز بن عبد السلام",
-    fullName: "أبو محمد عز الدين عبد العزيز بن عبد السلام السلمي الدمشقي",
-    era: "العلماء الكبار",
-    specialty: ["فقه", "أصول", "مقاصد"],
-    bio: "سلطان العلماء وبائع الملوك، فقيه شافعي واسع الأفق في المقاصد والاجتهاد، وصفه ابن دقيق العيد بأنه أحد مجتهدي العصر، عُرف بجرأته في الحق وقوله للملوك ما لا يقوله غيره",
-    key_works: ["قواعد الأحكام في مصالح الأنام", "الفوائد في اختصار المقاصد", "شجرة المعارف"],
-    died: "٦٦٠ هـ",
-    region: "دمشق ثم القاهرة",
-    madhhab: "شافعي",
-    quote: "لا يُباع الحق بشيء من الدنيا",
-  },
   {
     id: "ibn-battuta",
     name: "ابن بطوطة",
@@ -1184,6 +1372,8 @@ export const SCHOLARS: Scholar[] = [
     region: "طنجة، المغرب",
     madhhab: "مالكي",
     quote: "السفر يُعلّمك ما لا تعلّمه الكتب",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "al-mawardi",
@@ -1197,35 +1387,11 @@ export const SCHOLARS: Scholar[] = [
     region: "البصرة وبغداد، العراق",
     madhhab: "شافعي",
     quote: "السياسة العادلة من الدين لا خارج عنه",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
-    id: "al-bayhaqi",
-    name: "البيهقي",
-    fullName: "أبو بكر أحمد بن الحسين بن علي البيهقي الخراساني",
-    era: "المحدثون",
-    specialty: ["حديث", "فقه", "أصول"],
-    bio: "محدث شافعي حافظ من كبار المحدثين؛ جمع بين علوم الحديث والفقه جمعاً نادراً، واشتُهر بموسوعاته الحديثية الضخمة التي تُعدّ من أوسع المؤلفات في علوم السنة",
-    key_works: ["السنن الكبرى", "شعب الإيمان", "دلائل النبوة", "معرفة السنن والآثار"],
-    died: "٤٥٨ هـ",
-    region: "خراسان، إيران",
-    madhhab: "شافعي",
-    quote: "الجمع بين الحديث والفقه كمال العلم",
-  },
-  {
-    id: "al-khatib-baghdadi",
-    name: "الخطيب البغدادي",
-    fullName: "أبو بكر أحمد بن علي بن ثابت الخطيب البغدادي",
-    era: "المحدثون",
-    specialty: ["حديث", "تاريخ", "رجال"],
-    bio: "محدث ومؤرخ إسلامي بغدادي بارز؛ أُطلق عليه 'حافظ الشرق'، تاريخه 'تاريخ بغداد' في 14 جزءاً مرجع لا غنى عنه في تراجم العلماء ورجال الحديث، وكتابه 'الكفاية في علم الرواية' أسس لعلم مصطلح الحديث تأصيلاً منهجياً",
-    key_works: ["تاريخ بغداد", "الكفاية في علم الرواية", "الجامع لأخلاق الراوي وآداب السامع"],
-    died: "٤٦٣ هـ",
-    region: "بغداد، العراق",
-    madhhab: "شافعي",
-    quote: "الرواية لا تُقبل إلا بعد معرفة أحوال الراوي",
-  },
-  {
-    id: "al-ghazali-junior",
+    id: "ibn-ata-allah-al-sakandari",
     name: "ابن عطاء الله السكندري",
     fullName: "أحمد بن محمد بن عبد الكريم ابن عطاء الله الشاذلي الإسكندري",
     era: "العلماء الكبار",
@@ -1236,21 +1402,10 @@ export const SCHOLARS: Scholar[] = [
     region: "الإسكندرية ثم القاهرة، مصر",
     madhhab: "مالكي",
     quote: "لا تطلب من الله ما تريده واطلب منه ما يريده",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   
-  {
-    id: "al-nawawi",
-    name: "النووي",
-    fullName: "أبو زكريا يحيى بن شرف النووي الدمشقي",
-    era: "العلماء الكبار",
-    specialty: ["فقه", "حديث", "زهد"],
-    bio: "فقيه شافعي محدث زاهد من أبرز علماء الإسلام؛ وصل إلى درجة الاجتهاد في المذهب الشافعي، عُرف بورعه الشديد وزهده رغم صغر سنه عند وفاته",
-    key_works: ["شرح صحيح مسلم", "رياض الصالحين", "المجموع شرح المهذب", "روضة الطالبين", "الأذكار", "الأربعون النووية"],
-    died: "٦٧٦ هـ",
-    region: "نوى ودمشق، بلاد الشام",
-    madhhab: "شافعي",
-    quote: "من زهد في الدنيا أضاءت له الحكمة في قلبه وأجرى الله الحكمة على لسانه",
-  },
   
   
   {
@@ -1259,43 +1414,19 @@ export const SCHOLARS: Scholar[] = [
     fullName: "أبو الخير محمد بن عبد الرحمن بن محمد السخاوي",
     era: "العلماء الكبار",
     specialty: ["حديث", "تاريخ", "رجال"],
-    bio: "محدث مؤرخ شافعي من أكابر الحفاظ في القرن التاسع الهجري؛ تلميذ الحافظ ابن حجر العسقلاني المباشر، اشتُهر بترجمة شيوخه وعصره في موسوعته الضخمة «الضوء اللامع» التي لا غنى عنها في معرفة علماء القرن التاسع",
+    bio: "حافظ الإسلام في عصره، محدث مؤرخ شافعي من أكابر الحفاظ في القرن التاسع الهجري؛ تلميذ الحافظ ابن حجر العسقلاني المباشر، صنّف أكثر من خمسمائة كتاب، واشتُهر بترجمة شيوخه وعصره في موسوعته الضخمة «الضوء اللامع» التي لا غنى عنها في معرفة علماء القرن التاسع",
     key_works: ["الضوء اللامع لأهل القرن التاسع", "فتح المغيث شرح ألفية الحديث", "المقاصد الحسنة في الأحاديث المشتهرة"],
     died: "٩٠٢ هـ",
     region: "القاهرة، ثم المدينة المنورة",
     madhhab: "شافعي",
     quote: "من لم يتقن التاريخ لم يتقن العلم",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   
   
   
-  {
-    id: "ibn-juzayy-2",
-    name: "ابن جزي",
-    fullName: "أبو القاسم محمد بن أحمد بن محمد بن جزي الكلبي الغرناطي",
-    era: "العلماء الكبار",
-    specialty: ["فقه", "تفسير", "أصول"],
-    bio: "فقيه مالكي أندلسي؛ اشتُهر بكتابه «القوانين الفقهية» الذي لخّص فيه الفقه المالكي بأسلوب مقارن مركّز، وفي التفسير له «التسهيل لعلوم التنزيل»، وهو من نظّم رحلة ابن بطوطة كتاباً",
-    key_works: ["القوانين الفقهية", "التسهيل لعلوم التنزيل", "تقريب الوصول إلى علم الأصول"],
-    died: "٧٤١ هـ",
-    region: "غرناطة، الأندلس",
-    madhhab: "مالكي",
-    quote: "الفقه حياة الأحكام والأصول أُمهاتها",
-  },
   
-  {
-    id: "al-haytami",
-    name: "ابن حجر الهيتمي",
-    fullName: "أبو العباس أحمد بن محمد بن علي بن حجر الهيتمي",
-    era: "العلماء الكبار",
-    specialty: ["فقه", "حديث", "فتوى"],
-    bio: "فقيه شافعي مصري يُعدّ مرجعاً أساسياً للمذهب الشافعي المتأخر في المشرق والجزيرة العربية وجنوب شرق آسيا، وفتاواه الكبرى من أبرز موارد الفقه الشافعي",
-    key_works: ["تحفة المحتاج بشرح المنهاج", "الفتاوى الكبرى الفقهية", "الزواجر عن اقتراف الكبائر", "الصواعق المحرقة"],
-    died: "٩٧٤ هـ",
-    region: "مصر ثم مكة المكرمة",
-    madhhab: "شافعي",
-    quote: "الفقيه الحق من يُفتي بما يُفضي إلى مصلحة الدارين",
-  },
   
   {
     id: "al-ajurri",
@@ -1309,19 +1440,8 @@ export const SCHOLARS: Scholar[] = [
     region: "بغداد، ثم مكة المكرمة",
     madhhab: "حنبلي",
     quote: "العالم إذا لم يعمل بعلمه أفسد بجهله",
-  },
-  {
-    id: "al-mizzi-2",
-    name: "المزي",
-    fullName: "أبو الحجاج يوسف بن الزكي عبد الرحمن المزي",
-    era: "العلماء الكبار",
-    specialty: ["رجال", "حديث"],
-    bio: "حافظ دمشقي من أئمة علم الرجال في القرن الثامن الهجري؛ موسوعته «تهذيب الكمال في أسماء الرجال» من أضخم وأتقن كتب التراجم في رواة الكتب الستة، وتلميذه الذهبي هذّبها وزاد عليها",
-    key_works: ["تهذيب الكمال في أسماء الرجال", "الأطراف", "تحفة الأشراف بمعرفة الأطراف"],
-    died: "٧٤٢ هـ",
-    region: "دمشق، بلاد الشام",
-    madhhab: "شافعي",
-    quote: "معرفة الرجال نصف العلم",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-al-wazir",
@@ -1335,32 +1455,8 @@ export const SCHOLARS: Scholar[] = [
     region: "اليمن",
     madhhab: "مجتهد",
     quote: "الحق أحق أن يُتبع من الرجال",
-  },
-  {
-    id: "al-mubarakfuri-2",
-    name: "المباركفوري",
-    fullName: "أبو العلا محمد عبد الرحمن بن عبد الرحيم المباركفوري",
-    era: "المجددون",
-    specialty: ["حديث", "شروح"],
-    bio: "محدث هندي من أبرز علماء الحديث في شبه القارة الهندية في العصر الحديث؛ اشتُهر بشرحه الضخم على جامع الترمذي «تحفة الأحوذي» الذي أصبح مرجعاً أساسياً في شرح سنن الترمذي وبيان درجات أحاديثه",
-    key_works: ["تحفة الأحوذي شرح جامع الترمذي", "مختصر تحفة الأحوذي", "سيرة النبي ﷺ"],
-    died: "١٣٥٣ هـ",
-    region: "مباركفور، الهند",
-    madhhab: "أهل الحديث",
-    quote: "خير ما شُغل به العمر تقييد السنة وخدمة الحديث",
-  },
-  {
-    id: "ibn-al-mubarak-senior",
-    name: "ابن المبارك",
-    fullName: "أبو عبد الرحمن عبد الله بن المبارك المروزي",
-    era: "المحدثون",
-    specialty: ["حديث", "زهد", "فقه"],
-    bio: "إمام جليل من أئمة القرن الثاني الهجري؛ جمع بين العلم والزهد والجهاد في سبيل الله، وكان من أوسع الناس رواية في عصره مع تمييزه الفائق للرجال. قال فيه الإمام أحمد: «ما رأيت رجلاً أجمع لكل خير من ابن المبارك»",
-    key_works: ["الزهد والرقائق", "الجهاد", "المسند"],
-    died: "١٨١ هـ",
-    region: "مرو، خراسان",
-    madhhab: "مجتهد",
-    quote: "ربّ عمل صغير تُعظّمه النية، وربّ عمل كبير تُصغّره النية",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
     id: "ibn-abi-shaybah",
@@ -1374,9 +1470,11 @@ export const SCHOLARS: Scholar[] = [
     region: "الكوفة، العراق",
     madhhab: "مجتهد",
     quote: "من طلب العلم لله كفاه الله مؤونة الدنيا",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   {
-    id: "al-qurtubi-scholar",
+    id: "al-qurtubi",
     name: "القرطبي",
     fullName: "أبو عبد الله محمد بن أحمد بن أبي بكر الأنصاري القرطبي",
     era: "العلماء الكبار",
@@ -1387,6 +1485,8 @@ export const SCHOLARS: Scholar[] = [
     region: "قرطبة، الأندلس — ثم مصر",
     madhhab: "مالكي",
     quote: "كتاب الله تبارك وتعالى لا تنقضي عجائبه ولا تتناهى كنوزه",
+    sources: [],
+    verificationStatus: "pending_review",
   },
   
   

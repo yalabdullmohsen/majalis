@@ -308,7 +308,7 @@ export default function MuezzinsPage() {
         <div className="mzp-cta__icon" aria-hidden="true"><Mic2 size={28} strokeWidth={1.4} /></div>
         <div className="mzp-cta__info">
           <div className="mzp-cta__title">هل لديك تسجيل أذان جميل؟</div>
-          <div className="mzp-cta__desc">شارك صوتك مع مجتمع المجالس، يُراجع الفريق ويُنشر في المكتبة.</div>
+          <div className="mzp-cta__desc">شارك صوتك مع مجتمع المجلس العلمي، يُراجع الفريق ويُنشر في المكتبة.</div>
         </div>
         <div className="mzp-cta__btns">
           <Link href="/upload" className="mzp-cta__upload-btn">

@@ -1,52 +1,52 @@
 {
   "version": 1,
-  "generated_at": "2026-07-13T18:06:09.090Z",
-  "total": 1112,
+  "generated_at": "2026-07-14T18:49:31.159Z",
+  "total": 737,
   "chunks": [
     {
       "category": "الطهارة",
       "file": "chunks/الطهارة.json",
-      "count": 95
+      "count": 50
     },
     {
       "category": "الصلاة",
       "file": "chunks/الصلاة.json",
-      "count": 133
+      "count": 63
     },
     {
       "category": "الزكاة",
       "file": "chunks/الزكاة.json",
-      "count": 91
+      "count": 56
     },
     {
       "category": "الحج",
       "file": "chunks/الحج.json",
-      "count": 36
+      "count": 5
     },
     {
       "category": "المعاملات",
       "file": "chunks/المعاملات.json",
-      "count": 68
+      "count": 20
     },
     {
       "category": "المواريث",
       "file": "chunks/المواريث.json",
-      "count": 22
+      "count": 5
     },
     {
       "category": "الصيام",
       "file": "chunks/الصيام.json",
-      "count": 79
+      "count": 45
     },
     {
       "category": "الأسرة",
       "file": "chunks/الأسرة.json",
-      "count": 56
+      "count": 12
     },
     {
       "category": "النوازل",
       "file": "chunks/النوازل.json",
-      "count": 57
+      "count": 9
     },
     {
       "category": "طلب العلم والدعوة",
@@ -61,7 +61,7 @@
     {
       "category": "الحج والعمرة",
       "file": "chunks/الحج-والعمرة.json",
-      "count": 35
+      "count": 33
     },
     {
       "category": "القرآن والحديث",
@@ -81,7 +81,7 @@
     {
       "category": "النوازل المعاصرة",
       "file": "chunks/النوازل-المعاصرة.json",
-      "count": 66
+      "count": 65
     }
   ]
 }
