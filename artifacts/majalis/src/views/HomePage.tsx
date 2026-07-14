@@ -1,4 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
+import contentCounts from "@/data/content-counts.json";
 import { applyPageSeo } from "@/lib/seo";
 import { Link, useLocation } from "wouter";
 import { useDailyContext } from "@/lib/daily-context";
@@ -190,6 +191,11 @@ const FEATURE_CATS: FeatureCat[] = [
 
 function SafeHomeSection({ name, children }: { name: string; children: React.ReactNode }) {
   return <SectionErrorBoundary name={name}>{children}</SectionErrorBoundary>;
+}
+
+const ARABIC_DIGITS = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+function toArabicDigits(n: number): string {
+  return String(n).replace(/[0-9]/g, (d) => ARABIC_DIGITS[Number(d)]);
 }
 
 function RecentPagesBar() {
@@ -566,10 +572,10 @@ export default function HomePage() {
               borderTop: "1px solid rgba(255,255,255,0.1)",
             }}>
               {[
-                { num: "١٢٣+", label: "عالم مرجعي",   icon: "👤" },
-                { num: "٤٨٠+", label: "سؤال اختباري", icon: "🧠" },
-                { num: "٥١٠+", label: "فائدة علمية",  icon: "💡" },
-                { num: "١٠٠+", label: "كتاب علمي",    icon: "📚" },
+                { num: toArabicDigits(contentCounts.scholars),      label: "عالم مرجعي",   icon: "👤" },
+                { num: toArabicDigits(contentCounts.quizQuestions), label: "سؤال اختباري", icon: "🧠" },
+                { num: toArabicDigits(contentCounts.fawaid),        label: "فائدة علمية",  icon: "💡" },
+                { num: toArabicDigits(contentCounts.books),         label: "كتاب علمي",    icon: "📚" },
               ].map(({ num, label, icon }) => (
                 <div key={label} style={{
                   background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",

@@ -361,7 +361,7 @@
       "destination": "/favicon.png"
     },
     {
-      "source": "/((?!api/|assets/|feed.xml|sitemap.xml|favicon.ico|favicon.png|robots.txt|version.json).*)",
+      "source": "/((?!api/|assets/|feed.xml|sitemap.xml|favicon.ico|favicon.png|robots.txt|version.json|scholars/|library/).*)",
       "destination": "/index.html"
     }
   ],

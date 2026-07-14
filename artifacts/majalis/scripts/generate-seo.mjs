@@ -59,7 +59,9 @@ const DEFAULT_IMAGE = SITE.defaultImage;
 
 const LESSONS_SEED = JSON.parse(await readFile(resolve(__dirname, "lessons-seed.snapshot.json"), "utf8"));
 const PLATFORM_SEED = JSON.parse(await readFile(resolve(__dirname, "platform-seed.snapshot.json"), "utf8"));
-const LIBRARY_CATALOG = JSON.parse(await readFile(resolve(appRoot, "src/data/library-catalog.json"), "utf8"));
+// المصدر الوحيد لكتب المكتبة هو src/lib/library-catalog.ts (نفس ما تقرأه LibraryDetailPage.tsx فعليًا).
+// كان هذا الملف يقرأ سابقًا من src/data/library-catalog.json وهي مرآة يدوية انحرفت (102 مقابل 117 سجلًا حيًا).
+const { LIBRARY_CATALOG } = await importSrc("src/lib/library-catalog.ts");
 
 const seoConfigPath = resolve(appRoot, "src/lib/seo-routes.json");
 const seoConfig = JSON.parse(await readFile(seoConfigPath, "utf8"));

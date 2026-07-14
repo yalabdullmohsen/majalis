@@ -19,15 +19,13 @@ const { FATWA_SEED } = await import("../src/lib/fatwa-seed.js");
 const { DEMO_QUIZ_QUESTIONS } = await import("../src/lib/quiz-seed.js");
 const { MIND_MAPS } = await import("../src/lib/mind-maps-data.js");
 
-const library = JSON.parse(
-  await readFile(resolve(appRoot, "src/data/library-catalog.json"), "utf8"),
-);
+const { LIBRARY_CATALOG } = await import("../src/lib/library-catalog.js");
 
 const counts = {
   $comment:
     "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
   generatedAt: new Date().toISOString().slice(0, 10),
-  books: Array.isArray(library) ? library.length : (library.items ?? []).length,
+  books: LIBRARY_CATALOG.length,
   scholars: SCHOLARS.length,
   fawaid: SEED_FAWAID.length,
   fatwas: FATWA_SEED.length,
