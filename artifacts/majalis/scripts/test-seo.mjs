@@ -23,9 +23,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "..");
 const prerenderDir = resolve(appRoot, "seo-prerender");
 const seoConfigPath = resolve(appRoot, "src/lib/seo-routes.json");
+const siteConfigPath = resolve(appRoot, "site.config.json");
 
 const seoConfig = JSON.parse(await readFile(seoConfigPath, "utf8"));
+const siteConfig = JSON.parse(await readFile(siteConfigPath, "utf8"));
 const siteUrl = seoConfig.siteUrl;
+const TITLE_SUFFIX = siteConfig.titleSuffix;
+const SITE_NAME = siteConfig.siteName;
 
 // ── مسارات يجب أن تكون noindex
 const NOINDEX_PATHS = new Set(
@@ -34,10 +38,17 @@ const NOINDEX_PATHS = new Set(
     .map((r) => r.path)
 );
 
-// ── خريطة path → title المتوقع من seo-routes.json (مصدر الحقيقة الوحيد).
-// يكشف ملفات seo-prerender/ "المتجمدة" التي لم تُعَد توليدها بعد تعديل
-// seo-routes.json (السبب الجذري لتجمّد H1 في /courses وغيرها سابقاً).
-const EXPECTED_TITLES = new Map(seoConfig.routes.map((r) => [r.path, r.title]));
+// ── خريطة path → title المتوقع، بمحاكاة pageTitle() في generate-seo.mjs
+// (عناوين seo-routes.json عارية؛ اللاحقة "| المجلس العلمي" تُضاف برمجياً إلا
+// إذا كان route.suffix === false). يكشف ملفات seo-prerender/ "المتجمدة" التي
+// لم تُعَد توليدها بعد تعديل seo-routes.json (السبب الجذري لتجمّد H1 سابقاً).
+function pageTitle(route) {
+  const name = String(route.title || "").trim();
+  if (route.suffix === false || !name) return name || SITE_NAME;
+  if (name.endsWith(TITLE_SUFFIX)) return name;
+  return `${name}${TITLE_SUFFIX}`;
+}
+const EXPECTED_TITLES = new Map(seoConfig.routes.map((r) => [r.path, pageTitle(r)]));
 
 // ── قراءة الملفات
 async function walkDir(dir) {

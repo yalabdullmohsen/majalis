@@ -161,15 +161,28 @@ export default function NavBar() {
               <span className="navbar-menu-btn__label">{isMenuOpen ? t("nav_close") : t("nav_menu")}</span>
             </button>
             <Link href="/" className="navbar-brand" aria-label="المجلس العلمي">
-              <img
-                src="/logo-calligraphy.png"
-                alt="المجلس العلمي"
-                className="navbar-logo navbar-logo--calligraphy"
-                loading="eager"
-                decoding="async"
-                width="2044"
-                height="788"
-              />
+              {/*
+                الشعار مرشّح LCP في كل صفحة. الأصل PNG بعرض 2044px = ١.١MB بينما
+                يُعرض بعرض ≤180px. نقدّم WebP بعرض 400/800 (~37KB / ~89KB) مع
+                احتياطي PNG مصغّر (79KB). display:contents يُبقي <img> نفسه عنصرَ
+                الـflex فلا يتغيّر أي شيء في التنسيق.
+              */}
+              <picture style={{ display: "contents" }}>
+                <source
+                  type="image/webp"
+                  srcSet="/logo-calligraphy-400.webp 1x, /logo-calligraphy-800.webp 2x"
+                />
+                <img
+                  src="/logo-calligraphy-400.png"
+                  alt="المجلس العلمي"
+                  className="navbar-logo navbar-logo--calligraphy"
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  width="400"
+                  height="154"
+                />
+              </picture>
             </Link>
           </div>
 

@@ -1,4 +1,4 @@
-# https://majlisilm.com/robots.txt
+# https://www.majlisilm.com/robots.txt
 # المجلس العلمي
 
 User-agent: *
@@ -9,8 +9,4 @@ Disallow: /login
 Disallow: /api/
 Disallow: /search/
 
-Host: majlisilm.com
-Sitemap: https://majlisilm.com/sitemap.xml
-
-# RSS Feed
-# https://majlisilm.com/feed.xml
+Sitemap: https://www.majlisilm.com/sitemap.xml
