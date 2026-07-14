@@ -281,7 +281,7 @@ const DOMAINS: Domain[] = [
     icon: Map,
     color: "#FFFFFF",
     bg: "#123F36",
-    href: "/mind-maps",
+    href: "/mind-map",
     count: 23,
     unit: "خريطة",
     connections: ["fiqh", "aqidah", "hadith", "seerah"],

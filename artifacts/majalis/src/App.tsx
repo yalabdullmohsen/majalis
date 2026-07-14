@@ -409,6 +409,7 @@ function Router() {
       <Route path="/learning/quiz/:slug"><SafeLazyRoute component={LearningQuizPage} /></Route>
       <Route path="/learning/quiz"><SafeLazyRoute component={LearningQuizPage} /></Route>
       <Route path="/learning/calendar"><SafeLazyRoute component={LearningCalendarPage} /></Route>
+      <Route path="/learning/certificates"><SafeLazyRoute component={CertificateVerifyPage} /></Route>
       <Route path="/learning/certificates/:code"><SafeLazyRoute component={CertificateVerifyPage} /></Route>
       <Route path="/my-learning"><SafeLazyRoute component={MyLearningPage} /></Route>
       <Route path="/my-citations"><SafeLazyRoute component={MyCitationsPage} /></Route>

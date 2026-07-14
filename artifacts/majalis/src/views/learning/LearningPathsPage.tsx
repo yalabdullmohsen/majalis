@@ -146,7 +146,7 @@ export default function LearningPathsPage() {
         <Link href="/quiz" className="lpp-nav-link lpp-nav-link--outline">
           المسابقات التعليمية
         </Link>
-        <Link href="/certificate/verify" className="lpp-nav-link lpp-nav-link--outline">
+        <Link href="/learning/certificates" className="lpp-nav-link lpp-nav-link--outline">
           التحقق من شهادة
         </Link>
       </div>

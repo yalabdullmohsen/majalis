@@ -24,7 +24,7 @@ export default function CertificateVerifyPage() {
 
   useEffect(() => {
     applyPageSeo({
-      path: "/learning/certificate-verify",
+      path: "/learning/certificates",
       title: "التحقق من الشهادة | المجلس العلمي",
       description: "تحقق من صحة الشهادة العلمية الصادرة من المجلس العلمي، أدخل رمز الشهادة للتحقق منها.",
       keywords: ["تحقق شهادة", "شهادة علمية", "اعتماد علمي", "المجلس العلمي"],
@@ -33,7 +33,7 @@ export default function CertificateVerifyPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "التحقق من الشهادة العلمية",
-          url: "https://majlisilm.com/learning/certificate-verify",
+          url: "https://majlisilm.com/learning/certificates",
           description: "التحقق من صحة الشهادات العلمية الصادرة من المجلس العلمي",
           about: { "@type": "Thing", name: "الشهادات العلمية الإسلامية" },
         },
