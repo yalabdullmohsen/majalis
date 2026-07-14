@@ -623,7 +623,7 @@ const SCHOLARS: Scholar[] = [
     quote: "من يصبر على علم ولم يصبر على عمل فليرجع إلى علمه",
   },
   {
-    id: "ibn-al-qayyim-alt",
+    id: "al-sakhawi",
     name: "السخاوي",
     fullName: "محمد بن عبد الرحمن بن محمد السخاوي",
     era: "العلماء الكبار",
@@ -805,7 +805,7 @@ const SCHOLARS: Scholar[] = [
     quote: "العلم بعلوم القرآن يفتح أبواب التفسير من غير حصر",
   },
   {
-    id: "ibn-uthaymin-ext",
+    id: "ibn-jibreen",
     name: "الشيخ ابن جبرين",
     fullName: "عبد الله بن عبد الرحمن بن جبرين",
     era: "المعاصرون",
@@ -831,7 +831,7 @@ const SCHOLARS: Scholar[] = [
     quote: "الفقه نور والجهل به ظلام",
   },
   {
-    id: "ibn-uthaymeen-older",
+    id: "abd-al-karim-al-khudair",
     name: "الشيخ عبد الكريم الخضير",
     fullName: "عبد الكريم بن عبد الله بن عبد الرحمن الخضير",
     era: "المعاصرون",

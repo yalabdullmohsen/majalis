@@ -165,19 +165,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     keywords: ["الأربعون النووية", "النووي", "حديث", "متن"],
     sort_order: 10,
   },
-  {
-    id: "book-bulugh",
-    title: "بلوغ المرام",
-    author: "الإمام ابن حجر العسقلاني",
-    type: "كتاب",
-    category: "فقه",
-    description: "جمع أحاديث الأحكام مع بيان درجة كل حديث ومصدره.",
-    parts_label: "16 بابًا",
-    external_url: "https://sunnah.com/bulugh",
-    status: "approved",
-    keywords: ["بلوغ المرام", "ابن حجر", "فقه", "أحكام", "حديث"],
-    sort_order: 11,
-  },
+  
   {
     id: "book-umdat",
     title: "عمدة الأحكام",
@@ -226,18 +214,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     keywords: ["تفسير", "ابن كثير", "قرآن", "تفسير بالمأثور"],
     sort_order: 15,
   },
-  {
-    id: "book-tafsir-saadi",
-    title: "تفسير السعدي",
-    author: "الشيخ عبد الرحمن بن ناصر السعدي",
-    type: "كتاب",
-    category: "تفسير",
-    description: "تفسير ميسّر يركز على معاني الآيات وما تضمنته من هداية وإرشاد.",
-    parts_label: "تفسير كامل",
-    status: "approved",
-    keywords: ["تفسير", "السعدي", "تيسير", "قرآن"],
-    sort_order: 16,
-  },
+  
   {
     id: "book-tafsir-tabari",
     title: "تفسير الطبري",
@@ -295,18 +272,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     keywords: ["الورقات", "أصول الفقه", "الجويني", "متن"],
     sort_order: 21,
   },
-  {
-    id: "book-mustasfa",
-    title: "المستصفى في علم الأصول",
-    author: "حجة الإسلام أبو حامد الغزالي",
-    type: "كتاب",
-    category: "أصول الفقه",
-    description: "كتاب جامع في أصول الفقه يُعالج مسائله بأسلوب فلسفي استدلالي.",
-    parts_label: "جزءان",
-    status: "approved",
-    keywords: ["المستصفى", "الغزالي", "أصول الفقه", "استدلال"],
-    sort_order: 22,
-  },
+  
   {
     id: "book-rawdah-nadhir",
     title: "روضة الناظر وجنة المناظر",
@@ -401,18 +367,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     keywords: ["الرسالة القشيرية", "القشيري", "سلوك", "تزكية"],
     sort_order: 30,
   },
-  {
-    id: "book-madaarij",
-    title: "مدارج السالكين بين منازل إياك نعبد وإياك نستعين",
-    author: "ابن القيم الجوزية",
-    type: "كتاب",
-    category: "رقائق",
-    description: "شرح مستفيض لكتاب منازل السائرين يُعدّ من أجمع كتب السلوك والتزكية.",
-    parts_label: "3 أجزاء",
-    status: "approved",
-    keywords: ["مدارج السالكين", "ابن القيم", "تزكية", "سلوك", "منازل السالكين"],
-    sort_order: 31,
-  },
+  
   // ── كتب السيرة ─────────────────────────────────────────────────────
   {
     id: "book-seerah-ibn-hisham",
@@ -521,18 +476,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     sort_order: 40,
   },
   // ── تفسير ───────────────────────────────────────────────────────────
-  {
-    id: "book-saadi",
-    title: "تيسير الكريم الرحمن — تفسير السعدي",
-    author: "الشيخ عبدالرحمن السعدي",
-    type: "كتاب",
-    category: "تفسير",
-    description: "تفسير ميسر بأسلوب سهل واضح يستهدف عموم القراء؛ من أكثر التفاسير رواجاً.",
-    external_url: "https://quran.ksu.edu.sa/tafseer/saadi/",
-    status: "approved",
-    keywords: ["تفسير السعدي", "السعدي", "تيسير الكريم", "تفسير ميسر"],
-    sort_order: 41,
-  },
+  
   {
     id: "book-qurtubi",
     title: "الجامع لأحكام القرآن — تفسير القرطبي",
@@ -547,31 +491,8 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     sort_order: 42,
   },
   // ── تفسير (إضافة) ──────────────────────────────────────────────────
-  {
-    id: "book-tabari-tafsir",
-    title: "جامع البيان عن تأويل آي القرآن — تفسير الطبري",
-    author: "الإمام محمد بن جرير الطبري",
-    type: "كتاب",
-    category: "تفسير",
-    description: "أقدم وأضخم تفاسير القرآن الكريم بالمأثور، يجمع روايات الصحابة والتابعين مع ترجيح الطبري.",
-    parts_label: "30 جزءاً",
-    external_url: "https://quran.ksu.edu.sa/tafseer/tabary/",
-    status: "approved",
-    keywords: ["الطبري", "تفسير بالمأثور", "جامع البيان", "تفسير كلاسيكي"],
-    sort_order: 43,
-  },
-  {
-    id: "book-baghawi-tafsir",
-    title: "معالم التنزيل — تفسير البغوي",
-    author: "الإمام البغوي",
-    type: "كتاب",
-    category: "تفسير",
-    description: "تفسير بالمأثور موجز يُعدّ خلاصة من تفسير الثعلبي مع حذف الأحاديث الضعيفة.",
-    parts_label: "8 أجزاء",
-    status: "approved",
-    keywords: ["البغوي", "معالم التنزيل", "تفسير"],
-    sort_order: 44,
-  },
+  
+  
   {
     id: "book-razi-tafsir",
     title: "مفاتيح الغيب — تفسير الرازي",
@@ -739,28 +660,8 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     sort_order: 69,
   },
   // ── لغة (إضافة) ───────────────────────────────────────────────────
-  {
-    id: "book-ajurrumiyya",
-    title: "الآجرومية",
-    author: "محمد بن محمد بن داود الصنهاجي",
-    type: "متن",
-    category: "لغة",
-    description: "متن مختصر في النحو العربي يُدرَّس للمبتدئين في كل مكان.",
-    status: "approved",
-    keywords: ["الآجرومية", "نحو", "لغة عربية", "متن", "مبتدئ"],
-    sort_order: 70,
-  },
-  {
-    id: "book-alfiyya",
-    title: "ألفية ابن مالك",
-    author: "الإمام ابن مالك الأندلسي",
-    type: "منظومة",
-    category: "لغة",
-    description: "ألف بيت في النحو والصرف، من أهم المنظومات اللغوية وأوسعها انتشاراً.",
-    status: "approved",
-    keywords: ["ألفية ابن مالك", "نحو", "صرف", "لغة عربية", "منظومة"],
-    sort_order: 71,
-  },
+  
+  
   {
     id: "book-sarf-mutah",
     title: "متن مراح الأرواح في علم الصرف",
@@ -773,17 +674,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     sort_order: 72,
   },
   // ── منطق وفلسفة (إضافة) ──────────────────────────────────────────
-  {
-    id: "book-muqaddimah",
-    title: "المقدمة",
-    author: "الإمام ابن خلدون",
-    type: "كتاب",
-    category: "منطق وفلسفة",
-    description: "مقدمة موسوعية لكتاب العبر، تؤسس لعلم الاجتماع والتاريخ ببنية فلسفية فريدة.",
-    status: "approved",
-    keywords: ["المقدمة", "ابن خلدون", "تاريخ", "اجتماع", "فلسفة"],
-    sort_order: 73,
-  },
+  
   {
     id: "book-dara-at-taarus",
     title: "درء تعارض العقل والنقل",
