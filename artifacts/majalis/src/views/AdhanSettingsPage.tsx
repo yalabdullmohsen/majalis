@@ -54,13 +54,16 @@ function Toggle({
   );
 }
 
-type PermissionState = "granted" | "denied" | "default" | "unsupported";
+// "default" من Notification.permission و"prompt" من navigator.permissions.query()
+// يمثّلان نفس الحالة (لم يُطلب الإذن بعد) لكن باسمين مختلفين حسب الـ API.
+type PermissionState = "granted" | "denied" | "default" | "prompt" | "unsupported";
 
 function PermissionBadge({ value }: { value: PermissionState }) {
   const MAP: Record<PermissionState, { label: string; cls: string }> = {
     granted:     { label: "مفعّل ✓",        cls: "ads-perm--ok" },
     denied:      { label: "محجوب ✕",         cls: "ads-perm--err" },
     default:     { label: "لم يُطلب بعد",    cls: "ads-perm--warn" },
+    prompt:      { label: "لم يُطلب بعد",    cls: "ads-perm--warn" },
     unsupported: { label: "غير مدعوم",       cls: "ads-perm--muted" },
   };
   const { label, cls } = MAP[value];
