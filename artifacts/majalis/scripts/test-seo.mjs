@@ -34,6 +34,11 @@ const NOINDEX_PATHS = new Set(
     .map((r) => r.path)
 );
 
+// ── خريطة path → title المتوقع من seo-routes.json (مصدر الحقيقة الوحيد).
+// يكشف ملفات seo-prerender/ "المتجمدة" التي لم تُعَد توليدها بعد تعديل
+// seo-routes.json (السبب الجذري لتجمّد H1 في /courses وغيرها سابقاً).
+const EXPECTED_TITLES = new Map(seoConfig.routes.map((r) => [r.path, r.title]));
+
 // ── قراءة الملفات
 async function walkDir(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -66,6 +71,10 @@ function checkPage(relPath, html, homepageBody) {
 
   // 1. Title
   const title = extract(html, /<title[^>]*>([^<]+)<\/title>/i);
+  const expectedTitle = EXPECTED_TITLES.get(normalizedPath);
+  if (expectedTitle && title !== expectedTitle) {
+    issues.push(`❌ [P0] ملف seo-prerender/ متجمد — العنوان "${title}" لا يطابق seo-routes.json الحالي "${expectedTitle}" (شغّل node scripts/generate-seo.mjs)`);
+  }
   if (!title) {
     issues.push("❌ [P0] لا يوجد <title>");
   } else if (title.length < 10) {
@@ -100,6 +109,12 @@ function checkPage(relPath, html, homepageBody) {
     warns.push("⚠️ لا يوجد <h1>");
   } else if (h1s.length > 1) {
     warns.push(`⚠️ أكثر من <h1> في الصفحة (${h1s.length})`);
+  }
+  // H1 يجب ألا يحمل اسم العلامة التجارية — هذا خاص بـ<title> فقط.
+  // اكتُشف فعلياً في /courses وغيرها: ملف seo-prerender/ متجمد لم يُعَد توليده
+  // فبقي H1 يحمل "... | المجلس العلمي" كاملاً بدل اسم الصفحة وحده.
+  if (h1s.some((h) => h.includes("المجلس العلمي")) && normalizedPath !== "/") {
+    issues.push(`❌ [P0] <h1> يحتوي اسم العلامة التجارية (يجب أن يكون في <title> فقط): "${h1s[0]}"`);
   }
 
   // 5. Robots

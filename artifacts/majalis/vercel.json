@@ -178,6 +178,11 @@
   ],
   "redirects": [
     {
+      "source": "/quran",
+      "destination": "/quran-hub",
+      "permanent": true
+    },
+    {
       "source": "/search/%7Bsearch_term_string%7D",
       "destination": "/search",
       "permanent": false
