@@ -5,7 +5,6 @@ import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/Legal
 import { useAuth } from "@/components/AuthProvider";
 import { useFontPreference } from "@/components/FontPreferenceProvider";
 import { useUserPreferences } from "@/components/UserPreferencesProvider";
-import { FONT_OPTIONS, type FontPreference } from "@/lib/font-preference";
 import { clearQuranCache } from "@/lib/quran-api";
 import { DEFAULT_PREFERENCES, type UserPreferences } from "@/lib/user-preferences";
 import { useQuranPreferences, type QuranFontId } from "@/hooks/useQuranPreferences";
@@ -48,7 +47,7 @@ export default function SettingsPage() {
     });
   }, []);
   const { t } = useLanguage();
-  const { preference: fontPreference, setPreference: setFontPreference } = useFontPreference();
+  const { preference: fontPreference } = useFontPreference();
   const { preferences, updatePreferences } = useUserPreferences();
   const { prefs: quranPrefs, setPref: setQuranPref, bumpFont } = useQuranPreferences();
 
@@ -104,19 +103,6 @@ export default function SettingsPage() {
       </LegalSection>
 
       <LegalSection title={t("settings_reading")}>
-        <div className="settings-option-grid" role="group" aria-label={t("settings_reading")}>
-          {FONT_OPTIONS.map((option) => (
-            <button
-              key={option.id}
-              type="button"
-              className={`settings-choice${fontPreference === option.id ? " is-active" : ""}`}
-              onClick={() => setFontPreference(option.id as FontPreference)}
-            >
-              <strong>{option.label}</strong>
-              <span>{option.description}</span>
-            </button>
-          ))}
-        </div>
         <label className="settings-field">
           <span>{t("settings_reading_size")}</span>
           <input

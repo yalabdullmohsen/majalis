@@ -34208,6 +34208,32 @@ footer *,
   color: #FFFFFF !important;
 }
 
+/* استثناء .sch-profile-hero (صفحة بروفايل العالم) — تطابق [class*="-hero"] عن طريق
+   الخطأ رغم أن خلفيتها فاتحة (بلا لون خلفية أصلاً)، فكانت وسوم التخصص/العصر
+   (sch-tag) تُصبح بيضاء على خلفية شبه بيضاء — تباين شبه معدوم (WCAG). */
+.sch-profile-hero,
+.sch-profile-hero * {
+  color: inherit !important;
+}
+.sch-profile-hero .sch-tag {
+  color: var(--color-primary, #176B57) !important;
+}
+.sch-profile-hero .sch-tag--madhhab {
+  color: #5b21b6 !important;
+}
+
+/* استثناء .dvp-hero (رأس صفحة المطوّرين /developers) — نفس الخلل: لا خلفية
+   فعلية فبقي العنوان والمقدّمة أبيضين على خلفية فاتحة (غير مقروءين تقريبًا). */
+.dvp-hero,
+.dvp-hero * {
+  color: inherit !important;
+}
+.dvp-eyebrow { color: var(--majalis-emerald-deep) !important; }
+.dvp-title { color: var(--majalis-ink) !important; }
+.dvp-intro { color: var(--majalis-ink-soft) !important; }
+.dvp-btn--primary { color: #fff !important; }
+.dvp-btn--secondary { color: var(--majalis-emerald-deep) !important; }
+
 /* استثناء زر الرجوع داخل ds-page-header — له خلفية فاتحة فيحتاج نصاً داكناً
    §79 تُجبر جميع أبناء .ds-page-header على #fff فيصبح النص أبيض على خلفية الزر البيضاء */
 .ds-page-header .ds-page-back-btn {
