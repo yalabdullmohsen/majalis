@@ -59,9 +59,9 @@ export const SHADOW = {
 } as const;
 
 export const FONT = {
-  ui:     '"Times New Roman", Times, serif',
+  ui:     '"IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif',
   quran:  '"Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif',
-  display:'"Times New Roman", Times, serif',
+  display:'"IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif',
 } as const;
 
 /**

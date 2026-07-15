@@ -281,7 +281,7 @@ html {
   overflow-y: auto;
   background: var(--majalis-panel, #fff);
   border-radius: var(--ds-radius-lg) var(--ds-radius-lg) 0 0;
-  padding: var(--ds-space-4) var(--ds-space-3);
+  padding: var(--ds-space-4) var(--ds-space-3) calc(var(--ds-space-4) + var(--safe-bottom, 0px));
 }
 
 /* ── Empty / loading ── */

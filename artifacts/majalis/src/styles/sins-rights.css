@@ -862,7 +862,7 @@
   color: var(--elite-ink, #122019);
   line-height: 1.75;
   margin-bottom: 0.375rem;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
 }
 
 [data-theme="dark"] .snr-evidence-text { color: var(--elite-sage, #E1E5E3); }

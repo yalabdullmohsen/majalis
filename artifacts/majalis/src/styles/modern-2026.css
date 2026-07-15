@@ -156,7 +156,7 @@ html {
 body {
   background: var(--m26-bg, #F8F9FA);
   color: var(--txt-primary, #111827);
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: var(--type-body, 0.9375rem);
@@ -170,10 +170,10 @@ body {
   line-height: var(--lh-tight);
   letter-spacing: var(--ls-tighter);
   color: var(--txt-primary);
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
 }
-.txt-h1 { font-size: var(--type-h1); font-weight: var(--fw-bold); line-height: var(--lh-snug); letter-spacing: var(--ls-tight); color: var(--txt-primary); font-family: "Times New Roman", Times, serif; }
-.txt-h2 { font-size: var(--type-h2); font-weight: var(--fw-bold); line-height: var(--lh-snug); letter-spacing: var(--ls-tight); color: var(--txt-primary); font-family: "Times New Roman", Times, serif; }
+.txt-h1 { font-size: var(--type-h1); font-weight: var(--fw-bold); line-height: var(--lh-snug); letter-spacing: var(--ls-tight); color: var(--txt-primary); font-family: var(--font-body); }
+.txt-h2 { font-size: var(--type-h2); font-weight: var(--fw-bold); line-height: var(--lh-snug); letter-spacing: var(--ls-tight); color: var(--txt-primary); font-family: var(--font-body); }
 .txt-h3 { font-size: var(--type-h3); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-primary); }
 .txt-h4 { font-size: var(--type-h4); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-primary); }
 .txt-h5 { font-size: var(--type-h5); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-secondary); }
@@ -347,7 +347,7 @@ body {
 
 /* ══ 10. Buttons ══════════════════════════════════════════════════════════ */
 .ds-btn {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: var(--type-btn);
   font-weight: var(--fw-semibold);
   border-radius: var(--m26-r-md);
@@ -411,7 +411,7 @@ textarea {
   border: 1.5px solid rgba(0,0,0,0.12);
   border-radius: var(--m26-r-md);
   color: var(--txt-primary, #111827);
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   padding: 0.625rem 0.875rem;
   font-size: var(--type-body);
   transition: border-color var(--m26-duration-fast), box-shadow var(--m26-duration-fast);
@@ -468,7 +468,7 @@ label {
 }
 .pt-hero__name {
   color: var(--m26-green-950, #052E16) !important;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: var(--font-body) !important;
   font-size: clamp(1.5rem, 4vw, 2.25rem) !important;
   font-weight: var(--fw-bold) !important;
 }
@@ -637,7 +637,7 @@ label {
 }
 .login-card__title {
   color: var(--txt-primary, #111827) !important;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: var(--font-body) !important;
   font-size: var(--type-h2) !important;
   font-weight: var(--fw-bold) !important;
 }
@@ -797,7 +797,7 @@ label {
 }
 .home-hero__title {
   color: var(--m26-green-950, #052E16) !important;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: var(--font-body) !important;
   font-weight: var(--fw-bold) !important;
 }
 .home-hero__sub,
@@ -833,7 +833,7 @@ label {
 /* PageHeader */
 .ds-page-header .ds-heading {
   color: var(--txt-primary, #111827) !important;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: var(--font-body) !important;
   font-size: var(--type-h1) !important;
   font-weight: var(--fw-bold) !important;
   letter-spacing: var(--ls-tight) !important;
@@ -1163,7 +1163,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 }
 
 .adhkar-focus-text {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: clamp(1.25rem, 4vw, 1.75rem);
   line-height: 2.2;
   color: var(--txt-primary, #111827);
@@ -1371,7 +1371,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   margin: 0 0 1rem;
 }
 .adhkar-sheet-text {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 1.15rem;
   line-height: 2;
   color: var(--txt-primary, #111827);

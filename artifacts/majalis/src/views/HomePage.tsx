@@ -526,7 +526,7 @@ export default function HomePage() {
 
           {/* أزرار الإجراء — شبكة 2×2 */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4,auto)", gap: "0.45rem", justifyContent: "center" }}>
-            <Link href="/lessons" style={{
+            <Link href="/lessons" className="hpv4-hero__cta-primary" style={{
               background: "#FAF8F2", color: "#176B57", padding: "0.6rem 1.2rem",
               borderRadius: "0.6rem", fontWeight: 800, fontSize: "0.86rem",
               textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.3rem",

@@ -9,7 +9,6 @@
    §1. خطوط احترافية عالية الجودة
    ══════════════════════════════════════════════ */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap');
 
 /* ══════════════════════════════════════════════
    §2. متغيرات التصميم العليا (Elite Tokens)
@@ -75,11 +74,11 @@
   --elite-base:   220ms;
   --elite-slow:   380ms;
 
-  /* الخطوط — Times New Roman خط المنصة الموحَّد (2026-07-13) */
-  --font-display:  "Times New Roman", Times, serif;
-  --font-body:     "Times New Roman", Times, serif;
-  --font-serif:    "Times New Roman", Times, serif;
-  --font-brand:    "Times New Roman", Times, serif;
+  /* الخطوط — IBM Plex Sans Arabic خط المنصة الموحَّد (2026-07-16) */
+  --font-display:  "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-body:     "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-serif:    "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-brand:    "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
 }
 
 /* ══════════════════════════════════════════════
@@ -88,9 +87,9 @@
    ══════════════════════════════════════════════ */
 :root[data-font="default"],
 :root[data-font="naskh"] {
-  --font-display: "Times New Roman", Times, serif;
-  --font-body:    "Times New Roman", Times, serif;
-  --font-brand:   "Times New Roman", Times, serif;
+  --font-display: "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-body:    "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-brand:   "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
 }
 
 /* ══════════════════════════════════════════════
@@ -98,17 +97,17 @@
    ══════════════════════════════════════════════ */
 body {
   background: var(--elite-cream, #FAFAF9) !important;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: var(--font-body) !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 /* الخط الافتراضي (Cairo) — فقط عند طلب صريح */
 [data-font="default"] body {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: var(--font-body) !important;
 }
 [data-font="naskh"] body {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: var(--font-body) !important;
 }
 
 /* ══════════════════════════════════════════════
@@ -2406,8 +2405,8 @@ tr:last-child td {
 .fiqh-hub-strip {
   display: flex !important;
   align-items: center !important;
-  gap: 0.2rem !important;
-  flex-wrap: wrap !important;
+  gap: 0.3rem !important;
+  flex-wrap: nowrap !important;
   padding: 0.55rem 1rem !important;
   background: rgba(24, 54, 42, 0.04) !important;
   border: 1px solid rgba(24, 54, 42, 0.1) !important;
@@ -2415,6 +2414,7 @@ tr:last-child td {
   margin-bottom: 1.25rem !important;
   overflow-x: auto !important;
   scrollbar-width: none !important;
+  -webkit-overflow-scrolling: touch !important;
 }
 .fiqh-hub-strip::-webkit-scrollbar { display: none; }
 .fiqh-hub-strip__brand {
@@ -7380,7 +7380,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 .twh-section--mb3 { margin-bottom: 3rem; }
 .twh-hadith-wrap { margin-top: 0.5rem; }
 .twh-hadith-text {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 0.9rem;
   line-height: 1.9;
   color: var(--text-base, #1a1a1a);
@@ -7410,7 +7410,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 
 /* § أركان الإيمان */
 .twh-section-intro {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 0.95rem;
   line-height: 2;
   color: var(--majalis-ink, #1a2e26);
@@ -7497,7 +7497,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 }
 
 .twh-asma-name {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--majalis-emerald-deep, #123F36);
@@ -7860,7 +7860,7 @@ html[data-theme="dark"] .khatma-bar-fill {
   max-width: 900px;
   margin: 2rem auto;
   padding: 0 1rem 4rem;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
 }
 
 /* Hero */
@@ -11118,7 +11118,7 @@ body {
 }
 .qss-card__text {
   font-size: 0.95rem;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   line-height: 1.9;
   color: var(--majalis-ink);
   text-align: right;
@@ -11358,7 +11358,7 @@ body {
 .qbp-bk-ref { font-size: 0.72rem; color: var(--majalis-emerald-deep); font-weight: 700; margin-bottom: 0.2rem; display: block; }
 .qbp-bk-text {
   font-size: 0.9rem;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   line-height: 1.7;
   color: var(--majalis-ink);
   overflow: hidden;
@@ -11566,7 +11566,7 @@ body {
   color: var(--majalis-ink-soft);
   line-height: 1;
 }
-.bottom-sheet__body { padding: 0.75rem 1rem 2rem; overflow-y: auto; }
+.bottom-sheet__body { padding: 0.75rem 1rem calc(2rem + var(--safe-bottom, 0px)); overflow-y: auto; }
 .bottom-sheet__section { margin-bottom: 1.25rem; }
 .bottom-sheet__section-label {
   font-size: 0.7rem;
@@ -14008,7 +14008,7 @@ a:focus-visible {
 
 /* نص الذكر */
 .adhkar-text {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: var(--font-body) !important;
   font-size: clamp(1rem, 2.5vw, 1.2rem) !important;
   line-height: 2 !important;
 }
@@ -14163,7 +14163,7 @@ a:focus-visible {
 
 /* تحسين عرض الحديث النبوي */
 .hadith-text {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: var(--font-body) !important;
   font-size: clamp(0.95rem, 2.2vw, 1.1rem) !important;
   line-height: 2 !important;
   color: var(--majalis-ink) !important;
@@ -16723,14 +16723,14 @@ img[loading="lazy"]:not([src=""]) {
   pointer-events: none;
 }
 .quran-hub-hero__ornament {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 1.05rem;
   color: rgba(168,223,192,0.7);
   letter-spacing: 0.04em;
   margin-bottom: 1rem;
 }
 .quran-hub-hero__title {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: clamp(2rem, 6vw, 3rem);
   font-weight: 700;
   color: #FFFFFF;
@@ -17013,7 +17013,7 @@ img[loading="lazy"]:not([src=""]) {
   margin-bottom: 0.75rem;
 }
 .ikm-hero__title {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: clamp(1.8rem, 5vw, 2.8rem);
   font-weight: 700;
   color: #FFFFFF;
@@ -17463,7 +17463,7 @@ img[loading="lazy"]:not([src=""]) {
 .qlive-hero__badge-icon { animation: pulse 1.5s ease-in-out infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 .qlive-hero__title {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: clamp(1.6rem, 5vw, 2.6rem);
   font-weight: 700;
   color: #FFFFFF;
@@ -17737,7 +17737,7 @@ img[loading="lazy"]:not([src=""]) {
   color: #FFFFFF;
 }
 .sch-hero__title {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: clamp(1.8rem, 5vw, 2.8rem);
   font-weight: 700;
   margin: 0 0 0.5rem;
@@ -17892,7 +17892,7 @@ img[loading="lazy"]:not([src=""]) {
   font-size: 1.4rem;
   font-weight: 700;
   color: #FFFFFF;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
 }
 .sch-card__meta { flex: 1; }
 .sch-card__name {
@@ -17957,7 +17957,7 @@ img[loading="lazy"]:not([src=""]) {
   background: rgba(10,80,64,0.02);
 }
 .sch-card__quote {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 0.95rem;
   color: #123F36;
   border-right: 3px solid #123F36;
@@ -23798,7 +23798,7 @@ img[loading="lazy"]:not([src=""]) {
 .fq-card__title-wrap { flex: 1; min-width: 0; }
 .fq-card__arabic {
   font-size: 1.25rem; font-weight: 900; color: #0F172A;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
 }
 .fq-card__chevron { color: #9CA3AF; flex-shrink: 0; display: flex; }
 
@@ -23861,7 +23861,7 @@ img[loading="lazy"]:not([src=""]) {
   border-radius: 999px; padding: .2rem .7rem; font-size: .68rem; font-weight: 700;
   align-self: flex-start;
 }
-.fq-faraa-card__text { font-size: 1.05rem; font-weight: 800; color: #0F172A; margin: 0; font-family: "Times New Roman", Times, serif; }
+.fq-faraa-card__text { font-size: 1.05rem; font-weight: 800; color: #0F172A; margin: 0; font-family: var(--font-body); }
 .fq-faraa-card__explain { font-size: .83rem; color: #374151; line-height: 1.6; margin: 0; }
 .fq-faraa-card__example {
   display: flex; align-items: flex-start; gap: .4rem;
@@ -23888,7 +23888,7 @@ img[loading="lazy"]:not([src=""]) {
   display: flex; flex-direction: column; gap: .75rem;
 }
 .fq-daabit__rule { display: flex; flex-direction: column; gap: .3rem; }
-.fq-daabit__rule-text { font-size: .95rem; font-weight: 700; color: #0F172A; margin: 0; font-family: "Times New Roman", Times, serif; }
+.fq-daabit__rule-text { font-size: .95rem; font-weight: 700; color: #0F172A; margin: 0; font-family: var(--font-body); }
 .fq-daabit__rule-ex {
   display: flex; align-items: flex-start; gap: .35rem;
   font-size: .8rem; color: #6B7280; line-height: 1.5;
@@ -24062,7 +24062,7 @@ img[loading="lazy"]:not([src=""]) {
   padding: .85rem 1rem; display: flex; flex-direction: column; gap: .5rem;
 }
 .sh-hadith__text {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 1.05rem; color: #153025; line-height: 1.9; margin: 0;
 }
 .sh-hadith__meta {
@@ -24108,7 +24108,7 @@ img[loading="lazy"]:not([src=""]) {
   display: flex; flex-direction: column; gap: .5rem;
 }
 .sh-mahabbah-card__text {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 1.05rem; color: #153025; line-height: 1.9; margin: 0;
 }
 
@@ -24123,7 +24123,7 @@ img[loading="lazy"]:not([src=""]) {
   text-transform: uppercase; letter-spacing: .06em; margin-bottom: .9rem;
 }
 .sh-salat-box__text {
-  font-family: "Times New Roman", Times, serif; font-size: 1.5rem;
+  font-family: var(--font-body); font-size: 1.5rem;
   line-height: 2; margin: 0 0 .75rem; color: #fff;
 }
 .sh-salat-box__sub { font-size: .78rem; color: rgba(200,240,220,.6); margin: 0; }
@@ -24251,7 +24251,7 @@ img[loading="lazy"]:not([src=""]) {
   border-radius: 1.25rem; padding: 1.75rem 1.5rem; text-align: center; color: #fff;
 }
 .is-quran-highlight__text {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 1.45rem; line-height: 2; margin: 0 0 .5rem; color: #fff;
 }
 .is-quran-highlight__ref { font-size: .8rem; color: rgba(200,240,220,.65); margin: 0; }
@@ -24300,7 +24300,7 @@ img[loading="lazy"]:not([src=""]) {
   align-self: flex-start; letter-spacing: .04em;
 }
 .is-science-card__ayah {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 1rem; color: #0F172A; line-height: 1.8; margin: 0;
 }
 .is-science-card__ref { font-size: .72rem; color: #94A3B8; margin: 0; }
@@ -24927,7 +24927,7 @@ img[loading="lazy"]:not([src=""]) {
   display: flex; flex-direction: column; gap: .45rem;
 }
 .jn-dua-text {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 1.1rem; color: #0F172A; line-height: 1.9; margin: 0;
 }
 .jn-dua-source { font-size: .75rem; color: #6B7280; margin: 0; }
@@ -27006,7 +27006,7 @@ img[loading="lazy"]:not([src=""]) {
   min-height: 100vh;
   background: var(--majalis-parchment);
   direction: rtl;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   padding-bottom: 3rem;
 }
 
@@ -27356,7 +27356,7 @@ img[loading="lazy"]:not([src=""]) {
   cursor: pointer;
   font-size: 0.83rem;
   color: var(--majalis-ink-soft);
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   transition: border-color 0.15s, background 0.15s;
 }
 .seerah-panel__nav-btn:hover { border-color: color-mix(in srgb, var(--majalis-ink-soft) 50%, transparent); background: var(--majalis-parchment-deep, #f0ece4); }
@@ -27411,7 +27411,7 @@ img[loading="lazy"]:not([src=""]) {
   color: var(--majalis-emerald);
   text-decoration: none;
   transition: background 0.15s, border-color 0.15s;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
 }
 .seerah-back-link:hover {
   background: color-mix(in srgb, var(--majalis-emerald) 12%, transparent);
@@ -27430,7 +27430,7 @@ img[loading="lazy"]:not([src=""]) {
   display: flex;
   align-items: center;
   gap: 0.9rem;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   flex-wrap: wrap;
 }
 @media (max-width: 640px) {
@@ -27499,7 +27499,7 @@ img[loading="lazy"]:not([src=""]) {
   min-height: 100vh;
   background: var(--msk-canvas, #FAF8F5);
   color: var(--msk-text, #1C1A18);
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   direction: rtl;
 }
 
@@ -27570,7 +27570,7 @@ img[loading="lazy"]:not([src=""]) {
 }
 .prophets-lux-hero__title {
   font-size: clamp(2rem, 5vw, 3.5rem);
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   color: #BEC7C3;
   margin: 0;
   text-shadow: 0 2px 20px #BEC7C340;
@@ -27619,7 +27619,7 @@ img[loading="lazy"]:not([src=""]) {
   border: 1px solid #d4c9b5;
   background: transparent;
   color: var(--majalis-ink-soft);
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 0.875rem;
   cursor: pointer;
   white-space: nowrap;
@@ -27665,7 +27665,7 @@ img[loading="lazy"]:not([src=""]) {
   background: #fff;
   color: #1a1a1a;
   font-size: 1rem;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
   box-sizing: border-box;
@@ -27730,7 +27730,7 @@ img[loading="lazy"]:not([src=""]) {
 }
 .prophet-lux-card__body { flex: 1; }
 .prophet-lux-card__name {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 1.2rem;
   color: var(--majalis-ink);
   margin: 0 0 0.25rem;
@@ -27808,7 +27808,7 @@ img[loading="lazy"]:not([src=""]) {
   padding: 0.5rem 1.25rem;
   border-radius: 8px;
   cursor: pointer;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 0.9rem;
   transition: all 0.2s;
 }
@@ -27839,12 +27839,12 @@ img[loading="lazy"]:not([src=""]) {
 .prophet-action-btn {
   background: none;
   border: 1px solid #BEC7C330;
-  color: #ccc;
+  color: #BEC7C3;
   padding: 0.4rem 0.8rem;
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.85rem;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   transition: all 0.2s;
   white-space: nowrap;
 }
@@ -27856,11 +27856,11 @@ img[loading="lazy"]:not([src=""]) {
 .prophet-font-controls button {
   background: rgba(255,255,255,0.07);
   border: 1px solid #BEC7C325;
-  color: #ccc;
+  color: #BEC7C3;
   width: 32px; height: 32px;
   border-radius: 6px;
   cursor: pointer;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 0.8rem;
   transition: all 0.2s;
 }
@@ -27893,20 +27893,20 @@ img[loading="lazy"]:not([src=""]) {
 .prophet-detail-lux__hero-star { margin-bottom: 0.5rem; }
 .prophet-detail-lux__num-badge {
   font-size: 0.8rem;
-  color: #aaa;
+  color: #BEC7C3;
   background: rgba(255,255,255,0.07);
   padding: 0.2rem 0.75rem;
   border-radius: 20px;
   border: 1px solid #BEC7C325;
 }
 .prophet-detail-lux__name {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: clamp(2rem, 6vw, 3.5rem);
   color: #BEC7C3;
   margin: 0;
   text-shadow: 0 2px 20px #BEC7C340;
 }
-.prophet-detail-lux__pbuh { color: #aaa; font-size: 0.95rem; margin: 0; }
+.prophet-detail-lux__pbuh { color: #BEC7C3; font-size: 0.95rem; margin: 0; }
 .prophet-detail-lux__quran-title {
   font-family: 'Amiri Quran', 'Amiri', serif;
   font-size: 1.1rem;
@@ -27968,7 +27968,7 @@ img[loading="lazy"]:not([src=""]) {
   border-radius: 8px;
   padding: 0.75rem 1rem;
   font-size: 0.82rem;
-  color: #bbb;
+  color: #D8D2C0;
   margin-bottom: 2rem;
 }
 .prophet-section-lux {
@@ -27983,7 +27983,7 @@ img[loading="lazy"]:not([src=""]) {
   border-bottom: 1px solid #BEC7C320;
 }
 .prophet-section-lux__title {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 1.25rem;
   color: #E1E5E3;
   margin: 0;
@@ -28050,7 +28050,7 @@ img[loading="lazy"]:not([src=""]) {
 .prophet-lesson-card__num {
   font-size: 1.25rem;
   font-weight: 700;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   flex-shrink: 0;
   line-height: 1;
   color: var(--prophet-color, #BEC7C3);
@@ -28087,14 +28087,14 @@ img[loading="lazy"]:not([src=""]) {
   gap: 0.3rem;
 }
 .prophet-citation-card__surah {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 1rem;
   color: #E1E5E3;
   font-weight: 600;
 }
 .prophet-citation-card__ayahs {
   font-size: 0.8rem;
-  color: #aaa;
+  color: #BEC7C3;
 }
 .prophet-citation-card__note {
   font-size: 0.88rem;
@@ -28127,7 +28127,7 @@ img[loading="lazy"]:not([src=""]) {
 .prophet-nav-lux__btn:hover { border-color: #BEC7C3; background: #BEC7C310; }
 .prophet-nav-lux__btn--next { align-items: flex-end; }
 .prophet-nav-lux__dir { font-size: 0.75rem; color: #888; }
-.prophet-nav-lux__pname { font-size: 1rem; color: #E1E5E3; font-weight: 600; font-family: "Times New Roman", Times, serif; }
+.prophet-nav-lux__pname { font-size: 1rem; color: #E1E5E3; font-weight: 600; font-family: var(--font-body); }
 
 /* ── Timeline ── */
 .prophet-timeline {
@@ -28181,7 +28181,7 @@ img[loading="lazy"]:not([src=""]) {
 }
 .prophet-timeline__card:hover { border-color: #BEC7C3; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
 .prophet-timeline__name {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 1rem;
   margin: 0 0 0.2rem;
   color: var(--item-color, #111827);
@@ -28249,7 +28249,7 @@ img[loading="lazy"]:not([src=""]) {
   text-align: center;
 }
 .prophet-quiz__question {
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 1.3rem;
   color: var(--majalis-ink);
   line-height: 1.7;
@@ -28268,7 +28268,7 @@ img[loading="lazy"]:not([src=""]) {
   background: #fff;
   color: var(--majalis-ink-soft);
   cursor: pointer;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 0.95rem;
   transition: all 0.2s;
   box-shadow: 0 1px 3px rgba(0,0,0,0.06);
@@ -28284,7 +28284,7 @@ img[loading="lazy"]:not([src=""]) {
   gap: 1rem;
   padding: 2rem;
 }
-.prophet-quiz__done h2 { font-family: "Times New Roman", Times, serif; font-size: 2rem; color: var(--majalis-emerald); margin: 0; }
+.prophet-quiz__done h2 { font-family: var(--font-body); font-size: 2rem; color: var(--majalis-emerald); margin: 0; }
 .prophet-quiz__score { font-size: 1.5rem; color: var(--majalis-emerald); font-weight: 700; margin: 0; }
 .prophet-quiz__remark { color: #6b7280; font-size: 1rem; margin: 0; }
 .prophet-quiz__btn {
@@ -28295,7 +28295,7 @@ img[loading="lazy"]:not([src=""]) {
   color: var(--majalis-emerald);
   border-radius: 10px;
   cursor: pointer;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
   font-size: 1rem;
   transition: all 0.2s;
 }
@@ -28348,7 +28348,7 @@ img[loading="lazy"]:not([src=""]) {
   color: #FAF8F2;
   margin: 0 0 0.35rem;
   line-height: 1.3;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
 }
 .prophets-seerah-bridge__desc {
   font-size: 0.83rem;
@@ -29653,7 +29653,7 @@ html[data-theme="dark"] .sq-hint { color: #8AA89E; }
   color: var(--ds-emerald, #0E6E52); font-size: .7rem; font-weight: 700;
   display: flex; align-items: center; justify-content: center; margin-top: .05rem; }
 .hb-hadith-row__preview { flex: 1; font-size: .88rem; line-height: 1.6;
-  color: var(--elite-ink); text-align: right; font-family: "Times New Roman", Times, serif; }
+  color: var(--elite-ink); text-align: right; font-family: var(--font-body); }
 .hb-hadith-row__chevron { flex-shrink: 0; color: var(--elite-ink-muted);
   transition: transform .2s; margin-top: .2rem; }
 .hb-hadith-row__chevron--open { transform: rotate(90deg); }
@@ -29799,7 +29799,7 @@ html[data-theme="dark"] .hb-mutafaq-info { background: rgba(14,110,82,.09); bord
   letter-spacing: 0.04em;
   padding: 0.2rem 0.75rem;
   border-radius: 20px;
-  font-family: var(--font-body, Cairo, sans-serif);
+  font-family: var(--font-body, "IBM Plex Sans Arabic", sans-serif);
 }
 .frb-ayah {
   font-family: "Amiri Quran", "Amiri", "Scheherazade New", serif;
@@ -29818,13 +29818,13 @@ html[data-theme="dark"] .hb-mutafaq-info { background: rgba(14,110,82,.09); bord
 }
 .frb-ref {
   display: block;
-  font-family: var(--font-body, Cairo, sans-serif);
+  font-family: var(--font-body, "IBM Plex Sans Arabic", sans-serif);
   font-size: 0.72rem;
   color: rgba(250,248,242,0.45);
   letter-spacing: 0.02em;
 }
 .frb-hadith {
-  font-family: var(--font-body, Cairo, sans-serif);
+  font-family: var(--font-body, "IBM Plex Sans Arabic", sans-serif);
   font-size: 0.82rem;
   color: rgba(250,248,242,0.6);
   margin: 0;
@@ -29885,7 +29885,7 @@ html[data-theme="dark"] .frb-wrap {
   border-radius: 50%;
   font-size: 0.78rem;
   font-weight: 700;
-  font-family: var(--font-body, Cairo, sans-serif);
+  font-family: var(--font-body, "IBM Plex Sans Arabic", sans-serif);
 }
 .uq-qiraat-card__name {
   font-size: 0.92rem;
@@ -29977,7 +29977,7 @@ html[data-theme="dark"] .uq-usul-card { background: rgba(14,110,82,.07); }
 .myl2-page {
   min-height: 100vh;
   background: #F0F5F2;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--font-body);
 }
 
 /* ── Hero ─────────────────────────────────────────────────────────────── */
@@ -32819,10 +32819,10 @@ html[data-theme="dark"] mark.srch-hl {
   --elite-r-2xl:  28px;
   --elite-r-pill: 9999px;
 
-  /* خطوط — Times New Roman خط المنصة الموحَّد */
-  --font-display: "Times New Roman", Times, serif;
-  --font-body:    "Times New Roman", Times, serif;
-  --font-serif:   "Times New Roman", Times, serif;
+  /* خطوط — IBM Plex Sans Arabic خط المنصة الموحَّد */
+  --font-display: "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-body:    "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-serif:   "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
 }
 
 /* ════════════════════════════════════
@@ -34089,12 +34089,8 @@ svg:not([class*="pattern"]):not([class*="geo"]):not([class*="star"]) {
   vertical-align: middle;
 }
 
-/* @font-face لـ"IBM Plex Sans Arabic" حُذف (2026-07-13) — الخط لم يعد
-   مُستخدَمًا في أي مكان بعد توحيد المنصة على Times New Roman. لم يُستبدَل
-   بتعريف @font-face جديد باسم "Times New Roman" لأن تعريف font-family
-   داخل @font-face يُسجِّل اسمًا جديدًا فقط ولا يجلب Times New Roman
-   الفعلي (وهو مضمَّن أصلاً كخط نظام على iOS/macOS/معظم أنظمة ويندوز؛
-   انظر تقرير الجلسة لتفاصيل التوافق). */
+/* IBM Plex Sans Arabic عاد ليكون خط المنصة الموحَّد (2026-07-16) — يُحمَّل
+   عبر Google Fonts في index.html، لا حاجة لـ@font-face محلي هنا. */
 
 /* ── CSS Containment لصفحات ذات محتوى كثير ── */
 .page-shell > section,
@@ -34192,7 +34188,7 @@ img:not([src]) {
 
 /* ── نص الحديث الشريف: ليس آية قرآنية بخط عثماني، فيتبع خط المنصة الموحَّد ── */
 .hadith-text {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: var(--font-body) !important;
   font-size: 1.2em !important;
   line-height: 2 !important;
   color: var(--color-text, #17201D) !important;
@@ -34202,7 +34198,7 @@ img:not([src]) {
 
 /* ── لا يمس النصوص العربية التراثية ── */
 .arabic-text--classical {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: var(--font-body) !important;
 }
 
 /* ── Table responsive ── */
@@ -34672,7 +34668,7 @@ footer svg {
 }
 
 /* روابط ضمن الخلفيات الداكنة */
-.hpv4-hero a,
+.hpv4-hero a:not(.hpv4-hero__cta-primary),
 .home-learning-path-card a,
 .ds-page-header a,
 .lessons-page-header a,
@@ -34681,11 +34677,16 @@ footer svg {
 footer a {
   color: rgba(255,255,255,0.85) !important;
 }
-.hpv4-hero a:hover,
+.hpv4-hero a:hover:not(.hpv4-hero__cta-primary),
 .home-learning-path-card a:hover,
 .site-footer a:hover,
 footer a:hover {
   color: #FFFFFF !important;
+}
+/* الزر الأساسي (CTA) داخل الهيرو له خلفية فاتحة مقصودة — يحتفظ بلونه الغامق للتباين */
+.hpv4-hero a.hpv4-hero__cta-primary,
+.hpv4-hero a.hpv4-hero__cta-primary:hover {
+  color: #176B57 !important;
 }
 
 /* أزرار داخل الخلفيات الداكنة */

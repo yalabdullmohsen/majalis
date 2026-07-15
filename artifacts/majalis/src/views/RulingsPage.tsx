@@ -6,7 +6,7 @@ import { Link } from "wouter";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
 import { useAuth } from "@/components/AuthProvider";
-import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
@@ -245,16 +245,23 @@ export default function RulingsPage() {
 
       {loading ? (
         <SkeletonCardGrid />
+      ) : dbState.dbError && !dbState.needsSeed ? (
+        <ErrorState
+          text={
+            isAdmin
+              ? dbState.dbError === "table_missing"
+                ? "جدول sharia_rulings غير موجود، طبّق migrations التفعيل أولاً."
+                : `تعذّر تحميل الأحكام: ${dbState.dbError}`
+              : "تعذّر تحميل الأحكام الشرعية حاليًا. يرجى المحاولة مرة أخرى بعد قليل."
+          }
+          onRetry={loadRulings}
+        />
       ) : items.length === 0 ? (
         <Empty
           text={
             dbState.needsSeed
               ? "قاعدة البيانات جاهزة لكن لم تُستورد الأحكام بعد. شغّل Production Activation من لوحة الإدارة."
-              : dbState.dbError === "table_missing"
-                ? "جدول sharia_rulings غير موجود، طبّق migrations التفعيل أولاً."
-                : dbState.dbError
-                  ? `تعذّر تحميل الأحكام: ${dbState.dbError}`
-                  : "لا توجد أحكام مطابقة."
+              : "لا توجد أحكام مطابقة."
           }
         />
       ) : (

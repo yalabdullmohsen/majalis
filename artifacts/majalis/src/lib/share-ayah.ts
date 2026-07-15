@@ -80,13 +80,13 @@ export async function generateAyahImage(opts: ShareImageOptions): Promise<string
   wrapText(ctx, text, W / 2, startY, maxWidth, lineHeight);
 
   // ── Ayah number ──
-  ctx.font = `bold 22px "Times New Roman", Times, serif`;
+  ctx.font = `bold 22px "IBM Plex Sans Arabic", "Noto Sans Arabic", sans-serif`;
   ctx.fillStyle = "rgba(14,110,82,0.9)";
   const surahLine = `سورة ${surahName} ﴿${ayahNum}﴾`;
   ctx.fillText(surahLine, W / 2, H - 80);
 
   // ── Site watermark ──
-  ctx.font = `14px "Times New Roman", Times, serif`;
+  ctx.font = `14px "IBM Plex Sans Arabic", "Noto Sans Arabic", sans-serif`;
   ctx.fillStyle = "rgba(255,255,255,0.35)";
   ctx.fillText("المجلس العلمي", W / 2, H - 45);
   ctx.restore();
