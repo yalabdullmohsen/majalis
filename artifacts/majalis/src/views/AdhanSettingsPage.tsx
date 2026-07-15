@@ -16,6 +16,7 @@ import {
 } from "@/lib/adhan-preferences";
 import { getMuezzin, stopAdhan } from "@/lib/adhan-audio";
 import { MuezzinPicker } from "@/components/adhan/MuezzinPicker";
+import { PrayerAlertSettingsCard } from "@/components/adhan/PrayerAlertSettingsCard";
 import {
   KUWAIT_GOVERNORATES,
   getSelectedGovernorate,
@@ -329,6 +330,8 @@ export default function AdhanSettingsPage() {
           })}
         </div>
       </div>
+
+      <PrayerAlertSettingsCard />
 
       {/* ══ تذكير يوم الجمعة ══ */}
       <div className="ads-card">

@@ -36,6 +36,11 @@
 	<string>يستخدم التطبيق مستشعر الاتجاه لتوجيه بوصلة القبلة نحو الكعبة المشرفة.</string>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>يرسل التطبيق تذكيرات بأوقات الصلاة والأذكار اليومية. يمكنك التحكم بالإشعارات من إعدادات التطبيق.</string>
+	<!-- Live Activities (Dynamic Island وشاشة القفل) لتنبيه الصلاة القادمة —
+	     مدعومة فعلياً على iOS 16.2+ فقط؛ الشريط داخل التطبيق والإشعار المحلي
+	     يعملان بديلاً كاملاً على ما دون ذلك (انظر PrayerLiveActivityPlugin.swift). -->
+	<key>NSSupportsLiveActivities</key>
+	<true/>
 	<!-- App Transport Security -->
 	<key>NSAppTransportSecurity</key>
 	<dict>

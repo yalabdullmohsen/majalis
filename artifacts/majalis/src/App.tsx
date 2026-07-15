@@ -22,6 +22,9 @@ import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { startAdhanScheduler } from "@/lib/adhan-scheduler";
+import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
+import { startPrayerAlertScheduler, recheckPrayerAlertWindow } from "@/lib/prayer-alert-scheduler";
+import { PrayerCountdownBanner } from "@/components/prayer/PrayerCountdownBanner";
 import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
 import { NavProgressBar } from "@/components/NavProgressBar";
 import { recordRecentPage } from "@/lib/recent-pages";
@@ -264,6 +267,33 @@ function AdhanSchedulerBootstrap() {
     started.current = true;
     startAdhanScheduler(data).catch(() => {});
   }, [data]);
+  return null;
+}
+
+/**
+ * يُشغِّل منسّق تنبيه الصلاة (شريط + إشعار محلي + Live Activity) عند تحميل
+ * أوقات الصلاة، ويُعيد فحص النافذة الحالية فوراً عند عودة التطبيق للواجهة
+ * (مثلاً بعد إغلاقه في الخلفية لدقائق ثم فتحه من جديد داخل نافذة الـ١٥ دقيقة).
+ */
+function PrayerAlertSchedulerBootstrap() {
+  const { data } = usePrayerCountdown();
+  const started = useRef(false);
+  useEffect(() => {
+    if (!data || started.current) return;
+    started.current = true;
+    startPrayerAlertScheduler(data).catch(() => {});
+  }, [data]);
+
+  useEffect(() => {
+    const onVisible = () => {
+      if (document.visibilityState === "visible") {
+        void recheckPrayerAlertWindow(data);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => document.removeEventListener("visibilitychange", onVisible);
+  }, [data]);
+
   return null;
 }
 
@@ -584,7 +614,10 @@ function AppShell() {
         <ScrollResetOnNav />
         <IslamicReminderBootstrap />
         <AdhanSchedulerBootstrap />
+        <PrayerAlertSchedulerBootstrap />
         <NavBar />
+        <PrayerCountdownBanner />
+        <AdhanNotificationBar />
         <main id="main-content" className="app-main" tabIndex={-1}>
           <Router />
         </main>
