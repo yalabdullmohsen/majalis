@@ -32872,12 +32872,18 @@ h5, h6 { font-size: 0.9375rem !important; font-weight: 600 !important; }
 
 p { line-height: 1.7 !important; color: var(--clr-text-1) !important; }
 
+/* لون الروابط الافتراضي بلا !important عمدًا (2026-07-16): كقاعدة عامة بلا
+   إلزام، يفوز عليها تلقائيًا أي تصميم أكثر تخصيصًا لعنصر <a> (مثل تبويب نشط
+   بخلفية ملوَّنة يحتاج نص أبيض)، بينما ما زال يُلغي لون الرابط الأزرق
+   الافتراضي للمتصفح بلا مشكلة. كان !important هنا يتسبَّب بنص بلون الخلفية
+   نفسه (أخضر على أخضر) في أي تبويب/زر <a> نشط لا يملك !important خاصًّا به
+   (مثال: .quran-subnav__link.is-active). */
 a {
-  color: var(--clr-primary, #176B57) !important;
+  color: var(--clr-primary, #176B57);
   text-decoration: none !important;
   transition: color 140ms ease !important;
 }
-a:hover { color: var(--clr-primary-hov, #125746) !important; }
+a:hover { color: var(--clr-primary-hov, #125746); }
 
 /* ════════════════════════════════════
    §77b — نظام الألوان الموحّد

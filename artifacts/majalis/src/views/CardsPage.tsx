@@ -41,7 +41,7 @@ const TEMPLATES: Template[] = [
   },
   {
     id: "ivory_deep",
-    name: "عاجي داكن",
+    name: "أخضر الليل",
     bg: "linear-gradient(135deg, #0a1f18 0%, #0d2e24 100%)",
     textColor: "#FAF5EA",
     subColor: "#CFE0D3",
