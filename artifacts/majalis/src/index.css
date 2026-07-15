@@ -11318,18 +11318,39 @@ body.assistant-panel-open {
 
 .content-detail-actions {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 0.5rem;
   margin-top: 1rem;
 }
 
+/* تُبسَّط .share-btns إلى امتداد مباشر لهذا الحاوي كي تلتف كل الأزرار
+   (نسخ + مشاركة) معًا في نفس الصفوف بدل التفاف متداخل يكسر المحاذاة. */
+.content-detail-actions .share-btns {
+  display: contents;
+}
+
 .content-detail-action-btn {
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--line, #ddd5c8);
-  background: var(--panel, #fff);
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  height: 44px;
+  padding: .4rem .875rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--majalis-emerald, #176B57);
+  background: transparent;
+  color: var(--majalis-emerald, #176B57);
   cursor: pointer;
   font-family: inherit;
-  font-size: 0.875rem;
+  font-size: .8125rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background .15s, color .15s;
+}
+.content-detail-action-btn:hover {
+  background: var(--majalis-emerald, #176B57);
+  color: #fff;
 }
 
 .content-detail-evidence ul,

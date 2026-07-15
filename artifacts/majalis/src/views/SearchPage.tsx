@@ -408,7 +408,7 @@ export default function SearchPage() {
           value={term}
           onChange={handleTermChange}
           onSubmit={submitSearch}
-          placeholder="ابحث في القرآن والحديث والفتاوى والدروس والكتب..."
+          placeholder="ابحث في المنصة..."
         />
         <button type="submit" className="search-page-submit ds-btn ds-btn--primary" aria-label="تنفيذ البحث">بحث</button>
       </form>
