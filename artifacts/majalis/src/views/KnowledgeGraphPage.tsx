@@ -24,6 +24,7 @@ import {
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { useAuth } from "@/components/AuthProvider";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -170,6 +171,7 @@ type DataSource = "new" | "old";
 type Tab = "graph" | "explore";
 
 export default function KnowledgeGraphPage() {
+  const { isAdmin } = useAuth();
   const [, navigate] = useLocation();
   const [tab, setTab] = useState<Tab>("graph");
 
@@ -325,7 +327,7 @@ export default function KnowledgeGraphPage() {
             <button key={s} type="button" onClick={() => setSource(s)}
               className={`kng-source-btn${source === s ? " is-active" : ""}`}
             >
-              {s === "new" ? "الجديد (kn_nodes)" : "القديم (relations)"}
+              {s === "new" ? "الإصدار الحالي" : "الإصدار السابق"}
             </button>
           ))}
         </div>
@@ -362,7 +364,9 @@ export default function KnowledgeGraphPage() {
             <div className="kng-empty">
               <p className="kng-empty__title">لا توجد بيانات بعد</p>
               <p className="kng-empty__desc">
-                شغّل <code>knowledge_graph_islamic_v1.sql</code> و<code>knowledge_graph_islamic_seed_v1.sql</code> في Supabase، ثم أعد التحميل.
+                {isAdmin
+                  ? <>شغّل <code>knowledge_graph_islamic_v1.sql</code> و<code>knowledge_graph_islamic_seed_v1.sql</code> في Supabase، ثم أعد التحميل.</>
+                  : "الرسم البياني المعرفي قيد الإعداد حاليًا، يرجى العودة لاحقًا."}
               </p>
             </div>
           ) : (
