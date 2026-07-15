@@ -233,6 +233,7 @@ export default function LessonsPage({
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [myReg, setMyReg] = useState<string[]>([]);
   const [tab, setTab] = useTabFromUrl();
+  const [, navigateTo] = useLocation();
   const { user, isLoggedIn, isAdmin } = useAuth();
 
   useEffect(() => {
@@ -397,7 +398,10 @@ export default function LessonsPage({
   }, [filters]);
 
   const toggleReg = async (lessonId: string) => {
-    if (!isLoggedIn || !user) return alert("يرجى تسجيل الدخول أولاً");
+    if (!isLoggedIn || !user) {
+      navigateTo(`/login?next=${encodeURIComponent(window.location.pathname)}`);
+      return;
+    }
     try {
       if (myReg.includes(lessonId)) {
         await unregisterFromLesson(user.id, lessonId);

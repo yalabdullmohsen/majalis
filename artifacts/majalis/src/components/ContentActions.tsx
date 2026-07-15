@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link2 } from "lucide-react";
+import { useLocation } from "wouter";
 import { supabase } from "@/lib/supabase";
 
 interface Props {
@@ -88,6 +89,7 @@ export function ShareButtons({ title, url }: { title?: string; url?: string }) {
 }
 
 export default function ContentActions({ contentType, contentId, shareTitle, shareUrl }: Props) {
+  const [, navigate] = useLocation();
   const [rating, setRating] = useState(0);
   const [bookmarked, setBookmarked] = useState(false);
   const [showReport, setShowReport] = useState(false);
@@ -124,7 +126,7 @@ export default function ContentActions({ contentType, contentId, shareTitle, sha
   const requireUser = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      alert("يرجى تسجيل الدخول أولاً");
+      navigate(`/login?next=${encodeURIComponent(window.location.pathname)}`);
       return null;
     }
     return user;
