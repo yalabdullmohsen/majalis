@@ -462,34 +462,28 @@ label {
   box-shadow: 0 2px 8px rgba(22,101,52,0.25) !important;
 }
 
-/* ══ 13. Prayer Times Page ═══════════════════════════════════════════════════ */
-.pt-hero {
-  background: #FFFFFF !important;
-  border-color: rgba(22,163,74,0.20) !important;
-  box-shadow: var(--m26-shadow-lg) !important;
-}
+/* ══ 13. Prayer Times Page ═══════════════════════════════════════════════════
+   تعارض الخلفية/الألوان مع تصميم elite-2026.css (أخضر غامق + نص أبيض) أُزيل
+   (2026-07-16) — كانت الخلفية تُرث من هنا (بيضاء) بينما تُرث كل ألوان النصوص
+   من elite-2026.css (أبيضاء)، فينتج نصًا أبيض على خلفية بيضاء غير مرئي البتة.
+   أُبقي على القياسات (font-size/weight/letter-spacing) فقط، لا الألوان. */
 .pt-hero__name {
-  color: var(--m26-green-950, #052E16) !important;
   font-family: var(--font-body) !important;
   font-size: clamp(1.5rem, 4vw, 2.25rem) !important;
   font-weight: var(--fw-bold) !important;
 }
 .pt-hero__countdown {
-  color: var(--m26-green-800, #166534) !important;
   animation: none !important;
   font-size: clamp(1.75rem, 5vw, 2.5rem) !important;
   font-weight: var(--fw-black) !important;
   letter-spacing: -0.02em !important;
 }
 .pt-hero__label {
-  color: var(--m26-gold-700, #176B57) !important;
   font-size: var(--type-label) !important;
   font-weight: var(--fw-semibold) !important;
   letter-spacing: var(--ls-wider) !important;
   text-transform: uppercase !important;
 }
-.pt-hero__time,
-.pt-hero__time { color: var(--txt-muted, #52525B) !important; }
 .pt-prayer,
 .pt-prayer { background: #FFFFFF !important; border-color: rgba(0,0,0,0.07) !important; }
 .pt-prayer:hover {

@@ -1590,7 +1590,11 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
    §20. Prayer Times Page
    ══════════════════════════════════════════════ */
 .pt-hero {
-  background-color: var(--elite-forest, #18362A) !important;
+  /* لا تستخدم --elite-forest هنا: أي محدِّد ينتهي بـ"-hero" (ومنه .pt-hero
+     نفسه) يُعيد تعريف --elite-forest محليًا إلى var(--text-on-primary) (أبيض)
+     في قسم "تحييد العناوين الداكنة" أدناه، فتتحوّل خلفية هذا العنصر نفسه إلى
+     أبيض بدل الأخضر الغامق المقصود (راجع صفحة مواقيت الصلاة، 2026-07-16). */
+  background-color: var(--majalis-emerald, #18362A) !important;
   background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
   border-radius: var(--elite-r-xl, 24px) !important;
