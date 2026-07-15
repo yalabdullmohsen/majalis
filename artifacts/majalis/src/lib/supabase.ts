@@ -463,10 +463,16 @@ export async function getLibrary({ type, category }: { type?: string; category?:
   }
 }
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 export async function getLibraryItemById(id: string) {
   if (!id) return { data: null, error: null };
 
-  if (isConfigured) {
+  // library_items.id عمود uuid — كتب الفهرس الثابت (library-catalog.ts) تستخدم
+  // slugs نصية مثل "book-bukhari" لا UUID، فالاستعلام يفشل دائمًا بـ400 (نوع
+  // بيانات غير صالح) لكل كتاب ثابت. تخطّي الاستعلام كليًا لهذه الحالة يزيل طلب
+  // شبكة وضجيج طرفية مضمونَي الفشل، ويحافظ على نفس سلوك السقوط لمصدر الفهرس.
+  if (isConfigured && UUID_RE.test(id)) {
     try {
       const { data, error } = await supabase
         .from("library_items")
@@ -1569,14 +1575,6 @@ export type PrayerTimesRow = {
   isha: string;
 };
 
-export type IslamicOccasionCacheRow = {
-  occasion_id: string;
-  next_gregorian_date: string | null;
-  days_remaining: number | null;
-  hijri_label: string | null;
-  synced_at: string;
-};
-
 export async function getPrayerTimesFromDb(dateKey: string) {
   if (!isConfigured) return null;
 
@@ -1600,20 +1598,6 @@ export async function getPrayerTimesFromDb(dateKey: string) {
     logSupabaseError("getPrayerTimesFromDb", err, { dateKey });
     return null;
   }
-}
-
-export async function getIslamicOccasionsCacheFromDb() {
-  const fallback: IslamicOccasionCacheRow[] = [];
-  const result = await safeSupabaseQuery(
-    "getIslamicOccasionsCacheFromDb",
-    () =>
-      supabase
-        .from("islamic_occasions_cache")
-        .select("occasion_id, next_gregorian_date, days_remaining, hijri_label, synced_at")
-        .order("days_remaining", { ascending: true }),
-    fallback,
-  );
-  return result.data;
 }
 
 // ─── Knowledge Relationships ───────────────────────────────────────────────
