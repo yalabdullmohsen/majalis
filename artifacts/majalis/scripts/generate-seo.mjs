@@ -456,6 +456,30 @@ const ISLAMIC_SCHOLARS = JSON.parse(
   await readFile(resolve(appRoot, "src/data/scholars-list.json"), "utf8"),
 ).map((s) => ({ id: s.id, name: s.name }));
 
+// بيانات Person الغنية لصفحات العلماء (للـ prerender)
+const SCHOLARS_SEO = JSON.parse(
+  await readFile(resolve(appRoot, "src/data/scholars-seo.json"), "utf8"),
+);
+const SCHOLARS_SEO_BY_ID = new Map(SCHOLARS_SEO.map((s) => [s.id, s]));
+
+/** JSON-LD من نوع Person لصفحة عالِم — حقول موثّقة فقط. */
+function scholarPersonJsonLdScript(id) {
+  const s = SCHOLARS_SEO_BY_ID.get(id);
+  if (!s) return "";
+  const person = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: s.fullName || s.name,
+    alternateName: s.name,
+    description: s.bio,
+    knowsAbout: s.specialty && s.specialty.length ? s.specialty : undefined,
+    url: absoluteUrl(`/scholars/${s.id}`),
+  };
+  // إزالة الحقول الفارغة (لا تلفيق)
+  Object.keys(person).forEach((k) => person[k] === undefined && delete person[k]);
+  return `<script type="application/ld+json">${JSON.stringify(person)}</script>`;
+}
+
 const PROPHETS_NAMES = [
   { slug: "adam", name: "آدم" }, { slug: "idris", name: "إدريس" }, { slug: "nuh", name: "نوح" },
   { slug: "hud", name: "هود" }, { slug: "salih", name: "صالح" }, { slug: "ibrahim", name: "إبراهيم" },
@@ -691,7 +715,8 @@ for (const route of staticRoutes) {
     route.path === "/scholars" ? scholarsItemListScript :
     route.path === "/learning/paths" ? learningPathsItemListScript :
     route.path === "/asma-husna" ? asmaaItemListScript :
-    route.path === "/duas" ? duasItemListScript : "";
+    route.path === "/duas" ? duasItemListScript :
+    /^\/scholars\/[^/]+$/.test(route.path) ? scholarPersonJsonLdScript(route.path.replace("/scholars/", "")) : "";
   const staticRichBody = RICH_BODY_MAP[route.path] || "";
   await writeFile(resolve(routeDir, "index.html"), prerenderHtml(route, staticExtraJsonLd, staticRichBody), "utf8");
 

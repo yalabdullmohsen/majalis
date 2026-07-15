@@ -5,6 +5,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SCHOLARS, findScholarById } from "@/lib/scholars-data";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { ContentReportButton } from "@/components/ContentReportButton";
 
 // ── تحويل أرقام عربية-هندية إلى رقم ─────────────────────────────────────
 const AR_DIGITS: Record<string, number> = {
@@ -244,24 +245,27 @@ export default function ScholarProfilePage() {
         </blockquote>
       )}
 
-      {/* Key Works */}
-      <section className="sch-profile-section" aria-labelledby="works-heading">
-        <h2 id="works-heading" className="sch-profile-section__title">
-          <BookOpen size={16} aria-hidden="true" /> أبرز المؤلفات
-        </h2>
-        <ul className="sch-profile-works">
-          {scholar.key_works.map(w => (
-            <li key={w}>{w}</li>
-          ))}
-        </ul>
-      </section>
+      {/* Key Works — تُعرض فقط عند وجود مؤلفات موثّقة */}
+      {scholar.key_works.length > 0 && (
+        <section className="sch-profile-section" aria-labelledby="works-heading">
+          <h2 id="works-heading" className="sch-profile-section__title">
+            <BookOpen size={16} aria-hidden="true" /> أبرز المؤلفات
+          </h2>
+          <ul className="sch-profile-works">
+            {scholar.key_works.map(w => (
+              <li key={w}>{w}</li>
+            ))}
+          </ul>
+        </section>
+      )}
 
-      {/* Share */}
-      <div className="twh-share">
+      {/* Share + إبلاغ عن خطأ */}
+      <div className="twh-share" style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
         <ShareButtons
           title={`${scholar.name} — المجلس العلمي`}
           url={`https://majlisilm.com/scholars/${scholar.id}`}
         />
+        <ContentReportButton contentType="scholar" contentId={scholar.id} title={scholar.name} />
       </div>
 
       {/* Prev / Next */}

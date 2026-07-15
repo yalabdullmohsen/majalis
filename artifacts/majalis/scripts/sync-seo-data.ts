@@ -65,6 +65,20 @@ writeOrCheck("src/data/library-catalog.json", serialize(libraryJson), "مرآة 
 const scholarsList = SCHOLARS.map((s) => ({ id: s.id, name: s.name, died: s.died }));
 writeOrCheck("src/data/scholars-list.json", serialize(scholarsList), "مرآة قائمة العلماء");
 
+// ── 2ب) بيانات Person للـ prerender (حقول موثّقة فقط، بلا تلفيق) ───────────
+const scholarsSeo = SCHOLARS.map((s) => ({
+  id: s.id,
+  name: s.name,
+  fullName: s.fullName,
+  bio: s.bio,
+  specialty: s.specialty || [],
+  region: s.region,
+  died: s.died,
+  ...(s.madhhab ? { madhhab: s.madhhab } : {}),
+  era: s.era,
+}));
+writeOrCheck("src/data/scholars-seo.json", serialize(scholarsSeo), "بيانات Person للعلماء");
+
 // ── 3) مسارات فهرسة العلماء داخل seo-routes.json (وصف فريد لكل عالِم) ──────
 const seoRoutes = readJson("src/lib/seo-routes.json");
 const nonScholarRoutes = seoRoutes.routes.filter(

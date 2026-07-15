@@ -79,7 +79,9 @@
     "mobile:sync": "npm run build && npx cap sync",
     "mobile:android": "npm run build && npx cap sync && npx cap open android",
     "mobile:ios": "npm run build && npx cap sync && npx cap open ios",
-    "test:researcher-safety": "node lib/__tests__/researcher-safety.test.mjs"
+    "test:researcher-safety": "node lib/__tests__/researcher-safety.test.mjs",
+    "verify:owner-env": "node scripts/verify-owner-env.mjs",
+    "predeploy:gate": "pnpm run typecheck && pnpm run test:regression && pnpm run verify:owner-env --require"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

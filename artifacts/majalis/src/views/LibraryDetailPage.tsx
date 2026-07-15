@@ -80,6 +80,8 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
     author:      item.author || null,
     contentType: "نقل",
     isApproved:  item.status === "approved" ? true : null,
+    reportContentType: "book",
+    reportContentId: item.id,
   };
 
   return (
