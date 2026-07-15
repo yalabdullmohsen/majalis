@@ -39,6 +39,10 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/prophetic-medicine",   label: "الطب النبوي" },
   { href: "/qa",            label: "الأسئلة" },
   { href: "/arbaeen-nawawi",label: "الأربعون النووية" },
+  { href: "/sujood-sahw",      label: "سجود السهو" },
+  { href: "/amrad-qalbiyya",   label: "الأمراض القلبية" },
+  { href: "/durus-imaniyya",   label: "الدروس الإيمانية والتربوية" },
+  { href: "/durus-mutanawwia", label: "دروس متنوعة" },
   { href: "/updates",       label: "المستجدات" },
   { href: "/fiqh",               label: "الفقه الإسلامي" },
   { href: "/fiqh-council",       label: "المجمع الفقهي" },
@@ -85,6 +89,24 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/quran-hub",           label: "مركز القرآن" },
   { href: "/quran-radio",         label: "إذاعة القرآن" },
   { href: "/quran/surah-stories", label: "قصص القرآن" },
+  // الإيمان والعقيدة
+  { href: "/iman-topics",        label: "الإيمان والعقيدة" },
+  // الدراسات القرآنية
+  { href: "/quran-studies",      label: "الدراسات القرآنية" },
+  // دراسات السنة
+  { href: "/sunnah-studies",     label: "دراسات السنة" },
+  // تزكية النفس والأخلاق
+  { href: "/tazkiya-topics",     label: "تزكية النفس" },
+  // السيرة والتاريخ
+  { href: "/tarikh-islami",      label: "التاريخ الإسلامي" },
+  // الأسرة والمجتمع
+  { href: "/usra-mujtama",       label: "الأسرة والمجتمع" },
+  // الفكر والواقع
+  { href: "/fikr-waqia",         label: "الفكر والواقع" },
+  // الموسوعة العملية
+  { href: "/mawsuaat",           label: "الموسوعة العملية" },
+  // مسارات التعلم
+  { href: "/masarat",            label: "مسارات التعلم" },
   // الأذكار
   { href: "/adhkar",        label: "الأذكار" },
   { href: "/duas",          label: "الأدعية الشرعية" },
@@ -146,6 +168,7 @@ export const NAV_GROUPS: NavGroup[] = [
     links: [
       /* — القرآن — */
       { href: "/quran-hub",           label: "مركز القرآن",         description: "بوابتك الشاملة للقرآن الكريم" },
+      { href: "/quran-studies",       label: "الدراسات القرآنية",   description: "تدبر وفهم القرآن الكريم" },
       { href: "/daily-wird",          label: "الورد اليومي",        description: "تتبع قراءتك اليومية" },
       { href: "/quran/tajweed",       label: "التجويد",             description: "أحكام التلاوة الصحيحة" },
       { href: "/ulum-quran",          label: "علوم القرآن",         description: "النزول والجمع والإعجاز" },
@@ -179,6 +202,10 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/arkan-iman",       label: "أركان الإيمان",      description: "الأركان الستة بالأدلة" },
       { href: "/hadith-science",   label: "مصطلح الحديث",       description: "علوم الحديث والجرح والتعديل" },
       { href: "/miracles",         label: "الإعجاز العلمي",     description: "إشارات علمية في القرآن والسنة — مع بيان حالة المراجعة" },
+      { href: "/sujood-sahw",      label: "سجود السهو",         description: "أحكام سجود السهو في الصلاة" },
+      { href: "/amrad-qalbiyya",   label: "الأمراض القلبية",    description: "أمراض القلوب وعلاجها الشرعي" },
+      { href: "/durus-imaniyya",   label: "الدروس الإيمانية والتربوية", description: "دروس في تزكية الإيمان والتربية" },
+      { href: "/durus-mutanawwia", label: "دروس متنوعة",        description: "دروس شرعية متفرقة" },
       /* — الخرائط والمراجع — */
       { href: "/knowledge-map",    label: "الخريطة المعرفية",   description: "استكشاف تفاعلي لعلوم الإسلام" },
       { href: "/mind-map",         label: "الخرائط الذهنية",    description: `${COUNTS.mindMaps} خريطة في العلوم الشرعية` },
@@ -233,6 +260,7 @@ export const MOBILE_MORE_NAV = [
   { href: "/quran-radio",      label: "إذاعة القرآن" },
   { href: "/quran-live",       label: "البث المباشر" },
   { href: "/quran/tajweed",    label: "التجويد" },
+  { href: "/quran-studies",    label: "الدراسات القرآنية" },
   { href: "/quran/surah-stories", label: "قصص القرآن" },
   // الأذكار والأدوات
   { href: "/adhkar",           label: "الأذكار" },
@@ -262,6 +290,12 @@ export const MOBILE_MORE_NAV = [
 
 export const HOME_FEATURE_CARDS = [
   {
+    href: "/quran-studies",
+    title: "الدراسات القرآنية",
+    description: "تدبر وفهم القرآن الكريم",
+    icon: "book-open",
+  },
+  {
     href: "/adhkar",
     title: "الأذكار",
     description: "أذكار يومية مع تخريجها",
@@ -284,12 +318,6 @@ export const HOME_FEATURE_CARDS = [
     title: "التسابيح",
     description: "مسبحة إلكترونية",
     icon: "circle-dot",
-  },
-  {
-    href: "/quran-radio",
-    title: "إذاعة القرآن",
-    description: "بث مباشر للقرآن",
-    icon: "radio",
   },
   {
     href: "/hadith",

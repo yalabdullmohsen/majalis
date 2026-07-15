@@ -50,6 +50,7 @@ const FOOTER_GROUPS = [
     title: "القرآن والعبادة",
     links: [
       { href: "/quran-hub",           label: "مركز القرآن" },
+      { href: "/quran-studies",       label: "الدراسات القرآنية" },
       { href: "/quran-radio",         label: "إذاعة القرآن" },
       { href: "/quran-live",          label: "البث المباشر" },
       { href: "/quran/surah-stories", label: "قصص القرآن" },

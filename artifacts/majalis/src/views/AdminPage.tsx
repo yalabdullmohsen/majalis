@@ -91,6 +91,7 @@ export default function AdminPage() {
       {section === "governance" && <GovernanceSection />}
       {section === "knowledge-graph" && <RelationshipsSection />}
       {section === "quiz" && <QuizSection />}
+      {section === "telegram" && <TelegramSection />}
       {section === "lessons" && <LessonsSection />}
       {section === "sheikhs" && <SheikhsSection />}
       {section === "library" && <LibrarySection />}

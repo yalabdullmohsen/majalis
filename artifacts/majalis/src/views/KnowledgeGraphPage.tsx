@@ -367,11 +367,14 @@ export default function KnowledgeGraphPage() {
             </div>
           ) : (
             <div className="kng-svg-wrap">
-              <svg ref={svgRef} viewBox={`0 0 ${SVG_W} ${SVG_H}`} className="kng-svg">
+              <svg ref={svgRef} viewBox={`0 0 ${SVG_W} ${SVG_H}`} className="kng-svg" aria-label="الرسم البياني المعرفي الإسلامي">
                 <defs>
                   <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
                     <polygon points="0 0, 8 3, 0 6" fill="var(--majalis-ink-soft, #4A4A4A)" opacity="0.5" />
                   </marker>
+                  <filter id="kg-shadow">
+                    <feDropShadow dx="0" dy="1.5" stdDeviation="2.5" floodOpacity="0.15" />
+                  </filter>
                 </defs>
 
                 {visEdges.map((e, i) => {
@@ -399,22 +402,41 @@ export default function KnowledgeGraphPage() {
                   const isSel    = selected?.id === node.id;
                   const color    = getColor(node.nodeType);
                   const isCenter = node.id === centerNodeId;
+                  const r = isSel ? NODE_RADIUS + 5 : isCenter ? NODE_RADIUS + 3 : NODE_RADIUS;
                   return (
-                    <g key={node.id} className="kng-svg-node"
-                      onClick={() => setSelected(isSel ? null : node)}>
+                    <g
+                      key={node.id}
+                      className="kng-svg-node"
+                      tabIndex={0}
+                      role="button"
+                      aria-label={`${node.label} — ${getTypeLabel(node.nodeType)}`}
+                      aria-pressed={isSel}
+                      onClick={() => setSelected(isSel ? null : node)}
+                      onKeyDown={(e) => e.key === "Enter" && setSelected(isSel ? null : node)}
+                    >
                       <circle
-                        cx={node.x} cy={node.y}
-                        r={isSel ? NODE_RADIUS + 4 : (isCenter ? NODE_RADIUS + 2 : NODE_RADIUS)}
-                        fill={isSel ? color : `${color}22`}
+                        cx={node.x} cy={node.y} r={r}
+                        fill={isSel ? color : `${color}28`}
                         stroke={color}
-                        strokeWidth={isSel ? 3 : (isCenter ? 2.5 : 1.5)}
+                        strokeWidth={isSel ? 2.5 : isCenter ? 2 : 1.5}
+                        filter={isSel ? "url(#kg-shadow)" : undefined}
                       />
+                      {/* Specular highlight */}
+                      {isSel && (
+                        <ellipse
+                          cx={node.x - r * 0.2} cy={node.y - r * 0.3}
+                          rx={r * 0.4} ry={r * 0.22}
+                          fill="rgba(255,255,255,0.18)"
+                          style={{ pointerEvents: "none" }}
+                        />
+                      )}
                       <text
                         x={node.x} y={node.y + 4}
                         textAnchor="middle" fontSize={isSel ? "10" : "9"}
                         fill={isSel ? "#fff" : color}
                         fontFamily="inherit" fontWeight={isSel ? 700 : 500}
                         className="kng-svg-label"
+                        style={{ pointerEvents: "none", userSelect: "none" }}
                       >
                         {node.label}
                       </text>

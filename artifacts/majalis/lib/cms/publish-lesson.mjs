@@ -10,7 +10,7 @@ async function sendTelegramNewLesson(title, speaker, lessonId) {
   const chatId = String(process.env.TELEGRAM_ADMIN_CHAT_ID || "").trim();
   if (!chatId) return;
   const who = speaker ? `\nالشيخ: <b>${speaker}</b>` : "";
-  const text = `📚 درس جديد أُضيف للمنصة\n<b>${title || "بدون عنوان"}</b>${who}\n\n🔗 <a href="https://majlisilm.com/lessons/${lessonId}">عرض الدرس</a>`;
+  const text = `📚 درس جديد أُضيف للمنصة\n<b>${title || "بدون عنوان"}</b>${who}\n\n🔗 <a href="https://www.majlisilm.com/lessons/${lessonId}">عرض الدرس</a>`;
   try {
     await sendMessage(chatId, text, { parse_mode: "HTML", disable_web_page_preview: true });
   } catch { /* best-effort */ }
@@ -26,7 +26,7 @@ function mapDraftToLesson(extracted, opts = {}) {
   const startDate = d.start_date || d.gregorian_date || null;
   const keywords = Array.isArray(d.keywords) ? d.keywords.filter(Boolean) : [];
 
-  return {
+  const row = {
     title: d.title,
     speaker_name: d.speaker_name || d.sheikh_name || null,
     sheikh_id: opts.sheikhId || null,
@@ -70,6 +70,7 @@ function mapDraftToLesson(extracted, opts = {}) {
     imported_by: opts.importedBy || null,
     poster_image_hash: opts.posterImageHash || null,
   };
+  return row;
 }
 
 export async function publishLessonDraft({
