@@ -112,14 +112,20 @@
         var _dsv = "v4-light-2026-naskh";
         if (localStorage.getItem("majalis-design-v") !== _dsv) {
           localStorage.setItem("majalis-design-v", _dsv);
-          localStorage.removeItem("majalis-theme-preference");
+          localStorage.removeItem("majalis-theme");
           localStorage.removeItem("majalis-font-preference");
           localStorage.removeItem("majalis-font-preference-v2");
         }
-        var storedTheme = localStorage.getItem("majalis-theme-preference");
+        /* المفتاح الحقيقي المستخدَم في theme-preference.ts هو "majalis-theme" —
+           كان هذا المِشكاة يقرأ مفتاحًا مختلفًا ("majalis-theme-preference") لا
+           يكتب إليه أي جزء آخر من التطبيق، فكان يُنتج وميض الوضع النهاري دومًا
+           قبل أن يُصحِّحه React بعد الترطيب (2026-07-16). */
+        var storedTheme = localStorage.getItem("majalis-theme");
         var resolved = storedTheme === "light" ? "light"
           : storedTheme === "dark" ? "dark"
-          : "light";
+          : storedTheme === "auto"
+            ? (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+            : "light";
         document.documentElement.dataset.theme = resolved;
         document.documentElement.classList.toggle("dark", resolved === "dark");
         document.documentElement.style.colorScheme = resolved === "light" ? "light" : "dark";

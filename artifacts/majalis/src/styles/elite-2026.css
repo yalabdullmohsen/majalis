@@ -2794,7 +2794,7 @@ button.hcp-prayer-cell:focus-visible {
    §60. تبويبات الدروس (kuwait-tab) — سمة فاتحة
    ══════════════════════════════════════════════ */
 .kuwait-tabs {
-  background: #F4F6F5 !important;
+  background: var(--msk-canvas-1, #F4F6F5) !important;
   border-radius: 0.7rem !important;
   padding: 0.3rem !important;
   gap: 0.25rem !important;
@@ -2803,7 +2803,7 @@ button.hcp-prayer-cell:focus-visible {
 }
 
 .kuwait-tab {
-  color: var(--elite-ink-soft, #4A5568) !important;
+  color: var(--msk-text-2, #4A5568) !important;
   background: transparent !important;
   border: none !important;
   border-radius: 0.5rem !important;
@@ -2817,13 +2817,13 @@ button.hcp-prayer-cell:focus-visible {
 }
 
 .kuwait-tab:hover:not(.kuwait-tab--active) {
-  color: var(--elite-forest, #18362A) !important;
+  color: var(--majalis-emerald, #18362A) !important;
   background: rgba(24,54,42,0.07) !important;
   border: none !important;
 }
 
 .kuwait-tab--active {
-  background: #18362A !important;
+  background: var(--majalis-emerald, #18362A) !important;
   color: #fff !important;
   border: none !important;
   font-weight: 700 !important;
@@ -33422,8 +33422,12 @@ html[data-theme="dark"] h1, html[data-theme="dark"] h2,
 html[data-theme="dark"] h3, html[data-theme="dark"] h4 {
   color: #E5F0EC !important;
 }
-html[data-theme="dark"] a { color: #3BAD8A !important; }
-html[data-theme="dark"] a:hover { color: #4DC09A !important; }
+/* الروابط ذات خلفية ملوَّنة خاصة بها (تبويبات/أزرار نشطة) تحتفظ بلون نصها
+   المقصود — وإلا فاز هذا القانون العام بالأسبقية (0,1,1 > 0,1,0) فأنتج
+   نصًّا بلون الخلفية نفسه (أخضر على أخضر)، كما ظهر في fiqh-hub-strip__tab--active
+   على الوضع الليلي (2026-07-16). */
+html[data-theme="dark"] a:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary) { color: #3BAD8A !important; }
+html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary) { color: #4DC09A !important; }
 
 /* ════════════════════════════════════
    §77m — نظام التنسيق والتباعد
@@ -33645,10 +33649,14 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
   background-color: var(--color-primary-deep, #123F36) !important;
 }
 
-/* Tabs الرئيسي */
+/* Tabs الرئيسي — محدِّد فرعي [class*="tab"][class*="active"] حُذف (2026-07-16):
+   كان يطابق أي عنصر تحتوي قيمة class فيه على "tab" و"active" كنص فرعي في أي مكان،
+   فيَطغى بأسبقيته العالية (0,2,0) على تبويبات لها لون نص مقصود مختلف مع خلفية
+   ملوَّنة خاصة بها (مثل fiqh-hub-strip__tab--active وkuwait-tab--active)، منتجًا
+   نصًّا بلون خلفيته نفسها في الوضع الليلي. كل تبويب "نشط" له بالفعل قاعدة CSS
+   مخصصة أدق من هذا المحدِّد العام. */
 .nav-tab--active,
-.filter-tab--active,
-[class*="tab"][class*="active"] {
+.filter-tab--active {
   color: var(--color-primary, #176B57) !important;
   border-color: var(--color-primary, #176B57) !important;
 }
