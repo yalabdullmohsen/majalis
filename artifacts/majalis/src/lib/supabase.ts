@@ -555,7 +555,7 @@ export async function adminGetStats() {
     supabase.from("fawaid").select("*", { count: "exact", head: true }).eq("status", "pending"),
     supabase.from("qa_questions").select("*", { count: "exact", head: true }),
     supabase.from("qa_questions").select("*", { count: "exact", head: true }).eq("status", "published"),
-    supabase.from("quiz_questions").select("*", { count: "exact", head: true }).eq("status", "published"),
+    supabase.from("quiz_questions").select("*", { count: "exact", head: true }).eq("is_published", true),
   ]);
   return {
     sheikhsCount: sheikhs.count ?? 0,
@@ -1069,8 +1069,8 @@ export async function getQuizQuestions({ section, level }: { section?: string; l
   try {
     let q = supabase
       .from("quiz_questions")
-      .select("id, section, category, level, difficulty, question, answer, correct_answer, hint, is_used, status")
-      .eq("status", "published")
+      .select("id, section, category, level, question, answer, hint, is_used, is_published")
+      .eq("is_published", true)
       .or("is_used.is.null,is_used.eq.false")
       .order("created_at", { ascending: false });
     if (section && section !== "الكل") q = q.eq("section", section);
@@ -1103,10 +1103,10 @@ export async function adminDeleteQuizQuestion(id: string) {
   return await supabase.from("quiz_questions").delete().eq("id", id);
 }
 
-export async function adminSetQuizQuestionStatus(id: string, status: string) {
+export async function adminSetQuizQuestionStatus(id: string, isPublished: boolean) {
   return await supabase
     .from("quiz_questions")
-    .update({ status, updated_at: new Date().toISOString() })
+    .update({ is_published: isPublished, updated_at: new Date().toISOString() })
     .eq("id", id);
 }
 
@@ -1120,21 +1120,14 @@ export async function upsertQuizSeedToDb(): Promise<{ ok: boolean; synced: numbe
     // map Arabic level names → English stored in DB
     level: q.level === "سهل" ? "beginner" : q.level === "متوسط" ? "intermediate" : q.level === "صعب" ? "advanced" : q.level,
     question: q.question,
-    answer: q.answer,          // column added by migration
-    correct_answer: q.answer,  // keep legacy column in sync
-    status: "published",
+    answer: q.answer,
+    is_published: true,
     is_used: false,
   }));
   try {
     // insert-only: skip duplicates (question+section may not be unique constraint; use DO NOTHING)
     const { error } = await supabase.from("quiz_questions").insert(rows);
-    if (error) {
-      // If column doesn't exist yet, surface a clear message
-      if (error.message?.includes("column") || error.code === "42703") {
-        return { ok: false, synced: 0, error: "يجب تشغيل ملف fixes_data_pipeline_complete.sql في Supabase أولاً لإضافة الأعمدة المطلوبة." };
-      }
-      throw error;
-    }
+    if (error) throw error;
     return { ok: true, synced: rows.length };
   } catch (err) {
     logSupabaseError("upsertQuizSeedToDb", err);
