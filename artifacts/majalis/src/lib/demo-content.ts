@@ -14,7 +14,45 @@ export { FAWAID_CURATED_CATEGORIES as FAWAID_CATEGORIES, filterSeedFawaid };
 /** @deprecated استخدم LESSONS_SEED من lessons-seed.ts */
 export const DEMO_LESSONS = LESSONS_SEED;
 
-export const DEMO_SHEIKHS = SHEIKHS_SEED;
+/**
+ * تطبيع النص العربي لمقارنة التكرار: إزالة التطويل والتشكيل والمسافات الزائدة
+ * وتوحيد الهمزات، لتحييد الاختلافات الشكلية غير المؤثرة عند المقارنة.
+ */
+function normalizeArabic(value: string): string {
+  return (value || "")
+    .normalize("NFKC")
+    .replace(/ـ/g, "") // التطويل (ـ)
+    .replace(/[ً-ٰٟ]/g, "") // التشكيل
+    .replace(/[إأآا]/g, "ا") // توحيد الألف/الهمزات
+    .replace(/[ىي]/g, "ي")
+    .replace(/ة/g, "ه")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/**
+ * طبقة حماية إضافية ضد التكرار: نُزيل أي شيخ مكرّر بمعرّفه (id) أو باسمه
+ * المُطبّع. الإصلاح الجذري في sheikhs-seed.ts (حذف السجلات المكررة)، وهذا
+ * صمّام أمان يمنع ظهور أي شيخ مرتين حتى لو أُعيد إدخال تكرار في المصدر لاحقاً.
+ */
+function dedupeSheikhs<T extends { id?: string; name?: string }>(items: readonly T[]): T[] {
+  const seenIds = new Set<string>();
+  const seenNames = new Set<string>();
+  const result: T[] = [];
+  for (const item of items) {
+    const idKey = (item.id || "").trim();
+    const nameKey = normalizeArabic(item.name || "");
+    if (!idKey && !nameKey) continue;
+    if (idKey && seenIds.has(idKey)) continue;
+    if (nameKey && seenNames.has(nameKey)) continue;
+    if (idKey) seenIds.add(idKey);
+    if (nameKey) seenNames.add(nameKey);
+    result.push(item);
+  }
+  return result;
+}
+
+export const DEMO_SHEIKHS = dedupeSheikhs(SHEIKHS_SEED);
 
 export const DEMO_LIBRARY = getLibraryCatalog();
 

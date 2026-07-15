@@ -32819,6 +32819,68 @@ a:hover { color: var(--clr-primary-hov, #125746) !important; }
   --color-success:       var(--sys-success, #248A62);
   --color-warning:       var(--sys-warning, #B98232);
   --color-error:         var(--sys-error, #B94A48);
+
+  /* ── رموز تباين النص حسب سياق الخلفية (WCAG AA) ──
+     تُستخدم لضمان قراءة النص فوق الخلفيات الداكنة/الخضراء أو الفاتحة. */
+  --text-on-primary:      #FFFFFF;              /* نص فوق اللون الأساسي/الأخضر */
+  --text-on-dark:         rgba(255,255,255,0.95);
+  --text-on-dark-soft:    rgba(255,255,255,0.78);
+  --text-on-dark-muted:   rgba(255,255,255,0.62);
+  --text-on-light:        var(--clr-text-1, #17201D);
+}
+
+/* ════════════════════════════════════════════════════════════
+   §77b-contrast — إصلاح جذري لتباين النص فوق الخلفيات الداكنة
+   السبب الجذري: القاعدتان العامتان `h1..h6` و`p` تفرضان
+   `color: var(--clr-text-1) !important` (وهو داكن في الوضع الفاتح)،
+   فتُغطّي النص الأبيض الذي تضبطه البطاقات/الأبطال على خلفياتها الداكنة.
+   الحل: إعادة تعريف رمز النص إلى الأبيض داخل الحاويات الداكنة فقط،
+   فتُحلّ القاعدة العامة نفسها إلى الأبيض عبر var()، دون تجاوز عالمي ساذج.
+   ════════════════════════════════════════════════════════════ */
+
+/* ① أدوات مساعدة صريحة قائمة على السياق */
+.text-on-dark,
+.text-on-primary {
+  --clr-text-1:       var(--text-on-dark);
+  --clr-text:         var(--text-on-dark);
+  --clr-text-2:       var(--text-on-dark-soft);
+  --clr-text-muted:   var(--text-on-dark-muted);
+  color: var(--text-on-primary) !important;
+}
+.text-on-light {
+  --clr-text-1:       var(--clr-text-1, #17201D);
+  color: var(--text-on-light);
+}
+
+/* ② الحاويات الداكنة المعروفة: كل بطاقات «مسألة/فائدة اليوم»
+   (تشترك في تدرّج أخضر داكن واحد) وكل رؤوس الصفحات (heroes)
+   — تم التحقق أنّ جميعها ذات خلفيات داكنة. */
+[class$="od-card"],
+[class$="-hero"],
+.an-today__card {
+  --clr-text-1:            var(--text-on-dark);
+  --clr-text:              var(--text-on-dark);
+  --clr-text-2:            var(--text-on-dark-soft);
+  --clr-text-muted:        var(--text-on-dark-muted);
+  /* تحييد كل قواعد العناوين العدوانية (!important) التي تفرض ألواناً داكنة
+     عبر متغيرات مختلفة، حتى تُحلّ جميعها إلى الأبيض داخل الحاويات الداكنة:
+     - `[class*="card"] h*`            → --elite-forest
+     - `.ds-*` / heading tokens        → --ds-heading
+     - `.page-shell h*:not(...)`       → --majalis-emerald-deep
+     - `.page-shell h*`                → --majalis-ink / --txt-primary */
+  --elite-forest:          var(--text-on-primary);
+  --ds-heading:            var(--text-on-primary);
+  --majalis-emerald-deep:  var(--text-on-primary);
+  --majalis-ink:           var(--text-on-dark);
+  --majalis-ink-soft:      var(--text-on-dark-soft);
+  --txt-primary:           var(--text-on-dark);
+  --txt-secondary:         var(--text-on-dark-soft);
+}
+
+/* ③ صناديق المعادلات/الشارات الشفافة فوق الأخضر — نص أبيض وحدود فاتحة */
+[class$="od-card__formula"] {
+  color: var(--text-on-primary) !important;
+  border-color: rgba(255,255,255,0.28) !important;
 }
 
 /* ════════════════════════════════════
