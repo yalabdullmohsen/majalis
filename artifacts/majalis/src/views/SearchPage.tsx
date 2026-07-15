@@ -1,7 +1,7 @@
 import { BookMarked, BookOpen, Clock, FlaskConical, GraduationCap, Heart, Scale, Scroll } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
-import { Link, useParams, useLocation } from "wouter";
+import { Link, useParams, useLocation, useSearch } from "wouter";
 import { searchEverything, type SearchResults } from "@/lib/supabase";
 import { searchDemoContent } from "@/lib/demo-content";
 import { displayText } from "@/lib/display-text";
@@ -239,8 +239,13 @@ function FiqhResultRow({ row }: { row: FiqhGlobalSearchRow }) {
 
 export default function SearchPage() {
   const params = useParams();
-  const [location, navigate] = useLocation();
-  const queryParams = new URLSearchParams(location.split("?")[1] || "");
+  const [, navigate] = useLocation();
+  // useLocation() من wouter تُرجع المسار (pathname) فقط بلا query string، ولا
+  // تُعيد تصيير المكوّن عند تغيّر الاستعلام فقط (نفس المسار /search) — لذا
+  // البحث عبر ?q=... كان لا يعمل إطلاقًا مهما ضغط المستخدم زر البحث.
+  // useSearch() هي الأداة الصحيحة من wouter نفسها لقراءة search المتفاعل.
+  const search = useSearch();
+  const queryParams = new URLSearchParams(search);
   const q = params.q ? decodeURIComponent(params.q) : (queryParams.get("q") || "");
   const [term, setTerm] = useState(q);
   const [results, setResults] = useState<SearchResults>(EMPTY);
