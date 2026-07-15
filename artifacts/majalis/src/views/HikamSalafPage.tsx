@@ -1348,7 +1348,7 @@ export default function HikamSalafPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${h.scholar}: ${h.text.slice(0, 60)}`,
-            url: `https://majlisilm.com/hikam-salaf#${h.id}`,
+            url: `https://www.majlisilm.com/hikam-salaf#${h.id}`,
           })),
         },
       ],
@@ -1494,7 +1494,7 @@ export default function HikamSalafPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="حكم السلف الصالح — المجلس العلمي" url="https://majlisilm.com/hikam-salaf" />
+        <ShareButtons title="حكم السلف الصالح — المجلس العلمي" url="https://www.majlisilm.com/hikam-salaf" />
       </div>
 
       {/* ذات صلة */}

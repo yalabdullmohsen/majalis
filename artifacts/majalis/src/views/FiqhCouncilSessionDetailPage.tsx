@@ -65,7 +65,7 @@ export default function FiqhCouncilSessionDetailPage({ params }: { params: { slu
           location: session.location && session.location !== "غير متوفر"
             ? { "@type": "Place", name: session.location }
             : undefined,
-          url: `https://majlisilm.com${path}`,
+          url: `https://www.majlisilm.com${path}`,
         },
         breadcrumbJsonLd([
           { name: "الرئيسية", path: "/" },

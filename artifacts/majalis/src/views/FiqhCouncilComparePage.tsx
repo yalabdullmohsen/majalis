@@ -71,7 +71,7 @@ export default function FiqhCouncilComparePage() {
       title: "مقارنة قرارات المجمع الفقهي | المجلس العلمي",
       description: "قارن بين قرارات وفتاوى مجلس الفقه الإسلامي جنباً إلى جنب، أداة تحليلية للباحثين والدارسين.",
       keywords: ["مقارنة فقهية", "قرارات فقهية", "مجمع فقهي", "تحليل فقهي", "مقارنة الفتاوى"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "مقارنة قرارات المجمع الفقهي", url: "https://majlisilm.com/fiqh-council/compare", about: { "@type": "Thing", name: "تحليل ومقارنة الفتاوى الفقهية" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "مقارنة قرارات المجمع الفقهي", url: "https://www.majlisilm.com/fiqh-council/compare", about: { "@type": "Thing", name: "تحليل ومقارنة الفتاوى الفقهية" } }],
     });
   }, []);
 
@@ -164,7 +164,7 @@ export default function FiqhCouncilComparePage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="مقارنة مواد المجمع الفقهي — المجلس العلمي" url="https://majlisilm.com/fiqh-council/compare" />
+        <ShareButtons title="مقارنة مواد المجمع الفقهي — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/compare" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />

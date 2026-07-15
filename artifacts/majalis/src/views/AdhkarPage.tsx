@@ -147,7 +147,7 @@ export default function AdhkarPage() {
             "@type": "ListItem",
             position: i + 1,
             name: c.name,
-            url: `https://majlisilm.com/adhkar?cat=${c.slug}`,
+            url: `https://www.majlisilm.com/adhkar?cat=${c.slug}`,
           })),
         },
       ],

@@ -305,7 +305,7 @@ export function FiqhCouncilHubPage() {
             "@type": "ListItem",
             position: i + 1,
             name: l.label,
-            url: `https://majlisilm.com${l.href}`,
+            url: `https://www.majlisilm.com${l.href}`,
           })),
         },
       ],
@@ -582,7 +582,7 @@ export function FiqhCouncilHubPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="مجلس الفقه الإسلامي — المجلس العلمي" url="https://majlisilm.com/fiqh-council" />
+        <ShareButtons title="مجلس الفقه الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />

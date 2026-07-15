@@ -109,7 +109,7 @@ export const STYLE_LABEL: Record<CitationStyle, string> = {
 };
 
 export const MAX_QUOTE_LENGTH = 500;
-export const PLATFORM_URL = "https://majlisilm.com";
+export const PLATFORM_URL = "https://www.majlisilm.com";
 
 // ── مساعدات ──────────────────────────────────────────────────────────────────
 

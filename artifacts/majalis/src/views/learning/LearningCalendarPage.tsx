@@ -43,7 +43,7 @@ export default function LearningCalendarPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "تقويم الدروس والدورات الإسلامية",
-          url: "https://majlisilm.com/learning/calendar",
+          url: "https://www.majlisilm.com/learning/calendar",
           description: "تقويم الأحداث والدروس والدورات الإسلامية القادمة مع مواعيدها",
           about: { "@type": "Thing", name: "الأحداث والدروس العلمية الإسلامية" },
         },
@@ -154,7 +154,7 @@ export default function LearningCalendarPage() {
         <Link href="/calendar">تقويم الدروس الكامل</Link>
       </p>
       <div className="twh-share">
-        <ShareButtons title="تقويم الدروس الشرعية — المجلس العلمي" url="https://majlisilm.com/learning/calendar" />
+        <ShareButtons title="تقويم الدروس الشرعية — المجلس العلمي" url="https://www.majlisilm.com/learning/calendar" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["hadith", "fiqh"]} title="اختبر معلوماتك في الحديث والفقه" count={4} />

@@ -170,7 +170,7 @@ export default function ArkanIslamPage() {
             "@type": "ListItem",
             position: i + 1,
             name: r.title,
-            url: `https://majlisilm.com/arkan#rukn-${r.num}`,
+            url: `https://www.majlisilm.com/arkan#rukn-${r.num}`,
           })),
         },
       ],
@@ -316,7 +316,7 @@ export default function ArkanIslamPage() {
         </div>
       </div>
       <div className="zk-share">
-        <ShareButtons title="أركان الإسلام الخمسة — المجلس العلمي" url="https://majlisilm.com/arkan-islam" />
+        <ShareButtons title="أركان الإسلام الخمسة — المجلس العلمي" url="https://www.majlisilm.com/arkan-islam" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["fiqh", "aqeeda"]} title="اختبر معلوماتك في أركان الإسلام" count={4} />

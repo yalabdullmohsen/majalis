@@ -151,7 +151,7 @@ export default function QiblaPage() {
       title: "اتجاه القبلة | المجلس العلمي",
       description: "حدد اتجاه القبلة من موقعك الحالي بدقة، بوصلة رقمية تعتمد على GPS للمسلمين في كل مكان.",
       keywords: ["اتجاه القبلة", "قبلة", "بوصلة إسلامية", "اتجاه مكة", "صلاة"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "اتجاه القبلة", url: "https://majlisilm.com/qibla", about: { "@type": "Thing", name: "بوصلة القبلة للمسلمين" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "اتجاه القبلة", url: "https://www.majlisilm.com/qibla", about: { "@type": "Thing", name: "بوصلة القبلة للمسلمين" } }],
     });
   }, []);
   const [heading,    setHeading]    = useState<number | null>(null);
@@ -314,7 +314,7 @@ export default function QiblaPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="اتجاه القبلة — المجلس العلمي" url="https://majlisilm.com/qibla" />
+        <ShareButtons title="اتجاه القبلة — المجلس العلمي" url="https://www.majlisilm.com/qibla" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في أحكام القبلة والصلاة" count={4} />

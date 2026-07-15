@@ -403,14 +403,14 @@ export default function QuranTajweedPage() {
           "@type": "Course",
           name: "علم التجويد",
           description: "قواعد تجويد القرآن الكريم من أحكام النون الساكنة إلى المدود وصفات الحروف",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
-          url: "https://majlisilm.com/quran/tajweed",
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+          url: "https://www.majlisilm.com/quran/tajweed",
           inLanguage: "ar",
           about: { "@type": "Thing", name: "تجويد القرآن الكريم" },
           hasCourseInstance: CATEGORIES.filter((c) => c !== "الكل").map((cat) => ({
             "@type": "CourseInstance",
             name: cat,
-            url: `https://majlisilm.com/quran/tajweed?cat=${encodeURIComponent(cat)}`,
+            url: `https://www.majlisilm.com/quran/tajweed?cat=${encodeURIComponent(cat)}`,
           })),
         },
       ],
@@ -508,7 +508,7 @@ export default function QuranTajweedPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="أحكام التجويد — المجلس العلمي" url="https://majlisilm.com/quran-tajweed" />
+        <ShareButtons title="أحكام التجويد — المجلس العلمي" url="https://www.majlisilm.com/quran-tajweed" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="quran" title="اختبر معلوماتك في علم التجويد" count={4} />

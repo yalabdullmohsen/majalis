@@ -176,7 +176,7 @@ export default function SiteMapPage() {
       path: "/sitemap",
       title: "كل الأقسام | المجلس العلمي",
       description: "دليل شامل بجميع أقسام المجلس العلمي من قرآن وحديث وفقه وعقيدة وسيرة وأدوات التعلم.",
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "دليل أقسام المجلس العلمي", url: "https://majlisilm.com/sitemap", about: { "@type": "WebSite", name: "المجلس العلمي", url: "https://majlisilm.com" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "دليل أقسام المجلس العلمي", url: "https://www.majlisilm.com/sitemap", about: { "@type": "WebSite", name: "المجلس العلمي", url: "https://www.majlisilm.com" } }],
     });
   }, []);
 
@@ -208,7 +208,7 @@ export default function SiteMapPage() {
         ))}
       </main>
       <div className="twh-share">
-        <ShareButtons title="دليل أقسام المجلس العلمي" url="https://majlisilm.com/sitemap" />
+        <ShareButtons title="دليل أقسام المجلس العلمي" url="https://www.majlisilm.com/sitemap" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["quran", "hadith", "fiqh", "aqeeda"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />

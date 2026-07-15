@@ -44,7 +44,7 @@ export default function ContactPage() {
       title: "تواصل معنا | المجلس العلمي",
       description: "تواصل مع فريق المجلس العلمي، تقرير خطأ، اقتراح محتوى، شراكات مؤسسية، أو طلبات تقنية.",
       keywords: ["تواصل", "المجلس العلمي", "الدعم", "اقتراح محتوى", "إبلاغ عن خطأ"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "ContactPage", name: "تواصل مع المجلس العلمي", url: "https://majlisilm.com/contact", about: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "ContactPage", name: "تواصل مع المجلس العلمي", url: "https://www.majlisilm.com/contact", about: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" } }],
     });
   }, []);
 
@@ -128,7 +128,7 @@ export default function ContactPage() {
       </LegalSection>
 
       <div className="twh-share">
-        <ShareButtons title="تواصل مع المجلس العلمي" url="https://majlisilm.com/contact" />
+        <ShareButtons title="تواصل مع المجلس العلمي" url="https://www.majlisilm.com/contact" />
       </div>
       <LegalBackLink />
     </LegalPageLayout>

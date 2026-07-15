@@ -404,7 +404,7 @@ export default function UserStatsPage() {
       </nav>
 
       <div className="twh-share">
-        <ShareButtons title="إحصاءات التعلم — المجلس العلمي" url="https://majlisilm.com/my-stats" />
+        <ShareButtons title="إحصاءات التعلم — المجلس العلمي" url="https://www.majlisilm.com/my-stats" />
       </div>
     </div>
   );

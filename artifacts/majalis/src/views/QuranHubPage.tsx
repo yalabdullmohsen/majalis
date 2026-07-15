@@ -135,7 +135,7 @@ export default function QuranHubPage() {
             position: i + 1,
             name: s.title,
             description: s.desc,
-            url: `https://majlisilm.com${s.href}`,
+            url: `https://www.majlisilm.com${s.href}`,
           })),
         },
       ],
@@ -213,7 +213,7 @@ export default function QuranHubPage() {
       />
 
       <div className="twh-share">
-        <ShareButtons title="مركز القرآن الكريم — المجلس العلمي" url="https://majlisilm.com/quran-hub" />
+        <ShareButtons title="مركز القرآن الكريم — المجلس العلمي" url="https://www.majlisilm.com/quran-hub" />
       </div>
     </div>
   );

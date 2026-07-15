@@ -3,7 +3,7 @@
  */
 
 const SITE_NAME = "المجلس العلمي";
-const SITE_URL = "https://majlisilm.com";
+const SITE_URL = "https://www.majlisilm.com";
 
 const SCHEMA_MAP = {
   fatwa: "FAQPage",

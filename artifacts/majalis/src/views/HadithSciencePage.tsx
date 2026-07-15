@@ -969,7 +969,7 @@ export default function HadithSciencePage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${t.term}: ${t.definition.slice(0, 60)}`,
-            url: `https://majlisilm.com/hadith-science#${t.id}`,
+            url: `https://www.majlisilm.com/hadith-science#${t.id}`,
           })),
         },
       ],
@@ -1104,7 +1104,7 @@ export default function HadithSciencePage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="علوم الحديث — المجلس العلمي" url="https://majlisilm.com/hadith-science" />
+        <ShareButtons title="علوم الحديث — المجلس العلمي" url="https://www.majlisilm.com/hadith-science" />
       </div>
 
       {/* مصادر للمزيد */}

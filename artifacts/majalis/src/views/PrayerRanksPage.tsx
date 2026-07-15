@@ -289,7 +289,7 @@ export function PrayerRanksContent() {
         </ul>
       </section>
       <div className="twh-share">
-        <ShareButtons title="فضائل الصلاة ومراتبها — المجلس العلمي" url="https://majlisilm.com/prayer-ranks" />
+        <ShareButtons title="فضائل الصلاة ومراتبها — المجلس العلمي" url="https://www.majlisilm.com/prayer-ranks" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في فقه الصلاة" count={4} />
@@ -305,7 +305,7 @@ export default function PrayerRanksPage() {
       title: "فضائل الصلاة ومراتبها | المجلس العلمي",
       description: "مراتب الناس الخمسة في الصلاة بحسب ابن القيم، مع فضائل الصلاة من القرآن والسنة الصحيحة ووصايا في إصلاح الصلاة.",
       keywords: ["فضائل الصلاة", "مراتب الصلاة", "الصلاة في الإسلام", "أهمية الصلاة", "فقه الصلاة", "خشوع"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "فضائل الصلاة ومراتبها", url: "https://majlisilm.com/prayer-ranks", about: { "@type": "Thing", name: "فضائل الصلاة في الإسلام" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "فضائل الصلاة ومراتبها", url: "https://www.majlisilm.com/prayer-ranks", about: { "@type": "Thing", name: "فضائل الصلاة في الإسلام" } }],
     });
   }, []);
 

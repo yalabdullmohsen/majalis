@@ -493,7 +493,7 @@ export default function ShimaelPage() {
             "@type": "ListItem",
             position: i + 1,
             name: b.title,
-            url: `https://majlisilm.com/shamael#khalq-${b.id}`,
+            url: `https://www.majlisilm.com/shamael#khalq-${b.id}`,
           })),
         },
       ],
@@ -755,7 +755,7 @@ export default function ShimaelPage() {
         )}
 
       <div className="twh-share">
-        <ShareButtons title="الشمائل المحمدية — المجلس العلمي" url="https://majlisilm.com/shimail" />
+        <ShareButtons title="الشمائل المحمدية — المجلس العلمي" url="https://www.majlisilm.com/shimail" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="sira" title="اختبر معلوماتك في السيرة النبوية" count={4} />

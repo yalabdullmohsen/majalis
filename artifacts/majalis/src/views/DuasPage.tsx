@@ -1072,7 +1072,7 @@ export default function DuasPage() {
             "@type": "ListItem",
             position: i + 1,
             name: d.title,
-            url: `https://majlisilm.com/duas#${d.id}`,
+            url: `https://www.majlisilm.com/duas#${d.id}`,
           })),
         },
       ],
@@ -1219,7 +1219,7 @@ export default function DuasPage() {
       />
 
       <div className="twh-share">
-        <ShareButtons title="الأدعية الشرعية — المجلس العلمي" url="https://majlisilm.com/duas" />
+        <ShareButtons title="الأدعية الشرعية — المجلس العلمي" url="https://www.majlisilm.com/duas" />
       </div>
     </div>
   );

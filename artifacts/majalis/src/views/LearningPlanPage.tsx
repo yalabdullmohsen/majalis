@@ -214,9 +214,9 @@ export default function LearningPlanPage() {
           "@context": "https://schema.org",
           "@type": "EducationalOccupationalProgram",
           name: "خطة التعلم الشرعي الشخصية",
-          url: "https://majlisilm.com/learning-plan",
+          url: "https://www.majlisilm.com/learning-plan",
           description: "أنشئ خطة تعلم شرعية مخصصة مع تتبع التقدم اليومي",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
           inLanguage: "ar",
           educationalLevel: "متعدد المستويات",
           hasCourseInstance: { "@type": "CourseInstance", courseMode: "online" },
@@ -388,7 +388,7 @@ export default function LearningPlanPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="خطة التعلم الشخصية — المجلس العلمي" url="https://majlisilm.com/learning-plan" />
+        <ShareButtons title="خطة التعلم الشخصية — المجلس العلمي" url="https://www.majlisilm.com/learning-plan" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["aqeeda", "hadith"]} title="اختبر معلوماتك في العلم الشرعي" count={4} />

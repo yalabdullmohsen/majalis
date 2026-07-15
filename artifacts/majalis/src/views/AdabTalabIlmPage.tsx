@@ -524,7 +524,7 @@ export default function AdabTalabIlmPage() {
             "@type": "ListItem",
             position: i + 1,
             name: f.title,
-            url: `https://majlisilm.com/adab-talab-ilm#fadl-${i + 1}`,
+            url: `https://www.majlisilm.com/adab-talab-ilm#fadl-${i + 1}`,
           })),
         },
       ],
@@ -772,7 +772,7 @@ export default function AdabTalabIlmPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="آداب طالب العلم — المجلس العلمي" url="https://majlisilm.com/adab-talab-ilm" />
+        <ShareButtons title="آداب طالب العلم — المجلس العلمي" url="https://www.majlisilm.com/adab-talab-ilm" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأخلاق والآداب" count={4} />

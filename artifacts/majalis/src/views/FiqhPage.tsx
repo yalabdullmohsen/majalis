@@ -383,7 +383,7 @@ export default function FiqhPage() {
       />
 
       <div className="twh-share">
-        <ShareButtons title="الفقه الإسلامي — المجلس العلمي" url="https://majlisilm.com/fiqh" />
+        <ShareButtons title="الفقه الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/fiqh" />
       </div>
 
       </div>

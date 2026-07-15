@@ -43,10 +43,10 @@ export default function TranscribePage() {
         "@type": "WebApplication",
         name: "تفريغ الدروس والمحاضرات",
         description: "أداة تفريغ الدروس والمحاضرات الإسلامية تلقائياً.",
-        url: "https://majlisilm.com/transcribe",
+        url: "https://www.majlisilm.com/transcribe",
         applicationCategory: "EducationApplication",
         inLanguage: "ar",
-        provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
       }],
     });
   }, []);

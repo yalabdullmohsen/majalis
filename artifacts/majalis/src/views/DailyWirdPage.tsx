@@ -116,7 +116,7 @@ export default function DailyWirdPage() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "الورد اليومي من القرآن الكريم",
-          url: "https://majlisilm.com/daily-wird",
+          url: "https://www.majlisilm.com/daily-wird",
           description: "تتبّع وردك اليومي من القرآن الكريم وتابع تقدمك نحو ختم القرآن",
           applicationCategory: "EducationalApplication",
           inLanguage: "ar",
@@ -352,7 +352,7 @@ export default function DailyWirdPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الورد اليومي — المجلس العلمي" url="https://majlisilm.com/daily-wird" />
+        <ShareButtons title="الورد اليومي — المجلس العلمي" url="https://www.majlisilm.com/daily-wird" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["quran", "akhlaq"]} title="اختبر معلوماتك في القرآن والأخلاق" count={4} />

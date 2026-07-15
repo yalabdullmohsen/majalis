@@ -24,7 +24,7 @@ export default function QuranRadioPage() {
       title: "راديو القرآن الكريم | المجلس العلمي",
       description: "استمع إلى القرآن الكريم عبر الإنترنت، محطات إذاعية متنوعة وبث مباشر للتلاوات القرآنية.",
       keywords: ["راديو قرآن", "بث قرآن", "تلاوة قرآنية", "استماع قرآن", "إذاعة إسلامية"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "راديو القرآن الكريم", url: "https://majlisilm.com/quran-radio", about: { "@type": "Thing", name: "إذاعات وبث القرآن الكريم" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "راديو القرآن الكريم", url: "https://www.majlisilm.com/quran-radio", about: { "@type": "Thing", name: "إذاعات وبث القرآن الكريم" } }],
     });
   }, []);
   useEffect(() => {
@@ -163,7 +163,7 @@ export default function QuranRadioPage() {
         </section>
 
         <div className="twh-share">
-          <ShareButtons title="إذاعات وقنوات القرآن الكريم — المجلس العلمي" url="https://majlisilm.com/quran-radio" />
+          <ShareButtons title="إذاعات وقنوات القرآن الكريم — المجلس العلمي" url="https://www.majlisilm.com/quran-radio" />
         </div>
         <div className="px-4 pb-6 mt-4">
           <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />

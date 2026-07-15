@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
  * Smoke-test production URLs after deploy.
- * Usage: node scripts/verify-production-urls.mjs [--base=https://majlisilm.com]
+ * Usage: node scripts/verify-production-urls.mjs [--base=https://www.majlisilm.com]
  */
 
-const base = process.argv.find((a) => a.startsWith("--base="))?.slice(7) || "https://majlisilm.com";
+const base = process.argv.find((a) => a.startsWith("--base="))?.slice(7) || "https://www.majlisilm.com";
 
 const pages = [
   "/",

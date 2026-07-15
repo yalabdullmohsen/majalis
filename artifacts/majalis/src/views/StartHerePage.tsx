@@ -145,7 +145,7 @@ export default function StartHerePage() {
           "@type": "HowTo",
           name: "كيف تبدأ طريق طالب العلم",
           description: "مسار تعريفي مرتّب لطالب العلم المبتدئ",
-          url: "https://majlisilm.com/start-here",
+          url: "https://www.majlisilm.com/start-here",
           inLanguage: "ar",
           step: STEPS.map((s) => ({
             "@type": "HowToStep",

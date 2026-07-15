@@ -35,7 +35,7 @@ export default function MuezzinFavoritesPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "المؤذنون المفضلون",
-          url: "https://majlisilm.com/muezzins/favorites",
+          url: "https://www.majlisilm.com/muezzins/favorites",
           description: "أذان مؤذنيك المفضلين مع إمكانية الاستماع والتقييم واختيار الصوت الافتراضي",
           about: { "@type": "Thing", name: "تلاوات الأذان الإسلامي" },
         },
@@ -169,7 +169,7 @@ export default function MuezzinFavoritesPage() {
         </div>
       )}
       <div className="twh-share">
-        <ShareButtons title="المؤذنون المفضلون — المجلس العلمي" url="https://majlisilm.com/muezzins/favorites" />
+        <ShareButtons title="المؤذنون المفضلون — المجلس العلمي" url="https://www.majlisilm.com/muezzins/favorites" />
       </div>
     </div>
   );

@@ -33,7 +33,7 @@ export default function CertificateVerifyPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "التحقق من الشهادة العلمية",
-          url: "https://majlisilm.com/learning/certificates",
+          url: "https://www.majlisilm.com/learning/certificates",
           description: "التحقق من صحة الشهادات العلمية الصادرة من المجلس العلمي",
           about: { "@type": "Thing", name: "الشهادات العلمية الإسلامية" },
         },
@@ -189,7 +189,7 @@ export default function CertificateVerifyPage() {
         <Link href="/contact" className="cvp-back-link">تواصل معنا</Link>
       </div>
       <div className="twh-share">
-        <ShareButtons title="التحقق من الشهادة — المجلس العلمي" url="https://majlisilm.com/learning/certificate" />
+        <ShareButtons title="التحقق من الشهادة — المجلس العلمي" url="https://www.majlisilm.com/learning/certificate" />
       </div>
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 1rem 1.5rem" }}>
         <SectionQuiz categoryId={["fiqh","aqeeda","hadith"]} title="اختبر معلوماتك الشرعية" count={3} />

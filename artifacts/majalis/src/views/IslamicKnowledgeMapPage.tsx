@@ -342,7 +342,7 @@ export default function IslamicKnowledgeMapPage() {
       path: "/knowledge-map",
       title: "الخريطة المعرفية الإسلامية | المجلس العلمي",
       description: "استكشف ترابط العلوم الإسلامية، القرآن والحديث والفقه والتفسير والسيرة والأذكار ومئات المصادر",
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الخريطة المعرفية الإسلامية", url: "https://majlisilm.com/knowledge-map", about: { "@type": "Thing", name: "ترابط العلوم الإسلامية" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الخريطة المعرفية الإسلامية", url: "https://www.majlisilm.com/knowledge-map", about: { "@type": "Thing", name: "ترابط العلوم الإسلامية" } }],
     });
   }, []);
 
@@ -538,7 +538,7 @@ export default function IslamicKnowledgeMapPage() {
       </section>
 
       <div className="twh-share">
-        <ShareButtons title="خريطة المعرفة الإسلامية — المجلس العلمي" url="https://majlisilm.com/islamic-knowledge-map" />
+        <ShareButtons title="خريطة المعرفة الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/islamic-knowledge-map" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["aqeeda", "hadith", "fiqh"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />

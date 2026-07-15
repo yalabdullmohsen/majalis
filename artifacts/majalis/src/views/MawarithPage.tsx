@@ -259,7 +259,7 @@ export default function MawarithPage() {
             "@type": "ListItem",
             position: i + 1,
             name: w.name,
-            url: `https://majlisilm.com/mawarith#warith-${i + 1}`,
+            url: `https://www.majlisilm.com/mawarith#warith-${i + 1}`,
           })),
         },
       ],
@@ -536,7 +536,7 @@ export default function MawarithPage() {
 
         {/* related */}
         <div className="twh-share">
-          <ShareButtons title="علم المواريث — المجلس العلمي" url="https://majlisilm.com/mawarith" />
+          <ShareButtons title="علم المواريث — المجلس العلمي" url="https://www.majlisilm.com/mawarith" />
         </div>
 
         <nav className="mw-related" aria-label="صفحات ذات صلة">

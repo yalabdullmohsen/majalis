@@ -61,9 +61,9 @@ export default function LearningPathSciencePage() {
             "@context": "https://schema.org",
             "@type": "Course",
             name: d.science.name,
-            url: `https://majlisilm.com/learning-path/${scienceSlug}`,
+            url: `https://www.majlisilm.com/learning-path/${scienceSlug}`,
             description: d.science.description ?? `مسار تعليمي في ${d.science.name}`,
-            provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+            provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
             inLanguage: "ar",
             numberOfCredits: d.levels.reduce((acc, l) => acc + l.books.length, 0),
           }],
@@ -169,7 +169,7 @@ export default function LearningPathSciencePage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title={`${science.name} — مسار التعلم | المجلس العلمي`} url={`https://majlisilm.com/learning-path/${science.slug}`} />
+          <ShareButtons title={`${science.name} — مسار التعلم | المجلس العلمي`} url={`https://www.majlisilm.com/learning-path/${science.slug}`} />
         </div>
         <div className="px-4 pb-6 mt-4">
           <SectionQuiz categoryId={["quran", "hadith", "fiqh"]} title="اختبر معلوماتك في أصول العلوم الشرعية" count={4} />

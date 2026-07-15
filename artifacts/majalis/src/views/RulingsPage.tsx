@@ -100,10 +100,10 @@ export default function RulingsPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "موسوعة الأحكام الشرعية",
-          url: "https://majlisilm.com/rulings",
+          url: "https://www.majlisilm.com/rulings",
           description: "أحكام الفقه الإسلامي مرتّبةً حسب الأبواب والتصنيفات الفقهية",
           about: { "@type": "Thing", name: "الأحكام الشرعية في الفقه الإسلامي" },
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
         },
       ],
     });
@@ -297,7 +297,7 @@ export default function RulingsPage() {
       </aside>
 
       <div className="twh-share">
-        <ShareButtons title="الأحكام الشرعية — المجلس العلمي" url="https://majlisilm.com/rulings" />
+        <ShareButtons title="الأحكام الشرعية — المجلس العلمي" url="https://www.majlisilm.com/rulings" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الأحكام الشرعية" count={4} />

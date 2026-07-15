@@ -256,7 +256,7 @@ function DetailContent({ university: u }: { university: University }) {
         </div>
 
         <div className="twh-share">
-          <ShareButtons title={`${u.name_ar} — دليل الجامعات الإسلامية | المجلس العلمي`} url={`https://majlisilm.com/universities/${u.slug}`} />
+          <ShareButtons title={`${u.name_ar} — دليل الجامعات الإسلامية | المجلس العلمي`} url={`https://www.majlisilm.com/universities/${u.slug}`} />
         </div>
         <div className="px-4 pb-6 mt-4">
           <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
@@ -288,7 +288,7 @@ export default function UniversityDetailPage() {
             "@context": "https://schema.org",
             "@type": "EducationalOrganization",
             name: university.name_ar,
-            url: `https://majlisilm.com/universities/${slug}`,
+            url: `https://www.majlisilm.com/universities/${slug}`,
             description: university.about || `${university.name_ar} — بيانات وبرامج أكاديمية`,
             ...(university.website_url ? { sameAs: university.website_url } : {}),
           },

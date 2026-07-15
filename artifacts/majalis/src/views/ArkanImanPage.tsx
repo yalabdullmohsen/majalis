@@ -188,7 +188,7 @@ export default function ArkanImanPage() {
             "@type": "ListItem",
             position: i + 1,
             name: r.title,
-            url: `https://majlisilm.com/arkan-iman#rukn-${r.num}`,
+            url: `https://www.majlisilm.com/arkan-iman#rukn-${r.num}`,
           })),
         },
       ],
@@ -342,7 +342,7 @@ export default function ArkanImanPage() {
         </div>
       </section>
       <div className="zk-share">
-        <ShareButtons title="أركان الإيمان الستة — المجلس العلمي" url="https://majlisilm.com/arkan-iman" />
+        <ShareButtons title="أركان الإيمان الستة — المجلس العلمي" url="https://www.majlisilm.com/arkan-iman" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة" count={4} />

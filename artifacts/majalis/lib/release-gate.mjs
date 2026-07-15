@@ -31,7 +31,7 @@ export const BLOCK_REASONS = [
 ];
 
 export const PRODUCTION_BASE =
-  process.env.MAJALIS_PRODUCTION_URL || "https://majlisilm.com";
+  process.env.MAJALIS_PRODUCTION_URL || "https://www.majlisilm.com";
 
 export const USER_FACING_ROUTES = [
   "/",

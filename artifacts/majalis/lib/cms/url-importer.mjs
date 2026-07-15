@@ -66,7 +66,7 @@ function extractMeta(html, property) {
 export async function fetchUrlContent(url) {
   const res = await fetch(url, {
     headers: {
-      "User-Agent": "MajalisBot/1.0 (+https://majlisilm.com)",
+      "User-Agent": "MajalisBot/1.0 (+https://www.majlisilm.com)",
       Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     },
     redirect: "follow",

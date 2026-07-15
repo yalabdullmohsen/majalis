@@ -889,7 +889,7 @@ export default function IslamicSectsPage() {
             "@type": "ListItem",
             position: i + 1,
             name: s.fullName || s.name,
-            url: `https://majlisilm.com/islamic-sects#${s.id}`,
+            url: `https://www.majlisilm.com/islamic-sects#${s.id}`,
           })),
         },
       ],

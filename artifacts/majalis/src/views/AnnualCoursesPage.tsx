@@ -60,7 +60,7 @@ export default function AnnualCoursesPage() {
           "@type": "ListItem",
           position: i + 1,
           name: c.title || c.name,
-          url: `https://majlisilm.com/annual-courses/${c.id}`,
+          url: `https://www.majlisilm.com/annual-courses/${c.id}`,
         })),
       }],
     });
@@ -121,7 +121,7 @@ export default function AnnualCoursesPage() {
         </div>
       )}
       <div className="twh-share">
-        <ShareButtons title="الدورات العلمية السنوية — المجلس العلمي" url="https://majlisilm.com/annual-courses" />
+        <ShareButtons title="الدورات العلمية السنوية — المجلس العلمي" url="https://www.majlisilm.com/annual-courses" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["fiqh", "akhlaq"]} title="اختبر معلوماتك في العلم الشرعي" count={4} />

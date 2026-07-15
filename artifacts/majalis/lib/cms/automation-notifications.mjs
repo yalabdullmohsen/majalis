@@ -29,7 +29,7 @@ async function notifyAdminViaTelegram({ newCount, sourceName, link }) {
       ? "📚 درس جديد تلقائي بانتظار مراجعتك"
       : `📚 ${newCount} دروس جديدة تلقائياً بانتظار مراجعتك`;
   const sourceText = sourceName ? `\nالمصدر: <b>${sourceName}</b>` : "";
-  const text = `${headline}${sourceText}\n\n🔗 <a href="https://majlisilm.com${link}">فتح مركز المراجعة</a>`;
+  const text = `${headline}${sourceText}\n\n🔗 <a href="https://www.majlisilm.com${link}">فتح مركز المراجعة</a>`;
 
   try {
     await sendMessage(chatId, text, { parse_mode: "HTML", disable_web_page_preview: true });

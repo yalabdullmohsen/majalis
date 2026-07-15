@@ -211,7 +211,7 @@ export default function JannaNaarPage() {
             "@type": "ListItem",
             position: i + 1,
             name: a.title,
-            url: `https://majlisilm.com/janna-naar#janna-${i + 1}`,
+            url: `https://www.majlisilm.com/janna-naar#janna-${i + 1}`,
           })),
         },
       ],
@@ -350,7 +350,7 @@ export default function JannaNaarPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الجنة والنار — المجلس العلمي" url="https://majlisilm.com/janna-naar" />
+        <ShareButtons title="الجنة والنار — المجلس العلمي" url="https://www.majlisilm.com/janna-naar" />
       </div>
       <div className="px-4 pb-6 mt-6">
         <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة" count={4} />

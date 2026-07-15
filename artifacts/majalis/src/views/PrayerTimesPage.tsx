@@ -105,14 +105,14 @@ export default function PrayerTimesPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "مواقيت الصلاة في الكويت",
-          url: "https://majlisilm.com/prayer-times",
+          url: "https://www.majlisilm.com/prayer-times",
           description: "مواقيت الصلوات الخمس لجميع مناطق الكويت محسوبة فلكياً",
           about: {
             "@type": "Thing",
             name: "مواقيت الصلاة",
             description: "أوقات الصلوات الخمس الفجر والظهر والعصر والمغرب والعشاء",
           },
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
           areaServed: { "@type": "Country", name: "الكويت" },
         },
       ],
@@ -298,7 +298,7 @@ export default function PrayerTimesPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="مواقيت الصلاة — المجلس العلمي" url="https://majlisilm.com/prayer-times" />
+        <ShareButtons title="مواقيت الصلاة — المجلس العلمي" url="https://www.majlisilm.com/prayer-times" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في أحكام الصلاة" count={4} />

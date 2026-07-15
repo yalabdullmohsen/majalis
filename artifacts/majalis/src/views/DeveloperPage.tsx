@@ -108,9 +108,9 @@ export default function DeveloperPage() {
         "@type": "TechArticle",
         headline: "توثيق واجهة برمجة التطبيقات — المجلس العلمي",
         description: "وثائق API المجلس العلمي لدمج المحتوى الإسلامي في التطبيقات عبر REST API مفتوح.",
-        url: "https://majlisilm.com/developer",
+        url: "https://www.majlisilm.com/developer",
         inLanguage: "ar",
-        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
       }],
     });
   }, []);

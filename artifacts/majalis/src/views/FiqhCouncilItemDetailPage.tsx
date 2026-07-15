@@ -101,7 +101,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
               ? { "@type": "Organization", name: item.source_name }
               : undefined,
           inLanguage: "ar",
-          url: `https://majlisilm.com${path}`,
+          url: `https://www.majlisilm.com${path}`,
         },
         breadcrumbJsonLd([
           { name: "الرئيسية", path: "/" },

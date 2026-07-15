@@ -148,7 +148,7 @@ export default function LessonDetailPage({
         name: kuwaitLesson.title,
         description: kuwaitLesson.description || `درس ${kuwaitLesson.title} للشيخ ${kuwaitLesson.sheikhName}`,
         location: { "@type": "Place", name: kuwaitLesson.mosque, address: { "@type": "PostalAddress", addressLocality: kuwaitLesson.governorate, addressCountry: "KW" } },
-        organizer: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        organizer: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
         performer: { "@type": "Person", name: kuwaitLesson.sheikhName },
         ...(kuwaitLesson.startDate ? { startDate: kuwaitLesson.startDate } : {}),
         inLanguage: "ar",

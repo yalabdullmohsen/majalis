@@ -167,7 +167,7 @@ export default function ScholarProfilePage() {
         alternateName: scholar.name,
         description: scholar.bio,
         knowsAbout: scholar.specialty,
-        url: `https://majlisilm.com/scholars/${scholar.id}`,
+        url: `https://www.majlisilm.com/scholars/${scholar.id}`,
       }],
     });
   }, [scholar, id]);
@@ -260,7 +260,7 @@ export default function ScholarProfilePage() {
       <div className="twh-share">
         <ShareButtons
           title={`${scholar.name} — المجلس العلمي`}
-          url={`https://majlisilm.com/scholars/${scholar.id}`}
+          url={`https://www.majlisilm.com/scholars/${scholar.id}`}
         />
       </div>
 

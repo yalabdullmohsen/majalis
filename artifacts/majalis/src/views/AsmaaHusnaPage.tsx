@@ -173,7 +173,7 @@ export default function AsmaaHusnaPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${a.arabic} — ${a.meaning}`,
-            url: `https://majlisilm.com/asma-husna#name-${a.num}`,
+            url: `https://www.majlisilm.com/asma-husna#name-${a.num}`,
           })),
         },
       ],
@@ -299,7 +299,7 @@ export default function AsmaaHusnaPage() {
       />
 
       <div className="twh-share">
-        <ShareButtons title="الأسماء الحسنى — المجلس العلمي" url="https://majlisilm.com/asma-husna" />
+        <ShareButtons title="الأسماء الحسنى — المجلس العلمي" url="https://www.majlisilm.com/asma-husna" />
       </div>
 
       {/* ═══ نافذة التفاصيل ═══ */}

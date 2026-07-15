@@ -305,8 +305,8 @@ export default function UploadPage() {
         "@type": "WebPage",
         name: "رفع أذان أو درس",
         description: "أرسل تسجيل أذان أو درس علمي للمجلس العلمي.",
-        url: "https://majlisilm.com/upload",
-        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        url: "https://www.majlisilm.com/upload",
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
       }],
     });
   }, []);

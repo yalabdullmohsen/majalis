@@ -65,10 +65,10 @@ export default function LearningPathBookPage() {
             "@type": "Book",
             name: d.book.title,
             author: d.book.author ? { "@type": "Person", name: d.book.author } : undefined,
-            url: `https://majlisilm.com/learning-path/book/${bookId}`,
+            url: `https://www.majlisilm.com/learning-path/book/${bookId}`,
             description: d.book.summary ?? `كتاب ${d.book.title} في ${d.book.science.name}`,
             inLanguage: "ar",
-            publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+            publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
           }],
         });
       })
@@ -298,7 +298,7 @@ export default function LearningPathBookPage() {
         </Suspense>
       )}
       <div className="twh-share">
-        <ShareButtons title="كتاب المسار التعليمي — المجلس العلمي" url="https://majlisilm.com/learning/books" />
+        <ShareButtons title="كتاب المسار التعليمي — المجلس العلمي" url="https://www.majlisilm.com/learning/books" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["fiqh", "aqeeda", "hadith"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />

@@ -452,7 +452,7 @@ export default function AlamatSaahPage() {
             "@type": "ListItem",
             position: i + 1,
             name: a.title,
-            url: `https://majlisilm.com/alamat-saah#sughra-${i + 1}`,
+            url: `https://www.majlisilm.com/alamat-saah#sughra-${i + 1}`,
           })),
         },
       ],
@@ -615,7 +615,7 @@ export default function AlamatSaahPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="علامات الساعة — المجلس العلمي" url="https://majlisilm.com/alamat-saah" />
+        <ShareButtons title="علامات الساعة — المجلس العلمي" url="https://www.majlisilm.com/alamat-saah" />
       </div>
       <div className="px-4 pb-6 mt-6">
         <SectionQuiz categoryId={["aqeeda", "tarikh"]} title="اختبر معلوماتك في العقيدة والتاريخ" count={4} />

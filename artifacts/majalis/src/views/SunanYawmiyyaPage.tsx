@@ -919,7 +919,7 @@ export default function SunanYawmiyyaPage() {
             "@type": "ListItem",
             position: i + 1,
             name: s.title,
-            url: `https://majlisilm.com/sunan-yawmiyya#${s.id}`,
+            url: `https://www.majlisilm.com/sunan-yawmiyya#${s.id}`,
           })),
         },
       ],
@@ -1067,7 +1067,7 @@ export default function SunanYawmiyyaPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="السنن اليومية — المجلس العلمي" url="https://majlisilm.com/sunan-yawmiyya" />
+        <ShareButtons title="السنن اليومية — المجلس العلمي" url="https://www.majlisilm.com/sunan-yawmiyya" />
       </div>
 
       {/* صفحات ذات صلة */}

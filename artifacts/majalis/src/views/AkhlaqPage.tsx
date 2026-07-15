@@ -1159,7 +1159,7 @@ export default function AkhlaqPage() {
             "@type": "ListItem",
             position: i + 1,
             name: a.title,
-            url: `https://majlisilm.com/akhlaq#${a.id}`,
+            url: `https://www.majlisilm.com/akhlaq#${a.id}`,
           })),
         },
       ],
@@ -1301,7 +1301,7 @@ export default function AkhlaqPage() {
       />
 
       <div className="twh-share">
-        <ShareButtons title="الأخلاق الإسلامية — المجلس العلمي" url="https://majlisilm.com/akhlaq" />
+        <ShareButtons title="الأخلاق الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/akhlaq" />
       </div>
 
       {/* روابط ذات صلة */}

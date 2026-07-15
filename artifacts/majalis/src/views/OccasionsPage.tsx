@@ -43,14 +43,14 @@ export default function OccasionsPage() {
           description: "تقويم الأعياد والمناسبات الدينية في الشهور الهجرية",
           numberOfItems: 12,
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "شهر رمضان المبارك", url: "https://majlisilm.com/occasions?month=9" },
-            { "@type": "ListItem", position: 2, name: "عيد الفطر المبارك", url: "https://majlisilm.com/occasions?month=10" },
-            { "@type": "ListItem", position: 3, name: "عيد الأضحى المبارك", url: "https://majlisilm.com/occasions?month=12" },
-            { "@type": "ListItem", position: 4, name: "ذكرى الهجرة النبوية", url: "https://majlisilm.com/occasions?month=1" },
-            { "@type": "ListItem", position: 5, name: "ليلة القدر", url: "https://majlisilm.com/occasions?month=9" },
-            { "@type": "ListItem", position: 6, name: "يوم عرفة", url: "https://majlisilm.com/occasions?month=12" },
-            { "@type": "ListItem", position: 7, name: "الأشهر الحرم", url: "https://majlisilm.com/occasions" },
-            { "@type": "ListItem", position: 8, name: "النصف من شعبان", url: "https://majlisilm.com/occasions?month=8" },
+            { "@type": "ListItem", position: 1, name: "شهر رمضان المبارك", url: "https://www.majlisilm.com/occasions?month=9" },
+            { "@type": "ListItem", position: 2, name: "عيد الفطر المبارك", url: "https://www.majlisilm.com/occasions?month=10" },
+            { "@type": "ListItem", position: 3, name: "عيد الأضحى المبارك", url: "https://www.majlisilm.com/occasions?month=12" },
+            { "@type": "ListItem", position: 4, name: "ذكرى الهجرة النبوية", url: "https://www.majlisilm.com/occasions?month=1" },
+            { "@type": "ListItem", position: 5, name: "ليلة القدر", url: "https://www.majlisilm.com/occasions?month=9" },
+            { "@type": "ListItem", position: 6, name: "يوم عرفة", url: "https://www.majlisilm.com/occasions?month=12" },
+            { "@type": "ListItem", position: 7, name: "الأشهر الحرم", url: "https://www.majlisilm.com/occasions" },
+            { "@type": "ListItem", position: 8, name: "النصف من شعبان", url: "https://www.majlisilm.com/occasions?month=8" },
           ],
         },
       ],
@@ -161,7 +161,7 @@ export default function OccasionsPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="المناسبات الإسلامية — المجلس العلمي" url="https://majlisilm.com/occasions" />
+        <ShareButtons title="المناسبات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/occasions" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="tarikh" title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />

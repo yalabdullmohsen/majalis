@@ -5,7 +5,7 @@ import {
   type FiqhItemType,
 } from "./fiqh-council-types";
 
-const SITE = "https://majlisilm.com";
+const SITE = "https://www.majlisilm.com";
 
 export type FiqhCitationFormat = "short" | "academic" | "links" | "research";
 

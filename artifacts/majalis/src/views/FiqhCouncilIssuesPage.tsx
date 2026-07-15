@@ -87,7 +87,7 @@ export default function FiqhCouncilIssuesPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="المسائل الفقهية — المجمع الفقهي | المجلس العلمي" url="https://majlisilm.com/fiqh-council/issues" />
+        <ShareButtons title="المسائل الفقهية — المجمع الفقهي | المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/issues" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في المسائل الفقهية" count={4} />

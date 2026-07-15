@@ -41,8 +41,8 @@ export default function CarModePage() {
         "@type": "WebPage",
         name: "وضع السيارة",
         description: "استمع إلى الدروس العلمية والقرآن الكريم أثناء القيادة، واجهة مبسطة آمنة للاستخدام في السيارة.",
-        url: "https://majlisilm.com/car-mode",
-        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        url: "https://www.majlisilm.com/car-mode",
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
       }],
     });
   }, []);

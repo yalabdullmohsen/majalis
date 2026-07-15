@@ -75,7 +75,7 @@ export default function LearningPathsPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "المسارات العلمية الشرعية",
-          url: "https://majlisilm.com/learning-path",
+          url: "https://www.majlisilm.com/learning-path",
           description: "مسارات تعليمية منظمة في العلوم الشرعية من المبتدئ إلى المتقدم",
           about: { "@type": "Thing", name: "التعليم الإسلامي والمسارات الشرعية" },
         },
@@ -260,7 +260,7 @@ export default function LearningPathsPage() {
         </div>
       </section>
       <div className="twh-share">
-        <ShareButtons title="المسارات التعليمية الشرعية — المجلس العلمي" url="https://majlisilm.com/learning/paths" />
+        <ShareButtons title="المسارات التعليمية الشرعية — المجلس العلمي" url="https://www.majlisilm.com/learning/paths" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["fiqh", "aqeeda", "akhlaq"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />

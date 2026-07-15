@@ -70,7 +70,7 @@ export default function FawaidPage({
             "@type": "ListItem",
             position: i + 1,
             name: cat,
-            url: `https://majlisilm.com/fawaid?cat=${encodeURIComponent(cat)}`,
+            url: `https://www.majlisilm.com/fawaid?cat=${encodeURIComponent(cat)}`,
           })),
         },
       ],
@@ -231,7 +231,7 @@ export default function FawaidPage({
       </aside>
 
       <div className="twh-share">
-        <ShareButtons title="الفوائد العلمية — المجلس العلمي" url="https://majlisilm.com/fawaid" />
+        <ShareButtons title="الفوائد العلمية — المجلس العلمي" url="https://www.majlisilm.com/fawaid" />
       </div>
 
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">

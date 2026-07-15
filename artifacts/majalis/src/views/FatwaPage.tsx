@@ -202,7 +202,7 @@ export default function FatwaPage() {
         </div>
       )}
       <div className="twh-share">
-        <ShareButtons title="الفتاوى الشرعية — المجلس العلمي" url="https://majlisilm.com/fatwa" />
+        <ShareButtons title="الفتاوى الشرعية — المجلس العلمي" url="https://www.majlisilm.com/fatwa" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />

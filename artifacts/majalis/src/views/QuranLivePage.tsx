@@ -92,7 +92,7 @@ export default function QuranLivePage() {
       path: "/quran-live",
       title: "البث المباشر للقرآن الكريم | المجلس العلمي",
       description: "بث مباشر من الحرمين الشريفين والإذاعات القرآنية، مكة والمدينة ٢٤ ساعة",
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "البث المباشر للقرآن الكريم", url: "https://majlisilm.com/quran-live", about: { "@type": "Thing", name: "البث المباشر من الحرمين الشريفين" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "البث المباشر للقرآن الكريم", url: "https://www.majlisilm.com/quran-live", about: { "@type": "Thing", name: "البث المباشر من الحرمين الشريفين" } }],
     });
   }, []);
 
@@ -246,7 +246,7 @@ export default function QuranLivePage() {
 
       {/* ── روابط ذات صلة ─────────────────────────────────── */}
       <div className="twh-share">
-        <ShareButtons title="البث المباشر للقرآن الكريم — المجلس العلمي" url="https://majlisilm.com/quran-live" />
+        <ShareButtons title="البث المباشر للقرآن الكريم — المجلس العلمي" url="https://www.majlisilm.com/quran-live" />
       </div>
       <div className="px-4 pb-4 mt-4">
         <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />

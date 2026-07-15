@@ -15,11 +15,11 @@ export default function QuizPage() {
           "@context": "https://schema.org",
           "@type": "Quiz",
           name: "مسابقة المعلومات الإسلامية",
-          url: "https://majlisilm.com/quiz",
+          url: "https://www.majlisilm.com/quiz",
           description: "اختبر معلوماتك الإسلامية في الفقه والقرآن والسيرة والتاريخ",
           educationalLevel: "متعدد المستويات",
           inLanguage: "ar",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
         },
       ],
     });
@@ -29,7 +29,7 @@ export default function QuizPage() {
     <>
       <IslamicQuizGame />
       <div className="twh-share">
-        <ShareButtons title="مسابقة المعلومات الإسلامية — المجلس العلمي" url="https://majlisilm.com/quiz" />
+        <ShareButtons title="مسابقة المعلومات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/quiz" />
       </div>
     </>
   );

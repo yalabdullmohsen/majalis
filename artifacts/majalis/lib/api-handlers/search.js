@@ -232,7 +232,7 @@ const ALLOWED_ORIGINS = new Set(
   [
     process.env.SITE_ORIGIN,
     "https://www.majlisilm.com", // siteUrl المعتمد
-    "https://majlisilm.com",
+    "https://www.majlisilm.com",
     "http://majlisilm.com",
     "http://www.majlisilm.com",
   ].filter(Boolean),

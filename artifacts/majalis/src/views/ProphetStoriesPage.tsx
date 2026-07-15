@@ -290,7 +290,7 @@ function ProphetDetailView({
 
   const share = async () => {
     const text = `${p.arabicName} عليه السلام، ${p.title}\n${p.briefBio.slice(0, 200)}…\n\nمن قصص الأنبياء في المجلس العلمي`;
-    const url = `https://majlisilm.com/prophets/${p.slug}`;
+    const url = `https://www.majlisilm.com/prophets/${p.slug}`;
     try {
       if (navigator.share) {
         await navigator.share({ title: `قصة ${p.arabicName}`, text, url });
@@ -949,7 +949,7 @@ export default function ProphetStoriesPage() {
       />
 
       <div className="twh-share">
-        <ShareButtons title="قصص الأنبياء — المجلس العلمي" url="https://majlisilm.com/prophet-stories" />
+        <ShareButtons title="قصص الأنبياء — المجلس العلمي" url="https://www.majlisilm.com/prophet-stories" />
       </div>
     </div>
   );

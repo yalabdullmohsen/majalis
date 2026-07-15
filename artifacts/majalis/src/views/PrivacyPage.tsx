@@ -11,7 +11,7 @@ export default function PrivacyPage() {
       title: "سياسة الخصوصية | المجلس العلمي",
       description: "سياسة خصوصية المجلس العلمي، كيف نجمع بياناتك ونحميها ونستخدمها.",
       keywords: ["خصوصية", "سياسة خصوصية", "المجلس العلمي", "حماية البيانات"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "سياسة الخصوصية", url: "https://majlisilm.com/privacy", about: { "@type": "Organization", name: "المجلس العلمي" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "سياسة الخصوصية", url: "https://www.majlisilm.com/privacy", about: { "@type": "Organization", name: "المجلس العلمي" } }],
     });
   }, []);
 
@@ -132,7 +132,7 @@ export default function PrivacyPage() {
       </LegalSection>
 
       <div className="twh-share">
-        <ShareButtons title="سياسة الخصوصية — المجلس العلمي" url="https://majlisilm.com/privacy" />
+        <ShareButtons title="سياسة الخصوصية — المجلس العلمي" url="https://www.majlisilm.com/privacy" />
       </div>
       <LegalBackLink />
     </LegalPageLayout>

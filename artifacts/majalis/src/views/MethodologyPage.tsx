@@ -72,12 +72,12 @@ export default function MethodologyPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "منهجيتنا في التوثيق",
-          url: "https://majlisilm.com/methodology",
+          url: "https://www.majlisilm.com/methodology",
           description: "منهجية المجلس العلمي: لا وسم توثيق بلا مراجعة بشرية ومصدر خارجي، ووسم صريح للمحتوى المولَّد آلياً",
           publisher: {
             "@type": "Organization",
             name: "المجلس العلمي",
-            url: "https://majlisilm.com",
+            url: "https://www.majlisilm.com",
           },
           about: {
             "@type": "Thing",

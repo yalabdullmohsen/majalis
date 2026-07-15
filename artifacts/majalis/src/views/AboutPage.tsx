@@ -17,13 +17,13 @@ export default function AboutPage() {
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "المجلس العلمي",
-          url: "https://majlisilm.com",
-          logo: "https://majlisilm.com/logo.png",
+          url: "https://www.majlisilm.com",
+          logo: "https://www.majlisilm.com/logo.png",
           description: "منصة شرعية رقمية كويتية تجمع الدروس والفتاوى والمكتبة والقرآن والأذكار في مرجع موثوق",
           foundingDate: "2024",
           areaServed: { "@type": "Country", name: "الكويت" },
           inLanguage: "ar",
-          sameAs: ["https://majlisilm.com"],
+          sameAs: ["https://www.majlisilm.com"],
         },
       ],
     });
@@ -233,7 +233,7 @@ export default function AboutPage() {
       </LegalSection>
 
       <div className="twh-share">
-        <ShareButtons title="عن المجلس العلمي" url="https://majlisilm.com/about" />
+        <ShareButtons title="عن المجلس العلمي" url="https://www.majlisilm.com/about" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["aqeeda", "akhlaq", "fiqh"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />

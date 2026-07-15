@@ -106,7 +106,7 @@ export default function ScholarlyResearchPage() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "الباحث الشرعي",
-          url: "https://majlisilm.com/scholarly-research",
+          url: "https://www.majlisilm.com/scholarly-research",
           description: "محرك بحث شرعي ذكي بتقنية RAG للبحث في المصادر الإسلامية",
           applicationCategory: "EducationalApplication",
           inLanguage: "ar",
@@ -483,7 +483,7 @@ export default function ScholarlyResearchPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الباحث الشرعي — المجلس العلمي" url="https://majlisilm.com/scholarly-research" />
+        <ShareButtons title="الباحث الشرعي — المجلس العلمي" url="https://www.majlisilm.com/scholarly-research" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["hadith", "fiqh"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />

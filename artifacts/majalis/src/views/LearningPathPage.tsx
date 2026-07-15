@@ -29,9 +29,9 @@ export default function LearningPathPage() {
           "@context": "https://schema.org",
           "@type": "EducationalOccupationalProgram",
           name: "مسارات التعلم الشرعي",
-          url: "https://majlisilm.com/learning-path",
+          url: "https://www.majlisilm.com/learning-path",
           description: "مسارات علمية منهجية في الفقه والعقيدة والتفسير والحديث",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
           inLanguage: "ar",
           educationalLevel: "متعدد المستويات",
         },
@@ -164,7 +164,7 @@ export default function LearningPathPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="المسار التعليمي الإسلامي — المجلس العلمي" url="https://majlisilm.com/learning-path" />
+        <ShareButtons title="المسار التعليمي الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/learning-path" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["aqeeda", "fiqh"]} title="اختبر معلوماتك في أصول العلم الشرعي" count={4} />

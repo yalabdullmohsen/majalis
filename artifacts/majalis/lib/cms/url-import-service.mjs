@@ -10,7 +10,7 @@ import { decodeBase64Image, uploadLessonPoster, validateImageUpload } from "./im
 
 async function fetchRemoteImage(imageUrl) {
   const res = await fetch(imageUrl, {
-    headers: { "User-Agent": "MajalisBot/1.0 (+https://majlisilm.com)", Accept: "image/*" },
+    headers: { "User-Agent": "MajalisBot/1.0 (+https://www.majlisilm.com)", Accept: "image/*" },
     redirect: "follow",
     signal: AbortSignal.timeout(12000),
   });

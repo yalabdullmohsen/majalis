@@ -120,7 +120,7 @@ export default function MuezzinsPage() {
       title: "الأذان والمؤذنون | المجلس العلمي",
       description: "استمع إلى الأذان بأصوات أشهر المؤذنين وخصّص إعدادات الأذان، مكتبة متنوعة من أصوات الأذان العالمية.",
       keywords: ["أذان", "مؤذنون", "صوت الأذان", "أذان اسلامي", "مواقيت الصلاة"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الأذان والمؤذنون", url: "https://majlisilm.com/muezzins", about: { "@type": "Thing", name: "مكتبة أصوات الأذان الإسلامي" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الأذان والمؤذنون", url: "https://www.majlisilm.com/muezzins", about: { "@type": "Thing", name: "مكتبة أصوات الأذان الإسلامي" } }],
     });
   }, []);
 
@@ -328,7 +328,7 @@ export default function MuezzinsPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="مكتبة المؤذنين — المجلس العلمي" url="https://majlisilm.com/muezzins" />
+        <ShareButtons title="مكتبة المؤذنين — المجلس العلمي" url="https://www.majlisilm.com/muezzins" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في أحكام الأذان" count={4} />

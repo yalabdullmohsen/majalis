@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { adminFetch } from "@/lib/admin-api";
 
-const SITE = "https://majlisilm.com";
+const SITE = "https://www.majlisilm.com";
 
 type TrialRow = {
   type: string;

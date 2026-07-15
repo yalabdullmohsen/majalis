@@ -20,7 +20,7 @@ import QRCode from "qrcode";
 // ── ثوابت ────────────────────────────────────────────────────────────────────
 
 const MAX_QUOTE_LENGTH = 500;
-const PLATFORM_URL = "https://majlisilm.com";
+const PLATFORM_URL = "https://www.majlisilm.com";
 
 const VALID_STYLES = new Set(["default", "apa", "mla", "chicago", "turabian"]);
 const ACADEMIC_TYPES = new Set(["article", "research"]);

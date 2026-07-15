@@ -84,7 +84,7 @@ function UniversitiesContent() {
             "@type": "ListItem",
             position: i + 1,
             name: `الجامعات الإسلامية في ${country}`,
-            url: `https://majlisilm.com/universities?country=${encodeURIComponent(country)}`,
+            url: `https://www.majlisilm.com/universities?country=${encodeURIComponent(country)}`,
           })),
         },
       ],
@@ -216,7 +216,7 @@ function UniversitiesContent() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الجامعات الإسلامية — المجلس العلمي" url="https://majlisilm.com/universities" />
+        <ShareButtons title="الجامعات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/universities" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />

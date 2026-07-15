@@ -45,7 +45,7 @@ export default function AssistantPage() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "المساعد العلمي الذكي",
-          url: "https://majlisilm.com/assistant",
+          url: "https://www.majlisilm.com/assistant",
           description: "مساعد شرعي ذكي يجيب على أسئلتك في الفقه والعقيدة والقرآن والحديث",
           applicationCategory: "EducationalApplication",
           inLanguage: "ar",

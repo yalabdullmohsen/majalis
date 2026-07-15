@@ -379,7 +379,7 @@ export default function TawhidPage() {
             "@type": "ListItem",
             position: i + 1,
             name: s.title,
-            url: `https://majlisilm.com${s.href}`,
+            url: `https://www.majlisilm.com${s.href}`,
           })),
         },
       ],
@@ -563,7 +563,7 @@ export default function TawhidPage() {
       />
 
       <div className="twh-share">
-        <ShareButtons title="العقيدة والتوحيد — المجلس العلمي" url="https://majlisilm.com/tawhid" />
+        <ShareButtons title="العقيدة والتوحيد — المجلس العلمي" url="https://www.majlisilm.com/tawhid" />
       </div>
     </div>
   );

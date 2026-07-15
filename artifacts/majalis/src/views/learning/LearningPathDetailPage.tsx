@@ -88,9 +88,9 @@ export default function LearningPathDetailPage() {
           "@context": "https://schema.org",
           "@type": "Course",
           name: "مسار تعليمي شرعي",
-          url: `https://majlisilm.com/learning/paths/${slug}`,
+          url: `https://www.majlisilm.com/learning/paths/${slug}`,
           description: "تفاصيل مسار التعلم الإسلامي، الدروس والوحدات والاختبارات وشهادة الإتمام",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
           inLanguage: "ar",
         },
       ],
@@ -300,7 +300,7 @@ export default function LearningPathDetailPage() {
       <div className="twh-share">
         <ShareButtons
           title="تفاصيل المسار التعليمي — المجلس العلمي"
-          url="https://majlisilm.com/learning/paths"
+          url="https://www.majlisilm.com/learning/paths"
         />
       </div>
       <div className="px-4 pb-6 mt-4">

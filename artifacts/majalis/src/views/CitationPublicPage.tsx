@@ -48,10 +48,10 @@ export default function CitationPublicPage() {
                 "@context": "https://schema.org",
                 "@type": "Article",
                 name: c.source?.title_ar || "مقتطف علمي",
-                url: `https://majlisilm.com/c/${slug}`,
+                url: `https://www.majlisilm.com/c/${slug}`,
                 description: c.quoted_text.slice(0, 200),
                 ...(c.source?.author_name ? { author: { "@type": "Person", name: c.source.author_name } } : {}),
-                publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+                publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
                 inLanguage: "ar",
               },
             ],
@@ -223,7 +223,7 @@ export default function CitationPublicPage() {
             <Link href="/" className="cpp-link">المجلس العلمي</Link>
           </p>
           <div className="twh-share">
-            <ShareButtons title="اقتباس من المجلس العلمي" url={typeof window !== "undefined" ? window.location.href : "https://majlisilm.com"} />
+            <ShareButtons title="اقتباس من المجلس العلمي" url={typeof window !== "undefined" ? window.location.href : "https://www.majlisilm.com"} />
           </div>
           <div className="px-4 pb-6 mt-4">
             <SectionQuiz categoryId={["hadith", "quran"]} title="اختبر معلوماتك في القرآن والحديث" count={4} />

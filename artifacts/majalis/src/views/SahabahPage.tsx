@@ -1289,7 +1289,7 @@ export default function SahabahPage() {
             "@type": "ListItem",
             position: i + 1,
             name: s.name,
-            url: `https://majlisilm.com/sahabah#${s.id}`,
+            url: `https://www.majlisilm.com/sahabah#${s.id}`,
           })),
         },
       ],
@@ -1438,7 +1438,7 @@ export default function SahabahPage() {
         />
 
         <div className="twh-share">
-          <ShareButtons title="الصحابة الكرام — المجلس العلمي" url="https://majlisilm.com/sahabah" />
+          <ShareButtons title="الصحابة الكرام — المجلس العلمي" url="https://www.majlisilm.com/sahabah" />
         </div>
 
         {/* related */}

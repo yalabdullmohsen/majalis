@@ -242,7 +242,7 @@ export default function MySubmissionsPage() {
         </div>
       )}
       <div className="twh-share">
-        <ShareButtons title="مساهماتي — المجلس العلمي" url="https://majlisilm.com/my-submissions" />
+        <ShareButtons title="مساهماتي — المجلس العلمي" url="https://www.majlisilm.com/my-submissions" />
       </div>
     </div>
   );

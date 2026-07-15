@@ -179,7 +179,7 @@ export default function KnowledgeGraphPage() {
       title: "الرسم البياني المعرفي | المجلس العلمي",
       description: "استكشف العلاقات بين المفاهيم الإسلامية، رسم بياني تفاعلي يربط العلماء والكتب والمسائل الفقهية.",
       keywords: ["رسم بياني معرفي", "علاقات إسلامية", "استكشاف المعرفة", "خريطة علمية", "علم الشبكات"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الرسم البياني المعرفي الإسلامي", url: "https://majlisilm.com/knowledge-graph", about: { "@type": "Thing", name: "شبكة المعرفة الإسلامية التفاعلية" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الرسم البياني المعرفي الإسلامي", url: "https://www.majlisilm.com/knowledge-graph", about: { "@type": "Thing", name: "شبكة المعرفة الإسلامية التفاعلية" } }],
     });
   }, []);
   const [source, setSource] = useState<DataSource>("new");
@@ -570,7 +570,7 @@ export default function KnowledgeGraphPage() {
         </div>
       )}
       <div className="twh-share">
-        <ShareButtons title="الرسم البياني المعرفي الإسلامي — المجلس العلمي" url="https://majlisilm.com/knowledge-graph" />
+        <ShareButtons title="الرسم البياني المعرفي الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/knowledge-graph" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["aqeeda", "tarikh", "fiqh"]} title="اختبر معلوماتك في المعرفة الإسلامية" count={4} />

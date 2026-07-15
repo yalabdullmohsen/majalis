@@ -65,7 +65,7 @@ export default function HadithIndexPage() {
             position: i + 1,
             name: HADITH_CLASS_META[s.cls]?.title ?? s.cls,
             description: s.description,
-            url: `https://majlisilm.com${s.href}`,
+            url: `https://www.majlisilm.com${s.href}`,
           })),
         },
       ],
@@ -135,7 +135,7 @@ export default function HadithIndexPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="فهرس الأحاديث النبوية — المجلس العلمي" url="https://majlisilm.com/hadith-index" />
+        <ShareButtons title="فهرس الأحاديث النبوية — المجلس العلمي" url="https://www.majlisilm.com/hadith-index" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في الحديث الشريف" count={4} />

@@ -1138,7 +1138,7 @@ export default function IslamicScholarsPage() {
             "@type": "ListItem",
             position: i + 1,
             name: s.fullName || s.name,
-            url: `https://majlisilm.com/scholars#${s.id}`,
+            url: `https://www.majlisilm.com/scholars#${s.id}`,
           })),
         },
       ],
@@ -1317,7 +1317,7 @@ export default function IslamicScholarsPage() {
 
       {/* ── روابط ذات صلة ─────────────────────────────────────── */}
       <div className="twh-share">
-        <ShareButtons title="العلماء المسلمون — المجلس العلمي" url="https://majlisilm.com/scholars" />
+        <ShareButtons title="العلماء المسلمون — المجلس العلمي" url="https://www.majlisilm.com/scholars" />
       </div>
 
       <div className="sch-related">

@@ -315,7 +315,7 @@ export default function SalahGuidePage() {
             "@type": "ListItem",
             position: i + 1,
             name: `الركن ${r.num}: ${r.title} — ${r.desc}`,
-            url: `https://majlisilm.com/salah-guide#rukn-${r.num}`,
+            url: `https://www.majlisilm.com/salah-guide#rukn-${r.num}`,
           })),
         },
       ],
@@ -707,7 +707,7 @@ export default function SalahGuidePage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="دليل الصلاة — المجلس العلمي" url="https://majlisilm.com/salah-guide" />
+          <ShareButtons title="دليل الصلاة — المجلس العلمي" url="https://www.majlisilm.com/salah-guide" />
         </div>
 
         {/* related */}

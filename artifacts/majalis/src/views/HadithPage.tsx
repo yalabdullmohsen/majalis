@@ -237,7 +237,7 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
         </button>
         <ShareButtons
           title={h.title || "حديث نبوي شريف"}
-          url="https://majlisilm.com/hadith"
+          url="https://www.majlisilm.com/hadith"
         />
       </div>
     </article>
@@ -702,9 +702,9 @@ export default function HadithPage() {
           name: "أقسام الأحاديث النبوية",
           numberOfItems: 3,
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: HADITH_CLASS_META.sahih.title, description: HADITH_CLASS_META.sahih.subtitle, url: "https://majlisilm.com/hadith/sahih" },
-            { "@type": "ListItem", position: 2, name: HADITH_CLASS_META.daif.title, description: HADITH_CLASS_META.daif.subtitle, url: "https://majlisilm.com/hadith/daif" },
-            { "@type": "ListItem", position: 3, name: HADITH_CLASS_META.mawdu.title, description: HADITH_CLASS_META.mawdu.subtitle, url: "https://majlisilm.com/hadith/mawdu" },
+            { "@type": "ListItem", position: 1, name: HADITH_CLASS_META.sahih.title, description: HADITH_CLASS_META.sahih.subtitle, url: "https://www.majlisilm.com/hadith/sahih" },
+            { "@type": "ListItem", position: 2, name: HADITH_CLASS_META.daif.title, description: HADITH_CLASS_META.daif.subtitle, url: "https://www.majlisilm.com/hadith/daif" },
+            { "@type": "ListItem", position: 3, name: HADITH_CLASS_META.mawdu.title, description: HADITH_CLASS_META.mawdu.subtitle, url: "https://www.majlisilm.com/hadith/mawdu" },
           ],
         },
       ],

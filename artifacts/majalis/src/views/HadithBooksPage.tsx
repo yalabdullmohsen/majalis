@@ -379,7 +379,7 @@ export default function HadithBooksPage() {
           "@type": "DataCatalog",
           name: "الكتب الحديثية الكاملة",
           description: "مكتبة الأحاديث النبوية الكاملة من المصادر الموثوقة",
-          url: "https://majlisilm.com/hadith/books",
+          url: "https://www.majlisilm.com/hadith/books",
           dataset: HADITH_COLLECTIONS.map((c) => ({
             "@type": "Dataset",
             name: c.name,

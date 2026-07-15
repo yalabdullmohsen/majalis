@@ -41,8 +41,8 @@ export default function MosqueModePage() {
         "@type": "WebPage",
         name: "وضع المسجد",
         description: "وضع المسجد، عد تنازلي للصلاة مع تذكير بالصمت وإطفاء الصوت داخل المسجد.",
-        url: "https://majlisilm.com/mosque-mode",
-        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+        url: "https://www.majlisilm.com/mosque-mode",
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
       }],
     });
   }, []);

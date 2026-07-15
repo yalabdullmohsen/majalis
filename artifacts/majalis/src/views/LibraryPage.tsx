@@ -122,7 +122,7 @@ export default function LibraryPage({
             "@type": "ListItem",
             position: i + 1,
             name: cat,
-            url: `https://majlisilm.com/library?cat=${encodeURIComponent(cat)}`,
+            url: `https://www.majlisilm.com/library?cat=${encodeURIComponent(cat)}`,
           })),
         },
       ],
@@ -252,7 +252,7 @@ export default function LibraryPage({
       </PageLoadingGuard>
 
       <div className="twh-share">
-        <ShareButtons title="المكتبة الإسلامية — المجلس العلمي" url="https://majlisilm.com/library" />
+        <ShareButtons title="المكتبة الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/library" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["quran", "hadith"]} title="اختبر معلوماتك في علوم الكتاب والسنة" count={4} />

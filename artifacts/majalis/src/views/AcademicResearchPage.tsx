@@ -664,7 +664,7 @@ export default function AcademicResearchPage() {
       title: "الأبحاث العلمية الإسلامية | المجلس العلمي",
       description: "مستودع شامل للرسائل الجامعية وأبحاث المؤسسات والباحثين في العلوم الإسلامية، ماجستير ودكتوراه وبحوث متخصصة.",
       keywords: ["أبحاث إسلامية", "رسائل جامعية", "رسائل ماجستير", "رسائل دكتوراه", "بحوث شرعية"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الأبحاث العلمية الإسلامية", url: "https://majlisilm.com/academic-research", about: { "@type": "Thing", name: "مستودع الأبحاث والرسائل الجامعية الإسلامية" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الأبحاث العلمية الإسلامية", url: "https://www.majlisilm.com/academic-research", about: { "@type": "Thing", name: "مستودع الأبحاث والرسائل الجامعية الإسلامية" } }],
     });
   }, []);
 
@@ -755,7 +755,7 @@ export default function AcademicResearchPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="البحث الأكاديمي الإسلامي — المجلس العلمي" url="https://majlisilm.com/academic-research" />
+        <ShareButtons title="البحث الأكاديمي الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/academic-research" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["tarikh", "hadith"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />

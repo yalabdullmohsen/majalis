@@ -461,7 +461,7 @@ export default function RaqaiqPage() {
             "@type": "ListItem",
             position: i + 1,
             name: r.title,
-            url: `https://majlisilm.com/raqaiq#raqiqa-${i + 1}`,
+            url: `https://www.majlisilm.com/raqaiq#raqiqa-${i + 1}`,
           })),
         },
       ],
@@ -636,7 +636,7 @@ export default function RaqaiqPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الرقائق والزهد — المجلس العلمي" url="https://majlisilm.com/raqaiq" />
+        <ShareButtons title="الرقائق والزهد — المجلس العلمي" url="https://www.majlisilm.com/raqaiq" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأخلاق والزهد" count={4} />

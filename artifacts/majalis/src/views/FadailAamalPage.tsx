@@ -1189,7 +1189,7 @@ export default function FadailAamalPage() {
             "@type": "ListItem",
             position: i + 1,
             name: f.title,
-            url: `https://majlisilm.com/fadail-aamal#${f.id}`,
+            url: `https://www.majlisilm.com/fadail-aamal#${f.id}`,
           })),
         },
       ],
@@ -1292,7 +1292,7 @@ export default function FadailAamalPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="فضائل الأعمال — المجلس العلمي" url="https://majlisilm.com/fadail-aamal" />
+          <ShareButtons title="فضائل الأعمال — المجلس العلمي" url="https://www.majlisilm.com/fadail-aamal" />
         </div>
 
         {/* related */}

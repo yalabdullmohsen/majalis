@@ -68,7 +68,7 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
           dateModified: issue.updated_at,
           datePublished: issue.published_at,
           inLanguage: "ar",
-          url: `https://majlisilm.com${path}`,
+          url: `https://www.majlisilm.com${path}`,
         },
         breadcrumbJsonLd([
           { name: "الرئيسية", path: "/" },

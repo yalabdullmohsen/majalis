@@ -344,7 +344,7 @@ export default function MalaikaPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${m.name} — ${m.role}`,
-            url: `https://majlisilm.com/malaika#malak-${i + 1}`,
+            url: `https://www.majlisilm.com/malaika#malak-${i + 1}`,
           })),
         },
       ],
@@ -499,7 +499,7 @@ export default function MalaikaPage() {
         )}
 
       <div className="twh-share">
-        <ShareButtons title="الملائكة في الإسلام — المجلس العلمي" url="https://majlisilm.com/malaikah" />
+        <ShareButtons title="الملائكة في الإسلام — المجلس العلمي" url="https://www.majlisilm.com/malaikah" />
       </div>
 
       <div className="px-4 pb-6 mt-6">

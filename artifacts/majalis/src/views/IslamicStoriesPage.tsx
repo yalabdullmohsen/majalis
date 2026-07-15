@@ -151,7 +151,7 @@ function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => voi
         </div>
       )}
       <div className="isp-detail__share">
-        <ShareButtons title={story.title} url={`https://majlisilm.com/islamic-stories`} />
+        <ShareButtons title={story.title} url={`https://www.majlisilm.com/islamic-stories`} />
       </div>
     </div>
   );
@@ -183,7 +183,7 @@ export default function IslamicStoriesPage() {
             "@type": "ListItem",
             position: i + 1,
             name: cat,
-            url: `https://majlisilm.com/islamic-stories?cat=${encodeURIComponent(cat)}`,
+            url: `https://www.majlisilm.com/islamic-stories?cat=${encodeURIComponent(cat)}`,
           })),
         },
       ],

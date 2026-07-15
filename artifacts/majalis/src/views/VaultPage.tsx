@@ -385,7 +385,7 @@ export default function VaultPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="مخزن المعرفة — المجلس العلمي" url="https://majlisilm.com/vault" />
+        <ShareButtons title="مخزن المعرفة — المجلس العلمي" url="https://www.majlisilm.com/vault" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["quran", "hadith"]} title="اختبر معلوماتك أثناء مراجعة مخزنك" count={4} />

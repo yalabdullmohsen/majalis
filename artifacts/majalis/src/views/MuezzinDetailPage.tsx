@@ -76,7 +76,7 @@ export default function MuezzinDetailPage() {
           "@context": "https://schema.org",
           "@type": "Person",
           name: muezzin?.name || "مؤذن",
-          url: `https://majlisilm.com/muezzins/${id}`,
+          url: `https://www.majlisilm.com/muezzins/${id}`,
           jobTitle: "مؤذن",
           description: `تسجيلات أذان ${muezzin?.name || "المؤذن"} الإسلامية`,
         },
@@ -325,7 +325,7 @@ export default function MuezzinDetailPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title={`${muezzin.name} — مكتبة المؤذنين | المجلس العلمي`} url={`https://majlisilm.com/muezzins/${muezzin.id}`} />
+        <ShareButtons title={`${muezzin.name} — مكتبة المؤذنين | المجلس العلمي`} url={`https://www.majlisilm.com/muezzins/${muezzin.id}`} />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />

@@ -100,7 +100,7 @@ export default function TopicsIndexPage() {
       title: "الموضوعات العلمية الشرعية | المجلس العلمي",
       description: "استعرض المحتوى الشرعي مجمّعاً حسب الموضوع، فقه، عقيدة، أخلاق، قرآن، حديث، سيرة. آيات وأحاديث وفتاوى ودروس.",
       keywords: ["موضوعات إسلامية", "فقه إسلامي", "علوم شرعية", "تصنيف إسلامي", "محتوى شرعي"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الموضوعات العلمية الشرعية", url: "https://majlisilm.com/topics", about: { "@type": "Thing", name: "تصنيف المحتوى الإسلامي حسب الموضوع" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الموضوعات العلمية الشرعية", url: "https://www.majlisilm.com/topics", about: { "@type": "Thing", name: "تصنيف المحتوى الإسلامي حسب الموضوع" } }],
     });
   }, []);
 
@@ -209,7 +209,7 @@ export default function TopicsIndexPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="فهرس المواضيع الإسلامية — المجلس العلمي" url="https://majlisilm.com/topics" />
+        <ShareButtons title="فهرس المواضيع الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/topics" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["quran", "hadith", "fiqh", "aqeeda"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />

@@ -11,7 +11,7 @@ export default function TermsPage() {
       title: "شروط الاستخدام | المجلس العلمي",
       description: "شروط وأحكام استخدام منصة المجلس العلمي، اقرأها قبل استخدام الخدمات.",
       keywords: ["شروط الاستخدام", "المجلس العلمي", "الاستخدام المقبول"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "شروط الاستخدام", url: "https://majlisilm.com/terms", about: { "@type": "Organization", name: "المجلس العلمي" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "شروط الاستخدام", url: "https://www.majlisilm.com/terms", about: { "@type": "Organization", name: "المجلس العلمي" } }],
     });
   }, []);
 
@@ -113,7 +113,7 @@ export default function TermsPage() {
       </LegalSection>
 
       <div className="twh-share">
-        <ShareButtons title="شروط الاستخدام — المجلس العلمي" url="https://majlisilm.com/terms" />
+        <ShareButtons title="شروط الاستخدام — المجلس العلمي" url="https://www.majlisilm.com/terms" />
       </div>
       <LegalBackLink />
     </LegalPageLayout>

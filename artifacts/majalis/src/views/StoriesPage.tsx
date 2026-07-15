@@ -42,10 +42,10 @@ export default function StoriesPage() {
           description: "قصص من سير الصالحين والعلماء والصحابة والأنبياء",
           numberOfItems: 4,
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "قصص الصحابة الكرام", url: "https://majlisilm.com/stories?cat=صحابة" },
-            { "@type": "ListItem", position: 2, name: "قصص العلماء والفقهاء", url: "https://majlisilm.com/stories?cat=علماء" },
-            { "@type": "ListItem", position: 3, name: "قصص الصالحين والأولياء", url: "https://majlisilm.com/stories?cat=صالحون" },
-            { "@type": "ListItem", position: 4, name: "عبر وحكم إسلامية", url: "https://majlisilm.com/stories?cat=عبر" },
+            { "@type": "ListItem", position: 1, name: "قصص الصحابة الكرام", url: "https://www.majlisilm.com/stories?cat=صحابة" },
+            { "@type": "ListItem", position: 2, name: "قصص العلماء والفقهاء", url: "https://www.majlisilm.com/stories?cat=علماء" },
+            { "@type": "ListItem", position: 3, name: "قصص الصالحين والأولياء", url: "https://www.majlisilm.com/stories?cat=صالحون" },
+            { "@type": "ListItem", position: 4, name: "عبر وحكم إسلامية", url: "https://www.majlisilm.com/stories?cat=عبر" },
           ],
         },
       ],
@@ -139,7 +139,7 @@ export default function StoriesPage() {
                 {s.category && <span className="story-card__category">{s.category}</span>}
                 {s.source_name && <span><strong>المصدر:</strong> {s.source_name}</span>}
               </div>
-              <ShareButtons title={s.title} url="https://majlisilm.com/stories" />
+              <ShareButtons title={s.title} url="https://www.majlisilm.com/stories" />
             </article>
           ))}
         </div>
@@ -153,7 +153,7 @@ export default function StoriesPage() {
       </aside>
 
       <div className="twh-share">
-        <ShareButtons title="القصص الإسلامية — المجلس العلمي" url="https://majlisilm.com/stories" />
+        <ShareButtons title="القصص الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/stories" />
       </div>
 
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
