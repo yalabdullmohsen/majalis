@@ -1648,16 +1648,19 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
    §21. Banners — رؤوس الصفحات الداخلية
    ══════════════════════════════════════════════ */
 
-/* Hero للصفحات الداخلية */
-[class*="-hero"] {
+/* Hero للصفحات الداخلية — [class$="-hero"] (ينتهي بـ) لا [class*="-hero"]
+   (يحوي) عمدًا: النسخة "يحوي" كانت تطابق أيضًا عناصر ابنة زخرفية مثل
+   .sh-hero__glow (اسمها يحوي السلسلة "-hero")، فتفرض عليها position:relative
+   بدل position:absolute المقصودة أصلاً، فتُدفَع خارج التموضع المطلق وتحتل
+   مساحة حقيقية في السياق الطبيعي — ما ولّد فراغًا رأسيًا ضخمًا (~500px) في
+   هيرو صفحة الشمائل (2026-07-16). */
+[class$="-hero"] {
   position: relative !important;
 }
 
 /* تحقيق WCAG على جميع الـ hero banners */
-[class*="-hero"] h1,
-[class*="-hero"] h2,
-[class*="-hero"] h1,
-[class*="-hero"] h2 {
+[class$="-hero"] h1,
+[class$="-hero"] h2 {
   text-shadow: 0 2px 12px rgba(0,0,0,0.40) !important;
 }
 
@@ -34334,8 +34337,8 @@ footer *,
 .page-hero-wrap *,
 [class*="page-header"][class*="dark"],
 [class*="page-header"][class*="dark"] *,
-[class*="-hero"],
-[class*="-hero"] *,
+[class$="-hero"],
+[class$="-hero"] *,
 .dark-section,
 .dark-section *,
 .dark-bg,
