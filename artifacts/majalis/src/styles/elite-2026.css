@@ -10771,7 +10771,12 @@ body {
 }
 .ds-error-text { color: #b91c1c; }
 .ds-error-text--mb { margin-bottom: 0.75rem; }
-.legal-page-hero { background: var(--majalis-emerald-deep); color: var(--majalis-parchment); }
+/* --majalis-emerald-deep غير مستخدَم هنا عمدًا: أي محدِّد ينتهي بـ"-hero"
+   (ومنه .legal-page-hero نفسه) يُعاد تعريف هذا المتغيّر محليًا داخله إلى
+   var(--text-on-primary) (فاتح) في قسم "تحييد العناوين الداكنة"، فتتحوّل
+   الخلفية هنا إلى لون فاتح بدل الأخضر الغامق المقصود — نص فاتح على خلفية
+   فاتحة (صفحة الإعدادات وكل صفحات LegalPageLayout، 2026-07-16). */
+.legal-page-hero { background: var(--majalis-emerald, #176B57); color: var(--majalis-parchment, #FAF8F4); }
 
 /* ── §167 — AyahDisplay NoteForm (ayd-*) ────────────────────────────────── */
 .ayd-note-wrap { padding: 0.75rem 1rem; }
