@@ -2074,14 +2074,19 @@ html {
   color: rgba(255,255,255,0.72) !important;
   opacity: 1 !important;
 }
-/* إلغاء شارة الخلفية عن العنوان داخل رأس القسم (الخلفية الداكنة تكفي) */
-.hadith-section-header .hadith-section-title {
+/* إلغاء شارة الخلفية عن العنوان داخل رأس القسم (الخلفية الداكنة تكفي) —
+   ولون أبيض صريح: بلا هذا، يفوز لون عنوان داكن (مخصَّص لخلفيات فاتحة) عبر
+   محدِّدات أعلى أسبقية (.page-shell h2 وغيرها)، فينتج عنوانًا شبه معدوم
+   التباين فوق الخلفية الخضراء الداكنة لهذا الرأس (2026-07-16). */
+.hadith-section-header .hadith-section-title,
+.hadith-section-header h2.hadith-section-title {
   background: transparent !important;
   padding: 0 !important;
   border-radius: 0 !important;
   display: block !important;
   font-size: 1.25rem !important;
   margin-bottom: 0 !important;
+  color: #FFFFFF !important;
 }
 .hadith-section-subtitle {
   color: rgba(255,255,255,0.80) !important;
