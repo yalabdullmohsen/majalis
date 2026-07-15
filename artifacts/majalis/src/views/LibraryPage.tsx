@@ -18,10 +18,10 @@ type SortKey = "title" | "author" | "newest";
 type ViewMode = "grid" | "list";
 
 function BookCoverPlaceholder({ title, category }: { title: string; category?: string }) {
-  const initials = title.trim().slice(0, 2);
   return (
     <div className="lib-card-cover lib-card-cover--placeholder" aria-hidden="true">
-      <span className="lib-card-cover__initials">{initials}</span>
+      <BookOpen size={18} strokeWidth={1.6} className="lib-card-cover__icon" />
+      <span className="lib-card-cover__title">{title}</span>
       {category && <span className="lib-card-cover__cat">{category}</span>}
     </div>
   );

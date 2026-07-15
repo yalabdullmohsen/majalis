@@ -30,10 +30,15 @@ function PrayerChip() {
   }, []);
 
   if (!cd?.next) return null;
+  // خلال فترة السماح (٣٠ دقيقة بعد الأذان) لا نعرض 00:00:00 للصلاة التي أذّنت للتو،
+  // بل نتحوّل مباشرة لاسم وعدّاد الصلاة الفعلية التالية — نفس منطق PrayerTimesPage.
+  const inGrace = cd.sinceSeconds != null;
+  const displayName = inGrace && cd.graceNextSlot ? cd.graceNextSlot.name : cd.next.name;
+  const displayHms = inGrace && cd.graceNextHms ? cd.graceNextHms : cd.remainingHms;
   return (
-    <Link href="/prayer-times" className="navbar-prayer-chip" aria-label={`الصلاة القادمة: ${cd.next.name}`}>
-      <span className="navbar-prayer-chip__name">{cd.next.name}</span>
-      <span className="navbar-prayer-chip__hms" aria-live="off">{cd.remainingHms}</span>
+    <Link href="/prayer-times" className="navbar-prayer-chip" aria-label={`الصلاة القادمة: ${displayName}`}>
+      <span className="navbar-prayer-chip__name">{displayName}</span>
+      <span className="navbar-prayer-chip__hms" aria-live="off">{displayHms}</span>
     </Link>
   );
 }
