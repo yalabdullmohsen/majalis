@@ -34234,6 +34234,24 @@ footer *,
 .dvp-btn--primary { color: #fff !important; }
 .dvp-btn--secondary { color: var(--majalis-emerald-deep) !important; }
 
+/* استثناء .fqh-hub-hero__title (عنوان صفحة الفقه والأحكام، <h1> فوق خلفية
+   بطل خضراء داكنة) — ثلاث قواعد "عناوين page-shell" عامة منفصلة
+   (majalis-v2.css × 2 عبر :not، وmodern-2026.css بلا أي استثناء إطلاقًا)
+   كانت تتنازع فرض لون داكن !important على أي h1 داخل .page-shell، فبقي
+   العنوان شبه معدوم التباين. استُثني من قاعدتي majalis-v2.css عبر :not،
+   وهذه القاعدة الأعلى تخصيصًا (تحميلها الأخير في main.tsx) تكفل الفوز على
+   قاعدة modern-2026.css التي لا آلية استثناء فيها أصلاً. */
+.page-shell h1.fqh-hub-hero__title,
+.page-shell h1.twh-hub-hero__title,
+.page-shell h1.akl-hero__title,
+.page-shell h1.arkan-hero__title,
+.page-shell h1.ds-hero__title,
+.page-shell h1.duas-hero__title,
+.page-shell h1.mk-hero__title,
+.page-shell h1.sm-hero__title {
+  color: #FFFFFF !important;
+}
+
 /* استثناء زر الرجوع داخل ds-page-header — له خلفية فاتحة فيحتاج نصاً داكناً
    §79 تُجبر جميع أبناء .ds-page-header على #fff فيصبح النص أبيض على خلفية الزر البيضاء */
 .ds-page-header .ds-page-back-btn {
