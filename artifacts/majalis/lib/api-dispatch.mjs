@@ -82,6 +82,20 @@ const knowledgeGraphRateLimit = createRateLimiter({
   keyPrefix: "knowledge-graph",
 });
 
+// نقطتا كتابة عامتان بلا مصادقة إطلاقًا (أي زائر) — الأكثر عرضة لإساءة
+// الاستخدام (إغراق قائمة المراجعة/سجل الأخطاء) وكانتا بلا أي حد معدل طلبات.
+const submissionsRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 8,
+  keyPrefix: "submissions",
+});
+
+const clientErrorLogRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 15,
+  keyPrefix: "client-error-log",
+});
+
 /** Route table uses dynamic imports so Vercel bundles one lightweight function entrypoint. */
 export const API_ROUTES = [
   { prefix: "/api/healthz", module: "./api-handlers/healthz.js", allowGet: true, exact: true },
@@ -182,10 +196,10 @@ export const API_ROUTES = [
   { prefix: "/api/admin/auto-knowledge-engine", module: "./api-handlers/admin/auto-knowledge-engine.js", allowGet: true },
   { prefix: "/api/fiqh-research-assistant", module: "./api-handlers/fiqh-research-assistant.js", rateLimit: fiqhResearchRateLimit, allowGet: true },
   { prefix: "/api/assistant", module: "./api-handlers/assistant.js", rateLimit: assistantRateLimit, allowGet: true },
-  { prefix: "/api/client-error-log", module: "./api-handlers/client-error-log.js", allowGet: true },
+  { prefix: "/api/client-error-log", module: "./api-handlers/client-error-log.js", allowGet: true, rateLimit: clientErrorLogRateLimit },
   { prefix: "/api/test-anthropic", module: "./api-handlers/test-anthropic.js", allowGet: true },
   { prefix: "/api/transcribe", module: "./api-handlers/transcribe.js", rateLimit: transcribeRateLimit },
-  { prefix: "/api/submissions", module: "./api-handlers/submissions.js", exact: true },
+  { prefix: "/api/submissions", module: "./api-handlers/submissions.js", exact: true, rateLimit: submissionsRateLimit },
   { prefix: "/api/admin/submissions", module: "./api-handlers/admin/submissions.js", allowGet: true },
   { prefix: "/api/account/delete", module: "./api-handlers/account/delete.js", exact: true, rateLimit: accountDeleteRateLimit },
   // ── الباحث الشرعي (RAG) ────────────────────────────────────────────────────
