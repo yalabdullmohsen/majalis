@@ -178,6 +178,26 @@
   ],
   "redirects": [
     {
+      "source": "/learning-path/dashboard",
+      "destination": "/my-learning",
+      "permanent": true
+    },
+    {
+      "source": "/learning-path/book/:bookId",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/learning-path/:scienceSlug",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/learning-path",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
       "source": "/quran",
       "destination": "/quran-hub",
       "permanent": true

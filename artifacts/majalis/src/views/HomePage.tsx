@@ -159,7 +159,7 @@ const FEATURE_CATS: FeatureCat[] = [
     Icon: Wrench,
     label: "أدوات التعلم",
     items: [
-      { href: "/learning-path",   Icon: Map,         title: "خارطة طالب العلم",  desc: "مسار من المبتدئ إلى المتقدم" },
+      { href: "/learning/paths",  Icon: Map,         title: "المسارات العلمية",  desc: "مسار من المبتدئ إلى المتقدم" },
       { href: "/flashcards",      Icon: Layers,      title: "البطاقات الدعوية",   desc: "مراجعة ذكية" },
       { href: "/quiz",            Icon: Target,      title: "لعبة سؤال وجواب",   desc: "اختبر معلوماتك الإسلامية" },
       { href: "/assistant",       Icon: Bot,         title: "المساعد العلمي",    desc: "إرشاد فوري بالذكاء الاصطناعي" },

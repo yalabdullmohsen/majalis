@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { GitBranch, Map, Network } from "lucide-react";
+import { Map, Network } from "lucide-react";
 
 const MAPS = [
   {
@@ -15,13 +15,6 @@ const MAPS = [
     title: "شبكة المعرفة",
     desc: "استكشف العلاقات والروابط بين المفاهيم الإسلامية برسم بياني",
     tag: "مرئي",
-  },
-  {
-    href: "/learning-path",
-    Icon: GitBranch,
-    title: "خارطة طالب العلم",
-    desc: "مسارك التعليمي من المبتدئ إلى المتقدم خطوة بخطوة",
-    tag: "منهجي",
   },
 ];
 

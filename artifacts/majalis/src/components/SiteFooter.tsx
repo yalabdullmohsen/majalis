@@ -98,7 +98,7 @@ const FOOTER_GROUPS = [
     links: [
       { href: "/quiz",           label: "المسابقات" },
       { href: "/flashcards",     label: "البطاقات" },
-      { href: "/learning-path",  label: "خارطة طالب العلم" },
+      { href: "/learning/paths", label: "المسارات العلمية" },
       { href: "/assistant",      label: "المساعد العلمي" },
       { href: "/universities",   label: "دليل الجامعات" },
       { href: "/knowledge-map",  label: "الخريطة المعرفية" },

@@ -187,15 +187,7 @@ function routeForPath(path: string) {
     };
   }
 
-  if (normalized.startsWith("/learning-path/")) {
-    return {
-      ...requiredRoute("/learning-path"),
-      title: "خارطة طالب العلم | المجلس العلمي",
-      description: "مسار التعلم الشرعي التراكمي — الكتب والمتون والمستويات.",
-    };
-  }
-
-  if (normalized.startsWith("/quran/surah-stories/")) {
+if (normalized.startsWith("/quran/surah-stories/")) {
     return {
       ...requiredRoute("/quran/surah-stories"),
       title: "قصة سورة | المجلس العلمي",

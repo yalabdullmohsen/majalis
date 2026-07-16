@@ -60,7 +60,6 @@ const LABEL_MAP: Record<string, string> = {
   "/learning/calendar":             "تقويم التعلم",
   "/learning/certificates":         "الشهادات",
   "/my-learning":                   "تعلمي",
-  "/learning-path":                 "خارطة طالب العلم",
   "/learning-plan":                 "خطة التعلم",
   "/knowledge-map":                 "خارطة المعرفة",
   "/knowledge-graph":               "مخطط المعرفة",

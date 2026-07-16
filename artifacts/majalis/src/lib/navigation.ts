@@ -80,7 +80,6 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/fiqh-qawaid",      label: "القواعد الفقهية الكبرى" },
   { href: "/duas-quran",        label: "أدعية القرآن الكريم" },
   { href: "/universities",       label: "دليل الجامعات" },
-  { href: "/learning-path",      label: "خارطة طالب العلم (تجريبي)" },
   // القرآن
   { href: "/quran-hub",           label: "مركز القرآن" },
   { href: "/quran-radio",         label: "إذاعة القرآن" },

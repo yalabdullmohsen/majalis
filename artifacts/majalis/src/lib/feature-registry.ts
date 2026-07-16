@@ -71,7 +71,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
 
   // ── التعلم ───────────────────────────────────────────────────
   { id: "learn",         label: "أبواب العلم",       path: "/learn",        group: "تعلم",          status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "learning-path",label: "خارطة طالب العلم (تجريبي)", path: "/learning-path",group: "تعلم",     status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "learning-paths",label: "المسارات العلمية", path: "/learning/paths",group: "تعلم",     status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "my-learning",  label: "لوحتي التعليمية",  path: "/my-learning",  group: "تعلم",          status: "requires-auth",inSideNav: true,  inBottomNav: false },
   { id: "learning-plan",label: "خطة التعلم",       path: "/learning-plan",group: "تعلم",          status: "active",       inSideNav: true,  inBottomNav: false },
 

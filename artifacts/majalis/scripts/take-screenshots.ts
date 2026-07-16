@@ -47,7 +47,7 @@ const PAGES = [
   { path: "/prayer-times", slug: "04-prayer-times", title: "مواقيت الصلاة" },
   { path: "/lessons", slug: "05-lessons", title: "الدروس العلمية" },
   { path: "/hadith", slug: "06-hadith", title: "الأحاديث النبوية" },
-  { path: "/learning-path", slug: "07-learning-path", title: "مسار طالب العلم" },
+  { path: "/learning/paths", slug: "07-learning-path", title: "المسارات العلمية" },
   { path: "/qibla", slug: "08-qibla", title: "بوصلة القبلة" },
   { path: "/search", slug: "09-search", title: "البحث الشامل" },
 ];

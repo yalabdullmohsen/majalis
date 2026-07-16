@@ -1867,19 +1867,6 @@
       "priority": 0.72
     },
     {
-      "path": "/learning-path",
-      "title": "خارطة طالب العلم",
-      "description": "خارطة طالب العلم — منهج متدرج في العلوم الشرعية من مبتدئ إلى متقدم.",
-      "keywords": [
-        "خارطة طالب العلم",
-        "منهج الدراسة الشرعية",
-        "تدرج طلب العلم"
-      ],
-      "sitemap": true,
-      "changefreq": "monthly",
-      "priority": 0.78
-    },
-    {
       "path": "/hikam-salaf",
       "title": "حكم السلف الصالح",
       "description": "حكم ومواعظ السلف الصالح — أقوال الصحابة والتابعين والأئمة في الدين والتزكية.",
@@ -2251,17 +2238,6 @@
       "keywords": [
         "مسارات تعلم",
         "طلب العلم"
-      ],
-      "sitemap": false,
-      "robots": "noindex, follow"
-    },
-    {
-      "path": "/learning-path/dashboard",
-      "title": "لوحة تتبع المسار",
-      "description": "تتبع تقدمك في مسارات طلب العلم الشرعي واحصل على شهاداتك العلمية.",
-      "keywords": [
-        "لوحة التعلم",
-        "تتبع التعلم"
       ],
       "sitemap": false,
       "robots": "noindex, follow"

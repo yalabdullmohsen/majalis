@@ -118,7 +118,6 @@ const SECTIONS = [
       { href: "/quiz",             label: "المسابقة التعليمية",   desc: "اختبر معلوماتك" },
       { href: "/flashcards",       label: "بطاقات المراجعة",      desc: "مراجعة ذكية" },
       { href: "/assistant",        label: "المساعد الذكي",        desc: "استفسر عن أي مسألة" },
-      { href: "/learning-path",    label: "خارطة طالب العلم",    desc: "منهج التعلم التراكمي" },
       { href: "/learning-plan",    label: "خطتي التعليمية",      desc: "خطة تعلم شخصية" },
       { href: "/my-learning",      label: "لوحتي التعليمية",     desc: "إحصائياتك وتقدمك" },
       { href: "/knowledge-graph",  label: "شبكة المعرفة",        desc: "العلاقات بين المفاهيم" },

@@ -111,7 +111,6 @@ const DRAWER_GROUPS: NavGroup[] = [
           { href: "/start-here",         label: "ابدأ من هنا",         Icon: Waypoints,     desc: "مسار المبتدئ في طلب العلم" },
           { href: "/adab-talab-ilm",     label: "آداب طالب العلم",    Icon: Star,          desc: "شروط وآداب طلب العلم الشرعي" },
           { href: "/learning/paths",     label: "المسارات العلمية",    Icon: Layers,        desc: "تعلّم منظم من المبتدئ للمتقدم" },
-          { href: "/learning-path",      label: "خارطة طالب العلم (تجريبي)", Icon: Network, desc: "نموذج أولي منفصل عن المسارات العلمية، بلا محتوى معتمد بعد" },
           { href: "/my-learning",        label: "لوحتي التعليمية",    Icon: BarChart3,     desc: "إحصائياتك وتقدمك" },
           { href: "/learning-plan",      label: "خطة التعلّم",        Icon: BarChart2,     desc: "خطتك الأسبوعية للدراسة" },
           { href: "/quiz",               label: "المسابقة التعليمية",  Icon: Zap,           desc: "اختبر معلوماتك" },
