@@ -19,6 +19,7 @@ import {
   getEffectiveMuezzinId,
 } from "./adhan-preferences";
 import { getMuezzin, playAdhan } from "./adhan-audio";
+import { isNative } from "./capacitor-utils";
 
 export type AdhanEvent = {
   type: "adhan" | "advance";
@@ -72,6 +73,13 @@ async function requestNotificationPermission(): Promise<boolean> {
 }
 
 function showBrowserNotification(event: AdhanEvent) {
+  // على iOS/Android الأصليين: إشعارات دخول الوقت والتذكير المسبق تُغطّى فعلياً
+  // عبر prayer-alert-scheduler.ts (إشعارات Capacitor المحلية الحقيقية — تعمل
+  // حتى مع إغلاق التطبيق). أما Notification API + Service Worker هنا فهما
+  // آليتا ويب/PWA لا تعملان بشكل موثوق داخل تطبيق Capacitor الأصلي، وإطلاقهما
+  // كان يُنتج إشعارًا مكرَّرًا محتملاً على الويب لو عمل أحيانًا. نقتصر هذا
+  // المسار على الويب فقط لتفادي التكرار (2026-07-16).
+  if (isNative) return;
   if (!("Notification" in window) || Notification.permission !== "granted") return;
   const title = event.type === "advance"
     ? `تنبيه: ${event.prayerName} بعد ${event.minutesBefore} دقيقة`

@@ -32,6 +32,7 @@ import { HomePersonalDashboard } from "@/components/home/HomePersonalDashboard";
 import { FridayBanner } from "@/components/FridayBanner";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import { getHijriDateString } from "@/lib/hijri-utils";
+import { fetchPrayerTimes, computePrayerCountdown, type PrayerTimesPayload } from "@/lib/prayer-times";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import {
   BookMarked, BookOpen, Bot, CalendarDays, Car, Check, Clock,
@@ -279,6 +280,26 @@ export default function HomePage() {
   const { isAdmin } = useAuth();
   const dailyCtx = useDailyContext();
 
+  // شريط الترويسة المُصغَّر: الصلاة القادمة والوقت المتبقي (بديل الشعار الكبير)
+  const [heroPrayers, setHeroPrayers] = useState<PrayerTimesPayload | null>(null);
+  useEffect(() => {
+    fetchPrayerTimes().then(setHeroPrayers).catch(() => {});
+  }, []);
+  const [heroCountdown, setHeroCountdown] = useState<{ name: string; hms: string } | null>(null);
+  useEffect(() => {
+    if (!heroPrayers?.prayers?.length) return;
+    const tick = () => {
+      const cd = computePrayerCountdown(heroPrayers.prayers);
+      const inGrace = cd.sinceSeconds != null;
+      const name = inGrace && cd.graceNextSlot ? cd.graceNextSlot.name : cd.next?.name;
+      const hms = inGrace && cd.graceNextHms ? cd.graceNextHms : cd.remainingHms;
+      if (name && hms) setHeroCountdown({ name, hms });
+    };
+    tick();
+    const t = setInterval(tick, 1000);
+    return () => clearInterval(t);
+  }, [heroPrayers]);
+
   useEffect(() => {
     applyPageSeo({
       path: "/",
@@ -372,9 +393,9 @@ export default function HomePage() {
 
         <div style={{ maxWidth: 640, margin: "0 auto", position: "relative", textAlign: "center" }}>
 
-          {/* ── التحية اليومية الديناميكية ── */}
+          {/* ── التحية اليومية الديناميكية (h1 دلالي وحيد للصفحة) ── */}
           <div style={{ marginBottom: "1.1rem" }}>
-            <p style={{
+            <h1 style={{
               color: "rgba(250,248,242,0.92)",
               fontSize: "clamp(0.88rem, 2.4vw, 1.05rem)",
               fontWeight: 700,
@@ -383,7 +404,7 @@ export default function HomePage() {
               margin: "0 0 0.35rem",
             }}>
               {dailyCtx.greeting}
-            </p>
+            </h1>
             {dailyCtx.subGreeting && (
               <p style={{
                 color: "rgba(250,248,242,0.55)",
@@ -410,45 +431,49 @@ export default function HomePage() {
                 ✦ {dailyCtx.event}
               </div>
             )}
-            {/* التاريخ الهجري */}
+            {/* شريط التاريخ والصلاة القادمة — بديل الشعار الكبير واسم التطبيق
+                (يبقى الشعار في شاشة البداية وصفحة "عن التطبيق" والأيقونة فقط) */}
             <div style={{
-              display: "inline-flex", alignItems: "center", gap: "0.35rem",
-              marginTop: "0.45rem",
-              background: "rgba(255,255,255,0.1)",
-              border: "1px solid rgba(255,255,255,0.22)",
-              color: "rgba(250,248,242,0.75)",
-              padding: "0.18rem 0.75rem",
-              borderRadius: "999px",
-              fontSize: "0.72rem",
-              fontWeight: 600,
-              letterSpacing: "0.02em",
+              display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center",
+              gap: "0.4rem", marginTop: "0.45rem",
             }}>
-              <svg width="11" height="11" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
-                <circle cx="9" cy="9" r="7"/><path d="M9 2C6.5 4 5 6.3 5 9s1.5 5 4 7"/><path d="M9 2c2.5 2 4 4.3 4 7s-1.5 5-4 7"/><path d="M2 9h14"/>
-              </svg>
-              {getHijriDateString()}
+              <span style={{
+                display: "inline-flex", alignItems: "center", gap: "0.35rem",
+                background: "rgba(255,255,255,0.1)",
+                border: "1px solid rgba(255,255,255,0.22)",
+                color: "rgba(250,248,242,0.75)",
+                padding: "0.18rem 0.75rem",
+                borderRadius: "999px",
+                fontSize: "0.72rem",
+                fontWeight: 600,
+                letterSpacing: "0.02em",
+              }}>
+                <svg width="11" height="11" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+                  <circle cx="9" cy="9" r="7"/><path d="M9 2C6.5 4 5 6.3 5 9s1.5 5 4 7"/><path d="M9 2c2.5 2 4 4.3 4 7s-1.5 5-4 7"/><path d="M2 9h14"/>
+                </svg>
+                {getHijriDateString()}
+              </span>
+              {heroCountdown && (
+                <Link href="/prayer-times" style={{
+                  display: "inline-flex", alignItems: "center", gap: "0.35rem",
+                  background: "rgba(255,255,255,0.16)",
+                  border: "1px solid rgba(255,255,255,0.3)",
+                  color: "#FAF8F2",
+                  padding: "0.18rem 0.75rem",
+                  borderRadius: "999px",
+                  fontSize: "0.72rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.02em",
+                  textDecoration: "none",
+                }}>
+                  <svg width="11" height="11" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <circle cx="9" cy="9" r="7.5"/><path d="M9 5v4l3 2"/>
+                  </svg>
+                  {heroCountdown.name} بعد <span dir="ltr">{heroCountdown.hms}</span>
+                </Link>
+              )}
             </div>
           </div>
-
-          {/* الشعار والاسم */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "0.55rem" }}>
-            <img src="/logo.png" alt="" width={56} height={56} loading="eager" aria-hidden="true"
-              style={{
-                borderRadius: "50%", border: "2px solid rgba(255,255,255,0.35)",
-                boxShadow: "0 0 0 4px rgba(255,255,255,0.08), 0 4px 18px rgba(0,0,0,0.4)",
-              }} />
-            <h1 style={{ color: "#FAF8F2", fontSize: "clamp(1.7rem, 5.5vw, 2.6rem)", fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>
-              المجلس العلمي
-            </h1>
-          </div>
-
-          {/* الشعار الفلسفي */}
-          <p style={{
-            color: "rgba(250,248,242,0.45)", fontSize: "clamp(0.7rem, 1.8vw, 0.8rem)",
-            letterSpacing: "0.15em", fontWeight: 600, margin: "0 0 0.9rem", textTransform: "uppercase",
-          }}>
-            رسالةٌ عظيمة، ووسائل تتجدد
-          </p>
 
           {/* فاصل هندسي مُحسَّن — ماسة وخطوط */}
           <div aria-hidden="true" style={{ display: "flex", justifyContent: "center", marginBottom: "1rem", opacity: 0.45 }}>
