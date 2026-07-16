@@ -3,6 +3,7 @@
  */
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { sendMessage } from "../telegram/bot.mjs";
+import { createNotification } from "../notifications/create-notification.mjs";
 
 async function listAdminUserIds(admin) {
   try {
@@ -57,19 +58,8 @@ export async function notifyAdminsNewDrafts({ newCount, sourceName, link = "/adm
   // إشعار داخلي لكل مشرف
   let sent = 0;
   for (const userId of userIds) {
-    try {
-      await admin.from("notifications").insert({
-        user_id: userId,
-        title,
-        body,
-        type: "system",
-        link,
-        is_read: false,
-      });
-      sent += 1;
-    } catch {
-      /* continue */
-    }
+    const result = await createNotification(admin, { userId, title, body, type: "system", actionUrl: link });
+    if (result.ok) sent += 1;
   }
 
   // إشعار Telegram (best-effort — لا يوقف العملية)

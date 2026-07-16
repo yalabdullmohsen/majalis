@@ -3,6 +3,7 @@
  */
 
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
+import { createNotification } from "../notifications/create-notification.mjs";
 
 const NOTIFICATION_TEMPLATES = {
   new_lesson: { title: "درس جديد", type: "lesson" },
@@ -21,19 +22,14 @@ export async function sendLearningNotification(admin, { userId, ruleKey, body, l
   if (!template) return { ok: false, error: "unknown_rule" };
 
   if (admin && userId) {
-    try {
-      await admin.from("notifications").insert({
-        user_id: userId,
-        title: template.title,
-        body: body || template.title,
-        type: template.type,
-        link: link || null,
-        is_read: false,
-      });
-      return { ok: true };
-    } catch {
-      /* fallback */
-    }
+    const result = await createNotification(admin, {
+      userId,
+      title: template.title,
+      body: body || template.title,
+      type: template.type,
+      actionUrl: link || null,
+    });
+    if (result.ok) return { ok: true };
   }
 
   return { ok: false, reason: "no_admin_or_user" };

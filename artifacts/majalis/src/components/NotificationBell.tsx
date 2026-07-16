@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { Bell, Settings2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { createNotification } from "@/lib/notification-service";
 
 function relativeTime(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
@@ -45,11 +46,12 @@ export default function NotificationBell() {
           const { data: { user } } = await supabase.auth.getUser();
           if (!user) return;
           const lesson = payload.new as Record<string, unknown>;
-          await supabase.from("notifications").insert({
-            user_id: user.id,
+          await createNotification({
+            userId: user.id,
             title: "درس جديد أُضيف تلقائياً",
             body: [String(lesson.title || "درس جديد"), String(lesson.mosque || lesson.governorate || "").trim()].filter(Boolean).join(" · "),
-            is_read: false,
+            type: "lesson",
+            actionUrl: lesson.id != null ? `/lessons/${lesson.id}` : null,
           });
         })
       .subscribe();
@@ -84,6 +86,11 @@ export default function NotificationBell() {
       .eq("user_id", user.id)
       .eq("is_read", false);
     setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
+  };
+
+  const markOneRead = async (id: number) => {
+    setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, is_read: true } : n)));
+    await supabase.from("notifications").update({ is_read: true }).eq("id", id);
   };
 
   return (
@@ -133,16 +140,38 @@ export default function NotificationBell() {
                 <p className="nb-empty__sub">سنُخبرك بكل جديد</p>
               </div>
             ) : (
-              notifications.map((n) => (
-                <div key={n.id} role="listitem" className={`nb-item${!n.is_read ? " nb-item--new" : ""}`}>
-                  <div className="nb-item__dot" aria-hidden="true" />
-                  <div className="nb-item__body">
-                    <p className="nb-item__title">{n.title}</p>
-                    {n.body && <p className="nb-item__text">{n.body}</p>}
-                    <p className="nb-item__time">{relativeTime(n.created_at)}</p>
+              notifications.map((n) => {
+                const content = (
+                  <>
+                    <div className="nb-item__dot" aria-hidden="true" />
+                    <div className="nb-item__body">
+                      <p className="nb-item__title">{n.title}</p>
+                      {n.body && <p className="nb-item__text">{n.body}</p>}
+                      <p className="nb-item__time">{relativeTime(n.created_at)}</p>
+                    </div>
+                  </>
+                );
+                return n.action_url ? (
+                  <Link
+                    key={n.id}
+                    href={n.action_url}
+                    role="listitem"
+                    className={`nb-item${!n.is_read ? " nb-item--new" : ""}`}
+                    onClick={() => { setOpen(false); if (!n.is_read) markOneRead(n.id); }}
+                  >
+                    {content}
+                  </Link>
+                ) : (
+                  <div
+                    key={n.id}
+                    role="listitem"
+                    className={`nb-item${!n.is_read ? " nb-item--new" : ""}`}
+                    onClick={() => { if (!n.is_read) markOneRead(n.id); }}
+                  >
+                    {content}
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
 

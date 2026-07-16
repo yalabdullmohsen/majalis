@@ -80,6 +80,12 @@ function showBrowserNotification(event: AdhanEvent) {
   // كان يُنتج إشعارًا مكرَّرًا محتملاً على الويب لو عمل أحيانًا. نقتصر هذا
   // المسار على الويب فقط لتفادي التكرار (2026-07-16).
   if (isNative) return;
+  // إشعار "دخول الوقت" مُغطّى بالفعل عبر Service Worker (postSwSchedule أدناه)
+  // ليعمل حتى مع تبويب في الخلفية — إطلاقه هنا أيضًا كان يُنتج إشعارًا مكرَّرًا
+  // فعليًا على الويب (وسمان مختلفان: adhan-{key}-adhan هنا مقابل adhan-{key}
+  // في sw.js، فلا يُدمجهما المتصفح). التنبيه المسبق (advance) لا مسار SW موازيًا
+  // له، فيبقى هنا فقط (2026-07-16).
+  if (event.type === "adhan") return;
   if (!("Notification" in window) || Notification.permission !== "granted") return;
   const title = event.type === "advance"
     ? `تنبيه: ${event.prayerName} بعد ${event.minutesBefore} دقيقة`
