@@ -3,8 +3,6 @@ import { requestFetch } from "@/lib/request-manager";
  * Digital Learning Platform — client service
  */
 
-import { adminFetch as apiFetch } from "@/lib/admin-api";
-
 export type LearningPath = {
   slug: string;
   title: string;
