@@ -1,3 +1,4 @@
+import "@/styles/pages/tawba.css";
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { Sparkles } from "lucide-react";

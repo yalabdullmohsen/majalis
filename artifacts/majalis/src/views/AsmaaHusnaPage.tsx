@@ -1,3 +1,4 @@
+import "@/styles/pages/asmaa-husna.css";
 import { useEffect, useMemo, useState } from "react";
 import { Search, Star, BookOpen, Heart, Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";

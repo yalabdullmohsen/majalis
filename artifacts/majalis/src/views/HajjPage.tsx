@@ -1,3 +1,4 @@
+import "@/styles/pages/hajj.css";
 import { useEffect, useState, useMemo } from "react";
 import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";

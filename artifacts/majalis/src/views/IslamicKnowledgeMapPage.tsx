@@ -1,3 +1,4 @@
+import "@/styles/pages/islamic-knowledge-map.css";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { ShareButtons } from "@/components/ContentActions";
