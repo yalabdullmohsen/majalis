@@ -1,0 +1,923 @@
+{
+  "version": 1,
+  "generatedAt": "2026-07-16T07:00:04.610Z",
+  "source": "https://api.alquran.cloud/v1",
+  "edition": "quran-uthmani",
+  "license": "نص Tanzil المُراجَع (tanzil.net)، مُعاد نشره عبر AlQuran Cloud — راجع docs/quran-data-source.md",
+  "totalSurahs": 114,
+  "totalAyahs": 6236,
+  "surahs": [
+    {
+      "number": 1,
+      "name": "سُورَةُ ٱلْفَاتِحَةِ",
+      "englishName": "Al-Faatiha",
+      "numberOfAyahs": 7,
+      "file": "surah-001.json",
+      "sha256": "074861c548e8ee926e202dbcc8eb0d713a5f801e62fcd8a322ef432043cdd31d"
+    },
+    {
+      "number": 2,
+      "name": "سُورَةُ البَقَرَةِ",
+      "englishName": "Al-Baqara",
+      "numberOfAyahs": 286,
+      "file": "surah-002.json",
+      "sha256": "3bd23e90f565c63fcda41308195135b8f59b6935252af6023910590875356033"
+    },
+    {
+      "number": 3,
+      "name": "سُورَةُ آلِ عِمۡرَانَ",
+      "englishName": "Aal-i-Imraan",
+      "numberOfAyahs": 200,
+      "file": "surah-003.json",
+      "sha256": "eb3531e76928df6f79b3bdb3682bbccc7bceae6682caa4a676baac5f6de8453c"
+    },
+    {
+      "number": 4,
+      "name": "سُورَةُ النِّسَاءِ",
+      "englishName": "An-Nisaa",
+      "numberOfAyahs": 176,
+      "file": "surah-004.json",
+      "sha256": "b2e59bad730e8f3498a7b1bf54f037535cdaa3312e7755438d2175281fbcd004"
+    },
+    {
+      "number": 5,
+      "name": "سُورَةُ المَائـِدَةِ",
+      "englishName": "Al-Maaida",
+      "numberOfAyahs": 120,
+      "file": "surah-005.json",
+      "sha256": "11e38efbc59033e9f951e98b46800d121af52ad5af09ff23973482c43e61d005"
+    },
+    {
+      "number": 6,
+      "name": "سُورَةُ الأَنۡعَامِ",
+      "englishName": "Al-An'aam",
+      "numberOfAyahs": 165,
+      "file": "surah-006.json",
+      "sha256": "6916c4634a6abd3f2db0b7f851db9efa6da1250dd2b05552d0d7473150b0ab5f"
+    },
+    {
+      "number": 7,
+      "name": "سُورَةُ الأَعۡرَافِ",
+      "englishName": "Al-A'raaf",
+      "numberOfAyahs": 206,
+      "file": "surah-007.json",
+      "sha256": "ef3c33f5692e456adde820a89d3af1ae4bc801537b488a75656ffe532ff4aa0b"
+    },
+    {
+      "number": 8,
+      "name": "سُورَةُ الأَنفَالِ",
+      "englishName": "Al-Anfaal",
+      "numberOfAyahs": 75,
+      "file": "surah-008.json",
+      "sha256": "bca06745f87643a5f7d165d7952e75534846e8b07072a19199f54a15be6b9f70"
+    },
+    {
+      "number": 9,
+      "name": "سُورَةُ التَّوۡبَةِ",
+      "englishName": "At-Tawba",
+      "numberOfAyahs": 129,
+      "file": "surah-009.json",
+      "sha256": "21f5c9a69658eb42feb785505a7d8c7d5a10419111b7ab4e2a7e80422f69a29d"
+    },
+    {
+      "number": 10,
+      "name": "سُورَةُ يُونُسَ",
+      "englishName": "Yunus",
+      "numberOfAyahs": 109,
+      "file": "surah-010.json",
+      "sha256": "ea6d5249e25bb1df33a362dacb6c0d751b380872c2001753993069ded7d27a3d"
+    },
+    {
+      "number": 11,
+      "name": "سُورَةُ هُودٍ",
+      "englishName": "Hud",
+      "numberOfAyahs": 123,
+      "file": "surah-011.json",
+      "sha256": "f1bf717050876e4e90613f5955ced9a2a9211c07f60c09fda2c3b0d5c211de45"
+    },
+    {
+      "number": 12,
+      "name": "سُورَةُ يُوسُفَ",
+      "englishName": "Yusuf",
+      "numberOfAyahs": 111,
+      "file": "surah-012.json",
+      "sha256": "a3dad35d050fb5e8b5862c4fbfa5b4b453d74f256fe93bc9a633b13ea2662ded"
+    },
+    {
+      "number": 13,
+      "name": "سُورَةُ الرَّعۡدِ",
+      "englishName": "Ar-Ra'd",
+      "numberOfAyahs": 43,
+      "file": "surah-013.json",
+      "sha256": "c18ba20caa70c15482e87dfd7627ac01c5eab16f927fb2ae35a0d82b8e188170"
+    },
+    {
+      "number": 14,
+      "name": "سُورَةُ إِبۡرَاهِيمَ",
+      "englishName": "Ibrahim",
+      "numberOfAyahs": 52,
+      "file": "surah-014.json",
+      "sha256": "ae5d7969e92bfc51e34dc5be1538f32ae582239b7ca569ff6c4fe067bc03b3cb"
+    },
+    {
+      "number": 15,
+      "name": "سُورَةُ الحِجۡرِ",
+      "englishName": "Al-Hijr",
+      "numberOfAyahs": 99,
+      "file": "surah-015.json",
+      "sha256": "2106eb20ed14c2277d21ee43e79c38db0f775c7d48b603242fc049ef0df047c9"
+    },
+    {
+      "number": 16,
+      "name": "سُورَةُ النَّحۡلِ",
+      "englishName": "An-Nahl",
+      "numberOfAyahs": 128,
+      "file": "surah-016.json",
+      "sha256": "90c74c9cfa7a3e7e2a108112389fe2ee0cab9eb4a1fff2cf6e267004ae5a478f"
+    },
+    {
+      "number": 17,
+      "name": "سُورَةُ الإِسۡرَاءِ",
+      "englishName": "Al-Israa",
+      "numberOfAyahs": 111,
+      "file": "surah-017.json",
+      "sha256": "ac09fd4ed0a3d531e5683292aa57a30d402f0f28eb3f235885ff9c2245c362bc"
+    },
+    {
+      "number": 18,
+      "name": "سُورَةُ الكَهۡفِ",
+      "englishName": "Al-Kahf",
+      "numberOfAyahs": 110,
+      "file": "surah-018.json",
+      "sha256": "7c1f9e6e99810c47f9de1c91afde0547b261359c14433f7970889fcc127609b6"
+    },
+    {
+      "number": 19,
+      "name": "سُورَةُ مَرۡيَمَ",
+      "englishName": "Maryam",
+      "numberOfAyahs": 98,
+      "file": "surah-019.json",
+      "sha256": "7d0cdff9ceb8098156cc4357b30ac284ba3b63ab164185d06d385c3da9062348"
+    },
+    {
+      "number": 20,
+      "name": "سُورَةُ طه",
+      "englishName": "Taa-Haa",
+      "numberOfAyahs": 135,
+      "file": "surah-020.json",
+      "sha256": "5cd12595534c6b1dac8043f92f0ab0b609a3d09118740452cc47ce730e178292"
+    },
+    {
+      "number": 21,
+      "name": "سُورَةُ الأَنبِيَاءِ",
+      "englishName": "Al-Anbiyaa",
+      "numberOfAyahs": 112,
+      "file": "surah-021.json",
+      "sha256": "889a341df92ab2d832be0e73c6713efe57691769d6e078aa3209e6441a3cf9b5"
+    },
+    {
+      "number": 22,
+      "name": "سُورَةُ الحَجِّ",
+      "englishName": "Al-Hajj",
+      "numberOfAyahs": 78,
+      "file": "surah-022.json",
+      "sha256": "db37863af17ca9665b7d9fc119a9cf700b03a706554194b2bc469d4d2c6f3e2c"
+    },
+    {
+      "number": 23,
+      "name": "سُورَةُ المُؤۡمِنُونَ",
+      "englishName": "Al-Muminoon",
+      "numberOfAyahs": 118,
+      "file": "surah-023.json",
+      "sha256": "fa4e7df1253550e5eb04062201530f74d380dab1a5e9c02afe43697c057a7bd4"
+    },
+    {
+      "number": 24,
+      "name": "سُورَةُ النُّورِ",
+      "englishName": "An-Noor",
+      "numberOfAyahs": 64,
+      "file": "surah-024.json",
+      "sha256": "56c7be02399964696071f3521e91720a50cdeeb3c04059b575c5718640a57c26"
+    },
+    {
+      "number": 25,
+      "name": "سُورَةُ الفُرۡقَانِ",
+      "englishName": "Al-Furqaan",
+      "numberOfAyahs": 77,
+      "file": "surah-025.json",
+      "sha256": "3e9cd8121eee845a1f5ab235161ed4f7450e304aaf1ed83ba666f0b093521236"
+    },
+    {
+      "number": 26,
+      "name": "سُورَةُ الشُّعَرَاءِ",
+      "englishName": "Ash-Shu'araa",
+      "numberOfAyahs": 227,
+      "file": "surah-026.json",
+      "sha256": "2d6d74af55d82c5eaa09b8c36d69528904d96bbcc8b69ffdad5dbc69d10aeffb"
+    },
+    {
+      "number": 27,
+      "name": "سُورَةُ النَّمۡلِ",
+      "englishName": "An-Naml",
+      "numberOfAyahs": 93,
+      "file": "surah-027.json",
+      "sha256": "e6a5cc594363d2782597d98500eb8613900ce3a6413634c7d4ccf00a4b6d50de"
+    },
+    {
+      "number": 28,
+      "name": "سُورَةُ القَصَصِ",
+      "englishName": "Al-Qasas",
+      "numberOfAyahs": 88,
+      "file": "surah-028.json",
+      "sha256": "963fa3aeadda94bf1321f937c1204b93f6c93d4678c6ba7f4bcedb08791d7872"
+    },
+    {
+      "number": 29,
+      "name": "سُورَةُ العَنكَبُوتِ",
+      "englishName": "Al-Ankaboot",
+      "numberOfAyahs": 69,
+      "file": "surah-029.json",
+      "sha256": "7489da071db06b3ec6fc488f0cc10de5ef486462b6770ff86fedd89186395c14"
+    },
+    {
+      "number": 30,
+      "name": "سُورَةُ الرُّومِ",
+      "englishName": "Ar-Room",
+      "numberOfAyahs": 60,
+      "file": "surah-030.json",
+      "sha256": "fd8b16cb3c655e3fd1a0df4d930863a6b1dfcf49e2de2f5335cdbf75a43a37d1"
+    },
+    {
+      "number": 31,
+      "name": "سُورَةُ لُقۡمَانَ",
+      "englishName": "Luqman",
+      "numberOfAyahs": 34,
+      "file": "surah-031.json",
+      "sha256": "8cf1b16ee47e2a7149b8d19bf5184a65f007fa54bf556b41cd6262b9bd76d558"
+    },
+    {
+      "number": 32,
+      "name": "سُورَةُ السَّجۡدَةِ",
+      "englishName": "As-Sajda",
+      "numberOfAyahs": 30,
+      "file": "surah-032.json",
+      "sha256": "818fc40bef4420337db2d363993fead0bfe9f7c61337701e6bb34543a475dd25"
+    },
+    {
+      "number": 33,
+      "name": "سُورَةُ الأَحۡزَابِ",
+      "englishName": "Al-Ahzaab",
+      "numberOfAyahs": 73,
+      "file": "surah-033.json",
+      "sha256": "6ba02974740c23d27fd79da1ab5dc7330f385e25c8f08e36660bd25d7c6b026a"
+    },
+    {
+      "number": 34,
+      "name": "سُورَةُ سَبَإٍ",
+      "englishName": "Saba",
+      "numberOfAyahs": 54,
+      "file": "surah-034.json",
+      "sha256": "090f6b2a47015d21d3ee4ccf905f4cf4a1fffd924415c218f511cbcfde2dbdaa"
+    },
+    {
+      "number": 35,
+      "name": "سُورَةُ فَاطِرٍ",
+      "englishName": "Faatir",
+      "numberOfAyahs": 45,
+      "file": "surah-035.json",
+      "sha256": "2ef90e1d534646eb2de54a1e6a351cf46fbf868c221a1e868b460e4213109eb7"
+    },
+    {
+      "number": 36,
+      "name": "سُورَةُ يسٓ",
+      "englishName": "Yaseen",
+      "numberOfAyahs": 83,
+      "file": "surah-036.json",
+      "sha256": "6776b4e21126461ea8d08c768e2126581d7c793a6c0cdf94b9eea6be7977c6f2"
+    },
+    {
+      "number": 37,
+      "name": "سُورَةُ الصَّافَّاتِ",
+      "englishName": "As-Saaffaat",
+      "numberOfAyahs": 182,
+      "file": "surah-037.json",
+      "sha256": "22e4d0ae2a43922e0246ba6d8fc9be1057b7e95077cc85b3f78a8ab16b090633"
+    },
+    {
+      "number": 38,
+      "name": "سُورَةُ صٓ",
+      "englishName": "Saad",
+      "numberOfAyahs": 88,
+      "file": "surah-038.json",
+      "sha256": "7e605b339cdfcada2fdc6b44c5a6fb1c134d6f3fdb020b4ca06a8985f54ffd8b"
+    },
+    {
+      "number": 39,
+      "name": "سُورَةُ الزُّمَرِ",
+      "englishName": "Az-Zumar",
+      "numberOfAyahs": 75,
+      "file": "surah-039.json",
+      "sha256": "4bbb2d0752de4302b3bdcaa84ccb2be60d520279bc5892d9a3cc07d3ff9a05db"
+    },
+    {
+      "number": 40,
+      "name": "سُورَةُ غَافِرٍ",
+      "englishName": "Ghafir",
+      "numberOfAyahs": 85,
+      "file": "surah-040.json",
+      "sha256": "9ccf5f85dc9fb3ca7a6d854182e529843a006c8abbc9a91f2b57bdc604ccbc84"
+    },
+    {
+      "number": 41,
+      "name": "سُورَةُ فُصِّلَتۡ",
+      "englishName": "Fussilat",
+      "numberOfAyahs": 54,
+      "file": "surah-041.json",
+      "sha256": "4cc47d2864ffa62e7cfaf8bd0cdc54e3e5d6c50b180b0e7d4f9ca8100e0e2e54"
+    },
+    {
+      "number": 42,
+      "name": "سُورَةُ الشُّورَىٰ",
+      "englishName": "Ash-Shura",
+      "numberOfAyahs": 53,
+      "file": "surah-042.json",
+      "sha256": "2bcbfa779a4363d9b396e143c839c8c6199afc647e3039336d5bdbaba699d3e9"
+    },
+    {
+      "number": 43,
+      "name": "سُورَةُ الزُّخۡرُفِ",
+      "englishName": "Az-Zukhruf",
+      "numberOfAyahs": 89,
+      "file": "surah-043.json",
+      "sha256": "78940938e67abc84d909e68abc2b38833bf66886765cd7f460ce747bfbdfd0e4"
+    },
+    {
+      "number": 44,
+      "name": "سُورَةُ الدُّخَانِ",
+      "englishName": "Ad-Dukhaan",
+      "numberOfAyahs": 59,
+      "file": "surah-044.json",
+      "sha256": "c7d399b85255e5586863d4634edad1e6d2ff239332ded6a3ca73bc1d145ba332"
+    },
+    {
+      "number": 45,
+      "name": "سُورَةُ الجَاثِيَةِ",
+      "englishName": "Al-Jaathiya",
+      "numberOfAyahs": 37,
+      "file": "surah-045.json",
+      "sha256": "b04d9679b48e6a1bf0ba31900b0efd1f99ffac6e8aab547b0133caad2c9b8323"
+    },
+    {
+      "number": 46,
+      "name": "سُورَةُ الأَحۡقَافِ",
+      "englishName": "Al-Ahqaf",
+      "numberOfAyahs": 35,
+      "file": "surah-046.json",
+      "sha256": "062df6c79fdde6720b1285d036fb0d10c58f7ab34bd70c44459babc135301149"
+    },
+    {
+      "number": 47,
+      "name": "سُورَةُ مُحَمَّدٍ",
+      "englishName": "Muhammad",
+      "numberOfAyahs": 38,
+      "file": "surah-047.json",
+      "sha256": "3fc96c21c9a05442d422bda71649fda26efef0a112f76d7ce4dd166c4b49c492"
+    },
+    {
+      "number": 48,
+      "name": "سُورَةُ الفَتۡحِ",
+      "englishName": "Al-Fath",
+      "numberOfAyahs": 29,
+      "file": "surah-048.json",
+      "sha256": "69a0730db884ab6fde14c7b1b16c136e15fe4311933cf4942bb64a5fe923c546"
+    },
+    {
+      "number": 49,
+      "name": "سُورَةُ الحُجُرَاتِ",
+      "englishName": "Al-Hujuraat",
+      "numberOfAyahs": 18,
+      "file": "surah-049.json",
+      "sha256": "d1e29f77fa46ccdcb12f48cc135b1e26b790722e3a2bbc0d939eb8e04c20fa9f"
+    },
+    {
+      "number": 50,
+      "name": "سُورَةُ قٓ",
+      "englishName": "Qaaf",
+      "numberOfAyahs": 45,
+      "file": "surah-050.json",
+      "sha256": "9a12e177a4d344402725b8b31453c526429e769faaa20ab7fb62196c4e76d59b"
+    },
+    {
+      "number": 51,
+      "name": "سُورَةُ الذَّارِيَاتِ",
+      "englishName": "Adh-Dhaariyat",
+      "numberOfAyahs": 60,
+      "file": "surah-051.json",
+      "sha256": "9003f1ae5107d7a219d89217af084cbe0d21ace14ec21a57240f038c6f8257f9"
+    },
+    {
+      "number": 52,
+      "name": "سُورَةُ الطُّورِ",
+      "englishName": "At-Tur",
+      "numberOfAyahs": 49,
+      "file": "surah-052.json",
+      "sha256": "edbde8666ea5ddc1f71e41258fc3f4b73fb775912674465d5d0418ef8ab228d9"
+    },
+    {
+      "number": 53,
+      "name": "سُورَةُ النَّجۡمِ",
+      "englishName": "An-Najm",
+      "numberOfAyahs": 62,
+      "file": "surah-053.json",
+      "sha256": "39c3cbdac0d640506037c319e47dfd075464eabcc2923c279e734280bf8d441e"
+    },
+    {
+      "number": 54,
+      "name": "سُورَةُ القَمَرِ",
+      "englishName": "Al-Qamar",
+      "numberOfAyahs": 55,
+      "file": "surah-054.json",
+      "sha256": "c773eb574ed29d8d9f2123803f15471035a018388a240c61b89afb0197b89e85"
+    },
+    {
+      "number": 55,
+      "name": "سُورَةُ الرَّحۡمَٰن",
+      "englishName": "Ar-Rahmaan",
+      "numberOfAyahs": 78,
+      "file": "surah-055.json",
+      "sha256": "cc9f1bb70f22a97dca930ce2f55e245c4fa47e55c61e80a855b7062d7faf2ef1"
+    },
+    {
+      "number": 56,
+      "name": "سُورَةُ الوَاقِعَةِ",
+      "englishName": "Al-Waaqia",
+      "numberOfAyahs": 96,
+      "file": "surah-056.json",
+      "sha256": "fcf9ff4ed6ad5cc66204829bba2140e680913ba46b3cda1f007a5f5b257494be"
+    },
+    {
+      "number": 57,
+      "name": "سُورَةُ الحَدِيدِ",
+      "englishName": "Al-Hadid",
+      "numberOfAyahs": 29,
+      "file": "surah-057.json",
+      "sha256": "4b7eea418ec957f0c326bef91060fb2b24ac63764c90c3ba6213a938f72f1eed"
+    },
+    {
+      "number": 58,
+      "name": "سُورَةُ المُجَادلَةِ",
+      "englishName": "Al-Mujaadila",
+      "numberOfAyahs": 22,
+      "file": "surah-058.json",
+      "sha256": "806e03109a5a3a79f0db245f7c11c3a3e7a27d6070ec72b1d07fdc3e29b33b13"
+    },
+    {
+      "number": 59,
+      "name": "سُورَةُ الحَشۡرِ",
+      "englishName": "Al-Hashr",
+      "numberOfAyahs": 24,
+      "file": "surah-059.json",
+      "sha256": "af8961d2e5212a2b1ef8d2fc1a898ecc22e8eb4bebf7d43a93fbb03a7eb14b3e"
+    },
+    {
+      "number": 60,
+      "name": "سُورَةُ المُمۡتَحنَةِ",
+      "englishName": "Al-Mumtahana",
+      "numberOfAyahs": 13,
+      "file": "surah-060.json",
+      "sha256": "2261a88ca62f48447e7a034f402b9a6722242987e580d2d62cc8765a6e12af41"
+    },
+    {
+      "number": 61,
+      "name": "سُورَةُ الصَّفِّ",
+      "englishName": "As-Saff",
+      "numberOfAyahs": 14,
+      "file": "surah-061.json",
+      "sha256": "b9310cc041c613c7ffa8556e2cd9d5bfdc71fee087942dcd86d7f0d750c5f59f"
+    },
+    {
+      "number": 62,
+      "name": "سُورَةُ الجُمُعَةِ",
+      "englishName": "Al-Jumu'a",
+      "numberOfAyahs": 11,
+      "file": "surah-062.json",
+      "sha256": "e3010a649d0cdecd4ed7d9dd62023838b18c63b5bb93884acba67c29a82291c2"
+    },
+    {
+      "number": 63,
+      "name": "سُورَةُ المُنَافِقُونَ",
+      "englishName": "Al-Munaafiqoon",
+      "numberOfAyahs": 11,
+      "file": "surah-063.json",
+      "sha256": "41813c8a116f7ccc309a38efd7c98c9fb82f4958268002ee4e5626399f843dcf"
+    },
+    {
+      "number": 64,
+      "name": "سُورَةُ التَّغَابُنِ",
+      "englishName": "At-Taghaabun",
+      "numberOfAyahs": 18,
+      "file": "surah-064.json",
+      "sha256": "c5f1cc9a64c886a8804280b221f89009ae25f4ecd8927214d142c4b4f7e2202e"
+    },
+    {
+      "number": 65,
+      "name": "سُورَةُ الطَّلَاقِ",
+      "englishName": "At-Talaaq",
+      "numberOfAyahs": 12,
+      "file": "surah-065.json",
+      "sha256": "6b7bc4aa503eca205a1b2031266f81bd5fe2f2b4074e846bb55896394ef3af04"
+    },
+    {
+      "number": 66,
+      "name": "سُورَةُ التَّحۡرِيمِ",
+      "englishName": "At-Tahrim",
+      "numberOfAyahs": 12,
+      "file": "surah-066.json",
+      "sha256": "de491f84a12fb5142793b0d13dc8d6314271428245a8bda4406e3d3441c2ad7a"
+    },
+    {
+      "number": 67,
+      "name": "سُورَةُ المُلۡكِ",
+      "englishName": "Al-Mulk",
+      "numberOfAyahs": 30,
+      "file": "surah-067.json",
+      "sha256": "0692ffe3b4485e07eede5afd2491eddd4e567385cc5041ed719832f03375304b"
+    },
+    {
+      "number": 68,
+      "name": "سُورَةُ القَلَمِ",
+      "englishName": "Al-Qalam",
+      "numberOfAyahs": 52,
+      "file": "surah-068.json",
+      "sha256": "24adf633d9f429f6b589a996f62ef0561447c9728c6770f1614e2467268a4f3a"
+    },
+    {
+      "number": 69,
+      "name": "سُورَةُ الحَاقَّةِ",
+      "englishName": "Al-Haaqqa",
+      "numberOfAyahs": 52,
+      "file": "surah-069.json",
+      "sha256": "5ca3d63affa598aac2c4ea8f3ad35c57a4f8572f5bc313c772e90418562bab92"
+    },
+    {
+      "number": 70,
+      "name": "سُورَةُ المَعَارِجِ",
+      "englishName": "Al-Ma'aarij",
+      "numberOfAyahs": 44,
+      "file": "surah-070.json",
+      "sha256": "00f15be0f6476384c95235d91a378f96870fd5a6679182d8cda9de90b686c2d8"
+    },
+    {
+      "number": 71,
+      "name": "سُورَةُ نُوحٍ",
+      "englishName": "Nooh",
+      "numberOfAyahs": 28,
+      "file": "surah-071.json",
+      "sha256": "ec549971308042b7b47affd7f6edc0515a37280ccf5a802d79d8a0ca869149c9"
+    },
+    {
+      "number": 72,
+      "name": "سُورَةُ الجِنِّ",
+      "englishName": "Al-Jinn",
+      "numberOfAyahs": 28,
+      "file": "surah-072.json",
+      "sha256": "c52eea17127df1f0b604b818936136cfaf78565b04d6dc7f84f96e8261f15400"
+    },
+    {
+      "number": 73,
+      "name": "سُورَةُ المُزَّمِّلِ",
+      "englishName": "Al-Muzzammil",
+      "numberOfAyahs": 20,
+      "file": "surah-073.json",
+      "sha256": "44172c908810c630b216b01727bf29d94cea72621ef0a1eeb74ab8cd9148e82b"
+    },
+    {
+      "number": 74,
+      "name": "سُورَةُ المُدَّثِّرِ",
+      "englishName": "Al-Muddaththir",
+      "numberOfAyahs": 56,
+      "file": "surah-074.json",
+      "sha256": "839f731cc77a31edd7e75d4bd365f97145f4bde3d024ef2b4a3d10bd5ffe7524"
+    },
+    {
+      "number": 75,
+      "name": "سُورَةُ القِيَامَةِ",
+      "englishName": "Al-Qiyaama",
+      "numberOfAyahs": 40,
+      "file": "surah-075.json",
+      "sha256": "765007c1d74e64a893e934f1824dff1265a73b5b801d0a1e71e7f3373c890771"
+    },
+    {
+      "number": 76,
+      "name": "سُورَةُ الإِنسَانِ",
+      "englishName": "Al-Insaan",
+      "numberOfAyahs": 31,
+      "file": "surah-076.json",
+      "sha256": "36093c69e9bc0cd7db6d36f33140fc370784a20bf5fcb2ae3ecfef898a7e0b34"
+    },
+    {
+      "number": 77,
+      "name": "سُورَةُ المُرۡسَلَاتِ",
+      "englishName": "Al-Mursalaat",
+      "numberOfAyahs": 50,
+      "file": "surah-077.json",
+      "sha256": "8a6e1a9a2d3ec79c8e0c94a604ec9853a84a5e721165ff6184454b0d651baa7f"
+    },
+    {
+      "number": 78,
+      "name": "سُورَةُ النَّبَإِ",
+      "englishName": "An-Naba",
+      "numberOfAyahs": 40,
+      "file": "surah-078.json",
+      "sha256": "425dce66955430ef47ff01176962fc1390387c26377e8b5e3737cc2c50f8b43c"
+    },
+    {
+      "number": 79,
+      "name": "سُورَةُ النَّازِعَاتِ",
+      "englishName": "An-Naazi'aat",
+      "numberOfAyahs": 46,
+      "file": "surah-079.json",
+      "sha256": "f004137f15e6bd7a8387d499c139b62bb851bcb296cc37f5afd18179b994e454"
+    },
+    {
+      "number": 80,
+      "name": "سُورَةُ عَبَسَ",
+      "englishName": "Abasa",
+      "numberOfAyahs": 42,
+      "file": "surah-080.json",
+      "sha256": "298a72ed331252df9886425099008b2ec2cfe604b8ccb78132b1e46308bba5a8"
+    },
+    {
+      "number": 81,
+      "name": "سُورَةُ التَّكۡوِيرِ",
+      "englishName": "At-Takwir",
+      "numberOfAyahs": 29,
+      "file": "surah-081.json",
+      "sha256": "edef08a01c695a38099e5ab9a82a85f15b6bd315dbde26af60965e6dfd05c36b"
+    },
+    {
+      "number": 82,
+      "name": "سُورَةُ الانفِطَارِ",
+      "englishName": "Al-Infitaar",
+      "numberOfAyahs": 19,
+      "file": "surah-082.json",
+      "sha256": "96259f57f22f5eaa77ebb7daefbf89d9b6981d07b9b377dff5f8b5094efff436"
+    },
+    {
+      "number": 83,
+      "name": "سُورَةُ المُطَفِّفِينَ",
+      "englishName": "Al-Mutaffifin",
+      "numberOfAyahs": 36,
+      "file": "surah-083.json",
+      "sha256": "35b976d5bd4660a3aeb626ca559f748c769907ef1f7c09f7870f8b87b5f66f2d"
+    },
+    {
+      "number": 84,
+      "name": "سُورَةُ الانشِقَاقِ",
+      "englishName": "Al-Inshiqaaq",
+      "numberOfAyahs": 25,
+      "file": "surah-084.json",
+      "sha256": "a8864a60cfa25a60d8892bfc9c1db9763c3b428542df6e86c1c790bafa0e8641"
+    },
+    {
+      "number": 85,
+      "name": "سُورَةُ البُرُوجِ",
+      "englishName": "Al-Burooj",
+      "numberOfAyahs": 22,
+      "file": "surah-085.json",
+      "sha256": "4fdd1aceea53afeff2f4c35b88d72a05f569c44caa4689e6fa8a741bb3ad1ff4"
+    },
+    {
+      "number": 86,
+      "name": "سُورَةُ الطَّارِقِ",
+      "englishName": "At-Taariq",
+      "numberOfAyahs": 17,
+      "file": "surah-086.json",
+      "sha256": "72f81072ff4cab08f0c3d17631cd0756db3e0e759ba5901fe8188142c9b28713"
+    },
+    {
+      "number": 87,
+      "name": "سُورَةُ الأَعۡلَىٰ",
+      "englishName": "Al-A'laa",
+      "numberOfAyahs": 19,
+      "file": "surah-087.json",
+      "sha256": "968b1d52cc75a6fe1068292b325d216307f7af5ae61b91990bc97e454e00031d"
+    },
+    {
+      "number": 88,
+      "name": "سُورَةُ الغَاشِيَةِ",
+      "englishName": "Al-Ghaashiya",
+      "numberOfAyahs": 26,
+      "file": "surah-088.json",
+      "sha256": "781b2200e0de3ac8848781866e2312d2e1ec1f981bda15d5542e0a5cdab2948e"
+    },
+    {
+      "number": 89,
+      "name": "سُورَةُ الفَجۡرِ",
+      "englishName": "Al-Fajr",
+      "numberOfAyahs": 30,
+      "file": "surah-089.json",
+      "sha256": "1bfae541df8225b3e90c9c4ec8aa59d9aed877b46aa3050cd47a40334804b876"
+    },
+    {
+      "number": 90,
+      "name": "سُورَةُ البَلَدِ",
+      "englishName": "Al-Balad",
+      "numberOfAyahs": 20,
+      "file": "surah-090.json",
+      "sha256": "ff7f57cf2bae46294d97b4928d3fab7aaa6d8d661a5fc6a81f0c4b0a8ea31796"
+    },
+    {
+      "number": 91,
+      "name": "سُورَةُ الشَّمۡسِ",
+      "englishName": "Ash-Shams",
+      "numberOfAyahs": 15,
+      "file": "surah-091.json",
+      "sha256": "2a3c5f1875128885a3b5bdc109a2dfc660290d609b0d029449bfc972fea607de"
+    },
+    {
+      "number": 92,
+      "name": "سُورَةُ اللَّيۡلِ",
+      "englishName": "Al-Lail",
+      "numberOfAyahs": 21,
+      "file": "surah-092.json",
+      "sha256": "2267ba851880ed187332098b499048f8b6129c174c0e3a2a02bb3ee4bece80fe"
+    },
+    {
+      "number": 93,
+      "name": "سُورَةُ الضُّحَىٰ",
+      "englishName": "Ad-Dhuhaa",
+      "numberOfAyahs": 11,
+      "file": "surah-093.json",
+      "sha256": "4cfea83daf19b759468a5b11c8b0cfd6cd9bc6be5359abfb66e2f683aaeb65bb"
+    },
+    {
+      "number": 94,
+      "name": "سُورَةُ الشَّرۡحِ",
+      "englishName": "Ash-Sharh",
+      "numberOfAyahs": 8,
+      "file": "surah-094.json",
+      "sha256": "7f009dcef44e45ec5c4ef94f5732abbd85fc4e40777021f9077fc88f1c27602f"
+    },
+    {
+      "number": 95,
+      "name": "سُورَةُ التِّينِ",
+      "englishName": "At-Tin",
+      "numberOfAyahs": 8,
+      "file": "surah-095.json",
+      "sha256": "79fdce8eb3ef17dce8ee4613c4efcb385e7c178954a79978b1eb3065af3801e4"
+    },
+    {
+      "number": 96,
+      "name": "سُورَةُ العَلَقِ",
+      "englishName": "Al-Alaq",
+      "numberOfAyahs": 19,
+      "file": "surah-096.json",
+      "sha256": "cd724dd0dd11c69e92089889d9ee497cbf4a0151250366bdebff9e058c272179"
+    },
+    {
+      "number": 97,
+      "name": "سُورَةُ القَدۡرِ",
+      "englishName": "Al-Qadr",
+      "numberOfAyahs": 5,
+      "file": "surah-097.json",
+      "sha256": "ec885100f3b5bce9e72cd41fa175242e0a67c03d3529a329e95c8f58c682bc69"
+    },
+    {
+      "number": 98,
+      "name": "سُورَةُ البَيِّنَةِ",
+      "englishName": "Al-Bayyina",
+      "numberOfAyahs": 8,
+      "file": "surah-098.json",
+      "sha256": "594c650ba8cc36a4b7de979568550f3abbf05864faabcf1d8a1e247a09bc4217"
+    },
+    {
+      "number": 99,
+      "name": "سُورَةُ الزَّلۡزَلَةِ",
+      "englishName": "Az-Zalzala",
+      "numberOfAyahs": 8,
+      "file": "surah-099.json",
+      "sha256": "74580676e5a0d395b525043874e840c2804d4df1cb4e8477655bdf7ec89cc427"
+    },
+    {
+      "number": 100,
+      "name": "سُورَةُ العَادِيَاتِ",
+      "englishName": "Al-Aadiyaat",
+      "numberOfAyahs": 11,
+      "file": "surah-100.json",
+      "sha256": "c270ca0faca545d81948071e6f73c4ccfe06c8d679c95ebee8013deab8faa665"
+    },
+    {
+      "number": 101,
+      "name": "سُورَةُ القَارِعَةِ",
+      "englishName": "Al-Qaari'a",
+      "numberOfAyahs": 11,
+      "file": "surah-101.json",
+      "sha256": "3a1c593c9851d2d116e88a96cd74c8bc8d6c414bce9ce76d7a2cae1486bba1b8"
+    },
+    {
+      "number": 102,
+      "name": "سُورَةُ التَّكَاثُرِ",
+      "englishName": "At-Takaathur",
+      "numberOfAyahs": 8,
+      "file": "surah-102.json",
+      "sha256": "b82e866f0bc045012f13d72ae6823a195e602e829d8e278bf7251220c4da259c"
+    },
+    {
+      "number": 103,
+      "name": "سُورَةُ العَصۡرِ",
+      "englishName": "Al-Asr",
+      "numberOfAyahs": 3,
+      "file": "surah-103.json",
+      "sha256": "3fd945ed874e2c244e3d6f682aa2c3be5ca1efb476bdf9dab8c8d6eeb1ed8f01"
+    },
+    {
+      "number": 104,
+      "name": "سُورَةُ الهُمَزَةِ",
+      "englishName": "Al-Humaza",
+      "numberOfAyahs": 9,
+      "file": "surah-104.json",
+      "sha256": "c724510fe13b5895646779c64872f374b342f33452d08c312e5882433005a20d"
+    },
+    {
+      "number": 105,
+      "name": "سُورَةُ الفِيلِ",
+      "englishName": "Al-Fil",
+      "numberOfAyahs": 5,
+      "file": "surah-105.json",
+      "sha256": "353d7f2586c1abd42661ac029bbfeccee2abc554cadc45c2676f83677f2e97b9"
+    },
+    {
+      "number": 106,
+      "name": "سُورَةُ قُرَيۡشٍ",
+      "englishName": "Quraish",
+      "numberOfAyahs": 4,
+      "file": "surah-106.json",
+      "sha256": "a17eb42b623646f45149061f6bb20ec0656a8645bc5c35ee8302334ac4f2f2cb"
+    },
+    {
+      "number": 107,
+      "name": "سُورَةُ المَاعُونِ",
+      "englishName": "Al-Maa'un",
+      "numberOfAyahs": 7,
+      "file": "surah-107.json",
+      "sha256": "6983f613cd6d3f53f01ebe79c2e58822d744f8fd70dda668f7254ae26e97f91c"
+    },
+    {
+      "number": 108,
+      "name": "سُورَةُ الكَوۡثَرِ",
+      "englishName": "Al-Kawthar",
+      "numberOfAyahs": 3,
+      "file": "surah-108.json",
+      "sha256": "c25d03f18a1b70b6dd5367b9944627266cf636dba639edc4ea0799ab076bb5d2"
+    },
+    {
+      "number": 109,
+      "name": "سُورَةُ الكَافِرُونَ",
+      "englishName": "Al-Kaafiroon",
+      "numberOfAyahs": 6,
+      "file": "surah-109.json",
+      "sha256": "59c488409bec93cec341bfda1b76340b47812457add71e404c826bc9645e34bd"
+    },
+    {
+      "number": 110,
+      "name": "سُورَةُ النَّصۡرِ",
+      "englishName": "An-Nasr",
+      "numberOfAyahs": 3,
+      "file": "surah-110.json",
+      "sha256": "da29aaaf4132a32e8c4d5247920ef7c33f0fd616b7da66f920c0042477037c29"
+    },
+    {
+      "number": 111,
+      "name": "سُورَةُ المَسَدِ",
+      "englishName": "Al-Masad",
+      "numberOfAyahs": 5,
+      "file": "surah-111.json",
+      "sha256": "8932088e9b72a89327a683236d317e910a34c3553375154bd6c2565598632ca3"
+    },
+    {
+      "number": 112,
+      "name": "سُورَةُ الإِخۡلَاصِ",
+      "englishName": "Al-Ikhlaas",
+      "numberOfAyahs": 4,
+      "file": "surah-112.json",
+      "sha256": "98a891d2faf2a68d91ae16d8bb4786109bb168b6a8d90d9dd82535b4d67e1f49"
+    },
+    {
+      "number": 113,
+      "name": "سُورَةُ الفَلَقِ",
+      "englishName": "Al-Falaq",
+      "numberOfAyahs": 5,
+      "file": "surah-113.json",
+      "sha256": "ca6e86f4de08a7a055650a684a9ea42f6bfd39e5fc3e1fce89eed15f8a32e1e8"
+    },
+    {
+      "number": 114,
+      "name": "سُورَةُ النَّاسِ",
+      "englishName": "An-Naas",
+      "numberOfAyahs": 6,
+      "file": "surah-114.json",
+      "sha256": "a77e8b4a251a9edbd36a945105cc40807d52e81b4eb7dc3d16cb712b7652e141"
+    }
+  ]
+}

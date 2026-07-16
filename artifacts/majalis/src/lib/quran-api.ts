@@ -1,13 +1,20 @@
 /**
- * Quran text API — backed exclusively by api.alquran.cloud (AlQuran Cloud).
+ * Quran text API — local-first with live AlQuran Cloud fallback.
  * Source: https://alquran.cloud/api — open, free, no API key required.
  * Edition used: quran-uthmani (Uthmanic script, Hafs ʿan ʿĀṣim)
  *
+ * نص السورة (fetchSurahDetail) يُقرأ أولًا من public/data/quran/ (نسخة
+ * مُجلَّبة مسبقًا عبر scripts/fetch-quran-data.mjs ومُتحقَّق من سلامتها عبر
+ * scripts/verify-quran-integrity.mjs بمطابقة SHA-256 وعدد الآيات)، وعند
+ * غياب الملف المحلي أو تعذّر قراءته يرجع تلقائيًا للطلب الحي من الـ API —
+ * راجع docs/quran-data-source.md لتفاصيل المصدر والترخيص وآلية التحديث.
+ *
  * ⚠️ Never generate or modify Quran text manually.
- *    All content comes from the API only.
+ *    All content comes from the API (live or its verbatim local snapshot) only.
  */
 
 const BASE = "https://api.alquran.cloud/v1";
+const LOCAL_QURAN_DATA_BASE = "/data/quran";
 const CACHE_PREFIX = "mj-quran-v3-";
 const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
@@ -70,10 +77,31 @@ export async function fetchSurahList(): Promise<SurahSummary[]> {
   return list;
 }
 
+async function fetchLocalSurahDetail(surahNumber: number): Promise<SurahDetail | null> {
+  try {
+    const padded = String(surahNumber).padStart(3, "0");
+    const res = await fetch(`${LOCAL_QURAN_DATA_BASE}/surah-${padded}.json`, {
+      signal: AbortSignal.timeout(8_000),
+    });
+    if (!res.ok) return null;
+    const detail = await res.json();
+    if (!detail || !Array.isArray(detail.ayahs)) return null;
+    return detail as SurahDetail;
+  } catch {
+    return null;
+  }
+}
+
 export async function fetchSurahDetail(surahNumber: number): Promise<SurahDetail> {
   const key = `surah-${surahNumber}`;
   const cached = readCache<SurahDetail>(key);
   if (cached) return cached;
+
+  const local = await fetchLocalSurahDetail(surahNumber);
+  if (local) {
+    writeCache(key, local);
+    return local;
+  }
 
   const res = await fetch(`${BASE}/surah/${surahNumber}/quran-uthmani`, {
     signal: AbortSignal.timeout(15_000),
