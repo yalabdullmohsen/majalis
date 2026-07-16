@@ -53,9 +53,10 @@ for await (const file of walk(resolve(appRoot, "src"))) {
   text.split("\n").forEach((line, i) => {
     const at = `${rel}:${i + 1}`;
 
-    // ١) بريد خارج النطاق الرسمي
+    // ١) بريد خارج النطاق الرسمي — باستثناء بريد التواصل المعتمد وحده
+    // (contactEmail)، وهو استثناء متعمَّد رغم كونه على gmail.com.
     for (const domain of config.forbiddenEmailDomains) {
-      if (line.includes(`@${domain}`)) {
+      if (line.includes(`@${domain}`) && !line.includes(config.contactEmail)) {
         failures.push(`${at} — بريد شخصي/خارجي: @${domain}`);
       }
     }

@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { CONTACT_EMAIL } from "@/lib/site-config";
 
 export default function TermsPage() {
   useEffect(() => {
@@ -103,7 +104,7 @@ export default function TermsPage() {
           إذن استخدام المحتوى، يمكنك مراسلتنا عبر البريد الإلكتروني:
         </p>
         <p>
-          <a href="mailto:info@majlisilm.com">info@majlisilm.com</a>
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
         </p>
         <p>
           أو عبر صفحة{" "}

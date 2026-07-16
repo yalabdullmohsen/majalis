@@ -3,6 +3,7 @@
  * يفتح نموذج بريد إلكتروني مُعبّأ مسبقاً بمعرف المحتوى والصفحة.
  */
 import { Flag } from "lucide-react";
+import { CONTACT_EMAIL } from "@/lib/site-config";
 
 type Props = {
   contentType: string;
@@ -11,7 +12,7 @@ type Props = {
 };
 
 export function ContentReportButton({ contentType, contentId, title }: Props) {
-  const subject = encodeURIComponent(`إبلاغ عن خطأ علمي — ${contentType} #${contentId}`);
+  const subject = encodeURIComponent(`تصحيح محتوى علمي — ${contentType} #${contentId}`);
   const body = encodeURIComponent(
     `صفحة: ${window.location.href}\n` +
     `نوع المحتوى: ${contentType}\n` +
@@ -22,7 +23,7 @@ export function ContentReportButton({ contentType, contentId, title }: Props) {
 
   return (
     <a
-      href={`mailto:content@majlisilm.com?subject=${subject}&body=${body}`}
+      href={`mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`}
       className="crb-btn"
       aria-label="الإبلاغ عن خطأ في هذا المحتوى"
       dir="rtl"

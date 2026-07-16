@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import { CONTACT_EMAIL } from "@/lib/site-config";
 
 function IslamicStarFooter() {
   const cx = 16, r1 = 13, r2 = 7;
@@ -139,7 +140,7 @@ export function SiteFooter() {
             />
             <p>تطبيق علمي شرعي للدروس والعبادة والمحتوى اليومي.</p>
             <p className="site-footer-email">
-              <a href="mailto:info@majlisilm.com">info@majlisilm.com</a>
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             </p>
           </div>
         </div>

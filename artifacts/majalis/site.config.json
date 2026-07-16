@@ -15,15 +15,10 @@
 
   "titleSuffix": " | المجلس العلمي",
 
-  "emails": {
-    "info": "info@majlisilm.com",
-    "support": "support@majlisilm.com",
-    "content": "content@majlisilm.com",
-    "review": "review@majlisilm.com",
-    "privacy": "privacy@majlisilm.com"
-  },
+  "$emailNote": "بريد التواصل الرسمي الوحيد للمنصة كاملةً — استفسارات عامة، ملاحظات تقنية، تصحيح محتوى علمي، إبلاغ عن خطأ، اقتراحات وشراكات. لا بريد آخر معتمد.",
+  "contactEmail": "Majlisilm.app@gmail.com",
 
-  "$forbiddenNote": "أسماء وعناوين ممنوعة في أي نص معروض للمستخدم — يحرسها scripts/test-identity.mjs",
+  "$forbiddenNote": "أسماء وعناوين ممنوعة في أي نص معروض للمستخدم — يحرسها scripts/test-identity.mjs. استثناء وحيد: contactEmail أعلاه معتمَد رغم كونه على نطاق gmail.com.",
   "forbiddenBrandNames": ["مجالس العلم", "منصة المجالس", "مجالس العلمية"],
   "forbiddenEmailDomains": ["gmail.com", "hotmail.com", "outlook.com", "yahoo.com"],
 

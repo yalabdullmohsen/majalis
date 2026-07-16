@@ -108,5 +108,5 @@
 - [ ] تشغيل `npx @capacitor/assets generate --ios` بعد إعداد الأيقونة
 - [ ] تشغيل `npx cap sync ios` على Mac مع Xcode
 - [ ] إنشاء حساب Apple Developer ورفع التطبيق عبر Xcode/Transporter
-- [ ] إضافة حساب مراجعة تجريبي في App Store Connect (review@majlisilm.com)
+- [ ] إضافة حساب مراجعة تجريبي في App Store Connect (Majlisilm.app@gmail.com)
 - [ ] التقاط لقطات الشاشة باستخدام `scripts/take-screenshots.ts`

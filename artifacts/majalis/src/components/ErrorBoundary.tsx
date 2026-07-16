@@ -1,5 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
 import { buildErrorReport, copyErrorId, createErrorId, logClientError } from "@/lib/error-report";
+import { CONTACT_EMAIL } from "@/lib/site-config";
 
 type Props = { children: ReactNode };
 type State = { error: Error | null; copied: boolean; errorId: string; componentStack: string | null };
@@ -60,7 +61,7 @@ export class ErrorBoundary extends Component<Props, State> {
     const detail = encodeURIComponent(
       `Error ID: ${this.state.errorId}\nURL: ${typeof window !== "undefined" ? window.location.href : ""}\nMessage: ${this.state.error?.message || "unknown"}`,
     );
-    window.open(`mailto:support@majlisilm.com?subject=MJL%20Error%20${this.state.errorId}&body=${detail}`, "_blank", "noopener,noreferrer");
+    window.open(`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`ملاحظة تقنية — MJL Error ${this.state.errorId}`)}&body=${detail}`, "_blank", "noopener,noreferrer");
     this.setState({ copied: true });
   };
 

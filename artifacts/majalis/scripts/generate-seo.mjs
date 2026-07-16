@@ -1066,7 +1066,7 @@ const feed = `<?xml version="1.0" encoding="UTF-8"?>
     <description>آخر المستجدات العلمية — قرارات وفتاوى وأحكام ودورات</description>
     <language>ar</language>
     <lastBuildDate>${BUILD_DATE}</lastBuildDate>
-    <managingEditor>${escapeXml(SITE.emails.info)} (${escapeXml(SITE_NAME)})</managingEditor>
+    <managingEditor>${escapeXml(SITE.contactEmail)} (${escapeXml(SITE_NAME)})</managingEditor>
     <image>
       <url>${escapeXml(absoluteUrl(DEFAULT_IMAGE))}</url>
       <title>${escapeXml(SITE_NAME)}</title>
