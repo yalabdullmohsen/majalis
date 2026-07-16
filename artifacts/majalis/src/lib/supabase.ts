@@ -1478,45 +1478,16 @@ export async function searchEverything(term: string): Promise<SearchResults> {
     return { ...demo, ...platform, usingDemo: true, error: null };
   }
 
-  try {
-    const { data, error } = await supabase.rpc("search_platform", { query });
-
-    if (!error && data) {
-      const seeds = await loadSeedData();
-      const adhkar = seeds.filterAdhkar(query).slice(0, 15).map((item: any) => ({
-        id: item.id,
-        text: item.text,
-        category: seeds.ADHKAR_CATEGORIES.find((c: any) => c.id === item.categoryId)?.name,
-        source: item.source,
-      }));
-      const platformFallback = seeds.searchPlatformSeed(query);
-      return {
-        lessons: data.lessons || [],
-        library: data.library || [],
-        miracles: data.miracles || [],
-        sheikhs: data.sheikhs || [],
-        qa: data.qa || [],
-        fawaid: data.fawaid || [],
-        adhkar,
-        fiqh_decisions: data.fiqh_decisions?.length ? data.fiqh_decisions : platformFallback.fiqh_decisions,
-        fatwas: data.fatwas?.length ? data.fatwas : platformFallback.fatwas,
-        rulings: data.rulings?.length ? data.rulings : platformFallback.rulings,
-        courses: data.courses?.length ? data.courses : platformFallback.courses,
-        updates: data.updates?.length ? data.updates : platformFallback.updates,
-        hadith: data.hadith || [],
-        stories: data.stories || [],
-        usingDemo: false,
-        error: null,
-      };
-    }
-
-    if (error) {
-      logSupabaseError("searchEverything.rpc", error, { query });
-    }
-  } catch (err) {
-    logSupabaseError("searchEverything.rpc", err, { query });
-  }
-
+  // ملاحظة: كانت هذه الدالة تحاول أولاً استدعاء RPC باسم "search_platform"
+  // قبل اللجوء للبحث المباشر عبر الجداول — تحقَّقنا (2026-07-16) عبر استعلام
+  // مباشر لقاعدة بيانات الإنتاج (pg_proc) أن هذه الدالة **غير موجودة إطلاقًا**
+  // ولم تكن موجودة على الأرجح منذ فترة، فكل استدعاء بحث كان يهدر جولة شبكة
+  // كاملة تفشل دائمًا (خطأ "function does not exist") قبل السقوط تلقائيًا
+  // لمسار البحث المباشر أدناه (searchEverythingFallback) — وهو المسار الذي
+  // يُستخدَم فعليًا في كل بحث حتى الآن، ويدعم أصلاً تطبيعًا وتفاوتًا عربيًا
+  // (همزات، مرادفات، تشابه تحريري) عبر arabicSearchPatterns/searchPatternChunks
+  // في كل دالة searchXFallback. أُزيل استدعاء الـRPC الميت لتفادي هذه الجولة
+  // الضائعة وضجيج السجلات على كل بحث في التطبيق.
   const seeds = await loadSeedData();
   const fallback = await searchEverythingFallback(query);
   const platform = seeds.searchPlatformSeed(query);

@@ -25,8 +25,25 @@ const TABLE = "fiqh_council_items";
 const now = () => new Date().toISOString();
 
 function isMissingTableError(err: unknown) {
-  const msg = String((err as { message?: string })?.message || err || "");
-  return msg.includes("fiqh_council_items") || msg.includes("does not exist") || msg.includes("42P01");
+  const e = err as { message?: string; code?: string } | null;
+  const msg = String(e?.message || err || "");
+  const code = String(e?.code || "");
+  // "Could not find the function/table ... in the schema cache" هي رسالة PostgREST
+  // القياسية (كود PGRST202/PGRST205) لدالة RPC أو جدول غير موجودَين إطلاقًا في
+  // قاعدة البيانات — نمط أوسع من فحص اسم جدول واحد فقط، مطابق لنفس النمط
+  // المُستخدَم في rulings-service.ts لنفس فئة الخطأ. بدونه، دوال RPC غير موجودة
+  // فعليًا (مثل fiqh_council_quality_stats وfiqh_research_analytics) كانت لا
+  // تسقط تلقائيًا لبيانات احتياطية محسوبة، فتُظهر لوحات تحكم المشرف إحصاءات
+  // صفرية بصمت (2026-07-16). نفحص code وmessage معًا لأن PostgREST يُرجعهما
+  // كحقلين منفصلين، لا كود مُضمَّن داخل نص الرسالة بالضرورة.
+  return (
+    msg.includes("fiqh_council_items") ||
+    msg.includes("does not exist") ||
+    msg.includes("42P01") ||
+    /Could not find/i.test(msg) ||
+    code === "PGRST202" ||
+    code === "PGRST205"
+  );
 }
 
 export async function adminGetAllFiqhCouncilItems() {
