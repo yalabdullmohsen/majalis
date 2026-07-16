@@ -7,7 +7,7 @@ import {
   FileText, Gavel, GitBranch, GraduationCap, Heart, HelpCircle, Info, Landmark,
   Layers, Library, Lightbulb, Map, Mic, Mic2, Microscope, Moon, Network,
   Radio, RefreshCw, Repeat2, Rss, Scale, ScrollText, Search, Settings,
-  Shield, Sparkles, Star, Stethoscope, Sun, Tv, Users, Waypoints, X, Zap,
+  Shield, Sparkles, Star, Stethoscope, Sun, Tv, Users, X, Zap,
 } from "lucide-react";
 
 const SHEET_SECTIONS = [
