@@ -2114,3 +2114,38 @@
   /* هامش إضافي حول الصفحة على شاشات المكتب */
   .mf-page-frame { padding: 1.5rem 2.5rem; }
 }
+
+/* ── صفحة المصحف: زر فهرس السور على الهاتف + التنقل بين السور ── */
+.qs-mobile-sidebar-toggle {
+  display: none;
+}
+@media (max-width: 860px) {
+  .qs-mobile-sidebar-toggle {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    margin: .75rem 1rem 0;
+    padding: .5rem .9rem;
+    border: 1px solid var(--border, #e5e3dd);
+    border-radius: .6rem;
+    background: var(--bg-card, #fff);
+    color: var(--majalis-emerald, #176B57);
+    font-size: .85rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+.qs-surah-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border, #e5e3dd);
+}
+.qs-surah-nav button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}

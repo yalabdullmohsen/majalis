@@ -148,6 +148,7 @@ export const NAV_GROUPS: NavGroup[] = [
     title: "القرآن والأذكار",
     links: [
       /* — القرآن — */
+      { href: "/mushaf",              label: "المصحف الشريف",       description: "اقرأ القرآن الكريم كاملاً" },
       { href: "/quran-hub",           label: "مركز القرآن",         description: "بوابتك الشاملة للقرآن الكريم" },
       { href: "/daily-wird",          label: "الورد اليومي",        description: "تتبع قراءتك اليومية" },
       { href: "/quran/tajweed",       label: "التجويد",             description: "أحكام التلاوة الصحيحة" },

@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import {
   Radio, Mic2, Layers, Circle, Star,
-  ChevronLeft, BookMarked, Headphones, GraduationCap,
+  ChevronLeft, BookMarked, BookOpen, Headphones, GraduationCap,
   Moon, Heart, Sparkles,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
@@ -11,6 +11,14 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 /* ── بيانات أقسام القرآن ──────────────────────────────────── */
 const QURAN_SECTIONS = [
+  {
+    href: "/mushaf",
+    title: "المصحف الشريف",
+    desc: "اقرأ القرآن الكريم كاملاً سورة سورة، مع الاستماع لكل آية ومشاركتها",
+    Icon: BookOpen,
+    accent: "#176B57",
+    tag: "٦٠٤ صفحة",
+  },
   {
     href: "/quran/surah-stories",
     title: "قصص القرآن",

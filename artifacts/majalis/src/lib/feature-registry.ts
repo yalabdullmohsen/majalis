@@ -51,6 +51,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "fiqh-council", label: "المجمع الفقهي",    path: "/fiqh-council", group: "فقه",           status: "active",       inSideNav: true,  inBottomNav: false },
 
   // ── القرآن والأذكار ──────────────────────────────────────────
+  { id: "mushaf",        label: "المصحف الشريف",   path: "/mushaf",       group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "quran",        label: "القرآن الكريم",    path: "/quran-hub",    group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "quran-circles",label:"حلقات التحفيظ",     path: "/quran-circles",group:"قرآن",           status: "coming-soon",  inSideNav: true,  inBottomNav: false },
   { id: "quran-radio",  label: "إذاعة القرآن",     path: "/quran-radio",  group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
