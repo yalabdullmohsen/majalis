@@ -683,6 +683,7 @@ export default function HomePage() {
               onChange={(e) => setTerm(e.target.value)}
               placeholder="ابحث في المنصة..."
               aria-label="البحث"
+              className="hpv4-hero__search-input"
               style={{
                 flex: 1, padding: "0.75rem 1rem", border: "none", outline: "none",
                 fontSize: "0.88rem", direction: "rtl", fontFamily: "inherit",

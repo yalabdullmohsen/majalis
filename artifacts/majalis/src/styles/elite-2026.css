@@ -32575,6 +32575,17 @@ footer *,
   color: #0E6E52 !important;
 }
 
+/* استثناء خانة بحث الصفحة الرئيسية داخل .hpv4-hero — خلفيتها بيضاء تقريبًا
+   (rgba(255,255,255,.97)) بينما §78 (.hpv4-hero *) تُجبر كل نص داخل البطل
+   على color:#FFFFFF، فيصبح النص المكتوب أبيض على خلفية بيضاء تقريبًا —
+   غير مرئي تمامًا أثناء الكتابة (بلاغ مستخدم 2026-07-16). */
+.hpv4-hero input.hpv4-hero__search-input {
+  color: #1a1a1a !important;
+}
+.hpv4-hero input.hpv4-hero__search-input::placeholder {
+  color: rgba(26,26,26,0.55) !important;
+}
+
 /* استثناء Prayer Chip داخل NavBar — خلفيته شفافة-فاتحة على navbar أبيض
    §79 تُجبره على color:#fff فيصبح النص غير مرئي على خلفية شبه-شفافة */
 .navbar-v3 .navbar-prayer-chip,
