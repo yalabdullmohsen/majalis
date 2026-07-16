@@ -70,7 +70,6 @@ const SurahStoryDetailRoute = lazy(() =>
   }))
 );
 const TawhidPage = lazy(() => import("@/views/TawhidPage"));
-const StoriesPage = lazy(() => import("@/views/StoriesPage"));
 const AdhkarPage = lazy(() => import("@/views/AdhkarPage"));
 const QaPage = lazy(() => import("@/views/QaPage"));
 const QuizPage = lazy(() => import("@/views/QuizPage"));
@@ -364,13 +363,13 @@ function Router() {
       <Route path="/hadith/daif"><SafeLazyRoute component={HadithDaifPage} /></Route>
       <Route path="/hadith/mawdu"><SafeLazyRoute component={HadithMawduPage} /></Route>
       <Route path="/hadith"><SafeLazyRoute component={HadithIndexPage} /></Route>
-      <Route path="/stories"><SafeLazyRoute component={StoriesPage} /></Route>
+      <Route path="/stories"><SafeLazyRoute component={IslamicStoriesPage} /></Route>
       <Route path="/prophet-stories/:slug"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
       <Route path="/prophet-stories"><Redirect to="/prophets" /></Route>
       <Route path="/prophets/tree"><SafeLazyRoute component={ProphetsFamilyTreePage} /></Route>
       <Route path="/prophets/:slug"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
       <Route path="/prophets"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
-      <Route path="/islamic-stories"><SafeLazyRoute component={IslamicStoriesPage} /></Route>
+      <Route path="/islamic-stories"><Redirect to="/stories" /></Route>
       <Route path="/adhkar"><SafeLazyRoute component={AdhkarPage} /></Route>
       <Route path="/qa"><SafeLazyRoute component={QaPage} /></Route>
       <Route path="/quiz"><SafeLazyRoute component={QuizPage} /></Route>

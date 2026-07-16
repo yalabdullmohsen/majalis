@@ -963,7 +963,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     title: "تحديث: القصص الإسلامية، 57+ قصة كاملة",
     summary: "إضافة 5 قصص تفصيلية: صلاح الدين الأيوبي وفتح القدس، خديجة بنت خويلد، طارق بن زياد، الإمام مالك، وغزوة بدر الكبرى.",
     update_type: "إعلان",
-    source_url: "/islamic-stories",
+    source_url: "/stories",
     published_at: "2026-07-11T09:00:00Z",
     status: "approved",
   },

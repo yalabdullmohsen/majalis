@@ -178,6 +178,11 @@
   ],
   "redirects": [
     {
+      "source": "/islamic-stories",
+      "destination": "/stories",
+      "permanent": true
+    },
+    {
       "source": "/learning-path/dashboard",
       "destination": "/my-learning",
       "permanent": true

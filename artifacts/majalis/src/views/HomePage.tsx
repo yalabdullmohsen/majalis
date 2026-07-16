@@ -102,8 +102,7 @@ const FEATURE_CATS: FeatureCat[] = [
       { href: "/wasaya-nabawiyya", Icon: Scroll,  title: "الوصايا النبوية",    desc: "10 وصايا جامعة ووصايا خاصة بالصحابة مع التطبيق" },
       { href: "/raqaiq",          Icon: Heart,  title: "الرقائق والزهد",      desc: "مواعظ تُليِّن القلوب وأقوال كبار الزاهدين والمحاسبة اليومية" },
       { href: "/prophets",        Icon: Star,     title: "قصص الأنبياء",     desc: "من آدم إلى محمد ﷺ" },
-      { href: "/islamic-stories", Icon: Landmark, title: "صحابة وفتوحات",    desc: "سير الصحابة والفتوحات" },
-      { href: "/stories",         Icon: Map,      title: "القصص الإسلامية",  desc: "وقائع من التاريخ الإسلامي" },
+      { href: "/stories",         Icon: Map,      title: "القصص الإسلامية",  desc: "سير الصحابة والفتوحات ووقائع من التاريخ الإسلامي" },
     ],
   },
   {

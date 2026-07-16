@@ -40,7 +40,6 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "quiz",         label: "المسابقة",           path: "/quiz",         group: "تفاعلي",        status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "stories",      label: "القصص الإسلامية",   path: "/stories",      group: "قصص",           status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "prophets",     label: "قصص الأنبياء",      path: "/prophets",     group: "قصص",           status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "islamic-stories",label:"صحابة وفتوحات",    path: "/islamic-stories",group:"قصص",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "updates",      label: "آخر المستجدات",     path: "/updates",      group: "أخبار",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "miracles",     label: "الإعجاز العلمي",    path: "/miracles",     group: "علم",           status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "seerah",       label: "السيرة النبوية",    path: "/seerah",       group: "سيرة",          status: "active",       inSideNav: true,  inBottomNav: false },

@@ -92,7 +92,6 @@ const SHEET_SECTIONS = [
     { href: "/sahabah",         label: "الصحابة الكرام",         Icon: Users },
     { href: "/prophets",        label: "الأنبياء والرسل",         Icon: Star },
     { href: "/stories",            label: "القصص الإسلامية",     Icon: BookOpen },
-    { href: "/islamic-stories",    label: "صحابة وفتوحات",       Icon: Waypoints },
     { href: "/islamic-landmarks",  label: "المشاهد والمساجد",    Icon: Landmark },
   ]},
 

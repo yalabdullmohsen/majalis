@@ -151,7 +151,7 @@ function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => voi
         </div>
       )}
       <div className="isp-detail__share">
-        <ShareButtons title={story.title} url={`https://www.majlisilm.com/islamic-stories`} />
+        <ShareButtons title={story.title} url={`https://www.majlisilm.com/stories`} />
       </div>
     </div>
   );
@@ -169,7 +169,7 @@ export default function IslamicStoriesPage() {
 
   useEffect(() => {
     applyPageSeo({
-      path: "/islamic-stories",
+      path: "/stories",
       title: "قصص الصحابة والفتوحات الإسلامية | المجلس العلمي",
       description: "قصص الصحابة الكرام والفتوحات الإسلامية والأحداث التاريخية، من الهجرة النبوية إلى فتح مكة وما بعدها من عصور الإسلام.",
       keywords: ["قصص إسلامية", "الصحابة", "الفتوحات الإسلامية", "التاريخ الإسلامي", "السيرة"],
@@ -183,7 +183,7 @@ export default function IslamicStoriesPage() {
             "@type": "ListItem",
             position: i + 1,
             name: cat,
-            url: `https://www.majlisilm.com/islamic-stories?cat=${encodeURIComponent(cat)}`,
+            url: `https://www.majlisilm.com/stories?cat=${encodeURIComponent(cat)}`,
           })),
         },
       ],

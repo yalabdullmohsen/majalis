@@ -102,8 +102,7 @@ const SECTIONS = [
       { href: "/prophets",         label: "الأنبياء والرسل",      desc: "٢٥ نبياً بقصصهم" },
       { href: "/anbiya",           label: "قصص الأنبياء",         desc: "عرض تفاعلي بقصص وعبر" },
       { href: "/islamic-landmarks", label: "المعالم الإسلامية",   desc: "معالم ومواقع تاريخية إسلامية" },
-      { href: "/stories",          label: "القصص الإسلامية",      desc: "قصص إسلامية معبِّرة" },
-      { href: "/islamic-stories",  label: "صحابة وفتوحات",        desc: "قصص الصحابة والفتوحات" },
+      { href: "/stories",          label: "القصص الإسلامية",      desc: "قصص الصحابة والفتوحات والتاريخ الإسلامي" },
     ],
   },
   {
