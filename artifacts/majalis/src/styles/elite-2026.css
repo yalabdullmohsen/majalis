@@ -31117,7 +31117,12 @@ h3 { font-size: clamp(1.05rem, 2.5vw, 1.35rem) !important; }
 h4 { font-size: clamp(0.95rem, 2vw, 1.1rem) !important; font-weight: 600 !important; }
 h5, h6 { font-size: 0.9375rem !important; font-weight: 600 !important; }
 
-p { line-height: 1.7 !important; color: var(--clr-text-1) !important; }
+/* color بلا !important عمدًا (2026-07-17): نفس منطق قاعدة الروابط أدناه —
+   أي مكوّن يحدد لون نص خاصًا به (مثل نص فاتح فوق خلفية داكنة) يجب أن يفوز
+   تلقائيًا عبر تخصيص CSS العادي دون الحاجة لإضافة !important في كل مكان.
+   كان الإصدار السابق (!important) يُسكت كل ألوان <p> المخصصة في كل الموقع —
+   ومنها نص صفحة تفاصيل الأنبياء الذي صار غير مقروء فوق الخلفية الداكنة. */
+p { line-height: 1.7 !important; color: var(--clr-text-1); }
 
 /* لون الروابط الافتراضي بلا !important عمدًا (2026-07-16): كقاعدة عامة بلا
    إلزام، يفوز عليها تلقائيًا أي تصميم أكثر تخصيصًا لعنصر <a> (مثل تبويب نشط

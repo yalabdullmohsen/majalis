@@ -168,7 +168,7 @@ export const ISLAMIC_OCCASIONS: IslamicOccasion[] = [
     name: "يوم الجمعة",
     hijriMonth: 0,
     hijriDay: 0,
-    summary: "سيد الأيام وعيد الأسبوع للمسلمين — يوم فاضل تُغفر فيه الذنوب.",
+    summary: "سيد الأيام عند المسلمين — يوم فاضل تُغفر فيه الذنوب.",
     deeds: [
       "صلاة الجمعة",
       "الإكثار من الصلاة على النبي ﷺ",

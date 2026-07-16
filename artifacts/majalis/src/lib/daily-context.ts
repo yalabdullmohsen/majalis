@@ -82,7 +82,7 @@ const HIJRI_EVENTS: HijriEvent[] = [
 // ── أيام الأسبوع المميّزة ────────────────────────────────────────────────────
 
 const DAY_EVENTS: Partial<Record<DayOfWeek, { label: string; color: string }>> = {
-  friday:   { label: "يوم الجمعة المبارك — يوم العيد الأسبوعي", color: "#0E6E52" },
+  friday:   { label: "يوم الجمعة المبارك", color: "#0E6E52" },
   saturday: { label: "بداية أسبوع مثمر بإذن الله",             color: "#176B57" },
   monday:   { label: "يوم الإثنين — يوم صيام مستحب",           color: "#0F5132" },
   thursday: { label: "يوم الخميس — يوم صيام مستحب",            color: "#0F5132" },
