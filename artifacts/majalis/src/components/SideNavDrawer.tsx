@@ -3,7 +3,7 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import {
   Activity, BarChart2, BarChart3, BookMarked, BookOpen, BookText, BookUser,
-  Bot, Building2, Calculator, Calendar, CheckCircle2, ChevronDown, ChevronUp,
+  Bot, Building2, Calculator, Calendar, CalendarDays, CheckCircle2, ChevronDown, ChevronUp,
   Clock, Compass, CreditCard, FileText, Gavel, GitBranch, GraduationCap,
   Heart, HelpCircle, Home, Landmark, Layers, Library, Lightbulb,
   LogIn, Map, MapPin, Mic, Mic2, Moon, Network, Quote, Radio, RefreshCw, Repeat2,
@@ -113,6 +113,7 @@ const DRAWER_GROUPS: NavGroup[] = [
           { href: "/my-learning",        label: "الساعات والتقدم",     Icon: BarChart3,     desc: "إحصائياتك وتقدمك في المسارات" },
           { href: "/my-learning#myl2-certs-hd", label: "الشهادات",     Icon: Trophy,        desc: "شهاداتك العلمية المكتسبة" },
           { href: "/my-citations",       label: "دفتر الفوائد",       Icon: Quote,         desc: "اقتباساتك وفوائدك المحفوظة" },
+          { href: "/reading-plans",      label: "خطط القراءة",        Icon: CalendarDays,  desc: "خطة قراءة ذكية لأي كتاب مع متابعة التقدّم" },
         ],
       },
       {

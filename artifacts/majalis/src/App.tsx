@@ -205,6 +205,7 @@ const UploadPage = lazy(() => import("@/views/UploadPage"));
 const MySubmissionsPage = lazy(() => import("@/views/MySubmissionsPage"));
 const UserStatsPage = lazy(() => import("@/views/UserStatsPage"));
 const LearningPlanPage = lazy(() => import("@/views/LearningPlanPage"));
+const ReadingPlansPage = lazy(() => import("@/views/ReadingPlansPage"));
 const FlashCardsPage = lazy(() => import("@/views/FlashCardsPage"));
 const CarModePage = lazy(() => import("@/views/CarModePage"));
 const MosqueModePage = lazy(() => import("@/views/MosqueModePage"));
@@ -424,6 +425,7 @@ function Router() {
       <Route path="/stats"><SafeLazyRoute component={UserStatsPage} /></Route>
       <Route path="/profile"><SafeLazyRoute component={UserStatsPage} /></Route>
       <Route path="/learning-plan"><SafeLazyRoute component={LearningPlanPage} /></Route>
+      <Route path="/reading-plans"><SafeLazyRoute component={ReadingPlansPage} /></Route>
       <Route path="/flashcards"><SafeLazyRoute component={FlashCardsPage} /></Route>
       <Route path="/car-mode"><SafeLazyRoute component={CarModePage} /></Route>
       <Route path="/mosque-mode"><SafeLazyRoute component={MosqueModePage} /></Route>

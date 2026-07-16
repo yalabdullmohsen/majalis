@@ -18643,3 +18643,60 @@ html[data-theme="dark"] .skeleton-base {
 [class*="more-sheet"] {
   font-family: var(--font-ui) !important;
 }
+
+/* ── خطط القراءة (/reading-plans) ────────────────────────────────────────── */
+.rp-toolbar { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+.rp-new-btn {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--majalis-emerald, #176B57); color: #fff;
+  border: none; border-radius: .6rem; padding: .55rem 1rem;
+  font-size: .88rem; font-weight: 600; cursor: pointer;
+}
+.rp-plans-list { display: flex; flex-direction: column; gap: 1rem; }
+.rp-plan-card { padding: 1rem 1.1rem; }
+.rp-plan-card__head { display: flex; justify-content: space-between; align-items: center; gap: .5rem; margin-bottom: .6rem; }
+.rp-plan-card__title { font-size: 1rem; font-weight: 700; margin: 0; }
+.rp-badge { font-size: .72rem; font-weight: 700; padding: .2rem .6rem; border-radius: 99px; white-space: nowrap; background: var(--bg-hover, #f0f0f0); color: var(--text-muted, #6b7280); }
+.rp-badge--ahead { background: rgba(14,110,82,.12); color: #0E6E52; }
+.rp-badge--behind { background: rgba(190,60,40,.12); color: #B33C28; }
+.rp-badge--done { background: rgba(14,110,82,.18); color: #0E6E52; }
+.rp-badge--paused { background: rgba(120,120,120,.15); color: #6b7280; }
+.rp-badge--active { background: rgba(31,77,58,.1); color: #1F4D3A; }
+.rp-badge--idle { background: rgba(120,120,120,.1); color: #6b7280; }
+.rp-progress-bar { height: 8px; border-radius: 99px; background: var(--bg-hover, #eee); overflow: hidden; margin-bottom: .5rem; }
+.rp-progress-bar__fill { height: 100%; background: var(--majalis-emerald, #176B57); border-radius: 99px; transition: width .3s; }
+.rp-plan-card__meta { font-size: .82rem; color: var(--text-muted, #6b7280); margin: 0 0 .5rem; }
+.rp-plan-card__catchup { font-size: .82rem; color: #B33C28; background: rgba(190,60,40,.08); border-radius: .5rem; padding: .5rem .7rem; margin: 0 0 .6rem; }
+.rp-plan-card__log { display: flex; gap: .5rem; margin-bottom: .6rem; }
+.rp-log-input { flex: 1; padding: .5rem .7rem; border: 1px solid var(--border, #e5e3dd); border-radius: .5rem; font-size: .85rem; }
+.rp-log-btn { background: var(--majalis-emerald, #176B57); color: #fff; border: none; border-radius: .5rem; padding: .5rem 1rem; font-size: .85rem; font-weight: 600; cursor: pointer; }
+.rp-plan-card__actions { display: flex; gap: .5rem; }
+.rp-action-btn { display: inline-flex; align-items: center; gap: .3rem; background: none; border: 1px solid var(--border, #e5e3dd); border-radius: .5rem; padding: .4rem .8rem; font-size: .8rem; cursor: pointer; color: var(--text-secondary, #374151); }
+.rp-action-btn--danger { color: #B33C28; border-color: rgba(190,60,40,.3); }
+.rp-empty { text-align: center; padding: 2.5rem 1rem; color: var(--text-muted, #6b7280); display: flex; flex-direction: column; align-items: center; gap: .5rem; }
+
+.rp-new-plan { padding: 1.1rem; margin-bottom: 1.25rem; }
+.rp-new-plan__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: .8rem; }
+.rp-new-plan__head h3 { margin: 0; font-size: 1.05rem; }
+.rp-close-btn { background: none; border: none; cursor: pointer; color: var(--text-muted, #6b7280); }
+.rp-field { display: flex; flex-direction: column; gap: .3rem; margin-bottom: .8rem; font-size: .85rem; font-weight: 600; position: relative; }
+.rp-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+.rp-text-input { padding: .55rem .7rem; border: 1px solid var(--border, #e5e3dd); border-radius: .5rem; font-size: .88rem; font-weight: 400; }
+.rp-suggestions { position: absolute; top: 100%; inset-inline: 0; z-index: 5; background: var(--bg-card, #fff); border: 1px solid var(--border, #e5e3dd); border-radius: .5rem; box-shadow: 0 4px 14px rgba(0,0,0,.1); list-style: none; margin: .25rem 0 0; padding: .25rem; max-height: 220px; overflow-y: auto; }
+.rp-suggestions li button { width: 100%; text-align: right; background: none; border: none; padding: .5rem .6rem; font-size: .85rem; font-weight: 400; cursor: pointer; border-radius: .4rem; }
+.rp-suggestions li button:hover { background: var(--bg-hover, #f3f0eb); }
+.rp-suggestions li button span { color: var(--text-muted, #6b7280); font-size: .78rem; }
+.rp-days-grid { display: flex; flex-wrap: wrap; gap: .4rem; }
+.rp-day-chip { padding: .4rem .8rem; border-radius: 99px; border: 1px solid var(--border, #e5e3dd); background: none; font-size: .82rem; font-weight: 500; cursor: pointer; }
+.rp-day-chip.is-active { background: var(--majalis-emerald, #176B57); color: #fff; border-color: var(--majalis-emerald, #176B57); }
+.rp-checkbox-field { display: flex; align-items: center; gap: .5rem; font-size: .85rem; margin-bottom: .8rem; }
+.rp-feasibility { font-size: .82rem; padding: .6rem .8rem; border-radius: .5rem; background: rgba(14,110,82,.08); color: #0E6E52; margin-bottom: .8rem; }
+.rp-feasibility--warn { background: rgba(190,60,40,.08); color: #B33C28; }
+.rp-submit-btn { width: 100%; background: var(--majalis-emerald, #176B57); color: #fff; border: none; border-radius: .6rem; padding: .7rem; font-size: .92rem; font-weight: 700; cursor: pointer; }
+.rp-submit-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+html[data-theme="dark"] .rp-badge { background: rgba(255,255,255,.08); color: #C7D2CD; }
+html[data-theme="dark"] .rp-text-input,
+html[data-theme="dark"] .rp-log-input { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.15); color: #E9EEEC; }
+html[data-theme="dark"] .rp-day-chip { border-color: rgba(255,255,255,.15); color: #C7D2CD; }
+html[data-theme="dark"] .rp-suggestions { background: #16241d; border-color: rgba(255,255,255,.12); }

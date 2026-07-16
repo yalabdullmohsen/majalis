@@ -3,7 +3,7 @@ import { Link, useLocation } from "wouter";
 import { useEffect } from "react";
 import {
   Activity, BarChart2, BarChart3, BookMarked, BookOpen, BookText, BookUser,
-  Bot, Building2, Calculator, Calendar, CheckCircle2, Clock, Compass, CreditCard,
+  Bot, Building2, Calculator, Calendar, CalendarDays, CheckCircle2, Clock, Compass, CreditCard,
   FileText, Gavel, GitBranch, GraduationCap, Heart, HelpCircle, Info, Landmark,
   Layers, Library, Lightbulb, Map, Mic, Mic2, Microscope, Moon, Network,
   Quote, Radio, RefreshCw, Repeat2, Rss, Scale, ScrollText, Search, Settings,
@@ -122,6 +122,7 @@ const SHEET_SECTIONS = [
     { href: "/learning/paths",       label: "المسارات العلمية",    Icon: GraduationCap },
     { href: "/my-learning",          label: "لوحتي التعليمية",    Icon: BarChart3 },
     { href: "/my-citations",         label: "دفتر الفوائد",       Icon: Quote },
+    { href: "/reading-plans",        label: "خطط القراءة",        Icon: CalendarDays },
     { href: "/knowledge-map",        label: "الخريطة المعرفية",   Icon: Network },
     { href: "/knowledge-graph",      label: "شبكة المعرفة",       Icon: GitBranch },
     { href: "/calendar",             label: "التقويم الهجري",     Icon: Calendar },
