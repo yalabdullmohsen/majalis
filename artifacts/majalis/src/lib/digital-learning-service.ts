@@ -168,17 +168,3 @@ export async function fetchLearningNotes() {
 export async function fetchLessonInsights(body: { pathSlug: string; moduleId: string; moduleTitle: string }) {
   return dlFetch("ai-insights", { method: "POST", body });
 }
-
-export async function fetchAdminLearningStats() {
-  const res = await apiFetch("/api/admin/digital-learning?action=dashboard");
-  if (!res.ok) return null;
-  const json = await res.json();
-  return json.stats;
-}
-
-export async function generateLearningReport() {
-  const res = await apiFetch("/api/admin/digital-learning?action=report");
-  if (!res.ok) return null;
-  const json = await res.json();
-  return json.report;
-}

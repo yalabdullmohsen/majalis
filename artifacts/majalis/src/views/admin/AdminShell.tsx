@@ -6,7 +6,7 @@ import {
   FlaskConical, Flag, GraduationCap, Globe, HelpCircle, Image, Landmark,
   LayoutDashboard, Library, Lightbulb, MessageCircle, MessageSquare,
   Network, PlayCircle, Radio, RefreshCw, Route, Scale, School, ScrollText, Search,
-  Send, Settings, Settings2, ShieldCheck, Smartphone, Sparkles,
+  Send, Settings, Settings2, ShieldCheck, Sparkles,
   Target, Unlock, User, Users,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -34,7 +34,6 @@ export type AdminSection =
   | "verified-knowledge"
   | "knowledge-reasoning"
   | "search-analytics"
-  | "digital-learning"
   | "autonomous-ai"
   | "global-reference"
   | "islamic-intelligence"
@@ -114,7 +113,6 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
       { key: "verified-knowledge",     label: "المعرفة الموثقة", Icon: CheckCircle2 },
       { key: "scholarly-verification", label: "التوثيق العلمي",  Icon: ShieldCheck },
       { key: "knowledge-reasoning",    label: "محرك الاستدلال",  Icon: MessageCircle },
-      { key: "digital-learning",       label: "التعليم الرقمي",  Icon: Smartphone },
     ],
   },
   {

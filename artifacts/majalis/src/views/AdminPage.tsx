@@ -27,7 +27,6 @@ import { ScholarlyVerificationSection } from "@/views/admin/ScholarlyVerificatio
 import { VerifiedKnowledgeSection } from "@/views/admin/VerifiedKnowledgeSection";
 import { KnowledgeReasoningSection } from "@/views/admin/KnowledgeReasoningSection";
 import { SearchAnalyticsSection } from "@/views/admin/SearchAnalyticsSection";
-import { DigitalLearningSection } from "@/views/admin/DigitalLearningSection";
 import { AutonomousAiSection } from "@/views/admin/AutonomousAiSection";
 import { GlobalReferenceSection } from "@/views/admin/GlobalReferenceSection";
 import { IslamicIntelligenceSection } from "@/views/admin/IslamicIntelligenceSection";
@@ -84,7 +83,6 @@ export default function AdminPage() {
       {section === "verified-knowledge" && <VerifiedKnowledgeSection />}
       {section === "knowledge-reasoning" && <KnowledgeReasoningSection />}
       {section === "search-analytics" && <SearchAnalyticsSection />}
-      {section === "digital-learning" && <DigitalLearningSection />}
       {section === "autonomous-ai" && <AutonomousAiSection />}
       {section === "global-reference" && <GlobalReferenceSection />}
       {section === "islamic-intelligence" && <IslamicIntelligenceSection />}

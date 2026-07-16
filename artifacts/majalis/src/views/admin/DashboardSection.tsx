@@ -5,7 +5,7 @@ import {
   Eye, Flag, FlaskConical, Globe, GraduationCap, HelpCircle, Image,
   Landmark, Library, Lightbulb, MessageCircle, MessageSquare, Network,
   PlayCircle, Radio, RefreshCw, Scale, School, ScrollText, Search, Send,
-  Settings, Settings2, ShieldCheck, Smartphone, Sparkles, Target, Unlock,
+  Settings, Settings2, ShieldCheck, Sparkles, Target, Unlock,
   User, Users, Flame,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -240,11 +240,11 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "digital-learning", Icon: Smartphone, label: "التعليم الرقمي", group: "التحليل والذكاء",
-    description: "إدارة مسارات التعلم والبرامج التعليمية الرقمية",
-    whatItDoes: "يتيح تصميم مسارات تعلم مُنظَّمة وتتبع تقدم المستخدمين.",
-    whenToUse: "لإطلاق برنامج تعليمي جديد أو متابعة تقدم المتعلمين.",
-    dataManaged: "مسارات التعلم، نقاط التقدم، الشهادات، إحصائيات الإتمام",
+    key: "learning-paths", Icon: GraduationCap, label: "المسارات العلمية", group: "التحليل والذكاء",
+    description: "إدارة شجرة المسارات العلمية: مسار ← مرحلة ← مقرر ← وحدة ← عنصر",
+    whatItDoes: "تحرير كامل شجرة المسارات، ترتيب العناصر، وإدارة التقييمات والأسئلة مع اعتماد صريح لكل سؤال قبل نشره.",
+    whenToUse: "لإضافة مسار أو مقرر جديد، أو مراجعة واعتماد أسئلة تقييم قبل نشرها للمتعلمين.",
+    dataManaged: "learning_paths، path_stages، courses، course_units، learning_items، course_books، التقييمات وأسئلتها",
     affectsPublic: true,
   },
   // ── المجتمع ──────────────────────────────────────────────────────────
