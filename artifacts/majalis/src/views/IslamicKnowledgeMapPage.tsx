@@ -6,7 +6,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   BookOpen, Scroll, Scale, BookMarked, Users, Star, GraduationCap,
   Heart, Compass, Globe, Layers, ChevronLeft, ArrowLeftRight,
-  FileText, Mic2, Shield, Sparkles, Clock, Target, Map, PenLine, Search,
+  FileText, Mic2, Shield, Sparkles, Clock, Target, Map, PenLine, Search, Network,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -357,20 +357,28 @@ export default function IslamicKnowledgeMapPage() {
   return (
     <div className="ikm-page" dir="rtl">
       {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="ikm-hero">
-        <div className="ikm-hero__ornament" aria-hidden="true">❧ الخريطة المعرفية الإسلامية 2.0 ❧</div>
-        <h1 className="ikm-hero__title">ترابط العلوم الإسلامية</h1>
-        <p className="ikm-hero__sub">
+      <header className="sh-hero">
+        <div className="sh-hero__badge">
+          <Network size={16} strokeWidth={2} aria-hidden="true" />
+          <span>الخريطة المعرفية الإسلامية</span>
+        </div>
+        <h1 className="sh-hero__title">ترابط العلوم الإسلامية</h1>
+        <p className="sh-hero__sub">
           استكشف كيف تترابط علوم القرآن والحديث والفقه والسيرة والأذكار في موسوعة معرفية متكاملة
         </p>
-        <div className="ikm-stats">
-          {STATS.map(s => (
-            <div key={s.lbl} className="ikm-stat">
-              <span className="ikm-stat__val">{s.val}</span>
-              <span className="ikm-stat__lbl">{s.lbl}</span>
-            </div>
-          ))}
+        <div className="sh-hero__stats">
+          <span className="sh-stat"><Layers size={13} strokeWidth={2.5} />{DOMAINS.length} علمًا شرعيًا</span>
+          <span className="sh-stat"><Network size={13} strokeWidth={2.5} />{CONNECTIONS_MAP.length} رابطًا معرفيًا</span>
         </div>
+      </header>
+
+      <section className="ikm-stats" aria-label="إحصائيات موجزة">
+        {STATS.map(s => (
+          <div key={s.lbl} className="ikm-stat">
+            <span className="ikm-stat__val">{s.val}</span>
+            <span className="ikm-stat__lbl">{s.lbl}</span>
+          </div>
+        ))}
       </section>
 
       {/* ── بحث ───────────────────────────────────────────────── */}

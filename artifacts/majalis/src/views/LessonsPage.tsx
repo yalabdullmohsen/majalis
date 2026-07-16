@@ -38,6 +38,11 @@ const TAB_LABELS: Record<TabId, string> = {
   madinah: "المسجد النبوي",
 };
 
+// لا توجد بيانات دروس فعلية من الحرمين الشريفين في مصدر البيانات الحالي
+// (دروس كويتية محليًا) — نُبقي التبويبين ظاهرين ونُعلمِ المستخدم صراحةً بدل
+// عرضهما فارغين بلا تفسير.
+const TAB_COMING_SOON: Partial<Record<TabId, boolean>> = { makkah: true, madinah: true };
+
 function useTabFromUrl(): [TabId, (tab: TabId) => void] {
   const [, setLocation] = useLocation();
   const [tab, setTabState] = useState<TabId>(() => readTabFromUrl());
@@ -518,6 +523,7 @@ export default function LessonsPage({
               onClick={() => setTab(tabId)}
             >
               {TAB_LABELS[tabId]}
+              {TAB_COMING_SOON[tabId] && <span className="kuwait-tab__soon">قريبًا</span>}
             </button>
           ))}
         </div>
@@ -597,7 +603,11 @@ export default function LessonsPage({
                   {isAdmin && ` (${filtered.filter((l) => !featuredIds.has(l.id)).length})`}
                 </h2>
                 {filtered.filter((l) => !featuredIds.has(l.id)).length === 0 ? (
-                  <p className="lessons-empty-state">لا توجد {TAB_LABELS[tab]} مطابقة حاليًا.</p>
+                  <p className="lessons-empty-state">
+                    {TAB_COMING_SOON[tab]
+                      ? `دروس ${TAB_LABELS[tab]} قادمة قريبًا بإذن الله — نعمل على إضافتها.`
+                      : `لا توجد ${TAB_LABELS[tab]} مطابقة حاليًا.`}
+                  </p>
                 ) : (
                   renderGrid(filtered.filter((l) => !featuredIds.has(l.id)))
                 )}

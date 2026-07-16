@@ -26061,25 +26061,26 @@ img[loading="lazy"]:not([src=""]) {
 .prophet-detail-lux__hero-star { margin-bottom: 0.5rem; }
 .prophet-detail-lux__num-badge {
   font-size: 0.8rem;
-  color: #BEC7C3;
-  background: rgba(255,255,255,0.07);
+  color: #F3F5F4;
+  background: rgba(255,255,255,0.14);
   padding: 0.2rem 0.75rem;
   border-radius: 20px;
-  border: 1px solid #BEC7C325;
+  border: 1px solid #BEC7C340;
+  font-weight: 600;
 }
 .prophet-detail-lux__name {
   font-family: var(--font-body);
   font-size: clamp(2rem, 6vw, 3.5rem);
-  color: #BEC7C3;
+  color: #F3F5F4;
   margin: 0;
   text-shadow: 0 2px 20px #BEC7C340;
 }
-.prophet-detail-lux__pbuh { color: #BEC7C3; font-size: 0.95rem; margin: 0; }
+.prophet-detail-lux__pbuh { color: #D7DCDA; font-size: 0.95rem; margin: 0; }
 .prophet-detail-lux__quran-title {
   font-family: 'Amiri Quran', 'Amiri', serif;
-  font-size: 1.1rem;
-  color: #E1E5E3;
-  opacity: 0.9;
+  font-size: 1.15rem;
+  color: #F3F5F4;
+  font-weight: 600;
 }
 .prophet-detail-lux__hero-title {
   color: var(--prophet-color, #BEC7C3);
@@ -26108,7 +26109,7 @@ img[loading="lazy"]:not([src=""]) {
 .prophet-fact-card__label {
   display: block;
   font-size: 0.72rem;
-  color: #888;
+  color: #A9B2AE;
   margin-bottom: 0.4rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -26116,7 +26117,7 @@ img[loading="lazy"]:not([src=""]) {
 .prophet-fact-card__value {
   display: block;
   font-size: 0.95rem;
-  color: #E1E5E3;
+  color: #F3F5F4;
   font-weight: 600;
   line-height: 1.4;
 }

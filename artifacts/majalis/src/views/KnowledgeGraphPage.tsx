@@ -4,6 +4,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
+import { GitBranch, Network, Waypoints } from "lucide-react";
 import {
   fetchKnNodes,
   fetchKnSubgraph,
@@ -299,13 +300,22 @@ export default function KnowledgeGraphPage() {
     <div dir="rtl" className="kng-page">
 
       {/* Header */}
-      <div className="kng-header">
-        <h1 className="kng-title">الرسم البياني المعرفي الإسلامي</h1>
-        <p className="kng-subtitle">
-          شبكة دلالية تربط الآيات والأحاديث والفتاوى والعلماء والكتب والدروس.
-          {nodeCount > 0 && ` ${nodeCount} عقدة · ${edgeCount} علاقة`}
+      <header className="sh-hero">
+        <div className="sh-hero__badge">
+          <Network size={16} strokeWidth={2} aria-hidden="true" />
+          <span>شبكة معرفية تفاعلية</span>
+        </div>
+        <h1 className="sh-hero__title">الرسم البياني المعرفي الإسلامي</h1>
+        <p className="sh-hero__sub">
+          شبكة دلالية تربط الآيات والأحاديث والفتاوى والعلماء والكتب والدروس
         </p>
-      </div>
+        {nodeCount > 0 && (
+          <div className="sh-hero__stats">
+            <span className="sh-stat"><Waypoints size={13} strokeWidth={2.5} />{nodeCount} عقدة</span>
+            <span className="sh-stat"><GitBranch size={13} strokeWidth={2.5} />{edgeCount} علاقة</span>
+          </div>
+        )}
+      </header>
 
       {/* Tabs */}
       <div className="kng-tabs" role="tablist" aria-label="أوضاع عرض الرسم البياني">

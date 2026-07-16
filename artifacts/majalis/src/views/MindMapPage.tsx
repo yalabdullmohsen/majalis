@@ -1,7 +1,7 @@
 import "@/styles/mind-map.css";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { Link } from "wouter";
-import { ChevronDown, ChevronLeft, ExternalLink, Map, X } from "lucide-react";
+import { ChevronDown, ChevronLeft, ExternalLink, Layers, Map, Sparkles, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -162,15 +162,20 @@ export default function MindMapPage() {
   return (
     <div className="mm-page">
       {/* رأس */}
-      <div className="mm-hero">
-        <div className="mm-hero__icon" aria-hidden="true">
-          <Map size={32} strokeWidth={1.5} />
+      <header className="sh-hero">
+        <div className="sh-hero__badge">
+          <Map size={16} strokeWidth={2} aria-hidden="true" />
+          <span>تصوّر معرفي تفاعلي</span>
         </div>
-        <h1 className="mm-hero__title">الخرائط الذهنية</h1>
-        <p className="mm-hero__sub">
+        <h1 className="sh-hero__title">الخرائط الذهنية</h1>
+        <p className="sh-hero__sub">
           نظّم معرفتك بالعلوم الإسلامية عبر خرائط ذهنية تفاعلية قابلة للطيّ والتوسيع
         </p>
-      </div>
+        <div className="sh-hero__stats">
+          <span className="sh-stat"><Layers size={13} strokeWidth={2.5} />{MIND_MAPS.length} خريطة</span>
+          <span className="sh-stat"><Sparkles size={13} strokeWidth={2.5} />{MIND_MAP_CATEGORIES.length - 1} تصنيفًا</span>
+        </div>
+      </header>
 
       {/* فلتر الفئات */}
       <div className="mm-filters" role="tablist" aria-label="تصفية الخرائط">
