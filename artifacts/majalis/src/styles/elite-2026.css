@@ -957,6 +957,7 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
 .myt-block__text { font-size: .85rem; font-weight: 600; color: #fff !important; margin: 0; line-height: 1.5; }
 .myt-block__text--lesson { font-size: .82rem; }
 .myt-block__source { font-size: .72rem; color: rgba(255,255,255,.55) !important; margin: .15rem 0 0; }
+.myt-block__source--muted { font-style: italic; color: rgba(255,255,255,.4) !important; }
 .myt-prayer-time { margin-inline-start: .5rem; font-weight: 800; font-size: .95rem; }
 .myt-block__link {
   display: flex;
