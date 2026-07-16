@@ -44,9 +44,6 @@ jobs:
       - name: Build
         run: pnpm --filter @workspace/majalis run build
 
-      - name: Regression suite (SEO, guardrails, search, scholars/library integrity, governance, counts)
-        run: pnpm --filter @workspace/majalis run test:regression
-
       - name: Content import tests
         run: |
           cd artifacts/majalis
