@@ -8,7 +8,7 @@ import {
   Heart, HelpCircle, Home, Landmark, Layers, Library, Lightbulb,
   LogIn, Map, MapPin, Mic, Mic2, Moon, Network, Radio, RefreshCw, Repeat2,
   Rss, Scale, ScrollText, Search, Settings, Shield, Sparkles, Star, Stethoscope,
-  Sun, Tv, Users, UserPlus, Waypoints, X, Zap,
+  Sun, Trophy, Tv, Users, UserPlus, Waypoints, X, Zap,
 } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 
@@ -104,14 +104,23 @@ const DRAWER_GROUPS: NavGroup[] = [
     subGroups: [
       {
         id: "learn-lessons",
-        title: "الدروس والمسارات",
+        title: "تعلّم منظّم",
+        items: [
+          { href: "/learning/paths",     label: "المسارات العلمية",    Icon: Layers,        desc: "تعلّم منظم من المبتدئ للمتقدم" },
+          { href: "/annual-courses",     label: "الدورات",             Icon: BookMarked,    desc: "دورات حضورية وموسمية + مقررات المسارات" },
+          { href: "/lessons",            label: "الدروس",              Icon: GraduationCap, desc: "دروس صوتية ومرئية" },
+          { href: "/library",            label: "الكتب المطلوبة",      Icon: Library,       desc: "الكتب والمتون المعتمدة في المناهج" },
+          { href: "/my-learning",        label: "الساعات والتقدم",     Icon: BarChart3,     desc: "إحصائياتك وتقدمك في المسارات" },
+          { href: "/my-learning#myl2-certs-hd", label: "الشهادات",     Icon: Trophy,        desc: "شهاداتك العلمية المكتسبة" },
+        ],
+      },
+      {
+        id: "learn-tools",
+        title: "أدوات التعلّم",
         items: [
           { href: "/learn",               label: "أبواب العلم",         Icon: Layers,        desc: "فهرس شامل لكل العلوم الشرعية بتصنيف واضح" },
-          { href: "/lessons",            label: "الدروس والمحاضرات",   Icon: GraduationCap, desc: "دروس صوتية ومرئية" },
           { href: "/start-here",         label: "ابدأ من هنا",         Icon: Waypoints,     desc: "مسار المبتدئ في طلب العلم" },
           { href: "/adab-talab-ilm",     label: "آداب طالب العلم",    Icon: Star,          desc: "شروط وآداب طلب العلم الشرعي" },
-          { href: "/learning/paths",     label: "المسارات العلمية",    Icon: Layers,        desc: "تعلّم منظم من المبتدئ للمتقدم" },
-          { href: "/my-learning",        label: "لوحتي التعليمية",    Icon: BarChart3,     desc: "إحصائياتك وتقدمك" },
           { href: "/learning-plan",      label: "خطة التعلّم",        Icon: BarChart2,     desc: "خطتك الأسبوعية للدراسة" },
           { href: "/quiz",               label: "المسابقة التعليمية",  Icon: Zap,           desc: "اختبر معلوماتك" },
           { href: "/flashcards",         label: "بطاقات المراجعة",     Icon: CreditCard,    desc: "راجع المعلومات بطاقةً بطاقة" },
@@ -239,7 +248,6 @@ const DRAWER_GROUPS: NavGroup[] = [
     icon: <IcoLibrary />,
     items: [
       { href: "/library",       label: "المكتبة الشرعية",     Icon: Library,    desc: "كتب ومخطوطات إسلامية" },
-      { href: "/annual-courses", label: "الدورات العلمية",    Icon: BookMarked, desc: "برامج وكورسات منظمة" },
       { href: "/scholars",      label: "أعلام الإسلام",       Icon: BookUser,   desc: "تراجم العلماء والمشايخ" },
       { href: "/universities",  label: "دليل الجامعات",       Icon: Building2,  desc: "الجامعات الإسلامية حول العالم" },
       { href: "/institutions",       label: "المؤسسات الإسلامية",  Icon: Landmark,   desc: "مساجد · مكتبات · مراكز · جامعات" },

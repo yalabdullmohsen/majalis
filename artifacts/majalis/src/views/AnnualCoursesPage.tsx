@@ -10,6 +10,11 @@ import { COURSE_TYPES } from "@/lib/platform-types";
 import { usePageView } from "@/hooks/usePageView";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { fetchAllCourses, type CourseListItem } from "@/lib/learning-paths-service";
+
+const LEVEL_LABEL: Record<string, string> = {
+  beginner: "مبتدئ", foundational: "تأسيسي", intermediate: "متوسط", advanced: "متقدم", specialist: "تخصصي",
+};
 
 function useDebouncedValue<T>(value: T, delayMs = 350): T {
   const [debounced, setDebounced] = useState(value);
@@ -27,6 +32,7 @@ export default function AnnualCoursesPage() {
   const [courseType, setCourseType] = useState("الكل");
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebouncedValue(search);
+  const [pathCourses, setPathCourses] = useState<CourseListItem[]>([]);
 
   usePageView("annual-courses", null);
 
@@ -45,6 +51,10 @@ export default function AnnualCoursesPage() {
       .then(({ data }) => setItems(data))
       .finally(() => setLoading(false));
   }, [courseType, debouncedSearch]);
+
+  useEffect(() => {
+    fetchAllCourses().then(setPathCourses).catch(() => setPathCourses([]));
+  }, []);
 
   useEffect(() => {
     if (items.length === 0 || courseType !== "الكل" || debouncedSearch) return;
@@ -71,7 +81,7 @@ export default function AnnualCoursesPage() {
       <PageHeader
         eyebrow="برامج طلب العلم"
         title="الدورات العلمية"
-        subtitle="الدورات السنوية والموسمية والبرامج العلمية والمتون، مع الجداول والمشايخ والتسجيل."
+        subtitle="الدورات الحضورية السنوية والموسمية مع الجداول والمشايخ والتسجيل، إلى جانب مقررات المسارات العلمية المنظّمة ذاتية التعلّم."
       />
 
       <div className="page-stats-row">
@@ -120,6 +130,25 @@ export default function AnnualCoursesPage() {
           ))}
         </div>
       )}
+      {pathCourses.length > 0 && (
+        <section aria-labelledby="path-courses-heading" style={{ marginTop: "2.5rem" }}>
+          <h2 id="path-courses-heading" className="page-section-title">مقررات المسارات العلمية</h2>
+          <p className="page-desc">مقررات ضمن المسارات العلمية المتدرجة ذاتية التعلّم — سجّل في المسار لتتبع تقدّمك فيها.</p>
+          <div className="page-card-grid">
+            {pathCourses.map((c) => (
+              <PlatformContentCard
+                key={c.id}
+                href={`/learning/paths/${c.pathSlug}`}
+                title={c.title}
+                tag={LEVEL_LABEL[c.level] ?? c.level}
+                meta={c.pathTitle}
+                summary={c.description ?? undefined}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
       <div className="twh-share">
         <ShareButtons title="الدورات العلمية السنوية — المجلس العلمي" url="https://www.majlisilm.com/annual-courses" />
       </div>

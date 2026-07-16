@@ -20,6 +20,57 @@ export type PathSummary = {
   whatYouLearn: string[];
 };
 
+export type CourseListItem = {
+  id: string;
+  slug: string;
+  title: string;
+  description: string | null;
+  level: string;
+  pathSlug: string;
+  pathTitle: string;
+};
+
+/** كل المقررات المنشورة عبر جميع المسارات العلمية، لعرضها في فهرس الدورات الموحّد. */
+export async function fetchAllCourses(): Promise<CourseListItem[]> {
+  const { data: paths } = await supabase
+    .from("learning_paths")
+    .select("id, slug, title")
+    .eq("status", "published");
+  if (!paths?.length) return [];
+  const pathById = new Map(paths.map((p) => [p.id, p]));
+
+  const { data: stages } = await supabase
+    .from("path_stages")
+    .select("id, path_id")
+    .eq("status", "published")
+    .in("path_id", paths.map((p) => p.id));
+  const stageIds = (stages ?? []).map((s) => s.id);
+  if (!stageIds.length) return [];
+  const stageToPath = new Map((stages ?? []).map((s) => [s.id, s.path_id]));
+
+  const { data: courses } = await supabase
+    .from("courses")
+    .select("id, slug, title, description, level, stage_id, sort_order")
+    .eq("status", "published")
+    .in("stage_id", stageIds)
+    .order("sort_order");
+
+  return (courses ?? []).flatMap((c) => {
+    const pathId = stageToPath.get(c.stage_id);
+    const path = pathId ? pathById.get(pathId) : undefined;
+    if (!path) return [];
+    return [{
+      id: c.id,
+      slug: c.slug,
+      title: c.title,
+      description: c.description,
+      level: c.level,
+      pathSlug: path.slug,
+      pathTitle: path.title,
+    }];
+  });
+}
+
 export async function fetchPathList(): Promise<PathSummary[]> {
   const { data: paths, error } = await supabase
     .from("learning_paths")
