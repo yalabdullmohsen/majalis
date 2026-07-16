@@ -6,6 +6,7 @@
  */
 import { supabase } from "@/lib/supabase";
 import type { CompletionEvent, LearningItem, Prerequisite } from "@/lib/learning-paths/types";
+import { isItemComplete } from "@/lib/learning-paths/engine";
 
 export type PathSummary = {
   id: string;
@@ -347,6 +348,117 @@ export async function fetchAllCoursePrerequisites(courseIds: string[]): Promise<
   if (courseIds.length === 0) return [];
   const { data } = await supabase.from("prerequisites").select("course_id, requires_course_id").in("course_id", courseIds);
   return (data ?? []).map((r) => ({ courseId: r.course_id, requiresCourseId: r.requires_course_id }));
+}
+
+// ── لوحة المتعلّم (/my-learning) ────────────────────────────────────────
+
+export type UserEnrollmentProgress = {
+  pathSlug: string;
+  pathTitle: string;
+  progressPct: number;
+};
+
+/** مسارات المستخدم المسجَّل بها مع نسبة تقدّم فعلية (محسوبة من أحداث الإنجاز، لا مخزَّنة). */
+export async function fetchUserEnrollmentsWithProgress(userId: string): Promise<UserEnrollmentProgress[]> {
+  const { data: enrollments } = await supabase
+    .from("path_enrollments")
+    .select("path_id")
+    .eq("user_id", userId);
+  if (!enrollments?.length) return [];
+  const pathIds = enrollments.map((e) => e.path_id);
+
+  const { data: paths } = await supabase.from("learning_paths").select("id, slug, title").in("id", pathIds);
+  if (!paths?.length) return [];
+
+  const { data: stages } = await supabase.from("path_stages").select("id, path_id").in("path_id", pathIds);
+  const stageIds = (stages ?? []).map((s) => s.id);
+  const stageToPath = new Map((stages ?? []).map((s) => [s.id, s.path_id]));
+
+  const { data: courses } = stageIds.length
+    ? await supabase.from("courses").select("id, stage_id").in("stage_id", stageIds)
+    : { data: [] as { id: string; stage_id: string }[] };
+  const courseIds = (courses ?? []).map((c) => c.id);
+  const courseToPath = new Map((courses ?? []).map((c) => [c.id, stageToPath.get(c.stage_id)]));
+
+  const { data: units } = courseIds.length
+    ? await supabase.from("course_units").select("id, course_id").in("course_id", courseIds)
+    : { data: [] as { id: string; course_id: string }[] };
+  const unitIds = (units ?? []).map((u) => u.id);
+  const unitToPath = new Map((units ?? []).map((u) => [u.id, courseToPath.get(u.course_id)]));
+
+  const { data: items } = unitIds.length
+    ? await supabase
+        .from("learning_items")
+        .select("id, unit_id, is_required, completion_method, completion_threshold")
+        .in("unit_id", unitIds)
+        .eq("status", "published")
+        .eq("is_required", true)
+    : { data: [] as { id: string; unit_id: string; is_required: boolean; completion_method: string; completion_threshold: number | null }[] };
+
+  const itemIds = (items ?? []).map((i) => i.id);
+  const events = await fetchCompletionEvents(userId, itemIds);
+  const eventsByItem = new Map<string, CompletionEvent[]>();
+  for (const ev of events) {
+    const list = eventsByItem.get(ev.learningItemId) ?? [];
+    list.push(ev);
+    eventsByItem.set(ev.learningItemId, list);
+  }
+
+  const requiredByPath = new Map<string, number>();
+  const completeByPath = new Map<string, number>();
+  for (const it of items ?? []) {
+    const pathId = unitToPath.get(it.unit_id);
+    if (!pathId) continue;
+    requiredByPath.set(pathId, (requiredByPath.get(pathId) ?? 0) + 1);
+    const asItem = {
+      id: it.id,
+      completionMethod: it.completion_method,
+      completionThreshold: it.completion_threshold,
+    } as LearningItem;
+    if (isItemComplete(asItem, eventsByItem.get(it.id) ?? [])) {
+      completeByPath.set(pathId, (completeByPath.get(pathId) ?? 0) + 1);
+    }
+  }
+
+  return paths.map((p) => {
+    const total = requiredByPath.get(p.id) ?? 0;
+    const done = completeByPath.get(p.id) ?? 0;
+    return {
+      pathSlug: p.slug,
+      pathTitle: p.title,
+      progressPct: total > 0 ? Math.round((done / total) * 100) : 0,
+    };
+  });
+}
+
+export type UserCertificateSummary = {
+  certificate_code: string;
+  title: string;
+  path_slug?: string;
+  issued_at: string;
+};
+
+export async function fetchUserCertificatesList(userId: string): Promise<UserCertificateSummary[]> {
+  const { data: certs } = await supabase
+    .from("certificates")
+    .select("certificate_code, path_title_snapshot, path_id, issued_at, status")
+    .eq("user_id", userId)
+    .eq("status", "active")
+    .order("issued_at", { ascending: false });
+  if (!certs?.length) return [];
+
+  const pathIds = [...new Set(certs.map((c) => c.path_id).filter(Boolean))];
+  const { data: paths } = pathIds.length
+    ? await supabase.from("learning_paths").select("id, slug").in("id", pathIds)
+    : { data: [] as { id: string; slug: string }[] };
+  const slugById = new Map((paths ?? []).map((p) => [p.id, p.slug]));
+
+  return certs.map((c) => ({
+    certificate_code: c.certificate_code,
+    title: c.path_title_snapshot,
+    path_slug: c.path_id ? slugById.get(c.path_id) : undefined,
+    issued_at: c.issued_at,
+  }));
 }
 
 // ── الشهادة ──────────────────────────────────────────────────────────────

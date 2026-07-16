@@ -10,13 +10,15 @@ import { useAuth } from "@/components/AuthProvider";
 import { useRecentProgress } from "@/hooks/useRecentProgress";
 import {
   fetchUserLearningStats,
-  fetchUserProgress,
-  fetchUserCertificates,
   fetchPersonalLibrary,
   fetchLearningNotes,
   type UserStats,
-  type Certificate,
 } from "@/lib/digital-learning-service";
+import {
+  fetchUserEnrollmentsWithProgress,
+  fetchUserCertificatesList,
+  type UserCertificateSummary,
+} from "@/lib/learning-paths-service";
 
 /* ── أيقونات المحتوى ────────────────────────────────────────────────────── */
 const CONTENT_ICONS: Record<string, React.ComponentType<{ size?: number }>> = {
@@ -65,8 +67,8 @@ export default function MyLearningPage() {
   const { items: resumeItems, loading: resumeLoading } = useRecentProgress(3);
 
   const [stats,        setStats]        = useState<UserStats | null>(null);
-  const [enrollments,  setEnrollments]  = useState<Record<string, { progress_pct?: number }> | null>(null);
-  const [certificates, setCertificates] = useState<Certificate[]>([]);
+  const [enrollments,  setEnrollments]  = useState<Awaited<ReturnType<typeof fetchUserEnrollmentsWithProgress>>>([]);
+  const [certificates, setCertificates] = useState<UserCertificateSummary[]>([]);
   const [library,      setLibrary]      = useState<Array<{ title: string; content_url?: string; content_id?: string }>>([]);
   const [notes,        setNotes]        = useState<Array<{ title?: string; body?: string }>>([]);
   const [loading,      setLoading]      = useState(true);
@@ -82,22 +84,23 @@ export default function MyLearningPage() {
   }, []);
 
   useEffect(() => {
+    if (!user?.id) { setLoading(false); return; }
     Promise.all([
       fetchUserLearningStats(),
-      fetchUserProgress(),
-      fetchUserCertificates(),
+      fetchUserEnrollmentsWithProgress(user.id),
+      fetchUserCertificatesList(user.id),
       fetchPersonalLibrary(),
       fetchLearningNotes(),
     ])
-      .then(([s, p, c, l, n]) => {
+      .then(([s, en, c, l, n]) => {
         setStats(s ?? null);
-        setEnrollments((p as { enrollments?: Record<string, { progress_pct?: number }> })?.enrollments ?? null);
-        setCertificates(c ?? []);
+        setEnrollments(en);
+        setCertificates(c);
         setLibrary(l ?? []);
         setNotes(n ?? []);
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [user?.id]);
 
   /* اسم العرض */
   const rawProfile = user?.profile as Record<string, unknown> | null | undefined;
@@ -107,7 +110,6 @@ export default function MyLearningPage() {
     "المستخدم";
   const initial = displayName.charAt(0);
 
-  const enrollmentList = enrollments ? Object.entries(enrollments) : [];
 
   return (
     <div className="myl2-page" dir="rtl">
@@ -231,15 +233,15 @@ export default function MyLearningPage() {
               <div className="myl2-skel" aria-hidden="true" />
               <div className="myl2-skel" aria-hidden="true" />
             </div>
-          ) : enrollmentList.length > 0 ? (
+          ) : enrollments.length > 0 ? (
             <div className="myl2-paths-list">
-              {enrollmentList.map(([slug, e]) => (
-                <Link key={slug} href={`/learning/paths/${slug}`} className="myl2-path-item">
+              {enrollments.map((e) => (
+                <Link key={e.pathSlug} href={`/learning/paths/${e.pathSlug}`} className="myl2-path-item">
                   <div className="myl2-path-item__row">
-                    <span className="myl2-path-item__name">{slug}</span>
-                    <span className="myl2-path-item__pct">{e.progress_pct ?? 0}%</span>
+                    <span className="myl2-path-item__name">{e.pathTitle}</span>
+                    <span className="myl2-path-item__pct">{e.progressPct}%</span>
                   </div>
-                  <ProgressBar pct={e.progress_pct ?? 0} />
+                  <ProgressBar pct={e.progressPct} />
                 </Link>
               ))}
             </div>
@@ -273,7 +275,6 @@ export default function MyLearningPage() {
                       {c.certificate_code}
                       {" · "}
                       {new Date(c.issued_at).toLocaleDateString("ar-KW")}
-                      {c.score_pct != null ? ` · ${c.score_pct}%` : ""}
                     </p>
                   </div>
                 </div>
