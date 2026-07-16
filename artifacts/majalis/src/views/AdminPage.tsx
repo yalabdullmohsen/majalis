@@ -20,6 +20,7 @@ import { FatwaAdminSection } from "@/views/admin/FatwaAdminSection";
 import { RulingsSection } from "@/views/admin/RulingsSection";
 import { AnnualCoursesSection } from "@/views/admin/AnnualCoursesSection";
 import { LearningPathsSection } from "@/views/admin/LearningPathsSection";
+import { CategoriesSection } from "@/views/admin/CategoriesSection";
 import { UpdatesSection } from "@/views/admin/UpdatesSection";
 import { KnowledgeEngineSection } from "@/views/admin/KnowledgeEngineSection";
 import { ScholarlyVerificationSection } from "@/views/admin/ScholarlyVerificationSection";
@@ -107,6 +108,7 @@ export default function AdminPage() {
       {section === "rulings" && <RulingsSection />}
       {section === "annual-courses" && <AnnualCoursesSection />}
       {section === "learning-paths" && <LearningPathsSection />}
+      {section === "categories" && <CategoriesSection />}
       {section === "updates" && <UpdatesSection />}
     </AdminShell>
   );

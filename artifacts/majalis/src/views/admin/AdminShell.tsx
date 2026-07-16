@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState, ty
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import {
-  BookOpen, Bot, Brain, Building2, CheckCircle2, Dna,
+  BookOpen, Bot, Brain, Building2, CheckCircle2, Dna, FolderTree,
   FlaskConical, Flag, GraduationCap, Globe, HelpCircle, Image, Landmark,
   LayoutDashboard, Library, Lightbulb, MessageCircle, MessageSquare,
   Network, PlayCircle, Radio, RefreshCw, Route, Scale, School, ScrollText, Search,
@@ -50,6 +50,7 @@ export type AdminSection =
   | "islamic-stories"
   | "image-import"
   | "learning-paths"
+  | "categories"
 ;
 
 type NavItem = { key: AdminSection; label: string; Icon: LucideIcon };
@@ -63,6 +64,7 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
   {
     title: "المحتوى",
     items: [
+      { key: "categories", label: "أبواب العلم (تصنيفات)", Icon: FolderTree },
       { key: "lessons",  label: "الدروس",          Icon: PlayCircle },
       { key: "sheikhs",  label: "المشايخ",          Icon: User },
       { key: "library",  label: "المكتبة",          Icon: Library },

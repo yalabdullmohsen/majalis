@@ -197,6 +197,10 @@ const MyLearningPage = lazy(() => import("@/views/MyLearningPage"));
 const LearningQuizPage = lazy(() => import("@/views/learning/LearningQuizPage"));
 const LearningCalendarPage = lazy(() => import("@/views/learning/LearningCalendarPage"));
 const CertificateVerifyPage = lazy(() => import("@/views/learning/CertificateVerifyPage"));
+const LearnHubPage = lazy(() => import("@/views/learn/LearnHubPage"));
+const LearnCategoryPage = lazy(() => import("@/views/learn/LearnCategoryPage"));
+const LearnSeriesPage = lazy(() => import("@/views/learn/LearnSeriesPage"));
+const LearnLessonPage = lazy(() => import("@/views/learn/LearnLessonPage"));
 const AdhanSettingsPage = lazy(() => import("@/views/AdhanSettingsPage"));
 const MuezzinsPage = lazy(() => import("@/views/MuezzinsPage"));
 const MuezzinDetailPage = lazy(() => import("@/views/MuezzinDetailPage"));
@@ -438,6 +442,10 @@ function Router() {
       <Route path="/auth/callback"><SafeLazyRoute component={AuthCallbackPage} /></Route>
       <Route path="/learning/paths/:slug"><SafeLazyRoute component={LearningPathDetailPage} /></Route>
       <Route path="/learning/paths"><SafeLazyRoute component={LearningPathsPage} /></Route>
+      <Route path="/learn/series/:slug"><SafeLazyRoute component={LearnSeriesPage} /></Route>
+      <Route path="/learn/lesson/:id"><SafeLazyRoute component={LearnLessonPage} /></Route>
+      <Route path="/learn/:slug"><SafeLazyRoute component={LearnCategoryPage} /></Route>
+      <Route path="/learn"><SafeLazyRoute component={LearnHubPage} /></Route>
       <Route path="/learning/quiz/:slug"><SafeLazyRoute component={LearningQuizPage} /></Route>
       <Route path="/learning/quiz"><SafeLazyRoute component={LearningQuizPage} /></Route>
       <Route path="/learning/calendar"><SafeLazyRoute component={LearningCalendarPage} /></Route>

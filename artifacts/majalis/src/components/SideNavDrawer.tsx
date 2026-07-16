@@ -1,8 +1,8 @@
 import { createPortal } from "react-dom";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import {
-  Activity, BarChart3, BookMarked, BookOpen, BookText, BookUser,
+  Activity, BarChart2, BarChart3, BookMarked, BookOpen, BookText, BookUser,
   Bot, Building2, Calculator, Calendar, CheckCircle2, ChevronDown, ChevronUp,
   Clock, Compass, CreditCard, FileText, Gavel, GitBranch, GraduationCap,
   Heart, HelpCircle, Home, Landmark, Layers, Library, Lightbulb,
@@ -92,6 +92,9 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/updates", label: "آخر المستجدات",       Icon: Rss },
       { href: "/calendar", label: "التقويم الهجري",     Icon: Calendar,  desc: "التقويم والمناسبات الإسلامية" },
       { href: "/occasions", label: "المناسبات الإسلامية", Icon: Star,     desc: "أذكار المناسبات والأعياد" },
+      { href: "/islam-stats", label: "الإسلام في أرقام",  Icon: BarChart3, desc: "إحصائيات ومعطيات إسلامية" },
+      { href: "/about",   label: "عن التطبيق",           Icon: HelpCircle, desc: "تعرّف على المجلس العلمي" },
+      { href: "/features-in-progress", label: "مميزات قيد التطوير", Icon: Layers, desc: "ما الذي نعمل عليه حاليًا" },
     ],
   },
   {
@@ -103,12 +106,14 @@ const DRAWER_GROUPS: NavGroup[] = [
         id: "learn-lessons",
         title: "الدروس والمسارات",
         items: [
+          { href: "/learn",               label: "أبواب العلم",         Icon: Layers,        desc: "فهرس شامل لكل العلوم الشرعية بتصنيف واضح" },
           { href: "/lessons",            label: "الدروس والمحاضرات",   Icon: GraduationCap, desc: "دروس صوتية ومرئية" },
           { href: "/start-here",         label: "ابدأ من هنا",         Icon: Waypoints,     desc: "مسار المبتدئ في طلب العلم" },
           { href: "/adab-talab-ilm",     label: "آداب طالب العلم",    Icon: Star,          desc: "شروط وآداب طلب العلم الشرعي" },
           { href: "/learning/paths",     label: "المسارات العلمية",    Icon: Layers,        desc: "تعلّم منظم من المبتدئ للمتقدم" },
           { href: "/learning-path",      label: "خارطة طالب العلم (تجريبي)", Icon: Network, desc: "نموذج أولي منفصل عن المسارات العلمية، بلا محتوى معتمد بعد" },
           { href: "/my-learning",        label: "لوحتي التعليمية",    Icon: BarChart3,     desc: "إحصائياتك وتقدمك" },
+          { href: "/learning-plan",      label: "خطة التعلّم",        Icon: BarChart2,     desc: "خطتك الأسبوعية للدراسة" },
           { href: "/quiz",               label: "المسابقة التعليمية",  Icon: Zap,           desc: "اختبر معلوماتك" },
           { href: "/flashcards",         label: "بطاقات المراجعة",     Icon: CreditCard,    desc: "راجع المعلومات بطاقةً بطاقة" },
           { href: "/assistant",          label: "المساعد الذكي",       Icon: Bot,           desc: "استفسر عن أي مسألة" },
@@ -175,6 +180,7 @@ const DRAWER_GROUPS: NavGroup[] = [
           { href: "/sunan-yawmiyya",   label: "السنن اليومية",       Icon: CheckCircle2, desc: "السنن اليومية مع تتبع إتمامها" },
           { href: "/prayer-ranks",     label: "فضائل الصلاة",        Icon: Shield,       desc: "أحاديث وآيات فضل الصلاة" },
           { href: "/fadail-aamal",     label: "فضائل الأعمال",       Icon: Star,         desc: "أحاديث صحيحة في الفضائل" },
+          { href: "/fawaid",           label: "الفوائد العلمية",     Icon: Heart,        desc: "فوائد وفرائد مختارة" },
           { href: "/tawba",            label: "التوبة والاستغفار",   Icon: RefreshCw,    desc: "فضل التوبة وأدعية الاستغفار" },
           { href: "/raqaiq",           label: "الرقائق والزهد",      Icon: Heart,        desc: "تزكية النفس والمواعظ" },
           { href: "/prayer-times",     label: "مواقيت الصلاة",       Icon: Clock,        desc: "أوقات الصلاة بموقعك" },
@@ -188,8 +194,7 @@ const DRAWER_GROUPS: NavGroup[] = [
         items: [
           { href: "/seerah",          label: "السيرة النبوية",   Icon: BookUser,  desc: "من المولد حتى الوفاة ﷺ" },
           { href: "/sahabah",         label: "الصحابة الكرام",  Icon: Users,     desc: "سِيَر الصحابة وفضائلهم" },
-          { href: "/anbiya",          label: "الأنبياء والرسل", Icon: Sparkles,  desc: "موسوعة الأنبياء الكرام" },
-          { href: "/prophets",        label: "قصص الأنبياء",    Icon: Star,      desc: "٢٥ نبياً بقصصهم ومعجزاتهم" },
+          { href: "/prophets",        label: "قصص الأنبياء",    Icon: Star,      desc: "٢٦ نبياً بقصصهم ومعجزاتهم" },
           { href: "/islamic-stories", label: "صحابة وفتوحات",   Icon: Waypoints, desc: "قصص الصحابة والفتوحات" },
           { href: "/stories",         label: "القصص الإسلامية", Icon: BookOpen,  desc: "قصص إسلامية مؤثرة ومعبِّرة" },
         ],
@@ -211,6 +216,7 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/quran-live",          label: "البث المباشر",       Icon: Tv,            desc: "من مكة والمدينة" },
       { href: "/quran-circles",       label: "حلقات التحفيظ",      Icon: Users,         desc: "دليل حلقات القرآن" },
       { href: "/quran-memorization",  label: "اختبارات الحفظ",     Icon: Zap,           desc: "12 نوعًا من اختبارات الحفظ" },
+      { href: "/mutashabihat",        label: "الآيات المتشابهات",  Icon: GitBranch,     desc: "تمييز الآيات المتشابهة لفظًا" },
       { href: "/muezzins",            label: "مكتبة القراء",       Icon: Mic,           desc: "مقاطع صوتية للقراء" },
     ],
   },
@@ -221,7 +227,9 @@ const DRAWER_GROUPS: NavGroup[] = [
     items: [
       { href: "/search",              label: "البحث الشامل",        Icon: Search,    desc: "ابحث في كل محتوى التطبيق" },
       { href: "/scholarly-research",  label: "الباحث الشرعي",      Icon: BookOpen,  desc: "بحث بالذكاء الاصطناعي في المصادر" },
+      { href: "/academic-research",   label: "الأبحاث العلمية",    Icon: FileText,  desc: "أبحاث ودراسات شرعية" },
       { href: "/knowledge-graph",     label: "شبكة المعرفة",        Icon: GitBranch, desc: "العلاقات بين المفاهيم والمصطلحات" },
+      { href: "/knowledge-map",       label: "الخريطة المعرفية",   Icon: Network,   desc: "خريطة العلوم الشرعية مرئية" },
       { href: "/mind-map",            label: "الخرائط الذهنية",     Icon: Map,       desc: "تنظيم المعلومات مرئياً" },
       { href: "/islamic-glossary",    label: "المصطلحات الإسلامية", Icon: BookOpen,  desc: "معجم المصطلحات الفقهية" },
     ],
@@ -237,7 +245,6 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/universities",  label: "دليل الجامعات",       Icon: Building2,  desc: "الجامعات الإسلامية حول العالم" },
       { href: "/institutions",       label: "المؤسسات الإسلامية",  Icon: Landmark,   desc: "مساجد · مكتبات · مراكز · جامعات" },
       { href: "/islamic-landmarks",  label: "المشاهد والمساجد",    Icon: MapPin,     desc: "خريطة المشاهد الإسلامية التاريخية" },
-      { href: "/learning-path",      label: "خارطة طالب العلم (تجريبي)", Icon: Network, desc: "نموذج أولي منفصل عن المسارات العلمية" },
     ],
   },
 ];
@@ -329,12 +336,20 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
     });
   }
 
+  // إغلاق Escape يُعالَج مركزيًا في useMobileNavState (مستمع عام على window)
+  // — لا حاجة لمستمع محلي مكرر هنا.
+
+  // إمكانية الوصول: أعِد التركيز إلى العنصر الذي فتح القائمة (زر الهامبرغر
+  // عادةً) عند الإغلاق، بدل فقدان التركيز أو بقائه على عنصر أُزيل من DOM.
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
   useEffect(() => {
-    if (!open) return;
-    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    document.addEventListener("keydown", handler);
-    return () => document.removeEventListener("keydown", handler);
-  }, [open, onClose]);
+    if (open) {
+      previouslyFocusedRef.current = document.activeElement as HTMLElement | null;
+    } else {
+      previouslyFocusedRef.current?.focus?.();
+      previouslyFocusedRef.current = null;
+    }
+  }, [open]);
 
   if (!open || typeof document === "undefined") return null;
 
