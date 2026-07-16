@@ -248,6 +248,34 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
   border-color: rgba(92,196,154,.28) !important;
 }
 
+/* زر دخول/حساب على الجوال — واضح دائمًا في الشريط العلوي، لا يحتاج فتح
+   قائمة الهامبرغر للوصول إليه (2026-07-17) */
+.navbar-mobile-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  height: 34px;
+  padding: 0 0.65rem;
+  background: var(--msk-gold-dim, rgba(31,77,58,.08)) !important;
+  border: 1px solid var(--msk-gold-border, rgba(31,77,58,.22)) !important;
+  border-radius: 999px !important;
+  color: var(--msk-gold, #176B57) !important;
+  font-size: 0.78rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  text-decoration: none !important;
+}
+.navbar-mobile-login--active {
+  width: 34px;
+  padding: 0;
+  justify-content: center;
+}
+html[data-theme="dark"] .navbar-mobile-login {
+  background: rgba(92,196,154,.10) !important;
+  border-color: rgba(92,196,154,.28) !important;
+  color: #5CC49A !important;
+}
+
 /* Nav label — padding-inline-end يمنع قطع التاء المربوطة في RTL */
 .navbar-menu-btn__label {
   color: var(--elite-ink-soft, #4A4A4A) !important;

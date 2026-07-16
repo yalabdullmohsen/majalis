@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, Moon, Search, Sun, X } from "lucide-react";
+import { Menu, Moon, Search, Sun, User, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { useLanguage } from "./LanguageProvider";
 import NotificationBell from "./NotificationBell";
@@ -239,7 +239,18 @@ export default function NavBar() {
             {!isMobile && <SearchBox />}
             {!isMobile && desktopAuthLinks}
 
-            {/* Mobile: single auth icon only (no more / lang — those are in bottom nav + side nav) */}
+            {/* Mobile: زر دخول/حساب واضح دائمًا — لا يُترك مخفيًا داخل قائمة الهامبرغر فقط */}
+            {isMobile && !isLoggedIn && (
+              <Link href="/login" className="navbar-mobile-login" aria-label="تسجيل الدخول">
+                <User size={16} strokeWidth={1.8} aria-hidden="true" />
+                <span className="navbar-mobile-login__label">دخول</span>
+              </Link>
+            )}
+            {isMobile && isLoggedIn && (
+              <Link href="/stats" className="navbar-mobile-login navbar-mobile-login--active" aria-label="حسابي">
+                <User size={16} strokeWidth={1.8} aria-hidden="true" />
+              </Link>
+            )}
             {isMobile && isAdmin && <NotificationBell />}
           </div>
         </div>
