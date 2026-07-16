@@ -1,44 +1,15 @@
 import { useEffect, useState } from "react";
-import { BookOpen, Building2, Leaf, Library, Moon, PenLine, Scale, ScrollText, Sprout, Star, Target, Trophy } from "lucide-react";
+import { BookOpen, Building2, Leaf, Library, Moon, PenLine, Scale, ScrollText, Sprout, Target, Trophy } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { fetchLearningPaths, levelLabel, type LearningPath } from "@/lib/digital-learning-service";
+import { fetchPathList, type PathSummary } from "@/lib/learning-paths-service";
+import { estimateWeeksRange } from "@/lib/learning-paths/engine";
+import { useAuth } from "@/components/AuthProvider";
+import { supabase } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
-
-// ── Static fallback paths ─────────────────────────────────────────────────────
-
-const STATIC_PATHS: LearningPath[] = [
-  // ── تأسيسي (Foundation) ──
-  { slug: "islam-intro",           title: "مدخل إلى الإسلام",                 description: "لماذا الإسلام؟ الأركان الخمسة، وأرقام الإيمان الستة باختصار وافٍ.",           level: "foundation", category: "aqeedah",  estimated_hours: 4  },
-  { slug: "fatiha-qisar",          title: "تعلّم الفاتحة وقصار السور",         description: "حفظ الفاتحة وخمس عشرة سورة قصيرة مع تفسير مبسّط لكل سورة.",                  level: "foundation", category: "quran",    estimated_hours: 5  },
-  { slug: "arkan-islam-basics",    title: "أركان الإسلام الخمسة",              description: "معنى كل ركن وشروطه وفضله بأسلوب مبسّط للمبتدئ الجديد.",                      level: "foundation", category: "fiqh",     estimated_hours: 4  },
-  { slug: "adhkar-daily-basics",   title: "الأذكار اليومية الأساسية",           description: "أذكار الصباح والمساء والنوم والدخول والخروج، مع حفظ ١٠ أدعية أساسية.",       level: "foundation", category: "tarbiyah", estimated_hours: 3  },
-  // عقيدة
-  { slug: "tawhid-basics",        title: "مدخل إلى التوحيد",                description: "أسس عقيدة أهل السنة والجماعة في التوحيد وأقسامه الثلاثة.",            level: "beginner",     category: "aqeedah", estimated_hours: 8  },
-  { slug: "aqeedah-wasitiyya",    title: "شرح العقيدة الواسطية",            description: "شرح متن الواسطية لشيخ الإسلام ابن تيمية دراسةً وافيةً.",             level: "intermediate", category: "aqeedah", estimated_hours: 20 },
-  // فقه
-  { slug: "fiqh-ibadah",          title: "فقه العبادات الأساسية",           description: "أحكام الطهارة والصلاة والصيام والزكاة والحج من المبتدئين.",           level: "beginner",     category: "fiqh",    estimated_hours: 15 },
-  { slug: "fiqh-muamalat",        title: "فقه المعاملات المالية",           description: "أحكام البيع والشراء والعقود والتعاملات المصرفية المعاصرة.",           level: "intermediate", category: "fiqh",    estimated_hours: 18 },
-  { slug: "fiqh-usul",            title: "مدخل إلى أصول الفقه",            description: "مبادئ الاستنباط الفقهي والمصادر الشرعية والقواعد الكلية.",            level: "advanced",     category: "fiqh",    estimated_hours: 25 },
-  // قرآن
-  { slug: "tajwid-level1",        title: "أحكام التجويد للمبتدئين",         description: "أحكام النون الساكنة والتنوين والمدود وصفات الحروف.",                 level: "beginner",     category: "quran",   estimated_hours: 10 },
-  { slug: "tafsir-juz-amma",      title: "تفسير جزء عمّ",                   description: "تفسير موجز لقصار السور مع بيان المعاني وأسباب النزول.",              level: "beginner",     category: "quran",   estimated_hours: 12 },
-  { slug: "ulum-quran-intro",     title: "مدخل في علوم القرآن",             description: "تاريخ جمع القرآن ومناهج التفسير والإعجاز وأنواع القراءات.",          level: "intermediate", category: "quran",   estimated_hours: 16 },
-  // حديث
-  { slug: "arbaeen-study",        title: "دراسة الأربعون النووية",           description: "شرح الأربعين حديثاً مع الفوائد المستنبطة والتطبيق العملي.",          level: "beginner",     category: "hadith",  estimated_hours: 12 },
-  { slug: "mustalah-hadith",      title: "مصطلح الحديث",                    description: "أنواع الحديث من صحيح وحسن وضعيف وقواعد الجرح والتعديل.",           level: "intermediate", category: "hadith",  estimated_hours: 20 },
-  // أخلاق
-  { slug: "akhlaq-islamiyya",     title: "الأخلاق الإسلامية",               description: "الفضائل والرذائل والآداب الشرعية في الإسلام من الكتاب والسنة.",      level: "beginner",     category: "akhlaq",  estimated_hours: 10 },
-  { slug: "tazkiyah-nafs",        title: "تزكية النفس",                     description: "أساليب تزكية النفس وعلاج الأمراض القلبية وبناء العلاقة مع الله.",   level: "intermediate", category: "akhlaq",  estimated_hours: 14 },
-  // سيرة
-  { slug: "seerah-mukhtasara",    title: "السيرة النبوية المختصرة",         description: "نبذة وافية عن حياة النبي ﷺ من المولد إلى الوفاة.",                  level: "beginner",     category: "seerah",  estimated_hours: 12 },
-  { slug: "ghazawat",             title: "غزوات النبي ﷺ",                   description: "دراسة تفصيلية للغزوات والمعارك الكبرى ودروسها وعبرها.",              level: "intermediate", category: "seerah",  estimated_hours: 18 },
-  // تربية
-  { slug: "tarbiyah-dhati",       title: "التربية الذاتية لطالب العلم",     description: "منهج طالب العلم في تنظيم الوقت والمذاكرة والثبات على الطلب.",       level: "beginner",     category: "tarbiyah",estimated_hours: 8  },
-];
 
 const CATEGORY_META: Record<string, { label: string; Icon: LucideIcon }> = {
   aqeedah:  { label: "العقيدة",  Icon: Moon       },
@@ -54,19 +25,24 @@ const CATEGORY_META: Record<string, { label: string; Icon: LucideIcon }> = {
 };
 
 const LEVEL_ICON: Record<string, LucideIcon> = {
-  foundation: Star, beginner: Sprout, intermediate: BookOpen, advanced: Trophy,
+  beginner: Sprout, intermediate: BookOpen, advanced: Trophy,
+};
+const LEVEL_LABEL: Record<string, string> = {
+  beginner: "مبتدئ", intermediate: "متوسط", advanced: "متقدم",
 };
 
 const ALL_CAT = "الكل";
 
 export default function LearningPathsPage() {
-  const [paths, setPaths] = useState<LearningPath[]>([]);
+  const { user } = useAuth();
+  const [paths, setPaths] = useState<PathSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState(ALL_CAT);
+  const [enrolledSlugs, setEnrolledSlugs] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     applyPageSeo({
-      path: "/learning-path",
+      path: "/learning/paths",
       title: "المسارات العلمية الشرعية | المجلس العلمي",
       description: "مسارات تعليمية منظمة في العلوم الشرعية، فقه وعقيدة وقرآن وحديث وسيرة وأخلاق. من المبتدئ إلى المتقدم مع شهادات إتمام.",
       keywords: ["مسارات تعليمية", "طلب العلم", "تعلم الفقه", "تعلم القرآن", "شهادات إسلامية"],
@@ -75,7 +51,7 @@ export default function LearningPathsPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "المسارات العلمية الشرعية",
-          url: "https://www.majlisilm.com/learning-path",
+          url: "https://www.majlisilm.com/learning/paths",
           description: "مسارات تعليمية منظمة في العلوم الشرعية من المبتدئ إلى المتقدم",
           about: { "@type": "Thing", name: "التعليم الإسلامي والمسارات الشرعية" },
         },
@@ -84,18 +60,22 @@ export default function LearningPathsPage() {
   }, []);
 
   useEffect(() => {
-    fetchLearningPaths()
-      .then(setPaths)
-      .finally(() => setLoading(false));
+    fetchPathList().then(setPaths).finally(() => setLoading(false));
   }, []);
 
-  // Merge API paths with static (API first, then static extras)
-  const merged: LearningPath[] = [...paths];
-  for (const sp of STATIC_PATHS) {
-    if (!merged.some((p) => p.slug === sp.slug)) merged.push(sp);
-  }
+  useEffect(() => {
+    if (!user?.id) { setEnrolledSlugs(new Set()); return; }
+    supabase
+      .from("path_enrollments")
+      .select("path_id, learning_paths!inner(slug)")
+      .eq("user_id", user.id)
+      .then(({ data }) => {
+        const slugs = new Set<string>((data ?? []).map((r: any) => r.learning_paths?.slug).filter(Boolean));
+        setEnrolledSlugs(slugs);
+      });
+  }, [user?.id]);
 
-  const grouped = merged.reduce<Record<string, LearningPath[]>>((acc, p) => {
+  const grouped = paths.reduce<Record<string, PathSummary[]>>((acc, p) => {
     const cat = p.category || "other";
     if (!acc[cat]) acc[cat] = [];
     acc[cat].push(p);
@@ -104,8 +84,8 @@ export default function LearningPathsPage() {
 
   const allCategories = Object.keys(grouped);
   const displayed = activeCategory === ALL_CAT ? grouped : { [activeCategory]: grouped[activeCategory] ?? [] };
-
-  const totalHours = merged.reduce((s, p) => s + (p.estimated_hours ?? 0), 0);
+  const totalSessions = paths.reduce((s, p) => s + p.totalSessions, 0);
+  const pathsWithContent = paths.filter((p) => p.coursesCount > 0).length;
 
   return (
     <div className="page-shell lpp-page">
@@ -118,18 +98,18 @@ export default function LearningPathsPage() {
       {/* Stats bar */}
       <div className="lpp-stats-bar">
         <div className="lpp-stat">
-          <strong>{merged.length}+</strong>
+          <strong>{paths.length}</strong>
           <span>مساراً علمياً</span>
         </div>
         <div className="lpp-stat-divider" />
         <div className="lpp-stat">
-          <strong>{totalHours}+</strong>
-          <span>ساعة تعليمية</span>
+          <strong>{totalSessions}</strong>
+          <span>جلسة دراسية</span>
         </div>
         <div className="lpp-stat-divider" />
         <div className="lpp-stat">
-          <strong>٤</strong>
-          <span>مستويات</span>
+          <strong>{pathsWithContent}</strong>
+          <span>مسارًا بمحتوى فعلي الآن</span>
         </div>
         <div className="lpp-stat-divider" />
         <div className="lpp-stat">
@@ -143,9 +123,6 @@ export default function LearningPathsPage() {
         <Link href="/my-learning" className="lpp-nav-link lpp-nav-link--primary">
           لوحتي التعليمية
         </Link>
-        <Link href="/quiz" className="lpp-nav-link lpp-nav-link--outline">
-          المسابقات التعليمية
-        </Link>
         <Link href="/learning/certificates" className="lpp-nav-link lpp-nav-link--outline">
           التحقق من شهادة
         </Link>
@@ -153,7 +130,6 @@ export default function LearningPathsPage() {
 
       {/* Level legend */}
       <div className="lpp-legend">
-        <span className="lpp-legend-item"><Star size={13} className="icon-emerald" /> تأسيسي</span>
         <span className="lpp-legend-item"><Sprout size={13} className="icon-emerald" /> مبتدئ</span>
         <span className="lpp-legend-item"><BookOpen size={13} className="icon-emerald" /> متوسط</span>
         <span className="lpp-legend-item"><Trophy size={13} className="icon-ink-soft" /> متقدم</span>
@@ -185,7 +161,7 @@ export default function LearningPathsPage() {
 
       {loading && <SkeletonCardGrid count={8} />}
 
-      {Object.entries(displayed).map(([category, items]) => {
+      {!loading && Object.entries(displayed).map(([category, items]) => {
         const meta = CATEGORY_META[category] ?? CATEGORY_META.other;
         return (
           <section key={category} className="lpp-category">
@@ -195,39 +171,39 @@ export default function LearningPathsPage() {
               <span className="lpp-cat-count">{items.length}</span>
             </div>
             <div className="lpp-paths-grid">
-              {items.map((path) => (
-                <Link key={path.slug} href={`/learning/paths/${path.slug}`} className="lpp-path-link">
-                  <article className="lpp-path-card">
-                    <div className="lpp-path-card__top">
-                      <h3 className="lpp-path-card__title">{path.title}</h3>
-                      <span className="lpp-path-level-icon">{(() => { const I = LEVEL_ICON[path.level] ?? Sprout; return <I size={14} />; })()}</span>
-                    </div>
-                    {path.description && (
-                      <p className="lpp-path-card__desc">{path.description}</p>
-                    )}
-                    <div className="lpp-path-card__meta">
-                      <span className="lpp-path-card__badge lpp-path-card__badge--level">
-                        {levelLabel(path.level)}
-                      </span>
-                      {path.estimated_hours && (
-                        <span className="lpp-path-card__badge">
-                          ~{path.estimated_hours} ساعة
-                        </span>
-                      )}
-                      {typeof path.progress_pct === "number" && path.progress_pct > 0 && (
-                        <span className="lpp-path-card__badge lpp-path-card__badge--progress">
-                          {path.progress_pct}% مكتمل
-                        </span>
-                      )}
-                    </div>
-                    {typeof path.progress_pct === "number" && path.progress_pct > 0 && (
-                      <div className="lpp-progress-bar" role="progressbar" aria-valuenow={path.progress_pct} aria-valuemin={0} aria-valuemax={100}>
-                        <div className="lpp-progress-fill" style={{ "--lpp-pct": `${path.progress_pct}%` } as React.CSSProperties} />
+              {items.map((path) => {
+                const hasContent = path.coursesCount > 0;
+                const isEnrolled = enrolledSlugs.has(path.slug);
+                const weeks = estimateWeeksRange(path.totalSessions, 4);
+                return (
+                  <Link key={path.slug} href={`/learning/paths/${path.slug}`} className="lpp-path-link">
+                    <article className={`lpp-path-card${hasContent ? "" : " lpp-path-card--pending"}`}>
+                      <div className="lpp-path-card__top">
+                        <h3 className="lpp-path-card__title">{path.title}</h3>
+                        <span className="lpp-path-level-icon">{(() => { const I = LEVEL_ICON[path.level] ?? Sprout; return <I size={14} />; })()}</span>
                       </div>
-                    )}
-                  </article>
-                </Link>
-              ))}
+                      {path.description && (
+                        <p className="lpp-path-card__desc">{path.description}</p>
+                      )}
+                      <div className="lpp-path-card__meta">
+                        <span className="lpp-path-card__badge lpp-path-card__badge--level">
+                          {LEVEL_LABEL[path.level] ?? path.level}
+                        </span>
+                        {hasContent ? (
+                          <span className="lpp-path-card__badge">
+                            {path.totalSessions} جلسة{weeks.maxWeeks > 0 ? ` — نحو ${weeks.minWeeks}-${weeks.maxWeeks} أسابيع` : ""}
+                          </span>
+                        ) : (
+                          <span className="lpp-path-card__badge">قيد الإعداد</span>
+                        )}
+                        {isEnrolled && (
+                          <span className="lpp-path-card__badge lpp-path-card__badge--progress">مسجَّل</span>
+                        )}
+                      </div>
+                    </article>
+                  </Link>
+                );
+              })}
             </div>
           </section>
         );

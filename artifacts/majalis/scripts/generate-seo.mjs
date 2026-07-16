@@ -103,7 +103,7 @@ async function extractSlugTitlePairs(relFile, constName, min) {
   return unique;
 }
 
-const LEARNING_PATHS = await extractSlugTitlePairs("src/views/learning/LearningPathsPage.tsx", "STATIC_PATHS", 15);
+const { LEARNING_PATHS_INDEX: LEARNING_PATHS } = await importSrc("src/data/learning-paths-index.ts");
 const TOPICS = await extractSlugTitlePairs("src/views/TopicsIndexPage.tsx", "STATIC_TOPICS", 40);
 
 const publicDir = resolve(appRoot, "public");
@@ -912,7 +912,7 @@ ${issue.category ? `<p>التصنيف: ${escapeHtml(issue.category)}</p>` : ""}`
   );
 }
 
-// المسارات العلمية — من STATIC_PATHS في LearningPathsPage
+// المسارات العلمية — من src/data/learning-paths-index.ts (مرآة SEO لجدول learning_paths)
 for (const p of LEARNING_PATHS) {
   addPage(
     {
