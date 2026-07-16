@@ -285,16 +285,10 @@ function computePublicStatsFromSeed(): FiqhPublicStats {
 }
 
 export async function getFiqhCouncilPublicStats(): Promise<{ data: FiqhPublicStats; usingSeed: boolean }> {
-  const seedStats = computePublicStatsFromSeed();
-  if (!isConfigured) return { data: seedStats, usingSeed: true };
-
-  try {
-    const { data, error } = await supabase.rpc("fiqh_council_public_stats");
-    if (error || !data) return { data: seedStats, usingSeed: true };
-    return { data: data as FiqhPublicStats, usingSeed: false };
-  } catch {
-    return { data: seedStats, usingSeed: true };
-  }
+  // ملاحظة: كانت هذه الدالة تستدعي RPC باسم "fiqh_council_public_stats" غير
+  // الموجود إطلاقًا في قاعدة بيانات الإنتاج (تحقُّق مباشر عبر pg_proc،
+  // 2026-07-16) — أُزيل الاستدعاء الميت مباشرةً.
+  return { data: computePublicStatsFromSeed(), usingSeed: true };
 }
 
 export async function incrementFiqhCouncilViews(slug: string) {
@@ -332,22 +326,12 @@ export async function searchFiqhCouncil(query: string, limit = 20) {
   const q = query.trim();
   if (!q) return { data: [] as FiqhCouncilItem[], usingSeed: true };
 
+  // ملاحظة: كانت هذه الدالة تستدعي RPC باسم "search_fiqh_council" غير
+  // الموجود إطلاقًا في قاعدة بيانات الإنتاج (تحقُّق مباشر عبر pg_proc،
+  // 2026-07-16) — فكانت تُعيد بيانات seed دومًا على أي حال بعد جولة شبكة
+  // فاشلة مهدورة في كل بحث. أُزيل الاستدعاء الميت مباشرةً.
   const seedResults = filterSeed(FIQH_COUNCIL_PUBLISHED_SEED, { search: q, limit });
-  if (!isConfigured) return { data: seedResults, usingSeed: true };
-
-  try {
-    const { data, error } = await supabase.rpc("search_fiqh_council", { query: q, result_limit: limit });
-    if (error) {
-      if (isMissingTableError(error)) return { data: seedResults, usingSeed: true };
-      throw error;
-    }
-    const rows = (data || []) as FiqhCouncilItem[];
-    if (rows.length === 0 && seedResults.length > 0) return { data: seedResults, usingSeed: true };
-    return { data: rows, usingSeed: false };
-  } catch (err) {
-    logSupabaseError("searchFiqhCouncil", err);
-    return { data: seedResults, usingSeed: true };
-  }
+  return { data: seedResults, usingSeed: true };
 }
 
 export async function getFiqhSearchSuggestions(query: string) {
@@ -490,32 +474,11 @@ export async function advancedSearchFiqhCouncil(opts: FiqhAdvancedSearchOptions)
     seedResults.splice(0, seedResults.length, ...seedResults.filter((i) => i.decision_number?.includes(q)));
   }
 
-  if (!isConfigured) return { data: seedResults, usingSeed: true };
-
-  try {
-    const { data, error } = await supabase.rpc("search_fiqh_council_advanced", {
-      query: opts.query || null,
-      p_type: opts.type && opts.type !== "الكل" ? opts.type : null,
-      p_category: opts.category && opts.category !== "الكل" ? opts.category : null,
-      p_subcategory: opts.subcategory || null,
-      p_source: opts.source || null,
-      p_year: opts.year && opts.year !== "الكل" ? opts.year : null,
-      p_tags: opts.tags?.length ? opts.tags : null,
-      p_nawazil_topic: opts.nawazilTopic || null,
-      p_decision_number: opts.decisionNumber || null,
-      result_limit: opts.limit || 30,
-    });
-    if (error) {
-      if (isMissingTableError(error)) return { data: seedResults, usingSeed: true };
-      throw error;
-    }
-    const rows = (data || []) as FiqhCouncilItem[];
-    if (rows.length === 0 && seedResults.length > 0) return { data: seedResults, usingSeed: true };
-    return { data: rows, usingSeed: false };
-  } catch (err) {
-    logSupabaseError("advancedSearchFiqhCouncil", err);
-    return { data: seedResults, usingSeed: true };
-  }
+  // ملاحظة: كانت هذه الدالة تستدعي RPC باسم "search_fiqh_council_advanced"
+  // غير الموجود إطلاقًا في قاعدة بيانات الإنتاج (تحقُّق مباشر عبر pg_proc،
+  // 2026-07-16) — seedResults أعلاه مُصفّاة محليًا بكل معايير البحث المتقدّم
+  // بالفعل، فالنتيجة مطابقة تمامًا. أُزيل استدعاء الـRPC الميت مباشرةً.
+  return { data: seedResults, usingSeed: true };
 }
 
 export function compareFiqhItems(items: FiqhCouncilItem[]) {

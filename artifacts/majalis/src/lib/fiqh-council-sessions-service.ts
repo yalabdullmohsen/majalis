@@ -49,21 +49,11 @@ function buildLiveFromSeed(): FiqhLiveData {
 }
 
 export async function getFiqhLiveData(): Promise<{ data: FiqhLiveData; usingSeed: boolean }> {
-  const seed = buildLiveFromSeed();
-  if (!isConfigured) return { data: seed, usingSeed: true };
-
-  try {
-    const { data, error } = await supabase.rpc("fiqh_council_live_data");
-    if (error || !data) return { data: seed, usingSeed: true };
-
-    const live = data as FiqhLiveData;
-    if (!live.last_session && !live.latest_resolutions?.length) {
-      return { data: seed, usingSeed: true };
-    }
-    return { data: live, usingSeed: false };
-  } catch {
-    return { data: seed, usingSeed: true };
-  }
+  // ملاحظة: كانت هذه الدالة تستدعي RPC باسم "fiqh_council_live_data" غير
+  // الموجود إطلاقًا في قاعدة بيانات الإنتاج (تحقُّق مباشر عبر pg_proc،
+  // 2026-07-16) — فكانت تُعيد بيانات seed دومًا على أي حال بعد جولة شبكة
+  // فاشلة مهدورة في كل مرة. أُزيل الاستدعاء الميت مباشرةً.
+  return { data: buildLiveFromSeed(), usingSeed: true };
 }
 
 export async function getFiqhSessions(opts?: { status?: string; limit?: number }) {
