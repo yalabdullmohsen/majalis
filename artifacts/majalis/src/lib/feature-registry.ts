@@ -70,7 +70,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "universities", label: "دليل الجامعات",    path: "/universities", group: "مؤسسات",        status: "active",       inSideNav: true,  inBottomNav: false },
 
   // ── التعلم ───────────────────────────────────────────────────
-  { id: "learning-path",label: "خارطة طالب العلم", path: "/learning-path",group: "تعلم",          status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "learning-path",label: "خارطة طالب العلم (تجريبي)", path: "/learning-path",group: "تعلم",     status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "my-learning",  label: "لوحتي التعليمية",  path: "/my-learning",  group: "تعلم",          status: "requires-auth",inSideNav: true,  inBottomNav: false },
   { id: "learning-plan",label: "خطة التعلم",       path: "/learning-plan",group: "تعلم",          status: "active",       inSideNav: true,  inBottomNav: false },
 

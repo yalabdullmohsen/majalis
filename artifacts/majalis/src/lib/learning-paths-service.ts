@@ -136,7 +136,7 @@ export async function fetchPathDetail(slug: string): Promise<PathDetail | null> 
   const { data: itemRows } = unitIds.length
     ? await supabase
         .from("learning_items")
-        .select("id, unit_id, item_type, title, description, session_estimate, minutes_estimate, weight, is_required, completion_method, completion_threshold, status, sort_order")
+        .select("id, unit_id, item_type, title, description, session_estimate, minutes_estimate, weight, is_required, completion_method, completion_threshold, status, sort_order, assessment_id")
         .in("unit_id", unitIds)
         .eq("status", "published")
         .order("sort_order")
@@ -170,6 +170,7 @@ export async function fetchPathDetail(slug: string): Promise<PathDetail | null> 
       isRequired: row.is_required,
       completionMethod: row.completion_method,
       completionThreshold: row.completion_threshold,
+      assessmentId: row.assessment_id,
     });
     itemsByCourse.set(courseId, list);
   }
@@ -295,4 +296,63 @@ export async function fetchAllCoursePrerequisites(courseIds: string[]): Promise<
   if (courseIds.length === 0) return [];
   const { data } = await supabase.from("prerequisites").select("course_id, requires_course_id").in("course_id", courseIds);
   return (data ?? []).map((r) => ({ courseId: r.course_id, requiresCourseId: r.requires_course_id }));
+}
+
+// ── الشهادة ──────────────────────────────────────────────────────────────
+
+export async function fetchExistingCertificate(userId: string, pathId: string) {
+  const { data } = await supabase
+    .from("certificates")
+    .select("certificate_code, issued_at")
+    .eq("user_id", userId)
+    .eq("path_id", pathId)
+    .eq("status", "active")
+    .maybeSingle();
+  return data;
+}
+
+/**
+ * إصدار شهادة — يُستدعى فقط بعد التحقق من canIssueCertificate() في طبقة
+ * الواجهة (المصدر الحقيقي للشرط هو محرك src/lib/learning-paths/engine.ts،
+ * لا هذه الدالة). RLS على جدول certificates تسمح للمستخدم بإدراج شهادته
+ * الخاصة فقط (auth.uid() = user_id)، وUNIQUE(user_id, path_id) يمنع إصدار
+ * أكثر من شهادة لنفس المسار.
+ */
+export async function issueCertificate(
+  userId: string,
+  path: { id: string; title: string; level: string },
+  totalSessionsCompleted: number,
+): Promise<{ certificateCode: string } | null> {
+  const { data: profile } = await supabase.from("profiles").select("full_name").eq("id", userId).maybeSingle();
+  const { data: authUser } = await supabase.auth.getUser();
+  const holderName = profile?.full_name || authUser?.user?.email || "طالب علم";
+
+  const code = `MJ-${path.id.slice(0, 8).toUpperCase()}-${userId.slice(0, 6).toUpperCase()}-${Date.now().toString(36).toUpperCase()}`;
+
+  const { data, error } = await supabase
+    .from("certificates")
+    .insert({
+      user_id: userId,
+      path_id: path.id,
+      certificate_code: code,
+      holder_name: holderName,
+      path_title_snapshot: path.title,
+      level: path.level,
+      sessions_completed: totalSessionsCompleted,
+    })
+    .select("certificate_code")
+    .single();
+
+  if (error || !data) return null;
+  return { certificateCode: data.certificate_code };
+}
+
+export async function verifyCertificate(code: string) {
+  const { data } = await supabase
+    .from("certificates")
+    .select("certificate_code, holder_name, path_title_snapshot, level, sessions_completed, issued_at, status")
+    .eq("certificate_code", code)
+    .eq("status", "active")
+    .maybeSingle();
+  return data;
 }

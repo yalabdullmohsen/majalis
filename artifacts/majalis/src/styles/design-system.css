@@ -5224,4 +5224,83 @@ select:focus-visible {
 }
 .hpv4-customize-trigger:hover { border-color: var(--ds-emerald); color: var(--ds-emerald); }
 
+/* ── أداء التقييمات (am-*) ──────────────────────────────────────── */
+.am-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 200;
+}
+@media (min-width: 640px) {
+  .am-overlay { align-items: center; }
+}
+.am-modal {
+  background: #fff;
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh;
+  border-radius: 1rem 1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+@media (min-width: 640px) {
+  .am-modal { border-radius: 1rem; }
+}
+.am-modal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid var(--ds-line-color);
+  font-weight: 800;
+  color: var(--majalis-ink);
+}
+.am-modal__close { background: none; border: none; color: var(--majalis-ink-soft); cursor: pointer; }
+.am-modal__body { padding: 1rem 1.1rem; overflow-y: auto; }
+.am-loading { font-size: 0.85rem; color: var(--majalis-ink-soft); text-align: center; padding: 1.5rem 0; }
+
+.am-question { margin-bottom: 1.25rem; }
+.am-question__text { font-size: 0.9rem; font-weight: 700; color: var(--majalis-ink); margin-bottom: 0.6rem; line-height: 1.6; }
+.am-options { display: flex; flex-direction: column; gap: 0.5rem; }
+.am-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--ds-line-color);
+  border-radius: 0.6rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.am-option:has(input:checked) { border-color: var(--ds-emerald); background: rgba(14,110,82,.05); }
+.am-text-input {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--ds-line-color);
+  border-radius: 0.6rem;
+  font-size: 0.85rem;
+}
+.am-submit-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--ds-emerald);
+  color: #fff;
+  border: none;
+  border-radius: 0.6rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+.am-submit-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.am-result { text-align: center; padding: 1.5rem 0; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+.am-result--passed { color: var(--ds-emerald); }
+.am-result--failed { color: #C0392B; }
+.am-result__score { font-size: 2rem; font-weight: 800; margin: 0; }
+.am-result__msg { font-size: 0.88rem; color: var(--majalis-ink); margin: 0 0 0.75rem; }
+
 /* ══════════════════════════════════════════════════════════════════ */

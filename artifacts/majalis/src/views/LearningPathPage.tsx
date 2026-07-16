@@ -111,6 +111,13 @@ export default function LearningPathPage() {
       {/* المحتوى الرئيسي */}
       <div className="max-w-5xl mx-auto px-4 py-10">
 
+        {/* تنبيه: هذه نسخة تجريبية منفصلة، أغلب علومها بلا كتب معتمدة بعد */}
+        <div className="maw-disclaimer" role="note">
+          <strong>ملاحظة:</strong> هذه نسخة تجريبية أولى، ومعظم علومها لا تحتوي بعد
+          كتبًا معتمدة. للمسارات العلمية الكاملة بمحتوى حقيقي ومتابعة تقدّم دقيقة،
+          جرّب <Link href="/learning/paths">المسارات العلمية</Link>.
+        </div>
+
         {/* كيف تعمل الخارطة */}
         <div className="lpth-how-card">
           <h2 className="lpth-how-card__title">

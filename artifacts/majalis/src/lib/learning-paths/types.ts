@@ -22,6 +22,7 @@ export type LearningItem = {
   isRequired: boolean;
   completionMethod: CompletionMethod;
   completionThreshold: number | null;
+  assessmentId?: string | null;
 };
 
 export type CompletionEventType = "started" | "progress_update" | "completed" | "reopened";

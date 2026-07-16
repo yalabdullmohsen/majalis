@@ -3,7 +3,7 @@ import { GraduationCap } from "lucide-react";
 import { useParams, Link } from "wouter";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { verifyLearningCertificate } from "@/lib/digital-learning-service";
+import { verifyCertificate } from "@/lib/learning-paths-service";
 import { applyPageSeo } from "@/lib/seo";
 
 type CertResult = {
@@ -48,8 +48,23 @@ export default function CertificateVerifyPage() {
     if (!code) return;
     setLoading(true);
     setResult(null);
-    verifyLearningCertificate(code)
-      .then((r) => setResult(r as CertResult))
+    verifyCertificate(code)
+      .then((c) => {
+        if (!c) {
+          setResult({ valid: false });
+          return;
+        }
+        setResult({
+          valid: true,
+          certificate: {
+            title: c.path_title_snapshot,
+            holder: c.holder_name,
+            issued_at: c.issued_at,
+            path: c.path_title_snapshot,
+            level: c.level ?? undefined,
+          },
+        });
+      })
       .finally(() => setLoading(false));
   }, [code]);
 
@@ -184,7 +199,7 @@ export default function CertificateVerifyPage() {
       </section>
 
       <div className="cvp-links">
-        <Link href="/learning-path" className="cvp-back-link">المسارات العلمية</Link>
+        <Link href="/learning/paths" className="cvp-back-link">المسارات العلمية</Link>
         <Link href="/quiz" className="cvp-back-link">المسابقات التعليمية</Link>
         <Link href="/contact" className="cvp-back-link">تواصل معنا</Link>
       </div>

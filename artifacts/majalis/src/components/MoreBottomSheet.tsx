@@ -119,7 +119,7 @@ const SHEET_SECTIONS = [
     { href: "/assistant",            label: "المساعد الذكي",       Icon: Bot },
     { href: "/mind-map",             label: "الخرائط الذهنية",    Icon: Map },
     { href: "/learning-plan",        label: "خطة التعلّم",         Icon: BarChart2 },
-    { href: "/learning-path",        label: "خارطة طالب العلم",   Icon: GraduationCap },
+    { href: "/learning-path",        label: "خارطة طالب العلم (تجريبي)", Icon: GraduationCap },
     { href: "/my-learning",          label: "لوحتي التعليمية",    Icon: BarChart3 },
     { href: "/knowledge-map",        label: "الخريطة المعرفية",   Icon: Network },
     { href: "/knowledge-graph",      label: "شبكة المعرفة",       Icon: GitBranch },

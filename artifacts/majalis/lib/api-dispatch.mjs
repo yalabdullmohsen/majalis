@@ -64,6 +64,12 @@ const universitiesWriteRateLimit = createRateLimiter({
   keyPrefix: "universities-write",
 });
 
+const learningAssessmentRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 15,
+  keyPrefix: "learning-assessment",
+});
+
 const accountDeleteRateLimit = createRateLimiter({
   windowMs: 60_000,
   max: 5,
@@ -207,6 +213,7 @@ export const API_ROUTES = [
   // ── نظام الاقتباسات ────────────────────────────────────────────────────────
   { prefix: "/api/user/citations", module: "./api-handlers/citations.js", allowGet: true, rateLimit: citationsRateLimit },
   { prefix: "/api/citations",      module: "./api-handlers/citations.js", allowGet: true, rateLimit: citationsRateLimit },
+  { prefix: "/api/learning-assessment", module: "./api-handlers/learning-assessment.js", exact: true, allowGet: true, rateLimit: learningAssessmentRateLimit },
   // ── الرسم البياني المعرفي ──────────────────────────────────────────────────
   { prefix: "/api/knowledge-graph", module: "./api-handlers/knowledge-graph.js", allowGet: true, rateLimit: knowledgeGraphRateLimit },
   // ── التوصيات الذكية ───────────────────────────────────────────────────────

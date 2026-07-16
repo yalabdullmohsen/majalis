@@ -28963,6 +28963,7 @@ html[data-theme="dark"] .fc-kbd {
 }
 .lpd2-enroll-btn:disabled { opacity: 0.65; cursor: wait; }
 .lpd2-enroll-btn:hover:not(:disabled) { opacity: 0.9; }
+.lpd2-enroll-btn--cert { background: linear-gradient(135deg, #0A3D28, #0E6E52); text-decoration: none; }
 
 /* ── Next module ── */
 .lpd2-next {

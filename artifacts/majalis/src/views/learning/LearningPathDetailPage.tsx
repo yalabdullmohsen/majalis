@@ -7,10 +7,13 @@ import {
   enrollInPath,
   fetchCompletionEvents,
   logCompletionEvent,
+  fetchExistingCertificate,
+  issueCertificate,
   type PathDetail,
   type CourseDetail,
 } from "@/lib/learning-paths-service";
 import {
+  canIssueCertificate,
   computeCourseProgress,
   computeTotalSessions,
   estimateWeeksRange,
@@ -20,13 +23,14 @@ import {
 } from "@/lib/learning-paths/engine";
 import type { CompletionEvent } from "@/lib/learning-paths/types";
 import { useAuth } from "@/components/AuthProvider";
+import { AssessmentModal } from "@/components/learning/AssessmentModal";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { applyPageSeo } from "@/lib/seo";
 import {
   BookOpen, FileQuestion, BookMarked, CheckSquare,
   CheckCircle2, ChevronRight, ChevronDown, Clock, Lock,
-  BarChart3, UserPlus, type LucideProps,
+  BarChart3, UserPlus, Award, type LucideProps,
 } from "lucide-react";
 
 type LucideIcon = React.ComponentType<Omit<LucideProps, "ref">>;
@@ -72,12 +76,14 @@ function CourseCard({
   events,
   userId,
   onCompleteItem,
+  onStartAssessment,
 }: {
   course: CourseDetail;
   unlocked: boolean;
   events: CompletionEvent[];
   userId: string | undefined;
   onCompleteItem: (itemId: string, method: string) => void;
+  onStartAssessment: (assessmentId: string, learningItemId: string) => void;
 }) {
   const [open, setOpen] = useState(false);
   const progress = computeCourseProgress(course.items, events);
@@ -137,6 +143,10 @@ function CourseCard({
                         <span className="lpd2-module__done-tag"><CheckCircle2 size={12} aria-hidden="true" /> مكتمل</span>
                       ) : !userId ? (
                         <Link href="/login" className="lpd2-complete-btn">سجّل الدخول</Link>
+                      ) : item.itemType === "assessment" && item.assessmentId ? (
+                        <button type="button" onClick={() => onStartAssessment(item.assessmentId!, item.id)} className="lpd2-quiz-btn">
+                          ابدأ الاختبار
+                        </button>
                       ) : (
                         <button type="button" onClick={() => onCompleteItem(item.id, item.completionMethod)} className="lpd2-complete-btn">
                           إكمال
@@ -193,11 +203,16 @@ export default function LearningPathDetailPage() {
     });
   }, [slug]);
 
+  const [activeAssessment, setActiveAssessment] = useState<{ assessmentId: string; learningItemId: string } | null>(null);
+  const [certificateCode, setCertificateCode] = useState<string | null>(null);
+  const [issuingCert, setIssuingCert] = useState(false);
+
   useEffect(() => {
     if (!user?.id || !path) return;
     fetchEnrollment(user.id, path.id).then((e) => setEnrolled(!!e));
     const allItemIds = path.stages.flatMap((s) => s.courses.flatMap((c) => c.items.map((i) => i.id)));
     fetchCompletionEvents(user.id, allItemIds).then(setEvents);
+    fetchExistingCertificate(user.id, path.id).then((c) => setCertificateCode(c?.certificate_code ?? null));
   }, [user?.id, path]);
 
   const allCourses = useMemo(() => path?.stages.flatMap((s) => s.courses) ?? [], [path]);
@@ -212,6 +227,21 @@ export default function LearningPathDetailPage() {
     [allCourses],
   );
   const weeks = path ? estimateWeeksRange(computeTotalSessions(allRequiredItems, true), 4) : { minWeeks: 0, maxWeeks: 0 };
+
+  const courseCompletionMap = useMemo(() => {
+    const m = new Map<string, boolean>();
+    for (const c of allCourses) m.set(c.id, completedCourseIds.has(c.id));
+    return m;
+  }, [allCourses, completedCourseIds]);
+  // لا مسار مُهيَّأ حاليًا باختبار مسار شامل إلزامي (completion_requirements.final_assessment)
+  // — كل المسارات الحالية تكتفي بإكمال كل مقرراتها. راجع learning_paths.completion_requirements
+  // إن أُضيف اختبار شامل مستقبلًا.
+  const certificateEligible = allCourses.length > 0 && canIssueCertificate(
+    allCourses.map((c) => ({ id: c.id, stageId: "", title: c.title, passPercentage: c.passPercentage })),
+    courseCompletionMap,
+    null,
+    false,
+  );
 
   const handleEnroll = async () => {
     if (!user?.id || !path) return;
@@ -290,6 +320,29 @@ export default function LearningPathDetailPage() {
         </Link>
       )}
 
+      {certificateCode && (
+        <Link href={`/learning/certificates/${certificateCode}`} className="lpd2-enroll-btn lpd2-enroll-btn--cert">
+          <Award size={16} aria-hidden="true" /> عرض شهادتك
+        </Link>
+      )}
+      {!certificateCode && certificateEligible && user?.id && (
+        <button
+          type="button"
+          className="lpd2-enroll-btn lpd2-enroll-btn--cert"
+          disabled={issuingCert}
+          onClick={async () => {
+            if (!path) return;
+            setIssuingCert(true);
+            const totalSessions = computeTotalSessions(allRequiredItems, true);
+            const result = await issueCertificate(user.id, { id: path.id, title: path.title, level: path.level }, totalSessions);
+            setIssuingCert(false);
+            if (result) setCertificateCode(result.certificateCode);
+          }}
+        >
+          <Award size={16} aria-hidden="true" /> {issuingCert ? "جارٍ الإصدار…" : "احصل على شهادتك"}
+        </button>
+      )}
+
       <h2 className="lpd2-section-title">خطة المسار</h2>
       {path.stages.length === 0 && (
         <p className="lpd2-course-card__empty">هذا المسار قيد المراجعة العلمية، لم يُنشَر محتواه بعد.</p>
@@ -310,12 +363,25 @@ export default function LearningPathDetailPage() {
                   events={events}
                   userId={user?.id}
                   onCompleteItem={handleCompleteItem}
+                  onStartAssessment={(assessmentId, learningItemId) => setActiveAssessment({ assessmentId, learningItemId })}
                 />
               ))}
             </div>
           )}
         </section>
       ))}
+
+      {activeAssessment && (
+        <AssessmentModal
+          assessmentId={activeAssessment.assessmentId}
+          learningItemId={activeAssessment.learningItemId}
+          onClose={() => setActiveAssessment(null)}
+          onPassed={() => {
+            const itemId = activeAssessment.learningItemId;
+            setEvents((prev) => [...prev, { learningItemId: itemId, eventType: "completed", evidenceValue: 100, occurredAt: new Date().toISOString() }]);
+          }}
+        />
+      )}
 
       <div className="twh-share">
         <ShareButtons title="تفاصيل المسار التعليمي — المجلس العلمي" url={`https://www.majlisilm.com/learning/paths/${slug}`} />
