@@ -54,7 +54,6 @@ const SHEET_SECTIONS = [
   { group: "الفقه والأحكام", items: [
     { href: "/fiqh",               label: "الفقه الإسلامي",     Icon: BookText },
     { href: "/qa",                 label: "الأسئلة والأجوبة",   Icon: HelpCircle },
-    { href: "/fatwa",              label: "الفتاوى",             Icon: Scale },
     { href: "/rulings",            label: "الأحكام الشرعية",    Icon: Gavel },
     { href: "/fiqh-council",       label: "المجمع الفقهي",      Icon: Users },
     { href: "/madhahib",           label: "المذاهب الأربعة",    Icon: Scale },

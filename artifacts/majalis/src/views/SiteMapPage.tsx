@@ -66,7 +66,6 @@ const SECTIONS = [
       { href: "/madhahib",       label: "المذاهب الأربعة",      desc: "الحنفي والمالكي والشافعي والحنبلي" },
       { href: "/islamic-sects",  label: "الفرق الإسلامية",      desc: "نشأة الفرق وعقائدها وانتشارها" },
       { href: "/qa",          label: "الأسئلة والأجوبة",     desc: "أسئلة وأجوبة شرعية" },
-      { href: "/fatwa",       label: "الفتاوى",              desc: "فتاوى مُحقَّقة" },
       { href: "/rulings",     label: "الأحكام الشرعية",      desc: "موسوعة الأحكام" },
       { href: "/fiqh-council", label: "المجمع الفقهي",       desc: "قرارات المجامع الفقهية" },
     ],

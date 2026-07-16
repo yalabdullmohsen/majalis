@@ -42,7 +42,6 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/updates",       label: "المستجدات" },
   { href: "/fiqh",               label: "الفقه الإسلامي" },
   { href: "/fiqh-council",       label: "المجمع الفقهي" },
-  { href: "/fatwa",              label: "الفتاوى" },
   { href: "/rulings",            label: "الأحكام الشرعية" },
   { href: "/seerah",             label: "السيرة النبوية" },
   { href: "/scholarly-research", label: "الباحث الشرعي" },
@@ -113,7 +112,7 @@ export const PRIMARY_NAV_ITEMS: NavLink[] = [
   { href: "/quran-hub", label: "القرآن",   description: "مصحف · تجويد · قراء · إذاعة" },
   { href: "/library",   label: "المكتبة",  description: "كتب · مخطوطات · مؤسسات" },
   { href: "/scholars",  label: "العلماء",  description: "تراجم العلماء والمشايخ" },
-  { href: "/fatwa",     label: "الفتاوى",  description: "فتاوى شرعية موثقة" },
+  { href: "/fiqh",      label: "الفقه",    description: "أحكام · مسائل · مجمع فقهي" },
 ];
 
 /**
@@ -136,11 +135,10 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/arbaeen-nawawi",     label: "الأربعون النووية",  description: "أمهات أحاديث الإسلام" },
       { href: "/fawaid",             label: "الفوائد العلمية",   description: `${COUNTS.fawaid} فائدة منتقاة من أقوال العلماء` },
       { href: "/fiqh",               label: "الفقه الإسلامي",   description: "بوابة الفقه الشامل" },
-      { href: "/fatwa",              label: "الفتاوى",           description: `${COUNTS.fatwas} فتوى — تُعرض مع حالة مراجعتها ومصدرها` },
       { href: "/rulings",            label: "الأحكام الشرعية",  description: "أحكام شرعية مع أدلتها ومراجعها وحالة مراجعتها" },
       { href: "/fiqh-council",       label: "المجمع الفقهي",    description: "قرارات وبحوث وتوصيات" },
       { href: "/qa",                 label: "الأسئلة التعليمية", description: "أسئلة وأجوبة علمية مع مصادرها" },
-      { href: "/updates",            label: "آخر المستجدات",    description: "أحدث القرارات والفتاوى والدروس" },
+      { href: "/updates",            label: "آخر المستجدات",    description: "أحدث القرارات والدروس والمستجدات العلمية" },
     ],
   },
   {
@@ -324,8 +322,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/prayer-ranks", title: "فضائل الصلاة ومراتبها", description: "المراتب الخمسة في الصلاة وفضائلها من القرآن والسنة" },
   { href: "/stories", title: "القصص الإسلامية", description: "قصص من السيرة النبوية والأنبياء والصحابة" },
   { href: "/prophets", title: "قصص الأنبياء", description: "الأنبياء الخمسة والعشرون في القرآن — نبذات وعبر" },
-  { href: "/fiqh", title: "الفقه الإسلامي", description: "الفتاوى والأحكام والمجمع الفقهي" },
-  { href: "/fatwa", title: "الفتاوى", description: "مركز الفتاوى الشرعية" },
+  { href: "/fiqh", title: "الفقه الإسلامي", description: "الأحكام والأسئلة والمجمع الفقهي" },
   { href: "/rulings", title: "الأحكام الشرعية", description: "مكتبة الأحكام والأدلة" },
   { href: "/seerah", title: "السيرة النبوية", description: "حياة النبي محمد ﷺ من المولد إلى الوفاة" },
   { href: "/prophetic-medicine", title: "الطب النبوي", description: "ما ثبت في السنة من التداوي والوقاية" },

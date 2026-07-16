@@ -69,7 +69,6 @@ const EMPTY: SearchResults = {
   fawaid: [],
   adhkar: [],
   fiqh_decisions: [],
-  fatwas: [],
   rulings: [],
   courses: [],
   updates: [],
@@ -382,7 +381,7 @@ export default function SearchPage() {
     fiqhResults.length +
     results.lessons.length + results.library.length + results.miracles.length +
     results.qa.length + results.fawaid.length + results.adhkar.length +
-    (results.fatwas?.length || 0) + (results.rulings?.length || 0) +
+    (results.rulings?.length || 0) +
     (results.courses?.length || 0) + (results.updates?.length || 0) +
     (results.hadith?.length || 0) + (results.stories?.length || 0) +
     localExtra.occasions.length + localExtra.nawawi.length + localExtra.quran.length +
@@ -440,7 +439,6 @@ export default function SearchPage() {
               <select value={filters.type} onChange={(e) => setFilters({ ...filters, type: e.target.value })}>
                 <option value="">كل الأنواع</option>
                 <option value="lesson">دروس</option>
-                <option value="fatwa">فتاوى</option>
                 <option value="qa">أسئلة</option>
                 <option value="fawaid">فوائد</option>
                 <option value="library">كتب</option>
@@ -546,7 +544,7 @@ export default function SearchPage() {
                 { href: "/quran-hub",    Icon: BookOpen,      label: "القرآن الكريم" },
                 { href: "/hadith",       Icon: Scroll,        label: "الأحاديث النبوية" },
                 { href: "/adhkar",       Icon: Heart,         label: "الأذكار" },
-                { href: "/fatwa",        Icon: Scale,         label: "الفتاوى" },
+                { href: "/rulings",      Icon: Scale,         label: "الأحكام الشرعية" },
                 { href: "/lessons",      Icon: GraduationCap, label: "الدروس" },
                 { href: "/library",      Icon: BookMarked,    label: "المكتبة" },
                 { href: "/miracles",     Icon: FlaskConical,  label: "الإعجاز العلمي" },
@@ -664,11 +662,6 @@ export default function SearchPage() {
                       />
                     )} />
                   )}
-                  <Group title="الفتاوى" items={results.fatwas || []} render={(f) => (
-                    <ResultRow key={f.id} href={`/fatwa/${f.id}`} kind="fatwa" query={q}
-                      title={displayText(f.question)} meta={f.searchMeta || f.category}
-                    />
-                  )} />
                   <Group title="الأحكام الشرعية" items={results.rulings || []} render={(r) => (
                     <ResultRow key={r.id} href={`/rulings/${r.id}`} kind="ruling" query={q}
                       title={displayText(r.title)} meta={r.searchMeta || r.category}

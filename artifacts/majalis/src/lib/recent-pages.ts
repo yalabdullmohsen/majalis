@@ -96,7 +96,6 @@ const LABEL_MAP: Record<string, string> = {
   "/fiqh-council/stats":            "إحصائيات المجمع",
   "/fiqh-qawaid":                   "القواعد الفقهية",
   "/madhahib":                      "المذاهب الفقهية",
-  "/fatwa":                         "الفتاوى",
   "/rulings":                       "الأحكام الشرعية",
   "/amr-bil-maruf":                 "الأمر بالمعروف والنهي عن المنكر",
 

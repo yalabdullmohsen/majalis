@@ -129,7 +129,7 @@ export const MIND_MAPS: MindMap[] = [
           id: "ahkam",
           label: "الأحكام الشرعية",
           children: [
-            { id: "ah-1", label: "الفتاوى", href: "/fatwa" },
+            { id: "ah-1", label: "الأحكام الشرعية", href: "/rulings" },
             { id: "ah-2", label: "أحكام الجنائز", href: "/janaza" },
             { id: "ah-3", label: "الباحث الشرعي", href: "/scholarly-research" },
           ],

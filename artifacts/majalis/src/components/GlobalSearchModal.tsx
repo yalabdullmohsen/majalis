@@ -411,7 +411,7 @@ export function GlobalSearchModal({ onClose }: Props) {
                     { href: "/quran-hub",     label: "القرآن",       Icon: BookMarked },
                     { href: "/adhkar",         label: "الأذكار",      Icon: RotateCw },
                     { href: "/lessons",        label: "الدروس",       Icon: GraduationCap },
-                    { href: "/fatwa",          label: "الفتاوى",      Icon: Scale },
+                    { href: "/rulings",        label: "الأحكام الشرعية", Icon: Scale },
                     { href: "/library",        label: "المكتبة",      Icon: BookOpen },
                     { href: "/qa",             label: "الأسئلة",      Icon: HelpCircle },
                     { href: "/hadith",         label: "الأحاديث",     Icon: Scroll },

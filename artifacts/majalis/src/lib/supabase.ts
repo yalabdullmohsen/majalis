@@ -1164,7 +1164,6 @@ export type SearchResults = {
   fawaid: any[];
   adhkar: any[];
   fiqh_decisions?: any[];
-  fatwas?: any[];
   rulings?: any[];
   courses?: any[];
   updates?: any[];
@@ -1183,7 +1182,6 @@ const EMPTY_SEARCH: SearchResults = {
   fawaid: [],
   adhkar: [],
   fiqh_decisions: [],
-  fatwas: [],
   rulings: [],
   courses: [],
   updates: [],
@@ -1501,7 +1499,6 @@ export async function searchEverything(term: string): Promise<SearchResults> {
     merged.fawaid.length +
     merged.adhkar.length +
     (merged.fiqh_decisions?.length || 0) +
-    (merged.fatwas?.length || 0) +
     (merged.rulings?.length || 0) +
     (merged.courses?.length || 0) +
     (merged.updates?.length || 0);
@@ -1517,7 +1514,6 @@ export async function searchEverything(term: string): Promise<SearchResults> {
       demo.fawaid.length +
       demo.adhkar.length +
       demoPlatform.fiqh_decisions.length +
-      demoPlatform.fatwas.length +
       demoPlatform.rulings.length +
       demoPlatform.courses.length +
       demoPlatform.updates.length;

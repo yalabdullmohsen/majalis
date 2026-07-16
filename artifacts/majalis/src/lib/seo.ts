@@ -105,14 +105,6 @@ function routeForPath(path: string) {
     };
   }
 
-  if (normalized.startsWith("/fatwa/")) {
-    return {
-      ...requiredRoute("/fatwa"),
-      title: "فتوى شرعية | المجلس العلمي",
-      description: "تفاصيل فتوى شرعية — السؤال والجواب والمراجع.",
-    };
-  }
-
   if (normalized.startsWith("/rulings/")) {
     return {
       ...requiredRoute("/rulings"),

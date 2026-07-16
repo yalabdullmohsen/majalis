@@ -6,7 +6,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   BookOpen, Scroll, Scale, BookMarked, Users, Star, GraduationCap,
   Heart, Compass, Globe, Layers, ChevronLeft, ArrowLeftRight,
-  FileText, Mic2, Shield, Sparkles, Clock, Target, Map, PenLine, Search, Network,
+  Mic2, Shield, Sparkles, Clock, Target, Map, PenLine, Search, Network,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -64,7 +64,7 @@ const DOMAINS: Domain[] = [
     href: "/fiqh",
     count: 4,
     unit: "مذهب",
-    connections: ["quran", "hadith", "fatwa", "scholars", "rulings"],
+    connections: ["quran", "hadith", "scholars", "rulings"],
     tags: ["حنفي", "مالكي", "شافعي", "حنبلي"],
   },
   {
@@ -120,19 +120,6 @@ const DOMAINS: Domain[] = [
     tags: ["مخارج", "صفات", "مدود", "غنة"],
   },
   {
-    id: "fatwa",
-    title: "الفتاوى والأحكام",
-    subtitle: "إجابات العلماء عن المسائل المعاصرة",
-    icon: FileText,
-    color: "#FFFFFF",
-    bg: "#176B57",
-    href: "/fatwa",
-    count: 1200,
-    unit: "فتوى",
-    connections: ["fiqh", "scholars", "rulings"],
-    tags: ["مجمع", "مجلس", "اجتهاد", "تيسير"],
-  },
-  {
     id: "adhkar",
     title: "الأذكار والدعاء",
     subtitle: "تعبد الله بالذكر والدعاء والتسبيح",
@@ -168,7 +155,7 @@ const DOMAINS: Domain[] = [
     href: "/rulings",
     count: 800,
     unit: "حكم",
-    connections: ["fiqh", "fatwa", "hadith"],
+    connections: ["fiqh", "hadith"],
     tags: ["واجب", "مندوب", "مكروه", "حرام"],
   },
   {
@@ -323,7 +310,6 @@ const CONNECTIONS_MAP: { a: string; b: string; label: string }[] = [
   { a: "aqidah",   b: "history", label: "الأحداث التاريخية تُثبت العقيدة" },
   { a: "adhkar",       b: "fiqh",      label: "الأذكار ذات أحكام شرعية" },
   /* ── إضافي ── */
-  { a: "fatwa",        b: "fiqh",      label: "الفتوى تطبيق عملي للفقه" },
   { a: "rulings",      b: "usul",      label: "الأحكام مبنية على أصول الفقه" },
   { a: "universities", b: "scholars",  label: "الجامعات حاضنة العلماء والبحث" },
   { a: "mindmaps",     b: "usul",      label: "الخرائط تُنظِّم مسائل الأصول" },

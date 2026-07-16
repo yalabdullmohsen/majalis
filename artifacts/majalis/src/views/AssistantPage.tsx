@@ -27,7 +27,6 @@ const QUICK_PROMPTS = [
 const RESEARCHER_LINKS = [
   { href: "/fiqh-council/research-assistant", label: "الباحث الفقهي" },
   { href: "/scholarly-research", label: "البحث الشرعي" },
-  { href: "/fatwa", label: "الفتاوى" },
   { href: "/rulings", label: "الأحكام" },
 ];
 

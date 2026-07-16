@@ -59,10 +59,10 @@ const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc: string
   { href: "/hadith",         Icon: Scroll,        label: "الأحاديث",         desc: "صحيح وضعيف" },
   { href: "/quran-hub",      Icon: BookMarked,    label: "القرآن",            desc: "تجويد، تلاوة، وأكثر" },
   { href: "/fawaid",         Icon: Lightbulb,     label: "الفوائد",          desc: "فوائد منتقاة" },
-  { href: "/qa",             Icon: HelpCircle,    label: "الأسئلة",           desc: "فتاوى موثّقة" },
+  { href: "/qa",             Icon: HelpCircle,    label: "الأسئلة",           desc: "أسئلة شرعية موثّقة" },
   { href: "/tasbih",         Icon: RotateCw,      label: "التسبيح",          desc: "عداد إلكتروني" },
   { href: "/seerah",         Icon: Moon,          label: "السيرة",            desc: "حياته ﷺ كاملة" },
-  { href: "/fatwa",          Icon: Scale,         label: "الفتاوى",           desc: "أحكام معاصرة" },
+  { href: "/rulings",        Icon: Scale,         label: "الأحكام الشرعية",  desc: "مسائل معاصرة" },
   { href: "/quiz",           Icon: Target,        label: "المسابقات",         desc: "اختبار المعلومات" },
   { href: "/muezzins",       Icon: Mic2,          label: "المؤذنون",          desc: "أجمل الأصوات" },
   { href: "/library",        Icon: BookOpen,      label: "المكتبة",           desc: "كتب ومتون علمية" },
@@ -110,7 +110,7 @@ const FEATURE_CATS: FeatureCat[] = [
     Icon: Scale,
     label: "الفقه والأحكام",
     items: [
-      { href: "/qa",                 Icon: HelpCircle,   title: "الأسئلة والأجوبة",  desc: "فتاوى من العلماء" },
+      { href: "/qa",                 Icon: HelpCircle,   title: "الأسئلة والأجوبة",  desc: "أسئلة شرعية موثقة" },
       { href: "/rulings",            Icon: Scale,        title: "الأحكام الشرعية",   desc: "موسوعة الفقه والعبادات" },
       { href: "/tawhid",             Icon: BookMarked,   title: "التوحيد",            desc: "العقيدة الإسلامية" },
       { href: "/arkan",              Icon: Landmark,     title: "أركان الإسلام",     desc: "الأركان الخمسة مع الأدلة والتفاصيل" },
@@ -450,8 +450,8 @@ export default function HomePage() {
     applyPageSeo({
       path: "/",
       title: "المجلس العلمي، منصة العلوم الإسلامية",
-      description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم، الأذكار، الدروس العلمية، الفتاوى، والفقه المعاصر.",
-      keywords: ["المجلس العلمي", "علوم إسلامية", "قرآن كريم", "أذكار", "فتاوى", "دروس علمية"],
+      description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم، الأذكار، الدروس العلمية، الأحكام الشرعية، والفقه المعاصر.",
+      keywords: ["المجلس العلمي", "علوم إسلامية", "قرآن كريم", "أذكار", "أحكام شرعية", "دروس علمية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
@@ -459,7 +459,7 @@ export default function HomePage() {
           name: "المجلس العلمي",
           url: "https://www.majlisilm.com",
           logo: "https://www.majlisilm.com/logo.png",
-          description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم والأذكار والدروس والفتاوى والفقه",
+          description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم والأذكار والدروس والأحكام الشرعية والفقه",
           inLanguage: "ar",
           areaServed: { "@type": "Country", name: "الكويت" },
           sameAs: ["https://www.majlisilm.com"],
@@ -634,7 +634,7 @@ export default function HomePage() {
 
           {/* الوصف */}
           <p style={{ color: "rgba(255,255,255,0.82)", fontSize: "clamp(0.84rem, 2.2vw, 0.96rem)", lineHeight: 1.8, maxWidth: 510, margin: "0 auto 1.1rem" }}>
-            بوّابتك الشاملة إلى العلوم الشرعية: القرآن الكريم، السنة النبوية الموثّقة، دروس علماء الكويت، الفقه والفتاوى المعاصرة، والأذكار اليومية
+            بوّابتك الشاملة إلى العلوم الشرعية: القرآن الكريم، السنة النبوية الموثّقة، دروس علماء الكويت، الفقه والأحكام المعاصرة، والأذكار اليومية
           </p>
 
           {/* شريحات الجمهور */}

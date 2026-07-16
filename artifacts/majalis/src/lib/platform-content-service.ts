@@ -6,7 +6,6 @@ import {
   searchFiqhCouncilSeed,
   FIQH_COUNCIL_SEED,
 } from "./fiqh-council-service";
-import { FATWA_SEED, findFatwaById } from "./fatwa-seed";
 import { RULINGS_SEED } from "./rulings-seed";
 import { ANNUAL_COURSES_SEED, findAnnualCourseById } from "./annual-courses-seed";
 import { UPDATES_SEED, getSortedUpdates } from "./updates-seed";
@@ -14,7 +13,6 @@ import { supabase, isSupabaseConfigured } from "./supabase";
 import { logSupabaseError } from "./supabase-config";
 import type {
   AnnualCourse,
-  Fatwa,
   PlatformUpdate,
   ShariaRuling,
 } from "./platform-types";
@@ -37,64 +35,6 @@ export {
   getRelatedFiqhDecisions,
   FIQH_COUNCIL_SEED,
 };
-
-// ─── Fatwas ──────────────────────────────────────────────────────────────────
-
-export async function getFatwas(opts?: { category?: string; search?: string; format?: string }) {
-  let items = [...FATWA_SEED];
-  if (opts?.category && opts.category !== "الكل") {
-    items = items.filter((f) => f.category === opts.category);
-  }
-  if (opts?.format && opts.format !== "الكل") {
-    items = items.filter((f) => f.format === opts.format || f.format === "both");
-  }
-  items = filterBySearch(items, ["question", "answer", "summary", "category"], opts?.search);
-
-  if (!isConfigured) return { data: items, usingSeed: true };
-
-  try {
-    let query = supabase
-      .from("fatwas")
-      .select("*")
-      .eq("status", "approved")
-      .is("archived_at", null)
-      .order("created_at", { ascending: false });
-
-    if (opts?.category && opts.category !== "الكل") query = query.eq("category", opts.category);
-    if (opts?.format && opts.format !== "الكل") {
-      query = query.or(`format.eq.${opts.format},format.eq.both`);
-    }
-
-    const { data, error } = await query;
-    if (error) throw error;
-
-    let result = (data || []) as Fatwa[];
-    if (opts?.search?.trim()) {
-      result = filterBySearch(result, ["question", "answer"], opts.search);
-    }
-    if (result.length === 0 && items.length > 0) return { data: items, usingSeed: true };
-    return { data: result, usingSeed: false };
-  } catch (err) {
-    logSupabaseError("getFatwas", err);
-    return { data: items, usingSeed: true };
-  }
-}
-
-export async function getFatwaById(id: string) {
-  const fallback = findFatwaById(id);
-  if (!isConfigured) return { data: fallback, usingSeed: true };
-
-  try {
-    const byId = await supabase.from("fatwas").select("*").eq("id", id).eq("status", "approved").maybeSingle();
-    if (byId.data) return { data: byId.data as Fatwa, usingSeed: false };
-
-    const byKey = await supabase.from("fatwas").select("*").eq("external_key", id).eq("status", "approved").maybeSingle();
-    return { data: (byKey.data as Fatwa) || fallback, usingSeed: !byKey.data && !!fallback };
-  } catch (err) {
-    logSupabaseError("getFatwaById", err, { id });
-    return { data: fallback, usingSeed: true };
-  }
-}
 
 // ─── Sharia Rulings ──────────────────────────────────────────────────────────
 
@@ -196,11 +136,6 @@ export async function getPlatformUpdates(limit = 50) {
 
 // ─── Related content ─────────────────────────────────────────────────────────
 
-export async function getRelatedFatwas(currentId: string, category?: string, limit = 4) {
-  const { data } = await getFatwas({ category });
-  return data.filter((f) => f.id !== currentId).slice(0, limit);
-}
-
 export async function getRelatedRulings(currentId: string, category?: string, limit = 4) {
   const { getRelatedRulingsEncyclopedia } = await import("./rulings-service");
   return getRelatedRulingsEncyclopedia(currentId, category, undefined, limit) as Promise<ShariaRuling[]>;
@@ -212,7 +147,6 @@ export async function getRelatedCourses(currentId: string, limit = 4) {
 }
 
 export {
-  FATWA_SEED,
   RULINGS_SEED,
   ANNUAL_COURSES_SEED,
   UPDATES_SEED,

@@ -20,7 +20,6 @@ function CatIcon({ name }: { name?: string }) {
 }
 
 const FIQH_HUB_TABS = [
-  { key: "fatawa",  label: "الفتاوى",         href: "/fatwa" },
   { key: "rulings", label: "الأحكام الشرعية", href: "/rulings" },
   { key: "qa",      label: "الأسئلة الشرعية", href: "/qa" },
   { key: "council", label: "المجمع الفقهي",   href: "/fiqh-council" },

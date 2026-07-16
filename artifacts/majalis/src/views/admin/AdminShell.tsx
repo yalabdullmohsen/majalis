@@ -5,7 +5,7 @@ import {
   BookOpen, Bot, Brain, Building2, CalendarClock, CheckCircle2, Dna, FolderTree,
   FlaskConical, Flag, GraduationCap, Globe, HelpCircle, Image, Landmark,
   LayoutDashboard, Library, Lightbulb, MessageCircle, MessageSquare,
-  Network, PlayCircle, Radio, RefreshCw, Route, Scale, School, ScrollText, Search,
+  Network, PlayCircle, Radio, RefreshCw, Route, Scale, School, Search,
   Send, Settings, Settings2, ShieldCheck, Sparkles,
   Target, Unlock, User, Users,
 } from "lucide-react";
@@ -25,7 +25,6 @@ export type AdminSection =
   | "settings"
   | "reports"
   | "fiqh-council"
-  | "fatwa"
   | "rulings"
   | "annual-courses"
   | "updates"
@@ -79,7 +78,6 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
     title: "الشريعة",
     items: [
       { key: "fiqh-council",   label: "المجمع الفقهي",   Icon: Scale },
-      { key: "fatwa",          label: "الفتاوى",           Icon: ScrollText },
       { key: "rulings",        label: "الأحكام الشرعية",  Icon: Landmark },
       { key: "annual-courses", label: "الدورات العلمية",  Icon: GraduationCap },
       { key: "learning-paths", label: "المسارات العلمية", Icon: Route },

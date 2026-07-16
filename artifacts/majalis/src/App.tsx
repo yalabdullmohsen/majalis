@@ -114,8 +114,6 @@ const FiqhCouncilPage = lazy(() => import("@/views/FiqhCouncilPage"));
 const FiqhCouncilItemDetailPage = lazy(() => import("@/views/FiqhCouncilItemDetailPage"));
 const FiqhPage = lazy(() => import("@/views/FiqhPage"));
 const SeerahPage = lazy(() => import("@/views/SeerahPage"));
-const FatwaPage = lazy(() => import("@/views/FatwaPage"));
-const FatwaDetailPage = lazy(() => import("@/views/FatwaDetailPage"));
 const RulingsPage = lazy(() => import("@/views/RulingsPage"));
 const RulingDetailPage = lazy(() => import("@/views/RulingDetailPage"));
 const UpdatesPage = lazy(() => import("@/views/UpdatesPage"));
@@ -530,8 +528,8 @@ function Router() {
       <Route path="/fiqh-council/archive"><SafeLazyRoute component={FiqhCouncilArchivePage} /></Route>
       <Route path="/fiqh-council/:slug"><SafeLazyRoute component={FiqhCouncilItemDetailPage} /></Route>
       <Route path="/fiqh-council"><SafeLazyRoute component={FiqhCouncilPage} /></Route>
-      <Route path="/fatwa/:id"><SafeLazyRoute component={FatwaDetailPage} /></Route>
-      <Route path="/fatwa"><SafeLazyRoute component={FatwaPage} /></Route>
+      <Route path="/fatwa/:id"><Redirect to="/rulings" /></Route>
+      <Route path="/fatwa"><Redirect to="/fiqh" /></Route>
       <Route path="/rulings/:id"><SafeLazyRoute component={RulingDetailPage} /></Route>
       <Route path="/rulings"><SafeLazyRoute component={RulingsPage} /></Route>
       <Route path="/updates/auto/:slug"><SafeLazyRoute component={AutoContentDetailPage} /></Route>

@@ -52,7 +52,8 @@ export function WeekDayFactsSection() {
         editor_notes: form.editor_notes ? sanitizeText(form.editor_notes, 2000) : null,
       };
       if (form.id) {
-        const { id: _id, ...patch } = payload;
+        const patch = { ...payload };
+        delete (patch as { id?: string }).id;
         const { error } = await adminUpdateWeekDayFact(form.id, patch);
         if (error) throw error;
       } else {

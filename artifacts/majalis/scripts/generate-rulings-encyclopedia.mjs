@@ -296,39 +296,6 @@ function fromRulingsSeed() {
   return out.filter(Boolean);
 }
 
-function fromFatwaSeed() {
-  const items = parseSeedArray(path.resolve(ROOT, "src/lib/fatwa-seed.ts"), "FATWA_SEED");
-  const catMap = {
-    الصلاة: { category: "الصلاة", subcategory: "أحكام الصلاة" },
-    الزكاة: { category: "الزكاة", subcategory: "زكاة المال" },
-    "فقه عام": { category: "طلب العلم والدعوة", subcategory: "آداب الفتوى" },
-    المعاملات: { category: "المعاملات", subcategory: "البيع" },
-    الأسرة: { category: "الأسرة", subcategory: "النكاح" },
-    النوازل: { category: "النوازل المعاصرة", subcategory: "التقنية" },
-  };
-
-  return items
-    .map((f) => {
-      const cat = catMap[f.category] || { category: "طلب العلم والدعوة", subcategory: "آداب الفتوى" };
-      return makeRuling({
-        external_key: `fatwa-ruling-${f.external_key || f.id}`,
-        title: f.question,
-        summary: f.summary,
-        body: f.answer,
-        category: cat.category,
-        subcategory: cat.subcategory,
-        references: f.mufti_name ? [{ text: f.mufti_name, source: "فتوى معتمدة" }] : [],
-        keywords: f.keywords,
-        source_origin: "fatwa-seed",
-        linked_fatwa_ids: [f.id],
-        // لا نُمرّر view_count/search_count من البذرة — أرقام تفاعل غير حقيقية
-        // كانت تُبثّ إلى schema.org. العدّادات تبدأ من صفر وتنمو من الاستخدام الفعلي.
-        importance_score: 75,
-      });
-    })
-    .filter(Boolean);
-}
-
 function fromFiqhCouncilSeed() {
   const src = fs.readFileSync(path.resolve(ROOT, "src/lib/fiqh-council-seed.ts"), "utf8");
   const re = /id:\s*"([^"]+)"[\s\S]*?title:\s*"((?:\\.|[^"\\])*)"[\s\S]*?ruling_text:\s*`([\s\S]*?)`[\s\S]*?category:\s*"([^"]+)"[\s\S]*?source_name:\s*"([^"]*)"/g;
@@ -406,7 +373,6 @@ function main() {
   const all = dedupe([
     ...fromRulingsSeed(),
     ...fromQaSeed(),
-    ...fromFatwaSeed(),
     ...fromFiqhCouncilSeed(),
     ...fromFiqhIssuesSeed(),
     ...fromFawaidSeed(),

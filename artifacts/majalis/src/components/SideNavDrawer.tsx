@@ -4,7 +4,7 @@ import { Link, useLocation } from "wouter";
 import {
   Activity, BarChart2, BarChart3, BookMarked, BookOpen, BookText, BookUser,
   Bot, Building2, Calculator, Calendar, CalendarDays, CheckCircle2, ChevronDown, ChevronUp,
-  Clock, Compass, CreditCard, FileText, Gavel, GitBranch, GraduationCap,
+  Clock, Compass, CreditCard, FileText, GitBranch, GraduationCap,
   Heart, HelpCircle, Home, Landmark, Layers, Library, Lightbulb,
   LogIn, Map, MapPin, Mic, Mic2, Moon, Network, Quote, Radio, RefreshCw, Repeat2,
   Rss, Scale, ScrollText, Search, Settings, Shield, Sparkles, Star, Stethoscope,
@@ -172,7 +172,6 @@ const DRAWER_GROUPS: NavGroup[] = [
           { href: "/janaza",        label: "الجنائز",            Icon: ScrollText, desc: "أحكام الجنائز والتعزية" },
           { href: "/mawarith",      label: "المواريث",           Icon: Scale,      desc: "دليل الفرائض وأحكامها" },
           { href: "/mawarith/calculator", label: "حاسبة المواريث", Icon: Calculator, desc: "احسب أنصبة الورثة تلقائيًا" },
-          { href: "/fatwa",         label: "الفتاوى",            Icon: Gavel,      desc: "فتاوى مُحقَّقة ومُصنَّفة" },
           { href: "/rulings",       label: "الأحكام الشرعية",   Icon: Scale,      desc: "موسوعة الأحكام بالمذاهب" },
           { href: "/fiqh-council",  label: "الهيئات الإسلامية", Icon: Users,      desc: "قرارات المجامع وهيئات الإفتاء" },
           { href: "/qa",            label: "الأسئلة والأجوبة",  Icon: HelpCircle, desc: "أسئلة وأجوبة شرعية موثقة" },

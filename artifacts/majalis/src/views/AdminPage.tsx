@@ -16,7 +16,6 @@ import { SettingsSection } from "@/views/admin/SettingsSection";
 import { AggregatorSection } from "@/views/admin/AggregatorSection";
 import { ReportsSection } from "@/views/admin/ReportsSection";
 import { FiqhCouncilSection } from "@/views/admin/FiqhCouncilSection";
-import { FatwaAdminSection } from "@/views/admin/FatwaAdminSection";
 import { RulingsSection } from "@/views/admin/RulingsSection";
 import { AnnualCoursesSection } from "@/views/admin/AnnualCoursesSection";
 import { LearningPathsSection } from "@/views/admin/LearningPathsSection";
@@ -103,7 +102,6 @@ export default function AdminPage() {
       {section === "settings" && <SettingsSection />}
       {section === "reports" && <ReportsSection />}
       {section === "fiqh-council" && <FiqhCouncilSection />}
-      {section === "fatwa" && <FatwaAdminSection />}
       {section === "rulings" && <RulingsSection />}
       {section === "annual-courses" && <AnnualCoursesSection />}
       {section === "learning-paths" && <LearningPathsSection />}

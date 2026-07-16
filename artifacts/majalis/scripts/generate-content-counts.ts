@@ -15,7 +15,6 @@ const appRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 const { SCHOLARS } = await import("../src/lib/scholars-data.js");
 const { SEED_FAWAID } = await import("../src/lib/fawaid-seed.js");
-const { FATWA_SEED } = await import("../src/lib/fatwa-seed.js");
 const { DEMO_QUIZ_QUESTIONS } = await import("../src/lib/quiz-seed.js");
 const { MIND_MAPS } = await import("../src/lib/mind-maps-data.js");
 
@@ -28,7 +27,6 @@ const counts = {
   books: LIBRARY_CATALOG.length,
   scholars: SCHOLARS.length,
   fawaid: SEED_FAWAID.length,
-  fatwas: FATWA_SEED.length,
   quizQuestions: DEMO_QUIZ_QUESTIONS.length,
   mindMaps: MIND_MAPS.length,
 };

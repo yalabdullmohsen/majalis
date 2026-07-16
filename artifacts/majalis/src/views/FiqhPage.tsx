@@ -1,13 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
-import { Banknote, BookOpen, Building2, ClipboardList, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, Library, MapPin, MessageCircle, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Banknote, BookOpen, Building2, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, Library, MapPin, MessageCircle, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import type { LucideIcon } from "lucide-react";
 import { Link, useSearch } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
-import { getFatwas } from "@/lib/platform-content-service";
-import { getLatestFatwas } from "@/lib/fatwa-seed";
 import { getRulingsEncyclopedia } from "@/lib/rulings-service";
 import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
 import { SkeletonCardGrid, Empty } from "@/components/ui-common";
@@ -17,7 +15,7 @@ import { RequestManager } from "@/lib/request-manager";
 import type { ShariaRulingExtended } from "@/lib/rulings-types";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
-type Tab = "fatawa" | "rulings" | "qa" | "council";
+type Tab = "rulings" | "qa" | "council";
 
 const RULINGS_ICON_MAP: Record<string, LucideIcon> = {
   Landmark, Droplets, Banknote, Moon, MapPin, Handshake, Utensils, Shirt, Users,
@@ -29,7 +27,6 @@ function CatIcon({ name }: { name?: string }) {
 }
 
 const TABS: { key: Tab; label: string; Icon: LucideIcon }[] = [
-  { key: "fatawa",  label: "الفتاوى",          Icon: ClipboardList },
   { key: "rulings", label: "الأحكام الشرعية",  Icon: BookOpen },
   { key: "qa",      label: "الأسئلة والأجوبة", Icon: MessageCircle },
   { key: "council", label: "المجمع الفقهي",     Icon: Building2 },
@@ -65,7 +62,6 @@ const FIQH_TOPICS: FiqhTopic[] = [
   { emoji: "📐", title: "القواعد الفقهية",   desc: "القواعد الخمس الكبرى وفروعها",   href: "/fiqh-qawaid",  color: "#176B57" },
   { emoji: "📚", title: "المذاهب الأربعة",   desc: "الحنفي والمالكي والشافعي والحنبلي", href: "/madhahib",  color: "#7C3AED" },
   { emoji: "❓", title: "الأسئلة والأجوبة",  desc: "أسئلة شرعية موثقة",              href: "/qa",           color: "#0F766E" },
-  { emoji: "📜", title: "الفتاوى",           desc: "فتاوى مُحقَّقة ومُصنَّفة",       href: "/fatwa",        color: "#176B57" },
   { emoji: "🏛️", title: "المجمع الفقهي",    desc: "قرارات المجامع الفقهية",          href: "/fiqh-council", color: "#0F5132" },
   { emoji: "📋", title: "الأحكام الشرعية",   desc: "موسوعة الأحكام بالمذاهب",        href: "/rulings",      color: "#065F46" },
   { emoji: "🔬", title: "الباحث الشرعي",    desc: "بحث وتوثيق بالمصادر",             href: "/scholarly-research", color: "#374151" },
@@ -87,13 +83,11 @@ const FIQH_TOPICS: FiqhTopic[] = [
 export default function FiqhPage() {
   const search = useSearch();
   const params = new URLSearchParams(search);
-  const initialTab = (params.get("tab") as Tab) || "fatawa";
+  const initialTab = (params.get("tab") as Tab) || "rulings";
 
   const [activeTab, setActiveTab] = useState<Tab>(initialTab);
-  const [fatwas, setFatwas]       = useState<any[]>([]);
   const [rulings, setRulings]     = useState<ShariaRulingExtended[]>([]);
   const [qaItems, setQaItems]     = useState<any[]>([]);
-  const [loadingF, setLoadingF]   = useState(false);
   const [loadingR, setLoadingR]   = useState(false);
   const [loadingQ, setLoadingQ]   = useState(false);
 
@@ -114,21 +108,14 @@ export default function FiqhPage() {
       : undefined;
     applyPageSeo({
       path: "/fiqh",
-      title: "الفقه الإسلامي، فتاوى وأحكام وأسئلة | المجلس العلمي",
-      description: "مرجع شامل في الفقه الإسلامي: فتاوى موثقة، أحكام شرعية، أسئلة وأجوبة، وقرارات المجمع الفقهي.",
-      keywords: ["فقه إسلامي", "فتاوى", "أحكام شرعية", "الفقه الحنفي", "أسئلة شرعية"],
+      title: "الفقه الإسلامي، أحكام وأسئلة | المجلس العلمي",
+      description: "مرجع شامل في الفقه الإسلامي: أحكام شرعية موثقة، أسئلة وأجوبة، وقرارات المجمع الفقهي.",
+      keywords: ["فقه إسلامي", "أحكام شرعية", "الفقه الحنفي", "أسئلة شرعية", "المجمع الفقهي"],
       ...(faqSchema ? { jsonLd: [faqSchema] } : {}),
     });
   }, []);
 
   useEffect(() => {
-    if (activeTab === "fatawa" && fatwas.length === 0) {
-      setLoadingF(true);
-      getFatwas({ category: "الكل", format: "الكل", search: "" })
-        .then(({ data }) => setFatwas(data.slice(0, 12)))
-        .catch(() => setFatwas(getLatestFatwas(12)))
-        .finally(() => setLoadingF(false));
-    }
     if (activeTab === "rulings" && rulings.length === 0) {
       setLoadingR(true);
       getRulingsEncyclopedia({ page: 1, limit: 12, category: "الكل" })
@@ -146,8 +133,6 @@ export default function FiqhPage() {
     }
   }, [activeTab]);
 
-  const latestFatwas = useMemo(() => getLatestFatwas(6), []);
-
   return (
     <div className="fqp-root page-shell" dir="rtl">
       {/* مسار التنقل */}
@@ -162,7 +147,7 @@ export default function FiqhPage() {
         <p className="fqh-hub-hero__eyebrow">الفقه الإسلامي الشامل</p>
         <h1 className="fqh-hub-hero__title">الفقه والأحكام</h1>
         <p className="fqh-hub-hero__sub">
-          مرجع موحّد للفتاوى والعبادات والأحكام وقرارات المجامع الفقهية، كل شيء من مصادر موثقة ومعتمدة
+          مرجع موحّد للعبادات والأحكام وقرارات المجامع الفقهية، كل شيء من مصادر موثقة ومعتمدة
         </p>
       </header>
 
@@ -212,40 +197,6 @@ export default function FiqhPage() {
       </div>
 
       <div className="fqp-tab-content">
-
-        {/* تبويب الفتاوى */}
-        {activeTab === "fatawa" && (
-          <div role="tabpanel" id="fqp-panel-fatawa" aria-labelledby="fqp-tab-fatawa">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="fqp-section-title"><ScrollText size={20} />الفتاوى الشرعية</h2>
-              <Link href="/fatwa"><span className="fqp-see-all">عرض الكل ←</span></Link>
-            </div>
-
-            {loadingF ? (
-              <SkeletonCardGrid count={6} />
-            ) : fatwas.length === 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {latestFatwas.map((f, i) => (
-                  <FatwaCard key={i} item={f} />
-                ))}
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {fatwas.map((f: any, i: number) => (
-                  <FatwaCard key={f.id ?? i} item={f} />
-                ))}
-              </div>
-            )}
-
-            <div className="mt-8 text-center">
-              <Link href="/fatwa">
-                <span className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer fqp-cta-btn">
-                  استعرض جميع الفتاوى
-                </span>
-              </Link>
-            </div>
-          </div>
-        )}
 
         {/* تبويب الأحكام الشرعية */}
         {activeTab === "rulings" && (
@@ -388,20 +339,5 @@ export default function FiqhPage() {
 
       </div>
     </div>
-  );
-}
-
-function FatwaCard({ item }: { item: any }) {
-  return (
-    <Link href={item.id ? `/fatwa/${item.id}` : "/fatwa"}>
-      <div className="fqp-card h-full">
-        <h3 className="fqp-card__title fqp-card__title--mb2 line-clamp-2 leading-snug">
-          {item.title || item.question || "فتوى شرعية"}
-        </h3>
-        {(item.category || item.subject) && (
-          <span className="fqp-cat-badge">{item.category || item.subject}</span>
-        )}
-      </div>
-    </Link>
   );
 }

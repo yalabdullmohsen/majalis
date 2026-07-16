@@ -1,6 +1,5 @@
 import type { RulingRelationLink, ShariaRulingExtended } from "./rulings-types";
 import { SEED_QA } from "./qa-seed";
-import { FATWA_SEED } from "./fatwa-seed";
 import { FIQH_COUNCIL_SEED } from "./fiqh-council-service";
 
 export function buildRulingRelations(ruling: ShariaRulingExtended): RulingRelationLink[] {
@@ -15,19 +14,6 @@ export function buildRulingRelations(ruling: ShariaRulingExtended): RulingRelati
         title: qa.question,
         href: `/qa#${qa.id}`,
         meta: qa.qa_categories?.name,
-      });
-    }
-  }
-
-  for (const fatwaId of ruling.linked_fatwa_ids ?? []) {
-    const f = FATWA_SEED.find((x) => x.id === fatwaId);
-    if (f) {
-      links.push({
-        type: "fatwa",
-        id: f.id,
-        title: f.question,
-        href: `/fatwa/${f.id}`,
-        meta: f.category,
       });
     }
   }

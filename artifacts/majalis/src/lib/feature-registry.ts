@@ -46,7 +46,6 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "fiqh",         label: "الفقه الإسلامي",   path: "/fiqh",         group: "فقه",           status: "active",       inSideNav: false, inBottomNav: false },
 
   // ── الأحكام والفقه ───────────────────────────────────────────
-  { id: "fatwa",        label: "الفتاوى",           path: "/fatwa",        group: "فقه",           status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "rulings",      label: "الأحكام الشرعية",  path: "/rulings",      group: "فقه",           status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "fiqh-council", label: "المجمع الفقهي",    path: "/fiqh-council", group: "فقه",           status: "active",       inSideNav: true,  inBottomNav: false },
 
