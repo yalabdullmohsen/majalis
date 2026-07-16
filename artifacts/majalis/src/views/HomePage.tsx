@@ -34,6 +34,15 @@ import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import { getHijriDateString } from "@/lib/hijri-utils";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerTimesPayload } from "@/lib/prayer-times";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
+import { HomeCustomizeSheet } from "@/components/home/HomeCustomizeSheet";
+import {
+  HOME_WIDGET_DEFS,
+  getLocalHomepagePrefs,
+  saveLocalHomepagePrefs,
+  fetchRemoteHomepagePrefs,
+  visibleWidgetOrder,
+  type HomepagePrefs,
+} from "@/lib/homepage-layout";
 import {
   BookMarked, BookOpen, Bot, CalendarDays, Car, Check, Clock,
   Compass, Droplets, FlaskConical, GraduationCap, Heart, HelpCircle, Landmark, Layers,
@@ -194,6 +203,30 @@ function SafeHomeSection({ name, children }: { name: string; children: React.Rea
   return <SectionErrorBoundary name={name}>{children}</SectionErrorBoundary>;
 }
 
+/** خريطة مُعرِّف القسم القابل للتخصيص ← عرضه. تُستهلَك عبر homepage-layout.ts. */
+const WIDGET_RENDERERS: Record<string, () => React.ReactNode> = {
+  "lessons": () => (<><HomeUpcomingLessons /><HomeUpcomingCourses /></>),
+  "prayer": () => <HomeCompactPrayer />,
+  "continue": () => <HomeContinueWidget />,
+  "daily-progress": () => <HomeDailyProgress />,
+  "week-streak": () => <HomeWeekStreak />,
+  "asma": () => <HomeAsmaCard />,
+  "hadith": () => <HomeNawawiHadith />,
+  "sunnah-time": () => <HomeSunnahByTime />,
+  "explore": () => <ExplorePlatformSection />,
+  "learning-seasons": () => <HomeLearningSeasonsWidget />,
+  "occasions": () => <HomeIslamicOccasions />,
+  "latest-updates": () => <HomeLatestUpdates />,
+  "library": () => <HomeFeaturedLibrary />,
+  "quiz": () => <HomeQuizCard />,
+  "daily-corner": () => <HomeDailyCorner />,
+  "prayer-ranks": () => <HomePrayerRanks />,
+  "interesting-topics": () => <HomeInterestingTopics />,
+  "mind-map": () => <HomeMindMapSection />,
+};
+
+const WIDGET_LABEL: Record<string, string> = Object.fromEntries(HOME_WIDGET_DEFS.map((w) => [w.id, w.label]));
+
 const ARABIC_DIGITS = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
 function toArabicDigits(n: number): string {
   return String(n).replace(/[0-9]/g, (d) => ARABIC_DIGITS[Number(d)]);
@@ -274,11 +307,125 @@ function StartHereSection() {
   );
 }
 
+function ExplorePlatformSection() {
+  return (
+    <section aria-labelledby="features-heading" style={{ marginTop: "2rem" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.1rem" }}>
+        {/* أيقونة هندسية للعنوان */}
+        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+          <polygon points="11,1 13.5,8 21,8 15,13 17.5,20 11,16 4.5,20 7,13 1,8 8.5,8" fill="none" stroke="#176B57" strokeWidth="1.2"/>
+          <circle cx="11" cy="11" r="3.5" fill="none" stroke="#176B57" strokeWidth="0.8"/>
+        </svg>
+        <h2 id="features-heading" style={{ fontSize: "1.1rem", fontWeight: 800, color: "#1a1a1a", margin: 0 }}>
+          استكشف المنصة
+        </h2>
+      </div>
+
+      {/* بطاقات بارزة */}
+      <div style={{
+        display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "0.8rem",
+        marginBottom: "2.25rem",
+      }}>
+        {FEATURED.map(({ href, Icon, title, desc, cta }) => (
+          <Link key={href} href={href} aria-label={title} style={{
+            display: "flex", flexDirection: "column", gap: "0.65rem",
+            padding: "1.2rem 1.1rem", borderRadius: "1.1rem", textDecoration: "none",
+            background: "linear-gradient(145deg, #112a1e 0%, #1a3d2b 40%, #176B57 80%, #176B57 100%)",
+            color: "#fff",
+            boxShadow: "0 4px 16px rgba(15,50,30,0.28), inset 0 1px 0 rgba(255,255,255,0.1)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            position: "relative", overflow: "hidden",
+          }}>
+            {/* زخرفة هندسية في الخلفية */}
+            <svg aria-hidden="true" style={{
+              position: "absolute", top: "-10px", left: "-10px", opacity: 0.07, pointerEvents: "none",
+            }} width="80" height="80" viewBox="0 0 80 80">
+              <polygon points="40,5 55,25 75,20 65,40 75,60 55,55 40,75 25,55 5,60 15,40 5,20 25,25" fill="none" stroke="white" strokeWidth="1"/>
+              <circle cx="40" cy="40" r="15" fill="none" stroke="white" strokeWidth="0.6"/>
+            </svg>
+            <Icon size={22} strokeWidth={1.5} style={{ opacity: 0.92, position: "relative" }} />
+            <strong style={{ fontSize: "0.97rem", fontWeight: 800, position: "relative", lineHeight: 1.3 }}>{title}</strong>
+            <p style={{ fontSize: "0.79rem", opacity: 0.75, lineHeight: 1.6, margin: 0, position: "relative" }}>{desc}</p>
+            <span style={{
+              fontSize: "0.76rem", fontWeight: 700, marginTop: "auto",
+              display: "inline-flex", alignItems: "center", gap: "0.3rem",
+              color: "rgba(210,240,225,0.95)", position: "relative",
+              borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "0.5rem",
+            }}>{cta} ←</span>
+          </Link>
+        ))}
+      </div>
+
+      {/* أقسام بالتصنيف */}
+      {FEATURE_CATS.map(cat => (
+        <div key={cat.id} style={{ marginBottom: "2rem" }}>
+          <div style={{
+            display: "flex", alignItems: "center", gap: "0.6rem",
+            marginBottom: "0.85rem", paddingBottom: "0.7rem",
+            borderBottom: "1.5px solid #ddeee5",
+          }}>
+            {/* زخرفة هندسية بدل المربع */}
+            <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" style={{ flexShrink: 0 }}>
+              <polygon points="14,2 20,9 27,9 22,16 25,24 14,20 3,24 6,16 1,9 8,9" fill="#176B57"/>
+              <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="#176B57" opacity="0.6"/>
+              <circle cx="14" cy="14" r="3" fill="#FAF8F2"/>
+            </svg>
+            <h3 style={{ fontSize: "0.98rem", fontWeight: 800, color: "#176B57", margin: 0 }}>{cat.label}</h3>
+            <span style={{
+              marginRight: "auto", fontSize: "0.68rem", color: "#176B57", fontWeight: 700,
+              background: "#e8f4ed", padding: "0.15rem 0.6rem", borderRadius: "999px",
+              border: "1px solid #c8e6d5",
+            }}>{cat.items.length} قسم</span>
+          </div>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(165px, 1fr))",
+            gap: "0.5rem",
+          }}>
+            {cat.items.map(({ href, Icon: ItemIcon, title, desc }) => (
+              <Link key={href} href={href} style={{
+                display: "flex", alignItems: "flex-start", gap: "0.6rem",
+                padding: "0.75rem 0.8rem", borderRadius: "0.8rem",
+                textDecoration: "none", background: "#fafcfb",
+                border: "1px solid #e2ede8",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+              }}>
+                <span style={{
+                  background: "linear-gradient(135deg,#176B57,#176B57)", color: "#FAF8F2",
+                  padding: "0.38rem", borderRadius: "0.4rem",
+                  display: "flex", flexShrink: 0, marginTop: "0.05rem",
+                  boxShadow: "0 1px 3px rgba(15,50,30,0.2)",
+                }}>
+                  <ItemIcon size={14} strokeWidth={2} />
+                </span>
+                <div style={{ minWidth: 0 }}>
+                  <strong style={{ display: "block", fontSize: "0.81rem", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.35 }}>{title}</strong>
+                  <span style={{ fontSize: "0.7rem", color: "#666", lineHeight: 1.45, display: "block", marginTop: "0.1rem" }}>{desc}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      ))}
+    </section>
+  );
+}
+
 export default function HomePage() {
   const [term, setTerm] = useState("");
   const [, navigate] = useLocation();
-  const { isAdmin } = useAuth();
+  const { isAdmin, user } = useAuth();
   const dailyCtx = useDailyContext();
+
+  // تخصيص أقسام الصفحة الرئيسية: محلي فورًا، مع مزامنة اختيارية من Supabase عند تسجيل الدخول
+  const [homePrefs, setHomePrefs] = useState<HomepagePrefs>(() => getLocalHomepagePrefs());
+  const [customizeOpen, setCustomizeOpen] = useState(false);
+  useEffect(() => {
+    if (!user?.id) return;
+    fetchRemoteHomepagePrefs(user.id).then((remote) => {
+      if (remote) { setHomePrefs(remote); saveLocalHomepagePrefs(remote); }
+    });
+  }, [user?.id]);
 
   // شريط الترويسة المُصغَّر: الصلاة القادمة والوقت المتبقي (بديل الشعار الكبير)
   const [heroPrayers, setHeroPrayers] = useState<PrayerTimesPayload | null>(null);
@@ -692,201 +839,32 @@ export default function HomePage() {
       {/* ══ ابدأ من هنا ══ */}
       <StartHereSection />
 
+      <div style={{ maxWidth: 760, margin: "0.5rem auto 0", padding: "0 1rem", textAlign: "center" }}>
+        <button type="button" className="hpv4-customize-trigger" onClick={() => setCustomizeOpen(true)}>
+          <Wrench size={13} strokeWidth={2} aria-hidden="true" /> تخصيص الصفحة الرئيسية
+        </button>
+      </div>
+
       {/* ══════════════════ Main Content ══════════════════ */}
       <main className="home-container home-main home-main--v3">
 
-        {/* الدروس والدورات */}
-        <SafeHomeSection name="الدروس والدورات">
-          <HomeUpcomingLessons />
-          <HomeUpcomingCourses />
-        </SafeHomeSection>
-
-        {/* مواقيت الصلاة */}
-        <SafeHomeSection name="مواقيت الصلاة">
-          <HomeCompactPrayer />
-        </SafeHomeSection>
-
-        {/* استمر من حيث توقفت */}
-        <SafeHomeSection name="استمر من حيث توقفت">
-          <HomeContinueWidget />
-        </SafeHomeSection>
-
-        {/* التقدم اليومي */}
-        <SafeHomeSection name="التقدم اليومي">
-          <HomeDailyProgress />
-        </SafeHomeSection>
-
-        {/* سجل الأسبوع */}
-        <SafeHomeSection name="سجل الأسبوع">
-          <HomeWeekStreak />
-        </SafeHomeSection>
-
-        {/* اسم الله اليومي */}
-        <SafeHomeSection name="اسم الله اليومي">
-          <HomeAsmaCard />
-        </SafeHomeSection>
-
-        {/* حديث اليوم من الأربعين النووية */}
-        <SafeHomeSection name="حديث اليوم">
-          <HomeNawawiHadith />
-        </SafeHomeSection>
-
-        {/* سنن الوقت */}
-        <SafeHomeSection name="سنن الوقت">
-          <HomeSunnahByTime />
-        </SafeHomeSection>
-
-        {/* ══ استكشف المنصة ══ */}
-        <section aria-labelledby="features-heading" style={{ marginTop: "2rem" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.1rem" }}>
-            {/* أيقونة هندسية للعنوان */}
-            <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
-              <polygon points="11,1 13.5,8 21,8 15,13 17.5,20 11,16 4.5,20 7,13 1,8 8.5,8" fill="none" stroke="#176B57" strokeWidth="1.2"/>
-              <circle cx="11" cy="11" r="3.5" fill="none" stroke="#176B57" strokeWidth="0.8"/>
-            </svg>
-            <h2 id="features-heading" style={{ fontSize: "1.1rem", fontWeight: 800, color: "#1a1a1a", margin: 0 }}>
-              استكشف المنصة
-            </h2>
-          </div>
-
-          {/* بطاقات بارزة */}
-          <div style={{
-            display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "0.8rem",
-            marginBottom: "2.25rem",
-          }}>
-            {FEATURED.map(({ href, Icon, title, desc, cta }) => (
-              <Link key={href} href={href} aria-label={title} style={{
-                display: "flex", flexDirection: "column", gap: "0.65rem",
-                padding: "1.2rem 1.1rem", borderRadius: "1.1rem", textDecoration: "none",
-                background: "linear-gradient(145deg, #112a1e 0%, #1a3d2b 40%, #176B57 80%, #176B57 100%)",
-                color: "#fff",
-                boxShadow: "0 4px 16px rgba(15,50,30,0.28), inset 0 1px 0 rgba(255,255,255,0.1)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                position: "relative", overflow: "hidden",
-              }}>
-                {/* زخرفة هندسية في الخلفية */}
-                <svg aria-hidden="true" style={{
-                  position: "absolute", top: "-10px", left: "-10px", opacity: 0.07, pointerEvents: "none",
-                }} width="80" height="80" viewBox="0 0 80 80">
-                  <polygon points="40,5 55,25 75,20 65,40 75,60 55,55 40,75 25,55 5,60 15,40 5,20 25,25" fill="none" stroke="white" strokeWidth="1"/>
-                  <circle cx="40" cy="40" r="15" fill="none" stroke="white" strokeWidth="0.6"/>
-                </svg>
-                <Icon size={22} strokeWidth={1.5} style={{ opacity: 0.92, position: "relative" }} />
-                <strong style={{ fontSize: "0.97rem", fontWeight: 800, position: "relative", lineHeight: 1.3 }}>{title}</strong>
-                <p style={{ fontSize: "0.79rem", opacity: 0.75, lineHeight: 1.6, margin: 0, position: "relative" }}>{desc}</p>
-                <span style={{
-                  fontSize: "0.76rem", fontWeight: 700, marginTop: "auto",
-                  display: "inline-flex", alignItems: "center", gap: "0.3rem",
-                  color: "rgba(210,240,225,0.95)", position: "relative",
-                  borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "0.5rem",
-                }}>{cta} ←</span>
-              </Link>
-            ))}
-          </div>
-
-          {/* أقسام بالتصنيف */}
-          {FEATURE_CATS.map(cat => (
-            <div key={cat.id} style={{ marginBottom: "2rem" }}>
-              <div style={{
-                display: "flex", alignItems: "center", gap: "0.6rem",
-                marginBottom: "0.85rem", paddingBottom: "0.7rem",
-                borderBottom: "1.5px solid #ddeee5",
-              }}>
-                {/* زخرفة هندسية بدل المربع */}
-                <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" style={{ flexShrink: 0 }}>
-                  <polygon points="14,2 20,9 27,9 22,16 25,24 14,20 3,24 6,16 1,9 8,9" fill="#176B57"/>
-                  <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="#176B57" opacity="0.6"/>
-                  <circle cx="14" cy="14" r="3" fill="#FAF8F2"/>
-                </svg>
-                <h3 style={{ fontSize: "0.98rem", fontWeight: 800, color: "#176B57", margin: 0 }}>{cat.label}</h3>
-                <span style={{
-                  marginRight: "auto", fontSize: "0.68rem", color: "#176B57", fontWeight: 700,
-                  background: "#e8f4ed", padding: "0.15rem 0.6rem", borderRadius: "999px",
-                  border: "1px solid #c8e6d5",
-                }}>{cat.items.length} قسم</span>
-              </div>
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(165px, 1fr))",
-                gap: "0.5rem",
-              }}>
-                {cat.items.map(({ href, Icon: ItemIcon, title, desc }) => (
-                  <Link key={href} href={href} style={{
-                    display: "flex", alignItems: "flex-start", gap: "0.6rem",
-                    padding: "0.75rem 0.8rem", borderRadius: "0.8rem",
-                    textDecoration: "none", background: "#fafcfb",
-                    border: "1px solid #e2ede8",
-                    boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
-                  }}>
-                    <span style={{
-                      background: "linear-gradient(135deg,#176B57,#176B57)", color: "#FAF8F2",
-                      padding: "0.38rem", borderRadius: "0.4rem",
-                      display: "flex", flexShrink: 0, marginTop: "0.05rem",
-                      boxShadow: "0 1px 3px rgba(15,50,30,0.2)",
-                    }}>
-                      <ItemIcon size={14} strokeWidth={2} />
-                    </span>
-                    <div style={{ minWidth: 0 }}>
-                      <strong style={{ display: "block", fontSize: "0.81rem", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.35 }}>{title}</strong>
-                      <span style={{ fontSize: "0.7rem", color: "#666", lineHeight: 1.45, display: "block", marginTop: "0.1rem" }}>{desc}</span>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ))}
-        </section>
-
-        {/* مواسم التعلم */}
-        <SafeHomeSection name="مواسم التعلم">
-          <HomeLearningSeasonsWidget />
-        </SafeHomeSection>
-
-        {/* المناسبات الإسلامية */}
-        <SafeHomeSection name="المناسبات الإسلامية">
-          <HomeIslamicOccasions />
-        </SafeHomeSection>
-
-        {/* آخر التحديثات */}
-        <SafeHomeSection name="آخر التحديثات">
-          <HomeLatestUpdates />
-        </SafeHomeSection>
-
-        {/* المكتبة العلمية */}
-        <SafeHomeSection name="المكتبة العلمية">
-          <HomeFeaturedLibrary />
-        </SafeHomeSection>
-
-        {/* لعبة المسابقة */}
-        <SafeHomeSection name="المسابقة">
-          <HomeQuizCard />
-        </SafeHomeSection>
-
-        {/* الركن اليومي */}
-        <SafeHomeSection name="الركن اليومي">
-          <HomeDailyCorner />
-        </SafeHomeSection>
-
-        {/* مراتب الناس في الصلاة */}
-        <SafeHomeSection name="مراتب الصلاة">
-          <HomePrayerRanks />
-        </SafeHomeSection>
-
-        {/* مواضيع مشوقة */}
-        <SafeHomeSection name="مواضيع مشوقة">
-          <HomeInterestingTopics />
-        </SafeHomeSection>
-
-        {/* الخرائط الذهنية */}
-        <SafeHomeSection name="الخرائط الذهنية">
-          <HomeMindMapSection />
-        </SafeHomeSection>
+        {visibleWidgetOrder(homePrefs).map((id) => (
+          <SafeHomeSection key={id} name={WIDGET_LABEL[id] ?? id}>
+            {WIDGET_RENDERERS[id]?.()}
+          </SafeHomeSection>
+        ))}
 
         <SafeHomeSection name="عن المجلس العلمي">
           <HomeAboutSection />
         </SafeHomeSection>
 
       </main>
+
+      <HomeCustomizeSheet
+        open={customizeOpen}
+        onClose={() => setCustomizeOpen(false)}
+        onChange={setHomePrefs}
+      />
     </div>
   );
 }
