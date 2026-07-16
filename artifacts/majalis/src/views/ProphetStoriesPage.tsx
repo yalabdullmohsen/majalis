@@ -333,7 +333,7 @@ function ProphetDetailView({
         </div>
         <div className="prophet-detail-lux__hero-content">
           <div className="prophet-detail-lux__hero-star">
-            <IslamicStar size={60} color={color} />
+            <IslamicStar size={60} color="var(--prophet-color-on-dark)" />
           </div>
           <span className="prophet-detail-lux__num-badge">النبي {p.id} من {PROPHETS.length}</span>
           {isUlulAzm && <span className="prophet-detail-lux__azm-badge">أولو العزم</span>}
@@ -343,7 +343,7 @@ function ProphetDetailView({
             <div className="prophet-detail-lux__quran-title">﴾ {p.quranTitle} ﴿</div>
           )}
           <p className="prophet-detail-lux__hero-title">{p.title}</p>
-          <GeometricBorder color={color} size={20} />
+          <GeometricBorder color="var(--prophet-color-on-dark)" size={20} />
         </div>
       </div>
 
@@ -385,7 +385,7 @@ function ProphetDetailView({
 
         <section className="prophet-section-lux">
           <div className="prophet-section-lux__header">
-            <IslamicStar size={22} color={color} />
+            <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
             <h2 className="prophet-section-lux__title">نبذة تعريفية</h2>
           </div>
           <p className="prophet-section-lux__text">{p.briefBio}</p>
@@ -394,7 +394,7 @@ function ProphetDetailView({
         {sup?.miracle && (
           <section className="prophet-section-lux">
             <div className="prophet-section-lux__header">
-              <IslamicStar size={22} color={color} />
+              <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
               <h2 className="prophet-section-lux__title">المعجزة الكبرى</h2>
             </div>
             <div className="prophet-miracle-box">
@@ -406,7 +406,7 @@ function ProphetDetailView({
 
         <section className="prophet-section-lux">
           <div className="prophet-section-lux__header">
-            <IslamicStar size={22} color={color} />
+            <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
             <h2 className="prophet-section-lux__title">أبرز السور القرآنية</h2>
           </div>
           <div className="prophet-chips-lux">
@@ -418,7 +418,7 @@ function ProphetDetailView({
 
         <section className="prophet-section-lux">
           <div className="prophet-section-lux__header">
-            <IslamicStar size={22} color={color} />
+            <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
             <h2 className="prophet-section-lux__title">أبرز الصفات والمعجزات</h2>
           </div>
           <ul className="prophet-attrs-list">
@@ -433,7 +433,7 @@ function ProphetDetailView({
 
         <section className="prophet-section-lux">
           <div className="prophet-section-lux__header">
-            <IslamicStar size={22} color={color} />
+            <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
             <h2 className="prophet-section-lux__title">الدروس والعبر</h2>
           </div>
           <div className="prophet-lessons-grid">
@@ -449,7 +449,7 @@ function ProphetDetailView({
         {!dbLoading && dbStory?.content && (
           <section className="prophet-section-lux">
             <div className="prophet-section-lux__header">
-              <IslamicStar size={22} color={color} />
+              <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
               <h2 className="prophet-section-lux__title">القصة الكاملة</h2>
             </div>
             <div className="prophet-db-story">
@@ -463,7 +463,7 @@ function ProphetDetailView({
         {!dbLoading && dbStory?.citations && dbStory.citations.length > 0 && (
           <section className="prophet-section-lux">
             <div className="prophet-section-lux__header">
-              <IslamicStar size={22} color={color} />
+              <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
               <h2 className="prophet-section-lux__title">الاستشهادات القرآنية</h2>
             </div>
             <div className="prophet-citations">

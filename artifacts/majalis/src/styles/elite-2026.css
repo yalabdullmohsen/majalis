@@ -25960,7 +25960,7 @@ img[loading="lazy"]:not([src=""]) {
   background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
   border-radius: 0.8rem; padding: 0.9rem 1rem;
 }
-.prophet-miracle-box__icon { font-size: 1rem; color: var(--prophet-color, #BEC7C3); flex-shrink: 0; margin-top: 0.1rem; }
+.prophet-miracle-box__icon { font-size: 1rem; color: var(--prophet-color-on-dark, #BEC7C3); flex-shrink: 0; margin-top: 0.1rem; }
 .prophet-miracle-box__text { font-size: 0.9rem; color: #E1E5E3; line-height: 1.65; margin: 0; }
 .prophet-fact-card--wide { grid-column: 1 / -1; text-align: start; }
 
@@ -25995,6 +25995,11 @@ img[loading="lazy"]:not([src=""]) {
   background: linear-gradient(180deg, var(--msk-canvas-deep, #0A1628) 0%, color-mix(in srgb, var(--msk-canvas-deep, #0A1628) 60%, #0D1F3C) 50%, var(--msk-canvas-deep, #0A1628) 100%);
   color: #F5F5F0;
   direction: rtl;
+  /* --prophet-color (PROPHET_HUE في ProphetStoriesPage.tsx) مصمَّم كلون تمييزي على
+     خلفيات فاتحة (بطاقات القائمة البيضاء) — بعض قيمه داكنة جداً (مثل #123F36) ولا
+     تصلح نصاً على الخلفية الكحلية لهذه الصفحة. --prophet-color-on-dark نسخة مفتَّحة
+     بمزج نحو الأبيض تحافظ على ≥4.5:1 حتى مع أغمق قيم PROPHET_HUE. */
+  --prophet-color-on-dark: color-mix(in srgb, var(--prophet-color, #BEC7C3) 55%, white);
 }
 .prophet-detail-lux__topbar {
   display: flex;
@@ -26090,7 +26095,7 @@ img[loading="lazy"]:not([src=""]) {
   font-weight: 600;
 }
 .prophet-detail-lux__hero-title {
-  color: var(--prophet-color, #BEC7C3);
+  color: var(--prophet-color-on-dark, #BEC7C3);
   font-size: 1.1rem;
   font-weight: 600;
   margin: 0;
@@ -26229,7 +26234,7 @@ img[loading="lazy"]:not([src=""]) {
   font-family: var(--font-body);
   flex-shrink: 0;
   line-height: 1;
-  color: var(--prophet-color, #BEC7C3);
+  color: var(--prophet-color-on-dark, #BEC7C3);
 }
 .prophet-lesson-card__text { color: #d0d0c8; font-size: 0.9rem; line-height: 1.7; margin: 0; }
 
