@@ -19,6 +19,7 @@ import { FiqhCouncilSection } from "@/views/admin/FiqhCouncilSection";
 import { FatwaAdminSection } from "@/views/admin/FatwaAdminSection";
 import { RulingsSection } from "@/views/admin/RulingsSection";
 import { AnnualCoursesSection } from "@/views/admin/AnnualCoursesSection";
+import { LearningPathsSection } from "@/views/admin/LearningPathsSection";
 import { UpdatesSection } from "@/views/admin/UpdatesSection";
 import { KnowledgeEngineSection } from "@/views/admin/KnowledgeEngineSection";
 import { ScholarlyVerificationSection } from "@/views/admin/ScholarlyVerificationSection";
@@ -105,6 +106,7 @@ export default function AdminPage() {
       {section === "fatwa" && <FatwaAdminSection />}
       {section === "rulings" && <RulingsSection />}
       {section === "annual-courses" && <AnnualCoursesSection />}
+      {section === "learning-paths" && <LearningPathsSection />}
       {section === "updates" && <UpdatesSection />}
     </AdminShell>
   );

@@ -5,7 +5,7 @@ import {
   BookOpen, Bot, Brain, Building2, CheckCircle2, Dna,
   FlaskConical, Flag, GraduationCap, Globe, HelpCircle, Image, Landmark,
   LayoutDashboard, Library, Lightbulb, MessageCircle, MessageSquare,
-  Network, PlayCircle, Radio, RefreshCw, Scale, School, ScrollText, Search,
+  Network, PlayCircle, Radio, RefreshCw, Route, Scale, School, ScrollText, Search,
   Send, Settings, Settings2, ShieldCheck, Smartphone, Sparkles,
   Target, Unlock, User, Users,
 } from "lucide-react";
@@ -49,6 +49,7 @@ export type AdminSection =
   | "prophet-stories"
   | "islamic-stories"
   | "image-import"
+  | "learning-paths"
 ;
 
 type NavItem = { key: AdminSection; label: string; Icon: LucideIcon };
@@ -79,6 +80,7 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
       { key: "fatwa",          label: "الفتاوى",           Icon: ScrollText },
       { key: "rulings",        label: "الأحكام الشرعية",  Icon: Landmark },
       { key: "annual-courses", label: "الدورات العلمية",  Icon: GraduationCap },
+      { key: "learning-paths", label: "المسارات العلمية", Icon: Route },
     ],
   },
   {
