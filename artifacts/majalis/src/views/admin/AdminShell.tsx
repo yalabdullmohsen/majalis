@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState, ty
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import {
-  BookOpen, Bot, Brain, Building2, CheckCircle2, Dna, FolderTree,
+  BookOpen, Bot, Brain, Building2, CalendarClock, CheckCircle2, Dna, FolderTree,
   FlaskConical, Flag, GraduationCap, Globe, HelpCircle, Image, Landmark,
   LayoutDashboard, Library, Lightbulb, MessageCircle, MessageSquare,
   Network, PlayCircle, Radio, RefreshCw, Route, Scale, School, ScrollText, Search,
@@ -50,6 +50,7 @@ export type AdminSection =
   | "image-import"
   | "learning-paths"
   | "categories"
+  | "week-day-facts"
 ;
 
 type NavItem = { key: AdminSection; label: string; Icon: LucideIcon };
@@ -82,6 +83,7 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
       { key: "rulings",        label: "الأحكام الشرعية",  Icon: Landmark },
       { key: "annual-courses", label: "الدورات العلمية",  Icon: GraduationCap },
       { key: "learning-paths", label: "المسارات العلمية", Icon: Route },
+      { key: "week-day-facts", label: "أيام الأسبوع",     Icon: CalendarClock },
     ],
   },
   {
