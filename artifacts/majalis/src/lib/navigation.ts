@@ -102,14 +102,18 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/methodology",   label: "منهجية التوثيق" },
 ];
 
-/** القائمة العلوية (top navbar) — 6 أقسام رئيسية */
+/**
+ * القائمة العلوية (top navbar) — 6 أقسام رئيسية.
+ * البحث والحساب ليسا هنا لأن لهما عنصري واجهة دائمين مستقلّين في الهيدر
+ * (زر البحث الشامل Ctrl+K، ورابط الحساب/تسجيل الدخول) — انظر NavBar.tsx.
+ */
 export const PRIMARY_NAV_ITEMS: NavLink[] = [
-  { href: "/",             label: "الرئيسية" },
-  { href: "/lessons",      label: "تعلّم",      description: "حديث · عقيدة · فقه · سيرة" },
-  { href: "/quran-hub",    label: "القرآن",      description: "مصحف · تجويد · قراء · إذاعة" },
-  { href: "/search",       label: "ابحث",        description: "البحث الشامل في المحتوى" },
-  { href: "/library",      label: "المكتبة",     description: "كتب · دورات · علماء · مؤسسات" },
-  { href: "/my-learning",  label: "حسابي",       description: "لوحتي · مساراتي · إعداداتي" },
+  { href: "/",          label: "الرئيسية" },
+  { href: "/lessons",   label: "تعلّم",    description: "حديث · عقيدة · فقه · سيرة" },
+  { href: "/quran-hub", label: "القرآن",   description: "مصحف · تجويد · قراء · إذاعة" },
+  { href: "/library",   label: "المكتبة",  description: "كتب · مخطوطات · مؤسسات" },
+  { href: "/scholars",  label: "العلماء",  description: "تراجم العلماء والمشايخ" },
+  { href: "/fatwa",     label: "الفتاوى",  description: "فتاوى شرعية موثقة" },
 ];
 
 /**
