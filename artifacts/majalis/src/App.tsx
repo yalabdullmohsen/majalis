@@ -164,6 +164,7 @@ const SinsAndRightsDetailPage = lazy(() => import("@/views/SinsAndRightsDetailPa
 const AmrBilMarufPage = lazy(() => import("@/views/AmrBilMarufPage"));
 const UlumQuranPage = lazy(() => import("@/views/UlumQuranPage"));
 const MawarithPage = lazy(() => import("@/views/MawarithPage"));
+const MawarithCalculatorPage = lazy(() => import("@/views/MawarithCalculatorPage"));
 const SalahGuidePage = lazy(() => import("@/views/SalahGuidePage"));
 const DuasQuranPage = lazy(() => import("@/views/DuasQuranPage"));
 const AdminPage = lazyWithRetry(() => import("@/views/AdminPage"), "AdminPage");
@@ -414,6 +415,7 @@ function Router() {
       <Route path="/amr-bil-maruf"><SafeLazyRoute component={AmrBilMarufPage} /></Route>
       <Route path="/ulum-quran"><SafeLazyRoute component={UlumQuranPage} /></Route>
       <Route path="/mawarith"><SafeLazyRoute component={MawarithPage} /></Route>
+      <Route path="/mawarith/calculator"><SafeLazyRoute component={MawarithCalculatorPage} /></Route>
       <Route path="/salah-guide"><SafeLazyRoute component={SalahGuidePage} /></Route>
       <Route path="/duas-quran"><SafeLazyRoute component={DuasQuranPage} /></Route>
       <Route path="/submit"><SafeLazyRoute component={SubmitContentPage} /></Route>

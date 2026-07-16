@@ -66,6 +66,7 @@ const SHEET_SECTIONS = [
     { href: "/hajj",               label: "الحج والعمرة",       Icon: Landmark },
     { href: "/janaza",             label: "أحكام الجنائز",      Icon: ScrollText },
     { href: "/mawarith",           label: "المواريث والفرائض",  Icon: Scale },
+    { href: "/mawarith/calculator", label: "حاسبة المواريث",    Icon: Calculator },
     { href: "/scholarly-research", label: "الباحث الشرعي",     Icon: Microscope },
     { href: "/academic-research",  label: "الأبحاث العلمية",   Icon: FileText },
   ]},

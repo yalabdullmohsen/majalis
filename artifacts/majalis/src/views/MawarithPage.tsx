@@ -1,6 +1,7 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
-import { Sparkles } from "lucide-react";
+import { Link } from "wouter";
+import { Sparkles, Calculator } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -295,6 +296,15 @@ export default function MawarithPage() {
           <cite className="mw-ayah__ref">النساء: 11</cite>
         </div>
       </section>
+
+      {/* حاسبة المواريث */}
+      <Link href="/mawarith/calculator" className="mwod-card" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
+        <Calculator size={28} strokeWidth={1.6} aria-hidden="true" style={{ color: "#0E6E52", flexShrink: 0 }} />
+        <div>
+          <h2 className="mwod-card__title" style={{ marginBottom: "0.2rem" }}>حاسبة المواريث</h2>
+          <p className="mwod-card__desc">أدخل الورثة والتركة واحصل على توزيع الأنصبة تلقائيًا مع شرح كل خطوة ←</p>
+        </div>
+      </Link>
 
       {/* مسألة الميراث اليوم */}
       <div className="mwod-card">
