@@ -198,17 +198,22 @@ html {
   --color-parchment:     var(--msk-canvas,   #FFFFFF);
   --color-line:          var(--msk-border,   rgba(23,107,87,0.10));
 
-  /* ── الخطوط ── IBM Plex Sans Arabic خط المنصة الموحَّد لواجهة الاستخدام (2026-07-16) ──
-     خطّان فقط في كامل الواجهة: IBM Plex Sans Arabic للنصوص والعناوين والقراءة،
-     وخط الرسم القرآني/التراثي (--font-quran) للمصحف والعناوين المميزة فقط. */
+  /* ── الخطوط ── سياسة خطّين للواجهة + خط تراثي محدود + خط قرآني (2026-07-16) ──
+     1) --font-ui: واجهة التطبيق والقوائم (التنقل، الأزرار، القوائم) — SF Arabic
+        على أجهزة Apple عبر مكدّس النظام -apple-system (يحلّ تلقائيًا لخط SF
+        العربي المرافق)، وIBM Plex Sans Arabic كبديل خارج أجهزة Apple.
+     2) --font-body / --font-display / --font-reading: النصوص الطويلة والمقالات
+        والعناوين العامة — IBM Plex Sans Arabic / Noto Sans Arabic.
+     3) --font-heritage: عناوين تراثية محدودة فقط (لا نصوص طويلة) — Amiri.
+     4) --font-quran: المصحف حصرًا — خط عثماني موثق (Amiri Quran). */
   --font-primary:  "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
-  --font-ui:       "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+  --font-ui:       -apple-system, BlinkMacSystemFont, "SF Arabic", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
   --font-body:     "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
   --font-display:  "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
   --font-reading:  "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
   --font-quran:    "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
   /* خط تراثي للعناوين البارزة فقط (لا يُستخدَم في النصوص الطويلة أو الفقرات) */
-  --font-heritage: "Aref Ruqaa", "Amiri", "Scheherazade New", serif;
+  --font-heritage: "Amiri", "Aref Ruqaa", "Scheherazade New", serif;
 
   /* ── الحركة — تلاشٍ وهبوط (لا ارتداد) ── */
   --motion-fast:   120ms ease-out;
@@ -18622,3 +18627,19 @@ html[data-theme="dark"] .skeleton-base {
   background-size: 200% 100%;
 }
 
+
+/* ── خط واجهة التطبيق والقوائم (SF Arabic على Apple) ──────────────────────
+   يُطبَّق حصرًا على عناصر تنقّل/قوائم الواجهة (الهيدر، الشريط السفلي، القائمة
+   الجانبية، ورقة "المزيد")، لا على نصوص المحتوى (تبقى IBM Plex Sans Arabic
+   عبر --font-body/--font-reading). !important ضروري هنا لأن .navbar-v3
+   و.bottom-nav--v2 و.side-nav-drawer معرَّفة بتكرار عبر عدة ملفات CSS
+   لاحقة التحميل (elite-2026.css، majalis-v2.css، modern-2026.css). */
+.navbar-v3,
+.bottom-nav,
+.bottom-nav--v2,
+.side-nav-drawer,
+.side-nav-drawer--v2,
+.bottom-sheet,
+[class*="more-sheet"] {
+  font-family: var(--font-ui) !important;
+}
