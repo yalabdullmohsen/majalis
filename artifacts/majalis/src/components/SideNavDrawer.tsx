@@ -6,7 +6,7 @@ import {
   Bot, Building2, Calculator, Calendar, CheckCircle2, ChevronDown, ChevronUp,
   Clock, Compass, CreditCard, FileText, Gavel, GitBranch, GraduationCap,
   Heart, HelpCircle, Home, Landmark, Layers, Library, Lightbulb,
-  LogIn, Map, MapPin, Mic, Mic2, Moon, Network, Radio, RefreshCw, Repeat2,
+  LogIn, Map, MapPin, Mic, Mic2, Moon, Network, Quote, Radio, RefreshCw, Repeat2,
   Rss, Scale, ScrollText, Search, Settings, Shield, Sparkles, Star, Stethoscope,
   Sun, Trophy, Tv, Users, UserPlus, Waypoints, X, Zap,
 } from "lucide-react";
@@ -112,6 +112,7 @@ const DRAWER_GROUPS: NavGroup[] = [
           { href: "/library",            label: "الكتب المطلوبة",      Icon: Library,       desc: "الكتب والمتون المعتمدة في المناهج" },
           { href: "/my-learning",        label: "الساعات والتقدم",     Icon: BarChart3,     desc: "إحصائياتك وتقدمك في المسارات" },
           { href: "/my-learning#myl2-certs-hd", label: "الشهادات",     Icon: Trophy,        desc: "شهاداتك العلمية المكتسبة" },
+          { href: "/my-citations",       label: "دفتر الفوائد",       Icon: Quote,         desc: "اقتباساتك وفوائدك المحفوظة" },
         ],
       },
       {

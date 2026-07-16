@@ -6,7 +6,7 @@ import {
   Bot, Building2, Calculator, Calendar, CheckCircle2, Clock, Compass, CreditCard,
   FileText, Gavel, GitBranch, GraduationCap, Heart, HelpCircle, Info, Landmark,
   Layers, Library, Lightbulb, Map, Mic, Mic2, Microscope, Moon, Network,
-  Radio, RefreshCw, Repeat2, Rss, Scale, ScrollText, Search, Settings,
+  Quote, Radio, RefreshCw, Repeat2, Rss, Scale, ScrollText, Search, Settings,
   Shield, Sparkles, Star, Stethoscope, Sun, Tv, Users, X, Zap,
 } from "lucide-react";
 
@@ -121,6 +121,7 @@ const SHEET_SECTIONS = [
     { href: "/learning-plan",        label: "خطة التعلّم",         Icon: BarChart2 },
     { href: "/learning/paths",       label: "المسارات العلمية",    Icon: GraduationCap },
     { href: "/my-learning",          label: "لوحتي التعليمية",    Icon: BarChart3 },
+    { href: "/my-citations",         label: "دفتر الفوائد",       Icon: Quote },
     { href: "/knowledge-map",        label: "الخريطة المعرفية",   Icon: Network },
     { href: "/knowledge-graph",      label: "شبكة المعرفة",       Icon: GitBranch },
     { href: "/calendar",             label: "التقويم الهجري",     Icon: Calendar },
