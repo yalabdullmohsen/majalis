@@ -67,6 +67,7 @@ const HadithIndexPage = lazy(() => import("@/views/HadithIndexPage"));
 const HadithDaifPage = lazy(() => import("@/views/HadithDaifPage"));
 const HadithMawduPage = lazy(() => import("@/views/HadithMawduPage"));
 const HadithBooksPage = lazy(() => import("@/views/HadithBooksPage"));
+const ArbaeenLovePage = lazy(() => import("@/views/ArbaeenLovePage"));
 const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
 const QuranCirclesPage = lazy(() => import("@/views/QuranCirclesPage"));
 const QuranHubPage = lazy(() => import("@/views/QuranHubPage"));
@@ -404,6 +405,7 @@ function Router() {
       <Route path="/quran-circles"><SafeLazyRoute component={QuranCirclesPage} /></Route>
       <Route path="/fawaid"><SafeLazyRoute component={FawaidPage} /></Route>
       <Route path="/hadith/books"><SafeLazyRoute component={HadithBooksPage} /></Route>
+      <Route path="/hadith/arbaeen-love-of-allah"><SafeLazyRoute component={ArbaeenLovePage} /></Route>
       <Route path="/hadith/sahih"><SafeLazyRoute component={HadithPage} /></Route>
       <Route path="/hadith/daif"><SafeLazyRoute component={HadithDaifPage} /></Route>
       <Route path="/hadith/mawdu"><SafeLazyRoute component={HadithMawduPage} /></Route>

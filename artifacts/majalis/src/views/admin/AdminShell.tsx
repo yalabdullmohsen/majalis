@@ -3,7 +3,7 @@ import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import {
   AlertTriangle, BookOpen, Bot, Brain, Building2, CalendarClock, CheckCircle2, Dna, FolderTree,
-  FlaskConical, Flag, GraduationCap, Globe, HelpCircle, Image, Landmark,
+  FlaskConical, Flag, GraduationCap, Globe, HelpCircle, Heart, Image, Landmark,
   LayoutDashboard, Library, Lightbulb, MessageCircle, MessageSquare,
   Network, PlayCircle, Radio, RefreshCw, Route, Scale, School, Search,
   Send, Settings, Settings2, ShieldCheck, Sparkles,
@@ -51,6 +51,7 @@ export type AdminSection =
   | "learning-paths"
   | "categories"
   | "week-day-facts"
+  | "arbaeen-love"
 ;
 
 type NavItem = { key: AdminSection; label: string; Icon: LucideIcon };
@@ -83,6 +84,7 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
       { key: "annual-courses", label: "الدورات العلمية",  Icon: GraduationCap },
       { key: "learning-paths", label: "المسارات العلمية", Icon: Route },
       { key: "week-day-facts", label: "أيام الأسبوع",     Icon: CalendarClock },
+      { key: "arbaeen-love",   label: "الأربعون في محبة رب العالمين", Icon: Heart },
     ],
   },
   {

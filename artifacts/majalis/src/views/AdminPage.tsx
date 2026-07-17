@@ -42,6 +42,7 @@ import { ProphetStoriesSection } from "@/views/admin/ProphetStoriesSection";
 import { IslamicStoriesSection } from "@/views/admin/IslamicStoriesSection";
 import { ImageImportSection } from "@/views/admin/ImageImportSection";
 import { WeekDayFactsSection } from "@/views/admin/WeekDayFactsSection";
+import { ArbaeenLoveSection } from "@/views/admin/ArbaeenLoveSection";
 
 export default function AdminPage() {
   const [location] = useLocation();
@@ -108,6 +109,7 @@ export default function AdminPage() {
       {section === "annual-courses" && <AnnualCoursesSection />}
       {section === "learning-paths" && <LearningPathsSection />}
       {section === "week-day-facts" && <WeekDayFactsSection />}
+      {section === "arbaeen-love" && <ArbaeenLoveSection />}
       {section === "categories" && <CategoriesSection />}
       {section === "updates" && <UpdatesSection />}
     </AdminShell>

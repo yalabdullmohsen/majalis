@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, BadgeCheck, AlertTriangle, Ban, BookOpen } from "lucide-react";
+import { ArrowLeft, BadgeCheck, AlertTriangle, Ban, BookOpen, Heart } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -108,6 +108,20 @@ export default function HadithIndexPage() {
         <span className="hadith-index-card__count">35,000+ حديث</span>
         <span className="hadith-index-card__go">
           تصفّح الكتب <ArrowLeft size={16} aria-hidden="true" />
+        </span>
+      </Link>
+
+      {/* بطاقة الأربعون في محبة رب العالمين */}
+      <Link href="/hadith/arbaeen-love-of-allah" className="hadith-index-card hadith-index-card--books">
+        <span className="hadith-index-card__icon" aria-hidden="true">
+          <Heart size={22} strokeWidth={2} color="#fff" />
+        </span>
+        <h2 className="hadith-index-card__title">الأربعون في محبة رب العالمين</h2>
+        <p className="hadith-index-card__desc">
+          مجموعة قيد الاستكمال من الأحاديث الموثقة في محبة الله لعباده ومحبة العبد لربه.
+        </p>
+        <span className="hadith-index-card__go">
+          تصفّح المجموعة <ArrowLeft size={16} aria-hidden="true" />
         </span>
       </Link>
 
