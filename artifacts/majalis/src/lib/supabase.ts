@@ -388,8 +388,14 @@ export async function getApprovedFawaid() {
 }
 
 export async function getVerifiedHadith(options: { limit?: number; collection?: string; chapter?: string; authenticityClass?: "sahih" | "daif" | "mawdu" } = {}) {
+  // مفتاح فريد يشمل كل معاملات الفلترة: RequestManager يُوحِّد (dedupe) الطلبات
+  // المتزامنة بنفس المفتاح — نطاق ثابت هنا كان يجعل نداءات getVerifiedHadith
+  // المتزامنة بفلاتر مختلفة (كما في HadithIndexPage: sahih/daif/mawdu معًا عبر
+  // Promise.all) تتشارك نتيجة أول نداء فقط، فتعرض صفحة فهرس الأحاديث نفس
+  // العدد (والنتائج) للأقسام الثلاثة كلها (عطل حقيقي، 2026-07-17).
+  const scope = `getVerifiedHadith:${options.authenticityClass ?? "any"}:${options.collection ?? ""}:${options.chapter ?? ""}:${options.limit ?? 500}`;
   return safeSupabaseQuery(
-    "getVerifiedHadith",
+    scope,
     () => {
       let q = supabase
         .from("verified_hadith_items")
@@ -408,8 +414,10 @@ export async function getVerifiedHadith(options: { limit?: number; collection?: 
 }
 
 export async function getAkpStories(options: { limit?: number; category?: string } = {}) {
+  // نفس إصلاح getVerifiedHadith أعلاه: مفتاح يشمل الفلاتر لتفادي تصادم
+  // dedupe عند نداءات متزامنة بفئات مختلفة.
   return safeSupabaseQuery(
-    "getAkpStories",
+    `getAkpStories:${options.category ?? "any"}:${options.limit ?? 100}`,
     () => {
       let q = supabase
         .from("akp_stories")
