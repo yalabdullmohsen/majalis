@@ -74,11 +74,11 @@
   --elite-base:   220ms;
   --elite-slow:   380ms;
 
-  /* الخطوط — IBM Plex Sans Arabic خط المنصة الموحَّد (2026-07-16) */
-  --font-display:  "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
-  --font-body:     "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
-  --font-serif:    "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
-  --font-brand:    "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  /* الخطوط — Almarai خط المنصة الموحَّد (2026-07-18) */
+  --font-display:  "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-body:     "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-serif:    "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-brand:    "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
 }
 
 /* ══════════════════════════════════════════════
@@ -87,9 +87,9 @@
    ══════════════════════════════════════════════ */
 :root[data-font="default"],
 :root[data-font="naskh"] {
-  --font-display: "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
-  --font-body:    "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
-  --font-brand:   "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-display: "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-body:    "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-brand:   "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
 }
 
 /* ══════════════════════════════════════════════
@@ -28863,10 +28863,10 @@ html[data-theme="dark"] mark.srch-hl {
   --elite-r-2xl:  28px;
   --elite-r-pill: 9999px;
 
-  /* خطوط — IBM Plex Sans Arabic خط المنصة الموحَّد */
-  --font-display: "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
-  --font-body:    "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
-  --font-serif:   "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  /* خطوط — Almarai خط المنصة الموحَّد */
+  --font-display: "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-body:    "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-serif:   "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
 }
 
 /* ════════════════════════════════════
