@@ -4,6 +4,7 @@ import { AdminInlineEdit } from "@/components/AdminInlineEdit";
 import { getLessonById, getSheikhs } from "@/lib/supabase";
 import { SkeletonPage, Empty } from "@/components/ui-common";
 import ContentActions from "@/components/ContentActions";
+import { ContentReportButton } from "@/components/ContentReportButton";
 import { isDemoId } from "@/lib/demo-id";
 import { extractLessonSchedule, hasValue } from "@/lib/lesson-display";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
@@ -488,6 +489,7 @@ export default function LessonDetailPage({
           {!isDemoId(unified.id) && !unified.id.startsWith("kw-") && (
             <ContentActions contentType="lesson" contentId={unified.id} />
           )}
+          <ContentReportButton contentType="درس" contentId={unified.id} title={unified.title} />
         </div>
 
         {unified.qrCodeUrl && (
