@@ -25,6 +25,7 @@ import {
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { applyPageSeo } from "@/lib/seo";
 import { undismissFridayBanner } from "@/lib/friday-prayer";
+import { computeNotificationDiagnostics, type NotificationDiagnostics } from "@/lib/notification-diagnostics";
 
 const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 20, 30];
 
@@ -97,6 +98,16 @@ export default function AdhanSettingsPage() {
   );
 
   const { data: prayerData } = usePrayerCountdown(selectedGovId);
+  const [diagnostics, setDiagnostics] = useState<NotificationDiagnostics | null>(null);
+  const [diagnosticsOpen, setDiagnosticsOpen] = useState(false);
+
+  useEffect(() => {
+    if (!diagnosticsOpen) return;
+    let cancelled = false;
+    computeNotificationDiagnostics(prayerData ?? null).then((d) => { if (!cancelled) setDiagnostics(d); });
+    return () => { cancelled = true; };
+  }, [diagnosticsOpen, prayerData, prefs]);
+
   const sunriseTime =
     prayerData?.prayers.find((p: { key: string }) => p.key === "Sunrise")
       ?.time ?? null;
@@ -386,6 +397,54 @@ export default function AdhanSettingsPage() {
             <LocationPermBadge />
           </div>
         </div>
+      </div>
+
+      {/* ══ تشخيص: لماذا لا تصلني تنبيهات؟ ══ */}
+      <div className="ads-card">
+        <button
+          type="button"
+          className="ads-row-sep ads-diagnostics-toggle"
+          onClick={() => setDiagnosticsOpen((v) => !v)}
+          aria-expanded={diagnosticsOpen}
+        >
+          <div className="ads-card__head" style={{ margin: 0 }}>
+            <Bell size={15} strokeWidth={2} />
+            <span>لماذا لا تصلني تنبيهات؟</span>
+          </div>
+          <span aria-hidden="true">{diagnosticsOpen ? "▲" : "▼"}</span>
+        </button>
+        {diagnosticsOpen && (
+          <div className="ads-card__body">
+            {!diagnostics ? (
+              <p className="ads-adhan-desc">جارٍ الفحص…</p>
+            ) : (
+              <>
+                <div className="ads-row-sep">
+                  <span className="ads-adhan-desc">الصلاة القادمة</span>
+                  <span>{diagnostics.nextPrayer ? `${diagnostics.nextPrayer.name} — ${diagnostics.nextPrayer.time}` : "—"}</span>
+                </div>
+                <div className="ads-row-sep">
+                  <span className="ads-adhan-desc">تنبيه هذه الصلاة</span>
+                  <span>{diagnostics.nextPrayerEnabled ? "مفعّل ✓" : "معطّل ✕"}</span>
+                </div>
+                {diagnostics.blockingReasons.length === 0 ? (
+                  <p className="ads-adhan-desc" style={{ marginTop: ".5rem" }}>
+                    لا يوجد سبب ظاهر يمنع وصول التنبيهات — كل الإعدادات سليمة.
+                  </p>
+                ) : (
+                  <div style={{ marginTop: ".5rem" }}>
+                    <p className="ads-adhan-desc"><strong>أسباب محتملة لعدم وصول التنبيه:</strong></p>
+                    <ul style={{ margin: ".35rem 0 0", paddingInlineStart: "1.2rem", display: "flex", flexDirection: "column", gap: ".3rem" }}>
+                      {diagnostics.blockingReasons.map((r, i) => (
+                        <li key={i} className="ads-adhan-desc">{r}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        )}
       </div>
 
       {pickerFor && (

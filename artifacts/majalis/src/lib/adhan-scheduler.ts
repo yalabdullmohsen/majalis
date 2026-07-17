@@ -64,13 +64,6 @@ function prayerMs(slot: PrayerSlot): number | null {
   return slot.minutes * 60_000;
 }
 
-async function requestNotificationPermission(): Promise<boolean> {
-  if (!("Notification" in window)) return false;
-  if (Notification.permission === "granted") return true;
-  if (Notification.permission === "denied") return false;
-  const result = await Notification.requestPermission();
-  return result === "granted";
-}
 
 function showBrowserNotification(event: AdhanEvent) {
   // على iOS/Android الأصليين: إشعارات دخول الوقت والتذكير المسبق تُغطّى فعلياً
@@ -166,10 +159,18 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
   }
 }
 
-/** Start the scheduler for the current prayer data. Call once on app load. */
+/**
+ * Start the scheduler for the current prayer data. Call once on app load.
+ *
+ * لا يطلب إذن الإشعارات هنا أبداً — كان يفعل ذلك تلقائياً عند كل تحميل
+ * للتطبيق (أول فتح)، مخالفًا صراحةً لسياسة "اطلب الإذن في وقت منطقي بعد
+ * شرح الفائدة لا عند أول فتح". طلب الإذن الفعلي يحدث فقط عبر مسار مستخدم
+ * صريح في PrayerAlertSettingsCard.tsx (زر "تفعيل" بعد شارة شرح). المؤقّتات
+ * هنا تعمل بصرف النظر عن الإذن — تشغيل الصوت لا يحتاج إذنًا، والإشعار
+ * يُعرض فقط إن كان الإذن ممنوحًا مسبقًا (انظر showBrowserNotification).
+ */
 export async function startAdhanScheduler(payload: PrayerTimesPayload): Promise<void> {
   clearAllTimers();
-  await requestNotificationPermission();
 
   const SLOT_KEYS: Array<[string, PrayerKey]> = [
     ["Fajr", "fajr"],
