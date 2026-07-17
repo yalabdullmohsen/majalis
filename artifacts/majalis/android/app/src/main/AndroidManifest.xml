@@ -38,4 +38,6 @@
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- MajlisSpeechRecognitionPlugin: اختبار التلاوة صوتيًا بالمصحف التفاعلي -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 </manifest>

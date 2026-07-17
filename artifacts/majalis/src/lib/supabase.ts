@@ -85,13 +85,23 @@ export async function getCurrentUser() {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return null;
 
-    let profile;
-    const { data: initialProfile, error: profileError } = await supabase
-      .from("profiles").select("*").eq("id", user.id).single();
-    profile = initialProfile;
+    // profiles وgovernance_user_roles لا يعتمد أحدهما على الآخر (كلاهما
+    // يحتاج user.id فقط) — كانا يُنتظران بالتتابع فيتراكم زمن الشبكة
+    // (رُصد فعليًا: getCurrentUser يصل أحيانًا 9-11 ثانية). التوازي هنا
+    // يقصّ أسوأ حالة تقريبًا للنصف دون أي تغيير في RLS/الصلاحيات.
+    const [profileResult, governanceResult] = await Promise.all([
+      supabase.from("profiles").select("*").eq("id", user.id).single(),
+      supabase
+        .from("governance_user_roles")
+        .select("role_id")
+        .eq("user_id", user.id)
+        .maybeSingle()
+        .then((r) => r, () => ({ data: null, error: null })), // RLS قد تمنع حتى تُطبَّق migration
+    ]);
 
-    if (profileError) {
-      logSupabaseError("getCurrentUser.profile", profileError);
+    let profile = profileResult.data;
+    if (profileResult.error) {
+      logSupabaseError("getCurrentUser.profile", profileResult.error);
     }
 
     if (!profile) {
@@ -114,17 +124,7 @@ export async function getCurrentUser() {
       user: "read_only",
     };
 
-    let governanceRole: string | undefined;
-    try {
-      const { data: govRow } = await supabase
-        .from("governance_user_roles")
-        .select("role_id")
-        .eq("user_id", user.id)
-        .maybeSingle();
-      if (govRow?.role_id) governanceRole = govRow.role_id;
-    } catch {
-      /* RLS may block until migration — fall back to legacy map */
-    }
+    const governanceRole: string | undefined = governanceResult.data?.role_id || undefined;
 
     const resolvedGovernanceRole = governanceRole || LEGACY_MAP[profile?.role || "user"] || "read_only";
     const ownerAccess = hasUnrestrictedAdminAccess({

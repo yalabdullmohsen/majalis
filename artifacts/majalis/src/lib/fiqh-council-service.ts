@@ -503,15 +503,14 @@ export function detectSeedDuplicates(incoming: FiqhCouncilItem, pool = FIQH_COUN
   return findPotentialDuplicates(incoming, pool);
 }
 
+const PUBLIC_FIQH_SOURCES_SEED = [
+  { id: "seed-src-1", slug: "islamweb-majlis", name: "IslamWeb — المجمع الفقهي", organization: "IslamWeb.net", source_type: "json_manifest" as const, base_url: "https://www.islamweb.net", trust_level: "official" as const, is_active: true },
+  { id: "seed-src-2", slug: "iifa-oic", name: "الأكاديمية الإسلامية للفقه", organization: "OIC", source_type: "rss" as const, base_url: "https://www.iifa-aifi.org", trust_level: "official" as const, is_active: true },
+];
+
 export async function getPublicFiqhSources() {
   if (!isConfigured) {
-    return {
-      data: [
-        { id: "seed-src-1", slug: "islamweb-majlis", name: "IslamWeb — المجمع الفقهي", organization: "IslamWeb.net", source_type: "json_manifest" as const, base_url: "https://www.islamweb.net", trust_level: "official" as const, is_active: true },
-        { id: "seed-src-2", slug: "iifa-oic", name: "الأكاديمية الإسلامية للفقه", organization: "OIC", source_type: "rss" as const, base_url: "https://www.iifa-aifi.org", trust_level: "official" as const, is_active: true },
-      ],
-      usingSeed: true,
-    };
+    return { data: PUBLIC_FIQH_SOURCES_SEED, usingSeed: true };
   }
   try {
     const { data, error } = await supabase
@@ -521,10 +520,17 @@ export async function getPublicFiqhSources() {
       .eq("trust_level", "official")
       .order("name");
     if (error) throw error;
-    return { data: data || [], usingSeed: false };
+    // جدول fiqh_council_sources موجود لكن فارغ (ميزة المزامنة الخارجية لم
+    // تُملأ بعد) — نعرض البيانات الاحتياطية بدل قسم فارغ صامت بلا رسالة.
+    if (!data || data.length === 0) return { data: PUBLIC_FIQH_SOURCES_SEED, usingSeed: true };
+    return { data, usingSeed: false };
   } catch (err) {
+    // الجدول غير موجود في قاعدة الإنتاج فعليًا (ميزة مزامنة مصادر خارجية
+    // لم تُطبَّق migration لها قط) — كان هذا الفرع يُعيد مصفوفة فارغة رغم
+    // وجود بيانات احتياطية صحيحة أعلاه، فيظهر قسم "المصادر الرسمية" فارغًا
+    // بصمت. الإصلاح: استخدام نفس البيانات الاحتياطية هنا أيضًا.
     logSupabaseError("getPublicFiqhSources", err);
-    return { data: [], usingSeed: true };
+    return { data: PUBLIC_FIQH_SOURCES_SEED, usingSeed: true };
   }
 }
 
