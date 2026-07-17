@@ -2728,6 +2728,41 @@ button.primary:hover {
   box-shadow: none !important;
 }
 
+/* المرحلة 13 — أيقونة دلالية لكل نوع إشعار (بدل نقطة عامة)، عدّاد التجميع،
+   وهيكل تحميل (Skeleton). ألوان الأيقونة تُمرَّر عبر style={color} من
+   TYPE_META في NotificationBell.tsx (كلها متغيّرات --majalis-* قائمة). */
+.nb-item__icon {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 999px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  background: color-mix(in srgb, currentColor 12%, transparent) !important;
+}
+.nb-item__count {
+  display: inline-block;
+  margin-inline-start: .35rem;
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--majalis-ink-soft);
+}
+.nb-skeletons {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  padding: .5rem;
+}
+.nb-skeleton {
+  height: 52px;
+  border-radius: .6rem;
+  background: color-mix(in srgb, var(--majalis-line) 70%, transparent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .nb-skeleton { animation: widget-shell-shimmer 1.4s ease-in-out infinite; background-size: 200% 100%; }
+}
+
 .nb-item__body { flex: 1; min-width: 0; }
 .nb-item__title {
   color: #176B57 !important;
