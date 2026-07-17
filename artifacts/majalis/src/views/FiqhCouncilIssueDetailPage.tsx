@@ -148,6 +148,48 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
           </section>
         )}
 
+        {/* ── محل الاتفاق ومحل الخلاف والأقوال — سياسة التحرير العلمي
+            للمسائل الخلافية. لا تُملأ آليًا؛ فارغة حتى تُراجَع المسألة
+            علميًا بهذا التفصيل، وتُعرض كذلك صراحة بدل الإخفاء. ── */}
+        {(issue.area_of_agreement || issue.area_of_disagreement || (issue.opinions && issue.opinions.length > 0)) ? (
+          <section className="content-detail-evidence ui-card fiqh-comparative-section">
+            <h2>محل الاتفاق والخلاف</h2>
+            {issue.area_of_agreement && (
+              <p><strong>محل الاتفاق:</strong> {issue.area_of_agreement}</p>
+            )}
+            {issue.area_of_disagreement && (
+              <p><strong>محل الخلاف:</strong> {issue.area_of_disagreement}</p>
+            )}
+            {issue.opinions && issue.opinions.length > 0 && (
+              <div className="fiqh-opinions-list">
+                <h3>أشهر الأقوال</h3>
+                <ul>
+                  {issue.opinions.map((op, i) => (
+                    <li key={i}>
+                      <strong>{op.holder}:</strong> {op.position}
+                      {op.evidence && <span className="fiqh-opinion-evidence"> — {op.evidence}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {issue.adopted_opinion && (
+              <p className="fiqh-adopted-opinion">
+                <strong>القول المعتمد في المنصة:</strong> {issue.adopted_opinion}
+                {issue.adopted_reason && <span> — {issue.adopted_reason}</span>}
+              </p>
+            )}
+            {issue.context_disclaimer && (
+              <p className="fiqh-context-disclaimer">{issue.context_disclaimer}</p>
+            )}
+          </section>
+        ) : issue.documentation_level === "official_verified" ? (
+          <p className="fiqh-comparative-pending">
+            لم تُراجَع هذه المسألة بعد بتفصيل محل الاتفاق والخلاف وتعدد الأقوال —
+            الخلاصة أعلاه هي الحد الأدنى الموثَّق حاليًا.
+          </p>
+        ) : null}
+
         <p className="fiqh-research-disclaimer-inline">{FIQH_RESEARCH_DISCLAIMER}</p>
 
         {issue.timeline && issue.timeline.length > 0 && (

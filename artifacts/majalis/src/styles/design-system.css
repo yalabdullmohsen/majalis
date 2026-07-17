@@ -127,6 +127,14 @@ html {
   transform: translateY(-1px);
 }
 
+/* ── محل الاتفاق والخلاف (المسائل الخلافية) ── */
+.fiqh-comparative-section h3 { font-size: 0.95rem; margin: 0.75rem 0 0.4rem; }
+.fiqh-opinions-list ul { margin: 0; padding-inline-start: 1.1rem; display: flex; flex-direction: column; gap: 0.4rem; }
+.fiqh-opinion-evidence { color: var(--ds-ink-soft); font-size: 0.88em; }
+.fiqh-adopted-opinion { margin-top: 0.75rem; padding: 0.6rem 0.8rem; background: var(--ds-emerald-soft, rgba(23,107,87,.08)); border-radius: var(--ds-radius-md, 0.5rem); }
+.fiqh-context-disclaimer { margin-top: 0.5rem; font-size: 0.82rem; color: var(--ds-ink-soft); font-style: italic; }
+.fiqh-comparative-pending { font-size: 0.82rem; color: var(--ds-ink-soft); font-style: italic; margin: 0.25rem 0 0.75rem; }
+
 /* ── Buttons ── */
 .ds-btn,
 .ui-card-btn,
