@@ -18,6 +18,7 @@ const DATA_DIR = path.join(ROOT, "public", "data", "quran");
 
 const EXPECTED_TOTAL_PAGES = 604;
 const EXPECTED_TOTAL_AYAHS = 6236;
+const EXPECTED_JUZ_COUNT = 30;
 
 const GREEN = "\x1b[32m";
 const RED = "\x1b[31m";
@@ -86,6 +87,22 @@ async function main() {
     }
   }
   check("كل سورة: كل أرقام آياتها من 1 حتى عددها مغطاة بلا فجوة", missingErrors === 0, `${missingErrors} فجوة`);
+
+  // ── الأجزاء الثلاثون ──
+  const juzList = pagesManifest.juz ?? [];
+  check(`عدد الأجزاء = ${EXPECTED_JUZ_COUNT}`, juzList.length === EXPECTED_JUZ_COUNT, `الفعلي: ${juzList.length}`);
+  let juzOrderErrors = 0;
+  let prevJuzPage = 0;
+  let prevJuzNum = 0;
+  for (const j of juzList) {
+    if (j.juz !== prevJuzNum + 1) juzOrderErrors++;
+    if (j.firstPage <= prevJuzPage) juzOrderErrors++; // كل جزء يجب أن يبدأ بصفحة أكبر من سابقه فعليًا
+    if (j.firstPage < 1 || j.firstPage > EXPECTED_TOTAL_PAGES) juzOrderErrors++;
+    prevJuzNum = j.juz;
+    prevJuzPage = j.firstPage;
+  }
+  check("الأجزاء مرقّمة 1..30 تصاعديًا وصفحاتها الأولى تصاعدية ضمن 1-604", juzOrderErrors === 0, `${juzOrderErrors} خطأ`);
+  check("الجزء 1 يبدأ من الصفحة 1", juzList[0]?.firstPage === 1, `الفعلي: ${juzList[0]?.firstPage}`);
 
   console.log(`\n${BOLD}النتيجة: ${GREEN}${passed} نجح${RESET}${BOLD}، ${failed > 0 ? RED : GREEN}${failed} فشل${RESET}`);
   process.exit(failed > 0 ? 1 : 0);

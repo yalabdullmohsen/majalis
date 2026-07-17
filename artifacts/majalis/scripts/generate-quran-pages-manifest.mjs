@@ -36,6 +36,8 @@ async function main() {
 
   /** @type {Map<number, Array<{surah:number, from:number, to:number}>>} */
   const byPage = new Map();
+  /** أول صفحة تظهر فيها كل جزء (1-30) — من نفس حقل "juz" الموجود أصلاً بكل آية. */
+  const firstPageOfJuz = new Map();
   let totalAyahsSeen = 0;
 
   for (const entry of manifest.surahs) {
@@ -61,6 +63,9 @@ async function main() {
         rangePage = ayah.page;
         rangeStart = ayah.numberInSurah;
       }
+      if (!firstPageOfJuz.has(ayah.juz) || ayah.page < firstPageOfJuz.get(ayah.juz)) {
+        firstPageOfJuz.set(ayah.juz, ayah.page);
+      }
       prevAyah = ayah;
     }
     flush(prevAyah.numberInSurah);
@@ -82,16 +87,31 @@ async function main() {
     process.exit(1);
   }
 
+  const EXPECTED_JUZ_COUNT = 30;
+  if (firstPageOfJuz.size !== EXPECTED_JUZ_COUNT) {
+    console.log(`${RED}✗ عدد الأجزاء المكتشفة ${firstPageOfJuz.size} ≠ 30${RESET}`);
+    process.exit(1);
+  }
+  const juz = [];
+  for (let j = 1; j <= EXPECTED_JUZ_COUNT; j++) {
+    if (!firstPageOfJuz.has(j)) {
+      console.log(`${RED}✗ الجزء ${j} غير موجود${RESET}`);
+      process.exit(1);
+    }
+    juz.push({ juz: j, firstPage: firstPageOfJuz.get(j) });
+  }
+
   const output = {
-    $comment: "مُولَّد آليًا من public/data/quran/surah-*.json عبر scripts/generate-quran-pages-manifest.mjs — لا تحرّره يدويًا. لا يحتوي نص أي آية، إشارات (سورة/نطاق رقم آية) فقط.",
+    $comment: "مُولَّد آليًا من public/data/quran/surah-*.json عبر scripts/generate-quran-pages-manifest.mjs — لا تحرّره يدويًا. لا يحتوي نص أي آية، إشارات (سورة/نطاق رقم آية، وأول صفحة لكل جزء) فقط.",
     generatedAt: new Date().toISOString().slice(0, 10),
     totalPages: EXPECTED_TOTAL_PAGES,
     pages,
+    juz,
   };
 
   await writeFile(path.join(DATA_DIR, "pages-manifest.json"), JSON.stringify(output, null, 2) + "\n", "utf8");
 
-  console.log(`${GREEN}✓ ${EXPECTED_TOTAL_PAGES} صفحة، ${totalAyahsSeen} آية مفحوصة${RESET}`);
+  console.log(`${GREEN}✓ ${EXPECTED_TOTAL_PAGES} صفحة، ${totalAyahsSeen} آية، ${juz.length} جزءًا مفحوصة${RESET}`);
   console.log(`${GREEN}✓ كُتب public/data/quran/pages-manifest.json${RESET}`);
 }
 

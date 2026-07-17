@@ -1,5 +1,5 @@
 {
-  "$comment": "مُولَّد آليًا من public/data/quran/surah-*.json عبر scripts/generate-quran-pages-manifest.mjs — لا تحرّره يدويًا. لا يحتوي نص أي آية، إشارات (سورة/نطاق رقم آية) فقط.",
+  "$comment": "مُولَّد آليًا من public/data/quran/surah-*.json عبر scripts/generate-quran-pages-manifest.mjs — لا تحرّره يدويًا. لا يحتوي نص أي آية، إشارات (سورة/نطاق رقم آية، وأول صفحة لكل جزء) فقط.",
   "generatedAt": "2026-07-17",
   "totalPages": 604,
   "pages": [
@@ -6332,6 +6332,128 @@
           "to": 6
         }
       ]
+    }
+  ],
+  "juz": [
+    {
+      "juz": 1,
+      "firstPage": 1
+    },
+    {
+      "juz": 2,
+      "firstPage": 22
+    },
+    {
+      "juz": 3,
+      "firstPage": 42
+    },
+    {
+      "juz": 4,
+      "firstPage": 62
+    },
+    {
+      "juz": 5,
+      "firstPage": 82
+    },
+    {
+      "juz": 6,
+      "firstPage": 102
+    },
+    {
+      "juz": 7,
+      "firstPage": 121
+    },
+    {
+      "juz": 8,
+      "firstPage": 142
+    },
+    {
+      "juz": 9,
+      "firstPage": 162
+    },
+    {
+      "juz": 10,
+      "firstPage": 182
+    },
+    {
+      "juz": 11,
+      "firstPage": 201
+    },
+    {
+      "juz": 12,
+      "firstPage": 222
+    },
+    {
+      "juz": 13,
+      "firstPage": 242
+    },
+    {
+      "juz": 14,
+      "firstPage": 262
+    },
+    {
+      "juz": 15,
+      "firstPage": 282
+    },
+    {
+      "juz": 16,
+      "firstPage": 302
+    },
+    {
+      "juz": 17,
+      "firstPage": 322
+    },
+    {
+      "juz": 18,
+      "firstPage": 342
+    },
+    {
+      "juz": 19,
+      "firstPage": 362
+    },
+    {
+      "juz": 20,
+      "firstPage": 382
+    },
+    {
+      "juz": 21,
+      "firstPage": 402
+    },
+    {
+      "juz": 22,
+      "firstPage": 422
+    },
+    {
+      "juz": 23,
+      "firstPage": 442
+    },
+    {
+      "juz": 24,
+      "firstPage": 462
+    },
+    {
+      "juz": 25,
+      "firstPage": 482
+    },
+    {
+      "juz": 26,
+      "firstPage": 502
+    },
+    {
+      "juz": 27,
+      "firstPage": 522
+    },
+    {
+      "juz": 28,
+      "firstPage": 542
+    },
+    {
+      "juz": 29,
+      "firstPage": 562
+    },
+    {
+      "juz": 30,
+      "firstPage": 582
     }
   ]
 }
