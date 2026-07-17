@@ -14624,6 +14624,9 @@ img[loading="lazy"]:not([src=""]) {
   opacity: 0.8;
   text-transform: uppercase;
 }
+/* --tj-accent قيم خضراء داكنة مخصَّصة لكل نوع بطاقة، بلا نسخة ليلية —
+   على خلفية بطاقة داكنة (2026-07-17). */
+html[data-theme="dark"] .tj-cat-badge { color: #8BABA3 !important; }
 .tj-card__title { font-size: 1rem; font-weight: 700; color: var(--majalis-ink); margin: 0; }
 .tj-toggle { font-size: 0.7rem; color: var(--majalis-ink-soft); flex-shrink: 0; }
 
