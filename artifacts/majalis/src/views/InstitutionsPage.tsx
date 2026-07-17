@@ -82,16 +82,6 @@ const INSTITUTIONS: Institution[] = [
     mapQuery: "الجامعة الإسلامية ماليزيا",
   },
   {
-    id: "azhar",
-    name: "الجامع الأزهر الشريف",
-    type: "university",
-    city: "القاهرة",
-    country: "مصر",
-    description: "أعرق المؤسسات التعليمية الإسلامية في العالم، تأسس عام 970م.",
-    website: "https://www.azhar.eg",
-    mapQuery: "الجامع الأزهر القاهرة",
-  },
-  {
     id: "medina-university",
     name: "الجامعة الإسلامية بالمدينة المنورة",
     type: "university",
