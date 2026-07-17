@@ -1,14 +1,20 @@
 {
-  "at": "2026-07-17T22:09:12.264Z",
+  "at": "2026-07-17T22:48:30.061Z",
   "counts": {
     "qa": 360,
     "lessons": 0,
-    "sheikhs": 93
+    "sheikhs": 93,
+    "quiz": 914,
+    "fawaid": 508,
+    "adhkar": 305
   },
   "issues": {
     "qa": [],
     "lessons": [],
-    "sheikhs": []
+    "sheikhs": [],
+    "quiz": [],
+    "fawaid": [],
+    "adhkar": []
   },
   "summary": {
     "totalIssues": 0

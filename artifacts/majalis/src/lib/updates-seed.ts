@@ -879,7 +879,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   },
   {
     id: "update-adhkar-332",
-    title: "تحديث: الأذكار — 332+ ذكر",
+    title: "تحديث: توسعة قسم الأذكار",
     summary: "إضافة 10 أذكار في: الصلاة الإبراهيمية، أذكار الوضوء، أذكار النوم، الصباح، الاستغفار.",
     update_type: "إعلان",
     source_url: "/adhkar",

@@ -54,26 +54,58 @@ function auditSheikhs(sheikhs) {
   return issues;
 }
 
+/**
+ * فحص تكرار عام: يُطابق حقل نصي واحد (question/text) حرفياً بعد قص المسافات.
+ * أُضيف بعد اكتشاف حقيقي (2026-07-18): quiz-seed.ts وfawaid-seed.ts كانا
+ * يحويان عشرات الأسئلة/الفوائد المكررة حرفياً بلا أي فحص دائم يكتشفها —
+ * أُصلحا يدوياً حينها، وهذا الفحص يمنع تكرار المشكلة صامتاً مستقبلاً.
+ *
+ * groupKey اختياري: إن مُرِّر (مثل categoryId)، يُقيَّد التكرار بأن يكون
+ * ضمن نفس المجموعة فقط. ضروري لـadhkar-seed.ts تحديداً: نفس الذكر يتكرر
+ * شرعاً وعمداً عبر تصنيفات مختلفة (مثل "بسم الله" عند الوضوء وعند الطعام
+ * كلاهما مسنون فعلاً) — هذا تكرار صحيح لا خطأ، فلا يُحسب إلا لو تكرر نفس
+ * النص داخل نفس التصنيف بعينه (تكرار حقيقي زائد).
+ */
+function auditDuplicates(items, field, typeLabel, groupField) {
+  const issues = [];
+  const seen = new Map();
+  for (const item of items) {
+    const key = (item[field] || "").trim();
+    if (!key) continue;
+    const scopedKey = groupField ? `${item[groupField] ?? ""}::${key}` : key;
+    if (seen.has(scopedKey)) {
+      issues.push({ type: typeLabel, id: item.id, otherId: seen.get(scopedKey), key: key.slice(0, 80) });
+    } else {
+      seen.set(scopedKey, item.id);
+    }
+  }
+  return issues;
+}
+
 function main() {
   const qa = readTsExport("qa-seed.ts", "SEED_QA");
   const lessons = readTsExport("lessons-seed.ts", "LESSONS_SEED");
   const sheikhs = readTsExport("sheikhs-seed.ts", "SHEIKHS_SEED");
+  const quiz = readTsExport("quiz-seed.ts", "DEMO_QUIZ_QUESTIONS");
+  const fawaid = readTsExport("fawaid-seed.ts", "SEED_FAWAID");
+  const adhkar = readTsExport("adhkar-seed.ts", "ADHKAR_ITEMS");
 
   const report = {
     at: new Date().toISOString(),
-    counts: { qa: qa.length, lessons: lessons.length, sheikhs: sheikhs.length },
+    counts: { qa: qa.length, lessons: lessons.length, sheikhs: sheikhs.length, quiz: quiz.length, fawaid: fawaid.length, adhkar: adhkar.length },
     issues: {
       qa: auditQa(qa),
       lessons: auditLessons(lessons),
       sheikhs: auditSheikhs(sheikhs),
+      quiz: auditDuplicates(quiz, "question", "duplicate_quiz_question"),
+      fawaid: auditDuplicates(fawaid, "text", "duplicate_fawaid_text"),
+      // مُقيَّد بـcategoryId: التكرار عبر تصنيفات مختلفة مقصود شرعاً (راجع تعليق auditDuplicates)
+      adhkar: auditDuplicates(adhkar, "text", "duplicate_adhkar_text_same_category", "categoryId"),
     },
   };
 
   report.summary = {
-    totalIssues:
-      report.issues.qa.length +
-      report.issues.lessons.length +
-      report.issues.sheikhs.length,
+    totalIssues: Object.values(report.issues).reduce((sum, arr) => sum + arr.length, 0),
   };
 
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
@@ -83,8 +115,12 @@ function main() {
   console.log(`  QA: ${qa.length} (${report.issues.qa.length} issues)`);
   console.log(`  Lessons: ${lessons.length} (${report.issues.lessons.length} issues)`);
   console.log(`  Sheikhs: ${sheikhs.length} (${report.issues.sheikhs.length} issues)`);
+  console.log(`  Quiz: ${quiz.length} (${report.issues.quiz.length} duplicates)`);
+  console.log(`  Fawaid: ${fawaid.length} (${report.issues.fawaid.length} duplicates)`);
+  console.log(`  Adhkar: ${adhkar.length} (${report.issues.adhkar.length} duplicates)`);
   console.log(`  Total issues: ${report.summary.totalIssues}`);
   console.log(`  Report: ${outPath}`);
+  process.exitCode = report.summary.totalIssues > 0 ? 1 : 0;
 }
 
 main();
