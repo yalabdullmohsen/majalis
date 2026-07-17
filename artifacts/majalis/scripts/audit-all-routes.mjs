@@ -43,9 +43,19 @@ for (const route of routes) {
   const t0 = Date.now();
   let status = null;
   try {
-    const resp = await page.goto(`${baseUrl}${route}`, { waitUntil: "domcontentloaded", timeout: 15000 });
+    const resp = await page.goto(`${baseUrl}${route}`, { waitUntil: "domcontentloaded", timeout: 20000 });
     status = resp?.status() ?? null;
-    await page.waitForTimeout(500);
+    // 500ms كان غير كافٍ لصفحات ثقيلة تعتمد React Query/lazy chunks (اكتُشف
+    // فعلياً 2026-07-18: /library, /scholars, /quiz وغيرها أُبلِغت خطأً
+    // كصفحات فارغة بينما هي تُحمَّل بنجاح فعلياً بعد مهلة أطول في اختبار
+    // preview محلي). رُفعت المهلة الثابتة كتخفيف — تجربة waitForSelector("h1")
+    // بديلاً جُرِّبت وتراجعت: صفحات Redirect-only (مثل /fatwa) لا تعرض h1
+    // إطلاقاً على مسارها الأصلي فتنتظر كامل المهلة بلا فائدة، ولم تكن أدق.
+    // **ملاحظة صادقة**: حتى بعد هذا التخفيف قد تبقى بعض الصفحات الثقيلة
+    // تُبلَّغ "فارغة" زوراً في بيئة headless محلية بطيئة — تحقّق يدوياً
+    // (Playwright تفاعلي أو المتصفح) قبل اعتبار أي "isBlank" من هذا
+    // السكربت عطلاً حقيقياً دون تأكيد.
+    await page.waitForTimeout(2500);
   } catch (e) {
     results.push({ route, error: `goto failed: ${String(e).slice(0, 200)}` });
     page.off("console", errHandler);
