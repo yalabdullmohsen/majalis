@@ -11,7 +11,6 @@ import SiteFooter from "@/components/SiteFooter";
 import { BottomNavBar } from "@/components/BottomNavBar";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { GlobalBackButton } from "@/components/GlobalBackButton";
-import { AssistantFloatingWidget } from "@/components/assistant/AssistantFloatingWidget";
 import { AdminSiteEditBar } from "@/components/AdminSiteEditBar";
 import { AchievementToast } from "@/components/AchievementToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
@@ -32,6 +31,17 @@ import { recordRecentPage } from "@/lib/recent-pages";
 import { OfflineBanner } from "@/components/OfflineBanner";
 
 const lazy = lazyWithRetry;
+
+/**
+ * تحميل كسول للمساعد الذكي العائم — مكوّن ثانوي (تفاعلي عند الطلب فقط)
+ * كان يُستورَد بشكل عاجل في كل صفحة رغم أن أغلب الزوّار لا يفتحونه أبداً،
+ * فيُضخِّم الحزمة الرئيسية بلا داعٍ. لا يظهر شيء مختلف بصريًا — الأيقونة
+ * العائمة نفسها تظهر بعد جزء من الثانية فقط، لا تحجب أي محتوى صفحة.
+ */
+const AssistantFloatingWidget = lazyWithRetry(
+  () => import("@/components/assistant/AssistantFloatingWidget").then((m) => ({ default: m.AssistantFloatingWidget })),
+  "AssistantFloatingWidget",
+);
 
 const HomePage = lazy(() => import("@/views/HomePage"));
 const AboutPage = lazy(() => import("@/views/AboutPage"));
@@ -630,7 +640,9 @@ function AppShell() {
           <Router />
         </main>
         <SiteFooter />
-        <AssistantFloatingWidget />
+        <Suspense fallback={null}>
+          <AssistantFloatingWidget />
+        </Suspense>
         <AdminSiteEditBar />
         <ScrollToTop />
         <GlobalBackButton />
