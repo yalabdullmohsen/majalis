@@ -3025,19 +3025,18 @@ table th {
 
 /* ══ صفحة حذف الحساب (AccountDeletionPage) ═════════════════════════════════ */
 .accd-hero { text-align: center; padding: 2rem 1rem 1.5rem; }
-.accd-hero__icon { color: #DC2626; margin: 0 auto 1rem; display: block; }
+.accd-hero__icon { color: #DC2626 !important; margin: 0 auto 1rem; display: block; }
 /* .accd-hero لا خلفية داكنة له (يطابق [class$="-hero"] عن طريق الخطأ)، فيرث
    لون تحذير أحمر (#DC2626 دلالي: حذف حساب نهائي) لكن يخسره أمام قاعدة
-   [class$="-hero"]{color:#fff!important} إذ لم يكن !important أصلاً.
-   ملاحظة تحقيق (2026-07-17): !important هنا صحيح ومتفوّق تخصيصًا نظريًا
-   ومؤكَّد عبر إعادة إنتاج معزولة بنفس ملف CSS المُجمَّع فعليًا (نتيجة حمراء
-   صحيحة) — لكن على صفحة /account-deletion الحيّة عبر vite preview تحديدًا
-   ظل النص أبيض رغم كل محاولات رفع التخصيص (حتى تكرار الصنف ×4 وحقن متأخر
-   بعد التحميل)، وهو ما لم يحدث لأي إصلاح hero آخر بنفس الجلسة (.an-hero،
-   .sch-profile-hero نجحا بنفس الأسلوب بالضبط). لم يُحسَم السبب الجذري لهذا
-   التبايُن رغم تحقيق مطوَّل — يحتاج تحققًا مباشرًا على Production الفعلي
-   بعد النشر (قد يكون خاصًا ببيئة vite preview/توقيت تحميل هذا المسار
-   المُجزَّأ (lazy chunk) تحديدًا ولا يتكرر في السلوك الحقيقي). */
+   [class$="-hero"]{color:#fff!important}. جُرِّب !important بتخصيص متصاعد
+   (حتى ×4 تكرار صنف)، وحقن CSS متأخر بعد التحميل، وقاعدة inherit مطابقة
+   تمامًا للأسلوب الناجح فعليًا في .an-hero/.sch-profile-hero بنفس الجلسة —
+   كلها فشلت هنا تحديدًا لسبب لم يُحسَم رغم تحقيق مطوَّل (لا فرق بين dev
+   وpreview، تحقّق معزول بنفس حزمة CSS المُجمَّعة فعليًا نجح، الفرق حصريًا
+   في التطبيق الحي على هذا المسار). الإصلاح الفعلي المضمون في التطبيق:
+   inline style على العنصر مباشرة (AccountDeletionPage.tsx) — يتفوّق دومًا
+   بصرف النظر عن أي غموض في الـcascade. هذه القاعدة أُبقيت كخط دفاع ثانٍ
+   لا كإصلاح أساسي. */
 .accd-hero h1 { font-size: 1.5rem; color: #DC2626 !important; }
 .accd-hero p { opacity: 0.65; margin-top: 0.4rem; }
 
