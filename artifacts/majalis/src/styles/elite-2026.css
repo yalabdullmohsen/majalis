@@ -24729,6 +24729,9 @@ img[loading="lazy"]:not([src=""]) {
   font-size: .875rem;
   color: var(--majalis-emerald);
 }
+.up-quick-filters { display: flex; align-items: center; gap: .6rem; }
+.up-country-chips { flex: 1; min-width: 0; overflow-x: auto; flex-wrap: nowrap; padding-bottom: .2rem; }
+.up-sheet-filters { display: flex; flex-direction: column; gap: .9rem; padding: 0.25rem 0 1rem; }
 .up-filters-box {
   background: var(--majalis-panel);
   border: 1px solid var(--majalis-line);

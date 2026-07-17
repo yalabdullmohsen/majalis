@@ -6,6 +6,7 @@ import { UniversityCard } from "@/components/universities/UniversityCard";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import {
   fetchUniversities,
   DEGREE_LEVELS,
@@ -52,6 +53,8 @@ function UniversitiesContent() {
   const [search, setSearch]             = useState("");
   const [searchInput, setSearchInput]   = useState("");
   const [filters, setFilters]           = useState<UniversityFilters>({});
+  const [filtersOpen, setFiltersOpen]   = useState(false);
+  const activeFilterCount = Object.values(filters).filter(Boolean).length;
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -142,29 +145,23 @@ function UniversitiesContent() {
           الرسمي للجامعة قبل اتخاذ أي قرار.
         </div>
 
-        {/* فلاتر */}
-        <div className="up-filters-box">
-          <FilterSelect label="الدولة"         value={filters.country || ""} onChange={(v) => setFilter("country", v)}       options={COUNTRIES} />
-          <FilterSelect label="الدرجة العلمية" value={filters.degree_level || ""} onChange={(v) => setFilter("degree_level", v as UniversityFilters["degree_level"])} options={DEGREE_LEVELS} />
-          <FilterSelect label="نظام الدراسة"   value={filters.study_mode || ""}   onChange={(v) => setFilter("study_mode", v as UniversityFilters["study_mode"])}   options={STUDY_MODES} />
-          <FilterSelect label="لغة الدراسة"    value={filters.study_language || ""} onChange={(v) => setFilter("study_language", v)} options={LANGUAGES} />
-          <div className="flex flex-col gap-1">
-            <span className="up-filter-label">خيارات</span>
-            <div className="flex flex-col gap-1.5 mt-1">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked={!!filters.has_scholarship}
-                  onChange={(e) => setFilter("has_scholarship", e.target.checked || undefined)}
-                  className="accent-emerald-600" />
-                <span className="up-filter-opt-label">منح متاحة</span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked={!!filters.is_verified}
-                  onChange={(e) => setFilter("is_verified", e.target.checked || undefined)}
-                  className="accent-emerald-600" />
-                <span className="up-filter-opt-label">موثقة فقط</span>
-              </label>
-            </div>
+        {/* رقائق الدولة السريعة + زر التصفية المتقدمة */}
+        <div className="up-quick-filters">
+          <div className="content-hub-chips up-country-chips" role="tablist" aria-label="تصفية حسب الدولة">
+            <button
+              type="button" role="tab" aria-selected={!filters.country}
+              className={!filters.country ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+              onClick={() => setFilter("country", undefined)}
+            >كل الدول</button>
+            {COUNTRIES.map((c) => (
+              <button
+                key={c} type="button" role="tab" aria-selected={filters.country === c}
+                className={filters.country === c ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+                onClick={() => setFilter("country", filters.country === c ? undefined : c)}
+              >{c}</button>
+            ))}
           </div>
+          <FilterToggle onClick={() => setFiltersOpen(true)} label={`تصفية متقدمة${activeFilterCount ? ` (${activeFilterCount})` : ""}`} />
         </div>
 
         {/* إحصائية */}
@@ -223,6 +220,32 @@ function UniversitiesContent() {
       </div>
 
       <CompareBar />
+
+      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="تصفية متقدمة">
+        <div className="up-sheet-filters">
+          <FilterSelect label="الدرجة العلمية" value={filters.degree_level || ""} onChange={(v) => setFilter("degree_level", v as UniversityFilters["degree_level"])} options={DEGREE_LEVELS} />
+          <FilterSelect label="نظام الدراسة"   value={filters.study_mode || ""}   onChange={(v) => setFilter("study_mode", v as UniversityFilters["study_mode"])}   options={STUDY_MODES} />
+          <FilterSelect label="لغة الدراسة"    value={filters.study_language || ""} onChange={(v) => setFilter("study_language", v)} options={LANGUAGES} />
+          <div className="flex flex-col gap-1.5">
+            <span className="up-filter-label">خيارات إضافية</span>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={!!filters.has_scholarship}
+                onChange={(e) => setFilter("has_scholarship", e.target.checked || undefined)}
+                className="accent-emerald-600" />
+              <span className="up-filter-opt-label">منح متاحة</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={!!filters.is_verified}
+                onChange={(e) => setFilter("is_verified", e.target.checked || undefined)}
+                className="accent-emerald-600" />
+              <span className="up-filter-opt-label">موثقة فقط</span>
+            </label>
+          </div>
+          <button type="button" className="up-clear-btn" onClick={() => setFiltersOpen(false)}>
+            تطبيق
+          </button>
+        </div>
+      </FilterBottomSheet>
     </div>
   );
 }
