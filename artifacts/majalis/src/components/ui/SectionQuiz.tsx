@@ -2,18 +2,21 @@ import { useState, useMemo } from "react";
 import { Brain, CheckCircle2, XCircle, RotateCcw } from "lucide-react";
 import { ALL_QUESTIONS } from "@/data/islamicQuizData";
 import type { QuizQuestion } from "@/data/islamicQuizData";
+import { recordQuizAttempt } from "@/lib/quiz-performance-service";
 
-function gatherPool(catId: string | string[]): QuizQuestion[] {
+type TaggedQuizQuestion = QuizQuestion & { _catId: string };
+
+function gatherPool(catId: string | string[]): TaggedQuizQuestion[] {
   const ids = Array.isArray(catId) ? catId : [catId];
   return ids.flatMap((id) => {
     const cat = ALL_QUESTIONS[id];
     if (!cat) return [];
-    return [...(cat[200] ?? []), ...(cat[400] ?? []), ...(cat[600] ?? [])];
+    return [...(cat[200] ?? []), ...(cat[400] ?? []), ...(cat[600] ?? [])].map((q) => ({ ...q, _catId: id }));
   });
 }
 
 interface QuizBodyProps {
-  questions: QuizQuestion[];
+  questions: TaggedQuizQuestion[];
   onRefresh: () => void;
 }
 
@@ -23,8 +26,10 @@ function QuizBody({ questions, onRefresh }: QuizBodyProps) {
 
   const reveal = (i: number) =>
     setRevealed((prev) => { const n = [...prev]; n[i] = true; return n; });
-  const mark = (i: number, correct: boolean) =>
+  const mark = (i: number, correct: boolean) => {
     setScores((prev) => { const n = [...prev]; n[i] = correct; return n; });
+    void recordQuizAttempt(questions[i]._catId, questions[i].id, correct, "section_quiz");
+  };
 
   const allDone = scores.every((s) => s !== null);
   const correctCount = scores.filter(Boolean).length;

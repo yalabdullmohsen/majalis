@@ -15,6 +15,12 @@ import {
 } from "@/lib/user-profile-service";
 import { BADGE_DEFS, BADGE_MAP } from "@/lib/user-badges";
 import { applyPageSeo } from "@/lib/seo";
+import {
+  fetchUserCategoryPerformance,
+  weakestCategories,
+  strongestCategories,
+  type CategoryPerformance,
+} from "@/lib/quiz-performance-service";
 
 const BADGE_ICON_MAP: Record<string, LucideIcon> = {
   Flame, Moon, Star, BookOpen, Library, GraduationCap, BookMarked, Repeat2, Sparkles,
@@ -45,6 +51,51 @@ function StatCard({
       <span className="profile-stat-card__label">{label}</span>
       {sub && <span className="profile-stat-card__sub">{sub}</span>}
     </div>
+  );
+}
+
+// ─── تحليل أداء الأسئلة (نقاط القوة والضعف) ──────────────────────────────────
+
+function QuizPerformancePanel({ perf }: { perf: CategoryPerformance[] }) {
+  if (perf.length === 0) return null;
+  const weak = weakestCategories(perf, 3);
+  const strong = strongestCategories(perf, 2);
+
+  return (
+    <section className="profile-quiz-perf-section">
+      <h2 className="profile-section-title"><HelpCircle size={18} strokeWidth={1.8} aria-hidden="true" /> تحليل مستواك في الأسئلة</h2>
+      {weak.length > 0 ? (
+        <div className="profile-quiz-perf__weak">
+          <p className="profile-quiz-perf__hint">
+            بناءً على إجاباتك، هذه المواضيع تحتاج مراجعة أكثر:
+          </p>
+          <ul className="profile-quiz-perf__list">
+            {weak.map((c) => (
+              <li key={c.categoryId} className="profile-quiz-perf__item profile-quiz-perf__item--weak">
+                <span className="profile-quiz-perf__cat">{c.categoryName}</span>
+                <span className="profile-quiz-perf__pct">{c.accuracy}% صحيحة ({c.correct}/{c.total})</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <p className="profile-quiz-perf__hint">أداؤك متوازن في كل المواضيع التي خضتها حتى الآن — واصل!</p>
+      )}
+      {strong.length > 0 && (
+        <div className="profile-quiz-perf__strong">
+          <p className="profile-quiz-perf__hint profile-quiz-perf__hint--strong">أقوى مواضيعك:</p>
+          <ul className="profile-quiz-perf__list">
+            {strong.map((c) => (
+              <li key={c.categoryId} className="profile-quiz-perf__item profile-quiz-perf__item--strong">
+                <span className="profile-quiz-perf__cat">{c.categoryName}</span>
+                <span className="profile-quiz-perf__pct">{c.accuracy}%</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <Link href="/quiz" className="profile-quick-link">تدرّب أكثر ←</Link>
+    </section>
   );
 }
 
@@ -240,6 +291,7 @@ export default function UserStatsPage() {
   const [resumeItems, setResumeItems] = useState<ResumeItem[]>([]);
   const [newBadges, setNewBadges] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const [quizPerf, setQuizPerf] = useState<CategoryPerformance[]>([]);
 
   const earnedSet = useMemo(
     () => new Set(stats?.earnedBadges.map((b) => b.key) ?? []),
@@ -287,6 +339,8 @@ export default function UserStatsPage() {
       })
       .catch(() => {})
       .finally(() => setLoading(false));
+
+    void fetchUserCategoryPerformance().then(setQuizPerf).catch(() => setQuizPerf([]));
   }, [isLoggedIn, user?.id]);
 
   // ── Guards ────────────────────────────────────────────────────────
@@ -370,6 +424,9 @@ export default function UserStatsPage() {
           </div>
         </section>
       )}
+
+      {/* ── تحليل أداء الأسئلة ── */}
+      <QuizPerformancePanel perf={quizPerf} />
 
       {/* ── الاستئناف ── */}
       {user?.id && resumeItems.length > 0 && (

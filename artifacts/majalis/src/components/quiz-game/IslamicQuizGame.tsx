@@ -13,6 +13,7 @@ import {
   type QuizQuestion,
 } from "@/data/islamicQuizData";
 import { getQuizQuestions, getLocalUsedQuizIds, markQuizQuestionUsed } from "@/lib/supabase";
+import { recordQuizAttempt } from "@/lib/quiz-performance-service";
 
 // ─── Icon renderer ─────────────────────────────────────────────────────────
 
@@ -680,14 +681,20 @@ export function IslamicQuizGame() {
   const handleMarkCorrect = useCallback(() => {
     clearTimer();
     if (state.activeQuestion?.id) markQuizQuestionUsed(state.activeQuestion.id);
+    if (state.activeQuestion?.id && state.activeCell?.categoryId) {
+      void recordQuizAttempt(state.activeCell.categoryId, state.activeQuestion.id, true, "team_game");
+    }
     dispatch({ type: "MARK_CORRECT" });
-  }, [state.activeQuestion, clearTimer]);
+  }, [state.activeQuestion, state.activeCell, clearTimer]);
 
   const handleMarkWrong = useCallback(() => {
     clearTimer();
     if (state.activeQuestion?.id) markQuizQuestionUsed(state.activeQuestion.id);
+    if (state.activeQuestion?.id && state.activeCell?.categoryId) {
+      void recordQuizAttempt(state.activeCell.categoryId, state.activeQuestion.id, false, "team_game");
+    }
     dispatch({ type: "MARK_WRONG" });
-  }, [state.activeQuestion, clearTimer]);
+  }, [state.activeQuestion, state.activeCell, clearTimer]);
 
   return (
     <div className="qzg-root">

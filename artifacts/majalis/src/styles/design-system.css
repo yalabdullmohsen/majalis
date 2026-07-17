@@ -2333,6 +2333,25 @@ hr.decorative,
 .profile-stat-card__label { font-size: 0.72rem; color: var(--majalis-ink-soft); font-weight: 600; }
 .profile-stat-card__sub { font-size: 0.65rem; color: var(--majalis-ink-soft); }
 
+/* ── تحليل أداء الأسئلة ──────────────────────────────────────────── */
+.profile-quiz-perf-section { margin-bottom: 1.25rem; }
+.profile-quiz-perf__hint { font-size: 0.8rem; color: var(--majalis-ink-soft); margin: 0 0 0.5rem; }
+.profile-quiz-perf__hint--strong { margin-top: 0.75rem; }
+.profile-quiz-perf__list { display: flex; flex-direction: column; gap: 0.4rem; margin: 0 0 0.5rem; padding: 0; list-style: none; }
+.profile-quiz-perf__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--ds-radius-lg, 0.625rem);
+  border: 1px solid var(--ds-line-color);
+  font-size: 0.82rem;
+}
+.profile-quiz-perf__item--weak { background: rgba(220, 38, 38, 0.06); border-color: rgba(220, 38, 38, 0.18); }
+.profile-quiz-perf__item--strong { background: rgba(23, 107, 87, 0.06); border-color: rgba(23, 107, 87, 0.18); }
+.profile-quiz-perf__cat { font-weight: 700; color: var(--majalis-ink); }
+.profile-quiz-perf__pct { font-size: 0.75rem; color: var(--majalis-ink-soft); }
+
 /* ── لوحة الشارات ───────────────────────────────────────────────── */
 .profile-badges-section { margin-bottom: 1.25rem; }
 .profile-badges-hint { font-size: 0.8rem; color: var(--majalis-ink-soft); margin: 0 0 0.75rem; }
