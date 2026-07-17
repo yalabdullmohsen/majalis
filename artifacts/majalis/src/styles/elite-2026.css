@@ -14856,10 +14856,16 @@ img[loading="lazy"]:not([src=""]) {
   color: var(--elite-ink, #0C0C0C) !important;
 }
 
-/* العناوين h1-h4 على أي خلفية فاتحة — داكنة */
+/* العناوين h1-h4 على أي خلفية فاتحة — داكنة
+   استثناء .ds-section__title/.cards-page-title/.fiqh-council-section-title:
+   عناوين قد تقع داخل حاوية "card" ذات خلفية زمردية داكنة مقصودة (بانر عنوان
+   قسم)، فتحتاج نصًا أبيض لا زمرديًا داكنًا (كانت تُنتج نصًّا داكنًا فوق
+   خلفية داكنة — غير مقروء تقريبًا، 2026-07-17). */
 .bg-white h1, .bg-white h2, .bg-white h3, .bg-white h4,
-[class*="card"] h1, [class*="card"] h2,
-[class*="card"] h3, [class*="card"] h4 {
+[class*="card"] h1:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title),
+[class*="card"] h2:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title),
+[class*="card"] h3:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title),
+[class*="card"] h4:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title) {
   color: var(--elite-forest, #052E16) !important;
 }
 
@@ -25521,6 +25527,11 @@ html[data-theme="dark"] .qc-badge--gov { background: rgba(92,196,154,.15); color
 
 /* dark mode */
 html[data-theme="dark"] .sq-section { background: #0E1F18; border-color: rgba(92,196,154,.25); }
+/* .sq-header يعتمد background: var(--ds-emerald) — هذا المتغير يتحوّل لأخضر
+   نعناعي فاتح (#3BAD8A) في الوضع الليلي (يتقاطع مع --msk-gold عبر سلسلة
+   الإرث)، فيُفشِل تباين النص الأبيض فوقه (2.4:1 فقط). تثبيت صريح بلون
+   زمردي داكن مطابق للوضع النهاري بدل الاعتماد على المتغير المتقاطع. */
+html[data-theme="dark"] .sq-header { background: #0E6E52 !important; }
 html[data-theme="dark"] .sq-card { background: #0f1f17; border-color: rgba(92,196,154,.15); color: #E8DED4; }
 html[data-theme="dark"] .sq-card--correct { background: #0d2e18; border-color: #22c55e; }
 html[data-theme="dark"] .sq-card--wrong   { background: #2e0d0d; border-color: #ef4444; }
@@ -31676,5 +31687,32 @@ html[data-theme="dark"] .wn-card__cat,
 html[data-theme="dark"] .zk-card__rate,
 html[data-theme="dark"] .zk-card__title,
 html[data-theme="dark"] .zk-mustahiq__dalil {
+  color: var(--clr-text-1, #E5F0EC) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   إصلاح تباين إضافي — عناوين h1-h4 كانت تُسكَتها استثناءات ناقصة في
+   majalis-v2.css (رأت لون --majalis-emerald-deep الزمردي الداكن بدل لونها
+   الخاص المصمَّم لها)، ثم بعد استثنائها هنا عاد بعضها لخلفية داكنة بلون نص
+   داكن أصلي (#111 إلخ) لا نسخة له في الوضع الليلي — إصلاح جماعي بنفس نمط
+   القائمة أعلاه. تحقّق: audit-color-contrast.mjs، 2026-07-17.
+   ══════════════════════════════════════════════════════════════════ */
+html[data-theme="dark"] .an-hero__title,
+html[data-theme="dark"] .sch-profile-hero__name,
+html[data-theme="dark"] .jn-section__title,
+html[data-theme="dark"] .jn-subtitle,
+html[data-theme="dark"] .jn-related__title,
+html[data-theme="dark"] .sw-related__title,
+html[data-theme="dark"] .hj-section__title,
+html[data-theme="dark"] .hj-related__title,
+html[data-theme="dark"] .th-section__title,
+html[data-theme="dark"] .th-related__title,
+html[data-theme="dark"] .fa-related__title,
+html[data-theme="dark"] .qlive-player__name,
+html[data-theme="dark"] .seerah-panel__title,
+html[data-theme="dark"] .seerah-panel__events-title,
+html[data-theme="dark"] .fq-ref__title,
+html[data-theme="dark"] .sh-step__title,
+html[data-theme="dark"] .ikm-card__title {
   color: var(--clr-text-1, #E5F0EC) !important;
 }
