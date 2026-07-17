@@ -1,41 +1,12 @@
 /**
- * Majlis Design System v3 — compact, unified, minimal.
- * Applied globally across all pages.
+ * Majlis Design System — applied globally across all pages.
+ * تعريف القيم الفعلي في كتلة ":root" الأحدث أسفل هذا الملف ("Design
+ * System v5") — كانت كتلة أقدم (v3) هنا تُعيد تعريف كل هذه المتغيرات
+ * نفسها بقيم مختلفة، فتُلغيها الكتلة الأحدث بترتيب الـcascade دون أن
+ * تُستخدَم فعليًا في أي مكان (تحقّق: getComputedStyle على المتصفح الحي
+ * يطابق قيم v5 حصرًا) — أُزيلت لمنع الالتباس المستقبلي، بلا أي تغيير
+ * بصري (القيم الفعلية المطبَّقة لم تتغيّر).
  */
-
-:root {
-  --ds-base: 15px;
-  --ds-space-1: 0.25rem;
-  --ds-space-2: 0.5rem;
-  --ds-space-3: 0.75rem;
-  --ds-space-4: 1rem;
-  --ds-space-5: 1.25rem;
-  --ds-space-6: 1.5rem;
-  --ds-radius-sm: 0.375rem;
-  --ds-radius: 0.5rem;
-  --ds-radius-lg: 0.625rem;
-  --ds-shadow-sm: 0 1px 2px rgba(22, 78, 60, 0.05);
-  --ds-shadow: 0 2px 8px rgba(22, 78, 60, 0.07);
-  --ds-shadow-lg: 0 8px 24px rgba(22, 78, 60, 0.09);
-  --ds-text-xs: 0.6875rem;
-  --ds-text-sm: 0.8125rem;
-  --ds-text-base: 0.875rem;
-  --ds-text-md: 0.9375rem;
-  --ds-text-lg: 1.0625rem;
-  --ds-text-xl: 1.25rem;
-  --ds-text-2xl: 1.375rem;
-  --ds-line: 1.55;
-  --ds-emerald:      var(--msk-gold,      #176B57);
-  --ds-emerald-deep: var(--msk-gold-deep, #123F36);
-  --ds-emerald-soft: var(--majalis-sage,  #EAF3EF);
-  --ds-parchment:    var(--msk-canvas,    #FAF8F5);
-  --ds-parchment-deep:var(--msk-canvas-2, #F0EDE8);
-  --ds-ink:          var(--msk-text,      #1C1A18);
-  --ds-ink-soft:     var(--msk-text-2,    #5C5550);
-  --ds-line-color:   var(--msk-border,    #E0DBD5);
-  --ds-max: 72rem;
-  --ds-content-max: 48rem;
-}
 
 html {
   font-size: var(--ds-base);
