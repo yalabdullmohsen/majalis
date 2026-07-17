@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { AlertTriangle, Trash2, ShieldOff, CheckCircle } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
@@ -10,6 +10,7 @@ export default function AccountDeletionPage() {
   const [step, setStep] = useState<"info" | "confirm" | "typing" | "deleting" | "done">("info");
   const [confirmWord, setConfirmWord] = useState("");
   const [error, setError] = useState("");
+  const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     applyPageSeo({
@@ -19,6 +20,24 @@ export default function AccountDeletionPage() {
       robots: "noindex, nofollow",
     });
   }, []);
+
+  // قاعدة [class$="-hero"], [class$="-hero"] * العامة (elite-2026.css) تفرض
+  // color:#fff!important على .accd-hero وكل عنصر داخله (h1/p/الأيقونة)
+  // افتراضًا أن خلفيته داكنة — .accd-hero بلا خلفية فعلاً. أي محدِّد CSS
+  // خارجي (حتى !important بتخصيص أعلى) يخسر أمامها لسبب لم يُحسَم رغم
+  // تحقيق مطوَّل، وحتى inline style عادي (style={{}}) يخسر أيضًا لأن
+  // !important في ورقة الأنماط يتفوّق على inline غير important بصرف النظر
+  // عن التخصيص — والقاعدة تطابق كل عنصر ابن مباشرة عبر "*" فلا يكفي تصحيح
+  // لون الحاوية وحدها (لا وراثة فعلية). الحل الوحيد المؤكَّد تجريبيًا: فرض
+  // inline style بأولوية "important" على كل عنصر داخل الهيرو عبر DOM API.
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+    hero.style.setProperty("color", "#DC2626", "important");
+    hero.querySelectorAll<HTMLElement>("*").forEach((el) => {
+      el.style.setProperty("color", "#DC2626", "important");
+    });
+  }, [step]);
 
   async function handleDelete() {
     if (confirmWord !== "حذف") { setError("يجب كتابة كلمة «حذف» بالضبط للتأكيد."); return; }
@@ -60,9 +79,9 @@ export default function AccountDeletionPage() {
 
   return (
     <div className="page-shell">
-      <header className="accd-hero">
+      <header ref={heroRef} className="accd-hero" style={{ color: "#DC2626" }}>
         <ShieldOff size={36} className="accd-hero__icon" aria-hidden="true" />
-        <h1>حذف الحساب نهائياً</h1>
+        <h1 style={{ color: "#DC2626" }}>حذف الحساب نهائياً</h1>
         <p>هذه العملية لا يمكن التراجع عنها.</p>
       </header>
 

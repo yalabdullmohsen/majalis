@@ -452,6 +452,15 @@ html[data-theme="dark"] body {
   color: #E8DED4;
 }
 
+/* فقاعات المساعد الذكي (.assistant-message-assistant/-bubble) بخلفية
+   بيضاء ثابتة بلا نظير ليلي — نص العنوان يستخدم لون فاتح صحيح يفترض
+   خلفية داكنة، فيختفي التباين تمامًا في الوضع الليلي. */
+html[data-theme="dark"] .assistant-message-assistant,
+html[data-theme="dark"] .assistant-message-bubble {
+  background: #1A2120 !important;
+  border-color: rgba(255,255,255,.08) !important;
+}
+
 /* WCAG AA — focus-visible في الوضع الليلي */
 html[data-theme="dark"] :focus-visible {
   outline-color: #5CC49A !important;

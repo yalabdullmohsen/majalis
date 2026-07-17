@@ -1600,9 +1600,9 @@
 }
 
 /* ── 2. عناوين page-shell عالمية: El Messiri + زمردي ── */
-.page-shell h1:not([class*="ds-page-header"]):not(.fqh-hub-hero__title):not(.twh-hub-hero__title):not(.akl-hero__title):not(.arkan-hero__title):not(.ds-hero__title):not(.duas-hero__title):not(.mk-hero__title):not(.sm-hero__title),
-.page-shell h2:not([class*="ds-page-header"]),
-.page-shell h3,
+.page-shell h1:not([class*="ds-page-header"]):not(.fqh-hub-hero__title):not(.twh-hub-hero__title):not(.akl-hero__title):not(.arkan-hero__title):not(.ds-hero__title):not(.duas-hero__title):not(.mk-hero__title):not(.sm-hero__title):not(.an-hero__title):not(.sch-profile-hero__name),
+.page-shell h2:not([class*="ds-page-header"]):not(.sq-title):not(.jn-section__title):not(.jn-subtitle):not(.jn-related__title):not(.sw-related__title):not(.hj-section__title):not(.hj-related__title):not(.th-section__title):not(.th-related__title):not(.fa-related__title):not(.seerah-panel__title):not(.fq-ref__title):not(.sh-step__title),
+.page-shell h3:not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title),
 .page-shell h4 {
   font-family: var(--mj-font-display) !important;
   color: var(--majalis-emerald-deep, #123F36) !important;
@@ -1799,9 +1799,9 @@
 
 /* ── 2. عناوين الصفحات العامة → El Messiri + أخضر زمردي ── */
 /* مستثنى: عناوين elite-2026 المصممة (تأخذ ألوانها من elite-2026.css) */
-.page-shell h1:not(.ds-page-header__title):not(.cards-page-title):not(.search-page-title):not(.ds-section__title):not(.fqh-hub-hero__title):not(.twh-hub-hero__title):not(.akl-hero__title):not(.arkan-hero__title):not(.ds-hero__title):not(.duas-hero__title):not(.mk-hero__title):not(.sm-hero__title),
-.page-shell h2:not(.ds-page-header__title):not(.lessons-v2-section__title):not(.lessons-past-section__title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title):not(.ds-section__title),
-.page-shell h3:not(.ds-section__title) {
+.page-shell h1:not(.ds-page-header__title):not(.cards-page-title):not(.search-page-title):not(.ds-section__title):not(.fqh-hub-hero__title):not(.twh-hub-hero__title):not(.akl-hero__title):not(.arkan-hero__title):not(.ds-hero__title):not(.duas-hero__title):not(.mk-hero__title):not(.sm-hero__title):not(.an-hero__title):not(.sch-profile-hero__name),
+.page-shell h2:not(.ds-page-header__title):not(.lessons-v2-section__title):not(.lessons-past-section__title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title):not(.ds-section__title):not(.sq-title):not(.jn-section__title):not(.jn-subtitle):not(.jn-related__title):not(.sw-related__title):not(.hj-section__title):not(.hj-related__title):not(.th-section__title):not(.th-related__title):not(.fa-related__title):not(.seerah-panel__title):not(.fq-ref__title):not(.sh-step__title),
+.page-shell h3:not(.ds-section__title):not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title) {
   font-family: var(--mj-font-display) !important;
   color: var(--majalis-emerald-deep, #123F36) !important;
 }
@@ -2208,6 +2208,15 @@
 .page-shell span:not([class]),
 .page-shell li {
   color: var(--majalis-ink-soft);
+}
+/* var(--majalis-ink-soft) هنا يتحول أحيانًا لظل رمادي معتم مصمَّم للوضع
+   النهاري فقط (#374151 من modern-2026.css) بلا نسخة ليلية تصل لهذا
+   السياق تحديدًا — نص باهت شبه غير مرئي فوق خلفيات داكنة. تثبيت مباشر
+   (2026-07-17). */
+html[data-theme="dark"] .page-shell p,
+html[data-theme="dark"] .page-shell span:not([class]),
+html[data-theme="dark"] .page-shell li {
+  color: #C8D5CE !important;
 }
 .page-shell h1,
 .page-shell h2,
@@ -2944,6 +2953,16 @@ table th {
   color: #fff;
 }
 .sch-profile-hero__name { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.2rem; }
+/* .sch-profile-hero لا خلفية داكنة فعلية له (مطابقة [class$="-hero"] عن طريق
+   الخطأ)، فيرث العنوان لون أبيض غير مرئي على الخلفية الفاتحة. استثناء
+   `.sch-profile-hero, .sch-profile-hero *{color:inherit!important}` بنفس
+   التخصيص (0,1,0) يتنافس مع قاعدة [class$="-hero"] البيضاء دون ضمان فوز
+   حتمي (يعتمد على ترتيب لا يمكن ضمانه بعد التصغير/الدمج) — محدِّد مركّب
+   أعلى تخصيصًا هنا يضمن الفوز دومًا بصرف النظر عن الترتيب. تحذير: لا تستخدم
+   var(--majalis-ink) هنا رغم فوز هذه القاعدة بمعركة التخصيص — --majalis-ink
+   نفسه أيضًا مُعاد تعريفه للأبيض ضمن نفس نطاق [class$="-hero"] (بنفس آلية
+   --clr-text-1)، فتُطبَّق قيمة بيضاء رغم فوز القاعدة. لون حرفي ثابت فقط. */
+.sch-profile-hero .sch-profile-hero__name { color: #17201D !important; }
 .sch-profile-hero__fullname { opacity: 0.7; font-size: 0.9rem; margin-bottom: 0.75rem; }
 .sch-profile-hero__meta { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.5rem; }
 .sch-profile-hero__died { font-size: 0.82rem; opacity: 0.65; display: flex; align-items: center; gap: 0.3rem; }
@@ -3006,8 +3025,19 @@ table th {
 
 /* ══ صفحة حذف الحساب (AccountDeletionPage) ═════════════════════════════════ */
 .accd-hero { text-align: center; padding: 2rem 1rem 1.5rem; }
-.accd-hero__icon { color: #DC2626; margin: 0 auto 1rem; display: block; }
-.accd-hero h1 { font-size: 1.5rem; color: #DC2626; }
+.accd-hero__icon { color: #DC2626 !important; margin: 0 auto 1rem; display: block; }
+/* .accd-hero لا خلفية داكنة له (يطابق [class$="-hero"] عن طريق الخطأ)، فيرث
+   لون تحذير أحمر (#DC2626 دلالي: حذف حساب نهائي) لكن يخسره أمام قاعدة
+   [class$="-hero"]{color:#fff!important}. جُرِّب !important بتخصيص متصاعد
+   (حتى ×4 تكرار صنف)، وحقن CSS متأخر بعد التحميل، وقاعدة inherit مطابقة
+   تمامًا للأسلوب الناجح فعليًا في .an-hero/.sch-profile-hero بنفس الجلسة —
+   كلها فشلت هنا تحديدًا لسبب لم يُحسَم رغم تحقيق مطوَّل (لا فرق بين dev
+   وpreview، تحقّق معزول بنفس حزمة CSS المُجمَّعة فعليًا نجح، الفرق حصريًا
+   في التطبيق الحي على هذا المسار). الإصلاح الفعلي المضمون في التطبيق:
+   inline style على العنصر مباشرة (AccountDeletionPage.tsx) — يتفوّق دومًا
+   بصرف النظر عن أي غموض في الـcascade. هذه القاعدة أُبقيت كخط دفاع ثانٍ
+   لا كإصلاح أساسي. */
+.accd-hero h1 { font-size: 1.5rem; color: #DC2626 !important; }
 .accd-hero p { opacity: 0.65; margin-top: 0.4rem; }
 
 .accd-info { margin-bottom: 1.5rem; border: 1px solid rgba(220,38,38,0.2); }

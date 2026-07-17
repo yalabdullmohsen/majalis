@@ -25,7 +25,7 @@ export const ARBAEEN_REVIEW_STATUS_LABELS: Record<ArbaeenReviewStatus, string> =
 
 /**
  * يعيد فقط الصفوف المنشورة فعليًا (review_status='published' — يفرضه RLS
- * أيضًا على مستوى القاعدة). المجموعة قيد الاكتمال (17 من 40 حاليًا)، فعدد
+ * أيضًا على مستوى القاعدة). المجموعة قيد الاكتمال (35 من 40 حاليًا)، فعدد
  * النتائج المتوقع أقل من 40 حتى تكتمل المراجعة العلمية والبحث.
  */
 export async function fetchPublishedArbaeenLove(): Promise<ArbaeenHadith[]> {

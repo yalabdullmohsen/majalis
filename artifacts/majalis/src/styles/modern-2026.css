@@ -212,9 +212,9 @@ body {
 .ds-page h4,
 .ds-page h5,
 .ds-page h6,
-.page-shell h1,
-.page-shell h2,
-.page-shell h3,
+.page-shell h1:not(.an-hero__title):not(.sch-profile-hero__name),
+.page-shell h2:not(.sq-title):not(.jn-section__title):not(.jn-subtitle):not(.jn-related__title):not(.sw-related__title):not(.hj-section__title):not(.hj-related__title):not(.th-section__title):not(.th-related__title):not(.fa-related__title):not(.seerah-panel__title):not(.fq-ref__title):not(.sh-step__title):not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title),
+.page-shell h3:not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title),
 .page-shell h4,
 .page-shell h5,
 .page-shell h6,
@@ -863,6 +863,21 @@ th {
 td {
   color: var(--txt-primary, #111827) !important;
   border-color: rgba(0,0,0,0.06) !important;
+}
+/* لا نسخة ليلية سابقًا لعنصر table/th/td العام — خلفية بيضاء ونص داكن
+   ثابتان حتى في الوضع الليلي (كل جدول في الموقع، مثال: صفحات تفاصيل
+   جلسات المجمع الفقهي) (2026-07-17). */
+html[data-theme="dark"] table {
+  background: #122019 !important;
+}
+html[data-theme="dark"] th {
+  background: rgba(92,196,154,.12) !important;
+  color: #C8D5CE !important;
+  border-color: rgba(255,255,255,.08) !important;
+}
+html[data-theme="dark"] td {
+  color: #E5F0EC !important;
+  border-color: rgba(255,255,255,.06) !important;
 }
 
 /* ══ 22. Empty States ═════════════════════════════════════════════════════ */
