@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo } from "react";
-import { useScrollRestore } from "@/hooks/useScrollRestore";
 import { Link } from "wouter";
 import { Search, ChevronLeft, BookOpen, Star, Filter, Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
@@ -1110,7 +1109,6 @@ const ERAS = ["الكل", "الأئمة الأربعة", "المحدثون", "ا
 const SPECIALTIES = ["الكل", "فقه", "حديث", "عقيدة", "تفسير", "أصول", "مقاصد", "لغة", "سيرة", "رجال"];
 
 export default function IslamicScholarsPage() {
-  useScrollRestore("/scholars");
   const todayScholar = useMemo(() => {
     const now = new Date();
     const start = new Date(now.getFullYear(), 0, 0);

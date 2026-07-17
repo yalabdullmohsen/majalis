@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
-import { useScrollRestore } from "@/hooks/useScrollRestore";
 import { Pencil, Trash2 } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
@@ -227,7 +226,6 @@ export default function LessonsPage({
   initialActive?: KuwaitLessonRecord[];
   initialArchived?: KuwaitLessonRecord[];
 } = {}) {
-  useScrollRestore("/lessons");
   const [activeLessons, setActiveLessons] = useState<KuwaitLessonRecord[]>(initialActive ?? []);
   const [archivedLessons, setArchivedLessons] = useState<KuwaitLessonRecord[]>(initialArchived ?? []);
   const [loading, setLoading] = useState(!initialActive);

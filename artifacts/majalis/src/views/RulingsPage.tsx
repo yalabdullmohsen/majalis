@@ -55,6 +55,7 @@ import {
 } from "@/lib/rulings-service";
 import type { CategoryStat, RulingSortMode, ShariaRulingExtended } from "@/lib/rulings-types";
 import { usePageView } from "@/hooks/usePageView";
+import { usePersistedState } from "@/hooks/usePersistedState";
 import { RequestManager } from "@/lib/request-manager";
 import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
 
@@ -73,15 +74,15 @@ export default function RulingsPage() {
   const { isAdmin } = useAuth();
   const [items, setItems] = useState<ShariaRulingExtended[]>([]);
   const [total, setTotal] = useState(0);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = usePersistedState("filters:/rulings:page", 1);
   const [loading, setLoading] = useState(true);
   const [dbState, setDbState] = useState<{ needsSeed?: boolean; dbError?: string }>({});
   const [stats, setStats] = useState<CategoryStat[]>([]);
   const [encyclopediaTotal, setEncyclopediaTotal] = useState(0);
-  const [category, setCategory] = useState("الكل");
-  const [subcategory, setSubcategory] = useState<string | undefined>();
-  const [search, setSearch] = useState("");
-  const [sort, setSort] = useState<RulingSortMode>("importance");
+  const [category, setCategory] = usePersistedState("filters:/rulings:category", "الكل");
+  const [subcategory, setSubcategory] = usePersistedState<string | undefined>("filters:/rulings:subcategory", undefined);
+  const [search, setSearch] = usePersistedState("filters:/rulings:search", "");
+  const [sort, setSort] = usePersistedState<RulingSortMode>("filters:/rulings:sort", "importance");
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const debouncedSearch = useDebouncedValue(search);

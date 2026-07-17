@@ -7,6 +7,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
+import { usePersistedState } from "@/hooks/usePersistedState";
 import {
   fetchUniversities,
   DEGREE_LEVELS,
@@ -50,9 +51,9 @@ function UniversitiesContent() {
   const [loading, setLoading]           = useState(true);
   const [, setTotal]                     = useState(0);
   const [seedNeeded, setSeedNeeded]     = useState(false);
-  const [search, setSearch]             = useState("");
-  const [searchInput, setSearchInput]   = useState("");
-  const [filters, setFilters]           = useState<UniversityFilters>({});
+  const [search, setSearch]             = usePersistedState("filters:/universities:search", "");
+  const [searchInput, setSearchInput]   = usePersistedState("filters:/universities:searchInput", "");
+  const [filters, setFilters]           = usePersistedState<UniversityFilters>("filters:/universities:filters", {});
   const [filtersOpen, setFiltersOpen]   = useState(false);
   const activeFilterCount = Object.values(filters).filter(Boolean).length;
 

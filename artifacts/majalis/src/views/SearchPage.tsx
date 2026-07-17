@@ -48,6 +48,7 @@ import { searchLocalExtensions } from "@/lib/local-search-ext";
 import { lessonRecordToSearchRow, searchUnifiedLessons } from "@/lib/lessons-service";
 import { addSearchHistory, getSearchHistory, clearSearchHistory } from "@/lib/search-history";
 import { trackSearchQuery } from "@/lib/content-analytics";
+import { usePersistedState } from "@/hooks/usePersistedState";
 import {
   searchFiqhCouncilForGlobal,
   mergeFiqhSearchResults,
@@ -256,7 +257,7 @@ export default function SearchPage() {
   const [loading, setLoading] = useState(false);
   const [responseMs, setResponseMs] = useState<number | null>(null);
   const [showFilters, setShowFilters] = useState(false);
-  const [filters, setFilters] = useState({ type: "", author: "", status: "", language: "" });
+  const [filters, setFilters] = usePersistedState("filters:/search:filters", { type: "", author: "", status: "", language: "" });
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
 

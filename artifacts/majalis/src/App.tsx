@@ -245,11 +245,45 @@ function SeoManager() {
   return null;
 }
 
+/**
+ * كان يفرض scrollTo(0,0) على كل تغيير مسار بلا استثناء، فيُفقِد موضع
+ * التمرير حتى عند الرجوع (زر الرجوع العام أو زر رجوع المتصفح) — طلب صريح
+ * من المالك بحفظ حالة الصفحة (تمرير) عند الرجوع. الآن: يميّز بين تنقّل
+ * "للأمام" (رابط/بطاقة جديدة → تمرير للأعلى كالمعتاد) و"للخلف"
+ * (popstate → استعادة آخر موضع تمرير محفوظ لذلك المسار من sessionStorage).
+ */
 function ScrollResetOnNav() {
   const [location] = useLocation();
+  const isPopRef = useRef(false);
+  const lastLocationRef = useRef(location);
+
   useEffect(() => {
+    const onPopState = () => { isPopRef.current = true; };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
+  useEffect(() => {
+    const leavingLocation = lastLocationRef.current;
+    if (leavingLocation !== location) {
+      try {
+        sessionStorage.setItem(`scroll-pos:${leavingLocation}`, String(window.scrollY));
+      } catch { /* sessionStorage غير متاح (وضع خاص مثلًا) — تجاهل بأمان */ }
+    }
+    lastLocationRef.current = location;
+
+    if (isPopRef.current) {
+      isPopRef.current = false;
+      const saved = sessionStorage.getItem(`scroll-pos:${location}`);
+      if (saved != null) {
+        const top = Number(saved);
+        requestAnimationFrame(() => window.scrollTo({ top, left: 0, behavior: "instant" }));
+        return;
+      }
+    }
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, [location]);
+
   return null;
 }
 

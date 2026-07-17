@@ -11,6 +11,7 @@ import { LIBRARY_CATEGORIES } from "@/lib/library-catalog";
 import { Chip } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { ContentHubLayout } from "@/components/layout/ContentHubLayout";
+import { usePersistedState } from "@/hooks/usePersistedState";
 import { applyPageSeo } from "@/lib/seo";
 import { BookOpen, SortAsc, SortDesc, LayoutGrid, List } from "lucide-react";
 
@@ -84,11 +85,11 @@ export default function LibraryPage({
   const { isAdmin } = useAuth();
   const [items, setItems] = useState<any[]>(initialItems ?? []);
   const [loading, setLoading] = useState(!initialItems);
-  const [category, setCategory] = useState("الكل");
-  const [search, setSearch] = useState("");
+  const [category, setCategory] = usePersistedState("filters:/library:category", "الكل");
+  const [search, setSearch] = usePersistedState("filters:/library:search", "");
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [sortKey, setSortKey] = useState<SortKey>("newest");
-  const [sortAsc, setSortAsc] = useState(true);
+  const [sortKey, setSortKey] = usePersistedState<SortKey>("filters:/library:sortKey", "newest");
+  const [sortAsc, setSortAsc] = usePersistedState("filters:/library:sortAsc", true);
   const [view, setView] = useState<ViewMode>("grid");
 
   const loadLibrary = async () => {
