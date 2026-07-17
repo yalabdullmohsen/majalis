@@ -2209,6 +2209,15 @@
 .page-shell li {
   color: var(--majalis-ink-soft);
 }
+/* var(--majalis-ink-soft) هنا يتحول أحيانًا لظل رمادي معتم مصمَّم للوضع
+   النهاري فقط (#374151 من modern-2026.css) بلا نسخة ليلية تصل لهذا
+   السياق تحديدًا — نص باهت شبه غير مرئي فوق خلفيات داكنة. تثبيت مباشر
+   (2026-07-17). */
+html[data-theme="dark"] .page-shell p,
+html[data-theme="dark"] .page-shell span:not([class]),
+html[data-theme="dark"] .page-shell li {
+  color: #C8D5CE !important;
+}
 .page-shell h1,
 .page-shell h2,
 .page-shell h3,

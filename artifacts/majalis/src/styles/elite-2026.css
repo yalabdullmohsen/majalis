@@ -15093,6 +15093,12 @@ img[loading="lazy"]:not([src=""]) {
   padding: 1.5rem;
   box-shadow: 0 4px 20px rgba(0,0,0,0.06);
 }
+/* لا نسخة ليلية سابقًا — خلفية بيضاء ثابتة حتى في الوضع الليلي تُبقي نص
+   .qlive-youtube-notice الفاتح غير مقروء فوقها (2026-07-17). */
+html[data-theme="dark"] .qlive-player {
+  background: #122019 !important;
+  border-color: rgba(92,196,154,.15) !important;
+}
 .qlive-player__header {
   display: flex;
   align-items: center;
@@ -22289,8 +22295,20 @@ img[loading="lazy"]:not([src=""]) {
 }
 .share-btn:hover { opacity: .88; transform: translateY(-1px); }
 .share-btn--wa   { background: #0D5E3F; } /* أخضر واتساب #25D366 الأصلي كان يفشل تباين النص الأبيض (~2:1)؛ أعمق (2026-07-17) */
-.share-btn--tg   { background: #26A5E4; }
+.share-btn--tg   { background: #1B6FA8; } /* أزرق تيليجرام الرسمي #26A5E4 يفشل أيضًا (~2.9:1)؛ أعمق */
 .share-btn--copy { background: var(--majalis-emerald); }
+/* var(--majalis-emerald) يتحوّل أحيانًا لأخضر فاتح (#5CC49A، نفس عطل
+   legal-page-hero) — تثبيت خلفية داكنة صريحة بدل الاعتماد عليه هنا. */
+html[data-theme="dark"] .share-btn--copy { background: #0D5E3F !important; }
+/* .share-btn--snap (سناب شات) لم يكن له تعريف خلفية إطلاقًا فورث شفافية
+   كاملة → نص أبيض على خلفية الصفحة (بيضاء/فاتحة غالبًا) غير مرئي تمامًا
+   (2026-07-17). */
+.share-btn--snap { background: #1A1A1A; }
+/* .page-shell span:not([class]) (majalis-v2.css) تستهدف أي span بلا صنف
+   لتلوين نص عام داكن خافت — تصطدم بالسبان الداخلي غير المصنَّف لتسمية كل
+   زر مشاركة (<span>واتساب</span> إلخ)، فتُبطل لون #fff الموروث من
+   .share-btn (تطابق مباشر يفوز على وراثة بصرف النظر عن التخصيص). */
+.share-btn span { color: inherit !important; }
 .ca-actions-row {
   display: flex;
   flex-wrap: wrap;

@@ -59,6 +59,14 @@ const SCAN_FN = `() => {
     if (rect.width === 0 || rect.height === 0) continue;
     const cs = getComputedStyle(node);
     if (cs.visibility === "hidden" || cs.display === "none" || parseFloat(cs.opacity) < 0.2) continue;
+    // نص لقارئ الشاشة فقط (sr-only): مخفي بصريًا عمدًا عبر clip/clip-path
+    // بعرض/ارتفاع 1px (لا 0)، فيمر من فحص rect أعلاه لكن لا يراه أحد فعليًا
+    // — استبعاده يمنع إنذارات كاذبة عن نص لا يُعرَض بصريًا أصلًا.
+    if (
+      (cs.clipPath && cs.clipPath !== "none") ||
+      (cs.clip && cs.clip !== "auto") ||
+      (rect.width <= 1 && rect.height <= 1)
+    ) continue;
     const fg = parseColor(cs.color);
     if (!fg) continue;
     const bg = effectiveBg(node);

@@ -864,6 +864,21 @@ td {
   color: var(--txt-primary, #111827) !important;
   border-color: rgba(0,0,0,0.06) !important;
 }
+/* لا نسخة ليلية سابقًا لعنصر table/th/td العام — خلفية بيضاء ونص داكن
+   ثابتان حتى في الوضع الليلي (كل جدول في الموقع، مثال: صفحات تفاصيل
+   جلسات المجمع الفقهي) (2026-07-17). */
+html[data-theme="dark"] table {
+  background: #122019 !important;
+}
+html[data-theme="dark"] th {
+  background: rgba(92,196,154,.12) !important;
+  color: #C8D5CE !important;
+  border-color: rgba(255,255,255,.08) !important;
+}
+html[data-theme="dark"] td {
+  color: #E5F0EC !important;
+  border-color: rgba(255,255,255,.06) !important;
+}
 
 /* ══ 22. Empty States ═════════════════════════════════════════════════════ */
 .empty-state {
