@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearch } from "wouter";
-import { Pause, Square, ChevronLeft } from "lucide-react";
+import { Pause, Play, Square, ChevronLeft, RotateCcw } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { useAuth } from "@/components/AuthProvider";
 import { fetchSurahDetail, getSurahList } from "@/lib/quran-api";
@@ -13,6 +13,7 @@ import type { QuranASRProvider, ASRSession } from "@/lib/recitation-ai/asr-provi
 import { checkTajweedAvailability } from "@/lib/recitation-ai/precision-level";
 import { saveRecitationSession } from "@/lib/recitation-ai/recitation-session-service";
 import { addRecitationReviewItem } from "@/lib/recitation-ai/recitation-review-service";
+import { loadRecitationSettings, saveRecitationSettings } from "@/lib/recitation-ai/recitation-settings-service";
 import { InteractiveMushafReveal, type WordRevealInfo } from "@/components/quran/InteractiveMushafReveal";
 import type { AlertLevel, AlignmentEvent, PrecisionLevel, RecitationMode, ReferenceWord } from "@/lib/recitation-ai/types";
 import "@/styles/recitation-ai.css";
@@ -52,6 +53,8 @@ function RecitationTestPageInner() {
   const [justCompletedAyah, setJustCompletedAyah] = useState<number | null>(null);
   const [listening, setListening] = useState(false);
 
+  const [paused, setPaused] = useState(false);
+
   const engineRef = useRef<VerseAlignmentEngine | null>(null);
   const providerRef = useRef<QuranASRProvider | null>(null);
   const asrSessionRef = useRef<ASRSession | null>(null);
@@ -78,6 +81,26 @@ function RecitationTestPageInner() {
 
   const surahs = useMemo(() => getSurahList(), []);
 
+  // تحميل آخر إعدادات محفوظة للمستخدم (القسم 1) — لا تأثير لزائر مجهول
+  // (بلا حساب)، يبقى ببساطة على الإعدادات الافتراضية المحلية.
+  useEffect(() => {
+    if (!user?.id) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const saved = await loadRecitationSettings(user.id);
+        if (cancelled) return;
+        setMode(saved.defaultMode);
+        setPrecisionLevel(saved.precisionLevel);
+        setAlertLevel(saved.alertLevel);
+        setRevealGranularity(saved.revealGranularity);
+      } catch {
+        // تجاهل — الإعدادات الافتراضية المحلية تبقى سارية
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [user?.id]);
+
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -93,17 +116,44 @@ function RecitationTestPageInner() {
     return () => { cancelled = true; };
   }, []);
 
-  const startSession = useCallback(async () => {
+  /** يبدأ جلسة ASR جديدة على نفس المزوّد ويُغذّي نفس محرك المحاذاة القائم — يُستخدَم عند البدء الأول وعند الاستئناف بعد إيقاف مؤقت. */
+  const attachAsrSession = useCallback(async (provider: QuranASRProvider, engine: VerseAlignmentEngine) => {
+    const asrSession = await provider.startSession({ language: "ar-SA", precisionLevel });
+    asrSessionRef.current = asrSession;
+
+    if (provider.onPartialWord) {
+      unsubRef.current = provider.onPartialWord(asrSession, (word, atMs) => {
+        // خارج دورة render — ErrorBoundary لا يلتقط أخطاء المستدعيات
+        // غير المتزامنة، فأي خطأ هنا (مثلًا في المحرك) قد يُبقي الجلسة
+        // عالقة صامتًا بدل الانهيار. نلتقطه يدويًا وننهي الجلسة بصدق
+        // بدل تعليقها أو إسقاط الصفحة (القسم 12).
+        try {
+          const events = engine.feedWord(word, atMs);
+          applyEvents(events);
+        } catch (err) {
+          console.error("recitation-ai: feedWord failed", err);
+          setErrorMsg("حدث خلل أثناء تحليل التلاوة. أُنهيت الجلسة تلقائيًا لحمايتك — جرّب مجددًا.");
+          setListening(false);
+          unsubRef.current?.();
+          unsubRef.current = null;
+          void provider.endSession(asrSession).catch(() => {});
+          setPhase("error");
+        }
+      });
+    }
+  }, [precisionLevel]);
+
+  /** ينطلق منها كل من startSession (سورة كاملة) وretryAyah (آية واحدة، من شاشة التقرير). */
+  const startSessionWithWords = useCallback(async (words: ReferenceWord[]) => {
     setPhase("loading");
     setErrorMsg(null);
     try {
-      const detail = await fetchSurahDetail(surahNumber);
-      const words = buildReferenceWords(surahNumber, detail.ayahs);
       setReferenceWords(words);
       setWordStates(new Map(words.map((w) => [`${w.surah}:${w.ayah}:${w.wordIndex}`, "hidden" as const])));
       setCursorIdx(0);
       setLiveEvents([]);
       setJustCompletedAyah(null);
+      setPaused(false);
 
       const selection = await selectBestProvider(navigator.onLine);
       if (!selection.provider) {
@@ -115,33 +165,9 @@ function RecitationTestPageInner() {
 
       const engine = new VerseAlignmentEngine({ referenceWords: words, alertLevel });
       engineRef.current = engine;
-
-      const asrSession = await selection.provider.startSession({ language: "ar-SA", precisionLevel });
-      asrSessionRef.current = asrSession;
       sessionStartRef.current = Date.now();
 
-      if (selection.provider.onPartialWord) {
-        unsubRef.current = selection.provider.onPartialWord(asrSession, (word, atMs) => {
-          // خارج دورة render — ErrorBoundary لا يلتقط أخطاء المستدعيات
-          // غير المتزامنة، فأي خطأ هنا (مثلًا في المحرك) قد يُبقي الجلسة
-          // عالقة صامتًا بدل الانهيار. نلتقطه يدويًا وننهي الجلسة بصدق
-          // بدل تعليقها أو إسقاط الصفحة (القسم 12) — بلا الاعتماد على
-          // إغلاق finishSession (يُعرَّف لاحقًا في الملف، لتفادي أي
-          // مرجع قديم/معلَّق).
-          try {
-            const events = engine.feedWord(word, atMs);
-            applyEvents(events);
-          } catch (err) {
-            console.error("recitation-ai: feedWord failed", err);
-            setErrorMsg("حدث خلل أثناء تحليل التلاوة. أُنهيت الجلسة تلقائيًا لحمايتك — جرّب مجددًا.");
-            setListening(false);
-            unsubRef.current?.();
-            unsubRef.current = null;
-            void selection.provider.endSession(asrSession).catch(() => {});
-            setPhase("error");
-          }
-        });
-      }
+      await attachAsrSession(selection.provider, engine);
 
       setListening(true);
       setPhase("session");
@@ -149,7 +175,72 @@ function RecitationTestPageInner() {
       setErrorMsg(e instanceof Error ? e.message : "تعذّر بدء الجلسة");
       setPhase("error");
     }
-  }, [surahNumber, alertLevel, precisionLevel]);
+  }, [alertLevel, attachAsrSession]);
+
+  const startSession = useCallback(async () => {
+    if (user?.id) {
+      void saveRecitationSettings(user.id, {
+        defaultMode: mode,
+        precisionLevel,
+        alertLevel,
+        hintStyle: "progressive",
+        revealGranularity,
+        saveRecordings: false,
+        showErrorCount: true,
+      }).catch(() => {});
+    }
+    setPhase("loading");
+    try {
+      const detail = await fetchSurahDetail(surahNumber);
+      const words = buildReferenceWords(surahNumber, detail.ayahs);
+      await startSessionWithWords(words);
+    } catch (e) {
+      setErrorMsg(e instanceof Error ? e.message : "تعذّر بدء الجلسة");
+      setPhase("error");
+    }
+  }, [surahNumber, startSessionWithWords, user?.id, mode, precisionLevel, alertLevel, revealGranularity]);
+
+  /** "إعادة اختبار هذه الآية فورًا" — القسم 9. يبني كلمات مرجعية لآية واحدة فقط من نفس السورة. */
+  const retryAyah = useCallback(async (surah: number, ayah: number) => {
+    setPhase("loading");
+    try {
+      const detail = await fetchSurahDetail(surah);
+      const onlyAyah = detail.ayahs.filter((a) => a.numberInSurah === ayah);
+      const words = buildReferenceWords(surah, onlyAyah);
+      await startSessionWithWords(words);
+    } catch (e) {
+      setErrorMsg(e instanceof Error ? e.message : "تعذّر إعادة اختبار الآية");
+      setPhase("error");
+    }
+  }, [startSessionWithWords]);
+
+  /** إيقاف مؤقت: يوقف الاستماع فقط (يُغلق جلسة ASR) — محرك المحاذاة يحتفظ بموضعه وكل التقدّم المُحرَز. */
+  const pauseSession = useCallback(async () => {
+    const provider = providerRef.current;
+    const asrSession = asrSessionRef.current;
+    unsubRef.current?.();
+    unsubRef.current = null;
+    setListening(false);
+    setPaused(true);
+    if (provider && asrSession) {
+      try { await provider.endSession(asrSession); } catch { /* تجاهل */ }
+    }
+    asrSessionRef.current = null;
+  }, []);
+
+  /** استئناف بعد إيقاف مؤقت: جلسة ASR جديدة تُغذّي نفس محرك المحاذاة القائم — لا فقدان لأي تقدّم. */
+  const resumeSession = useCallback(async () => {
+    const provider = providerRef.current;
+    const engine = engineRef.current;
+    if (!provider || !engine) return;
+    try {
+      await attachAsrSession(provider, engine);
+      setListening(true);
+      setPaused(false);
+    } catch (e) {
+      setErrorMsg(e instanceof Error ? e.message : "تعذّر استئناف الاستماع");
+    }
+  }, [attachAsrSession]);
 
   const applyEvents = useCallback((events: AlignmentEvent[]) => {
     if (events.length === 0) return;
@@ -351,11 +442,15 @@ function RecitationTestPageInner() {
               {listening && (
                 <span className="rai-listen-wave" aria-hidden="true"><span /><span /><span /></span>
               )}
-              <span style={{ fontFamily: "var(--font-body)", fontSize: ".85rem" }}>{listening ? "يستمع الآن…" : "متوقّف مؤقتًا"}</span>
+              <span style={{ fontFamily: "var(--font-body)", fontSize: ".85rem" }}>{listening ? "يستمع الآن…" : paused ? "متوقّف مؤقتًا" : "جارٍ الاتصال…"}</span>
             </div>
             <span className="rai-error-count">{errorEvents.length} ملاحظة</span>
             <div className="rai-session__actions">
-              <button type="button" className="rai-icon-btn" aria-label="إيقاف مؤقت"><Pause size={18} /></button>
+              {paused ? (
+                <button type="button" className="rai-icon-btn" aria-label="استئناف الاستماع" onClick={() => void resumeSession()}><Play size={18} /></button>
+              ) : (
+                <button type="button" className="rai-icon-btn" aria-label="إيقاف مؤقت" onClick={() => void pauseSession()}><Pause size={18} /></button>
+              )}
               <button type="button" className="rai-icon-btn" aria-label="إنهاء الجلسة" onClick={finishSession}><Square size={18} /></button>
             </div>
           </div>
@@ -387,6 +482,35 @@ function RecitationTestPageInner() {
 
   // phase === "report"
   const accuracy = referenceWords.length > 0 ? Math.round((correctCount / referenceWords.length) * 100) : 0;
+
+  // تجميع الأخطاء حسب الآية (القسم 9: "تفصيل الأخطاء آية آية")
+  const errorsByAyah = new Map<string, { surah: number; ayah: number; errors: typeof errorEvents }>();
+  for (const e of errorEvents) {
+    if (!e.ref) continue;
+    const key = `${e.ref.surah}:${e.ref.ayah}`;
+    if (!errorsByAyah.has(key)) errorsByAyah.set(key, { surah: e.ref.surah, ayah: e.ref.ayah, errors: [] });
+    errorsByAyah.get(key)!.errors.push(e);
+  }
+  const ayahGroups = [...errorsByAyah.values()].sort((a, b) => b.errors.length - a.errors.length);
+  const mostRepeatedAyah = ayahGroups[0];
+
+  // "أفضل مقطع" — أطول سلسلة كلمات متتالية صحيحة بلا أي خطأ بينها
+  let bestStreak = 0;
+  let currentStreak = 0;
+  let bestStreakEndRef: ReferenceWord | null = null;
+  for (const e of liveEvents) {
+    if (e.kind === "correct") {
+      currentStreak += 1;
+      if (currentStreak > bestStreak) { bestStreak = currentStreak; bestStreakEndRef = e.ref; }
+    } else if (e.kind === "error") {
+      currentStreak = 0;
+    }
+  }
+
+  const sessionConfidence = overallSessionConfidence(
+    liveEvents.filter((e) => e.kind !== "ayah_complete").map((e) => (e as { confidence: number }).confidence),
+  );
+
   return (
     <div className="rai-page">
       <div className="rai-header">
@@ -410,15 +534,53 @@ function RecitationTestPageInner() {
           <div className="rai-report__stat"><span className="rai-report__stat-val">{correctCount}</span><span className="rai-report__stat-lbl">كلمة صحيحة</span></div>
           <div className="rai-report__stat"><span className="rai-report__stat-val">{errorEvents.length}</span><span className="rai-report__stat-lbl">ملاحظة</span></div>
           <div className="rai-report__stat"><span className="rai-report__stat-val">{new Set(referenceWords.map((w) => w.ayah)).size}</span><span className="rai-report__stat-lbl">آية</span></div>
+          <div className="rai-report__stat"><span className="rai-report__stat-val">{sessionConfidence}%</span><span className="rai-report__stat-lbl">ثقة التحليل</span></div>
         </div>
 
-        {errorEvents.length > 0 && (
+        {bestStreak > 0 && (
+          <p className="rai-report__disclaimer">
+            أفضل مقطع: {bestStreak} كلمة متتالية صحيحة{bestStreakEndRef ? ` (تنتهي عند آية ${bestStreakEndRef.surah}:${bestStreakEndRef.ayah})` : ""}
+          </p>
+        )}
+        {mostRepeatedAyah && mostRepeatedAyah.errors.length > 1 && (
+          <p className="rai-report__disclaimer">
+            أكثر موضع تكرر فيه الخطأ: آية {mostRepeatedAyah.surah}:{mostRepeatedAyah.ayah} ({mostRepeatedAyah.errors.length} ملاحظات)
+          </p>
+        )}
+
+        {ayahGroups.length > 0 && (
           <div className="rai-report__errors-list">
-            {errorEvents.map((e, i) => (
-              <div key={i} className="rai-report__error-row">
-                {e.ref ? `${e.ref.surah}:${e.ref.ayah} — ` : ""}
-                {errorTypeLabel(e.errorType)}
-                {e.heardWord ? ` (سُمع: "${e.heardWord}")` : ""}
+            {ayahGroups.map((group) => (
+              <div key={`${group.surah}:${group.ayah}`} className="rai-report__error-row">
+                <strong>آية {group.surah}:{group.ayah}</strong>
+                <ul style={{ margin: ".35rem 0", paddingInlineStart: "1.2rem" }}>
+                  {group.errors.map((e, i) => (
+                    <li key={i}>
+                      {errorTypeLabel(e.errorType)}
+                      {e.ref ? ` — النص الصحيح: "${e.ref.raw}"` : ""}
+                      {e.heardWord ? ` — سُمع: "${e.heardWord}"` : ""}
+                      {" "}(ثقة {Math.round(e.confidence)}%)
+                    </li>
+                  ))}
+                </ul>
+                <div style={{ display: "flex", gap: ".5rem", marginTop: ".4rem" }}>
+                  <button
+                    type="button"
+                    className="rai-icon-btn"
+                    onClick={() => void retryAyah(group.surah, group.ayah)}
+                  >
+                    <RotateCcw size={14} style={{ verticalAlign: "middle" }} /> إعادة اختبار هذه الآية
+                  </button>
+                  {user?.id && (
+                    <button
+                      type="button"
+                      className="rai-icon-btn"
+                      onClick={() => void addRecitationReviewItem(user.id, group.surah, group.ayah, group.ayah)}
+                    >
+                      إضافة لخطة المراجعة
+                    </button>
+                  )}
+                </div>
               </div>
             ))}
           </div>
