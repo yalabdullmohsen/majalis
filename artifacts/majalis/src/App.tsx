@@ -103,6 +103,7 @@ const DailyWirdPage = lazy(() => import("@/views/DailyWirdPage"));
 const OccasionsPage = lazy(() => import("@/views/OccasionsPage"));
 const FeaturesInProgressPage = lazy(() => import("@/views/FeaturesInProgressPage"));
 const ArbaeenNawawiPage = lazy(() => import("@/views/ArbaeenNawawiPage"));
+const ArbaeenHadithDetailPage = lazy(() => import("@/views/ArbaeenHadithDetailPage"));
 const SettingsPage = lazy(() => import("@/views/SettingsPage"));
 const AccountDeletionPage = lazy(() => import("@/views/AccountDeletionPage"));
 const AnnualCoursesPage = lazy(() => import("@/views/AnnualCoursesPage"));
@@ -555,6 +556,7 @@ function Router() {
       <Route path="/daily-wird"><SafeLazyRoute component={DailyWirdPage} /></Route>
       <Route path="/occasions"><SafeLazyRoute component={OccasionsPage} /></Route>
       <Route path="/features-in-progress"><SafeLazyRoute component={FeaturesInProgressPage} /></Route>
+      <Route path="/arbaeen-nawawi/:id"><SafeLazyRoute component={ArbaeenHadithDetailPage} /></Route>
       <Route path="/arbaeen-nawawi"><SafeLazyRoute component={ArbaeenNawawiPage} /></Route>
       <Route path="/cards"><SafeLazyRoute component={CardsPage} /></Route>
       <Route path="/annual-courses/:id"><SafeLazyRoute component={AnnualCourseDetailPage} /></Route>
