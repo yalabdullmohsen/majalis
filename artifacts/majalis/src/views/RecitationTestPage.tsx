@@ -3,7 +3,6 @@ import { useSearch } from "wouter";
 import { Pause, Square, ChevronLeft } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { useAuth } from "@/components/AuthProvider";
-import { FeatureGate } from "@/components/FeatureGate";
 import { fetchSurahDetail, getSurahList } from "@/lib/quran-api";
 import { buildReferenceWords } from "@/lib/recitation-ai/quran-reference-words";
 import { VerseAlignmentEngine } from "@/lib/recitation-ai/verse-alignment-engine";
@@ -123,8 +122,24 @@ function RecitationTestPageInner() {
 
       if (selection.provider.onPartialWord) {
         unsubRef.current = selection.provider.onPartialWord(asrSession, (word, atMs) => {
-          const events = engine.feedWord(word, atMs);
-          applyEvents(events);
+          // خارج دورة render — ErrorBoundary لا يلتقط أخطاء المستدعيات
+          // غير المتزامنة، فأي خطأ هنا (مثلًا في المحرك) قد يُبقي الجلسة
+          // عالقة صامتًا بدل الانهيار. نلتقطه يدويًا وننهي الجلسة بصدق
+          // بدل تعليقها أو إسقاط الصفحة (القسم 12) — بلا الاعتماد على
+          // إغلاق finishSession (يُعرَّف لاحقًا في الملف، لتفادي أي
+          // مرجع قديم/معلَّق).
+          try {
+            const events = engine.feedWord(word, atMs);
+            applyEvents(events);
+          } catch (err) {
+            console.error("recitation-ai: feedWord failed", err);
+            setErrorMsg("حدث خلل أثناء تحليل التلاوة. أُنهيت الجلسة تلقائيًا لحمايتك — جرّب مجددًا.");
+            setListening(false);
+            unsubRef.current?.();
+            unsubRef.current = null;
+            void selection.provider.endSession(asrSession).catch(() => {});
+            setPhase("error");
+          }
         });
       }
 
@@ -229,8 +244,15 @@ function RecitationTestPageInner() {
     return (
       <div className="rai-page">
         <div className="rai-header">
-          <h1 className="rai-header__title">اختبار التسميع بالذكاء الاصطناعي</h1>
+          <h1 className="rai-header__title">
+            اختبار التسميع بالذكاء الاصطناعي
+            <span className="rai-experimental-badge">نسخة تجريبية</span>
+          </h1>
           <p className="rai-header__sub">سمّع من حفظك، واستمع لتلاوتك لحظيًا، والمصحف يكشف الآية فور نطقها</p>
+          <p className="rai-header__sub" style={{ fontSize: ".78rem", opacity: .85 }}>
+            تحليل الحفظ الأساسي (كلمة صحيحة/خاطئة/ناقصة/زائدة) يعمل فعليًا. التحليل الصوتي الكامل
+            (خصوصًا تفاصيل التجويد الدقيقة) لا يزال قيد التطوير.
+          </p>
         </div>
 
         {errorMsg && <p className="rai-tajweed-disabled-note" style={{ maxWidth: 720, margin: "0 auto 1rem" }}>{errorMsg}</p>}
@@ -302,12 +324,18 @@ function RecitationTestPageInner() {
             </div>
           )}
 
+          <p className="rai-pre-session-warning" role="alert">
+            هذه الميزة تجريبية وقد لا تكتشف جميع الأخطاء بدقة. لا تعتمد عليها بديلًا عن العرض على معلّم متقن.
+          </p>
+
           <button type="button" className="rai-start-btn" onClick={startSession} disabled={phase === "loading"}>
             {phase === "loading" ? "جارٍ التحضير…" : "ابدأ التسميع"}
           </button>
           <p className="rai-report__disclaimer">
-            سيُستخدَم الميكروفون فقط أثناء الجلسة.{" "}
-            <a href="/privacy" style={{ color: "var(--rai-emerald)" }}>سياسة الخصوصية</a>
+            سيُطلَب إذن الميكروفون قبل بدء الاستماع، ويُستخدَم فقط أثناء الجلسة — لا يُحفَظ التسجيل افتراضيًا،
+            ولا يُرسَل أي جزء منه لخوادم مجالس. قد يعالج نظام تشغيلك/متصفحك التعرّف الصوتي خارج الجهاز حين لا
+            يتوفر تعرّف كامل محليًا (راجع{" "}
+            <a href="/privacy" style={{ color: "var(--rai-emerald)" }}>سياسة الخصوصية</a>).
           </p>
         </div>
       </div>
@@ -423,9 +451,5 @@ function errorTypeLabel(t: string): string {
 }
 
 export default function RecitationTestPage() {
-  return (
-    <FeatureGate flag="quran_recitation_ai_test">
-      <RecitationTestPageInner />
-    </FeatureGate>
-  );
+  return <RecitationTestPageInner />;
 }

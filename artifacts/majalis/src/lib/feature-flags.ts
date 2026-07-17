@@ -14,8 +14,7 @@ type Flag =
   | "academic_research"
   | "flashcards_advanced"
   | "quran_layouts"
-  | "learning_calendar"
-  | "quran_recitation_ai_test";
+  | "learning_calendar";
 
 /** الصفحات مكتملة = true / في تطوير = false */
 const FEATURES_DEFAULT: Record<Flag, boolean> = {
@@ -29,10 +28,6 @@ const FEATURES_DEFAULT: Record<Flag, boolean> = {
   flashcards_advanced: false,
   quran_layouts: false,
   learning_calendar: true,
-  // معطّل افتراضيًا في الإنتاج — راجع docs/recitation-ai/final-report.md
-  // لبوابات التفعيل. يُفعَّل يدويًا للاختبار الداخلي عبر setFeatureFlag()
-  // أو localStorage["mj-flag-quran_recitation_ai_test"]="1".
-  quran_recitation_ai_test: false,
 };
 
 const LS_PREFIX = "mj-flag-";

@@ -8,7 +8,6 @@ import { SurahList } from "@/components/quran/SurahList";
 import { ExploreAyahPanel } from "@/components/quran/ExploreAyahPanel";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
 import { copyAyahText } from "@/lib/share-ayah";
-import { isFeatureEnabled } from "@/lib/feature-flags";
 import "@/styles/quran.css";
 
 export default function MushafPage() {
@@ -118,16 +117,15 @@ export default function MushafPage() {
                 {isFirstAyahBasmala && (
                   <p className="qs-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
                 )}
-                {isFeatureEnabled("quran_recitation_ai_test") && (
-                  <button
-                    type="button"
-                    className="qs-mobile-sidebar-toggle"
-                    onClick={() => navigate(`/quran/recitation-test-ai?surah=${surahNum}`)}
-                  >
-                    <Mic size={16} aria-hidden="true" />
-                    سمّع هذه السورة
-                  </button>
-                )}
+                <button
+                  type="button"
+                  className="qs-recitation-cta"
+                  onClick={() => navigate(`/quran/recitation-test-ai?surah=${surahNum}`)}
+                >
+                  <Mic size={16} aria-hidden="true" />
+                  سمّع هذه السورة
+                  <span className="qs-recitation-cta__badge">نسخة تجريبية</span>
+                </button>
               </header>
 
               <div className="qs-ayah-display">

@@ -5,6 +5,7 @@
  */
 import { MockQuranASRProvider } from "../providers/mock-provider";
 import { ServerQuranASRProvider } from "../providers/server-provider";
+import { WebSpeechQuranASRProvider } from "../providers/web-speech-provider";
 import { checkTajweedAvailability } from "../precision-level";
 import { selectBestProvider } from "../provider-registry";
 import { ASRProviderUnavailableError } from "../asr-provider";
@@ -57,12 +58,25 @@ async function main() {
     assert(result2.available === false, "التجويد غير متاح للمزوّد الوهمي (supportsTajweed=false)");
   }
 
-  console.log("═══ selectBestProvider — بيئة اختبار بلا Capacitor أصلي ═══");
+  console.log("═══ WebSpeechQuranASRProvider — بيئة Node بلا window ═══");
+  {
+    const provider = new WebSpeechQuranASRProvider();
+    assert(!(await provider.isAvailable()), "غير متاح في Node (لا window/SpeechRecognition) — صادق لا Mock");
+    let threw = false;
+    try {
+      await provider.startSession({ language: "ar-SA", precisionLevel: "hifz" });
+    } catch (e) {
+      threw = e instanceof ASRProviderUnavailableError;
+    }
+    assert(threw, "startSession يرفض بخطأ واضح بدل نتيجة وهمية حين لا يتوفر Web Speech API");
+  }
+
+  console.log("═══ selectBestProvider — بيئة اختبار بلا Capacitor أصلي ولا متصفح ═══");
   {
     const online = await selectBestProvider(true);
-    assert(online.provider === null, "بلا Capacitor أصلي وخادم غير مُهيَّأ ← لا مزوّد متاح (صادق، لا Mock تلقائي)");
+    assert(online.provider === null, "بلا Capacitor أصلي وخادم غير مُهيَّأ وبلا متصفح ← لا مزوّد متاح (صادق، لا Mock تلقائي)");
     const offline = await selectBestProvider(false);
-    assert(offline.provider === null, "نفس النتيجة دون اتصال (لا مصدر جهازي في بيئة Node الاختبارية)");
+    assert(offline.provider === null, "نفس النتيجة دون اتصال (لا مصدر جهازي/متصفحي في بيئة Node الاختبارية)");
   }
 
   console.log(`\nالنتيجة: ${passed} نجح، ${failed} فشل`);

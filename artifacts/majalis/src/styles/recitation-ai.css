@@ -39,6 +39,33 @@ html[data-theme="dark"] .rai-header__title { color: #E5F0EC; }
 .rai-header__sub { color: #5C6660; font-size: .95rem; margin: 0; }
 html[data-theme="dark"] .rai-header__sub { color: #8BABA3; }
 
+.rai-experimental-badge {
+  display: inline-block;
+  vertical-align: middle;
+  margin-inline-start: .6rem;
+  font-size: .62rem;
+  font-weight: 700;
+  padding: .2rem .6rem;
+  border-radius: 1rem;
+  background: #C9A227;
+  color: #2b2205;
+  letter-spacing: .01em;
+}
+
+.rai-pre-session-warning {
+  max-width: 600px;
+  margin: 0 auto 1rem;
+  padding: .75rem 1rem;
+  border-radius: 12px;
+  background: rgba(220, 38, 38, .07);
+  border: 1px solid rgba(220, 38, 38, .25);
+  color: #9B1C1C;
+  font-size: .85rem;
+  font-weight: 600;
+  text-align: center;
+}
+html[data-theme="dark"] .rai-pre-session-warning { background: rgba(220,38,38,.15); color: #FCA5A5; border-color: rgba(220,38,38,.35); }
+
 /* ── شاشة الإعداد ─────────────────────────────────────────── */
 .rai-setup { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem; }
 .rai-setup__group {
