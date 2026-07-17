@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import {
-  GraduationCap, BookMarked, Scale, Lightbulb, HelpCircle, BookOpen,
+  GraduationCap, BookMarked, Lightbulb, HelpCircle, BookOpen,
   ChevronLeft, type LucideProps,
 } from "lucide-react";
 import {
@@ -16,7 +16,6 @@ const TYPE_ICON: Record<KnowledgeSourceType, LucideIcon> = {
   scholar:  GraduationCap,
   lesson:   BookOpen,
   book:     BookMarked,
-  fatwa:    Scale,
   fawaid:   Lightbulb,
   question: HelpCircle,
 };
@@ -25,16 +24,18 @@ const TYPE_LABEL: Record<KnowledgeSourceType, string> = {
   scholar:  "عالم",
   lesson:   "درس",
   book:     "كتاب",
-  fatwa:    "فتوى",
   fawaid:   "فائدة",
   question: "سؤال",
 };
 
+// ملاحظة: "fatwa" أُزيل من هذه الخرائط (2026-07-18) مع إزالته من
+// KnowledgeSourceType — كان رابطه هنا يشير لمسار /fatwa/:id المحذوف
+// بالكامل من التطبيق (يُحوَّل الآن إلى /rulings)، وصفر صف في
+// knowledge_relationships استخدم هذا النوع أصلاً فلم يكن ليُعرَض أبداً.
 const TYPE_HREF: Record<KnowledgeSourceType, (id: string) => string> = {
   scholar:  (id) => `/lessons?sheikh=${encodeURIComponent(id)}`,
   lesson:   (id) => `/lessons/${id}`,
   book:     (id) => `/library/${id}`,
-  fatwa:    (id) => `/fatwa/${id}`,
   fawaid:   ()   => `/fawaid`,
   question: ()   => `/qa`,
 };
