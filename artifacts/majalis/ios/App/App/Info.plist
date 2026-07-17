@@ -29,28 +29,27 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<!-- Usage Descriptions — Arabic -->
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>يستخدم التطبيق موقعك لحساب اتجاه القبلة والمسافة إلى مكة المكرمة. لا يُخزَّن موقعك.</string>
-	<key>NSMotionUsageDescription</key>
-	<string>يستخدم التطبيق مستشعر الاتجاه لتوجيه بوصلة القبلة نحو الكعبة المشرفة.</string>
-	<key>NSUserNotificationsUsageDescription</key>
-	<string>يرسل التطبيق تذكيرات بأوقات الصلاة والأذكار اليومية. يمكنك التحكم بالإشعارات من إعدادات التطبيق.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>يستخدم التطبيق الميكروفون فقط عند طلبك اختبار تلاوتك للقرآن — لا يُسجَّل الصوت ولا يُحفَظ، ويُقارَن النص المتعرَّف عليه بالآية فورًا على جهازك.</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>يستخدم التطبيق التعرّف على الصوت لتحويل تلاوتك إلى نص ومقارنتها بالآية عند اختبار التلاوة فقط، بموافقتك الصريحة في كل مرة.</string>
-	<!-- Live Activities (Dynamic Island وشاشة القفل) لتنبيه الصلاة القادمة —
-	     مدعومة فعلياً على iOS 16.2+ فقط؛ الشريط داخل التطبيق والإشعار المحلي
-	     يعملان بديلاً كاملاً على ما دون ذلك (انظر PrayerLiveActivityPlugin.swift). -->
-	<key>NSSupportsLiveActivities</key>
-	<true/>
-	<!-- App Transport Security -->
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<false/>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>يستخدم التطبيق موقعك لحساب اتجاه القبلة والمسافة إلى مكة المكرمة. لا يُخزَّن موقعك.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>يستخدم التطبيق الميكروفون فقط عند طلبك اختبار تلاوتك للقرآن — لا يُسجَّل الصوت ولا يُحفَظ، ويُقارَن النص المتعرَّف عليه بالآية فورًا على جهازك.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>يستخدم التطبيق مستشعر الاتجاه لتوجيه بوصلة القبلة نحو الكعبة المشرفة.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>يستخدم التطبيق التعرّف على الصوت لتحويل تلاوتك إلى نص ومقارنتها بالآية عند اختبار التلاوة فقط، بموافقتك الصريحة في كل مرة.</string>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>يرسل التطبيق تذكيرات بأوقات الصلاة والأذكار اليومية. يمكنك التحكم بالإشعارات من إعدادات التطبيق.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
