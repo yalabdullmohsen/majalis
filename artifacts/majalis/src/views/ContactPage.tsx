@@ -3,6 +3,7 @@ import { AlertTriangle, Code2, Lock, Mail, Plus, Settings2, Users2 } from "lucid
 import type { LucideIcon } from "lucide-react";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
+import { InstagramAcademyLink } from "@/components/InstagramAcademyLink";
 import { applyPageSeo } from "@/lib/seo";
 import { CONTACT_EMAIL, mailtoWithSubject } from "@/lib/site-config";
 
@@ -70,6 +71,12 @@ export default function ContactPage() {
               للاستفسارات العامة، والملاحظات التقنية، وتصحيح المحتوى العلمي، والاقتراحات والشراكات.
             </p>
           </div>
+        </div>
+      </LegalSection>
+
+      <LegalSection title="تابعونا">
+        <div className="contact-channels">
+          <InstagramAcademyLink variant="card" />
         </div>
       </LegalSection>
 

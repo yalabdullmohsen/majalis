@@ -31769,3 +31769,95 @@ html[data-theme="dark"] .sh-step__title,
 html[data-theme="dark"] .ikm-card__title {
   color: var(--clr-text-1, #E5F0EC) !important;
 }
+
+/* ============================================================
+   §219 — رابط أكاديمية ورثة الأنبياء على انستغرام (instagram-academy-link-*)
+   يعتمد على متغيّرات الهوية الحالية فقط (--majalis-*) — لا ألوان يدوية.
+   ============================================================ */
+.instagram-academy-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  text-decoration: none;
+  color: var(--majalis-ink);
+  min-height: 44px;
+}
+
+.instagram-academy-link__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--majalis-emerald-deep);
+}
+
+.instagram-academy-link__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.instagram-academy-link__name {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--majalis-ink);
+}
+
+.instagram-academy-link__handle {
+  font-size: .75rem;
+  color: var(--majalis-ink-soft);
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* variant: compact — الفوتر */
+.instagram-academy-link--compact {
+  padding: .35rem 0;
+}
+.instagram-academy-link--compact:hover .instagram-academy-link__name,
+.instagram-academy-link--compact:focus-visible .instagram-academy-link__name {
+  text-decoration: underline;
+}
+
+/* variant: card — من نحن / تواصل معنا */
+.instagram-academy-link--card {
+  width: 100%;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--majalis-line);
+  border-radius: .75rem;
+  background: var(--majalis-panel);
+  transition: border-color .15s ease, background-color .15s ease;
+}
+.instagram-academy-link--card:hover,
+.instagram-academy-link--card:focus-visible {
+  border-color: var(--majalis-emerald-deep);
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 6%, var(--majalis-panel));
+}
+.instagram-academy-link--card .instagram-academy-link__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 12%, transparent);
+}
+
+.instagram-academy-link__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  margin-inline-start: auto;
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+  white-space: nowrap;
+}
+
+.instagram-academy-link:focus-visible {
+  outline: 2px solid var(--majalis-emerald-deep);
+  outline-offset: 2px;
+  border-radius: .4rem;
+}
+
+/* الفوتر: صف "تابعونا" أسفل بيانات العلامة */
+.site-footer-social {
+  margin-top: .75rem;
+}
