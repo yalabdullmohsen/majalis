@@ -14,25 +14,32 @@ export type HomeWidgetId =
   | "occasions" | "latest-updates" | "library" | "quiz" | "daily-corner"
   | "prayer-ranks" | "interesting-topics" | "mind-map";
 
+/* ترتيب افتراضي مطابق للمواصفة (المرحلة 4، 2026-07-18): ترحيب سياقي/بحث
+   (ثابتان أعلى الصفحة، خارج هذه القائمة) ← صلاة قادمة ← متابعة آخر درس ←
+   ورد يومي ← لعبة سؤال وجواب ← القرآن/استكشاف ← تعلّم ← بقية الودجات ←
+   مقترحات (مواضيع مشوقة، قُرب النهاية) ← "عن المجلس العلمي" (ثابت، خارج
+   هذه القائمة). هذا الترتيب هو للمستخدمين الجدد/بلا تفضيل محفوظ فقط —
+   أي مستخدم خصَّص ترتيبه سابقًا (محليًا أو عبر user_homepage_prefs) يبقى
+   ترتيبه كما هو، لا يُفرض عليه هذا الترتيب. لا حذف لأي ودجت. */
 export const HOME_WIDGET_DEFS: { id: HomeWidgetId; label: string }[] = [
-  { id: "lessons", label: "الدروس والدورات" },
   { id: "prayer", label: "مواقيت الصلاة" },
   { id: "continue", label: "استمر من حيث توقفت" },
   { id: "daily-progress", label: "التقدم اليومي" },
-  { id: "week-streak", label: "سجل الأسبوع" },
-  { id: "asma", label: "اسم الله اليومي" },
-  { id: "hadith", label: "حديث اليوم" },
-  { id: "sunnah-time", label: "سنن الوقت" },
+  { id: "quiz", label: "المسابقة" },
   { id: "explore", label: "استكشف المنصة" },
+  { id: "lessons", label: "الدروس والدورات" },
+  { id: "hadith", label: "حديث اليوم" },
+  { id: "asma", label: "اسم الله اليومي" },
+  { id: "sunnah-time", label: "سنن الوقت" },
+  { id: "daily-corner", label: "الركن اليومي" },
+  { id: "week-streak", label: "سجل الأسبوع" },
   { id: "learning-seasons", label: "مواسم التعلم" },
+  { id: "library", label: "المكتبة العلمية" },
+  { id: "prayer-ranks", label: "مراتب الصلاة" },
+  { id: "mind-map", label: "الخرائط الذهنية" },
   { id: "occasions", label: "المناسبات الإسلامية" },
   { id: "latest-updates", label: "آخر التحديثات" },
-  { id: "library", label: "المكتبة العلمية" },
-  { id: "quiz", label: "المسابقة" },
-  { id: "daily-corner", label: "الركن اليومي" },
-  { id: "prayer-ranks", label: "مراتب الصلاة" },
   { id: "interesting-topics", label: "مواضيع مشوقة" },
-  { id: "mind-map", label: "الخرائط الذهنية" },
 ];
 
 const DEFAULT_ORDER: HomeWidgetId[] = HOME_WIDGET_DEFS.map((w) => w.id);
