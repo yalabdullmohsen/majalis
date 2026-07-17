@@ -9,7 +9,7 @@ import { bootstrapSupabaseFromServer, resetSupabaseClient } from "./lib/supabase
 import { createAppQueryClient } from "./lib/query-client";
 import { PERF_SLOW_MS } from "./lib/performance-monitor";
 import { registerProductionServiceWorker } from "./lib/service-worker";
-import { setupStatusBar, setupKeyboard, isAndroid } from "./lib/capacitor-utils";
+import { setupStatusBar, setupKeyboard, isAndroid, isNative } from "./lib/capacitor-utils";
 import "./index.css";
 import "./styles/design-system.css";
 import "./styles/patterns.css";
@@ -66,6 +66,30 @@ if (isAndroid) {
         const confirmExit = window.confirm("هل تريد الخروج من التطبيق؟");
         if (confirmExit) CapApp.exitApp();
       }
+    });
+  }).catch(() => {});
+}
+
+/**
+ * روابط عميقة (Universal Links على iOS، عبر majlisilm.com/apple-app-site-association
+ * + com.apple.developer.associated-domains في App.entitlements) — تفتح
+ * التطبيق مباشرة على المسار المطلوب بدل متصفح خارجي. نستخدم pushState +
+ * حدث popstate صناعي بدل window.location.href كي يلتقطه المُوجِّه
+ * (wouter يستمع لـpopstate) بلا إعادة تحميل كاملة للـWebView، التي قد لا
+ * تُصيَّر المسار بشكل صحيح خارج تحميل index.html الأول.
+ */
+if (isNative) {
+  import("@capacitor/app").then(({ App: CapApp }) => {
+    CapApp.addListener("appUrlOpen", ({ url }) => {
+      try {
+        const parsed = new URL(url);
+        const path = `${parsed.pathname}${parsed.search}${parsed.hash}`;
+        const current = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+        if (path && path !== current) {
+          window.history.pushState({}, "", path);
+          window.dispatchEvent(new PopStateEvent("popstate"));
+        }
+      } catch { /* رابط غير صالح — تجاهل بأمان */ }
     });
   }).catch(() => {});
 }
