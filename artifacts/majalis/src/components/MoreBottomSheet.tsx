@@ -7,7 +7,7 @@ import {
   FileText, Gavel, GitBranch, GraduationCap, Heart, HelpCircle, Info, Landmark,
   Layers, Library, Lightbulb, Map, Mic, Mic2, Microscope, Moon, Network,
   Quote, Radio, RefreshCw, Repeat2, Rss, Scale, ScrollText, Search, Settings,
-  Shield, Sparkles, Star, Stethoscope, Sun, Tv, Users, X, Zap,
+  Shield, Sparkles, Star, Stethoscope, Sun, Tv, Users, Waypoints, X, Zap,
 } from "lucide-react";
 
 const SHEET_SECTIONS = [
@@ -70,6 +70,7 @@ const SHEET_SECTIONS = [
     { href: "/mawarith/calculator", label: "حاسبة المواريث",    Icon: Calculator },
     { href: "/scholarly-research", label: "الباحث الشرعي",     Icon: Microscope },
     { href: "/academic-research",  label: "الأبحاث العلمية",   Icon: FileText },
+    { href: "/amr-bil-maruf",      label: "الأمر بالمعروف",     Icon: Shield },
   ]},
 
   /* ── العبادة والأذكار ── */
@@ -110,10 +111,13 @@ const SHEET_SECTIONS = [
     { href: "/islamic-glossary", label: "المصطلحات الإسلامية",  Icon: BookOpen },
     { href: "/islam-stats",      label: "الإسلام في أرقام",     Icon: BarChart3 },
     { href: "/updates",          label: "آخر المستجدات",        Icon: Rss },
+    { href: "/institutions",     label: "المؤسسات الإسلامية",   Icon: Landmark },
   ]},
 
   /* ── التعلّم والأدوات ── */
   { group: "التعلّم والأدوات", items: [
+    { href: "/learn",                label: "أبواب العلم",         Icon: Layers },
+    { href: "/start-here",           label: "ابدأ من هنا",         Icon: Waypoints },
     { href: "/quiz",                 label: "المسابقة التعليمية",  Icon: Zap },
     { href: "/flashcards",           label: "بطاقات المراجعة",     Icon: CreditCard },
     { href: "/assistant",            label: "المساعد الذكي",       Icon: Bot },

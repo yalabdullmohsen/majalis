@@ -215,6 +215,7 @@ const DRAWER_GROUPS: NavGroup[] = [
     icon: <IcoQuran />,
     items: [
       { href: "/mushaf",              label: "المصحف الشريف",      Icon: BookOpen,      desc: "اقرأ القرآن الكريم كاملاً" },
+      { href: "/quran/surahs",        label: "فهرس السور",         Icon: BookText,      desc: "دليل 114 سورة بالبحث والفلاتر" },
       { href: "/quran-hub",           label: "مركز القرآن",        Icon: Layers,        desc: "بوابة كل ما يتعلق بالقرآن" },
       { href: "/daily-wird",          label: "الورد اليومي",       Icon: Sun,           desc: "ختمة متجددة يومياً" },
       { href: "/quran/tajweed",       label: "علم التجويد",        Icon: Mic2,          desc: "أحكام التجويد بالأمثلة" },
