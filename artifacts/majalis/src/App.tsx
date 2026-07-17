@@ -10,6 +10,7 @@ import NavBar from "@/components/NavBar";
 import SiteFooter from "@/components/SiteFooter";
 import { BottomNavBar } from "@/components/BottomNavBar";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { GlobalBackButton } from "@/components/GlobalBackButton";
 import { AssistantFloatingWidget } from "@/components/assistant/AssistantFloatingWidget";
 import { AdminSiteEditBar } from "@/components/AdminSiteEditBar";
 import { AchievementToast } from "@/components/AchievementToast";
@@ -632,6 +633,7 @@ function AppShell() {
         <AssistantFloatingWidget />
         <AdminSiteEditBar />
         <ScrollToTop />
+        <GlobalBackButton />
         <BottomNavBar />
         {newBadges.length > 0 && (
           <AchievementToast badges={newBadges} onDismiss={dismissBadges} />

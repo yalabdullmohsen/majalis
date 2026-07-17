@@ -14960,6 +14960,37 @@ a:focus-visible {
 
 
 /* §217 Scroll to Top */
+.global-back-btn {
+  position: fixed;
+  bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+  inset-inline-start: 1rem;
+  z-index: 185;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  border: none;
+  background: var(--majalis-panel, #fff);
+  color: var(--majalis-ink, #1C1A18);
+  border: 1px solid var(--majalis-line, rgba(0,0,0,.1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,.16);
+  cursor: pointer;
+  transition: opacity .2s, transform .2s, background .15s;
+  opacity: .9;
+}
+.global-back-btn:hover { opacity: 1; transform: translateY(-2px); }
+.global-back-btn:active { transform: scale(.93); }
+html[data-theme="dark"] .global-back-btn {
+  background: var(--clr-surface, #1A2120) !important;
+  color: var(--clr-text-1, #E5F0EC) !important;
+  border-color: var(--clr-border, rgba(255,255,255,.08)) !important;
+}
+@media (min-width: 880px) {
+  .global-back-btn { bottom: 1.5rem; }
+}
+
 .scroll-to-top {
   position: fixed;
   bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
