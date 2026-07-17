@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "wouter";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { RequestManager } from "@/lib/request-manager";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
@@ -7,6 +6,13 @@ import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import { computeNextOccurrenceMs, getKuwaitClock, isLessonThisDay } from "@/lib/lesson-time";
+import { Widget } from "@/components/widgets/Widget";
+
+const LessonsIcon = () => (
+  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16">
+    <polygon points="8,1 10,6 15.5,6 11,9.5 13,15 8,11.5 3,15 5,9.5 0.5,6 6,6" fill="none" stroke="#176B57" strokeWidth="1.2"/>
+  </svg>
+);
 
 const ARABIC_WEEKDAY: Record<number, string> = {
   0: "الأحد",
@@ -66,22 +72,15 @@ export function HomeUpcomingLessons({
     .slice(0, 6);
 
   return (
-    <section className="home-section" aria-labelledby="today-lessons-heading">
-      <div className="home-section-head">
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16">
-            <polygon points="8,1 10,6 15.5,6 11,9.5 13,15 8,11.5 3,15 5,9.5 0.5,6 6,6" fill="none" stroke="#176B57" strokeWidth="1.2"/>
-          </svg>
-          <div>
-            <p className="home-eyebrow">اليوم · {todayArabic}</p>
-            <h2 id="today-lessons-heading">دروس اليوم</h2>
-          </div>
-        </div>
-        <div className="home-section-head-links">
-          <Link href="/lessons" className="home-section-link">كل الدروس</Link>
-        </div>
-      </div>
-
+    <Widget
+      id="today-lessons"
+      icon={<LessonsIcon />}
+      eyebrow={`اليوم · ${todayArabic}`}
+      title="دروس اليوم"
+      moreHref="/lessons"
+      moreLabel="كل الدروس"
+      state="ready"
+    >
       <PageLoadingGuard
         loading={loading}
         empty={!loading && todayLessons.length === 0}
@@ -93,7 +92,7 @@ export function HomeUpcomingLessons({
           ))}
         </div>
       </PageLoadingGuard>
-    </section>
+    </Widget>
   );
 }
 

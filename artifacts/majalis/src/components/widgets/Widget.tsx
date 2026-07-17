@@ -18,6 +18,10 @@ export type WidgetState = "loading" | "empty" | "auth-required" | "ready";
 export interface WidgetProps {
   /** معرّف مستقر لـ aria-labelledby — يفضَّل أن يطابق مُعرِّف الودجت في homepage-layout.ts. */
   id: string;
+  /** كلاس إضافي على عنصر <section> نفسه — للودجات التي لها تنسيق شبكة/محتوى خاص أدناه. */
+  className?: string;
+  /** أيقونة زخرفية اختيارية قبل عمود العنوان (نمط شائع عبر أغلب ودجات الرئيسية). */
+  icon?: ReactNode;
   eyebrow?: string;
   title: string;
   description?: string;
@@ -37,6 +41,8 @@ export interface WidgetProps {
 
 export function Widget({
   id,
+  className,
+  icon,
   eyebrow,
   title,
   description,
@@ -55,12 +61,15 @@ export function Widget({
   const headingId = `widget-${id}-heading`;
 
   return (
-    <section className="home-section widget-shell" aria-labelledby={headingId} data-widget-state={state}>
+    <section className={`home-section widget-shell${className ? ` ${className}` : ""}`} aria-labelledby={headingId} data-widget-state={state}>
       <div className="home-section-head">
-        <div>
-          {eyebrow && <p className="home-eyebrow">{eyebrow}</p>}
-          <h2 id={headingId}>{title}</h2>
-          {description && <p>{description}</p>}
+        <div style={icon ? { display: "flex", alignItems: "flex-start", gap: "0.5rem" } : undefined}>
+          {icon}
+          <div>
+            {eyebrow && <p className="home-eyebrow">{eyebrow}</p>}
+            <h2 id={headingId}>{title}</h2>
+            {description && <p>{description}</p>}
+          </div>
         </div>
         {moreHref && state === "ready" && (
           <Link href={moreHref} className="home-section-link">
