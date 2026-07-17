@@ -3,6 +3,7 @@ import { Brain, CheckCircle2, XCircle, RotateCcw } from "lucide-react";
 import { ALL_QUESTIONS } from "@/data/islamicQuizData";
 import type { QuizQuestion } from "@/data/islamicQuizData";
 import { recordQuizAttempt } from "@/lib/quiz-performance-service";
+import { hapticNotify } from "@/lib/capacitor-utils";
 
 type TaggedQuizQuestion = QuizQuestion & { _catId: string };
 
@@ -29,6 +30,7 @@ function QuizBody({ questions, onRefresh }: QuizBodyProps) {
   const mark = (i: number, correct: boolean) => {
     setScores((prev) => { const n = [...prev]; n[i] = correct; return n; });
     void recordQuizAttempt(questions[i]._catId, questions[i].id, correct, "section_quiz");
+    void hapticNotify(correct ? "success" : "error");
   };
 
   const allDone = scores.every((s) => s !== null);

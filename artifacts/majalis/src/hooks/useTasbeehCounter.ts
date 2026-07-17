@@ -5,6 +5,7 @@ import {
   writeEmbeddedCounter,
   type TasbeehWird,
 } from "@/lib/tasbeeh-storage";
+import { hapticTap, hapticNotify, isNative } from "@/lib/capacitor-utils";
 
 type Options = {
   storageId: string;
@@ -14,7 +15,14 @@ type Options = {
   onWirdChange?: (next: TasbeehWird) => void;
 };
 
+/**
+ * navigator.vibrate() غير مدعوم إطلاقًا على iOS (Safari أو WKWebView داخل
+ * تطبيق Capacitor الأصلي) — فمستخدمو iOS، رغم كونهم غالبية مستخدمي عدّاد
+ * التسبيح التفاعلي، لا يشعرون بأي اهتزاز إطلاقًا. نستخدم Haptics الأصلي
+ * حين نعمل داخل تطبيق iOS/Android الأصلي، ونتراجع لـvibrate على الويب.
+ */
 function hapticTick() {
+  if (isNative) { hapticTap("light"); return; }
   if (typeof navigator !== "undefined" && "vibrate" in navigator) {
     navigator.vibrate(12);
   }
@@ -69,7 +77,11 @@ export function useTasbeehCounter({ storageId, initialTarget, wird, onWirdChange
           });
         }
 
-        hapticTick();
+        if (target > 0 && prev < target && next >= target) {
+          hapticNotify("success");
+        } else {
+          hapticTick();
+        }
         return next;
       });
       if (pulseTimerRef.current) clearTimeout(pulseTimerRef.current);

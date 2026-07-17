@@ -14,6 +14,7 @@ import {
 } from "@/data/islamicQuizData";
 import { getQuizQuestions, getLocalUsedQuizIds, markQuizQuestionUsed } from "@/lib/supabase";
 import { recordQuizAttempt } from "@/lib/quiz-performance-service";
+import { hapticNotify } from "@/lib/capacitor-utils";
 
 // ─── Icon renderer ─────────────────────────────────────────────────────────
 
@@ -684,6 +685,7 @@ export function IslamicQuizGame() {
     if (state.activeQuestion?.id && state.activeCell?.categoryId) {
       void recordQuizAttempt(state.activeCell.categoryId, state.activeQuestion.id, true, "team_game");
     }
+    void hapticNotify("success");
     dispatch({ type: "MARK_CORRECT" });
   }, [state.activeQuestion, state.activeCell, clearTimer]);
 
@@ -693,6 +695,7 @@ export function IslamicQuizGame() {
     if (state.activeQuestion?.id && state.activeCell?.categoryId) {
       void recordQuizAttempt(state.activeCell.categoryId, state.activeQuestion.id, false, "team_game");
     }
+    void hapticNotify("error");
     dispatch({ type: "MARK_WRONG" });
   }, [state.activeQuestion, state.activeCell, clearTimer]);
 

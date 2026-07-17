@@ -26,3 +26,26 @@ export async function openExternalUrl(url: string) {
   const { Browser } = await import("@capacitor/browser");
   await Browser.open({ url, presentationStyle: "popover" });
 }
+
+/**
+ * ردود فعل لمسية (haptics) لتطبيق iOS/Android الأصلي فقط — بلا تأثير على
+ * نسخة الويب. تُستخدم لتأكيد تفاعلات قصيرة ومتكررة (عدّاد التسبيح، إجابة
+ * سؤال) بدل الاعتماد على المؤثرات البصرية وحدها.
+ */
+export async function hapticTap(style: "light" | "medium" | "heavy" = "light") {
+  if (!isNative) return;
+  try {
+    const { Haptics, ImpactStyle } = await import("@capacitor/haptics");
+    const map = { light: ImpactStyle.Light, medium: ImpactStyle.Medium, heavy: ImpactStyle.Heavy };
+    await Haptics.impact({ style: map[style] });
+  } catch { /* منصّة لا تدعم الاهتزاز — تجاهل بأمان */ }
+}
+
+export async function hapticNotify(type: "success" | "warning" | "error") {
+  if (!isNative) return;
+  try {
+    const { Haptics, NotificationType } = await import("@capacitor/haptics");
+    const map = { success: NotificationType.Success, warning: NotificationType.Warning, error: NotificationType.Error };
+    await Haptics.notification({ type: map[type] });
+  } catch { /* تجاهل بأمان */ }
+}
