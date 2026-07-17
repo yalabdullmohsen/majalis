@@ -20,6 +20,14 @@ const QURAN_SECTIONS = [
     tag: "٦٠٤ صفحة",
   },
   {
+    href: "/quran/surahs",
+    title: "فهرس السور",
+    desc: "تصفّح السور الـ١١٤ كاملة: رقمها واسمها وعدد آياتها وتصنيفها، مع بحث ومفضلة",
+    Icon: BookMarked,
+    accent: "#123F36",
+    tag: "١١٤ سورة",
+  },
+  {
     href: "/quran/surah-stories",
     title: "قصص القرآن",
     desc: "أسباب النزول ومحاور ١١٤ سورة قرآنية مع العبر والفوائد",

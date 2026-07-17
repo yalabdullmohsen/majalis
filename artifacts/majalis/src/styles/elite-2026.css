@@ -31927,3 +31927,186 @@ html[data-theme="dark"] .ikm-card__title {
 .widget-shell__empty-cta:focus-visible {
   filter: brightness(1.08);
 }
+
+/* ============================================================
+   §221 — فهرس السور (surah-index-*) — المرحلة 9
+   ============================================================ */
+.surah-index-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1rem 1rem 3rem;
+}
+.surah-index-hero {
+  text-align: center;
+  padding: 1.25rem 0 1rem;
+}
+.surah-index-hero h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--majalis-emerald-deep);
+  margin: 0 0 .35rem;
+}
+.surah-index-hero p {
+  font-size: .85rem;
+  color: var(--majalis-ink-soft);
+  margin: 0;
+}
+
+.surah-index-controls {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--majalis-panel);
+  padding: .75rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+.surah-index-search {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .7rem .9rem;
+  border: 1px solid var(--majalis-line);
+  border-radius: .75rem;
+  background: var(--majalis-panel);
+  color: var(--majalis-ink-soft);
+}
+.surah-index-search input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: .9rem;
+  color: var(--majalis-ink);
+  min-height: 24px;
+}
+.surah-index-filters {
+  display: flex;
+  gap: .4rem;
+  flex-wrap: wrap;
+}
+.surah-index-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  min-height: 40px;
+  padding: 0 .9rem;
+  border-radius: 999px;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  color: var(--majalis-ink-soft);
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.surah-index-chip.is-active {
+  background: var(--majalis-emerald-deep);
+  border-color: var(--majalis-emerald-deep);
+  color: #fff;
+}
+.surah-index-chip:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.surah-index-skeletons {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  padding-top: .5rem;
+}
+.surah-index-skel {
+  height: 3.5rem;
+  border-radius: .75rem;
+  background: color-mix(in srgb, var(--majalis-line) 70%, transparent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .surah-index-skel { animation: widget-shell-shimmer 1.4s ease-in-out infinite; background-size: 200% 100%; }
+}
+
+.surah-index-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+  padding: 3rem 1rem;
+  color: var(--majalis-ink-soft);
+  text-align: center;
+}
+.surah-index-empty p { margin: 0; font-size: .85rem; }
+
+.surah-index-list {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  margin-top: .5rem;
+}
+.surah-index-row {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .7rem .85rem;
+  min-height: 44px;
+  border: 1px solid var(--majalis-line);
+  border-radius: .85rem;
+  background: var(--majalis-panel);
+  text-decoration: none;
+  color: var(--majalis-ink);
+}
+.surah-index-row:hover,
+.surah-index-row:focus-visible {
+  border-color: var(--majalis-emerald-deep);
+}
+.surah-index-row__num {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 10%, transparent);
+  color: var(--majalis-emerald-deep);
+  font-size: .78rem;
+  font-weight: 800;
+}
+.surah-index-row__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+}
+.surah-index-row__name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--majalis-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.surah-index-row__meta {
+  font-size: .75rem;
+  color: var(--majalis-ink-soft);
+}
+.surah-index-row__fav {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: .6rem;
+  background: transparent;
+  border: none;
+  color: var(--majalis-ink-soft);
+  cursor: pointer;
+}
+.surah-index-row__fav.is-active {
+  color: var(--majalis-emerald-deep);
+}
+.surah-index-row__fav:hover,
+.surah-index-row__fav:focus-visible {
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 8%, transparent);
+}
