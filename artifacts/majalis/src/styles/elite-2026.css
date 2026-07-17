@@ -879,6 +879,96 @@ html[data-theme="dark"] .navbar-mobile-login {
 .home-main--v3 .ds-quiz-home-card .ds-quiz-home-card__cat svg {
   color: rgba(255,255,255,0.70) !important;
 }
+/* .ds-quiz-home-card__desc كانت الوحيدة بلا تجاوز هنا — لا تزال #4b5563
+   (رمادي داكن) من design-system.css فوق نفس الخلفية الداكنة #18362A، وهي
+   نفس فخّ التباين الموثَّق في هذا القسم بالذات (راجع التعليق أعلاه) لكن
+   بلا إصلاح فعلي حتى الآن — أُصلح الآن بنفس نمط الأسطر المجاورة (2026-07-18). */
+.home-main--v3 .ds-quiz-home-card .ds-quiz-home-card__desc {
+  color: rgba(255,255,255,0.75) !important;
+}
+
+/* المرحلة 6 — إحصاءات حقيقية + تحدي اليوم داخل بطاقة سؤال وجواب الرئيسية */
+.ds-quiz-home-card__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin: .25rem 0 .85rem;
+}
+.ds-quiz-home-card__stat {
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .35rem .65rem;
+  border-radius: .5rem;
+  font-size: .78rem;
+  font-weight: 700;
+}
+.ds-quiz-home-card__stats-skel {
+  height: 28px;
+  width: 100%;
+  max-width: 260px;
+  border-radius: .5rem;
+}
+.ds-quiz-home-card__stats-empty {
+  font-size: .78rem;
+  margin: 0 0 .5rem;
+}
+.ds-quiz-home-card__challenge {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  padding: .7rem .9rem;
+  border-radius: .7rem;
+  text-decoration: none;
+  margin-bottom: .85rem;
+  max-width: 420px;
+}
+.ds-quiz-home-card__challenge-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  font-size: .72rem;
+  font-weight: 800;
+  width: fit-content;
+}
+.ds-quiz-home-card__challenge-cat {
+  font-size: .72rem;
+}
+.ds-quiz-home-card__challenge-q {
+  font-size: .85rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.home-main--v3 .ds-quiz-home-card .ds-quiz-home-card__stat {
+  color: rgba(255,255,255,0.85) !important;
+  background: rgba(255,255,255,0.10) !important;
+}
+.home-main--v3 .ds-quiz-home-card .ds-quiz-home-card__stat svg {
+  color: rgba(255,255,255,0.75) !important;
+}
+.home-main--v3 .ds-quiz-home-card .ds-quiz-home-card__stats-skel {
+  background: rgba(255,255,255,0.10) !important;
+}
+.home-main--v3 .ds-quiz-home-card .ds-quiz-home-card__stats-empty {
+  color: rgba(255,255,255,0.70) !important;
+}
+.home-main--v3 .ds-quiz-home-card .ds-quiz-home-card__challenge {
+  background: rgba(255,255,255,0.08) !important;
+  border: 1px solid rgba(255,255,255,0.20) !important;
+}
+.home-main--v3 .ds-quiz-home-card .ds-quiz-home-card__challenge-badge {
+  color: #fff !important;
+}
+.home-main--v3 .ds-quiz-home-card .ds-quiz-home-card__challenge-cat {
+  color: rgba(255,255,255,0.70) !important;
+}
+.home-main--v3 .ds-quiz-home-card .ds-quiz-home-card__challenge-q {
+  color: rgba(255,255,255,0.92) !important;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ds-quiz-home-card__stats-skel { animation: widget-shell-shimmer 1.4s ease-in-out infinite; background-size: 200% 100%; }
+}
 
 /* ⑭ hnh__benefit-label داخل البطاقات الداكنة
    القاعدة ① تُغيّر --clr-primary إلى #7ED4B5 (فاتح) فتصبح الخلفية فاتحة مع نص أبيض = تباين ضعيف */
