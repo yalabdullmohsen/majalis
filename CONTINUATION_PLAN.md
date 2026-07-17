@@ -170,12 +170,15 @@ akhlaq, arabic, nahw, dawah, tarbiyah`) صارت `status='draft'` فاختفت
 
 ## أكبر فجوة متبقية الآن — بالأولوية (ابدأ من هنا)
 
-1. **التحقق الفردي من الجامعات السبع القديمة** (`universities`، الصفوف
-   التي `last_reviewed_by='بيانات تجريبية — يحتاج تحقق'`): تحقّق كل رابط
-   `website_url` فعلياً (WebFetch أو WebSearch)، صحّح ما يلزم، وحدّث
-   `last_reviewed_by` لكل صف على حدة بعد التحقق الفعلي. لا تُبقِ ادّعاء
-   "بيانات تجريبية" منشوراً (`is_published=true`) بلا تصحيح — هذا تناقض
-   مباشر مع "لا معلومة غير موثقة تُعرض كحقيقة".
+1. **[منجَز]** ~~التحقق الفردي من الجامعات السبع القديمة~~: نُفِّذ
+   (`supabase/universities_verify_original7_v1.sql`). اكتُشف وصُحِّح خطأ
+   حقيقي: صف `jordan-islamic-sciences` كان `website_url`/`name_en` يشيران
+   خطأً لمؤسسة مختلفة تماماً (aabu.edu.jo = جامعة آل البيت، لا صلة مباشرة
+   بالاسم العربي المسجَّل) — صُحِّح لـwise.edu.jo (World Islamic Sciences
+   and Education University، المؤسسة الحقيقية المقصودة). الست الأخرى
+   تحقّقت أنها صحيحة كما هي (IIUM ماليزيا، الجامعة الإسلامية بالمدينة،
+   جامعة الإمام محمد بن سعود، جامعة قطر-الشريعة، جامعة أم درمان، جامعة أم
+   القرى). **صفر صفوف متبقية بوسم "بيانات تجريبية" الآن من أصل 15.**
 
 2. **توسيع دفعة daif/mawdu** في `verified_hadith_items` من 14 إلى 20-30
    لكل قسم (الهدف الأصلي). نفس المنهجية بالضبط: WebSearch لكل حديث، migration
@@ -240,13 +243,19 @@ akhlaq, arabic, nahw, dawah, tarbiyah`) صارت `status='draft'` فاختفت
 
 ## المهمة التالية بدقة (ابدأ هنا مباشرة)
 
-نفّذ البند 1 أعلاه (التحقق الفردي من الجامعات السبع القديمة). الخطوات:
+نفّذ البند 2 أعلاه (توسيع دفعة daif/mawdu من 14 إلى 20-30). الخطوات:
 1. `cd /Users/alabdullmohsen/majalis-content-fill/artifacts/majalis && npx supabase link --project-ref ngmvmlulzacrlicuagyp`
-2. `npx supabase db query --linked "SELECT slug, name_ar, website_url FROM universities WHERE last_reviewed_by LIKE '%تجريبية%';"`
-3. لكل صف: WebSearch للتحقق من الاسم الرسمي والموقع الإلكتروني الحالي
-   (مواقع الجامعات تتغير أحياناً). صحّح website_url إن تغيّر، صحّح
-   الأخطاء إن وُجدت.
-4. اكتب migration SQL (`supabase/universities_verify_original7_v1.sql`)
-   بـ`UPDATE universities SET ..., last_reviewed_by = 'تحقق يدوي عبر بحث
-   مباشر — <التاريخ>' WHERE slug = '...';` لكل صف.
-5. طبّق، تحقّق، typecheck (لا تغيير كود متوقَّع)، commit، push.
+2. `npx supabase db query --linked "SELECT id FROM verified_hadith_items WHERE authenticity_class IN ('daif','mawdu');"` —
+   لرؤية الـ14 الموجودة (daif-001..005, mawdu-001..009) وتجنّب تكرارها.
+3. اجمع ~10-15 حديثاً ضعيفاً و~10-15 موضوعاً إضافياً (غير المذكورة أعلاه)
+   عبر WebSearch من dorar.net أو "سلسلة الأحاديث الضعيفة والموضوعة" —
+   نفس المنهجية بالضبط المستخدمة في `supabase/verified_hadith_daif_mawdu_
+   seed_v1.sql` (راجعه كمرجع للأسلوب: نص + راوٍ + مصدر + درجة + شرح موجز،
+   وذِكر الخلاف العلمي صراحة حيث وُجد بدل الجزم بجهة واحدة).
+4. اكتب `supabase/verified_hadith_daif_mawdu_seed_v2.sql` بنفس بنية
+   الإدخال (`INSERT INTO verified_hadith_items (...) VALUES (...) ON
+   CONFLICT (id) DO NOTHING;`)، أرقام id متسلسلة من daif-006/mawdu-010.
+5. طبّق عبر `npx supabase db query --linked --file <path>`، تحقّق فوراً من
+   الحالة (لا ذرّية مضمونة — راجع الملاحظة البيئية أعلى الملف)، تحقّق
+   بـ`SELECT authenticity_class, count(*) FROM verified_hadith_items GROUP
+   BY 1;`. typecheck (لا تغيير كود متوقَّع)، commit، push.
