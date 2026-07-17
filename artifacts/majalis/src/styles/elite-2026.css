@@ -29444,6 +29444,34 @@ html[data-theme="dark"] body {
   background-color: #111714 !important;
   color: #E5F0EC !important;
 }
+/* أغلفة صفحات مستقلة (sw-page، th-page، fa-page، jn-page، fq-page، gl-page،
+   atl-page) تفرض خلفية فاتحة صريحة (#F9FAFB/#F8FAFC) بلا نظير ليلي — عناوين
+   "استكشف أيضاً" وأقسامها الفرعية كانت تُصيَّر بلون نص ليلي فاتح صحيح على
+   هذه الخلفية الفاتحة الباقية، فيختفي التباين تمامًا. تحقّق: audit-color-contrast.mjs
+   كشف 15+ صنفًا متأثرًا عبر 7 صفحات، جذرها الفعلي هذا الغلاف الواحد لكل صفحة
+   لا كل صنف عنوان فرعي على حدة. */
+html[data-theme="dark"] .sw-page,
+html[data-theme="dark"] .th-page,
+html[data-theme="dark"] .fa-page,
+html[data-theme="dark"] .jn-page,
+html[data-theme="dark"] .fq-page,
+html[data-theme="dark"] .gl-page,
+html[data-theme="dark"] .atl-page,
+html[data-theme="dark"] .sh-page,
+html[data-theme="dark"] .is-page {
+  background: #111714 !important;
+}
+/* بطاقات فرعية بخلفية بيضاء ثابتة بلا نظير ليلي (نفس النمط، مكوّن أضيق —
+   لا غلاف صفحة كامل بل بطاقة/لوحة واحدة داخل صفحة صحيحة الوضع الليلي
+   أصلاً): seerah-panel (سيرة)، qlive-schedule-item (بث مباشر)، fq-ref
+   (فقه القواعد)، sh-step__body (ابدأ هنا). */
+html[data-theme="dark"] .seerah-panel,
+html[data-theme="dark"] .qlive-schedule-item,
+html[data-theme="dark"] .fq-ref,
+html[data-theme="dark"] .sh-step__body {
+  background: #1A2120 !important;
+  border-color: rgba(255,255,255,.08) !important;
+}
 html[data-theme="dark"] .ui-card,
 html[data-theme="dark"] .card-v2,
 html[data-theme="dark"] .ds-card {

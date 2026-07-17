@@ -7,6 +7,7 @@
    ══════════════════════════════════════════════════════════ */
 
 .hj-page { min-height: 100vh; background: #F9FAFB; padding-bottom: 4rem; }
+html[data-theme="dark"] .hj-page { background: #111714 !important; }
 
 /* of-the-day card */
 .hjod-card {
