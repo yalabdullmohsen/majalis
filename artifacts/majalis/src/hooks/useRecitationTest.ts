@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { isIOS, isNative } from "@/lib/capacitor-utils";
+import { isAndroid, isIOS, isNative } from "@/lib/capacitor-utils";
 import { getSpeechRecognitionPlugin } from "@/lib/plugins/speech-recognition";
 import { diffRecitation, type RecitationDiffResult } from "@/lib/recitation-diff";
 
@@ -17,9 +17,10 @@ export function grantRecitationConsent(): void {
 }
 
 /**
- * اختبار التلاوة: يستمع لصوت المستخدم عبر التعرف الصوتي الأصلي لتطبيق iOS
- * (SFSpeechRecognizer، عبر MajlisSpeechRecognitionPlugin.swift المحلي — لا
- * توجد حزمة أندرويد بعد) أو Web Speech API على متصفحات الويب التي تدعمها
+ * اختبار التلاوة: يستمع لصوت المستخدم عبر التعرف الصوتي الأصلي — iOS
+ * (SFSpeechRecognizer عبر MajlisSpeechRecognitionPlugin.swift) أو أندرويد
+ * (android.speech.SpeechRecognizer عبر MajlisSpeechRecognitionPlugin.kt) —
+ * أو Web Speech API على متصفحات الويب التي تدعمها
  * (Chrome/Edge؛ Safari لا يدعمها إطلاقًا فتكون النتيجة "unsupported")، ثم
  * يقارن النص المتعرَّف عليه بالآية عبر diffRecitation.
  *
@@ -43,7 +44,7 @@ export function useRecitationTest(canonicalText: string) {
   }, [canonicalText]);
 
   const stop = useCallback(async () => {
-    if (isNative && isIOS) {
+    if (isNative && (isIOS || isAndroid)) {
       try {
         await getSpeechRecognitionPlugin()?.stop();
       } catch { /* تجاهل */ }
@@ -65,7 +66,7 @@ export function useRecitationTest(canonicalText: string) {
     transcriptRef.current = "";
     setState("requesting-permission");
 
-    if (isNative && isIOS) {
+    if (isNative && (isIOS || isAndroid)) {
       const plugin = getSpeechRecognitionPlugin();
       if (!plugin) { setState("unsupported"); return; }
       try {
