@@ -3,8 +3,10 @@
  *
  * يحذف حساب المستخدم المسجَّل نهائياً عبر Supabase Admin API.
  * حذف صف auth.users يُطلق ON DELETE CASCADE على كل الجداول المرتبطة
- * بـ user_id (تم التحقق: 221 من 226 مفتاحاً خارجياً في المشروع لديها
- * ON DELETE مُعرَّف، ولا حالة استثناء منها على عمود user_id).
+ * بـ user_id. تحقّق حي (2026-07-17) عبر pg_constraint: كل مفتاح خارجي
+ * يشير إلى auth.users إما CASCADE أو SET NULL — لا يوجد أي RESTRICT/NO
+ * ACTION يمكن أن يُفشل عملية الحذف (كان learning_items.verified_by
+ * الاستثناء الوحيد، أُصلح إلى SET NULL في نفس التاريخ).
  */
 
 import { sendJson } from "../../api/_http.mjs";
