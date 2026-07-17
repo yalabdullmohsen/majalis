@@ -17,16 +17,31 @@
  * المتصفح (قد يُرسِله Chrome لخوادم Google للمعالجة إن لم يتوفر تعرّف
  * كامل على الجهاز — نفس السياسة المُفصَح عنها لمسار iOS الأصلي) — لا
  * إرسال لأي جزء منه لخوادم مجالس نفسها إطلاقًا.
+ *
+ * ⚠️ إصلاحان جوهريان (2026-07-18) لمشكلة "تعرّف ضعيف جدًا" المُبلَّغة:
+ * 1. **كان الكود القديم يُغذّي نصوصًا مؤقتة غير مستقرة (interim results)
+ *    لمحرك المحاذاة كأنها كلمات مؤكَّدة** — Chrome يُصدر onresult مرارًا
+ *    أثناء "تنقيح" تخمينه لنفس المقطع قبل أن يستقر (مثال: "الحمد" ←
+ *    "الحمد لل" ← "الحمد لله")، وكل تنقيح كان يُحتسَب كإضافة كلمات جديدة
+ *    فعليًا فيولّد أخطاء وهمية كثيرة تبدو كأن "التعرّف ضعيف" بينما المشكلة
+ *    في استهلاك النتيجة الخام لا في دقة Google نفسها. الإصلاح: لا تُغذَّى
+ *    للمحرك إلا الكلمات من نتائج **مؤكَّدة (isFinal=true)** فقط.
+ * 2. **Chrome يُوقف الاستماع المستمر (continuous) صامتًا** بعد مهلة داخلية
+ *    غير موثَّقة رسميًا (عادة حول 60 ثانية أو عند صمت قصير) — بلا إعادة
+ *    تشغيل تلقائية، تستمر تلاوة المستخدم بلا أي استماع فعلي بعد ذلك (يبدو
+ *    "توقف عن الفهم" تمامًا). الإصلاح: `onend` يُعيد تشغيل `recognition`
+ *    تلقائيًا ما دامت الجلسة لم تُنهَ عمدًا عبر endSession().
  */
 import type { ASRSession, AudioChunk, FinalResult, PartialResult, QuranASRProvider, RecitationConfig } from "../asr-provider";
 import { ASRProviderUnavailableError } from "../asr-provider";
 
+type WebSpeechResult = ArrayLike<{ transcript: string }> & { isFinal: boolean };
 type WebSpeechRecognition = {
   lang: string;
   interimResults: boolean;
   continuous: boolean;
   maxAlternatives: number;
-  onresult: ((event: { results: ArrayLike<ArrayLike<{ transcript: string }> & { isFinal: boolean }> }) => void) | null;
+  onresult: ((event: { results: ArrayLike<WebSpeechResult>; resultIndex: number }) => void) | null;
   onerror: ((event: { error: string }) => void) | null;
   onend: (() => void) | null;
   start: () => void;
@@ -40,7 +55,17 @@ function getCtor(): WebSpeechRecognitionCtor | null {
   return w.SpeechRecognition || w.webkitSpeechRecognition || null;
 }
 
-type Active = { recognition: WebSpeechRecognition; lastWordCount: number; fullTranscript: string; listeners: Set<(w: string, atMs: number) => void> };
+type Active = {
+  recognition: WebSpeechRecognition;
+  language: string;
+  processedFinalCount: number; // عدد نتائج event.results[] المؤكَّدة (isFinal) التي عُولجت فعلًا
+  finalWords: string[];
+  intentionallyStopped: boolean;
+  restartCount: number;
+  listeners: Set<(w: string, atMs: number) => void>;
+};
+
+const MAX_AUTO_RESTARTS = 50; // سقف أمان يمنع حلقة إعادة تشغيل لا نهائية عند عطل دائم (مثال: سحب إذن الميكروفون)
 
 export class WebSpeechQuranASRProvider implements QuranASRProvider {
   readonly id = "web-speech";
@@ -65,34 +90,72 @@ export class WebSpeechQuranASRProvider implements QuranASRProvider {
     }
 
     const id = `web-speech-${Date.now()}`;
-    const recognition = new Ctor();
-    recognition.lang = config.language;
-    recognition.interimResults = true;
-    recognition.continuous = true;
-    recognition.maxAlternatives = 1;
-
-    const active: Active = { recognition, lastWordCount: 0, fullTranscript: "", listeners: new Set() };
-    this.sessions.set(id, active);
-
-    recognition.onresult = (event) => {
-      let text = "";
-      for (let i = 0; i < event.results.length; i++) text += event.results[i][0].transcript + " ";
-      active.fullTranscript = text.trim();
-      const words = active.fullTranscript.split(/\s+/).filter(Boolean);
-      const newWords = words.slice(active.lastWordCount);
-      active.lastWordCount = words.length;
-      const now = Date.now();
-      for (const w of newWords) for (const cb of active.listeners) cb(w, now);
+    const active: Active = {
+      recognition: null as unknown as WebSpeechRecognition,
+      language: config.language,
+      processedFinalCount: 0,
+      finalWords: [],
+      intentionallyStopped: false,
+      restartCount: 0,
+      listeners: new Set(),
     };
-    recognition.onerror = () => { /* يُدار عبر endSession — لا رمي هنا حتى لا يُسقِط الجلسة كاملة لخطأ عابر */ };
+    this.sessions.set(id, active);
+    active.recognition = this.createRecognition(Ctor, active);
 
     try {
-      recognition.start();
+      active.recognition.start();
     } catch {
+      this.sessions.delete(id);
       throw new ASRProviderUnavailableError({ code: "PERMISSION_DENIED", message: "تعذّر بدء الاستماع — تحقّق من إذن الميكروفون." });
     }
 
     return { id, provider: this.id };
+  }
+
+  private createRecognition(Ctor: WebSpeechRecognitionCtor, active: Active): WebSpeechRecognition {
+    const recognition = new Ctor();
+    recognition.lang = active.language;
+    recognition.interimResults = true;
+    recognition.continuous = true;
+    recognition.maxAlternatives = 1;
+
+    recognition.onresult = (event) => {
+      // نعالج فقط النتائج المؤكَّدة (isFinal) الجديدة — النتيجة الأخيرة
+      // غالبًا مؤقتة (interim) وتتغيّر لاحقًا، فلا تُحتسَب أبدًا هنا.
+      for (let i = active.processedFinalCount; i < event.results.length; i++) {
+        const result = event.results[i];
+        if (!result.isFinal) continue;
+        const transcript = result[0]?.transcript ?? "";
+        const words = transcript.trim().split(/\s+/).filter(Boolean);
+        active.finalWords.push(...words);
+        active.processedFinalCount = i + 1;
+        const now = Date.now();
+        for (const w of words) for (const cb of active.listeners) cb(w, now);
+      }
+    };
+
+    recognition.onerror = (event) => {
+      // "no-speech" شائع جدًا (صمت قصير) وليس عطلاً حقيقيًا — يُدار عبر
+      // onend + إعادة التشغيل التلقائية أدناه، لا داعٍ لفعل شيء هنا.
+      if (event.error === "no-speech" || event.error === "aborted") return;
+      console.warn(`recitation-ai web-speech: ${event.error}`);
+    };
+
+    recognition.onend = () => {
+      if (active.intentionallyStopped) return;
+      if (active.restartCount >= MAX_AUTO_RESTARTS) return;
+      // Chrome يُنهي الاستماع المستمر صامتًا دوريًا — إعادة تشغيل فورية
+      // ضرورية وإلا يستمر المستخدم بالتلاوة دون أي استماع فعلي.
+      active.restartCount += 1;
+      try {
+        recognition.start();
+      } catch {
+        // تعذّر إعادة التشغيل (مثال: الجلسة أُنهيت بين onend ومحاولة إعادة
+        // التشغيل) — يُترَك بصمت، endSession سيُعيد ما تجمَّع فعلًا.
+      }
+    };
+
+    return recognition;
   }
 
   async transcribeChunk(_session: ASRSession, _chunk: AudioChunk): Promise<PartialResult | null> {
@@ -110,8 +173,8 @@ export class WebSpeechQuranASRProvider implements QuranASRProvider {
     const active = this.sessions.get(session.id);
     this.sessions.delete(session.id);
     if (!active) return { fullText: "", words: [] };
+    active.intentionallyStopped = true;
     try { active.recognition.stop(); } catch { /* تجاهل */ }
-    const words = active.fullTranscript.split(/\s+/).filter(Boolean);
-    return { fullText: active.fullTranscript, words };
+    return { fullText: active.finalWords.join(" "), words: active.finalWords };
   }
 }
