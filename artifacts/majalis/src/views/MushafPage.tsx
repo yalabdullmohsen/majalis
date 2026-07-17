@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useLocation } from "wouter";
-import { Menu, Pause, Play, Copy, Check } from "lucide-react";
+import { Menu, Pause, Play, Copy, Check, Mic } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { fetchSurahDetail, getSurahList, type SurahDetail, type SurahSummary } from "@/lib/quran-api";
@@ -8,6 +8,7 @@ import { SurahList } from "@/components/quran/SurahList";
 import { ExploreAyahPanel } from "@/components/quran/ExploreAyahPanel";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
 import { copyAyahText } from "@/lib/share-ayah";
+import { isFeatureEnabled } from "@/lib/feature-flags";
 import "@/styles/quran.css";
 
 export default function MushafPage() {
@@ -116,6 +117,16 @@ export default function MushafPage() {
                 </p>
                 {isFirstAyahBasmala && (
                   <p className="qs-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+                )}
+                {isFeatureEnabled("quran_recitation_ai_test") && (
+                  <button
+                    type="button"
+                    className="qs-mobile-sidebar-toggle"
+                    onClick={() => navigate(`/quran/recitation-test-ai?surah=${surahNum}`)}
+                  >
+                    <Mic size={16} aria-hidden="true" />
+                    سمّع هذه السورة
+                  </button>
                 )}
               </header>
 

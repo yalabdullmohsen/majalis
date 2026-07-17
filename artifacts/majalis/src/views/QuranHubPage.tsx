@@ -2,12 +2,22 @@ import { Link } from "wouter";
 import {
   Radio, Mic2, Layers, Circle, Star,
   ChevronLeft, BookMarked, BookOpen, Headphones, GraduationCap,
-  Moon, Heart, Sparkles,
+  Moon, Heart, Sparkles, Mic,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { useEffect } from "react";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { isFeatureEnabled } from "@/lib/feature-flags";
+
+const RECITATION_TEST_SECTION = {
+  href: "/quran/recitation-test-ai",
+  title: "اختبار التسميع بالذكاء الاصطناعي",
+  desc: "سمّع من حفظك واستمع التطبيق لتلاوتك لحظيًا، ويكشف المصحف الآيات كلما نطقتها صحيحة",
+  Icon: Mic,
+  accent: "#176B57",
+  tag: "تجريبي",
+};
 
 /* ── بيانات أقسام القرآن ──────────────────────────────────── */
 const QURAN_SECTIONS = [
@@ -175,7 +185,7 @@ export default function QuranHubPage() {
       <section className="quran-hub-sections">
         <h2 className="quran-hub-sections__title">أقسام القرآن</h2>
         <div className="quran-hub-grid">
-          {QURAN_SECTIONS.map(s => (
+          {(isFeatureEnabled("quran_recitation_ai_test") ? [...QURAN_SECTIONS, RECITATION_TEST_SECTION] : QURAN_SECTIONS).map(s => (
             <Link key={s.href} href={s.href} className="quran-hub-card">
               <div className={`quran-hub-card__header ${qhcAccentMod(s.accent)}`}>
                 <s.Icon size={28} className="quran-hub-card__icon" />
