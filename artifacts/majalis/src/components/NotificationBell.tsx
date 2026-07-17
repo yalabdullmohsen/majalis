@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Bell, Settings2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { createNotification } from "@/lib/notification-service";
+import { buildErrorReport, createErrorId, logClientError } from "@/lib/error-report";
 
 function relativeTime(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
@@ -33,32 +34,60 @@ export default function NotificationBell() {
     };
     fetch();
 
-    const channel = supabase
-      .channel("notifications")
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "notifications" },
-        (payload) => setNotifications((prev) => [payload.new as any, ...prev]))
-      .subscribe();
+    // Realtime هو تحسين تدريجي (تحديث فوري بلا إعادة تحميل) لا وظيفة
+    // أساسية — فشل اتصال WebSocket (شائع على iOS Safari: "operation is
+    // insecure" أثناء تنقّل الصفحة) يجب ألا يُسقِط الشجرة كاملة عبر
+    // ErrorBoundary. try/catch + status callback بدل fire-and-forget
+    // (عطل حقيقي على الإنتاج، 2026-07-17: MJL-20260717-191326-NR11UV).
+    let channel: ReturnType<typeof supabase.channel> | null = null;
+    let lessonChannel: ReturnType<typeof supabase.channel> | null = null;
+    const onChannelError = (source: string) => (status: string, err?: Error) => {
+      if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
+        void logClientError(
+          buildErrorReport(err || new Error(`Realtime ${status}`), {
+            errorId: createErrorId("RT"),
+            component: "NotificationBell",
+            section: source,
+          }),
+        );
+      }
+    };
+    try {
+      channel = supabase
+        .channel("notifications")
+        .on("postgres_changes", { event: "INSERT", schema: "public", table: "notifications" },
+          (payload) => setNotifications((prev) => [payload.new as any, ...prev]))
+        .subscribe(onChannelError("notifications"));
 
-    const lessonChannel = supabase
-      .channel("kuwait-lessons-auto-notify")
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "kuwait_lessons" },
-        async (payload) => {
-          const { data: { user } } = await supabase.auth.getUser();
-          if (!user) return;
-          const lesson = payload.new as Record<string, unknown>;
-          await createNotification({
-            userId: user.id,
-            title: "درس جديد أُضيف تلقائياً",
-            body: [String(lesson.title || "درس جديد"), String(lesson.mosque || lesson.governorate || "").trim()].filter(Boolean).join(" · "),
-            type: "lesson",
-            actionUrl: lesson.id != null ? `/lessons/${lesson.id}` : null,
-          });
-        })
-      .subscribe();
+      lessonChannel = supabase
+        .channel("kuwait-lessons-auto-notify")
+        .on("postgres_changes", { event: "INSERT", schema: "public", table: "kuwait_lessons" },
+          async (payload) => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) return;
+            const lesson = payload.new as Record<string, unknown>;
+            await createNotification({
+              userId: user.id,
+              title: "درس جديد أُضيف تلقائياً",
+              body: [String(lesson.title || "درس جديد"), String(lesson.mosque || lesson.governorate || "").trim()].filter(Boolean).join(" · "),
+              type: "lesson",
+              actionUrl: lesson.id != null ? `/lessons/${lesson.id}` : null,
+            });
+          })
+        .subscribe(onChannelError("kuwait-lessons-auto-notify"));
+    } catch (err) {
+      void logClientError(
+        buildErrorReport(err instanceof Error ? err : new Error(String(err)), {
+          errorId: createErrorId("RT"),
+          component: "NotificationBell",
+          section: "channel-setup",
+        }),
+      );
+    }
 
     return () => {
-      supabase.removeChannel(channel);
-      supabase.removeChannel(lessonChannel);
+      if (channel) supabase.removeChannel(channel);
+      if (lessonChannel) supabase.removeChannel(lessonChannel);
     };
   }, []);
 
