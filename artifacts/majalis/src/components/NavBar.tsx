@@ -4,6 +4,7 @@ import { Menu, Moon, Search, Sun, User, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { useLanguage } from "./LanguageProvider";
 import NotificationBell from "./NotificationBell";
+import { SectionErrorBoundary } from "./ErrorBoundary";
 import { SearchSuggestions } from "./SearchSuggestions";
 import { SideNavDrawer } from "./SideNavDrawer";
 import { MobileMoreMenu } from "./MobileMoreMenu";
@@ -120,7 +121,11 @@ export default function NavBar() {
   // Desktop only: full auth bar
   const desktopAuthLinks = isLoggedIn ? (
     <div className="navbar-auth">
-      {isAdmin && <NotificationBell />}
+      {isAdmin && (
+        <SectionErrorBoundary name="NotificationBell">
+          <NotificationBell />
+        </SectionErrorBoundary>
+      )}
       <Link href="/stats" className="navbar-user-link">{user?.profile?.full_name || user?.email || t("nav_my_account")}</Link>
       {isAdmin && (
         <Link href="/admin" className="navbar-admin-link">
@@ -251,7 +256,11 @@ export default function NavBar() {
                 <User size={16} strokeWidth={1.8} aria-hidden="true" />
               </Link>
             )}
-            {isMobile && isAdmin && <NotificationBell />}
+            {isMobile && isAdmin && (
+              <SectionErrorBoundary name="NotificationBell">
+                <NotificationBell />
+              </SectionErrorBoundary>
+            )}
           </div>
         </div>
       </header>
