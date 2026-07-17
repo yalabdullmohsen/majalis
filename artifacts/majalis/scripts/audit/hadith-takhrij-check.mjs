@@ -12,7 +12,9 @@
  * حرفياً بصيغة "قال ﷺ" أو «...» منسوبة للنبي دون أي حقل مصدر (quiz-seed لا
  * يملك حقل مصدر أصلاً، فهذا الفحص يكتشف حالات الاقتباس الحرفي فيه تحديداً).
  *
- * التشغيل: node scripts/audit/hadith-takhrij-check.mjs [--json]
+ * التشغيل: npx tsx scripts/audit/hadith-takhrij-check.mjs [--json]
+ * (لا "node" مباشرة — الاستيراد الديناميكي لملفات seed.ts بدون امتداد يحتاج
+ * محلّل tsx؛ node وحده يفشل بـERR_MODULE_NOT_FOUND على مسارات بلا .ts)
  */
 import path from "node:path";
 import { fileURLToPath } from "node:url";
