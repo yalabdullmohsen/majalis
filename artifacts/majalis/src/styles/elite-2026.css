@@ -31861,3 +31861,69 @@ html[data-theme="dark"] .ikm-card__title {
 .site-footer-social {
   margin-top: .75rem;
 }
+
+/* ============================================================
+   §220 — غلاف الودجت الموحّد (widget-shell-*) — المرحلة 7
+   حالات: تحميل/فارغ/تسجيل دخول مطلوب/جاهز. يعتمد على متغيّرات
+   الهوية الحالية (--majalis-*) فقط — لا ألوان يدوية جديدة.
+   ============================================================ */
+.widget-shell__skeletons {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+.widget-shell__skeleton {
+  height: 3.25rem;
+  border-radius: .75rem;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--majalis-line) 60%, transparent) 25%,
+    color-mix(in srgb, var(--majalis-line) 100%, transparent) 50%,
+    color-mix(in srgb, var(--majalis-line) 60%, transparent) 75%
+  );
+  background-size: 200% 100%;
+  animation: widget-shell-shimmer 1.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .widget-shell__skeleton { animation: none; opacity: .6; }
+}
+@keyframes widget-shell-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.widget-shell__empty,
+.widget-shell__auth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  color: var(--majalis-ink-soft);
+  border: 1px dashed var(--majalis-line);
+  border-radius: .85rem;
+}
+.widget-shell__empty p,
+.widget-shell__auth p {
+  font-size: .85rem;
+  margin: 0;
+}
+.widget-shell__empty-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  margin-top: .25rem;
+  padding: .45rem .9rem;
+  min-height: 44px;
+  border-radius: .6rem;
+  background: var(--majalis-emerald-deep);
+  color: #fff;
+  font-size: .8rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.widget-shell__empty-cta:hover,
+.widget-shell__empty-cta:focus-visible {
+  filter: brightness(1.08);
+}
