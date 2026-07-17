@@ -9810,6 +9810,48 @@ body {
    بدل الاعتماد على المتغير (2026-07-17). */
 html[data-theme="dark"] .legal-page-hero { background: #0D5E3F !important; }
 
+/* ══════════════════════════════════════════════════════════════════
+   إصلاح تباين إضافي — روابط <a> بخلفية/لون خاصَّين (أزرار وتبويبات)
+   كانت تفقد لونها المقصود لصالح قاعدة لون الروابط الليلية العامة
+   (html[data-theme="dark"] a:not(...) {color:#3BAD8A!important}، أسفل
+   هذا الملف) رغم أن كل واحد منها له قاعدة !important خاصة به — إذ كانت
+   قاعدة الروابط أعلى تخصيصًا (6 محدِّدات :not() > محدِّد صنف واحد) فتفوز
+   رغم ترتيب المصدر. **الإصلاح فعليًا مزدوج**: (1) أُضيفت هذه الأصناف
+   الستة لقائمة :not() في تلك القاعدة (ضروري — تثبيت مباشر وحده هنا لم
+   يكفِ، جُرِّب وفشل أولًا لأن خصوصيته (0,0,2,1) أقل من (0,0,6,2))، ثم
+   (2) هذه القواعد أدناه تضمن اللون الصحيح بعد الاستثناء. تحقّق:
+   audit-color-contrast.mjs، 2026-07-17.
+   ══════════════════════════════════════════════════════════════════ */
+html[data-theme="dark"] .quran-subnav__link.is-active,
+html[data-theme="dark"] .page-action-btn,
+html[data-theme="dark"] .fiqh-hub-strip__tab,
+html[data-theme="dark"] .lesson-unified-card__btn--primary {
+  color: #fff !important;
+}
+/* var(--ds-emerald) يتحوّل لأخضر نعناعي فاتح (#3BAD8A) في الوضع الليلي —
+   نفس عطل .sq-header المُصلَح سابقًا؛ #3BAD8A فاتح جدًا حتى للنص الأبيض
+   (2.86:1 فقط). خلفية داكنة صريحة لكل زر/تبويب يعتمد عليه هنا. */
+html[data-theme="dark"] .quran-subnav__link.is-active,
+html[data-theme="dark"] .page-action-btn,
+html[data-theme="dark"] .fiqh-hub-strip__tab {
+  background: #0D5E3F !important;
+}
+html[data-theme="dark"] .tj-related-link {
+  color: #E5F0EC !important;
+}
+/* خلفيته الفعلية غير متّسقة بين عناصر هذه القائمة (بعضها فاتح شبه شفاف،
+   بعضها داكن — لم أُشخِّص السبب) فلا يوجد لون نص واحد يناسب الكل؛ فاتح
+   يناسب الأغلبية (الحاوية الداكنة الطبيعية للوضع الليلي). */
+html[data-theme="dark"] .fiqh-council-subnav-link {
+  color: #E5F0EC !important;
+}
+/* خلفية .lesson-unified-card__btn--primary (var(--color-primary)) تتحول
+   لـ#059669 (Emerald 600) في سياقات مختلفة — نفس اللون الذي فشل تباينه
+   مرارًا هذه الجلسة (skip-link، bottom-nav، واتساب) — تثبيت مباشر. */
+html[data-theme="dark"] .lesson-unified-card__btn--primary {
+  background: #0D5E3F !important;
+}
+
 /* ── §167 — AyahDisplay NoteForm (ayd-*) ────────────────────────────────── */
 
 
@@ -29455,7 +29497,7 @@ html[data-theme="dark"] h3, html[data-theme="dark"] h4 {
    المقصود — وإلا فاز هذا القانون العام بالأسبقية (0,1,1 > 0,1,0) فأنتج
    نصًّا بلون الخلفية نفسه (أخضر على أخضر)، كما ظهر في fiqh-hub-strip__tab--active
    على الوضع الليلي (2026-07-16). */
-html[data-theme="dark"] a:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab) { color: #3BAD8A !important; }
+html[data-theme="dark"] a:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab):not(.quran-subnav__link):not(.page-action-btn):not(.fiqh-hub-strip__tab):not(.tj-related-link):not(.lesson-unified-card__btn--primary):not(.fiqh-council-subnav-link) { color: #3BAD8A !important; }
 html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab) { color: #4DC09A !important; }
 
 /* ════════════════════════════════════
