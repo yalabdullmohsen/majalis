@@ -28891,9 +28891,14 @@ body {
 }
 
 /* تسلسل طباعي عربي احترافي */
+/* color بلا !important عمدًا (2026-07-17): نفس منطق قاعدة <p> و<a> أدناه —
+   أي عنوان يحدد لون نص خاصًا به (مثل نص فاتح فوق خلفية داكنة، كمثال
+   .prophet-detail-lux__name فوق خلفية بطل داكنة) يجب أن يفوز تلقائيًا عبر
+   تخصيص CSS العادي. كان !important هنا يُسكت أي لون h1-h6 مخصَّص في كل
+   الموقع، تمامًا كما كان الحال مع <p> قبل إصلاحه بنفس المنطق. */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display) !important;
-  color: var(--clr-text-1, #17201D) !important;
+  color: var(--clr-text-1, #17201D);
   line-height: 1.3 !important;
   font-weight: 700 !important;
   letter-spacing: -0.01em !important;
