@@ -461,6 +461,48 @@ export async function fetchUserCertificatesList(userId: string): Promise<UserCer
   }));
 }
 
+export type RealUserLearningStats = {
+  completed_lessons: number;
+  completed_paths: number;
+  quiz_attempts: number;
+  achievements_count: number;
+  completion_pct: number;
+};
+
+/**
+ * إحصائيات لوحة "حسابي" الحقيقية — كلها من الجداول الحيّة الفعلية لمنظومة
+ * المسارات الموحّدة (path_enrollments/item_completion_events/certificates)
+ * وجدول quiz_attempts الحقيقي المنفصل، لا من /api/digital-learning
+ * (user_module_progress/user_learning_achievements) التي لا يكتب إليها أي
+ * تدفّق فعلي في التطبيق — كانت تُظهر 0 دائمًا مهما أنجز المستخدم فعليًا
+ * (راجع docs/redesign-audit.md، المرحلة 5، 2026-07-18).
+ */
+export async function fetchRealUserLearningStats(userId: string): Promise<RealUserLearningStats> {
+  const [completedLessonsRes, enrollmentsProgress, certificates, quizAttemptsRes] = await Promise.all([
+    supabase
+      .from("item_completion_events")
+      .select("learning_item_id", { count: "exact", head: true })
+      .eq("user_id", userId)
+      .eq("event_type", "completed"),
+    fetchUserEnrollmentsWithProgress(userId),
+    fetchUserCertificatesList(userId),
+    supabase.from("quiz_attempts").select("id", { count: "exact", head: true }).eq("user_id", userId),
+  ]);
+
+  const completedPaths = enrollmentsProgress.filter((e) => e.progressPct >= 100).length;
+  const completionPct = enrollmentsProgress.length
+    ? Math.round(enrollmentsProgress.reduce((sum, e) => sum + e.progressPct, 0) / enrollmentsProgress.length)
+    : 0;
+
+  return {
+    completed_lessons: completedLessonsRes.count ?? 0,
+    completed_paths: completedPaths,
+    quiz_attempts: quizAttemptsRes.count ?? 0,
+    achievements_count: certificates.length,
+    completion_pct: completionPct,
+  };
+}
+
 // ── الشهادة ──────────────────────────────────────────────────────────────
 
 export async function fetchExistingCertificate(userId: string, pathId: string) {
