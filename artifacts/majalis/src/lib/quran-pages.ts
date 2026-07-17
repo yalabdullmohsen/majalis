@@ -6,7 +6,7 @@
  * المُتحقَّق checksum). لا يُعيد تعريف أو تحويل أي نص آية — يقتطع فقط
  * النطاق المطلوب من نتيجة fetchSurahDetail كما هي حرفيًا.
  */
-import { fetchSurahDetail, type Ayah, type SurahDetail } from "@/lib/quran-api";
+import { fetchSurahDetail, getSurahMeta, type Ayah, type SurahDetail } from "@/lib/quran-api";
 
 export type PagesManifestEntry = {
   page: number;
@@ -23,7 +23,12 @@ export type PagesManifest = {
 
 export type PageAyah = Ayah & {
   surahNumber: number;
+  /** اسم مجرَّد بلا "سورة"/"سُورَةُ" بادئة — يُستخدَم في قوالب "سورة {name}"
+   *  (AyahActionSheet، ExploreAyahPanel المُستهلِكة أصلاً بهذا الشكل). */
   surahName: string;
+  /** الاسم الكامل المُشكَّل كما يظهر في نص المصحف نفسه ("سُورَةُ ٱلْفَاتِحَةِ") —
+   *  للعناوين المرئية فقط (رأس القارئ، فاصل بداية سورة داخل الصفحة). */
+  surahNameFull: string;
   isFirstOfSurah: boolean;
 };
 
@@ -73,13 +78,15 @@ export async function fetchPage(pageNumber: number): Promise<PageContent> {
 
   for (const range of entry.ranges) {
     const detail = await cachedSurahDetail(range.surah);
+    const bareName = getSurahMeta(range.surah).name; // "الفاتحة" — بلا بادئة، للقوالب "سورة {name}"
     surahsSeen.push({ number: range.surah, name: detail.name });
     for (const ayah of detail.ayahs) {
       if (ayah.numberInSurah >= range.from && ayah.numberInSurah <= range.to) {
         ayahs.push({
           ...ayah,
           surahNumber: range.surah,
-          surahName: detail.name,
+          surahName: bareName,
+          surahNameFull: detail.name,
           isFirstOfSurah: ayah.numberInSurah === 1,
         });
       }

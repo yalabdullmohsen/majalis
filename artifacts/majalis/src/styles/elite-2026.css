@@ -32110,3 +32110,456 @@ html[data-theme="dark"] .ikm-card__title {
 .surah-index-row__fav:focus-visible {
   background: color-mix(in srgb, var(--majalis-emerald-deep) 8%, transparent);
 }
+
+/* ============================================================
+   §222 — قارئ المصحف الجديد (mushaf-v2-*) — المرحلة 8
+   ترقيم مدينة 604 صفحة، سحب أفقي، Bottom Sheet بدل الأزرار الدائمة،
+   وضع هادئ. خط النص القرآني var(--font-quran) حصرًا، والواجهة
+   var(--font-ui)/Almarai لكل ما عداه.
+   ============================================================ */
+.quran-shell.mushaf-v2 {
+  /* min-height:100dvh وهي مدفوعة فعليًا لأسفل بارتفاع هيدر التطبيق العلوي
+     (--mobile-header-h) يتجاوز مجموعهما ارتفاع نافذة العرض — نفس صيغة
+     الحجز المُستخدَمة فعلاً في index.css لصفحات أخرى (بحثتُ عنها قبل
+     الاختراع)، لا حساب جديد مخمَّن. تحقّقتُ فعليًا بالقياس: بدون هذا كان
+     64px من مؤشّر الصفحات (mushaf-v2__pager) يقع خارج نافذة العرض خلف
+     التنقل السفلي الثابت. */
+  min-height: calc(100dvh - var(--mobile-header-h, 4rem) - var(--bottom-nav-h, 56px) - env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  background: var(--majalis-panel);
+  overflow: hidden;
+}
+@media (min-width: 880px) {
+  /* التنقل السفلي مخفي على الشاشات الكبيرة (desktop) — لا حاجة لحجز مساحته. */
+  .quran-shell.mushaf-v2 { min-height: calc(100dvh - var(--mobile-header-h, 4rem)); }
+}
+
+.mushaf-v2__header {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .6rem .85rem;
+  padding-top: max(.6rem, env(safe-area-inset-top, 0px));
+  border-bottom: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  flex-shrink: 0;
+}
+.mushaf-v2__sidebar-btn,
+.mushaf-v2__pager-btn,
+.mushaf-v2__sidebar-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: .6rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  color: var(--majalis-emerald-deep);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.mushaf-v2__pager-btn:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+.mushaf-v2__header-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.mushaf-v2__header-surah {
+  font-family: var(--font-quran);
+  font-size: 1.05rem;
+  color: var(--majalis-emerald-deep);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.mushaf-v2__header-meta {
+  font-size: .72rem;
+  color: var(--majalis-ink-soft);
+}
+.mushaf-v2__header-spacer { width: 44px; flex-shrink: 0; }
+
+.mushaf-v2__page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  touch-action: pan-y;
+  padding: 1.25rem 1rem;
+  padding-inline: max(1rem, env(safe-area-inset-left, 0px)) max(1rem, env(safe-area-inset-right, 0px));
+  cursor: pointer;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mushaf-v2__page { transition: transform .12s ease-out; }
+}
+
+.mushaf-v2--quiet .mushaf-v2__page {
+  padding-top: max(1.25rem, env(safe-area-inset-top, 0px));
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+}
+
+.mushaf-v2__ayahs {
+  max-width: 640px;
+  margin: 0 auto;
+  cursor: default;
+  text-align: justify;
+  text-align-last: center;
+}
+.mushaf-v2__ayah-wrap {
+  display: contents;
+}
+.mushaf-v2__surah-marker {
+  display: block;
+  text-align: center;
+  font-family: var(--font-quran);
+  font-size: 1.2rem;
+  color: var(--majalis-emerald-deep);
+  margin: 1.25rem 0 .5rem;
+}
+.mushaf-v2__bismillah {
+  display: block;
+  text-align: center;
+  font-family: var(--font-quran);
+  font-size: 1.35rem;
+  color: var(--majalis-emerald-deep);
+  margin: .25rem 0 .75rem;
+}
+.mushaf-v2__ayah {
+  font-family: var(--font-quran);
+  font-size: 1.6rem;
+  line-height: 2.35;
+  color: var(--majalis-ink);
+  cursor: pointer;
+  border-radius: .3rem;
+  padding: .1rem .15rem;
+}
+.mushaf-v2__ayah:hover,
+.mushaf-v2__ayah:focus-visible {
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 6%, transparent);
+  outline: none;
+}
+.mushaf-v2__ayah--playing {
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 10%, transparent);
+}
+.mushaf-v2__ayah-num {
+  display: inline-block;
+  font-size: 1.05rem;
+  color: var(--majalis-emerald-deep);
+  margin-inline-start: .2rem;
+  margin-inline-end: .35rem;
+}
+
+.mushaf-v2__pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: .6rem .85rem;
+  padding-bottom: max(.6rem, env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  flex-shrink: 0;
+}
+.mushaf-v2__pager-count {
+  font-variant-numeric: tabular-nums;
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--majalis-ink);
+  min-width: 5rem;
+  text-align: center;
+}
+
+/* ── الفهرس (سورة/جزء/صفحة) ──
+   z-index مرتفع جدًا عمدًا (10000): .navbar-v3 يستخدم 9999 مُثبَّتة حرفيًا
+   (لا تتبع سلّم --z-* المُعرَّف في index.css) — رصدتُ هذا فعليًا حين فشل
+   Playwright بالنقر على تبويب "جزء" لأن الهيدر الثابت اعترض النقر رغم
+   ظهور الفهرس بصريًا فوقه. */
+.mushaf-v2__sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0,0,0,.45);
+  display: flex;
+  justify-content: flex-end;
+}
+.mushaf-v2__sidebar {
+  width: min(360px, 88vw);
+  height: 100%;
+  background: var(--majalis-panel);
+  display: flex;
+  flex-direction: column;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.mushaf-v2__sidebar-head {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .75rem;
+  border-bottom: 1px solid var(--majalis-line);
+}
+.mushaf-v2__sidebar-tabs {
+  flex: 1;
+  display: flex;
+  gap: .4rem;
+}
+.mushaf-v2__sidebar-tab {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .3rem;
+  min-height: 40px;
+  border-radius: .6rem;
+  border: 1px solid var(--majalis-line);
+  background: transparent;
+  color: var(--majalis-ink-soft);
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.mushaf-v2__sidebar-tab.is-active {
+  background: var(--majalis-emerald-deep);
+  border-color: var(--majalis-emerald-deep);
+  color: #fff;
+}
+
+.mushaf-v2__juz-list {
+  overflow-y: auto;
+  padding: .5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+.mushaf-v2__juz-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding: 0 .9rem;
+  border-radius: .6rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  font-weight: 700;
+  font-size: .88rem;
+  cursor: pointer;
+}
+.mushaf-v2__juz-item.is-active {
+  border-color: var(--majalis-emerald-deep);
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 8%, transparent);
+}
+.mushaf-v2__juz-item-page {
+  font-size: .75rem;
+  color: var(--majalis-ink-soft);
+  font-weight: 600;
+}
+
+.mushaf-v2__page-jump {
+  display: flex;
+  gap: .5rem;
+  padding: .75rem;
+}
+.mushaf-v2__page-jump-btn {
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border-radius: .6rem;
+  border: none;
+  background: var(--majalis-emerald-deep);
+  color: #fff;
+  font-weight: 700;
+  font-size: .85rem;
+  cursor: pointer;
+}
+
+/* ── Bottom Sheet لإجراءات الآية (ayah-sheet-*) ── — نفس سبب 10000 أعلاه ── */
+.ayah-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0,0,0,.45);
+  display: flex;
+  align-items: flex-end;
+}
+.ayah-sheet {
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--majalis-panel);
+  border-radius: 1.25rem 1.25rem 0 0;
+  padding: .6rem 1rem 1rem;
+  padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+}
+.ayah-sheet__handle {
+  width: 40px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--majalis-line);
+  margin: 0 auto .75rem;
+}
+.ayah-sheet__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .5rem;
+}
+.ayah-sheet__meta {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--majalis-ink-soft);
+  margin: 0;
+}
+.ayah-sheet__close {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: none;
+  background: color-mix(in srgb, var(--majalis-line) 60%, transparent);
+  color: var(--majalis-ink-soft);
+  cursor: pointer;
+}
+.ayah-sheet__preview {
+  font-size: 1.15rem;
+  line-height: 2;
+  color: var(--majalis-ink);
+  text-align: center;
+  padding: .75rem;
+  margin-bottom: .85rem;
+  border-radius: .75rem;
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 5%, transparent);
+}
+.ayah-sheet__actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .5rem;
+  margin-bottom: .75rem;
+}
+.ayah-sheet__action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .3rem;
+  min-height: 64px;
+  border-radius: .75rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  font-size: .72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.ayah-sheet__action.is-active {
+  border-color: var(--majalis-emerald-deep);
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 10%, transparent);
+  color: var(--majalis-emerald-deep);
+}
+.ayah-sheet__action--fav {
+  padding: 0;
+}
+.ayah-sheet__action--fav .favorite-btn {
+  width: 100%;
+  height: 100%;
+  min-height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .3rem;
+  border: none;
+  background: transparent;
+  color: var(--majalis-ink);
+  font-size: .72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.ayah-sheet__action--fav .favorite-btn::before {
+  content: "★";
+  font-size: 1.1rem;
+  color: var(--majalis-ink-soft);
+}
+.ayah-sheet__action--fav .favorite-btn--active::before {
+  color: var(--majalis-emerald-deep);
+}
+
+.ayah-sheet__reciter-toggle,
+.ayah-sheet__tafsir-toggle {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 .5rem;
+  border: none;
+  border-top: 1px solid var(--majalis-line);
+  background: transparent;
+  color: var(--majalis-ink-soft);
+  font-size: .82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.ayah-sheet__reciter-toggle span:nth-child(2),
+.ayah-sheet__tafsir-toggle span:nth-child(2) {
+  flex: 1;
+  text-align: start;
+}
+.ayah-sheet__reciter-toggle svg:last-child,
+.ayah-sheet__tafsir-toggle svg:last-child {
+  transition: transform .15s ease;
+}
+.ayah-sheet__reciter-toggle svg.is-open,
+.ayah-sheet__tafsir-toggle svg.is-open {
+  transform: rotate(180deg);
+}
+.ayah-sheet__reciter-list {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  padding: .5rem 0 .25rem;
+}
+.ayah-sheet__reciter-item {
+  min-height: 40px;
+  padding: 0 .75rem;
+  border-radius: .5rem;
+  border: none;
+  background: transparent;
+  color: var(--majalis-ink);
+  font-size: .82rem;
+  text-align: start;
+  cursor: pointer;
+}
+.ayah-sheet__reciter-item.is-active {
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 10%, transparent);
+  color: var(--majalis-emerald-deep);
+  font-weight: 700;
+}
+.ayah-sheet__tafsir-body {
+  padding: .25rem 0 .5rem;
+}
+.ayah-sheet__tafsir-status {
+  font-size: .8rem;
+  color: var(--majalis-ink-soft);
+  margin: 0;
+}
+.ayah-sheet__tafsir-text {
+  font-size: .92rem;
+  line-height: 1.9;
+  color: var(--majalis-ink);
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .ayah-sheet-overlay { align-items: center; justify-content: center; }
+  .ayah-sheet { width: min(480px, 92vw); border-radius: 1.25rem; max-height: 80vh; }
+}
