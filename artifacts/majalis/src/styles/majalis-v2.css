@@ -2953,6 +2953,16 @@ table th {
   color: #fff;
 }
 .sch-profile-hero__name { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.2rem; }
+/* .sch-profile-hero لا خلفية داكنة فعلية له (مطابقة [class$="-hero"] عن طريق
+   الخطأ)، فيرث العنوان لون أبيض غير مرئي على الخلفية الفاتحة. استثناء
+   `.sch-profile-hero, .sch-profile-hero *{color:inherit!important}` بنفس
+   التخصيص (0,1,0) يتنافس مع قاعدة [class$="-hero"] البيضاء دون ضمان فوز
+   حتمي (يعتمد على ترتيب لا يمكن ضمانه بعد التصغير/الدمج) — محدِّد مركّب
+   أعلى تخصيصًا هنا يضمن الفوز دومًا بصرف النظر عن الترتيب. تحذير: لا تستخدم
+   var(--majalis-ink) هنا رغم فوز هذه القاعدة بمعركة التخصيص — --majalis-ink
+   نفسه أيضًا مُعاد تعريفه للأبيض ضمن نفس نطاق [class$="-hero"] (بنفس آلية
+   --clr-text-1)، فتُطبَّق قيمة بيضاء رغم فوز القاعدة. لون حرفي ثابت فقط. */
+.sch-profile-hero .sch-profile-hero__name { color: #17201D !important; }
 .sch-profile-hero__fullname { opacity: 0.7; font-size: 0.9rem; margin-bottom: 0.75rem; }
 .sch-profile-hero__meta { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.5rem; }
 .sch-profile-hero__died { font-size: 0.82rem; opacity: 0.65; display: flex; align-items: center; gap: 0.3rem; }
@@ -3016,7 +3026,19 @@ table th {
 /* ══ صفحة حذف الحساب (AccountDeletionPage) ═════════════════════════════════ */
 .accd-hero { text-align: center; padding: 2rem 1rem 1.5rem; }
 .accd-hero__icon { color: #DC2626; margin: 0 auto 1rem; display: block; }
-.accd-hero h1 { font-size: 1.5rem; color: #DC2626; }
+/* .accd-hero لا خلفية داكنة له (يطابق [class$="-hero"] عن طريق الخطأ)، فيرث
+   لون تحذير أحمر (#DC2626 دلالي: حذف حساب نهائي) لكن يخسره أمام قاعدة
+   [class$="-hero"]{color:#fff!important} إذ لم يكن !important أصلاً.
+   ملاحظة تحقيق (2026-07-17): !important هنا صحيح ومتفوّق تخصيصًا نظريًا
+   ومؤكَّد عبر إعادة إنتاج معزولة بنفس ملف CSS المُجمَّع فعليًا (نتيجة حمراء
+   صحيحة) — لكن على صفحة /account-deletion الحيّة عبر vite preview تحديدًا
+   ظل النص أبيض رغم كل محاولات رفع التخصيص (حتى تكرار الصنف ×4 وحقن متأخر
+   بعد التحميل)، وهو ما لم يحدث لأي إصلاح hero آخر بنفس الجلسة (.an-hero،
+   .sch-profile-hero نجحا بنفس الأسلوب بالضبط). لم يُحسَم السبب الجذري لهذا
+   التبايُن رغم تحقيق مطوَّل — يحتاج تحققًا مباشرًا على Production الفعلي
+   بعد النشر (قد يكون خاصًا ببيئة vite preview/توقيت تحميل هذا المسار
+   المُجزَّأ (lazy chunk) تحديدًا ولا يتكرر في السلوك الحقيقي). */
+.accd-hero h1 { font-size: 1.5rem; color: #DC2626 !important; }
 .accd-hero p { opacity: 0.65; margin-top: 0.4rem; }
 
 .accd-info { margin-bottom: 1.5rem; border: 1px solid rgba(220,38,38,0.2); }

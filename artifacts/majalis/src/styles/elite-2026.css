@@ -10782,15 +10782,20 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 
 /* Hero */
 .an-hero { text-align: center; padding: 2.4rem 1.2rem 1.6rem; }
-.an-hero__eyebrow { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--majalis-emerald); margin-bottom: 0.4rem; }
-.an-hero__title { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; color: #0f2a1e; margin-bottom: 0.4rem; }
-.an-hero__sub { font-size: 0.9rem; color: #4b5563; margin-bottom: 1.2rem; }
+/* .an-hero لا خلفية داكنة فعلية له (يطابق [class$="-hero"] عن طريق الخطأ)،
+   فترث كل هذه العناصر لون أبيض عبر --clr-text-1/inherit غير مرئي على
+   الخلفية الفاتحة. محدِّد مركّب (.an-hero .an-hero__x) أعلى تخصيصًا من
+   قاعدتَي [class$="-hero"] البيضاء يضمن الفوز دومًا بصرف النظر عن ترتيب
+   الدمج/التصغير. */
+.an-hero .an-hero__eyebrow { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--majalis-emerald) !important; margin-bottom: 0.4rem; }
+.an-hero .an-hero__title { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; color: #0f2a1e !important; margin-bottom: 0.4rem; }
+.an-hero .an-hero__sub { font-size: 0.9rem; color: #4b5563 !important; margin-bottom: 1.2rem; }
 
 /* Progress bar */
 .an-hero__progress { display: flex; align-items: center; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
 .an-prog { flex: 0 0 180px; height: 7px; background: #e5e7eb; border-radius: 99px; overflow: hidden; }
 .an-prog__bar { height: 100%; width: var(--an-pct, 0%); background: var(--majalis-emerald); border-radius: inherit; transition: width 0.5s ease; }
-.an-prog__label { font-size: 0.78rem; color: #6b7280; }
+.an-hero .an-prog__label { font-size: 0.78rem; color: #6b7280 !important; }
 .an-reset-btn { font-size: 0.72rem; padding: 0.2rem 0.7rem; border-radius: 99px; border: 1px solid #d1d5db; background: transparent; color: #6b7280; cursor: pointer; transition: background 0.15s, color 0.15s; }
 .an-reset-btn:hover { background: #f3f4f6; color: #374151; }
 
