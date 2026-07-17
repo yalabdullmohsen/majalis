@@ -99,6 +99,13 @@ export default function MyLearningPage() {
         setLibrary(l ?? []);
         setNotes(n ?? []);
       })
+      .catch(() => {
+        setStats(null);
+        setEnrollments([]);
+        setCertificates([]);
+        setLibrary([]);
+        setNotes([]);
+      })
       .finally(() => setLoading(false));
   }, [user?.id]);
 

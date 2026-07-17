@@ -54,6 +54,7 @@ export default function LearningCalendarPage() {
   useEffect(() => {
     fetchLearningCalendar()
       .then(setEvents)
+      .catch(() => setEvents([]))
       .finally(() => setLoading(false));
   }, []);
 
