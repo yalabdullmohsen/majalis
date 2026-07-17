@@ -9804,6 +9804,11 @@ body {
    الخلفية هنا إلى لون فاتح بدل الأخضر الغامق المقصود — نص فاتح على خلفية
    فاتحة (صفحة الإعدادات وكل صفحات LegalPageLayout، 2026-07-16). */
 .legal-page-hero { background: var(--majalis-emerald, #176B57); color: var(--majalis-parchment, #FAF8F4); }
+/* var(--majalis-emerald) نفسه يتحوّل لأخضر نعناعي فاتح (#5CC49A) في الوضع
+   الليلي عبر سلسلة إرث لم تُحسَم مصدرها بدقة (راجع التعليق أعلاه — نفس
+   عائلة العطل تكرَّرت رغم تجنّب --majalis-emerald-deep) — تثبيت مباشر
+   بدل الاعتماد على المتغير (2026-07-17). */
+html[data-theme="dark"] .legal-page-hero { background: #0D5E3F !important; }
 
 /* ── §167 — AyahDisplay NoteForm (ayd-*) ────────────────────────────────── */
 
@@ -13406,7 +13411,10 @@ html[data-theme="dark"] .global-back-btn {
   justify-content: center !important;
   gap: 4px !important;
   padding: 8px 4px 10px !important;
-  color: var(--rd-ink-muted) !important;
+  /* لا var(--rd-ink-muted): هذا المتغير مخصَّص أصلًا لنص placeholder
+     (#9CA3AF رمادي فاتح جدًا)، واستُخدم هنا خطأً لتسمية تنقّل أساسية
+     تظهر في كل صفحة — تباين 2.39:1 فقط ضد عتبة 4.5:1 (2026-07-17). */
+  color: #4B5563 !important;
   font-size: 0.625rem !important;
   font-weight: 600 !important;
   letter-spacing: 0.01em !important;
@@ -13891,13 +13899,17 @@ html[data-theme="dark"] .global-back-btn {
 }
 
 /* ─── Skip-to-main link ─────────────────────────────────────── */
+/* خلفية ثابتة لا تعتمد على --rd-emerald: هذا المتغير يُعاد تعريفه لاحقًا
+   في هذا الملف (Emerald 600، rgb(5,150,105)) فيُفشِل تباين النص الأبيض
+   (3.77:1 فقط ضد عتبة 4.5:1 المطلوبة) — رابط إتاحة يجب أن يمر دومًا
+   (2026-07-17). */
 .skip-link {
   position: fixed !important;
   top: -100px !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
   z-index: 9999 !important;
-  background: var(--rd-emerald, #10B981) !important;
+  background: #0D5E3F !important;
   color: #fff !important;
   padding: 10px 20px !important;
   border-radius: 0 0 8px 8px !important;
@@ -14004,8 +14016,10 @@ img[loading="lazy"]:not([src=""]) {
 }
 
 /* ─── تحسين شريط التنقل السفلي: لون أعمق ──────────────────────── */
+/* #059669 (Emerald 600) السابق فشل تباينه (3.77:1) ضد خلفية الشريط
+   الفاتحة — استُبدل بلون أعمق فعليًا (2026-07-17). */
 .bottom-nav--v2 .bottom-nav__tab.is-active {
-  color: #059669 !important;
+  color: #0D5E3F !important;
 }
 
 .bottom-nav--v2 .bottom-nav__tab.is-active .bottom-nav__tab-icon {
@@ -22232,7 +22246,7 @@ img[loading="lazy"]:not([src=""]) {
   color: #fff;
 }
 .share-btn:hover { opacity: .88; transform: translateY(-1px); }
-.share-btn--wa   { background: #25D366; }
+.share-btn--wa   { background: #0D5E3F; } /* أخضر واتساب #25D366 الأصلي كان يفشل تباين النص الأبيض (~2:1)؛ أعمق (2026-07-17) */
 .share-btn--tg   { background: #26A5E4; }
 .share-btn--copy { background: var(--majalis-emerald); }
 .ca-actions-row {
@@ -25460,6 +25474,11 @@ html[data-theme="dark"] .qc-badge--gov { background: rgba(92,196,154,.15); color
 .sq-header:focus-visible { outline: 3px solid #fff; outline-offset: -3px; }
 .sq-header-content { display: flex; align-items: center; gap: .6rem; }
 .sq-title { font-size: 1rem; font-weight: 700; margin: 0; }
+/* .sq-header بانر ملوَّن دومًا (نهاري وليلي) — نصه أبيض في كل الأحوال.
+   القاعدة العامة h1..h6 {color:var(--clr-text-1)!important} في هذا الملف
+   بلا استثناءات فتفوز بالنهاري (لا نسخة data-theme=dark لها هنا)، فينتج
+   نصًّا شبه أسود فوق أخضر داكن (2026-07-17). */
+.sq-header .sq-title { color: #fff !important; }
 .sq-toggle { font-size: .85rem; opacity: .8; flex-shrink: 0; }
 
 .sq-body { padding: 1.2rem 1rem 1rem; display: flex; flex-direction: column; gap: 1rem; }
@@ -29376,6 +29395,14 @@ html[data-theme="dark"] .bottom-nav--v2 {
   background: rgba(17,23,20,0.96) !important;
   border-top-color: rgba(255,255,255,.07) !important;
 }
+/* ألوان تبويبات الشريط السفلي أعلاه (#4B5563 / #0D5E3F) مضبوطة لخلفية
+   فاتحة — فاشلة تباينًا فوق خلفية الشريط الداكنة هذه؛ نسخة ليلية صريحة. */
+html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab {
+  color: #9CA3AF !important;
+}
+html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab.is-active {
+  color: #3BAD8A !important;
+}
 html[data-theme="dark"] .ds-page-header {
   background: #0E1B17 !important;
 }
@@ -29428,8 +29455,8 @@ html[data-theme="dark"] h3, html[data-theme="dark"] h4 {
    المقصود — وإلا فاز هذا القانون العام بالأسبقية (0,1,1 > 0,1,0) فأنتج
    نصًّا بلون الخلفية نفسه (أخضر على أخضر)، كما ظهر في fiqh-hub-strip__tab--active
    على الوضع الليلي (2026-07-16). */
-html[data-theme="dark"] a:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary) { color: #3BAD8A !important; }
-html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary) { color: #4DC09A !important; }
+html[data-theme="dark"] a:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab) { color: #3BAD8A !important; }
+html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab) { color: #4DC09A !important; }
 
 /* ════════════════════════════════════
    §77m — نظام التنسيق والتباعد
