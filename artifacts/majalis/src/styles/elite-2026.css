@@ -29387,6 +29387,15 @@ html[data-theme="dark"] {
   --elite-ink-muted:  #5E7870;
   --elite-border:     rgba(255,255,255,.07);
   --elite-border-2:   rgba(255,255,255,.12);
+  /* --txt-primary/--txt-secondary (نظام modern-2026.css: #111827/#374151)
+     كانا يُعادان تعريفهما فقط داخل نطاق ضيق ([class$="-hero"] وما شابه)
+     لا للوضع الليلي العام — فبقي نص فقرات/عناوين فرعية عادية (خارج تلك
+     البطاقات تحديدًا) رماديًا داكنًا مصمَّمًا لخلفية فاتحة حتى داخل بطاقات
+     داكنة صحيحة أصلاً (qc-card__desc، qlive-player__desc، fq-intro،
+     miracle-item__title، tj-related-title، وفقرات blockquote عامة —
+     5+ مواضع مؤكَّدة عبر audit-color-contrast.mjs). */
+  --txt-primary:      #E5F0EC;
+  --txt-secondary:    #8BABA3;
 }
 
 html[data-theme="dark"] body {
@@ -29420,6 +29429,13 @@ html[data-theme="dark"] .fq-ref,
 html[data-theme="dark"] .sh-step__body {
   background: #1A2120 !important;
   border-color: rgba(255,255,255,.08) !important;
+}
+/* .qlive-player__desc وfq-intro: لون حرفي #374151 مباشر بلا استخدام
+   var(--txt-secondary) أصلاً (خلافًا لبقية النصوص الثانوية) فلم يُصلَحهما
+   تعريف --txt-secondary العام أعلاه. */
+html[data-theme="dark"] .qlive-player__desc,
+html[data-theme="dark"] .fq-intro {
+  color: #8BABA3 !important;
 }
 html[data-theme="dark"] .ui-card,
 html[data-theme="dark"] .card-v2,
