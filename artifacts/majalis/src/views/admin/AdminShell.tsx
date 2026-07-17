@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState, ty
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import {
-  BookOpen, Bot, Brain, Building2, CalendarClock, CheckCircle2, Dna, FolderTree,
+  AlertTriangle, BookOpen, Bot, Brain, Building2, CalendarClock, CheckCircle2, Dna, FolderTree,
   FlaskConical, Flag, GraduationCap, Globe, HelpCircle, Image, Landmark,
   LayoutDashboard, Library, Lightbulb, MessageCircle, MessageSquare,
   Network, PlayCircle, Radio, RefreshCw, Route, Scale, School, Search,
@@ -24,6 +24,7 @@ export type AdminSection =
   | "users"
   | "settings"
   | "reports"
+  | "error-logs"
   | "fiqh-council"
   | "rulings"
   | "annual-courses"
@@ -90,6 +91,7 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
       { key: "users",       label: "المستخدمون",    Icon: Users },
       { key: "submissions", label: "مقترحات",       Icon: MessageSquare },
       { key: "reports",     label: "التقارير",      Icon: Flag },
+      { key: "error-logs",  label: "سجل الأخطاء",   Icon: AlertTriangle },
     ],
   },
   {

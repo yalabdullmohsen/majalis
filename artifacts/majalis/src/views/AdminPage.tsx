@@ -15,6 +15,7 @@ import { UsersSection } from "@/views/admin/UsersSection";
 import { SettingsSection } from "@/views/admin/SettingsSection";
 import { AggregatorSection } from "@/views/admin/AggregatorSection";
 import { ReportsSection } from "@/views/admin/ReportsSection";
+import { ClientErrorLogsSection } from "@/views/admin/ClientErrorLogsSection";
 import { FiqhCouncilSection } from "@/views/admin/FiqhCouncilSection";
 import { RulingsSection } from "@/views/admin/RulingsSection";
 import { AnnualCoursesSection } from "@/views/admin/AnnualCoursesSection";
@@ -101,6 +102,7 @@ export default function AdminPage() {
       {section === "users" && <UsersSection />}
       {section === "settings" && <SettingsSection />}
       {section === "reports" && <ReportsSection />}
+      {section === "error-logs" && <ClientErrorLogsSection />}
       {section === "fiqh-council" && <FiqhCouncilSection />}
       {section === "rulings" && <RulingsSection />}
       {section === "annual-courses" && <AnnualCoursesSection />}
