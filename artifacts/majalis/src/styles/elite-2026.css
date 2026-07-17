@@ -23295,6 +23295,21 @@ html[data-theme="dark"] .share-btn--copy { background: #0D5E3F !important; }
 .seerah-phase--open-dawah        { --phase-color: #9B1C1C; --panel-color: #9B1C1C; }
 .seerah-phase--year-of-sorrow    { --phase-color: #2A3E50; --panel-color: #2A3E50; }
 .seerah-phase--ghazawat          { --phase-color: #5C1C2A; --panel-color: #5C1C2A; }
+/* --panel-color/--phase-color داكنة عمدًا لتُقرَأ على .seerah-panel الفاتح
+   أصلاً — بعد تصحيح خلفية .seerah-panel للوضع الليلي (داكنة) أصبحت هذه
+   الألوان نفسها داكنة على داكن. نظائر أفتح لكل مرحلة بنفس عائلة اللون. */
+html[data-theme="dark"] .seerah-phase--lineage-birth,
+html[data-theme="dark"] .seerah-phase--youth,
+html[data-theme="dark"] .seerah-phase--prophethood,
+html[data-theme="dark"] .seerah-phase--hijra,
+html[data-theme="dark"] .seerah-phase--hudaybiyya-mecca,
+html[data-theme="dark"] .seerah-phase--childhood,
+html[data-theme="dark"] .seerah-phase--farewell,
+html[data-theme="dark"] .seerah-phase--secret-dawah,
+html[data-theme="dark"] .seerah-phase--death { --phase-color: #5CC49A; --panel-color: #5CC49A; }
+html[data-theme="dark"] .seerah-phase--open-dawah { --phase-color: #F87171; --panel-color: #F87171; }
+html[data-theme="dark"] .seerah-phase--year-of-sorrow { --phase-color: #60A5FA; --panel-color: #60A5FA; }
+html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --panel-color: #FB7185; }
 .seerah-panel {
   flex: 1;
   background: #fff;
