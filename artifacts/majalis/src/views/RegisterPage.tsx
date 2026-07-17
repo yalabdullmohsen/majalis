@@ -4,7 +4,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { mapAuthError } from "@/lib/auth-messages";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { bootstrapSupabaseFromServer } from "@/lib/supabase-bootstrap";
-import { supabase, signInWithGoogle } from "@/lib/supabase";
+import { supabase, signInWithGoogle, GOOGLE_OAUTH_ENABLED } from "@/lib/supabase";
 import { Loading } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -194,7 +194,7 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        {authEnabled && (
+        {authEnabled && GOOGLE_OAUTH_ENABLED && (
           <div className="login-oauth">
             <div className="login-oauth__divider"><span>أو</span></div>
             <button

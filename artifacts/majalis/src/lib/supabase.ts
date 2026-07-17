@@ -56,6 +56,17 @@ export async function signOut() {
   return await supabase.auth.signOut();
 }
 
+/**
+ * مزوّد Google غير مُفعَّل حاليًا في إعدادات Supabase Auth (لوحة التحكم →
+ * Authentication → Providers → Google) — تحقّق حي (2026-07-17): الضغط على
+ * الزر يُعيد فعليًا "Unsupported provider: provider is not enabled" من
+ * Supabase مباشرة. هذا إعداد لوحة تحكم لا كود، ويحتاج Client ID/Secret من
+ * Google Cloud Console (URI الإعادة المُعتمَد: <مشروع Supabase>/auth/v1/callback)
+ * لا أملك صلاحية الوصول لهما. الزر مخفي في LoginPage/RegisterPage حتى
+ * يُفعَّل — أعد GOOGLE_OAUTH_ENABLED إلى true فور تفعيله من لوحة التحكم.
+ */
+export const GOOGLE_OAUTH_ENABLED = false;
+
 export async function signInWithGoogle(redirectTo?: string) {
   const redirect = redirectTo || `${window.location.origin}/auth/callback`;
   return await supabase.auth.signInWithOAuth({
