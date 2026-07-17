@@ -592,21 +592,9 @@ html[data-theme="dark"] .navbar-mobile-login {
   margin-bottom: 0.625rem !important;
 }
 
-.page-header-title {
-  font-size: clamp(1.5rem, 4vw, 2rem) !important;
-  font-weight: 800 !important;
-  color: var(--elite-ink, #0C0C0C) !important;
-  letter-spacing: -0.02em !important;
-  line-height: 1.25 !important;
-  font-family: var(--font-display) !important;
-}
 
-.page-header-subtitle {
-  font-size: 0.9375rem !important;
-  color: var(--elite-ink-soft, #4A4A4A) !important;
-  max-width: 42rem !important;
-  line-height: 1.65 !important;
-}
+
+
 
 /* ══════════════════════════════════════════════
    §10. Home Sections — عناوين المقاطع
@@ -1556,9 +1544,7 @@ html {
 }
 
 /* إصلاح text-teal-100 على خلفية خضراء */
-.text-teal-100 {
-  color: rgba(255,255,255,0.85) !important;
-}
+
 
 /* ══════════════════════════════════════════════
    §38. Hadith Page تحسينات
@@ -1577,9 +1563,7 @@ html {
   line-height: 2.0 !important;
 }
 
-.hadith-isnad {
-  color: var(--elite-ink-soft, #4A4A4A) !important;
-}
+
 
 /* رأس القسم المضمّن — خلفية خضراء + نص أبيض (مثل بطاقات الدروس) */
 .hadith-section-header {
@@ -10271,21 +10255,10 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
   border-color: var(--majalis-emerald);
   color: var(--majalis-emerald-deep);
 }
-.coming-soon-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 60vh;
-  gap: 1rem;
-  font-family: inherit;
-  direction: rtl;
-  text-align: center;
-  padding: 2rem;
-}
-.coming-soon-wrap__icon { font-size: 3rem; opacity: 0.4; }
-.coming-soon-wrap__title { margin: 0; font-size: 1.5rem; font-weight: 700; color: var(--txt-primary, #111827); }
-.coming-soon-wrap__body  { margin: 0; color: var(--txt-muted, #52525B); font-size: 1rem; }
+
+
+
+
 
 /* ── §176 — AppShell, SiteFooter, RelatedKnowledge ──────────────────────── */
 .app-shell { min-height: 100vh; direction: var(--app-dir, rtl); }
@@ -12095,10 +12068,7 @@ html[data-theme="dark"] .pcb-bar {
 }
 
 /* ── شريط التصفح السفلي — نعومة التحويم ──────────────────────────────── */
-.bottom-nav-item,
-.bnav-item {
-  transition: color 0.15s ease, background 0.15s ease !important;
-}
+
 
 /* ── جداول الإدارة — تحسين قابلية القراءة ──────────────────────────────── */
 .adm-table tr:hover,
@@ -12399,14 +12369,12 @@ a:focus-visible {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.animate-fade-slide-up {
-  animation: fadeSlideUp 0.35s ease forwards;
-}
-.animate-fade-slide-up:nth-child(2) { animation-delay: 0.05s; }
-.animate-fade-slide-up:nth-child(3) { animation-delay: 0.10s; }
-.animate-fade-slide-up:nth-child(4) { animation-delay: 0.15s; }
-.animate-fade-slide-up:nth-child(5) { animation-delay: 0.20s; }
-.animate-fade-slide-up:nth-child(6) { animation-delay: 0.25s; }
+
+
+
+
+
+
 
 /* تأثير shimmer لعناصر التحميل */
 @keyframes shimmer {
@@ -12459,11 +12427,7 @@ a:focus-visible {
   letter-spacing: -0.02em !important;
   line-height: 1.2 !important;
 }
-.page-hero-subtitle {
-  font-size: clamp(0.85rem, 2vw, 1rem) !important;
-  color: var(--v2-ink-3, #8A847E) !important;
-  margin-top: 0.5rem !important;
-}
+
 
 /* مقسّم جمالي بنقطة وسطية */
 
@@ -14045,22 +14009,7 @@ img[loading="lazy"]:not([src=""]) {
   position: relative !important;
 }
 
-.bottom-nav__prayer-badge {
-  position: absolute !important;
-  top: -4px !important;
-  left: -2px !important;
-  background: #047857 !important;
-  color: #fff !important;
-  font-size: 0.52rem !important;
-  font-weight: 700 !important;
-  font-variant-numeric: tabular-nums !important;
-  line-height: 1 !important;
-  padding: 2px 4px !important;
-  border-radius: 5px !important;
-  white-space: nowrap !important;
-  pointer-events: none !important;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.20) !important;
-}
+
 
 /* ─── تحسين شريط التنقل السفلي: لون أعمق ──────────────────────── */
 /* #059669 (Emerald 600) السابق فشل تباينه (3.77:1) ضد خلفية الشريط
@@ -27035,11 +26984,7 @@ html[data-theme="dark"] .fc-kbd {
   line-height: 1.35;
 }
 .lpd2-module--done .lpd2-module__title { color: #0E6E52; }
-.lpd2-module__desc {
-  font-size: 0.78rem;
-  color: var(--clr-ink-soft, #6b7280);
-  margin-top: 0.2rem;
-}
+
 .lpd2-module__action { flex-shrink: 0; display: flex; align-items: center; }
 .lpd2-module__done-tag {
   display: flex;
@@ -28749,16 +28694,9 @@ html[data-theme="dark"] .page-search-input {
 .content-hub-chip--active { background: rgba(14,110,82,.1); color: #0E6E52; border-color: rgba(14,110,82,.2); }
 
 /* ── Page header improvements ── */
-.page-header-eyebrow {
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #0E6E52;
-  margin-bottom: 0.3rem;
-}
-.page-header-title { font-size: 1.5rem; font-weight: 800; margin: 0 0 0.4rem; color: var(--clr-ink, #1a1a1a); }
-.page-header-subtitle { font-size: 0.88rem; color: var(--clr-ink-soft, #6b7280); line-height: 1.65; margin: 0; }
+
+
+
 
 /* ── Breadcrumb */
 
@@ -28775,15 +28713,11 @@ html[data-theme="dark"] .page-search-input {
 }
 
 /* ── Responsive table wrapper ── */
-.table-responsive {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  border-radius: 0.75rem;
-}
+
 
 /* ── Mobile safe area ── */
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
-  .bottom-nav-bar { padding-bottom: calc(0.5rem + env(safe-area-inset-bottom)); }
+  
 }
 
 /* ── Reduced motion ── */
@@ -29821,19 +29755,7 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
 }
 
 /* رأس صفحة محدّد */
-.lessons-page-header,
-.scholars-page-header,
-.courses-page-header,
-.library-page-header,
-.quran-page-header,
-.fiqh-page-header,
-.fatwas-page-header,
-.hadith-page-header,
-.adhkar-page-header {
-  background: var(--color-primary-deep, #123F36) !important;
-  color: #fff !important;
-  border-radius: 0 0 var(--elite-r-xl, 20px) var(--elite-r-xl, 20px) !important;
-}
+
 
 /* Footer الرئيسي */
 .site-footer,
@@ -30210,17 +30132,7 @@ svg:not([class*="pattern"]):not([class*="geo"]):not([class*="star"]) {
    ══════════════════════════════════════════════════════════════════════════════ */
 
 /* ── صفحات فارغة ── */
-.page-empty-state {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  min-height: 40vh !important;
-  text-align: center !important;
-  padding: 2rem 1rem !important;
-  color: var(--color-text-muted, #89928E) !important;
-  gap: 1rem !important;
-}
+
 
 /* ── Error states ── */
 
