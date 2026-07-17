@@ -272,7 +272,9 @@ export function applyPageSeo(options: PageSeoOptions) {
   upsertMeta("name", "description", options.description);
   upsertMeta("name", "keywords", keywords);
   upsertMeta("name", "robots", robots);
-  upsertMeta("name", "theme-color", "#176B57");
+  // theme-color ديناميكي (فاتح/داكن) مُدار حصريًا عبر src/lib/theme-preference.ts
+  // (applyThemePreference) — لا تكتبه هنا بقيمة ثابتة، فذلك كان يُلغي التزامن مع
+  // الوضع الفعلي عند كل تنقّل بين الصفحات (2026-07-18).
   upsertMeta("name", "author", seoData.siteName);
 
   upsertMeta("property", "og:site_name", seoData.siteName);

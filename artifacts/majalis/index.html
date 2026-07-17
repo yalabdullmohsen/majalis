@@ -11,7 +11,7 @@
     <meta name="description" content="تطبيق علمي عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم." />
     <meta name="keywords" content="المجلس العلمي, دروس علمية, دروس شرعية, محاضرات إسلامية, دورات شرعية, طلب العلم, القرآن الكريم, السنة النبوية, الفوائد العلمية, الأذكار" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#153025" />
+    <meta name="theme-color" content="#FFFFFF" />
     <meta name="author" content="المجلس العلمي" />
     <link rel="canonical" href="https://www.majlisilm.com/" />
     <meta property="og:site_name" content="المجلس العلمي" />
@@ -131,6 +131,9 @@
         document.documentElement.dataset.theme = resolved;
         document.documentElement.classList.toggle("dark", resolved === "dark");
         document.documentElement.style.colorScheme = resolved === "light" ? "light" : "dark";
+        /* theme-color متزامن فورًا قبل الطلاء الأول (يطابق src/lib/theme-preference.ts) */
+        var _themeMeta = document.querySelector('meta[name="theme-color"]');
+        if (_themeMeta) _themeMeta.setAttribute("content", resolved === "dark" ? "#0D1A14" : "#FFFFFF");
 
         var storedFont = localStorage.getItem("majalis-font-preference-v2");
         document.documentElement.dataset.font =
