@@ -2149,3 +2149,102 @@
   cursor: pointer;
   font: inherit;
 }
+
+/* ── اختبار التلاوة (RecitationTestPanel) ─────────────────────────────── */
+.rtp-consent {
+  margin: 0.75rem 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background: var(--majalis-emerald-soft, #F0F5F2);
+  border: 1px solid var(--border, #e5e3dd);
+}
+.rtp-consent__text {
+  font-size: .8rem;
+  line-height: 1.7;
+  color: var(--clr-text-2, #4b5563);
+  margin: 0 0 .6rem;
+}
+.rtp-consent__btn {
+  background: var(--majalis-emerald, #176B57);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: .5rem 1.1rem;
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.rtp-panel {
+  margin: 0.75rem 1rem;
+}
+.rtp-mic-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  background: var(--majalis-emerald, #176B57);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: .55rem 1.1rem;
+  font-size: .82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.rtp-mic-btn--active {
+  background: #B91C1C;
+  animation: rtp-pulse 1.4s ease-in-out infinite;
+}
+@keyframes rtp-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .75; }
+}
+.rtp-status {
+  font-size: .82rem;
+  color: var(--clr-text-2, #4b5563);
+  margin: .4rem 0;
+}
+.rtp-status--warn {
+  color: #B45309;
+}
+.rtp-transcript {
+  margin-top: .6rem;
+  font-size: .85rem;
+  color: var(--clr-text-2, #4b5563);
+  background: var(--majalis-emerald-soft, #F0F5F2);
+  border-radius: 10px;
+  padding: .5rem .7rem;
+}
+.rtp-result {
+  background: var(--majalis-emerald-soft, #F0F5F2);
+  border-radius: 12px;
+  padding: .75rem .9rem;
+}
+.rtp-result__score {
+  font-weight: 700;
+  color: var(--majalis-emerald-deep, #123F36);
+  margin: 0 0 .5rem;
+}
+.rtp-result__words {
+  font-size: 1.05rem;
+  line-height: 2.1;
+  margin: 0 0 .6rem;
+}
+.rtp-word--ok { color: var(--majalis-emerald, #176B57); }
+.rtp-word--miss { color: #B91C1C; text-decoration: underline wavy; }
+.rtp-retry-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  background: none;
+  border: 1px solid var(--border, #e5e3dd);
+  border-radius: 999px;
+  padding: .4rem .9rem;
+  font-size: .78rem;
+  cursor: pointer;
+}
+
+html[data-theme="dark"] .rtp-consent,
+html[data-theme="dark"] .rtp-result,
+html[data-theme="dark"] .rtp-transcript {
+  background: rgba(23, 107, 87, 0.18);
+}
