@@ -317,6 +317,8 @@ majalis-content-fill
 
 ```
 0c9f2c76...
+c615761e  fix(seo): SurahStoryDetailPage (114 pages) never called applyPageSeo — same generic title for all
+d74c3a35  docs: تحديث بعد تعميم إصلاح .catch() على 5 صفحات إضافية
 3bc2f76a  fix(views): harden 5 more eternal-loading-on-network-failure spots (same family as .catch() fix)
 9510887f  docs: تحديث بعد تحقُّق Playwright تجريبي حقيقي + إصلاح .catch() المفقود
 2c033720  fix(learning): add missing .catch()/.finally() to fetchPathDetail — proven via live Playwright test
