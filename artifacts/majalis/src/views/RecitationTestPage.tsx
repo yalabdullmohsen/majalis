@@ -47,7 +47,7 @@ function RecitationTestPageInner() {
   const [mode, setMode] = useState<RecitationMode>("interactive_mushaf");
   const [precisionLevel, setPrecisionLevel] = useState<PrecisionLevel>("hifz");
   const [alertLevel, setAlertLevel] = useState<AlertLevel>("gentle");
-  const [revealGranularity, setRevealGranularity] = useState<"word" | "ayah">("word");
+  const [revealGranularity, setRevealGranularity] = useState<"word" | "ayah" | "page">("word");
   const [tajweedAvailable, setTajweedAvailable] = useState<{ available: boolean; reason?: string } | null>(null);
   const [dueReviews, setDueReviews] = useState<RecitationReviewItem[]>([]);
   // نطاق آيات مخصَّص (القسم 1: "من آية إلى آية" بدل السورة كاملة دومًا)
@@ -972,6 +972,7 @@ function RecitationTestPageInner() {
               <div className="rai-choice-grid">
                 <button type="button" className={`rai-choice ${revealGranularity === "word" ? "rai-choice--active" : ""}`} onClick={() => setRevealGranularity("word")}>كشف بالكلمة</button>
                 <button type="button" className={`rai-choice ${revealGranularity === "ayah" ? "rai-choice--active" : ""}`} onClick={() => setRevealGranularity("ayah")}>كشف بالآية</button>
+                <button type="button" className={`rai-choice ${revealGranularity === "page" ? "rai-choice--active" : ""}`} onClick={() => setRevealGranularity("page")}>إخفاء الصفحة</button>
               </div>
             </div>
           )}

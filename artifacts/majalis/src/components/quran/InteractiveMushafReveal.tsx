@@ -10,7 +10,15 @@ export type WordRevealInfo = {
 
 type Props = {
   words: WordRevealInfo[];
-  revealGranularity: "word" | "ayah";
+  /**
+   * "word": كشف تدريجي كلمة كلمة (الافتراضي). "ayah": الآية كاملة تُكشَف
+   * دفعة واحدة عند إتمامها. "page" (المرحلة السادسة، الوضع الثالث
+   * الناقص — TASMEE_AUDIT.md): **لا يُكشَف أي نص إطلاقًا طوال الجلسة** —
+   * فقط تظليل `.imr-ayah--recited` الدائم القائم أصلاً يبقى مؤشر التقدم
+   * الوحيد على مواضع الآيات المُسمَّعة، بلا أي كشف كلمات أو نبضات خطأ قد
+   * تُسرِّب معلومة عن الموضع.
+   */
+  revealGranularity: "word" | "ayah" | "page";
   /** الآية التي اكتملت للتوّ — تُستخدَم للمسة الذهبية على رأس الآية. */
   justCompletedAyah?: number | null;
 };
@@ -71,10 +79,14 @@ export function InteractiveMushafReveal({ words, revealGranularity, justComplete
                 <span
                   className={[
                     "imr-word",
-                    revealGranularity === "word" ? `imr-word--${w.state}` : ayahRevealed ? "imr-word--revealed" : "imr-word--hidden",
-                    w.state === "error" ? "imr-word--pulse-error" : "",
-                    w.state === "unclear" ? "imr-word--pulse-unclear" : "",
-                    w.state === "needs_repeat" ? "imr-word--pulse-needs-repeat" : "",
+                    revealGranularity === "page"
+                      ? "imr-word--hidden"
+                      : revealGranularity === "word"
+                        ? `imr-word--${w.state}`
+                        : ayahRevealed ? "imr-word--revealed" : "imr-word--hidden",
+                    revealGranularity !== "page" && w.state === "error" ? "imr-word--pulse-error" : "",
+                    revealGranularity !== "page" && w.state === "unclear" ? "imr-word--pulse-unclear" : "",
+                    revealGranularity !== "page" && w.state === "needs_repeat" ? "imr-word--pulse-needs-repeat" : "",
                   ].join(" ").trim()}
                 >
                   {w.word.raw}
