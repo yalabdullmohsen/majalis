@@ -206,12 +206,14 @@ export default function IslamicStoriesPage() {
       setLoading(false);
       return;
     }
-    supabase
-      .from("islamic_stories")
-      .select("*")
-      .eq("is_approved", true)
-      .order("category")
-      .order("era")
+    Promise.resolve(
+      supabase
+        .from("islamic_stories")
+        .select("*")
+        .eq("is_approved", true)
+        .order("category")
+        .order("era"),
+    )
       .then(({ data, error: err }) => {
         if (err) {
           setError("تعذّر تحميل القصص.");
@@ -220,8 +222,12 @@ export default function IslamicStoriesPage() {
           const rows = (data || []) as IslamicStory[];
           setStories(rows.length > 0 ? rows : ISLAMIC_STORIES_SEED as unknown as IslamicStory[]);
         }
-        setLoading(false);
-      });
+      })
+      .catch(() => {
+        setError("تعذّر تحميل القصص.");
+        setStories(ISLAMIC_STORIES_SEED as unknown as IslamicStory[]);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const filtered = stories.filter((s) => {
