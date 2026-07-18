@@ -29,7 +29,7 @@ type Madhhab = {
 const MADHAHIB: Madhhab[] = [
   {
     id: "hanafi",
-    color: "#176B57",
+    color: "#173D35",
     icon: "🕌",
     name: "الحنفي",
     fullName: "المذهب الحنفي",
@@ -59,7 +59,7 @@ const MADHAHIB: Madhhab[] = [
   },
   {
     id: "maliki",
-    color: "#123F36",
+    color: "#173D35",
     icon: "🌿",
     name: "المالكي",
     fullName: "المذهب المالكي",

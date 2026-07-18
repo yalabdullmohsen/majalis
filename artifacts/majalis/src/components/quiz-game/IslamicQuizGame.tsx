@@ -93,7 +93,7 @@ const S = {
   emerald:     "var(--ds-emerald)",
   emeraldDeep: "var(--ds-emerald-deep)",
   emeraldSoft: "var(--ds-emerald-soft)",
-  correct:     "var(--majalis-emerald, #176B57)",
+  correct:     "var(--majalis-emerald, #173D35)",
   wrong:       "var(--majalis-danger, #9B1C1C)",
 } as const;
 
@@ -239,7 +239,7 @@ function markCellUsed(board: Cell[][], cell: Cell | null): Cell[][] {
 
 function TimerBar({ seconds, maxSeconds }: { seconds: number; maxSeconds: number }) {
   const pct = maxSeconds > 0 ? seconds / maxSeconds : 0;
-  const color = pct > 0.4 ? "#22c55e" : pct > 0.2 ? "#176B57" : "#ef4444";
+  const color = pct > 0.4 ? "#22c55e" : pct > 0.2 ? "#173D35" : "#ef4444";
   const label = seconds <= 0 ? "انتهى الوقت" : `${seconds}ث`;
   const urgent = seconds > 0 && seconds <= 10;
   return (

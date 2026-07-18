@@ -7,14 +7,14 @@
    ══════════════════════════════════════════════ */
 .ikm-page {
   min-height: 100vh;
-  background: var(--elite-white, #FAF8F2);
-  color: var(--elite-ink, #0C0C0C);
+  background: var(--elite-white, #F7F4ED);
+  color: var(--elite-ink, #202725);
   padding-bottom: 6rem;
 }
 
 /* Hero */
 .ikm-hero {
-  background: linear-gradient(160deg, #031810 0%, #062B20 45%, #123F36 100%);
+  background: linear-gradient(160deg, #031810 0%, #062B20 45%, #173D35 100%);
   padding: 3rem 1.5rem 2.5rem;
   text-align: center;
   position: relative;
@@ -60,7 +60,7 @@
   /* أصبح هذا القسم بندًا مستقلاً بعد ترحيل الهيدر لنمط sh-hero الحديث،
      يحتاج خلفية داكنة خاصة به لأن ألوان النص (أبيض) صُمِّمت أصلاً على
      خلفية Hero الداكنة القديمة — بلا هذه الخلفية يختفي النص على الأبيض. */
-  background: linear-gradient(160deg, #031810 0%, #062B20 45%, #123F36 100%);
+  background: linear-gradient(160deg, #031810 0%, #062B20 45%, #173D35 100%);
   border-radius: 1.25rem;
   padding: 1.25rem 1.5rem;
   margin: 0 1rem 1.5rem;
@@ -98,20 +98,20 @@
   border: 1.5px solid rgba(10,80,64,0.2);
   border-radius: 2rem;
   background: #FFFFFF;
-  color: var(--elite-ink, #0C0C0C);
+  color: var(--elite-ink, #202725);
   font-size: 0.9rem;
   outline: none;
   transition: border-color 0.15s;
 }
 .ikm-search-input:focus {
-  border-color: #123F36;
+  border-color: #173D35;
 }
 .ikm-clear-btn {
   padding: 0.55rem 1rem;
   background: rgba(10,80,64,0.1);
   border: 1px solid rgba(10,80,64,0.2);
   border-radius: 2rem;
-  color: #123F36;
+  color: #173D35;
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
@@ -140,13 +140,13 @@
 .ikm-dom--hadith,
 .ikm-dom--stories,
 .ikm-dom--seerah,
-.ikm-dom--universities { --ikm-bg: #123F36; --ikm-domain-bg: #123F36; }
+.ikm-dom--universities { --ikm-bg: #173D35; --ikm-domain-bg: #173D35; }
 .ikm-dom--fiqh,
 .ikm-dom--fatwa,
-.ikm-dom--lessons      { --ikm-bg: #176B57; --ikm-domain-bg: #176B57; }
+.ikm-dom--lessons      { --ikm-bg: #173D35; --ikm-domain-bg: #173D35; }
 .ikm-dom--tafsir,
 .ikm-dom--tajweed,
-.ikm-dom--rulings      { --ikm-bg: #176B57; --ikm-domain-bg: #176B57; }
+.ikm-dom--rulings      { --ikm-bg: #173D35; --ikm-domain-bg: #173D35; }
 
 /* Cards grid */
 .ikm-grid {
@@ -155,7 +155,7 @@
   gap: 1rem;
 }
 .ikm-card {
-  background: var(--ikm-bg, #123F36);
+  background: var(--ikm-bg, #173D35);
   border: none;
   border-radius: 1rem;
   padding: 1.25rem;
@@ -255,7 +255,7 @@
 }
 .ikm-tag--dark {
   background: rgba(10,80,64,0.1);
-  color: #123F36;
+  color: #173D35;
   border-color: rgba(10,80,64,0.15);
 }
 .ikm-card__link {
@@ -395,11 +395,11 @@
 }
 .ikm-rel-reason {
   font-size: 0.75rem;
-  color: #6B7280;
+  color: #929995;
   margin-top: 0.1rem;
 }
 .ikm-rel-link {
-  color: #123F36;
+  color: #173D35;
   display: flex;
   align-items: center;
   flex-shrink: 0;
@@ -408,7 +408,7 @@
 .ikm-detail__tags-title {
   font-size: 0.82rem;
   font-weight: 600;
-  color: #6B7280;
+  color: #929995;
   margin: 0 0 0.5rem;
 }
 .ikm-detail__tags {
@@ -457,7 +457,7 @@
 }
 .ikm-conn-label {
   font-size: 0.72rem;
-  color: #6B7280;
+  color: #929995;
   white-space: nowrap;
 }
 .ikm-conn-arrow {

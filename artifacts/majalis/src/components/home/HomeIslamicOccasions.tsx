@@ -10,7 +10,7 @@ import { Widget } from "@/components/widgets/Widget";
 
 const OccasionsIcon = () => (
   <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" style={{ marginTop: "0.15rem", flexShrink: 0 }}>
-    <polygon points="9,1 11,6.5 17,6.5 12.5,10 14.5,16 9,12.5 3.5,16 5.5,10 1,6.5 7,6.5" fill="none" stroke="#176B57" strokeWidth="1.2"/>
+    <polygon points="9,1 11,6.5 17,6.5 12.5,10 14.5,16 9,12.5 3.5,16 5.5,10 1,6.5 7,6.5" fill="none" stroke="#173D35" strokeWidth="1.2"/>
   </svg>
 );
 
