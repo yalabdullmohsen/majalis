@@ -53,11 +53,16 @@ function RecitationTestPageInner() {
 
   // جلسة
   const [referenceWords, setReferenceWords] = useState<ReferenceWord[]>([]);
-  const [wordStates, setWordStates] = useState<Map<string, "hidden" | "revealed" | "error">>(new Map());
+  const [wordStates, setWordStates] = useState<Map<string, "hidden" | "revealed" | "error" | "unclear">>(new Map());
   const [cursorIdx, setCursorIdx] = useState(0);
   const [liveEvents, setLiveEvents] = useState<AlignmentEvent[]>([]);
   const [justCompletedAyah, setJustCompletedAyah] = useState<number | null>(null);
   const [listening, setListening] = useState(false);
+  // بند تفوّق "غير واضح": إشعار عابر (لا جزم بخطأ) يطلب إعادة النطق —
+  // مؤقَّت بمهلة زمنية حقيقية عبر ref، بلا أي استدعاء متداخل داخل مُحدِّث
+  // setWordStates (نفس درس سباق hintLevel أعلاه).
+  const [unclearNotice, setUnclearNotice] = useState<string | null>(null);
+  const unclearNoticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [paused, setPaused] = useState(false);
 
@@ -195,13 +200,13 @@ function RecitationTestPageInner() {
     asrSessionRef.current = asrSession;
 
     if (provider.onPartialWord) {
-      unsubRef.current = provider.onPartialWord(asrSession, (word, atMs) => {
+      unsubRef.current = provider.onPartialWord(asrSession, (word, atMs, confidence) => {
         // خارج دورة render — ErrorBoundary لا يلتقط أخطاء المستدعيات
         // غير المتزامنة، فأي خطأ هنا (مثلًا في المحرك) قد يُبقي الجلسة
         // عالقة صامتًا بدل الانهيار. نلتقطه يدويًا وننهي الجلسة بصدق
         // بدل تعليقها أو إسقاط الصفحة (القسم 12).
         try {
-          const events = engine.feedWord(word, atMs);
+          const events = engine.feedWord(word, atMs, confidence);
           applyEvents(events);
         } catch (err) {
           console.error("recitation-ai: feedWord failed", err);
@@ -352,6 +357,8 @@ function RecitationTestPageInner() {
           next.set(`${e.ref.surah}:${e.ref.ayah}:${e.ref.wordIndex}`, "revealed");
         } else if (e.kind === "error" && e.ref) {
           next.set(`${e.ref.surah}:${e.ref.ayah}:${e.ref.wordIndex}`, "error");
+        } else if (e.kind === "unclear") {
+          next.set(`${e.ref.surah}:${e.ref.ayah}:${e.ref.wordIndex}`, "unclear");
         } else if (e.kind === "ayah_complete") {
           setJustCompletedAyah(e.ayah);
           setTimeout(() => setJustCompletedAyah(null), 900);
@@ -359,6 +366,16 @@ function RecitationTestPageInner() {
       }
       return next;
     });
+
+    // إشعار "غير واضح" العابر — يُحسَب من آخر حدث unclear في هذه الدفعة
+    // فقط، بلا أي علاقة بمُحدِّث setWordStates أعلاه (استدعاء setState
+    // منفصل تمامًا، خارج أي دالة تحديث أخرى).
+    const lastUnclear = [...events].reverse().find((e) => e.kind === "unclear");
+    if (lastUnclear && lastUnclear.kind === "unclear") {
+      setUnclearNotice(lastUnclear.heardWord);
+      if (unclearNoticeTimerRef.current) clearTimeout(unclearNoticeTimerRef.current);
+      unclearNoticeTimerRef.current = setTimeout(() => setUnclearNotice(null), 3000);
+    }
 
     // زمن الاسترجاع لوضع "اختبار المعلّم" — يُسجَّل مرة واحدة فقط، عند
     // أول كلمة صحيحة بعد بدء الجلسة من الموضع العشوائي. بلا أي استدعاء
@@ -439,7 +456,10 @@ function RecitationTestPageInner() {
   );
 
   useEffect(() => {
-    return () => { unsubRef.current?.(); };
+    return () => {
+      unsubRef.current?.();
+      if (unclearNoticeTimerRef.current) clearTimeout(unclearNoticeTimerRef.current);
+    };
   }, []);
 
   // تلميح متدرج (وضع "التسميع بالمساعدة" فقط) — مؤقّت زمني حقيقي يُعاد
@@ -466,6 +486,9 @@ function RecitationTestPageInner() {
 
   const correctCount = liveEvents.filter((e) => e.kind === "correct").length;
   const errorEvents = liveEvents.filter((e): e is Extract<AlignmentEvent, { kind: "error" }> => e.kind === "error");
+  // "غير واضح" منفصل تمامًا عن errorEvents — لا يُحتسَب ضمن ملاحظات
+  // الأخطاء المؤكَّدة (القسم 9)، يُعرَض فقط كإحصاء شفاف مستقل في التقرير.
+  const unclearEvents = liveEvents.filter((e): e is Extract<AlignmentEvent, { kind: "unclear" }> => e.kind === "unclear");
 
   if (phase === "setup" || phase === "loading" || phase === "error") {
     return (
@@ -685,13 +708,23 @@ function RecitationTestPageInner() {
             </p>
           )}
 
+          {unclearNotice && (
+            <p className="rai-unclear-banner" role="status">
+              لم يتّضح الصوت جيدًا — أعد نطق هذه الكلمة: <bdi>{unclearNotice}</bdi>
+            </p>
+          )}
+
           {mode === "interactive_mushaf" ? (
             <InteractiveMushafReveal words={revealWords} revealGranularity={revealGranularity} justCompletedAyah={justCompletedAyah} />
           ) : (
             <p className="rai-plain-words">
               {referenceWords.map((w, i) => {
                 const state = wordStates.get(`${w.surah}:${w.ayah}:${w.wordIndex}`) ?? "hidden";
-                const cls = state === "revealed" ? "rai-plain-word--correct" : state === "error" ? "rai-plain-word--error" : "rai-plain-word--pending";
+                const cls =
+                  state === "revealed" ? "rai-plain-word--correct" :
+                  state === "error" ? "rai-plain-word--error" :
+                  state === "unclear" ? "rai-plain-word--unclear" :
+                  "rai-plain-word--pending";
                 const showText = mode !== "full_hide" || state !== "hidden";
                 return (
                   <span key={i} className={cls}>
@@ -759,6 +792,11 @@ function RecitationTestPageInner() {
         <div className="rai-report__stats">
           <div className="rai-report__stat"><span className="rai-report__stat-val">{correctCount}</span><span className="rai-report__stat-lbl">كلمة صحيحة</span></div>
           <div className="rai-report__stat"><span className="rai-report__stat-val">{errorEvents.length}</span><span className="rai-report__stat-lbl">ملاحظة</span></div>
+          {unclearEvents.length > 0 && (
+            <div className="rai-report__stat rai-report__stat--unclear" title="لا تُحتسَب أخطاءً — التقاط الصوت لم يكن واضحًا كفاية للجزم">
+              <span className="rai-report__stat-val">{unclearEvents.length}</span><span className="rai-report__stat-lbl">غير واضح</span>
+            </div>
+          )}
           <div className="rai-report__stat"><span className="rai-report__stat-val">{new Set(referenceWords.map((w) => w.ayah)).size}</span><span className="rai-report__stat-lbl">آية</span></div>
           <div className="rai-report__stat"><span className="rai-report__stat-val">{sessionConfidence}%</span><span className="rai-report__stat-lbl">ثقة التحليل</span></div>
           {mode === "teacher_test" && recallMs !== null && (

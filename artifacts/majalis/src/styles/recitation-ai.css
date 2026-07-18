@@ -13,6 +13,9 @@
   --rai-ivory-warm: #F3EFE6;
   --rai-error: #DC2626;
   --rai-gold: #C9A227;
+  /* لون منفصل تمامًا عن الخطأ (أحمر) والتجويد/التلميح (ذهبي) — بند "غير
+     واضح" يجب أن يبدو مختلفًا بصريًا فورًا فلا يُظَن جزمًا بخطأ. */
+  --rai-unclear: #8B5CF6;
 }
 
 .rai-page {
@@ -182,6 +185,21 @@ html[data-theme="dark"] .rai-session__topbar { background: rgba(17,23,20,.85); }
 html[data-theme="dark"] .rai-hint-banner { background: rgba(201,162,39,.18); color: #E8CB6B; }
 .rai-hint-banner bdi { font-family: "Amiri Quran", "Scheherazade New", serif; font-size: 1.1rem; }
 
+.rai-unclear-banner {
+  max-width: 600px;
+  margin: 0 auto 1rem;
+  padding: .6rem 1rem;
+  border-radius: 12px;
+  background: rgba(139,92,246,.1);
+  border: 1px solid rgba(139,92,246,.35);
+  color: #5B3FA8;
+  font-family: var(--font-body);
+  font-size: .9rem;
+  text-align: center;
+}
+html[data-theme="dark"] .rai-unclear-banner { background: rgba(139,92,246,.18); color: #C4B3F5; }
+.rai-unclear-banner bdi { font-family: "Amiri Quran", "Scheherazade New", serif; font-size: 1.1rem; }
+
 .rai-error-count { font-size: .8rem; color: #8A6D1B; }
 
 .rai-session__actions { display: flex; gap: .5rem; }
@@ -199,6 +217,7 @@ html[data-theme="dark"] .rai-icon-btn { background: #1A2120; color: #E5F0EC; }
 html[data-theme="dark"] .rai-plain-words { color: #E5F0EC; }
 .rai-plain-word--correct { color: var(--rai-emerald-deep); }
 .rai-plain-word--error { color: var(--rai-error); text-decoration: underline wavy var(--rai-error); }
+.rai-plain-word--unclear { color: var(--rai-unclear); text-decoration: underline dotted var(--rai-unclear); }
 .rai-plain-word--pending { color: #9CA3AF; }
 
 /* ── وضع المصحف التفاعلي (InteractiveMushafReveal) ──────────── */
@@ -241,6 +260,15 @@ html[data-theme="dark"] .imr-page { background: #17201D; color: #E5F0EC; }
   0%, 100% { text-shadow: none; }
   50% { text-shadow: 0 0 8px rgba(220,38,38,.55); }
 }
+.imr-word--unclear {
+  filter: blur(3px);
+  opacity: .6;
+}
+.imr-word--pulse-unclear { animation: imr-pulse-unclear 900ms ease-in-out 2; }
+@keyframes imr-pulse-unclear {
+  0%, 100% { text-shadow: none; }
+  50% { text-shadow: 0 0 8px rgba(139,92,246,.55); }
+}
 
 .imr-ayah-mark {
   display: inline-block;
@@ -260,6 +288,8 @@ html[data-theme="dark"] .rai-report__stat { background: #1A2120; border-color: r
 .rai-report__stat-val { display: block; font-size: 1.3rem; font-weight: 800; color: var(--rai-emerald-deep); }
 html[data-theme="dark"] .rai-report__stat-val { color: #E5F0EC; }
 .rai-report__stat-lbl { font-size: .75rem; color: #6B7A74; }
+.rai-report__stat--unclear { border-color: rgba(139,92,246,.3); }
+.rai-report__stat--unclear .rai-report__stat-val { color: var(--rai-unclear); }
 
 .rai-report__errors-list { display: flex; flex-direction: column; gap: .6rem; }
 .rai-report__error-row {

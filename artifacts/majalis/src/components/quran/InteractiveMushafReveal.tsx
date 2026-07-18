@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import type { ReferenceWord } from "@/lib/recitation-ai/types";
 
-export type RevealState = "hidden" | "revealed" | "error";
+export type RevealState = "hidden" | "revealed" | "error" | "unclear";
 
 export type WordRevealInfo = {
   word: ReferenceWord;
@@ -52,6 +52,7 @@ export function InteractiveMushafReveal({ words, revealGranularity, justComplete
                   "imr-word",
                   revealGranularity === "word" ? `imr-word--${w.state}` : ayahRevealed ? "imr-word--revealed" : "imr-word--hidden",
                   w.state === "error" ? "imr-word--pulse-error" : "",
+                  w.state === "unclear" ? "imr-word--pulse-unclear" : "",
                 ].join(" ").trim()}
               >
                 {w.word.raw}

@@ -18,6 +18,18 @@ const LOOKAHEAD = 6;     // حجم نافذة المرجع القادمة
 const COMMIT_LAG = 1;    // عدد الكلمات المسموعة الأخيرة التي تبقى معلَّقة (غير محسومة) لحل الغموض
 const REPETITION_LOOKBACK = 8; // عدد الكلمات الماضية المفحوصة لاكتشاف التكرار
 
+/**
+ * عتبة تصنيف "غير واضح" (0-100): كلمة تبدو "خطأ استبدال" (substitute)
+ * لكن مزوّد ASR أبلغ ثقة تعرّف أقل من هذه القيمة لهذه الكلمة تحديدًا ⇒
+ * السبب الأرجح ضعف التقاط الصوت لا خطأ حفظ حقيقي، فتُصنَّف "غير واضح"
+ * بدل "خطأ" (القسم 9: التصنيف الحادي عشر). عتبة أدنى من عتبة ملاحظات
+ * التجويد (85%، حقل منفصل تمامًا) عمدًا: هذه ثقة *تعرّف الكلمة نفسها*
+ * الخام من محرك ASR عامّ (غير مخصَّص للقرآن)، تكون عادة أدنى طبيعيًا من
+ * ثقة نموذج تجويد متخصص حتى في نتائج صحيحة — عتبة عالية هنا كانت ستُصنِّف
+ * أخطاء حفظ حقيقية كثيرة كـ"غير واضح" زورًا فتُضعِف قيمة الميزة التصحيحية.
+ */
+export const UNCLEAR_CONFIDENCE_THRESHOLD = 60;
+
 export type EngineConfig = {
   referenceWords: ReferenceWord[]; // كامل النطاق المُختار مسبقًا (سورة/نطاق آيات/صفحة/جزء)
   alertLevel?: AlertLevel;
@@ -25,7 +37,7 @@ export type EngineConfig = {
   longPauseThresholdMultiplier?: number;
 };
 
-type PendingHeard = { raw: string; norm: string; atMs: number };
+type PendingHeard = { raw: string; norm: string; atMs: number; confidence?: number };
 
 export class VerseAlignmentEngine {
   private readonly ref: ReferenceWord[];
@@ -62,7 +74,7 @@ export class VerseAlignmentEngine {
    * الجزئية — ليس كل partial update، بل الكلمات المؤكَّدة فقط؛ هذا قرار
    * الطبقة الأعلى StreamingTranscription/الجلسة، لا هذا المحرك).
    */
-  feedWord(rawWord: string, atMs: number): AlignmentEvent[] {
+  feedWord(rawWord: string, atMs: number, confidence?: number): AlignmentEvent[] {
     if (this.finished) return [];
     const events: AlignmentEvent[] = [];
 
@@ -85,7 +97,7 @@ export class VerseAlignmentEngine {
     this.lastWordAtMs = atMs;
 
     const norm = normalizeQuranWord(rawWord);
-    this.buffer.push({ raw: rawWord, norm, atMs });
+    this.buffer.push({ raw: rawWord, norm, atMs, confidence });
 
     events.push(...this.resolveBuffer(/* finalFlush */ false));
     return events;
@@ -195,7 +207,11 @@ export class VerseAlignmentEngine {
         case "substitute": {
           const ref = this.ref[this.cursor + op.refIndex!];
           const heard = this.buffer[op.heardIndex!];
-          events.push({ kind: "error", errorType: "wrong_word", ref, heardWord: heard.raw, confidence: 75 });
+          if (typeof heard.confidence === "number" && heard.confidence < UNCLEAR_CONFIDENCE_THRESHOLD) {
+            events.push({ kind: "unclear", ref, heardWord: heard.raw, confidence: heard.confidence });
+          } else {
+            events.push({ kind: "error", errorType: "wrong_word", ref, heardWord: heard.raw, confidence: 75 });
+          }
           consumedHeard += 1;
           consumedRef += 1;
           break;

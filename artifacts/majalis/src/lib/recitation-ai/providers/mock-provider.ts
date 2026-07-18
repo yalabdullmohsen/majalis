@@ -14,7 +14,7 @@ export class MockQuranASRProvider implements QuranASRProvider {
   readonly worksOffline = true;
   readonly capturesAudioInternally = true;
 
-  private listeners = new Map<string, Set<(word: string, atMs: number) => void>>();
+  private listeners = new Map<string, Set<(word: string, atMs: number, confidence?: number) => void>>();
   private transcripts = new Map<string, string[]>();
 
   async isAvailable(): Promise<boolean> {
@@ -31,16 +31,16 @@ export class MockQuranASRProvider implements QuranASRProvider {
     return null; // capturesAudioInternally=true — استخدم feedScriptedWord بدلاً
   }
 
-  onPartialWord(session: ASRSession, callback: (word: string, atMs: number) => void): () => void {
+  onPartialWord(session: ASRSession, callback: (word: string, atMs: number, confidence?: number) => void): () => void {
     if (!this.listeners.has(session.id)) this.listeners.set(session.id, new Set());
     this.listeners.get(session.id)!.add(callback);
     return () => this.listeners.get(session.id)?.delete(callback);
   }
 
-  /** يُستخدَم من الاختبارات فقط لمحاكاة كلمة "مسموعة" واحدة. */
-  feedScriptedWord(session: ASRSession, word: string, atMs: number): void {
+  /** يُستخدَم من الاختبارات فقط لمحاكاة كلمة "مسموعة" واحدة — confidence اختياري (0-100) لاختبار تصنيف "غير واضح". */
+  feedScriptedWord(session: ASRSession, word: string, atMs: number, confidence?: number): void {
     this.transcripts.get(session.id)?.push(word);
-    for (const cb of this.listeners.get(session.id) ?? []) cb(word, atMs);
+    for (const cb of this.listeners.get(session.id) ?? []) cb(word, atMs, confidence);
   }
 
   async endSession(session: ASRSession): Promise<FinalResult> {

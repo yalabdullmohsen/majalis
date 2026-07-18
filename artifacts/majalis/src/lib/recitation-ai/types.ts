@@ -34,6 +34,12 @@ export type ErrorType =
 export type AlignmentEvent =
   | { kind: "correct"; ref: ReferenceWord; confidence: number }
   | { kind: "error"; errorType: ErrorType; ref: ReferenceWord | null; heardWord: string | null; confidence: number; note?: string }
+  // "غير واضح" — بند تفوّق صريح على المنافسين (لا جزم خاطئ بالخطأ حين
+  // يكون سبب عدم التطابق ضعف التقاط الصوت نفسه لا خطأ حفظ حقيقي).
+  // مستقل تصميميًا عن "error" (لا يُحتسب ضمن إحصاء الأخطاء المؤكَّدة في
+  // نسبة الإتقان) — يطلب إعادة النطق بدل الحكم. يُصدَر فقط حين يتوفر
+  // مزوّد ASR يُبلِّغ ثقة تعرّف حقيقية دون العتبة لهذه الكلمة تحديدًا.
+  | { kind: "unclear"; ref: ReferenceWord; heardWord: string; confidence: number }
   | { kind: "ayah_complete"; surah: number; ayah: number };
 
 export type TajweedNote = {
