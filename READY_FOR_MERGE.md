@@ -6,7 +6,20 @@
 > هذا الملف يوثّق فقط أن البوابات الفنية (typecheck/lint/tests/build)
 > اجتازت معًا في دفعة واحدة نهائية، كما طلب المالك.
 
-## ▶️ حالة الجلسة — ملخص موحَّد (بعد 49+ دفعة، آخر تحديث 2026-07-18)
+## ▶️ حالة الجلسة — ملخص موحَّد (بعد 53+ دفعة، آخر تحديث 2026-07-18)
+
+**جلسة عاشرة (أحدث)**: أعدتُ تشغيل استعلام "كورسات منشورة بـ≤2 عنصر"
+فكشف 16 مقرراً ضحلاً متبقياً. عولجت 4 (`qawaid-muthla` 1→4،
+`minhaj-muslim` 1→6، `seerah-deep` 1→4، `arabic-mujam-wasit` 1→3 — كل
+إضافة هيكل/استشهاد تحقَّق عبر WebFetch) + أُصلح تكرار محتوى حقيقي
+(`adab-al-usrah`: عنصر "حق الجار" كان مكرراً حرفياً بعنوانه مع كورس آخر
+من نفس المسار وخارج نطاقه الموضوعي — استُبدل بـ"صلة الرحم"، حديث بخاري
+متحقَّق). **اكتشاف يحتاج قرار مالك لا إصلاح تقني**: `arbaeen_love_of_allah`
+(35 حديثاً مكتملاً نصاً) كلها بحالة `in_review`، صفر منشور — الصفحة الحية
+فارغة، لكن هذا تصميم مقصود (بوابة مراجعة عالِم شرعي فعلي صريحة في الكود
+والواجهة)، لم أُغيِّر `review_status`. تفصيل كامل في `CONTINUATION_PLAN.md`
+قسم "جلسة عاشرة". commits `1e42f0d6`→`cca48c58`→`9477d665`→`96ed51a6`،
+كل دفعة اجتازت البوابات الأربع معاً قبل commit، ودُفعت فور نجاحها.
 
 **المقالة الأصلية الرابعة**: "منازل القلب الثلاث: الصبر والشكر والرضا" —
 تربط 3 مقررات تربية بُنيت هذه الجلسة بمقرر "باب الصبر" في رياض الصالحين،
@@ -283,6 +296,10 @@ majalis-content-fill
 
 ```
 0c9f2c76...
+96ed51a6  feat(learning): deepen arabic-mujam-wasit course — 1 item → 3
+9477d665  feat(learning): deepen seerah-deep course — 1 item → 4 (3 late-Medinan events)
+cca48c58  feat(learning): deepen minhaj-muslim course — 1 general item → 6 (5 real book parts)
+1e42f0d6  fix+content(learning): dedupe adab-al-usrah "حق الجار" item + deepen qawaid-muthla course
 0c9f2c76  fix(qa): apply resolveCategorySlug() aliasing in filteredItems, not just counts
 2c3eb274  content(articles): fourth original article — منازل القلب الثلاث: الصبر والشكر والرضا
 b3e66c12  fix+content(fiqh-council): same category CHECK gap found on sibling table fiqh_council_items
