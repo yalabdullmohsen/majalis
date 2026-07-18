@@ -29527,6 +29527,8 @@ html[data-theme="dark"] {
   --msk-text:         #E5F0EC;
   --msk-text-2:       #8BABA3;
   --msk-text-3:       #5E7870;
+  /* --msk-gold-* هنا زمردي فعليًا لا ذهبي — انظر ملاحظة src/index.css
+     وREADY_FOR_MERGE.md §15/16 لتفاصيل هذا الاسم التاريخي المتبقّي. */
   --msk-gold:         #3BAD8A;
   --msk-gold-deep:    #2C8A6E;
   --msk-border:       rgba(255,255,255,.07);
