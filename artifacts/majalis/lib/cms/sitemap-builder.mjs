@@ -51,13 +51,19 @@ export async function fetchDynamicUrls() {
 
   if (!admin) return urls;
 
-  const [lessons, sheikhs, library, qa, fawaid, fatwas, updates, learningPaths] = await Promise.all([
+  const [lessons, sheikhs, library, qa, fawaid, updates, learningPaths] = await Promise.all([
     admin.from("lessons").select("id, updated_at, slug").eq("status", "approved").limit(2000),
     admin.from("sheikhs").select("id, updated_at").eq("is_verified", true).limit(500),
     admin.from("library_items").select("id, updated_at").eq("status", "approved").limit(500),
     admin.from("qa_questions").select("id, updated_at").eq("status", "published").limit(500),
     admin.from("fawaid").select("id, updated_at").eq("status", "approved").limit(500),
-    admin.from("fatwas").select("id, slug, updated_at").eq("status", "approved").limit(200),
+    // ملاحظة: استعلام fatwas أُزيل هنا (2026-07-18) — قسم الفتوى حُذف من
+    // التطبيق بالكامل في جلسة سابقة، و/fatwa و/fatwa/:id في src/App.tsx
+    // كليهما مجرد Redirect (لـ/fiqh و/rulings على التوالي) لا صفحة حقيقية،
+    // فإدراج روابطهما في sitemap.xml كان سيُرسِل محركات البحث لروابط
+    // تُعيد التوجيه فوراً بلا فائدة (جدول fatwas نفسه فارغ حالياً 0 صف
+    // approved، فلم يكن هذا يُنتج روابط فعلية بعد، لكنه كود ميت يستحق
+    // الإزالة قبل أن يُضاف محتوى للجدول بالخطأ مستقبلاً).
     admin.from("platform_updates").select("id, updated_at").eq("status", "approved").limit(200),
     // اكتُشف 2026-07-18: /learning/paths/:slug (كل الـ15 مساراً التعليمية
     // المبنية بكثافة هذه الجلسة) كانت غائبة تماماً عن sitemap.xml الحي —
@@ -84,9 +90,6 @@ export async function fetchDynamicUrls() {
   }
   for (const row of fawaid.data || []) {
     urls.push({ loc: `/fawaid/${row.id}`, lastmod: row.updated_at, priority: 0.68 });
-  }
-  for (const row of fatwas.data || []) {
-    urls.push({ loc: `/fatwa/${row.slug || row.id}`, lastmod: row.updated_at, priority: 0.8 });
   }
   for (const row of updates.data || []) {
     urls.push({ loc: `/updates/${row.id}`, lastmod: row.updated_at, priority: 0.65 });
