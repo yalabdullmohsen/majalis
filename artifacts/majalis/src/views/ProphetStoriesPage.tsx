@@ -181,7 +181,7 @@ function ProphetCard({
           <span className="prophet-lux-card__pbuh"> عليه السلام</span>
         </h3>
         {prophet.quranTitle && (
-          <div className="prophet-lux-card__quran">﴾ {prophet.quranTitle} ﴿</div>
+          <div className="prophet-lux-card__quran">﴿ {prophet.quranTitle} ﴾</div>
         )}
         <p className="prophet-lux-card__title">{prophet.title}</p>
         <p className="prophet-lux-card__place">{prophet.peopleOrPlace}</p>
@@ -340,7 +340,7 @@ function ProphetDetailView({
           <h1 className="prophet-detail-lux__name">{p.arabicName}</h1>
           <p className="prophet-detail-lux__pbuh">صلوات الله وسلامه عليه</p>
           {p.quranTitle && (
-            <div className="prophet-detail-lux__quran-title">﴾ {p.quranTitle} ﴿</div>
+            <div className="prophet-detail-lux__quran-title">﴿ {p.quranTitle} ﴾</div>
           )}
           <p className="prophet-detail-lux__hero-title">{p.title}</p>
           <GeometricBorder color="var(--prophet-color-on-dark)" size={20} />

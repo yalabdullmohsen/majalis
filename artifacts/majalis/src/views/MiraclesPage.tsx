@@ -289,7 +289,7 @@ export default function MiraclesPage({
                 {/* محتوى */}
                 <div className="miracle-item__body-wrap mk-card__body">
                   {item.reference && (
-                    <p className="miracle-item__ref mk-card__ref">﴾ {item.reference} ﴿</p>
+                    <p className="miracle-item__ref mk-card__ref">﴿ {item.reference} ﴾</p>
                   )}
                   {bodyText && (
                     <>
