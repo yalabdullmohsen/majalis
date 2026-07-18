@@ -193,7 +193,14 @@ export function MindMapCanvas({ root, mapId }: { root: MindMapNode; mapId: strin
         onPointerUp={onPointerUp}
         onPointerLeave={onPointerUp}
         onPointerCancel={onPointerUp}
-        role="img"
+        // role="group" لا "img": هذا الحاوية تضم أزرارًا وروابط حقيقية تفاعلية
+        // (عقد الخريطة)، وrole="img" في نموذج ARIA لا يسمح بعناصر تفاعلية
+        // فرعية إطلاقًا. تحقّقتُ فعليًا عبر ariaSnapshot أن Chromium لا يُخفي
+        // العناصر الفرعية عمليًا حتى مع role="img" (سلوك متسامح خاص بهذا
+        // المحرك تحديدًا)، لكن الاعتماد على تسامح محرك واحد بدل التوافق مع
+        // نموذج ARIA نفسه خطر حقيقي عبر متصفحات/تقنيات مساعدة أخرى — أُصلح
+        // بـrole="group" (الدور الصحيح لحاوية عناصر تفاعلية ذات وصف جماعي).
+        role="group"
         aria-label={`خريطة ذهنية بصرية تفاعلية، ${totalVisible} عقدة مرئية حاليًا. اسحب للتحريك، واستخدم التكبير/التصغير أو عجلة الفأرة.`}
       >
         <div
