@@ -72,7 +72,18 @@ export class OnDeviceQuranASRProvider implements QuranASRProvider {
     return null; // capturesAudioInternally=true — راجع تعليق الملف أعلاه
   }
 
-  onPartialWord(session: ASRSession, callback: (word: string, atMs: number) => void): () => void {
+  // ⚠️ ثغرة معروفة غير مُعالَجة: الجسر الأصلي الحالي
+  // (MajlisSpeechRecognitionPlugin.swift/.kt) يُصدر {matches: [string]}
+  // فقط — بلا أي حقل ثقة (confidence) على الإطلاق، خلافًا لـWeb Speech
+  // API. لذا `callback` هنا يُستدعى دومًا بـconfidence=undefined، فتصنيف
+  // "غير واضح" (VerseAlignmentEngine) يبقى معطَّلاً بأمان لمستخدمي تطبيق
+  // iOS/Android (يستمر السلوك بالجزم بالخطأ كما كان قبل هذه الميزة، لا
+  // كسر ولا تراجع). إصلاح فعلي يتطلب تعديل الجسر الأصلي نفسه
+  // (SFSpeechRecognizer على iOS يُوفّر confidence لكل segment فعليًا عبر
+  // transcription.segments[].confidence؛ Android SpeechRecognizer يُوفّره
+  // عبر EXTRA_CONFIDENCE_SCORES) — يحتاج بناء Xcode/cap sync للتحقق، وهو
+  // مُقيَّد حاليًا في هذه الجلسة (راجع القيد القائم أعلى الجلسة).
+  onPartialWord(session: ASRSession, callback: (word: string, atMs: number, confidence?: number) => void): () => void {
     const plugin = getSpeechRecognitionPlugin();
     if (!plugin) return () => {};
 
@@ -88,7 +99,7 @@ export class OnDeviceQuranASRProvider implements QuranASRProvider {
         const newWords = words.slice(already);
         this.lastEmittedWordCount.set(session.id, words.length);
         const now = Date.now();
-        for (const w of newWords) callback(w, now);
+        for (const w of newWords) callback(w, now, undefined);
       })
       .then((h) => {
         if (removed) h.remove();

@@ -18,6 +18,29 @@ const LOOKAHEAD = 6;     // حجم نافذة المرجع القادمة
 const COMMIT_LAG = 1;    // عدد الكلمات المسموعة الأخيرة التي تبقى معلَّقة (غير محسومة) لحل الغموض
 const REPETITION_LOOKBACK = 8; // عدد الكلمات الماضية المفحوصة لاكتشاف التكرار
 
+/**
+ * عتبة تصنيف "غير واضح" (0-100): كلمة تبدو "خطأ استبدال" (substitute)
+ * لكن مزوّد ASR أبلغ ثقة تعرّف أقل من هذه القيمة لهذه الكلمة تحديدًا ⇒
+ * السبب الأرجح ضعف التقاط الصوت لا خطأ حفظ حقيقي، فتُصنَّف "غير واضح"
+ * بدل "خطأ" (القسم 9: التصنيف الحادي عشر). عتبة أدنى من عتبة ملاحظات
+ * التجويد (85%، حقل منفصل تمامًا) عمدًا: هذه ثقة *تعرّف الكلمة نفسها*
+ * الخام من محرك ASR عامّ (غير مخصَّص للقرآن)، تكون عادة أدنى طبيعيًا من
+ * ثقة نموذج تجويد متخصص حتى في نتائج صحيحة — عتبة عالية هنا كانت ستُصنِّف
+ * أخطاء حفظ حقيقية كثيرة كـ"غير واضح" زورًا فتُضعِف قيمة الميزة التصحيحية.
+ */
+export const UNCLEAR_CONFIDENCE_THRESHOLD = 60;
+
+/**
+ * عتبة تصنيف "يحتاج إعادة" (0-100، نظام الثقة الثلاثي —
+ * TASMEE_AUDIT.md القسم 5 بند 3): كلمة استبدال بثقة بين هذه العتبة
+ * وUNCLEAR_CONFIDENCE_THRESHOLD تُصنَّف "needs_repeat" (تُسجَّل في
+ * التقرير، بلا جزم كامل ولا تنبيه أحمر فوري) بدل الجزم المباشر بـ"error".
+ * 85% نفس عتبة "ملاحظات التجويد" الموجودة أصلاً في المنصة
+ * (`confidence-scorer.ts`، `TajweedNote.confidencePct`) — اتساق مقصود:
+ * نفس القاعدة العامة "دون 85% ⇒ تحوّط لا جزم" مطبَّقة هنا أيضًا.
+ */
+export const NEEDS_REPEAT_CONFIDENCE_THRESHOLD = 85;
+
 export type EngineConfig = {
   referenceWords: ReferenceWord[]; // كامل النطاق المُختار مسبقًا (سورة/نطاق آيات/صفحة/جزء)
   alertLevel?: AlertLevel;
@@ -25,7 +48,7 @@ export type EngineConfig = {
   longPauseThresholdMultiplier?: number;
 };
 
-type PendingHeard = { raw: string; norm: string; atMs: number };
+type PendingHeard = { raw: string; norm: string; atMs: number; confidence?: number };
 
 export class VerseAlignmentEngine {
   private readonly ref: ReferenceWord[];
@@ -36,6 +59,8 @@ export class VerseAlignmentEngine {
   private readonly interWordGapsMs: number[] = [];
   private finished = false;
   private lastAyahAnnounced: string | null = null;
+  /** مرة واحدة فقط لكل جلسة: هل تقرَّر مصير كلمات البسملة المحتملة في مطلع النطاق (بسملة فعلية فتُحذَف، أو محتوى حقيقي فيُترَك)؟ */
+  private bismillahChecked = false;
 
   constructor(private readonly config: EngineConfig) {
     this.ref = config.referenceWords;
@@ -62,7 +87,7 @@ export class VerseAlignmentEngine {
    * الجزئية — ليس كل partial update، بل الكلمات المؤكَّدة فقط؛ هذا قرار
    * الطبقة الأعلى StreamingTranscription/الجلسة، لا هذا المحرك).
    */
-  feedWord(rawWord: string, atMs: number): AlignmentEvent[] {
+  feedWord(rawWord: string, atMs: number, confidence?: number): AlignmentEvent[] {
     if (this.finished) return [];
     const events: AlignmentEvent[] = [];
 
@@ -85,7 +110,7 @@ export class VerseAlignmentEngine {
     this.lastWordAtMs = atMs;
 
     const norm = normalizeQuranWord(rawWord);
-    this.buffer.push({ raw: rawWord, norm, atMs });
+    this.buffer.push({ raw: rawWord, norm, atMs, confidence });
 
     events.push(...this.resolveBuffer(/* finalFlush */ false));
     return events;
@@ -122,19 +147,36 @@ export class VerseAlignmentEngine {
     }
 
     // تجاوز البسملة إن وقعت في بداية سورة (عدا الفاتحة/التوبة، مُدارة عبر REFERENCE نفسه)
-    if (this.cursor === 0 && this.ref.length > 0) {
+    // — قرار **مرة واحدة فقط** لكل جلسة (bismillahChecked)، لا فحص متكرر
+    // كل مرة يكون فيها cursor=0: أول تنفيذ كان يُعيد الفحص عند كل استدعاء
+    // طالما لم يتقدَّم cursor، فإن سبقت كلمات البسملة كلمات محتوى حقيقية
+    // قليلة (<4) في الـbuffer بعد حذف البسملة، كانت تُحجَب عن الحسم إلى
+    // الأبد (لا بسملة أخرى قادمة لتُكمل الأربع وتُطلق القرار) — خلل حقيقي
+    // مُكتشَف عبر تحقّق حي لوضع "التسميع الحر" (سورة الإخلاص القصيرة).
+    let awaitingBismillahDecision = false;
+    if (!this.bismillahChecked && this.cursor === 0 && this.ref.length > 0) {
       const surah = this.ref[0].surah;
       const isFatihaOrTawbah =
         SURAH_WHERE_BISMILLAH_IS_AYAH_ONE.has(surah) || SURAH_WITHOUT_BISMILLAH.has(surah);
-      if (!isFatihaOrTawbah && this.buffer.length >= 4) {
+      if (isFatihaOrTawbah) {
+        this.bismillahChecked = true;
+      } else if (this.buffer.length >= 4) {
         const words = this.buffer.slice(0, 4).map((b) => b.norm);
         if (isBismillahPhrase(words)) {
           this.buffer.splice(0, 4);
         }
+        this.bismillahChecked = true;
+      } else if (finalFlush) {
+        this.bismillahChecked = true; // جلسة أُنهيت بأقل من 4 كلمات إجمالاً — لا حسم بسملة، تُعامَل كمحتوى مباشرة
+      } else {
+        // لم تصل كلمات كافية بعد للحسم — لا نُحاذي المعلَّق حتى الآن ضد
+        // المرجع، وإلا حاذاها المحرك خطأً ضد أول كلمات الآية الحقيقية.
+        awaitingBismillahDecision = true;
       }
     }
 
     if (this.buffer.length === 0) return events;
+    if (awaitingBismillahDecision) return events;
 
     while (this.buffer.length > (finalFlush ? 0 : COMMIT_LAG) && this.cursor < this.ref.length) {
       const refWindow = this.ref.slice(this.cursor, this.cursor + LOOKAHEAD).map((r) => r.normalized);
@@ -195,7 +237,13 @@ export class VerseAlignmentEngine {
         case "substitute": {
           const ref = this.ref[this.cursor + op.refIndex!];
           const heard = this.buffer[op.heardIndex!];
-          events.push({ kind: "error", errorType: "wrong_word", ref, heardWord: heard.raw, confidence: 75 });
+          if (typeof heard.confidence === "number" && heard.confidence < UNCLEAR_CONFIDENCE_THRESHOLD) {
+            events.push({ kind: "unclear", ref, heardWord: heard.raw, confidence: heard.confidence });
+          } else if (typeof heard.confidence === "number" && heard.confidence < NEEDS_REPEAT_CONFIDENCE_THRESHOLD) {
+            events.push({ kind: "needs_repeat", ref, heardWord: heard.raw, confidence: heard.confidence });
+          } else {
+            events.push({ kind: "error", errorType: "wrong_word", ref, heardWord: heard.raw, confidence: 75 });
+          }
           consumedHeard += 1;
           consumedRef += 1;
           break;

@@ -17,7 +17,7 @@ export type RecitationSettings = {
   precisionLevel: PrecisionLevel;
   alertLevel: AlertLevel;
   hintStyle: "progressive" | "off";
-  revealGranularity: "word" | "ayah";
+  revealGranularity: "word" | "ayah" | "page";
   saveRecordings: boolean;
   showErrorCount: boolean;
 };
@@ -46,7 +46,7 @@ export async function loadRecitationSettings(userId: string): Promise<Recitation
     precisionLevel: (data.precision_level as PrecisionLevel) ?? DEFAULT_RECITATION_SETTINGS.precisionLevel,
     alertLevel: (data.alert_level as AlertLevel) ?? DEFAULT_RECITATION_SETTINGS.alertLevel,
     hintStyle: (data.hint_style as "progressive" | "off") ?? DEFAULT_RECITATION_SETTINGS.hintStyle,
-    revealGranularity: (data.reveal_granularity as "word" | "ayah") ?? DEFAULT_RECITATION_SETTINGS.revealGranularity,
+    revealGranularity: (data.reveal_granularity as "word" | "ayah" | "page") ?? DEFAULT_RECITATION_SETTINGS.revealGranularity,
     saveRecordings: data.save_recordings ?? false,
     showErrorCount: data.show_error_count ?? true,
   };

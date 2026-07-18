@@ -35,7 +35,7 @@
 import type { ASRSession, AudioChunk, FinalResult, PartialResult, QuranASRProvider, RecitationConfig } from "../asr-provider";
 import { ASRProviderUnavailableError } from "../asr-provider";
 
-type WebSpeechResult = ArrayLike<{ transcript: string }> & { isFinal: boolean };
+type WebSpeechResult = ArrayLike<{ transcript: string; confidence: number }> & { isFinal: boolean };
 type WebSpeechRecognition = {
   lang: string;
   interimResults: boolean;
@@ -62,7 +62,7 @@ type Active = {
   finalWords: string[];
   intentionallyStopped: boolean;
   restartCount: number;
-  listeners: Set<(w: string, atMs: number) => void>;
+  listeners: Set<(w: string, atMs: number, confidence?: number) => void>;
 };
 
 const MAX_AUTO_RESTARTS = 50; // سقف أمان يمنع حلقة إعادة تشغيل لا نهائية عند عطل دائم (مثال: سحب إذن الميكروفون)
@@ -126,11 +126,20 @@ export class WebSpeechQuranASRProvider implements QuranASRProvider {
         const result = event.results[i];
         if (!result.isFinal) continue;
         const transcript = result[0]?.transcript ?? "";
+        // confidence (0-1) → نسبة مئوية 0-100 لمطابقة توثيق onPartialWord.
+        // ⚠️ Chrome يُصدر 0 تمامًا كقيمة افتراضية غير مضبوطة لمعظم النتائج
+        // (خلل موثَّق في محركه، لا انعكاسًا لثقة حقيقية منخفضة) — معاملة 0
+        // كثقة فعلية كانت ستُصنِّف أغلب التطابقات الصحيحة كـ"غير واضح" زورًا،
+        // فتُهدِم الميزة عمليًا. لذا 0 يُعامَل كـ"غير مُبلَّغ" (undefined)
+        // تمامًا مثل مزوّد لا يدعم الثقة أصلاً؛ فقط قيمة > 0 حقيقية تُفعِّل
+        // تصنيف "غير واضح".
+        const rawConfidence = result[0]?.confidence;
+        const confidencePct = typeof rawConfidence === "number" && Number.isFinite(rawConfidence) && rawConfidence > 0 ? rawConfidence * 100 : undefined;
         const words = transcript.trim().split(/\s+/).filter(Boolean);
         active.finalWords.push(...words);
         active.processedFinalCount = i + 1;
         const now = Date.now();
-        for (const w of words) for (const cb of active.listeners) cb(w, now);
+        for (const w of words) for (const cb of active.listeners) cb(w, now, confidencePct);
       }
     };
 
@@ -162,7 +171,7 @@ export class WebSpeechQuranASRProvider implements QuranASRProvider {
     return null; // capturesAudioInternally=true
   }
 
-  onPartialWord(session: ASRSession, callback: (word: string, atMs: number) => void): () => void {
+  onPartialWord(session: ASRSession, callback: (word: string, atMs: number, confidence?: number) => void): () => void {
     const active = this.sessions.get(session.id);
     if (!active) return () => {};
     active.listeners.add(callback);

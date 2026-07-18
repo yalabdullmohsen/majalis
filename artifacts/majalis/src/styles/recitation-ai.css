@@ -13,6 +13,12 @@
   --rai-ivory-warm: #F3EFE6;
   --rai-error: #DC2626;
   --rai-gold: #C9A227;
+  /* لون منفصل تمامًا عن الخطأ (أحمر) والتجويد/التلميح (ذهبي) — بند "غير
+     واضح" يجب أن يبدو مختلفًا بصريًا فورًا فلا يُظَن جزمًا بخطأ. */
+  --rai-unclear: #8B5CF6;
+  /* المستوى الأوسط في نظام الثقة الثلاثي: "يحتاج إعادة" — كهرماني، منفصل
+     عن الأحمر (خطأ مؤكَّد) والبنفسجي (غير واضح) والذهبي (تجويد). */
+  --rai-needs-repeat: #D97706;
 }
 
 .rai-page {
@@ -164,8 +170,52 @@ html[data-theme="dark"] .rai-session__topbar { background: rgba(17,23,20,.85); }
 .rai-listen-wave span:nth-child(3) { animation-delay: .3s; }
 @keyframes rai-wave { 0%,100% { height: 4px; } 50% { height: 16px; } }
 
+.rai-detecting {
+  max-width: 420px;
+  margin: 3rem auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .9rem;
+}
+.rai-detecting .rai-listen-wave span { width: 5px; }
+.rai-detecting__title { font-size: 1.15rem; font-weight: 700; color: var(--rai-emerald-deep); margin: 0; }
+html[data-theme="dark"] .rai-detecting__title { color: #E5F0EC; }
+.rai-detecting__hint { font-size: .85rem; color: #6B7A74; margin: 0; }
+
 .rai-progress-bar { height: 4px; background: rgba(14,110,82,.15); border-radius: 4px; overflow: hidden; margin: .5rem 0 1rem; }
 .rai-progress-bar__fill { height: 100%; background: var(--rai-emerald); transition: width .25s ease; }
+
+.rai-hint-banner {
+  max-width: 600px;
+  margin: 0 auto 1rem;
+  padding: .6rem 1rem;
+  border-radius: 12px;
+  background: rgba(201,162,39,.12);
+  border: 1px solid rgba(201,162,39,.35);
+  color: #7A5E10;
+  font-family: var(--font-body);
+  font-size: .9rem;
+  text-align: center;
+}
+html[data-theme="dark"] .rai-hint-banner { background: rgba(201,162,39,.18); color: #E8CB6B; }
+.rai-hint-banner bdi { font-family: "Amiri Quran", "Scheherazade New", serif; font-size: 1.1rem; }
+
+.rai-unclear-banner {
+  max-width: 600px;
+  margin: 0 auto 1rem;
+  padding: .6rem 1rem;
+  border-radius: 12px;
+  background: rgba(139,92,246,.1);
+  border: 1px solid rgba(139,92,246,.35);
+  color: #5B3FA8;
+  font-family: var(--font-body);
+  font-size: .9rem;
+  text-align: center;
+}
+html[data-theme="dark"] .rai-unclear-banner { background: rgba(139,92,246,.18); color: #C4B3F5; }
+.rai-unclear-banner bdi { font-family: "Amiri Quran", "Scheherazade New", serif; font-size: 1.1rem; }
 
 .rai-error-count { font-size: .8rem; color: #8A6D1B; }
 
@@ -180,17 +230,19 @@ html[data-theme="dark"] .rai-session__topbar { background: rgba(17,23,20,.85); }
 }
 html[data-theme="dark"] .rai-icon-btn { background: #1A2120; color: #E5F0EC; }
 
-.rai-plain-words { font-family: "Amiri Quran", "Scheherazade New", serif; font-size: 1.5rem; line-height: 2.3; color: #1A1A1A; text-align: justify; }
+.rai-plain-words { font-family: "Amiri Quran", "Scheherazade New", serif; font-size: 1.5rem; line-height: 1.9; color: #1A1A1A; text-align: justify; }
 html[data-theme="dark"] .rai-plain-words { color: #E5F0EC; }
 .rai-plain-word--correct { color: var(--rai-emerald-deep); }
 .rai-plain-word--error { color: var(--rai-error); text-decoration: underline wavy var(--rai-error); }
+.rai-plain-word--unclear { color: var(--rai-unclear); text-decoration: underline dotted var(--rai-unclear); }
+.rai-plain-word--needs-repeat { color: var(--rai-needs-repeat); text-decoration: underline dotted var(--rai-needs-repeat); }
 .rai-plain-word--pending { color: #9CA3AF; }
 
 /* ── وضع المصحف التفاعلي (InteractiveMushafReveal) ──────────── */
 .imr-page {
   font-family: "Amiri Quran", "Scheherazade New", serif;
   font-size: clamp(1.4rem, 3.4vw, 1.9rem);
-  line-height: 2.6;
+  line-height: 2;
   text-align: justify;
   color: #1A1A1A;
   background: var(--rai-ivory-warm);
@@ -199,7 +251,20 @@ html[data-theme="dark"] .rai-plain-words { color: #E5F0EC; }
 }
 html[data-theme="dark"] .imr-page { background: #17201D; color: #E5F0EC; }
 
-.imr-ayah { display: inline; }
+.imr-ayah { display: inline; transition: background-color .3s ease; }
+/* "آية مُسمَّعة" — تظليل دائم (لا مؤقّت كتوهّج imr-ayah-mark--glow) يبقى
+   طوال الجلسة فور إتمام كل كلمات الآية، ليرى القارئ أين وصل فعليًا على
+   صفحة المصحف نفسها (TASMEE_AUDIT.md القسم 5 بند 2). */
+.imr-ayah--recited {
+  background-color: rgba(14,110,82,.07);
+  border-radius: 6px;
+  padding: .1rem 0;
+  box-shadow: 0 0 0 3px rgba(14,110,82,.07);
+}
+html[data-theme="dark"] .imr-ayah--recited {
+  background-color: rgba(94,196,154,.09);
+  box-shadow: 0 0 0 3px rgba(94,196,154,.09);
+}
 .imr-word { display: inline; transition: color .15s ease, filter .15s ease, opacity .15s ease; }
 
 .imr-word--hidden {
@@ -226,6 +291,26 @@ html[data-theme="dark"] .imr-page { background: #17201D; color: #E5F0EC; }
   0%, 100% { text-shadow: none; }
   50% { text-shadow: 0 0 8px rgba(220,38,38,.55); }
 }
+.imr-word--unclear {
+  filter: blur(3px);
+  opacity: .6;
+}
+.imr-word--pulse-unclear { animation: imr-pulse-unclear 900ms ease-in-out 2; }
+@keyframes imr-pulse-unclear {
+  0%, 100% { text-shadow: none; }
+  50% { text-shadow: 0 0 8px rgba(139,92,246,.55); }
+}
+/* "يحتاج إعادة" — المستوى الأوسط: مُسجَّل ومرئي، لكن بلا تنبيه أحمر
+   (تظليل خافت لا اهتزاز/توهج قوي كالخطأ المؤكَّد). */
+.imr-word--needs_repeat {
+  filter: blur(1.5px);
+  opacity: .78;
+}
+.imr-word--pulse-needs-repeat { animation: imr-pulse-needs-repeat 900ms ease-in-out 1; }
+@keyframes imr-pulse-needs-repeat {
+  0%, 100% { text-shadow: none; }
+  50% { text-shadow: 0 0 6px rgba(217,119,6,.4); }
+}
 
 .imr-ayah-mark {
   display: inline-block;
@@ -245,6 +330,10 @@ html[data-theme="dark"] .rai-report__stat { background: #1A2120; border-color: r
 .rai-report__stat-val { display: block; font-size: 1.3rem; font-weight: 800; color: var(--rai-emerald-deep); }
 html[data-theme="dark"] .rai-report__stat-val { color: #E5F0EC; }
 .rai-report__stat-lbl { font-size: .75rem; color: #6B7A74; }
+.rai-report__stat--unclear { border-color: rgba(139,92,246,.3); }
+.rai-report__stat--unclear .rai-report__stat-val { color: var(--rai-unclear); }
+.rai-report__stat--needs-repeat { border-color: rgba(217,119,6,.3); }
+.rai-report__stat--needs-repeat .rai-report__stat-val { color: var(--rai-needs-repeat); }
 
 .rai-report__errors-list { display: flex; flex-direction: column; gap: .6rem; }
 .rai-report__error-row {
@@ -257,6 +346,28 @@ html[data-theme="dark"] .rai-report__stat-val { color: #E5F0EC; }
 }
 html[data-theme="dark"] .rai-report__error-row { background: #1A2120; }
 .rai-report__error-row--tajweed { border-inline-start-color: #C9A227; }
+
+.rai-mutashabih-note {
+  margin-top: .55rem;
+  padding: .55rem .75rem;
+  border-radius: 10px;
+  background: rgba(201,162,39,.08);
+  border: 1px dashed rgba(201,162,39,.4);
+}
+html[data-theme="dark"] .rai-mutashabih-note { background: rgba(201,162,39,.1); }
+.rai-mutashabih-note__title { font-size: .8rem; color: #7A5E10; margin: 0 0 .4rem; }
+html[data-theme="dark"] .rai-mutashabih-note__title { color: #E8CB6B; }
+.rai-mutashabih-note__diff { display: flex; flex-direction: column; gap: .3rem; }
+.rai-mutashabih-note__diff p {
+  margin: 0;
+  font-family: "Amiri Quran", "Scheherazade New", serif;
+  font-size: 1.05rem;
+  background: #fff;
+  border-radius: 8px;
+  padding: .4rem .6rem;
+}
+html[data-theme="dark"] .rai-mutashabih-note__diff p { background: #1A2120; color: #E5F0EC; }
+.rai-mutashabih-note__loc { font-family: var(--font-body); font-size: .7rem; color: #8A6D1B; }
 
 .rai-report__disclaimer {
   font-size: .78rem;

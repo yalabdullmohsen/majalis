@@ -59,7 +59,14 @@ export interface QuranASRProvider {
   startSession(config: RecitationConfig): Promise<ASRSession>;
   /** لا تأثير فعليًا إن كان capturesAudioInternally=true (موثَّق، لا خطأ صامت). */
   transcribeChunk(session: ASRSession, chunk: AudioChunk): Promise<PartialResult | null>;
-  /** يُستدعى فقط حين capturesAudioInternally=true — كلمة واحدة مستقرة في كل مرة. */
-  onPartialWord?(session: ASRSession, callback: (word: string, atMs: number) => void): () => void;
+  /**
+   * يُستدعى فقط حين capturesAudioInternally=true — كلمة واحدة مستقرة في
+   * كل مرة. `confidence` (0-100) اختياري: مزوّدات تُبلِّغ ثقة تعرّف
+   * حقيقية من محركها (مثال: Web Speech API) تُمرِّرها لتفعيل تصنيف
+   * "غير واضح" في VerseAlignmentEngine بدل الجزم الخاطئ بالخطأ — مزوّد
+   * لا يوفّرها (الجسر الأصلي الحالي للتطبيق، لا يزال بلا حقل ثقة) يُمرِّر
+   * undefined فيتعطَّل هذا التصنيف بأمان (سلوك المستوى السابق دون كسر).
+   */
+  onPartialWord?(session: ASRSession, callback: (word: string, atMs: number, confidence?: number) => void): () => void;
   endSession(session: ASRSession): Promise<FinalResult>;
 }
