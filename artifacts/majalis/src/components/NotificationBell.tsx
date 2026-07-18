@@ -265,9 +265,12 @@ export default function NotificationBell() {
                 ) : (
                   <div
                     key={n.id}
-                    role="listitem"
+                    role="button"
+                    tabIndex={0}
+                    aria-label={n.title}
                     className={`nb-item${!n.is_read ? " nb-item--new" : ""}`}
                     onClick={() => { if (!n.is_read) markGroupRead(n.groupIds); }}
+                    onKeyDown={(e) => { if ((e.key === "Enter" || e.key === " ") && !n.is_read) { e.preventDefault(); markGroupRead(n.groupIds); } }}
                   >
                     {content}
                   </div>

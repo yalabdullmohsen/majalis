@@ -100,6 +100,8 @@ function LandmarkModal({
   }, [onClose]);
 
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار بديل كامل
+    // بلوحة المفاتيح (بالإضافة لزر إغلاق ظاهر داخل النافذة إن وُجد).
     <div
       className="ilm-modal-backdrop"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}

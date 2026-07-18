@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { adminImportFetch } from "@/lib/admin-api";
 import { chunkRows, formatImportApiError, parseImportFile, UPLOAD_BATCH_SIZE } from "@/lib/import-parse";
@@ -223,6 +223,13 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
     setFilename("");
     retryFileRef.current = null;
   };
+
+  useEffect(() => {
+    if (!open) return;
+    const keyHandler = (e: KeyboardEvent) => { if (e.key === "Escape") close(); };
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  }, [open]);
 
   const applyJobResult = (job: JobProgress, jobId: string) => {
     const importReport = jobToReport(job, type, jobId);

@@ -35,6 +35,12 @@ export function AssessmentModal({
     });
   }, [assessmentId]);
 
+  useEffect(() => {
+    const keyHandler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  }, [onClose]);
+
   const handleSubmit = async () => {
     setSubmitting(true);
     const res = await submitAssessment(assessmentId, answers, learningItemId);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { adminFetch } from "@/lib/admin-api";
 
 const SITE = "https://www.majlisilm.com";
@@ -53,6 +53,13 @@ export function Phase2TrialImport({ onDone }: Phase2TrialImportProps) {
     setResult(null);
     setError(null);
   };
+
+  useEffect(() => {
+    if (!open) return;
+    const keyHandler = (e: KeyboardEvent) => { if (e.key === "Escape") close(); };
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  }, [open, running]);
 
   const run = async (dryRun: boolean) => {
     setRunning(true);

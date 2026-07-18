@@ -83,6 +83,10 @@ function SubmissionCard({ sub, onReview }: {
       <div
         className={`srp-card-header${sub.status !== "pending" ? ` srp-card-header--${sub.status}` : ""}`}
         onClick={() => setExpanded((v) => !v)}
+        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setExpanded((v) => !v); } }}
+        role="button"
+        tabIndex={0}
+        aria-expanded={expanded}
       >
         <div className="srp-card-icon">{TYPE_ICON[sub.type]}</div>
 

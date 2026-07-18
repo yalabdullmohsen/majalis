@@ -442,12 +442,16 @@ export default function ScholarlyResearchPage() {
                   </button>
                 </div>
 
-                <p
+                <div
                   className={`srp-lib-excerpt${expanded === item.id ? " srp-lib-excerpt--expanded" : ""}`}
                   onClick={() => setExpanded(expanded === item.id ? null : item.id)}
+                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setExpanded(expanded === item.id ? null : item.id); } }}
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={expanded === item.id}
                 >
                   {item.answer_snapshot}
-                </p>
+                </div>
 
                 <div className="srp-lib-item__footer">
                   <div className="srp-lib-tags">

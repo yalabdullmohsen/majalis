@@ -23,6 +23,12 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
     if (previewTimerRef.current) clearTimeout(previewTimerRef.current);
   }, []);
 
+  useEffect(() => {
+    const keyHandler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  }, [onClose]);
+
   function handlePreview(m: Muezzin) {
     if (previewing === m.id) {
       stopAdhan();
