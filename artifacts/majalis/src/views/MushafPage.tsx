@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { useParams, useLocation } from "wouter";
 import { Menu, ChevronRight, ChevronLeft, X, BookOpen, Hash, Layers, Mic } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
-import { getSurahList, getSurahMeta } from "@/lib/quran-api";
+import { getSurahList, getSurahMeta, stripEmbeddedBismillah } from "@/lib/quran-api";
 import {
   fetchPage, fetchPagesManifest, firstPageOfSurah, juzForPage,
   type PageContent, type PagesManifest,
@@ -243,6 +243,11 @@ export default function MushafPage() {
             {content.ayahs.map((a) => {
               const isPlaying = currentAyah === a.numberInSurah && a.surahNumber === activeSurahForPlayer && playerState === "playing";
               const showBasmala = a.isFirstOfSurah && a.surahNumber !== 1 && a.surahNumber !== 9;
+              // البسملة مدمَجة داخل نص الآية 1 في مصدر البيانات لكل سورة عدا
+              // الفاتحة/التوبة (راجع stripEmbeddedBismillah) — دون هذا كانت
+              // تظهر مرتين: مرة كعنوان showBasmala فوق السورة، ومرة أخرى
+              // داخل نص الآية نفسها. لا تعديل للنص المخزَّن، عرض فقط.
+              const displayText = stripEmbeddedBismillah(a.surahNumber, a.numberInSurah, a.text);
               return (
                 <span key={`${a.surahNumber}-${a.number}`} className="mushaf-v2__ayah-wrap">
                   {a.isFirstOfSurah && (
@@ -263,7 +268,10 @@ export default function MushafPage() {
                     aria-label={`آية ${a.numberInSurah} من سورة ${a.surahName} — افتح إجراءات الآية`}
                     onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveAyah(a); } }}
                   >
-                    {a.text}
+                    {displayText}
+                    {a.sajda && (
+                      <span className="mushaf-v2__sajda-mark" role="img" aria-label="موضع سجدة">۩</span>
+                    )}
                     <span className="mushaf-v2__ayah-num" aria-hidden="true">﴾{a.numberInSurah}﴿</span>
                   </span>
                 </span>
@@ -380,7 +388,7 @@ export default function MushafPage() {
           surahNumber={activeAyah.surahNumber}
           surahName={activeAyah.surahName}
           ayahNumberInSurah={activeAyah.numberInSurah}
-          ayahText={activeAyah.text}
+          ayahText={stripEmbeddedBismillah(activeAyah.surahNumber, activeAyah.numberInSurah, activeAyah.text)}
           playerState={playerState}
           isCurrentAyah={currentAyah === activeAyah.numberInSurah && activeAyah.surahNumber === activeSurahForPlayer}
           reciterId={reciterId}

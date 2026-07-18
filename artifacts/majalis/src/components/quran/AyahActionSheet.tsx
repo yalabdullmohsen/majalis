@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import {
-  Pause, Play, Repeat, Copy, Check, Share2, BookOpen, Compass, Mic2, ChevronDown, X,
+  Pause, Play, Repeat, Copy, Check, Share2, BookOpen, Compass, Mic2, ChevronDown, X, StickyNote,
 } from "lucide-react";
 import { RECITERS } from "@/lib/quran-audio";
-import { copyAyahText, shareAyahAsImage } from "@/lib/share-ayah";
+import { copyAyahText, copyAyahTextPlain, shareAyahAsImage, shareAyahAsText } from "@/lib/share-ayah";
 import { fetchTafsirAyahs } from "@/lib/quran-api";
+import { getNote, saveNote } from "@/lib/quran-personal";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { ExploreAyahPanel } from "@/components/quran/ExploreAyahPanel";
 import type { PlayerState } from "@/hooks/useAyahPlayer";
@@ -17,16 +18,20 @@ import type { PlayerState } from "@/hooks/useAyahPlayer";
  *
  * الأفعال المُنفَّذة فعليًا (تُعيد استخدام بنية تحتية قائمة، لا محركات
  * موازية): استماع + اختيار قارئ (useAyahPlayer + RECITERS الموجودان)،
- * تكرار (توليف فوق useAyahPlayer)، نسخ (copyAyahText)، مشاركة كصورة
- * (shareAyahAsImage)، حفظ (FavoriteButton بجدول bookmarks الحقيقي، تحقّقتُ
- * من RLS حيًّا)، تفسير (fetchTafsirAyahs — نص حي من نفس مصدر القرآن
- * المعتمد AlQuran Cloud، إصدار "ar.muyassar" التفسير الميسّر)، واستكشاف
- * المزيد (ExploreAyahPanel الموجود مسبقًا، بحث عبر محتوى المنصة).
+ * تكرار (توليف فوق useAyahPlayer)، نسخ مع/دون تشكيل (copyAyahText /
+ * copyAyahTextPlain — الثانية تزيل الحركات فقط بلا توحيد همزات، مضافة
+ * الآن)، مشاركة كصورة أو نص (shareAyahAsImage الموجودة + shareAyahAsText
+ * الجديدة عبر Web Share)، حفظ (FavoriteButton بجدول bookmarks الحقيقي،
+ * تحقّقتُ من RLS حيًّا)، **ملاحظة شخصية** (quran-personal.ts — كان مبنيًّا
+ * فعليًا محليًا (localStorage) منذ جلسة سابقة لكن بلا أي واجهة تستخدمه؛
+ * الفجوة الموثَّقة صراحة أدناه كانت "غير منفَّذ" — أُغلقت الآن)، تفسير
+ * (fetchTafsirAyahs — نص حي من نفس مصدر القرآن المعتمد AlQuran Cloud،
+ * إصدار "ar.muyassar" التفسير الميسّر)، واستكشاف المزيد (ExploreAyahPanel
+ * الموجود مسبقًا، بحث عبر محتوى المنصة).
  *
- * غير مُنفَّذ عمدًا هنا (بلا بنية تحتية موثوقة موجودة ضمن وقت هذه المرحلة):
- * "ملاحظة" شخصية على آية، و"أسباب نزول ومعاني كلمات" (لا مصدر is_approved
- * محلي تحقَّقت منه) — موثَّق في التقرير النهائي كعمل متبقٍ، لا أزرارًا معطَّلة
- * وهمية.
+ * لا يزال غير مُنفَّذ عمدًا (بلا مصدر is_approved محلي تحقَّقت منه): "أسباب
+ * نزول ومعاني كلمات" — موثَّق في التقرير النهائي كعمل متبقٍ، لا زرًا
+ * معطَّلًا وهميًا.
  */
 type Props = {
   surahNumber: number;
@@ -49,12 +54,16 @@ export function AyahActionSheet({
   repeatOn, onToggleRepeat, onClose,
 }: Props) {
   const [copied, setCopied] = useState(false);
+  const [copiedPlain, setCopiedPlain] = useState(false);
   const [reciterPickerOpen, setReciterPickerOpen] = useState(false);
   const [tafsirOpen, setTafsirOpen] = useState(false);
   const [tafsirText, setTafsirText] = useState<string | null>(null);
   const [tafsirLoading, setTafsirLoading] = useState(false);
   const [tafsirError, setTafsirError] = useState(false);
   const [exploreOpen, setExploreOpen] = useState(false);
+  const [noteOpen, setNoteOpen] = useState(false);
+  const [noteText, setNoteText] = useState(() => getNote(surahNumber, ayahNumberInSurah));
+  const [noteSaved, setNoteSaved] = useState(false);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -79,6 +88,20 @@ export function AyahActionSheet({
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
     }
+  };
+
+  const handleCopyPlain = async () => {
+    const ok = await copyAyahTextPlain(ayahText, surahName, ayahNumberInSurah);
+    if (ok) {
+      setCopiedPlain(true);
+      setTimeout(() => setCopiedPlain(false), 1800);
+    }
+  };
+
+  const handleSaveNote = () => {
+    saveNote(surahNumber, ayahNumberInSurah, noteText);
+    setNoteSaved(true);
+    setTimeout(() => setNoteSaved(false), 1500);
   };
 
   const handleShare = () => {
@@ -140,6 +163,23 @@ export function AyahActionSheet({
           {ayahText}
         </p>
 
+        {noteOpen && (
+          <div className="ayah-sheet__note">
+            <textarea
+              className="ayah-sheet__note-textarea"
+              value={noteText}
+              onChange={(e) => setNoteText(e.target.value)}
+              placeholder="اكتب ملاحظتك على هذه الآية..."
+              dir="rtl"
+              rows={3}
+            />
+            <button type="button" className="ayah-sheet__note-save" onClick={handleSaveNote}>
+              {noteSaved ? <Check size={14} aria-hidden="true" /> : <StickyNote size={14} aria-hidden="true" />}
+              <span>{noteSaved ? "تم الحفظ" : "حفظ الملاحظة"}</span>
+            </button>
+          </div>
+        )}
+
         <div className="ayah-sheet__actions">
           <button type="button" className={`ayah-sheet__action${isPlaying ? " is-active" : ""}`} onClick={onTogglePlay}>
             {isPlaying ? <Pause size={18} aria-hidden="true" /> : <Play size={18} aria-hidden="true" />}
@@ -156,14 +196,29 @@ export function AyahActionSheet({
             <span>{copied ? "نُسخت" : "نسخ"}</span>
           </button>
 
+          <button type="button" className="ayah-sheet__action" onClick={handleCopyPlain}>
+            {copiedPlain ? <Check size={18} aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
+            <span>{copiedPlain ? "نُسخت" : "نسخ بلا تشكيل"}</span>
+          </button>
+
           <button type="button" className="ayah-sheet__action" onClick={handleShare}>
             <Share2 size={18} aria-hidden="true" />
-            <span>مشاركة</span>
+            <span>مشاركة صورة</span>
+          </button>
+
+          <button type="button" className="ayah-sheet__action" onClick={() => shareAyahAsText(ayahText, surahName, ayahNumberInSurah)}>
+            <Share2 size={18} aria-hidden="true" />
+            <span>مشاركة نص</span>
           </button>
 
           <div className="ayah-sheet__action ayah-sheet__action--fav">
             <FavoriteButton contentType="quran_ayah" contentId={contentId} compact />
           </div>
+
+          <button type="button" className={`ayah-sheet__action${noteOpen ? " is-active" : ""}`} onClick={() => setNoteOpen((v) => !v)}>
+            <StickyNote size={18} aria-hidden="true" />
+            <span>ملاحظة</span>
+          </button>
 
           <button type="button" className="ayah-sheet__action" onClick={() => setExploreOpen(true)}>
             <Compass size={18} aria-hidden="true" />

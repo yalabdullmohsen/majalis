@@ -32406,6 +32406,12 @@ html[data-theme="dark"] .ikm-card__title {
   margin-inline-start: .2rem;
   margin-inline-end: .35rem;
 }
+.mushaf-v2__sajda-mark {
+  display: inline-block;
+  font-size: 1.1rem;
+  color: #B08D2E;
+  margin-inline-start: .3rem;
+}
 
 .mushaf-v2__pager {
   display: flex;
@@ -32588,6 +32594,38 @@ html[data-theme="dark"] .ikm-card__title {
   margin-bottom: .85rem;
   border-radius: .75rem;
   background: color-mix(in srgb, var(--majalis-emerald-deep) 5%, transparent);
+}
+.ayah-sheet__note {
+  margin-bottom: .75rem;
+}
+.ayah-sheet__note-textarea {
+  width: 100%;
+  min-height: 64px;
+  padding: .55rem .7rem;
+  border-radius: .6rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  font-family: inherit;
+  font-size: .85rem;
+  resize: vertical;
+}
+.ayah-sheet__note-save {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  width: 100%;
+  min-height: 40px;
+  margin-top: .4rem;
+  border-radius: .6rem;
+  border: 1px solid var(--majalis-emerald-deep);
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 10%, transparent);
+  color: var(--majalis-emerald-deep);
+  font-family: inherit;
+  font-size: .8rem;
+  font-weight: 700;
+  justify-content: center;
+  cursor: pointer;
 }
 .ayah-sheet__actions {
   display: grid;
