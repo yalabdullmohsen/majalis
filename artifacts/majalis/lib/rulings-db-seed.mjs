@@ -117,7 +117,16 @@ function toDbRow(item) {
     importance_score: item.importance_score ?? 50,
     popularity_score: item.popularity_score ?? 0,
     search_count: item.search_count ?? 0,
-    verification_status: item.verification_status || "approved",
+    // اكتُشف 2026-07-18: sharia_rulings.verification_status مقيَّد بـCHECK
+    // constraint حي يقبل فقط 'draft'|'pending'|'approved'|'rejected'|
+    // 'archived' — بينما generate-rulings-encyclopedia.mjs يُصدِّر
+    // 'pending_review' (لكل حكم بلا reviewed_by، أي الأغلبية) لكل الأحكام
+    // بلا استثناء. تحقَّقتُ بمحاولة إدراج فعلية: الإدراج يفشل بمخالفة
+    // القيد — كان سيُسقِط seedRulingsFromFilesystem() (cron أسبوعي حقيقي
+    // في production) صامتاً لأي حكم غير مراجَع بشرياً، أي معظم موسوعة
+    // الأحكام. 'pending' هو أقرب قيمة صالحة بنفس المعنى.
+    verification_status:
+      item.verification_status === "pending_review" ? "pending" : item.verification_status || "approved",
     status: "approved",
     published_at: item.published_at || item.created_at || new Date().toISOString(),
   };

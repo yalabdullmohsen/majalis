@@ -8,6 +8,15 @@
  *  3. وُجد كتاب بلا عنوان أو بلا مؤلف.
  *  4. وُجد verificationStatus: "verified" بلا sources.
  *  5. وُجدت عبارة مبالغ فيها بلا مصدر في أي وصف.
+ *  6. تباعد هذا الملف عن src/lib/library-catalog.ts (المصدر الحي الوحيد
+ *     الذي يستهلكه التطبيق فعلياً — راجع تعليق مطابق في generate-seo.mjs).
+ *
+ * ⚠️ اكتُشف 2026-07-18: كان هذا الملف قد جمد عند 102 كتاب بينما
+ * library-catalog.ts وصل 127 — 25+ كتاباً لم تُفحص إطلاقاً بواسطة هذا
+ * السكربت لأشهر (منها ما احتوى فعلياً عبارات مبالغ فيها غير مصدَّرة، لم
+ * تُكتشف إلا بعد إعادة المزامنة). الفحص 6 أدناه يمنع تكرار هذا الانجراف
+ * صامتاً — إن ظهر فرق، شغّل `npx tsx scripts/regen-library-catalog-json.mjs`
+ * لإعادة المزامنة قبل أي commit.
  *
  * التشغيل: node scripts/test-library-integrity.mjs
  * ويصدّر أيضًا دوال التطبيع لإعادة استخدامها في أدوات الفحص والدمج.
@@ -19,6 +28,7 @@ import { dirname, resolve } from "node:path";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const APP_ROOT = resolve(HERE, "..");
 const CATALOG_PATH = resolve(APP_ROOT, "src/data/library-catalog.json");
+const CATALOG_TS_PATH = resolve(APP_ROOT, "src/lib/library-catalog.ts");
 const AUTHORS_PATH = resolve(APP_ROOT, "src/data/library-authors.json");
 const REDIRECTS_PATH = resolve(HERE, "redirects.books.json");
 
@@ -254,6 +264,34 @@ async function main() {
   } catch (error) {
     if (error.code !== "ENOENT") throw error;
     warnings.push("لم يُعثر على scripts/redirects.books.json — تخطّي فحص التحويلات.");
+  }
+
+  /* 6) تباعد عن المصدر الحي library-catalog.ts ----------------------- */
+  // قراءة كنص خام (لا استيراد وحدة) حتى يعمل هذا السكربت بـ`node` عادي
+  // بلا الحاجة لـ`tsx` — نفس انضباط audit-data-quality.mjs.
+  try {
+    const tsSource = await readFile(CATALOG_TS_PATH, "utf8");
+    const liveIds = new Set([...tsSource.matchAll(/\n\s{4}id:\s*"([^"]+)"/g)].map((m) => m[1]));
+    const jsonIds = new Set(books.map((b) => b.id));
+
+    const missingFromJson = [...liveIds].filter((id) => !jsonIds.has(id));
+    const orphanedInJson = [...jsonIds].filter((id) => !liveIds.has(id));
+
+    if (missingFromJson.length) {
+      fail(
+        "JSON_TS_DRIFT",
+        `${missingFromJson.length} كتاباً في library-catalog.ts غائب عن library-catalog.json (${missingFromJson.slice(0, 5).join(", ")}${missingFromJson.length > 5 ? "…" : ""}). شغّل: npx tsx scripts/regen-library-catalog-json.mjs`
+      );
+    }
+    if (orphanedInJson.length) {
+      fail(
+        "JSON_TS_DRIFT",
+        `${orphanedInJson.length} كتاباً في library-catalog.json غير موجود في library-catalog.ts الحي (${orphanedInJson.slice(0, 5).join(", ")}${orphanedInJson.length > 5 ? "…" : ""}). شغّل: npx tsx scripts/regen-library-catalog-json.mjs`
+      );
+    }
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+    warnings.push("لم يُعثر على src/lib/library-catalog.ts — تخطّي فحص التباعد.");
   }
 
   /* التقرير --------------------------------------------------------- */

@@ -246,6 +246,27 @@ assert(
   liveSources.map((r) => r.from).join(", ")
 );
 
+console.log("\n=== ١٠) scholars-list.json (يغذّي /api/sitemap و/api/feed الحيّين) لا ينجرف عن المصدر ===");
+
+// اكتُشف 2026-07-18: src/data/scholars-list.json كان مجمَّداً عند 78 عالماً
+// بينما SCHOLARS الحي وصل 96 — هذا الملف يُستهلَك في
+// lib/cms/sitemap-builder.mjs الذي يبني /api/sitemap و/api/feed المسجَّلين
+// فعلياً في lib/api-dispatch.mjs (وvercel.json يُعيد توجيه /sitemap.xml
+// و/feed.xml إليهما مباشرة) — انجراف هذا الملف يعني صفحات علماء غائبة عن
+// خريطة الموقع الحقيقية المُرسَلة لمحركات البحث. إن فشل هذا الفحص:
+// npx tsx scripts/regen-scholars-list-json.mjs
+const scholarsListJson: Array<{ id: string; name: string; died: string }> = JSON.parse(
+  readFileSync(new URL("../../data/scholars-list.json", import.meta.url), "utf8")
+);
+const listIds = new Set(scholarsListJson.map((s) => s.id));
+const missingFromList = ids.filter((id) => !listIds.has(id));
+const orphanedInList = [...listIds].filter((id) => !idSet.has(id));
+assert(
+  missingFromList.length === 0 && orphanedInList.length === 0,
+  `scholars-list.json يطابق SCHOLARS الحي (${scholarsListJson.length}/${SCHOLARS.length})`,
+  `غائب: ${missingFromList.join(", ") || "—"} | يتيم: ${orphanedInList.join(", ") || "—"} — شغّل: npx tsx scripts/regen-scholars-list-json.mjs`
+);
+
 console.log(`\n${"─".repeat(48)}`);
 console.log(`النتائج: ${passed} نجح، ${failed} فشل`);
 if (failed > 0) process.exit(1);
