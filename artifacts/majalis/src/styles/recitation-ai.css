@@ -16,6 +16,9 @@
   /* لون منفصل تمامًا عن الخطأ (أحمر) والتجويد/التلميح (ذهبي) — بند "غير
      واضح" يجب أن يبدو مختلفًا بصريًا فورًا فلا يُظَن جزمًا بخطأ. */
   --rai-unclear: #8B5CF6;
+  /* المستوى الأوسط في نظام الثقة الثلاثي: "يحتاج إعادة" — كهرماني، منفصل
+     عن الأحمر (خطأ مؤكَّد) والبنفسجي (غير واضح) والذهبي (تجويد). */
+  --rai-needs-repeat: #D97706;
 }
 
 .rai-page {
@@ -232,6 +235,7 @@ html[data-theme="dark"] .rai-plain-words { color: #E5F0EC; }
 .rai-plain-word--correct { color: var(--rai-emerald-deep); }
 .rai-plain-word--error { color: var(--rai-error); text-decoration: underline wavy var(--rai-error); }
 .rai-plain-word--unclear { color: var(--rai-unclear); text-decoration: underline dotted var(--rai-unclear); }
+.rai-plain-word--needs-repeat { color: var(--rai-needs-repeat); text-decoration: underline dotted var(--rai-needs-repeat); }
 .rai-plain-word--pending { color: #9CA3AF; }
 
 /* ── وضع المصحف التفاعلي (InteractiveMushafReveal) ──────────── */
@@ -247,7 +251,20 @@ html[data-theme="dark"] .rai-plain-words { color: #E5F0EC; }
 }
 html[data-theme="dark"] .imr-page { background: #17201D; color: #E5F0EC; }
 
-.imr-ayah { display: inline; }
+.imr-ayah { display: inline; transition: background-color .3s ease; }
+/* "آية مُسمَّعة" — تظليل دائم (لا مؤقّت كتوهّج imr-ayah-mark--glow) يبقى
+   طوال الجلسة فور إتمام كل كلمات الآية، ليرى القارئ أين وصل فعليًا على
+   صفحة المصحف نفسها (TASMEE_AUDIT.md القسم 5 بند 2). */
+.imr-ayah--recited {
+  background-color: rgba(14,110,82,.07);
+  border-radius: 6px;
+  padding: .1rem 0;
+  box-shadow: 0 0 0 3px rgba(14,110,82,.07);
+}
+html[data-theme="dark"] .imr-ayah--recited {
+  background-color: rgba(94,196,154,.09);
+  box-shadow: 0 0 0 3px rgba(94,196,154,.09);
+}
 .imr-word { display: inline; transition: color .15s ease, filter .15s ease, opacity .15s ease; }
 
 .imr-word--hidden {
@@ -283,6 +300,17 @@ html[data-theme="dark"] .imr-page { background: #17201D; color: #E5F0EC; }
   0%, 100% { text-shadow: none; }
   50% { text-shadow: 0 0 8px rgba(139,92,246,.55); }
 }
+/* "يحتاج إعادة" — المستوى الأوسط: مُسجَّل ومرئي، لكن بلا تنبيه أحمر
+   (تظليل خافت لا اهتزاز/توهج قوي كالخطأ المؤكَّد). */
+.imr-word--needs_repeat {
+  filter: blur(1.5px);
+  opacity: .78;
+}
+.imr-word--pulse-needs-repeat { animation: imr-pulse-needs-repeat 900ms ease-in-out 1; }
+@keyframes imr-pulse-needs-repeat {
+  0%, 100% { text-shadow: none; }
+  50% { text-shadow: 0 0 6px rgba(217,119,6,.4); }
+}
 
 .imr-ayah-mark {
   display: inline-block;
@@ -304,6 +332,8 @@ html[data-theme="dark"] .rai-report__stat-val { color: #E5F0EC; }
 .rai-report__stat-lbl { font-size: .75rem; color: #6B7A74; }
 .rai-report__stat--unclear { border-color: rgba(139,92,246,.3); }
 .rai-report__stat--unclear .rai-report__stat-val { color: var(--rai-unclear); }
+.rai-report__stat--needs-repeat { border-color: rgba(217,119,6,.3); }
+.rai-report__stat--needs-repeat .rai-report__stat-val { color: var(--rai-needs-repeat); }
 
 .rai-report__errors-list { display: flex; flex-direction: column; gap: .6rem; }
 .rai-report__error-row {

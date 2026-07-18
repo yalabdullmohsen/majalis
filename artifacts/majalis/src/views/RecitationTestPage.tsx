@@ -65,7 +65,7 @@ function RecitationTestPageInner() {
 
   // جلسة
   const [referenceWords, setReferenceWords] = useState<ReferenceWord[]>([]);
-  const [wordStates, setWordStates] = useState<Map<string, "hidden" | "revealed" | "error" | "unclear">>(new Map());
+  const [wordStates, setWordStates] = useState<Map<string, "hidden" | "revealed" | "error" | "unclear" | "needs_repeat">>(new Map());
   const [cursorIdx, setCursorIdx] = useState(0);
   const [liveEvents, setLiveEvents] = useState<AlignmentEvent[]>([]);
   const [justCompletedAyah, setJustCompletedAyah] = useState<number | null>(null);
@@ -539,6 +539,8 @@ function RecitationTestPageInner() {
           next.set(`${e.ref.surah}:${e.ref.ayah}:${e.ref.wordIndex}`, "error");
         } else if (e.kind === "unclear") {
           next.set(`${e.ref.surah}:${e.ref.ayah}:${e.ref.wordIndex}`, "unclear");
+        } else if (e.kind === "needs_repeat") {
+          next.set(`${e.ref.surah}:${e.ref.ayah}:${e.ref.wordIndex}`, "needs_repeat");
         } else if (e.kind === "ayah_complete") {
           setJustCompletedAyah(e.ayah);
           setTimeout(() => setJustCompletedAyah(null), 900);
@@ -685,6 +687,10 @@ function RecitationTestPageInner() {
   // "غير واضح" منفصل تمامًا عن errorEvents — لا يُحتسَب ضمن ملاحظات
   // الأخطاء المؤكَّدة (القسم 9)، يُعرَض فقط كإحصاء شفاف مستقل في التقرير.
   const unclearEvents = liveEvents.filter((e): e is Extract<AlignmentEvent, { kind: "unclear" }> => e.kind === "unclear");
+  // "يحتاج إعادة" — المستوى الأوسط في نظام الثقة الثلاثي (TASMEE_AUDIT.md
+  // القسم 5 بند 3): يُسجَّل ويُعرَض في التقرير (خلافًا لـ"غير واضح")، لكن
+  // بلا احتساب ضمن الأخطاء المؤكَّدة (خلافًا لـ"error").
+  const needsRepeatEvents = liveEvents.filter((e): e is Extract<AlignmentEvent, { kind: "needs_repeat" }> => e.kind === "needs_repeat");
 
   // كشف المتشابهات: يُحمَّل الفهرس فقط عند بلوغ شاشة التقرير (لا أثناء
   // الجلسة الحيّة — لا فائدة تعليمية أثناء التسميع نفسه، فقط تشتيت محتمل).
@@ -1059,6 +1065,7 @@ function RecitationTestPageInner() {
                   state === "revealed" ? "rai-plain-word--correct" :
                   state === "error" ? "rai-plain-word--error" :
                   state === "unclear" ? "rai-plain-word--unclear" :
+                  state === "needs_repeat" ? "rai-plain-word--needs-repeat" :
                   "rai-plain-word--pending";
                 const showText = mode !== "full_hide" || state !== "hidden";
                 return (
@@ -1128,6 +1135,11 @@ function RecitationTestPageInner() {
         <div className="rai-report__stats">
           <div className="rai-report__stat"><span className="rai-report__stat-val">{correctCount}</span><span className="rai-report__stat-lbl">كلمة صحيحة</span></div>
           <div className="rai-report__stat"><span className="rai-report__stat-val">{errorEvents.length}</span><span className="rai-report__stat-lbl">ملاحظة</span></div>
+          {needsRepeatEvents.length > 0 && (
+            <div className="rai-report__stat rai-report__stat--needs-repeat" title="ثقة متوسطة — قد تكون خطأ حفظ حقيقيًا أو مجرد التقاط غير حاسم، فلا جزم كامل ولا تنبيه أحمر">
+              <span className="rai-report__stat-val">{needsRepeatEvents.length}</span><span className="rai-report__stat-lbl">يحتاج إعادة</span>
+            </div>
+          )}
           {unclearEvents.length > 0 && (
             <div className="rai-report__stat rai-report__stat--unclear" title="لا تُحتسَب أخطاءً — التقاط الصوت لم يكن واضحًا كفاية للجزم">
               <span className="rai-report__stat-val">{unclearEvents.length}</span><span className="rai-report__stat-lbl">غير واضح</span>

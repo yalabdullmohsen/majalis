@@ -32,6 +32,16 @@ export type ErrorType =
   | "long_pause"
   | "wrong_start";
 
+/**
+ * نظام ثقة ثلاثي (لا ثنائي) — TASMEE_AUDIT.md القسم 5، بند 3:
+ *   - ثقة عالية (>= NEEDS_REPEAT_CONFIDENCE_THRESHOLD، أو ثقة غير مُبلَّغة
+ *     أصلاً): "error" — خطأ مؤكَّد، يُسجَّل ويُعرض بتنبيه أحمر.
+ *   - ثقة متوسطة (بين العتبتين): "needs_repeat" — "يحتاج إعادة"، يُسجَّل
+ *     ويظهر في التقرير، لكن **دون تنبيه أحمر** (تمييز بصري أهدأ) — قد
+ *     يكون خطأ حفظ حقيقيًا أو مجرد التقاط غير حاسم، فلا جزم كامل.
+ *   - ثقة منخفضة (< UNCLEAR_CONFIDENCE_THRESHOLD): "unclear" — "لم أسمع
+ *     بوضوح"، **لا يُحتسب خطأ إطلاقًا** ولا يُدرَج في إحصاء الأخطاء.
+ */
 export type AlignmentEvent =
   | { kind: "correct"; ref: ReferenceWord; confidence: number }
   | { kind: "error"; errorType: ErrorType; ref: ReferenceWord | null; heardWord: string | null; confidence: number; note?: string }
@@ -41,6 +51,10 @@ export type AlignmentEvent =
   // نسبة الإتقان) — يطلب إعادة النطق بدل الحكم. يُصدَر فقط حين يتوفر
   // مزوّد ASR يُبلِّغ ثقة تعرّف حقيقية دون العتبة لهذه الكلمة تحديدًا.
   | { kind: "unclear"; ref: ReferenceWord; heardWord: string; confidence: number }
+  // "يحتاج إعادة" — المستوى الأوسط بين "unclear" و"error" المؤكَّد؛
+  // يُسجَّل في التقرير (خلافًا لـ"unclear") لكن بلا تنبيه أحمر فوري ولا
+  // احتساب ضمن الأخطاء المؤكَّدة (خلافًا لـ"error").
+  | { kind: "needs_repeat"; ref: ReferenceWord; heardWord: string; confidence: number }
   | { kind: "ayah_complete"; surah: number; ayah: number };
 
 export type TajweedNote = {

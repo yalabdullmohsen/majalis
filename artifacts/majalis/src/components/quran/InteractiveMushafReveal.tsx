@@ -1,7 +1,7 @@
 import { Fragment, useMemo } from "react";
 import type { ReferenceWord } from "@/lib/recitation-ai/types";
 
-export type RevealState = "hidden" | "revealed" | "error" | "unclear";
+export type RevealState = "hidden" | "revealed" | "error" | "unclear" | "needs_repeat";
 
 export type WordRevealInfo = {
   word: ReferenceWord;
@@ -37,6 +37,13 @@ type Props = {
  * فتبدو الكلمات متلاصقة والفراغ الوحيد كتلة كبيرة غير طبيعية عند كل آية.
  * الإصلاح: المسافة الآن عقدة نصية شقيقة مستقلة بعد كل span، لا محتوى
  * داخله — تُعامَل بشكل طبيعي وصحيح من خوارزمية التبرير.
+ *
+ * حالة "آية مُسمَّعة" الدائمة (TASMEE_AUDIT.md القسم 5 بند 2): تُحسَب من
+ * `words` نفسها — آية بلا أي كلمة "hidden" (أي حُسمت كل كلماتها، بصرف
+ * النظر عن كونها صحيحة/خطأ/غير واضحة) تُعامَل كـ"مُسمَّعة"، وتبقى مُظلَّلة
+ * طوال الجلسة (لا تختفي بعد لحظات كتوهّج `justCompletedAyah` العابر —
+ * ذاك يبقى لمسة ذهبية إضافية *مؤقتة* فوق التظليل الدائم عند إتمام الآية
+ * للتوّ تحديدًا، لا بديلًا عنه).
  */
 export function InteractiveMushafReveal({ words, revealGranularity, justCompletedAyah }: Props) {
   const byAyah = useMemo(() => {
@@ -53,8 +60,12 @@ export function InteractiveMushafReveal({ words, revealGranularity, justComplete
     <div className="imr-page" dir="rtl" role="group" aria-label="صفحة المصحف التفاعلية">
       {byAyah.map(([ayahNum, ayahWords]) => {
         const ayahRevealed = revealGranularity === "ayah" && ayahWords.every((w) => w.state !== "hidden");
+        const ayahRecited = ayahWords.every((w) => w.state !== "hidden");
         return (
-          <span className="imr-ayah" key={ayahNum}>
+          <span
+            className={`imr-ayah ${ayahRecited ? "imr-ayah--recited" : ""}`}
+            key={ayahNum}
+          >
             {ayahWords.map((w, idx) => (
               <Fragment key={`${w.word.surah}:${w.word.ayah}:${w.word.wordIndex}`}>
                 <span
@@ -63,6 +74,7 @@ export function InteractiveMushafReveal({ words, revealGranularity, justComplete
                     revealGranularity === "word" ? `imr-word--${w.state}` : ayahRevealed ? "imr-word--revealed" : "imr-word--hidden",
                     w.state === "error" ? "imr-word--pulse-error" : "",
                     w.state === "unclear" ? "imr-word--pulse-unclear" : "",
+                    w.state === "needs_repeat" ? "imr-word--pulse-needs-repeat" : "",
                   ].join(" ").trim()}
                 >
                   {w.word.raw}

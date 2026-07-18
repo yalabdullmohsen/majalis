@@ -227,5 +227,36 @@ console.log("═══ إضافي — تصنيف «غير واضح» بدل ال
   assert(wrongWordEvents.length === 2, `كلمتان (ثقة 90 فوق العتبة + بلا ثقة مُبلَّغة) صُنِّفتا "خطأ" عاديًا كسلوك المستوى السابق (${wrongWordEvents.length})`);
 }
 
+console.log("═══ إضافي — نظام الثقة الثلاثي: مستوى «يحتاج إعادة» الأوسط ═══");
+{
+  // ثلاث ثقات مختلفة ⇒ ثلاثة تصنيفات مختلفة بالضبط (منخفضة/متوسطة/عالية).
+  const ref = refWordsFor(113); // الفلق
+  const rawWords = ref.map((w) => w.normalized);
+  const tampered = [...rawWords];
+  tampered[1] = "كلمة_منخفضة";  // ثقة 40 (< 60) ⇒ unclear
+  tampered[3] = "كلمة_متوسطة";  // ثقة 70 (بين 60 و85) ⇒ needs_repeat (جديد)
+  tampered[5] = "كلمة_عالية";   // ثقة 95 (>= 85) ⇒ error مؤكَّد
+
+  const engine = new VerseAlignmentEngine({ referenceWords: ref });
+  const events: AlignmentEvent[] = [];
+  let t = 0;
+  for (let i = 0; i < tampered.length; i++) {
+    t += 500;
+    const confidence = i === 1 ? 40 : i === 3 ? 70 : i === 5 ? 95 : 98;
+    events.push(...engine.feedWord(tampered[i], t, confidence));
+  }
+  events.push(...engine.finalize());
+
+  const unclearEvents = events.filter((e) => e.kind === "unclear");
+  const needsRepeatEvents = events.filter((e): e is Extract<AlignmentEvent, { kind: "needs_repeat" }> => e.kind === "needs_repeat");
+  const errorEvents = events.filter((e) => e.kind === "error" && e.errorType === "wrong_word");
+
+  assert(unclearEvents.length === 1, `ثقة 40 (منخفضة) ← "غير واضح" (${unclearEvents.length})`);
+  assert(needsRepeatEvents.length === 1, `ثقة 70 (متوسطة، بين 60 و85) ← "يحتاج إعادة" — المستوى الجديد (${needsRepeatEvents.length})`);
+  assert(needsRepeatEvents[0]?.heardWord === "كلمة_متوسطة", "حدث needs_repeat يحمل الكلمة المسموعة الصحيحة");
+  assert(errorEvents.length === 1, `ثقة 95 (عالية) ← "خطأ" مؤكَّد (${errorEvents.length})`);
+  assert(needsRepeatEvents.length + unclearEvents.length + errorEvents.length === 3, "الثلاث كلمات المُبدَّلة صُنِّفت في ثلاث فئات مستقلة تمامًا، بلا تداخل");
+}
+
 console.log(`\nالنتيجة: ${passed} نجح، ${failed} فشل`);
 if (failed > 0) process.exit(1);
