@@ -1,6 +1,5 @@
 import { Link } from "wouter";
 import { CONTACT_EMAIL } from "@/lib/site-config";
-import { InstagramAcademyLink } from "@/components/InstagramAcademyLink";
 
 function IslamicStarFooter() {
   const cx = 16, r1 = 13, r2 = 7;
@@ -142,9 +141,6 @@ export function SiteFooter() {
             <p className="site-footer-email">
               <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             </p>
-            <div className="site-footer-social">
-              <InstagramAcademyLink variant="compact" />
-            </div>
           </div>
         </div>
 
