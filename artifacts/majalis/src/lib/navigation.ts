@@ -83,6 +83,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/quran-hub",           label: "مركز القرآن" },
   { href: "/quran-radio",         label: "إذاعة القرآن" },
   { href: "/quran/surah-stories", label: "قصص القرآن" },
+  { href: "/quran/recitation-test-ai", label: "اختبار التسميع بالذكاء الاصطناعي" },
   // الأذكار
   { href: "/adhkar",        label: "الأذكار" },
   { href: "/duas",          label: "الأدعية الشرعية" },
@@ -236,6 +237,7 @@ export const MOBILE_MORE_NAV = [
   { href: "/quran-live",       label: "البث المباشر" },
   { href: "/quran/tajweed",    label: "التجويد" },
   { href: "/quran/surah-stories", label: "قصص القرآن" },
+  { href: "/quran/recitation-test-ai", label: "اختبار التسميع بالذكاء الاصطناعي" },
   // الأذكار والأدوات
   { href: "/adhkar",           label: "الأذكار" },
   { href: "/tasbih",           label: "عداد التسبيح" },
