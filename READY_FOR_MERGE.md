@@ -317,6 +317,8 @@ majalis-content-fill
 
 ```
 0c9f2c76...
+3bc2f76a  fix(views): harden 5 more eternal-loading-on-network-failure spots (same family as .catch() fix)
+9510887f  docs: تحديث بعد تحقُّق Playwright تجريبي حقيقي + إصلاح .catch() المفقود
 2c033720  fix(learning): add missing .catch()/.finally() to fetchPathDetail — proven via live Playwright test
 69a0a1d4  docs: تحديث بعد إضافة مرآة fiqh-council-sessions لـsitemap.xml
 961a9dcb  feat(sitemap): add fiqh-council sessions (12, fallback seed content) via static JSON mirror
