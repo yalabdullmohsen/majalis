@@ -6,7 +6,18 @@
 > هذا الملف يوثّق فقط أن البوابات الفنية (typecheck/lint/tests/build)
 > اجتازت معًا في دفعة واحدة نهائية، كما طلب المالك.
 
-## ▶️ حالة الجلسة — ملخص موحَّد (بعد 45+ دفعة، آخر تحديث 2026-07-18)
+## ▶️ حالة الجلسة — ملخص موحَّد (بعد 46+ دفعة، آخر تحديث 2026-07-18)
+
+**🔧 بقان إضافيان مُكتشَفان وأُصلحا (المجمع الفقهي، فحص مباشر)**: تصنيف
+"الأطعمة والأشربة" كان بلا محتوى إطلاقاً (0 من 58)؛ وتصنيف "النوازل
+المعاصرة" كان **مستحيلاً بنيوياً** أن يحتوي محتوى بسبب CHECK constraint
+ناقص (10 قيم بدل 11). أُصلح القيد، وأُضيفت 4 قرارات حقيقية لمجمع الفقه
+الإسلامي الدولي (دورته 26، الدوحة، مايو 2025)، تحقَّقت مباشرة عبر
+WebFetch من iifa-aifi.org الرسمي (لحوم مستزرعة وGMO حيواني: إباحة
+بشروط؛ حشرات وصعق قبل الذبح: **تأجيل البتّ فعلياً**، لم يُفرض حكم غير
+صادر). `fiqh_council_issues` منشور: 58→62. commit `68344bc1`. صُحِّح
+أيضاً توثيق قديم خاطئ يدّعي أن fawaid↔book/lesson↔book "لم تُملأ بعد"
+(هما ممتلئان فعلاً: 49 و6).
 
 **🔧 بق جديد مُكتشَف وأُصلح (فحص مباشر بطلب المنسّق)**: 15 صفاً قديماً في
 `quiz_questions` كانت تستخدم section بالإنجليزية الصغيرة (ahkam/anbiya/
@@ -237,7 +248,8 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-d3c326b4...
+68344bc1...
+68344bc1  fix+content(fiqh-council): populate atima-ashriba category + fix category CHECK gap
 d3c326b4  fix(quiz): remap 15 legacy English-section rows to visible Arabic sections
 5d3eb8cc  feat(learning): add safa-call item — dawah-marahil-ula 2→3
 dfa7df67  feat(learning): add first-pledge-of-aqaba item — dawah-qabail-hijra 2→3
