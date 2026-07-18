@@ -6,7 +6,15 @@
 > هذا الملف يوثّق فقط أن البوابات الفنية (typecheck/lint/tests/build)
 > اجتازت معًا في دفعة واحدة نهائية، كما طلب المالك.
 
-## ▶️ حالة الجلسة — ملخص موحَّد (بعد 42+ دفعة، آخر تحديث 2026-07-18)
+## ▶️ حالة الجلسة — ملخص موحَّد (بعد 44+ دفعة، آخر تحديث 2026-07-18)
+
+**تكملتان أخيرتان (دعوة)**: عُمِّق "دعوة القبائل والهجرة" (بيعة العقبة
+الأولى، 2→3، dawah total_sessions 9→10، commit `dfa7df67`) و"مراحل
+الدعوة النبوية الأولى" (نداء الصفا، 2→3، dawah 10→11، commit
+`5d3eb8cc`) — كلاهما بنمط "عنصر واحد مؤكَّد لا أربعة مُختلَقة" حين تعذَّر
+تأكيد محتوى إضافي. بهذا اكتملت جولة استنفاد المقررات السطحية القابلة
+للتحقق هذه الجلسة؛ المتبقي (فقه matn متنوع، بلاغة، معجم، دعوى تعارض
+السنة والعلم، سيرة معمقة، تفسير عام) لم يُفحص فردياً بعد لتوفر مصدر.
 
 **تكملتان أخيرتان (نحو)**: عُمِّق متن الآجرومية (علامات الاسم/الفعل،
 2→4، nahw total_sessions 5→7، commit `8009bab8`) وألفية ابن مالك (البيت
@@ -220,7 +228,9 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-30a3c8fe...
+5d3eb8cc...
+5d3eb8cc  feat(learning): add safa-call item — dawah-marahil-ula 2→3
+dfa7df67  feat(learning): add first-pledge-of-aqaba item — dawah-qabail-hijra 2→3
 30a3c8fe  feat(learning): add alfiyyah opening verse — 2 items → 3 (1 verified, not 4)
 8009bab8  feat(learning): deepen nahw-ajurrumiyyah course — 2 items → 4 (noun/verb markers)
 bbba9372  feat(learning): deepen adab-mujtama (2→4) and fadail-munjiya (2→4)
