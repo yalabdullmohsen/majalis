@@ -15,7 +15,6 @@ const SOURCE_TYPES: { value: KnowledgeSourceType; label: string }[] = [
   { value: "scholar", label: "\u0639\u0627\u0644\u0645 / \u0634\u064a\u062e" },
   { value: "lesson",  label: "\u062f\u0631\u0633" },
   { value: "book",    label: "\u0643\u062a\u0627\u0628" },
-  { value: "fatwa",   label: "\u0641\u062a\u0648\u0649" },
   { value: "fawaid",  label: "\u0641\u0627\u0626\u062f\u0629" },
   { value: "question",label: "\u0633\u0624\u0627\u0644" },
 ];

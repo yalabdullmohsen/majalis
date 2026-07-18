@@ -59,11 +59,14 @@ const MAX_STEPS   = 180;
 const SVG_W       = 960;
 const SVG_H       = 580;
 
+// ملاحظة: "fatwa" أُزيل من هاتين الخريطتين (2026-07-18) مع إزالته من
+// KnowledgeSourceType — صفر صف في knowledge_relationships استخدم هذا
+// النوع أصلاً (تحقّقتُ مباشرة)، والقيمة الافتراضية (?? "#6b7280"/nodeType)
+// تُغطّي أي قيمة غير متوقَّعة بأمان.
 const OLD_TYPE_COLOR: Record<KnowledgeSourceType, string> = {
   scholar:  "#176B57",
   lesson:   "#0369a1",
   book:     "#176B57",
-  fatwa:    "#7c3aed",
   fawaid:   "#047857",
   question: "#6b7280",
 };
@@ -72,7 +75,6 @@ const OLD_TYPE_LABEL: Record<KnowledgeSourceType, string> = {
   scholar:  "عالم",
   lesson:   "درس",
   book:     "كتاب",
-  fatwa:    "فتوى",
   fawaid:   "فائدة",
   question: "سؤال",
 };

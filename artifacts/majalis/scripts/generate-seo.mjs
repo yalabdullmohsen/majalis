@@ -269,24 +269,6 @@ function courseJsonLdScript(row) {
   });
 }
 
-/** QAPage تُستعمل فقط حيث السؤال والجواب ظاهران كاملَين في الصفحة. */
-function fatwaQaJsonLdScript(row) {
-  return jsonLdScript({
-    "@context": "https://schema.org",
-    "@type": "QAPage",
-    mainEntity: {
-      "@type": "Question",
-      name: row.question,
-      text: row.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: row.answer || row.question,
-        upvoteCount: row.view_count || 1,
-      },
-    },
-  });
-}
-
 /**
  * Person للعلماء.
  * ملاحظة مقصودة: لا نُصدِر birthDate/deathDate — البيانات هجرية نصية («١٥٠ هـ»)
@@ -543,7 +525,6 @@ const LIST_JSON_LD = {
     (PLATFORM_SEED.fiqh_decisions || []).map((r) => ({ name: r.title, url: `/fiqh-council/${r.slug || r.id}` })),
     "قرارات المجمع الفقهي",
   ),
-  "/fatwa": itemListJsonLdScript((PLATFORM_SEED.fatwas || []).map((r) => ({ name: r.question, url: `/fatwa/${r.id}` })), "الفتاوى الشرعية"),
   "/qa": itemListJsonLdScript(
     (PLATFORM_SEED.qa_items || []).map((r) => ({ name: r.question, url: `/qa#${r.id}` })),
     "الأسئلة والأجوبة الشرعية",
@@ -595,10 +576,6 @@ const RICH_BODY_MAP = {
     "من علماء المسلمين",
     SCHOLARS.slice(0, 30).map((s) => ({ name: s.name, url: `/scholars/${s.id}`, note: s.died })),
   ),
-  "/fatwa": linkList(
-    "فتاوى شرعية",
-    (PLATFORM_SEED.fatwas || []).slice(0, 12).map((f) => ({ name: f.question, url: `/fatwa/${f.id}` })),
-  ),
   "/qa": linkList(
     "أسئلة وأجوبة شرعية",
     (PLATFORM_SEED.qa_items || []).slice(0, 12).map((q) => ({ name: q.question, url: `/qa#${q.id}` })),
@@ -625,7 +602,7 @@ const RICH_BODY_MAP = {
   "/scholarly-research": `<h2>ما الباحث الشرعي؟</h2>
 <p>أداة بحث تعتمد على الذكاء الاصطناعي للإجابة عن الأسئلة الشرعية بالاستناد إلى مصادر موثّقة من محتوى المنصة (الكتب والفتاوى والدروس)، مع ذكر مصدر كل معلومة. لا تصدر الأداة فتوى شخصية في المسائل التي تحتاج تفصيلاً دقيقاً؛ عند الحاجة تُوجّه السائل لعالم مؤهل.</p>
 ${linkList("روابط ذات صلة", [
-  { name: "الفتاوى الشرعية الموثقة", url: "/fatwa" },
+  { name: "فتاوى المجمع الفقهي الإسلامي", url: "/fiqh-council/fatwas" },
   { name: "الأسئلة والأجوبة", url: "/qa" },
   { name: "مصادر المكتبة العلمية", url: "/library" },
 ])}`,
@@ -686,21 +663,10 @@ for (const row of PLATFORM_SEED.fiqh_decisions || []) {
   );
 }
 
-for (const row of PLATFORM_SEED.fatwas || []) {
-  addPage(
-    {
-      path: `/fatwa/${row.id}`,
-      title: row.question,
-      description: padDesc(row.answer ? clamp(row.answer, 160) : row.question, `فتوى شرعية من ${SITE_NAME}`),
-      ogType: "article",
-    },
-    {
-      extraJsonLd: fatwaQaJsonLdScript(row),
-      parents: [{ name: "الفتاوى الشرعية", path: "/fatwa" }],
-      priority: 0.71,
-    },
-  );
-}
+// ملاحظة: قسم "/fatwa" المستقل أُلغي بالكامل من التطبيق (راجع commit 3a995462)؛
+// المسارات /fatwa و/fatwa/:id تُحوَّل الآن إلى /fiqh و/rulings على التوالي.
+// لا تُولَّد صفحات ثابتة لهذا المسار كي لا تبقى صفحات SEO يتيمة تُفهرَس ثم تُحيل فوراً.
+// الفتاوى المؤسسية الموثقة بقيت عمداً تحت /fiqh-council/fatwas ولها توليد منفصل أعلاه.
 
 for (const row of verifiedFiqhSessions) {
   addPage(
@@ -1029,12 +995,6 @@ const rssItems = [
     link: absoluteUrl(`/fiqh-council/${row.slug || row.id}`),
     description: `قرار فقهي جماعي: ${row.title} — ${row.category || "المجمع الفقهي الإسلامي"}`,
     category: "قرارات فقهية",
-  })),
-  ...(PLATFORM_SEED.fatwas || []).slice(0, 5).map((row) => ({
-    title: row.question,
-    link: absoluteUrl(`/fatwa/${row.id}`),
-    description: `فتوى شرعية في ${row.category || "الفقه الإسلامي"}: ${row.question}`,
-    category: "فتاوى شرعية",
   })),
   ...(PLATFORM_SEED.rulings || []).slice(0, 4).map((row) => ({
     title: `[حكم شرعي] ${row.title}`,

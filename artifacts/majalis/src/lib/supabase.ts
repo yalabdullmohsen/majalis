@@ -1589,7 +1589,12 @@ export type KnowledgeRelType =
   | "درس_عن_كتاب"
   | "مرتبط";
 
-export type KnowledgeSourceType = "scholar" | "lesson" | "book" | "fatwa" | "fawaid" | "question";
+// ملاحظة: "fatwa" أُزيل من هذا الاتحاد (2026-07-18) — قسم /fatwa حُذف
+// بالكامل من التطبيق (commit 3a995462)، وجدول fatwas في DB فارغ تماماً
+// (0 صف)، ولا صف واحد في knowledge_relationships استخدم هذا النوع قط
+// (تحقّقتُ مباشرة قبل الحذف). فتاوى المجمع الفقهي المؤسسية لا تُدار عبر
+// هذا النظام أصلاً.
+export type KnowledgeSourceType = "scholar" | "lesson" | "book" | "fawaid" | "question";
 
 export type KnowledgeRelationship = {
   id: string;
