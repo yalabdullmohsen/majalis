@@ -57,6 +57,16 @@ export default function OccasionsPage() {
     });
   }, []);
 
+  // رابط `?month=...` في JSON-LD أعلى (رمضان/الأعياد/عرفة...) كان يُتجاهَل
+  // كليًا: `monthFilter` تُهيَّأ دائماً بـ"" بلا قراءة أي شيء من الرابط
+  // الفعلي — عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف بالفحص
+  // المباشر 2026-07-18.
+  useEffect(() => {
+    const m = new URLSearchParams(window.location.search).get("month");
+    const n = m ? Number(m) : NaN;
+    if (Number.isFinite(n) && n >= 1 && n <= 12) setMonthFilter(n);
+  }, []);
+
   useEffect(() => {
     let active = true;
     loadIslamicOccasions()

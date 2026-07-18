@@ -97,6 +97,17 @@ function UniversitiesContent() {
 
   useEffect(() => { load(); }, [load]);
 
+  // رابط `?country=...` في JSON-LD أعلى (لكل دولة بـCOUNTRIES) كان يُتجاهَل
+  // كليًا: `filters` تُهيَّأ فقط من usePersistedState بلا قراءة أي شيء من
+  // الرابط الفعلي — عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف
+  // بالفحص المباشر 2026-07-18.
+  useEffect(() => {
+    const country = new URLSearchParams(window.location.search).get("country");
+    if (country && COUNTRIES.includes(country)) {
+      setFilters((prev) => ({ ...prev, country }));
+    }
+  }, []);
+
   function setFilter(key: keyof UniversityFilters, value: string | boolean | undefined) {
     setFilters((prev) => ({ ...prev, [key]: value || undefined }));
   }
