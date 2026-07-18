@@ -138,8 +138,7 @@ export function Phase2TrialImport({ onDone }: Phase2TrialImportProps) {
                   <div key={row.type} className="p2t-report-row">
                     <strong>{row.label}</strong>
                     <span className="p2t-report__muted">
-                      {" "}
-                     ، استورد {row.report.stats?.imported ?? 0} · تخطى {row.report.stats?.skipped ?? 0} · فشل{" "}
+                      ، استورد {row.report.stats?.imported ?? 0} · تخطى {row.report.stats?.skipped ?? 0} · فشل{" "}
                       {row.report.stats?.failed ?? 0}
                     </span>
                     {[...(row.report.validationErrors || []), ...(row.report.importErrors || [])].map((msg) => (

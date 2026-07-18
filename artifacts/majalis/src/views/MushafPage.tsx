@@ -272,7 +272,7 @@ export default function MushafPage() {
                     {a.sajda && (
                       <span className="mushaf-v2__sajda-mark" role="img" aria-label="موضع سجدة">۩</span>
                     )}
-                    <span className="mushaf-v2__ayah-num" aria-hidden="true">﴾{a.numberInSurah}﴿</span>
+                    <span className="mushaf-v2__ayah-num" aria-hidden="true">﴿{a.numberInSurah}﴾</span>
                   </span>
                 </span>
               );
