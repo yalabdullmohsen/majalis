@@ -296,6 +296,8 @@ majalis-content-fill
 
 ```
 0c9f2c76...
+0b6ed612  feat(learning): deepen tafsir-general course — 1 item → 3 (Al-Fatiha + Ayat al-Kursi)
+183f2e95  docs: تحديث بعد جلسة عاشرة — 4 مقررات عُمِّقت + إصلاح تكرار + توثيق فجوة arbaeen_love_of_allah
 96ed51a6  feat(learning): deepen arabic-mujam-wasit course — 1 item → 3
 9477d665  feat(learning): deepen seerah-deep course — 1 item → 4 (3 late-Medinan events)
 cca48c58  feat(learning): deepen minhaj-muslim course — 1 general item → 6 (5 real book parts)
