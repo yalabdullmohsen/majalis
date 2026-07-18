@@ -317,6 +317,8 @@ majalis-content-fill
 
 ```
 0c9f2c76...
+afc45667  feat(learning): second new full hierarchical course — فقه الصلاة (8 real items)
+af51f2f8  docs: تحديث بعد بناء باب هرمي كامل جديد (فقه الطهارة، 10 عناصر)
 261b07f8  feat(learning): new full hierarchical course — فقه الطهارة (10 real items, not a shallow 3-4 patch)
 c7f91e10  docs: تحديث بعد إصلاح SEO لـ114 صفحة قصص السور
 c615761e  fix(seo): SurahStoryDetailPage (114 pages) never called applyPageSeo — same generic title for all
