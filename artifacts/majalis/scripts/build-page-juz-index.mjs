@@ -1,24 +1,28 @@
 #!/usr/bin/env node
 /**
  * build-page-juz-index.mjs
- * يبني فهرسًا لمقاطع السور المُكوِّنة لكل صفحة (1-604) وكل جزء (1-30) من
- * مصحف المدينة، اعتمادًا **حصرًا على حقلَي `page`/`juz` الموجودَين فعلاً**
- * في بيانات كل آية (public/data/quran/*.json، مصدرها Tanzil عبر
- * AlQuran Cloud — راجع manifest.json). لا تخطيط بصري مُصنَّع ولا إحداثيات
- * كلمات — هذا الفهرس دقيق على مستوى "أي آيات تقع في هذه الصفحة/الجزء"
- * فقط (نفس دقة `numberInSurah` نفسها)، لا أكثر.
+ * يبني فهرسًا لمقاطع السور المُكوِّنة لكل صفحة (1-604)، جزء (1-30)، حزب
+ * (1-60)، وربع حزب (1-240) من مصحف المدينة، اعتمادًا **حصرًا على حقول
+ * `page`/`juz`/`hizbQuarter` الموجودة فعلاً** في بيانات كل آية
+ * (public/data/quran/*.json، مصدرها Tanzil عبر AlQuran Cloud — راجع
+ * manifest.json). لا تخطيط بصري مُصنَّع ولا إحداثيات كلمات — هذا الفهرس
+ * دقيق على مستوى "أي آيات تقع في هذه الصفحة/الجزء/الحزب/الربع" فقط (نفس
+ * دقة `numberInSurah` نفسها)، لا أكثر.
  *
- * ⚠️ حدّ صادق موروث من طبيعة البيانات نفسها: حقل `page` مُلحَق بكل **آية
- * كاملة** (لا بكل كلمة) — آية تمتد فعليًا عبر صفحتين مطبوعتين (نادر لكن
- * وارد) تُنسَب بالكامل لصفحة واحدة فقط في هذه البيانات. هذا متوافق تمامًا
+ * الحزب (1-60) غير موجود كحقل مستقل في البيانات — يُشتَق حسابيًا من
+ * hizbQuarter (1-240، أربعة أرباع لكل حزب): hizb = ceil(hizbQuarter/4).
+ * تحقُّق مباشر من البيانات أثبت هذا (240 = 60×4 بالضبط، لا قيمة خارج
+ * النطاق) — ليس افتراضًا نظريًا فقط.
+ *
+ * ⚠️ حدّ صادق موروث من طبيعة البيانات نفسها: كل هذه الحقول مُلحَقة بكل
+ * **آية كاملة** (لا بكل كلمة) — آية تمتد فعليًا عبر حدَّين (نادر لكن
+ * وارد) تُنسَب بالكامل لجهة واحدة فقط في هذه البيانات. هذا متوافق تمامًا
  * مع بقية البنية القائمة أصلاً (`ReferenceWord` نفسه دقته على مستوى الآية
  * لأغراض أخرى كثيرة، كـ"استكمل من آخر جلسة") — لا يُدخِل قيدًا جديدًا.
  *
- * الصيغة: { byPage: { [page]: [{surah,ayahFrom,ayahTo}, ...] },
- *           byJuz:  { [juz]:  [{surah,ayahFrom,ayahTo}, ...] } }
- * كل صفحة/جزء قد تمتد لأكثر من سورة (نادر) أو مقطع غير متصل داخل نفس
- * السورة (غير وارد عمليًا لأن ترقيم الصفحات/الأجزاء يتبع ترتيب الآيات
- * تصاعديًا دومًا) — لذا مصفوفة المقاطع لكل مفتاح غالبًا عنصر واحد فقط.
+ * الصيغة: { byPage: {...}, byJuz: {...}, byHizb: {...}, byRub: {...} }
+ * كل مفتاح → [{surah,ayahFrom,ayahTo}, ...] (قد يمتد لأكثر من سورة عند
+ * الحدود — نادر لكن وارد ومُتحقَّق منه).
  *
  * تشغيل: npx tsx scripts/build-page-juz-index.mjs
  * المخرَج: public/data/quran/page-juz-index.json
@@ -55,26 +59,36 @@ function buildSegments(entries, keyField) {
 }
 
 async function main() {
-  console.log("قراءة كل آيات المصحف (114 سورة) لاستخراج حقلَي page/juz...");
+  console.log("قراءة كل آيات المصحف (114 سورة) لاستخراج حقول page/juz/hizbQuarter...");
   const manifest = JSON.parse(await readFile(path.join(DATA_DIR, "manifest.json"), "utf8"));
   const entries = [];
   for (const s of manifest.surahs) {
     const data = JSON.parse(await readFile(path.join(DATA_DIR, s.file), "utf8"));
     for (const a of data.ayahs) {
-      entries.push({ surah: s.number, ayah: a.numberInSurah, page: a.page, juz: a.juz });
+      entries.push({
+        surah: s.number,
+        ayah: a.numberInSurah,
+        page: a.page,
+        juz: a.juz,
+        rub: a.hizbQuarter,
+        hizb: Math.ceil(a.hizbQuarter / 4),
+      });
     }
   }
   console.log(`  ${entries.length} آية مقروءة.`);
 
   const byPage = buildSegments(entries, "page");
   const byJuz = buildSegments(entries, "juz");
+  const byHizb = buildSegments(entries, "hizb");
+  const byRub = buildSegments(entries, "rub");
 
-  console.log(`  ${Object.keys(byPage).length} صفحة، ${Object.keys(byJuz).length} جزء.`);
-  const multiSurahPages = Object.values(byPage).filter((segs) => segs.length > 1).length;
-  const multiSurahJuz = Object.values(byJuz).filter((segs) => segs.length > 1).length;
-  console.log(`  ${multiSurahPages} صفحة تمتد لأكثر من سورة، ${multiSurahJuz} جزء يمتد لأكثر من سورة (متوقَّع وطبيعي عند حدود السور).`);
+  console.log(`  ${Object.keys(byPage).length} صفحة، ${Object.keys(byJuz).length} جزء، ${Object.keys(byHizb).length} حزب، ${Object.keys(byRub).length} ربع حزب.`);
+  for (const [label, idx] of [["صفحة", byPage], ["جزء", byJuz], ["حزب", byHizb], ["ربع", byRub]]) {
+    const multi = Object.values(idx).filter((segs) => segs.length > 1).length;
+    console.log(`  ${multi} ${label} تمتد لأكثر من سورة (متوقَّع وطبيعي عند حدود السور).`);
+  }
 
-  await writeFile(OUTPUT_PATH, JSON.stringify({ byPage, byJuz }), "utf8");
+  await writeFile(OUTPUT_PATH, JSON.stringify({ byPage, byJuz, byHizb, byRub }), "utf8");
   console.log(`✓ كُتب الفهرس → ${path.relative(ROOT, OUTPUT_PATH)}`);
 }
 

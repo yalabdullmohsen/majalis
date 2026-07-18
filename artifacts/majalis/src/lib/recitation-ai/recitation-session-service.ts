@@ -14,6 +14,9 @@ export type SessionRangeInput = {
   ayahTo?: number;
   pageNumber?: number;
   juzNumber?: number;
+  /** يحتاج supabase/quran_recitation_ai_test_v3_hizb_rub_columns.sql (لم يُطبَّق تلقائيًا — راجع تعليق الملف). */
+  hizbNumber?: number;
+  rubNumber?: number;
 };
 
 export type SessionSummaryInput = {
@@ -43,6 +46,14 @@ export async function saveRecitationSession(userId: string, input: SessionSummar
       ayah_to: input.range.ayahTo ?? null,
       page_number: input.range.pageNumber ?? null,
       juz_number: input.range.juzNumber ?? null,
+      // ⚠️ hizb_number/rub_number يُدرَجان **فقط عند الحاجة الفعلية** (لا
+      // ?? null دومًا كالحقول أعلاه) — هذان العمودان يحتاجان
+      // quran_recitation_ai_test_v3_hizb_rub_columns.sql (لم يُطبَّق
+      // تلقائيًا بعد). لو أُدرِجا دومًا كباقي الحقول، كان سيفشل حفظ **كل**
+      // جلسة (سورة/نطاق آيات/صفحة/جزء أيضًا لا وضعَي الحزب/الربع فقط)
+      // بمجرد وجود مفتاح لعمود غير موجود بعد في الجدول الحيّ.
+      ...(input.range.hizbNumber !== undefined ? { hizb_number: input.range.hizbNumber } : {}),
+      ...(input.range.rubNumber !== undefined ? { rub_number: input.range.rubNumber } : {}),
       mode: input.mode,
       precision_level: input.precisionLevel,
       provider_id: input.providerId,

@@ -17,7 +17,7 @@ import { loadRecitationSettings, saveRecitationSettings } from "@/lib/recitation
 import { InteractiveMushafReveal, type WordRevealInfo } from "@/components/quran/InteractiveMushafReveal";
 import { loadMutashabihatIndex, getSimilarAyahs, type MutashabihMatch } from "@/lib/recitation-ai/mutashabihat";
 import { FreeformStartDetector, loadPositionIndex } from "@/lib/recitation-ai/freeform-start-detector";
-import { loadPageJuzIndex, getSegmentsForPage, getSegmentsForJuz } from "@/lib/recitation-ai/page-juz-lookup";
+import { loadPageJuzIndex, getSegmentsForPage, getSegmentsForJuz, getSegmentsForHizb, getSegmentsForRub } from "@/lib/recitation-ai/page-juz-lookup";
 import { normalizeQuranWord } from "@/lib/recitation-ai/quran-normalize";
 import type { AlertLevel, AlignmentEvent, PrecisionLevel, RecitationMode, ReferenceWord } from "@/lib/recitation-ai/types";
 import "@/styles/recitation-ai.css";
@@ -51,14 +51,16 @@ function RecitationTestPageInner() {
   const [tajweedAvailable, setTajweedAvailable] = useState<{ available: boolean; reason?: string } | null>(null);
   const [dueReviews, setDueReviews] = useState<RecitationReviewItem[]>([]);
   // نطاق آيات مخصَّص (القسم 1: "من آية إلى آية" بدل السورة كاملة دومًا)
-  // "page"/"juz": نطاق عابر للسور، مبني من page_juz-index.json (حقول
-  // page/juz الحقيقية في بيانات كل آية — لا تخطيط بصري، راجع
-  // scripts/build-page-juz-index.mjs).
-  const [rangeMode, setRangeMode] = useState<"surah" | "ayahRange" | "page" | "juz">("surah");
+  // "page"/"juz"/"hizb"/"rub": نطاق عابر للسور، مبني من page-juz-index.json
+  // (حقول page/juz/hizbQuarter الحقيقية في بيانات كل آية — لا تخطيط
+  // بصري، راجع scripts/build-page-juz-index.mjs).
+  const [rangeMode, setRangeMode] = useState<"surah" | "ayahRange" | "page" | "juz" | "hizb" | "rub">("surah");
   const [ayahFrom, setAyahFrom] = useState(1);
   const [ayahTo, setAyahTo] = useState(7);
   const [pageNumber, setPageNumber] = useState(1);
   const [juzNumber, setJuzNumber] = useState(1);
+  const [hizbNumber, setHizbNumber] = useState(1);
+  const [rubNumber, setRubNumber] = useState(1);
   const [recentSession, setRecentSession] = useState<{ surahNumber: number; ayahFrom: number | null; ayahTo: number | null; accuracyPct: number | null } | null>(null);
 
   // جلسة
@@ -314,11 +316,21 @@ function RecitationTestPageInner() {
     }
     setPhase("loading");
     try {
-      if (rangeMode === "page" || rangeMode === "juz") {
+      if (rangeMode === "page" || rangeMode === "juz" || rangeMode === "hizb" || rangeMode === "rub") {
         const index = await loadPageJuzIndex();
-        const segments = rangeMode === "page" ? getSegmentsForPage(index, pageNumber) : getSegmentsForJuz(index, juzNumber);
+        const segments =
+          rangeMode === "page" ? getSegmentsForPage(index, pageNumber) :
+          rangeMode === "juz" ? getSegmentsForJuz(index, juzNumber) :
+          rangeMode === "hizb" ? getSegmentsForHizb(index, hizbNumber) :
+          getSegmentsForRub(index, rubNumber);
         if (segments.length === 0) {
-          setErrorMsg(rangeMode === "page" ? "رقم صفحة غير صالح (يجب أن يكون بين 1 و604)." : "رقم جزء غير صالح (يجب أن يكون بين 1 و30).");
+          const rangeErrorMsg = {
+            page: "رقم صفحة غير صالح (يجب أن يكون بين 1 و604).",
+            juz: "رقم جزء غير صالح (يجب أن يكون بين 1 و30).",
+            hizb: "رقم حزب غير صالح (يجب أن يكون بين 1 و60).",
+            rub: "رقم ربع غير صالح (يجب أن يكون بين 1 و240).",
+          }[rangeMode];
+          setErrorMsg(rangeErrorMsg);
           setPhase("error");
           return;
         }
@@ -345,7 +357,7 @@ function RecitationTestPageInner() {
       setErrorMsg(e instanceof Error ? e.message : "تعذّر بدء الجلسة");
       setPhase("error");
     }
-  }, [surahNumber, startSessionWithWords, user?.id, mode, precisionLevel, alertLevel, revealGranularity, rangeMode, ayahFrom, ayahTo, pageNumber, juzNumber]);
+  }, [surahNumber, startSessionWithWords, user?.id, mode, precisionLevel, alertLevel, revealGranularity, rangeMode, ayahFrom, ayahTo, pageNumber, juzNumber, hizbNumber, rubNumber]);
 
   /**
    * "التسميع الحر" (القسم 2، الوضع 6): يبدأ الاستماع فورًا بلا اختيار
@@ -597,6 +609,8 @@ function RecitationTestPageInner() {
       const range: SessionRangeInput =
         rangeMode === "page" ? { rangeType: "page", pageNumber } :
         rangeMode === "juz" ? { rangeType: "juz", juzNumber } :
+        rangeMode === "hizb" ? { rangeType: "hizb", hizbNumber } :
+        rangeMode === "rub" ? { rangeType: "rub", rubNumber } :
         isWholeSurah ? { rangeType: "surah", surahNumber } :
         { rangeType: "ayah_range", surahNumber, ayahFrom: actualAyahFrom, ayahTo: actualAyahTo };
 
@@ -634,7 +648,7 @@ function RecitationTestPageInner() {
         await addRecitationReviewItem(user.id, s, a, a);
       }
     },
-    [user?.id, surahNumber, mode, precisionLevel, alertLevel, referenceWords, rangeMode, ayahFrom, ayahTo, pageNumber, juzNumber],
+    [user?.id, surahNumber, mode, precisionLevel, alertLevel, referenceWords, rangeMode, ayahFrom, ayahTo, pageNumber, juzNumber, hizbNumber, rubNumber],
   );
 
   useEffect(() => {
@@ -819,6 +833,12 @@ function RecitationTestPageInner() {
                 <button type="button" className={`rai-choice ${rangeMode === "juz" ? "rai-choice--active" : ""}`} onClick={() => setRangeMode("juz")}>
                   بالجزء
                 </button>
+                <button type="button" className={`rai-choice ${rangeMode === "hizb" ? "rai-choice--active" : ""}`} onClick={() => setRangeMode("hizb")}>
+                  بالحزب
+                </button>
+                <button type="button" className={`rai-choice ${rangeMode === "rub" ? "rai-choice--active" : ""}`} onClick={() => setRangeMode("rub")}>
+                  بالربع
+                </button>
               </div>
 
               {(rangeMode === "surah" || rangeMode === "ayahRange") && (
@@ -867,6 +887,26 @@ function RecitationTestPageInner() {
                   <input
                     type="number" min={1} max={30} value={juzNumber}
                     onChange={(e) => setJuzNumber(Math.min(Math.max(Number(e.target.value) || 1, 1), 30))}
+                  />
+                </label>
+              )}
+
+              {rangeMode === "hizb" && (
+                <label style={{ display: "block", marginTop: ".6rem" }}>
+                  <span className="rai-choice__hint">رقم الحزب (1-60)</span>
+                  <input
+                    type="number" min={1} max={60} value={hizbNumber}
+                    onChange={(e) => setHizbNumber(Math.min(Math.max(Number(e.target.value) || 1, 1), 60))}
+                  />
+                </label>
+              )}
+
+              {rangeMode === "rub" && (
+                <label style={{ display: "block", marginTop: ".6rem" }}>
+                  <span className="rai-choice__hint">رقم ربع الحزب (1-240)</span>
+                  <input
+                    type="number" min={1} max={240} value={rubNumber}
+                    onChange={(e) => setRubNumber(Math.min(Math.max(Number(e.target.value) || 1, 1), 240))}
                   />
                 </label>
               )}
