@@ -6,7 +6,22 @@
 > هذا الملف يوثّق فقط أن البوابات الفنية (typecheck/lint/tests/build)
 > اجتازت معًا في دفعة واحدة نهائية، كما طلب المالك.
 
-## ▶️ حالة الجلسة — ملخص موحَّد (بعد 40+ دفعة، آخر تحديث 2026-07-18)
+## ▶️ حالة الجلسة — ملخص موحَّد (بعد 42+ دفعة، آخر تحديث 2026-07-18)
+
+**تكملتان أخيرتان (نحو)**: عُمِّق متن الآجرومية (علامات الاسم/الفعل،
+2→4، nahw total_sessions 5→7، commit `8009bab8`) وألفية ابن مالك (البيت
+الافتتاحي فقط — عنصر واحد لا أربعة لعدم توفر تأكيد لبيت ثانٍ، 2→3، nahw
+7→8، commit `30a3c8fe`). "المدخل إلى الصرف — مراح الأرواح" فُحص وتعذَّر
+(نفس نمط زاد المستقنع: لا مصدر متاح للتحقق).
+
+**🚨 اكتشاف عاجل (فحص وصول iOS، بطلب المنسّق)**: `client_error_logs`
+الحية تُظهر **44 خطأ iOS WebSocket/transport failure خلال 30 يوماً،
+آخرها اليوم فعلياً** — نفس عطل NotificationBell الحرج الموثَّق سابقاً
+(MJL-20260717-191326-NR11UV). الإصلاح (`commit 7a7d59e4`: إضافة
+`wss://*.supabase.co` لـCSP) **موجود على هذا الفرع فقط، غير مدموج
+لـmain/الإنتاج بعد** — مستخدمو iOS الحقيقيون لا يزالون يتعطّلون الآن.
+هذه معلومة عاجلة للمالك، لا عمل جديد داخل صلاحيات هذا الفرع (ممنوع
+الدمج/النشر).
 
 **تكملة أخيرة**: عُمِّق "آداب المجتمع" (حق الجار، آداب المجلس؛ adab
 total_sessions 7→9) و"الفضائل المنجية" (حسن الظن بالله، التوكل؛ بعد
@@ -203,7 +218,9 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-bbba9372...
+30a3c8fe...
+30a3c8fe  feat(learning): add alfiyyah opening verse — 2 items → 3 (1 verified, not 4)
+8009bab8  feat(learning): deepen nahw-ajurrumiyyah course — 2 items → 4 (noun/verb markers)
 bbba9372  feat(learning): deepen adab-mujtama (2→4) and fadail-munjiya (2→4)
 90b333fd  feat(learning): deepen tarbiyah courses — rida-shukr (2→6) and afat-nafs (2→4)
 c0ad0121  feat(learning): deepen manhaj-hiwar-tadarruj course — 1 item → 5 (4 gradualism examples)
