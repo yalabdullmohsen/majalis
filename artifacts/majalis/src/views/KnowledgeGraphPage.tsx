@@ -3,7 +3,7 @@
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
 import { GitBranch, Network, Waypoints } from "lucide-react";
 import {
   fetchKnNodes,
@@ -175,7 +175,6 @@ type Tab = "graph" | "explore";
 
 export default function KnowledgeGraphPage() {
   const { isAdmin } = useAuth();
-  const [, navigate] = useLocation();
   const [tab, setTab] = useState<Tab>("graph");
 
   useEffect(() => {
@@ -574,7 +573,15 @@ export default function KnowledgeGraphPage() {
               <div className="kng-type-browse__chips">
                 {(Object.keys(NODE_TYPE_LABEL) as KnNodeType[]).map((t) => (
                   <button key={t} type="button"
-                    onClick={() => navigate(`/knowledge-graph?type=${t}`)}
+                    // كان `navigate(/knowledge-graph?type=${t})` — لكن هذه
+                    // الصفحة لا تقرأ أي query param من الرابط إطلاقاً (لا
+                    // useSearch ولا URLSearchParams في الملف)، فكان الزر
+                    // يغيّر رابط المتصفح فقط بلا أي أثر ظاهر على الرسم
+                    // البياني — عطل صامت من نفس عائلة TYPE_HREF.scholar،
+                    // اكتُشف بالفحص المباشر 2026-07-18. صُحِّح باستخدام
+                    // نفس آلية التصفية setFilterType العاملة فعلياً أسفل
+                    // (سطر 354) بدل جولة رابط لا تُقرَأ أبداً.
+                    onClick={() => setFilterType(t)}
                     className={`kng-type-chip kng-nt--${t}`}
                   >
                     {NODE_TYPE_LABEL[t]}

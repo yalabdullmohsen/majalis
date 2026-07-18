@@ -97,6 +97,15 @@ export default function MiraclesPage({
   const [reloadKey, setReloadKey] = useState(0);
   const [search, setSearch] = useState("");
 
+  // رابط `?cat=...` في JSON-LD أسفل هذه الصفحة نفسها كان يُتجاهَل كليًا:
+  // `category` تُهيَّأ دائماً بـ"الكل" بلا قراءة أي شيء من الرابط الفعلي —
+  // عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف بالفحص المباشر
+  // 2026-07-18.
+  useEffect(() => {
+    const cat = new URLSearchParams(window.location.search).get("cat");
+    if (cat) setCategory(cat);
+  }, []);
+
   const displayed = useMemo(() => {
     if (!search.trim()) return items;
     return items.filter((i) => arabicMatchAny([i.title ?? "", i.body ?? "", i.category ?? "", i.scholarly_source ?? ""], search));

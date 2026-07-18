@@ -50,6 +50,15 @@ export default function FawaidPage({
   const [submitError, setSubmitError] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const { user, isLoggedIn, isAdmin } = useAuth();
+
+  // رابط `?cat=...` في JSON-LD أسفل هذه الصفحة نفسها كان يُتجاهَل كليًا:
+  // `category` تُهيَّأ دائماً بـ"الكل" بلا قراءة أي شيء من الرابط الفعلي —
+  // عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف بالفحص المباشر
+  // 2026-07-18.
+  useEffect(() => {
+    const cat = new URLSearchParams(window.location.search).get("cat");
+    if (cat) setCategory(cat);
+  }, []);
   const debouncedSearch = useDebouncedValue(search);
 
   useEffect(() => {

@@ -88,6 +88,25 @@ export default function ArbaeenNawawiPage() {
     });
   }, []);
 
+  // رابط وارد بـ`?h=<id>` (من اقتراحات البحث في search-suggestions.ts)
+  // ورابط `#hadith-<id>` (من JSON-LD أعلى) كانا معطوبَين معًا: لا شيء
+  // يقرأ `?h=` هنا، ولا عنصر DOM يحمل `id="hadith-<id>"` لتفعيل تمرير
+  // المتصفح الطبيعي للـhash — فكان كلا الرابطين يهبط على الصفحة بحالتها
+  // الافتراضية بلا أي أثر ظاهر. عطل صامت من نفس عائلة TYPE_HREF.scholar،
+  // اكتُشف بالفحص المباشر 2026-07-18. صُحِّح بإضافة id مطابق لكل بطاقة
+  // (يُفعِّل الـhash تلقائيًا) + قراءة `?h=` صراحةً مع توسيع وتمرير للحديث.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const hParam = params.get("h");
+    const hId = hParam ? Number(hParam) : NaN;
+    if (!Number.isFinite(hId)) return;
+    setExpanded((prev) => new Set(prev).add(hId));
+    const t = window.setTimeout(() => {
+      document.getElementById(`hadith-${hId}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 150);
+    return () => window.clearTimeout(t);
+  }, []);
+
   function toggleRead(id: number) {
     setRead((prev) => {
       const next = new Set(prev);
@@ -215,6 +234,7 @@ export default function ArbaeenNawawiPage() {
             return (
               <article
                 key={h.id}
+                id={`hadith-${h.id}`}
                 className={`an-card${isRead ? " an-card--read" : ""}${isToday ? " an-card--today" : ""}`}
               >
                 <div className="an-card__header">

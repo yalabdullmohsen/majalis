@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link, useSearch } from "wouter";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { useAuth } from "@/components/AuthProvider";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -91,6 +91,18 @@ export default function LibraryPage({
   const [sortKey, setSortKey] = usePersistedState<SortKey>("filters:/library:sortKey", "newest");
   const [sortAsc, setSortAsc] = usePersistedState("filters:/library:sortAsc", true);
   const [view, setView] = useState<ViewMode>("grid");
+  const urlSearch = useSearch();
+
+  // رابط وارد بـ`?category=...` (من LibraryDetailPage) أو `?cat=...` (من
+  // JSON-LD المُولَّد أسفل لكل تصنيف) كان يُتجاهَل كليًا: الحالة تُقرأ فقط
+  // من usePersistedState بلا مزامنة مع URL الفعلي عند الوصول — نفس عائلة
+  // عطل TYPE_HREF.scholar الصامت (لا خطأ ظاهر، فقط تصفية خاطئة/افتراضية).
+  // اكتُشف بالفحص المباشر 2026-07-18.
+  useEffect(() => {
+    const params = new URLSearchParams(urlSearch);
+    const cat = params.get("category") || params.get("cat");
+    if (cat) setCategory(cat);
+  }, [urlSearch]);
 
   const loadLibrary = async () => {
     setLoading(true);

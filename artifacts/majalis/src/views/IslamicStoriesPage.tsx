@@ -167,6 +167,16 @@ export default function IslamicStoriesPage() {
   const [era, setEra] = useState<Era>("الكل");
   const [search, setSearch] = useState("");
 
+  // رابط `?cat=...` في JSON-LD أسفل هذه الصفحة نفسها كان يُتجاهَل كليًا:
+  // `category` تُهيَّأ دائماً بـ"الكل" بلا قراءة أي شيء من الرابط الفعلي —
+  // عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف بالفحص المباشر
+  // 2026-07-18.
+  useEffect(() => {
+    const cat = new URLSearchParams(window.location.search).get("cat");
+    const valid: Category[] = ["الكل", "صحابة", "فتوحات", "تاريخ"];
+    if (cat && (valid as string[]).includes(cat)) setCategory(cat as Category);
+  }, []);
+
   useEffect(() => {
     applyPageSeo({
       path: "/stories",
