@@ -6,7 +6,16 @@
 > هذا الملف يوثّق فقط أن البوابات الفنية (typecheck/lint/tests/build)
 > اجتازت معًا في دفعة واحدة نهائية، كما طلب المالك.
 
-## ▶️ حالة الجلسة — ملخص موحَّد (بعد 46+ دفعة، آخر تحديث 2026-07-18)
+## ▶️ حالة الجلسة — ملخص موحَّد (بعد 47+ دفعة، آخر تحديث 2026-07-18)
+
+**إكمال تعبئة "النوازل المعاصرة"**: بعد إصلاح القيد، أُضيفت مسألتان
+ماليتان/تقنيتان ناشئتان حقيقيتان من مجمع الفقه الإسلامي الدولي (الدورة
+24، دبي، نوفمبر 2019): العملات الرقمية المشفَّرة (القرار 237) والعقود
+الذكية (القرار 230) — كلاهما **مؤجَّل رسمياً لمزيد من الدراسة**، عُرضا
+بأمانة كذلك لا كحكم قاطع مختلَق. تحقَّق كل قرار عبر WebFetch من
+iifa-aifi.org. `fiqh_council_issues` منشور: 62→64. **الآن كل الـ11
+تصنيفاً في FIQH_COUNCIL_CATEGORIES لها محتوى فعلي حي**. commit
+`a06ba3d1`.
 
 **🔧 بقان إضافيان مُكتشَفان وأُصلحا (المجمع الفقهي، فحص مباشر)**: تصنيف
 "الأطعمة والأشربة" كان بلا محتوى إطلاقاً (0 من 58)؛ وتصنيف "النوازل
@@ -248,7 +257,8 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-68344bc1...
+a06ba3d1...
+a06ba3d1  content(fiqh-council): populate nawazil-muasira category (2 real IIFA decisions)
 68344bc1  fix+content(fiqh-council): populate atima-ashriba category + fix category CHECK gap
 d3c326b4  fix(quiz): remap 15 legacy English-section rows to visible Arabic sections
 5d3eb8cc  feat(learning): add safa-call item — dawah-marahil-ula 2→3
