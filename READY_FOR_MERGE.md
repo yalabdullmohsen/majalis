@@ -6,7 +6,19 @@
 > هذا الملف يوثّق فقط أن البوابات الفنية (typecheck/lint/tests/build)
 > اجتازت معًا في دفعة واحدة نهائية، كما طلب المالك.
 
-## ▶️ حالة الجلسة — ملخص موحَّد (بعد 29+ دفعة، آخر تحديث 2026-07-18)
+## ▶️ حالة الجلسة — ملخص موحَّد (بعد 32+ دفعة، آخر تحديث 2026-07-18)
+
+**ثلاث تكملات أخيرة (أولوية علمية، بطلب المنسّق)**: بعد صحيح البخاري
+ومسلم ورياض الصالحين، عُمِّقت "العقيدة الواسطية" (ابن تيمية، 1→5،
+aqeedah total_sessions 62→66، commit `f9c07987`) و"العقيدة الطحاوية"
+(الإمام الطحاوي، 1→5، aqeedah 66→70، commit `74adbc42`) — كل نص تحقَّق
+حرفياً من متن الرسالتين عبر WebFetch، مواضيع مختلفة تماماً بين الاثنتين
+عمداً لتجنّب التكرار. محاولة "زاد المستقنع" تعذَّرت (متنه غير متوفر على
+ويكي مصدر، shamela.ws رفض 403) فأُجِّلت بدل اختلاق فقه حنبلي دقيق بلا
+تحقق؛ تابع بدلاً منها إلى "بلوغ المرام من أدلة الأحكام" (ابن حجر، 1→5،
+4 أحاديث أحكام فقهية مختلفة عن الدفعات السابقة، fiqh total_sessions
+110→114، commit `d50e988f`). 14 مقرراً ضحلاً متبقٍّ (زاد المستقنع من
+بينها، مؤجَّل لا مُستبعَد).
 
 **تكملتان أخيرتان (أولوية علمية، بطلب المنسّق)**: بعد صحيح البخاري،
 عُمِّق "صحيح مسلم" (2 عنصر→6: أول من تُسعَّر بهم النار رياءً، أفشوا
@@ -150,7 +162,10 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-8336a700...
+d50e988f...
+d50e988f  feat(learning): deepen bulugh-maram course — 1 general item → 5 (4 ahkam hadiths)
+74adbc42  feat(learning): deepen aqidah-tahawiyyah course — 1 general item → 5 (4 real sections)
+f9c07987  feat(learning): deepen aqidah-wasitiyyah course — 1 general item → 5 (4 real sections)
 8336a700  feat(learning): deepen riyad-saliheen course — 1 general item → 5 (4 named chapters)
 52620aaf  feat(learning): deepen sahih-muslim course — 2 items → 6 (4 named hadiths)
 3f7e87d3  feat(learning): deepen sahih-bukhari course — 1 general item → 5 (4 named hadiths)
