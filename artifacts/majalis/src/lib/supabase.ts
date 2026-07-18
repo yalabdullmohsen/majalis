@@ -1136,16 +1136,26 @@ export async function upsertQuizSeedToDb(): Promise<{ ok: boolean; synced: numbe
   const rows = DEMO_QUIZ_QUESTIONS.filter((q: any) => q.status !== "draft").map((q: any) => ({
     section: q.section,
     category: q.category || q.section,
-    // map Arabic level names → English stored in DB
-    level: q.level === "سهل" ? "beginner" : q.level === "متوسط" ? "intermediate" : q.level === "صعب" ? "advanced" : q.level,
+    // اكتُشف 2026-07-18: quiz_questions.level مقيَّد بـCHECK constraint حي
+    // يقبل فقط 'أساسي'|'متوسط'|'متقدم'|'صعب' (عربي) — الترميز السابق هنا
+    // ('beginner'/'intermediate'/'advanced') كان يُسقِط أي مزامنة فوراً
+    // بمخالفة القيد، وهو السبب الفعلي وراء بقاء الجدول الحي عند 15 صفاً
+    // اختبارياً قديماً فقط رغم نمو quiz-seed.ts إلى 943 عبر جلسات كثيرة
+    // (أُصلح الانحراف يدوياً عبر supabase/quiz_questions_widen_section_
+    // constraint_v1.sql + scripts/gen-quiz-sync-sql.mjs، لكن هذا الإصلاح
+    // هنا ضروري كي يعمل الزر الإداري بشكل صحيح لأي إضافة مستقبلية).
+    level: q.level === "سهل" ? "أساسي" : q.level,
     question: q.question,
     answer: q.answer,
     is_published: true,
     is_used: false,
   }));
   try {
-    // insert-only: skip duplicates (question+section may not be unique constraint; use DO NOTHING)
-    const { error } = await supabase.from("quiz_questions").insert(rows);
+    // upsert بدل insert: يتخطى تكرار question (قيد UNIQUE حي على العمود)
+    // بدل فشل الدفعة كاملةً عند أول تعارض — يطابق النية الموثَّقة أصلاً.
+    const { error } = await supabase
+      .from("quiz_questions")
+      .upsert(rows, { onConflict: "question", ignoreDuplicates: true });
     if (error) throw error;
     return { ok: true, synced: rows.length };
   } catch (err) {
