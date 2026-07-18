@@ -29,9 +29,49 @@
 > مجدداً في استئناف قادم — أضف فقط قسم جلسة جديد أسفله إن استؤنف العمل،
 > وحدِّث الأرقام في هذا القسم الموحَّد.
 
-**آخر commit مدفوع فعلياً**: `43149f58` (بعد `3fc56ccf`←`5b825501`←
-`b3b4da2a`←`5f7bcea1`←`c062408a`←`b6b65564`←`d516a914`←`ffcddf56`). فرع
+**آخر commit مدفوع فعلياً**: `552e8a35` (بعد `fb17a8ef`←`43149f58`←
+`3fc56ccf`←`5b825501`←`b3b4da2a`←`5f7bcea1`←`c062408a`←`b6b65564`←
+`d516a914`←`ffcddf56`). فرع
 `majalis-content-fill` فقط — **ممنوع الدمج لـmain، ممنوع النشر للإنتاج**.
+
+### 🚨 جلسة تاسعة (تكملة ثانية) — تدقيق شامل لكل بوابات test:*/audit-*/verify:* (commit `552e8a35`)
+
+بطلب صريح من المنسّق بعد اكتشاف عطل `library-catalog.json`: فحصتُ **كل**
+سكربت في سلسلة `test:regression` (16 حزمة) بنفس الشك — هل يقرأ لقطة JSON
+مجمَّدة بدل المصدر الحي؟ **النتيجة: سليمة كلها إلا واحدة**:
+- `test:content-counts` — يُعيد التوليد فعليًا ويقارن قبل/بعد (تصميم
+  محصَّن أصلاً، لا لقطة مجمَّدة).
+- `test:content-governance` (فحص `rulings-data`) — يقرأ من
+  `public/data/rulings-encyclopedia/chunks/*.json` و`rulings-encyclopedia-
+  seed.generated.ts`، وهما ملفان يُعاد توليدهما بأي `pnpm run build` —
+  تحقَّقتُ فعليًا بتشغيل المولِّد يدويًا ثم الفحص: **746 سجلًا، 0 مخالفة**
+  (المولِّد نفسه يُخفِّض `status` تلقائيًا لـ`pending_review` عند غياب
+  `reviewed_by`، تصميم سليم من جلسة سابقة).
+- بقية السكربتات (`scholars-integrity`، `sheikhs-dedup`، `library-
+  integrity` [مُصلَح جلسة سابقة]، `inheritance-engine`، `learning-paths-
+  engine`، `category-tree`، `quran-data`...) تستورد مصادرها حيةً مباشرة
+  (عبر `tsx` أو قراءة نص خام محدَّث)، لا لقطات وسيطة.
+
+**اكتشاف واحد أخطر بكثير من `library-catalog.json` نفسه**: وسّعت الفحص
+خارج `test:regression` لأي ملف `src/data/*.json` يُستهلَك من كود حي —
+`src/data/scholars-list.json` كان مجمَّداً عند **78 من 96 عالماً** (20
+غائبون). الفرق الحاسم عن `library-catalog.json`: مستهلِكه
+`lib/cms/sitemap-builder.mjs` **ليس كوداً ميتاً** — مسجَّل فعليًا في
+`lib/api-dispatch.mjs` (`/api/sitemap`، `/api/feed`)، و`vercel.json`
+يُعيد توجيه `/sitemap.xml` و`/feed.xml` صراحةً إلى هذين المسارين. أي أن
+**خريطة الموقع الحقيقية المُرسَلة لمحركات البحث في الإنتاج** (لا
+`public/sitemap.xml` الثابت الذي تعاملت معه الجلسة كضجيج طوابع زمنية —
+قد لا يُخدَّم إطلاقاً بسبب هذا الـrewrite الصريح) كانت تفتقد 20 صفحة عالم
+لأشهر بصمت تام. أُصلح بنفس نمط `library-catalog.json` تمامًا:
+`scripts/regen-scholars-list-json.mjs` جديد + فحص انجراف دائم (القسم ١٠
+في `scholars-data-integrity.test.ts`، يعمل ضمن `test:scholars-integrity`
+الحالي فلا حاجة لتسجيل سكربت جديد في `package.json`).
+
+**درس منهجي لأي جلسة قادمة**: لا تكتفِ بفحص `test:regression` وحدها عند
+البحث عن هذا النمط — افحص أيضًا أي ملف JSON ثابت يقرأه كود `lib/`
+المسجَّل فعليًا في `api-dispatch.mjs` (نقطة الدخول الحية لكل مسارات
+`/api/*`)، فبعض الأعطال الأخطر لا تظهر في بوابات الاختبار إطلاقًا بل في
+مسارات إنتاج منفصلة كليًا لا يفحصها أي `test:*` script قائم.
 
 ### 🎯 جلسة تاسعة (تكملة) — تدقيق مكتبة أعمق + ربط 8 مقررات فارغة (commits `3fc56ccf`، `43149f58`)
 

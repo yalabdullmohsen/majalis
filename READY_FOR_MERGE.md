@@ -44,6 +44,18 @@ WebFetch)؛ اكتُشف أثناء ذلك **تكرار محتوى حقيقي** 
 جديد (`JSON_TS_DRIFT`) يمنع تكرار هذا الانجراف صامتاً. تفصيل كامل في
 `CONTINUATION_PLAN.md`.
 
+**🚨 تدقيق شامل لكل بوابات test:*/audit-*/verify:* (بطلب المنسّق)**: فحصتُ
+كل سكربت في `test:regression` (16 حزمة) بحثاً عن نفس نمط "لقطة JSON
+مجمَّدة بدل المصدر الحي" — **سليمة كلها إلا واحدة إضافية أخطر من
+library-catalog.json نفسه**: `src/data/scholars-list.json` كان مجمَّداً
+عند 78 من 96 عالماً. الفرق الحاسم: مستهلِكه `lib/cms/sitemap-builder.mjs`
+**مسجَّل فعليًا** في `lib/api-dispatch.mjs` (`/api/sitemap`، `/api/feed`)،
+و`vercel.json` يُعيد توجيه `/sitemap.xml` و`/feed.xml` صراحةً إليهما — أي
+أن **خريطة الموقع الحقيقية المُرسَلة لمحركات البحث في الإنتاج** كانت
+تفتقد 20 صفحة عالم لأشهر. أُصلح بنفس نمط library-catalog.json (سكربت
+إعادة توليد + فحص انجراف دائم ضمن `test:scholars-integrity`). تفصيل كامل
+في `CONTINUATION_PLAN.md`.
+
 **تحقّق نهائي سابق (بطلب المنسّق)**: `scripts/audit-all-routes.mjs` عبر
 Playwright ضد `vite preview` فعلي على 236 مساراً (كل صفحة عُدِّلت + كل
 الـ96 عالماً + كل الـ127 كتاباً) — **235 نظيفة تماماً**، الحالة الوحيدة
@@ -65,7 +77,9 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-43149f58...
+552e8a35...
+552e8a35  fix(sitemap): scholars-list.json was frozen at 78/96 — feeds LIVE production /api/sitemap+/api/feed
+fb17a8ef  docs: تحديث CONTINUATION_PLAN وREADY_FOR_MERGE — 8 مقررات مربوطة + إصلاح انجراف مكتبة
 43149f58  feat(learning): link 8 empty fiqh/seerah/tafseer courses to real books via course_books
 3fc56ccf  fix(library): dedupe منهاج الطالبين + close silent JSON/TS drift in library integrity gate
 5b825501  docs: تحديث CONTINUATION_PLAN وREADY_FOR_MERGE — الأولويتان مكتملتان (أحكام + علماء)
@@ -74,12 +88,10 @@ b3b4da2a  feat(scholars): 12th and final batch — completes 96/96 scholars enri
 c062408a  feat(scholars): 10th enrichment batch — 8 more scholars + 4 new شيخ_تلميذ
 b6b65564  feat(scholars): 9th enrichment batch — 8 scholars + 4 new شيخ_تلميذ
 d516a914  content(rulings): fill 6 empty categories in rulings encyclopedia — 12 new verified rulings
-ffcddf56  docs: تحديث CONTINUATION_PLAN — 136 علاقة معرفية (fawaid-book جديد)
-f9884d53  feat(knowledge-graph): add 49 fawaid-to-book relationships + fix TYPE_HREF.fawaid
 ```
 
 سلسلة commits الجلسات كاملة (الأحدث أولاً):
-`43149f58` ← `3fc56ccf` ← `5b825501` ← `b3b4da2a` ← `5f7bcea1` ← `c062408a` ← `b6b65564` ← `d516a914` ← `ffcddf56` ← `f9884d53` ← `22d31925` ← `535000aa` ← `ce60125b` ← `c1cb2eb6` ← `7982fe9b` ← `2dcddead` ← `4a97a2b3` ← `9e00909e` ← `19ac1015` ← `07b84be2` ← ...
+`552e8a35` ← `fb17a8ef` ← `43149f58` ← `3fc56ccf` ← `5b825501` ← `b3b4da2a` ← `5f7bcea1` ← `c062408a` ← `b6b65564` ← `d516a914` ← `ffcddf56` ← `f9884d53` ← `22d31925` ← `535000aa` ← `ce60125b` ← `c1cb2eb6` ← `7982fe9b` ← `2dcddead` ← `4a97a2b3` ← `9e00909e` ← ...
 
 `git status --short` فارغ وقت كتابة هذا التحديث (بعد `git checkout --`
 لملفات الضجيج المُولَّدة القياسية). **مدفوع فعلياً** لـ
