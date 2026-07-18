@@ -199,10 +199,16 @@ export default function LearningPathDetailPage() {
   useEffect(() => {
     if (!slug) return;
     setLoading(true);
-    fetchPathDetail(slug).then((data) => {
-      setPath(data);
-      setLoading(false);
-    });
+    // اكتُشف 2026-07-18 أثناء تحقُّق Playwright فعلي لإصلاح SEO: بلا
+    // .catch() هنا، أي رفض غير متوقَّع من fetchPathDetail (خطأ شبكة
+    // حقيقي، لا مجرد "لم يُعثر على المسار" الذي يُعالَج بالفعل داخلياً
+    // بإرجاع null) يُبقي loading=true للأبد — يمنع كلاً من عرض الصفحة
+    // (سكيلتون أبدي) وتصحيح SEO (يبقى الاسم العام من usePageSeo(location)
+    // في App.tsx ظاهراً للأبد بدل تصحيحه أو التحوُّل لحالة noindex واضحة).
+    fetchPathDetail(slug)
+      .then((data) => setPath(data))
+      .catch(() => setPath(null))
+      .finally(() => setLoading(false));
   }, [slug]);
 
   // كان هذا الفحص يُطبِّق عنواناً/وصفاً/JSON-LD عامّاً موحَّداً ("مسار
