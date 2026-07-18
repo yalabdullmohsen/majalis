@@ -313,8 +313,8 @@ function ExplorePlatformSection() {
       <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.1rem" }}>
         {/* أيقونة هندسية للعنوان */}
         <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
-          <polygon points="11,1 13.5,8 21,8 15,13 17.5,20 11,16 4.5,20 7,13 1,8 8.5,8" fill="none" stroke="#176B57" strokeWidth="1.2"/>
-          <circle cx="11" cy="11" r="3.5" fill="none" stroke="#176B57" strokeWidth="0.8"/>
+          <polygon points="11,1 13.5,8 21,8 15,13 17.5,20 11,16 4.5,20 7,13 1,8 8.5,8" fill="none" stroke="#173D35" strokeWidth="1.2"/>
+          <circle cx="11" cy="11" r="3.5" fill="none" stroke="#173D35" strokeWidth="0.8"/>
         </svg>
         <h2 id="features-heading" style={{ fontSize: "1.1rem", fontWeight: 800, color: "#1a1a1a", margin: 0 }}>
           استكشف المنصة
@@ -330,7 +330,7 @@ function ExplorePlatformSection() {
           <Link key={href} href={href} aria-label={title} style={{
             display: "flex", flexDirection: "column", gap: "0.65rem",
             padding: "1.2rem 1.1rem", borderRadius: "1.1rem", textDecoration: "none",
-            background: "linear-gradient(145deg, #112a1e 0%, #1a3d2b 40%, #176B57 80%, #176B57 100%)",
+            background: "linear-gradient(145deg, #112a1e 0%, #1a3d2b 40%, #173D35 80%, #173D35 100%)",
             color: "#fff",
             boxShadow: "0 4px 16px rgba(15,50,30,0.28), inset 0 1px 0 rgba(255,255,255,0.1)",
             border: "1px solid rgba(255,255,255,0.12)",
@@ -372,13 +372,13 @@ function ExplorePlatformSection() {
             }}>
               {/* زخرفة هندسية بدل المربع */}
               <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" style={{ flexShrink: 0 }}>
-                <polygon points="14,2 20,9 27,9 22,16 25,24 14,20 3,24 6,16 1,9 8,9" fill="#176B57"/>
-                <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="#176B57" opacity="0.6"/>
-                <circle cx="14" cy="14" r="3" fill="#FAF8F2"/>
+                <polygon points="14,2 20,9 27,9 22,16 25,24 14,20 3,24 6,16 1,9 8,9" fill="#173D35"/>
+                <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="#173D35" opacity="0.6"/>
+                <circle cx="14" cy="14" r="3" fill="#F7F4ED"/>
               </svg>
-              <h3 style={{ fontSize: "0.98rem", fontWeight: 800, color: "#176B57", margin: 0 }}>{cat.label}</h3>
+              <h3 style={{ fontSize: "0.98rem", fontWeight: 800, color: "#173D35", margin: 0 }}>{cat.label}</h3>
               <span style={{
-                marginRight: "auto", fontSize: "0.68rem", color: "#176B57", fontWeight: 700,
+                marginRight: "auto", fontSize: "0.68rem", color: "#173D35", fontWeight: 700,
                 background: "#e8f4ed", padding: "0.15rem 0.6rem", borderRadius: "999px",
                 border: "1px solid #c8e6d5",
               }}>{cat.items.length} قسم</span>
@@ -397,7 +397,7 @@ function ExplorePlatformSection() {
                   boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
                 }}>
                   <span style={{
-                    background: "linear-gradient(135deg,#176B57,#176B57)", color: "#FAF8F2",
+                    background: "linear-gradient(135deg,#173D35,#173D35)", color: "#F7F4ED",
                     padding: "0.38rem", borderRadius: "0.4rem",
                     display: "flex", flexShrink: 0, marginTop: "0.05rem",
                     boxShadow: "0 1px 3px rgba(15,50,30,0.2)",
@@ -416,7 +416,7 @@ function ExplorePlatformSection() {
                   padding: "0.75rem 0.8rem", borderRadius: "0.8rem",
                   textDecoration: "none", background: "#eef6f2",
                   border: "1.5px dashed #b9dbcb",
-                  color: "#176B57", fontSize: "0.78rem", fontWeight: 700,
+                  color: "#173D35", fontSize: "0.78rem", fontWeight: 700,
                   textAlign: "center",
                 }}>
                   +{remaining} أقسام أخرى ←
@@ -432,7 +432,7 @@ function ExplorePlatformSection() {
         <Link href="/sitemap" style={{
           display: "inline-flex", alignItems: "center", gap: "0.4rem",
           padding: "0.6rem 1.4rem", borderRadius: "0.7rem",
-          textDecoration: "none", background: "#176B57", color: "#FAF8F2",
+          textDecoration: "none", background: "#173D35", color: "#F7F4ED",
           fontSize: "0.83rem", fontWeight: 800,
         }}>
           تصفّح كل أقسام المنصة ←
@@ -531,8 +531,9 @@ export default function HomePage() {
         className="hpv4-hero"
         aria-label="الصفحة الرئيسية"
         style={{
-          background: "linear-gradient(165deg, #071E18 0%, #123F36 40%, #0E4437 70%, #071E18 100%)",
-          padding: "clamp(2rem,5vw,3rem) 1rem clamp(1.75rem,4vw,2.5rem)",
+          /* تدرّج هادئ محدود بدرجتين فقط من لوحة الهوية v3 (لا تدرّج قوي متعدد المراحل) */
+          background: "linear-gradient(135deg, #173D35 0%, #28584D 100%)",
+          padding: "clamp(1.5rem,4vw,2rem) 1rem clamp(1.25rem,3vw,1.75rem)",
           position: "relative",
           overflow: "hidden",
         }}
@@ -600,7 +601,7 @@ export default function HomePage() {
                 marginTop: "0.5rem",
                 background: `${dailyCtx.accentColor}33`,
                 border: `1px solid ${dailyCtx.accentColor}66`,
-                color: "#FAF8F2",
+                color: "#F7F4ED",
                 padding: "0.22rem 0.9rem",
                 borderRadius: "999px",
                 fontSize: "0.75rem",
@@ -636,7 +637,7 @@ export default function HomePage() {
                   display: "inline-flex", alignItems: "center", gap: "0.35rem",
                   background: "rgba(255,255,255,0.16)",
                   border: "1px solid rgba(255,255,255,0.3)",
-                  color: "#FAF8F2",
+                  color: "#F7F4ED",
                   padding: "0.18rem 0.75rem",
                   borderRadius: "999px",
                   fontSize: "0.72rem",
@@ -691,7 +692,7 @@ export default function HomePage() {
             ] as { icon: React.ReactNode; label: string; href: string }[]).map(({ icon, label, href }, i) => (
               <Link key={label} href={href} style={{
                 background: i === 0 ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.08)",
-                color: "#FAF8F2",
+                color: "#F7F4ED",
                 padding: "0.32rem 0.85rem", borderRadius: "999px",
                 fontSize: "0.77rem", fontWeight: 700,
                 border: `1px solid ${i === 0 ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.18)"}`,
@@ -722,7 +723,7 @@ export default function HomePage() {
               }}
             />
             <button type="submit" style={{
-              background: "linear-gradient(135deg,#176B57,#176B57)", color: "#FAF8F2", border: "none", cursor: "pointer",
+              background: "linear-gradient(135deg,#173D35,#173D35)", color: "#F7F4ED", border: "none", cursor: "pointer",
               padding: "0.75rem 1.3rem", fontWeight: 800, fontSize: "0.85rem", fontFamily: "inherit",
               whiteSpace: "nowrap",
             }}>بحث</button>
@@ -731,7 +732,7 @@ export default function HomePage() {
           {/* أزرار الإجراء — شبكة 2×2 */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4,auto)", gap: "0.45rem", justifyContent: "center" }}>
             <Link href="/lessons" className="hpv4-hero__cta-primary" style={{
-              background: "#FAF8F2", color: "#176B57", padding: "0.6rem 1.2rem",
+              background: "#F7F4ED", color: "#173D35", padding: "0.6rem 1.2rem",
               borderRadius: "0.6rem", fontWeight: 800, fontSize: "0.86rem",
               textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.3rem",
               boxShadow: "0 2px 10px rgba(0,0,0,0.25)",
@@ -740,7 +741,7 @@ export default function HomePage() {
               الدروس
             </Link>
             <Link href="/quran-hub" style={{
-              background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1rem",
+              background: "rgba(255,255,255,0.1)", color: "#F7F4ED", padding: "0.6rem 1rem",
               borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.86rem",
               textDecoration: "none", border: "1px solid rgba(255,255,255,0.28)",
               display: "inline-flex", alignItems: "center", gap: "0.3rem",
@@ -749,7 +750,7 @@ export default function HomePage() {
               القرآن
             </Link>
             <Link href="/adhkar" style={{
-              background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1rem",
+              background: "rgba(255,255,255,0.1)", color: "#F7F4ED", padding: "0.6rem 1rem",
               borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.86rem",
               textDecoration: "none", border: "1px solid rgba(255,255,255,0.28)",
               display: "inline-flex", alignItems: "center", gap: "0.3rem",
@@ -758,7 +759,7 @@ export default function HomePage() {
               الأذكار
             </Link>
             <Link href="/prayer-times" style={{
-              background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1rem",
+              background: "rgba(255,255,255,0.1)", color: "#F7F4ED", padding: "0.6rem 1rem",
               borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.86rem",
               textDecoration: "none", border: "1px solid rgba(255,255,255,0.28)",
               display: "inline-flex", alignItems: "center", gap: "0.3rem",
@@ -786,7 +787,7 @@ export default function HomePage() {
                   borderRadius: "0.65rem", padding: "0.65rem 0.4rem", textAlign: "center",
                 }}>
                   <div style={{ fontSize: "1rem", marginBottom: "0.15rem", lineHeight: 1 }}>{icon}</div>
-                  <div style={{ color: "#FAF8F2", fontSize: "1.1rem", fontWeight: 800, lineHeight: 1.1 }}>{num}</div>
+                  <div style={{ color: "#F7F4ED", fontSize: "1.1rem", fontWeight: 800, lineHeight: 1.1 }}>{num}</div>
                   <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.62rem", marginTop: "0.18rem", lineHeight: 1.3 }}>{label}</div>
                 </div>
               ))}
@@ -814,9 +815,9 @@ export default function HomePage() {
       <nav aria-label="وصول سريع" style={{ maxWidth: 760, margin: "2rem auto 0", padding: "0 1rem" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.7rem" }}>
           <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
-            <polygon points="9,1 12,7 18,7 13,11 15,17 9,13 3,17 5,11 0,7 6,7" fill="#176B57" opacity="0.85"/>
+            <polygon points="9,1 12,7 18,7 13,11 15,17 9,13 3,17 5,11 0,7 6,7" fill="#173D35" opacity="0.85"/>
           </svg>
-          <p style={{ color: "#176B57", fontSize: "0.82rem", fontWeight: 800, margin: 0, letterSpacing: "0.03em" }}>وصول سريع</p>
+          <p style={{ color: "#173D35", fontSize: "0.82rem", fontWeight: 800, margin: 0, letterSpacing: "0.03em" }}>وصول سريع</p>
         </div>
         <div style={{
           display: "grid",
@@ -835,13 +836,13 @@ export default function HomePage() {
             }}>
               <span style={{
                 background: "linear-gradient(135deg,#edf6f1,#daf0e8)",
-                color: "#176B57", padding: "0.38rem", borderRadius: "0.4rem",
+                color: "#173D35", padding: "0.38rem", borderRadius: "0.4rem",
                 display: "flex", flexShrink: 0,
               }}>
                 <Ico size={14} strokeWidth={2} />
               </span>
               <div style={{ minWidth: 0 }}>
-                <div style={{ color: "#111827", fontSize: "0.77rem", fontWeight: 700, lineHeight: 1.25 }}>{label}</div>
+                <div style={{ color: "#202725", fontSize: "0.77rem", fontWeight: 700, lineHeight: 1.25 }}>{label}</div>
                 <div style={{ color: "#9ca3af", fontSize: "0.66rem", lineHeight: 1.3, marginTop: 1 }}>{desc}</div>
               </div>
             </Link>

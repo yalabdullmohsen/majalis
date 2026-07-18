@@ -299,7 +299,7 @@ export default function MawarithPage() {
 
       {/* حاسبة المواريث */}
       <Link href="/mawarith/calculator" className="mwod-card" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
-        <Calculator size={28} strokeWidth={1.6} aria-hidden="true" style={{ color: "#0E6E52", flexShrink: 0 }} />
+        <Calculator size={28} strokeWidth={1.6} aria-hidden="true" style={{ color: "#28584D", flexShrink: 0 }} />
         <div>
           <h2 className="mwod-card__title" style={{ marginBottom: "0.2rem" }}>حاسبة المواريث</h2>
           <p className="mwod-card__desc">أدخل الورثة والتركة واحصل على توزيع الأنصبة تلقائيًا مع شرح كل خطوة ←</p>

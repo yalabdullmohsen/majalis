@@ -84,7 +84,7 @@ export default function LandmarksMap({ landmarks, onSelect }: Props) {
           `<div dir="rtl" style="font-family:inherit;min-width:180px;">
             <strong style="font-size:0.9rem;display:block;margin-bottom:4px;">${lm.name}</strong>
             <span style="font-size:0.78rem;color:#6b7280;">${lm.city}، ${lm.country}</span>
-            <br/><span style="font-size:0.75rem;color:#0E6E52;font-weight:700;">${lm.type} · ${lm.era}</span>
+            <br/><span style="font-size:0.75rem;color:#28584D;font-weight:700;">${lm.type} · ${lm.era}</span>
           </div>`
         );
         marker.on("click", () => onSelect(lm));

@@ -14,7 +14,7 @@ const S = {
   hero: {
     padding: "2.5rem 1.25rem 2rem",
     textAlign: "center" as const,
-    background: "linear-gradient(160deg, #0d2d22 0%, #153025 60%, #1a4535 100%)",
+    background: "linear-gradient(160deg, #0d2d22 0%, #173D35 60%, #1a4535 100%)",
   },
   heroIcon: { fontSize: "2.5rem", display: "block", marginBottom: "0.6rem" },
   heroTitle: { fontSize: "clamp(1.4rem,4vw,2.1rem)", fontWeight: 700, color: "#fff", margin: "0 0 0.4rem" },
@@ -48,7 +48,7 @@ function AyahText({ surah, ayah: ayahNum, surahName }: { surah: number; ayah: nu
         direction: "rtl",
         padding: "0.75rem 1rem",
         background: "rgba(14,110,82,0.05)",
-        borderRight: "3px solid #0E6E52",
+        borderRight: "3px solid #28584D",
         borderRadius: "0 8px 8px 0",
         color: "var(--ds-text-1,#1a1a1a)",
         marginBottom: "0.5rem",
@@ -111,7 +111,7 @@ function MutashabihatCard({ pair }: { pair: MutashabihatPair }) {
                 padding: "0.15rem 0.5rem",
                 borderRadius: "6px",
                 background: "rgba(14,110,82,0.1)",
-                color: "#0E6E52",
+                color: "#28584D",
                 fontSize: "0.7rem",
                 fontWeight: 700,
               }}
@@ -141,7 +141,7 @@ function MutashabihatCard({ pair }: { pair: MutashabihatPair }) {
           <div style={{ marginTop: "1rem" }}>
             {pair.refs.map((ref, i) => (
               <div key={i} style={{ marginBottom: "0.75rem" }}>
-                <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0E6E52", marginBottom: "0.3rem" }}>
+                <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#28584D", marginBottom: "0.3rem" }}>
                   سورة {ref.surahName} — الآية {ref.ayah}
                 </div>
                 <AyahText surah={ref.surah} ayah={ref.ayah} surahName={ref.surahName} />
@@ -294,8 +294,8 @@ export default function MutashabihatPage() {
                 padding: "0.35rem 0.75rem",
                 borderRadius: "20px",
                 border: "1.5px solid",
-                borderColor: activeCategory === cat ? "#0E6E52" : "var(--ds-border,#e5e7eb)",
-                background: activeCategory === cat ? "#0E6E52" : "transparent",
+                borderColor: activeCategory === cat ? "#28584D" : "var(--ds-border,#e5e7eb)",
+                background: activeCategory === cat ? "#28584D" : "transparent",
                 color: activeCategory === cat ? "#fff" : "var(--ds-text-2,#6b7280)",
                 fontSize: "0.8rem",
                 fontWeight: 600,

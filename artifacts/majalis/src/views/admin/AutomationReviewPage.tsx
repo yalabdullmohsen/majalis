@@ -28,8 +28,8 @@ type DraftRow = {
 
 const DECISION_COLORS: Record<string, { bg: string; text: string }> = {
   approved: { bg: "#D1FAE5", text: "var(--majalis-emerald-deep)" },
-  pending_review: { bg: "rgba(14,110,82,0.08)", text: "#176B57" },
-  duplicate: { bg: "rgba(14,110,82,.10)", text: "#0E6E52" },
+  pending_review: { bg: "rgba(14,110,82,0.08)", text: "#173D35" },
+  duplicate: { bg: "rgba(14,110,82,.10)", text: "#28584D" },
   rejected: { bg: "#FEE2E2", text: "#991B1B" },
 };
 
@@ -45,7 +45,7 @@ function formatDt(iso?: string) {
 function confidenceColor(score: number) {
   const pct = Math.round(score * 100);
   if (pct >= 75) return { bg: "#D1FAE5", text: "var(--majalis-emerald-deep)" };
-  if (pct >= 45) return { bg: "rgba(14,110,82,0.08)", text: "#176B57" };
+  if (pct >= 45) return { bg: "rgba(14,110,82,0.08)", text: "#173D35" };
   return { bg: "#FEE2E2", text: "#991B1B" };
 }
 

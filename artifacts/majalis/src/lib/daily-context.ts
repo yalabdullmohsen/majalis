@@ -67,7 +67,7 @@ interface HijriEvent {
 }
 
 const HIJRI_EVENTS: HijriEvent[] = [
-  { day: 1,  month: 1,  label: "رأس السنة الهجرية",        color: "#0E6E52" },
+  { day: 1,  month: 1,  label: "رأس السنة الهجرية",        color: "#28584D" },
   { day: 10, month: 1,  label: "يوم عاشوراء",              color: "#5B21B6" },
   { day: 12, month: 3,  label: "ذكرى المولد النبوي الشريف", color: "#0F766E" },
   { day: 27, month: 7,  label: "ليلة الإسراء والمعراج",    color: "#4338CA" },
@@ -82,8 +82,8 @@ const HIJRI_EVENTS: HijriEvent[] = [
 // ── أيام الأسبوع المميّزة ────────────────────────────────────────────────────
 
 const DAY_EVENTS: Partial<Record<DayOfWeek, { label: string; color: string }>> = {
-  friday:   { label: "يوم الجمعة المبارك", color: "#0E6E52" },
-  saturday: { label: "بداية أسبوع مثمر بإذن الله",             color: "#176B57" },
+  friday:   { label: "يوم الجمعة المبارك", color: "#28584D" },
+  saturday: { label: "بداية أسبوع مثمر بإذن الله",             color: "#173D35" },
   monday:   { label: "يوم الإثنين — يوم صيام مستحب",           color: "#0F5132" },
   thursday: { label: "يوم الخميس — يوم صيام مستحب",            color: "#0F5132" },
 };
@@ -103,10 +103,10 @@ const TIME_SUGGESTIONS: Record<TimeOfDay, string> = {
 // ── الألوان الافتراضية حسب الوقت ────────────────────────────────────────────
 
 const TIME_COLORS: Record<TimeOfDay, string> = {
-  fajr:    "#176B57",
-  duha:    "#0E6E52",
+  fajr:    "#173D35",
+  duha:    "#28584D",
   zuhr:    "#0F766E",
-  asr:     "#0E6E52",
+  asr:     "#28584D",
   maghrib: "#B45309",
   isha:    "#5B21B6",
   layl:    "#1F2937",

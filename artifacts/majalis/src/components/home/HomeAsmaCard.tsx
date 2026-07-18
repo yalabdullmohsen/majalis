@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { getTodayAsma } from "@/lib/asma-husna-data";
 
 const CATEGORY_COLORS: Record<string, string> = {
-  الجلال: "#176B57",
+  الجلال: "#173D35",
   الجمال: "#0E6655",
   الرحمة: "#1A5276",
   القدرة: "#6C3483",
@@ -13,7 +13,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 export function HomeAsmaCard() {
   const asma = getTodayAsma();
-  const accentColor = CATEGORY_COLORS[asma.category] ?? "#176B57";
+  const accentColor = CATEGORY_COLORS[asma.category] ?? "#173D35";
 
   return (
     <section className="hac" aria-labelledby="hac-heading" style={{ "--hac-accent": accentColor } as React.CSSProperties}>
