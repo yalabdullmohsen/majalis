@@ -3,6 +3,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { applyFontPreference, readFontPreference } from "./lib/font-preference";
+import { readThemePreference, resolveTheme } from "./lib/theme-preference";
 import { initClientErrorReporting } from "./lib/error-report";
 import { resetMobileNavBodyLock } from "./lib/mobile-nav-body-lock";
 import { bootstrapSupabaseFromServer, resetSupabaseClient } from "./lib/supabase-bootstrap";
@@ -51,8 +52,9 @@ void mount();
 
 registerProductionServiceWorker();
 
-// إعداد Capacitor Native (يُهمَل تلقائياً على الويب)
-void setupStatusBar();
+// إعداد Capacitor Native (يُهمَل تلقائياً على الويب) — بلون/نمط الوضع الفعلي
+// عند الإقلاع، لا قيمة ثابتة (ThemePreferenceProvider يُعيد المزامنة عند أي تبديل لاحق).
+void setupStatusBar(resolveTheme(readThemePreference()));
 void setupKeyboard();
 
 // معالجة زر الرجوع في Android

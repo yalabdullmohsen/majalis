@@ -7,7 +7,6 @@ import NotificationBell from "./NotificationBell";
 import { SectionErrorBoundary } from "./ErrorBoundary";
 import { SearchSuggestions } from "./SearchSuggestions";
 import { SideNavDrawer } from "./SideNavDrawer";
-import { MobileMoreMenu } from "./MobileMoreMenu";
 import { useThemePreference } from "./ThemePreferenceProvider";
 
 import { useMobileNavState } from "@/hooks/useMobileNavState";
@@ -98,7 +97,7 @@ export default function NavBar() {
   const { resolvedTheme, toggleDark } = useThemePreference();
   const [location, navigate] = useLocation();
   const isMobile = useIsMobile();
-  const { isMenuOpen, moreOpen, toggleMenu, openMenu, closeMenu, closeMore, closeAll } = useMobileNavState();
+  const { isMenuOpen, toggleMenu, openMenu, closeMenu, closeAll } = useMobileNavState();
 
   const isActive = (href: string) => {
     const path = href.split("?")[0];
@@ -150,7 +149,7 @@ export default function NavBar() {
   return (
     <>
       <header
-        className={`navbar-v3 sticky top-0 border-b${isMenuOpen || moreOpen ? " navbar-v3--menu-open" : ""}`}
+        className={`navbar-v3 sticky top-0 border-b${isMenuOpen ? " navbar-v3--menu-open" : ""}`}
       >
         <div className="navbar-v3__inner">
           <div className="navbar-v3__start">
@@ -270,20 +269,6 @@ export default function NavBar() {
         onClose={closeMenu}
         onLogout={handleLogout}
       />
-
-      {/* Mobile "more" menu — still used if ever triggered, but hidden on mobile now */}
-      {!isMobile && (
-        <MobileMoreMenu
-          open={moreOpen}
-          onClose={closeMore}
-          isActive={isActive}
-          isAdmin={isAdmin}
-          isLoggedIn={isLoggedIn}
-          onLogout={handleLogout}
-          searchBox={<SearchBox onSubmitDone={closeMore} />}
-          location={location}
-        />
-      )}
     </>
   );
 }

@@ -9,15 +9,15 @@ import {
 import { useAuth } from "@/components/AuthProvider";
 import { useRecentProgress } from "@/hooks/useRecentProgress";
 import {
-  fetchUserLearningStats,
   fetchPersonalLibrary,
   fetchLearningNotes,
-  type UserStats,
 } from "@/lib/digital-learning-service";
 import {
   fetchUserEnrollmentsWithProgress,
   fetchUserCertificatesList,
+  fetchRealUserLearningStats,
   type UserCertificateSummary,
+  type RealUserLearningStats,
 } from "@/lib/learning-paths-service";
 
 /* ── أيقونات المحتوى ────────────────────────────────────────────────────── */
@@ -66,7 +66,7 @@ export default function MyLearningPage() {
   const { user } = useAuth();
   const { items: resumeItems, loading: resumeLoading } = useRecentProgress(3);
 
-  const [stats,        setStats]        = useState<UserStats | null>(null);
+  const [stats,        setStats]        = useState<RealUserLearningStats | null>(null);
   const [enrollments,  setEnrollments]  = useState<Awaited<ReturnType<typeof fetchUserEnrollmentsWithProgress>>>([]);
   const [certificates, setCertificates] = useState<UserCertificateSummary[]>([]);
   const [library,      setLibrary]      = useState<Array<{ title: string; content_url?: string; content_id?: string }>>([]);
@@ -86,7 +86,7 @@ export default function MyLearningPage() {
   useEffect(() => {
     if (!user?.id) { setLoading(false); return; }
     Promise.all([
-      fetchUserLearningStats(),
+      fetchRealUserLearningStats(user.id),
       fetchUserEnrollmentsWithProgress(user.id),
       fetchUserCertificatesList(user.id),
       fetchPersonalLibrary(),
@@ -151,9 +151,9 @@ export default function MyLearningPage() {
             {([
               { val: stats.completed_lessons,  lbl: "درس" },
               { val: stats.completed_paths,    lbl: "مسار" },
-              { val: stats.books_read,         lbl: "كتاب" },
+              { val: library.length,           lbl: "كتاب" },
               { val: stats.achievements_count, lbl: "إنجاز" },
-            ] as const).map(({ val, lbl }, i, arr) => (
+            ]).map(({ val, lbl }, i, arr) => (
               <span key={lbl} className="myl2-qstat">
                 <strong className="myl2-qstat__n">{val}</strong>
                 <span className="myl2-qstat__l">{lbl}</span>
@@ -215,7 +215,7 @@ export default function MyLearningPage() {
             <div className="myl2-stats-grid">
               <StatCard icon={GraduationCap} value={stats.completed_lessons} label="دروس مكتملة" />
               <StatCard icon={Target}        value={stats.completed_paths}    label="مسارات" />
-              <StatCard icon={BookOpen}      value={stats.books_read}         label="كتب محفوظة" />
+              <StatCard icon={BookOpen}      value={library.length}           label="كتب محفوظة" />
               <StatCard icon={Brain}         value={stats.quiz_attempts}      label="اختبارات" />
               <StatCard icon={Medal}         value={stats.achievements_count} label="إنجازات" />
               <StatCard icon={Flame}         value={stats.completion_pct}     label="نسبة الإنجاز" suffix="%" />
@@ -285,29 +285,6 @@ export default function MyLearningPage() {
                     </p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* الإنجازات */}
-        {stats && (stats.achievements?.length ?? 0) > 0 && (
-          <section className="myl2-card" aria-labelledby="myl2-ach-hd">
-            <div className="myl2-card__head">
-              <h2 className="myl2-card__title" id="myl2-ach-hd">
-                <Medal size={16} aria-hidden="true" />
-                الإنجازات
-              </h2>
-            </div>
-            <div className="myl2-badges-wrap">
-              {stats.achievements.map((a) => (
-                <span
-                  key={a.key}
-                  className="myl2-ach-badge"
-                  title={new Date(a.earned_at).toLocaleDateString("ar-KW")}
-                >
-                  ✦ {a.title}
-                </span>
               ))}
             </div>
           </section>

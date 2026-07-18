@@ -1587,6 +1587,30 @@ hr.decorative,
   color: var(--clr-primary, #176B57);
 }
 
+/* المرحلة 6 — إحصاءات/تحدي اليوم، قيم أساسية آمنة للسياق الفاتح (تُستبدَل
+   بتجاوزات .home-main--v3 في elite-2026.css عند الاستخدام الفعلي بالرئيسية). */
+.ds-quiz-home-card__stat {
+  color: var(--ds-emerald-deep, #134a3a);
+  background: rgba(22, 78, 60, 0.07);
+}
+.ds-quiz-home-card__stats-empty,
+.ds-quiz-home-card__challenge-cat {
+  color: #4b5563;
+}
+.ds-quiz-home-card__challenge {
+  background: rgba(14, 110, 82, 0.06);
+  border: 1px solid rgba(14, 110, 82, 0.18);
+}
+.ds-quiz-home-card__challenge-badge {
+  color: var(--clr-primary, #176B57);
+}
+.ds-quiz-home-card__challenge-q {
+  color: var(--ds-emerald-deep, #134a3a);
+}
+.ds-quiz-home-card__stats-skel {
+  background: rgba(22, 78, 60, 0.08);
+}
+
 @media (max-width: 600px) {
   .ds-quiz-home-card__content {
     flex-direction: column;

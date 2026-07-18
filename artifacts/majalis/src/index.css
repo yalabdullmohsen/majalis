@@ -198,19 +198,17 @@ html {
   --color-parchment:     var(--msk-canvas,   #FFFFFF);
   --color-line:          var(--msk-border,   rgba(23,107,87,0.10));
 
-  /* ── الخطوط ── سياسة خطّين للواجهة + خط تراثي محدود + خط قرآني (2026-07-16) ──
-     1) --font-ui: واجهة التطبيق والقوائم (التنقل، الأزرار، القوائم) — SF Arabic
-        على أجهزة Apple عبر مكدّس النظام -apple-system (يحلّ تلقائيًا لخط SF
-        العربي المرافق)، وIBM Plex Sans Arabic كبديل خارج أجهزة Apple.
-     2) --font-body / --font-display / --font-reading: النصوص الطويلة والمقالات
-        والعناوين العامة — IBM Plex Sans Arabic / Noto Sans Arabic.
-     3) --font-heritage: عناوين تراثية محدودة فقط (لا نصوص طويلة) — Amiri.
-     4) --font-quran: المصحف حصرًا — خط عثماني موثق (Amiri Quran). */
-  --font-primary:  "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
-  --font-ui:       -apple-system, BlinkMacSystemFont, "SF Arabic", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
-  --font-body:     "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
-  --font-display:  "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
-  --font-reading:  "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+  /* ── الخطوط ── سياسة خط الواجهة الموحَّد Almarai + خط تراثي محدود + خط قرآني (2026-07-18) ──
+     1) --font-ui / --font-body / --font-display / --font-reading: واجهة التطبيق
+        كاملة (تنقل، أزرار، قوائم، نصوص، عناوين، قراءة) — Almarai، ببديل احتياطي
+        IBM Plex Sans Arabic / Noto Sans Arabic لو تعذّر تحميل Almarai.
+     2) --font-heritage: عناوين تراثية محدودة فقط (لا نصوص طويلة) — Amiri.
+     3) --font-quran: المصحف حصرًا — خط عثماني موثق (Amiri Quran). لا يتغيّر أبدًا. */
+  --font-primary:  "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+  --font-ui:       "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+  --font-body:     "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+  --font-display:  "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+  --font-reading:  "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
   --font-quran:    "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
   /* خط تراثي للعناوين البارزة فقط (لا يُستخدَم في النصوص الطويلة أو الفقرات) */
   --font-heritage: "Amiri", "Aref Ruqaa", "Scheherazade New", serif;
@@ -475,7 +473,7 @@ html[data-theme="dark"] a:hover {
   color: #5CC49A;
 }
 
-/* IBM Plex Sans Arabic هو الخط الموحَّد الوحيد لواجهة المنصة (2026-07-16) — كلا خياري
+/* Almarai هو الخط الموحَّد الوحيد لواجهة المنصة (2026-07-18) — كلا خياري
    تفضيل القراءة السابقين (naskh/default) يُصيَّران لنفس الخط الأساسي كي لا
    يبقى أي مسار يتجاوز الخط الموحَّد. الآلية (data-font) أُبقيت سليمة تقنيًا
    لتفادي كسر مكوّن الإعدادات، لكنها لم تعد تُنتج فرقًا بصريًا. */

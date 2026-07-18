@@ -2,10 +2,13 @@
 /**
  * verify-font-consistency.mjs
  *
- * يمنع رجوع أي خط غير IBM Plex Sans Arabic ليصبح الخط الأساسي للمنصة (2026-07-16).
+ * يمنع رجوع أي خط غير Almarai ليصبح الخط الأساسي لواجهة المنصة (2026-07-18،
+ * تحديثًا لسياسة IBM Plex Sans Arabic السابقة بتاريخ 2026-07-16).
  * يفحص كل font-family/fontFamily في src/ وlib/ ويرفض أي قيمة أولى ليست:
- *   - "IBM Plex Sans Arabic" / "Noto Sans Arabic" / system-ui / -apple-system / sans-serif
- *   - var(--font-...) أو var(--mj-font-...) (تُحلّ جميعها إلى IBM Plex Sans Arabic ما عدا --font-quran)
+ *   - "Almarai" / "IBM Plex Sans Arabic" (بديل احتياطي، ولا يزال يُستخدَم صراحةً
+ *     في مسارات توليد الصور/PDF التي لا تقرأ متغيّرات CSS) / "Noto Sans Arabic" /
+ *     system-ui / -apple-system / sans-serif
+ *   - var(--font-...) أو var(--mj-font-...) (تُحلّ جميعها إلى Almarai ما عدا --font-quran)
  *   - inherit
  *   - مكدّس monospace (كود/أرقام)
  *   - أحد خطوط الاستثناء القرآني/التراثي المعتمدة صراحةً (انظر QURAN_EXCEPTION_FONTS)
@@ -43,7 +46,7 @@ function firstToken(value) {
 }
 
 const UI_FONT_MARKERS = [
-  "ibm plex sans arabic", "noto sans arabic", "system-ui", "-apple-system", "sans-serif",
+  "almarai", "ibm plex sans arabic", "noto sans arabic", "system-ui", "-apple-system", "sans-serif",
 ];
 
 function isAllowed(rawValue) {
@@ -105,16 +108,16 @@ for (const relPath of listFiles()) {
 }
 
 if (violations.length > 0) {
-  console.error("\x1b[31m✗ فحص اتساق الخط فشل — عُثر على خط غير IBM Plex Sans Arabic:\x1b[0m\n");
+  console.error("\x1b[31m✗ فحص اتساق الخط فشل — عُثر على خط غير Almarai:\x1b[0m\n");
   for (const v of violations) {
     console.error(`  ${v.file}:${v.line}  →  font-family: ${v.value}`);
   }
   console.error(
-    "\n\x1b[33mالخط الموحَّد للمنصة هو IBM Plex Sans Arabic. إن كان هذا استثناءً قرآنيًا/تراثيًا حقيقيًا،" +
+    "\n\x1b[33mالخط الموحَّد للمنصة هو Almarai. إن كان هذا استثناءً قرآنيًا/تراثيًا حقيقيًا،" +
     " أضف اسم الخط إلى QURAN_EXCEPTION_FONTS في scripts/verify-font-consistency.mjs بعد تدقيق يدوي" +
     " يؤكد أن العنصر يعرض نصًا قرآنيًا حرفيًا لا نصًا زخرفيًا مستعارًا.\x1b[0m\n"
   );
   process.exit(1);
 } else {
-  console.log(`\x1b[32m✓ فحص اتساق الخط: لا انحراف عن IBM Plex Sans Arabic (${listFiles().length} ملف مفحوص)\x1b[0m`);
+  console.log(`\x1b[32m✓ فحص اتساق الخط: لا انحراف عن Almarai (${listFiles().length} ملف مفحوص)\x1b[0m`);
 }

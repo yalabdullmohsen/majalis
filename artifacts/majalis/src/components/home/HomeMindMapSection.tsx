@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { Map, Network } from "lucide-react";
+import { Widget } from "@/components/widgets/Widget";
 
 const MAPS = [
   {
@@ -20,15 +21,15 @@ const MAPS = [
 
 export function HomeMindMapSection() {
   return (
-    <section className="home-section hmm-section" aria-labelledby="hmm-heading">
-      <div className="home-section-head">
-        <div>
-          <p className="home-eyebrow">التعلم المرئي</p>
-          <h2 id="hmm-heading">الخرائط الذهنية</h2>
-        </div>
-        <Link href="/mind-map" className="home-section-link">افتح الخرائط</Link>
-      </div>
-
+    <Widget
+      id="mind-map"
+      className="hmm-section"
+      eyebrow="التعلم المرئي"
+      title="الخرائط الذهنية"
+      moreHref="/mind-map"
+      moreLabel="افتح الخرائط"
+      state="ready"
+    >
       <div className="hmm-grid">
         {MAPS.map(({ href, Icon, title, desc, tag }) => (
           <Link key={href} href={href} className="hmm-card">
@@ -44,6 +45,6 @@ export function HomeMindMapSection() {
           </Link>
         ))}
       </div>
-    </section>
+    </Widget>
   );
 }

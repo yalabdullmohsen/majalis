@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { InstagramAcademyLink } from "@/components/InstagramAcademyLink";
 import { applyPageSeo } from "@/lib/seo";
 
 export default function AboutPage() {
@@ -200,6 +201,16 @@ export default function AboutPage() {
           بشرية من متخصص وتوثيق من يُزكّيه (<code>verified_by</code>). هذا ليس مجرد سياسة
           تقنية، بل التزام ديني وأمانة علمية لا نتساهل فيها.
         </p>
+      </LegalSection>
+
+      <LegalSection title="تابعونا">
+        <p>
+          تعاون المجلس العلمي مع أكاديمية ورثة الأنبياء لتقديم محتوى علمي إضافي عبر
+          حسابها على انستغرام.
+        </p>
+        <div className="contact-channels">
+          <InstagramAcademyLink variant="card" />
+        </div>
       </LegalSection>
 
       <LegalSection title="روابط مفيدة">

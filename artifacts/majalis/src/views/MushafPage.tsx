@@ -1,196 +1,375 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useParams, useLocation } from "wouter";
-import { Menu, Pause, Play, Copy, Check, Mic } from "lucide-react";
-import { PageHeader } from "@/components/ui-common";
+import { Menu, ChevronRight, ChevronLeft, X, BookOpen, Hash, Layers, Mic } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
-import { fetchSurahDetail, getSurahList, type SurahDetail, type SurahSummary } from "@/lib/quran-api";
+import { getSurahList, getSurahMeta } from "@/lib/quran-api";
+import {
+  fetchPage, fetchPagesManifest, firstPageOfSurah, juzForPage,
+  type PageContent, type PagesManifest,
+} from "@/lib/quran-pages";
 import { SurahList } from "@/components/quran/SurahList";
-import { ExploreAyahPanel } from "@/components/quran/ExploreAyahPanel";
+import { AyahActionSheet } from "@/components/quran/AyahActionSheet";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
-import { copyAyahText } from "@/lib/share-ayah";
+import { usePageSwipe } from "@/hooks/usePageSwipe";
 import "@/styles/quran.css";
+
+/**
+ * قارئ المصحف — إعادة بناء المرحلة 8 (2026-07-18): ترقيم مدينة 604 صفحة
+ * حقيقي (لا سرد بالسورة فقط كما كان)، سحب أفقي RTL بين الصفحات، Bottom
+ * Sheet بدل الأزرار الدائمة لكل آية، ووضع قراءة هادئ (ضغطة تُخفي/تُظهر
+ * التحكم). البيانات من src/lib/quran-pages.ts (فهرس صفحات مُتحقَّق + نص
+ * محلي checksum). البحث الحي الحالي في SurahList أُبقي كما هو دون تعديل.
+ */
+
+const LAST_PAGE_KEY = "majalis-mushaf-last-page-v1";
+const TOTAL_PAGES = 604;
+
+function readLastPage(): number {
+  try {
+    const raw = localStorage.getItem(LAST_PAGE_KEY);
+    const n = raw ? Number(raw) : 1;
+    return Number.isFinite(n) && n >= 1 && n <= TOTAL_PAGES ? n : 1;
+  } catch {
+    return 1;
+  }
+}
+
+function saveLastPage(page: number) {
+  try { localStorage.setItem(LAST_PAGE_KEY, String(page)); } catch { /* تجاهل بأمان */ }
+}
+
+type SidebarTab = "surah" | "juz" | "page";
 
 export default function MushafPage() {
   const params = useParams<{ surah?: string }>();
   const [, navigate] = useLocation();
-  const surahNum = Math.min(114, Math.max(1, Number(params.surah) || 1));
 
-  const [detail, setDetail] = useState<SurahDetail | null>(null);
+  const [manifest, setManifest] = useState<PagesManifest | null>(null);
+  const [currentPage, setCurrentPage] = useState<number | null>(null);
+  const [content, setContent] = useState<PageContent | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [exploreAyah, setExploreAyah] = useState<{ num: number; text: string } | null>(null);
-  const [copiedAyah, setCopiedAyah] = useState<number | null>(null);
+  const [sidebarTab, setSidebarTab] = useState<SidebarTab>("surah");
+  const [quietMode, setQuietMode] = useState(false);
+  const [pageJumpInput, setPageJumpInput] = useState("");
+  const [activeAyah, setActiveAyah] = useState<PageContent["ayahs"][number] | null>(null);
+  const [repeatOn, setRepeatOn] = useState(false);
+  const initializedFromRoute = useRef(false);
 
-  const surahs = useMemo<SurahSummary[]>(
+  const surahs = useMemo(
     () => getSurahList().map((s) => ({
-      number: s.number,
-      name: s.name,
-      englishName: "",
-      englishNameTranslation: "",
+      number: s.number, name: s.name, englishName: "", englishNameTranslation: "",
       numberOfAyahs: s.ayahs,
-      revelationType: s.revelation === "مدنية" ? "Medinan" : "Meccan",
+      revelationType: (s.revelation === "مدنية" ? "Medinan" : "Meccan") as "Meccan" | "Medinan",
     })),
     [],
   );
-  const surahMeta = surahs.find((s) => s.number === surahNum);
 
+  // ── تحديد الصفحة الابتدائية: من رابط /mushaf/:surah إن وُجد، وإلا آخر موضع محفوظ ──
   useEffect(() => {
+    if (initializedFromRoute.current) return;
+    initializedFromRoute.current = true;
+    let cancelled = false;
+    (async () => {
+      try {
+        const m = await fetchPagesManifest();
+        if (cancelled) return;
+        setManifest(m);
+        if (params.surah) {
+          const n = Math.min(114, Math.max(1, Number(params.surah) || 1));
+          const page = await firstPageOfSurah(n);
+          if (!cancelled) setCurrentPage(page);
+        } else {
+          setCurrentPage(readLastPage());
+        }
+      } catch {
+        if (!cancelled) { setError(true); setLoading(false); }
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
+  // ── تحميل محتوى الصفحة الحالية + تحضير مسبق للمجاورتين ──
+  useEffect(() => {
+    if (currentPage === null) return;
+    let cancelled = false;
     setLoading(true);
     setError(false);
-    fetchSurahDetail(surahNum)
-      .then(setDetail)
-      .catch(() => setError(true))
-      .finally(() => setLoading(false));
-  }, [surahNum]);
+    fetchPage(currentPage)
+      .then((c) => { if (!cancelled) setContent(c); })
+      .catch(() => { if (!cancelled) setError(true); })
+      .finally(() => { if (!cancelled) setLoading(false); });
+
+    if (currentPage < TOTAL_PAGES) void fetchPage(currentPage + 1).catch(() => {});
+    if (currentPage > 1) void fetchPage(currentPage - 1).catch(() => {});
+
+    saveLastPage(currentPage);
+    return () => { cancelled = true; };
+  }, [currentPage]);
+
+  // ── مزامنة الرابط (استبدال، لا دفع تاريخ) بالسورة الرائدة في الصفحة، للمشاركة/الفهرسة ──
+  useEffect(() => {
+    if (!content || content.surahs.length === 0) return;
+    const leadingSurah = content.surahs[0].number;
+    const target = leadingSurah === 1 ? "/mushaf" : `/mushaf/${leadingSurah}`;
+    if (window.location.pathname !== target) {
+      window.history.replaceState(null, "", target);
+    }
+  }, [content]);
 
   useEffect(() => {
+    const leadingSurah = content?.surahs[0];
     applyPageSeo({
-      path: `/mushaf${surahNum > 1 ? `/${surahNum}` : ""}`,
-      title: `${surahMeta ? `سورة ${surahMeta.name}` : "المصحف الشريف"} | المجلس العلمي`,
-      description: surahMeta
-        ? `اقرأ سورة ${surahMeta.name} كاملة (${surahMeta.numberOfAyahs} آية) برواية حفص عن عاصم، مع الاستماع والمشاركة.`
-        : "المصحف الشريف كاملاً — اقرأ القرآن الكريم سورة سورة بخط عثماني واضح، مع الاستماع لكل آية ومشاركتها.",
-      keywords: ["المصحف", "القرآن الكريم", "قراءة القرآن", surahMeta?.name ?? ""].filter(Boolean),
+      path: leadingSurah && leadingSurah.number !== 1 ? `/mushaf/${leadingSurah.number}` : "/mushaf",
+      title: `${leadingSurah ? `سورة ${leadingSurah.name}` : "المصحف الشريف"} — صفحة ${currentPage ?? ""} | المجلس العلمي`,
+      description: "اقرأ القرآن الكريم بترقيم مصحف المدينة (604 صفحة)، بخط عثماني واضح، مع الاستماع والتفسير والمشاركة لكل آية.",
+      keywords: ["المصحف", "القرآن الكريم", "قراءة القرآن", leadingSurah?.name ?? ""].filter(Boolean),
     });
-  }, [surahNum, surahMeta]);
+  }, [content, currentPage]);
 
-  const totalAyahs = detail?.ayahs.length ?? surahMeta?.numberOfAyahs ?? 0;
-  const { currentAyah, playerState, togglePlayAyah } = useAyahPlayer(surahNum, totalAyahs);
+  const activeSurahForPlayer = activeAyah?.surahNumber ?? content?.surahs[0]?.number ?? 1;
+  const totalAyahsForPlayer = getSurahMeta(activeSurahForPlayer).ayahs;
+  const { currentAyah, playerState, reciterId, setReciterId, togglePlayAyah, playFromAyah } =
+    useAyahPlayer(activeSurahForPlayer, totalAyahsForPlayer);
 
-  const handleSelectSurah = (n: number) => {
-    navigate(n === 1 ? "/mushaf" : `/mushaf/${n}`);
+  // تكرار: عند انتهاء الآية (idle) وتفعيل "تكرار"، أعِد تشغيل نفس الآية بدل التوقف.
+  const lastPlayedAyah = useRef<number | null>(null);
+  useEffect(() => {
+    if (currentAyah !== null) lastPlayedAyah.current = currentAyah;
+    if (repeatOn && playerState === "idle" && lastPlayedAyah.current !== null) {
+      playFromAyah(lastPlayedAyah.current);
+    }
+  }, [playerState, currentAyah, repeatOn, playFromAyah]);
+
+  const goToPage = useCallback((n: number) => {
+    setCurrentPage((prev) => {
+      const clamped = Math.min(TOTAL_PAGES, Math.max(1, n));
+      return clamped === prev ? prev : clamped;
+    });
+  }, []);
+
+  const { dragOffset, dragging, swipeHandlers } = usePageSwipe({
+    onNext: () => goToPage((currentPage ?? 1) + 1),
+    onPrev: () => goToPage((currentPage ?? 1) - 1),
+    disabled: currentPage === null || Boolean(activeAyah),
+  });
+
+  const handleSelectSurah = async (n: number) => {
+    const page = await firstPageOfSurah(n);
+    goToPage(page);
     setSidebarOpen(false);
   };
 
-  const handleCopy = async (ayahNum: number, text: string) => {
-    const ok = await copyAyahText(text, surahMeta?.name ?? "", ayahNum);
-    if (ok) {
-      setCopiedAyah(ayahNum);
-      setTimeout(() => setCopiedAyah((v) => (v === ayahNum ? null : v)), 1800);
+  const handleSelectJuz = (firstPage: number) => {
+    goToPage(firstPage);
+    setSidebarOpen(false);
+  };
+
+  const handlePageJumpSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const n = Number(pageJumpInput);
+    if (Number.isFinite(n) && n >= 1 && n <= TOTAL_PAGES) {
+      goToPage(n);
+      setSidebarOpen(false);
+      setPageJumpInput("");
     }
   };
 
-  const isFirstAyahBasmala = surahNum !== 1 && surahNum !== 9;
+  const juzNumber = manifest && currentPage ? juzForPage(manifest, currentPage) : null;
 
   return (
-    <div className="quran-shell" dir="rtl">
-      <PageHeader
-        eyebrow="القرآن الكريم"
-        title="المصحف الشريف"
-        subtitle="اقرأ القرآن الكريم كاملاً، سورة سورة، مع الاستماع لكل آية."
-      />
+    <div className={`quran-shell mushaf-v2${quietMode ? " mushaf-v2--quiet" : ""}`} dir="rtl">
+      {!quietMode && (
+        <header className="mushaf-v2__header">
+          <button type="button" className="mushaf-v2__sidebar-btn" onClick={() => setSidebarOpen(true)} aria-label="فهرس السور والأجزاء والصفحات">
+            <Menu size={18} aria-hidden="true" />
+          </button>
+          <div className="mushaf-v2__header-info">
+            <span className="mushaf-v2__header-surah">
+              {content?.surahs.map((s) => s.name).join(" / ") ?? "المصحف الشريف"}
+            </span>
+            <span className="mushaf-v2__header-meta">
+              {currentPage ? `صفحة ${currentPage}` : ""}{juzNumber ? ` · الجزء ${juzNumber}` : ""}
+            </span>
+          </div>
+          <button
+            type="button"
+            className="qs-recitation-cta"
+            onClick={() => navigate(`/quran/recitation-test-ai?surah=${activeSurahForPlayer}`)}
+          >
+            <Mic size={16} aria-hidden="true" />
+            سمّع
+            <span className="qs-recitation-cta__badge">تجريبي</span>
+          </button>
+        </header>
+      )}
 
-      <div className="qs-layout">
-        <button
-          type="button"
-          className="qs-mobile-sidebar-toggle"
-          onClick={() => setSidebarOpen(true)}
-          aria-label="فهرس السور"
-        >
-          <Menu size={16} aria-hidden="true" />
-          فهرس السور
-        </button>
+      <main
+        className="mushaf-v2__page"
+        {...swipeHandlers}
+        style={dragging ? { transform: `translateX(${dragOffset * 0.35}px)` } : undefined}
+        onClick={() => setQuietMode((v) => !v)}
+      >
+        {loading || currentPage === null ? (
+          <p className="ds-empty">جاري التحميل...</p>
+        ) : error || !content ? (
+          <div className="ds-empty">
+            <p>تعذّر تحميل الصفحة. تحقّق من اتصالك وحاول مجددًا.</p>
+            <button type="button" className="page-link-inline" onClick={(e) => { e.stopPropagation(); goToPage(currentPage); }}>
+              إعادة المحاولة
+            </button>
+          </div>
+        ) : (
+          <div className="mushaf-v2__ayahs" onClick={(e) => e.stopPropagation()}>
+            {content.ayahs.map((a) => {
+              const isPlaying = currentAyah === a.numberInSurah && a.surahNumber === activeSurahForPlayer && playerState === "playing";
+              const showBasmala = a.isFirstOfSurah && a.surahNumber !== 1 && a.surahNumber !== 9;
+              return (
+                <span key={`${a.surahNumber}-${a.number}`} className="mushaf-v2__ayah-wrap">
+                  {a.isFirstOfSurah && (
+                    <span className="mushaf-v2__surah-marker" aria-hidden="true">
+                      {/* a.surahNameFull بالفعل بصيغة "سُورَةُ ..." الكاملة — لا تُضَف
+                          "سورة" ثانيةً (كانت مُكرَّرة فعليًا هنا: "سورة سُورَةُ..."،
+                          رصدتُها بلقطة Playwright حقيقية لصفحة 604). */}
+                      {content.surahs.length > 1 || a.surahNumber !== content.surahs[0].number ? a.surahNameFull : ""}
+                    </span>
+                  )}
+                  {showBasmala && <span className="mushaf-v2__bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>}
+                  <span
+                    className={`mushaf-v2__ayah${isPlaying ? " mushaf-v2__ayah--playing" : ""}`}
+                    style={{ fontFamily: "var(--font-quran)" }}
+                    onClick={() => setActiveAyah(a)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`آية ${a.numberInSurah} من سورة ${a.surahName} — افتح إجراءات الآية`}
+                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveAyah(a); } }}
+                  >
+                    {a.text}
+                    <span className="mushaf-v2__ayah-num" aria-hidden="true">﴾{a.numberInSurah}﴿</span>
+                  </span>
+                </span>
+              );
+            })}
+          </div>
+        )}
+      </main>
 
-        <aside className={`qs-sidebar${sidebarOpen ? " is-open" : ""}`}>
-          <SurahList
-            surahs={surahs}
-            currentSurah={surahNum}
-            onSelect={handleSelectSurah}
-            onClose={() => setSidebarOpen(false)}
-          />
-        </aside>
+      {!quietMode && (
+        <nav className="mushaf-v2__pager" aria-label="التنقل بين صفحات المصحف">
+          <button
+            type="button"
+            className="mushaf-v2__pager-btn"
+            onClick={() => goToPage((currentPage ?? 1) - 1)}
+            disabled={!currentPage || currentPage <= 1}
+            aria-label="الصفحة السابقة"
+          >
+            <ChevronRight size={18} aria-hidden="true" />
+          </button>
+          {/* dir="ltr" إلزامي هنا: زوج رقم/رقم بفاصل "/" داخل حاوية RTL يُعاد ترتيبه
+              بصريًا بخوارزمية bidi الافتراضية (لاحظتُه فعليًا بلقطة Playwright:
+              "1 / 604" يظهر معكوسًا "604 / 1") — نفس فخّ ترقيم الصفحات في تخطيط RTL. */}
+          <span className="mushaf-v2__pager-count" dir="ltr">{currentPage ?? "—"} / {TOTAL_PAGES}</span>
+          <button
+            type="button"
+            className="mushaf-v2__pager-btn"
+            onClick={() => goToPage((currentPage ?? 1) + 1)}
+            disabled={!currentPage || currentPage >= TOTAL_PAGES}
+            aria-label="الصفحة التالية"
+          >
+            <ChevronLeft size={18} aria-hidden="true" />
+          </button>
+        </nav>
+      )}
 
-        <main className="qs-main">
-          {loading ? (
-            <p className="ds-empty">جاري التحميل...</p>
-          ) : error || !detail ? (
-            <p className="ds-empty">تعذّر تحميل السورة. تحقّق من اتصالك وحاول مجددًا.</p>
-          ) : (
-            <>
-              <header className="qs-surah-header">
-                <div className="qs-surah-header__ornament" aria-hidden="true">﴾ ﴿</div>
-                <h1 className="qs-surah-header__title">{surahMeta ? `سورة ${surahMeta.name}` : detail.name}</h1>
-                <p className="qs-surah-meta">
-                  {detail.numberOfAyahs} آية · {detail.revelationType === "Meccan" ? "مكية" : "مدنية"}
-                </p>
-                {isFirstAyahBasmala && (
-                  <p className="qs-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
-                )}
-                <button
-                  type="button"
-                  className="qs-recitation-cta"
-                  onClick={() => navigate(`/quran/recitation-test-ai?surah=${surahNum}`)}
-                >
-                  <Mic size={16} aria-hidden="true" />
-                  سمّع هذه السورة
-                  <span className="qs-recitation-cta__badge">نسخة تجريبية</span>
+      {sidebarOpen && typeof document !== "undefined" && createPortal(
+        // Portal إلى document.body إلزامي هنا (نفس نمط AyahActionSheet/ExploreAyahPanel
+        // الموجودَين مسبقًا) — بدونه يبقى العنصر محاصرًا داخل سياق تكديس (stacking
+        // context) وسيط أدنى من الهيدر العلوي الثابت (.navbar-v3) بصرف النظر عن
+        // z-index مهما ارتفع (تحقّقتُ فعليًا بـ Playwright: النقر كان يصل لأيقونة
+        // القمر داخل الهيدر بدل تبويب الفهرس رغم z-index أعلى بكثير). راجع أيضًا
+        // ملاحظة z-index:10000 في elite-2026.css بخصوص .navbar-v3 المُثبَّت 9999/200.
+        <div className="mushaf-v2__sidebar-overlay" role="presentation" onClick={() => setSidebarOpen(false)}>
+          <aside className="mushaf-v2__sidebar" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="فهرس السور والأجزاء والصفحات">
+            <div className="mushaf-v2__sidebar-head">
+              <div className="mushaf-v2__sidebar-tabs" role="tablist">
+                <button type="button" role="tab" aria-selected={sidebarTab === "surah"} className={`mushaf-v2__sidebar-tab${sidebarTab === "surah" ? " is-active" : ""}`} onClick={() => setSidebarTab("surah")}>
+                  <BookOpen size={14} aria-hidden="true" /> سورة
                 </button>
-              </header>
-
-              <div className="qs-ayah-display">
-                <p className="qs-mushaf-body">
-                  {detail.ayahs.map((a) => {
-                    const isPlaying = currentAyah === a.numberInSurah && playerState === "playing";
-                    const isTarget = currentAyah === a.numberInSurah;
-                    return (
-                      <span
-                        key={a.number}
-                        className={`qs-ayah-inline${isPlaying ? " qs-ayah-inline--playing" : ""}${isTarget ? " qs-ayah-inline--target" : ""}`}
-                      >
-                        <span
-                          className="qs-ayah-inline__text"
-                          onClick={() => setExploreAyah({ num: a.numberInSurah, text: a.text })}
-                        >
-                          {a.text}
-                        </span>
-                        <span className="qs-ayah-inline__num" aria-hidden="true">﴾{a.numberInSurah}﴿</span>
-                        <button
-                          type="button"
-                          className={`qs-ayah-inline__play${isPlaying ? " is-playing" : ""}`}
-                          onClick={() => togglePlayAyah(a.numberInSurah)}
-                          aria-label={isPlaying ? `إيقاف تلاوة الآية ${a.numberInSurah}` : `استماع الآية ${a.numberInSurah}`}
-                        >
-                          {isPlaying ? <Pause size={9} /> : <Play size={9} />}
-                        </button>
-                        <button
-                          type="button"
-                          className="qs-ayah-inline__share"
-                          onClick={() => handleCopy(a.numberInSurah, a.text)}
-                          aria-label={`نسخ الآية ${a.numberInSurah}`}
-                        >
-                          {copiedAyah === a.numberInSurah ? <Check size={9} /> : <Copy size={9} />}
-                        </button>
-                      </span>
-                    );
-                  })}
-                </p>
+                <button type="button" role="tab" aria-selected={sidebarTab === "juz"} className={`mushaf-v2__sidebar-tab${sidebarTab === "juz" ? " is-active" : ""}`} onClick={() => setSidebarTab("juz")}>
+                  <Layers size={14} aria-hidden="true" /> جزء
+                </button>
+                <button type="button" role="tab" aria-selected={sidebarTab === "page"} className={`mushaf-v2__sidebar-tab${sidebarTab === "page" ? " is-active" : ""}`} onClick={() => setSidebarTab("page")}>
+                  <Hash size={14} aria-hidden="true" /> صفحة
+                </button>
               </div>
+              <button type="button" className="mushaf-v2__sidebar-close" onClick={() => setSidebarOpen(false)} aria-label="إغلاق">
+                <X size={16} aria-hidden="true" />
+              </button>
+            </div>
 
-              <nav className="qs-surah-nav" aria-label="التنقل بين السور">
-                {surahNum > 1 && (
-                  <button type="button" onClick={() => handleSelectSurah(surahNum - 1)} className="page-link-inline">
-                    السورة السابقة →
-                  </button>
-                )}
-                {surahNum < 114 && (
-                  <button type="button" onClick={() => handleSelectSurah(surahNum + 1)} className="page-link-inline">
-                    ← السورة التالية
-                  </button>
-                )}
-              </nav>
-            </>
-          )}
-        </main>
-      </div>
+            {sidebarTab === "surah" && (
+              <SurahList
+                surahs={surahs}
+                currentSurah={content?.surahs[0]?.number ?? 1}
+                onSelect={handleSelectSurah}
+                onClose={() => setSidebarOpen(false)}
+              />
+            )}
 
-      {exploreAyah && (
-        <ExploreAyahPanel
-          surahNum={surahNum}
-          ayahNum={exploreAyah.num}
-          surahName={surahMeta?.name ?? ""}
-          ayahText={exploreAyah.text}
-          onClose={() => setExploreAyah(null)}
+            {sidebarTab === "juz" && manifest && (
+              <ol className="mushaf-v2__juz-list" role="list">
+                {manifest.juz.map((j) => (
+                  <li key={j.juz}>
+                    <button
+                      type="button"
+                      className={`mushaf-v2__juz-item${juzNumber === j.juz ? " is-active" : ""}`}
+                      onClick={() => handleSelectJuz(j.firstPage)}
+                      aria-current={juzNumber === j.juz ? "true" : undefined}
+                    >
+                      <span>الجزء {j.juz}</span>
+                      <span className="mushaf-v2__juz-item-page">صفحة {j.firstPage}</span>
+                    </button>
+                  </li>
+                ))}
+              </ol>
+            )}
+
+            {sidebarTab === "page" && (
+              <form className="mushaf-v2__page-jump" onSubmit={handlePageJumpSubmit}>
+                <input
+                  type="number"
+                  min={1}
+                  max={TOTAL_PAGES}
+                  value={pageJumpInput}
+                  onChange={(e) => setPageJumpInput(e.target.value)}
+                  placeholder={`رقم الصفحة (1-${TOTAL_PAGES})`}
+                  aria-label="انتقال إلى رقم صفحة"
+                  className="qs-search-input"
+                />
+                <button type="submit" className="mushaf-v2__page-jump-btn">انتقال</button>
+              </form>
+            )}
+          </aside>
+        </div>,
+        document.body,
+      )}
+
+      {activeAyah && (
+        <AyahActionSheet
+          surahNumber={activeAyah.surahNumber}
+          surahName={activeAyah.surahName}
+          ayahNumberInSurah={activeAyah.numberInSurah}
+          ayahText={activeAyah.text}
+          playerState={playerState}
+          isCurrentAyah={currentAyah === activeAyah.numberInSurah && activeAyah.surahNumber === activeSurahForPlayer}
+          reciterId={reciterId}
+          onSetReciter={setReciterId}
+          onTogglePlay={() => togglePlayAyah(activeAyah.numberInSurah)}
+          repeatOn={repeatOn}
+          onToggleRepeat={() => setRepeatOn((v) => !v)}
+          onClose={() => setActiveAyah(null)}
         />
       )}
     </div>

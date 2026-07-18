@@ -6,12 +6,6 @@ export type NavLink = {
   description?: string;
 };
 
-export type NavGroup = {
-  id: string;
-  title: string;
-  links: NavLink[];
-};
-
 /**
  * PUBLIC_NAV_ITEMS — المصدر الوحيد للحقيقة لجميع الصفحات العامة.
  *
@@ -23,7 +17,10 @@ export type NavGroup = {
  * تُستخدَم هذه القائمة في:
  *   - اختبار Playwright (00-public-routes.spec.ts) للتحقق من الوصول العام
  *   - القائمة الرئيسية (PRIMARY_NAV_ITEMS)
- *   - القائمة الجانبية (NAV_GROUPS)
+ *
+ * ملاحظة (2026-07-18): القائمة الجانبية (SideNavDrawer) والورقة السفلية
+ * (MoreBottomSheet) لهما بيانات روابط خاصة بهما مباشرة في ملفَي المكوّنين —
+ * وليس عبر هذا الملف. راجع phase 3 في READY_FOR_MERGE.md لتفاصيل التوحيد.
  */
 export const PUBLIC_NAV_ITEMS: NavLink[] = [
   // الصفحة الرئيسية
@@ -113,153 +110,6 @@ export const PRIMARY_NAV_ITEMS: NavLink[] = [
   { href: "/library",   label: "المكتبة",  description: "كتب · مخطوطات · مؤسسات" },
   { href: "/scholars",  label: "العلماء",  description: "تراجم العلماء والمشايخ" },
   { href: "/fiqh",      label: "الفقه",    description: "أحكام · مسائل · مجمع فقهي" },
-];
-
-/**
- * NAV_GROUPS — 4 مجموعات رئيسية لتجربة تنقل واضحة.
- * تُستخدم في: SideNavDrawer، MoreBottomSheet
- */
-export const NAV_GROUPS: NavGroup[] = [
-  {
-    id: "library",
-    title: "المكتبة",
-    links: [
-      /* — محتوى التعلّم — */
-      { href: "/lessons",            label: "الدروس الشرعية",     description: "دروس ومحاضرات مجدولة من علماء الكويت" },
-      { href: "/library",            label: "المكتبة العلمية",    description: `${COUNTS.books} كتابًا في الفقه والتفسير والحديث والعقيدة` },
-      { href: "/annual-courses",     label: "الدورات العلمية",    description: "برامج سنوية في العقيدة والفقه والحديث" },
-      { href: "/scholarly-research", label: "الباحث الشرعي",     description: "بحث ذكي في المصادر الإسلامية بتقنية RAG" },
-      { href: "/start-here",         label: "ابدأ من هنا",        description: "مسار مرتّب للمبتدئ في طلب العلم الشرعي" },
-      /* — الحديث والفقه — */
-      { href: "/hadith",             label: "الأحاديث النبوية",  description: "أحاديث مع بيان درجتها ومصدر تخريجها" },
-      { href: "/arbaeen-nawawi",     label: "الأربعون النووية",  description: "أمهات أحاديث الإسلام" },
-      { href: "/fawaid",             label: "الفوائد العلمية",   description: `${COUNTS.fawaid} فائدة منتقاة من أقوال العلماء` },
-      { href: "/fiqh",               label: "الفقه الإسلامي",   description: "بوابة الفقه الشامل" },
-      { href: "/rulings",            label: "الأحكام الشرعية",  description: "أحكام شرعية مع أدلتها ومراجعها وحالة مراجعتها" },
-      { href: "/fiqh-council",       label: "المجمع الفقهي",    description: "قرارات وبحوث وتوصيات" },
-      { href: "/qa",                 label: "الأسئلة التعليمية", description: "أسئلة وأجوبة علمية مع مصادرها" },
-      { href: "/updates",            label: "آخر المستجدات",    description: "أحدث القرارات والدروس والمستجدات العلمية" },
-    ],
-  },
-  {
-    id: "quran-adhkar",
-    title: "القرآن والأذكار",
-    links: [
-      /* — القرآن — */
-      { href: "/mushaf",              label: "المصحف الشريف",       description: "اقرأ القرآن الكريم كاملاً" },
-      { href: "/quran-hub",           label: "مركز القرآن",         description: "بوابتك الشاملة للقرآن الكريم" },
-      { href: "/daily-wird",          label: "الورد اليومي",        description: "تتبع قراءتك اليومية" },
-      { href: "/quran/tajweed",       label: "التجويد",             description: "أحكام التلاوة الصحيحة" },
-      { href: "/ulum-quran",          label: "علوم القرآن",         description: "النزول والجمع والإعجاز" },
-      { href: "/quran/surah-stories", label: "قصص القرآن",          description: "أسباب نزول ومحاور ١١٤ سورة" },
-      { href: "/duas-quran",          label: "أدعية القرآن",        description: "أدعية الأنبياء والمؤمنين" },
-      { href: "/quran-radio",         label: "إذاعات القرآن",       description: "بث مباشر بأصوات المشايخ" },
-      { href: "/quran-live",          label: "البث المباشر",        description: "بث الحرمين الشريفين مباشرة" },
-      /* — الأذكار — */
-      { href: "/adhkar",              label: "الأذكار",             description: "أذكار الصباح والمساء والنوم" },
-      { href: "/adhkar?cat=morning",  label: "أذكار الصباح",        description: "" },
-      { href: "/adhkar?cat=evening",  label: "أذكار المساء",        description: "" },
-      { href: "/duas",                label: "الأدعية الشرعية",     description: "أدعية من القرآن والسنة مع بيان مصدر كل دعاء" },
-      { href: "/tasbih",              label: "عداد التسبيح",        description: "مسبحة إلكترونية" },
-      { href: "/asma-husna",          label: "الأسماء الحسنى",      description: "99 اسماً لله تعالى مع المعاني" },
-    ],
-  },
-  {
-    id: "knowledge",
-    title: "المعرفة",
-    links: [
-      /* — السيرة والتاريخ — */
-      { href: "/seerah",           label: "السيرة النبوية",     description: "حياة النبي ﷺ من المولد إلى الوفاة" },
-      { href: "/sahabah",          label: "الصحابة الكرام",     description: "أعلام الجيل الأول الفريد" },
-      { href: "/anbiya",           label: "الأنبياء والرسل",    description: "موسوعة الأنبياء الكرام" },
-      { href: "/prophets",         label: "قصص الأنبياء",       description: "25 نبياً بالقصة والمعجزة" },
-      { href: "/scholars",         label: "أعلام الإسلام",      description: "العلماء والمحدثون عبر القرون" },
-      { href: "/stories",          label: "القصص الإسلامية",    description: "قصص من تاريخ الحضارة الإسلامية" },
-      /* — العقيدة والعلوم — */
-      { href: "/tawhid",           label: "التوحيد والعقيدة",   description: "أنواع التوحيد وأركان الإيمان" },
-      { href: "/arkan",            label: "أركان الإسلام",      description: "الأركان الخمسة بالأدلة" },
-      { href: "/arkan-iman",       label: "أركان الإيمان",      description: "الأركان الستة بالأدلة" },
-      { href: "/hadith-science",   label: "مصطلح الحديث",       description: "علوم الحديث والجرح والتعديل" },
-      { href: "/miracles",         label: "الإعجاز العلمي",     description: "إشارات علمية في القرآن والسنة — مع بيان حالة المراجعة" },
-      /* — الخرائط والمراجع — */
-      { href: "/knowledge-map",    label: "الخريطة المعرفية",   description: "استكشاف تفاعلي لعلوم الإسلام" },
-      { href: "/mind-map",         label: "الخرائط الذهنية",    description: `${COUNTS.mindMaps} خريطة في العلوم الشرعية` },
-      { href: "/knowledge-graph",  label: "الرسم المعرفي",      description: "علاقات المصطلحات والمفاهيم" },
-      { href: "/islamic-glossary", label: "المصطلحات الإسلامية", description: "مصطلحات العلوم الشرعية مُعرَّفة مع مصادرها" },
-      { href: "/learning/paths",   label: "المسارات العلمية",   description: "تعلّم منظم من المبتدئ للمتقدم" },
-      { href: "/universities",     label: "دليل الجامعات",      description: "جامعات الشريعة في العالم" },
-      { href: "/institutions",     label: "المؤسسات الإسلامية", description: "مساجد · مكتبات · مراكز · جامعات" },
-    ],
-  },
-  {
-    id: "my-tools",
-    title: "أدواتي",
-    links: [
-      /* — أدوات الصلاة — */
-      { href: "/prayer-times",          label: "مواقيت الصلاة",  description: "أوقات دقيقة للكويت" },
-      { href: "/prayer-countdown",      label: "عداد الصلاة",    description: "الوقت المتبقي للصلاة" },
-      { href: "/qibla",                 label: "القبلة",          description: "اتجاه الكعبة" },
-      { href: "/muezzins",              label: "مكتبة المؤذنين", description: "أجمل أصوات الأذان" },
-      /* — أدوات التعلّم — */
-      { href: "/search",                label: "البحث الشامل",    description: "ابحث في كل محتوى التطبيق" },
-      { href: "/quiz",                  label: "المسابقات",       description: `${COUNTS.quizQuestions} سؤال علمي` },
-      { href: "/flashcards",            label: "بطاقات المراجعة", description: "احفظ وراجع بأسلوب SM-2" },
-      { href: "/study-room",            label: "غرفة الدراسة",   description: "مؤقت بومودورو وتتبع جلسات المذاكرة" },
-      { href: "/my-learning",           label: "لوحتي التعليمية", description: "تقدمك وإنجازاتك" },
-      { href: "/learning-plan",         label: "خطة التعلّم",    description: "نظّم رحلتك العلمية" },
-      { href: "/vault",                 label: "مخزن المعرفة",   description: "المفضلات والملاحظات الشخصية" },
-      /* — التقاويم والمتابعة — */
-      { href: "/daily-wird",            label: "الورد اليومي",   description: "تتبع القراءة اليومية" },
-      { href: "/calendar",              label: "التقويم",         description: "التقويم الهجري" },
-      { href: "/learning/calendar",     label: "تقويم الدروس",   description: "مواعيد الدروس والدورات مع تصدير ICS" },
-      { href: "/occasions",             label: "المناسبات",       description: "المناسبات الإسلامية" },
-      { href: "/cards",                 label: "البطاقات الدعوية", description: "بطاقات اقتباسات بصرية" },
-      { href: "/settings",              label: "الإعدادات",       description: "تخصيص تجربتك" },
-      { href: "/notification-settings", label: "التنبيهات",       description: "مواقيت الصلاة والذكر" },
-    ],
-  },
-];
-
-/** Mobile "المزيد" dropdown — full site navigation */
-export const MOBILE_MORE_NAV = [
-  // المحتوى
-  { href: "/lessons",          label: "الدروس" },
-  { href: "/annual-courses",   label: "الدورات العلمية" },
-  { href: "/library",          label: "المكتبة" },
-  { href: "/qa",               label: "الأسئلة" },
-  { href: "/hadith",           label: "الأحاديث" },
-  { href: "/fawaid",           label: "الفوائد" },
-  { href: "/stories",          label: "القصص" },
-  { href: "/prophets",         label: "قصص الأنبياء" },
-  // القرآن
-  { href: "/quran-radio",      label: "إذاعة القرآن" },
-  { href: "/quran-live",       label: "البث المباشر" },
-  { href: "/quran/tajweed",    label: "التجويد" },
-  { href: "/quran/surah-stories", label: "قصص القرآن" },
-  // الأذكار والأدوات
-  { href: "/adhkar",           label: "الأذكار" },
-  { href: "/tasbih",           label: "عداد التسبيح" },
-  { href: "/prayer-ranks",     label: "مراتب الصلاة" },
-  { href: "/muezzins",         label: "مكتبة المؤذنين" },
-  { href: "/adhan-settings",   label: "إعدادات الأذان" },
-  { href: "/quiz",             label: "لعبة سؤال وجواب" },
-  { href: "/miracles",           label: "المعجزات" },
-  { href: "/prophetic-medicine", label: "الطب النبوي" },
-  { href: "/assistant",        label: "المساعد العلمي" },
-  { href: "/knowledge-graph",  label: "خارطة المعرفة" },
-  { href: "/universities",     label: "دليل الجامعات" },
-  { href: "/flashcards",       label: "بطاقات المراجعة" },
-  { href: "/learning-plan",    label: "خطة التعلّم" },
-  // أدوات الطالب
-  { href: "/study-room",       label: "غرفة الدراسة" },
-  { href: "/vault",            label: "مخزن المعرفة" },
-  { href: "/learning/calendar", label: "تقويم الدروس" },
-  // عام
-  { href: "/settings",         label: "الإعدادات" },
-  { href: "/upload",           label: "رفع أذان أو درس" },
-  { href: "/my-submissions",   label: "مساهماتي" },
-  { href: "/submit",           label: "أضف محتوى" },
-  { href: "/contact",          label: "تواصل معنا" },
 ];
 
 export const HOME_FEATURE_CARDS = [

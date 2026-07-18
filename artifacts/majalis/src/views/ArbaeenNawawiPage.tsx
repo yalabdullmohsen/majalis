@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "wouter";
+import { GraduationCap } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ARBAEEN_NAWAWI } from "@/lib/arbaeen-nawawi-seed";
 import { ShareButtons } from "@/components/ContentActions";
@@ -249,6 +251,9 @@ export default function ArbaeenNawawiPage() {
                     >
                       {isExp ? "طيّ" : "تفصيل"}
                     </button>
+                    <Link href={`/arbaeen-nawawi/${h.id}`} className="an-expand-btn" aria-label={`صفحة تعلّم واختبار الحديث ${h.id}`}>
+                      <GraduationCap size={13} strokeWidth={1.8} aria-hidden="true" /> اختبر نفسك
+                    </Link>
                     <button
                       type="button"
                       className={`an-read-btn an-read-btn--sm${isRead ? " an-read-btn--done" : ""}`}
