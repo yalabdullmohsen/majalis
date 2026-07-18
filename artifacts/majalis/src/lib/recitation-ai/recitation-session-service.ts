@@ -60,7 +60,16 @@ export async function saveRecitationSession(userId: string, input: SessionSummar
     .select("id")
     .single();
 
-  if (error || !session) return null;
+  if (error || !session) {
+    // فشل صامت سابقًا (بلا أي أثر) — خطر حقيقي: مثال فعلي هو قيد CHECK
+    // على عمود mode لا يشمل 'freeform' بعد (راجع
+    // supabase/quran_recitation_ai_test_v2_freeform_mode.sql) قد يرفض
+    // الحفظ بصمت فيبدو للمستخدم أن كل شيء تم بنجاح رغم ضياع النتيجة
+    // فعليًا. سجل تشخيصي على الأقل — لا يُغيِّر سلوك الواجهة (لا تزال
+    // تُكمِل الجلسة بصدق دون افتراض نجاح لم يحدث، القسم 12).
+    console.error("recitation-ai: فشل حفظ الجلسة في قاعدة البيانات", error);
+    return null;
+  }
 
   const errorRows = events
     .filter((e): e is Extract<AlignmentEvent, { kind: "error" }> => e.kind === "error")
