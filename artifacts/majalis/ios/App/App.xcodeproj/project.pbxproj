@@ -20,6 +20,7 @@
 		504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
 		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		7C1D8E2F3A4B5C6D7E8F9A0B /* MajlisSpeechRecognitionPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E7A1C9F0D4E5A8B3C6D7E /* MajlisSpeechRecognitionPlugin.swift */; };
+		B93F28F3C55EC1A0108A8118 /* RecitationAudioCapturePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC779234C02320DA7693A59 /* RecitationAudioCapturePlugin.swift */; };
 		B40A70BD645B44F885C91A9B /* PrayerActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C1C0E442F343FCA02B3616 /* PrayerActivityAttributes.swift */; };
 		EFBF4693BAFB4F5B82254F8C /* PrayerLiveActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4816472931E4AB1A0DE1F42 /* PrayerLiveActivityPlugin.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 		20C1C0E442F343FCA02B3616 /* PrayerActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerActivityAttributes.swift; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		4B2E7A1C9F0D4E5A8B3C6D7E /* MajlisSpeechRecognitionPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MajlisSpeechRecognitionPlugin.swift; sourceTree = "<group>"; };
+		4AC779234C02320DA7693A59 /* RecitationAudioCapturePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecitationAudioCapturePlugin.swift; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
 		504EC3041FED79650016851F /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		504EC3071FED79650016851F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				20C1C0E442F343FCA02B3616 /* PrayerActivityAttributes.swift */,
 				F4816472931E4AB1A0DE1F42 /* PrayerLiveActivityPlugin.swift */,
 				4B2E7A1C9F0D4E5A8B3C6D7E /* MajlisSpeechRecognitionPlugin.swift */,
+				4AC779234C02320DA7693A59 /* RecitationAudioCapturePlugin.swift */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
 				504EC30E1FED79650016851F /* Assets.xcassets */,
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
@@ -257,6 +260,7 @@
 				B40A70BD645B44F885C91A9B /* PrayerActivityAttributes.swift in Sources */,
 				EFBF4693BAFB4F5B82254F8C /* PrayerLiveActivityPlugin.swift in Sources */,
 				7C1D8E2F3A4B5C6D7E8F9A0B /* MajlisSpeechRecognitionPlugin.swift in Sources */,
+				B93F28F3C55EC1A0108A8118 /* RecitationAudioCapturePlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

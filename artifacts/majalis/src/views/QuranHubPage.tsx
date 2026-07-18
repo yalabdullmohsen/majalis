@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import {
   Radio, Mic2, Layers, Circle, Star,
   ChevronLeft, BookMarked, BookOpen, Headphones, GraduationCap,
-  Moon, Heart, Sparkles,
+  Moon, Heart, Sparkles, Mic,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -18,6 +18,14 @@ const QURAN_SECTIONS = [
     Icon: BookOpen,
     accent: "#176B57",
     tag: "٦٠٤ صفحة",
+  },
+  {
+    href: "/quran/recitation-test-ai",
+    title: "اختبار التسميع بالذكاء الاصطناعي",
+    desc: "سمّع من حفظك واستمع التطبيق لتلاوتك لحظيًا، ويكشف المصحف الآيات كلما نطقتها صحيحة",
+    Icon: Mic,
+    accent: "#176B57",
+    tag: "نسخة تجريبية",
   },
   {
     href: "/quran/surah-stories",
