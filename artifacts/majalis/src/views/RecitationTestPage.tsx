@@ -12,7 +12,7 @@ import { selectBestProvider } from "@/lib/recitation-ai/provider-registry";
 import type { QuranASRProvider, ASRSession } from "@/lib/recitation-ai/asr-provider";
 import { checkTajweedAvailability } from "@/lib/recitation-ai/precision-level";
 import { saveRecitationSession } from "@/lib/recitation-ai/recitation-session-service";
-import { addRecitationReviewItem } from "@/lib/recitation-ai/recitation-review-service";
+import { addRecitationReviewItem, getDueRecitationReviews, type RecitationReviewItem } from "@/lib/recitation-ai/recitation-review-service";
 import { loadRecitationSettings, saveRecitationSettings } from "@/lib/recitation-ai/recitation-settings-service";
 import { InteractiveMushafReveal, type WordRevealInfo } from "@/components/quran/InteractiveMushafReveal";
 import type { AlertLevel, AlignmentEvent, PrecisionLevel, RecitationMode, ReferenceWord } from "@/lib/recitation-ai/types";
@@ -44,6 +44,7 @@ function RecitationTestPageInner() {
   const [alertLevel, setAlertLevel] = useState<AlertLevel>("gentle");
   const [revealGranularity, setRevealGranularity] = useState<"word" | "ayah">("word");
   const [tajweedAvailable, setTajweedAvailable] = useState<{ available: boolean; reason?: string } | null>(null);
+  const [dueReviews, setDueReviews] = useState<RecitationReviewItem[]>([]);
 
   // جلسة
   const [referenceWords, setReferenceWords] = useState<ReferenceWord[]>([]);
@@ -55,11 +56,27 @@ function RecitationTestPageInner() {
 
   const [paused, setPaused] = useState(false);
 
+  // تلميح متدرج لوضع "التسميع بالمساعدة" (القسم 2، الوضع 2): أول حرف ←
+  // أول كلمة ← الآية كاملة. **مبني على مؤقّت زمني حقيقي (wall-clock)**
+  // لا على أحداث long_pause الرجعية من المحرك — هذه الأخيرة لا تُصدَر
+  // إلا بعد وصول الكلمة التالية فعليًا (مقارنة رجعية للفجوة الزمنية)،
+  // أي بعد فوات أوان إظهار تلميح مفيد أثناء التوقف نفسه. جُرِّب هذا
+  // النهج فعليًا وأثبت تحقّق حي (Playwright) أنه لا يعمل: استدعاء
+  // setHintLevel(0) كأثر جانبي داخل مُحدِّث setWordStates الوظيفي كان
+  // يتسابق مع استدعاء setHintLevel(1) اللاحق فيُبطله دومًا — درس: لا
+  // تستدعِ setState كأثر جانبي داخل مُحدِّث وظيفي لحالة أخرى أبدًا.
+  const [hintLevel, setHintLevel] = useState(0);
+  const hintsUsedRef = useRef(0);
+
   const engineRef = useRef<VerseAlignmentEngine | null>(null);
   const providerRef = useRef<QuranASRProvider | null>(null);
   const asrSessionRef = useRef<ASRSession | null>(null);
   const unsubRef = useRef<(() => void) | null>(null);
   const sessionStartRef = useRef<number>(0);
+  // وضع الجلسة النشطة الفعلي — لا الاعتماد على إغلاق (closure) لحالة
+  // mode داخل attachAsrSession (لا تُعاد بناؤه عند تغيّر mode فتبقى قيمة
+  // قديمة)؛ يُضبَط مرة واحدة عند بدء كل جلسة ويُقرَأ من هنا دومًا.
+  const activeModeRef = useRef<RecitationMode>("interactive_mushaf");
 
   useEffect(() => {
     applyPageSeo({
@@ -96,6 +113,22 @@ function RecitationTestPageInner() {
         setRevealGranularity(saved.revealGranularity);
       } catch {
         // تجاهل — الإعدادات الافتراضية المحلية تبقى سارية
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [user?.id]);
+
+  // مقاطع "مراجعة اليوم" المستحقة (القسم 10، عبر محرك SM-2 القائم) —
+  // زائر مجهول (بلا حساب) لا يرى شيئًا هنا، بلا خطأ.
+  useEffect(() => {
+    if (!user?.id) { setDueReviews([]); return; }
+    let cancelled = false;
+    (async () => {
+      try {
+        const items = await getDueRecitationReviews(user.id, 5);
+        if (!cancelled) setDueReviews(items);
+      } catch {
+        // تجاهل — لا حاجة لإفشال الصفحة كاملة لخطأ في تحميل قائمة المراجعة
       }
     })();
     return () => { cancelled = true; };
@@ -154,6 +187,9 @@ function RecitationTestPageInner() {
       setLiveEvents([]);
       setJustCompletedAyah(null);
       setPaused(false);
+      activeModeRef.current = mode;
+      hintsUsedRef.current = 0;
+      setHintLevel(0);
 
       const selection = await selectBestProvider(navigator.onLine);
       if (!selection.provider) {
@@ -175,7 +211,7 @@ function RecitationTestPageInner() {
       setErrorMsg(e instanceof Error ? e.message : "تعذّر بدء الجلسة");
       setPhase("error");
     }
-  }, [alertLevel, attachAsrSession]);
+  }, [alertLevel, attachAsrSession, mode]);
 
   const startSession = useCallback(async () => {
     if (user?.id) {
@@ -201,18 +237,25 @@ function RecitationTestPageInner() {
   }, [surahNumber, startSessionWithWords, user?.id, mode, precisionLevel, alertLevel, revealGranularity]);
 
   /** "إعادة اختبار هذه الآية فورًا" — القسم 9. يبني كلمات مرجعية لآية واحدة فقط من نفس السورة. */
-  const retryAyah = useCallback(async (surah: number, ayah: number) => {
+  /** يبني جلسة بنطاق آيات محدَّد من سورة واحدة — يُستخدَم لكل من "إعادة اختبار هذه الآية" و"مراجعة اليوم" (القسم 10). */
+  const startSessionForAyahRange = useCallback(async (surah: number, ayahFrom: number, ayahTo: number) => {
     setPhase("loading");
+    setSurahNumber(surah);
     try {
       const detail = await fetchSurahDetail(surah);
-      const onlyAyah = detail.ayahs.filter((a) => a.numberInSurah === ayah);
-      const words = buildReferenceWords(surah, onlyAyah);
+      const rangeAyahs = detail.ayahs.filter((a) => a.numberInSurah >= ayahFrom && a.numberInSurah <= ayahTo);
+      const words = buildReferenceWords(surah, rangeAyahs);
       await startSessionWithWords(words);
     } catch (e) {
-      setErrorMsg(e instanceof Error ? e.message : "تعذّر إعادة اختبار الآية");
+      setErrorMsg(e instanceof Error ? e.message : "تعذّر بدء المراجعة");
       setPhase("error");
     }
   }, [startSessionWithWords]);
+
+  const retryAyah = useCallback(
+    (surah: number, ayah: number) => startSessionForAyahRange(surah, ayah, ayah),
+    [startSessionForAyahRange],
+  );
 
   /** إيقاف مؤقت: يوقف الاستماع فقط (يُغلق جلسة ASR) — محرك المحاذاة يحتفظ بموضعه وكل التقدّم المُحرَز. */
   const pauseSession = useCallback(async () => {
@@ -304,7 +347,7 @@ function RecitationTestPageInner() {
           versesCount: new Set(referenceWords.map((w) => w.ayah)).size,
           wordsTotal: referenceWords.length,
           wordsCorrect: correct,
-          hintsUsed: 0,
+          hintsUsed: hintsUsedRef.current,
           confidencePct: overallSessionConfidence(confidences),
         },
         events,
@@ -322,6 +365,23 @@ function RecitationTestPageInner() {
   useEffect(() => {
     return () => { unsubRef.current?.(); };
   }, []);
+
+  // تلميح متدرج (وضع "التسميع بالمساعدة" فقط) — مؤقّت زمني حقيقي يُعاد
+  // ضبطه في كل مرة يتقدَّم فيها الموضع (cursorIdx) أو يُوقَف الاستماع
+  // مؤقتًا، فيبدأ العدّ من الصفر عند كل كلمة جديدة صحيحة تلقائيًا (بلا
+  // أي استدعاء setState متسابق من applyEvents — راجع تعليق hintLevel أعلاه).
+  useEffect(() => {
+    if (phase !== "session" || mode !== "assisted" || !listening) return;
+    setHintLevel(0);
+    const HINT_STEP_MS = 5000;
+    const timers = [1, 2, 3].map((level) =>
+      setTimeout(() => {
+        setHintLevel((prev) => Math.max(prev, level));
+        if (level === 1) hintsUsedRef.current += 1;
+      }, HINT_STEP_MS * level),
+    );
+    return () => timers.forEach(clearTimeout);
+  }, [cursorIdx, mode, phase, listening]);
 
   const revealWords: WordRevealInfo[] = useMemo(
     () => referenceWords.map((w) => ({ word: w, state: wordStates.get(`${w.surah}:${w.ayah}:${w.wordIndex}`) ?? "hidden" })),
@@ -347,6 +407,27 @@ function RecitationTestPageInner() {
         </div>
 
         {errorMsg && <p className="rai-tajweed-disabled-note" style={{ maxWidth: 720, margin: "0 auto 1rem" }}>{errorMsg}</p>}
+
+        {dueReviews.length > 0 && (
+          <div className="rai-setup" style={{ marginBottom: "1.25rem" }}>
+            <div className="rai-setup__group">
+              <span className="rai-setup__label">مراجعة اليوم ({dueReviews.length})</span>
+              <div className="rai-choice-grid">
+                {dueReviews.map((item) => (
+                  <button
+                    key={item.cardId}
+                    type="button"
+                    className="rai-choice"
+                    onClick={() => void startSessionForAyahRange(item.surahNumber, item.ayahFrom, item.ayahTo)}
+                  >
+                    {item.label}
+                    <span className="rai-choice__hint">مقطع مستحق للمراجعة</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="rai-setup">
           <div className="rai-setup__group">
@@ -434,6 +515,17 @@ function RecitationTestPageInner() {
   }
 
   if (phase === "session") {
+    // نص التلميح المتدرج (وضع "التسميع بالمساعدة" فقط) — القسم 2:
+    // مستوى 1: أول حرف من الكلمة المنتظرة، مستوى 2: الكلمة كاملة،
+    // مستوى 3: الآية كاملة.
+    const waitingWord = mode === "assisted" ? referenceWords[cursorIdx] : undefined;
+    let hintText: string | null = null;
+    if (waitingWord && hintLevel > 0) {
+      if (hintLevel === 1) hintText = waitingWord.raw.slice(0, 1) + "…";
+      else if (hintLevel === 2) hintText = waitingWord.raw;
+      else hintText = referenceWords.filter((w) => w.ayah === waitingWord.ayah).map((w) => w.raw).join(" ");
+    }
+
     return (
       <div className="rai-page">
         <div className="rai-session">
@@ -458,6 +550,12 @@ function RecitationTestPageInner() {
           <div className="rai-progress-bar">
             <div className="rai-progress-bar__fill" style={{ width: `${referenceWords.length ? (cursorIdx / referenceWords.length) * 100 : 0}%` }} />
           </div>
+
+          {hintText && (
+            <p className="rai-hint-banner" role="status">
+              تلميح ({hintLevel === 1 ? "أول حرف" : hintLevel === 2 ? "الكلمة" : "الآية كاملة"}): <bdi>{hintText}</bdi>
+            </p>
+          )}
 
           {mode === "interactive_mushaf" ? (
             <InteractiveMushafReveal words={revealWords} revealGranularity={revealGranularity} justCompletedAyah={justCompletedAyah} />
