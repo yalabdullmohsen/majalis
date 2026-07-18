@@ -4,19 +4,20 @@ import { Pause, Play, Square, ChevronLeft, RotateCcw } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { useAuth } from "@/components/AuthProvider";
 import { fetchSurahDetail, getSurahList } from "@/lib/quran-api";
-import { buildReferenceWords } from "@/lib/recitation-ai/quran-reference-words";
+import { buildReferenceWords, buildReferenceWordsForRange } from "@/lib/recitation-ai/quran-reference-words";
 import { VerseAlignmentEngine } from "@/lib/recitation-ai/verse-alignment-engine";
 import { postProcessAlignmentEvents } from "@/lib/recitation-ai/error-detector";
 import { overallSessionConfidence } from "@/lib/recitation-ai/confidence-scorer";
 import { selectBestProvider } from "@/lib/recitation-ai/provider-registry";
 import type { QuranASRProvider, ASRSession } from "@/lib/recitation-ai/asr-provider";
 import { checkTajweedAvailability } from "@/lib/recitation-ai/precision-level";
-import { saveRecitationSession, getRecentRecitationSessions } from "@/lib/recitation-ai/recitation-session-service";
+import { saveRecitationSession, getRecentRecitationSessions, type SessionRangeInput } from "@/lib/recitation-ai/recitation-session-service";
 import { addRecitationReviewItem, getDueRecitationReviews, type RecitationReviewItem } from "@/lib/recitation-ai/recitation-review-service";
 import { loadRecitationSettings, saveRecitationSettings } from "@/lib/recitation-ai/recitation-settings-service";
 import { InteractiveMushafReveal, type WordRevealInfo } from "@/components/quran/InteractiveMushafReveal";
 import { loadMutashabihatIndex, getSimilarAyahs, type MutashabihMatch } from "@/lib/recitation-ai/mutashabihat";
 import { FreeformStartDetector, loadPositionIndex } from "@/lib/recitation-ai/freeform-start-detector";
+import { loadPageJuzIndex, getSegmentsForPage, getSegmentsForJuz } from "@/lib/recitation-ai/page-juz-lookup";
 import { normalizeQuranWord } from "@/lib/recitation-ai/quran-normalize";
 import type { AlertLevel, AlignmentEvent, PrecisionLevel, RecitationMode, ReferenceWord } from "@/lib/recitation-ai/types";
 import "@/styles/recitation-ai.css";
@@ -50,9 +51,14 @@ function RecitationTestPageInner() {
   const [tajweedAvailable, setTajweedAvailable] = useState<{ available: boolean; reason?: string } | null>(null);
   const [dueReviews, setDueReviews] = useState<RecitationReviewItem[]>([]);
   // نطاق آيات مخصَّص (القسم 1: "من آية إلى آية" بدل السورة كاملة دومًا)
-  const [rangeMode, setRangeMode] = useState<"surah" | "ayahRange">("surah");
+  // "page"/"juz": نطاق عابر للسور، مبني من page_juz-index.json (حقول
+  // page/juz الحقيقية في بيانات كل آية — لا تخطيط بصري، راجع
+  // scripts/build-page-juz-index.mjs).
+  const [rangeMode, setRangeMode] = useState<"surah" | "ayahRange" | "page" | "juz">("surah");
   const [ayahFrom, setAyahFrom] = useState(1);
   const [ayahTo, setAyahTo] = useState(7);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [juzNumber, setJuzNumber] = useState(1);
   const [recentSession, setRecentSession] = useState<{ surahNumber: number; ayahFrom: number | null; ayahTo: number | null; accuracyPct: number | null } | null>(null);
 
   // جلسة
@@ -241,13 +247,22 @@ function RecitationTestPageInner() {
     try {
       // "اختبار المعلّم" (القسم 2، الوضع 5): يبدأ من آية عشوائية داخل
       // النطاق المُختار بدل أوله دومًا — يقيس قدرة الاسترجاع الفعلية لا
-      // مجرد بدء التلاوة من حفظ معروف بالترتيب.
+      // مجرد بدء التلاوة من حفظ معروف بالترتيب. الفلترة عبر `globalIndex`
+      // (فهرس متصاعد دومًا عبر كامل النطاق، حتى العابر لأكثر من سورة في
+      // وضعَي "بالصفحة"/"بالجزء") لا عبر رقم الآية الخام وحده — رقم الآية
+      // يتكرر عبر سور مختلفة (كل سورة تقريبًا لها آية 5)، فمقارنته وحده
+      // عبر نطاق متعدد السور كانت ستُدرج/تُسقط كلمات من سور غير مقصودة.
       let words = wordsIn;
       if (mode === "teacher_test") {
-        const uniqueAyahs = [...new Set(wordsIn.map((w) => w.ayah))];
-        if (uniqueAyahs.length > 1) {
-          const randomAyah = uniqueAyahs[Math.floor(Math.random() * (uniqueAyahs.length - 1))];
-          words = wordsIn.filter((w) => w.ayah >= randomAyah);
+        const seen = new Set<string>();
+        const uniqueStarts: number[] = []; // globalIndex لكل موضع بداية آية فريد، بترتيب الظهور
+        for (const w of wordsIn) {
+          const key = `${w.surah}:${w.ayah}`;
+          if (!seen.has(key)) { seen.add(key); uniqueStarts.push(w.globalIndex); }
+        }
+        if (uniqueStarts.length > 1) {
+          const startGlobalIndex = uniqueStarts[Math.floor(Math.random() * (uniqueStarts.length - 1))];
+          words = wordsIn.filter((w) => w.globalIndex >= startGlobalIndex);
         }
       }
 
@@ -299,6 +314,27 @@ function RecitationTestPageInner() {
     }
     setPhase("loading");
     try {
+      if (rangeMode === "page" || rangeMode === "juz") {
+        const index = await loadPageJuzIndex();
+        const segments = rangeMode === "page" ? getSegmentsForPage(index, pageNumber) : getSegmentsForJuz(index, juzNumber);
+        if (segments.length === 0) {
+          setErrorMsg(rangeMode === "page" ? "رقم صفحة غير صالح (يجب أن يكون بين 1 و604)." : "رقم جزء غير صالح (يجب أن يكون بين 1 و30).");
+          setPhase("error");
+          return;
+        }
+        const surahAyahs = await Promise.all(
+          segments.map(async (seg) => {
+            const detail = await fetchSurahDetail(seg.surah);
+            const ayahs = detail.ayahs.filter((a) => a.numberInSurah >= seg.ayahFrom && a.numberInSurah <= seg.ayahTo);
+            return { surahNumber: seg.surah, ayahs };
+          }),
+        );
+        setSurahNumber(segments[0].surah); // للعرض/التوافق فقط — النطاق الفعلي قد يمتد لأكثر من سورة
+        const words = buildReferenceWordsForRange(surahAyahs);
+        await startSessionWithWords(words);
+        return;
+      }
+
       const detail = await fetchSurahDetail(surahNumber);
       const ayahs = rangeMode === "ayahRange"
         ? detail.ayahs.filter((a) => a.numberInSurah >= ayahFrom && a.numberInSurah <= ayahTo)
@@ -309,7 +345,7 @@ function RecitationTestPageInner() {
       setErrorMsg(e instanceof Error ? e.message : "تعذّر بدء الجلسة");
       setPhase("error");
     }
-  }, [surahNumber, startSessionWithWords, user?.id, mode, precisionLevel, alertLevel, revealGranularity, rangeMode, ayahFrom, ayahTo]);
+  }, [surahNumber, startSessionWithWords, user?.id, mode, precisionLevel, alertLevel, revealGranularity, rangeMode, ayahFrom, ayahTo, pageNumber, juzNumber]);
 
   /**
    * "التسميع الحر" (القسم 2، الوضع 6): يبدأ الاستماع فورًا بلا اختيار
@@ -552,18 +588,22 @@ function RecitationTestPageInner() {
       const confidences = events.filter((e) => e.kind !== "ayah_complete").map((e) => (e as { confidence: number }).confidence);
 
       // النطاق الفعلي المُسمَّع (لا الاختيار الأصلي فقط) — يهم خصوصًا في
-      // وضع "اختبار المعلّم" حيث يبدأ النطاق الفعلي من آية عشوائية.
+      // وضع "اختبار المعلّم" حيث يبدأ النطاق الفعلي من آية عشوائية، ووضع
+      // "التسميع الحر" حيث يبدأ من آية مُكتشَفة تلقائيًا لا من أول السورة.
       const sessionAyahs = referenceWords.map((w) => w.ayah);
       const actualAyahFrom = sessionAyahs.length ? Math.min(...sessionAyahs) : ayahFrom;
       const actualAyahTo = sessionAyahs.length ? Math.max(...sessionAyahs) : ayahTo;
-      const isWholeSurah = rangeMode === "surah" && mode !== "teacher_test";
+      const isWholeSurah = rangeMode === "surah" && mode !== "teacher_test" && mode !== "freeform";
+      const range: SessionRangeInput =
+        rangeMode === "page" ? { rangeType: "page", pageNumber } :
+        rangeMode === "juz" ? { rangeType: "juz", juzNumber } :
+        isWholeSurah ? { rangeType: "surah", surahNumber } :
+        { rangeType: "ayah_range", surahNumber, ayahFrom: actualAyahFrom, ayahTo: actualAyahTo };
 
       await saveRecitationSession(
         user.id,
         {
-          range: isWholeSurah
-            ? { rangeType: "surah", surahNumber }
-            : { rangeType: "ayah_range", surahNumber, ayahFrom: actualAyahFrom, ayahTo: actualAyahTo },
+          range,
           mode,
           precisionLevel,
           providerId: providerRef.current?.id ?? "unknown",
@@ -578,13 +618,23 @@ function RecitationTestPageInner() {
         events,
       );
 
-      // إضافة الآيات كثيرة الأخطاء لخطة المراجعة تلقائيًا (القسم 10)
-      const errorAyahs = new Set(errors.map((e) => (e.kind === "error" ? e.ref?.ayah : null)).filter(Boolean) as number[]);
-      for (const ayah of errorAyahs) {
-        await addRecitationReviewItem(user.id, surahNumber, ayah, ayah);
+      // إضافة الآيات كثيرة الأخطاء لخطة المراجعة تلقائيًا (القسم 10) —
+      // تُجمَّع حسب (سورة:آية) الفعلية من كل حدث خطأ، لا حسب `surahNumber`
+      // الحالة الواحدة: نطاقا "بالصفحة"/"بالجزء" يمتدان غالبًا لأكثر من
+      // سورة، فاستخدام `surahNumber` وحدها كان سيُسجِّل مراجعات بسورة
+      // خاطئة لأي خطأ يقع في سورة غير أول سورة بالنطاق.
+      const errorSurahAyahPairs = new Set(
+        errors
+          .map((e) => (e.kind === "error" ? e.ref : null))
+          .filter((ref): ref is NonNullable<typeof ref> => ref !== null && ref !== undefined)
+          .map((ref) => `${ref.surah}:${ref.ayah}`),
+      );
+      for (const pair of errorSurahAyahPairs) {
+        const [s, a] = pair.split(":").map(Number);
+        await addRecitationReviewItem(user.id, s, a, a);
       }
     },
-    [user?.id, surahNumber, mode, precisionLevel, alertLevel, referenceWords, rangeMode, ayahFrom, ayahTo],
+    [user?.id, surahNumber, mode, precisionLevel, alertLevel, referenceWords, rangeMode, ayahFrom, ayahTo, pageNumber, juzNumber],
   );
 
   useEffect(() => {
@@ -755,17 +805,6 @@ function RecitationTestPageInner() {
         <div className="rai-setup">
           {mode !== "freeform" && (
             <div className="rai-setup__group">
-              <label className="rai-setup__label" htmlFor="rai-surah">السورة</label>
-              <select id="rai-surah" className="rai-surah-select" value={surahNumber} onChange={(e) => setSurahNumber(Number(e.target.value))}>
-                {surahs.map((s) => (
-                  <option key={s.number} value={s.number}>{s.number}. {s.name} ({s.ayahs} آية)</option>
-                ))}
-              </select>
-            </div>
-          )}
-
-          {mode !== "freeform" && (
-            <div className="rai-setup__group">
               <span className="rai-setup__label">النطاق</span>
               <div className="rai-choice-grid">
                 <button type="button" className={`rai-choice ${rangeMode === "surah" ? "rai-choice--active" : ""}`} onClick={() => setRangeMode("surah")}>
@@ -774,7 +813,25 @@ function RecitationTestPageInner() {
                 <button type="button" className={`rai-choice ${rangeMode === "ayahRange" ? "rai-choice--active" : ""}`} onClick={() => setRangeMode("ayahRange")}>
                   من آية إلى آية
                 </button>
+                <button type="button" className={`rai-choice ${rangeMode === "page" ? "rai-choice--active" : ""}`} onClick={() => setRangeMode("page")}>
+                  بالصفحة
+                </button>
+                <button type="button" className={`rai-choice ${rangeMode === "juz" ? "rai-choice--active" : ""}`} onClick={() => setRangeMode("juz")}>
+                  بالجزء
+                </button>
               </div>
+
+              {(rangeMode === "surah" || rangeMode === "ayahRange") && (
+                <div style={{ marginTop: ".6rem" }}>
+                  <label className="rai-setup__label" htmlFor="rai-surah">السورة</label>
+                  <select id="rai-surah" className="rai-surah-select" value={surahNumber} onChange={(e) => setSurahNumber(Number(e.target.value))}>
+                    {surahs.map((s) => (
+                      <option key={s.number} value={s.number}>{s.number}. {s.name} ({s.ayahs} آية)</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
               {rangeMode === "ayahRange" && (
                 <div className="rai-range-inputs" style={{ display: "flex", gap: ".6rem", marginTop: ".6rem" }}>
                   <label style={{ flex: 1 }}>
@@ -792,6 +849,26 @@ function RecitationTestPageInner() {
                     />
                   </label>
                 </div>
+              )}
+
+              {rangeMode === "page" && (
+                <label style={{ display: "block", marginTop: ".6rem" }}>
+                  <span className="rai-choice__hint">رقم الصفحة (1-604، ترقيم مصحف المدينة)</span>
+                  <input
+                    type="number" min={1} max={604} value={pageNumber}
+                    onChange={(e) => setPageNumber(Math.min(Math.max(Number(e.target.value) || 1, 1), 604))}
+                  />
+                </label>
+              )}
+
+              {rangeMode === "juz" && (
+                <label style={{ display: "block", marginTop: ".6rem" }}>
+                  <span className="rai-choice__hint">رقم الجزء (1-30)</span>
+                  <input
+                    type="number" min={1} max={30} value={juzNumber}
+                    onChange={(e) => setJuzNumber(Math.min(Math.max(Number(e.target.value) || 1, 1), 30))}
+                  />
+                </label>
               )}
             </div>
           )}
