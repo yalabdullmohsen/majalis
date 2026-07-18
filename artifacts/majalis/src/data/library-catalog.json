@@ -2014,5 +2014,21 @@
     "sources": [],
     "reviewedBy": null,
     "reviewedAt": null
+  },
+  {
+    "id": "book-ianat-talibin",
+    "slug": "book-ianat-talibin",
+    "title": "إعانة الطالبين على حل ألفاظ فتح المعين",
+    "canonicalTitle": "إعانة الطالبين على حل ألفاظ فتح المعين",
+    "normalizedTitle": "اعانه طالبين حل الفاظ فتح معين",
+    "author": "أبو بكر عثمان بن محمد شطا الدمياطي",
+    "authorId": null,
+    "category": "فقه",
+    "description": "حاشية موسعة على «فتح المعين» لزين الدين المليباري (نفسه شرح لـ«قرة العين»)؛ من أكثر كتب الفقه الشافعي المتأخر تداولاً في جنوب شرق آسيا وحضرموت، تتناول أبواب الفقه كاملة من العبادات إلى المعاملات بأسلوب تفصيلي.",
+    "editions": [],
+    "verificationStatus": "pending_review",
+    "sources": [],
+    "reviewedBy": null,
+    "reviewedAt": null
   }
 ]
