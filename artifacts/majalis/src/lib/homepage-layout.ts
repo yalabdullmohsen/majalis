@@ -50,7 +50,16 @@ export type HomepagePrefs = {
   hidden: HomeWidgetId[];
 };
 
-const DEFAULT_PREFS: HomepagePrefs = { order: DEFAULT_ORDER, hidden: [] };
+/* تخفيف الازدحام الافتراضي (تحسين 2026-07-18): أربعة ودجتات ذات أولوية
+   أدنى أو متداخلة مع محتوى آخر ظاهر أصلاً في الصفحة تُخفى افتراضياً فقط
+   للمستخدم الجديد/بلا تفضيل محفوظ. لا حذف لأي وظيفة — كل ودجت يبقى قابلاً
+   لإعادة الإظهار فوراً عبر "تخصيص الصفحة الرئيسية":
+   - occasions: يتداخل مع تذكير الشهر الهجري الظاهر أعلى الصفحة أصلاً.
+   - prayer-ranks: يتداخل موضوعياً مع ودجت الصلاة البارز أصلاً.
+   - interesting-topics: محتوى اكتشاف ثانوي (موثّق أنه "قُرب النهاية").
+   - latest-updates: تغذية تحديثات عامة، أولوية أقل من التقدم الشخصي. */
+const DEFAULT_HIDDEN: HomeWidgetId[] = ["occasions", "prayer-ranks", "interesting-topics", "latest-updates"];
+const DEFAULT_PREFS: HomepagePrefs = { order: DEFAULT_ORDER, hidden: DEFAULT_HIDDEN };
 const STORAGE_KEY = "majalis-homepage-prefs-v1";
 
 function sanitizePrefs(raw: unknown): HomepagePrefs {
