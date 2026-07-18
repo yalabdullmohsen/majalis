@@ -6,7 +6,18 @@
 > هذا الملف يوثّق فقط أن البوابات الفنية (typecheck/lint/tests/build)
 > اجتازت معًا في دفعة واحدة نهائية، كما طلب المالك.
 
-## ▶️ حالة الجلسة — ملخص موحَّد (بعد 47+ دفعة، آخر تحديث 2026-07-18)
+## ▶️ حالة الجلسة — ملخص موحَّد (بعد 48+ دفعة، آخر تحديث 2026-07-18)
+
+**🔧 فحص منهجي لكل قيود category الحية كشف نفس البق على جدول شقيق**:
+`fiqh_council_items` (الجدول الأساسي للصفحة الرئيسية /fiqh-council وست
+صفحات حية أخرى) يحمل نفس بق CHECK constraint (10 قيم بدل 11) الذي أُصلح
+في fiqh_council_issues، بالإضافة إلى تصنيف "الأطعمة والأشربة" الرقيق
+جداً (صف واحد من 30). أُصلح بنفس الطريقة وأُعيد استخدام نفس القرارات
+الأربعة المُتحقَّقة سابقاً (مُعاد صياغتها لمخطط الجدول المختلف).
+`fiqh_council_items`: 30→34. commit `b3e66c12`. فُحص أيضاً
+`islamic_stories_category_check` (مطابق تماماً لـTS، سليم) و`kn_tags_
+category_check` (لا ثابت TS مقترن، لم يُتابَع). بهذا اكتمل الفحص
+المنهجي لهذا النمط من البق.
 
 **إكمال تعبئة "النوازل المعاصرة"**: بعد إصلاح القيد، أُضيفت مسألتان
 ماليتان/تقنيتان ناشئتان حقيقيتان من مجمع الفقه الإسلامي الدولي (الدورة
@@ -257,7 +268,8 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-a06ba3d1...
+b3e66c12...
+b3e66c12  fix+content(fiqh-council): same category CHECK gap found on sibling table fiqh_council_items
 a06ba3d1  content(fiqh-council): populate nawazil-muasira category (2 real IIFA decisions)
 68344bc1  fix+content(fiqh-council): populate atima-ashriba category + fix category CHECK gap
 d3c326b4  fix(quiz): remap 15 legacy English-section rows to visible Arabic sections
