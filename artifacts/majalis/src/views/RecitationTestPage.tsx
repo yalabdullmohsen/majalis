@@ -9,11 +9,13 @@ import { VerseAlignmentEngine } from "@/lib/recitation-ai/verse-alignment-engine
 import { postProcessAlignmentEvents } from "@/lib/recitation-ai/error-detector";
 import { overallSessionConfidence } from "@/lib/recitation-ai/confidence-scorer";
 import { selectBestProvider } from "@/lib/recitation-ai/provider-registry";
-import type { QuranASRProvider, ASRSession } from "@/lib/recitation-ai/asr-provider";
+import { ASRProviderUnavailableError, type QuranASRProvider, type ASRSession, type ASRProviderError } from "@/lib/recitation-ai/asr-provider";
+import { isIOS, isAndroid, isNative } from "@/lib/capacitor-utils";
 import { checkTajweedAvailability } from "@/lib/recitation-ai/precision-level";
-import { saveRecitationSession, getRecentRecitationSessions, type SessionRangeInput } from "@/lib/recitation-ai/recitation-session-service";
+import { saveRecitationSession, getRecentRecitationSessions, deleteAllRecitationSessions, type SessionRangeInput } from "@/lib/recitation-ai/recitation-session-service";
 import { addRecitationReviewItem, getDueRecitationReviews, type RecitationReviewItem } from "@/lib/recitation-ai/recitation-review-service";
 import { loadRecitationSettings, saveRecitationSettings } from "@/lib/recitation-ai/recitation-settings-service";
+import { hapticNotify } from "@/lib/capacitor-utils";
 import { InteractiveMushafReveal, type WordRevealInfo } from "@/components/quran/InteractiveMushafReveal";
 import { loadMutashabihatIndex, getSimilarAyahs, type MutashabihMatch } from "@/lib/recitation-ai/mutashabihat";
 import { FreeformStartDetector, loadPositionIndex } from "@/lib/recitation-ai/freeform-start-detector";
@@ -33,7 +35,30 @@ const MODE_LABELS: Record<RecitationMode, { label: string; hint: string }> = {
   freeform: { label: "التسميع الحر", hint: "ابدأ التلاوة مباشرة — نكتشف السورة تلقائيًا" },
 };
 
-const ALERT_LABELS: Record<AlertLevel, string> = { gentle: "لطيف", medium: "متوسط", immediate: "فوري" };
+const ALERT_LABELS: Record<AlertLevel, string> = { gentle: "لطيف", medium: "متوسط", immediate: "فوري", teacher: "معلّم حقيقي" };
+
+/**
+ * موافقة مخصَّصة لميزة "اختبار التسميع بالذكاء الاصطناعي" تحديدًا — مفتاح
+ * localStorage منفصل عمدًا عن recitation-test-consent-v1 (لوحة "استكشف
+ * الآية" السريعة في RecitationTestPanel.tsx): هذه الميزة تحفظ نتائج
+ * الجلسة (دقة، أخطاء، مدة) في قاعدة البيانات لحساب مسجَّل الدخول وتغذّي
+ * الشارات/الإنجازات — نطاق مختلف تمامًا يستحق شرحًا وموافقة مستقلَّين، لا
+ * إعادة استخدام قسرية لموافقة لوحة لا تحفظ شيئًا إطلاقًا.
+ */
+const RAI_CONSENT_KEY = "recitation-ai-full-consent-v1";
+function hasRecitationAiConsent(): boolean {
+  try { return localStorage.getItem(RAI_CONSENT_KEY) === "1"; } catch { return false; }
+}
+function grantRecitationAiConsent(): void {
+  try { localStorage.setItem(RAI_CONSENT_KEY, "1"); } catch { /* تجاهل */ }
+}
+
+/** يستخرج نصًا صالحًا للعرض ورمز الخطأ (إن وُجد) من أي خطأ مُلتقَط — يميّز ASRProviderUnavailableError (رمز حقيقي) عن أي Error عام آخر. */
+function describeAsrError(e: unknown): { message: string; code: ASRProviderError["code"] | null } {
+  if (e instanceof ASRProviderUnavailableError) return { message: e.detail.message, code: e.detail.code };
+  if (e instanceof Error) return { message: e.message, code: null };
+  return { message: "خطأ غير معروف", code: null };
+}
 
 function RecitationTestPageInner() {
   const search = useSearch();
@@ -41,6 +66,9 @@ function RecitationTestPageInner() {
 
   const [phase, setPhase] = useState<Phase>("setup");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  // رمز خطأ المزوّد (PERMISSION_DENIED خاصة) — يُميَّز عن باقي الأخطاء
+  // بشاشة إرشادية خطوة بخطوة حسب المنصة بدل نص خطأ عام (القسم 1 بند 4).
+  const [errorCode, setErrorCode] = useState<ASRProviderError["code"] | null>(null);
 
   // إعداد
   const [surahNumber, setSurahNumber] = useState(1);
@@ -78,6 +106,19 @@ function RecitationTestPageInner() {
 
   const [paused, setPaused] = useState(false);
 
+  // بطاقة التصحيح الحي (القسم: "المعلّم الحقيقي" + بند تفوّق "بطاقة
+  // تصحيح حي") — تُملأ عند كل خطأ مؤكَّد (kind:"error")، بصرف النظر عن
+  // alertLevel، فتُتاح للنقر عليها من المصحف نفسه دومًا؛ في alertLevel
+  // "teacher" فقط تُفتَح تلقائيًا وتُوقِف الجلسة فعليًا حتى إعادة صحيحة.
+  const [correctionCard, setCorrectionCard] = useState<{ ref: ReferenceWord; heardWord: string } | null>(null);
+  const [teacherHold, setTeacherHold] = useState(false);
+  const [retrying, setRetrying] = useState(false);
+
+  // شاشة الخصوصية المخصَّصة قبل أول استخدام (القسم 12)
+  const [consentGiven, setConsentGiven] = useState(hasRecitationAiConsent);
+  const [deletingData, setDeletingData] = useState(false);
+  const [deleteResult, setDeleteResult] = useState<"success" | "error" | null>(null);
+
   // كشف المتشابهات (القسم 1: بند تفوّق — راجع src/lib/recitation-ai/mutashabihat.ts
   // وscripts/build-mutashabihat-index.mjs). يُحمَّل فقط عند بلوغ شاشة
   // التقرير (لا أثناء الجلسة الحيّة)، ونصوص الآيات المتشابهة الفعلية
@@ -112,6 +153,15 @@ function RecitationTestPageInner() {
   // حتى أول كلمة صحيحة — يُعرَض في التقرير لهذا الوضع تحديدًا فقط.
   const recallStartAtRef = useRef<number | null>(null);
   const [recallMs, setRecallMs] = useState<number | null>(null);
+
+  // alertLevel طازج داخل applyEvents (اعتماديات فارغة عمدًا، نفس سبب
+  // استبعاد applyEvents من اعتماديات attachAsrSession أعلاه — TDZ).
+  const alertLevelRef = useRef<AlertLevel>(alertLevel);
+  useEffect(() => { alertLevelRef.current = alertLevel; }, [alertLevel]);
+
+  // listening طازج لمستمع visibilitychange (مسجَّل مرة واحدة عند التركيب) — أدناه.
+  const listeningRef = useRef(false);
+  useEffect(() => { listeningRef.current = listening; }, [listening]);
 
   useEffect(() => {
     applyPageSeo({
@@ -200,16 +250,28 @@ function RecitationTestPageInner() {
     return () => { cancelled = true; };
   }, [user?.id]);
 
+  // ⚠️ إصلاح خلل حقيقي (تشخيص م3 "الظهور المتقطع"): كانت بلا try/catch —
+  // أي خطأ من selectBestProvider/checkTajweedAvailability (استثناء
+  // حقيقي، لا مجرد "لا مزوّد") يُصبح رفض وعد غير مُلتقَط. ErrorBoundary
+  // **لا يلتقط** أخطاء المستدعيات غير المتزامنة (موثَّق بالفعل في تعليق
+  // attachAsrSession أسفله) فلا ينهار المكوّن ظاهريًا، لكن tajweedAvailable
+  // يبقى عالقًا عند null إلى الأبد — قد يترك جزءًا من شاشة الإعداد
+  // متجمّدًا بصمت حسب كيفية استهلاكه لاحقًا في الواجهة.
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const provider = (await selectBestProvider(navigator.onLine)).provider;
-      if (cancelled) return;
-      if (provider) {
-        const result = await checkTajweedAvailability(provider);
-        if (!cancelled) setTajweedAvailable(result);
-      } else {
-        setTajweedAvailable({ available: false, reason: "لا يتوفر محرك تعرّف صوتي بعد" });
+      try {
+        const provider = (await selectBestProvider(navigator.onLine)).provider;
+        if (cancelled) return;
+        if (provider) {
+          const result = await checkTajweedAvailability(provider);
+          if (!cancelled) setTajweedAvailable(result);
+        } else {
+          setTajweedAvailable({ available: false, reason: "لا يتوفر محرك تعرّف صوتي بعد" });
+        }
+      } catch (err) {
+        console.error("recitation-ai: فشل اكتشاف مزوّد التعرّف الصوتي", err);
+        if (!cancelled) setTajweedAvailable({ available: false, reason: "تعذّر التحقق من محرك التعرّف الصوتي — أعد تحميل الصفحة" });
       }
     })();
     return () => { cancelled = true; };
@@ -246,6 +308,7 @@ function RecitationTestPageInner() {
   const startSessionWithWords = useCallback(async (wordsIn: ReferenceWord[]) => {
     setPhase("loading");
     setErrorMsg(null);
+    setErrorCode(null);
     try {
       // "اختبار المعلّم" (القسم 2، الوضع 5): يبدأ من آية عشوائية داخل
       // النطاق المُختار بدل أوله دومًا — يقيس قدرة الاسترجاع الفعلية لا
@@ -274,6 +337,8 @@ function RecitationTestPageInner() {
       setLiveEvents([]);
       setJustCompletedAyah(null);
       setPaused(false);
+      setCorrectionCard(null);
+      setTeacherHold(false);
       activeModeRef.current = mode;
       hintsUsedRef.current = 0;
       setHintLevel(0);
@@ -297,7 +362,9 @@ function RecitationTestPageInner() {
       setListening(true);
       setPhase("session");
     } catch (e) {
-      setErrorMsg(e instanceof Error ? e.message : "تعذّر بدء الجلسة");
+      const { message, code } = describeAsrError(e);
+      setErrorMsg(message);
+      setErrorCode(code);
       setPhase("error");
     }
   }, [alertLevel, attachAsrSession, mode]);
@@ -354,7 +421,9 @@ function RecitationTestPageInner() {
       const words = buildReferenceWords(surahNumber, ayahs);
       await startSessionWithWords(words);
     } catch (e) {
-      setErrorMsg(e instanceof Error ? e.message : "تعذّر بدء الجلسة");
+      const { message, code } = describeAsrError(e);
+      setErrorMsg(message);
+      setErrorCode(code);
       setPhase("error");
     }
   }, [surahNumber, startSessionWithWords, user?.id, mode, precisionLevel, alertLevel, revealGranularity, rangeMode, ayahFrom, ayahTo, pageNumber, juzNumber, hizbNumber, rubNumber]);
@@ -370,6 +439,7 @@ function RecitationTestPageInner() {
   const startSessionFreeform = useCallback(async () => {
     setPhase("detecting");
     setErrorMsg(null);
+    setErrorCode(null);
     try {
       const [selection, positionIndex] = await Promise.all([selectBestProvider(navigator.onLine), loadPositionIndex()]);
       if (!selection.provider) {
@@ -424,6 +494,8 @@ function RecitationTestPageInner() {
         setLiveEvents([]);
         setJustCompletedAyah(null);
         setPaused(false);
+        setCorrectionCard(null);
+        setTeacherHold(false);
         activeModeRef.current = "freeform";
         hintsUsedRef.current = 0;
         setHintLevel(0);
@@ -470,7 +542,9 @@ function RecitationTestPageInner() {
 
       setListening(true);
     } catch (e) {
-      setErrorMsg(e instanceof Error ? e.message : "تعذّر بدء التسميع الحر");
+      const { message, code } = describeAsrError(e);
+      setErrorMsg(message);
+      setErrorCode(code);
       setPhase("error");
     }
     // applyEvents مُتعمَّد استبعاده من الاعتماديات (مطابقةً لـattachAsrSession
@@ -499,6 +573,21 @@ function RecitationTestPageInner() {
     [startSessionForAyahRange],
   );
 
+  /** حذف حقيقي (لا صوري) لكل بيانات جلسات التسميع المحفوظة لهذا المستخدم — شاشة الخصوصية. */
+  const handleDeleteRecitationData = useCallback(async () => {
+    if (!user?.id) return;
+    setDeletingData(true);
+    setDeleteResult(null);
+    try {
+      const ok = await deleteAllRecitationSessions(user.id);
+      setDeleteResult(ok ? "success" : "error");
+    } catch {
+      setDeleteResult("error");
+    } finally {
+      setDeletingData(false);
+    }
+  }, [user?.id]);
+
   /** إيقاف مؤقت: يوقف الاستماع فقط (يُغلق جلسة ASR) — محرك المحاذاة يحتفظ بموضعه وكل التقدّم المُحرَز. */
   const pauseSession = useCallback(async () => {
     const provider = providerRef.current;
@@ -526,6 +615,72 @@ function RecitationTestPageInner() {
       setErrorMsg(e instanceof Error ? e.message : "تعذّر استئناف الاستماع");
     }
   }, [attachAsrSession]);
+
+  // وضع المعلّم الحقيقي: يستدعي pauseSession() الفعلية (تُغلق المايكروفون
+  // حقًا، لا مجرد تجاهل بصري) بمجرد ضبط teacherHold=true من applyEvents —
+  // عبر useEffect مدفوع بالحالة بدل استدعاء pauseSession مباشرة من داخل
+  // applyEvents (كانت ستحتاج إدراجها ضمن اعتماديات فارغة عمدًا لتفادي TDZ،
+  // ونفس الخلل الموثَّق أعلاه لحالات setState متسابقة).
+  useEffect(() => {
+    if (teacherHold) void pauseSession();
+  }, [teacherHold, pauseSession]);
+
+  // استئناف تلقائي أدق (القسم 12: "لا يُبقي الجلسة عالقة صامتًا عند
+  // انتقال المستخدم بعيدًا"): عند إخفاء التبويب/تصغير التطبيق أثناء
+  // استماع فعلي، تُوقَف الجلسة فعليًا (pauseSession — نفس المسار المتاح
+  // يدويًا بزر الإيقاف المؤقت، لا مجرد تجاهل بصري) بدل ترك مايكروفون
+  // نشطًا بلا فائدة في الخلفية (يستنزف البطارية، وبعض المتصفحات/المنصات
+  // الأصلية تُنهي جلسة ASR من تلقاء نفسها بصمت عند التصغير على أي حال،
+  // فتُبقي الحالة الظاهرة "يستمع" غير صادقة). **لا استئناف تلقائي** عند
+  // العودة عمدًا — إعادة تفعيل المايكروفون بلا فعل واعٍ من المستخدم قد
+  // تُفاجئه؛ زر "استئناف الاستماع" (▶) الموجود أصلاً يبقى الخيار الوحيد.
+  useEffect(() => {
+    const onVisibilityChange = () => {
+      if (document.hidden && listeningRef.current) void pauseSession();
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", onVisibilityChange);
+  }, [pauseSession]);
+
+  /**
+   * "أعد من هذه الكلمة" — القسم "المعلّم الحقيقي": لا مجرد استئناف من حيث
+   * توقفت الجلسة (ذاك مسار resumeSession العادي)، بل محرك محاذاة جديد
+   * كليًا مصدره الكلمات من موضع الخطأ فصاعدًا (referenceWords.slice) —
+   * تحقّق حقيقي بإعادة الاستماع لنفس الكلمة، لا إقرار بصري فقط بأنها
+   * "صُحِّحت". حالات الكلمات من موضع الخطأ فصاعدًا تُعاد لـ"hidden" لأنها
+   * ستُختبَر من جديد.
+   */
+  const retryFromError = useCallback(async () => {
+    const failed = correctionCard;
+    const provider = providerRef.current;
+    if (!failed || !provider) return;
+    setRetrying(true);
+    try {
+      const remaining = referenceWords.filter((w) => w.globalIndex >= failed.ref.globalIndex);
+      setWordStates((prev) => {
+        const next = new Map(prev);
+        for (const w of remaining) next.set(`${w.surah}:${w.ayah}:${w.wordIndex}`, "hidden");
+        return next;
+      });
+      const engine = new VerseAlignmentEngine({ referenceWords: remaining, alertLevel: alertLevelRef.current });
+      engineRef.current = engine;
+      setCorrectionCard(null);
+      setTeacherHold(false);
+      await attachAsrSession(provider, engine);
+      setListening(true);
+      setPaused(false);
+    } catch (e) {
+      setErrorMsg(e instanceof Error ? e.message : "تعذّر إعادة المحاولة");
+    } finally {
+      setRetrying(false);
+    }
+  }, [correctionCard, referenceWords, attachAsrSession]);
+
+  /** إغلاق بطاقة التصحيح دون إعادة اختبار الكلمة — تبقى الجلسة متقدِّمة من نفس موضعها الحالي. متاح فقط خارج وضع المعلّم (فيه الإغلاق إلزامي عبر "أعد من هذه الكلمة" فقط). */
+  const dismissCorrectionCard = useCallback(() => {
+    if (teacherHold) return;
+    setCorrectionCard(null);
+  }, [teacherHold]);
 
   const applyEvents = useCallback((events: AlignmentEvent[]) => {
     if (events.length === 0) return;
@@ -557,6 +712,20 @@ function RecitationTestPageInner() {
       setUnclearNotice(lastUnclear.heardWord);
       if (unclearNoticeTimerRef.current) clearTimeout(unclearNoticeTimerRef.current);
       unclearNoticeTimerRef.current = setTimeout(() => setUnclearNotice(null), 3000);
+    }
+
+    // بطاقة التصحيح الحي + Haptics + وضع المعلّم الحقيقي — تُحسَب من آخر
+    // حدث "error" في هذه الدفعة، بلا أي علاقة بمُحدِّث setWordStates
+    // أعلاه (نفس نمط unclearNotice قبله تمامًا: استدعاء setState منفصل).
+    const lastError = [...events].reverse().find((e) => e.kind === "error");
+    if (lastError && lastError.kind === "error" && lastError.ref && lastError.heardWord) {
+      setCorrectionCard({ ref: lastError.ref, heardWord: lastError.heardWord });
+      if (alertLevelRef.current === "immediate" || alertLevelRef.current === "teacher") {
+        void hapticNotify("error");
+      }
+      if (alertLevelRef.current === "teacher") {
+        setTeacherHold(true);
+      }
     }
 
     // زمن الاسترجاع لوضع "اختبار المعلّم" — يُسجَّل مرة واحدة فقط، عند
@@ -737,6 +906,54 @@ function RecitationTestPageInner() {
     return () => { cancelled = true; };
   }, [phase]);
 
+  // شاشة الخصوصية المخصَّصة — تُعرَض قبل أي استخدام فعلي للميزة (تسبق كل
+  // الأطوار الأخرى)، مرة واحدة فقط لكل جهاز/متصفح (localStorage). توضّح
+  // بالتحديد ما يختلف هنا عن أي إذن ميكروفون عادي: نتائج الجلسة (الدقة
+  // وتفاصيل الأخطاء) تُحفَظ في قاعدة البيانات لمن سجّل الدخول لتغذية
+  // التقارير ومراجعة الأخطاء المتكررة والشارات — مع زر حذف حقيقي يعمل الآن.
+  if (!consentGiven) {
+    return (
+      <div className="rai-page">
+        <div className="rai-consent-screen">
+          <h1 className="rai-header__title">قبل أن نبدأ</h1>
+          <p className="rai-consent-screen__intro">
+            "اختبار التسميع بالذكاء الاصطناعي" يستمع لتلاوتك عبر ميكروفون جهازك
+            ليقارنها بنص الآيات فور نطقها. إليك بالتحديد ما يحدث ببياناتك:
+          </p>
+          <ul className="rai-consent-screen__list">
+            <li>سيُطلَب إذن الميكروفون فقط عند ضغطك "ابدأ التسميع" — لا استماع في الخلفية بلا علمك.</li>
+            <li>الصوت نفسه لا يُسجَّل ولا يُرسَل لخوادم مجالس مطلقًا؛ التعرّف الصوتي يتم على جهازك، أو عبر خدمة نظام التشغيل (Apple/Google) حين لا يتوفر تعرّف كامل محليًا.</li>
+            <li>إن سجّلت الدخول: نتيجة كل جلسة (نسبة الدقة، مواضع الأخطاء، المدة) تُحفَظ في حسابك لعرضها في التقارير ومراجعة الأخطاء المتكررة، وتُحتسَب ضمن شارات الإنجاز.</li>
+            <li>زائر بلا حساب: لا شيء يُحفَظ عبر الأجهزة — فقط أثناء الجلسة نفسها.</li>
+            <li>يمكنك حذف كل بيانات جلسات التسميع المحفوظة نهائيًا في أي وقت — الزر أدناه فعّال الآن، لا وعد مستقبلي.</li>
+          </ul>
+
+          {user?.id && (
+            <div className="rai-consent-screen__delete">
+              <button type="button" className="rai-consent-screen__delete-btn" onClick={() => void handleDeleteRecitationData()} disabled={deletingData}>
+                {deletingData ? "جارٍ الحذف…" : "حذف كل بيانات جلسات التسميع المحفوظة"}
+              </button>
+              {deleteResult === "success" && <p className="rai-consent-screen__delete-status rai-consent-screen__delete-status--ok">تم الحذف بنجاح.</p>}
+              {deleteResult === "error" && <p className="rai-consent-screen__delete-status rai-consent-screen__delete-status--err">تعذّر الحذف. حاول مجددًا.</p>}
+            </div>
+          )}
+
+          <p className="rai-report__disclaimer">
+            التفاصيل الكاملة في <a href="/privacy" style={{ color: "var(--rai-emerald)" }}>سياسة الخصوصية</a>.
+          </p>
+
+          <button
+            type="button"
+            className="rai-start-btn"
+            onClick={() => { grantRecitationAiConsent(); setConsentGiven(true); }}
+          >
+            أوافق، تابع إلى الميزة
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (phase === "detecting") {
     return (
       <div className="rai-page">
@@ -777,7 +994,28 @@ function RecitationTestPageInner() {
           </p>
         </div>
 
-        {errorMsg && <p className="rai-tajweed-disabled-note" style={{ maxWidth: 720, margin: "0 auto 1rem" }}>{errorMsg}</p>}
+        {errorMsg && errorCode !== "PERMISSION_DENIED" && (
+          <p className="rai-tajweed-disabled-note" style={{ maxWidth: 720, margin: "0 auto 1rem" }}>{errorMsg}</p>
+        )}
+
+        {/* شاشة إرشادية مخصَّصة لرفض إذن الميكروفون — خطوات فعل حسب المنصة
+            الفعلية (Capacitor iOS/Android أو متصفح) بدل نص خطأ عام، مع زر
+            إعادة محاولة حقيقي (يعيد محاولة بدء الجلسة، لا مجرد إخفاء الرسالة). */}
+        {errorCode === "PERMISSION_DENIED" && (
+          <div className="rai-permission-guide" role="alert">
+            <p className="rai-permission-guide__title">يحتاج التطبيق إذن الميكروفون للاستماع لتلاوتك</p>
+            <p className="rai-permission-guide__steps">
+              {isNative && isIOS
+                ? "افتح إعدادات آيفون ← مرِّر لتطبيق «المجلس العلمي» ← فعِّل «الميكروفون» و«التعرّف على الكلام»، ثم عد وحاول مجددًا."
+                : isNative && isAndroid
+                  ? "افتح إعدادات الجهاز ← التطبيقات ← «المجلس العلمي» ← الأذونات ← فعِّل «الميكروفون»، ثم عد وحاول مجددًا."
+                  : "اضغط على أيقونة القفل 🔒 بجانب عنوان الموقع في المتصفح ← اسمح بإذن «الميكروفون» لهذا الموقع، ثم أعد تحميل الصفحة."}
+            </p>
+            <button type="button" className="rai-permission-guide__retry" onClick={() => { setErrorMsg(null); setErrorCode(null); setPhase("setup"); }}>
+              حسنًا، حاول مجددًا
+            </button>
+          </div>
+        )}
 
         {recentSession && (
           <div className="rai-setup" style={{ marginBottom: "1.25rem" }}>
@@ -1054,6 +1292,35 @@ function RecitationTestPageInner() {
             <p className="rai-unclear-banner" role="status">
               لم يتّضح الصوت جيدًا — أعد نطق هذه الكلمة: <bdi>{unclearNotice}</bdi>
             </p>
+          )}
+
+          {/* بطاقة التصحيح الحي — تُعرَض تلقائيًا فقط في alertLevel "فوري"/"معلّم
+              حقيقي" (نمط "لطيف"/"متوسط" بلا مقاطعة تلقائية عمدًا، يبقى الخطأ
+              مرئيًا في تظليل الكلمة + قائمة التقرير لاحقًا فقط). في وضع
+              المعلّم تحديدًا: الجلسة متوقفة فعليًا (مايكروفون مغلق عبر
+              teacherHold أعلاه) ولا خيار سوى "أعد من هذه الكلمة". */}
+          {correctionCard && (alertLevel === "immediate" || alertLevel === "teacher") && (
+            <div className="rai-correction-card" role="alertdialog" aria-label="بطاقة تصحيح">
+              {teacherHold && <p className="rai-correction-card__teacher-note">توقفت الجلسة — صحّح ثم أعد النطق</p>}
+              <p className="rai-correction-card__row">
+                <span className="rai-correction-card__label">قرأتَ:</span>
+                <bdi className="rai-correction-card__heard">{correctionCard.heardWord}</bdi>
+              </p>
+              <p className="rai-correction-card__row">
+                <span className="rai-correction-card__label">الصواب:</span>
+                <bdi className="rai-correction-card__correct">{correctionCard.ref.raw}</bdi>
+              </p>
+              <div className="rai-correction-card__actions">
+                <button type="button" className="rai-correction-card__retry" onClick={() => void retryFromError()} disabled={retrying}>
+                  {retrying ? "جارٍ الاستئناف…" : "أعد من هذه الكلمة"}
+                </button>
+                {!teacherHold && (
+                  <button type="button" className="rai-correction-card__dismiss" onClick={dismissCorrectionCard}>
+                    إغلاق
+                  </button>
+                )}
+              </div>
+            </div>
           )}
 
           {mode === "interactive_mushaf" ? (

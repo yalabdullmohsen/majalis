@@ -112,3 +112,15 @@ export async function getRecentRecitationSessions(userId: string, limit = 10) {
     .limit(limit);
   return data ?? [];
 }
+
+/**
+ * حذف حقيقي (لا صوري) لكل جلسات وأخطاء التسميع الخاصة بالمستخدم — يُستدعى
+ * من شاشة الخصوصية (القسم 12: "حذف بيانات فعلي"). recitation_errors تُحذَف
+ * تلقائيًا (ON DELETE CASCADE على session_id، راجع quran_recitation_ai_test_v1.sql)
+ * فلا حاجة لحذفها صراحة هنا. لا يمس أي صوت — لا صوت يُخزَّن أصلًا في هذا
+ * الجدول (راجع تعليق أعلى الملف).
+ */
+export async function deleteAllRecitationSessions(userId: string): Promise<boolean> {
+  const { error } = await supabase.from("recitation_sessions").delete().eq("user_id", userId);
+  return !error;
+}

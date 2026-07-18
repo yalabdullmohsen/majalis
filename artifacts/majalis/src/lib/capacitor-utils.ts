@@ -43,12 +43,25 @@ export async function openExternalUrl(url: string) {
 }
 
 /**
- * ردود فعل لمسية (haptics) لتطبيق iOS/Android الأصلي فقط — بلا تأثير على
- * نسخة الويب. تُستخدم لتأكيد تفاعلات قصيرة ومتكررة (عدّاد التسبيح، إجابة
- * سؤال) بدل الاعتماد على المؤثرات البصرية وحدها.
+ * ردود فعل لمسية (haptics): تطبيق iOS/Android الأصلي عبر Capacitor
+ * Haptics (أدق: أنماط ضغط/إشعار حقيقية)، وعلى الويب عبر Vibration API
+ * القياسية (navigator.vibrate) كبديل حقيقي لا تجاهل صامت — يعمل فعليًا
+ * على Chrome/Android (لا يدعمه Safari/iOS Safari إطلاقًا، قيد منصّة لا
+ * يمكن تجاوزه). تُستخدم لتأكيد تفاعلات قصيرة ومتكررة (عدّاد التسبيح،
+ * إجابة سؤال، خطأ مؤكَّد في اختبار التسميع) بدل المؤثرات البصرية وحدها.
  */
+const WEB_VIBRATE_MS: Record<"light" | "medium" | "heavy", number> = { light: 15, medium: 35, heavy: 60 };
+const WEB_VIBRATE_PATTERN: Record<"success" | "warning" | "error", number[]> = {
+  success: [20],
+  warning: [25, 40, 25],
+  error: [40, 60, 40],
+};
+
 export async function hapticTap(style: "light" | "medium" | "heavy" = "light") {
-  if (!isNative) return;
+  if (!isNative) {
+    try { navigator.vibrate?.(WEB_VIBRATE_MS[style]); } catch { /* متصفح لا يدعم Vibration API — تجاهل بأمان */ }
+    return;
+  }
   try {
     const { Haptics, ImpactStyle } = await import("@capacitor/haptics");
     const map = { light: ImpactStyle.Light, medium: ImpactStyle.Medium, heavy: ImpactStyle.Heavy };
@@ -57,7 +70,10 @@ export async function hapticTap(style: "light" | "medium" | "heavy" = "light") {
 }
 
 export async function hapticNotify(type: "success" | "warning" | "error") {
-  if (!isNative) return;
+  if (!isNative) {
+    try { navigator.vibrate?.(WEB_VIBRATE_PATTERN[type]); } catch { /* تجاهل بأمان */ }
+    return;
+  }
   try {
     const { Haptics, NotificationType } = await import("@capacitor/haptics");
     const map = { success: NotificationType.Success, warning: NotificationType.Warning, error: NotificationType.Error };

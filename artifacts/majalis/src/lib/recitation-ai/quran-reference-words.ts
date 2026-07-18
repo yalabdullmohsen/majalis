@@ -39,6 +39,7 @@ export function buildReferenceWords(surahNumber: number, ayahs: Ayah[]): Referen
         globalIndex: globalIndex++,
         raw,
         normalized: override ?? normalizeQuranWord(raw),
+        page: ayah.page,
       });
     });
   }

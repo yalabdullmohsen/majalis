@@ -117,6 +117,45 @@ html[data-theme="dark"] .rai-choice { background: #111714; color: #E5F0EC; borde
   margin-top: .5rem;
 }
 
+/* ── شاشة إرشادية عند رفض إذن الميكروفون ── */
+.rai-permission-guide {
+  max-width: 480px;
+  margin: 0 auto 1.25rem;
+  padding: 1rem 1.1rem;
+  border-radius: 14px;
+  background: rgba(220,38,38,.06);
+  border: 1.5px solid rgba(220,38,38,.3);
+  text-align: center;
+}
+html[data-theme="dark"] .rai-permission-guide { background: rgba(248,113,113,.12); border-color: rgba(248,113,113,.35); }
+.rai-permission-guide__title {
+  margin: 0 0 .5rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: .92rem;
+  color: #B91C1C;
+}
+html[data-theme="dark"] .rai-permission-guide__title { color: #FCA5A5; }
+.rai-permission-guide__steps {
+  margin: 0 0 .8rem;
+  font-family: var(--font-body);
+  font-size: .85rem;
+  line-height: 1.9;
+  color: var(--text-base, #1a1a1a);
+}
+.rai-permission-guide__retry {
+  min-height: 42px;
+  padding: 0 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background: var(--majalis-emerald, #176B57);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: .85rem;
+  cursor: pointer;
+}
+
 .rai-surah-select, .rai-range-inputs input {
   width: 100%;
   padding: .6rem .8rem;
@@ -217,6 +256,73 @@ html[data-theme="dark"] .rai-hint-banner { background: rgba(201,162,39,.18); col
 html[data-theme="dark"] .rai-unclear-banner { background: rgba(139,92,246,.18); color: #C4B3F5; }
 .rai-unclear-banner bdi { font-family: "Amiri Quran", "Scheherazade New", serif; font-size: 1.1rem; }
 
+/* ── بطاقة التصحيح الحي (alertLevel: فوري/معلّم حقيقي) ── */
+.rai-correction-card {
+  max-width: 600px;
+  margin: 0 auto 1rem;
+  padding: .85rem 1.1rem;
+  border-radius: 14px;
+  background: rgba(220,38,38,.08);
+  border: 1.5px solid rgba(220,38,38,.4);
+}
+html[data-theme="dark"] .rai-correction-card { background: rgba(248,113,113,.14); border-color: rgba(248,113,113,.4); }
+.rai-correction-card__teacher-note {
+  margin: 0 0 .5rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: .85rem;
+  color: #B91C1C;
+  text-align: center;
+}
+html[data-theme="dark"] .rai-correction-card__teacher-note { color: #FCA5A5; }
+.rai-correction-card__row {
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+  margin: 0 0 .35rem;
+  font-family: var(--font-body);
+}
+.rai-correction-card__label { font-size: .8rem; color: var(--text-muted, #6b7280); flex-shrink: 0; }
+.rai-correction-card__heard,
+.rai-correction-card__correct {
+  font-family: "Amiri Quran", "Scheherazade New", serif;
+  font-size: 1.15rem;
+}
+.rai-correction-card__heard { color: #B91C1C; text-decoration: line-through; text-decoration-thickness: 1.5px; }
+html[data-theme="dark"] .rai-correction-card__heard { color: #FCA5A5; }
+.rai-correction-card__correct { color: var(--majalis-emerald, #176B57); font-weight: 700; }
+html[data-theme="dark"] .rai-correction-card__correct { color: #6EE7B7; }
+.rai-correction-card__actions {
+  display: flex;
+  gap: .5rem;
+  margin-top: .6rem;
+}
+.rai-correction-card__retry {
+  flex: 1;
+  min-height: 42px;
+  border: none;
+  border-radius: 10px;
+  background: var(--majalis-emerald, #176B57);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: .85rem;
+  cursor: pointer;
+}
+.rai-correction-card__retry:disabled { opacity: .6; cursor: not-allowed; }
+.rai-correction-card__dismiss {
+  min-height: 42px;
+  padding: 0 1rem;
+  border: 1px solid var(--border, #e5e3dd);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-base, #1a1a1a);
+  font-family: var(--font-body);
+  font-size: .85rem;
+  cursor: pointer;
+}
+html[data-theme="dark"] .rai-correction-card__dismiss { color: #E8DED4; border-color: rgba(255,255,255,.15); }
+
 .rai-error-count { font-size: .8rem; color: #8A6D1B; }
 
 .rai-session__actions { display: flex; gap: .5rem; }
@@ -230,7 +336,7 @@ html[data-theme="dark"] .rai-unclear-banner { background: rgba(139,92,246,.18); 
 }
 html[data-theme="dark"] .rai-icon-btn { background: #1A2120; color: #E5F0EC; }
 
-.rai-plain-words { font-family: "Amiri Quran", "Scheherazade New", serif; font-size: 1.5rem; line-height: 1.9; color: #1A1A1A; text-align: justify; }
+.rai-plain-words { font-family: "Amiri Quran", "Scheherazade New", serif; font-size: 1.5rem; line-height: 2.3; color: #1A1A1A; text-align: justify; }
 html[data-theme="dark"] .rai-plain-words { color: #E5F0EC; }
 .rai-plain-word--correct { color: var(--rai-emerald-deep); }
 .rai-plain-word--error { color: var(--rai-error); text-decoration: underline wavy var(--rai-error); }
@@ -242,7 +348,7 @@ html[data-theme="dark"] .rai-plain-words { color: #E5F0EC; }
 .imr-page {
   font-family: "Amiri Quran", "Scheherazade New", serif;
   font-size: clamp(1.4rem, 3.4vw, 1.9rem);
-  line-height: 2;
+  line-height: 2.3;
   text-align: justify;
   color: #1A1A1A;
   background: var(--rai-ivory-warm);
@@ -385,3 +491,54 @@ html[data-theme="dark"] .rai-mutashabih-note__diff p { background: #1A2120; colo
   color: #6B7A74;
   font-family: var(--font-body);
 }
+
+/* ── شاشة الخصوصية المخصَّصة (قبل أول استخدام) ── */
+.rai-consent-screen {
+  max-width: 560px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  direction: rtl;
+}
+.rai-consent-screen__intro {
+  font-family: var(--font-body);
+  font-size: .95rem;
+  line-height: 1.9;
+  color: var(--text-base, #1a1a1a);
+  margin: .75rem 0 1rem;
+}
+.rai-consent-screen__list {
+  margin: 0 0 1.25rem;
+  padding-inline-start: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  font-family: var(--font-body);
+  font-size: .88rem;
+  line-height: 1.8;
+  color: var(--text-base, #1a1a1a);
+}
+.rai-consent-screen__delete {
+  margin-bottom: 1.25rem;
+  padding: .9rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(220,38,38,.3);
+  background: rgba(220,38,38,.05);
+  text-align: center;
+}
+.rai-consent-screen__delete-btn {
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border-radius: 10px;
+  border: 1px solid #B91C1C;
+  background: transparent;
+  color: #B91C1C;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: .85rem;
+  cursor: pointer;
+}
+.rai-consent-screen__delete-btn:disabled { opacity: .6; cursor: not-allowed; }
+html[data-theme="dark"] .rai-consent-screen__delete-btn { color: #FCA5A5; border-color: #FCA5A5; }
+.rai-consent-screen__delete-status { margin: .5rem 0 0; font-family: var(--font-body); font-size: .8rem; }
+.rai-consent-screen__delete-status--ok { color: var(--majalis-emerald, #176B57); }
+.rai-consent-screen__delete-status--err { color: #B91C1C; }
