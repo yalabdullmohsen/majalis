@@ -643,6 +643,8 @@ export default function LessonsPage({
       </div>
 
       {filtersOpen && (
+        // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار بديل
+        // كامل بلوحة المفاتيح.
         <div className="lessons-v2-sheet-backdrop" onClick={() => setFiltersOpen(false)} role="presentation">
           <div className="lessons-v2-sheet" onClick={(e) => e.stopPropagation()}>
             <LessonsFilterPanel

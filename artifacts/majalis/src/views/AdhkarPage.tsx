@@ -51,6 +51,8 @@ function DhikrSheet({ item, onClose }: { item: AdhkarItem; onClose: () => void }
   }, [onClose]);
 
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
+    // مساران بديلان كاملان بلوحة المفاتيح.
     <div
       className="adhkar-sheet-overlay"
       role="dialog" aria-modal="true" aria-label="تفاصيل الذكر"

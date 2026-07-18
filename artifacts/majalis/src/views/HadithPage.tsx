@@ -208,7 +208,9 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
         </div>
       )}
 
-      {/* Actions */}
+      {/* Actions. onClick لمنع انتشار النقر إلى البطاقة الأم (التي تفتح تفاصيل
+          الحديث عند النقر) — لا إجراء فعلي هنا يحتاج مكافئ لوحة مفاتيح؛ كل
+          الأزرار الفعلية داخل هذا الصف قابلة للوصول بلوحة المفاتيح أصلًا. */}
       <div className="hadith-card__actions" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"

@@ -375,6 +375,8 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
         aria-label="إغلاق القائمة الجانبية"
         onClick={onClose}
       />
+      {/* onClick هنا لمنع انتشار النقر إلى الخلفية (button حقيقي أعلاه، مغلِق
+          فعليًا وقابل للوصول بلوحة المفاتيح أصلًا) — لا إجراء مستقل هنا. */}
       <aside
         id="main-navigation-drawer"
         className="side-nav-drawer--v2"

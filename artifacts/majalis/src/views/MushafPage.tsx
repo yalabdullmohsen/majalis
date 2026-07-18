@@ -66,6 +66,13 @@ export default function MushafPage() {
     [],
   );
 
+  useEffect(() => {
+    if (!sidebarOpen) return;
+    const keyHandler = (e: KeyboardEvent) => { if (e.key === "Escape") setSidebarOpen(false); };
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  }, [sidebarOpen]);
+
   // ── تحديد الصفحة الابتدائية: من رابط /mushaf/:surah إن وُجد، وإلا آخر موضع محفوظ ──
   useEffect(() => {
     if (initializedFromRoute.current) return;
@@ -197,6 +204,13 @@ export default function MushafPage() {
         </header>
       )}
 
+      {/* onClick هنا يبدّل "الوضع الهادئ" (إخفاء الهيدر/الشريط للقراءة الغامرة)
+          — تفضيل عرض اختياري بحت، لا إجراء لازم للوصول إلى نص القرآن نفسه
+          (كل الآيات موجودة وقابلة للقراءة بلا أي تفاعل). لم يُضَف role/tabIndex
+          هنا عمدًا: main هو المعلَم الأساسي لكل محتوى الصفحة، وتحويله بالكامل
+          إلى "زر" واحد ضخم يمكن التبويب إليه يضرّ بمستخدمي لوحة المفاتيح/قارئ
+          الشاشة أكثر مما ينفعهم (محطة Tab واحدة مربكة تغطي كل نص القرآن). ترك
+          هذا التبديل كميزة مريحة بالماوس/اللمس فقط قرار واعٍ، لا إغفال. */}
       <main
         className="mushaf-v2__page"
         {...swipeHandlers}
@@ -213,6 +227,9 @@ export default function MushafPage() {
             </button>
           </div>
         ) : (
+          // onClick هنا لا يفعل شيئًا سوى e.stopPropagation() (منع تفعيل تبديل
+          // "الوضع الهادئ" في main الأب عند النقر داخل نص الآيات) — لا إجراء
+          // فعليًا يحتاج مكافئ لوحة مفاتيح.
           <div className="mushaf-v2__ayahs" onClick={(e) => e.stopPropagation()}>
             {content.ayahs.map((a) => {
               const isPlaying = currentAyah === a.numberInSurah && a.surahNumber === activeSurahForPlayer && playerState === "playing";
@@ -281,6 +298,8 @@ export default function MushafPage() {
         // z-index مهما ارتفع (تحقّقتُ فعليًا بـ Playwright: النقر كان يصل لأيقونة
         // القمر داخل الهيدر بدل تبويب الفهرس رغم z-index أعلى بكثير). راجع أيضًا
         // ملاحظة z-index:10000 في elite-2026.css بخصوص .navbar-v3 المُثبَّت 9999/200.
+        // نقر الخلفية للإغلاق مصحوب الآن بمعالج Escape فعلي (أعلاه) — مسار
+        // بديل كامل بلوحة المفاتيح.
         <div className="mushaf-v2__sidebar-overlay" role="presentation" onClick={() => setSidebarOpen(false)}>
           <aside className="mushaf-v2__sidebar" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="فهرس السور والأجزاء والصفحات">
             <div className="mushaf-v2__sidebar-head">

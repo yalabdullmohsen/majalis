@@ -68,6 +68,8 @@ function AddNoteModal({
   };
 
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
+    // مساران بديلان كاملان بلوحة المفاتيح.
     <div className="vault-modal-backdrop" onClick={onClose} role="presentation">
       <div className="vault-modal" role="dialog" aria-modal="true" aria-label="إضافة ملاحظة" onClick={(e) => e.stopPropagation()}>
         <div className="vault-modal__head">

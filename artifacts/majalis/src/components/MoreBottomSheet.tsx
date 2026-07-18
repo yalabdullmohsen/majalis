@@ -161,6 +161,8 @@ export function MoreBottomSheet({ open, onClose }: Props) {
   if (!open || typeof document === "undefined") return null;
 
   return createPortal(
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر
+    // داخل الورقة — مسارا وصول بديلان كاملان بلوحة المفاتيح.
     <div className="bottom-sheet-overlay" role="presentation" onClick={onClose}>
       <div
         className="bottom-sheet"

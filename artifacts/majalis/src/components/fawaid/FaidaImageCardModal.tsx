@@ -56,6 +56,8 @@ export function FaidaImageCardModal({ text, source, category, onClose }: Props) 
   }, []);
 
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
+    // مساران بديلان كاملان بلوحة المفاتيح.
     <div
       className="fic-backdrop"
       role="dialog"

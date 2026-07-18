@@ -18,6 +18,8 @@ export function FilterBottomSheet({ open, onClose, title = "تصفية وبحث"
   if (!open) return null;
 
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
+    // مساران بديلان كاملان بلوحة المفاتيح.
     <div className="ds-sheet-backdrop" onClick={onClose} role="presentation">
       <div
         className="ds-sheet"
