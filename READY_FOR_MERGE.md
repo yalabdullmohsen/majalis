@@ -116,7 +116,9 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-b1eb7a44...
+fe94ad45...
+fe94ad45  content(library): 3 verified additions to thinnest categories — 127→130 books
+8edfc978  docs: تحديث بعد المقالة الثالثة — articles 2→3
 b1eb7a44  content(articles): third original article — آداب طلب العلم
 330620dd  docs: إغلاق تدقيق "المسار حتى القاعدة الحية" — 7 أنظمة بيانات، صفر فجوات متبقية
 0f878221  docs: توثيق تعميم منهجية "تتبع المسار حتى القاعدة الحية" على 5 أنظمة بيانات
@@ -125,8 +127,6 @@ b1eb7a44  content(articles): third original article — آداب طلب العل
 51d51fe2  fix(quiz): 943 vetted questions never reached the live game — 3-layer bug chain found & fixed
 61e75258  docs: توثيق إصلاح buildFeedXml — القناة كانت تَعِد بفتاوى وقرارات ولا تجلبها
 76200fd9  fix(feed): live /api/feed only served lessons, ignoring its own promised فتاوى/قرارات
-740cf4ce  docs: توثيق تدقيق شامل لبوابات test:*/audit-* + عطل scholars-list.json الحي
-552e8a35  fix(sitemap): scholars-list.json was frozen at 78/96 — feeds LIVE production /api/sitemap+/api/feed
 ```
 
 سلسلة commits الجلسات كاملة (الأحدث أولاً):
@@ -171,7 +171,7 @@ b1eb7a44  content(articles): third original article — آداب طلب العل
 ```
 ✓ Pre-rendered 119 routes (58 skipped)
 ✓ post-build-seo: دُمج 732 ملف prerender → dist/
-فُحص: 96 عالِمًا و127 كتابًا.
+فُحص: 96 عالِمًا و130 كتابًا.
 ✓ كل سجل حي (عالِم/كتاب) له prerender مطابق — 404 الحقيقية آمنة.
 فُحص: 732 صفحة مُصيَّرة مسبقًا.
 ✓ لا تسرّب لمحتوى الرئيسية، ولا بقايا فتاوى أو أزهر محذوفة.
