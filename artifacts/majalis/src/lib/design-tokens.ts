@@ -77,11 +77,11 @@ export const SHADOW = {
  * عنوان بطاقة 16-18، نص أساسي 15-17، نص مساند 13-14).
  */
 export const TYPE_SCALE = {
-  pageTitle:    "1.75rem",   // 28px
-  sectionTitle: "1.3125rem",// 21px
-  cardTitle:    "1.0625rem",// 17px
-  body:         "1rem",     // 16px
-  support:      "0.8125rem",// 13px
+  pageTitle:    "1.5rem",    // 24px
+  sectionTitle: "1.1875rem",// 19px
+  cardTitle:    "1rem",     // 16px
+  body:         "0.9375rem",// 15px
+  support:      "0.75rem",  // 12px
 } as const;
 
 export const FONT = {
