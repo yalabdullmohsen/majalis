@@ -6,7 +6,14 @@
 > هذا الملف يوثّق فقط أن البوابات الفنية (typecheck/lint/tests/build)
 > اجتازت معًا في دفعة واحدة نهائية، كما طلب المالك.
 
-## ▶️ حالة الجلسة — ملخص موحَّد (بعد 35+ دفعة، آخر تحديث 2026-07-18)
+## ▶️ حالة الجلسة — ملخص موحَّد (بعد 37+ دفعة، آخر تحديث 2026-07-18)
+
+**تكملتان أخيرتان**: عُمِّق "تفسير سورة النحل" (آيات 1-39 موضوعياً: نعم
+الله، حجة التوحيد، حال المتقين/الظالمين، إرسال الرسل؛ tafseer
+total_sessions 43→47؛ commit `65bca303`) و"كتاب التوحيد كاملًا" (مسار
+tawheed منفصل عن aqeedah، 4 أبواب مختلفة تماماً عن الدفعة السابقة لنفس
+الكتاب لتفادي التكرار؛ tawheed total_sessions 19→23؛ commit `3a4c432d`).
+9 مقررات ضحلة متبقية (زاد المستقنع مؤجَّل).
 
 **تكملة أخيرة**: عُمِّق "السيرة النبوية" العام (1→5: بدء الوحي وغار حراء،
 الهجرة إلى الحبشة، عام الحزن ورحلة الطائف، بيعة العقبة الثانية — أحداث
@@ -176,7 +183,9 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-239edf6e...
+3a4c432d...
+3a4c432d  feat(learning): deepen kitab-tawhid-complete course (tawheed path) — 1 item → 5
+65bca303  feat(learning): deepen tafsir-nahl course — 2 items → 6 (ayahs 1-39 themes)
 239edf6e  feat(learning): deepen seerah-general course — 1 item → 5 (4 early Meccan events)
 139b5228  feat(learning): deepen nawaqid-islam course — 2 items → 6 (10 nullifiers, grouped)
 6bda7e0e  feat(learning): deepen mustalah-hadith-general course — 1 item → 5 (4 terminology types)
