@@ -296,6 +296,8 @@ majalis-content-fill
 
 ```
 0c9f2c76...
+5bad68bc  feat(learning): deepen fiqh-ibadat and adab-al-usrah — 2 items → 3 each
+22f2f891  docs: تحديث بعد تعميق fiqh-shafii/fiqh-hanafi (9 مقررات ضحلة متبقية من 16)
 fb945712  feat(learning): deepen fiqh-shafii and fiqh-hanafi courses — 1 item → 3 each
 3f8edc95  docs: تحديث بعد تعميق tafsir-general (11 مقرراً ضحلاً متبقٍّ من 16)
 0b6ed612  feat(learning): deepen tafsir-general course — 1 item → 3 (Al-Fatiha + Ayat al-Kursi)
