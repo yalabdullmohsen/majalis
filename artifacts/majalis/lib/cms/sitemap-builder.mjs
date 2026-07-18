@@ -49,6 +49,16 @@ export async function fetchDynamicUrls() {
     urls.push({ loc: `/library/${b.id}`, priority: 0.72, changefreq: "weekly" });
   }
 
+  // اكتُشف 2026-07-18: جدول fiqh_council_sessions غير موجود أصلاً في
+  // القاعدة الحية — الصفحة الحية /fiqh-council/sessions/:slug تعمل فعلياً
+  // عبر fallback ثابت في fiqh-council-sessions-service.ts (لا استعلام DB
+  // ممكن هنا لجدول غائب). مرآة ثابتة مثل scholars/library بالضبط، تُولَّد
+  // عبر scripts/regen-fiqh-sessions-json.mjs من fiqh-sessions-seed.ts.
+  const fiqhSessions = loadStaticCatalog("fiqh-sessions-list.json");
+  for (const s of fiqhSessions) {
+    urls.push({ loc: `/fiqh-council/sessions/${s.slug}`, lastmod: s.updated_at, priority: 0.6, changefreq: "yearly" });
+  }
+
   if (!admin) return urls;
 
   const [
