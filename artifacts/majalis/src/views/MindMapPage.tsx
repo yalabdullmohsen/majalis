@@ -1,12 +1,15 @@
 import "@/styles/mind-map.css";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { Link } from "wouter";
-import { ChevronDown, ChevronLeft, ExternalLink, Layers, Map, Sparkles, X } from "lucide-react";
+import { ChevronDown, ChevronLeft, ExternalLink, Layers, List, Map, Sparkles, Waypoints, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { MIND_MAPS, MIND_MAP_CATEGORIES, type MindMap, type MindMapNode } from "@/lib/mind-maps-data";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { MindMapCanvas } from "@/components/mind-map/MindMapCanvas";
+
+type ViewMode = "canvas" | "list";
 
 /* ═══════════════════════════════════════════════════
    مكوّن عقدة الخريطة الذهنية (قابلة للطيّ)
@@ -80,7 +83,17 @@ function countNodes(node: MindMapNode): number {
 /* ═══════════════════════════════════════════════════
    بطاقة الخريطة الذهنية الموسّعة
 ═══════════════════════════════════════════════════ */
-function MindMapCard({ map, forceOpen, onInteract }: { map: MindMap; forceOpen?: boolean; onInteract?: () => void }) {
+function MindMapCard({
+  map,
+  forceOpen,
+  onInteract,
+  viewMode,
+}: {
+  map: MindMap;
+  forceOpen?: boolean;
+  onInteract?: () => void;
+  viewMode: ViewMode;
+}) {
   const [expanded, setExpanded] = useState(false);
   const nodeCount = useMemo(() => countNodes(map.root), [map.root]);
   const isOpen = forceOpen !== undefined ? forceOpen : expanded;
@@ -119,7 +132,11 @@ function MindMapCard({ map, forceOpen, onInteract }: { map: MindMap; forceOpen?:
 
       {isOpen && (
         <div className="mm-card__body">
-          <MindNode node={map.root} depth={0} defaultOpen />
+          {viewMode === "canvas" ? (
+            <MindMapCanvas root={map.root} mapId={map.id} />
+          ) : (
+            <MindNode node={map.root} depth={0} defaultOpen />
+          )}
         </div>
       )}
     </div>
@@ -133,6 +150,7 @@ export default function MindMapPage() {
   const [activeCategory, setActiveCategory] = useState<string>("الكل");
   const [search, setSearch] = useState("");
   const [expandAll, setExpandAll] = useState<boolean | undefined>(undefined);
+  const [viewMode, setViewMode] = useState<ViewMode>("canvas");
 
   useEffect(() => {
     applyPageSeo({
@@ -176,6 +194,30 @@ export default function MindMapPage() {
           <span className="sh-stat"><Sparkles size={13} strokeWidth={2.5} />{MIND_MAP_CATEGORIES.length - 1} تصنيفًا</span>
         </div>
       </header>
+
+      {/* تبديل نمط العرض: خريطة بصرية تفاعلية (افتراضي) أو قائمة نصية قابلة للطيّ */}
+      <div className="mmv-view-toggle" role="tablist" aria-label="نمط عرض الخريطة الذهنية">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={viewMode === "canvas"}
+          className={`mmv-view-toggle-btn${viewMode === "canvas" ? " mmv-view-toggle-btn--active" : ""}`}
+          onClick={() => setViewMode("canvas")}
+        >
+          <Waypoints size={14} strokeWidth={2.4} />
+          خريطة بصرية
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={viewMode === "list"}
+          className={`mmv-view-toggle-btn${viewMode === "list" ? " mmv-view-toggle-btn--active" : ""}`}
+          onClick={() => setViewMode("list")}
+        >
+          <List size={14} strokeWidth={2.4} />
+          قائمة نصية
+        </button>
+      </div>
 
       {/* فلتر الفئات */}
       <div className="mm-filters" role="tablist" aria-label="تصفية الخرائط">
@@ -240,6 +282,7 @@ export default function MindMapPage() {
               map={map}
               forceOpen={expandAll}
               onInteract={() => setExpandAll(undefined)}
+              viewMode={viewMode}
             />
           ))
         )}
