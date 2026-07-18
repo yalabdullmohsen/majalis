@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import {
   buildSearchSuggestions,
+  ensureSuggestionIndex,
+  isSuggestionIndexReady,
   SUGGESTION_GROUP_LABELS,
   type SearchSuggestion,
 } from "@/lib/search-suggestions";
@@ -28,12 +30,39 @@ export function SearchSuggestions({
   const [activeIndex, setActiveIndex] = useState(-1);
   const rootRef = useRef<HTMLDivElement>(null);
 
+  // فهرس الاقتراحات (~٩٦٠KB بذور) يُحمَّل عند أول تفاعل مع المربّع فقط،
+  // لا مع تحميل الصفحة — NavBar موجود في كل صفحة.
+  const [indexReady, setIndexReady] = useState(() => isSuggestionIndexReady());
+  const [indexLoading, setIndexLoading] = useState(false);
+  const mountedRef = useRef(true);
+  useEffect(() => () => { mountedRef.current = false; }, []);
+
+  const loadIndex = () => {
+    if (indexReady || isSuggestionIndexReady()) {
+      if (!indexReady) setIndexReady(true);
+      return;
+    }
+    setIndexLoading(true);
+    ensureSuggestionIndex()
+      .then(() => {
+        if (!mountedRef.current) return;
+        setIndexReady(true);
+      })
+      .catch(() => undefined)
+      .finally(() => {
+        if (mountedRef.current) setIndexLoading(false);
+      });
+  };
+
   const suggestions = useMemo(
-    () => buildSearchSuggestions(value),
-    [value],
+    () => (indexReady ? buildSearchSuggestions(value) : []),
+    [value, indexReady],
   );
 
   const history = useMemo(() => getSearchHistory(), [open, value]);
+
+  const showLoadingHint =
+    open && value.trim().length >= 2 && !indexReady && indexLoading;
 
   useEffect(() => {
     setActiveIndex(-1);
@@ -91,21 +120,28 @@ export function SearchSuggestions({
       <input
         value={value}
         onChange={(e) => {
+          loadIndex();
           onChange(e.target.value);
           setOpen(true);
         }}
-        onFocus={() => setOpen(true)}
+        onFocus={() => {
+          loadIndex();
+          setOpen(true);
+        }}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
+        role="combobox"
         aria-label="كلمة البحث"
-        aria-expanded={open && suggestions.length > 0}
+        aria-expanded={open && (suggestions.length > 0 || history.length > 0)}
         aria-autocomplete="list"
+        aria-controls="search-suggestions-listbox"
+        aria-haspopup="listbox"
         className={inputClassName}
         autoComplete="off"
       />
 
       {open && value.trim().length < 2 && history.length > 0 && (
-        <div className="search-suggestions-panel" role="listbox" aria-label="سجل البحث">
+        <div id="search-suggestions-listbox" className="search-suggestions-panel" role="listbox" aria-label="سجل البحث">
           <div className="search-suggestions-group">
             <p className="search-suggestions-group-label">بحثت سابقًا</p>
             {history.map((item) => (
@@ -129,8 +165,16 @@ export function SearchSuggestions({
         </div>
       )}
 
+      {showLoadingHint && (
+        <div className="search-suggestions-panel" role="status" aria-live="polite">
+          <div className="search-suggestions-group">
+            <p className="search-suggestions-group-label">جارٍ تحميل الاقتراحات…</p>
+          </div>
+        </div>
+      )}
+
       {open && value.trim().length >= 2 && suggestions.length > 0 && (
-        <div className="search-suggestions-panel" role="listbox">
+        <div id="search-suggestions-listbox" className="search-suggestions-panel" role="listbox">
           {Array.from(grouped.entries()).map(([group, items]) => (
             <div key={group} className="search-suggestions-group">
               <p className="search-suggestions-group-label">{SUGGESTION_GROUP_LABELS[group]}</p>

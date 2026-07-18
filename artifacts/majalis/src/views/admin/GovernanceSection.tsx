@@ -85,8 +85,8 @@ export function GovernanceSection() {
         <StatCard label="اكتمال البيانات" value={`${q?.completeness_pct ?? 0}%`} />
         <StatCard label="يحتاج مراجعة" value={`${q?.needs_review_pct ?? 0}%`} color="#dc2626" />
         <StatCard label="تكرارات" value={q?.duplicate_count ?? 0} />
-        <StatCard label="روابط معطلة" value={q?.broken_links_count ?? 0} color="#1F4D3A" />
-        <StatCard label="Queue مراجعة" value={m?.queue?.pending ?? dashboard?.review_queue?.length ?? 0} />
+        <StatCard label="روابط معطلة" value={q?.broken_links_count ?? 0} color="#176B57" />
+        <StatCard label="طابور المراجعة" value={m?.queue?.pending ?? dashboard?.review_queue?.length ?? 0} />
         <StatCard label="معدل النجاح" value={`${m?.performance?.success_rate ?? 0}%`} />
       </div>
 
@@ -136,7 +136,7 @@ export function GovernanceSection() {
           </Panel>
         )}
 
-        <Panel title="Queue المراجعة">
+        <Panel title="طابور المراجعة">
           {(dashboard?.review_queue || []).slice(0, 6).map((r, i) => (
             <div key={i} className="gov-list-item">
               {r.content_kind}/{r.content_id}، {r.status}

@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { useScrollRestore } from "@/hooks/useScrollRestore";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
 import { RequestManager } from "@/lib/request-manager";
@@ -22,6 +21,20 @@ const LEGACY_CATEGORIES = [
   "فوائد تربوية",
   "فوائد دعوية",
   "فوائد سلوكية",
+  // الثلاثة التالية: اكتُشف بالفحص المباشر 2026-07-18 أن 142 من 515 فائدة
+  // في fawaid-seed.ts (SEED_FAWAID) كانت تحمل قيم category لا تطابق أي شريحة
+  // فلترة معروضة هنا إطلاقاً (لا في FAWAID_CATEGORIES المُستورَدة من
+  // fawaid-curated-seed.ts ولا في LEGACY_CATEGORIES أعلاه) — فتختفي صامتاً
+  // عند الفلترة بأي تصنيف محدَّد رغم ظهورها تحت "الكل"، نفس عطل "أخلاق
+  // إسلامية" في لعبة المسابقات لكن على نطاق أوسع بكثير. 126 من الـ142 حالة
+  // أُعيد تسميتها في المصدر لتطابق تصنيفاً قائماً هنا (مثل "فوائد علمية"
+  // → "طلب العلم"، "فوائد لغوية" → "اللغة")، والـ16 المتبقية ("فوائد
+  // تاريخية") لا تصنيف قريب لها فأُضيفت هنا كتصنيف أصيل جديد، إضافة
+  // لتوحيد "الرقائق والمواعظ"/"الرقائق والزهد" → "الرقائق" و"الذكر
+  // والدعاء"/"الدعاء والذكر" → "الذكر والدعاء" (متغيّرا ترتيب لنفس المعنى).
+  "فوائد تاريخية",
+  "الرقائق",
+  "الذكر والدعاء",
 ] as const;
 
 const DISPLAY_CATEGORIES = ["الكل", ...FAWAID_CATEGORIES, ...LEGACY_CATEGORIES.filter((c) => !FAWAID_CATEGORIES.includes(c as never))] as const;
@@ -40,7 +53,6 @@ export default function FawaidPage({
 }: {
   initialFawaid?: any[];
 } = {}) {
-  useScrollRestore("/fawaid");
   const [fawaid, setFawaid] = useState<any[]>(initialFawaid ?? []);
   const [loading, setLoading] = useState(!initialFawaid);
   const [category, setCategory] = useState("الكل");
@@ -52,6 +64,15 @@ export default function FawaidPage({
   const [submitError, setSubmitError] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const { user, isLoggedIn, isAdmin } = useAuth();
+
+  // رابط `?cat=...` في JSON-LD أسفل هذه الصفحة نفسها كان يُتجاهَل كليًا:
+  // `category` تُهيَّأ دائماً بـ"الكل" بلا قراءة أي شيء من الرابط الفعلي —
+  // عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف بالفحص المباشر
+  // 2026-07-18.
+  useEffect(() => {
+    const cat = new URLSearchParams(window.location.search).get("cat");
+    if (cat) setCategory(cat);
+  }, []);
   const debouncedSearch = useDebouncedValue(search);
 
   useEffect(() => {
@@ -70,7 +91,7 @@ export default function FawaidPage({
             "@type": "ListItem",
             position: i + 1,
             name: cat,
-            url: `https://majlisilm.com/fawaid?cat=${encodeURIComponent(cat)}`,
+            url: `https://www.majlisilm.com/fawaid?cat=${encodeURIComponent(cat)}`,
           })),
         },
       ],
@@ -146,14 +167,15 @@ export default function FawaidPage({
         className="page-search-input full content-hub-search"
         aria-label="بحث في الفوائد"
       />
-      <div className="content-hub-chips">
+      <div className="content-hub-chips" role="tablist" aria-label="تصفية الفوائد">
         {DISPLAY_CATEGORIES.map((cat) => (
           <button
             key={cat}
+            role="tab"
             type="button"
             onClick={() => setCategory(cat)}
             className={category === cat ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-            aria-pressed={category === cat}
+            aria-selected={category === cat}
           >
             {cat}
           </button>
@@ -200,18 +222,19 @@ export default function FawaidPage({
           {submitted ? (
             <p className="content-submit-success">شكرًا. سيتم مراجعة الفائدة قبل نشرها.</p>
           ) : (
-            <form onSubmit={handleSubmit} className="content-submit-form">
+            <form onSubmit={handleSubmit} className="content-submit-form" aria-label="إرسال فائدة علمية">
               {submitError && <p className="content-submit-error" role="alert">{submitError}</p>}
               <textarea
                 value={text}
                 onChange={(e) => setText(e.target.value)}
+                aria-label="نص الفائدة"
                 placeholder="اكتب الفائدة هنا..."
                 rows={4}
               />
               <input
                 value={authorName}
                 onChange={(e) => setAuthorName(e.target.value)}
-                placeholder="اسم الكاتب (اختياري)"
+                aria-label="اسم الكاتب (اختياري)" placeholder="اسم الكاتب (اختياري)"
               />
               <button type="submit" disabled={submitting || !text.trim()}>
                 {submitting ? "جارٍ الإرسال..." : "إرسال الفائدة"}
@@ -229,7 +252,7 @@ export default function FawaidPage({
       </aside>
 
       <div className="twh-share">
-        <ShareButtons title="الفوائد العلمية — المجلس العلمي" url="https://majlisilm.com/fawaid" />
+        <ShareButtons title="الفوائد العلمية — المجلس العلمي" url="https://www.majlisilm.com/fawaid" />
       </div>
 
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">

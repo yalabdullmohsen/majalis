@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
-import { useScrollRestore } from "@/hooks/useScrollRestore";
 import { Pencil, Trash2 } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
@@ -9,6 +8,7 @@ import { PageHeader } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { useAuth } from "@/components/AuthProvider";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
+import { computeNextOccurrenceMs, isLessonInProgress } from "@/lib/lesson-time";
 import { supabase } from "@/lib/supabase";
 import {
   DEFAULT_KUWAIT_FILTERS,
@@ -36,6 +36,11 @@ const TAB_LABELS: Record<TabId, string> = {
   makkah: "الحرم المكي",
   madinah: "المسجد النبوي",
 };
+
+// لا توجد بيانات دروس فعلية من الحرمين الشريفين في مصدر البيانات الحالي
+// (دروس كويتية محليًا) — نُبقي التبويبين ظاهرين ونُعلمِ المستخدم صراحةً بدل
+// عرضهما فارغين بلا تفسير.
+const TAB_COMING_SOON: Partial<Record<TabId, boolean>> = { makkah: true, madinah: true };
 
 function useTabFromUrl(): [TabId, (tab: TabId) => void] {
   const [, setLocation] = useLocation();
@@ -118,11 +123,16 @@ function LessonsFilterPanel({
           onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
           placeholder="ابحث: عنوان، شيخ، مسجد..."
           aria-label="بحث في الدروس"
+          role="combobox"
+          aria-expanded={showSuggestions && suggestions.length > 0}
+          aria-autocomplete="list"
+          aria-controls="lessons-search-listbox"
+          aria-haspopup="listbox"
         />
         {showSuggestions && suggestions.length > 0 && (
-          <ul className="lessons-search-suggestions" role="listbox">
+          <ul id="lessons-search-listbox" className="lessons-search-suggestions" role="listbox" aria-label="اقتراحات البحث">
             {suggestions.map((item) => (
-              <li key={item}>
+              <li key={item} role="option" aria-selected={false}>
                 <button type="button" onMouseDown={() => setFilter("search", item)}>
                   {item}
                 </button>
@@ -216,7 +226,6 @@ export default function LessonsPage({
   initialActive?: KuwaitLessonRecord[];
   initialArchived?: KuwaitLessonRecord[];
 } = {}) {
-  useScrollRestore("/lessons");
   const [activeLessons, setActiveLessons] = useState<KuwaitLessonRecord[]>(initialActive ?? []);
   const [archivedLessons, setArchivedLessons] = useState<KuwaitLessonRecord[]>(initialArchived ?? []);
   const [loading, setLoading] = useState(!initialActive);
@@ -227,7 +236,18 @@ export default function LessonsPage({
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [myReg, setMyReg] = useState<string[]>([]);
   const [tab, setTab] = useTabFromUrl();
+  const [, navigateTo] = useLocation();
   const { user, isLoggedIn, isAdmin } = useAuth();
+
+  // رابط وارد بـ`?search=...` (من rulings-relations.ts، يُعرَض في بطاقات
+  // "مواد ذات صلة" بصفحات الأحكام الشرعية) كان يُتجاهَل كليًا: `filters`
+  // يُهيَّأ دائماً بـDEFAULT_KUWAIT_FILTERS بلا قراءة أي شيء غير `tab` من
+  // الرابط الفعلي — عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف
+  // بالفحص المباشر 2026-07-18.
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("search");
+    if (q) setFilters((prev) => ({ ...prev, search: q }));
+  }, []);
 
   useEffect(() => {
     applyPageSeo({
@@ -243,14 +263,14 @@ export default function LessonsPage({
           description: "دروس ودورات علمية من أئمة وعلماء الكويت في الفقه والعقيدة والقرآن والسيرة",
           numberOfItems: 8,
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "الدروس الشرعية", url: "https://majlisilm.com/lessons?tab=lessons" },
-            { "@type": "ListItem", position: 2, name: "الدورات العلمية", url: "https://majlisilm.com/lessons?tab=courses" },
-            { "@type": "ListItem", position: 3, name: "الفقه وأصوله", url: "https://majlisilm.com/lessons?topic=فقه" },
-            { "@type": "ListItem", position: 4, name: "العقيدة الإسلامية", url: "https://majlisilm.com/lessons?topic=عقيدة" },
-            { "@type": "ListItem", position: 5, name: "علوم القرآن والتفسير", url: "https://majlisilm.com/lessons?topic=قرآن" },
-            { "@type": "ListItem", position: 6, name: "السيرة النبوية", url: "https://majlisilm.com/lessons?topic=سيرة" },
-            { "@type": "ListItem", position: 7, name: "الحديث الشريف", url: "https://majlisilm.com/lessons?topic=حديث" },
-            { "@type": "ListItem", position: 8, name: "اللغة العربية", url: "https://majlisilm.com/lessons?topic=لغة" },
+            { "@type": "ListItem", position: 1, name: "الدروس الشرعية", url: "https://www.majlisilm.com/lessons?tab=lessons" },
+            { "@type": "ListItem", position: 2, name: "الدورات العلمية", url: "https://www.majlisilm.com/lessons?tab=courses" },
+            { "@type": "ListItem", position: 3, name: "الفقه وأصوله", url: "https://www.majlisilm.com/lessons?topic=فقه" },
+            { "@type": "ListItem", position: 4, name: "العقيدة الإسلامية", url: "https://www.majlisilm.com/lessons?topic=عقيدة" },
+            { "@type": "ListItem", position: 5, name: "علوم القرآن والتفسير", url: "https://www.majlisilm.com/lessons?topic=قرآن" },
+            { "@type": "ListItem", position: 6, name: "السيرة النبوية", url: "https://www.majlisilm.com/lessons?topic=سيرة" },
+            { "@type": "ListItem", position: 7, name: "الحديث الشريف", url: "https://www.majlisilm.com/lessons?topic=حديث" },
+            { "@type": "ListItem", position: 8, name: "اللغة العربية", url: "https://www.majlisilm.com/lessons?topic=لغة" },
           ],
         },
       ],
@@ -323,9 +343,15 @@ export default function LessonsPage({
 
   const featuredSections = useMemo(() => {
     const sorted = sortKuwaitLessons(tabLessons);
+    const now    = Date.now();
+    const THRESHOLD_MS = 36 * 60 * 60 * 1000; // 36 ساعة
 
-    // كل قسم يستبعد ما ظهر في الأقسام السابقة
-    const upcoming = sorted.slice(0, 4);
+    // "الأقرب موعدًا": فقط الدروس الجارية الآن أو التي تبدأ خلال 36 ساعة
+    const upcoming = sorted.filter((l) =>
+      isLessonInProgress(l.day, l.time) ||
+      computeNextOccurrenceMs(l.day, l.time) - now <= THRESHOLD_MS
+    ).slice(0, 4);
+
     const upcomingIds = new Set(upcoming.map((l) => l.id));
 
     const popular = [...tabLessons]
@@ -385,7 +411,10 @@ export default function LessonsPage({
   }, [filters]);
 
   const toggleReg = async (lessonId: string) => {
-    if (!isLoggedIn || !user) return alert("يرجى تسجيل الدخول أولاً");
+    if (!isLoggedIn || !user) {
+      navigateTo(`/login?next=${encodeURIComponent(window.location.pathname)}`);
+      return;
+    }
     try {
       if (myReg.includes(lessonId)) {
         await unregisterFromLesson(user.id, lessonId);
@@ -427,7 +456,7 @@ export default function LessonsPage({
               <a
                 href={`/admin?edit=${lesson.id}`}
                 className="lesson-admin-btn lesson-admin-btn--edit"
-                title="تعديل"
+                aria-label="تعديل"
               >
                 <Pencil size={13} strokeWidth={1.4} aria-hidden="true" />
                 تعديل
@@ -436,7 +465,7 @@ export default function LessonsPage({
                 <button
                   type="button"
                   className="lesson-admin-btn lesson-admin-btn--delete"
-                  title="حذف"
+                  aria-label="حذف"
                   onClick={() => handleAdminDelete(lesson.id)}
                 >
                   <Trash2 size={13} strokeWidth={1.4} aria-hidden="true" />
@@ -502,6 +531,7 @@ export default function LessonsPage({
               onClick={() => setTab(tabId)}
             >
               {TAB_LABELS[tabId]}
+              {TAB_COMING_SOON[tabId] && <span className="kuwait-tab__soon">قريبًا</span>}
             </button>
           ))}
         </div>
@@ -552,10 +582,16 @@ export default function LessonsPage({
             <>
               {!filters.search && filters.governorate === "كل المحافظات" && (
                 <>
-                  <section className="lessons-v2-section">
-                    <h2 className="lessons-v2-section__title">الأقرب موعدًا</h2>
-                    {renderGrid(featuredSections.upcoming)}
-                  </section>
+                  {featuredSections.upcoming.length > 0 && (
+                    <section className="lessons-v2-section">
+                      <h2 className="lessons-v2-section__title">
+                        {featuredSections.upcoming.some(l => isLessonInProgress(l.day, l.time))
+                          ? "جارٍ الآن"
+                          : "الأقرب موعدًا"}
+                      </h2>
+                      {renderGrid(featuredSections.upcoming)}
+                    </section>
+                  )}
                   {featuredSections.featured.length > 0 && (
                     <section className="lessons-v2-section">
                       <h2 className="lessons-v2-section__title">المميز: بث مباشر</h2>
@@ -575,7 +611,11 @@ export default function LessonsPage({
                   {isAdmin && ` (${filtered.filter((l) => !featuredIds.has(l.id)).length})`}
                 </h2>
                 {filtered.filter((l) => !featuredIds.has(l.id)).length === 0 ? (
-                  <p className="lessons-empty-state">لا توجد {TAB_LABELS[tab]} مطابقة حاليًا.</p>
+                  <p className="lessons-empty-state">
+                    {TAB_COMING_SOON[tab]
+                      ? `دروس ${TAB_LABELS[tab]} قادمة قريبًا بإذن الله — نعمل على إضافتها.`
+                      : `لا توجد ${TAB_LABELS[tab]} مطابقة حاليًا.`}
+                  </p>
                 ) : (
                   renderGrid(filtered.filter((l) => !featuredIds.has(l.id)))
                 )}
@@ -613,6 +653,8 @@ export default function LessonsPage({
       </div>
 
       {filtersOpen && (
+        // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار بديل
+        // كامل بلوحة المفاتيح.
         <div className="lessons-v2-sheet-backdrop" onClick={() => setFiltersOpen(false)} role="presentation">
           <div className="lessons-v2-sheet" onClick={(e) => e.stopPropagation()}>
             <LessonsFilterPanel
@@ -630,10 +672,10 @@ export default function LessonsPage({
       )}
 
       <div className="twh-share">
-        <ShareButtons title="الدروس العلمية — المجلس العلمي" url="https://majlisilm.com/lessons" />
+        <ShareButtons aria-label="الدروس العلمية — المجلس العلمي" url="https://www.majlisilm.com/lessons" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["hadith", "fiqh"]} title="اختبر معلوماتك في الدروس الشرعية" count={4} />
+        <SectionQuiz categoryId={["hadith", "fiqh"]} aria-label="اختبر معلوماتك في الدروس الشرعية" count={4} />
       </div>
     </div>
   );

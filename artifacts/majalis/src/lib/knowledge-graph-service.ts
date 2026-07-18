@@ -86,8 +86,8 @@ export const NODE_TYPE_COLOR: Record<KnNodeType, string> = {
   quran_ayah:    "#065f46", // أخضر داكن
   hadith:        "#1d4ed8", // أزرق
   fatwa:         "#7c3aed", // بنفسجي
-  scholar:       "#1F4D3A", // ذهبي
-  book:          "#1F4D3A", // بني
+  scholar:       "#176B57", // ذهبي
+  book:          "#176B57", // بني
   lesson:        "#0369a1", // أزرق فاتح
   benefit:       "#047857", // أخضر
   prophet_story: "#dc2626", // أحمر
@@ -107,7 +107,7 @@ export const REL_TYPE_LABEL: Record<KnRelType, string> = {
 export function getNodeHref(node: KnNode): string {
   const ref = node.reference_id;
   switch (node.node_type) {
-    case "quran_ayah":    return "/quran";
+    case "quran_ayah":    return "/quran-hub";
     case "hadith":        return "/hadith";
     case "fatwa":         return ref ? `/fatwa/${ref}` : "/fatwa";
     case "scholar":       return "/lessons";

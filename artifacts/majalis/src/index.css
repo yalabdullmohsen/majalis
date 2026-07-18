@@ -1,4 +1,4 @@
-/* ══ خط Amiri للعناوين الرئيسية ══ */
+/* ══ خط المنصة الموحَّد IBM Plex Sans Arabic — يُحمَّل عبر index.html، مع استثناء خطوط الرسم القرآني (2026-07-16) ══ */
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -10,64 +10,148 @@ html {
 }
 
 :root {
+  /* أزواج لون مضمونة التباين (WCAG 2.2 AA). القاعدة: لا تخلط مقدمة من عائلة مع خلفية من أخرى.
+     تُعرَّف هنا فقط، ولا يجوز لأي كتلة أخرى إعادة تعريفها — وإلا عاد «الأخضر على الأخضر». */
+  --color-accent-fg-on-soft: #176B57;  /* على --color-accent-soft-bg = 5.58:1 ✓ */
+  --color-accent-soft-bg:    #E6F2EC;
+  --color-success-fg:        #15803D;  /* على #DCFCE7 = 4.57:1 ✓ (بدل #16a34a = 3.00:1 ✗) */
+  --color-success-bg:        #DCFCE7;
+  --color-on-dark:           #FFFFFF;
+
   /* ══════════════════════════════════════════════════
      مجالس — هوية زمردية — الأخضر الغامق والعاج
      سُلَّم Emerald المستخرَج من الصور المرجعية
      ══════════════════════════════════════════════════ */
 
   /* ══ Design Tokens الموحَّدة — نظام لون واحد ══ */
-  --clr-primary:     #1F4D3A;
-  --clr-primary-hov: #173A2C;
-  --clr-primary-act: #133024;
-  --clr-bg:          #FFFFFF;
-  --clr-surface:     #F8F9FA;
-  --clr-border:      #E5E7EB;
-  --clr-divider:     #ECECEC;
-  --clr-text-1:      #1F2937;
-  --clr-text-2:      #6B7280;
-  --clr-text-on-pri: #FFFFFF;
+  /* ── سُلَّم المسافات (Design System — Spacing Scale) ── */
+  --sp-1:  0.25rem;   /* 4px  */
+  --sp-2:  0.5rem;    /* 8px  */
+  --sp-3:  0.75rem;   /* 12px */
+  --sp-4:  1rem;      /* 16px */
+  --sp-5:  1.25rem;   /* 20px */
+  --sp-6:  1.5rem;    /* 24px */
+  --sp-8:  2rem;      /* 32px */
+  --sp-10: 2.5rem;    /* 40px */
+  --sp-12: 3rem;      /* 48px */
+  --sp-16: 4rem;      /* 64px */
 
-  /* ── سُلَّم Emerald الكامل (محدَّث) ── */
-  --emerald-50:  #F0F5F2;
-  --emerald-100: #D8E8E1;
-  --emerald-200: #B0CEBF;
-  --emerald-300: #7AA898;
-  --emerald-400: #4E7D6A;
-  --emerald-500: #1F4D3A;
-  --emerald-600: #173A2C;
-  --emerald-700: #133024;
-  --emerald-800: #0E2419;
-  --emerald-900: #0A1A12;
-  --emerald-950: #06100B;
+  /* ── سُلَّم الطباعة (Design System — Typography Scale) ── */
+  --text-xs:   0.6875rem;  /* 11px */
+  --text-sm:   0.8125rem;  /* 13px */
+  --text-base: 0.9375rem;  /* 15px */
+  --text-lg:   1.0625rem;  /* 17px */
+  --text-xl:   1.25rem;    /* 20px */
+  --text-2xl:  1.5rem;     /* 24px */
+  --text-3xl:  1.875rem;   /* 30px */
+  --text-4xl:  2.25rem;    /* 36px */
 
-  /* ── عاج وحبر ── */
-  --ivory:      #FAF8F2;
-  --ink:        #122019;
-  --mark-green: #005424;
+  /* ── نصف القطر (Design System — Radius Scale) ── */
+  --radius-sm:   0.375rem; /* 6px  */
+  --radius-md:   0.625rem; /* 10px */
+  --radius-lg:   0.875rem; /* 14px */
+  --radius-xl:   1.25rem;  /* 20px */
+  --radius-2xl:  1.75rem;  /* 28px */
+  --radius-pill: 9999px;
+
+  /* ── ترتيب الطبقات (Design System — Z-Index Scale) ── */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-sticky:  100;
+  --z-nav:     200;
+  --z-drawer:  300;
+  --z-modal:   400;
+  --z-toast:   500;
+
+  /* ── نظام الأيقونات الموحَّد ── */
+  --icon-section-size: 22px;
+  --icon-nav-size:     20px;
+  --icon-card-size:    24px;
+
+  --clr-primary:       var(--emerald-500, #176B57);
+  --clr-primary-deep:  var(--emerald-deep, #123F36);
+  --clr-primary-hov:   var(--emerald-600, #125746);
+  --clr-primary-act:   var(--emerald-700, #0E4437);
+  --clr-primary-soft:  #E8F2EE;
+  --clr-primary-subtle:#F3F8F6;
+  --clr-bg:            var(--ivory, #F8F7F3);
+  --clr-surface:       #FFFFFF;
+  --clr-surface-sec:   #F2F1EC;
+  --clr-border:        #E2E6E3;
+  --clr-border-strong: #CBD2CE;
+  --clr-divider:       rgba(23,107,87,.07);
+  --clr-text-1:        var(--ink, #17201D);
+  --clr-text-2:        #5E6964;
+  --clr-text-muted:    #89928E;
+  --clr-text-on-pri:   #FFFFFF;
+  --clr-accent:        var(--sand, #C7A96B);
+  --clr-accent-soft:   var(--sand-soft, #F4EEDF);
+  --clr-emerald:       var(--emerald-500, #176B57);
+  --clr-ink:           var(--ink, #17201D);
+  --clr-ink-soft:      #5E6964;
+  --clr-ink-muted:     #89928E;
+
+  /* ── سُلَّم Emerald المحدَّث 2026 ── */
+  --emerald-50:  #EFF7F4;
+  --emerald-100: #D4EDE6;
+  --emerald-200: #A4D3C5;
+  --emerald-300: #6BB3A1;
+  --emerald-400: #3A8E78;
+  --emerald-500: #176B57;  /* اللون الأساسي الجديد */
+  --emerald-600: #125746;  /* Hover */
+  --emerald-700: #0E4437;
+  --emerald-800: #0A3327;
+  --emerald-900: #071E18;
+  --emerald-950: #040F0C;
+  /* Deep Emerald للبطل والعناوين الكبيرة */
+  --emerald-deep: #123F36;
+
+  /* ── عاج دافئ وحبر ── */
+  --ivory:      #F8F7F3;  /* خلفية دافئة هادئة */
+  --ink:        #17201D;  /* نص رئيسي */
+  --mark-green: #248A62;  /* تمييز نجاح */
+
+  /* ── رمل/ذهب خفيف (Accent) ── */
+  --sand:       #C7A96B;
+  --sand-soft:  #F4EEDF;
+  --sand-dim:   rgba(199,169,107,.12);
+
+  /* ── حالات النظام ── */
+  --sys-success: #248A62;
+  --sys-warning: #B98232;
+  --sys-error:   #B94A48;
+  --sys-info:    #1E7A9A;
 
   /* ── لوحة مجالس الأساسية (النهار — الوضع الافتراضي) ── */
   --msk-canvas:        var(--ivory);
   --msk-canvas-1:      var(--emerald-50);
   --msk-canvas-2:      var(--emerald-100);
-  --msk-canvas-glass:  rgba(250,248,242,.94);
+  --msk-canvas-glass:  rgba(248,247,243,.94);
   --msk-manuscript:    #F5EFE0;
   --msk-manuscript-2:  #EDE3CA;
+  /* ملاحظة صيانة: كل متغيّرات msk-gold في هذا الملف (وأشباهها في الملفات
+     الأخرى: m26-gold، ds-gold، mj-gold، mf-gold) تُحلّ فعليًا لألوان
+     أخضر زمردي، لا أي درجة ذهبية حقيقية — بقايا تسمية من تصميم ذهبي
+     سابق أُعيد تصميمه بالكامل لأخضر زمردي دون تحديث الأسماء. لا عطل
+     بصري ناتج (كل استخدام متسق)، لكن الاسم مضلِّل لأي مطوّر يقرأ الكود.
+     إعادة تسمية آمنة تتطلب تمريرة rename فقط مخصَّصة عبر 5 ملفات CSS
+     متوازية مع تغطية بصرية كاملة — موثَّق في READY_FOR_MERGE.md قسم 15/16. */
   --msk-gold:          var(--emerald-500);
-  --msk-gold-deep:     var(--emerald-600);
-  --msk-gold-dim:      rgba(24,54,42,.12);
-  --msk-gold-glow:     rgba(24,54,42,.15);
-  --msk-gold-border:   rgba(24,54,42,.22);
+  --msk-gold-deep:     var(--emerald-deep);
+  --msk-gold-dim:      rgba(23,107,87,.12);
+  --msk-gold-glow:     rgba(23,107,87,.15);
+  --msk-gold-border:   rgba(23,107,87,.22);
   --msk-sky:           #1E7A9A;
   --msk-sky-dim:       rgba(30,122,154,.10);
   --msk-text:          var(--ink);
-  --msk-text-2:        var(--emerald-400);
-  --msk-text-3:        var(--emerald-300);
+  --msk-text-2:        #5E6964;
+  --msk-text-3:        #89928E;
   --msk-green:         var(--emerald-500);
-  --msk-red:           #9B1C1C;
-  --msk-red-dim:       rgba(155,28,28,.08);
-  --msk-border:        rgba(24,54,42,0.12);
+  --msk-red:           #B94A48;
+  --msk-red-dim:       rgba(185,74,72,.08);
+  --msk-border:        rgba(23,107,87,0.10);
   --msk-border-strong: var(--emerald-200);
-  --msk-divider:       rgba(24,54,42,.07);
+  --msk-divider:       rgba(23,107,87,.06);
   --msk-shadow-sm:     0 1px 2px rgba(18,32,25,.06);
   --msk-shadow:        0 4px 12px rgba(18,32,25,.08), 0 1px 3px rgba(18,32,25,.05);
   --msk-shadow-lg:     0 12px 32px rgba(18,32,25,.10);
@@ -85,18 +169,18 @@ html {
   --majalis-emerald:       var(--msk-gold);
   --majalis-emerald-deep:  var(--msk-gold-deep);
   --majalis-emerald-muted: var(--msk-gold-dim);
-  --majalis-emerald-soft:  rgba(31,77,58,.06);
+  --majalis-emerald-soft:  rgba(23,107,87,.06);
   --majalis-blue:          var(--msk-sky);
   --majalis-blue-deep:     #145878;
   --majalis-blue-soft:     var(--msk-sky-dim);
   --majalis-brass:         var(--msk-gold);
   --majalis-brass-deep:    var(--msk-gold-deep);
-  --majalis-brass-soft:    rgba(31,77,58,.06);
+  --majalis-brass-soft:    rgba(23,107,87,.06);
   --majalis-sage:          #EAF3EF;
   --majalis-danger:        var(--msk-red);
   --majalis-danger-muted:  var(--msk-red-dim);
   --majalis-success:       var(--msk-green);
-  --majalis-warning:       #1F4D3A;
+  --majalis-warning:       var(--sys-warning, #B98232);
   --majalis-line:          var(--msk-border);
   --majalis-line-strong:   var(--msk-border-strong);
   --majalis-shadow:        var(--msk-shadow);
@@ -104,30 +188,37 @@ html {
   --majalis-shadow-lg:     var(--msk-shadow-lg);
   --majalis-shadow-xl:     0 24px 64px rgba(28,26,24,.13);
   --majalis-gold:          var(--msk-gold);
-  --majalis-gold-light:    rgba(31,77,58,.18);
+  --majalis-gold-light:    rgba(23,107,87,.18);
   --majalis-ivory:         var(--msk-canvas-1);
 
   /* ── جسر إرثي: متغيرات design-system.css القديمة ── */
   --bg-card:             var(--msk-canvas,   #FFFFFF);
-  --bg-base:             var(--msk-canvas-1, #F7FBF9);
-  --text-base:           var(--msk-text,     #1C1A18);
-  --text-body:           var(--msk-text-2,   #5C5550);
-  --text-muted:          var(--msk-text-3,   #918A85);
-  --majalis-accent:      var(--msk-gold,     #1F4D3A);
-  --majalis-surface-2:   var(--msk-canvas-1, #F7FBF9);
-  --majalis-surface-hover: rgba(31,77,58,0.04);
-  --majalis-surface-muted: var(--msk-canvas-1, #F7FBF9);
-  --ds-surface-2:        var(--msk-canvas-1, #F7FBF9);
+  --bg-base:             var(--msk-canvas-1, #F8F7F3);
+  --text-base:           var(--msk-text,     #17201D);
+  --text-body:           var(--msk-text-2,   #5E6964);
+  --text-muted:          var(--msk-text-3,   #89928E);
+  --majalis-accent:      var(--msk-gold,     #176B57);
+  --majalis-surface-2:   var(--msk-canvas-1, #F8F7F3);
+  --majalis-surface-hover: rgba(23,107,87,0.04);
+  --majalis-surface-muted: var(--msk-canvas-1, #F8F7F3);
+  --ds-surface-2:        var(--msk-canvas-1, #F8F7F3);
   --color-parchment:     var(--msk-canvas,   #FFFFFF);
-  --color-line:          var(--msk-border,   rgba(31,77,58,0.10));
+  --color-line:          var(--msk-border,   rgba(23,107,87,0.10));
 
-  /* ── الخطوط — Cairo (نص) + Amiri للعناوين + Amiri Quran (مصحف) ── */
-  --font-primary:  "Cairo", system-ui, sans-serif;
-  --font-ui:       "Cairo", system-ui, sans-serif;
-  --font-display:  "Amiri", "Cairo", serif;
-  --font-reading:  "Noto Naskh Arabic", "Cairo", serif;
-  --font-body:     "Cairo", system-ui, sans-serif;
+  /* ── الخطوط ── سياسة خط الواجهة الموحَّد Almarai + خط تراثي محدود + خط قرآني (2026-07-18) ──
+     1) --font-ui / --font-body / --font-display / --font-reading: واجهة التطبيق
+        كاملة (تنقل، أزرار، قوائم، نصوص، عناوين، قراءة) — Almarai، ببديل احتياطي
+        IBM Plex Sans Arabic / Noto Sans Arabic لو تعذّر تحميل Almarai.
+     2) --font-heritage: عناوين تراثية محدودة فقط (لا نصوص طويلة) — Amiri.
+     3) --font-quran: المصحف حصرًا — خط عثماني موثق (Amiri Quran). لا يتغيّر أبدًا. */
+  --font-primary:  "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+  --font-ui:       "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+  --font-body:     "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+  --font-display:  "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+  --font-reading:  "Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
   --font-quran:    "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
+  /* خط تراثي للعناوين البارزة فقط (لا يُستخدَم في النصوص الطويلة أو الفقرات) */
+  --font-heritage: "Amiri", "Aref Ruqaa", "Scheherazade New", serif;
 
   /* ── الحركة — تلاشٍ وهبوط (لا ارتداد) ── */
   --motion-fast:   120ms ease-out;
@@ -366,6 +457,15 @@ html[data-theme="dark"] body {
   color: #E8DED4;
 }
 
+/* فقاعات المساعد الذكي (.assistant-message-assistant/-bubble) بخلفية
+   بيضاء ثابتة بلا نظير ليلي — نص العنوان يستخدم لون فاتح صحيح يفترض
+   خلفية داكنة، فيختفي التباين تمامًا في الوضع الليلي. */
+html[data-theme="dark"] .assistant-message-assistant,
+html[data-theme="dark"] .assistant-message-bubble {
+  background: #1A2120 !important;
+  border-color: rgba(255,255,255,.08) !important;
+}
+
 /* WCAG AA — focus-visible في الوضع الليلي */
 html[data-theme="dark"] :focus-visible {
   outline-color: #5CC49A !important;
@@ -380,12 +480,13 @@ html[data-theme="dark"] a:hover {
   color: #5CC49A;
 }
 
-html[data-font="default"] {
-  --font-body: var(--font-primary);
-}
-
+/* Almarai هو الخط الموحَّد الوحيد لواجهة المنصة (2026-07-18) — كلا خياري
+   تفضيل القراءة السابقين (naskh/default) يُصيَّران لنفس الخط الأساسي كي لا
+   يبقى أي مسار يتجاوز الخط الموحَّد. الآلية (data-font) أُبقيت سليمة تقنيًا
+   لتفادي كسر مكوّن الإعدادات، لكنها لم تعد تُنتج فرقًا بصريًا. */
+html[data-font="default"],
 html[data-font="naskh"] {
-  --font-body: "Noto Naskh Arabic", "Cairo", "Tajawal", serif;
+  --font-body: var(--font-primary);
 }
 
 :root {
@@ -1943,6 +2044,24 @@ input, textarea, select { font-family: inherit; }
   text-align: center;
 }
 
+.assistant-retry-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.6rem auto 0;
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  background: #b91c1c;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 140ms ease;
+}
+.assistant-retry-btn:hover:not(:disabled) { background: #991b1b; }
+.assistant-retry-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
 .assistant-message-assistant {
   align-self: flex-end;
   background: #fff;
@@ -3235,7 +3354,7 @@ input, textarea, select { font-family: inherit; }
 .cond-card__intro,
 .cond-card__middle {
   margin: 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-family: var(--font-body);
   font-size: calc(30px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.55;
@@ -3245,7 +3364,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-card__family {
   margin: calc(4px * var(--cond-scale)) 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-family: var(--font-body);
   font-size: calc(var(--cond-family-size) * var(--cond-scale));
   font-weight: 700;
   line-height: 1.4;
@@ -3256,7 +3375,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-card__name {
   margin: calc(8px * var(--cond-scale)) 0 calc(6px * var(--cond-scale));
-  font-family: "Amiri Quran", "Amiri", "Aref Ruqaa", "Scheherazade New", serif;
+  font-family: var(--font-body);
   font-size: calc(var(--cond-name-size) * var(--cond-scale));
   font-weight: 700;
   line-height: 1.35;
@@ -3267,7 +3386,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-card__dua {
   margin: calc(6px * var(--cond-scale)) 0 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  font-family: var(--font-body);
   font-size: calc(28px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.62;
@@ -3278,7 +3397,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-card__extra {
   margin: calc(6px * var(--cond-scale)) 0 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", serif;
+  font-family: var(--font-body);
   font-size: calc(24px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.6;
@@ -3468,7 +3587,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-death__transition {
   margin: 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-family: var(--font-body);
   font-size: calc(42px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.45;
@@ -3477,7 +3596,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-death__name {
   margin: calc(4px * var(--cond-scale)) 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-family: var(--font-body);
   font-size: calc(var(--cond-death-name) * var(--cond-scale));
   font-weight: 700;
   line-height: 1.35;
@@ -3488,7 +3607,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-death__detail {
   margin: 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-family: var(--font-body);
   font-size: calc(var(--cond-death-address) * var(--cond-scale));
   font-weight: 400;
   line-height: 1.55;
@@ -3499,7 +3618,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-death__phone {
   margin: calc(4px * var(--cond-scale)) 0 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-family: var(--font-body);
   font-size: calc(44px * var(--cond-scale));
   font-weight: 700;
   line-height: 1.4;
@@ -3532,7 +3651,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-death__extra {
   margin: 0;
-  font-family: "Aref Ruqaa", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Cairo", serif;
+  font-family: var(--font-body);
   font-size: calc(32px * var(--cond-scale));
   font-weight: 400;
   line-height: 1.6;
@@ -4018,7 +4137,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .site-brand-name {
-  font-family: "Cairo", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 1.0625rem;
   white-space: nowrap;
@@ -7342,6 +7461,21 @@ input, textarea, select { font-family: inherit; }
   font-weight: 700;
 }
 
+.kuwait-tab__soon {
+  display: inline-block;
+  margin-inline-start: 0.35rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: rgba(31, 77, 58, 0.12);
+  color: var(--msk-gold, #1F4D3A);
+}
+.kuwait-tab--active .kuwait-tab__soon {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
 .kuwait-lesson-card--archived {
   opacity: 0.88;
 }
@@ -8711,7 +8845,7 @@ input, textarea, select { font-family: inherit; }
 .site-footer-brand-name {
   display: block;
   color: var(--majalis-emerald-deep);
-  font-family: "Scheherazade New", "Amiri", "Noto Naskh Arabic", serif;
+  font-family: var(--font-body);
   font-size: 1.2rem;
   font-weight: 700;
   margin-bottom: 0.35rem;
@@ -8839,7 +8973,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .page-soft-tag--active {
-  background: #d1fae5;
+  background: var(--color-accent-soft-bg);
   color: var(--majalis-emerald-deep);
 }
 
@@ -9838,7 +9972,7 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
 }
 
 .site-brand-logotype__main {
-  font-family: "Scheherazade New", "Amiri", "Noto Naskh Arabic", serif;
+  font-family: var(--font-body);
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--majalis-emerald-deep, #1F4D3A);
@@ -10435,6 +10569,48 @@ body.mobile-nav-body-lock {
 .side-nav-link--danger { color: #DC2626; }
 .side-nav-link--danger svg { color: #DC2626; }
 .side-nav-link--danger:hover { background: #FEF2F2; }
+
+/* ── Subgroups inside "تعلّم" ── */
+.side-nav-subgroups-wrap {
+  padding: 0.1rem 0 0.15rem 0;
+}
+.side-nav-subgroup {
+  margin-bottom: 0.08rem;
+}
+.side-nav-subgroup__toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.28rem 0.55rem;
+  border: none;
+  border-radius: 0.45rem;
+  background: rgba(14, 110, 82, 0.055);
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--majalis-emerald, #0E6E52);
+  text-align: start;
+  letter-spacing: 0.01em;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.13s ease;
+  margin: 0.1rem 0.25rem;
+}
+.side-nav-subgroup__toggle:hover {
+  background: rgba(14, 110, 82, 0.1);
+}
+.side-nav-subgroup__toggle svg {
+  color: var(--majalis-emerald, #0E6E52);
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+.side-nav-subgroup__items {
+  padding: 0.05rem 0 0.05rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.03rem;
+}
 
 /* ── User info block ── */
 .side-nav-user-info {
@@ -11176,18 +11352,39 @@ body.assistant-panel-open {
 
 .content-detail-actions {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 0.5rem;
   margin-top: 1rem;
 }
 
+/* تُبسَّط .share-btns إلى امتداد مباشر لهذا الحاوي كي تلتف كل الأزرار
+   (نسخ + مشاركة) معًا في نفس الصفوف بدل التفاف متداخل يكسر المحاذاة. */
+.content-detail-actions .share-btns {
+  display: contents;
+}
+
 .content-detail-action-btn {
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--line, #ddd5c8);
-  background: var(--panel, #fff);
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  height: 44px;
+  padding: .4rem .875rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--majalis-emerald, #176B57);
+  background: transparent;
+  color: var(--majalis-emerald, #176B57);
   cursor: pointer;
   font-family: inherit;
-  font-size: 0.875rem;
+  font-size: .8125rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background .15s, color .15s;
+}
+.content-detail-action-btn:hover {
+  background: var(--majalis-emerald, #176B57);
+  color: #fff;
 }
 
 .content-detail-evidence ul,
@@ -14242,8 +14439,8 @@ body.has-assistant-fab .app-main {
   gap: 0.3rem;
   font-size: 0.72rem;
   font-weight: 700;
-  color: #16a34a;
-  background: #dcfce7;
+  color: var(--color-success-fg);
+  background: var(--color-success-bg);
   padding: 0.3rem 0.7rem;
   border-radius: 100px;
   white-space: nowrap;
@@ -14615,7 +14812,7 @@ body.has-assistant-fab .app-main {
   border: 1px solid var(--majalis-border, #e2e8f0);
   background: var(--majalis-surface, #fff);
   color: var(--majalis-ink, #0d1b2a);
-  font-family: 'Amiri', serif;
+  font-family: var(--font-body);
   font-size: 0.88rem;
   text-align: right;
   cursor: pointer;
@@ -14662,7 +14859,7 @@ body.has-assistant-fab .app-main {
 .cb-font-chip__name {
   font-size: 0.72rem;
   color: var(--majalis-ink-soft, #6b7280);
-  font-family: system-ui, sans-serif;
+  font-family: var(--font-body);
 }
 
 /* ─── Range Sliders ───────────────────────────────────────────── */
@@ -17421,7 +17618,7 @@ body.has-assistant-fab .app-main {
   right: 0.75rem;
   font-size: 3.5rem;
   color: rgba(22, 96, 72, 0.06);
-  font-family: Georgia, serif;
+  font-family: var(--font-body);
   line-height: 1;
   pointer-events: none;
 }
@@ -17844,7 +18041,7 @@ body.has-assistant-fab .app-main {
 }
 
 .prv-virtue-text {
-  font-family: "Amiri Quran", "Scheherazade New", serif;
+  font-family: var(--font-body);
   font-size: 0.92rem;
   line-height: 1.9;
   color: var(--majalis-ink, #1a2e26);
@@ -18197,7 +18394,7 @@ body.has-assistant-fab .app-main {
 
 /* ── التسلسل الطباعي: عنوان الصفحة الرئيسية ── */
 .hpv4-hero h1 {
-  font-family: "Amiri", "IBM Plex Sans Arabic", serif !important;
+  font-family: var(--font-body) !important;
   letter-spacing: -0.01em !important;
   text-shadow: 0 2px 20px rgba(0,0,0,0.25) !important;
 }
@@ -18338,24 +18535,32 @@ button,
 .offline-banner__icon { flex-shrink: 0; }
 .offline-banner__text { line-height: 1.3; }
 
-/* ── شارة الصلاة العائمة (bottom nav) ── */
+/* ── شارة الصلاة العائمة (bottom nav) ──
+   مربوطة بنفس نقطة تجاوب .bottom-nav — بلا هذا القيد كانت تطفو فوق محتوى
+   سطح المكتب رغم اختفاء الشريط السفلي نفسه هناك. */
 .bottom-nav__prayer-float {
-  position: fixed;
-  bottom: calc(var(--bottom-nav-h, 56px) + env(safe-area-inset-bottom, 0px) + 4px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(31,77,58,0.92);
-  color: #d1fae5;
-  font-size: 0.72rem;
-  padding: 2px 10px;
-  border-radius: 999px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  pointer-events: none;
-  z-index: 200;
-  backdrop-filter: blur(4px);
-  direction: rtl;
+  display: none;
+}
+
+@media (max-width: 879px) {
+  .bottom-nav__prayer-float {
+    position: fixed;
+    bottom: calc(var(--bottom-nav-h, 56px) + env(safe-area-inset-bottom, 0px) + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(31,77,58,0.92);
+    color: #d1fae5;
+    font-size: 0.72rem;
+    padding: 2px 10px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    pointer-events: none;
+    z-index: 200;
+    backdrop-filter: blur(4px);
+    direction: rtl;
+  }
 }
 
 /* ── انتقالات الصفحات ── */
@@ -18436,3 +18641,76 @@ html[data-theme="dark"] .skeleton-base {
   background-size: 200% 100%;
 }
 
+
+/* ── خط واجهة التطبيق والقوائم (SF Arabic على Apple) ──────────────────────
+   يُطبَّق حصرًا على عناصر تنقّل/قوائم الواجهة (الهيدر، الشريط السفلي، القائمة
+   الجانبية، ورقة "المزيد")، لا على نصوص المحتوى (تبقى IBM Plex Sans Arabic
+   عبر --font-body/--font-reading). !important ضروري هنا لأن .navbar-v3
+   و.bottom-nav--v2 و.side-nav-drawer معرَّفة بتكرار عبر عدة ملفات CSS
+   لاحقة التحميل (elite-2026.css، majalis-v2.css، modern-2026.css). */
+.navbar-v3,
+.bottom-nav,
+.bottom-nav--v2,
+.side-nav-drawer,
+.side-nav-drawer--v2,
+.bottom-sheet,
+[class*="more-sheet"] {
+  font-family: var(--font-ui) !important;
+}
+
+/* ── خطط القراءة (/reading-plans) ────────────────────────────────────────── */
+.rp-toolbar { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+.rp-new-btn {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--majalis-emerald, #176B57); color: #fff;
+  border: none; border-radius: .6rem; padding: .55rem 1rem;
+  font-size: .88rem; font-weight: 600; cursor: pointer;
+}
+.rp-plans-list { display: flex; flex-direction: column; gap: 1rem; }
+.rp-plan-card { padding: 1rem 1.1rem; }
+.rp-plan-card__head { display: flex; justify-content: space-between; align-items: center; gap: .5rem; margin-bottom: .6rem; }
+.rp-plan-card__title { font-size: 1rem; font-weight: 700; margin: 0; }
+.rp-badge { font-size: .72rem; font-weight: 700; padding: .2rem .6rem; border-radius: 99px; white-space: nowrap; background: var(--bg-hover, #f0f0f0); color: var(--text-muted, #6b7280); }
+.rp-badge--ahead { background: rgba(14,110,82,.12); color: #0E6E52; }
+.rp-badge--behind { background: rgba(190,60,40,.12); color: #B33C28; }
+.rp-badge--done { background: rgba(14,110,82,.18); color: #0E6E52; }
+.rp-badge--paused { background: rgba(120,120,120,.15); color: #6b7280; }
+.rp-badge--active { background: rgba(31,77,58,.1); color: #1F4D3A; }
+.rp-badge--idle { background: rgba(120,120,120,.1); color: #6b7280; }
+.rp-progress-bar { height: 8px; border-radius: 99px; background: var(--bg-hover, #eee); overflow: hidden; margin-bottom: .5rem; }
+.rp-progress-bar__fill { height: 100%; background: var(--majalis-emerald, #176B57); border-radius: 99px; transition: width .3s; }
+.rp-plan-card__meta { font-size: .82rem; color: var(--text-muted, #6b7280); margin: 0 0 .5rem; }
+.rp-plan-card__catchup { font-size: .82rem; color: #B33C28; background: rgba(190,60,40,.08); border-radius: .5rem; padding: .5rem .7rem; margin: 0 0 .6rem; }
+.rp-plan-card__log { display: flex; gap: .5rem; margin-bottom: .6rem; }
+.rp-log-input { flex: 1; padding: .5rem .7rem; border: 1px solid var(--border, #e5e3dd); border-radius: .5rem; font-size: .85rem; }
+.rp-log-btn { background: var(--majalis-emerald, #176B57); color: #fff; border: none; border-radius: .5rem; padding: .5rem 1rem; font-size: .85rem; font-weight: 600; cursor: pointer; }
+.rp-plan-card__actions { display: flex; gap: .5rem; }
+.rp-action-btn { display: inline-flex; align-items: center; gap: .3rem; background: none; border: 1px solid var(--border, #e5e3dd); border-radius: .5rem; padding: .4rem .8rem; font-size: .8rem; cursor: pointer; color: var(--text-secondary, #374151); }
+.rp-action-btn--danger { color: #B33C28; border-color: rgba(190,60,40,.3); }
+.rp-empty { text-align: center; padding: 2.5rem 1rem; color: var(--text-muted, #6b7280); display: flex; flex-direction: column; align-items: center; gap: .5rem; }
+
+.rp-new-plan { padding: 1.1rem; margin-bottom: 1.25rem; }
+.rp-new-plan__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: .8rem; }
+.rp-new-plan__head h3 { margin: 0; font-size: 1.05rem; }
+.rp-close-btn { background: none; border: none; cursor: pointer; color: var(--text-muted, #6b7280); }
+.rp-field { display: flex; flex-direction: column; gap: .3rem; margin-bottom: .8rem; font-size: .85rem; font-weight: 600; position: relative; }
+.rp-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+.rp-text-input { padding: .55rem .7rem; border: 1px solid var(--border, #e5e3dd); border-radius: .5rem; font-size: .88rem; font-weight: 400; }
+.rp-suggestions { position: absolute; top: 100%; inset-inline: 0; z-index: 5; background: var(--bg-card, #fff); border: 1px solid var(--border, #e5e3dd); border-radius: .5rem; box-shadow: 0 4px 14px rgba(0,0,0,.1); list-style: none; margin: .25rem 0 0; padding: .25rem; max-height: 220px; overflow-y: auto; }
+.rp-suggestions li button { width: 100%; text-align: right; background: none; border: none; padding: .5rem .6rem; font-size: .85rem; font-weight: 400; cursor: pointer; border-radius: .4rem; }
+.rp-suggestions li button:hover { background: var(--bg-hover, #f3f0eb); }
+.rp-suggestions li button span { color: var(--text-muted, #6b7280); font-size: .78rem; }
+.rp-days-grid { display: flex; flex-wrap: wrap; gap: .4rem; }
+.rp-day-chip { padding: .4rem .8rem; border-radius: 99px; border: 1px solid var(--border, #e5e3dd); background: none; font-size: .82rem; font-weight: 500; cursor: pointer; }
+.rp-day-chip.is-active { background: var(--majalis-emerald, #176B57); color: #fff; border-color: var(--majalis-emerald, #176B57); }
+.rp-checkbox-field { display: flex; align-items: center; gap: .5rem; font-size: .85rem; margin-bottom: .8rem; }
+.rp-feasibility { font-size: .82rem; padding: .6rem .8rem; border-radius: .5rem; background: rgba(14,110,82,.08); color: #0E6E52; margin-bottom: .8rem; }
+.rp-feasibility--warn { background: rgba(190,60,40,.08); color: #B33C28; }
+.rp-submit-btn { width: 100%; background: var(--majalis-emerald, #176B57); color: #fff; border: none; border-radius: .6rem; padding: .7rem; font-size: .92rem; font-weight: 700; cursor: pointer; }
+.rp-submit-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+html[data-theme="dark"] .rp-badge { background: rgba(255,255,255,.08); color: #C7D2CD; }
+html[data-theme="dark"] .rp-text-input,
+html[data-theme="dark"] .rp-log-input { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.15); color: #E9EEEC; }
+html[data-theme="dark"] .rp-day-chip { border-color: rgba(255,255,255,.15); color: #C7D2CD; }
+html[data-theme="dark"] .rp-suggestions { background: #16241d; border-color: rgba(255,255,255,.12); }

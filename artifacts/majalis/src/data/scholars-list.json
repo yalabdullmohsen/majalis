@@ -2,391 +2,481 @@
   {
     "id": "abu-hanifa",
     "name": "أبو حنيفة النعمان",
-    "died": null
+    "died": "١٥٠ هـ"
   },
   {
     "id": "malik",
     "name": "الإمام مالك",
-    "died": null
+    "died": "١٧٩ هـ"
   },
   {
     "id": "shafi",
     "name": "الإمام الشافعي",
-    "died": null
+    "died": "٢٠٤ هـ"
   },
   {
     "id": "ahmad",
     "name": "الإمام أحمد",
-    "died": null
+    "died": "٢٤١ هـ"
   },
   {
     "id": "bukhari",
     "name": "الإمام البخاري",
-    "died": null
+    "died": "٢٥٦ هـ"
   },
   {
     "id": "muslim",
     "name": "الإمام مسلم",
-    "died": null
+    "died": "٢٦١ هـ"
   },
   {
     "id": "ibn-taymiyya",
     "name": "ابن تيمية",
-    "died": null
+    "died": "٧٢٨ هـ"
   },
   {
     "id": "ibn-qayyim",
     "name": "ابن القيم",
-    "died": null
+    "died": "٧٥١ هـ"
   },
   {
     "id": "nawawi",
     "name": "الإمام النووي",
-    "died": null
+    "died": "٦٧٦ هـ"
   },
   {
     "id": "ibn-hajar",
     "name": "ابن حجر العسقلاني",
-    "died": null
+    "died": "٨٥٢ هـ"
   },
   {
     "id": "shawkani",
     "name": "الشوكاني",
-    "died": null
+    "died": "١٢٥٠ هـ"
   },
   {
     "id": "ibn-baz",
     "name": "الشيخ ابن باز",
-    "died": null
+    "died": "١٤٢٠ هـ"
   },
   {
     "id": "ibn-uthaymeen",
     "name": "الشيخ ابن عثيمين",
-    "died": null
+    "died": "١٤٢١ هـ"
   },
   {
     "id": "albani",
     "name": "الشيخ الألباني",
-    "died": null
+    "died": "١٤٢٠ هـ"
   },
   {
     "id": "qaradawi",
     "name": "الشيخ القرضاوي",
-    "died": null
+    "died": "١٤٤٣ هـ"
   },
   {
     "id": "tirmidhi",
     "name": "الإمام الترمذي",
-    "died": null
+    "died": "٢٧٩ هـ"
   },
   {
     "id": "ibn-majah",
     "name": "ابن ماجه",
-    "died": null
+    "died": "٢٧٣ هـ"
   },
   {
     "id": "ghazali",
     "name": "الإمام الغزالي",
-    "died": null
+    "died": "٥٠٥ هـ"
   },
   {
     "id": "ibn-kathir",
     "name": "ابن كثير",
-    "died": null
+    "died": "٧٧٤ هـ"
   },
   {
     "id": "ibn-khaldun",
     "name": "ابن خلدون",
-    "died": null
+    "died": "٨٠٨ هـ"
   },
   {
     "id": "ibn-ashur",
     "name": "ابن عاشور",
-    "died": null
+    "died": "١٣٩٣ هـ"
   },
   {
     "id": "fawzan",
     "name": "الشيخ صالح الفوزان",
-    "died": null
+    "died": "—"
   },
   {
     "id": "al-suyuti",
     "name": "الإمام السيوطي",
-    "died": null
+    "died": "٩١١ هـ"
   },
   {
     "id": "abu-dawud",
     "name": "أبو داود السجستاني",
-    "died": null
+    "died": "٢٧٥ هـ"
   },
   {
     "id": "nasai",
     "name": "الإمام النسائي",
-    "died": null
+    "died": "٣٠٣ هـ"
   },
   {
     "id": "daraqutni",
     "name": "الإمام الدارقطني",
-    "died": null
+    "died": "٣٨٥ هـ"
   },
   {
     "id": "bayhaki",
     "name": "الإمام البيهقي",
-    "died": null
+    "died": "٤٥٨ هـ"
   },
   {
     "id": "ibn-juzayy",
     "name": "ابن جزي الكلبي",
-    "died": null
+    "died": "٧٤١ هـ"
   },
   {
     "id": "shatbi",
     "name": "الإمام الشاطبي",
-    "died": null
+    "died": "٧٩٠ هـ"
   },
   {
     "id": "shanqiti",
     "name": "الشنقيطي",
-    "died": null
+    "died": "١٣٩٣ هـ"
   },
   {
     "id": "bint-al-shati",
     "name": "بنت الشاطئ",
-    "died": null
+    "died": "١٤١٩ هـ"
   },
   {
     "id": "zuhayli",
     "name": "الشيخ وهبة الزحيلي",
-    "died": null
+    "died": "١٤٣٦ هـ"
   },
   {
     "id": "abu-zayd",
     "name": "الشيخ بكر أبو زيد",
-    "died": null
+    "died": "١٤٢٩ هـ"
   },
   {
     "id": "muhammad-ghazali",
     "name": "الشيخ محمد الغزالي",
-    "died": null
+    "died": "١٤١٦ هـ"
   },
   {
     "id": "mubarakfuri",
     "name": "المباركفوري",
-    "died": null
+    "died": "١٣٥٣ هـ"
   },
   {
     "id": "tabari",
     "name": "الطبري",
-    "died": null
+    "died": "٣١٠ هـ"
   },
   {
     "id": "ibn-jawzi",
     "name": "ابن الجوزي",
-    "died": null
+    "died": "٥٩٧ هـ"
   },
   {
     "id": "ibn-rajab",
     "name": "ابن رجب الحنبلي",
-    "died": null
+    "died": "٧٩٥ هـ"
   },
   {
     "id": "ibn-abd-al-barr",
     "name": "ابن عبد البر",
-    "died": null
+    "died": "٤٦٣ هـ"
   },
   {
     "id": "dhahabi",
     "name": "الإمام الذهبي",
-    "died": null
+    "died": "٧٤٨ هـ"
   },
   {
     "id": "izz-ibn-abd-al-salam",
     "name": "العز بن عبد السلام",
-    "died": null
+    "died": "٦٦٠ هـ"
   },
   {
     "id": "ibn-abd-al-wahhab",
     "name": "الشيخ محمد بن عبد الوهاب",
-    "died": null
+    "died": "١٢٠٦ هـ"
   },
   {
     "id": "ibn-abidin",
     "name": "ابن عابدين",
-    "died": null
+    "died": "١٢٥٢ هـ"
   },
   {
     "id": "rashid-rida",
     "name": "رشيد رضا",
-    "died": null
+    "died": "١٣٥٤ هـ"
   },
   {
     "id": "muhammad-abdu",
     "name": "الشيخ محمد عبده",
-    "died": null
+    "died": "١٣٢٣ هـ"
   },
   {
     "id": "ibn-badis",
     "name": "عبد الحميد بن باديس",
-    "died": null
+    "died": "١٣٥٩ هـ"
   },
   {
     "id": "abu-yusuf",
     "name": "الإمام أبو يوسف",
-    "died": null
+    "died": "١٨٢ هـ"
   },
   {
     "id": "shaybani",
     "name": "الإمام محمد الشيباني",
-    "died": null
+    "died": "١٨٩ هـ"
   },
   {
     "id": "muzani",
     "name": "الإمام المزني",
-    "died": null
+    "died": "٢٦٤ هـ"
   },
   {
     "id": "ibn-hibban",
     "name": "الإمام ابن حبان",
-    "died": null
+    "died": "٣٥٤ هـ"
   },
   {
     "id": "ibn-khuzayma",
     "name": "الإمام ابن خزيمة",
-    "died": null
+    "died": "٣١١ هـ"
   },
   {
     "id": "hakim",
     "name": "الإمام الحاكم",
-    "died": null
+    "died": "٤٠٥ هـ"
   },
   {
     "id": "ibn-mubarak",
     "name": "الإمام عبد الله بن المبارك",
-    "died": null
+    "died": "١٨١ هـ"
   },
   {
     "id": "sufyan-thawri",
     "name": "الإمام سفيان الثوري",
-    "died": null
+    "died": "١٦١ هـ"
   },
   {
     "id": "awzai",
     "name": "الإمام الأوزاعي",
-    "died": null
+    "died": "١٥٧ هـ"
   },
   {
     "id": "laith-ibn-sad",
     "name": "الإمام الليث بن سعد",
-    "died": null
+    "died": "١٧٥ هـ"
   },
   {
     "id": "ibn-al-mundhir",
     "name": "الإمام ابن المنذر",
-    "died": null
+    "died": "٣٢٠ هـ"
   },
   {
     "id": "khattabi",
     "name": "الإمام الخطابي",
-    "died": null
+    "died": "٣٨٨ هـ"
   },
   {
     "id": "ibn-hajar-haytami",
     "name": "ابن حجر الهيتمي",
-    "died": null
+    "died": "٩٧٤ هـ"
   },
   {
     "id": "ali-tantawi",
     "name": "الشيخ علي الطنطاوي",
-    "died": null
+    "died": "١٤٢٠ هـ"
   },
   {
     "id": "shaarawi",
     "name": "الشيخ الشعراوي",
-    "died": null
+    "died": "١٤١٩ هـ"
   },
   {
     "id": "ibn-ghudiyan",
     "name": "الشيخ عبد الله بن غديان",
-    "died": null
+    "died": "١٤٣٤ هـ"
   },
   {
     "id": "afifi",
     "name": "الشيخ عبد الرزاق عفيفي",
-    "died": null
+    "died": "١٤١٥ هـ"
   },
   {
     "id": "sufyan-uyayna",
     "name": "الإمام سفيان بن عيينة",
-    "died": null
+    "died": "١٩٨ هـ"
   },
   {
     "id": "muqbil",
     "name": "الشيخ مقبل بن هادي الوادعي",
-    "died": null
+    "died": "١٤٢٢ هـ"
   },
   {
-    "id": "ibn-mufli",
+    "id": "ibn-muflih",
     "name": "الإمام ابن مفلح",
-    "died": null
+    "died": "٧٦٣ هـ"
   },
   {
     "id": "ibn-rushd",
     "name": "ابن رشد",
-    "died": null
+    "died": "٥٩٥ هـ"
   },
   {
     "id": "ibn-hazm",
     "name": "ابن حزم الأندلسي",
-    "died": null
-  },
-  {
-    "id": "ibn-al-qayyim-alt",
-    "name": "السخاوي",
-    "died": null
+    "died": "٤٥٦ هـ"
   },
   {
     "id": "ibn-asakir",
     "name": "ابن عساكر",
-    "died": null
+    "died": "٥٧١ هـ"
   },
   {
     "id": "ibn-nujaym",
     "name": "ابن نجيم",
-    "died": null
+    "died": "٩٧٠ هـ"
   },
   {
     "id": "khatib-baghdadi",
     "name": "الخطيب البغدادي",
-    "died": null
+    "died": "٤٦٣ هـ"
   },
   {
-    "id": "amir-al-san'ani",
+    "id": "al-amir-al-sanani",
     "name": "الأمير الصنعاني",
-    "died": null
+    "died": "١١٨٢ هـ"
   },
   {
     "id": "ibn-faris",
     "name": "ابن فارس",
-    "died": null
+    "died": "٣٩٥ هـ"
   },
   {
     "id": "zarkashi",
     "name": "الزركشي",
-    "died": null
+    "died": "٧٩٤ هـ"
   },
   {
-    "id": "ibn-uthaymin-ext",
+    "id": "ibn-jibreen",
     "name": "الشيخ ابن جبرين",
-    "died": null
+    "died": "١٤٣٠ هـ"
   },
   {
     "id": "syed-saabiq",
     "name": "الشيخ سيد سابق",
-    "died": null
+    "died": "١٤٢٠ هـ"
   },
   {
-    "id": "ibn-uthaymeen-older",
+    "id": "abd-al-karim-al-khudair",
     "name": "الشيخ عبد الكريم الخضير",
-    "died": null
+    "died": "معاصر"
+  },
+  {
+    "id": "ibn-qudama",
+    "name": "ابن قدامة المقدسي",
+    "died": "٦٢٠ هـ"
+  },
+  {
+    "id": "juwayny",
+    "name": "إمام الحرمين الجويني",
+    "died": "٤٧٨ هـ"
+  },
+  {
+    "id": "ibn-salah",
+    "name": "ابن الصلاح",
+    "died": "٦٤٣ هـ"
+  },
+  {
+    "id": "al-qarafi",
+    "name": "الإمام القرافي",
+    "died": "٦٨٤ هـ"
+  },
+  {
+    "id": "fakhr-razi",
+    "name": "الفخر الرازي",
+    "died": "٦٠٦ هـ"
+  },
+  {
+    "id": "al-mizzi",
+    "name": "الإمام المزي",
+    "died": "٧٤٢ هـ"
+  },
+  {
+    "id": "al-saadi",
+    "name": "الشيخ عبد الرحمن السعدي",
+    "died": "١٣٧٦ هـ"
+  },
+  {
+    "id": "ibn-aqil",
+    "name": "ابن عقيل الحنبلي",
+    "died": "٥١٣ هـ"
+  },
+  {
+    "id": "ahmad-shakir",
+    "name": "الشيخ أحمد محمد شاكر",
+    "died": "١٣٧٧ هـ"
+  },
+  {
+    "id": "al-mundhiri",
+    "name": "الحافظ المنذري",
+    "died": "٦٥٦ هـ"
+  },
+  {
+    "id": "ibn-daqiq",
+    "name": "ابن دقيق العيد",
+    "died": "٧٠٢ هـ"
+  },
+  {
+    "id": "ibn-battuta",
+    "name": "ابن بطوطة",
+    "died": "٧٧٠ هـ تقريباً"
+  },
+  {
+    "id": "al-mawardi",
+    "name": "الماوردي",
+    "died": "٤٥٠ هـ"
+  },
+  {
+    "id": "ibn-ata-allah-al-sakandari",
+    "name": "ابن عطاء الله السكندري",
+    "died": "٧٠٩ هـ"
+  },
+  {
+    "id": "al-sakhawi",
+    "name": "السخاوي",
+    "died": "٩٠٢ هـ"
+  },
+  {
+    "id": "al-ajurri",
+    "name": "الآجري",
+    "died": "٣٦٠ هـ"
+  },
+  {
+    "id": "ibn-al-wazir",
+    "name": "ابن الوزير",
+    "died": "٨٤٠ هـ"
+  },
+  {
+    "id": "ibn-abi-shaybah",
+    "name": "ابن أبي شيبة",
+    "died": "٢٣٥ هـ"
+  },
+  {
+    "id": "al-qurtubi",
+    "name": "القرطبي",
+    "died": "٦٧١ هـ"
   }
 ]

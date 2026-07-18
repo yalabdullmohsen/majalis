@@ -149,7 +149,8 @@ function DetailContent({ university: u }: { university: University }) {
           <div className="flex items-start gap-4">
             {u.logo_url ? (
               <img src={u.logo_url} alt={u.name_ar}
-                className="w-16 h-16 rounded-2xl bg-white object-contain flex-shrink-0" />
+                className="w-16 h-16 rounded-2xl bg-white object-contain flex-shrink-0"
+                loading="lazy" decoding="async" width="64" height="64" />
             ) : (
               <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-3xl font-bold flex-shrink-0">
                 {u.name_ar[0]}
@@ -255,7 +256,7 @@ function DetailContent({ university: u }: { university: University }) {
         </div>
 
         <div className="twh-share">
-          <ShareButtons title={`${u.name_ar} — دليل الجامعات الإسلامية | المجلس العلمي`} url={`https://majlisilm.com/universities/${u.slug}`} />
+          <ShareButtons title={`${u.name_ar} — دليل الجامعات الإسلامية | المجلس العلمي`} url={`https://www.majlisilm.com/universities/${u.slug}`} />
         </div>
         <div className="px-4 pb-6 mt-4">
           <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
@@ -275,6 +276,7 @@ export default function UniversityDetailPage() {
   const [notFound, setNotFound]     = useState(false);
 
   useEffect(() => {
+    if (loading) return;
     if (university) {
       applyPageSeo({
         path: `/universities/${slug}`,
@@ -286,14 +288,22 @@ export default function UniversityDetailPage() {
             "@context": "https://schema.org",
             "@type": "EducationalOrganization",
             name: university.name_ar,
-            url: `https://majlisilm.com/universities/${slug}`,
+            url: `https://www.majlisilm.com/universities/${slug}`,
             description: university.about || `${university.name_ar} — بيانات وبرامج أكاديمية`,
             ...(university.website_url ? { sameAs: university.website_url } : {}),
           },
         ],
       });
+    } else {
+      applyPageSeo({
+        path: `/universities/${slug}`,
+        title: "الجامعة غير موجودة | المجلس العلمي",
+        description: "لم يُعثر على هذه الجامعة.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
     }
-  }, [university, slug]);
+  }, [university, slug, loading]);
 
   useEffect(() => {
     if (!slug) return;

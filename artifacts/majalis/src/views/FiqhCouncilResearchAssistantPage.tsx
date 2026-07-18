@@ -20,7 +20,7 @@ export default function FiqhCouncilResearchAssistantPage() {
       title: "مساعد البحث الفقهي | المجلس العلمي",
       description: "مساعد بحث ذكي في قرارات المجمع الفقهي، ابحث وصنّف واستشهد بالمصادر الفقهية الموثوقة.",
       keywords: ["مساعد بحث فقهي", "ذكاء اصطناعي فقهي", "بحث إسلامي", "مجمع فقهي", "استشهاد علمي"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "مساعد البحث الفقهي", url: "https://majlisilm.com/fiqh-council/assistant", about: { "@type": "Thing", name: "أدوات البحث الفقهي الذكية" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "مساعد البحث الفقهي", url: "https://www.majlisilm.com/fiqh-council/assistant", about: { "@type": "Thing", name: "أدوات البحث الفقهي الذكية" } }],
     });
   }, []);
   const [category, setCategory] = useState("الكل");
@@ -67,7 +67,7 @@ export default function FiqhCouncilResearchAssistantPage() {
           </label>
           <label className="fiqh-council-select-label">
             المصدر
-            <input value={source} onChange={(e) => setSource(e.target.value)} className="fiqh-council-source-input" placeholder="اسم المصدر" />
+            <input value={source} onChange={(e) => setSource(e.target.value)} className="fiqh-council-source-input" aria-label="اسم المصدر" placeholder="اسم المصدر" />
           </label>
         </div>
       </div>

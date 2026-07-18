@@ -1,9 +1,11 @@
 import { useEffect } from "react";
-import { AlertTriangle, Code2, Lock, Plus, Settings2, Users2 } from "lucide-react";
+import { AlertTriangle, Code2, Lock, Mail, Plus, Settings2, Users2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
+import { InstagramAcademyLink } from "@/components/InstagramAcademyLink";
 import { applyPageSeo } from "@/lib/seo";
+import { CONTACT_EMAIL, mailtoWithSubject } from "@/lib/site-config";
 
 const FAQ = [
   {
@@ -28,13 +30,13 @@ const FAQ = [
   },
 ];
 
-const TOPICS: { Icon: LucideIcon; label: string; note: string }[] = [
-  { Icon: AlertTriangle, label: "الإبلاغ عن خطأ في المحتوى",     note: "درس / حديث / فتوى / معلومة غير دقيقة" },
-  { Icon: Plus,          label: "اقتراح محتوى أو شيخ جديد",       note: "علماء / كتب / دروس / فوائد" },
-  { Icon: Settings2,     label: "مشكلة تقنية في المنصة",          note: "خلل في عرض الصفحات أو الأدوات" },
-  { Icon: Lock,          label: "طلب حذف أو تعديل بيانات الحساب", note: "خصوصيتك مكفولة" },
-  { Icon: Users2,        label: "شراكات مؤسسية وعلمية",           note: "مؤسسات / هيئات / جامعات" },
-  { Icon: Code2,         label: "واجهة برمجية (API) والمطورين",   note: "مفاتيح API / التكامل" },
+const TOPICS: { Icon: LucideIcon; label: string; note: string; subject: string }[] = [
+  { Icon: AlertTriangle, label: "الإبلاغ عن خطأ في المحتوى",     note: "درس / حديث / فتوى / معلومة غير دقيقة", subject: "الإبلاغ عن خطأ" },
+  { Icon: Plus,          label: "اقتراح محتوى أو شيخ جديد",       note: "علماء / كتب / دروس / فوائد", subject: "اقتراح أو شراكة" },
+  { Icon: Settings2,     label: "مشكلة تقنية في المنصة",          note: "خلل في عرض الصفحات أو الأدوات", subject: "ملاحظة تقنية" },
+  { Icon: Lock,          label: "طلب حذف أو تعديل بيانات الحساب", note: "خصوصيتك مكفولة", subject: "استفسار عام" },
+  { Icon: Users2,        label: "شراكات مؤسسية وعلمية",           note: "مؤسسات / هيئات / جامعات", subject: "اقتراح أو شراكة" },
+  { Icon: Code2,         label: "واجهة برمجية (API) والمطورين",   note: "مفاتيح API / التكامل", subject: "استفسار عام" },
 ];
 
 export default function ContactPage() {
@@ -44,7 +46,7 @@ export default function ContactPage() {
       title: "تواصل معنا | المجلس العلمي",
       description: "تواصل مع فريق المجلس العلمي، تقرير خطأ، اقتراح محتوى، شراكات مؤسسية، أو طلبات تقنية.",
       keywords: ["تواصل", "المجلس العلمي", "الدعم", "اقتراح محتوى", "إبلاغ عن خطأ"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "ContactPage", name: "تواصل مع مجالس العلم", url: "https://majlisilm.com/contact", about: { "@type": "Organization", name: "مجالس العلم", url: "https://majlisilm.com" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "ContactPage", name: "تواصل مع المجلس العلمي", url: "https://www.majlisilm.com/contact", about: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" } }],
     });
   }, []);
 
@@ -61,32 +63,34 @@ export default function ContactPage() {
       <LegalSection title="قنوات التواصل">
         <div className="contact-channels">
           <div className="contact-channel">
-            <p className="contact-channel__label">البريد الإلكتروني الرسمي</p>
-            <a href="mailto:yalabdullmohsen1@gmail.com" className="contact-channel__link">
-              yalabdullmohsen1@gmail.com
+            <p className="contact-channel__label">البريد الإلكتروني الرسمي والتواصل</p>
+            <a href={mailtoWithSubject("استفسار عام")} className="contact-channel__link">
+              {CONTACT_EMAIL}
             </a>
-            <p className="contact-channel__note">للمطوّرين والشراكات والطلبات العامة</p>
+            <p className="contact-channel__note">
+              للاستفسارات العامة، والملاحظات التقنية، وتصحيح المحتوى العلمي، والاقتراحات والشراكات.
+            </p>
           </div>
-          <div className="contact-channel">
-            <p className="contact-channel__label">تصحيح المحتوى العلمي</p>
-            <a href="mailto:yalabdullmohsen1@gmail.com?subject=تصحيح محتوى" className="contact-channel__link">
-              يالبدالمحسن، بريد التصحيح
-            </a>
-            <p className="contact-channel__note">خطأ في حديث / فتوى / معلومة شرعية</p>
-          </div>
+        </div>
+      </LegalSection>
+
+      <LegalSection title="تابعونا">
+        <div className="contact-channels">
+          <InstagramAcademyLink variant="card" />
         </div>
       </LegalSection>
 
       <LegalSection title="يمكننا مساعدتك في">
         <div className="contact-topics">
           {TOPICS.map((t) => (
-            <div key={t.label} className="contact-topic">
+            <a key={t.label} href={mailtoWithSubject(t.subject)} className="contact-topic contact-topic--link">
               <span className="contact-topic__icon" aria-hidden="true">{(() => { const I = t.Icon; return <I size={18} strokeWidth={1.8} />; })()}</span>
               <div>
                 <strong className="contact-topic__label">{t.label}</strong>
                 <p className="contact-topic__note">{t.note}</p>
               </div>
-            </div>
+              <Mail size={15} strokeWidth={1.8} className="contact-topic__mail-icon" aria-hidden="true" />
+            </a>
           ))}
         </div>
       </LegalSection>
@@ -128,7 +132,7 @@ export default function ContactPage() {
       </LegalSection>
 
       <div className="twh-share">
-        <ShareButtons title="تواصل مع المجلس العلمي" url="https://majlisilm.com/contact" />
+        <ShareButtons title="تواصل مع المجلس العلمي" url="https://www.majlisilm.com/contact" />
       </div>
       <LegalBackLink />
     </LegalPageLayout>

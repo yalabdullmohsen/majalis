@@ -18,7 +18,7 @@ function formatCountdown(seconds: number): string {
 }
 
 const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string }[] = [
-  { href: "/quran",        Icon: BookMarked, label: "القرآن الكريم" },
+  { href: "/quran-hub",    Icon: BookMarked, label: "القرآن الكريم" },
   { href: "/adhkar",       Icon: RotateCw,   label: "الأذكار" },
   { href: "/qibla",        Icon: Compass,    label: "القبلة" },
   { href: "/prayer-times", Icon: Building2,  label: "مواقيت الصلاة" },
@@ -36,6 +36,14 @@ export default function MosqueModePage() {
       title: "وضع المسجد | المجلس العلمي",
       description: "وضع المسجد، عد تنازلي للصلاة مع تذكير بالصمت وإطفاء الصوت داخل المسجد.",
       keywords: ["وضع المسجد", "آداب المسجد", "صمت مسجد", "عد تنازلي صلاة"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: "وضع المسجد",
+        description: "وضع المسجد، عد تنازلي للصلاة مع تذكير بالصمت وإطفاء الصوت داخل المسجد.",
+        url: "https://www.majlisilm.com/mosque-mode",
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+      }],
     });
   }, []);
 
@@ -66,6 +74,7 @@ export default function MosqueModePage() {
             type="button"
             className="mosque-mode__silence-dismiss"
             onClick={() => setSilenceAlerted(false)}
+            aria-label="إغلاق التنبيه"
           >
             ✓
           </button>

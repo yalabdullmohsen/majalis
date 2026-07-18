@@ -28,7 +28,7 @@ export default function SurahStoriesPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `سورة ${s.name}`,
-            url: `https://majlisilm.com/surah-stories/${s.number}`,
+            url: `https://www.majlisilm.com/surah-stories/${s.number}`,
           })),
         },
       ],
@@ -45,7 +45,7 @@ export default function SurahStoriesPage() {
       />
 
       <nav className="quran-subnav" aria-label="أقسام القرآن">
-        <Link href="/quran" className="quran-subnav__link">المصحف</Link>
+        <Link href="/quran-hub" className="quran-subnav__link">مركز القرآن</Link>
         <Link href="/quran/tajweed" className="quran-subnav__link">التجويد</Link>
         <Link href="/quran/surah-stories" className="quran-subnav__link is-active">قصص القرآن</Link>
         <Link href="/quran-live" className="quran-subnav__link">البث المباشر</Link>
@@ -134,7 +134,7 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
         <Link href={`/quran?surah=${story.number}`} className="page-action-btn">قراءة السورة</Link>
 
         <div className="twh-share">
-          <ShareButtons title={`${story.name} — قصص سور القرآن | المجلس العلمي`} url={`https://majlisilm.com/surah-stories/${story.number}`} />
+          <ShareButtons title={`${story.name} — قصص سور القرآن | المجلس العلمي`} url={`https://www.majlisilm.com/surah-stories/${story.number}`} />
         </div>
         <div className="px-4 pb-6 mt-4">
           <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />

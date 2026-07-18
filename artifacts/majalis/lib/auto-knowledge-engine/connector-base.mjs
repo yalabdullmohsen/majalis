@@ -44,7 +44,7 @@ export class BaseConnector {
     const response = await fetch(url, {
       ...options,
       headers: {
-        "User-Agent": "MajlisIlmBot/2.0 (+https://majlisilm.com)",
+        "User-Agent": "MajlisIlmBot/2.0 (+https://www.majlisilm.com)",
         Accept: "application/json, application/xml, text/xml, */*",
         ...(options.headers || {}),
       },

@@ -1,8 +1,8 @@
 import { Link } from "wouter";
 import {
-  BookOpen, Radio, Mic2, Layers, Circle, Star,
-  ChevronLeft, BookMarked, Headphones, GraduationCap,
-  Moon, Heart, Sparkles,
+  Radio, Mic2, Layers, Circle, Star,
+  ChevronLeft, BookMarked, BookOpen, Headphones, GraduationCap,
+  Moon, Heart, Sparkles, Mic,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -12,19 +12,35 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 /* ── بيانات أقسام القرآن ──────────────────────────────────── */
 const QURAN_SECTIONS = [
   {
-    href: "/quran",
+    href: "/mushaf",
     title: "المصحف الشريف",
-    desc: "اقرأ المصحف صفحةً بصفحة، ٦٠٤ صفحة بصورة واضحة",
+    desc: "اقرأ القرآن الكريم كاملاً سورة سورة، مع الاستماع لكل آية ومشاركتها",
     Icon: BookOpen,
-    accent: "#0A5040",
-    tag: "الأكثر زيارةً",
+    accent: "#176B57",
+    tag: "٦٠٤ صفحة",
+  },
+  {
+    href: "/quran/recitation-test-ai",
+    title: "اختبار التسميع بالذكاء الاصطناعي",
+    desc: "سمّع من حفظك واستمع التطبيق لتلاوتك لحظيًا، ويكشف المصحف الآيات كلما نطقتها صحيحة",
+    Icon: Mic,
+    accent: "#176B57",
+    tag: "نسخة تجريبية",
+  },
+  {
+    href: "/quran/surahs",
+    title: "فهرس السور",
+    desc: "تصفّح السور الـ١١٤ كاملة: رقمها واسمها وعدد آياتها وتصنيفها، مع بحث ومفضلة",
+    Icon: BookMarked,
+    accent: "#123F36",
+    tag: "١١٤ سورة",
   },
   {
     href: "/quran/surah-stories",
     title: "قصص القرآن",
     desc: "أسباب النزول ومحاور ١١٤ سورة قرآنية مع العبر والفوائد",
     Icon: BookMarked,
-    accent: "#1F4D3A",
+    accent: "#176B57",
     tag: "١١٤ سورة",
   },
   {
@@ -32,7 +48,7 @@ const QURAN_SECTIONS = [
     title: "علم التجويد",
     desc: "أحكام التجويد الشاملة مصنَّفة في ستة أبواب رئيسية",
     Icon: GraduationCap,
-    accent: "#145C46",
+    accent: "#176B57",
     tag: "١٤ حكماً",
   },
   {
@@ -40,7 +56,7 @@ const QURAN_SECTIONS = [
     title: "إذاعات القرآن",
     desc: "استمع للقرآن الكريم من كبار القراء حول العالم",
     Icon: Radio,
-    accent: "#0A5040",
+    accent: "#123F36",
     tag: "مباشر",
   },
   {
@@ -48,7 +64,7 @@ const QURAN_SECTIONS = [
     title: "البث المباشر",
     desc: "بث مباشر من الحرمين الشريفين، مكة المكرمة والمدينة المنورة",
     Icon: Mic2,
-    accent: "#1F4D3A",
+    accent: "#176B57",
     tag: "٢٤ ساعة",
   },
   {
@@ -56,7 +72,7 @@ const QURAN_SECTIONS = [
     title: "حلقات القرآن",
     desc: "انضم لحلقات الحفظ والمراجعة وتلاوة القرآن الكريم",
     Icon: Circle,
-    accent: "#145C46",
+    accent: "#176B57",
     tag: "مجتمع",
   },
   {
@@ -64,7 +80,7 @@ const QURAN_SECTIONS = [
     title: "الورد اليومي",
     desc: "تتبع ورد قراءة القرآن اليومي مع السلسلة المتواصلة",
     Icon: Moon,
-    accent: "#0A5040",
+    accent: "#123F36",
     tag: "يومي",
   },
   {
@@ -72,7 +88,7 @@ const QURAN_SECTIONS = [
     title: "أذكار القرآن",
     desc: "أذكار وأدعية مستمدة من القرآن الكريم والسنة النبوية",
     Icon: Sparkles,
-    accent: "#1F4D3A",
+    accent: "#176B57",
     tag: "أذكار",
   },
   {
@@ -80,7 +96,7 @@ const QURAN_SECTIONS = [
     title: "علوم القرآن",
     desc: "النزول والجمع والتدوين والتفسير وطبقات المفسِّرين عبر القرون",
     Icon: Layers,
-    accent: "#0A5040",
+    accent: "#123F36",
     tag: "علم",
   },
   {
@@ -88,7 +104,7 @@ const QURAN_SECTIONS = [
     title: "أدعية القرآن الكريم",
     desc: "٣٠+ دعاءً قرآنياً مصنَّفاً بحسب النبي والمناسبة والفائدة",
     Icon: Star,
-    accent: "#1F4D3A",
+    accent: "#176B57",
     tag: "دعاء",
   },
   {
@@ -96,14 +112,13 @@ const QURAN_SECTIONS = [
     title: "إعجاز القرآن ومعجزاته",
     desc: "المعجزات النبوية والإعجاز العلمي والبياني في القرآن الكريم",
     Icon: Heart,
-    accent: "#145C46",
+    accent: "#176B57",
     tag: "إعجاز",
   },
 ];
 
 function qhcAccentMod(a: string) {
-  if (a === "#0A5040") return "qhc-accent--deep";
-  if (a === "#145C46") return "qhc-accent--mid";
+  if (a === "#123F36") return "qhc-accent--deep";
   return "qhc-accent--base";
 }
 
@@ -130,8 +145,8 @@ export default function QuranHubPage() {
     applyPageSeo({
       path: "/quran-hub",
       title: "مركز القرآن الكريم | المجلس العلمي",
-      description: "مركز القرآن الكريم الشامل: مصحف، تجويد، قصص السور، إذاعات قرآنية وأكثر.",
-      keywords: ["القرآن الكريم", "مصحف", "تجويد", "قصص القرآن", "إذاعة قرآنية"],
+      description: "مركز القرآن الكريم الشامل: تجويد، قصص السور، إذاعات قرآنية، حلقات، وأكثر.",
+      keywords: ["القرآن الكريم", "تجويد", "قصص القرآن", "إذاعة قرآنية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
@@ -144,7 +159,7 @@ export default function QuranHubPage() {
             position: i + 1,
             name: s.title,
             description: s.desc,
-            url: `https://majlisilm.com${s.href}`,
+            url: `https://www.majlisilm.com${s.href}`,
           })),
         },
       ],
@@ -170,13 +185,6 @@ export default function QuranHubPage() {
             </div>
           ))}
         </div>
-
-        {/* زر رئيسي */}
-        <Link href="/quran" className="quran-hub-cta">
-          <BookOpen size={20} />
-          افتح المصحف الشريف
-          <ChevronLeft size={16} />
-        </Link>
       </section>
 
       {/* ── أقسام القرآن ─────────────────────────────────────── */}
@@ -203,7 +211,7 @@ export default function QuranHubPage() {
 
       {/* ── مميزات ────────────────────────────────────────────── */}
       <section className="quran-hub-features">
-        <h2 className="quran-hub-features__title">ماذا يقدم مجالس للقرآن؟</h2>
+        <h2 className="quran-hub-features__title">ماذا يقدّم المجلس العلمي للقرآن؟</h2>
         <div className="quran-hub-features__list">
           {FEATURES.map((f, i) => (
             <div key={i} className="quran-hub-feature-item">
@@ -229,7 +237,7 @@ export default function QuranHubPage() {
       />
 
       <div className="twh-share">
-        <ShareButtons title="مركز القرآن الكريم — المجلس العلمي" url="https://majlisilm.com/quran-hub" />
+        <ShareButtons title="مركز القرآن الكريم — المجلس العلمي" url="https://www.majlisilm.com/quran-hub" />
       </div>
     </div>
   );

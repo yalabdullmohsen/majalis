@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { InstagramAcademyLink } from "@/components/InstagramAcademyLink";
 import { applyPageSeo } from "@/lib/seo";
 
 export default function AboutPage() {
@@ -10,20 +11,20 @@ export default function AboutPage() {
     applyPageSeo({
       path: "/about",
       title: "من نحن | المجلس العلمي",
-      description: "تعرف على المجلس العلمي، منصة شرعية رقمية كويتية تجمع المصحف الرقمي والأذكار والدروس والفتاوى والمكتبة والتوحيد وإذاعة القرآن في مرجع موثوق.",
+      description: "تعرف على المجلس العلمي، منصة شرعية رقمية كويتية تجمع المصحف الرقمي والأذكار والدروس والأحكام الشرعية والمكتبة والتوحيد وإذاعة القرآن في مرجع موثوق.",
       keywords: ["المجلس العلمي", "منصة إسلامية", "منصة شرعية", "الكويت", "تعريف"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "المجلس العلمي",
-          url: "https://majlisilm.com",
-          logo: "https://majlisilm.com/logo.png",
-          description: "منصة شرعية رقمية كويتية تجمع الدروس والفتاوى والمكتبة والقرآن والأذكار في مرجع موثوق",
+          url: "https://www.majlisilm.com",
+          logo: "https://www.majlisilm.com/logo.png",
+          description: "منصة شرعية رقمية كويتية تجمع الدروس والأحكام الشرعية والمكتبة والقرآن والأذكار في مرجع موثوق",
           foundingDate: "2024",
           areaServed: { "@type": "Country", name: "الكويت" },
           inLanguage: "ar",
-          sameAs: ["https://majlisilm.com"],
+          sameAs: ["https://www.majlisilm.com"],
         },
       ],
     });
@@ -36,7 +37,7 @@ export default function AboutPage() {
         <p>
           المجلس العلمي منصة شرعية رقمية كويتية أُسِّست لتكون مرجعاً علمياً موثوقاً يجمع بين
           الأصالة والحداثة؛ إذ تتضافر فيها الدروس الشرعية والمصحف الرقمي والأذكار المأثورة
-          والفتاوى الموثّقة والمكتبة العلمية الشاملة في منظومة متكاملة، سهلة الاستخدام
+          والأحكام الشرعية الموثّقة والمكتبة العلمية الشاملة في منظومة متكاملة، سهلة الاستخدام
           للمسلم في كل مكان.
         </p>
         <p>
@@ -89,8 +90,8 @@ export default function AboutPage() {
             إلى ابن باز وابن عثيمين والألباني، مع سيرهم ودروسهم ومؤلفاتهم.
           </li>
           <li>
-            <strong>الفتاوى والأحكام الشرعية:</strong> أكثر من 97 فتوى موثّقة و53 حكماً شرعياً و59 موضوعاً في الطب النبوي
-            و48 مسألة فقهية معاصرة، مع جلسات المجمع الفقهي الإسلامي وأعمال هيئات الإفتاء.
+            <strong>الأحكام الشرعية والمجمع الفقهي:</strong> أكثر من 53 حكماً شرعياً و59 موضوعاً في الطب النبوي
+            و48 مسألة فقهية معاصرة، مع جلسات المجمع الفقهي الإسلامي وقراراته الجماعية الموثقة.
           </li>
           <li>
             <strong>أسئلة تعليمية تفاعلية:</strong> بنك يضم أكثر من 780 سؤالاً في السيرة والفقه
@@ -127,7 +128,7 @@ export default function AboutPage() {
           <li><strong>604</strong> صفحة من المصحف الشريف مع أسباب تسمية ١١٤ سورة وقصصها وفضائلها</li>
           <li><strong>125</strong> كتاباً في المكتبة الشرعية</li>
           <li><strong>76+</strong> عالماً وشيخاً في قاعدة بيانات العلماء</li>
-          <li><strong>97+</strong> فتوى موثّقة و53 حكماً شرعياً</li>
+          <li><strong>53</strong> حكماً شرعياً موثّقاً</li>
           <li><strong>780+</strong> سؤال في المسابقة التعليمية</li>
           <li><strong>49+</strong> دورة علمية مجدولة</li>
           <li><strong>64+</strong> موضوع في الإعجاز العلمي</li>
@@ -172,7 +173,7 @@ export default function AboutPage() {
       <LegalSection title="المحتوى والمصادر">
         <p>
           يُستمد محتوى المجلس العلمي من مصادر شرعية موثوقة ومحكَّمة؛ فالكتب مأخوذة
-          من طبعات علمية معتمدة، والفتاوى منقولة عن علماء ثقات مع الإشارة إلى مصدرها،
+          من طبعات علمية معتمدة، والأحكام الشرعية منقولة عن مصادرها الفقهية المعتمدة مع الإشارة إلى مرجعها،
           والأذكار موثّقة بدرجة صحّتها استناداً إلى كتب السنة المعتبرة.
         </p>
         <p>
@@ -202,13 +203,23 @@ export default function AboutPage() {
         </p>
       </LegalSection>
 
+      <LegalSection title="تابعونا">
+        <p>
+          تعاون المجلس العلمي مع أكاديمية ورثة الأنبياء لتقديم محتوى علمي إضافي عبر
+          حسابها على انستغرام.
+        </p>
+        <div className="contact-channels">
+          <InstagramAcademyLink variant="card" />
+        </div>
+      </LegalSection>
+
       <LegalSection title="روابط مفيدة">
         <p>
           <Link href="/lessons">الدروس والمحاضرات</Link>
           {" · "}
           <Link href="/lessons?tab=courses">الدورات العلمية</Link>
           {" · "}
-          <Link href="/quran">المصحف الرقمي</Link>
+          <Link href="/quran-hub">مركز القرآن</Link>
           {" · "}
           <Link href="/quran-radio">إذاعة القرآن</Link>
           {" · "}
@@ -220,7 +231,7 @@ export default function AboutPage() {
           {" · "}
           <Link href="/prayer-ranks">فضائل الصلاة</Link>
           {" · "}
-          <Link href="/fatwa">الفتاوى والأحكام</Link>
+          <Link href="/rulings">الأحكام الشرعية</Link>
           {" · "}
           <Link href="/library">المكتبة الشرعية</Link>
           {" · "}
@@ -233,7 +244,7 @@ export default function AboutPage() {
       </LegalSection>
 
       <div className="twh-share">
-        <ShareButtons title="عن المجلس العلمي" url="https://majlisilm.com/about" />
+        <ShareButtons title="عن المجلس العلمي" url="https://www.majlisilm.com/about" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["aqeeda", "akhlaq", "fiqh"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />

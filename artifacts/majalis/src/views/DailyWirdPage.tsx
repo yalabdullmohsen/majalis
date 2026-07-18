@@ -31,7 +31,7 @@ function KhatmaRing({ pagesInKhatma, khatmasCompleted }: { pagesInKhatma: number
       <circle cx="62" cy="62" r={r} fill="none" stroke="var(--majalis-emerald-muted, rgba(14,110,82,.12))" strokeWidth="8" />
       <circle
         cx="62" cy="62" r={r} fill="none"
-        stroke={done ? "#0E6E52" : "var(--majalis-emerald, #1F4D3A)"}
+        stroke={done ? "#0E6E52" : "var(--majalis-emerald, #176B57)"}
         strokeWidth="8" strokeLinecap="round"
         strokeDasharray={circ}
         strokeDashoffset={circ * (1 - pct)}
@@ -65,7 +65,7 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
       <circle
         cx="74" cy="74" r={r}
         fill="none"
-        stroke="var(--majalis-emerald, #1F4D3A)"
+        stroke="var(--majalis-emerald, #176B57)"
         strokeWidth="9"
         strokeLinecap="round"
         strokeDasharray={circ}
@@ -74,7 +74,7 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
         className="dwd-ring-fill"
         opacity={done ? "1" : "0.7"}
       />
-      <text x="74" y="67" textAnchor="middle" fill="var(--majalis-emerald, #1F4D3A)"
+      <text x="74" y="67" textAnchor="middle" fill="var(--majalis-emerald, #176B57)"
         fontSize="24" fontWeight="800" fontFamily="inherit">
         {toAr(pages)}
       </text>
@@ -83,7 +83,7 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
         من {toAr(target)} صفحة
       </text>
       {done && (
-        <text x="74" y="100" textAnchor="middle" fill="var(--majalis-emerald, #1F4D3A)"
+        <text x="74" y="100" textAnchor="middle" fill="var(--majalis-emerald, #176B57)"
           fontSize="12" fontWeight="700" fontFamily="inherit">✓ اكتمل</text>
       )}
     </svg>
@@ -116,7 +116,7 @@ export default function DailyWirdPage() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "الورد اليومي من القرآن الكريم",
-          url: "https://majlisilm.com/daily-wird",
+          url: "https://www.majlisilm.com/daily-wird",
           description: "تتبّع وردك اليومي من القرآن الكريم وتابع تقدمك نحو ختم القرآن",
           applicationCategory: "EducationalApplication",
           inLanguage: "ar",
@@ -352,7 +352,7 @@ export default function DailyWirdPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الورد اليومي — المجلس العلمي" url="https://majlisilm.com/daily-wird" />
+        <ShareButtons title="الورد اليومي — المجلس العلمي" url="https://www.majlisilm.com/daily-wird" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["quran", "akhlaq"]} title="اختبر معلوماتك في القرآن والأخلاق" count={4} />

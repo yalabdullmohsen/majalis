@@ -55,7 +55,7 @@ async function fetchRss(url, timeoutMs = 12000) {
   try {
     const res = await fetch(url, {
       signal: controller.signal,
-      headers: { "User-Agent": "MajlisIlm-KnowledgeBot/1.0 (+https://majlisilm.com)" },
+      headers: { "User-Agent": "MajlisIlm-KnowledgeBot/1.0 (+https://www.majlisilm.com)" },
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const xml = await res.text();
@@ -118,7 +118,7 @@ function parseTsSeedArray(raw, kind) {
       external_id: ids[i],
       title,
       description: descs[i] || texts[i] || "",
-      link: `https://majlisilm.com/${kind}`,
+      link: `https://www.majlisilm.com/${kind}`,
       content_kind: kind,
       source_attribution: "المجلس العلمي — بذور موثقة",
     });

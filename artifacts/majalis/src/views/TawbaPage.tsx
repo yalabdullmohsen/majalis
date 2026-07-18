@@ -1,4 +1,7 @@
+import "@/styles/pages/tawba.css";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -229,13 +232,19 @@ export default function TawbaPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `الشرط ${s.num}: ${s.title}`,
-            url: `https://majlisilm.com/tawba#shart-${s.num}`,
+            url: `https://www.majlisilm.com/tawba#shart-${s.num}`,
           })),
         },
       ],
     });
   }, []);
 
+  const todayDhikr = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return ADHKAR[(day - 1 + ADHKAR.length) % ADHKAR.length];
+  }, []);
   const [tab, setTab] = useState<TawbaTab>("shurut");
   const [openDhikr, setOpenDhikr] = useState<number | null>(null);
   const [search, setSearch] = useState("");
@@ -268,17 +277,31 @@ export default function TawbaPage() {
         </div>
       </section>
 
+      {/* ذكر التوبة اليوم */}
+      <div className="twod-card">
+        <div className="twod-card__badge"><Sparkles size={11} aria-hidden="true" /> ذكر التوبة اليوم</div>
+        <p className="twod-card__arabic">{todayDhikr.arabic}</p>
+        <p className="twod-card__reward">{todayDhikr.reward}</p>
+        <div className="twod-card__meta">
+          <span className="twod-card__source">{todayDhikr.source}</span>
+          <span className="twod-card__times">{todayDhikr.times}</span>
+        </div>
+      </div>
+
       {/* tabs */}
-      <div className="tw-tabs-bar">
+      <div className="tw-tabs-bar" role="tablist" aria-label="أقسام التوبة">
         {TABS.map((t) => (
           <button
             key={t.id}
+            id={`twb-tab-${t.id}`}
             type="button"
+            role="tab"
             className={`tw-tab${tab === t.id ? " tw-tab--active" : ""}`}
             onClick={() => setTab(t.id)}
-            aria-pressed={tab === t.id}
+            aria-selected={tab === t.id}
+              aria-controls={`twb-panel-${t.id}`}
           >
-            <span className="tw-tab__icon">{t.icon}</span>
+            <span className="tw-tab__icon"><SectionIcon name={t.icon} size={20} /></span>
             <span className="tw-tab__label">{t.label}</span>
           </button>
         ))}
@@ -287,7 +310,7 @@ export default function TawbaPage() {
       <div className="tw-body">
         {/* ── شروط التوبة ── */}
         {tab === "shurut" && (
-          <div className="tw-section">
+          <div role="tabpanel" id="twb-panel-shurut" aria-labelledby="twb-tab-shurut" className="tw-section">
             <p className="tw-section-lead">
               اتفق العلماء على أن للتوبة شروطاً لا تصح إلا بها، وتزداد شرطاً إذا تعلّقت بحق آدمي
             </p>
@@ -325,12 +348,12 @@ export default function TawbaPage() {
 
         {/* ── أنواع وأحكام ── */}
         {tab === "anwaa" && (
-          <div className="tw-section">
+          <div role="tabpanel" id="twb-panel-anwaa" aria-labelledby="twb-tab-anwaa" className="tw-section">
             <div className="tw-anwaa-grid">
               {ANWAA.map((n) => (
                 <div key={n.title} className="tw-nawaa-card">
                   <div className="tw-nawaa-head">
-                    <span className="tw-nawaa-icon">{n.icon}</span>
+                    <span className="tw-nawaa-icon"><SectionIcon name={n.icon} size={24} /></span>
                     <div>
                       <span className="tw-nawaa-title">{n.title}</span>
                       <span className={`tw-nawaa-hukm tw-nawaa-hukm--${n.hukm.includes("واجب") ? "wajib" : "mustahabb"}`}>{n.hukm}</span>
@@ -356,7 +379,7 @@ export default function TawbaPage() {
 
         {/* ── أذكار الاستغفار ── */}
         {tab === "adhkar" && (
-          <div className="tw-section">
+          <div role="tabpanel" id="twb-panel-adhkar" aria-labelledby="twb-tab-adhkar" className="tw-section">
             <p className="tw-section-lead">أفضل صيغ الاستغفار المأثورة عن النبي ﷺ</p>
             <div className="tw-dhikr-list">
               {ADHKAR.map((d, i) => {
@@ -410,7 +433,7 @@ export default function TawbaPage() {
 
         {/* ── موانع التوبة ── */}
         {tab === "mawani" && (
-          <div className="tw-section">
+          <div role="tabpanel" id="twb-panel-mawani" aria-labelledby="twb-tab-mawani" className="tw-section">
             <p className="tw-section-lead">أمور تحول دون قبول التوبة أو صحتها، يجب الحذر منها</p>
             <div className="tw-search-wrap">
               <input type="search" value={search} onChange={e => setSearch(e.target.value)}
@@ -441,12 +464,12 @@ export default function TawbaPage() {
 
         {/* ── آثار التوبة ── */}
         {tab === "athaar" && (
-          <div className="tw-section">
+          <div role="tabpanel" id="twb-panel-athaar" aria-labelledby="twb-tab-athaar" className="tw-section">
             <p className="tw-section-lead">ثمرات التوبة الصادقة وآثارها في الدنيا والآخرة</p>
             <div className="tw-athaar-grid">
               {filteredAthaar.map((a) => (
                 <div key={a.title} className="tw-athar-card">
-                  <span className="tw-athar-icon">{a.icon}</span>
+                  <span className="tw-athar-icon"><SectionIcon name={a.icon} size={22} /></span>
                   <h3 className="tw-athar-title">{a.title}</h3>
                   <p className="tw-athar-desc">{a.desc}</p>
                 </div>
@@ -463,7 +486,7 @@ export default function TawbaPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="التوبة والاستغفار — المجلس العلمي" url="https://majlisilm.com/tawba" />
+          <ShareButtons title="التوبة والاستغفار — المجلس العلمي" url="https://www.majlisilm.com/tawba" />
         </div>
 
         {/* related */}

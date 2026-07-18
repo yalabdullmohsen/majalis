@@ -1,12 +1,15 @@
 import "@/styles/mind-map.css";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { Link } from "wouter";
-import { ChevronDown, ChevronLeft, ExternalLink, Map, X } from "lucide-react";
+import { ChevronDown, ChevronLeft, ExternalLink, Layers, List, Map, Sparkles, Waypoints, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { MIND_MAPS, MIND_MAP_CATEGORIES, type MindMap, type MindMapNode } from "@/lib/mind-maps-data";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { MindMapCanvas } from "@/components/mind-map/MindMapCanvas";
+
+type ViewMode = "canvas" | "list";
 
 /* ═══════════════════════════════════════════════════
    مكوّن عقدة الخريطة الذهنية (قابلة للطيّ)
@@ -70,32 +73,70 @@ function MindNode({
 }
 
 /* ═══════════════════════════════════════════════════
+   عدّ الفروع الكلي في الخريطة
+═══════════════════════════════════════════════════ */
+function countNodes(node: MindMapNode): number {
+  if (!node.children?.length) return 1;
+  return 1 + node.children.reduce((acc, c) => acc + countNodes(c), 0);
+}
+
+/* ═══════════════════════════════════════════════════
    بطاقة الخريطة الذهنية الموسّعة
 ═══════════════════════════════════════════════════ */
-function MindMapCard({ map }: { map: MindMap }) {
+function MindMapCard({
+  map,
+  forceOpen,
+  onInteract,
+  viewMode,
+}: {
+  map: MindMap;
+  forceOpen?: boolean;
+  onInteract?: () => void;
+  viewMode: ViewMode;
+}) {
   const [expanded, setExpanded] = useState(false);
+  const nodeCount = useMemo(() => countNodes(map.root), [map.root]);
+  const isOpen = forceOpen !== undefined ? forceOpen : expanded;
+
+  const toggle = () => {
+    if (forceOpen !== undefined) {
+      setExpanded(!forceOpen);
+      onInteract?.();
+    } else {
+      setExpanded(e => !e);
+    }
+  };
 
   return (
-    <div className={`mm-card${expanded ? " mm-card--open" : ""}`}>
+    <div className={`mm-card${isOpen ? " mm-card--open" : ""}`}>
       <button
         type="button"
         className="mm-card__head"
-        onClick={() => setExpanded(e => !e)}
-        aria-expanded={expanded}
+        onClick={toggle}
+        aria-expanded={isOpen}
       >
         <div className="mm-card__meta">
-          <span className="mm-card__category">{map.category}</span>
+          <div style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
+            <span className="mm-card__category">{map.category}</span>
+            <span style={{ fontSize: "0.65rem", fontWeight: 700, color: "var(--majalis-ink-soft)", background: "rgba(31,77,58,0.06)", borderRadius: "4px", padding: "0.1rem 0.4rem" }}>
+              {nodeCount} عقدة
+            </span>
+          </div>
           <h3 className="mm-card__title">{map.title}</h3>
           {map.description && <p className="mm-card__desc">{map.description}</p>}
         </div>
         <span className="mm-card__toggle" aria-hidden="true">
-          {expanded ? <X size={18} strokeWidth={2} /> : <ChevronDown size={18} strokeWidth={2} />}
+          {isOpen ? <X size={18} strokeWidth={2} /> : <ChevronDown size={18} strokeWidth={2} />}
         </span>
       </button>
 
-      {expanded && (
+      {isOpen && (
         <div className="mm-card__body">
-          <MindNode node={map.root} depth={0} defaultOpen />
+          {viewMode === "canvas" ? (
+            <MindMapCanvas root={map.root} mapId={map.id} />
+          ) : (
+            <MindNode node={map.root} depth={0} defaultOpen />
+          )}
         </div>
       )}
     </div>
@@ -108,6 +149,8 @@ function MindMapCard({ map }: { map: MindMap }) {
 export default function MindMapPage() {
   const [activeCategory, setActiveCategory] = useState<string>("الكل");
   const [search, setSearch] = useState("");
+  const [expandAll, setExpandAll] = useState<boolean | undefined>(undefined);
+  const [viewMode, setViewMode] = useState<ViewMode>("canvas");
 
   useEffect(() => {
     applyPageSeo({
@@ -120,7 +163,7 @@ export default function MindMapPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "الخرائط الذهنية للعلوم الإسلامية",
-          url: "https://majlisilm.com/mind-map",
+          url: "https://www.majlisilm.com/mind-map",
           description: "خرائط ذهنية تفاعلية تنظّم العلوم الإسلامية من فقه وعقيدة وحديث وسيرة",
           about: { "@type": "Thing", name: "العلوم الإسلامية وتنظيمها المعرفي" },
         },
@@ -137,14 +180,43 @@ export default function MindMapPage() {
   return (
     <div className="mm-page">
       {/* رأس */}
-      <div className="mm-hero">
-        <div className="mm-hero__icon" aria-hidden="true">
-          <Map size={32} strokeWidth={1.5} />
+      <header className="sh-hero">
+        <div className="sh-hero__badge">
+          <Map size={16} strokeWidth={2} aria-hidden="true" />
+          <span>تصوّر معرفي تفاعلي</span>
         </div>
-        <h1 className="mm-hero__title">الخرائط الذهنية</h1>
-        <p className="mm-hero__sub">
+        <h1 className="sh-hero__title">الخرائط الذهنية</h1>
+        <p className="sh-hero__sub">
           نظّم معرفتك بالعلوم الإسلامية عبر خرائط ذهنية تفاعلية قابلة للطيّ والتوسيع
         </p>
+        <div className="sh-hero__stats">
+          <span className="sh-stat"><Layers size={13} strokeWidth={2.5} />{MIND_MAPS.length} خريطة</span>
+          <span className="sh-stat"><Sparkles size={13} strokeWidth={2.5} />{MIND_MAP_CATEGORIES.length - 1} تصنيفًا</span>
+        </div>
+      </header>
+
+      {/* تبديل نمط العرض: خريطة بصرية تفاعلية (افتراضي) أو قائمة نصية قابلة للطيّ */}
+      <div className="mmv-view-toggle" role="tablist" aria-label="نمط عرض الخريطة الذهنية">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={viewMode === "canvas"}
+          className={`mmv-view-toggle-btn${viewMode === "canvas" ? " mmv-view-toggle-btn--active" : ""}`}
+          onClick={() => setViewMode("canvas")}
+        >
+          <Waypoints size={14} strokeWidth={2.4} />
+          خريطة بصرية
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={viewMode === "list"}
+          className={`mmv-view-toggle-btn${viewMode === "list" ? " mmv-view-toggle-btn--active" : ""}`}
+          onClick={() => setViewMode("list")}
+        >
+          <List size={14} strokeWidth={2.4} />
+          قائمة نصية
+        </button>
       </div>
 
       {/* فلتر الفئات */}
@@ -175,13 +247,43 @@ export default function MindMapPage() {
         />
       </div>
 
+      {/* أزرار التوسيع والطيّ */}
+      {filtered.length > 0 && (
+        <div className="mm-batch-btns">
+          <button
+            type="button"
+            className={`mm-batch-btn${expandAll === true ? " mm-batch-btn--active" : ""}`}
+            onClick={() => setExpandAll(true)}
+            aria-pressed={expandAll === true}
+          >
+            <ChevronDown size={14} strokeWidth={2.5} />
+            توسيع الكل
+          </button>
+          <button
+            type="button"
+            className={`mm-batch-btn${expandAll === false ? " mm-batch-btn--active" : ""}`}
+            onClick={() => setExpandAll(false)}
+            aria-pressed={expandAll === false}
+          >
+            <ChevronLeft size={14} strokeWidth={2.5} />
+            طيّ الكل
+          </button>
+        </div>
+      )}
+
       {/* قائمة الخرائط */}
       <div className="mm-list">
         {filtered.length === 0 ? (
           <p className="mm-empty">لا توجد خرائط في هذه الفئة حتى الآن</p>
         ) : (
           filtered.map(map => (
-            <MindMapCard key={map.id} map={map} />
+            <MindMapCard
+              key={map.id}
+              map={map}
+              forceOpen={expandAll}
+              onInteract={() => setExpandAll(undefined)}
+              viewMode={viewMode}
+            />
           ))
         )}
       </div>
@@ -192,7 +294,7 @@ export default function MindMapPage() {
         أيقونة <ExternalLink size={11} strokeWidth={2} className="icon-inline" /> تفتح الصفحة المرتبطة مباشرة.
       </p>
       <div className="twh-share">
-        <ShareButtons title="الخرائط الذهنية الإسلامية — المجلس العلمي" url="https://majlisilm.com/mind-map" />
+        <ShareButtons title="الخرائط الذهنية الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/mind-map" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["quran", "hadith", "fiqh", "aqeeda"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />

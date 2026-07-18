@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { BookOpen, Search, X } from "lucide-react";
+import { BookOpen, Search, Sparkles, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -143,30 +143,6 @@ const TERMS: HadithTerm[] = [
     definition: "ما اتصل سنده مرفوعاً إلى النبي ﷺ من راويه الأخير.",
     note: "المسند أقوى من المرسل والمنقطع.",
   },
-  {
-    id: "marfu",
-    term: "الحديث المرفوع",
-    category: "السند",
-    grade: "accepted",
-    definition: "ما نُسب إلى النبي ﷺ قولاً أو فعلاً أو تقريراً أو صفةً.",
-    note: "أعلى درجات الأثر، وهو الأصل في الاستدلال.",
-  },
-  {
-    id: "mawquf",
-    term: "الحديث الموقوف",
-    category: "السند",
-    grade: "neutral",
-    definition: "ما نُسب إلى الصحابي قولاً أو فعلاً أو تقريراً، ولم يرفعه إلى النبي ﷺ.",
-    note: "يُحتج به في تفسير الآيات والأحكام لقرب الصحابي من عصر الوحي.",
-  },
-  {
-    id: "maqtu",
-    term: "الحديث المقطوع",
-    category: "السند",
-    grade: "neutral",
-    definition: "ما نُسب إلى التابعي قولاً أو فعلاً.",
-    note: "لا يُحتج به مستقلاً لكنه مفيد في معرفة آراء التابعين.",
-  },
 
   /* ─── الراوي ─── */
   {
@@ -193,14 +169,6 @@ const TERMS: HadithTerm[] = [
     definition: "الراوي الجامع للعدالة والضبط معاً، وروايته مقبولة.",
     example: "مالك وشعبة والثوري وابن عيينة، أئمة ثقات.",
     note: "أعلى ألقاب التوثيق التي يُطلقها النقاد.",
-  },
-  {
-    id: "majhul",
-    term: "المجهول",
-    category: "الراوي",
-    grade: "rejected",
-    definition: "من لم يُعرف فيه توثيق ولا جرح، أو عُرف اسمه دون حاله.",
-    note: "الجهالة أقسام: جهالة العين وجهالة الحال، والأول أشد.",
   },
   {
     id: "mudallis-rawi",
@@ -239,7 +207,7 @@ const TERMS: HadithTerm[] = [
     note: "أحد أشد مراتب الجرح، يوجب رد روايته.",
   },
   {
-    id: "munkar",
+    id: "munkar-rawi",
     term: "الراوي المنكَر",
     category: "الجرح والتعديل",
     grade: "rejected",
@@ -411,14 +379,6 @@ const TERMS: HadithTerm[] = [
     definition: "كتاب حديثي للإمام الدارمي (ت255ه)، يُعدّ من أوثق المصادر الحديثية.",
     note: "يتمتع بأسانيد عالية الجودة، وبعض أهل العلم يُقدمه على بعض كتب السنن الأربعة.",
   },
-  {
-    id: "mustadrak-hakim",
-    term: "مستدرك الحاكم",
-    category: "كتب الحديث",
-    grade: "accepted",
-    definition: "كتاب الحاكم النيسابوري (ت405ه)، أودع فيه ما يرى أنه على شرط الشيخين وفاتهما.",
-    note: "ينتقده كثير من الأئمة في التساهل، والذهبي اختصره ونقد كثيراً من أحاديثه.",
-  },
   /* ══ أنواع الحديث، توسعة ثانية ══ */
   {
     id: "mursil",
@@ -505,15 +465,6 @@ const TERMS: HadithTerm[] = [
     definition: "ما رواه جمع كبير لا يُتصوَّر تواطؤهم على الكذب في كل طبقات السند.",
     example: "حديث «من كذب عليَّ متعمداً فليتبوأ مقعده من النار» روي بأكثر من ستين طريقاً.",
     note: "يُفيد القطع واليقين، ولا تُشترط فيه العدالة في الرواة.",
-  },
-  {
-    id: "ahad",
-    term: "حديث الآحاد",
-    category: "أنواع الحديث",
-    grade: "neutral",
-    definition: "ما لم يبلغ حدَّ التواتر من الأحاديث، سواء رواه راوٍ واحد أو جماعة دون حد التواتر.",
-    example: "أغلب الأحاديث النبوية الصحيحة من قبيل الآحاد.",
-    note: "يُفيد الظن الراجح، ويُحتج به في الأحكام عند جمهور العلماء.",
   },
   {
     id: "hasan-lighayrihi",
@@ -991,6 +942,12 @@ const TERMS: HadithTerm[] = [
 ];
 
 export default function HadithSciencePage() {
+  const todayTerm = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return TERMS[(day - 1 + TERMS.length) % TERMS.length];
+  }, []);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("الكل");
   const [openId, setOpenId] = useState<string | null>(null);
@@ -1012,7 +969,7 @@ export default function HadithSciencePage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${t.term}: ${t.definition.slice(0, 60)}`,
-            url: `https://majlisilm.com/hadith-science#${t.id}`,
+            url: `https://www.majlisilm.com/hadith-science#${t.id}`,
           })),
         },
       ],
@@ -1056,6 +1013,16 @@ export default function HadithSciencePage() {
         </div>
       </section>
 
+      {/* مصطلح الحديث اليوم */}
+      <div className="hsod-card">
+        <div className="hsod-card__badge"><Sparkles size={11} aria-hidden="true" /> مصطلح الحديث اليوم</div>
+        <div className="hsod-card__cat">{todayTerm.category}</div>
+        <h2 className="hsod-card__term">{todayTerm.term}</h2>
+        <p className="hsod-card__def">{todayTerm.definition}</p>
+        {todayTerm.example && <p className="hsod-card__ex"><span className="hsod-card__ex-label">مثال: </span>{todayTerm.example}</p>}
+        {todayTerm.note && <p className="hsod-card__note">{todayTerm.note}</p>}
+      </div>
+
       {/* شريط التحكم */}
       <div className="hs-controls">
         <div className="hs-search-wrap">
@@ -1074,15 +1041,15 @@ export default function HadithSciencePage() {
             </button>
           )}
         </div>
-        <div className="hs-cats" role="list" aria-label="تصفية حسب الباب">
+        <div className="hs-cats" role="tablist" aria-label="تصفية حسب الباب">
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
+              role="tab"
               type="button"
-              role="listitem"
               className={`hs-cat-chip${category === cat ? " hs-cat-chip--active" : ""}`}
               onClick={() => setCategory(cat)}
-              aria-pressed={category === cat}
+              aria-selected={category === cat}
             >
               {cat}
             </button>
@@ -1137,7 +1104,7 @@ export default function HadithSciencePage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="علوم الحديث — المجلس العلمي" url="https://majlisilm.com/hadith-science" />
+        <ShareButtons title="علوم الحديث — المجلس العلمي" url="https://www.majlisilm.com/hadith-science" />
       </div>
 
       {/* مصادر للمزيد */}

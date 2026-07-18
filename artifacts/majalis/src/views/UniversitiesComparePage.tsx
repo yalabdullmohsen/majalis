@@ -154,7 +154,7 @@ function CompareContent() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="مقارنة الجامعات الإسلامية — المجلس العلمي" url="https://majlisilm.com/universities/compare" />
+        <ShareButtons title="مقارنة الجامعات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/universities/compare" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في الفقه والتاريخ" count={4} />
@@ -175,7 +175,7 @@ export default function UniversitiesComparePage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "مقارنة الجامعات الإسلامية",
-          url: "https://majlisilm.com/universities/compare",
+          url: "https://www.majlisilm.com/universities/compare",
           description: "مقارنة تفصيلية بين الجامعات الإسلامية في التخصصات والبرامج الأكاديمية",
           about: { "@type": "Thing", name: "الجامعات الإسلامية والدراسة الشرعية" },
         },

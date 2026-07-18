@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Scale } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useSearch } from "wouter";
 import { getQaCategories, getQaQuestions } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const FIQH_HUB_TABS = [
-  { key: "fatawa",  label: "الفتاوى",         href: "/fatwa" },
   { key: "rulings", label: "الأحكام الشرعية", href: "/rulings" },
   { key: "qa",      label: "الأسئلة الشرعية", href: "/qa" },
   { key: "council", label: "المجمع الفقهي",   href: "/fiqh-council" },
@@ -37,6 +36,7 @@ import { QA_DISCLAIMER } from "@/lib/theme";
 import { PageHeader, QaSkeleton } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
+import { usePersistedState } from "@/hooks/usePersistedState";
 import { DEMO_QA, DEMO_QA_CATEGORIES } from "@/lib/demo-content";
 import { QaCard } from "@/components/qa/QaCard";
 import { useAuth } from "@/components/AuthProvider";
@@ -80,14 +80,23 @@ export default function QaPage({
   const [categories, setCategories] = useState<any[]>(initialCategories ?? []);
   const [loading, setLoading] = useState(!initialQuestions);
   const [categoriesLoading, setCategoriesLoading] = useState(!initialCategories);
-  const [categorySlug, setCategorySlug] = useState("all");
-  const [search, setSearch] = useState("");
-  const [sortMode, setSortMode] = useState<QaSortMode>("default");
+  const [categorySlug, setCategorySlug] = usePersistedState("filters:/qa:categorySlug", "all");
+  const [search, setSearch] = usePersistedState("filters:/qa:search", "");
+  const [sortMode, setSortMode] = usePersistedState<QaSortMode>("filters:/qa:sortMode", "default");
   const [randomId, setRandomId] = useState<string | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const debouncedSearch = useDebouncedValue(search);
+  const urlSearch = useSearch();
 
   const items = useMemo(() => normalizeQaItems(rawItems), [rawItems]);
+
+  // رابط وارد بـ`?cat=...` (من FiqhPage) كان يُتجاهَل كليًا: الحالة تُقرأ
+  // فقط من usePersistedState بلا مزامنة مع URL الفعلي عند الوصول — نفس
+  // عائلة عطل TYPE_HREF.scholar الصامت. اكتُشف بالفحص المباشر 2026-07-18.
+  useEffect(() => {
+    const cat = new URLSearchParams(urlSearch).get("cat");
+    if (cat) setCategorySlug(cat);
+  }, [urlSearch]);
 
   useEffect(() => {
     const topQa = DEMO_QA.filter((q: any) => q.answer).slice(0, 8);
@@ -216,17 +225,18 @@ export default function QaPage({
         className="page-search-input full content-hub-search qa-v2-search"
         aria-label="بحث في الأسئلة والأجوبة"
       />
-      <div className="qa-sort-row qa-v2-sort-row">
+      <div className="qa-sort-row qa-v2-sort-row" role="tablist" aria-label="ترتيب الأسئلة">
         {(Object.keys(QA_SORT_LABELS) as QaSortMode[]).map((mode) => (
           <button
             key={mode}
+            role="tab"
             type="button"
             className={`content-hub-chip${sortMode === mode ? " content-hub-chip--active" : ""}`}
             onClick={() => {
               setSortMode(mode);
               if (mode === "random") handleRandom();
             }}
-            aria-pressed={sortMode === mode}
+            aria-selected={sortMode === mode}
           >
             {QA_SORT_LABELS[mode]}
           </button>
@@ -321,7 +331,7 @@ export default function QaPage({
       </aside>
 
       <div className="twh-share">
-        <ShareButtons title="الأسئلة والأجوبة الشرعية — المجلس العلمي" url="https://majlisilm.com/qa" />
+        <ShareButtons title="الأسئلة والأجوبة الشرعية — المجلس العلمي" url="https://www.majlisilm.com/qa" />
       </div>
 
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">

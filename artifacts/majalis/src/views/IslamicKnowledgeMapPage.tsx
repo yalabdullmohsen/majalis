@@ -1,3 +1,4 @@
+import "@/styles/pages/islamic-knowledge-map.css";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { ShareButtons } from "@/components/ContentActions";
@@ -5,7 +6,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   BookOpen, Scroll, Scale, BookMarked, Users, Star, GraduationCap,
   Heart, Compass, Globe, Layers, ChevronLeft, ArrowLeftRight,
-  FileText, Mic2, Shield, Sparkles, Clock, Target, Map, PenLine, Search,
+  Mic2, Shield, Sparkles, Clock, Target, Map, PenLine, Search, Network,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -46,7 +47,7 @@ const DOMAINS: Domain[] = [
     subtitle: "الأصل الثاني، السنة المطهرة",
     icon: Scroll,
     color: "#FFFFFF",
-    bg: "#0A5040",
+    bg: "#123F36",
     href: "/hadith",
     count: 7563,
     unit: "حديث",
@@ -59,11 +60,11 @@ const DOMAINS: Domain[] = [
     subtitle: "الأحكام العملية من الأدلة",
     icon: Scale,
     color: "#FFFFFF",
-    bg: "#1F4D3A",
+    bg: "#176B57",
     href: "/fiqh",
     count: 4,
     unit: "مذهب",
-    connections: ["quran", "hadith", "fatwa", "scholars", "rulings"],
+    connections: ["quran", "hadith", "scholars", "rulings"],
     tags: ["حنفي", "مالكي", "شافعي", "حنبلي"],
   },
   {
@@ -72,7 +73,7 @@ const DOMAINS: Domain[] = [
     subtitle: "شرح وبيان كلام الله تعالى",
     icon: BookMarked,
     color: "#FFFFFF",
-    bg: "#145C46",
+    bg: "#176B57",
     href: "/quran/surah-stories",
     count: 114,
     unit: "سورة",
@@ -98,7 +99,7 @@ const DOMAINS: Domain[] = [
     subtitle: "قصص الأنبياء والصحابة والسيرة",
     icon: Star,
     color: "#FFFFFF",
-    bg: "#0A5040",
+    bg: "#123F36",
     href: "/stories",
     count: 25,
     unit: "نبي",
@@ -111,25 +112,12 @@ const DOMAINS: Domain[] = [
     subtitle: "إتقان تلاوة القرآن الكريم",
     icon: Mic2,
     color: "#FFFFFF",
-    bg: "#145C46",
+    bg: "#176B57",
     href: "/quran/tajweed",
     count: 14,
     unit: "حكم",
     connections: ["quran", "adhkar"],
     tags: ["مخارج", "صفات", "مدود", "غنة"],
-  },
-  {
-    id: "fatwa",
-    title: "الفتاوى والأحكام",
-    subtitle: "إجابات العلماء عن المسائل المعاصرة",
-    icon: FileText,
-    color: "#FFFFFF",
-    bg: "#1F4D3A",
-    href: "/fatwa",
-    count: 1200,
-    unit: "فتوى",
-    connections: ["fiqh", "scholars", "rulings"],
-    tags: ["مجمع", "مجلس", "اجتهاد", "تيسير"],
   },
   {
     id: "adhkar",
@@ -150,7 +138,7 @@ const DOMAINS: Domain[] = [
     subtitle: "حياة النبي محمد ﷺ وغزواته",
     icon: Compass,
     color: "#FFFFFF",
-    bg: "#0A5040",
+    bg: "#123F36",
     href: "/seerah",
     count: 23,
     unit: "سنة نبوية",
@@ -163,11 +151,11 @@ const DOMAINS: Domain[] = [
     subtitle: "مكتبة الأحكام الفقهية المصنّفة",
     icon: Shield,
     color: "#FFFFFF",
-    bg: "#145C46",
+    bg: "#176B57",
     href: "/rulings",
     count: 800,
     unit: "حكم",
-    connections: ["fiqh", "fatwa", "hadith"],
+    connections: ["fiqh", "hadith"],
     tags: ["واجب", "مندوب", "مكروه", "حرام"],
   },
   {
@@ -176,7 +164,7 @@ const DOMAINS: Domain[] = [
     subtitle: "تعلم العلم الشرعي من كبار المشايخ",
     icon: GraduationCap,
     color: "#FFFFFF",
-    bg: "#1F4D3A",
+    bg: "#176B57",
     href: "/lessons",
     count: 3000,
     unit: "درس",
@@ -202,7 +190,7 @@ const DOMAINS: Domain[] = [
     subtitle: "مؤسسات تعليم العلوم الشرعية",
     icon: Globe,
     color: "#FFFFFF",
-    bg: "#0A5040",
+    bg: "#123F36",
     href: "/universities",
     count: 200,
     unit: "مؤسسة",
@@ -228,7 +216,7 @@ const DOMAINS: Domain[] = [
     subtitle: "مصطلح الحديث والجرح والتعديل",
     icon: Search,
     color: "#FFFFFF",
-    bg: "#0A5040",
+    bg: "#123F36",
     href: "/hadith-science",
     count: 69,
     unit: "مصطلح",
@@ -241,7 +229,7 @@ const DOMAINS: Domain[] = [
     subtitle: "الحضارة الإسلامية والدولة والسيرة",
     icon: Clock,
     color: "#FFFFFF",
-    bg: "#145C46",
+    bg: "#176B57",
     href: "/sahabah",
     count: 1400,
     unit: "سنة",
@@ -254,7 +242,7 @@ const DOMAINS: Domain[] = [
     subtitle: "الحكمة والغاية من التشريع الإسلامي",
     icon: Target,
     color: "#FFFFFF",
-    bg: "#1F4D3A",
+    bg: "#176B57",
     href: "/fiqh-qawaid",
     count: 5,
     unit: "مقاصد كلية",
@@ -280,8 +268,8 @@ const DOMAINS: Domain[] = [
     subtitle: "تصور مرئي لعلوم الإسلام وترابطها",
     icon: Map,
     color: "#FFFFFF",
-    bg: "#0A5040",
-    href: "/mind-maps",
+    bg: "#123F36",
+    href: "/mind-map",
     count: 23,
     unit: "خريطة",
     connections: ["fiqh", "aqidah", "hadith", "seerah"],
@@ -322,7 +310,6 @@ const CONNECTIONS_MAP: { a: string; b: string; label: string }[] = [
   { a: "aqidah",   b: "history", label: "الأحداث التاريخية تُثبت العقيدة" },
   { a: "adhkar",       b: "fiqh",      label: "الأذكار ذات أحكام شرعية" },
   /* ── إضافي ── */
-  { a: "fatwa",        b: "fiqh",      label: "الفتوى تطبيق عملي للفقه" },
   { a: "rulings",      b: "usul",      label: "الأحكام مبنية على أصول الفقه" },
   { a: "universities", b: "scholars",  label: "الجامعات حاضنة العلماء والبحث" },
   { a: "mindmaps",     b: "usul",      label: "الخرائط تُنظِّم مسائل الأصول" },
@@ -340,9 +327,9 @@ export default function IslamicKnowledgeMapPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/knowledge-map",
-      title: "الخريطة المعرفية الإسلامية | مجالس",
+      title: "الخريطة المعرفية الإسلامية | المجلس العلمي",
       description: "استكشف ترابط العلوم الإسلامية، القرآن والحديث والفقه والتفسير والسيرة والأذكار ومئات المصادر",
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الخريطة المعرفية الإسلامية", url: "https://majlisilm.com/knowledge-map", about: { "@type": "Thing", name: "ترابط العلوم الإسلامية" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الخريطة المعرفية الإسلامية", url: "https://www.majlisilm.com/knowledge-map", about: { "@type": "Thing", name: "ترابط العلوم الإسلامية" } }],
     });
   }, []);
 
@@ -356,20 +343,28 @@ export default function IslamicKnowledgeMapPage() {
   return (
     <div className="ikm-page" dir="rtl">
       {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="ikm-hero">
-        <div className="ikm-hero__ornament" aria-hidden="true">❧ الخريطة المعرفية الإسلامية 2.0 ❧</div>
-        <h1 className="ikm-hero__title">ترابط العلوم الإسلامية</h1>
-        <p className="ikm-hero__sub">
+      <header className="sh-hero">
+        <div className="sh-hero__badge">
+          <Network size={16} strokeWidth={2} aria-hidden="true" />
+          <span>الخريطة المعرفية الإسلامية</span>
+        </div>
+        <h1 className="sh-hero__title">ترابط العلوم الإسلامية</h1>
+        <p className="sh-hero__sub">
           استكشف كيف تترابط علوم القرآن والحديث والفقه والسيرة والأذكار في موسوعة معرفية متكاملة
         </p>
-        <div className="ikm-stats">
-          {STATS.map(s => (
-            <div key={s.lbl} className="ikm-stat">
-              <span className="ikm-stat__val">{s.val}</span>
-              <span className="ikm-stat__lbl">{s.lbl}</span>
-            </div>
-          ))}
+        <div className="sh-hero__stats">
+          <span className="sh-stat"><Layers size={13} strokeWidth={2.5} />{DOMAINS.length} علمًا شرعيًا</span>
+          <span className="sh-stat"><Network size={13} strokeWidth={2.5} />{CONNECTIONS_MAP.length} رابطًا معرفيًا</span>
         </div>
+      </header>
+
+      <section className="ikm-stats" aria-label="إحصائيات موجزة">
+        {STATS.map(s => (
+          <div key={s.lbl} className="ikm-stat">
+            <span className="ikm-stat__val">{s.val}</span>
+            <span className="ikm-stat__lbl">{s.lbl}</span>
+          </div>
+        ))}
       </section>
 
       {/* ── بحث ───────────────────────────────────────────────── */}
@@ -405,6 +400,7 @@ export default function IslamicKnowledgeMapPage() {
 
             return (
               <button
+                type="button"
                 key={domain.id}
                 className={[
                   "ikm-card",
@@ -513,6 +509,7 @@ export default function IslamicKnowledgeMapPage() {
             return (
               <div key={i} className="ikm-conn-item">
                 <button
+                  type="button"
                   className={`ikm-conn-node ikm-dom--${c.a}`}
                   onClick={() => setSelected(c.a)}
                 >
@@ -523,6 +520,7 @@ export default function IslamicKnowledgeMapPage() {
                   <ArrowLeftRight size={16} className="ikm-conn-arrow" />
                 </div>
                 <button
+                  type="button"
                   className={`ikm-conn-node ikm-dom--${c.b}`}
                   onClick={() => setSelected(c.b)}
                 >
@@ -535,7 +533,7 @@ export default function IslamicKnowledgeMapPage() {
       </section>
 
       <div className="twh-share">
-        <ShareButtons title="خريطة المعرفة الإسلامية — المجلس العلمي" url="https://majlisilm.com/islamic-knowledge-map" />
+        <ShareButtons title="خريطة المعرفة الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/islamic-knowledge-map" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["aqeeda", "hadith", "fiqh"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />

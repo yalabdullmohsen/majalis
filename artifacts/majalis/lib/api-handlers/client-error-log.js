@@ -1,8 +1,13 @@
 import { sendJson } from "../api/_http.mjs";
+import { getSupabaseAdmin } from "../supabase-admin.mjs";
 
 const MAX_BODY = 32_000;
 const recentIds = new Map();
 const DEDUPE_MS = 60_000;
+// احتياطي داخل الذاكرة فقط لحال تعذّر الاتصال بقاعدة البيانات — المصدر
+// الدائم الفعلي هو جدول public.client_error_logs (انظر تعليق الهجرة:
+// كانت هذه الذاكرة وحدها هي المصدر الوحيد سابقًا، وتُفقَد بين النسخ على
+// Vercel serverless).
 const errorStore = new Map();
 const MAX_STORE = 200;
 
@@ -21,6 +26,33 @@ function storeReport(report) {
   if (errorStore.size > MAX_STORE) {
     const firstKey = errorStore.keys().next().value;
     if (firstKey) errorStore.delete(firstKey);
+  }
+}
+
+async function persistReport(report) {
+  const admin = getSupabaseAdmin();
+  if (!admin) return;
+  try {
+    await admin.from("client_error_logs").insert({
+      error_id: report.errorId,
+      message: report.message,
+      name: report.name || null,
+      stack: report.stack || null,
+      component_stack: report.componentStack || null,
+      component: report.component || null,
+      route: report.route || null,
+      section: report.section || null,
+      user_agent: report.userAgent || null,
+      user_id: report.userId || null,
+      user_action: report.userAction || null,
+      build_version: report.buildVersion || null,
+      commit_hash: report.commitHash || null,
+      device_type: report.deviceType || null,
+      api_response: report.apiResponse || null,
+      occurred_at: report.at || new Date().toISOString(),
+    });
+  } catch {
+    /* الاحتياطي داخل الذاكرة يبقى متاحًا حتى لو فشل الإدراج */
   }
 }
 
@@ -72,12 +104,26 @@ export default async function handler(req, res) {
       sendJson(res, 400, { ok: false, message: "Missing id query parameter" });
       return;
     }
-    const report = errorStore.get(errorId);
-    if (!report) {
-      sendJson(res, 404, { ok: false, message: "Error report not found", errorId });
+    const memReport = errorStore.get(errorId);
+    if (memReport) {
+      sendJson(res, 200, { ok: true, report: memReport });
       return;
     }
-    sendJson(res, 200, { ok: true, report });
+    const admin = getSupabaseAdmin();
+    if (admin) {
+      const { data } = await admin
+        .from("client_error_logs")
+        .select("*")
+        .eq("error_id", errorId)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (data) {
+        sendJson(res, 200, { ok: true, report: data });
+        return;
+      }
+    }
+    sendJson(res, 404, { ok: false, message: "Error report not found", errorId });
     return;
   }
 
@@ -94,6 +140,7 @@ export default async function handler(req, res) {
 
   const report = sanitizeReport(body);
   storeReport(report);
+  await persistReport(report);
 
   if (shouldLog(report.errorId)) {
     console.error("[client-error-log]", JSON.stringify(report).slice(0, MAX_BODY));

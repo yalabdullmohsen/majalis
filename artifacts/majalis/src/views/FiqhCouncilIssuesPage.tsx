@@ -47,14 +47,15 @@ export default function FiqhCouncilIssuesPage() {
 
       <FiqhCouncilSubnav />
 
-      <div className="content-hub-chips fci-chips-row">
+      <div className="content-hub-chips fci-chips-row" role="tablist" aria-label="تصفية مسائل مجلس الفقه">
         {["الكل", ...FIQH_COUNCIL_CATEGORIES].map((cat) => (
           <button
             key={cat}
+            role="tab"
             type="button"
             onClick={() => setCategory(cat)}
             className={category === cat ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-            aria-pressed={category === cat}
+            aria-selected={category === cat}
           >
             {cat}
           </button>
@@ -86,7 +87,7 @@ export default function FiqhCouncilIssuesPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="المسائل الفقهية — المجمع الفقهي | المجلس العلمي" url="https://majlisilm.com/fiqh-council/issues" />
+        <ShareButtons title="المسائل الفقهية — المجمع الفقهي | المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/issues" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في المسائل الفقهية" count={4} />

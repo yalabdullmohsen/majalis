@@ -23,10 +23,13 @@ import { createClient } from "@supabase/supabase-js";
 
 function getSupabase() {
   const url = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || "";
+  // نقطة نهاية عامة غير مصادَق عليها — نُفضّل مفتاح anon المحكوم بـ RLS
+  // على service_role (الذي يتجاوز RLS بالكامل) لتفادي تسريب صفوف غير
+  // منشورة إن نُسي فلتر status في دالة بحث جديدة مستقبلاً.
   const key =
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
     process.env.VITE_SUPABASE_ANON_KEY ||
     process.env.SUPABASE_ANON_KEY ||
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
     "";
   if (!url || !key) return null;
   return createClient(url, key, {
@@ -40,7 +43,7 @@ function normalizeArabic(text) {
   if (!text) return "";
   return text
     // التشكيل الكامل + علامات وقف قرآنية + الكشيدة
-    .replace(/[ً-ٟٓ-ٕؐ-ؚۖ-ۜ۟-ۤۧ-ٰۭـ]/g, "")
+    .replace(/[ً-ٟؐ-ؚۖ-ۜ۟-ۤۧ-ٰۭـ]/g, "")
     .replace(/[أإآٱ]/g, "ا")
     .replace(/ؤ/g, "و")
     .replace(/ئ/g, "ي")
@@ -214,17 +217,47 @@ async function searchQuranIndex(supabase, normQuery, limit) {
     title: r.ayah_text,
     summary: "",
     meta: [r.surah_name, r.source_reference].filter(Boolean).join(" · "),
-    href: "/quran",
+    href: "/quran-hub",
     verbatim: true, // يشير للواجهة أن هذا النص يُعرض حرفياً
   }));
 }
 
 // ─── Handler الرئيسي ────────────────────────────────────────────────────────
 
+// ─── CORS — مقيَّد بنطاق الموقع ─────────────────────────────────────────────
+// كان "*" يسمح لأي موقع باستهلاك واجهة البحث من متصفح المستخدم.
+// النطاقات مأخوذة من site.config.json (siteUrl + legacyOrigins)؛ عند تغيير
+// النطاق هناك حدِّث القائمة هنا أو مرِّر SITE_ORIGIN في البيئة.
+const ALLOWED_ORIGINS = new Set(
+  [
+    process.env.SITE_ORIGIN,
+    "https://www.majlisilm.com", // siteUrl المعتمد
+    "https://www.majlisilm.com",
+    "http://majlisilm.com",
+    "http://www.majlisilm.com",
+  ].filter(Boolean),
+);
+
+function applyCors(req, res) {
+  const origin = String(req.headers?.origin || "");
+  if (origin && ALLOWED_ORIGINS.has(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  } else {
+    // نطاق افتراضي واحد — لا "*"
+    res.setHeader("Access-Control-Allow-Origin", "https://www.majlisilm.com");
+  }
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Vary", "Origin, Accept-Encoding");
+}
+
 export default async function handler(req, res) {
-  // ── CORS ────────────────────────────────────────────────────────────────────
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Vary", "Accept-Encoding");
+  applyCors(req, res);
+
+  if (req.method === "OPTIONS") {
+    res.statusCode = 204;
+    res.end();
+    return;
+  }
 
   if (req.method !== "GET") {
     sendJson(res, 405, { ok: false, error: "GET only" });

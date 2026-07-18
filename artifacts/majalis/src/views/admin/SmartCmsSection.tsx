@@ -161,6 +161,7 @@ export function SmartCmsSection() {
       <div className="scm-tabs">
         {(["text", "url", "image"] as InputMode[]).map((m) => (
           <button
+            type="button"
             key={m}
             className={`scm-tab${mode === m ? " scm-tab--active" : ""}`}
             onClick={() => setMode(m)}
@@ -174,10 +175,14 @@ export function SmartCmsSection() {
         {mode === "text" && (
           <div className="scm-input-group">
             <div>
-              <label className="scm-hint-label">
+              {/* span لا label: هذا وصف لمجموعة أزرار اختيار (scm-hints-row)
+                  لا لحقل إدخال واحد، فـhtmlFor غير قابل للتطبيق هنا أصلًا —
+                  role="group"+aria-labelledby هو الربط الصحيح لهذا النمط
+                  (جماعة عناصر تفاعلية بوصف مشترك)، لا label/htmlFor. */}
+              <span id="scm-content-hint-label" className="scm-hint-label">
                 نوع المحتوى (اختياري، يُساعد الذكاء الاصطناعي على التحليل)
-              </label>
-              <div className="scm-hints-row">
+              </span>
+              <div className="scm-hints-row" role="group" aria-labelledby="scm-content-hint-label">
                 {CONTENT_HINTS.map((h) => (
                   <button
                     key={h}
@@ -227,11 +232,12 @@ export function SmartCmsSection() {
 
         {mode === "url" && (
           <div className="scm-input-group">
-            <label className="scm-hint-label">
+            <label className="scm-hint-label" htmlFor="scm-url-input">
               رابط المحتوى (Instagram / YouTube / X / Telegram / موقع)
             </label>
             <div className="scm-url-row">
               <input
+                id="scm-url-input"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="https://..."
@@ -260,11 +266,12 @@ export function SmartCmsSection() {
 
         {mode === "image" && (
           <div className="scm-input-group">
-            <label className="scm-hint-label">
+            <label className="scm-hint-label" htmlFor="scm-image-input">
               ارفع صورة تحتوي محتوى (إعلان، جدول، نص مصوّر…)
             </label>
             <div className="scm-image-drop">
               <input
+                id="scm-image-input"
                 type="file"
                 accept="image/*"
                 disabled={busy}

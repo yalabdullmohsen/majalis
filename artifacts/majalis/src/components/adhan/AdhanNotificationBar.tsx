@@ -78,7 +78,6 @@ function AdhanToast({ event, onDismiss }: { event: ActiveEvent; onDismiss: () =>
             type="button"
             onClick={handleStop}
             className="anb-btn anb-btn--mute"
-            title="إيقاف صوت الأذان"
             aria-label="إيقاف صوت الأذان"
           >
             <Volume2 size={15} strokeWidth={2} />
@@ -91,7 +90,6 @@ function AdhanToast({ event, onDismiss }: { event: ActiveEvent; onDismiss: () =>
           type="button"
           onClick={onDismiss}
           className="anb-btn anb-btn--close"
-          title="إغلاق الإشعار"
           aria-label="إغلاق الإشعار"
         >
           <X size={15} strokeWidth={2.5} />

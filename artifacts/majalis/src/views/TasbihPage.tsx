@@ -48,7 +48,7 @@ export default function TasbihPage() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "عداد التسبيح الرقمي",
-          url: "https://majlisilm.com/tasbih",
+          url: "https://www.majlisilm.com/tasbih",
           description: "عداد تسبيح رقمي مع أوراد قابلة للتخصيص لذكر الله في أي وقت",
           applicationCategory: "LifestyleApplication",
           inLanguage: "ar",
@@ -244,7 +244,7 @@ export default function TasbihPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="التسبيح الرقمي — المجلس العلمي" url="https://majlisilm.com/tasbih" />
+        <ShareButtons title="التسبيح الرقمي — المجلس العلمي" url="https://www.majlisilm.com/tasbih" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأذكار والأخلاق" count={4} />

@@ -25,7 +25,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
       <div className="univ-card__head">
         {u.logo_url ? (
           <img src={u.logo_url} alt={u.name_ar} loading="lazy" decoding="async"
-            className="w-10 h-10 rounded-full object-contain univ-card__logo" />
+            className="w-10 h-10 rounded-full object-contain univ-card__logo" width="40" height="40" />
         ) : (
           <div className="univ-card__head-avatar">{u.name_ar[0]}</div>
         )}
@@ -97,7 +97,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
             target="_blank"
             rel="noopener noreferrer"
             className="univ-btn univ-btn--ghost"
-            title="الموقع الرسمي"
+            aria-label={`الموقع الرسمي لـ ${u.name_ar}`}
           >
             <Globe size={13} className="inline ml-1" />الموقع
           </a>
@@ -105,7 +105,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
 
         <button
           type="button"
-          title={inCompare ? "إزالة من المقارنة" : canAdd ? "أضف للمقارنة" : "تعبأت المقارنة (4)"}
+          aria-label={inCompare ? "إزالة من المقارنة" : canAdd ? "أضف للمقارنة" : "تعبأت المقارنة (4 بحد أقصى)"}
           onClick={() => inCompare ? removeFromCompare(u.slug) : addToCompare(u)}
           className={`univ-btn ${inCompare ? "univ-btn--compare-active" : "univ-btn--ghost"}`}
           disabled={!inCompare && !canAdd}

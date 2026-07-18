@@ -61,37 +61,34 @@ export default defineConfig({
     chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
+        /**
+         * ⚠️ لا تُضِف قواعد لمسارات `src/` هنا.
+         *
+         * القواعد القديمة كانت تُجبر ملفات التطبيق على حزم مسمّاة (admin،
+         * content-catalog…). حين يُشارك ملفٌ واحد من الحزمة بين مسار كسول
+         * (lazy) ونقطة الدخول، تتحوّل الحزمة كلها إلى commons يستوردها ملف
+         * الدخول استيرادًا ساكنًا — فصارت حزمة `admin` (٥٠٣KB) تنزل عند كل
+         * زائر مجهول. التقسيم التلقائي في Rollup يحترم رسم lazy() (١٦٤ استدعاء)
+         * ويولّد الحزم المشتركة بأمان.
+         *
+         * التقسيم اليدوي هنا مقتصر على node_modules (تخزين مؤقت طويل الأمد).
+         */
         manualChunks(id) {
-          if (id.includes("node_modules")) {
-            if (id.includes("@supabase")) return "supabase";
-            if (id.includes("html2canvas") || id.includes("html-to-image")) return "html2canvas";
-            if (id.includes("date-fns")) return "date-fns";
-            if (id.includes("lucide-react")) return "icons";
-            if (id.includes("@radix-ui")) return "radix";
-            if (id.includes("recharts") || id.includes("d3-") || id.includes("victory")) return "charts";
-            if (id.includes("adhan")) return "adhan";
-            if (id.includes("@tanstack")) return "query";
-            if (id.includes("react") || id.includes("wouter") || id.includes("scheduler")) return "vendor";
-            if (id.includes("zod") || id.includes("react-hook-form") || id.includes("@hookform")) return "forms";
-            if (id.includes("framer-motion") || id.includes("motion")) return "animation";
-            if (id.includes("cmdk") || id.includes("vaul") || id.includes("sonner")) return "ui-extra";
-            if (id.includes("mapbox") || id.includes("leaflet") || id.includes("maplibre")) return "maps";
-          }
-          if (id.includes("src/views/AdminPage") || id.includes("src/views/admin/")) return "admin";
-          if (id.includes("src/components/home/")) return "home-sections";
-          if (id.includes("src/views/QuranCirclesPage") || id.includes("src/views/QuranPage") || id.includes("src/views/QuranRadioPage")) return "quran-pages";
-          if (id.includes("src/views/Scholarly") || id.includes("scholarly-research")) return "scholarly";
-          if (id.includes("src/lib/miracles-seed") || id.includes("src/lib/prophets-seed")) return "content-seed";
-          if (id.includes("src/lib/lessons-seed") || id.includes("src/lib/lesson-ads") || id.includes("src/lib/lessons-catalog")) return "lessons-seed-data";
-          if (id.includes("src/lib/adhkar-seed") || id.includes("src/lib/fawaid-seed")) return "adhkar-fawaid-seed";
-          if (id.includes("src/views/PropheticMedicine") || id.includes("src/views/Miracles")) return "science-pages";
-          if (id.includes("src/views/FiqhCouncil")) return "fiqh-council";
-          if (id.includes("src/views/Learning") || id.includes("src/views/learning/")) return "learning-pages";
-          if (id.includes("src/lib/mind-maps-data") || id.includes("src/lib/quiz-seed") || id.includes("src/lib/islamic-glossary")) return "content-data";
-          if (id.includes("src/lib/fatwa-seed") || id.includes("src/lib/rulings-seed")) return "fatwa-rulings-seed";
-          if (id.includes("src/lib/annual-courses-seed") || id.includes("src/lib/updates-seed")) return "courses-updates-seed";
-          if (id.includes("src/lib/fiqh-council-seed") || id.includes("src/lib/fiqh-council-nawazil") || id.includes("src/lib/fiqh-council-categories") || id.includes("src/lib/fiqh-council-trust")) return "fiqh-council-data";
-          if (id.includes("src/lib/platform-content-service") || id.includes("src/lib/demo-content")) return "platform-services";
+          if (!id.includes("node_modules")) return;
+
+          if (id.includes("@supabase")) return "supabase";
+          if (id.includes("html2canvas") || id.includes("html-to-image")) return "html2canvas";
+          if (id.includes("date-fns")) return "date-fns";
+          if (id.includes("lucide-react")) return "icons";
+          if (id.includes("@radix-ui")) return "radix";
+          if (id.includes("recharts") || id.includes("d3-") || id.includes("victory")) return "charts";
+          if (id.includes("adhan")) return "adhan";
+          if (id.includes("@tanstack")) return "query";
+          if (id.includes("react") || id.includes("wouter") || id.includes("scheduler")) return "vendor";
+          if (id.includes("zod") || id.includes("react-hook-form") || id.includes("@hookform")) return "forms";
+          if (id.includes("framer-motion") || id.includes("motion")) return "animation";
+          if (id.includes("cmdk") || id.includes("vaul") || id.includes("sonner")) return "ui-extra";
+          if (id.includes("mapbox") || id.includes("leaflet") || id.includes("maplibre")) return "maps";
         },
       },
     },

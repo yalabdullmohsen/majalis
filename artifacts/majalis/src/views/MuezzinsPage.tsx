@@ -65,6 +65,7 @@ function MuezzinCard({ muezzin, onPreview, previewing, isFav, onToggleFav }: {
             onClick={(e) => { e.preventDefault(); onToggleFav(muezzin.id); }}
             className={`mzp-fav-btn${isFav ? " is-fav" : ""}`}
             title={isFav ? "إزالة من المفضلة" : "إضافة للمفضلة"}
+            aria-label={isFav ? `إزالة ${muezzin.name} من المفضلة` : `إضافة ${muezzin.name} للمفضلة`}
           >
             {isFav ? <Heart size={16} className="icon-danger--filled" /> : <Heart size={16} />}
           </button>
@@ -119,7 +120,7 @@ export default function MuezzinsPage() {
       title: "الأذان والمؤذنون | المجلس العلمي",
       description: "استمع إلى الأذان بأصوات أشهر المؤذنين وخصّص إعدادات الأذان، مكتبة متنوعة من أصوات الأذان العالمية.",
       keywords: ["أذان", "مؤذنون", "صوت الأذان", "أذان اسلامي", "مواقيت الصلاة"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الأذان والمؤذنون", url: "https://majlisilm.com/muezzins", about: { "@type": "Thing", name: "مكتبة أصوات الأذان الإسلامي" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الأذان والمؤذنون", url: "https://www.majlisilm.com/muezzins", about: { "@type": "Thing", name: "مكتبة أصوات الأذان الإسلامي" } }],
     });
   }, []);
 
@@ -210,22 +211,22 @@ export default function MuezzinsPage() {
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="ابحث بالاسم أو الدولة أو الأسلوب..."
+          aria-label="ابحث بالاسم أو الدولة أو الأسلوب" placeholder="ابحث بالاسم أو الدولة أو الأسلوب..."
           className="mzp-search-input"
         />
       </div>
 
       {/* Filters */}
       <div className="mzp-filters">
-        <select value={styleFilter} onChange={(e) => setStyleFilter(e.target.value as MuezzinStyle | "")} className="mzp-filter-select">
+        <select value={styleFilter} onChange={(e) => setStyleFilter(e.target.value as MuezzinStyle | "")} className="mzp-filter-select" aria-label="تصفية حسب الأسلوب">
           <option value="">كل الأساليب</option>
           {STYLES.map((s) => <option key={s} value={s}>{s}</option>)}
         </select>
-        <select value={countryFilter} onChange={(e) => setCountryFilter(e.target.value)} className="mzp-filter-select">
+        <select value={countryFilter} onChange={(e) => setCountryFilter(e.target.value)} className="mzp-filter-select" aria-label="تصفية حسب الدولة">
           <option value="">كل الدول</option>
           {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
-        <select value={sortKey} onChange={(e) => setSortKey(e.target.value as typeof sortKey)} className="mzp-filter-select">
+        <select value={sortKey} onChange={(e) => setSortKey(e.target.value as typeof sortKey)} className="mzp-filter-select" aria-label="ترتيب المؤذنين">
           <option value="rating">الأعلى تقييماً</option>
           <option value="followers">الأكثر متابعة</option>
           <option value="favorites">المفضلة فقط</option>
@@ -307,7 +308,7 @@ export default function MuezzinsPage() {
         <div className="mzp-cta__icon" aria-hidden="true"><Mic2 size={28} strokeWidth={1.4} /></div>
         <div className="mzp-cta__info">
           <div className="mzp-cta__title">هل لديك تسجيل أذان جميل؟</div>
-          <div className="mzp-cta__desc">شارك صوتك مع مجتمع المجالس، يُراجع الفريق ويُنشر في المكتبة.</div>
+          <div className="mzp-cta__desc">شارك صوتك مع مجتمع المجلس العلمي، يُراجع الفريق ويُنشر في المكتبة.</div>
         </div>
         <div className="mzp-cta__btns">
           <Link href="/upload" className="mzp-cta__upload-btn">
@@ -327,7 +328,7 @@ export default function MuezzinsPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="مكتبة المؤذنين — المجلس العلمي" url="https://majlisilm.com/muezzins" />
+        <ShareButtons title="مكتبة المؤذنين — المجلس العلمي" url="https://www.majlisilm.com/muezzins" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في أحكام الأذان" count={4} />

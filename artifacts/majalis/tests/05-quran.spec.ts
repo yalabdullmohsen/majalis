@@ -1,42 +1,41 @@
 /**
- * Quran tests — page loads, surah list, navigation, audio controls.
+ * Quran tests — hub page loads, section navigation, radio controls.
+ * قارئ المصحف صفحة-بصفحة حُذف (2026-07-14)؛ /quran و/mushaf يُحوَّلان الآن إلى /quran-hub.
  */
 import { test, expect } from "@playwright/test";
 import { waitForContent } from "./helpers";
 
-test.describe("Quran — المصحف", () => {
-  test("quran page loads with surah list", async ({ page }) => {
+test.describe("Quran — مركز القرآن", () => {
+  test("/quran redirects to quran hub and loads with content", async ({ page }) => {
     await page.goto("/quran");
     await waitForContent(page);
     await page.waitForTimeout(800);
+    expect(page.url()).toContain("/quran-hub");
     const body = await page.locator("body").innerText();
-    // قسم القرآن أُحيل لـ"قريباً" — نتحقق فقط من تحميل الصفحة بمحتوى
     const hasContent = body.length > 10;
-    expect(hasContent, "صفحة القرآن يجب أن تحمّل بمحتوى").toBe(true);
+    expect(hasContent, "مركز القرآن يجب أن يحمّل بمحتوى").toBe(true);
   });
 
-  test("clicking on Surah Al-Fatiha navigates to its page", async ({ page }) => {
-    await page.goto("/quran");
+  test("clicking a section card navigates to its page", async ({ page }) => {
+    await page.goto("/quran-hub");
     await waitForContent(page);
     await page.waitForTimeout(600);
-    const fatiha = page.locator('text=الفاتحة').first();
-    if (await fatiha.count() > 0) {
-      await fatiha.click();
+    const card = page.locator(".quran-hub-card").first();
+    if (await card.count() > 0) {
+      await card.click();
       await waitForContent(page);
-      const body = await page.locator("body").innerText();
-      const hasFatiha = body.includes("الفاتحة") || body.includes("بسم الله");
-      expect(hasFatiha).toBe(true);
+      const url = page.url();
+      expect(url).not.toContain("/quran-hub");
     }
   });
 
-  test("quran page has search or filter capability", async ({ page }) => {
-    await page.goto("/quran");
+  test("quran hub has explorable sections grid", async ({ page }) => {
+    await page.goto("/quran-hub");
     await waitForContent(page);
-    const searchEl = page.locator('input[type="search"], input[placeholder*="بحث"], input[placeholder*="سورة"]');
-    // Either search exists or list is visible
-    const hasSearch = await searchEl.count() > 0;
+    const cards = page.locator(".quran-hub-card");
+    const hasCards = await cards.count() > 0;
     const hasList = await page.locator("body").innerText().then((t) => t.length > 50);
-    expect(hasSearch || hasList).toBe(true);
+    expect(hasCards || hasList).toBe(true);
   });
 
   test("quran radio page loads and shows station list", async ({ page }) => {

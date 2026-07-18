@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { SectionIcon } from "@/components/ui/SectionIcon";
+import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -27,7 +29,7 @@ type Madhhab = {
 const MADHAHIB: Madhhab[] = [
   {
     id: "hanafi",
-    color: "#1F4D3A",
+    color: "#176B57",
     icon: "🕌",
     name: "الحنفي",
     fullName: "المذهب الحنفي",
@@ -57,7 +59,7 @@ const MADHAHIB: Madhhab[] = [
   },
   {
     id: "maliki",
-    color: "#0A5040",
+    color: "#123F36",
     icon: "🌿",
     name: "المالكي",
     fullName: "المذهب المالكي",
@@ -150,6 +152,12 @@ const MADHAHIB: Madhhab[] = [
 ];
 
 export default function MadhahibPage() {
+  const todayMadhhab = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return MADHAHIB[(day - 1 + MADHAHIB.length) % MADHAHIB.length];
+  }, []);
   const [openId, setOpenId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -169,7 +177,7 @@ export default function MadhahibPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${m.fullName} — ${m.founder}`,
-            url: `https://majlisilm.com/madhahib#${m.id}`,
+            url: `https://www.majlisilm.com/madhahib#${m.id}`,
           })),
         },
       ],
@@ -200,12 +208,23 @@ export default function MadhahibPage() {
               onClick={() => toggle(m.id)}
               aria-pressed={openId === m.id}
             >
-              <span className="mdb-hero__nav-icon">{m.icon}</span>
+              <span className="mdb-hero__nav-icon"><SectionIcon name={m.icon} size={22} /></span>
               <span className="mdb-hero__nav-name">{m.name}</span>
             </button>
           ))}
         </div>
       </section>
+
+      {/* مذهب اليوم */}
+      <div className="mdbod-card">
+        <div className="mdbod-card__badge"><Sparkles size={11} aria-hidden="true" /> مذهب اليوم</div>
+        <span className="mdbod-card__icon"><SectionIcon name={todayMadhhab.icon} size={26} /></span>
+        <h2 className="mdbod-card__name">{todayMadhhab.name}</h2>
+        <div className="mdbod-card__founder">{todayMadhhab.founder} · {todayMadhhab.born}–{todayMadhhab.died}</div>
+        <div className="mdbod-card__origin">{todayMadhhab.origin}</div>
+        <p className="mdbod-card__summary">{todayMadhhab.summary}</p>
+        <p className="mdbod-card__quote">«{todayMadhhab.quote.text}»<span className="mdbod-card__quote-src"> — {todayMadhhab.quote.source}</span></p>
+      </div>
 
       {/* بطاقات المذاهب */}
       <div className="mdb-list">
@@ -221,7 +240,7 @@ export default function MadhahibPage() {
                 aria-expanded={isOpen}
               >
                 <div className="mdb-card__header-left">
-                  <span className="mdb-card__icon">{m.icon}</span>
+                  <span className="mdb-card__icon"><SectionIcon name={m.icon} size={24} /></span>
                   <div>
                     <div className="mdb-card__name">{m.fullName}</div>
                     <div className="mdb-card__founder">الإمام {m.founder} ({m.born}–{m.died})</div>
@@ -314,7 +333,7 @@ export default function MadhahibPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="المذاهب الفقهية الأربعة — المجلس العلمي" url="https://majlisilm.com/madhahib" />
+        <ShareButtons title="المذاهب الفقهية الأربعة — المجلس العلمي" url="https://www.majlisilm.com/madhahib" />
       </div>
 
       {/* صفحات ذات صلة */}

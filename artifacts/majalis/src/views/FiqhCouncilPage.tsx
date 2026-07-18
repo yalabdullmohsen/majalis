@@ -126,15 +126,16 @@ export function FiqhCouncilFilters({
 
       <div className={`fiqh-filter-panel${filtersOpen ? " is-open" : ""}`}>
         {showType && (
-          <div className="content-hub-chips fiqh-chip-strip">
+          <div className="content-hub-chips fiqh-chip-strip" role="tablist" aria-label="تصفية نوع القرار">
             <span className="fiqh-council-filter-label">النوع</span>
             {["الكل", ...FIQH_ITEM_TYPES].map((t) => (
               <button
                 key={t}
+                role="tab"
                 type="button"
                 onClick={() => onType(t)}
                 className={type === t ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-                aria-pressed={type === t}
+                aria-selected={type === t}
               >
                 {t === "الكل" ? "الكل" : FIQH_ITEM_TYPE_LABELS[t as FiqhItemType]}
               </button>
@@ -142,15 +143,16 @@ export function FiqhCouncilFilters({
           </div>
         )}
 
-        <div className="content-hub-chips fiqh-chip-strip">
+        <div className="content-hub-chips fiqh-chip-strip" role="tablist" aria-label="تصفية تصنيف القرار">
           <span className="fiqh-council-filter-label">التصنيف</span>
           {["الكل", ...FIQH_COUNCIL_CATEGORIES].map((cat) => (
             <button
               key={cat}
+              role="tab"
               type="button"
               onClick={() => onCategory(cat)}
               className={category === cat ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-              aria-pressed={category === cat}
+              aria-selected={category === cat}
             >
               {cat}
             </button>
@@ -171,7 +173,7 @@ export function FiqhCouncilFilters({
             <input
               value={source}
               onChange={(e) => onSource(e.target.value)}
-              placeholder="اسم المصدر"
+              aria-label="اسم المصدر" placeholder="اسم المصدر"
               className="fiqh-council-source-input"
             />
           </label>
@@ -303,7 +305,7 @@ export function FiqhCouncilHubPage() {
             "@type": "ListItem",
             position: i + 1,
             name: l.label,
-            url: `https://majlisilm.com${l.href}`,
+            url: `https://www.majlisilm.com${l.href}`,
           })),
         },
       ],
@@ -580,7 +582,7 @@ export function FiqhCouncilHubPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="مجلس الفقه الإسلامي — المجلس العلمي" url="https://majlisilm.com/fiqh-council" />
+        <ShareButtons title="مجلس الفقه الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />

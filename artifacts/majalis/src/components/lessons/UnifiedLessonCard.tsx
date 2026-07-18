@@ -10,7 +10,7 @@ import {
   type UnifiedLesson,
 } from "@/lib/unified-lesson-card";
 import { cleanDisplayText } from "@/lib/display-text";
-import { computeNextOccurrenceMs, formatRelativeTimeDetailed } from "@/lib/lesson-time";
+import { computeNextOccurrenceMs, formatRelativeTimeDetailed, isLessonInProgress } from "@/lib/lesson-time";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 
@@ -57,15 +57,16 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
   const [copied, setCopied] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   const [statusLabel, setStatusLabel] = useState(lesson.statusLabel);
+  const [nowLive, setNowLive] = useState(() => isLessonInProgress(lesson.day, lesson.time));
 
   useEffect(() => {
-    // حساب فوري عند التحميل — يستخدم كاش أوقات الصلاة الحالي بدل القيمة المخزّنة مسبقاً
     function refresh() {
+      const live    = isLessonInProgress(lesson.day, lesson.time);
       const freshMs = computeNextOccurrenceMs(lesson.day, lesson.time);
-      setStatusLabel(formatRelativeTimeDetailed(freshMs, lesson.time));
+      setNowLive(live);
+      setStatusLabel(live ? "الآن" : formatRelativeTimeDetailed(freshMs, lesson.time));
     }
     refresh();
-    // إعادة فحص بعد 5 ثوانٍ للتقاط بيانات API إن وصلت بعد التحميل
     const earlyTimer = window.setTimeout(refresh, 5_000);
     const timer = window.setInterval(refresh, 60_000);
     return () => { window.clearTimeout(earlyTimer); window.clearInterval(timer); };
@@ -118,7 +119,13 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
     >
       <header className="lesson-unified-card__header">
         <span className="lesson-unified-card__category">{lesson.category}</span>
-        <span className="lesson-unified-card__status">{statusLabel}</span>
+        {nowLive ? (
+          <span className="lesson-now-badge" role="status" aria-label="الدرس جارٍ الآن">
+            <span aria-hidden="true">●</span> الآن
+          </span>
+        ) : (
+          <span className="lesson-unified-card__status">{statusLabel}</span>
+        )}
       </header>
 
       <div className="lesson-unified-card__body">

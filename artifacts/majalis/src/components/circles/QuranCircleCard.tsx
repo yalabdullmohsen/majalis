@@ -1,6 +1,7 @@
 import { CalendarDays, MapPin, Phone, Globe, ExternalLink, UserCheck } from "lucide-react";
 import type { QuranCircle } from "@/lib/quran-circles-service";
 import { GeometricPattern } from "@/components/design/GeometricPattern";
+import { formatSheikhName } from "@/lib/sheikh-name";
 
 const LEVEL_MOD: Record<string, string> = {
   "مبتدئ": "qcl--mubtadi",
@@ -46,7 +47,7 @@ export function QuranCircleCard({ circle: c }: Props) {
       <div className="qc-card__head">
         <GeometricPattern pattern="stars" color="#fff" opacity={0.12} />
         <p className="qc-card__title">{c.name}</p>
-        {c.sheikh_name && <p className="qc-card__sheikh">الشيخ: {c.sheikh_name}</p>}
+        {c.sheikh_name && <p className="qc-card__sheikh">{formatSheikhName(c.sheikh_name)}</p>}
       </div>
 
       <div className="qc-card__body">
@@ -116,8 +117,7 @@ export function QuranCircleCard({ circle: c }: Props) {
         {(c as any).registration_url && (
           <a
             href={(c as any).registration_url}
-            target="_blank"
-            rel="noopener noreferrer"
+            target="_blank" rel="noopener noreferrer"
             className="qc-card__reg-btn"
           >
             <UserCheck size={14} aria-hidden="true" />
@@ -129,8 +129,7 @@ export function QuranCircleCard({ circle: c }: Props) {
         {isRemote && c.meeting_link && !(c as any).registration_url && (
           <a
             href={c.meeting_link}
-            target="_blank"
-            rel="noopener noreferrer"
+            target="_blank" rel="noopener noreferrer"
             className="qc-card__join-btn"
           >
             <ExternalLink size={14} aria-hidden="true" />
@@ -142,10 +141,9 @@ export function QuranCircleCard({ circle: c }: Props) {
         {(c as any).website_url && (
           <a
             href={(c as any).website_url}
-            target="_blank"
-            rel="noopener noreferrer"
+            target="_blank" rel="noopener noreferrer"
             className="qc-card__site-btn"
-            title="الموقع الإلكتروني"
+            aria-label="الموقع الإلكتروني"
           >
             <Globe size={14} aria-hidden="true" />
             الموقع
@@ -162,8 +160,7 @@ export function QuranCircleCard({ circle: c }: Props) {
             {c.contact_info.startsWith("+") && (
               <a
                 href={whatsappHref(c.contact_info)}
-                target="_blank"
-                rel="noopener noreferrer"
+                target="_blank" rel="noopener noreferrer"
                 className="qc-card__wa-link"
                 aria-label="واتساب"
               >

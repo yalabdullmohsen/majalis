@@ -36,6 +36,14 @@ export default function CarModePage() {
       title: "وضع السيارة، الاستماع أثناء القيادة | المجلس العلمي",
       description: "استمع إلى الدروس العلمية والقرآن الكريم أثناء القيادة، واجهة مبسطة آمنة للاستخدام في السيارة.",
       keywords: ["وضع السيارة", "استماع أثناء القيادة", "دروس صوتية", "قيادة وتعلم"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: "وضع السيارة",
+        description: "استمع إلى الدروس العلمية والقرآن الكريم أثناء القيادة، واجهة مبسطة آمنة للاستخدام في السيارة.",
+        url: "https://www.majlisilm.com/car-mode",
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+      }],
     });
   }, []);
 
@@ -151,7 +159,10 @@ export default function CarModePage() {
 
   return (
     <div className="car-mode" dir="rtl">
-      {/* Hidden audio element */}
+      {/* Hidden audio element. لا يوجد <track> لأن هذا تشغيل صوت للدروس بلا نص
+          مرافق متزامن متاح حاليًا؛ البديل الصحيح لمحتوى صوتي فقط هو نص بديل
+          (transcript) لا مسار ترجمة متزامنة — إضافة نص كامل للدروس تتطلب بنية
+          تحتية جديدة (تفريغ صوتي)، خارج نطاق تنظيف الوصولية الحالي. */}
       {audioSrc && (
         <audio
           ref={audioRef}
@@ -210,14 +221,15 @@ export default function CarModePage() {
       </div>
 
       {/* Playlist (scrollable list below controls) */}
-      <div className="car-mode__playlist">
+      <div className="car-mode__playlist" role="tablist" aria-label="قائمة الدروس">
         {lessons.map((lesson, idx) => (
           <button
             key={lesson.id}
+            role="tab"
             type="button"
             className={`car-mode__playlist-item${idx === currentIdx ? " car-mode__playlist-item--active" : ""}`}
             onClick={() => selectLesson(idx)}
-            aria-pressed={idx === currentIdx}
+            aria-selected={idx === currentIdx}
           >
             <span className="car-mode__playlist-num">{idx + 1}</span>
             <span className="car-mode__playlist-title">{lesson.title}</span>

@@ -780,7 +780,7 @@ a.admin-info-panel__item-title:hover { color: var(--majalis-emerald-deep); }
 }
 .ii-stat-pill--waiting   { --pill-color: #64748b; }
 .ii-stat-pill--analyzing { --pill-color: #3b82f6; }
-.ii-stat-pill--review    { --pill-color: #1F4D3A; }
+.ii-stat-pill--review    { --pill-color: #176B57; }
 .ii-stat-pill--done      { --pill-color: #22c55e; }
 .ii-stat-pill--approved  { --pill-color: #10b981; }
 .ii-stat-pill--failed    { --pill-color: #ef4444; }
@@ -828,7 +828,7 @@ a.admin-info-panel__item-title:hover { color: var(--majalis-emerald-deep); }
 .ii-chip--dup      { background: #F5F3FF; color: #6D28D9; border-color: #DDD6FE; }
 .ii-chip--wait     .ii-chip__dot { background: #64748b; }
 .ii-chip--analyze  .ii-chip__dot { background: #3b82f6; }
-.ii-chip--review   .ii-chip__dot { background: #1F4D3A; }
+.ii-chip--review   .ii-chip__dot { background: #176B57; }
 .ii-chip--fail     .ii-chip__dot { background: #ef4444; }
 .ii-chip--approved .ii-chip__dot { background: #10b981; }
 .ii-chip--rejected .ii-chip__dot { background: #dc2626; }
@@ -842,7 +842,7 @@ a.admin-info-panel__item-title:hover { color: var(--majalis-emerald-deep); }
 .ii-conf__fill { height: 100%; border-radius: 999px; transition: width .4s ease; }
 .ii-conf__label { font-size: .62rem; font-weight: 700; }
 .ii-conf--high { --iis-color: #22c55e; }
-.ii-conf--mid  { --iis-color: #1F4D3A; }
+.ii-conf--mid  { --iis-color: #176B57; }
 .ii-conf--low  { --iis-color: #ef4444; }
 
 /* ── القائمة + التفاصيل جنباً إلى جنب ────────────────────────────── */

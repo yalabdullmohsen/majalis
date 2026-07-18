@@ -87,8 +87,8 @@
 
 ## معلومات إضافية
 
-- **الموقع:** https://majlisilm.com
-- **بريد الدعم:** yalabdullmohsen1@gmail.com
-- **سياسة الخصوصية:** https://majlisilm.com/privacy
+- **الموقع:** https://www.majlisilm.com
+- **بريد الدعم:** Majlisilm.app@gmail.com
+- **سياسة الخصوصية:** https://www.majlisilm.com/privacy
 - **الدولة المستهدفة:** الكويت والعالم العربي
 - **اللغة الأساسية:** العربية

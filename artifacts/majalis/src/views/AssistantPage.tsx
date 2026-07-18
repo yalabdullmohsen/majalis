@@ -11,7 +11,9 @@ const QUICK_PROMPTS = [
   "ما فضل قراءة القرآن الكريم؟",
   "ما هي شروط صحة الصلاة؟",
   "ما حكم صيام يوم عرفة؟",
-  "ما حكم الميراث في الإسلام؟",
+  // أُزيل سؤال الميراث: باب المواريث محجوب في المساعد (يُحال لأهل العلم)،
+  // فاقتراحه يوهم المستخدم بأن المنصة تُفتي فيه.
+  "ما فضل ذكر الله وما أنواعه؟",
   "ما هي أركان الإيمان الستة؟",
   "ما فضل الصلاة على النبي ﷺ؟",
   "ما هي أركان الإسلام الخمسة؟",
@@ -25,7 +27,6 @@ const QUICK_PROMPTS = [
 const RESEARCHER_LINKS = [
   { href: "/fiqh-council/research-assistant", label: "الباحث الفقهي" },
   { href: "/scholarly-research", label: "البحث الشرعي" },
-  { href: "/fatwa", label: "الفتاوى" },
   { href: "/rulings", label: "الأحكام" },
 ];
 
@@ -43,7 +44,7 @@ export default function AssistantPage() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "المساعد العلمي الذكي",
-          url: "https://majlisilm.com/assistant",
+          url: "https://www.majlisilm.com/assistant",
           description: "مساعد شرعي ذكي يجيب على أسئلتك في الفقه والعقيدة والقرآن والحديث",
           applicationCategory: "EducationalApplication",
           inLanguage: "ar",
@@ -105,7 +106,8 @@ export default function AssistantPage() {
           onInputChange={chat.setInput}
           onSubmit={chat.submit}
           bottomRef={chat.bottomRef}
-          onQuickPrompt={chat.sendQuestion}
+          onQuickPrompt={chat.submitQuestion}
+          onRetry={chat.retryLast}
         />
       </section>
 

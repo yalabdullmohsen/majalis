@@ -94,7 +94,7 @@ function QiblaCompass({
         {/* جسم السهم */}
         <polygon
           points="100,18 96,78 100,88 104,78"
-          fill={aligned ? "var(--majalis-emerald, #1F4D3A)" : "#22C55E"}
+          fill={aligned ? "var(--majalis-emerald, #176B57)" : "#22C55E"}
           opacity={aligned ? 1 : 0.9}
         />
         <polygon
@@ -102,9 +102,9 @@ function QiblaCompass({
           fill="var(--majalis-emerald-muted, rgba(14,110,82,0.18))"
         />
         {/* رأس السهم: القبلة */}
-        <polygon points="100,6 93,20 107,20" fill="var(--majalis-emerald, #1F4D3A)" opacity="0.75" />
+        <polygon points="100,6 93,20 107,20" fill="var(--majalis-emerald, #176B57)" opacity="0.75" />
         {/* مركز الوصلة */}
-        <circle cx="100" cy="100" r="7" fill={aligned ? "var(--majalis-emerald, #1F4D3A)" : "#22C55E"} />
+        <circle cx="100" cy="100" r="7" fill={aligned ? "var(--majalis-emerald, #176B57)" : "#22C55E"} />
         <circle cx="100" cy="100" r="3" fill="#fff" />
       </g>
 
@@ -151,7 +151,7 @@ export default function QiblaPage() {
       title: "اتجاه القبلة | المجلس العلمي",
       description: "حدد اتجاه القبلة من موقعك الحالي بدقة، بوصلة رقمية تعتمد على GPS للمسلمين في كل مكان.",
       keywords: ["اتجاه القبلة", "قبلة", "بوصلة إسلامية", "اتجاه مكة", "صلاة"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "اتجاه القبلة", url: "https://majlisilm.com/qibla", about: { "@type": "Thing", name: "بوصلة القبلة للمسلمين" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "اتجاه القبلة", url: "https://www.majlisilm.com/qibla", about: { "@type": "Thing", name: "بوصلة القبلة للمسلمين" } }],
     });
   }, []);
   const [heading,    setHeading]    = useState<number | null>(null);
@@ -314,7 +314,7 @@ export default function QiblaPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="اتجاه القبلة — المجلس العلمي" url="https://majlisilm.com/qibla" />
+        <ShareButtons title="اتجاه القبلة — المجلس العلمي" url="https://www.majlisilm.com/qibla" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في أحكام القبلة والصلاة" count={4} />

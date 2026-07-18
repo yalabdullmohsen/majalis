@@ -1,4 +1,6 @@
 import { Link } from "wouter";
+import { CONTACT_EMAIL } from "@/lib/site-config";
+import { InstagramAcademyLink } from "@/components/InstagramAcademyLink";
 
 function IslamicStarFooter() {
   const cx = 16, r1 = 13, r2 = 7;
@@ -9,8 +11,8 @@ function IslamicStarFooter() {
   }).join(" ");
   return (
     <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" className="footer-star">
-      <polygon points={pts} fill="none" stroke="var(--majalis-emerald,#1F4D3A)" strokeWidth="1.2" strokeLinejoin="round" opacity="0.7" />
-      <circle cx={cx} cy={cx} r="2.5" fill="var(--majalis-emerald,#1F4D3A)" opacity="0.7" />
+      <polygon points={pts} fill="none" stroke="var(--majalis-emerald,#176B57)" strokeWidth="1.2" strokeLinejoin="round" opacity="0.7" />
+      <circle cx={cx} cy={cx} r="2.5" fill="var(--majalis-emerald,#176B57)" opacity="0.7" />
     </svg>
   );
 }
@@ -79,7 +81,6 @@ const FOOTER_GROUPS = [
       { href: "/mawarith",     label: "المواريث والفرائض" },
       { href: "/salah-guide",  label: "دليل الصلاة الكامل" },
       { href: "/fiqh-qawaid",  label: "القواعد الفقهية" },
-      { href: "/fatwa",        label: "الفتاوى" },
       { href: "/rulings",      label: "الأحكام الشرعية" },
       { href: "/fiqh-council", label: "المجمع الفقهي" },
       { href: "/tawhid",       label: "التوحيد" },
@@ -97,7 +98,7 @@ const FOOTER_GROUPS = [
     links: [
       { href: "/quiz",           label: "المسابقات" },
       { href: "/flashcards",     label: "البطاقات" },
-      { href: "/learning-path",  label: "خارطة طالب العلم" },
+      { href: "/learning/paths", label: "المسارات العلمية" },
       { href: "/assistant",      label: "المساعد العلمي" },
       { href: "/universities",   label: "دليل الجامعات" },
       { href: "/knowledge-map",  label: "الخريطة المعرفية" },
@@ -110,6 +111,7 @@ const FOOTER_GROUPS = [
     links: [
       { href: "/about",                label: "من نحن" },
       { href: "/methodology",          label: "منهجية التوثيق" },
+      { href: "/sitemap",              label: "خريطة الموقع" },
       { href: "/contact",              label: "تواصل معنا" },
       { href: "/features-in-progress", label: "قيد التطوير" },
       { href: "/privacy",              label: "الخصوصية" },
@@ -133,11 +135,16 @@ export function SiteFooter() {
               className="site-footer-logo site-footer-logo--calligraphy"
               loading="lazy"
               decoding="async"
+              width="2044"
+              height="788"
             />
             <p>تطبيق علمي شرعي للدروس والعبادة والمحتوى اليومي.</p>
             <p className="site-footer-email">
-              <a href="mailto:yalabdullmohsen1@gmail.com">yalabdullmohsen1@gmail.com</a>
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             </p>
+            <div className="site-footer-social">
+              <InstagramAcademyLink variant="compact" />
+            </div>
           </div>
         </div>
 

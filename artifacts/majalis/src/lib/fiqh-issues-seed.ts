@@ -373,26 +373,6 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
     created_at: "2025-11-08T09:00:00Z",
   },
   {
-    id: "seed-issue-ai-fatwa",
-    slug: "ai-in-fatwa",
-    title: "حكم الاستعانة بالذكاء الاصطناعي في الإفتاء",
-    summary: "مسألة فقهية مستحدثة حول توظيف برامج الذكاء الاصطناعي في تقديم الفتاوى الشرعية.",
-    description:
-      "انتشر في العصر الحديث توظيف برامج الذكاء الاصطناعي في الإجابة عن الأسئلة الشرعية، مما أثار تساؤلات فقهية حول الاستناد إلى هذه البرامج وموقع المفتي منها.",
-    category: "الاقتصاد الإسلامي",
-    subcategory: "التقنية والفقه",
-    ruling_summary:
-      "لا يجوز الاعتماد على الذكاء الاصطناعي مستقلاً في الإفتاء؛ وقد يُستعان به أداةً مساعدة للمفتي المؤهل في جمع المعلومات وتنظيمها.",
-    evidence_summary:
-      "الفتوى ولاية دينية تستلزم أهلية العلم والعدالة والتيقظ الشرعي، وهي صفات لا تتوفر في برامج الحاسوب.",
-    documentation_level: "official_verified",
-    status: "published",
-    views_count: 1120,
-    published_at: "2025-03-20T09:00:00Z",
-    updated_at: "2025-03-20T09:00:00Z",
-    created_at: "2025-03-20T09:00:00Z",
-  },
-  {
     id: "seed-issue-stem-cells",
     slug: "stem-cell-therapy",
     title: "حكم العلاج بخلايا الجذع",
@@ -1183,7 +1163,7 @@ export const FIQH_ISSUE_ITEM_LINKS: Record<string, string[]> = {
   "organ-donation-will": ["fiqh-organ-donation-will"],
   "milk-bank-breastfeeding": ["fiqh-milk-bank-breastfeeding"],
   "minorities-kitabiyya-marriage": ["fiqh-minorities-kitabiyya-marriage"],
-  "ai-in-fatwa": ["fiqh-social-media-dawah", "fiqh-ai-fatwa-tools"],
+  "ai-generated-fatwa-ruling": ["fiqh-social-media-dawah", "fiqh-ai-fatwa-tools"],
   "stem-cell-therapy": ["fiqh-surrogacy", "fiqh-genetic-testing"],
   "digital-waqf": ["update-decision-waqf-digital", "fiqh-waqf-stocks"],
   "zakat-real-estate": ["fatwa-zakat-debt"],

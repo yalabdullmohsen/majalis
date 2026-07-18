@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { ShareButtons } from "@/components/ContentActions";
@@ -89,9 +90,9 @@ export default function QuranLivePage() {
   useEffect(() => {
     applyPageSeo({
       path: "/quran-live",
-      title: "البث المباشر للقرآن الكريم | مجالس",
+      title: "البث المباشر للقرآن الكريم | المجلس العلمي",
       description: "بث مباشر من الحرمين الشريفين والإذاعات القرآنية، مكة والمدينة ٢٤ ساعة",
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "البث المباشر للقرآن الكريم", url: "https://majlisilm.com/quran-live", about: { "@type": "Thing", name: "البث المباشر من الحرمين الشريفين" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "البث المباشر للقرآن الكريم", url: "https://www.majlisilm.com/quran-live", about: { "@type": "Thing", name: "البث المباشر من الحرمين الشريفين" } }],
     });
   }, []);
 
@@ -121,14 +122,15 @@ export default function QuranLivePage() {
         <h2 className="qlive-section-title">
           <Radio size={18} /> اختر القناة
         </h2>
-        <div className="qlive-channel-grid">
+        <div className="qlive-channel-grid" role="tablist" aria-label="اختيار قناة القرآن">
           {LIVE_CHANNELS.map(ch => (
             <button
               key={ch.id}
+              role="tab"
               type="button"
               className={["qlive-ch-card", activeChannel.id === ch.id ? "qlive-ch-card--active" : ""].join(" ")}
               onClick={() => { setActiveChannel(ch); setPlaying(true); }}
-              aria-pressed={activeChannel.id === ch.id}
+              aria-selected={activeChannel.id === ch.id}
             >
               <span className="qlive-ch-flag">{ch.flag}</span>
               <div className="qlive-ch-info">
@@ -162,7 +164,8 @@ export default function QuranLivePage() {
         </div>
         <p className="qlive-player__desc">{activeChannel.description}</p>
 
-        {/* مشغّل الصوت */}
+        {/* مشغّل الصوت. لا <track> ممكن هنا: بث مباشر (live radio stream) بلا
+            نهاية زمنية معروفة، لا يمكن توفير ترجمة/تفريغ متزامن لمحتوى حي. */}
         {playing && activeChannel.id !== "makkah" && activeChannel.id !== "madinah" && (
           <div className="qlive-audio-wrap">
             <audio
@@ -190,8 +193,7 @@ export default function QuranLivePage() {
                     ? "https://www.youtube.com/@haramainlive"
                     : "https://www.youtube.com/@nabawi_tv"
                 }
-                target="_blank"
-                rel="noopener noreferrer"
+                target="_blank" rel="noopener noreferrer"
                 className="qlive-yt-btn"
               >
                 فتح في يوتيوب <ExternalLink size={14} />
@@ -233,7 +235,7 @@ export default function QuranLivePage() {
         <div className="qlive-schedule-list">
           {SCHEDULE.map(s => (
             <div key={s.time} className="qlive-schedule-item">
-              <span className="qlive-schedule-emoji">{s.icon}</span>
+              <span className="qlive-schedule-emoji"><SectionIcon name={s.icon} size={22} /></span>
               <div className="qlive-schedule-info">
                 <span className="qlive-schedule-time">{s.time}</span>
                 <span className="qlive-schedule-name">{s.name}</span>
@@ -245,7 +247,7 @@ export default function QuranLivePage() {
 
       {/* ── روابط ذات صلة ─────────────────────────────────── */}
       <div className="twh-share">
-        <ShareButtons title="البث المباشر للقرآن الكريم — المجلس العلمي" url="https://majlisilm.com/quran-live" />
+        <ShareButtons title="البث المباشر للقرآن الكريم — المجلس العلمي" url="https://www.majlisilm.com/quran-live" />
       </div>
       <div className="px-4 pb-4 mt-4">
         <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />
@@ -258,8 +260,8 @@ export default function QuranLivePage() {
             <Radio size={16} /> إذاعات القرآن
             <ChevronLeft size={14} />
           </Link>
-          <Link href="/quran" className="qlive-related-link">
-            <BookOpen size={16} /> المصحف الشريف
+          <Link href="/quran-hub" className="qlive-related-link">
+            <BookOpen size={16} /> مركز القرآن
             <ChevronLeft size={14} />
           </Link>
           <Link href="/muezzins" className="qlive-related-link">

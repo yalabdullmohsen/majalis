@@ -18,7 +18,7 @@ type Submission = {
 const TYPE_COLORS: Record<ContentType, { bg: string; color: string }> = {
   "درس":       { bg: "#dbeafe", color: "#1d4ed8" },
   "فائدة":     { bg: "#d1fae5", color: "#065f46" },
-  "معلومة":    { bg: "#E6EDE9", color: "#18362A" },
+  "معلومة":    { bg: "#E6EDE9", color: "#123F36" },
   "سؤال لعبة": { bg: "#f3e8ff", color: "#7c3aed" },
   "فكرة":      { bg: "#ffe4e6", color: "#9f1239" },
 };

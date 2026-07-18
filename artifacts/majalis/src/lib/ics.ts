@@ -29,7 +29,7 @@ export function downloadICS(lesson: {
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//مجالس العلمية//AR",
+    "PRODID:-//المجلس العلمي//AR",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
     "BEGIN:VEVENT",

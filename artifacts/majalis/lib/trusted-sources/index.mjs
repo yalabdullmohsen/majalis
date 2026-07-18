@@ -10,7 +10,7 @@ async function probeFeedUrl(url) {
   try {
     const res = await fetch(url, {
       headers: {
-        "User-Agent": "MajlisIlmBot/2.0 (+https://majlisilm.com)",
+        "User-Agent": "MajlisIlmBot/2.0 (+https://www.majlisilm.com)",
         Accept: "application/rss+xml, application/xml, text/xml, */*",
       },
       signal: AbortSignal.timeout(PROBE_TIMEOUT_MS),

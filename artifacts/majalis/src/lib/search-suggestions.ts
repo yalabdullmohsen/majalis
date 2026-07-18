@@ -1,10 +1,13 @@
 import { arabicMatchAny } from "@/lib/arabic-search";
-import { ADHKAR_CATEGORIES, getAllAdhkarItems } from "@/lib/adhkar-seed";
-import { LESSONS_SEED } from "@/lib/lessons-seed";
-import { SEED_FAWAID } from "@/lib/fawaid-seed";
-import { SEED_QA } from "@/lib/qa-seed";
-import { ARBAEEN_NAWAWI } from "@/lib/arbaeen-nawawi-seed";
-import { SCHOLARS } from "@/lib/scholars-data";
+
+/**
+ * فهرس اقتراحات البحث — يُحمَّل كسولًا.
+ *
+ * ⚠️ لا تُعِد أي استيراد ساكن لملفات البذور هنا: هذه الوحدة مربوطة بـ NavBar
+ *    الظاهر في كل صفحة، فأي استيراد ساكن يعني أن كل زائر ينزّل ~٩٦٠KB من
+ *    البذور (adhkar + lessons + fawaid + qa + arbaeen + scholars) قبل أن يبحث.
+ *    التحميل يتم عبر ensureSuggestionIndex() عند أول تفاعل مع مربّع البحث.
+ */
 
 export type SearchSuggestion = {
   id: string;
@@ -13,6 +16,72 @@ export type SearchSuggestion = {
   href: string;
   group: "lessons" | "fawaid" | "qa" | "adhkar" | "nawawi" | "scholars";
 };
+
+type AdhkarModule = typeof import("@/lib/adhkar-seed");
+type LessonsModule = typeof import("@/lib/lessons-seed");
+type FawaidModule = typeof import("@/lib/fawaid-seed");
+type QaModule = typeof import("@/lib/qa-seed");
+type NawawiModule = typeof import("@/lib/arbaeen-nawawi-seed");
+type ScholarsModule = typeof import("@/lib/scholars-data");
+
+type SuggestionIndex = {
+  ADHKAR_CATEGORIES: AdhkarModule["ADHKAR_CATEGORIES"];
+  adhkarItems: ReturnType<AdhkarModule["getAllAdhkarItems"]>;
+  LESSONS_SEED: LessonsModule["LESSONS_SEED"];
+  SEED_FAWAID: FawaidModule["SEED_FAWAID"];
+  SEED_QA: QaModule["SEED_QA"];
+  ARBAEEN_NAWAWI: NawawiModule["ARBAEEN_NAWAWI"];
+  SCHOLARS: ScholarsModule["SCHOLARS"];
+};
+
+let index: SuggestionIndex | null = null;
+let pending: Promise<SuggestionIndex> | null = null;
+
+/**
+ * يحمّل فهرس الاقتراحات مرة واحدة. آمن للاستدعاء المتكرر (يعيد نفس الـpromise).
+ * استدعِه عند التركيز/الكتابة في مربّع البحث — لا عند تحميل الصفحة.
+ */
+export function ensureSuggestionIndex(): Promise<SuggestionIndex> {
+  if (index) return Promise.resolve(index);
+  if (pending) return pending;
+
+  const load = (async (): Promise<SuggestionIndex> => {
+    const [adhkar, lessons, fawaid, qa, nawawi, scholars] = await Promise.all([
+      import("@/lib/adhkar-seed"),
+      import("@/lib/lessons-seed"),
+      import("@/lib/fawaid-seed"),
+      import("@/lib/qa-seed"),
+      import("@/lib/arbaeen-nawawi-seed"),
+      import("@/lib/scholars-data"),
+    ]);
+
+    const built: SuggestionIndex = {
+      ADHKAR_CATEGORIES: adhkar.ADHKAR_CATEGORIES,
+      adhkarItems: adhkar.getAllAdhkarItems(),
+      LESSONS_SEED: lessons.LESSONS_SEED,
+      SEED_FAWAID: fawaid.SEED_FAWAID,
+      SEED_QA: qa.SEED_QA,
+      ARBAEEN_NAWAWI: nawawi.ARBAEEN_NAWAWI,
+      SCHOLARS: scholars.SCHOLARS,
+    };
+    index = built;
+    return built;
+  })();
+
+  pending = load;
+
+  load.catch(() => {
+    // اسمح بإعادة المحاولة عند الفشل (شبكة متقطّعة / chunk لم يُحمَّل)
+    if (pending === load) pending = null;
+  });
+
+  return load;
+}
+
+/** هل الفهرس جاهز في الذاكرة؟ (لعرض حالة تحميل بسيطة) */
+export function isSuggestionIndexReady(): boolean {
+  return index !== null;
+}
 
 const MAX_PER_GROUP = 4;
 
@@ -27,9 +96,24 @@ function pushUnique(
   list.push(item);
 }
 
+/**
+ * يبني الاقتراحات من الفهرس المحمَّل.
+ * يعيد [] إن لم يُحمَّل الفهرس بعد — نادِ ensureSuggestionIndex() أولًا.
+ */
 export function buildSearchSuggestions(query: string, limit = 12): SearchSuggestion[] {
   const q = query.trim();
   if (q.length < 2) return [];
+  if (!index) return [];
+
+  const {
+    LESSONS_SEED,
+    SEED_FAWAID,
+    SEED_QA,
+    adhkarItems,
+    ADHKAR_CATEGORIES,
+    ARBAEEN_NAWAWI,
+    SCHOLARS,
+  } = index;
 
   const results: SearchSuggestion[] = [];
   const seen = new Set<string>();
@@ -73,7 +157,7 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
     if (results.filter((r) => r.group === "qa").length >= MAX_PER_GROUP) break;
   }
 
-  for (const adhkar of getAllAdhkarItems()) {
+  for (const adhkar of adhkarItems) {
     if (results.length >= limit) break;
     if (!arabicMatchAny([adhkar.text, ...(adhkar.keywords || []), adhkar.source, adhkar.reference], q)) continue;
     const category = ADHKAR_CATEGORIES.find((c) => c.id === adhkar.categoryId);

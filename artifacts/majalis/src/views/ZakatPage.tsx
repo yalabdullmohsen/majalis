@@ -1,6 +1,7 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { Link } from "wouter";
-import { Calculator, ChevronDown, ChevronUp, Info } from "lucide-react";
+import { Calculator, ChevronDown, ChevronUp, Info, Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -248,15 +249,15 @@ function ZakatCalc() {
       <div className="zk-calc__fields">
         <label className="zk-calc__field">
           <span>الذهب (غرام)</span>
-          <input type="number" min="0" value={gold} onChange={(e) => setGold(e.target.value)} placeholder="0" className="zk-calc__input" />
+          <input type="number" min="0" value={gold} onChange={(e) => setGold(e.target.value)} aria-label="0" placeholder="0" className="zk-calc__input" />
         </label>
         <label className="zk-calc__field">
           <span>الفضة (غرام)</span>
-          <input type="number" min="0" value={silver} onChange={(e) => setSilver(e.target.value)} placeholder="0" className="zk-calc__input" />
+          <input type="number" min="0" value={silver} onChange={(e) => setSilver(e.target.value)} aria-label="0" placeholder="0" className="zk-calc__input" />
         </label>
         <label className="zk-calc__field">
           <span>النقود (دينار كويتي)</span>
-          <input type="number" min="0" value={cash} onChange={(e) => setCash(e.target.value)} placeholder="0" className="zk-calc__input" />
+          <input type="number" min="0" value={cash} onChange={(e) => setCash(e.target.value)} aria-label="0" placeholder="0" className="zk-calc__input" />
         </label>
       </div>
       <button type="button" className="zk-calc__btn" onClick={calculate}>احسب الزكاة</button>
@@ -272,6 +273,12 @@ function ZakatCalc() {
 }
 
 export default function ZakatPage() {
+  const todayKind = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return KINDS[(day - 1 + KINDS.length) % KINDS.length];
+  }, []);
   const [openId, setOpenId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
 
@@ -296,7 +303,7 @@ export default function ZakatPage() {
             "@type": "ListItem",
             position: i + 1,
             name: k.title,
-            url: `https://majlisilm.com/zakat#${k.id}`,
+            url: `https://www.majlisilm.com/zakat#${k.id}`,
           })),
         },
       ],
@@ -322,6 +329,17 @@ export default function ZakatPage() {
           <div className="zk-hero__stat"><strong>2.5%</strong><span>المال والذهب</span></div>
         </div>
       </section>
+
+      {/* نوع الزكاة اليوم */}
+      <div className="zkod-card">
+        <div className="zkod-card__badge"><Sparkles size={11} aria-hidden="true" /> نوع الزكاة اليوم</div>
+        <span className="zkod-card__icon"><SectionIcon name={todayKind.icon} size={28} /></span>
+        <h2 className="zkod-card__title">{todayKind.title}</h2>
+        <div className="zkod-card__nisab">{todayKind.nisab}</div>
+        <div className="zkod-card__rate">{todayKind.rate}</div>
+        <p className="zkod-card__detail">{todayKind.detail}</p>
+        <div className="zkod-card__dalil">﴿{todayKind.dalil}﴾ — {todayKind.dalilRef}</div>
+      </div>
 
       {/* المصارف الثمانية */}
       <section className="zk-mustahiq">
@@ -391,7 +409,7 @@ export default function ZakatPage() {
                   onClick={() => toggle(k.id)}
                   aria-expanded={isOpen}
                 >
-                  <span className="zk-card__icon">{k.icon}</span>
+                  <span className="zk-card__icon"><SectionIcon name={k.icon} size={24} /></span>
                   <div className="zk-card__header-text">
                     <div className="zk-card__title">{k.title}</div>
                     <div className="zk-card__rate">{k.rate}</div>
@@ -421,7 +439,7 @@ export default function ZakatPage() {
 
       {/* مشاركة */}
       <div className="zk-share">
-        <ShareButtons title="الزكاة وأحكامها — المجلس العلمي" url="https://majlisilm.com/zakat" />
+        <ShareButtons title="الزكاة وأحكامها — المجلس العلمي" url="https://www.majlisilm.com/zakat" />
       </div>
 
       {/* ذات صلة */}

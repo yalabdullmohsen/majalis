@@ -1,4 +1,6 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -196,13 +198,19 @@ export default function UlumQuranPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${f.label}: ${f.value}`,
-            url: `https://majlisilm.com/ulum-quran#fact-${i + 1}`,
+            url: `https://www.majlisilm.com/ulum-quran#fact-${i + 1}`,
           })),
         },
       ],
     });
   }, []);
 
+  const todayQira = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return QIRAAT_SABA[(day - 1 + QIRAAT_SABA.length) % QIRAAT_SABA.length];
+  }, []);
   const [tab, setTab] = useState<UQTab>("nuzul");
   const [openJam, setOpenJam] = useState<number | null>(null);
   const [search, setSearch] = useState("");
@@ -246,17 +254,38 @@ export default function UlumQuranPage() {
         </div>
       </section>
 
+      {/* قراءة اليوم */}
+      <div className="uqod-card">
+        <div className="uqod-card__badge"><Sparkles size={11} aria-hidden="true" /> قراءة اليوم</div>
+        <h2 className="uqod-card__name">{todayQira.name}</h2>
+        <div className="uqod-card__meta">
+          <span className="uqod-card__imam">{todayQira.imam}</span>
+          <span className="uqod-card__sep">·</span>
+          <span className="uqod-card__died">{todayQira.died}</span>
+          <span className="uqod-card__sep">·</span>
+          <span className="uqod-card__origin">{todayQira.origin}</span>
+        </div>
+        <div className="uqod-card__rawi">
+          <span className="uqod-card__rawi-label">الراويان:</span>
+          <span>{todayQira.rawi1} · {todayQira.rawi2}</span>
+        </div>
+        <p className="uqod-card__note">{todayQira.note}</p>
+      </div>
+
       {/* tabs */}
-      <div className="uq-tabs-bar">
+      <div className="uq-tabs-bar" role="tablist" aria-label="أقسام علوم القرآن">
         {TABS.map((t) => (
           <button
             key={t.id}
+            id={`ulq-tab-${t.id}`}
             type="button"
+            role="tab"
             className={`uq-tab${tab === t.id ? " uq-tab--active" : ""}`}
             onClick={() => setTab(t.id)}
-            aria-pressed={tab === t.id}
+            aria-selected={tab === t.id}
+              aria-controls={`ulq-panel-${t.id}`}
           >
-            <span>{t.icon}</span>
+            <span><SectionIcon name={t.icon} size={22} /></span>
             <span>{t.label}</span>
           </button>
         ))}
@@ -266,7 +295,7 @@ export default function UlumQuranPage() {
 
         {/* ── النزول ── */}
         {tab === "nuzul" && (
-          <div className="uq-section">
+          <div role="tabpanel" id="ulq-panel-nuzul" aria-labelledby="ulq-tab-nuzul" className="uq-section">
             <div className="uq-search-wrap">
               <input
                 type="search"
@@ -306,7 +335,7 @@ export default function UlumQuranPage() {
 
         {/* ── الجمع ── */}
         {tab === "jam" && (
-          <div className="uq-section">
+          <div role="tabpanel" id="ulq-panel-jam" aria-labelledby="ulq-tab-jam" className="uq-section">
             <p className="uq-lead">
               مرّ جمع القرآن وتدوينه بثلاث مراحل تاريخية متتالية ضمنت حفظه من الضياع والتحريف
             </p>
@@ -320,7 +349,7 @@ export default function UlumQuranPage() {
                       className="uq-jam-head"
                       onClick={() => setOpenJam(isOpen ? null : i)}
                     >
-                      <span className="uq-jam-num">{s.icon}</span>
+                      <span className="uq-jam-num"><SectionIcon name={s.icon} size={22} /></span>
                       <span className="uq-jam-title">{s.stage}</span>
                       <span className={`uq-jam-chevron${isOpen ? " uq-jam-chevron--open" : ""}`}>▾</span>
                     </button>
@@ -345,7 +374,7 @@ export default function UlumQuranPage() {
 
         {/* ── التفسير ── */}
         {tab === "tafsir" && (
-          <div className="uq-section">
+          <div role="tabpanel" id="ulq-panel-tafsir" aria-labelledby="ulq-tab-tafsir" className="uq-section">
             <div className="uq-search-wrap">
               <input
                 type="search"
@@ -359,7 +388,7 @@ export default function UlumQuranPage() {
             <div className="uq-tafsir-types">
               {filteredTafsirTypes.map((t) => (
                 <div key={t.title} className="uq-tafsir-card">
-                  <span className="uq-tafsir-icon">{t.icon}</span>
+                  <span className="uq-tafsir-icon"><SectionIcon name={t.icon} size={22} /></span>
                   <div>
                     <h3 className="uq-tafsir-title">{t.title}</h3>
                     <p className="uq-tafsir-desc">{t.desc}</p>
@@ -389,7 +418,7 @@ export default function UlumQuranPage() {
 
         {/* ── الإعجاز ── */}
         {tab === "ijaz" && (
-          <div className="uq-section">
+          <div role="tabpanel" id="ulq-panel-ijaz" aria-labelledby="ulq-tab-ijaz" className="uq-section">
             <div className="uq-search-wrap">
               <input
                 type="search"
@@ -403,7 +432,7 @@ export default function UlumQuranPage() {
             <div className="uq-ijaz-grid">
               {filteredIjaz.map((j) => (
                 <div key={j.title} className="uq-ijaz-card">
-                  <span className="uq-ijaz-icon">{j.icon}</span>
+                  <span className="uq-ijaz-icon"><SectionIcon name={j.icon} size={22} /></span>
                   <h3 className="uq-ijaz-title">{j.title}</h3>
                   <p className="uq-ijaz-desc">{j.desc}</p>
                 </div>
@@ -422,7 +451,7 @@ export default function UlumQuranPage() {
 
         {/* ── أحكام القرآن ── */}
         {tab === "ahkam" && (
-          <div className="uq-section">
+          <div role="tabpanel" id="ulq-panel-ahkam" aria-labelledby="ulq-tab-ahkam" className="uq-section">
             <h2 className="uq-subhead">المحكم والمتشابه</h2>
             <div className="uq-mm-grid">
               {[MUHKAM_MUTASHABIH.muhkam, MUHKAM_MUTASHABIH.mutashabih].map((m) => (
@@ -463,7 +492,7 @@ export default function UlumQuranPage() {
 
         {/* ── القراءات السبع ── */}
         {tab === "qiraat" && (
-          <div className="uq-section">
+          <div role="tabpanel" id="ulq-panel-qiraat" aria-labelledby="ulq-tab-qiraat" className="uq-section">
             <p className="uq-lead">
               القراءات السبع المتواترة هي طرق أداء القرآن الكريم المنقولة بالسند الصحيح عن النبي ﷺ، كل قراءة تتميز بخصائص أدائية وعلماء رواة محددين.
             </p>
@@ -508,7 +537,7 @@ export default function UlumQuranPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="علوم القرآن الكريم — المجلس العلمي" url="https://majlisilm.com/ulum-quran" />
+          <ShareButtons title="علوم القرآن الكريم — المجلس العلمي" url="https://www.majlisilm.com/ulum-quran" />
         </div>
 
         {/* related */}
@@ -516,7 +545,6 @@ export default function UlumQuranPage() {
           <h2 className="uq-related__title">استكشف أيضاً</h2>
           <div className="uq-related__grid">
             {[
-              { href: "/quran", label: "المصحف الشريف" },
               { href: "/quran/tajweed", label: "علم التجويد" },
               { href: "/quran-hub", label: "مركز القرآن" },
               { href: "/hadith-science", label: "مصطلح الحديث" },

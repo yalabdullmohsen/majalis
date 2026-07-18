@@ -97,7 +97,7 @@ export function AutonomousAiSection() {
               <span>{job.name}</span>
               <span
                 className="aai-cron-status"
-                style={{ "--aai-status-color": job.status === "healthy" ? "var(--majalis-emerald-deep,#0A5040)" : "#dc2626" } as React.CSSProperties}
+                style={{ "--aai-status-color": job.status === "healthy" ? "var(--majalis-emerald-deep,#123F36)" : "#dc2626" } as React.CSSProperties}
               >{job.status}</span>
             </div>
           ))}
@@ -141,7 +141,7 @@ export function AutonomousAiSection() {
               <div key={ev.id || ev.created_at + ev.stage} className="aai-event">
                 <span
                   className="aai-event__status"
-                  style={{ "--aai-ev-color": ev.success ? "var(--majalis-emerald-deep,#0A5040)" : "#dc2626" } as React.CSSProperties}
+                  style={{ "--aai-ev-color": ev.success ? "var(--majalis-emerald-deep,#123F36)" : "#dc2626" } as React.CSSProperties}
                 >{ev.success ? "✓" : "✗"}</span>
                 {" "}
                 <strong>{PIPELINE_STAGE_LABELS[ev.stage] || ev.stage}</strong>

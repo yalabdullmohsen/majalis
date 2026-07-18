@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
@@ -387,9 +388,40 @@ const STATUS_MOD: Record<string, string> = {
   "لم تقع": "as-status--lam-taqaa",
 };
 
+/* ─── علامة اليوم ─── */
+function todaysAlama(): Alama {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return SUGHRA[(dayOfYear - 1 + SUGHRA.length) % SUGHRA.length];
+}
+
+const STATUS_COLOR: Record<string, string> = {
+  "وقعت": "rgba(102,210,151,0.3)",
+  "جارية": "rgba(255,198,79,0.3)",
+  "لم تقع": "rgba(200,200,200,0.2)",
+};
+
+function AlamaOfDayCard({ alama }: { alama: Alama }) {
+  return (
+    <div className="asod-card">
+      <div className="asod-card__badge"><Sparkles size={11} aria-hidden="true" /> علامة اليوم</div>
+      {alama.status && (
+        <span className="asod-card__status" style={{ background: STATUS_COLOR[alama.status] ?? "rgba(255,255,255,0.15)" }}>
+          {alama.status}
+        </span>
+      )}
+      <h2 className="asod-card__title">{alama.title}</h2>
+      <p className="asod-card__desc">{alama.desc}</p>
+      {alama.source && <div className="asod-card__source">{alama.source}</div>}
+    </div>
+  );
+}
+
 export default function AlamatSaahPage() {
   const [activeTab, setActiveTab] = useState<Tab>("sughra");
   const [search, setSearch] = useState("");
+  const todayAlama = useMemo(() => todaysAlama(), []);
 
   const filteredSughra = useMemo(() =>
     search.trim()
@@ -420,7 +452,7 @@ export default function AlamatSaahPage() {
             "@type": "ListItem",
             position: i + 1,
             name: a.title,
-            url: `https://majlisilm.com/alamat-saah#sughra-${i + 1}`,
+            url: `https://www.majlisilm.com/alamat-saah#sughra-${i + 1}`,
           })),
         },
       ],
@@ -444,15 +476,21 @@ export default function AlamatSaahPage() {
         </div>
       </section>
 
+      {/* علامة اليوم */}
+      <AlamaOfDayCard alama={todayAlama} />
+
       {/* Tabs */}
-      <div className="as-tabs">
+      <div className="as-tabs" role="tablist" aria-label="أقسام أشراط الساعة">
         {TABS.map(t => (
           <button
             key={t.id}
+            id={`als-tab-${t.id}`}
             type="button"
+            role="tab"
             className={`as-tab${activeTab === t.id ? " as-tab--active" : ""}`}
             onClick={() => setActiveTab(t.id)}
-            aria-pressed={activeTab === t.id}
+            aria-selected={activeTab === t.id}
+              aria-controls={`als-panel-${t.id}`}
           >{t.label}</button>
         ))}
       </div>
@@ -461,7 +499,7 @@ export default function AlamatSaahPage() {
 
         {/* العلامات الصغرى */}
         {activeTab === "sughra" && (
-          <div>
+          <div role="tabpanel" id="als-panel-sughra" aria-labelledby="als-tab-sughra">
             <div className="as-intro">
               <p>العلامات الصغرى هي المقدِّمات البعيدة للساعة، وقد وقع كثيرها وبعضها لا يزال جارياً. والصغرى لا تعني صغر خطورتها بل قِدَمها في الظهور قبل الكبرى.</p>
             </div>
@@ -502,7 +540,7 @@ export default function AlamatSaahPage() {
 
         {/* العلامات الكبرى */}
         {activeTab === "kubra" && (
-          <div>
+          <div role="tabpanel" id="als-panel-kubra" aria-labelledby="als-tab-kubra">
             <div className="as-intro">
               <p>
                 العلامات الكبرى عشر، جاءت في حديث واحد جامع: «لا تقوم الساعة حتى تروا عشر آيات: الدخان، والدجال، والدابة، وطلوع الشمس من مغربها، ونزول عيسى بن مريم، ويأجوج ومأجوج، وثلاثة خسوف، وآخر ذلك نار تخرج من اليمن تطرد الناس إلى محشرهم».
@@ -523,7 +561,7 @@ export default function AlamatSaahPage() {
 
         {/* الأشراط والترتيب */}
         {activeTab === "ashrat" && (
-          <div>
+          <div role="tabpanel" id="als-panel-ashrat" aria-labelledby="als-tab-ashrat">
             <div className="as-intro">
               <p>جاء في الأحاديث ترتيب بعض العلامات الكبرى وتتابعها. وقد ذهب ابن حجر في الفتح وغيره إلى تحديد الترتيب المرجَّح.</p>
             </div>
@@ -555,7 +593,7 @@ export default function AlamatSaahPage() {
 
         {/* الاستعداد */}
         {activeTab === "tahdhukat" && (
-          <div>
+          <div role="tabpanel" id="als-panel-tahdhukat" aria-labelledby="als-tab-tahdhukat">
             <div className="as-intro">
               <p>الإيمان بعلامات الساعة لا يعني الاستسلام والجمود، بل هو دافع للعمل الصالح والتمسك بالسنة قبل أن تُغلَق أبواب التوبة.</p>
             </div>
@@ -577,7 +615,7 @@ export default function AlamatSaahPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="علامات الساعة — المجلس العلمي" url="https://majlisilm.com/alamat-saah" />
+        <ShareButtons title="علامات الساعة — المجلس العلمي" url="https://www.majlisilm.com/alamat-saah" />
       </div>
       <div className="px-4 pb-6 mt-6">
         <SectionQuiz categoryId={["aqeeda", "tarikh"]} title="اختبر معلوماتك في العقيدة والتاريخ" count={4} />

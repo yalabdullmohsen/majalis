@@ -3,18 +3,19 @@ import { Link, useLocation } from "wouter";
 import { useEffect } from "react";
 import {
   Activity, BarChart2, BarChart3, BookMarked, BookOpen, BookText, BookUser,
-  Bot, Building2, Calculator, Calendar, CheckCircle2, Clock, Compass, CreditCard,
+  Bot, Building2, Calculator, Calendar, CalendarDays, CheckCircle2, Clock, Compass, CreditCard,
   FileText, Gavel, GitBranch, GraduationCap, Heart, HelpCircle, Info, Landmark,
   Layers, Library, Lightbulb, Map, Mic, Mic2, Microscope, Moon, Network,
-  Radio, RefreshCw, Repeat2, Rss, Scale, ScrollText, Search, Settings,
+  Quote, Radio, RefreshCw, Repeat2, Rss, Scale, ScrollText, Search, Settings,
   Shield, Sparkles, Star, Stethoscope, Sun, Tv, Users, Waypoints, X, Zap,
 } from "lucide-react";
 
 const SHEET_SECTIONS = [
   /* ── القرآن الكريم ── */
   { group: "القرآن الكريم", items: [
+    { href: "/mushaf",              label: "المصحف الشريف",      Icon: BookOpen },
+    { href: "/quran/surahs",        label: "فهرس السور",         Icon: BookText },
     { href: "/quran-hub",           label: "مركز القرآن",        Icon: Layers },
-    { href: "/quran",               label: "المصحف الشريف",      Icon: BookOpen },
     { href: "/daily-wird",          label: "الورد اليومي",       Icon: Sun },
     { href: "/quran/tajweed",       label: "علم التجويد",        Icon: Mic2 },
     { href: "/ulum-quran",          label: "علوم القرآن",        Icon: GraduationCap },
@@ -23,6 +24,8 @@ const SHEET_SECTIONS = [
     { href: "/quran-radio",         label: "إذاعة القرآن",       Icon: Radio },
     { href: "/quran-live",          label: "البث المباشر",       Icon: Tv },
     { href: "/quran-circles",       label: "حلقات التحفيظ",      Icon: Users },
+    { href: "/quran-memorization",  label: "اختبارات الحفظ",     Icon: Zap },
+    { href: "/mutashabihat",        label: "الآيات المتشابهات",  Icon: GitBranch },
     { href: "/muezzins",            label: "مكتبة المؤذنين",     Icon: Mic },
   ]},
 
@@ -52,7 +55,6 @@ const SHEET_SECTIONS = [
   { group: "الفقه والأحكام", items: [
     { href: "/fiqh",               label: "الفقه الإسلامي",     Icon: BookText },
     { href: "/qa",                 label: "الأسئلة والأجوبة",   Icon: HelpCircle },
-    { href: "/fatwa",              label: "الفتاوى",             Icon: Scale },
     { href: "/rulings",            label: "الأحكام الشرعية",    Icon: Gavel },
     { href: "/fiqh-council",       label: "المجمع الفقهي",      Icon: Users },
     { href: "/madhahib",           label: "المذاهب الأربعة",    Icon: Scale },
@@ -65,8 +67,10 @@ const SHEET_SECTIONS = [
     { href: "/hajj",               label: "الحج والعمرة",       Icon: Landmark },
     { href: "/janaza",             label: "أحكام الجنائز",      Icon: ScrollText },
     { href: "/mawarith",           label: "المواريث والفرائض",  Icon: Scale },
+    { href: "/mawarith/calculator", label: "حاسبة المواريث",    Icon: Calculator },
     { href: "/scholarly-research", label: "الباحث الشرعي",     Icon: Microscope },
     { href: "/academic-research",  label: "الأبحاث العلمية",   Icon: FileText },
+    { href: "/amr-bil-maruf",      label: "الأمر بالمعروف",     Icon: Shield },
   ]},
 
   /* ── العبادة والأذكار ── */
@@ -89,8 +93,8 @@ const SHEET_SECTIONS = [
     { href: "/seerah",          label: "السيرة النبوية",         Icon: BookUser },
     { href: "/sahabah",         label: "الصحابة الكرام",         Icon: Users },
     { href: "/prophets",        label: "الأنبياء والرسل",         Icon: Star },
-    { href: "/stories",         label: "القصص الإسلامية",        Icon: BookOpen },
-    { href: "/islamic-stories", label: "صحابة وفتوحات",          Icon: Waypoints },
+    { href: "/stories",            label: "القصص الإسلامية",     Icon: BookOpen },
+    { href: "/islamic-landmarks",  label: "المشاهد والمساجد",    Icon: Landmark },
   ]},
 
   /* ── الدروس والمكتبة ── */
@@ -107,17 +111,22 @@ const SHEET_SECTIONS = [
     { href: "/islamic-glossary", label: "المصطلحات الإسلامية",  Icon: BookOpen },
     { href: "/islam-stats",      label: "الإسلام في أرقام",     Icon: BarChart3 },
     { href: "/updates",          label: "آخر المستجدات",        Icon: Rss },
+    { href: "/institutions",     label: "المؤسسات الإسلامية",   Icon: Landmark },
   ]},
 
   /* ── التعلّم والأدوات ── */
   { group: "التعلّم والأدوات", items: [
+    { href: "/learn",                label: "أبواب العلم",         Icon: Layers },
+    { href: "/start-here",           label: "ابدأ من هنا",         Icon: Waypoints },
     { href: "/quiz",                 label: "المسابقة التعليمية",  Icon: Zap },
     { href: "/flashcards",           label: "بطاقات المراجعة",     Icon: CreditCard },
     { href: "/assistant",            label: "المساعد الذكي",       Icon: Bot },
     { href: "/mind-map",             label: "الخرائط الذهنية",    Icon: Map },
     { href: "/learning-plan",        label: "خطة التعلّم",         Icon: BarChart2 },
-    { href: "/learning-path",        label: "خارطة طالب العلم",   Icon: GraduationCap },
+    { href: "/learning/paths",       label: "المسارات العلمية",    Icon: GraduationCap },
     { href: "/my-learning",          label: "لوحتي التعليمية",    Icon: BarChart3 },
+    { href: "/my-citations",         label: "دفتر الفوائد",       Icon: Quote },
+    { href: "/reading-plans",        label: "خطط القراءة",        Icon: CalendarDays },
     { href: "/knowledge-map",        label: "الخريطة المعرفية",   Icon: Network },
     { href: "/knowledge-graph",      label: "شبكة المعرفة",       Icon: GitBranch },
     { href: "/calendar",             label: "التقويم الهجري",     Icon: Calendar },
@@ -141,12 +150,19 @@ export function MoreBottomSheet({ open, onClose }: Props) {
     if (!open) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
-  }, [open]);
+    const keyHandler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", keyHandler);
+    return () => {
+      document.body.style.overflow = prev;
+      document.removeEventListener("keydown", keyHandler);
+    };
+  }, [open, onClose]);
 
   if (!open || typeof document === "undefined") return null;
 
   return createPortal(
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر
+    // داخل الورقة — مسارا وصول بديلان كاملان بلوحة المفاتيح.
     <div className="bottom-sheet-overlay" role="presentation" onClick={onClose}>
       <div
         className="bottom-sheet"

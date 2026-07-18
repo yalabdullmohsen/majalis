@@ -1,9 +1,11 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { Sparkles } from "lucide-react";
 
 // ─── أقسام العقيدة والتوحيد ──────────────────────────────────────────────────
 
@@ -21,7 +23,7 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
   {
     emoji: "🕌", title: "التوحيد ومسائله",
     desc: "أنواع التوحيد، الشرك، البدعة، والمسائل العقدية",
-    href: "/tawhid", badge: "٨ مسائل", color: "#1F4D3A", isCurrent: true,
+    href: "/tawhid", badge: "٨ مسائل", color: "#176B57", isCurrent: true,
   },
   {
     emoji: "🌟", title: "أركان الإسلام",
@@ -41,7 +43,7 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
   {
     emoji: "🌿", title: "الجنة والنار",
     desc: "صفة الجنة ونعيمها وصفة النار وعذابها",
-    href: "/janna-naar", badge: "عقيدة", color: "#1F4D3A",
+    href: "/janna-naar", badge: "عقيدة", color: "#176B57",
   },
   {
     emoji: "⏳", title: "علامات الساعة",
@@ -239,7 +241,6 @@ const ASMA_HUSNA = [
   { name: "الفتاح",  meaning: "الذي يفتح أبواب الرزق والرحمة، ويحكم بين عباده بالحق" },
   { name: "المتكبر", meaning: "المتعظِّم بكماله وجلاله، الذي لا ينبغي الكبرياء إلا له سبحانه" },
   { name: "الجبار",  meaning: "الذي يجبر الكسير ويُعلي شأنه، القاهر لمن طغى وتكبّر" },
-  { name: "الغني",   meaning: "الذي لا يحتاج إلى أحد من خلقه وجميع الخلق محتاجون إليه في كل شيء" },
   { name: "الباسط",  meaning: "الذي يبسط الرزق لمن يشاء ويقدر على التوسعة بلا حساب ويضيّق بحكمته" },
   { name: "المجيب",  meaning: "الذي يجيب دعاء كل داعٍ ويستجيب لمن ناداه قريباً كان أم بعيداً" },
   { name: "الحسيب",  meaning: "الكافي لعباده الذي يُحاسب الخلق يوم القيامة على ما قدّموا وما أخّروا" },
@@ -298,6 +299,31 @@ const RECOMMENDED_BOOKS = [
   { title: "شرح العقيدة السفارينية", author: "محمد بن صالح العثيمين", level: "متقدم", desc: "شرح موسَّع على منظومة السفاريني في العقيدة، يُعالج مسائل الأسماء والصفات والقضاء والقدر واليوم الآخر." },
 ];
 
+// ─── مسألة التوحيد اليوم ────────────────────────────────────────────────────
+
+function todaysPrinciple(): Principle {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return PRINCIPLES[(dayOfYear - 1 + PRINCIPLES.length) % PRINCIPLES.length];
+}
+
+function PrincipleOfDayCard({ p }: { p: Principle }) {
+  return (
+    <div className="tpod-card">
+      <div className="tpod-card__badge"><Sparkles size={11} aria-hidden="true" /> مسألة التوحيد اليوم</div>
+      <h2 className="tpod-card__title">{p.title}</h2>
+      <p className="tpod-card__body">{p.body}</p>
+      {p.hadith && (
+        <div className="tpod-card__hadith">
+          <p className="tpod-card__hadith-text">« {p.hadith.text} »</p>
+          <span className="tpod-card__hadith-meta">{p.hadith.grade} · {p.hadith.source} ({p.hadith.number}) · رواه {p.hadith.narrator}</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── مكوّنات مساعدة ─────────────────────────────────────────────────────────
 
 function HadithBadge({ h }: { h: HadithRef }) {
@@ -315,7 +341,7 @@ function HadithBadge({ h }: { h: HadithRef }) {
 function SectionLabel({ emoji, label }: { emoji: string; label: string }) {
   return (
     <div className="twh-section-label">
-      <span className="twh-section-label__emoji" aria-hidden="true">{emoji}</span>
+      <span className="twh-section-label__emoji" aria-hidden="true"><SectionIcon name={emoji} size={20} /></span>
       <span>{label}</span>
     </div>
   );
@@ -324,6 +350,7 @@ function SectionLabel({ emoji, label }: { emoji: string; label: string }) {
 // ─── الصفحة ────────────────────────────────────────────────────────────────
 
 export default function TawhidPage() {
+  const todayPrinciple = useMemo(() => todaysPrinciple(), []);
   const [search, setSearch] = useState("");
   const filteredPrinciples = useMemo(() =>
     search.trim() ? PRINCIPLES.filter(p => arabicMatchAny([p.title, p.body, p.hadith?.text ?? "", p.hadith?.source ?? ""], search)) : PRINCIPLES,
@@ -352,7 +379,7 @@ export default function TawhidPage() {
             "@type": "ListItem",
             position: i + 1,
             name: s.title,
-            url: `https://majlisilm.com${s.href}`,
+            url: `https://www.majlisilm.com${s.href}`,
           })),
         },
       ],
@@ -395,7 +422,7 @@ export default function TawhidPage() {
               style={{ "--twh-hub-clr": s.color } as React.CSSProperties}
               aria-current={s.isCurrent ? "page" : undefined}
             >
-              <span className="twh-hub-card__emoji" aria-hidden="true">{s.emoji}</span>
+              <span className="twh-hub-card__emoji" aria-hidden="true"><SectionIcon name={s.emoji} size={26} /></span>
               <div className="twh-hub-card__body">
                 <p className="twh-hub-card__title">{s.title}</p>
                 <p className="twh-hub-card__desc">{s.desc}</p>
@@ -406,6 +433,9 @@ export default function TawhidPage() {
           ))}
         </div>
       </section>
+
+      {/* ══ مسألة التوحيد اليوم ══ */}
+      <PrincipleOfDayCard p={todayPrinciple} />
 
       {/* ══ قفز سريع ══ */}
       <nav aria-label="انتقل إلى" className="twh-jumpnav">
@@ -457,7 +487,7 @@ export default function TawhidPage() {
             <div key={p.num} className="twh-pillar-card">
               <div className="twh-pillar-num">{p.num}</div>
               <div className="twh-pillar-body">
-                <span className="twh-pillar-icon" aria-hidden="true">{p.icon}</span>
+                <span className="twh-pillar-icon" aria-hidden="true"><SectionIcon name={p.icon} size={22} /></span>
                 <p className="twh-pillar-title">{p.title}</p>
                 <p className="twh-pillar-desc">{p.body}</p>
               </div>
@@ -533,7 +563,7 @@ export default function TawhidPage() {
       />
 
       <div className="twh-share">
-        <ShareButtons title="العقيدة والتوحيد — المجلس العلمي" url="https://majlisilm.com/tawhid" />
+        <ShareButtons title="العقيدة والتوحيد — المجلس العلمي" url="https://www.majlisilm.com/tawhid" />
       </div>
     </div>
   );

@@ -26,8 +26,8 @@
   --m26-green-50:     #F0FDF4;
 
   /* ── زمردي/عاجي بديل الذهبي ── */
-  --m26-gold-900:     #0A5040;
-  --m26-gold-700:     #1F4D3A;
+  --m26-gold-900:     #123F36;
+  --m26-gold-700:     #176B57;
   --m26-gold-500:     #1a9e75;
   --m26-gold-100:     #e8f5f0;
   --m26-gold-50:      #f0faf5;
@@ -54,7 +54,7 @@
   --txt-hint:       #71717A;
   --txt-disabled:   #A1A1AA;
   --txt-success:    #15803D;
-  --txt-warning:    #0A5040;
+  --txt-warning:    #123F36;
   --txt-error:      #B91C1C;
   --txt-info:       #1E40AF;
   --txt-accent:     #166534;
@@ -122,9 +122,11 @@
   --m26-duration-slow: 350ms;
 }
 
-/* ══ 2. Light Theme Overrides ════════════════════════════════════════════════ */
-:root,
-html {
+/* ══ 2. Light Theme Overrides ════════════════════════════════════════════════
+   نطاق الأثر مقصور على الوضع النهاري فعليًا (كان يُطبَّق بلا شرط سابقًا، ما كان
+   يُثبِّت --ds-emerald-deep وأخواتها على قيم الوضع النهاري داخل الوضع الليلي
+   أيضًا — راجع .ds-filter-toggle كمثال ظهر فيه نص شبه معدوم التباين، 2026-07-16). */
+html:not([data-theme="dark"]) {
   --msk-canvas:        #FFFFFF;
   --msk-canvas-1:      #F8F9FA;
   --msk-canvas-2:      #F1F3F5;
@@ -142,7 +144,7 @@ html {
   --majalis-ink-soft:     #374151;
   --majalis-ink-muted:    #52525B;
   --majalis-emerald:      #166534;
-  --majalis-brass:        #1F4D3A;
+  --majalis-brass:        #176B57;
   --majalis-panel:        #FFFFFF;
   --majalis-panel-raised: #F8F9FA;
   --ds-emerald:      #166534;
@@ -156,7 +158,7 @@ html {
 body {
   background: var(--m26-bg, #F8F9FA);
   color: var(--txt-primary, #111827);
-  font-family: "IBM Plex Sans Arabic", "Almarai", "Cairo", system-ui, sans-serif;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: var(--type-body, 0.9375rem);
@@ -170,10 +172,10 @@ body {
   line-height: var(--lh-tight);
   letter-spacing: var(--ls-tighter);
   color: var(--txt-primary);
-  font-family: "El Messiri", "Amiri", serif;
+  font-family: var(--font-body);
 }
-.txt-h1 { font-size: var(--type-h1); font-weight: var(--fw-bold); line-height: var(--lh-snug); letter-spacing: var(--ls-tight); color: var(--txt-primary); font-family: "El Messiri", "Amiri", serif; }
-.txt-h2 { font-size: var(--type-h2); font-weight: var(--fw-bold); line-height: var(--lh-snug); letter-spacing: var(--ls-tight); color: var(--txt-primary); font-family: "El Messiri", "Amiri", serif; }
+.txt-h1 { font-size: var(--type-h1); font-weight: var(--fw-bold); line-height: var(--lh-snug); letter-spacing: var(--ls-tight); color: var(--txt-primary); font-family: var(--font-body); }
+.txt-h2 { font-size: var(--type-h2); font-weight: var(--fw-bold); line-height: var(--lh-snug); letter-spacing: var(--ls-tight); color: var(--txt-primary); font-family: var(--font-body); }
 .txt-h3 { font-size: var(--type-h3); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-primary); }
 .txt-h4 { font-size: var(--type-h4); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-primary); }
 .txt-h5 { font-size: var(--type-h5); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-secondary); }
@@ -210,9 +212,9 @@ body {
 .ds-page h4,
 .ds-page h5,
 .ds-page h6,
-.page-shell h1,
-.page-shell h2,
-.page-shell h3,
+.page-shell h1:not(.an-hero__title):not(.sch-profile-hero__name),
+.page-shell h2:not(.sq-title):not(.jn-section__title):not(.jn-subtitle):not(.jn-related__title):not(.sw-related__title):not(.hj-section__title):not(.hj-related__title):not(.th-section__title):not(.th-related__title):not(.fa-related__title):not(.seerah-panel__title):not(.fq-ref__title):not(.sh-step__title):not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title),
+.page-shell h3:not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title),
 .page-shell h4,
 .page-shell h5,
 .page-shell h6,
@@ -347,7 +349,7 @@ body {
 
 /* ══ 10. Buttons ══════════════════════════════════════════════════════════ */
 .ds-btn {
-  font-family: "IBM Plex Sans Arabic", inherit;
+  font-family: var(--font-body);
   font-size: var(--type-btn);
   font-weight: var(--fw-semibold);
   border-radius: var(--m26-r-md);
@@ -411,7 +413,7 @@ textarea {
   border: 1.5px solid rgba(0,0,0,0.12);
   border-radius: var(--m26-r-md);
   color: var(--txt-primary, #111827);
-  font-family: "IBM Plex Sans Arabic", inherit;
+  font-family: var(--font-body);
   padding: 0.625rem 0.875rem;
   font-size: var(--type-body);
   transition: border-color var(--m26-duration-fast), box-shadow var(--m26-duration-fast);
@@ -460,34 +462,28 @@ label {
   box-shadow: 0 2px 8px rgba(22,101,52,0.25) !important;
 }
 
-/* ══ 13. Prayer Times Page ═══════════════════════════════════════════════════ */
-.pt-hero {
-  background: #FFFFFF !important;
-  border-color: rgba(22,163,74,0.20) !important;
-  box-shadow: var(--m26-shadow-lg) !important;
-}
+/* ══ 13. Prayer Times Page ═══════════════════════════════════════════════════
+   تعارض الخلفية/الألوان مع تصميم elite-2026.css (أخضر غامق + نص أبيض) أُزيل
+   (2026-07-16) — كانت الخلفية تُرث من هنا (بيضاء) بينما تُرث كل ألوان النصوص
+   من elite-2026.css (أبيضاء)، فينتج نصًا أبيض على خلفية بيضاء غير مرئي البتة.
+   أُبقي على القياسات (font-size/weight/letter-spacing) فقط، لا الألوان. */
 .pt-hero__name {
-  color: var(--m26-green-950, #052E16) !important;
-  font-family: "El Messiri", serif !important;
+  font-family: var(--font-body) !important;
   font-size: clamp(1.5rem, 4vw, 2.25rem) !important;
   font-weight: var(--fw-bold) !important;
 }
 .pt-hero__countdown {
-  color: var(--m26-green-800, #166534) !important;
   animation: none !important;
   font-size: clamp(1.75rem, 5vw, 2.5rem) !important;
   font-weight: var(--fw-black) !important;
   letter-spacing: -0.02em !important;
 }
 .pt-hero__label {
-  color: var(--m26-gold-700, #1F4D3A) !important;
   font-size: var(--type-label) !important;
   font-weight: var(--fw-semibold) !important;
   letter-spacing: var(--ls-wider) !important;
   text-transform: uppercase !important;
 }
-.pt-hero__time,
-.pt-hero__time { color: var(--txt-muted, #52525B) !important; }
 .pt-prayer,
 .pt-prayer { background: #FFFFFF !important; border-color: rgba(0,0,0,0.07) !important; }
 .pt-prayer:hover {
@@ -637,7 +633,7 @@ label {
 }
 .login-card__title {
   color: var(--txt-primary, #111827) !important;
-  font-family: "El Messiri", serif !important;
+  font-family: var(--font-body) !important;
   font-size: var(--type-h2) !important;
   font-weight: var(--fw-bold) !important;
 }
@@ -701,7 +697,7 @@ label {
 .prophets-lux-empty,
 .prophets-lux-empty { color: var(--txt-muted, #52525B) !important; }
 .prophets-lux-disclaimer {
-  color: var(--txt-warning, #0A5040) !important;
+  color: var(--txt-warning, #123F36) !important;
   border-color: rgba(202,138,4,0.30) !important;
   background: var(--m26-gold-50, #f0faf5) !important;
 }
@@ -781,7 +777,7 @@ label {
 .notif-banner--warn {
   background: var(--m26-gold-50, #f0faf5) !important;
   border-color: rgba(202,138,4,0.35) !important;
-  color: var(--txt-warning, #0A5040) !important;
+  color: var(--txt-warning, #123F36) !important;
 }
 .notif-banner--err {
   background: #FEF2F2 !important;
@@ -797,7 +793,7 @@ label {
 }
 .home-hero__title {
   color: var(--m26-green-950, #052E16) !important;
-  font-family: "El Messiri", serif !important;
+  font-family: var(--font-body) !important;
   font-weight: var(--fw-bold) !important;
 }
 .home-hero__sub,
@@ -833,7 +829,7 @@ label {
 /* PageHeader */
 .ds-page-header .ds-heading {
   color: var(--txt-primary, #111827) !important;
-  font-family: "El Messiri", "Amiri", serif !important;
+  font-family: var(--font-body) !important;
   font-size: var(--type-h1) !important;
   font-weight: var(--fw-bold) !important;
   letter-spacing: var(--ls-tight) !important;
@@ -867,6 +863,21 @@ th {
 td {
   color: var(--txt-primary, #111827) !important;
   border-color: rgba(0,0,0,0.06) !important;
+}
+/* لا نسخة ليلية سابقًا لعنصر table/th/td العام — خلفية بيضاء ونص داكن
+   ثابتان حتى في الوضع الليلي (كل جدول في الموقع، مثال: صفحات تفاصيل
+   جلسات المجمع الفقهي) (2026-07-17). */
+html[data-theme="dark"] table {
+  background: #122019 !important;
+}
+html[data-theme="dark"] th {
+  background: rgba(92,196,154,.12) !important;
+  color: #C8D5CE !important;
+  border-color: rgba(255,255,255,.08) !important;
+}
+html[data-theme="dark"] td {
+  color: #E5F0EC !important;
+  border-color: rgba(255,255,255,.06) !important;
 }
 
 /* ══ 22. Empty States ═════════════════════════════════════════════════════ */
@@ -910,7 +921,7 @@ td {
 .prophets-seerah-bridge__title,
 .prophets-seerah-bridge__title { color: var(--m26-green-950, #052E16) !important; }
 .prophets-seerah-bridge__eyebrow,
-.prophets-seerah-bridge__eyebrow { color: var(--m26-gold-700, #1F4D3A) !important; }
+.prophets-seerah-bridge__eyebrow { color: var(--m26-gold-700, #176B57) !important; }
 .prophets-seerah-bridge__desc,
 .prophets-seerah-bridge__desc { color: var(--txt-secondary, #374151) !important; }
 .prophets-seerah-bridge__arrow,
@@ -1163,7 +1174,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 }
 
 .adhkar-focus-text {
-  font-family: "Amiri", "Scheherazade New", serif;
+  font-family: var(--font-body);
   font-size: clamp(1.25rem, 4vw, 1.75rem);
   line-height: 2.2;
   color: var(--txt-primary, #111827);
@@ -1371,7 +1382,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   margin: 0 0 1rem;
 }
 .adhkar-sheet-text {
-  font-family: "Amiri", "Scheherazade New", serif;
+  font-family: var(--font-body);
   font-size: 1.15rem;
   line-height: 2;
   color: var(--txt-primary, #111827);
@@ -1414,7 +1425,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   font-weight: 600;
 }
 .adhkar-grade--sahih { background: #DCFCE7; color: #166534; }
-.adhkar-grade--hasan { background: #e8f5f0; color: #1F4D3A; }
+.adhkar-grade--hasan { background: #e8f5f0; color: #176B57; }
 .adhkar-grade--other { background: #F3F4F6; color: #374151; }
 .adhkar-sheet-share {
   width: 100%;
@@ -1474,7 +1485,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 /* رأس النجمة — الوضع الاحتفالي للصفحات الرئيسية */
 .majalis-star-hero {
   position: relative;
-  background-color: #18362A;
+  background-color: #176B57;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.06' stroke-width='1.2'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.09'/%3E%3C/svg%3E");
   background-size: 100px 100px;
   color: #FAF8F2;
@@ -1570,7 +1581,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   right: 0;
   left: 0;
   height: 3px;
-  background: linear-gradient(to left, var(--color-primary, #1F4D3A), #34d399);
+  background: linear-gradient(to left, var(--color-primary, #176B57), #34d399);
   width: var(--rpb-pct, 0%);
   z-index: 9999;
   transition: width 0.1s linear;
@@ -1722,7 +1733,7 @@ p { line-height: var(--lh-normal, 1.65); }
 
 /* ─── ضمان النص الأبيض على شريط القراءة ─── */
 .reading-progress-bar {
-  background: linear-gradient(to right, var(--majalis-emerald, #1F4D3A), #1a9e75);
+  background: linear-gradient(to right, var(--majalis-emerald, #176B57), #1a9e75);
 }
 
 /* ─── تحسين الفهرس والتسميات المرئية ─── */

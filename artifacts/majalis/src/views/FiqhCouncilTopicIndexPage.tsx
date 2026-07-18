@@ -111,7 +111,7 @@ export default function FiqhCouncilTopicIndexPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="الفهرس الموضوعي للمجمع الفقهي — المجلس العلمي" url="https://majlisilm.com/fiqh-council/index" />
+        <ShareButtons title="الفهرس الموضوعي للمجمع الفقهي — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/index" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />

@@ -99,10 +99,19 @@ const METHOD_COLORS: Record<string, string> = {
 export default function DeveloperPage() {
   useEffect(() => {
     applyPageSeo({
-      path: "/developer",
-      title: "واجهة برمجة التطبيقات | مجالس للمطورين",
-      description: "وثائق API مجالس، دمج المحتوى الإسلامي في تطبيقاتك بسهولة عبر REST API مفتوح.",
-      keywords: ["API إسلامي", "واجهة برمجية", "مطورون", "مجالس API", "بيانات إسلامية"],
+      path: "/developers",
+      title: "واجهة برمجة التطبيقات | المجلس العلمي للمطورين",
+      description: "وثائق API المجلس العلمي، دمج المحتوى الإسلامي في تطبيقاتك بسهولة عبر REST API مفتوح.",
+      keywords: ["API إسلامي", "واجهة برمجية", "مطورون", "API المجلس العلمي", "بيانات إسلامية"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        headline: "توثيق واجهة برمجة التطبيقات — المجلس العلمي",
+        description: "وثائق API المجلس العلمي لدمج المحتوى الإسلامي في التطبيقات عبر REST API مفتوح.",
+        url: "https://www.majlisilm.com/developers",
+        inLanguage: "ar",
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+      }],
     });
   }, []);
 
@@ -129,7 +138,7 @@ export default function DeveloperPage() {
 # 2. ابدأ البحث فوراً:
 
 curl -H "X-API-Key: maj_YOUR_KEY" \\
-  "https://majalis.app/api/v1/search?q=الصلاة&limit=5"
+  "https://www.majlisilm.com/api/v1/search?q=الصلاة&limit=5"
 
 # النتيجة:
 {
@@ -146,11 +155,11 @@ curl -H "X-API-Key: maj_YOUR_KEY" \\
         <p className="dvp-section-desc">طريقتان مدعومتان:</p>
         <pre className="dvp-pre">{`# الطريقة 1: API Key في الترويسة (موصى به)
 curl -H "X-API-Key: maj_xxxxxxxxxxxxxxxx" \\
-  "https://majalis.app/api/v1/hadith"
+  "https://www.majlisilm.com/api/v1/hadith"
 
 # الطريقة 2: Bearer Token (OAuth 2.0)
 curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI..." \\
-  "https://majalis.app/api/v1/fatwa"`}</pre>
+  "https://www.majlisilm.com/api/v1/fatwa"`}</pre>
         <p className="dvp-note">
           أنشئ مفاتيحك وأدر صلاحياتها من{" "}
           <Link href="/admin">لوحة المطوّرين</Link>.

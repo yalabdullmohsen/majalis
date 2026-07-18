@@ -142,7 +142,7 @@ export default function FiqhCouncilLivePage() {
       ))}
 
       <div className="twh-share">
-        <ShareButtons title="جلسات المجمع الفقهي الحية — المجلس العلمي" url="https://majlisilm.com/fiqh-council/live" />
+        <ShareButtons title="جلسات المجمع الفقهي الحية — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/live" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />

@@ -20,7 +20,7 @@ const TABS = ["الكل", "المجلدات", "المفضلة", "الأكثر ا
 type Tab = (typeof TABS)[number];
 
 const FOLDER_COLORS = [
-  "#065f46", "#1d4ed8", "#7c3aed", "#1F4D3A",
+  "#065f46", "#1d4ed8", "#7c3aed", "#176B57",
   "#dc2626", "#0369a1", "#047857", "#6b7280",
 ];
 
@@ -203,7 +203,7 @@ export default function MyCitationsPage() {
               type="search"
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
-              placeholder="ابحث في اقتباساتك وملاحظاتك..."
+              aria-label="ابحث في اقتباساتك وملاحظاتك" placeholder="ابحث في اقتباساتك وملاحظاتك..."
               className="mcp-search-input"
               dir="rtl"
             />
@@ -245,7 +245,7 @@ export default function MyCitationsPage() {
                   type="text"
                   value={newFolderName}
                   onChange={(e) => setNewFolderName(e.target.value)}
-                  placeholder="اسم المجلد..."
+                  aria-label="اسم المجلد" placeholder="اسم المجلد..."
                   className="mcp-folder-name-input"
                   dir="rtl"
                   onKeyDown={(e) => { if (e.key === "Enter") handleCreateFolder(); }}
@@ -348,6 +348,7 @@ export default function MyCitationsPage() {
                       {editNoteId === item.id ? (
                         <div className="space-y-1">
                           <textarea
+                            aria-label="تعديل الملاحظة"
                             value={editNoteText}
                             onChange={(e) => setEditNoteText(e.target.value)}
                             rows={2}
@@ -397,7 +398,7 @@ export default function MyCitationsPage() {
         </main>
       </div>
       <div className="twh-share">
-        <ShareButtons title="اقتباساتي — المجلس العلمي" url="https://majlisilm.com/my-citations" />
+        <ShareButtons title="اقتباساتي — المجلس العلمي" url="https://www.majlisilm.com/my-citations" />
       </div>
     </div>
   );

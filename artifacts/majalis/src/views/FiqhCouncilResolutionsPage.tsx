@@ -10,7 +10,7 @@ export default function FiqhCouncilResolutionsPage() {
       title: "قرارات المجمع الفقهي | المجلس العلمي",
       description: "قرارات المجمع الفقهي الإسلامي في المسائل المعاصرة، موثقة بأدلتها ومراجعها الشرعية.",
       keywords: ["قرارات فقهية", "مجمع فقهي", "قرارات إسلامية", "هيئة كبار العلماء"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "قرارات المجمع الفقهي", url: "https://majlisilm.com/fiqh-council/resolutions", about: { "@type": "Thing", name: "القرارات الفقهية الجماعية الإسلامية" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "قرارات المجمع الفقهي", url: "https://www.majlisilm.com/fiqh-council/resolutions", about: { "@type": "Thing", name: "القرارات الفقهية الجماعية الإسلامية" } }],
     });
   }, []);
 

@@ -4,8 +4,8 @@ import {
   BarChart2, BookOpen, Bot, Brain, Building2, CheckCircle2, Clock, Dna,
   Eye, Flag, FlaskConical, Globe, GraduationCap, HelpCircle, Image,
   Landmark, Library, Lightbulb, MessageCircle, MessageSquare, Network,
-  PlayCircle, Radio, RefreshCw, Scale, School, ScrollText, Search, Send,
-  Settings, Settings2, ShieldCheck, Smartphone, Sparkles, Target, Unlock,
+  PlayCircle, Radio, RefreshCw, Scale, School, Search, Send,
+  Settings, Settings2, ShieldCheck, Sparkles, Target, Unlock,
   User, Users, Flame,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -107,14 +107,6 @@ const SECTION_CATALOG: SectionCard[] = [
     whatItDoes: "تتيح استعراض وإضافة قرارات المجامع الفقهية وتصنيفها وربطها بموضوعاتها.",
     whenToUse: "لإدخال قرارات جديدة من دورات المجمع أو تحديث بيانات قرار قديم.",
     dataManaged: "القرارات، الفتاوى، التوصيات، الأبحاث، جلسات المجمع، المجالات الفقهية",
-    affectsPublic: true,
-  },
-  {
-    key: "fatwa", Icon: ScrollText, label: "الفتاوى", group: "الشريعة",
-    description: "إدارة قاعدة الفتاوى الشرعية الموثقة",
-    whatItDoes: "تتيح إدارة الفتاوى الشرعية مع بيانات المُفتي والسند والمراجع.",
-    whenToUse: "لإضافة فتوى جديدة أو مراجعة فتاوى مُقترحة أو تصحيح بيانات فتوى.",
-    dataManaged: "نص الفتوى، المُفتي، التاريخ، المصدر، التصنيف، حالة الاعتماد",
     affectsPublic: true,
   },
   {
@@ -240,11 +232,11 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: false,
   },
   {
-    key: "digital-learning", Icon: Smartphone, label: "التعليم الرقمي", group: "التحليل والذكاء",
-    description: "إدارة مسارات التعلم والبرامج التعليمية الرقمية",
-    whatItDoes: "يتيح تصميم مسارات تعلم مُنظَّمة وتتبع تقدم المستخدمين.",
-    whenToUse: "لإطلاق برنامج تعليمي جديد أو متابعة تقدم المتعلمين.",
-    dataManaged: "مسارات التعلم، نقاط التقدم، الشهادات، إحصائيات الإتمام",
+    key: "learning-paths", Icon: GraduationCap, label: "المسارات العلمية", group: "التحليل والذكاء",
+    description: "إدارة شجرة المسارات العلمية: مسار ← مرحلة ← مقرر ← وحدة ← عنصر",
+    whatItDoes: "تحرير كامل شجرة المسارات، ترتيب العناصر، وإدارة التقييمات والأسئلة مع اعتماد صريح لكل سؤال قبل نشره.",
+    whenToUse: "لإضافة مسار أو مقرر جديد، أو مراجعة واعتماد أسئلة تقييم قبل نشرها للمتعلمين.",
+    dataManaged: "learning_paths، path_stages، courses، course_units، learning_items، course_books، التقييمات وأسئلتها",
     affectsPublic: true,
   },
   // ── المجتمع ──────────────────────────────────────────────────────────

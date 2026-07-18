@@ -82,16 +82,6 @@ const INSTITUTIONS: Institution[] = [
     mapQuery: "الجامعة الإسلامية ماليزيا",
   },
   {
-    id: "azhar",
-    name: "الجامع الأزهر الشريف",
-    type: "university",
-    city: "القاهرة",
-    country: "مصر",
-    description: "أعرق المؤسسات التعليمية الإسلامية في العالم، تأسس عام 970م.",
-    website: "https://www.azhar.eg",
-    mapQuery: "الجامع الأزهر القاهرة",
-  },
-  {
     id: "medina-university",
     name: "الجامعة الإسلامية بالمدينة المنورة",
     type: "university",
@@ -384,8 +374,7 @@ function InstitutionCard({ inst }: { inst: Institution }) {
           <a
             href={inst.website}
             className="inst-card__link inst-card__link--web"
-            target="_blank"
-            rel="noopener noreferrer"
+            target="_blank" rel="noopener noreferrer"
           >
             <Globe size={13} strokeWidth={1.8} aria-hidden="true" /> الموقع الرسمي
           </a>
@@ -394,8 +383,7 @@ function InstitutionCard({ inst }: { inst: Institution }) {
           <a
             href={`https://maps.google.com/?q=${encodeURIComponent(inst.mapQuery)}`}
             className="inst-card__link inst-card__link--map"
-            target="_blank"
-            rel="noopener noreferrer"
+            target="_blank" rel="noopener noreferrer"
           >
             <MapPin size={13} strokeWidth={1.8} aria-hidden="true" /> الموقع على الخريطة
           </a>
@@ -427,7 +415,7 @@ export default function InstitutionsPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${inst.name} — ${inst.city}`,
-            url: `https://majlisilm.com/institutions#${inst.id}`,
+            url: `https://www.majlisilm.com/institutions#${inst.id}`,
           })),
         },
       ],
@@ -455,7 +443,7 @@ export default function InstitutionsPage() {
           <input
             type="text"
             className="vault-search"
-            placeholder="ابحث باسم المؤسسة أو البلد أو المدينة…"
+            aria-label="ابحث باسم المؤسسة أو البلد أو المدينة…" placeholder="ابحث باسم المؤسسة أو البلد أو المدينة…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             dir="rtl"
@@ -466,7 +454,7 @@ export default function InstitutionsPage() {
         </div>
 
         {/* Filter tabs */}
-        <div className="inst-filters" role="tablist">
+        <div className="inst-filters" role="tablist" aria-label="تصفية حسب نوع المؤسسة">
           {TYPE_FILTERS.map((f) => (
             <button
               key={f.key}
@@ -510,7 +498,7 @@ export default function InstitutionsPage() {
         </p>
 
         <div className="twh-share">
-          <ShareButtons title="المؤسسات الإسلامية — المجلس العلمي" url="https://majlisilm.com/institutions" />
+          <ShareButtons title="المؤسسات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/institutions" />
         </div>
         <div className="px-4 pb-6 mt-4">
           <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />

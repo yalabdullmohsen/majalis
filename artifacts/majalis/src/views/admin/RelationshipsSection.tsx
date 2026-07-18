@@ -15,7 +15,6 @@ const SOURCE_TYPES: { value: KnowledgeSourceType; label: string }[] = [
   { value: "scholar", label: "\u0639\u0627\u0644\u0645 / \u0634\u064a\u062e" },
   { value: "lesson",  label: "\u062f\u0631\u0633" },
   { value: "book",    label: "\u0643\u062a\u0627\u0628" },
-  { value: "fatwa",   label: "\u0641\u062a\u0648\u0649" },
   { value: "fawaid",  label: "\u0641\u0627\u0626\u062f\u0629" },
   { value: "question",label: "\u0633\u0624\u0627\u0644" },
 ];
@@ -169,44 +168,44 @@ export function RelationshipsSection() {
         </h3>
         <div className="rel-form-grid">
           <div className="rel-field">
-            <label className="rel-label">\u0646\u0648\u0639 \u0627\u0644\u0645\u0635\u062f\u0631</label>
-            <select className="rel-select" value={F.source_type}
+            <label className="rel-label" htmlFor="rel-source-type">\u0646\u0648\u0639 \u0627\u0644\u0645\u0635\u062f\u0631</label>
+            <select id="rel-source-type" className="rel-select" value={F.source_type}
               onChange={(e) => setForm((p) => ({ ...p, source_type: e.target.value as KnowledgeSourceType }))}>
               {SOURCE_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
             </select>
           </div>
           <div className="rel-field">
-            <label className="rel-label">\u0645\u0639\u0631\u0651\u0641 \u0627\u0644\u0645\u0635\u062f\u0631 (ID)</label>
-            <input className="rel-input" value={F.source_id} placeholder="uuid \u0623\u0648 external_key..."
+            <label className="rel-label" htmlFor="rel-source-id">\u0645\u0639\u0631\u0651\u0641 \u0627\u0644\u0645\u0635\u062f\u0631 (ID)</label>
+            <input id="rel-source-id" className="rel-input" value={F.source_id} placeholder="uuid \u0623\u0648 external_key..."
               onChange={(e) => setForm((p) => ({ ...p, source_id: e.target.value }))} />
           </div>
           <div className="rel-field">
-            <label className="rel-label">\u0646\u0648\u0639 \u0627\u0644\u0647\u062f\u0641</label>
-            <select className="rel-select" value={F.target_type}
+            <label className="rel-label" htmlFor="rel-target-type">\u0646\u0648\u0639 \u0627\u0644\u0647\u062f\u0641</label>
+            <select id="rel-target-type" className="rel-select" value={F.target_type}
               onChange={(e) => setForm((p) => ({ ...p, target_type: e.target.value as KnowledgeSourceType }))}>
               {SOURCE_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
             </select>
           </div>
           <div className="rel-field">
-            <label className="rel-label">\u0645\u0639\u0631\u0651\u0641 \u0627\u0644\u0647\u062f\u0641 (ID)</label>
-            <input className="rel-input" value={F.target_id} placeholder="uuid \u0623\u0648 external_key..."
+            <label className="rel-label" htmlFor="rel-target-id">\u0645\u0639\u0631\u0651\u0641 \u0627\u0644\u0647\u062f\u0641 (ID)</label>
+            <input id="rel-target-id" className="rel-input" value={F.target_id} placeholder="uuid \u0623\u0648 external_key..."
               onChange={(e) => setForm((p) => ({ ...p, target_id: e.target.value }))} />
           </div>
           <div className="rel-field">
-            <label className="rel-label">\u0646\u0648\u0639 \u0627\u0644\u0639\u0644\u0627\u0642\u0629</label>
-            <select className="rel-select" value={F.relationship_type}
+            <label className="rel-label" htmlFor="rel-relationship-type">\u0646\u0648\u0639 \u0627\u0644\u0639\u0644\u0627\u0642\u0629</label>
+            <select id="rel-relationship-type" className="rel-select" value={F.relationship_type}
               onChange={(e) => setForm((p) => ({ ...p, relationship_type: e.target.value as KnowledgeRelType }))}>
               {REL_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
             </select>
           </div>
           <div className="rel-field">
-            <label className="rel-label">\u062a\u0633\u0645\u064a\u0629 \u0645\u062e\u062a\u0635\u0631\u0629 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)</label>
-            <input className="rel-input" value={F.label} placeholder="\u0634\u0631\u062d \u0627\u0628\u0646 \u0639\u062b\u064a\u0645\u064a\u0646..."
+            <label className="rel-label" htmlFor="rel-label-input">\u062a\u0633\u0645\u064a\u0629 \u0645\u062e\u062a\u0635\u0631\u0629 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)</label>
+            <input id="rel-label-input" className="rel-input" value={F.label} placeholder="\u0634\u0631\u062d \u0627\u0628\u0646 \u0639\u062b\u064a\u0645\u064a\u0646..."
               onChange={(e) => setForm((p) => ({ ...p, label: e.target.value }))} />
           </div>
           <div className="rel-field rel-full-col">
-            <label className="rel-label">\u0627\u0644\u0645\u0635\u062f\u0631 \u0648\u0627\u0644\u0645\u0631\u062c\u0639 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)</label>
-            <input className="rel-input" value={F.source_reference} placeholder="\u0643\u062a\u0627\u0628 \u0627\u0644\u0633\u064a\u0631 / \u0627\u0644\u0637\u0628\u0642\u0627\u062a \u0627\u0644\u0643\u0628\u0631\u0649..."
+            <label className="rel-label" htmlFor="rel-source-reference">\u0627\u0644\u0645\u0635\u062f\u0631 \u0648\u0627\u0644\u0645\u0631\u062c\u0639 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)</label>
+            <input id="rel-source-reference" className="rel-input" value={F.source_reference} placeholder="\u0643\u062a\u0627\u0628 \u0627\u0644\u0633\u064a\u0631 / \u0627\u0644\u0637\u0628\u0642\u0627\u062a \u0627\u0644\u0643\u0628\u0631\u0649..."
               onChange={(e) => setForm((p) => ({ ...p, source_reference: e.target.value }))} />
           </div>
           <div className="rel-verified-row">
@@ -276,7 +275,7 @@ export function RelationshipsSection() {
                     className="rel-verified-badge"
                     style={{
                       "--rel-vb-bg": r.is_verified ? "#d1fae5" : "#E6EDE9",
-                      "--rel-vb-color": r.is_verified ? "#065f46" : "#1F4D3A",
+                      "--rel-vb-color": r.is_verified ? "#065f46" : "#176B57",
                     } as React.CSSProperties}
                   >
                     {r.is_verified ? "\u0645\u062d\u0642\u0642\u0629" : "\u0642\u064a\u062f \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629"}

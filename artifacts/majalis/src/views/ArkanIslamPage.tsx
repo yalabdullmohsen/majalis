@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { SectionIcon } from "@/components/ui/SectionIcon";
+import { useEffect, useState, useMemo } from "react";
 import { Link } from "wouter";
-import { ChevronDown, ChevronUp, Star } from "lucide-react";
+import { ChevronDown, ChevronUp, Sparkles, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -43,7 +44,7 @@ const ARKAN: Rukn[] = [
       { label: "ثمرات الشهادتين في الحياة", body: "الشهادتان تُفضيان إلى: راحة النفس بالتوكل على الله، والعدل في التعامل إذ لا يُرى غير الله، وتحرير الإنسان من العبودية للأهواء والبشر والمادة." },
     ],
     scholarQuote: { text: "لا إله إلا الله كلمة يتضمن إثباتها ونفيها توحيد الله في ربوبيته وألوهيته وأسمائه وصفاته.", scholar: "ابن تيمية" },
-    color: "#1F4D3A",
+    color: "#176B57",
   },
   {
     num: 2,
@@ -67,7 +68,7 @@ const ARKAN: Rukn[] = [
       { label: "قضاء الصلاة وأحوالها", body: "تُجمع الصلاة في السفر والمرض. وتُقصَر رباعية الركعات إلى ركعتين في السفر. وتُصلَّى قاعداً إن تعذَّر القيام. ولا يسقط فرضها عن المسلم بأي عذر." },
     ],
     scholarQuote: { text: "الصلاة معراج المؤمنين، وإقامتها على وجهها تُصلح باقي الأعمال.", scholar: "الإمام النووي" },
-    color: "#0A5040",
+    color: "#123F36",
   },
   {
     num: 3,
@@ -139,17 +140,23 @@ const ARKAN: Rukn[] = [
       { label: "الحج والعمرة والفرق بينهما", body: "العمرة تُؤدَّى في أي وقت، وأركانها: الإحرام والطواف والسعي والحلق. أما الحج فله مواقيت محددة في ذي الحجة، وهو أكمل وأشمل. ويمكن الجمع بينهما في الحج القِران أو التمتع." },
     ],
     scholarQuote: { text: "الحج مؤتمر إسلامي سنوي يجمع المسلمين على كلمة التوحيد ويذكّرهم بيوم القيامة.", scholar: "الإمام الشافعي" },
-    color: "#1F4D3A",
+    color: "#176B57",
   },
 ];
 
 export default function ArkanIslamPage() {
   const [expanded, setExpanded] = useState<number | null>(1);
+  const todayRukn = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return ARKAN[(day - 1 + ARKAN.length) % ARKAN.length];
+  }, []);
 
   useEffect(() => {
     applyPageSeo({
       path: "/arkan",
-      title: "أركان الإسلام الخمسة | مجالس",
+      title: "أركان الإسلام الخمسة | المجلس العلمي",
       description: "شرح تفصيلي لأركان الإسلام الخمسة: الشهادتان، الصلاة، الزكاة، الصوم، الحج، مع الأدلة وأقوال العلماء.",
       keywords: ["أركان الإسلام", "الشهادتان", "الصلاة", "الزكاة", "رمضان", "الحج"],
       jsonLd: [
@@ -163,7 +170,7 @@ export default function ArkanIslamPage() {
             "@type": "ListItem",
             position: i + 1,
             name: r.title,
-            url: `https://majlisilm.com/arkan#rukn-${r.num}`,
+            url: `https://www.majlisilm.com/arkan#rukn-${r.num}`,
           })),
         },
       ],
@@ -190,11 +197,22 @@ export default function ArkanIslamPage() {
               onClick={() => setExpanded(expanded === r.num ? null : r.num)}
               title={r.title}
             >
-              <span className="arkan-hero__icon-emoji">{r.icon}</span>
+              <span className="arkan-hero__icon-emoji"><SectionIcon name={r.icon} size={28} /></span>
               <span className="arkan-hero__icon-num">{r.numAr}</span>
             </button>
           ))}
         </div>
+      </div>
+
+      {/* ركن الإسلام اليوم */}
+      <div className="arod-card">
+        <div className="arod-card__badge"><Sparkles size={11} aria-hidden="true" /> ركن الإسلام اليوم</div>
+        <span className="arod-card__icon"><SectionIcon name={todayRukn.icon} size={28} /></span>
+        <div className="arod-card__num">الركن {todayRukn.numAr}</div>
+        <h2 className="arod-card__title">{todayRukn.title}</h2>
+        <p className="arod-card__sub">{todayRukn.subtitle}</p>
+        <p className="arod-card__summary">{todayRukn.summary}</p>
+        <p className="arod-card__quote">«{todayRukn.scholarQuote.text}»<span className="arod-card__scholar"> — {todayRukn.scholarQuote.scholar}</span></p>
       </div>
 
       {/* ═══ الأركان ═══ */}
@@ -209,7 +227,7 @@ export default function ArkanIslamPage() {
                 onClick={() => setExpanded(open ? null : r.num)}
                 aria-expanded={open}
               >
-                <span className="arkan-card__emoji" aria-hidden="true">{r.icon}</span>
+                <span className="arkan-card__emoji" aria-hidden="true"><SectionIcon name={r.icon} size={26} /></span>
                 <div className="arkan-card__info">
                   <span className="arkan-card__num">الركن {r.numAr}</span>
                   <h2 className="arkan-card__title">{r.title}</h2>
@@ -298,7 +316,7 @@ export default function ArkanIslamPage() {
         </div>
       </div>
       <div className="zk-share">
-        <ShareButtons title="أركان الإسلام الخمسة — المجلس العلمي" url="https://majlisilm.com/arkan-islam" />
+        <ShareButtons title="أركان الإسلام الخمسة — المجلس العلمي" url="https://www.majlisilm.com/arkan-islam" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["fiqh", "aqeeda"]} title="اختبر معلوماتك في أركان الإسلام" count={4} />

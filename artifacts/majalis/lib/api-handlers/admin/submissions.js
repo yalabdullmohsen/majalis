@@ -7,7 +7,7 @@ async function notifyTelegramNewLesson(title, speaker, lessonId) {
   const chatId = String(process.env.TELEGRAM_ADMIN_CHAT_ID || "").trim();
   if (!chatId) return;
   const who = speaker ? `\nالشيخ: <b>${speaker}</b>` : "";
-  const text = `📚 درس جديد (قُبل يدوياً)\n<b>${title || "بدون عنوان"}</b>${who}\n\n🔗 <a href="https://majlisilm.com/lessons/${lessonId}">عرض الدرس</a>`;
+  const text = `📚 درس جديد (قُبل يدوياً)\n<b>${title || "بدون عنوان"}</b>${who}\n\n🔗 <a href="https://www.majlisilm.com/lessons/${lessonId}">عرض الدرس</a>`;
   try { await sendMessage(chatId, text, { parse_mode: "HTML", disable_web_page_preview: true }); }
   catch { /* best-effort */ }
 }

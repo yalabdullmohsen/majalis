@@ -48,6 +48,13 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
     });
   }, [source.id, style]);
 
+  // إغلاق بمفتاح Escape (بديل للنقر خارج النافذة، أو زر الإغلاق الظاهر)
+  useEffect(() => {
+    const keyHandler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  }, [onClose]);
+
   // إنشاء الاقتباس عند فتح التبويب الثاني أو الثالث
   const ensureCitation = useCallback(async () => {
     if (citation) return citation;
@@ -179,10 +186,11 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
             <>
               {/* تعديل النص */}
               <div>
-                <label className="block text-xs font-medium mb-1 cm-label">
+                <label htmlFor="cm-quoted-text" className="block text-xs font-medium mb-1 cm-label">
                   النص المقتبس ({text.length}/{MAX_QUOTE_LENGTH} حرف)
                 </label>
                 <textarea
+                  id="cm-quoted-text"
                   value={text}
                   onChange={(e) => setText(e.target.value.slice(0, MAX_QUOTE_LENGTH))}
                   rows={4}
@@ -194,8 +202,9 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
               {/* أسلوب التوثيق (للأبحاث والمقالات فقط) */}
               {["article", "research"].includes(source.content_type) && (
                 <div>
-                  <label className="block text-xs font-medium mb-1 cm-label">أسلوب التوثيق</label>
+                  <label htmlFor="cm-citation-style" className="block text-xs font-medium mb-1 cm-label">أسلوب التوثيق</label>
                   <select
+                    id="cm-citation-style"
                     value={style}
                     onChange={(e) => setStyle(e.target.value as CitationStyle)}
                     className="w-full rounded-lg px-3 py-2 text-sm outline-none cm-field"
@@ -209,7 +218,7 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
 
               {/* بطاقة المعاينة */}
               <div ref={cardRef} dir="rtl" className="border rounded-xl p-5 space-y-3 cm-preview-card">
-                <p className="text-sm font-bold cm-preview-title">مجالس — منصة العلم الشرعي</p>
+                <p className="text-sm font-bold cm-preview-title">المجلس العلمي — منصة العلم الشرعي</p>
                 <p className="leading-relaxed text-base font-arabic pr-3 cm-preview-text">
                   {text || "أدخل النص المراد اقتباسه..."}
                 </p>
@@ -244,9 +253,10 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
               {shareUrl ? (
                 <>
                   <div>
-                    <label className="block text-xs font-medium mb-1 cm-label">الرابط المباشر</label>
+                    <label htmlFor="cm-share-url" className="block text-xs font-medium mb-1 cm-label">الرابط المباشر</label>
                     <div className="flex gap-2">
                       <input
+                        id="cm-share-url"
                         readOnly
                         value={shareUrl}
                         className="flex-1 rounded-lg px-3 py-2 text-sm text-left font-mono outline-none cm-field cm-field--readonly"
@@ -276,7 +286,11 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
                         <img
                           src={getQrCodeUrl(citation.deep_link_slug)}
                           alt="QR Code"
+                          loading="lazy"
+                          decoding="async"
                           className="cm-qr-img"
+                          width="200"
+                          height="200"
                         />
                         <a
                           href={getQrCodeUrl(citation.deep_link_slug)}
@@ -317,8 +331,9 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
                 احفظ هذا الاقتباس في مكتبتك الشخصية مع ملاحظة اختيارية.
               </p>
               <div>
-                <label className="block text-xs font-medium mb-1 cm-label">ملاحظة شخصية (اختياري)</label>
+                <label htmlFor="cm-personal-note" className="block text-xs font-medium mb-1 cm-label">ملاحظة شخصية (اختياري)</label>
                 <textarea
+                  id="cm-personal-note"
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                   rows={3}

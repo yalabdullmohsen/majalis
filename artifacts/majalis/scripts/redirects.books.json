@@ -1,0 +1,52 @@
+[
+  {
+    "from": "/library/book-mustasfa",
+    "to": "/library/book-al-mustasfa-ghazali",
+    "reason": "دمج تكرار: المستصفى للغزالي"
+  },
+  {
+    "from": "/library/book-alfiyya",
+    "to": "/library/book-alfiyyah",
+    "reason": "دمج تكرار: ألفية ابن مالك"
+  },
+  {
+    "from": "/library/book-saadi",
+    "to": "/library/book-tafsir-al-saadi",
+    "reason": "دمج تكرار: تفسير السعدي (تيسير الكريم الرحمن)"
+  },
+  {
+    "from": "/library/book-tafsir-saadi",
+    "to": "/library/book-tafsir-al-saadi",
+    "reason": "دمج تكرار: تفسير السعدي (تيسير الكريم الرحمن)"
+  },
+  {
+    "from": "/library/book-muqaddimah",
+    "to": "/library/book-muqaddima-ibn-khaldun",
+    "reason": "دمج تكرار: مقدمة ابن خلدون"
+  },
+  {
+    "from": "/library/book-tabari-tafsir",
+    "to": "/library/book-tafsir-tabari",
+    "reason": "دمج تكرار: تفسير الطبري (جامع البيان)"
+  },
+  {
+    "from": "/library/book-baghawi-tafsir",
+    "to": "/library/book-tafsir-al-baghawi",
+    "reason": "دمج تكرار: تفسير البغوي (معالم التنزيل)"
+  },
+  {
+    "from": "/library/book-ajurrumiyya",
+    "to": "/library/book-ajrumiyyah",
+    "reason": "دمج تكرار: متن الآجرومية"
+  },
+  {
+    "from": "/library/book-madaarij",
+    "to": "/library/book-madarij",
+    "reason": "دمج تكرار: مدارج السالكين"
+  },
+  {
+    "from": "/library/book-bulugh",
+    "to": "/library/book-bulugh-maram",
+    "reason": "دمج تكرار: بلوغ المرام"
+  }
+]

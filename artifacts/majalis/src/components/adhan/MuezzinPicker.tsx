@@ -23,6 +23,12 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
     if (previewTimerRef.current) clearTimeout(previewTimerRef.current);
   }, []);
 
+  useEffect(() => {
+    const keyHandler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  }, [onClose]);
+
   function handlePreview(m: Muezzin) {
     if (previewing === m.id) {
       stopAdhan();
@@ -65,6 +71,16 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
                 key={m.id}
                 className={`mzp-item${isSelected ? " mzp-item--selected" : ""}`}
                 onClick={() => handleSelect(m.id)}
+                role="button"
+                tabIndex={0}
+                aria-pressed={isSelected}
+                aria-label={`اختيار المؤذن ${m.name}`}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleSelect(m.id);
+                  }
+                }}
               >
                 <div className={`mzp-radio${isSelected ? " mzp-radio--selected" : ""}`}>
                   {isSelected && <span className="mzp-check">✓</span>}
@@ -84,7 +100,7 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
                   type="button"
                   onClick={(e) => { e.stopPropagation(); handlePreview(m); }}
                   className={`mzp-preview-btn${isPlaying ? " mzp-preview-btn--playing" : ""}`}
-                  title={isPlaying ? "إيقاف" : "معاينة 15 ثانية"}
+                  aria-label={isPlaying ? "إيقاف معاينة الأذان" : "معاينة الأذان (15 ثانية)"}
                 >
                   {isPlaying ? "⏹" : "▶"}
                 </button>

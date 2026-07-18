@@ -12,6 +12,17 @@ const CDN_BASE = "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions"
 const CACHE_PREFIX = "hadith_cdn_";
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 ساعة
 
+/**
+ * "nawawi" و"qudsi" مُعرَّفان بلا بادئة لغة في هذا المشروع، لكن fawazahmed0/hadith-api
+ * لا يوفّر ملفاً باسمها المجرد — فقط بادئة اللغة (ara-nawawi، ara-qudsi). بقية
+ * المجموعات مُعرَّفة أصلاً ببادئتها الصحيحة (ara-bukhari...) فلا تحتاج تحويلاً.
+ */
+function cdnEditionSlug(collection: HadithCollection): string {
+  if (collection === "nawawi") return "ara-nawawi";
+  if (collection === "qudsi") return "ara-qudsi";
+  return collection;
+}
+
 export type HadithCollection =
   | "ara-bukhari"
   | "ara-muslim"
@@ -100,7 +111,7 @@ export async function fetchHadithByNumber(
   collection: HadithCollection,
   number: number,
 ): Promise<CdnHadith | null> {
-  const url = `${CDN_BASE}/${collection}/${number}.min.json`;
+  const url = `${CDN_BASE}/${cdnEditionSlug(collection)}/${number}.min.json`;
   try {
     const res = await fetch(url);
     if (!res.ok) return null;
@@ -118,7 +129,7 @@ export async function fetchHadithsByChapter(
   const cached = readCache<CdnHadith[]>(key);
   if (cached) return cached;
 
-  const url = `${CDN_BASE}/${collection}/${chapter}.min.json`;
+  const url = `${CDN_BASE}/${cdnEditionSlug(collection)}/${chapter}.min.json`;
   try {
     const res = await fetch(url);
     if (!res.ok) return [];
@@ -135,7 +146,7 @@ export async function fetchChapters(collection: HadithCollection): Promise<CdnCh
   const cached = readCache<CdnChapter[]>(key);
   if (cached) return cached;
 
-  const url = `${CDN_BASE}/${collection}.min.json`;
+  const url = `${CDN_BASE}/${cdnEditionSlug(collection)}.min.json`;
   try {
     const res = await fetch(url);
     if (!res.ok) return [];
@@ -175,7 +186,7 @@ export async function fetchAllHadiths(collection: HadithCollection): Promise<Cdn
   const cached = readCache<CdnHadith[]>(key);
   if (cached) return cached;
 
-  const url = `${CDN_BASE}/${collection}.min.json`;
+  const url = `${CDN_BASE}/${cdnEditionSlug(collection)}.min.json`;
   try {
     const res = await fetch(url);
     if (!res.ok) return [];

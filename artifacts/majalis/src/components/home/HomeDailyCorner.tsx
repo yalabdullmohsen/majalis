@@ -7,12 +7,13 @@ import { cleanDisplayText, displayText } from "@/lib/display-text";
 import { RequestManager } from "@/lib/request-manager";
 import { getQaQuestions } from "@/lib/supabase";
 import { ShareButton } from "@/components/ShareButton";
+import { Widget } from "@/components/widgets/Widget";
 
 type TabId = "dhikr" | "ayah" | "hadith" | "faida" | "question";
 
 const TABS: { id: TabId; label: string; Icon: LucideIcon; link: string; linkLabel: string }[] = [
   { id: "dhikr",    label: "ذكر",   Icon: RotateCw,  link: "/adhkar", linkLabel: "الأذكار" },
-  { id: "ayah",     label: "آية",   Icon: BookOpen,  link: "/quran",  linkLabel: "القرآن"  },
+  { id: "ayah",     label: "آية",   Icon: BookOpen,  link: "/quran-hub",  linkLabel: "القرآن"  },
   { id: "hadith",   label: "حديث",  Icon: Scroll,    link: "/hadith", linkLabel: "الأحاديث" },
   { id: "faida",    label: "فائدة", Icon: Lightbulb, link: "/fawaid", linkLabel: "الفوائد" },
   { id: "question", label: "سؤال",  Icon: HelpCircle, link: "/qa",   linkLabel: "الأسئلة" },
@@ -66,23 +67,24 @@ export function HomeDailyCorner() {
   };
 
   const active = TABS.find(t => t.id === tab)!;
+  const dailyCornerIcon = (
+    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
+      <polygon points="9,1 11.5,6.5 18,6.5 13,10.5 15,17 9,13 3,17 5,10.5 0,6.5 6.5,6.5" fill="#176B57"/>
+      <circle cx="9" cy="9" r="2.5" fill="none" stroke="#176B57" strokeWidth="0.8"/>
+    </svg>
+  );
 
   return (
-    <section className="hdc" aria-labelledby="hdc-heading">
-      <div className="hdc__head">
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
-            <polygon points="9,1 11.5,6.5 18,6.5 13,10.5 15,17 9,13 3,17 5,10.5 0,6.5 6.5,6.5" fill="#1F4D3A"/>
-            <circle cx="9" cy="9" r="2.5" fill="none" stroke="#2d7a5a" strokeWidth="0.8"/>
-          </svg>
-          <div>
-            <p className="home-eyebrow">ورد يومي</p>
-            <h2 id="hdc-heading" className="hdc__title">الركن اليومي</h2>
-          </div>
-        </div>
-        <Link href={active.link} className="home-section-link">{active.linkLabel}</Link>
-      </div>
-
+    <Widget
+      id="daily-corner"
+      className="hdc"
+      icon={dailyCornerIcon}
+      eyebrow="ورد يومي"
+      title="الركن اليومي"
+      moreHref={active.link}
+      moreLabel={active.linkLabel}
+      state="ready"
+    >
       {/* تبويبات */}
       <div className="hdc__tabs" role="tablist" aria-label="الورد اليومي">
         {TABS.map(t => (
@@ -172,7 +174,7 @@ export function HomeDailyCorner() {
           </div>
         )}
       </div>
-    </section>
+    </Widget>
   );
 }
 

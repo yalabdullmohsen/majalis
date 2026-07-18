@@ -67,7 +67,7 @@ export default function QuranCirclesPage() {
         "@context": "https://schema.org",
         "@type": "WebPage",
         name: "حلقات القرآن الكريم في الكويت وعالمياً",
-        url: "https://majlisilm.com/quran-circles",
+        url: "https://www.majlisilm.com/quran-circles",
         about: { "@type": "Thing", name: "حلقات تحفيظ وتجويد القرآن الكريم" },
       }],
     });
@@ -185,8 +185,7 @@ export default function QuranCirclesPage() {
         </div>
         <a
           href="https://halakat.awqaf.gov.kw/Home/RegisterStudent"
-          target="_blank"
-          rel="noopener noreferrer"
+          target="_blank" rel="noopener noreferrer"
           className="qcp-reg-banner__btn"
         >
           سجّل الآن ←
@@ -258,7 +257,7 @@ export default function QuranCirclesPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="حلقات القرآن الكريم — المجلس العلمي" url="https://majlisilm.com/quran-circles" />
+        <ShareButtons title="حلقات القرآن الكريم — المجلس العلمي" url="https://www.majlisilm.com/quran-circles" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />

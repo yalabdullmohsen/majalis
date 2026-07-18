@@ -77,13 +77,16 @@ function NotifRow({ rec, onRead, onArchive, onDelete }: {
         {rec.body && <div className="nh-row__body-text">{rec.body}</div>}
         <div className="nh-row__meta">{dateStr} · {timeStr}</div>
       </div>
+      {/* onClick لمنع انتشار النقر إلى صف الإشعار الأب — لا إجراء فعلي هنا
+          يحتاج مكافئ لوحة مفاتيح؛ الأزرار الفعلية داخل هذا الصف قابلة للوصول
+          بلوحة المفاتيح أصلًا. */}
       <div className="nh-row__actions" onClick={e => e.stopPropagation()}>
         {!rec.isArchived && (
-          <button type="button" className="nh-action" onClick={onArchive} title="أرشفة" aria-label="أرشفة">
+          <button type="button" className="nh-action" onClick={onArchive} aria-label="أرشفة">
             <Archive size={14} strokeWidth={2} aria-hidden="true" />
           </button>
         )}
-        <button type="button" className="nh-action nh-action--del" onClick={onDelete} title="حذف" aria-label="حذف">
+        <button type="button" className="nh-action nh-action--del" onClick={onDelete} aria-label="حذف">
           <Trash2 size={14} strokeWidth={2} aria-hidden="true" />
         </button>
       </div>
@@ -211,7 +214,7 @@ export default function NotificationSettingsPage() {
       {/* ── اختبار ── */}
       {isGranted && (
         <div className="notif-card">
-          <button type="button" className="notif-test-btn" onClick={() => sendLocalNotification("اختبار الإشعارات", { body: "هذا إشعار تجريبي من منصة المجالس." })}>
+          <button type="button" className="notif-test-btn" onClick={() => sendLocalNotification("اختبار الإشعارات", { body: "هذا إشعار تجريبي من المجلس العلمي." })}>
             إرسال إشعار تجريبي
           </button>
         </div>
@@ -258,11 +261,11 @@ export default function NotificationSettingsPage() {
         </div>
 
         {/* تبويبات */}
-        <div className="nh-tabs">
-          <button type="button" className={`nh-tab${histTab === "inbox" ? " nh-tab--active" : ""}`} onClick={() => setHistTab("inbox")} aria-pressed={histTab === "inbox"}>
+        <div className="nh-tabs" role="tablist" aria-label="تبويبات الإشعارات">
+          <button role="tab" type="button" className={`nh-tab${histTab === "inbox" ? " nh-tab--active" : ""}`} onClick={() => setHistTab("inbox")} aria-selected={histTab === "inbox"}>
             الصندوق {unread > 0 && `(${unread})`}
           </button>
-          <button type="button" className={`nh-tab${histTab === "archived" ? " nh-tab--active" : ""}`} onClick={() => setHistTab("archived")} aria-pressed={histTab === "archived"}>
+          <button role="tab" type="button" className={`nh-tab${histTab === "archived" ? " nh-tab--active" : ""}`} onClick={() => setHistTab("archived")} aria-selected={histTab === "archived"}>
             المؤرشف
           </button>
         </div>

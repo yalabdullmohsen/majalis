@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "wouter";
+import { GraduationCap } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ARBAEEN_NAWAWI } from "@/lib/arbaeen-nawawi-seed";
 import { ShareButtons } from "@/components/ContentActions";
@@ -59,7 +61,7 @@ export default function ArbaeenNawawiPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/arbaeen-nawawi",
-      title: "الأربعون النووية، أحاديث نووية مشروحة | المجالس العلمية",
+      title: "الأربعون النووية، أحاديث نووية مشروحة | المجلس العلمي",
       description: "الأربعون حديثاً النووية مع شرح موجز وفوائد ومصدر لكل حديث، مرجع حديثي مختصر لطالب العلم.",
       keywords: ["الأربعون النووية", "أحاديث نووية", "شرح الأحاديث", "الحديث النبوي", "نووي"],
       jsonLd: [
@@ -69,7 +71,7 @@ export default function ArbaeenNawawiPage() {
           name: "الأربعون النووية",
           author: { "@type": "Person", name: "الإمام النووي" },
           description: "الأربعون حديثاً النووية الجامعة لأحكام الإسلام",
-          url: "https://majlisilm.com/arbaeen-nawawi",
+          url: "https://www.majlisilm.com/arbaeen-nawawi",
           inLanguage: "ar",
         },
         {
@@ -81,11 +83,30 @@ export default function ArbaeenNawawiPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `الحديث ${h.id}: ${h.title}`,
-            url: `https://majlisilm.com/arbaeen-nawawi#hadith-${h.id}`,
+            url: `https://www.majlisilm.com/arbaeen-nawawi#hadith-${h.id}`,
           })),
         },
       ],
     });
+  }, []);
+
+  // رابط وارد بـ`?h=<id>` (من اقتراحات البحث في search-suggestions.ts)
+  // ورابط `#hadith-<id>` (من JSON-LD أعلى) كانا معطوبَين معًا: لا شيء
+  // يقرأ `?h=` هنا، ولا عنصر DOM يحمل `id="hadith-<id>"` لتفعيل تمرير
+  // المتصفح الطبيعي للـhash — فكان كلا الرابطين يهبط على الصفحة بحالتها
+  // الافتراضية بلا أي أثر ظاهر. عطل صامت من نفس عائلة TYPE_HREF.scholar،
+  // اكتُشف بالفحص المباشر 2026-07-18. صُحِّح بإضافة id مطابق لكل بطاقة
+  // (يُفعِّل الـhash تلقائيًا) + قراءة `?h=` صراحةً مع توسيع وتمرير للحديث.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const hParam = params.get("h");
+    const hId = hParam ? Number(hParam) : NaN;
+    if (!Number.isFinite(hId)) return;
+    setExpanded((prev) => new Set(prev).add(hId));
+    const t = window.setTimeout(() => {
+      document.getElementById(`hadith-${hId}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 150);
+    return () => window.clearTimeout(t);
   }, []);
 
   function toggleRead(id: number) {
@@ -177,15 +198,15 @@ export default function ArbaeenNawawiPage() {
           onChange={(e) => setQuery(e.target.value)}
           aria-label="البحث في الأربعين النووية"
         />
-        <div className="an-cats" role="list">
+        <div className="an-cats" role="tablist" aria-label="تصفية الأربعين النووية">
           {CATS.map((c) => (
             <button
               key={c}
+              role="tab"
               type="button"
-              role="listitem"
               className={`an-cat${category === c ? " an-cat--active" : ""}`}
               onClick={() => setCategory(c)}
-              aria-pressed={category === c}
+              aria-selected={category === c}
             >
               {c}
             </button>
@@ -193,7 +214,6 @@ export default function ArbaeenNawawiPage() {
           {read.size > 0 && (
             <button
               type="button"
-              role="listitem"
               className={`an-cat an-cat--read${showReadOnly ? " an-cat--active" : ""}`}
               onClick={() => setShowReadOnly((v) => !v)}
               aria-pressed={showReadOnly}
@@ -216,6 +236,7 @@ export default function ArbaeenNawawiPage() {
             return (
               <article
                 key={h.id}
+                id={`hadith-${h.id}`}
                 className={`an-card${isRead ? " an-card--read" : ""}${isToday ? " an-card--today" : ""}`}
               >
                 <div className="an-card__header">
@@ -250,6 +271,9 @@ export default function ArbaeenNawawiPage() {
                     >
                       {isExp ? "طيّ" : "تفصيل"}
                     </button>
+                    <Link href={`/arbaeen-nawawi/${h.id}`} className="an-expand-btn" aria-label={`صفحة تعلّم واختبار الحديث ${h.id}`}>
+                      <GraduationCap size={13} strokeWidth={1.8} aria-hidden="true" /> اختبر نفسك
+                    </Link>
                     <button
                       type="button"
                       className={`an-read-btn an-read-btn--sm${isRead ? " an-read-btn--done" : ""}`}
@@ -267,7 +291,7 @@ export default function ArbaeenNawawiPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="الأربعون النووية — المجلس العلمي" url="https://majlisilm.com/arbaeen-nawawi" />
+        <ShareButtons title="الأربعون النووية — المجلس العلمي" url="https://www.majlisilm.com/arbaeen-nawawi" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في الحديث النبوي" count={4} />

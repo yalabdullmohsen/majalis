@@ -1,8 +1,10 @@
 import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 
 
 type JanazaTab = "ghusl" | "takfin" | "salah" | "dafn" | "aadab";
@@ -164,13 +166,19 @@ export default function JanazaPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${s.num}: ${s.title} — ${s.desc}`,
-            url: `https://majlisilm.com/janaza#step-${i + 1}`,
+            url: `https://www.majlisilm.com/janaza#step-${i + 1}`,
           })),
         },
       ],
     });
   }, []);
 
+  const todayTakfin = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return TAKFIN_ITEMS[(day - 1 + TAKFIN_ITEMS.length) % TAKFIN_ITEMS.length];
+  }, []);
   const [tab, setTab] = useState<JanazaTab>("ghusl");
   const [search, setSearch] = useState("");
   const filteredGhusulSteps = useMemo(() =>
@@ -190,39 +198,51 @@ export default function JanazaPage() {
   [search]);
 
   return (
-    <main className="jn-page" dir="rtl">
+    <main className="jnz-page" dir="rtl">
       {/* hero */}
-      <section className="jn-hero">
-        <div className="jn-hero__badge">الفقه الإسلامي</div>
-        <h1 className="jn-hero__title">أحكام الجنائز</h1>
-        <p className="jn-hero__sub">
+      <section className="jnz-hero">
+        <div className="jnz-hero__badge">الفقه الإسلامي</div>
+        <h1 className="jnz-hero__title">أحكام الجنائز</h1>
+        <p className="jnz-hero__sub">
           دليل شامل لما يجب على المسلمين تجاه موتاهم من الغسل والتكفين والصلاة والدفن والتعزية
         </p>
 
-        <div className="jn-ayah">
-          <p className="jn-ayah__text">
+        <div className="jnz-ayah">
+          <p className="jnz-ayah__text">
             كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ ثُمَّ إِلَيْنَا تُرْجَعُونَ
           </p>
-          <cite className="jn-ayah__ref">العنكبوت: 57</cite>
+          <cite className="jnz-ayah__ref">العنكبوت: 57</cite>
         </div>
 
-        <nav className="jn-tabs" aria-label="أقسام الجنائز">
+        <div className="jnz-tabs" aria-label="أقسام الجنائز" role="tablist">
           {TABS.map((t) => (
             <button
               key={t.id}
+              id={`jnz-tab-${t.id}`}
               type="button"
-              className={`jn-tab${tab === t.id ? " jn-tab--active" : ""}`}
+              role="tab"
+              className={`jnz-tab${tab === t.id ? " jnz-tab--active" : ""}`}
               onClick={() => setTab(t.id)}
-              aria-pressed={tab === t.id}
+              aria-selected={tab === t.id}
+              aria-controls={`jnz-panel-${t.id}`}
             >
-              <span className="jn-tab__icon">{t.icon}</span>
-              <span className="jn-tab__label">{t.label}</span>
+              <span className="jnz-tab__icon"><SectionIcon name={t.icon} size={24} /></span>
+              <span className="jnz-tab__label">{t.label}</span>
             </button>
           ))}
-        </nav>
+        </div>
       </section>
 
-      <div className="jn-body">
+      {/* حكم التكفين اليوم */}
+      <div className="jnod-card">
+        <div className="jnod-card__badge"><Sparkles size={11} aria-hidden="true" /> حكم التكفين اليوم</div>
+        <span className="jnod-card__icon">{todayTakfin.icon}</span>
+        <h2 className="jnod-card__title">{todayTakfin.title}</h2>
+        <p className="jnod-card__desc">{todayTakfin.desc}</p>
+        <p className="jnod-card__dalil">«{todayTakfin.dalil}»<span className="jnod-card__ref"> — {todayTakfin.ref}</span></p>
+      </div>
+
+      <div className="jnz-body">
 
         <div className="jnz-search-wrap">
           <input
@@ -237,31 +257,31 @@ export default function JanazaPage() {
 
         {/* ── الغسل ── */}
         {tab === "ghusl" && (
-          <section className="jn-section">
-            <div className="jn-info">
-              <span className="jn-info__icon">📌</span>
+          <section role="tabpanel" id="jnz-panel-ghusl" aria-labelledby="jnz-tab-ghusl" className="jnz-section">
+            <div className="jnz-info">
+              <span className="jnz-info__icon">📌</span>
               <p>
                 <strong>حكم غسل الميت:</strong> فرض كفاية على المسلمين إذا قام به بعضهم سقط عن الباقين.
                 ويُشترط أن يكون الغاسل مسلماً بالغاً عاقلاً.
               </p>
             </div>
 
-            <div className="jn-steps">
+            <div className="jnz-steps">
               {filteredGhusulSteps.map((s) => (
-                <div key={s.num} className="jn-step">
-                  <div className="jn-step__num">{s.num}</div>
-                  <div className="jn-step__content">
-                    <strong className="jn-step__title">{s.title}</strong>
-                    <p className="jn-step__desc">{s.desc}</p>
+                <div key={s.num} className="jnz-step">
+                  <div className="jnz-step__num">{s.num}</div>
+                  <div className="jnz-step__content">
+                    <strong className="jnz-step__title">{s.title}</strong>
+                    <p className="jnz-step__desc">{s.desc}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <h2 className="jn-subtitle">تنبيهات مهمة</h2>
-            <ul className="jn-notes">
+            <h2 className="jnz-subtitle">تنبيهات مهمة</h2>
+            <ul className="jnz-notes">
               {GHUSL_NOTES.map((n) => (
-                <li key={n} className="jn-note">{n}</li>
+                <li key={n} className="jnz-note">{n}</li>
               ))}
             </ul>
           </section>
@@ -269,24 +289,24 @@ export default function JanazaPage() {
 
         {/* ── التكفين ── */}
         {tab === "takfin" && (
-          <section className="jn-section">
-            <div className="jn-info">
-              <span className="jn-info__icon">📌</span>
+          <section role="tabpanel" id="jnz-panel-takfin" aria-labelledby="jnz-tab-takfin" className="jnz-section">
+            <div className="jnz-info">
+              <span className="jnz-info__icon">📌</span>
               <p>
                 <strong>حكم التكفين:</strong> فرض كفاية. يُؤخذ كفن الميت من ماله قبل قسمة التركة،
                 ويُستحب أن يكون أبيض نظيفاً.
               </p>
             </div>
             {filteredTakfin.map((item) => (
-              <div key={item.title} className="jn-takfin-card">
-                <div className="jn-takfin-card__head">
-                  <span className="jn-takfin-card__icon">{item.icon}</span>
-                  <strong className="jn-takfin-card__title">{item.title}</strong>
+              <div key={item.title} className="jnz-takfin-card">
+                <div className="jnz-takfin-card__head">
+                  <span className="jnz-takfin-card__icon"><SectionIcon name={item.icon} size={24} /></span>
+                  <strong className="jnz-takfin-card__title">{item.title}</strong>
                 </div>
-                <p className="jn-takfin-card__desc">{item.desc}</p>
-                <blockquote className="jn-dalil">
-                  <p className="jn-dalil__text">{item.dalil}</p>
-                  <cite className="jn-dalil__ref">{item.ref}</cite>
+                <p className="jnz-takfin-card__desc">{item.desc}</p>
+                <blockquote className="jnz-dalil">
+                  <p className="jnz-dalil__text">{item.dalil}</p>
+                  <cite className="jnz-dalil__ref">{item.ref}</cite>
                 </blockquote>
               </div>
             ))}
@@ -295,37 +315,37 @@ export default function JanazaPage() {
 
         {/* ── الصلاة ── */}
         {tab === "salah" && (
-          <section className="jn-section">
-            <div className="jn-info">
-              <span className="jn-info__icon">📌</span>
+          <section role="tabpanel" id="jnz-panel-salah" aria-labelledby="jnz-tab-salah" className="jnz-section">
+            <div className="jnz-info">
+              <span className="jnz-info__icon">📌</span>
               <p>
                 <strong>حكم صلاة الجنازة:</strong> فرض كفاية. تصح منفردة وفي جماعة، وتُؤدَّى بعد الغسل
                 والتكفين قبل الدفن. لا سجود فيها ولا ركوع.
               </p>
             </div>
 
-            <h2 className="jn-subtitle">أركان صلاة الجنازة</h2>
-            <div className="jn-arkan-grid">
+            <h2 className="jnz-subtitle">أركان صلاة الجنازة</h2>
+            <div className="jnz-arkan-grid">
               {filteredSalahArkan.map((rk) => (
-                <div key={rk.num} className="jn-rukn-card">
-                  <span className="jn-rukn-card__num">{rk.num}</span>
+                <div key={rk.num} className="jnz-rukn-card">
+                  <span className="jnz-rukn-card__num">{rk.num}</span>
                   <div>
-                    <strong className="jn-rukn-card__title">{rk.title}</strong>
-                    <p className="jn-rukn-card__desc">{rk.desc}</p>
+                    <strong className="jnz-rukn-card__title">{rk.title}</strong>
+                    <p className="jnz-rukn-card__desc">{rk.desc}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <h2 className="jn-subtitle">دعاء الميت</h2>
-            <div className="jn-dua-box">
-              <span className="jn-dua-box__label">يُقال بعد التكبيرة الثالثة</span>
-              <p className="jn-dua-box__text">{DUA_MAYYIT}</p>
-              <cite className="jn-dua-box__ref">متفق عليه</cite>
+            <h2 className="jnz-subtitle">دعاء الميت</h2>
+            <div className="jnz-dua-box">
+              <span className="jnz-dua-box__label">يُقال بعد التكبيرة الثالثة</span>
+              <p className="jnz-dua-box__text">{DUA_MAYYIT}</p>
+              <cite className="jnz-dua-box__ref">متفق عليه</cite>
             </div>
 
-            <div className="jn-info jn-info--mt">
-              <span className="jn-info__icon">💡</span>
+            <div className="jnz-info jnz-info--mt">
+              <span className="jnz-info__icon">💡</span>
               <p>
                 من فاتته التكبيرة الأولى يدخل مع الإمام ثم يقضي ما فاته بعد التسليم.
                 ويُستحب أن يكون الإمام أمام صدر الرجل ووسط المرأة.
@@ -336,21 +356,21 @@ export default function JanazaPage() {
 
         {/* ── الدفن ── */}
         {tab === "dafn" && (
-          <section className="jn-section">
-            <div className="jn-info">
-              <span className="jn-info__icon">📌</span>
+          <section role="tabpanel" id="jnz-panel-dafn" aria-labelledby="jnz-tab-dafn" className="jnz-section">
+            <div className="jnz-info">
+              <span className="jnz-info__icon">📌</span>
               <p>
                 <strong>حكم الدفن:</strong> فرض كفاية، ويُستحب الإسراع به. ولا يجوز حرق الميت المسلم
                 ولا دفنه في البحر إلا لضرورة. ولا يُدفن في تابوت إلا لرطوبة الأرض.
               </p>
             </div>
-            <div className="jn-dafn-grid">
+            <div className="jnz-dafn-grid">
               {filteredDafn.map((d) => (
-                <div key={d.title} className="jn-dafn-card">
-                  <span className="jn-dafn-card__icon">{d.icon}</span>
+                <div key={d.title} className="jnz-dafn-card">
+                  <span className="jnz-dafn-card__icon"><SectionIcon name={d.icon} size={24} /></span>
                   <div>
-                    <strong className="jn-dafn-card__title">{d.title}</strong>
-                    <p className="jn-dafn-card__desc">{d.desc}</p>
+                    <strong className="jnz-dafn-card__title">{d.title}</strong>
+                    <p className="jnz-dafn-card__desc">{d.desc}</p>
                   </div>
                 </div>
               ))}
@@ -360,41 +380,41 @@ export default function JanazaPage() {
 
         {/* ── التعزية والآداب ── */}
         {tab === "aadab" && (
-          <section className="jn-section">
-            <div className="jn-info">
-              <span className="jn-info__icon">📌</span>
+          <section role="tabpanel" id="jnz-panel-aadab" aria-labelledby="jnz-tab-aadab" className="jnz-section">
+            <div className="jnz-info">
+              <span className="jnz-info__icon">📌</span>
               <p>
                 <strong>التعزية:</strong> سنة مؤكدة، وهي مواساة أهل الميت وتخفيف حزنهم.
                 قال النبي ﷺ: «مَا مِنْ مُؤْمِنٍ يُعَزِّي أَخَاهُ بِمُصِيبَةٍ إِلَّا كَسَاهُ اللَّهُ مِنْ حُلَلِ الْكَرَامَةِ يَوْمَ الْقِيَامَةِ». (سنن ابن ماجه، صحيح)
               </p>
             </div>
             {filteredAadab.map((a) => (
-              <div key={a.title} className="jn-adab-card">
-                <span className="jn-adab-card__icon">{a.icon}</span>
+              <div key={a.title} className="jnz-adab-card">
+                <span className="jnz-adab-card__icon"><SectionIcon name={a.icon} size={24} /></span>
                 <div>
-                  <strong className="jn-adab-card__title">{a.title}</strong>
-                  <p className="jn-adab-card__desc">{a.desc}</p>
+                  <strong className="jnz-adab-card__title">{a.title}</strong>
+                  <p className="jnz-adab-card__desc">{a.desc}</p>
                 </div>
               </div>
             ))}
 
-            <div className="jn-hadith-box">
-              <blockquote className="jn-hadith-box__text">
+            <div className="jnz-hadith-box">
+              <blockquote className="jnz-hadith-box__text">
                 أَكْثِرُوا ذِكْرَ هَاذِمِ اللَّذَّاتِ
               </blockquote>
-              <cite className="jn-hadith-box__ref">سنن الترمذي، صحيح | المعنى: الموت</cite>
+              <cite className="jnz-hadith-box__ref">سنن الترمذي، صحيح | المعنى: الموت</cite>
             </div>
           </section>
         )}
 
         <div className="twh-share">
-          <ShareButtons title="أحكام الجنازة — المجلس العلمي" url="https://majlisilm.com/janaza" />
+          <ShareButtons title="أحكام الجنازة — المجلس العلمي" url="https://www.majlisilm.com/janaza" />
         </div>
 
         {/* related */}
-        <nav className="jn-related" aria-label="صفحات ذات صلة">
-          <h2 className="jn-related__title">استكشف أيضاً</h2>
-          <div className="jn-related__grid">
+        <nav className="jnz-related" aria-label="صفحات ذات صلة">
+          <h2 className="jnz-related__title">استكشف أيضاً</h2>
+          <div className="jnz-related__grid">
             {[
               { href: "/tahara", label: "الطهارة وأحكامها" },
               { href: "/sawm", label: "الصيام وأحكامه" },
@@ -403,7 +423,7 @@ export default function JanazaPage() {
               { href: "/duas", label: "الأدعية الشرعية" },
               { href: "/arkan", label: "أركان الإسلام" },
             ].map((r) => (
-              <a key={r.href} href={r.href} className="jn-related__link">{r.label}</a>
+              <a key={r.href} href={r.href} className="jnz-related__link">{r.label}</a>
             ))}
           </div>
         </nav>

@@ -105,14 +105,6 @@ function routeForPath(path: string) {
     };
   }
 
-  if (normalized.startsWith("/fatwa/")) {
-    return {
-      ...requiredRoute("/fatwa"),
-      title: "فتوى شرعية | المجلس العلمي",
-      description: "تفاصيل فتوى شرعية — السؤال والجواب والمراجع.",
-    };
-  }
-
   if (normalized.startsWith("/rulings/")) {
     return {
       ...requiredRoute("/rulings"),
@@ -187,15 +179,7 @@ function routeForPath(path: string) {
     };
   }
 
-  if (normalized.startsWith("/learning-path/")) {
-    return {
-      ...requiredRoute("/learning-path"),
-      title: "خارطة طالب العلم | المجلس العلمي",
-      description: "مسار التعلم الشرعي التراكمي — الكتب والمتون والمستويات.",
-    };
-  }
-
-  if (normalized.startsWith("/quran/surah-stories/")) {
+if (normalized.startsWith("/quran/surah-stories/")) {
     return {
       ...requiredRoute("/quran/surah-stories"),
       title: "قصة سورة | المجلس العلمي",
@@ -288,7 +272,9 @@ export function applyPageSeo(options: PageSeoOptions) {
   upsertMeta("name", "description", options.description);
   upsertMeta("name", "keywords", keywords);
   upsertMeta("name", "robots", robots);
-  upsertMeta("name", "theme-color", "#1F4D3A");
+  // theme-color ديناميكي (فاتح/داكن) مُدار حصريًا عبر src/lib/theme-preference.ts
+  // (applyThemePreference) — لا تكتبه هنا بقيمة ثابتة، فذلك كان يُلغي التزامن مع
+  // الوضع الفعلي عند كل تنقّل بين الصفحات (2026-07-18).
   upsertMeta("name", "author", seoData.siteName);
 
   upsertMeta("property", "og:site_name", seoData.siteName);
@@ -361,9 +347,21 @@ export function usePageSeo(path: string) {
   }, [path]);
 }
 
-export function useLessonSeo(lesson: KuwaitLessonRecord | null, path: string) {
+export function useLessonSeo(lesson: KuwaitLessonRecord | null, path: string, loading = false) {
   useEffect(() => {
-    if (!lesson) return;
+    if (!lesson) {
+      // لا نضع عنوان/ميتا "غير موجود" أثناء التحميل — فقط بعد تأكّد الفشل،
+      // لتفادي وميض عنوان خاطئ قبل وصول البيانات.
+      if (loading) return;
+      applyPageSeo({
+        path,
+        title: "الدرس غير موجود | المجلس العلمي",
+        description: "لم يُعثر على هذا الدرس.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
 
     const meta = lessonSeoMeta(lesson);
     const breadcrumbs = breadcrumbJsonLd([
@@ -382,5 +380,5 @@ export function useLessonSeo(lesson: KuwaitLessonRecord | null, path: string) {
       canonicalPath: meta.canonicalPath,
       jsonLd: [lessonJsonLd(lesson), breadcrumbs, ...defaultSiteJsonLd()],
     });
-  }, [lesson, path]);
+  }, [lesson, path, loading]);
 }

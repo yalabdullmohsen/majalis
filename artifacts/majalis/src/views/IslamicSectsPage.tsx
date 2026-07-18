@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 
 type Sect = {
   id: string;
@@ -851,7 +853,7 @@ const CATEGORIES = ["الكل", "مدرسة سنية", "شيعة", "مدرسة �
 const STATUS_FILTER = ["الكل", "قائمة", "تاريخية"];
 
 const CATEGORY_COLOR: Record<string, string> = {
-  "مدرسة سنية": "#1F4D3A",
+  "مدرسة سنية": "#176B57",
   "شيعة": "#2D5A8E",
   "مدرسة عقدية": "#4A6741",
   "فرقة مستقلة": "#0E6E52",
@@ -859,6 +861,12 @@ const CATEGORY_COLOR: Record<string, string> = {
 };
 
 export default function IslamicSectsPage() {
+  const todaySect = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return SECTS[(day - 1 + SECTS.length) % SECTS.length];
+  }, []);
   const [category, setCategory] = useState("الكل");
   const [statusF, setStatusF] = useState("الكل");
   const [selected, setSelected] = useState<Sect | null>(null);
@@ -867,7 +875,7 @@ export default function IslamicSectsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/islamic-sects",
-      title: "الفرق الإسلامية — نشأتها وعقائدها | مجالس",
+      title: "الفرق الإسلامية — نشأتها وعقائدها | المجلس العلمي",
       description: "موسوعة علمية تاريخية في الفرق والمذاهب الإسلامية: نشأة كل فرقة وأصولها العقدية وأبرز علمائها وكتبها وانتشارها",
       keywords: ["فرق إسلامية", "مذاهب", "أهل السنة", "الشيعة", "المعتزلة", "الخوارج", "تاريخ الإسلام"],
       jsonLd: [
@@ -881,7 +889,7 @@ export default function IslamicSectsPage() {
             "@type": "ListItem",
             position: i + 1,
             name: s.fullName || s.name,
-            url: `https://majlisilm.com/islamic-sects#${s.id}`,
+            url: `https://www.majlisilm.com/islamic-sects#${s.id}`,
           })),
         },
       ],
@@ -900,7 +908,7 @@ export default function IslamicSectsPage() {
       {/* Hero */}
       <div
         className="page-hero"
-        style={{ background: "linear-gradient(135deg, #1F4D3A 0%, #2d7a5a 100%)" }}
+        style={{ background: "linear-gradient(135deg, #176B57 0%, #176B57 100%)" }}
       >
         <div className="page-hero-content">
           <div className="page-hero-icon" style={{ fontSize: "3rem" }}>🕌</div>
@@ -918,9 +926,20 @@ export default function IslamicSectsPage() {
             </span>
           </div>
           <div style={{ marginTop: "1rem" }}>
-            <ShareButtons title="الفرق الإسلامية — مجالس" />
+            <ShareButtons title="الفرق الإسلامية — المجلس العلمي" />
           </div>
         </div>
+      </div>
+
+      {/* فرقة اليوم */}
+      <div className="isod-card">
+        <div className="isod-card__badge"><Sparkles size={11} aria-hidden="true" /> مدرسة اليوم</div>
+        <span className="isod-card__icon">{todaySect.icon}</span>
+        <div className="isod-card__cat">{todaySect.category}</div>
+        <h2 className="isod-card__name">{todaySect.name}</h2>
+        <div className="isod-card__meta">{todaySect.era} · {todaySect.origin}</div>
+        <p className="isod-card__cause">{todaySect.foundingCause}</p>
+        {todaySect.quote && <p className="isod-card__quote">«{todaySect.quote}»</p>}
       </div>
 
       {/* Notice */}
@@ -958,6 +977,7 @@ export default function IslamicSectsPage() {
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
           {CATEGORIES.map((c) => (
             <button
+              type="button"
               key={c}
               onClick={() => setCategory(c)}
               style={{
@@ -966,9 +986,9 @@ export default function IslamicSectsPage() {
                 border: "1px solid",
                 fontSize: "0.85rem",
                 cursor: "pointer",
-                background: category === c ? "#1F4D3A" : "transparent",
-                color: category === c ? "#fff" : "#1F4D3A",
-                borderColor: "#1F4D3A",
+                background: category === c ? "#176B57" : "transparent",
+                color: category === c ? "#fff" : "#176B57",
+                borderColor: "#176B57",
                 fontFamily: "inherit",
               }}
             >
@@ -979,6 +999,7 @@ export default function IslamicSectsPage() {
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
           {STATUS_FILTER.map((s) => (
             <button
+              type="button"
               key={s}
               onClick={() => setStatusF(s)}
               style={{
@@ -987,9 +1008,9 @@ export default function IslamicSectsPage() {
                 border: "1px solid",
                 fontSize: "0.82rem",
                 cursor: "pointer",
-                background: statusF === s ? "#2d7a5a" : "transparent",
-                color: statusF === s ? "#fff" : "#2d7a5a",
-                borderColor: "#2d7a5a",
+                background: statusF === s ? "#176B57" : "transparent",
+                color: statusF === s ? "#fff" : "#176B57",
+                borderColor: "#176B57",
                 fontFamily: "inherit",
               }}
             >
@@ -1014,21 +1035,31 @@ export default function IslamicSectsPage() {
           <div
             key={sect.id}
             onClick={() => setSelected(selected?.id === sect.id ? null : sect)}
+            role="button"
+            tabIndex={0}
+            aria-pressed={selected?.id === sect.id}
+            aria-label={`عرض تفاصيل ${sect.name}`}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setSelected(selected?.id === sect.id ? null : sect);
+              }
+            }}
             style={{
               background: "#fff",
               borderRadius: "1rem",
               padding: "1.25rem",
-              boxShadow: selected?.id === sect.id ? "0 0 0 3px #1F4D3A" : "0 2px 8px rgba(0,0,0,0.08)",
+              boxShadow: selected?.id === sect.id ? "0 0 0 3px #176B57" : "0 2px 8px rgba(0,0,0,0.08)",
               cursor: "pointer",
               transition: "box-shadow 0.2s, transform 0.15s",
-              border: `2px solid ${selected?.id === sect.id ? "#1F4D3A" : "transparent"}`,
+              border: `2px solid ${selected?.id === sect.id ? "#176B57" : "transparent"}`,
             }}
           >
             {/* Header */}
             <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.75rem" }}>
-              <span style={{ fontSize: "2rem" }}>{sect.icon}</span>
+              <span style={{ fontSize: "2rem" }}><SectionIcon name={sect.icon} size={24} /></span>
               <div>
-                <div style={{ fontWeight: "700", fontSize: "1rem", color: "#1F4D3A" }}>{sect.name}</div>
+                <div style={{ fontWeight: "700", fontSize: "1rem", color: "#176B57" }}>{sect.name}</div>
                 <div style={{ fontSize: "0.78rem", color: "#888" }}>{sect.era}</div>
               </div>
             </div>
@@ -1060,13 +1091,13 @@ export default function IslamicSectsPage() {
                   padding: "0.2rem 0.6rem",
                   borderRadius: "999px",
                   background: sect.status === "قائمة" ? "#e8f5e9" : "#f5f5f5",
-                  color: sect.status === "قائمة" ? "#1F4D3A" : "#888",
+                  color: sect.status === "قائمة" ? "#176B57" : "#888",
                   fontWeight: "600",
                 }}
               >
                 {sect.status === "قائمة" ? "✅ قائمة" : "📜 تاريخية"}
               </span>
-              <span style={{ fontSize: "0.75rem", color: "#1F4D3A" }}>
+              <span style={{ fontSize: "0.75rem", color: "#176B57" }}>
                 {selected?.id === sect.id ? "▲ إغلاق" : "▼ التفاصيل"}
               </span>
             </div>
@@ -1117,7 +1148,7 @@ export default function IslamicSectsPage() {
                     <blockquote
                       style={{
                         marginTop: "0.9rem",
-                        borderRight: "3px solid #1F4D3A",
+                        borderRight: "3px solid #176B57",
                         paddingRight: "0.75rem",
                         color: "#444",
                         fontStyle: "italic",

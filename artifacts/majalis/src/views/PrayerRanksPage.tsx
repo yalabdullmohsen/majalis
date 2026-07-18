@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
@@ -163,6 +164,12 @@ function GradeBadge({ grade }: { grade: string }) {
 
 export function PrayerRanksContent() {
   const [search, setSearch] = useState("");
+  const todayVirtue = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return PRAYER_VIRTUES[(day - 1 + PRAYER_VIRTUES.length) % PRAYER_VIRTUES.length];
+  }, []);
 
   const filteredRanks = useMemo(() =>
     search.trim() ? RANKS.filter(r => arabicMatchAny([r.title, r.label, r.ruling, r.text, r.benefit], search)) : RANKS,
@@ -185,6 +192,17 @@ export function PrayerRanksContent() {
 
   return (
     <div className="prayer-ranks-page">
+      {/* فضيلة الصلاة اليوم */}
+      <div className="prvod-card">
+        <div className="prvod-card__badge"><Sparkles size={11} aria-hidden="true" /> فضيلة الصلاة اليوم</div>
+        <h2 className="prvod-card__title">{todayVirtue.title}</h2>
+        <p className="prvod-card__text">{todayVirtue.text}</p>
+        <div className="prvod-card__meta">
+          <GradeBadge grade={todayVirtue.grade} />
+          {todayVirtue.narrator && <span className="prvod-card__narrator">رواه {todayVirtue.narrator}</span>}
+          <span className="prvod-card__source">{todayVirtue.source}</span>
+        </div>
+      </div>
       <div className="prayer-ranks-actions">
         <button type="button" className="ui-card-btn" onClick={share}>مشاركة</button>
         <button type="button" className="ui-card-btn" onClick={() => window.print()}>طباعة / PDF</button>
@@ -271,7 +289,7 @@ export function PrayerRanksContent() {
         </ul>
       </section>
       <div className="twh-share">
-        <ShareButtons title="فضائل الصلاة ومراتبها — المجلس العلمي" url="https://majlisilm.com/prayer-ranks" />
+        <ShareButtons title="فضائل الصلاة ومراتبها — المجلس العلمي" url="https://www.majlisilm.com/prayer-ranks" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في فقه الصلاة" count={4} />
@@ -287,7 +305,7 @@ export default function PrayerRanksPage() {
       title: "فضائل الصلاة ومراتبها | المجلس العلمي",
       description: "مراتب الناس الخمسة في الصلاة بحسب ابن القيم، مع فضائل الصلاة من القرآن والسنة الصحيحة ووصايا في إصلاح الصلاة.",
       keywords: ["فضائل الصلاة", "مراتب الصلاة", "الصلاة في الإسلام", "أهمية الصلاة", "فقه الصلاة", "خشوع"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "فضائل الصلاة ومراتبها", url: "https://majlisilm.com/prayer-ranks", about: { "@type": "Thing", name: "فضائل الصلاة في الإسلام" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "فضائل الصلاة ومراتبها", url: "https://www.majlisilm.com/prayer-ranks", about: { "@type": "Thing", name: "فضائل الصلاة في الإسلام" } }],
     });
   }, []);
 

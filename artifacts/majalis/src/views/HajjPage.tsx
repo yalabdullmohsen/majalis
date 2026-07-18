@@ -1,8 +1,11 @@
+import "@/styles/pages/hajj.css";
 import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 
 
 /* ────── types ────── */
@@ -341,13 +344,19 @@ export default function HajjPage() {
             "@type": "ListItem",
             position: i + 1,
             name: r.title,
-            url: `https://majlisilm.com/hajj#${r.id}`,
+            url: `https://www.majlisilm.com/hajj#${r.id}`,
           })),
         },
       ],
     });
   }, []);
 
+  const todayRukn = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return ARKAN[(day - 1 + ARKAN.length) % ARKAN.length];
+  }, []);
   const [tab, setTab] = useState<HajjTab>("overview");
   const [openRukn, setOpenRukn] = useState<string | null>("ihram");
   const [search, setSearch] = useState("");
@@ -383,21 +392,34 @@ export default function HajjPage() {
         </div>
 
         {/* tabs */}
-        <nav className="hj-tabs" aria-label="أقسام الحج">
+        <div className="hj-tabs" role="tablist" aria-label="أقسام الحج">
           {TABS.map((t) => (
             <button
               key={t.id}
+              id={`hjp-tab-${t.id}`}
+              role="tab"
               type="button"
               className={`hj-tab${tab === t.id ? " hj-tab--active" : ""}`}
               onClick={() => setTab(t.id)}
-              aria-pressed={tab === t.id}
+              aria-selected={tab === t.id}
+              aria-controls={`hjp-panel-${t.id}`}
             >
-              <span className="hj-tab__icon">{t.icon}</span>
+              <span className="hj-tab__icon"><SectionIcon name={t.icon} size={24} /></span>
               <span className="hj-tab__label">{t.label}</span>
             </button>
           ))}
-        </nav>
+        </div>
       </section>
+
+      {/* ركن الحج اليوم */}
+      <div className="hjod-card">
+        <div className="hjod-card__badge"><Sparkles size={11} aria-hidden="true" /> ركن الحج اليوم</div>
+        <span className="hjod-card__icon">{todayRukn.icon}</span>
+        <div className="hjod-card__num">الركن {todayRukn.num}</div>
+        <h2 className="hjod-card__title">{todayRukn.title}</h2>
+        <p className="hjod-card__sub">{todayRukn.subtitle}</p>
+        <p className="hjod-card__dalil">«{todayRukn.dalil}»<span className="hjod-card__ref"> — {todayRukn.dalilRef}</span></p>
+      </div>
 
       {tab !== "overview" && (
         <div className="hj-search-wrap">
@@ -410,7 +432,7 @@ export default function HajjPage() {
       <div className="hj-body">
         {/* ── نظرة عامة ── */}
         {tab === "overview" && (
-          <section className="hj-section">
+          <section role="tabpanel" id="hjp-panel-overview" aria-labelledby="hjp-tab-overview" className="hj-section">
             <div className="hj-overview-grid">
               {[
                 { icon: "☪️", label: "الفريضة", value: "مرة في العمر لمن استطاع" },
@@ -419,7 +441,7 @@ export default function HajjPage() {
                 { icon: "📖", label: "الدليل", value: "وَلِلَّهِ عَلَى النَّاسِ حِجُّ الْبَيْتِ (آل عمران: 97)" },
               ].map((item) => (
                 <div key={item.label} className="hj-stat-card">
-                  <span className="hj-stat-card__icon">{item.icon}</span>
+                  <span className="hj-stat-card__icon"><SectionIcon name={item.icon} size={24} /></span>
                   <span className="hj-stat-card__label">{item.label}</span>
                   <span className="hj-stat-card__value">{item.value}</span>
                 </div>
@@ -445,7 +467,7 @@ export default function HajjPage() {
                 { icon: "🤲", text: "دعاء الحاج مستجاب، والحاج يشفع لسبعمئة من أهله", ref: "ابن ماجه، حسن" },
               ].map((f) => (
                 <div key={f.text} className="hj-fadl-card">
-                  <span className="hj-fadl-card__icon">{f.icon}</span>
+                  <span className="hj-fadl-card__icon"><SectionIcon name={f.icon} size={24} /></span>
                   <p className="hj-fadl-card__text">{f.text}</p>
                   <cite className="hj-fadl-card__ref">{f.ref}</cite>
                 </div>
@@ -470,7 +492,7 @@ export default function HajjPage() {
 
         {/* ── الأركان ── */}
         {tab === "arkan" && (
-          <section className="hj-section">
+          <section role="tabpanel" id="hjp-panel-arkan" aria-labelledby="hjp-tab-arkan" className="hj-section">
             <p className="hj-section__intro">
               أركان الحج هي ما لا يصح الحج بدونها ولا تجبر بالدم. من ترك ركناً لم يتم حجّه.
             </p>
@@ -485,7 +507,7 @@ export default function HajjPage() {
                     aria-expanded={isOpen}
                   >
                     <span className="hj-card__num">{rk.num}</span>
-                    <span className="hj-card__icon">{rk.icon}</span>
+                    <span className="hj-card__icon"><SectionIcon name={rk.icon} size={24} /></span>
                     <div className="hj-card__info">
                       <span className="hj-card__title">{rk.title}</span>
                       <span className="hj-card__sub">{rk.subtitle}</span>
@@ -514,13 +536,13 @@ export default function HajjPage() {
 
         {/* ── الواجبات ── */}
         {tab === "wajibat" && (
-          <section className="hj-section">
+          <section role="tabpanel" id="hjp-panel-wajibat" aria-labelledby="hjp-tab-wajibat" className="hj-section">
             <p className="hj-section__intro">
               واجبات الحج هي ما يلزم فعله، ومن تركه أثم ويجبره بدم (ذبح شاة)، لكن حجّه صحيح.
             </p>
             {filteredWajibat.map((w) => (
               <div key={w.id} className="hj-wajib-card">
-                <span className="hj-wajib-card__icon">{w.icon}</span>
+                <span className="hj-wajib-card__icon"><SectionIcon name={w.icon} size={24} /></span>
                 <div className="hj-wajib-card__content">
                   <strong className="hj-wajib-card__title">{w.title}</strong>
                   <p className="hj-wajib-card__desc">{w.description}</p>
@@ -537,11 +559,11 @@ export default function HajjPage() {
 
         {/* ── المشاعر ── */}
         {tab === "mashaer" && (
-          <section className="hj-section">
+          <section role="tabpanel" id="hjp-panel-mashaer" aria-labelledby="hjp-tab-mashaer" className="hj-section">
             {filteredMashaer.map((m) => (
               <div key={m.id} className="hj-mashar-card">
                 <div className="hj-mashar-card__head">
-                  <span className="hj-mashar-card__icon">{m.icon}</span>
+                  <span className="hj-mashar-card__icon"><SectionIcon name={m.icon} size={24} /></span>
                   <div>
                     <strong className="hj-mashar-card__name">{m.name}</strong>
                     <span className="hj-mashar-card__day">{m.day}</span>
@@ -561,7 +583,7 @@ export default function HajjPage() {
 
         {/* ── العمرة ── */}
         {tab === "umra" && (
-          <section className="hj-section">
+          <section role="tabpanel" id="hjp-panel-umra" aria-labelledby="hjp-tab-umra" className="hj-section">
             <p className="hj-section__intro">
               العمرة سنة مؤكدة يمكن أداؤها في أي وقت من السنة ما عدا أيام الحج عند بعض العلماء.
               تتكون من أربعة خطوات أساسية.
@@ -571,7 +593,7 @@ export default function HajjPage() {
               {filteredUmraSteps.map((s) => (
                 <div key={s.num} className="hj-umra-step">
                   <div className="hj-umra-step__num">{s.num}</div>
-                  <div className="hj-umra-step__icon">{s.icon}</div>
+                  <div className="hj-umra-step__icon"><SectionIcon name={s.icon} size={24} /></div>
                   <div className="hj-umra-step__content">
                     <strong className="hj-umra-step__title">{s.title}</strong>
                     <p className="hj-umra-step__desc">{s.desc}</p>
@@ -601,7 +623,7 @@ export default function HajjPage() {
                 { icon: "💒", text: "عقد النكاح" },
               ].map((item) => (
                 <div key={item.text} className="hj-mahzur-item">
-                  <span className="hj-mahzur-item__icon">{item.icon}</span>
+                  <span className="hj-mahzur-item__icon"><SectionIcon name={item.icon} size={24} /></span>
                   <span className="hj-mahzur-item__text">{item.text}</span>
                 </div>
               ))}
@@ -610,7 +632,7 @@ export default function HajjPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="الحج والعمرة — المجلس العلمي" url="https://majlisilm.com/hajj" />
+          <ShareButtons title="الحج والعمرة — المجلس العلمي" url="https://www.majlisilm.com/hajj" />
         </div>
 
         {/* related */}

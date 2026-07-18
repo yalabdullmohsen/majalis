@@ -583,7 +583,7 @@ function ThesesTab() {
           <p className="ar-contribute-banner__title">هل لديك رسالة علمية؟</p>
           <p className="ar-contribute-banner__sub">شارك رسالتك مع مجتمع الباحثين في العلوم الإسلامية</p>
         </div>
-        <Link href="/submit-content" className="ar-contribute-banner__btn">إضافة رسالة</Link>
+        <Link href="/submit" className="ar-contribute-banner__btn">إضافة رسالة</Link>
       </div>
     </div>
   );
@@ -625,7 +625,7 @@ function InstitutionsTab() {
         <div className="ar-empty__icon"><Landmark size={44} strokeWidth={1.3} /></div>
         <p className="ar-empty__title">لا توجد أبحاث مؤسسية بعد</p>
         <p className="ar-empty__sub">نعمل على تجميع أبحاث المراكز والجامعات الإسلامية</p>
-        <Link href="/submit-content" className="ar-empty__btn">إرسال بحث</Link>
+        <Link href="/submit" className="ar-empty__btn">إرسال بحث</Link>
       </div>
     </div>
   );
@@ -641,7 +641,7 @@ function PersonalTab() {
         <div className="ar-submit-prompt__body">
           <p className="ar-submit-prompt__title">شارك بحثك مع المجتمع العلمي</p>
           <p className="ar-submit-prompt__sub">يمكنك نشر أبحاثك ودراساتك وتلخيصاتك لتستفيد منها المجتمع المسلم حول العالم.</p>
-          <Link href="/submit-content" className="ar-submit-prompt__btn">إضافة بحث</Link>
+          <Link href="/submit" className="ar-submit-prompt__btn">إضافة بحث</Link>
         </div>
       </div>
       <div className="ar-empty">
@@ -664,7 +664,7 @@ export default function AcademicResearchPage() {
       title: "الأبحاث العلمية الإسلامية | المجلس العلمي",
       description: "مستودع شامل للرسائل الجامعية وأبحاث المؤسسات والباحثين في العلوم الإسلامية، ماجستير ودكتوراه وبحوث متخصصة.",
       keywords: ["أبحاث إسلامية", "رسائل جامعية", "رسائل ماجستير", "رسائل دكتوراه", "بحوث شرعية"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الأبحاث العلمية الإسلامية", url: "https://majlisilm.com/academic-research", about: { "@type": "Thing", name: "مستودع الأبحاث والرسائل الجامعية الإسلامية" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الأبحاث العلمية الإسلامية", url: "https://www.majlisilm.com/academic-research", about: { "@type": "Thing", name: "مستودع الأبحاث والرسائل الجامعية الإسلامية" } }],
     });
   }, []);
 
@@ -705,16 +705,19 @@ export default function AcademicResearchPage() {
       </div>
 
       {/* تبويبات */}
-      <div className="ar-tabs-bar">
+      <div className="ar-tabs-bar" role="tablist" aria-label="أقسام البحث الأكاديمي">
         {TABS.map(t => {
           const I = t.Icon;
           return (
             <button
               key={t.id}
+              id={`ar-tab-${t.id}`}
               type="button"
+              role="tab"
               className={`ar-tab-btn${activeTab === t.id ? " ar-tab-btn--active" : ""}`}
               onClick={() => setActiveTab(t.id)}
-              aria-pressed={activeTab === t.id}
+              aria-selected={activeTab === t.id}
+              aria-controls={`ar-panel-${t.id}`}
             >
               <span className="ar-tab-btn__icon" aria-hidden="true"><I size={16} strokeWidth={1.6} /></span>
               <span className="ar-tab-btn__label">{t.label}</span>
@@ -726,9 +729,21 @@ export default function AcademicResearchPage() {
 
       {/* محتوى */}
       <div className="ar-content">
-        {activeTab === "theses"       && <ThesesTab />}
-        {activeTab === "institutions" && <InstitutionsTab />}
-        {activeTab === "personal"     && <PersonalTab />}
+        {activeTab === "theses" && (
+          <div role="tabpanel" id="ar-panel-theses" aria-labelledby="ar-tab-theses">
+            <ThesesTab />
+          </div>
+        )}
+        {activeTab === "institutions" && (
+          <div role="tabpanel" id="ar-panel-institutions" aria-labelledby="ar-tab-institutions">
+            <InstitutionsTab />
+          </div>
+        )}
+        {activeTab === "personal" && (
+          <div role="tabpanel" id="ar-panel-personal" aria-labelledby="ar-tab-personal">
+            <PersonalTab />
+          </div>
+        )}
       </div>
 
       {/* رابط الباحث الشرعي */}
@@ -740,7 +755,7 @@ export default function AcademicResearchPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="البحث الأكاديمي الإسلامي — المجلس العلمي" url="https://majlisilm.com/academic-research" />
+        <ShareButtons title="البحث الأكاديمي الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/academic-research" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["tarikh", "hadith"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />

@@ -31,7 +31,7 @@ assert("detect twitter legacy", detectPlatform("https://twitter.com/user/status/
 assert("detect youtube", detectPlatform("https://youtu.be/abc") === "youtube");
 assert("detect youtube watch", detectPlatform("https://www.youtube.com/watch?v=abc") === "youtube");
 assert("detect telegram", detectPlatform("https://t.me/channel/1") === "telegram");
-assert("detect website", detectPlatform("https://majlisilm.com/lessons") === "website");
+assert("detect website", detectPlatform("https://www.majlisilm.com/lessons") === "website");
 assert("detect facebook unsupported", detectPlatform("https://facebook.com/page") === "facebook");
 
 // Supported platforms

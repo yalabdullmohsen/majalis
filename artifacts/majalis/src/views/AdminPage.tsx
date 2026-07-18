@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import "@/styles/admin.css";
+import { applyPageSeo } from "@/lib/seo";
 import { AdminShell, type AdminSection } from "@/views/admin/AdminShell";
 import { DashboardSection } from "@/views/admin/DashboardSection";
 import { LessonsSection } from "@/views/admin/LessonsSection";
@@ -14,17 +15,18 @@ import { UsersSection } from "@/views/admin/UsersSection";
 import { SettingsSection } from "@/views/admin/SettingsSection";
 import { AggregatorSection } from "@/views/admin/AggregatorSection";
 import { ReportsSection } from "@/views/admin/ReportsSection";
+import { ClientErrorLogsSection } from "@/views/admin/ClientErrorLogsSection";
 import { FiqhCouncilSection } from "@/views/admin/FiqhCouncilSection";
-import { FatwaAdminSection } from "@/views/admin/FatwaAdminSection";
 import { RulingsSection } from "@/views/admin/RulingsSection";
 import { AnnualCoursesSection } from "@/views/admin/AnnualCoursesSection";
+import { LearningPathsSection } from "@/views/admin/LearningPathsSection";
+import { CategoriesSection } from "@/views/admin/CategoriesSection";
 import { UpdatesSection } from "@/views/admin/UpdatesSection";
 import { KnowledgeEngineSection } from "@/views/admin/KnowledgeEngineSection";
 import { ScholarlyVerificationSection } from "@/views/admin/ScholarlyVerificationSection";
 import { VerifiedKnowledgeSection } from "@/views/admin/VerifiedKnowledgeSection";
 import { KnowledgeReasoningSection } from "@/views/admin/KnowledgeReasoningSection";
 import { SearchAnalyticsSection } from "@/views/admin/SearchAnalyticsSection";
-import { DigitalLearningSection } from "@/views/admin/DigitalLearningSection";
 import { AutonomousAiSection } from "@/views/admin/AutonomousAiSection";
 import { GlobalReferenceSection } from "@/views/admin/GlobalReferenceSection";
 import { IslamicIntelligenceSection } from "@/views/admin/IslamicIntelligenceSection";
@@ -39,19 +41,19 @@ import { UniversitiesSection } from "@/views/admin/UniversitiesAdminPage";
 import { ProphetStoriesSection } from "@/views/admin/ProphetStoriesSection";
 import { IslamicStoriesSection } from "@/views/admin/IslamicStoriesSection";
 import { ImageImportSection } from "@/views/admin/ImageImportSection";
+import { WeekDayFactsSection } from "@/views/admin/WeekDayFactsSection";
+import { ArbaeenLoveSection } from "@/views/admin/ArbaeenLoveSection";
 
 export default function AdminPage() {
   const [location] = useLocation();
 
   useEffect(() => {
-    document.title = "لوحة الإدارة | المجلس العلمي";
-    const meta = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null;
-    if (meta) meta.content = "noindex, nofollow";
-    else {
-      const m = document.createElement("meta");
-      m.name = "robots"; m.content = "noindex, nofollow";
-      document.head.appendChild(m);
-    }
+    applyPageSeo({
+      path: "/admin",
+      title: "لوحة الإدارة | المجلس العلمي",
+      description: "لوحة إدارة محتوى منصة المجلس العلمي — للمديرين المعتمدين فقط.",
+      robots: "noindex, nofollow",
+    });
   }, []);
 
   const initialSection = (() => {
@@ -83,7 +85,6 @@ export default function AdminPage() {
       {section === "verified-knowledge" && <VerifiedKnowledgeSection />}
       {section === "knowledge-reasoning" && <KnowledgeReasoningSection />}
       {section === "search-analytics" && <SearchAnalyticsSection />}
-      {section === "digital-learning" && <DigitalLearningSection />}
       {section === "autonomous-ai" && <AutonomousAiSection />}
       {section === "global-reference" && <GlobalReferenceSection />}
       {section === "islamic-intelligence" && <IslamicIntelligenceSection />}
@@ -102,10 +103,14 @@ export default function AdminPage() {
       {section === "users" && <UsersSection />}
       {section === "settings" && <SettingsSection />}
       {section === "reports" && <ReportsSection />}
+      {section === "error-logs" && <ClientErrorLogsSection />}
       {section === "fiqh-council" && <FiqhCouncilSection />}
-      {section === "fatwa" && <FatwaAdminSection />}
       {section === "rulings" && <RulingsSection />}
       {section === "annual-courses" && <AnnualCoursesSection />}
+      {section === "learning-paths" && <LearningPathsSection />}
+      {section === "week-day-facts" && <WeekDayFactsSection />}
+      {section === "arbaeen-love" && <ArbaeenLoveSection />}
+      {section === "categories" && <CategoriesSection />}
       {section === "updates" && <UpdatesSection />}
     </AdminShell>
   );

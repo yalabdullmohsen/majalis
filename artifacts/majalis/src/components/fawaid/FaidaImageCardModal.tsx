@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toPng } from "html-to-image";
 
 type Props = {
@@ -11,6 +11,12 @@ type Props = {
 export function FaidaImageCardModal({ text, source, category, onClose }: Props) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState<"idle" | "generating" | "done" | "error">("idle");
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [onClose]);
 
   const handleDownload = useCallback(async () => {
     if (!cardRef.current) return;
@@ -50,6 +56,8 @@ export function FaidaImageCardModal({ text, source, category, onClose }: Props) 
   }, []);
 
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
+    // مساران بديلان كاملان بلوحة المفاتيح.
     <div
       className="fic-backdrop"
       role="dialog"
@@ -65,7 +73,7 @@ export function FaidaImageCardModal({ text, source, category, onClose }: Props) 
         <div
           ref={cardRef}
           className="fic-card"
-          style={{ fontFamily: "'Noto Naskh Arabic', 'Segoe UI', Tahoma, sans-serif" }}
+          style={{ fontFamily: "'IBM Plex Sans Arabic', 'Noto Sans Arabic', system-ui, sans-serif" }}
         >
           <div className="fic-card__inner">
             <div className="fic-card__top">

@@ -86,8 +86,8 @@ export const CONTENT_TYPE_COLOR: Record<CitationContentType, string> = {
   quran_ayah:   "#065f46",
   hadith:       "#1d4ed8",
   scholar_quote:"#7c3aed",
-  fatwa:        "#1F4D3A",
-  book:         "#1F4D3A",
+  fatwa:        "#176B57",
+  book:         "#176B57",
   article:      "#0369a1",
   research:     "#0c4a6e",
   lesson:       "#047857",
@@ -109,7 +109,7 @@ export const STYLE_LABEL: Record<CitationStyle, string> = {
 };
 
 export const MAX_QUOTE_LENGTH = 500;
-export const PLATFORM_URL = "https://majlisilm.com";
+export const PLATFORM_URL = "https://www.majlisilm.com";
 
 // ── مساعدات ──────────────────────────────────────────────────────────────────
 

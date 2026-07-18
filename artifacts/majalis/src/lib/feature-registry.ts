@@ -40,19 +40,18 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "quiz",         label: "المسابقة",           path: "/quiz",         group: "تفاعلي",        status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "stories",      label: "القصص الإسلامية",   path: "/stories",      group: "قصص",           status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "prophets",     label: "قصص الأنبياء",      path: "/prophets",     group: "قصص",           status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "islamic-stories",label:"صحابة وفتوحات",    path: "/islamic-stories",group:"قصص",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "updates",      label: "آخر المستجدات",     path: "/updates",      group: "أخبار",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "miracles",     label: "الإعجاز العلمي",    path: "/miracles",     group: "علم",           status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "seerah",       label: "السيرة النبوية",    path: "/seerah",       group: "سيرة",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "fiqh",         label: "الفقه الإسلامي",   path: "/fiqh",         group: "فقه",           status: "active",       inSideNav: false, inBottomNav: false },
 
   // ── الأحكام والفقه ───────────────────────────────────────────
-  { id: "fatwa",        label: "الفتاوى",           path: "/fatwa",        group: "فقه",           status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "rulings",      label: "الأحكام الشرعية",  path: "/rulings",      group: "فقه",           status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "fiqh-council", label: "المجمع الفقهي",    path: "/fiqh-council", group: "فقه",           status: "active",       inSideNav: true,  inBottomNav: false },
 
   // ── القرآن والأذكار ──────────────────────────────────────────
-  { id: "quran",        label: "القرآن الكريم",    path: "/quran",        group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "mushaf",        label: "المصحف الشريف",   path: "/mushaf",       group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "quran",        label: "القرآن الكريم",    path: "/quran-hub",    group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "quran-circles",label:"حلقات التحفيظ",     path: "/quran-circles",group:"قرآن",           status: "coming-soon",  inSideNav: true,  inBottomNav: false },
   { id: "quran-radio",  label: "إذاعة القرآن",     path: "/quran-radio",  group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "muezzins",     label: "الأذان والمؤذنون",  path: "/muezzins",     group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
@@ -70,7 +69,8 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "universities", label: "دليل الجامعات",    path: "/universities", group: "مؤسسات",        status: "active",       inSideNav: true,  inBottomNav: false },
 
   // ── التعلم ───────────────────────────────────────────────────
-  { id: "learning-path",label: "خارطة طالب العلم", path: "/learning-path",group: "تعلم",          status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "learn",         label: "أبواب العلم",       path: "/learn",        group: "تعلم",          status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "learning-paths",label: "المسارات العلمية", path: "/learning/paths",group: "تعلم",     status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "my-learning",  label: "لوحتي التعليمية",  path: "/my-learning",  group: "تعلم",          status: "requires-auth",inSideNav: true,  inBottomNav: false },
   { id: "learning-plan",label: "خطة التعلم",       path: "/learning-plan",group: "تعلم",          status: "active",       inSideNav: true,  inBottomNav: false },
 

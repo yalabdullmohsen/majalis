@@ -971,7 +971,7 @@ export const SCIENTIFIC_ANNOUNCEMENTS: ScientificAnnouncement[] = [
     sheikh: "أ. د. محمد السلمي",
     day: "الثلاثاء",
     time: "7:30 مساءً",
-    liveUrl: "https://majlisilm.com/quran-live",
+    liveUrl: "https://www.majlisilm.com/quran-live",
     notes: [
       "دورة مكثفة تُعنى بتعليم أساسيات اللغة العربية لفهم القرآن.",
       "تشمل: الإعراب الأساسي، الأفعال الثلاثية وأوزانها، أسلوب التوكيد والشرط.",
@@ -1049,7 +1049,7 @@ export const SCIENTIFIC_ANNOUNCEMENTS: ScientificAnnouncement[] = [
     sheikh: "د. سمر العتيبي",
     day: "الثلاثاء",
     time: "6:00 مساءً",
-    liveUrl: "https://majlisilm.com/family-live",
+    liveUrl: "https://www.majlisilm.com/family-live",
     notes: [
       "دروس موجهة للأسرة المسلمة في بناء بيت إسلامي متماسك.",
       "تشمل: حقوق الزوجين، التربية الصحيحة للأبناء، تحصين الأسرة.",

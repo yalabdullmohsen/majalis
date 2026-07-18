@@ -38,7 +38,17 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
   usePageView("annual-courses", params.id);
 
   useEffect(() => {
-    if (!item) return;
+    if (loading) return;
+    if (!item) {
+      applyPageSeo({
+        path: `/annual-courses/${params.id}`,
+        title: "الدورة غير موجودة | المجلس العلمي",
+        description: "لم يُعثر على هذه الدورة العلمية.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     const path = `/annual-courses/${item.id}`;
     applyPageSeo({
       path,
@@ -63,7 +73,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
         ]),
       ],
     });
-  }, [item]);
+  }, [item, loading, params.id]);
 
   if (loading) return <SkeletonPage />;
   if (!item) return <Empty text="الدورة غير موجودة." />;

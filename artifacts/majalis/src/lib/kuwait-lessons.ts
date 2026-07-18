@@ -11,6 +11,7 @@ import {
   formatGregorianDate,
   formatHijriDate,
   formatRelativeTimeDetailed,
+  isLessonInProgress,
   isOccurrencePast,
 } from "@/lib/lesson-time";
 
@@ -243,12 +244,13 @@ export function dedupeKuwaitLessons(lessons: KuwaitLessonRecord[]): KuwaitLesson
 }
 
 export function sortKuwaitLessons(lessons: KuwaitLessonRecord[]): KuwaitLessonRecord[] {
-  // نعيد حساب nextOccurrenceMs الآن — القيمة المُخزّنة تصبح قديمة بمرور الأيام
   const now = new Date();
-  const enriched = lessons.map((l) => ({
-    ...l,
-    nextOccurrenceMs: computeNextOccurrenceMs(l.day, l.time, now),
-  }));
+  const enriched = lessons.map((l) => {
+    const inProgress = isLessonInProgress(l.day, l.time, now);
+    // الدرس الجاري: nextOccurrenceMs = 0 → يظهر في أعلى القائمة
+    const nextMs = inProgress ? 0 : computeNextOccurrenceMs(l.day, l.time, now);
+    return { ...l, nextOccurrenceMs: nextMs };
+  });
   return enriched.sort((a, b) => {
     if (a.nextOccurrenceMs !== b.nextOccurrenceMs) return a.nextOccurrenceMs - b.nextOccurrenceMs;
     const gov = a.governorate.localeCompare(b.governorate, "ar");

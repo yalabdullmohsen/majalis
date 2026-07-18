@@ -1,12 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
-import { Banknote, BookOpen, Building2, ClipboardList, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, Library, MapPin, MessageCircle, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Banknote, BookOpen, Building2, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, Library, MapPin, MessageCircle, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import type { LucideIcon } from "lucide-react";
 import { Link, useSearch } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
-import { getFatwas } from "@/lib/platform-content-service";
-import { getLatestFatwas } from "@/lib/fatwa-seed";
 import { getRulingsEncyclopedia } from "@/lib/rulings-service";
 import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
 import { SkeletonCardGrid, Empty } from "@/components/ui-common";
@@ -16,7 +15,7 @@ import { RequestManager } from "@/lib/request-manager";
 import type { ShariaRulingExtended } from "@/lib/rulings-types";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
-type Tab = "fatawa" | "rulings" | "qa" | "council";
+type Tab = "rulings" | "qa" | "council";
 
 const RULINGS_ICON_MAP: Record<string, LucideIcon> = {
   Landmark, Droplets, Banknote, Moon, MapPin, Handshake, Utensils, Shirt, Users,
@@ -28,7 +27,6 @@ function CatIcon({ name }: { name?: string }) {
 }
 
 const TABS: { key: Tab; label: string; Icon: LucideIcon }[] = [
-  { key: "fatawa",  label: "الفتاوى",          Icon: ClipboardList },
   { key: "rulings", label: "الأحكام الشرعية",  Icon: BookOpen },
   { key: "qa",      label: "الأسئلة والأجوبة", Icon: MessageCircle },
   { key: "council", label: "المجمع الفقهي",     Icon: Building2 },
@@ -55,16 +53,15 @@ type FiqhTopic = { emoji: string; title: string; desc: string; href: string; col
 
 const FIQH_TOPICS: FiqhTopic[] = [
   { emoji: "🚿", title: "الطهارة",           desc: "الوضوء والغسل والتيمم",          href: "/tahara",       color: "#0F766E" },
-  { emoji: "🕌", title: "الصلاة",            desc: "أحكام الصلاة وأوقاتها",          href: "/salah-guide",  color: "#1F4D3A" },
+  { emoji: "🕌", title: "الصلاة",            desc: "أحكام الصلاة وأوقاتها",          href: "/salah-guide",  color: "#176B57" },
   { emoji: "💰", title: "الزكاة",            desc: "أحكام الزكاة وحسابها",           href: "/zakat",        color: "#0F5132" },
   { emoji: "🌙", title: "الصيام",            desc: "أحكام رمضان والنوافل",           href: "/sawm",         color: "#5B21B6" },
   { emoji: "🕋", title: "الحج والعمرة",       desc: "مناسك الحج والعمرة",             href: "/hajj",         color: "#0E6E52" },
   { emoji: "🕯️", title: "الجنائز",           desc: "أحكام الجنائز والتعزية",         href: "/janaza",       color: "#374151" },
   { emoji: "⚖️", title: "المواريث",          desc: "حاسبة الفرائض والتركات",         href: "/mawarith",     color: "#DC2626" },
-  { emoji: "📐", title: "القواعد الفقهية",   desc: "القواعد الخمس الكبرى وفروعها",   href: "/fiqh-qawaid",  color: "#1F4D3A" },
+  { emoji: "📐", title: "القواعد الفقهية",   desc: "القواعد الخمس الكبرى وفروعها",   href: "/fiqh-qawaid",  color: "#176B57" },
   { emoji: "📚", title: "المذاهب الأربعة",   desc: "الحنفي والمالكي والشافعي والحنبلي", href: "/madhahib",  color: "#7C3AED" },
   { emoji: "❓", title: "الأسئلة والأجوبة",  desc: "أسئلة شرعية موثقة",              href: "/qa",           color: "#0F766E" },
-  { emoji: "📜", title: "الفتاوى",           desc: "فتاوى مُحقَّقة ومُصنَّفة",       href: "/fatwa",        color: "#1F4D3A" },
   { emoji: "🏛️", title: "المجمع الفقهي",    desc: "قرارات المجامع الفقهية",          href: "/fiqh-council", color: "#0F5132" },
   { emoji: "📋", title: "الأحكام الشرعية",   desc: "موسوعة الأحكام بالمذاهب",        href: "/rulings",      color: "#065F46" },
   { emoji: "🔬", title: "الباحث الشرعي",    desc: "بحث وتوثيق بالمصادر",             href: "/scholarly-research", color: "#374151" },
@@ -72,12 +69,12 @@ const FIQH_TOPICS: FiqhTopic[] = [
   { emoji: "🤝", title: "المعاملات",        desc: "البيع والإجارة والشركات",           href: "/rulings?cat=المعاملات", color: "#0F766E" },
   { emoji: "🥩", title: "الأطعمة",          desc: "الحلال والحرام والذبائح",           href: "/rulings?cat=الأطعمة", color: "#DC2626" },
   { emoji: "🏥", title: "الفقه الطبي",      desc: "أحكام العلاج والأدوية والعمليات",   href: "/rulings?cat=الصحة",  color: "#065F46" },
-  { emoji: "🏦", title: "المال الإسلامي",   desc: "أحكام البنوك والتأمين والاستثمار",  href: "/rulings?cat=المعاملات", color: "#1F4D3A" },
+  { emoji: "🏦", title: "المال الإسلامي",   desc: "أحكام البنوك والتأمين والاستثمار",  href: "/rulings?cat=المعاملات", color: "#176B57" },
   { emoji: "🕊️", title: "الوقف والهبة",    desc: "أحكام الوقف والصدقة الجارية والهبة", href: "/rulings?cat=الوقف", color: "#0F5132" },
   { emoji: "📖", title: "أصول الفقه",      desc: "مصادر التشريع وطرق الاستنباط",      href: "/fiqh-qawaid",    color: "#7C3AED" },
   { emoji: "⚡", title: "النوازل المعاصرة", desc: "مسائل العصر ومستجداته الفقهية",    href: "/fiqh-council/nawazil", color: "#374151" },
   { emoji: "🔐", title: "الحدود والجنايات", desc: "أحكام الحدود والقصاص والديات",     href: "/rulings",        color: "#991B1B" },
-  { emoji: "🌍", title: "فقه الأقليات",    desc: "أحكام المسلمين في غير ديار الإسلام", href: "/fiqh-council/nawazil", color: "#1F4D3A" },
+  { emoji: "🌍", title: "فقه الأقليات",    desc: "أحكام المسلمين في غير ديار الإسلام", href: "/fiqh-council/nawazil", color: "#176B57" },
   { emoji: "💻", title: "فقه التقنية",     desc: "أحكام الإنترنت والذكاء الاصطناعي والألعاب",  href: "/fiqh-council/nawazil", color: "#0F766E" },
   { emoji: "🩺", title: "فقه العبادات للمرضى", desc: "أحكام الصلاة والصيام والطهارة للمرضى",   href: "/rulings?cat=الصحة",  color: "#374151" },
   { emoji: "🏦", title: "التمويل الإسلامي", desc: "الصيرفة والتكافل والاستثمار الحلال",        href: "/rulings?cat=المعاملات", color: "#065F46" },
@@ -86,13 +83,11 @@ const FIQH_TOPICS: FiqhTopic[] = [
 export default function FiqhPage() {
   const search = useSearch();
   const params = new URLSearchParams(search);
-  const initialTab = (params.get("tab") as Tab) || "fatawa";
+  const initialTab = (params.get("tab") as Tab) || "rulings";
 
   const [activeTab, setActiveTab] = useState<Tab>(initialTab);
-  const [fatwas, setFatwas]       = useState<any[]>([]);
   const [rulings, setRulings]     = useState<ShariaRulingExtended[]>([]);
   const [qaItems, setQaItems]     = useState<any[]>([]);
-  const [loadingF, setLoadingF]   = useState(false);
   const [loadingR, setLoadingR]   = useState(false);
   const [loadingQ, setLoadingQ]   = useState(false);
 
@@ -113,21 +108,14 @@ export default function FiqhPage() {
       : undefined;
     applyPageSeo({
       path: "/fiqh",
-      title: "الفقه الإسلامي، فتاوى وأحكام وأسئلة | المجلس العلمي",
-      description: "مرجع شامل في الفقه الإسلامي: فتاوى موثقة، أحكام شرعية، أسئلة وأجوبة، وقرارات المجمع الفقهي.",
-      keywords: ["فقه إسلامي", "فتاوى", "أحكام شرعية", "الفقه الحنفي", "أسئلة شرعية"],
+      title: "الفقه الإسلامي، أحكام وأسئلة | المجلس العلمي",
+      description: "مرجع شامل في الفقه الإسلامي: أحكام شرعية موثقة، أسئلة وأجوبة، وقرارات المجمع الفقهي.",
+      keywords: ["فقه إسلامي", "أحكام شرعية", "الفقه الحنفي", "أسئلة شرعية", "المجمع الفقهي"],
       ...(faqSchema ? { jsonLd: [faqSchema] } : {}),
     });
   }, []);
 
   useEffect(() => {
-    if (activeTab === "fatawa" && fatwas.length === 0) {
-      setLoadingF(true);
-      getFatwas({ category: "الكل", format: "الكل", search: "" })
-        .then(({ data }) => setFatwas(data.slice(0, 12)))
-        .catch(() => setFatwas(getLatestFatwas(12)))
-        .finally(() => setLoadingF(false));
-    }
     if (activeTab === "rulings" && rulings.length === 0) {
       setLoadingR(true);
       getRulingsEncyclopedia({ page: 1, limit: 12, category: "الكل" })
@@ -145,8 +133,6 @@ export default function FiqhPage() {
     }
   }, [activeTab]);
 
-  const latestFatwas = useMemo(() => getLatestFatwas(6), []);
-
   return (
     <div className="fqp-root page-shell" dir="rtl">
       {/* مسار التنقل */}
@@ -161,7 +147,7 @@ export default function FiqhPage() {
         <p className="fqh-hub-hero__eyebrow">الفقه الإسلامي الشامل</p>
         <h1 className="fqh-hub-hero__title">الفقه والأحكام</h1>
         <p className="fqh-hub-hero__sub">
-          مرجع موحّد للفتاوى والعبادات والأحكام وقرارات المجامع الفقهية، كل شيء من مصادر موثقة ومعتمدة
+          مرجع موحّد للعبادات والأحكام وقرارات المجامع الفقهية، كل شيء من مصادر موثقة ومعتمدة
         </p>
       </header>
 
@@ -173,12 +159,12 @@ export default function FiqhPage() {
         <div className="fqh-hub-grid">
           {FIQH_TOPICS.map((t) => (
             <Link
-              key={t.href}
+              key={t.title}
               href={t.href}
               className="fqh-hub-card"
               style={{ "--fqh-clr": t.color } as React.CSSProperties}
             >
-              <span className="fqh-hub-card__emoji" aria-hidden="true">{t.emoji}</span>
+              <span className="fqh-hub-card__emoji" aria-hidden="true"><SectionIcon name={t.emoji} size={28} /></span>
               <p className="fqh-hub-card__title">{t.title}</p>
               <p className="fqh-hub-card__desc">{t.desc}</p>
             </Link>
@@ -191,14 +177,17 @@ export default function FiqhPage() {
 
       {/* Tabs، للمحتوى الديناميكي */}
       <div className="fqp-tabs-nav fqp-tabs-nav--bare">
-        <div className="fqp-tabs-scroll">
+        <div className="fqp-tabs-scroll" role="tablist" aria-label="أقسام الفقه">
           {TABS.map((t) => (
             <button
               key={t.key}
+              id={`fqp-tab-${t.key}`}
               type="button"
+              role="tab"
               onClick={() => setActiveTab(t.key)}
               className={`fqp-tab${activeTab === t.key ? " fqp-tab--active" : ""}`}
-              aria-pressed={activeTab === t.key}
+              aria-selected={activeTab === t.key}
+              aria-controls={`fqp-panel-${t.key}`}
             >
               <t.Icon size={15} strokeWidth={1.8} aria-hidden="true" />
               {t.label}
@@ -209,43 +198,9 @@ export default function FiqhPage() {
 
       <div className="fqp-tab-content">
 
-        {/* تبويب الفتاوى */}
-        {activeTab === "fatawa" && (
-          <div>
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="fqp-section-title"><ScrollText size={20} />الفتاوى الشرعية</h2>
-              <Link href="/fatwa"><span className="fqp-see-all">عرض الكل ←</span></Link>
-            </div>
-
-            {loadingF ? (
-              <SkeletonCardGrid count={6} />
-            ) : fatwas.length === 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {latestFatwas.map((f, i) => (
-                  <FatwaCard key={i} item={f} />
-                ))}
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {fatwas.map((f: any, i: number) => (
-                  <FatwaCard key={f.id ?? i} item={f} />
-                ))}
-              </div>
-            )}
-
-            <div className="mt-8 text-center">
-              <Link href="/fatwa">
-                <span className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer fqp-cta-btn">
-                  استعرض جميع الفتاوى
-                </span>
-              </Link>
-            </div>
-          </div>
-        )}
-
         {/* تبويب الأحكام الشرعية */}
         {activeTab === "rulings" && (
-          <div>
+          <div role="tabpanel" id="fqp-panel-rulings" aria-labelledby="fqp-tab-rulings">
             <div className="flex items-center justify-between mb-6">
               <h2 className="fqp-section-title"><Library size={20} />الأحكام الشرعية</h2>
               <Link href="/rulings"><span className="fqp-see-all">عرض الكل ←</span></Link>
@@ -291,7 +246,7 @@ export default function FiqhPage() {
 
         {/* تبويب الأسئلة والأجوبة */}
         {activeTab === "qa" && (
-          <div>
+          <div role="tabpanel" id="fqp-panel-qa" aria-labelledby="fqp-tab-qa">
             <div className="flex items-center justify-between mb-6">
               <h2 className="fqp-section-title"><MessageCircle size={20} />الأسئلة والأجوبة الشرعية</h2>
               <Link href="/qa"><span className="fqp-see-all">عرض الكل ←</span></Link>
@@ -340,7 +295,7 @@ export default function FiqhPage() {
 
         {/* تبويب المجمع الفقهي */}
         {activeTab === "council" && (
-          <div>
+          <div role="tabpanel" id="fqp-panel-council" aria-labelledby="fqp-tab-council">
             <div className="mb-6">
               <h2 className="fqp-section-title mb-2"><Landmark size={20} />المجمع الفقهي الإسلامي</h2>
               <p className="fqp-section-desc">
@@ -379,25 +334,10 @@ export default function FiqhPage() {
       />
 
       <div className="twh-share">
-        <ShareButtons title="الفقه الإسلامي — المجلس العلمي" url="https://majlisilm.com/fiqh" />
+        <ShareButtons title="الفقه الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/fiqh" />
       </div>
 
       </div>
     </div>
-  );
-}
-
-function FatwaCard({ item }: { item: any }) {
-  return (
-    <Link href={item.id ? `/fatwa/${item.id}` : "/fatwa"}>
-      <div className="fqp-card h-full">
-        <h3 className="fqp-card__title fqp-card__title--mb2 line-clamp-2 leading-snug">
-          {item.title || item.question || "فتوى شرعية"}
-        </h3>
-        {(item.category || item.subject) && (
-          <span className="fqp-cat-badge">{item.category || item.subject}</span>
-        )}
-      </div>
-    </Link>
   );
 }

@@ -110,12 +110,12 @@ export default function StudyRoomPage() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "غرفة الدراسة — المجلس العلمي",
-          url: "https://majlisilm.com/study-room",
+          url: "https://www.majlisilm.com/study-room",
           description: "بيئة مذاكرة مركّزة مع مؤقت Pomodoro وتتبع جلسات الدراسة الشرعية",
           applicationCategory: "EducationalApplication",
           operatingSystem: "Web",
           inLanguage: "ar",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
         },
       ],
     });
@@ -231,14 +231,15 @@ export default function StudyRoomPage() {
       />
 
       {/* Preset selector */}
-      <div className="sr-presets">
+      <div className="sr-presets" role="tablist" aria-label="إعدادات مسبقة للجلسة">
         {PRESETS.map((p, i) => (
           <button
             key={p.label}
+            role="tab"
             type="button"
             className={`sr-preset${presetIdx === i ? " sr-preset--active" : ""}`}
             onClick={() => { setPresetIdx(i); reset(); }}
-            aria-pressed={presetIdx === i}
+            aria-selected={presetIdx === i}
             disabled={phase !== "idle"}
           >
             {p.label}
@@ -250,7 +251,7 @@ export default function StudyRoomPage() {
       <input
         type="text"
         className="sr-goal-input"
-        placeholder="ما هدفك لهذه الجلسة؟ (اختياري)"
+        aria-label="ما هدفك لهذه الجلسة؟ (اختياري)" placeholder="ما هدفك لهذه الجلسة؟ (اختياري)"
         value={goal}
         onChange={(e) => setGoal(e.target.value)}
         disabled={phase !== "idle"}
@@ -313,7 +314,7 @@ export default function StudyRoomPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="غرفة الدراسة — المجلس العلمي" url="https://majlisilm.com/study-room" />
+        <ShareButtons title="غرفة الدراسة — المجلس العلمي" url="https://www.majlisilm.com/study-room" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["quran", "hadith"]} title="اختبر معلوماتك أثناء الدراسة" count={4} />

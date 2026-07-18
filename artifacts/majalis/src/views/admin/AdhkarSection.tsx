@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ADHKAR_CATEGORIES,
   type AdhkarItem,
@@ -35,6 +35,13 @@ export function AdhkarSection() {
   const [saving, setSaving] = useState(false);
 
   const reload = () => setItems(getAllAdhkarForAdmin());
+
+  useEffect(() => {
+    if (!preview) return;
+    const keyHandler = (e: KeyboardEvent) => { if (e.key === "Escape") setPreview(null); };
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  }, [preview]);
 
   const filtered = useMemo(() => {
     return items.filter((item) => {

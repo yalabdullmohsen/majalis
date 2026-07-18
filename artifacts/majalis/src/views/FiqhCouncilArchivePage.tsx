@@ -24,7 +24,7 @@ export default function FiqhCouncilArchivePage() {
       title: "أرشيف المجمع الفقهي | المجلس العلمي",
       description: "أرشيف القرارات والفتاوى التاريخية للمجمع الفقهي الإسلامي، وثائق وقرارات مؤرشفة.",
       keywords: ["أرشيف فقهي", "قرارات تاريخية", "مجمع فقهي", "وثائق إسلامية", "تاريخ الفقه"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "أرشيف المجمع الفقهي", url: "https://majlisilm.com/fiqh-council/archive", about: { "@type": "Thing", name: "الأرشيف التاريخي للقرارات الفقهية" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "أرشيف المجمع الفقهي", url: "https://www.majlisilm.com/fiqh-council/archive", about: { "@type": "Thing", name: "الأرشيف التاريخي للقرارات الفقهية" } }],
     });
   }, []);
 
@@ -66,7 +66,7 @@ export default function FiqhCouncilArchivePage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="أرشيف مجلس الفقه — المجلس العلمي" url="https://majlisilm.com/fiqh-council/archive" />
+        <ShareButtons title="أرشيف مجلس الفقه — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/archive" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />

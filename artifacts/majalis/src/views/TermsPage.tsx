@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { CONTACT_EMAIL } from "@/lib/site-config";
 
 export default function TermsPage() {
   useEffect(() => {
@@ -11,7 +12,7 @@ export default function TermsPage() {
       title: "شروط الاستخدام | المجلس العلمي",
       description: "شروط وأحكام استخدام منصة المجلس العلمي، اقرأها قبل استخدام الخدمات.",
       keywords: ["شروط الاستخدام", "المجلس العلمي", "الاستخدام المقبول"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "شروط الاستخدام", url: "https://majlisilm.com/terms", about: { "@type": "Organization", name: "مجالس العلم" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "شروط الاستخدام", url: "https://www.majlisilm.com/terms", about: { "@type": "Organization", name: "المجلس العلمي" } }],
     });
   }, []);
 
@@ -103,7 +104,7 @@ export default function TermsPage() {
           إذن استخدام المحتوى، يمكنك مراسلتنا عبر البريد الإلكتروني:
         </p>
         <p>
-          <a href="mailto:yalabdullmohsen1@gmail.com">yalabdullmohsen1@gmail.com</a>
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
         </p>
         <p>
           أو عبر صفحة{" "}
@@ -113,7 +114,7 @@ export default function TermsPage() {
       </LegalSection>
 
       <div className="twh-share">
-        <ShareButtons title="شروط الاستخدام — المجلس العلمي" url="https://majlisilm.com/terms" />
+        <ShareButtons title="شروط الاستخدام — المجلس العلمي" url="https://www.majlisilm.com/terms" />
       </div>
       <LegalBackLink />
     </LegalPageLayout>

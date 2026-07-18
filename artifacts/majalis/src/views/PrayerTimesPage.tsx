@@ -105,14 +105,14 @@ export default function PrayerTimesPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "مواقيت الصلاة في الكويت",
-          url: "https://majlisilm.com/prayer-times",
+          url: "https://www.majlisilm.com/prayer-times",
           description: "مواقيت الصلوات الخمس لجميع مناطق الكويت محسوبة فلكياً",
           about: {
             "@type": "Thing",
             name: "مواقيت الصلاة",
             description: "أوقات الصلوات الخمس الفجر والظهر والعصر والمغرب والعشاء",
           },
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
           areaServed: { "@type": "Country", name: "الكويت" },
         },
       ],
@@ -235,21 +235,21 @@ export default function PrayerTimesPage() {
 
       {/* ── شريط الصلوات ── */}
       {prayers.length > 0 && (
-        <nav className="pt-prayers" role="list" aria-label="صلوات اليوم">
+        <nav className="pt-prayers" aria-label="صلوات اليوم">
           {prayers.map((p) => (
             <button
               key={p.key}
               type="button"
-              role="listitem"
               className={[
                 "pt-prayer",
                 isNext(p.key)   ? "pt-prayer--next"   : "",
                 isPinned(p.key) ? "pt-prayer--pinned" : "",
                 isPast(p)       ? "pt-prayer--past"   : "",
+                p.key === "Sunrise" ? "pt-prayer--sunrise" : "",
               ].filter(Boolean).join(" ")}
               onClick={() => setPinnedKey(p.key === pinnedKey ? null : p.key)}
               aria-pressed={isPinned(p.key)}
-              aria-label={`صلاة ${PRAYER_AR[p.key] ?? p.name}، ${p.time}`}
+              aria-label={`صلاة ${PRAYER_AR[p.key] ?? p.name}${p.key === "Sunrise" ? " (غير مفروضة)" : ""}، ${p.time}`}
             >
               <span className="pt-prayer__icon" aria-hidden="true">
                 {(() => { const I = PRAYER_ICON[p.key] ?? Sunset; return <I size={20} strokeWidth={1.6} />; })()}
@@ -265,14 +265,15 @@ export default function PrayerTimesPage() {
       {/* ── اختيار المحافظة ── */}
       <div className="pt-gov-section">
         <p className="pt-gov-label">المحافظة</p>
-        <div className="pt-gov-chips" role="group" aria-label="اختيار المحافظة">
+        <div className="pt-gov-chips" role="tablist" aria-label="اختيار المحافظة">
           {KUWAIT_GOVERNORATES.map((gov) => (
             <button
               key={gov.id}
+              role="tab"
               type="button"
               className={`pt-gov-chip${govId === gov.id ? " pt-gov-chip--active" : ""}`}
               onClick={() => handleGov(gov.id)}
-              aria-pressed={govId === gov.id}
+              aria-selected={govId === gov.id}
             >
               {gov.name}
             </button>
@@ -297,7 +298,7 @@ export default function PrayerTimesPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="مواقيت الصلاة — المجلس العلمي" url="https://majlisilm.com/prayer-times" />
+        <ShareButtons title="مواقيت الصلاة — المجلس العلمي" url="https://www.majlisilm.com/prayer-times" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في أحكام الصلاة" count={4} />

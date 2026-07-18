@@ -1,9 +1,9 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { Link } from "wouter";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { AdminInlineEdit, type InlineEditContentType } from "@/components/AdminInlineEdit";
 import { ReadingProgressBar } from "@/components/ReadingProgressBar";
-import { Clock } from "lucide-react";
+import { Clock, Copy } from "lucide-react";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
@@ -40,10 +40,13 @@ function ShareCopyBar({
   title: string;
   adminEdit?: Props["adminEdit"];
 }) {
+  const [copied, setCopied] = useState(false);
   const handleCopy = async () => {
     if (!copyText) return;
     try {
       await navigator.clipboard.writeText(copyText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     } catch {
       /* ignore */
     }
@@ -55,7 +58,8 @@ function ShareCopyBar({
     <div className="content-detail-actions">
       {copyText && (
         <button type="button" onClick={handleCopy} className="content-detail-action-btn">
-          نسخ
+          <Copy size={14} strokeWidth={1.8} aria-hidden="true" />
+          <span>{copied ? "تم النسخ ✓" : "نسخ النص"}</span>
         </button>
       )}
       <ShareButtons title={title} url={shareUrl || (typeof window !== "undefined" ? window.location.href : "")} />

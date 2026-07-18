@@ -683,10 +683,20 @@ const SECTION_TO_CATEGORY: Record<string, string> = {
   "التاريخ": "tarikh",
 };
 
+// اكتُشف 2026-07-18: quiz_questions.level الحي مقيَّد بـCHECK constraint
+// يقبل فقط القيم العربية 'أساسي'|'متوسط'|'متقدم'|'صعب' — المفاتيح
+// الإنجليزية وحدها كانت تجعل كل صف حي (943 سؤالاً بعد المزامنة) يسقط في
+// نقاط 400 الافتراضية بصمت (levelKey غير مطابق لأي مفتاح فيُرجِع
+// LEVEL_TO_POINTS[levelKey] قيمة undefined). أُبقيت المفاتيح الإنجليزية
+// للتوافق مع أي مصدر بيانات مستقبلي يستخدمها فعلاً.
 const LEVEL_TO_POINTS: Record<string, PointValue> = {
   beginner: 200,
   intermediate: 400,
   advanced: 600,
+  "أساسي": 200,
+  "متوسط": 400,
+  "متقدم": 600,
+  "صعب": 600,
 };
 
 /** Merges Supabase rows into a copy of ALL_QUESTIONS. Falls back silently to local data on empty input. */

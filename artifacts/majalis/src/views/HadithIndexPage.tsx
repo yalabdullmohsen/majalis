@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, BadgeCheck, AlertTriangle, Ban, BookOpen } from "lucide-react";
+import { ArrowLeft, BadgeCheck, AlertTriangle, Ban, BookOpen, Heart } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -29,7 +29,7 @@ const SECTIONS: SectionDef[] = [
     cls: "daif",
     href: "/hadith/daif",
     description: "الأحاديث الضعيفة الإسناد، تُبيَّن درجتها للتحذير من الاحتجاج بها.",
-    accent: "#1F4D3A",
+    accent: "#176B57",
     Icon: AlertTriangle,
   },
   {
@@ -65,7 +65,7 @@ export default function HadithIndexPage() {
             position: i + 1,
             name: HADITH_CLASS_META[s.cls]?.title ?? s.cls,
             description: s.description,
-            url: `https://majlisilm.com${s.href}`,
+            url: `https://www.majlisilm.com${s.href}`,
           })),
         },
       ],
@@ -111,6 +111,20 @@ export default function HadithIndexPage() {
         </span>
       </Link>
 
+      {/* بطاقة الأربعون في محبة رب العالمين */}
+      <Link href="/hadith/arbaeen-love-of-allah" className="hadith-index-card hadith-index-card--books">
+        <span className="hadith-index-card__icon" aria-hidden="true">
+          <Heart size={22} strokeWidth={2} color="#fff" />
+        </span>
+        <h2 className="hadith-index-card__title">الأربعون في محبة رب العالمين</h2>
+        <p className="hadith-index-card__desc">
+          مجموعة قيد الاستكمال من الأحاديث الموثقة في محبة الله لعباده ومحبة العبد لربه.
+        </p>
+        <span className="hadith-index-card__go">
+          تصفّح المجموعة <ArrowLeft size={16} aria-hidden="true" />
+        </span>
+      </Link>
+
       <div className="hadith-index-grid">
         {SECTIONS.map((s) => {
           const meta = HADITH_CLASS_META[s.cls];
@@ -135,7 +149,7 @@ export default function HadithIndexPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="فهرس الأحاديث النبوية — المجلس العلمي" url="https://majlisilm.com/hadith-index" />
+        <ShareButtons title="فهرس الأحاديث النبوية — المجلس العلمي" url="https://www.majlisilm.com/hadith-index" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في الحديث الشريف" count={4} />

@@ -1,0 +1,220 @@
+/**
+ * أنماط صفحة تعلّم حديث واحد من الأربعين النووية (/arbaeen-nawawi/:id) —
+ * المرحلة 11. مُستوردة مباشرة من ArbaeenHadithDetailPage.tsx (تحميل كسول
+ * حسب المسار). كل الألوان من متغيّرات --majalis-* القائمة، لا hex جديد.
+ */
+.ahd-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1rem 1.1rem 3rem;
+}
+
+.ahd-back {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  min-height: 44px;
+  color: var(--majalis-emerald-deep);
+  text-decoration: none;
+  font-size: .85rem;
+  font-weight: 700;
+}
+
+.ahd-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .35rem;
+  text-align: center;
+  padding: 1rem 0 1.25rem;
+}
+.ahd-header__num {
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--majalis-ink-soft);
+}
+.ahd-header__title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--majalis-emerald-deep);
+  margin: 0;
+}
+.ahd-level {
+  display: inline-block;
+  padding: .2rem .7rem;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 700;
+}
+.ahd-level--new      { background: color-mix(in srgb, var(--majalis-ink-soft) 12%, transparent); color: var(--majalis-ink-soft); }
+.ahd-level--mid       { background: color-mix(in srgb, var(--majalis-emerald-deep) 10%, transparent); color: var(--majalis-emerald-deep); }
+.ahd-level--advanced  { background: color-mix(in srgb, var(--majalis-emerald-deep) 18%, transparent); color: var(--majalis-emerald-deep); }
+.ahd-level--mastered  { background: var(--majalis-emerald-deep); color: #fff; }
+
+.ahd-text {
+  font-size: 1.25rem;
+  line-height: 2.1;
+  text-align: center;
+  color: var(--majalis-ink);
+  padding: 1rem;
+  margin: 0 0 .5rem;
+  border-radius: .85rem;
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 5%, transparent);
+}
+.ahd-source {
+  text-align: center;
+  font-size: .8rem;
+  color: var(--majalis-ink-soft);
+  margin: 0 0 1.5rem;
+}
+
+.ahd-section { margin-bottom: 1.25rem; }
+.ahd-section__title {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .95rem;
+  font-weight: 800;
+  color: var(--majalis-emerald-deep);
+  margin: 0 0 .4rem;
+}
+.ahd-section__body {
+  font-size: .9rem;
+  line-height: 1.9;
+  color: var(--majalis-ink);
+  margin: 0;
+}
+
+.ahd-quiz-cta {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  border: none;
+  border-radius: .75rem;
+  background: var(--majalis-emerald-deep);
+  color: #fff;
+  font-size: .9rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin: 1.5rem 0;
+}
+
+.ahd-quiz {
+  border: 1px solid var(--majalis-line);
+  border-radius: .85rem;
+  padding: 1rem;
+  margin: 1.5rem 0;
+}
+.ahd-quiz__progress {
+  font-size: .75rem;
+  color: var(--majalis-ink-soft);
+  margin: 0 0 .5rem;
+}
+.ahd-quiz__prompt {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--majalis-ink);
+  white-space: pre-line;
+  margin: 0 0 1rem;
+  line-height: 1.8;
+}
+.ahd-quiz__options {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.ahd-quiz__opt {
+  min-height: 48px;
+  padding: .6rem .9rem;
+  border-radius: .6rem;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  color: var(--majalis-ink);
+  font-size: .88rem;
+  text-align: start;
+  cursor: pointer;
+}
+.ahd-quiz__opt:disabled { cursor: default; }
+.ahd-quiz__opt--correct {
+  border-color: var(--color-success-fg, #15803D);
+  background: var(--color-success-bg, #DCFCE7);
+  color: var(--color-success-fg, #15803D);
+  font-weight: 700;
+}
+.ahd-quiz__opt--wrong {
+  border-color: var(--majalis-danger);
+  background: var(--majalis-danger-muted);
+  color: var(--majalis-danger);
+}
+.ahd-quiz__next {
+  margin-top: 1rem;
+  min-height: 44px;
+  padding: 0 1.2rem;
+  border: none;
+  border-radius: .6rem;
+  background: var(--majalis-emerald-deep);
+  color: #fff;
+  font-weight: 700;
+  font-size: .85rem;
+  cursor: pointer;
+}
+
+.ahd-quiz-result {
+  text-align: center;
+  border: 1px solid var(--majalis-line);
+  border-radius: .85rem;
+  padding: 1.25rem 1rem;
+  margin: 1.5rem 0;
+}
+.ahd-quiz-result__score {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--majalis-emerald-deep);
+  margin: 0 0 .75rem;
+}
+.ahd-quiz-result__prompt {
+  font-size: .85rem;
+  color: var(--majalis-ink-soft);
+  margin: 0 0 .6rem;
+}
+.ahd-quiz-result__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .5rem;
+}
+.ahd-quiz-result__btn {
+  min-height: 44px;
+  padding: 0 1rem;
+  border-radius: .6rem;
+  border: 1.5px solid;
+  background: transparent;
+  font-weight: 700;
+  font-size: .82rem;
+  cursor: pointer;
+}
+.ahd-quiz-result__btn:disabled { opacity: .6; cursor: wait; }
+.ahd-quiz-result__login {
+  font-size: .85rem;
+  color: var(--majalis-ink-soft);
+}
+.ahd-quiz-result__login a { color: var(--majalis-emerald-deep); font-weight: 700; }
+
+.ahd-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--majalis-line);
+}
+.ahd-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  min-height: 44px;
+  color: var(--majalis-emerald-deep);
+  text-decoration: none;
+  font-size: .82rem;
+  font-weight: 700;
+}

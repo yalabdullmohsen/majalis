@@ -35,7 +35,7 @@ export default function MuezzinFavoritesPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "المؤذنون المفضلون",
-          url: "https://majlisilm.com/muezzins/favorites",
+          url: "https://www.majlisilm.com/muezzins/favorites",
           description: "أذان مؤذنيك المفضلين مع إمكانية الاستماع والتقييم واختيار الصوت الافتراضي",
           about: { "@type": "Thing", name: "تلاوات الأذان الإسلامي" },
         },
@@ -131,7 +131,7 @@ export default function MuezzinFavoritesPage() {
                     type="button"
                     onClick={() => handlePreview(m.id, m.audioUrl)}
                     className={`mzf-play-btn${isPlaying ? " is-playing" : ""}`}
-                    title={isPlaying ? "إيقاف" : "معاينة"}
+                    aria-label={isPlaying ? "إيقاف التشغيل" : "معاينة الأذان"}
                   >
                     {isPlaying ? "⏹" : "▶"}
                   </button>
@@ -139,7 +139,7 @@ export default function MuezzinFavoritesPage() {
                     type="button"
                     onClick={() => handleRemove(m.id)}
                     className="mzf-remove-btn"
-                    title="إزالة من المفضلة"
+                    aria-label="إزالة من المفضلة"
                   >
                     <Trash2 size={14} />
                   </button>
@@ -169,7 +169,7 @@ export default function MuezzinFavoritesPage() {
         </div>
       )}
       <div className="twh-share">
-        <ShareButtons title="المؤذنون المفضلون — المجلس العلمي" url="https://majlisilm.com/muezzins/favorites" />
+        <ShareButtons title="المؤذنون المفضلون — المجلس العلمي" url="https://www.majlisilm.com/muezzins/favorites" />
       </div>
     </div>
   );

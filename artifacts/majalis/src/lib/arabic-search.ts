@@ -92,6 +92,11 @@ export function arabicSearchPatterns(term: string): string[] {
   const variants = new Set<string>();
   for (const expanded of expandSearchTerms(base)) {
     variants.add(expanded);
+    // نضمن دومًا وجود الصيغة المطبَّعة الكاملة (بلا تشكيل) بين الأنماط —
+    // وإلا فاستدعاء هذه الدالة على نص لم يُطبَّع مسبقًا (كمصطلح فيه شدة، مثل
+    // "مصلّى") ينتج أنماطًا لا تلتقي أبدًا مع نتيجة استدعائها على "مصلي"
+    // المطبَّعة، فيفشل البحث الفعلي بين الصيغتين رغم أنهما نفس الكلمة.
+    variants.add(normalizeArabic(expanded));
     const hamzaMap: Record<string, string[]> = {
       ا: ["أ", "إ", "آ", "ٱ"],
       و: ["ؤ"],

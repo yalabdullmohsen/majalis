@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { BookOpen, ChevronDown, ChevronUp, Search, X } from "lucide-react";
+import { BookOpen, ChevronDown, ChevronUp, Search, Sparkles, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -24,7 +24,7 @@ interface GlossaryTerm {
 }
 
 const CATEGORIES: { id: Category; label: string; color: string }[] = [
-  { id: "all",     label: "الكل",            color: "#1F4D3A" },
+  { id: "all",     label: "الكل",            color: "#176B57" },
   { id: "aqeedah", label: "العقيدة",         color: "#1a5a7a" },
   { id: "fiqh",    label: "الفقه",           color: "#0E6E52" },
   { id: "hadith",  label: "علم الحديث",      color: "#312E81" },
@@ -1388,28 +1388,28 @@ const TERMS: GlossaryTerm[] = [
     source: "مقدمة في أصول التفسير — ابن تيمية",
   },
   {
-    id: 186, term: "المراقبة", category: "tazkiya",
+    id: 215, term: "المراقبة", category: "tazkiya",
     definition: "استحضار العبد أن الله مطّلع عليه في كل حال، فيراقب قلبه وجوارحه ونيته.",
     detail: "المراقبة أعلى من الخشية لأنها وعي دائم لا يتوقف. قال ابن القيم: «أعلى المراقبة أن يرى القلب الله مطّلعاً عليه في كل لحظة حتى يستحي منه استحياء من يرى ربه أمامه». وهي ثمرة اليقين بصفة العلم الإلهي.",
     related: ["الإحسان", "التوبة", "الورع"],
     source: "مدارج السالكين — ابن القيم",
   },
   {
-    id: 187, term: "الزهد الحقيقي", category: "tazkiya",
+    id: 216, term: "الزهد الحقيقي", category: "tazkiya",
     definition: "ترك ما لا ينفع في الآخرة وإيثار ما ينفع فيها، لا مجرد ترك الدنيا ماديًا.",
     detail: "قال أحمد بن حنبل: «الزهد في الدنيا: قِصَر الأمل». وقال ابن القيم: «الزهد ليس الفقر وترك المال، إنما هو ألا يزيدك المال اغتراراً ولا يزيدك الفقر حسرةً، بل الزهد زهد في فضول الدنيا لا في ضرورياتها». فالزهد حال قلبية لا بدنية.",
     related: ["القناعة", "التوكل", "حب الدنيا"],
     source: "إغاثة اللهفان — ابن القيم",
   },
   {
-    id: 188, term: "الرجاء الممدوح", category: "tazkiya",
+    id: 217, term: "الرجاء الممدوح", category: "tazkiya",
     definition: "توقُّع رحمة الله مع السعي الصادق للعمل الصالح، وهو أحد جناحي الطير.",
     detail: "قال ابن القيم: «الرجاء الممدوح ما اقترن بالعمل، وأما توقُّع الرحمة مع التقصير والإصرار فهذا غرور لا رجاء». والرجاء يُعيّن العبد على الاستمرار، فمن يئس من رحمة الله أحجم عن التوبة. وهو ثمرة الإيمان بسعة الرحمة الإلهية.",
     related: ["الخوف", "التوبة", "المراقبة"],
     source: "مدارج السالكين — ابن القيم",
   },
   {
-    id: 189, term: "المجاهدة النفسية", category: "tazkiya",
+    id: 218, term: "المجاهدة النفسية", category: "tazkiya",
     definition: "مكابدة النفس وحملها على ما تكره من الطاعات وصرفها عما تهوى من المعاصي.",
     detail: "قال تعالى: ﴿وَالَّذِينَ جَاهَدُوا فِينَا لَنَهْدِيَنَّهُمْ سُبُلَنَا﴾. والجهاد الأكبر عند بعض العلماء هو جهاد النفس. وقد قسَّمها ابن القيم إلى أربع مراحل: تعلُّم الهدى، والعمل به، والدعوة إليه، والصبر على أذى المخالفين له.",
     related: ["الصبر", "الورع", "التوبة"],
@@ -1598,11 +1598,45 @@ const TERMS: GlossaryTerm[] = [
   },
 ];
 
+/* ─── مصطلح اليوم ─── */
+function todaysTerm(): GlossaryTerm {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return TERMS[(dayOfYear - 1 + TERMS.length) % TERMS.length];
+}
+
+const CAT_LABELS: Record<string, string> = {
+  aqeedah: "العقيدة", fiqh: "الفقه", hadith: "علم الحديث",
+  quran: "علوم القرآن", seerah: "السيرة", tazkiya: "التزكية",
+};
+
+function TermOfDayCard({ term }: { term: GlossaryTerm }) {
+  return (
+    <div className="glod-card">
+      <div className="glod-card__badge"><Sparkles size={11} aria-hidden="true" /> مصطلح اليوم</div>
+      <div className="glod-card__cat">{CAT_LABELS[term.category] ?? term.category}</div>
+      <h2 className="glod-card__term">{term.term}</h2>
+      {term.plural && <div className="glod-card__plural">الجمع: {term.plural}</div>}
+      <p className="glod-card__definition">{term.definition}</p>
+      {term.detail && <p className="glod-card__detail">{term.detail}</p>}
+      {term.source && <div className="glod-card__source">{term.source}</div>}
+      {term.related && term.related.length > 0 && (
+        <div className="glod-card__related">
+          <span>ذات صلة: </span>
+          {term.related.map(r => <span key={r} className="glod-card__rel-tag">{r}</span>)}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function IslamicGlossaryPage() {
   const [activeCategory, setActiveCategory] = useState<Category>("all");
   const [search, setSearch] = useState("");
   const [openTerm, setOpenTerm] = useState<number | null>(null);
   const [alpha, setAlpha] = useState<string>("");
+  const todayTerm = useMemo(() => todaysTerm(), []);
 
   useEffect(() => {
     applyPageSeo({
@@ -1621,7 +1655,7 @@ export default function IslamicGlossaryPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${t.term}: ${t.definition.slice(0, 60)}`,
-            url: `https://majlisilm.com/islamic-glossary#term-${t.id}`,
+            url: `https://www.majlisilm.com/islamic-glossary#term-${t.id}`,
           })),
         },
       ],
@@ -1685,9 +1719,12 @@ export default function IslamicGlossaryPage() {
         </div>
       </section>
 
+      {/* مصطلح اليوم */}
+      <TermOfDayCard term={todayTerm} />
+
       <div className="gl-container">
         {/* الفئات */}
-        <div className="gl-cats" role="tablist">
+        <div className="gl-cats" role="tablist" aria-label="تصنيفات المصطلحات الإسلامية">
           {CATEGORIES.map(c => (
             <button
               key={c.id}
@@ -1787,7 +1824,7 @@ export default function IslamicGlossaryPage() {
       />
 
       <div className="twh-share">
-        <ShareButtons title="المعجم الإسلامي — المجلس العلمي" url="https://majlisilm.com/islamic-glossary" />
+        <ShareButtons title="المعجم الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/islamic-glossary" />
       </div>
     </div>
   );

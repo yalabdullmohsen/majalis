@@ -52,7 +52,7 @@ export default function FiqhCouncilAdvancedSearchPage() {
       title: "البحث المتقدم في المجمع الفقهي | المجلس العلمي",
       description: "بحث متقدم في قرارات وفتاوى وبحوث المجمع الفقهي، تصفية حسب النوع والتصنيف والسنة والمصدر.",
       keywords: ["بحث متقدم فقهي", "بحث في الفتاوى", "مجمع فقهي", "تصفية فقهية", "محرك بحث إسلامي"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "البحث المتقدم في المجمع الفقهي", url: "https://majlisilm.com/fiqh-council/advanced-search", about: { "@type": "Thing", name: "محرك البحث الفقهي المتقدم" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "البحث المتقدم في المجمع الفقهي", url: "https://www.majlisilm.com/fiqh-council/advanced-search", about: { "@type": "Thing", name: "محرك البحث الفقهي المتقدم" } }],
     });
   }, []);
 
@@ -128,11 +128,11 @@ export default function FiqhCouncilAdvancedSearchPage() {
         <div className="fiqh-council-filter-row">
           <label className="fiqh-council-select-label">
             المصدر
-            <input value={source} onChange={(e) => setSource(e.target.value)} className="fiqh-council-source-input" placeholder="اسم المصدر" />
+            <input value={source} onChange={(e) => setSource(e.target.value)} className="fiqh-council-source-input" aria-label="اسم المصدر" placeholder="اسم المصدر" />
           </label>
           <label className="fiqh-council-select-label">
             رقم القرار
-            <input value={decisionNumber} onChange={(e) => setDecisionNumber(e.target.value)} className="fiqh-council-source-input" placeholder="رقم القرار أو الجلسة" />
+            <input value={decisionNumber} onChange={(e) => setDecisionNumber(e.target.value)} className="fiqh-council-source-input" aria-label="رقم القرار أو الجلسة" placeholder="رقم القرار أو الجلسة" />
           </label>
         </div>
       </div>
@@ -162,7 +162,7 @@ export default function FiqhCouncilAdvancedSearchPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="البحث المتقدم في المجمع الفقهي — المجلس العلمي" url="https://majlisilm.com/fiqh-council/search" />
+        <ShareButtons title="البحث المتقدم في المجمع الفقهي — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/search" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />

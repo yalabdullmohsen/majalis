@@ -97,6 +97,15 @@ export default function MiraclesPage({
   const [reloadKey, setReloadKey] = useState(0);
   const [search, setSearch] = useState("");
 
+  // رابط `?cat=...` في JSON-LD أسفل هذه الصفحة نفسها كان يُتجاهَل كليًا:
+  // `category` تُهيَّأ دائماً بـ"الكل" بلا قراءة أي شيء من الرابط الفعلي —
+  // عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف بالفحص المباشر
+  // 2026-07-18.
+  useEffect(() => {
+    const cat = new URLSearchParams(window.location.search).get("cat");
+    if (cat) setCategory(cat);
+  }, []);
+
   const displayed = useMemo(() => {
     if (!search.trim()) return items;
     return items.filter((i) => arabicMatchAny([i.title ?? "", i.body ?? "", i.category ?? "", i.scholarly_source ?? ""], search));
@@ -118,7 +127,7 @@ export default function MiraclesPage({
             "@type": "ListItem",
             position: i + 1,
             name: cat,
-            url: `https://majlisilm.com/miracles?cat=${encodeURIComponent(cat)}`,
+            url: `https://www.majlisilm.com/miracles?cat=${encodeURIComponent(cat)}`,
           })),
         },
       ],
@@ -307,7 +316,7 @@ export default function MiraclesPage({
                 <div className="mk-card__actions">
                   <ShareButtons
                     title={item.title}
-                    url={`https://majlisilm.com/miracles`}
+                    url={`https://www.majlisilm.com/miracles`}
                   />
                 </div>
                 {isAdmin && <AdminQuickEdit section="miracles" searchTerm={item.title} />}

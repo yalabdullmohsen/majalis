@@ -189,7 +189,7 @@ function StatusTab() {
   const [data, setData] = useState<BotStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [acting, setActing] = useState<string | null>(null);
-  const [webhookUrl, setWebhookUrl] = useState("https://majlisilm.com/api/webhook/telegram");
+  const [webhookUrl, setWebhookUrl] = useState("https://www.majlisilm.com/api/webhook/telegram");
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -219,8 +219,8 @@ function StatusTab() {
       <div className="tgm-badges-row">
         <Badge ok={data.tokenConfigured} label="Telegram Token" />
         <Badge ok={data.anthropicConfigured} label="Anthropic API" />
-        <Badge ok={!!data.bot} label="Bot Connected" />
-        <Badge ok={!!data.webhook?.url} label="Webhook Active" />
+        <Badge ok={!!data.bot} label="البوت متصل" />
+        <Badge ok={!!data.webhook?.url} label="Webhook نشط" />
       </div>
 
       {data.bot && (
@@ -232,7 +232,7 @@ function StatusTab() {
         </InfoCard>
       )}
 
-      <InfoCard title="Webhook">
+      <InfoCard title="Webhook التيليغرام">
         <Row label="الرابط" value={data.webhook?.url || "غير مُعيَّن"} mono />
         {data.webhook?.pending_update_count !== undefined && (
           <Row label="طلبات معلقة" value={String(data.webhook.pending_update_count)} />
@@ -507,6 +507,7 @@ function ReviewTab() {
 
                 {(raw?.raw_text || raw?.raw_caption || lesson.description) && (
                   <button
+                    type="button"
                     onClick={() => setExpanded(isExpanded ? null : lesson.id)}
                     className="tgm-expand-btn"
                   >

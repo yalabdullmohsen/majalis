@@ -14,7 +14,7 @@ function loadSeoConfig() {
     const raw = readFileSync(join(APP_ROOT, "src/lib/seo-routes.json"), "utf8");
     return JSON.parse(raw);
   } catch {
-    return { siteUrl: "https://majlisilm.com", routes: [] };
+    return { siteUrl: "https://www.majlisilm.com", routes: [] };
   }
 }
 
@@ -139,25 +139,68 @@ export async function buildFeedXml() {
   const base = config.siteUrl.replace(/\/+$/, "");
   const admin = getSupabaseAdmin();
 
-  let items = [];
+  // اكتُشف 2026-07-18: وصف القناة أدناه يَعِد بـ"دروس وفتاوى وقرارات" لكن
+  // التنفيذ كان يجلب الدروس فقط — انحراف حي بين القناة ومحتواها لا علاقة
+  // له بأي لقطة JSON مجمَّدة (buildFeedXml لم يقرأ قط ملفاً ثابتاً)، لكنه
+  // نفس فئة العطل الأعمق: مصدر محتوى حي (fiqh_council_issues) موعود به
+  // في الواجهة لكنه غير مُستعلَم إطلاقاً. أُضيف هنا مطابقاً لنفس شروط
+  // الفلترة الحية المُستخدَمة في fiqh-council-issues-service.ts
+  // (status='published' + documentation_level='official_verified') وفي
+  // platform-content-service.ts للدورات (status='approved').
+  let entries = [];
   if (admin) {
-    const { data } = await admin
-      .from("lessons")
-      .select("id, title, description, updated_at, slug")
-      .eq("status", "approved")
-      .order("updated_at", { ascending: false })
-      .limit(30);
-    items = data || [];
+    const [lessons, fiqhIssues, courses] = await Promise.all([
+      admin
+        .from("lessons")
+        .select("id, title, description, updated_at, slug")
+        .eq("status", "approved")
+        .order("updated_at", { ascending: false })
+        .limit(30),
+      admin
+        .from("fiqh_council_issues")
+        .select("id, title, summary, published_at, updated_at, slug")
+        .eq("status", "published")
+        .eq("documentation_level", "official_verified")
+        .order("published_at", { ascending: false })
+        .limit(10),
+      admin
+        .from("annual_courses")
+        .select("id, title, summary, updated_at, created_at, external_key")
+        .eq("status", "approved")
+        .order("updated_at", { ascending: false })
+        .limit(10),
+    ]);
+
+    entries = [
+      ...(lessons.data || []).map((row) => ({
+        title: row.title,
+        link: `${base}/lessons/${row.slug || row.id}`,
+        description: row.description || "",
+        date: row.updated_at,
+      })),
+      ...(fiqhIssues.data || []).map((row) => ({
+        title: `[قرار مجمعي] ${row.title}`,
+        link: `${base}/fiqh-council/issues/${row.slug || row.id}`,
+        description: row.summary || "",
+        date: row.published_at || row.updated_at,
+      })),
+      ...(courses.data || []).map((row) => ({
+        title: `[دورة علمية] ${row.title}`,
+        link: `${base}/annual-courses/${row.external_key || row.id}`,
+        description: row.summary || "",
+        date: row.updated_at || row.created_at,
+      })),
+    ].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
   }
 
-  const rssItems = items
+  const rssItems = entries
     .map(
       (item) => `    <item>
       <title>${escapeXml(item.title)}</title>
-      <link>${escapeXml(`${base}/lessons/${item.slug || item.id}`)}</link>
+      <link>${escapeXml(item.link)}</link>
       <description>${escapeXml((item.description || "").slice(0, 300))}</description>
-      <pubDate>${item.updated_at ? new Date(item.updated_at).toUTCString() : new Date().toUTCString()}</pubDate>
-      <guid isPermaLink="true">${escapeXml(`${base}/lessons/${item.slug || item.id}`)}</guid>
+      <pubDate>${item.date ? new Date(item.date).toUTCString() : new Date().toUTCString()}</pubDate>
+      <guid isPermaLink="true">${escapeXml(item.link)}</guid>
     </item>`,
     )
     .join("\n");

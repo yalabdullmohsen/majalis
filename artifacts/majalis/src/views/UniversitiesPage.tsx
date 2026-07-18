@@ -6,6 +6,8 @@ import { UniversityCard } from "@/components/universities/UniversityCard";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
+import { usePersistedState } from "@/hooks/usePersistedState";
 import {
   fetchUniversities,
   DEGREE_LEVELS,
@@ -49,9 +51,11 @@ function UniversitiesContent() {
   const [loading, setLoading]           = useState(true);
   const [, setTotal]                     = useState(0);
   const [seedNeeded, setSeedNeeded]     = useState(false);
-  const [search, setSearch]             = useState("");
-  const [searchInput, setSearchInput]   = useState("");
-  const [filters, setFilters]           = useState<UniversityFilters>({});
+  const [search, setSearch]             = usePersistedState("filters:/universities:search", "");
+  const [searchInput, setSearchInput]   = usePersistedState("filters:/universities:searchInput", "");
+  const [filters, setFilters]           = usePersistedState<UniversityFilters>("filters:/universities:filters", {});
+  const [filtersOpen, setFiltersOpen]   = useState(false);
+  const activeFilterCount = Object.values(filters).filter(Boolean).length;
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -84,7 +88,7 @@ function UniversitiesContent() {
             "@type": "ListItem",
             position: i + 1,
             name: `الجامعات الإسلامية في ${country}`,
-            url: `https://majlisilm.com/universities?country=${encodeURIComponent(country)}`,
+            url: `https://www.majlisilm.com/universities?country=${encodeURIComponent(country)}`,
           })),
         },
       ],
@@ -92,6 +96,17 @@ function UniversitiesContent() {
   }, []);
 
   useEffect(() => { load(); }, [load]);
+
+  // رابط `?country=...` في JSON-LD أعلى (لكل دولة بـCOUNTRIES) كان يُتجاهَل
+  // كليًا: `filters` تُهيَّأ فقط من usePersistedState بلا قراءة أي شيء من
+  // الرابط الفعلي — عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف
+  // بالفحص المباشر 2026-07-18.
+  useEffect(() => {
+    const country = new URLSearchParams(window.location.search).get("country");
+    if (country && COUNTRIES.includes(country)) {
+      setFilters((prev) => ({ ...prev, country }));
+    }
+  }, []);
 
   function setFilter(key: keyof UniversityFilters, value: string | boolean | undefined) {
     setFilters((prev) => ({ ...prev, [key]: value || undefined }));
@@ -136,35 +151,29 @@ function UniversitiesContent() {
 
       <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
         {/* تنبيه البيانات التجريبية */}
-        <div className="up-alert">
+        <div className="up-alert" role="note">
           <AlertTriangle size={14} aria-hidden="true" className="inline ml-1" />
           <strong>تنبيه:</strong> البيانات المعروضة تجريبية وتحتاج تحقق بشري. تأكد دائماً من الموقع
           الرسمي للجامعة قبل اتخاذ أي قرار.
         </div>
 
-        {/* فلاتر */}
-        <div className="up-filters-box">
-          <FilterSelect label="الدولة"         value={filters.country || ""} onChange={(v) => setFilter("country", v)}       options={COUNTRIES} />
-          <FilterSelect label="الدرجة العلمية" value={filters.degree_level || ""} onChange={(v) => setFilter("degree_level", v as UniversityFilters["degree_level"])} options={DEGREE_LEVELS} />
-          <FilterSelect label="نظام الدراسة"   value={filters.study_mode || ""}   onChange={(v) => setFilter("study_mode", v as UniversityFilters["study_mode"])}   options={STUDY_MODES} />
-          <FilterSelect label="لغة الدراسة"    value={filters.study_language || ""} onChange={(v) => setFilter("study_language", v)} options={LANGUAGES} />
-          <div className="flex flex-col gap-1">
-            <span className="up-filter-label">خيارات</span>
-            <div className="flex flex-col gap-1.5 mt-1">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked={!!filters.has_scholarship}
-                  onChange={(e) => setFilter("has_scholarship", e.target.checked || undefined)}
-                  className="accent-emerald-600" />
-                <span className="up-filter-opt-label">منح متاحة</span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked={!!filters.is_verified}
-                  onChange={(e) => setFilter("is_verified", e.target.checked || undefined)}
-                  className="accent-emerald-600" />
-                <span className="up-filter-opt-label">موثقة فقط</span>
-              </label>
-            </div>
+        {/* رقائق الدولة السريعة + زر التصفية المتقدمة */}
+        <div className="up-quick-filters">
+          <div className="content-hub-chips up-country-chips" role="tablist" aria-label="تصفية حسب الدولة">
+            <button
+              type="button" role="tab" aria-selected={!filters.country}
+              className={!filters.country ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+              onClick={() => setFilter("country", undefined)}
+            >كل الدول</button>
+            {COUNTRIES.map((c) => (
+              <button
+                key={c} type="button" role="tab" aria-selected={filters.country === c}
+                className={filters.country === c ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+                onClick={() => setFilter("country", filters.country === c ? undefined : c)}
+              >{c}</button>
+            ))}
           </div>
+          <FilterToggle onClick={() => setFiltersOpen(true)} label={`تصفية متقدمة${activeFilterCount ? ` (${activeFilterCount})` : ""}`} />
         </div>
 
         {/* إحصائية */}
@@ -216,13 +225,39 @@ function UniversitiesContent() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الجامعات الإسلامية — المجلس العلمي" url="https://majlisilm.com/universities" />
+        <ShareButtons title="الجامعات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/universities" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
       </div>
 
       <CompareBar />
+
+      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="تصفية متقدمة">
+        <div className="up-sheet-filters">
+          <FilterSelect label="الدرجة العلمية" value={filters.degree_level || ""} onChange={(v) => setFilter("degree_level", v as UniversityFilters["degree_level"])} options={DEGREE_LEVELS} />
+          <FilterSelect label="نظام الدراسة"   value={filters.study_mode || ""}   onChange={(v) => setFilter("study_mode", v as UniversityFilters["study_mode"])}   options={STUDY_MODES} />
+          <FilterSelect label="لغة الدراسة"    value={filters.study_language || ""} onChange={(v) => setFilter("study_language", v)} options={LANGUAGES} />
+          <div className="flex flex-col gap-1.5">
+            <span className="up-filter-label">خيارات إضافية</span>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={!!filters.has_scholarship}
+                onChange={(e) => setFilter("has_scholarship", e.target.checked || undefined)}
+                className="accent-emerald-600" />
+              <span className="up-filter-opt-label">منح متاحة</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={!!filters.is_verified}
+                onChange={(e) => setFilter("is_verified", e.target.checked || undefined)}
+                className="accent-emerald-600" />
+              <span className="up-filter-opt-label">موثقة فقط</span>
+            </label>
+          </div>
+          <button type="button" className="up-clear-btn" onClick={() => setFiltersOpen(false)}>
+            تطبيق
+          </button>
+        </div>
+      </FilterBottomSheet>
     </div>
   );
 }

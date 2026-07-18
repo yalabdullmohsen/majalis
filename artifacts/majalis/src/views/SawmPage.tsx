@@ -1,8 +1,10 @@
 import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 
 
 /* ───────── types ───────── */
@@ -563,13 +565,19 @@ export default function SawmPage() {
             "@type": "ListItem",
             position: i + 1,
             name: f.title,
-            url: `https://majlisilm.com/sawm#${f.id}`,
+            url: `https://www.majlisilm.com/sawm#${f.id}`,
           })),
         },
       ],
     });
   }, []);
 
+  const todayVirtue = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return VIRTUES[(day - 1 + VIRTUES.length) % VIRTUES.length];
+  }, []);
   const [tab, setTab] = useState<SawmTab>("types");
   const [openType, setOpenType] = useState<string | null>("ramadan");
   const [search, setSearch] = useState("");
@@ -607,21 +615,33 @@ export default function SawmPage() {
         </div>
 
         {/* tabs */}
-        <nav className="sw-tabs" aria-label="أقسام الصيام">
+        <div className="sw-tabs" role="tablist" aria-label="أقسام الصيام">
           {TABS.map((t) => (
             <button
               key={t.id}
+              id={`swm-tab-${t.id}`}
+              role="tab"
               type="button"
               className={`sw-tab${tab === t.id ? " sw-tab--active" : ""}`}
               onClick={() => setTab(t.id)}
-              aria-pressed={tab === t.id}
+              aria-selected={tab === t.id}
+              aria-controls={`swm-panel-${t.id}`}
             >
-              <span className="sw-tab__icon">{t.icon}</span>
+              <span className="sw-tab__icon"><SectionIcon name={t.icon} size={24} /></span>
               <span className="sw-tab__label">{t.label}</span>
             </button>
           ))}
-        </nav>
+        </div>
       </section>
+
+      {/* فضيلة الصيام اليوم */}
+      <div className="swod-card">
+        <div className="swod-card__badge"><Sparkles size={11} aria-hidden="true" /> فضيلة الصيام اليوم</div>
+        <span className="swod-card__icon"><SectionIcon name={todayVirtue.icon} size={26} /></span>
+        <h2 className="swod-card__title">{todayVirtue.title}</h2>
+        <p className="swod-card__text">« {todayVirtue.text} »</p>
+        <span className="swod-card__source">{todayVirtue.source}</span>
+      </div>
 
       {tab !== "conditions" && (
         <div className="sw-search-wrap">
@@ -634,7 +654,7 @@ export default function SawmPage() {
       <div className="sw-body">
         {/* ── أنواع الصيام ── */}
         {tab === "types" && (
-          <section className="sw-section">
+          <section role="tabpanel" id="swm-panel-types" aria-labelledby="swm-tab-types" className="sw-section">
             {filteredFastTypes.map((ft) => {
               const isOpen = openType === ft.id;
               return (
@@ -645,7 +665,7 @@ export default function SawmPage() {
                     onClick={() => setOpenType(isOpen ? null : ft.id)}
                     aria-expanded={isOpen}
                   >
-                    <span className="sw-card__icon">{ft.icon}</span>
+                    <span className="sw-card__icon"><SectionIcon name={ft.icon} size={24} /></span>
                     <div className="sw-card__info">
                       <span className="sw-card__title">{ft.title}</span>
                       <span className="sw-card__sub">{ft.subtitle}</span>
@@ -677,12 +697,12 @@ export default function SawmPage() {
 
         {/* ── الشروط والأركان ── */}
         {tab === "conditions" && (
-          <section className="sw-section">
+          <section role="tabpanel" id="swm-panel-conditions" aria-labelledby="swm-tab-conditions" className="sw-section">
             <h2 className="sw-section__title">شروط صحة الصيام</h2>
             <div className="sw-grid-2">
               {SAWM_CONDITIONS.map((c) => (
                 <div key={c.title} className="sw-cond-card">
-                  <span className="sw-cond-card__icon">{c.icon}</span>
+                  <span className="sw-cond-card__icon"><SectionIcon name={c.icon} size={24} /></span>
                   <div>
                     <strong className="sw-cond-card__title">{c.title}</strong>
                     <p className="sw-cond-card__body">{c.body}</p>
@@ -695,7 +715,7 @@ export default function SawmPage() {
             <div className="sw-grid-2">
               {SAWM_ARKAAN.map((a) => (
                 <div key={a.title} className="sw-cond-card sw-cond-card--rukn">
-                  <span className="sw-cond-card__icon">{a.icon}</span>
+                  <span className="sw-cond-card__icon"><SectionIcon name={a.icon} size={24} /></span>
                   <div>
                     <strong className="sw-cond-card__title">{a.title}</strong>
                     <p className="sw-cond-card__body">{a.body}</p>
@@ -716,14 +736,14 @@ export default function SawmPage() {
 
         {/* ── المفطرات ── */}
         {tab === "muftirat" && (
-          <section className="sw-section">
+          <section role="tabpanel" id="swm-panel-muftirat" aria-labelledby="swm-tab-muftirat" className="sw-section">
             <p className="sw-section__intro">
               المفطرات هي الأشياء التي تُبطل الصيام إذا فُعلت في نهار رمضان عمداً
               مع العلم والإرادة. أما الجاهل والناسي والمُكرَه فلا يُفطر بها في الجملة.
             </p>
             {filteredMuftirat.map((m) => (
               <div key={m.id} className={`sw-muf-card sw-muf-card--${m.type}`}>
-                <span className="sw-muf-card__icon">{m.icon}</span>
+                <span className="sw-muf-card__icon"><SectionIcon name={m.icon} size={24} /></span>
                 <div className="sw-muf-card__content">
                   <strong className="sw-muf-card__title">{m.title}</strong>
                   <p className="sw-muf-card__desc">{m.description}</p>
@@ -747,14 +767,14 @@ export default function SawmPage() {
 
         {/* ── المعذورون ── */}
         {tab === "exemptions" && (
-          <section className="sw-section">
+          <section role="tabpanel" id="swm-panel-exemptions" aria-labelledby="swm-tab-exemptions" className="sw-section">
             <p className="sw-section__intro">
               رفع الإسلام الحرج عن أصحاب الأعذار، وأباح لهم الفطر مع وجوب القضاء أو الفدية
               حسب كل حالة.
             </p>
             {filteredExemptions.map((ex) => (
               <div key={ex.id} className="sw-ex-card">
-                <span className="sw-ex-card__icon">{ex.icon}</span>
+                <span className="sw-ex-card__icon"><SectionIcon name={ex.icon} size={24} /></span>
                 <div className="sw-ex-card__content">
                   <div className="sw-ex-card__head">
                     <strong className="sw-ex-card__title">{ex.title}</strong>
@@ -769,14 +789,14 @@ export default function SawmPage() {
 
         {/* ── الفضائل ── */}
         {tab === "virtues" && (
-          <section className="sw-section">
+          <section role="tabpanel" id="swm-panel-virtues" aria-labelledby="swm-tab-virtues" className="sw-section">
             <p className="sw-section__intro">
               حثّ النبي ﷺ على الصيام وبيّن عظيم أجره وفضله، وفيما يلي جملة من الأحاديث الصحيحة.
             </p>
             <div className="sw-virtues-grid">
               {filteredVirtues.map((v) => (
                 <div key={v.id} className="sw-virtue-card">
-                  <span className="sw-virtue-card__icon">{v.icon}</span>
+                  <span className="sw-virtue-card__icon"><SectionIcon name={v.icon} size={24} /></span>
                   <h3 className="sw-virtue-card__title">{v.title}</h3>
                   <blockquote className="sw-virtue-card__text">{v.text}</blockquote>
                   <cite className="sw-virtue-card__source">{v.source}</cite>
@@ -787,7 +807,7 @@ export default function SawmPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="الصيام وأحكامه — المجلس العلمي" url="https://majlisilm.com/sawm" />
+          <ShareButtons title="الصيام وأحكامه — المجلس العلمي" url="https://www.majlisilm.com/sawm" />
         </div>
 
         {/* related */}

@@ -1,7 +1,11 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import { type Lang, readLang, writeLang } from "@/lib/language-preference";
+import { type Lang, readLang, writeLang, langDir } from "@/lib/language-preference";
 import { ar } from "@/locales/ar";
 import { en } from "@/locales/en";
+import { fr } from "@/locales/fr";
+import { tr } from "@/locales/tr";
+import { ur } from "@/locales/ur";
+import { id } from "@/locales/id";
 import type { TranslationKey } from "@/locales/ar";
 
 type LanguageContextValue = {
@@ -10,6 +14,8 @@ type LanguageContextValue = {
   t: (key: TranslationKey) => string;
   dir: "rtl" | "ltr";
 };
+
+const DICTS: Record<Lang, Record<TranslationKey, string>> = { ar, en, fr, tr, ur, id };
 
 const LanguageContext = createContext<LanguageContextValue>({
   lang: "ar",
@@ -26,13 +32,13 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     setLangState(next);
   };
 
-  const dict = lang === "en" ? en : ar;
-  const t = (key: TranslationKey): string => dict[key];
-  const dir: "rtl" | "ltr" = lang === "en" ? "ltr" : "rtl";
+  const dir = langDir(lang);
+  const dict = DICTS[lang] ?? ar;
+  const t = (key: TranslationKey): string => dict[key] ?? ar[key];
 
   useEffect(() => {
     document.documentElement.lang = lang;
-    document.documentElement.dir = dir;
+    document.documentElement.dir  = dir;
   }, [lang, dir]);
 
   return (

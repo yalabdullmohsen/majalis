@@ -39,8 +39,7 @@ function SheikhCard({ sheikh }: { sheikh: (typeof KUWAIT_SHEIKHS)[number] }) {
   return (
     <a
       href={sheikh.drosq8Url}
-      target="_blank"
-      rel="noopener noreferrer"
+      target="_blank" rel="noopener noreferrer"
       className="sheikh-card"
       aria-label={`دروس ${sheikh.name} على موقع دروس الكويت`}
     >
@@ -58,10 +57,11 @@ function SheikhCard({ sheikh }: { sheikh: (typeof KUWAIT_SHEIKHS)[number] }) {
                 if (sib) sib.style.display = "flex";
               }}
               loading="lazy"
+              decoding="async"
             />
             <span
               className="sheikh-avatar sheikh-avatar--initials sheikh-avatar--hidden"
-              style={{ "--avatar-bg": ["#1b5e3b","#0a5040","#1b3a5e","#5e1b1b","#3b1b5e","#1F4D3A"][sheikh.name.split("").reduce((a,c)=>a+c.charCodeAt(0),0) % 6] } as React.CSSProperties}
+              style={{ "--avatar-bg": ["#1b5e3b","#123F36","#1b3a5e","#5e1b1b","#3b1b5e","#176B57"][sheikh.name.split("").reduce((a,c)=>a+c.charCodeAt(0),0) % 6] } as React.CSSProperties}
               aria-hidden="true"
             >
               {sheikh.name.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("")}
@@ -70,7 +70,7 @@ function SheikhCard({ sheikh }: { sheikh: (typeof KUWAIT_SHEIKHS)[number] }) {
         ) : (
           <span
             className="sheikh-avatar sheikh-avatar--initials"
-            style={{ "--avatar-bg": ["#1b5e3b","#0a5040","#1b3a5e","#5e1b1b","#3b1b5e","#1F4D3A"][sheikh.name.split("").reduce((a,c)=>a+c.charCodeAt(0),0) % 6] } as React.CSSProperties}
+            style={{ "--avatar-bg": ["#1b5e3b","#123F36","#1b3a5e","#5e1b1b","#3b1b5e","#176B57"][sheikh.name.split("").reduce((a,c)=>a+c.charCodeAt(0),0) % 6] } as React.CSSProperties}
             aria-hidden="true"
           >
             {sheikh.name.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("")}
@@ -102,7 +102,7 @@ export default function KuwaitLessonsPage() {
           "@type": "ItemList",
           name: "دروس مشايخ الكويت القادمة",
           description: "قائمة الدروس الشرعية القادمة لعلماء ومشايخ الكويت",
-          url: "https://majlisilm.com/kuwait-lessons",
+          url: "https://www.majlisilm.com/kuwait-lessons",
           about: {
             "@type": "Country",
             name: "الكويت",
@@ -120,9 +120,9 @@ export default function KuwaitLessonsPage() {
           organizer: {
             "@type": "Organization",
             name: "المجلس العلمي",
-            url: "https://majlisilm.com",
+            url: "https://www.majlisilm.com",
           },
-          url: "https://majlisilm.com/kuwait-lessons",
+          url: "https://www.majlisilm.com/kuwait-lessons",
           inLanguage: "ar",
         },
       ],
@@ -195,7 +195,7 @@ export default function KuwaitLessonsPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="دروس الكويت — المجلس العلمي" url="https://majlisilm.com/kuwait-lessons" />
+        <ShareButtons title="دروس الكويت — المجلس العلمي" url="https://www.majlisilm.com/kuwait-lessons" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["hadith", "akhlaq"]} title="اختبر معلوماتك في العلم الشرعي" count={4} />

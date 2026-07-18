@@ -13,6 +13,8 @@ import {
   type QuizQuestion,
 } from "@/data/islamicQuizData";
 import { getQuizQuestions, getLocalUsedQuizIds, markQuizQuestionUsed } from "@/lib/supabase";
+import { recordQuizAttempt } from "@/lib/quiz-performance-service";
+import { hapticNotify } from "@/lib/capacitor-utils";
 
 // ─── Icon renderer ─────────────────────────────────────────────────────────
 
@@ -91,7 +93,7 @@ const S = {
   emerald:     "var(--ds-emerald)",
   emeraldDeep: "var(--ds-emerald-deep)",
   emeraldSoft: "var(--ds-emerald-soft)",
-  correct:     "var(--majalis-emerald, #1F4D3A)",
+  correct:     "var(--majalis-emerald, #176B57)",
   wrong:       "var(--majalis-danger, #9B1C1C)",
 } as const;
 
@@ -237,16 +239,19 @@ function markCellUsed(board: Cell[][], cell: Cell | null): Cell[][] {
 
 function TimerBar({ seconds, maxSeconds }: { seconds: number; maxSeconds: number }) {
   const pct = maxSeconds > 0 ? seconds / maxSeconds : 0;
-  const color = pct > 0.4 ? "#22c55e" : pct > 0.2 ? "#1F4D3A" : "#ef4444";
+  const color = pct > 0.4 ? "#22c55e" : pct > 0.2 ? "#176B57" : "#ef4444";
   const label = seconds <= 0 ? "انتهى الوقت" : `${seconds}ث`;
+  const urgent = seconds > 0 && seconds <= 10;
   return (
     <div
       className="qzg-timer"
+      role="timer"
+      aria-label={`الوقت المتبقي: ${label}`}
       style={{ "--qzg-timer-color": color, "--qzg-timer-pct": `${Math.max(0, pct * 100)}%` } as React.CSSProperties}
     >
       <div className="qzg-timer__head">
         <span className="qzg-timer__label">⏱ الوقت</span>
-        <span className="qzg-timer__count">{label}</span>
+        <span className="qzg-timer__count" aria-live={urgent ? "assertive" : "off"} aria-atomic="true">{label}</span>
       </div>
       <div className="qzg-timer__track">
         <div className="qzg-timer__fill" />
@@ -325,12 +330,12 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
         <h2 className="qzg-section-h2"><Trophy size={18} className="inline ml-1" />أسماء الفريقين</h2>
         <div className="qzg-teams-grid">
           <div>
-            <label className="qzg-team-label">الفريق الأول</label>
-            <input value={name1} onChange={(e) => setName1(e.target.value)} maxLength={20} className="qzg-input" />
+            <label htmlFor="qzg-team1" className="qzg-team-label">الفريق الأول</label>
+            <input id="qzg-team1" value={name1} onChange={(e) => setName1(e.target.value)} maxLength={20} className="qzg-input" />
           </div>
           <div>
-            <label className="qzg-team-label">الفريق الثاني</label>
-            <input value={name2} onChange={(e) => setName2(e.target.value)} maxLength={20} className="qzg-input" />
+            <label htmlFor="qzg-team2" className="qzg-team-label">الفريق الثاني</label>
+            <input id="qzg-team2" value={name2} onChange={(e) => setName2(e.target.value)} maxLength={20} className="qzg-input" />
           </div>
         </div>
       </section>
@@ -493,7 +498,7 @@ function QuestionPhase({
 
       <div className="qzg-section-card qzg-section-card--brass qzg-section-card--mb-sm">
         <div className="qzg-q-header">
-          <span className="qzg-q-cat-label">{cat?.icon} {cat?.name}</span>
+          <span className="qzg-q-cat-label"><CategoryIcon name={cat?.icon ?? ""} size={14} /> {cat?.name}</span>
           <span className="qzg-q-points-badge">{activeCell.points} نقطة</span>
         </div>
 
@@ -677,14 +682,22 @@ export function IslamicQuizGame() {
   const handleMarkCorrect = useCallback(() => {
     clearTimer();
     if (state.activeQuestion?.id) markQuizQuestionUsed(state.activeQuestion.id);
+    if (state.activeQuestion?.id && state.activeCell?.categoryId) {
+      void recordQuizAttempt(state.activeCell.categoryId, state.activeQuestion.id, true, "team_game");
+    }
+    void hapticNotify("success");
     dispatch({ type: "MARK_CORRECT" });
-  }, [state.activeQuestion, clearTimer]);
+  }, [state.activeQuestion, state.activeCell, clearTimer]);
 
   const handleMarkWrong = useCallback(() => {
     clearTimer();
     if (state.activeQuestion?.id) markQuizQuestionUsed(state.activeQuestion.id);
+    if (state.activeQuestion?.id && state.activeCell?.categoryId) {
+      void recordQuizAttempt(state.activeCell.categoryId, state.activeQuestion.id, false, "team_game");
+    }
+    void hapticNotify("error");
     dispatch({ type: "MARK_WRONG" });
-  }, [state.activeQuestion, clearTimer]);
+  }, [state.activeQuestion, state.activeCell, clearTimer]);
 
   return (
     <div className="qzg-root">

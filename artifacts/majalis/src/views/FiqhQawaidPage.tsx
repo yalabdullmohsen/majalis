@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useMemo, useState } from "react";
 import { BookOpen, ChevronDown, ChevronUp, Layers, Scale, Search, Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
@@ -381,12 +382,41 @@ const TATBIQAT: TatbiqMasala[] = [
   },
 ];
 
+/* ─── قاعدة اليوم ─── */
+function todaysQaaida(): Qaaida {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return QAWAID_KUBRA[(dayOfYear - 1 + QAWAID_KUBRA.length) % QAWAID_KUBRA.length];
+}
+
+function QaaidaOfDayCard({ q }: { q: Qaaida }) {
+  return (
+    <div className="fqod-card">
+      <div className="fqod-card__badge"><Sparkles size={11} aria-hidden="true" /> قاعدة اليوم</div>
+      <h2 className="fqod-card__text">«{q.text}»</h2>
+      <p className="fqod-card__meaning">{q.meaning}</p>
+      <div className="fqod-card__origin">{q.origin}</div>
+      {q.faraa.length > 0 && (
+        <div className="fqod-card__faraa">
+          <div className="fqod-card__faraa-title">من فروعها</div>
+          <ul className="fqod-card__faraa-list">
+            {q.faraa.slice(0, 3).map(f => <li key={f}>{f}</li>)}
+          </ul>
+        </div>
+      )}
+      {q.scholars && <div className="fqod-card__scholars">العلماء: {q.scholars}</div>}
+    </div>
+  );
+}
+
 export default function FiqhQawaidPage() {
   const [activeTab, setActiveTab] = useState<TabId>("kubra");
   const [openKubra, setOpenKubra] = useState<number | null>(null);
   const [openDhaabit, setOpenDhaabit] = useState<number | null>(null);
   const [search, setSearch] = useState("");
   const [openTatbiq, setOpenTatbiq] = useState<number | null>(null);
+  const todayQaaida = useMemo(() => todaysQaaida(), []);
 
   useEffect(() => {
     applyPageSeo({
@@ -405,7 +435,7 @@ export default function FiqhQawaidPage() {
             "@type": "ListItem",
             position: i + 1,
             name: q.text,
-            url: `https://majlisilm.com/fiqh-qawaid#qaaida-${q.id}`,
+            url: `https://www.majlisilm.com/fiqh-qawaid#qaaida-${q.id}`,
           })),
         },
       ],
@@ -438,17 +468,22 @@ export default function FiqhQawaidPage() {
         </div>
       </section>
 
+      {/* قاعدة اليوم */}
+      <QaaidaOfDayCard q={todayQaaida} />
+
       {/* ══ التبويبات ══ */}
       <div className="fq-container">
-        <div className="fq-tabs" role="tablist">
+        <div className="fq-tabs" role="tablist" aria-label="تبويبات القواعد الفقهية">
           {TABS.map(t => (
             <button
               key={t.id}
+              id={`fq-tab-${t.id}`}
               role="tab"
               type="button"
               className={`fq-tab${activeTab === t.id ? " fq-tab--active" : ""}`}
               onClick={() => setActiveTab(t.id)}
               aria-selected={activeTab === t.id}
+              aria-controls={`fq-panel-${t.id}`}
             >
               {t.label}
             </button>
@@ -457,7 +492,7 @@ export default function FiqhQawaidPage() {
 
         {/* ── القواعد الكبرى ── */}
         {activeTab === "kubra" && (
-          <div className="fq-section">
+          <div role="tabpanel" id="fq-panel-kubra" aria-labelledby="fq-tab-kubra" className="fq-section">
             <p className="fq-intro">
               اتفق العلماء على أن هذه القواعد الخمس هي أمهات القواعد الفقهية وأكثرها استيعاباً للجزئيات،
               وقد أُودعت في كتب «الأشباه والنظائر» للسيوطي وابن نجيم وابن الوكيل وغيرهم.
@@ -542,7 +577,7 @@ export default function FiqhQawaidPage() {
 
         {/* ── القواعد الفرعية ── */}
         {activeTab === "faraa" && (
-          <div className="fq-section">
+          <div role="tabpanel" id="fq-panel-faraa" aria-labelledby="fq-tab-faraa" className="fq-section">
             <div className="fq-search-bar">
               <Search size={15} aria-hidden="true" />
               <input
@@ -576,7 +611,7 @@ export default function FiqhQawaidPage() {
 
         {/* ── الضوابط الفقهية ── */}
         {activeTab === "dhawaabit" && (
-          <div className="fq-section">
+          <div role="tabpanel" id="fq-panel-dhawaabit" aria-labelledby="fq-tab-dhawaabit" className="fq-section">
             <p className="fq-intro">
               الضوابط الفقهية أخص من القواعد، تنحصر في فن بعينه كالعبادات أو المعاملات، وتجمع أحكاماً متشابهة في باب واحد.
             </p>
@@ -590,7 +625,7 @@ export default function FiqhQawaidPage() {
                   onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenDhaabit(openDhaabit === d.id ? null : d.id)}
                   aria-expanded={openDhaabit === d.id}
                 >
-                  <span className="fq-daabit__icon" aria-hidden="true">{d.icon}</span>
+                  <span className="fq-daabit__icon" aria-hidden="true"><SectionIcon name={d.icon} size={22} /></span>
                   <span className="fq-daabit__science">{d.science}</span>
                   <span className="fq-daabit__count">{d.rules.length} ضوابط</span>
                   <span className="fq-card__chevron" aria-hidden="true">
@@ -617,7 +652,7 @@ export default function FiqhQawaidPage() {
 
         {/* ── التطبيقات المعاصرة ── */}
         {activeTab === "tatbiq" && (
-          <div className="fq-section">
+          <div role="tabpanel" id="fq-panel-tatbiq" aria-labelledby="fq-tab-tatbiq" className="fq-section">
             <p className="fq-intro">
               القواعد الفقهية ليست حبيسة كتب التراث، بل هي المرجع الأول للعلماء حين تنزل بهم نوازل العصر وقضاياه المستجدة.
             </p>
@@ -682,7 +717,7 @@ export default function FiqhQawaidPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="القواعد الفقهية — المجلس العلمي" url="https://majlisilm.com/fiqh-qawaid" />
+        <ShareButtons title="القواعد الفقهية — المجلس العلمي" url="https://www.majlisilm.com/fiqh-qawaid" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه والقواعد" count={4} />

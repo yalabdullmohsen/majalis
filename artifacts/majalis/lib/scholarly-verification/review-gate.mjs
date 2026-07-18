@@ -24,7 +24,7 @@ export async function checkLink(url, timeoutMs = 8000) {
       method: 'HEAD',
       redirect: 'follow',
       signal: controller.signal,
-      headers: { 'User-Agent': 'MajalisScientific/1.0 (+https://majlisilm.com)' },
+      headers: { 'User-Agent': 'MajalisScientific/1.0 (+https://www.majlisilm.com)' },
     });
     clearTimeout(timer);
     const ok = response.status >= 200 && response.status < 400;

@@ -4,7 +4,6 @@ import {
   ISLAMIC_OCCASIONS,
   type IslamicOccasion,
 } from "@/lib/islamic-occasions-seed";
-import { getIslamicOccasionsCacheFromDb } from "@/lib/supabase";
 import { arabicMatchAny } from "@/lib/arabic-search";
 
 export type IslamicOccasionView = IslamicOccasion & {
@@ -12,27 +11,17 @@ export type IslamicOccasionView = IslamicOccasion & {
   nextGregorian?: string | null;
 };
 
+/**
+ * محسوبة محليًا دائمًا — جدول islamic_occasions_cache غير موجود في قاعدة
+ * البيانات (لم يُنشأ قط)، وكان استدعاؤه يفشل صامتًا على كل تحميل للرئيسية
+ * (خطأ PGRST205 في الطرفية) قبل الرجوع لهذا الحساب المحلي نفسه في كل مرة.
+ */
 export async function loadIslamicOccasions(): Promise<IslamicOccasionView[]> {
   const today = estimateHijriDate();
-  const cache = await getIslamicOccasionsCacheFromDb();
-
-  if (!cache.length) {
-    return ISLAMIC_OCCASIONS.map((occasion) => ({
-      ...occasion,
-      daysRemaining: daysUntilOccasion(occasion, today),
-    }));
-  }
-
-  const cacheMap = new Map(cache.map((row) => [row.occasion_id, row]));
-
-  return ISLAMIC_OCCASIONS.map((occasion) => {
-    const row = cacheMap.get(occasion.id);
-    return {
-      ...occasion,
-      daysRemaining: row?.days_remaining ?? daysUntilOccasion(occasion, today),
-      nextGregorian: row?.next_gregorian_date ?? null,
-    };
-  });
+  return ISLAMIC_OCCASIONS.map((occasion) => ({
+    ...occasion,
+    daysRemaining: daysUntilOccasion(occasion, today),
+  }));
 }
 
 export function sortOccasionsByUpcoming(items: IslamicOccasionView[]) {

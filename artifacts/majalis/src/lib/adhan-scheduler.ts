@@ -19,6 +19,7 @@ import {
   getEffectiveMuezzinId,
 } from "./adhan-preferences";
 import { getMuezzin, playAdhan } from "./adhan-audio";
+import { isNative } from "./capacitor-utils";
 
 export type AdhanEvent = {
   type: "adhan" | "advance";
@@ -63,15 +64,21 @@ function prayerMs(slot: PrayerSlot): number | null {
   return slot.minutes * 60_000;
 }
 
-async function requestNotificationPermission(): Promise<boolean> {
-  if (!("Notification" in window)) return false;
-  if (Notification.permission === "granted") return true;
-  if (Notification.permission === "denied") return false;
-  const result = await Notification.requestPermission();
-  return result === "granted";
-}
 
 function showBrowserNotification(event: AdhanEvent) {
+  // على iOS/Android الأصليين: إشعارات دخول الوقت والتذكير المسبق تُغطّى فعلياً
+  // عبر prayer-alert-scheduler.ts (إشعارات Capacitor المحلية الحقيقية — تعمل
+  // حتى مع إغلاق التطبيق). أما Notification API + Service Worker هنا فهما
+  // آليتا ويب/PWA لا تعملان بشكل موثوق داخل تطبيق Capacitor الأصلي، وإطلاقهما
+  // كان يُنتج إشعارًا مكرَّرًا محتملاً على الويب لو عمل أحيانًا. نقتصر هذا
+  // المسار على الويب فقط لتفادي التكرار (2026-07-16).
+  if (isNative) return;
+  // إشعار "دخول الوقت" مُغطّى بالفعل عبر Service Worker (postSwSchedule أدناه)
+  // ليعمل حتى مع تبويب في الخلفية — إطلاقه هنا أيضًا كان يُنتج إشعارًا مكرَّرًا
+  // فعليًا على الويب (وسمان مختلفان: adhan-{key}-adhan هنا مقابل adhan-{key}
+  // في sw.js، فلا يُدمجهما المتصفح). التنبيه المسبق (advance) لا مسار SW موازيًا
+  // له، فيبقى هنا فقط (2026-07-16).
+  if (event.type === "adhan") return;
   if (!("Notification" in window) || Notification.permission !== "granted") return;
   const title = event.type === "advance"
     ? `تنبيه: ${event.prayerName} بعد ${event.minutesBefore} دقيقة`
@@ -152,10 +159,18 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
   }
 }
 
-/** Start the scheduler for the current prayer data. Call once on app load. */
+/**
+ * Start the scheduler for the current prayer data. Call once on app load.
+ *
+ * لا يطلب إذن الإشعارات هنا أبداً — كان يفعل ذلك تلقائياً عند كل تحميل
+ * للتطبيق (أول فتح)، مخالفًا صراحةً لسياسة "اطلب الإذن في وقت منطقي بعد
+ * شرح الفائدة لا عند أول فتح". طلب الإذن الفعلي يحدث فقط عبر مسار مستخدم
+ * صريح في PrayerAlertSettingsCard.tsx (زر "تفعيل" بعد شارة شرح). المؤقّتات
+ * هنا تعمل بصرف النظر عن الإذن — تشغيل الصوت لا يحتاج إذنًا، والإشعار
+ * يُعرض فقط إن كان الإذن ممنوحًا مسبقًا (انظر showBrowserNotification).
+ */
 export async function startAdhanScheduler(payload: PrayerTimesPayload): Promise<void> {
   clearAllTimers();
-  await requestNotificationPermission();
 
   const SLOT_KEYS: Array<[string, PrayerKey]> = [
     ["Fajr", "fajr"],

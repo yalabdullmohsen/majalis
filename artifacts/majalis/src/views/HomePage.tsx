@@ -1,6 +1,8 @@
 import { useEffect, useState, type FormEvent } from "react";
+import contentCounts from "@/data/content-counts.json";
 import { applyPageSeo } from "@/lib/seo";
 import { Link, useLocation } from "wouter";
+import { useDailyContext } from "@/lib/daily-context";
 import { useAuth } from "@/components/AuthProvider";
 import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
 import { History } from "lucide-react";
@@ -26,8 +28,21 @@ import { HomeNawawiHadith } from "@/components/home/HomeNawawiHadith";
 import { HomeInterestingTopics } from "@/components/home/HomeInterestingTopics";
 import { HomeMindMapSection } from "@/components/home/HomeMindMapSection";
 import { HomeMajlisToday } from "@/components/home/HomeMajlisToday";
+import { HomePersonalDashboard } from "@/components/home/HomePersonalDashboard";
 import { FridayBanner } from "@/components/FridayBanner";
+import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
+import { getHijriDateString } from "@/lib/hijri-utils";
+import { fetchPrayerTimes, computePrayerCountdown, type PrayerTimesPayload } from "@/lib/prayer-times";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
+import { HomeCustomizeSheet } from "@/components/home/HomeCustomizeSheet";
+import {
+  HOME_WIDGET_DEFS,
+  getLocalHomepagePrefs,
+  saveLocalHomepagePrefs,
+  fetchRemoteHomepagePrefs,
+  visibleWidgetOrder,
+  type HomepagePrefs,
+} from "@/lib/homepage-layout";
 import {
   BookMarked, BookOpen, Bot, CalendarDays, Car, Check, Clock,
   Compass, Droplets, FlaskConical, GraduationCap, Heart, HelpCircle, Landmark, Layers,
@@ -42,12 +57,12 @@ const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc: string
   { href: "/prayer-times",   Icon: Clock,         label: "أوقات الصلاة",    desc: "الكويت لحظياً" },
   { href: "/lessons",        Icon: GraduationCap, label: "الدروس",           desc: "علماء الكويت" },
   { href: "/hadith",         Icon: Scroll,        label: "الأحاديث",         desc: "صحيح وضعيف" },
-  { href: "/quran",          Icon: BookMarked,    label: "القرآن",            desc: "مصحف رقمي كامل" },
+  { href: "/quran-hub",      Icon: BookMarked,    label: "القرآن",            desc: "تجويد، تلاوة، وأكثر" },
   { href: "/fawaid",         Icon: Lightbulb,     label: "الفوائد",          desc: "فوائد منتقاة" },
-  { href: "/qa",             Icon: HelpCircle,    label: "الأسئلة",           desc: "فتاوى موثّقة" },
+  { href: "/qa",             Icon: HelpCircle,    label: "الأسئلة",           desc: "أسئلة شرعية موثّقة" },
   { href: "/tasbih",         Icon: RotateCw,      label: "التسبيح",          desc: "عداد إلكتروني" },
   { href: "/seerah",         Icon: Moon,          label: "السيرة",            desc: "حياته ﷺ كاملة" },
-  { href: "/fatwa",          Icon: Scale,         label: "الفتاوى",           desc: "أحكام معاصرة" },
+  { href: "/rulings",        Icon: Scale,         label: "الأحكام الشرعية",  desc: "مسائل معاصرة" },
   { href: "/quiz",           Icon: Target,        label: "المسابقات",         desc: "اختبار المعلومات" },
   { href: "/muezzins",       Icon: Mic2,          label: "المؤذنون",          desc: "أجمل الأصوات" },
   { href: "/library",        Icon: BookOpen,      label: "المكتبة",           desc: "كتب ومتون علمية" },
@@ -55,7 +70,7 @@ const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc: string
   { href: "/salah-guide",    Icon: Scroll,        label: "دليل الصلاة",       desc: "للمبتدئ والمتقن" },
   { href: "/calendar",       Icon: CalendarDays,  label: "التقويم",           desc: "التاريخ الهجري" },
   { href: "/mawarith",       Icon: Scale,         label: "المواريث",          desc: "الفرائض والتركات" },
-  { href: "/knowledge-map",  Icon: Map,           label: "خريطة المعرفة",     desc: "٢١ علماً مترابطاً" },
+  { href: "/knowledge-map",  Icon: Map,           label: "خريطة المعرفة",     desc: "حقول العلوم الشرعية مترابطة" },
   { href: "/scholars",       Icon: Users,         label: "العلماء",            desc: "رواد الفقه والحديث" },
 ];
 
@@ -87,8 +102,7 @@ const FEATURE_CATS: FeatureCat[] = [
       { href: "/wasaya-nabawiyya", Icon: Scroll,  title: "الوصايا النبوية",    desc: "10 وصايا جامعة ووصايا خاصة بالصحابة مع التطبيق" },
       { href: "/raqaiq",          Icon: Heart,  title: "الرقائق والزهد",      desc: "مواعظ تُليِّن القلوب وأقوال كبار الزاهدين والمحاسبة اليومية" },
       { href: "/prophets",        Icon: Star,     title: "قصص الأنبياء",     desc: "من آدم إلى محمد ﷺ" },
-      { href: "/islamic-stories", Icon: Landmark, title: "صحابة وفتوحات",    desc: "سير الصحابة والفتوحات" },
-      { href: "/stories",         Icon: Map,      title: "القصص الإسلامية",  desc: "وقائع من التاريخ الإسلامي" },
+      { href: "/stories",         Icon: Map,      title: "القصص الإسلامية",  desc: "سير الصحابة والفتوحات ووقائع من التاريخ الإسلامي" },
     ],
   },
   {
@@ -96,14 +110,14 @@ const FEATURE_CATS: FeatureCat[] = [
     Icon: Scale,
     label: "الفقه والأحكام",
     items: [
-      { href: "/qa",                 Icon: HelpCircle,   title: "الأسئلة والأجوبة",  desc: "فتاوى من العلماء" },
+      { href: "/qa",                 Icon: HelpCircle,   title: "الأسئلة والأجوبة",  desc: "أسئلة شرعية موثقة" },
       { href: "/rulings",            Icon: Scale,        title: "الأحكام الشرعية",   desc: "موسوعة الفقه والعبادات" },
       { href: "/tawhid",             Icon: BookMarked,   title: "التوحيد",            desc: "العقيدة الإسلامية" },
       { href: "/arkan",              Icon: Landmark,     title: "أركان الإسلام",     desc: "الأركان الخمسة مع الأدلة والتفاصيل" },
       { href: "/arkan-iman",         Icon: Star,         title: "أركان الإيمان",     desc: "الأركان الستة مع الأدلة وأقوال العلماء" },
       { href: "/asma-husna",         Icon: Star,         title: "الأسماء الحسنى",    desc: "99 اسماً لله بمعانيها ومنافعها" },
       { href: "/akhlaq",             Icon: Heart,        title: "الأخلاق الإسلامية", desc: "مكارم الأخلاق مع الآيات والأحاديث" },
-      { href: "/hadith-science",      Icon: Scroll,       title: "مصطلح الحديث",      desc: "30+ مصطلح في علوم الحديث والإسناد" },
+      { href: "/hadith-science",      Icon: Scroll,       title: "مصطلح الحديث",      desc: "مصطلحات علوم الحديث والإسناد" },
       { href: "/madhahib",            Icon: Scale,        title: "المذاهب الفقهية",    desc: "المذاهب الأربعة مناهجاً ومصادراً وانتشاراً" },
       { href: "/zakat",               Icon: Scale,        title: "الزكاة وأحكامها",    desc: "دليل الزكاة مع حاسبة وأحكام الأنواع السبعة" },
       { href: "/sawm",                Icon: Moon,         title: "الصيام وأحكامه",      desc: "أنواع الصيام وشروطه ومفطراته وفضائل رمضان" },
@@ -124,11 +138,11 @@ const FEATURE_CATS: FeatureCat[] = [
     items: [
       { href: "/adhkar",          Icon: Star,        title: "الأذكار",              desc: "أذكار الصباح والمساء" },
       { href: "/sunan-yawmiyya",  Icon: Check,       title: "السنن النبوية",        desc: "25+ سنة يومية مع تتبع التطبيق" },
-      { href: "/duas",        Icon: Heart,       title: "الأدعية الشرعية",    desc: "٨٠+ دعاءً موثقاً بالمصدر في ٨ أبواب" },
-      { href: "/duas-quran",  Icon: BookOpen,    title: "أدعية القرآن",        desc: "12 دعاءً قرآنياً للأنبياء والمؤمنين" },
+      { href: "/duas",        Icon: Heart,       title: "الأدعية الشرعية",    desc: "أدعية مأثورة مع مصدر كل دعاء" },
+      { href: "/duas-quran",  Icon: BookOpen,    title: "أدعية القرآن",        desc: "أدعية قرآنية للأنبياء والمؤمنين" },
       { href: "/fawaid",       Icon: Lightbulb,   title: "الفوائد الدينية",      desc: "فوائد علمية منتقاة" },
       { href: "/hikam-salaf",  Icon: BookOpen,    title: "حكم السلف الصالح",     desc: "أقوال الأئمة والصحابة والتابعين" },
-      { href: "/fadail-aamal",      Icon: Star,      title: "فضائل الأعمال",         desc: "56+ حديث في فضائل العبادات والأخلاق" },
+      { href: "/fadail-aamal",      Icon: Star,      title: "فضائل الأعمال",         desc: "أحاديث في فضائل العبادات والأخلاق" },
       { href: "/islamic-glossary",  Icon: BookOpen,       title: "المصطلحات الإسلامية",  desc: "قاموس شامل للمصطلحات في ستة علوم شرعية" },
       { href: "/adab-talab-ilm",   Icon: GraduationCap,  title: "آداب طالب العلم",      desc: "دليل طالب العلم من الفضل إلى الكتب المقررة" },
       { href: "/tawba",         Icon: RotateCw,    title: "التوبة والاستغفار",          desc: "شروط التوبة النصوح وأفضل صيغ الاستغفار" },
@@ -144,14 +158,14 @@ const FEATURE_CATS: FeatureCat[] = [
     Icon: Wrench,
     label: "أدوات التعلم",
     items: [
-      { href: "/learning-path",   Icon: Map,         title: "خارطة طالب العلم",  desc: "مسار من المبتدئ إلى المتقدم" },
+      { href: "/learning/paths",  Icon: Map,         title: "المسارات العلمية",  desc: "مسار من المبتدئ إلى المتقدم" },
       { href: "/flashcards",      Icon: Layers,      title: "البطاقات الدعوية",   desc: "مراجعة ذكية" },
       { href: "/quiz",            Icon: Target,      title: "لعبة سؤال وجواب",   desc: "اختبر معلوماتك الإسلامية" },
       { href: "/assistant",       Icon: Bot,         title: "المساعد العلمي",    desc: "إرشاد فوري بالذكاء الاصطناعي" },
       { href: "/calendar",        Icon: CalendarDays, title: "التقويم الهجري",   desc: "التواريخ والأيام المميزة" },
       { href: "/knowledge-graph", Icon: Network,     title: "خارطة المعرفة التفاعلية",     desc: "علاقات المعرفة الإسلامية بالرسم البياني" },
-      { href: "/knowledge-map",   Icon: Map,         title: "الخريطة المعرفية 2.0",         desc: "١٤ علماً إسلامياً مترابطاً" },
-      { href: "/mind-map",        Icon: Layers,      title: "الخرائط الذهنية",             desc: "23+ خريطة تفاعلية للعلوم الشرعية" },
+      { href: "/knowledge-map",   Icon: Map,         title: "الخريطة المعرفية 2.0",         desc: "حقول العلوم الشرعية مترابطة" },
+      { href: "/mind-map",        Icon: Layers,      title: "الخرائط الذهنية",             desc: "خرائط ذهنية تفاعلية للعلوم الشرعية" },
       { href: "/islam-stats",     Icon: Star,        title: "إحصائيات الإسلام",             desc: "أرقام وحضارة وعلماء — في بيانات مرئية" },
       { href: "/institutions",    Icon: Landmark,    title: "المؤسسات الإسلامية",            desc: "المجامع والجامعات والمراكز البحثية الكبرى" },
       { href: "/scholars",        Icon: Users,       title: "أعلام العلماء",                desc: "مئات العلماء عبر التاريخ بالتخصص والحقبة" },
@@ -186,6 +200,35 @@ const FEATURE_CATS: FeatureCat[] = [
 
 function SafeHomeSection({ name, children }: { name: string; children: React.ReactNode }) {
   return <SectionErrorBoundary name={name}>{children}</SectionErrorBoundary>;
+}
+
+/** خريطة مُعرِّف القسم القابل للتخصيص ← عرضه. تُستهلَك عبر homepage-layout.ts. */
+const WIDGET_RENDERERS: Record<string, () => React.ReactNode> = {
+  "lessons": () => (<><HomeUpcomingLessons /><HomeUpcomingCourses /></>),
+  "prayer": () => <HomeCompactPrayer />,
+  "continue": () => <HomeContinueWidget />,
+  "daily-progress": () => <HomeDailyProgress />,
+  "week-streak": () => <HomeWeekStreak />,
+  "asma": () => <HomeAsmaCard />,
+  "hadith": () => <HomeNawawiHadith />,
+  "sunnah-time": () => <HomeSunnahByTime />,
+  "explore": () => <ExplorePlatformSection />,
+  "learning-seasons": () => <HomeLearningSeasonsWidget />,
+  "occasions": () => <HomeIslamicOccasions />,
+  "latest-updates": () => <HomeLatestUpdates />,
+  "library": () => <HomeFeaturedLibrary />,
+  "quiz": () => <HomeQuizCard />,
+  "daily-corner": () => <HomeDailyCorner />,
+  "prayer-ranks": () => <HomePrayerRanks />,
+  "interesting-topics": () => <HomeInterestingTopics />,
+  "mind-map": () => <HomeMindMapSection />,
+};
+
+const WIDGET_LABEL: Record<string, string> = Object.fromEntries(HOME_WIDGET_DEFS.map((w) => [w.id, w.label]));
+
+const ARABIC_DIGITS = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+function toArabicDigits(n: number): string {
+  return String(n).replace(/[0-9]/g, (d) => ARABIC_DIGITS[Number(d)]);
 }
 
 function RecentPagesBar() {
@@ -263,41 +306,173 @@ function StartHereSection() {
   );
 }
 
+function ExplorePlatformSection() {
+  return (
+    <section aria-labelledby="features-heading" style={{ marginTop: "2rem" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.1rem" }}>
+        {/* أيقونة هندسية للعنوان */}
+        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+          <polygon points="11,1 13.5,8 21,8 15,13 17.5,20 11,16 4.5,20 7,13 1,8 8.5,8" fill="none" stroke="#176B57" strokeWidth="1.2"/>
+          <circle cx="11" cy="11" r="3.5" fill="none" stroke="#176B57" strokeWidth="0.8"/>
+        </svg>
+        <h2 id="features-heading" style={{ fontSize: "1.1rem", fontWeight: 800, color: "#1a1a1a", margin: 0 }}>
+          استكشف المنصة
+        </h2>
+      </div>
+
+      {/* بطاقات بارزة */}
+      <div style={{
+        display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "0.8rem",
+        marginBottom: "2.25rem",
+      }}>
+        {FEATURED.map(({ href, Icon, title, desc, cta }) => (
+          <Link key={href} href={href} aria-label={title} style={{
+            display: "flex", flexDirection: "column", gap: "0.65rem",
+            padding: "1.2rem 1.1rem", borderRadius: "1.1rem", textDecoration: "none",
+            background: "linear-gradient(145deg, #112a1e 0%, #1a3d2b 40%, #176B57 80%, #176B57 100%)",
+            color: "#fff",
+            boxShadow: "0 4px 16px rgba(15,50,30,0.28), inset 0 1px 0 rgba(255,255,255,0.1)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            position: "relative", overflow: "hidden",
+          }}>
+            {/* زخرفة هندسية في الخلفية */}
+            <svg aria-hidden="true" style={{
+              position: "absolute", top: "-10px", left: "-10px", opacity: 0.07, pointerEvents: "none",
+            }} width="80" height="80" viewBox="0 0 80 80">
+              <polygon points="40,5 55,25 75,20 65,40 75,60 55,55 40,75 25,55 5,60 15,40 5,20 25,25" fill="none" stroke="white" strokeWidth="1"/>
+              <circle cx="40" cy="40" r="15" fill="none" stroke="white" strokeWidth="0.6"/>
+            </svg>
+            <Icon size={22} strokeWidth={1.5} style={{ opacity: 0.92, position: "relative" }} />
+            <strong style={{ fontSize: "0.97rem", fontWeight: 800, position: "relative", lineHeight: 1.3 }}>{title}</strong>
+            <p style={{ fontSize: "0.79rem", opacity: 0.75, lineHeight: 1.6, margin: 0, position: "relative" }}>{desc}</p>
+            <span style={{
+              fontSize: "0.76rem", fontWeight: 700, marginTop: "auto",
+              display: "inline-flex", alignItems: "center", gap: "0.3rem",
+              color: "rgba(210,240,225,0.95)", position: "relative",
+              borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "0.5rem",
+            }}>{cta} ←</span>
+          </Link>
+        ))}
+      </div>
+
+      {/* أقسام بالتصنيف */}
+      {FEATURE_CATS.map(cat => (
+        <div key={cat.id} style={{ marginBottom: "2rem" }}>
+          <div style={{
+            display: "flex", alignItems: "center", gap: "0.6rem",
+            marginBottom: "0.85rem", paddingBottom: "0.7rem",
+            borderBottom: "1.5px solid #ddeee5",
+          }}>
+            {/* زخرفة هندسية بدل المربع */}
+            <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" style={{ flexShrink: 0 }}>
+              <polygon points="14,2 20,9 27,9 22,16 25,24 14,20 3,24 6,16 1,9 8,9" fill="#176B57"/>
+              <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="#176B57" opacity="0.6"/>
+              <circle cx="14" cy="14" r="3" fill="#FAF8F2"/>
+            </svg>
+            <h3 style={{ fontSize: "0.98rem", fontWeight: 800, color: "#176B57", margin: 0 }}>{cat.label}</h3>
+            <span style={{
+              marginRight: "auto", fontSize: "0.68rem", color: "#176B57", fontWeight: 700,
+              background: "#e8f4ed", padding: "0.15rem 0.6rem", borderRadius: "999px",
+              border: "1px solid #c8e6d5",
+            }}>{cat.items.length} قسم</span>
+          </div>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(165px, 1fr))",
+            gap: "0.5rem",
+          }}>
+            {cat.items.map(({ href, Icon: ItemIcon, title, desc }) => (
+              <Link key={href} href={href} style={{
+                display: "flex", alignItems: "flex-start", gap: "0.6rem",
+                padding: "0.75rem 0.8rem", borderRadius: "0.8rem",
+                textDecoration: "none", background: "#fafcfb",
+                border: "1px solid #e2ede8",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+              }}>
+                <span style={{
+                  background: "linear-gradient(135deg,#176B57,#176B57)", color: "#FAF8F2",
+                  padding: "0.38rem", borderRadius: "0.4rem",
+                  display: "flex", flexShrink: 0, marginTop: "0.05rem",
+                  boxShadow: "0 1px 3px rgba(15,50,30,0.2)",
+                }}>
+                  <ItemIcon size={14} strokeWidth={2} />
+                </span>
+                <div style={{ minWidth: 0 }}>
+                  <strong style={{ display: "block", fontSize: "0.81rem", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.35 }}>{title}</strong>
+                  <span style={{ fontSize: "0.7rem", color: "#666", lineHeight: 1.45, display: "block", marginTop: "0.1rem" }}>{desc}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      ))}
+    </section>
+  );
+}
+
 export default function HomePage() {
   const [term, setTerm] = useState("");
   const [, navigate] = useLocation();
-  const { isAdmin } = useAuth();
+  const { isAdmin, user } = useAuth();
+  const dailyCtx = useDailyContext();
+
+  // تخصيص أقسام الصفحة الرئيسية: محلي فورًا، مع مزامنة اختيارية من Supabase عند تسجيل الدخول
+  const [homePrefs, setHomePrefs] = useState<HomepagePrefs>(() => getLocalHomepagePrefs());
+  const [customizeOpen, setCustomizeOpen] = useState(false);
+  useEffect(() => {
+    if (!user?.id) return;
+    fetchRemoteHomepagePrefs(user.id).then((remote) => {
+      if (remote) { setHomePrefs(remote); saveLocalHomepagePrefs(remote); }
+    });
+  }, [user?.id]);
+
+  // شريط الترويسة المُصغَّر: الصلاة القادمة والوقت المتبقي (بديل الشعار الكبير)
+  const [heroPrayers, setHeroPrayers] = useState<PrayerTimesPayload | null>(null);
+  useEffect(() => {
+    fetchPrayerTimes().then(setHeroPrayers).catch(() => {});
+  }, []);
+  const [heroCountdown, setHeroCountdown] = useState<{ name: string; hms: string } | null>(null);
+  useEffect(() => {
+    if (!heroPrayers?.prayers?.length) return;
+    const tick = () => {
+      const cd = computePrayerCountdown(heroPrayers.prayers);
+      const inGrace = cd.sinceSeconds != null;
+      const name = inGrace && cd.graceNextSlot ? cd.graceNextSlot.name : cd.next?.name;
+      const hms = inGrace && cd.graceNextHms ? cd.graceNextHms : cd.remainingHms;
+      if (name && hms) setHeroCountdown({ name, hms });
+    };
+    tick();
+    const t = setInterval(tick, 1000);
+    return () => clearInterval(t);
+  }, [heroPrayers]);
 
   useEffect(() => {
     applyPageSeo({
       path: "/",
       title: "المجلس العلمي، منصة العلوم الإسلامية",
-      description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم، الأذكار، الدروس العلمية، الفتاوى، والفقه المعاصر.",
-      keywords: ["المجلس العلمي", "علوم إسلامية", "قرآن كريم", "أذكار", "فتاوى", "دروس علمية"],
+      description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم، الأذكار، الدروس العلمية، الأحكام الشرعية، والفقه المعاصر.",
+      keywords: ["المجلس العلمي", "علوم إسلامية", "قرآن كريم", "أذكار", "أحكام شرعية", "دروس علمية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "المجلس العلمي",
-          url: "https://majlisilm.com",
-          logo: "https://majlisilm.com/logo.png",
-          description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم والأذكار والدروس والفتاوى والفقه",
+          url: "https://www.majlisilm.com",
+          logo: "https://www.majlisilm.com/logo.png",
+          description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم والأذكار والدروس والأحكام الشرعية والفقه",
           inLanguage: "ar",
           areaServed: { "@type": "Country", name: "الكويت" },
-          sameAs: ["https://majlisilm.com"],
+          sameAs: ["https://www.majlisilm.com"],
         },
         {
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "المجلس العلمي",
-          url: "https://majlisilm.com",
+          url: "https://www.majlisilm.com",
           inLanguage: "ar",
           potentialAction: {
             "@type": "SearchAction",
-            target: {
-              "@type": "EntryPoint",
-              urlTemplate: "https://majlisilm.com/search/{search_term_string}",
-            },
+            target: "https://www.majlisilm.com/search?q={search_term_string}",
             "query-input": "required name=search_term_string",
           },
         },
@@ -324,7 +499,7 @@ export default function HomePage() {
         className="hpv4-hero"
         aria-label="الصفحة الرئيسية"
         style={{
-          background: "linear-gradient(165deg, #0c2318 0%, #1a3d2b 40%, #163728 70%, #0e2619 100%)",
+          background: "linear-gradient(165deg, #071E18 0%, #123F36 40%, #0E4437 70%, #071E18 100%)",
           padding: "clamp(2rem,5vw,3rem) 1rem clamp(1.75rem,4vw,2.5rem)",
           position: "relative",
           overflow: "hidden",
@@ -363,25 +538,88 @@ export default function HomePage() {
         </svg>
 
         <div style={{ maxWidth: 640, margin: "0 auto", position: "relative", textAlign: "center" }}>
-          {/* الشعار والاسم */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "0.55rem" }}>
-            <img src="/logo.png" alt="" width={56} height={56} loading="eager" aria-hidden="true"
-              style={{
-                borderRadius: "50%", border: "2px solid rgba(255,255,255,0.35)",
-                boxShadow: "0 0 0 4px rgba(255,255,255,0.08), 0 4px 18px rgba(0,0,0,0.4)",
-              }} />
-            <h1 style={{ color: "#FAF8F2", fontSize: "clamp(1.7rem, 5.5vw, 2.6rem)", fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>
-              المجلس العلمي
-            </h1>
-          </div>
 
-          {/* الشعار الفلسفي */}
-          <p style={{
-            color: "rgba(250,248,242,0.45)", fontSize: "clamp(0.7rem, 1.8vw, 0.8rem)",
-            letterSpacing: "0.15em", fontWeight: 600, margin: "0 0 0.9rem", textTransform: "uppercase",
-          }}>
-            رسالةٌ عظيمة، ووسائل تتجدد
-          </p>
+          {/* ── التحية اليومية الديناميكية (h1 دلالي وحيد للصفحة) ── */}
+          <div style={{ marginBottom: "1.1rem" }}>
+            <h1 style={{
+              color: "rgba(250,248,242,0.92)",
+              fontSize: "clamp(0.88rem, 2.4vw, 1.05rem)",
+              fontWeight: 700,
+              letterSpacing: "0.01em",
+              lineHeight: 1.5,
+              margin: "0 0 0.35rem",
+            }}>
+              {dailyCtx.greeting}
+            </h1>
+            {dailyCtx.subGreeting && (
+              <p style={{
+                color: "rgba(250,248,242,0.55)",
+                fontSize: "clamp(0.72rem, 1.9vw, 0.82rem)",
+                margin: 0,
+              }}>
+                {dailyCtx.subGreeting}
+              </p>
+            )}
+            {dailyCtx.event && (
+              <div style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                marginTop: "0.5rem",
+                background: `${dailyCtx.accentColor}33`,
+                border: `1px solid ${dailyCtx.accentColor}66`,
+                color: "#FAF8F2",
+                padding: "0.22rem 0.9rem",
+                borderRadius: "999px",
+                fontSize: "0.75rem",
+                fontWeight: 700,
+              }}>
+                ✦ {dailyCtx.event}
+              </div>
+            )}
+            {/* شريط التاريخ والصلاة القادمة — بديل الشعار الكبير واسم التطبيق
+                (يبقى الشعار في شاشة البداية وصفحة "عن التطبيق" والأيقونة فقط) */}
+            <div style={{
+              display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center",
+              gap: "0.4rem", marginTop: "0.45rem",
+            }}>
+              <span style={{
+                display: "inline-flex", alignItems: "center", gap: "0.35rem",
+                background: "rgba(255,255,255,0.1)",
+                border: "1px solid rgba(255,255,255,0.22)",
+                color: "rgba(250,248,242,0.75)",
+                padding: "0.18rem 0.75rem",
+                borderRadius: "999px",
+                fontSize: "0.72rem",
+                fontWeight: 600,
+                letterSpacing: "0.02em",
+              }}>
+                <svg width="11" height="11" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+                  <circle cx="9" cy="9" r="7"/><path d="M9 2C6.5 4 5 6.3 5 9s1.5 5 4 7"/><path d="M9 2c2.5 2 4 4.3 4 7s-1.5 5-4 7"/><path d="M2 9h14"/>
+                </svg>
+                {getHijriDateString()}
+              </span>
+              {heroCountdown && (
+                <Link href="/prayer-times" style={{
+                  display: "inline-flex", alignItems: "center", gap: "0.35rem",
+                  background: "rgba(255,255,255,0.16)",
+                  border: "1px solid rgba(255,255,255,0.3)",
+                  color: "#FAF8F2",
+                  padding: "0.18rem 0.75rem",
+                  borderRadius: "999px",
+                  fontSize: "0.72rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.02em",
+                  textDecoration: "none",
+                }}>
+                  <svg width="11" height="11" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <circle cx="9" cy="9" r="7.5"/><path d="M9 5v4l3 2"/>
+                  </svg>
+                  {heroCountdown.name} بعد <span dir="ltr">{heroCountdown.hms}</span>
+                </Link>
+              )}
+            </div>
+          </div>
 
           {/* فاصل هندسي مُحسَّن — ماسة وخطوط */}
           <div aria-hidden="true" style={{ display: "flex", justifyContent: "center", marginBottom: "1rem", opacity: 0.45 }}>
@@ -396,7 +634,7 @@ export default function HomePage() {
 
           {/* الوصف */}
           <p style={{ color: "rgba(255,255,255,0.82)", fontSize: "clamp(0.84rem, 2.2vw, 0.96rem)", lineHeight: 1.8, maxWidth: 510, margin: "0 auto 1.1rem" }}>
-            بوّابتك الشاملة إلى العلوم الشرعية: القرآن الكريم، السنة النبوية الموثّقة، دروس علماء الكويت، الفقه والفتاوى المعاصرة، والأذكار اليومية
+            بوّابتك الشاملة إلى العلوم الشرعية: القرآن الكريم، السنة النبوية الموثّقة، دروس علماء الكويت، الفقه والأحكام المعاصرة، والأذكار اليومية
           </p>
 
           {/* شريحات الجمهور */}
@@ -444,6 +682,7 @@ export default function HomePage() {
               onChange={(e) => setTerm(e.target.value)}
               placeholder="ابحث في المنصة..."
               aria-label="البحث"
+              className="hpv4-hero__search-input"
               style={{
                 flex: 1, padding: "0.75rem 1rem", border: "none", outline: "none",
                 fontSize: "0.88rem", direction: "rtl", fontFamily: "inherit",
@@ -451,7 +690,7 @@ export default function HomePage() {
               }}
             />
             <button type="submit" style={{
-              background: "linear-gradient(135deg,#2d7a5a,#1F4D3A)", color: "#FAF8F2", border: "none", cursor: "pointer",
+              background: "linear-gradient(135deg,#176B57,#176B57)", color: "#FAF8F2", border: "none", cursor: "pointer",
               padding: "0.75rem 1.3rem", fontWeight: 800, fontSize: "0.85rem", fontFamily: "inherit",
               whiteSpace: "nowrap",
             }}>بحث</button>
@@ -459,8 +698,8 @@ export default function HomePage() {
 
           {/* أزرار الإجراء — شبكة 2×2 */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4,auto)", gap: "0.45rem", justifyContent: "center" }}>
-            <Link href="/lessons" style={{
-              background: "#FAF8F2", color: "#1F4D3A", padding: "0.6rem 1.2rem",
+            <Link href="/lessons" className="hpv4-hero__cta-primary" style={{
+              background: "#FAF8F2", color: "#176B57", padding: "0.6rem 1.2rem",
               borderRadius: "0.6rem", fontWeight: 800, fontSize: "0.86rem",
               textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.3rem",
               boxShadow: "0 2px 10px rgba(0,0,0,0.25)",
@@ -468,7 +707,7 @@ export default function HomePage() {
               <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 3 1 7l8 4 8-4-8-4z"/><path d="M5 9.5v3.5a4 4 0 0 0 8 0V9.5"/></svg>
               الدروس
             </Link>
-            <Link href="/quran" style={{
+            <Link href="/quran-hub" style={{
               background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1rem",
               borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.86rem",
               textDecoration: "none", border: "1px solid rgba(255,255,255,0.28)",
@@ -505,10 +744,10 @@ export default function HomePage() {
               borderTop: "1px solid rgba(255,255,255,0.1)",
             }}>
               {[
-                { num: "١٢٣+", label: "عالم مرجعي",   icon: "👤" },
-                { num: "٤٨٠+", label: "سؤال اختباري", icon: "🧠" },
-                { num: "٥١٠+", label: "فائدة علمية",  icon: "💡" },
-                { num: "١٠٠+", label: "كتاب علمي",    icon: "📚" },
+                { num: toArabicDigits(contentCounts.scholars),      label: "عالم مرجعي",   icon: "👤" },
+                { num: toArabicDigits(contentCounts.quizQuestions), label: "سؤال اختباري", icon: "🧠" },
+                { num: toArabicDigits(contentCounts.fawaid),        label: "فائدة علمية",  icon: "💡" },
+                { num: toArabicDigits(contentCounts.books),         label: "كتاب علمي",    icon: "📚" },
               ].map(({ num, label, icon }) => (
                 <div key={label} style={{
                   background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
@@ -534,13 +773,18 @@ export default function HomePage() {
       {/* ══ زرتَ مؤخراً ══ */}
       <RecentPagesBar />
 
+      {/* ══ لوحة المستخدم الشخصية — للمسجلين فقط ══ */}
+      <SectionErrorBoundary name="PersonalDashboard">
+        <HomePersonalDashboard />
+      </SectionErrorBoundary>
+
       {/* ══ وصول سريع ══ */}
       <nav aria-label="وصول سريع" style={{ maxWidth: 760, margin: "1.5rem auto 0", padding: "0 1rem" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.7rem" }}>
           <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
-            <polygon points="9,1 12,7 18,7 13,11 15,17 9,13 3,17 5,11 0,7 6,7" fill="#2d7a5a" opacity="0.85"/>
+            <polygon points="9,1 12,7 18,7 13,11 15,17 9,13 3,17 5,11 0,7 6,7" fill="#176B57" opacity="0.85"/>
           </svg>
-          <p style={{ color: "#1F4D3A", fontSize: "0.82rem", fontWeight: 800, margin: 0, letterSpacing: "0.03em" }}>وصول سريع</p>
+          <p style={{ color: "#176B57", fontSize: "0.82rem", fontWeight: 800, margin: 0, letterSpacing: "0.03em" }}>وصول سريع</p>
         </div>
         <div style={{
           display: "grid",
@@ -559,7 +803,7 @@ export default function HomePage() {
             }}>
               <span style={{
                 background: "linear-gradient(135deg,#edf6f1,#daf0e8)",
-                color: "#1F4D3A", padding: "0.38rem", borderRadius: "0.4rem",
+                color: "#176B57", padding: "0.38rem", borderRadius: "0.4rem",
                 display: "flex", flexShrink: 0,
               }}>
                 <Ico size={14} strokeWidth={2} />
@@ -585,204 +829,42 @@ export default function HomePage() {
         <HomeSawmReminder />
       </div>
 
+      {/* ══ تذكير الشهر الهجري ══ */}
+      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 1rem" }}>
+        <SafeHomeSection name="HijriSacredMonthBanner">
+          <HijriSacredMonthBanner />
+        </SafeHomeSection>
+      </div>
+
       {/* ══ ابدأ من هنا ══ */}
       <StartHereSection />
+
+      <div style={{ maxWidth: 760, margin: "0.5rem auto 0", padding: "0 1rem", textAlign: "center" }}>
+        <button type="button" className="hpv4-customize-trigger" onClick={() => setCustomizeOpen(true)}>
+          <Wrench size={13} strokeWidth={2} aria-hidden="true" /> تخصيص الصفحة الرئيسية
+        </button>
+      </div>
 
       {/* ══════════════════ Main Content ══════════════════ */}
       <main className="home-container home-main home-main--v3">
 
-        {/* الدروس والدورات */}
-        <SafeHomeSection name="الدروس والدورات">
-          <HomeUpcomingLessons />
-          <HomeUpcomingCourses />
-        </SafeHomeSection>
-
-        {/* مواقيت الصلاة */}
-        <SafeHomeSection name="مواقيت الصلاة">
-          <HomeCompactPrayer />
-        </SafeHomeSection>
-
-        {/* استمر من حيث توقفت */}
-        <SafeHomeSection name="استمر من حيث توقفت">
-          <HomeContinueWidget />
-        </SafeHomeSection>
-
-        {/* التقدم اليومي */}
-        <SafeHomeSection name="التقدم اليومي">
-          <HomeDailyProgress />
-        </SafeHomeSection>
-
-        {/* سجل الأسبوع */}
-        <SafeHomeSection name="سجل الأسبوع">
-          <HomeWeekStreak />
-        </SafeHomeSection>
-
-        {/* اسم الله اليومي */}
-        <SafeHomeSection name="اسم الله اليومي">
-          <HomeAsmaCard />
-        </SafeHomeSection>
-
-        {/* حديث اليوم من الأربعين النووية */}
-        <SafeHomeSection name="حديث اليوم">
-          <HomeNawawiHadith />
-        </SafeHomeSection>
-
-        {/* سنن الوقت */}
-        <SafeHomeSection name="سنن الوقت">
-          <HomeSunnahByTime />
-        </SafeHomeSection>
-
-        {/* ══ استكشف المنصة ══ */}
-        <section aria-labelledby="features-heading" style={{ marginTop: "2rem" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.1rem" }}>
-            {/* أيقونة هندسية للعنوان */}
-            <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
-              <polygon points="11,1 13.5,8 21,8 15,13 17.5,20 11,16 4.5,20 7,13 1,8 8.5,8" fill="none" stroke="#1F4D3A" strokeWidth="1.2"/>
-              <circle cx="11" cy="11" r="3.5" fill="none" stroke="#2d7a5a" strokeWidth="0.8"/>
-            </svg>
-            <h2 id="features-heading" style={{ fontSize: "1.1rem", fontWeight: 800, color: "#1a1a1a", margin: 0 }}>
-              استكشف المنصة
-            </h2>
-          </div>
-
-          {/* بطاقات بارزة */}
-          <div style={{
-            display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "0.8rem",
-            marginBottom: "2.25rem",
-          }}>
-            {FEATURED.map(({ href, Icon, title, desc, cta }) => (
-              <Link key={href} href={href} aria-label={title} style={{
-                display: "flex", flexDirection: "column", gap: "0.65rem",
-                padding: "1.2rem 1.1rem", borderRadius: "1.1rem", textDecoration: "none",
-                background: "linear-gradient(145deg, #112a1e 0%, #1a3d2b 40%, #1F4D3A 80%, #2d7a5a 100%)",
-                color: "#fff",
-                boxShadow: "0 4px 16px rgba(15,50,30,0.28), inset 0 1px 0 rgba(255,255,255,0.1)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                position: "relative", overflow: "hidden",
-              }}>
-                {/* زخرفة هندسية في الخلفية */}
-                <svg aria-hidden="true" style={{
-                  position: "absolute", top: "-10px", left: "-10px", opacity: 0.07, pointerEvents: "none",
-                }} width="80" height="80" viewBox="0 0 80 80">
-                  <polygon points="40,5 55,25 75,20 65,40 75,60 55,55 40,75 25,55 5,60 15,40 5,20 25,25" fill="none" stroke="white" strokeWidth="1"/>
-                  <circle cx="40" cy="40" r="15" fill="none" stroke="white" strokeWidth="0.6"/>
-                </svg>
-                <Icon size={22} strokeWidth={1.5} style={{ opacity: 0.92, position: "relative" }} />
-                <strong style={{ fontSize: "0.97rem", fontWeight: 800, position: "relative", lineHeight: 1.3 }}>{title}</strong>
-                <p style={{ fontSize: "0.79rem", opacity: 0.75, lineHeight: 1.6, margin: 0, position: "relative" }}>{desc}</p>
-                <span style={{
-                  fontSize: "0.76rem", fontWeight: 700, marginTop: "auto",
-                  display: "inline-flex", alignItems: "center", gap: "0.3rem",
-                  color: "rgba(210,240,225,0.95)", position: "relative",
-                  borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "0.5rem",
-                }}>{cta} ←</span>
-              </Link>
-            ))}
-          </div>
-
-          {/* أقسام بالتصنيف */}
-          {FEATURE_CATS.map(cat => (
-            <div key={cat.id} style={{ marginBottom: "2rem" }}>
-              <div style={{
-                display: "flex", alignItems: "center", gap: "0.6rem",
-                marginBottom: "0.85rem", paddingBottom: "0.7rem",
-                borderBottom: "1.5px solid #ddeee5",
-              }}>
-                {/* زخرفة هندسية بدل المربع */}
-                <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" style={{ flexShrink: 0 }}>
-                  <polygon points="14,2 20,9 27,9 22,16 25,24 14,20 3,24 6,16 1,9 8,9" fill="#1F4D3A"/>
-                  <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="#2d7a5a" opacity="0.6"/>
-                  <circle cx="14" cy="14" r="3" fill="#FAF8F2"/>
-                </svg>
-                <h3 style={{ fontSize: "0.98rem", fontWeight: 800, color: "#1F4D3A", margin: 0 }}>{cat.label}</h3>
-                <span style={{
-                  marginRight: "auto", fontSize: "0.68rem", color: "#2d7a5a", fontWeight: 700,
-                  background: "#e8f4ed", padding: "0.15rem 0.6rem", borderRadius: "999px",
-                  border: "1px solid #c8e6d5",
-                }}>{cat.items.length} قسم</span>
-              </div>
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(165px, 1fr))",
-                gap: "0.5rem",
-              }}>
-                {cat.items.map(({ href, Icon: ItemIcon, title, desc }) => (
-                  <Link key={href} href={href} style={{
-                    display: "flex", alignItems: "flex-start", gap: "0.6rem",
-                    padding: "0.75rem 0.8rem", borderRadius: "0.8rem",
-                    textDecoration: "none", background: "#fafcfb",
-                    border: "1px solid #e2ede8",
-                    boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
-                  }}>
-                    <span style={{
-                      background: "linear-gradient(135deg,#1F4D3A,#2d7a5a)", color: "#FAF8F2",
-                      padding: "0.38rem", borderRadius: "0.4rem",
-                      display: "flex", flexShrink: 0, marginTop: "0.05rem",
-                      boxShadow: "0 1px 3px rgba(15,50,30,0.2)",
-                    }}>
-                      <ItemIcon size={14} strokeWidth={2} />
-                    </span>
-                    <div style={{ minWidth: 0 }}>
-                      <strong style={{ display: "block", fontSize: "0.81rem", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.35 }}>{title}</strong>
-                      <span style={{ fontSize: "0.7rem", color: "#666", lineHeight: 1.45, display: "block", marginTop: "0.1rem" }}>{desc}</span>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ))}
-        </section>
-
-        {/* مواسم التعلم */}
-        <SafeHomeSection name="مواسم التعلم">
-          <HomeLearningSeasonsWidget />
-        </SafeHomeSection>
-
-        {/* المناسبات الإسلامية */}
-        <SafeHomeSection name="المناسبات الإسلامية">
-          <HomeIslamicOccasions />
-        </SafeHomeSection>
-
-        {/* آخر التحديثات */}
-        <SafeHomeSection name="آخر التحديثات">
-          <HomeLatestUpdates />
-        </SafeHomeSection>
-
-        {/* المكتبة العلمية */}
-        <SafeHomeSection name="المكتبة العلمية">
-          <HomeFeaturedLibrary />
-        </SafeHomeSection>
-
-        {/* لعبة المسابقة */}
-        <SafeHomeSection name="المسابقة">
-          <HomeQuizCard />
-        </SafeHomeSection>
-
-        {/* الركن اليومي */}
-        <SafeHomeSection name="الركن اليومي">
-          <HomeDailyCorner />
-        </SafeHomeSection>
-
-        {/* مراتب الناس في الصلاة */}
-        <SafeHomeSection name="مراتب الصلاة">
-          <HomePrayerRanks />
-        </SafeHomeSection>
-
-        {/* مواضيع مشوقة */}
-        <SafeHomeSection name="مواضيع مشوقة">
-          <HomeInterestingTopics />
-        </SafeHomeSection>
-
-        {/* الخرائط الذهنية */}
-        <SafeHomeSection name="الخرائط الذهنية">
-          <HomeMindMapSection />
-        </SafeHomeSection>
+        {visibleWidgetOrder(homePrefs).map((id) => (
+          <SafeHomeSection key={id} name={WIDGET_LABEL[id] ?? id}>
+            {WIDGET_RENDERERS[id]?.()}
+          </SafeHomeSection>
+        ))}
 
         <SafeHomeSection name="عن المجلس العلمي">
           <HomeAboutSection />
         </SafeHomeSection>
 
       </main>
+
+      <HomeCustomizeSheet
+        open={customizeOpen}
+        onClose={() => setCustomizeOpen(false)}
+        onChange={setHomePrefs}
+      />
     </div>
   );
 }

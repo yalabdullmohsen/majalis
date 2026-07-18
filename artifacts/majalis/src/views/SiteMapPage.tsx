@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
@@ -10,13 +11,15 @@ const SECTIONS = [
     emoji: "📖",
     links: [
       { href: "/quran-hub",          label: "مركز القرآن",        desc: "بوابة كل ما يتعلق بالقرآن" },
-      { href: "/quran",              label: "المصحف الشريف",      desc: "تصفّح القرآن سورةً سورة" },
       { href: "/daily-wird",         label: "الورد اليومي",       desc: "ختمة متجددة يومياً" },
       { href: "/quran/tajweed",      label: "علم التجويد",        desc: "أحكام التجويد بالأمثلة" },
       { href: "/ulum-quran",         label: "علوم القرآن",        desc: "التفسير والناسخ والمنسوخ" },
       { href: "/quran/surah-stories", label: "قصص السور",         desc: "أسباب النزول" },
+      { href: "/mutashabihat",       label: "المتشابهات القرآنية", desc: "الآيات المتشابهة لفظاً" },
       { href: "/duas-quran",         label: "أدعية القرآن",       desc: "الأدعية القرآنية المختارة" },
       { href: "/quran-radio",        label: "إذاعة القرآن",       desc: "استماع مباشر" },
+      { href: "/quran-live",         label: "بث قرآني مباشر",     desc: "متابعة تلاوات مباشرة" },
+      { href: "/quran-memorization", label: "حفظ القرآن",         desc: "أدوات مساعدة على الحفظ" },
       { href: "/quran-circles",      label: "حلقات التحفيظ",      desc: "دليل حلقات القرآن" },
       { href: "/muezzins",           label: "مكتبة القراء",       desc: "مقاطع صوتية للقراء" },
     ],
@@ -63,7 +66,6 @@ const SECTIONS = [
       { href: "/madhahib",       label: "المذاهب الأربعة",      desc: "الحنفي والمالكي والشافعي والحنبلي" },
       { href: "/islamic-sects",  label: "الفرق الإسلامية",      desc: "نشأة الفرق وعقائدها وانتشارها" },
       { href: "/qa",          label: "الأسئلة والأجوبة",     desc: "أسئلة وأجوبة شرعية" },
-      { href: "/fatwa",       label: "الفتاوى",              desc: "فتاوى مُحقَّقة" },
       { href: "/rulings",     label: "الأحكام الشرعية",      desc: "موسوعة الأحكام" },
       { href: "/fiqh-council", label: "المجمع الفقهي",       desc: "قرارات المجامع الفقهية" },
     ],
@@ -74,7 +76,6 @@ const SECTIONS = [
     links: [
       { href: "/adhkar",            label: "الأذكار",              desc: "الصباح والمساء والنوم" },
       { href: "/duas",              label: "الأدعية الشرعية",      desc: "أدعية مصنفة" },
-      { href: "/duas-quran",        label: "أدعية القرآن",         desc: "الأدعية القرآنية المختارة" },
       { href: "/tasbih",            label: "التسبيح",              desc: "عداد التسبيح الرقمي" },
       { href: "/sunan-yawmiyya",    label: "السنن اليومية",        desc: "السنن مع تتبع إتمامها" },
       { href: "/prayer-ranks",      label: "فضائل الصلاة",         desc: "أحاديث وآيات فضل الصلاة" },
@@ -85,6 +86,7 @@ const SECTIONS = [
       { href: "/tawba",             label: "التوبة والاستغفار",    desc: "فضل التوبة وأدعيتها" },
       { href: "/amr-bil-maruf",     label: "الأمر بالمعروف",       desc: "شروطه ومراتبه ومعرفة المعروف والمنكر" },
       { href: "/raqaiq",            label: "الرقائق والزهد",       desc: "تزكية النفس" },
+      { href: "/sins-and-rights",   label: "الذنوب والحقوق",       desc: "التوبة وحقوق العباد" },
       { href: "/occasions",         label: "المناسبات الإسلامية",  desc: "أذكار المناسبات" },
       { href: "/adab-talab-ilm",    label: "آداب طالب العلم",      desc: "شروط طلب العلم وآدابه" },
       { href: "/akhlaq",            label: "الأخلاق الإسلامية",    desc: "مكارم الأخلاق" },
@@ -98,8 +100,8 @@ const SECTIONS = [
       { href: "/sahabah",          label: "الصحابة الكرام",       desc: "سِيَر الصحابة وفضائلهم" },
       { href: "/prophets",         label: "الأنبياء والرسل",      desc: "٢٥ نبياً بقصصهم" },
       { href: "/anbiya",           label: "قصص الأنبياء",         desc: "عرض تفاعلي بقصص وعبر" },
-      { href: "/stories",          label: "القصص الإسلامية",      desc: "قصص إسلامية معبِّرة" },
-      { href: "/islamic-stories",  label: "صحابة وفتوحات",        desc: "قصص الصحابة والفتوحات" },
+      { href: "/islamic-landmarks", label: "المعالم الإسلامية",   desc: "معالم ومواقع تاريخية إسلامية" },
+      { href: "/stories",          label: "القصص الإسلامية",      desc: "قصص الصحابة والفتوحات والتاريخ الإسلامي" },
     ],
   },
   {
@@ -107,13 +109,14 @@ const SECTIONS = [
     emoji: "🎓",
     links: [
       { href: "/lessons",          label: "الدروس والمحاضرات",    desc: "دروس صوتية ومرئية" },
+      { href: "/kuwait-lessons",   label: "دروس الكويت",          desc: "دليل الدروس بالمساجد الكويتية" },
       { href: "/annual-courses",   label: "الدورات العلمية",      desc: "برامج وكورسات منظمة" },
       { href: "/library",          label: "المكتبة الشرعية",      desc: "كتب ومخطوطات إسلامية" },
       { href: "/scholars",         label: "أعلام الإسلام",        desc: "تراجم العلماء" },
       { href: "/quiz",             label: "المسابقة التعليمية",   desc: "اختبر معلوماتك" },
       { href: "/flashcards",       label: "بطاقات المراجعة",      desc: "مراجعة ذكية" },
       { href: "/assistant",        label: "المساعد الذكي",        desc: "استفسر عن أي مسألة" },
-      { href: "/learning-path",    label: "خارطة طالب العلم",    desc: "منهج التعلم التراكمي" },
+      { href: "/learning-plan",    label: "خطتي التعليمية",      desc: "خطة تعلم شخصية" },
       { href: "/my-learning",      label: "لوحتي التعليمية",     desc: "إحصائياتك وتقدمك" },
       { href: "/knowledge-graph",  label: "شبكة المعرفة",        desc: "العلاقات بين المفاهيم" },
       { href: "/knowledge-map",    label: "خريطة المعرفة",        desc: "تخطيط المعرفة الإسلامية" },
@@ -126,7 +129,6 @@ const SECTIONS = [
       { href: "/hikam-salaf",      label: "حكم السلف الصالح",     desc: "أقوال الأئمة والصحابة" },
       { href: "/fawaid",           label: "الفوائد العلمية",      desc: "فوائد ومنقولات موثقة" },
       { href: "/islamic-glossary", label: "المصطلحات الإسلامية",  desc: "معجم المصطلحات" },
-      { href: "/hadith-science",   label: "مصطلح الحديث",         desc: "54+ مصطلح في علوم الحديث" },
       { href: "/universities",     label: "دليل الجامعات",        desc: "الجامعات الإسلامية" },
       { href: "/academic-research",label: "البحث الأكاديمي",      desc: "موارد البحث العلمي الشرعي" },
       { href: "/institutions",     label: "المؤسسات الإسلامية",   desc: "المراكز والمجامع العلمية" },
@@ -139,13 +141,14 @@ const SECTIONS = [
     links: [
       { href: "/my-citations",       label: "اقتباساتي",           desc: "اقتباساتك المحفوظة" },
       { href: "/vault",              label: "خزانتي",              desc: "المحفوظات الشخصية" },
+      { href: "/family",             label: "وضع العائلة",         desc: "متابعة تعلم أفراد الأسرة" },
       { href: "/my-submissions",     label: "مشاركاتي",            desc: "محتواك المُرسَل للمراجعة" },
-      { href: "/submit-content",     label: "ارسل محتوى",          desc: "شارك معلومة أو فائدة" },
+      { href: "/submit",             label: "ارسل محتوى",          desc: "شارك معلومة أو فائدة" },
       { href: "/researcher-profile", label: "ملف الباحث",          desc: "ملفك الشخصي البحثي" },
       { href: "/study-room",         label: "غرفة الدراسة",        desc: "بيئة مراجعة منظمة" },
       { href: "/transcribe",         label: "نسخ المحاضرات",       desc: "تحويل المحاضرات إلى نص" },
       { href: "/cards",              label: "البطاقات الدعوية",    desc: "صانع البطاقات الإسلامية" },
-      { href: "/user-stats",         label: "إحصائياتي",           desc: "إحصائيات نشاطك" },
+      { href: "/stats",              label: "إحصائياتي",           desc: "إحصائيات نشاطك" },
       { href: "/settings",           label: "الإعدادات",           desc: "إعدادات الحساب والتطبيق" },
     ],
   },
@@ -154,6 +157,7 @@ const SECTIONS = [
     emoji: "ℹ️",
     links: [
       { href: "/about",    label: "عن المجلس",       desc: "رسالتنا وأهدافنا" },
+      { href: "/methodology", label: "منهجنا العلمي",  desc: "منهج المراجعة والتوثيق" },
       { href: "/contact",  label: "تواصل معنا",      desc: "للملاحظات والاقتراحات" },
       { href: "/privacy",  label: "سياسة الخصوصية", desc: "كيف نحمي بياناتك" },
       { href: "/terms",    label: "الشروط والأحكام", desc: "شروط استخدام المنصة" },
@@ -169,7 +173,7 @@ export default function SiteMapPage() {
       path: "/sitemap",
       title: "كل الأقسام | المجلس العلمي",
       description: "دليل شامل بجميع أقسام المجلس العلمي من قرآن وحديث وفقه وعقيدة وسيرة وأدوات التعلم.",
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "دليل أقسام مجالس العلم", url: "https://majlisilm.com/sitemap", about: { "@type": "WebSite", name: "مجالس العلم", url: "https://majlisilm.com" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "دليل أقسام المجلس العلمي", url: "https://www.majlisilm.com/sitemap", about: { "@type": "WebSite", name: "المجلس العلمي", url: "https://www.majlisilm.com" } }],
     });
   }, []);
 
@@ -186,7 +190,7 @@ export default function SiteMapPage() {
         {SECTIONS.map(({ title, emoji, links }) => (
           <section key={title} className="sm-section">
             <h2 className="sm-section__title">
-              <span aria-hidden="true">{emoji}</span>
+              <span aria-hidden="true"><SectionIcon name={emoji} size={22} /></span>
               {title}
             </h2>
             <div className="sm-grid">
@@ -201,7 +205,7 @@ export default function SiteMapPage() {
         ))}
       </main>
       <div className="twh-share">
-        <ShareButtons title="دليل أقسام المجلس العلمي" url="https://majlisilm.com/sitemap" />
+        <ShareButtons title="دليل أقسام المجلس العلمي" url="https://www.majlisilm.com/sitemap" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["quran", "hadith", "fiqh", "aqeeda"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />

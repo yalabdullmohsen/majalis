@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
@@ -95,7 +96,7 @@ const MALAIKA: Malak[] = [
     name: "ملَك الجنين",
     arabicTitle: "الموكَّل بالأرحام",
     role: "تصوير الجنين وكتابة مقاديره",
-    detail: "يُوكِّل الله ملَكاً بالجنين بعد اكتمال أربعة أشهر، فيكتب رزقه وأجله وعمله وشقي أم سعيد. قال ﷺ: «ثم يُرسَل إليه الملَك فينفخ فيه الروح ويؤمَر بأربع كلمات: باكتب رزقه وأجله وعمله وشقي أم سعيد».",
+    detail: "يُوكِّل الله ملَكاً بالجنين بعد اكتمال أربعة أشهر، فيكتب رزقه وأجله وعمله وشقيٌّ أو سعيد. قال ﷺ: «ثم يُرسَل إليه المَلَك فيَنفُخ فيه الرُّوحَ، ويُؤمَر بأربعِ كلماتٍ: بكَتْبِ رِزقِه، وأجَلِه، وعمَلِه، وشَقيٌّ أو سعيدٌ».",
     ref: "البخاري: ٣٢٠٨",
   },
   {
@@ -245,7 +246,8 @@ const AQIDA_POINTS: { title: string; text: string }[] = [
 
 /* ══ فضائل الملائكة ومشاهدهم ══ */
 const FADAIL: { title: string; text: string; ref?: string }[] = [
-  { title: "دعاء الملائكة للصائمين", text: "قال ﷺ: «الصيام والقرآن يشفعان للعبد يوم القيامة. يقول الصيام: أي رب منعته الطعام والشهوات بالنهار فشفِّعني فيه».", ref: "أحمد: ٦٦٢٦" },
+  // العنوان صُحِّح: الحديث في شفاعة الصيام والقرآن، لا في دعاء الملائكة للصائمين.
+  { title: "شفاعة الصيام والقرآن للعبد", text: "قال ﷺ: «الصيام والقرآن يشفعان للعبد يوم القيامة. يقول الصيام: أي رب منعته الطعام والشهوات بالنهار فشفِّعني فيه».", ref: "أحمد: ٦٦٢٦" },
   { title: "صلاة الملائكة على المعلِّم", text: "قال ﷺ: «إن الله وملائكته وأهل السماوات والأرضين حتى النملة في جحرها وحتى الحوت ليصلُّون على معلِّم الناس الخير».", ref: "الترمذي: ٢٦٨٥" },
   { title: "نزول الملائكة ليلة القدر", text: "قال تعالى: ﴿تَنَزَّلُ الْمَلَائِكَةُ وَالرُّوحُ فِيهَا بِإِذْنِ رَبِّهِم مِّن كُلِّ أَمْرٍ. سَلَامٌ هِيَ حَتَّىٰ مَطْلَعِ الْفَجْرِ﴾.", ref: "القدر: ٤-٥" },
   { title: "نزول الملائكة عند الذكر", text: "«ما اجتمع قوم في بيت من بيوت الله يتلون كتاب الله ويتدارسونه بينهم إلا نزلت عليهم السكينة وغشيتهم الرحمة وحفَّتهم الملائكة».", ref: "مسلم: ٢٦٩٩" },
@@ -286,9 +288,31 @@ const AMAL_ITEMS: { title: string; text: string }[] = [
   { title: "في ساعة الاحتضار مع الكافر", text: "قال تعالى: ﴿وَلَوْ تَرَىٰ إِذِ الظَّالِمُونَ فِي غَمَرَاتِ الْمَوْتِ وَالْمَلَائِكَةُ بَاسِطُو أَيْدِيهِمْ أَخْرِجُوا أَنفُسَكُمُ﴾. وفي مقابل لطف ملائكة الرحمة مع المؤمن، تأتي ملائكة العذاب للكافر بالبُشرى بالعذاب." },
 ];
 
+/* ─── ملَك اليوم ─── */
+function todaysMalak(): Malak {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return MALAIKA[(dayOfYear - 1 + MALAIKA.length) % MALAIKA.length];
+}
+
+function MalakOfDayCard({ malak }: { malak: Malak }) {
+  return (
+    <div className="mkod-card">
+      <div className="mkod-card__badge"><Sparkles size={11} aria-hidden="true" /> من أسماء الملائكة</div>
+      {malak.arabicTitle && <div className="mkod-card__title-ar">{malak.arabicTitle}</div>}
+      <h2 className="mkod-card__name">{malak.name}</h2>
+      <div className="mkod-card__role">{malak.role}</div>
+      <p className="mkod-card__detail">{malak.detail}</p>
+      <div className="mkod-card__ref">{malak.ref}</div>
+    </div>
+  );
+}
+
 export default function MalaikaPage() {
   const [activeTab, setActiveTab] = useState<Tab>("aqida");
   const [search, setSearch] = useState("");
+  const todayMalak = useMemo(() => todaysMalak(), []);
 
   const filteredMalaika = useMemo(() =>
     search.trim() ? MALAIKA.filter(m => arabicMatchAny([m.name, m.arabicTitle ?? "", m.role, m.detail], search)) : MALAIKA,
@@ -320,7 +344,7 @@ export default function MalaikaPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${m.name} — ${m.role}`,
-            url: `https://majlisilm.com/malaika#malak-${i + 1}`,
+            url: `https://www.majlisilm.com/malaika#malak-${i + 1}`,
           })),
         },
       ],
@@ -344,15 +368,21 @@ export default function MalaikaPage() {
         </div>
       </section>
 
+      {/* ملَك اليوم */}
+      <MalakOfDayCard malak={todayMalak} />
+
       {/* Tabs */}
-      <div className="mk-tabs">
+      <div className="mk-tabs" role="tablist" aria-label="أقسام الملائكة">
         {TABS.map(t => (
           <button
             key={t.id}
+            id={`mlk-tab-${t.id}`}
             type="button"
+            role="tab"
             className={`mk-tab${activeTab === t.id ? " mk-tab--active" : ""}`}
             onClick={() => setActiveTab(t.id)}
-            aria-pressed={activeTab === t.id}
+            aria-selected={activeTab === t.id}
+              aria-controls={`mlk-panel-${t.id}`}
           >{t.label}</button>
         ))}
       </div>
@@ -369,7 +399,7 @@ export default function MalaikaPage() {
 
         {/* العقيدة */}
         {activeTab === "aqida" && (
-          <div>
+          <div role="tabpanel" id="mlk-panel-aqida" aria-labelledby="mlk-tab-aqida">
             <div className="mk-intro">
               <p>الإيمان بالملائكة ركن ثانٍ من أركان الإيمان الستة، وهو واجب بالكتاب والسنة والإجماع. جاء الأمر به في أكثر من موضع في القرآن مقروناً بالإيمان بالله.</p>
             </div>
@@ -389,7 +419,7 @@ export default function MalaikaPage() {
 
         {/* الأسماء والمهام */}
         {activeTab === "asma" && (
-          <div>
+          <div role="tabpanel" id="mlk-panel-asma" aria-labelledby="mlk-tab-asma">
             <div className="mk-intro">
               <p>من الملائكة من عرَّفنا الله باسمه ومهمته، ومنهم من لا نعلم عنهم إلا عمومهم. نؤمن بالجميع ونعرف الخصائص التالية:</p>
             </div>
@@ -414,7 +444,7 @@ export default function MalaikaPage() {
 
         {/* الصفات */}
         {activeTab === "awsaf" && (
-          <div>
+          <div role="tabpanel" id="mlk-panel-awsaf" aria-labelledby="mlk-tab-awsaf">
             <div className="mk-intro">
               <p>الملائكة عالَم غيبي لا يدرك بالحواس، وكل ما نعرفه عنهم جاء من الوحي. ومن صفاتهم الثابتة:</p>
             </div>
@@ -435,7 +465,7 @@ export default function MalaikaPage() {
 
         {/* الفضائل */}
         {activeTab === "fadail" && (
-          <div>
+          <div role="tabpanel" id="mlk-panel-fadail" aria-labelledby="mlk-tab-fadail">
             <div className="mk-intro">
               <p>للملائكة حضور ومشهد مع المؤمنين في أفضل أحوالهم، في الذكر والعلم والصلاة والصوم. هذه اللمسات الغيبية دافع للمراقبة والإخلاص.</p>
             </div>
@@ -453,7 +483,7 @@ export default function MalaikaPage() {
 
         {/* التعامل مع البشر */}
         {activeTab === "amal" && (
-          <div>
+          <div role="tabpanel" id="mlk-panel-amal" aria-labelledby="mlk-tab-amal">
             <div className="mk-intro">
               <p>للملائكة تعاملات مع بني آدم في مواقف دقيقة لا تدركها الأعين عادةً. هي محطات تذكِّرنا بالغيب القريب منا في كل لحظة.</p>
             </div>
@@ -469,7 +499,7 @@ export default function MalaikaPage() {
         )}
 
       <div className="twh-share">
-        <ShareButtons title="الملائكة في الإسلام — المجلس العلمي" url="https://majlisilm.com/malaikah" />
+        <ShareButtons title="الملائكة في الإسلام — المجلس العلمي" url="https://www.majlisilm.com/malaikah" />
       </div>
 
       <div className="px-4 pb-6 mt-6">

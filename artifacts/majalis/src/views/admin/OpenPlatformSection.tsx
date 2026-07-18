@@ -137,7 +137,7 @@ export function OpenPlatformSection() {
         <StatCard label="مفاتيح API" value={dashboard?.keys?.length ?? 0} />
         <StatCard label="طلبات (30 يوم)" value={dashboard?.usage?.total ?? 0} />
         <StatCard label="متوسط الاستجابة" value={`${dashboard?.usage?.avg_response_ms ?? 0}ms`} />
-        <StatCard label="Webhooks" value={webhooks.length} />
+        <StatCard label="الـ Webhooks" value={webhooks.length} />
         <StatCard label="Cache" value={dashboard?.cache?.entries ?? 0} />
         <StatCard label="أخطاء" value={dashboard?.usage?.errors ?? 0} color="#dc2626" />
       </div>
@@ -175,7 +175,7 @@ export function OpenPlatformSection() {
           {!dashboard?.keys?.length && <p className="ii-muted">لا مفاتيح بعد</p>}
         </Panel>
 
-        <Panel title="Webhooks">
+        <Panel title="الـ Webhooks">
           <input
             type="url"
             placeholder="https://example.com/webhook"

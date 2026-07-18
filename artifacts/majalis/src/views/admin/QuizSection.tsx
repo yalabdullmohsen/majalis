@@ -76,7 +76,9 @@ export function QuizSection() {
   const load = useCallback(() => {
     setLoading(true);
     adminGetQuizQuestions()
-      .then(({ data }) => setItems(data ?? []))
+      .then(({ data }) => setItems(
+        (data ?? []).map((row: any) => ({ ...row, status: row.is_published ? "published" : "draft" })),
+      ))
       .catch(() => setItems([]))
       .finally(() => setLoading(false));
   }, []);
@@ -94,8 +96,7 @@ export function QuizSection() {
   };
 
   const handleToggleStatus = async (item: any) => {
-    const next = item.status === "published" ? "draft" : "published";
-    const { error } = await adminSetQuizQuestionStatus(item.id, next);
+    const { error } = await adminSetQuizQuestionStatus(item.id, item.status !== "published");
     if (error) showError("فشل تغيير الحالة");
     else load();
   };
@@ -107,13 +108,14 @@ export function QuizSection() {
     if (!form.answer.trim()) return alert("الجواب مطلوب");
     setSaving(true);
     const answerClean = sanitizeText(form.answer, 1000);
+    const { status, ...formRest } = form;
     const payload = {
-      ...form,
+      ...formRest,
       question: sanitizeText(form.question, 1000),
       answer: answerClean,
-      correct_answer: answerClean,
       hint: sanitizeText(form.hint || "", 500),
       category: sanitizeText(form.category || form.section, 200),
+      is_published: status === "published",
       is_used: false,
     };
     const { error } = await adminUpsertQuizQuestion(payload);

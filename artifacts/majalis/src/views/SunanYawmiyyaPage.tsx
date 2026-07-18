@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { Check, CheckCircle2, Search, X } from "lucide-react";
+import { Check, CheckCircle2, Copy, Search, Sparkles, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -860,6 +860,38 @@ const SUNAN: Sunnah[] = [
   },
 ];
 
+/* ─── سنة اليوم ─── */
+function todaysSunnah(): Sunnah {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return SUNAN[(dayOfYear - 1 + SUNAN.length) % SUNAN.length];
+}
+
+function SunnahOfDayCard({ sunnah, onApply, applied }: { sunnah: Sunnah; onApply: () => void; applied: boolean }) {
+  return (
+    <div className="sod-card">
+      <div className="sod-card__badge"><Sparkles size={11} aria-hidden="true" /> سنة اليوم</div>
+      <div className="sod-card__cat">{sunnah.category} · {sunnah.time}</div>
+      <h2 className="sod-card__title">{sunnah.title}</h2>
+      <p className="sod-card__text">{sunnah.text}</p>
+      <div className="sod-card__source">{sunnah.source}</div>
+      {sunnah.reward && (
+        <div className="sod-card__reward">✨ {sunnah.reward}</div>
+      )}
+      {sunnah.howTo && (
+        <div className="sod-card__howto">
+          <span className="sod-card__howto-label">كيف؟</span>
+          {sunnah.howTo}
+        </div>
+      )}
+      <button type="button" className="sod-card__apply" onClick={onApply} aria-pressed={applied}>
+        {applied ? <><Check size={13} /> طُبِّقت اليوم ✓</> : <><Copy size={13} /> سجِّل تطبيقها</>}
+      </button>
+    </div>
+  );
+}
+
 export default function SunanYawmiyyaPage() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("الكل");
@@ -887,7 +919,7 @@ export default function SunanYawmiyyaPage() {
             "@type": "ListItem",
             position: i + 1,
             name: s.title,
-            url: `https://majlisilm.com/sunan-yawmiyya#${s.id}`,
+            url: `https://www.majlisilm.com/sunan-yawmiyya#${s.id}`,
           })),
         },
       ],
@@ -917,6 +949,7 @@ export default function SunanYawmiyyaPage() {
     });
   }, [query, category]);
 
+  const todaySunnah = useMemo(() => todaysSunnah(), []);
   const doneCount = filtered.filter((s) => checked.has(s.id)).length;
 
   return (
@@ -948,6 +981,13 @@ export default function SunanYawmiyyaPage() {
         </div>
       </section>
 
+      {/* سنة اليوم */}
+      <SunnahOfDayCard
+        sunnah={todaySunnah}
+        onApply={() => toggleCheck(todaySunnah.id)}
+        applied={checked.has(todaySunnah.id)}
+      />
+
       {/* تحكم */}
       <div className="sy-controls">
         <div className="sy-search-wrap">
@@ -966,12 +1006,11 @@ export default function SunanYawmiyyaPage() {
             </button>
           )}
         </div>
-        <div className="sy-cats" role="list">
+        <div className="sy-cats">
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
               type="button"
-              role="listitem"
               className={`sy-cat-chip${category === cat ? " sy-cat-chip--active" : ""}`}
               onClick={() => setCategory(cat)}
             >
@@ -1027,7 +1066,7 @@ export default function SunanYawmiyyaPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="السنن اليومية — المجلس العلمي" url="https://majlisilm.com/sunan-yawmiyya" />
+        <ShareButtons title="السنن اليومية — المجلس العلمي" url="https://www.majlisilm.com/sunan-yawmiyya" />
       </div>
 
       {/* صفحات ذات صلة */}

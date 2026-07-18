@@ -22,7 +22,7 @@ const WEEK_DAYS = ["السبت", "الأحد", "الاثنين", "الثلاثا
 
 function ConfidenceBadge({ score }: { score: number }) {
   const pct = Math.round(score * 100);
-  const color = pct >= 75 ? "var(--majalis-emerald-deep)" : pct >= 45 ? "#1F4D3A" : "#991B1B";
+  const color = pct >= 75 ? "var(--majalis-emerald-deep)" : pct >= 45 ? "#176B57" : "#991B1B";
   const bg = pct >= 75 ? "#D1FAE5" : pct >= 45 ? "rgba(14,110,82,0.08)" : "#FEE2E2";
   return (
     <span
@@ -76,7 +76,7 @@ function FieldStatusGrid({
         const isWarn = val && conf < 0.5;
         const isMissing = !val;
         const bg = isOk ? "#D1FAE5" : isWarn ? "rgba(14,110,82,0.08)" : "#FEE2E2";
-        const color = isOk ? "var(--majalis-emerald-deep)" : isWarn ? "#1F4D3A" : "#991B1B";
+        const color = isOk ? "var(--majalis-emerald-deep)" : isWarn ? "#176B57" : "#991B1B";
         const icon = isOk ? "✓" : isWarn ? "⚠" : "✗";
         return (
           <div
@@ -489,12 +489,12 @@ function LessonImportImageContent() {
         <h3 className="lip-upload-h3">رفع الإعلان</h3>
         <div className="lip-upload-meta">
           <div>
-            <label className="lis-label">رابط المصدر (اختياري)</label>
-            <input className="lis-input" value={sourceUrl} onChange={(e) => setSourceUrl(e.target.value)} placeholder="https://..." dir="ltr" disabled={busy} />
+            <label className="lis-label" htmlFor="lip-source-url">رابط المصدر (اختياري)</label>
+            <input id="lip-source-url" className="lis-input" value={sourceUrl} onChange={(e) => setSourceUrl(e.target.value)} placeholder="https://..." dir="ltr" disabled={busy} />
           </div>
           <div>
-            <label className="lis-label">ملاحظات (اختياري)</label>
-            <input className="lis-input" value={notes} onChange={(e) => setNotes(e.target.value)} disabled={busy} />
+            <label className="lis-label" htmlFor="lip-notes">ملاحظات (اختياري)</label>
+            <input id="lip-notes" className="lis-input" value={notes} onChange={(e) => setNotes(e.target.value)} disabled={busy} />
           </div>
         </div>
         <input

@@ -23,6 +23,15 @@ export default function AmrBilMarufPage() {
       title: "الأمر بالمعروف والنهي عن المنكر | المجلس العلمي",
       description: "مراتب الأمر بالمعروف والنهي عن المنكر الثلاث وشروطها وأحكامها وفق المذاهب الفقهية الأربعة.",
       keywords: ["أمر بالمعروف", "نهي عن المنكر", "مراتب", "شروط", "فقه"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: "الأمر بالمعروف والنهي عن المنكر",
+        description: "مراتب الأمر بالمعروف والنهي عن المنكر الثلاث وشروطها وأحكامها وفق المذاهب الفقهية الأربعة.",
+        url: "https://www.majlisilm.com/amr-bil-maruf",
+        inLanguage: "ar",
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+      }],
     });
   }, []);
 
@@ -30,7 +39,7 @@ export default function AmrBilMarufPage() {
     <div className="page-shell narrow" dir="rtl" style={{ paddingBottom: "3rem" }}>
       {/* ═══ الهيدر ═══ */}
       <div style={{
-        background: "linear-gradient(160deg, #1F4D3A 0%, #163728 55%, #0e2619 100%)",
+        background: "linear-gradient(160deg, #176B57 0%, #163728 55%, #0e2619 100%)",
         borderRadius: "1rem",
         padding: "2rem 1.5rem",
         marginBottom: "2rem",
@@ -76,7 +85,7 @@ export default function AmrBilMarufPage() {
           color: "#122019",
           margin: "0 0 0.6rem",
           lineHeight: 1.8,
-          borderRight: "3px solid #1F4D3A",
+          borderRight: "3px solid #176B57",
           paddingRight: "1rem",
         }}>
           {AMR_BIL_MARUF_META.quran_basis}
@@ -238,11 +247,11 @@ export default function AmrBilMarufPage() {
             border: "1px solid #E5E7EB",
             borderRadius: "0.7rem",
             padding: "1rem",
-            borderTop: "3px solid #1F4D3A",
+            borderTop: "3px solid #176B57",
           }}>
             <div style={{ display: "flex", gap: "0.6rem", alignItems: "flex-start" }}>
               <span style={{
-                background: "#1F4D3A",
+                background: "#176B57",
                 color: "#fff",
                 borderRadius: "50%",
                 width: 24,
@@ -355,7 +364,7 @@ export default function AmrBilMarufPage() {
             border: "1px solid #E5E7EB",
             borderRadius: "0.7rem",
             padding: "1rem 1.2rem",
-            borderRight: "3px solid #1F4D3A",
+            borderRight: "3px solid #176B57",
           }}>
             <blockquote style={{
               margin: "0 0 0.5rem",

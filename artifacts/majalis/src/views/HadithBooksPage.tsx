@@ -45,6 +45,10 @@ function CollectionTab({
   return (
     <button
       type="button"
+      role="tab"
+      id={`hb-tab-${meta.id}`}
+      aria-selected={active}
+      aria-controls={`hb-panel-${meta.id}`}
       onClick={onClick}
       className={`hb-tab${active ? " hb-tab--active" : ""}`}
     >
@@ -99,7 +103,7 @@ function HadithRow({ h, index }: { h: CdnHadith; index: number }) {
   }
 
   return (
-    <article
+    <div
       className={`hb-hadith-row${expanded ? " hb-hadith-row--expanded" : ""}`}
       onClick={() => setExpanded((x) => !x)}
       onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setExpanded((x) => !x)}
@@ -120,6 +124,8 @@ function HadithRow({ h, index }: { h: CdnHadith; index: number }) {
         />
       </div>
       {expanded && (
+        // onClick هنا لمنع انتشار النقر إلى صف الحديث الأب (الذي يطوي/يبسط
+        // عند النقر) — لا إجراء فعلي يحتاج مكافئ لوحة مفاتيح.
         <div className="hb-hadith-row__detail" onClick={(e) => e.stopPropagation()}>
           <div className="hb-hadith-row__meta">
             {chapter && <span className="hb-hadith-row__chapter">{chapter}</span>}
@@ -138,7 +144,7 @@ function HadithRow({ h, index }: { h: CdnHadith; index: number }) {
           </button>
         </div>
       )}
-    </article>
+    </div>
   );
 }
 
@@ -375,7 +381,7 @@ export default function HadithBooksPage() {
           "@type": "DataCatalog",
           name: "الكتب الحديثية الكاملة",
           description: "مكتبة الأحاديث النبوية الكاملة من المصادر الموثوقة",
-          url: "https://majlisilm.com/hadith/books",
+          url: "https://www.majlisilm.com/hadith/books",
           dataset: HADITH_COLLECTIONS.map((c) => ({
             "@type": "Dataset",
             name: c.name,
@@ -408,8 +414,7 @@ export default function HadithBooksPage() {
           المصدر:{" "}
           <a
             href="https://github.com/fawazahmed0/hadith-api"
-            target="_blank"
-            rel="noopener noreferrer"
+            target="_blank" rel="noopener noreferrer"
             className="hb-header__source-link"
           >
             fawazahmed0/hadith-api
@@ -443,7 +448,12 @@ export default function HadithBooksPage() {
       </div>
 
       {/* متصفح المجموعة */}
-      <div className="hb-content">
+      <div
+        className="hb-content"
+        role="tabpanel"
+        id={`hb-panel-${activeId}`}
+        aria-labelledby={`hb-tab-${activeId}`}
+      >
         <CollectionBrowser key={activeId} meta={activeMeta} />
       </div>
 

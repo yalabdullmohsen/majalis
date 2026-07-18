@@ -29,7 +29,7 @@ export function FeatureGate({ flag, children, label }: FeatureGateProps) {
       <span
         style={{
           background: "rgba(31,77,58,0.08)",
-          color: "#1F4D3A",
+          color: "#176B57",
           padding: "1rem",
           borderRadius: "50%",
           display: "flex",
@@ -47,7 +47,7 @@ export function FeatureGate({ flag, children, label }: FeatureGateProps) {
 
       <p style={{ color: "#555", maxWidth: 380, lineHeight: 1.65, margin: 0, fontSize: "0.92rem" }}>
         نعمل على إتاحة هذه الميزة في أقرب وقت. تابع{" "}
-        <Link href="/features-in-progress" style={{ color: "#1F4D3A", fontWeight: 700 }}>
+        <Link href="/features-in-progress" style={{ color: "#176B57", fontWeight: 700 }}>
           خارطة التطوير
         </Link>{" "}
         لمعرفة آخر التحديثات.
@@ -59,7 +59,7 @@ export function FeatureGate({ flag, children, label }: FeatureGateProps) {
           style={{
             padding: "0.55rem 1.2rem",
             borderRadius: "0.55rem",
-            background: "#1F4D3A",
+            background: "#176B57",
             color: "#fff",
             textDecoration: "none",
             fontWeight: 700,
@@ -73,8 +73,8 @@ export function FeatureGate({ flag, children, label }: FeatureGateProps) {
           style={{
             padding: "0.55rem 1.2rem",
             borderRadius: "0.55rem",
-            border: "1.5px solid #1F4D3A",
-            color: "#1F4D3A",
+            border: "1.5px solid #176B57",
+            color: "#176B57",
             textDecoration: "none",
             fontWeight: 700,
             fontSize: "0.88rem",

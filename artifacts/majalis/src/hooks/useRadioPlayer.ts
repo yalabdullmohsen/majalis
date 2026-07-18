@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { RadioStation } from "@/lib/quran-radio";
+import { useMediaSession } from "@/hooks/useMediaSession";
 
 export type RadioState = "idle" | "connecting" | "live" | "paused" | "error";
 
@@ -95,6 +96,19 @@ export function useRadioPlayer() {
   }, [station, stop, play]);
 
   const setVolume = useCallback((v: number) => setVolumeState(Math.min(100, Math.max(0, v))), []);
+
+  useMediaSession(
+    station
+      ? {
+          title: `${station.reciterName} — ${station.readingType}`,
+          artist: "إذاعة القرآن الكريم — المجلس العلمي",
+          playing: radioState === "live",
+          onPlay: () => play(station),
+          onPause: pause,
+          onStop: stop,
+        }
+      : null,
+  );
 
   return { station, radioState, volume, play, pause, stop, toggle, reconnect, setVolume };
 }

@@ -10,7 +10,7 @@ const PUBLIC_ROUTES = [
   { path: "/lessons", name: "الدروس" },
   { path: "/hadith", name: "الحديث" },
   { path: "/adhkar", name: "الأذكار" },
-  { path: "/quran", name: "المصحف" },
+  { path: "/quran-hub", name: "مركز القرآن" },
   { path: "/prayer-times", name: "مواقيت الصلاة" },
   { path: "/muezzins", name: "مكتبة المؤذنين" },
   { path: "/library", name: "المكتبة" },

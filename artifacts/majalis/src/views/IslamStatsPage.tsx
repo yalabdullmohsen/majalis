@@ -49,7 +49,7 @@ interface ScienceCard {
 }
 
 const GLOBAL_STATS: StatCard[] = [
-  { value: "١.٩ مليار", label: "مسلم في العالم", sub: "٢٤٪ من سكان الأرض", color: "#1F4D3A" },
+  { value: "١.٩ مليار", label: "مسلم في العالم", sub: "٢٤٪ من سكان الأرض", color: "#176B57" },
   { value: "٢٠٥٠", label: "أكبر ديانة متوقعة", sub: "وفق تقديرات مركز بيو", color: "#1a5a7a" },
   { value: "٤٩", label: "دولة ذات أغلبية مسلمة", sub: "من أصل ١٩٥ دولة في العالم", color: "#0E6E52" },
   { value: "٣٨٠٠", label: "لغة ينطق بها المسلمون", sub: "الإسلام يتجاوز الحدود اللغوية", color: "#312E81" },
@@ -66,7 +66,7 @@ const GLOBAL_STATS: StatCard[] = [
 ];
 
 const POPULATION_BARS: BarItem[] = [
-  { label: "إندونيسيا", value: 231, max: 270, unit: "م", color: "#1F4D3A" },
+  { label: "إندونيسيا", value: 231, max: 270, unit: "م", color: "#176B57" },
   { label: "باكستان",   value: 212, max: 270, unit: "م", color: "#1a5a7a" },
   { label: "بنغلاديش",  value: 153, max: 270, unit: "م", color: "#0E6E52" },
   { label: "نيجيريا",   value: 99,  max: 270, unit: "م", color: "#312E81" },
@@ -76,15 +76,15 @@ const POPULATION_BARS: BarItem[] = [
   { label: "الجزائر",   value: 44,  max: 270, unit: "م", color: "#1E3A5F" },
   { label: "المغرب",    value: 36,  max: 270, unit: "م", color: "#065F46" },
   { label: "السودان",   value: 35,  max: 270, unit: "م", color: "#1a5a7a" },
-  { label: "السعودية",  value: 33,  max: 270, unit: "م", color: "#1F4D3A" },
+  { label: "السعودية",  value: 33,  max: 270, unit: "م", color: "#176B57" },
   { label: "الكويت",    value: 4,   max: 270, unit: "م", color: "#312E81" },
-  { label: "الهند",    value: 200, max: 270, unit: "م", color: "#1F4D3A" },
+  { label: "الهند",    value: 200, max: 270, unit: "م", color: "#176B57" },
   { label: "إثيوبيا", value: 40,  max: 270, unit: "م", color: "#065F46" },
   { label: "أوزبكستان", value: 29, max: 270, unit: "م", color: "#1a5a7a" },
 ];
 
 const QURAN_STATS: StatCard[] = [
-  { value: "١١٤",  label: "سورة",        sub: "منها ٨٦ مكية و٢٨ مدنية", color: "#1F4D3A" },
+  { value: "١١٤",  label: "سورة",        sub: "منها ٨٦ مكية و٢٨ مدنية", color: "#176B57" },
   { value: "٦٢٣٦", label: "آية",          sub: "في الرواية الأكثر شيوعاً", color: "#1a5a7a" },
   { value: "٣٠",   label: "جزءاً",        sub: "موزعة على ٦٠ حزباً", color: "#0E6E52" },
   { value: "٧٧٤٣٩", label: "كلمة",       sub: "في المصحف الشريف", color: "#312E81" },
@@ -92,7 +92,7 @@ const QURAN_STATS: StatCard[] = [
   { value: "٢٣",   label: "سنة للنزول",  sub: "بدأ في رمضان ٦١٠م", color: "#9B1C1C" },
   { value: "٥",    label: "حفاظ في عهده ﷺ أشهرهم", sub: "عثمان، علي، ابن مسعود، زيد، أبيّ", color: "#153025" },
   { value: "١",    label: "مصدر للتشريع", sub: "أولاً وقبل كل شيء", color: "#1E3A5F" },
-  { value: "٧",    label: "أحرف أُنزل عليها", sub: "القراءات السبع المتواترة المعتمدة", color: "#1F4D3A" },
+  { value: "٧",    label: "أحرف أُنزل عليها", sub: "القراءات السبع المتواترة المعتمدة", color: "#176B57" },
   { value: "٥ آلاف+", label: "حافظ للقرآن يتولد يومياً", sub: "تشير الإحصاءات لنمو مستمر في عدد الحفاظ", color: "#065F46" },
   { value: "١٨٠٠+", label: "لغة تُرجم إليها القرآن", sub: "وهو يتلى بالعربية كما أُنزل في كل أنحاء الأرض", color: "#312E81" },
   { value: "٤٠٠٠+", label: "موضوع علمي في القرآن", sub: "يتناولها العلماء في التفسير الموضوعي", color: "#0E6E52" },
@@ -129,7 +129,7 @@ const HISTORY_TIMELINE: TimelineItem[] = [
 ];
 
 const HISTORY_ACHIEVEMENTS: StatCard[] = [
-  { value: "٨٠٠+", label: "طبيب وعالم مسلم", sub: "في العصور الوسطى أسهموا في الطب والعلوم", color: "#1F4D3A" },
+  { value: "٨٠٠+", label: "طبيب وعالم مسلم", sub: "في العصور الوسطى أسهموا في الطب والعلوم", color: "#176B57" },
   { value: "٤٠٠+", label: "كتاب لابن سينا", sub: "شاملة للطب والفلسفة والفلك", color: "#1a5a7a" },
   { value: "١٢٠٠+", label: "لفظ عربي في الإنجليزية", sub: "مثل: algebra, alcohol, coffee, sugar", color: "#0E6E52" },
   { value: "٦٠٠ سنة", label: "القانون مرجعاً طبياً", sub: "كتاب ابن سينا في جامعات أوروبا", color: "#312E81" },
@@ -141,7 +141,7 @@ const HISTORY_ACHIEVEMENTS: StatCard[] = [
   { value: "٢٧٠ م", label: "أول مرصد فلكي عربي منظّم", sub: "مرصد الشماسية ببغداد في عهد المأمون", color: "#1a5a7a" },
   { value: "١٥٠+", label: "نجم يحمل اسماً عربياً حتى اليوم", sub: "مثل: أحمد (Achernar)، بيتلجوس، الدبران", color: "#312E81" },
   { value: "٩٠٠+", label: "مدرسة وجامعة في الأندلس", sub: "المدارس والمكتبات ودور العلم في الحضارة الأندلسية", color: "#153025" },
-  { value: "١٠ آلاف", label: "مخطوطة في مكتبة بغداد", sub: "قبل حرقها: خزينة العلم الإسلامي في العصر الذهبي", color: "#1F4D3A" },
+  { value: "١٠ آلاف", label: "مخطوطة في مكتبة بغداد", sub: "قبل حرقها: خزينة العلم الإسلامي في العصر الذهبي", color: "#176B57" },
   { value: "٣٢٠+", label: "عالم رياضيات مسلم بارز", sub: "في الجبر والهندسة والمثلثات وعلم الأعداد", color: "#312E81" },
   { value: "٧٠٠+", label: "لفظ عربي في الإسبانية", sub: "إرث الحضارة الأندلسية في اللغة الإسبانية الحديثة", color: "#065F46" },
   { value: "٩٦٥-١٠٤٠ م", label: "ابن الهيثم — أبو علم البصريات", sub: "أسس نظرية البصر الحديثة وكتب 'المناظر' المرجع الأوروبي لـ500 عام", color: "#1E3A5F" },
@@ -339,7 +339,7 @@ export default function IslamStatsPage() {
             "@type": "ListItem",
             position: i + 1,
             name: tab.label,
-            url: `https://majlisilm.com/islam-stats#${tab.id}`,
+            url: `https://www.majlisilm.com/islam-stats#${tab.id}`,
           })),
         },
       ],
@@ -369,15 +369,17 @@ export default function IslamStatsPage() {
 
       <div className="is-container">
         {/* ══ التبويبات ══ */}
-        <div className="is-tabs" role="tablist">
+        <div className="is-tabs" role="tablist" aria-label="تبويبات إحصائيات الإسلام">
           {TABS.map(t => (
             <button
               key={t.id}
+              id={`is-tab-${t.id}`}
               type="button"
               role="tab"
               className={`is-tab${activeTab === t.id ? " is-tab--active" : ""}`}
               onClick={() => setActiveTab(t.id)}
               aria-selected={activeTab === t.id}
+              aria-controls={`is-panel-${t.id}`}
             >
               <t.icon size={15} aria-hidden="true" />
               <span>{t.label}</span>
@@ -387,7 +389,7 @@ export default function IslamStatsPage() {
 
         {/* ── الإسلام في العالم ── */}
         {activeTab === "global" && (
-          <div className="is-section">
+          <div className="is-section" role="tabpanel" id="is-panel-global" aria-labelledby="is-tab-global">
             <div className="is-stats-grid">
               {GLOBAL_STATS.map((s, i) => (
                 <div key={i} className="is-stat-card" style={{ "--is-card-color": s.color } as { [k: string]: string }}>
@@ -416,7 +418,7 @@ export default function IslamStatsPage() {
 
         {/* ── القرآن الكريم ── */}
         {activeTab === "quran" && (
-          <div className="is-section">
+          <div className="is-section" role="tabpanel" id="is-panel-quran" aria-labelledby="is-tab-quran">
             <div className="is-quran-highlight">
               <p className="is-quran-highlight__text">
                 إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ
@@ -440,7 +442,7 @@ export default function IslamStatsPage() {
 
         {/* ── الحضارة الإسلامية ── */}
         {activeTab === "history" && (
-          <div className="is-section">
+          <div className="is-section" role="tabpanel" id="is-panel-history" aria-labelledby="is-tab-history">
             <div className="is-search-wrap">
               <input
                 type="search"
@@ -482,7 +484,7 @@ export default function IslamStatsPage() {
 
         {/* ── الإعجاز العلمي ── */}
         {activeTab === "science" && (
-          <div className="is-section">
+          <div className="is-section" role="tabpanel" id="is-panel-science" aria-labelledby="is-tab-science">
             <div className="is-science-intro">
               <BarChart3 size={20} aria-hidden="true" />
               <p>
@@ -523,7 +525,7 @@ export default function IslamStatsPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الإسلام في أرقام — المجلس العلمي" url="https://majlisilm.com/islam-stats" />
+        <ShareButtons title="الإسلام في أرقام — المجلس العلمي" url="https://www.majlisilm.com/islam-stats" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["tarikh", "aqeeda"]} title="اختبر معلوماتك في الإسلام والتاريخ" count={4} />

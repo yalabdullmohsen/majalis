@@ -35,7 +35,7 @@ export function normalizeQuery(q) {
     .slice(0, 500);
 }
 
-export function formatCitation(item, baseUrl = "https://majlisilm.com") {
+export function formatCitation(item, baseUrl = "https://www.majlisilm.com") {
   const parts = [
     item.title,
     item.source_name ? `المصدر: ${item.source_name}` : "",

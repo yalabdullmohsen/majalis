@@ -25,7 +25,28 @@ app.use(
     },
   }),
 );
-app.use(cors());
+const ALLOWED_ORIGINS = [
+  "https://majlisilm.com",
+  "https://www.majlisilm.com",
+];
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      // لا رأس Origin (طلبات من خادم لخادم، أو curl، أو تطبيق الجوال عبر
+      // Capacitor الذي لا يرسل Origin دائمًا) — نسمح، فهذه ليست طلبات متصفح
+      // متعددة المصادر أصلاً.
+      if (!origin) return callback(null, true);
+      if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+      if (process.env.NODE_ENV !== "production" && /^https?:\/\/localhost(:\d+)?$/.test(origin)) {
+        return callback(null, true);
+      }
+      // false (لا Error) يجعل مكتبة cors تُسقط رؤوس CORS بهدوء فيرفض
+      // المتصفح الطلب من جهته — بدل رمي خطأ يتحوّل إلى 500 مضلِّل في السجلات.
+      return callback(null, false);
+    },
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

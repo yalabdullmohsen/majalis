@@ -1,5 +1,6 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
-import { ChevronDown, ChevronUp, Heart, Star } from "lucide-react";
+import { ChevronDown, ChevronUp, Heart, Sparkles, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
@@ -438,11 +439,42 @@ const MAWLID_STATS = [
   { label: "مُرضِعاته الشريفات", value: "ثُوَيبة مولاة أبي لهب، ثم حليمة السعدية" },
 ];
 
+/* ─── شميلة اليوم ─── */
+type FlatHadith = { babTitle: string; text: string; rawi: string; source: string };
+
+const ALL_HADITHS: FlatHadith[] = [
+  ...ABWAB_KHALQ.flatMap(b => b.hadiths.map(h => ({ babTitle: b.title, ...h }))),
+  ...ABWAB_KHULUQ.flatMap(b => b.hadiths.map(h => ({ babTitle: b.title, ...h }))),
+  ...ABWAB_SIRA.flatMap(b => b.hadiths.map(h => ({ babTitle: b.title, ...h }))),
+];
+
+function todaysHadith(): FlatHadith {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return ALL_HADITHS[(dayOfYear - 1 + ALL_HADITHS.length) % ALL_HADITHS.length];
+}
+
+function ShamilaOfDayCard({ hadith }: { hadith: FlatHadith }) {
+  return (
+    <div className="shod-card">
+      <div className="shod-card__badge"><Sparkles size={11} aria-hidden="true" /> شميلة اليوم</div>
+      <div className="shod-card__bab">{hadith.babTitle}</div>
+      <blockquote className="shod-card__text">«{hadith.text}»</blockquote>
+      <div className="shod-card__footer">
+        <span className="shod-card__rawi">{hadith.rawi}</span>
+        <span className="shod-card__source">{hadith.source}</span>
+      </div>
+    </div>
+  );
+}
+
 export default function ShimaelPage() {
   const [activeTab, setActiveTab] = useState<TabId>("khalq");
   const [openBab, setOpenBab] = useState<number | null>(null);
   const [openMahabbah, setOpenMahabbah] = useState<number | null>(null);
   const [search, setSearch] = useState("");
+  const todayHadith = useMemo(() => todaysHadith(), []);
 
   useEffect(() => {
     applyPageSeo({
@@ -461,7 +493,7 @@ export default function ShimaelPage() {
             "@type": "ListItem",
             position: i + 1,
             name: b.title,
-            url: `https://majlisilm.com/shamael#khalq-${b.id}`,
+            url: `https://www.majlisilm.com/shamael#khalq-${b.id}`,
           })),
         },
       ],
@@ -506,17 +538,22 @@ export default function ShimaelPage() {
         </div>
       </section>
 
+      {/* شميلة اليوم */}
+      <ShamilaOfDayCard hadith={todayHadith} />
+
       <div className="sh-container">
         {/* ══ التبويبات ══ */}
-        <div className="sh-tabs" role="tablist">
+        <div className="sh-tabs" role="tablist" aria-label="تبويبات الشمائل المحمدية">
           {TABS.map(t => (
             <button
               key={t.id}
+              id={`sh-tab-${t.id}`}
               type="button"
               role="tab"
               className={`sh-tab${activeTab === t.id ? " sh-tab--active" : ""}`}
               onClick={() => { setActiveTab(t.id); setOpenBab(null); }}
               aria-selected={activeTab === t.id}
+              aria-controls={`sh-panel-${t.id}`}
             >
               {t.label}
             </button>
@@ -536,7 +573,7 @@ export default function ShimaelPage() {
 
         {/* ── الخَلق ── */}
         {activeTab === "khalq" && (
-          <div className="sh-section">
+          <div role="tabpanel" id="sh-panel-khalq" aria-labelledby="sh-tab-khalq" className="sh-section">
             <div className="sh-intro-box">
               <Star size={16} aria-hidden="true" />
               <p>قال الإمام الترمذي رحمه الله: «باب ما جاء في خَلق رسول الله ﷺ»، وهذه أصحُّ ما وردَ في وصفِ صورتِه الشريفة.</p>
@@ -551,7 +588,7 @@ export default function ShimaelPage() {
                   onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenBab(openBab === bab.id ? null : bab.id)}
                   aria-expanded={openBab === bab.id}
                 >
-                  <span className="sh-bab__icon" aria-hidden="true">{bab.icon}</span>
+                  <span className="sh-bab__icon" aria-hidden="true"><SectionIcon name={bab.icon} size={24} /></span>
                   <span className="sh-bab__title">{bab.title}</span>
                   <span className="sh-bab__count">{bab.hadiths.length} روايات</span>
                   <span className="sh-bab__chevron" aria-hidden="true">
@@ -578,7 +615,7 @@ export default function ShimaelPage() {
 
         {/* ── الخُلُق ── */}
         {activeTab === "khuluq" && (
-          <div className="sh-section">
+          <div role="tabpanel" id="sh-panel-khuluq" aria-labelledby="sh-tab-khuluq" className="sh-section">
             <div className="sh-intro-box">
               <Heart size={16} aria-hidden="true" />
               <p>قال اللهُ تعالى: ﴿وَإِنَّكَ لَعَلَىٰ خُلُقٍ عَظِيمٍ﴾ [القلم: ٤]، وهذه أبوابُ ما وُصِفَ به النبيُّ ﷺ في أخلاقِه.</p>
@@ -593,7 +630,7 @@ export default function ShimaelPage() {
                   onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenBab(openBab === bab.id + 100 ? null : bab.id + 100)}
                   aria-expanded={openBab === bab.id + 100}
                 >
-                  <span className="sh-bab__icon" aria-hidden="true">{bab.icon}</span>
+                  <span className="sh-bab__icon" aria-hidden="true"><SectionIcon name={bab.icon} size={24} /></span>
                   <span className="sh-bab__title">{bab.title}</span>
                   <span className="sh-bab__count">{bab.hadiths.length} روايات</span>
                   <span className="sh-bab__chevron" aria-hidden="true">
@@ -620,7 +657,7 @@ export default function ShimaelPage() {
 
         {/* ── السيرة والهَدي ── */}
         {activeTab === "sira" && (
-          <div className="sh-section">
+          <div role="tabpanel" id="sh-panel-sira" aria-labelledby="sh-tab-sira" className="sh-section">
             <div className="sh-intro-box">
               <Star size={16} aria-hidden="true" />
               <p>كانَ هَدْيُه ﷺ في حياتِه كلِّها عِبادةً، حتى في أكلِه وشُربِه ونَومِه ولِباسِه وتعامُلِه مع الناس.</p>
@@ -635,7 +672,7 @@ export default function ShimaelPage() {
                   onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenBab(openBab === bab.id + 200 ? null : bab.id + 200)}
                   aria-expanded={openBab === bab.id + 200}
                 >
-                  <span className="sh-bab__icon" aria-hidden="true">{bab.icon}</span>
+                  <span className="sh-bab__icon" aria-hidden="true"><SectionIcon name={bab.icon} size={24} /></span>
                   <span className="sh-bab__title">{bab.title}</span>
                   <span className="sh-bab__count">{bab.hadiths.length} روايات</span>
                   <span className="sh-bab__chevron" aria-hidden="true">
@@ -662,7 +699,7 @@ export default function ShimaelPage() {
 
         {/* ── المحبة ── */}
         {activeTab === "mahabbah" && (
-          <div className="sh-section">
+          <div role="tabpanel" id="sh-panel-mahabbah" aria-labelledby="sh-tab-mahabbah" className="sh-section">
             <div className="sh-mahabbah-intro">
               <Heart size={40} className="sh-mahabbah-intro__icon" aria-hidden="true" />
               <h2 className="sh-mahabbah-intro__title">حبُّ النبيِّ ﷺ</h2>
@@ -718,7 +755,7 @@ export default function ShimaelPage() {
         )}
 
       <div className="twh-share">
-        <ShareButtons title="الشمائل المحمدية — المجلس العلمي" url="https://majlisilm.com/shimail" />
+        <ShareButtons title="الشمائل المحمدية — المجلس العلمي" url="https://www.majlisilm.com/shimail" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="sira" title="اختبر معلوماتك في السيرة النبوية" count={4} />

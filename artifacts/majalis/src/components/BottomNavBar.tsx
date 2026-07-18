@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { BookMarked, GraduationCap, Home, LayoutGrid, Repeat2, Search, Sunset } from "lucide-react";
+import { BookOpen, Gamepad2, GraduationCap, Home, LayoutGrid, Sunset } from "lucide-react";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 
@@ -10,12 +10,15 @@ type NavTab = {
   Icon: React.ComponentType<{ size?: number; strokeWidth?: number; "aria-hidden"?: boolean }>;
 };
 
+/* 4 وجهات أساسية + "المزيد" = 5 إجمالاً (كان 6+المزيد=7 — يخالف المواصفة).
+   المكتبة/العلماء/الفقه لم تُحذَف، بل تبقى متاحة عبر "المزيد" (MoreBottomSheet
+   يضمّها فعلاً ضمن أقسامها) — إعادة تموضع لا حذف وظيفة (2026-07-18).
+   "سؤال وجواب" (لعبة /quiz) أُضيفت هنا صراحةً تلبيةً للمرحلة 6. */
 const NAV_TABS: NavTab[] = [
-  { href: "/",        label: "الرئيسية", Icon: Home },
-  { href: "/quran",   label: "المصحف",   Icon: BookMarked },
-  { href: "/adhkar",  label: "الأذكار",  Icon: Repeat2 },
-  { href: "/lessons", label: "الدروس",   Icon: GraduationCap },
-  { href: "/search",  label: "البحث",    Icon: Search },
+  { href: "/",          label: "الرئيسية",    Icon: Home },
+  { href: "/quran-hub", label: "القرآن",      Icon: BookOpen },
+  { href: "/quiz",      label: "سؤال وجواب", Icon: Gamepad2 },
+  { href: "/lessons",   label: "تعلّم",       Icon: GraduationCap },
 ];
 
 export function BottomNavBar() {

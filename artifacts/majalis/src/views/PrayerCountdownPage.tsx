@@ -24,7 +24,7 @@ export default function PrayerCountdownPage() {
       title: "العد التنازلي للصلاة | المجلس العلمي",
       description: "عد تنازلي لوقت الصلاة القادمة، الفجر والظهر والعصر والمغرب والعشاء في الكويت.",
       keywords: ["عد تنازلي صلاة", "وقت الصلاة", "الصلاة القادمة", "مواقيت الكويت", "أذان"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "العد التنازلي للصلاة", url: "https://majlisilm.com/prayer-countdown", about: { "@type": "Thing", name: "مواقيت الصلاة في الكويت" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "العد التنازلي للصلاة", url: "https://www.majlisilm.com/prayer-countdown", about: { "@type": "Thing", name: "مواقيت الصلاة في الكويت" } }],
     });
   }, []);
 
@@ -109,7 +109,7 @@ export default function PrayerCountdownPage() {
       </p>
 
       <div className="twh-share">
-        <ShareButtons title="العد التنازلي للصلاة — المجلس العلمي" url="https://majlisilm.com/prayer-countdown" />
+        <ShareButtons title="العد التنازلي للصلاة — المجلس العلمي" url="https://www.majlisilm.com/prayer-countdown" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في فقه الصلاة" count={4} />

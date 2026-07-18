@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { SectionIcon } from "@/components/ui/SectionIcon";
+import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -344,13 +346,19 @@ export default function DuasQuranPage() {
             "@type": "ListItem",
             position: i + 1,
             name: d.name,
-            url: `https://majlisilm.com/duas-quran#${d.id}`,
+            url: `https://www.majlisilm.com/duas-quran#${d.id}`,
           })),
         },
       ],
     });
   }, []);
 
+  const todayDua = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return DUAS[(day - 1 + DUAS.length) % DUAS.length];
+  }, []);
   const [activeCat, setActiveCat] = useState<DuaCategory>("الكل");
   const [search, setSearch] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);
@@ -379,25 +387,36 @@ export default function DuasQuranPage() {
         </div>
       </section>
 
+      {/* دعاء قرآني اليوم */}
+      <div className="dqod-card">
+        <div className="dqod-card__badge"><Sparkles size={11} aria-hidden="true" /> دعاء قرآني اليوم</div>
+        {todayDua.prophet && <div className="dqod-card__prophet">{todayDua.prophet}</div>}
+        <h2 className="dqod-card__name">{todayDua.name}</h2>
+        <p className="dqod-card__arabic">{todayDua.arabic}</p>
+        <cite className="dqod-card__ref">{todayDua.ref}</cite>
+        {todayDua.context && <p className="dqod-card__context">{todayDua.context}</p>}
+      </div>
+
       <div className="dq-body">
         {/* search */}
         <input
           type="search"
           className="dq-search"
-          placeholder="ابحث بالاسم أو الآية..."
+          aria-label="ابحث بالاسم أو الآية" placeholder="ابحث بالاسم أو الآية..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
 
         {/* categories */}
-        <div className="dq-cats">
+        <div className="dq-cats" role="tablist" aria-label="تصفية أدعية القرآن">
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
+              role="tab"
               type="button"
               className={`dq-cat-btn${activeCat === cat ? " dq-cat-btn--active" : ""}`}
               onClick={() => setActiveCat(cat)}
-              aria-pressed={activeCat === cat}
+              aria-selected={activeCat === cat}
             >
               {cat}
             </button>
@@ -474,7 +493,7 @@ export default function DuasQuranPage() {
               { icon: "🔄", text: "الإلحاح والتكرار دون استعجال الإجابة" },
             ].map((a) => (
               <div key={a.text} className="dq-adab-item">
-                <span className="dq-adab-item__icon">{a.icon}</span>
+                <span className="dq-adab-item__icon"><SectionIcon name={a.icon} size={22} /></span>
                 <span className="dq-adab-item__text">{a.text}</span>
               </div>
             ))}
@@ -482,7 +501,7 @@ export default function DuasQuranPage() {
         </div>
 
         <div className="twh-share">
-          <ShareButtons title="أدعية القرآن الكريم — المجلس العلمي" url="https://majlisilm.com/duas-quran" />
+          <ShareButtons title="أدعية القرآن الكريم — المجلس العلمي" url="https://www.majlisilm.com/duas-quran" />
         </div>
 
         {/* related */}

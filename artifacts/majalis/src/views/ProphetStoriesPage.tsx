@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect, useRef } from "react";
-import { CalendarDays, Heart, HelpCircle, LayoutList } from "lucide-react";
+import { useState, useCallback, useEffect, useMemo, useRef } from "react";
+import { CalendarDays, Heart, HelpCircle, LayoutList, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { PROPHETS, getProphet, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
 import { applyPageSeo } from "@/lib/seo";
@@ -14,12 +14,12 @@ type Citation = { surah: string; ayahs: string; note: string };
 
 const PROPHET_HUE: Record<string, string> = {
   adam: "#5D726A", idris: "#4A6B6B", nuh: "#3D6560", hud: "#5A7066",
-  salih: "#5B6B60", ibrahim: "#18362A", lut: "#3A6A4A", ismail: "#2A5E42",
+  salih: "#5B6B60", ibrahim: "#123F36", lut: "#3A6A4A", ismail: "#2A5E42",
   "is-haq": "#3D6050", yaqub: "#356055", yusuf: "#2D5545", ayyub: "#4A6055",
-  shuayb: "#25504A", musa: "#18362A", harun: "#1E4A38", "dhul-kifl": "#354A42",
+  shuayb: "#25504A", musa: "#123F36", harun: "#1E4A38", "dhul-kifl": "#354A42",
   dawud: "#2A3E35", sulayman: "#153025", ilyas: "#3A5548", "al-yasa": "#266050",
   yunus: "#1A5555", zakariyya: "#2A503C", yahya: "#205540", isa: "#1E3F50",
-  muhammad: "#18362A",
+  muhammad: "#123F36",
 };
 
 const IVORY = "#BEC7C3";
@@ -155,7 +155,7 @@ function ProphetCard({
   const isUlulAzm = ULUL_AZM_SLUGS.includes(prophet.slug);
 
   return (
-    <article
+    <div
       className={`prophet-lux-card${isUlulAzm ? " prophet-lux-card--azm" : ""}`}
       style={{
         "--prophet-color": color,
@@ -211,7 +211,7 @@ function ProphetCard({
 
       {isUlulAzm && <div className="prophet-lux-card__azm-tag">أولو العزم</div>}
       <div className="prophet-lux-card__border" />
-    </article>
+    </div>
   );
 }
 
@@ -289,8 +289,8 @@ function ProphetDetailView({
   const isUlulAzm = ULUL_AZM_SLUGS.includes(p.slug);
 
   const share = async () => {
-    const text = `${p.arabicName} عليه السلام، ${p.title}\n${p.briefBio.slice(0, 200)}…\n\nمن قصص الأنبياء في المجالس العلمية`;
-    const url = `https://majlisilm.com/prophets/${p.slug}`;
+    const text = `${p.arabicName} عليه السلام، ${p.title}\n${p.briefBio.slice(0, 200)}…\n\nمن قصص الأنبياء في المجلس العلمي`;
+    const url = `https://www.majlisilm.com/prophets/${p.slug}`;
     try {
       if (navigator.share) {
         await navigator.share({ title: `قصة ${p.arabicName}`, text, url });
@@ -333,7 +333,7 @@ function ProphetDetailView({
         </div>
         <div className="prophet-detail-lux__hero-content">
           <div className="prophet-detail-lux__hero-star">
-            <IslamicStar size={60} color={color} />
+            <IslamicStar size={60} color="var(--prophet-color-on-dark)" />
           </div>
           <span className="prophet-detail-lux__num-badge">النبي {p.id} من {PROPHETS.length}</span>
           {isUlulAzm && <span className="prophet-detail-lux__azm-badge">أولو العزم</span>}
@@ -343,7 +343,7 @@ function ProphetDetailView({
             <div className="prophet-detail-lux__quran-title">﴾ {p.quranTitle} ﴿</div>
           )}
           <p className="prophet-detail-lux__hero-title">{p.title}</p>
-          <GeometricBorder color={color} size={20} />
+          <GeometricBorder color="var(--prophet-color-on-dark)" size={20} />
         </div>
       </div>
 
@@ -385,7 +385,7 @@ function ProphetDetailView({
 
         <section className="prophet-section-lux">
           <div className="prophet-section-lux__header">
-            <IslamicStar size={22} color={color} />
+            <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
             <h2 className="prophet-section-lux__title">نبذة تعريفية</h2>
           </div>
           <p className="prophet-section-lux__text">{p.briefBio}</p>
@@ -394,7 +394,7 @@ function ProphetDetailView({
         {sup?.miracle && (
           <section className="prophet-section-lux">
             <div className="prophet-section-lux__header">
-              <IslamicStar size={22} color={color} />
+              <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
               <h2 className="prophet-section-lux__title">المعجزة الكبرى</h2>
             </div>
             <div className="prophet-miracle-box">
@@ -406,7 +406,7 @@ function ProphetDetailView({
 
         <section className="prophet-section-lux">
           <div className="prophet-section-lux__header">
-            <IslamicStar size={22} color={color} />
+            <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
             <h2 className="prophet-section-lux__title">أبرز السور القرآنية</h2>
           </div>
           <div className="prophet-chips-lux">
@@ -418,7 +418,7 @@ function ProphetDetailView({
 
         <section className="prophet-section-lux">
           <div className="prophet-section-lux__header">
-            <IslamicStar size={22} color={color} />
+            <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
             <h2 className="prophet-section-lux__title">أبرز الصفات والمعجزات</h2>
           </div>
           <ul className="prophet-attrs-list">
@@ -433,7 +433,7 @@ function ProphetDetailView({
 
         <section className="prophet-section-lux">
           <div className="prophet-section-lux__header">
-            <IslamicStar size={22} color={color} />
+            <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
             <h2 className="prophet-section-lux__title">الدروس والعبر</h2>
           </div>
           <div className="prophet-lessons-grid">
@@ -449,7 +449,7 @@ function ProphetDetailView({
         {!dbLoading && dbStory?.content && (
           <section className="prophet-section-lux">
             <div className="prophet-section-lux__header">
-              <IslamicStar size={22} color={color} />
+              <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
               <h2 className="prophet-section-lux__title">القصة الكاملة</h2>
             </div>
             <div className="prophet-db-story">
@@ -463,7 +463,7 @@ function ProphetDetailView({
         {!dbLoading && dbStory?.citations && dbStory.citations.length > 0 && (
           <section className="prophet-section-lux">
             <div className="prophet-section-lux__header">
-              <IslamicStar size={22} color={color} />
+              <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
               <h2 className="prophet-section-lux__title">الاستشهادات القرآنية</h2>
             </div>
             <div className="prophet-citations">
@@ -737,6 +737,12 @@ const TABS: { id: View; label: string }[] = [
 ];
 
 export default function ProphetStoriesPage() {
+  const todayMiracle = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return MIRACLES_LIST[(day - 1 + MIRACLES_LIST.length) % MIRACLES_LIST.length];
+  }, []);
   const [search, setSearch] = useState("");
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [view, setView] = useState<View>("grid");
@@ -746,7 +752,7 @@ export default function ProphetStoriesPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/prophets",
-      title: "الأنبياء والرسل | المجالس العلمية",
+      title: "الأنبياء والرسل | المجلس العلمي",
       description: "قصص ٢٥ نبياً ورسولاً مذكورين في القرآن الكريم، سِيَرهم ومعجزاتهم وأقوامهم والدروس المستفادة، مع خط زمني ومقارنة وأولو العزم.",
       keywords: ["قصص الأنبياء", "الأنبياء في القرآن", "معجزات الأنبياء", "أولو العزم", "أنبياء الإسلام"],
     });
@@ -815,16 +821,27 @@ export default function ProphetStoriesPage() {
         </div>
       </div>
 
+      {/* معجزة اليوم */}
+      <div className="psod-card">
+        <div className="psod-card__badge"><Sparkles size={11} aria-hidden="true" /> معجزة اليوم</div>
+        <div className="psod-card__nabi">{todayMiracle.nabi}</div>
+        <h2 className="psod-card__miracle">{todayMiracle.miracle}</h2>
+        <div className="psod-card__ayah">{todayMiracle.ayah}</div>
+      </div>
+
       {/* تبويبات العرض */}
       <div className="prophets-light-section">
-        <div className="prophets-lux-tabs">
+        <div className="prophets-lux-tabs" role="tablist" aria-label="طريقة عرض قصص الأنبياء">
           {TABS.map(t => (
             <button
               key={t.id}
+              id={`pst-tab-${t.id}`}
               type="button"
+              role="tab"
               className={`prophets-lux-tab ${view === t.id ? "prophets-lux-tab--active" : ""}`}
               onClick={() => setView(t.id)}
-              aria-pressed={view === t.id}
+              aria-selected={view === t.id}
+              aria-controls={`pst-panel-${t.id}`}
             >
               {t.id === "grid"      && <><LayoutList size={14} strokeWidth={1.8} aria-hidden="true" /> {t.label}</>}
               {t.id === "timeline"  && <><CalendarDays size={14} strokeWidth={1.8} aria-hidden="true" /> {t.label}</>}
@@ -837,7 +854,7 @@ export default function ProphetStoriesPage() {
 
         {/* Xط الزمني */}
         {view === "timeline" && (
-          <div className="prophets-lux-container">
+          <div role="tabpanel" id="pst-panel-timeline" aria-labelledby="pst-tab-timeline" className="prophets-lux-container">
             <TimelineView onSelect={setSelectedSlug} />
           </div>
         )}
@@ -851,14 +868,14 @@ export default function ProphetStoriesPage() {
 
         {/* المعجزات */}
         {view === "miracles" && (
-          <div className="prophets-lux-container nb-container">
+          <div role="tabpanel" id="pst-panel-miracles" aria-labelledby="pst-tab-miracles" className="prophets-lux-container nb-container">
             <MiraclesView />
           </div>
         )}
 
         {/* مقارنة */}
         {view === "compare" && (
-          <div className="prophets-lux-container nb-container">
+          <div role="tabpanel" id="pst-panel-compare" aria-labelledby="pst-tab-compare" className="prophets-lux-container nb-container">
             <CompareView onSelect={setSelectedSlug} />
           </div>
         )}
@@ -932,7 +949,7 @@ export default function ProphetStoriesPage() {
       />
 
       <div className="twh-share">
-        <ShareButtons title="قصص الأنبياء — المجلس العلمي" url="https://majlisilm.com/prophet-stories" />
+        <ShareButtons title="قصص الأنبياء — المجلس العلمي" url="https://www.majlisilm.com/prophet-stories" />
       </div>
     </div>
   );

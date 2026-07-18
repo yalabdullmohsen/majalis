@@ -3,6 +3,14 @@ import { Link } from "wouter";
 import { fetchLiveAutoContent, autoContentToUpdateItem } from "@/lib/auto-content-service";
 import type { MergedUpdateItem } from "@/lib/auto-content/auto-content-utils";
 import { displayText } from "@/lib/display-text";
+import { Widget } from "@/components/widgets/Widget";
+
+const UpdatesIcon = () => (
+  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16">
+    <polygon points="8,1 10,6 15.5,6 11,9.5 13,15 8,11.5 3,15 5,9.5 0.5,6 6,6" fill="none" stroke="#176B57" strokeWidth="1.2"/>
+    <circle cx="8" cy="8" r="2.2" fill="#176B57" opacity="0.4"/>
+  </svg>
+);
 
 const TYPE_LABELS: Record<string, string> = {
   fatwa: "فتوى",
@@ -52,20 +60,15 @@ export function HomeLatestUpdates() {
   if (loading || items.length === 0) return null;
 
   return (
-    <section className="home-section" aria-labelledby="latest-updates-heading">
-      <div className="home-section-head">
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16">
-            <polygon points="8,1 10,6 15.5,6 11,9.5 13,15 8,11.5 3,15 5,9.5 0.5,6 6,6" fill="none" stroke="#1F4D3A" strokeWidth="1.2"/>
-            <circle cx="8" cy="8" r="2.2" fill="#2d7a5a" opacity="0.4"/>
-          </svg>
-          <div>
-            <p className="home-eyebrow">محتوى موثّق</p>
-            <h2 id="latest-updates-heading">آخر التحديثات من المصادر الرسمية</h2>
-          </div>
-        </div>
-        <Link href="/updates" className="home-section-link">جميع التحديثات</Link>
-      </div>
+    <Widget
+      id="latest-updates"
+      icon={<UpdatesIcon />}
+      eyebrow="محتوى موثّق"
+      title="آخر التحديثات من المصادر الرسمية"
+      moreHref="/updates"
+      moreLabel="جميع التحديثات"
+      state="ready"
+    >
       <div className="home-more-grid">
         {items.map((item) => (
           <Link
@@ -83,7 +86,7 @@ export function HomeLatestUpdates() {
           </Link>
         ))}
       </div>
-    </section>
+    </Widget>
   );
 }
 

@@ -31,7 +31,7 @@ function RingProgress({ pct, size = 120 }: { pct: number; size?: number }) {
       <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--majalis-emerald-muted, rgba(14,110,82,0.12))" strokeWidth="6" />
       <circle
         cx={size / 2} cy={size / 2} r={r}
-        fill="none" stroke="var(--majalis-emerald, #1F4D3A)" strokeWidth="6"
+        fill="none" stroke="var(--majalis-emerald, #176B57)" strokeWidth="6"
         strokeLinecap="round"
         strokeDasharray={circ}
         strokeDashoffset={circ * (1 - pct)}
@@ -51,6 +51,8 @@ function DhikrSheet({ item, onClose }: { item: AdhkarItem; onClose: () => void }
   }, [onClose]);
 
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
+    // مساران بديلان كاملان بلوحة المفاتيح.
     <div
       className="adhkar-sheet-overlay"
       role="dialog" aria-modal="true" aria-label="تفاصيل الذكر"
@@ -147,7 +149,7 @@ export default function AdhkarPage() {
             "@type": "ListItem",
             position: i + 1,
             name: c.name,
-            url: `https://majlisilm.com/adhkar?cat=${c.slug}`,
+            url: `https://www.majlisilm.com/adhkar?cat=${c.slug}`,
           })),
         },
       ],
@@ -255,19 +257,20 @@ export default function AdhkarPage() {
       />
 
       {/* شريط التصنيفات */}
-      <div className="content-hub-chips adhkar-chips">
+      <div className="content-hub-chips adhkar-chips" role="tablist" aria-label="تصفية الأذكار">
         <button
+          role="tab"
           type="button"
           className={`content-hub-chip${category === "all" ? " content-hub-chip--active" : ""}`}
           onClick={() => changeCategory("all")}
-          aria-pressed={category === "all"}
+          aria-selected={category === "all"}
         >الكل</button>
         {FEATURED_CATEGORIES.map((cat) => (
           <button
-            key={cat.id} type="button"
+            key={cat.id} role="tab" type="button"
             className={`content-hub-chip${category === cat.id ? " content-hub-chip--active" : ""}`}
             onClick={() => changeCategory(cat.id)}
-            aria-pressed={category === cat.id}
+            aria-selected={category === cat.id}
           >{cat.name}</button>
         ))}
       </div>

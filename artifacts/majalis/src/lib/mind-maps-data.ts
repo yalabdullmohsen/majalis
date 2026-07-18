@@ -129,7 +129,7 @@ export const MIND_MAPS: MindMap[] = [
           id: "ahkam",
           label: "الأحكام الشرعية",
           children: [
-            { id: "ah-1", label: "الفتاوى", href: "/fatwa" },
+            { id: "ah-1", label: "الأحكام الشرعية", href: "/rulings" },
             { id: "ah-2", label: "أحكام الجنائز", href: "/janaza" },
             { id: "ah-3", label: "الباحث الشرعي", href: "/scholarly-research" },
           ],
@@ -191,9 +191,8 @@ export const MIND_MAPS: MindMap[] = [
         },
         {
           id: "quran-tools",
-          label: "أدوات المصحف",
+          label: "أدوات القرآن",
           children: [
-            { id: "qt-1", label: "المصحف الشريف", href: "/quran" },
             { id: "qt-2", label: "الورد اليومي", href: "/daily-wird" },
             { id: "qt-3", label: "أدعية القرآن", href: "/duas-quran" },
           ],

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { Copy, Heart, Search, X } from "lucide-react";
+import { Copy, Heart, Search, Sparkles, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -643,7 +643,7 @@ const HIKAM: Hikma[] = [
     source: "جامع العلوم والحكم",
   },
   {
-    id: "e11",
+    id: "e18",
     text: "لو أن العلماء صانوا علمهم لسادوا أهل زمانهم، فلما بذلوه لأهل الدنيا هانوا عليهم.",
     scholar: "الفضيل بن عياض",
     died: "187ه",
@@ -651,7 +651,7 @@ const HIKAM: Hikma[] = [
     source: "حلية الأولياء",
   },
   {
-    id: "e12",
+    id: "e19",
     text: "المؤمن ينظر بنور الله؛ فإذا قال الله كان، وإذا أخبر فقد وقع، يتحرَّى الصدق في أخذه وردِّه.",
     scholar: "ابن تيمية",
     died: "728ه",
@@ -691,7 +691,7 @@ const HIKAM: Hikma[] = [
     source: "حلية الأولياء",
   },
   {
-    id: "i8",
+    id: "i21",
     text: "إن الله يُحب أن يُتم نعمته على عبده، وأبغض الناس إليه من يُريد الاستغناء عنه.",
     scholar: "الإمام أحمد",
     died: "241ه",
@@ -824,7 +824,7 @@ const HIKAM: Hikma[] = [
     category: "القرآن والذكر",
   },
   {
-    id: "i8",
+    id: "i22",
     text: "أصل كل فتنة في القلوب من الشهوة، وأصل كل بلية من الجهل. فمن خلا قلبه من الشهوة، واستنار بالعلم، نجا.",
     scholar: "الإمام الشافعي",
     died: "204ه",
@@ -832,7 +832,7 @@ const HIKAM: Hikma[] = [
     source: "مناقب الشافعي",
   },
   {
-    id: "e13",
+    id: "e20",
     text: "تعلَّموا العلم فإن تعلُّمه لله خشيةٌ، وطلبه عبادةٌ، ومذاكرته تسبيحٌ، والبحث عنه جهادٌ، وتعليمه من لا يعلمه صدقةٌ.",
     scholar: "معاذ بن جبل",
     died: "18ه",
@@ -840,7 +840,7 @@ const HIKAM: Hikma[] = [
     source: "حلية الأولياء",
   },
   {
-    id: "d11",
+    id: "d14",
     text: "الدنيا دار ممر لا دار مقر، والناس فيها رجلان: رجل باع نفسه فأوبقها، ورجل اشتراها فأعتقها.",
     scholar: "علي بن أبي طالب",
     died: "40ه",
@@ -913,7 +913,7 @@ const HIKAM: Hikma[] = [
   },
   /* ─── العلم والعمل إضافة ─── */
   {
-    id: "e15",
+    id: "e21",
     text: "من طلب العلم للعمل به وفّقه الله، ومن طلبه لغير ذلك ازداد بعداً.",
     scholar: "سفيان الثوري",
     died: "161ه",
@@ -1285,6 +1285,39 @@ const HIKAM: Hikma[] = [
   },
 ];
 
+function todaysHikma(): Hikma {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return HIKAM[(dayOfYear - 1 + HIKAM.length) % HIKAM.length];
+}
+
+function HikmaOfDayCard({ hikma, onCopy, copied }: { hikma: Hikma; onCopy: (h: Hikma) => void; copied: string | null }) {
+  return (
+    <div className="hod-card">
+      <div className="hod-card__badge"><Sparkles size={11} aria-hidden="true" /> حكمة اليوم</div>
+      <span className="hod-card__cat">{hikma.category}</span>
+      <blockquote className="hod-card__quote">
+        <p className="hod-card__text">«{hikma.text}»</p>
+        <footer className="hod-card__footer">
+          <span className="hod-card__scholar">— {hikma.scholar}</span>
+          {hikma.died && <span className="hod-card__died">(ت{hikma.died})</span>}
+          {hikma.source && <span className="hod-card__source">[{hikma.source}]</span>}
+        </footer>
+      </blockquote>
+      <button
+        type="button"
+        className="hod-card__copy"
+        onClick={() => onCopy(hikma)}
+        aria-label="نسخ الحكمة"
+      >
+        <Copy size={13} aria-hidden="true" />
+        {copied === hikma.id ? "تم النسخ ✓" : "نسخ الحكمة"}
+      </button>
+    </div>
+  );
+}
+
 export default function HikamSalafPage() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("الكل");
@@ -1296,6 +1329,7 @@ export default function HikamSalafPage() {
   });
   const [copied, setCopied] = useState<string | null>(null);
   const [showFavsOnly, setShowFavsOnly] = useState(false);
+  const todayHikma = useMemo(() => todaysHikma(), []);
 
   useEffect(() => {
     applyPageSeo({
@@ -1314,7 +1348,7 @@ export default function HikamSalafPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${h.scholar}: ${h.text.slice(0, 60)}`,
-            url: `https://majlisilm.com/hikam-salaf#${h.id}`,
+            url: `https://www.majlisilm.com/hikam-salaf#${h.id}`,
           })),
         },
       ],
@@ -1367,6 +1401,9 @@ export default function HikamSalafPage() {
         </div>
       </section>
 
+      {/* حكمة اليوم */}
+      <HikmaOfDayCard hikma={todayHikma} onCopy={copyHikma} copied={copied} />
+
       {/* تحكم */}
       <div className="hk-controls">
         <div className="hk-search-wrap">
@@ -1385,15 +1422,15 @@ export default function HikamSalafPage() {
             </button>
           )}
         </div>
-        <div className="hk-cats" role="list">
+        <div className="hk-cats" role="tablist" aria-label="تصفية حكم السلف">
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
+              role="tab"
               type="button"
-              role="listitem"
               className={`hk-cat${category === cat ? " hk-cat--active" : ""}`}
               onClick={() => { setCategory(cat); setShowFavsOnly(false); }}
-              aria-pressed={category === cat}
+              aria-selected={category === cat}
             >
               {cat}
             </button>
@@ -1401,7 +1438,6 @@ export default function HikamSalafPage() {
           {favorites.size > 0 && (
             <button
               type="button"
-              role="listitem"
               className={`hk-cat hk-cat--fav-filter${showFavsOnly ? " hk-cat--active" : ""}`}
               onClick={() => { setShowFavsOnly((v) => !v); setCategory("الكل"); }}
               aria-pressed={showFavsOnly}
@@ -1458,7 +1494,7 @@ export default function HikamSalafPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="حكم السلف الصالح — المجلس العلمي" url="https://majlisilm.com/hikam-salaf" />
+        <ShareButtons title="حكم السلف الصالح — المجلس العلمي" url="https://www.majlisilm.com/hikam-salaf" />
       </div>
 
       {/* ذات صلة */}

@@ -95,12 +95,13 @@ function EditDialog({ el, path, onDone }: EditDialogProps) {
   }, [onDone, save]);
 
   return (
-    <div className="ase-overlay" onClick={(e) => { if (e.target === e.currentTarget) onDone(); }}>
-      <div className="ase-dialog" dir="rtl">
+    <div className="ase-overlay" onClick={(e) => { if (e.target === e.currentTarget) onDone(); }} aria-hidden="true">
+      <div className="ase-dialog" role="dialog" aria-modal="true" aria-label="تعديل النص" dir="rtl">
         <div className="ase-dialog__head">
           <span className="ase-dialog__tag">{el.tagName.toLowerCase()}</span>
           <p className="ase-dialog__title">تعديل النص</p>
-          <button className="ase-dialog__close" onClick={onDone} aria-label="إغلاق"><X size={14} /></button>
+          <button
+            type="button" className="ase-dialog__close" onClick={onDone} aria-label="إغلاق"><X size={14} /></button>
         </div>
         <textarea
           ref={ta}
@@ -108,13 +109,16 @@ function EditDialog({ el, path, onDone }: EditDialogProps) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           rows={Math.max(3, Math.ceil(text.length / 60))}
+          aria-label="تعديل النص"
         />
         <p className="ase-dialog__hint">Ctrl+Enter للحفظ • Esc للإلغاء</p>
         <div className="ase-dialog__footer">
-          <button className="ase-btn ase-btn--ghost" onClick={reset} title="استعادة النص الأصلي">
+          <button
+            type="button" className="ase-btn ase-btn--ghost" onClick={reset} aria-label="استعادة النص الأصلي">
             <RefreshCw size={13} /> استعادة
           </button>
-          <button className="ase-btn ase-btn--primary" onClick={save}>
+          <button
+            type="button" className="ase-btn ase-btn--primary" onClick={save}>
             <Check size={14} /> حفظ
           </button>
         </div>
@@ -204,7 +208,7 @@ export function AdminSiteEditBar() {
         body.site-edit-mode blockquote,
         body.site-edit-mode td,
         body.site-edit-mode th {
-          outline: 1.5px dashed #1F4D3A !important;
+          outline: 1.5px dashed #176B57 !important;
           cursor: text !important;
           border-radius: 2px;
         }
@@ -220,7 +224,7 @@ export function AdminSiteEditBar() {
         body.site-edit-mode td:hover,
         body.site-edit-mode th:hover {
           background: rgba(31,77,58,0.06) !important;
-          outline-color: #2d7a5a !important;
+          outline-color: #176B57 !important;
           outline-width: 2px !important;
         }
         /* Floating bar */
@@ -249,14 +253,14 @@ export function AdminSiteEditBar() {
           transition: background 0.2s;
         }
         .ase-bar__toggle--off {
-          background: #1F4D3A;
+          background: #176B57;
           color: #fff;
         }
         .ase-bar__toggle--on {
           background: #d32f2f;
           color: #fff;
         }
-        .ase-bar__toggle--off:hover { background: #2d7a5a; }
+        .ase-bar__toggle--off:hover { background: #176B57; }
         .ase-bar__toggle--on:hover  { background: #b71c1c; }
         .ase-bar__panel {
           background: #fff;
@@ -274,7 +278,7 @@ export function AdminSiteEditBar() {
           color: #555;
           line-height: 1.5;
         }
-        .ase-bar__info strong { color: #1F4D3A; }
+        .ase-bar__info strong { color: #176B57; }
         .ase-bar__clear {
           font-size: 0.72rem;
           color: #d32f2f;
@@ -292,7 +296,7 @@ export function AdminSiteEditBar() {
           left: 0;
           right: 0;
           z-index: 9991;
-          background: #1F4D3A;
+          background: #176B57;
           color: #fff;
           font-size: 0.82rem;
           text-align: center;
@@ -330,7 +334,7 @@ export function AdminSiteEditBar() {
           gap: 0.5rem;
         }
         .ase-dialog__tag {
-          background: #1F4D3A;
+          background: #176B57;
           color: #fff;
           font-size: 0.65rem;
           font-weight: 700;
@@ -366,7 +370,7 @@ export function AdminSiteEditBar() {
           direction: rtl;
           box-sizing: border-box;
         }
-        .ase-dialog__ta:focus { outline: 2px solid #1F4D3A; border-color: #1F4D3A; }
+        .ase-dialog__ta:focus { outline: 2px solid #176B57; border-color: #176B57; }
         .ase-dialog__hint {
           font-size: 0.72rem;
           color: #888;
@@ -391,8 +395,8 @@ export function AdminSiteEditBar() {
           transition: background 0.15s;
           font-family: inherit;
         }
-        .ase-btn--primary { background: #1F4D3A; color: #fff; }
-        .ase-btn--primary:hover { background: #2d7a5a; }
+        .ase-btn--primary { background: #176B57; color: #fff; }
+        .ase-btn--primary:hover { background: #176B57; }
         .ase-btn--ghost { background: #f5f5f5; color: #333; }
         .ase-btn--ghost:hover { background: #e8e8e8; }
       `}</style>
@@ -417,7 +421,8 @@ export function AdminSiteEditBar() {
               ) : "لا توجد تعديلات محفوظة"}
             </p>
             {editCount > 0 && (
-              <button className="ase-bar__clear" onClick={clearAll}>
+              <button
+                type="button" className="ase-bar__clear" onClick={clearAll}>
                 <RefreshCw size={11} style={{ display: "inline", marginLeft: 3 }} />
                 استعادة النصوص الأصلية
               </button>
@@ -428,9 +433,10 @@ export function AdminSiteEditBar() {
         <div style={{ display: "flex", gap: "0.4rem" }}>
           {!editMode && (
             <button
+              type="button"
               className="ase-bar__toggle ase-bar__toggle--off"
               onClick={() => { setExpanded((v) => !v); }}
-              title="أدوات المشرف"
+              aria-label="أدوات المشرف"
             >
               <Pencil size={13} />
               مشرف
@@ -438,6 +444,7 @@ export function AdminSiteEditBar() {
             </button>
           )}
           <button
+            type="button"
             className={`ase-bar__toggle ${editMode ? "ase-bar__toggle--on" : "ase-bar__toggle--off"}`}
             onClick={() => { setEditMode((v) => !v); setExpanded(false); }}
             title={editMode ? "إيقاف وضع التحرير" : "تفعيل وضع تحرير الصفحة"}

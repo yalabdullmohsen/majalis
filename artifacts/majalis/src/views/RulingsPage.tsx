@@ -2,11 +2,11 @@ import "@/styles/rulings-encyclopedia.css";
 import { useCallback, useEffect, useState } from "react";
 import { Banknote, BookOpen, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, MapPin, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useSearch } from "wouter";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
 import { useAuth } from "@/components/AuthProvider";
-import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
@@ -20,7 +20,6 @@ function CatIcon({ name }: { name?: string }) {
 }
 
 const FIQH_HUB_TABS = [
-  { key: "fatawa",  label: "الفتاوى",         href: "/fatwa" },
   { key: "rulings", label: "الأحكام الشرعية", href: "/rulings" },
   { key: "qa",      label: "الأسئلة الشرعية", href: "/qa" },
   { key: "council", label: "المجمع الفقهي",   href: "/fiqh-council" },
@@ -56,6 +55,7 @@ import {
 } from "@/lib/rulings-service";
 import type { CategoryStat, RulingSortMode, ShariaRulingExtended } from "@/lib/rulings-types";
 import { usePageView } from "@/hooks/usePageView";
+import { usePersistedState } from "@/hooks/usePersistedState";
 import { RequestManager } from "@/lib/request-manager";
 import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
 
@@ -74,20 +74,31 @@ export default function RulingsPage() {
   const { isAdmin } = useAuth();
   const [items, setItems] = useState<ShariaRulingExtended[]>([]);
   const [total, setTotal] = useState(0);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = usePersistedState("filters:/rulings:page", 1);
   const [loading, setLoading] = useState(true);
   const [dbState, setDbState] = useState<{ needsSeed?: boolean; dbError?: string }>({});
   const [stats, setStats] = useState<CategoryStat[]>([]);
   const [encyclopediaTotal, setEncyclopediaTotal] = useState(0);
-  const [category, setCategory] = useState("الكل");
-  const [subcategory, setSubcategory] = useState<string | undefined>();
-  const [search, setSearch] = useState("");
-  const [sort, setSort] = useState<RulingSortMode>("importance");
+  const [category, setCategory] = usePersistedState("filters:/rulings:category", "الكل");
+  const [subcategory, setSubcategory] = usePersistedState<string | undefined>("filters:/rulings:subcategory", undefined);
+  const [search, setSearch] = usePersistedState("filters:/rulings:search", "");
+  const [sort, setSort] = usePersistedState<RulingSortMode>("filters:/rulings:sort", "importance");
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const debouncedSearch = useDebouncedValue(search);
+  const urlSearch = useSearch();
 
   usePageView("rulings", null);
+
+  // رابط وارد بـ`?category=...` (من RulingDetailPage/FiqhPage) كان يُتجاهَل
+  // كليًا هنا: الحالة تُقرأ فقط من usePersistedState بلا مزامنة مع رابط
+  // URL الفعلي عند الوصول — نفس عائلة عطل TYPE_HREF.scholar الصامت
+  // (رابط يُبنى صحيحًا لكن لا يُقرأ في الوجهة، فيهبط المستخدم على الفلتر
+  // الافتراضي/السابق بلا أي خطأ ظاهر). اكتُشف بالفحص المباشر 2026-07-18.
+  useEffect(() => {
+    const cat = new URLSearchParams(urlSearch).get("category");
+    if (cat) setCategory(cat);
+  }, [urlSearch]);
 
   useEffect(() => {
     applyPageSeo({
@@ -100,10 +111,10 @@ export default function RulingsPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "موسوعة الأحكام الشرعية",
-          url: "https://majlisilm.com/rulings",
+          url: "https://www.majlisilm.com/rulings",
           description: "أحكام الفقه الإسلامي مرتّبةً حسب الأبواب والتصنيفات الفقهية",
           about: { "@type": "Thing", name: "الأحكام الشرعية في الفقه الإسلامي" },
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
         },
       ],
     });
@@ -186,12 +197,13 @@ export default function RulingsPage() {
           onSelect={handleCategorySelect}
         />
       ) : (
-        <div className="content-hub-chips ruling-quick-chips">
+        <div className="content-hub-chips ruling-quick-chips" role="tablist" aria-label="تصفية الأحكام">
           <button
+            role="tab"
             type="button"
             className={category === "الكل" ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
             onClick={() => handleCategorySelect("الكل")}
-            aria-pressed={category === "الكل"}
+            aria-selected={category === "الكل"}
           >
             {isAdmin ? `الكل (${encyclopediaTotal || total})` : "الكل"}
           </button>
@@ -201,12 +213,13 @@ export default function RulingsPage() {
             return (
               <button
                 key={cat.slug}
+                role="tab"
                 type="button"
                 className={
                   category === cat.name ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"
                 }
                 onClick={() => handleCategorySelect(cat.name)}
-                aria-pressed={category === cat.name}
+                aria-selected={category === cat.name}
               >
                 <CatIcon name={cat.icon} />{cat.name}{isAdmin ? ` (${count})` : ""}
               </button>
@@ -243,16 +256,23 @@ export default function RulingsPage() {
 
       {loading ? (
         <SkeletonCardGrid />
+      ) : dbState.dbError && !dbState.needsSeed ? (
+        <ErrorState
+          text={
+            isAdmin
+              ? dbState.dbError === "table_missing"
+                ? "جدول sharia_rulings غير موجود، طبّق migrations التفعيل أولاً."
+                : `تعذّر تحميل الأحكام: ${dbState.dbError}`
+              : "تعذّر تحميل الأحكام الشرعية حاليًا. يرجى المحاولة مرة أخرى بعد قليل."
+          }
+          onRetry={loadRulings}
+        />
       ) : items.length === 0 ? (
         <Empty
           text={
             dbState.needsSeed
               ? "قاعدة البيانات جاهزة لكن لم تُستورد الأحكام بعد. شغّل Production Activation من لوحة الإدارة."
-              : dbState.dbError === "table_missing"
-                ? "جدول sharia_rulings غير موجود، طبّق migrations التفعيل أولاً."
-                : dbState.dbError
-                  ? `تعذّر تحميل الأحكام: ${dbState.dbError}`
-                  : "لا توجد أحكام مطابقة."
+              : "لا توجد أحكام مطابقة."
           }
         />
       ) : (
@@ -295,7 +315,7 @@ export default function RulingsPage() {
       </aside>
 
       <div className="twh-share">
-        <ShareButtons title="الأحكام الشرعية — المجلس العلمي" url="https://majlisilm.com/rulings" />
+        <ShareButtons title="الأحكام الشرعية — المجلس العلمي" url="https://www.majlisilm.com/rulings" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الأحكام الشرعية" count={4} />

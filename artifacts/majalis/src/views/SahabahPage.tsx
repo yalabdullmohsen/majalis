@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 
 
 type SahabiCategory = "الكل" | "الخلفاء" | "العشرة" | "النساء" | "العلماء" | "الفاتحون";
@@ -1238,6 +1240,37 @@ const SAHABAH: Sahabi[] = [
 
 const CATEGORIES: SahabiCategory[] = ["الكل", "الخلفاء", "العشرة", "النساء", "العلماء", "الفاتحون"];
 
+/* ─── صحابي اليوم ─── */
+function todaysSahabi(): Sahabi {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return SAHABAH[(dayOfYear - 1 + SAHABAH.length) % SAHABAH.length];
+}
+
+function SahabiOfDayCard({ sahabi }: { sahabi: Sahabi }) {
+  return (
+    <div className="sbod-card">
+      <div className="sbod-card__badge"><Sparkles size={11} aria-hidden="true" /> صحابي اليوم</div>
+      <div className="sbod-card__icon"><SectionIcon name={sahabi.icon} size={32} /></div>
+      <h2 className="sbod-card__name">{sahabi.name}</h2>
+      {sahabi.kunya && <div className="sbod-card__kunya">{sahabi.kunya}</div>}
+      <div className="sbod-card__cats">
+        {sahabi.category.filter(c => c !== "الكل").map(c => (
+          <span key={c} className="sbod-card__cat">{c}</span>
+        ))}
+      </div>
+      <div className="sbod-card__meta">
+        <span>📍 {sahabi.origin}</span>
+        <span>🕌 {sahabi.islam}</span>
+        {sahabi.died && <span>📅 {sahabi.died}</span>}
+      </div>
+      <p className="sbod-card__fadl">{sahabi.fadl}</p>
+      {sahabi.quote && <blockquote className="sbod-card__quote">«{sahabi.quote}»</blockquote>}
+    </div>
+  );
+}
+
 export default function SahabahPage() {
   useEffect(() => {
     applyPageSeo({
@@ -1256,7 +1289,7 @@ export default function SahabahPage() {
             "@type": "ListItem",
             position: i + 1,
             name: s.name,
-            url: `https://majlisilm.com/sahabah#${s.id}`,
+            url: `https://www.majlisilm.com/sahabah#${s.id}`,
           })),
         },
       ],
@@ -1266,6 +1299,7 @@ export default function SahabahPage() {
   const [activeCat, setActiveCat] = useState<SahabiCategory>("الكل");
   const [search, setSearch] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);
+  const todaySahabi = useMemo(() => todaysSahabi(), []);
 
   const filtered = SAHABAH.filter((s) => {
     const matchCat = activeCat === "الكل" || s.category.includes(activeCat);
@@ -1292,25 +1326,29 @@ export default function SahabahPage() {
         </div>
       </section>
 
+      {/* صحابي اليوم */}
+      <SahabiOfDayCard sahabi={todaySahabi} />
+
       <div className="sb-body">
         {/* search */}
         <input
           type="search"
           className="sb-search"
-          placeholder="ابحث بالاسم..."
+          aria-label="ابحث بالاسم" placeholder="ابحث بالاسم..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
 
         {/* categories */}
-        <div className="sb-cats">
+        <div className="sb-cats" role="tablist" aria-label="تصفية الصحابة">
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
+              role="tab"
               type="button"
               className={`sb-cat-btn${activeCat === cat ? " sb-cat-btn--active" : ""}`}
               onClick={() => setActiveCat(cat)}
-              aria-pressed={activeCat === cat}
+              aria-selected={activeCat === cat}
             >
               {cat}
             </button>
@@ -1331,7 +1369,7 @@ export default function SahabahPage() {
                   onClick={() => setOpenId(isOpen ? null : s.id)}
                   aria-expanded={isOpen}
                 >
-                  <span className="sb-card__icon">{s.icon}</span>
+                  <span className="sb-card__icon"><SectionIcon name={s.icon} size={24} /></span>
                   <div className="sb-card__info">
                     <span className="sb-card__name">{s.name}</span>
                     {s.kunya && <span className="sb-card__kunya">{s.kunya}</span>}
@@ -1400,7 +1438,7 @@ export default function SahabahPage() {
         />
 
         <div className="twh-share">
-          <ShareButtons title="الصحابة الكرام — المجلس العلمي" url="https://majlisilm.com/sahabah" />
+          <ShareButtons title="الصحابة الكرام — المجلس العلمي" url="https://www.majlisilm.com/sahabah" />
         </div>
 
         {/* related */}

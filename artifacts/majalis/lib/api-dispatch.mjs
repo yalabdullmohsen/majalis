@@ -36,6 +36,72 @@ const ragRateLimit = createRateLimiter({
   keyPrefix: "rag",
 });
 
+// مسارات تستدعي نماذج AI خارجية (OpenAI) وكانت بلا أي حد معدل طلبات —
+// كل طلب (حتى GET) يستهلك استدعاء API مدفوعًا خارجيًا بلا سقف.
+const digitalLearningRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 20,
+  keyPrefix: "digital-learning",
+});
+
+const globalReferenceRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 20,
+  keyPrefix: "global-reference",
+});
+
+// نقاط كتابة مصادَق عليها كانت بلا حد معدل صريح — حماية من إساءة الاستخدام
+// (حساب مُخترَق أو مستخدم خبيث يستنزف قاعدة البيانات عبر طلبات متكررة).
+const citationsRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 30,
+  keyPrefix: "citations",
+});
+
+const universitiesWriteRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 20,
+  keyPrefix: "universities-write",
+});
+
+const learningAssessmentRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 15,
+  keyPrefix: "learning-assessment",
+});
+
+const accountDeleteRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 5,
+  keyPrefix: "account-delete",
+});
+
+const recommendationsRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 40,
+  keyPrefix: "recommendations",
+});
+
+const knowledgeGraphRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 30,
+  keyPrefix: "knowledge-graph",
+});
+
+// نقطتا كتابة عامتان بلا مصادقة إطلاقًا (أي زائر) — الأكثر عرضة لإساءة
+// الاستخدام (إغراق قائمة المراجعة/سجل الأخطاء) وكانتا بلا أي حد معدل طلبات.
+const submissionsRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 8,
+  keyPrefix: "submissions",
+});
+
+const clientErrorLogRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 15,
+  keyPrefix: "client-error-log",
+});
+
 /** Route table uses dynamic imports so Vercel bundles one lightweight function entrypoint. */
 export const API_ROUTES = [
   { prefix: "/api/healthz", module: "./api-handlers/healthz.js", allowGet: true, exact: true },
@@ -75,13 +141,12 @@ export const API_ROUTES = [
   { prefix: "/api/content-relations", module: "./api-handlers/content-relations.js", allowGet: true },
   { prefix: "/api/scholarly-search", module: "./api-handlers/scholarly-search.js", allowGet: true },
   { prefix: "/api/admin/search-analytics", module: "./api-handlers/admin/search-analytics.js", allowGet: true },
-  { prefix: "/api/digital-learning", module: "./api-handlers/digital-learning.js", allowGet: true },
-  { prefix: "/api/admin/digital-learning", module: "./api-handlers/admin/digital-learning.js", allowGet: true },
+  { prefix: "/api/digital-learning", module: "./api-handlers/digital-learning.js", allowGet: true, rateLimit: digitalLearningRateLimit },
   { prefix: "/api/cron/autonomous-orchestrator", module: "./api-handlers/cron/autonomous-orchestrator.js", allowGet: true, exact: true },
   { prefix: "/api/admin/autonomous-ai", module: "./api-handlers/admin/autonomous-ai.js", allowGet: true },
   { prefix: "/api/admin/autonomous-platform", module: "./api-handlers/admin/autonomous-platform.js", allowGet: true },
   { prefix: "/api/daily-content", module: "./api-handlers/daily-content.js", allowGet: true },
-  { prefix: "/api/global-reference", module: "./api-handlers/global-reference.js", allowGet: true },
+  { prefix: "/api/global-reference", module: "./api-handlers/global-reference.js", allowGet: true, rateLimit: globalReferenceRateLimit },
   { prefix: "/api/admin/global-reference", module: "./api-handlers/admin/global-reference.js", allowGet: true },
   { prefix: "/api/cron/global-reference-review", module: "./api-handlers/cron/global-reference-review.js", allowGet: true, exact: true },
   { prefix: "/api/cron/islamic-intelligence", module: "./api-handlers/cron/islamic-intelligence.js", allowGet: true, exact: true },
@@ -136,30 +201,32 @@ export const API_ROUTES = [
   { prefix: "/api/admin/auto-knowledge-engine", module: "./api-handlers/admin/auto-knowledge-engine.js", allowGet: true },
   { prefix: "/api/fiqh-research-assistant", module: "./api-handlers/fiqh-research-assistant.js", rateLimit: fiqhResearchRateLimit, allowGet: true },
   { prefix: "/api/assistant", module: "./api-handlers/assistant.js", rateLimit: assistantRateLimit, allowGet: true },
-  { prefix: "/api/client-error-log", module: "./api-handlers/client-error-log.js", allowGet: true },
+  { prefix: "/api/client-error-log", module: "./api-handlers/client-error-log.js", allowGet: true, rateLimit: clientErrorLogRateLimit },
   { prefix: "/api/test-anthropic", module: "./api-handlers/test-anthropic.js", allowGet: true },
   { prefix: "/api/transcribe", module: "./api-handlers/transcribe.js", rateLimit: transcribeRateLimit },
-  { prefix: "/api/submissions", module: "./api-handlers/submissions.js", exact: true },
+  { prefix: "/api/submissions", module: "./api-handlers/submissions.js", exact: true, rateLimit: submissionsRateLimit },
   { prefix: "/api/admin/submissions", module: "./api-handlers/admin/submissions.js", allowGet: true },
+  { prefix: "/api/account/delete", module: "./api-handlers/account/delete.js", exact: true, rateLimit: accountDeleteRateLimit },
   // ── الباحث الشرعي (RAG) ────────────────────────────────────────────────────
   { prefix: "/api/rag", module: "./api-handlers/rag-research.js", allowGet: true, rateLimit: ragRateLimit },
   // ── نظام الاقتباسات ────────────────────────────────────────────────────────
-  { prefix: "/api/user/citations", module: "./api-handlers/citations.js", allowGet: true },
-  { prefix: "/api/citations",      module: "./api-handlers/citations.js", allowGet: true },
+  { prefix: "/api/user/citations", module: "./api-handlers/citations.js", allowGet: true, rateLimit: citationsRateLimit },
+  { prefix: "/api/citations",      module: "./api-handlers/citations.js", allowGet: true, rateLimit: citationsRateLimit },
+  { prefix: "/api/learning-assessment", module: "./api-handlers/learning-assessment.js", exact: true, allowGet: true, rateLimit: learningAssessmentRateLimit },
   // ── الرسم البياني المعرفي ──────────────────────────────────────────────────
-  { prefix: "/api/knowledge-graph", module: "./api-handlers/knowledge-graph.js", allowGet: true },
+  { prefix: "/api/knowledge-graph", module: "./api-handlers/knowledge-graph.js", allowGet: true, rateLimit: knowledgeGraphRateLimit },
   // ── التوصيات الذكية ───────────────────────────────────────────────────────
-  { prefix: "/api/recommendations", module: "./api-handlers/recommendations.js", allowGet: true },
+  { prefix: "/api/recommendations", module: "./api-handlers/recommendations.js", allowGet: true, rateLimit: recommendationsRateLimit },
   // ── خارطة طالب العلم ──────────────────────────────────────────────────────
   { prefix: "/api/learning-path", module: "./api-handlers/learning-path.js", allowGet: true },
   // ── دليل الجامعات ─────────────────────────────────────────────────────────
   { prefix: "/api/cron/universities-review", module: "./api-handlers/cron/universities-review.js", allowGet: true, exact: true },
   { prefix: "/api/cron/content-scoring",     module: "./api-handlers/cron/content-scoring.js",     allowGet: true, exact: true },
-  { prefix: "/api/admin/reminders",    module: "./api-handlers/universities-vercel.js", allowGet: true },
-  { prefix: "/api/admin/programs",     module: "./api-handlers/universities-vercel.js", allowGet: true },
-  { prefix: "/api/admin/requirements", module: "./api-handlers/universities-vercel.js", allowGet: true },
-  { prefix: "/api/admin/faqs",         module: "./api-handlers/universities-vercel.js", allowGet: true },
-  { prefix: "/api/admin/universities", module: "./api-handlers/universities-vercel.js", allowGet: true },
+  { prefix: "/api/admin/reminders",    module: "./api-handlers/universities-vercel.js", allowGet: true, rateLimit: universitiesWriteRateLimit },
+  { prefix: "/api/admin/programs",     module: "./api-handlers/universities-vercel.js", allowGet: true, rateLimit: universitiesWriteRateLimit },
+  { prefix: "/api/admin/requirements", module: "./api-handlers/universities-vercel.js", allowGet: true, rateLimit: universitiesWriteRateLimit },
+  { prefix: "/api/admin/faqs",         module: "./api-handlers/universities-vercel.js", allowGet: true, rateLimit: universitiesWriteRateLimit },
+  { prefix: "/api/admin/universities", module: "./api-handlers/universities-vercel.js", allowGet: true, rateLimit: universitiesWriteRateLimit },
   { prefix: "/api/universities",       module: "./api-handlers/universities-vercel.js", allowGet: true },
 ];
 
@@ -269,13 +336,20 @@ export async function dispatchApiRequest(req, res) {
 
   if (req.method === "GET" && route.allowGet) {
     req.body = {};
-    try {
-      await invokeHandler(handler, req, res, route.prefix, route);
-    } catch (error) {
-      console.error(`${route.prefix} GET handler failed`, error);
-      if (!res.headersSent) {
-        sendJson(res, 500, { ok: false, message: "تعذر تنفيذ الطلب.", fallback: true });
+    const runGet = async () => {
+      try {
+        await invokeHandler(handler, req, res, route.prefix, route);
+      } catch (error) {
+        console.error(`${route.prefix} GET handler failed`, error);
+        if (!res.headersSent) {
+          sendJson(res, 500, { ok: false, message: "تعذر تنفيذ الطلب.", fallback: true });
+        }
       }
+    };
+    if (route.rateLimit) {
+      await route.rateLimit(req, res, runGet);
+    } else {
+      await runGet();
     }
     return;
   }

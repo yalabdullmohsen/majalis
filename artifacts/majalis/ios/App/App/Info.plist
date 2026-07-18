@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>ar</string>
 	<key>CFBundleDisplayName</key>
-	<string>مجالس العلم</string>
+	<string>المجلس العلمي</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -29,19 +29,27 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<!-- Usage Descriptions — Arabic -->
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>يستخدم التطبيق موقعك لحساب اتجاه القبلة والمسافة إلى مكة المكرمة. لا يُخزَّن موقعك.</string>
-	<key>NSMotionUsageDescription</key>
-	<string>يستخدم التطبيق مستشعر الاتجاه لتوجيه بوصلة القبلة نحو الكعبة المشرفة.</string>
-	<key>NSUserNotificationsUsageDescription</key>
-	<string>يرسل التطبيق تذكيرات بأوقات الصلاة والأذكار اليومية. يمكنك التحكم بالإشعارات من إعدادات التطبيق.</string>
-	<!-- App Transport Security -->
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<false/>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>يستخدم التطبيق موقعك لحساب اتجاه القبلة والمسافة إلى مكة المكرمة. لا يُخزَّن موقعك.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>يستخدم المجلس العلمي الميكروفون للاستماع إلى تلاوتك أثناء جلسة اختبار التلاوة أو اختبار التسميع فقط، لمساعدتك في مراجعة حفظك للقرآن الكريم — لا يُسجَّل الصوت ولا يُحفَظ افتراضيًا، ويُقارَن ما تنطقه بالآية فورًا. الحفظ المؤقت للتسجيل (لمراجعته لاحقًا) خيار صريح تختاره بنفسك قبل بدء الجلسة.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>يستخدم التطبيق مستشعر الاتجاه لتوجيه بوصلة القبلة نحو الكعبة المشرفة.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>يُستخدم التعرّف على الكلام لمطابقة تلاوتك بالنص القرآني أثناء اختبار التلاوة أو اختبار التسميع فقط، ولا يُحتفظ بالتسجيلات دون إذنك. قد يعالج نظام التشغيل التعرّف خارج الجهاز حين لا يتوفر تعرّف كامل على الجهاز للعربية — مُفصح عنه هنا صراحة.</string>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>يرسل التطبيق تذكيرات بأوقات الصلاة والأذكار اليومية. يمكنك التحكم بالإشعارات من إعدادات التطبيق.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

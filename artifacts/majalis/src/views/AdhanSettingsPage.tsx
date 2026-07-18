@@ -16,6 +16,7 @@ import {
 } from "@/lib/adhan-preferences";
 import { getMuezzin, stopAdhan } from "@/lib/adhan-audio";
 import { MuezzinPicker } from "@/components/adhan/MuezzinPicker";
+import { PrayerAlertSettingsCard } from "@/components/adhan/PrayerAlertSettingsCard";
 import {
   KUWAIT_GOVERNORATES,
   getSelectedGovernorate,
@@ -24,6 +25,7 @@ import {
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { applyPageSeo } from "@/lib/seo";
 import { undismissFridayBanner } from "@/lib/friday-prayer";
+import { computeNotificationDiagnostics, type NotificationDiagnostics } from "@/lib/notification-diagnostics";
 
 const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 20, 30];
 
@@ -35,16 +37,19 @@ function Toggle({
   checked,
   onChange,
   id,
+  label,
 }: {
   checked: boolean;
   onChange: (v: boolean) => void;
   id?: string;
+  label: string;
 }) {
   return (
     <button
       type="button"
       role="switch"
       aria-checked={checked}
+      aria-label={label}
       id={id}
       onClick={() => onChange(!checked)}
       className={`ads-toggle${checked ? " is-on" : ""}`}
@@ -54,13 +59,16 @@ function Toggle({
   );
 }
 
-type PermissionState = "granted" | "denied" | "default" | "unsupported";
+// "default" من Notification.permission و"prompt" من navigator.permissions.query()
+// يمثّلان نفس الحالة (لم يُطلب الإذن بعد) لكن باسمين مختلفين حسب الـ API.
+type PermissionState = "granted" | "denied" | "default" | "prompt" | "unsupported";
 
 function PermissionBadge({ value }: { value: PermissionState }) {
   const MAP: Record<PermissionState, { label: string; cls: string }> = {
     granted:     { label: "مفعّل ✓",        cls: "ads-perm--ok" },
     denied:      { label: "محجوب ✕",         cls: "ads-perm--err" },
     default:     { label: "لم يُطلب بعد",    cls: "ads-perm--warn" },
+    prompt:      { label: "لم يُطلب بعد",    cls: "ads-perm--warn" },
     unsupported: { label: "غير مدعوم",       cls: "ads-perm--muted" },
   };
   const { label, cls } = MAP[value];
@@ -90,6 +98,16 @@ export default function AdhanSettingsPage() {
   );
 
   const { data: prayerData } = usePrayerCountdown(selectedGovId);
+  const [diagnostics, setDiagnostics] = useState<NotificationDiagnostics | null>(null);
+  const [diagnosticsOpen, setDiagnosticsOpen] = useState(false);
+
+  useEffect(() => {
+    if (!diagnosticsOpen) return;
+    let cancelled = false;
+    computeNotificationDiagnostics(prayerData ?? null).then((d) => { if (!cancelled) setDiagnostics(d); });
+    return () => { cancelled = true; };
+  }, [diagnosticsOpen, prayerData, prefs]);
+
   const sunriseTime =
     prayerData?.prayers.find((p: { key: string }) => p.key === "Sunrise")
       ?.time ?? null;
@@ -187,7 +205,7 @@ export default function AdhanSettingsPage() {
 
           <div className="ads-row">
             <div className="ads-sunrise-inner">
-              <Sunrise size={16} strokeWidth={2} color="#18362A" />
+              <Sunrise size={16} strokeWidth={2} color="#123F36" />
               الشروق
               <span className="ads-sunrise-tag">وقت الكراهة</span>
             </div>
@@ -247,7 +265,7 @@ export default function AdhanSettingsPage() {
               <div className="ads-global-label">تفعيل إشعارات الأذان</div>
               <div className="ads-global-desc">تشغيل الأذان وإرسال تنبيه عند كل وقت صلاة</div>
             </div>
-            <Toggle checked={prefs.globalEnabled} onChange={toggleGlobal} id="global-toggle" />
+            <Toggle checked={prefs.globalEnabled} onChange={toggleGlobal} id="global-toggle" label="تفعيل إشعارات الأذان" />
           </div>
 
           {!prefs.globalEnabled && (
@@ -273,7 +291,7 @@ export default function AdhanSettingsPage() {
                     {(() => { const I = PRAYER_ICON_MAP[PRAYER_ICON[key]] ?? Moon; return <I size={16} className="ads-prayer-icon" />; })()}
                     <span className="ads-prayer-name">{PRAYER_ARABIC[key]}</span>
                   </div>
-                  <Toggle checked={p.enabled} onChange={(v) => togglePrayer(key, v)} />
+                  <Toggle checked={p.enabled} onChange={(v) => togglePrayer(key, v)} label={`تفعيل أذان ${PRAYER_ARABIC[key]}`} />
                 </div>
 
                 {p.enabled && (
@@ -324,6 +342,8 @@ export default function AdhanSettingsPage() {
         </div>
       </div>
 
+      <PrayerAlertSettingsCard />
+
       {/* ══ تذكير يوم الجمعة ══ */}
       <div className="ads-card">
         <div className="ads-card__head">
@@ -347,6 +367,7 @@ export default function AdhanSettingsPage() {
                 if (v) undismissFridayBanner();
               }}
               id="friday-banner-toggle"
+              label="عرض إعلان ليلة الجمعة ويومها"
             />
           </div>
           <p className="ads-adhan-desc">
@@ -376,6 +397,54 @@ export default function AdhanSettingsPage() {
             <LocationPermBadge />
           </div>
         </div>
+      </div>
+
+      {/* ══ تشخيص: لماذا لا تصلني تنبيهات؟ ══ */}
+      <div className="ads-card">
+        <button
+          type="button"
+          className="ads-row-sep ads-diagnostics-toggle"
+          onClick={() => setDiagnosticsOpen((v) => !v)}
+          aria-expanded={diagnosticsOpen}
+        >
+          <div className="ads-card__head" style={{ margin: 0 }}>
+            <Bell size={15} strokeWidth={2} />
+            <span>لماذا لا تصلني تنبيهات؟</span>
+          </div>
+          <span aria-hidden="true">{diagnosticsOpen ? "▲" : "▼"}</span>
+        </button>
+        {diagnosticsOpen && (
+          <div className="ads-card__body">
+            {!diagnostics ? (
+              <p className="ads-adhan-desc">جارٍ الفحص…</p>
+            ) : (
+              <>
+                <div className="ads-row-sep">
+                  <span className="ads-adhan-desc">الصلاة القادمة</span>
+                  <span>{diagnostics.nextPrayer ? `${diagnostics.nextPrayer.name} — ${diagnostics.nextPrayer.time}` : "—"}</span>
+                </div>
+                <div className="ads-row-sep">
+                  <span className="ads-adhan-desc">تنبيه هذه الصلاة</span>
+                  <span>{diagnostics.nextPrayerEnabled ? "مفعّل ✓" : "معطّل ✕"}</span>
+                </div>
+                {diagnostics.blockingReasons.length === 0 ? (
+                  <p className="ads-adhan-desc" style={{ marginTop: ".5rem" }}>
+                    لا يوجد سبب ظاهر يمنع وصول التنبيهات — كل الإعدادات سليمة.
+                  </p>
+                ) : (
+                  <div style={{ marginTop: ".5rem" }}>
+                    <p className="ads-adhan-desc"><strong>أسباب محتملة لعدم وصول التنبيه:</strong></p>
+                    <ul style={{ margin: ".35rem 0 0", paddingInlineStart: "1.2rem", display: "flex", flexDirection: "column", gap: ".3rem" }}>
+                      {diagnostics.blockingReasons.map((r, i) => (
+                        <li key={i} className="ads-adhan-desc">{r}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        )}
       </div>
 
       {pickerFor && (

@@ -85,6 +85,8 @@ function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => v
   }, [onClose]);
 
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار بديل كامل
+    // بلوحة المفاتيح.
     <div className="cal-modal-backdrop" onClick={onClose} role="presentation">
       <div className="cal-modal ui-card" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="cal-modal-title">
         <h3 id="cal-modal-title">{event.title}</h3>
@@ -187,7 +189,7 @@ export default function CalendarPage() {
       title: "التقويم الإسلامي والدروس | المجلس العلمي",
       description: "تقويم الدروس والمناسبات الإسلامية، عرض شهري وأسبوعي ويومي مع الأحداث والحلقات العلمية.",
       keywords: ["تقويم إسلامي", "مواعيد دروس", "التقويم الهجري", "الأحداث الإسلامية", "جدول الدروس"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "التقويم الإسلامي والدروس", url: "https://majlisilm.com/calendar", about: { "@type": "Thing", name: "التقويم الهجري والمناسبات الإسلامية" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "التقويم الإسلامي والدروس", url: "https://www.majlisilm.com/calendar", about: { "@type": "Thing", name: "التقويم الهجري والمناسبات الإسلامية" } }],
     });
   }, []);
 
@@ -254,7 +256,6 @@ export default function CalendarPage() {
           type="button"
           className="cal-ics-btn"
           onClick={handleIcsExport}
-          title="تحميل التقويم بصيغة ICS"
           aria-label="تحميل دروس الشهر كملف تقويم"
         >
           <Download size={16} aria-hidden="true" />
@@ -369,10 +370,10 @@ export default function CalendarPage() {
       {modalEvent && <EventModal event={modalEvent} onClose={() => setModalEvent(null)} />}
 
       <div className="twh-share">
-        <ShareButtons title="التقويم الهجري والمناسبات الإسلامية — المجلس العلمي" url="https://majlisilm.com/calendar" />
+        <ShareButtons aria-label="التقويم الهجري والمناسبات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/calendar" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="tarikh" title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
+        <SectionQuiz categoryId="tarikh" aria-label="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
       </div>
     </div>
   );

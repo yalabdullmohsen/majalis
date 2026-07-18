@@ -39,7 +39,9 @@ function cdnToHadithItems(hadiths: CdnHadith[], collection: string, sourceName: 
     text: h.text,
     narrator: null,
     source_name: sourceName,
-    grade: "صحيح",
+    // لا درجة من الـCDN: كان يُلصق "صحيح" بكل حديث بلا سند من المصدر.
+    // الدرجة تُعرض فقط إذا جاءت من المصدر نفسه.
+    grade: null,
     collection,
     chapter: (h as any).chapter ?? null,
     explanation: null,
@@ -109,10 +111,13 @@ const GRADE_CLASS: Record<string, string> = {
   ضعيف: "hadith-grade--daif",
 };
 
+/** لا نُلوّن درجة مجهولة بلون الصحيح — الدرجة غير المعروفة تبقى محايدة. */
 function gradeClass(grade: string | null): string {
-  if (!grade) return "hadith-grade--sahih";
-  return GRADE_CLASS[grade.trim()] ?? "hadith-grade--sahih";
+  if (!grade) return "hadith-grade--unknown";
+  return GRADE_CLASS[grade.trim()] ?? "hadith-grade--unknown";
 }
+
+const GRADE_UNKNOWN_LABEL = "الدرجة غير مثبتة في المصدر";
 
 // ─── HadithCard ──────────────────────────────────────────────────────────────
 
@@ -140,7 +145,7 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
   const compRef = h.metadata?.companion as string | undefined;
 
   return (
-    <article
+    <div
       className="hadith-card ui-card"
       onClick={() => onExpand(h)}
       onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onExpand(h)}
@@ -160,8 +165,10 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
             <span className="hadith-badge hadith-badge--num">#{h.hadith_number}</span>
           )}
         </div>
-        {h.grade && (
+        {h.grade ? (
           <span className={`hadith-grade ${gradeClass(h.grade)}`}>{h.grade}</span>
+        ) : (
+          <span className="hadith-grade hadith-grade--unknown">{GRADE_UNKNOWN_LABEL}</span>
         )}
       </header>
 
@@ -201,7 +208,9 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
         </div>
       )}
 
-      {/* Actions */}
+      {/* Actions. onClick لمنع انتشار النقر إلى البطاقة الأم (التي تفتح تفاصيل
+          الحديث عند النقر) — لا إجراء فعلي هنا يحتاج مكافئ لوحة مفاتيح؛ كل
+          الأزرار الفعلية داخل هذا الصف قابلة للوصول بلوحة المفاتيح أصلًا. */}
       <div className="hadith-card__actions" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
@@ -215,7 +224,6 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
         <button
           type="button"
           className="hadith-action-btn"
-          title="نسخ"
           onClick={handleCopy}
           aria-label="نسخ الحديث"
         >
@@ -224,7 +232,6 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
         <button
           type="button"
           className="hadith-action-btn"
-          title="عرض التفاصيل"
           onClick={(e) => { e.stopPropagation(); onExpand(h); }}
           aria-label="عرض التفاصيل"
         >
@@ -232,10 +239,10 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
         </button>
         <ShareButtons
           title={h.title || "حديث نبوي شريف"}
-          url="https://majlisilm.com/hadith"
+          url="https://www.majlisilm.com/hadith"
         />
       </div>
-    </article>
+    </div>
   );
 }
 
@@ -285,8 +292,10 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
             {h.hadith_number && (
               <span className="hadith-badge hadith-badge--num">حديث #{h.hadith_number}</span>
             )}
-            {h.grade && (
+            {h.grade ? (
               <span className={`hadith-grade ${gradeClass(h.grade)}`}>{h.grade}</span>
+            ) : (
+              <span className="hadith-grade hadith-grade--unknown">{GRADE_UNKNOWN_LABEL}</span>
             )}
           </div>
           <button
@@ -331,12 +340,14 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
               <span>{String(meta.takhrij)}</span>
             </div>
           )}
-          {h.grade && (
-            <div className="hadith-modal__meta-item">
-              <strong>درجة الحديث</strong>
+          <div className="hadith-modal__meta-item">
+            <strong>درجة الحديث</strong>
+            {h.grade ? (
               <span className={`hadith-grade ${gradeClass(h.grade)}`}>{h.grade}</span>
-            </div>
-          )}
+            ) : (
+              <span className="hadith-grade hadith-grade--unknown">{GRADE_UNKNOWN_LABEL}</span>
+            )}
+          </div>
           {h.chapter && (
             <div className="hadith-modal__meta-item">
               <strong>الباب</strong>
@@ -533,14 +544,15 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
 
       <div className="hadith-filter-section">
         <p className="hadith-filter-label">المجموعة</p>
-        <div className="content-hub-chips">
+        <div className="content-hub-chips" role="tablist" aria-label="تصفية مجموعة الحديث">
           {collections.map((c) => (
             <button
               key={c}
+              role="tab"
               type="button"
               onClick={() => setActiveCollection(c)}
               className={activeCollection === c ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-              aria-pressed={activeCollection === c}
+              aria-selected={activeCollection === c}
             >
               {c === "الكل" ? "الكل" : collectionLabel(c)}
             </button>
@@ -602,14 +614,15 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
       </div>
 
       {/* Category chips (quick filter on desktop) */}
-      <div className="hadith-quick-cats">
+      <div className="hadith-quick-cats" role="tablist" aria-label="تصفية موضوع الحديث">
         {CATEGORIES.map((cat) => (
           <button
             key={cat.id}
+            role="tab"
             type="button"
             className={`hadith-quick-cat ${activeCategory === cat.id ? "hadith-quick-cat--active" : ""}`}
             onClick={() => setActiveCategory(cat.id)}
-            aria-pressed={activeCategory === cat.id}
+            aria-selected={activeCategory === cat.id}
           >
             {cat.label}
           </button>
@@ -643,7 +656,7 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
         </aside>
       )}
 
-      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
+      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} aria-label="بحث وتصفية">
         {filtersPanel}
       </FilterBottomSheet>
 
@@ -691,9 +704,9 @@ export default function HadithPage() {
           name: "أقسام الأحاديث النبوية",
           numberOfItems: 3,
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: HADITH_CLASS_META.sahih.title, description: HADITH_CLASS_META.sahih.subtitle, url: "https://majlisilm.com/hadith/sahih" },
-            { "@type": "ListItem", position: 2, name: HADITH_CLASS_META.daif.title, description: HADITH_CLASS_META.daif.subtitle, url: "https://majlisilm.com/hadith/daif" },
-            { "@type": "ListItem", position: 3, name: HADITH_CLASS_META.mawdu.title, description: HADITH_CLASS_META.mawdu.subtitle, url: "https://majlisilm.com/hadith/mawdu" },
+            { "@type": "ListItem", position: 1, name: HADITH_CLASS_META.sahih.title, description: HADITH_CLASS_META.sahih.subtitle, url: "https://www.majlisilm.com/hadith/sahih" },
+            { "@type": "ListItem", position: 2, name: HADITH_CLASS_META.daif.title, description: HADITH_CLASS_META.daif.subtitle, url: "https://www.majlisilm.com/hadith/daif" },
+            { "@type": "ListItem", position: 3, name: HADITH_CLASS_META.mawdu.title, description: HADITH_CLASS_META.mawdu.subtitle, url: "https://www.majlisilm.com/hadith/mawdu" },
           ],
         },
       ],
@@ -737,7 +750,7 @@ export default function HadithPage() {
       <div className="px-4 pb-6">
         <SectionQuiz
           categoryId="hadith"
-          title="اختبر معلوماتك في علوم الحديث"
+          aria-label="اختبر معلوماتك في علوم الحديث"
           count={4}
         />
       </div>

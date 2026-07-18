@@ -1,5 +1,6 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useMemo, useState } from "react";
-import { Heart, Star, Users, BookOpen, ChevronDown, ChevronUp } from "lucide-react";
+import { Heart, Star, Users, BookOpen, ChevronDown, ChevronUp, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -194,7 +195,7 @@ const AKHLAQ: AkhlaqEntry[] = [
     practices: ["قل أعوذ بالله من الشيطان عند الغضب", "اجلس إن كنت قائماً", "اصمت حتى يهدأ الغضب", "تذكر أن الأجر على الحلم"],
   },
   {
-    id: "haya",
+    id: "haya-self",
     title: "الحياء",
     category: "مع النفس",
     icon: "🌹",
@@ -418,21 +419,7 @@ const AKHLAQ: AkhlaqEntry[] = [
     practices: ["قل الحق وإن كان مرّاً", "لا تخشَ في الله لومة لائم", "أقدِم على الخير ولا تتردد", "أُسُّ الشجاعة الصبر لا الغضب"],
   },
   {
-    id: "ikhlas",
-    title: "الإخلاص",
-    category: "مع الله",
-    icon: "💎",
-    summary: "الإخلاص هو إفراد الله بالقصد والنية في العبادة والعمل. وهو روح العمل الصالح بدونه يكون العمل هباءً منثوراً.",
-    ayah: "وَمَا أُمِرُوا إِلَّا لِيَعْبُدُوا اللَّهَ مُخْلِصِينَ لَهُ الدِّينَ",
-    ayahRef: "البيّنة: 5",
-    hadith: "إن الله لا ينظر إلى أجسادكم ولا إلى صوركم ولكن ينظر إلى قلوبكم.",
-    hadithSource: "رواه مسلم",
-    scholarQuote: "الإخلاص سرٌّ بين العبد وربِّه لا يعلمه ملكٌ فيكتبه ولا شيطانٌ فيُفسده.",
-    scholarName: "الفضيل بن عياض",
-    practices: ["استحضر نية القربة قبل كل عمل", "لا تبتغِ بعملك المدح والثناء", "تفقَّد نيتك باستمرار فكثيراً ما تتغير", "اعمل السر كما تعمل في العلن"],
-  },
-  {
-    id: "haya",
+    id: "haya-people",
     title: "الحياء",
     category: "مع الناس",
     icon: "🌸",
@@ -558,7 +545,7 @@ const AKHLAQ: AkhlaqEntry[] = [
     practices: ["تلطَّف مع الأطفال وامسح على رؤوسهم", "ارحم الضعفاء والمرضى وزُر العليل", "ارفق بالحيوان ولا تُؤذه", "أفِض الرحمة على أهل بيتك يومياً"],
   },
   {
-    id: "haya",
+    id: "haya-allah",
     title: "الحياء",
     category: "مع الله",
     icon: "🌸",
@@ -628,7 +615,7 @@ const AKHLAQ: AkhlaqEntry[] = [
     practices: ["خصص دقائق قبل النوم لمراجعة يومك مع الله", "اسأل نفسك: ما الذي قدَّمته لآخرتي اليوم؟", "سجِّل تقدُّمك في العبادة والأخلاق أسبوعياً", "لا تنام على معصية دون استغفار وعزم على الإصلاح"],
   },
   {
-    id: "zuhd",
+    id: "zuhd-self",
     title: "الزهد وعدم التعلق بالدنيا",
     category: "مع النفس",
     icon: "🌱",
@@ -670,7 +657,7 @@ const AKHLAQ: AkhlaqEntry[] = [
     practices: ["لا تمش بالنميمة بين الناس فتُفسد ما أُصلح", "إذا علمت بخلاف بين إخوة فبادر بالإصلاح وإن لم تُكلَّف", "اسمع من الطرفين دون محاباة", "أوجد نقاط المشترك وابدأ منها في الجمع بين المتخاصمين"],
   },
   {
-    id: "sabr",
+    id: "sabr-self",
     title: "الصبر وعدم الجزع",
     category: "مع النفس",
     icon: "⏳",
@@ -698,7 +685,7 @@ const AKHLAQ: AkhlaqEntry[] = [
     practices: ["قُل عند كل أمر: حسبي الله ونعم الوكيل", "خُذ بالأسباب الممكنة ثم دع القلق وفوِّض لله", "كرِّر في يومك: لا حول ولا قوة إلا بالله", "استعِن بالله أولاً ولا تعتمد على نفسك أو الناس وحدهم"],
   },
   {
-    id: "shajaa",
+    id: "shajaa-self",
     title: "الشجاعة وقول الحق",
     category: "مع النفس",
     icon: "🦁",
@@ -867,7 +854,7 @@ const AKHLAQ: AkhlaqEntry[] = [
     practices: ["كن وسيطاً أميناً لا تنحاز لطرف على الآخر", "اسمع كلا الطرفين قبل الحكم", "ذكّر المتخاصمين بفضل العفو والصفح", "لا تنقل كلام أحد للآخر إلا ما يُصلح"],
   },
   {
-    id: "ithar",
+    id: "ithar-society",
     title: "الإيثار",
     category: "في المجتمع",
     icon: "🌱",
@@ -911,7 +898,7 @@ const AKHLAQ: AkhlaqEntry[] = [
   },
   /* ─── مع الله — إضافي ─── */
   {
-    id: "tawakkul",
+    id: "tawakkul-allah",
     title: "التوكل على الله",
     category: "مع الله",
     icon: "🤲",
@@ -1113,15 +1100,52 @@ const AKHLAQ: AkhlaqEntry[] = [
 ];
 
 
+/* ─── خُلُق اليوم ─── */
+function todaysAkhlaq(): AkhlaqEntry {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return AKHLAQ[(dayOfYear - 1 + AKHLAQ.length) % AKHLAQ.length];
+}
+
+function AkhlaqOfDayCard({ entry }: { entry: AkhlaqEntry }) {
+  return (
+    <div className="klod-card">
+      <div className="klod-card__badge"><Sparkles size={11} aria-hidden="true" /> خُلُق اليوم</div>
+      <div className="klod-card__cat">
+        <SectionIcon name={entry.icon} size={15} />
+        {entry.category}
+      </div>
+      <h2 className="klod-card__title">{entry.title}</h2>
+      <p className="klod-card__summary">{entry.summary}</p>
+      <div className="klod-card__ayah">
+        <span className="klod-card__ayah-text">﴿{entry.ayah}﴾</span>
+        <span className="klod-card__ayah-ref">{entry.ayahRef}</span>
+      </div>
+      <blockquote className="klod-card__hadith">«{entry.hadith}»<footer>{entry.hadithSource}</footer></blockquote>
+      <div className="klod-card__scholar">
+        <span className="klod-card__scholar-quote">"{entry.scholarQuote}"</span>
+        <span className="klod-card__scholar-name">— {entry.scholarName}</span>
+      </div>
+      {entry.practices.length > 0 && (
+        <ul className="klod-card__practices">
+          {entry.practices.slice(0, 3).map(p => <li key={p}>{p}</li>)}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 export default function AkhlaqPage() {
   const [category, setCategory] = useState("الكل");
   const [expanded, setExpanded] = useState<string | null>(null);
   const [search, setSearch] = useState("");
+  const todayAkhlaq = useMemo(() => todaysAkhlaq(), []);
 
   useEffect(() => {
     applyPageSeo({
       path: "/akhlaq",
-      title: "الأخلاق الإسلامية، القيم والآداب | مجالس",
+      title: "الأخلاق الإسلامية، القيم والآداب | المجلس العلمي",
       description: "موسوعة الأخلاق الإسلامية: التواضع، الصدق، الأمانة، الصبر، الكرم، مع الآيات والأحاديث وأقوال العلماء.",
       keywords: ["أخلاق إسلامية", "قيم", "آداب", "تواضع", "صدق", "أمانة", "صبر"],
       jsonLd: [
@@ -1135,7 +1159,7 @@ export default function AkhlaqPage() {
             "@type": "ListItem",
             position: i + 1,
             name: a.title,
-            url: `https://majlisilm.com/akhlaq#${a.id}`,
+            url: `https://www.majlisilm.com/akhlaq#${a.id}`,
           })),
         },
       ],
@@ -1171,6 +1195,9 @@ export default function AkhlaqPage() {
         </div>
       </div>
 
+      {/* ═══ خُلُق اليوم ═══ */}
+      <AkhlaqOfDayCard entry={todayAkhlaq} />
+
       {/* ═══ فلاتر وبحث ═══ */}
       <div className="akl-controls">
         <input
@@ -1180,14 +1207,15 @@ export default function AkhlaqPage() {
           placeholder="ابحث في الأخلاق..."
           aria-label="بحث"
         />
-        <div className="akl-cats">
+        <div className="akl-cats" role="tablist" aria-label="تصفية الأخلاق">
           {CATEGORIES.map((c) => (
             <button
               key={c}
+              role="tab"
               type="button"
               className={`akl-cat${category === c ? " akl-cat--active" : ""}`}
               onClick={() => setCategory(c)}
-              aria-pressed={category === c}
+              aria-selected={category === c}
             >
               {c}
             </button>
@@ -1207,7 +1235,7 @@ export default function AkhlaqPage() {
                 onClick={() => toggle(a.id)}
                 aria-expanded={open}
               >
-                <span className="akl-card__icon" aria-hidden="true">{a.icon}</span>
+                <span className="akl-card__icon" aria-hidden="true"><SectionIcon name={a.icon} size={24} /></span>
                 <div className="akl-card__title-wrap">
                   <h2 className="akl-card__title">{a.title}</h2>
                   <span className="akl-card__cat">{a.category}</span>
@@ -1273,7 +1301,7 @@ export default function AkhlaqPage() {
       />
 
       <div className="twh-share">
-        <ShareButtons title="الأخلاق الإسلامية — المجلس العلمي" url="https://majlisilm.com/akhlaq" />
+        <ShareButtons title="الأخلاق الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/akhlaq" />
       </div>
 
       {/* روابط ذات صلة */}

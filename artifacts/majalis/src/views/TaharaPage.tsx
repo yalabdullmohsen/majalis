@@ -1,8 +1,10 @@
 import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 
 
 type TaharaTab = "wudu" | "ghusl" | "tayammum" | "najasat";
@@ -155,13 +157,19 @@ export default function TaharaPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${w.num}: ${w.title} — ${w.desc}`,
-            url: `https://majlisilm.com/tahara#wudu-fardh-${i + 1}`,
+            url: `https://www.majlisilm.com/tahara#wudu-fardh-${i + 1}`,
           })),
         },
       ],
     });
   }, []);
 
+  const todayFardh = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return WUDU_FARDH[(day - 1 + WUDU_FARDH.length) % WUDU_FARDH.length];
+  }, []);
   const [tab, setTab] = useState<TaharaTab>("wudu");
   const [search, setSearch] = useState("");
   const filteredWuduNawaqidh = useMemo(() =>
@@ -198,21 +206,33 @@ export default function TaharaPage() {
           <cite className="th-ayah__ref">البقرة: 222</cite>
         </div>
 
-        <nav className="th-tabs" aria-label="أقسام الطهارة">
+        <div className="th-tabs" aria-label="أقسام الطهارة" role="tablist">
           {TABS.map((t) => (
             <button
               key={t.id}
+              id={`thr-tab-${t.id}`}
               type="button"
+              role="tab"
               className={`th-tab${tab === t.id ? " th-tab--active" : ""}`}
               onClick={() => setTab(t.id)}
-              aria-pressed={tab === t.id}
+              aria-selected={tab === t.id}
+              aria-controls={`thr-panel-${t.id}`}
             >
-              <span className="th-tab__icon">{t.icon}</span>
+              <span className="th-tab__icon"><SectionIcon name={t.icon} size={24} /></span>
               <span className="th-tab__label">{t.label}</span>
             </button>
           ))}
-        </nav>
+        </div>
       </section>
+
+      {/* فرض الوضوء اليوم */}
+      <div className="thod-card">
+        <div className="thod-card__badge"><Sparkles size={11} aria-hidden="true" /> فرض الوضوء اليوم</div>
+        <span className="thod-card__icon"><SectionIcon name={todayFardh.icon} size={26} /></span>
+        <div className="thod-card__num">الفرض {todayFardh.num}</div>
+        <h2 className="thod-card__title">{todayFardh.title}</h2>
+        <p className="thod-card__desc">{todayFardh.desc}</p>
+      </div>
 
       <div className="th-body">
         <div className="th-search-wrap">
@@ -228,14 +248,14 @@ export default function TaharaPage() {
 
         {/* ── الوضوء ── */}
         {tab === "wudu" && (
-          <section className="th-section">
+          <section role="tabpanel" id="thr-panel-wudu" aria-labelledby="thr-tab-wudu" className="th-section">
             <h2 className="th-section__title">فرائض الوضوء</h2>
             <div className="th-fardh-grid">
               {WUDU_FARDH.map((f) => (
                 <div key={f.num} className="th-fardh-card">
                   <div className="th-fardh-card__head">
                     <span className="th-fardh-card__num">{f.num}</span>
-                    <span className="th-fardh-card__icon">{f.icon}</span>
+                    <span className="th-fardh-card__icon"><SectionIcon name={f.icon} size={24} /></span>
                     <strong className="th-fardh-card__title">{f.title}</strong>
                   </div>
                   <p className="th-fardh-card__desc">{f.desc}</p>
@@ -254,7 +274,7 @@ export default function TaharaPage() {
             <div className="th-nawaqidh-grid">
               {filteredWuduNawaqidh.map((n) => (
                 <div key={n.title} className="th-naqidh-card">
-                  <span className="th-naqidh-card__icon">{n.icon}</span>
+                  <span className="th-naqidh-card__icon"><SectionIcon name={n.icon} size={24} /></span>
                   <div>
                     <strong className="th-naqidh-card__title">{n.title}</strong>
                     <p className="th-naqidh-card__desc">{n.desc}</p>
@@ -275,12 +295,12 @@ export default function TaharaPage() {
 
         {/* ── الغسل ── */}
         {tab === "ghusl" && (
-          <section className="th-section">
+          <section role="tabpanel" id="thr-panel-ghusl" aria-labelledby="thr-tab-ghusl" className="th-section">
             <h2 className="th-section__title">موجبات الغسل</h2>
             <div className="th-mujibat-grid">
               {filteredGhusulMujibat.map((m) => (
                 <div key={m.title} className="th-mujib-card">
-                  <span className="th-mujib-card__icon">{m.icon}</span>
+                  <span className="th-mujib-card__icon"><SectionIcon name={m.icon} size={24} /></span>
                   <div>
                     <strong className="th-mujib-card__title">{m.title}</strong>
                     <p className="th-mujib-card__desc">{m.desc}</p>
@@ -293,7 +313,7 @@ export default function TaharaPage() {
             <div className="th-faraidh-grid">
               {GHUSL_FARAIDH.map((f) => (
                 <div key={f.title} className="th-faridh-card">
-                  <span className="th-faridh-card__icon">{f.icon}</span>
+                  <span className="th-faridh-card__icon"><SectionIcon name={f.icon} size={24} /></span>
                   <div>
                     <strong className="th-faridh-card__title">{f.title}</strong>
                     <p className="th-faridh-card__desc">{f.desc}</p>
@@ -324,7 +344,7 @@ export default function TaharaPage() {
 
         {/* ── التيمم ── */}
         {tab === "tayammum" && (
-          <section className="th-section">
+          <section role="tabpanel" id="thr-panel-tayammum" aria-labelledby="thr-tab-tayammum" className="th-section">
             <div className="th-ayah th-ayah--body">
               <p className="th-ayah__text">
                 وَإِن كُنتُم مَّرْضَىٰ أَوْ عَلَىٰ سَفَرٍ أَوْ جَاءَ أَحَدٌ مِّنكُم مِّنَ الْغَائِطِ
@@ -337,7 +357,7 @@ export default function TaharaPage() {
             <div className="th-ibaha-grid">
               {filteredTayammumIbaha.map((item) => (
                 <div key={item.title} className="th-ibaha-card">
-                  <span className="th-ibaha-card__icon">{item.icon}</span>
+                  <span className="th-ibaha-card__icon"><SectionIcon name={item.icon} size={24} /></span>
                   <div>
                     <strong className="th-ibaha-card__title">{item.title}</strong>
                     <p className="th-ibaha-card__desc">{item.desc}</p>
@@ -371,7 +391,7 @@ export default function TaharaPage() {
 
         {/* ── النجاسات ── */}
         {tab === "najasat" && (
-          <section className="th-section">
+          <section role="tabpanel" id="thr-panel-najasat" aria-labelledby="thr-tab-najasat" className="th-section">
             <p className="th-section__intro">
               النجاسة: كل عين حكم الشارع بنجاستها. إزالتها شرط لصحة الصلاة.
             </p>
@@ -382,7 +402,7 @@ export default function TaharaPage() {
                 </h2>
                 {group.items.map((item) => (
                   <div key={item.title} className="th-naj-card">
-                    <span className="th-naj-card__icon">{item.icon}</span>
+                    <span className="th-naj-card__icon"><SectionIcon name={item.icon} size={24} /></span>
                     <div>
                       <strong className="th-naj-card__title">{item.title}</strong>
                       <p className="th-naj-card__desc">{item.desc}</p>
@@ -409,7 +429,7 @@ export default function TaharaPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="الطهارة وأحكامها — المجلس العلمي" url="https://majlisilm.com/tahara" />
+          <ShareButtons title="الطهارة وأحكامها — المجلس العلمي" url="https://www.majlisilm.com/tahara" />
         </div>
 
         {/* related */}

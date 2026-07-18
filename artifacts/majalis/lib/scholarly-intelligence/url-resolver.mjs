@@ -79,7 +79,7 @@ export function resolveContentUrl(item) {
     case "sheikhs":
       return "/lessons";
     case "quran":
-      return "/quran";
+      return "/quran-hub";
     case "hadith":
       return "/arbaeen-nawawi";
     case "article":

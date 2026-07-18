@@ -84,14 +84,17 @@ export function ResearchAnswer({ result, onSave }: Props) {
       </div>
 
       {/* تبويبات */}
-      <div className="ra-tabs-bar">
+      <div className="ra-tabs-bar" role="tablist" aria-label="أقسام نتائج البحث">
         {visibleTabs.map((t) => (
           <button
             key={t.key}
+            id={`ra-tab-${t.key}`}
+            role="tab"
             type="button"
             onClick={() => setActiveTab(t.key)}
             className={`ra-tab${activeTab === t.key ? " ra-tab--active" : ""}`}
-            aria-pressed={activeTab === t.key}
+            aria-selected={activeTab === t.key}
+              aria-controls={`ra-panel-${t.key}`}
           >
             {t.label}
             {t.key !== "answer" && t.key !== "opinions" && t.types && (
@@ -108,7 +111,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
 
         {/* تبويب الجواب */}
         {activeTab === "answer" && (
-          <div className="space-y-4">
+          <div role="tabpanel" id="ra-panel-answer" aria-labelledby="ra-tab-answer" className="space-y-4">
             <div className="ra-answer-box">
               <AnswerText text={result.answer} />
             </div>
@@ -158,7 +161,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
 
         {/* تبويب آراء متعددة */}
         {activeTab === "opinions" && (
-          <div className="space-y-3">
+          <div role="tabpanel" id="ra-panel-opinions" aria-labelledby="ra-tab-opinions" className="space-y-3">
             <div className="ra-opinions-note">
               <Scale size={13} className="inline ml-1" />تعدّدت آراء العلماء في هذه المسألة. يعرض النظام الأقوال بمصادرها ولا يُرجِّح بنفسه.
             </div>

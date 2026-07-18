@@ -21,7 +21,7 @@ export const PROGRESS_TASKS: ProgressTask[] = [
   { id: "evening-adhkar", label: "أذكار المساء", href: "/adhkar?cat=evening", target: 1 },
   { id: "nawafil", label: "النوافل", href: "/adhkar?cat=salah", target: 1 },
   { id: "tasbih", label: "التسبيح", href: "/tasbih", target: 100 },
-  { id: "quran", label: "قراءة القرآن", href: "/quran", target: 1 },
+  { id: "quran", label: "قراءة القرآن", href: "/quran-hub", target: 1 },
 ];
 
 type DayProgress = Record<ProgressTaskId, number>;

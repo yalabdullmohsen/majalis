@@ -1,0 +1,19 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["5D8TX37HTS.com.yousef.majlisilm"],
+        "appID": "5D8TX37HTS.com.yousef.majlisilm",
+        "components": [
+          { "/": "/admin", "exclude": true },
+          { "/": "/admin/*", "exclude": true },
+          { "/": "/api/*", "exclude": true },
+          { "/": "/.well-known/*", "exclude": true },
+          { "/": "/auth/*", "exclude": true },
+          { "/": "*" }
+        ]
+      }
+    ]
+  }
+}

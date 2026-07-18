@@ -56,6 +56,17 @@ export async function signOut() {
   return await supabase.auth.signOut();
 }
 
+/**
+ * مزوّد Google غير مُفعَّل حاليًا في إعدادات Supabase Auth (لوحة التحكم →
+ * Authentication → Providers → Google) — تحقّق حي (2026-07-17): الضغط على
+ * الزر يُعيد فعليًا "Unsupported provider: provider is not enabled" من
+ * Supabase مباشرة. هذا إعداد لوحة تحكم لا كود، ويحتاج Client ID/Secret من
+ * Google Cloud Console (URI الإعادة المُعتمَد: <مشروع Supabase>/auth/v1/callback)
+ * لا أملك صلاحية الوصول لهما. الزر مخفي في LoginPage/RegisterPage حتى
+ * يُفعَّل — أعد GOOGLE_OAUTH_ENABLED إلى true فور تفعيله من لوحة التحكم.
+ */
+export const GOOGLE_OAUTH_ENABLED = false;
+
 export async function signInWithGoogle(redirectTo?: string) {
   const redirect = redirectTo || `${window.location.origin}/auth/callback`;
   return await supabase.auth.signInWithOAuth({
@@ -74,13 +85,23 @@ export async function getCurrentUser() {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return null;
 
-    let profile;
-    const { data: initialProfile, error: profileError } = await supabase
-      .from("profiles").select("*").eq("id", user.id).single();
-    profile = initialProfile;
+    // profiles وgovernance_user_roles لا يعتمد أحدهما على الآخر (كلاهما
+    // يحتاج user.id فقط) — كانا يُنتظران بالتتابع فيتراكم زمن الشبكة
+    // (رُصد فعليًا: getCurrentUser يصل أحيانًا 9-11 ثانية). التوازي هنا
+    // يقصّ أسوأ حالة تقريبًا للنصف دون أي تغيير في RLS/الصلاحيات.
+    const [profileResult, governanceResult] = await Promise.all([
+      supabase.from("profiles").select("*").eq("id", user.id).single(),
+      supabase
+        .from("governance_user_roles")
+        .select("role_id")
+        .eq("user_id", user.id)
+        .maybeSingle()
+        .then((r) => r, () => ({ data: null, error: null })), // RLS قد تمنع حتى تُطبَّق migration
+    ]);
 
-    if (profileError) {
-      logSupabaseError("getCurrentUser.profile", profileError);
+    let profile = profileResult.data;
+    if (profileResult.error) {
+      logSupabaseError("getCurrentUser.profile", profileResult.error);
     }
 
     if (!profile) {
@@ -103,17 +124,7 @@ export async function getCurrentUser() {
       user: "read_only",
     };
 
-    let governanceRole: string | undefined;
-    try {
-      const { data: govRow } = await supabase
-        .from("governance_user_roles")
-        .select("role_id")
-        .eq("user_id", user.id)
-        .maybeSingle();
-      if (govRow?.role_id) governanceRole = govRow.role_id;
-    } catch {
-      /* RLS may block until migration — fall back to legacy map */
-    }
+    const governanceRole: string | undefined = governanceResult.data?.role_id || undefined;
 
     const resolvedGovernanceRole = governanceRole || LEGACY_MAP[profile?.role || "user"] || "read_only";
     const ownerAccess = hasUnrestrictedAdminAccess({
@@ -146,7 +157,9 @@ export async function getSheikhs() {
   const { DEMO_SHEIKHS } = await loadSeedData();
   return safeSupabaseQuery(
     "getSheikhs",
-    () => supabase.from("sheikhs").select("*").order("name"),
+    // حدّ أمان ضد نموّ الجدول — المستدعون يحتاجون القائمة كاملة (بحث بالاسم/عرض)
+    // والعدد الحالي ~١٠٥، فالحدّ لا يقتطع شيئًا اليوم.
+    () => supabase.from("sheikhs").select("*").order("name").limit(300),
     DEMO_SHEIKHS,
   );
 }
@@ -366,14 +379,23 @@ export async function getApprovedFawaid() {
   const { DEMO_FAWAID } = await loadSeedData();
   return safeSupabaseQuery(
     "getApprovedFawaid",
-    () => supabase.from("fawaid").select("*").eq("status", "approved").order("created_at", { ascending: false }),
+    // FawaidPage تُصفّي بالفئة وتبحث محليًا في القائمة كاملة، لذا حدّ ١٠٠ كان
+    // ليُخفي ~٨٠٪ من الفوائد (البذرة وحدها ٥١٠). الحدّ هنا حارس ضد الجموح فقط.
+    // الإصلاح الجذري = ترقيم صفحات من الخادم داخل FawaidPage.
+    () => supabase.from("fawaid").select("*").eq("status", "approved").order("created_at", { ascending: false }).limit(1000),
     DEMO_FAWAID,
   );
 }
 
 export async function getVerifiedHadith(options: { limit?: number; collection?: string; chapter?: string; authenticityClass?: "sahih" | "daif" | "mawdu" } = {}) {
+  // مفتاح فريد يشمل كل معاملات الفلترة: RequestManager يُوحِّد (dedupe) الطلبات
+  // المتزامنة بنفس المفتاح — نطاق ثابت هنا كان يجعل نداءات getVerifiedHadith
+  // المتزامنة بفلاتر مختلفة (كما في HadithIndexPage: sahih/daif/mawdu معًا عبر
+  // Promise.all) تتشارك نتيجة أول نداء فقط، فتعرض صفحة فهرس الأحاديث نفس
+  // العدد (والنتائج) للأقسام الثلاثة كلها (عطل حقيقي، 2026-07-17).
+  const scope = `getVerifiedHadith:${options.authenticityClass ?? "any"}:${options.collection ?? ""}:${options.chapter ?? ""}:${options.limit ?? 500}`;
   return safeSupabaseQuery(
-    "getVerifiedHadith",
+    scope,
     () => {
       let q = supabase
         .from("verified_hadith_items")
@@ -392,8 +414,10 @@ export async function getVerifiedHadith(options: { limit?: number; collection?: 
 }
 
 export async function getAkpStories(options: { limit?: number; category?: string } = {}) {
+  // نفس إصلاح getVerifiedHadith أعلاه: مفتاح يشمل الفلاتر لتفادي تصادم
+  // dedupe عند نداءات متزامنة بفئات مختلفة.
   return safeSupabaseQuery(
-    "getAkpStories",
+    `getAkpStories:${options.category ?? "any"}:${options.limit ?? 100}`,
     () => {
       let q = supabase
         .from("akp_stories")
@@ -418,7 +442,8 @@ export async function getPendingFawaid() {
   const { data } = await supabase
     .from("fawaid").select("*")
     .eq("status", "pending")
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .limit(100);
   return data || [];
 }
 
@@ -457,10 +482,16 @@ export async function getLibrary({ type, category }: { type?: string; category?:
   }
 }
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 export async function getLibraryItemById(id: string) {
   if (!id) return { data: null, error: null };
 
-  if (isConfigured) {
+  // library_items.id عمود uuid — كتب الفهرس الثابت (library-catalog.ts) تستخدم
+  // slugs نصية مثل "book-bukhari" لا UUID، فالاستعلام يفشل دائمًا بـ400 (نوع
+  // بيانات غير صالح) لكل كتاب ثابت. تخطّي الاستعلام كليًا لهذه الحالة يزيل طلب
+  // شبكة وضجيج طرفية مضمونَي الفشل، ويحافظ على نفس سلوك السقوط لمصدر الفهرس.
+  if (isConfigured && UUID_RE.test(id)) {
     try {
       const { data, error } = await supabase
         .from("library_items")
@@ -511,36 +542,51 @@ export async function getMyAchievements(userId: string) {
   const { data } = await supabase
     .from("achievements").select("*")
     .eq("user_id", userId)
-    .order("earned_at", { ascending: false });
+    .order("earned_at", { ascending: false })
+    .limit(100);
   return data || [];
 }
 
 // ─── Admin CRUD ────────────────────────────────────────────────────────────────
 
 export async function adminGetStats() {
-  const [sheikhs, lessonsRes, library, miracles, fawaidTotal, pendingFawaid, qa, quizPublished] = await Promise.all([
+  // كل الأرقام تُحسب عبر count/head — بلا جلب صفوف الجداول كاملة.
+  const [
+    sheikhs,
+    lessonsTotal,
+    lessonsApproved,
+    lessonsPending,
+    library,
+    miracles,
+    fawaidTotal,
+    pendingFawaid,
+    qaTotal,
+    qaPublished,
+    quizPublished,
+  ] = await Promise.all([
     supabase.from("sheikhs").select("*", { count: "exact", head: true }),
-    supabase.from("lessons").select("status"),
+    supabase.from("lessons").select("*", { count: "exact", head: true }),
+    supabase.from("lessons").select("*", { count: "exact", head: true }).eq("status", "approved"),
+    supabase.from("lessons").select("*", { count: "exact", head: true }).eq("status", "pending"),
     supabase.from("library_items").select("*", { count: "exact", head: true }),
     supabase.from("scientific_miracles").select("*", { count: "exact", head: true }),
     supabase.from("fawaid").select("*", { count: "exact", head: true }),
     supabase.from("fawaid").select("*", { count: "exact", head: true }).eq("status", "pending"),
-    supabase.from("qa_questions").select("status"),
-    supabase.from("quiz_questions").select("*", { count: "exact", head: true }).eq("status", "published"),
+    supabase.from("qa_questions").select("*", { count: "exact", head: true }),
+    supabase.from("qa_questions").select("*", { count: "exact", head: true }).eq("status", "published"),
+    supabase.from("quiz_questions").select("*", { count: "exact", head: true }).eq("is_published", true),
   ]);
-  const lessons = lessonsRes.data || [];
-  const qaRows = qa.data || [];
   return {
     sheikhsCount: sheikhs.count ?? 0,
-    lessonsTotal: lessons.length,
-    lessonsApproved: lessons.filter((l: any) => l.status === "approved").length,
-    lessonsPending: lessons.filter((l: any) => l.status === "pending").length,
+    lessonsTotal: lessonsTotal.count ?? 0,
+    lessonsApproved: lessonsApproved.count ?? 0,
+    lessonsPending: lessonsPending.count ?? 0,
     libraryCount: library.count ?? 0,
     miraclesCount: miracles.count ?? 0,
     fawaidTotal: fawaidTotal.count ?? 0,
     pendingFawaidCount: pendingFawaid.count ?? 0,
-    qaTotal: qaRows.length,
-    qaPublished: qaRows.filter((q: any) => q.status === "published").length,
+    qaTotal: qaTotal.count ?? 0,
+    qaPublished: qaPublished.count ?? 0,
     quizCount: quizPublished.count ?? 0,
   };
 }
@@ -1042,8 +1088,8 @@ export async function getQuizQuestions({ section, level }: { section?: string; l
   try {
     let q = supabase
       .from("quiz_questions")
-      .select("id, section, category, level, difficulty, question, answer, correct_answer, hint, is_used, status")
-      .eq("status", "published")
+      .select("id, section, category, level, question, answer, hint, is_used, is_published")
+      .eq("is_published", true)
       .or("is_used.is.null,is_used.eq.false")
       .order("created_at", { ascending: false });
     if (section && section !== "الكل") q = q.eq("section", section);
@@ -1076,10 +1122,10 @@ export async function adminDeleteQuizQuestion(id: string) {
   return await supabase.from("quiz_questions").delete().eq("id", id);
 }
 
-export async function adminSetQuizQuestionStatus(id: string, status: string) {
+export async function adminSetQuizQuestionStatus(id: string, isPublished: boolean) {
   return await supabase
     .from("quiz_questions")
-    .update({ status, updated_at: new Date().toISOString() })
+    .update({ is_published: isPublished, updated_at: new Date().toISOString() })
     .eq("id", id);
 }
 
@@ -1090,24 +1136,27 @@ export async function upsertQuizSeedToDb(): Promise<{ ok: boolean; synced: numbe
   const rows = DEMO_QUIZ_QUESTIONS.filter((q: any) => q.status !== "draft").map((q: any) => ({
     section: q.section,
     category: q.category || q.section,
-    // map Arabic level names → English stored in DB
-    level: q.level === "سهل" ? "beginner" : q.level === "متوسط" ? "intermediate" : q.level === "صعب" ? "advanced" : q.level,
+    // اكتُشف 2026-07-18: quiz_questions.level مقيَّد بـCHECK constraint حي
+    // يقبل فقط 'أساسي'|'متوسط'|'متقدم'|'صعب' (عربي) — الترميز السابق هنا
+    // ('beginner'/'intermediate'/'advanced') كان يُسقِط أي مزامنة فوراً
+    // بمخالفة القيد، وهو السبب الفعلي وراء بقاء الجدول الحي عند 15 صفاً
+    // اختبارياً قديماً فقط رغم نمو quiz-seed.ts إلى 943 عبر جلسات كثيرة
+    // (أُصلح الانحراف يدوياً عبر supabase/quiz_questions_widen_section_
+    // constraint_v1.sql + scripts/gen-quiz-sync-sql.mjs، لكن هذا الإصلاح
+    // هنا ضروري كي يعمل الزر الإداري بشكل صحيح لأي إضافة مستقبلية).
+    level: q.level === "سهل" ? "أساسي" : q.level,
     question: q.question,
-    answer: q.answer,          // column added by migration
-    correct_answer: q.answer,  // keep legacy column in sync
-    status: "published",
+    answer: q.answer,
+    is_published: true,
     is_used: false,
   }));
   try {
-    // insert-only: skip duplicates (question+section may not be unique constraint; use DO NOTHING)
-    const { error } = await supabase.from("quiz_questions").insert(rows);
-    if (error) {
-      // If column doesn't exist yet, surface a clear message
-      if (error.message?.includes("column") || error.code === "42703") {
-        return { ok: false, synced: 0, error: "يجب تشغيل ملف fixes_data_pipeline_complete.sql في Supabase أولاً لإضافة الأعمدة المطلوبة." };
-      }
-      throw error;
-    }
+    // upsert بدل insert: يتخطى تكرار question (قيد UNIQUE حي على العمود)
+    // بدل فشل الدفعة كاملةً عند أول تعارض — يطابق النية الموثَّقة أصلاً.
+    const { error } = await supabase
+      .from("quiz_questions")
+      .upsert(rows, { onConflict: "question", ignoreDuplicates: true });
+    if (error) throw error;
     return { ok: true, synced: rows.length };
   } catch (err) {
     logSupabaseError("upsertQuizSeedToDb", err);
@@ -1144,7 +1193,6 @@ export type SearchResults = {
   fawaid: any[];
   adhkar: any[];
   fiqh_decisions?: any[];
-  fatwas?: any[];
   rulings?: any[];
   courses?: any[];
   updates?: any[];
@@ -1163,7 +1211,6 @@ const EMPTY_SEARCH: SearchResults = {
   fawaid: [],
   adhkar: [],
   fiqh_decisions: [],
-  fatwas: [],
   rulings: [],
   courses: [],
   updates: [],
@@ -1180,17 +1227,46 @@ function mergeUniqueById<T extends { id: string }>(rows: T[]): T[] {
   });
 }
 
-async function searchLessonsFallback(term: string) {
+/**
+ * أعمدة قاعدة البيانات مخزَّنة بنصّها الأصلي (غير مطبَّعة)، بينما استعلام المستخدم
+ * قد يصل مطبَّعًا («الصلاه» بدل «الصلاة»). لذلك كل بحث ilike يجب أن يمرّ عبر
+ * arabicSearchPatterns() التي توسّع صيغ الهمزات/التاء المربوطة/الألف المقصورة
+ * والمرادفات — استعمال ilikePattern(term) الخام يُرجع صفر نتائج.
+ *
+ * توسعة الأنماط قد تُنتج عشرات الصيغ لعبارة متعددة الكلمات، لذا تُجمَّع في دفعات
+ * ضمن شرط or() واحد بدل استعلام مستقل لكل نمط (عدد الطلبات ينخفض ~10×،
+ * ويبقى طول الـURL بعيدًا عن حدود PostgREST).
+ */
+const PATTERNS_PER_QUERY = 10;
+
+function searchPatternChunks(term: string): string[][] {
   const patterns = arabicSearchPatterns(term);
-  const queries = patterns.map((p) => {
-    const like = ilikePattern(p);
-    return supabase
+  const chunks: string[][] = [];
+  for (let i = 0; i < patterns.length; i += PATTERNS_PER_QUERY) {
+    chunks.push(patterns.slice(i, i + PATTERNS_PER_QUERY));
+  }
+  return chunks;
+}
+
+/** يبني شرط `or()` واحدًا: كل نمط × كل عمود. */
+function orIlikeFilter(columns: string[], patterns: string[]): string {
+  return patterns
+    .flatMap((p) => {
+      const like = ilikePattern(p);
+      return columns.map((column) => `${column}.ilike.${like}`);
+    })
+    .join(",");
+}
+
+async function searchLessonsFallback(term: string) {
+  const queries = searchPatternChunks(term).map((chunk) =>
+    supabase
       .from("lessons")
       .select(`id, title, category, description, mosque, schedule, ${SHEIKH_EMBED_MIN}`)
       .eq("status", "approved")
-      .or(`title.ilike.${like},description.ilike.${like},category.ilike.${like},mosque.ilike.${like},city.ilike.${like}`)
-      .limit(40);
-  });
+      .or(orIlikeFilter(["title", "description", "category", "mosque", "city"], chunk))
+      .limit(40),
+  );
 
   const responses = await Promise.all(queries);
   const rows = responses.flatMap((r) => {
@@ -1218,10 +1294,13 @@ async function searchLessonsFallback(term: string) {
 }
 
 async function searchSheikhsFallback(term: string) {
-  const patterns = arabicSearchPatterns(term);
   const responses = await Promise.all(
-    patterns.map((p) =>
-      supabase.from("sheikhs").select("id, name, bio, specialties, photo_url").ilike("name", ilikePattern(p)).limit(20)
+    searchPatternChunks(term).map((chunk) =>
+      supabase
+        .from("sheikhs")
+        .select("id, name, bio, specialties, photo_url")
+        .or(orIlikeFilter(["name"], chunk))
+        .limit(20)
     )
   );
   const rows = mergeUniqueById(responses.flatMap((r) => r.data || [])).filter((s: any) =>
@@ -1231,17 +1310,15 @@ async function searchSheikhsFallback(term: string) {
 }
 
 async function searchLibraryFallback(term: string) {
-  const patterns = arabicSearchPatterns(term);
   const responses = await Promise.all(
-    patterns.map((p) => {
-      const like = ilikePattern(p);
-      return supabase
+    searchPatternChunks(term).map((chunk) =>
+      supabase
         .from("library_items")
         .select("id, title, type, description, category")
         .eq("status", "approved")
-        .or(`title.ilike.${like},description.ilike.${like},category.ilike.${like}`)
-        .limit(20);
-    })
+        .or(orIlikeFilter(["title", "description", "category"], chunk))
+        .limit(20)
+    )
   );
   const rows = mergeUniqueById(responses.flatMap((r) => r.data || [])).filter((it: any) =>
     arabicMatchAny([it.title, it.description, it.category, it.type, it.author, it.author_name], term)
@@ -1263,17 +1340,15 @@ async function searchLibraryFallback(term: string) {
 }
 
 async function searchQaFallback(term: string) {
-  const patterns = arabicSearchPatterns(term);
   const responses = await Promise.all(
-    patterns.map((p) => {
-      const like = ilikePattern(p);
-      return supabase
+    searchPatternChunks(term).map((chunk) =>
+      supabase
         .from("qa_questions")
         .select("id, question, answer, qa_categories(name)")
         .eq("status", "published")
-        .or(`question.ilike.${like},answer.ilike.${like}`)
-        .limit(20);
-    })
+        .or(orIlikeFilter(["question", "answer"], chunk))
+        .limit(20)
+    )
   );
   const rows = mergeUniqueById(responses.flatMap((r) => r.data || [])).filter((x: any) =>
     arabicMatchAny([x.question, x.answer, x.qa_categories?.name], term)
@@ -1289,37 +1364,49 @@ async function searchMiraclesFallback(term: string) {
       errors: [] as any[],
     };
   }
-  const like = ilikePattern(term);
-  const { data, error } = await supabase
-    .from("scientific_miracles")
-    .select("id, title, category, body")
-    .eq("status", "approved")
-    .or(`title.ilike.${like},body.ilike.${like}`)
-    .limit(15);
-  if (error) logSupabaseError("searchMiraclesFallback", error, { term });
-  const dbRows = (data || []).filter((m: any) => arabicMatchAny([m.title, m.body, m.category], term));
+  const responses = await Promise.all(
+    searchPatternChunks(term).map((chunk) =>
+      supabase
+        .from("scientific_miracles")
+        .select("id, title, category, body")
+        .eq("status", "approved")
+        .or(orIlikeFilter(["title", "body"], chunk))
+        .limit(15)
+    )
+  );
+  const errors = responses.map((r) => r.error).filter(Boolean);
+  for (const error of errors) logSupabaseError("searchMiraclesFallback", error, { term });
+
+  const rows = mergeUniqueById(responses.flatMap((r) => r.data || []));
+  const dbRows = rows.filter((m: any) => arabicMatchAny([m.title, m.body, m.category], term));
   if (dbRows.length > 0) {
-    return { data: dbRows, errors: error ? [error] : [] };
+    return { data: dbRows.slice(0, 15), errors };
   }
   const { searchMiraclesSeed } = await loadSeedData();
   return {
     data: searchMiraclesSeed(term).map((m: any) => ({ id: m.id, title: m.title, category: m.category, body: m.body })),
-    errors: error ? [error] : [],
+    errors,
   };
 }
 
 async function searchFawaidFallback(term: string) {
-  const like = ilikePattern(term);
-  const { data, error } = await supabase
-    .from("fawaid")
-    .select("id, text, author_name")
-    .eq("status", "approved")
-    .ilike("text", like)
-    .limit(15);
-  if (error) logSupabaseError("searchFawaidFallback", error, { term });
+  const responses = await Promise.all(
+    searchPatternChunks(term).map((chunk) =>
+      supabase
+        .from("fawaid")
+        .select("id, text, author_name")
+        .eq("status", "approved")
+        .or(orIlikeFilter(["text", "author_name"], chunk))
+        .limit(15)
+    )
+  );
+  const errors = responses.map((r) => r.error).filter(Boolean);
+  for (const error of errors) logSupabaseError("searchFawaidFallback", error, { term });
+
+  const rows = mergeUniqueById(responses.flatMap((r) => r.data || []));
   return {
-    data: (data || []).filter((f: any) => arabicMatchAny([f.text, f.author_name], term)),
-    errors: error ? [error] : [],
+    data: rows.filter((f: any) => arabicMatchAny([f.text, f.author_name], term)).slice(0, 15),
+    errors,
   };
 }
 
@@ -1336,33 +1423,45 @@ async function searchAdhkarFallback(term: string) {
 
 async function searchHadithFallback(term: string) {
   if (!isConfigured) return { data: [] as any[], errors: [] as any[] };
-  const like = ilikePattern(term);
-  const { data, error } = await supabase
-    .from("verified_hadith_items")
-    .select("id, title, text, narrator, collection, grade")
-    .eq("status", "published")
-    .or(`title.ilike.${like},text.ilike.${like},narrator.ilike.${like}`)
-    .limit(10);
-  if (error) logSupabaseError("searchHadithFallback", error, { term });
+  const responses = await Promise.all(
+    searchPatternChunks(term).map((chunk) =>
+      supabase
+        .from("verified_hadith_items")
+        .select("id, title, text, narrator, collection, grade")
+        .eq("status", "published")
+        .or(orIlikeFilter(["title", "text", "narrator"], chunk))
+        .limit(10)
+    )
+  );
+  const errors = responses.map((r) => r.error).filter(Boolean);
+  for (const error of errors) logSupabaseError("searchHadithFallback", error, { term });
+
+  const rows = mergeUniqueById(responses.flatMap((r) => r.data || []));
   return {
-    data: (data || []).filter((h: any) => arabicMatchAny([h.title, h.text, h.narrator, h.collection], term)),
-    errors: error ? [error] : [],
+    data: rows.filter((h: any) => arabicMatchAny([h.title, h.text, h.narrator, h.collection], term)).slice(0, 10),
+    errors,
   };
 }
 
 async function searchStoriesFallback(term: string) {
   if (!isConfigured) return { data: [] as any[], errors: [] as any[] };
-  const like = ilikePattern(term);
-  const { data, error } = await supabase
-    .from("akp_stories")
-    .select("id, title, topic, summary, category, source_name")
-    .eq("status", "published")
-    .or(`title.ilike.${like},topic.ilike.${like},summary.ilike.${like}`)
-    .limit(10);
-  if (error) logSupabaseError("searchStoriesFallback", error, { term });
+  const responses = await Promise.all(
+    searchPatternChunks(term).map((chunk) =>
+      supabase
+        .from("akp_stories")
+        .select("id, title, topic, summary, category, source_name")
+        .eq("status", "published")
+        .or(orIlikeFilter(["title", "topic", "summary"], chunk))
+        .limit(10)
+    )
+  );
+  const errors = responses.map((r) => r.error).filter(Boolean);
+  for (const error of errors) logSupabaseError("searchStoriesFallback", error, { term });
+
+  const rows = mergeUniqueById(responses.flatMap((r) => r.data || []));
   return {
-    data: (data || []).filter((s: any) => arabicMatchAny([s.title, s.topic, s.summary, s.category], term)),
-    errors: error ? [error] : [],
+    data: rows.filter((s: any) => arabicMatchAny([s.title, s.topic, s.summary, s.category], term)).slice(0, 10),
+    errors,
   };
 }
 
@@ -1406,45 +1505,16 @@ export async function searchEverything(term: string): Promise<SearchResults> {
     return { ...demo, ...platform, usingDemo: true, error: null };
   }
 
-  try {
-    const { data, error } = await supabase.rpc("search_platform", { query });
-
-    if (!error && data) {
-      const seeds = await loadSeedData();
-      const adhkar = seeds.filterAdhkar(query).slice(0, 15).map((item: any) => ({
-        id: item.id,
-        text: item.text,
-        category: seeds.ADHKAR_CATEGORIES.find((c: any) => c.id === item.categoryId)?.name,
-        source: item.source,
-      }));
-      const platformFallback = seeds.searchPlatformSeed(query);
-      return {
-        lessons: data.lessons || [],
-        library: data.library || [],
-        miracles: data.miracles || [],
-        sheikhs: data.sheikhs || [],
-        qa: data.qa || [],
-        fawaid: data.fawaid || [],
-        adhkar,
-        fiqh_decisions: data.fiqh_decisions?.length ? data.fiqh_decisions : platformFallback.fiqh_decisions,
-        fatwas: data.fatwas?.length ? data.fatwas : platformFallback.fatwas,
-        rulings: data.rulings?.length ? data.rulings : platformFallback.rulings,
-        courses: data.courses?.length ? data.courses : platformFallback.courses,
-        updates: data.updates?.length ? data.updates : platformFallback.updates,
-        hadith: data.hadith || [],
-        stories: data.stories || [],
-        usingDemo: false,
-        error: null,
-      };
-    }
-
-    if (error) {
-      logSupabaseError("searchEverything.rpc", error, { query });
-    }
-  } catch (err) {
-    logSupabaseError("searchEverything.rpc", err, { query });
-  }
-
+  // ملاحظة: كانت هذه الدالة تحاول أولاً استدعاء RPC باسم "search_platform"
+  // قبل اللجوء للبحث المباشر عبر الجداول — تحقَّقنا (2026-07-16) عبر استعلام
+  // مباشر لقاعدة بيانات الإنتاج (pg_proc) أن هذه الدالة **غير موجودة إطلاقًا**
+  // ولم تكن موجودة على الأرجح منذ فترة، فكل استدعاء بحث كان يهدر جولة شبكة
+  // كاملة تفشل دائمًا (خطأ "function does not exist") قبل السقوط تلقائيًا
+  // لمسار البحث المباشر أدناه (searchEverythingFallback) — وهو المسار الذي
+  // يُستخدَم فعليًا في كل بحث حتى الآن، ويدعم أصلاً تطبيعًا وتفاوتًا عربيًا
+  // (همزات، مرادفات، تشابه تحريري) عبر arabicSearchPatterns/searchPatternChunks
+  // في كل دالة searchXFallback. أُزيل استدعاء الـRPC الميت لتفادي هذه الجولة
+  // الضائعة وضجيج السجلات على كل بحث في التطبيق.
   const seeds = await loadSeedData();
   const fallback = await searchEverythingFallback(query);
   const platform = seeds.searchPlatformSeed(query);
@@ -1458,7 +1528,6 @@ export async function searchEverything(term: string): Promise<SearchResults> {
     merged.fawaid.length +
     merged.adhkar.length +
     (merged.fiqh_decisions?.length || 0) +
-    (merged.fatwas?.length || 0) +
     (merged.rulings?.length || 0) +
     (merged.courses?.length || 0) +
     (merged.updates?.length || 0);
@@ -1474,7 +1543,6 @@ export async function searchEverything(term: string): Promise<SearchResults> {
       demo.fawaid.length +
       demo.adhkar.length +
       demoPlatform.fiqh_decisions.length +
-      demoPlatform.fatwas.length +
       demoPlatform.rulings.length +
       demoPlatform.courses.length +
       demoPlatform.updates.length;
@@ -1494,14 +1562,6 @@ export type PrayerTimesRow = {
   asr: string;
   maghrib: string;
   isha: string;
-};
-
-export type IslamicOccasionCacheRow = {
-  occasion_id: string;
-  next_gregorian_date: string | null;
-  days_remaining: number | null;
-  hijri_label: string | null;
-  synced_at: string;
 };
 
 export async function getPrayerTimesFromDb(dateKey: string) {
@@ -1529,20 +1589,6 @@ export async function getPrayerTimesFromDb(dateKey: string) {
   }
 }
 
-export async function getIslamicOccasionsCacheFromDb() {
-  const fallback: IslamicOccasionCacheRow[] = [];
-  const result = await safeSupabaseQuery(
-    "getIslamicOccasionsCacheFromDb",
-    () =>
-      supabase
-        .from("islamic_occasions_cache")
-        .select("occasion_id, next_gregorian_date, days_remaining, hijri_label, synced_at")
-        .order("days_remaining", { ascending: true }),
-    fallback,
-  );
-  return result.data;
-}
-
 // ─── Knowledge Relationships ───────────────────────────────────────────────
 
 export type KnowledgeRelType =
@@ -1553,7 +1599,12 @@ export type KnowledgeRelType =
   | "درس_عن_كتاب"
   | "مرتبط";
 
-export type KnowledgeSourceType = "scholar" | "lesson" | "book" | "fatwa" | "fawaid" | "question";
+// ملاحظة: "fatwa" أُزيل من هذا الاتحاد (2026-07-18) — قسم /fatwa حُذف
+// بالكامل من التطبيق (commit 3a995462)، وجدول fatwas في DB فارغ تماماً
+// (0 صف)، ولا صف واحد في knowledge_relationships استخدم هذا النوع قط
+// (تحقّقتُ مباشرة قبل الحذف). فتاوى المجمع الفقهي المؤسسية لا تُدار عبر
+// هذا النظام أصلاً.
+export type KnowledgeSourceType = "scholar" | "lesson" | "book" | "fawaid" | "question";
 
 export type KnowledgeRelationship = {
   id: string;

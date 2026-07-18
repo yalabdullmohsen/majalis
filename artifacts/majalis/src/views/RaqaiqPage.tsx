@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { Copy, Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
@@ -395,6 +396,31 @@ const MUSAB_AWLIYA: Raqiqa[] = [
   },
 ];
 
+/* ─── رقيقة اليوم ─── */
+function todaysRaqiqa(): Raqiqa {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return RAQAIQ[(dayOfYear - 1 + RAQAIQ.length) % RAQAIQ.length];
+}
+
+function RaqiqaOfDayCard({ raqiqa, onCopy, copied }: { raqiqa: Raqiqa; onCopy: () => void; copied: boolean }) {
+  return (
+    <div className="rod-card">
+      <div className="rod-card__badge"><Sparkles size={11} aria-hidden="true" /> رقيقة اليوم</div>
+      <h2 className="rod-card__title">{raqiqa.title}</h2>
+      <blockquote className="rod-card__quote">
+        <p className="rod-card__text">{raqiqa.text}</p>
+        {raqiqa.source && <footer className="rod-card__source">{raqiqa.source}</footer>}
+      </blockquote>
+      <button type="button" className="rod-card__copy" onClick={onCopy} aria-label="نسخ الرقيقة">
+        <Copy size={13} aria-hidden="true" />
+        {copied ? "تم النسخ ✓" : "نسخ الرقيقة"}
+      </button>
+    </div>
+  );
+}
+
 const TABS: { id: Tab; label: string }[] = [
   { id: "raqaiq",   label: "مواعظ الرقائق" },
   { id: "zuhd",     label: "أقوال الزاهدين" },
@@ -407,6 +433,8 @@ export default function RaqaiqPage() {
   const [activeTab, setActiveTab] = useState<Tab>("raqaiq");
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [search, setSearch] = useState("");
+  const [rodCopied, setRodCopied] = useState(false);
+  const todayRaqiqa = useMemo(() => todaysRaqiqa(), []);
 
   const toggle = (i: number) => setOpenIdx(p => p === i ? null : i);
 
@@ -433,7 +461,7 @@ export default function RaqaiqPage() {
             "@type": "ListItem",
             position: i + 1,
             name: r.title,
-            url: `https://majlisilm.com/raqaiq#raqiqa-${i + 1}`,
+            url: `https://www.majlisilm.com/raqaiq#raqiqa-${i + 1}`,
           })),
         },
       ],
@@ -457,15 +485,30 @@ export default function RaqaiqPage() {
         </div>
       </section>
 
+      {/* رقيقة اليوم */}
+      <RaqiqaOfDayCard
+        raqiqa={todayRaqiqa}
+        onCopy={() => {
+          navigator.clipboard.writeText(`${todayRaqiqa.title}\n\n${todayRaqiqa.text}${todayRaqiqa.source ? `\n— ${todayRaqiqa.source}` : ""}`).then(() => {
+            setRodCopied(true);
+            setTimeout(() => setRodCopied(false), 2000);
+          });
+        }}
+        copied={rodCopied}
+      />
+
       {/* Tabs */}
-      <div className="rq-tabs">
+      <div className="rq-tabs" role="tablist" aria-label="أقسام الرقائق">
         {TABS.map(t => (
           <button
             key={t.id}
+            id={`raq-tab-${t.id}`}
             type="button"
+            role="tab"
             className={`rq-tab${activeTab === t.id ? " rq-tab--active" : ""}`}
             onClick={() => { setActiveTab(t.id); setOpenIdx(null); }}
-            aria-pressed={activeTab === t.id}
+            aria-selected={activeTab === t.id}
+              aria-controls={`raq-panel-${t.id}`}
           >{t.label}</button>
         ))}
       </div>
@@ -474,7 +517,7 @@ export default function RaqaiqPage() {
 
         {/* مواعظ الرقائق */}
         {activeTab === "raqaiq" && (
-          <div>
+          <div role="tabpanel" id="raq-panel-raqaiq" aria-labelledby="raq-tab-raqaiq">
             <div className="rq-intro">
               <p>الرقائق ما رقَّ من الكلام وأثَّر في القلب. هذه المواعظ من أصح ما نُقِل وأبلغه في تليين القلوب القاسية.</p>
             </div>
@@ -510,7 +553,7 @@ export default function RaqaiqPage() {
 
         {/* أقوال الزاهدين */}
         {activeTab === "zuhd" && (
-          <div>
+          <div role="tabpanel" id="raq-panel-zuhd" aria-labelledby="raq-tab-zuhd">
             <div className="rq-intro">
               <p>أقوال العلماء والزاهدين خلاصة تجارب قضوا أعمارهم في تهذيبها. كل قول منها يستحق تأملاً طويلاً.</p>
             </div>
@@ -527,7 +570,7 @@ export default function RaqaiqPage() {
 
         {/* المحاسبة اليومية */}
         {activeTab === "muhasaba" && (
-          <div>
+          <div role="tabpanel" id="raq-panel-muhasaba" aria-labelledby="raq-tab-muhasaba">
             <div className="rq-intro">
               <p>المحاسبة تُطهِّر الروح وتُنبِّه العقل لما فات. اجلس بعد صلاة العشاء دقيقتين وأجِب عن هذه الأسئلة بصدق.</p>
             </div>
@@ -547,7 +590,7 @@ export default function RaqaiqPage() {
 
         {/* نماذج زهد الأولياء */}
         {activeTab === "musab" && (
-          <div>
+          <div role="tabpanel" id="raq-panel-musab" aria-labelledby="raq-tab-musab">
             <div className="rq-intro">
               <p>التاريخ الإسلامي مليء بنماذج حيَّة كانت الزهد واقعاً معاشاً، لا كلاماً يُكتَب. هذه نماذج مضيئة.</p>
             </div>
@@ -565,7 +608,7 @@ export default function RaqaiqPage() {
 
         {/* ما هو الزهد الحق؟ */}
         {activeTab === "awliya" && (
-          <div>
+          <div role="tabpanel" id="raq-panel-awliya" aria-labelledby="raq-tab-awliya">
             <div className="rq-intro">
               <p>الزهد كثيراً ما يُساء فهمه. إليك التعريف الدقيق الذي اتفق عليه علماء أهل السنة.</p>
             </div>
@@ -593,7 +636,7 @@ export default function RaqaiqPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الرقائق والزهد — المجلس العلمي" url="https://majlisilm.com/raqaiq" />
+        <ShareButtons title="الرقائق والزهد — المجلس العلمي" url="https://www.majlisilm.com/raqaiq" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأخلاق والزهد" count={4} />

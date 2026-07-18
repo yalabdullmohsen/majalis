@@ -78,11 +78,11 @@ const STATIC_TOPICS: Record<string, Array<{ slug: string; title: string }>> = {
 
 const CATEGORY_META: Record<string, { label: string; Icon: LucideIcon; color: string }> = {
   fiqh:    { label: "الفقه الإسلامي",  Icon: Scale,      color: "var(--majalis-emerald-deep, #166534)" },
-  aqeedah: { label: "العقيدة",          Icon: Shapes,     color: "var(--majalis-emerald, #1F4D3A)" },
+  aqeedah: { label: "العقيدة",          Icon: Shapes,     color: "var(--majalis-emerald, #176B57)" },
   akhlaq:  { label: "الأخلاق",          Icon: Leaf,       color: "#2d6a4f" },
   quran:   { label: "القرآن الكريم",   Icon: BookMarked, color: "#1e40af" },
   hadith:  { label: "الحديث النبوي",  Icon: ScrollText,  color: "#7c3aed" },
-  seerah:  { label: "السيرة النبوية",  Icon: Moon,       color: "var(--majalis-emerald-deep, #0A5040)" },
+  seerah:  { label: "السيرة النبوية",  Icon: Moon,       color: "var(--majalis-emerald-deep, #123F36)" },
   other:   { label: "أخرى",            Icon: BookOpen,   color: "var(--majalis-ink-soft)" },
 };
 
@@ -100,7 +100,7 @@ export default function TopicsIndexPage() {
       title: "الموضوعات العلمية الشرعية | المجلس العلمي",
       description: "استعرض المحتوى الشرعي مجمّعاً حسب الموضوع، فقه، عقيدة، أخلاق، قرآن، حديث، سيرة. آيات وأحاديث وفتاوى ودروس.",
       keywords: ["موضوعات إسلامية", "فقه إسلامي", "علوم شرعية", "تصنيف إسلامي", "محتوى شرعي"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الموضوعات العلمية الشرعية", url: "https://majlisilm.com/topics", about: { "@type": "Thing", name: "تصنيف المحتوى الإسلامي حسب الموضوع" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الموضوعات العلمية الشرعية", url: "https://www.majlisilm.com/topics", about: { "@type": "Thing", name: "تصنيف المحتوى الإسلامي حسب الموضوع" } }],
     });
   }, []);
 
@@ -139,12 +139,13 @@ export default function TopicsIndexPage() {
       />
 
       {/* Category tabs */}
-      <div className="tip-category-bar">
+      <div className="tip-category-bar" role="tablist" aria-label="تصفية الموضوعات">
         <button
+          role="tab"
           type="button"
           className={activeCategory === ALL_CAT ? "tip-cat-btn tip-cat-btn--active" : "tip-cat-btn"}
           onClick={() => setActiveCategory(ALL_CAT)}
-          aria-pressed={activeCategory === ALL_CAT}
+          aria-selected={activeCategory === ALL_CAT}
         >
           {ALL_CAT}
         </button>
@@ -153,10 +154,11 @@ export default function TopicsIndexPage() {
           return (
             <button
               key={cat}
+              role="tab"
               type="button"
               className={activeCategory === cat ? "tip-cat-btn tip-cat-btn--active" : "tip-cat-btn"}
               onClick={() => setActiveCategory(cat)}
-              aria-pressed={activeCategory === cat}
+              aria-selected={activeCategory === cat}
             >
               <meta.Icon size={14} strokeWidth={1.8} aria-hidden="true" /> {meta.label}
             </button>
@@ -207,7 +209,7 @@ export default function TopicsIndexPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="فهرس المواضيع الإسلامية — المجلس العلمي" url="https://majlisilm.com/topics" />
+        <ShareButtons title="فهرس المواضيع الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/topics" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["quran", "hadith", "fiqh", "aqeeda"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />

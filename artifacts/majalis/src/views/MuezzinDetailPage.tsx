@@ -76,7 +76,7 @@ export default function MuezzinDetailPage() {
           "@context": "https://schema.org",
           "@type": "Person",
           name: muezzin?.name || "مؤذن",
-          url: `https://majlisilm.com/muezzins/${id}`,
+          url: `https://www.majlisilm.com/muezzins/${id}`,
           jobTitle: "مؤذن",
           description: `تسجيلات أذان ${muezzin?.name || "المؤذن"} الإسلامية`,
         },
@@ -216,7 +216,7 @@ export default function MuezzinDetailPage() {
                 onMouseLeave={() => setHoverStar(0)}
                 onClick={() => handleRate(star)}
                 className={`mzd-star-btn${star <= (hoverStar || userRating) ? " is-active" : ""}`}
-                title={`${star} نجوم`}
+                aria-label={`تقييم ${star} من 5 نجوم`}
               >
                 ★
               </button>
@@ -325,7 +325,7 @@ export default function MuezzinDetailPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title={`${muezzin.name} — مكتبة المؤذنين | المجلس العلمي`} url={`https://majlisilm.com/muezzins/${muezzin.id}`} />
+        <ShareButtons title={`${muezzin.name} — مكتبة المؤذنين | المجلس العلمي`} url={`https://www.majlisilm.com/muezzins/${muezzin.id}`} />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />
@@ -355,7 +355,7 @@ function AudioRow({ label, sublabel, duration, isPlaying, onPlay, icon, highligh
         type="button"
         onClick={onPlay}
         className={`mzd-audio-row__play${isPlaying ? " is-playing" : ""}`}
-        title={isPlaying ? "إيقاف" : "استمع"}
+        aria-label={isPlaying ? "إيقاف التشغيل" : "استمع للأذان"}
       >
         {isPlaying ? "⏹" : "▶"}
       </button>

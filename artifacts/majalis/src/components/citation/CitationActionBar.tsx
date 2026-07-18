@@ -74,7 +74,7 @@ function SelectionTooltip({
         type="button"
         onMouseDown={(e) => { e.preventDefault(); onCite(selText, selStart, selEnd); setPos(null); }}
         className="cab-tooltip-btn"
-        title="اقتبس"
+        aria-label="اقتبس"
       >
         <Quote size={13} className="inline ml-1" />اقتباس
       </button>
@@ -82,7 +82,7 @@ function SelectionTooltip({
         type="button"
         onMouseDown={(e) => { e.preventDefault(); onCopy(selText); setPos(null); }}
         className="cab-tooltip-btn"
-        title="نسخ"
+        aria-label="نسخ"
       >
         <ClipboardCopy size={13} className="inline ml-1" />نسخ
       </button>
@@ -178,7 +178,7 @@ export function CitationActionBar({
           type="button"
           onClick={handleCiteBtn}
           className={btnClass}
-          title="اقتباس"
+          aria-label="اقتباس"
         >
           <Quote size={13} className="inline ml-1" />{!compact && "اقتباس"}
         </button>
@@ -187,7 +187,7 @@ export function CitationActionBar({
           type="button"
           onClick={() => { /* الحفظ يتم عبر Modal */ setShowModal(true); }}
           className={btnClass}
-          title="حفظ"
+          aria-label="حفظ"
         >
           <Star size={13} className="inline ml-1" />{!compact && "حفظ"}
         </button>
@@ -196,7 +196,7 @@ export function CitationActionBar({
           type="button"
           onClick={handleShare}
           className={btnClass}
-          title="مشاركة"
+          aria-label="مشاركة"
         >
           <Link2 size={13} className="inline ml-1" />{!compact && "مشاركة"}
         </button>
@@ -205,7 +205,7 @@ export function CitationActionBar({
           type="button"
           onClick={() => handleCopy()}
           className={btnClass}
-          title="نسخ"
+          aria-label="نسخ"
         >
           <ClipboardCopy size={13} className="inline ml-1" />{!compact && (copied ? "تم النسخ" : "نسخ")}
         </button>
@@ -214,7 +214,7 @@ export function CitationActionBar({
           type="button"
           onClick={handlePrint}
           className={btnClass}
-          title="طباعة"
+          aria-label="طباعة"
         >
           <Printer size={13} className="inline ml-1" />{!compact && "طباعة"}
         </button>

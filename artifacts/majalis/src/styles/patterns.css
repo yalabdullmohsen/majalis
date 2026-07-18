@@ -120,7 +120,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   font-size: 0.7rem;
-  color: var(--clr-primary, #1F4D3A);
+  color: var(--clr-primary, #176B57);
   background: var(--majalis-parchment, #F9F6EF);
   padding: 0 0.5rem;
   line-height: 1;
@@ -131,7 +131,7 @@
    يستخدم للإنجازات وشاشات الترحيب
    ══════════════════════════════════════════════════ */
 .geo-frame {
-  border: 2px solid color-mix(in srgb, var(--clr-primary, #1F4D3A) 30%, transparent);
+  border: 2px solid color-mix(in srgb, var(--clr-primary, #176B57) 30%, transparent);
   border-radius: 1rem;
   position: relative;
 }
@@ -142,7 +142,7 @@
   position: absolute;
   width: 1.25rem;
   height: 1.25rem;
-  border: 2px solid var(--clr-primary, #1F4D3A);
+  border: 2px solid var(--clr-primary, #176B57);
 }
 
 .geo-frame::before {
@@ -210,8 +210,8 @@
   height: 6px;
   background: repeating-linear-gradient(
     90deg,
-    var(--clr-primary, #1F4D3A) 0,
-    var(--clr-primary, #1F4D3A) 6px,
+    var(--clr-primary, #176B57) 0,
+    var(--clr-primary, #176B57) 6px,
     transparent 6px,
     transparent 12px,
     rgba(31,77,58,0.4) 12px,
@@ -263,7 +263,7 @@
   height: 100%;
   background: linear-gradient(
     to bottom,
-    var(--clr-primary, #1F4D3A),
+    var(--clr-primary, #176B57),
     rgba(31,77,58,0.3)
   );
   border-radius: 2px;
@@ -274,7 +274,7 @@
   top: -8px; right: 12px;
   font-size: 2.5rem;
   color: rgba(31,77,58,0.12);
-  font-family: serif;
+  font-family: var(--font-body);
   line-height: 1;
 }
 
@@ -294,9 +294,9 @@
   background: linear-gradient(
     90deg,
     transparent,
-    var(--clr-primary, #1F4D3A) 20%,
+    var(--clr-primary, #176B57) 20%,
     rgba(31,77,58,0.5) 50%,
-    var(--clr-primary, #1F4D3A) 80%,
+    var(--clr-primary, #176B57) 80%,
     transparent
   );
   margin-bottom: 0;
@@ -314,7 +314,7 @@
   display: block;
   width: 3rem;
   height: 2px;
-  background: var(--clr-primary, #1F4D3A);
+  background: var(--clr-primary, #176B57);
   margin: .4rem auto 0;
   border-radius: 1px;
   opacity: 0.5;
@@ -370,7 +370,7 @@
   position: absolute;
   top: 0; right: 0;
   width: 3px; height: 100%;
-  background: linear-gradient(to bottom, #1F4D3A, rgba(31,77,58,0.2));
+  background: linear-gradient(to bottom, #176B57, rgba(31,77,58,0.2));
   border-radius: 0 .5rem .5rem 0;
 }
 

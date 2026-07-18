@@ -1,0 +1,467 @@
+/**
+ * أنماط صفحة خريطة المعرفة الإسلامية (/knowledge-map) فقط — مُستخرَجة من
+ * elite-2026.css (كانت §56). مستوردة مباشرة من src/views/IslamicKnowledgeMapPage.tsx.
+ */
+/* ══════════════════════════════════════════════
+   §56. Islamic Knowledge Map — الخريطة المعرفية
+   ══════════════════════════════════════════════ */
+.ikm-page {
+  min-height: 100vh;
+  background: var(--elite-white, #FAF8F2);
+  color: var(--elite-ink, #0C0C0C);
+  padding-bottom: 6rem;
+}
+
+/* Hero */
+.ikm-hero {
+  background: linear-gradient(160deg, #031810 0%, #062B20 45%, #123F36 100%);
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.ikm-hero::before {
+  content: "";
+  position: absolute;
+  top: 0None;
+  right: 0None;
+  bottom: 0None;
+  left: 0None;
+  background-image:
+    radial-gradient(circle at 15% 25%, rgba(255,255,255,0.05) 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(255,255,255,0.04) 0%, transparent 45%);
+  pointer-events: none;
+}
+.ikm-hero__ornament {
+  font-size: 0.85rem;
+  color: rgba(168,223,192,0.6);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+}
+.ikm-hero__title {
+  font-family: var(--font-body);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0 0 0.5rem;
+}
+.ikm-hero__sub {
+  font-size: 0.96rem;
+  color: rgba(255,255,255,0.72);
+  max-width: 32rem;
+  margin: 0 auto 1.75rem;
+  line-height: 1.65;
+}
+.ikm-stats {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  /* أصبح هذا القسم بندًا مستقلاً بعد ترحيل الهيدر لنمط sh-hero الحديث،
+     يحتاج خلفية داكنة خاصة به لأن ألوان النص (أبيض) صُمِّمت أصلاً على
+     خلفية Hero الداكنة القديمة — بلا هذه الخلفية يختفي النص على الأبيض. */
+  background: linear-gradient(160deg, #031810 0%, #062B20 45%, #123F36 100%);
+  border-radius: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  margin: 0 1rem 1.5rem;
+}
+@media (min-width: 640px) { .ikm-stats { margin-inline: auto; max-width: 900px; } }
+.ikm-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ikm-stat__val {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1;
+}
+.ikm-stat__lbl {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.55);
+  margin-top: 0.2rem;
+}
+
+/* Search */
+.ikm-search-bar {
+  max-width: 42rem;
+  margin: 1.5rem auto 0;
+  padding: 0 1rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+.ikm-search-input {
+  flex: 1;
+  padding: 0.65rem 1rem;
+  border: 1.5px solid rgba(10,80,64,0.2);
+  border-radius: 2rem;
+  background: #FFFFFF;
+  color: var(--elite-ink, #0C0C0C);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.ikm-search-input:focus {
+  border-color: #123F36;
+}
+.ikm-clear-btn {
+  padding: 0.55rem 1rem;
+  background: rgba(10,80,64,0.1);
+  border: 1px solid rgba(10,80,64,0.2);
+  border-radius: 2rem;
+  color: #123F36;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.ikm-clear-btn:hover { background: rgba(10,80,64,0.15); }
+
+/* Grid section */
+.ikm-grid-section {
+  max-width: 76rem;
+  margin: 2rem auto 0;
+  padding: 0 1rem;
+}
+.ikm-section-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--elite-forest, #052E16);
+  margin-bottom: 1rem;
+}
+
+/* Domain color tokens — set both vars so any consumer works */
+.ikm-dom--quran,
+.ikm-dom--scholars,
+.ikm-dom--adhkar,
+.ikm-dom--books       { --ikm-bg: #062B20; --ikm-domain-bg: #062B20; }
+.ikm-dom--hadith,
+.ikm-dom--stories,
+.ikm-dom--seerah,
+.ikm-dom--universities { --ikm-bg: #123F36; --ikm-domain-bg: #123F36; }
+.ikm-dom--fiqh,
+.ikm-dom--fatwa,
+.ikm-dom--lessons      { --ikm-bg: #176B57; --ikm-domain-bg: #176B57; }
+.ikm-dom--tafsir,
+.ikm-dom--tajweed,
+.ikm-dom--rulings      { --ikm-bg: #176B57; --ikm-domain-bg: #176B57; }
+
+/* Cards grid */
+.ikm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  gap: 1rem;
+}
+.ikm-card {
+  background: var(--ikm-bg, #123F36);
+  border: none;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  text-align: right;
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.18s, opacity 0.18s;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.ikm-card::before {
+  content: "";
+  position: absolute;
+  top: -30%;
+  left: -20%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.ikm-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 32px rgba(0,0,0,0.2);
+}
+.ikm-card--selected {
+  ring: 3px solid #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.5), 0 10px 32px rgba(0,0,0,0.25) !important;
+  transform: translateY(-6px) !important;
+}
+.ikm-card--connected {
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.3), 0 6px 20px rgba(0,0,0,0.15) !important;
+}
+.ikm-card--dimmed {
+  opacity: 0.35;
+}
+.ikm-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+.ikm-card__icon { color: rgba(255,255,255,0.9); }
+.ikm-card__badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 2rem;
+  background: rgba(255,255,255,0.2);
+  color: #FFFFFF;
+}
+.ikm-card__badge--active {
+  background: rgba(255,255,255,0.4);
+}
+.ikm-card__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0;
+  line-height: 1.3;
+}
+.ikm-card__sub {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.65);
+  margin: 0;
+  line-height: 1.5;
+}
+.ikm-card__count {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  margin-top: 0.25rem;
+}
+.ikm-card__num {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+.ikm-card__unit {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.6);
+}
+.ikm-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.25rem;
+}
+.ikm-tag {
+  font-size: 0.68rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 2rem;
+  background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.ikm-tag--dark {
+  background: rgba(10,80,64,0.1);
+  color: #123F36;
+  border-color: rgba(10,80,64,0.15);
+}
+.ikm-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+}
+.ikm-card__link:hover {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+/* Detail panel */
+.ikm-detail {
+  max-width: 76rem;
+  margin: 2rem auto 0;
+  padding: 0 1rem;
+}
+.ikm-detail__inner {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.5rem;
+  background: #FFFFFF;
+  border: 1px solid rgba(10,80,64,0.12);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+@media (max-width: 640px) {
+  .ikm-detail__inner { grid-template-columns: 1fr; }
+}
+.ikm-detail__left {
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+  background: var(--ikm-domain-bg, var(--clr-primary));
+}
+.ikm-detail__icon { color: rgba(255,255,255,0.9); }
+.ikm-detail__title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0;
+}
+.ikm-detail__sub {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.7);
+  margin: 0;
+  line-height: 1.6;
+}
+.ikm-detail__count {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+.ikm-detail__num {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+.ikm-detail__unit {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+}
+.ikm-detail__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255,255,255,0.15);
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 2rem;
+  text-decoration: none;
+  margin-top: auto;
+  transition: background 0.15s;
+}
+.ikm-detail__cta:hover {
+  background: rgba(255,255,255,0.25);
+  text-decoration: none;
+}
+.ikm-detail__right {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.ikm-detail__rels-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--elite-forest, #052E16);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+.ikm-detail__rels {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.ikm-rel-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(10,80,64,0.04);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(10,80,64,0.08);
+}
+.ikm-rel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--ikm-domain-bg, var(--clr-primary));
+}
+.ikm-rel-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.ikm-rel-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--elite-forest, #052E16);
+}
+.ikm-rel-reason {
+  font-size: 0.75rem;
+  color: #6B7280;
+  margin-top: 0.1rem;
+}
+.ikm-rel-link {
+  color: #123F36;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.ikm-detail__tags-section { margin-top: auto; }
+.ikm-detail__tags-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #6B7280;
+  margin: 0 0 0.5rem;
+}
+.ikm-detail__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* Connections section */
+.ikm-connections-section {
+  max-width: 76rem;
+  margin: 3rem auto 0;
+  padding: 0 1rem;
+}
+.ikm-connections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.ikm-conn-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.ikm-conn-node {
+  padding: 0.5rem 1.1rem;
+  border-radius: 2rem;
+  color: #FFFFFF;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+  transition: opacity 0.15s, transform 0.15s;
+  background: var(--ikm-domain-bg, var(--clr-primary));
+}
+.ikm-conn-node:hover { opacity: 0.85; transform: scale(1.03); }
+.ikm-conn-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  flex: 1;
+  min-width: 80px;
+}
+.ikm-conn-label {
+  font-size: 0.72rem;
+  color: #6B7280;
+  white-space: nowrap;
+}
+.ikm-conn-arrow {
+  color: rgba(10,80,64,0.4);
+}
+
+/* ── نهاية §56 ───────────────────────────────────────────── */

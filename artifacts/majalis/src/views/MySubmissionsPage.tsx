@@ -167,13 +167,14 @@ export default function MySubmissionsPage() {
       {/* Search by email */}
       <div className="msp-search-box">
         <p className="msp-search-label"><Search size={13} className="inline ml-1" />ابحث بالبريد الإلكتروني الذي أدخلته عند الإرسال:</p>
-        <form onSubmit={handleSearch} className="msp-search-form">
+        <form onSubmit={handleSearch} className="msp-search-form" role="search" aria-label="البحث عن المساهمات">
           <input
             type="email"
+            autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            placeholder="example@email.com"
+            aria-label="بريدك@مثال.com" placeholder="بريدك@مثال.com"
             className="msp-email-input"
           />
           <button
@@ -241,7 +242,7 @@ export default function MySubmissionsPage() {
         </div>
       )}
       <div className="twh-share">
-        <ShareButtons title="مساهماتي — المجلس العلمي" url="https://majlisilm.com/my-submissions" />
+        <ShareButtons title="مساهماتي — المجلس العلمي" url="https://www.majlisilm.com/my-submissions" />
       </div>
     </div>
   );

@@ -2,11 +2,11 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState, ty
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import {
-  BookOpen, Bot, Brain, Building2, CheckCircle2, Dna,
-  FlaskConical, Flag, GraduationCap, Globe, HelpCircle, Image, Landmark,
+  AlertTriangle, BookOpen, Bot, Brain, Building2, CalendarClock, CheckCircle2, Dna, FolderTree,
+  FlaskConical, Flag, GraduationCap, Globe, HelpCircle, Heart, Image, Landmark,
   LayoutDashboard, Library, Lightbulb, MessageCircle, MessageSquare,
-  Network, PlayCircle, Radio, RefreshCw, Scale, School, ScrollText, Search,
-  Send, Settings, Settings2, ShieldCheck, Smartphone, Sparkles,
+  Network, PlayCircle, Radio, RefreshCw, Route, Scale, School, Search,
+  Send, Settings, Settings2, ShieldCheck, Sparkles,
   Target, Unlock, User, Users,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -24,8 +24,8 @@ export type AdminSection =
   | "users"
   | "settings"
   | "reports"
+  | "error-logs"
   | "fiqh-council"
-  | "fatwa"
   | "rulings"
   | "annual-courses"
   | "updates"
@@ -34,7 +34,6 @@ export type AdminSection =
   | "verified-knowledge"
   | "knowledge-reasoning"
   | "search-analytics"
-  | "digital-learning"
   | "autonomous-ai"
   | "global-reference"
   | "islamic-intelligence"
@@ -49,6 +48,10 @@ export type AdminSection =
   | "prophet-stories"
   | "islamic-stories"
   | "image-import"
+  | "learning-paths"
+  | "categories"
+  | "week-day-facts"
+  | "arbaeen-love"
 ;
 
 type NavItem = { key: AdminSection; label: string; Icon: LucideIcon };
@@ -62,6 +65,7 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
   {
     title: "المحتوى",
     items: [
+      { key: "categories", label: "أبواب العلم (تصنيفات)", Icon: FolderTree },
       { key: "lessons",  label: "الدروس",          Icon: PlayCircle },
       { key: "sheikhs",  label: "المشايخ",          Icon: User },
       { key: "library",  label: "المكتبة",          Icon: Library },
@@ -76,9 +80,11 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
     title: "الشريعة",
     items: [
       { key: "fiqh-council",   label: "المجمع الفقهي",   Icon: Scale },
-      { key: "fatwa",          label: "الفتاوى",           Icon: ScrollText },
       { key: "rulings",        label: "الأحكام الشرعية",  Icon: Landmark },
       { key: "annual-courses", label: "الدورات العلمية",  Icon: GraduationCap },
+      { key: "learning-paths", label: "المسارات العلمية", Icon: Route },
+      { key: "week-day-facts", label: "أيام الأسبوع",     Icon: CalendarClock },
+      { key: "arbaeen-love",   label: "الأربعون في محبة رب العالمين", Icon: Heart },
     ],
   },
   {
@@ -87,6 +93,7 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
       { key: "users",       label: "المستخدمون",    Icon: Users },
       { key: "submissions", label: "مقترحات",       Icon: MessageSquare },
       { key: "reports",     label: "التقارير",      Icon: Flag },
+      { key: "error-logs",  label: "سجل الأخطاء",   Icon: AlertTriangle },
     ],
   },
   {
@@ -110,7 +117,6 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
       { key: "verified-knowledge",     label: "المعرفة الموثقة", Icon: CheckCircle2 },
       { key: "scholarly-verification", label: "التوثيق العلمي",  Icon: ShieldCheck },
       { key: "knowledge-reasoning",    label: "محرك الاستدلال",  Icon: MessageCircle },
-      { key: "digital-learning",       label: "التعليم الرقمي",  Icon: Smartphone },
     ],
   },
   {

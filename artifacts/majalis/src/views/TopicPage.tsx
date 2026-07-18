@@ -57,11 +57,11 @@ export default function TopicPage() {
 
   useEffect(() => {
     applyPageSeo({
-      path: "/topic",
+      path: `/topic/${topic?.slug || slug}`,
       title: `${topic?.title || "موضوع"} | المجلس العلمي`,
       description: `استعرض محتوى موضوع "${topic?.title || "الموضوع"}" من الدروس والفتاوى والأحاديث في المجلس العلمي.`,
       keywords: [topic?.title || "موضوع", "محتوى إسلامي", "فتاوى", "دروس", "أحاديث"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: topic?.title || "موضوع إسلامي", url: `https://majlisilm.com/topic/${topic?.slug || ""}`, about: { "@type": "Thing", name: topic?.title || "الموضوعات الإسلامية" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: topic?.title || "موضوع إسلامي", url: `https://www.majlisilm.com/topic/${topic?.slug || ""}`, about: { "@type": "Thing", name: topic?.title || "الموضوعات الإسلامية" } }],
     });
   }, [topic?.title]);
 
@@ -132,7 +132,7 @@ export default function TopicPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="موضوعات المجلس العلمي" url="https://majlisilm.com/topics" />
+        <ShareButtons title="موضوعات المجلس العلمي" url="https://www.majlisilm.com/topics" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["fiqh", "aqeeda", "hadith"]} title="اختبر معلوماتك في هذا الموضوع" count={4} />

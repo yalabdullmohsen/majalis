@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
@@ -153,16 +154,36 @@ const DUAS_LIST: Dua[] = [
 ];
 
 const TABS: { id: Tab; label: string; color: string }[] = [
-  { id: "janna",       label: "صفة الجنة",       color: "#1F4D3A" },
+  { id: "janna",       label: "صفة الجنة",       color: "#176B57" },
   { id: "naar",        label: "صفة النار",        color: "#9B1C1C" },
   { id: "asbab-janna", label: "أسباب الجنة",      color: "#1a3a5c" },
   { id: "asbab-naar",  label: "أسباب النار",      color: "#7F1D1D" },
   { id: "duas",        label: "أدعية الآخرة",     color: "#312E81" },
 ];
 
+/* ─── سبب الجنة اليوم ─── */
+function todaysAsbabJanna(): DescCard {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return ASBAB_JANNA[(dayOfYear - 1 + ASBAB_JANNA.length) % ASBAB_JANNA.length];
+}
+
+function JannaOfDayCard({ card }: { card: DescCard }) {
+  return (
+    <div className="jnod-card">
+      <div className="jnod-card__badge"><Sparkles size={11} aria-hidden="true" /> من أسباب دخول الجنة</div>
+      <h2 className="jnod-card__title">{card.title}</h2>
+      <p className="jnod-card__text">{card.text}</p>
+      {card.ref && <div className="jnod-card__ref">{card.ref}</div>}
+    </div>
+  );
+}
+
 export default function JannaNaarPage() {
   const [activeTab, setActiveTab] = useState<Tab>("janna");
   const [search, setSearch] = useState("");
+  const todayJanna = useMemo(() => todaysAsbabJanna(), []);
 
   const filteredAsbabJanna = useMemo(() =>
     search.trim() ? ASBAB_JANNA.filter(i => arabicMatchAny([i.title, i.text, i.ref ?? ""], search)) : ASBAB_JANNA,
@@ -190,7 +211,7 @@ export default function JannaNaarPage() {
             "@type": "ListItem",
             position: i + 1,
             name: a.title,
-            url: `https://majlisilm.com/janna-naar#janna-${i + 1}`,
+            url: `https://www.majlisilm.com/janna-naar#janna-${i + 1}`,
           })),
         },
       ],
@@ -220,15 +241,20 @@ export default function JannaNaarPage() {
         </div>
       </section>
 
+      {/* سبب الجنة اليوم */}
+      <JannaOfDayCard card={todayJanna} />
+
       {/* Tabs */}
-      <div className="jn-tabs">
+      <div className="jn-tabs" role="tablist" aria-label="الجنة والنار">
         {TABS.map(t => (
           <button
             key={t.id}
+            role="tab"
             type="button"
             className={`jn-tab jn-tab--${t.id}${activeTab === t.id ? " jn-tab--active" : ""}`}
             onClick={() => setActiveTab(t.id)}
-            aria-pressed={activeTab === t.id}
+            aria-selected={activeTab === t.id}
+              aria-controls={`jnn-panel-${t.id}`}
           >{t.label}</button>
         ))}
       </div>
@@ -237,7 +263,7 @@ export default function JannaNaarPage() {
 
         {/* صفة الجنة */}
         {activeTab === "janna" && (
-          <div className="jn-sections">
+          <div role="tabpanel" id="jnn-panel-janna" aria-labelledby="jnn-tab-janna" className="jn-sections">
             <Section title="أبواب الجنة" cards={JANNA_ABWAB} tabId={activeTab} />
             <Section title="أنهار الجنة" cards={JANNA_ANHAR} tabId={activeTab} />
             <Section title="درجات الجنة" cards={JANNA_DARAJAT} tabId={activeTab} />
@@ -247,7 +273,7 @@ export default function JannaNaarPage() {
 
         {/* صفة النار */}
         {activeTab === "naar" && (
-          <div className="jn-sections">
+          <div role="tabpanel" id="jnn-panel-naar" aria-labelledby="jnn-tab-naar" className="jn-sections">
             <div className="jn-naar-warn">
               ﴿وَاتَّقُوا النَّارَ الَّتِي أُعِدَّتْ لِلْكَافِرِينَ﴾، آل عمران: ١٣١
             </div>
@@ -306,7 +332,7 @@ export default function JannaNaarPage() {
 
         {/* الأدعية */}
         {activeTab === "duas" && (
-          <div>
+          <div role="tabpanel" id="jnn-panel-duas" aria-labelledby="jnn-tab-duas">
             <div className="jn-intro">
               <p>من أعظم ما يتقرَّب به العبد إلى الله دعاؤه بالجنة والاستعاذة من النار. قال ﷺ: «من سأل الله الجنة ثلاثاً قالت الجنة: اللهم أدخله الجنة».</p>
             </div>
@@ -324,7 +350,7 @@ export default function JannaNaarPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الجنة والنار — المجلس العلمي" url="https://majlisilm.com/janna-naar" />
+        <ShareButtons title="الجنة والنار — المجلس العلمي" url="https://www.majlisilm.com/janna-naar" />
       </div>
       <div className="px-4 pb-6 mt-6">
         <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة" count={4} />

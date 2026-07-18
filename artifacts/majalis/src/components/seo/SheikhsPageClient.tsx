@@ -89,14 +89,17 @@ export default function SheikhsPageClient({
         <>
           <h2 className="spc-section-h2">مشايخ المنصة</h2>
           <p className="seo-listing-intro">
-            {isAdmin ? `${sheikhs.length.toLocaleString("ar-EG")} شيخ وعالم معتمد — ` : ""}اختر اسماً لعرض السيرة والدروس المرتبطة.
+            {isAdmin ? `${sheikhs.length.toLocaleString("ar-EG")} شيخ وعالم — ` : ""}اختر اسماً لعرض السيرة والدروس المرتبطة.
           </p>
           <div className="page-card-grid">
             {sheikhs.map((sheikh) => (
               <Link key={sheikh.id} href={`/sheikhs/${sheikh.id}`} className="page-card">
                 <div className="page-card-header">
                   <p>{sheikh.name}</p>
-                  {sheikh.is_verified && <span className="page-tag">معتمد</span>}
+                  {/* «معتمد» لا تُعرض إلا بمصدر خارجي فعلي — لا اعتماد بلا مصدر. */}
+                  {sheikh.is_verified && sheikh.sources?.length > 0 && (
+                    <span className="page-tag">معتمد</span>
+                  )}
                 </div>
                 {sheikh.ijazah && <p className="page-meta">{sheikh.ijazah}</p>}
                 {sheikh.specialties?.length > 0 && (

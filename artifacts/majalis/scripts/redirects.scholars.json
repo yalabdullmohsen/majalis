@@ -1,0 +1,98 @@
+[
+  {
+    "from": "/scholars/ibn-al-qayyim-alt",
+    "to": "/scholars/al-sakhawi",
+    "status": 301,
+    "reason": "slug باسم عالِم آخر — المعرّف باسم ابن القيّم (ت ٧٥١هـ) والسجل عن السخاوي (ت ٩٠٢هـ)؛ والسجل نفسه مكرر مع al-sakhawi فدُمج فيه"
+  },
+  {
+    "from": "/scholars/ibn-uthaymeen-older",
+    "to": "/scholars/abd-al-karim-al-khudair",
+    "status": 301,
+    "reason": "slug باسم عالِم آخر — المعرّف باسم ابن عثيمين والصفحة عن الشيخ عبد الكريم الخضير"
+  },
+  {
+    "from": "/scholars/ibn-uthaymin-ext",
+    "to": "/scholars/ibn-jibreen",
+    "status": 301,
+    "reason": "slug باسم عالِم آخر — المعرّف باسم ابن عثيمين والصفحة عن الشيخ عبد الله بن جبرين"
+  },
+  {
+    "from": "/scholars/al-ghazali-junior",
+    "to": "/scholars/ibn-ata-allah-al-sakandari",
+    "status": 301,
+    "reason": "slug باسم عالِم آخر — المعرّف باسم الغزالي والصفحة عن ابن عطاء الله السكندري"
+  },
+  {
+    "from": "/scholars/amir-al-san'ani",
+    "to": "/scholars/al-amir-al-sanani",
+    "status": 301,
+    "reason": "المعرّف يحوي فاصلة عليا (') غير آمنة في المسار — تُرمَّز %27 وتكسر الروابط"
+  },
+  {
+    "from": "/scholars/al-qurtubi-scholar",
+    "to": "/scholars/al-qurtubi",
+    "status": 301,
+    "reason": "لاحقة -scholar حيلة لفض تصادم معرّفات، لا معنى دلالي لها"
+  },
+  {
+    "from": "/scholars/ibn-mufli",
+    "to": "/scholars/ibn-muflih",
+    "status": 301,
+    "reason": "خطأ إملائي في نقل الاسم — ابن مفلح = ibn-muflih"
+  },
+  {
+    "from": "/scholars/al-nawawi",
+    "to": "/scholars/nawawi",
+    "status": 301,
+    "reason": "تكرار — النووي (ت ٦٧٦هـ) بسجلين؛ دُمج الأغنى بيانًا في nawawi"
+  },
+  {
+    "from": "/scholars/al-bayhaqi",
+    "to": "/scholars/bayhaki",
+    "status": 301,
+    "reason": "تكرار — البيهقي (ت ٤٥٨هـ) بسجلين؛ دُمج الأغنى بيانًا في bayhaki"
+  },
+  {
+    "from": "/scholars/al-mubarakfuri-2",
+    "to": "/scholars/mubarakfuri",
+    "status": 301,
+    "reason": "تكرار — عبد الرحمن المباركفوري (ت ١٣٥٣هـ) بسجلين"
+  },
+  {
+    "from": "/scholars/al-izz-ibn-abdes-salam",
+    "to": "/scholars/izz-ibn-abd-al-salam",
+    "status": 301,
+    "reason": "تكرار — العز بن عبد السلام (ت ٦٦٠هـ) بسجلين"
+  },
+  {
+    "from": "/scholars/ibn-al-mubarak-senior",
+    "to": "/scholars/ibn-mubarak",
+    "status": 301,
+    "reason": "تكرار — عبد الله بن المبارك (ت ١٨١هـ) بسجلين"
+  },
+  {
+    "from": "/scholars/al-haytami",
+    "to": "/scholars/ibn-hajar-haytami",
+    "status": 301,
+    "reason": "تكرار — ابن حجر الهيتمي (ت ٩٧٤هـ) بسجلين"
+  },
+  {
+    "from": "/scholars/al-khatib-baghdadi",
+    "to": "/scholars/khatib-baghdadi",
+    "status": 301,
+    "reason": "تكرار — الخطيب البغدادي (ت ٤٦٣هـ) بسجلين"
+  },
+  {
+    "from": "/scholars/al-mizzi-2",
+    "to": "/scholars/al-mizzi",
+    "status": 301,
+    "reason": "تكرار — المزي (ت ٧٤٢هـ) بسجلين"
+  },
+  {
+    "from": "/scholars/ibn-juzayy-2",
+    "to": "/scholars/ibn-juzayy",
+    "status": 301,
+    "reason": "تكرار — ابن جزي الكلبي (ت ٧٤١هـ) بسجلين"
+  }
+]

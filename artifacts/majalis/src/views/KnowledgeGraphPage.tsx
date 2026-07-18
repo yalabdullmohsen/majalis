@@ -3,7 +3,8 @@
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
+import { GitBranch, Network, Waypoints } from "lucide-react";
 import {
   fetchKnNodes,
   fetchKnSubgraph,
@@ -24,6 +25,7 @@ import {
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { useAuth } from "@/components/AuthProvider";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -57,11 +59,14 @@ const MAX_STEPS   = 180;
 const SVG_W       = 960;
 const SVG_H       = 580;
 
+// ملاحظة: "fatwa" أُزيل من هاتين الخريطتين (2026-07-18) مع إزالته من
+// KnowledgeSourceType — صفر صف في knowledge_relationships استخدم هذا
+// النوع أصلاً (تحقّقتُ مباشرة)، والقيمة الافتراضية (?? "#6b7280"/nodeType)
+// تُغطّي أي قيمة غير متوقَّعة بأمان.
 const OLD_TYPE_COLOR: Record<KnowledgeSourceType, string> = {
-  scholar:  "#1F4D3A",
+  scholar:  "#176B57",
   lesson:   "#0369a1",
-  book:     "#1F4D3A",
-  fatwa:    "#7c3aed",
+  book:     "#176B57",
   fawaid:   "#047857",
   question: "#6b7280",
 };
@@ -70,7 +75,6 @@ const OLD_TYPE_LABEL: Record<KnowledgeSourceType, string> = {
   scholar:  "عالم",
   lesson:   "درس",
   book:     "كتاب",
-  fatwa:    "فتوى",
   fawaid:   "فائدة",
   question: "سؤال",
 };
@@ -170,7 +174,7 @@ type DataSource = "new" | "old";
 type Tab = "graph" | "explore";
 
 export default function KnowledgeGraphPage() {
-  const [, navigate] = useLocation();
+  const { isAdmin } = useAuth();
   const [tab, setTab] = useState<Tab>("graph");
 
   useEffect(() => {
@@ -179,7 +183,7 @@ export default function KnowledgeGraphPage() {
       title: "الرسم البياني المعرفي | المجلس العلمي",
       description: "استكشف العلاقات بين المفاهيم الإسلامية، رسم بياني تفاعلي يربط العلماء والكتب والمسائل الفقهية.",
       keywords: ["رسم بياني معرفي", "علاقات إسلامية", "استكشاف المعرفة", "خريطة علمية", "علم الشبكات"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الرسم البياني المعرفي الإسلامي", url: "https://majlisilm.com/knowledge-graph", about: { "@type": "Thing", name: "شبكة المعرفة الإسلامية التفاعلية" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الرسم البياني المعرفي الإسلامي", url: "https://www.majlisilm.com/knowledge-graph", about: { "@type": "Thing", name: "شبكة المعرفة الإسلامية التفاعلية" } }],
     });
   }, []);
   const [source, setSource] = useState<DataSource>("new");
@@ -297,20 +301,32 @@ export default function KnowledgeGraphPage() {
     <div dir="rtl" className="kng-page">
 
       {/* Header */}
-      <div className="kng-header">
-        <h1 className="kng-title">الرسم البياني المعرفي الإسلامي</h1>
-        <p className="kng-subtitle">
-          شبكة دلالية تربط الآيات والأحاديث والفتاوى والعلماء والكتب والدروس.
-          {nodeCount > 0 && ` ${nodeCount} عقدة · ${edgeCount} علاقة`}
+      <header className="sh-hero">
+        <div className="sh-hero__badge">
+          <Network size={16} strokeWidth={2} aria-hidden="true" />
+          <span>شبكة معرفية تفاعلية</span>
+        </div>
+        <h1 className="sh-hero__title">الرسم البياني المعرفي الإسلامي</h1>
+        <p className="sh-hero__sub">
+          شبكة دلالية تربط الآيات والأحاديث والفتاوى والعلماء والكتب والدروس
         </p>
-      </div>
+        {nodeCount > 0 && (
+          <div className="sh-hero__stats">
+            <span className="sh-stat"><Waypoints size={13} strokeWidth={2.5} />{nodeCount} عقدة</span>
+            <span className="sh-stat"><GitBranch size={13} strokeWidth={2.5} />{edgeCount} علاقة</span>
+          </div>
+        )}
+      </header>
 
       {/* Tabs */}
-      <div className="kng-tabs">
+      <div className="kng-tabs" role="tablist" aria-label="أوضاع عرض الرسم البياني">
         {(["graph", "explore"] as Tab[]).map((t) => (
           <button key={t} type="button" onClick={() => setTab(t)}
+            role="tab"
             className={`kng-tab${tab === t ? " is-active" : ""}`}
-            aria-pressed={tab === t}
+            aria-selected={tab === t}
+            id={`kng-tab-${t}`}
+            aria-controls={`kng-panel-${t}`}
           >
             {t === "graph" ? "شبكة العلاقات" : "استكشاف الموضوعات"}
           </button>
@@ -322,7 +338,7 @@ export default function KnowledgeGraphPage() {
             <button key={s} type="button" onClick={() => setSource(s)}
               className={`kng-source-btn${source === s ? " is-active" : ""}`}
             >
-              {s === "new" ? "الجديد (kn_nodes)" : "القديم (relations)"}
+              {s === "new" ? "الإصدار الحالي" : "الإصدار السابق"}
             </button>
           ))}
         </div>
@@ -330,7 +346,7 @@ export default function KnowledgeGraphPage() {
 
       {/* ══ Graph Tab ══ */}
       {tab === "graph" && (
-        <>
+        <div role="tabpanel" id="kng-panel-graph" aria-labelledby="kng-tab-graph">
           {/* Filter chips */}
           <div className="kng-filter-chips">
             {(["all", ...allTypes]).map((t) => (
@@ -359,7 +375,9 @@ export default function KnowledgeGraphPage() {
             <div className="kng-empty">
               <p className="kng-empty__title">لا توجد بيانات بعد</p>
               <p className="kng-empty__desc">
-                شغّل <code>knowledge_graph_islamic_v1.sql</code> و<code>knowledge_graph_islamic_seed_v1.sql</code> في Supabase، ثم أعد التحميل.
+                {isAdmin
+                  ? <>شغّل <code>knowledge_graph_islamic_v1.sql</code> و<code>knowledge_graph_islamic_seed_v1.sql</code> في Supabase، ثم أعد التحميل.</>
+                  : "الرسم البياني المعرفي قيد الإعداد حاليًا، يرجى العودة لاحقًا."}
               </p>
             </div>
           ) : (
@@ -435,7 +453,7 @@ export default function KnowledgeGraphPage() {
                 <div className="kng-panel__actions">
                   {source === "new" && (
                     <>
-                      <select value={expandDepth} onChange={(e) => setExpandDepth(Number(e.target.value))} className="kng-expand-select">
+                      <select value={expandDepth} onChange={(e) => setExpandDepth(Number(e.target.value))} className="kng-expand-select" aria-label="عمق التوسيع">
                         <option value={1}>عمق 1</option>
                         <option value={2}>عمق 2</option>
                         <option value={3}>عمق 3</option>
@@ -482,12 +500,12 @@ export default function KnowledgeGraphPage() {
           <p className="kng-note">
             جميع العلاقات المعروضة موثقة بمصدر معتمد. يمكن إضافة علاقات من لوحة الإدارة.
           </p>
-        </>
+        </div>
       )}
 
       {/* ══ Explore Tab ══ */}
       {tab === "explore" && (
-        <div className="kng-explore">
+        <div role="tabpanel" id="kng-panel-explore" aria-labelledby="kng-tab-explore" className="kng-explore">
           <div className="kng-explore__search-section">
             <h2 className="kng-explore__title">استكشاف الموضوعات</h2>
             <p className="kng-explore__desc">ابحث بوسم موضوعي (عقيدة، فقه، سيرة...) لاستكشاف العقد المرتبطة.</p>
@@ -498,7 +516,7 @@ export default function KnowledgeGraphPage() {
                 value={searchTag}
                 onChange={(e) => setSearchTag(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleTagSearch()}
-                placeholder="مثال: عقيدة، صلاة، زكاة، السيرة..."
+                aria-label="مثال: عقيدة، صلاة، زكاة، السيرة" placeholder="مثال: عقيدة، صلاة، زكاة، السيرة..."
                 className="kng-search-input"
               />
               <button type="button" onClick={handleTagSearch} disabled={tagLoading} className="kng-search-btn">
@@ -555,7 +573,15 @@ export default function KnowledgeGraphPage() {
               <div className="kng-type-browse__chips">
                 {(Object.keys(NODE_TYPE_LABEL) as KnNodeType[]).map((t) => (
                   <button key={t} type="button"
-                    onClick={() => navigate(`/knowledge-graph?type=${t}`)}
+                    // كان `navigate(/knowledge-graph?type=${t})` — لكن هذه
+                    // الصفحة لا تقرأ أي query param من الرابط إطلاقاً (لا
+                    // useSearch ولا URLSearchParams في الملف)، فكان الزر
+                    // يغيّر رابط المتصفح فقط بلا أي أثر ظاهر على الرسم
+                    // البياني — عطل صامت من نفس عائلة TYPE_HREF.scholar،
+                    // اكتُشف بالفحص المباشر 2026-07-18. صُحِّح باستخدام
+                    // نفس آلية التصفية setFilterType العاملة فعلياً أسفل
+                    // (سطر 354) بدل جولة رابط لا تُقرَأ أبداً.
+                    onClick={() => setFilterType(t)}
                     className={`kng-type-chip kng-nt--${t}`}
                   >
                     {NODE_TYPE_LABEL[t]}
@@ -567,7 +593,7 @@ export default function KnowledgeGraphPage() {
         </div>
       )}
       <div className="twh-share">
-        <ShareButtons title="الرسم البياني المعرفي الإسلامي — المجلس العلمي" url="https://majlisilm.com/knowledge-graph" />
+        <ShareButtons title="الرسم البياني المعرفي الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/knowledge-graph" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["aqeeda", "tarikh", "fiqh"]} title="اختبر معلوماتك في المعرفة الإسلامية" count={4} />

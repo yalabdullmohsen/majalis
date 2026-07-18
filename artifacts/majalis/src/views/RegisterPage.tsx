@@ -4,7 +4,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { mapAuthError } from "@/lib/auth-messages";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { bootstrapSupabaseFromServer } from "@/lib/supabase-bootstrap";
-import { supabase, signInWithGoogle } from "@/lib/supabase";
+import { supabase, signInWithGoogle, GOOGLE_OAUTH_ENABLED } from "@/lib/supabase";
 import { Loading } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -110,7 +110,7 @@ export default function RegisterPage() {
     <div className="login-page">
       <div className="login-card">
         <div className="login-card__header">
-          <img src="/logo.png" alt="المجلس العلمي" className="login-logo" />
+          <img src="/logo.png" alt="المجلس العلمي" className="login-logo" loading="eager" decoding="async" width="512" height="512" />
           <p className="login-card__brand">المجلس العلمي</p>
           <h1 className="login-card__title">إنشاء حساب</h1>
           <p className="login-card__subtitle">انضم للتطبيق للمتابعة والوصول إلى المحتوى</p>
@@ -194,7 +194,7 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        {authEnabled && (
+        {authEnabled && GOOGLE_OAUTH_ENABLED && (
           <div className="login-oauth">
             <div className="login-oauth__divider"><span>أو</span></div>
             <button

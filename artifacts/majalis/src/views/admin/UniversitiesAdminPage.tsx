@@ -71,36 +71,36 @@ function UniversityForm({
     <form dir="rtl" onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="uap-label">الاسم بالعربية *</label>
-          <input className="uap-input" required value={form.name_ar || ""} onChange={(e) => { set("name_ar", e.target.value); autoSlug(e.target.value); }} />
+          <label className="uap-label" htmlFor="uap-name_ar">الاسم بالعربية *</label>
+          <input id="uap-name_ar" className="uap-input" required value={form.name_ar || ""} onChange={(e) => { set("name_ar", e.target.value); autoSlug(e.target.value); }} />
         </div>
         <div>
-          <label className="uap-label">الاسم بالإنجليزية</label>
-          <input className="uap-input" value={form.name_en || ""} onChange={(e) => set("name_en", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-name_en">الاسم بالإنجليزية</label>
+          <input id="uap-name_en" className="uap-input" value={form.name_en || ""} onChange={(e) => set("name_en", e.target.value)} />
         </div>
         <div>
-          <label className="uap-label">Slug (رابط) *</label>
-          <input className="uap-input" required value={form.slug || ""} onChange={(e) => set("slug", e.target.value)} dir="ltr" />
+          <label className="uap-label" htmlFor="uap-slug">Slug (رابط) *</label>
+          <input id="uap-slug" className="uap-input" required value={form.slug || ""} onChange={(e) => set("slug", e.target.value)} dir="ltr" />
         </div>
         <div>
-          <label className="uap-label">الدولة *</label>
-          <input className="uap-input" required value={form.country || ""} onChange={(e) => set("country", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-country">الدولة *</label>
+          <input id="uap-country" className="uap-input" required value={form.country || ""} onChange={(e) => set("country", e.target.value)} />
         </div>
         <div>
-          <label className="uap-label">المدينة</label>
-          <input className="uap-input" value={form.city || ""} onChange={(e) => set("city", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-city">المدينة</label>
+          <input id="uap-city" className="uap-input" value={form.city || ""} onChange={(e) => set("city", e.target.value)} />
         </div>
         <div>
-          <label className="uap-label">رابط الشعار (logo_url)</label>
-          <input className="uap-input" dir="ltr" value={form.logo_url || ""} onChange={(e) => set("logo_url", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-logo_url">رابط الشعار (logo_url)</label>
+          <input id="uap-logo_url" className="uap-input" dir="ltr" value={form.logo_url || ""} onChange={(e) => set("logo_url", e.target.value)} />
         </div>
         <div>
-          <label className="uap-label">الموقع الرسمي</label>
-          <input className="uap-input" dir="ltr" value={form.website_url || ""} onChange={(e) => set("website_url", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-website_url">الموقع الرسمي</label>
+          <input id="uap-website_url" className="uap-input" dir="ltr" value={form.website_url || ""} onChange={(e) => set("website_url", e.target.value)} />
         </div>
         <div>
-          <label className="uap-label">حالة الاعتماد</label>
-          <select className="uap-input" value={form.accreditation_status || "unknown"} onChange={(e) => set("accreditation_status", e.target.value as AccreditationStatus)}>
+          <label className="uap-label" htmlFor="uap-accreditation_status">حالة الاعتماد</label>
+          <select id="uap-accreditation_status" className="uap-input" value={form.accreditation_status || "unknown"} onChange={(e) => set("accreditation_status", e.target.value as AccreditationStatus)}>
             {Object.entries(ACCREDITATION_LABELS).map(([k, v]) => (
               <option key={k} value={k}>{v}</option>
             ))}
@@ -109,8 +109,8 @@ function UniversityForm({
       </div>
 
       <div>
-        <label className="uap-label">نبذة عن الجامعة</label>
-        <textarea className="uap-input" rows={4} value={form.about || ""} onChange={(e) => set("about", e.target.value)} />
+        <label className="uap-label" htmlFor="uap-about">نبذة عن الجامعة</label>
+        <textarea id="uap-about" className="uap-input" rows={4} value={form.about || ""} onChange={(e) => set("about", e.target.value)} />
       </div>
 
       <div className="flex gap-4">
@@ -166,38 +166,38 @@ function ProgramForm({
       <h4 className="uap-form-title">إضافة برنامج جديد</h4>
       <div className="grid grid-cols-2 gap-3">
         <div className="col-span-2">
-          <label className="uap-label">اسم البرنامج *</label>
-          <input className="uap-input" required value={form.program_name || ""} onChange={(e) => set("program_name", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-program_name">اسم البرنامج *</label>
+          <input id="uap-program_name" className="uap-input" required value={form.program_name || ""} onChange={(e) => set("program_name", e.target.value)} />
         </div>
         <div>
-          <label className="uap-label">الكلية / القسم</label>
-          <input className="uap-input" value={form.faculty_department || ""} onChange={(e) => set("faculty_department", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-faculty_department">الكلية / القسم</label>
+          <input id="uap-faculty_department" className="uap-input" value={form.faculty_department || ""} onChange={(e) => set("faculty_department", e.target.value)} />
         </div>
         <div>
-          <label className="uap-label">التخصص</label>
-          <input className="uap-input" value={form.specialization || ""} onChange={(e) => set("specialization", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-specialization">التخصص</label>
+          <input id="uap-specialization" className="uap-input" value={form.specialization || ""} onChange={(e) => set("specialization", e.target.value)} />
         </div>
         <div>
-          <label className="uap-label">الدرجة العلمية *</label>
-          <select className="uap-input" value={form.degree_level || "بكالوريوس"} onChange={(e) => set("degree_level", e.target.value as DegreeLevel)}>
+          <label className="uap-label" htmlFor="uap-degree_level">الدرجة العلمية *</label>
+          <select id="uap-degree_level" className="uap-input" value={form.degree_level || "بكالوريوس"} onChange={(e) => set("degree_level", e.target.value as DegreeLevel)}>
             {DEGREE_LEVELS.map((d) => <option key={d} value={d}>{d}</option>)}
           </select>
         </div>
         <div>
-          <label className="uap-label">لغة الدراسة</label>
-          <select className="uap-input" value={form.study_language || "العربية"} onChange={(e) => set("study_language", e.target.value)}>
+          <label className="uap-label" htmlFor="uap-study_language">لغة الدراسة</label>
+          <select id="uap-study_language" className="uap-input" value={form.study_language || "العربية"} onChange={(e) => set("study_language", e.target.value)}>
             {LANGUAGES.map((l) => <option key={l} value={l}>{l}</option>)}
           </select>
         </div>
         <div>
-          <label className="uap-label">نظام الدراسة</label>
-          <select className="uap-input" value={form.study_mode || "حضوري"} onChange={(e) => set("study_mode", e.target.value as StudyMode)}>
+          <label className="uap-label" htmlFor="uap-study_mode">نظام الدراسة</label>
+          <select id="uap-study_mode" className="uap-input" value={form.study_mode || "حضوري"} onChange={(e) => set("study_mode", e.target.value as StudyMode)}>
             {STUDY_MODES.map((m) => <option key={m} value={m}>{m}</option>)}
           </select>
         </div>
         <div>
-          <label className="uap-label">المدة</label>
-          <input className="uap-input" placeholder="مثال: 4 سنوات" value={form.duration || ""} onChange={(e) => set("duration", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-duration">المدة</label>
+          <input id="uap-duration" className="uap-input" placeholder="مثال: 4 سنوات" value={form.duration || ""} onChange={(e) => set("duration", e.target.value)} />
         </div>
         <div className="col-span-2">
           <label className="flex items-center gap-2 cursor-pointer mb-2">

@@ -3,7 +3,7 @@ import { GraduationCap } from "lucide-react";
 import { useParams, Link } from "wouter";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { verifyLearningCertificate } from "@/lib/digital-learning-service";
+import { verifyCertificate } from "@/lib/learning-paths-service";
 import { applyPageSeo } from "@/lib/seo";
 
 type CertResult = {
@@ -24,7 +24,7 @@ export default function CertificateVerifyPage() {
 
   useEffect(() => {
     applyPageSeo({
-      path: "/learning/certificate-verify",
+      path: "/learning/certificates",
       title: "التحقق من الشهادة | المجلس العلمي",
       description: "تحقق من صحة الشهادة العلمية الصادرة من المجلس العلمي، أدخل رمز الشهادة للتحقق منها.",
       keywords: ["تحقق شهادة", "شهادة علمية", "اعتماد علمي", "المجلس العلمي"],
@@ -33,7 +33,7 @@ export default function CertificateVerifyPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "التحقق من الشهادة العلمية",
-          url: "https://majlisilm.com/learning/certificate-verify",
+          url: "https://www.majlisilm.com/learning/certificates",
           description: "التحقق من صحة الشهادات العلمية الصادرة من المجلس العلمي",
           about: { "@type": "Thing", name: "الشهادات العلمية الإسلامية" },
         },
@@ -48,8 +48,23 @@ export default function CertificateVerifyPage() {
     if (!code) return;
     setLoading(true);
     setResult(null);
-    verifyLearningCertificate(code)
-      .then((r) => setResult(r as CertResult))
+    verifyCertificate(code)
+      .then((c) => {
+        if (!c) {
+          setResult({ valid: false });
+          return;
+        }
+        setResult({
+          valid: true,
+          certificate: {
+            title: c.path_title_snapshot,
+            holder: c.holder_name,
+            issued_at: c.issued_at,
+            path: c.path_title_snapshot,
+            level: c.level ?? undefined,
+          },
+        });
+      })
       .finally(() => setLoading(false));
   }, [code]);
 
@@ -184,12 +199,12 @@ export default function CertificateVerifyPage() {
       </section>
 
       <div className="cvp-links">
-        <Link href="/learning-path" className="cvp-back-link">المسارات العلمية</Link>
+        <Link href="/learning/paths" className="cvp-back-link">المسارات العلمية</Link>
         <Link href="/quiz" className="cvp-back-link">المسابقات التعليمية</Link>
         <Link href="/contact" className="cvp-back-link">تواصل معنا</Link>
       </div>
       <div className="twh-share">
-        <ShareButtons title="التحقق من الشهادة — المجلس العلمي" url="https://majlisilm.com/learning/certificate" />
+        <ShareButtons title="التحقق من الشهادة — المجلس العلمي" url="https://www.majlisilm.com/learning/certificate" />
       </div>
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 1rem 1.5rem" }}>
         <SectionQuiz categoryId={["fiqh","aqeeda","hadith"]} title="اختبر معلوماتك الشرعية" count={3} />

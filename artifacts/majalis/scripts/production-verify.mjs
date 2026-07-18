@@ -2,7 +2,7 @@
 /**
 import "dotenv/config";
  * Production readiness verification — run after Vercel env vars are configured.
- * Usage: node scripts/production-verify.mjs [--base=https://majlisilm.com]
+ * Usage: node scripts/production-verify.mjs [--base=https://www.majlisilm.com]
  *
  * Loads `.env.local` from the majalis app root when present.
  * When server secrets are unavailable locally, runs remote HTTP smoke tests against --base.

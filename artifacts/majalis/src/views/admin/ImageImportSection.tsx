@@ -67,7 +67,7 @@ const STATUS_META: Record<JobStatus, { label: string; css: string; dot: string }
   waiting:      { label: "بانتظار المعالجة", css: "ii-chip--wait",    dot: "#94a3b8" },
   analyzing:    { label: "جارٍ التحليل",    css: "ii-chip--analyze", dot: "#3b82f6" },
   completed:    { label: "اكتمل",           css: "ii-chip--done",    dot: "#22c55e" },
-  "needs-review":{ label:"يحتاج مراجعة",   css: "ii-chip--review",  dot: "#1F4D3A" },
+  "needs-review":{ label:"يحتاج مراجعة",   css: "ii-chip--review",  dot: "#176B57" },
   failed:       { label: "فشل",            css: "ii-chip--fail",    dot: "#ef4444" },
   approved:     { label: "تمّ النشر",      css: "ii-chip--approved",dot: "#10b981" },
   rejected:     { label: "مرفوض",          css: "ii-chip--rejected",dot: "#dc2626" },
@@ -232,8 +232,8 @@ function ReviewForm({
 
       {/* نوع النشاط */}
       <div>
-        <label className="iis-label">نوع النشاط</label>
-        <select className="iis-input" value={parsed.activity_type || "درس"} disabled={disabled}
+        <label className="iis-label" htmlFor="iis-activity-type">نوع النشاط</label>
+        <select id="iis-activity-type" className="iis-input" value={parsed.activity_type || "درس"} disabled={disabled}
           onChange={(e) => set("activity_type", e.target.value)}>
           {ACTIVITY_TYPES.map((a) => <option key={a} value={a}>{a}</option>)}
         </select>

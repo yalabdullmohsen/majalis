@@ -13,6 +13,7 @@ import {
   intelligentSearch,
   type IntelligentSearchResult,
 } from "@/lib/scholarly-intelligence-service";
+import { RecitationTestPanel } from "@/components/quran/RecitationTestPanel";
 
 type Props = {
   surahNum: number;
@@ -103,6 +104,12 @@ export function ExploreAyahPanel({ ayahNum, surahName, ayahText, onClose }: Prop
 
   useEffect(() => { load(); }, [load]);
 
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [onClose]);
+
   const groups = groupResults(results);
   const total = results.length;
 
@@ -139,6 +146,8 @@ export function ExploreAyahPanel({ ayahNum, surahName, ayahText, onClose }: Prop
         <div className="eap-ayah-preview">
           <p dir="rtl" lang="ar" className="eap-ayah-text">{ayahText}</p>
         </div>
+
+        <RecitationTestPanel ayahText={ayahText} />
 
         <div className="eap-results">
           {loading && <Skeleton />}

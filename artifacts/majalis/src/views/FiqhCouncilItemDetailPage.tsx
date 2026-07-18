@@ -67,7 +67,17 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
   usePageView("fiqh-council", params.slug);
 
   useEffect(() => {
-    if (!item) return;
+    if (loading) return;
+    if (!item) {
+      applyPageSeo({
+        path: fiqhItemHref(params.slug),
+        title: "المحتوى غير موجود | المجلس العلمي",
+        description: "لم يُعثر على هذا المحتوى في المجمع الفقهي.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     const path = fiqhItemHref(item.slug);
     const description = item.summary || item.title;
     applyPageSeo({
@@ -91,7 +101,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
               ? { "@type": "Organization", name: item.source_name }
               : undefined,
           inLanguage: "ar",
-          url: `https://majlisilm.com${path}`,
+          url: `https://www.majlisilm.com${path}`,
         },
         breadcrumbJsonLd([
           { name: "الرئيسية", path: "/" },
@@ -100,7 +110,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
         ]),
       ],
     });
-  }, [item]);
+  }, [item, loading, params.slug]);
 
   if (loading) return <SkeletonPage />;
   if (!item) return <Empty text="المحتوى غير موجود." />;

@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, Moon, Search, Sun, X } from "lucide-react";
+import { Menu, Moon, Search, Sun, User, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { useLanguage } from "./LanguageProvider";
 import NotificationBell from "./NotificationBell";
+import { SectionErrorBoundary } from "./ErrorBoundary";
 import { SearchSuggestions } from "./SearchSuggestions";
 import { SideNavDrawer } from "./SideNavDrawer";
-import { MobileMoreMenu } from "./MobileMoreMenu";
 import { useThemePreference } from "./ThemePreferenceProvider";
 
 import { useMobileNavState } from "@/hooks/useMobileNavState";
@@ -30,10 +30,15 @@ function PrayerChip() {
   }, []);
 
   if (!cd?.next) return null;
+  // خلال فترة السماح (٣٠ دقيقة بعد الأذان) لا نعرض 00:00:00 للصلاة التي أذّنت للتو،
+  // بل نتحوّل مباشرة لاسم وعدّاد الصلاة الفعلية التالية — نفس منطق PrayerTimesPage.
+  const inGrace = cd.sinceSeconds != null;
+  const displayName = inGrace && cd.graceNextSlot ? cd.graceNextSlot.name : cd.next.name;
+  const displayHms = inGrace && cd.graceNextHms ? cd.graceNextHms : cd.remainingHms;
   return (
-    <Link href="/prayer-times" className="navbar-prayer-chip" aria-label={`الصلاة القادمة: ${cd.next.name}`}>
-      <span className="navbar-prayer-chip__name">{cd.next.name}</span>
-      <span className="navbar-prayer-chip__hms" aria-live="off">{cd.remainingHms}</span>
+    <Link href="/prayer-times" className="navbar-prayer-chip" aria-label={`الصلاة القادمة: ${displayName}`}>
+      <span className="navbar-prayer-chip__name">{displayName}</span>
+      <span className="navbar-prayer-chip__hms" aria-live="off">{displayHms}</span>
     </Link>
   );
 }
@@ -64,6 +69,8 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
   };
   return (
     <form
+      role="search"
+      aria-label="البحث في المجلس العلمي"
       onSubmit={(e) => {
         e.preventDefault();
         submit(term);
@@ -90,7 +97,7 @@ export default function NavBar() {
   const { resolvedTheme, toggleDark } = useThemePreference();
   const [location, navigate] = useLocation();
   const isMobile = useIsMobile();
-  const { isMenuOpen, moreOpen, toggleMenu, openMenu, closeMenu, closeMore, closeAll } = useMobileNavState();
+  const { isMenuOpen, toggleMenu, openMenu, closeMenu, closeAll } = useMobileNavState();
 
   const isActive = (href: string) => {
     const path = href.split("?")[0];
@@ -113,7 +120,11 @@ export default function NavBar() {
   // Desktop only: full auth bar
   const desktopAuthLinks = isLoggedIn ? (
     <div className="navbar-auth">
-      {isAdmin && <NotificationBell />}
+      {isAdmin && (
+        <SectionErrorBoundary name="NotificationBell">
+          <NotificationBell />
+        </SectionErrorBoundary>
+      )}
       <Link href="/stats" className="navbar-user-link">{user?.profile?.full_name || user?.email || t("nav_my_account")}</Link>
       {isAdmin && (
         <Link href="/admin" className="navbar-admin-link">
@@ -138,7 +149,7 @@ export default function NavBar() {
   return (
     <>
       <header
-        className={`navbar-v3 sticky top-0 border-b${isMenuOpen || moreOpen ? " navbar-v3--menu-open" : ""}`}
+        className={`navbar-v3 sticky top-0 border-b${isMenuOpen ? " navbar-v3--menu-open" : ""}`}
       >
         <div className="navbar-v3__inner">
           <div className="navbar-v3__start">
@@ -159,13 +170,28 @@ export default function NavBar() {
               <span className="navbar-menu-btn__label">{isMenuOpen ? t("nav_close") : t("nav_menu")}</span>
             </button>
             <Link href="/" className="navbar-brand" aria-label="المجلس العلمي">
-              <img
-                src="/logo-calligraphy.png"
-                alt="المجلس العلمي"
-                className="navbar-logo navbar-logo--calligraphy"
-                loading="eager"
-                decoding="async"
-              />
+              {/*
+                الشعار مرشّح LCP في كل صفحة. الأصل PNG بعرض 2044px = ١.١MB بينما
+                يُعرض بعرض ≤180px. نقدّم WebP بعرض 400/800 (~37KB / ~89KB) مع
+                احتياطي PNG مصغّر (79KB). display:contents يُبقي <img> نفسه عنصرَ
+                الـflex فلا يتغيّر أي شيء في التنسيق.
+              */}
+              <picture style={{ display: "contents" }}>
+                <source
+                  type="image/webp"
+                  srcSet="/logo-calligraphy-400.webp 1x, /logo-calligraphy-800.webp 2x"
+                />
+                <img
+                  src="/logo-calligraphy-400.png"
+                  alt="المجلس العلمي"
+                  className="navbar-logo navbar-logo--calligraphy"
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  width="400"
+                  height="154"
+                />
+              </picture>
             </Link>
           </div>
 
@@ -217,8 +243,23 @@ export default function NavBar() {
             {!isMobile && <SearchBox />}
             {!isMobile && desktopAuthLinks}
 
-            {/* Mobile: single auth icon only (no more / lang — those are in bottom nav + side nav) */}
-            {isMobile && isAdmin && <NotificationBell />}
+            {/* Mobile: زر دخول/حساب واضح دائمًا — لا يُترك مخفيًا داخل قائمة الهامبرغر فقط */}
+            {isMobile && !isLoggedIn && (
+              <Link href="/login" className="navbar-mobile-login" aria-label="تسجيل الدخول">
+                <User size={16} strokeWidth={1.8} aria-hidden="true" />
+                <span className="navbar-mobile-login__label">دخول</span>
+              </Link>
+            )}
+            {isMobile && isLoggedIn && (
+              <Link href="/stats" className="navbar-mobile-login navbar-mobile-login--active" aria-label="حسابي">
+                <User size={16} strokeWidth={1.8} aria-hidden="true" />
+              </Link>
+            )}
+            {isMobile && isAdmin && (
+              <SectionErrorBoundary name="NotificationBell">
+                <NotificationBell />
+              </SectionErrorBoundary>
+            )}
           </div>
         </div>
       </header>
@@ -228,20 +269,6 @@ export default function NavBar() {
         onClose={closeMenu}
         onLogout={handleLogout}
       />
-
-      {/* Mobile "more" menu — still used if ever triggered, but hidden on mobile now */}
-      {!isMobile && (
-        <MobileMoreMenu
-          open={moreOpen}
-          onClose={closeMore}
-          isActive={isActive}
-          isAdmin={isAdmin}
-          isLoggedIn={isLoggedIn}
-          onLogout={handleLogout}
-          searchBox={<SearchBox onSubmitDone={closeMore} />}
-          location={location}
-        />
-      )}
     </>
   );
 }

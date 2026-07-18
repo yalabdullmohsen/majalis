@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { AdminInlineEdit } from "@/components/AdminInlineEdit";
+import { ReadingProgressBar } from "@/components/ReadingProgressBar";
 import { getLessonById, getSheikhs } from "@/lib/supabase";
 import { SkeletonPage, Empty } from "@/components/ui-common";
 import ContentActions from "@/components/ContentActions";
+import { ContentReportButton } from "@/components/ContentReportButton";
 import { isDemoId } from "@/lib/demo-id";
 import { extractLessonSchedule, hasValue } from "@/lib/lesson-display";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
@@ -136,6 +138,27 @@ export default function LessonDetailPage({
   const [loading, setLoading] = useState(!initialLesson);
 
   useEffect(() => {
+    if (!kuwaitLesson) return;
+    applyPageSeo({
+      path: `/lesson/${kuwaitLesson.id}`,
+      title: `${kuwaitLesson.title} | المجلس العلمي`,
+      description: kuwaitLesson.description || `درس ${kuwaitLesson.title} للشيخ ${kuwaitLesson.sheikhName} في ${kuwaitLesson.mosque}، ${kuwaitLesson.governorate}.`,
+      keywords: kuwaitLesson.keywords ?? ["درس شرعي", kuwaitLesson.category, kuwaitLesson.sheikhName],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "Event",
+        name: kuwaitLesson.title,
+        description: kuwaitLesson.description || `درس ${kuwaitLesson.title} للشيخ ${kuwaitLesson.sheikhName}`,
+        location: { "@type": "Place", name: kuwaitLesson.mosque, address: { "@type": "PostalAddress", addressLocality: kuwaitLesson.governorate, addressCountry: "KW" } },
+        organizer: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+        performer: { "@type": "Person", name: kuwaitLesson.sheikhName },
+        ...(kuwaitLesson.startDate ? { startDate: kuwaitLesson.startDate } : {}),
+        inLanguage: "ar",
+      }],
+    });
+  }, [kuwaitLesson]);
+
+  useEffect(() => {
     if (initialLesson) {
       Promise.all([
         fetchRelatedLessons(initialLesson),
@@ -248,7 +271,7 @@ export default function LessonDetailPage({
     };
   }, [kuwaitLesson, lesson, unified]);
 
-  useLessonSeo(seoLesson, `/lessons/${params.id}`);
+  useLessonSeo(seoLesson, `/lessons/${params.id}`, loading);
   usePageView("lesson", params.id);
 
   if (loading) return <SkeletonPage />;
@@ -281,6 +304,7 @@ export default function LessonDetailPage({
 
   return (
     <div className="page-shell narrow lesson-detail-page">
+      <ReadingProgressBar />
       <nav className="lesson-detail-breadcrumb" aria-label="مسار التصفح">
         <Link href="/">الرئيسية</Link>
         <span aria-hidden="true"> / </span>
@@ -467,11 +491,12 @@ export default function LessonDetailPage({
           {!isDemoId(unified.id) && !unified.id.startsWith("kw-") && (
             <ContentActions contentType="lesson" contentId={unified.id} />
           )}
+          <ContentReportButton contentType="درس" contentId={unified.id} title={unified.title} />
         </div>
 
         {unified.qrCodeUrl && (
           <div className="lesson-detail-qr">
-            <img src={unified.qrCodeUrl} alt={`رمز QR للدرس: ${unified.title}`} title={unified.title} loading="lazy" decoding="async" />
+            <img src={unified.qrCodeUrl} alt={`رمز QR للدرس: ${unified.title}`} loading="lazy" decoding="async" width="200" height="200" />
           </div>
         )}
       </article>

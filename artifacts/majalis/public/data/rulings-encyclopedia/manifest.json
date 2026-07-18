@@ -1,57 +1,57 @@
 {
   "version": 1,
-  "generated_at": "2026-07-12T07:11:03.804Z",
-  "total": 1101,
+  "generated_at": "2026-07-17T23:05:11.767Z",
+  "total": 515,
   "chunks": [
     {
       "category": "الطهارة",
       "file": "chunks/الطهارة.json",
-      "count": 95
+      "count": 44
     },
     {
       "category": "الصلاة",
       "file": "chunks/الصلاة.json",
-      "count": 126
+      "count": 41
     },
     {
       "category": "الزكاة",
       "file": "chunks/الزكاة.json",
-      "count": 91
+      "count": 35
     },
     {
       "category": "الحج",
       "file": "chunks/الحج.json",
-      "count": 36
+      "count": 5
     },
     {
       "category": "المعاملات",
       "file": "chunks/المعاملات.json",
-      "count": 68
+      "count": 10
     },
     {
       "category": "المواريث",
       "file": "chunks/المواريث.json",
-      "count": 22
+      "count": 5
     },
     {
       "category": "الصيام",
       "file": "chunks/الصيام.json",
-      "count": 79
+      "count": 34
     },
     {
       "category": "الأسرة",
       "file": "chunks/الأسرة.json",
-      "count": 56
+      "count": 9
     },
     {
       "category": "النوازل",
       "file": "chunks/النوازل.json",
-      "count": 57
+      "count": 9
     },
     {
       "category": "طلب العلم والدعوة",
       "file": "chunks/طلب-العلم-والدعوة.json",
-      "count": 198
+      "count": 112
     },
     {
       "category": "العقيدة",
@@ -61,27 +61,27 @@
     {
       "category": "الحج والعمرة",
       "file": "chunks/الحج-والعمرة.json",
-      "count": 35
+      "count": 22
     },
     {
       "category": "القرآن والحديث",
       "file": "chunks/القرآن-والحديث.json",
-      "count": 67
+      "count": 49
     },
     {
       "category": "الأذكار والدعاء",
       "file": "chunks/الأذكار-والدعاء.json",
-      "count": 36
+      "count": 28
     },
     {
       "category": "الأخلاق والآداب",
       "file": "chunks/الأخلاق-والآداب.json",
-      "count": 31
+      "count": 16
     },
     {
       "category": "النوازل المعاصرة",
       "file": "chunks/النوازل-المعاصرة.json",
-      "count": 66
+      "count": 58
     }
   ]
 }

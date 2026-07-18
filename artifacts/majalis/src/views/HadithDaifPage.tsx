@@ -16,7 +16,7 @@ export default function HadithDaifPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "الأحاديث الضعيفة",
-          url: "https://majlisilm.com/hadith/daif",
+          url: "https://www.majlisilm.com/hadith/daif",
           description: "قائمة بالأحاديث الضعيفة مع بيان علّة الضعف، للتوعية العلمية",
           about: { "@type": "Thing", name: "الأحاديث الضعيفة في علم مصطلح الحديث" },
         },
@@ -28,7 +28,7 @@ export default function HadithDaifPage() {
     <>
       <HadithSection authenticityClass="daif" />
       <div className="twh-share">
-        <ShareButtons title="الأحاديث الضعيفة — المجلس العلمي" url="https://majlisilm.com/hadith/daif" />
+        <ShareButtons title="الأحاديث الضعيفة — المجلس العلمي" url="https://www.majlisilm.com/hadith/daif" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في علوم الحديث" count={4} />

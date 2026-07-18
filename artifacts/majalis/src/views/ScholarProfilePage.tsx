@@ -6,15 +6,158 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SCHOLARS, findScholarById } from "@/lib/scholars-data";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
+// ── تحويل أرقام عربية-هندية إلى رقم ─────────────────────────────────────
+const AR_DIGITS: Record<string, number> = {
+  "٠": 0, "١": 1, "٢": 2, "٣": 3, "٤": 4,
+  "٥": 5, "٦": 6, "٧": 7, "٨": 8, "٩": 9,
+};
+
+function parseHijriYear(died: string): number | null {
+  const chars = [...died.replace(/[^٠-٩0-9]/g, "")];
+  if (!chars.length) return null;
+  const n = chars.reduce((acc, ch) => acc * 10 + (AR_DIGITS[ch] ?? parseInt(ch, 10)), 0);
+  return n > 0 ? n : null;
+}
+
+function toArabicOrdinal(n: number): string {
+  const map: Record<number, string> = {
+    1: "الأول", 2: "الثاني", 3: "الثالث", 4: "الرابع", 5: "الخامس",
+    6: "السادس", 7: "السابع", 8: "الثامن", 9: "التاسع", 10: "العاشر",
+    11: "الحادي عشر", 12: "الثاني عشر", 13: "الثالث عشر",
+    14: "الرابع عشر", 15: "الخامس عشر",
+  };
+  return map[n] ?? String(n);
+}
+
+// ── خط زمني للقرون الهجرية ────────────────────────────────────────────────
+function ScholarTimeline({ died }: { died: string }) {
+  const year = parseHijriYear(died);
+  if (!year) return null;
+
+  const century = Math.min(Math.max(Math.ceil(year / 100), 1), 15);
+  const eraLabels: Record<number, string> = {
+    1: "الصحابة", 2: "التابعون", 3: "تدوين السنة",
+    5: "العصر الكلاسيكي", 8: "ابن تيمية", 14: "الحديث",
+  };
+
+  return (
+    <section
+      className="sch-profile-section"
+      aria-labelledby="timeline-heading"
+      style={{ padding: "1rem 1.25rem 0.5rem" }}
+    >
+      <h2
+        id="timeline-heading"
+        className="sch-profile-section__title"
+        style={{ marginBottom: "0.5rem", fontSize: "0.9rem" }}
+      >
+        موقع العالم في التاريخ الإسلامي
+      </h2>
+      <p style={{ fontSize: "0.8rem", color: "var(--ds-ink-soft)", marginBottom: "0.6rem" }}>
+        وفاته: {died} — القرن {toArabicOrdinal(century)} الهجري
+      </p>
+
+      {/* شريط القرون */}
+      <div
+        role="img"
+        aria-label={`الخط الزمني: القرن ${century} الهجري`}
+        style={{ width: "100%" }}
+      >
+        <div style={{
+          display: "flex",
+          height: "18px",
+          borderRadius: "9px",
+          overflow: "hidden",
+          border: "1px solid var(--ds-line-color, #d4ccc2)",
+        }}>
+          {Array.from({ length: 15 }, (_, i) => i + 1).map((c) => (
+            <div
+              key={c}
+              title={`القرن ${toArabicOrdinal(c)}${eraLabels[c] ? " — " + eraLabels[c] : ""}`}
+              style={{
+                flex: 1,
+                background: c === century
+                  ? "var(--elite-green, #0E6E52)"
+                  : c <= 3
+                    ? "var(--ds-parchment-deep, #ede8e0)"
+                    : "var(--ds-parchment, #f5f0e8)",
+                borderRight: c < 15 ? "1px solid var(--ds-line-color, #d4ccc2)" : "none",
+              }}
+            />
+          ))}
+        </div>
+
+        {/* أرقام */}
+        <div style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "3px",
+          paddingInline: "1px",
+        }}>
+          {[1, 3, 5, 7, 9, 11, 13, 15].map((c) => (
+            <span
+              key={c}
+              style={{
+                fontSize: "0.62rem",
+                color: c === century ? "var(--elite-green, #0E6E52)" : "var(--ds-ink-soft, #9ca3af)",
+                fontWeight: c === century ? 700 : 400,
+                direction: "ltr",
+              }}
+            >
+              {c}هـ
+            </span>
+          ))}
+        </div>
+
+        {/* وسوم الحقب */}
+        <div style={{
+          marginTop: "0.5rem",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "0.3rem",
+        }}>
+          {Object.entries(eraLabels).map(([c, label]) => (
+            <span
+              key={c}
+              style={{
+                fontSize: "0.68rem",
+                padding: "1px 6px",
+                borderRadius: "4px",
+                background: Number(c) === century ? "var(--elite-green, #0E6E52)" : "var(--ds-parchment-deep, #ede8e0)",
+                color: Number(c) === century ? "#fff" : "var(--ds-ink-soft, #6b7280)",
+                border: "1px solid var(--ds-line-color, #d4ccc2)",
+              }}
+            >
+              ق{c} — {label}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function ScholarProfilePage() {
   const { id } = useParams<{ id: string }>();
   const scholar = findScholarById(id ?? "");
 
   useEffect(() => {
-    if (!scholar) return;
+    if (!scholar) {
+      // معرّف غير موجود — لا يجوز ترك عنوان/ميتا الصفحة السابقة (غالباً الرئيسية)
+      // كما هي؛ هذا كان يجعل الزواحف التي تُنفّذ JS تفهرس هذه الصفحة بعنوان
+      // ومحتوى منظم (JSON-LD) خاطئين تماماً بينما الجسم الفعلي "غير موجود".
+      applyPageSeo({
+        path: `/scholars/${id ?? ""}`,
+        title: "العالم غير موجود | المجلس العلمي",
+        description: "لم يُعثر على هذا العالم في قاعدة بياناتنا.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     applyPageSeo({
       path: `/scholars/${scholar.id}`,
-      title: `${scholar.name} — سيرة العالم | مجالس`,
+      title: `${scholar.name} — سيرة العالم | المجلس العلمي`,
       description: scholar.bio,
       keywords: [scholar.name, scholar.fullName, scholar.era, ...scholar.specialty],
       jsonLd: [{
@@ -24,10 +167,10 @@ export default function ScholarProfilePage() {
         alternateName: scholar.name,
         description: scholar.bio,
         knowsAbout: scholar.specialty,
-        url: `https://majlisilm.com/scholars/${scholar.id}`,
+        url: `https://www.majlisilm.com/scholars/${scholar.id}`,
       }],
     });
-  }, [scholar]);
+  }, [scholar, id]);
 
   if (!scholar) {
     return (
@@ -75,6 +218,17 @@ export default function ScholarProfilePage() {
         </div>
       </header>
 
+      {/* خط زمني */}
+      <ScholarTimeline died={scholar.died} />
+
+      {/* ملاحظة مصادر الترجمة */}
+      <div className="stb-wrap stb-wrap--compact stb-wrap--empty" role="note" dir="rtl">
+        <p className="stb-missing" style={{ fontSize: "0.8rem", color: "var(--clr-ink-soft)" }}>
+          المعلومات الواردة نُقلت من مصادر التراجم المعتمدة (طبقات ابن سعد، سير أعلام النبلاء، وفيات الأعيان).
+          عند وجود نقص أو خطأ يُرجى الإبلاغ.
+        </p>
+      </div>
+
       {/* Bio */}
       <section className="sch-profile-section" aria-labelledby="bio-heading">
         <h2 id="bio-heading" className="sch-profile-section__title">نبذة تعريفية</h2>
@@ -105,8 +259,8 @@ export default function ScholarProfilePage() {
       {/* Share */}
       <div className="twh-share">
         <ShareButtons
-          title={`${scholar.name} — مجالس العلم`}
-          url={`https://majlisilm.com/scholars/${scholar.id}`}
+          title={`${scholar.name} — المجلس العلمي`}
+          url={`https://www.majlisilm.com/scholars/${scholar.id}`}
         />
       </div>
 

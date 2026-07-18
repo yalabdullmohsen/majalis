@@ -95,7 +95,7 @@ The app serves the Kuwaiti Islamic scholarly community and Arabic-speaking Musli
 
 If the reviewer needs to test logged-in features:
 
-- **Email:** review@majlisilm.com  
+- **Email:** Majlisilm.app@gmail.com  
 - **Password:** *(provided separately via App Review Notes field in App Store Connect)*
 
 Logged-in features include: submitting content suggestions, saving learning progress, and accessing the personal vault.

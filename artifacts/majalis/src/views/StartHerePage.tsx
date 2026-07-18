@@ -68,7 +68,7 @@ const STEPS: Step[] = [
     desc: "تلاوة القرآن يومياً مع الفهم. ابدأ بصفحتين يومياً واستخدم الورد اليومي للمتابعة.",
     Icon: BookOpen,
     links: [
-      { href: "/quran",       label: "المصحف الرقمي" },
+      { href: "/quran-hub",   label: "مركز القرآن" },
       { href: "/daily-wird",  label: "الورد اليومي" },
       { href: "/quran/tajweed", label: "أحكام التجويد" },
     ],
@@ -145,7 +145,7 @@ export default function StartHerePage() {
           "@type": "HowTo",
           name: "كيف تبدأ طريق طالب العلم",
           description: "مسار تعريفي مرتّب لطالب العلم المبتدئ",
-          url: "https://majlisilm.com/start-here",
+          url: "https://www.majlisilm.com/start-here",
           inLanguage: "ar",
           step: STEPS.map((s) => ({
             "@type": "HowToStep",

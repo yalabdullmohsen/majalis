@@ -833,7 +833,7 @@ const DUAS: DuaEntry[] = [
   },
   /* ── الأكل والشرب ── */
   {
-    id: "akl-6",
+    id: "akl-12",
     title: "دعاء الشرب",
     arabic: "بِسْمِ اللَّهِ",
     transliteration: "Bismillah",
@@ -844,7 +844,7 @@ const DUAS: DuaEntry[] = [
     virtue: "من سنن النبي ﷺ التسمية عند الشرب والحمد بعده",
   },
   {
-    id: "akl-7",
+    id: "akl-10",
     title: "دعاء الحمد بعد الشرب",
     arabic: "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ",
     transliteration: "Alhamdu lillahillathi at'amana wa saqana wa ja'alana muslimin",
@@ -867,7 +867,7 @@ const DUAS: DuaEntry[] = [
   },
   /* ── السفر ── */
   {
-    id: "safar-7",
+    id: "safar-10",
     title: "دعاء الرجوع من السفر",
     arabic: "آيِبُونَ تَائِبُونَ عَابِدُونَ، لِرَبِّنَا حَامِدُونَ",
     transliteration: "Ayibuna ta'ibuna 'abiduna, li-rabbina hamidun",
@@ -878,7 +878,7 @@ const DUAS: DuaEntry[] = [
     virtue: "كان النبي ﷺ يقوله كلما رجع من سفر",
   },
   {
-    id: "safar-8",
+    id: "safar-11",
     title: "دعاء المسافر لأهله",
     arabic: "أَسْتَوْدِعُكُمُ اللَّهَ الَّذِي لَا تَضِيعُ وَدَائِعُهُ",
     transliteration: "Astawdi'ukum Allaha alladhi la tadi'u wada'i'uh",
@@ -1007,17 +1007,58 @@ const DUAS: DuaEntry[] = [
   },
 ];
 
+/* ─── دعاء اليوم ─── */
+function todaysDua(): DuaEntry {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+  return DUAS[dayOfYear % DUAS.length];
+}
+
+function DuaOfDayCard({ dua, onCopy, copied }: { dua: DuaEntry; onCopy: (d: DuaEntry) => void; copied: string | null }) {
+  return (
+    <div className="dua-of-day">
+      <div className="dua-of-day__badge">
+        <BookOpen size={12} aria-hidden="true" />
+        دعاء اليوم
+      </div>
+      <h3 className="dua-of-day__title">{dua.title}</h3>
+      <p className="dua-of-day__arabic">{dua.arabic}</p>
+      <div className="dua-of-day__meta">
+        <span className="dua-of-day__occasion">{dua.occasion}</span>
+        <span className="dua-of-day__src">{dua.source}</span>
+      </div>
+      {dua.virtue && (
+        <p className="dua-of-day__virtue">
+          <Star size={12} aria-hidden="true" />
+          {dua.virtue}
+        </p>
+      )}
+      <button
+        type="button"
+        className="dua-of-day__copy"
+        onClick={() => onCopy(dua)}
+        aria-label="نسخ دعاء اليوم"
+      >
+        {copied === dua.id ? <Check size={14} /> : <Copy size={14} />}
+        {copied === dua.id ? "تم النسخ" : "نسخ الدعاء"}
+      </button>
+    </div>
+  );
+}
+
 /* ─── الصفحة ─── */
 export default function DuasPage() {
   const [category, setCategory] = useState("الكل");
   const [search, setSearch] = useState("");
   const [copied, setCopied] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
+  const todayDua = useMemo(() => todaysDua(), []);
 
   useEffect(() => {
     applyPageSeo({
       path: "/duas",
-      title: "الأدعية الشرعية، أدعية من القرآن والسنة | مجالس",
+      title: "الأدعية الشرعية، أدعية من القرآن والسنة | المجلس العلمي",
       description: "مكتبة الأدعية الشرعية الموثقة: أدعية الصباح والمساء والصلاة والسفر والكرب مع المعنى والمصدر.",
       keywords: ["أدعية", "دعاء", "أذكار", "دعاء الكرب", "دعاء الصباح", "دعاء المساء"],
       jsonLd: [
@@ -1031,7 +1072,7 @@ export default function DuasPage() {
             "@type": "ListItem",
             position: i + 1,
             name: d.title,
-            url: `https://majlisilm.com/duas#${d.id}`,
+            url: `https://www.majlisilm.com/duas#${d.id}`,
           })),
         },
       ],
@@ -1073,6 +1114,9 @@ export default function DuasPage() {
         </div>
       </div>
 
+      {/* ═══ دعاء اليوم ═══ */}
+      <DuaOfDayCard dua={todayDua} onCopy={copyDua} copied={copied} />
+
       {/* ═══ فلاتر ═══ */}
       <div className="duas-controls">
         <div className="duas-search-wrap">
@@ -1085,14 +1129,15 @@ export default function DuasPage() {
             aria-label="بحث"
           />
         </div>
-        <div className="duas-cats">
+        <div className="duas-cats" role="tablist" aria-label="تصفية الأدعية">
           {CATEGORIES.map((c) => (
             <button
               key={c}
+              role="tab"
               type="button"
               className={`duas-cat${category === c ? " duas-cat--active" : ""}`}
               onClick={() => setCategory(c)}
-              aria-pressed={category === c}
+              aria-selected={category === c}
             >
               {c}
             </button>
@@ -1174,7 +1219,7 @@ export default function DuasPage() {
       />
 
       <div className="twh-share">
-        <ShareButtons title="الأدعية الشرعية — المجلس العلمي" url="https://majlisilm.com/duas" />
+        <ShareButtons title="الأدعية الشرعية — المجلس العلمي" url="https://www.majlisilm.com/duas" />
       </div>
     </div>
   );

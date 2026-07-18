@@ -46,7 +46,7 @@ const CATEGORY_LABELS: Category[] = ["الكل", "صحابة", "فتوحات", "
 // ─────────────────── Story Card ───────────────────────────────────────────────
 function StoryCard({ story, onSelect }: { story: IslamicStory; onSelect: () => void }) {
   return (
-    <article
+    <div
       className={`isp-card isp-card--${story.category === "صحابة" ? "companions" : story.category === "فتوحات" ? "conquests" : "history"}`}
       onClick={onSelect}
       onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onSelect()}
@@ -76,7 +76,7 @@ function StoryCard({ story, onSelect }: { story: IslamicStory; onSelect: () => v
       </div>
 
       <span className="isp-card__cta">اقرأ القصة ←</span>
-    </article>
+    </div>
   );
 }
 
@@ -151,7 +151,7 @@ function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => voi
         </div>
       )}
       <div className="isp-detail__share">
-        <ShareButtons title={story.title} url={`https://majlisilm.com/islamic-stories`} />
+        <ShareButtons title={story.title} url={`https://www.majlisilm.com/stories`} />
       </div>
     </div>
   );
@@ -167,9 +167,19 @@ export default function IslamicStoriesPage() {
   const [era, setEra] = useState<Era>("الكل");
   const [search, setSearch] = useState("");
 
+  // رابط `?cat=...` في JSON-LD أسفل هذه الصفحة نفسها كان يُتجاهَل كليًا:
+  // `category` تُهيَّأ دائماً بـ"الكل" بلا قراءة أي شيء من الرابط الفعلي —
+  // عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف بالفحص المباشر
+  // 2026-07-18.
+  useEffect(() => {
+    const cat = new URLSearchParams(window.location.search).get("cat");
+    const valid: Category[] = ["الكل", "صحابة", "فتوحات", "تاريخ"];
+    if (cat && (valid as string[]).includes(cat)) setCategory(cat as Category);
+  }, []);
+
   useEffect(() => {
     applyPageSeo({
-      path: "/islamic-stories",
+      path: "/stories",
       title: "قصص الصحابة والفتوحات الإسلامية | المجلس العلمي",
       description: "قصص الصحابة الكرام والفتوحات الإسلامية والأحداث التاريخية، من الهجرة النبوية إلى فتح مكة وما بعدها من عصور الإسلام.",
       keywords: ["قصص إسلامية", "الصحابة", "الفتوحات الإسلامية", "التاريخ الإسلامي", "السيرة"],
@@ -183,7 +193,7 @@ export default function IslamicStoriesPage() {
             "@type": "ListItem",
             position: i + 1,
             name: cat,
-            url: `https://majlisilm.com/islamic-stories?cat=${encodeURIComponent(cat)}`,
+            url: `https://www.majlisilm.com/stories?cat=${encodeURIComponent(cat)}`,
           })),
         },
       ],
@@ -263,7 +273,7 @@ export default function IslamicStoriesPage() {
         <div className="isp-controls">
           <input
             className="isp-search"
-            placeholder="ابحث في القصص…"
+            aria-label="ابحث في القصص…" placeholder="ابحث في القصص…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />

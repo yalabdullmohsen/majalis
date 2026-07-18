@@ -24,7 +24,7 @@ export default function QuranRadioPage() {
       title: "راديو القرآن الكريم | المجلس العلمي",
       description: "استمع إلى القرآن الكريم عبر الإنترنت، محطات إذاعية متنوعة وبث مباشر للتلاوات القرآنية.",
       keywords: ["راديو قرآن", "بث قرآن", "تلاوة قرآنية", "استماع قرآن", "إذاعة إسلامية"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "راديو القرآن الكريم", url: "https://majlisilm.com/quran-radio", about: { "@type": "Thing", name: "إذاعات وبث القرآن الكريم" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "راديو القرآن الكريم", url: "https://www.majlisilm.com/quran-radio", about: { "@type": "Thing", name: "إذاعات وبث القرآن الكريم" } }],
     });
   }, []);
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function QuranRadioPage() {
     <div className="page-shell qs-radio-page">
       {/* Subnav */}
       <nav className="qs-subnav" aria-label="أقسام القرآن">
-        <Link href="/quran" className="qs-subnav__link">المصحف</Link>
+        <Link href="/quran-hub" className="qs-subnav__link">مركز القرآن</Link>
         <Link href="/quran-radio" className="qs-subnav__link is-active">الإذاعة والبث</Link>
       </nav>
 
@@ -138,8 +138,7 @@ export default function QuranRadioPage() {
                 {ch.youtubeUrl && (
                   <a
                     href={ch.youtubeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    target="_blank" rel="noopener noreferrer"
                     className="qs-youtube-btn"
                     aria-label={`مشاهدة ${ch.name} على يوتيوب`}
                   >
@@ -149,6 +148,8 @@ export default function QuranRadioPage() {
                     مشاهدة مباشر على يوتيوب
                   </a>
                 )}
+                {/* لا <track> ممكن: بث مباشر (live stream) لقناة إذاعة قرآنية،
+                    بلا محتوى مسجَّل يمكن تفريغه/ترجمته مسبقًا. */}
                 <video
                   src={ch.streamUrl}
                   controls
@@ -164,7 +165,7 @@ export default function QuranRadioPage() {
         </section>
 
         <div className="twh-share">
-          <ShareButtons title="إذاعات وقنوات القرآن الكريم — المجلس العلمي" url="https://majlisilm.com/quran-radio" />
+          <ShareButtons title="إذاعات وقنوات القرآن الكريم — المجلس العلمي" url="https://www.majlisilm.com/quran-radio" />
         </div>
         <div className="px-4 pb-6 mt-4">
           <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />

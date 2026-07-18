@@ -27,7 +27,7 @@ export default function FiqhCouncilNawazilPage() {
       title: "النوازل المعاصرة | المجمع الفقهي | المجلس العلمي",
       description: "النوازل الفقهية المعاصرة، مسائل العصر الحديث من التقنية والاقتصاد الرقمي والطب والبيئة.",
       keywords: ["نوازل معاصرة", "مسائل معاصرة", "فقه معاصر", "نوازل فقهية", "مستجدات فقهية"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "النوازل المعاصرة", url: "https://majlisilm.com/fiqh-council/nawazil", about: { "@type": "Thing", name: "النوازل الفقهية والمستجدات المعاصرة" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "النوازل المعاصرة", url: "https://www.majlisilm.com/fiqh-council/nawazil", about: { "@type": "Thing", name: "النوازل الفقهية والمستجدات المعاصرة" } }],
     });
   }, []);
 
@@ -49,22 +49,24 @@ export default function FiqhCouncilNawazilPage() {
 
       <FiqhCouncilSubnav />
 
-      <div className="content-hub-chips fiqh-nawazil-chips">
+      <div className="content-hub-chips fiqh-nawazil-chips" role="tablist" aria-label="تصفية النوازل الفقهية">
         <button
+          role="tab"
           type="button"
           className={!activeTopic ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
           onClick={() => setActiveTopic(null)}
-          aria-pressed={!activeTopic}
+          aria-selected={!activeTopic}
         >
           الكل
         </button>
         {NAWAZIL_TOPICS.map((topic) => (
           <button
             key={topic.slug}
+            role="tab"
             type="button"
             className={activeTopic === topic.slug ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
             onClick={() => setActiveTopic(topic.slug)}
-            aria-pressed={activeTopic === topic.slug}
+            aria-selected={activeTopic === topic.slug}
           >
             {topic.title}
           </button>
@@ -119,7 +121,7 @@ export default function FiqhCouncilNawazilPage() {
       </p>
 
       <div className="twh-share">
-        <ShareButtons title="نوازل فقهية معاصرة — المجلس العلمي" url="https://majlisilm.com/fiqh-council/nawazil" />
+        <ShareButtons title="نوازل فقهية معاصرة — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/nawazil" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في النوازل الفقهية" count={4} />

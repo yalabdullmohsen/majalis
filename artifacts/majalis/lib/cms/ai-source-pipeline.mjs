@@ -10,7 +10,7 @@ import { fieldCompletenessScore } from "./lesson-intelligence/dedup-engine.mjs";
 
 async function fetchImageBuffer(imageUrl) {
   const res = await fetch(imageUrl, {
-    headers: { "User-Agent": "MajalisBot/1.0 (+https://majlisilm.com)", Accept: "image/*" },
+    headers: { "User-Agent": "MajalisBot/1.0 (+https://www.majlisilm.com)", Accept: "image/*" },
     signal: AbortSignal.timeout(12000),
   });
   if (!res.ok) return null;

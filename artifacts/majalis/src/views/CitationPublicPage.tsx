@@ -19,28 +19,7 @@ import { applyPageSeo } from "@/lib/seo";
 
 export default function CitationPublicPage() {
   const [, params] = useRoute("/c/:slug");
-
   const slug = params?.slug || "";
-
-  useEffect(() => {
-    applyPageSeo({
-      path: `/c/${slug}`,
-      title: "مقتطف علمي مشترك | المجلس العلمي",
-      description: "مقتطف علمي من المجلس العلمي، استشهادات أكاديمية بأسلوب مفهرس وجاهز للمشاركة والنشر.",
-      keywords: ["مقتطف علمي", "استشهاد أكاديمي", "نص إسلامي", "مشاركة علمية"],
-      jsonLd: [
-        {
-          "@context": "https://schema.org",
-          "@type": "Article",
-          name: "مقتطف علمي",
-          url: `https://majlisilm.com/c/${slug}`,
-          description: "مقتطف علمي إسلامي جاهز للمشاركة والاستشهاد الأكاديمي",
-          publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
-          inLanguage: "ar",
-        },
-      ],
-    });
-  }, [slug]);
   const { user } = useAuth();
 
   const [citation, setCitation] = useState<Citation | null>(null);
@@ -55,8 +34,38 @@ export default function CitationPublicPage() {
     setLoading(true);
     fetchCitationBySlug(slug)
       .then((r) => {
-        if (r.ok && r.citation) setCitation(r.citation);
-        else setError(r.error || "الاقتباس غير موجود");
+        if (r.ok && r.citation) {
+          setCitation(r.citation);
+          const c = r.citation;
+          applyPageSeo({
+            path: `/c/${slug}`,
+            title: `"${c.quoted_text.slice(0, 60)}..." | المجلس العلمي`,
+            description: c.quoted_text.slice(0, 300),
+            image: getCitationImageUrl(slug),
+            keywords: ["مقتطف علمي", "استشهاد أكاديمي", "نص إسلامي", "مشاركة علمية"],
+            jsonLd: [
+              {
+                "@context": "https://schema.org",
+                "@type": "Article",
+                name: c.source?.title_ar || "مقتطف علمي",
+                url: `https://www.majlisilm.com/c/${slug}`,
+                description: c.quoted_text.slice(0, 200),
+                ...(c.source?.author_name ? { author: { "@type": "Person", name: c.source.author_name } } : {}),
+                publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+                inLanguage: "ar",
+              },
+            ],
+          });
+        } else {
+          setError(r.error || "الاقتباس غير موجود");
+          applyPageSeo({
+            path: `/c/${slug}`,
+            title: "الاقتباس غير موجود | المجلس العلمي",
+            description: "لم يُعثر على هذا الاقتباس.",
+            robots: "noindex, follow",
+            jsonLd: [],
+          });
+        }
       })
       .catch(() => setError("خطأ في الاتصال"))
       .finally(() => setLoading(false));
@@ -109,21 +118,11 @@ export default function CitationPublicPage() {
   const typeLabel = src ? CONTENT_TYPE_LABEL[src.content_type] || "" : "";
   const sourceHref = src?.source_url || (src?.reference_id ? `/${src.content_type.replace("_", "-")}/${src.reference_id}` : "/");
 
-  useEffect(() => {
-    if (!citation || !src) return;
-    document.title = `"${citation.quoted_text.slice(0, 60)}..."، مجالس`;
-    const meta = (n: string) => document.querySelector(`meta[name="${n}"],meta[property="${n}"]`) as HTMLMetaElement | null;
-    if (meta("description")) meta("description")!.content = citation.quoted_text;
-    if (meta("og:title")) meta("og:title")!.content = `اقتباس: ${src.title_ar}`;
-    if (meta("og:description")) meta("og:description")!.content = citation.quoted_text;
-    if (meta("og:image")) meta("og:image")!.content = getCitationImageUrl(slug);
-  }, [citation, src, slug]);
-
   return (
     <div className="cpp-root">
       {/* شريط التنقل */}
       <nav aria-label="تنقل الصفحة" className="cpp-nav">
-        <Link href="/" className="cpp-nav__brand">مجالس</Link>
+        <Link href="/" className="cpp-nav__brand">المجلس العلمي</Link>
         <span className="cpp-nav__tagline">تطبيق العلم الشرعي</span>
       </nav>
 
@@ -203,7 +202,7 @@ export default function CitationPublicPage() {
           {showQr && (
             <div className="cpp-qr-wrap">
               <div className="cpp-qr-box">
-                <img src={getQrCodeUrl(slug)} alt="QR Code للاقتباس" className="cpp-qr-img" />
+                <img src={getQrCodeUrl(slug)} alt="QR Code للاقتباس" className="cpp-qr-img" loading="lazy" decoding="async" width="200" height="200" />
                 <p className="cpp-qr-url">{getShareUrl(slug)}</p>
               </div>
             </div>
@@ -221,10 +220,10 @@ export default function CitationPublicPage() {
           {/* تذييل */}
           <p className="cpp-footer">
             تم إنشاء هذا الاقتباس عبر{" "}
-            <Link href="/" className="cpp-link">منصة مجالس</Link>
+            <Link href="/" className="cpp-link">المجلس العلمي</Link>
           </p>
           <div className="twh-share">
-            <ShareButtons title="اقتباس من المجلس العلمي" url={typeof window !== "undefined" ? window.location.href : "https://majlisilm.com"} />
+            <ShareButtons title="اقتباس من المجلس العلمي" url={typeof window !== "undefined" ? window.location.href : "https://www.majlisilm.com"} />
           </div>
           <div className="px-4 pb-6 mt-4">
             <SectionQuiz categoryId={["hadith", "quran"]} title="اختبر معلوماتك في القرآن والحديث" count={4} />

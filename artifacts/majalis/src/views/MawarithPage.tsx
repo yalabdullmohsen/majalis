@@ -1,4 +1,7 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
+import { Link } from "wouter";
+import { Sparkles, Calculator } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -257,13 +260,19 @@ export default function MawarithPage() {
             "@type": "ListItem",
             position: i + 1,
             name: w.name,
-            url: `https://majlisilm.com/mawarith#warith-${i + 1}`,
+            url: `https://www.majlisilm.com/mawarith#warith-${i + 1}`,
           })),
         },
       ],
     });
   }, []);
 
+  const todayMasala = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
+    return MASAIL[(day - 1 + MASAIL.length) % MASAIL.length];
+  }, []);
   const [tab, setTab] = useState<MawTab>("varasa");
   const [openWarith, setOpenWarith] = useState<string | null>(null);
   const [search, setSearch] = useState("");
@@ -288,17 +297,44 @@ export default function MawarithPage() {
         </div>
       </section>
 
+      {/* حاسبة المواريث */}
+      <Link href="/mawarith/calculator" className="mwod-card" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
+        <Calculator size={28} strokeWidth={1.6} aria-hidden="true" style={{ color: "#0E6E52", flexShrink: 0 }} />
+        <div>
+          <h2 className="mwod-card__title" style={{ marginBottom: "0.2rem" }}>حاسبة المواريث</h2>
+          <p className="mwod-card__desc">أدخل الورثة والتركة واحصل على توزيع الأنصبة تلقائيًا مع شرح كل خطوة ←</p>
+        </div>
+      </Link>
+
+      {/* مسألة الميراث اليوم */}
+      <div className="mwod-card">
+        <div className="mwod-card__badge"><Sparkles size={11} aria-hidden="true" /> مسألة الميراث اليوم</div>
+        <h2 className="mwod-card__title">{todayMasala.title}</h2>
+        <p className="mwod-card__desc">{todayMasala.desc}</p>
+        <div className="mwod-card__formula">{todayMasala.formula}</div>
+      </div>
+
+      {/* تنبيه تعليمي */}
+      <div className="maw-disclaimer" role="note">
+        <strong>تنبيه:</strong> المعلومات الواردة هنا ذات طابع <strong>تعليمي</strong> وتوضيحي للقواعد الشرعية العامة.
+        قضايا المواريث الواقعية تحتاج إلى <strong>عالم شرعي متخصص</strong> أو جهة قضائية معتمدة مطّلعة على
+        تفاصيل كل حالة، خاصةً عند وجود ديون أو وصايا أو حالات غير عادية.
+      </div>
+
       {/* tabs */}
-      <div className="mw-tabs-bar">
+      <div className="mw-tabs-bar" role="tablist" aria-label="أقسام المواريث">
         {TABS.map((t) => (
           <button
             key={t.id}
+            id={`mwr-tab-${t.id}`}
             type="button"
+            role="tab"
             className={`mw-tab${tab === t.id ? " mw-tab--active" : ""}`}
             onClick={() => setTab(t.id)}
-            aria-pressed={tab === t.id}
+            aria-selected={tab === t.id}
+              aria-controls={`mwr-panel-${t.id}`}
           >
-            <span>{t.icon}</span>
+            <span><SectionIcon name={t.icon} size={22} /></span>
             <span>{t.label}</span>
           </button>
         ))}
@@ -308,7 +344,7 @@ export default function MawarithPage() {
 
         {/* ── الورثة ── */}
         {tab === "varasa" && (
-          <div className="mw-section">
+          <div role="tabpanel" id="mwr-panel-varasa" aria-labelledby="mwr-tab-varasa" className="mw-section">
             <p className="mw-lead">حصص الورثة المنصوص عليها في القرآن الكريم وسنة النبي ﷺ</p>
 
             <div className="mw-shares-legend">
@@ -367,7 +403,7 @@ export default function MawarithPage() {
 
         {/* ── الحقوق ── */}
         {tab === "huquq" && (
-          <div className="mw-section">
+          <div role="tabpanel" id="mwr-panel-huquq" aria-labelledby="mwr-tab-huquq" className="mw-section">
             <p className="mw-lead">قبل توزيع التركة تُؤدَّى أربعة حقوق بالترتيب التالي</p>
             <div className="mw-huquq-timeline">
               {HUQUQ.map((h) => (
@@ -409,7 +445,7 @@ export default function MawarithPage() {
 
         {/* ── العصبة ── */}
         {tab === "asab" && (
-          <div className="mw-section">
+          <div role="tabpanel" id="mwr-panel-asab" aria-labelledby="mwr-tab-asab" className="mw-section">
             <p className="mw-lead">العَصَبة: من يأخذ ما بقي من التركة بعد أصحاب الفروض، وثلاثة أنواع</p>
             <div className="mw-asab-list">
               {ASAB_TYPES.map((a, i) => (
@@ -437,7 +473,7 @@ export default function MawarithPage() {
 
         {/* ── الحجب ── */}
         {tab === "hajb" && (
-          <div className="mw-section">
+          <div role="tabpanel" id="mwr-panel-hajb" aria-labelledby="mwr-tab-hajb" className="mw-section">
             <p className="mw-lead">الحجب: منع وارث من الميراث كله أو جزء منه بوجود وارث آخر</p>
             <div className="mw-hajb-list">
               {HAJB_TYPES.map((h, i) => (
@@ -471,7 +507,7 @@ export default function MawarithPage() {
 
         {/* ── مسائل ── */}
         {tab === "masail" && (
-          <div className="mw-section">
+          <div role="tabpanel" id="mwr-panel-masail" aria-labelledby="mwr-tab-masail" className="mw-section">
             <p className="mw-lead">مسائل فقهية مشهورة في علم الفرائض، تُبيّن دقة المنهج وعمق الفقه الإسلامي</p>
             <div className="mw-search-wrap">
               <input
@@ -510,7 +546,7 @@ export default function MawarithPage() {
 
         {/* related */}
         <div className="twh-share">
-          <ShareButtons title="علم المواريث — المجلس العلمي" url="https://majlisilm.com/mawarith" />
+          <ShareButtons title="علم المواريث — المجلس العلمي" url="https://www.majlisilm.com/mawarith" />
         </div>
 
         <nav className="mw-related" aria-label="صفحات ذات صلة">

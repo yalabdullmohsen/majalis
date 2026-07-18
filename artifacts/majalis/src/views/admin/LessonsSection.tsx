@@ -38,7 +38,7 @@ const DELIVERY = ["حضور فقط", "بث مباشر", "كلاهما"];
 const STATUSES: Record<string, string> = { approved: "معتمد", pending: "معلّق", rejected: "مرفوض" };
 const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
   approved: { bg: "#D1FAE5", text: "var(--majalis-emerald-deep)" },
-  pending:  { bg: "rgba(14,110,82,0.08)", text: "#1F4D3A" },
+  pending:  { bg: "rgba(14,110,82,0.08)", text: "#176B57" },
   rejected: { bg: "#FEE2E2", text: "#991B1B" },
 };
 const EMPTY: any = {

@@ -41,7 +41,7 @@ const TEMPLATES: Template[] = [
   },
   {
     id: "ivory_deep",
-    name: "عاجي داكن",
+    name: "أخضر الليل",
     bg: "linear-gradient(135deg, #0a1f18 0%, #0d2e24 100%)",
     textColor: "#FAF5EA",
     subColor: "#CFE0D3",
@@ -79,12 +79,12 @@ export default function CardsPage() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "صانع البطاقات الإسلامية",
-          url: "https://majlisilm.com/cards",
+          url: "https://www.majlisilm.com/cards",
           description: "أنشئ بطاقات اقتباسات إسلامية جميلة قابلة للمشاركة",
           applicationCategory: "ReligiousApplication",
           operatingSystem: "Web",
           inLanguage: "ar",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
         },
       ],
     });
@@ -146,13 +146,13 @@ export default function CardsPage() {
                 value={quote}
                 onChange={(e) => setQuote(e.target.value)}
                 rows={4}
-                placeholder="أدخل الاقتباس أو الفائدة..."
+                aria-label="أدخل الاقتباس أو الفائدة" placeholder="أدخل الاقتباس أو الفائدة..."
                 className="cards-textarea"
               />
               <input
                 value={source}
                 onChange={(e) => setSource(e.target.value)}
-                placeholder="المصدر، مثال: رواه البخاري"
+                aria-label="المصدر، مثال: رواه البخاري" placeholder="المصدر، مثال: رواه البخاري"
                 className="cards-input"
               />
             </div>
@@ -234,7 +234,7 @@ export default function CardsPage() {
                     {source}
                   </div>
                   {showLogo && (
-                    <img src="/logo.png" alt="" className="cards-export-logo" aria-hidden="true" />
+                    <img src="/logo.png" alt="" className="cards-export-logo" aria-hidden="true" loading="eager" decoding="sync" width="512" height="512" />
                   )}
                 </div>
               </div>
@@ -243,7 +243,7 @@ export default function CardsPage() {
         </div>
       </div>
       <div className="twh-share">
-        <ShareButtons title="البطاقات الدعوية — المجلس العلمي" url="https://majlisilm.com/cards" />
+        <ShareButtons title="البطاقات الدعوية — المجلس العلمي" url="https://www.majlisilm.com/cards" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["akhlaq", "aqeeda"]} title="اختبر معلوماتك في الأخلاق والعقيدة" count={4} />

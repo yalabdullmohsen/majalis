@@ -6,6 +6,7 @@ import {
   writeThemePreference,
   type ThemePreference,
 } from "@/lib/theme-preference";
+import { setupStatusBar } from "@/lib/capacitor-utils";
 
 type ThemePreferenceContextValue = {
   preference: ThemePreference;
@@ -25,6 +26,12 @@ export function ThemePreferenceProvider({ children }: { children: ReactNode }) {
     applyThemePreference(preference);
     setResolvedTheme(resolveTheme(preference));
   }, [preference]);
+
+  // شريط الحالة الأصلي (iOS/Android) يتبع الوضع المُحلَّل فعليًا — لا يُهمَل على
+  // الويب (setupStatusBar تتأكد بنفسها). يشمل تبديل "تلقائي" حسب النظام أدناه.
+  useEffect(() => {
+    void setupStatusBar(resolvedTheme);
+  }, [resolvedTheme]);
 
   // Listen for system theme changes in "auto" mode
   useEffect(() => {
