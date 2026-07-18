@@ -46,6 +46,14 @@ async function mount() {
   if (renderMs > PERF_SLOW_MS) {
     console.warn(`[perf:slow] render "app-mount" ${renderMs}ms`);
   }
+
+  // بعد استقرار الإقلاع (لا خطأ chunk خلال 8 ثوانٍ)، يُحرَّر حارس إعادة
+  // التحميل لخطأ chunk في ErrorBoundary.tsx — فيبقى خطأ chunk لاحق (نشر
+  // جديد بعد ساعات مثلاً بينما التبويب مفتوح) قادرًا على إعادة تحميل
+  // تلقائية واحدة أيضًا، لا محظورًا للأبد لبقية عمر التبويب.
+  setTimeout(() => {
+    try { sessionStorage.removeItem("mj-chunk-reload-attempted"); } catch { /* تجاهل */ }
+  }, 8000);
 }
 
 void mount();
