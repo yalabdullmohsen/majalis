@@ -6,7 +6,15 @@
 > هذا الملف يوثّق فقط أن البوابات الفنية (typecheck/lint/tests/build)
 > اجتازت معًا في دفعة واحدة نهائية، كما طلب المالك.
 
-## ▶️ حالة الجلسة — ملخص موحَّد (بعد 38+ دفعة، آخر تحديث 2026-07-18)
+## ▶️ حالة الجلسة — ملخص موحَّد (بعد 39+ دفعة، آخر تحديث 2026-07-18)
+
+**تكملة أخيرة (مسار تربية، مكتشَف حديثاً)**: عُمِّق "منزلتا الرضا والشكر"
+(2→6) و"آفات النفس" (2→4، أُضيفت الحسد والكِبر). **خطأ ذاتي في إعادة
+توازن الوزن اكتُشف وصُحِّح فوراً عبر تحقّق SUM(weight) مباشر من DB
+الحية** (150 بدل 100 المتوقَّع، بسبب افتراض عدد عناصر خاطئ) — مثال إضافي
+على انضباط "لا تفترض، تحقق" المتَّبع طوال الجلسة. tarbiyah
+total_sessions: 6→12. commit `90b333fd`. 6 مقررات ضحلة متبقية (زاد
+المستقنع مؤجَّل).
 
 **تكملة أخيرة**: عُمِّق "منهج الحوار والتدرج" (dawah) — 4 أمثلة حقيقية
 للتدرج: حديث بعث معاذ، تحريم الخمر تدريجياً (3 آيات محلية)، الرفق في
@@ -189,7 +197,8 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-c0ad0121...
+90b333fd...
+90b333fd  feat(learning): deepen tarbiyah courses — rida-shukr (2→6) and afat-nafs (2→4)
 c0ad0121  feat(learning): deepen manhaj-hiwar-tadarruj course — 1 item → 5 (4 gradualism examples)
 3a4c432d  feat(learning): deepen kitab-tawhid-complete course (tawheed path) — 1 item → 5
 65bca303  feat(learning): deepen tafsir-nahl course — 2 items → 6 (ayahs 1-39 themes)
