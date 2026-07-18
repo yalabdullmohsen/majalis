@@ -40,7 +40,7 @@ import { usePersistedState } from "@/hooks/usePersistedState";
 import { DEMO_QA, DEMO_QA_CATEGORIES } from "@/lib/demo-content";
 import { QaCard } from "@/components/qa/QaCard";
 import { useAuth } from "@/components/AuthProvider";
-import { QA_CANONICAL_CATEGORIES } from "@/lib/qa-categories";
+import { QA_CANONICAL_CATEGORIES, resolveCategorySlug } from "@/lib/qa-categories";
 import {
   countByCategorySlug,
   markQaSeen,
@@ -182,7 +182,19 @@ export default function QaPage({
     return items.filter((q) => {
       const slug = q.qa_categories?.slug || q.category_slug;
       const cat = categories.find((c) => c.id === categorySlug);
-      return slug === categorySlug || slug === cat?.slug || q.category_id === categorySlug;
+      // resolveCategorySlug() applies the same legacy/aliased-slug mapping
+      // that countByCategorySlug() already uses to build the category
+      // grid's displayed counts (e.g. "nikah"/"talaq" → "family"). Without
+      // it here, a question tagged with an aliased DB category slug was
+      // counted toward its canonical category's badge but excluded when
+      // that category was actually clicked — a silent "count says N,
+      // click shows fewer" mismatch.
+      return (
+        slug === categorySlug ||
+        slug === cat?.slug ||
+        q.category_id === categorySlug ||
+        resolveCategorySlug(slug) === categorySlug
+      );
     });
   }, [items, categorySlug, categories]);
 
