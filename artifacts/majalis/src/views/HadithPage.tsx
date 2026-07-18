@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AlertTriangle, BookOpen, Star } from "lucide-react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { truncateAtWord } from "@/lib/utils";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { getVerifiedHadith } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
@@ -403,7 +404,7 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
             id: h.id,
             content_type: "hadith",
             reference_id: h.hadith_number ? String(h.hadith_number) : null,
-            title_ar: h.title ?? h.text.slice(0, 60),
+            title_ar: h.title ?? truncateAtWord(h.text, 60),
             author_name: h.narrator ?? null,
             book_name: h.source_name ?? null,
             is_approved: true,

@@ -2,6 +2,7 @@ import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react"
 import { Link } from "wouter";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { readPreferences, writePreferences } from "@/lib/user-preferences";
+import { truncateAtWord } from "@/lib/utils";
 import { AdminInlineEdit, type InlineEditContentType } from "@/components/AdminInlineEdit";
 
 const FaidaImageCardModal = lazy(() =>
@@ -77,14 +78,14 @@ export function ContentActionBar({
 
   const shareToWhatsApp = useCallback(() => {
     const pageUrl = window.location.href;
-    const msg = `${title}\n${text.slice(0, 300)}\n\n${pageUrl}`;
+    const msg = `${title}\n${truncateAtWord(text, 300)}\n\n${pageUrl}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
     setShowShareMenu(false);
   }, [text, title]);
 
   const shareToSnapchat = useCallback(async () => {
     const pageUrl = window.location.href;
-    const shareText = `${title}\n${text.slice(0, 200)}\n\n${pageUrl}`;
+    const shareText = `${title}\n${truncateAtWord(text, 200)}\n\n${pageUrl}`;
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
         await navigator.share({ title, text: shareText, url: pageUrl });
