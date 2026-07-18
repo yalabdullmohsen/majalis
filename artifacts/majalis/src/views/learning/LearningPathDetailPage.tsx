@@ -27,11 +27,23 @@ import { AssessmentModal } from "@/components/learning/AssessmentModal";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { applyPageSeo } from "@/lib/seo";
+import { LIBRARY_CATALOG } from "@/lib/library-catalog";
 import {
   BookOpen, FileQuestion, BookMarked, CheckSquare,
   CheckCircle2, ChevronRight, ChevronDown, Clock, Lock,
   BarChart3, UserPlus, Award, type LucideProps,
 } from "lucide-react";
+
+/**
+ * course_books.book_title نص حر (لا FK لمعرّف الفهرس الثابت في
+ * library-catalog.ts — عمود library_item_id الموجود في الجدول يشير لجدول
+ * library_items شبه الفارغ في DB، لا للفهرس الثابت الفعلي). هذا الفهرس
+ * يربط عنوان الكتاب المطابق حرفياً (كما كُتب عمداً في كل migration مسار
+ * تعليمي: aqeedah/arkan-al-iman, uloom-quran, akhlaq, adab, nahw, arabic)
+ * بمعرّف صفحة تفصيله الفعلية `/library/:id`، بدل عرضه كنص عادٍ بلا رابط
+ * (فجوة ربط داخلي حقيقية أُصلحت — Phase 11).
+ */
+const LIBRARY_TITLE_TO_ID = new Map(LIBRARY_CATALOG.map((b) => [b.title, b.id]));
 
 type LucideIcon = React.ComponentType<Omit<LucideProps, "ref">>;
 
@@ -130,13 +142,21 @@ function CourseCard({
                     <div className="lpd2-module__body">
                       <span className="lpd2-module__type-row"><Icon size={15} aria-hidden="true" /> {item.sessionEstimate} جلسة</span>
                       <h3 className="lpd2-module__title">{item.title}</h3>
-                      {books.map((b) => (
-                        <div key={b.id} className="lpd2-book-chip">
-                          <BookMarked size={12} aria-hidden="true" />
-                          <span><strong>{b.bookTitle}</strong>{b.bookAuthor ? ` — ${b.bookAuthor}` : ""}</span>
-                          <span className="lpd2-book-chip__role">{b.materialRole}</span>
-                        </div>
-                      ))}
+                      {books.map((b) => {
+                        const libraryId = LIBRARY_TITLE_TO_ID.get(b.bookTitle);
+                        const bookLabel = <><strong>{b.bookTitle}</strong>{b.bookAuthor ? ` — ${b.bookAuthor}` : ""}</>;
+                        return (
+                          <div key={b.id} className="lpd2-book-chip">
+                            <BookMarked size={12} aria-hidden="true" />
+                            {libraryId ? (
+                              <Link href={`/library/${libraryId}`} className="lpd2-book-chip__link">{bookLabel}</Link>
+                            ) : (
+                              <span>{bookLabel}</span>
+                            )}
+                            <span className="lpd2-book-chip__role">{b.materialRole}</span>
+                          </div>
+                        );
+                      })}
                     </div>
                     <div className="lpd2-module__action">
                       {done ? (
