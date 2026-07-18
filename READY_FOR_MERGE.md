@@ -317,6 +317,8 @@ majalis-content-fill
 
 ```
 0c9f2c76...
+2c033720  fix(learning): add missing .catch()/.finally() to fetchPathDetail — proven via live Playwright test
+69a0a1d4  docs: تحديث بعد إضافة مرآة fiqh-council-sessions لـsitemap.xml
 961a9dcb  feat(sitemap): add fiqh-council sessions (12, fallback seed content) via static JSON mirror
 b580c27a  docs: تصحيح توصيف fiqh_council_sessions — يعمل بمحتوى ثابت لا "معطَّل فعلياً"
 a9c86f39  docs: تدقيق المنسّق المستقل لشذوذي sitemap.xml/fiqh_council_sessions
