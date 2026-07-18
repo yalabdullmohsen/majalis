@@ -11,6 +11,7 @@ import {
 import type { SinType } from "@/lib/sins-rights-types";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { Empty } from "@/components/ui-common";
+import { ContentDetailLayout, RelatedLinks } from "@/components/platform/ContentDetailLayout";
 
 export default function SinsAndRightsDetailPage({ params }: { params: { slug: string } }) {
   const topic = getTopicBySlug(params.slug);
@@ -67,56 +68,59 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
   }
 
   const sinTypes = Array.isArray(topic.sinType) ? topic.sinType : [topic.sinType];
+  const copyText = [topic.title, topic.shortDescription, topic.explanation].filter(Boolean).join("\n\n");
 
   return (
-    <div className="snr-detail-page">
-      {/* Breadcrumb */}
-      <nav className="snr-detail-breadcrumb" aria-label="مسار التنقل">
-        <Link href="/">الرئيسية</Link>
-        <span className="snr-detail-breadcrumb-sep">›</span>
-        <Link href="/sins-and-rights">الذنوب والحقوق</Link>
-        <span className="snr-detail-breadcrumb-sep">›</span>
-        <span>{topic.title}</span>
-      </nav>
-
-      {/* Header */}
-      <header className="snr-detail-header">
-        <h1 className="snr-detail-title">{topic.title}</h1>
-        <p className="snr-detail-short-desc">{topic.shortDescription}</p>
-
-        <div className="snr-detail-badges">
-          <span className={`snr-badge snr-badge--${topic.rightsCategory}`}>
-            {RIGHTS_CATEGORY_LABELS[topic.rightsCategory]}
+    <ContentDetailLayout
+      breadcrumbs={[
+        { label: "الرئيسية", href: "/" },
+        { label: "الذنوب والحقوق", href: "/sins-and-rights" },
+        { label: topic.title },
+      ]}
+      title={topic.title}
+      subtitle={topic.shortDescription}
+      copyText={copyText}
+      related={
+        <RelatedLinks
+          items={related.map((r) => ({ href: `/sins-and-rights/${r.slug}`, title: r.title }))}
+        />
+      }
+    >
+      {/* شارات التصنيف وحالة المراجعة — تبقى بتصميمها الخاص (ألوان دلالية لكل
+          نوع/شدة) بدل خانة "tags" العامة في القالب الموحّد، لأنها ليست وسومًا
+          عامة بل حالة مصنَّفة لونيًا لا يمكن التعبير عنها بشريحة نصية موحّدة. */}
+      <div className="snr-detail-badges">
+        <span className={`snr-badge snr-badge--${topic.rightsCategory}`}>
+          {RIGHTS_CATEGORY_LABELS[topic.rightsCategory]}
+        </span>
+        {(() => {
+          const sev = topic.sinSeverity;
+          const cls = sev === "kabira" ? "kabira" : sev === "saghira" ? "saghira" : "depends";
+          return <span className={`snr-badge snr-badge--${cls}`}>{SIN_SEVERITY_LABELS[sev]}</span>;
+        })()}
+        {sinTypes.map((t) => (
+          <span key={t} className="snr-badge snr-badge--shared" style={{ fontSize: "0.72rem" }}>
+            {SIN_TYPE_LABELS[t as SinType]}
           </span>
-          {(() => {
-            const sev = topic.sinSeverity;
-            const cls = sev === "kabira" ? "kabira" : sev === "saghira" ? "saghira" : "depends";
-            return <span className={`snr-badge snr-badge--${cls}`}>{SIN_SEVERITY_LABELS[sev]}</span>;
-          })()}
-          {sinTypes.map((t) => (
-            <span key={t} className="snr-badge snr-badge--shared" style={{ fontSize: "0.72rem" }}>
-              {SIN_TYPE_LABELS[t as SinType]}
-            </span>
-          ))}
-          {topic.repentanceConditions.requiresRestitution && (
-            <span className="snr-badge snr-badge--restitution">يستلزم رد حق</span>
-          )}
-          {topic.repentanceConditions.hasExpiation && (
-            <span className="snr-badge snr-badge--expiation">توجد كفارة</span>
-          )}
-        </div>
+        ))}
+        {topic.repentanceConditions.requiresRestitution && (
+          <span className="snr-badge snr-badge--restitution">يستلزم رد حق</span>
+        )}
+        {topic.repentanceConditions.hasExpiation && (
+          <span className="snr-badge snr-badge--expiation">توجد كفارة</span>
+        )}
+      </div>
 
-        <div className="snr-detail-review-status">
-          {topic.reviewStatus === "reviewed" ? (
-            <>
-              <span className="snr-badge snr-badge--reviewed">✓ مراجع</span>
-              {topic.reviewedAt && <span style={{ marginRight: "0.25rem" }}>— آخر مراجعة: {topic.reviewedAt}</span>}
-            </>
-          ) : (
-            <span className="snr-badge snr-badge--pending">⏳ قيد المراجعة الشرعية</span>
-          )}
-        </div>
-      </header>
+      <div className="snr-detail-review-status">
+        {topic.reviewStatus === "reviewed" ? (
+          <>
+            <span className="snr-badge snr-badge--reviewed">✓ مراجع</span>
+            {topic.reviewedAt && <span style={{ marginRight: "0.25rem" }}>— آخر مراجعة: {topic.reviewedAt}</span>}
+          </>
+        ) : (
+          <span className="snr-badge snr-badge--pending">⏳ قيد المراجعة الشرعية</span>
+        )}
+      </div>
 
       {/* الشرح */}
       <section className="snr-detail-section">
@@ -258,40 +262,9 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
         </section>
       )}
 
-      {/* الموضوعات ذات الصلة */}
-      {related.length > 0 && (
-        <section className="snr-detail-section">
-          <div className="snr-detail-section-title">
-            <span>🔗</span> موضوعات ذات صلة
-          </div>
-          <div className="snr-related-grid">
-            {related.map((r) => (
-              <Link key={r.slug} href={`/sins-and-rights/${r.slug}`} className="snr-related-link">
-                <span className="snr-related-link-label">{r.title}</span>
-                <span className="snr-mindmap-child-arrow">←</span>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* العودة */}
-      <div style={{ textAlign: "center", paddingTop: "1rem" }}>
-        <Link
-          href="/sins-and-rights"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "0.375rem",
-            color: "var(--elite-green, #18362A)",
-            fontWeight: 600,
-            fontSize: "0.9375rem",
-            textDecoration: "none",
-          }}
-        >
-          ← العودة إلى الذنوب والحقوق
-        </Link>
-      </div>
-    </div>
+      {/* الموضوعات ذات الصلة: انتقلت إلى prop "related" أعلاه — القالب الموحّد
+          يعرضها عبر RelatedLinks/PlatformContentCard، نفس مكوّن صفحات الأحكام
+          والمجلس الفقهي، بدل تصميم مخصَّص لهذه الصفحة وحدها. */}
+    </ContentDetailLayout>
   );
 }
