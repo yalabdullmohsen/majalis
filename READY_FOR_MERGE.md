@@ -326,6 +326,8 @@ majalis-content-fill
 
 ```
 0c9f2c76...
+64678272  feat(learning): deepen waraqat-intro (usool-fiqh) — 3 items → 10, real usul methodology depth
+1e7770d5  docs: تحديث بعد اكتمال سلسلة الأركان الخمسة كاملة (فقه الحج، الباب الخامس والأخير)
 0583df1e  feat(learning): fifth and final new full hierarchical course — فقه الحج (8 real items) — completes all five pillars
 45c98d44  docs: تحديث بعد بناء باب هرمي كامل رابع (فقه الصيام، 10 عناصر)
 6fb17922  feat(learning): fourth new full hierarchical course — فقه الصيام (10 real items)
