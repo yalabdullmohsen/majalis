@@ -39,7 +39,6 @@ import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
 import { ScholarFollowButton } from "@/components/ScholarFollowButton";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
-import { applyPageSeo } from "@/lib/seo";
 import { ContentMindMap } from "@/components/ContentMindMap";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
@@ -121,14 +120,16 @@ export default function LessonDetailPage({
 }) {
   const [lesson, setLesson] = useState<any>(null);
 
-  useEffect(() => {
-    applyPageSeo({
-      path: "/lessons",
-      title: "تفاصيل الدرس | المجلس العلمي",
-      description: "تفاصيل الدرس العلمي الشرعي، محتوى الدرس والشيخ والملاحظات والمصادر.",
-      keywords: ["درس شرعي", "محاضرة إسلامية", "علم شرعي", "تفاصيل درس"],
-    });
-  }, []);
+  // كانت هنا فعليًا ثلاث آليات SEO متنافسة على نفس الصفحة: (1) placeholder
+  // عام بعنوان/مسار خاطئين تمامًا (`path: "/lessons"` — صفحة الفهرس لا
+  // صفحة الدرس نفسها) يُطبَّق فوراً بلا انتظار البيانات، (2) نسخة تعمل فقط
+  // مع مصدر `kuwaitLesson` (لا تعمل إطلاقاً للدروس القادمة من `getLessonById`
+  // مباشرة عبر DB fallback) بمخطط JSON-LD "Event" مكرَّر، (3) الخُطّاف
+  // الصحيح `useLessonSeo(seoLesson, ...)` أدناه (يغطي كلا المصدرين، ينتظر
+  // `loading`، ويبني `lessonJsonLd` الأشمل عبر `lessonSeoMeta`). أُزيلت (1)
+  // و(2) — كانتا تُنتجان "ومضة" عنوان/JSON-LD خاطئ عند كل تحميل صفحة قبل أن
+  // يُصحِّحهما (3)، وتُبقيان العنوان خاطئاً بلا تصحيح أبداً لأي درس مصدره
+  // DB مباشرة لا `kuwaitLesson` الثابت.
   const [kuwaitLesson, setKuwaitLesson] = useState<KuwaitLessonRecord | null>(initialLesson ?? null);
   const [similar, setSimilar] = useState<KuwaitLessonRecord[]>([]);
   const [sameSheikh, setSameSheikh] = useState<KuwaitLessonRecord[]>([]);
@@ -136,27 +137,6 @@ export default function LessonDetailPage({
   const [sheikhBio, setSheikhBio] = useState<string>("");
   const [stats, setStats] = useState<LessonEngagementStats>({ views: 0, saves: 0, shares: 0 });
   const [loading, setLoading] = useState(!initialLesson);
-
-  useEffect(() => {
-    if (!kuwaitLesson) return;
-    applyPageSeo({
-      path: `/lesson/${kuwaitLesson.id}`,
-      title: `${kuwaitLesson.title} | المجلس العلمي`,
-      description: kuwaitLesson.description || `درس ${kuwaitLesson.title} للشيخ ${kuwaitLesson.sheikhName} في ${kuwaitLesson.mosque}، ${kuwaitLesson.governorate}.`,
-      keywords: kuwaitLesson.keywords ?? ["درس شرعي", kuwaitLesson.category, kuwaitLesson.sheikhName],
-      jsonLd: [{
-        "@context": "https://schema.org",
-        "@type": "Event",
-        name: kuwaitLesson.title,
-        description: kuwaitLesson.description || `درس ${kuwaitLesson.title} للشيخ ${kuwaitLesson.sheikhName}`,
-        location: { "@type": "Place", name: kuwaitLesson.mosque, address: { "@type": "PostalAddress", addressLocality: kuwaitLesson.governorate, addressCountry: "KW" } },
-        organizer: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
-        performer: { "@type": "Person", name: kuwaitLesson.sheikhName },
-        ...(kuwaitLesson.startDate ? { startDate: kuwaitLesson.startDate } : {}),
-        inLanguage: "ar",
-      }],
-    });
-  }, [kuwaitLesson]);
 
   useEffect(() => {
     if (initialLesson) {

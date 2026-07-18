@@ -30,10 +30,10 @@ export default function FiqhCouncilStatsPage() {
   }, []);
 
   useEffect(() => {
-    getFiqhCouncilPublicStats().then(({ data }) => {
-      setStats(data);
-      setLoading(false);
-    });
+    getFiqhCouncilPublicStats()
+      .then(({ data }) => setStats(data))
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
 
   if (loading) return <SkeletonCardGrid />;

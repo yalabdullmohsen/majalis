@@ -49,16 +49,56 @@ export async function fetchDynamicUrls() {
     urls.push({ loc: `/library/${b.id}`, priority: 0.72, changefreq: "weekly" });
   }
 
+  // اكتُشف 2026-07-18: جدول fiqh_council_sessions غير موجود أصلاً في
+  // القاعدة الحية — الصفحة الحية /fiqh-council/sessions/:slug تعمل فعلياً
+  // عبر fallback ثابت في fiqh-council-sessions-service.ts (لا استعلام DB
+  // ممكن هنا لجدول غائب). مرآة ثابتة مثل scholars/library بالضبط، تُولَّد
+  // عبر scripts/regen-fiqh-sessions-json.mjs من fiqh-sessions-seed.ts.
+  const fiqhSessions = loadStaticCatalog("fiqh-sessions-list.json");
+  for (const s of fiqhSessions) {
+    urls.push({ loc: `/fiqh-council/sessions/${s.slug}`, lastmod: s.updated_at, priority: 0.6, changefreq: "yearly" });
+  }
+
   if (!admin) return urls;
 
-  const [lessons, sheikhs, library, qa, fawaid, fatwas, updates] = await Promise.all([
+  const [
+    lessons, sheikhs, library, qa, fawaid, updates, learningPaths,
+    rulings, universities, fiqhIssues, fiqhItems, annualCourses,
+  ] = await Promise.all([
     admin.from("lessons").select("id, updated_at, slug").eq("status", "approved").limit(2000),
     admin.from("sheikhs").select("id, updated_at").eq("is_verified", true).limit(500),
     admin.from("library_items").select("id, updated_at").eq("status", "approved").limit(500),
     admin.from("qa_questions").select("id, updated_at").eq("status", "published").limit(500),
     admin.from("fawaid").select("id, updated_at").eq("status", "approved").limit(500),
-    admin.from("fatwas").select("id, slug, updated_at").eq("status", "approved").limit(200),
+    // ملاحظة: استعلام fatwas أُزيل هنا (2026-07-18) — قسم الفتوى حُذف من
+    // التطبيق بالكامل في جلسة سابقة، و/fatwa و/fatwa/:id في src/App.tsx
+    // كليهما مجرد Redirect (لـ/fiqh و/rulings على التوالي) لا صفحة حقيقية،
+    // فإدراج روابطهما في sitemap.xml كان سيُرسِل محركات البحث لروابط
+    // تُعيد التوجيه فوراً بلا فائدة (جدول fatwas نفسه فارغ حالياً 0 صف
+    // approved، فلم يكن هذا يُنتج روابط فعلية بعد، لكنه كود ميت يستحق
+    // الإزالة قبل أن يُضاف محتوى للجدول بالخطأ مستقبلاً).
     admin.from("platform_updates").select("id, updated_at").eq("status", "approved").limit(200),
+    // اكتُشف 2026-07-18: /learning/paths/:slug (كل الـ15 مساراً التعليمية
+    // المبنية بكثافة هذه الجلسة) كانت غائبة تماماً عن sitemap.xml الحي —
+    // seo-routes.json (المصدر الثابت لـbuildSitemapXml) لا يحوي أي إدخال
+    // فردي لمسار، وfetchDynamicUrls لم يكن يستعلم جدول learning_paths
+    // إطلاقاً. تحقَّق مباشرة من https://www.majlisilm.com/sitemap.xml
+    // الحي: يحوي فقط /learning/paths (الفهرس) بلا أي مسار فردي. أُضيف
+    // استعلام حي هنا (لا مرآة ثابتة) ليبقى متزامناً تلقائياً مع أي مسار
+    // جديد يُنشَر مستقبلاً.
+    admin.from("learning_paths").select("id, slug, updated_at").eq("status", "published").limit(200),
+    // اكتُشف 2026-07-18 (بمتابعة نفس التدقيق): محتوى حي آخر له صفحات
+    // تفصيل فعلية (*DetailPage.tsx حقيقية في src/views) لكن لم يكن أيٌّ
+    // منها مُستعلَماً هنا — أكبرها موسوعة الأحكام (690 صفاً). شروط الفلترة
+    // مطابقة حرفياً لسياسات RLS/الخدمات الحية المستهلِكة لكل جدول.
+    // fiqh_council_sessions اسْتُبعِد عمداً — الجدول غير موجود أصلاً في
+    // القاعدة الحية حالياً (تحقَّقتُ مباشرة، سيُسقِط Promise.all بالكامل
+    // لو أُضيف).
+    admin.from("sharia_rulings").select("id, updated_at").eq("status", "approved").limit(1000),
+    admin.from("universities").select("id, slug, updated_at").eq("is_published", true).limit(100),
+    admin.from("fiqh_council_issues").select("id, slug, updated_at").eq("status", "published").eq("documentation_level", "official_verified").limit(200),
+    admin.from("fiqh_council_items").select("id, slug, updated_at").eq("status", "published").limit(200),
+    admin.from("annual_courses").select("id, external_key, updated_at").eq("status", "approved").limit(100),
   ]);
 
   for (const row of lessons.data || []) {
@@ -76,11 +116,26 @@ export async function fetchDynamicUrls() {
   for (const row of fawaid.data || []) {
     urls.push({ loc: `/fawaid/${row.id}`, lastmod: row.updated_at, priority: 0.68 });
   }
-  for (const row of fatwas.data || []) {
-    urls.push({ loc: `/fatwa/${row.slug || row.id}`, lastmod: row.updated_at, priority: 0.8 });
-  }
   for (const row of updates.data || []) {
     urls.push({ loc: `/updates/${row.id}`, lastmod: row.updated_at, priority: 0.65 });
+  }
+  for (const row of learningPaths.data || []) {
+    urls.push({ loc: `/learning/paths/${row.slug || row.id}`, lastmod: row.updated_at, priority: 0.7 });
+  }
+  for (const row of rulings.data || []) {
+    urls.push({ loc: `/rulings/${row.id}`, lastmod: row.updated_at, priority: 0.7 });
+  }
+  for (const row of universities.data || []) {
+    urls.push({ loc: `/universities/${row.slug || row.id}`, lastmod: row.updated_at, priority: 0.65 });
+  }
+  for (const row of fiqhIssues.data || []) {
+    urls.push({ loc: `/fiqh-council/issues/${row.slug || row.id}`, lastmod: row.updated_at, priority: 0.68 });
+  }
+  for (const row of fiqhItems.data || []) {
+    urls.push({ loc: `/fiqh-council/${row.slug || row.id}`, lastmod: row.updated_at, priority: 0.65 });
+  }
+  for (const row of annualCourses.data || []) {
+    urls.push({ loc: `/annual-courses/${row.external_key || row.id}`, lastmod: row.updated_at, priority: 0.65 });
   }
 
   return urls;

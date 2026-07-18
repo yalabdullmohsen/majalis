@@ -218,10 +218,10 @@ export default function VaultPage() {
   useEffect(() => {
     if (!user?.id) return;
     setLoading(true);
-    getVaultData(user.id).then((data) => {
-      setVaultData(data);
-      setLoading(false);
-    });
+    getVaultData(user.id)
+      .then((data) => setVaultData(data))
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, [user?.id]);
 
   const handleAddNote = async (text: string) => {

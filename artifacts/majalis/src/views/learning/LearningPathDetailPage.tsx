@@ -27,6 +27,7 @@ import { AssessmentModal } from "@/components/learning/AssessmentModal";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { applyPageSeo } from "@/lib/seo";
+import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { LIBRARY_CATALOG } from "@/lib/library-catalog";
 import {
   BookOpen, FileQuestion, BookMarked, CheckSquare,
@@ -196,32 +197,66 @@ export default function LearningPathDetailPage() {
   const [events, setEvents] = useState<CompletionEvent[]>([]);
 
   useEffect(() => {
+    if (!slug) return;
+    setLoading(true);
+    // اكتُشف 2026-07-18 أثناء تحقُّق Playwright فعلي لإصلاح SEO: بلا
+    // .catch() هنا، أي رفض غير متوقَّع من fetchPathDetail (خطأ شبكة
+    // حقيقي، لا مجرد "لم يُعثر على المسار" الذي يُعالَج بالفعل داخلياً
+    // بإرجاع null) يُبقي loading=true للأبد — يمنع كلاً من عرض الصفحة
+    // (سكيلتون أبدي) وتصحيح SEO (يبقى الاسم العام من usePageSeo(location)
+    // في App.tsx ظاهراً للأبد بدل تصحيحه أو التحوُّل لحالة noindex واضحة).
+    fetchPathDetail(slug)
+      .then((data) => setPath(data))
+      .catch(() => setPath(null))
+      .finally(() => setLoading(false));
+  }, [slug]);
+
+  // كان هذا الفحص يُطبِّق عنواناً/وصفاً/JSON-LD عامّاً موحَّداً ("مسار
+  // تعليمي شرعي") على كل صفحات /learning/paths/:slug فور التحميل، بلا
+  // انتظار بيانات المسار الفعلية (نفس عائلة بق "عنوان عام يطغى على بيانات
+  // حقيقية" المُصلَحة سابقاً في LibraryDetailPage/ScholarProfilePage) — أي
+  // زائر أو محرك بحث ينفّذ JavaScript كان يرى نفس العنوان/الوصف/JSON-LD
+  // حرفياً لكل مسار (عقيدة، فقه، حديث...)، يستبدل حتى ما ولَّده
+  // generate-seo.mjs الصحيح للـHTML المُصيَّر مسبقاً فور hydration. أُصلح
+  // بانتظار تحميل بيانات المسار الفعلية أولاً، مطابقةً لنمط LibraryDetailPage.
+  useEffect(() => {
+    if (loading) return;
+    const path_ = `/learning/paths/${slug}`;
+    if (!path) {
+      applyPageSeo({
+        path: path_,
+        title: "المسار غير موجود | المجلس العلمي",
+        description: "لم يُعثر على هذا المسار التعليمي.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     applyPageSeo({
-      path: `/learning/paths/${slug}`,
-      title: "مسار تعليمي | المجلس العلمي",
-      description: "تفاصيل مسار التعلم الإسلامي، المراحل والمقررات والدروس والكتب وشهادة الإتمام.",
-      keywords: ["مسار تعليمي", "تعلم إسلامي", "مقررات دراسية", "شهادة إتمام"],
+      path: path_,
+      title: `${path.title} | مسارات التعلم، المجلس العلمي`,
+      description: path.description || `مسار تعلّم شرعي منظّم في ${path.title} — كتب ودروس واختبارات وشهادة إتمام.`,
+      keywords: [path.title, path.category || "", "مسار تعليمي", "تعلم إسلامي", "مقررات دراسية", "شهادة إتمام"].filter(Boolean),
+      canonicalPath: path_,
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "Course",
-          name: "مسار تعليمي شرعي",
-          url: `https://www.majlisilm.com/learning/paths/${slug}`,
+          name: path.title,
+          description: path.description || undefined,
+          url: `https://www.majlisilm.com${path_}`,
           provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
           inLanguage: "ar",
+          numberOfCredits: path.totalSessions || undefined,
         },
+        breadcrumbJsonLd([
+          { name: "الرئيسية", path: "/" },
+          { name: "المسارات العلمية", path: "/learning/paths" },
+          { name: path.title, path: path_ },
+        ]),
       ],
     });
-  }, [slug]);
-
-  useEffect(() => {
-    if (!slug) return;
-    setLoading(true);
-    fetchPathDetail(slug).then((data) => {
-      setPath(data);
-      setLoading(false);
-    });
-  }, [slug]);
+  }, [slug, loading, path]);
 
   const [activeAssessment, setActiveAssessment] = useState<{ assessmentId: string; learningItemId: string } | null>(null);
   const [certificateCode, setCertificateCode] = useState<string | null>(null);
