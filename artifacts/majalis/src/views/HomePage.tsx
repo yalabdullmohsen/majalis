@@ -1,7 +1,7 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState } from "react";
 import contentCounts from "@/data/content-counts.json";
 import { applyPageSeo } from "@/lib/seo";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
 import { useDailyContext } from "@/lib/daily-context";
 import { useAuth } from "@/components/AuthProvider";
 import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
@@ -28,7 +28,6 @@ import { HomeNawawiHadith } from "@/components/home/HomeNawawiHadith";
 import { HomeInterestingTopics } from "@/components/home/HomeInterestingTopics";
 import { HomeMindMapSection } from "@/components/home/HomeMindMapSection";
 import { HomeMajlisToday } from "@/components/home/HomeMajlisToday";
-import { HomePersonalDashboard } from "@/components/home/HomePersonalDashboard";
 import { FridayBanner } from "@/components/FridayBanner";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import { getHijriDateString } from "@/lib/hijri-utils";
@@ -52,26 +51,16 @@ import {
 import type { LucideIcon } from "lucide-react";
 
 /* ── روابط الوصول السريع ── */
+/* إجراءات سريعة مختصرة — 4 عناصر فقط (إعادة هيكلة الرئيسية، الأولوية 3):
+   أكمل وردك / تابع تعلّمك / اختبر معلوماتك / أذكار اليوم، بالحرف كما ورد
+   بالتكليف. القائمة الطويلة السابقة (١٩ رابطًا) كانت تكرارًا شبه كامل
+   لتبويب "المزيد" في الشريط السفلي — لا حذف وظيفة، كل تلك الروابط تبقى
+   متاحة عبر "المزيد" (MoreBottomSheet) أو /sitemap. */
 const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc: string }[] = [
-  { href: "/adhkar",         Icon: Star,          label: "الأذكار",         desc: "صباح ومساء ونوم" },
-  { href: "/prayer-times",   Icon: Clock,         label: "أوقات الصلاة",    desc: "الكويت لحظياً" },
-  { href: "/lessons",        Icon: GraduationCap, label: "الدروس",           desc: "علماء الكويت" },
-  { href: "/hadith",         Icon: Scroll,        label: "الأحاديث",         desc: "صحيح وضعيف" },
-  { href: "/quran-hub",      Icon: BookMarked,    label: "القرآن",            desc: "تجويد، تلاوة، وأكثر" },
-  { href: "/fawaid",         Icon: Lightbulb,     label: "الفوائد",          desc: "فوائد منتقاة" },
-  { href: "/qa",             Icon: HelpCircle,    label: "الأسئلة",           desc: "أسئلة شرعية موثّقة" },
-  { href: "/tasbih",         Icon: RotateCw,      label: "التسبيح",          desc: "عداد إلكتروني" },
-  { href: "/seerah",         Icon: Moon,          label: "السيرة",            desc: "حياته ﷺ كاملة" },
-  { href: "/rulings",        Icon: Scale,         label: "الأحكام الشرعية",  desc: "مسائل معاصرة" },
-  { href: "/quiz",           Icon: Target,        label: "المسابقات",         desc: "اختبار المعلومات" },
-  { href: "/muezzins",       Icon: Mic2,          label: "المؤذنون",          desc: "أجمل الأصوات" },
-  { href: "/library",        Icon: BookOpen,      label: "المكتبة",           desc: "كتب ومتون علمية" },
-  { href: "/qibla",          Icon: Compass,       label: "القِبلة",           desc: "اتجاه الكعبة" },
-  { href: "/salah-guide",    Icon: Scroll,        label: "دليل الصلاة",       desc: "للمبتدئ والمتقن" },
-  { href: "/calendar",       Icon: CalendarDays,  label: "التقويم",           desc: "التاريخ الهجري" },
-  { href: "/mawarith",       Icon: Scale,         label: "المواريث",          desc: "الفرائض والتركات" },
-  { href: "/knowledge-map",  Icon: Map,           label: "خريطة المعرفة",     desc: "حقول العلوم الشرعية مترابطة" },
-  { href: "/scholars",       Icon: Users,         label: "العلماء",            desc: "رواد الفقه والحديث" },
+  { href: "/daily-wird", Icon: Star,          label: "أكمل وردك",       desc: "الورد اليومي" },
+  { href: "/lessons",    Icon: GraduationCap, label: "تابع تعلّمك",     desc: "الدروس والدورات" },
+  { href: "/quiz",       Icon: Target,        label: "اختبر معلوماتك",  desc: "مسابقة معرفية" },
+  { href: "/adhkar",     Icon: RotateCw,      label: "أذكار اليوم",     desc: "صباح ومساء ونوم" },
 ];
 
 
@@ -443,10 +432,21 @@ function ExplorePlatformSection() {
 }
 
 export default function HomePage() {
-  const [term, setTerm] = useState("");
-  const [, navigate] = useLocation();
   const { isAdmin, user } = useAuth();
   const dailyCtx = useDailyContext();
+
+  // زر المتابعة الوحيد في البطاقة اليومية: آخر صفحة زارها المستخدم فعليًا،
+  // أو دعوة افتراضية لزائر جديد بلا سجل تصفّح (يُقرأ بعد التركيب لتفادي
+  // اختلاف الترطيب SSR/prerender، بنفس نمط RecentPagesBar أدناه).
+  const [lastVisited, setLastVisited] = useState<RecentPage | null>(null);
+  useEffect(() => {
+    const pages = getRecentPages(2);
+    // أول عنصر هو الصفحة الحالية غالبًا ("/")، فنأخذ أول صفحة مختلفة عنها
+    const last = pages.find((p) => p.href !== "/") ?? null;
+    setLastVisited(last);
+  }, []);
+  const continueHref  = lastVisited?.href ?? "/daily-wird";
+  const continueLabel = lastVisited ? `تابع: ${lastVisited.label}` : "ابدأ يومك: الورد اليومي";
 
   // تخصيص أقسام الصفحة الرئيسية: محلي فورًا، مع مزامنة اختيارية من Supabase عند تسجيل الدخول
   const [homePrefs, setHomePrefs] = useState<HomepagePrefs>(() => getLocalHomepagePrefs());
@@ -512,11 +512,6 @@ export default function HomePage() {
     });
   }, []);
 
-  const submitSearch = (e: FormEvent) => {
-    e.preventDefault();
-    const q = term.trim();
-    if (q) navigate(`/search/${encodeURIComponent(q)}`);
-  };
 
   return (
     <div className="home-page home-page--v4" dir="rtl">
@@ -665,107 +660,17 @@ export default function HomePage() {
             </svg>
           </div>
 
-          {/* الوصف */}
-          <p style={{ color: "rgba(255,255,255,0.82)", fontSize: "clamp(0.84rem, 2.2vw, 0.96rem)", lineHeight: 1.8, maxWidth: 510, margin: "0 auto 1.1rem" }}>
-            بوّابتك الشاملة إلى العلوم الشرعية: القرآن الكريم، السنة النبوية الموثّقة، دروس علماء الكويت، الفقه والأحكام المعاصرة، والأذكار اليومية
-          </p>
-
-          {/* شريحات الجمهور */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem", justifyContent: "center", marginBottom: "1.1rem" }}>
-            {([
-              {
-                icon: <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 3 1 7l8 4 8-4-8-4z"/><path d="M5 9.5v3.5a4 4 0 0 0 8 0V9.5"/></svg>,
-                label: "طالب العلم", href: "/lessons",
-              },
-              {
-                icon: <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M1 17h16"/><path d="M3 17v-6a6 6 0 0 1 12 0v6"/><path d="M9 5V3"/><path d="M7.5 8h3"/></svg>,
-                label: "المسلم اليومي", href: "/adhkar",
-              },
-              {
-                icon: <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="7" cy="6" r="3"/><path d="M1 17c0-3 2.7-5 6-5s6 2 6 5"/><circle cx="14" cy="6" r="2"/><path d="M14 11c1.7 0 3 1.3 3 4"/></svg>,
-                label: "الأسرة المسلمة", href: "/qa",
-              },
-              {
-                icon: <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M9 12v3"/><path d="M6 15h6"/><path d="M12 5l2-3"/><path d="M6 5 4 2"/></svg>,
-                label: "العالم والباحث", href: "/library",
-              },
-            ] as { icon: React.ReactNode; label: string; href: string }[]).map(({ icon, label, href }, i) => (
-              <Link key={label} href={href} style={{
-                background: i === 0 ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.08)",
-                color: "#F7F4ED",
-                padding: "0.32rem 0.85rem", borderRadius: "999px",
-                fontSize: "0.77rem", fontWeight: 700,
-                border: `1px solid ${i === 0 ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.18)"}`,
-                display: "inline-flex", alignItems: "center", gap: "0.35rem",
-                textDecoration: "none",
-              }}>
-                {icon}{label}
-              </Link>
-            ))}
-          </div>
-
-          {/* خانة البحث */}
-          <form onSubmit={submitSearch} style={{
-            display: "flex", borderRadius: "0.75rem", overflow: "hidden",
-            boxShadow: "0 6px 24px rgba(0,0,0,0.4)", maxWidth: 460, margin: "0 auto 1rem",
-            border: "1px solid rgba(255,255,255,0.18)",
-          }} aria-label="البحث">
-            <input
-              value={term}
-              onChange={(e) => setTerm(e.target.value)}
-              placeholder="ابحث في المنصة..."
-              aria-label="البحث"
-              className="hpv4-hero__search-input"
-              style={{
-                flex: 1, padding: "0.75rem 1rem", border: "none", outline: "none",
-                fontSize: "0.88rem", direction: "rtl", fontFamily: "inherit",
-                background: "rgba(255,255,255,0.97)", color: "#1a1a1a",
-              }}
-            />
-            <button type="submit" style={{
-              background: "linear-gradient(135deg,#173D35,#173D35)", color: "#F7F4ED", border: "none", cursor: "pointer",
-              padding: "0.75rem 1.3rem", fontWeight: 800, fontSize: "0.85rem", fontFamily: "inherit",
-              whiteSpace: "nowrap",
-            }}>بحث</button>
-          </form>
-
-          {/* أزرار الإجراء — شبكة 2×2 */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,auto)", gap: "0.45rem", justifyContent: "center" }}>
-            <Link href="/lessons" className="hpv4-hero__cta-primary" style={{
-              background: "#F7F4ED", color: "#173D35", padding: "0.6rem 1.2rem",
-              borderRadius: "0.6rem", fontWeight: 800, fontSize: "0.86rem",
-              textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.3rem",
+          {/* زر متابعة واحد — العنصر الثالث من البطاقة اليومية (ديناميكي: آخر صفحة
+              زارها المستخدم، أو دعوة افتراضية لبدء الورد اليومي لزائر جديد) */}
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Link href={continueHref} className="hpv4-hero__cta-primary" style={{
+              background: "#F7F4ED", color: "#173D35", padding: "0.7rem 1.6rem",
+              borderRadius: "0.65rem", fontWeight: 800, fontSize: "0.9rem",
+              textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.4rem",
               boxShadow: "0 2px 10px rgba(0,0,0,0.25)",
             }}>
-              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 3 1 7l8 4 8-4-8-4z"/><path d="M5 9.5v3.5a4 4 0 0 0 8 0V9.5"/></svg>
-              الدروس
-            </Link>
-            <Link href="/quran-hub" style={{
-              background: "rgba(255,255,255,0.1)", color: "#F7F4ED", padding: "0.6rem 1rem",
-              borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.86rem",
-              textDecoration: "none", border: "1px solid rgba(255,255,255,0.28)",
-              display: "inline-flex", alignItems: "center", gap: "0.3rem",
-            }}>
-              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 15V4C8 2.5 6 2 3 2.5v12c3-.5 5 0 6 1.5z"/><path d="M9 15V4c1-1.5 3-2 6-1.5v12c-3-.5-5 0-6 1.5z"/></svg>
-              القرآن
-            </Link>
-            <Link href="/adhkar" style={{
-              background: "rgba(255,255,255,0.1)", color: "#F7F4ED", padding: "0.6rem 1rem",
-              borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.86rem",
-              textDecoration: "none", border: "1px solid rgba(255,255,255,0.28)",
-              display: "inline-flex", alignItems: "center", gap: "0.3rem",
-            }}>
-              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="9" cy="9" r="2"/><path d="M9 2v2M9 14v2M2 9h2M14 9h2"/><path d="M4.2 4.2l1.4 1.4M12.4 12.4l1.4 1.4M4.2 13.8l1.4-1.4M12.4 5.6l1.4-1.4"/></svg>
-              الأذكار
-            </Link>
-            <Link href="/prayer-times" style={{
-              background: "rgba(255,255,255,0.1)", color: "#F7F4ED", padding: "0.6rem 1rem",
-              borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.86rem",
-              textDecoration: "none", border: "1px solid rgba(255,255,255,0.28)",
-              display: "inline-flex", alignItems: "center", gap: "0.3rem",
-            }}>
-              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M1 17h16"/><path d="M3 17v-6a6 6 0 0 1 12 0v6"/><path d="M9 5V3"/><path d="M7.5 8h3"/></svg>
-              الصلاة
+              <svg width="15" height="15" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 3l8 6-8 6V3z"/></svg>
+              {continueLabel}
             </Link>
           </div>
 
@@ -806,10 +711,11 @@ export default function HomePage() {
       {/* ══ زرتَ مؤخراً ══ */}
       <RecentPagesBar />
 
-      {/* ══ لوحة المستخدم الشخصية — للمسجلين فقط ══ */}
-      <SectionErrorBoundary name="PersonalDashboard">
-        <HomePersonalDashboard />
-      </SectionErrorBoundary>
+      {/* ملاحظة: "لوحة المستخدم الشخصية" (ترحيب + آخر نشاطين) حُذفت من هنا —
+          كانت تكرارًا حرفيًا لودجت "استمر من حيث توقفت" (HomeContinueWidget)
+          الذي يعرض نفس البيانات (useRecentProgress) بمعالجة حالات أشمل
+          (تسجيل دخول/تحميل/فراغ) ضمن قسم "أكمل من حيث توقفت" أدناه — لا حذف
+          وظيفة، فقط إزالة ازدواج بصري (إعادة هيكلة الرئيسية، الأولوية 1). */}
 
       {/* ══ وصول سريع ══ */}
       <nav aria-label="وصول سريع" style={{ maxWidth: 760, margin: "2rem auto 0", padding: "0 1rem" }}>
@@ -821,10 +727,10 @@ export default function HomePage() {
         </div>
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(126px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
           gap: "0.45rem",
         }}>
-          {[...QUICK_LINKS, { href: "/sitemap", Icon: Layers, label: "كل الأقسام", desc: "خريطة الموقع" }].map(({ href, Icon: Ico, label, desc }) => (
+          {QUICK_LINKS.map(({ href, Icon: Ico, label, desc }) => (
             <Link key={label + href} href={href} aria-label={label} style={{
               display: "flex", alignItems: "center", gap: "0.5rem",
               padding: "0.6rem 0.65rem",
