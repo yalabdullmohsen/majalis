@@ -20,8 +20,14 @@ import { normalizeQuranWord, WORD_POSITION_OVERRIDES, positionKey } from "./qura
 
 const BISMILLAH_WORD_COUNT = 4;
 
-/** يُعيد نص آية 1 بعد فصل البسملة المدمَجة إن وُجدت (لا يُعدّل الآية الأصلية). */
-function stripEmbeddedBismillah(surahNumber: number, ayahNumberInSurah: number, text: string): string {
+/**
+ * يُعيد نص آية 1 بعد فصل البسملة المدمَجة إن وُجدت (لا يُعدّل الآية الأصلية).
+ * مُصدَّرة (لا خاصة) ليستخدمها scripts/build-quran-position-index.mjs
+ * بالضبط — globalIndex في ذلك الفهرس يجب أن يطابق globalIndex هنا حرفيًا
+ * (كلاهما يُفصِّل البسملة أولاً)، وإلا انكسر تحويل موضع الحسم في وضع
+ * "التسميع الحر" إلى (سورة, آية) حقيقية.
+ */
+export function stripEmbeddedBismillah(surahNumber: number, ayahNumberInSurah: number, text: string): string {
   if (ayahNumberInSurah !== 1) return text;
   if (surahNumber === 1 || surahNumber === 9) return text; // الفاتحة: البسملة هي الآية ذاتها. التوبة: لا بسملة.
   const words = text.split(/\s+/).filter(Boolean);

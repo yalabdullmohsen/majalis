@@ -48,6 +48,8 @@ export class VerseAlignmentEngine {
   private readonly interWordGapsMs: number[] = [];
   private finished = false;
   private lastAyahAnnounced: string | null = null;
+  /** مرة واحدة فقط لكل جلسة: هل تقرَّر مصير كلمات البسملة المحتملة في مطلع النطاق (بسملة فعلية فتُحذَف، أو محتوى حقيقي فيُترَك)؟ */
+  private bismillahChecked = false;
 
   constructor(private readonly config: EngineConfig) {
     this.ref = config.referenceWords;
@@ -134,19 +136,36 @@ export class VerseAlignmentEngine {
     }
 
     // تجاوز البسملة إن وقعت في بداية سورة (عدا الفاتحة/التوبة، مُدارة عبر REFERENCE نفسه)
-    if (this.cursor === 0 && this.ref.length > 0) {
+    // — قرار **مرة واحدة فقط** لكل جلسة (bismillahChecked)، لا فحص متكرر
+    // كل مرة يكون فيها cursor=0: أول تنفيذ كان يُعيد الفحص عند كل استدعاء
+    // طالما لم يتقدَّم cursor، فإن سبقت كلمات البسملة كلمات محتوى حقيقية
+    // قليلة (<4) في الـbuffer بعد حذف البسملة، كانت تُحجَب عن الحسم إلى
+    // الأبد (لا بسملة أخرى قادمة لتُكمل الأربع وتُطلق القرار) — خلل حقيقي
+    // مُكتشَف عبر تحقّق حي لوضع "التسميع الحر" (سورة الإخلاص القصيرة).
+    let awaitingBismillahDecision = false;
+    if (!this.bismillahChecked && this.cursor === 0 && this.ref.length > 0) {
       const surah = this.ref[0].surah;
       const isFatihaOrTawbah =
         SURAH_WHERE_BISMILLAH_IS_AYAH_ONE.has(surah) || SURAH_WITHOUT_BISMILLAH.has(surah);
-      if (!isFatihaOrTawbah && this.buffer.length >= 4) {
+      if (isFatihaOrTawbah) {
+        this.bismillahChecked = true;
+      } else if (this.buffer.length >= 4) {
         const words = this.buffer.slice(0, 4).map((b) => b.norm);
         if (isBismillahPhrase(words)) {
           this.buffer.splice(0, 4);
         }
+        this.bismillahChecked = true;
+      } else if (finalFlush) {
+        this.bismillahChecked = true; // جلسة أُنهيت بأقل من 4 كلمات إجمالاً — لا حسم بسملة، تُعامَل كمحتوى مباشرة
+      } else {
+        // لم تصل كلمات كافية بعد للحسم — لا نُحاذي المعلَّق حتى الآن ضد
+        // المرجع، وإلا حاذاها المحرك خطأً ضد أول كلمات الآية الحقيقية.
+        awaitingBismillahDecision = true;
       }
     }
 
     if (this.buffer.length === 0) return events;
+    if (awaitingBismillahDecision) return events;
 
     while (this.buffer.length > (finalFlush ? 0 : COMMIT_LAG) && this.cursor < this.ref.length) {
       const refWindow = this.ref.slice(this.cursor, this.cursor + LOOKAHEAD).map((r) => r.normalized);

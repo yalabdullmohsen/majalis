@@ -16,10 +16,12 @@ import { addRecitationReviewItem, getDueRecitationReviews, type RecitationReview
 import { loadRecitationSettings, saveRecitationSettings } from "@/lib/recitation-ai/recitation-settings-service";
 import { InteractiveMushafReveal, type WordRevealInfo } from "@/components/quran/InteractiveMushafReveal";
 import { loadMutashabihatIndex, getSimilarAyahs, type MutashabihMatch } from "@/lib/recitation-ai/mutashabihat";
+import { FreeformStartDetector, loadPositionIndex } from "@/lib/recitation-ai/freeform-start-detector";
+import { normalizeQuranWord } from "@/lib/recitation-ai/quran-normalize";
 import type { AlertLevel, AlignmentEvent, PrecisionLevel, RecitationMode, ReferenceWord } from "@/lib/recitation-ai/types";
 import "@/styles/recitation-ai.css";
 
-type Phase = "setup" | "loading" | "session" | "report" | "error";
+type Phase = "setup" | "loading" | "detecting" | "session" | "report" | "error";
 
 const MODE_LABELS: Record<RecitationMode, { label: string; hint: string }> = {
   full_hide: { label: "التسميع الكامل", hint: "النص مخفٍ تمامًا" },
@@ -27,6 +29,7 @@ const MODE_LABELS: Record<RecitationMode, { label: string; hint: string }> = {
   word_follow: { label: "المتابعة كلمة بكلمة", hint: "الصفحة ظاهرة، تُظلَّل الكلمات الصحيحة" },
   interactive_mushaf: { label: "المصحف التفاعلي", hint: "الكلمات مموَّهة وتنكشف بتلاوتك" },
   teacher_test: { label: "اختبار المعلّم", hint: "يبدأ من موضع عشوائي" },
+  freeform: { label: "التسميع الحر", hint: "ابدأ التلاوة مباشرة — نكتشف السورة تلقائيًا" },
 };
 
 const ALERT_LABELS: Record<AlertLevel, string> = { gentle: "لطيف", medium: "متوسط", immediate: "فوري" };
@@ -91,6 +94,8 @@ function RecitationTestPageInner() {
   const asrSessionRef = useRef<ASRSession | null>(null);
   const unsubRef = useRef<(() => void) | null>(null);
   const sessionStartRef = useRef<number>(0);
+  /** يُلغي جلسة اكتشاف "التسميع الحر" الجارية — يُضبَط داخل startSessionFreeform فقط. */
+  const freeformCancelRef = useRef<(() => void) | null>(null);
   // وضع الجلسة النشطة الفعلي — لا الاعتماد على إغلاق (closure) لحالة
   // mode داخل attachAsrSession (لا تُعاد بناؤه عند تغيّر mode فتبقى قيمة
   // قديمة)؛ يُضبَط مرة واحدة عند بدء كل جلسة ويُقرَأ من هنا دومًا.
@@ -305,6 +310,125 @@ function RecitationTestPageInner() {
       setPhase("error");
     }
   }, [surahNumber, startSessionWithWords, user?.id, mode, precisionLevel, alertLevel, revealGranularity, rangeMode, ayahFrom, ayahTo]);
+
+  /**
+   * "التسميع الحر" (القسم 2، الوضع 6): يبدأ الاستماع فورًا بلا اختيار
+   * سورة/نطاق مسبق، ويُحدِّد السورة/الآية تلقائيًا من أول كلمات مسموعة
+   * عبر FreeformStartDetector — بلا أي طلب شبكي أثناء الحسم نفسه (فهرس
+   * المواضع مُحمَّل مسبقًا كاملاً). الكلمات المسموعة أثناء الاكتشاف نفسه
+   * لا تُهدَر: تُعاد تغذيتها للمحرك فور إنشائه بمجرد معرفة نقطة البدء،
+   * فتُحتسَب ضمن التقييم كأي كلمة أخرى.
+   */
+  const startSessionFreeform = useCallback(async () => {
+    setPhase("detecting");
+    setErrorMsg(null);
+    try {
+      const [selection, positionIndex] = await Promise.all([selectBestProvider(navigator.onLine), loadPositionIndex()]);
+      if (!selection.provider) {
+        setErrorMsg("لا يتوفر محرك تعرّف صوتي على هذا الجهاز/المتصفح حاليًا. جرّب من تطبيق الجوال، أو تحقّق من إذن الميكروفون.");
+        setPhase("error");
+        return;
+      }
+      const provider = selection.provider;
+      providerRef.current = provider;
+
+      const asrSession = await provider.startSession({ language: "ar-SA", precisionLevel });
+      asrSessionRef.current = asrSession;
+      sessionStartRef.current = Date.now();
+
+      if (!provider.onPartialWord) {
+        setErrorMsg("المزوّد المتاح لا يدعم الاستماع اللحظي اللازم للتسميع الحر.");
+        setPhase("error");
+        return;
+      }
+
+      const detector = new FreeformStartDetector(positionIndex);
+      const buffered: Array<{ word: string; atMs: number; confidence?: number }> = [];
+      let detectionUnsub: (() => void) | null = null;
+
+      freeformCancelRef.current = () => {
+        detectionUnsub?.();
+        setListening(false);
+        void provider.endSession(asrSession).catch(() => {});
+        setPhase("setup");
+      };
+
+      const finishDetectionFailure = () => {
+        detectionUnsub?.();
+        freeformCancelRef.current = null;
+        setErrorMsg("تعذّر تحديد السورة تلقائيًا من التلاوة المسموعة. جرّب مجددًا بصوت أوضح، أو اختر السورة يدويًا من وضع آخر.");
+        setListening(false);
+        void provider.endSession(asrSession).catch(() => {});
+        setPhase("setup");
+      };
+
+      const resolveAndStart = async (surah: number, ayah: number) => {
+        detectionUnsub?.();
+        freeformCancelRef.current = null;
+        const detail = await fetchSurahDetail(surah);
+        const rangeAyahs = detail.ayahs.filter((a) => a.numberInSurah >= ayah);
+        const words = buildReferenceWords(surah, rangeAyahs);
+
+        setSurahNumber(surah);
+        setReferenceWords(words);
+        setWordStates(new Map(words.map((w) => [`${w.surah}:${w.ayah}:${w.wordIndex}`, "hidden" as const])));
+        setCursorIdx(0);
+        setLiveEvents([]);
+        setJustCompletedAyah(null);
+        setPaused(false);
+        activeModeRef.current = "freeform";
+        hintsUsedRef.current = 0;
+        setHintLevel(0);
+        recallStartAtRef.current = null;
+        setRecallMs(null);
+
+        const engine = new VerseAlignmentEngine({ referenceWords: words, alertLevel });
+        engineRef.current = engine;
+
+        // إعادة تغذية الكلمات المسموعة أثناء الاكتشاف نفسه — لا تُهدَر.
+        for (const b of buffered) {
+          try {
+            applyEvents(engine.feedWord(b.word, b.atMs, b.confidence));
+          } catch {
+            // تجاهل — لا يجب أن يُفشل خللٌ في كلمة اكتشاف واحدة الجلسة كاملة
+          }
+        }
+
+        unsubRef.current = provider.onPartialWord!(asrSession, (word, atMs, confidence) => {
+          try {
+            applyEvents(engine.feedWord(word, atMs, confidence));
+          } catch (err) {
+            console.error("recitation-ai: feedWord failed", err);
+            setErrorMsg("حدث خلل أثناء تحليل التلاوة. أُنهيت الجلسة تلقائيًا لحمايتك — جرّب مجددًا.");
+            setListening(false);
+            unsubRef.current?.();
+            unsubRef.current = null;
+            void provider.endSession(asrSession).catch(() => {});
+            setPhase("error");
+          }
+        });
+
+        setListening(true);
+        setPhase("session");
+      };
+
+      detectionUnsub = provider.onPartialWord(asrSession, (rawWord, atMs, confidence) => {
+        buffered.push({ word: rawWord, atMs, confidence });
+        const result = detector.feedWord(normalizeQuranWord(rawWord));
+        if (result === null) return; // لم يُحسَم بعد — استمر بالاستماع
+        if (result.length === 0) { finishDetectionFailure(); return; }
+        void resolveAndStart(result[0].surah, result[0].ayah);
+      });
+
+      setListening(true);
+    } catch (e) {
+      setErrorMsg(e instanceof Error ? e.message : "تعذّر بدء التسميع الحر");
+      setPhase("error");
+    }
+    // applyEvents مُتعمَّد استبعاده من الاعتماديات (مطابقةً لـattachAsrSession
+    // أعلاه) — هويته ثابتة دومًا (useCallback بمصفوفة اعتماديات فارغة)،
+    // وتضمينه هنا كان سيُسبِّب خطأ TDZ وقت render لأن تعريفه لاحقًا في الملف.
+  }, [alertLevel, precisionLevel]);
 
   /** "إعادة اختبار هذه الآية فورًا" — القسم 9. يبني كلمات مرجعية لآية واحدة فقط من نفس السورة. */
   /** يبني جلسة بنطاق آيات محدَّد من سورة واحدة — يُستخدَم لكل من "إعادة اختبار هذه الآية" و"مراجعة اليوم" (القسم 10). */
@@ -543,6 +667,31 @@ function RecitationTestPageInner() {
     return () => { cancelled = true; };
   }, [phase]);
 
+  if (phase === "detecting") {
+    return (
+      <div className="rai-page">
+        <div className="rai-header">
+          <h1 className="rai-header__title">
+            اختبار التسميع بالذكاء الاصطناعي
+            <span className="rai-experimental-badge">نسخة تجريبية</span>
+          </h1>
+        </div>
+        <div className="rai-detecting">
+          <div className="rai-listen-wave" aria-hidden="true"><span /><span /><span /></div>
+          <p className="rai-detecting__title">نستمع... تابع التلاوة</p>
+          <p className="rai-detecting__hint">نحدِّد السورة والآية تلقائيًا من كلماتك — لا حاجة للتوقف.</p>
+          <button
+            type="button"
+            className="rai-icon-btn"
+            onClick={() => freeformCancelRef.current?.()}
+          >
+            إلغاء
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (phase === "setup" || phase === "loading" || phase === "error") {
     return (
       <div className="rai-page">
@@ -604,44 +753,48 @@ function RecitationTestPageInner() {
         )}
 
         <div className="rai-setup">
-          <div className="rai-setup__group">
-            <label className="rai-setup__label" htmlFor="rai-surah">السورة</label>
-            <select id="rai-surah" className="rai-surah-select" value={surahNumber} onChange={(e) => setSurahNumber(Number(e.target.value))}>
-              {surahs.map((s) => (
-                <option key={s.number} value={s.number}>{s.number}. {s.name} ({s.ayahs} آية)</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="rai-setup__group">
-            <span className="rai-setup__label">النطاق</span>
-            <div className="rai-choice-grid">
-              <button type="button" className={`rai-choice ${rangeMode === "surah" ? "rai-choice--active" : ""}`} onClick={() => setRangeMode("surah")}>
-                السورة كاملة
-              </button>
-              <button type="button" className={`rai-choice ${rangeMode === "ayahRange" ? "rai-choice--active" : ""}`} onClick={() => setRangeMode("ayahRange")}>
-                من آية إلى آية
-              </button>
+          {mode !== "freeform" && (
+            <div className="rai-setup__group">
+              <label className="rai-setup__label" htmlFor="rai-surah">السورة</label>
+              <select id="rai-surah" className="rai-surah-select" value={surahNumber} onChange={(e) => setSurahNumber(Number(e.target.value))}>
+                {surahs.map((s) => (
+                  <option key={s.number} value={s.number}>{s.number}. {s.name} ({s.ayahs} آية)</option>
+                ))}
+              </select>
             </div>
-            {rangeMode === "ayahRange" && (
-              <div className="rai-range-inputs" style={{ display: "flex", gap: ".6rem", marginTop: ".6rem" }}>
-                <label style={{ flex: 1 }}>
-                  <span className="rai-choice__hint">من آية</span>
-                  <input
-                    type="number" min={1} max={currentSurahAyahCount} value={ayahFrom}
-                    onChange={(e) => setAyahFrom(Math.min(Number(e.target.value) || 1, ayahTo))}
-                  />
-                </label>
-                <label style={{ flex: 1 }}>
-                  <span className="rai-choice__hint">إلى آية</span>
-                  <input
-                    type="number" min={ayahFrom} max={currentSurahAyahCount} value={ayahTo}
-                    onChange={(e) => setAyahTo(Math.max(Number(e.target.value) || ayahFrom, ayahFrom))}
-                  />
-                </label>
+          )}
+
+          {mode !== "freeform" && (
+            <div className="rai-setup__group">
+              <span className="rai-setup__label">النطاق</span>
+              <div className="rai-choice-grid">
+                <button type="button" className={`rai-choice ${rangeMode === "surah" ? "rai-choice--active" : ""}`} onClick={() => setRangeMode("surah")}>
+                  السورة كاملة
+                </button>
+                <button type="button" className={`rai-choice ${rangeMode === "ayahRange" ? "rai-choice--active" : ""}`} onClick={() => setRangeMode("ayahRange")}>
+                  من آية إلى آية
+                </button>
               </div>
-            )}
-          </div>
+              {rangeMode === "ayahRange" && (
+                <div className="rai-range-inputs" style={{ display: "flex", gap: ".6rem", marginTop: ".6rem" }}>
+                  <label style={{ flex: 1 }}>
+                    <span className="rai-choice__hint">من آية</span>
+                    <input
+                      type="number" min={1} max={currentSurahAyahCount} value={ayahFrom}
+                      onChange={(e) => setAyahFrom(Math.min(Number(e.target.value) || 1, ayahTo))}
+                    />
+                  </label>
+                  <label style={{ flex: 1 }}>
+                    <span className="rai-choice__hint">إلى آية</span>
+                    <input
+                      type="number" min={ayahFrom} max={currentSurahAyahCount} value={ayahTo}
+                      onChange={(e) => setAyahTo(Math.max(Number(e.target.value) || ayahFrom, ayahFrom))}
+                    />
+                  </label>
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="rai-setup__group">
             <span className="rai-setup__label">نوع الاختبار</span>
@@ -700,11 +853,23 @@ function RecitationTestPageInner() {
             </div>
           )}
 
+          {mode === "freeform" && (
+            <p className="rai-tajweed-disabled-note">
+              لا حاجة لاختيار سورة — اضغط "ابدأ" وابدأ التلاوة مباشرة (يمكنك البدء بالبسملة كالمعتاد)،
+              وسنكتشف السورة والآية تلقائيًا من أول كلماتك. إن تعذّر التحديد، أعد المحاولة بصوت أوضح.
+            </p>
+          )}
+
           <p className="rai-pre-session-warning" role="alert">
             هذه الميزة تجريبية وقد لا تكتشف جميع الأخطاء بدقة. لا تعتمد عليها بديلًا عن العرض على معلّم متقن.
           </p>
 
-          <button type="button" className="rai-start-btn" onClick={startSession} disabled={phase === "loading"}>
+          <button
+            type="button"
+            className="rai-start-btn"
+            onClick={mode === "freeform" ? () => void startSessionFreeform() : startSession}
+            disabled={phase === "loading"}
+          >
             {phase === "loading" ? "جارٍ التحضير…" : "ابدأ التسميع"}
           </button>
           <p className="rai-report__disclaimer">

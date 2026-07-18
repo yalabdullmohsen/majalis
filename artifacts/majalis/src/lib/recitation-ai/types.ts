@@ -7,7 +7,8 @@ export type RecitationMode =
   | "assisted"
   | "word_follow"
   | "interactive_mushaf"
-  | "teacher_test";
+  | "teacher_test"
+  | "freeform";
 
 export type AlertLevel = "gentle" | "medium" | "immediate";
 
