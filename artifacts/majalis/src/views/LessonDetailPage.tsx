@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { AdminInlineEdit } from "@/components/AdminInlineEdit";
+import { ReadingProgressBar } from "@/components/ReadingProgressBar";
 import { getLessonById, getSheikhs } from "@/lib/supabase";
 import { SkeletonPage, Empty } from "@/components/ui-common";
 import ContentActions from "@/components/ContentActions";
@@ -303,6 +304,7 @@ export default function LessonDetailPage({
 
   return (
     <div className="page-shell narrow lesson-detail-page">
+      <ReadingProgressBar />
       <nav className="lesson-detail-breadcrumb" aria-label="مسار التصفح">
         <Link href="/">الرئيسية</Link>
         <span aria-hidden="true"> / </span>
