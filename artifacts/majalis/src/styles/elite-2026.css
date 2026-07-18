@@ -772,6 +772,20 @@ html[data-theme="dark"] .navbar-mobile-login {
   color: #fff !important;
 }
 .home-main--v3 .ui-card .home-sunnah-card__period { color: rgba(255,255,255,0.75) !important; }
+/* عنوان القسم (h2) — اكتُشف فعليًا عبر Playwright بعد هجرة هذا الودجت إلى
+   <Widget> الموحّد (المرحلة 7): إضافة class="home-section" (يأتي من Widget
+   نفسه) فعّلت لأول مرة عدّة قواعد لم تكن تُطبَّق قط على العنوان الأصلي (لم يكن
+   يحمل هذه الـclasses إطلاقًا قبل الهجرة)، أقواها فعليًا محدَّدًا
+   `[class*="card"] h2:not(.ds-section__title):not(.cards-page-title):not(
+   .fiqh-council-section-title) { color: var(--elite-forest) !important }`
+   (تطابق أي عنصر class يحوي "card" — و.ui-card يحويها) بخصوصية (0,4,1) —
+   أعلى من أي محاولة تجاوز بالأصناف وحدها هنا (0,3,1)، فبقي العنوان أسود
+   تقريبًا فوق خلفية البطاقة الداكنة (contrast bug حقيقي، لا افتراضي).
+   الحل: استهداف عبر id الفريد `#widget-sunnah-time-heading` (يتولّد تلقائيًا
+   من id="sunnah-time" في <Widget>) بدل تكديس أصناف لمجاراة خصوصية قد تتغيّر
+   لاحقًا — الخصوصية معرِّف فريد تتجاوز أي عدد من الأصناف دائمًا، وأكثر أمانًا
+   من محاولة "الفوز" في سباق خصوصية صنفي مع قاعدة عامة قد تُعدَّل مستقبلًا. */
+#widget-sunnah-time-heading { color: rgba(255,255,255,0.95) !important; }
 
 /* ⑦ strong / em / blockquote / cite / small / a */
 .home-main--v3 .ui-card strong,
@@ -32696,4 +32710,36 @@ html[data-theme="dark"] .ikm-card__title {
 @media (min-width: 640px) {
   .ayah-sheet-overlay { align-items: center; justify-content: center; }
   .ayah-sheet { width: min(480px, 92vw); border-radius: 1.25rem; max-height: 80vh; }
+}
+
+/* ============================================================
+   §223 — أسماء الصلوات بخط زخرفي (المرحلة 12، 2026-07-18)
+   لا خط ثلث جلي مرخَّص متاح، ولا يمكن رسم SVG خط ثلث حقيقي موثوق يدويًا في
+   هذه الجلسة — البديل الصادق المُطبَّق: "Aref Ruqaa" (خط عربي زخرفي مرخَّص
+   مُحمَّل بالفعل في index.html، غير مُستخدَم فعليًا بأي مكان قبل هذا)، يليه
+   Amiri كما يتطلب fallback النصي. لا استخدام جديد لخط غير محمَّل مسبقًا،
+   فلا CLS إضافي. الأرقام (.pt-hero__time/.pt-prayer__time) تبقى على
+   var(--font-body)/Almarai كما هي أصلاً (لم تُغيَّر). !important إلزامية
+   هنا لتجاوز .pt-hero__name!important الموجود فعلاً في modern-2026.css
+   (نفس فخّ "!important خارجي" الموثَّق — الحل الوحيد الفعلي محاذاة نفس
+   القاعدة بتحميل لاحق في elite-2026.css، لا استخدام style.prop مباشر). */
+.pt-hero__name,
+.pt-prayer__name {
+  font-family: "Aref Ruqaa", "Amiri", var(--font-body) !important;
+  line-height: 1.5 !important; /* مساحة كافية لحروف الخط الزخرفي الممتدة — لا قص */
+  overflow: visible !important;
+}
+.pt-hero__name { font-weight: 700 !important; } /* Aref Ruqaa ثقيل بصريًا أصلاً؛ 700 كافٍ بدل 800 المُورَّث */
+
+/* الشروق مميَّز بصريًا كصلاة غير مفروضة — لا يُخلَط بصريًا بالخمس المفروضة */
+.pt-prayer--sunrise {
+  border-style: dashed !important;
+  opacity: .82;
+}
+.pt-prayer--sunrise .pt-prayer__name::after {
+  content: " (غير مفروضة)";
+  font-family: var(--font-body); /* التسمية التوضيحية بخط الواجهة العادي، لا الزخرفي */
+  font-size: .68em;
+  font-weight: 600;
+  color: var(--majalis-ink-soft, inherit);
 }

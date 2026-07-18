@@ -34,7 +34,7 @@ export function SurahList({ surahs, currentSurah, onSelect, onClose }: Props) {
           className="qs-search-input"
         />
       </div>
-      <ol className="qs-surah-items" role="list">
+      <ol className="qs-surah-items">
         {filtered.map((s) => (
           <li key={s.number}>
             <button

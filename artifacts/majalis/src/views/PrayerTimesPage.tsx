@@ -246,10 +246,11 @@ export default function PrayerTimesPage() {
                 isNext(p.key)   ? "pt-prayer--next"   : "",
                 isPinned(p.key) ? "pt-prayer--pinned" : "",
                 isPast(p)       ? "pt-prayer--past"   : "",
+                p.key === "Sunrise" ? "pt-prayer--sunrise" : "",
               ].filter(Boolean).join(" ")}
               onClick={() => setPinnedKey(p.key === pinnedKey ? null : p.key)}
               aria-pressed={isPinned(p.key)}
-              aria-label={`صلاة ${PRAYER_AR[p.key] ?? p.name}، ${p.time}`}
+              aria-label={`صلاة ${PRAYER_AR[p.key] ?? p.name}${p.key === "Sunrise" ? " (غير مفروضة)" : ""}، ${p.time}`}
             >
               <span className="pt-prayer__icon" aria-hidden="true">
                 {(() => { const I = PRAYER_ICON[p.key] ?? Sunset; return <I size={20} strokeWidth={1.6} />; })()}

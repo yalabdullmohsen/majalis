@@ -489,12 +489,12 @@ function LessonImportImageContent() {
         <h3 className="lip-upload-h3">رفع الإعلان</h3>
         <div className="lip-upload-meta">
           <div>
-            <label className="lis-label">رابط المصدر (اختياري)</label>
-            <input className="lis-input" value={sourceUrl} onChange={(e) => setSourceUrl(e.target.value)} placeholder="https://..." dir="ltr" disabled={busy} />
+            <label className="lis-label" htmlFor="lip-source-url">رابط المصدر (اختياري)</label>
+            <input id="lip-source-url" className="lis-input" value={sourceUrl} onChange={(e) => setSourceUrl(e.target.value)} placeholder="https://..." dir="ltr" disabled={busy} />
           </div>
           <div>
-            <label className="lis-label">ملاحظات (اختياري)</label>
-            <input className="lis-input" value={notes} onChange={(e) => setNotes(e.target.value)} disabled={busy} />
+            <label className="lis-label" htmlFor="lip-notes">ملاحظات (اختياري)</label>
+            <input id="lip-notes" className="lis-input" value={notes} onChange={(e) => setNotes(e.target.value)} disabled={busy} />
           </div>
         </div>
         <input

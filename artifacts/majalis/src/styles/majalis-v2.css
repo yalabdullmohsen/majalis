@@ -2336,7 +2336,7 @@ table th {
   text-align: center;
   padding: 2.5rem 2rem;
   background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(201,168,76,0.20);
+  border: 1px solid rgba(23,107,87,0.20);
   border-radius: 1.25rem;
   width: 100%;
   max-width: 480px;
@@ -2391,7 +2391,7 @@ table th {
 }
 .pt-hero__reset {
   background: none;
-  border: 1px solid rgba(201,168,76,0.30);
+  border: 1px solid rgba(23,107,87,0.30);
   border-radius: 999px;
   color: var(--majalis-brass, #176B57);
   font-size: 0.72rem;
@@ -2401,7 +2401,7 @@ table th {
   transition: border-color 0.15s, background 0.15s;
 }
 .pt-hero__reset:hover {
-  background: rgba(201,168,76,0.10);
+  background: rgba(23,107,87,0.10);
   border-color: var(--majalis-brass, #176B57);
 }
 
@@ -2427,8 +2427,8 @@ table th {
   font-family: inherit;
 }
 .pt-prayer:hover {
-  border-color: rgba(201,168,76,0.35);
-  background: rgba(201,168,76,0.06);
+  border-color: rgba(23,107,87,0.35);
+  background: rgba(23,107,87,0.06);
   transform: translateY(-2px);
 }
 .pt-prayer--next {
@@ -2437,7 +2437,7 @@ table th {
 }
 .pt-prayer--pinned {
   border-color: var(--majalis-brass, #176B57);
-  background: rgba(201,168,76,0.10);
+  background: rgba(23,107,87,0.10);
 }
 .pt-prayer__name {
   font-size: 0.82rem;
@@ -2491,15 +2491,15 @@ table th {
   gap: 1rem;
   padding: 1.25rem 1.5rem;
   border-radius: 1rem;
-  background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(46,139,103,0.08) 100%);
-  border: 1.5px solid rgba(201,168,76,0.30);
+  background: linear-gradient(135deg, rgba(23,107,87,0.08) 0%, rgba(46,139,103,0.08) 100%);
+  border: 1.5px solid rgba(23,107,87,0.30);
   cursor: pointer;
   transition: border-color 0.2s, background 0.2s, transform 0.2s;
   direction: rtl;
 }
 .prophets-seerah-bridge:hover {
-  border-color: rgba(201,168,76,0.60);
-  background: linear-gradient(135deg, rgba(201,168,76,0.14) 0%, rgba(46,139,103,0.12) 100%);
+  border-color: rgba(23,107,87,0.60);
+  background: linear-gradient(135deg, rgba(23,107,87,0.14) 0%, rgba(46,139,103,0.12) 100%);
   transform: translateY(-2px);
 }
 .prophets-seerah-bridge__ornament { flex-shrink: 0; }
@@ -2543,7 +2543,7 @@ table th {
   font-size: 0.78rem;
   color: var(--majalis-brass, #176B57);
   text-decoration: none;
-  border: 1px solid rgba(201,168,76,0.25);
+  border: 1px solid rgba(23,107,87,0.25);
   border-radius: 999px;
   padding: 0.2rem 0.75rem;
   transition: border-color 0.15s, background 0.15s;
@@ -2551,8 +2551,8 @@ table th {
   direction: rtl;
 }
 .seerah-back-link:hover {
-  background: rgba(201,168,76,0.08);
-  border-color: rgba(201,168,76,0.50);
+  background: rgba(23,107,87,0.08);
+  border-color: rgba(23,107,87,0.50);
 }
 /* ══ نهاية بطاقة الانتقال ══════════════════════════════════════════════════ */
 
@@ -2759,7 +2759,7 @@ table th {
   font-family: inherit;
 }
 .kuwait-tab:hover:not(.kuwait-tab--active) {
-  border-color: rgba(201,168,76,0.30) !important;
+  border-color: rgba(23,107,87,0.30) !important;
   color: var(--majalis-ink, #EDE9DD) !important;
   background: rgba(255,255,255,0.07) !important;
 }

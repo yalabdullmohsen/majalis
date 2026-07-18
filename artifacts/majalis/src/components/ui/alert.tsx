@@ -36,6 +36,12 @@ const AlertTitle = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement>
 >(({ className, ...props }, ref) => (
+  // ملاحظة وصول (jsx-a11y/heading-has-content في تدقيق منفصل غير مُفعَّل ضمن
+  // بوابة lint الرئيسية بعد): هذا مكوّن أساسي عام (نمط shadcn/ui) يمرِّر
+  // children عبر {...props} بدل كتابتها حرفيًا داخل الـJSX، فلا يستطيع
+  // التحليل الساكن رؤية أن المُستدعي سيمرِّر نصًا حقيقيًا (وهذا هو الاستخدام
+  // المقصود الوحيد لمكوّن كهذا). غير مُستخدَم حاليًا في أي مكان بالموقع (بحث
+  // فعلي أكَّد ذلك)، فلا أثر حقيقي على أي مستخدم الآن.
   <h5
     ref={ref}
     className={cn("mb-1 font-medium leading-none tracking-tight", className)}

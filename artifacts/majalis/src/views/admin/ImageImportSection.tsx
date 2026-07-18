@@ -232,8 +232,8 @@ function ReviewForm({
 
       {/* نوع النشاط */}
       <div>
-        <label className="iis-label">نوع النشاط</label>
-        <select className="iis-input" value={parsed.activity_type || "درس"} disabled={disabled}
+        <label className="iis-label" htmlFor="iis-activity-type">نوع النشاط</label>
+        <select id="iis-activity-type" className="iis-input" value={parsed.activity_type || "درس"} disabled={disabled}
           onChange={(e) => set("activity_type", e.target.value)}>
           {ACTIVITY_TYPES.map((a) => <option key={a} value={a}>{a}</option>)}
         </select>

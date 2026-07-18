@@ -135,7 +135,7 @@ export default function SurahIndexPage() {
           <p>{filter === "favorites" ? "لا سور في مفضلتك بعد." : "لا نتائج مطابقة."}</p>
         </div>
       ) : (
-        <ol className="surah-index-list" role="list">
+        <ol className="surah-index-list">
           {filtered.map((s) => (
             <li key={s.number}>
               <Link href={`/mushaf/${s.number}`} className="surah-index-row">

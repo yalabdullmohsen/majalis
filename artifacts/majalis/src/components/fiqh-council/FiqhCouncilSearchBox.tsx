@@ -17,13 +17,16 @@ function useDebouncedValue<T>(value: T, delayMs = 300): T {
 }
 
 type Props = {
-  autoFocus?: boolean;
   placeholder?: string;
   onResultClick?: () => void;
 };
 
+// ملاحظة: خاصية autoFocus حُذفت (كانت غير مستخدَمة فعليًا في أي من نقطتي
+// الاستدعاء الحقيقيتين — FiqhCouncilArchivePage/FiqhCouncilPage — كلتاهما لا
+// تُمرِّرانها إطلاقًا، فكانت دائمًا false/undefined عمليًا) — إضافة إلى أن
+// jsx-a11y/no-autofocus يُحذِّر من autoFocus JSX دائمًا (يخطف التركيز فجأة عن
+// المستخدم بلا توقّع)، فحُسم الأمر بالحذف بدل الإبقاء على كود ميت لمشكلة وصول.
 export function FiqhCouncilSearchBox({
-  autoFocus,
   placeholder = "ابحث في القرارات والفتاوى والتوصيات...",
   onResultClick,
 }: Props) {
@@ -60,16 +63,16 @@ export function FiqhCouncilSearchBox({
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onFocus={() => debounced.trim() && setOpen(true)}
-        autoFocus={autoFocus}
         placeholder={placeholder}
         className="page-search-input full content-hub-search fiqh-search-input"
         aria-label="بحث في المجمع الفقهي"
         aria-expanded={open}
+        aria-controls="fiqh-search-dropdown"
         role="combobox"
       />
 
       {open && debounced.trim() && (
-        <div className="fiqh-search-dropdown" role="listbox">
+        <div id="fiqh-search-dropdown" className="fiqh-search-dropdown" role="listbox">
           {loading && <p className="fiqh-search-hint">جارٍ البحث...</p>}
 
           {!loading && suggestions.length > 0 && (

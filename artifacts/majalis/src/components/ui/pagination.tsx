@@ -39,6 +39,11 @@ type PaginationLinkProps = {
 } & Pick<ButtonProps, "size"> &
   React.ComponentProps<"a">
 
+// ملاحظة وصول (jsx-a11y/anchor-has-content في تدقيق منفصل غير مُفعَّل ضمن
+// بوابة lint الرئيسية بعد): مكوّن أساسي عام (نمط shadcn/ui) يمرِّر children
+// عبر {...props}، فلا يستطيع التحليل الساكن التأكّد من وجود نص حقيقي —
+// وهذا هو الاستخدام المقصود الوحيد له. غير مُستخدَم حاليًا في أي مكان بالموقع
+// (بحث فعلي أكَّد ذلك)، فلا أثر حقيقي على أي مستخدم الآن.
 const PaginationLink = ({
   className,
   isActive,

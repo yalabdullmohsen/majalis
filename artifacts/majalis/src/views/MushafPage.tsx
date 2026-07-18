@@ -319,7 +319,7 @@ export default function MushafPage() {
             )}
 
             {sidebarTab === "juz" && manifest && (
-              <ol className="mushaf-v2__juz-list" role="list">
+              <ol className="mushaf-v2__juz-list">
                 {manifest.juz.map((j) => (
                   <li key={j.juz}>
                     <button
