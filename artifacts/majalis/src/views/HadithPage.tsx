@@ -145,7 +145,7 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
   const compRef = h.metadata?.companion as string | undefined;
 
   return (
-    <article
+    <div
       className="hadith-card ui-card"
       onClick={() => onExpand(h)}
       onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onExpand(h)}
@@ -240,7 +240,7 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
           url="https://www.majlisilm.com/hadith"
         />
       </div>
-    </article>
+    </div>
   );
 }
 

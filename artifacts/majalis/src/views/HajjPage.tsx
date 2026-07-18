@@ -392,7 +392,7 @@ export default function HajjPage() {
         </div>
 
         {/* tabs */}
-        <nav className="hj-tabs" role="tablist" aria-label="أقسام الحج">
+        <div className="hj-tabs" role="tablist" aria-label="أقسام الحج">
           {TABS.map((t) => (
             <button
               key={t.id}
@@ -408,7 +408,7 @@ export default function HajjPage() {
               <span className="hj-tab__label">{t.label}</span>
             </button>
           ))}
-        </nav>
+        </div>
       </section>
 
       {/* ركن الحج اليوم */}

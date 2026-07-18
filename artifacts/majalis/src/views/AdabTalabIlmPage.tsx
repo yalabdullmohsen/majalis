@@ -559,7 +559,7 @@ export default function AdabTalabIlmPage() {
             type="button"
             className={`atl-tab${activeTab === id ? " atl-tab--active" : ""}`}
             onClick={() => setActiveTab(id)}
-            aria-selected={activeTab === id}
+            aria-pressed={activeTab === id}
           >
             <Icon size={14} aria-hidden="true" />
             {label}

@@ -148,6 +148,8 @@ export default function QuranRadioPage() {
                     مشاهدة مباشر على يوتيوب
                   </a>
                 )}
+                {/* لا <track> ممكن: بث مباشر (live stream) لقناة إذاعة قرآنية،
+                    بلا محتوى مسجَّل يمكن تفريغه/ترجمته مسبقًا. */}
                 <video
                   src={ch.streamUrl}
                   controls

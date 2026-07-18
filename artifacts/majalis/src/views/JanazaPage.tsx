@@ -214,7 +214,7 @@ export default function JanazaPage() {
           <cite className="jn-ayah__ref">العنكبوت: 57</cite>
         </div>
 
-        <nav className="jn-tabs" aria-label="أقسام الجنائز" role="tablist">
+        <div className="jn-tabs" aria-label="أقسام الجنائز" role="tablist">
           {TABS.map((t) => (
             <button
               key={t.id}
@@ -230,7 +230,7 @@ export default function JanazaPage() {
               <span className="jn-tab__label">{t.label}</span>
             </button>
           ))}
-        </nav>
+        </div>
       </section>
 
       {/* حكم التكفين اليوم */}
