@@ -6,7 +6,13 @@
 > هذا الملف يوثّق فقط أن البوابات الفنية (typecheck/lint/tests/build)
 > اجتازت معًا في دفعة واحدة نهائية، كما طلب المالك.
 
-## ▶️ حالة الجلسة — ملخص موحَّد (بعد 39+ دفعة، آخر تحديث 2026-07-18)
+## ▶️ حالة الجلسة — ملخص موحَّد (بعد 40+ دفعة، آخر تحديث 2026-07-18)
+
+**تكملة أخيرة**: عُمِّق "آداب المجتمع" (حق الجار، آداب المجلس؛ adab
+total_sessions 7→9) و"الفضائل المنجية" (حسن الظن بالله، التوكل؛ بعد
+استبعاد حديث كان سيكرر الأربعين النووية رقم 31؛ tarbiyah total_sessions
+12→14). كلاهما 2→4، تحقَّق SUM(weight)=100.00 مباشرة لكليهما من أول
+محاولة. commit `bbba9372`. 4 مقررات ضحلة متبقية (زاد المستقنع مؤجَّل).
 
 **تكملة أخيرة (مسار تربية، مكتشَف حديثاً)**: عُمِّق "منزلتا الرضا والشكر"
 (2→6) و"آفات النفس" (2→4، أُضيفت الحسد والكِبر). **خطأ ذاتي في إعادة
@@ -197,7 +203,8 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-90b333fd...
+bbba9372...
+bbba9372  feat(learning): deepen adab-mujtama (2→4) and fadail-munjiya (2→4)
 90b333fd  feat(learning): deepen tarbiyah courses — rida-shukr (2→6) and afat-nafs (2→4)
 c0ad0121  feat(learning): deepen manhaj-hiwar-tadarruj course — 1 item → 5 (4 gradualism examples)
 3a4c432d  feat(learning): deepen kitab-tawhid-complete course (tawheed path) — 1 item → 5
