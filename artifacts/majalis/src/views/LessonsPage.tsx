@@ -239,6 +239,16 @@ export default function LessonsPage({
   const [, navigateTo] = useLocation();
   const { user, isLoggedIn, isAdmin } = useAuth();
 
+  // رابط وارد بـ`?search=...` (من rulings-relations.ts، يُعرَض في بطاقات
+  // "مواد ذات صلة" بصفحات الأحكام الشرعية) كان يُتجاهَل كليًا: `filters`
+  // يُهيَّأ دائماً بـDEFAULT_KUWAIT_FILTERS بلا قراءة أي شيء غير `tab` من
+  // الرابط الفعلي — عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف
+  // بالفحص المباشر 2026-07-18.
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("search");
+    if (q) setFilters((prev) => ({ ...prev, search: q }));
+  }, []);
+
   useEffect(() => {
     applyPageSeo({
       path: "/lessons",

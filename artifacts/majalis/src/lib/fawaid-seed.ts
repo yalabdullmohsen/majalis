@@ -843,7 +843,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-103",
     text: "أكمل المؤمنين إيماناً أحسنهم خلقاً، وخياركم خياركم لنسائهم.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
     status: "approved",
@@ -851,7 +851,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-104",
     text: "غض البصر واجب شرعي وهو حصن العفة؛ ومن غض بصره ملأ الله قلبه نوراً.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه الحاكم وصحح الألباني",
     author_name: null,
     status: "approved",
@@ -859,7 +859,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-105",
     text: "صلة الرحم تزيد في العمر والرزق وتدفع البلاء.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
     status: "approved",
@@ -867,7 +867,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-106",
     text: "إكرام الضيف من شعائر الإيمان، وهو خُلُق إبراهيم الخليل عليه السلام.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
     status: "approved",
@@ -875,7 +875,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-107",
     text: "التواضع خُلُق المؤمن الحق؛ ما تواضع أحد لله إلا رفعه.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
@@ -883,7 +883,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-108",
     text: "صدق اللسان أمان المجتمع؛ والصدق يهدي إلى البر، والبر يهدي إلى الجنة.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
     status: "approved",
@@ -891,7 +891,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-109",
     text: "حفظ اللسان من أعظم أسباب النجاة؛ من يضمن لي ما بين فكَّيه أضمن له الجنة.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه البخاري",
     author_name: null,
     status: "approved",
@@ -899,7 +899,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-110",
     text: "الحياء شعبة من شعب الإيمان، وإذا لم تستح فاصنع ما شئت.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه البخاري",
     author_name: null,
     status: "approved",
@@ -907,7 +907,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-111",
     text: "بر الوالدين من أوجب الواجبات بعد توحيد الله؛ رضا الله في رضا الوالدين.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
     status: "approved",
@@ -915,7 +915,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-112",
     text: "الأمانة في المعاملات أساس بناء الثقة؛ أدِّ الأمانة إلى من ائتمنك ولا تخن من خانك.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه أبو داود والترمذي وصحح الألباني",
     author_name: null,
     status: "approved",
@@ -923,7 +923,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-113",
     text: "الوفاء بالوعد علامة الكرم وخُلُق الإسلام؛ كبُرَ مقتاً عند الله أن تقولوا ما لا تفعلون.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "سورة الصف: 3",
     author_name: null,
     status: "approved",
@@ -931,7 +931,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-114",
     text: "التعاون على البر والتقوى ركيزة المجتمع المسلم؛ والمؤمن للمؤمن كالبنيان يشد بعضه بعضاً.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
     status: "approved",
@@ -939,7 +939,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-115",
     text: "حسن الجوار من تمام الإيمان؛ ومن كان يؤمن بالله واليوم الآخر فليكرم جاره.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
     status: "approved",
@@ -947,7 +947,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-116",
     text: "الإيثار على النفس مقام رفيع من مقامات الإيمان؛ ﴿وَيُؤْثِرُونَ عَلَى أَنْفُسِهِمْ وَلَوْ كَانَ بِهِمْ خَصَاصَةٌ﴾.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "سورة الحشر: 9",
     author_name: null,
     status: "approved",
@@ -955,7 +955,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-117",
     text: "العفو عند المقدرة من أعظم خصال الكرماء، ومن عفا وأصلح فأجره على الله.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "سورة الشورى: 40",
     author_name: null,
     status: "approved",
@@ -963,7 +963,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-118",
     text: "التواضع في طلب العلم شرط لاستقباله؛ من تكبّر على العلم لم يُفتح له.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "من أقوال السلف في أدب العلم",
     author_name: null,
     status: "approved",
@@ -971,7 +971,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-119",
     text: "حسن الظن بالمسلمين عبادة وصون للمجتمع من الفتنة والتشكيك.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "قال تعالى: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا اجْتَنِبُوا كَثِيرًا مِنَ الظَّنِّ﴾",
     author_name: null,
     status: "approved",
@@ -979,7 +979,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-120",
     text: "الشكر لله على النعمة يزيدها، وقد جعل الله الكفر سبباً لزوالها.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "قال تعالى: ﴿لَئِنْ شَكَرْتُمْ لَأَزِيدَنَّكُمْ وَلَئِنْ كَفَرْتُمْ إِنَّ عَذَابِي لَشَدِيدٌ﴾",
     author_name: null,
     status: "approved",
@@ -1986,7 +1986,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-246",
     text: "السلام قبل الكلام؛ يُفشي المحبة ويُذهب الشحناء.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
@@ -1994,7 +1994,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-247",
     text: "حسن الجوار من تمام الإيمان.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه البخاري",
     author_name: null,
     status: "approved",
@@ -2002,7 +2002,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-248",
     text: "البشاشة في وجه أخيك صدقة.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
     status: "approved",
@@ -2010,7 +2010,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-249",
     text: "الكلمة الطيبة صدقة.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
     status: "approved",
@@ -2018,7 +2018,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-250",
     text: "أكمل المؤمنين إيماناً أحسنهم خلقاً.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه الترمذي",
     author_name: null,
     status: "approved",
@@ -2026,7 +2026,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-251",
     text: "من لا يرحم لا يُرحم.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
     status: "approved",
@@ -2034,7 +2034,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-252",
     text: "اليد العليا خير من اليد السفلى.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
     status: "approved",
@@ -2042,7 +2042,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-253",
     text: "إياك والحسد فإنه يأكل الحسنات كما تأكل النار الحطب.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه أبو داود وصحح الألباني",
     author_name: null,
     status: "approved",
@@ -2050,7 +2050,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-254",
     text: "غض البصر من أحكام الإيمان وأداة لصون القلب.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "سورة النور: 30",
     author_name: null,
     status: "approved",
@@ -2058,7 +2058,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-255",
     text: "احرص على ما ينفعك واستعن بالله.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
@@ -2066,7 +2066,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-256",
     text: "الغيبة أشد من الزنا؛ لأن الغيبة لا تُكفّرها إلا رضا المغتاب.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه الطبراني",
     author_name: null,
     status: "approved",
@@ -2074,7 +2074,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-257",
     text: "من آذى مسلماً في الدنيا آذاه الله في الآخرة.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
     status: "approved",
@@ -2082,7 +2082,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-258",
     text: "إكرام الضيف ثلاثة أيام وما بعدها صدقة.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
     status: "approved",
@@ -2090,7 +2090,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-259",
     text: "صلة الرحم تزيد في العمر والرزق.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه البخاري",
     author_name: null,
     status: "approved",
@@ -2098,7 +2098,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-260",
     text: "لا يدخل الجنة قاطع رحم.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
     status: "approved",
@@ -2106,7 +2106,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-261",
     text: "الحياء من الإيمان؛ وقلّته قسوة في القلب.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
     status: "approved",
@@ -2114,7 +2114,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-262",
     text: "احفظ لسانك تسلم؛ فالمرء يعثر بلسانه قبل قدمه.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه أحمد",
     author_name: null,
     status: "approved",
@@ -2122,7 +2122,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-263",
     text: "البيت الذي يُتلى فيه القرآن تتسع ساكنته.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه الدارمي",
     author_name: null,
     status: "approved",
@@ -2130,7 +2130,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-264",
     text: "من أطاع والديه فتح له باب الجنة.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه ابن ماجه وصحح الألباني",
     author_name: null,
     status: "approved",
@@ -2138,7 +2138,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-265",
     text: "الخادم المسلم له أجر إن أحسن النية في خدمته.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه البخاري",
     author_name: null,
     status: "approved",
@@ -2146,7 +2146,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-266",
     text: "الوقت أثمن من المال؛ يذهب ولا يعود.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "قال ابن القيم",
     author_name: null,
     status: "approved",
@@ -2154,7 +2154,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-267",
     text: "التواضع طريق الرفعة والكبر طريق السقوط.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
@@ -2162,7 +2162,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-268",
     text: "الغضب من الشيطان؛ والحليم سيد نفسه.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه أبو داود",
     author_name: null,
     status: "approved",
@@ -2170,7 +2170,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-269",
     text: "من تصدّق بصدقة من كسب طيب - ولا يقبل الله إلا طيباً - تلقاها الرحمن بيمينه.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
@@ -2178,7 +2178,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-270",
     text: "إن من أعظم البر أن يصل الرجل أهل ودّ أبيه.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
@@ -2282,7 +2282,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-283",
     text: "ما ملأ آدمي وعاءً شراً من بطنه — بحسب ابن آدم لقيمات يُقمن صلبه.",
-    category: "فوائد طبية نبوية",
+    category: "طلب العلم",
     source: "رواه الترمذي — صحيح",
     author_name: null,
     status: "approved",
@@ -2290,7 +2290,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-284",
     text: "آفة العلم النسيان وإضاعته أن تحدّث به غير أهله.",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "قال الإمام الشافعي",
     author_name: "الإمام الشافعي",
     status: "approved",
@@ -2378,7 +2378,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-296",
     text: "كان النبي ﷺ يُوصي بالصلاة وما ملكت أيمانكم — الوصية بالصلاة تعني الوصية بكل شعائر الإسلام.",
-    category: "فوائد طبية نبوية",
+    category: "طلب العلم",
     source: "رواه أبو داود وابن ماجه — صحيح",
     author_name: null,
     status: "approved",
@@ -2434,7 +2434,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-303",
     text: "العلم نور والجهل ظلام — العالم يُضيء لنفسه ولغيره، والجاهل يُعمي نفسه وما حوله.",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "الزهد — ابن المبارك",
     author_name: "ابن المبارك",
     status: "approved",
@@ -2458,7 +2458,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-306",
     text: "من سلك طريقاً يلتمس فيه علماً سهّل الله له طريقاً إلى الجنة — العلم طريق الجنة بلا منازع.",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
@@ -2554,7 +2554,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-318",
     text: "الصدق منجاة — الصادق في أمانه وفي تجارته وفي دينه يبلغ درجة الصدّيقين يوم القيامة.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه الترمذي — صحيح",
     author_name: null,
     status: "approved",
@@ -2562,7 +2562,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-319",
     text: "الحياء لا يأتي إلا بخير — الحياء الذي يمنعك من المعصية دليل حياء الإيمان الذي هو شعبة من الإيمان.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
     status: "approved",
@@ -2570,7 +2570,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-320",
     text: "العجب بالعلم داء عضال — الإعجاب بالنفس يُسدل الحجاب بين العالم ومزيد العلم؛ فالتواضع باب العلم الحقيقي.",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "جامع بيان العلم — ابن عبد البر",
     author_name: "ابن عبد البر",
     status: "approved",
@@ -2578,7 +2578,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-321",
     text: "ثلاثة إذا أحببتهم أحبك الله: من أحب الفقراء، ومن أحب أصحاب محمد ﷺ، ومن يصبر على البلاء.",
-    category: "الأخلاق والرقائق",
+    category: "الأخلاق",
     source: "الزهد لأحمد بن حنبل",
     author_name: "الإمام أحمد",
     status: "approved",
@@ -2586,7 +2586,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-322",
     text: "الجنة لا تنال بالأماني — إن الله قضى أن لا يدخل الجنة من أسرف على نفسه؛ فاجمع بين الخوف والرجاء.",
-    category: "الأخلاق والرقائق",
+    category: "الأخلاق",
     source: "إحياء علوم الدين — الغزالي",
     author_name: "الإمام الغزالي",
     status: "approved",
@@ -2594,7 +2594,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-323",
     text: "من لم يشكر الناس لم يشكر الله — الشكر درجات: شكر القلب، وشكر اللسان، وشكر الجوارح بالعمل.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رواه أحمد والترمذي — صحيح",
     author_name: null,
     status: "approved",
@@ -2602,7 +2602,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-324",
     text: "الدعاء سلاح المؤمن وعماد الدين — وهو العبادة بحد ذاته؛ لأنه يُعبّر عن كسر العبد بين يدي ربه وافتقاره إليه.",
-    category: "الأخلاق والرقائق",
+    category: "الأخلاق",
     source: "رواه أبو داود — حسن",
     author_name: null,
     status: "approved",
@@ -2610,7 +2610,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-325",
     text: "صاحب الكتب لا يستغني عن الشيوخ — الكتاب يُعطيك المعلومة والشيخ يُعطيك الحياة. العلم يُؤخذ تلقياً لا تلقفاً.",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "منهاج التعلم عند السلف",
     author_name: "ابن خلدون",
     status: "approved",
@@ -2626,7 +2626,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-327",
     text: "الصمت حكمة وكثير من الناس لا يُحسنه — صُنّف الصمت في أبواب التصوف والزهد لأن اللسان مفتاح الخير والشر معاً.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "رياض الصالحين — النووي",
     author_name: "الإمام النووي",
     status: "approved",
@@ -2642,7 +2642,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-329",
     text: "الفقه في الدين نعمة لا يعرف قدرها إلا من حُرمها — قال النبي ﷺ: «من يُرد الله به خيراً يُفقّهه في الدين».",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "متفق عليه",
     author_name: null,
     status: "approved",
@@ -2650,7 +2650,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-330",
     text: "الرحمة بالضعفاء علامة الإيمان — قال ﷺ: «لا يرحم اللهُ من لا يرحم الناس»؛ فالرحمة جسر بين العبد وربه.",
-    category: "الأخلاق والرقائق",
+    category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
     status: "approved",
@@ -2722,7 +2722,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-339",
     text: "قضاء حاجة المسلم من أعظم القربات — قال ﷺ: «من نفّس عن مؤمن كربةً من كُرَب الدنيا نفّس اللهُ عنه كربةً من كُرَب يوم القيامة».",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "صحيح مسلم",
     author_name: null,
     status: "approved",
@@ -2730,7 +2730,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-340",
     text: "حسن الخلق من أثقل ما يُوضع في الميزان — قال ﷺ: «ما شيء أثقل في ميزان المؤمن يوم القيامة من حُسن الخُلق، وإن الله يُبغض الفاحش البذيء».",
-    category: "الأخلاق والرقائق",
+    category: "الأخلاق",
     source: "سنن الترمذي — صحيح",
     author_name: null,
     status: "approved",
@@ -2738,7 +2738,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-341",
     text: "صلاة الضحى كنز لا يعلمه كثيرون — قال ﷺ: «يُصبح على كل سُلامى من أحدكم صدقة … ويُجزئ من ذلك ركعتان يركعهما من الضحى». فمن داوم عليها خرج من معصية كل مفصل في جسده ذلك اليوم.",
-    category: "فضائل الأعمال",
+    category: "الفقه",
     source: "صحيح مسلم — 720",
     author_name: null,
     status: "approved",
@@ -2754,7 +2754,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-343",
     text: "الغيبة أشد من الزنا — قال ﷺ: «الغيبة أشدّ من الزنا». قالوا: وكيف؟ قال: «الرجل يزني ثم يتوب فيتوب الله عليه، وصاحب الغيبة لا يُغفر له حتى يغفر له صاحبه». فاحفظ لسانك تسلم.",
-    category: "الأخلاق والرقائق",
+    category: "الأخلاق",
     source: "شعب الإيمان للبيهقي — حسن",
     author_name: null,
     status: "approved",
@@ -2762,7 +2762,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-344",
     text: "القرآن شفيع لأهله يوم القيامة — قال ﷺ: «اقرأوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه». فالمداومة على التلاوة ولو آيات يسيرة كل يوم عمل عظيم.",
-    category: "فضائل القرآن",
+    category: "القرآن",
     source: "صحيح مسلم — 804",
     author_name: null,
     status: "approved",
@@ -2770,7 +2770,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-345",
     text: "من قرأ آية الكرسي دبر كل صلاة مكتوبة لم يحل بينه وبين الجنة إلا الموت — فهي من أعظم الأوراد التي أُوصي بالمداومة عليها بعد كل فريضة.",
-    category: "فضائل الأعمال",
+    category: "الفقه",
     source: "النسائي في الكبرى — صحيح",
     author_name: null,
     status: "approved",
@@ -2778,7 +2778,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-346",
     text: "صلة الرحم تزيد في العمر والرزق — قال ﷺ: «من سرّه أن يُبسط له في رزقه ويُنسأ له في أثره فليصل رحمه». فزيارة الأقارب ليست مجرد عادة بل سببٌ شرعي للبركة.",
-    category: "الأخلاق والرقائق",
+    category: "الأخلاق",
     source: "صحيح البخاري — 5986",
     author_name: null,
     status: "approved",
@@ -2794,7 +2794,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-348",
     text: "السواك سنة عظيمة تجمع خيري الدنيا والآخرة — قال ﷺ: «لولا أن أشقّ على أمتي لأمرتهم بالسواك عند كل صلاة». أثبتت الدراسات الطبية أن السواك يُعادل فرشاة الأسنان أو يتفوق عليها.",
-    category: "السنن والآداب",
+    category: "الآداب",
     source: "صحيح البخاري — 887، صحيح مسلم — 252",
     author_name: null,
     status: "approved",
@@ -2802,7 +2802,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-349",
     text: "التوبة النصوح تجُبّ ما قبلها — قال تعالى: ﴿إِلَّا مَن تَابَ وَآمَنَ وَعَمِلَ عَمَلًا صَالِحًا فَأُولَٰئِكَ يُبَدِّلُ اللَّهُ سَيِّئَاتِهِمْ حَسَنَاتٍ﴾ — فلا ييأس مذنب من رحمة الله فإن الله يُبدّل السيئات حسنات لمن صدق في توبته.",
-    category: "الرقائق والزهد",
+    category: "الرقائق",
     source: "سورة الفرقان — 70",
     author_name: null,
     status: "approved",
@@ -2810,7 +2810,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-350",
     text: "من مات وعليه صيام صام عنه وليّه — قال ﷺ: «من مات وعليه صيام صام عنه وليّه». فعلى الأولاد والأقارب الحرص على قضاء ما فات من صيام من توفّي قبل قضائه.",
-    category: "الصيام والعبادة",
+    category: "الفقه",
     source: "صحيح البخاري — 1952، صحيح مسلم — 1147",
     author_name: null,
     status: "approved",
@@ -2818,7 +2818,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-351",
     text: "الرقائق تُليّن القلب القاسي — قال ابن القيم: «القلب يصدأ من الذنوب وجلاؤه بالاستغفار وتلاوة القرآن وذكر الله». فمن أحسّ بقسوة قلبه فليُكثر من قراءة الرقائق والاستغفار وصحبة الصالحين.",
-    category: "الرقائق والزهد",
+    category: "الرقائق",
     source: "مدارج السالكين — ابن القيم",
     author_name: "ابن القيم الجوزية",
     status: "approved",
@@ -2826,7 +2826,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-352",
     text: "الدنيا لا تساوي عند الله جناح بعوضة — قال ﷺ: «لو كانت الدنيا تعدل عند الله جناح بعوضة ما سقى كافراً منها شربة ماء». فلا تبكِ على الدنيا وافرح بما ادخرت للآخرة.",
-    category: "الرقائق والزهد",
+    category: "الرقائق",
     source: "سنن الترمذي — 2320، صحيح",
     author_name: null,
     status: "approved",
@@ -2834,7 +2834,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-353",
     text: "السنن الرواتب كنز لا يفرط فيه العاقل — عشر ركعات رواتب يومياً بنى الله بها بيتاً في الجنة. قال ﷺ: «ما من عبد مسلم يصلي لله كل يوم اثنتي عشرة ركعة تطوعاً غير فريضة إلا بنى الله له بيتاً في الجنة».",
-    category: "السنن والآداب",
+    category: "الآداب",
     source: "صحيح مسلم — 728",
     author_name: null,
     status: "approved",
@@ -2842,7 +2842,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-354",
     text: "آداب التسمية في أول كل عمل تجلب البركة — قال العلماء: كل أمر ذي بال لا يُبدأ فيه ببسم الله فهو أجذم. وقد جاء في الحديث أن التسمية عند الأكل تُبارك في الطعام وتمنع الشيطان من الاشتراك.",
-    category: "السنن والآداب",
+    category: "الآداب",
     source: "صحيح مسلم — 2017، أبو داود — 3767",
     author_name: null,
     status: "approved",
@@ -2850,7 +2850,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-355",
     text: "صيام الإثنين والخميس عبادة نبوية وحكمة روحية — كان ﷺ يحرص على صومهما وقال: «هذان يومان تُعرض فيهما الأعمال على ربّ العالمين فأحبّ أن يُعرض عملي وأنا صائم».",
-    category: "الصيام والعبادة",
+    category: "الفقه",
     source: "سنن النسائي — 2358، صحيح",
     author_name: null,
     status: "approved",
@@ -2858,7 +2858,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-356",
     text: "صيام ست من شوال يعدل صيام الدهر — قال ﷺ: «من صام رمضان ثم أتبعه ستاً من شوال كان كصيام الدهر». وذلك لأن الحسنة بعشر أمثالها: رمضان بعشرة أشهر وست شوال بشهرين.",
-    category: "الصيام والعبادة",
+    category: "الفقه",
     source: "صحيح مسلم — 1164",
     author_name: null,
     status: "approved",
@@ -2890,7 +2890,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-360",
     text: "فضل قراءة سورة الكهف يوم الجمعة نور من الجمعة إلى الجمعة — قال ﷺ: «من قرأ سورة الكهف في يوم الجمعة أضاء له من النور ما بين الجمعتين». فاجعلها عادة أسبوعية تحفظك وتنوّر قلبك وحياتك.",
-    category: "فضائل القرآن",
+    category: "القرآن",
     source: "المستدرك للحاكم — صحيح",
     author_name: null,
     status: "approved",
@@ -2898,7 +2898,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-361",
     text: "أفضل ما يُتعلم بعد الفرائض هو تلاوة القرآن وتدبّره — قال عثمان بن عفان رضي الله عنه: «لو طهرت قلوبنا لما شبعنا من كلام ربّنا». فكيف نشبع من كلام الخلق وننقطع عن كلام الخالق؟",
-    category: "فضائل القرآن",
+    category: "القرآن",
     source: "المصاحف — ابن أبي داود",
     author_name: "عثمان بن عفان رضي الله عنه",
     status: "approved",
@@ -2906,7 +2906,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-362",
     text: "حافظ القرآن يُكرَّم يوم القيامة وأهله يُتوَّجون — قال ﷺ: «يُقال لصاحب القرآن: اقرأ وارتقِ ورتّل كما كنت ترتّل في الدنيا فإن منزلتك عند آخر آية تقرؤها». فحافظ القرآن يرقى في الجنة بمقدار ما حفظ.",
-    category: "فضائل القرآن",
+    category: "القرآن",
     source: "سنن أبي داود — 1464، سنن الترمذي — 2914، صحيح",
     author_name: null,
     status: "approved",
@@ -2914,7 +2914,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-363",
     text: "من أسرار الصبر أنه لا حدود لثوابه — قال الله تعالى: ﴿إِنَّمَا يُوَفَّى الصَّابِرُونَ أَجْرَهُم بِغَيْرِ حِسَابٍ﴾. وكل نعمة من نعم الدنيا لها حساب إلا الصبر فله أجر بلا حدٍّ ولا قياس، فاصبر على بلاء الله يمنحك ما لا يُحصى.",
-    category: "الرقائق والمواعظ",
+    category: "الرقائق",
     source: "الزمر — 10",
     author_name: null,
     status: "approved",
@@ -2922,7 +2922,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-364",
     text: "الدعاء للأخ بظهر الغيب يُستجاب ويعود على صاحبه — قال ﷺ: «دعوة المرء المسلم لأخيه بظهر الغيب مستجابة، عند رأسه ملَك موكَّل كلما دعا لأخيه بخير قال الملك الموكَّل به: آمين، ولك بمثله». فابحث عن إخوانك بالدعاء.",
-    category: "الدعاء والذكر",
+    category: "الذكر والدعاء",
     source: "صحيح مسلم — 2733",
     author_name: null,
     status: "approved",
@@ -2930,7 +2930,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-365",
     text: "قال الإمام الشافعي رحمه الله: «إذا أردتَ أن تتكلم فكِّر: هل هو خير فتتكلم، أم شر فتسكت». فالصمت عن الشر خير من الكلام، والصمت عما لا يُفيد عبادة يستيقظ فيها القلب وتسكن فيها الجوارح.",
-    category: "الرقائق والمواعظ",
+    category: "الرقائق",
     source: "مناقب الشافعي — البيهقي",
     author_name: "الإمام الشافعي",
     status: "approved",
@@ -2938,7 +2938,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-366",
     text: "العلم بلا عمل وبال على صاحبه — قال ابن القيم: «العلم يُراد للعمل، كما أن العمل يُراد به وجه الله. فإذا تجرّد العلم عن العمل كان حجةً على صاحبه لا له». فالعالم الذي لا يعمل بعلمه كالمصباح الذي يضيء للناس ويحرق نفسه.",
-    category: "العلم والتعلم",
+    category: "طلب العلم",
     source: "مفتاح دار السعادة — ابن القيم",
     author_name: "ابن القيم الجوزية",
     status: "approved",
@@ -2946,7 +2946,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-367",
     text: "التواضع لا يُنقص من قدر صاحبه بل يرفعه — قال ﷺ: «وما تواضع أحد لله إلا رفعه الله». والرافعون أنفسهم بالكبرياء يضعهم الله، أما المتواضعون بحق فإن الله يرفع درجاتهم في الدنيا والآخرة.",
-    category: "الأخلاق والآداب",
+    category: "الأخلاق",
     source: "صحيح مسلم — 2588",
     author_name: null,
     status: "approved",
@@ -2954,7 +2954,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-368",
     text: "الحسنة تضاعف عشرة أضعاف إلى سبعمائة ضعف وأكثر — قال الله تعالى: ﴿مَن جَاءَ بِالْحَسَنَةِ فَلَهُ عَشْرُ أَمْثَالِهَا﴾. وقد تبلغ المضاعفة سبعمائة ضعف فأكثر حسب إخلاص العبد وظروفه. فكل خطوة في طريق الخير تستحق أن تُخطى.",
-    category: "العبادات والطاعات",
+    category: "الفقه",
     source: "الأنعام — 160، صحيح البخاري — 6491",
     author_name: null,
     status: "approved",
@@ -2962,7 +2962,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-369",
     text: "قال الإمام أحمد بن حنبل رحمه الله: «أصل العلم خشية الله». فالعلم الذي لا تنبت منه الخشية في القلب ليس علماً حقيقياً، بل هو معلومات تزيد الحجة ولا تُقرّب من الله.",
-    category: "العلم والتعلم",
+    category: "طلب العلم",
     source: "مناقب الإمام أحمد — ابن الجوزي",
     author_name: "الإمام أحمد بن حنبل",
     status: "approved",
@@ -2970,7 +2970,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-370",
     text: "الرحمة بالخلق سبب لنزول رحمة الله — قال ﷺ: «الراحمون يرحمهم الرحمن، ارحموا من في الأرض يرحمكم من في السماء». فكلما وسّعت رحمتك بالناس والحيوان والشجر وسّع الله رحمته بك.",
-    category: "الأخلاق والآداب",
+    category: "الأخلاق",
     source: "سنن أبي داود — 4941، سنن الترمذي — 1924، صحيح",
     author_name: null,
     status: "approved",
@@ -2978,7 +2978,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-371",
     text: "أعظم ما يُستعان به على طاعة الله هو صحبة الصالحين — قال الله تعالى: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَكُونُوا مَعَ الصَّادِقِينَ﴾. فالبيئة الصالحة تحمل صاحبها إلى الله وتُسهّل عليه الطاعة وتُبعّده عن المعصية.",
-    category: "الرقائق والمواعظ",
+    category: "الرقائق",
     source: "التوبة — 119",
     author_name: null,
     status: "approved",
@@ -2986,7 +2986,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-372",
     text: "قال الإمام مالك رحمه الله لأحد طلابه: «تعلّم الأدب قبل أن تتعلم العلم». فأدب الطالب مع شيخه ومع العلم نفسه هو الذي يُبارك له في تعلّمه ويجعل العلم نافعاً مثمراً في قلبه وحياته.",
-    category: "العلم والتعلم",
+    category: "طلب العلم",
     source: "ترتيب المدارك — القاضي عياض",
     author_name: "الإمام مالك بن أنس",
     status: "approved",
@@ -2994,7 +2994,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-373",
     text: "ليلة القدر خير من ألف شهر — قال الله تعالى: ﴿لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ﴾. والعبادة فيها تعادل ثلاثة وثمانين عاماً وأربعة أشهر من العبادة. فمن وفّقه الله لإحيائها بالإيمان والاحتساب غُفر له ما تقدم من ذنبه.",
-    category: "العبادات والطاعات",
+    category: "الفقه",
     source: "القدر — 3، صحيح البخاري — 1901",
     author_name: null,
     status: "approved",
@@ -3002,7 +3002,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-374",
     text: "الاستغفار يفتح أبواب الرزق ويُيسّر الأمور — قال الله على لسان هود عليه السلام: ﴿وَيَا قَوْمِ اسْتَغْفِرُوا رَبَّكُمْ ثُمَّ تُوبُوا إِلَيْهِ يُرْسِلِ السَّمَاءَ عَلَيْكُم مِّدْرَارًا وَيَزِدْكُمْ قُوَّةً إِلَىٰ قُوَّتِكُمْ﴾. فالاستغفار ليس فقط لمحو الذنوب بل هو مفتاح بركات الحياة.",
-    category: "الدعاء والذكر",
+    category: "الذكر والدعاء",
     source: "هود — 52",
     author_name: null,
     status: "approved",
@@ -3010,7 +3010,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-375",
     text: "من لم يشكر الناس لم يشكر الله — قال ﷺ: «لا يشكر الله من لا يشكر الناس». فالشكر درجات: شكر الله على نعمه أولاً، ثم شكر من كانوا سبباً في وصول النعمة إليك. فأكثر من شكر الناس تجد القلوب تنفتح لك.",
-    category: "الأخلاق والآداب",
+    category: "الأخلاق",
     source: "سنن أبي داود — 4811، سنن الترمذي — 1954، صحيح",
     author_name: null,
     status: "approved",
@@ -3018,7 +3018,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-376",
     text: "أمان ابن آدم في الدنيا محدود فلا تغترّ — قال الإمام ابن الجوزي: «عجبت لمن يعلم أن الموت يغتاله وهو ينام مطمئناً، ويعلم أن الحساب ينتظره وهو يلهو لاهياً». فاستيقاظ القلب على حقيقة الدنيا بداية الفلاح.",
-    category: "الرقائق والمواعظ",
+    category: "الرقائق",
     source: "صيد الخاطر — ابن الجوزي",
     author_name: "ابن الجوزي",
     status: "approved",
@@ -3026,7 +3026,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-377",
     text: "المسلم مَن سلم المسلمون من لسانه ويده — قال ﷺ: «المسلم من سلم المسلمون من لسانه ويده، والمهاجر من هجر ما نهى الله عنه». فالإسلام الحقيقي لا يُكتفى فيه بأداء الشعائر بل لا بد أن يسلم الآخرون من أذاك.",
-    category: "الأخلاق والآداب",
+    category: "الأخلاق",
     source: "صحيح البخاري — 10، صحيح مسلم — 41",
     author_name: null,
     status: "approved",
@@ -3130,7 +3130,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-390",
     text: "التبكير في طلب العلم بركة مضاعفة — دعا النبي ﷺ بالبركة في البكور فقال: «اللهم بارك لأمتي في بكورها». وكان السلف يستثمرون الساعات الأولى من الصباح في القراءة والمذاكرة لأنها أصفى أوقات الذهن وأبعدها عن الشواغل. من أهدر صباحه أهدر يومه.",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "سنن الترمذي — 1212، السنن الكبرى للبيهقي",
     author_name: null,
     status: "approved",
@@ -3146,7 +3146,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-392",
     text: "الغيبة تأكل الحسنات كما تأكل النار الحطب — والمظلوم في الغيبة يأخذ من حسنات الظالم يوم القيامة إن لم يُعفَ عنه في الدنيا. وكلما عظمت حسنات العبد كان أكثر خسارةً إن أسرف على الغيبة. الحفاظ على الحسنات بترك الغيبة أحكم من جمعها بالعبادة ثم إهدارها بها.",
-    category: "فوائد أخلاقية",
+    category: "الأخلاق",
     source: "مدارج السالكين — ابن القيم، صحيح مسلم — 2581",
     author_name: null,
     status: "approved",
@@ -3194,7 +3194,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-398",
     text: "الأخوة الإسلامية ركيزة المجتمع المسلم — قال ﷺ: «المؤمن للمؤمن كالبنيان يشدّ بعضه بعضاً». وقال: «مثل المؤمنين في توادّهم وتراحمهم وتعاطفهم كمثل الجسد الواحد». وكان للصحابة نظام التآخي الذي جعل الأنصار يتقاسمون بيوتهم وأموالهم مع المهاجرين.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "صحيح البخاري — 2446، صحيح مسلم — 2585",
     author_name: null,
     status: "approved",
@@ -3242,7 +3242,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-404",
     text: "فضل العلم على المال — قال علي رضي الله عنه: «العلم خير من المال؛ العلم يحرسك وأنت تحرس المال، والعلم حاكم والمال محكوم عليه، مات خزّان المال وهم أحياء والعلماء باقون ما بقي الدهر». فمن أنفق ماله نقص، ومن أنفق علمه زاد.",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "منسوب إلى علي بن أبي طالب رضي الله عنه، مناقب آل أبي طالب — ابن المغازلي",
     author_name: null,
     status: "approved",
@@ -3250,7 +3250,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-405",
     text: "آداب طلب العلم عند السلف — كان ابن المبارك يقول: «من استخفّ بالعلماء ذهبت آخرته، ومن استخفّ بالأمراء ذهبت دنياه». وكان الإمام الشافعي يقول: «ما ناظرت أحداً إلا تمنيت أن يظهر الله الحق على لسانه». هذه الآداب هي مفتاح الانتفاع بالعلم.",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "جامع بيان العلم — ابن عبد البر، مناقب الشافعي — البيهقي",
     author_name: null,
     status: "approved",
@@ -3266,7 +3266,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-407",
     text: "علم الإسناد ميزة إسلامية فريدة — قال ابن المبارك: «الإسناد من الدين، ولولا الإسناد لقال من شاء ما شاء». لم تملك أمة في التاريخ نظاماً كاملاً كنظام الإسناد الإسلامي في التثبت من صحة المنقولات ونقد الرواة.",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "صحيح مسلم — مقدمة الإمام مسلم، الكفاية في علم الرواية — الخطيب البغدادي",
     author_name: null,
     status: "approved",
@@ -3306,7 +3306,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-412",
     text: "الفرق بين الفقه والأصول والقواعد — الفقه: الأحكام الفرعية التفصيلية. أصول الفقه: المناهج والأدوات التي يستخرج منها الفقيه الأحكام. القواعد الفقهية: ضوابط كلية تندرج تحتها مسائل جزئية كثيرة مثل «الأمور بمقاصدها» و«لا ضرر ولا ضرار».",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "الأشباه والنظائر — السيوطي وابن نجيم، شرح الكوكب المنير",
     author_name: null,
     status: "approved",
@@ -3314,7 +3314,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-413",
     text: "دور المرأة في نقل السنة النبوية — روت أمهات المؤمنين كثيراً من الأحاديث النبوية؛ فعائشة رضي الله عنها روت نحو ألفين وسبعين حديثاً، وأم سلمة وأم عطية وغيرهن. وكانت كريمة المروزية تُقرئ البخاري لطلاب العلم في القرن الخامس. حضور المرأة في السند الحديثي عميق ومتقن.",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "تذكرة الحفاظ — الذهبي، الإصابة — ابن حجر",
     author_name: null,
     status: "approved",
@@ -3426,7 +3426,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-427",
     text: "منزلة الفقه المقارن في الحضارة الإسلامية — الفقه المقارن علم يدرس آراء المذاهب المختلفة وأدلتها وعلل الخلاف بينها؛ وقد أسهم في توسيع الاجتهاد وتعميق الفهم للنصوص الشرعية، وكان من أبرز علماؤه: ابن رشد في 'بداية المجتهد' الذي قارن بين المذاهب الأربعة بأسلوب علمي رائع.",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "بداية المجتهد ونهاية المقتصد — ابن رشد",
     author_name: null,
     status: "approved",
@@ -3482,7 +3482,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-434",
     text: "أقسام الكلم في النحو العربي وصلته بفهم القرآن — الكلم ثلاثة: اسم وفعل وحرف. وعلم إعراب القرآن من أدق العلوم لأن تغيير الإعراب يُغيّر المعنى؛ قال الشافعي: من أراد أن يُفتي في الدين فعليه بالعربية. ومن أشهر المصنّفات في هذا الباب: «إعراب القرآن» للنحاس و«البيان» للأنباري.",
-    category: "فوائد لغوية",
+    category: "اللغة",
     source: "الرسالة — الشافعي، إعراب القرآن — النحاس",
     author_name: null,
     status: "approved",
@@ -3514,7 +3514,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-438",
     text: "منهج ابن خلدون في فهم التاريخ — ابن خلدون صاحب «المقدمة» أسّس علماً جديداً سماه علم العمران البشري، بيّن فيه أن التاريخ لا يُفهم بمجرد نقل الأحداث بل بفهم العلل والأسباب؛ فالعصبية تُقوم الدول وتهدمها، والترف يُفسد الأمم. وهذا المنهج النقدي أثّر في علم التاريخ الحديث.",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "مقدمة ابن خلدون",
     author_name: null,
     status: "approved",
@@ -3562,7 +3562,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-444",
     text: "فائدة المعجم العربي في فهم النصوص — المعجم العربي لا يقتصر على ضبط المعاني بل يُبيّن التطور الدلالي للألفاظ؛ فكلمة «النفاق» كانت تعني أصلاً الجحر الذي يدخله الحيوان من طرف ويخرج من آخر، ومنه المنافق: يُظهر الإسلام ويُخفي الكفر. وهذا المنهج في فهم الاشتقاق يُعين على فقه النصوص.",
-    category: "فوائد لغوية",
+    category: "اللغة",
     source: "لسان العرب — ابن منظور، مفردات القرآن — الراغب الأصفهاني",
     author_name: null,
     status: "approved",
@@ -3578,7 +3578,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-446",
     text: "فائدة لغوية: الفرق بين «الصبر» و«الشُّكر» — قال ابن القيم: «الصبر نصف الإيمان، والشكر نصفه الثاني؛ فالصبر كفٌّ للنفس عن الجزع، والشكر بعثٌ لها على الطاعة». ولذلك قال تعالى: 'إن في ذلك لآيات لكل صبار شكور'. وأصل الشكر من: شَكَرَ الشجرةُ إذا امتلأت جمالاً بعد سقيها.",
-    category: "فوائد لغوية",
+    category: "اللغة",
     source: "مدارج السالكين — ابن القيم",
     author_name: null,
     status: "approved",
@@ -3642,7 +3642,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-454",
     text: "لغوية: الإعجاز البياني في تنوع أساليب القرآن — جمع القرآن الكريم بين الأمر والنهي، والخبر والإنشاء، والتمثيل والتشبيه، والحقيقة والمجاز، والإيجاز والإطناب؛ وهذا من أوجه إعجازه البياني الذي أعجز الفصحاء والبلغاء أن يأتوا بمثله، وقد قال عمر بن الخطاب رضي الله عنه حين سمع أول سورة طه: ما أحسن هذا الكلام وأكرمه.",
-    category: "فوائد لغوية",
+    category: "اللغة",
     source: "إعجاز القرآن — الباقلاني",
     author_name: null,
     status: "approved",
@@ -3706,7 +3706,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-462",
     text: "فائدة لغوية: الفرق بين الحقيقة والمجاز في اللغة العربية — الحقيقة: اللفظ المستعمل في موضعه الأصلي. المجاز: اللفظ المستعمل في غير موضعه لعلاقة مع قرينة. كقولك «رأيت أسداً يخطب» — المجاز بالاستعارة. وللمجاز أنواع: مرسل، واستعارة، وكناية. وقد أنكر بعض العلماء كابن تيمية وجود المجاز في القرآن من باب الاحتراز العقدي لا الإنكار اللغوي المطلق.",
-    category: "فوائد لغوية",
+    category: "اللغة",
     source: "دلائل الإعجاز — الجرجاني",
     author_name: null,
     status: "approved",
@@ -3762,7 +3762,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-469",
     text: "فائدة نحوية: «الإعراب» في اللغة العربية هو تغيُّر أواخر الكلمات بحسب مواقعها في الجملة. وقد قيل: من أتقن الإعراب أُمن من التحريف في قراءة القرآن وتفسيره. وقد أُلِّفت متون كثيرة لضبطه أبرزها: الألفية لابن مالك، والأجرومية لابن آجروم، وقطر الندى لابن هشام.",
-    category: "فوائد لغوية",
+    category: "اللغة",
     source: "شرح ابن عقيل على ألفية ابن مالك",
     author_name: null,
     status: "approved",
@@ -3778,7 +3778,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-471",
     text: "فائدة أصولية: «المصلحة المرسلة» هي مصلحة لم يرد في الشرع نص باعتبارها ولا بإلغائها، فيجتهد الفقيه في إثبات حكم بناءً عليها إذا كانت ملائمة لمقاصد الشريعة. ومن أمثلتها: تدوين الدواوين، وضرب النقود، وبناء السجون. واعتمدها المالكية وأجازها جمهور الأصوليين بشروط.",
-    category: "فوائد أصولية",
+    category: "الفقه",
     source: "الموافقات في أصول الشريعة — الشاطبي",
     author_name: null,
     status: "approved",
@@ -3794,7 +3794,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-473",
     text: "فائدة في الأخلاق: «الحياء» شعبة من شعب الإيمان كما قال ﷺ: «الإيمان بضع وسبعون شعبة، فأفضلها قول لا إله إلا الله، وأدناها إماطة الأذى عن الطريق، والحياء شعبة من الإيمان». والحياء من الله يُثمر الامتناع عن المعاصي وأداء الفرائض، ومن الناس يُثمر الكرم ومكارم الأخلاق.",
-    category: "فوائد أخلاقية",
+    category: "الأخلاق",
     source: "صحيح البخاري: ٩، رياض الصالحين — النووي",
     author_name: null,
     status: "approved",
@@ -3818,7 +3818,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-476",
     text: "فائدة لغوية: «الصلاة» في اللغة الدعاء. قال تعالى: ﴿وَصَلِّ عَلَيْهِمْ﴾ أي ادعُ لهم. وفي الاصطلاح الشرعي: عبادة ذات أقوال وأفعال مفتتحة بالتكبير مختتمة بالتسليم. والانتقال من المعنى اللغوي إلى الاصطلاحي من أبرز أمثلة تطور الدلالة في العربية.",
-    category: "فوائد لغوية",
+    category: "اللغة",
     source: "الصحاح للجوهري، التعريفات للجرجاني",
     author_name: null,
     status: "approved",
@@ -3826,7 +3826,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-477",
     text: "فائدة لغوية: «الزكاة» في اللغة النماء والطهارة والبركة. يقال: زكا الزرع إذا نما. وتسمية إخراج الزكاة بهذا الاسم إشارة إلى أنها تُنمّي المال وتُطهّر صاحبه وتُبارك فيه. وهذا المعنى اللغوي ملتحم بالمعنى الشرعي التحاماً دقيقاً.",
-    category: "فوائد لغوية",
+    category: "اللغة",
     source: "لسان العرب لابن منظور، المفردات في غريب القرآن للراغب",
     author_name: null,
     status: "approved",
@@ -3834,7 +3834,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-478",
     text: "فائدة لغوية: «الجهاد» مصدر جاهَد، من الجَهد بمعنى بذل الطاقة والوسع. وينقسم في الشرع إلى جهاد النفس والشيطان والكفار والمنافقين. قال ابن القيم: أعلى مراتبه جهاد النفس إذ هو أساس كل جهاد خارجي، فمن لم يجاهد نفسه لم يستطع جهاد غيره.",
-    category: "فوائد لغوية",
+    category: "اللغة",
     source: "زاد المعاد — ابن القيم",
     author_name: null,
     status: "approved",
@@ -3899,7 +3899,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-486",
     text: "فائدة علمية: العلم الشرعي درجات ثلاث: أولها علم النصوص (الكتاب والسنة)، ثانيها علم استنباط الأحكام منها (الفقه وأصوله)، ثالثها العلم بمقاصد الشريعة وعللها. قال ابن القيم: «من اقتصر على النصوص دون الفهم وقع في التقليد الأعمى، ومن اقتصر على العقل دون النص وقع في الهوى». الكمال الجمع بين الروايةوالدراية.",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "مدارج السالكين لابن القيم، إعلام الموقعين",
     author_name: null,
     status: "approved",
@@ -3907,7 +3907,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-487",
     text: "فائدة علمية: «الإسناد من الدين». قال عبدالله بن المبارك: «الإسناد من الدين، ولولا الإسناد لقال من شاء ما شاء». نظام الإسناد الحديثي فريد في تاريخ البشرية: هو نقل مسلسل موثوق من راوٍ إلى راوٍ حتى يصل إلى النبي ﷺ، وقد أفرد العلماء له علماً مستقلاً: علم مصطلح الحديث.",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "مقدمة صحيح مسلم، شرح النووي",
     author_name: null,
     status: "approved",
@@ -3915,7 +3915,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-488",
     text: "فائدة علمية: الفتوى والقضاء مختلفان: الفتوى إخبار بالحكم الشرعي وهي غير ملزِمة، والقضاء حكم ملزِم. لذلك يُشترط للقاضي ما لا يُشترط للمفتي. قال الإمام النووي: «المفتي معلِّم والقاضي حاكم». ويجوز للعامي ترك فتوى مفتٍ لفتوى أوثق وأعلم، بينما حكم القاضي ملزِم لمن صدر عليه.",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "المجموع للنووي، أدب المفتي والمستفتي لابن الصلاح",
     author_name: null,
     status: "approved",
@@ -3923,7 +3923,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-489",
     text: "فائدة علمية: «التخريج» في اصطلاح المحدثين: هو نسبة الحديث إلى مصدره الأصلي مع بيان درجته. وطريقته: النظر في سند الحديث ومتنه، والبحث في كتب الحديث الأصلية، والحكم على كل راوٍ بما قاله الأئمة فيه. والغاية: التمييز بين الصحيح والضعيف والموضوع، لأن العمل بالضعيف في الأحكام حرام.",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "المنهج الحديثي بين النظرية والتطبيق، تدريب الراوي للسيوطي",
     author_name: null,
     status: "approved",
@@ -3931,7 +3931,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-490",
     text: "فائدة علمية: الفرق بين الناسخ والمنسوخ: النسخ رفع حكم شرعي متقدم بحكم شرعي متأخر. وشرطه أن يكون الدليلان متعارضَين لا يمكن الجمع بينهما، وأن يُعلم تأخر أحدهما. قال ابن كثير: «أبواب النسخ من أجل علوم القرآن وأدقها وقد أكثر العلماء من التوسع فيه حتى أدخلوا ما ليس منه». والمنسوخات في القرآن لا تتجاوز أربع وعشرين آية عند المحققين.",
-    category: "فوائد علمية",
+    category: "طلب العلم",
     source: "الإتقان للسيوطي، تفسير ابن كثير",
     author_name: null,
     status: "approved",
@@ -4022,7 +4022,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-501",
     text: "فائدة لغوية: «القرآن نزل بلغة العرب» لكنه أعجزهم عن الإتيان بمثله وهم أهل الفصاحة. سرّ الإعجاز ليس في المفردات وحدها بل في النظم الفريد: تأليف الألفاظ وتناسق الأساليب وإحكام المعنى. قال الجاحظ: «ليست عبقرية القرآن في ألفاظه بمفردها بل في الطريقة التي تتصل بها الألفاظ بالمعاني والمعاني بالنفوس». ولذا بقي القرآن حياً بلا ترجمة تُعوِّضه.",
-    category: "فوائد لغوية",
+    category: "اللغة",
     source: "البيان والتبيين للجاحظ، البرهان للزركشي",
     author_name: null,
     status: "approved",
@@ -4030,7 +4030,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-502",
     text: "فائدة لغوية: اللغة العربية لغة اشتقاقية غنية. الجذر الثلاثي «ك-ت-ب» اشتُق منه: كتب، كاتب، مكتوب، كتاب، مكتبة، مكتب، كِتابة، اكتتب، استكتب. وهكذا تنمو المعاجم دون أن تتضخم، لأن اللغة تتوسع من داخلها. وهذا ما جعل العربية قادرة على استيعاب مصطلحات العلوم والتقنية الحديثة بالاشتقاق والتعريب.",
-    category: "فوائد لغوية",
+    category: "اللغة",
     source: "اللغة العربية معناها ومبناها لتمام حسان، مجمع اللغة العربية",
     author_name: null,
     status: "approved",
@@ -4038,7 +4038,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-503",
     text: "فائدة لغوية: الإعراب في العربية وظيفة نحوية دقيقة تُميّز الفاعل من المفعول ومن الجار والمجرور وغيرها دون الحاجة لترتيب صارم للكلمات. وهذا يمنح العربية مرونة فائقة في التعبير: «ضرب زيدٌ عمراً» و«عمراً ضرب زيدٌ» معناهما واحد. وقد كان الإعراب الحارس الصامت لفهم النص القرآني عبر القرون، إذ يمنع تحريف المعاني باختلاط الأدوار.",
-    category: "فوائد لغوية",
+    category: "اللغة",
     source: "شرح ابن عقيل على ألفية ابن مالك، النحو الوافي لعباس حسن",
     author_name: null,
     status: "approved",
@@ -4046,7 +4046,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-504",
     text: "فائدة لغوية: لغة العرب لها سبع وعشرون حرفاً مخرجها من مخارج متنوعة في الحلق واللسان والشفتين. هذا التنوع الصوتي الثري جعل العربية قادرة على محاكاة أصوات الطبيعة وتسمية أشياء لا تسمية لها في لغات أخرى. ومن عجيب العربية أن «الصهيل» للخيل، و«الزئير» للأسد، و«الحفيف» للريح، و«الخرير» للماء—كل صوت له اسم دقيق.",
-    category: "فوائد لغوية",
+    category: "اللغة",
     source: "سر الفصاحة لابن سنان الخفاجي، الخصائص لابن جني",
     author_name: null,
     status: "approved",
@@ -4054,7 +4054,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-505",
     text: "فائدة لغوية: اللغة العربية في القرآن استخدمت أسلوب الالتفات بكثرة: الانتقال من الغيبة إلى الخطاب أو من الخطاب إلى الغيبة في سياق واحد. مثاله: ﴿إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ﴾ — انتقلت من الغيبة «الله» في الفاتحة إلى الخطاب المباشر «إياك» فجأة. والغرض: إحداث مفاجأة تُيقظ المتلقي وتُجدد انتباهه وتُعبّر عن القُرب الشديد من الله.",
-    category: "فوائد لغوية",
+    category: "اللغة",
     source: "البرهان في علوم القرآن للزركشي، التحرير والتنوير لابن عاشور",
     author_name: null,
     status: "approved",
@@ -4097,6 +4097,64 @@ export const SEED_FAWAID = [
     text: "فائدة سلوكية: «خِدمة الآخرين» طريق إلى السعادة النفسية قبل أن تكون عبادة. قال ابن القيم: «من أراد الانبساط والفرح فليكن عوناً للناس». علم النفس الحديث يُثبت أن التطوع والخدمة يُخفِّفان الاكتئاب ويزيدان الرضا. والنبي ﷺ كان يخدم أهله ويُصلح نعله ويحمل تمره بيده تواضعاً وتعليماً. الخدمة ليست إهانةً للنفس بل رفعةٌ للقلب.",
     category: "فوائد سلوكية",
     source: "زاد المعاد لابن القيم، البخاري: ٦٧٦",
+    author_name: null,
+    status: "approved",
+  },
+  // ──────────────────── فوائد فقهية (511-513): آيات الأحكام ────────────────────
+  {
+    id: "seed-fawaid-511",
+    text: "فائدة فقهية: آية الوضوء ﴿يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوٓا۟ إِذَا قُمْتُمْ إِلَى ٱلصَّلَوٰةِ فَٱغْسِلُوا۟ وُجُوهَكُمْ وَأَيْدِيَكُمْ إِلَى ٱلْمَرَافِقِ وَٱمْسَحُوا۟ بِرُءُوسِكُمْ وَأَرْجُلَكُمْ إِلَى ٱلْكَعْبَيْنِ﴾ هي الأصل الذي استنبط منه الفقهاء فرائض الوضوء الأربع: غسل الوجه، وغسل اليدين إلى المرفقين، ومسح الرأس، وغسل الرجلين إلى الكعبين. اختلف الفقهاء في تفصيلات كمسح كامل الرأس أو بعضه، لكنهم أجمعوا على أصل الفرائض الأربعة المذكورة في الآية نفسها.",
+    category: "فوائد فقهية",
+    source: "سورة المائدة: 6",
+    author_name: null,
+    status: "approved",
+  },
+  {
+    id: "seed-fawaid-512",
+    text: "فائدة فقهية: قوله تعالى ﴿إِنَّ ٱلصَّلَوٰةَ كَانَتْ عَلَى ٱلْمُؤْمِنِينَ كِتَٰبًا مَّوْقُوتًا﴾ أصلٌ في أن أوقات الصلوات الخمس مفروضة بتوقيت محدَّد لا تصح قبله ولا يجوز تأخيرها عنه بلا عذر شرعي، خلافاً لبعض العبادات التي وقتها موسّع. «موقوتاً» في الآية تعني: مفروضاً محدَّد الوقت، وهو ما فصّلته السنة النبوية ببيان أوقات الصلوات الخمس وحدودها.",
+    category: "فوائد فقهية",
+    source: "سورة النساء: 103",
+    author_name: null,
+    status: "approved",
+  },
+  {
+    id: "seed-fawaid-513",
+    text: "فائدة فقهية: في قوله تعالى ﴿وَأَحَلَّ ٱللَّهُ ٱلْبَيْعَ وَحَرَّمَ ٱلرِّبَوٰا۟﴾ ردٌّ إلهيٌّ مباشر على شبهة من قال «إنما البيع مثل الربا» فسوّى بينهما، إذ فرّق الله بينهما حكماً رغم تشابههما الظاهري في كون كلٍّ منهما زيادة مالية عن مقابل. البيع مبنيٌّ على تبادل سلعة بثمن برضا الطرفين وتحمّل مخاطرة السوق، بخلاف الربا الذي هو زيادة مضمونة على أصل الدَّين بلا مقابل حقيقي ولا مخاطرة — وهذا الفارق هو مدار تحريم الربا عند الفقهاء.",
+    category: "فوائد فقهية",
+    source: "سورة البقرة: 275",
+    author_name: null,
+    status: "approved",
+  },
+  // ──────────────────── فوائد عقدية + فقهية (514-517): أقسام التوحيد وآية الزكاة ────────────────────
+  {
+    id: "seed-fawaid-514",
+    text: "فائدة عقدية: قوله تعالى ﴿ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ﴾ أصلٌ في توحيد الربوبية — إفراد الله بالخلق والتدبير والملك والهيمنة على الكون، فلا خالق ولا مدبِّر لشؤون الخلق سواه. هذا القسم من التوحيد أقرّ به عامة المشركين الأوائل أنفسهم (كما تصرّح آيات أخرى)، ومع ذلك لم يُدخلهم وحده في الإسلام حتى يقترن بتوحيد الألوهية (إفراده بالعبادة).",
+    category: "فوائد عقدية",
+    source: "سورة الفاتحة: 2",
+    author_name: null,
+    status: "approved",
+  },
+  {
+    id: "seed-fawaid-515",
+    text: "فائدة عقدية: قوله تعالى ﴿وَلَقَدْ بَعَثْنَا فِى كُلِّ أُمَّةٍ رَّسُولًا أَنِ ٱعْبُدُوا۟ ٱللَّهَ وَٱجْتَنِبُوا۟ ٱلطَّٰغُوتَ﴾ أصلٌ في توحيد الألوهية (العبادة) — وهو محور دعوة جميع الرسل من غير استثناء، ولم يبعث الله رسولاً إلا بهذه الدعوة نفسها. هذا القسم هو الذي خالف فيه مشركو الأمم رغم إقرارهم بتوحيد الربوبية، فكانوا يصرفون العبادة (كالدعاء والذبح والنذر) لغير الله مع اعترافهم بأنه الخالق الرازق.",
+    category: "فوائد عقدية",
+    source: "سورة النحل: 36",
+    author_name: null,
+    status: "approved",
+  },
+  {
+    id: "seed-fawaid-516",
+    text: "فائدة عقدية: قوله تعالى ﴿وَلِلَّهِ ٱلْأَسْمَآءُ ٱلْحُسْنَىٰ فَٱدْعُوهُ بِهَا وَذَرُوا۟ ٱلَّذِينَ يُلْحِدُونَ فِىٓ أَسْمَٰٓئِهِۦ﴾ أصلٌ في توحيد الأسماء والصفات — إثبات ما أثبته الله لنفسه من أسماء وصفات على الوجه اللائق بجلاله، من غير تحريف لمعناها ولا تعطيل لها ولا تكييف لكيفيتها ولا تمثيل بصفات المخلوقين. والإلحاد في أسمائه المذكور في الآية يشمل تحريفها أو تسمية الأصنام ببعض معانيها أو إنكارها.",
+    category: "فوائد عقدية",
+    source: "سورة الأعراف: 180",
+    author_name: null,
+    status: "approved",
+  },
+  {
+    id: "seed-fawaid-517",
+    text: "فائدة فقهية: قوله تعالى ﴿خُذْ مِنْ أَمْوَٰلِهِمْ صَدَقَةًۭ تُطَهِّرُهُمْ وَتُزَكِّيهِم بِهَا وَصَلِّ عَلَيْهِمْ إِنَّ صَلَوٰتَكَ سَكَنٌ لَّهُمْ﴾ أصلٌ قرآني مباشر لفريضة الزكاة وحكمتها معاً: «تطهرهم» من الشح والبخل، و«تزكيهم» أي تنمّي أموالهم وأخلاقهم. والأمر بالصلاة على دافعها («وصلّ عليهم») هو أصل استحباب دعاء الإمام/الساعي لمن أدّى زكاته، لا فرض صلاة حقيقية عليه.",
+    category: "فوائد فقهية",
+    source: "سورة التوبة: 103",
     author_name: null,
     status: "approved",
   },

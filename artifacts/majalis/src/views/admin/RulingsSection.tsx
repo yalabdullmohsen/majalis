@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { adminGetAllRulings, adminUpsertRuling, adminDeleteRuling } from "@/lib/platform-supabase";
 import { getAllRulingsForAdmin } from "@/lib/rulings-service";
-import { RULING_CATEGORIES } from "@/lib/platform-types";
 import { RULINGS_CATEGORY_TREE, flattenCategories } from "@/lib/rulings-categories";
 import { importRulingsFromText, RULINGS_CSV_TEMPLATE } from "@/lib/rulings-import";
 import { validateRuling, findSimilarRulings } from "@/lib/rulings-validator";
@@ -250,9 +249,13 @@ export function RulingsSection() {
         </Field>
         <Field label="التصنيف">
           <select className="adm-select" value={form.category} onChange={(e) => set("category", e.target.value)}>
-            {RULING_CATEGORIES.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
+            {/* كان هذا الـselect يعرض RULING_CATEGORIES (13 تصنيفاً قديماً
+                من platform-types.ts) و RULINGS_CATEGORY_TREE (20 تصنيفاً
+                حالياً من rulings-categories.ts) معاً في نفس القائمة —
+                تكرار وبقايا ترحيل غير مكتمل تسمح للإداري باختيار تصنيف
+                قديم ("الحج" بدل "الحج والعمرة" مثلاً) فيختفي الحكم صامتاً
+                من فلاتر RulingsPage الحية. أُزيلت القائمة القديمة، أُبقي
+                المصدر الحالي وحده. اكتُشف بالفحص المباشر 2026-07-18. */}
             {RULINGS_CATEGORY_TREE.map((c) => (
               <option key={c.slug} value={c.name}>{c.name}</option>
             ))}

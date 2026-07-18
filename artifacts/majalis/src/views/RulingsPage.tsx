@@ -2,7 +2,7 @@ import "@/styles/rulings-encyclopedia.css";
 import { useCallback, useEffect, useState } from "react";
 import { Banknote, BookOpen, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, MapPin, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useSearch } from "wouter";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
 import { useAuth } from "@/components/AuthProvider";
@@ -86,8 +86,19 @@ export default function RulingsPage() {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const debouncedSearch = useDebouncedValue(search);
+  const urlSearch = useSearch();
 
   usePageView("rulings", null);
+
+  // رابط وارد بـ`?category=...` (من RulingDetailPage/FiqhPage) كان يُتجاهَل
+  // كليًا هنا: الحالة تُقرأ فقط من usePersistedState بلا مزامنة مع رابط
+  // URL الفعلي عند الوصول — نفس عائلة عطل TYPE_HREF.scholar الصامت
+  // (رابط يُبنى صحيحًا لكن لا يُقرأ في الوجهة، فيهبط المستخدم على الفلتر
+  // الافتراضي/السابق بلا أي خطأ ظاهر). اكتُشف بالفحص المباشر 2026-07-18.
+  useEffect(() => {
+    const cat = new URLSearchParams(urlSearch).get("category");
+    if (cat) setCategory(cat);
+  }, [urlSearch]);
 
   useEffect(() => {
     applyPageSeo({

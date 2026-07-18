@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Scale } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useSearch } from "wouter";
 import { getQaCategories, getQaQuestions } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -86,8 +86,17 @@ export default function QaPage({
   const [randomId, setRandomId] = useState<string | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const debouncedSearch = useDebouncedValue(search);
+  const urlSearch = useSearch();
 
   const items = useMemo(() => normalizeQaItems(rawItems), [rawItems]);
+
+  // رابط وارد بـ`?cat=...` (من FiqhPage) كان يُتجاهَل كليًا: الحالة تُقرأ
+  // فقط من usePersistedState بلا مزامنة مع URL الفعلي عند الوصول — نفس
+  // عائلة عطل TYPE_HREF.scholar الصامت. اكتُشف بالفحص المباشر 2026-07-18.
+  useEffect(() => {
+    const cat = new URLSearchParams(urlSearch).get("cat");
+    if (cat) setCategorySlug(cat);
+  }, [urlSearch]);
 
   useEffect(() => {
     const topQa = DEMO_QA.filter((q: any) => q.answer).slice(0, 8);
