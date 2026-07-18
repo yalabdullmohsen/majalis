@@ -212,16 +212,24 @@ WebFetch من `sitemap.xml` الحي: صفر رابط `/universities/` فردي)
 متى أُضيف محتوى). كل شروط الفلترة تحقَّقت مباشرة عبر `npx supabase db
 query --linked` مطابقةً لسياسات RLS/الخدمات الحية.
 
-**اكتشاف جانبي أثناء الفحص — مؤكَّد من المنسّق بفحص مستقل**: `fiqh_council_sessions`
-— الجدول الذي تشير إليه `FiqhCouncilSessionDetailPage.tsx`/`fiqh-council-
-sessions-service.ts` **غير موجود أصلاً في القاعدة الحية** (`relation
-"fiqh_council_sessions" does not exist`، تحقَّقتُ مباشرة عبر استعلام
-فاشل، والمنسّق أكَّد مستقلاً عبر `information_schema.tables`: فقط
-`fiqh_council_issues` و`fiqh_council_items` موجودان فعلياً). استُبعِد
-عمداً من إضافة sitemap (كان سيُسقِط `Promise.all` بالكامل). هذا يعني أن
-صفحة `/fiqh-council/sessions/:slug` كلها معطَّلة فعلياً حالياً — **يستحق
-فحصاً منفصلاً في جلسة قادمة** (هل الجدول حُذف بالخطأ، أم الميزة لم
-تُفعَّل بعد؟).
+**اكتشاف جانبي أثناء الفحص — مؤكَّد من المنسّق بفحص مستقل، وصُحِّح توصيفه
+بعد فحص إضافي للكود**: `fiqh_council_sessions` — الجدول الذي تشير إليه
+`FiqhCouncilSessionDetailPage.tsx`/`fiqh-council-sessions-service.ts`
+**غير موجود أصلاً في القاعدة الحية** (`relation "fiqh_council_sessions"
+does not exist`، تحقَّقتُ مباشرة عبر استعلام فاشل، والمنسّق أكَّد
+مستقلاً عبر `information_schema.tables`: فقط `fiqh_council_issues`
+و`fiqh_council_items` موجودان فعلياً). استُبعِد عمداً من إضافة sitemap
+(كان سيُسقِط `Promise.all` بالكامل). **تصحيح مهم**: الصفحة **ليست
+معطَّلة فعلياً** كما ذكرتُ أولاً — `fiqh-council-sessions-service.ts`
+مصمَّم بعناية مسبقاً لهذا السيناريو تحديداً (`isMissingTableError()`
+يلتقط أخطاء `does not exist`/`42P01` صراحةً ويرجع تلقائياً لبيانات ثابتة
+من `fiqh-sessions-seed.ts`، 13 جلسة `published`+`verified`). فالصفحة
+تعمل فعلياً للزوار لكن بمحتوى ثابت (seed) لا حي — **فرصة تحسين إضافية
+غير مُنفَّذة بعد**: يمكن إضافة روابط هذه الجلسات الـ13 لـsitemap.xml
+بنفس نمط `loadStaticCatalog()` المُستخدَم لـscholars/library، لكنه يحتاج
+تحويل `fiqh-sessions-seed.ts` (ملف `.ts` بمصفوفة كائنات) لصيغة يقرأها
+`.mjs` وقت التشغيل بأمان (JSON مرآة أو ما شابه) — مؤجَّل لجلسة قادمة
+تفادياً لمخاطرة غير محسوبة الوقت المتبقي لهذه الدفعة.
 
 **ملاحظة منهجية — لغز sitemap.xml محلول جزئياً بفحص مستقل من المنسّق**:
 `sitemap.xml` الحي على `majlisilm.com` (خارج هذا الفرع تماماً — الفرع
