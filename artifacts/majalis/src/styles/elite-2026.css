@@ -18829,7 +18829,7 @@ html[data-theme="dark"] .qlive-player {
    §232 · JanazaPage · /janaza
    ══════════════════════════════════════════════════════════ */
 
-.jn-page { min-height: 100vh; background: #F9FAFB; padding-bottom: 4rem; }
+.jnz-page { min-height: 100vh; background: #F9FAFB; padding-bottom: 4rem; }
 
 /* of-the-day card */
 .jnod-card {
@@ -18855,13 +18855,13 @@ html[data-theme="dark"] .qlive-player {
 }
 .jnod-card__ref { font-family: inherit; font-size: 0.76rem; color: rgba(255,255,255,0.6); }
 
-.jn-hero {
+.jnz-hero {
   background: linear-gradient(155deg, #123F36 0%, #176B57 70%, #124E3B 100%);
   color: #fff;
   padding: 2.5rem 1.25rem 0;
   text-align: center;
 }
-.jn-hero__badge {
+.jnz-hero__badge {
   display: inline-block;
   background: rgba(255,255,255,.18);
   border-radius: 999px;
@@ -18869,10 +18869,10 @@ html[data-theme="dark"] .qlive-player {
   font-size: .75rem;
   margin-bottom: .6rem;
 }
-.jn-hero__title { font-size: clamp(1.65rem, 4vw, 2.4rem); font-weight: 800; margin: 0 0 .5rem; color: #fff; }
-.jn-hero__sub { font-size: .9rem; opacity: .88; max-width: 520px; margin: 0 auto 1.25rem; line-height: 1.65; }
+.jnz-hero__title { font-size: clamp(1.65rem, 4vw, 2.4rem); font-weight: 800; margin: 0 0 .5rem; color: #fff; }
+.jnz-hero__sub { font-size: .9rem; opacity: .88; max-width: 520px; margin: 0 auto 1.25rem; line-height: 1.65; }
 
-.jn-ayah {
+.jnz-ayah {
   background: rgba(255,255,255,.13);
   border: 1px solid rgba(255,255,255,.22);
   border-radius: .7rem;
@@ -18880,16 +18880,16 @@ html[data-theme="dark"] .qlive-player {
   max-width: 460px;
   margin: 0 auto 1.5rem;
 }
-.jn-ayah__text { font-size: 1.05rem; font-weight: 600; line-height: 1.9; color: #fff; margin: 0 0 .3rem; }
-.jn-ayah__ref { font-size: .72rem; color: rgba(255,255,255,.75); font-style: normal; display: block; }
+.jnz-ayah__text { font-size: 1.05rem; font-weight: 600; line-height: 1.9; color: #fff; margin: 0 0 .3rem; }
+.jnz-ayah__ref { font-size: .72rem; color: rgba(255,255,255,.75); font-style: normal; display: block; }
 
-.jn-tabs {
+.jnz-tabs {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: .35rem;
 }
-.jn-tab {
+.jnz-tab {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18905,15 +18905,15 @@ html[data-theme="dark"] .qlive-player {
   transition: background .18s;
   min-width: 5rem;
 }
-.jn-tab:hover { background: rgba(255,255,255,.22); color: #fff; }
-.jn-tab--active { background: #F9FAFB; color: var(--majalis-emerald, #176B57); font-weight: 700; }
-.jn-tab__icon { font-size: 1.1rem; }
-.jn-tab__label { white-space: nowrap; font-size: .73rem; }
+.jnz-tab:hover { background: rgba(255,255,255,.22); color: #fff; }
+.jnz-tab--active { background: #F9FAFB; color: var(--majalis-emerald, #176B57); font-weight: 700; }
+.jnz-tab__icon { font-size: 1.1rem; }
+.jnz-tab__label { white-space: nowrap; font-size: .73rem; }
 
-.jn-body { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem; }
-.jn-section { display: flex; flex-direction: column; gap: .85rem; }
+.jnz-body { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem; }
+.jnz-section { display: flex; flex-direction: column; gap: .85rem; }
 
-.jn-subtitle {
+.jnz-subtitle {
   font-size: 1rem;
   font-weight: 700;
   color: var(--majalis-emerald, #176B57);
@@ -18922,8 +18922,8 @@ html[data-theme="dark"] .qlive-player {
   margin: .3rem 0 .3rem;
 }
 
-.jn-info--mt { margin-top: .5rem; }
-.jn-info {
+.jnz-info--mt { margin-top: .5rem; }
+.jnz-info {
   background: #ECFDF5;
   border: 1px solid #A7F3D0;
   border-radius: .65rem;
@@ -18934,19 +18934,19 @@ html[data-theme="dark"] .qlive-player {
   color: #123F36;
   line-height: 1.65;
 }
-.jn-info__icon { font-size: 1.15rem; flex-shrink: 0; }
-.jn-info p { margin: 0; }
+.jnz-info__icon { font-size: 1.15rem; flex-shrink: 0; }
+.jnz-info p { margin: 0; }
 
-.jn-steps { display: flex; flex-direction: column; gap: 0; background: #fff; border: 1px solid #E5E7EB; border-radius: .75rem; overflow: hidden; }
-.jn-step {
+.jnz-steps { display: flex; flex-direction: column; gap: 0; background: #fff; border: 1px solid #E5E7EB; border-radius: .75rem; overflow: hidden; }
+.jnz-step {
   display: flex;
   gap: 1rem;
   align-items: flex-start;
   padding: .9rem 1rem;
   border-bottom: 1px solid #F3F4F6;
 }
-.jn-step:last-child { border-bottom: none; }
-.jn-step__num {
+.jnz-step:last-child { border-bottom: none; }
+.jnz-step__num {
   min-width: 2rem;
   height: 2rem;
   background: var(--majalis-emerald, #176B57);
@@ -18959,12 +18959,12 @@ html[data-theme="dark"] .qlive-player {
   font-weight: 800;
   flex-shrink: 0;
 }
-.jn-step__content { flex: 1; }
-.jn-step__title { display: block; font-size: .9rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
-.jn-step__desc { font-size: .84rem; color: #374151; line-height: 1.6; margin: 0; }
+.jnz-step__content { flex: 1; }
+.jnz-step__title { display: block; font-size: .9rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
+.jnz-step__desc { font-size: .84rem; color: #374151; line-height: 1.6; margin: 0; }
 
-.jn-notes { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .4rem; }
-.jn-note {
+.jnz-notes { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .4rem; }
+.jnz-note {
   background: #fff;
   border: 1px solid #E5E7EB;
   border-radius: .55rem;
@@ -18975,9 +18975,9 @@ html[data-theme="dark"] .qlive-player {
   padding-right: 1.6rem;
   position: relative;
 }
-.jn-note::before { content: "•"; position: absolute; right: .7rem; color: var(--majalis-emerald, #176B57); font-weight: 900; font-size: 1.1rem; top: .45rem; }
+.jnz-note::before { content: "•"; position: absolute; right: .7rem; color: var(--majalis-emerald, #176B57); font-weight: 900; font-size: 1.1rem; top: .45rem; }
 
-.jn-takfin-card {
+.jnz-takfin-card {
   background: #fff;
   border: 1px solid #E5E7EB;
   border-radius: .75rem;
@@ -18987,22 +18987,22 @@ html[data-theme="dark"] .qlive-player {
   gap: .5rem;
   box-shadow: 0 1px 3px rgba(0,0,0,.05);
 }
-.jn-takfin-card__head { display: flex; align-items: center; gap: .65rem; }
-.jn-takfin-card__icon { font-size: 1.5rem; }
-.jn-takfin-card__title { font-size: .95rem; font-weight: 700; color: #111; }
-.jn-takfin-card__desc { font-size: .85rem; color: #374151; line-height: 1.65; margin: 0; }
-.jn-dalil {
+.jnz-takfin-card__head { display: flex; align-items: center; gap: .65rem; }
+.jnz-takfin-card__icon { font-size: 1.5rem; }
+.jnz-takfin-card__title { font-size: .95rem; font-weight: 700; color: #111; }
+.jnz-takfin-card__desc { font-size: .85rem; color: #374151; line-height: 1.65; margin: 0; }
+.jnz-dalil {
   background: #F0F5F2;
   border-right: 3px solid var(--majalis-emerald, #176B57);
   border-radius: .5rem;
   padding: .65rem .9rem;
   margin: 0;
 }
-.jn-dalil__text { font-size: .88rem; line-height: 1.85; color: #052E16; font-weight: 500; margin: 0 0 .3rem; }
-.jn-dalil__ref { font-size: .72rem; color: #16A34A; font-style: normal; display: block; }
+.jnz-dalil__text { font-size: .88rem; line-height: 1.85; color: #052E16; font-weight: 500; margin: 0 0 .3rem; }
+.jnz-dalil__ref { font-size: .72rem; color: #16A34A; font-style: normal; display: block; }
 
-.jn-arkan-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; }
-.jn-rukn-card {
+.jnz-arkan-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; }
+.jnz-rukn-card {
   background: #fff;
   border: 1px solid #E5E7EB;
   border-radius: .65rem;
@@ -19012,7 +19012,7 @@ html[data-theme="dark"] .qlive-player {
   gap: .6rem;
   box-shadow: 0 1px 3px rgba(0,0,0,.04);
 }
-.jn-rukn-card__num {
+.jnz-rukn-card__num {
   min-width: 1.6rem;
   height: 1.6rem;
   background: #D4FAE8;
@@ -19026,10 +19026,10 @@ html[data-theme="dark"] .qlive-player {
   flex-shrink: 0;
   border: 2px solid var(--majalis-emerald, #176B57);
 }
-.jn-rukn-card__title { display: block; font-size: .88rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
-.jn-rukn-card__desc { font-size: .79rem; color: #4B5563; line-height: 1.5; margin: 0; }
+.jnz-rukn-card__title { display: block; font-size: .88rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
+.jnz-rukn-card__desc { font-size: .79rem; color: #4B5563; line-height: 1.5; margin: 0; }
 
-.jn-dua-box {
+.jnz-dua-box {
   background: #F0F5F2;
   border: 1px solid #6EE7B7;
   border-radius: .7rem;
@@ -19038,12 +19038,12 @@ html[data-theme="dark"] .qlive-player {
   flex-direction: column;
   gap: .4rem;
 }
-.jn-dua-box__label { font-size: .72rem; color: #16A34A; font-weight: 700; }
-.jn-dua-box__text { font-size: .95rem; line-height: 2; color: #052E16; font-weight: 600; margin: 0; }
-.jn-dua-box__ref { font-size: .72rem; color: #16A34A; font-style: normal; }
+.jnz-dua-box__label { font-size: .72rem; color: #16A34A; font-weight: 700; }
+.jnz-dua-box__text { font-size: .95rem; line-height: 2; color: #052E16; font-weight: 600; margin: 0; }
+.jnz-dua-box__ref { font-size: .72rem; color: #16A34A; font-style: normal; }
 
-.jn-dafn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; }
-.jn-dafn-card {
+.jnz-dafn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; }
+.jnz-dafn-card {
   background: #fff;
   border: 1px solid #E5E7EB;
   border-radius: .65rem;
@@ -19053,11 +19053,11 @@ html[data-theme="dark"] .qlive-player {
   gap: .65rem;
   box-shadow: 0 1px 3px rgba(0,0,0,.05);
 }
-.jn-dafn-card__icon { font-size: 1.4rem; flex-shrink: 0; }
-.jn-dafn-card__title { display: block; font-size: .88rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
-.jn-dafn-card__desc { font-size: .8rem; color: #4B5563; line-height: 1.55; margin: 0; }
+.jnz-dafn-card__icon { font-size: 1.4rem; flex-shrink: 0; }
+.jnz-dafn-card__title { display: block; font-size: .88rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
+.jnz-dafn-card__desc { font-size: .8rem; color: #4B5563; line-height: 1.55; margin: 0; }
 
-.jn-adab-card {
+.jnz-adab-card {
   background: #fff;
   border: 1px solid #E5E7EB;
   border-radius: .7rem;
@@ -19067,24 +19067,24 @@ html[data-theme="dark"] .qlive-player {
   gap: .75rem;
   box-shadow: 0 1px 3px rgba(0,0,0,.04);
 }
-.jn-adab-card__icon { font-size: 1.5rem; flex-shrink: 0; }
-.jn-adab-card__title { display: block; font-size: .9rem; font-weight: 700; color: #111; margin-bottom: .25rem; }
-.jn-adab-card__desc { font-size: .84rem; color: #374151; line-height: 1.6; margin: 0; }
+.jnz-adab-card__icon { font-size: 1.5rem; flex-shrink: 0; }
+.jnz-adab-card__title { display: block; font-size: .9rem; font-weight: 700; color: #111; margin-bottom: .25rem; }
+.jnz-adab-card__desc { font-size: .84rem; color: #374151; line-height: 1.6; margin: 0; }
 
-.jn-hadith-box {
+.jnz-hadith-box {
   background: #F0F5F2;
   border-right: 3px solid var(--majalis-emerald, #176B57);
   border-radius: .65rem;
   padding: .9rem 1rem;
   margin-top: .5rem;
 }
-.jn-hadith-box__text { font-size: 1rem; line-height: 1.9; color: #052E16; font-style: normal; font-weight: 600; margin: 0 0 .35rem; }
-.jn-hadith-box__ref { font-size: .72rem; color: #16A34A; font-style: normal; display: block; }
+.jnz-hadith-box__text { font-size: 1rem; line-height: 1.9; color: #052E16; font-style: normal; font-weight: 600; margin: 0 0 .35rem; }
+.jnz-hadith-box__ref { font-size: .72rem; color: #16A34A; font-style: normal; display: block; }
 
-.jn-related { margin-top: 2.5rem; }
-.jn-related__title { font-size: 1rem; font-weight: 700; color: #111; margin: 0 0 .75rem; }
-.jn-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
-.jn-related__link {
+.jnz-related { margin-top: 2.5rem; }
+.jnz-related__title { font-size: 1rem; font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.jnz-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+.jnz-related__link {
   background: #fff;
   border: 1px solid #E5E7EB;
   border-radius: .6rem;
@@ -19096,13 +19096,13 @@ html[data-theme="dark"] .qlive-player {
   font-weight: 600;
   transition: background .15s;
 }
-.jn-related__link:hover { background: #F0F5F2; border-color: var(--majalis-emerald, #176B57); }
+.jnz-related__link:hover { background: #F0F5F2; border-color: var(--majalis-emerald, #176B57); }
 
 @media (max-width: 640px) {
-  .jn-arkan-grid, .jn-dafn-grid { grid-template-columns: 1fr; }
-  .jn-related__grid { grid-template-columns: repeat(2, 1fr); }
-  .jn-tab { min-width: 4.5rem; }
-  .jn-tab__label { font-size: .65rem; }
+  .jnz-arkan-grid, .jnz-dafn-grid { grid-template-columns: 1fr; }
+  .jnz-related__grid { grid-template-columns: repeat(2, 1fr); }
+  .jnz-tab { min-width: 4.5rem; }
+  .jnz-tab__label { font-size: .65rem; }
 }
 
 /* ── نهاية §232 ─────────────────────────────────────────── */
