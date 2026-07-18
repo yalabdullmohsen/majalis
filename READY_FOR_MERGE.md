@@ -70,8 +70,18 @@ library-catalog.json نفسه**: `src/data/scholars-list.json` كان مجمَّ
 (CHECK constraints على `level`/`section` تتعارض مع تحويل `upsertQuizSeedToDb()`
 + `LEVEL_TO_POINTS` يقبل إنجليزي فقط) كانت تُسقِط أي محاولة مزامنة صامتاً.
 أُصلحت الطبقات الثلاث معاً + مزامنة يدوية فعلية: **`quiz_questions`
-15→953 صفاً**، تحقَّق end-to-end فعلي بمحاكاة مباشرة لدالة الدمج. تفصيل
-كامل في `CONTINUATION_PLAN.md`.
+15→953 صفاً**، تحقَّق end-to-end فعلي بمحاكاة مباشرة لدالة الدمج.
+
+**🚨 تعميم المنهجية على كل ما بُني هذه الجلسة (بطلب المنسّق)**: فحصتُ 5
+أنظمة بيانات بنفس الشك المباشر — **2 معطَّلان فعلياً**: `sharia_rulings`
+(268 صفاً حياً فقط، يفتقد كل الـ12 حكماً الجديدة + عشرات الإصلاحات
+السابقة، بسبب عطل CHECK constraint حقيقي آخر على `verification_status`
+— أُصلح + طُبِّقت مزامنة كاملة: **268→690 صفاً**) و`quiz_questions`
+(أعلاه). **1 انجراف تافه**: `learning_paths.total_sessions` لـ`aqeedah`
+(57 مُخزَّن مقابل 58 حيّ فعلياً، صُحِّح). **2 سليمان تماماً**:
+`knowledge_relationships` (153، مطابق حرفياً) و`scholars-data.ts` (صفر
+اعتماد DB أصلاً — استيراد ثابت مباشر، لا فجوة ممكنة). تفصيل كامل في
+`CONTINUATION_PLAN.md`.
 
 **تحقّق نهائي سابق (بطلب المنسّق)**: `scripts/audit-all-routes.mjs` عبر
 Playwright ضد `vite preview` فعلي على 236 مساراً (كل صفحة عُدِّلت + كل
@@ -94,7 +104,9 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-51d51fe2...
+21068504...
+21068504  fix(rulings): sharia_rulings verification_status constraint would silently block ALL future syncs
+7d8408a8  docs: توثيق أكبر اكتشاف — 943 سؤال مسابقة لم تصل اللاعبين (عطل 3 طبقات)
 51d51fe2  fix(quiz): 943 vetted questions never reached the live game — 3-layer bug chain found & fixed
 61e75258  docs: توثيق إصلاح buildFeedXml — القناة كانت تَعِد بفتاوى وقرارات ولا تجلبها
 76200fd9  fix(feed): live /api/feed only served lessons, ignoring its own promised فتاوى/قرارات
@@ -103,8 +115,6 @@ majalis-content-fill
 fb17a8ef  docs: تحديث CONTINUATION_PLAN وREADY_FOR_MERGE — 8 مقررات مربوطة + إصلاح انجراف مكتبة
 43149f58  feat(learning): link 8 empty fiqh/seerah/tafseer courses to real books via course_books
 3fc56ccf  fix(library): dedupe منهاج الطالبين + close silent JSON/TS drift in library integrity gate
-5b825501  docs: تحديث CONTINUATION_PLAN وREADY_FOR_MERGE — الأولويتان مكتملتان (أحكام + علماء)
-b3b4da2a  feat(scholars): 12th and final batch — completes 96/96 scholars enriched with sources
 ```
 
 سلسلة commits الجلسات كاملة (الأحدث أولاً):
