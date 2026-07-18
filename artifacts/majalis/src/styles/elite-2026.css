@@ -26951,6 +26951,15 @@ html[data-theme="dark"] .fc-kbd {
   font-weight: 600;
   font-size: 0.68rem;
 }
+.lpd2-book-chip__link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dashed currentColor;
+}
+.lpd2-book-chip__link:hover,
+.lpd2-book-chip__link:focus-visible {
+  color: var(--majalis-emerald, #0E6E52);
+}
 
 /* ── Modules list ── */
 .lpd2-modules { display: grid; gap: 0.6rem; margin-bottom: 1.5rem; }
