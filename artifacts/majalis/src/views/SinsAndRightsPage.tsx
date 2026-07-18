@@ -478,7 +478,7 @@ export default function SinsAndRightsPage() {
             type="button"
             className={`snr-tab${activeTab === tab.key ? " snr-tab--active" : ""}`}
             onClick={() => setActiveTab(tab.key)}
-            aria-selected={activeTab === tab.key}
+            aria-pressed={activeTab === tab.key}
           >
             {tab.label}
           </button>

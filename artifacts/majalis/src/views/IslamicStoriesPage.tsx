@@ -46,7 +46,7 @@ const CATEGORY_LABELS: Category[] = ["الكل", "صحابة", "فتوحات", "
 // ─────────────────── Story Card ───────────────────────────────────────────────
 function StoryCard({ story, onSelect }: { story: IslamicStory; onSelect: () => void }) {
   return (
-    <article
+    <div
       className={`isp-card isp-card--${story.category === "صحابة" ? "companions" : story.category === "فتوحات" ? "conquests" : "history"}`}
       onClick={onSelect}
       onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onSelect()}
@@ -76,7 +76,7 @@ function StoryCard({ story, onSelect }: { story: IslamicStory; onSelect: () => v
       </div>
 
       <span className="isp-card__cta">اقرأ القصة ←</span>
-    </article>
+    </div>
   );
 }
 

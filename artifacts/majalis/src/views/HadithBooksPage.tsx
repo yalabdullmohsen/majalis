@@ -103,7 +103,7 @@ function HadithRow({ h, index }: { h: CdnHadith; index: number }) {
   }
 
   return (
-    <article
+    <div
       className={`hb-hadith-row${expanded ? " hb-hadith-row--expanded" : ""}`}
       onClick={() => setExpanded((x) => !x)}
       onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setExpanded((x) => !x)}
@@ -142,7 +142,7 @@ function HadithRow({ h, index }: { h: CdnHadith; index: number }) {
           </button>
         </div>
       )}
-    </article>
+    </div>
   );
 }
 

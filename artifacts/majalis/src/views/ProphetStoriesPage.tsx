@@ -155,7 +155,7 @@ function ProphetCard({
   const isUlulAzm = ULUL_AZM_SLUGS.includes(prophet.slug);
 
   return (
-    <article
+    <div
       className={`prophet-lux-card${isUlulAzm ? " prophet-lux-card--azm" : ""}`}
       style={{
         "--prophet-color": color,
@@ -211,7 +211,7 @@ function ProphetCard({
 
       {isUlulAzm && <div className="prophet-lux-card__azm-tag">أولو العزم</div>}
       <div className="prophet-lux-card__border" />
-    </article>
+    </div>
   );
 }
 

@@ -235,12 +235,11 @@ export default function PrayerTimesPage() {
 
       {/* ── شريط الصلوات ── */}
       {prayers.length > 0 && (
-        <nav className="pt-prayers" role="list" aria-label="صلوات اليوم">
+        <nav className="pt-prayers" aria-label="صلوات اليوم">
           {prayers.map((p) => (
             <button
               key={p.key}
               type="button"
-              role="listitem"
               className={[
                 "pt-prayer",
                 isNext(p.key)   ? "pt-prayer--next"   : "",

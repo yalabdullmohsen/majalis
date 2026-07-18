@@ -615,7 +615,7 @@ export default function SawmPage() {
         </div>
 
         {/* tabs */}
-        <nav className="sw-tabs" role="tablist" aria-label="أقسام الصيام">
+        <div className="sw-tabs" role="tablist" aria-label="أقسام الصيام">
           {TABS.map((t) => (
             <button
               key={t.id}
@@ -631,7 +631,7 @@ export default function SawmPage() {
               <span className="sw-tab__label">{t.label}</span>
             </button>
           ))}
-        </nav>
+        </div>
       </section>
 
       {/* فضيلة الصيام اليوم */}

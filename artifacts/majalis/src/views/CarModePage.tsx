@@ -159,7 +159,10 @@ export default function CarModePage() {
 
   return (
     <div className="car-mode" dir="rtl">
-      {/* Hidden audio element */}
+      {/* Hidden audio element. لا يوجد <track> لأن هذا تشغيل صوت للدروس بلا نص
+          مرافق متزامن متاح حاليًا؛ البديل الصحيح لمحتوى صوتي فقط هو نص بديل
+          (transcript) لا مسار ترجمة متزامنة — إضافة نص كامل للدروس تتطلب بنية
+          تحتية جديدة (تفريغ صوتي)، خارج نطاق تنظيف الوصولية الحالي. */}
       {audioSrc && (
         <audio
           ref={audioRef}
