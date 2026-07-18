@@ -18,8 +18,21 @@
 (35 حديثاً مكتملاً نصاً) كلها بحالة `in_review`، صفر منشور — الصفحة الحية
 فارغة، لكن هذا تصميم مقصود (بوابة مراجعة عالِم شرعي فعلي صريحة في الكود
 والواجهة)، لم أُغيِّر `review_status`. تفصيل كامل في `CONTINUATION_PLAN.md`
-قسم "جلسة عاشرة". commits `1e42f0d6`→`cca48c58`→`9477d665`→`96ed51a6`،
-كل دفعة اجتازت البوابات الأربع معاً قبل commit، ودُفعت فور نجاحها.
+قسم "جلسة عاشرة". بعدها عولجت 5 مقررات ضحلة أخرى (tafsir-general 1→3،
+fiqh-shafii 1→3، fiqh-hanafi 1→3، fiqh-ibadat 2→3، adab-al-usrah 2→3
+[عنصر عائلي حقيقي هذه المرة])، فبقي 7 مقررات فقط بلا مصدر تحقُّق متاح.
+
+**🚨 بق SEO حقيقي مُصلَح (commit `1a0de25c`)**: فحص منهجي لكل الـ167 ملفاً
+المستدعية لـ`applyPageSeo` كشف صفحتين تُطبِّقان عنوان/JSON-LD عاماً
+موحَّداً (يستبدل عنواناً صحيحاً بعد hydration) بدل بيانات الصفحة الفعلية:
+`LearningPathDetailPage.tsx` (كل الـ14 مساراً تعليمياً — العنوان
+كان حرفياً "مسار تعليمي شرعي" للجميع دون استثناء) و`LessonDetailPage.tsx`
+(3 آليات SEO متنافسة، اثنتان منها معطوبتان/مكرَّرتان أُزيلتا). بقية
+صفحات `*DetailPage.tsx` فُحصت وسليمة. تفصيل كامل في `CONTINUATION_PLAN.md`.
+
+commits الجلسة كاملة: `1e42f0d6`→`cca48c58`→`9477d665`→`96ed51a6`→
+`0b6ed612`→`fb945712`→`5bad68bc`→`1a0de25c`، كل دفعة اجتازت البوابات
+الأربع معاً قبل commit، ودُفعت فور نجاحها.
 
 **المقالة الأصلية الرابعة**: "منازل القلب الثلاث: الصبر والشكر والرضا" —
 تربط 3 مقررات تربية بُنيت هذه الجلسة بمقرر "باب الصبر" في رياض الصالحين،
@@ -296,6 +309,8 @@ majalis-content-fill
 
 ```
 0c9f2c76...
+1a0de25c  fix(seo): stop client-side hydration from overwriting per-page SEO with generic placeholders
+c7f1f722  docs: تحديث بعد تعميق fiqh-ibadat/adab-al-usrah (7 مقررات ضحلة متبقية من 16، كلها مؤجَّلة لعدم مصدر)
 5bad68bc  feat(learning): deepen fiqh-ibadat and adab-al-usrah — 2 items → 3 each
 22f2f891  docs: تحديث بعد تعميق fiqh-shafii/fiqh-hanafi (9 مقررات ضحلة متبقية من 16)
 fb945712  feat(learning): deepen fiqh-shafii and fiqh-hanafi courses — 1 item → 3 each
