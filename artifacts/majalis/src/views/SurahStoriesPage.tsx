@@ -77,6 +77,35 @@ export default function SurahStoriesPage() {
 export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
   const story = getSurahStory(surahNumber >= 1 && surahNumber <= 114 ? surahNumber : 1);
 
+  // اكتُشف 2026-07-18: هذه الصفحة (114 صفحة فردية، محتوى حقيقي ومختلف
+  // تماماً لكل سورة — سبب التسمية، زمان النزول، المحاور، القصص) لم تكن
+  // تستدعي applyPageSeo إطلاقاً، فكانت تعتمد بالكامل على fallback عام
+  // موحَّد من usePageSeo(location) في App.tsx ("قصة سورة | المجلس العلمي"
+  // حرفياً لكل الـ114 صفحة دون استثناء) — نفس عائلة بق LearningPathDetailPage
+  // المُصلَح سابقاً، لكن هنا البيانات متوفرة مزامنةً (getSurahStory محلية
+  // لا async) فلا حاجة لانتظار تحميل، الإصلاح مباشر وبلا مخاطرة تزامن.
+  useEffect(() => {
+    const path = `/quran/surah-stories/${story.number}`;
+    applyPageSeo({
+      path,
+      title: `قصة سورة ${story.name} | المجلس العلمي`,
+      description: `${story.namingReason} — ${story.revelationTime}، ${story.revelationPlace}، ${story.ayahCount} آية. ${story.virtues || ""}`.slice(0, 300),
+      keywords: [story.name, "قصص القرآن", "أسباب النزول", ...story.keywords],
+      ogType: "article",
+      canonicalPath: path,
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: `قصة سورة ${story.name}`,
+          description: story.namingReason,
+          url: `https://www.majlisilm.com${path}`,
+          inLanguage: "ar",
+        },
+      ],
+    });
+  }, [story.number, story.name, story.namingReason, story.revelationTime, story.revelationPlace, story.ayahCount, story.virtues, story.keywords]);
+
   return (
     <div className="page-shell surah-story-detail">
       <PageHeader eyebrow={`سورة ${story.number}`} title={story.name} subtitle={story.revelationPlace} />

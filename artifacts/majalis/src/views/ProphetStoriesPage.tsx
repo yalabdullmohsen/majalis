@@ -920,6 +920,23 @@ export default function ProphetStoriesPage() {
                   ))}
                 </div>
                 {!search && (
+                  <Link href="/prophets/tree" className="prophets-seerah-link">
+                    <div className="prophets-seerah-bridge">
+                      <div className="prophets-seerah-bridge__ornament" aria-hidden="true">
+                        <IslamicStar size={28} color={IVORY} opacity={0.7} />
+                      </div>
+                      <div className="prophets-seerah-bridge__body">
+                        <div className="prophets-seerah-bridge__eyebrow">عرض تفاعلي</div>
+                        <h3 className="prophets-seerah-bridge__title">شجرة أنساب الأنبياء</h3>
+                        <p className="prophets-seerah-bridge__desc">
+                          شاهد صلة النسب بين الأنبياء عليهم السلام من آدم إلى محمد ﷺ في شجرة تفاعلية واحدة.
+                        </p>
+                      </div>
+                      <div className="prophets-seerah-bridge__arrow" aria-hidden="true">←</div>
+                    </div>
+                  </Link>
+                )}
+                {!search && (
                   <Link href="/seerah" className="prophets-seerah-link">
                     <div className="prophets-seerah-bridge">
                       <div className="prophets-seerah-bridge__ornament" aria-hidden="true">

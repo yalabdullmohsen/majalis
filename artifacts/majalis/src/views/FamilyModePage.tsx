@@ -98,7 +98,9 @@ function ParentView({ userId }: { userId: string }) {
     setLoading(false);
   };
 
-  useEffect(() => { loadLinks(); }, [userId]);
+  useEffect(() => {
+    loadLinks().catch(() => setLoading(false));
+  }, [userId]);
 
   const createInvite = async () => {
     setCreating(true);

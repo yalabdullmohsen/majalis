@@ -123,15 +123,17 @@ export default function ResearcherProfilePage() {
 
   useEffect(() => {
     if (!user?.id) return;
-    getResearcherProfile(user.id).then((data) => {
-      if (data) {
-        setProfile(data);
-        if (data.publications && data.publications.length > 0) {
-          setPubInput([...data.publications, ""]);
+    getResearcherProfile(user.id)
+      .then((data) => {
+        if (data) {
+          setProfile(data);
+          if (data.publications && data.publications.length > 0) {
+            setPubInput([...data.publications, ""]);
+          }
         }
-      }
-      setLoading(false);
-    });
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, [user?.id]);
 
   const toggleInterest = (tag: string) => {
