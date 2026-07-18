@@ -3,10 +3,16 @@ import { AlertTriangle, Pencil } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 
 // ── أنواع المحتوى المدعومة ──────────────────────────────────────────────────
+// ملاحظة (2026-07-18): أُزيل "fatwa" من هذا الاتحاد — لم يستدعِه أي مكوّن
+// عبر contentType="fatwa" إطلاقاً (تحقّقتُ بحث شامل قبل الحذف)، وجدول
+// fatwas في DB فارغ تماماً (0 صف)، وقسم /fatwa العام حُذف بالكامل من
+// التطبيق سابقاً (commit 3a995462). بقايا يتيمة من CMS عام قبل الحذف —
+// النطاق الأوسع CmsContentKind في content-types.ts/content-registry.ts
+// تُرك بلا تعديل عمداً (يخدم 14 نوع محتوى آخر حي وفعّال، مخاطرة أعلى من
+// فائدتها لجدول فارغ بلا مستخدم حقيقي — نفس قرار commit dde85da6 سابقاً).
 export type InlineEditContentType =
   | "lesson"
   | "library"
-  | "fatwa"
   | "ruling"
   | "fawaid"
   | "qa"
@@ -39,12 +45,6 @@ const FIELDS: Record<InlineEditContentType, FieldDef[]> = {
     { key: "author", label: "المؤلف", type: "text" },
     { key: "category", label: "التصنيف", type: "text" },
     { key: "description", label: "الوصف", type: "textarea", rows: 5 },
-  ],
-  fatwa: [
-    { key: "title", label: "عنوان الفتوى", type: "text" },
-    { key: "category", label: "التصنيف", type: "text" },
-    { key: "question", label: "السؤال", type: "textarea", rows: 4 },
-    { key: "answer", label: "الجواب", type: "textarea", rows: 6 },
   ],
   ruling: [
     { key: "title", label: "عنوان الحكم", type: "text" },
@@ -95,7 +95,6 @@ const FIELDS: Record<InlineEditContentType, FieldDef[]> = {
 const LABELS: Record<InlineEditContentType, string> = {
   lesson: "الدرس",
   library: "الكتاب",
-  fatwa: "الفتوى",
   ruling: "الحكم الشرعي",
   fawaid: "الفائدة",
   qa: "السؤال والجواب",
@@ -124,11 +123,6 @@ async function saveContent(
       case "library": {
         const m = await import("@/lib/supabase");
         result = await m.adminUpsertLibraryItem(payload);
-        break;
-      }
-      case "fatwa": {
-        const m = await import("@/lib/platform-supabase");
-        result = await m.adminUpsertFatwa(payload);
         break;
       }
       case "ruling": {

@@ -3,23 +3,10 @@ import { logSupabaseError } from "./supabase-config";
 
 const now = () => new Date().toISOString();
 
-// ─── Fatwa Admin ─────────────────────────────────────────────────────────────
-
-export async function adminGetAllFatwas() {
-  const { data, error } = await supabase.from("fatwas").select("*").order("created_at", { ascending: false });
-  if (error) logSupabaseError("adminGetAllFatwas", error);
-  return { data: data || [], error };
-}
-
-export async function adminUpsertFatwa(row: Record<string, unknown>) {
-  const payload = { ...row, updated_at: now() };
-  if (row.id) return await supabase.from("fatwas").update(payload).eq("id", row.id);
-  return await supabase.from("fatwas").insert(payload);
-}
-
-export async function adminDeleteFatwa(id: string) {
-  return await supabase.from("fatwas").delete().eq("id", id);
-}
+// ملاحظة (2026-07-18): دوال إدارة "fatwa" (adminGetAllFatwas/
+// adminUpsertFatwa/adminDeleteFatwa) أُزيلت من هنا — لم يستدعِها أي مكوّن
+// حي إلا مسار ميت واحد في AdminInlineEdit.tsx (case "fatwa" في
+// saveContent) أُزيل بالتزامن. جدول fatwas في DB فارغ تماماً (0 صف).
 
 // ─── Rulings Admin ───────────────────────────────────────────────────────────
 
@@ -76,7 +63,7 @@ export async function adminDeleteUpdate(id: string) {
 }
 
 export async function adminSetPlatformContentStatus(
-  table: "fiqh_council_decisions" | "fatwas" | "sharia_rulings" | "annual_courses" | "platform_updates",
+  table: "fiqh_council_decisions" | "sharia_rulings" | "annual_courses" | "platform_updates",
   id: string,
   status: string,
 ) {
