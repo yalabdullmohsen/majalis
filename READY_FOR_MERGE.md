@@ -6,7 +6,12 @@
 > هذا الملف يوثّق فقط أن البوابات الفنية (typecheck/lint/tests/build)
 > اجتازت معًا في دفعة واحدة نهائية، كما طلب المالك.
 
-## ▶️ حالة الجلسة — ملخص موحَّد (بعد 34+ دفعة، آخر تحديث 2026-07-18)
+## ▶️ حالة الجلسة — ملخص موحَّد (بعد 35+ دفعة، آخر تحديث 2026-07-18)
+
+**تكملة أخيرة**: عُمِّق "السيرة النبوية" العام (1→5: بدء الوحي وغار حراء،
+الهجرة إلى الحبشة، عام الحزن ورحلة الطائف، بيعة العقبة الثانية — أحداث
+مكية مبكرة مختارة عمداً لتفادي التداخل مع "الغزوات الكبرى" المدنية).
+seerah total_sessions: 34→38. commit `239edf6e`. 11 مقرراً ضحلاً متبقٍّ.
 
 **تكملتان أخيرتان (قائمة المقررات السطحية المتبقية، بطلب المنسّق)**:
 عُمِّق "مصطلح الحديث" العام (4 مصطلحات تصنيفية جديدة: مرفوع/موقوف/مقطوع،
@@ -171,7 +176,8 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-139b5228...
+239edf6e...
+239edf6e  feat(learning): deepen seerah-general course — 1 item → 5 (4 early Meccan events)
 139b5228  feat(learning): deepen nawaqid-islam course — 2 items → 6 (10 nullifiers, grouped)
 6bda7e0e  feat(learning): deepen mustalah-hadith-general course — 1 item → 5 (4 terminology types)
 d50e988f  feat(learning): deepen bulugh-maram course — 1 general item → 5 (4 ahkam hadiths)
