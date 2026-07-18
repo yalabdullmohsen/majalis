@@ -42,11 +42,19 @@ const TYPE_LABEL: Record<KnowledgeSourceType, string> = {
 // مرة (كان الجدول فارغاً كلياً 0 صف قبل هذه الجلسة فلم يُختبَر قط).
 // المسار الصحيح هو صفحة الملف الشخصي `/scholars/:id` التي تستهلك نفس
 // مُعرِّف scholars-data.ts مباشرة (ScholarProfilePage.tsx عبر findScholarById).
+// ملاحظة ثالثة (2026-07-18): TYPE_HREF.fawaid كان يتجاهل `id` كلياً
+// ويعيد `/fawaid` العامة دوماً — نفس عائلة عطل fatwa/scholar أعلاه (رابط
+// يُبنى لكن لا يوصل للعنصر المحدَّد). اكتُشف أثناء إضافة أول علاقات
+// fawaid↔book لـknowledge_relationships. الإصلاح: `FaidahCard.tsx` يضع
+// `id={item.id}` على جذر كل بطاقة فعلياً (تحقَّقتُ مباشرة)، ولا حدّ/تقسيم
+// صفحات يمنع عرض كل العناصر دفعة واحدة في الحالة الافتراضية (بلا فلترة) —
+// فرابط hash قياسي (`#seed-fawaid-N`) يعمل عبر تمرير المتصفح الطبيعي
+// بلا حاجة لمنطق JS إضافي، بنفس نمط إصلاح ArbaeenNawawiPage سابقاً.
 const TYPE_HREF: Record<KnowledgeSourceType, (id: string) => string> = {
   scholar:  (id) => `/scholars/${id}`,
   lesson:   (id) => `/lessons/${id}`,
   book:     (id) => `/library/${id}`,
-  fawaid:   ()   => `/fawaid`,
+  fawaid:   (id) => `/fawaid#${id}`,
   question: ()   => `/qa`,
 };
 
