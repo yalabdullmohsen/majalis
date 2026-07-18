@@ -226,6 +226,19 @@ html[data-theme="dark"] .rai-detecting__title { color: #E5F0EC; }
 .rai-progress-bar { height: 4px; background: rgba(14,110,82,.15); border-radius: 4px; overflow: hidden; margin: .5rem 0 1rem; }
 .rai-progress-bar__fill { height: 100%; background: var(--rai-emerald); transition: width .25s ease; }
 
+.rai-page-indicator {
+  text-align: center;
+  font-size: .8rem;
+  color: #6B7A74;
+  margin: -.4rem 0 .8rem;
+}
+.rai-page-indicator__of { opacity: .75; }
+html[data-theme="dark"] .rai-page-indicator { color: #9FB3AC; }
+
+/* نقاط ربط غير مرئية (بلا أبعاد) لتمرير الصفحة الجديدة تلقائيًا إلى مركز
+   العرض — انظر useEffect الخاص بـcurrentPage في RecitationTestPage.tsx. */
+.rai-page-marker, .imr-page-marker { display: inline-block; height: 0; width: 0; overflow: hidden; }
+
 .rai-hint-banner {
   max-width: 600px;
   margin: 0 auto 1rem;

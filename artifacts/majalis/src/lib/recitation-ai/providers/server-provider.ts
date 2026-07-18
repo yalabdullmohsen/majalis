@@ -29,8 +29,15 @@
  */
 import type { ASRSession, AudioChunk, FinalResult, PartialResult, QuranASRProvider, RecitationConfig } from "../asr-provider";
 import { ASRProviderUnavailableError } from "../asr-provider";
+import { isNative } from "../../capacitor-utils";
+import { SITE_URL } from "../../site-config";
 
-const ENDPOINT = "/api/recitation-transcribe";
+// تطبيق iOS/Android الأصلي (Capacitor) يُحمِّل الواجهة من ملفات مُجمَّعة
+// محليًا (capacitor://localhost أو https://localhost) لا من موقعنا —
+// مسار نسبي "/api/..." كان سيُوجَّه هناك محليًا (لا خادم فعلي)، فيفشل هذا
+// المزوّد صامتًا في التطبيق الأصلي تحديدًا رغم عمله في متصفح الويب. لذا
+// نبني رابطًا مطلقًا لدومين الإنتاج الحقيقي فقط حين نعمل داخل Capacitor.
+const ENDPOINT = isNative ? `${SITE_URL}/api/recitation-transcribe` : "/api/recitation-transcribe";
 const SEGMENT_MS = 3000;
 
 type Active = {

@@ -141,6 +141,10 @@ function RecitationTestPageInner() {
   const engineRef = useRef<VerseAlignmentEngine | null>(null);
   const providerRef = useRef<QuranASRProvider | null>(null);
   const asrSessionRef = useRef<ASRSession | null>(null);
+  /** آخر صفحة مصحف مُدينيّة مررنا بها فعليًا داخل الجلسة الحالية (لا رقم
+   * الصفحة المختارة كنطاق) — يمنع تكرار التمرير التلقائي لنفس الصفحة،
+   * ويُصفَّر عند كل بدء جلسة جديدة كي لا يُحمَل رقم صفحة من جلسة سابقة. */
+  const lastScrolledPageRef = useRef<number | null>(null);
   const unsubRef = useRef<(() => void) | null>(null);
   const sessionStartRef = useRef<number>(0);
   /** يُلغي جلسة اكتشاف "التسميع الحر" الجارية — يُضبَط داخل startSessionFreeform فقط. */
@@ -339,6 +343,7 @@ function RecitationTestPageInner() {
       setPaused(false);
       setCorrectionCard(null);
       setTeacherHold(false);
+      lastScrolledPageRef.current = null;
       activeModeRef.current = mode;
       hintsUsedRef.current = 0;
       setHintLevel(0);
@@ -496,6 +501,7 @@ function RecitationTestPageInner() {
         setPaused(false);
         setCorrectionCard(null);
         setTeacherHold(false);
+        lastScrolledPageRef.current = null;
         activeModeRef.current = "freeform";
         hintsUsedRef.current = 0;
         setHintLevel(0);
@@ -850,6 +856,51 @@ function RecitationTestPageInner() {
     () => referenceWords.map((w) => ({ word: w, state: wordStates.get(`${w.surah}:${w.ayah}:${w.wordIndex}`) ?? "hidden" })),
     [referenceWords, wordStates],
   );
+
+  // صفحات مصحف المدينة الموزَّعة على النطاق الحالي (قد تتجاوز صفحة واحدة
+  // في "بالجزء"/"بالحزب"/نطاق آية-لآية طويل) — تُستخدَم للانتقال التلقائي.
+  const distinctPages = useMemo(() => {
+    const set = new Set<number>();
+    for (const w of referenceWords) set.add(w.page);
+    return [...set].sort((a, b) => a - b);
+  }, [referenceWords]);
+  const isMultiPageRange = distinctPages.length > 1;
+
+  // "الموضع الحالي" الحقيقي عبر كل الأوضاع (لا cursorIdx الخاص بالتلميح
+  // في وضع "assisted" فقط): أول كلمة لم تُحسَم بعد، أو آخر كلمة إن اكتملت
+  // الجلسة بالكامل. صفحتها هي الصفحة التي يجب أن تكون مرئية الآن.
+  const currentWordIndex = useMemo(() => {
+    const idx = referenceWords.findIndex(
+      (w) => (wordStates.get(`${w.surah}:${w.ayah}:${w.wordIndex}`) ?? "hidden") === "hidden",
+    );
+    return idx === -1 ? referenceWords.length - 1 : idx;
+  }, [referenceWords, wordStates]);
+  const currentPage = referenceWords[currentWordIndex]?.page ?? null;
+
+  // فهارس الكلمات التي تبدأ عندها صفحة مصحف مدينية جديدة — تُستخدَم كنقاط
+  // ربط (id) للتمرير التلقائي، في كلا وضعي العرض (المصحف التفاعلي والنص
+  // الخطّي البسيط)، دون تغيير ترتيب الكلمات أو نصها بأي شكل.
+  const pageStartIndices = useMemo(() => {
+    const set = new Set<number>();
+    let last: number | null = null;
+    referenceWords.forEach((w, i) => {
+      if (w.page !== last) { set.add(i); last = w.page; }
+    });
+    return set;
+  }, [referenceWords]);
+
+  // انتقال تلقائي بين صفحات مصحف المدينة أثناء الاستماع لنطاق متعدد
+  // الصفحات: يمرِّر العرض إلى علامة بداية الصفحة الجديدة فور تجاوزها —
+  // بلا ذلك يبقى المستخدم يمرِّر يدويًا لمتابعة موضعه في نطاق طويل
+  // (جزء/حزب كامل مثلًا) بينما التركيز الحقيقي على الاستماع لا الشاشة.
+  useEffect(() => {
+    if (!isMultiPageRange || phase !== "session" || currentPage == null) return;
+    if (lastScrolledPageRef.current === currentPage) return;
+    lastScrolledPageRef.current = currentPage;
+    if (lastScrolledPageRef.current === distinctPages[0]) return; // الصفحة الأولى مرئية أصلًا عند بدء الجلسة
+    const el = document.getElementById(`rai-page-${currentPage}`);
+    el?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [currentPage, isMultiPageRange, phase, distinctPages]);
 
   const correctCount = liveEvents.filter((e) => e.kind === "correct").length;
   const errorEvents = liveEvents.filter((e): e is Extract<AlignmentEvent, { kind: "error" }> => e.kind === "error");
@@ -1282,6 +1333,13 @@ function RecitationTestPageInner() {
             <div className="rai-progress-bar__fill" style={{ width: `${referenceWords.length ? (cursorIdx / referenceWords.length) * 100 : 0}%` }} />
           </div>
 
+          {isMultiPageRange && currentPage != null && (
+            <p className="rai-page-indicator" role="status" aria-live="polite">
+              الصفحة {currentPage}
+              <span className="rai-page-indicator__of"> — {distinctPages.indexOf(currentPage) + 1} من {distinctPages.length}</span>
+            </p>
+          )}
+
           {hintText && (
             <p className="rai-hint-banner" role="status">
               تلميح ({hintLevel === 1 ? "أول حرف" : hintLevel === 2 ? "الكلمة" : "الآية كاملة"}): <bdi>{hintText}</bdi>
@@ -1338,6 +1396,9 @@ function RecitationTestPageInner() {
                 const showText = mode !== "full_hide" || state !== "hidden";
                 return (
                   <Fragment key={i}>
+                    {isMultiPageRange && pageStartIndices.has(i) && (
+                      <span id={`rai-page-${w.page}`} className="rai-page-marker" aria-hidden="true" />
+                    )}
                     <span className={cls}>{showText ? w.raw : "ــــ"}</span>
                     {i < referenceWords.length - 1 ? " " : ""}
                   </Fragment>

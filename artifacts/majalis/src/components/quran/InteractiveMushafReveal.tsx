@@ -64,6 +64,22 @@ export function InteractiveMushafReveal({ words, revealGranularity, justComplete
     return [...map.entries()];
   }, [words]);
 
+  // فهارس بداية كل صفحة مصحف مدينية جديدة عبر كامل تدفّق الكلمات — نقاط
+  // ربط (id) للتمرير التلقائي بين الصفحات في نطاقات متعددة الصفحات
+  // (RecitationTestPage.tsx)، لا تُغيِّر شيئًا في العرض حين تكون الصفحة
+  // واحدة (نطاق قصير داخل صفحة واحدة، الحالة الأشيع).
+  const pageStartKeys = useMemo(() => {
+    const set = new Set<string>();
+    let last: number | null = null;
+    for (const w of words) {
+      if (w.word.page !== last) {
+        set.add(`${w.word.surah}:${w.word.ayah}:${w.word.wordIndex}`);
+        last = w.word.page;
+      }
+    }
+    return set;
+  }, [words]);
+
   return (
     <div className="imr-page" dir="rtl" role="group" aria-label="صفحة المصحف التفاعلية">
       {byAyah.map(([ayahNum, ayahWords]) => {
@@ -74,8 +90,13 @@ export function InteractiveMushafReveal({ words, revealGranularity, justComplete
             className={`imr-ayah ${ayahRecited ? "imr-ayah--recited" : ""}`}
             key={ayahNum}
           >
-            {ayahWords.map((w, idx) => (
-              <Fragment key={`${w.word.surah}:${w.word.ayah}:${w.word.wordIndex}`}>
+            {ayahWords.map((w, idx) => {
+              const wordKey = `${w.word.surah}:${w.word.ayah}:${w.word.wordIndex}`;
+              return (
+              <Fragment key={wordKey}>
+                {pageStartKeys.has(wordKey) && (
+                  <span id={`rai-page-${w.word.page}`} className="imr-page-marker" aria-hidden="true" />
+                )}
                 <span
                   className={[
                     "imr-word",
@@ -93,7 +114,8 @@ export function InteractiveMushafReveal({ words, revealGranularity, justComplete
                 </span>
                 {idx < ayahWords.length - 1 ? " " : ""}
               </Fragment>
-            ))}
+              );
+            })}
             <span
               className={`imr-ayah-mark ${justCompletedAyah === ayahNum ? "imr-ayah-mark--glow" : ""}`}
               aria-label={`نهاية الآية ${ayahNum}`}

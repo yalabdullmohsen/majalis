@@ -26,6 +26,30 @@ const GROQ_TRANSCRIBE_URL = "https://api.groq.com/openai/v1/audio/transcriptions
 const GROQ_MODEL = "whisper-large-v3";
 const MAX_AUDIO_BYTES = 8 * 1024 * 1024; // ~8MB — مقطع قصير (2-4 ثوانٍ) لا يقترب من هذا الحد إطلاقًا؛ سقف أمان فقط
 
+// تطبيق iOS/Android الأصلي (Capacitor) يُحمِّل الواجهة من ملفات مُجمَّعة
+// محليًا لا من موقعنا (لا server.url مضبوط في capacitor.config.ts) —
+// أصلها ليس https://www.majlisilm.com بل هذه المخططات المحلية، فطلب
+// server-provider.ts (الذي يبني رابطًا مطلقًا للدومين الحقيقي حين يعمل
+// أصليًا) يُعامَل كطلب عابر للأصول (CORS) يحتاج إذنًا صريحًا هنا — بلا
+// هذا، تفشل الميزة صامتًا في التطبيق الأصلي فقط رغم عملها في متصفح الويب.
+// هذه النقطة بلا جلسة/كوكيز (بروكسي عديم الحالة لـGroq)، فالسماح بهذه
+// الأصول المحدودة (لا "*") آمن.
+const ALLOWED_ORIGINS = new Set([
+  "capacitor://localhost", // iOS
+  "https://localhost", // Android (androidScheme: "https")
+  "http://localhost", // احتياط بيئة تطوير محلية للتطبيق الأصلي
+]);
+
+function applyCors(req, res) {
+  const origin = String(req.headers?.origin || "");
+  if (ALLOWED_ORIGINS.has(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Vary", "Origin");
+  }
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+}
+
 function getApiKey() {
   return String(process.env.GROQ_API_KEY || "").trim();
 }
@@ -44,6 +68,7 @@ async function parseJsonBody(req) {
 }
 
 export default async function handler(req, res) {
+  applyCors(req, res);
   if (req.method === "OPTIONS") { res.statusCode = 204; res.end(); return; }
 
   if (req.method === "GET" || req.method === "HEAD") {
