@@ -11,7 +11,7 @@ import { overallSessionConfidence } from "@/lib/recitation-ai/confidence-scorer"
 import { selectBestProvider } from "@/lib/recitation-ai/provider-registry";
 import type { QuranASRProvider, ASRSession } from "@/lib/recitation-ai/asr-provider";
 import { checkTajweedAvailability } from "@/lib/recitation-ai/precision-level";
-import { saveRecitationSession } from "@/lib/recitation-ai/recitation-session-service";
+import { saveRecitationSession, getRecentRecitationSessions } from "@/lib/recitation-ai/recitation-session-service";
 import { addRecitationReviewItem, getDueRecitationReviews, type RecitationReviewItem } from "@/lib/recitation-ai/recitation-review-service";
 import { loadRecitationSettings, saveRecitationSettings } from "@/lib/recitation-ai/recitation-settings-service";
 import { InteractiveMushafReveal, type WordRevealInfo } from "@/components/quran/InteractiveMushafReveal";
@@ -45,6 +45,11 @@ function RecitationTestPageInner() {
   const [revealGranularity, setRevealGranularity] = useState<"word" | "ayah">("word");
   const [tajweedAvailable, setTajweedAvailable] = useState<{ available: boolean; reason?: string } | null>(null);
   const [dueReviews, setDueReviews] = useState<RecitationReviewItem[]>([]);
+  // نطاق آيات مخصَّص (القسم 1: "من آية إلى آية" بدل السورة كاملة دومًا)
+  const [rangeMode, setRangeMode] = useState<"surah" | "ayahRange">("surah");
+  const [ayahFrom, setAyahFrom] = useState(1);
+  const [ayahTo, setAyahTo] = useState(7);
+  const [recentSession, setRecentSession] = useState<{ surahNumber: number; ayahFrom: number | null; ayahTo: number | null; accuracyPct: number | null } | null>(null);
 
   // جلسة
   const [referenceWords, setReferenceWords] = useState<ReferenceWord[]>([]);
@@ -77,6 +82,10 @@ function RecitationTestPageInner() {
   // mode داخل attachAsrSession (لا تُعاد بناؤه عند تغيّر mode فتبقى قيمة
   // قديمة)؛ يُضبَط مرة واحدة عند بدء كل جلسة ويُقرَأ من هنا دومًا.
   const activeModeRef = useRef<RecitationMode>("interactive_mushaf");
+  // "اختبار المعلّم" (القسم 2، الوضع 5): زمن الاسترجاع = من بدء الاستماع
+  // حتى أول كلمة صحيحة — يُعرَض في التقرير لهذا الوضع تحديدًا فقط.
+  const recallStartAtRef = useRef<number | null>(null);
+  const [recallMs, setRecallMs] = useState<number | null>(null);
 
   useEffect(() => {
     applyPageSeo({
@@ -97,6 +106,13 @@ function RecitationTestPageInner() {
   }, [search]);
 
   const surahs = useMemo(() => getSurahList(), []);
+  const currentSurahAyahCount = surahs.find((s) => s.number === surahNumber)?.ayahs ?? 7;
+
+  // عند تغيير السورة، اضبط نطاق الآية الافتراضي (كامل السورة الجديدة)
+  useEffect(() => {
+    setAyahFrom(1);
+    setAyahTo(currentSurahAyahCount);
+  }, [surahNumber]);
 
   // تحميل آخر إعدادات محفوظة للمستخدم (القسم 1) — لا تأثير لزائر مجهول
   // (بلا حساب)، يبقى ببساطة على الإعدادات الافتراضية المحلية.
@@ -129,6 +145,30 @@ function RecitationTestPageInner() {
         if (!cancelled) setDueReviews(items);
       } catch {
         // تجاهل — لا حاجة لإفشال الصفحة كاملة لخطأ في تحميل قائمة المراجعة
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [user?.id]);
+
+  // "متابعة من آخر جلسة" / "مراجعة آخر محفوظ" (القسم 1) — آخر جلسة
+  // مكتملة للمستخدم، تُعرض كاختصار سريع لإعادة نفس النطاق.
+  useEffect(() => {
+    if (!user?.id) { setRecentSession(null); return; }
+    let cancelled = false;
+    (async () => {
+      try {
+        const sessions = await getRecentRecitationSessions(user.id, 1);
+        const last = sessions[0];
+        if (!cancelled && last?.surah_number) {
+          setRecentSession({
+            surahNumber: last.surah_number,
+            ayahFrom: last.ayah_from,
+            ayahTo: last.ayah_to,
+            accuracyPct: last.accuracy_pct,
+          });
+        }
+      } catch {
+        // تجاهل — لا حاجة لإفشال الصفحة كاملة
       }
     })();
     return () => { cancelled = true; };
@@ -176,11 +216,23 @@ function RecitationTestPageInner() {
     }
   }, [precisionLevel]);
 
-  /** ينطلق منها كل من startSession (سورة كاملة) وretryAyah (آية واحدة، من شاشة التقرير). */
-  const startSessionWithWords = useCallback(async (words: ReferenceWord[]) => {
+  /** ينطلق منها كل من startSession (سورة كاملة/نطاق) وretryAyah ("مراجعة اليوم" و"إعادة اختبار هذه الآية"). */
+  const startSessionWithWords = useCallback(async (wordsIn: ReferenceWord[]) => {
     setPhase("loading");
     setErrorMsg(null);
     try {
+      // "اختبار المعلّم" (القسم 2، الوضع 5): يبدأ من آية عشوائية داخل
+      // النطاق المُختار بدل أوله دومًا — يقيس قدرة الاسترجاع الفعلية لا
+      // مجرد بدء التلاوة من حفظ معروف بالترتيب.
+      let words = wordsIn;
+      if (mode === "teacher_test") {
+        const uniqueAyahs = [...new Set(wordsIn.map((w) => w.ayah))];
+        if (uniqueAyahs.length > 1) {
+          const randomAyah = uniqueAyahs[Math.floor(Math.random() * (uniqueAyahs.length - 1))];
+          words = wordsIn.filter((w) => w.ayah >= randomAyah);
+        }
+      }
+
       setReferenceWords(words);
       setWordStates(new Map(words.map((w) => [`${w.surah}:${w.ayah}:${w.wordIndex}`, "hidden" as const])));
       setCursorIdx(0);
@@ -190,6 +242,8 @@ function RecitationTestPageInner() {
       activeModeRef.current = mode;
       hintsUsedRef.current = 0;
       setHintLevel(0);
+      recallStartAtRef.current = mode === "teacher_test" ? Date.now() : null;
+      setRecallMs(null);
 
       const selection = await selectBestProvider(navigator.onLine);
       if (!selection.provider) {
@@ -228,13 +282,16 @@ function RecitationTestPageInner() {
     setPhase("loading");
     try {
       const detail = await fetchSurahDetail(surahNumber);
-      const words = buildReferenceWords(surahNumber, detail.ayahs);
+      const ayahs = rangeMode === "ayahRange"
+        ? detail.ayahs.filter((a) => a.numberInSurah >= ayahFrom && a.numberInSurah <= ayahTo)
+        : detail.ayahs;
+      const words = buildReferenceWords(surahNumber, ayahs);
       await startSessionWithWords(words);
     } catch (e) {
       setErrorMsg(e instanceof Error ? e.message : "تعذّر بدء الجلسة");
       setPhase("error");
     }
-  }, [surahNumber, startSessionWithWords, user?.id, mode, precisionLevel, alertLevel, revealGranularity]);
+  }, [surahNumber, startSessionWithWords, user?.id, mode, precisionLevel, alertLevel, revealGranularity, rangeMode, ayahFrom, ayahTo]);
 
   /** "إعادة اختبار هذه الآية فورًا" — القسم 9. يبني كلمات مرجعية لآية واحدة فقط من نفس السورة. */
   /** يبني جلسة بنطاق آيات محدَّد من سورة واحدة — يُستخدَم لكل من "إعادة اختبار هذه الآية" و"مراجعة اليوم" (القسم 10). */
@@ -302,6 +359,16 @@ function RecitationTestPageInner() {
       }
       return next;
     });
+
+    // زمن الاسترجاع لوضع "اختبار المعلّم" — يُسجَّل مرة واحدة فقط، عند
+    // أول كلمة صحيحة بعد بدء الجلسة من الموضع العشوائي. بلا أي استدعاء
+    // setState متسابق (خارج مُحدِّث setWordStates تمامًا، درسٌ من خلل
+    // hintLevel السابق أعلاه).
+    if (recallStartAtRef.current !== null && events.some((e) => e.kind === "correct")) {
+      setRecallMs(Date.now() - recallStartAtRef.current);
+      recallStartAtRef.current = null;
+    }
+
     if (engineRef.current) setCursorIdx(engineRef.current.progress.cursor);
   }, []);
 
@@ -335,10 +402,19 @@ function RecitationTestPageInner() {
       const durationSeconds = Math.round((Date.now() - sessionStartRef.current) / 1000);
       const confidences = events.filter((e) => e.kind !== "ayah_complete").map((e) => (e as { confidence: number }).confidence);
 
+      // النطاق الفعلي المُسمَّع (لا الاختيار الأصلي فقط) — يهم خصوصًا في
+      // وضع "اختبار المعلّم" حيث يبدأ النطاق الفعلي من آية عشوائية.
+      const sessionAyahs = referenceWords.map((w) => w.ayah);
+      const actualAyahFrom = sessionAyahs.length ? Math.min(...sessionAyahs) : ayahFrom;
+      const actualAyahTo = sessionAyahs.length ? Math.max(...sessionAyahs) : ayahTo;
+      const isWholeSurah = rangeMode === "surah" && mode !== "teacher_test";
+
       await saveRecitationSession(
         user.id,
         {
-          range: { rangeType: "surah", surahNumber },
+          range: isWholeSurah
+            ? { rangeType: "surah", surahNumber }
+            : { rangeType: "ayah_range", surahNumber, ayahFrom: actualAyahFrom, ayahTo: actualAyahTo },
           mode,
           precisionLevel,
           providerId: providerRef.current?.id ?? "unknown",
@@ -359,7 +435,7 @@ function RecitationTestPageInner() {
         await addRecitationReviewItem(user.id, surahNumber, ayah, ayah);
       }
     },
-    [user?.id, surahNumber, mode, precisionLevel, alertLevel, referenceWords],
+    [user?.id, surahNumber, mode, precisionLevel, alertLevel, referenceWords, rangeMode, ayahFrom, ayahTo],
   );
 
   useEffect(() => {
@@ -408,6 +484,28 @@ function RecitationTestPageInner() {
 
         {errorMsg && <p className="rai-tajweed-disabled-note" style={{ maxWidth: 720, margin: "0 auto 1rem" }}>{errorMsg}</p>}
 
+        {recentSession && (
+          <div className="rai-setup" style={{ marginBottom: "1.25rem" }}>
+            <div className="rai-setup__group">
+              <span className="rai-setup__label">متابعة من آخر جلسة</span>
+              <button
+                type="button"
+                className="rai-choice"
+                onClick={() => void startSessionForAyahRange(
+                  recentSession.surahNumber,
+                  recentSession.ayahFrom ?? 1,
+                  recentSession.ayahTo ?? (surahs.find((s) => s.number === recentSession.surahNumber)?.ayahs ?? 1),
+                )}
+              >
+                {surahs.find((s) => s.number === recentSession.surahNumber)?.name ?? `سورة ${recentSession.surahNumber}`}
+                <span className="rai-choice__hint">
+                  {recentSession.accuracyPct !== null ? `آخر نسبة إتقان: ${Math.round(recentSession.accuracyPct)}%` : "استكمل نفس النطاق"}
+                </span>
+              </button>
+            </div>
+          </div>
+        )}
+
         {dueReviews.length > 0 && (
           <div className="rai-setup" style={{ marginBottom: "1.25rem" }}>
             <div className="rai-setup__group">
@@ -437,6 +535,36 @@ function RecitationTestPageInner() {
                 <option key={s.number} value={s.number}>{s.number}. {s.name} ({s.ayahs} آية)</option>
               ))}
             </select>
+          </div>
+
+          <div className="rai-setup__group">
+            <span className="rai-setup__label">النطاق</span>
+            <div className="rai-choice-grid">
+              <button type="button" className={`rai-choice ${rangeMode === "surah" ? "rai-choice--active" : ""}`} onClick={() => setRangeMode("surah")}>
+                السورة كاملة
+              </button>
+              <button type="button" className={`rai-choice ${rangeMode === "ayahRange" ? "rai-choice--active" : ""}`} onClick={() => setRangeMode("ayahRange")}>
+                من آية إلى آية
+              </button>
+            </div>
+            {rangeMode === "ayahRange" && (
+              <div className="rai-range-inputs" style={{ display: "flex", gap: ".6rem", marginTop: ".6rem" }}>
+                <label style={{ flex: 1 }}>
+                  <span className="rai-choice__hint">من آية</span>
+                  <input
+                    type="number" min={1} max={currentSurahAyahCount} value={ayahFrom}
+                    onChange={(e) => setAyahFrom(Math.min(Number(e.target.value) || 1, ayahTo))}
+                  />
+                </label>
+                <label style={{ flex: 1 }}>
+                  <span className="rai-choice__hint">إلى آية</span>
+                  <input
+                    type="number" min={ayahFrom} max={currentSurahAyahCount} value={ayahTo}
+                    onChange={(e) => setAyahTo(Math.max(Number(e.target.value) || ayahFrom, ayahFrom))}
+                  />
+                </label>
+              </div>
+            )}
           </div>
 
           <div className="rai-setup__group">
@@ -633,6 +761,9 @@ function RecitationTestPageInner() {
           <div className="rai-report__stat"><span className="rai-report__stat-val">{errorEvents.length}</span><span className="rai-report__stat-lbl">ملاحظة</span></div>
           <div className="rai-report__stat"><span className="rai-report__stat-val">{new Set(referenceWords.map((w) => w.ayah)).size}</span><span className="rai-report__stat-lbl">آية</span></div>
           <div className="rai-report__stat"><span className="rai-report__stat-val">{sessionConfidence}%</span><span className="rai-report__stat-lbl">ثقة التحليل</span></div>
+          {mode === "teacher_test" && recallMs !== null && (
+            <div className="rai-report__stat"><span className="rai-report__stat-val">{(recallMs / 1000).toFixed(1)}ث</span><span className="rai-report__stat-lbl">زمن الاسترجاع</span></div>
+          )}
         </div>
 
         {bestStreak > 0 && (
