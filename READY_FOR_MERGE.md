@@ -317,6 +317,10 @@ majalis-content-fill
 
 ```
 0c9f2c76...
+961a9dcb  feat(sitemap): add fiqh-council sessions (12, fallback seed content) via static JSON mirror
+b580c27a  docs: تصحيح توصيف fiqh_council_sessions — يعمل بمحتوى ثابت لا "معطَّل فعلياً"
+a9c86f39  docs: تدقيق المنسّق المستقل لشذوذي sitemap.xml/fiqh_council_sessions
+faf1a783  docs: تحديث بعد إضافة 5 أنواع محتوى ناقصة من sitemap.xml + رصد جدول fiqh_council_sessions المفقود
 6a799b44  fix(sitemap): 5 more real content types with detail pages missing from live sitemap.xml
 51654632  docs: تحديث بعد تنظيف كود /fatwa الميت في sitemap-builder.mjs
 ae1fe6e2  chore(sitemap): remove dead /fatwa/:slug entries from buildSitemapXml

@@ -29,7 +29,7 @@
 > مجدداً في استئناف قادم — أضف فقط قسم جلسة جديد أسفله إن استؤنف العمل،
 > وحدِّث الأرقام في هذا القسم الموحَّد.
 
-**آخر commit مدفوع فعلياً**: `6a799b44` (بعد `51654632`←`ae1fe6e2`←`0a9d3e8e`←`2e2e43a1`←`4b66645d`←`1a0de25c`←`c7f1f722`←`5bad68bc`←`22f2f891`←`fb945712`←`3f8edc95`←`0b6ed612`←`183f2e95`←`96ed51a6`←`9477d665`←`cca48c58`←
+**آخر commit مدفوع فعلياً**: `961a9dcb` (بعد `b580c27a`←`a9c86f39`←`faf1a783`←`6a799b44`←`51654632`←`ae1fe6e2`←`0a9d3e8e`←`2e2e43a1`←`4b66645d`←`1a0de25c`←`c7f1f722`←`5bad68bc`←`22f2f891`←`fb945712`←`3f8edc95`←`0b6ed612`←`183f2e95`←`96ed51a6`←`9477d665`←`cca48c58`←
 `1e42f0d6`←`c575ea42`←`0c9f2c76`←`218f6547`←`2c3eb274`←`8e0e2d14`←
 `b3e66c12`←`49eee100`←`a06ba3d1`←`48286977`←`68344bc1`←`967f14c4`←
 `d3c326b4`←`135d5ddd`←`5d3eb8cc`←`dfa7df67`←`30a3c8fe`←`8009bab8`←
@@ -223,13 +223,16 @@ does not exist`، تحقَّقتُ مباشرة عبر استعلام فاشل،
 معطَّلة فعلياً** كما ذكرتُ أولاً — `fiqh-council-sessions-service.ts`
 مصمَّم بعناية مسبقاً لهذا السيناريو تحديداً (`isMissingTableError()`
 يلتقط أخطاء `does not exist`/`42P01` صراحةً ويرجع تلقائياً لبيانات ثابتة
-من `fiqh-sessions-seed.ts`، 13 جلسة `published`+`verified`). فالصفحة
-تعمل فعلياً للزوار لكن بمحتوى ثابت (seed) لا حي — **فرصة تحسين إضافية
-غير مُنفَّذة بعد**: يمكن إضافة روابط هذه الجلسات الـ13 لـsitemap.xml
-بنفس نمط `loadStaticCatalog()` المُستخدَم لـscholars/library، لكنه يحتاج
-تحويل `fiqh-sessions-seed.ts` (ملف `.ts` بمصفوفة كائنات) لصيغة يقرأها
-`.mjs` وقت التشغيل بأمان (JSON مرآة أو ما شابه) — مؤجَّل لجلسة قادمة
-تفادياً لمخاطرة غير محسوبة الوقت المتبقي لهذه الدفعة.
+من `fiqh-sessions-seed.ts`، 12 جلسة `published`+`verified`). فالصفحة
+تعمل فعلياً للزوار لكن بمحتوى ثابت (seed) لا حي.
+
+**✅ الفرصة نُفِّذت (commit `961a9dcb`)**: أُضيف `scripts/regen-fiqh-
+sessions-json.mjs` (نفس نمط `regen-scholars-list-json.mjs` الناجح) يولِّد
+`src/data/fiqh-sessions-list.json` (slug+updated_at فقط) من
+`fiqh-sessions-seed.ts`، ويُقرأ في `sitemap-builder.mjs` عبر
+`loadStaticCatalog()` الموجودة أصلاً (بلا تغيير بنية التحميل). تحقَّق
+مباشر بتشغيل `buildSitemapXml()` فعلياً: أرجع 12 رابط
+`/fiqh-council/sessions/:slug` صحيحاً.
 
 **ملاحظة منهجية — لغز sitemap.xml محلول جزئياً بفحص مستقل من المنسّق**:
 `sitemap.xml` الحي على `majlisilm.com` (خارج هذا الفرع تماماً — الفرع
