@@ -36,6 +36,12 @@ export const ADHKAR_CATEGORIES: AdhkarCategory[] = [
   { id: "adh-distress", name: "الكرب", slug: "distress", description: "أدعية الكرب والهم" },
   { id: "adh-istikharah", name: "الاستخارة", slug: "istikharah", description: "دعاء الاستخارة" },
   { id: "adh-istighfar", name: "الاستغفار", slug: "istighfar", description: "أذكار الاستغفار والتوبة" },
+  // اكتُشف بالفحص المباشر 2026-07-18: 5 أذكار كانت تحمل categoryId
+  // "adh-salawat" غير موجود إطلاقاً في هذه القائمة، فكانت تختفي صامتاً من
+  // أي فلترة بفئة محدَّدة (لا تظهر إلا ضمن "الكل") — نفس عطل "أخلاق
+  // إسلامية". أُضيفت هذه الفئة الأصيلة بدل إعادة التسمية لفئة قائمة، لأن
+  // الصلاة على النبي ﷺ جنس ذكر مستقل بذاته (كالاستغفار أعلاه بالضبط).
+  { id: "adh-salawat", name: "الصلاة على النبي ﷺ", slug: "salawat", description: "صيغ الصلاة والسلام على النبي ﷺ" },
   { id: "adh-rain", name: "المطر", slug: "rain", description: "ما يقال عند نزول المطر" },
   { id: "adh-wind", name: "الرياح", slug: "wind", description: "ما يقال عند هبوب الريح" },
   { id: "adh-market", name: "دخول السوق", slug: "market", description: "دعاء دخول السوق" },
@@ -3314,7 +3320,7 @@ export const ADHKAR_ITEMS: AdhkarItem[] = [
   /* ── أذكار التسبيح والتحميد (توسعة) ── */
   {
     id: "adh-320",
-    categoryId: "adh-general",
+    categoryId: "adh-misc",
     text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحَانَ اللَّهِ الْعَظِيمِ",
     count: 100,
     narrator: "أبو هريرة",
@@ -3325,7 +3331,7 @@ export const ADHKAR_ITEMS: AdhkarItem[] = [
   },
   {
     id: "adh-321",
-    categoryId: "adh-general",
+    categoryId: "adh-misc",
     text: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
     count: 100,
     narrator: "أبو موسى الأشعري",
@@ -3336,7 +3342,7 @@ export const ADHKAR_ITEMS: AdhkarItem[] = [
   },
   {
     id: "adh-322",
-    categoryId: "adh-general",
+    categoryId: "adh-misc",
     text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
     count: 100,
     narrator: "أبو هريرة",
@@ -3380,7 +3386,7 @@ export const ADHKAR_ITEMS: AdhkarItem[] = [
   },
   {
     id: "adh-326",
-    categoryId: "adh-general",
+    categoryId: "adh-misc",
     text: "أَسْتَغْفِرُ اللَّهَ الَّذِي لَا إِلَهَ إِلَّا هُوَ الْحَيَّ الْقَيُّومَ وَأَتُوبُ إِلَيْهِ",
     count: 3,
     narrator: "شداد بن أوس",
@@ -3391,7 +3397,7 @@ export const ADHKAR_ITEMS: AdhkarItem[] = [
   },
   {
     id: "adh-327",
-    categoryId: "adh-general",
+    categoryId: "adh-misc",
     text: "رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ إِنَّكَ أَنْتَ التَّوَّابُ الرَّحِيمُ",
     count: 100,
     narrator: "ابن عمر",
