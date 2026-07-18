@@ -317,6 +317,8 @@ majalis-content-fill
 
 ```
 0c9f2c76...
+261b07f8  feat(learning): new full hierarchical course — فقه الطهارة (10 real items, not a shallow 3-4 patch)
+c7f91e10  docs: تحديث بعد إصلاح SEO لـ114 صفحة قصص السور
 c615761e  fix(seo): SurahStoryDetailPage (114 pages) never called applyPageSeo — same generic title for all
 d74c3a35  docs: تحديث بعد تعميم إصلاح .catch() على 5 صفحات إضافية
 3bc2f76a  fix(views): harden 5 more eternal-loading-on-network-failure spots (same family as .catch() fix)
