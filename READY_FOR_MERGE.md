@@ -30,9 +30,17 @@ fiqh-shafii 1→3، fiqh-hanafi 1→3، fiqh-ibadat 2→3، adab-al-usrah 2→3
 (3 آليات SEO متنافسة، اثنتان منها معطوبتان/مكرَّرتان أُزيلتا). بقية
 صفحات `*DetailPage.tsx` فُحصت وسليمة. تفصيل كامل في `CONTINUATION_PLAN.md`.
 
+**🚨🚨 اكتشاف SEO أكبر (commit `2e2e43a1`)**: تحقَّق مباشر من
+`https://www.majlisilm.com/sitemap.xml` الحي (WebFetch) — صفر رابط فردي
+لأي من الـ15 مساراً التعليمية، فقط صفحة الفهرس. السبب: `/sitemap.xml`
+مُوجَّه لـ`/api/sitemap` (دالة حية في `lib/cms/sitemap-builder.mjs`)
+لا للملف الثابت الصحيح الذي يولِّده `generate-seo.mjs` (لا يُخدَّم في
+الإنتاج إطلاقاً). أُضيف استعلام حي على `learning_paths` لم يكن موجوداً
+منذ إنشاء الملف. تفصيل كامل في `CONTINUATION_PLAN.md`.
+
 commits الجلسة كاملة: `1e42f0d6`→`cca48c58`→`9477d665`→`96ed51a6`→
-`0b6ed612`→`fb945712`→`5bad68bc`→`1a0de25c`، كل دفعة اجتازت البوابات
-الأربع معاً قبل commit، ودُفعت فور نجاحها.
+`0b6ed612`→`fb945712`→`5bad68bc`→`1a0de25c`→`2e2e43a1`، كل دفعة اجتازت
+البوابات الأربع معاً قبل commit، ودُفعت فور نجاحها.
 
 **المقالة الأصلية الرابعة**: "منازل القلب الثلاث: الصبر والشكر والرضا" —
 تربط 3 مقررات تربية بُنيت هذه الجلسة بمقرر "باب الصبر" في رياض الصالحين،
@@ -309,6 +317,8 @@ majalis-content-fill
 
 ```
 0c9f2c76...
+2e2e43a1  fix(sitemap): learning_paths (all 15 paths built this session) missing entirely from live sitemap.xml
+4b66645d  docs: تحديث بعد إصلاح بق SEO hydration (LearningPathDetailPage/LessonDetailPage) + إغلاق خيط المقررات الضحلة
 1a0de25c  fix(seo): stop client-side hydration from overwriting per-page SEO with generic placeholders
 c7f1f722  docs: تحديث بعد تعميق fiqh-ibadat/adab-al-usrah (7 مقررات ضحلة متبقية من 16، كلها مؤجَّلة لعدم مصدر)
 5bad68bc  feat(learning): deepen fiqh-ibadat and adab-al-usrah — 2 items → 3 each
