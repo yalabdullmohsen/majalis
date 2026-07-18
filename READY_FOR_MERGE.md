@@ -317,6 +317,7 @@ majalis-content-fill
 
 ```
 0c9f2c76...
+ae1fe6e2  chore(sitemap): remove dead /fatwa/:slug entries from buildSitemapXml
 2e2e43a1  fix(sitemap): learning_paths (all 15 paths built this session) missing entirely from live sitemap.xml
 4b66645d  docs: تحديث بعد إصلاح بق SEO hydration (LearningPathDetailPage/LessonDetailPage) + إغلاق خيط المقررات الضحلة
 1a0de25c  fix(seo): stop client-side hydration from overwriting per-page SEO with generic placeholders
