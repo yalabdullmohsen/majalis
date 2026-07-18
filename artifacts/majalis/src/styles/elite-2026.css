@@ -772,6 +772,20 @@ html[data-theme="dark"] .navbar-mobile-login {
   color: #fff !important;
 }
 .home-main--v3 .ui-card .home-sunnah-card__period { color: rgba(255,255,255,0.75) !important; }
+/* عنوان القسم (h2) — اكتُشف فعليًا عبر Playwright بعد هجرة هذا الودجت إلى
+   <Widget> الموحّد (المرحلة 7): إضافة class="home-section" (يأتي من Widget
+   نفسه) فعّلت لأول مرة عدّة قواعد لم تكن تُطبَّق قط على العنوان الأصلي (لم يكن
+   يحمل هذه الـclasses إطلاقًا قبل الهجرة)، أقواها فعليًا محدَّدًا
+   `[class*="card"] h2:not(.ds-section__title):not(.cards-page-title):not(
+   .fiqh-council-section-title) { color: var(--elite-forest) !important }`
+   (تطابق أي عنصر class يحوي "card" — و.ui-card يحويها) بخصوصية (0,4,1) —
+   أعلى من أي محاولة تجاوز بالأصناف وحدها هنا (0,3,1)، فبقي العنوان أسود
+   تقريبًا فوق خلفية البطاقة الداكنة (contrast bug حقيقي، لا افتراضي).
+   الحل: استهداف عبر id الفريد `#widget-sunnah-time-heading` (يتولّد تلقائيًا
+   من id="sunnah-time" في <Widget>) بدل تكديس أصناف لمجاراة خصوصية قد تتغيّر
+   لاحقًا — الخصوصية معرِّف فريد تتجاوز أي عدد من الأصناف دائمًا، وأكثر أمانًا
+   من محاولة "الفوز" في سباق خصوصية صنفي مع قاعدة عامة قد تُعدَّل مستقبلًا. */
+#widget-sunnah-time-heading { color: rgba(255,255,255,0.95) !important; }
 
 /* ⑦ strong / em / blockquote / cite / small / a */
 .home-main--v3 .ui-card strong,
