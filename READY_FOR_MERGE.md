@@ -317,6 +317,8 @@ majalis-content-fill
 
 ```
 0c9f2c76...
+6002cd4a  feat(learning): third new full hierarchical course — فقه الزكاة (8 real items)
+652297ac  docs: تحديث بعد بناء باب هرمي كامل ثانٍ (فقه الصلاة، 8 عناصر)
 afc45667  feat(learning): second new full hierarchical course — فقه الصلاة (8 real items)
 af51f2f8  docs: تحديث بعد بناء باب هرمي كامل جديد (فقه الطهارة، 10 عناصر)
 261b07f8  feat(learning): new full hierarchical course — فقه الطهارة (10 real items, not a shallow 3-4 patch)
