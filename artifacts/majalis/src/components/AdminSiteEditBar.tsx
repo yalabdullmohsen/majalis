@@ -208,7 +208,7 @@ export function AdminSiteEditBar() {
         body.site-edit-mode blockquote,
         body.site-edit-mode td,
         body.site-edit-mode th {
-          outline: 1.5px dashed #176B57 !important;
+          outline: 1.5px dashed #173D35 !important;
           cursor: text !important;
           border-radius: 2px;
         }
@@ -224,7 +224,7 @@ export function AdminSiteEditBar() {
         body.site-edit-mode td:hover,
         body.site-edit-mode th:hover {
           background: rgba(31,77,58,0.06) !important;
-          outline-color: #176B57 !important;
+          outline-color: #173D35 !important;
           outline-width: 2px !important;
         }
         /* Floating bar */
@@ -253,14 +253,14 @@ export function AdminSiteEditBar() {
           transition: background 0.2s;
         }
         .ase-bar__toggle--off {
-          background: #176B57;
+          background: #173D35;
           color: #fff;
         }
         .ase-bar__toggle--on {
           background: #d32f2f;
           color: #fff;
         }
-        .ase-bar__toggle--off:hover { background: #176B57; }
+        .ase-bar__toggle--off:hover { background: #173D35; }
         .ase-bar__toggle--on:hover  { background: #b71c1c; }
         .ase-bar__panel {
           background: #fff;
@@ -278,7 +278,7 @@ export function AdminSiteEditBar() {
           color: #555;
           line-height: 1.5;
         }
-        .ase-bar__info strong { color: #176B57; }
+        .ase-bar__info strong { color: #173D35; }
         .ase-bar__clear {
           font-size: 0.72rem;
           color: #d32f2f;
@@ -296,7 +296,7 @@ export function AdminSiteEditBar() {
           left: 0;
           right: 0;
           z-index: 9991;
-          background: #176B57;
+          background: #173D35;
           color: #fff;
           font-size: 0.82rem;
           text-align: center;
@@ -334,7 +334,7 @@ export function AdminSiteEditBar() {
           gap: 0.5rem;
         }
         .ase-dialog__tag {
-          background: #176B57;
+          background: #173D35;
           color: #fff;
           font-size: 0.65rem;
           font-weight: 700;
@@ -370,7 +370,7 @@ export function AdminSiteEditBar() {
           direction: rtl;
           box-sizing: border-box;
         }
-        .ase-dialog__ta:focus { outline: 2px solid #176B57; border-color: #176B57; }
+        .ase-dialog__ta:focus { outline: 2px solid #173D35; border-color: #173D35; }
         .ase-dialog__hint {
           font-size: 0.72rem;
           color: #888;
@@ -395,8 +395,8 @@ export function AdminSiteEditBar() {
           transition: background 0.15s;
           font-family: inherit;
         }
-        .ase-btn--primary { background: #176B57; color: #fff; }
-        .ase-btn--primary:hover { background: #176B57; }
+        .ase-btn--primary { background: #173D35; color: #fff; }
+        .ase-btn--primary:hover { background: #173D35; }
         .ase-btn--ghost { background: #f5f5f5; color: #333; }
         .ase-btn--ghost:hover { background: #e8e8e8; }
       `}</style>

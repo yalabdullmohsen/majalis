@@ -18,7 +18,7 @@ type Submission = {
 const TYPE_COLORS: Record<ContentType, { bg: string; color: string }> = {
   "درس":       { bg: "#dbeafe", color: "#1d4ed8" },
   "فائدة":     { bg: "#d1fae5", color: "#065f46" },
-  "معلومة":    { bg: "#E6EDE9", color: "#123F36" },
+  "معلومة":    { bg: "#E6EDE9", color: "#173D35" },
   "سؤال لعبة": { bg: "#f3e8ff", color: "#7c3aed" },
   "فكرة":      { bg: "#ffe4e6", color: "#9f1239" },
 };
@@ -96,7 +96,7 @@ export function SubmissionsSection() {
 
       <div className="sub-list">
         {items.map((item) => {
-          const typeColor = TYPE_COLORS[item.type as ContentType] ?? { bg: "#f3f4f6", color: "#374151" };
+          const typeColor = TYPE_COLORS[item.type as ContentType] ?? { bg: "#f3f4f6", color: "#68716D" };
           const isActing = acting === item.id;
           return (
             <div key={item.id} className="sub-card">

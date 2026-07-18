@@ -77,7 +77,7 @@ function ScholarTimeline({ died }: { died: string }) {
               style={{
                 flex: 1,
                 background: c === century
-                  ? "var(--elite-green, #0E6E52)"
+                  ? "var(--elite-green, #28584D)"
                   : c <= 3
                     ? "var(--ds-parchment-deep, #ede8e0)"
                     : "var(--ds-parchment, #f5f0e8)",
@@ -99,7 +99,7 @@ function ScholarTimeline({ died }: { died: string }) {
               key={c}
               style={{
                 fontSize: "0.62rem",
-                color: c === century ? "var(--elite-green, #0E6E52)" : "var(--ds-ink-soft, #9ca3af)",
+                color: c === century ? "var(--elite-green, #28584D)" : "var(--ds-ink-soft, #9ca3af)",
                 fontWeight: c === century ? 700 : 400,
                 direction: "ltr",
               }}
@@ -123,7 +123,7 @@ function ScholarTimeline({ died }: { died: string }) {
                 fontSize: "0.68rem",
                 padding: "1px 6px",
                 borderRadius: "4px",
-                background: Number(c) === century ? "var(--elite-green, #0E6E52)" : "var(--ds-parchment-deep, #ede8e0)",
+                background: Number(c) === century ? "var(--elite-green, #28584D)" : "var(--ds-parchment-deep, #ede8e0)",
                 color: Number(c) === century ? "#fff" : "var(--ds-ink-soft, #6b7280)",
                 border: "1px solid var(--ds-line-color, #d4ccc2)",
               }}

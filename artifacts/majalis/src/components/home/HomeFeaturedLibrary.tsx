@@ -10,8 +10,8 @@ export function HomeFeaturedLibrary() {
       <div className="ds-section__head">
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
-            <polygon points="9,1 11.5,6.5 18,6.5 13,10.5 15,17 9,13 3,17 5,10.5 0.5,6.5 6.5,6.5" fill="none" stroke="#176B57" strokeWidth="1.2"/>
-            <circle cx="9" cy="9" r="2.8" fill="#176B57" opacity="0.3"/>
+            <polygon points="9,1 11.5,6.5 18,6.5 13,10.5 15,17 9,13 3,17 5,10.5 0.5,6.5 6.5,6.5" fill="none" stroke="#173D35" strokeWidth="1.2"/>
+            <circle cx="9" cy="9" r="2.8" fill="#173D35" opacity="0.3"/>
           </svg>
           <div>
             <p className="home-eyebrow">الكتب الأساسية</p>

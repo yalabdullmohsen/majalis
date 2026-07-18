@@ -11,9 +11,9 @@ function IslamicStar({ size = 44 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true"
       className="ds-loader-svg">
-<polygon points={pts} fill="none" stroke="var(--majalis-emerald,#176B57)"
+<polygon points={pts} fill="none" stroke="var(--majalis-emerald,#173D35)"
         strokeWidth="1.6" strokeLinejoin="round" opacity="0.85" />
-      <circle cx={cx} cy={cx} r={size * 0.09} fill="var(--majalis-emerald,#176B57)" opacity="0.6" />
+      <circle cx={cx} cy={cx} r={size * 0.09} fill="var(--majalis-emerald,#173D35)" opacity="0.6" />
     </svg>
   );
 }

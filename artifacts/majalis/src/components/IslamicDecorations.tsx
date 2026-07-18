@@ -1,6 +1,6 @@
 /**
  * أشكال هندسية إسلامية للزينة — مكوّنات SVG قابلة لإعادة الاستخدام.
- * الألوان: زمردي (#0E6E52 / #153025)، عاجي، ذهبي محدود.
+ * الألوان: زمردي (#28584D / #173D35)، عاجي، ذهبي محدود.
  * جميع المكوّنات مزيّنة فقط — aria-hidden="true".
  */
 
@@ -246,7 +246,7 @@ export function CornerOrnament({
 
 /** إطار هندسي — section header with geometric border top */
 export function GeometricSectionBorder({
-  color = "#0E6E52",
+  color = "#28584D",
   opacity = 0.18,
   className = "",
 }: {
@@ -288,7 +288,7 @@ export function GeometricSectionBorder({
 
 /** بطاقة إسلامية — decorative top edge for cards */
 export function CardIslamicAccent({
-  color = "#0E6E52",
+  color = "#28584D",
   opacity = 0.12,
   height = 8,
 }: {

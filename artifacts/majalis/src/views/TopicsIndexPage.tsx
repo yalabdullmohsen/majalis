@@ -78,11 +78,11 @@ const STATIC_TOPICS: Record<string, Array<{ slug: string; title: string }>> = {
 
 const CATEGORY_META: Record<string, { label: string; Icon: LucideIcon; color: string }> = {
   fiqh:    { label: "الفقه الإسلامي",  Icon: Scale,      color: "var(--majalis-emerald-deep, #166534)" },
-  aqeedah: { label: "العقيدة",          Icon: Shapes,     color: "var(--majalis-emerald, #176B57)" },
+  aqeedah: { label: "العقيدة",          Icon: Shapes,     color: "var(--majalis-emerald, #173D35)" },
   akhlaq:  { label: "الأخلاق",          Icon: Leaf,       color: "#2d6a4f" },
   quran:   { label: "القرآن الكريم",   Icon: BookMarked, color: "#1e40af" },
   hadith:  { label: "الحديث النبوي",  Icon: ScrollText,  color: "#7c3aed" },
-  seerah:  { label: "السيرة النبوية",  Icon: Moon,       color: "var(--majalis-emerald-deep, #123F36)" },
+  seerah:  { label: "السيرة النبوية",  Icon: Moon,       color: "var(--majalis-emerald-deep, #173D35)" },
   other:   { label: "أخرى",            Icon: BookOpen,   color: "var(--majalis-ink-soft)" },
 };
 
