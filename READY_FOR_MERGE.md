@@ -8,6 +8,15 @@
 
 ## ▶️ حالة الجلسة — ملخص موحَّد (بعد 53+ دفعة، آخر تحديث 2026-07-18)
 
+**🎯 إنجاز بارز: سلسلة الأركان الخمسة كاملة في مسار fiqh (commits
+`261b07f8`→`0583df1e`)**: بطلب المنسّق، بُنيت 5 أبواب هرمية كاملة جديدة
+(لا تعميق سطحي) بترتيب فقهي كلاسيكي متسلسل — `fiqh-tahara` (10 عناصر)،
+`fiqh-salah` (8)، `fiqh-zakat` (8)، `fiqh-siyam` (10)، `fiqh-hajj` (8) —
+**44 عنصراً تعليمياً حقيقياً**، كل استشهاد قرآني محلي أو حديثي تحقَّق
+حرفياً عبر WebFetch من صحيح البخاري/مسلم/سنن أبي داود على ويكي مصدر،
+بأرقام الأحاديث كما وردت في تلك النسخ. `fiqh.total_sessions`: 124→168.
+تفصيل كامل في `CONTINUATION_PLAN.md`.
+
 **جلسة عاشرة (أحدث)**: أعدتُ تشغيل استعلام "كورسات منشورة بـ≤2 عنصر"
 فكشف 16 مقرراً ضحلاً متبقياً. عولجت 4 (`qawaid-muthla` 1→4،
 `minhaj-muslim` 1→6، `seerah-deep` 1→4، `arabic-mujam-wasit` 1→3 — كل
@@ -317,6 +326,8 @@ majalis-content-fill
 
 ```
 0c9f2c76...
+0583df1e  feat(learning): fifth and final new full hierarchical course — فقه الحج (8 real items) — completes all five pillars
+45c98d44  docs: تحديث بعد بناء باب هرمي كامل رابع (فقه الصيام، 10 عناصر)
 6fb17922  feat(learning): fourth new full hierarchical course — فقه الصيام (10 real items)
 a6ebff52  docs: تحديث بعد بناء باب هرمي كامل ثالث (فقه الزكاة، 8 عناصر)
 6002cd4a  feat(learning): third new full hierarchical course — فقه الزكاة (8 real items)
