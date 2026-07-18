@@ -102,6 +102,15 @@ const clientErrorLogRateLimit = createRateLimiter({
   keyPrefix: "client-error-log",
 });
 
+// اختبار التسميع بالذكاء الاصطناعي — مقطع صوتي كل 2-4 ثوانٍ تقريبًا أثناء
+// الاستماع الفعلي؛ سقف سخي نسبيًا (يسمح بجلسة تسميع طويلة) لكن يمنع إساءة
+// استخدام واضحة (استدعاءات Groq مدفوعة خلف هذا المسار).
+const recitationTranscribeRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 60,
+  keyPrefix: "recitation-transcribe",
+});
+
 /** Route table uses dynamic imports so Vercel bundles one lightweight function entrypoint. */
 export const API_ROUTES = [
   { prefix: "/api/healthz", module: "./api-handlers/healthz.js", allowGet: true, exact: true },
@@ -204,6 +213,7 @@ export const API_ROUTES = [
   { prefix: "/api/client-error-log", module: "./api-handlers/client-error-log.js", allowGet: true, rateLimit: clientErrorLogRateLimit },
   { prefix: "/api/test-anthropic", module: "./api-handlers/test-anthropic.js", allowGet: true },
   { prefix: "/api/transcribe", module: "./api-handlers/transcribe.js", rateLimit: transcribeRateLimit },
+  { prefix: "/api/recitation-transcribe", module: "./api-handlers/recitation-transcribe.js", rateLimit: recitationTranscribeRateLimit, allowGet: true, exact: true },
   { prefix: "/api/submissions", module: "./api-handlers/submissions.js", exact: true, rateLimit: submissionsRateLimit },
   { prefix: "/api/admin/submissions", module: "./api-handlers/admin/submissions.js", allowGet: true },
   { prefix: "/api/account/delete", module: "./api-handlers/account/delete.js", exact: true, rateLimit: accountDeleteRateLimit },

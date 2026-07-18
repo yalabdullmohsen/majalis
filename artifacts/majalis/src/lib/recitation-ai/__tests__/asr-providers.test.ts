@@ -51,7 +51,7 @@ async function main() {
   {
     const server = new ServerQuranASRProvider();
     const result = await checkTajweedAvailability(server);
-    assert(result.available === false, "التجويد غير متاح لأن isAvailable()=false رغم supportsTajweed=true نظريًا");
+    assert(result.available === false, "التجويد غير متاح — whisper-large-v3 عام (supportsTajweed=false) لا محرك تجويد متخصص");
 
     const mock = new MockQuranASRProvider(); // supportsTajweed=false تصميميًا
     const result2 = await checkTajweedAvailability(mock);

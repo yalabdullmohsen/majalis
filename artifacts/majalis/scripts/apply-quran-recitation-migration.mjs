@@ -17,7 +17,10 @@ import { getPgClient } from "../lib/database.mjs";
 const __dir = dirname(fileURLToPath(import.meta.url));
 const supabaseDir = join(__dir, "../supabase");
 
-const MIGRATION_FILES = ["quran_recitation_ai_test_v1.sql"];
+const MIGRATION_FILES = [
+  "quran_recitation_ai_test_v1.sql",
+  "quran_recitation_ai_test_v2_constraint_widening.sql",
+];
 
 async function main() {
   const { client } = await getPgClient();
