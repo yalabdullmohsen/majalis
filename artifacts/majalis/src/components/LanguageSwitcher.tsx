@@ -51,12 +51,18 @@ export function LanguageSwitcher() {
         />
       </button>
 
+      {/* لا aria-activedescendant على القائمة أدناه عمدًا (أُزيل — راجع
+          jsx-a11y/aria-activedescendant-has-tabindex): كل خيار <li> أدناه له
+          tabIndex={0} وonKeyDown مستقل بالفعل، أي نمط "تنقّل Tab عادي بين
+          عناصر مستقلة" لا نمط "تركيز افتراضي وهمي عبر aria-activedescendant
+          على حاوية واحدة" — الجمع بينهما كان تناقضًا فعليًا في نموذج ARIA
+          المُطبَّق، وaria-selected أدناه يكفي وحده لإعلام التقنية المساعدة
+          بالخيار الحالي. */}
       {open && (
         <ul
           className="lsw-menu"
           role="listbox"
           aria-label="اختر اللغة"
-          aria-activedescendant={`lsw-opt-${lang}`}
         >
           {LANG_META.map((m) => (
             <li
