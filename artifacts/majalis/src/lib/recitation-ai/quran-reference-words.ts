@@ -13,21 +13,14 @@
  *    فور القسمة وتُستبعَد من قائمة الكلمات المرجعية القابلة للاختبار،
  *    بحيث تُصلَح مشكلة "زيادة/نقص البسملة لا تُحتسَب خطأ" (القسم 6) عبر
  *    عدم وجودها في المرجع أصلاً بدل معالجتها وقت المقارنة الحيّة.
+ *
+ *    stripEmbeddedBismillah نفسها انتقلت إلى quran-api.ts (مصدر واحد
+ *    مشترك) لأن قارئ المصحف (MushafPage.tsx) يحتاج نفس المنطق تمامًا
+ *    لعرض الآية بلا تكرار بصري للبسملة — لا نسخة موازية هنا بعد الآن.
  */
-import type { Ayah } from "@/lib/quran-api";
+import { stripEmbeddedBismillah, type Ayah } from "@/lib/quran-api";
 import type { ReferenceWord } from "./types";
 import { normalizeQuranWord, WORD_POSITION_OVERRIDES, positionKey } from "./quran-normalize";
-
-const BISMILLAH_WORD_COUNT = 4;
-
-/** يُعيد نص آية 1 بعد فصل البسملة المدمَجة إن وُجدت (لا يُعدّل الآية الأصلية). */
-function stripEmbeddedBismillah(surahNumber: number, ayahNumberInSurah: number, text: string): string {
-  if (ayahNumberInSurah !== 1) return text;
-  if (surahNumber === 1 || surahNumber === 9) return text; // الفاتحة: البسملة هي الآية ذاتها. التوبة: لا بسملة.
-  const words = text.split(/\s+/).filter(Boolean);
-  if (words.length <= BISMILLAH_WORD_COUNT) return text; // احتياط: لا نُفرغ الآية بالخطأ
-  return words.slice(BISMILLAH_WORD_COUNT).join(" ");
-}
 
 export function buildReferenceWords(surahNumber: number, ayahs: Ayah[]): ReferenceWord[] {
   const result: ReferenceWord[] = [];

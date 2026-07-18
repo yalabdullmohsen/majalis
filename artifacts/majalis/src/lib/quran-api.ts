@@ -255,6 +255,29 @@ export function getSurahForPage(page: number): StaticSurahMeta {
   return getSurahMeta(idx + 1);
 }
 
+const BISMILLAH_WORD_COUNT = 4;
+
+/**
+ * البسملة ليست آية منفصلة لكل السور في مصدر البيانات — هي **مدمَجة داخل
+ * نص الآية 1** لكل سورة عدا الفاتحة (البسملة = الآية 1 نفسها) والتوبة
+ * (لا بسملة إطلاقًا). تحقّق مباشر: سورة 2 آية 1 = "بِسْمِ ٱللَّهِ
+ * ٱلرَّحْمَٰنِ ٱلرَّحِيمِ الٓمٓ" (بسملة + بداية الآية الحقيقية متصلتين).
+ *
+ * يُستخدَم هذا لغرضين منفصلين يجب أن يبقيا متوافقَين: (1) استبعاد البسملة
+ * من الكلمات المرجعية القابلة للاختبار في اختبار التسميع
+ * (quran-reference-words.ts)، و(2) عرض نص الآية في قارئ المصحف بلا تكرار
+ * بصري للبسملة (تُعرض مرة واحدة فقط كعنوان فوق السورة عبر
+ * isFirstOfSurah/showBismillah في MushafPage.tsx، لا داخل نص الآية 1
+ * أيضًا). **لا يُعدّل النص القرآني المخزَّن أبدًا** — دالة عرض/اشتقاق محضة.
+ */
+export function stripEmbeddedBismillah(surahNumber: number, ayahNumberInSurah: number, text: string): string {
+  if (ayahNumberInSurah !== 1) return text;
+  if (surahNumber === 1 || surahNumber === 9) return text; // الفاتحة: البسملة هي الآية ذاتها. التوبة: لا بسملة.
+  const words = text.split(/\s+/).filter(Boolean);
+  if (words.length <= BISMILLAH_WORD_COUNT) return text; // احتياط: لا نُفرغ الآية بالخطأ
+  return words.slice(BISMILLAH_WORD_COUNT).join(" ");
+}
+
 // ─── Qiraat (القراءات العشر) ──────────────────────────────────────────────
 
 export type Qiraat = {
