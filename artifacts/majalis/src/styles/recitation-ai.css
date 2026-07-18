@@ -227,7 +227,7 @@ html[data-theme="dark"] .rai-unclear-banner { background: rgba(139,92,246,.18); 
 }
 html[data-theme="dark"] .rai-icon-btn { background: #1A2120; color: #E5F0EC; }
 
-.rai-plain-words { font-family: "Amiri Quran", "Scheherazade New", serif; font-size: 1.5rem; line-height: 2.3; color: #1A1A1A; text-align: justify; }
+.rai-plain-words { font-family: "Amiri Quran", "Scheherazade New", serif; font-size: 1.5rem; line-height: 1.9; color: #1A1A1A; text-align: justify; }
 html[data-theme="dark"] .rai-plain-words { color: #E5F0EC; }
 .rai-plain-word--correct { color: var(--rai-emerald-deep); }
 .rai-plain-word--error { color: var(--rai-error); text-decoration: underline wavy var(--rai-error); }
@@ -238,7 +238,7 @@ html[data-theme="dark"] .rai-plain-words { color: #E5F0EC; }
 .imr-page {
   font-family: "Amiri Quran", "Scheherazade New", serif;
   font-size: clamp(1.4rem, 3.4vw, 1.9rem);
-  line-height: 2.6;
+  line-height: 2;
   text-align: justify;
   color: #1A1A1A;
   background: var(--rai-ivory-warm);

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { Fragment, useMemo } from "react";
 import type { ReferenceWord } from "@/lib/recitation-ai/types";
 
 export type RevealState = "hidden" | "revealed" | "error" | "unclear";
@@ -27,6 +27,16 @@ type Props = {
  * الحقيقي (من نفس مصدر public/data/quran/ الموثوق) مقسَّمًا آية آية بخط
  * Amiri Quran بحجم كبير يحاكي تجربة القراءة، لا نسخة طبق الأصل من صفحة
  * مطبوعة. تحسين مستقبلي محتمل إن توفرت بيانات إحداثيات كلمات لكل صفحة.
+ *
+ * ⚠️ إصلاح خلل تباعد حقيقي (2026-07-18): كانت المسافة الفاصلة بين
+ * الكلمات تُدرَج **داخل** عنصر `<span>` الكلمة نفسه (نص لاحق) بدل أن
+ * تكون عقدة نصية منفصلة بين عنصرين — مع `text-align: justify` على
+ * الحاوية، لا يتعرّف محرك التنسيق دومًا على هذه المسافة كنقطة تبرير
+ * صالحة فتُهمَل عمليًا (قياس مباشر أثبت تلامس الكلمات ببعضها ببُعد صفري)،
+ * بينما تتراكم كل مساحة التبرير عند نقطة واحدة (علامة نهاية الآية) —
+ * فتبدو الكلمات متلاصقة والفراغ الوحيد كتلة كبيرة غير طبيعية عند كل آية.
+ * الإصلاح: المسافة الآن عقدة نصية شقيقة مستقلة بعد كل span، لا محتوى
+ * داخله — تُعامَل بشكل طبيعي وصحيح من خوارزمية التبرير.
  */
 export function InteractiveMushafReveal({ words, revealGranularity, justCompletedAyah }: Props) {
   const byAyah = useMemo(() => {
@@ -46,18 +56,19 @@ export function InteractiveMushafReveal({ words, revealGranularity, justComplete
         return (
           <span className="imr-ayah" key={ayahNum}>
             {ayahWords.map((w, idx) => (
-              <span
-                key={`${w.word.surah}:${w.word.ayah}:${w.word.wordIndex}`}
-                className={[
-                  "imr-word",
-                  revealGranularity === "word" ? `imr-word--${w.state}` : ayahRevealed ? "imr-word--revealed" : "imr-word--hidden",
-                  w.state === "error" ? "imr-word--pulse-error" : "",
-                  w.state === "unclear" ? "imr-word--pulse-unclear" : "",
-                ].join(" ").trim()}
-              >
-                {w.word.raw}
-                {idx < ayahWords.length - 1 ? " " : ""}
-              </span>
+              <Fragment key={`${w.word.surah}:${w.word.ayah}:${w.word.wordIndex}`}>
+                <span
+                  className={[
+                    "imr-word",
+                    revealGranularity === "word" ? `imr-word--${w.state}` : ayahRevealed ? "imr-word--revealed" : "imr-word--hidden",
+                    w.state === "error" ? "imr-word--pulse-error" : "",
+                    w.state === "unclear" ? "imr-word--pulse-unclear" : "",
+                  ].join(" ").trim()}
+                >
+                  {w.word.raw}
+                </span>
+                {idx < ayahWords.length - 1 ? " " : ""}
+              </Fragment>
             ))}
             <span
               className={`imr-ayah-mark ${justCompletedAyah === ayahNum ? "imr-ayah-mark--glow" : ""}`}

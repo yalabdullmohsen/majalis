@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearch } from "wouter";
 import { Pause, Play, Square, ChevronLeft, RotateCcw } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
@@ -1062,9 +1062,10 @@ function RecitationTestPageInner() {
                   "rai-plain-word--pending";
                 const showText = mode !== "full_hide" || state !== "hidden";
                 return (
-                  <span key={i} className={cls}>
-                    {showText ? w.raw : "ــــ"}{" "}
-                  </span>
+                  <Fragment key={i}>
+                    <span className={cls}>{showText ? w.raw : "ــــ"}</span>
+                    {i < referenceWords.length - 1 ? " " : ""}
+                  </Fragment>
                 );
               })}
             </p>
