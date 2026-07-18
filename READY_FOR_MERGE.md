@@ -14,12 +14,13 @@
 غير مؤكَّد التصحيح (الحسد، أبو داود) بدل ادّعاء صحته. `articles`: 3→4.
 commit `2c3eb274`.
 
-**رصد بلا إصلاح**: لعبة الأسئلة الجاهزة (QA) لها احتمال نفس نمط بق
-category (`QA_CANONICAL_CATEGORIES` 22 مقابل `qa_categories` الحية 37)،
-لكن يوجد نظام aliasing جزئي موجود مسبقاً وسلوك الفلترة الفعلي عند النقر
-غامض بلا اختبار متصفح حي؛ ومحتوى qa_questions رقيق جداً (39 سؤالاً
-تجريبياً). لم يُقدَّم إصلاح تخميني — وُثِّق كمرشح بأولوية أدنى من
-fiqh_council.
+**متابعة وإصلاح**: تتبُّع الكود بدقة (منطق مقارنة سلاسل نصية حتمي، لا
+حاجة لمتصفح) أكَّد الفجوة المرصودة سابقاً في لعبة الأسئلة الجاهزة (QA):
+زر تصنيف "الأسرة" يعرض عدّاداً يشمل تصنيفات مُعاد تعيينها (nikah/talaq)
+لأن `countByCategorySlug` يستدعي `resolveCategorySlug`، لكن `filteredItems`
+لم يكن يستدعيها فيستبعدها عند النقر الفعلي — "العدّاد يقول كذا، النقر
+يُظهر أقل". أُصلح بتوحيد المنطق (استدعاء resolveCategorySlug في كلا
+الموضعين). `QaPage.tsx`: تعديل سطرين + تعليق. commit `0c9f2c76`.
 
 **🔧 فحص منهجي لكل قيود category الحية كشف نفس البق على جدول شقيق**:
 `fiqh_council_items` (الجدول الأساسي للصفحة الرئيسية /fiqh-council وست
@@ -281,7 +282,8 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-2c3eb274...
+0c9f2c76...
+0c9f2c76  fix(qa): apply resolveCategorySlug() aliasing in filteredItems, not just counts
 2c3eb274  content(articles): fourth original article — منازل القلب الثلاث: الصبر والشكر والرضا
 b3e66c12  fix+content(fiqh-council): same category CHECK gap found on sibling table fiqh_council_items
 a06ba3d1  content(fiqh-council): populate nawazil-muasira category (2 real IIFA decisions)
