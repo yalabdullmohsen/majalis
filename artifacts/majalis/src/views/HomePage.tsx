@@ -54,6 +54,7 @@ import type { LucideIcon } from "lucide-react";
 /* ── روابط الوصول السريع ── */
 const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc: string }[] = [
   { href: "/adhkar",         Icon: Star,          label: "الأذكار",         desc: "صباح ومساء ونوم" },
+  { href: "/quran/recitation-test-ai", Icon: Bot, label: "اختبار التسميع", desc: "بالذكاء الاصطناعي" },
   { href: "/prayer-times",   Icon: Clock,         label: "أوقات الصلاة",    desc: "الكويت لحظياً" },
   { href: "/lessons",        Icon: GraduationCap, label: "الدروس",           desc: "علماء الكويت" },
   { href: "/hadith",         Icon: Scroll,        label: "الأحاديث",         desc: "صحيح وضعيف" },

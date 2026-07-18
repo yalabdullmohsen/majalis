@@ -14799,6 +14799,27 @@ html[data-theme="dark"] .tj-cat-badge { color: #8BABA3 !important; }
   margin-top: 0.5rem;
 }
 
+/* بطاقة مميَّزة — تبرز بصريًا عن بقية الشبكة بدل الاندماج فيها (مثال: اختبار التسميع بالذكاء الاصطناعي) */
+.quran-hub-card--featured {
+  grid-column: span 2;
+  border: 2px solid #C9A227;
+  box-shadow: 0 6px 24px rgba(201,162,39,.28);
+}
+.quran-hub-card--featured:hover {
+  box-shadow: 0 10px 32px rgba(201,162,39,.4);
+  border-color: #C9A227;
+}
+.quran-hub-card--featured .quran-hub-card__header {
+  background: linear-gradient(135deg, #176B57, #0E4A3D);
+}
+.quran-hub-card--featured .quran-hub-card__tag {
+  background: #C9A227;
+  color: #1A1400;
+}
+@media (max-width: 640px) {
+  .quran-hub-card--featured { grid-column: span 1; }
+}
+
 /* Features */
 .quran-hub-features {
   max-width: 72rem;
