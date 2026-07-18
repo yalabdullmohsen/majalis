@@ -303,6 +303,28 @@ html[data-theme="dark"] .rai-report__stat-val { color: #E5F0EC; }
 html[data-theme="dark"] .rai-report__error-row { background: #1A2120; }
 .rai-report__error-row--tajweed { border-inline-start-color: #C9A227; }
 
+.rai-mutashabih-note {
+  margin-top: .55rem;
+  padding: .55rem .75rem;
+  border-radius: 10px;
+  background: rgba(201,162,39,.08);
+  border: 1px dashed rgba(201,162,39,.4);
+}
+html[data-theme="dark"] .rai-mutashabih-note { background: rgba(201,162,39,.1); }
+.rai-mutashabih-note__title { font-size: .8rem; color: #7A5E10; margin: 0 0 .4rem; }
+html[data-theme="dark"] .rai-mutashabih-note__title { color: #E8CB6B; }
+.rai-mutashabih-note__diff { display: flex; flex-direction: column; gap: .3rem; }
+.rai-mutashabih-note__diff p {
+  margin: 0;
+  font-family: "Amiri Quran", "Scheherazade New", serif;
+  font-size: 1.05rem;
+  background: #fff;
+  border-radius: 8px;
+  padding: .4rem .6rem;
+}
+html[data-theme="dark"] .rai-mutashabih-note__diff p { background: #1A2120; color: #E5F0EC; }
+.rai-mutashabih-note__loc { font-family: var(--font-body); font-size: .7rem; color: #8A6D1B; }
+
 .rai-report__disclaimer {
   font-size: .78rem;
   color: #6B7A74;

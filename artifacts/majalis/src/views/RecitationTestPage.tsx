@@ -15,6 +15,7 @@ import { saveRecitationSession, getRecentRecitationSessions } from "@/lib/recita
 import { addRecitationReviewItem, getDueRecitationReviews, type RecitationReviewItem } from "@/lib/recitation-ai/recitation-review-service";
 import { loadRecitationSettings, saveRecitationSettings } from "@/lib/recitation-ai/recitation-settings-service";
 import { InteractiveMushafReveal, type WordRevealInfo } from "@/components/quran/InteractiveMushafReveal";
+import { loadMutashabihatIndex, getSimilarAyahs, type MutashabihMatch } from "@/lib/recitation-ai/mutashabihat";
 import type { AlertLevel, AlignmentEvent, PrecisionLevel, RecitationMode, ReferenceWord } from "@/lib/recitation-ai/types";
 import "@/styles/recitation-ai.css";
 
@@ -65,6 +66,13 @@ function RecitationTestPageInner() {
   const unclearNoticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [paused, setPaused] = useState(false);
+
+  // كشف المتشابهات (القسم 1: بند تفوّق — راجع src/lib/recitation-ai/mutashabihat.ts
+  // وscripts/build-mutashabihat-index.mjs). يُحمَّل فقط عند بلوغ شاشة
+  // التقرير (لا أثناء الجلسة الحيّة)، ونصوص الآيات المتشابهة الفعلية
+  // (للمقارنة جنبًا إلى جنب) تُجلب عند الحاجة فقط.
+  const [mutashabihatByKey, setMutashabihatByKey] = useState<Map<string, MutashabihMatch[]>>(new Map());
+  const [mutashabihatTexts, setMutashabihatTexts] = useState<Map<string, string>>(new Map());
 
   // تلميح متدرج لوضع "التسميع بالمساعدة" (القسم 2، الوضع 2): أول حرف ←
   // أول كلمة ← الآية كاملة. **مبني على مؤقّت زمني حقيقي (wall-clock)**
@@ -490,6 +498,51 @@ function RecitationTestPageInner() {
   // الأخطاء المؤكَّدة (القسم 9)، يُعرَض فقط كإحصاء شفاف مستقل في التقرير.
   const unclearEvents = liveEvents.filter((e): e is Extract<AlignmentEvent, { kind: "unclear" }> => e.kind === "unclear");
 
+  // كشف المتشابهات: يُحمَّل الفهرس فقط عند بلوغ شاشة التقرير (لا أثناء
+  // الجلسة الحيّة — لا فائدة تعليمية أثناء التسميع نفسه، فقط تشتيت محتمل).
+  useEffect(() => {
+    if (phase !== "report") return;
+    let cancelled = false;
+    const errorAyahKeys = new Set(
+      errorEvents.filter((e) => e.ref).map((e) => `${e.ref!.surah}:${e.ref!.ayah}`),
+    );
+    if (errorAyahKeys.size === 0) return;
+
+    (async () => {
+      try {
+        const index = await loadMutashabihatIndex();
+        if (cancelled) return;
+        const matches = new Map<string, MutashabihMatch[]>();
+        for (const key of errorAyahKeys) {
+          const [s, a] = key.split(":").map(Number);
+          const m = getSimilarAyahs(index, s, a);
+          if (m.length > 0) matches.set(key, m);
+        }
+        setMutashabihatByKey(matches);
+
+        // نصوص أقرب تشابه فقط (لا كل المطابقات) — تفاديًا لجلب شبكي غير ضروري.
+        const texts = new Map<string, string>();
+        for (const [, m] of matches) {
+          const top = m[0];
+          const textKey = `${top.surah}:${top.ayah}`;
+          if (texts.has(textKey)) continue;
+          try {
+            const detail = await fetchSurahDetail(top.surah);
+            const ayahText = detail.ayahs.find((a) => a.numberInSurah === top.ayah)?.text;
+            if (ayahText) texts.set(textKey, ayahText);
+          } catch {
+            // تجاهل — التشابه يبقى معروضًا بلا نص مقارنة إن فشل الجلب
+          }
+        }
+        if (!cancelled) setMutashabihatTexts(texts);
+      } catch {
+        // فشل تحميل الفهرس (شبكة/404) — لا يُفسد شاشة التقرير، يبقى القسم مخفيًا بصمت
+      }
+    })();
+
+    return () => { cancelled = true; };
+  }, [phase]);
+
   if (phase === "setup" || phase === "loading" || phase === "error") {
     return (
       <div className="rai-page">
@@ -830,6 +883,29 @@ function RecitationTestPageInner() {
                     </li>
                   ))}
                 </ul>
+                {(() => {
+                  const mKey = `${group.surah}:${group.ayah}`;
+                  const matches = mutashabihatByKey.get(mKey);
+                  if (!matches || matches.length === 0) return null;
+                  const top = matches[0];
+                  const topKey = `${top.surah}:${top.ayah}`;
+                  const otherText = mutashabihatTexts.get(topKey);
+                  const thisText = referenceWords.filter((w) => w.surah === group.surah && w.ayah === group.ayah).map((w) => w.raw).join(" ");
+                  return (
+                    <div className="rai-mutashabih-note">
+                      <p className="rai-mutashabih-note__title">
+                        ⚠️ هذه الآية لها آية مشابهة نصيًا (سبب شائع للخلط أثناء الحفظ) — سورة {top.surah}:{top.ayah}
+                        {matches.length > 1 ? ` (و${matches.length - 1} أخرى)` : ""}
+                      </p>
+                      {otherText && (
+                        <div className="rai-mutashabih-note__diff">
+                          <p><bdi>{thisText}</bdi> <span className="rai-mutashabih-note__loc">({group.surah}:{group.ayah})</span></p>
+                          <p><bdi>{otherText}</bdi> <span className="rai-mutashabih-note__loc">({top.surah}:{top.ayah})</span></p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
                 <div style={{ display: "flex", gap: ".5rem", marginTop: ".4rem" }}>
                   <button
                     type="button"
