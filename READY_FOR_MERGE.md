@@ -116,7 +116,9 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-fe94ad45...
+cf7a3486...
+cf7a3486  feat(learning): deepen tafsir-kahf course — 1 general item → 5 (4 real story chapters)
+d30765dd  docs: تحديث بعد 3 إضافات مكتبة — 127→130 كتاباً
 fe94ad45  content(library): 3 verified additions to thinnest categories — 127→130 books
 8edfc978  docs: تحديث بعد المقالة الثالثة — articles 2→3
 b1eb7a44  content(articles): third original article — آداب طلب العلم
@@ -125,8 +127,6 @@ b1eb7a44  content(articles): third original article — آداب طلب العل
 21068504  fix(rulings): sharia_rulings verification_status constraint would silently block ALL future syncs
 7d8408a8  docs: توثيق أكبر اكتشاف — 943 سؤال مسابقة لم تصل اللاعبين (عطل 3 طبقات)
 51d51fe2  fix(quiz): 943 vetted questions never reached the live game — 3-layer bug chain found & fixed
-61e75258  docs: توثيق إصلاح buildFeedXml — القناة كانت تَعِد بفتاوى وقرارات ولا تجلبها
-76200fd9  fix(feed): live /api/feed only served lessons, ignoring its own promised فتاوى/قرارات
 ```
 
 سلسلة commits الجلسات كاملة (الأحدث أولاً):
