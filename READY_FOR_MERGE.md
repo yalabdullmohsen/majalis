@@ -116,7 +116,9 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-cf7a3486...
+8ff7dd6a...
+8ff7dd6a  feat(learning): deepen arbaeen-nawawiyya course — 1 general item → 5 (4 named hadiths)
+cf9d275c  docs: تحديث بعد تعميق مقرر تفسير سورة الكهف (4 عناصر جديدة)
 cf7a3486  feat(learning): deepen tafsir-kahf course — 1 general item → 5 (4 real story chapters)
 d30765dd  docs: تحديث بعد 3 إضافات مكتبة — 127→130 كتاباً
 fe94ad45  content(library): 3 verified additions to thinnest categories — 127→130 books
@@ -125,8 +127,6 @@ b1eb7a44  content(articles): third original article — آداب طلب العل
 330620dd  docs: إغلاق تدقيق "المسار حتى القاعدة الحية" — 7 أنظمة بيانات، صفر فجوات متبقية
 0f878221  docs: توثيق تعميم منهجية "تتبع المسار حتى القاعدة الحية" على 5 أنظمة بيانات
 21068504  fix(rulings): sharia_rulings verification_status constraint would silently block ALL future syncs
-7d8408a8  docs: توثيق أكبر اكتشاف — 943 سؤال مسابقة لم تصل اللاعبين (عطل 3 طبقات)
-51d51fe2  fix(quiz): 943 vetted questions never reached the live game — 3-layer bug chain found & fixed
 ```
 
 سلسلة commits الجلسات كاملة (الأحدث أولاً):
