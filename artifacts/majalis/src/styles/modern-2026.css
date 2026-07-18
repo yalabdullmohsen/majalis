@@ -26,9 +26,9 @@
   --m26-green-50:     #F0FDF4;
 
   /* ── زمردي/عاجي بديل الذهبي ── */
-  --m26-gold-900:     #123F36;
-  --m26-gold-700:     #176B57;
-  --m26-gold-500:     #1a9e75;
+  --m26-gold-900:     #153025;
+  --m26-gold-700:     #0e6e52;
+  --m26-gold-500:     #0e6e52;
   --m26-gold-100:     #e8f5f0;
   --m26-gold-50:      #f0faf5;
 
@@ -54,7 +54,7 @@
   --txt-hint:       #71717A;
   --txt-disabled:   #A1A1AA;
   --txt-success:    #15803D;
-  --txt-warning:    #123F36;
+  --txt-warning:    #153025;
   --txt-error:      #B91C1C;
   --txt-info:       #1E40AF;
   --txt-accent:     #166534;
@@ -144,7 +144,7 @@ html:not([data-theme="dark"]) {
   --majalis-ink-soft:     #374151;
   --majalis-ink-muted:    #52525B;
   --majalis-emerald:      #166534;
-  --majalis-brass:        #176B57;
+  --majalis-brass:        #0e6e52;
   --majalis-panel:        #FFFFFF;
   --majalis-panel-raised: #F8F9FA;
   --ds-emerald:      #166534;
@@ -495,7 +495,7 @@ label {
   background: var(--m26-green-50) !important;
 }
 .pt-prayer--pinned {
-  border-color: var(--m26-gold-500, #1a9e75) !important;
+  border-color: var(--m26-gold-500, #0e6e52) !important;
   background: var(--m26-gold-50, #f0faf5) !important;
 }
 .pt-prayer__name {
@@ -697,7 +697,7 @@ label {
 .prophets-lux-empty,
 .prophets-lux-empty { color: var(--txt-muted, #52525B) !important; }
 .prophets-lux-disclaimer {
-  color: var(--txt-warning, #123F36) !important;
+  color: var(--txt-warning, #153025) !important;
   border-color: rgba(202,138,4,0.30) !important;
   background: var(--m26-gold-50, #f0faf5) !important;
 }
@@ -777,7 +777,7 @@ label {
 .notif-banner--warn {
   background: var(--m26-gold-50, #f0faf5) !important;
   border-color: rgba(202,138,4,0.35) !important;
-  color: var(--txt-warning, #123F36) !important;
+  color: var(--txt-warning, #153025) !important;
 }
 .notif-banner--err {
   background: #FEF2F2 !important;
@@ -868,7 +868,7 @@ td {
    ثابتان حتى في الوضع الليلي (كل جدول في الموقع، مثال: صفحات تفاصيل
    جلسات المجمع الفقهي) (2026-07-17). */
 html[data-theme="dark"] table {
-  background: #122019 !important;
+  background: #153025 !important;
 }
 html[data-theme="dark"] th {
   background: rgba(92,196,154,.12) !important;
@@ -921,7 +921,7 @@ html[data-theme="dark"] td {
 .prophets-seerah-bridge__title,
 .prophets-seerah-bridge__title { color: var(--m26-green-950, #052E16) !important; }
 .prophets-seerah-bridge__eyebrow,
-.prophets-seerah-bridge__eyebrow { color: var(--m26-gold-700, #176B57) !important; }
+.prophets-seerah-bridge__eyebrow { color: var(--m26-gold-700, #0e6e52) !important; }
 .prophets-seerah-bridge__desc,
 .prophets-seerah-bridge__desc { color: var(--txt-secondary, #374151) !important; }
 .prophets-seerah-bridge__arrow,
@@ -1425,7 +1425,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   font-weight: 600;
 }
 .adhkar-grade--sahih { background: #DCFCE7; color: #166534; }
-.adhkar-grade--hasan { background: #e8f5f0; color: #176B57; }
+.adhkar-grade--hasan { background: #e8f5f0; color: #0e6e52; }
 .adhkar-grade--other { background: #F3F4F6; color: #374151; }
 .adhkar-sheet-share {
   width: 100%;
@@ -1447,12 +1447,12 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 
 /* ══ 40. Legacy Token Bridge — إعادة تعريف الرموز القديمة للتوافق ═══════════ */
 :root {
-  --text-base:       var(--txt-primary,   #122019);
+  --text-base:       var(--txt-primary,   #153025);
   --text-soft:       var(--txt-secondary, #374151);
   --text-muted:      var(--txt-muted,     #52525B);
   --text-subtle:     var(--txt-subdued,   #6B7280);
   --text-disabled:   var(--txt-disabled,  #A1A1AA);
-  --text-accent:     var(--txt-accent,    #18362A);
+  --text-accent:     var(--txt-accent,    #153025);
   --text-inverse:    var(--txt-inverse,   #FAF8F2);
 
   /* ── تحديث رموز m26 لتطابق هوية Emerald ── */
@@ -1462,9 +1462,9 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   --m26-surface-2:    #F1F3F2;
   --m26-surface-3:    #E1E5E3;
   --m26-green-950:    #07100D;
-  --m26-green-800:    #12281F;
+  --m26-green-800:    #153025;
   --m26-green-700:    #153025;
-  --m26-green-600:    #18362A;
+  --m26-green-600:    #153025;
   --m26-green-100:    #E1E5E3;
   --m26-green-50:     #F1F3F2;
 }
@@ -1476,7 +1476,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
  * يُمنع تماماً خلف: نص قرآني، نص حديث، نماذج، جداول.
  */
 .majalis-star-bg {
-  background-color: #18362A;
+  background-color: #153025;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E");
   background-size: 100px 100px;
   color: #FAF8F2;
@@ -1485,7 +1485,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 /* رأس النجمة — الوضع الاحتفالي للصفحات الرئيسية */
 .majalis-star-hero {
   position: relative;
-  background-color: #176B57;
+  background-color: #0e6e52;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.06' stroke-width='1.2'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.09'/%3E%3C/svg%3E");
   background-size: 100px 100px;
   color: #FAF8F2;
@@ -1581,7 +1581,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   right: 0;
   left: 0;
   height: 3px;
-  background: linear-gradient(to left, var(--color-primary, #176B57), #34d399);
+  background: linear-gradient(to left, var(--color-primary, #0e6e52), #34d399);
   width: var(--rpb-pct, 0%);
   z-index: 9999;
   transition: width 0.1s linear;
@@ -1733,7 +1733,7 @@ p { line-height: var(--lh-normal, 1.65); }
 
 /* ─── ضمان النص الأبيض على شريط القراءة ─── */
 .reading-progress-bar {
-  background: linear-gradient(to right, var(--majalis-emerald, #176B57), #1a9e75);
+  background: linear-gradient(to right, var(--majalis-emerald, #0e6e52), #0e6e52);
 }
 
 /* ─── تحسين الفهرس والتسميات المرئية ─── */

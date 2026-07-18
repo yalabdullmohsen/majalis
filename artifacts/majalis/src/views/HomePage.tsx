@@ -355,57 +355,88 @@ function ExplorePlatformSection() {
         ))}
       </div>
 
-      {/* أقسام بالتصنيف */}
-      {FEATURE_CATS.map(cat => (
-        <div key={cat.id} style={{ marginBottom: "2rem" }}>
-          <div style={{
-            display: "flex", alignItems: "center", gap: "0.6rem",
-            marginBottom: "0.85rem", paddingBottom: "0.7rem",
-            borderBottom: "1.5px solid #ddeee5",
-          }}>
-            {/* زخرفة هندسية بدل المربع */}
-            <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" style={{ flexShrink: 0 }}>
-              <polygon points="14,2 20,9 27,9 22,16 25,24 14,20 3,24 6,16 1,9 8,9" fill="#176B57"/>
-              <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="#176B57" opacity="0.6"/>
-              <circle cx="14" cy="14" r="3" fill="#FAF8F2"/>
-            </svg>
-            <h3 style={{ fontSize: "0.98rem", fontWeight: 800, color: "#176B57", margin: 0 }}>{cat.label}</h3>
-            <span style={{
-              marginRight: "auto", fontSize: "0.68rem", color: "#176B57", fontWeight: 700,
-              background: "#e8f4ed", padding: "0.15rem 0.6rem", borderRadius: "999px",
-              border: "1px solid #c8e6d5",
-            }}>{cat.items.length} قسم</span>
-          </div>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(165px, 1fr))",
-            gap: "0.5rem",
-          }}>
-            {cat.items.map(({ href, Icon: ItemIcon, title, desc }) => (
-              <Link key={href} href={href} style={{
-                display: "flex", alignItems: "flex-start", gap: "0.6rem",
-                padding: "0.75rem 0.8rem", borderRadius: "0.8rem",
-                textDecoration: "none", background: "#fafcfb",
-                border: "1px solid #e2ede8",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
-              }}>
-                <span style={{
-                  background: "linear-gradient(135deg,#176B57,#176B57)", color: "#FAF8F2",
-                  padding: "0.38rem", borderRadius: "0.4rem",
-                  display: "flex", flexShrink: 0, marginTop: "0.05rem",
-                  boxShadow: "0 1px 3px rgba(15,50,30,0.2)",
+      {/* أقسام بالتصنيف — معاينة مختصرة (٤ عناصر) + رابط لعرض الكل، تقليلاً للازدحام.
+          القائمة الكاملة (والأشمل) متاحة دائماً عبر /sitemap. لا حذف لأي رابط —
+          كل عنصر لا يظهر هنا موجود ضمن دليل "كل الأقسام". */}
+      {FEATURE_CATS.map(cat => {
+        const PREVIEW_COUNT = 4;
+        const preview = cat.items.slice(0, PREVIEW_COUNT);
+        const remaining = cat.items.length - preview.length;
+        return (
+          <div key={cat.id} style={{ marginBottom: "2rem" }}>
+            <div style={{
+              display: "flex", alignItems: "center", gap: "0.6rem",
+              marginBottom: "0.85rem", paddingBottom: "0.7rem",
+              borderBottom: "1.5px solid #ddeee5",
+            }}>
+              {/* زخرفة هندسية بدل المربع */}
+              <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" style={{ flexShrink: 0 }}>
+                <polygon points="14,2 20,9 27,9 22,16 25,24 14,20 3,24 6,16 1,9 8,9" fill="#176B57"/>
+                <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="#176B57" opacity="0.6"/>
+                <circle cx="14" cy="14" r="3" fill="#FAF8F2"/>
+              </svg>
+              <h3 style={{ fontSize: "0.98rem", fontWeight: 800, color: "#176B57", margin: 0 }}>{cat.label}</h3>
+              <span style={{
+                marginRight: "auto", fontSize: "0.68rem", color: "#176B57", fontWeight: 700,
+                background: "#e8f4ed", padding: "0.15rem 0.6rem", borderRadius: "999px",
+                border: "1px solid #c8e6d5",
+              }}>{cat.items.length} قسم</span>
+            </div>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(165px, 1fr))",
+              gap: "0.5rem",
+            }}>
+              {preview.map(({ href, Icon: ItemIcon, title, desc }) => (
+                <Link key={href} href={href} style={{
+                  display: "flex", alignItems: "flex-start", gap: "0.6rem",
+                  padding: "0.75rem 0.8rem", borderRadius: "0.8rem",
+                  textDecoration: "none", background: "#fafcfb",
+                  border: "1px solid #e2ede8",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
                 }}>
-                  <ItemIcon size={14} strokeWidth={2} />
-                </span>
-                <div style={{ minWidth: 0 }}>
-                  <strong style={{ display: "block", fontSize: "0.81rem", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.35 }}>{title}</strong>
-                  <span style={{ fontSize: "0.7rem", color: "#666", lineHeight: 1.45, display: "block", marginTop: "0.1rem" }}>{desc}</span>
-                </div>
-              </Link>
-            ))}
+                  <span style={{
+                    background: "linear-gradient(135deg,#176B57,#176B57)", color: "#FAF8F2",
+                    padding: "0.38rem", borderRadius: "0.4rem",
+                    display: "flex", flexShrink: 0, marginTop: "0.05rem",
+                    boxShadow: "0 1px 3px rgba(15,50,30,0.2)",
+                  }}>
+                    <ItemIcon size={14} strokeWidth={2} />
+                  </span>
+                  <div style={{ minWidth: 0 }}>
+                    <strong style={{ display: "block", fontSize: "0.81rem", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.35 }}>{title}</strong>
+                    <span style={{ fontSize: "0.7rem", color: "#666", lineHeight: 1.45, display: "block", marginTop: "0.1rem" }}>{desc}</span>
+                  </div>
+                </Link>
+              ))}
+              {remaining > 0 && (
+                <Link href="/sitemap" style={{
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem",
+                  padding: "0.75rem 0.8rem", borderRadius: "0.8rem",
+                  textDecoration: "none", background: "#eef6f2",
+                  border: "1.5px dashed #b9dbcb",
+                  color: "#176B57", fontSize: "0.78rem", fontWeight: 700,
+                  textAlign: "center",
+                }}>
+                  +{remaining} أقسام أخرى ←
+                </Link>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
+
+      {/* رابط ختامي واحد لدليل الأقسام الكامل (أشمل من القائمة أعلاه) */}
+      <div style={{ textAlign: "center", marginTop: "0.5rem" }}>
+        <Link href="/sitemap" style={{
+          display: "inline-flex", alignItems: "center", gap: "0.4rem",
+          padding: "0.6rem 1.4rem", borderRadius: "0.7rem",
+          textDecoration: "none", background: "#176B57", color: "#FAF8F2",
+          fontSize: "0.83rem", fontWeight: 800,
+        }}>
+          تصفّح كل أقسام المنصة ←
+        </Link>
+      </div>
     </section>
   );
 }
@@ -779,7 +810,7 @@ export default function HomePage() {
       </SectionErrorBoundary>
 
       {/* ══ وصول سريع ══ */}
-      <nav aria-label="وصول سريع" style={{ maxWidth: 760, margin: "1.5rem auto 0", padding: "0 1rem" }}>
+      <nav aria-label="وصول سريع" style={{ maxWidth: 760, margin: "2rem auto 0", padding: "0 1rem" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.7rem" }}>
           <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
             <polygon points="9,1 12,7 18,7 13,11 15,17 9,13 3,17 5,11 0,7 6,7" fill="#176B57" opacity="0.85"/>
@@ -817,20 +848,17 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* ══ بانر يوم الجمعة ══ */}
-      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 1rem" }}>
+      {/* ══ بانرات المناسبات المؤقتة (جمعة/صيام/شهر هجري) — مجمّعة في حاوية
+          واحدة بتباعد داخلي موحّد بدل ثلاث حاويات منفصلة، تقليلاً للتكرار
+          البصري. كل بانر يبقى شرطي الظهور كما كان تماماً. ══ */}
+      <div style={{
+        maxWidth: 760, margin: "2rem auto 0", padding: "0 1rem",
+        display: "flex", flexDirection: "column", gap: "0.75rem",
+      }}>
         <SafeHomeSection name="FridayBanner">
           <FridayBanner />
         </SafeHomeSection>
-      </div>
-
-      {/* ══ تذكير صيام ══ */}
-      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 1rem" }}>
         <HomeSawmReminder />
-      </div>
-
-      {/* ══ تذكير الشهر الهجري ══ */}
-      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 1rem" }}>
         <SafeHomeSection name="HijriSacredMonthBanner">
           <HijriSacredMonthBanner />
         </SafeHomeSection>
