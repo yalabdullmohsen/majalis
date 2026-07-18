@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Bookmark, BookMarked, BookOpen, Flame, Gem, GraduationCap, Landmark, Leaf, Library, Medal, Moon, Repeat2, Scale, Sparkles, Star } from "lucide-react";
+import { Award, Bookmark, BookMarked, BookOpen, BookOpenCheck, Flame, Gem, GraduationCap, Landmark, Leaf, Library, Medal, Mic, Mic2, Moon, Repeat2, Scale, Sparkles, Star } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { EarnedBadge } from "@/lib/user-profile-service";
 
 const BADGE_ICON_MAP: Record<string, LucideIcon> = {
   Flame, Moon, Star, BookOpen, Library, GraduationCap, BookMarked, Repeat2,
   Sparkles, Leaf, Landmark, Scale, Bookmark, Gem, Medal,
+  Mic, Mic2, Award, BookOpenCheck,
 };
 
 type Props = {

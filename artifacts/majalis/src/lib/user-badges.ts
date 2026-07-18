@@ -4,7 +4,8 @@ export type BadgeCategory =
   | "library"
   | "tasbih"
   | "path"
-  | "content";
+  | "content"
+  | "recitation";
 
 export type BadgeDef = {
   key: string;
@@ -24,6 +25,9 @@ export type BadgeCheckStats = {
   savedItems: number;          // bookmarks count
   pathsCompleted: string[];    // path slugs
   achievementsEarned: string[]; // already-earned keys (to skip re-check)
+  recitationSessions: number;         // recitation_sessions count (اختبار التسميع بالذكاء الاصطناعي)
+  recitationPerfectSessions: number;  // جلسات بدقة 100% (accuracy_pct = 100)
+  recitationVersesTotal: number;      // مجموع verses_count عبر كل الجلسات
 };
 
 export const BADGE_DEFS: BadgeDef[] = [
@@ -141,6 +145,40 @@ export const BADGE_DEFS: BadgeDef[] = [
     condition: (s) => s.pathsCompleted.some((p) => p.includes("fiqh") || p.includes("فقه")),
   },
 
+  // ── اختبار التسميع بالذكاء الاصطناعي ─────────────────────────────
+  {
+    key: "recitation_first",
+    titleAr: "أول تسميع",
+    descAr: "أكملت أول جلسة اختبار تسميع بالذكاء الاصطناعي",
+    icon: "Mic",
+    category: "recitation",
+    condition: (s) => s.recitationSessions >= 1,
+  },
+  {
+    key: "recitation_10",
+    titleAr: "المُسمِّع المواظب",
+    descAr: "أكملت 10 جلسات تسميع",
+    icon: "Mic2",
+    category: "recitation",
+    condition: (s) => s.recitationSessions >= 10,
+  },
+  {
+    key: "recitation_perfect",
+    titleAr: "الحافظ المتقن",
+    descAr: "جلسة تسميع بدقة كاملة 100% بلا أي خطأ",
+    icon: "Award",
+    category: "recitation",
+    condition: (s) => s.recitationPerfectSessions >= 1,
+  },
+  {
+    key: "recitation_verses_100",
+    titleAr: "قارئ الآيات",
+    descAr: "سمّعت 100 آية أو أكثر إجمالًا",
+    icon: "BookOpenCheck",
+    category: "recitation",
+    condition: (s) => s.recitationVersesTotal >= 100,
+  },
+
   // ── المحتوى المحفوظ ──────────────────────────────────────────────
   {
     key: "first_save",
@@ -186,6 +224,7 @@ export type XpSources = {
   tasbihLifetime: number;
   savedItems: number;
   badgesEarned: number;
+  recitationVersesTotal: number;
 };
 
 export function computeXp(s: XpSources): number {
@@ -195,7 +234,8 @@ export function computeXp(s: XpSources): number {
     Math.min(s.streakDays, 365) * 10 +
     Math.floor(s.tasbihLifetime / 100) * 2 +
     s.savedItems * 5 +
-    s.badgesEarned * 50
+    s.badgesEarned * 50 +
+    s.recitationVersesTotal * 3
   );
 }
 
