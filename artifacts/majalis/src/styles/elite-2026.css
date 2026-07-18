@@ -32745,3 +32745,35 @@ html[data-theme="dark"] .ikm-card__title {
   font-weight: 600;
   color: var(--majalis-ink-soft, inherit);
 }
+
+/* ════════════════════════════════════
+   §78 — تصغير شعار الهيدر ومحاذاته رأسياً (2026-07-18)
+   ════════════════════════════════════
+   السبب الجذري (تحقّق فعلي عبر Playwright، لا افتراضًا):
+   header.navbar-v3 هو display:block، بينما .navbar-v3__inner بداخله
+   ارتفاعه الفعلي 52px فقط (قاعدة @media (max-width:879px) في index.css)
+   ضمن هيدر ارتفاعه 60px — فيلتصق المحتوى بأعلى الهيدر (top:0) ويبقى
+   فراغ 8px كامل أسفله فقط، فيظهر الشعار (والقائمة بجانبه) أعلى من مركز
+   الشريط فعليًا بدل توسّطه. القيم المتفرّقة لـ.navbar-logo/.navbar-logo--
+   calligraphy عبر index.css (4+ تعريفات) جعلت الشعار أيضًا أعرض بصريًا من
+   زر القائمة المجاور له (69–88px عرضاً مقابل 57–62px للقائمة على الجوال).
+   الإصلاح هنا: جعل الهيدر نفسه flex ليتوسّط .navbar-v3__inner داخله فعلاً
+   (بدل الالتصاق العلوي)، وتصغير الشعار درجة واحدة على سلّم 4pt (32px
+   جوال / 40px سطح مكتب) ليتناسب مع بقية عناصر الهيدر ولا يطغى عليها. */
+header.navbar-v3 {
+  display: flex !important;
+  align-items: center !important;
+}
+.navbar-brand img.navbar-logo.navbar-logo--calligraphy {
+  height: 40px !important;
+  max-height: 40px !important;
+  max-width: 160px !important;
+  width: auto !important;
+}
+@media (max-width: 879px) {
+  .navbar-brand img.navbar-logo.navbar-logo--calligraphy {
+    height: 32px !important;
+    max-height: 32px !important;
+    max-width: 130px !important;
+  }
+}
