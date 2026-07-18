@@ -32,6 +32,14 @@ const QURAN_SECTIONS: QuranSection[] = [
     tag: "٦٠٤ صفحة",
   },
   {
+    href: "/mushaf/page",
+    title: "المصحف بنظام الصفحات",
+    desc: "صفحات مصحف حقيقية مطابقة لتقسيم مصحف المدينة، مع إطارات وأوضاع قراءة وإشارات مرجعية وملاحظات",
+    Icon: Layers,
+    accent: "#176B57",
+    tag: "جديد",
+  },
+  {
     href: "/quran/surah-stories",
     title: "قصص القرآن",
     desc: "أسباب النزول ومحاور ١١٤ سورة قرآنية مع العبر والفوائد",

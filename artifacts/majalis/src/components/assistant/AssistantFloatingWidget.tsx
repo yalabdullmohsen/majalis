@@ -10,7 +10,10 @@ export function AssistantFloatingWidget() {
   const chat = useAssistantChat();
   const closeRef = useRef<HTMLButtonElement>(null);
 
-  const hiddenOnPage = location === "/assistant" || location.startsWith("/admin");
+  // /mushaf/page: قارئ غامر بشريط تنقّل سفلي ثابت بعرض الشاشة كاملاً — الزر
+  // العائم يتراكب فوقه فعليًا (z-index:45 أعلى من شريط التنقّل) ويحجب النقر،
+  // اكتُشف حيًّا أثناء تحقّق Playwright (انظر MushafPageView.tsx).
+  const hiddenOnPage = location === "/assistant" || location.startsWith("/admin") || location.startsWith("/mushaf/page");
 
   useEffect(() => {
     setOpen(false);

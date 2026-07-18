@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useLocation } from "wouter";
-import { Menu, Pause, Play, Copy, Check, Mic } from "lucide-react";
+import { Menu, Pause, Play, Copy, Check, Mic, BookOpen } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
-import { fetchSurahDetail, getSurahList, type SurahDetail, type SurahSummary } from "@/lib/quran-api";
+import { fetchSurahDetail, getSurahList, SURAH_START_PAGES, type SurahDetail, type SurahSummary } from "@/lib/quran-api";
 import { SurahList } from "@/components/quran/SurahList";
 import { ExploreAyahPanel } from "@/components/quran/ExploreAyahPanel";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
@@ -117,15 +117,25 @@ export default function MushafPage() {
                 {isFirstAyahBasmala && (
                   <p className="qs-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
                 )}
-                <button
-                  type="button"
-                  className="qs-recitation-cta"
-                  onClick={() => navigate(`/quran/recitation-test-ai?surah=${surahNum}`)}
-                >
-                  <Mic size={16} aria-hidden="true" />
-                  سمّع هذه السورة
-                  <span className="qs-recitation-cta__badge">نسخة تجريبية</span>
-                </button>
+                <div className="qs-surah-header__actions" style={{ display: "flex", gap: ".5rem", justifyContent: "center", flexWrap: "wrap" }}>
+                  <button
+                    type="button"
+                    className="qs-recitation-cta"
+                    onClick={() => navigate(`/quran/recitation-test-ai?surah=${surahNum}`)}
+                  >
+                    <Mic size={16} aria-hidden="true" />
+                    سمّع هذه السورة
+                    <span className="qs-recitation-cta__badge">نسخة تجريبية</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="qs-recitation-cta"
+                    onClick={() => navigate(`/mushaf/page/${SURAH_START_PAGES[surahNum - 1]}`)}
+                  >
+                    <BookOpen size={16} aria-hidden="true" />
+                    عرض بصفحات المصحف الحقيقية
+                  </button>
+                </div>
               </header>
 
               <div className="qs-ayah-display">
