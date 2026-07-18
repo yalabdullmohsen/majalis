@@ -51,7 +51,7 @@ export async function fetchDynamicUrls() {
 
   if (!admin) return urls;
 
-  const [lessons, sheikhs, library, qa, fawaid, fatwas, updates] = await Promise.all([
+  const [lessons, sheikhs, library, qa, fawaid, fatwas, updates, learningPaths] = await Promise.all([
     admin.from("lessons").select("id, updated_at, slug").eq("status", "approved").limit(2000),
     admin.from("sheikhs").select("id, updated_at").eq("is_verified", true).limit(500),
     admin.from("library_items").select("id, updated_at").eq("status", "approved").limit(500),
@@ -59,6 +59,15 @@ export async function fetchDynamicUrls() {
     admin.from("fawaid").select("id, updated_at").eq("status", "approved").limit(500),
     admin.from("fatwas").select("id, slug, updated_at").eq("status", "approved").limit(200),
     admin.from("platform_updates").select("id, updated_at").eq("status", "approved").limit(200),
+    // اكتُشف 2026-07-18: /learning/paths/:slug (كل الـ15 مساراً التعليمية
+    // المبنية بكثافة هذه الجلسة) كانت غائبة تماماً عن sitemap.xml الحي —
+    // seo-routes.json (المصدر الثابت لـbuildSitemapXml) لا يحوي أي إدخال
+    // فردي لمسار، وfetchDynamicUrls لم يكن يستعلم جدول learning_paths
+    // إطلاقاً. تحقَّق مباشرة من https://www.majlisilm.com/sitemap.xml
+    // الحي: يحوي فقط /learning/paths (الفهرس) بلا أي مسار فردي. أُضيف
+    // استعلام حي هنا (لا مرآة ثابتة) ليبقى متزامناً تلقائياً مع أي مسار
+    // جديد يُنشَر مستقبلاً.
+    admin.from("learning_paths").select("id, slug, updated_at").eq("status", "published").limit(200),
   ]);
 
   for (const row of lessons.data || []) {
@@ -81,6 +90,9 @@ export async function fetchDynamicUrls() {
   }
   for (const row of updates.data || []) {
     urls.push({ loc: `/updates/${row.id}`, lastmod: row.updated_at, priority: 0.65 });
+  }
+  for (const row of learningPaths.data || []) {
+    urls.push({ loc: `/learning/paths/${row.slug || row.id}`, lastmod: row.updated_at, priority: 0.7 });
   }
 
   return urls;
