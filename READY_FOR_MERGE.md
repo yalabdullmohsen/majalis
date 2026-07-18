@@ -6,7 +6,13 @@
 > هذا الملف يوثّق فقط أن البوابات الفنية (typecheck/lint/tests/build)
 > اجتازت معًا في دفعة واحدة نهائية، كما طلب المالك.
 
-## ▶️ حالة الجلسة — ملخص موحَّد (بعد 37+ دفعة، آخر تحديث 2026-07-18)
+## ▶️ حالة الجلسة — ملخص موحَّد (بعد 38+ دفعة، آخر تحديث 2026-07-18)
+
+**تكملة أخيرة**: عُمِّق "منهج الحوار والتدرج" (dawah) — 4 أمثلة حقيقية
+للتدرج: حديث بعث معاذ، تحريم الخمر تدريجياً (3 آيات محلية)، الرفق في
+الدعوة، مراتب تغيير المنكر. dawah total_sessions: 5→9. commit
+`c0ad0121`. 8 مقررات ضحلة متبقية (زاد المستقنع مؤجَّل؛ اكتُشفت أيضاً
+مقررات إضافية في مساري آداب/تربية لم تُفحص من قبل).
 
 **تكملتان أخيرتان**: عُمِّق "تفسير سورة النحل" (آيات 1-39 موضوعياً: نعم
 الله، حجة التوحيد، حال المتقين/الظالمين، إرسال الرسل؛ tafseer
@@ -183,7 +189,8 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-3a4c432d...
+c0ad0121...
+c0ad0121  feat(learning): deepen manhaj-hiwar-tadarruj course — 1 item → 5 (4 gradualism examples)
 3a4c432d  feat(learning): deepen kitab-tawhid-complete course (tawheed path) — 1 item → 5
 65bca303  feat(learning): deepen tafsir-nahl course — 2 items → 6 (ayahs 1-39 themes)
 239edf6e  feat(learning): deepen seerah-general course — 1 item → 5 (4 early Meccan events)
