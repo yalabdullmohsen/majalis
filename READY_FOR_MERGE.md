@@ -6,7 +6,20 @@
 > هذا الملف يوثّق فقط أن البوابات الفنية (typecheck/lint/tests/build)
 > اجتازت معًا في دفعة واحدة نهائية، كما طلب المالك.
 
-## ▶️ حالة الجلسة — ملخص موحَّد (بعد 48+ دفعة، آخر تحديث 2026-07-18)
+## ▶️ حالة الجلسة — ملخص موحَّد (بعد 49+ دفعة، آخر تحديث 2026-07-18)
+
+**المقالة الأصلية الرابعة**: "منازل القلب الثلاث: الصبر والشكر والرضا" —
+تربط 3 مقررات تربية بُنيت هذه الجلسة بمقرر "باب الصبر" في رياض الصالحين،
+محتوى مُتحقَّق منه بالفعل (لا استشهادات جديدة)، مع إفصاح صريح عن حديث
+غير مؤكَّد التصحيح (الحسد، أبو داود) بدل ادّعاء صحته. `articles`: 3→4.
+commit `2c3eb274`.
+
+**رصد بلا إصلاح**: لعبة الأسئلة الجاهزة (QA) لها احتمال نفس نمط بق
+category (`QA_CANONICAL_CATEGORIES` 22 مقابل `qa_categories` الحية 37)،
+لكن يوجد نظام aliasing جزئي موجود مسبقاً وسلوك الفلترة الفعلي عند النقر
+غامض بلا اختبار متصفح حي؛ ومحتوى qa_questions رقيق جداً (39 سؤالاً
+تجريبياً). لم يُقدَّم إصلاح تخميني — وُثِّق كمرشح بأولوية أدنى من
+fiqh_council.
 
 **🔧 فحص منهجي لكل قيود category الحية كشف نفس البق على جدول شقيق**:
 `fiqh_council_items` (الجدول الأساسي للصفحة الرئيسية /fiqh-council وست
@@ -268,7 +281,8 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-b3e66c12...
+2c3eb274...
+2c3eb274  content(articles): fourth original article — منازل القلب الثلاث: الصبر والشكر والرضا
 b3e66c12  fix+content(fiqh-council): same category CHECK gap found on sibling table fiqh_council_items
 a06ba3d1  content(fiqh-council): populate nawazil-muasira category (2 real IIFA decisions)
 68344bc1  fix+content(fiqh-council): populate atima-ashriba category + fix category CHECK gap
