@@ -6,7 +6,16 @@
 > هذا الملف يوثّق فقط أن البوابات الفنية (typecheck/lint/tests/build)
 > اجتازت معًا في دفعة واحدة نهائية، كما طلب المالك.
 
-## ▶️ حالة الجلسة — ملخص موحَّد (بعد 32+ دفعة، آخر تحديث 2026-07-18)
+## ▶️ حالة الجلسة — ملخص موحَّد (بعد 34+ دفعة، آخر تحديث 2026-07-18)
+
+**تكملتان أخيرتان (قائمة المقررات السطحية المتبقية، بطلب المنسّق)**:
+عُمِّق "مصطلح الحديث" العام (4 مصطلحات تصنيفية جديدة: مرفوع/موقوف/مقطوع،
+مسند/متصل/منقطع/مرسل، زيادة الثقة، الحديث الموضوع — محتوى تعريفي مستقر
+من مقدمة ابن الصلاح، لا يحتاج تخريجاً فردياً؛ mustalah-hadith
+total_sessions 18→22؛ commit `6bda7e0e`) و"نواقض الإسلام" (القائمة
+الكاملة للنواقض العشرة تحقَّقت حرفياً عبر WebFetch، جُمِّعت في 4 عناصر
+موضوعية؛ aqeedah total_sessions 70→74؛ commit `139b5228`). 12 مقرراً
+ضحلاً متبقٍّ.
 
 **ثلاث تكملات أخيرة (أولوية علمية، بطلب المنسّق)**: بعد صحيح البخاري
 ومسلم ورياض الصالحين، عُمِّقت "العقيدة الواسطية" (ابن تيمية، 1→5،
@@ -162,7 +171,9 @@ majalis-content-fill
 ## آخر commit مُتحقَّق منه (مدفوع فعلياً لـorigin)
 
 ```
-d50e988f...
+139b5228...
+139b5228  feat(learning): deepen nawaqid-islam course — 2 items → 6 (10 nullifiers, grouped)
+6bda7e0e  feat(learning): deepen mustalah-hadith-general course — 1 item → 5 (4 terminology types)
 d50e988f  feat(learning): deepen bulugh-maram course — 1 general item → 5 (4 ahkam hadiths)
 74adbc42  feat(learning): deepen aqidah-tahawiyyah course — 1 general item → 5 (4 real sections)
 f9c07987  feat(learning): deepen aqidah-wasitiyyah course — 1 general item → 5 (4 real sections)
