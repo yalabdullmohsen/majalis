@@ -163,6 +163,7 @@ const SECTIONS = [
       { href: "/terms",    label: "الشروط والأحكام", desc: "شروط استخدام المنصة" },
       { href: "/features-in-progress", label: "المميزات القادمة", desc: "خارطة الطريق" },
       { href: "/updates",  label: "آخر التحديثات",   desc: "مستجدات المنصة" },
+      { href: "/developers", label: "للمطورين",      desc: "واجهة برمجة التطبيقات (API)" },
     ],
   },
 ];

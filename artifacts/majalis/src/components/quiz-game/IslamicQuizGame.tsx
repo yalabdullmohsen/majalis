@@ -305,8 +305,11 @@ function ScoreBar({ teams, activeTeam }: { teams: [Team, Team]; activeTeam: Team
 // ─── Setup Phase ───────────────────────────────────────────────────────────
 
 function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, string]) => void }) {
-  const [name1, setName1] = useState("الفريق الأول");
-  const [name2, setName2] = useState("الفريق الثاني");
+  // الحقلان يبدآن فارغَين فعلياً (لا نص افتراضي يحتاج مسحاً يدوياً) — اسم
+  // الفريق الافتراضي يُستخدم فقط كعرض احتياطي عند عدم الإدخال (زر البدء
+  // أدناه)، وكـplaceholder باهت يختفي تلقائياً عند الكتابة.
+  const [name1, setName1] = useState("");
+  const [name2, setName2] = useState("");
   const [selected, setSelected] = useState<string[]>([]);
 
   const toggle = (id: string) =>
@@ -314,7 +317,7 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
       prev.includes(id) ? prev.filter((x) => x !== id) : prev.length < 6 ? [...prev, id] : prev,
     );
 
-  const canStart = selected.length >= 2 && name1.trim() && name2.trim();
+  const canStart = selected.length >= 2;
 
   return (
     <div className="qzg-setup">
@@ -331,11 +334,11 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
         <div className="qzg-teams-grid">
           <div>
             <label htmlFor="qzg-team1" className="qzg-team-label">الفريق الأول</label>
-            <input id="qzg-team1" value={name1} onChange={(e) => setName1(e.target.value)} maxLength={20} className="qzg-input" />
+            <input id="qzg-team1" value={name1} onChange={(e) => setName1(e.target.value)} placeholder="الفريق الأول" maxLength={20} className="qzg-input" />
           </div>
           <div>
             <label htmlFor="qzg-team2" className="qzg-team-label">الفريق الثاني</label>
-            <input id="qzg-team2" value={name2} onChange={(e) => setName2(e.target.value)} maxLength={20} className="qzg-input" />
+            <input id="qzg-team2" value={name2} onChange={(e) => setName2(e.target.value)} placeholder="الفريق الثاني" maxLength={20} className="qzg-input" />
           </div>
         </div>
       </section>
@@ -389,7 +392,7 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
         disabled={!canStart}
         className={`qzg-btn-primary qzg-btn-primary--wide${canStart ? "" : " qzg-btn-primary--disabled"}`}
       >
-        {canStart ? "ابدأ اللعبة" : selected.length < 2 ? "اختر فئتين على الأقل" : "أدخل أسماء الفريقين"}
+        {canStart ? "ابدأ اللعبة" : "اختر فئتين على الأقل"}
       </button>
     </div>
   );

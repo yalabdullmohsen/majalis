@@ -12,6 +12,7 @@ import {
   Heart,
   Lightbulb,
   Moon,
+  Puzzle,
   Scroll,
   Star,
   Target,
@@ -65,9 +66,10 @@ const STEPS: Step[] = [
   {
     num: 4,
     title: "القرآن الكريم",
-    desc: "تلاوة القرآن يومياً مع الفهم. ابدأ بصفحتين يومياً واستخدم الورد اليومي للمتابعة.",
+    desc: "اقرأ المصحف كاملاً بترقيم مصحف المدينة (٦٠٤ صفحة) بخط عثماني واضح، أو ابدأ من مركز القرآن للتلاوة والتفسير. ابدأ بصفحتين يومياً واستخدم الورد اليومي للمتابعة.",
     Icon: BookOpen,
     links: [
+      { href: "/mushaf",      label: "المصحف (٦٠٤ صفحة)" },
       { href: "/quran-hub",   label: "مركز القرآن" },
       { href: "/daily-wird",  label: "الورد اليومي" },
       { href: "/quran/tajweed", label: "أحكام التجويد" },
@@ -112,6 +114,18 @@ const STEPS: Step[] = [
   },
   {
     num: 8,
+    title: "راجع واختبر نفسك",
+    desc: "المراجعة بالاختبار ترسّخ العلم أكثر من القراءة وحدها. اختبر معلوماتك بلعبة الأسئلة، راجع بالبطاقات، أو استخدم الخرائط الذهنية لتنظيم ما حفظته.",
+    Icon: Puzzle,
+    links: [
+      { href: "/quiz",       label: "لعبة سؤال وجواب" },
+      { href: "/flashcards", label: "البطاقات الدعوية" },
+      { href: "/mind-map",   label: "الخرائط الذهنية" },
+    ],
+    tip: "خصّص وقتاً أسبوعياً للمراجعة، لا للحفظ الجديد فقط.",
+  },
+  {
+    num: 9,
     title: "توسيع المعرفة",
     desc: "بعد الأساسيات توسّع في العلوم: الأحاديث، علوم القرآن، الفقه المقارن، السيرة التفصيلية.",
     Icon: Target,
@@ -120,6 +134,7 @@ const STEPS: Step[] = [
       { href: "/ulum-quran",     label: "علوم القرآن" },
       { href: "/hadith-science", label: "مصطلح الحديث" },
       { href: "/learning/paths", label: "المسارات العلمية" },
+      { href: "/knowledge-graph", label: "خارطة المعرفة التفاعلية" },
     ],
     tip: "الآن يمكنك الاختيار بحرية حسب اهتمامك.",
   },
@@ -137,7 +152,7 @@ export default function StartHerePage() {
     applyPageSeo({
       path: "/start-here",
       title: "ابدأ من هنا — طريقك لطالب العلم | المجلس العلمي",
-      description: "مسار تعريفي مرتّب لطالب العلم المبتدئ: العقيدة، الصلاة، السيرة، القرآن، الأذكار، الفقه، الدروس. خطوات واضحة بروابط مباشرة.",
+      description: "مسار تعريفي مرتّب لطالب العلم المبتدئ: العقيدة، الصلاة، السيرة، القرآن (بما فيه المصحف كاملاً ٦٠٤ صفحة)، الأذكار، الفقه، الدروس، والمراجعة بالاختبارات. خطوات واضحة بروابط مباشرة.",
       keywords: ["ابدأ من هنا", "طالب العلم المبتدئ", "كيف أبدأ بطلب العلم", "مسار إسلامي"],
       jsonLd: [
         {
@@ -168,11 +183,11 @@ export default function StartHerePage() {
         </div>
         <h1 className="sh-hero__title">ابدأ من هنا</h1>
         <p className="sh-hero__sub">
-          مسار مرتّب لطالب العلم المبتدئ — ٨ خطوات تربط المحتوى الموجود في المنصة
+          مسار مرتّب لطالب العلم المبتدئ — ٩ خطوات تربط المحتوى الموجود في المنصة
           بترتيب يُبني العلم طبقة فوق طبقة.
         </p>
         <div className="sh-hero__stats">
-          <span className="sh-stat"><Check size={13} strokeWidth={2.5} />٨ محطات علمية</span>
+          <span className="sh-stat"><Check size={13} strokeWidth={2.5} />٩ محطات علمية</span>
           <span className="sh-stat"><Clock size={13} strokeWidth={2.5} />١٥ دقيقة يومياً تكفي</span>
           <span className="sh-stat"><Lightbulb size={13} strokeWidth={2.5} />بدون محتوى جديد مولّد</span>
         </div>
