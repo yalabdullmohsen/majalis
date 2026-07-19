@@ -32526,21 +32526,16 @@ html[data-theme="dark"] .ikm-card__title {
    var(--font-ui)/Alexandria لكل ما عداه.
    ============================================================ */
 .quran-shell.mushaf-v2 {
-  /* min-height:100dvh وهي مدفوعة فعليًا لأسفل بارتفاع هيدر التطبيق العلوي
-     (--mobile-header-h) يتجاوز مجموعهما ارتفاع نافذة العرض — نفس صيغة
-     الحجز المُستخدَمة فعلاً في index.css لصفحات أخرى (بحثتُ عنها قبل
-     الاختراع)، لا حساب جديد مخمَّن. تحقّقتُ فعليًا بالقياس: بدون هذا كان
-     64px من مؤشّر الصفحات (mushaf-v2__pager) يقع خارج نافذة العرض خلف
-     التنقل السفلي الثابت. */
-  min-height: calc(100dvh - var(--mobile-header-h, 4rem) - var(--bottom-nav-h, 56px) - env(safe-area-inset-bottom, 0px));
+  /* قراءة غامرة كاملة الشاشة (NavBar/BottomNavBar/المساعد العائم مخفية
+     كليًا على /mushaf — راجع hiddenOnPage في NavBar.tsx/BottomNavBar.tsx/
+     AssistantFloatingWidget.tsx): لا حجز لارتفاع شريط علوي/سفلي عام بعد
+     الآن، فقط 100dvh كاملة؛ حواف الشاشة الآمنة (النوتش/شريط الإيماءات)
+     تُترَك لـpadding الهيدر/الصفحة نفسها (env(safe-area-inset-*) هناك). */
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   background: var(--majalis-panel);
   overflow: hidden;
-}
-@media (min-width: 880px) {
-  /* التنقل السفلي مخفي على الشاشات الكبيرة (desktop) — لا حاجة لحجز مساحته. */
-  .quran-shell.mushaf-v2 { min-height: calc(100dvh - var(--mobile-header-h, 4rem)); }
 }
 
 .mushaf-v2__header {
@@ -32665,10 +32660,23 @@ html[data-theme="dark"] .ikm-card__title {
   margin-inline-end: .35rem;
 }
 .mushaf-v2__sajda-mark {
-  display: inline-block;
-  font-size: 1.1rem;
-  color: #B08D2E;
-  margin-inline-start: .3rem;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: .68rem;
+  font-weight: 700;
+  color: #7A5E14;
+  background: rgba(176,141,46,.14);
+  border: 1px solid rgba(176,141,46,.35);
+  border-radius: 999px;
+  padding: .08rem .5rem;
+  margin-inline-start: .4rem;
+  vertical-align: middle;
+}
+html[data-theme="dark"] .mushaf-v2__sajda-mark {
+  color: #E8C97A;
+  background: rgba(232,201,122,.14);
+  border-color: rgba(232,201,122,.35);
 }
 
 .mushaf-v2__pager {

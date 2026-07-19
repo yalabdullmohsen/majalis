@@ -31,6 +31,11 @@ export function BottomNavBar() {
     return location === href || location.startsWith(href + "/");
   };
 
+  // قارئ المصحف /mushaf غامر مخصَّص بتنقّله الخاص (pager/سحب صفحات) —
+  // شريط تنقّل سفلي عام فوقه يجعله يبدو صفحة ويب لا تطبيق قراءة، ويحجز
+  // مساحة (--bottom-nav-h) كانت ستبقى محسوبة في تخطيط المصحف بلا داعٍ.
+  if (location.startsWith("/mushaf")) return null;
+
   return (
     <>
       <nav className="bottom-nav bottom-nav--v2" aria-label="التنقل السفلي">

@@ -146,6 +146,10 @@ export default function NavBar() {
     </div>
   );
 
+  // قارئ المصحف /mushaf غامر مخصَّص بهيدره/تنقّله الخاصين — شريط الموقع
+  // الكامل (بحث/دخول/قوائم) فوقه يجعله يبدو صفحة ويب لا تطبيق قراءة.
+  if (location.startsWith("/mushaf")) return null;
+
   return (
     <>
       <header
