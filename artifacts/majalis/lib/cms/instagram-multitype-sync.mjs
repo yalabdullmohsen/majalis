@@ -114,6 +114,7 @@ export async function upsertUnifiedContentItem(supabase, { source, item, content
     attribution_name: attributionName,
     organization_name: organizationName,
     image_url: item.imageUrl || null,
+    media_type: item.mediaType || null,
     registration_url: source.config?.website_url || null,
     event_start_at: eventStartAt,
     expires_at: expiresAt,
