@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Link } from "wouter";
 import { ARBAEEN_NAWAWI } from "@/lib/arbaeen-nawawi-seed";
+import { truncateAtWord } from "@/lib/utils";
 
 function getTodayHadith() {
   const start = new Date(new Date().getFullYear(), 0, 0);
@@ -11,7 +12,7 @@ function getTodayHadith() {
 
 export function HomeNawawiHadith() {
   const hadith = useMemo(() => getTodayHadith(), []);
-  const shortText = hadith.text.length > 160 ? hadith.text.slice(0, 157) + "…" : hadith.text;
+  const shortText = hadith.text.length > 160 ? truncateAtWord(hadith.text, 157) : hadith.text;
 
   return (
     <section className="hnh" aria-labelledby="hnh-heading">

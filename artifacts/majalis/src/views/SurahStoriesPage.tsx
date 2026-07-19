@@ -6,6 +6,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { getAllSurahStories, getSurahStory, searchSurahStories } from "@/lib/surah-stories";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
+import { truncateAtWord } from "@/lib/utils";
 
 export default function SurahStoriesPage() {
   const [search, setSearch] = useState("");
@@ -65,7 +66,7 @@ export default function SurahStoriesPage() {
           <Link key={s.number} href={`/quran/surah-stories/${s.number}`} className="surah-story-card ui-card">
             <span className="surah-story-num">{s.number}</span>
             <strong>{s.name}</strong>
-            <p>{s.namingReason.slice(0, 80)}{s.namingReason.length > 80 ? "…" : ""}</p>
+            <p>{truncateAtWord(s.namingReason, 80)}</p>
             <span className="surah-story-meta">{s.ayahCount} آية · {s.revelationPlace}</span>
           </Link>
         ))}
