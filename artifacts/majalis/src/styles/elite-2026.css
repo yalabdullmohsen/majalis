@@ -33454,6 +33454,9 @@ header.navbar-v3 {
   position: relative;
 }
 .update-available-banner__icon { flex-shrink: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .update-available-banner__icon--spin { animation: spin 1.2s linear infinite; }
+}
 .update-available-banner__btn {
   border: 1px solid rgba(255,255,255,.55);
   background: rgba(255,255,255,.12);
