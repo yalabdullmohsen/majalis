@@ -11,3 +11,5 @@ dist/
 # ملفات محلية مؤقتة من CLI (supabase db query --linked وXcode)
 supabase/.temp/
 **/xcshareddata/swiftpm/
+.vercel
+.env*
