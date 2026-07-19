@@ -18,11 +18,6 @@ type RevelationFilter = "all" | "meccan" | "medinan" | "favorites";
  *  الكامل). لا يُغيَّر الافتراضي أبدًا — طلب صريح من المالك. */
 type SortMode = "mushaf" | "revelation";
 
-const REVELATION_LABEL: Record<"Meccan" | "Medinan", string> = {
-  Meccan: "مكية",
-  Medinan: "مدنية",
-};
-
 export default function SurahIndexPage() {
   const [surahs, setSurahs] = useState<SurahIndexEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -87,7 +82,7 @@ export default function SurahIndexPage() {
     <div className="surah-index-page" dir="rtl">
       <header className="surah-index-hero">
         <h1>فهرس السور</h1>
-        <p>١١٤ سورة — رقمها واسمها وعدد آياتها وتصنيفها، مع بحث سريع ومفضلة.</p>
+        <p>١١٤ سورة — رقمها واسمها، مع بحث سريع ومفضلة وفلترة حسب التصنيف.</p>
         <Link href="/quran/revelation-order" className="surah-index-revelation-link">
           <Sparkles size={14} strokeWidth={1.8} aria-hidden="true" />
           خريطة ترتيب نزول السور ←
@@ -181,11 +176,15 @@ export default function SurahIndexPage() {
                 </span>
                 <span className="surah-index-row__body">
                   <span className="surah-index-row__name" style={{ fontFamily: "var(--font-quran)" }}>{s.name}</span>
-                  <span className="surah-index-row__meta">
-                    {sortMode === "revelation" ? <>سورة رقم {s.number} في المصحف · </> : null}
-                    {s.numberOfAyahs} آية
-                    {s.revelationType && <> · {REVELATION_LABEL[s.revelationType]}</>}
-                  </span>
+                  {/* عدد الآيات والتصنيف (مكية/مدنية) أُخفيا من بطاقة القائمة عمدًا —
+                      اسم السورة فقط هنا؛ كل التفاصيل (عدد الآيات، التصنيف...) تبقى
+                      كاملة داخل صفحة السورة نفسها، لا حذف بيانات، فقط تبسيط بصري
+                      للقائمة. رقم المصحف عند الفرز بترتيب النزول يبقى ظاهرًا لأنه
+                      سياق تنقّل ضروري (الرقم الظاهر في الشارة حينها هو ترتيب النزول
+                      لا رقم المصحف). */}
+                  {sortMode === "revelation" && (
+                    <span className="surah-index-row__meta">سورة رقم {s.number} في المصحف</span>
+                  )}
                 </span>
                 <button
                   type="button"

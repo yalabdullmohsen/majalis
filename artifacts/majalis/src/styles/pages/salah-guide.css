@@ -89,10 +89,19 @@
 .sg-tabs-bar::-webkit-scrollbar { display: none; }
 .sg-tab {
   display: flex; flex-direction: column; align-items: center; gap: .2rem;
-  padding: .65rem .8rem; border: none; background: transparent;
-  cursor: pointer; font-family: inherit; white-space: nowrap;
+  padding: .65rem .5rem; border: none; background: transparent;
+  cursor: pointer; font-family: inherit;
   border-bottom: 2px solid transparent; margin-bottom: -2px;
   transition: all .15s; color: #929995; font-size: .72rem;
+  /* عرض ثابت (لا min-width فقط) ليمنع النص الحرفي (نمط تسمية سطرين تحت
+     الأيقونة) من التمدد بعرض المحتوى؛ white-space الافتراضي (normal) على
+     تسمية النص يسمح لها بالالتفاف على سطرين بدل الفيض أفقيًا فوق التبويبات
+     المجاورة (تشابك نصوص حقيقي كان يظهر مع تسميات طويلة كـ"المبطلات
+     والمكروهات"، شُخِّص 2026-07-19 عبر Playwright حي). */
+  width: 4.6rem; flex-shrink: 0;
+}
+.sg-tab > span:last-child {
+  white-space: normal; line-height: 1.15; text-align: center;
 }
 .sg-tab--active { border-bottom-color: var(--majalis-emerald,#173D35); color: var(--majalis-emerald,#173D35); font-weight: 700; }
 
@@ -301,7 +310,6 @@
   .sg-shurut-grid, .sg-khushuu-grid { grid-template-columns: 1fr; }
   .sg-related__grid { grid-template-columns: repeat(2, 1fr); }
   .sg-hero__title { font-size: 1.35rem; }
-  .sg-tab { min-width: 4.8rem; }
   .sg-times-row { gap: .3rem; }
 }
 
