@@ -1207,7 +1207,7 @@ p, li {
   --ds-emerald:        var(--msk-gold,        #28584D);
   --ds-emerald-deep:   var(--msk-gold-deep,   #173D35);
   --ds-emerald-soft:   var(--majalis-sage,    #EAF3EF);
-  --ds-emerald-muted:  var(--msk-gold-dim,    rgba(14,110,82,.12));
+  --ds-emerald-muted:  var(--msk-gold-dim,    rgba(23,61,53,.12));
   --ds-gold:           var(--msk-gold,        #28584D);
   --ds-gold-soft:      var(--majalis-sage,    #EAF3EF);
   --ds-parchment:      var(--msk-canvas,      #FAF8F5);
@@ -1501,7 +1501,7 @@ hr.decorative,
 /* ── البند 1: Home Quiz Card ─────────────────────────────── */
 .ds-quiz-home-card {
   background: linear-gradient(135deg, #f0f7f3 0%, #fefdf5 100%);
-  border: 1.5px solid rgba(14, 110, 82, 0.45);
+  border: 1.5px solid rgba(23,61,53, 0.45);
   border-radius: 1rem;
   padding: 1.75rem;
 }
@@ -1521,7 +1521,7 @@ hr.decorative,
 .ds-quiz-home-card__badge {
   display: inline-block;
   padding: 0.2rem 0.625rem;
-  background: rgba(14, 110, 82, 0.12);
+  background: rgba(23,61,53, 0.12);
   color: var(--clr-primary, #28584D);
   border-radius: 999px;
   font-size: 0.73rem;
@@ -1598,8 +1598,8 @@ hr.decorative,
   color: #4b5563;
 }
 .ds-quiz-home-card__challenge {
-  background: rgba(14, 110, 82, 0.06);
-  border: 1px solid rgba(14, 110, 82, 0.18);
+  background: rgba(23,61,53, 0.06);
+  border: 1px solid rgba(23,61,53, 0.18);
 }
 .ds-quiz-home-card__challenge-badge {
   color: var(--clr-primary, #28584D);
@@ -1628,7 +1628,7 @@ hr.decorative,
 /* ── البند 4: Compact Prayer Strip ──────────────────────── */
 .hcp-strip {
   background: #fafdf8;
-  border: 1px solid rgba(14, 110, 82, 0.28);
+  border: 1px solid rgba(23,61,53, 0.28);
   border-radius: 0.75rem;
   padding: 0.75rem 1rem;
 }
@@ -1705,10 +1705,10 @@ hr.decorative,
 
 /* ── البند 2: About Section ─────────────────────────────── */
 .home-about {
-  background: linear-gradient(135deg, rgba(22,78,60,0.03) 0%, rgba(14,110,82,0.04) 100%);
+  background: linear-gradient(135deg, rgba(22,78,60,0.03) 0%, rgba(23,61,53,0.04) 100%);
   border-radius: 1rem;
   padding: 2rem;
-  border: 1px solid rgba(14, 110, 82, 0.2);
+  border: 1px solid rgba(23,61,53, 0.2);
 }
 
 .home-about__eyebrow {
@@ -1997,7 +1997,7 @@ hr.decorative,
   margin-bottom: 0.75rem;
 }
 
-.push-prompt--warn { border-color: #fcd34d; background: rgba(14,110,82,0.06); }
+.push-prompt--warn { border-color: #fcd34d; background: rgba(23,61,53,0.06); }
 .push-prompt--info { border-color: #93c5fd; background: #eff6ff; font-size: 0.82rem; color: #1e40af; }
 
 .push-prompt__text {
@@ -2867,7 +2867,7 @@ hr.decorative,
   border-top: 1px dashed var(--ds-line-color);
   margin-top: 0.5rem;
 }
-.mwc-advanced { padding: 0.75rem; background: rgba(14,110,82,0.04); border-radius: var(--ds-radius, 0.5rem); margin-top: 0.5rem; }
+.mwc-advanced { padding: 0.75rem; background: rgba(23,61,53,0.04); border-radius: var(--ds-radius, 0.5rem); margin-top: 0.5rem; }
 
 .mwc-error {
   padding: 0.85rem 1rem;
@@ -4748,7 +4748,7 @@ h1, h2, h3 {
 
 .ds-btn--primary,
 .ui-card-btn,
-.page-action-btn,
+.page-action-btn:not(.page-action-btn--secondary),
 .login-submit {
   background: var(--ds-emerald);
   border-color: var(--ds-emerald);
@@ -4757,7 +4757,7 @@ h1, h2, h3 {
 
 .ds-btn--primary:hover:not(:disabled),
 .ui-card-btn:hover:not(:disabled),
-.page-action-btn:hover:not(:disabled),
+.page-action-btn:hover:not(.page-action-btn--secondary):not(:disabled),
 .login-submit:hover:not(:disabled) {
   background: var(--ds-emerald-deep);
   box-shadow: 0 4px 12px rgba(22, 96, 72, 0.3);
@@ -5298,7 +5298,7 @@ select:focus-visible {
   font-size: 0.85rem;
   cursor: pointer;
 }
-.am-option:has(input:checked) { border-color: var(--ds-emerald); background: rgba(14,110,82,.05); }
+.am-option:has(input:checked) { border-color: var(--ds-emerald); background: rgba(23,61,53,.05); }
 .am-text-input {
   width: 100%;
   padding: 0.6rem 0.85rem;

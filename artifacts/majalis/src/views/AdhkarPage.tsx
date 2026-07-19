@@ -28,7 +28,7 @@ function RingProgress({ pct, size = 120 }: { pct: number; size?: number }) {
   const circ = 2 * Math.PI * r;
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true" className="adhkar-ring">
-      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--majalis-emerald-muted, rgba(14,110,82,0.12))" strokeWidth="6" />
+      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--majalis-emerald-muted, rgba(23,61,53,0.12))" strokeWidth="6" />
       <circle
         cx={size / 2} cy={size / 2} r={r}
         fill="none" stroke="var(--majalis-emerald, #173D35)" strokeWidth="6"

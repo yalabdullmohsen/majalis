@@ -11,7 +11,7 @@ const EMPTY_FAWAID: any = { text: "", author_name: "", status: "approved" };
 const STATUS_AR: Record<string, string> = { approved: "مقبول", pending: "معلّق", rejected: "مرفوض" };
 const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
   approved: { bg: "#D1FAE5", text: "var(--majalis-emerald-deep)" },
-  pending:  { bg: "rgba(14,110,82,0.08)", text: "#173D35" },
+  pending:  { bg: "rgba(23,61,53,0.08)", text: "#173D35" },
   rejected: { bg: "#FEE2E2", text: "#991B1B" },
 };
 const FILTERS: [string, string][] = [["all", "الكل"], ["pending", "معلّقة"], ["approved", "مقبولة"], ["rejected", "مرفوضة"]];

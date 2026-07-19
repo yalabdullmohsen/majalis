@@ -6,7 +6,7 @@ import { SkeletonCardGrid } from "@/components/ui-common";
 import { useAdminShell } from "./AdminShell";
 
 const ROLES: Record<string, { label: string; bg: string; text: string }> = {
-  admin:  { label: "مشرف",    bg: "rgba(14,110,82,0.08)", text: "#173D35" },
+  admin:  { label: "مشرف",    bg: "rgba(23,61,53,0.08)", text: "#173D35" },
   sheikh: { label: "شيخ",     bg: "#D1FAE5", text: "var(--majalis-emerald-deep)" },
   user:   { label: "مستخدم",  bg: "var(--majalis-parchment-deep)", text: "var(--majalis-ink-soft)" },
 };

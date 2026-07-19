@@ -932,7 +932,7 @@ a.admin-info-panel__item-title:hover { color: var(--majalis-emerald-deep); }
 /* تحذير التكرار */
 .ii-dup-warn {
   display: flex; gap: .4rem; align-items: flex-start;
-  background: rgba(14,110,82,0.06); border: 1px solid #fcd34d; border-radius: .5rem;
+  background: rgba(23,61,53,0.06); border: 1px solid #fcd34d; border-radius: .5rem;
   padding: .45rem .75rem; font-size: .78rem; color: #0369A1; font-weight: 600;
   width: 100%;
 }
