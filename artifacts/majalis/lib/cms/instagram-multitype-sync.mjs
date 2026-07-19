@@ -10,8 +10,9 @@
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { listTrustedSources, updateSourceCheckStatus } from "./trusted-sources.mjs";
 import { discoverInstagramSource } from "./instagram-connector.mjs";
+import { fetchInstagramPostsViaApify, isApifyConfigured } from "./apify-instagram-connector.mjs";
 import { processAutomationItem } from "./lesson-source-monitor.mjs";
-import { classifyInstagramPost, extractExplicitPersonName } from "./instagram-content-classifier.mjs";
+import { classifyInstagramPost, extractExplicitPersonName, isMultiTypeInstagramSource } from "./instagram-content-classifier.mjs";
 import { createExternalKey, ensureUniqueSlug, generateSeoMetadata } from "../auto-content/auto-content-utils.mjs";
 import crypto from "node:crypto";
 
@@ -132,7 +133,9 @@ export async function runInstagramMultiTypeSync({ runId = null } = {}) {
   if (!supabase) return { ok: false, error: "Supabase not configured", imported: 0, skipped: 0, failed: 0, sourceResults: [] };
 
   const allSources = await listTrustedSources({ activeOnly: true });
-  const igSources = allSources.filter((s) => s.source_type === "instagram" || s.platform === "instagram");
+  const igSources = allSources.filter(
+    (s) => (s.source_type === "instagram" || s.platform === "instagram") && isMultiTypeInstagramSource(s),
+  );
 
   let imported = 0;
   let skipped = 0;
@@ -140,15 +143,34 @@ export async function runInstagramMultiTypeSync({ runId = null } = {}) {
   let ignored = 0;
   const sourceResults = [];
 
+  // استدعاء Apify واحد لكل الحسابات معًا (لا استدعاء منفصل لكل حساب) —
+  // يقلّل التكلفة وعدد الاستدعاءات فعليًا. عند فشل الدفعة كاملة فقط
+  // (شبكة/مصادقة) نرجع لـdiscoverInstagramSource لكل حساب على حدة
+  // (OG fallback ثم Manual Assist) — لا Apify مكرَّر لكل حساب في الحالة العادية.
+  let apifyByHandle = null;
+  if (isApifyConfigured() && igSources.length > 0) {
+    const handles = igSources.map((s) => s.config?.handle).filter(Boolean);
+    const batch = await fetchInstagramPostsViaApify(handles);
+    if (batch.ok) apifyByHandle = batch.byHandle;
+  }
+
   for (const enriched of igSources) {
     const allowedTypes = new Set(enriched.content_types_allowed || ["lesson"]);
+    const handle = String(enriched.config?.handle || "").toLowerCase();
 
     let sImported = 0;
     let sSkipped = 0;
     let sFailed = 0;
     try {
-      const discovery = await discoverInstagramSource(enriched, { runId });
-      const items = discovery.items || [];
+      let items;
+      let manualAssistMode = false;
+      if (apifyByHandle && handle && apifyByHandle[handle]) {
+        items = apifyByHandle[handle];
+      } else {
+        const discovery = await discoverInstagramSource(enriched, { runId });
+        items = discovery.items || [];
+        manualAssistMode = Boolean(discovery.manualAssistMode);
+      }
 
       for (const item of items) {
         const caption = item.description || item.title || "";
@@ -177,7 +199,16 @@ export async function runInstagramMultiTypeSync({ runId = null } = {}) {
       }
 
       await updateSourceCheckStatus(enriched.id, { success: true });
-      sourceResults.push({ name: enriched.name, ok: true, imported: sImported, skipped: sSkipped, failed: sFailed, manualAssistMode: Boolean(discovery.manualAssistMode) });
+      sourceResults.push({
+        name: enriched.name,
+        ok: true,
+        imported: sImported,
+        skipped: sSkipped,
+        failed: sFailed,
+        newPosts: items.length,
+        viaApify: Boolean(apifyByHandle && handle && apifyByHandle[handle]),
+        manualAssistMode,
+      });
     } catch (err) {
       sFailed++;
       await updateSourceCheckStatus(enriched.id, { success: false, error: err.message });
