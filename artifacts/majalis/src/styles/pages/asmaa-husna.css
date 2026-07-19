@@ -125,7 +125,7 @@
   cursor: pointer;
   transition: all 0.18s;
   gap: 0.25rem;
-  box-shadow: 0 1px 4px rgba(10,80,64,0.06);
+  box-shadow: 0 1px 4px rgba(23,61,53,0.06);
 }
 .ah-card:hover {
   border-color: #173D35;

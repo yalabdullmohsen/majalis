@@ -2124,16 +2124,16 @@
   gap: .45rem;
   margin: .9rem auto 0;
   padding: .55rem 1.1rem;
-  border: 1px solid rgba(14, 110, 82, .3);
+  border: 1px solid rgba(23,61,53, .3);
   border-radius: .7rem;
-  background: rgba(14, 110, 82, .06);
+  background: rgba(23,61,53, .06);
   color: var(--majalis-emerald, #173D35);
   font-size: .88rem;
   font-weight: 700;
   font-family: var(--font-body);
   cursor: pointer;
 }
-.qs-recitation-cta:hover { background: rgba(14, 110, 82, .12); }
+.qs-recitation-cta:hover { background: rgba(23,61,53, .12); }
 .qs-recitation-cta__badge {
   font-size: .68rem;
   font-weight: 700;

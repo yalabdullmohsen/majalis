@@ -233,7 +233,7 @@
 }
 
 .ilm-card:hover {
-  box-shadow: 0 6px 24px rgba(14,110,82,0.12);
+  box-shadow: 0 6px 24px rgba(23,61,53,0.12);
   border-color: var(--majalis-emerald, #28584D);
 }
 
@@ -310,7 +310,7 @@
 }
 
 .ilm-badge--type {
-  background: rgba(14,110,82,0.1);
+  background: rgba(23,61,53,0.1);
   color: var(--majalis-emerald, #28584D);
 }
 

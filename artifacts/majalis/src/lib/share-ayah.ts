@@ -81,16 +81,16 @@ export async function generateAyahImage(opts: ShareImageOptions): Promise<string
   ctx.fillRect(0, 0, W, H);
 
   // ── Gold border ──
-  ctx.strokeStyle = "rgba(14,110,82,0.5)";
+  ctx.strokeStyle = "rgba(23,61,53,0.5)";
   ctx.lineWidth = 3;
   ctx.strokeRect(20, 20, W - 40, H - 40);
-  ctx.strokeStyle = "rgba(14,110,82,0.25)";
+  ctx.strokeStyle = "rgba(23,61,53,0.25)";
   ctx.lineWidth = 1;
   ctx.strokeRect(30, 30, W - 60, H - 60);
 
   // ── Corner ornaments (simple crosses) ──
   const corners = [[40,40],[W-40,40],[40,H-40],[W-40,H-40]] as const;
-  ctx.strokeStyle = "rgba(14,110,82,0.7)";
+  ctx.strokeStyle = "rgba(23,61,53,0.7)";
   ctx.lineWidth = 1.5;
   for (const [cx,cy] of corners) {
     ctx.beginPath(); ctx.moveTo(cx-10,cy); ctx.lineTo(cx+10,cy); ctx.stroke();
@@ -113,7 +113,7 @@ export async function generateAyahImage(opts: ShareImageOptions): Promise<string
 
   // ── Ayah number ──
   ctx.font = `bold 22px "IBM Plex Sans Arabic", "Noto Sans Arabic", sans-serif`;
-  ctx.fillStyle = "rgba(14,110,82,0.9)";
+  ctx.fillStyle = "rgba(23,61,53,0.9)";
   const surahLine = `سورة ${surahName} ﴿${ayahNum}﴾`;
   ctx.fillText(surahLine, W / 2, H - 80);
 

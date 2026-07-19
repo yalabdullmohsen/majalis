@@ -9,7 +9,7 @@
  * إن تعذّر الاتصال تبقى القائمة كاملة وصحيحة، فقط بلا فلتر مكية/مدنية،
  * بدل تعليق الصفحة على شبكة قد لا تتوفر.
  */
-import { fetchSurahList } from "@/lib/quran-api";
+import { fetchSurahList, getSurahList } from "@/lib/quran-api";
 
 export type SurahIndexEntry = {
   number: number;
@@ -17,6 +17,9 @@ export type SurahIndexEntry = {
   englishName: string;
   numberOfAyahs: number;
   revelationType: "Meccan" | "Medinan" | null;
+  /** ترتيب النزول التاريخي (1-114) — بيانات محلية ثابتة، راجع التوثيق
+   *  الكامل للمصدر عند REVELATION_ORDER في src/lib/quran-api.ts. */
+  revelationOrder: number;
 };
 
 type ManifestSurah = { number: number; name: string; englishName: string; numberOfAyahs: number };
@@ -27,6 +30,7 @@ export async function fetchSurahIndexLocal(): Promise<SurahIndexEntry[]> {
   const res = await fetch("/data/quran/manifest.json", { signal: AbortSignal.timeout(8_000) });
   if (!res.ok) throw new Error(`manifest fetch failed: HTTP ${res.status}`);
   const manifest = (await res.json()) as Manifest;
+  const revelationOrderByNumber = new Map(getSurahList().map((s) => [s.number, s.revelationOrder]));
   return manifest.surahs
     .map((s) => ({
       number: s.number,
@@ -34,6 +38,7 @@ export async function fetchSurahIndexLocal(): Promise<SurahIndexEntry[]> {
       englishName: s.englishName,
       numberOfAyahs: s.numberOfAyahs,
       revelationType: null,
+      revelationOrder: revelationOrderByNumber.get(s.number) ?? 0,
     }))
     .sort((a, b) => a.number - b.number);
 }

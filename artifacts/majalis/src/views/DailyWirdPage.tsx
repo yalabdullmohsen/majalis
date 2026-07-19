@@ -28,7 +28,7 @@ function KhatmaRing({ pagesInKhatma, khatmasCompleted }: { pagesInKhatma: number
   const done = pagesInKhatma >= QURAN_PAGES;
   return (
     <svg width="124" height="124" viewBox="0 0 124 124" className="wird-ring khatma-ring" aria-hidden="true">
-      <circle cx="62" cy="62" r={r} fill="none" stroke="var(--majalis-emerald-muted, rgba(14,110,82,.12))" strokeWidth="8" />
+      <circle cx="62" cy="62" r={r} fill="none" stroke="var(--majalis-emerald-muted, rgba(23,61,53,.12))" strokeWidth="8" />
       <circle
         cx="62" cy="62" r={r} fill="none"
         stroke={done ? "#28584D" : "var(--majalis-emerald, #173D35)"}
@@ -43,7 +43,7 @@ function KhatmaRing({ pagesInKhatma, khatmasCompleted }: { pagesInKhatma: number
           {toAr(khatmasCompleted)}
         </text>
       )}
-      <text x="62" y={khatmasCompleted > 0 ? "70" : "66"} textAnchor="middle" fill="var(--majalis-ink-soft, rgba(14,110,82,.45))" fontSize="9" fontWeight="600" fontFamily="inherit">
+      <text x="62" y={khatmasCompleted > 0 ? "70" : "66"} textAnchor="middle" fill="var(--majalis-ink-soft, rgba(23,61,53,.45))" fontSize="9" fontWeight="600" fontFamily="inherit">
         {khatmasCompleted > 0 ? "ختمة كاملة" : "ص " + toAr(pagesInKhatma) + " / ٦٠٤"}
       </text>
       {khatmasCompleted > 0 && (
@@ -61,7 +61,7 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
   const done = pct >= 1;
   return (
     <svg width="148" height="148" viewBox="0 0 148 148" className="wird-ring" aria-hidden="true">
-      <circle cx="74" cy="74" r={r} fill="none" stroke="var(--majalis-emerald-muted, rgba(14,110,82,0.12))" strokeWidth="9" />
+      <circle cx="74" cy="74" r={r} fill="none" stroke="var(--majalis-emerald-muted, rgba(23,61,53,0.12))" strokeWidth="9" />
       <circle
         cx="74" cy="74" r={r}
         fill="none"
@@ -78,7 +78,7 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
         fontSize="24" fontWeight="800" fontFamily="inherit">
         {toAr(pages)}
       </text>
-      <text x="74" y="84" textAnchor="middle" fill="var(--majalis-ink-soft, rgba(14,110,82,0.45))"
+      <text x="74" y="84" textAnchor="middle" fill="var(--majalis-ink-soft, rgba(23,61,53,0.45))"
         fontSize="10.5" fontWeight="600" fontFamily="inherit">
         من {toAr(target)} صفحة
       </text>
