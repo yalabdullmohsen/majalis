@@ -8,7 +8,7 @@
 .qmem-hero {
   padding: 2.5rem 1.25rem 2rem;
   text-align: center;
-  background: linear-gradient(160deg, #0d2d22 0%, #153025 60%, #1a4535 100%);
+  background: linear-gradient(160deg, #0d2d22 0%, #173D35 60%, #1a4535 100%);
   position: relative;
   overflow: hidden;
 }
@@ -118,7 +118,7 @@
 
 .qmem-type-card:hover,
 .qmem-type-card--active {
-  border-color: var(--majalis-emerald, #0E6E52);
+  border-color: var(--majalis-emerald, #28584D);
   background: rgba(14,110,82,0.05);
   box-shadow: 0 4px 12px rgba(14,110,82,0.1);
 }
@@ -126,7 +126,7 @@
 .qmem-type-card__num {
   font-size: 0.7rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #0E6E52);
+  color: var(--majalis-emerald, #28584D);
   letter-spacing: 0.05em;
 }
 
@@ -165,13 +165,13 @@
 
 .qmem-surah-select:focus {
   outline: none;
-  border-color: var(--majalis-emerald, #0E6E52);
+  border-color: var(--majalis-emerald, #28584D);
 }
 
 .qmem-start-btn {
   padding: 0.6rem 1.5rem;
   border-radius: 10px;
-  background: var(--majalis-emerald, #0E6E52);
+  background: var(--majalis-emerald, #28584D);
   color: #fff;
   border: none;
   font-size: 0.9rem;
@@ -184,7 +184,7 @@
   gap: 0.5rem;
 }
 
-.qmem-start-btn:hover { background: #123F36; }
+.qmem-start-btn:hover { background: #173D35; }
 .qmem-start-btn:disabled { background: #9ca3af; cursor: not-allowed; }
 
 /* ── Quiz Session ─────────────────────────────────────────────── */
@@ -210,7 +210,7 @@
 
 .qmem-progress__fill {
   height: 100%;
-  background: var(--majalis-emerald, #0E6E52);
+  background: var(--majalis-emerald, #28584D);
   border-radius: 3px;
   transition: width 0.3s ease;
 }
@@ -233,7 +233,7 @@
 .qmem-card__type {
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #0E6E52);
+  color: var(--majalis-emerald, #28584D);
   letter-spacing: 0.06em;
   margin-bottom: 0.75rem;
   text-transform: uppercase;
@@ -257,7 +257,7 @@
   line-height: 2;
   color: var(--ds-text-1, #1a1a1a);
   background: rgba(14,110,82,0.04);
-  border-right: 3px solid var(--majalis-emerald, #0E6E52);
+  border-right: 3px solid var(--majalis-emerald, #28584D);
   padding: 0.75rem 1rem;
   border-radius: 0 8px 8px 0;
   direction: rtl;
@@ -291,7 +291,7 @@
 }
 
 .qmem-option:hover:not(:disabled) {
-  border-color: var(--majalis-emerald, #0E6E52);
+  border-color: var(--majalis-emerald, #28584D);
   background: rgba(14,110,82,0.05);
 }
 
@@ -344,8 +344,8 @@
 }
 
 .qmem-voice-btn:hover {
-  border-color: var(--majalis-emerald, #0E6E52);
-  color: var(--majalis-emerald, #0E6E52);
+  border-color: var(--majalis-emerald, #28584D);
+  color: var(--majalis-emerald, #28584D);
 }
 
 .qmem-voice-btn--active {
@@ -375,14 +375,14 @@
 
 .qmem-answer-input:focus {
   outline: none;
-  border-color: var(--majalis-emerald, #0E6E52);
+  border-color: var(--majalis-emerald, #28584D);
 }
 
 .qmem-submit-btn {
   align-self: flex-start;
   padding: 0.6rem 1.25rem;
   border-radius: 8px;
-  background: var(--majalis-emerald, #0E6E52);
+  background: var(--majalis-emerald, #28584D);
   color: #fff;
   border: none;
   font-size: 0.88rem;
@@ -455,7 +455,7 @@
   width: 100%;
   padding: 0.7rem;
   border-radius: 10px;
-  background: var(--majalis-emerald, #0E6E52);
+  background: var(--majalis-emerald, #28584D);
   color: #fff;
   border: none;
   font-size: 0.9rem;
@@ -465,7 +465,7 @@
   transition: background 0.15s;
 }
 
-.qmem-next-btn:hover { background: #123F36; }
+.qmem-next-btn:hover { background: #173D35; }
 
 /* ── Session End ──────────────────────────────────────────────── */
 .qmem-end {
@@ -491,7 +491,7 @@
 .qmem-end__score {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #0E6E52);
+  color: var(--majalis-emerald, #28584D);
 }
 
 .qmem-end__score-lbl {
@@ -551,7 +551,7 @@
   font-size: 0.7rem;
   font-weight: 700;
   background: rgba(14,110,82,0.1);
-  color: var(--majalis-emerald, #0E6E52);
+  color: var(--majalis-emerald, #28584D);
 }
 
 /* ── Dark ─────────────────────────────────────────────────────── */

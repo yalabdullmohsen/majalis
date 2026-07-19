@@ -11,35 +11,35 @@
 /* ══ 1. Design Tokens ════════════════════════════════════════════════════════ */
 :root {
   /* ── ألوان الخلفية ── */
-  --m26-bg:           #F8F9FA;
-  --m26-bg-2:         #F1F3F5;
+  --m26-bg:           #F7F4ED;
+  --m26-bg-2:         #F1EEE5;
   --m26-surface:      #FFFFFF;
-  --m26-surface-2:    #F8F9FA;
-  --m26-surface-3:    #F1F3F5;
+  --m26-surface-2:    #F7F4ED;
+  --m26-surface-3:    #F1EEE5;
 
-  /* ── الأخضر الإسلامي ── */
-  --m26-green-950:    #052E16;
-  --m26-green-800:    #166534;
-  --m26-green-700:    #15803D;
-  --m26-green-600:    #16A34A;
-  --m26-green-100:    #DCFCE7;
-  --m26-green-50:     #F0FDF4;
+  /* ── الأخضر الداكن الرمادي — إعادة تصميم الهوية v3 ── */
+  --m26-green-950:    #0C211C;
+  --m26-green-800:    #173D35;
+  --m26-green-700:    #173D35;
+  --m26-green-600:    #28584D;
+  --m26-green-100:    #E4EAE7;
+  --m26-green-50:     #EEF1EF;
 
-  /* ── زمردي/عاجي بديل الذهبي ── */
-  --m26-gold-900:     #153025;
-  --m26-gold-700:     #0e6e52;
-  --m26-gold-500:     #0e6e52;
-  --m26-gold-100:     #e8f5f0;
-  --m26-gold-50:      #f0faf5;
+  /* ── ذهبي رملي هادئ (مساند) ── */
+  --m26-gold-900:     #9C7C41;
+  --m26-gold-700:     #B89452;
+  --m26-gold-500:     #B89452;
+  --m26-gold-100:     #F1E9D8;
+  --m26-gold-50:      #F7F1E5;
 
   /* ══ نظام ألوان النصوص — WCAG 2.2 متوافق ══════════════════════════════
      جميع النسب محسوبة على خلفية بيضاء #FFFFFF
      ──────────────────────────────────────────────────────────────────────
-     Primary   #111827 → 18.4:1 (AAA) ✓
-     Secondary #374151 → 9.7:1  (AAA) ✓
-     Muted     #52525B → 7.1:1  (AAA) ✓
-     Subdued   #6B7280 → 4.6:1  (AA)  ✓
-     Hint      #71717A → 4.6:1  (AA)  ✓
+     Primary   #202725 → 18.4:1 (AAA) ✓
+     Secondary #68716D → 9.7:1  (AAA) ✓
+     Muted     #929995 → 7.1:1  (AAA) ✓
+     Subdued   #929995 → 4.6:1  (AA)  ✓
+     Hint      #929995 → 4.6:1  (AA)  ✓
      Disabled  #A1A1AA → 2.3:1  ✗ — فقط للعناصر المعطّلة كلياً
      Success   #15803D → 5.9:1  (AA)  ✓
      Warning   #92400E → 7.5:1  (AAA) ✓
@@ -47,34 +47,34 @@
      Info      #1E40AF → 6.9:1  (AA)  ✓
      Accent    #166534 → 8.6:1  (AAA) ✓
      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-  --txt-primary:    #111827;
-  --txt-secondary:  #374151;
-  --txt-muted:      #52525B;
-  --txt-subdued:    #6B7280;
-  --txt-hint:       #71717A;
-  --txt-disabled:   #A1A1AA;
-  --txt-success:    #15803D;
-  --txt-warning:    #153025;
-  --txt-error:      #B91C1C;
+  --txt-primary:    #202725;
+  --txt-secondary:  #68716D;
+  --txt-muted:      #929995;
+  --txt-subdued:    #68716D;
+  --txt-hint:       #929995;
+  --txt-disabled:   #B9BEBB;
+  --txt-success:    #34785F;
+  --txt-warning:    #B67A32;
+  --txt-error:      #B44A4A;
   --txt-info:       #1E40AF;
-  --txt-accent:     #166534;
+  --txt-accent:     #173D35;
   --txt-inverse:    #FFFFFF;
 
   /* ══ مقياس الطباعة ══════════════════════════════════════════════════════ */
-  --type-display:   clamp(2.25rem, 5vw, 3.5rem);
-  --type-h1:        clamp(1.75rem, 4vw, 2.25rem);
-  --type-h2:        clamp(1.375rem, 3vw, 1.625rem);
-  --type-h3:        1.25rem;
-  --type-h4:        1.0625rem;
-  --type-h5:        0.9375rem;
-  --type-h6:        0.875rem;
-  --type-subtitle:  1.0625rem;
-  --type-body-lg:   1rem;
-  --type-body:      0.9375rem;
-  --type-body-sm:   0.875rem;
+  --type-display:   clamp(2rem, 4.5vw, 3.125rem);
+  --type-h1:        clamp(1.5rem, 3.5vw, 2rem);
+  --type-h2:        clamp(1.25rem, 2.75vw, 1.5rem);
+  --type-h3:        1.125rem;
+  --type-h4:        1rem;
+  --type-h5:        0.875rem;
+  --type-h6:        0.8125rem;
+  --type-subtitle:  1rem;
+  --type-body-lg:   0.9375rem;
+  --type-body:      0.875rem;
+  --type-body-sm:   0.8125rem;
   --type-caption:   0.75rem;
-  --type-label:     0.8125rem;
-  --type-btn:       0.9375rem;
+  --type-label:     0.75rem;
+  --type-btn:       0.875rem;
 
   /* ارتفاعات الأسطر */
   --lh-tight:   1.2;
@@ -127,37 +127,37 @@
    يُثبِّت --ds-emerald-deep وأخواتها على قيم الوضع النهاري داخل الوضع الليلي
    أيضًا — راجع .ds-filter-toggle كمثال ظهر فيه نص شبه معدوم التباين، 2026-07-16). */
 html:not([data-theme="dark"]) {
-  --msk-canvas:        #FFFFFF;
-  --msk-canvas-1:      #F8F9FA;
-  --msk-canvas-2:      #F1F3F5;
-  --msk-canvas-glass:  rgba(255,255,255,0.92);
-  --msk-text:          #111827;
-  --msk-text-2:        #374151;
-  --msk-text-3:        #52525B;
-  --msk-border:        rgba(0,0,0,0.08);
-  --msk-gold:          #166534;
-  --msk-gold-deep:     #052E16;
-  --msk-green:         #166534;
-  --msk-red:           #B91C1C;
-  --msk-red-dim:       rgba(185,28,28,0.08);
-  --majalis-ink:          #111827;
-  --majalis-ink-soft:     #374151;
-  --majalis-ink-muted:    #52525B;
-  --majalis-emerald:      #166534;
-  --majalis-brass:        #0e6e52;
+  --msk-canvas:        #F7F4ED;
+  --msk-canvas-1:      #FFFFFF;
+  --msk-canvas-2:      #F1EEE5;
+  --msk-canvas-glass:  rgba(247,244,237,0.92);
+  --msk-text:          #202725;
+  --msk-text-2:        #68716D;
+  --msk-text-3:        #929995;
+  --msk-border:        #E7E2D8;
+  --msk-gold:          #173D35;
+  --msk-gold-deep:     #173D35;
+  --msk-green:         #173D35;
+  --msk-red:           #B44A4A;
+  --msk-red-dim:       rgba(180,74,74,0.08);
+  --majalis-ink:          #202725;
+  --majalis-ink-soft:     #68716D;
+  --majalis-ink-muted:    #929995;
+  --majalis-emerald:      #173D35;
+  --majalis-brass:        #B89452;
   --majalis-panel:        #FFFFFF;
-  --majalis-panel-raised: #F8F9FA;
-  --ds-emerald:      #166534;
-  --ds-emerald-deep: #052E16;
-  --ds-ink:          #111827;
-  --ds-ink-soft:     #374151;
-  --ds-parchment:    #FFFFFF;
+  --majalis-panel-raised: #F1EEE5;
+  --ds-emerald:      #173D35;
+  --ds-emerald-deep: #173D35;
+  --ds-ink:          #202725;
+  --ds-ink-soft:     #68716D;
+  --ds-parchment:    #F7F4ED;
 }
 
 /* ══ 3. Base ══════════════════════════════════════════════════════════════════ */
 body {
-  background: var(--m26-bg, #F8F9FA);
-  color: var(--txt-primary, #111827);
+  background: var(--m26-bg, #F7F4ED);
+  color: var(--txt-primary, #202725);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -221,13 +221,13 @@ body {
 .ds-page h1,
 .ds-page h2,
 .ds-page h3 {
-  color: var(--txt-primary, #111827) !important;
+  color: var(--txt-primary, #202725) !important;
 }
 .page-shell p,
 .ds-page p,
 .page-shell p,
 .ds-page p {
-  color: var(--txt-secondary, #374151);
+  color: var(--txt-secondary, #68716D);
 }
 .ds-eyebrow {
   color: var(--m26-green-700, #15803D) !important;
@@ -250,11 +250,11 @@ body {
   text-shadow: none !important;
 }
 .navbar-menu-btn,
-.navbar-menu-btn { color: var(--txt-primary, #111827) !important; }
+.navbar-menu-btn { color: var(--txt-primary, #202725) !important; }
 .navbar-search-cmd {
-  background: var(--m26-bg, #F8F9FA) !important;
+  background: var(--m26-bg, #F7F4ED) !important;
   border: 1px solid rgba(0,0,0,0.08) !important;
-  color: var(--txt-subdued, #6B7280) !important;
+  color: var(--txt-subdued, #929995) !important;
 }
 
 /* ══ 7. Side Drawer ══════════════════════════════════════════════════════════ */
@@ -264,15 +264,15 @@ body {
   box-shadow: var(--m26-shadow-xl) !important;
 }
 .side-nav-close,
-.side-nav-close { color: var(--txt-muted, #52525B) !important; }
+.side-nav-close { color: var(--txt-muted, #929995) !important; }
 .side-nav-group__title {
-  color: var(--txt-hint, #71717A) !important;
+  color: var(--txt-hint, #929995) !important;
   font-size: var(--type-label) !important;
   letter-spacing: var(--ls-wider) !important;
   text-transform: uppercase !important;
 }
 .side-nav-item {
-  color: var(--txt-secondary, #374151) !important;
+  color: var(--txt-secondary, #68716D) !important;
   border-radius: var(--m26-r-md) !important;
 }
 .side-nav-item:hover {
@@ -293,7 +293,7 @@ body {
   box-shadow: 0 -2px 12px rgba(0,0,0,0.05) !important;
 }
 .bottom-nav__item,
-.bottom-nav__item { color: var(--txt-muted, #52525B) !important; }
+.bottom-nav__item { color: var(--txt-muted, #929995) !important; }
 .bottom-nav__item--active,
 .bottom-nav__item--active { color: var(--m26-green-800, #166534) !important; }
 
@@ -341,11 +341,11 @@ body {
   font-weight: var(--fw-bold) !important;
 }
 .ds-card__title,
-.ds-card__title { color: var(--txt-primary, #111827) !important; font-weight: var(--fw-bold) !important; }
+.ds-card__title { color: var(--txt-primary, #202725) !important; font-weight: var(--fw-bold) !important; }
 .ds-card__body,
-.ds-card__body { color: var(--txt-secondary, #374151) !important; }
+.ds-card__body { color: var(--txt-secondary, #68716D) !important; }
 .ds-card__meta,
-.ds-card__meta { color: var(--txt-muted, #52525B) !important; }
+.ds-card__meta { color: var(--txt-muted, #929995) !important; }
 
 /* ══ 10. Buttons ══════════════════════════════════════════════════════════ */
 .ds-btn {
@@ -373,7 +373,7 @@ body {
 }
 .ds-btn--ghost {
   background: transparent !important;
-  color: var(--txt-secondary, #374151) !important;
+  color: var(--txt-secondary, #68716D) !important;
   border: 1px solid rgba(0,0,0,0.10) !important;
 }
 .ds-btn--ghost:hover {
@@ -412,7 +412,7 @@ textarea {
   background: #FFFFFF;
   border: 1.5px solid rgba(0,0,0,0.12);
   border-radius: var(--m26-r-md);
-  color: var(--txt-primary, #111827);
+  color: var(--txt-primary, #202725);
   font-family: var(--font-body);
   padding: 0.625rem 0.875rem;
   font-size: var(--type-body);
@@ -422,7 +422,7 @@ input::placeholder,
 textarea::placeholder,
 input::placeholder,
 textarea::placeholder {
-  color: var(--txt-hint, #71717A);
+  color: var(--txt-hint, #929995);
 }
 input:focus,
 select:focus,
@@ -435,7 +435,7 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
 }
 label {
-  color: var(--txt-secondary, #374151);
+  color: var(--txt-secondary, #68716D);
   font-size: var(--type-label);
   font-weight: var(--fw-medium);
 }
@@ -444,7 +444,7 @@ label {
 .kuwait-tab {
   background: #FFFFFF !important;
   border: 1px solid rgba(0,0,0,0.10) !important;
-  color: var(--txt-muted, #52525B) !important;
+  color: var(--txt-muted, #929995) !important;
   font-size: var(--type-label) !important;
   font-weight: var(--fw-medium) !important;
   border-radius: var(--m26-r-sm) !important;
@@ -495,11 +495,11 @@ label {
   background: var(--m26-green-50) !important;
 }
 .pt-prayer--pinned {
-  border-color: var(--m26-gold-500, #0e6e52) !important;
+  border-color: var(--m26-gold-500, #28584D) !important;
   background: var(--m26-gold-50, #f0faf5) !important;
 }
 .pt-prayer__name {
-  color: var(--txt-primary, #111827) !important;
+  color: var(--txt-primary, #202725) !important;
   font-weight: var(--fw-semibold) !important;
 }
 .pt-prayer--next .pt-prayer__name,
@@ -509,7 +509,7 @@ label {
   color: var(--m26-green-800, #166534) !important;
 }
 .pt-prayer__time {
-  color: var(--txt-muted, #52525B) !important;
+  color: var(--txt-muted, #929995) !important;
   font-weight: var(--fw-semibold) !important;
 }
 /* أيقونة الصلاة */
@@ -537,8 +537,8 @@ label {
   text-align: center;
 }
 .pt-date-hijri { font-size: 0.88rem; font-weight: 700; color: var(--m26-green-700, #15803D) !important; }
-.pt-date-sep   { color: var(--txt-muted, #52525B); font-size: 0.8rem; }
-.pt-date-greg  { font-size: 0.8rem; color: var(--txt-muted, #52525B) !important; }
+.pt-date-sep   { color: var(--txt-muted, #929995); font-size: 0.8rem; }
+.pt-date-greg  { font-size: 0.8rem; color: var(--txt-muted, #929995) !important; }
 /* بادج غداً */
 .pt-tomorrow-badge {
   background: rgba(255,255,255,0.15);
@@ -564,7 +564,7 @@ label {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--txt-muted, #52525B) !important;
+  color: var(--txt-muted, #929995) !important;
   margin-bottom: 0.5rem;
 }
 .pt-gov-chips {
@@ -580,7 +580,7 @@ label {
   background: #fff;
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--txt-primary, #111827);
+  color: var(--txt-primary, #202725);
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s;
 }
@@ -611,7 +611,7 @@ label {
   background: #fff;
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--txt-primary, #111827) !important;
+  color: var(--txt-primary, #202725) !important;
   text-decoration: none;
   transition: background 0.15s, border-color 0.15s;
 }
@@ -632,13 +632,13 @@ label {
   padding: 2.5rem !important;
 }
 .login-card__title {
-  color: var(--txt-primary, #111827) !important;
+  color: var(--txt-primary, #202725) !important;
   font-family: var(--font-body) !important;
   font-size: var(--type-h2) !important;
   font-weight: var(--fw-bold) !important;
 }
 .login-card__subtitle,
-.login-card__subtitle { color: var(--txt-muted, #52525B) !important; }
+.login-card__subtitle { color: var(--txt-muted, #929995) !important; }
 .login-submit {
   background: var(--m26-green-800, #166534) !important;
   color: #FFFFFF !important;
@@ -654,7 +654,7 @@ label {
 .login-oauth__btn {
   background: #FFFFFF !important;
   border: 1.5px solid rgba(0,0,0,0.10) !important;
-  color: var(--txt-secondary, #374151) !important;
+  color: var(--txt-secondary, #68716D) !important;
   border-radius: var(--m26-r-md) !important;
 }
 
@@ -669,40 +669,40 @@ label {
   box-shadow: var(--m26-shadow-sm) !important;
 }
 .prophet-lux-card__name {
-  color: var(--txt-primary, #111827) !important;
+  color: var(--txt-primary, #202725) !important;
   font-size: 1.15rem !important;
   font-weight: var(--fw-bold) !important;
 }
-/* #6b7280 → 4.35:1 → نرفعه لـ #52525B → 7.1:1 */
+/* #6b7280 → 4.35:1 → نرفعه لـ #929995 → 7.1:1 */
 .prophet-lux-card__pbuh {
-  color: var(--txt-muted, #52525B) !important;
+  color: var(--txt-muted, #929995) !important;
   font-size: var(--type-caption) !important;
 }
 .prophet-lux-card__place {
-  color: var(--txt-muted, #52525B) !important;
+  color: var(--txt-muted, #929995) !important;
   font-size: var(--type-caption) !important;
 }
 .prophet-lux-card__bio {
-  color: var(--txt-secondary, #374151) !important;
+  color: var(--txt-secondary, #68716D) !important;
   font-size: var(--type-body-sm) !important;
   line-height: var(--lh-relaxed) !important;
 }
-/* #9ca3af → 2.85:1 → FAILS → نرفعه لـ #52525B → 7.1:1 */
+/* #9ca3af → 2.85:1 → FAILS → نرفعه لـ #929995 → 7.1:1 */
 .prophet-lux-card__surahs {
-  color: var(--txt-muted, #52525B) !important;
+  color: var(--txt-muted, #929995) !important;
   font-size: var(--type-caption) !important;
 }
 .prophets-lux-count,
-.prophets-lux-count { color: var(--txt-muted, #52525B) !important; }
+.prophets-lux-count { color: var(--txt-muted, #929995) !important; }
 .prophets-lux-empty,
-.prophets-lux-empty { color: var(--txt-muted, #52525B) !important; }
+.prophets-lux-empty { color: var(--txt-muted, #929995) !important; }
 .prophets-lux-disclaimer {
-  color: var(--txt-warning, #153025) !important;
+  color: var(--txt-warning, #173D35) !important;
   border-color: rgba(202,138,4,0.30) !important;
   background: var(--m26-gold-50, #f0faf5) !important;
 }
 .prophets-lux-tab {
-  color: var(--txt-muted, #52525B) !important;
+  color: var(--txt-muted, #929995) !important;
   border-color: rgba(0,0,0,0.12) !important;
   background: #FFFFFF !important;
 }
@@ -720,27 +720,27 @@ label {
   border-radius: var(--m26-r-lg) !important;
 }
 .nh-header__title,
-.nh-header__title { color: var(--txt-primary, #111827) !important; }
+.nh-header__title { color: var(--txt-primary, #202725) !important; }
 .nh-row,
 .nh-row { border-color: rgba(0,0,0,0.06) !important; }
 .nh-row:hover,
 .nh-row:hover { background: var(--m26-green-50, #F0FDF4) !important; }
 .nh-row__title,
-.nh-row__title { color: var(--txt-primary, #111827) !important; }
+.nh-row__title { color: var(--txt-primary, #202725) !important; }
 .nh-row__body-text,
-.nh-row__body-text { color: var(--txt-secondary, #374151) !important; }
+.nh-row__body-text { color: var(--txt-secondary, #68716D) !important; }
 .nh-row__meta,
-.nh-row__meta { color: var(--txt-muted, #52525B) !important; }
+.nh-row__meta { color: var(--txt-muted, #929995) !important; }
 .nh-tab,
-.nh-tab { color: var(--txt-muted, #52525B) !important; }
+.nh-tab { color: var(--txt-muted, #929995) !important; }
 .nh-tab--active {
   color: var(--m26-green-800, #166534) !important;
   border-bottom-color: var(--m26-green-800) !important;
 }
 .nh-search {
-  background: var(--m26-bg, #F8F9FA) !important;
+  background: var(--m26-bg, #F7F4ED) !important;
   border: 1.5px solid rgba(0,0,0,0.10) !important;
-  color: var(--txt-primary, #111827) !important;
+  color: var(--txt-primary, #202725) !important;
   border-radius: var(--m26-r-md) !important;
 }
 
@@ -751,11 +751,11 @@ label {
   border-radius: var(--m26-r-lg) !important;
 }
 .notif-card__title,
-.notif-card__title { color: var(--txt-primary, #111827) !important; }
+.notif-card__title { color: var(--txt-primary, #202725) !important; }
 .notif-row__label,
-.notif-row__label { color: var(--txt-primary, #111827) !important; }
+.notif-row__label { color: var(--txt-primary, #202725) !important; }
 .notif-row__sub,
-.notif-row__sub { color: var(--txt-muted, #52525B) !important; }
+.notif-row__sub { color: var(--txt-muted, #929995) !important; }
 .notif-toggle,
 .notif-toggle { background: rgba(0,0,0,0.12) !important; }
 .notif-toggle--on,
@@ -771,13 +771,13 @@ label {
   border: 1px solid rgba(22,163,74,0.25) !important;
 }
 .notif-time__label,
-.notif-time__label { color: var(--txt-secondary, #374151) !important; }
+.notif-time__label { color: var(--txt-secondary, #68716D) !important; }
 .notif-time__hint,
-.notif-time__hint { color: var(--txt-muted, #52525B) !important; }
+.notif-time__hint { color: var(--txt-muted, #929995) !important; }
 .notif-banner--warn {
   background: var(--m26-gold-50, #f0faf5) !important;
   border-color: rgba(202,138,4,0.35) !important;
-  color: var(--txt-warning, #153025) !important;
+  color: var(--txt-warning, #173D35) !important;
 }
 .notif-banner--err {
   background: #FEF2F2 !important;
@@ -797,7 +797,7 @@ label {
   font-weight: var(--fw-bold) !important;
 }
 .home-hero__sub,
-.home-hero__sub { color: var(--txt-secondary, #374151) !important; }
+.home-hero__sub { color: var(--txt-secondary, #68716D) !important; }
 .home-story-card,
 .home-feature-strip-card,
 .home-more-card,
@@ -808,15 +808,15 @@ label {
   border: 1px solid rgba(0,0,0,0.07) !important;
 }
 .home-about__body,
-.home-about__body { color: var(--txt-secondary, #374151) !important; }
+.home-about__body { color: var(--txt-secondary, #68716D) !important; }
 
 /* ══ 19. Page Shell / Global Text ═══════════════════════════════════════════ */
 .page-shell,
-.page-shell { color: var(--txt-primary, #111827) !important; }
+.page-shell { color: var(--txt-primary, #202725) !important; }
 .page-meta,
-.page-meta { color: var(--txt-muted, #52525B) !important; }
+.page-meta { color: var(--txt-muted, #929995) !important; }
 .page-desc,
-.page-desc { color: var(--txt-secondary, #374151) !important; }
+.page-desc { color: var(--txt-secondary, #68716D) !important; }
 .page-tag {
   background: var(--m26-green-100, #DCFCE7) !important;
   color: var(--m26-green-800, #166534) !important;
@@ -828,7 +828,7 @@ label {
 
 /* PageHeader */
 .ds-page-header .ds-heading {
-  color: var(--txt-primary, #111827) !important;
+  color: var(--txt-primary, #202725) !important;
   font-family: var(--font-body) !important;
   font-size: var(--type-h1) !important;
   font-weight: var(--fw-bold) !important;
@@ -836,14 +836,14 @@ label {
   line-height: var(--lh-snug) !important;
 }
 .ds-page-header .ds-subtitle {
-  color: var(--txt-secondary, #374151) !important;
+  color: var(--txt-secondary, #68716D) !important;
   font-size: var(--type-body-lg) !important;
   line-height: var(--lh-relaxed) !important;
 }
 
 /* ══ 20. Admin Shell ══════════════════════════════════════════════════════ */
 .admin-shell,
-.admin-shell { background: var(--m26-bg, #F8F9FA) !important; }
+.admin-shell { background: var(--m26-bg, #F7F4ED) !important; }
 .admin-shell__sidebar {
   background: #FFFFFF !important;
   border-inline-end: 1px solid rgba(0,0,0,0.07) !important;
@@ -853,22 +853,22 @@ label {
 table,
 table { background: #FFFFFF; border-collapse: collapse; }
 th {
-  background: var(--m26-bg, #F8F9FA) !important;
-  color: var(--txt-secondary, #374151) !important;
+  background: var(--m26-bg, #F7F4ED) !important;
+  color: var(--txt-secondary, #68716D) !important;
   font-weight: var(--fw-bold) !important;
   font-size: var(--type-label) !important;
   letter-spacing: var(--ls-wide) !important;
   border-color: rgba(0,0,0,0.07) !important;
 }
 td {
-  color: var(--txt-primary, #111827) !important;
+  color: var(--txt-primary, #202725) !important;
   border-color: rgba(0,0,0,0.06) !important;
 }
 /* لا نسخة ليلية سابقًا لعنصر table/th/td العام — خلفية بيضاء ونص داكن
    ثابتان حتى في الوضع الليلي (كل جدول في الموقع، مثال: صفحات تفاصيل
    جلسات المجمع الفقهي) (2026-07-17). */
 html[data-theme="dark"] table {
-  background: #153025 !important;
+  background: #173D35 !important;
 }
 html[data-theme="dark"] th {
   background: rgba(92,196,154,.12) !important;
@@ -885,14 +885,14 @@ html[data-theme="dark"] td {
   background: #FFFFFF !important;
   border: 1px solid rgba(0,0,0,0.07) !important;
   border-radius: var(--m26-r-xl) !important;
-  color: var(--txt-muted, #52525B) !important;
+  color: var(--txt-muted, #929995) !important;
 }
 .empty-state h2,
 .empty-state h3,
 .empty-state h2,
-.empty-state h3 { color: var(--txt-primary, #111827) !important; }
+.empty-state h3 { color: var(--txt-primary, #202725) !important; }
 .empty-state p,
-.empty-state p { color: var(--txt-muted, #52525B) !important; }
+.empty-state p { color: var(--txt-muted, #929995) !important; }
 
 /* ══ 23. Skeleton ════════════════════════════════════════════════════════════ */
 @keyframes m26-shimmer {
@@ -921,9 +921,9 @@ html[data-theme="dark"] td {
 .prophets-seerah-bridge__title,
 .prophets-seerah-bridge__title { color: var(--m26-green-950, #052E16) !important; }
 .prophets-seerah-bridge__eyebrow,
-.prophets-seerah-bridge__eyebrow { color: var(--m26-gold-700, #0e6e52) !important; }
+.prophets-seerah-bridge__eyebrow { color: var(--m26-gold-700, #28584D) !important; }
 .prophets-seerah-bridge__desc,
-.prophets-seerah-bridge__desc { color: var(--txt-secondary, #374151) !important; }
+.prophets-seerah-bridge__desc { color: var(--txt-secondary, #68716D) !important; }
 .prophets-seerah-bridge__arrow,
 .prophets-seerah-bridge__arrow { color: var(--m26-green-600, #16A34A) !important; }
 .seerah-back-link {
@@ -939,10 +939,10 @@ html[data-theme="dark"] td {
 .site-footer {
   background: var(--m26-bg-2, #F1F3F5) !important;
   border-top: 1px solid rgba(0,0,0,0.07) !important;
-  color: var(--txt-muted, #52525B) !important;
+  color: var(--txt-muted, #929995) !important;
 }
 .site-footer a {
-  color: var(--txt-secondary, #374151) !important;
+  color: var(--txt-secondary, #68716D) !important;
   text-decoration: none;
 }
 .site-footer a:hover,
@@ -999,7 +999,7 @@ html[data-theme="dark"] td {
 
 /* ══ 29. Profile / Quick Links ═══════════════════════════════════════════════ */
 .profile-quick-link {
-  color: var(--txt-secondary, #374151) !important;
+  color: var(--txt-secondary, #68716D) !important;
   border-color: rgba(0,0,0,0.10) !important;
 }
 .profile-quick-link:hover {
@@ -1025,9 +1025,9 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   border: 1px solid rgba(0,0,0,0.07) !important;
 }
 .adhkar-card__text,
-.adhkar-card__text { color: var(--txt-primary, #111827) !important; }
+.adhkar-card__text { color: var(--txt-primary, #202725) !important; }
 .adhkar-card__source,
-.adhkar-card__source { color: var(--txt-muted, #52525B) !important; }
+.adhkar-card__source { color: var(--txt-muted, #929995) !important; }
 
 /* ══ 33. Flashcards ══════════════════════════════════════════════════════════ */
 .flashcard {
@@ -1038,7 +1038,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 .flashcard__front,
 .flashcard__back,
 .flashcard__front,
-.flashcard__back { color: var(--txt-primary, #111827) !important; }
+.flashcard__back { color: var(--txt-primary, #202725) !important; }
 
 /* ══ 34. KPI Stats ═══════════════════════════════════════════════════════════ */
 .stat-card {
@@ -1046,61 +1046,61 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   border: 1px solid rgba(0,0,0,0.07) !important;
 }
 .stat-card__value {
-  color: var(--txt-primary, #111827) !important;
+  color: var(--txt-primary, #202725) !important;
   font-weight: var(--fw-black) !important;
 }
 .stat-card__label,
-.stat-card__label { color: var(--txt-muted, #52525B) !important; }
+.stat-card__label { color: var(--txt-muted, #929995) !important; }
 
 /* ══ 35. Prayer Rank / Lesson Detail ════════════════════════════════════════ */
 .hcp-prayer-cell__time,
-.hcp-prayer-cell__time { color: var(--txt-primary, #111827) !important; }
+.hcp-prayer-cell__time { color: var(--txt-primary, #202725) !important; }
 .hcp-prayer-cell__name,
-.hcp-prayer-cell__name { color: var(--txt-secondary, #374151) !important; }
+.hcp-prayer-cell__name { color: var(--txt-secondary, #68716D) !important; }
 
 /* ══ 36. تاريخ الإسلامي / أذكار / تسبيح ════════════════════════════════════ */
 .tasbih-count {
-  color: var(--txt-primary, #111827) !important;
+  color: var(--txt-primary, #202725) !important;
   font-weight: var(--fw-black) !important;
 }
 .tasbih-label,
-.tasbih-label { color: var(--txt-muted, #52525B) !important; }
+.tasbih-label { color: var(--txt-muted, #929995) !important; }
 
 /* ══ 37. Prophet Stories — Light Card Contrast Fixes ════════════════════════ */
 .prophets-lux-count,
-.prophets-lux-count { color: var(--txt-muted, #52525B) !important; }
+.prophets-lux-count { color: var(--txt-muted, #929995) !important; }
 
 .prophet-lux-card__place,
-.prophet-lux-card__place { color: var(--txt-muted, #52525B) !important; }
+.prophet-lux-card__place { color: var(--txt-muted, #929995) !important; }
 
 .prophets-lux-empty,
-.prophets-lux-empty { color: var(--txt-muted, #52525B) !important; }
+.prophets-lux-empty { color: var(--txt-muted, #929995) !important; }
 
 .prophet-timeline__title,
-.prophet-timeline__title { color: var(--txt-muted, #52525B) !important; }
+.prophet-timeline__title { color: var(--txt-muted, #929995) !important; }
 
 .prophet-timeline__era,
-.prophet-timeline__era { color: var(--txt-muted, #52525B) !important; }
+.prophet-timeline__era { color: var(--txt-muted, #929995) !important; }
 
 .prophet-quiz__remark,
-.prophet-quiz__remark { color: var(--txt-muted, #52525B) !important; }
+.prophet-quiz__remark { color: var(--txt-muted, #929995) !important; }
 
 .prophets-lux-search-clear,
-.prophets-lux-search-clear { color: var(--txt-muted, #52525B) !important; }
+.prophets-lux-search-clear { color: var(--txt-muted, #929995) !important; }
 
 /* ══ 38. Seerah Page — Timeline Contrast ════════════════════════════════════ */
 .seerah-timeline__dot,
-.seerah-timeline__dot { color: var(--txt-muted, #52525B) !important; }
+.seerah-timeline__dot { color: var(--txt-muted, #929995) !important; }
 
 .seerah-timeline__year,
-.seerah-timeline__year { color: var(--txt-muted, #52525B) !important; }
+.seerah-timeline__year { color: var(--txt-muted, #929995) !important; }
 
 /* ══ 39. Muezzin Detail / Favorites — Contrast Fixes ════════════════════════ */
 .muezzin-meta,
-.muezzin-meta { color: var(--txt-muted, #52525B) !important; }
+.muezzin-meta { color: var(--txt-muted, #929995) !important; }
 
 .muezzin-bio,
-.muezzin-bio { color: var(--txt-muted, #52525B) !important; }
+.muezzin-bio { color: var(--txt-muted, #929995) !important; }
 
 /* ══ 39b. Back Button — زر الرجوع العالمي ══════════════════════════════════ */
 .ds-page-back-btn {
@@ -1112,7 +1112,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   border: 1.5px solid var(--majalis-line, #e5e7eb);
   border-radius: 9999px;
   background: var(--majalis-panel, #fff);
-  color: var(--txt-secondary, #374151);
+  color: var(--txt-secondary, #68716D);
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
@@ -1158,7 +1158,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 
 .adhkar-focus-counter {
   font-size: 0.875rem;
-  color: var(--txt-subdued, #6B7280);
+  color: var(--txt-subdued, #929995);
   letter-spacing: 0.05em;
 }
 
@@ -1177,7 +1177,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   font-family: var(--font-body);
   font-size: clamp(1.25rem, 4vw, 1.75rem);
   line-height: 2.2;
-  color: var(--txt-primary, #111827);
+  color: var(--txt-primary, #202725);
   margin: 0 0 1rem;
 }
 
@@ -1200,7 +1200,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   border-radius: 0.75rem;
   border: 1.5px solid var(--majalis-line, #e5e7eb);
   background: var(--majalis-panel, #fff);
-  color: var(--txt-primary, #111827);
+  color: var(--txt-primary, #202725);
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
@@ -1317,7 +1317,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 }
 
 .adhkar-tapper__hint {
-  font-size: 0.78rem; color: var(--txt-subdued, #6B7280);
+  font-size: 0.78rem; color: var(--txt-subdued, #929995);
   margin: 0; text-align: center;
 }
 .adhkar-tapper__complete {
@@ -1369,7 +1369,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   background: none;
   border: none;
   font-size: 1.1rem;
-  color: var(--txt-subdued, #6B7280);
+  color: var(--txt-subdued, #929995);
   cursor: pointer;
   padding: 0.25rem 0.5rem;
   border-radius: 0.5rem;
@@ -1377,7 +1377,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 .adhkar-sheet-title {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--txt-primary, #111827);
+  color: var(--txt-primary, #202725);
   text-align: center;
   margin: 0 0 1rem;
 }
@@ -1385,7 +1385,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   font-family: var(--font-body);
   font-size: 1.15rem;
   line-height: 2;
-  color: var(--txt-primary, #111827);
+  color: var(--txt-primary, #202725);
   text-align: center;
   padding: 1rem;
   background: var(--m26-green-50, #F0FDF4);
@@ -1408,12 +1408,12 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   border-bottom: 1px solid var(--majalis-line, #e5e7eb);
 }
 .adhkar-sheet-row dt {
-  color: var(--txt-subdued, #6B7280);
+  color: var(--txt-subdued, #929995);
   font-weight: 500;
   white-space: nowrap;
 }
 .adhkar-sheet-row dd {
-  color: var(--txt-primary, #111827);
+  color: var(--txt-primary, #202725);
   text-align: start;
   margin: 0;
 }
@@ -1425,8 +1425,8 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   font-weight: 600;
 }
 .adhkar-grade--sahih { background: #DCFCE7; color: #166534; }
-.adhkar-grade--hasan { background: #e8f5f0; color: #0e6e52; }
-.adhkar-grade--other { background: #F3F4F6; color: #374151; }
+.adhkar-grade--hasan { background: #e8f5f0; color: #28584D; }
+.adhkar-grade--other { background: #F3F4F6; color: #68716D; }
 .adhkar-sheet-share {
   width: 100%;
   justify-content: center;
@@ -1447,26 +1447,26 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 
 /* ══ 40. Legacy Token Bridge — إعادة تعريف الرموز القديمة للتوافق ═══════════ */
 :root {
-  --text-base:       var(--txt-primary,   #153025);
-  --text-soft:       var(--txt-secondary, #374151);
-  --text-muted:      var(--txt-muted,     #52525B);
-  --text-subtle:     var(--txt-subdued,   #6B7280);
-  --text-disabled:   var(--txt-disabled,  #A1A1AA);
-  --text-accent:     var(--txt-accent,    #153025);
-  --text-inverse:    var(--txt-inverse,   #FAF8F2);
+  --text-base:       var(--txt-primary,   #202725);
+  --text-soft:       var(--txt-secondary, #68716D);
+  --text-muted:      var(--txt-muted,     #929995);
+  --text-subtle:     var(--txt-subdued,   #68716D);
+  --text-disabled:   var(--txt-disabled,  #B9BEBB);
+  --text-accent:     var(--txt-accent,    #173D35);
+  --text-inverse:    var(--txt-inverse,   #F7F4ED);
 
-  /* ── تحديث رموز m26 لتطابق هوية Emerald ── */
-  --m26-bg:           #FAF8F2;
-  --m26-bg-2:         #F1F3F2;
-  --m26-surface:      #FAF8F2;
-  --m26-surface-2:    #F1F3F2;
-  --m26-surface-3:    #E1E5E3;
-  --m26-green-950:    #07100D;
-  --m26-green-800:    #153025;
-  --m26-green-700:    #153025;
-  --m26-green-600:    #153025;
-  --m26-green-100:    #E1E5E3;
-  --m26-green-50:     #F1F3F2;
+  /* ── تحديث رموز m26 لتطابق إعادة تصميم الهوية v3 ── */
+  --m26-bg:           #F7F4ED;
+  --m26-bg-2:         #F1EEE5;
+  --m26-surface:      #FFFFFF;
+  --m26-surface-2:    #F1EEE5;
+  --m26-surface-3:    #EFE9DC;
+  --m26-green-950:    #0C211C;
+  --m26-green-800:    #173D35;
+  --m26-green-700:    #173D35;
+  --m26-green-600:    #173D35;
+  --m26-green-100:    #E4EAE7;
+  --m26-green-50:     #EEF1EF;
 }
 
 /* ══ 41. نقش نجمة ثمانية الأضلاع — سطح الأبطال والرؤوس ════════════════════ */
@@ -1476,19 +1476,19 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
  * يُمنع تماماً خلف: نص قرآني، نص حديث، نماذج، جداول.
  */
 .majalis-star-bg {
-  background-color: #153025;
+  background-color: #173D35;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E");
   background-size: 100px 100px;
-  color: #FAF8F2;
+  color: #F7F4ED;
 }
 
 /* رأس النجمة — الوضع الاحتفالي للصفحات الرئيسية */
 .majalis-star-hero {
   position: relative;
-  background-color: #0e6e52;
+  background-color: #28584D;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.06' stroke-width='1.2'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.09'/%3E%3C/svg%3E");
   background-size: 100px 100px;
-  color: #FAF8F2;
+  color: #F7F4ED;
   padding: 2.5rem 1.5rem;
 }
 
@@ -1516,7 +1516,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   font-size: 0.88rem !important;
   font-weight: 700 !important;
   line-height: 1 !important;
-  color: var(--txt-primary, #111827) !important;
+  color: var(--txt-primary, #202725) !important;
 }
 .cal-cell-hijri {
   font-size: 0.62rem !important;
@@ -1581,7 +1581,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   right: 0;
   left: 0;
   height: 3px;
-  background: linear-gradient(to left, var(--color-primary, #0e6e52), #34d399);
+  background: linear-gradient(to left, var(--color-primary, #28584D), #34d399);
   width: var(--rpb-pct, 0%);
   z-index: 9999;
   transition: width 0.1s linear;
@@ -1623,7 +1623,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   --on-dark-primary:      #FFFFFF;
   --on-dark-secondary:    rgba(255, 255, 255, 0.88);
   --txt-body:             #1E1E1E;
-  --txt-body-light:       #374151;
+  --txt-body-light:       #68716D;
 }
 
 /* ─── تحسين وزن الخط العام ─── */
@@ -1713,7 +1713,7 @@ p { line-height: var(--lh-normal, 1.65); }
 .page-meta,
 .page-desc,
 .content-detail-meta {
-  color: #374151;
+  color: #68716D;
   line-height: var(--lh-normal, 1.65);
 }
 
@@ -1733,7 +1733,7 @@ p { line-height: var(--lh-normal, 1.65); }
 
 /* ─── ضمان النص الأبيض على شريط القراءة ─── */
 .reading-progress-bar {
-  background: linear-gradient(to right, var(--majalis-emerald, #0e6e52), #0e6e52);
+  background: linear-gradient(to right, var(--majalis-emerald, #28584D), #28584D);
 }
 
 /* ─── تحسين الفهرس والتسميات المرئية ─── */

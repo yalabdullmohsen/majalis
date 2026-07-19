@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { Link } from "wouter";
-import { Compass, Moon, RotateCw, Star, Sun, SunDim, Sunset, Sunrise } from "lucide-react";
+import { Bell, Compass, Moon, RotateCw, Star, Sun, SunDim, Sunset, Sunrise } from "lucide-react";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import type { LucideIcon } from "lucide-react";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
@@ -294,6 +294,9 @@ export default function PrayerTimesPage() {
         </Link>
         <Link href="/salah-guide?tab=suwar" className="pt-quick-link">
           <Moon size={16} strokeWidth={1.8} aria-hidden="true" /> سور الصلاة والنوافل
+        </Link>
+        <Link href="/adhan-settings" className="pt-quick-link">
+          <Bell size={16} strokeWidth={1.8} aria-hidden="true" /> إعدادات الأذان والتنبيهات
         </Link>
       </div>
 

@@ -176,7 +176,7 @@ export function IslamicIntelligenceSection() {
               <span>{AGENT_LABELS[r.agent_id] || r.agent_id}</span>
               <span
                 className="ii-run-status"
-                style={{ "--ii-run-color": r.status === "completed" ? "var(--majalis-emerald-deep,#123F36)" : "#dc2626" } as React.CSSProperties}
+                style={{ "--ii-run-color": r.status === "completed" ? "var(--majalis-emerald-deep,#173D35)" : "#dc2626" } as React.CSSProperties}
               >
                 {r.issues_found} مشكلة
               </span>

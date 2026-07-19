@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { BookOpen, Gamepad2, GraduationCap, Home, LayoutGrid, Sunset } from "lucide-react";
 import { MoreBottomSheet } from "./MoreBottomSheet";
-import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 
 type NavTab = {
   href: string;
@@ -10,28 +9,27 @@ type NavTab = {
   Icon: React.ComponentType<{ size?: number; strokeWidth?: number; "aria-hidden"?: boolean }>;
 };
 
-/* 4 وجهات أساسية + "المزيد" = 5 إجمالاً (كان 6+المزيد=7 — يخالف المواصفة).
-   المكتبة/العلماء/الفقه لم تُحذَف، بل تبقى متاحة عبر "المزيد" (MoreBottomSheet
-   يضمّها فعلاً ضمن أقسامها) — إعادة تموضع لا حذف وظيفة (2026-07-18).
-   "سؤال وجواب" (لعبة /quiz) أُضيفت هنا صراحةً تلبيةً للمرحلة 6. */
+/* 5 وجهات أساسية + "المزيد" = 6 إجمالاً — إعادة تصميم الهوية v3 (2026-07-19):
+   يُلغي قرار توحيد الشريط لـ4+المزيد السابق (2026-07-18) ويضيف "الصلاة"
+   صراحةً كوجهة سادسة (مواقيت + عد تنازلي + قبلة + إعدادات أذان، جميعها
+   موجودة فعلاً عبر /prayer-times ولوحاتها الفرعية). المكتبة/العلماء/الفقه
+   تبقى متاحة عبر "المزيد" (MoreBottomSheet) — إعادة تموضع لا حذف وظيفة. */
 const NAV_TABS: NavTab[] = [
-  { href: "/",          label: "الرئيسية",    Icon: Home },
-  { href: "/quran-hub", label: "القرآن",      Icon: BookOpen },
-  { href: "/quiz",      label: "سؤال وجواب", Icon: Gamepad2 },
-  { href: "/lessons",   label: "تعلّم",       Icon: GraduationCap },
+  { href: "/",             label: "الرئيسية",    Icon: Home },
+  { href: "/quran-hub",    label: "القرآن",      Icon: BookOpen },
+  { href: "/quiz",         label: "سؤال وجواب", Icon: Gamepad2 },
+  { href: "/lessons",      label: "تعلّم",       Icon: GraduationCap },
+  { href: "/prayer-times", label: "الصلاة",      Icon: Sunset },
 ];
 
 export function BottomNavBar() {
   const [location] = useLocation();
   const [moreOpen, setMoreOpen] = useState(false);
-  const { countdown } = usePrayerCountdown();
 
   const isActive = (href: string) => {
     if (href === "/") return location === "/";
     return location === href || location.startsWith(href + "/");
   };
-
-  const next = countdown?.next;
 
   // قارئ المصحف /mushaf غامر مخصَّص بتنقّله الخاص (pager/سحب صفحات) —
   // شريط تنقّل سفلي عام فوقه يجعله يبدو صفحة ويب لا تطبيق قراءة، ويحجز
@@ -73,14 +71,6 @@ export function BottomNavBar() {
           <span className="bottom-nav__tab-label">المزيد</span>
         </button>
       </nav>
-
-      {/* شارة الصلاة القادمة — تظهر فوق تبويب الدروس عند الحاجة */}
-      {next && (
-        <div className="bottom-nav__prayer-float" aria-hidden="true">
-          <Sunset size={12} />
-          <span>{next.name} · {next.time}</span>
-        </div>
-      )}
 
       <MoreBottomSheet open={moreOpen} onClose={() => setMoreOpen(false)} />
     </>

@@ -1,29 +1,43 @@
 /**
  * Design Tokens — المجلس العلمي
- * مرجع الحقيقة الوحيد للهوية البصرية المُستخرج من صفحة التوحيد (المرجع)
+ * مرجع الحقيقة الوحيد للهوية البصرية — إعادة تصميم الهوية البصرية v3 (2026-07-19)
+ * لوحة ألوان هادئة فاخرة: أخضر رمادي داكن + عاجي دافئ + ذهبي رملي مساند.
  * لا تُغيّر هذه القيم إلا بقرار توحيد واعٍ يطال كل الصفحات.
  */
 
 export const COLOR = {
-  /* ── الأساس الزمردي 2026 ── */
-  emerald:      "#176B57",              // --clr-primary
-  emeraldDeep:  "#123F36",             // --clr-primary-deep
-  emeraldHov:   "#125746",             // --clr-primary-hov
-  emeraldSoft:  "rgba(23,107,87,0.06)", // hover خفيف
-  emeraldMid:   "rgba(23,107,87,0.12)", // تظليل ناعم
-  emeraldBorder:"rgba(23,107,87,0.10)", // --msk-border
+  /* ── الأساس: أخضر داكن مائل للرمادي ── */
+  primary:      "#173D35",
+  primaryLight: "#28584D",
+  emerald:      "#173D35",              // alias توافقي مع الاستخدام القديم
+  emeraldDeep:  "#173D35",
+  emeraldHov:   "#28584D",
+  emeraldSoft:  "rgba(23,61,53,0.06)",
+  emeraldMid:   "rgba(23,61,53,0.12)",
+  emeraldBorder:"rgba(23,61,53,0.10)",
 
-  /* ── تدرّج البطاقة الرئيسية (hero) ── */
-  heroGradient: "linear-gradient(135deg, #176B57 0%, #123F36 100%)",
+  /* ── مساند ذهبي رملي هادئ (استخدام مقتصد) ── */
+  gold:      "#B89452",
+  goldSoft:  "rgba(184,148,82,0.10)",
+  goldMid:   "rgba(184,148,82,0.18)",
+
+  /* ── تدرّج البطاقة اليومية الرئيسية (hero) — استخدام محدود جدًا ── */
+  heroGradient: "linear-gradient(135deg, #173D35 0%, #28584D 100%)",
 
   /* ── الخلفيات ── */
-  canvas:   "#FFFFFF",   // --msk-canvas
-  canvas1:  "#F8F7F3",   // --msk-canvas-1
+  canvas:   "#F7F4ED",   // خلفية عامة — عاجي دافئ
+  canvas1:  "#FFFFFF",   // خلفية بطاقات
+  border:   "#E7E2D8",   // حدود خفيفة
 
   /* ── النصوص ── */
-  ink:      "#17201D",   // --msk-text
-  inkSoft:  "#5E6964",   // --msk-text-2
-  inkMuted: "#89928E",   // --msk-text-3
+  ink:      "#202725",   // نص أساسي
+  inkSoft:  "#68716D",   // نص ثانوي
+  inkMuted: "#929995",   // نص خافت
+
+  /* ── حالات النظام ── */
+  success: "#34785F",
+  warning: "#B67A32",
+  error:   "#B44A4A",
 
   /* ── الوضع الداكن ── */
   dark: {
@@ -37,9 +51,9 @@ export const COLOR = {
 export const RADIUS = {
   sm:  "0.375rem",   // --ds-radius-sm
   md:  "0.5rem",     // --ds-radius
-  lg:  "0.625rem",   // --ds-radius-lg / بطاقات التوحيد الفرعية
-  xl:  "0.75rem",    // بطاقات التوحيد الرئيسية
-  "2xl":"1rem",      // بطاقات البطل (hero cards)
+  lg:  "1rem",       // 16px — الحد الأدنى لبطاقات الهوية الجديدة
+  xl:  "1.25rem",    // 20px — بطاقات قياسية
+  "2xl":"1.375rem",  // 22px — الحد الأقصى لبطاقات الهوية الجديدة
   full:"999px",      // شارات ورقاقات
 } as const;
 
@@ -53,15 +67,30 @@ export const SPACING = {
 } as const;
 
 export const SHADOW = {
-  sm: "0 1px 2px rgba(22,78,60,0.05)",
-  md: "0 2px 8px rgba(22,78,60,0.07)",
-  lg: "0 8px 24px rgba(22,78,60,0.09)",
+  sm: "0 1px 2px rgba(23,61,53,0.05)",
+  md: "0 2px 8px rgba(23,61,53,0.06)",
+  lg: "0 8px 24px rgba(23,61,53,0.08)",
+} as const;
+
+/**
+ * سلّم الطباعة الموحَّد (يطابق التكليف: عنوان صفحة 26-30، عنوان قسم 20-22،
+ * عنوان بطاقة 16-18، نص أساسي 15-17، نص مساند 13-14).
+ */
+export const TYPE_SCALE = {
+  pageTitle:    "1.5rem",    // 24px
+  sectionTitle: "1.1875rem",// 19px
+  cardTitle:    "1rem",     // 16px
+  body:         "0.9375rem",// 15px
+  support:      "0.75rem",  // 12px
 } as const;
 
 export const FONT = {
-  ui:     '"Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif',
+  /* الخط الموحَّد للواجهة: Alexandria — خط عربي حديث هادئ بأوزان متعددة
+     مناسب لهوية فاخرة منخفضة الضجيج (اختير بدل IBM Plex Sans Arabic
+     لثراء أوزانه وانسجامه مع طابع "هادئ فاخر" المطلوب — 2026-07-19). */
+  ui:     '"Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif',
   quran:  '"Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif',
-  display:'"Almarai", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif',
+  display:'"Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif',
 } as const;
 
 /**
@@ -81,8 +110,8 @@ export const QURAN_QUOTE_STYLE = {
   },
   /* داخل بطاقة بيضاء */
   onWhite: {
-    borderRight: `3px solid ${COLOR.emerald}`,
-    background: COLOR.canvas1,
+    borderRight: `3px solid ${COLOR.primary}`,
+    background: COLOR.canvas,
     borderRadius: `0 ${RADIUS.lg} ${RADIUS.lg} 0`,
     padding: "0.6rem 0.75rem",
     fontFamily: FONT.quran,
@@ -96,8 +125,8 @@ export const QURAN_QUOTE_STYLE = {
  * ألوان درجات تصنيف الحديث
  */
 export const HADITH_GRADE_COLOR = {
-  "صحيح":  COLOR.emerald,
-  "حسن":   COLOR.emeraldHov,
-  "ضعيف":  "#B94A48",
+  "صحيح":  COLOR.primary,
+  "حسن":   COLOR.primaryLight,
+  "ضعيف":  COLOR.error,
   "موضوع": "#7f1d1d",
 } as const;

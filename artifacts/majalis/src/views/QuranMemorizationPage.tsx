@@ -258,7 +258,7 @@ function QuestionCard({
         <button
           type="button"
           className="qmem-next-btn"
-          style={{ background: "#176B57" }}
+          style={{ background: "#173D35" }}
           onClick={() => { setAnswered(true); }}
         >
           اعرض الإجابة

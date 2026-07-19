@@ -23,7 +23,7 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
   {
     emoji: "🕌", title: "التوحيد ومسائله",
     desc: "أنواع التوحيد، الشرك، البدعة، والمسائل العقدية",
-    href: "/tawhid", badge: "٨ مسائل", color: "#176B57", isCurrent: true,
+    href: "/tawhid", badge: "٨ مسائل", color: "#173D35", isCurrent: true,
   },
   {
     emoji: "🌟", title: "أركان الإسلام",
@@ -43,12 +43,12 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
   {
     emoji: "🌿", title: "الجنة والنار",
     desc: "صفة الجنة ونعيمها وصفة النار وعذابها",
-    href: "/janna-naar", badge: "عقيدة", color: "#176B57",
+    href: "/janna-naar", badge: "عقيدة", color: "#173D35",
   },
   {
     emoji: "⏳", title: "علامات الساعة",
     desc: "العلامات الصغرى والكبرى مرتبةً بالأدلة",
-    href: "/alamat-saah", badge: "صغرى وكبرى", color: "#0E6E52",
+    href: "/alamat-saah", badge: "صغرى وكبرى", color: "#28584D",
   },
   {
     emoji: "👼", title: "الملائكة في الإسلام",

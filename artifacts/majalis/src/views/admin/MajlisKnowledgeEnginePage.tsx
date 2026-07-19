@@ -152,11 +152,11 @@ function MajlisKnowledgeEngineContent() {
       {loading ? <SkeletonCardGrid count={6} /> : (
         <>
           <div className="mke-stats-row">
-            <StatCard label="\u0635\u062d\u0629 \u0627\u0644\u0646\u0638\u0627\u0645" value={stats?.health?.score ?? "\u2014"} color={stats?.health?.status === "healthy" ? "var(--majalis-emerald-deep)" : "#176B57"} />
+            <StatCard label="\u0635\u062d\u0629 \u0627\u0644\u0646\u0638\u0627\u0645" value={stats?.health?.score ?? "\u2014"} color={stats?.health?.status === "healthy" ? "var(--majalis-emerald-deep)" : "#173D35"} />
             <StatCard label="\u0627\u0644\u0645\u0635\u0627\u062f\u0631" value={stats?.counts?.sources ?? (stats?.subsystems as { sources?: { total?: number } } | undefined)?.sources?.total ?? stats?.sourcesTotal ?? 0} />
             <StatCard label="\u0627\u0644\u0645\u0646\u0635\u0627\u062a" value={stats?.platformsSupported ?? platforms.length} />
             <StatCard label="\u0645\u0633\u0648\u062f\u0627\u062a" value={stats?.counts?.drafts ?? stats?.drafts ?? 0} />
-            <StatCard label="\u0628\u0627\u0646\u062a\u0638\u0627\u0631 \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629" value={stats?.counts?.pendingReview ?? stats?.pendingReview ?? 0} color="#176B57" />
+            <StatCard label="\u0628\u0627\u0646\u062a\u0638\u0627\u0631 \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629" value={stats?.counts?.pendingReview ?? stats?.pendingReview ?? 0} color="#173D35" />
             <StatCard label="\u0645\u0646\u0634\u0648\u0631 \u0627\u0644\u064a\u0648\u0645" value={stats?.counts?.publishedToday ?? stats?.publishedToday ?? 0} />
             <StatCard label="Queue" value={stats?.subsystems?.queue ? (stats.subsystems.queue as { pending?: number }).pending ?? 0 : stats?.queue?.pending ?? 0} />
             <StatCard label="Self-Heal" value={stats?.counts?.self_heal_log ?? "\u2014"} />
@@ -165,7 +165,7 @@ function MajlisKnowledgeEngineContent() {
                 <StatCard label="AKP \u062c\u0627\u0647\u0632\u064a\u0629 %" value={akp.readinessPct ?? "\u2014"} />
                 <StatCard label="\u0645\u0646\u0634\u0648\u0631 AKP \u0627\u0644\u064a\u0648\u0645" value={akp.counts?.published ?? akp.productionVelocity?.itemsToday ?? 0} />
                 <StatCard label="DLQ" value={akp.counts?.dlq ?? 0} color="#991B1B" />
-                <StatCard label="\u0645\u0631\u0627\u062c\u0639\u0629 AKP" value={akp.counts?.reviewPending ?? 0} color="#176B57" />
+                <StatCard label="\u0645\u0631\u0627\u062c\u0639\u0629 AKP" value={akp.counts?.reviewPending ?? 0} color="#173D35" />
               </>
             )}
           </div>

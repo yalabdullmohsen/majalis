@@ -25,7 +25,7 @@ function getSeasons(): Season[] {
       description: "رأس السنة الهجرية 1448هـ — شهر الله المحرم",
       suggestion: "تجديد النية واستحضار نعمة الهجرة",
       href: "/raqaiq",
-      color: "#176B57",
+      color: "#173D35",
     },
     {
       id: "rabi-awwal-1448",
@@ -36,7 +36,7 @@ function getSeasons(): Season[] {
       description: "ربيع الأول 1448هـ — ذكرى مولد النبي ﷺ",
       suggestion: "قراءة السيرة النبوية والشمائل المحمدية",
       href: "/shamael",
-      color: "#123F36",
+      color: "#173D35",
     },
     {
       id: "rajab-1448",
@@ -69,7 +69,7 @@ function getSeasons(): Season[] {
       description: "شهر رمضان المبارك 1448هـ",
       suggestion: "خطة تعلّم رمضانية مكثّفة",
       href: "/learning-plan",
-      color: "var(--majalis-emerald-deep, #123F36)",
+      color: "var(--majalis-emerald-deep, #173D35)",
     },
     {
       id: "dhul-hijja-1448",
@@ -80,7 +80,7 @@ function getSeasons(): Season[] {
       description: "أفضل أيام الدنيا، العشر الأول من ذي الحجة 1448هـ",
       suggestion: "مراجعة أعمال اليوم العظيمة",
       href: "/adhkar",
-      color: "var(--majalis-emerald, #176B57)",
+      color: "var(--majalis-emerald, #173D35)",
     },
   ];
 }
@@ -120,8 +120,8 @@ export function HomeLearningSeasonsWidget() {
       <div className="ds-section__head">
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20">
-            <polygon points="10,1 12.5,7 19,7 14,11 16,18 10,14 4,18 6,11 1,7 7.5,7" fill="none" stroke="#176B57" strokeWidth="1.3"/>
-            <circle cx="10" cy="10" r="3" fill="none" stroke="#176B57" strokeWidth="0.9"/>
+            <polygon points="10,1 12.5,7 19,7 14,11 16,18 10,14 4,18 6,11 1,7 7.5,7" fill="none" stroke="#173D35" strokeWidth="1.3"/>
+            <circle cx="10" cy="10" r="3" fill="none" stroke="#173D35" strokeWidth="0.9"/>
           </svg>
           <h2 className="ds-section__title">مواسم التعلّم</h2>
         </div>
