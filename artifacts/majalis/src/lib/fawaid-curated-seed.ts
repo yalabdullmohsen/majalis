@@ -1,5 +1,17 @@
 /**
  * فوائد علمية مختارة — موثقة ومُصنّفة
+ *
+ * ملاحظة (2026-07-19): اكتُشف بالفحص المباشر أن 10 عناصر في هذا الملف
+ * كانت تحمل قيم category ("الزهد"، "الزهد والتقوى"، "الأسرة"، "الصبر
+ * والتوكل"، "اللغة العربية") لا تطابق أياً من الشرائح المعروضة فعلياً في
+ * FawaidPage.tsx (لا هنا في FAWAID_CURATED_CATEGORIES ولا في
+ * LEGACY_CATEGORIES بذلك الملف) — فكانت تختفي صامتاً عند الفلترة بأي
+ * تصنيف محدَّد رغم ظهورها تحت "الكل"، نفس عائلة عطل "142 فائدة" المُصلَح
+ * سابقاً في fawaid-seed.ts (2026-07-18) لكن في هذا الملف تحديداً الذي لم
+ * يُفحص حينها. أُعيدت تسميتها لأقرب تصنيف قائم فعلاً: "الزهد"/"الزهد
+ * والتقوى" → "الرقائق" (نفس معنى تزكية القلب)، "الأسرة" → "التربية"،
+ * "الصبر والتوكل" → "العقيدة" (التوكل من مسائل الاعتقاد)، "اللغة
+ * العربية" → "اللغة" (نفس المعنى بالضبط).
  */
 export const FAWAID_CURATED_CATEGORIES = [
   "العقيدة",
@@ -234,9 +246,9 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الحكمة في الدعوة لا تعني التنازل عن الحق؛ بل حسن اختيار الوقت والأسلوب.", category: "الدعوة", source: "تفسير ابن سعدي — النحل: 125", author_name: "ابن سعدي", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الزهد والرقائق ── */
-  { text: "الزهد في الدنيا ليس ترك أسبابها؛ بل ألا تستعبدك ولا تملأ قلبك.", category: "الزهد", source: "مدارج السالكين — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
-  { text: "ما أُفرغ في جوف ابن آدم أشد من الحب والغضب؛ فداوِهما بالصبر والاستعاذة.", category: "الزهد", source: "إغاثة اللهفان — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
-  { text: "أكبر الكبائر حب الدنيا والأمن من مكر الله والقنوط من رحمته.", category: "الزهد", source: "الزهد — الإمام أحمد بن حنبل", author_name: "الإمام أحمد بن حنبل", status: "approved", verification_status: "needs_review" },
+  { text: "الزهد في الدنيا ليس ترك أسبابها؛ بل ألا تستعبدك ولا تملأ قلبك.", category: "الرقائق", source: "مدارج السالكين — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "ما أُفرغ في جوف ابن آدم أشد من الحب والغضب؛ فداوِهما بالصبر والاستعاذة.", category: "الرقائق", source: "إغاثة اللهفان — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "أكبر الكبائر حب الدنيا والأمن من مكر الله والقنوط من رحمته.", category: "الرقائق", source: "الزهد — الإمام أحمد بن حنبل", author_name: "الإمام أحمد بن حنبل", status: "approved", verification_status: "needs_review" },
 
   /* ── إضافات الأخلاق ── */
   { text: "الإنسان كثير بأخلاقه؛ لا بماله ولا بجاهه.", category: "الأخلاق", source: "ديوان الإمام الشافعي", author_name: "الإمام الشافعي", status: "approved", verification_status: "needs_review" },
@@ -252,8 +264,8 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "درء المفسدة مقدّم على جلب المصلحة؛ وهذا أصل عظيم في الاجتهاد الفقهي.", category: "الفقه", source: "الأشباه والنظائر — ابن نجيم", author_name: "ابن نجيم الحنفي", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الأسرة ── */
-  { text: "خيركم خيركم لأهله — الأسرة الصالحة أساس المجتمع المسلم الصالح.", category: "الأسرة", source: "رواه الترمذي — صحيح", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "verified" },
-  { text: "البيت السعيد هو الذي تُعلَّم فيه الصلاة قبل القراءة والكتابة.", category: "الأسرة", source: "تربية الأولاد في الإسلام — عبد الله ناصح علوان", author_name: "عبد الله ناصح علوان", status: "approved", verification_status: "needs_review" },
+  { text: "خيركم خيركم لأهله — الأسرة الصالحة أساس المجتمع المسلم الصالح.", category: "التربية", source: "رواه الترمذي — صحيح", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "verified" },
+  { text: "البيت السعيد هو الذي تُعلَّم فيه الصلاة قبل القراءة والكتابة.", category: "التربية", source: "تربية الأولاد في الإسلام — عبد الله ناصح علوان", author_name: "عبد الله ناصح علوان", status: "approved", verification_status: "needs_review" },
 
   /* ── إضافات العقيدة ── */
   { text: "التوحيد أسُّ الدين وقمّته؛ فلا عمل يُقبل بلا توحيد، ولا توحيد يكتمل بلا إخلاص.", category: "العقيدة", source: "درء تعارض العقل والنقل — ابن تيمية", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
@@ -284,15 +296,15 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "دراسة السيرة النبوية واجب على كل مسلم؛ فهي التطبيق العملي للقرآن الكريم في حياة بشرية كاملة.", category: "السيرة", source: "الشمائل المحمدية — الترمذي", author_name: "الإمام الترمذي", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الزهد والتقوى ── */
-  { text: "الزهد ليس فراراً من الدنيا؛ بل ألّا تُسكن الدنيا قلبك وهي في يدك. فاعملها واتركها في يدك لا في قلبك.", category: "الزهد والتقوى", source: "إحياء علوم الدين — الغزالي", author_name: "الإمام الغزالي", status: "approved", verification_status: "verified" },
-  { text: "قيمة الوقت عند المؤمن من قيمة نفسه؛ فكل ساعة تمر بلا طاعة أو نفع هي خسارة لا تُعوَّض.", category: "الزهد والتقوى", source: "الفوائد — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "الزهد ليس فراراً من الدنيا؛ بل ألّا تُسكن الدنيا قلبك وهي في يدك. فاعملها واتركها في يدك لا في قلبك.", category: "الرقائق", source: "إحياء علوم الدين — الغزالي", author_name: "الإمام الغزالي", status: "approved", verification_status: "verified" },
+  { text: "قيمة الوقت عند المؤمن من قيمة نفسه؛ فكل ساعة تمر بلا طاعة أو نفع هي خسارة لا تُعوَّض.", category: "الرقائق", source: "الفوائد — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الصبر والتوكل ── */
-  { text: "التوكل على الله لا يعني ترك الأسباب؛ بل أن تأخذ بالأسباب وقلبك معلق بالمسبب لا بالسبب.", category: "الصبر والتوكل", source: "مدارج السالكين — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "التوكل على الله لا يعني ترك الأسباب؛ بل أن تأخذ بالأسباب وقلبك معلق بالمسبب لا بالسبب.", category: "العقيدة", source: "مدارج السالكين — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
 
   /* ── إضافات اللغة العربية ── */
-  { text: "من أتقن العربية فتح له باب الفهم على الكتاب والسنة؛ ولغة القرآن ليست وسيلة فحسب بل هي من شريعته.", category: "اللغة العربية", source: "اقتضاء الصراط المستقيم — ابن تيمية", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
-  { text: "أفصح البشر لساناً رسول الله ﷺ — أوتي جوامع الكلم: كلمات قليلة تحمل معاني غزيرة لا يُحيط بها شرح.", category: "اللغة العربية", source: "جوامع الكلم — دراسة حديثية", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "verified" },
+  { text: "من أتقن العربية فتح له باب الفهم على الكتاب والسنة؛ ولغة القرآن ليست وسيلة فحسب بل هي من شريعته.", category: "اللغة", source: "اقتضاء الصراط المستقيم — ابن تيمية", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
+  { text: "أفصح البشر لساناً رسول الله ﷺ — أوتي جوامع الكلم: كلمات قليلة تحمل معاني غزيرة لا يُحيط بها شرح.", category: "اللغة", source: "جوامع الكلم — دراسة حديثية", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "verified" },
 
   /* ── الطب النبوي والصحة ── */
   { text: "عليكم بهذا العود الهندي فإن فيه سبعة أشفية.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
@@ -341,6 +353,13 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── ذكر الله وتلاوة القرآن ── */
   { text: "ألا بذكر الله تطمئن القلوب — الذكر دواء القلوب وغذاؤها وقوتها في كل وقت.", category: "العقيدة", source: "الرعد: 28", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
   { text: "الذاكرون الله كثيراً والذاكرات أعد الله لهم مغفرة وأجراً عظيماً — فأكثر من الذكر في كل حال.", category: "الحديث", source: "الأحزاب: 35", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
+
+  /* ── الذكر والدعاء (تعميق 2026-07-19: كانت أشح تصنيفات الفوائد بـ4
+     عناصر فقط بعد إصلاح فجوة التصنيفات اليتيمة أعلاه) ── */
+  { text: "دعاء ذي النون في بطن الحوت: «لا إله إلا أنت سبحانك إني كنت من الظالمين» — استجاب الله له فنجّاه من الغمّ، وهي من أعظم أدعية الكرب.", category: "الذكر والدعاء", source: "الأنبياء: 87", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
+  { text: "الأمر بذكر الله ذكراً كثيراً والتسبيح بكرة وأصيلاً — لا يقتصر الذكر على وقت دون آخر بل يلازم المؤمن في كل أحواله.", category: "الذكر والدعاء", source: "الأحزاب: 41-42", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
+  { text: "«فاذكروني أذكركم» — وعد إلهي مباشر: من ذكر الله في نفسه ذكره الله، ومن ذكره في ملأ ذكره الله في ملأ خير منه.", category: "الذكر والدعاء", source: "البقرة: 152", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
+  { text: "«ادعوني أستجب لكم» — أمر إلهي بالدعاء مقروناً بوعد الإجابة، والاستكبار عن الدعاء استكبار عن العبادة نفسها.", category: "الذكر والدعاء", source: "غافر: 60", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
 ];
 
 export const FAWAID_CURATED_SEED: FawaidCuratedItem[] = curated.map((item, i) => ({
