@@ -8,8 +8,15 @@ import {
   reAnalyzeAutomationDraft,
   type AutomationAuditRecord,
 } from "@/lib/lesson-automation-api";
+import { adminApproveAutoContent, adminRejectAutoContent } from "@/lib/auto-content-service";
+import { adminListUnifiedContent, adminSetPinned, adminDeleteUnifiedContent } from "@/lib/unified-content-service";
+import type { AutoImportedContent } from "@/lib/auto-content/auto-content-utils";
 import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
+
+const CONTENT_TYPE_LABEL: Record<string, string> = {
+  course: "دورة", event: "فعالية", benefit: "فائدة", announcement: "إعلان",
+};
 
 type DraftRow = {
   id: string;
@@ -58,7 +65,8 @@ function AutomationReviewContent() {
   const [autoPublished, setAutoPublished] = useState<AutomationAuditRecord[]>([]);
   const [duplicates, setDuplicates] = useState<AutomationAuditRecord[]>([]);
   const [rejected, setRejected] = useState<AutomationAuditRecord[]>([]);
-  const [tab, setTab] = useState<"pending" | "auto" | "duplicate" | "rejected">("pending");
+  const [unified, setUnified] = useState<AutoImportedContent[]>([]);
+  const [tab, setTab] = useState<"pending" | "auto" | "duplicate" | "rejected" | "unified">("pending");
 
   const load = useCallback(() => {
     setLoading(true);
@@ -75,6 +83,7 @@ function AutomationReviewContent() {
         setAutoPublished([]);
       })
       .finally(() => setLoading(false));
+    adminListUnifiedContent("needs_review").then((r) => setUnified(r.data)).catch(() => setUnified([]));
   }, []);
 
   useEffect(() => {
@@ -133,11 +142,49 @@ function AutomationReviewContent() {
     }
   };
 
+  const onApproveUnified = async (id: string) => {
+    setBusy(true);
+    try {
+      const { error } = await adminApproveAutoContent(id);
+      if (error) { showError(error.message); return; }
+      showSuccess("\u062a\u0645 \u0627\u0644\u0627\u0639\u062a\u0645\u0627\u062f \u2014 \u0633\u064a\u0638\u0647\u0631 \u0627\u0644\u0622\u0646 \u0641\u064a \u0627\u0644\u0642\u0633\u0645 \u0627\u0644\u0645\u0646\u0627\u0633\u0628");
+      setUnified((prev) => prev.filter((u) => u.id !== id));
+    } finally { setBusy(false); }
+  };
+
+  const onRejectUnified = async (id: string) => {
+    setBusy(true);
+    try {
+      const { error } = await adminRejectAutoContent(id);
+      if (error) { showError(error.message); return; }
+      showSuccess("\u062a\u0645 \u0627\u0644\u0631\u0641\u0636");
+      setUnified((prev) => prev.filter((u) => u.id !== id));
+    } finally { setBusy(false); }
+  };
+
+  const onPinUnified = async (id: string, pinned: boolean) => {
+    setBusy(true);
+    try {
+      await adminSetPinned(id, pinned);
+      setUnified((prev) => prev.map((u) => (u.id === id ? { ...u, pinned } : u)));
+    } finally { setBusy(false); }
+  };
+
+  const onDeleteUnified = async (id: string) => {
+    setBusy(true);
+    try {
+      const { ok, error } = await adminDeleteUnifiedContent(id);
+      if (!ok) { showError(error?.message || "\u062a\u0639\u0630\u0651\u0631 \u0627\u0644\u062d\u0630\u0641"); return; }
+      setUnified((prev) => prev.filter((u) => u.id !== id));
+    } finally { setBusy(false); }
+  };
+
   const tabs = [
     ["pending", `\u0645\u0633\u0648\u062f\u0627\u062a (${drafts.length})`],
     ["auto", `\u0645\u0646\u0634\u0648\u0631 \u062a\u0644\u0642\u0627\u0626\u064a\u064b\u0627 (${autoPublished.length})`],
     ["duplicate", `\u0645\u0643\u0631\u0631 (${duplicates.length})`],
     ["rejected", `\u0645\u0631\u0641\u0648\u0636 (${rejected.length})`],
+    ["unified", `\u062f\u0648\u0631\u0627\u062a/\u0641\u0639\u0627\u0644\u064a\u0627\u062a/\u0641\u0648\u0627\u0626\u062f (${unified.length})`],
   ] as const;
 
   return (
@@ -253,6 +300,45 @@ function AutomationReviewContent() {
 
           {tab === "rejected" && rejected.map((a) => <AuditCard key={a.id} record={a} />)}
           {tab === "rejected" && rejected.length === 0 && <p className="arp-empty">\u0644\u0627 \u0639\u0646\u0627\u0635\u0631 \u0645\u0631\u0641\u0648\u0636\u0629.</p>}
+
+          {tab === "unified" && unified.map((u) => (
+            <article key={u.id} className="arp-card">
+              <div className="arp-card-grid">
+                {u.image_url ? (
+                  <img src={u.image_url} alt="" loading="lazy" decoding="async" className="arp-card-thumb" />
+                ) : (
+                  <div className="arp-card-placeholder">\u0628\u062f\u0648\u0646 \u0635\u0648\u0631\u0629</div>
+                )}
+                <div>
+                  <div className="arp-card-meta-row">
+                    <div>
+                      <strong>{u.title}</strong>
+                      <span className="arp-decision-badge" style={{ "--arp-db-bg": "rgba(23,61,53,0.08)", "--arp-db-color": "#173D35" } as React.CSSProperties}>
+                        {CONTENT_TYPE_LABEL[u.content_type] || u.content_type}
+                      </span>
+                      {u.review_status === "needs_date_review" && (
+                        <span className="arp-decision-badge" style={{ "--arp-db-bg": "#FEF3C7", "--arp-db-color": "#92400E" } as React.CSSProperties}>
+                          \u064a\u062d\u062a\u0627\u062c \u0645\u0631\u0627\u062c\u0639\u0629 \u0627\u0644\u062a\u0627\u0631\u064a\u062e
+                        </span>
+                      )}
+                      <p className="arp-card-subtext">
+                        {u.attribution_name || u.organization_name || u.source_name} \u00b7 {formatDt(u.source_published_at || u.created_at)}
+                      </p>
+                      {u.summary && <p className="arp-card-reason">{u.summary.slice(0, 220)}</p>}
+                      {u.original_url && <a href={u.original_url} target="_blank" rel="noopener noreferrer" className="arp-card-url">{u.original_url}</a>}
+                    </div>
+                    <div className="arp-card-actions">
+                      <button type="button" disabled={busy} onClick={() => onApproveUnified(u.id)} className="arp-approve-btn">\u0627\u0639\u062a\u0645\u0627\u062f</button>
+                      <button type="button" disabled={busy} onClick={() => onPinUnified(u.id, !u.pinned)} className="arp-small-btn">{u.pinned ? "\u0625\u0644\u063a\u0627\u0621 \u0627\u0644\u062a\u062b\u0628\u064a\u062a" : "\u062a\u062b\u0628\u064a\u062a"}</button>
+                      <button type="button" disabled={busy} onClick={() => onRejectUnified(u.id)} className="arp-small-btn">\u0631\u0641\u0636</button>
+                      <button type="button" disabled={busy} onClick={() => onDeleteUnified(u.id)} className="arp-small-btn">\u062d\u0630\u0641</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))}
+          {tab === "unified" && unified.length === 0 && <p className="arp-empty">\u0644\u0627 \u0645\u0648\u0627\u062f \u0628\u0627\u0646\u062a\u0638\u0627\u0631 \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629 (\u062f\u0648\u0631\u0627\u062a/\u0641\u0639\u0627\u0644\u064a\u0627\u062a/\u0641\u0648\u0627\u0626\u062f/\u0625\u0639\u0644\u0627\u0646\u0627\u062a).</p>}
         </div>
       )}
     </div>

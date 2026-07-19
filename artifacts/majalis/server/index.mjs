@@ -14,6 +14,7 @@ import knowledgePipelineHandler from "../lib/api-handlers/admin/knowledge-pipeli
 import knowledgeSearchHandler from "../lib/api-handlers/knowledge-search.js";
 import autoContentHealthHandler from "../lib/api-handlers/cron/auto-content-health.js";
 import autoContentSyncHandler from "../lib/api-handlers/cron/auto-content-sync.js";
+import dailyBenefitRotationHandler from "../lib/api-handlers/cron/daily-benefit-rotation.js";
 import systemHealthHandler from "../lib/api-handlers/cron/system-health.js";
 import applyMigrationsHandler from "../lib/api-handlers/cron/apply-migrations.js";
 import bootstrapDatabaseHandler from "../lib/api-handlers/cron/bootstrap-database.js";
@@ -175,6 +176,8 @@ app.get("/api/cron/auto-content-sync", runHandler(autoContentSyncHandler, "auto-
 app.post("/api/cron/auto-content-sync", runHandler(autoContentSyncHandler, "auto-content-sync"));
 app.get("/api/cron/auto-content-health", runHandler(autoContentHealthHandler, "auto-content-health"));
 app.post("/api/cron/auto-content-health", runHandler(autoContentHealthHandler, "auto-content-health"));
+app.get("/api/cron/daily-benefit-rotation", runHandler(dailyBenefitRotationHandler, "daily-benefit-rotation"));
+app.post("/api/cron/daily-benefit-rotation", runHandler(dailyBenefitRotationHandler, "daily-benefit-rotation"));
 app.get("/api/cron/system-health", runHandler(systemHealthHandler, "system-health"));
 app.post("/api/cron/system-health", runHandler(systemHealthHandler, "system-health"));
 app.get("/api/cron/apply-migrations", runHandler(applyMigrationsHandler, "apply-migrations"));

@@ -144,6 +144,7 @@ export const API_ROUTES = [
   { prefix: "/api/knowledge-search", module: "./api-handlers/knowledge-search.js", allowGet: true },
   { prefix: "/api/cron/auto-content-sync", module: "./api-handlers/cron/auto-content-sync.js", allowGet: true, exact: true },
   { prefix: "/api/cron/auto-content-health", module: "./api-handlers/cron/auto-content-health.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/daily-benefit-rotation", module: "./api-handlers/cron/daily-benefit-rotation.js", allowGet: true, exact: true },
   { prefix: "/api/cron/system-health", module: "./api-handlers/cron/system-health.js", allowGet: true, exact: true },
   { prefix: "/api/cron/apply-migrations", module: "./api-handlers/cron/apply-migrations.js", allowGet: true, exact: true },
   { prefix: "/api/cron/bootstrap-database", module: "./api-handlers/cron/bootstrap-database.js", allowGet: true, exact: true },
