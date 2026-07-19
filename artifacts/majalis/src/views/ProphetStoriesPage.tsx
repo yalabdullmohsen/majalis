@@ -7,6 +7,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { prophetArticleJsonLd, breadcrumbJsonLd, defaultSiteJsonLd } from "@/lib/seo-structured-data";
 import { supabase } from "@/lib/supabase";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { truncateAtWord } from "@/lib/utils";
 
 type Citation = { surah: string; ayahs: string; note: string };
 
@@ -185,7 +186,7 @@ function ProphetCard({
         )}
         <p className="prophet-lux-card__title">{prophet.title}</p>
         <p className="prophet-lux-card__place">{prophet.peopleOrPlace}</p>
-        <p className="prophet-lux-card__bio">{prophet.briefBio.slice(0, 100)}…</p>
+        <p className="prophet-lux-card__bio">{truncateAtWord(prophet.briefBio, 100)}</p>
 
         <div className="prophet-lux-card__footer">
           {sup && (
@@ -254,7 +255,7 @@ function ProphetDetailView({
     applyPageSeo({
       path: `/prophets/${p.slug}`,
       title: `قصة ${p.arabicName} عليه السلام | المجلس العلمي`,
-      description: p.briefBio?.slice(0, 160) || `قصة نبي الله ${p.arabicName} عليه السلام من القرآن والسنة.`,
+      description: p.briefBio ? truncateAtWord(p.briefBio, 160) : `قصة نبي الله ${p.arabicName} عليه السلام من القرآن والسنة.`,
       keywords: ["قصص الأنبياء", p.arabicName, "أنبياء الإسلام", "معجزات الأنبياء"],
       ogType: "article",
       jsonLd,
@@ -289,7 +290,7 @@ function ProphetDetailView({
   const isUlulAzm = ULUL_AZM_SLUGS.includes(p.slug);
 
   const share = async () => {
-    const text = `${p.arabicName} عليه السلام، ${p.title}\n${p.briefBio.slice(0, 200)}…\n\nمن قصص الأنبياء في المجلس العلمي`;
+    const text = `${p.arabicName} عليه السلام، ${p.title}\n${truncateAtWord(p.briefBio, 200)}\n\nمن قصص الأنبياء في المجلس العلمي`;
     const url = `https://www.majlisilm.com/prophets/${p.slug}`;
     try {
       if (navigator.share) {
@@ -568,7 +569,7 @@ function UlulAzmView({ onSelect }: { onSelect: (slug: string) => void }) {
               <div className="nb-azm-star"><IslamicStar size={32} color={prophetColor(p.slug)} /></div>
               <h3 className="nb-azm-name">{p.arabicName} ﷺ</h3>
               <div className="nb-azm-book">{sup?.book ? `كتابه: ${sup.book}` : "لا كتاب مستقل"}</div>
-              <p className="nb-azm-story">{p.briefBio.slice(0, 140)}…</p>
+              <p className="nb-azm-story">{truncateAtWord(p.briefBio, 140)}</p>
               {sup?.miracle && (
                 <div className="nb-azm-miracle">
                   <strong>معجزته:</strong> {sup.miracle}

@@ -10,6 +10,7 @@ import { loadCommunityMuezzins, type CommunityMuezzin } from "@/lib/user-submiss
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { truncateAtWord } from "@/lib/utils";
 
 const STYLES: MuezzinStyle[] = ["خاشع", "رسمي", "تقليدي", "كلاسيكي"];
 const COUNTRIES = [...new Set(MUEZZINS.map((m) => m.country))];
@@ -354,7 +355,7 @@ function CommunityMuezzinCard({ muezzin, previewing, onPreview }: {
       </div>
       {muezzin.biography && (
         <p className="mzp-com-card__bio">
-          {muezzin.biography.length > 80 ? `${muezzin.biography.slice(0, 80)}...` : muezzin.biography}
+          {muezzin.biography.length > 80 ? truncateAtWord(muezzin.biography, 80) : muezzin.biography}
         </p>
       )}
       <div className="mzp-com-card__meta">

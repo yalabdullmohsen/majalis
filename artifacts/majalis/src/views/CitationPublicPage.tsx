@@ -16,6 +16,7 @@ import {
 } from "@/lib/citation-service";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
+import { truncateAtWord } from "@/lib/utils";
 
 export default function CitationPublicPage() {
   const [, params] = useRoute("/c/:slug");
@@ -39,8 +40,8 @@ export default function CitationPublicPage() {
           const c = r.citation;
           applyPageSeo({
             path: `/c/${slug}`,
-            title: `"${c.quoted_text.slice(0, 60)}..." | المجلس العلمي`,
-            description: c.quoted_text.slice(0, 300),
+            title: `"${truncateAtWord(c.quoted_text, 60)}" | المجلس العلمي`,
+            description: truncateAtWord(c.quoted_text, 300),
             image: getCitationImageUrl(slug),
             keywords: ["مقتطف علمي", "استشهاد أكاديمي", "نص إسلامي", "مشاركة علمية"],
             jsonLd: [
@@ -49,7 +50,7 @@ export default function CitationPublicPage() {
                 "@type": "Article",
                 name: c.source?.title_ar || "مقتطف علمي",
                 url: `https://www.majlisilm.com/c/${slug}`,
-                description: c.quoted_text.slice(0, 200),
+                description: truncateAtWord(c.quoted_text, 200),
                 ...(c.source?.author_name ? { author: { "@type": "Person", name: c.source.author_name } } : {}),
                 publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
                 inLanguage: "ar",
