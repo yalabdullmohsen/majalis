@@ -20,6 +20,9 @@ const supabaseDir = join(__dir, "../supabase");
 const MIGRATION_FILES = [
   "quran_recitation_ai_test_v1.sql",
   "quran_recitation_ai_test_v2_constraint_widening.sql",
+  "quran_recitation_ai_test_v2_freeform_mode.sql",
+  "quran_recitation_ai_test_v3_hizb_rub_columns.sql",
+  "quran_recitation_ai_test_v4_page_hide_mode.sql",
 ];
 
 async function main() {

@@ -3,14 +3,26 @@ import {
   Radio, Mic2, Layers, Circle, Star,
   ChevronLeft, BookMarked, BookOpen, Headphones, GraduationCap,
   Moon, Heart, Sparkles, Mic, History,
+  type LucideIcon,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { useEffect } from "react";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
+type QuranSection = { href: string; title: string; desc: string; Icon: LucideIcon; accent: string; tag: string; featured?: boolean };
+
 /* ── بيانات أقسام القرآن ──────────────────────────────────── */
-const QURAN_SECTIONS = [
+const QURAN_SECTIONS: QuranSection[] = [
+  {
+    href: "/quran/recitation-test-ai",
+    title: "اختبار التسميع بالذكاء الاصطناعي",
+    desc: "سمّع من حفظك واستمع التطبيق لتلاوتك لحظيًا، ويكشف المصحف الآيات كلما نطقتها صحيحة",
+    Icon: Mic,
+    accent: "#176B57",
+    tag: "بالذكاء الاصطناعي",
+    featured: true,
+  },
   {
     href: "/mushaf",
     title: "المصحف الشريف",
@@ -20,12 +32,12 @@ const QURAN_SECTIONS = [
     tag: "٦٠٤ صفحة",
   },
   {
-    href: "/quran/recitation-test-ai",
-    title: "اختبار التسميع بالذكاء الاصطناعي",
-    desc: "سمّع من حفظك واستمع التطبيق لتلاوتك لحظيًا، ويكشف المصحف الآيات كلما نطقتها صحيحة",
-    Icon: Mic,
-    accent: "#173D35",
-    tag: "نسخة تجريبية",
+    href: "/mushaf/page",
+    title: "المصحف بنظام الصفحات",
+    desc: "صفحات مصحف حقيقية مطابقة لتقسيم مصحف المدينة، مع إطارات وأوضاع قراءة وإشارات مرجعية وملاحظات",
+    Icon: Layers,
+    accent: "#176B57",
+    tag: "جديد",
   },
   {
     href: "/quran/surahs",
@@ -200,7 +212,7 @@ export default function QuranHubPage() {
         <h2 className="quran-hub-sections__title">أقسام القرآن</h2>
         <div className="quran-hub-grid">
           {QURAN_SECTIONS.map(s => (
-            <Link key={s.href} href={s.href} className="quran-hub-card">
+            <Link key={s.href} href={s.href} className={`quran-hub-card ${s.featured ? "quran-hub-card--featured" : ""}`}>
               <div className={`quran-hub-card__header ${qhcAccentMod(s.accent)}`}>
                 <s.Icon size={28} className="quran-hub-card__icon" />
                 <span className="quran-hub-card__tag">{s.tag}</span>
