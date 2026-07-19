@@ -161,6 +161,15 @@ html {
   --majalis-ink:           var(--msk-text);
   --majalis-ink-soft:      var(--msk-text-2);
   --majalis-ink-muted:     var(--msk-text-3);
+  /* --ds-text-1/--ds-text-2 مُستخدمان في islamic-landmarks.css وغيرها
+     (عشرات القواعد) لكنهما لم يكونا معرَّفين في أي مكان بالمشروع فعليًا —
+     متغيّران "ميتان" يسقطان دومًا للقيمة الاحتياطية الثابتة المكتوبة محليًا
+     (#1a1a1a/#6b7280) بصرف النظر عن السمة، فيُنتجان نصًّا داكنًا غير مقروء
+     فوق خلفيات داكنة في الوضع الليلي (شُخِّص 2026-07-19 عبر تدقيق تباين
+     آلي حي — مثال: .qmem-section-title، .ilm-badge). تعريفهما هنا يربطهما
+     بنفس نظام الألوان الواعي بالسمة تلقائيًا. */
+  --ds-text-1:             var(--msk-text);
+  --ds-text-2:             var(--msk-text-2);
   --majalis-charcoal:      var(--msk-text);
   --majalis-parchment:     #FFFFFF;
   --majalis-parchment-deep:#F7F4ED;
