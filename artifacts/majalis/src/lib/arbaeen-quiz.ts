@@ -15,6 +15,7 @@
  * تخمين) — موثَّق كعمل متبقٍ صريح لا سؤال مُخترَع.
  */
 import { ARBAEEN_NAWAWI, type NawawiHadith } from "@/lib/arbaeen-nawawi-seed";
+import { truncateAtWord } from "@/lib/utils";
 
 export type ArbaeenQuestionType = "true_false" | "fill_blank" | "ending" | "benefit_match";
 
@@ -62,7 +63,7 @@ export function generateTrueFalseQuestion(hadith: NawawiHadith): ArbaeenQuestion
     id: `true_false:${hadith.id}`,
     type: "true_false",
     hadithId: hadith.id,
-    prompt: `هل عنوان «${shownTitle}» يطابق هذا الحديث؟\n«${hadith.text.slice(0, 140)}${hadith.text.length > 140 ? "…" : ""}»`,
+    prompt: `هل عنوان «${shownTitle}» يطابق هذا الحديث؟\n«${truncateAtWord(hadith.text, 140)}»`,
     options: ["صحيح", "خطأ"],
     correctAnswer: { value: useWrongTitle ? "خطأ" : "صحيح" },
     gradingType: "true_false",

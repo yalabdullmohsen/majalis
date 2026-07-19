@@ -11,6 +11,7 @@ import {
   type CdnCollectionMeta,
 } from "@/lib/hadith-cdn-service";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { truncateAtWord } from "@/lib/utils";
 
 // ─── Chapter index built from hadith data ─────────────────────────────────────
 
@@ -115,7 +116,7 @@ function HadithRow({ h, index }: { h: CdnHadith; index: number }) {
       <div className="hb-hadith-row__head">
         <span className="hb-hadith-row__num">{index}</span>
         <p className="hb-hadith-row__preview">
-          {expanded ? h.text : h.text.slice(0, 140) + (h.text.length > 140 ? "…" : "")}
+          {expanded ? h.text : truncateAtWord(h.text, 140)}
         </p>
         <ChevronRight
           size={14}

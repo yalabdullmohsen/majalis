@@ -6,6 +6,7 @@ import { ARBAEEN_NAWAWI } from "@/lib/arbaeen-nawawi-seed";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { truncateAtWord } from "@/lib/utils";
 
 /* ══════════════════════════════════════════════════════════════════
    §178b، الأربعون النووية (.an-*)
@@ -246,7 +247,7 @@ export default function ArbaeenNawawiPage() {
                 </div>
                 <blockquote className="an-card__text">
                   {h.text.length > 120 && !isExp
-                    ? `«${h.text.slice(0, 117)}…»`
+                    ? `«${truncateAtWord(h.text, 117)}»`
                     : `«${h.text}»`}
                 </blockquote>
                 {isExp && (

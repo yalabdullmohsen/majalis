@@ -10,6 +10,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { truncateAtWord } from "@/lib/utils";
 
 const STORY_ICON_MAP: Record<string, LucideIcon> = {
   Star, Scale, Sword, Landmark, Bird, Compass, Gem, BookOpen, Moon, Castle,
@@ -67,7 +68,7 @@ function StoryCard({ story, onSelect }: { story: IslamicStory; onSelect: () => v
       </div>
 
       <h3 className="isp-card__title">{story.title}</h3>
-      <p className="isp-card__summary">{story.summary.slice(0, 120)}…</p>
+      <p className="isp-card__summary">{truncateAtWord(story.summary, 120)}</p>
 
       <div className="isp-card__tags">
         {story.tags.slice(0, 3).map((tag) => (

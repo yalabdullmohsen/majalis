@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { PROPHETS_LINEAGE, type LineageNode } from "@/lib/prophets-lineage";
 import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
+import { truncateAtWord } from "@/lib/utils";
 
 // ── ثوابت التخطيط ──────────────────────────────────────────────────────────
 const NODE_W  = 110;
@@ -108,7 +109,7 @@ function NodeBox({ placed, onClick }: {
           fontSize={8.5} fontFamily="IBM Plex Sans Arabic, Noto Sans Arabic, sans-serif"
           fill={isLast ? "rgba(255,255,255,0.8)" : "#929995"}
         >
-          {node.era.slice(0, 20)}{node.era.length > 20 ? "…" : ""}
+          {truncateAtWord(node.era, 20)}
         </text>
       )}
       {isAnc && (
