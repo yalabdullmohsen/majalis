@@ -231,17 +231,18 @@ export default function NavBar() {
                 : <Moon size={17} strokeWidth={1.6} aria-hidden="true" />
               }
             </button>
-            {/* زر البحث الشامل */}
+            {/* زر البحث الشامل — أيقونة عدسة فقط على الجوال، أيقونة+كلمة "بحث"
+                على الشاشات الأكبر. اختصار Ctrl/Cmd+K يبقى فعالاً (مُدار في
+                App.tsx عبر مستمع keydown مستقل) لكن لا يُعرض بصريًا هنا —
+                طلب صريح من المالك: إزالة حرف K والمربع المحيط به نهائيًا. */}
             <button
               type="button"
               onClick={() => window.dispatchEvent(new Event("global-search-open"))}
-              aria-label="البحث الشامل (Ctrl+K)"
-              title="البحث الشامل — Ctrl+K"
+              aria-label="بحث"
               className="navbar-search-cmd"
             >
-              <Search size={15} strokeWidth={1.4} aria-hidden="true" />
+              <Search size={17} strokeWidth={1.8} aria-hidden="true" />
               <span className="navbar-search-hint">بحث</span>
-              <kbd className="navbar-search-kbd" aria-hidden="true">K</kbd>
             </button>
             {/* Desktop: search + auth + lang */}
             {!isMobile && <SearchBox />}

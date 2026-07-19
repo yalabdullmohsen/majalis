@@ -749,8 +749,13 @@ export default function HomePage() {
                 <Ico size={14} strokeWidth={2} />
               </span>
               <div style={{ minWidth: 0 }}>
-                <div style={{ color: "#202725", fontSize: "0.77rem", fontWeight: 700, lineHeight: 1.25 }}>{label}</div>
-                <div style={{ color: "#9ca3af", fontSize: "0.66rem", lineHeight: 1.3, marginTop: 1 }}>{desc}</div>
+                {/* لون ثابت (#202725/#9ca3af) لا يتكيّف مع السمة الليلية — بطاقة
+                    "وصول سريع" تتحول خلفيتها للداكن في الوضع الليلي (قاعدة
+                    CSS منفصلة) بينما بقي النص هنا داكنًا ثابتًا = شبه غير
+                    مقروء (تباين ~1:1، شُخِّص 2026-07-19). متغيّرات CSS تعمل
+                    داخل style inline في React وتتكيّف تلقائيًا مع السمة. */}
+                <div style={{ color: "var(--majalis-ink, #202725)", fontSize: "0.77rem", fontWeight: 700, lineHeight: 1.25 }}>{label}</div>
+                <div style={{ color: "var(--majalis-ink-soft, #9ca3af)", fontSize: "0.66rem", lineHeight: 1.3, marginTop: 1 }}>{desc}</div>
               </div>
             </Link>
           ))}

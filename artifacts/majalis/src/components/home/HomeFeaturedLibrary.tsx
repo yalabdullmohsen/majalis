@@ -32,7 +32,7 @@ export function HomeFeaturedLibrary() {
             </span>
             <div>
               <span className="page-tag">{book.category}</span>
-              <h3>{book.title}</h3>
+              <h3 className="home-library-card__title">{book.title}</h3>
               <p>{book.author}</p>
             </div>
           </Link>
