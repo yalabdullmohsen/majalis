@@ -227,3 +227,21 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
 export function prefetchMushafPage(pageNumber: number): void {
   if (pageNumber >= 1 && pageNumber <= 604) void fetchRawPage(pageNumber).catch(() => {});
 }
+
+/** نص الآية العثماني الكامل (لا الـglyph الخاص بخط الصفحة) من تخطيط
+ * مُحمَّل بالفعل — بلا أي طلب شبكة إضافي، ومصدره نفس بيانات QPC V2
+ * المعتمدة (لا AlQuran Cloud ولا أي مصدر بديل). */
+export function getAyahTextFromLayout(layout: MushafPageLayout, verseKey: string): string {
+  const words: QpcWord[] = [];
+  for (const row of layout.rows) {
+    if (row.kind === "line") {
+      for (const w of row.words) {
+        if (w.verseKey === verseKey) words.push(w);
+      }
+    }
+  }
+  return words
+    .sort((a, b) => a.position - b.position)
+    .map((w) => w.textUthmani)
+    .join(" ");
+}
