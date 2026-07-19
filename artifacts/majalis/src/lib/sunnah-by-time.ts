@@ -58,7 +58,7 @@ const PERIODS: Record<string, SunnahPeriod> = {
     title: "بعد المغرب",
     suggestions: [
       { label: "أذكار المساء", href: "/adhkar?cat=evening" },
-      { label: "قراءة سورة الملك", href: "/quran?surah=67" },
+      { label: "قراءة سورة الملك", href: "/mushaf/67" },
       { label: "الفوائد العلمية", href: "/fawaid" },
       { label: "الوصايا النبوية", href: "/wasaya-nabawiyya" },
     ],
