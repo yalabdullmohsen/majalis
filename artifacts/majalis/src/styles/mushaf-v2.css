@@ -1,0 +1,190 @@
+/* ═══════════════════════════════════════════════════════════════
+   mushaf-v2.css — المصحف الاحترافي المطابق لمصحف المدينة (Phase 3)
+   ⚠️ الترقيم "mf2-" هنا **مختلف تمامًا** عن بادئة ".mushaf-v2__*"
+   الموجودة في elite-2026.css (تلك للقارئ النصي المستمر القديم/الحالي
+   على /mushaf، غير مرتبطة بهذا الملف إطلاقًا رغم تشابه الاسم الصدفي).
+   هوية المجلس العلمي: زمردي #0E6E52 / #153025، أسطح عاجية #F8F7F3.
+   ═══════════════════════════════════════════════════════════════ */
+
+.mf2-page {
+  direction: rtl;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.mf2-frame {
+  position: relative;
+  aspect-ratio: 0.72;
+  background: var(--mf2-page-bg, #F8F7F3);
+  border-radius: 6px;
+  padding: 3.2cqw 2.6cqw;
+  container-type: inline-size;
+  box-shadow: 0 2px 18px rgba(14, 110, 82, .12);
+  /* إطار زخرفي مزدوج — CSS بحت، منفصل كليًا عن النص (القسم 6.1). */
+  outline: 2px solid #0E6E52;
+  outline-offset: -8px;
+}
+.mf2-frame::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(14, 110, 82, .45);
+  border-radius: 4px;
+  pointer-events: none;
+}
+html[data-theme="dark"] .mf2-frame {
+  --mf2-page-bg: #153025;
+  box-shadow: 0 2px 24px rgba(0,0,0,.4);
+}
+
+.mf2-lines {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: opacity .2s ease;
+}
+
+.mf2-line {
+  flex: 1;
+  /* نفس إصلاح min-width:0 للعناصر الأفقية (راجع .mf2-ayah-group) لكن على
+     المحور الرأسي هنا: .mf2-line نفسها عنصر flex ابن .mf2-lines
+     (flex-direction:column) — بلا min-height:0 يمنعها min-height:auto
+     الضمني من الانكماش لحصتها العادلة (ارتفاع الحاوية/15) إن كبر حجم
+     خطها مؤقتًا أثناء قياس البحث الثنائي، فتكبر الخانة نفسها وتتراكب
+     بصريًا مع الأسطر المجاورة رغم overflow:hidden (الذي يحمي من تجاوز
+     حدود الصندوق، لا من نمو الصندوق نفسه). */
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  direction: rtl;
+  /* حجم خط نسبي لعرض حاوية الصفحة (لا الشاشة) — يتطابق عبر كل المقاسات
+     من iPhone SE إلى iPad دون كسر تخطيط (بوابة القبول 3). */
+  font-size: 5.6cqw;
+  line-height: 1;
+  color: var(--mf2-ink, #1C1A18);
+  white-space: nowrap;
+  /* شبكة أمان: التحجيم التلقائي عبر JS (useLayoutEffect) دقيق في الغالبية
+     العظمى من الأسطر لكن ليس مضمونًا 100% رياضيًا لكل سطر (راجع تعليق
+     المكوّن) — overflow:hidden يمنع أي فيضان مرئي متبقٍّ من كسر إطار
+     الصفحة، حتى لو نتج عنه اقتصاص نادر جدًا بدل امتداد خارج الحدود. */
+  overflow: hidden;
+}
+html[data-theme="dark"] .mf2-line { --mf2-ink: #F0EDE4; }
+/* سطر قصير طبيعيًا (آية واحدة قصيرة على صفحة خاصة كالفاتحة) لا يُمدَّد
+   بحجم خط ضخم ليملأ العرض — يُتوسَّط بحجمه المعقول بدلًا من ذلك. */
+.mf2-line--short { justify-content: center; gap: .5em; }
+
+/* الوحدة التفاعلية الحقيقية = الآية (role="button" هنا فقط)، لا كل
+   حرف/كلمة مفردة — كانت role="button" على .mf2-word نفسها تُفعِّل عمدًا
+   قاعدة إتاحة عامة موقعية حقيقية (WCAG 2.5.5، elite-2026.css:30100)
+   تفرض min-width:44px!important على أي [role="button"] على الموبايل،
+   فتكسر تحجيم الأسطر (اكتُشف بتحقيق دقيق: تطابق حسابي تام بين عدد
+   الكلمات×44px والفيضان المُقاس فعليًا). .mf2-ayah-group هي عنصر flex
+   الحقيقي الآن (ابن .mf2-line مباشرة) فتحتاج نفس إصلاح min-width:0. */
+.mf2-ayah-group {
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color .15s;
+  /* !important ضروري هنا تحديدًا: قاعدة WCAG 2.5.5 العامة نفسها
+     !important (elite-2026.css:30100) — لا شيء أضعف يهزمها بصرف النظر
+     عن الخصوصية. هذا استثناء مقصود ومحدود لفئة مختلفة فعليًا عمّا تستهدفه
+     تلك القاعدة: نص عثماني متدفّق داخل سطر (لا زر منفصل قائم بذاته) —
+     فرض ٤٤px كحد أدنى هنا يكسر تخطيط المصحف المطابق حرفيًا بلا أي فائدة
+     إتاحة حقيقية (النقر على أي نقطة ضمن الآية داخل السطر يعمل بلا حاجة
+     لهامش ٤٤px حول كل كلمة/مجموعة قصيرة). */
+  min-width: 0 !important;
+  min-height: 0 !important;
+}
+.mf2-ayah-group:hover,
+.mf2-ayah-group:focus-visible {
+  background: color-mix(in srgb, #0E6E52 10%, transparent);
+  outline: none;
+}
+.mf2-ayah-group--active {
+  background: color-mix(in srgb, #0E6E52 16%, transparent);
+}
+.mf2-word { display: inline; }
+
+.mf2-sajda-badge {
+  display: inline-flex;
+  vertical-align: middle;
+  font-family: var(--font-body);
+  font-size: .38em;
+  font-weight: 700;
+  color: #7A5E14;
+  background: rgba(176,141,46,.14);
+  border: 1px solid rgba(176,141,46,.35);
+  border-radius: 999px;
+  padding: .05rem .4rem;
+  margin-inline-start: .3rem;
+}
+html[data-theme="dark"] .mf2-sajda-badge {
+  color: #E8C97A;
+  background: rgba(232,201,122,.14);
+  border-color: rgba(232,201,122,.35);
+}
+
+/* رأس سورة زخرفي — SVG/CSS بأسلوب الهوية الزمردية/العاجية (القسم 6.1) */
+.mf2-surah-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .3em;
+  padding: .2em 0;
+}
+.mf2-surah-header__frame {
+  width: 92%;
+  text-align: center;
+  padding: .35em 1em;
+  border-top: 1.5px solid #0E6E52;
+  border-bottom: 1.5px solid #0E6E52;
+  background: linear-gradient(180deg, rgba(14,110,82,.06), transparent);
+}
+.mf2-surah-header__name {
+  font-family: var(--font-display, "Amiri", serif);
+  font-size: 4.2cqw;
+  font-weight: 700;
+  color: #0E6E52;
+  letter-spacing: .02em;
+}
+html[data-theme="dark"] .mf2-surah-header__name { color: #5EC49A; }
+.mf2-bismillah {
+  font-family: var(--font-quran, "Amiri Quran", serif);
+  font-size: 4.8cqw;
+  color: var(--mf2-ink, #1C1A18);
+}
+
+/* هيكل تحميل (skeleton) — أسطر عاجية باهتة بنبض خفيف، بلا أي نص إطلاقًا
+   قبل اكتمال تحميل خط الصفحة (القسم 5.3: يُمنع FOUT منعًا باتًا هنا). */
+.mf2-skeleton {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 4%;
+}
+.mf2-skeleton--overlay {
+  position: absolute;
+  inset: 3.2cqw 2.6cqw;
+  z-index: 2;
+  background: var(--mf2-page-bg, #F8F7F3);
+}
+.mf2-skeleton__line {
+  flex: 1;
+  border-radius: 4px;
+  background: linear-gradient(90deg, rgba(14,110,82,.06), rgba(14,110,82,.13), rgba(14,110,82,.06));
+  background-size: 200% 100%;
+  animation: mf2-skeleton-pulse 1.6s ease-in-out infinite;
+}
+@keyframes mf2-skeleton-pulse {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mf2-skeleton__line { animation: none; }
+}

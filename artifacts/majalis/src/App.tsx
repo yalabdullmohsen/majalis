@@ -73,6 +73,7 @@ const QuranHubPage = lazy(() => import("@/views/QuranHubPage"));
 const SurahIndexPage = lazy(() => import("@/views/SurahIndexPage"));
 const RevelationOrderPage = lazy(() => import("@/views/RevelationOrderPage"));
 const MushafPage = lazy(() => import("@/views/MushafPage"));
+const MushafReaderV2Preview = lazy(() => import("@/views/MushafReaderV2Preview"));
 const RecitationTestPage = lazy(() => import("@/views/RecitationTestPage"));
 const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
 const QuranTajweedPage = lazy(() => import("@/views/QuranTajweedPage"));
@@ -529,6 +530,9 @@ function Router() {
       <Route path="/quran"><Redirect to="/quran-hub" /></Route>
       <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafPage} /></Route>
       <Route path="/mushaf"><SafeLazyRoute component={MushafPage} /></Route>
+      {/* معاينة داخلية لـPhase 3 من إعادة بناء المصحف المطابق لمصحف
+          المدينة — لا تستبدل /mushaf الحيّ بعد، راجع docs/mushaf-rebuild-inventory.md. */}
+      <Route path="/mushaf-v2-preview"><SafeLazyRoute component={MushafReaderV2Preview} /></Route>
       <Route path="/quran-hub"><SafeLazyRoute component={QuranHubPage} /></Route>
       <Route path="/quran/recitation-test-ai"><SafeLazyRoute component={RecitationTestPage} /></Route>
       <Route path="/quran/surahs"><SafeLazyRoute component={SurahIndexPage} /></Route>
