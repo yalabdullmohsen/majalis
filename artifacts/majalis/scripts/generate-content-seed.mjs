@@ -11,6 +11,7 @@ const QA_CATEGORIES = [
   { id: "seed-cat-aqeedah", name: "العقيدة", slug: "aqeedah" },
   { id: "seed-cat-anbiya", name: "الأنبياء", slug: "anbiya" },
   { id: "seed-cat-sahabah", name: "الصحابة", slug: "sahabah" },
+  { id: "seed-cat-fiqh", name: "الفقه", slug: "fiqh" },
   { id: "seed-cat-tahara", name: "الطهارة", slug: "tahara" },
   { id: "seed-cat-salah", name: "الصلاة", slug: "salah" },
   { id: "seed-cat-zakat", name: "الزكاة", slug: "zakat" },
