@@ -32,7 +32,7 @@ const SHEET_SECTIONS = [
   /* ── الحديث والسنة ── */
   { group: "الحديث والسنة", items: [
     { href: "/hadith",             label: "الأحاديث النبوية",    Icon: ScrollText },
-    { href: "/arbaeen-nawawi",     label: "الأربعون النووية",    Icon: FileText },
+    { href: "/hadith/books-and-rulings", label: "كتب الحديث والأحكام", Icon: FileText },
     { href: "/hadith-science",     label: "مصطلح الحديث",        Icon: BookOpen },
     { href: "/wasaya-nabawiyya",   label: "الوصايا النبوية",     Icon: Star },
     { href: "/prophetic-medicine", label: "الطب النبوي",         Icon: Stethoscope },
