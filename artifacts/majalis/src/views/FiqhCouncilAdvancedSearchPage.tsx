@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "wouter";
+import { Link, useSearch } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { ShareButtons } from "@/components/ContentActions";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
@@ -41,10 +41,20 @@ export default function FiqhCouncilAdvancedSearchPage() {
   const [loading, setLoading] = useState(false);
   const debouncedQuery = useDebouncedValue(query);
   const debouncedSource = useDebouncedValue(source);
+  const urlSearch = useSearch();
 
   const subcategories = category !== "الكل"
     ? FIQH_CATEGORY_TREE.find((c) => c.name === category)?.children?.map((c) => c.name) || []
     : [];
+
+  // رابط وارد بـ`?category=...` (من بطاقات التصنيف في FiqhCouncilPage) كان
+  // يُتجاهَل كليًا: الحالة تُهيَّأ دائماً بـ"الكل" بلا قراءة أي شيء من
+  // الرابط الفعلي عند الوصول — نفس عائلة عطل TYPE_HREF.scholar الصامت.
+  // اكتُشف بالفحص المباشر 2026-07-20.
+  useEffect(() => {
+    const cat = new URLSearchParams(urlSearch).get("category");
+    if (cat) setCategory(cat);
+  }, [urlSearch]);
 
   useEffect(() => {
     applyPageSeo({
