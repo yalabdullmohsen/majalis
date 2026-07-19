@@ -213,7 +213,14 @@ body {
 .ds-page h5,
 .ds-page h6,
 .page-shell h1:not(.an-hero__title):not(.sch-profile-hero__name),
-.page-shell h2:not(.sq-title):not(.jn-section__title):not(.jn-subtitle):not(.jn-related__title):not(.sw-related__title):not(.hj-section__title):not(.hj-related__title):not(.th-section__title):not(.th-related__title):not(.fa-related__title):not(.seerah-panel__title):not(.fq-ref__title):not(.sh-step__title):not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title),
+/* لائحة الاستثناءات مطابقة بالحرف لنسختها الكاملة في majalis-v2.css (نفس نمط
+   عناوين الأقسام "الشارة" — نص أبيض على شريط أخضر داكن). كانت هذه النسخة هنا
+   قد تخلّفت عن التحديثات اللاحقة (تفتقد lessons-v2/lessons-past وغيرها)، فكانت
+   خاصية `h2` العامة عالية التخصيص (بفعل عدد not() الكبير) تهزم شارة "الأقرب
+   موعدًا"/"جارٍ الآن"/"الدروس السابقة" في صفحة الدروس، منتجة نصًا داكنًا فوق
+   الخلفية الخضراء الداكنة لنفس الشارة (تباين ~1.27:1 — نفس نمط عطل [class$="-hero"]
+   المُصلَح سابقًا: قاعدة عامة تفترض سياقًا خاطئًا بسبب استثناءات ناقصة). */
+.page-shell h2:not(.sq-title):not(.jn-section__title):not(.jn-subtitle):not(.jn-related__title):not(.sw-related__title):not(.hj-section__title):not(.hj-related__title):not(.th-section__title):not(.th-related__title):not(.fa-related__title):not(.seerah-panel__title):not(.fq-ref__title):not(.sh-step__title):not(.ds-section__title):not(.cards-page-title):not(.search-page-title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title):not(.lessons-v2-section__title):not(.lessons-past-section__title),
 .page-shell h3:not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title),
 .page-shell h4,
 .page-shell h5,
@@ -520,7 +527,11 @@ label {
 .pt-prayer--past {
   opacity: 0.45 !important;
 }
-.pt-prayer--past .pt-prayer__name,
+/* :not شطب اسم الصلاة نفسه (لا الوقت فقط) عبر حروف عربية متصلة يقلّل
+   وضوحها بشدة (خط أفقي يمرّ خلال حروف مرتبطة أصعب قراءة من نظيره اللاتيني)،
+   خصوصًا مع opacity:.45 أعلاه معًا — نص شبه غير مقروء (شُخِّص 2026-07-19
+   عبر Playwright حي على /prayer-times). التعتيم + شطب الوقت فقط يكفيان
+   لإفادة "صلاة فائتة" دون التضحية بوضوح اسم الصلاة. */
 .pt-prayer--past .pt-prayer__time { text-decoration: line-through; }
 .pt-prayer__done { color: var(--m26-green-600, #16A34A) !important; font-size: 0.8rem; font-weight: 700; }
 /* أيقونة في العداد */

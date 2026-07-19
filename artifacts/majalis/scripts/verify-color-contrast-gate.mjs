@@ -63,6 +63,22 @@ const ASSERTIONS = [
   { route: "/", selector: ".hnh__title", mode: "light", min: 3 },
   { route: "/", selector: ".ds-quiz-home-card__title", mode: "light", min: 3 },
   { route: "/", selector: ".home-library-card__title", mode: "light", min: 3 },
+  // ── تكليف ثانٍ (2026-07-19، بند 7): عناوين "شارة" أقسام (نص أبيض/خلفية
+  // خضراء داكنة، §4c في elite-2026.css) كانت تخسر لونها الأبيض المقصود أمام
+  // قواعد `.home-section h2`/`.page-shell h2:not(...)` عالية التخصيص (بفعل
+  // كثرة not()) التي تفتقد بعض أصناف الشارة من قائمة استثنائها — نفس نمط
+  // عطل [class$="-hero"] بالضبط (قاعدة عامة تفترض سياقًا خاطئًا). يجب أن
+  // تبقى هذه التأكيدات ملاصقة لتأكيدات "/" الأخرى أعلاه — routeCache في
+  // main() لا يُعيد زيارة مسار سبقت زيارته، فتأكيد "/" بعيد عن مجموعته هنا
+  // يُقاس فعليًا على آخر مسار آخر تمت زيارته (فشل زائف، لا عطل تباين حقيقي). ──
+  // "المكتبة العلمية" (HomeFeaturedLibrary) داخل .home-section على الرئيسية
+  // — معرِّف فريد #home-library-heading لا الصنف العام (.ds-section__title
+  // يطابق أيضًا "مواسم التعلّم" السابق له في DOM، فيختبر عنصرًا مختلفًا خطأً).
+  { route: "/", selector: "#home-library-heading", mode: "light", min: 4.5 },
+  // "مواسم التعلّم" (.ds-section__title نفسه، بطاقة مختلفة بلا .home-section
+  // تعارض) — في الوضع الليلي فقط: --elite-forest يتحوّل لأخضر نعناعي أفتح
+  // فلا يكفي نص أبيض ثابت (color:#fff) فوقه.
+  { route: "/", selector: ".lsw-section .ds-section__title", mode: "dark", min: 3 },
   // .sq-title (عنوان SectionQuiz داخل .sq-header الداكن) كان يخسر نفس المعركة.
   { route: "/cards", selector: ".sq-title", mode: "light", min: 4.5 },
   // .twh-hub-card__current-tag اكتسب خلفية داكنة بالخطأ (يطابق [class*="-card"]
@@ -81,6 +97,12 @@ const ASSERTIONS = [
   // (لا تتحول للداكن)، فكانت قاعدة "كل h2 أبيض في الوضع الليلي" العامة
   // تفرض نصًا شبه أبيض فوق هذه الخلفية البيضاء الثابتة.
   { route: "/janaza", selector: ".jnz-subtitle", mode: "dark", min: 4.5 },
+  // "الأقرب موعدًا"/"جارٍ الآن" و"الدروس السابقة" في صفحة الدروس — نسخة
+  // modern-2026.css من قائمة استثناء `.page-shell h2:not(...)` كانت متأخرة
+  // عن نظيرتها الكاملة في majalis-v2.css (تفتقد lessons-v2/lessons-past
+  // وغيرها).
+  { route: "/lessons", selector: ".lessons-v2-section__title", mode: "light", min: 4.5 },
+  { route: "/lessons", selector: ".lessons-past-section__title", mode: "light", min: 4.5 },
 ];
 
 const RATIO_FN = `(selector) => {
@@ -181,6 +203,13 @@ async function main() {
         }, a.mode);
         await page.waitForTimeout(300);
       }
+      // انتظار ظهور العنصر فعليًا قبل القياس — بعض ودجتات الرئيسية (مثل
+      // .lsw-section/#home-library-heading) قد تستغرق أطول قليلاً من مهلة
+      // الـ400ms العامة أعلاه عند أول تحميل بارد لخادم dev (تصريف Vite
+      // للوحدات عند أول طلب)، فيُبلَّغ خطأً بأن العنصر "غير موجود" رغم أنه
+      // يظهر فعليًا بعد فاصل بسيط. لا يغيّر هذا نتيجة أي تأكيد آخر — مجرد
+      // انتظار إضافي آمن قبل القياس.
+      await page.waitForSelector(a.selector, { timeout: 4000 }).catch(() => {});
       const result = await page.evaluate(`(${RATIO_FN})(${JSON.stringify(a.selector)})`);
       if (result.error === "NOT_FOUND") {
         failures.push(`${a.route} [${a.mode}] ${a.selector} — العنصر غير موجود في الصفحة (تغيّر بنيوي؟ راجع يدويًا)`);

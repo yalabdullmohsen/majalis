@@ -742,28 +742,28 @@
   border-bottom: 1px solid rgba(23,61,53,0.10) !important;
 }
 .side-nav-drawer__brand {
-  color: #28584D !important;
+  color: var(--majalis-emerald-deep, #173D35) !important;
 }
 .side-nav-close {
   color: #68716D !important;
 }
 .side-nav-close:hover {
   background: rgba(23,61,53,0.08) !important;
-  color: #28584D !important;
+  color: var(--majalis-emerald-deep, #173D35) !important;
 }
 .side-nav-group__title {
-  color: #28584D !important;
+  color: var(--majalis-emerald-deep, #173D35) !important;
 }
 .side-nav-link--v2 {
   color: #202725 !important;
 }
 .side-nav-link--v2:hover:not(.is-active) {
   background: rgba(23,61,53,0.06) !important;
-  color: #28584D !important;
+  color: var(--majalis-emerald-deep, #173D35) !important;
 }
 .side-nav-link--v2.is-active {
   background: rgba(23,61,53,0.08) !important;
-  color: #28584D !important;
+  color: var(--majalis-emerald-deep, #173D35) !important;
   font-weight: 700 !important;
 }
 /* dark mode القائمة */
@@ -1789,9 +1789,14 @@
 }
 
 /* ── 19. عناوين الأقسام الداخلية في صفحة التوحيد وباقي الصفحات المحتوى ── */
+/* :not(...) لعناوين "الشارة" (نص أبيض/خلفية خضراء داكنة) ضروري: أي عنوان
+   شارة يقع داخل حاوية .home-section (كـHomeFeaturedLibrary) يطابق
+   `.home-section h2` بتخصيص (0,1,1) يهزم لون الشارة الأبيض المقصود عند
+   غياب سلف .page-shell، فينتج نص أخضر داكن فوق خلفية خضراء داكنة لنفس
+   الشارة — نفس نمط عطل [class$="-hero"] (قاعدة عامة بلا استثناء كافٍ). */
 .tawheed-section-title,
 .tawheed-subsection h3,
-.home-section h2 {
+.home-section h2:not(.ds-section__title):not(.lessons-v2-section__title):not(.lessons-past-section__title):not(.cards-page-title):not(.search-page-title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title) {
   font-family: var(--mj-font-display) !important;
   color: var(--majalis-emerald-deep, #173D35) !important;
 }
