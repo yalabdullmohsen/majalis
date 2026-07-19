@@ -90,6 +90,16 @@ const SurahStoryDetailRoute = lazy(() =>
   }))
 );
 const TawhidPage = lazy(() => import("@/views/TawhidPage"));
+const DiscoverIslamPage = lazy(() => import("@/views/DiscoverIslamPage"));
+const DiscoverIslamQuestionsPage = lazy(() => import("@/views/DiscoverIslamQuestionsPage"));
+const DiscoverIslamQuestionDetailPage = lazy(() => import("@/views/DiscoverIslamQuestionDetailPage"));
+const DiscoverIslamDoubtsPage = lazy(() => import("@/views/DiscoverIslamDoubtsPage"));
+const DiscoverIslamDoubtDetailPage = lazy(() => import("@/views/DiscoverIslamDoubtDetailPage"));
+const DiscoverIslamArticleDetailPage = lazy(() => import("@/views/DiscoverIslamArticleDetailPage"));
+const HowToBecomeMuslimPage = lazy(() => import("@/views/HowToBecomeMuslimPage"));
+const NewMuslimPathPage = lazy(() => import("@/views/NewMuslimPathPage"));
+const NewMuslimDayDetailPage = lazy(() => import("@/views/NewMuslimDayDetailPage"));
+const DiscoverIslamContactPage = lazy(() => import("@/views/DiscoverIslamContactPage"));
 const AdhkarPage = lazy(() => import("@/views/AdhkarPage"));
 const QaPage = lazy(() => import("@/views/QaPage"));
 const QuizPage = lazy(() => import("@/views/QuizPage"));
@@ -554,6 +564,16 @@ function Router() {
       <Route path="/research"><Redirect to="/fiqh-council/research" /></Route>
       {/* الفقه الإسلامي الموحّد + السيرة النبوية */}
       <Route path="/tawhid"><SafeLazyRoute component={TawhidPage} /></Route>
+      <Route path="/discover-islam"><SafeLazyRoute component={DiscoverIslamPage} /></Route>
+      <Route path="/discover-islam/questions"><SafeLazyRoute component={DiscoverIslamQuestionsPage} /></Route>
+      <Route path="/discover-islam/questions/:slug"><SafeLazyRoute component={DiscoverIslamQuestionDetailPage} /></Route>
+      <Route path="/discover-islam/doubts"><SafeLazyRoute component={DiscoverIslamDoubtsPage} /></Route>
+      <Route path="/discover-islam/doubts/:slug"><SafeLazyRoute component={DiscoverIslamDoubtDetailPage} /></Route>
+      <Route path="/discover-islam/articles/:slug"><SafeLazyRoute component={DiscoverIslamArticleDetailPage} /></Route>
+      <Route path="/discover-islam/how-to-convert"><SafeLazyRoute component={HowToBecomeMuslimPage} /></Route>
+      <Route path="/discover-islam/new-muslim"><SafeLazyRoute component={NewMuslimPathPage} /></Route>
+      <Route path="/discover-islam/new-muslim/:day"><SafeLazyRoute component={NewMuslimDayDetailPage} /></Route>
+      <Route path="/discover-islam/contact"><SafeLazyRoute component={DiscoverIslamContactPage} /></Route>
       <Route path="/fiqh"><SafeLazyRoute component={FiqhPage} /></Route>
       <Route path="/seerah"><SafeLazyRoute component={SeerahPage} /></Route>
       <Route path="/quran/surah-stories/:number"><SafeLazyRoute component={SurahStoryDetailRoute} /></Route>
