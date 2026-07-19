@@ -10,10 +10,13 @@ export function AssistantFloatingWidget() {
   const chat = useAssistantChat();
   const closeRef = useRef<HTMLButtonElement>(null);
 
-  // /mushaf/page: قارئ غامر بشريط تنقّل سفلي ثابت بعرض الشاشة كاملاً — الزر
-  // العائم يتراكب فوقه فعليًا (z-index:45 أعلى من شريط التنقّل) ويحجب النقر،
-  // اكتُشف حيًّا أثناء تحقّق Playwright (انظر MushafPageView.tsx).
-  const hiddenOnPage = location === "/assistant" || location.startsWith("/admin") || location.startsWith("/mushaf/page");
+  // /mushaf: قارئ غامر مخصَّص (وضع هادئ خاص به) — زر عائم فوق نص المصحف
+  // يكسر تجربة القراءة ويُشعر بأنها صفحة ويب لا تطبيق قراءة مخصَّص.
+  // يشمل أيضًا /mushaf/page (قارئ الصفحات): شريط تنقّل سفلي ثابت بعرض
+  // الشاشة كاملاً — الزر العائم كان يتراكب فوقه فعليًا (z-index:45 أعلى
+  // من شريط التنقّل) ويحجب النقر، اكتُشف حيًّا أثناء تحقّق Playwright
+  // (انظر MushafPageView.tsx).
+  const hiddenOnPage = location === "/assistant" || location.startsWith("/admin") || location.startsWith("/mushaf");
 
   useEffect(() => {
     setOpen(false);

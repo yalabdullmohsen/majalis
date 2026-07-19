@@ -12,6 +12,7 @@ import { SurahList } from "@/components/quran/SurahList";
 import { AyahActionSheet } from "@/components/quran/AyahActionSheet";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
 import { usePageSwipe } from "@/hooks/usePageSwipe";
+import { toArabicDigits } from "@/lib/utils";
 import "@/styles/quran.css";
 
 /**
@@ -198,7 +199,7 @@ export default function MushafPage() {
               {content?.surahs.map((s) => s.name).join(" / ") ?? "المصحف الشريف"}
             </span>
             <span className="mushaf-v2__header-meta">
-              {currentPage ? `صفحة ${currentPage}` : ""}{juzNumber ? ` · الجزء ${juzNumber}` : ""}
+              {currentPage ? `صفحة ${toArabicDigits(currentPage)}` : ""}{juzNumber ? ` · الجزء ${toArabicDigits(juzNumber)}` : ""}
             </span>
           </div>
           <button
@@ -248,15 +249,18 @@ export default function MushafPage() {
               // تظهر مرتين: مرة كعنوان showBasmala فوق السورة، ومرة أخرى
               // داخل نص الآية نفسها. لا تعديل للنص المخزَّن، عرض فقط.
               const displayText = stripEmbeddedBismillah(a.surahNumber, a.numberInSurah, a.text);
+              // a.surahNameFull بالفعل بصيغة "سُورَةُ ..." الكاملة — لا تُضَف "سورة" ثانيةً
+              // (كانت مُكرَّرة فعليًا هنا: "سورة سُورَةُ..."، رصدتُها بلقطة Playwright
+              // حقيقية لصفحة 604). سورة وحيدة في الصفحة ومطابقة لعنوان الهيدر أصلًا
+              // → لا داعي لعنوان مكرَّر هنا إطلاقًا (لا نصّ فارغ).
+              const surahMarkerText =
+                a.isFirstOfSurah && (content.surahs.length > 1 || a.surahNumber !== content.surahs[0].number)
+                  ? a.surahNameFull
+                  : "";
               return (
                 <span key={`${a.surahNumber}-${a.number}`} className="mushaf-v2__ayah-wrap">
-                  {a.isFirstOfSurah && (
-                    <span className="mushaf-v2__surah-marker" aria-hidden="true">
-                      {/* a.surahNameFull بالفعل بصيغة "سُورَةُ ..." الكاملة — لا تُضَف
-                          "سورة" ثانيةً (كانت مُكرَّرة فعليًا هنا: "سورة سُورَةُ..."،
-                          رصدتُها بلقطة Playwright حقيقية لصفحة 604). */}
-                      {content.surahs.length > 1 || a.surahNumber !== content.surahs[0].number ? a.surahNameFull : ""}
-                    </span>
+                  {surahMarkerText && (
+                    <span className="mushaf-v2__surah-marker" aria-hidden="true">{surahMarkerText}</span>
                   )}
                   {showBasmala && <span className="mushaf-v2__bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>}
                   <span
@@ -269,10 +273,14 @@ export default function MushafPage() {
                     onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveAyah(a); } }}
                   >
                     {displayText}
-                    {a.sajda && (
-                      <span className="mushaf-v2__sajda-mark" role="img" aria-label="موضع سجدة">۩</span>
-                    )}
-                    <span className="mushaf-v2__ayah-num" aria-hidden="true">﴿{a.numberInSurah}﴾</span>
+                    {/* ۩ (U+06E9) بلا لون في كل خطوط المشروع المُحمَّلة — يسقط Chromium
+                        لخط إيموجي ملوَّن بديل مهما كانت سلسلة font-family (تحقّقتُ
+                        فعليًا: font-variant-emoji:text وحدها وتقديم Noto Naskh Arabic
+                        كلاهما بلا أثر)، فيبدو أيقونة غريبة وسط نص عثماني أحادي اللون.
+                        بطاقة نصية بدلًا منه: موثوقة عبر كل المتصفحات/الخطوط بلا
+                        استثناء، ومعناها أوضح من الرمز التقليدي أصلًا. */}
+                    {a.sajda && <span className="mushaf-v2__sajda-mark">سجدة</span>}
+                    <span className="mushaf-v2__ayah-num" aria-hidden="true">﴿{toArabicDigits(a.numberInSurah)}﴾</span>
                   </span>
                 </span>
               );

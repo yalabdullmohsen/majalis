@@ -49,6 +49,11 @@ type Active = {
   stopped: boolean;
   segmentTimer: ReturnType<typeof setTimeout> | null;
   pendingSegments: Promise<void>[];
+  /** true أثناء مقاطعة نظام صوتية حقيقية (مكالمة واردة، Siri، تطبيق آخر
+   * استولى على AVAudioSession على iOS) — المسار المضبوط عبره: track.onmute.
+   * لا نُسجِّل/نُرسِل مقاطع أثناء الكتم — تجنّبًا لهدر استدعاءات Groq
+   * مدفوعة على صمت/ضجيج مقطوع، ولمنع تلوّث محرك المحاذاة بكلمات فارغة. */
+  interrupted: boolean;
 };
 
 function pickSupportedMimeType(): string {
@@ -128,16 +133,36 @@ export class ServerQuranASRProvider implements QuranASRProvider {
       stopped: false,
       segmentTimer: null,
       pendingSegments: [],
+      interrupted: false,
     };
     this.sessions.set(id, active);
+
+    // مقاطعات نظام صوتية حقيقية: مكالمة واردة/Siri/تطبيق آخر يستولي على
+    // جلسة الصوت (AVAudioSession على iOS تحديدًا) تُكتِم مسار الالتقاط —
+    // WebKit يُبلِّغ هذا عبر onmute/onunmute على المسار الصوتي نفسه (لا
+    // حدث عام على الصفحة، ولا يُصاحبه بالضرورة visibilitychange — مثال:
+    // مكالمة قصيرة تُرفَض فورًا، أو تفعيل Siri الصوتي بلا مغادرة الصفحة).
+    for (const track of active.stream.getAudioTracks()) {
+      track.onmute = () => { active.interrupted = true; };
+      track.onunmute = () => { active.interrupted = false; };
+      // انتهاء غير متوقَّع للمسار (سحب صلاحية الميكروفون من إعدادات
+      // النظام أثناء الجلسة مثلًا) — أوقف حلقة التسجيل بدل محاولة مستمرة
+      // على مسار ميت (كانت ستفشل بصمت في كل مرة عبر catch(()=>{}) الحالي).
+      track.onended = () => { active.stopped = true; };
+    }
+
     this.recordNextSegment(id, active);
 
     return { id, provider: this.id };
   }
 
-  /** يُسجِّل مقطعًا واحدًا (~3 ثوانٍ) بمُسجِّل مستقل تمامًا (ملف صالح قائم بذاته)، ثم يُرسله ويُعيد جدولة المقطع التالي فور انتهاء التسجيل (لا انتظار نتيجة الإرسال — لا فجوة استماع بسبب بطء الشبكة). */
+  /** يُسجِّل مقطعًا واحدًا (~3 ثوانٍ) بمُسجِّل مستقل تمامًا (ملف صالح قائم بذاته)، ثم يُرسله ويُعيد جدولة المقطع التالي فور انتهاء التسجيل (لا انتظار نتيجة الإرسال — لا فجوة استماع بسبب بطء الشبكة). أثناء مقاطعة نظام صوتية (interrupted=true) نُعيد الفحص كل 500ms بلا تسجيل فعلي، بدل إرسال مقاطع صامتة/تالفة لـGroq. */
   private recordNextSegment(sessionId: string, active: Active) {
     if (active.stopped) return;
+    if (active.interrupted) {
+      active.segmentTimer = setTimeout(() => this.recordNextSegment(sessionId, active), 500);
+      return;
+    }
     const recorder = new MediaRecorder(active.stream, { mimeType: active.mimeType });
     active.recorder = recorder;
     const chunks: Blob[] = [];
@@ -145,7 +170,9 @@ export class ServerQuranASRProvider implements QuranASRProvider {
     recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
     recorder.onstop = () => {
       const blob = new Blob(chunks, { type: active.mimeType });
-      if (blob.size > 200) { // تجاهل مقاطع فارغة/ضجيج بالغ الصغر (صمت تام)
+      // تجاهل مقطع بدأ تسجيله سليمًا ثم اعترضته مقاطعة نظام صوتية قبل
+      // اكتماله — على الأرجح صوت مقطوع/تالف، لا يستحق استدعاء Groq.
+      if (blob.size > 200 && !active.interrupted) { // تجاهل مقاطع فارغة/ضجيج بالغ الصغر (صمت تام)
         const sendPromise = this.sendSegment(active, blob).catch(() => {});
         active.pendingSegments.push(sendPromise);
       }
