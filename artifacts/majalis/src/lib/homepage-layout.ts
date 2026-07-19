@@ -12,7 +12,7 @@ export type HomeWidgetId =
   | "lessons" | "prayer" | "continue" | "daily-progress" | "week-streak"
   | "asma" | "hadith" | "sunnah-time" | "explore" | "learning-seasons"
   | "occasions" | "latest-updates" | "library" | "quiz" | "daily-corner"
-  | "prayer-ranks" | "interesting-topics" | "mind-map" | "daily-benefits";
+  | "prayer-ranks" | "interesting-topics" | "mind-map" | "daily-benefits" | "upcoming-events";
 
 /* ترتيب افتراضي — تحديث 2026-07-19 (تكليف ثانٍ، بند 4): "التقدم اليومي" كان
    ثاني ودجت (مباشرة بعد "استمر من حيث توقفت")؛ نُقل إلى آخر القائمة فعليًا
@@ -29,6 +29,7 @@ export const HOME_WIDGET_DEFS: { id: HomeWidgetId; label: string }[] = [
   { id: "asma", label: "اسم الله اليومي" },
   { id: "daily-corner", label: "الركن اليومي" },
   { id: "daily-benefits", label: "فوائد منتقاة" },
+  { id: "upcoming-events", label: "فعاليات وإعلانات علمية" },
   { id: "library", label: "المكتبة العلمية" },
   { id: "quiz", label: "المسابقة" },
   { id: "sunnah-time", label: "سنن الوقت" },
