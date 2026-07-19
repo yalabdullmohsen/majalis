@@ -22,13 +22,28 @@ export type DawahEvidence = { type: "quran" | "hadith"; ref: string; grading?: s
 export type DawahSource = { title: string; author?: string; url?: string };
 export type DawahGlossaryTerm = { term: string; definition: string };
 
-export type ReligionCode = "christian" | "jewish" | "hindu" | "buddhist" | "atheist_agnostic";
+export type ReligionCode =
+  | "christian"
+  | "jewish"
+  | "hindu"
+  | "buddhist"
+  | "sikh"
+  | "jain"
+  | "zoroastrian"
+  | "bahai"
+  | "chinese_folk"
+  | "atheist_agnostic";
 
 export const RELIGIONS: { code: ReligionCode; label: string }[] = [
   { code: "christian", label: "المسيحية" },
   { code: "jewish", label: "اليهودية" },
   { code: "hindu", label: "الهندوسية" },
   { code: "buddhist", label: "البوذية" },
+  { code: "sikh", label: "السيخية" },
+  { code: "jain", label: "الجاينية" },
+  { code: "zoroastrian", label: "الزرادشتية" },
+  { code: "bahai", label: "البهائية" },
+  { code: "chinese_folk", label: "التقاليد الصينية (كونفوشيوسية/طاوية)" },
   { code: "atheist_agnostic", label: "لا أدين / لا أؤمن بوجود إله" },
 ];
 
