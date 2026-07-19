@@ -2094,5 +2094,37 @@
     "sources": [],
     "reviewedBy": null,
     "reviewedAt": null
+  },
+  {
+    "id": "book-kashf-shubuhat",
+    "slug": "book-kashf-shubuhat",
+    "title": "كشف الشبهات",
+    "canonicalTitle": "كشف الشبهات",
+    "normalizedTitle": "كشف شبهات",
+    "author": "الإمام محمد بن عبد الوهاب",
+    "authorId": "author-muhammad-ibn-abd-al-wahhab",
+    "category": "عقيدة",
+    "description": "رسالة مختصرة في تصحيح مفهوم التوحيد والرد على شبهات المشركين التي يُبرِّرون بها دعاء الأولياء والصالحين، مبيِّنة أن التوحيد إفراد الله بالعبادة لا مجرد الإقرار بربوبيته، لمؤلفها الشيخ محمد بن عبد الوهاب (1115-1206هـ / 1703-1792م).",
+    "editions": [],
+    "verificationStatus": "pending_review",
+    "sources": [],
+    "reviewedBy": null,
+    "reviewedAt": null
+  },
+  {
+    "id": "book-qawaid-arbaa",
+    "slug": "book-qawaid-arbaa",
+    "title": "القواعد الأربع",
+    "canonicalTitle": "القواعد الأربع",
+    "normalizedTitle": "قواعد اربع",
+    "author": "الإمام محمد بن عبد الوهاب",
+    "authorId": "author-muhammad-ibn-abd-al-wahhab",
+    "category": "عقيدة",
+    "description": "رسالة مختصرة تُقرِّر أربع قواعد في بيان حقيقة الشرك ولماذا لم ينفع توحيد الربوبية وحده المشركين الأوائل، ولماذا يُعَدُّ شرك المتأخرين أشد من شرك الأولين، لمؤلفها الشيخ محمد بن عبد الوهاب (1115-1206هـ / 1703-1792م).",
+    "editions": [],
+    "verificationStatus": "pending_review",
+    "sources": [],
+    "reviewedBy": null,
+    "reviewedAt": null
   }
 ]
