@@ -207,16 +207,20 @@
 }
 
 /* Continuous paragraph — all ayahs inline like a real Mushaf page */
+/* ⚠️ لا text-align:justify ولا letter-spacing/word-spacing يدوي هنا (2026-07-19،
+   شكوى "مسافات مفرطة وأقواس مشوهة" على صفحات المصحف): تمديد الكلمات آليًا
+   ليملأ التبرير عرض السطر ينتج تباعدًا غير منتظم بين الكلمات، بمقدار
+   يختلف بشدة من سطر لآخر، ويُبعِد شارة رقم الآية عن النص بمسافة مطّاطة.
+   محاذاة يمين طبيعية لـRTL بلا أي تمديد آلي — النص نفسه غير مُقاس أصلًا
+   بلا حرف/word-spacing إضافي. */
 .qs-mushaf-body {
   font-family: "Amiri Quran", "Scheherazade New", serif;
   font-size: var(--qs-font-size, 26px);
   line-height: 2.6;
-  text-align: justify;
+  text-align: right;
   direction: rtl;
   color: var(--text-body, #1a1a1a);
   padding: 1.25rem .5rem 2rem;
-  word-spacing: .05em;
-  letter-spacing: .01em;
 }
 
 /* Each ayah: pure inline, no block breaking */

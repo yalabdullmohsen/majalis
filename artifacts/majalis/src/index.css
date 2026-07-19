@@ -16641,6 +16641,21 @@ body.has-assistant-fab .app-main {
 /* لون الأحاديث الموضوعة (لم يكن موجوداً) — للبادج في القوائم */
 .hadith-grade--mawdu, .grade--mawdu { color: #B91C1C; background: rgba(185, 28, 28, 0.1); }
 
+/* ── بطاقة "قريبًا" — كتب حديثية لا بيانات فعلية متوفرة لها بعد (راجع
+   HadithBooksAndRulingsPage.tsx) — مظهر مكتوم غير قابل للنقر، بلا حذف
+   البطاقة نفسها من الواجهة (شفافية بدل إخفاء). ── */
+.hadith-index-card--soon {
+  cursor: default;
+  opacity: 0.62;
+  pointer-events: none;
+}
+.hadith-index-card--soon:hover { transform: none; box-shadow: var(--ds-shadow, 0 2px 8px rgba(22, 78, 60, 0.07)); }
+.hadith-index-card--soon .hadith-index-card__count {
+  background: transparent;
+  border: 1px solid var(--majalis-line, #e5ddd0);
+  color: var(--majalis-ink-soft, #5c564c);
+}
+
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — Premium Hero & Page Enhancements
    ══════════════════════════════════════════════════════════════ */

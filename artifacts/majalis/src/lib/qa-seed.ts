@@ -18,6 +18,11 @@ export const QA_CATEGORIES = [
     "slug": "sahabah"
   },
   {
+    "id": "seed-cat-fiqh",
+    "name": "الفقه",
+    "slug": "fiqh"
+  },
+  {
     "id": "seed-cat-tahara",
     "name": "الطهارة",
     "slug": "tahara"

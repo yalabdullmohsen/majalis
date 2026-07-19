@@ -1,7 +1,29 @@
-/** PWA service worker v18 — network-first for app shell, cache-first for static Quran/lesson data. */
+/**
+ * PWA service worker — network-first for app shell, cache-first for static Quran/lesson data.
+ *
+ * Cache-name versioning: SHELL_CACHE/DATA_CACHE used to be a hand-bumped
+ * literal ("v18") — easy to forget when touching this file, which silently
+ * leaves returning PWA users on stale cached data after a deploy. They now
+ * derive from SW_BUILD_ID, loaded from /sw-version.js — a tiny file written
+ * at build time by scripts/generate-version.mjs from the real deploy commit
+ * (same commit as /version.json). Every real deploy now gets fresh cache
+ * names automatically; no manual bump required. If /sw-version.js is
+ * missing for any reason (e.g. a build that skipped the version step), we
+ * fall back to a static id so the SW still installs — caches just won't
+ * rotate for that one deploy.
+ */
+let SW_BUILD_ID = "unversioned";
+try {
+  importScripts("/sw-version.js");
+  if (typeof self.SW_BUILD_ID === "string" && self.SW_BUILD_ID) {
+    SW_BUILD_ID = self.SW_BUILD_ID;
+  }
+} catch {
+  // /sw-version.js missing or failed to load — keep the fallback above.
+}
 
-const SHELL_CACHE   = "majalis-shell-v18";
-const DATA_CACHE    = "majalis-data-v18";
+const SHELL_CACHE   = `majalis-shell-${SW_BUILD_ID}`;
+const DATA_CACHE    = `majalis-data-${SW_BUILD_ID}`;
 const VERSION_CACHE = "majalis-version";
 const FETCH_TIMEOUT = 8000;
 
@@ -78,13 +100,13 @@ self.addEventListener("activate", (event) => {
       // السيطرة على كل النوافذ
       await self.clients.claim();
 
-      // عند التحديث: إعادة تحميل كل النوافذ المفتوحة
-      if (isUpdate) {
-        const allClients = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
-        allClients.forEach((client) => {
-          client.navigate(client.url).catch(() => undefined);
-        });
-      }
+      // ملاحظة: كانت هذه الكتلة تُعيد تحميل كل النوافذ المفتوحة تلقائيًا
+      // عند أي تحديث. كانت خاملة عمليًا طالما SHELL_CACHE مرقَّم يدويًا
+      // (v18) نادر التغيّر — الآن بعد ربطه بمعرّف كل نشر فعلي (commit)،
+      // كانت ستُصبح نشطة على كل نشر تقريبًا (وتيرة نشر عالية جدًا)، فتُقاطع
+      // المستخدمين قسرًا أثناء الاستخدام. أُزيلت لصالح شريط "تحديث متاح"
+      // الجديد (اختياري، بضغطة المستخدم فقط) — راجع UpdateAvailableBanner.
+      void isUpdate;
     })(),
   );
 });

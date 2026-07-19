@@ -23,12 +23,14 @@ import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { startAdhanScheduler } from "@/lib/adhan-scheduler";
 import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
+import { PrayerRespectBanner } from "@/components/adhan/PrayerRespectBanner";
 import { startPrayerAlertScheduler, recheckPrayerAlertWindow } from "@/lib/prayer-alert-scheduler";
 import { PrayerCountdownBanner } from "@/components/prayer/PrayerCountdownBanner";
 import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
 import { NavProgressBar } from "@/components/NavProgressBar";
 import { recordRecentPage } from "@/lib/recent-pages";
 import { OfflineBanner } from "@/components/OfflineBanner";
+import { UpdateAvailableBanner } from "@/components/UpdateAvailableBanner";
 
 const lazy = lazyWithRetry;
 
@@ -66,6 +68,7 @@ const HadithPage = lazy(() => import("@/views/HadithPage"));
 const HadithDaifPage = lazy(() => import("@/views/HadithDaifPage"));
 const HadithMawduPage = lazy(() => import("@/views/HadithMawduPage"));
 const HadithBooksPage = lazy(() => import("@/views/HadithBooksPage"));
+const HadithBooksAndRulingsPage = lazy(() => import("@/views/HadithBooksAndRulingsPage"));
 const ArbaeenLovePage = lazy(() => import("@/views/ArbaeenLovePage"));
 const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
 const QuranCirclesPage = lazy(() => import("@/views/QuranCirclesPage"));
@@ -410,6 +413,7 @@ function Router() {
       <Route path="/quran-circles"><SafeLazyRoute component={QuranCirclesPage} /></Route>
       <Route path="/fawaid"><SafeLazyRoute component={FawaidPage} /></Route>
       <Route path="/hadith/books"><SafeLazyRoute component={HadithBooksPage} /></Route>
+      <Route path="/hadith/books-and-rulings"><SafeLazyRoute component={HadithBooksAndRulingsPage} /></Route>
       <Route path="/hadith/arbaeen-love-of-allah"><SafeLazyRoute component={ArbaeenLovePage} /></Route>
       <Route path="/hadith/sahih"><SafeLazyRoute component={HadithPage} /></Route>
       <Route path="/hadith/daif"><SafeLazyRoute component={HadithDaifPage} /></Route>
@@ -677,6 +681,7 @@ function AppShell() {
       >
         <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
         <OfflineBanner />
+        <UpdateAvailableBanner />
         <NavProgressBar />
         <SeoManager />
         <ScrollResetOnNav />
@@ -686,6 +691,7 @@ function AppShell() {
         <NavBar />
         <PrayerCountdownBanner />
         <AdhanNotificationBar />
+        <PrayerRespectBanner />
         <main id="main-content" className="app-main" tabIndex={-1}>
           <Router />
         </main>
