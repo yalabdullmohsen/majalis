@@ -100,13 +100,13 @@ self.addEventListener("activate", (event) => {
       // السيطرة على كل النوافذ
       await self.clients.claim();
 
-      // عند التحديث: إعادة تحميل كل النوافذ المفتوحة
-      if (isUpdate) {
-        const allClients = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
-        allClients.forEach((client) => {
-          client.navigate(client.url).catch(() => undefined);
-        });
-      }
+      // ملاحظة: كانت هذه الكتلة تُعيد تحميل كل النوافذ المفتوحة تلقائيًا
+      // عند أي تحديث. كانت خاملة عمليًا طالما SHELL_CACHE مرقَّم يدويًا
+      // (v18) نادر التغيّر — الآن بعد ربطه بمعرّف كل نشر فعلي (commit)،
+      // كانت ستُصبح نشطة على كل نشر تقريبًا (وتيرة نشر عالية جدًا)، فتُقاطع
+      // المستخدمين قسرًا أثناء الاستخدام. أُزيلت لصالح شريط "تحديث متاح"
+      // الجديد (اختياري، بضغطة المستخدم فقط) — راجع UpdateAvailableBanner.
+      void isUpdate;
     })(),
   );
 });
