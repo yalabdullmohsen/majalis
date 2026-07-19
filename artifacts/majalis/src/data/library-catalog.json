@@ -2078,5 +2078,21 @@
     "sources": [],
     "reviewedBy": null,
     "reviewedAt": null
+  },
+  {
+    "id": "book-minhaj-muslim-jazairi",
+    "slug": "book-minhaj-muslim-jazairi",
+    "title": "منهاج المسلم",
+    "canonicalTitle": "منهاج المسلم",
+    "normalizedTitle": "منهاج مسلم",
+    "author": "الشيخ أبو بكر جابر الجزائري",
+    "authorId": null,
+    "category": "فقه",
+    "description": "موسوعة شاملة ميسَّرة لمبتدئ طلب العلم، تجمع أبواب العقيدة والآداب والأخلاق والعبادات والمعاملات في كتاب واحد بأسلوب سهل مدعَّم بالأدلة، لمؤلفها الشيخ أبي بكر جابر الجزائري (1921-2018م) الذي درَّس في المسجد النبوي والجامعة الإسلامية بالمدينة المنورة نحو خمسين عاماً.",
+    "editions": [],
+    "verificationStatus": "pending_review",
+    "sources": [],
+    "reviewedBy": null,
+    "reviewedAt": null
   }
 ]

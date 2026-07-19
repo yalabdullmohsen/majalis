@@ -1,7 +1,7 @@
 {
   "$comment": "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
-  "generatedAt": "2026-07-18",
-  "books": 130,
+  "generatedAt": "2026-07-19",
+  "books": 131,
   "scholars": 96,
   "fawaid": 515,
   "quizQuestions": 978,
