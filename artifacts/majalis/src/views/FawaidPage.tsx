@@ -68,10 +68,15 @@ export default function FawaidPage({
   // رابط `?cat=...` في JSON-LD أسفل هذه الصفحة نفسها كان يُتجاهَل كليًا:
   // `category` تُهيَّأ دائماً بـ"الكل" بلا قراءة أي شيء من الرابط الفعلي —
   // عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف بالفحص المباشر
-  // 2026-07-18.
+  // 2026-07-18. امتداد 2026-07-20: `search-suggestions.ts` يبني روابط
+  // `/fawaid?q=...` لاقتراحات البحث العام — لم يكن `q` يُقرأ إطلاقًا،
+  // فتهبط كل نقرة على اقتراح فوائد على القائمة الكاملة غير المُصفّاة.
   useEffect(() => {
-    const cat = new URLSearchParams(window.location.search).get("cat");
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get("cat");
+    const q = params.get("q");
     if (cat) setCategory(cat);
+    if (q) setSearch(q);
   }, []);
   const debouncedSearch = useDebouncedValue(search);
 

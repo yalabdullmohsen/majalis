@@ -51,6 +51,15 @@ const SHEET_SECTIONS = [
     { href: "/miracles",    label: "الإعجاز العلمي",       Icon: Lightbulb },
   ]},
 
+  /* ── التعريف بالإسلام ── */
+  { group: "التعريف بالإسلام", items: [
+    { href: "/discover-islam",             label: "تعرّف إلى الإسلام",   Icon: Compass },
+    { href: "/discover-islam/questions",   label: "أسئلة وأجوبة",       Icon: HelpCircle },
+    { href: "/discover-islam/doubts",      label: "الشبهات والتفنيدات", Icon: Shield },
+    { href: "/discover-islam/how-to-convert", label: "كيف أصبح مسلمًا؟", Icon: Star },
+    { href: "/discover-islam/new-muslim",  label: "مسار المسلم الجديد", Icon: Sparkles },
+  ]},
+
   /* ── الفقه والأحكام ── */
   { group: "الفقه والأحكام", items: [
     { href: "/fiqh",               label: "الفقه الإسلامي",     Icon: BookText },
