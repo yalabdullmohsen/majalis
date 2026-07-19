@@ -29,6 +29,7 @@ import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notificatio
 import { NavProgressBar } from "@/components/NavProgressBar";
 import { recordRecentPage } from "@/lib/recent-pages";
 import { OfflineBanner } from "@/components/OfflineBanner";
+import { UpdateAvailableBanner } from "@/components/UpdateAvailableBanner";
 
 const lazy = lazyWithRetry;
 
@@ -677,6 +678,7 @@ function AppShell() {
       >
         <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
         <OfflineBanner />
+        <UpdateAvailableBanner />
         <NavProgressBar />
         <SeoManager />
         <ScrollResetOnNav />

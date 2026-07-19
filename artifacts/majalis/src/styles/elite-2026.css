@@ -33339,3 +33339,51 @@ header.navbar-v3 {
     max-width: 130px !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   §224 — شريط "يتوفر تحديث جديد" (update-available-banner-*) — 2026-07-19
+   ═══════════════════════════════════════════════════════════════════════════
+   يظهر فقط عند اكتشاف useVersionCheck (src/hooks/useVersionCheck.ts) نشرًا
+   حيًّا أحدث من الذي حُمِّلت به الجلسة (مقارنة commit مع /version.json).
+   لا تحريك تلقائي للصفحة هنا إطلاقًا — الزر هو المسار الوحيد للتحديث. */
+.update-available-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1rem;
+  background: #2563EB;
+  color: #F7F4ED;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  animation: uab-slide-in 0.3s ease;
+  z-index: 150;
+  position: relative;
+}
+.update-available-banner__icon { flex-shrink: 0; }
+.update-available-banner__btn {
+  border: 1px solid rgba(255,255,255,.55);
+  background: rgba(255,255,255,.12);
+  color: #F7F4ED;
+  border-radius: 999px;
+  padding: 0.2rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.update-available-banner__btn:hover,
+.update-available-banner__btn:focus-visible {
+  background: rgba(255,255,255,.22);
+  border-color: rgba(255,255,255,.85);
+}
+.update-available-banner__btn:active { transform: scale(0.97); }
+@keyframes uab-slide-in {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+
+@media print {
+  .update-available-banner { display: none !important; }
+}
