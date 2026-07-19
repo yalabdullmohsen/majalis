@@ -10585,7 +10585,7 @@ body.mobile-nav-body-lock {
   padding: 0.28rem 0.55rem;
   border: none;
   border-radius: 0.45rem;
-  background: rgba(14, 110, 82, 0.055);
+  background: rgba(23,61,53, 0.055);
   cursor: pointer;
   font-size: 0.72rem;
   font-weight: 700;
@@ -10598,7 +10598,7 @@ body.mobile-nav-body-lock {
   margin: 0.1rem 0.25rem;
 }
 .side-nav-subgroup__toggle:hover {
-  background: rgba(14, 110, 82, 0.1);
+  background: rgba(23,61,53, 0.1);
 }
 .side-nav-subgroup__toggle svg {
   color: var(--majalis-emerald, #28584D);
@@ -12446,7 +12446,7 @@ body.assistant-panel-open {
 /* ── نتائج القرآن الكريم ─────────────────────────────────────── */
 .search-result-row--quran {
   border-inline-start: 3px solid var(--clr-primary, #28584D);
-  background: rgba(14, 110, 82, 0.03);
+  background: rgba(23,61,53, 0.03);
 }
 
 .search-result-row--quran .search-result-title {
@@ -18672,9 +18672,9 @@ html[data-theme="dark"] .skeleton-base {
 .rp-plan-card__head { display: flex; justify-content: space-between; align-items: center; gap: .5rem; margin-bottom: .6rem; }
 .rp-plan-card__title { font-size: 1rem; font-weight: 700; margin: 0; }
 .rp-badge { font-size: .72rem; font-weight: 700; padding: .2rem .6rem; border-radius: 99px; white-space: nowrap; background: var(--bg-hover, #f0f0f0); color: var(--text-muted, #6b7280); }
-.rp-badge--ahead { background: rgba(14,110,82,.12); color: #28584D; }
+.rp-badge--ahead { background: rgba(23,61,53,.12); color: #28584D; }
 .rp-badge--behind { background: rgba(190,60,40,.12); color: #B33C28; }
-.rp-badge--done { background: rgba(14,110,82,.18); color: #28584D; }
+.rp-badge--done { background: rgba(23,61,53,.18); color: #28584D; }
 .rp-badge--paused { background: rgba(120,120,120,.15); color: #6b7280; }
 .rp-badge--active { background: rgba(31,77,58,.1); color: #173D35; }
 .rp-badge--idle { background: rgba(120,120,120,.1); color: #6b7280; }
@@ -18705,7 +18705,7 @@ html[data-theme="dark"] .skeleton-base {
 .rp-day-chip { padding: .4rem .8rem; border-radius: 99px; border: 1px solid var(--border, #e5e3dd); background: none; font-size: .82rem; font-weight: 500; cursor: pointer; }
 .rp-day-chip.is-active { background: var(--majalis-emerald, #28584D); color: #fff; border-color: var(--majalis-emerald, #28584D); }
 .rp-checkbox-field { display: flex; align-items: center; gap: .5rem; font-size: .85rem; margin-bottom: .8rem; }
-.rp-feasibility { font-size: .82rem; padding: .6rem .8rem; border-radius: .5rem; background: rgba(14,110,82,.08); color: #28584D; margin-bottom: .8rem; }
+.rp-feasibility { font-size: .82rem; padding: .6rem .8rem; border-radius: .5rem; background: rgba(23,61,53,.08); color: #28584D; margin-bottom: .8rem; }
 .rp-feasibility--warn { background: rgba(190,60,40,.08); color: #B33C28; }
 .rp-submit-btn { width: 100%; background: var(--majalis-emerald, #28584D); color: #fff; border: none; border-radius: .6rem; padding: .7rem; font-size: .92rem; font-weight: 700; cursor: pointer; }
 .rp-submit-btn:disabled { opacity: .5; cursor: not-allowed; }

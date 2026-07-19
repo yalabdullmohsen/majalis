@@ -237,7 +237,7 @@
 
 /* intro note */
 .sg-intro-note {
-  font-size: .85rem; color: #555; background: rgba(14,110,82,.06);
+  font-size: .85rem; color: #555; background: rgba(23,61,53,.06);
   border-right: 3px solid var(--clr-primary,#28584D); border-radius: 0 .5rem .5rem 0;
   padding: .65rem .9rem; margin: 0 0 1rem; line-height: 1.7;
 }
@@ -254,10 +254,10 @@
 .sg-rank-card__title { display: block; font-size: .9rem; font-weight: 700; color: #111; }
 .sg-rank-card__ruling {
   display: inline-block; margin-top: .2rem; font-size: .72rem; font-weight: 600;
-  background: rgba(14,110,82,.1); color: var(--clr-primary,#28584D);
+  background: rgba(23,61,53,.1); color: var(--clr-primary,#28584D);
   padding: .15rem .55rem; border-radius: 20px;
 }
-.sg-rank-card__ruling--high { background: rgba(14,110,82,.2); }
+.sg-rank-card__ruling--high { background: rgba(23,61,53,.2); }
 .sg-rank-card__text { font-size: .83rem; color: #444; line-height: 1.7; margin: 0 0 .4rem; }
 .sg-rank-card__benefit { font-size: .78rem; color: #555; font-style: italic; margin: 0; }
 
@@ -270,7 +270,7 @@
 .sg-suwar-card__rec {
   font-size: .72rem; font-weight: 700; padding: .15rem .55rem; border-radius: 20px;
 }
-.sg-suwar-card__rec--jahr  { background: rgba(14,110,82,.12); color: var(--clr-primary,#28584D); }
+.sg-suwar-card__rec--jahr  { background: rgba(23,61,53,.12); color: var(--clr-primary,#28584D); }
 .sg-suwar-card__rec--sirr  { background: rgba(100,116,139,.12); color: #475569; }
 .sg-suwar-card__rakat { font-size: .72rem; color: #888; margin-right: auto; }
 .sg-suwar-card__note { font-size: .8rem; color: #555; line-height: 1.65; margin: 0; }
@@ -280,7 +280,7 @@
 .sg-nawfil-card__header { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; margin-bottom: .4rem; }
 .sg-nawfil-card__name { font-size: .88rem; font-weight: 700; color: #111; }
 .sg-nawfil-card__rakat {
-  font-size: .72rem; font-weight: 600; background: rgba(14,110,82,.1);
+  font-size: .72rem; font-weight: 600; background: rgba(23,61,53,.1);
   color: var(--clr-primary,#28584D); padding: .12rem .5rem; border-radius: 20px;
 }
 .sg-nawfil-card__note { font-size: .8rem; color: #555; line-height: 1.65; margin: 0; }

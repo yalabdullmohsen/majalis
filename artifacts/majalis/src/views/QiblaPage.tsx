@@ -99,7 +99,7 @@ function QiblaCompass({
         />
         <polygon
           points="100,182 96,122 100,112 104,122"
-          fill="var(--majalis-emerald-muted, rgba(14,110,82,0.18))"
+          fill="var(--majalis-emerald-muted, rgba(23,61,53,0.18))"
         />
         {/* رأس السهم: القبلة */}
         <polygon points="100,6 93,20 107,20" fill="var(--majalis-emerald, #173D35)" opacity="0.75" />

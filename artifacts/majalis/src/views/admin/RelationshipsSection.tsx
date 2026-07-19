@@ -282,7 +282,7 @@ export function RelationshipsSection() {
                   </span>
                   <button type="button" onClick={() => handleToggleVerified(r)}
                     className="rel-toggle-btn"
-                    style={{ "--rel-tb-bg": r.is_verified ? "rgba(14,110,82,0.08)" : "#d1fae5" } as React.CSSProperties}>
+                    style={{ "--rel-tb-bg": r.is_verified ? "rgba(23,61,53,0.08)" : "#d1fae5" } as React.CSSProperties}>
                     {r.is_verified ? "\u0625\u0644\u063a\u0627\u0621 \u0627\u0644\u062a\u062d\u0642\u0642" : "\u062a\u062d\u0642\u0642"}
                   </button>
                   <button type="button" onClick={() => startEdit(r)} className="rel-edit-btn">

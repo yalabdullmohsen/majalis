@@ -47,7 +47,7 @@ function AyahText({ surah, ayah: ayahNum, surahName }: { surah: number; ayah: nu
         lineHeight: 2.2,
         direction: "rtl",
         padding: "0.75rem 1rem",
-        background: "rgba(14,110,82,0.05)",
+        background: "rgba(23,61,53,0.05)",
         borderRight: "3px solid #28584D",
         borderRadius: "0 8px 8px 0",
         color: "var(--ds-text-1,#1a1a1a)",
@@ -82,7 +82,7 @@ function MutashabihatCard({ pair }: { pair: MutashabihatPair }) {
         marginBottom: "0.85rem",
         overflow: "hidden",
         transition: "box-shadow 0.2s",
-        boxShadow: open ? "0 6px 24px rgba(14,110,82,0.1)" : "none",
+        boxShadow: open ? "0 6px 24px rgba(23,61,53,0.1)" : "none",
       }}
     >
       {/* رأس البطاقة */}
@@ -110,7 +110,7 @@ function MutashabihatCard({ pair }: { pair: MutashabihatPair }) {
               style={{
                 padding: "0.15rem 0.5rem",
                 borderRadius: "6px",
-                background: "rgba(14,110,82,0.1)",
+                background: "rgba(23,61,53,0.1)",
                 color: "#28584D",
                 fontSize: "0.7rem",
                 fontWeight: 700,
@@ -256,8 +256,8 @@ export default function MutashabihatPage() {
           style={{
             padding: "0.75rem 1rem",
             borderRadius: "10px",
-            background: "rgba(14,110,82,0.06)",
-            border: "1px solid rgba(14,110,82,0.15)",
+            background: "rgba(23,61,53,0.06)",
+            border: "1px solid rgba(23,61,53,0.15)",
             fontSize: "0.8rem",
             color: "#0F5132",
             marginBottom: "1.25rem",
