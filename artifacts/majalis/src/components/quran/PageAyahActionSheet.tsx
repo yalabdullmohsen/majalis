@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { X, Copy, Check, Share2, Bookmark, StickyNote, Play, Pause, ChevronRight, ChevronLeft, Flag, Image as ImageIcon } from "lucide-react";
+import { X, Copy, Check, Share2, Bookmark, StickyNote, Play, Pause, ChevronRight, ChevronLeft, ChevronDown, Flag, Image as ImageIcon, BookOpen, Mic2 } from "lucide-react";
 import { copyAyahText, copyAyahTextPlain, shareAyahAsText, shareAyahAsImage } from "@/lib/share-ayah";
 import { addBookmark, removeBookmark, isBookmarked, getNote, saveNote } from "@/lib/quran-personal";
+import { fetchTafsirAyahs } from "@/lib/quran-api";
+import { RECITERS } from "@/lib/quran-audio";
 import { CONTACT_EMAIL } from "@/lib/site-config";
 
 /**
@@ -26,14 +28,22 @@ type Props = {
   onPrev?: () => void;
   onNext?: () => void;
   onClose: () => void;
+  /** اختياريان — عند تمريرهما فقط يظهر منتقي القارئ (لا يكسر MushafPageView.tsx القائم الذي لا يمرّرهما). */
+  reciterId?: string;
+  onSetReciter?: (id: string) => void;
 };
 
-export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, isPlaying, onTogglePlay, canPlay = true, onPrev, onNext, onClose }: Props) {
+export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, isPlaying, onTogglePlay, canPlay = true, onPrev, onNext, onClose, reciterId, onSetReciter }: Props) {
   const [bookmarked, setBookmarked] = useState(() => isBookmarked(surahNum, ayahNum));
   const [copiedKind, setCopiedKind] = useState<"full" | "plain" | null>(null);
   const [noteOpen, setNoteOpen] = useState(false);
   const [noteText, setNoteText] = useState(() => getNote(surahNum, ayahNum));
   const [noteSaved, setNoteSaved] = useState(false);
+  const [reciterPickerOpen, setReciterPickerOpen] = useState(false);
+  const [tafsirOpen, setTafsirOpen] = useState(false);
+  const [tafsirText, setTafsirText] = useState<string | null>(null);
+  const [tafsirLoading, setTafsirLoading] = useState(false);
+  const [tafsirError, setTafsirError] = useState(false);
 
   useEffect(() => {
     setBookmarked(isBookmarked(surahNum, ayahNum));
@@ -41,7 +51,29 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
     setCopiedKind(null);
     setNoteOpen(false);
     setNoteSaved(false);
+    setTafsirOpen(false);
+    setTafsirText(null);
+    setTafsirError(false);
   }, [surahNum, ayahNum]);
+
+  const handleToggleTafsir = async () => {
+    const next = !tafsirOpen;
+    setTafsirOpen(next);
+    if (next && tafsirText === null && !tafsirLoading) {
+      setTafsirLoading(true);
+      setTafsirError(false);
+      try {
+        const ayahs = await fetchTafsirAyahs(surahNum, "ar.muyassar");
+        const found = ayahs.find((a) => a.numberInSurah === ayahNum);
+        setTafsirText(found?.text ?? null);
+        if (!found) setTafsirError(true);
+      } catch {
+        setTafsirError(true);
+      } finally {
+        setTafsirLoading(false);
+      }
+    }
+  };
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -89,6 +121,49 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
           </button>
         </div>
         <p className="aas-panel__text" dir="rtl">{ayahText}</p>
+
+        {reciterId && onSetReciter && (
+          <>
+            <button type="button" className="ayah-sheet__reciter-toggle" onClick={() => setReciterPickerOpen((v) => !v)}>
+              <Mic2 size={14} aria-hidden="true" />
+              <span>القارئ: {RECITERS.find((r) => r.id === reciterId)?.nameAr ?? RECITERS[0].nameAr}</span>
+              <ChevronDown size={14} aria-hidden="true" className={reciterPickerOpen ? "is-open" : ""} />
+            </button>
+            {reciterPickerOpen && (
+              <div className="ayah-sheet__reciter-list" role="listbox" aria-label="اختيار القارئ">
+                {RECITERS.map((r) => (
+                  <button
+                    key={r.id}
+                    type="button"
+                    role="option"
+                    aria-selected={r.id === reciterId}
+                    className={`ayah-sheet__reciter-item${r.id === reciterId ? " is-active" : ""}`}
+                    onClick={() => { onSetReciter(r.id); setReciterPickerOpen(false); }}
+                  >
+                    {r.nameAr}
+                  </button>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
+        <button type="button" className="ayah-sheet__tafsir-toggle" onClick={handleToggleTafsir} aria-expanded={tafsirOpen}>
+          <BookOpen size={14} aria-hidden="true" />
+          <span>تفسير الآية (الميسّر)</span>
+          <ChevronDown size={14} aria-hidden="true" className={tafsirOpen ? "is-open" : ""} />
+        </button>
+        {tafsirOpen && (
+          <div className="ayah-sheet__tafsir-body">
+            {tafsirLoading ? (
+              <p className="ayah-sheet__tafsir-status">جارٍ التحميل...</p>
+            ) : tafsirError || !tafsirText ? (
+              <p className="ayah-sheet__tafsir-status">تعذّر تحميل التفسير. تحقّق من اتصالك.</p>
+            ) : (
+              <p className="ayah-sheet__tafsir-text">{tafsirText}</p>
+            )}
+          </div>
+        )}
 
         {noteOpen && (
           <div className="aas-panel__note">
