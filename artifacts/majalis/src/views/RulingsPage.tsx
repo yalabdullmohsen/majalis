@@ -95,9 +95,15 @@ export default function RulingsPage() {
   // URL الفعلي عند الوصول — نفس عائلة عطل TYPE_HREF.scholar الصامت
   // (رابط يُبنى صحيحًا لكن لا يُقرأ في الوجهة، فيهبط المستخدم على الفلتر
   // الافتراضي/السابق بلا أي خطأ ظاهر). اكتُشف بالفحص المباشر 2026-07-18.
+  // امتداد 2026-07-19: أُضيف دعم `?subcategory=...` بنفس المنطق — بعض بطاقات
+  // FiqhPage تحتاج الهبوط على تصنيف فرعي محدد (مثل «الطب» ضمن «النوازل
+  // المعاصرة») لا القسم الرئيسي فقط.
   useEffect(() => {
-    const cat = new URLSearchParams(urlSearch).get("category");
+    const params = new URLSearchParams(urlSearch);
+    const cat = params.get("category");
+    const sub = params.get("subcategory");
     if (cat) setCategory(cat);
+    if (sub) setSubcategory(sub);
   }, [urlSearch]);
 
   useEffect(() => {
