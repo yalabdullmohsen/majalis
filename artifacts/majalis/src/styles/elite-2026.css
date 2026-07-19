@@ -32142,6 +32142,25 @@ html[data-theme="dark"] .ikm-card__title {
   color: var(--majalis-ink-soft);
   margin: 0;
 }
+.surah-index-revelation-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  margin-top: .6rem;
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep);
+  text-decoration: none;
+}
+.surah-index-revelation-link:hover,
+.surah-index-revelation-link:focus-visible {
+  text-decoration: underline;
+}
+
+.surah-index-sort {
+  display: flex;
+  gap: .4rem;
+}
 
 .surah-index-controls {
   position: sticky;
@@ -32300,6 +32319,204 @@ html[data-theme="dark"] .ikm-card__title {
 .surah-index-row__fav:hover,
 .surah-index-row__fav:focus-visible {
   background: color-mix(in srgb, var(--majalis-emerald-deep) 8%, transparent);
+}
+
+/* ============================================================
+   §221ب — خريطة ترتيب نزول السور (revord-*) — المرحلة 9
+   خط زمني رأسي RTL. أخضر داكن (#173D35) = مكية، أخضر أفتح (#28584D) =
+   مدنية — نفس زوج الألوان المستخدَم فعلاً لهذا الغرض التمييزي في
+   .fiqh-timeline (src/index.css) لا اختراع جديد.
+   ============================================================ */
+.revord-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1rem 1rem 3rem;
+}
+.revord-hero {
+  text-align: center;
+  padding: 1.25rem 0 1rem;
+}
+.revord-hero h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--majalis-emerald-deep);
+  margin: 0 0 .35rem;
+}
+.revord-hero p {
+  font-size: .85rem;
+  color: var(--majalis-ink-soft);
+  margin: 0 0 .75rem;
+}
+.revord-note {
+  display: flex;
+  align-items: flex-start;
+  gap: .4rem;
+  text-align: start;
+  font-size: .75rem;
+  color: var(--majalis-ink-soft);
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 6%, transparent);
+  border: 1px solid var(--majalis-line);
+  border-radius: .65rem;
+  padding: .6rem .75rem;
+}
+.revord-note svg { flex-shrink: 0; margin-top: .1rem; color: var(--majalis-emerald-deep); }
+.revord-note a { color: var(--majalis-emerald-deep); font-weight: 700; }
+
+.revord-filters {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  gap: .4rem;
+  flex-wrap: wrap;
+  background: var(--majalis-panel);
+  padding: .75rem 0;
+}
+.revord-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  min-height: 40px;
+  padding: 0 .9rem;
+  border-radius: 999px;
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  color: var(--majalis-ink-soft);
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.revord-chip.is-active {
+  background: var(--majalis-emerald-deep);
+  border-color: var(--majalis-emerald-deep);
+  color: #fff;
+}
+.revord-chip.is-active .revord-dot { outline: 2px solid rgba(255,255,255,.65); }
+.revord-dot {
+  width: .55rem;
+  height: .55rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.revord-dot--meccan { background: #173D35; }
+.revord-dot--medinan { background: #28584D; }
+
+.revord-skeletons {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  padding-top: .5rem;
+}
+.revord-skel {
+  height: 3.5rem;
+  border-radius: .75rem;
+  background: color-mix(in srgb, var(--majalis-line) 70%, transparent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .revord-skel { animation: widget-shell-shimmer 1.4s ease-in-out infinite; background-size: 200% 100%; }
+}
+
+.revord-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+  padding: 3rem 1rem;
+  color: var(--majalis-ink-soft);
+  text-align: center;
+}
+.revord-empty p { margin: 0; font-size: .85rem; }
+
+.revord-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  margin: .5rem 0 0;
+  padding-inline-start: 1.25rem;
+  border-inline-start: 2px solid color-mix(in srgb, var(--majalis-emerald-deep) 18%, transparent);
+}
+.revord-event {
+  position: relative;
+}
+.revord-marker {
+  position: absolute;
+  inset-inline-start: -1.45rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: .7rem;
+  height: .7rem;
+  border-radius: 50%;
+  background: #173D35;
+  border: 2px solid var(--majalis-panel);
+}
+.revord-marker--medinan { background: #28584D; }
+
+.revord-card {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .6rem .85rem;
+  min-height: 44px;
+  border: 1px solid var(--majalis-line);
+  border-radius: .85rem;
+  background: var(--majalis-panel);
+  text-decoration: none;
+  color: var(--majalis-ink);
+}
+.revord-card:hover,
+.revord-card:focus-visible {
+  border-color: var(--majalis-emerald-deep);
+}
+.revord-card__order {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 10%, transparent);
+  color: var(--majalis-emerald-deep);
+  font-size: .78rem;
+  font-weight: 800;
+}
+.revord-card__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+}
+.revord-card__name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--majalis-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.revord-card__meta {
+  font-size: .72rem;
+  color: var(--majalis-ink-soft);
+}
+
+.revord-source {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--majalis-line);
+}
+.revord-source h2 {
+  font-size: .95rem;
+  font-weight: 800;
+  color: var(--majalis-emerald-deep);
+  margin: 0 0 .5rem;
+}
+.revord-source p {
+  font-size: .78rem;
+  line-height: 1.7;
+  color: var(--majalis-ink-soft);
+  margin: 0;
 }
 
 /* ============================================================
