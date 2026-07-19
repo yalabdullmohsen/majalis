@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { Search, Star, BookOpen } from "lucide-react";
+import { Search, Star, BookOpen, Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import {
@@ -12,6 +12,11 @@ import {
 } from "@/lib/surah-index";
 
 type RevelationFilter = "all" | "meccan" | "medinan" | "favorites";
+/** ترتيب العرض: "mushaf" هو الافتراضي الدائم (رقم السورة في المصحف —
+ *  توقيفي، كما هو معروض في الموقع دومًا)، و"revelation" فرز زمني اختياري
+ *  إضافي بحسب ترتيب النزول (راجع /quran/revelation-order للعرض البصري
+ *  الكامل). لا يُغيَّر الافتراضي أبدًا — طلب صريح من المالك. */
+type SortMode = "mushaf" | "revelation";
 
 const REVELATION_LABEL: Record<"Meccan" | "Medinan", string> = {
   Meccan: "مكية",
@@ -25,6 +30,7 @@ export default function SurahIndexPage() {
   const [revelationLoaded, setRevelationLoaded] = useState(false);
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<RevelationFilter>("all");
+  const [sortMode, setSortMode] = useState<SortMode>("mushaf"); // الافتراضي: ترتيب المصحف، لا يتغيّر
   const [favorites, setFavorites] = useState<Set<number>>(() => new Set());
 
   useEffect(() => {
@@ -61,9 +67,15 @@ export default function SurahIndexPage() {
     else if (filter === "medinan") list = list.filter((s) => s.revelationType === "Medinan");
 
     const term = query.trim();
-    if (!term) return list;
-    return list.filter((s) => arabicMatchAny([s.name, s.englishName], term) || String(s.number).startsWith(term));
-  }, [surahs, filter, query, favorites]);
+    if (term) {
+      list = list.filter((s) => arabicMatchAny([s.name, s.englishName], term) || String(s.number).startsWith(term));
+    }
+
+    if (sortMode === "revelation") {
+      list = [...list].sort((a, b) => a.revelationOrder - b.revelationOrder);
+    }
+    return list;
+  }, [surahs, filter, query, favorites, sortMode]);
 
   function handleToggleFavorite(number: number, e: React.MouseEvent) {
     e.preventDefault();
@@ -76,9 +88,34 @@ export default function SurahIndexPage() {
       <header className="surah-index-hero">
         <h1>فهرس السور</h1>
         <p>١١٤ سورة — رقمها واسمها وعدد آياتها وتصنيفها، مع بحث سريع ومفضلة.</p>
+        <Link href="/quran/revelation-order" className="surah-index-revelation-link">
+          <Sparkles size={14} strokeWidth={1.8} aria-hidden="true" />
+          خريطة ترتيب نزول السور ←
+        </Link>
       </header>
 
       <div className="surah-index-controls">
+        <div className="surah-index-sort" role="tablist" aria-label="ترتيب العرض">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={sortMode === "mushaf"}
+            className={`surah-index-chip${sortMode === "mushaf" ? " is-active" : ""}`}
+            onClick={() => setSortMode("mushaf")}
+          >
+            ترتيب المصحف
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={sortMode === "revelation"}
+            className={`surah-index-chip${sortMode === "revelation" ? " is-active" : ""}`}
+            onClick={() => setSortMode("revelation")}
+          >
+            ترتيب النزول
+          </button>
+        </div>
+
         <div className="surah-index-search">
           <Search size={16} strokeWidth={1.8} aria-hidden="true" />
           <input
@@ -139,10 +176,13 @@ export default function SurahIndexPage() {
           {filtered.map((s) => (
             <li key={s.number}>
               <Link href={`/mushaf/${s.number}`} className="surah-index-row">
-                <span className="surah-index-row__num" aria-hidden="true">{s.number}</span>
+                <span className="surah-index-row__num" aria-hidden="true">
+                  {sortMode === "revelation" ? s.revelationOrder : s.number}
+                </span>
                 <span className="surah-index-row__body">
                   <span className="surah-index-row__name" style={{ fontFamily: "var(--font-quran)" }}>{s.name}</span>
                   <span className="surah-index-row__meta">
+                    {sortMode === "revelation" ? <>سورة رقم {s.number} في المصحف · </> : null}
                     {s.numberOfAyahs} آية
                     {s.revelationType && <> · {REVELATION_LABEL[s.revelationType]}</>}
                   </span>

@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import {
   Radio, Mic2, Layers, Circle, Star,
   ChevronLeft, BookMarked, BookOpen, Headphones, GraduationCap,
-  Moon, Heart, Sparkles, Mic,
+  Moon, Heart, Sparkles, Mic, History,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -32,6 +32,14 @@ const QURAN_SECTIONS = [
     title: "فهرس السور",
     desc: "تصفّح السور الـ١١٤ كاملة: رقمها واسمها وعدد آياتها وتصنيفها، مع بحث ومفضلة",
     Icon: BookMarked,
+    accent: "#173D35",
+    tag: "١١٤ سورة",
+  },
+  {
+    href: "/quran/revelation-order",
+    title: "ترتيب نزول القرآن",
+    desc: "خريطة زمنية للسور الـ١١٤ حسب تسلسل نزولها التاريخي الفعلي، لا حسب ترقيم المصحف",
+    Icon: History,
     accent: "#173D35",
     tag: "١١٤ سورة",
   },

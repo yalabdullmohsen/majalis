@@ -11,7 +11,7 @@ import {
 } from "@/lib/amr-bil-maruf-seed";
 
 const RANK_COLOR: Record<number, { bg: string; border: string; badge: string }> = {
-  1: { bg: "rgba(14,110,82,.08)", border: "#28584D", badge: "#28584D" },
+  1: { bg: "rgba(23,61,53,.08)", border: "#28584D", badge: "#28584D" },
   2: { bg: "#ECFDF5", border: "#10B981", badge: "#059669" },
   3: { bg: "#EFF6FF", border: "#3B82F6", badge: "#1D4ED8" },
 };

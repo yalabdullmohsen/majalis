@@ -95,7 +95,7 @@
 .ikm-search-input {
   flex: 1;
   padding: 0.65rem 1rem;
-  border: 1.5px solid rgba(10,80,64,0.2);
+  border: 1.5px solid rgba(23,61,53,0.2);
   border-radius: 2rem;
   background: #FFFFFF;
   color: var(--elite-ink, #202725);
@@ -108,8 +108,8 @@
 }
 .ikm-clear-btn {
   padding: 0.55rem 1rem;
-  background: rgba(10,80,64,0.1);
-  border: 1px solid rgba(10,80,64,0.2);
+  background: rgba(23,61,53,0.1);
+  border: 1px solid rgba(23,61,53,0.2);
   border-radius: 2rem;
   color: #173D35;
   font-size: 0.82rem;
@@ -117,7 +117,7 @@
   cursor: pointer;
   white-space: nowrap;
 }
-.ikm-clear-btn:hover { background: rgba(10,80,64,0.15); }
+.ikm-clear-btn:hover { background: rgba(23,61,53,0.15); }
 
 /* Grid section */
 .ikm-grid-section {
@@ -254,9 +254,9 @@
   border: 1px solid rgba(255,255,255,0.1);
 }
 .ikm-tag--dark {
-  background: rgba(10,80,64,0.1);
+  background: rgba(23,61,53,0.1);
   color: #173D35;
-  border-color: rgba(10,80,64,0.15);
+  border-color: rgba(23,61,53,0.15);
 }
 .ikm-card__link {
   display: inline-flex;
@@ -286,7 +286,7 @@
   grid-template-columns: 280px 1fr;
   gap: 1.5rem;
   background: #FFFFFF;
-  border: 1px solid rgba(10,80,64,0.12);
+  border: 1px solid rgba(23,61,53,0.12);
   border-radius: 1.25rem;
   overflow: hidden;
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);
@@ -372,9 +372,9 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem 0.75rem;
-  background: rgba(10,80,64,0.04);
+  background: rgba(23,61,53,0.04);
   border-radius: 0.5rem;
-  border: 1px solid rgba(10,80,64,0.08);
+  border: 1px solid rgba(23,61,53,0.08);
 }
 .ikm-rel-dot {
   width: 10px;
@@ -461,7 +461,7 @@
   white-space: nowrap;
 }
 .ikm-conn-arrow {
-  color: rgba(10,80,64,0.4);
+  color: rgba(23,61,53,0.4);
 }
 
 /* ── نهاية §56 ───────────────────────────────────────────── */

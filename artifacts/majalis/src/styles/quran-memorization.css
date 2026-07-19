@@ -119,8 +119,8 @@
 .qmem-type-card:hover,
 .qmem-type-card--active {
   border-color: var(--majalis-emerald, #28584D);
-  background: rgba(14,110,82,0.05);
-  box-shadow: 0 4px 12px rgba(14,110,82,0.1);
+  background: rgba(23,61,53,0.05);
+  box-shadow: 0 4px 12px rgba(23,61,53,0.1);
 }
 
 .qmem-type-card__num {
@@ -256,7 +256,7 @@
   font-size: 1.25rem;
   line-height: 2;
   color: var(--ds-text-1, #1a1a1a);
-  background: rgba(14,110,82,0.04);
+  background: rgba(23,61,53,0.04);
   border-right: 3px solid var(--majalis-emerald, #28584D);
   padding: 0.75rem 1rem;
   border-radius: 0 8px 8px 0;
@@ -292,7 +292,7 @@
 
 .qmem-option:hover:not(:disabled) {
   border-color: var(--majalis-emerald, #28584D);
-  background: rgba(14,110,82,0.05);
+  background: rgba(23,61,53,0.05);
 }
 
 .qmem-option--correct {
@@ -550,7 +550,7 @@
   border-radius: 20px;
   font-size: 0.7rem;
   font-weight: 700;
-  background: rgba(14,110,82,0.1);
+  background: rgba(23,61,53,0.1);
   color: var(--majalis-emerald, #28584D);
 }
 
