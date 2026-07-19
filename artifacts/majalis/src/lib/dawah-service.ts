@@ -98,11 +98,30 @@ export type DawahArticle = {
   title_ar: string;
   title_en: string | null;
   summary_ar: string | null;
+  summary_en: string | null;
   body_ar: string;
   cover_image_url: string | null;
   tags: string[];
   updated_at: string;
 };
+
+export type DawahTranslation = {
+  lang: string;
+  title: string | null;
+  summary: string | null;
+  body: string | null;
+  status: "draft" | "in_review" | "approved";
+};
+
+export async function getQuestionTranslations(questionId: string): Promise<DawahTranslation[]> {
+  const { data, error } = await supabase
+    .from("dawah_translations")
+    .select("lang, title, summary, body, status")
+    .eq("entity_type", "question")
+    .eq("entity_id", questionId);
+  if (error) return [];
+  return (data || []) as DawahTranslation[];
+}
 
 export type NewMuslimDay = {
   id: string;
