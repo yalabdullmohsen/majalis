@@ -19,6 +19,7 @@ import { ClientErrorLogsSection } from "@/views/admin/ClientErrorLogsSection";
 import { FiqhCouncilSection } from "@/views/admin/FiqhCouncilSection";
 import { RulingsSection } from "@/views/admin/RulingsSection";
 import { AnnualCoursesSection } from "@/views/admin/AnnualCoursesSection";
+import { DawahSection } from "@/views/admin/DawahSection";
 import { LearningPathsSection } from "@/views/admin/LearningPathsSection";
 import { CategoriesSection } from "@/views/admin/CategoriesSection";
 import { UpdatesSection } from "@/views/admin/UpdatesSection";
@@ -107,6 +108,7 @@ export default function AdminPage() {
       {section === "fiqh-council" && <FiqhCouncilSection />}
       {section === "rulings" && <RulingsSection />}
       {section === "annual-courses" && <AnnualCoursesSection />}
+      {section === "dawah" && <DawahSection />}
       {section === "learning-paths" && <LearningPathsSection />}
       {section === "week-day-facts" && <WeekDayFactsSection />}
       {section === "arbaeen-love" && <ArbaeenLoveSection />}

@@ -73,6 +73,13 @@ export const ROLES = {
     level: 10,
     permissions: ["content.read", "audit.read"],
   },
+  dawah_counselor: {
+    id: "dawah_counselor",
+    label: "Dawah Counselor",
+    label_ar: "داعية",
+    level: 40,
+    permissions: ["dawah.contact.read_assigned", "dawah.contact.respond", "content.read"],
+  },
 };
 
 export const ROLE_IDS = Object.keys(ROLES);
