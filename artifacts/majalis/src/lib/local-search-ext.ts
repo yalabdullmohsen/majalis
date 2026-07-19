@@ -33,7 +33,7 @@ export function searchLocalExtensions(query: string) {
       id: String(s.number),
       title: `سورة ${s.name}`,
       meta: `${s.ayahs} آية`,
-      href: `/quran?surah=${s.number}`,
+      href: `/mushaf/${s.number}`,
     }));
 
   const adhkar = filterAdhkar(q)

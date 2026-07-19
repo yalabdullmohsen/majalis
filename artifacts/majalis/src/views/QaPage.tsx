@@ -93,9 +93,16 @@ export default function QaPage({
   // رابط وارد بـ`?cat=...` (من FiqhPage) كان يُتجاهَل كليًا: الحالة تُقرأ
   // فقط من usePersistedState بلا مزامنة مع URL الفعلي عند الوصول — نفس
   // عائلة عطل TYPE_HREF.scholar الصامت. اكتُشف بالفحص المباشر 2026-07-18.
+  // امتداد 2026-07-20: نفس العطل بالضبط وُجد في رابطين إضافيين لم يُقرآ
+  // مُعامَلاهما إطلاقًا — `search-suggestions.ts` يبني `/qa?q=...` و
+  // `rulings-relations.ts` يبني `/qa?search=...` (اسمان مختلفان من
+  // مصدرين مختلفين)؛ كلاهما يُقرآن الآن دفاعيًا.
   useEffect(() => {
-    const cat = new URLSearchParams(urlSearch).get("cat");
+    const params = new URLSearchParams(urlSearch);
+    const cat = params.get("cat");
+    const q = params.get("q") || params.get("search");
     if (cat) setCategorySlug(cat);
+    if (q) setSearch(q);
   }, [urlSearch]);
 
   useEffect(() => {

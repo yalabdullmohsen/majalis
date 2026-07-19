@@ -346,7 +346,7 @@ export default function DailyWirdPage() {
           />
         </label>
 
-        <Link href={`/quran?surah=${state.currentSurah}`} className="wird-quran-link">
+        <Link href={`/mushaf/${state.currentSurah}`} className="wird-quran-link">
           <BookOpen size={15} strokeWidth={1.8} aria-hidden="true" /> فتح المصحف من هذا الموضع
         </Link>
       </div>
