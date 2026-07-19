@@ -108,6 +108,7 @@ export type AutoImportedContent = {
   attribution_name?: string;
   organization_name?: string;
   image_url?: string;
+  media_type?: "image" | "video" | "carousel" | string;
   registration_url?: string;
   event_start_at?: string;
   event_end_at?: string;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BookMarked } from "lucide-react";
+import { BookMarked, PlayCircle, Layers } from "lucide-react";
 import { getBenefitCards } from "@/lib/unified-content-service";
 import type { AutoImportedContent } from "@/lib/auto-content/auto-content-utils";
 import { Widget } from "@/components/widgets/Widget";
@@ -70,6 +70,16 @@ function BenefitCard({ item }: { item: AutoImportedContent }) {
       {item.image_url && (
         <div className="dmb__card-media">
           <img src={item.image_url} alt="" loading="lazy" decoding="async" />
+          {item.media_type === "video" && (
+            <span className="dmb__media-badge" aria-label="فيديو">
+              <PlayCircle size={22} strokeWidth={1.6} aria-hidden="true" />
+            </span>
+          )}
+          {item.media_type === "carousel" && (
+            <span className="dmb__media-badge dmb__media-badge--carousel" aria-label="ألبوم صور">
+              <Layers size={16} strokeWidth={1.8} aria-hidden="true" />
+            </span>
+          )}
         </div>
       )}
       <span className="dmb__badge">{guessBadge(item)}</span>

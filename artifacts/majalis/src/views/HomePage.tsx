@@ -12,6 +12,7 @@ import { HomeAboutSection } from "@/components/home/HomeAboutSection";
 import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
 import { HomeDailyCorner } from "@/components/home/HomeDailyCorner";
 import { HomeDailyBenefits } from "@/components/home/HomeDailyBenefits";
+import { HomeUpcomingEvents } from "@/components/home/HomeUpcomingEvents";
 import { HomeSunnahByTime } from "@/components/home/HomeSunnahByTime";
 import { HomeSawmReminder } from "@/components/home/HomeSawmReminder";
 import { HomeIslamicOccasions } from "@/components/home/HomeIslamicOccasions";
@@ -213,6 +214,7 @@ const WIDGET_RENDERERS: Record<string, () => React.ReactNode> = {
   "quiz": () => <HomeQuizCard />,
   "daily-corner": () => <HomeDailyCorner />,
   "daily-benefits": () => <HomeDailyBenefits />,
+  "upcoming-events": () => <HomeUpcomingEvents />,
   "prayer-ranks": () => <HomePrayerRanks />,
   "interesting-topics": () => <HomeInterestingTopics />,
   "mind-map": () => <HomeMindMapSection />,
