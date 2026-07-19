@@ -11,6 +11,7 @@ import {
   Sun, Trophy, Tv, Users, UserPlus, Waypoints, X, Zap,
 } from "lucide-react";
 import { useAuth } from "./AuthProvider";
+import { usePageSwipe } from "@/hooks/usePageSwipe";
 
 type DrawerProps = {
   open: boolean;
@@ -362,6 +363,15 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
     }
   }, [open]);
 
+  // سحب لليمين (فعليًا) يُغلق الدرج — إعادة استخدام أداة السحب الموجودة
+  // (usePageSwipe، مُستخدَمة أصلاً لتقليب صفحات المصحف) بلا آلية جديدة.
+  const { swipeHandlers } = usePageSwipe({
+    onPrev: onClose,
+    onNext: () => {},
+    threshold: 70,
+    disabled: !open,
+  });
+
   if (!open || typeof document === "undefined") return null;
 
   const isActive = (href: string) => {
@@ -386,6 +396,7 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
         aria-modal="true"
         aria-label="القائمة الجانبية"
         onClick={(e) => e.stopPropagation()}
+        {...swipeHandlers}
       >
         {/* Header */}
         <div className="side-nav-drawer__head side-nav-drawer__head--v2">
