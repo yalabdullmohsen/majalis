@@ -30628,11 +30628,18 @@ img:not([src]) {
    لأن !important في هذه القاعدة الخارجية يهزم inline عاديًا دومًا. هذا
    القيد لا يمسّ أي هدف آخر فعلي لهذه القاعدة (كل استخدامات *ayah* الأخرى
    في المنصة — ayah-sheet__*، dq-hero-ayah__*، jnz-ayah__*... إلخ — لا
-   تحتوي "mushaf-v2" فتبقى كما هي بلا تغيير). */
+   تحتوي "mushaf-v2" فتبقى كما هي بلا تغيير).
+
+   استثناء .mf2-* إضافي (2026-07-19، مصحف QPC V2 — مسار css منفصل تمامًا
+   بادئته "mf2-" لا "mushaf-v2__"، راجع mushaf-v2.css): .mf2-ayah-group
+   يحتوي "ayah" فيُصاد بنفس القاعدة، فيُفرَض "Noto Naskh Arabic" على كل
+   حرف/كلمة (يُورَّث font-family للأبناء .mf2-word) بدل خط الصفحة الخاص
+   qpc-page-N المضبوط inline على .mf2-line — تحقّقتُ فعليًا عبر Playwright
+   (getComputedStyle) بعد هذا الاستثناء أن الخط الصحيح يُطبَّق فعليًا. */
 .quran-text,
 .ayah-text,
 [class*="quran-verse"],
-[class*="ayah"]:not([class*="mushaf-v2__"]) {
+[class*="ayah"]:not([class*="mushaf-v2__"]):not([class*="mf2-"]) {
   font-family: "Noto Naskh Arabic", "Scheherazade New", serif !important;
   font-size: 1.2em !important;
   line-height: 2 !important;
