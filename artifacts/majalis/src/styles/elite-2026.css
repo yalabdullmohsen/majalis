@@ -30557,11 +30557,23 @@ img:not([src]) {
   color: transparent !important;
 }
 
-/* ── Quran text override (لا يمس النصوص الشرعية) ── */
+/* ── Quran text override (لا يمس النصوص الشرعية) ──
+   استثناء .mushaf-v2__* إلزامي هنا (2026-07-19، إصلاح جذر قارئ المصحف):
+   [class*="ayah"] بديل نصي (substring) كان يطابق أيضًا mushaf-v2__ayah/
+   -num/-wrap/-ayahs عرَضًا (كلها تحتوي "ayah")، فيفرض عليها بخط "Noto
+   Naskh Arabic" بدل var(--font-quran) (Amiri Quran — الخط الوحيد المُصرَّح
+   له بالنص القرآني في هذه المنصة)، و line-height:2 بدل 2.35 المصمَّم في
+   §222، و font-size:1.2em بدل 1.6rem — تحقّقتُ فعليًا عبر Playwright
+   (getComputedStyle) أن fontFamily الفعلي على .mushaf-v2__ayah كان
+   "Noto Naskh Arabic" حرفيًا رغم style inline صريح بـvar(--font-quran)،
+   لأن !important في هذه القاعدة الخارجية يهزم inline عاديًا دومًا. هذا
+   القيد لا يمسّ أي هدف آخر فعلي لهذه القاعدة (كل استخدامات *ayah* الأخرى
+   في المنصة — ayah-sheet__*، dq-hero-ayah__*، jnz-ayah__*... إلخ — لا
+   تحتوي "mushaf-v2" فتبقى كما هي بلا تغيير). */
 .quran-text,
 .ayah-text,
 [class*="quran-verse"],
-[class*="ayah"] {
+[class*="ayah"]:not([class*="mushaf-v2__"]) {
   font-family: "Noto Naskh Arabic", "Scheherazade New", serif !important;
   font-size: 1.2em !important;
   line-height: 2 !important;
@@ -32818,8 +32830,22 @@ html[data-theme="dark"] .ikm-card__title {
 .mushaf-v2__ayah--playing {
   background: color-mix(in srgb, var(--majalis-emerald-deep) 10%, transparent);
 }
-.mushaf-v2__ayah-num {
-  display: inline-block;
+/* رقم الآية كعنصر ذرّي منعزل — طبق الحل التقني المحدَّد حرفيًا: عنصر واحد
+   (ayah-marker) لا ينكسر، لا ينعكس، لا يتأثر بالسياق الثنائي الاتجاه
+   المحيط به مهما كان (رقم آيات عربية أو لاتينية، خانة واحدة أو خانتين أو
+   ثلاث). unicode-bidi:isolate (لا plaintext) يبقي direction:rtl الموروث
+   من dir="rtl" على .quran-shell كأساس اتجاه هذا العنصر المعزول، بلا
+   استبدال بخوارزمية "أول حرف قوي" (وهو ما يفعله plaintext ولا نريده هنا:
+   محتوى هذا العنصر بالكامل أقواس زخرفية + أرقام، بلا حرف قوي واحد). */
+.mushaf-v2__ayah-num,
+.ayah-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  unicode-bidi: isolate;
+  direction: rtl;
+  flex-shrink: 0;
   font-size: 1.05rem;
   color: var(--majalis-emerald-deep);
   margin-inline-start: .2rem;
