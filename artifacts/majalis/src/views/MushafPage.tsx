@@ -188,7 +188,7 @@ export default function MushafPage() {
   const juzNumber = manifest && currentPage ? juzForPage(manifest, currentPage) : null;
 
   return (
-    <div className={`quran-shell mushaf-v2${quietMode ? " mushaf-v2--quiet" : ""}`} dir="rtl">
+    <div className={`quran-shell mushaf-v2${quietMode ? " mushaf-v2--quiet" : ""}`} dir="rtl" lang="ar">
       {!quietMode && (
         <header className="mushaf-v2__header">
           <button type="button" className="mushaf-v2__sidebar-btn" onClick={() => setSidebarOpen(true)} aria-label="فهرس السور والأجزاء والصفحات">
@@ -240,7 +240,7 @@ export default function MushafPage() {
           // onClick هنا لا يفعل شيئًا سوى e.stopPropagation() (منع تفعيل تبديل
           // "الوضع الهادئ" في main الأب عند النقر داخل نص الآيات) — لا إجراء
           // فعليًا يحتاج مكافئ لوحة مفاتيح.
-          <div className="mushaf-v2__ayahs" onClick={(e) => e.stopPropagation()}>
+          <div className="mushaf-v2__ayahs" dir="rtl" lang="ar" onClick={(e) => e.stopPropagation()}>
             {content.ayahs.map((a) => {
               const isPlaying = currentAyah === a.numberInSurah && a.surahNumber === activeSurahForPlayer && playerState === "playing";
               const showBasmala = a.isFirstOfSurah && a.surahNumber !== 1 && a.surahNumber !== 9;
@@ -280,7 +280,7 @@ export default function MushafPage() {
                         بطاقة نصية بدلًا منه: موثوقة عبر كل المتصفحات/الخطوط بلا
                         استثناء، ومعناها أوضح من الرمز التقليدي أصلًا. */}
                     {a.sajda && <span className="mushaf-v2__sajda-mark">سجدة</span>}
-                    <span className="mushaf-v2__ayah-num" aria-hidden="true">﴿{toArabicDigits(a.numberInSurah)}﴾</span>
+                    <span className="mushaf-v2__ayah-num ayah-marker" aria-hidden="true">﴿{toArabicDigits(a.numberInSurah)}﴾</span>
                   </span>
                 </span>
               );
