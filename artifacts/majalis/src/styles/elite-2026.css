@@ -370,6 +370,28 @@ html[data-theme="dark"] .navbar-mobile-login {
   margin-bottom: 0.75rem !important;
 }
 
+/* §4c-dark — في الوضع الليلي يتحوّل --elite-forest من أخضر داكن جدًا
+   (#173D35) إلى نعناعي فاتح نسبيًا (#3BAD8A، انظر html[data-theme="dark"]
+   أعلى الملف)؛ نص أبيض ثابت (color:#fff أعلاه) فوق هذه الخلفية الأفتح
+   ينتج تباينًا 2.39:1 فقط (يلزم 3:1 على الأقل) — نفس نمط عطل [class$="-hero"]:
+   قيمة متغيّر تتبدّل بين السمتين بينما يبقى اللون المقابل لها ثابتًا. */
+html[data-theme="dark"] .ds-section__title,
+html[data-theme="dark"] .lessons-v2-section__title,
+html[data-theme="dark"] .lessons-past-section__title,
+html[data-theme="dark"] .cards-page-title,
+html[data-theme="dark"] .search-page-title,
+html[data-theme="dark"] .hadith-section-title,
+html[data-theme="dark"] .fiqh-council-section-title,
+html[data-theme="dark"] .qa-v2-section-title,
+html[data-theme="dark"] .kuwait-lessons-section-title,
+html[data-theme="dark"] .profile-section-title,
+html[data-theme="dark"] .user-stats-section__title,
+html[data-theme="dark"] .admin-section-title,
+html[data-theme="dark"] .fm-section-title,
+html[data-theme="dark"] .rp-section-title {
+  color: #202725 !important;
+}
+
 /* إلغاء الشخطة الزخرفية الزمردية تحت عناوين الأقسام */
 .ds-section__head::after {
   display: none !important;
@@ -1022,7 +1044,14 @@ html[data-theme="dark"] .navbar-mobile-login {
   gap: 1rem !important;
 }
 
-.home-section h2,
+/* :not(.ds-section__title) وبقية شارات "عناوين الأقسام" ضروري هنا: أي عنوان
+   شارة (نص أبيض/خلفية خضراء داكنة، القاعدة أدناه §4c) يقع أيضًا داخل حاوية
+   .home-section (كما في HomeFeaturedLibrary — "المكتبة العلمية") يطابق
+   `.home-section h2` بتخصيص (0,1,1) أعلى من التخصيص الفعلي (0,1,0) لقاعدة
+   الشارة عند غياب سلف .page-shell، فيهزم لون الشارة الأبيض المقصود ويترك نصًا
+   داكنًا فوق خلفية خضراء داكنة (تباين ~1.27:1، نفس نمط عطل [class$="-hero"]:
+   قاعدة عامة تفترض سياقًا خاطئًا بسبب استثناء ناقص). */
+.home-section h2:not(.ds-section__title):not(.lessons-v2-section__title):not(.lessons-past-section__title):not(.cards-page-title):not(.search-page-title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title),
 .ds-section__title {
   font-size: clamp(1.125rem, 3vw, 1.375rem) !important;
   font-weight: 800 !important;
@@ -7023,6 +7052,14 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
   font-weight: 600;
   color: var(--twh-hub-clr, #28584D);
   letter-spacing: 0.04em;
+}
+/* شارة "٨ مسائل" (.twh-hub-card__badge) بمحاذاة flex-start تبدأ من أعلى
+   الصف مباشرة (بعد padding البطاقة 1rem)، بينما "أنت هنا" فوقها المطلق
+   (top:.5rem) يمتد فعليًا حتى ~1.37rem — فيتداخل الاثنان بصريًا في البطاقة
+   الحالية تحديدًا (شُخِّص 2026-07-19 عبر كاشف تراكب نصوص آلي حي). هامش
+   علوي كافٍ للشارة في هذه الحالة فقط يفصلهما دون تغيير أي بطاقة أخرى. */
+.twh-hub-card--current .twh-hub-card__badge {
+  margin-top: 0.9rem;
 }
 /* --twh-hub-clr مضبوط inline لكل بطاقة (لون تصنيف مختلف)، على خلفية بطاقة
    داكنة موحّدة #173D35 في الوضع الليلي — لون فئة داكن (--twh-hub-clr) فوق
@@ -29863,7 +29900,12 @@ html[data-theme="dark"] .page-soft-tag {
    خلفية بيضاء ثابتة (#F9FAFB) لا تتحول للداكن مع السمة الليلية (تصميم
    مقصود لصفحة أحكام الجنازة)، فتفرض هذه القاعدة العامة نصًّا شبه أبيض
    فوق خلفية شبه بيضاء (تباين ~1:1، شُخِّص 2026-07-19). */
-html[data-theme="dark"] h1, html[data-theme="dark"] h2:not(.jnz-subtitle):not(.jnz-related__title),
+/* استثناء عناوين "الشارة" (.ds-section__title وأخواتها) أيضًا: نفس نمط
+   استثناء .jnz-subtitle أعلاه — بلا هذا الاستثناء تفوز هذه القاعدة العامة
+   (تخصيص html+h2+not = أعلى من شارة .page-shell .ds-section__title نفسها)
+   فتُبقي نصًا فاتحًا ثابتًا (#E5F0EC) فوق خلفية --elite-forest التي تصبح
+   فاتحة نسبيًا (#3BAD8A) في الوضع الليلي، فينتج تباين 2.39:1 فقط. */
+html[data-theme="dark"] h1, html[data-theme="dark"] h2:not(.jnz-subtitle):not(.jnz-related__title):not(.ds-section__title):not(.lessons-v2-section__title):not(.lessons-past-section__title):not(.cards-page-title):not(.search-page-title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title),
 html[data-theme="dark"] h3, html[data-theme="dark"] h4 {
   color: #E5F0EC !important;
 }
@@ -30270,8 +30312,16 @@ html[data-theme="dark"] ::-webkit-scrollbar-thumb {
 }
 
 /* ── Touch Target Size (WCAG 2.5.5) ── */
+/* :not(.sg-tab) ضروري: قاعدة "حد أدنى 44px" العامة هذه (!important) كانت
+   تهزم min-width: 4.8rem الخاص بتبويبات دليل الصلاة (.sg-tab في
+   salah-guide.css، مقصودة لتتسع لتسمية سطرين تحت الأيقونة مثل "المبطلات
+   والمكروهات")، فتُجبر التبويب على الانكماش إلى 44px بينما تسمية النص
+   (white-space: nowrap) تبقى بعرضها الطبيعي الأكبر فتفيض خارج حدود
+   التبويب وتتداخل مع تسميات التبويبات المجاورة (تشابك نصوص حقيقي،
+   شُخِّص 2026-07-19 عبر Playwright حي). 4.8rem=76.8px أكبر من 44px أصلاً
+   فلا يخالف WCAG 2.5.5 — توسعة الحد الأدنى مطابقة، لا تجاوز له. */
 @media (max-width: 768px) {
-  button:not([class*="navbar"]):not([class*="bottom-nav"]),
+  button:not([class*="navbar"]):not([class*="bottom-nav"]):not(.sg-tab),
   a[class*="btn"],
   [role="button"],
   .filter-chip,

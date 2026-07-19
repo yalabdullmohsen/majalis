@@ -34,6 +34,7 @@ import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import { getHijriDateString } from "@/lib/hijri-utils";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerTimesPayload } from "@/lib/prayer-times";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
+import { toArabicDigits } from "@/lib/utils";
 import { HomeCustomizeSheet } from "@/components/home/HomeCustomizeSheet";
 import {
   HOME_WIDGET_DEFS,
@@ -218,11 +219,6 @@ const WIDGET_RENDERERS: Record<string, () => React.ReactNode> = {
 };
 
 const WIDGET_LABEL: Record<string, string> = Object.fromEntries(HOME_WIDGET_DEFS.map((w) => [w.id, w.label]));
-
-const ARABIC_DIGITS = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
-function toArabicDigits(n: number): string {
-  return String(n).replace(/[0-9]/g, (d) => ARABIC_DIGITS[Number(d)]);
-}
 
 function RecentPagesBar() {
   const [pages, setPages] = useState<RecentPage[]>([]);
