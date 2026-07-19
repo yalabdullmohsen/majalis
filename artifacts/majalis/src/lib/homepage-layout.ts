@@ -12,7 +12,7 @@ export type HomeWidgetId =
   | "lessons" | "prayer" | "continue" | "daily-progress" | "week-streak"
   | "asma" | "hadith" | "sunnah-time" | "explore" | "learning-seasons"
   | "occasions" | "latest-updates" | "library" | "quiz" | "daily-corner"
-  | "prayer-ranks" | "interesting-topics" | "mind-map";
+  | "prayer-ranks" | "interesting-topics" | "mind-map" | "daily-benefits";
 
 /* ترتيب افتراضي مطابق لتسلسل أقسام الرئيسية السبعة بالتكليف (إعادة هيكلة
    الرئيسية، 2026-07-19): بطاقة يومية+إجراءات سريعة (ثابتان أعلى الصفحة،
@@ -31,6 +31,7 @@ export const HOME_WIDGET_DEFS: { id: HomeWidgetId; label: string }[] = [
   { id: "hadith", label: "حديث اليوم" },
   { id: "asma", label: "اسم الله اليومي" },
   { id: "daily-corner", label: "الركن اليومي" },
+  { id: "daily-benefits", label: "فوائد منتقاة" },
   { id: "library", label: "المكتبة العلمية" },
   { id: "lessons", label: "الدروس والدورات" },
   { id: "quiz", label: "المسابقة" },

@@ -11,6 +11,7 @@ import { HomeCompactPrayer } from "@/components/home/HomeCompactPrayer";
 import { HomeAboutSection } from "@/components/home/HomeAboutSection";
 import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
 import { HomeDailyCorner } from "@/components/home/HomeDailyCorner";
+import { HomeDailyBenefits } from "@/components/home/HomeDailyBenefits";
 import { HomeSunnahByTime } from "@/components/home/HomeSunnahByTime";
 import { HomeSawmReminder } from "@/components/home/HomeSawmReminder";
 import { HomeIslamicOccasions } from "@/components/home/HomeIslamicOccasions";
@@ -166,6 +167,7 @@ const FEATURE_CATS: FeatureCat[] = [
     label: "القرآن الكريم",
     items: [
       { href: "/quran-hub",            Icon: BookMarked, title: "مركز القرآن",       desc: "جميع أقسام القرآن في مكان واحد" },
+      { href: "/quran/recitation-test-ai", Icon: Bot,    title: "اختبار التسميع بالذكاء الاصطناعي", desc: "سمّع من حفظك واستمع لتلاوتك لحظيًا" },
       { href: "/quran/surah-stories",  Icon: Star,       title: "قصص القرآن",        desc: "أسباب النزول و١١٤ سورة" },
       { href: "/quran/tajweed",        Icon: Mic2,       title: "علم التجويد",        desc: "أحكام التجويد الشاملة" },
       { href: "/ulum-quran",           Icon: GraduationCap, title: "علوم القرآن",      desc: "النزول والجمع والإعجاز والتفسير" },
@@ -209,6 +211,7 @@ const WIDGET_RENDERERS: Record<string, () => React.ReactNode> = {
   "library": () => <HomeFeaturedLibrary />,
   "quiz": () => <HomeQuizCard />,
   "daily-corner": () => <HomeDailyCorner />,
+  "daily-benefits": () => <HomeDailyBenefits />,
   "prayer-ranks": () => <HomePrayerRanks />,
   "interesting-topics": () => <HomeInterestingTopics />,
   "mind-map": () => <HomeMindMapSection />,
@@ -748,8 +751,13 @@ export default function HomePage() {
                 <Ico size={14} strokeWidth={2} />
               </span>
               <div style={{ minWidth: 0 }}>
-                <div style={{ color: "#202725", fontSize: "0.77rem", fontWeight: 700, lineHeight: 1.25 }}>{label}</div>
-                <div style={{ color: "#9ca3af", fontSize: "0.66rem", lineHeight: 1.3, marginTop: 1 }}>{desc}</div>
+                {/* لون ثابت (#202725/#9ca3af) لا يتكيّف مع السمة الليلية — بطاقة
+                    "وصول سريع" تتحول خلفيتها للداكن في الوضع الليلي (قاعدة
+                    CSS منفصلة) بينما بقي النص هنا داكنًا ثابتًا = شبه غير
+                    مقروء (تباين ~1:1، شُخِّص 2026-07-19). متغيّرات CSS تعمل
+                    داخل style inline في React وتتكيّف تلقائيًا مع السمة. */}
+                <div style={{ color: "var(--majalis-ink, #202725)", fontSize: "0.77rem", fontWeight: 700, lineHeight: 1.25 }}>{label}</div>
+                <div style={{ color: "var(--majalis-ink-soft, #9ca3af)", fontSize: "0.66rem", lineHeight: 1.3, marginTop: 1 }}>{desc}</div>
               </div>
             </Link>
           ))}

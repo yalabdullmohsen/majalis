@@ -17,6 +17,10 @@ export type TrustedLessonSource = {
   last_success_at?: string;
   failure_count?: number;
   last_error?: string;
+  content_types_allowed?: string[];
+  default_attribution_name?: string | null;
+  default_organization_name?: string | null;
+  attribute_to_person?: boolean;
 };
 
 export type AutomationAuditRecord = {

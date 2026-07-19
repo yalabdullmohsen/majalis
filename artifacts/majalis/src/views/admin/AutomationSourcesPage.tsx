@@ -164,6 +164,13 @@ function AutomationSourcesContent() {
                     \u0622\u062e\u0631 \u0641\u062d\u0635: {formatDt(s.last_checked_at)} \u00b7 \u0646\u062c\u0627\u062d: {formatDt(s.last_success_at)} \u00b7 \u0623\u062e\u0637\u0627\u0621: {s.failure_count ?? 0}
                   </p>
                   {s.last_error && <p className="asp-card-error">{s.last_error}</p>}
+                  {Boolean(s.content_types_allowed?.length) && (
+                    <p className="asp-card-meta">
+                      أنواع مسموحة: {(s.content_types_allowed || []).join("، ")}
+                      {s.default_attribution_name ? ` · ينسب لـ: ${s.default_attribution_name}` : ""}
+                      {s.default_organization_name ? ` · الجهة: ${s.default_organization_name}` : ""}
+                    </p>
+                  )}
                   <InstagramManualAssistPanel source={s} onDone={load} />
                 </div>
                 <div className="asp-card-actions">

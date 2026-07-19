@@ -32,6 +32,10 @@ import type { PlayerState } from "@/hooks/useAyahPlayer";
  * لا يزال غير مُنفَّذ عمدًا (بلا مصدر is_approved محلي تحقَّقت منه): "أسباب
  * نزول ومعاني كلمات" — موثَّق في التقرير النهائي كعمل متبقٍ، لا زرًا
  * معطَّلًا وهميًا.
+ *
+ * ملاحظة دمج: يستخدمه MushafPage.tsx (قارئ /mushaf التقليدي بالسورة).
+ * قارئ الصفحات /mushaf/page (MushafPageView.tsx) يستخدم مكوّنًا منفصلًا
+ * بواجهة props مختلفة تمامًا: PageAyahActionSheet.tsx.
  */
 type Props = {
   surahNumber: number;

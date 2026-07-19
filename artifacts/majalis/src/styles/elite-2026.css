@@ -166,19 +166,44 @@ body {
   font-size: 0.72rem !important;
 }
 
-/* Search command button */
+/* زر البحث في الشريط العلوي — أيقونة عدسة حقيقية (Lucide Search)، بلا حرف
+   K وبلا مربع اختصار لوحة المفاتيح ظاهر بصريًا (الاختصار Ctrl/Cmd+K يبقى
+   فعالاً عبر مستمع مستقل في App.tsx). مساحة لمس ≥44×44px على الجوال
+   (أيقونة فقط)، أيقونة + كلمة "بحث" على الشاشات الأوسع (>640px عبر
+   .navbar-search-hint في index.css)، بنفس منطق ونمط زر القائمة
+   (.navbar-menu-btn) وزر الوضع الداكن (.navbar-theme-toggle) لاتساق بصري. */
 .navbar-search-cmd {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.4rem !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
   background: var(--elite-off-white, #F5F5F4) !important;
   border: 1px solid var(--elite-border, rgba(0,0,0,0.07)) !important;
   color: var(--elite-ink-muted, #6B6B6B) !important;
   border-radius: var(--elite-r-md) !important;
   padding: 0.375rem 0.75rem !important;
+  cursor: pointer !important;
   transition: all var(--elite-fast) var(--elite-ease) !important;
 }
 .navbar-search-cmd:hover {
   background: var(--elite-white) !important;
   border-color: var(--elite-border-2) !important;
   box-shadow: var(--elite-shadow-sm) !important;
+}
+.navbar-search-cmd:active {
+  transform: scale(0.97) !important;
+}
+.navbar-search-cmd:focus-visible {
+  outline: 2px solid var(--majalis-emerald-deep, #173D35) !important;
+  outline-offset: 2px !important;
+}
+@media (min-width: 641px) {
+  .navbar-search-cmd {
+    min-width: auto !important;
+    min-height: 36px !important;
+  }
 }
 
 /* Night mode toggle button */
@@ -253,24 +278,9 @@ html[data-theme="dark"] .navbar-mobile-login {
 .navbar-search-cmd svg {
   color: var(--elite-ink-muted) !important;
 }
-.navbar-search-kbd {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: inherit;
-  font-size: 0.6rem;
-  font-weight: 700;
-  line-height: 1;
-  padding: 0.15rem 0.35rem;
-  border: 1px solid var(--elite-border-2, rgba(0,0,0,0.14));
-  border-bottom-width: 2px;
-  border-radius: 4px;
-  background: var(--elite-white, #FFFFFF);
-  color: var(--elite-ink-muted, #929995);
-  letter-spacing: 0.03em;
-  margin-inline-start: 2px;
-  opacity: 0.75;
-}
+/* .navbar-search-kbd (حرف K + مربع الاختصار) أُزيل نهائيًا من العرض بطلب
+   صريح — لم يعد يُستخدَم في NavBar.tsx، وحُذفت قاعدته هنا معه (كان سيبقى
+   CSS ميتًا بلا فائدة). الاختصار Ctrl/Cmd+K نفسه لا يزال فعالاً (App.tsx). */
 
 /* ── Navbar menu button — يُلغي الحدود الذهبية من majalis-v2.css ── */
 .navbar-menu-btn,
@@ -728,6 +738,14 @@ html[data-theme="dark"] .navbar-mobile-login {
   --txt-secondary:         rgba(255,255,255,0.70);
   color: #fff;
 }
+/* ملاحظة 2026-07-19 (مُصحَّحة): مُحاولة أولى غيّرت --elite-forest نفسه هنا
+   إلى #7ED4B5 — تراجعتُ عنها فورًا لأن نفس المتغيّر يُستخدَم أيضًا كخلفية
+   لهذه البطاقات بالذات (.home-main--v3 .hmm-card/.ds-quiz-home-card
+   { background: var(--elite-forest) })، فأصبحت الخلفية فاتحة (#7ED4B5)
+   بدل الداكنة الأصلية (#173D35) — عطل جديد (بطاقة فاتحة + نص فاتح = غير
+   مقروء) أسوأ من الأصلي. الإصلاح الصحيح أدناه بدلاً من ذلك: استثناء
+   .hnh__title/.ds-quiz-home-card__title من القاعدة العامة
+   `[class*="card"] h*` (نفس نمط .sq-title). */
 
 /* ② فرض الأبيض على عناصر p (لتجاوز قاعدة p { !important } العامة)
    sawm-reminder مُدرج هنا لأن خلفيته داكنة لكنه لم يكن ضمن ① */
@@ -1452,6 +1470,69 @@ body > #root > div {
   font-size: 0.78rem; font-weight: 600;
   color: rgba(255,255,255,0.6) !important;
 }
+
+/* ══════════════════════════════════════════════
+   §24.5 «فوائد منتقاة» — بطاقات الفوائد المستوردة من مصادر Instagram
+   المعتمدة، بعد اعتماد بشري فقط. مطابقة لهوية بطاقات الرئيسية القائمة
+   (ui-card/page-tag)، بلا هوية بصرية جديدة.
+   ══════════════════════════════════════════════ */
+.dmb__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.85rem;
+}
+.dmb__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem !important;
+  min-height: 0;
+}
+.dmb__card-media {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--elite-r-md, 10px);
+  overflow: hidden;
+  background: var(--elite-border, rgba(0,0,0,0.06));
+}
+.dmb__card-media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.dmb__badge {
+  align-self: flex-start;
+  font-size: 0.72rem; font-weight: 700;
+  padding: 0.2rem 0.65rem;
+  border-radius: 2rem;
+  background: color-mix(in srgb, var(--elite-forest, #173D35) 10%, transparent);
+  color: var(--elite-forest, #173D35) !important;
+}
+.dmb__text {
+  font-size: 0.92rem; line-height: 1.7;
+  color: var(--elite-ink, #202725) !important;
+  margin: 0;
+  /* لا اقتصاص يشوّه المعنى — 2-4 أسطر ظاهرة، والبقية عبر رابط المصدر. */
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.dmb__meta {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 0.5rem; flex-wrap: wrap;
+  font-size: 0.76rem;
+  color: var(--elite-muted, #6b7280) !important;
+}
+.dmb__speaker { font-weight: 600; }
+.dmb__source-btn {
+  align-self: flex-start;
+  font-size: 0.8rem; font-weight: 600;
+  color: var(--elite-forest, #173D35) !important;
+  text-decoration: none;
+  margin-top: 0.15rem;
+}
+.dmb__source-btn:hover { text-decoration: underline; }
 
 /* ══════════════════════════════════════════════
    §25. Forms — نماذج الإدخال
@@ -2875,6 +2956,12 @@ button.primary:hover {
   font-size: 0.9rem !important;
 }
 .notif-row__sub { color: var(--elite-ink-soft, #4A5568) !important; font-size: 0.78rem !important; }
+/* لا يوجد استثناء للوضع الليلي هنا أصلاً (شُخِّص 2026-07-19) — الصف يقع
+   داخل حاوية "-card" تتحول خلفيتها لأخضر داكن #173D35 في الوضع الليلي
+   (قاعدة "Cards dark" العامة)، بينما يبقى النص #173D35 نفسه = 1:1. */
+html[data-theme="dark"] .notif-row__label {
+  color: #E5F0EC !important;
+}
 
 /* التبديل */
 .notif-toggle {
@@ -5997,7 +6084,10 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
 .ads-gov-select { border: 1.5px solid var(--msk-border); border-radius: 0.625rem; padding: 0.35rem 0.75rem; font-size: 0.875rem; font-weight: 600; color: var(--msk-text); background: var(--msk-canvas); font-family: inherit; cursor: pointer; min-width: 130px; }
 .ads-sunrise-inner { display: flex; align-items: center; gap: 0.4rem; color: var(--msk-text); font-size: 0.875rem; font-weight: 600; }
 .ads-sunrise-tag { font-size: 0.7rem; font-weight: 400; color: var(--msk-text-3); background: var(--msk-canvas-2); border-radius: 999px; padding: 0.1rem 0.4rem; }
-.ads-sunrise-time { font-size: 0.875rem; font-weight: 700; color: #173D35; font-variant-numeric: tabular-nums; }
+/* color كان #173D35 ثابتًا (غير مرتبط بالسمة) — يبقى أخضر داكن فوق بطاقة
+   خضراء داكنة في الوضع الليلي (تباين 1:1، شُخِّص 2026-07-19). var(--msk-text)
+   نفس المتغيّر المُستخدَم فعلاً في .ads-sunrise-inner المجاورة مباشرة. */
+.ads-sunrise-time { font-size: 0.875rem; font-weight: 700; color: var(--msk-text, #173D35); font-variant-numeric: tabular-nums; }
 
 /* ─ Adhan section ─ */
 .ads-adhan-desc { font-size: 0.78rem; color: var(--msk-text-2); margin-bottom: 0.75rem; }
@@ -6933,6 +7023,13 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
   font-weight: 600;
   color: var(--twh-hub-clr, #28584D);
   letter-spacing: 0.04em;
+}
+/* --twh-hub-clr مضبوط inline لكل بطاقة (لون تصنيف مختلف)، على خلفية بطاقة
+   داكنة موحّدة #173D35 في الوضع الليلي — لون فئة داكن (--twh-hub-clr) فوق
+   بطاقة داكنة يُنتج تباينًا شبه معدوم (شُخِّص 2026-07-19). لون فاتح ثابت
+   يضمن القراءة بصرف النظر عن لون الفئة. */
+html[data-theme="dark"] .twh-hub-card__current-tag {
+  color: #7ED4B5 !important;
 }
 
 /* Jump nav */
@@ -9962,11 +10059,21 @@ html[data-theme="dark"] .fiqh-hub-strip__tab {
 html[data-theme="dark"] .tj-related-link {
   color: #E5F0EC !important;
 }
-/* خلفيته الفعلية غير متّسقة بين عناصر هذه القائمة (بعضها فاتح شبه شفاف،
-   بعضها داكن — لم أُشخِّص السبب) فلا يوجد لون نص واحد يناسب الكل؛ فاتح
-   يناسب الأغلبية (الحاوية الداكنة الطبيعية للوضع الليلي). */
+/* السبب الحقيقي (شُخِّص 2026-07-19 عبر تدقيق تباين آلي حي): index.css
+   يضبط background:#fff صريحة وغير مشروطة على .fiqh-council-subnav-link
+   (سطر ~11451) بلا أي استثناء للوضع الليلي — فتبقى الخلفية بيضاء بينما
+   النص يتحوّل هنا للفاتح، فينتج نص شبه أبيض فوق خلفية بيضاء (تباين
+   1.17:1). الإصلاح: خلفية داكنة شفافة صريحة هنا تطابق نمط أزرار القائمة
+   الأخرى في الوضع الليلي، بدل ترك #fff الأصلية تتسرب. */
 html[data-theme="dark"] .fiqh-council-subnav-link {
   color: #E5F0EC !important;
+  background: rgba(255,255,255,0.06) !important;
+  border-color: rgba(92,196,154,.18) !important;
+}
+html[data-theme="dark"] .fiqh-council-subnav-link:hover,
+html[data-theme="dark"] .fiqh-council-subnav-link--active {
+  background: rgba(92,196,154,.16) !important;
+  border-color: rgba(92,196,154,.32) !important;
 }
 /* خلفية .lesson-unified-card__btn--primary (var(--color-primary)) تتحول
    لـ#059669 (Emerald 600) في سياقات مختلفة — نفس اللون الذي فشل تباينه
@@ -14980,6 +15087,27 @@ html[data-theme="dark"] .tj-cat-badge { color: #8BABA3 !important; }
   margin-top: 0.5rem;
 }
 
+/* بطاقة مميَّزة — تبرز بصريًا عن بقية الشبكة بدل الاندماج فيها (مثال: اختبار التسميع بالذكاء الاصطناعي) */
+.quran-hub-card--featured {
+  grid-column: span 2;
+  border: 2px solid #C9A227;
+  box-shadow: 0 6px 24px rgba(201,162,39,.28);
+}
+.quran-hub-card--featured:hover {
+  box-shadow: 0 10px 32px rgba(201,162,39,.4);
+  border-color: #C9A227;
+}
+.quran-hub-card--featured .quran-hub-card__header {
+  background: linear-gradient(135deg, #176B57, #0E4A3D);
+}
+.quran-hub-card--featured .quran-hub-card__tag {
+  background: #C9A227;
+  color: #1A1400;
+}
+@media (max-width: 640px) {
+  .quran-hub-card--featured { grid-column: span 1; }
+}
+
 /* Features */
 .quran-hub-features {
   max-width: 72rem;
@@ -15056,12 +15184,26 @@ html[data-theme="dark"] .tj-cat-badge { color: #8BABA3 !important; }
    قسم)، فتحتاج نصًا أبيض لا زمرديًا داكنًا (كانت تُنتج نصًّا داكنًا فوق
    خلفية داكنة — غير مقروء تقريبًا، 2026-07-17). */
 .bg-white h1, .bg-white h2, .bg-white h3, .bg-white h4,
-[class*="card"] h1:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title),
-[class*="card"] h2:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title),
-[class*="card"] h3:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title),
-[class*="card"] h4:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title) {
+[class*="card"] h1:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title),
+[class*="card"] h2:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title),
+[class*="card"] h3:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title),
+[class*="card"] h4:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title) {
   color: var(--elite-forest, #052E16) !important;
 }
+/* استثناء .sq-title (عنوان SectionQuiz، h2 داخل .sq-header الداكن — «اختبر
+   معلوماتك...») — تدقيق تباين آلي حي (2026-07-19) وجد هذه القاعدة العامة
+   (تخصيص أعلى بسبب ثلاثة :not() سابقة) تهزم .sq-header .sq-title{color:#fff}
+   الصحيحة أصلاً، فيظهر نص أخضر داكن فوق شريط عنوان أخضر داكن — شبه معدوم
+   التباين (1:1) في /cards و/quran/surah-stories.
+
+   استثناء .hnh__title/.ds-quiz-home-card__title/.home-library-card__title
+   (عناوين h2/h3 داخل بطاقات .ui-card/.ds-quiz-home-card/.home-library-card
+   الداكنة في الرئيسية) — نفس السبب بالضبط: القاعدة العامة أعلاه (!important)
+   تهزم `.home-main--v3 .ui-card h1..h6 {color:#fff}` (بلا !important) رغم
+   أنها الأدق منطقيًا لهذا السياق. (home-library-card__title أُضيف صنفه
+   هنا أولاً — لم يكن موجودًا). محاولة سابقة أصلحت هذا عبر إعادة تعريف
+   --elite-forest نفسه، لكن تراجعتُ عنها لأنها أفسدت خلفية البطاقة (المتغيّر
+   نفسه يُستخدَم أيضًا كخلفية لهذه البطاقات) — الاستثناء المباشر هنا أسلم. */
 
 /* النصوص الثانوية على البيضاء — رمادي داكن وليس رمادياً فاتحاً */
 .bg-white .text-gray-400,
@@ -25483,11 +25625,6 @@ html[data-theme="dark"] .navbar-search-cmd:hover {
   background: #173D35 !important;
   border-color: rgba(92,196,154,.22) !important;
 }
-html[data-theme="dark"] .navbar-search-kbd {
-  background: #173D35 !important;
-  border-color: rgba(92,196,154,.15) !important;
-  color: #6E8E84 !important;
-}
 html[data-theme="dark"] .navbar-prayer-chip {
   background: rgba(92,196,154,.08) !important;
   border-color: rgba(92,196,154,.15) !important;
@@ -25518,10 +25655,14 @@ html[data-theme="dark"] .side-nav-link--v2.is-active {
   color: #5CC49A !important;
 }
 
-/* Cards dark */
+/* Cards dark — استثناء .twh-hub-card__current-tag: شارة صغيرة "أنت هنا"
+   اسم صنفها يحوي السلسلة الفرعية "-card" مصادفةً (twh-HUB-CARD__current-tag)
+   رغم أنها ليست حاوية بطاقة أصلاً، فتكتسب خلفية داكنة #173D35 هنا تطابق
+   لون نصها الافتراضي (--twh-hub-clr، أخضر داكن) بالضبط — تباين 1:1 (شُخِّص
+   عبر تدقيق آلي حي 2026-07-19). */
 html[data-theme="dark"] .card,
-html[data-theme="dark"] [class*="-card"],
-html[data-theme="dark"] [class*="__card"] {
+html[data-theme="dark"] [class*="-card"]:not(.twh-hub-card__current-tag),
+html[data-theme="dark"] [class*="__card"]:not(.twh-hub-card__current-tag) {
   background: #173D35 !important;
   border-color: rgba(92,196,154,.10) !important;
 }
@@ -29177,9 +29318,13 @@ a:hover { color: var(--clr-primary-hov, #28584D); }
 
 /* ② الحاويات الداكنة المعروفة: كل بطاقات «مسألة/فائدة اليوم»
    (تشترك في تدرّج أخضر داكن واحد) وكل رؤوس الصفحات (heroes)
-   — تم التحقق أنّ جميعها ذات خلفيات داكنة. */
+   — تم التحقق أنّ جميعها ذات خلفيات داكنة، باستثناء الأصناف المُستثناة
+   أدناه (heroes بخلفية فاتحة فعليًا تطابق [class$="-hero"] عن طريق
+   تسمية الصنف فقط — تدقيق تباين آلي حي 2026-07-19 أثبت أن استثناءها
+   هنا عند المصدر هو الإصلاح الموثوق فعليًا، لا محاولات تجاوزها لاحقًا
+   بقواعد !important تنافسية كانت تفشل أحيانًا حسب ترتيب حقن CSS). */
 [class$="od-card"],
-[class$="-hero"],
+[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.dvp-hero):not(.sch-profile-hero):not(.accd-hero),
 .an-today__card {
   --clr-text-1:            var(--text-on-dark);
   --clr-text:              var(--text-on-dark);
@@ -29705,15 +29850,33 @@ html[data-theme="dark"] .page-soft-tag {
   color: #8BABA3 !important;
   border-color: rgba(255,255,255,.08) !important;
 }
-html[data-theme="dark"] h1, html[data-theme="dark"] h2,
+/* استثناء .jnz-subtitle/.jnz-related__title: صفحة /janaza (.jnz-page) لها
+   خلفية بيضاء ثابتة (#F9FAFB) لا تتحول للداكن مع السمة الليلية (تصميم
+   مقصود لصفحة أحكام الجنازة)، فتفرض هذه القاعدة العامة نصًّا شبه أبيض
+   فوق خلفية شبه بيضاء (تباين ~1:1، شُخِّص 2026-07-19). */
+html[data-theme="dark"] h1, html[data-theme="dark"] h2:not(.jnz-subtitle):not(.jnz-related__title),
 html[data-theme="dark"] h3, html[data-theme="dark"] h4 {
   color: #E5F0EC !important;
+}
+/* استبعادهما أعلاه من القانون العام يُعيدهما لقاعدتيهما الأصليتين
+   (.jnz-subtitle تستخدم var(--majalis-emerald)، أخضر واعٍ بالسمة يتحول
+   لأخضر فاتح في الوضع الليلي — مناسب لخلفية داكنة، لكن خلفية .jnz-page
+   تبقى بيضاء ثابتة، فينتج أخضر فاتح على أبيض تقريبًا (2.05:1). لون أخضر
+   داكن ثابت هنا (لا واعٍ بالسمة) هو المناسب فعليًا لهذه الصفحة تحديدًا. */
+html[data-theme="dark"] .jnz-subtitle,
+html[data-theme="dark"] .jnz-related__title {
+  color: #173D35 !important;
 }
 /* الروابط ذات خلفية ملوَّنة خاصة بها (تبويبات/أزرار نشطة) تحتفظ بلون نصها
    المقصود — وإلا فاز هذا القانون العام بالأسبقية (0,1,1 > 0,1,0) فأنتج
    نصًّا بلون الخلفية نفسه (أخضر على أخضر)، كما ظهر في fiqh-hub-strip__tab--active
-   على الوضع الليلي (2026-07-16). */
-html[data-theme="dark"] a:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab):not(.quran-subnav__link):not(.page-action-btn):not(.fiqh-hub-strip__tab):not(.tj-related-link):not(.lesson-unified-card__btn--primary):not(.fiqh-council-subnav-link) { color: #3BAD8A !important; }
+   على الوضع الليلي (2026-07-16). تدقيق تباين آلي حي (2026-07-19) وجد نفس
+   العطل بالضبط في سبعة أزرار/روابط إضافية لم تكن مستثناة: .btn-primary،
+   .dvp-btn (صفحة المطوّرين)، .hadith-books-banner__btn, .lqp2-btn،
+   .citation-btn--primary (حذف الحساب/مقارنة الجامعات)، .ar-contribute-banner__btn،
+   .lsw-featured__cta — كلها أزرار CTA بخلفية خضراء خاصة بها فقدت لون
+   نصها المقصود (أبيض/داكن) لنفس السبب بالضبط. */
+html[data-theme="dark"] a:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab):not(.quran-subnav__link):not(.page-action-btn):not(.fiqh-hub-strip__tab):not(.tj-related-link):not(.lesson-unified-card__btn--primary):not(.fiqh-council-subnav-link):not(.btn-primary):not(.btn--primary):not(.ds-btn--primary):not(.dvp-btn):not(.hadith-books-banner__btn):not(.lqp2-btn):not(.citation-btn--primary):not(.ar-contribute-banner__btn):not(.lsw-featured__cta) { color: #3BAD8A !important; }
 html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab) { color: #4DC09A !important; }
 
 /* ════════════════════════════════════
@@ -30515,8 +30678,8 @@ footer *,
 .page-hero-wrap *,
 [class*="page-header"][class*="dark"],
 [class*="page-header"][class*="dark"] *,
-[class$="-hero"],
-[class$="-hero"] *,
+[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.dvp-hero):not(.sch-profile-hero):not(.accd-hero),
+[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.dvp-hero):not(.sch-profile-hero):not(.accd-hero) *,
 .dark-section,
 .dark-section *,
 .dark-bg,
@@ -30945,7 +31108,11 @@ html[data-theme="dark"] .site-footer * {
 /* ══════════════════════════════════════════════════════════════════════════════
    §79 — نص أبيض على جميع الخلفيات الخضراء الداكنة (بدون استثناء)
    ══════════════════════════════════════════════════════════════════════════════ */
-/* §79 — نص أبيض على جميع الخلفيات الخضراء الداكنة (446 محدِّد) */
+/* §79 — نص أبيض على جميع الخلفيات الخضراء الداكنة (446 محدِّد)
+   ملاحظة 2026-07-19: .seerah-panel__topic حُذفت من هذه القائمة — شارة/رقاقة
+   (chip) بخلفيتها الشفافة الخاصة (color-mix مبني على --panel-color)، لا
+   بانر أخضر داكن صريح، فأنتج فرض الأبيض هنا نصًّا أبيض شبه غير مرئي فوق
+   رقاقة فاتحة (تباين 1.00:1، شُخِّص عبر تدقيق آلي حي). */
 .ds-page-header,
 .page-shell .ds-section__title,
 .page-shell .lessons-v2-section__title,
@@ -31292,7 +31459,6 @@ button.primary,
 .seerah-back-link:hover,
 .seerah-prophets-banner__link:hover,
 .seerah-timeline__item--active .seerah-timeline__dot,
-.seerah-panel__topic,
 .seerah-panel__share:hover,
 .prophets-lux-hero,
 .prophets-seerah-bridge,

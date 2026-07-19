@@ -13,6 +13,10 @@ import { readFileSync, writeFileSync } from "node:fs";
 const baseUrl = process.argv[2] || "http://localhost:5178";
 const routesFile = process.argv[3];
 const outJson = process.argv[4] || "/tmp/contrast-audit-report.json";
+// عرض نافذة قابل للتخصيص عبر VIEWPORT_W/VIEWPORT_H (افتراضيًا 390×844 —
+// هاتف — كما كان السلوك الأصلي قبل هذا التعديل، للحفاظ على التوافق).
+const viewportWidth = Number(process.env.VIEWPORT_W) || 390;
+const viewportHeight = Number(process.env.VIEWPORT_H) || 844;
 
 const routes = readFileSync(routesFile, "utf8").split("\n").map((l) => l.trim()).filter(Boolean);
 
@@ -104,7 +108,7 @@ const SCAN_FN = `() => {
 }`;
 
 const browser = await chromium.launch();
-const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+const page = await browser.newPage({ viewport: { width: viewportWidth, height: viewportHeight } });
 
 const allProblems = [];
 let i = 0;

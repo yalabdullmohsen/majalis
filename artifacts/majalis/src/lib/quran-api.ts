@@ -33,6 +33,8 @@ export type Ayah = {
   text: string;
   juz: number;
   page: number;
+  /** ربع الحزب (1–240 عبر كامل المصحف) — من public/data/quran المحلي فقط؛ قد يغيب من نتائج الـAPI الحي. */
+  hizbQuarter?: number;
   surahNumber?: number;
   sajda: boolean | { id: number; recommended: boolean; obligatory: boolean };
 };
@@ -549,4 +551,33 @@ export function loadPosition(): { surah: number; ayah: number } | null {
   } catch {
     return null;
   }
+}
+
+// ─── Page-view position persistence (وضع "الصفحة" الحقيقي) ────────────────
+const PAGE_POS_KEY = "mj-quran-page-pos-v1";
+
+export function savePagePosition(page: number) {
+  try {
+    localStorage.setItem(PAGE_POS_KEY, JSON.stringify({ page, at: Date.now() }));
+  } catch {
+    // ignore
+  }
+}
+
+export function loadPagePosition(): number | null {
+  try {
+    const raw = localStorage.getItem(PAGE_POS_KEY);
+    if (!raw) return null;
+    const page = Number(JSON.parse(raw)?.page);
+    return Number.isFinite(page) && page >= 1 && page <= 604 ? page : null;
+  } catch {
+    return null;
+  }
+}
+
+/** الجزء/الحزب/الربع من hizbQuarter الخام (1–240 عبر كامل المصحف؛ كل حزب = 4 أرباع، كل جزء = حزبان). */
+export function deriveHizbRub(hizbQuarter: number): { hizb: number; rubInHizb: number } {
+  const hizb = Math.ceil(hizbQuarter / 4);
+  const rubInHizb = ((hizbQuarter - 1) % 4) + 1;
+  return { hizb, rubInHizb };
 }

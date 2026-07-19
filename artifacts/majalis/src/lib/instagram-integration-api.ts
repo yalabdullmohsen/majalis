@@ -51,6 +51,7 @@ export async function runInstagramManualAssist(body: {
   postUrl?: string;
   imageUrl?: string;
   caption?: string;
+  contentType?: "lesson" | "course" | "event" | "benefit" | "announcement";
 }) {
   return postInstagram({ action: "manual-assist", ...body });
 }

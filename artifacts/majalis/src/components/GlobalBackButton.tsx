@@ -12,6 +12,11 @@ export function GlobalBackButton() {
   const [location] = useLocation();
 
   if (location === "/") return null;
+  // /mushaf/page: قارئ غامر بشريط تنقّل سفلي ثابت بعرض الشاشة كاملاً
+  // (z-index أدنى من هذا الزر) يتراكب معه فعليًا — اكتُشف حيًّا أثناء
+  // تحقّق Playwright. الصفحة توفّر زر "رجوع" مكافئًا داخل شريطها العلوي
+  // (راجع MushafPageView.tsx)، فلا فقدان لوظيفة الرجوع.
+  if (location.startsWith("/mushaf/page")) return null;
 
   const goBack = () => {
     if (window.history.length > 1) window.history.back();
