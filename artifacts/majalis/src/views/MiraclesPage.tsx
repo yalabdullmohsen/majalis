@@ -68,14 +68,6 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
   "النجوم": Star, "الدم": Droplets,
 };
 
-const CAT_EMOJIS: Record<string, string> = {
-  "الكون": "🌌", "الفلك": "🔭", "الجبال": "⛰️", "البحار": "🌊",
-  "الأجنة": "🔬", "النبات": "🌿", "الحيوان": "🦋", "الطب": "🩺",
-  "المياه": "💧", "الحديد": "⚙️", "الرياح": "🌬️", "السحاب": "☁️",
-  "الحشرات": "🐝", "الأرض": "🌍", "الزمن": "⏳", "الضوء": "💡",
-  "الجلد": "🧬", "العظام": "🦴", "النجوم": "⭐", "الدم": "🩸",
-};
-
 const MK_SRC_MOD: Record<string, string> = {
   "قرآن": "mk-src--quran",
   "سنة":  "mk-src--sunna",
@@ -191,17 +183,20 @@ export default function MiraclesPage({
             <span>🔍</span>
             <span>الكل</span>
           </button>
-          {(CATEGORIES as readonly string[]).filter(c => c !== "الكل").map((c) => (
-            <button
-              key={c}
-              type="button"
-              onClick={() => setCategory(c)}
-              className={`mk-cat-pill${category === c ? " mk-cat-pill--active" : ""}`}
-            >
-              <span>{CAT_EMOJIS[c] ?? "🔬"}</span>
-              <span>{c}</span>
-            </button>
-          ))}
+          {(CATEGORIES as readonly string[]).filter(c => c !== "الكل").map((c) => {
+            const PillIcon: LucideIcon = CATEGORY_ICONS[c] ?? Microscope;
+            return (
+              <button
+                key={c}
+                type="button"
+                onClick={() => setCategory(c)}
+                className={`mk-cat-pill${category === c ? " mk-cat-pill--active" : ""}`}
+              >
+                <PillIcon size={14} strokeWidth={2} aria-hidden="true" />
+                <span>{c}</span>
+              </button>
+            );
+          })}
         </div>
       </section>
 
@@ -271,7 +266,7 @@ export default function MiraclesPage({
                       <div className="miracle-item__badges">
                         {item.category && (
                           <span className="miracle-item__cat-badge mk-badge">
-                            {CAT_EMOJIS[item.category] ?? "🔬"} {item.category}
+                            <ItemIcon size={11} strokeWidth={2} aria-hidden="true" /> {item.category}
                           </span>
                         )}
                         {item.source_type && (

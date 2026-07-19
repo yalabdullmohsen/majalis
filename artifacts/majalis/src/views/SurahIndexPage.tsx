@@ -170,7 +170,7 @@ export default function SurahIndexPage() {
         <ol className="surah-index-list">
           {filtered.map((s) => (
             <li key={s.number}>
-              <Link href={`/mushaf/${s.number}`} className="surah-index-row">
+              <Link href={`/mushaf/${s.number}`} className="surah-index-row" title={s.description || undefined}>
                 <span className="surah-index-row__num" aria-hidden="true">
                   {sortMode === "revelation" ? s.revelationOrder : s.number}
                 </span>

@@ -20,6 +20,9 @@ export type SurahIndexEntry = {
   /** ترتيب النزول التاريخي (1-114) — بيانات محلية ثابتة، راجع التوثيق
    *  الكامل للمصدر عند REVELATION_ORDER في src/lib/quran-api.ts. */
   revelationOrder: number;
+  /** نبذة موجزة (مكية/مدنية + الموضوع العام) — راجع SURAH_DESCRIPTIONS في
+   *  src/lib/quran-api.ts لمصدر المحتوى وقيوده. */
+  description: string;
 };
 
 type ManifestSurah = { number: number; name: string; englishName: string; numberOfAyahs: number };
@@ -30,7 +33,7 @@ export async function fetchSurahIndexLocal(): Promise<SurahIndexEntry[]> {
   const res = await fetch("/data/quran/manifest.json", { signal: AbortSignal.timeout(8_000) });
   if (!res.ok) throw new Error(`manifest fetch failed: HTTP ${res.status}`);
   const manifest = (await res.json()) as Manifest;
-  const revelationOrderByNumber = new Map(getSurahList().map((s) => [s.number, s.revelationOrder]));
+  const staticByNumber = new Map(getSurahList().map((s) => [s.number, s]));
   return manifest.surahs
     .map((s) => ({
       number: s.number,
@@ -38,7 +41,8 @@ export async function fetchSurahIndexLocal(): Promise<SurahIndexEntry[]> {
       englishName: s.englishName,
       numberOfAyahs: s.numberOfAyahs,
       revelationType: null,
-      revelationOrder: revelationOrderByNumber.get(s.number) ?? 0,
+      revelationOrder: staticByNumber.get(s.number)?.revelationOrder ?? 0,
+      description: staticByNumber.get(s.number)?.description ?? "",
     }))
     .sort((a, b) => a.number - b.number);
 }

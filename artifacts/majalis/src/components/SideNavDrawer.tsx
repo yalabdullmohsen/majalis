@@ -135,7 +135,7 @@ const DRAWER_GROUPS: NavGroup[] = [
         title: "الحديث والسنة",
         items: [
           { href: "/hadith",             label: "الأحاديث النبوية",   Icon: ScrollText,  desc: "موسوعة الأحاديث بالتصنيف" },
-          { href: "/arbaeen-nawawi",     label: "الأربعون النووية",   Icon: FileText,    desc: "٤٠ حديثاً مع شرح وتتبع" },
+          { href: "/hadith/books-and-rulings", label: "كتب الحديث والأحكام", Icon: FileText, desc: "الأربعون النووية وكتب أحكام أخرى" },
           { href: "/hadith-science",     label: "مصطلح الحديث",       Icon: BookOpen,    desc: "السند والمتن والدرجات" },
           { href: "/hikam-salaf",        label: "حكم السلف الصالح",   Icon: BookMarked,  desc: "حِكَم وأقوال العلماء المأثورة" },
           { href: "/wasaya-nabawiyya",   label: "الوصايا النبوية",    Icon: Star,        desc: "خلاصة الوصايا الجامعة" },

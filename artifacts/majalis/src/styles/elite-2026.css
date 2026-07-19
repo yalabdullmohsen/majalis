@@ -30635,11 +30635,21 @@ img:not([src]) {
    يحتوي "ayah" فيُصاد بنفس القاعدة، فيُفرَض "Noto Naskh Arabic" على كل
    حرف/كلمة (يُورَّث font-family للأبناء .mf2-word) بدل خط الصفحة الخاص
    qpc-page-N المضبوط inline على .mf2-line — تحقّقتُ فعليًا عبر Playwright
-   (getComputedStyle) بعد هذا الاستثناء أن الخط الصحيح يُطبَّق فعليًا. */
+   (getComputedStyle) بعد هذا الاستثناء أن الخط الصحيح يُطبَّق فعليًا.
+
+   استثناء .qs-ayah-* إضافي (2026-07-19، اكتُشف أثناء تشخيص شكوى "مسافات
+   مفرطة" على صفحات المصحف): قارئ /mushaf/page/:page (MushafPageView.tsx،
+   quran.css) يستخدم .qs-ayah-inline/.qs-ayah-inline__text/.qs-ayah-num —
+   كلها تحتوي "ayah" فتُصاد بنفس القاعدة، فيُفرَض عليها "Noto Naskh Arabic"
+   بدل var(--font-quran) (Amiri Quran) المضبوط فعليًا على .qs-mushaf-body —
+   عطل من نفس عائلة إصلاح mushaf-v2__ أعلاه، لم يكن مشمولاً باستثنائه لأن
+   بادئة الأصناف هنا مختلفة (qs- لا mushaf-v2__). تحقّقتُ فعليًا عبر
+   Playwright (getComputedStyle) أن fontFamily كان "Noto Naskh Arabic"
+   حرفيًا قبل هذا الاستثناء، وAmiri Quran صحيحًا بعده. */
 .quran-text,
 .ayah-text,
 [class*="quran-verse"],
-[class*="ayah"]:not([class*="mushaf-v2__"]):not([class*="mf2-"]) {
+[class*="ayah"]:not([class*="mushaf-v2__"]):not([class*="mf2-"]):not([class*="qs-ayah"]) {
   font-family: "Noto Naskh Arabic", "Scheherazade New", serif !important;
   font-size: 1.2em !important;
   line-height: 2 !important;
@@ -32857,8 +32867,14 @@ html[data-theme="dark"] .ikm-card__title {
   max-width: 640px;
   margin: 0 auto;
   cursor: default;
-  text-align: justify;
-  text-align-last: center;
+  /* ⚠️ ممنوع text-align:justify هنا (2026-07-19، شكوى "مسافات مفرطة وأقواس
+     مشوهة"): التبرير في CSS يمدّد مسافات الكلمات آليًا (inter-word
+     justification) ليملأ كل سطر العرض الكامل، فينتج تباعدًا غير منتظم بين
+     الكلمات (شديد التفاوت بين سطر وآخر) ويُبعِد بادئة رقم الآية ﴿١﴾ عن
+     النص بمسافة مطّاطة متغيّرة تبدو "مشوَّهة". محاذاة يمين عادية (طبيعية
+     لـRTL) بلا أي تمديد آلي بين الكلمات — تطابق توجيه المهمة الصريح: لا
+     text-align:justify ولا letter-spacing يدوي على نص القرآن. */
+  text-align: right;
 }
 .mushaf-v2__ayah-wrap {
   display: contents;
