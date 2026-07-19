@@ -10,7 +10,9 @@ export function AssistantFloatingWidget() {
   const chat = useAssistantChat();
   const closeRef = useRef<HTMLButtonElement>(null);
 
-  const hiddenOnPage = location === "/assistant" || location.startsWith("/admin");
+  // /mushaf: قارئ غامر مخصَّص (وضع هادئ خاص به) — زر عائم فوق نص المصحف
+  // يكسر تجربة القراءة ويُشعر بأنها صفحة ويب لا تطبيق قراءة مخصَّص.
+  const hiddenOnPage = location === "/assistant" || location.startsWith("/admin") || location.startsWith("/mushaf");
 
   useEffect(() => {
     setOpen(false);
