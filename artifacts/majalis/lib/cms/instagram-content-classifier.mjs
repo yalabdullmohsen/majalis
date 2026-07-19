@@ -58,3 +58,10 @@ export function extractExplicitPersonName(caption = "") {
   const name = match[0].replace(/\s+/g, " ").trim();
   return name.length >= 4 && name.length <= 60 ? name : null;
 }
+
+/** الحسابات الخمسة المعتمدة لخط instagram-multitype-sync.mjs تحديدًا (لا
+ * الحسابات الأقدم التي يديرها lesson-source-monitor.mjs بمعزل تام) —
+ * يُميَّزها وجود اسم نسب افتراضي (شخص أو جهة)، حقل لا تملكه المصادر الأقدم. */
+export function isMultiTypeInstagramSource(source) {
+  return Boolean(source.default_attribution_name || source.default_organization_name);
+}
