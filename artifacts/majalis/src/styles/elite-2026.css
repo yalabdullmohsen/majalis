@@ -32979,6 +32979,12 @@ html[data-theme="dark"] .ikm-card__title {
   cursor: pointer;
   border-radius: .3rem;
   padding: .1rem .15rem;
+  /* تمنع قائمة تحديد/نسخ النص الأصلية من iOS Safari من الظهور فوق ضغطتنا
+     المطوّلة المخصَّصة (فتح لوحة إجراءات الآية) — النسخ متاح من داخل تلك
+     اللوحة نفسها، لا حاجة لتحديد النص يدويًا. */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .mushaf-v2__ayah:hover,
 .mushaf-v2__ayah:focus-visible {
