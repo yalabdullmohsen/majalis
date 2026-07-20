@@ -123,6 +123,16 @@ export async function getQuestionTranslations(questionId: string): Promise<Dawah
   return (data || []) as DawahTranslation[];
 }
 
+export async function getArticleTranslations(articleId: string): Promise<DawahTranslation[]> {
+  const { data, error } = await supabase
+    .from("dawah_translations")
+    .select("lang, title, summary, body, status")
+    .eq("entity_type", "article")
+    .eq("entity_id", articleId);
+  if (error) return [];
+  return (data || []) as DawahTranslation[];
+}
+
 export type NewMuslimDay = {
   id: string;
   day_number: number;
