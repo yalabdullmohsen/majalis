@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { useLanguage } from "@/components/LanguageProvider";
-import { submitDawahContactRequest } from "@/lib/dawah-service";
+import { submitDawahContactRequest, CONTACT_RELIGIONS, type ReligionCode } from "@/lib/dawah-service";
 import "@/styles/discover-islam.css";
 
 export default function DiscoverIslamContactPage() {
@@ -10,6 +10,7 @@ export default function DiscoverIslamContactPage() {
   const [isAnonymous, setIsAnonymous] = useState(true);
   const [name, setName] = useState("");
   const [gender, setGender] = useState<"male" | "female" | "no_preference">("no_preference");
+  const [religion, setReligion] = useState<ReligionCode | "other_religion" | "no_specific" | "prefer_not_to_say">("prefer_not_to_say");
   const [country, setCountry] = useState("");
   const [topic, setTopic] = useState("");
   const [contactMethod, setContactMethod] = useState("email");
@@ -37,6 +38,7 @@ export default function DiscoverIslamContactPage() {
         isAnonymous,
         lang,
         preferredDaeeGender: gender,
+        religiousBackground: religion,
         country: country || undefined,
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         topic,
@@ -81,6 +83,12 @@ export default function DiscoverIslamContactPage() {
           <option value="no_preference">لا تفضيل لجنس الداعية</option>
           <option value="male">أفضّل التحدث مع داعية</option>
           <option value="female">أفضّل التحدث مع داعية (امرأة)</option>
+        </select>
+
+        <select value={religion} onChange={(e) => setReligion(e.target.value as typeof religion)} className="adm-input">
+          {CONTACT_RELIGIONS.map((r) => (
+            <option key={r.code} value={r.code}>{r.label}</option>
+          ))}
         </select>
 
         <input value={country} onChange={(e) => setCountry(e.target.value)} placeholder="الدولة (اختياري)" className="adm-input" />

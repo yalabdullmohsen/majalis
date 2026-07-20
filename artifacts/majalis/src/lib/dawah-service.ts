@@ -22,6 +22,38 @@ export type DawahEvidence = { type: "quran" | "hadith"; ref: string; grading?: s
 export type DawahSource = { title: string; author?: string; url?: string };
 export type DawahGlossaryTerm = { term: string; definition: string };
 
+export type ReligionCode =
+  | "christian"
+  | "jewish"
+  | "hindu"
+  | "buddhist"
+  | "sikh"
+  | "jain"
+  | "zoroastrian"
+  | "bahai"
+  | "chinese_folk"
+  | "atheist_agnostic";
+
+export const RELIGIONS: { code: ReligionCode; label: string }[] = [
+  { code: "christian", label: "المسيحية" },
+  { code: "jewish", label: "اليهودية" },
+  { code: "hindu", label: "الهندوسية" },
+  { code: "buddhist", label: "البوذية" },
+  { code: "sikh", label: "السيخية" },
+  { code: "jain", label: "الجاينية" },
+  { code: "zoroastrian", label: "الزرادشتية" },
+  { code: "bahai", label: "البهائية" },
+  { code: "chinese_folk", label: "التقاليد الصينية (كونفوشيوسية/طاوية)" },
+  { code: "atheist_agnostic", label: "لا أدين / لا أؤمن بوجود إله" },
+];
+
+export const CONTACT_RELIGIONS: { code: ReligionCode | "other_religion" | "no_specific" | "prefer_not_to_say"; label: string }[] = [
+  ...RELIGIONS,
+  { code: "other_religion", label: "ديانة أخرى" },
+  { code: "no_specific", label: "لا أنتمي لديانة محددة" },
+  { code: "prefer_not_to_say", label: "أفضّل عدم الذكر" },
+];
+
 export type DawahQuestion = {
   id: string;
   category_id: string | null;
@@ -34,6 +66,7 @@ export type DawahQuestion = {
   sources: DawahSource[];
   related_question_ids: string[];
   keywords: string[];
+  target_religion: ReligionCode | null;
   reviewed_at: string | null;
   view_count: number;
   updated_at: string;
@@ -65,11 +98,30 @@ export type DawahArticle = {
   title_ar: string;
   title_en: string | null;
   summary_ar: string | null;
+  summary_en: string | null;
   body_ar: string;
   cover_image_url: string | null;
   tags: string[];
   updated_at: string;
 };
+
+export type DawahTranslation = {
+  lang: string;
+  title: string | null;
+  summary: string | null;
+  body: string | null;
+  status: "draft" | "in_review" | "approved";
+};
+
+export async function getQuestionTranslations(questionId: string): Promise<DawahTranslation[]> {
+  const { data, error } = await supabase
+    .from("dawah_translations")
+    .select("lang, title, summary, body, status")
+    .eq("entity_type", "question")
+    .eq("entity_id", questionId);
+  if (error) return [];
+  return (data || []) as DawahTranslation[];
+}
 
 export type NewMuslimDay = {
   id: string;
@@ -103,6 +155,18 @@ export async function getQuestionsByCategory(categorySlug?: string, limit = 50):
   let q = supabase.from("dawah_questions").select("*, dawah_categories!inner(slug)").match(PUBLISHED).order("title").limit(limit);
   if (categorySlug) q = q.eq("dawah_categories.slug", categorySlug);
   const { data, error } = await q;
+  if (error) return [];
+  return (data || []) as DawahQuestion[];
+}
+
+export async function getQuestionsByReligion(religion: ReligionCode, limit = 30): Promise<DawahQuestion[]> {
+  const { data, error } = await supabase
+    .from("dawah_questions")
+    .select("*")
+    .match(PUBLISHED)
+    .eq("target_religion", religion)
+    .order("title")
+    .limit(limit);
   if (error) return [];
   return (data || []) as DawahQuestion[];
 }
@@ -191,6 +255,7 @@ export type ContactRequestPayload = {
   isAnonymous: boolean;
   lang: Lang;
   preferredDaeeGender?: "male" | "female" | "no_preference";
+  religiousBackground?: ReligionCode | "other_religion" | "no_specific" | "prefer_not_to_say";
   country?: string;
   timezone?: string;
   topic: string;
@@ -213,6 +278,7 @@ export async function submitDawahContactRequest(payload: ContactRequestPayload):
       is_anonymous: payload.isAnonymous,
       lang: payload.lang,
       preferred_daee_gender: payload.preferredDaeeGender || "no_preference",
+      religious_background: payload.religiousBackground || "prefer_not_to_say",
       country: payload.country || null,
       timezone: payload.timezone || null,
       topic: payload.topic,
