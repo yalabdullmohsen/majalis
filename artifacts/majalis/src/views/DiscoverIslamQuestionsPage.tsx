@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
-import { getDawahCategories, getQuestionsByCategory, searchDawahQuestions, type DawahCategory, type DawahQuestion } from "@/lib/dawah-service";
+import { getDawahCategories, getQuestionsByCategory, getQuestionsByReligion, searchDawahQuestions, RELIGIONS, type DawahCategory, type DawahQuestion, type ReligionCode } from "@/lib/dawah-service";
 import "@/styles/discover-islam.css";
 
 function useDebounced<T>(value: T, ms = 350): T {
@@ -20,6 +20,10 @@ export default function DiscoverIslamQuestionsPage() {
     const params = new URLSearchParams(window.location.search);
     return params.get("category") || undefined;
   });
+  const [religion, setReligion] = useState<ReligionCode | undefined>(() => {
+    const params = new URLSearchParams(window.location.search);
+    return (params.get("religion") as ReligionCode) || undefined;
+  });
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounced(search);
   const [items, setItems] = useState<DawahQuestion[]>([]);
@@ -36,9 +40,22 @@ export default function DiscoverIslamQuestionsPage() {
 
   useEffect(() => {
     setLoading(true);
-    const task = debouncedSearch.trim() ? searchDawahQuestions(debouncedSearch) : getQuestionsByCategory(categorySlug);
+    const task = debouncedSearch.trim()
+      ? searchDawahQuestions(debouncedSearch)
+      : religion
+        ? getQuestionsByReligion(religion)
+        : getQuestionsByCategory(categorySlug);
     task.then(setItems).finally(() => setLoading(false));
-  }, [categorySlug, debouncedSearch]);
+  }, [categorySlug, religion, debouncedSearch]);
+
+  const selectReligion = (code: ReligionCode | undefined) => {
+    setReligion(code);
+    if (code) setCategorySlug(undefined);
+  };
+  const selectCategory = (slug: string | undefined) => {
+    setCategorySlug(slug);
+    if (slug !== undefined || religion) setReligion(undefined);
+  };
 
   return (
     <div className="page-shell narrow content-hub-page">
@@ -53,12 +70,23 @@ export default function DiscoverIslamQuestionsPage() {
       />
 
       <div className="content-hub-chips" role="tablist" aria-label="تصفية حسب التصنيف">
-        <button type="button" onClick={() => setCategorySlug(undefined)} className={!categorySlug ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}>الكل</button>
+        <button type="button" onClick={() => selectCategory(undefined)} className={!categorySlug && !religion ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}>الكل</button>
         {categories.map((c) => (
-          <button key={c.id} type="button" onClick={() => setCategorySlug(c.slug)} className={categorySlug === c.slug ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}>
+          <button key={c.id} type="button" onClick={() => selectCategory(c.slug)} className={categorySlug === c.slug ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}>
             {c.name_ar}
           </button>
         ))}
+      </div>
+
+      <div className="dii-lang-row">
+        <span className="dii-lang-label">أسئلة موجَّهة حسب ديانتك السابقة:</span>
+        <div className="content-hub-chips" role="tablist" aria-label="تصفية حسب الديانة">
+          {RELIGIONS.map((r) => (
+            <button key={r.code} type="button" onClick={() => selectReligion(religion === r.code ? undefined : r.code)} className={religion === r.code ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}>
+              {r.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {loading ? (
