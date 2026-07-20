@@ -59,6 +59,45 @@ export default function MushafPage() {
   const [repeatOn, setRepeatOn] = useState(false);
   const initializedFromRoute = useRef(false);
 
+  // ── ضغط مطول لفتح إجراءات الآية (لا لمسة/نقرة عادية) ─────────────────────
+  // بأمر صريح من المالك: اللمسة العادية أثناء القراءة كانت تفتح لوحة
+  // الإجراءات بسهولة زائدة وتقاطع القراءة؛ الفتح الآن فقط بضغط مستمر
+  // (٥٠٠ مللي ثانية) مع إلغائه تلقائيًا لو تحرّك الإصبع (سحب صفحة حقيقي
+  // لا ضغط ثابت). لوحة المفاتيح تبقى فورية (Enter/مسافة) — لا مكافئ منطقي
+  // لـ"ضغط مطول" بالكيبورد.
+  const LONG_PRESS_MS = 500;
+  const LONG_PRESS_MOVE_CANCEL_PX = 10;
+  const pressTimerRef = useRef<number | null>(null);
+  const pressStartRef = useRef<{ x: number; y: number } | null>(null);
+
+  const handleAyahPointerDown = useCallback(
+    (e: React.PointerEvent, ayah: PageContent["ayahs"][number]) => {
+      pressStartRef.current = { x: e.clientX, y: e.clientY };
+      if (pressTimerRef.current !== null) window.clearTimeout(pressTimerRef.current);
+      pressTimerRef.current = window.setTimeout(() => {
+        pressTimerRef.current = null;
+        setActiveAyah(ayah);
+      }, LONG_PRESS_MS);
+    },
+    [],
+  );
+  const handleAyahPointerMove = useCallback((e: React.PointerEvent) => {
+    if (pressTimerRef.current === null || !pressStartRef.current) return;
+    const dx = Math.abs(e.clientX - pressStartRef.current.x);
+    const dy = Math.abs(e.clientY - pressStartRef.current.y);
+    if (dx > LONG_PRESS_MOVE_CANCEL_PX || dy > LONG_PRESS_MOVE_CANCEL_PX) {
+      window.clearTimeout(pressTimerRef.current);
+      pressTimerRef.current = null;
+    }
+  }, []);
+  const cancelAyahPress = useCallback(() => {
+    if (pressTimerRef.current !== null) {
+      window.clearTimeout(pressTimerRef.current);
+      pressTimerRef.current = null;
+    }
+  }, []);
+  useEffect(() => () => { if (pressTimerRef.current !== null) window.clearTimeout(pressTimerRef.current); }, []);
+
   const surahs = useMemo(
     () => getSurahList().map((s) => ({
       number: s.number, name: s.name, englishName: "", englishNameTranslation: "",
@@ -266,10 +305,15 @@ export default function MushafPage() {
                   <span
                     className={`mushaf-v2__ayah${isPlaying ? " mushaf-v2__ayah--playing" : ""}`}
                     style={{ fontFamily: "var(--font-quran)" }}
-                    onClick={() => setActiveAyah(a)}
+                    onPointerDown={(e) => handleAyahPointerDown(e, a)}
+                    onPointerMove={handleAyahPointerMove}
+                    onPointerUp={cancelAyahPress}
+                    onPointerCancel={cancelAyahPress}
+                    onPointerLeave={cancelAyahPress}
+                    onContextMenu={(e) => e.preventDefault()}
                     role="button"
                     tabIndex={0}
-                    aria-label={`آية ${a.numberInSurah} من سورة ${a.surahName} — افتح إجراءات الآية`}
+                    aria-label={`آية ${a.numberInSurah} من سورة ${a.surahName} — اضغط مطوّلًا لفتح إجراءات الآية`}
                     onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveAyah(a); } }}
                   >
                     {displayText}
