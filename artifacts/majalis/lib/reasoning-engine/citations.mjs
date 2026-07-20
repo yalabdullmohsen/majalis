@@ -16,7 +16,7 @@ export function resolveHref(item) {
     verified_hadith: `/arbaeen-nawawi#${id}`,
     adhkar: `/adhkar`,
     verified_adhkar: `/adhkar`,
-    fatwa: `/fatwa/${id}`,
+    fatwa: `/rulings`,
     fiqh_decision: `/fiqh-council/${id}`,
     fiqh_council: `/fiqh-council/${id}`,
     ruling: `/rulings/${id}`,

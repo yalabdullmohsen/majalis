@@ -125,7 +125,7 @@ export const CONTENT_REGISTRY: Record<CmsContentKind, ContentTableConfig> = {
     publishedField: "published_at",
     scheduledField: "scheduled_at",
     statusMap: { approved: "approved", pending: "pending", draft: "draft", archived: "archived", rejected: "rejected" },
-    publicRoute: (id) => `/fatwa/${id}`,
+    publicRoute: () => `/rulings`,
   },
   news: {
     table: "platform_updates",

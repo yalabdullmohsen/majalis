@@ -274,6 +274,27 @@ typecheck/lint/test:regression (271+ حالة، شاملة 4 ملفات اختب
 > هذا الملف يوثّق فقط أن البوابات الفنية (typecheck/lint/tests/build)
 > اجتازت معًا في دفعة واحدة نهائية، كما طلب المالك.
 
+## 🧹 فحص أفقي شامل لبقايا "/fatwa" عبر كل الكودبيس — 7 ملفات (2026-07-20)
+
+بناءً على اقتراح المنسِّق: عمَّمت اكتشاف بقايا /fatwa (بدأ بمدخلين في
+updates-seed.ts) إلى فحص أفقي شامل عبر كل الكودبيس (لا ملفات البذور
+فقط، بل أي كود توليد روابط). **5 مسارات كود حيّة** كانت تُولِّد روابط
+`/fatwa/${id}` ميتة عند استدعائها بأي بيانات `kind: "fatwa"`:
+knowledge-graph-service.ts (تحققت: 0 صف بـnode_type='fatwa' حاليًا،
+كامن)، cms/content-registry.ts (تحققت: جدول fatwas موجود لكن فارغ)،
+lib/reasoning-engine/citations.mjs، lib/auto-knowledge-engine/
+seo-engine.mjs (إصلاحان: بريدكرمب + routeForKind)، lib/scholarly-
+intelligence/url-resolver.mjs — كلها أُصلحت إلى `/rulings` (مطابقة
+لسلوك التحويل الفعلي في App.tsx)، عدا البريدكرمب الذي أُصلح إلى
+`/fiqh-council/fatwas` تحديدًا (المسار الوحيد المتبقي بمعنى "فتاوى"
+فعليًا). **إصلاحا نظافة إضافيان بلا مخاطر**: tests/00-public-
+routes.spec.ts (سطر اختبار منحرف عن navigation.ts الفعلي، أُزيل)،
+scripts/prerender.mjs (شرط ميت 100%، حُذف). **فُحص ولم يُعدَّل بقرار
+واعٍ**: public/sw.js (يتطلب ترقية إصدار الكاش، أثر أوسع من التناسب —
+مؤجَّل لدفعة PWA مخصَّصة)، وعدة حراس ارتداد/تعليقات توثيقية سليمة أصلًا.
+typecheck/lint/node --check لكل ملفات mjs/test:regression (صفر
+فشل)/build (744 صفحة) نُفِّذت كاملة. تفصيل كامل في CONTINUATION_PLAN.md.
+
 ## 🔗 تدقيق updates-seed.ts (المصدر الفعلي الوحيد) — 13 رابطًا مكسورًا مُصلَحًا (2026-07-20)
 
 updates-seed.ts (126 إشعار "آخر التحديثات") تأكَّد كونه المصدر الفعلي
