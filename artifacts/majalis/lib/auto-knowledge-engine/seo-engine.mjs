@@ -93,7 +93,7 @@ export function buildSeoPackage(item, analysis, routePath) {
 
 function buildBreadcrumb(path, title) {
   const crumbs = [{ name: "الرئيسية", path: "/" }];
-  if (path?.includes("/fatwa")) crumbs.push({ name: "الفتاوى", path: "/fatwa" });
+  if (path?.includes("/fatwa")) crumbs.push({ name: "الفتاوى", path: "/fiqh-council/fatwas" });
   else if (path?.includes("/fiqh")) crumbs.push({ name: "المجمع الفقهي", path: "/fiqh-council" });
   else if (path?.includes("/fawaid")) crumbs.push({ name: "الفوائد", path: "/fawaid" });
   else if (path?.includes("/library")) crumbs.push({ name: "المكتبة", path: "/library" });
@@ -106,7 +106,7 @@ function buildBreadcrumb(path, title) {
 
 export function routeForKind(kind, recordId) {
   const routes = {
-    fatwa: `/fatwa/${recordId}`,
+    fatwa: `/rulings`,
     fiqh_decision: `/fiqh-council/${recordId}`,
     resolution: `/fiqh-council/${recordId}`,
     fawaid: `/fawaid`,

@@ -40,7 +40,6 @@ function buildJsonLd(route, siteUrl) {
   if (route.path.startsWith("/library")) base["@type"] = "CollectionPage";
   if (route.path.startsWith("/seerah")) base["@type"] = "Article";
   if (route.path.startsWith("/quran")) base["@type"] = "WebPage";
-  if (route.path.startsWith("/fatwa")) base["@type"] = "QAPage";
   return base;
 }
 

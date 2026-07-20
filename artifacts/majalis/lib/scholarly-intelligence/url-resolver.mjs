@@ -52,7 +52,7 @@ export function resolveContentUrl(item) {
       return "/library";
     case "fatwa":
     case "fatwas":
-      return id ? `/fatwa/${id}` : "/fatwa";
+      return "/rulings";
     case "ruling":
     case "rulings":
       return id ? `/rulings/${id}` : "/rulings";
