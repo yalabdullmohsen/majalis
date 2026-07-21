@@ -34,7 +34,7 @@ export const SCHOLARS: Scholar[] = [
     region: "الكوفة / بغداد",
     madhhab: "حنفي",
     quote: "العلم لا يُعطيك بعضه حتى تُعطيه كلّك",
-    sources: ["سير أعلام النبلاء — الذهبي"],
+    sources: ["سير أعلام النبلاء — الذهبي", "تاريخ بغداد — الخطيب البغدادي"],
     verificationStatus: "reviewed",
   },
   {
@@ -49,7 +49,7 @@ export const SCHOLARS: Scholar[] = [
     region: "المدينة المنورة",
     madhhab: "مالكي",
     quote: "لا يُفتي بهذا الأمر حتى تأتيه الآثار من ثلاثة وجوه",
-    sources: ["سير أعلام النبلاء — الذهبي"],
+    sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
   {
@@ -64,7 +64,7 @@ export const SCHOLARS: Scholar[] = [
     region: "فلسطين / مصر",
     madhhab: "شافعي",
     quote: "كلما ازددتُ علماً ازددتُ علماً بجهلي",
-    sources: ["سير أعلام النبلاء — الذهبي"],
+    sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
   {
@@ -79,7 +79,7 @@ export const SCHOLARS: Scholar[] = [
     region: "بغداد",
     madhhab: "حنبلي",
     quote: "المحنة ميزان بين المؤمن وأهل النفاق",
-    sources: ["سير أعلام النبلاء — الذهبي"],
+    sources: ["سير أعلام النبلاء — الذهبي", "تاريخ بغداد — الخطيب البغدادي"],
     verificationStatus: "reviewed",
   },
   // علماء الحديث
@@ -94,7 +94,7 @@ export const SCHOLARS: Scholar[] = [
     died: "٢٥٦ هـ",
     region: "بخارى (أوزبكستان)",
     quote: "ما وضعتُ في الصحيح حديثاً إلا اغتسلتُ وصليتُ ركعتين",
-    sources: ["سير أعلام النبلاء — الذهبي"],
+    sources: ["سير أعلام النبلاء — الذهبي", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
   {
@@ -109,7 +109,7 @@ export const SCHOLARS: Scholar[] = [
     region: "نيسابور / خراسان",
     madhhab: "شافعي",
     quote: "لا أعلم أحداً وصف الحديث في الصحة كما وصفه الإمام مسلم",
-    sources: ["سير أعلام النبلاء — الذهبي"],
+    sources: ["سير أعلام النبلاء — الذهبي", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
   // علماء العقيدة والتفسير
