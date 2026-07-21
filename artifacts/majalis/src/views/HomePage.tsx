@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import contentCounts from "@/data/content-counts.json";
 import { applyPageSeo } from "@/lib/seo";
 import { Link } from "wouter";
@@ -7,28 +7,13 @@ import { useAuth } from "@/components/AuthProvider";
 import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
 import { History } from "lucide-react";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
-import { HomeCompactPrayer } from "@/components/home/HomeCompactPrayer";
 import { HomeAboutSection } from "@/components/home/HomeAboutSection";
 import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
-import { HomeDailyCorner } from "@/components/home/HomeDailyCorner";
-import { HomeDailyBenefits } from "@/components/home/HomeDailyBenefits";
-import { HomeUpcomingEvents } from "@/components/home/HomeUpcomingEvents";
-import { HomeSunnahByTime } from "@/components/home/HomeSunnahByTime";
 import { HomeSawmReminder } from "@/components/home/HomeSawmReminder";
-import { HomeIslamicOccasions } from "@/components/home/HomeIslamicOccasions";
-import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeContinueWidget } from "@/components/home/HomeContinueWidget";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
 import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
-import { HomePrayerRanks } from "@/components/home/HomePrayerRanks";
-import { HomeFeaturedLibrary } from "@/components/home/HomeFeaturedLibrary";
-import { HomeQuizCard } from "@/components/home/HomeQuizCard";
-import { HomeAsmaCard } from "@/components/home/HomeAsmaCard";
-import { HomeWeekStreak } from "@/components/home/HomeWeekStreak";
-import { HomeNawawiHadith } from "@/components/home/HomeNawawiHadith";
-import { HomeInterestingTopics } from "@/components/home/HomeInterestingTopics";
-import { HomeMindMapSection } from "@/components/home/HomeMindMapSection";
 import { HomeMajlisToday } from "@/components/home/HomeMajlisToday";
 import { FridayBanner } from "@/components/FridayBanner";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
@@ -52,6 +37,24 @@ import {
   Radio, RotateCw, Scale, Scroll, Sparkles, Star, Target, Upload, Users, Wrench,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+
+// الودجتات الاختيارية لا تدخل حزمة الرئيسية للمستخدم الجديد. تُحمَّل فقط
+// إذا فعّلها المستخدم من شاشة التخصيص، مع بقاء الوظيفة والحالة المحفوظة.
+const HomeCompactPrayer = lazy(() => import("@/components/home/HomeCompactPrayer").then((m) => ({ default: m.HomeCompactPrayer })));
+const HomeDailyCorner = lazy(() => import("@/components/home/HomeDailyCorner").then((m) => ({ default: m.HomeDailyCorner })));
+const HomeDailyBenefits = lazy(() => import("@/components/home/HomeDailyBenefits").then((m) => ({ default: m.HomeDailyBenefits })));
+const HomeUpcomingEvents = lazy(() => import("@/components/home/HomeUpcomingEvents").then((m) => ({ default: m.HomeUpcomingEvents })));
+const HomeSunnahByTime = lazy(() => import("@/components/home/HomeSunnahByTime").then((m) => ({ default: m.HomeSunnahByTime })));
+const HomeIslamicOccasions = lazy(() => import("@/components/home/HomeIslamicOccasions").then((m) => ({ default: m.HomeIslamicOccasions })));
+const HomeLatestUpdates = lazy(() => import("@/components/home/HomeLatestUpdates").then((m) => ({ default: m.HomeLatestUpdates })));
+const HomePrayerRanks = lazy(() => import("@/components/home/HomePrayerRanks").then((m) => ({ default: m.HomePrayerRanks })));
+const HomeFeaturedLibrary = lazy(() => import("@/components/home/HomeFeaturedLibrary").then((m) => ({ default: m.HomeFeaturedLibrary })));
+const HomeQuizCard = lazy(() => import("@/components/home/HomeQuizCard").then((m) => ({ default: m.HomeQuizCard })));
+const HomeAsmaCard = lazy(() => import("@/components/home/HomeAsmaCard").then((m) => ({ default: m.HomeAsmaCard })));
+const HomeWeekStreak = lazy(() => import("@/components/home/HomeWeekStreak").then((m) => ({ default: m.HomeWeekStreak })));
+const HomeNawawiHadith = lazy(() => import("@/components/home/HomeNawawiHadith").then((m) => ({ default: m.HomeNawawiHadith })));
+const HomeInterestingTopics = lazy(() => import("@/components/home/HomeInterestingTopics").then((m) => ({ default: m.HomeInterestingTopics })));
+const HomeMindMapSection = lazy(() => import("@/components/home/HomeMindMapSection").then((m) => ({ default: m.HomeMindMapSection })));
 
 /* ── روابط الوصول السريع ── */
 /* إجراءات سريعة مختصرة — 4 عناصر فقط (إعادة هيكلة الرئيسية، الأولوية 3):
@@ -193,7 +196,13 @@ const FEATURE_CATS: FeatureCat[] = [
 ];
 
 function SafeHomeSection({ name, children }: { name: string; children: React.ReactNode }) {
-  return <SectionErrorBoundary name={name}>{children}</SectionErrorBoundary>;
+  return (
+    <SectionErrorBoundary name={name}>
+      <Suspense fallback={<div className="skeleton-base" style={{ minHeight: 96 }} aria-label={`تحميل ${name}`} />}>
+        {children}
+      </Suspense>
+    </SectionErrorBoundary>
+  );
 }
 
 /** خريطة مُعرِّف القسم القابل للتخصيص ← عرضه. تُستهلَك عبر homepage-layout.ts. */
