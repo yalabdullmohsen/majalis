@@ -368,7 +368,7 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
   const robots = route.robots || "index, follow";
   const ogType = route.ogType || "website";
   const title = pageTitle(route);
-  const h1 = route.title;
+  const h1 = String(route.title || "").split(" | ")[0];
 
   return `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
