@@ -30800,7 +30800,7 @@ html[data-theme="dark"] tr:hover td {
    Hero / Page Headers / Card Headers / Footer / Learning Path / Dark Banners
 */
 .hpv4-hero,
-.hpv4-hero *,
+.hpv4-hero :not(.hpv4-hero__cta-primary):not(.hpv4-hero__cta-primary *),
 .lesson-unified-card__header,
 .lesson-unified-card__header *,
 .ds-page-header,
@@ -30835,8 +30835,8 @@ footer *,
 .page-hero-wrap *,
 [class*="page-header"][class*="dark"],
 [class*="page-header"][class*="dark"] *,
-[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.dvp-hero):not(.sch-profile-hero):not(.accd-hero),
-[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.dvp-hero):not(.sch-profile-hero):not(.accd-hero) *,
+[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.dvp-hero):not(.sch-profile-hero):not(.accd-hero):not(.hpv4-hero),
+[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.dvp-hero):not(.sch-profile-hero):not(.accd-hero):not(.hpv4-hero) *,
 .dark-section,
 .dark-section *,
 .dark-bg,
@@ -31260,6 +31260,15 @@ html[data-theme="dark"] .home-learning-path-card *,
 html[data-theme="dark"] .site-footer,
 html[data-theme="dark"] .site-footer * {
   color: #FFFFFF !important;
+}
+
+/* CTA الهيرو ذو سطح عاجي في الوضعين، لذلك لا يجوز أن يرث فرض الأبيض العام
+   أعلاه. إبقاء النص والأيقونة على الأخضر الداكن يحقق تباينًا 7.4:1 تقريبًا. */
+html[data-theme="dark"] .hpv4-hero a.hpv4-hero__cta-primary,
+html[data-theme="dark"] .hpv4-hero a.hpv4-hero__cta-primary:hover,
+html[data-theme="dark"] .hpv4-hero a.hpv4-hero__cta-primary * {
+  color: #173D35 !important;
+  stroke: currentColor !important;
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════

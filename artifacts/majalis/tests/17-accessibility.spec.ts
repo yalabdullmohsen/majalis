@@ -33,6 +33,40 @@ test.describe("إمكانية الوصول — WCAG", () => {
     expect(hasMain || await page.locator("#root, #app, [data-main]").count() > 0, "يجب وجود منطقة main").toBeTruthy();
   });
 
+  test("زر الورد اليومي يحقق تباين AA في الوضعين", async ({ page }) => {
+    await page.goto("/");
+
+    const cta = page.locator(".hpv4-hero__cta-primary");
+    await expect(cta).toBeVisible();
+
+    const ratios = await cta.evaluate((element) => {
+      const luminance = (rgb: string) => {
+        const channels = rgb.match(/[\d.]+/g)?.slice(0, 3).map(Number) ?? [];
+        const linear = channels.map((channel) => {
+          const value = channel / 255;
+          return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+        });
+        return 0.2126 * linear[0]! + 0.7152 * linear[1]! + 0.0722 * linear[2]!;
+      };
+      const ratio = () => {
+        const style = getComputedStyle(element);
+        const foreground = luminance(style.color);
+        const background = luminance(style.backgroundColor);
+        return (Math.max(foreground, background) + 0.05) /
+          (Math.min(foreground, background) + 0.05);
+      };
+
+      const light = ratio();
+      document.documentElement.dataset.theme = "dark";
+      document.documentElement.classList.add("dark");
+      const dark = ratio();
+      return { light, dark };
+    });
+
+    expect(ratios.light).toBeGreaterThanOrEqual(4.5);
+    expect(ratios.dark).toBeGreaterThanOrEqual(4.5);
+  });
+
   // ── 2. التنقل بلوحة المفاتيح ─────────────────────────────────────────────
 
   test("عناصر التنقل قابلة للوصول بـ Tab", async ({ page }) => {
