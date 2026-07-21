@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "./AuthProvider";
-import { Loading } from "./ui-common";
 import { ADMIN_ACCESS_DENIED_MESSAGE } from "@/lib/auth-messages";
 
 /**
@@ -80,11 +79,25 @@ export function AdminRouteGuard({ children }: { children: React.ReactNode }) {
   }, []);
 
   // ── حالة التحميل ─────────────────────────────────────────
-  if (loading) return <Loading />;
+  if (loading) {
+    return (
+      <div className="login-page">
+        <div className="login-card" role="status" aria-live="polite">
+          <p className="ds-empty">جارٍ التحقق من تسجيل الدخول وصلاحية الوصول…</p>
+        </div>
+      </div>
+    );
+  }
 
   // ── فترة انتظار قبل الجزم بعدم تسجيل الدخول (أولى أو بعد اختفاء مؤقت) ──
   if (!isLoggedIn && !graceExpired) {
-    return <Loading />;
+    return (
+      <div className="login-page">
+        <div className="login-card" role="status" aria-live="polite">
+          <p className="ds-empty">جارٍ التحقق من تسجيل الدخول وصلاحية الوصول…</p>
+        </div>
+      </div>
+    );
   }
 
   // ── غير مسجّل ────────────────────────────────────────────
