@@ -40,7 +40,9 @@ const config: CapacitorConfig = {
     webContentsDebuggingEnabled: false,
   },
   ios: {
-    contentInset: "always",
+    // Safe areas are owned by the shared CSS shell via env(safe-area-inset-*).
+    // UIKit adjustment here would apply a second inset around the WKWebView.
+    contentInset: "never",
     backgroundColor: "#153025",
     scrollEnabled: true,
   },

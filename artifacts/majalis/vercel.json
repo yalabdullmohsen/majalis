@@ -559,7 +559,7 @@
       ]
     },
     {
-      "source": "/(manifest\\.webmanifest|site\\.webmanifest|robots\\.txt)",
+      "source": "/robots.txt",
       "headers": [
         {
           "key": "Cache-Control",
