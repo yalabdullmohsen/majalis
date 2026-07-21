@@ -7637,6 +7637,9 @@ input, textarea, select { font-family: inherit; }
 .navbar-search-form {
   display: flex;
   align-items: center;
+  direction: rtl;
+  width: clamp(12rem, 20vw, 18rem);
+  min-width: 12rem;
   background: transparent;
   border: 1px solid var(--msk-border, #E7E2D8);
   border-radius: 0.75rem;
@@ -7645,6 +7648,10 @@ input, textarea, select { font-family: inherit; }
 }
 
 .navbar-search-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
   border: none;
   background: var(--majalis-emerald);
   color: var(--majalis-parchment);
@@ -7662,13 +7669,19 @@ input, textarea, select { font-family: inherit; }
   right: 0;
   left: 0;
   z-index: 60;
-  background: transparent;
+  background: var(--color-surface, #fff);
   border: 1px solid var(--msk-border, #E7E2D8);
   border-radius: 0.85rem;
   box-shadow: 0 16px 40px rgba(36, 31, 24, 0.12);
   max-height: 18rem;
   overflow: auto;
   padding: 0.35rem;
+}
+
+html[data-theme="dark"] .search-suggestions-panel {
+  background: var(--color-surface, #173D35);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.32);
 }
 
 .search-suggestions-group-label {

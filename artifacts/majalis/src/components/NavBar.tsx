@@ -81,11 +81,12 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
         value={term}
         onChange={setTerm}
         onSubmit={submit}
-        placeholder="بحث..."
+        placeholder="ابحث في المجلس العلمي..."
         compact
       />
-      <button type="button" onClick={() => submit(term)} aria-label="بحث" className="navbar-search-submit">
-        بحث
+      <button type="submit" aria-label="تنفيذ البحث" className="navbar-search-submit">
+        <Search size={15} strokeWidth={1.8} aria-hidden="true" />
+        <span>بحث</span>
       </button>
     </form>
   );
@@ -173,30 +174,6 @@ export default function NavBar() {
               }
               <span className="navbar-menu-btn__label">{isMenuOpen ? t("nav_close") : t("nav_menu")}</span>
             </button>
-            <Link href="/" className="navbar-brand" aria-label="المجلس العلمي">
-              {/*
-                الشعار مرشّح LCP في كل صفحة. الأصل PNG بعرض 2044px = ١.١MB بينما
-                يُعرض بعرض ≤180px. نقدّم WebP بعرض 400/800 (~37KB / ~89KB) مع
-                احتياطي PNG مصغّر (79KB). display:contents يُبقي <img> نفسه عنصرَ
-                الـflex فلا يتغيّر أي شيء في التنسيق.
-              */}
-              <picture style={{ display: "contents" }}>
-                <source
-                  type="image/webp"
-                  srcSet="/logo-calligraphy-400.webp 1x, /logo-calligraphy-800.webp 2x"
-                />
-                <img
-                  src="/logo-calligraphy-400.png"
-                  alt="المجلس العلمي"
-                  className="navbar-logo navbar-logo--calligraphy"
-                  loading="eager"
-                  fetchPriority="high"
-                  decoding="async"
-                  width="400"
-                  height="154"
-                />
-              </picture>
-            </Link>
           </div>
 
           {/* Desktop tabs */}
@@ -235,15 +212,16 @@ export default function NavBar() {
                 على الشاشات الأكبر. اختصار Ctrl/Cmd+K يبقى فعالاً (مُدار في
                 App.tsx عبر مستمع keydown مستقل) لكن لا يُعرض بصريًا هنا —
                 طلب صريح من المالك: إزالة حرف K والمربع المحيط به نهائيًا. */}
-            <button
-              type="button"
-              onClick={() => window.dispatchEvent(new Event("global-search-open"))}
-              aria-label="بحث"
-              className="navbar-search-cmd"
-            >
-              <Search size={17} strokeWidth={1.8} aria-hidden="true" />
-              <span className="navbar-search-hint">بحث</span>
-            </button>
+            {isMobile && (
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new Event("global-search-open"))}
+                aria-label="فتح البحث"
+                className="navbar-search-cmd"
+              >
+                <Search size={17} strokeWidth={1.8} aria-hidden="true" />
+              </button>
+            )}
             {/* Desktop: search + auth + lang */}
             {!isMobile && <SearchBox />}
             {!isMobile && desktopAuthLinks}
