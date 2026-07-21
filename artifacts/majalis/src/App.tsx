@@ -178,7 +178,6 @@ function AdhanSchedulerBootstrap() {
   return null;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function SafeLazyRoute({ component: Component }: { component: ComponentType<any> }) {
   // useParams يُعيد params المسار الحالي (مثل { id } أو { slug })
   // ويُمرَّر كـ prop "params" لجميع صفحات التفاصيل
