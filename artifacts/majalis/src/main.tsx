@@ -19,6 +19,8 @@ import "./styles/majalis-v2.css";
 import "./styles/modern-2026.css";
 import "./styles/elite-2026.css";
 import "./styles/sins-rights.css";
+// Final release layer: one authoritative visual contract loaded after legacy page styles.
+import "./styles/final-release.css";
 
 const queryClient = createAppQueryClient();
 

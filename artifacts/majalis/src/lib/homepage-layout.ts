@@ -65,6 +65,8 @@ export type HomepagePrefs = {
      الشريط السفلي يفتح التفاصيل الكاملة مباشرة (2026-07-19). */
 const DEFAULT_HIDDEN: HomeWidgetId[] = [
   "occasions", "prayer-ranks", "interesting-topics", "latest-updates", "prayer",
+  "asma", "sunnah-time", "explore", "week-streak", "mind-map",
+  "daily-benefits", "upcoming-events", "quiz", "hadith", "daily-corner", "library",
 ];
 const DEFAULT_PREFS: HomepagePrefs = { order: DEFAULT_ORDER, hidden: DEFAULT_HIDDEN };
 const STORAGE_KEY = "majalis-homepage-prefs-v1";
