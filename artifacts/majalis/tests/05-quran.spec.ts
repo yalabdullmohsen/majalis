@@ -79,4 +79,13 @@ test.describe("Quran — المصحف", () => {
     expect(body).toContain("حلقات التحفيظ");
     expect(body).not.toContain("قسم القرآن الكريم قيد التطوير");
   });
+
+  test("Makki and Madani guide filters the existing surah inventory", async ({ page }) => {
+    await page.goto("/quran/makki-madani");
+    await waitForContent(page);
+    await expect(page.getByRole("heading", { name: "السور المكية والمدنية" })).toBeVisible();
+    await page.getByRole("button", { name: "مدنية", exact: true }).click();
+    await expect(page.getByText("البقرة", { exact: true })).toBeVisible();
+    await expect(page.getByText("الفاتحة", { exact: true })).toHaveCount(0);
+  });
 });

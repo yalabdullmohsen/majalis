@@ -59,6 +59,7 @@ const CardsPage = lazy(() => import("@/views/CardsPage"));
 const QuranPage = lazy(() => import("@/views/QuranPage"));
 const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
 const QuranCirclesPage = lazy(() => import("@/views/QuranCirclesPage"));
+const MakkiMadaniPage = lazy(() => import("@/views/MakkiMadaniPage"));
 const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
 const SurahStoryDetailPage = lazy(() =>
   import("@/views/SurahStoriesPage").then((module) => ({ default: module.SurahStoryDetailPage })),
@@ -336,6 +337,7 @@ function Router() {
       <Route path="/seerah"><SafeLazyRoute component={SeerahPage} /></Route>
       <Route path="/quran/surah-stories/:number"><SurahStoryRoute /></Route>
       <Route path="/quran/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
+      <Route path="/quran/makki-madani"><SafeLazyRoute component={MakkiMadaniPage} /></Route>
       <Route path="/quran"><SafeLazyRoute component={QuranPage} /></Route>
       <Route path="/prayer-times"><SafeLazyRoute component={PrayerTimesPage} /></Route>
       <Route path="/prayer-countdown"><SafeLazyRoute component={PrayerCountdownPage} /></Route>

@@ -35,6 +35,7 @@ const SHEET_SECTIONS = [
     { href: "/quran-circles",    label: "حلقات التحفيظ",  Icon: IconCircles },
     { href: "/quran-radio",      label: "إذاعة القرآن",   Icon: IconRadio },
     { href: "/quran/tajweed",    label: "التجويد",        Icon: IconLessons },
+    { href: "/quran/makki-madani", label: "المكي والمدني", Icon: IconQuran },
   ]},
   { group: "المحتوى العلمي", items: [
     { href: "/lessons",          label: "الدروس",         Icon: IconLessons },
