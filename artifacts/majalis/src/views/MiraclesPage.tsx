@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  Bone, BookOpen, Bug, Clock, Cloud, Cog, Dna,
+  AlertTriangle, Bone, BookOpen, Bug, Clock, Cloud, Cog, Dna,
   Droplets, Globe, Globe2, Leaf, Lightbulb, Microscope,
-  Mountain, ScrollText, Sparkles, Star, Stethoscope,
+  Mountain, ScrollText, Search, Sparkles, Star, Stethoscope,
   Telescope, Waves, Wind,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -167,7 +167,8 @@ export default function MiraclesPage({
             مقالات موثّقة تربط الاكتشافات العلمية بالآيات القرآنية والأحاديث النبوية
           </p>
           <p className="mk-hero__note">
-            ⚠️ الملاحظات العلمية قد تتطور مع البحث، نعرضها للتفكر لا كحكم نهائي
+            <AlertTriangle size={16} strokeWidth={1.8} aria-hidden="true" />
+            <span>الملاحظات العلمية قد تتطور مع البحث، نعرضها للتفكر لا كحكم نهائي</span>
           </p>
         </div>
       </header>
@@ -180,7 +181,7 @@ export default function MiraclesPage({
             onClick={() => setCategory("الكل")}
             className={`mk-cat-pill${category === "الكل" ? " mk-cat-pill--active" : ""}`}
           >
-            <span>🔍</span>
+            <Search size={14} strokeWidth={2} aria-hidden="true" />
             <span>الكل</span>
           </button>
           {(CATEGORIES as readonly string[]).filter(c => c !== "الكل").map((c) => {
@@ -210,7 +211,11 @@ export default function MiraclesPage({
               onClick={() => setSourceType(s)}
               className={`mk-src-tab${sourceType === s ? " mk-src-tab--active" : ""}`}
             >
-              {s === "قرآن" ? "📖 قرآن" : s === "سنة" ? "📜 سنة" : "الجميع"}
+              {s === "قرآن" ? (
+                <><BookOpen size={14} strokeWidth={2} aria-hidden="true" /> قرآن</>
+              ) : s === "سنة" ? (
+                <><ScrollText size={14} strokeWidth={2} aria-hidden="true" /> سنة</>
+              ) : "الجميع"}
             </button>
           ))}
         </div>

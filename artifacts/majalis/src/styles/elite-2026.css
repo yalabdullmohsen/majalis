@@ -25260,7 +25260,10 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   line-height: 1.6;
 }
 .mk-hero__note {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
   font-size: 0.7rem;
   color: rgba(255,255,255,0.55);
   background: rgba(255,255,255,0.08);
@@ -25325,6 +25328,10 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   padding: 0.2rem;
 }
 .mk-src-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
   padding: 0.3rem 0.7rem;
   border-radius: 0.35rem;
   border: none;
