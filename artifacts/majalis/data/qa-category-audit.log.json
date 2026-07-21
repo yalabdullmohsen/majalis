@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-17T21:42:54.080Z",
+  "at": "2026-07-21T23:43:13.658Z",
   "total": 360,
   "byCategory": {
     "sahabah": 22,
@@ -15,17 +15,10 @@
     "adhkar": 28,
     "quran": 19,
     "adab": 16,
-    "misc": 31
+    "fiqh": 31
   },
-  "misclassified": 2,
+  "misclassified": 1,
   "corrections": [
-    {
-      "id": "seed-qa-249",
-      "question": "من مؤلف كتاب رياض الصالحين؟",
-      "from": "hadith",
-      "to": "anbiya",
-      "reason": "سؤال عن الأنبياء — لا ينتمي للعقيدة"
-    },
     {
       "id": "seed-qa-405",
       "question": "ما قصة جمع القرآن في عهد أبي بكر وعثمان رضي الله عنهما؟",
