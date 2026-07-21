@@ -1,6 +1,17 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { Link } from "wouter";
 import { Breadcrumbs } from "./Breadcrumbs";
+import { AdminInlineEdit, type InlineEditContentType } from "@/components/AdminInlineEdit";
+import { ReadingProgressBar } from "@/components/ReadingProgressBar";
+import { Clock, Copy } from "lucide-react";
+import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
+
+function estimateReadMinutes(text?: string): number | null {
+  if (!text || text.length < 200) return null;
+  const words = text.trim().split(/\s+/).length;
+  return Math.max(1, Math.round(words / 180));
+}
 
 type Props = {
   breadcrumbs: { label: string; href?: string }[];
@@ -14,43 +25,52 @@ type Props = {
   sourceUrls?: string[];
   copyText?: string;
   shareUrl?: string;
+  /** لتفعيل زر التعديل المباشر — نوع المحتوى ومعرفه */
+  adminEdit?: { contentType: InlineEditContentType; contentId: string | number; initialData?: Record<string, unknown> };
 };
 
-function ShareCopyBar({ copyText, shareUrl, title }: { copyText?: string; shareUrl?: string; title: string }) {
+function ShareCopyBar({
+  copyText,
+  shareUrl,
+  title,
+  adminEdit,
+}: {
+  copyText?: string;
+  shareUrl?: string;
+  title: string;
+  adminEdit?: Props["adminEdit"];
+}) {
+  const [copied, setCopied] = useState(false);
   const handleCopy = async () => {
     if (!copyText) return;
     try {
       await navigator.clipboard.writeText(copyText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     } catch {
       /* ignore */
     }
   };
 
-  const handleShare = async () => {
-    const url = shareUrl || (typeof window !== "undefined" ? window.location.href : "");
-    if (navigator.share) {
-      try {
-        await navigator.share({ title, url });
-        return;
-      } catch {
-        /* fall through */
-      }
-    }
-    if (url) await navigator.clipboard.writeText(url);
-  };
-
-  if (!copyText && !shareUrl) return null;
+  if (!copyText && !shareUrl && !adminEdit) return null;
 
   return (
     <div className="content-detail-actions">
       {copyText && (
         <button type="button" onClick={handleCopy} className="content-detail-action-btn">
-          نسخ
+          <Copy size={14} strokeWidth={1.8} aria-hidden="true" />
+          <span>{copied ? "تم النسخ ✓" : "نسخ النص"}</span>
         </button>
       )}
-      <button type="button" onClick={handleShare} className="content-detail-action-btn">
-        مشاركة
-      </button>
+      <ShareButtons title={title} url={shareUrl || (typeof window !== "undefined" ? window.location.href : "")} />
+      {adminEdit && (
+        <AdminInlineEdit
+          contentType={adminEdit.contentType}
+          contentId={adminEdit.contentId}
+          initialData={adminEdit.initialData}
+          className="content-detail-action-btn"
+        />
+      )}
     </div>
   );
 }
@@ -67,13 +87,23 @@ export function ContentDetailLayout({
   sourceUrls,
   copyText,
   shareUrl,
+  adminEdit,
 }: Props) {
   return (
     <div className="page-shell narrow content-detail-page">
+      <ReadingProgressBar />
       <Breadcrumbs items={breadcrumbs} />
 
       <header className="content-detail-header">
-        {meta && <p className="content-detail-meta">{meta}</p>}
+        <div className="content-detail-header-top">
+          {meta && <p className="content-detail-meta">{meta}</p>}
+          {estimateReadMinutes(body) && (
+            <span className="content-detail-readtime" aria-label={`وقت القراءة المتوقع: ${estimateReadMinutes(body)} دقيقة`}>
+              <Clock size={13} strokeWidth={2} aria-hidden="true" />
+              {estimateReadMinutes(body)} د
+            </span>
+          )}
+        </div>
         <h1 className="content-detail-title">{title}</h1>
         {subtitle && <p className="content-detail-subtitle">{subtitle}</p>}
         {tags && tags.length > 0 && (
@@ -83,9 +113,7 @@ export function ContentDetailLayout({
             ))}
           </div>
         )}
-        {copyText && (
-          <ShareCopyBar copyText={copyText} shareUrl={shareUrl} title={title} />
-        )}
+        <ShareCopyBar copyText={copyText} shareUrl={shareUrl} title={title} adminEdit={adminEdit} />
       </header>
 
       {body && (
@@ -124,6 +152,10 @@ export function ContentDetailLayout({
           {related}
         </section>
       )}
+
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["fiqh", "aqeeda", "hadith"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
+      </div>
     </div>
   );
 }
@@ -138,7 +170,7 @@ type CardProps = {
 
 export function PlatformContentCard({ href, title, meta, tag, summary }: CardProps) {
   return (
-    <Link href={href} style={{ textDecoration: "none" }}>
+    <Link href={href} className="platform-card-link">
       <article className="page-card platform-content-card">
         <div className="page-card-header">
           <p>{title}</p>

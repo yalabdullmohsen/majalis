@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 56" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="arch-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#1A4826" stop-opacity="0"/>
+      <stop offset="20%"  stop-color="#1A4826" stop-opacity="0.45"/>
+      <stop offset="48%"  stop-color="#2E6A36" stop-opacity="0.55"/>
+      <stop offset="52%"  stop-color="#A78747" stop-opacity="0.55"/>
+      <stop offset="80%"  stop-color="#A78747" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#A78747" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="arch-line" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#1A4826" stop-opacity="0"/>
+      <stop offset="30%"  stop-color="#1A4826" stop-opacity="0.7"/>
+      <stop offset="49%"  stop-color="#2E6A36" stop-opacity="0.8"/>
+      <stop offset="51%"  stop-color="#A78747" stop-opacity="0.8"/>
+      <stop offset="70%"  stop-color="#A78747" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#A78747" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- الجسم الرئيسي للقوس -->
+  <path d="M0,56 Q150,56 450,10 Q510,2 560,1 Q580,0 600,0.5 Q620,0 640,1 Q690,2 750,10 Q1050,56 1200,56 Z"
+        fill="url(#arch-grad)"/>
+  <!-- خط حافة القوس الرفيع -->
+  <path d="M80,56 Q300,30 480,8 Q540,2 580,1 Q600,0.8 620,1 Q660,2 720,8 Q900,30 1120,56"
+        fill="none" stroke="url(#arch-line)" stroke-width="1"/>
+  <!-- نقطة وسطى (الذروة) -->
+  <circle cx="600" cy="3" r="3" fill="#A78747" opacity="0.5"/>
+  <circle cx="600" cy="3" r="1.5" fill="#795B25" opacity="0.8"/>
+</svg>

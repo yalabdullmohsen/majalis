@@ -1,5 +1,10 @@
+import { useEffect } from "react";
+import { AlertTriangle, Globe } from "lucide-react";
 import { Link } from "wouter";
 import { CompareProvider, useCompare } from "@/components/universities/CompareContext";
+import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { applyPageSeo } from "@/lib/seo";
 import { ACCREDITATION_LABELS, ACCREDITATION_COLOR } from "@/lib/universities-service";
 import type { University, UniversityProgram } from "@/lib/universities-service";
 
@@ -43,7 +48,7 @@ function nearestDeadline(programs: UniversityProgram[]): string {
 }
 
 const COMPARE_ROWS: { label: string; fn: (u: University) => string }[] = [
-  { label: "الدولة والمدينة",   fn: (u) => `${u.country}${u.city ? ` — ${u.city}` : ""}` },
+  { label: "الدولة والمدينة",   fn: (u) => `${u.country}${u.city ? `، ${u.city}` : ""}` },
   { label: "حالة الاعتماد",     fn: (u) => ACCREDITATION_LABELS[u.accreditation_status] },
   { label: "الدرجات العلمية",   fn: (u) => degrees(u.university_programs ?? []) },
   { label: "لغة الدراسة",       fn: (u) => languages(u.university_programs ?? []) },
@@ -62,8 +67,8 @@ function CompareContent() {
       <div dir="rtl" className="flex items-center justify-center min-h-[60vh] text-center px-4">
         <div>
           <p className="text-5xl mb-4">⇔</p>
-          <p className="text-lg font-bold text-[var(--majalis-ink-soft)] mb-2">لا توجد جامعات للمقارنة</p>
-          <p className="text-sm text-[var(--majalis-ink-soft)] opacity-60 mb-4">اختر جامعتين على الأقل من الدليل لتبدأ المقارنة.</p>
+          <p className="ucp-empty-title">لا توجد جامعات للمقارنة</p>
+          <p className="ucp-empty-desc">اختر جامعتين على الأقل من الدليل لتبدأ المقارنة.</p>
           <Link href="/universities"
             className="px-5 py-2 citation-btn citation-btn--primary rounded-xl text-sm font-medium transition-colors">
             → الدليل
@@ -74,11 +79,11 @@ function CompareContent() {
   }
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-10">
+    <div dir="rtl" className="ucp-root">
       {/* Header */}
-      <div className="text-white px-4 py-6" style={{ background: "linear-gradient(to left, var(--majalis-emerald-deep), var(--majalis-emerald))" }}>
+      <div className="text-white px-4 py-6 ldb-hero">
         <div className="max-w-5xl mx-auto">
-          <Link href="/universities" className="text-emerald-200 text-sm hover:text-white mb-3 block w-fit">
+          <Link href="/universities" className="text-white/70 text-sm hover:text-white mb-3 block w-fit">
             → دليل الجامعات
           </Link>
           <h1 className="text-xl font-bold">⇔ مقارنة الجامعات ({compareList.length})</h1>
@@ -87,33 +92,27 @@ function CompareContent() {
 
       <div className="max-w-5xl mx-auto px-2 py-6 overflow-x-auto">
         {/* تنبيه */}
-        <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800
-          rounded-xl px-4 py-2 text-xs text-amber-700 dark:text-amber-300 mb-4">
-          ⚠️ البيانات تجريبية — تحقق من الموقع الرسمي لكل جامعة قبل التقديم.
+        <div className="ucp-alert">
+          <AlertTriangle size={13} className="inline ml-1" />البيانات تجريبية، تحقق من الموقع الرسمي لكل جامعة قبل التقديم.
         </div>
 
         {/* جدول المقارنة */}
-        <div className="bg-[var(--majalis-panel)] rounded-2xl border border-[var(--majalis-line)]
-          overflow-hidden shadow-sm">
+        <div className="ucp-table-wrap">
           <table className="w-full min-w-[600px]">
             <thead>
-              <tr className="border-b border-[var(--majalis-line)]">
-                <th className="px-4 py-3 text-right text-xs font-semibold text-[var(--majalis-ink-soft)]
-                  w-32 sticky right-0 bg-[var(--majalis-panel)]">المعيار</th>
+              <tr className="ucp-table-header-row">
+                <th className="ucp-th-label">المعيار</th>
                 {compareList.map((u) => (
                   <th key={u.slug} className="px-4 py-3 text-center min-w-[180px]">
                     <div className="space-y-1">
-                      <p className="text-sm font-bold text-[var(--majalis-ink)] leading-snug">
-                        {u.name_ar}
-                      </p>
+                      <p className="ucp-uni-name">{u.name_ar}</p>
                       <div className="flex justify-center gap-1">
-                        <a href={`/universities/${u.slug}`}
-                          className="text-xs text-[var(--majalis-emerald)] hover:underline">
+                        <a href={`/universities/${u.slug}`} className="ucp-detail-link">
                           التفاصيل
                         </a>
-                        <span className="text-gray-300">|</span>
+                        <span className="ucp-sep">|</span>
                         <button type="button" onClick={() => removeFromCompare(u.slug)}
-                          className="text-xs text-red-400 hover:text-red-600">إزالة</button>
+                          className="ucp-danger-btn">إزالة</button>
                       </div>
                     </div>
                   </th>
@@ -123,18 +122,13 @@ function CompareContent() {
             <tbody>
               {COMPARE_ROWS.map((row, i) => (
                 <tr key={row.label}
-                  className={`border-b border-[var(--majalis-line)] ${
-                    i % 2 === 0 ? "bg-[var(--majalis-parchment)]" : ""
-                  }`}>
-                  <td className="px-4 py-3 text-xs font-semibold text-[var(--majalis-ink-soft)]
-                    sticky right-0 bg-inherit">
-                    {row.label}
-                  </td>
+                  className={`ucp-table-row${i % 2 === 0 ? " ucp-table-row--even" : ""}`}>
+                  <td className="ucp-td-label">{row.label}</td>
                   {compareList.map((u) => (
-                    <td key={u.slug} className="px-4 py-3 text-sm text-center text-[var(--majalis-ink-soft)]">
+                    <td key={u.slug} className="ucp-td-val">
                       {row.label === "حالة الاعتماد" ? (
-                        <span className="px-2 py-0.5 rounded-full text-white text-xs font-medium"
-                          style={{ background: ACCREDITATION_COLOR[u.accreditation_status] }}>
+                        <span className="px-2 py-0.5 rounded-full text-white text-xs font-medium ucp-acc-badge"
+                          style={{ "--acc-color": ACCREDITATION_COLOR[u.accreditation_status] } as React.CSSProperties}>
                           {row.fn(u)}
                         </span>
                       ) : row.fn(u)}
@@ -147,23 +141,48 @@ function CompareContent() {
         </div>
 
         {/* روابط التقديم */}
-        <div className="mt-4 grid gap-3" style={{ gridTemplateColumns: `repeat(${compareList.length}, minmax(0,1fr))` }}>
+        <div className="mt-4 ucp-apply-grid" style={{ "--col-count": compareList.length } as React.CSSProperties}>
           {compareList.map((u) => (
             u.website_url ? (
               <a key={u.slug} href={u.website_url} target="_blank" rel="noopener noreferrer"
-                className="text-center py-2.5 citation-btn citation-btn--primary
-                  rounded-xl text-sm font-medium transition-colors">
-                🌐 موقع {u.name_ar.split(" ")[1] || u.name_ar} ↗
+                className="text-center py-2.5 citation-btn citation-btn--primary rounded-xl text-sm font-medium transition-colors">
+                <Globe size={13} className="inline ml-1" />موقع {u.name_ar.split(" ")[1] || u.name_ar} ↗
               </a>
             ) : <div key={u.slug} />
           ))}
         </div>
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="مقارنة الجامعات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/universities/compare" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في الفقه والتاريخ" count={4} />
       </div>
     </div>
   );
 }
 
 export default function UniversitiesComparePage() {
+  useEffect(() => {
+    applyPageSeo({
+      path: "/universities/compare",
+      title: "مقارنة الجامعات الإسلامية | المجلس العلمي",
+      description: "قارن بين الجامعات الإسلامية، التخصصات والاعتمادات والبرامج الأكاديمية جنباً إلى جنب.",
+      keywords: ["مقارنة جامعات", "جامعات إسلامية", "دراسة شرعية", "اعتماد أكاديمي", "مقارنة برامج"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "مقارنة الجامعات الإسلامية",
+          url: "https://www.majlisilm.com/universities/compare",
+          description: "مقارنة تفصيلية بين الجامعات الإسلامية في التخصصات والبرامج الأكاديمية",
+          about: { "@type": "Thing", name: "الجامعات الإسلامية والدراسة الشرعية" },
+        },
+      ],
+    });
+  }, []);
+
   return (
     <CompareProvider>
       <CompareContent />

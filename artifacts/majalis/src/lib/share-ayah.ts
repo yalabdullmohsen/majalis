@@ -2,16 +2,15 @@
  * مشاركة آية: نسخ النص أو توليد صورة مصممة بـ Canvas.
  */
 
-export async function copyAyahText(text: string, surahName: string, ayahNum: number): Promise<boolean> {
-  const formatted = `${text} ﴿${ayahNum}﴾\n— سورة ${surahName}`;
+async function copyPlainText(text: string): Promise<boolean> {
   try {
-    await navigator.clipboard.writeText(formatted);
+    await navigator.clipboard.writeText(text);
     return true;
   } catch {
     // Fallback for older browsers
     try {
       const el = document.createElement("textarea");
-      el.value = formatted;
+      el.value = text;
       el.style.position = "fixed";
       el.style.opacity = "0";
       document.body.appendChild(el);
@@ -23,6 +22,39 @@ export async function copyAyahText(text: string, surahName: string, ayahNum: num
       return false;
     }
   }
+}
+
+export async function copyAyahText(text: string, surahName: string, ayahNum: number): Promise<boolean> {
+  return copyPlainText(`${text} ﴿${ayahNum}﴾\n— سورة ${surahName}`);
+}
+
+/**
+ * إزالة التشكيل فقط (الحركات، السكون، التنوين، المدّ...) دون أي تعديل آخر
+ * على الحروف نفسها (لا توحيد للهمزات، لا حذف ألف خنجرية) — نسخة "قراءة
+ * بلا تشكيل" أمينة للرسم العثماني الأصلي، لا نسخة مطبَّعة للمطابقة (تلك
+ * موجودة بغرض مختلف تمامًا في src/lib/recitation-ai/quran-normalize.ts
+ * ولا تصلح هنا لأنها تُوحِّد أشكال الهمزة وتُسقط الألف الخنجرية — تغييرات
+ * لا يريدها مستخدم يطلب فقط "بلا تشكيل").
+ */
+export function stripArabicDiacritics(text: string): string {
+  return text.replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\uFEFF]/g, "");
+}
+
+export async function copyAyahTextPlain(text: string, surahName: string, ayahNum: number): Promise<boolean> {
+  return copyPlainText(`${stripArabicDiacritics(text)} ﴿${ayahNum}﴾\n— سورة ${surahName}`);
+}
+
+export async function shareAyahAsText(text: string, surahName: string, ayahNum: number): Promise<boolean> {
+  const formatted = `${text} ﴿${ayahNum}﴾\n— سورة ${surahName}`;
+  if (navigator.share) {
+    try {
+      await navigator.share({ text: formatted, title: `آية ${ayahNum} — سورة ${surahName}` });
+      return true;
+    } catch {
+      // المستخدم أغلق نافذة المشاركة أو فشلت — نرجع لنسخ النص بدل ترك الزر بلا أثر
+    }
+  }
+  return copyPlainText(formatted);
 }
 
 type ShareImageOptions = {
@@ -49,16 +81,16 @@ export async function generateAyahImage(opts: ShareImageOptions): Promise<string
   ctx.fillRect(0, 0, W, H);
 
   // ── Gold border ──
-  ctx.strokeStyle = "rgba(176,141,46,0.5)";
+  ctx.strokeStyle = "rgba(23,61,53,0.5)";
   ctx.lineWidth = 3;
   ctx.strokeRect(20, 20, W - 40, H - 40);
-  ctx.strokeStyle = "rgba(176,141,46,0.25)";
+  ctx.strokeStyle = "rgba(23,61,53,0.25)";
   ctx.lineWidth = 1;
   ctx.strokeRect(30, 30, W - 60, H - 60);
 
   // ── Corner ornaments (simple crosses) ──
   const corners = [[40,40],[W-40,40],[40,H-40],[W-40,H-40]] as const;
-  ctx.strokeStyle = "rgba(176,141,46,0.7)";
+  ctx.strokeStyle = "rgba(23,61,53,0.7)";
   ctx.lineWidth = 1.5;
   for (const [cx,cy] of corners) {
     ctx.beginPath(); ctx.moveTo(cx-10,cy); ctx.lineTo(cx+10,cy); ctx.stroke();
@@ -80,13 +112,13 @@ export async function generateAyahImage(opts: ShareImageOptions): Promise<string
   wrapText(ctx, text, W / 2, startY, maxWidth, lineHeight);
 
   // ── Ayah number ──
-  ctx.font = `bold 22px "Cairo", "Tajawal", sans-serif`;
-  ctx.fillStyle = "rgba(176,141,46,0.9)";
+  ctx.font = `bold 22px "IBM Plex Sans Arabic", "Noto Sans Arabic", sans-serif`;
+  ctx.fillStyle = "rgba(23,61,53,0.9)";
   const surahLine = `سورة ${surahName} ﴿${ayahNum}﴾`;
   ctx.fillText(surahLine, W / 2, H - 80);
 
   // ── Site watermark ──
-  ctx.font = `14px "Cairo", "Tajawal", sans-serif`;
+  ctx.font = `14px "IBM Plex Sans Arabic", "Noto Sans Arabic", sans-serif`;
   ctx.fillStyle = "rgba(255,255,255,0.35)";
   ctx.fillText("المجلس العلمي", W / 2, H - 45);
   ctx.restore();

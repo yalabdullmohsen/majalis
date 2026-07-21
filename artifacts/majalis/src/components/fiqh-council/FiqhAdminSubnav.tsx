@@ -1,5 +1,4 @@
 import { Link } from "wouter";
-import { C } from "@/lib/theme";
 
 const LINKS = [
   { href: "/admin", label: "المجمع الفقهي" },
@@ -15,10 +14,6 @@ export function FiqhAdminSubnav({ active }: { active: string }) {
           key={href}
           href={href}
           className={active === href ? "fiqh-admin-subnav-link fiqh-admin-subnav-link--active" : "fiqh-admin-subnav-link"}
-          style={{
-            color: active === href ? C.emeraldDeep : C.inkSoft,
-            fontWeight: active === href ? 700 : 400,
-          }}
         >
           {label}
         </Link>

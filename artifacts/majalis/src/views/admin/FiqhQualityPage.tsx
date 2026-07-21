@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { FiqhAdminSubnav } from "@/components/fiqh-council/FiqhAdminSubnav";
 import {
   adminGetFiqhQualityStats,
@@ -9,7 +9,6 @@ import {
   adminTriggerFiqhLinkCheck,
 } from "@/lib/fiqh-council-supabase";
 import type { FiqhQualityStats, FiqhReviewLog } from "@/lib/fiqh-council-types";
-import { C } from "@/lib/theme";
 
 function StatCard({ label, value, tone }: { label: string; value: number | string; tone?: string }) {
   return (
@@ -54,14 +53,14 @@ function QualityContent() {
     const result = await adminTriggerFiqhLinkCheck();
     setCheckingLinks(false);
     if (result.ok) {
-      showSuccess(`تم فحص ${result.result?.checked || 0} رابط — معطل: ${result.result?.broken || 0}`);
+      showSuccess(`تم فحص ${result.result?.checked || 0} رابط، معطل: ${result.result?.broken || 0}`);
       await load();
     } else {
       showError(result.error || "فشل فحص الروابط");
     }
   };
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonCardGrid count={6} />;
 
   const s = stats || {
     published_count: 0,
@@ -102,7 +101,7 @@ function QualityContent() {
       <section className="fiqh-quality-logs ui-card">
         <h2>آخر عمليات المراجعة</h2>
         {logs.length === 0 ? (
-          <p style={{ color: C.inkSoft }}>لا توجد سجلات مراجعة بعد.</p>
+          <p className="adm-empty-msg">لا توجد سجلات مراجعة بعد.</p>
         ) : (
           <ul className="fiqh-quality-log-list">
             {logs.map((log) => (
@@ -111,7 +110,7 @@ function QualityContent() {
                 {log.from_status && log.to_status && <> · {log.from_status} → {log.to_status}</>}
                 {log.actor_email && <> · {log.actor_email}</>}
                 {log.created_at && <> · {new Date(log.created_at).toLocaleString("ar")}</>}
-                {log.notes && <span style={{ color: C.inkSoft }}> — {log.notes}</span>}
+                {log.notes && <span className="adm-empty-msg">، {log.notes}</span>}
               </li>
             ))}
           </ul>

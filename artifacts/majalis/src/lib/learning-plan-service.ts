@@ -11,12 +11,12 @@ export const LEVEL_LABELS: Record<PlanLevel, string> = {
 };
 
 export const INTEREST_OPTIONS = [
-  { id: "aqeedah", label: "العقيدة", icon: "🕌" },
-  { id: "fiqh", label: "الفقه", icon: "📜" },
-  { id: "hadith", label: "الحديث", icon: "📿" },
-  { id: "quran", label: "القرآن والتفسير", icon: "📖" },
-  { id: "seerah", label: "السيرة", icon: "🌙" },
-  { id: "akhlaq", label: "الأخلاق والتزكية", icon: "💎" },
+  { id: "aqeedah", label: "العقيدة", icon: "Landmark" },
+  { id: "fiqh", label: "الفقه", icon: "ScrollText" },
+  { id: "hadith", label: "الحديث", icon: "Repeat2" },
+  { id: "quran", label: "القرآن والتفسير", icon: "BookOpen" },
+  { id: "seerah", label: "السيرة", icon: "Moon" },
+  { id: "akhlaq", label: "الأخلاق والتزكية", icon: "Gem" },
 ] as const;
 
 export type InterestId = (typeof INTEREST_OPTIONS)[number]["id"];

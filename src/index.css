@@ -679,8 +679,8 @@ input, textarea, select { font-family: inherit; }
 
 html[data-theme="light"] .home-page {
   background:
-    radial-gradient(circle at top right, rgba(154,113,40,.07), transparent 32rem),
-    linear-gradient(180deg, #FAFAF7 0%, #FAF3E4 52%, #F5ECD8 100%);
+    radial-gradient(circle at top right, rgba(14,110,82,.06), transparent 32rem),
+    linear-gradient(180deg, #FAFAF7 0%, #FAF8F5 100%);
 }
 
 .home-container {

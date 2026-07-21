@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "wouter";
 import { SearchSkeleton } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
 import { displayText } from "@/lib/display-text";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   fetchTopicContent,
   SECTION_LABELS,
   type IntelligentSearchResult,
   type TopicSection,
 } from "@/lib/scholarly-intelligence-service";
+import { applyPageSeo } from "@/lib/seo";
 
 function SectionGroup({
   title,
@@ -18,14 +21,14 @@ function SectionGroup({
 }) {
   if (!items.length) return null;
   return (
-    <section className="search-results-group" style={{ marginBottom: "2rem" }}>
+    <section className="search-results-group tpc-section-group">
       <h2 className="search-results-group-title">
         {title}
         <span className="search-results-count">{items.length}</span>
       </h2>
       <div className="search-results-list">
         {items.map((item) => (
-          <Link key={`${item.kind}-${item.id || item.title}`} href={item.href} style={{ textDecoration: "none" }}>
+          <Link key={`${item.kind}-${item.id || item.title}`} href={item.href} className="tpc-result-link">
             <div className="search-result-row">
               <div className="search-result-copy">
                 <span>{displayText(item.title)}</span>
@@ -51,6 +54,16 @@ export default function TopicPage() {
   const [sections, setSections] = useState<TopicSection | null>(null);
   const [totalCount, setTotalCount] = useState(0);
   const [relatedTopics, setRelatedTopics] = useState<Array<{ slug: string; title: string }>>([]);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: `/topic/${topic?.slug || slug}`,
+      title: `${topic?.title || "موضوع"} | المجلس العلمي`,
+      description: `استعرض محتوى موضوع "${topic?.title || "الموضوع"}" من الدروس والفتاوى والأحاديث في المجلس العلمي.`,
+      keywords: [topic?.title || "موضوع", "محتوى إسلامي", "فتاوى", "دروس", "أحاديث"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: topic?.title || "موضوع إسلامي", url: `https://www.majlisilm.com/topic/${topic?.slug || ""}`, about: { "@type": "Thing", name: topic?.title || "الموضوعات الإسلامية" } }],
+    });
+  }, [topic?.title]);
 
   useEffect(() => {
     if (!slug) return;
@@ -80,15 +93,15 @@ export default function TopicPage() {
 
   return (
     <div className="page-shell narrow search-page">
-      <nav style={{ marginBottom: "1rem", fontSize: "0.875rem" }}>
+      <nav className="tpc-breadcrumb" aria-label="مسار التنقل">
         <Link href="/topics">الموضوعات العلمية</Link>
-        <span style={{ margin: "0 0.5rem" }}>/</span>
+        <span className="tpc-sep">/</span>
         <span>{topic.title}</span>
       </nav>
 
       <h1 className="search-page-title">{topic.title}</h1>
       {topic.title_en && (
-        <p className="search-page-hint" style={{ marginTop: "-0.5rem" }}>
+        <p className="search-page-hint tpc-title-en">
           {topic.title_en}
         </p>
       )}
@@ -106,27 +119,24 @@ export default function TopicPage() {
       )}
 
       {relatedTopics.length > 0 && (
-        <aside style={{ marginTop: "2rem", padding: "1rem", borderRadius: "0.5rem", border: "1px solid var(--line, #e5e7eb)" }}>
-          <h2 style={{ fontSize: "1rem", fontWeight: 700, marginBottom: "0.75rem" }}>موضوعات ذات صلة</h2>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+        <aside className="tpc-related">
+          <h2 className="tpc-related__title">موضوعات ذات صلة</h2>
+          <div className="tpc-related__chips">
             {relatedTopics.map((t) => (
-              <Link
-                key={t.slug}
-                href={`/topics/${t.slug}`}
-                style={{
-                  padding: "0.375rem 0.75rem",
-                  borderRadius: "999px",
-                  background: "var(--panel-soft, #f3f4f6)",
-                  textDecoration: "none",
-                  fontSize: "0.875rem",
-                }}
-              >
+              <Link key={t.slug} href={`/topics/${t.slug}`} className="tpc-related__chip">
                 {t.title}
               </Link>
             ))}
           </div>
         </aside>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="موضوعات المجلس العلمي" url="https://www.majlisilm.com/topics" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["fiqh", "aqeeda", "hadith"]} title="اختبر معلوماتك في هذا الموضوع" count={4} />
+      </div>
     </div>
   );
 }

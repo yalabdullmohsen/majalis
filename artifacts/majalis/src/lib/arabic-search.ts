@@ -1,4 +1,15 @@
+/**
+ * arabic-search.ts
+ * وحدة البحث العربي — تعتمد على @/shared/arabic-normalize كقاعدة مشتركة.
+ *
+ * ⚠️ normalizeArabic() مُعاد تصديرها من الوحدة المشتركة للتوافق الخلفي.
+ *    كل الاستخدامات الجديدة تستورد مباشرةً من @/shared/arabic-normalize.
+ */
+import { normalizeArabic } from "@/shared/arabic-normalize";
 import { expandSearchTerms } from "@/lib/search-synonyms";
+
+// إعادة تصدير للتوافق الخلفي مع الملفات التي تستورد من arabic-search
+export { normalizeArabic };
 
 function expandArabicVariants(normalized: string): string[] {
   const variants = new Set<string>([normalized]);
@@ -12,20 +23,6 @@ function expandArabicVariants(normalized: string): string[] {
   variants.add(normalized.replace(/ا/g, ""));
 
   return [...variants].filter(Boolean);
-}
-
-/** Remove tashkeel and normalize Arabic letters for fuzzy matching. */
-export function normalizeArabic(text: string): string {
-  return (text || "")
-    .replace(/[\u064B-\u065F\u0670\u0640]/g, "")
-    .replace(/[أإآٱ]/g, "ا")
-    .replace(/[ؤ]/g, "و")
-    .replace(/[ئ]/g, "ي")
-    .replace(/[ة]/g, "ه")
-    .replace(/[ى]/g, "ي")
-    .replace(/\s+/g, " ")
-    .trim()
-    .toLowerCase();
 }
 
 function editDistanceAtMostOne(a: string, b: string): boolean {
@@ -95,6 +92,11 @@ export function arabicSearchPatterns(term: string): string[] {
   const variants = new Set<string>();
   for (const expanded of expandSearchTerms(base)) {
     variants.add(expanded);
+    // نضمن دومًا وجود الصيغة المطبَّعة الكاملة (بلا تشكيل) بين الأنماط —
+    // وإلا فاستدعاء هذه الدالة على نص لم يُطبَّع مسبقًا (كمصطلح فيه شدة، مثل
+    // "مصلّى") ينتج أنماطًا لا تلتقي أبدًا مع نتيجة استدعائها على "مصلي"
+    // المطبَّعة، فيفشل البحث الفعلي بين الصيغتين رغم أنهما نفس الكلمة.
+    variants.add(normalizeArabic(expanded));
     const hamzaMap: Record<string, string[]> = {
       ا: ["أ", "إ", "آ", "ٱ"],
       و: ["ؤ"],

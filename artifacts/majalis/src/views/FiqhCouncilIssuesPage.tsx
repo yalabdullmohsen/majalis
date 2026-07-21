@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
 import { getFiqhIssues } from "@/lib/fiqh-council-issues-service";
 import { FIQH_COUNCIL_CATEGORIES, fiqhIssueHref, type FiqhCouncilIssue } from "@/lib/fiqh-council-types";
 import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 
 export default function FiqhCouncilIssuesPage() {
@@ -15,8 +17,8 @@ export default function FiqhCouncilIssuesPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fiqh-council/issues",
-      title: "المسائل الفقهية | المجمع الفقهي — المجلس العلمي",
-      description: "موسوعة المسائل الفقهية — ملفات جامعة تربط القرارات والفتاوى والبحوث والتوصيات والأدلة.",
+      title: "المسائل الفقهية | المجمع الفقهي، المجلس العلمي",
+      description: "موسوعة المسائل الفقهية، ملفات جامعة تربط القرارات والفتاوى والبحوث والتوصيات والأدلة.",
       keywords: ["المسائل الفقهية", "المجمع الفقهي", "قرارات فقهية", "فتاوى جماعية"],
       jsonLd: [
         breadcrumbJsonLd([
@@ -40,18 +42,20 @@ export default function FiqhCouncilIssuesPage() {
       <PageHeader
         eyebrow="موسوعة علمية"
         title="المسائل الفقهية"
-        subtitle="كل مسألة ملف جامع يربط القرارات والفتاوى والبحوث والتوصيات والأدلة — لا فتوى منفردة."
+        subtitle="كل مسألة ملف جامع يربط القرارات والفتاوى والبحوث والتوصيات والأدلة، لا فتوى منفردة."
       />
 
       <FiqhCouncilSubnav />
 
-      <div className="content-hub-chips" style={{ marginBottom: "1rem" }}>
+      <div className="content-hub-chips fci-chips-row" role="tablist" aria-label="تصفية مسائل مجلس الفقه">
         {["الكل", ...FIQH_COUNCIL_CATEGORIES].map((cat) => (
           <button
             key={cat}
+            role="tab"
             type="button"
             onClick={() => setCategory(cat)}
             className={category === cat ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+            aria-selected={category === cat}
           >
             {cat}
           </button>
@@ -59,7 +63,7 @@ export default function FiqhCouncilIssuesPage() {
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid />
       ) : issues.length === 0 ? (
         <Empty text="لا توجد مسائل فقهية منشورة في هذا التصنيف." />
       ) : (
@@ -81,6 +85,13 @@ export default function FiqhCouncilIssuesPage() {
           ))}
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="المسائل الفقهية — المجمع الفقهي | المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/issues" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في المسائل الفقهية" count={4} />
+      </div>
     </div>
   );
 }

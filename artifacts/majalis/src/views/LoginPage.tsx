@@ -5,9 +5,10 @@ import { ADMIN_ACCESS_DENIED_MESSAGE, mapAuthError } from "@/lib/auth-messages";
 import { hasUnrestrictedAdminAccess, isOwnerAuthUser, resolveUserEmail } from "@/lib/owner-config";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { bootstrapSupabaseFromServer } from "@/lib/supabase-bootstrap";
-import { signInWithGoogle } from "@/lib/supabase";
+import { signInWithGoogle, GOOGLE_OAUTH_ENABLED } from "@/lib/supabase";
 import { preloadRoute } from "@/lib/lazy-with-retry";
 import { Loading } from "@/components/ui-common";
+import { applyPageSeo } from "@/lib/seo";
 
 function canAccessAdminUser(current: Awaited<ReturnType<typeof import("@/lib/supabase").getCurrentUser>>) {
   if (!current) return false;
@@ -40,6 +41,16 @@ function isAdminLogin(nextPath: string) {
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/login",
+      title: "تسجيل الدخول | المجلس العلمي",
+      description: "سجّل دخولك إلى المجلس العلمي للوصول إلى محتوى شخصي وأدوات متقدمة.",
+      keywords: ["تسجيل دخول", "المجلس العلمي"],
+      robots: "noindex, follow",
+    });
+  }, []);
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [denied, setDenied] = useState(false);
@@ -118,7 +129,7 @@ export default function LoginPage() {
     <div className="login-page">
       <div className="login-card">
         <div className="login-card__header">
-          <img src="/logo.png" alt="المجلس العلمي" className="login-logo" />
+          <img src="/logo.png" alt="المجلس العلمي" className="login-logo" loading="eager" decoding="async" width="512" height="512" />
           <p className="login-card__brand">المجلس العلمي</p>
           <h1 className="login-card__title">{adminLogin ? "دخول المسؤول" : "تسجيل الدخول"}</h1>
           <p className="login-card__subtitle">
@@ -176,7 +187,7 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {!adminLogin && authEnabled && (
+        {!adminLogin && authEnabled && GOOGLE_OAUTH_ENABLED && (
           <div className="login-oauth">
             <div className="login-oauth__divider"><span>أو</span></div>
             <button

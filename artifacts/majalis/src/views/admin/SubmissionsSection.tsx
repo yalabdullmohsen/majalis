@@ -1,5 +1,3 @@
-"use client";
-
 import { useCallback, useEffect, useState } from "react";
 import { useAdminShell } from "@/views/admin/AdminShell";
 import { SubmissionsReviewPanel } from "@/components/admin/SubmissionsReviewPanel";
@@ -20,7 +18,7 @@ type Submission = {
 const TYPE_COLORS: Record<ContentType, { bg: string; color: string }> = {
   "درس":       { bg: "#dbeafe", color: "#1d4ed8" },
   "فائدة":     { bg: "#d1fae5", color: "#065f46" },
-  "معلومة":    { bg: "#fef9c3", color: "#854d0e" },
+  "معلومة":    { bg: "#E6EDE9", color: "#173D35" },
   "سؤال لعبة": { bg: "#f3e8ff", color: "#7c3aed" },
   "فكرة":      { bg: "#ffe4e6", color: "#9f1239" },
 };
@@ -72,25 +70,15 @@ export function SubmissionsSection() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
-        <h2 style={{ fontSize: "1.25rem", fontWeight: 700, margin: 0 }}>مقترحات المحتوى</h2>
-        <div style={{ display: "flex", gap: "0.5rem" }}>
+      <div className="sub-header">
+        <h2 className="sub-title">مقترحات المحتوى</h2>
+        <div className="sub-filter-row">
           {(["pending", "approved", "rejected"] as const).map((s) => (
             <button
               key={s}
               type="button"
               onClick={() => setFilter(s)}
-              style={{
-                padding: "0.375rem 0.875rem",
-                borderRadius: "0.375rem",
-                border: `1px solid ${filter === s ? "#C9A84C" : "#e5e7eb"}`,
-                background: filter === s ? "#fffbeb" : "#fff",
-                color: filter === s ? "#92400e" : "#6b7280",
-                fontWeight: filter === s ? 700 : 400,
-                cursor: "pointer",
-                fontFamily: "inherit",
-                fontSize: "0.8125rem",
-              }}
+              className={`sub-filter-btn${filter === s ? " sub-filter-btn--active" : ""}`}
             >
               {s === "pending" ? "معلّق" : s === "approved" ? "موافق عليه" : "مرفوض"}
             </button>
@@ -98,104 +86,67 @@ export function SubmissionsSection() {
         </div>
       </div>
 
-      {loading && <p style={{ color: "#9ca3af" }}>جارٍ التحميل...</p>}
+      {loading && <p className="sub-loading">جارٍ التحميل...</p>}
 
       {!loading && items.length === 0 && (
-        <p style={{ color: "#9ca3af", padding: "2rem", textAlign: "center" }}>
+        <p className="sub-empty">
           لا توجد {filter === "pending" ? "مقترحات معلّقة" : "سجلات"}.
         </p>
       )}
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
-        {items.map((item) => (
-          <div
-            key={item.id}
-            style={{
-              padding: "1rem 1.25rem",
-              background: "#fff",
-              borderRadius: "0.5rem",
-              border: "1px solid #e5e7eb",
-              boxShadow: "0 1px 3px rgba(0,0,0,.05)",
-            }}
-          >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem" }}>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.25rem" }}>
-                  <span
-                    style={{
-                      fontSize: "0.7rem",
-                      fontWeight: 700,
-                      padding: "0.15rem 0.5rem",
-                      borderRadius: "0.25rem",
-                      ...(TYPE_COLORS[item.type as ContentType] ?? { bg: "#f3f4f6", color: "#374151" }),
-                      background: (TYPE_COLORS[item.type as ContentType] ?? { bg: "#f3f4f6" }).bg,
-                      color: (TYPE_COLORS[item.type as ContentType] ?? { color: "#374151" }).color,
-                    }}
-                  >
-                    {item.type}
-                  </span>
+      <div className="sub-list">
+        {items.map((item) => {
+          const typeColor = TYPE_COLORS[item.type as ContentType] ?? { bg: "#f3f4f6", color: "#68716D" };
+          const isActing = acting === item.id;
+          return (
+            <div key={item.id} className="sub-card">
+              <div className="sub-card__row">
+                <div className="sub-card__body">
+                  <div className="sub-card__tags">
+                    <span
+                      className="sub-type-badge"
+                      style={{ "--sub-type-bg": typeColor.bg, "--sub-type-color": typeColor.color } as React.CSSProperties}
+                    >
+                      {item.type}
+                    </span>
+                  </div>
+                  <p className="sub-card__title">{item.title}</p>
+                  <p className="sub-card__content">
+                    {(() => { const content = item.content ?? ""; return content.length > 300 ? `${content.slice(0, 300)}...` : content; })()}
+                  </p>
+                  <p className="sub-card__meta">
+                    {item.author ? `بقلم: ${item.author} · ` : ""}
+                    {new Date(item.created_at).toLocaleDateString("ar-KW", { dateStyle: "medium" })}
+                  </p>
                 </div>
-                <p style={{ fontWeight: 600, margin: "0 0 0.25rem", color: "#0D1B2A", wordBreak: "break-word" }}>
-                  {item.title}
-                </p>
-                <p style={{ color: "#6b7280", fontSize: "0.85rem", margin: "0 0 0.5rem", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
-                  {(() => { const content = item.content ?? ""; return content.length > 300 ? `${content.slice(0, 300)}...` : content; })()}
-                </p>
-                <p style={{ fontSize: "0.75rem", color: "#9ca3af", margin: 0 }}>
-                  {item.author ? `بقلم: ${item.author} · ` : ""}
-                  {new Date(item.created_at).toLocaleDateString("ar-KW", { dateStyle: "medium" })}
-                </p>
-              </div>
 
-              {filter === "pending" && (
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", flexShrink: 0 }}>
-                  <button
-                    type="button"
-                    disabled={acting === item.id}
-                    onClick={() => act(item.id, "approve")}
-                    style={{
-                      padding: "0.4rem 0.875rem",
-                      background: "#16a34a",
-                      color: "#fff",
-                      border: "none",
-                      borderRadius: "0.375rem",
-                      fontSize: "0.8125rem",
-                      fontWeight: 600,
-                      cursor: acting === item.id ? "not-allowed" : "pointer",
-                      fontFamily: "inherit",
-                      opacity: acting === item.id ? 0.6 : 1,
-                    }}
-                  >
-                    موافقة
-                  </button>
-                  <button
-                    type="button"
-                    disabled={acting === item.id}
-                    onClick={() => act(item.id, "reject")}
-                    style={{
-                      padding: "0.4rem 0.875rem",
-                      background: "#dc2626",
-                      color: "#fff",
-                      border: "none",
-                      borderRadius: "0.375rem",
-                      fontSize: "0.8125rem",
-                      fontWeight: 600,
-                      cursor: acting === item.id ? "not-allowed" : "pointer",
-                      fontFamily: "inherit",
-                      opacity: acting === item.id ? 0.6 : 1,
-                    }}
-                  >
-                    رفض
-                  </button>
-                </div>
-              )}
+                {filter === "pending" && (
+                  <div className="sub-action-col">
+                    <button
+                      type="button"
+                      disabled={isActing}
+                      onClick={() => act(item.id, "approve")}
+                      className={`sub-approve-btn${isActing ? " sub-approve-btn--acting" : ""}`}
+                    >
+                      موافقة
+                    </button>
+                    <button
+                      type="button"
+                      disabled={isActing}
+                      onClick={() => act(item.id, "reject")}
+                      className={`sub-reject-btn${isActing ? " sub-reject-btn--acting" : ""}`}
+                    >
+                      رفض
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
-      {/* ── رفع الأذان والدروس ─────────────────────────────── */}
-      <div style={{ borderTop: "2px solid #f3f4f6", marginTop: "2rem", paddingTop: "0.5rem" }}>
+      <div className="sub-divider">
         <SubmissionsReviewPanel />
       </div>
     </div>

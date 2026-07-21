@@ -7,7 +7,7 @@ import { ButtonProps, buttonVariants } from "@/components/ui/button"
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
     role="navigation"
-    aria-label="pagination"
+    aria-label="التنقل بين الصفحات"
     className={cn("mx-auto flex w-full justify-center", className)}
     {...props}
   />
@@ -39,6 +39,11 @@ type PaginationLinkProps = {
 } & Pick<ButtonProps, "size"> &
   React.ComponentProps<"a">
 
+// ملاحظة وصول (jsx-a11y/anchor-has-content في تدقيق منفصل غير مُفعَّل ضمن
+// بوابة lint الرئيسية بعد): مكوّن أساسي عام (نمط shadcn/ui) يمرِّر children
+// عبر {...props}، فلا يستطيع التحليل الساكن التأكّد من وجود نص حقيقي —
+// وهذا هو الاستخدام المقصود الوحيد له. غير مُستخدَم حاليًا في أي مكان بالموقع
+// (بحث فعلي أكَّد ذلك)، فلا أثر حقيقي على أي مستخدم الآن.
 const PaginationLink = ({
   className,
   isActive,
@@ -64,13 +69,13 @@ const PaginationPrevious = ({
   ...props
 }: React.ComponentProps<typeof PaginationLink>) => (
   <PaginationLink
-    aria-label="Go to previous page"
+    aria-label="الصفحة السابقة"
     size="default"
     className={cn("gap-1 pl-2.5", className)}
     {...props}
   >
     <ChevronLeft className="h-4 w-4" />
-    <span>Previous</span>
+    <span>السابق</span>
   </PaginationLink>
 )
 PaginationPrevious.displayName = "PaginationPrevious"
@@ -80,12 +85,12 @@ const PaginationNext = ({
   ...props
 }: React.ComponentProps<typeof PaginationLink>) => (
   <PaginationLink
-    aria-label="Go to next page"
+    aria-label="الصفحة التالية"
     size="default"
     className={cn("gap-1 pr-2.5", className)}
     {...props}
   >
-    <span>Next</span>
+    <span>التالي</span>
     <ChevronRight className="h-4 w-4" />
   </PaginationLink>
 )
@@ -101,7 +106,7 @@ const PaginationEllipsis = ({
     {...props}
   >
     <MoreHorizontal className="h-4 w-4" />
-    <span className="sr-only">More pages</span>
+    <span className="sr-only">المزيد من الصفحات</span>
   </span>
 )
 PaginationEllipsis.displayName = "PaginationEllipsis"

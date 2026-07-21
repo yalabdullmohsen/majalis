@@ -5,23 +5,14 @@ import {
   runContentProductionJob,
   type ContentProductionDashboard,
 } from "@/lib/content-production-api";
-import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminShell } from "@/views/admin/AdminShell";
 
 function StatCard({ label, value, color }: { label: string; value: number | string; color?: string }) {
   return (
-    <div
-      style={{
-        background: C.panel,
-        border: `1px solid ${C.line}`,
-        borderRadius: "0.5rem",
-        padding: "1rem",
-        minWidth: "110px",
-      }}
-    >
-      <div style={{ fontSize: "1.4rem", fontWeight: 700, color: color || C.emeraldDeep }}>{value}</div>
-      <div style={{ fontSize: "0.8125rem", color: C.inkSoft, marginTop: "0.25rem" }}>{label}</div>
+    <div className="cpd-stat" style={color ? { "--cpd-val-color": color } as React.CSSProperties : undefined}>
+      <div className="cpd-stat__value">{value}</div>
+      <div className="cpd-stat__label">{label}</div>
     </div>
   );
 }
@@ -51,7 +42,7 @@ function ContentProductionDashboardContent() {
       await runContentProductionJob(jobId);
       load();
     } catch {
-      setJobError("تعذّر تشغيل المهمة.");
+      setJobError("\u062a\u0639\u0630\u0651\u0631 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0645\u0647\u0645\u0629.");
     } finally {
       setRunningJob(null);
     }
@@ -63,64 +54,50 @@ function ContentProductionDashboardContent() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "0.75rem", marginBottom: "1rem" }}>
+      <div className="cpd-header">
         <div>
-          <h2 style={{ margin: "0 0 0.35rem", color: C.emeraldDeep }}>إنتاج المحتوى الذاتي — Phase 4</h2>
-          <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>
-            Source → Validation → Dedup → Classification → Quality → Publishing → Indexing → Search → Statistics
+          <h2 className="cpd-title">\u0625\u0646\u062a\u0627\u062c \u0627\u0644\u0645\u062d\u062a\u0648\u0649 \u0627\u0644\u0630\u0627\u062a\u064a \u2014 Phase 4</h2>
+          <p className="cpd-subtitle">
+            Source \u2192 Validation \u2192 Dedup \u2192 Classification \u2192 Quality \u2192 Publishing \u2192 Indexing \u2192 Search \u2192 Statistics
           </p>
         </div>
-        <div style={{ display: "flex", gap: "0.75rem", fontSize: "0.8125rem", flexWrap: "wrap" }}>
-          <Link href="/admin/automation/review" style={{ color: C.emeraldDeep }}>مركز المراجعة</Link>
-          <Link href="/admin/automation/dashboard" style={{ color: C.emeraldDeep }}>أتمتة الدروس</Link>
-          <Link href="/admin/auto-content" style={{ color: C.emeraldDeep }}>المقالات RSS</Link>
+        <div className="cpd-links">
+          <Link href="/admin/automation/review" className="cpd-link">\u0645\u0631\u0643\u0632 \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629</Link>
+          <Link href="/admin/automation/dashboard" className="cpd-link">\u0623\u062a\u0645\u062a\u0629 \u0627\u0644\u062f\u0631\u0648\u0633</Link>
+          <Link href="/admin/auto-content" className="cpd-link">\u0627\u0644\u0645\u0642\u0627\u0644\u0627\u062a RSS</Link>
         </div>
       </div>
 
       {jobError && (
-        <p role="alert" style={{ margin: "0 0 1rem", padding: "0.625rem 0.75rem", borderRadius: "0.375rem", background: "#FEE2E2", border: "1px solid #FCA5A5", color: "#991B1B", fontSize: "0.8125rem" }}>
-          {jobError}
-        </p>
+        <p role="alert" className="cpd-error">{jobError}</p>
       )}
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : (
         <>
-          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginBottom: "1.25rem" }}>
-            <StatCard label="جاهزية النظام" value={`${data?.readiness?.score ?? 0}%`} />
-            <StatCard label="إنتاج اليوم" value={prod?.today?.published ?? 0} />
-            <StatCard label="إنتاج الأسبوع" value={prod?.week?.published ?? 0} />
-            <StatCard label="إنتاج الشهر" value={prod?.month?.published ?? 0} />
-            <StatCard label="مرفوض اليوم" value={prod?.today?.rejected ?? 0} color="#92400E" />
-            <StatCard label="مكرر اليوم" value={prod?.today?.duplicate ?? 0} />
-            <StatCard label="مصادر نشطة" value={data?.readiness?.activeSources ?? 0} />
-            <StatCard label="تنبيهات" value={data?.readiness?.openAlerts ?? 0} color="#991B1B" />
+          <div className="cpd-stats-row">
+            <StatCard label="\u062c\u0627\u0647\u0632\u064a\u0629 \u0627\u0644\u0646\u0638\u0627\u0645" value={`${data?.readiness?.score ?? 0}%`} />
+            <StatCard label="\u0625\u0646\u062a\u0627\u062c \u0627\u0644\u064a\u0648\u0645" value={prod?.today?.published ?? 0} />
+            <StatCard label="\u0625\u0646\u062a\u0627\u062c \u0627\u0644\u0623\u0633\u0628\u0648\u0639" value={prod?.week?.published ?? 0} />
+            <StatCard label="\u0625\u0646\u062a\u0627\u062c \u0627\u0644\u0634\u0647\u0631" value={prod?.month?.published ?? 0} />
+            <StatCard label="\u0645\u0631\u0641\u0648\u0636 \u0627\u0644\u064a\u0648\u0645" value={prod?.today?.rejected ?? 0} color="#173D35" />
+            <StatCard label="\u0645\u0643\u0631\u0631 \u0627\u0644\u064a\u0648\u0645" value={prod?.today?.duplicate ?? 0} />
+            <StatCard label="\u0645\u0635\u0627\u062f\u0631 \u0646\u0634\u0637\u0629" value={data?.readiness?.activeSources ?? 0} />
+            <StatCard label="\u062a\u0646\u0628\u064a\u0647\u0627\u062a" value={data?.readiness?.openAlerts ?? 0} color="#991B1B" />
           </div>
 
-          <section style={{ marginBottom: "1.5rem" }}>
-            <h3 style={{ color: C.emeraldDeep, fontSize: "0.9375rem" }}>Cron Jobs</h3>
-            <div style={{ display: "grid", gap: "0.5rem" }}>
+          <section className="cpd-section">
+            <h3 className="cpd-section-h3">Cron Jobs</h3>
+            <div className="cpd-jobs-list">
               {(data?.jobs || []).map((job: NonNullable<ContentProductionDashboard["jobs"]>[number]) => (
-                <div
-                  key={job.id}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    gap: "0.75rem",
-                    padding: "0.625rem 0.75rem",
-                    background: C.parchmentDeep,
-                    borderRadius: "0.375rem",
-                    fontSize: "0.8125rem",
-                  }}
-                >
+                <div key={job.id} className="cpd-job-row">
                   <div>
-                    <strong>{job.name_ar}</strong> · {job.interval_label}
+                    <strong>{job.name_ar}</strong> \u00b7 {job.interval_label}
                     {job.last_run_at && (
-                      <span style={{ color: C.inkSoft, marginRight: "0.5rem" }}>
+                      <span className="cpd-job-time">
                         {" "}
-                        — آخر تشغيل: {new Date(job.last_run_at).toLocaleString("ar-EG")}
+                        \u2014 \u0622\u062e\u0631 \u062a\u0634\u063a\u064a\u0644: {new Date(job.last_run_at).toLocaleString("ar-EG")}
                         {job.last_duration_ms ? ` (${job.last_duration_ms}ms)` : ""}
                       </span>
                     )}
@@ -129,76 +106,59 @@ function ContentProductionDashboardContent() {
                     type="button"
                     disabled={runningJob === job.id}
                     onClick={() => triggerJob(job.id)}
-                    style={{
-                      padding: "0.35rem 0.75rem",
-                      borderRadius: "0.25rem",
-                      border: "none",
-                      background: C.emerald,
-                      color: C.parchment,
-                      cursor: "pointer",
-                      fontFamily: "inherit",
-                      fontSize: "0.75rem",
-                    }}
+                    className="cpd-job-btn"
                   >
-                    {runningJob === job.id ? "..." : "تشغيل"}
+                    {runningJob === job.id ? "..." : "\u062a\u0634\u063a\u064a\u0644"}
                   </button>
                 </div>
               ))}
             </div>
           </section>
 
-          <section style={{ marginBottom: "1.5rem" }}>
-            <h3 style={{ color: C.emeraldDeep, fontSize: "0.9375rem" }}>Pipelines ({Object.keys(data?.pipelines || {}).length})</h3>
-            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+          <section className="cpd-section">
+            <h3 className="cpd-section-h3">Pipelines ({Object.keys(data?.pipelines || {}).length})</h3>
+            <div className="cpd-pipelines">
               {Object.entries(data?.pipelines || {}).map(([id, p]) => {
                 const pipe = p as { labelAr?: string; dailyQuota?: number; weeklyQuota?: number };
                 return (
-                  <span
-                    key={id}
-                    style={{
-                      padding: "0.35rem 0.65rem",
-                      borderRadius: "999px",
-                      background: C.sage,
-                      fontSize: "0.75rem",
-                    }}
-                  >
+                  <span key={id} className="cpd-pipeline-tag">
                     {pipe.labelAr || id}
-                    {pipe.dailyQuota ? ` · ${pipe.dailyQuota}/يوم` : ""}
-                    {pipe.weeklyQuota ? ` · ${pipe.weeklyQuota}/أسبوع` : ""}
+                    {pipe.dailyQuota ? ` \u00b7 ${pipe.dailyQuota}/\u064a\u0648\u0645` : ""}
+                    {pipe.weeklyQuota ? ` \u00b7 ${pipe.weeklyQuota}/\u0623\u0633\u0628\u0648\u0639` : ""}
                   </span>
                 );
               })}
             </div>
           </section>
 
-          <section style={{ marginBottom: "1.5rem" }}>
-            <h3 style={{ color: C.emeraldDeep, fontSize: "0.9375rem" }}>Monitoring</h3>
-            <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
+          <section className="cpd-section">
+            <h3 className="cpd-section-h3">Monitoring</h3>
+            <div className="cpd-monitor-row">
               <StatCard label="Retry Queue" value={obs?.retries?.length ?? 0} />
               <StatCard label="Dead Letter" value={obs?.dlq?.length ?? 0} />
-              <StatCard label="سجلات" value={obs?.logs?.length ?? 0} />
+              <StatCard label="\u0633\u062c\u0644\u0627\u062a" value={obs?.logs?.length ?? 0} />
             </div>
             {lastRun && (
-              <p style={{ fontSize: "0.8125rem", color: C.inkSoft }}>
-                آخر Cron: {lastRun.job_id} — {lastRun.status} — {lastRun.duration_ms ?? "?"}ms
+              <p className="cpd-last-run">
+                \u0622\u062e\u0631 Cron: {lastRun.job_id} \u2014 {lastRun.status} \u2014 {lastRun.duration_ms ?? "?"}ms
               </p>
             )}
-            <div style={{ display: "grid", gap: "0.35rem", maxHeight: "200px", overflowY: "auto" }}>
+            <div className="cpd-logs-list">
               {(obs?.logs || []).slice(0, 12).map((log: { id?: string; stage?: string; message?: string; level?: string }) => (
-                <div key={log.id} style={{ fontSize: "0.75rem", padding: "0.35rem", background: C.panel, borderRadius: "0.25rem" }}>
+                <div key={log.id} className="cpd-log-item">
                   [{log.level}] {log.stage}: {log.message}
                 </div>
               ))}
             </div>
           </section>
 
-          <section>
-            <h3 style={{ color: C.emeraldDeep, fontSize: "0.9375rem" }}>المصادر الموثقة ({data?.sources?.length ?? 0})</h3>
-            <div style={{ display: "grid", gap: "0.35rem" }}>
+          <section className="cpd-section">
+            <h3 className="cpd-section-h3">\u0627\u0644\u0645\u0635\u0627\u062f\u0631 \u0627\u0644\u0645\u0648\u062b\u0642\u0629 ({data?.sources?.length ?? 0})</h3>
+            <div className="cpd-sources-list">
               {(data?.sources || []).map((s: NonNullable<ContentProductionDashboard["sources"]>[number]) => (
-                <div key={s.slug} style={{ fontSize: "0.8125rem" }}>
-                  <strong>{s.name}</strong> · {s.pipeline} · ثقة {s.trust_level}%
-                  {!s.active && " (معطّل)"}
+                <div key={s.slug} className="cpd-source-item">
+                  <strong>{s.name}</strong> \u00b7 {s.pipeline} \u00b7 \u062b\u0642\u0629 {s.trust_level}%
+                  {!s.active && " (\u0645\u0639\u0637\u0651\u0644)"}
                 </div>
               ))}
             </div>

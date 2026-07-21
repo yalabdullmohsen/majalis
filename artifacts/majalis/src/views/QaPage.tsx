@@ -1,14 +1,46 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Scale } from "lucide-react";
+import { Link, useSearch } from "wouter";
 import { getQaCategories, getQaQuestions } from "@/lib/supabase";
+import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
+
+const FIQH_HUB_TABS = [
+  { key: "rulings", label: "الأحكام الشرعية", href: "/rulings" },
+  { key: "qa",      label: "الأسئلة الشرعية", href: "/qa" },
+  { key: "council", label: "المجمع الفقهي",   href: "/fiqh-council" },
+] as const;
+type FiqhTab = (typeof FIQH_HUB_TABS)[number]["key"];
+
+function FiqhHubStrip({ current }: { current: FiqhTab }) {
+  return (
+    <nav className="fiqh-hub-strip" dir="rtl" aria-label="الأقسام الشرعية">
+      <Link href="/fiqh" className="fiqh-hub-strip__brand"><Scale size={14} className="inline ml-1" />الفقه الإسلامي</Link>
+      <span className="fiqh-hub-strip__sep" aria-hidden="true">·</span>
+      {FIQH_HUB_TABS.map((item) => (
+        <Link
+          key={item.key}
+          href={item.href}
+          className={`fiqh-hub-strip__tab${item.key === current ? " fiqh-hub-strip__tab--active" : ""}`}
+          aria-current={item.key === current ? "page" : undefined}
+        >
+          {item.label}
+        </Link>
+      ))}
+    </nav>
+  );
+}
 import { RequestManager } from "@/lib/request-manager";
 import { QA_DISCLAIMER } from "@/lib/theme";
 import { PageHeader, QaSkeleton } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
+import { usePersistedState } from "@/hooks/usePersistedState";
 import { DEMO_QA, DEMO_QA_CATEGORIES } from "@/lib/demo-content";
 import { QaCard } from "@/components/qa/QaCard";
 import { useAuth } from "@/components/AuthProvider";
-import { QA_CANONICAL_CATEGORIES } from "@/lib/qa-categories";
+import { QA_CANONICAL_CATEGORIES, resolveCategorySlug } from "@/lib/qa-categories";
 import {
   countByCategorySlug,
   markQaSeen,
@@ -48,14 +80,52 @@ export default function QaPage({
   const [categories, setCategories] = useState<any[]>(initialCategories ?? []);
   const [loading, setLoading] = useState(!initialQuestions);
   const [categoriesLoading, setCategoriesLoading] = useState(!initialCategories);
-  const [categorySlug, setCategorySlug] = useState("all");
-  const [search, setSearch] = useState("");
-  const [sortMode, setSortMode] = useState<QaSortMode>("default");
+  const [categorySlug, setCategorySlug] = usePersistedState("filters:/qa:categorySlug", "all");
+  const [search, setSearch] = usePersistedState("filters:/qa:search", "");
+  const [sortMode, setSortMode] = usePersistedState<QaSortMode>("filters:/qa:sortMode", "default");
   const [randomId, setRandomId] = useState<string | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const debouncedSearch = useDebouncedValue(search);
+  const urlSearch = useSearch();
 
   const items = useMemo(() => normalizeQaItems(rawItems), [rawItems]);
+
+  // رابط وارد بـ`?cat=...` (من FiqhPage) كان يُتجاهَل كليًا: الحالة تُقرأ
+  // فقط من usePersistedState بلا مزامنة مع URL الفعلي عند الوصول — نفس
+  // عائلة عطل TYPE_HREF.scholar الصامت. اكتُشف بالفحص المباشر 2026-07-18.
+  // امتداد 2026-07-20: نفس العطل بالضبط وُجد في رابطين إضافيين لم يُقرآ
+  // مُعامَلاهما إطلاقًا — `search-suggestions.ts` يبني `/qa?q=...` و
+  // `rulings-relations.ts` يبني `/qa?search=...` (اسمان مختلفان من
+  // مصدرين مختلفين)؛ كلاهما يُقرآن الآن دفاعيًا.
+  useEffect(() => {
+    const params = new URLSearchParams(urlSearch);
+    const cat = params.get("cat");
+    const q = params.get("q") || params.get("search");
+    if (cat) setCategorySlug(cat);
+    if (q) setSearch(q);
+  }, [urlSearch]);
+
+  useEffect(() => {
+    const topQa = DEMO_QA.filter((q: any) => q.answer).slice(0, 8);
+    const faqSchema = topQa.length
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: topQa.map((q) => ({
+            "@type": "Question",
+            name: q.question,
+            acceptedAnswer: { "@type": "Answer", text: q.answer },
+          })),
+        }
+      : undefined;
+    applyPageSeo({
+      path: "/qa",
+      title: "الأسئلة والأجوبة الشرعية | المجلس العلمي",
+      description: "أسئلة وأجوبة شرعية في الفقه والعقيدة والعبادات والمعاملات، موثقة من العلماء والمراجع الموثوقة.",
+      keywords: ["أسئلة شرعية", "أجوبة شرعية", "فتاوى", "فقه إسلامي", "سؤال وجواب"],
+      ...(faqSchema ? { jsonLd: [faqSchema] } : {}),
+    });
+  }, []);
 
   const loadCategories = useCallback(async () => {
     setCategoriesLoading(true);
@@ -119,7 +189,19 @@ export default function QaPage({
     return items.filter((q) => {
       const slug = q.qa_categories?.slug || q.category_slug;
       const cat = categories.find((c) => c.id === categorySlug);
-      return slug === categorySlug || slug === cat?.slug || q.category_id === categorySlug;
+      // resolveCategorySlug() applies the same legacy/aliased-slug mapping
+      // that countByCategorySlug() already uses to build the category
+      // grid's displayed counts (e.g. "nikah"/"talaq" → "family"). Without
+      // it here, a question tagged with an aliased DB category slug was
+      // counted toward its canonical category's badge but excluded when
+      // that category was actually clicked — a silent "count says N,
+      // click shows fewer" mismatch.
+      return (
+        slug === categorySlug ||
+        slug === cat?.slug ||
+        q.category_id === categorySlug ||
+        resolveCategorySlug(slug) === categorySlug
+      );
     });
   }, [items, categorySlug, categories]);
 
@@ -162,16 +244,18 @@ export default function QaPage({
         className="page-search-input full content-hub-search qa-v2-search"
         aria-label="بحث في الأسئلة والأجوبة"
       />
-      <div className="qa-sort-row qa-v2-sort-row">
+      <div className="qa-sort-row qa-v2-sort-row" role="tablist" aria-label="ترتيب الأسئلة">
         {(Object.keys(QA_SORT_LABELS) as QaSortMode[]).map((mode) => (
           <button
             key={mode}
+            role="tab"
             type="button"
             className={`content-hub-chip${sortMode === mode ? " content-hub-chip--active" : ""}`}
             onClick={() => {
               setSortMode(mode);
               if (mode === "random") handleRandom();
             }}
+            aria-selected={sortMode === mode}
           >
             {QA_SORT_LABELS[mode]}
           </button>
@@ -216,11 +300,13 @@ export default function QaPage({
         subtitle="أحدث الأسئلة والأجوبة الشرعية الموثقة."
       />
 
+      <FiqhHubStrip current="qa" />
+
       <Disclaimer />
 
       <div className="ds-section__head">
         {isAdmin && (
-          <div className="page-stats-row" style={{ marginBottom: 0 }}>
+          <div className="page-stats-row page-stats-row--flush">
             <span>{sortedItems.length} سؤال</span>
             <span>{categoryGrid.length} تصنيف</span>
             {correctionsCount > 0 && (
@@ -263,9 +349,16 @@ export default function QaPage({
         {filtersPanel}
       </aside>
 
+      <div className="twh-share">
+        <ShareButtons title="الأسئلة والأجوبة الشرعية — المجلس العلمي" url="https://www.majlisilm.com/qa" />
+      </div>
+
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}
       </FilterBottomSheet>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه والأسئلة الشرعية" count={4} />
+      </div>
     </div>
   );
 }

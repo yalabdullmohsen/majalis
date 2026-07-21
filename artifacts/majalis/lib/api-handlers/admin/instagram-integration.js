@@ -86,6 +86,7 @@ export default async function handler(req, res) {
         postUrl: body.postUrl,
         imageUrl: body.imageUrl,
         caption: body.caption,
+        contentType: body.contentType || null,
         userId: auth.userId,
       });
       sendJson(res, result.ok ? 200 : 422, result);

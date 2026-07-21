@@ -3,8 +3,7 @@ import { Link } from "wouter";
 import { adminGetDashboardStats, adminGetStats } from "@/lib/supabase";
 import { ADHKAR_ITEMS } from "@/lib/adhkar-seed";
 import { getPublishedAdhkarItems } from "@/lib/adhkar-admin";
-import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { useAdminShell } from "./AdminShell";
 import { AdminSectionToolbar } from "./AdminSectionToolbar";
 
@@ -24,7 +23,7 @@ export function ReportsSection() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonCardGrid count={6} />;
 
   const cards = [
     { label: "المشايخ", value: stats?.sheikhsCount ?? 0 },
@@ -59,71 +58,40 @@ export function ReportsSection() {
         title="التقارير"
         actions={
           <>
-            <Link
-              href="/admin/dashboard"
-              style={{
-                padding: "0.5rem 1rem",
-                borderRadius: "0.375rem",
-                border: `1px solid ${C.line}`,
-                background: C.panel,
-                color: C.emeraldDeep,
-                textDecoration: "none",
-                fontSize: "0.8125rem",
-                fontWeight: 600,
-              }}
-            >
+            <Link href="/admin/dashboard" className="rpt-link-btn">
               لوحة متقدمة
             </Link>
-            <button
-              type="button"
-              onClick={exportReport}
-              style={{
-                padding: "0.5rem 1rem",
-                borderRadius: "0.375rem",
-                border: "none",
-                background: C.emerald,
-                color: C.parchment,
-                cursor: "pointer",
-                fontFamily: "inherit",
-                fontSize: "0.8125rem",
-                fontWeight: 600,
-              }}
-            >
+            <button type="button" onClick={exportReport} className="rpt-export-btn">
               تصدير تقرير
             </button>
           </>
         }
       />
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(155px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
+      <div className="rpt-cards-grid">
         {cards.map((c) => (
           <div
             key={c.label}
-            style={{
-              background: c.alert ? "#FEE2E2" : C.sage,
-              border: `1px solid ${c.alert ? "#dc2626" : C.line}`,
-              borderRadius: "0.5rem",
-              padding: "1.25rem",
-              textAlign: "center",
-            }}
+            className="rpt-stat-card"
+            style={{ "--rpt-bg": c.alert ? "#FEE2E2" : "var(--majalis-sage)", "--rpt-border": c.alert ? "#dc2626" : "var(--majalis-line)", "--rpt-value": c.alert ? "#dc2626" : "var(--majalis-emerald-deep)" } as React.CSSProperties}
           >
-            <p style={{ fontSize: "2rem", fontWeight: 700, color: c.alert ? "#dc2626" : C.emeraldDeep, margin: 0 }}>
+            <p className="rpt-stat-value">
               {c.value}
               {"total" in c && c.total ? (
-                <span style={{ fontSize: "0.875rem", color: C.inkSoft }}> / {c.total}</span>
+                <span className="rpt-stat-total"> / {c.total}</span>
               ) : null}
             </p>
-            <p style={{ fontSize: "0.8125rem", color: C.inkSoft, margin: "0.375rem 0 0" }}>{c.label}</p>
+            <p className="rpt-stat-label">{c.label}</p>
           </div>
         ))}
       </div>
 
-      <div style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.5rem", padding: "1.25rem" }}>
-        <h3 style={{ margin: "0 0 0.75rem", color: C.emeraldDeep, fontSize: "1rem" }}>ملخص الجاهزية</h3>
-        <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem", lineHeight: 1.8 }}>
+      <div className="rpt-summary-box">
+        <h3 className="rpt-summary-h3">ملخص الجاهزية</h3>
+        <p className="rpt-summary-p">
           {stats?.lessonsTotal > 0 && stats?.sheikhsCount > 0
             ? "المحتوى الأساسي متوفر. راجع البلاغات والفوائد المعلّقة قبل الإطلاق."
-            : "بعض الأقسام الأساسية فارغة — أضف المشايخ والدروس من الأقسام المخصصة."}
+            : "بعض الأقسام الأساسية فارغة، أضف المشايخ والدروس من الأقسام المخصصة."}
         </p>
       </div>
     </div>

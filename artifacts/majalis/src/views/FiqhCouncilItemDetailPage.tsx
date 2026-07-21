@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { Loading, Empty } from "@/components/ui-common";
+import { SkeletonPage, Empty } from "@/components/ui-common";
 import { ContentDetailLayout, RelatedLinks } from "@/components/platform/ContentDetailLayout";
 import {
   getFiqhCouncilItemBySlug,
@@ -67,12 +67,22 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
   usePageView("fiqh-council", params.slug);
 
   useEffect(() => {
-    if (!item) return;
+    if (loading) return;
+    if (!item) {
+      applyPageSeo({
+        path: fiqhItemHref(params.slug),
+        title: "المحتوى غير موجود | المجلس العلمي",
+        description: "لم يُعثر على هذا المحتوى في المجمع الفقهي.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     const path = fiqhItemHref(item.slug);
     const description = item.summary || item.title;
     applyPageSeo({
       path,
-      title: `${item.title} | المجمع الفقهي — المجلس العلمي`,
+      title: `${item.title} | المجمع الفقهي، المجلس العلمي`,
       description,
       keywords: [...(item.tags || []), item.category, "المجمع الفقهي", "قرارات فقهية"],
       ogType: "article",
@@ -91,7 +101,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
               ? { "@type": "Organization", name: item.source_name }
               : undefined,
           inLanguage: "ar",
-          url: `https://majlisilm.com${path}`,
+          url: `https://www.majlisilm.com${path}`,
         },
         breadcrumbJsonLd([
           { name: "الرئيسية", path: "/" },
@@ -100,9 +110,9 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
         ]),
       ],
     });
-  }, [item]);
+  }, [item, loading, params.slug]);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonPage />;
   if (!item) return <Empty text="المحتوى غير موجود." />;
 
   const bodyText = item.content || item.ruling_text || "";
@@ -157,7 +167,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
                 <td>
                   {item.session_number}
                   {FIQH_SESSION_NUMBER_MAP[item.session_number] && (
-                    <> — <Link href={fiqhSessionHref(FIQH_SESSION_NUMBER_MAP[item.session_number])}>صفحة الجلسة</Link></>
+                    <>، <Link href={fiqhSessionHref(FIQH_SESSION_NUMBER_MAP[item.session_number])}>صفحة الجلسة</Link></>
                   )}
                 </td>
               </tr>
@@ -213,9 +223,9 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
               <li key={i}>
                 {ref.type && <strong>{ref.type}: </strong>}
                 {ref.text}
-                {ref.source && <> — <em>{ref.source}</em></>}
+                {ref.source && <>، <em>{ref.source}</em></>}
                 {ref.url && (
-                  <> — <a href={ref.url} target="_blank" rel="noopener noreferrer">رابط</a></>
+                  <>، <a href={ref.url} target="_blank" rel="noopener noreferrer">رابط</a></>
                 )}
               </li>
             ))}
@@ -228,7 +238,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
           <p>
             {item.source_name}
             {item.source_url && (
-              <> — <a href={item.source_url} target="_blank" rel="noopener noreferrer">الرابط الأصلي</a></>
+              <>، <a href={item.source_url} target="_blank" rel="noopener noreferrer">الرابط الأصلي</a></>
             )}
           </p>
         </DetailSection>
@@ -236,7 +246,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
 
       {item.council_name && item.session_number && (
         <DetailSection title="المجلس">
-          <p>{item.council_name} — الجلسة {item.session_number}</p>
+          <p>{item.council_name}، الجلسة {item.session_number}</p>
         </DetailSection>
       )}
 

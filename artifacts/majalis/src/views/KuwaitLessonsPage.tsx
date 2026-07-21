@@ -1,7 +1,8 @@
-"use client";
-
 import { useEffect, useRef } from "react";
 import { KUWAIT_SHEIKHS } from "@/lib/kuwait-sheikhs";
+import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 declare global {
   interface Window { twttr?: { widgets?: { load: (el?: HTMLElement) => void } } }
@@ -38,8 +39,7 @@ function SheikhCard({ sheikh }: { sheikh: (typeof KUWAIT_SHEIKHS)[number] }) {
   return (
     <a
       href={sheikh.drosq8Url}
-      target="_blank"
-      rel="noopener noreferrer"
+      target="_blank" rel="noopener noreferrer"
       className="sheikh-card"
       aria-label={`دروس ${sheikh.name} على موقع دروس الكويت`}
     >
@@ -57,15 +57,11 @@ function SheikhCard({ sheikh }: { sheikh: (typeof KUWAIT_SHEIKHS)[number] }) {
                 if (sib) sib.style.display = "flex";
               }}
               loading="lazy"
+              decoding="async"
             />
             <span
-              className="sheikh-avatar sheikh-avatar--initials"
-              style={{
-                display: "none",
-                background: ["#1b5e3b","#7c5e1b","#1b3a5e","#5e1b1b","#3b1b5e","#1b5e56"][
-                  sheikh.name.split("").reduce((a,c)=>a+c.charCodeAt(0),0) % 6
-                ],
-              }}
+              className="sheikh-avatar sheikh-avatar--initials sheikh-avatar--hidden"
+              style={{ "--avatar-bg": ["#1b5e3b","#173D35","#1b3a5e","#5e1b1b","#3b1b5e","#173D35"][sheikh.name.split("").reduce((a,c)=>a+c.charCodeAt(0),0) % 6] } as React.CSSProperties}
               aria-hidden="true"
             >
               {sheikh.name.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("")}
@@ -74,11 +70,7 @@ function SheikhCard({ sheikh }: { sheikh: (typeof KUWAIT_SHEIKHS)[number] }) {
         ) : (
           <span
             className="sheikh-avatar sheikh-avatar--initials"
-            style={{
-              background: ["#1b5e3b","#7c5e1b","#1b3a5e","#5e1b1b","#3b1b5e","#1b5e56"][
-                sheikh.name.split("").reduce((a,c)=>a+c.charCodeAt(0),0) % 6
-              ],
-            }}
+            style={{ "--avatar-bg": ["#1b5e3b","#173D35","#1b3a5e","#5e1b1b","#3b1b5e","#173D35"][sheikh.name.split("").reduce((a,c)=>a+c.charCodeAt(0),0) % 6] } as React.CSSProperties}
             aria-hidden="true"
           >
             {sheikh.name.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("")}
@@ -98,6 +90,45 @@ export default function KuwaitLessonsPage() {
   const feedRef = useRef<HTMLDivElement>(null);
   useTwitterEmbed(feedRef);
 
+  useEffect(() => {
+    applyPageSeo({
+      path: "/kuwait-lessons",
+      title: "دروس مشايخ الكويت | المجلس العلمي",
+      description: "جميع الدروس العلمية القادمة لمشايخ الكويت، محدَّثة تلقائياً من مصادر معتمدة.",
+      keywords: ["دروس الكويت", "مشايخ الكويت", "دروس كويتية", "علماء الكويت", "حلقات علمية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "دروس مشايخ الكويت القادمة",
+          description: "قائمة الدروس الشرعية القادمة لعلماء ومشايخ الكويت",
+          url: "https://www.majlisilm.com/kuwait-lessons",
+          about: {
+            "@type": "Country",
+            name: "الكويت",
+          },
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Event",
+          name: "الدروس العلمية الأسبوعية في الكويت",
+          description: "دروس شرعية منتظمة في مساجد ومراكز الكويت العلمية",
+          location: {
+            "@type": "Country",
+            name: "الكويت",
+          },
+          organizer: {
+            "@type": "Organization",
+            name: "المجلس العلمي",
+            url: "https://www.majlisilm.com",
+          },
+          url: "https://www.majlisilm.com/kuwait-lessons",
+          inLanguage: "ar",
+        },
+      ],
+    });
+  }, []);
+
   return (
     <div className="page-shell narrow" dir="rtl">
       {/* Header */}
@@ -106,7 +137,7 @@ export default function KuwaitLessonsPage() {
           <p className="kuwait-lessons-eyebrow">الكويت</p>
           <h1 className="kuwait-lessons-title">دروس المشايخ القادمة</h1>
           <p className="kuwait-lessons-subtitle">
-            جميع الدروس العلمية القادمة لمشايخ الكويت — محدَّثة تلقائياً عبر موقع{" "}
+            جميع الدروس العلمية القادمة لمشايخ الكويت، محدَّثة تلقائياً عبر موقع{" "}
             <a href="https://drosq8.com" target="_blank" rel="noopener noreferrer" className="kuwait-lessons-source-link">
               دروس الكويت
             </a>
@@ -115,7 +146,7 @@ export default function KuwaitLessonsPage() {
         <span className="kuwait-lessons-live-badge">● تحديث تلقائي</span>
       </div>
 
-      {/* Twitter feed — @drosq8 */}
+      {/* Twitter feed، @drosq8 */}
       <section className="kuwait-lessons-feed-section">
         <h2 className="kuwait-lessons-section-title">آخر إعلانات الدروس</h2>
         <p className="kuwait-lessons-feed-note">
@@ -161,6 +192,13 @@ export default function KuwaitLessonsPage() {
         <strong>المصدر:</strong>{" "}
         <a href="https://drosq8.com" target="_blank" rel="noopener noreferrer">drosq8.com</a>
         {" "}— موقع دروس الكويت. هذه الصفحة تعرض البيانات مباشرة من المصدر الرسمي دون تخزينها.
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="دروس الكويت — المجلس العلمي" url="https://www.majlisilm.com/kuwait-lessons" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["hadith", "akhlaq"]} title="اختبر معلوماتك في العلم الشرعي" count={4} />
       </div>
     </div>
   );

@@ -1,13 +1,40 @@
-"use client";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { applyPageSeo } from "@/lib/seo";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { getAllSurahStories, getSurahStory, searchSurahStories } from "@/lib/surah-stories";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
+import { truncateAtWord } from "@/lib/utils";
 
 export default function SurahStoriesPage() {
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const allStories = getAllSurahStories();
+    applyPageSeo({
+      path: "/surah-stories",
+      title: "قصص سور القرآن | المجلس العلمي",
+      description: "قصص وأسباب نزول سور القرآن الكريم، تعرّف على مناسبات النزول والقصص المرتبطة بكل سورة.",
+      keywords: ["قصص القرآن", "أسباب النزول", "سور القرآن", "قصص إسلامية", "تفسير قرآني"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "قصص سور القرآن الكريم",
+          description: "قصص وأسباب نزول ١١٤ سورة من سور القرآن الكريم",
+          numberOfItems: 114,
+          itemListElement: allStories.slice(0, 20).map((s, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `سورة ${s.name}`,
+            url: `https://www.majlisilm.com/surah-stories/${s.number}`,
+          })),
+        },
+      ],
+    });
+  }, []);
   const stories = search.trim() ? searchSurahStories(search) : getAllSurahStories();
 
   return (
@@ -15,11 +42,11 @@ export default function SurahStoriesPage() {
       <PageHeader
         eyebrow="القرآن"
         title="قصص القرآن"
-        subtitle="سبب التسمية، زمان ومكان النزول، المحاور، والقصص القرآنية الموثقة — ١١٤ سورة."
+        subtitle="سبب التسمية، زمان ومكان النزول، المحاور، والقصص القرآنية الموثقة: ١١٤ سورة."
       />
 
       <nav className="quran-subnav" aria-label="أقسام القرآن">
-        <Link href="/quran" className="quran-subnav__link">المصحف</Link>
+        <Link href="/quran-hub" className="quran-subnav__link">مركز القرآن</Link>
         <Link href="/quran/tajweed" className="quran-subnav__link">التجويد</Link>
         <Link href="/quran/surah-stories" className="quran-subnav__link is-active">قصص القرآن</Link>
         <Link href="/quran-live" className="quran-subnav__link">البث المباشر</Link>
@@ -39,7 +66,7 @@ export default function SurahStoriesPage() {
           <Link key={s.number} href={`/quran/surah-stories/${s.number}`} className="surah-story-card ui-card">
             <span className="surah-story-num">{s.number}</span>
             <strong>{s.name}</strong>
-            <p>{s.namingReason.slice(0, 80)}{s.namingReason.length > 80 ? "…" : ""}</p>
+            <p>{truncateAtWord(s.namingReason, 80)}</p>
             <span className="surah-story-meta">{s.ayahCount} آية · {s.revelationPlace}</span>
           </Link>
         ))}
@@ -51,6 +78,35 @@ export default function SurahStoriesPage() {
 export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
   const story = getSurahStory(surahNumber >= 1 && surahNumber <= 114 ? surahNumber : 1);
 
+  // اكتُشف 2026-07-18: هذه الصفحة (114 صفحة فردية، محتوى حقيقي ومختلف
+  // تماماً لكل سورة — سبب التسمية، زمان النزول، المحاور، القصص) لم تكن
+  // تستدعي applyPageSeo إطلاقاً، فكانت تعتمد بالكامل على fallback عام
+  // موحَّد من usePageSeo(location) في App.tsx ("قصة سورة | المجلس العلمي"
+  // حرفياً لكل الـ114 صفحة دون استثناء) — نفس عائلة بق LearningPathDetailPage
+  // المُصلَح سابقاً، لكن هنا البيانات متوفرة مزامنةً (getSurahStory محلية
+  // لا async) فلا حاجة لانتظار تحميل، الإصلاح مباشر وبلا مخاطرة تزامن.
+  useEffect(() => {
+    const path = `/quran/surah-stories/${story.number}`;
+    applyPageSeo({
+      path,
+      title: `قصة سورة ${story.name} | المجلس العلمي`,
+      description: `${story.namingReason} — ${story.revelationTime}، ${story.revelationPlace}، ${story.ayahCount} آية. ${story.virtues || ""}`.slice(0, 300),
+      keywords: [story.name, "قصص القرآن", "أسباب النزول", ...story.keywords],
+      ogType: "article",
+      canonicalPath: path,
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: `قصة سورة ${story.name}`,
+          description: story.namingReason,
+          url: `https://www.majlisilm.com${path}`,
+          inLanguage: "ar",
+        },
+      ],
+    });
+  }, [story.number, story.name, story.namingReason, story.revelationTime, story.revelationPlace, story.ayahCount, story.virtues, story.keywords]);
+
   return (
     <div className="page-shell surah-story-detail">
       <PageHeader eyebrow={`سورة ${story.number}`} title={story.name} subtitle={story.revelationPlace} />
@@ -60,7 +116,7 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
           <section><h2>سبب التسمية</h2><p>{story.namingReason}</p></section>
         </SectionErrorBoundary>
         <SectionErrorBoundary name="زمان النزول">
-          <section><h2>زمان ومكان النزول</h2><p>{story.revelationTime} — {story.revelationPlace}</p></section>
+          <section><h2>زمان ومكان النزول</h2><p>{story.revelationTime}، {story.revelationPlace}</p></section>
         </SectionErrorBoundary>
         <section><h2>عدد الآيات</h2><p>{story.ayahCount} آية</p></section>
         {story.mainThemes.length > 0 && (
@@ -105,7 +161,14 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
           </SectionErrorBoundary>
         )}
         <p className="quran-source-note">{story.trustNote}{story.lastReviewed ? ` · آخر مراجعة: ${story.lastReviewed}` : ""}</p>
-        <Link href={`/quran?surah=${story.number}`} className="page-action-btn">قراءة السورة</Link>
+        <Link href={`/mushaf/${story.number}`} className="page-action-btn">قراءة السورة</Link>
+
+        <div className="twh-share">
+          <ShareButtons title={`${story.name} — قصص سور القرآن | المجلس العلمي`} url={`https://www.majlisilm.com/surah-stories/${story.number}`} />
+        </div>
+        <div className="px-4 pb-6 mt-4">
+          <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />
+        </div>
       </article>
     </div>
   );

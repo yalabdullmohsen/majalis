@@ -5,6 +5,8 @@
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { getAyahAudioUrl, loadReciterId, saveReciterId } from "@/lib/quran-audio";
+import { getSurahMeta } from "@/lib/quran-api";
+import { useMediaSession } from "@/hooks/useMediaSession";
 
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error";
 
@@ -112,6 +114,21 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   useEffect(() => {
     stop();
   }, [surahNum, stop]);
+
+  useMediaSession(
+    currentAyah
+      ? {
+          title: `سورة ${getSurahMeta(surahNum).name} — آية ${currentAyah}`,
+          artist: "تلاوة القرآن الكريم — المجلس العلمي",
+          playing: playerState === "playing",
+          onPlay: resume,
+          onPause: pause,
+          onStop: stop,
+          onNext: currentAyah < totalAyahs ? () => playFromAyah(currentAyah + 1) : undefined,
+          onPrevious: currentAyah > 1 ? () => playFromAyah(currentAyah - 1) : undefined,
+        }
+      : null,
+  );
 
   return {
     currentAyah,

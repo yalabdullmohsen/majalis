@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { Link } from "wouter";
+import { Link, useSearch } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
 import { advancedSearchFiqhCouncil } from "@/lib/fiqh-council-service";
 import { FIQH_CATEGORY_TREE } from "@/lib/fiqh-council-categories";
+import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   FIQH_COUNCIL_CATEGORIES,
   FIQH_ITEM_TYPES,
@@ -38,10 +41,30 @@ export default function FiqhCouncilAdvancedSearchPage() {
   const [loading, setLoading] = useState(false);
   const debouncedQuery = useDebouncedValue(query);
   const debouncedSource = useDebouncedValue(source);
+  const urlSearch = useSearch();
 
   const subcategories = category !== "الكل"
     ? FIQH_CATEGORY_TREE.find((c) => c.name === category)?.children?.map((c) => c.name) || []
     : [];
+
+  // رابط وارد بـ`?category=...` (من بطاقات التصنيف في FiqhCouncilPage) كان
+  // يُتجاهَل كليًا: الحالة تُهيَّأ دائماً بـ"الكل" بلا قراءة أي شيء من
+  // الرابط الفعلي عند الوصول — نفس عائلة عطل TYPE_HREF.scholar الصامت.
+  // اكتُشف بالفحص المباشر 2026-07-20.
+  useEffect(() => {
+    const cat = new URLSearchParams(urlSearch).get("category");
+    if (cat) setCategory(cat);
+  }, [urlSearch]);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/fiqh-council/advanced-search",
+      title: "البحث المتقدم في المجمع الفقهي | المجلس العلمي",
+      description: "بحث متقدم في قرارات وفتاوى وبحوث المجمع الفقهي، تصفية حسب النوع والتصنيف والسنة والمصدر.",
+      keywords: ["بحث متقدم فقهي", "بحث في الفتاوى", "مجمع فقهي", "تصفية فقهية", "محرك بحث إسلامي"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "البحث المتقدم في المجمع الفقهي", url: "https://www.majlisilm.com/fiqh-council/advanced-search", about: { "@type": "Thing", name: "محرك البحث الفقهي المتقدم" } }],
+    });
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -66,7 +89,7 @@ export default function FiqhCouncilAdvancedSearchPage() {
       <PageHeader
         eyebrow="البحث الفقهي"
         title="البحث المتقدم"
-        subtitle="ابحث في العناوين والنصوص والأدلة والمصادر والتصنيفات — مع فلاتر دقيقة."
+        subtitle="ابحث في العناوين والنصوص والأدلة والمصادر والتصنيفات، مع فلاتر دقيقة."
       />
 
       <FiqhCouncilSubnav />
@@ -115,11 +138,11 @@ export default function FiqhCouncilAdvancedSearchPage() {
         <div className="fiqh-council-filter-row">
           <label className="fiqh-council-select-label">
             المصدر
-            <input value={source} onChange={(e) => setSource(e.target.value)} className="fiqh-council-source-input" placeholder="اسم المصدر" />
+            <input value={source} onChange={(e) => setSource(e.target.value)} className="fiqh-council-source-input" aria-label="اسم المصدر" placeholder="اسم المصدر" />
           </label>
           <label className="fiqh-council-select-label">
             رقم القرار
-            <input value={decisionNumber} onChange={(e) => setDecisionNumber(e.target.value)} className="fiqh-council-source-input" placeholder="رقم القرار أو الجلسة" />
+            <input value={decisionNumber} onChange={(e) => setDecisionNumber(e.target.value)} className="fiqh-council-source-input" aria-label="رقم القرار أو الجلسة" placeholder="رقم القرار أو الجلسة" />
           </label>
         </div>
       </div>
@@ -130,7 +153,7 @@ export default function FiqhCouncilAdvancedSearchPage() {
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid />
       ) : results.length === 0 ? (
         <Empty text="لا توجد نتائج مطابقة." />
       ) : (
@@ -147,6 +170,13 @@ export default function FiqhCouncilAdvancedSearchPage() {
           ))}
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="البحث المتقدم في المجمع الفقهي — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/search" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
+      </div>
     </div>
   );
 }

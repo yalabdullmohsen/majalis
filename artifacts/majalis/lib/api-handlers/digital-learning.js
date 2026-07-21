@@ -133,7 +133,8 @@ export default async function handler(req, res) {
     }
 
     if (action === "ai-insights") {
-      const result = await generateLessonInsights(admin, { ...req.body, userId });
+      const moduleTitle = String(req.body?.moduleTitle || "").slice(0, 300);
+      const result = await generateLessonInsights(admin, { ...req.body, moduleTitle, userId });
       sendJson(res, 200, result);
       return;
     }

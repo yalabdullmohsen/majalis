@@ -1,15 +1,38 @@
 import { useCallback, useEffect, useState } from "react";
+import { Link } from "wouter";
 import { invalidateLessonsCache } from "@/lib/lessons-service";
 import {
   approveContentDraft,
+  extractFromRawText,
   extractLessonFromImageFile,
   extractLessonFromUrl,
   listContentDrafts,
   rejectContentDraft,
 } from "@/lib/smart-cms-api";
-import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { useAdminShell } from "./AdminShell";
+
+const ERROR_MESSAGES: Record<string, string> = {
+  unknown_action:    "تعذّر تحليل المحتوى، يُرجى المحاولة مرة أخرى.",
+  missing_text:      "يُرجى إدخال نص قبل التحليل.",
+  missing_image:     "يُرجى رفع صورة.",
+  missing_url:       "يُرجى إدخال رابط صحيح.",
+  draft_not_found:   "لم يُعثر على المسودة.",
+  extraction_failed: "تعذّر تحليل المحتوى، يُرجى المحاولة مرة أخرى.",
+  credit_exhausted:  "رصيد API منتهٍ، يُرجى التواصل مع المشرف.",
+  invalid_api_key:   "مفتاح API غير صالح، يُرجى التواصل مع المشرف.",
+  rate_limit:        "تجاوزت حد الطلبات، انتظر دقيقة ثم أعد المحاولة.",
+  timeout:           "انتهت مهلة الاتصال، يُرجى المحاولة مرة أخرى.",
+  no_key:            "خدمة الذكاء الاصطناعي غير مضبوطة، تواصل مع المشرف.",
+  network_error:     "تعذّر الاتصال بالخادم، تحقق من الشبكة وأعد المحاولة.",
+  server_error:      "خطأ مؤقت في الخادم، يُرجى المحاولة مرة أخرى.",
+  supabase_admin_missing: "تعذّر حفظ المسودة، تعذّر الاتصال بقاعدة البيانات.",
+};
+
+function translateError(raw?: string): string {
+  if (!raw) return "تعذّر العملية.";
+  return ERROR_MESSAGES[raw] ?? raw.replace(/_/g, " ");
+}
 
 type Draft = {
   id: string;
@@ -21,14 +44,30 @@ type Draft = {
   created_at: string;
 };
 
+type InputMode = "text" | "url" | "image";
+
+const CONTENT_HINTS = [
+  "درس أسبوعي", "قصة إسلامية", "حديث شريف", "فتوى", "مقال", "خبر",
+  "إعلان", "مناسبة", "سيرة", "ترجمة عالم", "كتاب",
+];
+
+const TAB_LABELS: Record<InputMode, string> = { text: "لصق نص", url: "رابط", image: "صورة" };
+
 export function SmartCmsSection() {
   const { showSuccess, showError } = useAdminShell();
   const [drafts, setDrafts] = useState<Draft[]>([]);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
+  const [mode, setMode] = useState<InputMode>("text");
+
+  const [rawText, setRawText] = useState("");
+  const [hint, setHint] = useState("");
   const [url, setUrl] = useState("");
+
   const [preview, setPreview] = useState<Record<string, unknown> | null>(null);
   const [previewDraftId, setPreviewDraftId] = useState<string | null>(null);
+  const [previewEditing, setPreviewEditing] = useState(false);
+  const [previewJson, setPreviewJson] = useState("");
 
   const load = useCallback(() => {
     setLoading(true);
@@ -38,28 +77,38 @@ export function SmartCmsSection() {
       .finally(() => setLoading(false));
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { load(); }, [load]);
+
+  const handleSuccess = (res: { ok: boolean; error?: string; message?: string; extracted?: Record<string, unknown>; draft?: Record<string, unknown> }) => {
+    if (!res.ok) { showError(res.message || translateError(res.error)); return false; }
+    const ext = res.extracted || {};
+    setPreview(ext);
+    setPreviewJson(JSON.stringify(ext, null, 2));
+    setPreviewDraftId(String(res.draft?.id || ""));
+    showSuccess("تم التحليل، راجع المسودة وأكملها ثم اعتمدها");
     load();
-  }, [load]);
+    return true;
+  };
+
+  const onTextAnalyze = async () => {
+    const text = rawText.trim();
+    if (!text) return;
+    setBusy(true);
+    try {
+      const res = await extractFromRawText(text, hint || undefined);
+      handleSuccess(res);
+    } catch { showError("تعذّر التحليل"); }
+    finally { setBusy(false); }
+  };
 
   const onImage = async (file: File | null) => {
     if (!file) return;
     setBusy(true);
     try {
       const res = await extractLessonFromImageFile(file);
-      if (!res.ok) {
-        showError(res.error || "تعذر استخراج البيانات من الصورة");
-        return;
-      }
-      setPreview(res.extracted || null);
-      setPreviewDraftId(String(res.draft?.id || ""));
-      showSuccess("تم إنشاء مسودة — بانتظار المراجعة");
-      load();
-    } catch {
-      showError("تعذر رفع الصورة");
-    } finally {
-      setBusy(false);
-    }
+      handleSuccess(res);
+    } catch { showError("تعذّر رفع الصورة"); }
+    finally { setBusy(false); }
   };
 
   const onUrlImport = async () => {
@@ -68,171 +117,292 @@ export function SmartCmsSection() {
     setBusy(true);
     try {
       const res = await extractLessonFromUrl(trimmed);
-      if (!res.ok) {
-        showError(res.error || "تعذر الاستيراد من الرابط");
-        return;
-      }
-      setPreview(res.extracted || null);
-      setPreviewDraftId(String(res.draft?.id || ""));
-      showSuccess("تم استيراد المسودة من الرابط");
-      load();
-    } catch {
-      showError("تعذر الاستيراد");
-    } finally {
-      setBusy(false);
-    }
+      handleSuccess(res);
+    } catch { showError("تعذّر الاستيراد"); }
+    finally { setBusy(false); }
   };
 
   const onApprove = async (draftId: string) => {
     setBusy(true);
     try {
-      const res = await approveContentDraft(draftId, preview || undefined);
-      if (!res.ok) {
-        const msgs = res.validation?.errors?.map((e) => e.message).join(" — ");
-        showError(msgs || res.error || "تعذر الاعتماد");
-        return;
-      }
+      const data = previewEditing
+        ? (() => { try { return JSON.parse(previewJson); } catch { return preview; } })()
+        : preview;
+      const res = await approveContentDraft(draftId, data || undefined);
+      if (!res.ok) { showError(res.validation?.errors?.map((e: { message: string }) => e.message).join("، ") || translateError(res.error) || "تعذّر الاعتماد"); return; }
       invalidateLessonsCache();
-      setPreview(null);
-      setPreviewDraftId(null);
-      showSuccess("تم اعتماد الدرس ونشره");
+      setPreview(null); setPreviewDraftId(null); setPreviewEditing(false);
+      showSuccess("تم اعتماد المحتوى ونشره");
       load();
-    } catch {
-      showError("تعذر الاعتماد");
-    } finally {
-      setBusy(false);
-    }
+    } catch { showError("تعذّر الاعتماد"); }
+    finally { setBusy(false); }
   };
 
   const onReject = async (draftId: string) => {
     setBusy(true);
     try {
-      const res = await rejectContentDraft(draftId);
-      if (res && (res as { ok?: boolean }).ok === false) {
-        showError((res as { error?: string }).error || "تعذّر رفض المسودة");
-        return;
-      }
+      await rejectContentDraft(draftId);
       showSuccess("تم رفض المسودة");
+      setPreview(null); setPreviewDraftId(null);
       load();
-    } catch {
-      showError("تعذّر رفض المسودة");
-    } finally {
-      setBusy(false);
-    }
+    } catch { showError("تعذّر رفض المسودة"); }
+    finally { setBusy(false); }
   };
 
   return (
-    <div>
-      <h2 style={{ margin: "0 0 0.5rem", color: C.emeraldDeep }}>إدارة المحتوى الذكية</h2>
-      <p style={{ color: C.inkSoft, marginBottom: "1.25rem", fontSize: "0.875rem" }}>
-        استخراج تلقائي من صورة أو رابط — مراجعة — اعتماد — نشر في المنصة وSEO دون تعديل الكود.
-      </p>
-
-      <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", marginBottom: "1.5rem" }}>
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", fontSize: "0.9375rem", color: C.emeraldDeep }}>أتمتة المصادر المعتمدة</h3>
-          <a
-            href="/admin/automation/sources"
-            style={{ display: "inline-block", padding: "0.5rem 1rem", background: "#FEF3C7", color: "#92400E", borderRadius: "0.375rem", textDecoration: "none", fontFamily: "inherit", fontWeight: 600, fontSize: "0.875rem", marginInlineEnd: "0.5rem" }}
-          >
-            مصادر + Auto-Publish
-          </a>
-          <a
-            href="/admin/automation/review"
-            style={{ display: "inline-block", padding: "0.5rem 1rem", background: "#FFEDD5", color: "#C2410C", borderRadius: "0.375rem", textDecoration: "none", fontFamily: "inherit", fontWeight: 600, fontSize: "0.875rem" }}
-          >
-            مركز المراجعة
-          </a>
-        </section>
-
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", fontSize: "0.9375rem", color: C.emeraldDeep }}>إضافة درس من صورة</h3>
-          <a
-            href="/admin/content-import/image"
-            style={{ display: "inline-block", padding: "0.5rem 1rem", background: "#DBEAFE", color: "#1D4ED8", borderRadius: "0.375rem", textDecoration: "none", fontFamily: "inherit", fontWeight: 600, fontSize: "0.875rem" }}
-          >
-            فتح واجهة الاستيراد من صورة
-          </a>
-          <p style={{ fontSize: "0.75rem", color: C.inkSoft, marginTop: "0.5rem" }}>Vision + OCR + مراجعة + اعتماد</p>
-        </section>
-
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", fontSize: "0.9375rem", color: C.emeraldDeep }}>إضافة درس من رابط</h3>
-          <a
-            href="/admin/content-import/url"
-            style={{ display: "inline-block", padding: "0.5rem 1rem", background: "#EDE9FE", color: "#5B21B6", borderRadius: "0.375rem", textDecoration: "none", fontFamily: "inherit", fontWeight: 600, fontSize: "0.875rem" }}
-          >
-            Instagram / X / YouTube / Telegram / موقع
-          </a>
-          <p style={{ fontSize: "0.75rem", color: C.inkSoft, marginTop: "0.5rem" }}>جلب + استخراج + مراجعة + اعتماد</p>
-        </section>
-
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", fontSize: "0.9375rem", color: C.emeraldDeep }}>رفع سريع (JSON)</h3>
-          <input
-            type="file"
-            accept="image/*"
-            disabled={busy}
-            onChange={(e) => onImage(e.target.files?.[0] || null)}
-          />
-          <p style={{ fontSize: "0.75rem", color: C.inkSoft, marginTop: "0.5rem" }}>معاينة JSON — للاختبار السريع</p>
-        </section>
-
-        <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem" }}>
-          <h3 style={{ margin: "0 0 0.75rem", fontSize: "0.9375rem", color: C.emeraldDeep }}>استيراد من رابط</h3>
-          <input
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            placeholder="Instagram / YouTube / X / Telegram / RSS / موقع"
-            style={{ width: "100%", padding: "0.5rem", marginBottom: "0.5rem", fontFamily: "inherit" }}
-          />
-          <button type="button" disabled={busy} onClick={onUrlImport} style={{ padding: "0.4rem 0.75rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit" }}>
-            استيراد
-          </button>
-        </section>
+    <div dir="rtl" className="scm-wrapper">
+      <div className="scm-header">
+        <h2 className="scm-title">المساعد الذكي لإدارة المحتوى</h2>
+        <p className="scm-subtitle">
+          الصق أي نص أو أدخل رابطاً أو ارفع صورة، يحلّل المحتوى تلقائياً ويعبّئ جميع الحقول، ثم أكمل المراجعة واعتمده.
+        </p>
       </div>
 
-      {preview && (
-        <section style={{ background: "#F0FDF4", border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem", marginBottom: "1.5rem" }}>
-          <h3 style={{ margin: "0 0 0.5rem", color: C.emeraldDeep }}>معاينة المسودة</h3>
-          <pre style={{ whiteSpace: "pre-wrap", fontSize: "0.8125rem", margin: 0, direction: "rtl" }}>{JSON.stringify(preview, null, 2)}</pre>
-          {previewDraftId && (
-            <div style={{ marginTop: "0.75rem", display: "flex", gap: "0.5rem" }}>
-              <button type="button" disabled={busy} onClick={() => onApprove(previewDraftId)} style={{ padding: "0.4rem 0.75rem", background: C.emeraldDeep, color: "#fff", border: "none", borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit" }}>
-                اعتماد ونشر
+      <div className="scm-tabs">
+        {(["text", "url", "image"] as InputMode[]).map((m) => (
+          <button
+            type="button"
+            key={m}
+            className={`scm-tab${mode === m ? " scm-tab--active" : ""}`}
+            onClick={() => setMode(m)}
+          >
+            {TAB_LABELS[m]}
+          </button>
+        ))}
+      </div>
+
+      <section className="scm-input-panel">
+        {mode === "text" && (
+          <div className="scm-input-group">
+            <div>
+              {/* span لا label: هذا وصف لمجموعة أزرار اختيار (scm-hints-row)
+                  لا لحقل إدخال واحد، فـhtmlFor غير قابل للتطبيق هنا أصلًا —
+                  role="group"+aria-labelledby هو الربط الصحيح لهذا النمط
+                  (جماعة عناصر تفاعلية بوصف مشترك)، لا label/htmlFor. */}
+              <span id="scm-content-hint-label" className="scm-hint-label">
+                نوع المحتوى (اختياري، يُساعد الذكاء الاصطناعي على التحليل)
+              </span>
+              <div className="scm-hints-row" role="group" aria-labelledby="scm-content-hint-label">
+                {CONTENT_HINTS.map((h) => (
+                  <button
+                    key={h}
+                    type="button"
+                    onClick={() => setHint(hint === h ? "" : h)}
+                    className={`scm-hint-btn${hint === h ? " scm-hint-btn--active" : ""}`}
+                  >
+                    {h}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="ai-raw-text" className="scm-hint-label">
+                المحتوى الخام (درس، قصة، حديث، فتوى، مقال، خبر…)
+              </label>
+              <textarea
+                id="ai-raw-text"
+                value={rawText}
+                onChange={(e) => setRawText(e.target.value)}
+                placeholder="الصق هنا أي نص: درس كامل، قصة، حديث، فتوى، مقال، إعلان، مناسبة، سيرة، ترجمة، أو أي محتوى آخر…"
+                rows={9}
+                className="scm-textarea"
+              />
+              <div className="scm-textarea-footer">
+                <span className="scm-char-count">{rawText.length} حرف</span>
+                <div className="scm-textarea-actions">
+                  {rawText && (
+                    <button type="button" onClick={() => setRawText("")} className="scm-clear-btn">
+                      مسح
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={onTextAnalyze}
+                    disabled={busy || !rawText.trim()}
+                    className="scm-analyze-btn"
+                  >
+                    {busy ? "جارٍ التحليل…" : "تحليل بالذكاء الاصطناعي"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {mode === "url" && (
+          <div className="scm-input-group">
+            <label className="scm-hint-label" htmlFor="scm-url-input">
+              رابط المحتوى (Instagram / YouTube / X / Telegram / موقع)
+            </label>
+            <div className="scm-url-row">
+              <input
+                id="scm-url-input"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="https://..."
+                dir="ltr"
+                className="scm-url-input"
+              />
+              <button
+                type="button"
+                onClick={onUrlImport}
+                disabled={busy || !url.trim()}
+                className="scm-url-btn"
+              >
+                {busy ? "جارٍ الاستيراد…" : "استيراد"}
               </button>
-              <button type="button" disabled={busy} onClick={() => onReject(previewDraftId)} style={{ padding: "0.4rem 0.75rem", background: "#fee2e2", color: "#991b1b", border: "none", borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit" }}>
+            </div>
+            <div className="scm-url-links">
+              <a href="/admin/automation/sources" className="scm-url-link scm-url-link--automation">
+                مصادر المراقبة التلقائية
+              </a>
+              <a href="/admin/content-import/url" className="scm-url-link scm-url-link--advanced">
+                واجهة الاستيراد المتقدمة
+              </a>
+            </div>
+          </div>
+        )}
+
+        {mode === "image" && (
+          <div className="scm-input-group">
+            <label className="scm-hint-label" htmlFor="scm-image-input">
+              ارفع صورة تحتوي محتوى (إعلان، جدول، نص مصوّر…)
+            </label>
+            <div className="scm-image-drop">
+              <input
+                id="scm-image-input"
+                type="file"
+                accept="image/*"
+                disabled={busy}
+                onChange={(e) => onImage(e.target.files?.[0] || null)}
+                className="scm-image-input"
+              />
+              <p className="scm-image-hint">
+                Vision + OCR، يستخرج الذكاء الاصطناعي النص والبيانات تلقائياً
+              </p>
+            </div>
+            <Link href="/admin/content-import/image" className="scm-image-link">
+              واجهة الاستيراد من الصورة المتقدمة ←
+            </Link>
+          </div>
+        )}
+      </section>
+
+      {preview && (
+        <section className="scm-preview">
+          <div className="scm-preview-header">
+            <h3 className="scm-preview-h3">معاينة المسودة</h3>
+            <button
+              type="button"
+              onClick={() => { setPreviewEditing(!previewEditing); if (!previewEditing) setPreviewJson(JSON.stringify(preview, null, 2)); }}
+              className="scm-preview-toggle"
+            >
+              {previewEditing ? "إلغاء التعديل" : "تعديل"}
+            </button>
+          </div>
+
+          {previewEditing ? (
+            <textarea
+              value={previewJson}
+              onChange={(e) => setPreviewJson(e.target.value)}
+              rows={14}
+              dir="ltr"
+              className="scm-preview-editor"
+            />
+          ) : (
+            <div className="scm-preview-grid">
+              {Object.entries(preview).filter(([, v]) => v !== null && v !== "").map(([k, v]) => (
+                <div key={k} className="scm-preview-row">
+                  <span className="scm-preview-key">{k}</span>
+                  <span className="scm-preview-val">
+                    {Array.isArray(v) ? v.join("، ") : String(v).slice(0, 200)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {previewDraftId && (
+            <div className="scm-preview-actions">
+              <button
+                type="button"
+                disabled={busy}
+                onClick={() => onApprove(previewDraftId)}
+                className="scm-preview-approve"
+              >
+                {busy ? "جارٍ النشر…" : "اعتماد ونشر"}
+              </button>
+              <button
+                type="button"
+                disabled={busy}
+                onClick={() => onReject(previewDraftId)}
+                className="scm-preview-reject"
+              >
                 رفض
+              </button>
+              <button
+                type="button"
+                onClick={() => { setPreview(null); setPreviewDraftId(null); }}
+                className="scm-preview-close"
+              >
+                إغلاق
               </button>
             </div>
           )}
         </section>
       )}
 
-      <h3 style={{ color: C.emeraldDeep, fontSize: "1rem" }}>مسودات بانتظار المراجعة ({drafts.length})</h3>
+      <div className="scm-drafts-header">
+        <h3 className="scm-drafts-h3">
+          مسودات بانتظار المراجعة ({drafts.length})
+        </h3>
+        <button type="button" onClick={load} className="scm-refresh-btn">
+          تحديث
+        </button>
+      </div>
+
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : drafts.length === 0 ? (
-        <p style={{ color: C.inkSoft }}>لا توجد مسودات معلّقة.</p>
+        <p className="scm-empty">لا توجد مسودات معلّقة.</p>
       ) : (
-        <div style={{ display: "grid", gap: "0.75rem" }}>
+        <div className="scm-drafts-list">
           {drafts.map((d) => (
-            <article key={d.id} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.5rem", padding: "0.75rem" }}>
-              <strong>{String(d.extracted_data?.title || "بدون عنوان")}</strong>
-              <p style={{ margin: "0.25rem 0", fontSize: "0.8125rem", color: C.inkSoft }}>
+            <article key={d.id} className="scm-draft-card">
+              <strong className="scm-draft-title">{String(d.extracted_data?.title || "بدون عنوان")}</strong>
+              <p className="scm-draft-meta">
                 {d.source_type} · {String(d.extracted_data?.speaker_name || "")} · {new Date(d.created_at).toLocaleString("ar")}
               </p>
               {(d.validation_errors || []).length > 0 && (
-                <ul style={{ margin: "0.35rem 0", paddingInlineStart: "1.1rem", color: "#b91c1c", fontSize: "0.75rem" }}>
-                  {d.validation_errors!.map((e, i) => (
-                    <li key={i}>{e.message}</li>
-                  ))}
+                <ul className="scm-draft-errors">
+                  {d.validation_errors!.map((e, i) => <li key={i}>{e.message}</li>)}
                 </ul>
               )}
-              <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
-                <button type="button" onClick={() => { setPreview(d.extracted_data); setPreviewDraftId(d.id); }} style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem", cursor: "pointer", fontFamily: "inherit" }}>معاينة</button>
-                <button type="button" disabled={busy} onClick={() => onApprove(d.id)} style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.25rem", cursor: "pointer", fontFamily: "inherit" }}>اعتماد</button>
-                <button type="button" disabled={busy} onClick={() => onReject(d.id)} style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem", cursor: "pointer", fontFamily: "inherit" }}>رفض</button>
+              <div className="scm-draft-actions">
+                <button
+                  type="button"
+                  onClick={() => { setPreview(d.extracted_data); setPreviewJson(JSON.stringify(d.extracted_data, null, 2)); setPreviewDraftId(d.id); }}
+                  className="scm-draft-preview-btn"
+                >
+                  معاينة وتعديل
+                </button>
+                <button
+                  type="button"
+                  disabled={busy}
+                  onClick={() => onApprove(d.id)}
+                  className="scm-draft-approve-btn"
+                >
+                  اعتماد
+                </button>
+                <button
+                  type="button"
+                  disabled={busy}
+                  onClick={() => onReject(d.id)}
+                  className="scm-draft-reject-btn"
+                >
+                  رفض
+                </button>
               </div>
             </article>
           ))}

@@ -1,4 +1,5 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { applyPageSeo } from "@/lib/seo";
 import { validateMediaUpload, safeUploadFileName, MAX_MEDIA_BYTES } from "@/lib/file-validation";
 import { sanitizeText } from "@/lib/sanitize";
 import { Link } from "wouter";
@@ -30,6 +31,25 @@ export default function TranscribePage() {
   const [activeTab, setActiveTab] = useState<TabId>("upload");
   const [manualText, setManualText] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/transcribe",
+      title: "تفريغ الدروس والمحاضرات | المجلس العلمي",
+      description: "أداة تفريغ الدروس والمحاضرات الإسلامية تلقائياً، حمّل ملفاً صوتياً أو رابط يوتيوب واحصل على ملخص وفوائد منظّمة.",
+      keywords: ["تفريغ دروس", "تفريغ محاضرات", "تلخيص درس", "ذكاء اصطناعي إسلامي", "استخراج فوائد"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        name: "تفريغ الدروس والمحاضرات",
+        description: "أداة تفريغ الدروس والمحاضرات الإسلامية تلقائياً.",
+        url: "https://www.majlisilm.com/transcribe",
+        applicationCategory: "EducationApplication",
+        inLanguage: "ar",
+        provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+      }],
+    });
+  }, []);
 
   const onDrop = useCallback(
     (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
@@ -151,7 +171,7 @@ export default function TranscribePage() {
           .eq("id", record.id);
         setProgress(100);
         setStatus("done");
-        setErrorMessage("تم حفظ رابط يوتيوب. التفريغ التلقائي قيد التطوير — استخدم تبويب «نص مباشر» للتحليل الآن.");
+        setErrorMessage("تم حفظ رابط يوتيوب. التفريغ التلقائي قيد التطوير، استخدم تبويب «نص مباشر» للتحليل الآن.");
         return;
       }
 
@@ -203,21 +223,19 @@ export default function TranscribePage() {
   };
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[#FAF5EA] py-8">
+    <div className="trp-root">
       <div className="mx-auto max-w-4xl px-4">
-        <Link href="/" className="text-sm font-bold text-[#164E3C] hover:underline">
-          ← المجلس العلمي
-        </Link>
-        <h1 className="mt-2 text-2xl font-bold text-[#164E3C]">تفريغ الدروس</h1>
-        <p className="mb-8 text-[#5B5446]">حوّل الصوت والفيديو إلى نص مع تلخيص ذكي واستخراج الفوائد</p>
+        <Link href="/" className="trp-back-link">← المجلس العلمي</Link>
+        <h1 className="trp-title">تفريغ الدروس</h1>
+        <p className="trp-subtitle">حوّل الصوت والفيديو إلى نص مع تلخيص ذكي واستخراج الفوائد</p>
 
         {!isLoggedIn && (
-          <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-amber-900">
+          <div className="trp-login-notice">
             يجب <Link href="/login?next=/transcribe" className="font-bold underline">تسجيل الدخول</Link> لاستخدام التفريغ.
           </div>
         )}
 
-        <div className="mb-6 flex gap-2 rounded-xl border border-[#E0D7C4] bg-white p-1 shadow-sm">
+        <div className="trp-tabs-nav">
           {[
             { id: "upload" as const, label: "رفع ملف" },
             { id: "youtube" as const, label: "يوتيوب" },
@@ -227,41 +245,38 @@ export default function TranscribePage() {
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-all ${
-                activeTab === tab.id ? "bg-[#1F6E54] text-white shadow" : "text-[#5B5446] hover:bg-[#F0E8D6]"
-              }`}
+              className={activeTab === tab.id ? "trp-tab trp-tab--active" : "trp-tab"}
             >
               {tab.label}
             </button>
           ))}
         </div>
 
-        <div className="space-y-4 rounded-2xl border border-[#E0D7C4] bg-white p-6 shadow-sm">
+        <div className="trp-form-box">
           <div>
-            <label className="mb-1 block text-sm font-medium text-[#5B5446]">عنوان الدرس *</label>
+            <label htmlFor="trp-title" className="trp-label">عنوان الدرس *</label>
             <input
+              id="trp-title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="مثال: شرح الأربعين النووية - الدرس الأول"
-              className="w-full rounded-xl border border-[#E0D7C4] px-4 py-3 text-right outline-none focus:ring-2 focus:ring-[#1F6E54]"
+              className="trp-input"
             />
           </div>
 
           {activeTab === "upload" && (
             <div
               {...getRootProps()}
-              className={`cursor-pointer rounded-xl border-2 border-dashed p-12 text-center transition-all ${
-                isDragActive ? "border-[#1F6E54] bg-[#CFE0D3]/40" : "border-[#E0D7C4] hover:border-[#1F6E54]/60"
-              }`}
+              className={isDragActive ? "trp-dropzone trp-dropzone--active" : "trp-dropzone"}
             >
-              <input {...getInputProps()} />
-              <div className="mb-3 text-sm font-bold text-[#164E3C]">اسحب الملف هنا أو انقر للاختيار</div>
+              <input {...getInputProps()} aria-label="رفع ملف صوتي" />
+              <div className="trp-drop-label">اسحب الملف هنا أو انقر للاختيار</div>
               {file ? (
-                <p className="font-medium text-[#164E3C]">{file.name}</p>
+                <p className="trp-drop-filename">{file.name}</p>
               ) : (
                 <>
-                  <p className="font-medium text-[#5B5446]">اسحب الملف هنا أو اضغط للاختيار</p>
-                  <p className="mt-1 text-sm text-[#5B5446]/70">MP3, MP4, WAV, M4A — حتى 500MB</p>
+                  <p className="trp-drop-hint">اسحب الملف هنا أو اضغط للاختيار</p>
+                  <p className="trp-drop-hint-sub">MP3, MP4, WAV, M4A، حتى 500MB</p>
                 </>
               )}
             </div>
@@ -269,33 +284,35 @@ export default function TranscribePage() {
 
           {activeTab === "youtube" && (
             <div>
-              <label className="mb-1 block text-sm font-medium text-[#5B5446]">رابط يوتيوب</label>
+              <label htmlFor="trp-youtube-url" className="trp-label">رابط يوتيوب</label>
               <input
+                id="trp-youtube-url"
                 value={youtubeUrl}
                 onChange={(e) => setYoutubeUrl(e.target.value)}
                 placeholder="https://youtube.com/watch?v=..."
-                className="w-full rounded-xl border border-[#E0D7C4] px-4 py-3 text-right outline-none focus:ring-2 focus:ring-[#1F6E54]"
+                className="trp-input"
               />
             </div>
           )}
 
           {activeTab === "text" && (
             <div>
-              <label className="mb-1 block text-sm font-medium text-[#5B5446]">أدخل النص المُفرَّغ مسبقاً</label>
+              <label htmlFor="trp-manual-text" className="trp-label">أدخل النص المُفرَّغ مسبقاً</label>
               <textarea
+                id="trp-manual-text"
                 value={manualText}
                 onChange={(e) => setManualText(e.target.value)}
                 rows={8}
                 placeholder="الصق النص هنا لتلخيصه واستخراج فوائده..."
-                className="w-full resize-none rounded-xl border border-[#E0D7C4] px-4 py-3 text-right outline-none focus:ring-2 focus:ring-[#1F6E54]"
+                className="trp-input"
               />
             </div>
           )}
 
           {status !== "idle" && (
             <div>
-              <div className="mb-1 flex justify-between text-sm">
-                <span className="text-[#5B5446]">
+              <div className="trp-progress-row">
+                <span className="trp-progress-status">
                   {status === "uploading"
                     ? "جاري الرفع..."
                     : status === "processing"
@@ -304,19 +321,19 @@ export default function TranscribePage() {
                         ? "اكتملت المعالجة"
                         : "حدث خطأ"}
                 </span>
-                <span className="font-medium text-[#164E3C]">{progress}%</span>
+                <span className="trp-progress-pct">{progress}%</span>
               </div>
-              <div className="h-2 w-full rounded-full bg-[#E0D7C4]">
+              <div className="trp-prog-track">
                 <div
-                  className="h-2 rounded-full bg-[#1F6E54] transition-all duration-500"
-                  style={{ width: `${progress}%` }}
+                  className="trp-prog-fill"
+                  style={{ "--tp-pct": `${progress}%` } as React.CSSProperties}
                 />
               </div>
             </div>
           )}
 
           {errorMessage && (
-            <p className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900" role="alert">
+            <p className="trp-alert" role="alert">
               {errorMessage}
             </p>
           )}
@@ -325,7 +342,7 @@ export default function TranscribePage() {
             type="button"
             onClick={handleProcess}
             disabled={!isLoggedIn || status === "uploading" || status === "processing"}
-            className="w-full rounded-xl bg-[#1F6E54] py-4 text-lg font-bold text-white transition-all hover:bg-[#164E3C] disabled:opacity-50"
+            className="trp-submit-btn"
           >
             {status === "uploading" || status === "processing" ? "جاري المعالجة..." : "ابدأ التحليل الذكي"}
           </button>
@@ -334,29 +351,27 @@ export default function TranscribePage() {
         {result && (
           <div className="mt-8 space-y-6">
             {result.summary && (
-              <div className="rounded-2xl border border-[#E0D7C4] bg-white p-6 shadow-sm">
-                <h2 className="mb-4 text-xl font-bold text-[#164E3C]">الملخص الذكي</h2>
-                <p className="text-lg leading-relaxed text-[#241F18]">{result.summary}</p>
+              <div className="trp-result-card">
+                <h2 className="trp-result-title">الملخص الذكي</h2>
+                <p className="trp-result-body">{result.summary}</p>
               </div>
             )}
 
             {result.benefits && result.benefits.length > 0 && (
-              <div className="rounded-2xl border border-[#E0D7C4] bg-white p-6 shadow-sm">
-                <h2 className="mb-4 text-xl font-bold text-[#164E3C]">
+              <div className="trp-result-card">
+                <h2 className="trp-result-title">
                   الفوائد المستخرجة ({result.benefits.length})
                 </h2>
                 <div className="space-y-3">
                   {result.benefits.map((b, i) => (
-                    <div key={i} className="flex gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4">
+                    <div key={i} className="trp-benefit-card">
                       {b.timestamp && (
-                        <span className="mt-1 shrink-0 text-sm font-bold text-amber-700">{b.timestamp}</span>
+                        <span className="trp-benefit-timestamp">{b.timestamp}</span>
                       )}
                       <div className="flex-1">
-                        <p className="text-[#241F18]">{b.benefit}</p>
+                        <p className="trp-benefit-text">{b.benefit}</p>
                         {b.category && (
-                          <span className="mt-1 inline-block rounded-full bg-amber-200 px-2 py-0.5 text-xs text-amber-900">
-                            {b.category}
-                          </span>
+                          <span className="trp-benefit-category">{b.category}</span>
                         )}
                       </div>
                     </div>
@@ -366,11 +381,11 @@ export default function TranscribePage() {
             )}
 
             {result.key_quotes && result.key_quotes.length > 0 && (
-              <div className="rounded-2xl border border-[#E0D7C4] bg-white p-6 shadow-sm">
-                <h2 className="mb-4 text-xl font-bold text-[#164E3C]">أبرز الاقتباسات</h2>
+              <div className="trp-result-card">
+                <h2 className="trp-result-title">أبرز الاقتباسات</h2>
                 <div className="space-y-3">
                   {result.key_quotes.map((q, i) => (
-                    <blockquote key={i} className="border-r-4 border-[#1F6E54] pr-4 italic text-[#5B5446]">
+                    <blockquote key={i} className="trp-blockquote">
                       {q}
                     </blockquote>
                   ))}

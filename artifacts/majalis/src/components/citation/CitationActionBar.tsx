@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { ClipboardCopy, Link2, Printer, Quote, Star } from "lucide-react";
 import { CitationModal } from "./CitationModal";
-import { type CitationSource, type CitationContentType, CONTENT_TYPE_COLOR } from "@/lib/citation-service";
+import { type CitationSource, type CitationContentType, citTypeClass } from "@/lib/citation-service";
 
 interface Props {
   /** بيانات المصدر — يمكن تمريرها مباشرة إن كانت معلومة */
@@ -66,27 +67,24 @@ function SelectionTooltip({
   return (
     <div
       dir="rtl"
-      className="fixed z-[500] -translate-x-1/2 flex items-center gap-1 bg-gray-900 dark:bg-gray-700 text-white rounded-lg shadow-xl px-2 py-1 text-xs"
-      style={{ top: pos.top, left: pos.left }}
+      className="cab-tooltip"
+      style={{ "--cab-top": `${pos.top}px`, "--cab-left": `${pos.left}px` } as React.CSSProperties}
     >
       <button
         type="button"
         onMouseDown={(e) => { e.preventDefault(); onCite(selText, selStart, selEnd); setPos(null); }}
-        className="flex items-center gap-1 px-2 py-1 rounded transition-colors"
-        style={{ "--tw-hover-bg": "var(--majalis-emerald-deep)" } as React.CSSProperties}
-        onMouseEnter={(e) => { e.currentTarget.style.background = "var(--majalis-emerald-deep)"; }}
-        onMouseLeave={(e) => { e.currentTarget.style.background = ""; }}
-        title="اقتبس"
+        className="cab-tooltip-btn"
+        aria-label="اقتبس"
       >
-        📑 اقتباس
+        <Quote size={13} className="inline ml-1" />اقتباس
       </button>
       <button
         type="button"
         onMouseDown={(e) => { e.preventDefault(); onCopy(selText); setPos(null); }}
-        className="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-600 transition-colors"
-        title="نسخ"
+        className="cab-tooltip-btn"
+        aria-label="نسخ"
       >
-        📋 نسخ
+        <ClipboardCopy size={13} className="inline ml-1" />نسخ
       </button>
     </div>
   );
@@ -109,9 +107,7 @@ export function CitationActionBar({
   const printRef = useRef(false);
 
 
-  const typeColor = src
-    ? CONTENT_TYPE_COLOR[src.content_type] || "#065f46"
-    : (contentType ? CONTENT_TYPE_COLOR[contentType] || "#065f46" : "#065f46");
+  const typeMod = citTypeClass(src?.content_type ?? contentType ?? "fatwa");
 
   const openCite = useCallback((text = "", start?: number, end?: number) => {
     setSelectedText(text);
@@ -175,55 +171,52 @@ export function CitationActionBar({
       >
         {/* فاصل ملوَّن حسب نوع المحتوى */}
         {!compact && (
-          <span
-            className="w-1 h-6 rounded-full ml-1 self-center"
-            style={{ background: typeColor }}
-          />
+          <span className={`w-1 h-6 rounded-full ml-1 self-center cab-type-bar ${typeMod}`} />
         )}
 
         <button
           type="button"
           onClick={handleCiteBtn}
           className={btnClass}
-          title="اقتباس"
+          aria-label="اقتباس"
         >
-          📑 {!compact && "اقتباس"}
+          <Quote size={13} className="inline ml-1" />{!compact && "اقتباس"}
         </button>
 
         <button
           type="button"
           onClick={() => { /* الحفظ يتم عبر Modal */ setShowModal(true); }}
           className={btnClass}
-          title="حفظ"
+          aria-label="حفظ"
         >
-          ⭐ {!compact && "حفظ"}
+          <Star size={13} className="inline ml-1" />{!compact && "حفظ"}
         </button>
 
         <button
           type="button"
           onClick={handleShare}
           className={btnClass}
-          title="مشاركة"
+          aria-label="مشاركة"
         >
-          🔗 {!compact && "مشاركة"}
+          <Link2 size={13} className="inline ml-1" />{!compact && "مشاركة"}
         </button>
 
         <button
           type="button"
           onClick={() => handleCopy()}
           className={btnClass}
-          title="نسخ"
+          aria-label="نسخ"
         >
-          {copied ? "✓" : "📋"} {!compact && (copied ? "تم النسخ" : "نسخ")}
+          <ClipboardCopy size={13} className="inline ml-1" />{!compact && (copied ? "تم النسخ" : "نسخ")}
         </button>
 
         <button
           type="button"
           onClick={handlePrint}
           className={btnClass}
-          title="طباعة"
+          aria-label="طباعة"
         >
-          🖨️ {!compact && "طباعة"}
+          <Printer size={13} className="inline ml-1" />{!compact && "طباعة"}
         </button>
       </div>
 
@@ -262,7 +255,7 @@ export function WithCitation({
           source={source}
           contentRef={contentRef as React.RefObject<HTMLElement>}
           compact={compact}
-          className="border-t border-gray-100 dark:border-gray-700 pt-2 mt-2"
+          className="cab-divider-wrap"
         />
       )}
     </div>

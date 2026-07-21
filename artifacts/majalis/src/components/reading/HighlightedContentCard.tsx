@@ -3,6 +3,7 @@ import { ReadingText } from "@/components/reading/ReadingText";
 import { ContentActionBar } from "@/components/reading/ContentActionBar";
 import { markReadingProgress, type ReadingSection } from "@/lib/reading-progress";
 import { readPreferences } from "@/lib/user-preferences";
+import type { InlineEditContentType } from "@/components/AdminInlineEdit";
 
 export type ContentMetaItem = {
   label: string;
@@ -31,8 +32,14 @@ export type HighlightedContentCardProps = {
   footnote?: ReactNode;
   extra?: ReactNode;
   showPrint?: boolean;
+  showImageCard?: boolean;
+  imageCardCategory?: string;
+  imageCardSource?: string;
   trackProgress?: boolean;
   className?: string;
+  /** لتفعيل زر التعديل المباشر للمشرفين */
+  adminEditType?: InlineEditContentType;
+  adminEditData?: Record<string, unknown>;
 };
 
 export function HighlightedContentCard({
@@ -57,8 +64,13 @@ export function HighlightedContentCard({
   footnote,
   extra,
   showPrint = false,
+  showImageCard = false,
+  imageCardCategory,
+  imageCardSource,
   trackProgress = true,
   className = "",
+  adminEditType,
+  adminEditData,
 }: HighlightedContentCardProps) {
   const [open, setOpen] = useState(defaultOpen);
   const [localReading, setLocalReading] = useState(false);
@@ -160,6 +172,10 @@ export function HighlightedContentCard({
             contentId={contentId}
             showSave={showSave}
             showPrint={showPrint}
+            showImageCard={showImageCard}
+            imageCardCategory={imageCardCategory}
+            imageCardSource={imageCardSource}
+            adminEdit={adminEditType && contentId ? { contentType: adminEditType, initialData: adminEditData } : undefined}
           />
 
           <button

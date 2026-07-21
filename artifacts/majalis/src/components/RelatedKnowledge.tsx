@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import {
+  BookMarked, BookOpen, GraduationCap, Scale, Lightbulb, HelpCircle,
+  CheckCircle2, ChevronLeft,
+} from "lucide-react";
 import { fetchContentRelations, type IntelligentSearchResult } from "@/lib/scholarly-intelligence-service";
 
 type Props = {
@@ -11,9 +15,35 @@ type Props = {
   limit?: number;
 };
 
-export function RelatedKnowledge({ kind, recordId, topicSlug, query, title = "مواد ذات صلة", limit = 6 }: Props) {
-  const [items, setItems] = useState<IntelligentSearchResult[]>([]);
-  const [loading, setLoading] = useState(true);
+const KIND_ICONS: Record<string, React.ComponentType<{ size?: number; strokeWidth?: number }>> = {
+  lesson:   GraduationCap,
+  book:     BookMarked,
+  fatwa:    Scale,
+  fawaid:   Lightbulb,
+  question: HelpCircle,
+  default:  BookOpen,
+};
+
+const KIND_LABELS: Record<string, string> = {
+  lesson:   "درس",
+  book:     "كتاب",
+  fatwa:    "فتوى",
+  fawaid:   "فائدة",
+  question: "سؤال وجواب",
+};
+
+function KindIcon({ kind }: { kind?: string }) {
+  const Icon = KIND_ICONS[kind ?? ""] ?? KIND_ICONS.default;
+  return <Icon size={14} strokeWidth={1.6} aria-hidden="true" />;
+}
+
+export function RelatedKnowledge({
+  kind, recordId, topicSlug, query,
+  title = "مواد ذات صلة",
+  limit = 6,
+}: Props) {
+  const [items,     setItems]     = useState<IntelligentSearchResult[]>([]);
+  const [loading,   setLoading]   = useState(true);
   const [algorithm, setAlgorithm] = useState("none");
 
   useEffect(() => {
@@ -29,51 +59,63 @@ export function RelatedKnowledge({ kind, recordId, topicSlug, query, title = "م
       .finally(() => {
         if (!cancelled) setLoading(false);
       });
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, [kind, recordId, topicSlug, query, limit]);
 
   if (loading || items.length === 0) return null;
 
   return (
-    <aside className="related-knowledge" style={{ marginTop: "2rem" }}>
-      <h2 className="related-knowledge__title" style={{ fontSize: "1rem", fontWeight: 700, marginBottom: "0.75rem" }}>
-        {title}
-      </h2>
-      <div className="related-knowledge__list" style={{ display: "grid", gap: "0.5rem" }}>
-        {items.map((item) => (
-          <Link
-            key={item.id || item.href}
-            href={item.href || `/search/${encodeURIComponent(item.title || "")}`}
-            style={{ textDecoration: "none" }}
-          >
-            <div
-              className="related-knowledge__item"
-              style={{
-                padding: "0.75rem 1rem",
-                borderRadius: "0.375rem",
-                border: "1px solid var(--line, #e5e7eb)",
-                background: "var(--panel, #fff)",
-              }}
-            >
-              <span style={{ fontWeight: 600, fontSize: "0.875rem", color: "var(--emerald-deep, #065f46)" }}>
-                {item.title}
-              </span>
-              <span style={{ display: "block", fontSize: "0.75rem", color: "var(--ink-soft, #6b7280)", marginTop: "0.125rem" }}>
-                {[item.kind_label, item.source_name, item.verification_status === "verified" ? "موثق" : null]
-                  .filter(Boolean)
-                  .join(" · ")}
-              </span>
-            </div>
-          </Link>
-        ))}
+    <aside className="rk-aside" aria-label={title}>
+      <div className="rk-head">
+        <h2 className="rk-title">{title}</h2>
+        {algorithm !== "none" && (
+          <span className="rk-algo-badge">اقتراحات ذكية</span>
+        )}
       </div>
-      {algorithm !== "none" && (
-        <p style={{ fontSize: "0.7rem", color: "var(--ink-soft)", marginTop: "0.5rem" }}>
-          اقتراحات ذكية
-        </p>
-      )}
+
+      <div className="rk-grid">
+        {items.map((item) => {
+          const isVerified = item.verification_status === "verified";
+          const href = item.href || `/search/${encodeURIComponent(item.title || "")}`;
+          const kindLabel = KIND_LABELS[item.kind_label ?? ""] ?? item.kind_label;
+
+          return (
+            <Link
+              key={item.id || item.href}
+              href={href}
+              className="rk-card"
+            >
+              {/* الشريط الجانبي الملوّن */}
+              <div className="rk-card__bar" />
+
+              <div className="rk-card__body">
+                {/* رأس البطاقة */}
+                <div className="rk-card__head">
+                  <span className="rk-card__kind">
+                    <KindIcon kind={item.kind_label} />
+                    {kindLabel}
+                  </span>
+                  {isVerified && (
+                    <span className="rk-card__verified">
+                      <CheckCircle2 size={11} aria-hidden="true" /> موثّق
+                    </span>
+                  )}
+                </div>
+
+                {/* العنوان */}
+                <p className="rk-card__title">{item.title}</p>
+
+                {/* المصدر */}
+                {item.source_name && (
+                  <p className="rk-card__source">{item.source_name}</p>
+                )}
+              </div>
+
+              <ChevronLeft size={14} className="rk-card__arrow" aria-hidden="true" />
+            </Link>
+          );
+        })}
+      </div>
     </aside>
   );
 }

@@ -39,6 +39,8 @@ export function useAssistantChat() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  // آخر سؤال أُرسل — يُستخدم لزر «إعادة المحاولة» عند فشل الطلب.
+  const lastQuestionRef = useRef<string>("");
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -56,9 +58,15 @@ export function useAssistantChat() {
     ]);
   };
 
-  const sendQuestion = async (question: string) => {
+  /**
+   * المسار الموحّد لإرسال أي سؤال (كتابة يدوية، سؤال مقترح، إعادة طرح).
+   * يستقبل نص السؤال مباشرةً ولا يعتمد على قيمة `input` في الحالة،
+   * تفاديًا لأي مشكلة stale state أو race condition.
+   */
+  const submitQuestion = async (question: string) => {
     const trimmed = question.trim();
     if (!trimmed || loading) return;
+    lastQuestionRef.current = trimmed;
 
     const userMessage: ChatMessage = {
       id: createId(),
@@ -122,7 +130,15 @@ export function useAssistantChat() {
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
-    await sendQuestion(input);
+    await submitQuestion(input);
+  };
+
+  /** إعادة إرسال آخر سؤال بعد فشل، مع إزالة رسائل الفشل السابقة. */
+  const retryLast = async () => {
+    const question = lastQuestionRef.current;
+    if (!question || loading) return;
+    setMessages((current) => current.filter((message) => !message.isFailure));
+    await submitQuestion(question);
   };
 
   return {
@@ -130,7 +146,10 @@ export function useAssistantChat() {
     input,
     setInput,
     loading,
-    sendQuestion,
+    // الاسم القانوني الموحّد + اسم متوافق مع الاستخدام القائم.
+    submitQuestion,
+    sendQuestion: submitQuestion,
+    retryLast,
     submit,
     bottomRef,
   };

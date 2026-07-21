@@ -26,23 +26,18 @@ export default async function handler(req, res) {
     const { dispatchApiRequest } = await getDispatch();
     return await dispatchApiRequest(req, res);
   } catch (error) {
+    // تسجيل داخلي كامل (سجلّات الخادم فقط) — لا يُسرَّب شيء منه للعميل.
     console.error("API bootstrap failed", error);
+
+    // ردّ عام بلا تفاصيل: error.message قد يكشف مسارات وأسماء وحدات وأسرار بيئة.
+    const payload = { ok: false, message: "تعذر تشغيل واجهة API." };
+
     if (typeof res.status === "function" && typeof res.json === "function") {
-      res.status(500).json({
-        ok: false,
-        message: "تعذر تشغيل واجهة API.",
-        error: error?.message || String(error),
-      });
+      res.status(500).json(payload);
       return;
     }
     res.statusCode = 500;
     res.setHeader("Content-Type", "application/json; charset=utf-8");
-    res.end(
-      JSON.stringify({
-        ok: false,
-        message: "تعذر تشغيل واجهة API.",
-        error: error?.message || String(error),
-      }),
-    );
+    res.end(JSON.stringify(payload));
   }
 }

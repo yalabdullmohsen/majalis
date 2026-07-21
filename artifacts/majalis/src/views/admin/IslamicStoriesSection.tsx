@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { BookOpen, Library } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/components/AuthProvider";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 type IslamicStory = {
   id: number;
@@ -21,54 +23,6 @@ type IslamicStory = {
   created_at: string;
 };
 
-const CSS = `
-.is-wrap { direction: rtl; font-family: inherit; }
-.is-header { margin-bottom: 1.5rem; }
-.is-title { font-size: 1.375rem; font-weight: 700; color: #1e293b; margin: 0 0 0.25rem; }
-.is-subtitle { font-size: 0.8125rem; color: #64748b; margin: 0; }
-.is-stats { display: flex; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap; }
-.is-stat { background: #f1f5f9; border-radius: 0.5rem; padding: 0.45rem 0.85rem; font-size: 0.8125rem; }
-.is-stat strong { color: #0f172a; }
-.is-stat span { color: #64748b; margin-right: 0.25rem; }
-.is-filters { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; align-items: center; }
-.is-filters input { flex: 1; min-width: 160px; padding: 0.45rem 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.375rem; font-size: 0.8125rem; outline: none; font-family: inherit; direction: rtl; }
-.is-filters input:focus { border-color: #94a3b8; }
-.is-filters select { padding: 0.45rem 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.375rem; font-size: 0.8125rem; background: #fff; cursor: pointer; font-family: inherit; }
-.is-list { display: flex; flex-direction: column; gap: 0.9rem; }
-.is-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 0.75rem; overflow: hidden; }
-.is-card.approved { border-color: #bbf7d0; }
-.is-card-head { display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1.1rem; cursor: pointer; background: #f8fafc; border-bottom: 1px solid transparent; transition: background 0.15s; }
-.is-card.approved .is-card-head { background: #f0fdf4; }
-.is-card-head:hover { background: #f1f5f9; }
-.is-card.approved .is-card-head:hover { background: #dcfce7; }
-.is-icon { font-size: 1.4rem; }
-.is-info { flex: 1; }
-.is-name { font-size: 0.975rem; font-weight: 700; color: #1e293b; }
-.is-meta { font-size: 0.75rem; color: #64748b; margin-top: 2px; }
-.is-badge { font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 9999px; letter-spacing: 0.03em; }
-.is-badge.pending { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
-.is-badge.done { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-.is-toggle { font-size: 0.75rem; color: #94a3b8; }
-.is-body { padding: 1.1rem 1.25rem; border-top: 1px solid #e2e8f0; }
-.is-section-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #64748b; margin-bottom: 0.5rem; }
-.is-summary { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 0.75rem 1rem; font-size: 0.875rem; line-height: 1.65; color: #334155; margin-bottom: 0.9rem; }
-.is-full-toggle { background: none; border: 1px solid #cbd5e1; border-radius: 0.375rem; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: #475569; cursor: pointer; font-family: inherit; margin-bottom: 0.75rem; transition: border-color 0.15s; }
-.is-full-toggle:hover { border-color: #94a3b8; color: #1e293b; }
-.is-content { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 1rem 1.1rem; font-size: 0.875rem; line-height: 1.7; color: #334155; white-space: pre-wrap; margin-bottom: 0.9rem; max-height: 380px; overflow-y: auto; }
-.is-lessons { margin-bottom: 0.9rem; }
-.is-lesson-item { display: flex; gap: 0.5rem; align-items: flex-start; font-size: 0.8125rem; color: #334155; margin-bottom: 0.35rem; }
-.is-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-.is-btn { padding: 0.45rem 1rem; border-radius: 0.375rem; font-size: 0.8125rem; font-weight: 600; cursor: pointer; font-family: inherit; border: none; transition: all 0.15s; }
-.is-btn.approve { background: #16a34a; color: #fff; }
-.is-btn.approve:hover { background: #15803d; }
-.is-btn.revoke { background: #fff; color: #dc2626; border: 1px solid #fca5a5; }
-.is-btn.revoke:hover { background: #fef2f2; }
-.is-btn.disabled { opacity: 0.45; cursor: not-allowed; }
-.is-verified-info { font-size: 0.7375rem; color: #64748b; padding: 0.3rem 0; }
-.is-sources { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.9rem; }
-.is-source { font-size: 0.8rem; color: #475569; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.375rem; padding: 0.3rem 0.6rem; }
-`;
-
 export function IslamicStoriesSection() {
   const { user } = useAuth();
   const [stories, setStories] = useState<IslamicStory[]>([]);
@@ -78,7 +32,7 @@ export function IslamicStoriesSection() {
   const [working, setWorking] = useState<Set<number>>(new Set());
   const [filterCategory, setFilterCategory] = useState("الكل");
   const [filterStatus, setFilterStatus] = useState("الكل");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(() => { const p = new URLSearchParams(window.location.search); return p.get("q") || ""; });
 
   const load = async () => {
     setLoading(true);
@@ -127,8 +81,7 @@ export function IslamicStoriesSection() {
     if (filterStatus === "معتمد" && !s.is_approved) return false;
     if (filterStatus === "قيد المراجعة" && s.is_approved) return false;
     if (search.trim()) {
-      const q = search.toLowerCase();
-      return s.title.toLowerCase().includes(q) || s.category.includes(q) || s.era.includes(q);
+      return arabicMatchAny([s.title, s.category, s.era], search);
     }
     return true;
   });
@@ -141,7 +94,7 @@ export function IslamicStoriesSection() {
 
   if (loading) {
     return (
-      <div style={{ padding: "2rem", textAlign: "center", color: "#64748b", direction: "rtl" }}>
+      <div className="iss-empty">
         جاري التحميل…
       </div>
     );
@@ -149,18 +102,17 @@ export function IslamicStoriesSection() {
 
   return (
     <>
-      <style>{CSS}</style>
       <div className="is-wrap">
         <div className="is-header">
-          <h2 className="is-title">📖 القصص الإسلامية — مراجعة واعتماد</h2>
+          <h2 className="is-title"><BookOpen size={20} className="inline ml-2" />القصص الإسلامية، مراجعة واعتماد</h2>
           <p className="is-subtitle">
-            جميع القصص محفوظة بـ is_approved = false — اعتمادك قرارك وحدك.
+            جميع القصص محفوظة بـ is_approved = false، اعتمادك قرارك وحدك.
             لا تُنشر قصة للمستخدمين قبل موافقتك.
           </p>
           <div className="is-stats">
             <div className="is-stat"><strong>{stories.length}</strong><span>إجمالي</span></div>
-            <div className="is-stat"><strong style={{ color: "#16a34a" }}>{approved}</strong><span>معتمد</span></div>
-            <div className="is-stat"><strong style={{ color: "#b45309" }}>{pending}</strong><span>قيد المراجعة</span></div>
+            <div className="is-stat"><strong className="text-approved">{approved}</strong><span>معتمد</span></div>
+            <div className="is-stat"><strong className="text-emerald">{pending}</strong><span>قيد المراجعة</span></div>
             <div className="is-stat">صحابة: <strong>{catApproved("صحابة")}/{catCount("صحابة")}</strong></div>
             <div className="is-stat">فتوحات: <strong>{catApproved("فتوحات")}/{catCount("فتوحات")}</strong></div>
             <div className="is-stat">تاريخ: <strong>{catApproved("تاريخ")}/{catCount("تاريخ")}</strong></div>
@@ -170,7 +122,7 @@ export function IslamicStoriesSection() {
         {/* Filters */}
         <div className="is-filters">
           <input
-            placeholder="🔍 بحث في العنوان أو التصنيف…"
+            placeholder="بحث في العنوان أو التصنيف…"
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
@@ -190,7 +142,7 @@ export function IslamicStoriesSection() {
         {/* Stories List */}
         <div className="is-list">
           {filtered.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "2rem", color: "#64748b" }}>
+            <div className="iss-empty">
               لا توجد نتائج
             </div>
           ) : filtered.map(story => {
@@ -201,7 +153,15 @@ export function IslamicStoriesSection() {
             return (
               <div key={story.id} className={`is-card${story.is_approved ? " approved" : ""}`}>
                 {/* Header */}
-                <div className="is-card-head" onClick={() => toggleExpand(story.id)}>
+                <div
+                  className="is-card-head"
+                  onClick={() => toggleExpand(story.id)}
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={isExpanded}
+                  aria-label={`${isExpanded ? "طي" : "توسيع"} قصة ${story.title}`}
+                  onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && toggleExpand(story.id)}
+                >
                   <span className="is-icon">{story.icon}</span>
                   <div className="is-info">
                     <div className="is-name">{story.title}</div>
@@ -223,7 +183,7 @@ export function IslamicStoriesSection() {
                     <div className="is-summary">{story.summary}</div>
 
                     {/* Full content */}
-                    <button className="is-full-toggle" onClick={() => toggleFull(story.id)}>
+                    <button type="button" className="is-full-toggle" onClick={() => toggleFull(story.id)}>
                       {isFullShown ? "▲ إخفاء التفاصيل الكاملة" : "▼ عرض التفاصيل الكاملة"}
                     </button>
                     {isFullShown && (
@@ -250,7 +210,7 @@ export function IslamicStoriesSection() {
                         <div className="is-section-label">المصادر</div>
                         <div className="is-sources">
                           {story.sources.map((src, i) => (
-                            <div key={i} className="is-source">📚 {src}</div>
+                            <div key={i} className="is-source"><Library size={11} className="inline ml-0.5" />{src}</div>
                           ))}
                         </div>
                       </>
@@ -267,6 +227,7 @@ export function IslamicStoriesSection() {
                     <div className="is-actions">
                       {!story.is_approved ? (
                         <button
+                          type="button"
                           className={`is-btn approve${isWorking ? " disabled" : ""}`}
                           onClick={() => setApproval(story, true)}
                           disabled={isWorking}
@@ -275,6 +236,7 @@ export function IslamicStoriesSection() {
                         </button>
                       ) : (
                         <button
+                          type="button"
                           className={`is-btn revoke${isWorking ? " disabled" : ""}`}
                           onClick={() => setApproval(story, false)}
                           disabled={isWorking}

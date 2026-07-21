@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import { BookOpen, ClipboardList, Gem, Landmark, Lock, Moon, Repeat2, ScrollText, Sprout, Timer, Trophy } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
+import { ShareButtons } from "@/components/ContentActions";
 import { PageHeader } from "@/components/ui-common";
 import {
   getUserLearningPlan,
@@ -15,6 +18,12 @@ import {
   type LearningPlan,
   type PlanItem,
 } from "@/lib/learning-plan-service";
+import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
+
+const INTEREST_ICON_MAP: Record<string, LucideIcon> = {
+  Landmark, ScrollText, Repeat2, BookOpen, Moon, Gem,
+};
 
 // ─── Wizard Steps ─────────────────────────────────────────────────────────────
 
@@ -27,10 +36,10 @@ function StepLevel({
   value: PlanLevel | "";
   onChange: (v: PlanLevel) => void;
 }) {
-  const options: { value: PlanLevel; label: string; desc: string; icon: string }[] = [
-    { value: "beginner", label: "مبتدئ", desc: "أبدأ رحلتي في طلب العلم", icon: "🌱" },
-    { value: "intermediate", label: "متوسط", desc: "لديّ قاعدة ولكنني أريد المزيد", icon: "📚" },
-    { value: "advanced", label: "متقدم", desc: "طالب علم بخبرة واسعة", icon: "🏆" },
+  const options: { value: PlanLevel; label: string; desc: string; Icon: LucideIcon }[] = [
+    { value: "beginner", label: "مبتدئ", desc: "أبدأ رحلتي في طلب العلم", Icon: Sprout },
+    { value: "intermediate", label: "متوسط", desc: "لديّ قاعدة ولكنني أريد المزيد", Icon: BookOpen },
+    { value: "advanced", label: "متقدم", desc: "طالب علم بخبرة واسعة", Icon: Trophy },
   ];
 
   return (
@@ -44,7 +53,7 @@ function StepLevel({
             className={`lp-wizard__option${value === o.value ? " lp-wizard__option--selected" : ""}`}
             onClick={() => onChange(o.value)}
           >
-            <span className="lp-wizard__option-icon">{o.icon}</span>
+            <span className="lp-wizard__option-icon">{(() => { const I = o.Icon; return <I size={28} strokeWidth={1.5} aria-hidden="true" />; })()}</span>
             <span className="lp-wizard__option-label">{o.label}</span>
             <span className="lp-wizard__option-desc">{o.desc}</span>
           </button>
@@ -76,7 +85,7 @@ function StepInterests({
             className={`lp-wizard__interest${value.includes(o.id) ? " lp-wizard__interest--selected" : ""}`}
             onClick={() => toggle(o.id)}
           >
-            <span>{o.icon}</span>
+            {(() => { const I = INTEREST_ICON_MAP[o.icon] ?? BookOpen; return <I size={18} />; })()}
             <span>{o.label}</span>
           </button>
         ))}
@@ -137,13 +146,13 @@ function PlanDisplay({
       <div className="lp-plan__header">
         <div className="lp-plan__meta">
           <span className="lp-plan__level">{LEVEL_LABELS[plan.level]}</span>
-          <span className="lp-plan__minutes">⏱ {plan.daily_minutes} دقيقة يومياً</span>
+          <span className="lp-plan__minutes flex items-center gap-1"><Timer size={13} aria-hidden="true" /> {plan.daily_minutes} دقيقة يومياً</span>
         </div>
         <div className="lp-plan__progress">
           <div className="lp-plan__progress-bar">
             <div
               className="lp-plan__progress-fill"
-              style={{ width: items.length ? `${Math.round((doneCount / items.length) * 100)}%` : "0%" }}
+              style={{ "--plan-pct": items.length ? `${Math.round((doneCount / items.length) * 100)}%` : "0%" } as React.CSSProperties}
             />
           </div>
           <span className="lp-plan__progress-text">{doneCount} / {items.length}</span>
@@ -177,8 +186,8 @@ function PlanDisplay({
       )}
 
       <div className="lp-plan__actions">
-        <Link href="/flashcards" className="lp-plan__action-btn lp-plan__action-btn--primary">
-          📇 مراجعة البطاقات
+        <Link href="/flashcards" className="lp-plan__action-btn lp-plan__action-btn--primary flex items-center gap-1.5">
+          <ClipboardList size={14} aria-hidden="true" /> مراجعة البطاقات
         </Link>
         <button type="button" className="lp-plan__action-btn" onClick={onReset}>
           ↺ إعادة بناء الخطة
@@ -193,6 +202,28 @@ function PlanDisplay({
 export default function LearningPlanPage() {
   const { user, isLoggedIn, loading: authLoading } = useAuth();
   const [step, setStep] = useState<WizardStep>("level");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/learning-plan",
+      title: "خطة التعلم الشخصية | المجلس العلمي",
+      description: "أنشئ خطة تعلم شرعية مخصصة لك، حدد مستواك واهتماماتك وعدد الدقائق اليومية.",
+      keywords: ["خطة تعلم", "تعلم شرعي", "منهج إسلامي شخصي", "تعليم إسلامي ذكي"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "EducationalOccupationalProgram",
+          name: "خطة التعلم الشرعي الشخصية",
+          url: "https://www.majlisilm.com/learning-plan",
+          description: "أنشئ خطة تعلم شرعية مخصصة مع تتبع التقدم اليومي",
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+          inLanguage: "ar",
+          educationalLevel: "متعدد المستويات",
+          hasCourseInstance: { "@type": "CourseInstance", courseMode: "online" },
+        },
+      ],
+    });
+  }, []);
   const [level, setLevel] = useState<PlanLevel | "">("");
   const [interests, setInterests] = useState<InterestId[]>([]);
   const [dailyMinutes, setDailyMinutes] = useState(30);
@@ -248,9 +279,9 @@ export default function LearningPlanPage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="page-shell narrow" dir="rtl" style={{ textAlign: "center", paddingTop: "3rem" }}>
-        <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🔐</div>
-        <p style={{ color: "var(--majalis-ink-soft)", marginBottom: "1rem" }}>
+      <div className="page-shell narrow lpn-login-prompt" dir="rtl">
+        <div className="lpn-login-icon"><Lock size={40} strokeWidth={1.3} aria-hidden="true" /></div>
+        <p className="lpn-login-msg">
           سجّل الدخول لإنشاء خطة تعلّم شخصية.
         </p>
         <Link href="/login?next=/learning-plan" className="ui-card-btn">
@@ -325,20 +356,20 @@ export default function LearningPlanPage() {
               ← رجوع
             </button>
             <button type="button" className="lp-wizard__next" onClick={buildPlan}>
-              ابنِ خطتي ✨
+              ابنِ خطتي
             </button>
           </div>
         </>
       )}
 
       {step === "loading" && (
-        <div style={{ textAlign: "center", padding: "4rem 0" }}>
+        <div className="lpn-building">
           <div className="profile-loading">
             <span className="profile-loading__dot" />
             <span className="profile-loading__dot" />
             <span className="profile-loading__dot" />
           </div>
-          <p style={{ marginTop: "1rem", color: "var(--majalis-ink-soft)" }}>جارٍ بناء خطتك…</p>
+          <p className="lpn-building__msg">جارٍ بناء خطتك…</p>
         </div>
       )}
 
@@ -355,6 +386,13 @@ export default function LearningPlanPage() {
           }}
         />
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="خطة التعلم الشخصية — المجلس العلمي" url="https://www.majlisilm.com/learning-plan" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["aqeeda", "hadith"]} title="اختبر معلوماتك في العلم الشرعي" count={4} />
+      </div>
     </div>
   );
 }

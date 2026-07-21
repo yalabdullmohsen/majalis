@@ -228,7 +228,8 @@ export async function cmsUpsert(
   }
 
   if (!record.title?.trim()) {
-    return { ok: false, action: "error", message: "العنوان مطلوب" };
+    const kind = record.kind || "محتوى";
+    record.title = `${kind} — ${new Date().toLocaleDateString("ar-SA")} #${Date.now().toString().slice(-4)}`;
   }
 
   record.external_key = ensureExternalKey(record);

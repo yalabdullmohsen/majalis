@@ -12,17 +12,16 @@ import {
   type ParsedLessonFields,
   type LessonImportResponse,
 } from "@/lib/lesson-import-api";
-import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
-import { LessonImportReviewPanel, inputStyle, labelStyle } from "@/views/admin/LessonImportShared";
+import { LessonImportReviewPanel, labelStyle } from "@/views/admin/LessonImportShared";
 
 const PLATFORM_HINTS = [
-  "Instagram — instagram.com/p/...",
-  "X — x.com/.../status/...",
-  "YouTube — youtube.com/watch?v=...",
-  "Telegram — t.me/channel/123",
-  "صفحة ويب — أي رابط HTTPS",
+  "Instagram، instagram.com/p/...",
+  "X، x.com/.../status/...",
+  "YouTube، youtube.com/watch?v=...",
+  "Telegram، t.me/channel/123",
+  "صفحة ويب، أي رابط HTTPS",
 ];
 
 function LessonImportUrlContent() {
@@ -64,8 +63,8 @@ function LessonImportUrlContent() {
     if (res.platform_label) setPlatformLabel(String(res.platform_label));
     const dup = res.duplicate as { isDuplicate?: boolean; draft?: { status?: string }; lesson?: { title?: string } } | undefined;
     if (dup?.isDuplicate) {
-      if (dup.lesson?.title) setDuplicateMessage(`رابط مكرر — درس: ${dup.lesson.title}`);
-      else if (dup.draft?.status) setDuplicateMessage(`رابط مكرر — مسودة (${dup.draft.status})`);
+      if (dup.lesson?.title) setDuplicateMessage(`رابط مكرر، درس: ${dup.lesson.title}`);
+      else if (dup.draft?.status) setDuplicateMessage(`رابط مكرر، مسودة (${dup.draft.status})`);
       else setDuplicateMessage("رابط مكرر");
     } else {
       setDuplicateMessage("");
@@ -91,11 +90,11 @@ function LessonImportUrlContent() {
       }
       applyResponse(res);
       if (res.extraction_failed || res.partial) {
-        showSuccess("تعذر الاستخراج الكامل — أكمل البيانات يدويًا");
+        showSuccess("تعذر الاستخراج الكامل، أكمل البيانات يدويًا");
       } else if (res.vision_enabled === false) {
-        showSuccess("تم جلب الرابط — أكمل البيانات يدويًا");
+        showSuccess("تم جلب الرابط، أكمل البيانات يدويًا");
       } else {
-        showSuccess("تم استخراج البيانات — راجعها ثم اعتمد");
+        showSuccess("تم استخراج البيانات، راجعها ثم اعتمد");
       }
     } catch {
       showError("تعذر استيراد الرابط");
@@ -129,19 +128,19 @@ function LessonImportUrlContent() {
 
   const onApprove = async () => {
     if (!draftId) {
-      showError("لا توجد مسودة — استورد الرابط أولًا");
+      showError("لا توجد مسودة، استورد الرابط أولًا");
       return;
     }
     setBusy(true);
     try {
       const res = await approveLessonImportFromUrl(draftId, parsed);
       if (!res.ok) {
-        const msgs = res.validation?.errors?.map((e) => e.message).join(" — ");
+        const msgs = res.validation?.errors?.map((e) => e.message).join("، ");
         showError(msgs || res.error || "تعذر الاعتماد");
         return;
       }
       invalidateLessonsCache();
-      showSuccess("تم اعتماد الدرس — يظهر الآن في المنصة");
+      showSuccess("تم اعتماد الدرس، يظهر الآن في المنصة");
       setDraftId(null);
       setImageUrl(null);
       setSourceUrl(null);
@@ -192,47 +191,48 @@ function LessonImportUrlContent() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "0.75rem", marginBottom: "1rem" }}>
+      <div className="liu-header">
         <div>
-          <h2 style={{ margin: "0 0 0.35rem", color: C.emeraldDeep }}>إضافة درس من رابط</h2>
-          <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>
+          <h2 className="liu-title">إضافة درس من رابط</h2>
+          <p className="liu-desc">
             الصق رابط الإعلان → استخراج تلقائي → مراجعة → اعتماد → نشر في المنصة.
           </p>
         </div>
-        <div style={{ display: "flex", gap: "0.75rem", fontSize: "0.8125rem" }}>
-          <Link href="/admin/content-import/image" style={{ color: C.emeraldDeep }}>من صورة</Link>
-          <Link href="/admin" style={{ color: C.emeraldDeep }}>← لوحة الإدارة</Link>
+        <div className="liu-nav-links">
+          <Link href="/admin/content-import/image" className="liu-nav-link">من صورة</Link>
+          <Link href="/admin" className="liu-nav-link">← لوحة الإدارة</Link>
         </div>
       </div>
 
       {(visionEnabled === false || visionMessage) && (
-        <div style={{ background: "#FEF3C7", border: "1px solid #FCD34D", borderRadius: "0.5rem", padding: "0.75rem 1rem", marginBottom: "1rem", fontSize: "0.875rem", color: "#92400E" }}>
+        <div className="liu-vision-notice">
           {visionMessage || "الاستخراج التلقائي غير مفعّل. يمكنك إدخال البيانات يدويًا."}
         </div>
       )}
 
-      <section style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem", marginBottom: "1rem" }}>
-        <h3 style={{ margin: "0 0 0.75rem", fontSize: "0.9375rem", color: C.emeraldDeep }}>1. رابط الإعلان</h3>
-        <label style={labelStyle}>URL</label>
+      <section className="liu-section">
+        <h3 className="liu-section__h3">1. رابط الإعلان</h3>
+        <label style={labelStyle} htmlFor="liu-url">URL</label>
         <input
-          style={{ ...inputStyle, marginBottom: "0.75rem" }}
+          id="liu-url"
+          className="adm-input liu-input--mb"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="https://..."
           dir="ltr"
           disabled={busy}
         />
-        <label style={labelStyle}>ملاحظات (اختياري)</label>
-        <input style={{ ...inputStyle, marginBottom: "0.75rem" }} value={notes} onChange={(e) => setNotes(e.target.value)} disabled={busy} />
+        <label style={labelStyle} htmlFor="liu-notes">ملاحظات (اختياري)</label>
+        <input id="liu-notes" className="adm-input liu-input--mb" value={notes} onChange={(e) => setNotes(e.target.value)} disabled={busy} />
         <button
           type="button"
           disabled={busy}
           onClick={onImport}
-          style={{ padding: "0.625rem 1.25rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: "pointer", fontFamily: "inherit", fontWeight: 600 }}
+          className="liu-import-btn"
         >
           {busy ? "جاري الاستيراد…" : "استيراد من الرابط"}
         </button>
-        <ul style={{ margin: "0.75rem 0 0", paddingInlineStart: "1.1rem", fontSize: "0.75rem", color: C.inkSoft }}>
+        <ul className="liu-hints">
           {PLATFORM_HINTS.map((h) => (
             <li key={h}>{h}</li>
           ))}
@@ -266,8 +266,8 @@ function LessonImportUrlContent() {
       )}
 
       {busy && (
-        <div style={{ marginTop: "1rem" }}>
-          <Loading />
+        <div className="liu-loading-wrap">
+          <SkeletonCardGrid count={6} />
         </div>
       )}
     </div>

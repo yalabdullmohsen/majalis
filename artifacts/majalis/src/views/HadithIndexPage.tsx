@@ -1,12 +1,12 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, BadgeCheck, AlertTriangle, Ban } from "lucide-react";
+import { ArrowLeft, BadgeCheck, AlertTriangle, Ban, BookOpen, Heart } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import { getVerifiedHadith } from "@/lib/supabase";
 import { HADITH_CLASS_META, type HadithClass } from "./HadithPage";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 type SectionDef = {
   cls: HadithClass;
@@ -29,7 +29,7 @@ const SECTIONS: SectionDef[] = [
     cls: "daif",
     href: "/hadith/daif",
     description: "الأحاديث الضعيفة الإسناد، تُبيَّن درجتها للتحذير من الاحتجاج بها.",
-    accent: "#B45309",
+    accent: "#173D35",
     Icon: AlertTriangle,
   },
   {
@@ -51,8 +51,24 @@ export default function HadithIndexPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/hadith",
-      title: "الأحاديث النبوية — صحيحة وضعيفة وموضوعة | المجلس العلمي",
-      description: "قسم الأحاديث النبوية في المجلس العلمي: الأحاديث الصحيحة، والأحاديث الضعيفة، والأحاديث الموضوعة والمكذوبة — مصنّفة ومفصولة لمنع الاختلاط.",
+      title: "الأحاديث النبوية، صحيحة وضعيفة وموضوعة | المجلس العلمي",
+      description: "قسم الأحاديث النبوية في المجلس العلمي: الأحاديث الصحيحة، والأحاديث الضعيفة، والأحاديث الموضوعة والمكذوبة، مصنّفة ومفصولة لمنع الاختلاط.",
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أقسام الأحاديث النبوية",
+          description: "تصنيف الأحاديث النبوية إلى صحيح وضعيف وموضوع",
+          numberOfItems: SECTIONS.length,
+          itemListElement: SECTIONS.map((s, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: HADITH_CLASS_META[s.cls]?.title ?? s.cls,
+            description: s.description,
+            url: `https://www.majlisilm.com${s.href}`,
+          })),
+        },
+      ],
     });
   }, []);
 
@@ -77,8 +93,37 @@ export default function HadithIndexPage() {
       <PageHeader
         eyebrow="السنة النبوية الشريفة"
         title="الأحاديث النبوية"
-        subtitle="ثلاثة أقسام مستقلة ومفصولة: الصحيحة، ثم الضعيفة، ثم الموضوعة والمكذوبة — لمنع أي اختلاط."
+        subtitle="ثلاثة أقسام مستقلة ومفصولة: الصحيحة، ثم الضعيفة، ثم الموضوعة والمكذوبة، لمنع أي اختلاط."
       />
+
+      {/* بطاقة الكتب الكاملة */}
+      <Link href="/hadith/books" className="hadith-index-card hadith-index-card--books">
+        <span className="hadith-index-card__icon" aria-hidden="true">
+          <BookOpen size={22} strokeWidth={2} color="#fff" />
+        </span>
+        <h2 className="hadith-index-card__title">الكتب الحديثية الكاملة</h2>
+        <p className="hadith-index-card__desc">
+          تصفّح صحيح البخاري (7563) ومسلم (3033) والأربعين النووية والقدسية والسنن الأربعة — بحث وتصفح بالكتاب والباب.
+        </p>
+        <span className="hadith-index-card__count">35,000+ حديث</span>
+        <span className="hadith-index-card__go">
+          تصفّح الكتب <ArrowLeft size={16} aria-hidden="true" />
+        </span>
+      </Link>
+
+      {/* بطاقة الأربعون في محبة رب العالمين */}
+      <Link href="/hadith/arbaeen-love-of-allah" className="hadith-index-card hadith-index-card--books">
+        <span className="hadith-index-card__icon" aria-hidden="true">
+          <Heart size={22} strokeWidth={2} color="#fff" />
+        </span>
+        <h2 className="hadith-index-card__title">الأربعون في محبة رب العالمين</h2>
+        <p className="hadith-index-card__desc">
+          مجموعة قيد الاستكمال من الأحاديث الموثقة في محبة الله لعباده ومحبة العبد لربه.
+        </p>
+        <span className="hadith-index-card__go">
+          تصفّح المجموعة <ArrowLeft size={16} aria-hidden="true" />
+        </span>
+      </Link>
 
       <div className="hadith-index-grid">
         {SECTIONS.map((s) => {
@@ -86,11 +131,11 @@ export default function HadithIndexPage() {
           const count = counts[s.cls];
           const Icon = s.Icon;
           return (
-            <Link key={s.cls} href={s.href} className="hadith-index-card" style={{ borderTopColor: s.accent }}>
-              <span className="hadith-index-card__icon" style={{ background: s.accent }} aria-hidden="true">
+            <Link key={s.cls} href={s.href} className={`hadith-index-card hadith-index-card--${s.cls}`}>
+              <span className="hadith-index-card__icon" aria-hidden="true">
                 <Icon size={22} strokeWidth={2} color="#fff" />
               </span>
-              <h2 className="hadith-index-card__title" style={{ color: s.accent }}>{meta.title}</h2>
+              <h2 className="hadith-index-card__title">{meta.title}</h2>
               <p className="hadith-index-card__desc">{s.description}</p>
               <span className="hadith-index-card__count">
                 {count == null ? "…" : `${count.toLocaleString("ar-EG")} ${meta.countUnit}`}
@@ -101,6 +146,13 @@ export default function HadithIndexPage() {
             </Link>
           );
         })}
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="فهرس الأحاديث النبوية — المجلس العلمي" url="https://www.majlisilm.com/hadith-index" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في الحديث الشريف" count={4} />
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
+import { applyPageSeo } from "@/lib/seo";
 import { PageHeader } from "@/components/ui-common";
 import { FiqhResearchAssistantView } from "@/components/fiqh-council/FiqhResearchAssistantView";
 import {
@@ -12,6 +13,16 @@ import { FIQH_RESEARCH_DISCLAIMER } from "@/lib/fiqh-citation";
 
 export default function FiqhCouncilResearchAssistantPage() {
   const [type, setType] = useState("الكل");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/fiqh-council/assistant",
+      title: "مساعد البحث الفقهي | المجلس العلمي",
+      description: "مساعد بحث ذكي في قرارات المجمع الفقهي، ابحث وصنّف واستشهد بالمصادر الفقهية الموثوقة.",
+      keywords: ["مساعد بحث فقهي", "ذكاء اصطناعي فقهي", "بحث إسلامي", "مجمع فقهي", "استشهاد علمي"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "مساعد البحث الفقهي", url: "https://www.majlisilm.com/fiqh-council/assistant", about: { "@type": "Thing", name: "أدوات البحث الفقهي الذكية" } }],
+    });
+  }, []);
   const [category, setCategory] = useState("الكل");
   const [source, setSource] = useState("");
   const [year, setYear] = useState("الكل");
@@ -23,7 +34,7 @@ export default function FiqhCouncilResearchAssistantPage() {
       <PageHeader
         eyebrow="أداة الباحث"
         title="مساعد الباحث الفقهي"
-        subtitle="يبحث في القرارات والفتاوى والتوصيات المنشورة فقط — ويربط كل جواب بمراجعها دون إصدار فتوى جديدة."
+        subtitle="يبحث في القرارات والفتاوى والتوصيات المنشورة فقط، ويربط كل جواب بمراجعها دون إصدار فتوى جديدة."
       />
 
       <FiqhCouncilSubnav />
@@ -56,7 +67,7 @@ export default function FiqhCouncilResearchAssistantPage() {
           </label>
           <label className="fiqh-council-select-label">
             المصدر
-            <input value={source} onChange={(e) => setSource(e.target.value)} className="fiqh-council-source-input" placeholder="اسم المصدر" />
+            <input value={source} onChange={(e) => setSource(e.target.value)} className="fiqh-council-source-input" aria-label="اسم المصدر" placeholder="اسم المصدر" />
           </label>
         </div>
       </div>

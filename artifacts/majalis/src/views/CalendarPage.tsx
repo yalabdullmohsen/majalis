@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import { Download } from "lucide-react";
+import { ShareButtons } from "@/components/ContentActions";
 import {
   addMonths,
   eachDayOfInterval,
@@ -15,9 +17,11 @@ import {
 import { arSA } from "date-fns/locale";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
-import { PageHeader, Loading } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
-import { getHijriDateString } from "@/lib/hijri-utils";
+import { getHijriDateString, gregorianToHijri } from "@/lib/hijri-utils";
+import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 type ViewMode = "month" | "week" | "day";
 
@@ -74,10 +78,18 @@ function eventsForDate(date: Date, events: CalendarEvent[]): CalendarEvent[] {
 }
 
 function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => void }) {
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [onClose]);
+
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار بديل كامل
+    // بلوحة المفاتيح.
     <div className="cal-modal-backdrop" onClick={onClose} role="presentation">
-      <div className="cal-modal ui-card" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
-        <h3>{event.title}</h3>
+      <div className="cal-modal ui-card" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="cal-modal-title">
+        <h3 id="cal-modal-title">{event.title}</h3>
         <dl className="cal-modal-meta">
           <div><dt>الشيخ</dt><dd>{event.sheikh}</dd></div>
           <div><dt>المكان</dt><dd>{event.mosque}</dd></div>
@@ -94,13 +106,92 @@ function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => v
   );
 }
 
+function hijriDayNum(date: Date): string {
+  const h = gregorianToHijri(date);
+  return h ? String(h.day) : "";
+}
+
+function toIcsDate(date: Date, time?: string): string {
+  const d = format(date, "yyyyMMdd");
+  if (!time) return `${d}T060000`;
+  const [hh, mm] = time.replace(/[^\d:]/g, "").split(":").map(Number);
+  const h = String(hh || 6).padStart(2, "0");
+  const m = String(mm || 0).padStart(2, "0");
+  return `${d}T${h}${m}00`;
+}
+
+function generateIcs(monthEvents: { date: Date; ev: CalendarEvent }[], monthLabel: string): string {
+  const lines: string[] = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//majlisilm.com//Islamic Lessons Calendar//AR",
+    `X-WR-CALNAME:دروس المجلس العلمي — ${monthLabel}`,
+    "X-WR-TIMEZONE:Asia/Kuwait",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+  ];
+  for (const { date, ev } of monthEvents) {
+    const dtstart = toIcsDate(date, ev.time);
+    const dtend   = toIcsDate(date, ev.time ? ev.time.replace(/\d+/, (h) => String(Number(h) + 1)) : undefined);
+    const uid = `${ev.id}-${format(date, "yyyyMMdd")}@majlisilm.com`;
+    lines.push(
+      "BEGIN:VEVENT",
+      `UID:${uid}`,
+      `DTSTAMP:${format(new Date(), "yyyyMMdd'T'HHmmss")}`,
+      `DTSTART;TZID=Asia/Kuwait:${dtstart}`,
+      `DTEND;TZID=Asia/Kuwait:${dtend}`,
+      `SUMMARY:${ev.title}`,
+      `DESCRIPTION:${[ev.sheikh, ev.mosque, ev.description].filter(Boolean).join(" | ")}`,
+      `LOCATION:${ev.mosque || ""}`,
+      "END:VEVENT",
+    );
+  }
+  lines.push("END:VCALENDAR");
+  return lines.join("\r\n");
+}
+
+function downloadIcs(content: string, filename: string) {
+  const blob = new Blob([content], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export default function CalendarPage() {
+  const today = new Date();
   const [view, setView] = useState<ViewMode>("month");
-  const [cursor, setCursor] = useState(new Date());
-  const [selected, setSelected] = useState(new Date());
+  const [cursor, setCursor] = useState(today);
+  const [selected, setSelected] = useState(today);
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalEvent, setModalEvent] = useState<CalendarEvent | null>(null);
+
+  function handleIcsExport() {
+    const monthStart = startOfMonth(cursor);
+    const monthEnd   = endOfMonth(cursor);
+    const days = eachDayOfInterval({ start: monthStart, end: monthEnd });
+    const monthEvents: { date: Date; ev: CalendarEvent }[] = [];
+    for (const day of days) {
+      for (const ev of eventsForDate(day, events)) {
+        monthEvents.push({ date: day, ev });
+      }
+    }
+    const label = format(cursor, "yyyy-MM");
+    downloadIcs(generateIcs(monthEvents, format(cursor, "MMMM yyyy", { locale: arSA })), `majalis-${label}.ics`);
+  }
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/calendar",
+      title: "التقويم الإسلامي والدروس | المجلس العلمي",
+      description: "تقويم الدروس والمناسبات الإسلامية، عرض شهري وأسبوعي ويومي مع الأحداث والحلقات العلمية.",
+      keywords: ["تقويم إسلامي", "مواعيد دروس", "التقويم الهجري", "الأحداث الإسلامية", "جدول الدروس"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "التقويم الإسلامي والدروس", url: "https://www.majlisilm.com/calendar", about: { "@type": "Thing", name: "التقويم الهجري والمناسبات الإسلامية" } }],
+    });
+  }, []);
 
   useEffect(() => {
     getUnifiedActiveLessons()
@@ -122,6 +213,12 @@ export default function CalendarPage() {
   });
 
   const selectedEvents = eventsForDate(selected, events);
+  const isViewingCurrentMonth = isSameMonth(cursor, today);
+
+  function goToday() {
+    setCursor(today);
+    setSelected(today);
+  }
 
   return (
     <div className="page-shell calendar-page">
@@ -137,6 +234,11 @@ export default function CalendarPage() {
           <button type="button" className="cal-nav-btn" onClick={() => setCursor(subMonths(cursor, 1))} aria-label="الشهر السابق">‹</button>
           <strong>{format(cursor, "MMMM yyyy", { locale: arSA })}</strong>
           <button type="button" className="cal-nav-btn" onClick={() => setCursor(addMonths(cursor, 1))} aria-label="الشهر التالي">›</button>
+          {!isViewingCurrentMonth && (
+            <button type="button" className="cal-today-btn" onClick={goToday} aria-label="انتقل لليوم">
+              اليوم
+            </button>
+          )}
         </div>
         <div className="cal-view-tabs">
           {(["month", "week", "day"] as ViewMode[]).map((v) => (
@@ -150,10 +252,19 @@ export default function CalendarPage() {
             </button>
           ))}
         </div>
+        <button
+          type="button"
+          className="cal-ics-btn"
+          onClick={handleIcsExport}
+          aria-label="تحميل دروس الشهر كملف تقويم"
+        >
+          <Download size={16} aria-hidden="true" />
+          <span>ICS</span>
+        </button>
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={12} />
       ) : (
         <>
           {view === "month" && (
@@ -167,20 +278,36 @@ export default function CalendarPage() {
                 {monthDays.map((day) => {
                   const dayEvents = eventsForDate(day, events);
                   const isSelected = isSameDay(day, selected);
-                  const inMonth = isSameMonth(day, cursor);
+                  const isToday   = isSameDay(day, today);
+                  const inMonth   = isSameMonth(day, cursor);
+                  const hDay      = hijriDayNum(day);
+                  const shown     = dayEvents.slice(0, 2);
+                  const extra     = dayEvents.length - shown.length;
                   return (
                     <button
                       key={day.toISOString()}
                       type="button"
-                      className={`cal-cell${isSelected ? " is-selected" : ""}${!inMonth ? " is-outside" : ""}`}
-                      onClick={() => {
-                        setSelected(day);
-                        setView("day");
-                      }}
+                      className={[
+                        "cal-cell",
+                        isSelected ? "is-selected" : "",
+                        isToday    ? "is-today"    : "",
+                        !inMonth   ? "is-outside"  : "",
+                        dayEvents.length > 0 ? "has-events" : "",
+                      ].filter(Boolean).join(" ")}
+                      onClick={() => { setSelected(day); setView("day"); }}
+                      aria-label={`${format(day, "d MMMM", { locale: arSA })}${dayEvents.length > 0 ? `، ${dayEvents.length} درس` : ""}`}
                     >
-                      <span className="cal-cell-num">{format(day, "d")}</span>
-                      {dayEvents.length > 0 && (
-                        <span className="cal-cell-dot" aria-label={`${dayEvents.length} درس`} />
+                      <div className="cal-cell-head">
+                        <span className="cal-cell-num">{format(day, "d")}</span>
+                        {hDay && <span className="cal-cell-hijri">{hDay}</span>}
+                      </div>
+                      {shown.map((ev) => (
+                        <span key={ev.id} className="cal-cell-event" title={ev.title}>
+                          {ev.title}
+                        </span>
+                      ))}
+                      {extra > 0 && (
+                        <span className="cal-cell-more">+{extra}</span>
                       )}
                     </button>
                   );
@@ -241,6 +368,13 @@ export default function CalendarPage() {
       )}
 
       {modalEvent && <EventModal event={modalEvent} onClose={() => setModalEvent(null)} />}
+
+      <div className="twh-share">
+        <ShareButtons aria-label="التقويم الهجري والمناسبات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/calendar" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="tarikh" aria-label="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
+      </div>
     </div>
   );
 }

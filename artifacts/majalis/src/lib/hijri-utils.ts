@@ -60,13 +60,22 @@ export function getCurrentHijriInfo(): HijriInfo | null {
     const monthName = HIJRI_MONTH_NAMES[month] ?? "";
     const isSacred = [1, 7, 11, 12].includes(month);
 
+    // لمحرم: إذا مضى العاشر أزل فضيلة عاشوراء من القائمة
+    let sacredInfo = isSacred ? SACRED_MONTH_INFO[month] : undefined;
+    if (sacredInfo && month === 1 && day > 10) {
+      sacredInfo = {
+        ...sacredInfo,
+        deeds: sacredInfo.deeds.filter((d) => !d.includes("عاشوراء")),
+      };
+    }
+
     return {
       day,
       month,
       monthName,
       year,
       isSacred,
-      sacredInfo: isSacred ? SACRED_MONTH_INFO[month] : undefined,
+      sacredInfo,
     };
   } catch {
     return null;

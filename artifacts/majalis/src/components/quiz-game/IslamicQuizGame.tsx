@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import {
-  BookOpen, ScrollText, Moon, Star, Scale, Building2, Landmark, Gem,
+  Award, BookOpen, CheckCircle2, Handshake, Library, Lightbulb, RefreshCw, ScrollText, Moon, Search, Send, Star, Scale, Building2, Landmark, Gem, Trophy, User, Users, XCircle, Zap,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -13,6 +13,8 @@ import {
   type QuizQuestion,
 } from "@/data/islamicQuizData";
 import { getQuizQuestions, getLocalUsedQuizIds, markQuizQuestionUsed } from "@/lib/supabase";
+import { recordQuizAttempt } from "@/lib/quiz-performance-service";
+import { hapticNotify } from "@/lib/capacitor-utils";
 
 // ─── Icon renderer ─────────────────────────────────────────────────────────
 
@@ -33,8 +35,13 @@ function CategoryIcon({ name, size = 18 }: { name: string; size?: number }) {
 }
 
 // ─── Types ─────────────────────────────────────────────────────────────────
+//
+// نمط اللعب: "solo" (لاعب واحد، لا دوران أدوار، لا خصم) أو "team" (2-4 فرق
+// تتناوب الأدوار). TeamId أصبح string ديناميكيًا ("team1".."team4" أو "solo")
+// بدل union ثابت بقيمتين — teams أصبح مصفوفة بطول 1-4 بدل Tuple ثابت.
 
-type TeamId = "team1" | "team2";
+type GameMode = "solo" | "team";
+type TeamId = string;
 interface Lifelines { penalize: boolean; eliminate: boolean; pass: boolean; }
 
 interface Team {
@@ -53,28 +60,31 @@ interface Cell {
 type Phase = "setup" | "board" | "question" | "winner";
 
 interface GameState {
+  mode: GameMode;
   phase: Phase;
-  teams: [Team, Team];
-  activeTeam: TeamId;
+  teams: Team[];
+  activeTeamId: TeamId;
   selectedCategories: string[];
   board: Cell[][];
   activeCell: Cell | null;
   activeQuestion: QuizQuestion | null;
-  passedToOpponent: boolean;
+  /** الفريق الذي أُرسل إليه السؤال حاليًا (تمرير حر أو وسيلة "تمرير") — null إن لم يُرسَل بعد. */
+  passedToTeamId: TeamId | null;
   usedIds: string[];
   showHint: boolean;
 }
 
 type Action =
-  | { type: "START_GAME"; categories: string[]; names: [string, string] }
+  | { type: "START_GAME"; mode: GameMode; categories: string[]; names: string[] }
   | { type: "SELECT_CELL"; cell: Cell; pool: Record<string, CategoryQuestions>; persistedUsedIds?: Set<string> }
   | { type: "REVEAL_HINT" }
   | { type: "MARK_CORRECT" }
   | { type: "MARK_WRONG" }
-  | { type: "USE_LIFELINE_PENALIZE" }
+  | { type: "USE_LIFELINE_PENALIZE"; targetId: TeamId }
   | { type: "USE_LIFELINE_ELIMINATE" }
-  | { type: "PASS_QUESTION" }
-  | { type: "TRANSFER_QUESTION" }
+  | { type: "PASS_QUESTION"; targetId: TeamId }
+  | { type: "TRANSFER_QUESTION"; targetId: TeamId }
+  | { type: "SOLO_SKIP" }
   | { type: "RESET" };
 
 // ─── Palette — منسجمة مع design system المنصة ─────────────────────────────
@@ -91,8 +101,8 @@ const S = {
   emerald:     "var(--ds-emerald)",
   emeraldDeep: "var(--ds-emerald-deep)",
   emeraldSoft: "var(--ds-emerald-soft)",
-  correct:     "#1A6B4A",
-  wrong:       "#8B1A1A",
+  correct:     "var(--majalis-emerald, #173D35)",
+  wrong:       "var(--majalis-danger, #9B1C1C)",
 } as const;
 
 // ─── Reducer helpers ───────────────────────────────────────────────────────
@@ -101,7 +111,13 @@ function makeTeam(id: TeamId, name: string): Team {
   return { id, name, score: 0, lifelines: { penalize: true, eliminate: true, pass: true } };
 }
 
-function opponentOf(id: TeamId): TeamId { return id === "team1" ? "team2" : "team1"; }
+/** دوران الأدوار العام: يعمل لأي عدد فرق (1-4) — يدور للفريق التالي في المصفوفة.
+ *  لفريق واحد (وضع فردي) يعيد نفس المعرّف دائمًا (idx+1 % 1 === idx). */
+function nextTeamId(teams: Team[], currentId: TeamId): TeamId {
+  const idx = teams.findIndex((t) => t.id === currentId);
+  if (idx === -1) return currentId;
+  return teams[(idx + 1) % teams.length].id;
+}
 
 function isBoardDone(board: Cell[][]): boolean {
   return board.every((col) => col.every((c) => c.used));
@@ -113,45 +129,54 @@ function buildBoard(categories: string[]): Cell[][] {
   );
 }
 
+const DEFAULT_TEAM_NAMES = ["الفريق الأول", "الفريق الثاني", "الفريق الثالث", "الفريق الرابع"];
+
 const initial: GameState = {
+  mode: "team",
   phase: "setup",
-  teams: [makeTeam("team1", "الفريق الأول"), makeTeam("team2", "الفريق الثاني")],
-  activeTeam: "team1",
+  teams: [makeTeam("team1", DEFAULT_TEAM_NAMES[0]), makeTeam("team2", DEFAULT_TEAM_NAMES[1])],
+  activeTeamId: "team1",
   selectedCategories: [],
   board: [],
   activeCell: null,
   activeQuestion: null,
-  passedToOpponent: false,
+  passedToTeamId: null,
   usedIds: [],
   showHint: false,
 };
 
 function reducer(state: GameState, action: Action): GameState {
   switch (action.type) {
-    case "START_GAME":
+    case "START_GAME": {
+      const teams = action.mode === "solo"
+        ? [makeTeam("solo", action.names[0]?.trim() || "اللاعب")]
+        : action.names.map((n, i) => makeTeam(`team${i + 1}`, n));
       return {
         ...initial,
+        mode: action.mode,
         phase: "board",
-        teams: [makeTeam("team1", action.names[0]), makeTeam("team2", action.names[1])],
+        teams,
+        activeTeamId: teams[0].id,
         selectedCategories: action.categories,
         board: buildBoard(action.categories),
       };
+    }
 
     case "SELECT_CELL": {
       const usedSet = new Set(state.usedIds);
       const q = pickQuestion(action.cell.categoryId, action.cell.points, usedSet, action.pool, action.persistedUsedIds);
-      return { ...state, phase: "question", activeCell: action.cell, activeQuestion: q, passedToOpponent: false, showHint: false };
+      return { ...state, phase: "question", activeCell: action.cell, activeQuestion: q, passedToTeamId: null, showHint: false };
     }
 
     case "REVEAL_HINT":
       return { ...state, showHint: true };
 
     case "MARK_CORRECT": {
-      const winner = state.passedToOpponent ? opponentOf(state.activeTeam) : state.activeTeam;
+      const winnerId = state.passedToTeamId ?? state.activeTeamId;
       const pts = state.activeCell?.points ?? 0;
       const teams = state.teams.map((t) =>
-        t.id === winner ? { ...t, score: t.score + pts } : t,
-      ) as [Team, Team];
+        t.id === winnerId ? { ...t, score: t.score + pts } : t,
+      );
       const board = markCellUsed(state.board, state.activeCell);
       const usedIds = state.activeQuestion ? [...state.usedIds, state.activeQuestion.id] : state.usedIds;
       return {
@@ -162,9 +187,9 @@ function reducer(state: GameState, action: Action): GameState {
         usedIds,
         activeCell: null,
         activeQuestion: null,
-        passedToOpponent: false,
+        passedToTeamId: null,
         showHint: false,
-        activeTeam: opponentOf(state.activeTeam),
+        activeTeamId: nextTeamId(state.teams, state.activeTeamId),
       };
     }
 
@@ -178,43 +203,66 @@ function reducer(state: GameState, action: Action): GameState {
         usedIds,
         activeCell: null,
         activeQuestion: null,
-        passedToOpponent: false,
+        passedToTeamId: null,
         showHint: false,
-        activeTeam: opponentOf(state.activeTeam),
+        activeTeamId: nextTeamId(state.teams, state.activeTeamId),
       };
     }
 
     case "USE_LIFELINE_PENALIZE": {
-      if (!state.teams.find((t) => t.id === state.activeTeam)?.lifelines.penalize) return state;
+      if (!state.teams.find((t) => t.id === state.activeTeamId)?.lifelines.penalize) return state;
       const pts = state.activeCell?.points ?? 200;
-      const opp = opponentOf(state.activeTeam);
       const teams = state.teams.map((t) => {
-        if (t.id === state.activeTeam) return { ...t, lifelines: { ...t.lifelines, penalize: false } };
-        if (t.id === opp) return { ...t, score: Math.max(0, t.score - pts) };
+        if (t.id === state.activeTeamId) return { ...t, lifelines: { ...t.lifelines, penalize: false } };
+        if (t.id === action.targetId) return { ...t, score: Math.max(0, t.score - pts) };
         return t;
-      }) as [Team, Team];
+      });
       return { ...state, teams };
     }
 
     case "USE_LIFELINE_ELIMINATE": {
-      if (!state.teams.find((t) => t.id === state.activeTeam)?.lifelines.eliminate) return state;
+      if (!state.teams.find((t) => t.id === state.activeTeamId)?.lifelines.eliminate) return state;
       const teams = state.teams.map((t) =>
-        t.id === state.activeTeam ? { ...t, lifelines: { ...t.lifelines, eliminate: false } } : t,
-      ) as [Team, Team];
+        t.id === state.activeTeamId ? { ...t, lifelines: { ...t.lifelines, eliminate: false } } : t,
+      );
       return { ...state, teams };
     }
 
     case "PASS_QUESTION": {
-      if (!state.teams.find((t) => t.id === state.activeTeam)?.lifelines.pass) return state;
+      if (!state.teams.find((t) => t.id === state.activeTeamId)?.lifelines.pass) return state;
       const teams = state.teams.map((t) =>
-        t.id === state.activeTeam ? { ...t, lifelines: { ...t.lifelines, pass: false } } : t,
-      ) as [Team, Team];
-      return { ...state, teams, passedToOpponent: true };
+        t.id === state.activeTeamId ? { ...t, lifelines: { ...t.lifelines, pass: false } } : t,
+      );
+      return { ...state, teams, passedToTeamId: action.targetId };
     }
 
     case "TRANSFER_QUESTION":
-      if (state.passedToOpponent) return state;
-      return { ...state, passedToOpponent: true };
+      if (state.passedToTeamId) return state;
+      return { ...state, passedToTeamId: action.targetId };
+
+    // وضع فردي: لا خصم لتمرير السؤال إليه، فبدل وسيلتي "استبعاد لاعب من
+    // الفريق المنافس" و"تمرير السؤال للفريق الآخر" (تفترضان خصمًا) — لاعب
+    // الوضع الفردي يملك وسيلة واحدة مكافئة منطقيًا: "مساعدة إضافية" تتخطى
+    // سؤالًا صعبًا بلا تسجيله خطأً (الخلية تُستهلك، لا نقاط تُضاف أو تُخصم).
+    case "SOLO_SKIP": {
+      const solo = state.teams[0];
+      if (!solo?.lifelines.pass) return state;
+      const teams = state.teams.map((t) => ({ ...t, lifelines: { ...t.lifelines, pass: false } }));
+      const board = markCellUsed(state.board, state.activeCell);
+      const usedIds = state.activeQuestion ? [...state.usedIds, state.activeQuestion.id] : state.usedIds;
+      return {
+        ...state,
+        phase: isBoardDone(board) ? "winner" : "board",
+        teams,
+        board,
+        usedIds,
+        activeCell: null,
+        activeQuestion: null,
+        passedToTeamId: null,
+        showHint: false,
+        activeTeamId: nextTeamId(state.teams, state.activeTeamId),
+      };
+    }
 
     case "RESET":
       return initial;
@@ -231,100 +279,28 @@ function markCellUsed(board: Cell[][], cell: Cell | null): Cell[][] {
   );
 }
 
-// ─── Style helpers ─────────────────────────────────────────────────────────
-
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: "0.625rem 0.75rem",
-  borderRadius: "var(--ds-radius, 0.5rem)",
-  border: `1px solid var(--ds-line-color)`,
-  background: "#fff",
-  color: S.ink,
-  fontSize: "0.9rem",
-  outline: "none",
-  boxSizing: "border-box",
-  fontFamily: "inherit",
-};
-
-const primaryBtn = (disabled = false): React.CSSProperties => ({
-  padding: "0.875rem 1.5rem",
-  borderRadius: "var(--ds-radius-lg, 0.625rem)",
-  background: disabled ? S.cardAlt : S.emerald,
-  color: disabled ? S.inkSoft : "#fff",
-  border: "none",
-  fontSize: "1rem",
-  fontWeight: 700,
-  cursor: disabled ? "not-allowed" : "pointer",
-  fontFamily: "inherit",
-  transition: "background 0.15s",
-});
-
-const goldBtn = (): React.CSSProperties => ({
-  padding: "0.875rem 1.5rem",
-  borderRadius: "var(--ds-radius-lg, 0.625rem)",
-  background: `linear-gradient(135deg, var(--majalis-brass), var(--majalis-brass-deep))`,
-  color: "#fff",
-  border: "none",
-  fontSize: "1rem",
-  fontWeight: 700,
-  cursor: "pointer",
-  fontFamily: "inherit",
-});
-
-const ghostBtn: React.CSSProperties = {
-  background: "transparent",
-  border: `1px solid var(--ds-line-color)`,
-  color: S.inkSoft,
-  padding: "0.5rem 1rem",
-  borderRadius: "var(--ds-radius, 0.5rem)",
-  cursor: "pointer",
-  fontSize: "0.875rem",
-  fontFamily: "inherit",
-};
-
-const sectionCard: React.CSSProperties = {
-  background: S.card,
-  borderRadius: "var(--ds-radius-lg, 0.625rem)",
-  padding: "1.5rem",
-  marginBottom: "1rem",
-  border: `1px solid var(--ds-line-color)`,
-  boxShadow: "var(--ds-shadow-sm, 0 1px 2px rgba(22,78,60,0.05))",
-};
-
-const lifelineStyle = (color: string, bg: string): React.CSSProperties => ({
-  padding: "0.4rem 0.75rem",
-  borderRadius: "var(--ds-radius, 0.5rem)",
-  background: bg,
-  color,
-  border: `1px solid ${color}`,
-  cursor: "pointer",
-  fontSize: "0.8rem",
-  fontWeight: 600,
-  fontFamily: "inherit",
-});
+// ─── Style helpers removed — using CSS classes (qzg-*) ────────────────────
 
 // ─── Timer Bar ─────────────────────────────────────────────────────────────
 
 function TimerBar({ seconds, maxSeconds }: { seconds: number; maxSeconds: number }) {
   const pct = maxSeconds > 0 ? seconds / maxSeconds : 0;
-  const color = pct > 0.4 ? "#22c55e" : pct > 0.2 ? "#f59e0b" : "#ef4444";
+  const color = pct > 0.4 ? "#22c55e" : pct > 0.2 ? "#173D35" : "#ef4444";
   const label = seconds <= 0 ? "انتهى الوقت" : `${seconds}ث`;
+  const urgent = seconds > 0 && seconds <= 10;
   return (
-    <div style={{ margin: "0 0 0.875rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.3rem" }}>
-        <span style={{ fontSize: "0.75rem", color: S.inkSoft, fontWeight: 600 }}>⏱ الوقت</span>
-        <span style={{ fontSize: "0.82rem", fontWeight: 700, color }}>{label}</span>
+    <div
+      className="qzg-timer"
+      role="timer"
+      aria-label={`الوقت المتبقي: ${label}`}
+      style={{ "--qzg-timer-color": color, "--qzg-timer-pct": `${Math.max(0, pct * 100)}%` } as React.CSSProperties}
+    >
+      <div className="qzg-timer__head">
+        <span className="qzg-timer__label">⏱ الوقت</span>
+        <span className="qzg-timer__count" aria-live={urgent ? "assertive" : "off"} aria-atomic="true">{label}</span>
       </div>
-      <div style={{ height: "0.45rem", borderRadius: 999, background: "var(--ds-line-color, #e5e7eb)", overflow: "hidden" }}>
-        <div
-          style={{
-            height: "100%",
-            borderRadius: 999,
-            background: color,
-            width: `${Math.max(0, pct * 100)}%`,
-            transition: "width 1s linear, background 0.3s ease",
-          }}
-        />
+      <div className="qzg-timer__track">
+        <div className="qzg-timer__fill" />
       </div>
     </div>
   );
@@ -332,38 +308,48 @@ function TimerBar({ seconds, maxSeconds }: { seconds: number; maxSeconds: number
 
 // ─── Score Bar ─────────────────────────────────────────────────────────────
 
-function ScoreBar({ teams, activeTeam }: { teams: [Team, Team]; activeTeam: TeamId }) {
+function ScoreBar({ teams, activeTeamId }: { teams: Team[]; activeTeamId: TeamId }) {
+  const solo = teams.length === 1;
   return (
-    <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1.25rem" }}>
-      {teams.map((t) => {
-        const active = t.id === activeTeam;
-        const activeBg = t.id === "team1" ? S.emerald : "#8B4515";
+    <div className="qzg-score-row" data-team-count={teams.length}>
+      {teams.map((t, i) => {
+        const active = t.id === activeTeamId;
+        // يتناوب على لونَي الهوية الحاليَين (زمردي/أحمر) حسب فهرس الفريق —
+        // يحافظ حرفيًا على مظهر الوضع الثنائي الأصلي (فريق1=زمردي، فريق2=أحمر)
+        // ويمدّه بنمط متكرر لأي عدد فرق دون إدخال ألوان جديدة.
+        const activeBg = i % 2 === 0 ? S.emerald : "var(--majalis-danger, #9B1C1C)";
         return (
           <div
             key={t.id}
+            className={`qzg-team-card${active ? " qzg-team-card--active" : ""}`}
             style={{
-              flex: 1,
-              padding: "0.875rem 1rem",
-              borderRadius: "var(--ds-radius-lg, 0.625rem)",
-              background: active ? activeBg : S.cardAlt,
-              border: `2px solid ${active ? "var(--majalis-brass)" : "var(--ds-line-color)"}`,
-              textAlign: "center",
-              transition: "all 0.3s ease",
-              boxShadow: active ? "var(--ds-shadow, 0 2px 8px rgba(22,78,60,0.07))" : "none",
-            }}
+              "--qzg-team-bg": active ? activeBg : S.cardAlt,
+              "--qzg-team-border": active ? "var(--majalis-brass)" : "var(--ds-line-color)",
+              "--qzg-name-color": active ? "#fff" : S.ink,
+              "--qzg-score-color": active ? "var(--majalis-brass)" : S.emeraldDeep,
+              "--qzg-unit-color": active ? "rgba(255,255,255,0.7)" : S.inkSoft,
+            } as React.CSSProperties}
           >
-            {active && (
-              <p style={{ margin: "0 0 0.2rem", fontSize: "0.7rem", color: "var(--majalis-brass)", fontWeight: 700 }}>▶ دوره ◀</p>
-            )}
-            <p style={{ margin: 0, fontSize: "0.9rem", fontWeight: 700, color: active ? "#fff" : S.ink }}>{t.name}</p>
-            <p style={{ margin: "0.25rem 0 0", fontSize: "1.6rem", fontWeight: 800, color: active ? "var(--majalis-brass)" : S.emeraldDeep }}>
-              {t.score.toLocaleString("ar-EG")}
-            </p>
-            <p style={{ margin: 0, fontSize: "0.7rem", color: active ? "rgba(255,255,255,0.7)" : S.inkSoft }}>نقطة</p>
-            <div style={{ display: "flex", justifyContent: "center", gap: "0.3rem", marginTop: "0.4rem", flexWrap: "wrap" }}>
-              {t.lifelines.penalize && <span style={{ fontSize: "0.6rem", padding: "0.1rem 0.35rem", borderRadius: 999, border: "1px solid #FFB347", color: active ? "#FFB347" : "#9A6B10" }}>خصم</span>}
-              {t.lifelines.eliminate && <span style={{ fontSize: "0.6rem", padding: "0.1rem 0.35rem", borderRadius: 999, border: "1px solid #9B59B6", color: active ? "#C080FF" : "#7D3C98" }}>استبعاد</span>}
-              {t.lifelines.pass && <span style={{ fontSize: "0.6rem", padding: "0.1rem 0.35rem", borderRadius: 999, border: "1px solid #2E86C1", color: active ? "#80C0FF" : "#1A5276" }}>تمرير</span>}
+            {!solo && active && <p className="qzg-team-card__turn">▶ دوره ◀</p>}
+            <p className="qzg-team-card__name">{t.name}</p>
+            <p className="qzg-team-card__score">{t.score.toLocaleString("ar-EG")}</p>
+            <p className="qzg-team-card__unit">نقطة</p>
+            <div className="qzg-team-card__lifelines">
+              {solo ? (
+                t.lifelines.pass && <span className="qzg-lifeline qzg-lifeline--pass">مساعدة</span>
+              ) : (
+                <>
+                  {t.lifelines.penalize && (
+                    <span className="qzg-lifeline qzg-lifeline--penalize">خصم</span>
+                  )}
+                  {t.lifelines.eliminate && (
+                    <span className="qzg-lifeline qzg-lifeline--eliminate">استبعاد</span>
+                  )}
+                  {t.lifelines.pass && (
+                    <span className="qzg-lifeline qzg-lifeline--pass">تمرير</span>
+                  )}
+                </>
+              )}
             </div>
           </div>
         );
@@ -374,9 +360,11 @@ function ScoreBar({ teams, activeTeam }: { teams: [Team, Team]; activeTeam: Team
 
 // ─── Setup Phase ───────────────────────────────────────────────────────────
 
-function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, string]) => void }) {
-  const [name1, setName1] = useState("الفريق الأول");
-  const [name2, setName2] = useState("الفريق الثاني");
+function SetupPhase({ onStart }: { onStart: (cats: string[], mode: GameMode, names: string[]) => void }) {
+  const [mode, setMode] = useState<GameMode>("team");
+  const [teamCount, setTeamCount] = useState<2 | 3 | 4>(2);
+  const [teamNames, setTeamNames] = useState<string[]>(["", ""]);
+  const [soloName, setSoloName] = useState("");
   const [selected, setSelected] = useState<string[]>([]);
 
   const toggle = (id: string) =>
@@ -384,38 +372,109 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
       prev.includes(id) ? prev.filter((x) => x !== id) : prev.length < 6 ? [...prev, id] : prev,
     );
 
-  const canStart = selected.length >= 2 && name1.trim() && name2.trim();
+  const canStart = selected.length >= 2;
+
+  const changeTeamCount = (n: 2 | 3 | 4) => {
+    setTeamCount(n);
+    setTeamNames((prev) => {
+      const next = prev.slice(0, n);
+      while (next.length < n) next.push("");
+      return next;
+    });
+  };
+
+  const handleStart = () => {
+    if (!canStart) return;
+    if (mode === "solo") {
+      onStart(selected, "solo", [soloName]);
+    } else {
+      const names = teamNames.map((n, i) => n.trim() || DEFAULT_TEAM_NAMES[i]);
+      onStart(selected, "team", names);
+    }
+  };
 
   return (
-    <div style={{ maxWidth: 640, margin: "0 auto" }}>
-      <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-        <div style={{ fontSize: "3rem", marginBottom: "0.5rem" }}>🕌</div>
-        <h1 style={{ margin: 0, fontSize: "2rem", color: S.emeraldDeep, fontWeight: 800 }}>لعبة سؤال وجواب</h1>
-        <p style={{ margin: "0.5rem 0 0", color: S.inkSoft, fontSize: "0.9rem" }}>
-          لعبة جماعية تنافسية بطابع إسلامي — فريقان يتنافسان على النقاط
+    <div className="qzg-setup">
+      <div className="qzg-setup__hero">
+        <div className="qzg-setup__icon"><Landmark size={40} strokeWidth={1.3} /></div>
+        <h1 className="qzg-setup__title">لعبة سؤال وجواب</h1>
+        <p className="qzg-setup__sub">
+          {mode === "solo"
+            ? "تحدَّ نفسك في اختبار معلوماتك الإسلامية"
+            : "لعبة جماعية تنافسية بطابع إسلامي — فرق تتنافس على النقاط"}
         </p>
       </div>
 
-      <section style={sectionCard}>
-        <h2 style={{ margin: "0 0 1rem", color: S.gold, fontSize: "0.95rem", fontWeight: 700 }}>🏆 أسماء الفريقين</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
-          <div>
-            <label style={{ display: "block", fontSize: "0.78rem", color: S.inkSoft, marginBottom: "0.35rem" }}>الفريق الأول</label>
-            <input value={name1} onChange={(e) => setName1(e.target.value)} maxLength={20} style={inputStyle} />
-          </div>
-          <div>
-            <label style={{ display: "block", fontSize: "0.78rem", color: S.inkSoft, marginBottom: "0.35rem" }}>الفريق الثاني</label>
-            <input value={name2} onChange={(e) => setName2(e.target.value)} maxLength={20} style={inputStyle} />
-          </div>
+      <section className="qzg-section-card">
+        <h2 className="qzg-section-h2"><Users size={18} className="inline ml-1" />نمط اللعب</h2>
+        <div className="qzg-mode-toggle">
+          <button
+            type="button"
+            onClick={() => setMode("solo")}
+            className={`qzg-mode-btn${mode === "solo" ? " qzg-mode-btn--on" : ""}`}
+          >
+            <User size={16} className="inline ml-1" />فردي
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode("team")}
+            className={`qzg-mode-btn${mode === "team" ? " qzg-mode-btn--on" : ""}`}
+          >
+            <Users size={16} className="inline ml-1" />جماعي
+          </button>
         </div>
       </section>
 
-      <section style={sectionCard}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-          <h2 style={{ margin: 0, color: S.gold, fontSize: "0.95rem", fontWeight: 700 }}>📚 اختر الفئات</h2>
-          <span style={{ fontSize: "0.78rem", color: S.inkSoft }}>{selected.length}/6 (2 كحد أدنى)</span>
+      {mode === "team" ? (
+        <section className="qzg-section-card">
+          <h2 className="qzg-section-h2"><Trophy size={18} className="inline ml-1" />عدد الفرق وأسماؤها</h2>
+          <div className="qzg-team-count-row">
+            {([2, 3, 4] as const).map((n) => (
+              <button
+                key={n}
+                type="button"
+                onClick={() => changeTeamCount(n)}
+                className={`qzg-count-btn${teamCount === n ? " qzg-count-btn--on" : ""}`}
+              >
+                {n} فرق
+              </button>
+            ))}
+          </div>
+          <div className="qzg-teams-grid qzg-teams-grid--dynamic" style={{ "--qzg-teams-cols": teamCount } as React.CSSProperties}>
+            {teamNames.map((name, i) => (
+              <div key={i}>
+                <label htmlFor={`qzg-team${i + 1}`} className="qzg-team-label">{DEFAULT_TEAM_NAMES[i]}</label>
+                <input
+                  id={`qzg-team${i + 1}`}
+                  value={name}
+                  onChange={(e) => setTeamNames((prev) => prev.map((v, idx) => (idx === i ? e.target.value : v)))}
+                  placeholder={DEFAULT_TEAM_NAMES[i]}
+                  maxLength={20}
+                  className="qzg-input"
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : (
+        <section className="qzg-section-card">
+          <h2 className="qzg-section-h2"><User size={18} className="inline ml-1" />اسمك (اختياري)</h2>
+          <input
+            value={soloName}
+            onChange={(e) => setSoloName(e.target.value)}
+            placeholder="اللاعب"
+            maxLength={20}
+            className="qzg-input"
+          />
+        </section>
+      )}
+
+      <section className="qzg-section-card">
+        <div className="qzg-cats-head">
+          <h2 className="qzg-section-h2 qzg-section-h2--flush"><Library size={16} className="inline ml-1" />اختر الفئات</h2>
+          <span className="qzg-cats-count">{selected.length}/6 (2 كحد أدنى)</span>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: "0.6rem" }}>
+        <div className="qzg-cats-grid">
           {GAME_CATEGORIES.map((cat) => {
             const on = selected.includes(cat.id);
             const maxed = !on && selected.length >= 6;
@@ -425,22 +484,9 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
                 type="button"
                 onClick={() => toggle(cat.id)}
                 disabled={maxed}
-                style={{
-                  padding: "0.75rem 0.5rem",
-                  borderRadius: "var(--ds-radius-lg, 0.625rem)",
-                  border: `2px solid ${on ? "var(--ds-emerald)" : "var(--ds-line-color)"}`,
-                  background: on ? S.emeraldSoft : S.cardAlt,
-                  color: on ? S.emeraldDeep : maxed ? S.inkSoft : S.ink,
-                  cursor: maxed ? "not-allowed" : "pointer",
-                  textAlign: "center",
-                  fontSize: "0.82rem",
-                  fontWeight: on ? 700 : 400,
-                  transition: "border-color 0.2s, background 0.2s",
-                  fontFamily: "inherit",
-                  opacity: maxed ? 0.5 : 1,
-                }}
+                className={`qzg-cat-btn${on ? " qzg-cat-btn--on" : ""}${maxed ? " qzg-cat-btn--maxed" : ""}`}
               >
-                <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.35rem", opacity: maxed ? 0.4 : 1 }}>
+                <div className="qzg-cat-btn__icon">
                   <CategoryIcon name={cat.icon} size={20} />
                 </div>
                 {cat.name}
@@ -450,29 +496,39 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], names: [string, str
         </div>
       </section>
 
-      <section style={{ ...sectionCard, marginBottom: "1.5rem" }}>
-        <h3 style={{ margin: "0 0 0.75rem", color: S.gold, fontSize: "0.88rem", fontWeight: 700 }}>⚡ وسائل المساعدة (لكل فريق 3 وسائل)</h3>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.5rem", fontSize: "0.78rem" }}>
-          {([
-            ["#FFB347", "خصم نقاط", "تُخصم نقاط الخلية من رصيد الخصم"],
-            ["#9B59B6", "استبعاد لاعب", "يُستبعد لاعب من الفريق المنافس"],
-            ["#2E86C1", "تمرير السؤال", "يُحوَّل السؤال للفريق المنافس"],
-          ] as [string, string, string][]).map(([color, title, desc]) => (
-            <div key={title} style={{ padding: "0.6rem", borderRadius: "var(--ds-radius, 0.5rem)", background: S.cardAlt, textAlign: "center", border: `1px solid var(--ds-line-color)` }}>
-              <div style={{ color, fontWeight: 700, marginBottom: "0.25rem", fontSize: "0.82rem" }}>{title}</div>
-              <div style={{ color: S.inkSoft, lineHeight: 1.5 }}>{desc}</div>
+      <section className="qzg-section-card qzg-section-card--mb-lg">
+        <h3 className="qzg-lifelines-h3">
+          <Zap size={14} className="inline ml-1" />
+          {mode === "solo" ? "مساعدة إضافية" : "وسائل المساعدة (لكل فريق 3 وسائل)"}
+        </h3>
+        <div className={`qzg-lifelines-grid${mode === "solo" ? " qzg-lifelines-grid--solo" : ""}`}>
+          {mode === "solo" ? (
+            <div className="qzg-lifeline-info">
+              <div className="qzg-lifeline-info__title qzg-ll--transfer">مساعدة إضافية</div>
+              <div className="qzg-lifeline-info__desc">تخطَّ سؤالاً واحدًا صعبًا بلا خسارة نقاط — تُستخدم مرة واحدة طوال اللعبة</div>
             </div>
-          ))}
+          ) : (
+            ([
+              ["qzg-ll--score",    "خصم نقاط",     "تُخصم نقاط الخلية من رصيد فريق منافس تختاره"],
+              ["qzg-ll--exclude",  "استبعاد لاعب", "يُستبعد لاعب من فريق منافس تختاره"],
+              ["qzg-ll--transfer", "تمرير السؤال", "يُحوَّل السؤال لفريق منافس تختاره"],
+            ] as [string, string, string][]).map(([llMod, title, desc]) => (
+              <div key={title} className="qzg-lifeline-info">
+                <div className={`qzg-lifeline-info__title ${llMod}`}>{title}</div>
+                <div className="qzg-lifeline-info__desc">{desc}</div>
+              </div>
+            ))
+          )}
         </div>
       </section>
 
       <button
         type="button"
-        onClick={() => canStart && onStart(selected, [name1.trim() || "الفريق الأول", name2.trim() || "الفريق الثاني"])}
+        onClick={handleStart}
         disabled={!canStart}
-        style={{ ...primaryBtn(!canStart), width: "100%", fontSize: "1.1rem" }}
+        className={`qzg-btn-primary qzg-btn-primary--wide${canStart ? "" : " qzg-btn-primary--disabled"}`}
       >
-        {canStart ? "ابدأ اللعبة 🎮" : selected.length < 2 ? "اختر فئتين على الأقل" : "أدخل أسماء الفريقين"}
+        {canStart ? "ابدأ اللعبة" : "اختر فئتين على الأقل"}
       </button>
     </div>
   );
@@ -501,34 +557,20 @@ function BoardPhase({
 
   return (
     <div>
-      <ScoreBar teams={state.teams} activeTeam={state.activeTeam} />
+      <ScoreBar teams={state.teams} activeTeamId={state.activeTeamId} />
 
-      <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" as unknown as undefined }}>
+      <div className="qzg-board-scroll">
         <div
+          className="qzg-board-grid"
           style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(${colCount}, minmax(105px, 1fr))`,
-            gap: "0.45rem",
-            minWidth: colCount * 115,
-          }}
+            "--qzg-board-cols": `repeat(${colCount}, minmax(105px, 1fr))`,
+            "--qzg-board-min-w": `${colCount * 115}px`,
+          } as React.CSSProperties}
         >
           {activeCats.map((cat) => (
-            <div
-              key={cat.id}
-              style={{
-                padding: "0.6rem 0.35rem",
-                background: S.emeraldSoft,
-                borderRadius: "var(--ds-radius, 0.5rem)",
-                textAlign: "center",
-                fontSize: "0.72rem",
-                fontWeight: 700,
-                color: S.emeraldDeep,
-                border: `1px solid var(--ds-line-color)`,
-                lineHeight: 1.4,
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "center" }}><CategoryIcon name={cat.icon} size={16} /></div>
-              <div style={{ marginTop: "0.2rem" }}>{cat.name}</div>
+            <div key={cat.id} className="qzg-board-cat">
+              <div className="qzg-board-cat__icon"><CategoryIcon name={cat.icon} size={16} /></div>
+              <div className="qzg-board-cat__name">{cat.name}</div>
             </div>
           ))}
 
@@ -542,19 +584,7 @@ function BoardPhase({
                   type="button"
                   disabled={cell.used}
                   onClick={() => dispatch({ type: "SELECT_CELL", cell, pool: poolRef.current ?? ALL_QUESTIONS, persistedUsedIds })}
-                  style={{
-                    padding: "1rem 0.375rem",
-                    borderRadius: "var(--ds-radius, 0.5rem)",
-                    border: `1px solid ${cell.used ? "var(--ds-line-color)" : "var(--ds-emerald)"}`,
-                    background: cell.used ? S.cardAlt : S.card,
-                    color: cell.used ? S.inkSoft : S.emeraldDeep,
-                    fontSize: "1.2rem",
-                    fontWeight: 800,
-                    cursor: cell.used ? "default" : "pointer",
-                    transition: "all 0.2s ease",
-                    opacity: cell.used ? 0.4 : 1,
-                    fontFamily: "inherit",
-                  }}
+                  className={`qzg-board-cell${cell.used ? " qzg-board-cell--used" : ""}`}
                 >
                   {cell.used ? "—" : pts}
                 </button>
@@ -564,8 +594,8 @@ function BoardPhase({
         </div>
       </div>
 
-      <div style={{ marginTop: "1.25rem", display: "flex", justifyContent: "center" }}>
-        <button type="button" onClick={() => dispatch({ type: "RESET" })} style={ghostBtn}>
+      <div className="qzg-board-reset-row">
+        <button type="button" onClick={() => dispatch({ type: "RESET" })} className="qzg-btn-ghost">
           ← إعادة الإعداد
         </button>
       </div>
@@ -574,6 +604,8 @@ function BoardPhase({
 }
 
 // ─── Question Phase ────────────────────────────────────────────────────────
+
+type LifelineKind = "transfer" | "pass" | "penalize" | "eliminate";
 
 function QuestionPhase({
   state,
@@ -591,129 +623,165 @@ function QuestionPhase({
   onMarkWrong: () => void;
 }) {
   const [revealed, setRevealed] = useState(false);
-  const { activeCell, activeQuestion, teams, activeTeam, passedToOpponent, showHint } = state;
+  const [pendingTarget, setPendingTarget] = useState<LifelineKind | null>(null);
+  const [eliminateBanner, setEliminateBanner] = useState<string | null>(null);
+  const { activeCell, activeQuestion, teams, activeTeamId, passedToTeamId, showHint, mode } = state;
 
   if (!activeCell) return null;
 
   const cat = GAME_CATEGORIES.find((c) => c.id === activeCell.categoryId);
-  const activeTeamObj = teams.find((t) => t.id === activeTeam)!;
-  const scoringTeam = passedToOpponent ? teams.find((t) => t.id !== activeTeam) : activeTeamObj;
+  const activeTeamObj = teams.find((t) => t.id === activeTeamId)!;
+  const scoringTeam = passedToTeamId ? teams.find((t) => t.id === passedToTeamId) : activeTeamObj;
+  const otherTeams = teams.filter((t) => t.id !== activeTeamId);
+
+  // اختيار الفريق المستهدف: مع فريق منافس واحد فقط (الوضع الثنائي التقليدي)
+  // يُطبَّق التأثير فورًا كما كان دومًا — لا كسر للسلوك الحالي. مع 3-4 فرق
+  // يفتح لوحة اختيار صريحة لاسم الفريق المستهدَف.
+  const requestTeamAction = (kind: LifelineKind) => {
+    if (otherTeams.length === 0) return;
+    if (otherTeams.length === 1) {
+      applyTeamAction(kind, otherTeams[0].id);
+    } else {
+      setPendingTarget(kind);
+    }
+  };
+
+  const applyTeamAction = (kind: LifelineKind, targetId: TeamId) => {
+    if (kind === "transfer") dispatch({ type: "TRANSFER_QUESTION", targetId });
+    if (kind === "pass") dispatch({ type: "PASS_QUESTION", targetId });
+    if (kind === "penalize") dispatch({ type: "USE_LIFELINE_PENALIZE", targetId });
+    if (kind === "eliminate") {
+      setEliminateBanner(teams.find((t) => t.id === targetId)?.name ?? null);
+      dispatch({ type: "USE_LIFELINE_ELIMINATE" });
+    }
+    setPendingTarget(null);
+  };
+
+  const noLifelinesLeft = mode === "solo"
+    ? !activeTeamObj.lifelines.pass
+    : !activeTeamObj.lifelines.penalize && !activeTeamObj.lifelines.eliminate && !activeTeamObj.lifelines.pass;
 
   return (
-    <div style={{ maxWidth: 640, margin: "0 auto" }}>
-      <ScoreBar teams={teams} activeTeam={activeTeam} />
+    <div className="qzg-question-wrap">
+      <ScoreBar teams={teams} activeTeamId={activeTeamId} />
 
       <TimerBar seconds={timerSec} maxSeconds={maxTimerSec} />
 
-      <div style={{ ...sectionCard, border: `2px solid var(--majalis-brass)`, marginBottom: "1rem" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
-          <span style={{ fontSize: "0.82rem", color: S.inkSoft }}>{cat?.icon} {cat?.name}</span>
-          <span style={{ padding: "0.3rem 0.875rem", borderRadius: 999, background: S.emeraldSoft, color: S.emeraldDeep, fontWeight: 800, fontSize: "1rem", border: `1px solid var(--ds-emerald)` }}>
-            {activeCell.points} نقطة
-          </span>
+      <div className="qzg-section-card qzg-section-card--brass qzg-section-card--mb-sm">
+        <div className="qzg-q-header">
+          <span className="qzg-q-cat-label"><CategoryIcon name={cat?.icon ?? ""} size={14} /> {cat?.name}</span>
+          <span className="qzg-q-points-badge">{activeCell.points} نقطة</span>
         </div>
 
-        {passedToOpponent && (
-          <div style={{ padding: "0.5rem 0.75rem", background: "#EFF6FF", borderRadius: "var(--ds-radius, 0.5rem)", marginBottom: "0.875rem", fontSize: "0.82rem", color: "#1D4ED8", border: "1px solid #BFDBFE" }}>
-            📨 تم إرسال السؤال — يجيب الآن: <strong>{scoringTeam?.name}</strong>
+        {passedToTeamId && (
+          <div className="qzg-q-passed-banner">
+            <Send size={14} className="inline ml-1" />تم إرسال السؤال — يجيب الآن: <strong>{scoringTeam?.name}</strong>
           </div>
         )}
 
         {activeQuestion ? (
-          <p style={{ margin: 0, fontSize: "1.2rem", fontWeight: 700, color: S.ink, lineHeight: 1.9, textAlign: "center", padding: "0.75rem 0" }}>
-            {activeQuestion.q}
-          </p>
+          <p className="qzg-q-text">{activeQuestion.q}</p>
         ) : (
-          <p style={{ margin: 0, color: S.inkSoft, textAlign: "center", fontSize: "0.9rem" }}>
-            لا يوجد سؤال متاح — حدد النتيجة يدوياً
-          </p>
+          <p className="qzg-q-noq">لا يوجد سؤال متاح — حدد النتيجة يدوياً</p>
         )}
 
-        {!passedToOpponent && (
-          <div style={{ marginTop: "0.75rem", paddingTop: "0.75rem", borderTop: `1px solid var(--ds-line-color)`, textAlign: "center" }}>
-            <button
-              type="button"
-              onClick={() => dispatch({ type: "TRANSFER_QUESTION" })}
-              style={{
-                padding: "0.45rem 1.1rem",
-                borderRadius: "var(--ds-radius, 0.5rem)",
-                background: "#EFF6FF",
-                color: "#1D4ED8",
-                border: "1px solid #BFDBFE",
-                cursor: "pointer",
-                fontSize: "0.82rem",
-                fontWeight: 600,
-                fontFamily: "inherit",
-              }}
-            >
-              📤 أرسل للفريق الآخر
+        {mode === "team" && !passedToTeamId && (
+          <div className="qzg-q-transfer-row">
+            <button type="button" onClick={() => requestTeamAction("transfer")} className="qzg-btn-transfer">
+              <Send size={14} className="inline ml-1" />أرسل لفريق آخر
             </button>
           </div>
         )}
       </div>
 
       {!revealed && (
-        <button
-          type="button"
-          onClick={() => setRevealed(true)}
-          style={{ ...goldBtn(), width: "100%", marginBottom: "0.75rem" }}
-        >
-          🔍 كشف الإجابة
+        <button type="button" onClick={() => setRevealed(true)} className="qzg-btn-gold qzg-btn-gold--wide qzg-btn-gold--mb">
+          <Search size={14} className="inline ml-1" />كشف الإجابة
         </button>
       )}
 
       {revealed && (
         <>
-          <div style={{ ...sectionCard, marginBottom: "0.75rem" }}>
-            <p style={{ margin: "0 0 0.5rem", fontSize: "0.78rem", color: S.gold, fontWeight: 700 }}>الإجابة الصحيحة:</p>
-            <p style={{ margin: 0, fontSize: "1.1rem", color: S.ink, fontWeight: 600, lineHeight: 1.8 }}>{activeQuestion?.a ?? "—"}</p>
+          <div className="qzg-section-card qzg-section-card--mb-sm">
+            <p className="qzg-answer-label">الإجابة الصحيحة:</p>
+            <p className="qzg-answer-text">{activeQuestion?.a ?? "—"}</p>
             {showHint && (
-              <p style={{ margin: "0.625rem 0 0", fontSize: "0.85rem", color: S.inkSoft, lineHeight: 1.6, paddingTop: "0.625rem", borderTop: `1px solid var(--ds-line-color)` }}>
-                💡 {activeQuestion?.hint}
-              </p>
+              <p className="qzg-hint-text"><Lightbulb size={13} className="inline ml-1" />{activeQuestion?.hint}</p>
             )}
             {!showHint && activeQuestion?.hint && (
-              <button type="button" onClick={() => dispatch({ type: "REVEAL_HINT" })} style={{ ...ghostBtn, marginTop: "0.625rem", fontSize: "0.78rem" }}>
+              <button type="button" onClick={() => dispatch({ type: "REVEAL_HINT" })} className="qzg-btn-ghost qzg-btn-ghost--mt">
                 عرض الشرح
               </button>
             )}
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.625rem", marginBottom: "0.875rem" }}>
-            <button type="button" onClick={onMarkCorrect} style={{ padding: "0.875rem 1rem", borderRadius: "var(--ds-radius, 0.5rem)", background: S.correct, color: "#fff", border: "none", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer", fontFamily: "inherit", textAlign: "center" }}>
-              ✅ صحيح +{activeCell.points}
+          <div className="qzg-result-grid">
+            <button type="button" onClick={onMarkCorrect} className="qzg-btn-correct">
+              <CheckCircle2 size={14} className="inline ml-1" />صحيح +{activeCell.points}
             </button>
-            <button type="button" onClick={onMarkWrong} style={{ padding: "0.875rem 1rem", borderRadius: "var(--ds-radius, 0.5rem)", background: S.wrong, color: "#fff", border: "none", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer", fontFamily: "inherit", textAlign: "center" }}>
-              ❌ خطأ
+            <button type="button" onClick={onMarkWrong} className="qzg-btn-wrong">
+              <XCircle size={14} className="inline ml-1" />خطأ
             </button>
           </div>
         </>
       )}
 
-      <div style={{ ...sectionCard }}>
-        <p style={{ margin: "0 0 0.625rem", fontSize: "0.82rem", color: S.gold, fontWeight: 700 }}>
-          ⚡ وسائل المساعدة — {activeTeamObj.name}
-        </p>
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-          {activeTeamObj.lifelines.penalize && (
-            <button type="button" onClick={() => dispatch({ type: "USE_LIFELINE_PENALIZE" })} style={lifelineStyle("#FFB347", "#FFF8EE")}>
-              خصم {activeCell.points} من الخصم
-            </button>
-          )}
-          {activeTeamObj.lifelines.eliminate && (
-            <button type="button" onClick={() => dispatch({ type: "USE_LIFELINE_ELIMINATE" })} style={lifelineStyle("#9B59B6", "#F5EEF8")}>
-              استبعاد لاعب
-            </button>
-          )}
-          {activeTeamObj.lifelines.pass && !passedToOpponent && (
-            <button type="button" onClick={() => dispatch({ type: "PASS_QUESTION" })} style={lifelineStyle("#2E86C1", "#EBF5FB")}>
-              تمرير للخصم (وسيلة)
-            </button>
-          )}
-          {!activeTeamObj.lifelines.penalize && !activeTeamObj.lifelines.eliminate && !activeTeamObj.lifelines.pass && (
-            <span style={{ fontSize: "0.8rem", color: S.inkSoft, padding: "0.4rem 0" }}>لا وسائل متبقية</span>
+      <div className="qzg-section-card">
+        <p className="qzg-lifelines-label"><Zap size={14} className="inline ml-1" />وسائل المساعدة — {activeTeamObj.name}</p>
+
+        {eliminateBanner && (
+          <p className="qzg-q-passed-banner">تم استبعاد لاعب من: <strong>{eliminateBanner}</strong></p>
+        )}
+
+        <div className="qzg-lifelines-flex">
+          {mode === "solo" ? (
+            <>
+              {activeTeamObj.lifelines.pass && (
+                <button type="button" onClick={() => dispatch({ type: "SOLO_SKIP" })}
+                  className="qzg-ll-btn qzg-ll-btn--pass">
+                  مساعدة إضافية (تخطَّ السؤال)
+                </button>
+              )}
+              {noLifelinesLeft && <span className="qzg-no-lifelines">لا وسائل متبقية</span>}
+            </>
+          ) : (
+            <>
+              {activeTeamObj.lifelines.penalize && (
+                <button type="button" onClick={() => requestTeamAction("penalize")}
+                  className="qzg-ll-btn qzg-ll-btn--penalize">
+                  خصم {activeCell.points} من فريق منافس
+                </button>
+              )}
+              {activeTeamObj.lifelines.eliminate && (
+                <button type="button" onClick={() => requestTeamAction("eliminate")}
+                  className="qzg-ll-btn qzg-ll-btn--eliminate">
+                  استبعاد لاعب
+                </button>
+              )}
+              {activeTeamObj.lifelines.pass && !passedToTeamId && (
+                <button type="button" onClick={() => requestTeamAction("pass")}
+                  className="qzg-ll-btn qzg-ll-btn--pass">
+                  تمرير لفريق آخر (وسيلة)
+                </button>
+              )}
+              {noLifelinesLeft && <span className="qzg-no-lifelines">لا وسائل متبقية</span>}
+            </>
           )}
         </div>
+
+        {pendingTarget && (
+          <div className="qzg-target-picker">
+            <p className="qzg-target-picker__label">اختر الفريق المستهدَف:</p>
+            <div className="qzg-target-picker__list">
+              {otherTeams.map((t) => (
+                <button key={t.id} type="button" onClick={() => applyTeamAction(pendingTarget, t.id)} className="qzg-target-btn">
+                  {t.name}
+                </button>
+              ))}
+              <button type="button" onClick={() => setPendingTarget(null)} className="qzg-btn-ghost">إلغاء</button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -721,35 +789,41 @@ function QuestionPhase({
 
 // ─── Winner Phase ──────────────────────────────────────────────────────────
 
-function WinnerPhase({ teams, onReset }: { teams: [Team, Team]; onReset: () => void }) {
-  const [a, b] = teams[0].score >= teams[1].score ? teams : [teams[1], teams[0]];
-  const isDraw = a.score === b.score;
+function WinnerPhase({ teams, mode, onReset }: { teams: Team[]; mode: GameMode; onReset: () => void }) {
+  const isSolo = mode === "solo" || teams.length === 1;
+  const sorted = [...teams].sort((a, b) => b.score - a.score);
+  const topScore = sorted[0]?.score ?? 0;
+  const isDraw = !isSolo && sorted.filter((t) => t.score === topScore).length > 1;
+
+  const title = isSolo ? "انتهت اللعبة!" : isDraw ? "تعادل!" : `فاز ${sorted[0].name}`;
+  const subtitle = isSolo
+    ? "أحسنت! إليك نتيجتك النهائية"
+    : isDraw
+      ? "تعادل الفرق المتصدرة — تكافؤ رائع!"
+      : "أحسنتم جميعاً وبارك الله في سعيكم";
 
   return (
-    <div style={{ textAlign: "center", maxWidth: 480, margin: "0 auto", paddingTop: "1rem" }}>
-      <div style={{ fontSize: "4rem", marginBottom: "1rem" }}>{isDraw ? "🤝" : "🏆"}</div>
-      <h1 style={{ margin: "0 0 0.5rem", fontSize: "2rem", color: S.emeraldDeep, fontWeight: 800 }}>
-        {isDraw ? "تعادل!" : `فاز ${a.name}`}
-      </h1>
-      <p style={{ color: S.inkSoft, marginBottom: "2rem", fontSize: "0.95rem" }}>
-        {isDraw ? "تعادل الفريقان — أنتما متكافئان!" : "أحسنتم جميعاً وبارك الله في سعيكم"}
-      </p>
+    <div className="qzg-winner-wrap">
+      <div className="qzg-winner-trophy">{isDraw ? <Handshake size={48} strokeWidth={1.3} /> : <Trophy size={48} strokeWidth={1.3} />}</div>
+      <h1 className="qzg-winner-title">{title}</h1>
+      <p className="qzg-winner-sub">{subtitle}</p>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "2rem" }}>
-        {[a, b].map((team, i) => (
-          <div key={team.id} style={{ ...sectionCard, border: `2px solid ${i === 0 ? "var(--majalis-brass)" : "var(--ds-line-color)"}`, marginBottom: 0 }}>
-            <div style={{ fontSize: "1.75rem", marginBottom: "0.5rem" }}>{i === 0 ? (isDraw ? "🤝" : "🥇") : "🥈"}</div>
-            <p style={{ margin: "0 0 0.5rem", fontWeight: 700, color: S.ink, fontSize: "0.95rem" }}>{team.name}</p>
-            <p style={{ margin: 0, fontSize: "2.25rem", fontWeight: 800, color: i === 0 ? S.gold : S.inkSoft }}>
+      <div className="qzg-winner-grid" data-team-count={sorted.length}>
+        {sorted.map((team, i) => (
+          <div key={team.id}
+            className={`qzg-section-card qzg-winner-card${i === 0 ? " qzg-winner-card--first" : ""}`}>
+            <div className="qzg-winner-rank">{i === 0 ? (isDraw ? <Handshake size={24} /> : <Trophy size={24} />) : <Award size={24} />}</div>
+            <p className="qzg-winner-name">{team.name}</p>
+            <p className={`qzg-winner-score${i === 0 ? " qzg-winner-score--first" : ""}`}>
               {team.score.toLocaleString("ar-EG")}
             </p>
-            <p style={{ margin: "0.25rem 0 0", fontSize: "0.78rem", color: S.inkSoft }}>نقطة</p>
+            <p className="qzg-winner-unit">نقطة</p>
           </div>
         ))}
       </div>
 
-      <button type="button" onClick={onReset} style={{ ...goldBtn(), paddingInline: "2.5rem" }}>
-        🔄 لعبة جديدة
+      <button type="button" onClick={onReset} className="qzg-btn-gold qzg-btn-gold--px">
+        <RefreshCw size={14} className="inline ml-1" />لعبة جديدة
       </button>
     </div>
   );
@@ -766,8 +840,8 @@ export function IslamicQuizGame() {
   const [timerSec, setTimerSec] = useState(60);
   const [maxTimerSec, setMaxTimerSec] = useState(60);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const passedRef = useRef(state.passedToOpponent);
-  useEffect(() => { passedRef.current = state.passedToOpponent; }, [state.passedToOpponent]);
+  const passedRef = useRef(state.passedToTeamId);
+  useEffect(() => { passedRef.current = state.passedToTeamId; }, [state.passedToTeamId]);
 
   const clearTimer = useCallback(() => {
     if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
@@ -776,7 +850,7 @@ export function IslamicQuizGame() {
   // Start/reset timer on question phase or when question is transferred
   useEffect(() => {
     if (state.phase !== "question") { clearTimer(); return; }
-    const duration = state.passedToOpponent ? 30 : 60;
+    const duration = state.passedToTeamId ? 30 : 60;
     setTimerSec(duration);
     setMaxTimerSec(duration);
     clearTimer();
@@ -784,10 +858,15 @@ export function IslamicQuizGame() {
       setTimerSec((prev) => {
         if (prev <= 1) {
           clearTimer();
-          if (!passedRef.current) {
-            dispatch({ type: "TRANSFER_QUESTION" });
+          // تمديد تلقائي (30ث لفريق آخر) عند انتهاء الوقت لأول مرة — لا يُطبَّق
+          // إلا حين يوجد فريق منافس واحد بالضبط (الوضع الثنائي التقليدي)، إذ
+          // لا يوجد هدف واحد واضح لتحويله إليه تلقائيًا مع 3-4 فرق أو في
+          // الوضع الفردي؛ في تلك الحالات ينتهي السؤال مباشرةً بـ"خطأ".
+          const others = state.teams.filter((t) => t.id !== state.activeTeamId);
+          const canAutoForward = others.length === 1 && !passedRef.current;
+          if (canAutoForward) {
+            dispatch({ type: "TRANSFER_QUESTION", targetId: others[0].id });
           } else {
-            // auto mark wrong — need to also mark the question used
             const qId = (state as GameState).activeQuestion?.id;
             if (qId) markQuizQuestionUsed(qId);
             dispatch({ type: "MARK_WRONG" });
@@ -798,7 +877,7 @@ export function IslamicQuizGame() {
       });
     }, 1000);
     return clearTimer;
-  }, [state.phase, state.passedToOpponent]);
+  }, [state.phase, state.passedToTeamId]);
 
   useEffect(() => {
     getQuizQuestions().then(({ data }) => {
@@ -810,37 +889,36 @@ export function IslamicQuizGame() {
   }, []);
 
   const handleStart = useCallback(
-    (cats: string[], names: [string, string]) => dispatch({ type: "START_GAME", categories: cats, names }),
+    (cats: string[], mode: GameMode, names: string[]) => dispatch({ type: "START_GAME", mode, categories: cats, names }),
     [],
   );
 
   const handleMarkCorrect = useCallback(() => {
     clearTimer();
     if (state.activeQuestion?.id) markQuizQuestionUsed(state.activeQuestion.id);
+    if (state.activeQuestion?.id && state.activeCell?.categoryId) {
+      void recordQuizAttempt(state.activeCell.categoryId, state.activeQuestion.id, true, "team_game");
+    }
+    void hapticNotify("success");
     dispatch({ type: "MARK_CORRECT" });
-  }, [state.activeQuestion, clearTimer]);
+  }, [state.activeQuestion, state.activeCell, clearTimer]);
 
   const handleMarkWrong = useCallback(() => {
     clearTimer();
     if (state.activeQuestion?.id) markQuizQuestionUsed(state.activeQuestion.id);
+    if (state.activeQuestion?.id && state.activeCell?.categoryId) {
+      void recordQuizAttempt(state.activeCell.categoryId, state.activeQuestion.id, false, "team_game");
+    }
+    void hapticNotify("error");
     dispatch({ type: "MARK_WRONG" });
-  }, [state.activeQuestion, clearTimer]);
+  }, [state.activeQuestion, state.activeCell, clearTimer]);
 
   return (
-    <div
-      style={{
-        minHeight: "calc(100vh - 64px)",
-        background: S.bg,
-        padding: "1.25rem 1rem",
-        direction: "rtl",
-        fontFamily: "inherit",
-        color: S.ink,
-      }}
-    >
-      <div style={{ maxWidth: 860, margin: "0 auto", paddingBottom: "3rem" }}>
+    <div className="qzg-root">
+      <div className="qzg-inner">
         {(state.phase === "board" || state.phase === "question") && (
-          <div style={{ textAlign: "center", marginBottom: "1rem", paddingBottom: "0.75rem", borderBottom: `1px solid var(--ds-line-color)` }}>
-            <span style={{ color: S.gold, fontWeight: 700 }}>🕌 لعبة سؤال وجواب الإسلامية</span>
+          <div className="qzg-game-title-bar">
+            <span className="qzg-game-title"><Landmark size={16} className="inline ml-1" />لعبة سؤال وجواب الإسلامية</span>
           </div>
         )}
 
@@ -863,7 +941,7 @@ export function IslamicQuizGame() {
             onMarkWrong={handleMarkWrong}
           />
         )}
-        {state.phase === "winner" && <WinnerPhase teams={state.teams} onReset={() => dispatch({ type: "RESET" })} />}
+        {state.phase === "winner" && <WinnerPhase teams={state.teams} mode={state.mode} onReset={() => dispatch({ type: "RESET" })} />}
       </div>
     </div>
   );

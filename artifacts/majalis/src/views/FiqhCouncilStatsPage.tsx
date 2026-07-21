@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
-import { PageHeader, Loading } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { getFiqhCouncilPublicStats } from "@/lib/fiqh-council-service";
 import { fiqhItemHref, FIQH_ITEM_TYPE_LABELS, type FiqhPublicStats } from "@/lib/fiqh-council-types";
 import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 export default function FiqhCouncilStatsPage() {
   const [stats, setStats] = useState<FiqhPublicStats | null>(null);
@@ -15,7 +17,7 @@ export default function FiqhCouncilStatsPage() {
     applyPageSeo({
       path: "/fiqh-council/stats",
       title: "إحصائيات المجمع الفقهي | المجلس العلمي",
-      description: "إحصائيات المجمع الفقهي — عدد القرارات والفتاوى والبحوث وأكثر التصنيفات والمواد قراءة.",
+      description: "إحصائيات المجمع الفقهي، عدد القرارات والفتاوى والبحوث وأكثر التصنيفات والمواد قراءة.",
       keywords: ["إحصائيات فقهية", "المجمع الفقهي"],
       jsonLd: [
         breadcrumbJsonLd([
@@ -28,13 +30,13 @@ export default function FiqhCouncilStatsPage() {
   }, []);
 
   useEffect(() => {
-    getFiqhCouncilPublicStats().then(({ data }) => {
-      setStats(data);
-      setLoading(false);
-    });
+    getFiqhCouncilPublicStats()
+      .then(({ data }) => setStats(data))
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonCardGrid />;
 
   const s = stats || {
     resolutions: 0,
@@ -68,7 +70,7 @@ export default function FiqhCouncilStatsPage() {
           ["issues", "المسائل الفقهية"],
         ].map(([key, label]) => (
           <div key={key} className="fiqh-admin-stat">
-            <strong>{(s as any)[key] ?? 0}</strong>
+            <strong>{(s as unknown as Record<string, number>)[key] ?? 0}</strong>
             <span>{label}</span>
           </div>
         ))}
@@ -79,7 +81,7 @@ export default function FiqhCouncilStatsPage() {
           <h2>أكثر التصنيفات</h2>
           <ul className="fiqh-stats-list">
             {s.top_categories.map((row) => (
-              <li key={row.category}>{row.category} — {row.cnt}</li>
+              <li key={row.category}>{row.category}، {row.cnt}</li>
             ))}
           </ul>
         </section>
@@ -92,7 +94,7 @@ export default function FiqhCouncilStatsPage() {
             {s.top_viewed.map((row) => (
               <li key={row.slug}>
                 <Link href={fiqhItemHref(row.slug)}>{row.title}</Link>
-                <span> — {row.views_count?.toLocaleString("ar")} مشاهدة</span>
+                <span>، {row.views_count?.toLocaleString("ar")} مشاهدة</span>
               </li>
             ))}
           </ul>
@@ -106,7 +108,7 @@ export default function FiqhCouncilStatsPage() {
             {s.latest.map((row) => (
               <li key={row.slug}>
                 <Link href={fiqhItemHref(row.slug)}>{row.title}</Link>
-                <span> — {FIQH_ITEM_TYPE_LABELS[row.type as keyof typeof FIQH_ITEM_TYPE_LABELS]}</span>
+                <span>، {FIQH_ITEM_TYPE_LABELS[row.type as keyof typeof FIQH_ITEM_TYPE_LABELS]}</span>
               </li>
             ))}
           </ul>
@@ -118,7 +120,7 @@ export default function FiqhCouncilStatsPage() {
           <h2>أكثر المصادر</h2>
           <ul className="fiqh-stats-list">
             {s.top_sources.map((row) => (
-              <li key={row.source_name}>{row.source_name} — {row.cnt}</li>
+              <li key={row.source_name}>{row.source_name}، {row.cnt}</li>
             ))}
           </ul>
         </section>
@@ -129,6 +131,13 @@ export default function FiqhCouncilStatsPage() {
         {" · "}
         <Link href="/fiqh-council/index">الفهرس الموضوعي</Link>
       </p>
+
+      <div className="twh-share">
+        <ShareButtons title="إحصائيات مجلس الفقه — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/stats" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["fiqh", "tarikh"]} title="اختبر معلوماتك في الفقه والتاريخ" count={4} />
+      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { resolveLessonPosterUrl } from "@/lib/lesson-image";
 import { Link } from "wouter";
+import { AdminInlineEdit } from "@/components/AdminInlineEdit";
 import {
   buildLessonCopyText,
   buildLessonShareUrl,
@@ -9,7 +10,7 @@ import {
   type UnifiedLesson,
 } from "@/lib/unified-lesson-card";
 import { cleanDisplayText } from "@/lib/display-text";
-import { computeNextOccurrenceMs, formatRelativeTimeDetailed } from "@/lib/lesson-time";
+import { computeNextOccurrenceMs, formatRelativeTimeDetailed, isLessonInProgress } from "@/lib/lesson-time";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 
@@ -56,16 +57,20 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
   const [copied, setCopied] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   const [statusLabel, setStatusLabel] = useState(lesson.statusLabel);
+  const [nowLive, setNowLive] = useState(() => isLessonInProgress(lesson.day, lesson.time));
 
   useEffect(() => {
-    setStatusLabel(lesson.statusLabel);
-    const timer = window.setInterval(() => {
-      // نُعيد الحساب بشكل حديث كل دقيقة — لا نعتمد على nextOccurrenceMs القديم
+    function refresh() {
+      const live    = isLessonInProgress(lesson.day, lesson.time);
       const freshMs = computeNextOccurrenceMs(lesson.day, lesson.time);
-      setStatusLabel(formatRelativeTimeDetailed(freshMs, lesson.time));
-    }, 60_000);
-    return () => window.clearInterval(timer);
-  }, [lesson.day, lesson.time, lesson.statusLabel]);
+      setNowLive(live);
+      setStatusLabel(live ? "الآن" : formatRelativeTimeDetailed(freshMs, lesson.time));
+    }
+    refresh();
+    const earlyTimer = window.setTimeout(refresh, 5_000);
+    const timer = window.setInterval(refresh, 60_000);
+    return () => { window.clearTimeout(earlyTimer); window.clearInterval(timer); };
+  }, [lesson.day, lesson.time]);
 
   const handleCopy = useCallback(async () => {
     try {
@@ -114,7 +119,13 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
     >
       <header className="lesson-unified-card__header">
         <span className="lesson-unified-card__category">{lesson.category}</span>
-        <span className="lesson-unified-card__status">{statusLabel}</span>
+        {nowLive ? (
+          <span className="lesson-now-badge" role="status" aria-label="الدرس جارٍ الآن">
+            <span aria-hidden="true">●</span> الآن
+          </span>
+        ) : (
+          <span className="lesson-unified-card__status">{statusLabel}</span>
+        )}
       </header>
 
       <div className="lesson-unified-card__body">
@@ -175,6 +186,12 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
               <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--secondary" onClick={handleShare}>
                 مشاركة
               </button>
+              <AdminInlineEdit
+                contentType="lesson"
+                contentId={lesson.id}
+                initialData={{ title: lesson.title, category: lesson.category, mosque: lesson.mosque, region: lesson.region, day_of_week: lesson.day, lesson_time: lesson.time, description: lesson.description }}
+                className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
+              />
               <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--secondary" onClick={handleCopyLink}>
                 {linkCopied ? "تم النسخ" : "نسخ الرابط"}
               </button>

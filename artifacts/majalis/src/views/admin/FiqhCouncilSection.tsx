@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "wouter";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import {
   adminGetAllFiqhCouncilItems,
   adminUpsertFiqhCouncilItem,
@@ -50,9 +52,8 @@ import {
   type FiqhCouncilSource,
   type FiqhSyncJob,
 } from "@/lib/fiqh-council-types";
-import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
-import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { SkeletonCardGrid } from "@/components/ui-common";
+import { AdminModal, Field } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 import { FiqhCompletionBarFromItem } from "@/components/fiqh-council/FiqhCompletionBar";
 
@@ -80,7 +81,7 @@ function slugify(title: string) {
   return title
     .trim()
     .toLowerCase()
-    .replace(/[^\u0600-\u06FFa-z0-9\s-]/g, "")
+    .replace(/[^؀-ۿa-z0-9\s-]/g, "")
     .replace(/\s+/g, "-")
     .slice(0, 80) || `fiqh-${Date.now()}`;
 }
@@ -170,7 +171,7 @@ export function FiqhCouncilSection() {
         ...(jobsData.some((j: FiqhSyncJob) => j.status === "failed") ? [{ id: "local-sync-fail", title: "فشل في آخر مزامنة", alert_type: "sync_failed", severity: "error", is_read: false }] : []),
       ];
       setAlerts([...computedAlerts, ...(alertsRes.data || [])]);
-      if (allRes.error && allRes.usingSeed) showError("تعذّر تحميل البيانات — عرض البذور المحلية.");
+      if (allRes.error && allRes.usingSeed) showError("تعذّر تحميل البيانات، عرض البذور المحلية.");
     }).catch(() => showError("تعذّر تحميل بيانات المجمع الفقهي.")).finally(() => setLoading(false));
   };
 
@@ -190,9 +191,7 @@ export function FiqhCouncilSection() {
       if (filterStatus !== "الكل" && item.status !== filterStatus) return false;
       if (filterType !== "الكل" && item.type !== filterType) return false;
       if (adminSearch.trim()) {
-        const q = adminSearch.trim();
-        const hay = [item.title, item.summary, item.slug, item.category, ...(item.tags || [])].join(" ");
-        if (!hay.includes(q)) return false;
+        if (!arabicMatchAny([item.title, item.summary, item.slug, item.category, ...(item.tags || [])], adminSearch)) return false;
       }
       return true;
     });
@@ -327,46 +326,47 @@ export function FiqhCouncilSection() {
   };
 
   const renderItemCard = (item: any) => (
-    <div key={item.id} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.375rem", padding: "1rem" }}>
+    <div key={item.id} className="fcs-item-card">
       <strong>{item.title}</strong>
-      <p style={{ margin: "0.5rem 0", fontSize: "0.875rem", color: C.inkSoft }}>
+      <p className="fcs-item-meta">
         {FIQH_ITEM_TYPE_LABELS[item.type as FiqhItemType]} · {item.category} · {FIQH_ITEM_STATUS_LABELS[item.status as FiqhItemStatus] || item.status}
         {item.validation_status && <> · تحقق: {item.validation_status}</>}
         {item.external_id && <> · {item.external_id}</>}
       </p>
       <FiqhCompletionBarFromItem item={item} className="fiqh-admin-item-completion" />
-      <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-        <button onClick={() => { setForm({ ...item, tags: (item.tags || []).join("، "), evidence: formatEvidence(item.evidence) }); setOpen(true); }} style={{ fontSize: "0.75rem", cursor: "pointer" }}>تعديل</button>
+      <div className="fcs-item-actions">
+        <button type="button" onClick={() => { setForm({ ...item, tags: (item.tags || []).join("، "), evidence: formatEvidence(item.evidence) }); setOpen(true); }} className="fcs-btn">تعديل</button>
         {item.status !== "published" && (
           <>
-            <button onClick={() => handleApprove(item.id)} style={{ fontSize: "0.75rem", cursor: "pointer" }}>اعتماد</button>
-            <button onClick={() => handlePublish(item.id)} style={{ fontSize: "0.75rem", cursor: "pointer" }}>نشر</button>
-            <button onClick={() => handleReject(item.id)} style={{ fontSize: "0.75rem", cursor: "pointer", color: "#dc2626" }}>رفض</button>
+            <button type="button" onClick={() => handleApprove(item.id)} className="fcs-btn">اعتماد</button>
+            <button type="button" onClick={() => handlePublish(item.id)} className="fcs-btn">نشر</button>
+            <button type="button" onClick={() => handleReject(item.id)} className="fcs-btn--danger">رفض</button>
           </>
         )}
         {item.status === "published" && (
-          <button onClick={() => handleStatus(item.id, "draft")} style={{ fontSize: "0.75rem", cursor: "pointer" }}>إلغاء النشر</button>
+          <button type="button" onClick={() => handleStatus(item.id, "draft")} className="fcs-btn">إلغاء النشر</button>
         )}
         {item.status !== "archived" && (
-          <button onClick={() => handleArchive(item.id)} style={{ fontSize: "0.75rem", cursor: "pointer" }}>أرشفة</button>
+          <button type="button" onClick={() => handleArchive(item.id)} className="fcs-btn">أرشفة</button>
         )}
-        <button onClick={() => setPreviewSlug(item.slug)} style={{ fontSize: "0.75rem", cursor: "pointer" }}>معاينة</button>
-        <a href={fiqhItemHref(item.slug)} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.75rem" }}>فتح</a>
-        <button onClick={() => handleDelete(item.id)} style={{ fontSize: "0.75rem", color: "#dc2626", cursor: "pointer" }}>حذف</button>
+        <button type="button" onClick={() => setPreviewSlug(item.slug)} className="fcs-btn">معاينة</button>
+        <a href={fiqhItemHref(item.slug)} target="_blank" rel="noopener noreferrer" className="fcs-a">فتح</a>
+        <button type="button" onClick={() => handleDelete(item.id)} className="fcs-btn--danger">حذف</button>
       </div>
     </div>
   );
 
   return (
     <div className="fiqh-council-admin">
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem", flexWrap: "wrap", gap: "0.75rem", alignItems: "center" }}>
-        <h2 style={{ margin: 0, color: C.emeraldDeep }}>المجمع الفقهي الإسلامي ({filtered.length})</h2>
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-          <a href="/admin/fiqh-review" style={{ fontSize: "0.8125rem", color: C.emeraldDeep }}>المراجعة العلمية</a>
-          <a href="/admin/fiqh-quality" style={{ fontSize: "0.8125rem", color: C.emeraldDeep }}>جودة البيانات</a>
+      <div className="fcs-header">
+        <h2 className="fcs-title">المجمع الفقهي الإسلامي ({filtered.length})</h2>
+        <div className="fcs-header-actions">
+          <Link href="/admin/fiqh-review" className="fcs-link">المراجعة العلمية</Link>
+          <Link href="/admin/fiqh-quality" className="fcs-link">جودة البيانات</Link>
           <button
+            type="button"
             onClick={() => { setForm({ ...EMPTY }); setOpen(true); }}
-            style={{ padding: "0.5rem 1rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: "pointer" }}
+            className="fcs-add-btn"
           >
             + إضافة
           </button>
@@ -396,15 +396,15 @@ export function FiqhCouncilSection() {
       </div>
 
       {alerts.filter((a) => !a.is_read).length > 0 && (
-        <section className="fiqh-admin-alerts ui-card" style={{ marginBottom: "1rem" }}>
-          <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep, margin: "0 0 0.5rem" }}>إشعارات الإدارة</h3>
-          <div style={{ display: "grid", gap: "0.35rem" }}>
+        <section className="fiqh-admin-alerts ui-card fcs-alerts-sec">
+          <h3 className="fcs-h3">إشعارات الإدارة</h3>
+          <div className="fcs-grid-gap">
             {alerts.filter((a) => !a.is_read).slice(0, 8).map((alert) => (
-              <div key={alert.id} className="fiqh-sync-job" style={{ fontSize: "0.8125rem" }}>
+              <div key={alert.id} className="fiqh-sync-job fcs-text-sm">
                 <strong>{alert.title}</strong>
-                {alert.message && <span style={{ color: C.inkSoft }}> — {alert.message}</span>}
+                {alert.message && <span className="fcs-muted">، {alert.message}</span>}
                 {!String(alert.id).startsWith("local-") && (
-                  <button type="button" style={{ marginInlineStart: "0.5rem", fontSize: "0.75rem", cursor: "pointer" }} onClick={() => adminMarkFiqhAlertRead(alert.id).then(loadItems)}>تم</button>
+                  <button type="button" className="fcs-btn--ms" onClick={() => adminMarkFiqhAlertRead(alert.id).then(loadItems)}>تم</button>
                 )}
               </div>
             ))}
@@ -429,14 +429,14 @@ export function FiqhCouncilSection() {
               </div>
             ))}
           </div>
-          <section style={{ marginTop: "1rem" }}>
-            <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>سجل الاعتماد</h3>
+          <section className="fcs-stats-sec">
+            <h3 className="fcs-h3">سجل الاعتماد</h3>
             {auditLog.length === 0 ? (
-              <p style={{ fontSize: "0.8125rem", color: C.inkSoft }}>لا توجد عمليات بعد.</p>
+              <p className="fcs-text-sm">لا توجد عمليات بعد.</p>
             ) : (
-              <div style={{ display: "grid", gap: "0.35rem" }}>
+              <div className="fcs-grid-gap">
                 {auditLog.map((entry: any) => (
-                  <div key={entry.id} className="fiqh-sync-job" style={{ fontSize: "0.75rem" }}>
+                  <div key={entry.id} className="fiqh-sync-job fcs-text-xs">
                     {entry.action} · {entry.from_status} → {entry.to_status}
                     {entry.actor_email && <> · {entry.actor_email}</>}
                     {entry.created_at && <> · {new Date(entry.created_at).toLocaleString("ar")}</>}
@@ -447,42 +447,42 @@ export function FiqhCouncilSection() {
           </section>
         </div>
       ) : tab === "duplicates" ? (
-        <div style={{ display: "grid", gap: "0.75rem" }}>
+        <div className="fcs-grid-gap-md">
           {duplicates.length === 0 ? (
-            <p style={{ color: C.inkSoft, fontSize: "0.875rem" }}>لا توجد احتمالات تكرار.</p>
+            <p className="fcs-empty">لا توجد احتمالات تكرار.</p>
           ) : duplicates.map((dup: any) => (
             <div key={dup.id} className="fiqh-sync-job">
               <strong>تشابه {(dup.similarity_score * 100).toFixed(0)}%</strong>
-              <p style={{ margin: "0.35rem 0", fontSize: "0.8125rem", color: C.inkSoft }}>
+              <p className="fcs-dup-reasons">
                 {(dup.match_reasons || []).join(" · ")}
               </p>
-              <div style={{ display: "flex", gap: "0.5rem" }}>
-                <button onClick={() => handleResolveDup(dup.id, "merged")} style={{ fontSize: "0.75rem", cursor: "pointer" }}>دمج</button>
-                <button onClick={() => handleResolveDup(dup.id, "ignored")} style={{ fontSize: "0.75rem", cursor: "pointer" }}>تجاهل</button>
+              <div className="fcs-dup-actions">
+                <button type="button" onClick={() => handleResolveDup(dup.id, "merged")} className="fcs-btn">دمج</button>
+                <button type="button" onClick={() => handleResolveDup(dup.id, "ignored")} className="fcs-btn">تجاهل</button>
               </div>
             </div>
           ))}
         </div>
       ) : tab === "relations" ? (
-        <div style={{ display: "grid", gap: "1rem" }}>
-          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
+        <div className="fcs-grid-gap-lg">
+          <div className="fcs-flex-header">
             <button
               type="button"
               onClick={handleScanRelations}
               disabled={scanningRelations}
-              style={{ padding: "0.5rem 1rem", cursor: scanningRelations ? "wait" : "pointer" }}
+              className="fcs-scan-btn"
             >
               {scanningRelations ? "جارٍ الفحص..." : "فحص علاقات مقترحة"}
             </button>
-            <span style={{ fontSize: "0.8125rem", color: C.inkSoft }}>
+            <span className="fcs-text-sm">
               معلّقة: {suggestedRelations.length} · محلية: {localRelationScan.length}
             </span>
           </div>
 
           {suggestedRelations.length === 0 && localRelationScan.length === 0 ? (
-            <p style={{ fontSize: "0.875rem", color: C.inkSoft }}>لا توجد علاقات مقترحة — شغّل الفحص.</p>
+            <p className="fcs-empty">لا توجد علاقات مقترحة، شغّل الفحص.</p>
           ) : (
-            <div style={{ display: "grid", gap: "0.75rem" }}>
+            <div className="fcs-grid-gap-md">
               {(suggestedRelations.length ? suggestedRelations : localRelationScan.map((row, i) => ({
                 id: `local-${i}`,
                 item_id: row.itemId,
@@ -494,18 +494,18 @@ export function FiqhCouncilSection() {
               }))).map((rel: any) => (
                 <div key={rel.id} className="fiqh-sync-job">
                   <strong>تشابه {((rel.similarity_score || 0) * 100).toFixed(0)}%</strong>
-                  <p style={{ margin: "0.35rem 0", fontSize: "0.8125rem" }}>
+                  <p className="fcs-relation-title">
                     {rel.item?.title || rel.item_id} ↔ {rel.related_item?.title || rel.related_item_id}
                   </p>
-                  <p style={{ margin: 0, fontSize: "0.75rem", color: C.inkSoft }}>
+                  <p className="fcs-relation-reasons">
                     {(rel.match_reasons || []).join(" · ")}
                   </p>
-                  <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.35rem" }}>
+                  <div className="fcs-relation-actions">
                     {!String(rel.id).startsWith("local-") && (
                       <>
-                        <button type="button" style={{ fontSize: "0.75rem", cursor: "pointer" }} onClick={() => handleApproveRelation(rel.id)}>اعتماد</button>
-                        <button type="button" style={{ fontSize: "0.75rem", cursor: "pointer" }} onClick={() => handleRejectRelation(rel.id)}>رفض</button>
-                        <button type="button" style={{ fontSize: "0.75rem", cursor: "pointer" }} onClick={() => handleMergeRelation(rel.id)}>دمج</button>
+                        <button type="button" className="fcs-btn" onClick={() => handleApproveRelation(rel.id)}>اعتماد</button>
+                        <button type="button" className="fcs-btn" onClick={() => handleRejectRelation(rel.id)}>رفض</button>
+                        <button type="button" className="fcs-btn" onClick={() => handleMergeRelation(rel.id)}>دمج</button>
                       </>
                     )}
                   </div>
@@ -515,8 +515,8 @@ export function FiqhCouncilSection() {
           )}
         </div>
       ) : tab === "research" ? (
-        <div style={{ display: "grid", gap: "1rem" }}>
-          <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
+        <div className="fcs-grid-gap-lg">
+          <div className="fcs-flex-header">
             <button
               type="button"
               onClick={async () => {
@@ -525,22 +525,22 @@ export function FiqhCouncilSection() {
                 setAssistantEnabled(next);
                 showSuccess(next ? "تم تفعيل المساعد" : "تم تعطيل المساعد");
               }}
-              style={{ padding: "0.5rem 1rem", cursor: "pointer" }}
+              className="fcs-toggle-btn"
             >
               {assistantEnabled ? "تعطيل مساعد الباحث" : "تفعيل مساعد الباحث"}
             </button>
-            <span style={{ fontSize: "0.8125rem", color: C.inkSoft }}>
+            <span className="fcs-text-sm">
               عمليات بحث: {researchAnalytics?.total_searches ?? researchLogs.length} · غير مجاب: {researchAnalytics?.unanswered_count ?? unanswered.length}
             </span>
           </div>
 
           {researchAnalytics?.top_queries?.length > 0 && (
             <section>
-              <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>أكثر الأسئلة بحثاً</h3>
-              <div style={{ display: "grid", gap: "0.35rem" }}>
+              <h3 className="fcs-h3">أكثر الأسئلة بحثاً</h3>
+              <div className="fcs-grid-gap">
                 {researchAnalytics.top_queries.map((row: any) => (
-                  <div key={row.query} className="fiqh-sync-job" style={{ fontSize: "0.8125rem" }}>
-                    {row.query} — {row.cnt} مرة
+                  <div key={row.query} className="fiqh-sync-job fcs-text-sm">
+                    {row.query}، {row.cnt} مرة
                   </div>
                 ))}
               </div>
@@ -549,11 +549,11 @@ export function FiqhCouncilSection() {
 
           {researchAnalytics?.top_categories?.length > 0 && (
             <section>
-              <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>أكثر التصنيفات بحثاً</h3>
-              <div style={{ display: "grid", gap: "0.35rem" }}>
+              <h3 className="fcs-h3">أكثر التصنيفات بحثاً</h3>
+              <div className="fcs-grid-gap">
                 {researchAnalytics.top_categories.map((row: any) => (
-                  <div key={row.category} className="fiqh-sync-job" style={{ fontSize: "0.8125rem" }}>
-                    {row.category} — {row.cnt} مرة
+                  <div key={row.category} className="fiqh-sync-job fcs-text-sm">
+                    {row.category}، {row.cnt} مرة
                   </div>
                 ))}
               </div>
@@ -562,11 +562,11 @@ export function FiqhCouncilSection() {
 
           {researchAnalytics?.top_keywords?.length > 0 && (
             <section>
-              <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>كلمات مفتاحية متكررة</h3>
-              <div style={{ display: "grid", gap: "0.35rem" }}>
+              <h3 className="fcs-h3">كلمات مفتاحية متكررة</h3>
+              <div className="fcs-grid-gap">
                 {researchAnalytics.top_keywords.map((row: any) => (
-                  <div key={row.keyword} className="fiqh-sync-job" style={{ fontSize: "0.8125rem" }}>
-                    {row.keyword} — {row.cnt} مرة
+                  <div key={row.keyword} className="fiqh-sync-job fcs-text-sm">
+                    {row.keyword}، {row.cnt} مرة
                   </div>
                 ))}
               </div>
@@ -574,19 +574,19 @@ export function FiqhCouncilSection() {
           )}
 
           <section>
-            <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>أسئلة بلا نتائج</h3>
+            <h3 className="fcs-h3">أسئلة بلا نتائج</h3>
             {unanswered.length === 0 ? (
-              <p style={{ fontSize: "0.8125rem", color: C.inkSoft }}>لا توجد أسئلة مفتوحة.</p>
+              <p className="fcs-text-sm">لا توجد أسئلة مفتوحة.</p>
             ) : (
-              <div style={{ display: "grid", gap: "0.5rem" }}>
+              <div className="fcs-grid-gap-sm">
                 {unanswered.map((q: any) => (
                   <div key={q.id} className="fiqh-sync-job">
                     <strong>{q.query}</strong>
-                    <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.35rem", flexWrap: "wrap", alignItems: "center" }}>
+                    <div className="fcs-unanswered-actions">
                       <select
                         id={`link-${q.id}`}
                         defaultValue=""
-                        style={{ ...selectSt, fontSize: "0.75rem", minWidth: "12rem" }}
+                        className="adm-select fcs-sel-sm"
                       >
                         <option value="">ربط بمادة فقهية...</option>
                         {items.filter((i) => i.status === "published").slice(0, 80).map((item) => (
@@ -595,7 +595,7 @@ export function FiqhCouncilSection() {
                       </select>
                       <button
                         type="button"
-                        style={{ fontSize: "0.75rem", cursor: "pointer" }}
+                        className="fcs-btn"
                         onClick={() => {
                           const sel = document.getElementById(`link-${q.id}`) as HTMLSelectElement | null;
                           const itemId = sel?.value;
@@ -609,7 +609,7 @@ export function FiqhCouncilSection() {
                       >
                         ربط
                       </button>
-                      <button type="button" style={{ fontSize: "0.75rem", cursor: "pointer" }} onClick={() => adminDismissUnansweredQuestion(q.id).then(loadItems)}>تجاهل</button>
+                      <button type="button" className="fcs-btn" onClick={() => adminDismissUnansweredQuestion(q.id).then(loadItems)}>تجاهل</button>
                     </div>
                   </div>
                 ))}
@@ -618,11 +618,11 @@ export function FiqhCouncilSection() {
           </section>
 
           <section>
-            <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>آخر عمليات البحث</h3>
-            <div style={{ display: "grid", gap: "0.35rem", maxHeight: "16rem", overflowY: "auto" }}>
+            <h3 className="fcs-h3">آخر عمليات البحث</h3>
+            <div className="fcs-logs-grid">
               {researchLogs.map((log: any) => (
-                <div key={log.id} className="fiqh-sync-job" style={{ fontSize: "0.75rem" }}>
-                  {log.query} — {log.result_count} نتيجة · {log.retrieval_mode}
+                <div key={log.id} className="fiqh-sync-job fcs-text-xs">
+                  {log.query}، {log.result_count} نتيجة · {log.retrieval_mode}
                   {log.created_at && <> · {new Date(log.created_at).toLocaleString("ar")}</>}
                 </div>
               ))}
@@ -630,28 +630,28 @@ export function FiqhCouncilSection() {
           </section>
         </div>
       ) : tab === "sessions" ? (
-        <div style={{ display: "grid", gap: "1rem" }}>
-          <p style={{ fontSize: "0.8125rem", color: C.inkSoft }}>
-            إدارة جلسات المجمع — لا تُنشر للعامة إلا بعد التوثيق والاعتماد.
+        <div className="fcs-grid-gap-lg">
+          <p className="fcs-text-sm">
+            إدارة جلسات المجمع، لا تُنشر للعامة إلا بعد التوثيق والاعتماد.
           </p>
           {sessions.length === 0 ? (
-            <p style={{ fontSize: "0.875rem", color: C.inkSoft }}>لا توجد جلسات — أضف من Supabase أو migration v10.</p>
+            <p className="fcs-empty">لا توجد جلسات، أضف من Supabase أو migration v10.</p>
           ) : (
-            <div style={{ display: "grid", gap: "0.75rem" }}>
+            <div className="fcs-grid-gap-md">
               {sessions.map((s: any) => (
                 <div key={s.id} className="fiqh-sync-job">
                   <strong>{s.session_title}</strong>
-                  <p style={{ margin: "0.35rem 0", fontSize: "0.8125rem", color: C.inkSoft }}>
+                  <p className="fcs-session-meta">
                     {FIQH_SESSION_STATUS_LABELS[s.status as keyof typeof FIQH_SESSION_STATUS_LABELS] || s.status}
                     {" · "}{FIQH_VERIFICATION_STATUS_LABELS[s.verification_status as keyof typeof FIQH_VERIFICATION_STATUS_LABELS] || s.verification_status}
                     {s.start_date && <> · {s.start_date}</>}
                   </p>
-                  <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                  <div className="fcs-session-actions">
                     {s.publish_status === "published" && (
-                      <a href={fiqhSessionHref(s.slug)} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.75rem" }}>معاينة</a>
+                      <a href={fiqhSessionHref(s.slug)} target="_blank" rel="noopener noreferrer" className="fcs-a">معاينة</a>
                     )}
-                    <button type="button" style={{ fontSize: "0.75rem", cursor: "pointer" }} onClick={() => adminUpsertFiqhSession({ ...s, publish_status: "published", verification_status: "verified" }).then(loadItems)}>نشر</button>
-                    <button type="button" style={{ fontSize: "0.75rem", cursor: "pointer" }} onClick={() => adminArchiveFiqhSession(s.id).then(loadItems)}>أرشفة</button>
+                    <button type="button" className="fcs-btn" onClick={() => adminUpsertFiqhSession({ ...s, publish_status: "published", verification_status: "verified" }).then(loadItems)}>نشر</button>
+                    <button type="button" className="fcs-btn" onClick={() => adminArchiveFiqhSession(s.id).then(loadItems)}>أرشفة</button>
                   </div>
                 </div>
               ))}
@@ -659,30 +659,31 @@ export function FiqhCouncilSection() {
           )}
         </div>
       ) : tab === "sync" ? (
-        <div style={{ display: "grid", gap: "1rem" }}>
-          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
+        <div className="fcs-grid-gap-lg">
+          <div className="fcs-flex-header">
             <button
+              type="button"
               onClick={handleManualSync}
               disabled={syncing}
-              style={{ padding: "0.5rem 1rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: syncing ? "wait" : "pointer" }}
+              className="fcs-sync-btn"
             >
               {syncing ? "جارٍ المزامنة..." : "تشغيل المزامنة يدوياً"}
             </button>
-            <span style={{ fontSize: "0.8125rem", color: C.inkSoft }}>
+            <span className="fcs-text-sm">
               المصادر الرسمية: {sources.length} · آخر عمليات: {syncJobs.length}
             </span>
           </div>
 
           <section>
-            <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>المصادر الرسمية</h3>
+            <h3 className="fcs-h3">المصادر الرسمية</h3>
             {sources.length === 0 ? (
-              <p style={{ fontSize: "0.8125rem", color: C.inkSoft }}>لا توجد مصادر — نفّذ migration v6 على Supabase.</p>
+              <p className="fcs-text-sm">لا توجد مصادر، نفّذ migration v6 على Supabase.</p>
             ) : (
-              <div style={{ display: "grid", gap: "0.5rem" }}>
+              <div className="fcs-grid-gap-sm">
                 {sources.map((src) => (
                   <div key={src.id} className="fiqh-sync-job">
                     <strong>{src.name}</strong>
-                    <div style={{ color: C.inkSoft, marginTop: "0.25rem" }}>
+                    <div className="fcs-source-meta">
                       {src.organization} · {src.source_type} · {src.is_active ? "نشط" : "معطّل"}
                       {src.last_sync_at && <> · آخر مزامنة: {new Date(src.last_sync_at).toLocaleString("ar")}</>}
                     </div>
@@ -693,21 +694,20 @@ export function FiqhCouncilSection() {
           </section>
 
           <section>
-            <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>سجل عمليات التحديث</h3>
+            <h3 className="fcs-h3">سجل عمليات التحديث</h3>
             {syncJobs.length === 0 ? (
-              <p style={{ fontSize: "0.8125rem", color: C.inkSoft }}>لا توجد عمليات مزامنة بعد.</p>
+              <p className="fcs-text-sm">لا توجد عمليات مزامنة بعد.</p>
             ) : (
-              <div style={{ display: "grid", gap: "0.5rem" }}>
+              <div className="fcs-grid-gap-sm">
                 {syncJobs.map((job) => (
                   <button
                     key={job.id}
                     type="button"
-                    className="fiqh-sync-job"
-                    style={{ textAlign: "right", cursor: "pointer", width: "100%" }}
+                    className="fiqh-sync-job fcs-job-btn"
                     onClick={() => setSelectedJobId(job.id === selectedJobId ? null : job.id)}
                   >
                     <strong>{job.status}</strong> · {job.trigger_type}
-                    <div style={{ color: C.inkSoft, marginTop: "0.25rem" }}>
+                    <div className="fcs-job-meta">
                       جلب: {job.total_fetched} · جديد: {job.inserted_count} · تحديث: {job.updated_count} · تخطّي: {job.skipped_count} · تكرار: {job.duplicate_count} · أخطاء: {job.error_count}
                       {job.created_at && <> · {new Date(job.created_at).toLocaleString("ar")}</>}
                     </div>
@@ -719,10 +719,10 @@ export function FiqhCouncilSection() {
 
           {selectedJobId && syncLogs.length > 0 && (
             <section>
-              <h3 style={{ fontSize: "0.9375rem", color: C.emeraldDeep }}>تفاصيل السجل</h3>
-              <div style={{ display: "grid", gap: "0.35rem", maxHeight: "16rem", overflowY: "auto" }}>
+              <h3 className="fcs-h3">تفاصيل السجل</h3>
+              <div className="fcs-logs-grid">
                 {syncLogs.map((log: any) => (
-                  <div key={log.id} className="fiqh-sync-job" style={{ fontSize: "0.75rem" }}>
+                  <div key={log.id} className="fiqh-sync-job fcs-text-xs">
                     [{log.level || log.status}] {log.message || log.action}
                     {log.external_id && <> · {log.external_id}</>}
                   </div>
@@ -733,12 +733,12 @@ export function FiqhCouncilSection() {
         </div>
       ) : (
         <>
-          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
-            <select value={filterType} onChange={(e) => setFilterType(e.target.value)} style={selectSt}>
+          <div className="fcs-filters-row">
+            <select value={filterType} onChange={(e) => setFilterType(e.target.value)} className="adm-select">
               <option value="الكل">كل الأنواع</option>
               {FIQH_ITEM_TYPES.map((t) => <option key={t} value={t}>{FIQH_ITEM_TYPE_LABELS[t]}</option>)}
             </select>
-            <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} style={selectSt}>
+            <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="adm-select">
               <option value="الكل">كل الحالات</option>
               {Object.entries(FIQH_ITEM_STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
             </select>
@@ -746,14 +746,14 @@ export function FiqhCouncilSection() {
               value={adminSearch}
               onChange={(e) => setAdminSearch(e.target.value)}
               placeholder="بحث..."
-              style={{ ...inputSt, flex: 1, minWidth: "140px" }}
+              className="adm-input fcs-search"
             />
           </div>
 
-          {loading ? <Loading /> : (
-            <div style={{ display: "grid", gap: "0.75rem" }}>
+          {loading ? <SkeletonCardGrid count={6} /> : (
+            <div className="fcs-items-grid">
               {filtered.length === 0 ? (
-                <p style={{ color: C.inkSoft, fontSize: "0.875rem" }}>
+                <p className="fcs-empty">
                   {tab === "review" ? "لا توجد عناصر بانتظار المراجعة." : "لا توجد عناصر."}
                 </p>
               ) : filtered.map(renderItemCard)}
@@ -764,7 +764,7 @@ export function FiqhCouncilSection() {
 
       {previewSlug && (
         <AdminModal open={!!previewSlug} onClose={() => setPreviewSlug(null)} title="معاينة قبل النشر" onSave={() => setPreviewSlug(null)} saving={false}>
-          <p style={{ fontSize: "0.875rem", color: C.inkSoft }}>
+          <p className="fcs-text-sm">
             المعاينة متاحة للعناصر المنشورة فقط. للمسودات، راجع النموذج أو انشر مؤقتاً للمعاينة.
           </p>
           <a href={fiqhItemHref(previewSlug)} target="_blank" rel="noopener noreferrer">فتح صفحة المعاينة</a>
@@ -772,32 +772,32 @@ export function FiqhCouncilSection() {
       )}
 
       <AdminModal open={open} onClose={() => setOpen(false)} title="عنصر المجمع الفقهي" onSave={handleSave} saving={saving}>
-        <Field label="العنوان"><input style={inputSt} value={form.title || ""} onChange={(e) => set("title", e.target.value)} /></Field>
-        <Field label="الرابط (slug)"><input style={inputSt} value={form.slug || ""} onChange={(e) => set("slug", e.target.value)} placeholder="يُولَّد تلقائياً من العنوان" /></Field>
+        <Field label="العنوان"><input className="adm-input" value={form.title || ""} onChange={(e) => set("title", e.target.value)} /></Field>
+        <Field label="الرابط (slug)"><input className="adm-input" value={form.slug || ""} onChange={(e) => set("slug", e.target.value)} placeholder="يُولَّد تلقائياً من العنوان" /></Field>
         <Field label="النوع">
-          <select style={selectSt} value={form.type} onChange={(e) => set("type", e.target.value)}>
+          <select className="adm-select" value={form.type} onChange={(e) => set("type", e.target.value)}>
             {FIQH_ITEM_TYPES.map((t) => <option key={t} value={t}>{FIQH_ITEM_TYPE_LABELS[t]}</option>)}
           </select>
         </Field>
         <Field label="التصنيف">
-          <select style={selectSt} value={form.category} onChange={(e) => set("category", e.target.value)}>
+          <select className="adm-select" value={form.category} onChange={(e) => set("category", e.target.value)}>
             {FIQH_COUNCIL_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
         </Field>
-        <Field label="الملخص"><textarea style={textareaSt} value={form.summary || ""} onChange={(e) => set("summary", e.target.value)} rows={2} /></Field>
-        <Field label="المحتوى"><textarea style={textareaSt} value={form.content || ""} onChange={(e) => set("content", e.target.value)} rows={5} /></Field>
-        <Field label="نص الحكم / الفتوى"><textarea style={textareaSt} value={form.ruling_text || ""} onChange={(e) => set("ruling_text", e.target.value)} rows={3} /></Field>
-        <Field label="الأدلة (نوع|نص|مصدر — سطر لكل دليل)">
-          <textarea style={textareaSt} value={form.evidence || ""} onChange={(e) => set("evidence", e.target.value)} rows={3} placeholder="قرآن|يَا أَيُّهَا..." />
+        <Field label="الملخص"><textarea className="adm-textarea" value={form.summary || ""} onChange={(e) => set("summary", e.target.value)} rows={2} /></Field>
+        <Field label="المحتوى"><textarea className="adm-textarea" value={form.content || ""} onChange={(e) => set("content", e.target.value)} rows={5} /></Field>
+        <Field label="نص الحكم / الفتوى"><textarea className="adm-textarea" value={form.ruling_text || ""} onChange={(e) => set("ruling_text", e.target.value)} rows={3} /></Field>
+        <Field label="الأدلة (نوع|نص|مصدر، سطر لكل دليل)">
+          <textarea className="adm-textarea" value={form.evidence || ""} onChange={(e) => set("evidence", e.target.value)} rows={3} placeholder="قرآن|يَا أَيُّهَا..." />
         </Field>
-        <Field label="المصدر"><input style={inputSt} value={form.source_name || ""} onChange={(e) => set("source_name", e.target.value)} /></Field>
-        <Field label="رابط المصدر"><input style={inputSt} value={form.source_url || ""} onChange={(e) => set("source_url", e.target.value)} /></Field>
-        <Field label="المجلس"><input style={inputSt} value={form.council_name || ""} onChange={(e) => set("council_name", e.target.value)} /></Field>
-        <Field label="رقم الجلسة"><input style={inputSt} value={form.session_number || ""} onChange={(e) => set("session_number", e.target.value)} /></Field>
-        <Field label="تاريخ الجلسة"><input style={inputSt} type="date" value={form.session_date || ""} onChange={(e) => set("session_date", e.target.value)} /></Field>
-        <Field label="الوسوم (مفصولة بفاصلة)"><input style={inputSt} value={form.tags || ""} onChange={(e) => set("tags", e.target.value)} /></Field>
+        <Field label="المصدر"><input className="adm-input" value={form.source_name || ""} onChange={(e) => set("source_name", e.target.value)} /></Field>
+        <Field label="رابط المصدر"><input className="adm-input" value={form.source_url || ""} onChange={(e) => set("source_url", e.target.value)} /></Field>
+        <Field label="المجلس"><input className="adm-input" value={form.council_name || ""} onChange={(e) => set("council_name", e.target.value)} /></Field>
+        <Field label="رقم الجلسة"><input className="adm-input" value={form.session_number || ""} onChange={(e) => set("session_number", e.target.value)} /></Field>
+        <Field label="تاريخ الجلسة"><input className="adm-input" type="date" value={form.session_date || ""} onChange={(e) => set("session_date", e.target.value)} /></Field>
+        <Field label="الوسوم (مفصولة بفاصلة)"><input className="adm-input" value={form.tags || ""} onChange={(e) => set("tags", e.target.value)} /></Field>
         <Field label="الحالة">
-          <select style={selectSt} value={form.status || "draft"} onChange={(e) => set("status", e.target.value)}>
+          <select className="adm-select" value={form.status || "draft"} onChange={(e) => set("status", e.target.value)}>
             {Object.entries(FIQH_ITEM_STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
           </select>
         </Field>

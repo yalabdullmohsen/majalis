@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Coffee, Pause, Target } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { ShareButtons } from "@/components/ContentActions";
 import { PageHeader } from "@/components/ui-common";
 import {
   logStudySession,
@@ -9,6 +11,8 @@ import {
   type DailyStudyStats,
   type StudySession,
 } from "@/lib/study-session-service";
+import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 // ─── Pomodoro config ──────────────────────────────────────────────────────────
 
@@ -93,6 +97,29 @@ function SessionHistory({ sessions }: { sessions: StudySession[] }) {
 
 export default function StudyRoomPage() {
   const { user, isLoggedIn } = useAuth();
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/study-room",
+      title: "غرفة المذاكرة | المجلس العلمي",
+      description: "غرفة المذاكرة الإسلامية، مؤقت بومودورو للمذاكرة وتسجيل جلسات الدراسة الشرعية.",
+      keywords: ["غرفة مذاكرة", "مذاكرة إسلامية", "بومودورو إسلامي", "جلسة دراسة", "تعلم شرعي"],
+      robots: "index, follow",
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "غرفة الدراسة — المجلس العلمي",
+          url: "https://www.majlisilm.com/study-room",
+          description: "بيئة مذاكرة مركّزة مع مؤقت Pomodoro وتتبع جلسات الدراسة الشرعية",
+          applicationCategory: "EducationalApplication",
+          operatingSystem: "Web",
+          inLanguage: "ar",
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+        },
+      ],
+    });
+  }, []);
 
   // Preset
   const [presetIdx, setPresetIdx] = useState(0);
@@ -204,13 +231,15 @@ export default function StudyRoomPage() {
       />
 
       {/* Preset selector */}
-      <div className="sr-presets">
+      <div className="sr-presets" role="tablist" aria-label="إعدادات مسبقة للجلسة">
         {PRESETS.map((p, i) => (
           <button
             key={p.label}
+            role="tab"
             type="button"
             className={`sr-preset${presetIdx === i ? " sr-preset--active" : ""}`}
             onClick={() => { setPresetIdx(i); reset(); }}
+            aria-selected={presetIdx === i}
             disabled={phase !== "idle"}
           >
             {p.label}
@@ -222,7 +251,7 @@ export default function StudyRoomPage() {
       <input
         type="text"
         className="sr-goal-input"
-        placeholder="ما هدفك لهذه الجلسة؟ (اختياري)"
+        aria-label="ما هدفك لهذه الجلسة؟ (اختياري)" placeholder="ما هدفك لهذه الجلسة؟ (اختياري)"
         value={goal}
         onChange={(e) => setGoal(e.target.value)}
         disabled={phase !== "idle"}
@@ -242,7 +271,7 @@ export default function StudyRoomPage() {
         </svg>
         <div className="sr-timer__content">
           <span className="sr-timer__phase">
-            {phase === "work" ? "🎯 تركيز" : phase === "rest" ? "☕ راحة" : "⏸ جاهز"}
+            {phase === "work" ? <><Target size={14} strokeWidth={2} aria-hidden="true" /> تركيز</> : phase === "rest" ? <><Coffee size={14} strokeWidth={2} aria-hidden="true" /> راحة</> : <><Pause size={14} strokeWidth={2} aria-hidden="true" /> جاهز</>}
           </span>
           <span className="sr-timer__time">{formatTime(secondsLeft)}</span>
         </div>
@@ -257,7 +286,7 @@ export default function StudyRoomPage() {
         ) : (
           <>
             <button type="button" className="sr-btn sr-btn--pause" onClick={pause}>
-              ⏸ إيقاف
+              <Pause size={14} strokeWidth={2} aria-hidden="true" /> إيقاف
             </button>
             <button type="button" className="sr-btn sr-btn--reset" onClick={reset}>
               ↺ إعادة
@@ -269,7 +298,7 @@ export default function StudyRoomPage() {
       {/* Stats */}
       {isLoggedIn ? (
         loadingData ? (
-          <div className="profile-loading" style={{ margin: "2rem auto" }}>
+          <div className="profile-loading stp-loading-center">
             <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
           </div>
         ) : (
@@ -283,6 +312,13 @@ export default function StudyRoomPage() {
           <Link href="/login?next=/study-room">سجّل الدخول</Link> لحفظ جلسات دراستك وعرض إحصاءاتك.
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="غرفة الدراسة — المجلس العلمي" url="https://www.majlisilm.com/study-room" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["quran", "hadith"]} title="اختبر معلوماتك أثناء الدراسة" count={4} />
+      </div>
     </div>
   );
 }

@@ -1,5 +1,3 @@
-"use client";
-
 import dynamic from "next/dynamic";
 import type { ReactNode } from "react";
 import { AuthProvider } from "@/components/AuthProvider";
@@ -10,7 +8,7 @@ import { UserPreferencesProvider } from "@/components/UserPreferencesProvider";
 
 const NavBar = dynamic(() => import("@/components/NavBar"), {
   ssr: false,
-  loading: () => <header className="navbar-v3" style={{ minHeight: "4rem" }} aria-hidden="true" />,
+  loading: () => <header className="navbar-v3 navbar-v3-placeholder" aria-hidden="true" />,
 });
 
 const AssistantFloatingWidget = dynamic(
@@ -24,7 +22,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <FontPreferenceProvider>
         <UserPreferencesProvider>
           <AuthProvider>
-          <div className="app-shell" style={{ minHeight: "100vh", direction: "rtl" }}>
+          <div className="app-shell">
             <a href="#main-content" className="skip-link">
               تخطّي إلى المحتوى
             </a>

@@ -1,36 +1,5 @@
 export type PlatformContentStatus = "draft" | "pending" | "approved" | "archived" | "rejected";
 
-export type FiqhDecisionType = "قرار" | "بحث" | "توصية" | "بيان" | "فتوى جماعية";
-
-export type FiqhCategory =
-  | "العبادات"
-  | "المعاملات"
-  | "الأسرة"
-  | "الطب"
-  | "الاقتصاد"
-  | "قضايا معاصرة"
-  | "الأقليات المسلمة";
-
-export type FiqhDecision = {
-  id: string;
-  external_key?: string;
-  title: string;
-  summary?: string;
-  body?: string;
-  decision_type: FiqhDecisionType;
-  category: FiqhCategory;
-  session_number?: string;
-  decision_date?: string;
-  source_urls?: string[];
-  references?: EvidenceRef[];
-  keywords?: string[];
-  status?: PlatformContentStatus;
-  view_count?: number;
-  search_count?: number;
-  created_at?: string;
-  updated_at?: string;
-};
-
 export type FatwaFormat = "written" | "audio" | "both";
 
 export type Fatwa = {
@@ -53,20 +22,35 @@ export type Fatwa = {
   updated_at?: string;
 };
 
+// اكتُشف بالفحص المباشر 2026-07-18: هذا النوع كان يعكس تصنيفاً قديماً
+// (13 قيمة) لا يطابق RULINGS_CATEGORY_TREE الحالية في rulings-categories.ts
+// (20 قيمة، المصدر الفعلي المُستهلَك في RulingsPage.tsx الحية) — ما سبَّب
+// اختفاء 19 حكماً شرعياً صامتاً من فلاتر الصفحة الحية رغم صحة بياناتها
+// (كانت مُصنَّفة "الحج"/"المواريث"/"النوازل" القديمة بدل "الحج والعمرة"/
+// "المواريث والوصايا"/"النوازل المعاصرة" الحالية). حُدِّث النوع ليطابق
+// التصنيف الحالي حرفياً بدل القديم — راجع RULINGS_CATEGORY_TREE للمصدر
+// الأصلي إن لزم توسيع مستقبلي.
 export type RulingCategory =
-  | "العبادات"
+  | "العقيدة"
   | "الطهارة"
   | "الصلاة"
   | "الزكاة"
   | "الصيام"
-  | "الحج"
-  | "الأسرة"
-  | "البيوت"
+  | "الحج والعمرة"
   | "المعاملات"
-  | "القضاء"
-  | "المواريث"
-  | "النوازل"
-  | "السياسة الشرعية";
+  | "الأطعمة والأشربة"
+  | "اللباس والزينة"
+  | "الأسرة"
+  | "المواريث والوصايا"
+  | "القضاء والحدود"
+  | "الأيمان والنذور"
+  | "الجهاد والسياسة الشرعية"
+  | "الأخلاق والآداب"
+  | "الأذكار والدعاء"
+  | "القرآن والحديث"
+  | "طلب العلم والدعوة"
+  | "النوازل المعاصرة"
+  | "الجنائز";
 
 export type ShariaRuling = {
   id: string;
@@ -145,24 +129,6 @@ export type EvidenceRef = {
   url?: string;
 };
 
-export const FIQH_CATEGORIES: FiqhCategory[] = [
-  "العبادات",
-  "المعاملات",
-  "الأسرة",
-  "الطب",
-  "الاقتصاد",
-  "قضايا معاصرة",
-  "الأقليات المسلمة",
-];
-
-export const FIQH_DECISION_TYPES: FiqhDecisionType[] = [
-  "قرار",
-  "بحث",
-  "توصية",
-  "بيان",
-  "فتوى جماعية",
-];
-
 export const FATWA_CATEGORIES = [
   "العبادات",
   "الطهارة",
@@ -180,19 +146,26 @@ export const FATWA_CATEGORIES = [
 ] as const;
 
 export const RULING_CATEGORIES: RulingCategory[] = [
-  "العبادات",
+  "العقيدة",
   "الطهارة",
   "الصلاة",
   "الزكاة",
   "الصيام",
-  "الحج",
-  "الأسرة",
-  "البيوت",
+  "الحج والعمرة",
   "المعاملات",
-  "القضاء",
-  "المواريث",
-  "النوازل",
-  "السياسة الشرعية",
+  "الأطعمة والأشربة",
+  "اللباس والزينة",
+  "الأسرة",
+  "المواريث والوصايا",
+  "القضاء والحدود",
+  "الأيمان والنذور",
+  "الجهاد والسياسة الشرعية",
+  "الأخلاق والآداب",
+  "الأذكار والدعاء",
+  "القرآن والحديث",
+  "طلب العلم والدعوة",
+  "النوازل المعاصرة",
+  "الجنائز",
 ];
 
 export const COURSE_TYPES: CourseType[] = ["سنوية", "موسمية", "برنامج", "متن"];

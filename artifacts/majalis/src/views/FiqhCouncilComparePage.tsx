@@ -1,8 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useSearch } from "wouter";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
+import { ShareButtons } from "@/components/ContentActions";
 import { compareFiqhItems, getFiqhCouncilItems, getFiqhCouncilItemsBySlugs } from "@/lib/fiqh-council-service";
+import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   fiqhCompareHref,
   fiqhItemHref,
@@ -27,7 +30,7 @@ function CompareColumn({ item }: { item: FiqhCouncilItem }) {
           <strong>الأدلة</strong>
           <ul>
             {item.evidence.map((e, i) => (
-              <li key={i}>{e.type && `${e.type}: `}{e.text}{e.source && ` — ${e.source}`}</li>
+              <li key={i}>{e.type && `${e.type}: `}{e.text}{e.source && `، ${e.source}`}</li>
             ))}
           </ul>
         </div>
@@ -63,6 +66,16 @@ export default function FiqhCouncilComparePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    applyPageSeo({
+      path: "/fiqh-council/compare",
+      title: "مقارنة قرارات المجمع الفقهي | المجلس العلمي",
+      description: "قارن بين قرارات وفتاوى مجلس الفقه الإسلامي جنباً إلى جنب، أداة تحليلية للباحثين والدارسين.",
+      keywords: ["مقارنة فقهية", "قرارات فقهية", "مجمع فقهي", "تحليل فقهي", "مقارنة الفتاوى"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "مقارنة قرارات المجمع الفقهي", url: "https://www.majlisilm.com/fiqh-council/compare", about: { "@type": "Thing", name: "تحليل ومقارنة الفتاوى الفقهية" } }],
+    });
+  }, []);
+
+  useEffect(() => {
     getFiqhCouncilItems({ limit: 40 }).then(({ data }) => setCatalog(data));
   }, []);
 
@@ -93,7 +106,7 @@ export default function FiqhCouncilComparePage() {
       <PageHeader
         eyebrow="أداة الباحث"
         title="مقارنة القرارات الفقهية"
-        subtitle="قارِن بين قرارين أو أكثر — المصدر، التاريخ، الأدلة، ونقاط الاتفاق والاختلاف."
+        subtitle="قارِن بين قرارين أو أكثر: المصدر، التاريخ، الأدلة، ونقاط الاتفاق والاختلاف."
       />
 
       <FiqhCouncilSubnav />
@@ -119,7 +132,7 @@ export default function FiqhCouncilComparePage() {
         )}
       </section>
 
-      {loading ? <Loading /> : selectedSlugs.length < 2 ? (
+      {loading ? <SkeletonCardGrid /> : selectedSlugs.length < 2 ? (
         <Empty text="اختر قرارين على الأقل للمقارنة." />
       ) : items.length < 2 ? (
         <Empty text="تعذّر تحميل العناصر المحددة." />
@@ -149,6 +162,13 @@ export default function FiqhCouncilComparePage() {
           </div>
         </>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="مقارنة مواد المجمع الفقهي — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/compare" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
+      </div>
     </div>
   );
 }

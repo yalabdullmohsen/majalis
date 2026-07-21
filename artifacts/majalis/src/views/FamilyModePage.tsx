@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import { Award, Baby, BookOpen, Bookmark, CheckCircle2, Lock, PartyPopper, User, Users } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/ui-common";
 import { supabase } from "@/lib/supabase";
+import { applyPageSeo } from "@/lib/seo";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -52,39 +54,53 @@ function ParentView({ userId }: { userId: string }) {
     const rows = (data ?? []) as FamilyLink[];
     setLinks(rows);
 
-    // Fetch stats for active links
+    // Fetch stats for active links — ٣ استعلامات مجمّعة إجمالًا بدل ٣ لكل ابن (N+1)
     const active = rows.filter((l) => l.status === "active" && l.child_id);
-    const stats = await Promise.all(
-      active.map(async (link) => {
-        const [lessonsRes, bookmarksRes, badgesRes] = await Promise.all([
-          supabase
-            .from("lesson_registrations")
-            .select("id", { count: "exact", head: true })
-            .eq("user_id", link.child_id!)
-            .eq("status", "completed"),
-          supabase
-            .from("bookmarks")
-            .select("id", { count: "exact", head: true })
-            .eq("user_id", link.child_id!),
-          supabase
-            .from("achievements")
-            .select("id", { count: "exact", head: true })
-            .eq("user_id", link.child_id!),
-        ]);
-        return {
-          child_id: link.child_id!,
-          invite_code: link.invite_code,
-          completedLessons: lessonsRes.count ?? 0,
-          savedItems: bookmarksRes.count ?? 0,
-          badgesCount: badgesRes.count ?? 0,
-        } as ChildStats;
-      }),
+    const childIds = [...new Set(active.map((l) => l.child_id!))];
+
+    if (childIds.length === 0) {
+      setChildStats([]);
+      setLoading(false);
+      return;
+    }
+
+    const [lessonsRes, bookmarksRes, badgesRes] = await Promise.all([
+      supabase
+        .from("lesson_registrations")
+        .select("user_id")
+        .in("user_id", childIds)
+        .eq("status", "completed"),
+      supabase.from("bookmarks").select("user_id").in("user_id", childIds),
+      supabase.from("achievements").select("user_id").in("user_id", childIds),
+    ]);
+
+    const tally = (res: { data: { user_id: string }[] | null }) => {
+      const map = new Map<string, number>();
+      for (const row of res.data ?? []) {
+        map.set(row.user_id, (map.get(row.user_id) ?? 0) + 1);
+      }
+      return map;
+    };
+
+    const lessonCounts = tally(lessonsRes as any);
+    const bookmarkCounts = tally(bookmarksRes as any);
+    const badgeCounts = tally(badgesRes as any);
+
+    setChildStats(
+      active.map((link) => ({
+        child_id: link.child_id!,
+        invite_code: link.invite_code,
+        completedLessons: lessonCounts.get(link.child_id!) ?? 0,
+        savedItems: bookmarkCounts.get(link.child_id!) ?? 0,
+        badgesCount: badgeCounts.get(link.child_id!) ?? 0,
+      })),
     );
-    setChildStats(stats);
     setLoading(false);
   };
 
-  useEffect(() => { loadLinks(); }, [userId]);
+  useEffect(() => {
+    loadLinks().catch(() => setLoading(false));
+  }, [userId]);
 
   const createInvite = async () => {
     setCreating(true);
@@ -116,7 +132,7 @@ function ParentView({ userId }: { userId: string }) {
 
   if (loading) {
     return (
-      <div className="profile-loading" style={{ margin: "3rem auto" }}>
+      <div className="profile-loading fm-loading-wrap">
         <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
       </div>
     );
@@ -170,13 +186,13 @@ function ParentView({ userId }: { userId: string }) {
       {/* Active children */}
       {childStats.map((child) => (
         <div key={child.child_id} className="fm-child-card">
-          <div className="fm-child-card__avatar">👤</div>
+          <div className="fm-child-card__avatar" aria-hidden="true"><User size={22} strokeWidth={1.5} /></div>
           <div className="fm-child-card__info">
             <span className="fm-child-card__name">ابن ({child.invite_code})</span>
             <div className="fm-child-card__stats">
-              <span>📖 {child.completedLessons} درس</span>
-              <span>🔖 {child.savedItems} محفوظ</span>
-              <span>🏅 {child.badgesCount} شارة</span>
+              <span><BookOpen size={12} strokeWidth={1.8} aria-hidden="true" /> {child.completedLessons} درس</span>
+              <span><Bookmark size={12} strokeWidth={1.8} aria-hidden="true" /> {child.savedItems} محفوظ</span>
+              <span><Award size={12} strokeWidth={1.8} aria-hidden="true" /> {child.badgesCount} شارة</span>
             </div>
           </div>
           <button
@@ -244,7 +260,7 @@ function ChildView({ userId }: { userId: string }) {
   if (existingLink) {
     return (
       <div className="fm-joined">
-        <div style={{ fontSize: "3rem" }}>✅</div>
+        <div className="fm-joined__icon" aria-hidden="true"><CheckCircle2 size={36} strokeWidth={1.4} /></div>
         <p>أنت مرتبط بحساب ولي الأمر. يمكنه متابعة إنجازاتك.</p>
       </div>
     );
@@ -253,7 +269,7 @@ function ChildView({ userId }: { userId: string }) {
   if (joined) {
     return (
       <div className="fm-joined">
-        <div style={{ fontSize: "3rem" }}>🎉</div>
+        <div className="fm-joined__icon" aria-hidden="true"><PartyPopper size={36} strokeWidth={1.4} /></div>
         <p>تم الانضمام بنجاح! يمكن لولي أمرك الآن متابعة تقدمك.</p>
       </div>
     );
@@ -267,7 +283,7 @@ function ChildView({ userId }: { userId: string }) {
         <input
           type="text"
           className="fm-code-input"
-          placeholder="XXXXXX"
+          aria-label="ABC123" placeholder="ABC123"
           value={code}
           onChange={(e) => setCode(e.target.value.toUpperCase().slice(0, 6))}
           maxLength={6}
@@ -293,6 +309,16 @@ export default function FamilyModePage() {
   const { user, isLoggedIn, loading: authLoading } = useAuth();
   const [role, setRole] = useState<"parent" | "child" | null>(null);
 
+  useEffect(() => {
+    applyPageSeo({
+      path: "/family",
+      title: "الوضع العائلي | المجلس العلمي",
+      description: "إدارة التعلم العائلي، خصص المحتوى لكل فرد في العائلة وتابع التقدم في التعلم الشرعي.",
+      keywords: ["وضع عائلي", "تعلم العائلة", "تعليم أطفال", "الأسرة المسلمة"],
+      robots: "noindex, follow",
+    });
+  }, []);
+
   if (authLoading) {
     return (
       <div className="page-shell narrow" dir="rtl">
@@ -305,9 +331,9 @@ export default function FamilyModePage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="page-shell narrow" dir="rtl" style={{ textAlign: "center", paddingTop: "3rem" }}>
-        <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🔐</div>
-        <p style={{ color: "var(--majalis-ink-soft)", marginBottom: "1rem" }}>
+      <div className="page-shell narrow fm-login-prompt" dir="rtl">
+        <div className="fm-login-icon" aria-hidden="true"><Lock size={40} strokeWidth={1.3} /></div>
+        <p className="fm-login-msg">
           سجّل الدخول للوصول إلى الوضع العائلي.
         </p>
         <Link href="/login?next=/family" className="ui-card-btn">تسجيل الدخول</Link>
@@ -319,8 +345,8 @@ export default function FamilyModePage() {
     <div className="page-shell narrow fm-page" dir="rtl">
       <PageHeader
         eyebrow="المجتمع"
-        title="👨‍👩‍👧 الوضع العائلي"
-        subtitle="ولي الأمر يتابع تقدم أبنائه في طلب العلم — روابط آمنة بدون مشاركة كلمة المرور."
+        title="الوضع العائلي"
+        subtitle="ولي الأمر يتابع تقدم أبنائه في طلب العلم، روابط آمنة بدون مشاركة كلمة المرور."
       />
 
       {!role && (
@@ -330,7 +356,7 @@ export default function FamilyModePage() {
             className="fm-role-btn"
             onClick={() => setRole("parent")}
           >
-            <span className="fm-role-btn__icon">👨‍👧</span>
+            <span className="fm-role-btn__icon"><Users size={28} strokeWidth={1.4} /></span>
             <span className="fm-role-btn__label">أنا ولي الأمر</span>
             <span className="fm-role-btn__sub">أتابع إنجازات أبنائي</span>
           </button>
@@ -339,7 +365,7 @@ export default function FamilyModePage() {
             className="fm-role-btn"
             onClick={() => setRole("child")}
           >
-            <span className="fm-role-btn__icon">🧒</span>
+            <span className="fm-role-btn__icon"><Baby size={28} strokeWidth={1.4} /></span>
             <span className="fm-role-btn__label">أنا الابن/البنت</span>
             <span className="fm-role-btn__sub">أدخل رمز ولي أمري</span>
           </button>
@@ -352,8 +378,7 @@ export default function FamilyModePage() {
       {role && (
         <button
           type="button"
-          className="fm-btn"
-          style={{ marginTop: "1.5rem" }}
+          className="fm-btn fm-btn--back"
           onClick={() => setRole(null)}
         >
           ← رجوع

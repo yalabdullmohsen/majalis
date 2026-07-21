@@ -9,6 +9,9 @@ import { decodeBase64Image, uploadLessonPoster, validateImageUpload } from "./im
 import { hashImageBuffer } from "./lesson-duplicate-detector.mjs";
 import { findIntelligenceDuplicate } from "./lesson-intelligence/dedup-engine.mjs";
 import { importFromUrl } from "./url-importer.mjs";
+import { classifyInstagramPost } from "./instagram-content-classifier.mjs";
+import { upsertUnifiedContentItem } from "./instagram-multitype-sync.mjs";
+import { getSupabaseAdmin } from "../supabase-admin.mjs";
 
 export async function processInstagramManualAssist({
   sourceId,
@@ -18,6 +21,7 @@ export async function processInstagramManualAssist({
   postUrl,
   imageUrl,
   caption,
+  contentType = null,
   runId = null,
   userId = null,
 }) {
@@ -105,6 +109,26 @@ export async function processInstagramManualAssist({
 
   if (!item.imageUrl && !item.description) {
     return { ok: false, error: "missing_media_or_caption" };
+  }
+
+  const allowedTypes = source.content_types_allowed || ["lesson"];
+  const resolvedType = contentType && allowedTypes.includes(contentType)
+    ? contentType
+    : classifyInstagramPost({ caption: item.description || item.title || "" });
+
+  if (resolvedType !== "lesson" && allowedTypes.includes(resolvedType)) {
+    const supabase = getSupabaseAdmin();
+    if (!supabase) return { ok: false, error: "supabase_admin_missing" };
+    const result = await upsertUnifiedContentItem(supabase, { source, item, contentType: resolvedType });
+    await logAutomationStep({
+      runId,
+      sourceId,
+      step: result.action === "imported" ? "draft_created" : result.action === "skipped" ? "duplicate_detected" : "fetch_failed",
+      status: result.action === "failed" ? "error" : "ok",
+      detail: `manual_assist_${resolvedType}`,
+      metadata: { userId, contentId: result.id || null },
+    });
+    return { ok: result.action !== "failed", mode, outcome: { decision: result.action, contentType: resolvedType, contentId: result.id || null } };
   }
 
   const outcome = await processAutomationItem({

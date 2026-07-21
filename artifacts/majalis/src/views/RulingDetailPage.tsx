@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Loading, Empty } from "@/components/ui-common";
+import { SkeletonPage, Empty } from "@/components/ui-common";
 import { ContentDetailLayout, RelatedLinks } from "@/components/platform/ContentDetailLayout";
 import { RulingDetailSections } from "@/components/rulings/RulingDetailSections";
 import { getRulingById, getRelatedRulingsEncyclopedia } from "@/lib/rulings-service";
@@ -8,6 +8,7 @@ import type { ShariaRulingExtended } from "@/lib/rulings-types";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
+import { ScholarlyTrustBadge, type TrustData } from "@/components/ScholarlyTrustBadge";
 
 export default function RulingDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<ShariaRulingExtended | null>(null);
@@ -30,11 +31,21 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
   usePageView("rulings", params.id);
 
   useEffect(() => {
-    if (!item) return;
+    if (loading) return;
+    if (!item) {
+      applyPageSeo({
+        path: `/rulings/${params.id}`,
+        title: "الحكم غير موجود | المجلس العلمي",
+        description: "لم يُعثر على هذا الحكم الشرعي.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     const path = `/rulings/${item.id}`;
     applyPageSeo({
       path,
-      title: `${item.title} | موسوعة الأحكام — المجلس العلمي`,
+      title: `${item.title} | موسوعة الأحكام، المجلس العلمي`,
       description: item.summary || item.body?.slice(0, 160) || item.title,
       keywords: [...(item.keywords || []), item.category, item.subcategory || "", "أحكام شرعية", "فقه"],
       ogType: "article",
@@ -54,13 +65,37 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
         ]),
       ],
     });
-  }, [item]);
+  }, [item, loading, params.id]);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonPage />;
   if (!item) return <Empty text="الحكم غير موجود." />;
 
   const copyText = [item.title, item.summary, item.body].filter(Boolean).join("\n\n");
   const relations = buildRulingRelations(item);
+
+  // حقول الحوكمة قد لا تكون في النوع بعد — تُقرأ من البيانات كما هي، ولا تُخترع.
+  const meta = item as typeof item & {
+    reviewed_by?: string | null;
+    reviewed_at?: string | null;
+    content_type?: string | null;
+    provenance?: string | null;
+    source_url?: string | null;
+  };
+
+  const trustData: TrustData = {
+    source:      item.source_origin || null,
+    sourceUrl:   meta.source_url    || null,
+    hadithGrade: item.hadith_grade  || null,
+    verifiedBy:  meta.reviewed_by   || null,
+    reviewedAt:  meta.reviewed_at   || null,
+    isApproved:  item.verification_status === "approved" ? true : false,
+    provenance:  meta.provenance    || null,
+    publishedAt: item.published_at  || item.created_at || null,
+    updatedAt:   item.updated_at    || null,
+    // لا نوع مخترع: يأتي من البيانات أو لا يُعرض.
+    contentType: meta.content_type  || null,
+    hasKhilaf:   !!(item.scholar_opinions && item.scholar_opinions.length > 1),
+  };
 
   return (
     <ContentDetailLayout
@@ -76,6 +111,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
       tags={item.keywords}
       body={item.body}
       copyText={copyText}
+      adminEdit={{ contentType: "ruling", contentId: item.id, initialData: { title: item.title, category: item.category, subcategory: item.subcategory, content: item.body, evidence: item.evidence } }}
       related={
         <RelatedLinks
           items={related.map((r) => ({
@@ -87,6 +123,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
       }
     >
       <RulingDetailSections ruling={item} relations={relations} />
+      <ScholarlyTrustBadge data={trustData} />
     </ContentDetailLayout>
   );
 }

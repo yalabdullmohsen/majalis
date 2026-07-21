@@ -101,6 +101,23 @@ export type AutoImportedContent = {
   published_at?: string;
   created_at: string;
   updated_at: string;
+  // حقول أتمتة Instagram متعددة الأنواع (دورات/فعاليات/فوائد/إعلانات)
+  source_account?: string;
+  source_post_id?: string;
+  source_published_at?: string;
+  attribution_name?: string;
+  organization_name?: string;
+  image_url?: string;
+  media_type?: "image" | "video" | "carousel" | string;
+  registration_url?: string;
+  event_start_at?: string;
+  event_end_at?: string;
+  expires_at?: string;
+  review_status?: string;
+  content_hash?: string;
+  last_displayed_at?: string;
+  display_count?: number;
+  pinned?: boolean;
 };
 
 export type TrustedSource = {

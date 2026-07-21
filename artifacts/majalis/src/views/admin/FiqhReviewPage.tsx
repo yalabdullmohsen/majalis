@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { FiqhAdminSubnav } from "@/components/fiqh-council/FiqhAdminSubnav";
 import { FiqhCompletionBarFromItem } from "@/components/fiqh-council/FiqhCompletionBar";
 import {
@@ -24,7 +24,6 @@ import {
   fiqhItemHref,
   type FiqhCouncilItem,
 } from "@/lib/fiqh-council-types";
-import { C } from "@/lib/theme";
 
 const QUEUE_LABELS: Record<FiqhReviewQueueKind, string> = {
   needs_review: "بانتظار المراجعة",
@@ -118,14 +117,14 @@ function ReviewContent() {
     }
   };
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonCardGrid count={6} />;
 
   return (
     <div className="fiqh-admin-page">
       <FiqhAdminSubnav active="/admin/fiqh-review" />
       <header className="fiqh-admin-page-header">
         <h1>المراجعة العلمية</h1>
-        <p>مراجعة المواد قبل النشر — لا تُعرض للعامة إلا بعد التحقق والاعتماد.</p>
+        <p>مراجعة المواد قبل النشر، لا تُعرض للعامة إلا بعد التحقق والاعتماد.</p>
       </header>
 
       <div className="fiqh-review-filters">
@@ -143,7 +142,7 @@ function ReviewContent() {
       </div>
 
       {filtered.length === 0 ? (
-        <p style={{ color: C.inkSoft }}>لا توجد مواد في هذه القائمة.</p>
+        <p className="adm-empty-msg">لا توجد مواد في هذه القائمة.</p>
       ) : (
         <div className="fiqh-review-list">
           {filtered.map((item) => {
@@ -189,7 +188,7 @@ function ReviewContent() {
                     <a href={item.source_url} target="_blank" rel="noopener noreferrer">فتح المصدر</a>
                   )}
                   {item.status === "published" && verification.canPublish && (
-                    <Link href={fiqhItemHref(item.slug)} target="_blank">معاينة عامة</Link>
+                    <Link href={fiqhItemHref(item.slug)} target="_blank" rel="noopener noreferrer">معاينة عامة</Link>
                   )}
                 </div>
               </article>

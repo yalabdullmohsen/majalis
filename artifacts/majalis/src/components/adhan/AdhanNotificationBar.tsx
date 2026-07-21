@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { X, Volume2 } from "lucide-react";
 import { ADHAN_EVENT_NAME, type AdhanEvent } from "@/lib/adhan-scheduler";
 import { stopAdhan } from "@/lib/adhan-audio";
 
@@ -16,7 +17,6 @@ export function AdhanNotificationBar() {
       const detail = (e as CustomEvent<AdhanEvent>).detail;
       const id = ++counter.current;
       setEvents((prev) => [...prev, { ...detail, id }]);
-      // Auto-dismiss after 60s
       const t = setTimeout(() => { dismiss(id); timersRef.current.delete(id); }, 60_000);
       timersRef.current.set(id, t);
     };
@@ -35,18 +35,7 @@ export function AdhanNotificationBar() {
   if (events.length === 0) return null;
 
   return (
-    <div style={{
-      position: "fixed",
-      top: "4.5rem",
-      left: "50%",
-      transform: "translateX(-50%)",
-      zIndex: 2000,
-      display: "flex",
-      flexDirection: "column",
-      gap: "0.5rem",
-      width: "min(92vw, 420px)",
-      direction: "rtl",
-    }}>
+    <div className="anb-stack" role="region" aria-label="إشعارات الصلاة" aria-live="polite">
       {events.map((ev) => (
         <AdhanToast key={ev.id} event={ev} onDismiss={() => dismiss(ev.id)} />
       ))}
@@ -64,66 +53,48 @@ function AdhanToast({ event, onDismiss }: { event: ActiveEvent; onDismiss: () =>
   }
 
   return (
-    <div style={{
-      background: isAdhan ? "linear-gradient(135deg, #134a3a, #0c3020)" : "#1d4ed8",
-      color: "#fff",
-      borderRadius: "0.875rem",
-      padding: "0.875rem 1rem",
-      boxShadow: "0 8px 32px rgba(0,0,0,0.35)",
-      display: "flex",
-      alignItems: "center",
-      gap: "0.75rem",
-      animation: "adhan-slide-in 0.35s cubic-bezier(0.34,1.56,0.64,1)",
-    }}>
-      <span style={{ fontSize: "1.5rem", flexShrink: 0 }}>
+    <div
+      className={`anb-toast${isAdhan ? " anb-toast--adhan" : " anb-toast--reminder"}`}
+      role="alert"
+    >
+      <span className="anb-toast__emoji" aria-hidden="true">
         {isAdhan ? "🕌" : "⏰"}
       </span>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontWeight: 700, fontSize: "0.95rem", marginBottom: "0.15rem" }}>
-          {isAdhan ? `حان وقت ${event.prayerName}` : `تنبيه: ${event.prayerName}`}
-        </div>
-        <div style={{ fontSize: "0.78rem", opacity: 0.85 }}>
+
+      <div className="anb-toast__body">
+        <p className="anb-toast__title">
+          {isAdhan ? `حان وقت صلاة ${event.prayerName}` : `قريباً: ${event.prayerName}`}
+        </p>
+        <p className="anb-toast__sub">
           {isAdhan
-            ? "حان وقت الصلاة؛ يرجى ضبط الهاتف على الوضع الصامت وعدم إشغال المصلين."
-            : `اقترب وقت الصلاة (${event.minutesBefore} د)، تذكّر ضبط هاتفك على الوضع الصامت احترامًا للمصلين.`}
-        </div>
+            ? "حيَّ على الصلاة • حيَّ على الفلاح"
+            : `موعد الصلاة بعد ${event.minutesBefore} دقيقة`}
+        </p>
       </div>
-      <div style={{ display: "flex", gap: "0.35rem", flexShrink: 0 }}>
+
+      <div className="anb-toast__actions">
         {isAdhan && playing && (
           <button
             type="button"
             onClick={handleStop}
-            style={toastBtnStyle("#ffffff22")}
-            title="إيقاف الأذان"
+            className="anb-btn anb-btn--mute"
+            aria-label="إيقاف صوت الأذان"
           >
-            ⏹
+            <Volume2 size={15} strokeWidth={2} />
           </button>
+        )}
+        {isAdhan && !playing && (
+          <span className="anb-muted-tag" aria-label="الأذان صامت">صامت</span>
         )}
         <button
           type="button"
           onClick={onDismiss}
-          style={toastBtnStyle("#ffffff22")}
-          title="إغلاق"
+          className="anb-btn anb-btn--close"
+          aria-label="إغلاق الإشعار"
         >
-          ✕
+          <X size={15} strokeWidth={2.5} />
         </button>
       </div>
     </div>
   );
-}
-
-function toastBtnStyle(bg: string) {
-  return {
-    background: bg,
-    border: "none",
-    color: "#fff",
-    borderRadius: "0.4rem",
-    width: 30,
-    height: 30,
-    cursor: "pointer",
-    fontSize: "0.85rem",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  } as const;
 }

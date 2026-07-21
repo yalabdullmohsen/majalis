@@ -1,8 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Flame } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import { TasbeehCounter } from "@/components/reading/TasbeehCounter";
 import { setTaskProgress } from "@/lib/daily-progress";
+import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   computeStreakDays,
   computeTasbeehStats,
@@ -32,6 +36,27 @@ export default function TasbihPage() {
   const [syncNote, setSyncNote] = useState<string | null>(null);
 
   const active = items.find((item) => item.id === activeId) || items[0];
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/tasbih",
+      title: "التسبيح الرقمي | المجلس العلمي",
+      description: "عداد التسبيح الرقمي مع أوراد قابلة للتخصيص، سبّح بحمد الله واذكر الله في أي وقت مع متابعة تقدمك اليومي.",
+      keywords: ["تسبيح", "ذكر الله", "عداد تسبيح", "أوراد", "أذكار"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "عداد التسبيح الرقمي",
+          url: "https://www.majlisilm.com/tasbih",
+          description: "عداد تسبيح رقمي مع أوراد قابلة للتخصيص لذكر الله في أي وقت",
+          applicationCategory: "LifestyleApplication",
+          inLanguage: "ar",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        },
+      ],
+    });
+  }, []);
 
   useEffect(() => {
     if (!isLoggedIn) return;
@@ -107,7 +132,7 @@ export default function TasbihPage() {
       <PageHeader
         eyebrow="الأذكار"
         title="عداد التسبيح"
-        subtitle="عدّ بدون حد أقصى، اختر هدفك، واستمر حتى بعد تجاوزه — مع حفظ تلقائي."
+        subtitle="عدّ بدون حد أقصى، اختر هدفك، واستمر حتى بعد تجاوزه، مع حفظ تلقائي."
       />
 
       {/* Stats grid */}
@@ -131,7 +156,7 @@ export default function TasbihPage() {
         {aggregateStats.streak > 0 && (
           <div className="ui-card tasbih-stat tasbih-stat--streak">
             <span>التتابع</span>
-            <strong>{aggregateStats.streak} 🔥</strong>
+            <strong>{aggregateStats.streak} <Flame size={14} strokeWidth={2} aria-hidden="true" /></strong>
           </div>
         )}
       </div>
@@ -173,7 +198,7 @@ export default function TasbihPage() {
           />
           {activeStats && (
             <p className="tasbih-progress-label">
-              هذا الورد — اليوم: {activeStats.today} · الأسبوع: {activeStats.week} · الشهر: {activeStats.month}
+              هذا الورد، اليوم: {activeStats.today} · الأسبوع: {activeStats.week} · الشهر: {activeStats.month}
             </p>
           )}
           <div className="tasbih-actions-grid">
@@ -197,6 +222,7 @@ export default function TasbihPage() {
             value={newPhrase}
             onChange={(e) => setNewPhrase(e.target.value)}
             placeholder="مثال: لا حول ولا قوة إلا بالله"
+            aria-label="نص الورد"
             onKeyDown={(e) => e.key === "Enter" && addWird()}
           />
           <input
@@ -215,6 +241,13 @@ export default function TasbihPage() {
         {isLoggedIn
           ? "يُحفظ محلياً ويُزامَن مع حسابك عند التحديث."
           : "يُحفظ في هذا الجهاز. سجّل الدخول للمزامنة مع حسابك."}
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="التسبيح الرقمي — المجلس العلمي" url="https://www.majlisilm.com/tasbih" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأذكار والأخلاق" count={4} />
       </div>
     </div>
   );

@@ -187,5 +187,5 @@ CREATE POLICY "lp_streaks_own_all" ON lp_streaks FOR ALL USING (auth.uid() = use
 DROP POLICY IF EXISTS "lp_achievements_service_insert" ON lp_achievements;
 DROP POLICY IF EXISTS "lp_streaks_service_write"       ON lp_streaks;
 
-CREATE POLICY "lp_achievements_service_insert" ON lp_achievements FOR INSERT WITH CHECK (true);
-CREATE POLICY "lp_streaks_service_write"       ON lp_streaks      FOR ALL   USING (true);
+CREATE POLICY "lp_achievements_service_insert" ON lp_achievements FOR INSERT TO service_role WITH CHECK (true);
+CREATE POLICY "lp_streaks_service_write"       ON lp_streaks      FOR ALL   TO service_role USING (true);

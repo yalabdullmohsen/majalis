@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "wouter";
 import { supabase } from "@/lib/supabase";
 
 type Props = {
@@ -9,6 +10,7 @@ type Props = {
 };
 
 export function FavoriteButton({ contentType, contentId, className = "", compact = false }: Props) {
+  const [, navigate] = useLocation();
   const [bookmarked, setBookmarked] = useState(false);
   const [busy, setBusy] = useState(false);
 
@@ -36,7 +38,7 @@ export function FavoriteButton({ contentType, contentId, className = "", compact
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        alert("يرجى تسجيل الدخول أولاً");
+        navigate(`/login?next=${encodeURIComponent(window.location.pathname)}`);
         return;
       }
       if (bookmarked) {

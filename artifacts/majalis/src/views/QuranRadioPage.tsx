@@ -1,10 +1,11 @@
-"use client";
-
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { RADIO_STATIONS, LIVE_CHANNELS, saveLastRadioId } from "@/lib/quran-radio";
+import { applyPageSeo } from "@/lib/seo";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
+import { ShareButtons } from "@/components/ContentActions";
 import "@/styles/quran.css";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 const RADIO_STATE_LABELS = {
   idle: "جاهز",
@@ -16,6 +17,16 @@ const RADIO_STATE_LABELS = {
 
 export default function QuranRadioPage() {
   const radio = useRadioPlayer();
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/quran-radio",
+      title: "راديو القرآن الكريم | المجلس العلمي",
+      description: "استمع إلى القرآن الكريم عبر الإنترنت، محطات إذاعية متنوعة وبث مباشر للتلاوات القرآنية.",
+      keywords: ["راديو قرآن", "بث قرآن", "تلاوة قرآنية", "استماع قرآن", "إذاعة إسلامية"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "راديو القرآن الكريم", url: "https://www.majlisilm.com/quran-radio", about: { "@type": "Thing", name: "إذاعات وبث القرآن الكريم" } }],
+    });
+  }, []);
   useEffect(() => {
     if (radio.station) {
       saveLastRadioId(radio.station.id);
@@ -26,18 +37,18 @@ export default function QuranRadioPage() {
     <div className="page-shell qs-radio-page">
       {/* Subnav */}
       <nav className="qs-subnav" aria-label="أقسام القرآن">
-        <Link href="/quran" className="qs-subnav__link">المصحف</Link>
+        <Link href="/quran-hub" className="qs-subnav__link">مركز القرآن</Link>
         <Link href="/quran-radio" className="qs-subnav__link is-active">الإذاعة والبث</Link>
       </nav>
 
-      <div style={{ padding: "1.5rem 1rem 8rem", maxWidth: "860px", margin: "0 auto" }}>
+      <div className="qrp-content">
         {/* ── Section: Radio streams ── */}
         <section aria-labelledby="radio-heading">
-          <div className="ds-section__head" style={{ marginBottom: "1rem" }}>
+          <div className="ds-section__head qrp-section-head">
             <h1 id="radio-heading" className="ds-section__title">إذاعات القرآن الكريم</h1>
           </div>
-          <p style={{ fontSize: ".88rem", color: "var(--text-muted)", marginBottom: "1rem", direction: "rtl" }}>
-            بث مستمر لقرّاء موثوقين — المصدر: qurango.net. كل إذاعة بصوت القارئ المسمّى.
+          <p className="qrp-intro">
+            بث مستمر لقرّاء موثوقين، المصدر: qurango.net. كل إذاعة بصوت القارئ المسمّى.
           </p>
 
           <ol className="qs-radio-list" aria-label="قائمة إذاعات القرآن">
@@ -72,36 +83,21 @@ export default function QuranRadioPage() {
 
           {/* Active station controls */}
           {radio.station && (
-            <div
-              style={{
-                marginTop: "1.25rem",
-                padding: "1rem",
-                background: "var(--bg-card, #fff)",
-                border: "1px solid var(--majalis-gold, #B08D2E)",
-                borderRadius: ".75rem",
-                direction: "rtl",
-              }}
-              aria-live="polite"
-              aria-label="الإذاعة النشطة"
-            >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: ".5rem" }}>
+            <div className="qrp-now-playing" aria-live="polite" aria-label="الإذاعة النشطة">
+              <div className="qrp-now-playing__head">
                 <div>
-                  <p style={{ fontWeight: "700", marginBottom: ".15rem" }}>{radio.station.reciterName}</p>
-                  <p style={{ fontSize: ".82rem", color: "var(--text-muted)" }}>{radio.station.readingType}</p>
+                  <p className="qrp-now-playing__name">{radio.station.reciterName}</p>
+                  <p className="qrp-now-playing__type">{radio.station.readingType}</p>
                 </div>
                 <span className={`qs-radio-status${radio.radioState === "live" ? " qs-radio-status--live" : radio.radioState === "error" ? " qs-radio-status--error" : ""}`}>
                   {RADIO_STATE_LABELS[radio.radioState]}
                 </span>
               </div>
-              <div style={{ display: "flex", gap: ".5rem", marginTop: ".75rem", flexWrap: "wrap" }}>
+              <div className="qrp-now-playing__btns">
                 <button type="button" className="qs-radio-play-btn" onClick={() => radio.station && radio.toggle(radio.station)}>
                   {radio.radioState === "live" ? "إيقاف" : "تشغيل"}
                 </button>
-                <button
-                  type="button"
-                  className="qs-pb-btn"
-                  onClick={radio.reconnect}
-                >
+                <button type="button" className="qs-pb-btn" onClick={radio.reconnect}>
                   إعادة الاتصال
                 </button>
                 <button type="button" className="qs-pb-btn" onClick={radio.stop}>
@@ -118,7 +114,7 @@ export default function QuranRadioPage() {
                   value={radio.volume}
                   onChange={(e) => radio.setVolume(Number(e.target.value))}
                 />
-                <span style={{ fontSize: ".78rem", color: "var(--text-muted)" }}>{radio.volume}%</span>
+                <span className="qrp-volume-pct">{radio.volume}%</span>
               </div>
               <p className="qs-source-note">المصدر: qurango.net</p>
             </div>
@@ -127,11 +123,11 @@ export default function QuranRadioPage() {
 
         {/* ── Section: Live HLS channels ── */}
         <section className="qs-live-section" aria-labelledby="live-heading">
-          <div className="ds-section__head" style={{ marginBottom: "1rem" }}>
+          <div className="ds-section__head qrp-section-head">
             <h2 id="live-heading" className="ds-section__title">البث المباشر</h2>
           </div>
-          <p style={{ fontSize: ".88rem", color: "var(--text-muted)", marginBottom: "1rem", direction: "rtl" }}>
-            بث مباشر HLS من قنوات رسمية — افتح الرابط في مشغّل الفيديو المدمج أو انسخه لأي مشغّل خارجي.
+          <p className="qrp-intro">
+            بث مباشر HLS من قنوات رسمية، افتح الرابط في مشغّل الفيديو المدمج أو انسخه لأي مشغّل خارجي.
           </p>
 
           <div className="qs-live-cards">
@@ -139,12 +135,27 @@ export default function QuranRadioPage() {
               <div key={ch.id} className="qs-live-card">
                 <p className="qs-live-card__name">{ch.name}</p>
                 <p className="qs-live-card__desc">{ch.description}</p>
+                {ch.youtubeUrl && (
+                  <a
+                    href={ch.youtubeUrl}
+                    target="_blank" rel="noopener noreferrer"
+                    className="qs-youtube-btn"
+                    aria-label={`مشاهدة ${ch.name} على يوتيوب`}
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/>
+                    </svg>
+                    مشاهدة مباشر على يوتيوب
+                  </a>
+                )}
+                {/* لا <track> ممكن: بث مباشر (live stream) لقناة إذاعة قرآنية،
+                    بلا محتوى مسجَّل يمكن تفريغه/ترجمته مسبقًا. */}
                 <video
                   src={ch.streamUrl}
                   controls
                   preload="none"
                   playsInline
-                  style={{ width: "100%", borderRadius: ".4rem", maxHeight: "200px", background: "#000" }}
+                  className="qrp-video"
                   aria-label={ch.name}
                 />
                 <p className="qs-live-card__source">المصدر: {ch.source}</p>
@@ -152,6 +163,13 @@ export default function QuranRadioPage() {
             ))}
           </div>
         </section>
+
+        <div className="twh-share">
+          <ShareButtons title="إذاعات وقنوات القرآن الكريم — المجلس العلمي" url="https://www.majlisilm.com/quran-radio" />
+        </div>
+        <div className="px-4 pb-6 mt-4">
+          <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />
+        </div>
       </div>
     </div>
   );

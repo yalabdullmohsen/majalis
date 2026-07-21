@@ -1,5 +1,3 @@
-"use client";
-
 import QaPage from "@/views/QaPage";
 
 export default function QaPageClient({

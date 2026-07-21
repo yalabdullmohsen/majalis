@@ -52,7 +52,7 @@ export function resolveContentUrl(item) {
       return "/library";
     case "fatwa":
     case "fatwas":
-      return id ? `/fatwa/${id}` : "/fatwa";
+      return "/rulings";
     case "ruling":
     case "rulings":
       return id ? `/rulings/${id}` : "/rulings";
@@ -79,7 +79,7 @@ export function resolveContentUrl(item) {
     case "sheikhs":
       return "/lessons";
     case "quran":
-      return "/quran";
+      return "/quran-hub";
     case "hadith":
       return "/arbaeen-nawawi";
     case "article":

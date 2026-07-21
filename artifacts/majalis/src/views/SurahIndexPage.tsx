@@ -1,0 +1,205 @@
+import { useEffect, useMemo, useState } from "react";
+import { Link } from "wouter";
+import { Search, Star, BookOpen, Sparkles } from "lucide-react";
+import { applyPageSeo } from "@/lib/seo";
+import { arabicMatchAny } from "@/lib/arabic-search";
+import {
+  fetchSurahIndexLocal,
+  fetchRevelationTypes,
+  readFavoriteSurahs,
+  toggleFavoriteSurah,
+  type SurahIndexEntry,
+} from "@/lib/surah-index";
+
+type RevelationFilter = "all" | "meccan" | "medinan" | "favorites";
+/** ترتيب العرض: "mushaf" هو الافتراضي الدائم (رقم السورة في المصحف —
+ *  توقيفي، كما هو معروض في الموقع دومًا)، و"revelation" فرز زمني اختياري
+ *  إضافي بحسب ترتيب النزول (راجع /quran/revelation-order للعرض البصري
+ *  الكامل). لا يُغيَّر الافتراضي أبدًا — طلب صريح من المالك. */
+type SortMode = "mushaf" | "revelation";
+
+export default function SurahIndexPage() {
+  const [surahs, setSurahs] = useState<SurahIndexEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
+  const [revelationLoaded, setRevelationLoaded] = useState(false);
+  const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState<RevelationFilter>("all");
+  const [sortMode, setSortMode] = useState<SortMode>("mushaf"); // الافتراضي: ترتيب المصحف، لا يتغيّر
+  const [favorites, setFavorites] = useState<Set<number>>(() => new Set());
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/quran/surahs",
+      title: "فهرس السور | المجلس العلمي",
+      description: "فهرس سور القرآن الكريم الـ114 كاملة: رقم السورة واسمها وعدد آياتها وتصنيفها المكي أو المدني، مع بحث سريع ومفضلة.",
+      keywords: ["فهرس السور", "سور القرآن", "مكية ومدنية", "المصحف"],
+    });
+  }, []);
+
+  useEffect(() => {
+    setFavorites(readFavoriteSurahs());
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchSurahIndexLocal()
+      .then((list) => { if (!cancelled) setSurahs(list); })
+      .catch(() => { if (!cancelled) setLoadError(true); })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    fetchRevelationTypes().then((map) => {
+      if (cancelled || map.size === 0) return;
+      setSurahs((prev) => prev.map((s) => ({ ...s, revelationType: map.get(s.number) ?? s.revelationType })));
+      setRevelationLoaded(true);
+    });
+    return () => { cancelled = true; };
+  }, []);
+
+  const filtered = useMemo(() => {
+    let list = surahs;
+    if (filter === "favorites") list = list.filter((s) => favorites.has(s.number));
+    else if (filter === "meccan") list = list.filter((s) => s.revelationType === "Meccan");
+    else if (filter === "medinan") list = list.filter((s) => s.revelationType === "Medinan");
+
+    const term = query.trim();
+    if (term) {
+      list = list.filter((s) => arabicMatchAny([s.name, s.englishName], term) || String(s.number).startsWith(term));
+    }
+
+    if (sortMode === "revelation") {
+      list = [...list].sort((a, b) => a.revelationOrder - b.revelationOrder);
+    }
+    return list;
+  }, [surahs, filter, query, favorites, sortMode]);
+
+  function handleToggleFavorite(number: number, e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    setFavorites(toggleFavoriteSurah(number));
+  }
+
+  return (
+    <div className="surah-index-page" dir="rtl">
+      <header className="surah-index-hero">
+        <h1>فهرس السور</h1>
+        <p>١١٤ سورة — رقمها واسمها، مع بحث سريع ومفضلة وفلترة حسب التصنيف.</p>
+        <Link href="/quran/revelation-order" className="surah-index-revelation-link">
+          <Sparkles size={14} strokeWidth={1.8} aria-hidden="true" />
+          خريطة ترتيب نزول السور ←
+        </Link>
+      </header>
+
+      <div className="surah-index-controls">
+        <div className="surah-index-sort" role="tablist" aria-label="ترتيب العرض">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={sortMode === "mushaf"}
+            className={`surah-index-chip${sortMode === "mushaf" ? " is-active" : ""}`}
+            onClick={() => setSortMode("mushaf")}
+          >
+            ترتيب المصحف
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={sortMode === "revelation"}
+            className={`surah-index-chip${sortMode === "revelation" ? " is-active" : ""}`}
+            onClick={() => setSortMode("revelation")}
+          >
+            ترتيب النزول
+          </button>
+        </div>
+
+        <div className="surah-index-search">
+          <Search size={16} strokeWidth={1.8} aria-hidden="true" />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="ابحث عن سورة بالاسم أو الرقم..."
+            aria-label="ابحث عن سورة"
+          />
+        </div>
+
+        <div className="surah-index-filters" role="tablist" aria-label="فلاتر السور">
+          <button type="button" role="tab" aria-selected={filter === "all"} className={`surah-index-chip${filter === "all" ? " is-active" : ""}`} onClick={() => setFilter("all")}>الكل</button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={filter === "meccan"}
+            className={`surah-index-chip${filter === "meccan" ? " is-active" : ""}`}
+            onClick={() => setFilter("meccan")}
+            disabled={!revelationLoaded}
+            title={!revelationLoaded ? "يحتاج اتصالاً بالإنترنت لتحميل التصنيف" : undefined}
+          >
+            مكية
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={filter === "medinan"}
+            className={`surah-index-chip${filter === "medinan" ? " is-active" : ""}`}
+            onClick={() => setFilter("medinan")}
+            disabled={!revelationLoaded}
+            title={!revelationLoaded ? "يحتاج اتصالاً بالإنترنت لتحميل التصنيف" : undefined}
+          >
+            مدنية
+          </button>
+          <button type="button" role="tab" aria-selected={filter === "favorites"} className={`surah-index-chip${filter === "favorites" ? " is-active" : ""}`} onClick={() => setFilter("favorites")}>
+            <Star size={12} strokeWidth={2} aria-hidden="true" /> المفضلة
+          </button>
+        </div>
+      </div>
+
+      {loading ? (
+        <div className="surah-index-skeletons" aria-hidden="true">
+          {Array.from({ length: 8 }).map((_, i) => <div key={i} className="surah-index-skel" />)}
+        </div>
+      ) : loadError ? (
+        <div className="surah-index-empty">
+          <BookOpen size={32} strokeWidth={1} aria-hidden="true" />
+          <p>تعذّر تحميل فهرس السور. تحقّق من اتصالك وأعد المحاولة.</p>
+        </div>
+      ) : filtered.length === 0 ? (
+        <div className="surah-index-empty">
+          <BookOpen size={32} strokeWidth={1} aria-hidden="true" />
+          <p>{filter === "favorites" ? "لا سور في مفضلتك بعد." : "لا نتائج مطابقة."}</p>
+        </div>
+      ) : (
+        <ol className="surah-index-list">
+          {filtered.map((s) => (
+            <li key={s.number}>
+              <Link href={`/mushaf/${s.number}`} className="surah-index-row" title={s.description || undefined}>
+                <span className="surah-index-row__num" aria-hidden="true">
+                  {sortMode === "revelation" ? s.revelationOrder : s.number}
+                </span>
+                <span className="surah-index-row__body">
+                  <span className="surah-index-row__name" style={{ fontFamily: "var(--font-quran)" }}>{s.name}</span>
+                  {/* عدد الآيات والتصنيف (مكية/مدنية) أُخفيا من بطاقة القائمة عمدًا —
+                      اسم السورة فقط هنا؛ كل التفاصيل (عدد الآيات، التصنيف...) تبقى
+                      كاملة داخل صفحة السورة نفسها، لا حذف بيانات، فقط تبسيط بصري
+                      للقائمة. رقم المصحف عند الفرز بترتيب النزول يبقى ظاهرًا لأنه
+                      سياق تنقّل ضروري (الرقم الظاهر في الشارة حينها هو ترتيب النزول
+                      لا رقم المصحف). */}
+                  {sortMode === "revelation" && (
+                    <span className="surah-index-row__meta">سورة رقم {s.number} في المصحف</span>
+                  )}
+                </span>
+                <button
+                  type="button"
+                  className={`surah-index-row__fav${favorites.has(s.number) ? " is-active" : ""}`}
+                  onClick={(e) => handleToggleFavorite(s.number, e)}
+                  aria-label={favorites.has(s.number) ? `إزالة ${s.name} من المفضلة` : `إضافة ${s.name} إلى المفضلة`}
+                  aria-pressed={favorites.has(s.number)}
+                >
+                  <Star size={17} strokeWidth={1.8} fill={favorites.has(s.number) ? "currentColor" : "none"} aria-hidden="true" />
+                </button>
+              </Link>
+            </li>
+          ))}
+        </ol>
+      )}
+    </div>
+  );
+}

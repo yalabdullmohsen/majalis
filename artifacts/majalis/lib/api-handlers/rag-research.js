@@ -13,6 +13,8 @@
 import { sendJson } from "../api/_http.mjs";
 import { getSupabaseAdmin } from "../../lib/supabase-admin.mjs";
 import { runRAGPipeline } from "../../lib/rag/index.mjs";
+import { createClient } from "@supabase/supabase-js";
+import { safePublicError } from "../api/_security.mjs";
 
 export const maxDuration = 45;
 
@@ -28,14 +30,25 @@ async function parseBody(req) {
   try { return JSON.parse(raw || "{}"); } catch { return {}; }
 }
 
-function getUserId(req) {
+/**
+ * يتحقق من هوية المستخدم عبر Supabase Auth الحقيقي (توقيع JWT مُتحقَّق منه)
+ * بدل فك ترميز base64 غير موقَّع — يمنع تزوير Bearer token للوصول لبيانات مستخدم آخر.
+ */
+async function getUserId(req) {
   try {
     const auth = req.headers?.["authorization"] || "";
     if (!auth.startsWith("Bearer ")) return null;
-    const payload = auth.split(".")[1];
-    if (!payload) return null;
-    const decoded = JSON.parse(Buffer.from(payload, "base64url").toString());
-    return decoded?.sub || null;
+    const token = auth.slice(7).trim();
+    if (!token) return null;
+    const url = process.env.VITE_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+    const anon = process.env.VITE_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+    const client = createClient(url, anon, {
+      global: { headers: { Authorization: `Bearer ${token}` } },
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+    const { data: { user }, error } = await client.auth.getUser();
+    if (error || !user) return null;
+    return user.id;
   } catch {
     return null;
   }
@@ -58,7 +71,7 @@ async function handleSearch(req, res) {
     return sendJson(res, 400, { ok: false, error: "السؤال طويل جداً" });
   }
 
-  const userId    = getUserId(req);
+  const userId    = await getUserId(req);
   const sessionId = getSessionId(req);
   const types     = Array.isArray(body.types) ? body.types : null;
   const limit     = Math.min(Number(body.limit) || 15, 20);
@@ -79,7 +92,7 @@ async function handleSearch(req, res) {
 
 // ── /api/rag/history ─────────────────────────────────────────────────────────
 async function handleHistory(req, res) {
-  const userId = getUserId(req);
+  const userId = await getUserId(req);
   if (!userId) return sendJson(res, 401, { ok: false, error: "غير مصرح" });
 
   const admin = getSupabaseAdmin();
@@ -94,13 +107,13 @@ async function handleHistory(req, res) {
     .order("created_at", { ascending: false })
     .limit(limit);
 
-  if (error) return sendJson(res, 500, { ok: false, error: error.message });
+  if (error) return sendJson(res, 500, { ok: false, error: safePublicError(error) });
   return sendJson(res, 200, { ok: true, queries: data || [] });
 }
 
 // ── /api/rag/library/save ────────────────────────────────────────────────────
 async function handleLibrarySave(req, res) {
-  const userId = getUserId(req);
+  const userId = await getUserId(req);
   if (!userId) return sendJson(res, 401, { ok: false, error: "غير مصرح" });
 
   const body = await parseBody(req);
@@ -124,13 +137,13 @@ async function handleLibrarySave(req, res) {
     personal_notes:    String(personal_notes || "").slice(0, 2000),
   }).select("id, title, saved_at").single();
 
-  if (error) return sendJson(res, 500, { ok: false, error: error.message });
+  if (error) return sendJson(res, 500, { ok: false, error: safePublicError(error) });
   return sendJson(res, 201, { ok: true, saved: data });
 }
 
 // ── /api/rag/library (GET) ───────────────────────────────────────────────────
 async function handleLibraryList(req, res) {
-  const userId = getUserId(req);
+  const userId = await getUserId(req);
   if (!userId) return sendJson(res, 401, { ok: false, error: "غير مصرح" });
 
   const admin = getSupabaseAdmin();
@@ -150,13 +163,13 @@ async function handleLibraryList(req, res) {
   if (tag) qb = qb.contains("tags", [tag]);
 
   const { data, error } = await qb;
-  if (error) return sendJson(res, 500, { ok: false, error: error.message });
+  if (error) return sendJson(res, 500, { ok: false, error: safePublicError(error) });
   return sendJson(res, 200, { ok: true, items: data || [] });
 }
 
 // ── /api/rag/library/:id (DELETE) ───────────────────────────────────────────
 async function handleLibraryDelete(req, res, id) {
-  const userId = getUserId(req);
+  const userId = await getUserId(req);
   if (!userId) return sendJson(res, 401, { ok: false, error: "غير مصرح" });
 
   if (!id) return sendJson(res, 400, { ok: false, error: "المعرّف مطلوب" });
@@ -170,7 +183,7 @@ async function handleLibraryDelete(req, res, id) {
     .eq("id", id)
     .eq("user_id", userId);
 
-  if (error) return sendJson(res, 500, { ok: false, error: error.message });
+  if (error) return sendJson(res, 500, { ok: false, error: safePublicError(error) });
   return sendJson(res, 200, { ok: true });
 }
 

@@ -1,7 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { BookmarkCheck, BookOpen, FileText, GraduationCap, HelpCircle, Lightbulb, Lock, Pin, Scale, ScrollText } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import { PageHeader } from "@/components/ui-common";
+import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   getVaultData,
   addNote,
@@ -15,6 +21,15 @@ import {
 
 type Tab = "bookmarks" | "resume" | "notes";
 
+const VAULT_ICON_MAP: Record<string, LucideIcon> = {
+  GraduationCap, BookOpen, ScrollText, Lightbulb, Scale, HelpCircle, FileText, Pin,
+};
+function VaultIcon({ type }: { type: string }) {
+  const name = getContentTypeIcon(type);
+  const I = VAULT_ICON_MAP[name] ?? FileText;
+  return <I size={18} strokeWidth={1.5} />;
+}
+
 // ─── Add Note Modal ───────────────────────────────────────────────────────────
 
 function AddNoteModal({
@@ -26,6 +41,22 @@ function AddNoteModal({
 }) {
   const [text, setText] = useState("");
   const [saving, setSaving] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  // نُركِّز الحقل برمجيًا بدل خاصية autoFocus JSX — نفس السلوك المرغوب فعليًا
+  // (نقل التركيز لداخل الحوار عند فتحه، وهو تطبيق ARIA سليم لصناديق الحوار لا
+  // عطل وصول)، لكن jsx-a11y/no-autofocus يُحذِّر تحديدًا من الخاصية التصريحية
+  // JSX (تخطف التركيز بلا سياق واضح للمستخدم أحيانًا)؛ .focus() البرمجي هنا
+  // مقصود وواعٍ لسياق حوار مفتوح فعلاً، فلا يُخالف الفحص.
+  useEffect(() => {
+    textareaRef.current?.focus();
+  }, []);
 
   const handleSave = async () => {
     const trimmed = text.trim();
@@ -37,19 +68,21 @@ function AddNoteModal({
   };
 
   return (
-    <div className="vault-modal-backdrop" onClick={onClose}>
-      <div className="vault-modal" onClick={(e) => e.stopPropagation()}>
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
+    // مساران بديلان كاملان بلوحة المفاتيح.
+    <div className="vault-modal-backdrop" onClick={onClose} role="presentation">
+      <div className="vault-modal" role="dialog" aria-modal="true" aria-label="إضافة ملاحظة" onClick={(e) => e.stopPropagation()}>
         <div className="vault-modal__head">
           <h3 className="vault-modal__title">إضافة ملاحظة</h3>
-          <button type="button" className="vault-modal__close" onClick={onClose}>✕</button>
+          <button type="button" className="vault-modal__close" onClick={onClose} aria-label="إغلاق">✕</button>
         </div>
         <textarea
+          ref={textareaRef}
           className="vault-modal__textarea"
-          placeholder="اكتب ملاحظتك هنا…"
+          aria-label="اكتب ملاحظتك هنا…" placeholder="اكتب ملاحظتك هنا…"
           value={text}
           onChange={(e) => setText(e.target.value)}
           rows={5}
-          autoFocus
         />
         <div className="vault-modal__foot">
           <button type="button" className="vault-btn vault-btn--ghost" onClick={onClose}>إلغاء</button>
@@ -82,6 +115,14 @@ function NotesTab({
 }) {
   const [editing, setEditing] = useState<string | null>(null);
   const [editText, setEditText] = useState("");
+  const editTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  // تركيز برمجي بدل autoFocus JSX (راجع نفس الشرح في AddNoteModal أعلاه) —
+  // عنصر واحد فقط من هذا الـtextarea موجود في DOM في أي لحظة (الشرط الشرطي
+  // أدناه يعرض واحدًا فقط لكل note.id يطابق editing)، فref مشترك واحد يكفي.
+  useEffect(() => {
+    if (editing) editTextareaRef.current?.focus();
+  }, [editing]);
 
   const startEdit = (note: VaultNote) => {
     setEditing(note.id);
@@ -106,7 +147,7 @@ function NotesTab({
 
       {notes.length === 0 && (
         <div className="vault-empty">
-          <div className="vault-empty__icon">📝</div>
+          <div className="vault-empty__icon" aria-hidden="true"><FileText size={40} strokeWidth={1.3} /></div>
           <p>لا توجد ملاحظات بعد. ابدأ بتدوين أفكارك وفوائدك.</p>
         </div>
       )}
@@ -117,11 +158,12 @@ function NotesTab({
             {editing === note.id ? (
               <div className="vault-note-card__edit">
                 <textarea
+                  ref={editTextareaRef}
+                  aria-label="تعديل النص"
                   className="vault-note-card__textarea"
                   value={editText}
                   onChange={(e) => setEditText(e.target.value)}
                   rows={4}
-                  autoFocus
                 />
                 <div className="vault-note-card__edit-actions">
                   <button type="button" className="vault-btn vault-btn--sm vault-btn--primary" onClick={() => saveEdit(note)}>حفظ</button>
@@ -158,6 +200,16 @@ function NotesTab({
 export default function VaultPage() {
   const { user, isLoggedIn, loading: authLoading } = useAuth();
   const [tab, setTab] = useState<Tab>("bookmarks");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/vault",
+      title: "خزينتي الشخصية | المجلس العلمي",
+      description: "احفظ المحتوى الإسلامي المفضل، الإشارات المرجعية والملاحظات الشخصية وسجل القراءة في مكان واحد.",
+      keywords: ["خزينة", "إشارات مرجعية", "حفظ المحتوى", "ملاحظات إسلامية", "مكتبة شخصية"],
+      robots: "noindex, follow",
+    });
+  }, []);
   const [vaultData, setVaultData] = useState<VaultData>({ bookmarks: [], resume: [], notes: [] });
   const [loading, setLoading] = useState(true);
   const [showAddNote, setShowAddNote] = useState(false);
@@ -166,10 +218,10 @@ export default function VaultPage() {
   useEffect(() => {
     if (!user?.id) return;
     setLoading(true);
-    getVaultData(user.id).then((data) => {
-      setVaultData(data);
-      setLoading(false);
-    });
+    getVaultData(user.id)
+      .then((data) => setVaultData(data))
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, [user?.id]);
 
   const handleAddNote = async (text: string) => {
@@ -205,9 +257,9 @@ export default function VaultPage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="page-shell narrow" dir="rtl" style={{ textAlign: "center", paddingTop: "3rem" }}>
-        <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🔐</div>
-        <p style={{ color: "var(--majalis-ink-soft)", marginBottom: "1rem" }}>
+      <div className="page-shell narrow vault-login-prompt" dir="rtl">
+        <div className="vault-login-icon" aria-hidden="true"><Lock size={40} strokeWidth={1.3} /></div>
+        <p className="vault-login-msg">
           سجّل الدخول للوصول إلى محفظتك العلمية.
         </p>
         <Link href="/login?next=/vault" className="ui-card-btn">تسجيل الدخول</Link>
@@ -216,13 +268,13 @@ export default function VaultPage() {
   }
 
   const filteredBookmarks = vaultData.bookmarks.filter((b) =>
-    !search || (b.title ?? "").includes(search) || b.content_type.includes(search),
+    arabicMatchAny([b.title ?? "", b.content_type], search),
   );
   const filteredResume = vaultData.resume.filter((r) =>
-    !search || (r.content_title ?? "").toLowerCase().includes(search.toLowerCase()),
+    arabicMatchAny([r.content_title ?? ""], search),
   );
   const filteredNotes = vaultData.notes.filter((n) =>
-    !search || n.note_text.includes(search),
+    arabicMatchAny([n.note_text], search),
   );
 
   const tabs: { key: Tab; label: string; count: number }[] = [
@@ -235,7 +287,7 @@ export default function VaultPage() {
     <div className="page-shell narrow vault-page" dir="rtl">
       <PageHeader
         eyebrow="المعرفة"
-        title="📦 المحفظة العلمية"
+        title="المحفظة العلمية"
         subtitle="مكان موحّد لكل ما حفظته وقرأته وسجّلته في رحلتك مع العلم."
       />
 
@@ -251,18 +303,19 @@ export default function VaultPage() {
           dir="rtl"
         />
         {search && (
-          <button type="button" className="vault-search-clear" onClick={() => setSearch("")}>✕</button>
+          <button type="button" className="vault-search-clear" onClick={() => setSearch("")} aria-label="مسح البحث">✕</button>
         )}
       </div>
 
       {/* Tabs */}
-      <div className="vault-tabs" role="tablist">
+      <div className="vault-tabs" role="tablist" aria-label="تبويبات مستودع المعرفة">
         {tabs.map((t) => (
           <button
             key={t.key}
             type="button"
             role="tab"
             aria-selected={tab === t.key}
+              aria-controls={`vault-panel-${t.key}`}
             className={`vault-tab${tab === t.key ? " vault-tab--active" : ""}`}
             onClick={() => setTab(t.key)}
           >
@@ -273,23 +326,23 @@ export default function VaultPage() {
       </div>
 
       {loading ? (
-        <div className="profile-loading" style={{ margin: "3rem auto" }}>
+        <div className="profile-loading vault-loading-wrap">
           <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
         </div>
       ) : (
         <>
           {/* Bookmarks Tab */}
           {tab === "bookmarks" && (
-            <div className="vault-list">
+          <div role="tabpanel" id="vault-panel-bookmarks" aria-labelledby="vault-tab-bookmarks" className="vault-list">
               {filteredBookmarks.length === 0 && (
                 <div className="vault-empty">
-                  <div className="vault-empty__icon">🔖</div>
+                  <div className="vault-empty__icon"><BookmarkCheck size={32} strokeWidth={1.3} /></div>
                   <p>{search ? "لا نتائج للبحث." : "لا توجد محفوظات بعد. احفظ دروساً وكتباً من صفحاتها."}</p>
                 </div>
               )}
               {filteredBookmarks.map((b) => (
                 <div key={b.id} className="vault-item-card">
-                  <span className="vault-item-card__icon">{getContentTypeIcon(b.content_type)}</span>
+                  <span className="vault-item-card__icon"><VaultIcon type={b.content_type} /></span>
                   <div className="vault-item-card__body">
                     <p className="vault-item-card__title">{b.title ?? b.content_id}</p>
                     <span className="vault-item-card__type">{getContentTypeLabel(b.content_type)}</span>
@@ -304,16 +357,16 @@ export default function VaultPage() {
 
           {/* Resume Tab */}
           {tab === "resume" && (
-            <div className="vault-list">
+          <div role="tabpanel" id="vault-panel-resume" aria-labelledby="vault-tab-resume" className="vault-list">
               {filteredResume.length === 0 && (
                 <div className="vault-empty">
-                  <div className="vault-empty__icon">📖</div>
+                  <div className="vault-empty__icon" aria-hidden="true"><BookOpen size={40} strokeWidth={1.3} /></div>
                   <p>{search ? "لا نتائج للبحث." : "لا يوجد محتوى قيد القراءة. سيُسجَّل هنا كل ما تفتحه."}</p>
                 </div>
               )}
               {filteredResume.map((r) => (
                 <div key={r.id} className="vault-item-card">
-                  <span className="vault-item-card__icon">{getContentTypeIcon(r.content_type)}</span>
+                  <span className="vault-item-card__icon"><VaultIcon type={r.content_type} /></span>
                   <div className="vault-item-card__body">
                     <p className="vault-item-card__title">{r.content_title ?? r.content_id}</p>
                     <span className="vault-item-card__type">{getContentTypeLabel(r.content_type)}</span>
@@ -335,12 +388,14 @@ export default function VaultPage() {
 
           {/* Notes Tab */}
           {tab === "notes" && (
-            <NotesTab
-              notes={filteredNotes}
-              onAdd={() => setShowAddNote(true)}
-              onDelete={handleDeleteNote}
-              onEdit={handleEditNote}
-            />
+            <div role="tabpanel" id="vault-panel-notes" aria-labelledby="vault-tab-notes">
+              <NotesTab
+                notes={filteredNotes}
+                onAdd={() => setShowAddNote(true)}
+                onDelete={handleDeleteNote}
+                onEdit={handleEditNote}
+              />
+            </div>
           )}
         </>
       )}
@@ -348,6 +403,13 @@ export default function VaultPage() {
       {showAddNote && (
         <AddNoteModal onSave={handleAddNote} onClose={() => setShowAddNote(false)} />
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="مخزن المعرفة — المجلس العلمي" url="https://www.majlisilm.com/vault" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["quran", "hadith"]} title="اختبر معلوماتك أثناء مراجعة مخزنك" count={4} />
+      </div>
     </div>
   );
 }

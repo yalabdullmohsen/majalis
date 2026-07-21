@@ -1,6 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
-import { C } from "@/lib/theme";
 import { buildErrorReport, copyErrorId, createErrorId, logClientError } from "@/lib/error-report";
+import { CONTACT_EMAIL } from "@/lib/site-config";
 
 type Props = { children: ReactNode };
 type State = { error: Error | null; copied: boolean; errorId: string; componentStack: string | null };
@@ -18,6 +18,25 @@ function isChunkLoadError(error: Error): boolean {
     msg.includes("/assets/") ||
     msg.includes("importing a module script failed")
   );
+}
+
+/**
+ * حارس ضد حلقة إعادة تحميل لا نهائية: reload التلقائي أدناه يُصلح الحالة
+ * الشائعة الحقيقية (chunk قديم في تبويب مفتوح منذ قبل نشر جديد — التحديث
+ * يجلب index.html جديدًا بمراجع chunks صحيحة)، لكن لو كان الفشل من مشكلة
+ * شبكة حقيقية مستمرة لا كاش قديم فقط، سيتكرر نفس الخطأ فور التحميل من
+ * جديد إلى ما لا نهاية. مرة واحدة فقط لكل جلسة تبويب (sessionStorage) —
+ * بعدها تُعرض واجهة الخطأ العادية بأزرارها بدل إعادة تحميل صامتة متكررة.
+ */
+const CHUNK_RELOAD_GUARD_KEY = "mj-chunk-reload-attempted";
+function shouldAutoReloadForChunkError(): boolean {
+  try {
+    if (sessionStorage.getItem(CHUNK_RELOAD_GUARD_KEY) === "1") return false;
+    sessionStorage.setItem(CHUNK_RELOAD_GUARD_KEY, "1");
+    return true;
+  } catch {
+    return true; // sessionStorage غير متاح (وضع خاص صارم) — لا حارس، لكن أيضًا لا خطر تكرار عبر التخزين
+  }
 }
 
 export class ErrorBoundary extends Component<Props, State> {
@@ -39,7 +58,7 @@ export class ErrorBoundary extends Component<Props, State> {
       }),
     );
 
-    if (isChunkLoadError(error)) {
+    if (isChunkLoadError(error) && shouldAutoReloadForChunkError()) {
       window.location.reload();
     }
   }
@@ -61,7 +80,7 @@ export class ErrorBoundary extends Component<Props, State> {
     const detail = encodeURIComponent(
       `Error ID: ${this.state.errorId}\nURL: ${typeof window !== "undefined" ? window.location.href : ""}\nMessage: ${this.state.error?.message || "unknown"}`,
     );
-    window.open(`mailto:support@majlisilm.com?subject=MJL%20Error%20${this.state.errorId}&body=${detail}`, "_blank", "noopener,noreferrer");
+    window.open(`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`ملاحظة تقنية — MJL Error ${this.state.errorId}`)}&body=${detail}`, "_blank", "noopener,noreferrer");
     this.setState({ copied: true });
   };
 
@@ -71,31 +90,17 @@ export class ErrorBoundary extends Component<Props, State> {
       const chunkError = isChunkLoadError(this.state.error);
 
       return (
-        <div
-          role="alert"
-          className="error-boundary-page"
-          style={{
-            maxWidth: "40rem",
-            margin: "3rem auto",
-            padding: "2rem 1.5rem",
-            borderRadius: "0.75rem",
-            border: `1px solid ${C.line}`,
-            background: C.parchmentDeep,
-            textAlign: "center",
-          }}
-        >
-          <h1 style={{ color: C.emeraldDeep, marginBottom: "0.75rem", fontSize: "1.35rem" }}>
-            تعذر عرض هذه الصفحة
-          </h1>
-          <p style={{ color: C.inkSoft, marginBottom: "1rem", lineHeight: 1.7, fontSize: "0.95rem" }}>
+        <div role="alert" className="error-boundary-page">
+          <h1 className="error-boundary-page__title">تعذر عرض هذه الصفحة</h1>
+          <p className="error-boundary-page__body">
             {chunkError
               ? "تعذر تحميل هذه الصفحة. حدّث المتصفح أو حاول مجددًا."
               : userFacingBody()}
           </p>
-          <p style={{ color: C.inkSoft, marginBottom: "1rem", fontSize: "0.82rem" }}>
+          <p className="error-boundary-page__id">
             رقم التتبع: <code>{this.state.errorId}</code>
           </p>
-          <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+          <div className="error-boundary-page__actions">
             <button type="button" onClick={this.reset} className="error-boundary-btn error-boundary-btn--primary">
               إعادة المحاولة
             </button>
@@ -111,15 +116,13 @@ export class ErrorBoundary extends Component<Props, State> {
           </div>
 
           {this.state.copied && (
-            <p style={{ color: C.inkSoft, marginTop: "0.75rem", fontSize: "0.85rem" }}>
-              تم تجهيز تقرير الخطأ.
-            </p>
+            <p className="error-boundary-page__copied">تم تجهيز تقرير الخطأ.</p>
           )}
 
           {isDev && (
-            <details style={{ marginTop: "1.25rem", textAlign: "right", fontSize: "0.78rem", color: C.inkSoft }}>
-              <summary style={{ cursor: "pointer", fontWeight: 700 }}>تفاصيل للمطور</summary>
-              <pre style={{ overflow: "auto", marginTop: "0.5rem", whiteSpace: "pre-wrap", direction: "ltr", textAlign: "left" }}>
+            <details className="error-boundary-page__dev">
+              <summary>تفاصيل للمطور</summary>
+              <pre>
                 {`name: ${this.state.error.name}\nmessage: ${this.state.error.message}\nroute: ${typeof window !== "undefined" ? window.location.pathname : ""}\nuserAgent: ${typeof navigator !== "undefined" ? navigator.userAgent : ""}\n\ncomponentStack:${this.state.componentStack || ""}\n\nstack:\n${this.state.error.stack || ""}`}
               </pre>
             </details>

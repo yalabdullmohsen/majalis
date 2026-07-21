@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { MUEZZINS, previewAdhan, stopAdhan, type Muezzin } from "@/lib/adhan-audio";
 
-const STYLE_COLOR: Record<string, string> = {
-  "خاشع":    "#065f46",
-  "رسمي":    "#1d4ed8",
-  "تقليدي":  "#7c3aed",
-  "كلاسيكي": "#92400e",
+const STYLE_MOD: Record<string, string> = {
+  "خاشع":    "mzp-style--emerald",
+  "رسمي":    "mzp-style--blue",
+  "تقليدي":  "mzp-style--purple",
+  "كلاسيكي": "mzp-style--emerald",
 };
 
 type Props = {
@@ -22,6 +22,12 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
     stopAdhan();
     if (previewTimerRef.current) clearTimeout(previewTimerRef.current);
   }, []);
+
+  useEffect(() => {
+    const keyHandler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  }, [onClose]);
 
   function handlePreview(m: Muezzin) {
     if (previewing === m.id) {
@@ -44,116 +50,57 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
   }
 
   return (
-    <div style={{
-      position: "fixed",
-      inset: 0,
-      zIndex: 3000,
-      background: "rgba(0,0,0,0.5)",
-      display: "flex",
-      alignItems: "flex-end",
-      justifyContent: "center",
-    }} onClick={onClose}>
-      <div
-        style={{
-          background: "#fff",
-          borderRadius: "1.25rem 1.25rem 0 0",
-          width: "min(100vw, 540px)",
-          maxHeight: "82vh",
-          overflowY: "auto",
-          direction: "rtl",
-          padding: "0 0 2rem",
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Handle */}
-        <div style={{ display: "flex", justifyContent: "center", padding: "0.75rem 0 0" }}>
-          <div style={{ width: 40, height: 4, borderRadius: 999, background: "#e5e7eb" }} />
+    <div className="mzp-overlay" onClick={onClose}>
+      <div className="mzp-sheet" onClick={(e) => e.stopPropagation()}>
+        <div className="mzp-handle-row">
+          <div className="mzp-handle" />
         </div>
 
-        <div style={{ padding: "1rem 1.25rem 0.5rem" }}>
-          <h3 style={{ margin: 0, fontSize: "1.05rem", fontWeight: 700, color: "#134a3a" }}>
-            اختر المؤذن
-          </h3>
-          <p style={{ margin: "0.3rem 0 0", fontSize: "0.78rem", color: "#6b7280" }}>
-            اضغط ▶ للمعاينة • اضغط الاسم للاختيار
-          </p>
+        <div className="mzp-header">
+          <h3 className="mzp-title">اختر المؤذن</h3>
+          <p className="mzp-subtitle">اضغط ▶ للمعاينة • اضغط الاسم للاختيار</p>
         </div>
 
-        <div style={{ padding: "0.5rem 1rem" }}>
+        <div className="mzp-list">
           {MUEZZINS.map((m) => {
             const isSelected = selected === m.id;
             const isPlaying = previewing === m.id;
-            const styleColor = STYLE_COLOR[m.style] ?? "#374151";
+            const styleMod = STYLE_MOD[m.style] ?? "";
             return (
               <div
                 key={m.id}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.75rem",
-                  padding: "0.75rem 0.875rem",
-                  borderRadius: "0.75rem",
-                  marginBottom: "0.4rem",
-                  background: isSelected ? "#f0fdf4" : "#fafafa",
-                  border: `1.5px solid ${isSelected ? "#134a3a" : "#f3f4f6"}`,
-                  cursor: "pointer",
-                  transition: "border-color 0.15s, background 0.15s",
-                }}
+                className={`mzp-item${isSelected ? " mzp-item--selected" : ""}`}
                 onClick={() => handleSelect(m.id)}
+                role="button"
+                tabIndex={0}
+                aria-pressed={isSelected}
+                aria-label={`اختيار المؤذن ${m.name}`}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleSelect(m.id);
+                  }
+                }}
               >
-                {/* Selection indicator */}
-                <div style={{
-                  width: 18, height: 18,
-                  borderRadius: "50%",
-                  border: `2px solid ${isSelected ? "#134a3a" : "#d1d5db"}`,
-                  background: isSelected ? "#134a3a" : "transparent",
-                  flexShrink: 0,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                }}>
-                  {isSelected && <span style={{ color: "#fff", fontSize: "0.6rem" }}>✓</span>}
+                <div className={`mzp-radio${isSelected ? " mzp-radio--selected" : ""}`}>
+                  {isSelected && <span className="mzp-check">✓</span>}
                 </div>
 
-                {/* Info */}
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontWeight: 600, fontSize: "0.9rem", color: "#111827" }}>
-                    {m.name}
-                  </div>
-                  <div style={{ fontSize: "0.73rem", color: "#6b7280", marginTop: "0.1rem" }}>
+                <div className="mzp-info">
+                  <div className="mzp-name">{m.name}</div>
+                  <div className="mzp-origin">
                     {m.origin}
-                    <span style={{
-                      marginRight: "0.5rem",
-                      padding: "0.1rem 0.4rem",
-                      borderRadius: "999px",
-                      fontSize: "0.68rem",
-                      background: `${styleColor}18`,
-                      color: styleColor,
-                      fontWeight: 600,
-                    }}>
+                    <span className={`mzp-style-badge ${styleMod}`}>
                       {m.style}
                     </span>
                   </div>
                 </div>
 
-                {/* Preview button */}
                 <button
                   type="button"
                   onClick={(e) => { e.stopPropagation(); handlePreview(m); }}
-                  style={{
-                    flexShrink: 0,
-                    width: 34,
-                    height: 34,
-                    borderRadius: "50%",
-                    border: "none",
-                    background: isPlaying ? "#ef4444" : "#134a3a",
-                    color: "#fff",
-                    cursor: "pointer",
-                    fontSize: "0.85rem",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    transition: "background 0.15s",
-                  }}
-                  title={isPlaying ? "إيقاف" : "معاينة 15 ثانية"}
+                  className={`mzp-preview-btn${isPlaying ? " mzp-preview-btn--playing" : ""}`}
+                  aria-label={isPlaying ? "إيقاف معاينة الأذان" : "معاينة الأذان (15 ثانية)"}
                 >
                   {isPlaying ? "⏹" : "▶"}
                 </button>

@@ -1,17 +1,71 @@
 import { useEffect, useMemo, useState } from "react";
-import { Loading, PageHeader } from "@/components/ui-common";
+import { Star } from "lucide-react";
+import { SkeletonCardGrid, PageHeader } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   loadIslamicOccasions,
   sortOccasionsByUpcoming,
   type IslamicOccasionView,
 } from "@/lib/islamic-occasions";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { HijriMonthSelect } from "@/components/HijriMonthSelect";
 import { getHijriMonthName, isSacredMonth } from "@/lib/hijri-utils";
+import { applyPageSeo } from "@/lib/seo";
+
+function CountdownBadge({ days }: { days: number | null | undefined }) {
+  if (days == null) return <span className="occasion-detail__countdown">موسمية</span>;
+  if (days === 0) return <span className="occasion-detail__countdown occasion-detail__countdown--soon">قريب</span>;
+  return (
+    <span className="occasion-detail__countdown">
+      بعد {days.toLocaleString("ar-EG")} يوم
+    </span>
+  );
+}
 
 export default function OccasionsPage() {
   const [occasions, setOccasions] = useState<IslamicOccasionView[]>([]);
   const [loading, setLoading] = useState(true);
   const [monthFilter, setMonthFilter] = useState<number | "">("");
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/occasions",
+      title: "المناسبات الإسلامية والمواسم | المجلس العلمي",
+      description: "تقويم المناسبات الإسلامية والأعياد والمواسم الدينية، رمضان وعيد الفطر وعيد الأضحى والمواسم الهجرية.",
+      keywords: ["مناسبات إسلامية", "أعياد إسلامية", "رمضان", "عيد الأضحى", "المواسم الدينية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "المناسبات والمواسم الإسلامية",
+          description: "تقويم الأعياد والمناسبات الدينية في الشهور الهجرية",
+          numberOfItems: 12,
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "شهر رمضان المبارك", url: "https://www.majlisilm.com/occasions?month=9" },
+            { "@type": "ListItem", position: 2, name: "عيد الفطر المبارك", url: "https://www.majlisilm.com/occasions?month=10" },
+            { "@type": "ListItem", position: 3, name: "عيد الأضحى المبارك", url: "https://www.majlisilm.com/occasions?month=12" },
+            { "@type": "ListItem", position: 4, name: "ذكرى الهجرة النبوية", url: "https://www.majlisilm.com/occasions?month=1" },
+            { "@type": "ListItem", position: 5, name: "ليلة القدر", url: "https://www.majlisilm.com/occasions?month=9" },
+            { "@type": "ListItem", position: 6, name: "يوم عرفة", url: "https://www.majlisilm.com/occasions?month=12" },
+            { "@type": "ListItem", position: 7, name: "الأشهر الحرم", url: "https://www.majlisilm.com/occasions" },
+            { "@type": "ListItem", position: 8, name: "النصف من شعبان", url: "https://www.majlisilm.com/occasions?month=8" },
+          ],
+        },
+      ],
+    });
+  }, []);
+
+  // رابط `?month=...` في JSON-LD أعلى (رمضان/الأعياد/عرفة...) كان يُتجاهَل
+  // كليًا: `monthFilter` تُهيَّأ دائماً بـ"" بلا قراءة أي شيء من الرابط
+  // الفعلي — عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف بالفحص
+  // المباشر 2026-07-18.
+  useEffect(() => {
+    const m = new URLSearchParams(window.location.search).get("month");
+    const n = m ? Number(m) : NaN;
+    if (Number.isFinite(n) && n >= 1 && n <= 12) setMonthFilter(n);
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -27,10 +81,11 @@ export default function OccasionsPage() {
     };
   }, []);
 
-  const filtered = useMemo(
-    () => (monthFilter === "" ? occasions : occasions.filter((o) => o.hijriMonth === monthFilter)),
-    [occasions, monthFilter],
-  );
+  const filtered = useMemo(() => {
+    let list = monthFilter === "" ? occasions : occasions.filter((o) => o.hijriMonth === monthFilter);
+    if (search.trim()) list = list.filter((o) => arabicMatchAny([o.name, o.summary, o.evidence, ...o.deeds], search));
+    return list;
+  }, [occasions, monthFilter, search]);
 
   return (
     <div className="page-shell">
@@ -41,8 +96,8 @@ export default function OccasionsPage() {
       />
 
       {!loading && (
-        <div className="occasions-filter" style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
-          <label htmlFor="occasion-month" style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--majalis-ink-soft)" }}>
+        <div className="occasions-filter">
+          <label htmlFor="occasion-month" className="occasions-filter__label">
             الشهر الهجري:
           </label>
           <HijriMonthSelect
@@ -50,52 +105,63 @@ export default function OccasionsPage() {
             value={monthFilter}
             onChange={setMonthFilter}
             includeAll
-            className="ds-input"
-            style={{ maxWidth: "16rem" }}
+            className="ds-input ocp-month-filter"
           />
-          <span style={{ fontSize: "0.8rem", color: "var(--majalis-ink-soft)" }}>
+          <span className="occasions-filter__count">
             ({filtered.length.toLocaleString("ar-EG")})
           </span>
-          <span style={{ fontSize: "0.72rem", color: "var(--majalis-brass-deep)" }}>⭐ شهر حرام</span>
+          <span className="occasions-filter__sacred-note"><Star size={13} strokeWidth={2} aria-hidden="true" /> شهر حرام</span>
+        </div>
+      )}
+      {!loading && (
+        <div className="ocp-search-wrap">
+          <input
+            type="search"
+            className="ds-input ocp-search-input"
+            placeholder="ابحث في المناسبات والأعمال..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            aria-label="بحث في المناسبات الإسلامية"
+          />
         </div>
       )}
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : filtered.length === 0 ? (
-        <p style={{ color: "var(--majalis-ink-soft)", padding: "1rem 0" }}>لا توجد مناسبات في هذا الشهر.</p>
+        <p className="occasions-filter__count occasions-filter__count--empty">
+          لا توجد مناسبات في هذا الشهر.
+        </p>
       ) : (
         <div className="occasions-list">
           {filtered.map((occasion) => (
             <article key={occasion.id} className="occasion-detail ui-card">
-              <header className="occasion-detail__head">
+              <div className="occasion-detail__head">
                 <h2>
                   {occasion.name}
-                  <span style={{ fontSize: "0.72rem", fontWeight: 600, color: "var(--majalis-brass-deep)", marginInlineStart: "0.5rem" }}>
+                  <span className="occasion-detail__month-badge">
                     {getHijriMonthName(occasion.hijriMonth)}
-                    {isSacredMonth(occasion.hijriMonth) ? " ⭐" : ""}
+                    {isSacredMonth(occasion.hijriMonth) ? <Star size={12} strokeWidth={2} className="occasion-detail__sacred-star" aria-label="شهر حرام" /> : null}
                   </span>
                 </h2>
-                <span>
-                  {occasion.daysRemaining != null
-                    ? occasion.daysRemaining === 0
-                      ? "قريب"
-                      : `بعد ${occasion.daysRemaining} يوم تقريباً`
-                    : "موسمية"}
-                </span>
-              </header>
+                <CountdownBadge days={occasion.daysRemaining} />
+              </div>
+
               {occasion.nextGregorian && (
                 <p className="occasion-detail__date">
                   التاريخ الميلادي التقريبي: {occasion.nextGregorian}
                 </p>
               )}
+
               <p>{occasion.summary}</p>
+
               <h3>الأعمال المستحبة</h3>
               <ul>
                 {occasion.deeds.map((d) => (
                   <li key={d}>{d}</li>
                 ))}
               </ul>
+
               <p className="occasion-evidence">
                 <strong>الدليل:</strong> {occasion.evidence}
               </p>
@@ -103,6 +169,13 @@ export default function OccasionsPage() {
           ))}
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="المناسبات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/occasions" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="tarikh" title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
+      </div>
     </div>
   );
 }

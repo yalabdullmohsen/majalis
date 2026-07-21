@@ -1,4 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
+import { Lightbulb } from "lucide-react";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import {
   adminGetQuizQuestions,
   adminUpsertQuizQuestion,
@@ -9,9 +11,8 @@ import {
   resetAllUsedQuizIds,
 } from "@/lib/supabase";
 import { sanitizeText } from "@/lib/sanitize";
-import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
-import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { SkeletonCardGrid } from "@/components/ui-common";
+import { AdminModal, Field, FieldRow } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 
 const SECTIONS = [
@@ -42,17 +43,6 @@ const STATUS_LABELS: Record<string, string> = {
   draft: "مسودة",
 };
 
-const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
-  published: { bg: "#D1FAE5", text: C.emeraldDeep },
-  draft: { bg: "#F3F4F6", text: "#6B7280" },
-};
-
-const LEVEL_COLORS: Record<string, { bg: string; text: string }> = {
-  beginner:     { bg: "#D1FAE5", text: "#065F46" },
-  intermediate: { bg: "#FEF3C7", text: "#92400E" },
-  advanced:     { bg: "#FEE2E2", text: "#991B1B" },
-};
-
 const LEVEL_LABELS: Record<string, string> = {
   beginner: "سهل",
   intermediate: "متوسط",
@@ -69,31 +59,11 @@ const EMPTY_FORM = {
   status: "published",
 };
 
-const BTN: React.CSSProperties = {
-  padding: "0.4rem 0.875rem",
-  borderRadius: "0.375rem",
-  border: `1px solid ${C.line}`,
-  background: C.panel,
-  color: C.emeraldDeep,
-  cursor: "pointer",
-  fontSize: "0.8125rem",
-  fontFamily: "inherit",
-  fontWeight: 600,
-};
-const BTN_PRIMARY: React.CSSProperties = {
-  ...BTN,
-  background: C.emerald,
-  color: "#fff",
-  border: "none",
-};
-const BTN_DANGER: React.CSSProperties = { ...BTN, color: "#dc2626" };
-const BTN_WARN: React.CSSProperties = { ...BTN, background: "#FEF3C7", color: "#92400E", border: "1px solid #FDE68A" };
-
 export function QuizSection() {
   const { showSuccess, showError } = useAdminShell();
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(() => { const p = new URLSearchParams(window.location.search); return p.get("q") || ""; });
   const [sectionFilter, setSectionFilter] = useState("الكل");
   const [levelFilter, setLevelFilter] = useState("الكل");
   const [statusFilter, setStatusFilter] = useState("الكل");
@@ -106,7 +76,9 @@ export function QuizSection() {
   const load = useCallback(() => {
     setLoading(true);
     adminGetQuizQuestions()
-      .then(({ data }) => setItems(data ?? []))
+      .then(({ data }) => setItems(
+        (data ?? []).map((row: any) => ({ ...row, status: row.is_published ? "published" : "draft" })),
+      ))
       .catch(() => setItems([]))
       .finally(() => setLoading(false));
   }, []);
@@ -124,8 +96,7 @@ export function QuizSection() {
   };
 
   const handleToggleStatus = async (item: any) => {
-    const next = item.status === "published" ? "draft" : "published";
-    const { error } = await adminSetQuizQuestionStatus(item.id, next);
+    const { error } = await adminSetQuizQuestionStatus(item.id, item.status !== "published");
     if (error) showError("فشل تغيير الحالة");
     else load();
   };
@@ -137,13 +108,14 @@ export function QuizSection() {
     if (!form.answer.trim()) return alert("الجواب مطلوب");
     setSaving(true);
     const answerClean = sanitizeText(form.answer, 1000);
+    const { status, ...formRest } = form;
     const payload = {
-      ...form,
+      ...formRest,
       question: sanitizeText(form.question, 1000),
       answer: answerClean,
-      correct_answer: answerClean, // keep legacy column in sync
       hint: sanitizeText(form.hint || "", 500),
       category: sanitizeText(form.category || form.section, 200),
+      is_published: status === "published",
       is_used: false,
     };
     const { error } = await adminUpsertQuizQuestion(payload);
@@ -157,7 +129,7 @@ export function QuizSection() {
     setSyncing(true);
     const { ok, synced, error } = await upsertQuizSeedToDb();
     setSyncing(false);
-    if (ok) { showSuccess(`تمت المزامنة — ${synced} سؤال`); load(); }
+    if (ok) { showSuccess(`تمت المزامنة، ${synced} سؤال`); load(); }
     else showError(`فشل: ${error || "خطأ غير معروف"}`);
   };
 
@@ -166,7 +138,7 @@ export function QuizSection() {
     setResetting(true);
     const { ok, error } = await adminResetAllQuizIsUsed();
     setResetting(false);
-    if (ok) { showSuccess("تم إعادة التعيين — يمكن للجميع استخدام الأسئلة مجدداً"); load(); }
+    if (ok) { showSuccess("تم إعادة التعيين، يمكن للجميع استخدام الأسئلة مجدداً"); load(); }
     else { showError(`فشل: ${error || "خطأ غير معروف"}`); resetAllUsedQuizIds(); }
   };
 
@@ -174,121 +146,100 @@ export function QuizSection() {
     if (sectionFilter !== "الكل" && item.section !== sectionFilter) return false;
     if (levelFilter !== "الكل" && item.level !== levelFilter) return false;
     if (statusFilter !== "الكل" && item.status !== statusFilter) return false;
-    const q = search.trim();
-    if (!q) return true;
-    // support both new (answer) and legacy (correct_answer) column names
     const answerText = item.answer || item.correct_answer || "";
-    return `${item.question} ${answerText} ${item.section || item.category || ""}`.includes(q);
+    return arabicMatchAny([item.question, answerText, item.section || "", item.category || ""], search);
   });
 
   const usedCount = items.filter((i) => i.is_used).length;
   const publishedCount = items.filter((i) => i.status === "published").length;
-
   const uniqueSections = ["الكل", ...Array.from(new Set(items.map((i) => i.section).filter(Boolean)))];
 
   return (
     <div>
-      {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.75rem" }}>
-        <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep }}>
-          أسئلة المسابقة ({items.length})
-        </h2>
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-          <button style={BTN_WARN} onClick={handleResetUsed} disabled={resetting}>
+      <div className="qzs-header">
+        <h2 className="qzs-title">أسئلة المسابقة ({items.length})</h2>
+        <div className="qzs-btn-group">
+          <button type="button" className="qzs-btn qzs-btn--warn" onClick={handleResetUsed} disabled={resetting}>
             {resetting ? "جاري الإعادة..." : "إعادة تعيين المُستخدَمة"}
           </button>
-          <button style={BTN_WARN} onClick={handleSyncSeed} disabled={syncing}>
+          <button type="button" className="qzs-btn qzs-btn--warn" onClick={handleSyncSeed} disabled={syncing}>
             {syncing ? "جاري الرفع..." : "رفع Seed → DB"}
           </button>
-          <button style={BTN_PRIMARY} onClick={openAdd}>+ سؤال جديد</button>
+          <button type="button" className="qzs-btn qzs-btn--primary" onClick={openAdd}>+ سؤال جديد</button>
         </div>
       </div>
 
-      {/* Stats */}
-      <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem", flexWrap: "wrap" }}>
+      <div className="qzs-stats-row">
         {[
-          { label: "إجمالي", value: items.length, color: C.emeraldDeep },
-          { label: "منشور", value: publishedCount, color: C.emeraldDeep },
-          { label: "مُستخدَم", value: usedCount, color: "#dc2626" },
-          { label: "متاح", value: publishedCount - usedCount, color: "#059669" },
+          { label: "إجمالي", value: items.length, color: "var(--majalis-emerald-deep)" },
+          { label: "منشور",    value: publishedCount,              mod: "qzs-stat--published" },
+          { label: "مُستخدَم", value: usedCount,                    mod: "qzs-stat--used" },
+          { label: "متاح",     value: publishedCount - usedCount,  mod: "qzs-stat--available" },
         ].map((s) => (
-          <div key={s.label} style={{ padding: "0.625rem 1rem", background: C.panel, borderRadius: "0.375rem", border: `1px solid ${C.line}`, textAlign: "center", minWidth: "80px" }}>
-            <div style={{ fontSize: "1.375rem", fontWeight: 700, color: s.color }}>{s.value}</div>
-            <div style={{ fontSize: "0.6875rem", color: C.inkSoft }}>{s.label}</div>
+          <div key={s.label} className={`qzs-stat ${s.mod}`}>
+            <div className="qzs-stat__value">{s.value}</div>
+            <div className="qzs-stat__label">{s.label}</div>
           </div>
         ))}
       </div>
 
-      {/* Filters */}
-      <div style={{ display: "flex", gap: "0.625rem", marginBottom: "1rem", flexWrap: "wrap", alignItems: "center" }}>
+      <div className="qzs-filters">
         <input
-          style={{ ...inputSt, maxWidth: "220px" }}
+          className="adm-input qzs-filter-input"
           placeholder="بحث في الأسئلة..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <select style={{ ...selectSt, maxWidth: "160px" }} value={sectionFilter} onChange={(e) => setSectionFilter(e.target.value)}>
+        <select className="adm-select qzs-filter-select" value={sectionFilter} onChange={(e) => setSectionFilter(e.target.value)}>
           {uniqueSections.map((s) => <option key={s} value={s}>{s}</option>)}
         </select>
-        <select style={{ ...selectSt, maxWidth: "150px" }} value={levelFilter} onChange={(e) => setLevelFilter(e.target.value)}>
+        <select className="adm-select qzs-filter-select--sm" value={levelFilter} onChange={(e) => setLevelFilter(e.target.value)}>
           <option value="الكل">كل المستويات</option>
           {LEVELS.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
         </select>
-        <select style={{ ...selectSt, maxWidth: "130px" }} value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+        <select className="adm-select qzs-filter-select--xs" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
           <option value="الكل">كل الحالات</option>
           <option value="published">منشور</option>
           <option value="draft">مسودة</option>
         </select>
       </div>
 
-      {/* List */}
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : filtered.length === 0 ? (
-        <div style={{ padding: "2.5rem", textAlign: "center", color: C.inkSoft, background: C.panel, borderRadius: "0.5rem", border: `1px solid ${C.line}` }}>
+        <div className="qzs-empty">
           {items.length === 0
             ? <>لا توجد أسئلة في قاعدة البيانات. اضغط <strong>رفع Seed → DB</strong> لرفع الأسئلة الأساسية.</>
             : "لا توجد نتائج مطابقة للفلتر."}
         </div>
       ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <div className="qzs-list">
           {filtered.map((item) => {
-            const lvl = LEVEL_COLORS[item.level] || { bg: C.panel, text: C.ink };
-            const st = STATUS_COLORS[item.status] || { bg: C.panel, text: C.ink };
             return (
-              <div
-                key={item.id}
-                style={{ padding: "0.875rem 1rem", background: item.is_used ? "#FFF8F0" : C.panel, border: `1px solid ${item.is_used ? "#FDE68A" : C.line}`, borderRadius: "0.375rem", display: "flex", gap: "0.875rem", alignItems: "flex-start" }}
-              >
-                {/* Question body */}
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ display: "flex", gap: "0.375rem", marginBottom: "0.375rem", flexWrap: "wrap", alignItems: "center" }}>
-                    <span style={{ fontSize: "0.7rem", padding: "0.15rem 0.5rem", borderRadius: "99px", background: lvl.bg, color: lvl.text, fontWeight: 700 }}>
+              <div key={item.id} className={`qzs-item${item.is_used ? " qzs-item--used" : ""}`}>
+                <div className="qzs-item-body">
+                  <div className="qzs-item-tags">
+                    <span className={`qzs-tag qzs-tag--${item.level}`}>
                       {LEVEL_LABELS[item.level] || item.level}
                     </span>
-                    <span style={{ fontSize: "0.7rem", padding: "0.15rem 0.5rem", borderRadius: "99px", background: st.bg, color: st.text, fontWeight: 600 }}>
+                    <span className={`qzs-tag qzs-tag--${item.status}`}>
                       {STATUS_LABELS[item.status] || item.status}
                     </span>
-                    {item.is_used && (
-                      <span style={{ fontSize: "0.7rem", padding: "0.15rem 0.5rem", borderRadius: "99px", background: "#FEF3C7", color: "#92400E" }}>مُستخدَم</span>
-                    )}
-                    <span style={{ fontSize: "0.7rem", color: C.inkSoft }}>{item.section}</span>
+                    {item.is_used && <span className="qzs-tag qzs-tag--used">مُستخدَم</span>}
+                    <span className="qzs-tag--section">{item.section}</span>
                   </div>
-                  <div style={{ fontWeight: 600, fontSize: "0.9375rem", marginBottom: "0.25rem", color: C.ink }}>{item.question}</div>
-                  <div style={{ fontSize: "0.8125rem", color: C.inkSoft }}>
-                    <strong style={{ color: C.emeraldDeep }}>الجواب:</strong> {item.answer || item.correct_answer}
+                  <div className="qzs-item-question">{item.question}</div>
+                  <div className="qzs-item-answer">
+                    <strong>الجواب:</strong> {item.answer || item.correct_answer}
                   </div>
-                  {item.hint && (
-                    <div style={{ fontSize: "0.75rem", color: C.inkSoft, marginTop: "0.25rem" }}>💡 {item.hint}</div>
-                  )}
+                  {item.hint && <div className="qzs-item-hint"><Lightbulb size={13} className="inline ml-1" />{item.hint}</div>}
                 </div>
-                {/* Actions */}
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.375rem", flexShrink: 0 }}>
-                  <button style={BTN} onClick={() => openEdit(item)}>تعديل</button>
-                  <button style={BTN} onClick={() => handleToggleStatus(item)}>
+                <div className="qzs-item-actions">
+                  <button type="button" className="qzs-btn" onClick={() => openEdit(item)}>تعديل</button>
+                  <button type="button" className="qzs-btn" onClick={() => handleToggleStatus(item)}>
                     {item.status === "published" ? "إخفاء" : "نشر"}
                   </button>
-                  <button style={BTN_DANGER} onClick={() => handleDelete(item.id, item.question)}>حذف</button>
+                  <button type="button" className="qzs-btn qzs-btn--danger" onClick={() => handleDelete(item.id, item.question)}>حذف</button>
                 </div>
               </div>
             );
@@ -296,34 +247,33 @@ export function QuizSection() {
         </div>
       )}
 
-      {/* Add/Edit Modal */}
       <AdminModal title={form.id ? "تعديل السؤال" : "سؤال جديد"} open={open} onClose={() => setOpen(false)} onSave={handleSave} saving={saving}>
         <Field label="القسم / الموضوع">
-          <select style={selectSt} value={form.section} onChange={(e) => set("section", e.target.value)}>
+          <select className="adm-select" value={form.section} onChange={(e) => set("section", e.target.value)}>
             {SECTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
           </select>
         </Field>
         <FieldRow>
           <Field label="المستوى">
-            <select style={selectSt} value={form.level} onChange={(e) => set("level", e.target.value)}>
+            <select className="adm-select" value={form.level} onChange={(e) => set("level", e.target.value)}>
               {LEVELS.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
             </select>
           </Field>
           <Field label="الحالة">
-            <select style={selectSt} value={form.status} onChange={(e) => set("status", e.target.value)}>
+            <select className="adm-select" value={form.status} onChange={(e) => set("status", e.target.value)}>
               <option value="published">منشور</option>
               <option value="draft">مسودة</option>
             </select>
           </Field>
         </FieldRow>
         <Field label="نص السؤال">
-          <textarea style={textareaSt} value={form.question} onChange={(e) => set("question", e.target.value)} placeholder="اكتب السؤال هنا..." rows={3} />
+          <textarea className="adm-textarea" value={form.question} onChange={(e) => set("question", e.target.value)} placeholder="اكتب السؤال هنا..." rows={3} />
         </Field>
         <Field label="الجواب">
-          <textarea style={textareaSt} value={form.answer} onChange={(e) => set("answer", e.target.value)} placeholder="الجواب الصحيح..." rows={2} />
+          <textarea className="adm-textarea" value={form.answer} onChange={(e) => set("answer", e.target.value)} placeholder="الجواب الصحيح..." rows={2} />
         </Field>
         <Field label="تلميح (اختياري)">
-          <input style={inputSt} value={form.hint || ""} onChange={(e) => set("hint", e.target.value)} placeholder="تلميح يساعد الفريق..." />
+          <input className="adm-input" value={form.hint || ""} onChange={(e) => set("hint", e.target.value)} placeholder="تلميح يساعد الفريق..." />
         </Field>
       </AdminModal>
     </div>

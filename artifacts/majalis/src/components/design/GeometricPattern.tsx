@@ -130,7 +130,7 @@ export function GeometricPattern({
     <div
       className={`geo-pattern ${className}`}
       aria-hidden="true"
-      style={{ opacity }}
+      style={{ "--geo-opacity": opacity } as React.CSSProperties}
     >
       {render(color)}
     </div>

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import { Mic2, Music2, Play, Pause, SkipBack, SkipForward } from "lucide-react";
 import { Link } from "wouter";
 import { supabase } from "@/lib/supabase";
+import { applyPageSeo } from "@/lib/seo";
 
 type AudioLesson = {
   id: string;
@@ -26,6 +28,24 @@ export default function CarModePage() {
   const [playing, setPlaying] = useState(false);
   const [loading, setLoading] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const wasPlayingRef = useRef(false);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/car-mode",
+      title: "وضع السيارة، الاستماع أثناء القيادة | المجلس العلمي",
+      description: "استمع إلى الدروس العلمية والقرآن الكريم أثناء القيادة، واجهة مبسطة آمنة للاستخدام في السيارة.",
+      keywords: ["وضع السيارة", "استماع أثناء القيادة", "دروس صوتية", "قيادة وتعلم"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: "وضع السيارة",
+        description: "استمع إلى الدروس العلمية والقرآن الكريم أثناء القيادة، واجهة مبسطة آمنة للاستخدام في السيارة.",
+        url: "https://www.majlisilm.com/car-mode",
+        publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+      }],
+    });
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -81,31 +101,37 @@ export default function CarModePage() {
   };
 
   const goNext = () => {
+    wasPlayingRef.current = playing;
     const next = Math.min(currentIdx + 1, lessons.length - 1);
     setCurrentIdx(next);
-    setPlaying(false);
     saveLastLesson(lessons[next]?.id ?? "");
   };
 
   const goPrev = () => {
+    wasPlayingRef.current = playing;
     const prev = Math.max(currentIdx - 1, 0);
     setCurrentIdx(prev);
-    setPlaying(false);
     saveLastLesson(lessons[prev]?.id ?? "");
   };
 
   const selectLesson = (idx: number) => {
+    wasPlayingRef.current = playing;
     setCurrentIdx(idx);
-    setPlaying(false);
     saveLastLesson(lessons[idx]?.id ?? "");
   };
 
-  // Sync audio element when current changes
+  // Sync audio element when current changes، resume if was playing
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio || !audioSrc) return;
     audio.load();
-    setPlaying(false);
+    if (wasPlayingRef.current) {
+      audio.play().catch(() => {});
+      setPlaying(true);
+      wasPlayingRef.current = false;
+    } else {
+      setPlaying(false);
+    }
   }, [audioSrc]);
 
   if (loading) {
@@ -133,7 +159,10 @@ export default function CarModePage() {
 
   return (
     <div className="car-mode" dir="rtl">
-      {/* Hidden audio element */}
+      {/* Hidden audio element. لا يوجد <track> لأن هذا تشغيل صوت للدروس بلا نص
+          مرافق متزامن متاح حاليًا؛ البديل الصحيح لمحتوى صوتي فقط هو نص بديل
+          (transcript) لا مسار ترجمة متزامنة — إضافة نص كامل للدروس تتطلب بنية
+          تحتية جديدة (تفريغ صوتي)، خارج نطاق تنظيف الوصولية الحالي. */}
       {audioSrc && (
         <audio
           ref={audioRef}
@@ -147,12 +176,12 @@ export default function CarModePage() {
       {/* Header */}
       <div className="car-mode__header">
         <Link href="/" className="car-mode__exit">✕ خروج</Link>
-        <span className="car-mode__label">وضع السيارة 🚗</span>
+        <span className="car-mode__label">وضع السيارة</span>
       </div>
 
       {/* Now playing */}
       <div className="car-mode__now-playing">
-        <div className="car-mode__disk">{playing ? "🎵" : "🎙️"}</div>
+        <div className="car-mode__disk" aria-hidden="true">{playing ? <Music2 size={40} strokeWidth={1.4} /> : <Mic2 size={40} strokeWidth={1.4} />}</div>
         <p className="car-mode__category">{current.category ?? "درس"}</p>
         <h1 className="car-mode__title">{current.title}</h1>
         {current.speaker_name && (
@@ -170,7 +199,7 @@ export default function CarModePage() {
           disabled={currentIdx === 0}
           aria-label="السابق"
         >
-          ⏮
+          <SkipBack size={28} strokeWidth={1.6} />
         </button>
         <button
           type="button"
@@ -178,7 +207,7 @@ export default function CarModePage() {
           onClick={togglePlay}
           aria-label={playing ? "إيقاف" : "تشغيل"}
         >
-          {playing ? "⏸" : "▶"}
+          {playing ? <Pause size={36} strokeWidth={1.5} /> : <Play size={36} strokeWidth={1.5} />}
         </button>
         <button
           type="button"
@@ -187,18 +216,20 @@ export default function CarModePage() {
           disabled={currentIdx === lessons.length - 1}
           aria-label="التالي"
         >
-          ⏭
+          <SkipForward size={28} strokeWidth={1.6} />
         </button>
       </div>
 
       {/* Playlist (scrollable list below controls) */}
-      <div className="car-mode__playlist">
+      <div className="car-mode__playlist" role="tablist" aria-label="قائمة الدروس">
         {lessons.map((lesson, idx) => (
           <button
             key={lesson.id}
+            role="tab"
             type="button"
             className={`car-mode__playlist-item${idx === currentIdx ? " car-mode__playlist-item--active" : ""}`}
             onClick={() => selectLesson(idx)}
+            aria-selected={idx === currentIdx}
           >
             <span className="car-mode__playlist-num">{idx + 1}</span>
             <span className="car-mode__playlist-title">{lesson.title}</span>

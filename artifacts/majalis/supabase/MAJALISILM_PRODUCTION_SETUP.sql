@@ -153,7 +153,9 @@ SECURITY DEFINER
 SET search_path = public
 AS $$
 BEGIN
-  IF NEW.is_owner = true OR NEW.is_super_admin = true OR NEW.role = 'super_admin' THEN
+  -- ⚠️ إصلاح أمني 2026-07-14: الإعفاء يُبنى على OLD (حالة الصف الفعلية) لا NEW (ما يطلبه المستدعي).
+  -- الصيغة القديمة كانت تفحص NEW فتُرجع الصف دون فحص لمن طلب لنفسه is_super_admin = true → تصعيد صلاحيات كامل.
+  IF OLD.is_owner = true OR OLD.is_super_admin = true OR OLD.role = 'super_admin' THEN
     RETURN NEW;
   END IF;
   IF NOT is_admin() AND NEW.role IS DISTINCT FROM OLD.role THEN
@@ -650,10 +652,10 @@ ALTER TABLE governance_user_roles  ENABLE ROW LEVEL SECURITY;
 ALTER TABLE governance_audit_log   ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "svc_governance_user_roles" ON governance_user_roles;
-CREATE POLICY "svc_governance_user_roles" ON governance_user_roles FOR ALL USING (true);
+CREATE POLICY "svc_governance_user_roles" ON governance_user_roles FOR ALL TO service_role USING (true);
 
 DROP POLICY IF EXISTS "svc_governance_audit_log" ON governance_audit_log;
-CREATE POLICY "svc_governance_audit_log" ON governance_audit_log FOR ALL USING (true);
+CREATE POLICY "svc_governance_audit_log" ON governance_audit_log FOR ALL TO service_role USING (true);
 
 -- AKP tables (admin only, engine writes via service_role)
 ALTER TABLE akp_content_sources    ENABLE ROW LEVEL SECURITY;

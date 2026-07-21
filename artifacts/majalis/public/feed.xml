@@ -1,21 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>المجلس العلمي</title>
-    <link>https://majlisilm.com</link>
-    <description>آخر المستجدات العلمية — قرارات وفتاوى ودورات</description>
+    <link>https://www.majlisilm.com</link>
+    <description>آخر المستجدات العلمية — قرارات وفتاوى وأحكام ودورات</description>
     <language>ar</language>
-    <lastBuildDate>Sat, 04 Jul 2026 03:46:44 GMT</lastBuildDate>
-    <atom:link href="https://majlisilm.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <item><title>حكم التعامل بالعملات الرقمية (المشفّرة)</title><link>https://majlisilm.com/fiqh-council/fiqh-crypto-2024</link><description>حكم التعامل بالعملات الرقمية (المشفّرة)</description><pubDate>Sat, 04 Jul 2026 03:46:44 GMT</pubDate></item>
-    <item><title>حكم التبرع بالأعضاء بعد الوفاة</title><link>https://majlisilm.com/fiqh-council/fiqh-organ-donation</link><description>حكم التبرع بالأعضاء بعد الوفاة</description><pubDate>Sat, 04 Jul 2026 03:46:44 GMT</pubDate></item>
-    <item><title>حقوق الأقليات المسلمة في البلدان غير الإسلامية</title><link>https://majlisilm.com/fiqh-council/fiqh-minorities-rights</link><description>حقوق الأقليات المسلمة في البلدان غير الإسلامية</description><pubDate>Sat, 04 Jul 2026 03:46:44 GMT</pubDate></item>
-    <item><title>ضوابط عقد النكاح الإلكتروني</title><link>https://majlisilm.com/fiqh-council/fiqh-marriage-contract</link><description>ضوابط عقد النكاح الإلكتروني</description><pubDate>Sat, 04 Jul 2026 03:46:44 GMT</pubDate></item>
-    <item><title>زكاة الأسهم والصناديق الاستثمارية</title><link>https://majlisilm.com/fiqh-council/fiqh-zakat-stocks</link><description>زكاة الأسهم والصناديق الاستثمارية</description><pubDate>Sat, 04 Jul 2026 03:46:44 GMT</pubDate></item>
-    <item><title>هل يجوز الجمع بين الصلاتين للمسافر؟</title><link>https://majlisilm.com/fatwa/fatwa-prayer-combine</link><description>هل يجوز الجمع بين الصلاتين للمسافر؟</description><pubDate>Sat, 04 Jul 2026 03:46:44 GMT</pubDate></item>
-    <item><title>هل تجب الزكاة في الذهب المُدّخر للزينة؟</title><link>https://majlisilm.com/fatwa/fatwa-zakat-gold</link><description>هل تجب الزكاة في الذهب المُدّخر للزينة؟</description><pubDate>Sat, 04 Jul 2026 03:46:44 GMT</pubDate></item>
-    <item><title>ما حكم الاستماع إلى الأناشيد الإسلامية؟</title><link>https://majlisilm.com/fatwa/fatwa-music-voice</link><description>ما حكم الاستماع إلى الأناشيد الإسلامية؟</description><pubDate>Sat, 04 Jul 2026 03:46:44 GMT</pubDate></item>
-    <item><title>هل يجوز للمسافر الإفطار في رمضان؟</title><link>https://majlisilm.com/fatwa/fatwa-fasting-travel</link><description>هل يجوز للمسافر الإفطار في رمضان؟</description><pubDate>Sat, 04 Jul 2026 03:46:44 GMT</pubDate></item>
-    <item><title>ما نصيب البنت من الميراث؟</title><link>https://majlisilm.com/fatwa/fatwa-inheritance-daughter</link><description>ما نصيب البنت من الميراث؟</description><pubDate>Sat, 04 Jul 2026 03:46:44 GMT</pubDate></item>
+    <lastBuildDate>Fri, 17 Jul 2026 23:05:11 GMT</lastBuildDate>
+    <managingEditor>Majlisilm.app@gmail.com (المجلس العلمي)</managingEditor>
+    <image>
+      <url>https://www.majlisilm.com/logo.png</url>
+      <title>المجلس العلمي</title>
+      <link>https://www.majlisilm.com</link>
+    </image>
+    <atom:link href="https://www.majlisilm.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>[قرار مجمعي] حكم التعامل بالعملات الرقمية (المشفّرة)</title>
+      <link>https://www.majlisilm.com/fiqh-council/fiqh-crypto-2024</link>
+      <description>قرار فقهي جماعي: حكم التعامل بالعملات الرقمية (المشفّرة) — الاقتصاد الإسلامي</description>
+      <pubDate>Fri, 17 Jul 2026 23:05:11 GMT</pubDate>
+      <dc:subject>قرارات فقهية</dc:subject>
+      <guid isPermaLink="true">https://www.majlisilm.com/fiqh-council/fiqh-crypto-2024</guid>
+    </item>
+    <item>
+      <title>[قرار مجمعي] حكم التبرع بالأعضاء بعد الوفاة</title>
+      <link>https://www.majlisilm.com/fiqh-council/fiqh-organ-donation</link>
+      <description>قرار فقهي جماعي: حكم التبرع بالأعضاء بعد الوفاة — الطب والنوازل</description>
+      <pubDate>Fri, 17 Jul 2026 23:05:11 GMT</pubDate>
+      <dc:subject>قرارات فقهية</dc:subject>
+      <guid isPermaLink="true">https://www.majlisilm.com/fiqh-council/fiqh-organ-donation</guid>
+    </item>
+    <item>
+      <title>[قرار مجمعي] حقوق الأقليات المسلمة في البلدان غير الإسلامية</title>
+      <link>https://www.majlisilm.com/fiqh-council/fiqh-minorities-rights</link>
+      <description>قرار فقهي جماعي: حقوق الأقليات المسلمة في البلدان غير الإسلامية — الأقليات المسلمة</description>
+      <pubDate>Fri, 17 Jul 2026 23:05:11 GMT</pubDate>
+      <dc:subject>قرارات فقهية</dc:subject>
+      <guid isPermaLink="true">https://www.majlisilm.com/fiqh-council/fiqh-minorities-rights</guid>
+    </item>
+    <item>
+      <title>[قرار مجمعي] ضوابط عقد النكاح الإلكتروني</title>
+      <link>https://www.majlisilm.com/fiqh-council/fiqh-marriage-contract</link>
+      <description>قرار فقهي جماعي: ضوابط عقد النكاح الإلكتروني — الأسرة</description>
+      <pubDate>Fri, 17 Jul 2026 23:05:11 GMT</pubDate>
+      <dc:subject>قرارات فقهية</dc:subject>
+      <guid isPermaLink="true">https://www.majlisilm.com/fiqh-council/fiqh-marriage-contract</guid>
+    </item>
+    <item>
+      <title>[قرار مجمعي] زكاة الأسهم والصناديق الاستثمارية</title>
+      <link>https://www.majlisilm.com/fiqh-council/fiqh-zakat-stocks</link>
+      <description>قرار فقهي جماعي: زكاة الأسهم والصناديق الاستثمارية — الزكاة والوقف</description>
+      <pubDate>Fri, 17 Jul 2026 23:05:11 GMT</pubDate>
+      <dc:subject>قرارات فقهية</dc:subject>
+      <guid isPermaLink="true">https://www.majlisilm.com/fiqh-council/fiqh-zakat-stocks</guid>
+    </item>
+    <item>
+      <title>[قرار مجمعي] فتوى جماعية: حكم تأخير الحج لمن استطاع مادياً</title>
+      <link>https://www.majlisilm.com/fiqh-council/fiqh-collective-fatwa-hajj</link>
+      <description>قرار فقهي جماعي: فتوى جماعية: حكم تأخير الحج لمن استطاع مادياً — الحج والعمرة</description>
+      <pubDate>Fri, 17 Jul 2026 23:05:11 GMT</pubDate>
+      <dc:subject>قرارات فقهية</dc:subject>
+      <guid isPermaLink="true">https://www.majlisilm.com/fiqh-council/fiqh-collective-fatwa-hajj</guid>
+    </item>
+    <item>
+      <title>[حكم شرعي] نواقض الوضوء</title>
+      <link>https://www.majlisilm.com/rulings/ruling-wudu-nullifiers</link>
+      <description>حكم شرعي موثق في الطهارة: نواقض الوضوء</description>
+      <pubDate>Fri, 17 Jul 2026 23:05:11 GMT</pubDate>
+      <dc:subject>أحكام شرعية</dc:subject>
+      <guid isPermaLink="true">https://www.majlisilm.com/rulings/ruling-wudu-nullifiers</guid>
+    </item>
+    <item>
+      <title>[حكم شرعي] أركان الصلاة</title>
+      <link>https://www.majlisilm.com/rulings/ruling-prayer-pillars</link>
+      <description>حكم شرعي موثق في الصلاة: أركان الصلاة</description>
+      <pubDate>Fri, 17 Jul 2026 23:05:11 GMT</pubDate>
+      <dc:subject>أحكام شرعية</dc:subject>
+      <guid isPermaLink="true">https://www.majlisilm.com/rulings/ruling-prayer-pillars</guid>
+    </item>
+    <item>
+      <title>[حكم شرعي] شروط وجوب الزكاة</title>
+      <link>https://www.majlisilm.com/rulings/ruling-zakat-conditions</link>
+      <description>حكم شرعي موثق في الزكاة: شروط وجوب الزكاة</description>
+      <pubDate>Fri, 17 Jul 2026 23:05:11 GMT</pubDate>
+      <dc:subject>أحكام شرعية</dc:subject>
+      <guid isPermaLink="true">https://www.majlisilm.com/rulings/ruling-zakat-conditions</guid>
+    </item>
+    <item>
+      <title>[حكم شرعي] أركان الحج</title>
+      <link>https://www.majlisilm.com/rulings/ruling-hajj-pillars</link>
+      <description>حكم شرعي موثق في الحج: أركان الحج</description>
+      <pubDate>Fri, 17 Jul 2026 23:05:11 GMT</pubDate>
+      <dc:subject>أحكام شرعية</dc:subject>
+      <guid isPermaLink="true">https://www.majlisilm.com/rulings/ruling-hajj-pillars</guid>
+    </item>
+    <item>
+      <title>[دورة علمية] دورة الإجازة في التحرير — 1447هـ</title>
+      <link>https://www.majlisilm.com/annual-courses/course-ijazah-tahrir-2026</link>
+      <description>دورة علمية: دورة الإجازة في التحرير — 1447هـ — المجلس العلمي</description>
+      <pubDate>Fri, 17 Jul 2026 23:05:11 GMT</pubDate>
+      <dc:subject>دورات علمية</dc:subject>
+      <guid isPermaLink="true">https://www.majlisilm.com/annual-courses/course-ijazah-tahrir-2026</guid>
+    </item>
+    <item>
+      <title>[دورة علمية] البرنامج العلمي الرمضاني</title>
+      <link>https://www.majlisilm.com/annual-courses/course-ramadan-intensive</link>
+      <description>دورة علمية: البرنامج العلمي الرمضاني — المجلس العلمي</description>
+      <pubDate>Fri, 17 Jul 2026 23:05:11 GMT</pubDate>
+      <dc:subject>دورات علمية</dc:subject>
+      <guid isPermaLink="true">https://www.majlisilm.com/annual-courses/course-ramadan-intensive</guid>
+    </item>
+    <item>
+      <title>[دورة علمية] برنامج الفقه المقارن</title>
+      <link>https://www.majlisilm.com/annual-courses/course-alfiqh-almuqaran</link>
+      <description>دورة علمية: برنامج الفقه المقارن — المجلس العلمي</description>
+      <pubDate>Fri, 17 Jul 2026 23:05:11 GMT</pubDate>
+      <dc:subject>دورات علمية</dc:subject>
+      <guid isPermaLink="true">https://www.majlisilm.com/annual-courses/course-alfiqh-almuqaran</guid>
+    </item>
   </channel>
 </rss>

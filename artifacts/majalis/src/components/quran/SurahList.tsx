@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import type { SurahSummary } from "@/lib/quran-api";
+import { arabicMatchAny } from "@/lib/arabic-search";
 
 type Props = {
   surahs: SurahSummary[];
@@ -16,8 +17,7 @@ export function SurahList({ surahs, currentSurah, onSelect, onClose }: Props) {
     if (!term) return surahs;
     return surahs.filter(
       (s) =>
-        s.name.includes(term) ||
-        s.englishName.toLowerCase().includes(term.toLowerCase()) ||
+        arabicMatchAny([s.name, s.englishName], term) ||
         String(s.number).startsWith(term),
     );
   }, [surahs, q]);
@@ -34,7 +34,7 @@ export function SurahList({ surahs, currentSurah, onSelect, onClose }: Props) {
           className="qs-search-input"
         />
       </div>
-      <ol className="qs-surah-items" role="list">
+      <ol className="qs-surah-items">
         {filtered.map((s) => (
           <li key={s.number}>
             <button

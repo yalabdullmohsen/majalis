@@ -1,11 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { AlertTriangle, BookOpen, Star } from "lucide-react";
+import { Link } from "wouter";
+import { applyPageSeo } from "@/lib/seo";
+import { truncateAtWord } from "@/lib/utils";
+import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { getVerifiedHadith } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { CitationActionBar } from "@/components/citation/CitationActionBar";
+import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { fetchAllHadiths, type CdnHadith } from "@/lib/hadith-cdn-service";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -24,6 +32,26 @@ type HadithItem = {
   metadata: Record<string, string | number | boolean | null> | null;
   created_at: string;
 };
+
+function cdnToHadithItems(hadiths: CdnHadith[], collection: string, sourceName: string): HadithItem[] {
+  return hadiths.map((h) => ({
+    id: `cdn-${collection}-${h.hadithnumber}`,
+    title: null,
+    text: h.text,
+    narrator: null,
+    source_name: sourceName,
+    // لا درجة من الـCDN: كان يُلصق "صحيح" بكل حديث بلا سند من المصدر.
+    // الدرجة تُعرض فقط إذا جاءت من المصدر نفسه.
+    grade: null,
+    collection,
+    chapter: (h as any).chapter ?? null,
+    explanation: null,
+    keywords: null,
+    hadith_number: String(h.hadithnumber),
+    metadata: null,
+    created_at: new Date().toISOString(),
+  }));
+}
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -84,10 +112,13 @@ const GRADE_CLASS: Record<string, string> = {
   ضعيف: "hadith-grade--daif",
 };
 
+/** لا نُلوّن درجة مجهولة بلون الصحيح — الدرجة غير المعروفة تبقى محايدة. */
 function gradeClass(grade: string | null): string {
-  if (!grade) return "hadith-grade--sahih";
-  return GRADE_CLASS[grade.trim()] ?? "hadith-grade--sahih";
+  if (!grade) return "hadith-grade--unknown";
+  return GRADE_CLASS[grade.trim()] ?? "hadith-grade--unknown";
 }
+
+const GRADE_UNKNOWN_LABEL = "الدرجة غير مثبتة في المصدر";
 
 // ─── HadithCard ──────────────────────────────────────────────────────────────
 
@@ -115,10 +146,10 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
   const compRef = h.metadata?.companion as string | undefined;
 
   return (
-    <article
+    <div
       className="hadith-card ui-card"
       onClick={() => onExpand(h)}
-      onKeyDown={(e) => e.key === "Enter" && onExpand(h)}
+      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onExpand(h)}
       tabIndex={0}
       role="button"
       aria-label={`عرض تفاصيل الحديث: ${h.title ?? ""}`}
@@ -135,8 +166,10 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
             <span className="hadith-badge hadith-badge--num">#{h.hadith_number}</span>
           )}
         </div>
-        {h.grade && (
+        {h.grade ? (
           <span className={`hadith-grade ${gradeClass(h.grade)}`}>{h.grade}</span>
+        ) : (
+          <span className="hadith-grade hadith-grade--unknown">{GRADE_UNKNOWN_LABEL}</span>
         )}
       </header>
 
@@ -176,7 +209,9 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
         </div>
       )}
 
-      {/* Actions */}
+      {/* Actions. onClick لمنع انتشار النقر إلى البطاقة الأم (التي تفتح تفاصيل
+          الحديث عند النقر) — لا إجراء فعلي هنا يحتاج مكافئ لوحة مفاتيح؛ كل
+          الأزرار الفعلية داخل هذا الصف قابلة للوصول بلوحة المفاتيح أصلًا. */}
       <div className="hadith-card__actions" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
@@ -185,12 +220,11 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
           onClick={handleSave}
           aria-label="حفظ في المفضلة"
         >
-          {saved ? "★" : "☆"}
+          {saved ? <Star size={15} className="icon-star--filled" /> : <Star size={15} />}
         </button>
         <button
           type="button"
           className="hadith-action-btn"
-          title="نسخ"
           onClick={handleCopy}
           aria-label="نسخ الحديث"
         >
@@ -199,14 +233,17 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
         <button
           type="button"
           className="hadith-action-btn"
-          title="عرض التفاصيل"
           onClick={(e) => { e.stopPropagation(); onExpand(h); }}
           aria-label="عرض التفاصيل"
         >
           ↗
         </button>
+        <ShareButtons
+          title={h.title || "حديث نبوي شريف"}
+          url="https://www.majlisilm.com/hadith"
+        />
       </div>
-    </article>
+    </div>
   );
 }
 
@@ -256,8 +293,10 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
             {h.hadith_number && (
               <span className="hadith-badge hadith-badge--num">حديث #{h.hadith_number}</span>
             )}
-            {h.grade && (
+            {h.grade ? (
               <span className={`hadith-grade ${gradeClass(h.grade)}`}>{h.grade}</span>
+            ) : (
+              <span className="hadith-grade hadith-grade--unknown">{GRADE_UNKNOWN_LABEL}</span>
             )}
           </div>
           <button
@@ -302,12 +341,14 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
               <span>{String(meta.takhrij)}</span>
             </div>
           )}
-          {h.grade && (
-            <div className="hadith-modal__meta-item">
-              <strong>درجة الحديث</strong>
+          <div className="hadith-modal__meta-item">
+            <strong>درجة الحديث</strong>
+            {h.grade ? (
               <span className={`hadith-grade ${gradeClass(h.grade)}`}>{h.grade}</span>
-            </div>
-          )}
+            ) : (
+              <span className="hadith-grade hadith-grade--unknown">{GRADE_UNKNOWN_LABEL}</span>
+            )}
+          </div>
           {h.chapter && (
             <div className="hadith-modal__meta-item">
               <strong>الباب</strong>
@@ -363,7 +404,7 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
             id: h.id,
             content_type: "hadith",
             reference_id: h.hadith_number ? String(h.hadith_number) : null,
-            title_ar: h.title ?? h.text.slice(0, 60),
+            title_ar: h.title ?? truncateAtWord(h.text, 60),
             author_name: h.narrator ?? null,
             book_name: h.source_name ?? null,
             is_approved: true,
@@ -373,9 +414,10 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
         />
 
         <footer className="hadith-modal__footer">
-          <p>⚠️ تحقق من صحة الحديث ومصدره قبل النشر أو الاستشهاد به.</p>
+          <p><AlertTriangle size={13} className="inline ml-1" />تحقق من صحة الحديث ومصدره قبل النشر أو الاستشهاد به.</p>
         </footer>
       </div>
+      <AdminQuickEdit section="qa" />
     </div>
   );
 }
@@ -401,7 +443,7 @@ export const HADITH_CLASS_META: Record<HadithClass, {
   sahih: {
     eyebrow: "السنة النبوية الشريفة",
     title: "الأحاديث الصحيحة",
-    subtitle: "أحاديث نبوية صحيحة وحسنة من مصادر موثوقة ومحققة — الأربعون النووية وغيرها.",
+    subtitle: "أحاديث نبوية صحيحة وحسنة من مصادر موثوقة ومحققة، الأربعون النووية وغيرها.",
     empty: "لا توجد أحاديث في هذا التصنيف.",
     countUnit: "حديث صحيح",
   },
@@ -409,19 +451,19 @@ export const HADITH_CLASS_META: Record<HadithClass, {
     eyebrow: "التمييز والتحذير",
     title: "الأحاديث الضعيفة",
     subtitle: "أحاديث ضعيفة الإسناد، تُذكر لبيان درجتها والتحذير من الاحتجاج بها.",
-    empty: "قيد الإضافة — تُضاف الأحاديث الضعيفة من مصادر تخريج موثّقة قريباً بإذن الله.",
+    empty: "قيد الإضافة، تُضاف الأحاديث الضعيفة من مصادر تخريج موثّقة قريباً بإذن الله.",
     countUnit: "حديث ضعيف",
   },
   mawdu: {
     eyebrow: "التحذير والبيان",
     title: "الأحاديث الموضوعة والمكذوبة",
     subtitle: "أحاديث موضوعة ومكذوبة على النبي ﷺ، يُحذَّر منها ولا تجوز نسبتها إليه.",
-    empty: "قيد الإضافة — تُضاف الأحاديث الموضوعة من مصادر تخريج موثّقة قريباً بإذن الله.",
+    empty: "قيد الإضافة، تُضاف الأحاديث الموضوعة من مصادر تخريج موثّقة قريباً بإذن الله.",
     countUnit: "حديث موضوع",
   },
 };
 
-export function HadithSection({ authenticityClass = "sahih" }: { authenticityClass?: HadithClass }) {
+export function HadithSection({ authenticityClass = "sahih", embedded = false }: { authenticityClass?: HadithClass; embedded?: boolean }) {
   const meta = HADITH_CLASS_META[authenticityClass];
   const [items, setItems] = useState<HadithItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -435,7 +477,23 @@ export function HadithSection({ authenticityClass = "sahih" }: { authenticityCla
   useEffect(() => {
     setLoading(true);
     RequestManager.run(`hadith:list:${authenticityClass}`, () => getVerifiedHadith({ limit: 500, authenticityClass }))
-      .then(({ data }) => setItems((data as HadithItem[]) ?? []))
+      .then(async ({ data }) => {
+        const rows = (data as HadithItem[]) ?? [];
+        if (rows.length > 0) { setItems(rows); return; }
+        if (authenticityClass === "sahih") {
+          // Fallback: الأربعون النووية + القدسية من CDN عند فراغ قاعدة البيانات
+          const [nawawi, qudsi] = await Promise.all([
+            fetchAllHadiths("nawawi"),
+            fetchAllHadiths("qudsi"),
+          ]);
+          setItems([
+            ...cdnToHadithItems(nawawi, "nawawi40", "الأربعون النووية"),
+            ...cdnToHadithItems(qudsi, "qudsi", "الأحاديث القدسية"),
+          ]);
+        } else {
+          setItems([]);
+        }
+      })
       .catch(() => setItems([]))
       .finally(() => setLoading(false));
   }, [authenticityClass]);
@@ -487,13 +545,15 @@ export function HadithSection({ authenticityClass = "sahih" }: { authenticityCla
 
       <div className="hadith-filter-section">
         <p className="hadith-filter-label">المجموعة</p>
-        <div className="content-hub-chips">
+        <div className="content-hub-chips" role="tablist" aria-label="تصفية مجموعة الحديث">
           {collections.map((c) => (
             <button
               key={c}
+              role="tab"
               type="button"
               onClick={() => setActiveCollection(c)}
               className={activeCollection === c ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+              aria-selected={activeCollection === c}
             >
               {c === "الكل" ? "الكل" : collectionLabel(c)}
             </button>
@@ -519,13 +579,17 @@ export function HadithSection({ authenticityClass = "sahih" }: { authenticityCla
     </div>
   );
 
-  return (
-    <div className="page-shell content-hub-page ds-page hadith-page">
-      <PageHeader
-        eyebrow={meta.eyebrow}
-        title={meta.title}
-        subtitle={meta.subtitle}
-      />
+  const inner = (
+    <>
+      {embedded ? (
+        <div className="hadith-section-header">
+          <span className="hadith-section-eyebrow">{meta.eyebrow}</span>
+          <h2 className="hadith-section-title">{meta.title}</h2>
+          <p className="hadith-section-subtitle">{meta.subtitle}</p>
+        </div>
+      ) : (
+        <PageHeader eyebrow={meta.eyebrow} title={meta.title} subtitle={meta.subtitle} />
+      )}
 
       <div className="ds-section__head">
         <div className="hadith-stats-row">
@@ -551,13 +615,15 @@ export function HadithSection({ authenticityClass = "sahih" }: { authenticityCla
       </div>
 
       {/* Category chips (quick filter on desktop) */}
-      <div className="hadith-quick-cats">
+      <div className="hadith-quick-cats" role="tablist" aria-label="تصفية موضوع الحديث">
         {CATEGORIES.map((cat) => (
           <button
             key={cat.id}
+            role="tab"
             type="button"
             className={`hadith-quick-cat ${activeCategory === cat.id ? "hadith-quick-cat--active" : ""}`}
             onClick={() => setActiveCategory(cat.id)}
+            aria-selected={activeCategory === cat.id}
           >
             {cat.label}
           </button>
@@ -565,7 +631,7 @@ export function HadithSection({ authenticityClass = "sahih" }: { authenticityCla
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={8} />
       ) : displayItems.length === 0 ? (
         <Empty
           text={
@@ -582,20 +648,19 @@ export function HadithSection({ authenticityClass = "sahih" }: { authenticityCla
         </div>
       )}
 
-      {/* Desktop sidebar filters */}
-      <aside className="ds-filters-panel ds-filters-panel--desktop">
-        <div className="ds-filters-panel__head">
-          <h2>بحث وتصفية</h2>
-        </div>
-        {filtersPanel}
-      </aside>
+      {!embedded && (
+        <aside className="ds-filters-panel ds-filters-panel--desktop">
+          <div className="ds-filters-panel__head">
+            <h2>بحث وتصفية</h2>
+          </div>
+          {filtersPanel}
+        </aside>
+      )}
 
-      {/* Mobile filter sheet */}
-      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
+      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} aria-label="بحث وتصفية">
         {filtersPanel}
       </FilterBottomSheet>
 
-      {/* Detail modal */}
       {expandedHadith && (
         <HadithDetailModal
           h={expandedHadith}
@@ -603,7 +668,7 @@ export function HadithSection({ authenticityClass = "sahih" }: { authenticityCla
         />
       )}
 
-      {!loading && displayItems.length > 0 && (
+      {!embedded && !loading && displayItems.length > 0 && (
         <RecommendationWidget
           context="hadith"
           contentType="hadith"
@@ -612,11 +677,84 @@ export function HadithSection({ authenticityClass = "sahih" }: { authenticityCla
           className="mt-8"
         />
       )}
+    </>
+  );
+
+  if (embedded) {
+    return <section className="hadith-embedded-section">{inner}</section>;
+  }
+
+  return (
+    <div className="page-shell content-hub-page ds-page hadith-page">
+      {inner}
     </div>
   );
 }
 
-// المسار /hadith/sahih — الأحاديث الصحيحة (والقسم الافتراضي)
 export default function HadithPage() {
-  return <HadithSection authenticityClass="sahih" />;
+  useEffect(() => {
+    applyPageSeo({
+      path: "/hadith",
+      title: "الأحاديث النبوية الشريفة | المجلس العلمي",
+      description: "مكتبة الأحاديث النبوية الشريفة مع بيان درجة كل حديث، صحيح وضعيف وموضوع، بمصادر التخريج.",
+      keywords: ["أحاديث نبوية", "الحديث الشريف", "صحيح البخاري", "صحيح مسلم", "الحديث الضعيف"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أقسام الأحاديث النبوية",
+          numberOfItems: 3,
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: HADITH_CLASS_META.sahih.title, description: HADITH_CLASS_META.sahih.subtitle, url: "https://www.majlisilm.com/hadith/sahih" },
+            { "@type": "ListItem", position: 2, name: HADITH_CLASS_META.daif.title, description: HADITH_CLASS_META.daif.subtitle, url: "https://www.majlisilm.com/hadith/daif" },
+            { "@type": "ListItem", position: 3, name: HADITH_CLASS_META.mawdu.title, description: HADITH_CLASS_META.mawdu.subtitle, url: "https://www.majlisilm.com/hadith/mawdu" },
+          ],
+        },
+      ],
+    });
+  }, []);
+
+  return (
+    <div className="page-shell content-hub-page ds-page hadith-page hadith-page--stacked">
+      <PageHeader
+        eyebrow="السنة النبوية الشريفة"
+        title="الأحاديث النبوية"
+        subtitle="الأحاديث الصحيحة والضعيفة والموضوعة، مع بيان درجة كل حديث ومصدره."
+      />
+      <div className="hadith-stacked-sections">
+        <HadithSection authenticityClass="sahih" embedded />
+        <div className="hadith-section-sep" role="separator" aria-hidden="true" />
+        <HadithSection authenticityClass="daif" embedded />
+        <div className="hadith-section-sep" role="separator" aria-hidden="true" />
+        <HadithSection authenticityClass="mawdu" embedded />
+      </div>
+      <RecommendationWidget
+        context="hadith"
+        contentType="hadith"
+        limit={4}
+        layout="row"
+        className="mt-8"
+      />
+
+      {/* بانر الكتب الكاملة */}
+      <div className="hadith-books-banner" dir="rtl">
+        <BookOpen size={20} className="hadith-books-banner__icon" aria-hidden="true" />
+        <div>
+          <strong>الكتب الحديثية الكاملة</strong>
+          <p>تصفّح صحيح البخاري (7563 حديثاً) ومسلم (3033) والسنن الأربعة بالكامل مع البحث والتصفح بالكتاب والباب.</p>
+        </div>
+        <Link href="/hadith/books" className="hadith-books-banner__btn">
+          تصفّح الكتب ←
+        </Link>
+      </div>
+
+      <div className="px-4 pb-6">
+        <SectionQuiz
+          categoryId="hadith"
+          aria-label="اختبر معلوماتك في علوم الحديث"
+          count={4}
+        />
+      </div>
+    </div>
+  );
 }

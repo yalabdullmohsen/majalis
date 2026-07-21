@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
-  "installCommand": "cd ../.. && pnpm install",
+  "installCommand": "corepack enable && cd ../.. && corepack pnpm install --frozen-lockfile --prod=false",
   "buildCommand": "pnpm run build",
   "outputDirectory": "dist",
   "functions": {
@@ -38,6 +38,10 @@
     {
       "path": "/api/cron/auto-content-health",
       "schedule": "15 3 * * *"
+    },
+    {
+      "path": "/api/cron/daily-benefit-rotation",
+      "schedule": "0 * * * *"
     },
     {
       "path": "/api/cron/system-health",
@@ -176,6 +180,198 @@
       "schedule": "0 2 * * 1"
     }
   ],
+  "redirects": [
+    {
+      "source": "/islamic-stories",
+      "destination": "/stories",
+      "permanent": true
+    },
+    {
+      "source": "/learning-path/dashboard",
+      "destination": "/my-learning",
+      "permanent": true
+    },
+    {
+      "source": "/learning-path/book/:bookId",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/learning-path/:scienceSlug",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/learning-path",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/quran",
+      "destination": "/quran-hub",
+      "permanent": true
+    },
+    {
+      "source": "/search/%7Bsearch_term_string%7D",
+      "destination": "/search",
+      "permanent": false
+    },
+    {
+      "source": "/search/%7Bsearch_term_string%7D(.*)",
+      "destination": "/search",
+      "permanent": false
+    },
+    {
+      "source": "/scholars/ibn-al-qayyim-alt",
+      "destination": "/scholars/al-sakhawi",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-uthaymeen-older",
+      "destination": "/scholars/abd-al-karim-al-khudair",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-uthaymin-ext",
+      "destination": "/scholars/ibn-jibreen",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-ghazali-junior",
+      "destination": "/scholars/ibn-ata-allah-al-sakandari",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/amir-al-san'ani",
+      "destination": "/scholars/al-amir-al-sanani",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-qurtubi-scholar",
+      "destination": "/scholars/al-qurtubi",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-mufli",
+      "destination": "/scholars/ibn-muflih",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-nawawi",
+      "destination": "/scholars/nawawi",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-bayhaqi",
+      "destination": "/scholars/bayhaki",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-mubarakfuri-2",
+      "destination": "/scholars/mubarakfuri",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-izz-ibn-abdes-salam",
+      "destination": "/scholars/izz-ibn-abd-al-salam",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-al-mubarak-senior",
+      "destination": "/scholars/ibn-mubarak",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-haytami",
+      "destination": "/scholars/ibn-hajar-haytami",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-khatib-baghdadi",
+      "destination": "/scholars/khatib-baghdadi",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/al-mizzi-2",
+      "destination": "/scholars/al-mizzi",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-juzayy-2",
+      "destination": "/scholars/ibn-juzayy",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-mustasfa",
+      "destination": "/library/book-al-mustasfa-ghazali",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-alfiyya",
+      "destination": "/library/book-alfiyyah",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-saadi",
+      "destination": "/library/book-tafsir-al-saadi",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-tafsir-saadi",
+      "destination": "/library/book-tafsir-al-saadi",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-muqaddimah",
+      "destination": "/library/book-muqaddima-ibn-khaldun",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-tabari-tafsir",
+      "destination": "/library/book-tafsir-tabari",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-baghawi-tafsir",
+      "destination": "/library/book-tafsir-al-baghawi",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-ajurrumiyya",
+      "destination": "/library/book-ajrumiyyah",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-madaarij",
+      "destination": "/library/book-madarij",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-bulugh",
+      "destination": "/library/book-bulugh-maram",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/amir-al-san%27ani",
+      "destination": "/scholars/al-amir-al-sanani",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-al-salah",
+      "destination": "/scholars/ibn-salah",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-abi-shayba",
+      "destination": "/scholars/ibn-abi-shaybah",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/fakhr-al-razi",
+      "destination": "/scholars/fakhr-razi",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/sitemap.xml",
@@ -194,7 +390,7 @@
       "destination": "/favicon.png"
     },
     {
-      "source": "/((?!api/|assets/|feed.xml|sitemap.xml|favicon.ico|favicon.png|robots.txt|version.json).*)",
+      "source": "/((?!api/|assets/|feed.xml|sitemap.xml|favicon.ico|favicon.png|robots.txt|version.json|scholars/|library/|\\.well-known/).*)",
       "destination": "/index.html"
     }
   ],
@@ -202,78 +398,74 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "X-DNS-Prefetch-Control", "value": "on" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(self), geolocation=(self), interest-cohort=()" },
-        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains; preload" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-DNS-Prefetch-Control",
+          "value": "on"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(self), geolocation=(self), interest-cohort=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains; preload"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.alquran.cloud https://api.aladhan.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
+        }
+      ]
+    },
+    {
+      "source": "/.well-known/apple-app-site-association",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
       ]
     },
     {
       "source": "/",
       "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
       ]
     },
     {
       "source": "/index.html",
       "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
       ]
     },
     {
       "source": "/version.json",
       "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/sw.js",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/logo.png",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/logo-icon.png",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/favicon.png",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/favicon.svg",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/site.webmanifest",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/manifest.webmanifest",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/opengraph.jpg",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
       ]
     },
     {
@@ -282,6 +474,69 @@
         {
           "key": "Cache-Control",
           "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/logo.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/logo-icon.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/favicon.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/favicon.svg",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/site.webmanifest",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/manifest.webmanifest",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/opengraph.jpg",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, must-revalidate"
         }
       ]
     },
@@ -306,7 +561,10 @@
     {
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     }
   ]

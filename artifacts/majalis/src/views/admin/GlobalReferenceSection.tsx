@@ -30,7 +30,7 @@ export function GlobalReferenceSection() {
     setReviewRunning(true);
     try {
       const result = await runReferenceReview();
-      showSuccess(`اكتملت المراجعة — ${result.cycle?.issues_found || 0} مشكلة`);
+      showSuccess(`اكتملت المراجعة، ${result.cycle?.issues_found || 0} مشكلة`);
       const d = await fetchReferenceDashboard();
       setDashboard(d);
     } catch {
@@ -43,7 +43,7 @@ export function GlobalReferenceSection() {
   const handleReport = async () => {
     try {
       const report = await generateReferenceReport();
-      if (report) showSuccess(`التقرير جاهز — اكتمال ${report.completion_pct}%`);
+      if (report) showSuccess(`التقرير جاهز، اكتمال ${report.completion_pct}%`);
       else showError("تعذر إنشاء التقرير");
     } catch {
       showError("تعذر إنشاء التقرير");
@@ -54,7 +54,7 @@ export function GlobalReferenceSection() {
     try {
       const results = await auditSources();
       const broken = results.filter((r: any) => !r.ok).length;
-      showSuccess(`فُحص ${results.length} مصدر — ${broken} معطل`);
+      showSuccess(`فُحص ${results.length} مصدر، ${broken} معطل`);
     } catch {
       showError("فشل فحص المصادر");
     }
@@ -64,9 +64,9 @@ export function GlobalReferenceSection() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap", gap: "0.75rem" }}>
-        <h2 style={{ margin: 0 }}>المنظومة المرجعية العالمية</h2>
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+      <div className="grs-header">
+        <h2>المنظومة المرجعية العالمية</h2>
+        <div className="grs-btn-group">
           <button type="button" onClick={handleReview} disabled={reviewRunning}>
             {reviewRunning ? "جاري المراجعة..." : "مراجعة دورية"}
           </button>
@@ -75,20 +75,20 @@ export function GlobalReferenceSection() {
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
+      <div className="grs-stats-grid">
         <StatCard label="العناصر" value={dashboard?.counts?.refs ?? 0} />
         <StatCard label="العلاقات" value={dashboard?.counts?.relations ?? 0} />
         <StatCard label="المصادر" value={dashboard?.counts?.sources ?? 0} />
         <StatCard label="نسبة التوثيق" value={`${dashboard?.verification_pct ?? 0}%`} />
         <StatCard label="جودة متوسطة" value={dashboard?.avg_quality_score ?? 0} />
         <StatCard label="يحتاج مراجعة" value={dashboard?.counts?.needs_review ?? 0} color="#dc2626" />
-        <StatCard label="غير مكتمل" value={dashboard?.counts?.incomplete ?? 0} color="#f59e0b" />
+        <StatCard label="غير مكتمل" value={dashboard?.counts?.incomplete ?? 0} color="#173D35" />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem", marginBottom: "2rem" }}>
+      <div className="grs-panels-grid">
         <Panel title="المصادر الموثوقة">
           {(dashboard?.sources || []).map((s) => (
-            <div key={s.slug} style={{ fontSize: "0.8125rem", padding: "0.25rem 0", display: "flex", justifyContent: "space-between" }}>
+            <div key={s.slug} className="grs-source-row">
               <span>{s.name}</span>
               <span>{s.trust_level}%</span>
             </div>
@@ -104,24 +104,22 @@ export function GlobalReferenceSection() {
       </div>
 
       {roadmap && (
-        <section style={{ marginTop: "2rem" }}>
-          <h3 style={{ fontSize: "1rem", fontWeight: 700, marginBottom: "1rem" }}>خارطة الطريق (3 سنوات)</h3>
+        <section className="grs-roadmap">
+          <h3 className="grs-roadmap-h3">خارطة الطريق (3 سنوات)</h3>
           {roadmap.phases?.map((phase: any) => (
-            <div key={phase.year} style={{ marginBottom: "1.5rem", padding: "1rem", borderRadius: "0.5rem", border: "1px solid var(--line)" }}>
-              <h4 style={{ fontWeight: 700, marginBottom: "0.5rem" }}>السنة {phase.year}: {phase.title}</h4>
-              <ul style={{ margin: 0, paddingInlineStart: "1.25rem", fontSize: "0.8125rem" }}>
+            <div key={phase.year} className="grs-phase">
+              <h4 className="grs-phase-h4">السنة {phase.year}: {phase.title}</h4>
+              <ul className="grs-phase-ul">
                 {phase.items?.map((item: any) => (
-                  <li key={item.task} style={{ marginBottom: "0.25rem" }}>
+                  <li key={item.task} className="grs-phase-li">
                     {item.task}
-                    <span style={{ color: "var(--ink-soft)", marginRight: "0.5rem" }}>({item.benefit})</span>
+                    <span className="grs-benefit">({item.benefit})</span>
                   </li>
                 ))}
               </ul>
             </div>
           ))}
-          <p style={{ fontSize: "0.75rem", color: "var(--ink-soft)", marginTop: "1rem" }}>
-            {roadmap.principle}
-          </p>
+          <p className="grs-roadmap-note">{roadmap.principle}</p>
         </section>
       )}
     </div>
@@ -130,17 +128,17 @@ export function GlobalReferenceSection() {
 
 function StatCard({ label, value, color }: { label: string; value: string | number; color?: string }) {
   return (
-    <div style={{ padding: "1rem", borderRadius: "0.5rem", border: "1px solid var(--line)" }}>
-      <div style={{ fontSize: "0.75rem", color: "var(--ink-soft)" }}>{label}</div>
-      <div style={{ fontSize: "1.5rem", fontWeight: 700, color: color || "inherit" }}>{value}</div>
+    <div className="grs-stat" style={{ "--grs-val-color": color } as React.CSSProperties}>
+      <div className="grs-stat__label">{label}</div>
+      <div className="grs-stat__value">{value}</div>
     </div>
   );
 }
 
 function Panel({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div style={{ padding: "1rem", borderRadius: "0.5rem", border: "1px solid var(--line)" }}>
-      <h3 style={{ fontSize: "0.875rem", fontWeight: 700, marginBottom: "0.75rem" }}>{title}</h3>
+    <div className="grs-panel">
+      <h3 className="grs-panel-h3">{title}</h3>
       {children}
     </div>
   );
@@ -148,7 +146,7 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
 
 function Row({ label, value }: { label: string; value: string }) {
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8125rem", padding: "0.25rem 0" }}>
+    <div className="grs-row">
       <span>{label}</span>
       <span>{value}</span>
     </div>

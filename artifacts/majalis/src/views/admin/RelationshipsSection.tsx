@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import {
   type KnowledgeRelationship,
   type KnowledgeRelType,
@@ -11,21 +12,20 @@ import {
 import { useAdminShell } from "./AdminShell";
 
 const SOURCE_TYPES: { value: KnowledgeSourceType; label: string }[] = [
-  { value: "scholar", label: "عالم / شيخ" },
-  { value: "lesson",  label: "درس" },
-  { value: "book",    label: "كتاب" },
-  { value: "fatwa",   label: "فتوى" },
-  { value: "fawaid",  label: "فائدة" },
-  { value: "question",label: "سؤال" },
+  { value: "scholar", label: "\u0639\u0627\u0644\u0645 / \u0634\u064a\u062e" },
+  { value: "lesson",  label: "\u062f\u0631\u0633" },
+  { value: "book",    label: "\u0643\u062a\u0627\u0628" },
+  { value: "fawaid",  label: "\u0641\u0627\u0626\u062f\u0629" },
+  { value: "question",label: "\u0633\u0624\u0627\u0644" },
 ];
 
 const REL_TYPES: { value: KnowledgeRelType; label: string }[] = [
-  { value: "شيخ_تلميذ",   label: "شيخ → تلميذ" },
-  { value: "مؤلف_كتاب",   label: "مؤلف → كتاب" },
-  { value: "شرح_لكتاب",   label: "شرح → كتاب" },
-  { value: "فتوى_في_باب", label: "فتوى في باب فقهي" },
-  { value: "درس_عن_كتاب", label: "درس عن كتاب" },
-  { value: "مرتبط",       label: "مرتبط عمومًا" },
+  { value: "\u0634\u064a\u062e_\u062a\u0644\u0645\u064a\u0630",   label: "\u0634\u064a\u062e \u2192 \u062a\u0644\u0645\u064a\u0630" },
+  { value: "\u0645\u0624\u0644\u0641_\u0643\u062a\u0627\u0628",   label: "\u0645\u0624\u0644\u0641 \u2192 \u0643\u062a\u0627\u0628" },
+  { value: "\u0634\u0631\u062d_\u0644\u0643\u062a\u0627\u0628",   label: "\u0634\u0631\u062d \u2192 \u0643\u062a\u0627\u0628" },
+  { value: "\u0641\u062a\u0648\u0649_\u0641\u064a_\u0628\u0627\u0628", label: "\u0641\u062a\u0648\u0649 \u0641\u064a \u0628\u0627\u0628 \u0641\u0642\u0647\u064a" },
+  { value: "\u062f\u0631\u0633_\u0639\u0646_\u0643\u062a\u0627\u0628", label: "\u062f\u0631\u0633 \u0639\u0646 \u0643\u062a\u0627\u0628" },
+  { value: "\u0645\u0631\u062a\u0628\u0637",       label: "\u0645\u0631\u062a\u0628\u0637 \u0639\u0645\u0648\u0645\u064b\u0627" },
 ];
 
 const EMPTY_FORM = {
@@ -33,7 +33,7 @@ const EMPTY_FORM = {
   source_id: "",
   target_type: "lesson" as KnowledgeSourceType,
   target_id: "",
-  relationship_type: "مرتبط" as KnowledgeRelType,
+  relationship_type: "\u0645\u0631\u062a\u0628\u0637" as KnowledgeRelType,
   label: "",
   is_verified: false,
   source_reference: "",
@@ -85,7 +85,7 @@ export function RelationshipsSection() {
 
   async function handleSave() {
     if (!form.source_id.trim() || !form.target_id.trim()) {
-      showError("يجب إدخال معرّف المصدر والهدف");
+      showError("\u064a\u062c\u0628 \u0625\u062f\u062e\u0627\u0644 \u0645\u0639\u0631\u0651\u0641 \u0627\u0644\u0645\u0635\u062f\u0631 \u0648\u0627\u0644\u0647\u062f\u0641");
       return;
     }
     setSaving(true);
@@ -101,41 +101,36 @@ export function RelationshipsSection() {
     });
     setSaving(false);
     if (result.ok) {
-      showSuccess(editId ? "تم تحديث العلاقة" : "تم إضافة العلاقة");
+      showSuccess(editId ? "\u062a\u0645 \u062a\u062d\u062f\u064a\u062b \u0627\u0644\u0639\u0644\u0627\u0642\u0629" : "\u062a\u0645 \u0625\u0636\u0627\u0641\u0629 \u0627\u0644\u0639\u0644\u0627\u0642\u0629");
       resetForm();
       await load();
     } else {
-      showError(`فشل الحفظ: ${result.error ?? "خطأ غير معروف"}`);
+      showError(`\u0641\u0634\u0644 \u0627\u0644\u062d\u0641\u0638: ${result.error ?? "\u062e\u0637\u0623 \u063a\u064a\u0631 \u0645\u0639\u0631\u0648\u0641"}`);
     }
   }
 
   async function handleToggleVerified(r: KnowledgeRelationship) {
     const ok = await setKnowledgeRelVerified(r.id, !r.is_verified);
     if (ok) {
-      showSuccess(r.is_verified ? "تم إلغاء التحقق" : "تم التحقق من العلاقة");
+      showSuccess(r.is_verified ? "\u062a\u0645 \u0625\u0644\u063a\u0627\u0621 \u0627\u0644\u062a\u062d\u0642\u0642" : "\u062a\u0645 \u0627\u0644\u062a\u062d\u0642\u0642 \u0645\u0646 \u0627\u0644\u0639\u0644\u0627\u0642\u0629");
       await load();
     } else {
-      showError("فشل تغيير حالة التحقق");
+      showError("\u0641\u0634\u0644 \u062a\u063a\u064a\u064a\u0631 \u062d\u0627\u0644\u0629 \u0627\u0644\u062a\u062d\u0642\u0642");
     }
   }
 
   async function handleDelete(r: KnowledgeRelationship) {
-    if (!window.confirm(`حذف العلاقة: ${r.source_id} → ${r.target_id}?`)) return;
+    if (!window.confirm(`\u062d\u0630\u0641 \u0627\u0644\u0639\u0644\u0627\u0642\u0629: ${r.source_id} \u2192 ${r.target_id}?`)) return;
     const ok = await deleteKnowledgeRelationship(r.id);
-    if (ok) { showSuccess("تم الحذف"); await load(); }
-    else showError("فشل الحذف");
+    if (ok) { showSuccess("\u062a\u0645 \u0627\u0644\u062d\u0630\u0641"); await load(); }
+    else showError("\u0641\u0634\u0644 \u0627\u0644\u062d\u0630\u0641");
   }
 
   const filtered = rows.filter((r) => {
     if (filterVerified === "verified" && !r.is_verified) return false;
     if (filterVerified === "pending" && r.is_verified) return false;
     if (search) {
-      const s = search.toLowerCase();
-      return (
-        r.source_id.toLowerCase().includes(s) ||
-        r.target_id.toLowerCase().includes(s) ||
-        (r.label ?? "").toLowerCase().includes(s)
-      );
+      return arabicMatchAny([r.source_id, r.target_id, r.label ?? ""], search);
     }
     return true;
   });
@@ -147,183 +142,154 @@ export function RelationshipsSection() {
   };
 
   const F = form;
-  const fieldStyle: React.CSSProperties = {
-    width: "100%", padding: "0.5rem 0.75rem", border: "1px solid #d1d5db",
-    borderRadius: "0.375rem", fontSize: "0.875rem", fontFamily: "inherit",
-    background: "#fff",
-  };
-  const labelStyle: React.CSSProperties = {
-    display: "block", fontSize: "0.75rem", fontWeight: 600, marginBottom: "0.25rem",
-    color: "#374151",
-  };
-  const cardStyle: React.CSSProperties = {
-    background: "#fff", border: "1px solid #e5e7eb", borderRadius: "0.5rem",
-    padding: "1rem", display: "flex", flexDirection: "column", gap: "0.5rem",
-  };
 
   return (
-    <div style={{ direction: "rtl", maxWidth: "900px" }}>
-      <h2 style={{ fontSize: "1.25rem", fontWeight: 700, marginBottom: "1.5rem", color: "#065f46" }}>
-        الرسم البياني المعرفي — العلاقات
+    <div className="rel-page">
+      <h2 className="rel-title">
+        \u0627\u0644\u0631\u0633\u0645 \u0627\u0644\u0628\u064a\u0627\u0646\u064a \u0627\u0644\u0645\u0639\u0631\u0641\u064a \u2014 \u0627\u0644\u0639\u0644\u0627\u0642\u0627\u062a
       </h2>
 
-      {/* Stats */}
-      <div style={{ display: "flex", gap: "1rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
+      <div className="rel-stats-row">
         {[
-          { label: "الإجمالي", value: stats.total },
-          { label: "محققة", value: stats.verified },
-          { label: "قيد المراجعة", value: stats.pending },
+          { label: "\u0627\u0644\u0625\u062c\u0645\u0627\u0644\u064a", value: stats.total },
+          { label: "\u0645\u062d\u0642\u0642\u0629", value: stats.verified },
+          { label: "\u0642\u064a\u062f \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629", value: stats.pending },
         ].map((s) => (
-          <div key={s.label} style={{
-            background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "0.5rem",
-            padding: "0.75rem 1.25rem", textAlign: "center", minWidth: "100px",
-          }}>
-            <div style={{ fontSize: "1.5rem", fontWeight: 700, color: "#065f46" }}>{s.value}</div>
-            <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>{s.label}</div>
+          <div key={s.label} className="rel-stat">
+            <div className="rel-stat__value">{s.value}</div>
+            <div className="rel-stat__label">{s.label}</div>
           </div>
         ))}
       </div>
 
-      {/* Form */}
-      <div style={{ background: "#f9fafb", border: "1px solid #e5e7eb", borderRadius: "0.5rem", padding: "1.25rem", marginBottom: "1.5rem" }}>
-        <h3 style={{ fontSize: "1rem", fontWeight: 700, marginBottom: "1rem", color: "#1f2937" }}>
-          {editId ? "تعديل العلاقة" : "إضافة علاقة جديدة"}
+      <div className="rel-form">
+        <h3 className="rel-form-h3">
+          {editId ? "\u062a\u0639\u062f\u064a\u0644 \u0627\u0644\u0639\u0644\u0627\u0642\u0629" : "\u0625\u0636\u0627\u0641\u0629 \u0639\u0644\u0627\u0642\u0629 \u062c\u062f\u064a\u062f\u0629"}
         </h3>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "0.75rem" }}>
-          <div>
-            <label style={labelStyle}>نوع المصدر</label>
-            <select style={fieldStyle} value={F.source_type}
+        <div className="rel-form-grid">
+          <div className="rel-field">
+            <label className="rel-label" htmlFor="rel-source-type">\u0646\u0648\u0639 \u0627\u0644\u0645\u0635\u062f\u0631</label>
+            <select id="rel-source-type" className="rel-select" value={F.source_type}
               onChange={(e) => setForm((p) => ({ ...p, source_type: e.target.value as KnowledgeSourceType }))}>
               {SOURCE_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
             </select>
           </div>
-          <div>
-            <label style={labelStyle}>معرّف المصدر (ID)</label>
-            <input style={fieldStyle} value={F.source_id} placeholder="uuid أو external_key..."
+          <div className="rel-field">
+            <label className="rel-label" htmlFor="rel-source-id">\u0645\u0639\u0631\u0651\u0641 \u0627\u0644\u0645\u0635\u062f\u0631 (ID)</label>
+            <input id="rel-source-id" className="rel-input" value={F.source_id} placeholder="uuid \u0623\u0648 external_key..."
               onChange={(e) => setForm((p) => ({ ...p, source_id: e.target.value }))} />
           </div>
-          <div>
-            <label style={labelStyle}>نوع الهدف</label>
-            <select style={fieldStyle} value={F.target_type}
+          <div className="rel-field">
+            <label className="rel-label" htmlFor="rel-target-type">\u0646\u0648\u0639 \u0627\u0644\u0647\u062f\u0641</label>
+            <select id="rel-target-type" className="rel-select" value={F.target_type}
               onChange={(e) => setForm((p) => ({ ...p, target_type: e.target.value as KnowledgeSourceType }))}>
               {SOURCE_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
             </select>
           </div>
-          <div>
-            <label style={labelStyle}>معرّف الهدف (ID)</label>
-            <input style={fieldStyle} value={F.target_id} placeholder="uuid أو external_key..."
+          <div className="rel-field">
+            <label className="rel-label" htmlFor="rel-target-id">\u0645\u0639\u0631\u0651\u0641 \u0627\u0644\u0647\u062f\u0641 (ID)</label>
+            <input id="rel-target-id" className="rel-input" value={F.target_id} placeholder="uuid \u0623\u0648 external_key..."
               onChange={(e) => setForm((p) => ({ ...p, target_id: e.target.value }))} />
           </div>
-          <div>
-            <label style={labelStyle}>نوع العلاقة</label>
-            <select style={fieldStyle} value={F.relationship_type}
+          <div className="rel-field">
+            <label className="rel-label" htmlFor="rel-relationship-type">\u0646\u0648\u0639 \u0627\u0644\u0639\u0644\u0627\u0642\u0629</label>
+            <select id="rel-relationship-type" className="rel-select" value={F.relationship_type}
               onChange={(e) => setForm((p) => ({ ...p, relationship_type: e.target.value as KnowledgeRelType }))}>
               {REL_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
             </select>
           </div>
-          <div>
-            <label style={labelStyle}>تسمية مختصرة (اختياري)</label>
-            <input style={fieldStyle} value={F.label} placeholder="شرح ابن عثيمين لمتن الآجرومية..."
+          <div className="rel-field">
+            <label className="rel-label" htmlFor="rel-label-input">\u062a\u0633\u0645\u064a\u0629 \u0645\u062e\u062a\u0635\u0631\u0629 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)</label>
+            <input id="rel-label-input" className="rel-input" value={F.label} placeholder="\u0634\u0631\u062d \u0627\u0628\u0646 \u0639\u062b\u064a\u0645\u064a\u0646..."
               onChange={(e) => setForm((p) => ({ ...p, label: e.target.value }))} />
           </div>
-          <div style={{ gridColumn: "1 / -1" }}>
-            <label style={labelStyle}>المصدر والمرجع (اختياري)</label>
-            <input style={fieldStyle} value={F.source_reference} placeholder="كتاب السير / الطبقات الكبرى..."
+          <div className="rel-field rel-full-col">
+            <label className="rel-label" htmlFor="rel-source-reference">\u0627\u0644\u0645\u0635\u062f\u0631 \u0648\u0627\u0644\u0645\u0631\u062c\u0639 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)</label>
+            <input id="rel-source-reference" className="rel-input" value={F.source_reference} placeholder="\u0643\u062a\u0627\u0628 \u0627\u0644\u0633\u064a\u0631 / \u0627\u0644\u0637\u0628\u0642\u0627\u062a \u0627\u0644\u0643\u0628\u0631\u0649..."
               onChange={(e) => setForm((p) => ({ ...p, source_reference: e.target.value }))} />
           </div>
-          <div style={{ gridColumn: "1 / -1", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <div className="rel-verified-row">
             <input type="checkbox" id="is_verified_chk" checked={F.is_verified}
               onChange={(e) => setForm((p) => ({ ...p, is_verified: e.target.checked }))} />
-            <label htmlFor="is_verified_chk" style={{ fontSize: "0.875rem", cursor: "pointer" }}>
-              محققة ومعتمدة
+            <label htmlFor="is_verified_chk" className="rel-verified-lbl">
+              \u0645\u062d\u0642\u0642\u0629 \u0648\u0645\u0639\u062a\u0645\u062f\u0629
             </label>
           </div>
         </div>
-        <div style={{ display: "flex", gap: "0.75rem", marginTop: "1rem" }}>
-          <button type="button" disabled={saving} onClick={handleSave}
-            style={{ padding: "0.625rem 1.5rem", background: "#065f46", color: "#fff", border: "none",
-              borderRadius: "0.375rem", cursor: "pointer", fontWeight: 600, fontSize: "0.875rem",
-              fontFamily: "inherit", opacity: saving ? 0.7 : 1 }}>
-            {saving ? "جارٍ الحفظ..." : editId ? "تحديث" : "إضافة"}
+        <div className="rel-form-actions">
+          <button type="button" disabled={saving} onClick={handleSave} className="rel-save-btn">
+            {saving ? "\u062c\u0627\u0631\u0650 \u0627\u0644\u062d\u0641\u0638..." : editId ? "\u062a\u062d\u062f\u064a\u062b" : "\u0625\u0636\u0627\u0641\u0629"}
           </button>
           {editId && (
-            <button type="button" onClick={resetForm}
-              style={{ padding: "0.625rem 1rem", background: "#f3f4f6", color: "#374151", border: "1px solid #d1d5db",
-                borderRadius: "0.375rem", cursor: "pointer", fontSize: "0.875rem", fontFamily: "inherit" }}>
-              إلغاء
+            <button type="button" onClick={resetForm} className="rel-cancel-btn">
+              \u0625\u0644\u063a\u0627\u0621
             </button>
           )}
         </div>
       </div>
 
-      {/* Filters */}
-      <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1rem", flexWrap: "wrap", alignItems: "center" }}>
-        <input style={{ ...fieldStyle, maxWidth: "260px" }} value={search} placeholder="بحث بالمعرّف أو التسمية..."
+      <div className="rel-filters">
+        <input className="rel-search" value={search} placeholder="\u0628\u062d\u062b \u0628\u0627\u0644\u0645\u0639\u0631\u0651\u0641 \u0623\u0648 \u0627\u0644\u062a\u0633\u0645\u064a\u0629..."
           onChange={(e) => setSearch(e.target.value)} />
         {(["all", "verified", "pending"] as const).map((v) => (
           <button key={v} type="button" onClick={() => setFilterVerified(v)}
-            style={{ padding: "0.375rem 0.875rem", border: "1px solid #d1d5db", borderRadius: "999px",
-              background: filterVerified === v ? "#065f46" : "#fff",
-              color: filterVerified === v ? "#fff" : "#374151",
-              cursor: "pointer", fontSize: "0.8125rem", fontFamily: "inherit" }}>
-            {v === "all" ? "الكل" : v === "verified" ? "محققة" : "قيد المراجعة"}
+            className="rel-filter-btn"
+            style={filterVerified === v ? { "--rel-fb-bg": "#065f46", "--rel-fb-color": "#fff" } as React.CSSProperties : undefined}>
+            {v === "all" ? "\u0627\u0644\u0643\u0644" : v === "verified" ? "\u0645\u062d\u0642\u0642\u0629" : "\u0642\u064a\u062f \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629"}
           </button>
         ))}
       </div>
 
-      {/* Table */}
       {loading ? (
-        <p style={{ color: "#6b7280", textAlign: "center", padding: "2rem" }}>جارٍ التحميل...</p>
+        <p className="rel-empty">\u062c\u0627\u0631\u0650 \u0627\u0644\u062a\u062d\u0645\u064a\u0644...</p>
       ) : filtered.length === 0 ? (
-        <p style={{ color: "#6b7280", textAlign: "center", padding: "2rem" }}>
+        <p className="rel-empty">
           {rows.length === 0
-            ? "لا توجد علاقات بعد — أضف أول علاقة أعلاه."
-            : "لا نتائج للفلتر المحدد."}
+            ? "\u0644\u0627 \u062a\u0648\u062c\u062f \u0639\u0644\u0627\u0642\u0627\u062a \u0628\u0639\u062f \u2014 \u0623\u0636\u0641 \u0623\u0648\u0644 \u0639\u0644\u0627\u0642\u0629 \u0623\u0639\u0644\u0627\u0647."
+            : "\u0644\u0627 \u0646\u062a\u0627\u0626\u062c \u0644\u0644\u0641\u0644\u062a\u0631 \u0627\u0644\u0645\u062d\u062f\u062f."}
         </p>
       ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <div className="rel-list">
           {filtered.map((r) => (
-            <div key={r.id} style={cardStyle}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem", flexWrap: "wrap" }}>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem", flex: 1 }}>
-                  <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
-                    <span style={{ fontSize: "0.7rem", background: "#e0f2fe", color: "#0369a1", borderRadius: "4px", padding: "2px 6px" }}>
+            <div key={r.id} className="rel-card">
+              <div className="rel-card-body">
+                <div className="rel-card-info">
+                  <div className="rel-card-tags">
+                    <span className="rel-source-tag">
                       {SOURCE_TYPES.find((t) => t.value === r.source_type)?.label ?? r.source_type}
                     </span>
-                    <code style={{ fontSize: "0.75rem", color: "#374151" }}>{r.source_id.slice(0, 20)}{r.source_id.length > 20 ? "…" : ""}</code>
-                    <span style={{ color: "#9ca3af", fontSize: "0.75rem" }}>
+                    <code className="rel-code">{r.source_id.slice(0, 20)}{r.source_id.length > 20 ? "\u2026" : ""}</code>
+                    <span className="rel-rel-type">
                       {REL_TYPES.find((t) => t.value === r.relationship_type)?.label ?? r.relationship_type}
                     </span>
-                    <span style={{ fontSize: "0.7rem", background: "#fef3c7", color: "#92400e", borderRadius: "4px", padding: "2px 6px" }}>
+                    <span className="rel-target-tag">
                       {SOURCE_TYPES.find((t) => t.value === r.target_type)?.label ?? r.target_type}
                     </span>
-                    <code style={{ fontSize: "0.75rem", color: "#374151" }}>{r.target_id.slice(0, 20)}{r.target_id.length > 20 ? "…" : ""}</code>
+                    <code className="rel-code">{r.target_id.slice(0, 20)}{r.target_id.length > 20 ? "\u2026" : ""}</code>
                   </div>
-                  {r.label && <span style={{ fontSize: "0.8125rem", color: "#374151", fontWeight: 500 }}>{r.label}</span>}
-                  {r.source_reference && <span style={{ fontSize: "0.75rem", color: "#6b7280" }}>المرجع: {r.source_reference}</span>}
+                  {r.label && <span className="rel-label-text">{r.label}</span>}
+                  {r.source_reference && <span className="rel-ref-text">\u0627\u0644\u0645\u0631\u062c\u0639: {r.source_reference}</span>}
                 </div>
-                <div style={{ display: "flex", gap: "0.5rem", flexShrink: 0, alignItems: "center" }}>
-                  <span style={{
-                    fontSize: "0.7rem", borderRadius: "999px", padding: "2px 8px",
-                    background: r.is_verified ? "#d1fae5" : "#fef9c3",
-                    color: r.is_verified ? "#065f46" : "#92400e",
-                  }}>
-                    {r.is_verified ? "محققة" : "قيد المراجعة"}
+                <div className="rel-card-actions">
+                  <span
+                    className="rel-verified-badge"
+                    style={{
+                      "--rel-vb-bg": r.is_verified ? "#d1fae5" : "#E6EDE9",
+                      "--rel-vb-color": r.is_verified ? "#065f46" : "#173D35",
+                    } as React.CSSProperties}
+                  >
+                    {r.is_verified ? "\u0645\u062d\u0642\u0642\u0629" : "\u0642\u064a\u062f \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629"}
                   </span>
                   <button type="button" onClick={() => handleToggleVerified(r)}
-                    style={{ padding: "0.25rem 0.625rem", fontSize: "0.75rem", background: r.is_verified ? "#fef3c7" : "#d1fae5",
-                      border: "1px solid #d1d5db", borderRadius: "0.25rem", cursor: "pointer", fontFamily: "inherit" }}>
-                    {r.is_verified ? "إلغاء التحقق" : "تحقق"}
+                    className="rel-toggle-btn"
+                    style={{ "--rel-tb-bg": r.is_verified ? "rgba(23,61,53,0.08)" : "#d1fae5" } as React.CSSProperties}>
+                    {r.is_verified ? "\u0625\u0644\u063a\u0627\u0621 \u0627\u0644\u062a\u062d\u0642\u0642" : "\u062a\u062d\u0642\u0642"}
                   </button>
-                  <button type="button" onClick={() => startEdit(r)}
-                    style={{ padding: "0.25rem 0.625rem", fontSize: "0.75rem", background: "#eff6ff",
-                      border: "1px solid #bfdbfe", borderRadius: "0.25rem", cursor: "pointer", fontFamily: "inherit", color: "#1d4ed8" }}>
-                    تعديل
+                  <button type="button" onClick={() => startEdit(r)} className="rel-edit-btn">
+                    \u062a\u0639\u062f\u064a\u0644
                   </button>
-                  <button type="button" onClick={() => handleDelete(r)}
-                    style={{ padding: "0.25rem 0.625rem", fontSize: "0.75rem", background: "#fee2e2",
-                      border: "1px solid #fecaca", borderRadius: "0.25rem", cursor: "pointer", fontFamily: "inherit", color: "#dc2626" }}>
-                    حذف
+                  <button type="button" onClick={() => handleDelete(r)} className="rel-del-btn">
+                    \u062d\u0630\u0641
                   </button>
                 </div>
               </div>

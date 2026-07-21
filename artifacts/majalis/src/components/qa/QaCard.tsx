@@ -1,13 +1,20 @@
 import { displayText } from "@/lib/display-text";
-import { isDemoId } from "@/lib/demo-content";
-import { C, QA_RULING_COLORS } from "@/lib/theme";
+import { isDemoId } from "@/lib/demo-id";
 import { HighlightedContentCard } from "@/components/reading/HighlightedContentCard";
 import { getQaViewCount } from "@/lib/qa-utils";
 
+const QA_RULING_MOD: Record<string, string> = {
+  "حلال":  "qa-ruling--halal",
+  "مباح":  "qa-ruling--mubah",
+  "سنة":   "qa-ruling--sunna",
+  "مندوب": "qa-ruling--mandub",
+  "مكروه": "qa-ruling--makruh",
+  "حرام":  "qa-ruling--haram",
+};
+
 function RulingBadge({ ruling }: { ruling: string }) {
-  const c = QA_RULING_COLORS[ruling] || { bg: C.parchmentDeep, text: C.inkSoft };
   return (
-    <span className="qa-badge" style={{ background: c.bg, color: c.text }}>
+    <span className={`qa-badge ${QA_RULING_MOD[ruling] ?? ""}`}>
       {ruling}
     </span>
   );
@@ -59,6 +66,8 @@ export function QaCard({ item, defaultOpen = false }: Props) {
       defaultOpen={defaultOpen}
       headerAsButton
       className="qa-card"
+      adminEditType="qa"
+      adminEditData={{ question: item.question, answer: item.answer || "", category: catName || "" }}
     />
   );
 }

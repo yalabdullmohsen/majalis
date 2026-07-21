@@ -58,3 +58,7 @@ export async function rejectContentDraft(draftId: string) {
 export async function validateDraftExtracted(extracted: Record<string, unknown>) {
   return postSmartCms({ action: "validate-draft", extracted });
 }
+
+export async function extractFromRawText(rawText: string, hint?: string) {
+  return postSmartCms({ action: "extract-from-text", rawText, hint });
+}

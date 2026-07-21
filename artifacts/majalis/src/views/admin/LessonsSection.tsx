@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
+import { AlertTriangle } from "lucide-react";
 import { Link } from "wouter";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { adminGetAllLessons, adminUpsertLesson, adminDeleteLesson, adminGetSheikhs, upsertSeedLessonsToDb } from "@/lib/supabase";
 import { parseTimeToMinutes } from "@/lib/lesson-time";
 import { invalidateLessonsCache } from "@/lib/lessons-service";
 import { sanitizeText } from "@/lib/sanitize";
-import { C, GOVERNORATES } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { GOVERNORATES } from "@/lib/theme";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { adminListLoad } from "@/lib/admin-list-load";
-import { AdminModal, Field, FieldRow, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { AdminModal, Field, FieldRow } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
 const CATEGORIES = ["تفسير", "فقه", "عقيدة", "حديث", "سيرة", "تجويد", "أخرى"];
 const VENUE_TYPES = ["مسجد", "مجلس", "ديوان", "مزرعة", "استراحة", "مركز", "جامعة", "أخرى"] as const;
 const WEEK_DAYS   = ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"] as const;
 
-// كلمات تدل على موضوع/عنوان وليس اسم شيخ
 const TOPIC_HINT_RE = /^(فضل|حكم|أحكام|شرح|تفسير|أصول|أحاديث|السيرة|الفقه|العقيدة|كتاب|موضوع|بحث|أهمية|منهج|آداب|مسائل|فوائد|دروس|حقوق|واجبات|أساسيات)/u;
 
 function looksLikeTopic(name: string): boolean {
@@ -22,11 +23,10 @@ function looksLikeTopic(name: string): boolean {
   return TOPIC_HINT_RE.test(name.trim());
 }
 
-/** استخراج نوع المكان واسمه من قيمة حقل mosque المخزَّنة */
 function parseVenueFromMosque(mosque: string): { type: string; name: string } {
   const raw = (mosque || "").trim();
   for (const t of VENUE_TYPES) {
-    if (t !== "مسجد" && raw.startsWith(`${t} — `)) {
+    if (t !== "مسجد" && raw.startsWith(`${t}، `)) {
       return { type: t, name: raw.slice(t.length + 3) };
     }
   }
@@ -37,8 +37,8 @@ const AUDIENCE = ["الكل", "رجال", "نساء", "أطفال"];
 const DELIVERY = ["حضور فقط", "بث مباشر", "كلاهما"];
 const STATUSES: Record<string, string> = { approved: "معتمد", pending: "معلّق", rejected: "مرفوض" };
 const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
-  approved: { bg: "#D1FAE5", text: C.emeraldDeep },
-  pending:  { bg: "#FEF3C7", text: "#92400E" },
+  approved: { bg: "#D1FAE5", text: "var(--majalis-emerald-deep)" },
+  pending:  { bg: "rgba(23,61,53,0.08)", text: "#173D35" },
   rejected: { bg: "#FEE2E2", text: "#991B1B" },
 };
 const EMPTY: any = {
@@ -60,13 +60,8 @@ const EMPTY: any = {
   status: "approved",
 };
 
-const BTN_EDIT: React.CSSProperties = { padding: "0.25rem 0.625rem", borderRadius: "0.25rem", border: `1px solid ${C.line}`, background: C.panel, color: C.emeraldDeep, cursor: "pointer", fontSize: "0.75rem", fontFamily: "inherit" };
-const BTN_DEL: React.CSSProperties = { ...BTN_EDIT, color: "#dc2626" };
-
-/** تحويل نص الوقت العربي إلى صيغة HH:MM لمنتقي الوقت */
 function toHHMM(raw: string): string {
   if (!raw?.trim()) return "";
-  // إذا كانت الصيغة HH:MM أو H:MM مسبقاً
   if (/^\d{1,2}:\d{2}$/.test(raw.trim())) {
     const [h, m] = raw.trim().split(":").map(Number);
     return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
@@ -82,7 +77,10 @@ export function LessonsSection() {
   const [items, setItems] = useState<any[]>([]);
   const [sheikhs, setSheikhs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("q") || "";
+  });
   const [statusFilter, setStatusFilter] = useState("all");
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<any>(EMPTY);
@@ -135,7 +133,6 @@ export function LessonsSection() {
       return;
     }
     if (!data || data.length === 0) {
-      // RLS منع الحذف صامتاً (لم يُحذف أي صف) — غالباً صلاحية المشرف غير مُفعّلة على الخادم
       alert("لم يُحذف الدرس. تأكّد أنك مسجّل الدخول بحساب مشرف معتمد؛ إن استمرّت المشكلة فصلاحية الإشراف قد تكون غير مُفعّلة على مستوى قاعدة البيانات.");
       return;
     }
@@ -143,17 +140,20 @@ export function LessonsSection() {
     load();
   };
   const handleSave = async () => {
-    if (!form.title.trim()) return alert("عنوان الدرس مطلوب");
+    if (!form.title?.trim()) {
+      form.title = form.speaker_name?.trim()
+        ? `درس الشيخ ${form.speaker_name.trim()}`
+        : `درس، ${new Date().toLocaleDateString("ar-SA")}`;
+    }
     setSaving(true);
-    // دمج نوع المكان مع اسمه في حقل mosque
     const venueName = (form.mosque || "").trim();
     const combinedMosque = form.venue_type && form.venue_type !== "مسجد" && venueName
-      ? `${form.venue_type} — ${venueName}`
+      ? `${form.venue_type}، ${venueName}`
       : venueName;
-    // تحويل مصفوفة الأيام إلى نص مفصول بـ ،
     const dayOfWeek = Array.isArray(form.days_of_week) && form.days_of_week.length > 0
       ? form.days_of_week.join("،")
       : "";
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { venue_type: _vt, days_of_week: _dw, ...rest } = form;
     const payload = {
       ...rest,
@@ -182,7 +182,7 @@ export function LessonsSection() {
     const { ok, synced, error } = await upsertSeedLessonsToDb();
     setSyncing(false);
     if (ok) {
-      setSyncMsg(`✓ تمت المزامنة — ${synced} درس`);
+      setSyncMsg(`✓ تمت المزامنة، ${synced} درس`);
       invalidateLessonsCache();
       load();
     } else {
@@ -192,17 +192,14 @@ export function LessonsSection() {
 
   const filtered = items.filter((item) => {
     if (statusFilter !== "all" && item.status !== statusFilter) return false;
-    const q = search.trim();
-    if (!q) return true;
-    const hay = `${item.title} ${item.sheikhs?.name ?? ""} ${item.category ?? ""} ${item.city ?? ""} ${item.mosque ?? ""}`;
-    return hay.includes(q);
+    return arabicMatchAny([item.title, item.sheikhs?.name ?? "", item.category ?? "", item.city ?? "", item.mosque ?? ""], search);
   });
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.875rem", flexWrap: "wrap", gap: "0.75rem" }}>
-        <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep }}>الدروس ({items.length})</h2>
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+      <div className="les-header">
+        <h2 className="les-title">الدروس ({items.length})</h2>
+        <div className="les-actions">
           <BulkImport
             title="استيراد الدروس"
             hint="يمكن ربط الشيخ باسمه عبر الحقل sheikh_name (يُطابَق تلقائيًا)."
@@ -221,91 +218,76 @@ export function LessonsSection() {
               load();
             }}
           />
-          <Link
-            href="/admin/sources"
-            style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", background: "#FEF3C7", color: "#92400E", textDecoration: "none", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600, display: "inline-flex", alignItems: "center" }}
-          >
-            أتمتة المصادر
-          </Link>
-          <Link
-            href="/admin/review-center"
-            style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", background: "#FCE7F3", color: "#9D174D", textDecoration: "none", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600, display: "inline-flex", alignItems: "center" }}
-          >
-            مركز المراجعة
-          </Link>
-          <Link
-            href="/admin/content-import/image"
-            style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", background: "#DBEAFE", color: "#1D4ED8", textDecoration: "none", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600, display: "inline-flex", alignItems: "center" }}
-          >
-            إضافة درس من صورة
-          </Link>
-          <Link
-            href="/admin/content-import/url"
-            style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", background: "#EDE9FE", color: "#5B21B6", textDecoration: "none", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600, display: "inline-flex", alignItems: "center" }}
-          >
-            إضافة درس من رابط
-          </Link>
-          <button
-            onClick={handleSyncSeed}
-            disabled={syncing}
-            style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", background: "#F0FDF4", color: C.emeraldDeep, border: `1px solid ${C.emerald}`, cursor: syncing ? "not-allowed" : "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600, opacity: syncing ? 0.6 : 1 }}
-          >
+          <Link href="/admin/sources" className="les-link-btn les-link-btn--green">أتمتة المصادر</Link>
+          <Link href="/admin/review-center" className="les-link-btn les-link-btn--pink">مركز المراجعة</Link>
+          <Link href="/admin/content-import/image" className="les-link-btn les-link-btn--blue">إضافة درس من صورة</Link>
+          <Link href="/admin/content-import/url" className="les-link-btn les-link-btn--purple">إضافة درس من رابط</Link>
+          <button type="button" onClick={handleSyncSeed} disabled={syncing} className="les-sync-btn">
             {syncing ? "جاري المزامنة…" : "⬆ مزامنة الكتالوج مع DB"}
           </button>
-          <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة درس</button>
+          <button type="button" onClick={openAdd} className="les-add-btn">+ إضافة درس</button>
         </div>
       </div>
       {syncMsg && (
-        <div style={{ marginBottom: "0.75rem", padding: "0.5rem 0.875rem", borderRadius: "0.375rem", background: syncMsg.startsWith("✓") ? "#D1FAE5" : "#FEE2E2", color: syncMsg.startsWith("✓") ? C.emeraldDeep : "#991B1B", fontSize: "0.875rem", fontWeight: 600 }}>
+        <div
+          className="les-sync-msg"
+          style={{
+            "--les-msg-bg": syncMsg.startsWith("✓") ? "#D1FAE5" : "#FEE2E2",
+            "--les-msg-color": syncMsg.startsWith("✓") ? "var(--majalis-emerald-deep)" : "#991B1B",
+          } as React.CSSProperties}
+        >
           {syncMsg}
         </div>
       )}
-      <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
-        <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في الدروس..." style={{ ...inputSt, maxWidth: "20rem", flex: "1 1 12rem" }} />
-        <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} style={{ ...selectSt, width: "auto" }}>
+      <div className="les-filter-row">
+        <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في الدروس..." className="adm-input les-search" />
+        <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="adm-select">
           <option value="all">كل الحالات</option>
           {Object.entries(STATUSES).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
         </select>
       </div>
 
-      {loading ? <Loading /> : (
-        <div style={{ overflowX: "auto" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
+      {loading ? <SkeletonCardGrid count={6} /> : (
+        <div className="les-table-wrap">
+          <table className="les-table">
             <thead>
-              <tr style={{ background: C.parchmentDeep }}>
+              <tr className="les-thead-row">
                 {["العنوان", "الشيخ", "التصنيف", "المحافظة", "الحضور", "الحالة", "إجراءات"].map(h => (
-                  <th key={h} style={{ padding: "0.625rem 0.75rem", textAlign: "right", color: C.emeraldDeep, fontWeight: 700, borderBottom: `1px solid ${C.line}`, whiteSpace: "nowrap" }}>{h}</th>
+                  <th key={h} className="les-th">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {filtered.map(item => {
-                const sc = STATUS_COLORS[item.status] || { bg: C.parchmentDeep, text: C.inkSoft };
+                const sc = STATUS_COLORS[item.status] || { bg: "var(--majalis-parchment-deep)", text: "var(--majalis-ink-soft)" };
                 return (
-                  <tr key={item.id} style={{ borderBottom: `1px solid ${C.line}` }}>
-                    <td style={{ padding: "0.625rem 0.75rem", color: C.ink, fontWeight: 600, maxWidth: "220px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.title}</td>
-                    <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft, whiteSpace: "nowrap" }}>
+                  <tr key={item.id} className="les-tr">
+                    <td className="les-td les-td--name">{item.title}</td>
+                    <td className="les-td les-td--nowrap">
                       {item.sheikhs?.name || (item.speaker_name ? (
                         <span>
                           {item.speaker_name}
                           {looksLikeTopic(item.speaker_name) && (
-                            <span title="يبدو أن هذا موضوع وليس اسم شيخ" style={{ marginRight: "0.3rem", cursor: "help" }}>⚠️</span>
+                            <span title="يبدو أن هذا موضوع وليس اسم شيخ" className="les-topic-warn"><AlertTriangle size={12} /></span>
                           )}
                         </span>
                       ) : "—")}
                     </td>
-                    <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft }}>{item.category || "—"}</td>
-                    <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft }}>{item.city || "—"}</td>
-                    <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft, whiteSpace: "nowrap" }}>{item.delivery || "—"}</td>
-                    <td style={{ padding: "0.625rem 0.75rem" }}>
-                      <span style={{ padding: "0.125rem 0.5rem", borderRadius: "0.25rem", background: sc.bg, color: sc.text, fontSize: "0.75rem", whiteSpace: "nowrap" }}>
+                    <td className="les-td">{item.category || "—"}</td>
+                    <td className="les-td">{item.city || "—"}</td>
+                    <td className="les-td les-td--nowrap">{item.delivery || "—"}</td>
+                    <td className="les-td">
+                      <span
+                        className="les-status-badge"
+                        style={{ "--les-status-bg": sc.bg, "--les-status-color": sc.text } as React.CSSProperties}
+                      >
                         {STATUSES[item.status] || item.status}
                       </span>
                     </td>
-                    <td style={{ padding: "0.625rem 0.75rem" }}>
-                      <div style={{ display: "flex", gap: "0.375rem" }}>
-                        <button onClick={() => openEdit(item)} style={BTN_EDIT}>تعديل</button>
-                        <button onClick={() => handleDelete(item.id, item.title)} style={BTN_DEL}>حذف</button>
+                    <td className="les-td">
+                      <div className="les-cell-actions">
+                        <button type="button" onClick={() => openEdit(item)} className="les-btn-edit">تعديل</button>
+                        <button type="button" onClick={() => handleDelete(item.id, item.title)} className="les-btn-del">حذف</button>
                       </div>
                     </td>
                   </tr>
@@ -313,29 +295,29 @@ export function LessonsSection() {
               })}
             </tbody>
           </table>
-          {filtered.length === 0 && <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem" }}>{search || statusFilter !== "all" ? "لا توجد دروس مطابقة" : "لا توجد دروس — ابدأ بإضافة أول درس"}</p>}
+          {filtered.length === 0 && <p className="les-empty">{search || statusFilter !== "all" ? "لا توجد دروس مطابقة" : "لا توجد دروس، ابدأ بإضافة أول درس"}</p>}
         </div>
       )}
 
       <AdminModal title={form.id ? "تعديل الدرس" : "إضافة درس جديد"} open={open} onClose={() => setOpen(false)} onSave={handleSave} saving={saving}>
         <Field label="عنوان الدرس *">
-          <input style={inputSt} value={form.title} onChange={e => set("title", e.target.value)} placeholder="عنوان الدرس أو الدورة" />
+          <input className="adm-input" value={form.title} onChange={e => set("title", e.target.value)} placeholder="عنوان الدرس أو الدورة" />
         </Field>
         <Field label="الشيخ">
-          <select style={selectSt} value={form.sheikh_id || ""} onChange={e => set("sheikh_id", e.target.value)}>
+          <select className="adm-select" value={form.sheikh_id || ""} onChange={e => set("sheikh_id", e.target.value)}>
             <option value="">اختر الشيخ (اختياري)</option>
             {sheikhs.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
           </select>
         </Field>
         <FieldRow>
           <Field label="التصنيف">
-            <select style={selectSt} value={form.category || ""} onChange={e => set("category", e.target.value)}>
+            <select className="adm-select" value={form.category || ""} onChange={e => set("category", e.target.value)}>
               <option value="">اختر التصنيف</option>
               {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
           </Field>
           <Field label="المحافظة">
-            <select style={selectSt} value={form.city || ""} onChange={e => set("city", e.target.value)}>
+            <select className="adm-select" value={form.city || ""} onChange={e => set("city", e.target.value)}>
               <option value="">اختر المحافظة</option>
               {GOVERNORATES.map(g => <option key={g} value={g}>{g}</option>)}
             </select>
@@ -343,53 +325,53 @@ export function LessonsSection() {
         </FieldRow>
         <FieldRow>
           <Field label="نوع المكان">
-            <select style={selectSt} value={form.venue_type || "مسجد"} onChange={e => set("venue_type", e.target.value)}>
+            <select className="adm-select" value={form.venue_type || "مسجد"} onChange={e => set("venue_type", e.target.value)}>
               {VENUE_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
             </select>
           </Field>
           <Field label="اسم المكان">
-            <input style={inputSt} value={form.mosque || ""} onChange={e => set("mosque", e.target.value)} placeholder={form.venue_type === "مسجد" ? "مسجد الرحمة" : form.venue_type === "ديوان" ? "ديوان آل فلان" : form.venue_type === "مجلس" ? "مجلس الشيخ فلان" : "اسم المكان"} />
+            <input className="adm-input" value={form.mosque || ""} onChange={e => set("mosque", e.target.value)} placeholder={form.venue_type === "مسجد" ? "مسجد الرحمة" : form.venue_type === "ديوان" ? "ديوان آل فلان" : form.venue_type === "مجلس" ? "مجلس الشيخ فلان" : "اسم المكان"} />
           </Field>
         </FieldRow>
         <FieldRow>
           <Field label="المنطقة">
-            <input style={inputSt} value={form.region || ""} onChange={e => set("region", e.target.value)} placeholder="مثال: الصديق" />
+            <input className="adm-input" value={form.region || ""} onChange={e => set("region", e.target.value)} placeholder="مثال: الصديق" />
           </Field>
           <Field label="اسم الشيخ (إن لم يُربط بحساب)">
-            <input style={inputSt} value={form.speaker_name || ""} onChange={e => set("speaker_name", e.target.value)} placeholder="مثال: عبدالله الأنصاري" />
+            <input className="adm-input" value={form.speaker_name || ""} onChange={e => set("speaker_name", e.target.value)} placeholder="مثال: عبدالله الأنصاري" />
             {looksLikeTopic(form.speaker_name) && (
-              <div style={{ marginTop: "0.3rem", padding: "0.35rem 0.6rem", borderRadius: "0.35rem", background: "#FEF3C7", color: "#92400E", fontSize: "0.75rem", fontWeight: 600 }}>
-                ⚠️ يبدو أن هذا موضوع وليس اسم شيخ. يُرجى التأكد من إدخال الاسم الصحيح.
+              <div className="les-topic-warn">
+                <AlertTriangle size={13} className="inline ml-1" />يبدو أن هذا موضوع وليس اسم شيخ. يُرجى التأكد من إدخال الاسم الصحيح.
               </div>
             )}
           </Field>
         </FieldRow>
         <FieldRow>
           <Field label="الجمهور المستهدف">
-            <select style={selectSt} value={form.audience} onChange={e => set("audience", e.target.value)}>
+            <select className="adm-select" value={form.audience} onChange={e => set("audience", e.target.value)}>
               {AUDIENCE.map(a => <option key={a} value={a}>{a}</option>)}
             </select>
           </Field>
           <Field label="طريقة الحضور">
-            <select style={selectSt} value={form.delivery} onChange={e => set("delivery", e.target.value)}>
+            <select className="adm-select" value={form.delivery} onChange={e => set("delivery", e.target.value)}>
               {DELIVERY.map(d => <option key={d} value={d}>{d}</option>)}
             </select>
           </Field>
         </FieldRow>
         <Field label="أيام الدرس (يمكن اختيار أكثر من يوم)">
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem 1rem", padding: "0.5rem 0" }}>
+          <div className="les-days-row">
             {WEEK_DAYS.map(d => {
               const selected = Array.isArray(form.days_of_week) && form.days_of_week.includes(d);
               return (
-                <label key={d} style={{ display: "flex", alignItems: "center", gap: "0.35rem", cursor: "pointer", fontSize: "0.875rem", color: selected ? C.emeraldDeep : C.ink, fontWeight: selected ? 700 : 400 }}>
+                <label key={d} className={`les-day-label${selected ? " les-day-label--active" : ""}`}>
                   <input
                     type="checkbox"
+                    className="les-day-checkbox"
                     checked={selected}
                     onChange={e => {
                       const cur: string[] = Array.isArray(form.days_of_week) ? form.days_of_week : [];
                       set("days_of_week", e.target.checked ? [...cur, d] : cur.filter(x => x !== d));
                     }}
-                    style={{ accentColor: C.emerald, width: "1rem", height: "1rem" }}
                   />
                   {d}
                 </label>
@@ -397,39 +379,39 @@ export function LessonsSection() {
             })}
           </div>
           {Array.isArray(form.days_of_week) && form.days_of_week.length > 1 && (
-            <div style={{ marginTop: "0.35rem", fontSize: "0.75rem", color: C.inkSoft }}>
+            <div className="les-days-note">
               الدرس يتكرر كل: {form.days_of_week.join(" و")}
             </div>
           )}
         </Field>
         <Field label="تاريخ الانتهاء (اختياري)">
-          <input type="date" style={inputSt} value={form.end_date || ""} onChange={e => set("end_date", e.target.value || null)} />
+          <input type="date" className="adm-input" value={form.end_date || ""} onChange={e => set("end_date", e.target.value || null)} />
         </Field>
         <FieldRow>
           <Field label="الجدول الزمني">
-            <input style={inputSt} value={form.schedule || ""} onChange={e => set("schedule", e.target.value)} placeholder="كل اثنين بعد العشاء" />
+            <input className="adm-input" value={form.schedule || ""} onChange={e => set("schedule", e.target.value)} placeholder="كل اثنين بعد العشاء" />
           </Field>
           <Field label="وقت الدرس">
             <input
               type="time"
-              style={inputSt}
+              className="adm-input"
               value={form.lesson_time || ""}
               onChange={e => { set("lesson_time", e.target.value); setOrigTime(null); }}
             />
             {origTime && (
-              <span style={{ display: "block", marginTop: "0.3rem", fontSize: "0.72rem", color: "#6b6460" }}>
+              <span className="les-time-note">
                 {form.lesson_time
-                  ? `القيمة السابقة «${origTime}» حُوِّلت تلقائياً — عدّلها إن احتجت`
-                  : `القيمة السابقة «${origTime}» — تعذّر تحويلها، حدّد الوقت من المنتقي`}
+                  ? `القيمة السابقة «${origTime}» حُوِّلت تلقائياً، عدّلها إن احتجت`
+                  : `القيمة السابقة «${origTime}»، تعذّر تحويلها، حدّد الوقت من المنتقي`}
               </span>
             )}
           </Field>
         </FieldRow>
         <Field label="الوصف">
-          <textarea style={textareaSt} value={form.description || ""} onChange={e => set("description", e.target.value)} placeholder="وصف موجز للدرس أو الدورة..." />
+          <textarea className="adm-textarea" value={form.description || ""} onChange={e => set("description", e.target.value)} placeholder="وصف موجز للدرس أو الدورة..." />
         </Field>
         <Field label="الحالة">
-          <select style={selectSt} value={form.status} onChange={e => set("status", e.target.value)}>
+          <select className="adm-select" value={form.status} onChange={e => set("status", e.target.value)}>
             {Object.entries(STATUSES).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
           </select>
         </Field>

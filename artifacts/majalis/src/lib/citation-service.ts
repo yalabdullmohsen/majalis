@@ -86,8 +86,8 @@ export const CONTENT_TYPE_COLOR: Record<CitationContentType, string> = {
   quran_ayah:   "#065f46",
   hadith:       "#1d4ed8",
   scholar_quote:"#7c3aed",
-  fatwa:        "#b45309",
-  book:         "#92400e",
+  fatwa:        "#173D35",
+  book:         "#173D35",
   article:      "#0369a1",
   research:     "#0c4a6e",
   lesson:       "#047857",
@@ -95,6 +95,10 @@ export const CONTENT_TYPE_COLOR: Record<CitationContentType, string> = {
   prophet_story:"#dc2626",
   qa:           "#6b7280",
 };
+
+export function citTypeClass(t: CitationContentType | string): string {
+  return `cit-type--${String(t).replace(/_/g, "-")}`;
+}
 
 export const STYLE_LABEL: Record<CitationStyle, string> = {
   default:  "الافتراضي",
@@ -105,7 +109,7 @@ export const STYLE_LABEL: Record<CitationStyle, string> = {
 };
 
 export const MAX_QUOTE_LENGTH = 500;
-export const PLATFORM_URL = "https://majlisilm.com";
+export const PLATFORM_URL = "https://www.majlisilm.com";
 
 // ── مساعدات ──────────────────────────────────────────────────────────────────
 

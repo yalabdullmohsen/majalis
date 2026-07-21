@@ -14,6 +14,7 @@ import knowledgePipelineHandler from "../lib/api-handlers/admin/knowledge-pipeli
 import knowledgeSearchHandler from "../lib/api-handlers/knowledge-search.js";
 import autoContentHealthHandler from "../lib/api-handlers/cron/auto-content-health.js";
 import autoContentSyncHandler from "../lib/api-handlers/cron/auto-content-sync.js";
+import dailyBenefitRotationHandler from "../lib/api-handlers/cron/daily-benefit-rotation.js";
 import systemHealthHandler from "../lib/api-handlers/cron/system-health.js";
 import applyMigrationsHandler from "../lib/api-handlers/cron/apply-migrations.js";
 import bootstrapDatabaseHandler from "../lib/api-handlers/cron/bootstrap-database.js";
@@ -54,6 +55,7 @@ import contentScoringHandler from "../lib/api-handlers/cron/content-scoring.js";
 import ragResearchHandler from "../lib/api-handlers/rag-research.js";
 import universitiesHandler from "../lib/api-handlers/universities.js";
 import universitiesReviewCron from "../lib/api-handlers/cron/universities-review.js";
+import accountDeleteHandler from "../lib/api-handlers/account-delete.js";
 import { createRateLimiter } from "./rate-limit.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -143,6 +145,8 @@ app.get("/api/admin/reminders",              (req, res) => universitiesHandler(r
 app.put("/api/admin/reminders/:id",          express.json({ limit: "4kb" }),  (req, res) => universitiesHandler(req, res, "admin-reminder-update"));
 app.get("/api/cron/universities-review",     (req, res) => universitiesReviewCron(req, res));
 
+app.post("/api/account/delete", express.json({ limit: "1kb" }), runHandler(accountDeleteHandler, "account-delete"));
+
 app.get("/api/assistant/health", runHandler(assistantHealthHandler, "assistant-health"));
 app.get("/api/assistant", runHandler(assistantHandler, "assistant"));
 app.post("/api/assistant", express.json({ limit: "32kb" }), assistantRateLimit, runHandler(assistantHandler, "assistant"));
@@ -172,6 +176,8 @@ app.get("/api/cron/auto-content-sync", runHandler(autoContentSyncHandler, "auto-
 app.post("/api/cron/auto-content-sync", runHandler(autoContentSyncHandler, "auto-content-sync"));
 app.get("/api/cron/auto-content-health", runHandler(autoContentHealthHandler, "auto-content-health"));
 app.post("/api/cron/auto-content-health", runHandler(autoContentHealthHandler, "auto-content-health"));
+app.get("/api/cron/daily-benefit-rotation", runHandler(dailyBenefitRotationHandler, "daily-benefit-rotation"));
+app.post("/api/cron/daily-benefit-rotation", runHandler(dailyBenefitRotationHandler, "daily-benefit-rotation"));
 app.get("/api/cron/system-health", runHandler(systemHealthHandler, "system-health"));
 app.post("/api/cron/system-health", runHandler(systemHealthHandler, "system-health"));
 app.get("/api/cron/apply-migrations", runHandler(applyMigrationsHandler, "apply-migrations"));

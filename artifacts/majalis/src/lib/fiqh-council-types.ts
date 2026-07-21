@@ -248,6 +248,21 @@ export type FiqhCouncilIssue = {
   published_at?: string;
   updated_at?: string;
   created_at?: string;
+  /** محل الاتفاق بين الأقوال — فارغ يعني لم يُراجَع بهذا التفصيل بعد */
+  area_of_agreement?: string;
+  /** محل الخلاف المعتبر — فارغ يعني لم يُراجَع بهذا التفصيل بعد */
+  area_of_disagreement?: string;
+  /** أشهر الأقوال، كل قول بصاحبه ودليله — لا تُعرض المسألة كمحسومة إن كانت فارغة ومعها خلاف */
+  opinions?: Array<{ holder: string; position: string; evidence?: string }>;
+  /** القول المعتمد في المنصة إن وُجد */
+  adopted_opinion?: string;
+  /** سبب اختيار القول المعتمد */
+  adopted_reason?: string;
+  /** تنبيه بأن المسألة قد تختلف باختلاف الحال أو المذهب أو النازلة */
+  context_disclaimer?: string;
+  reviewed_by?: string;
+  last_reviewed_at?: string;
+  content_version?: number;
   /** Populated on detail fetch */
   items?: FiqhCouncilItem[];
   timeline?: FiqhTimelineEvent[];
@@ -404,8 +419,9 @@ export const FIQH_PUBLIC_STATUSES: FiqhItemStatus[] = ["published"];
 export const FIQH_REVIEW_STATUSES: FiqhItemStatus[] = ["imported", "needs_review", "review", "approved"];
 
 export const FIQH_COUNCIL_INTRO =
-  "المجمع الفقهي الإسلامي مرجع منظم للقرارات والفتاوى الجماعية والبحوث والتوصيات الشرعية، " +
-  "يُعنى بقضايا العصر مع الالتزام بضوابط الفقه الإسلامي والمراجع المعتمدة.";
+  "مرجع منظم لقرارات وفتاوى وتوصيات الهيئات والمنظمات الإسلامية السنية المعتمدة، " +
+  "يشمل: المجامع الفقهية الدولية، هيئة كبار العلماء، دور الإفتاء، ورابطة العالم الإسلامي، " +
+  "معنيٌّ بنوازل العصر مع الالتزام بضوابط الفقه الإسلامي والمراجع الموثّقة.";
 
 export function fiqhItemHref(slug: string) {
   return `/fiqh-council/${slug}`;

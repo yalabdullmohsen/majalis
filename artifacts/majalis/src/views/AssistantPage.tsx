@@ -1,6 +1,9 @@
+import { useEffect } from "react";
+import { AlertTriangle } from "lucide-react";
 import { Link } from "wouter";
 import { useAssistantChat } from "@/hooks/useAssistantChat";
 import { AssistantChatView } from "@/components/assistant/AssistantChatView";
+import { applyPageSeo } from "@/lib/seo";
 
 export { ASSISTANT_FAILURE_MESSAGE as FAILURE_MESSAGE } from "@/hooks/useAssistantChat";
 
@@ -8,20 +11,48 @@ const QUICK_PROMPTS = [
   "ما فضل قراءة القرآن الكريم؟",
   "ما هي شروط صحة الصلاة؟",
   "ما حكم صيام يوم عرفة؟",
-  "ما حكم الميراث في الإسلام؟",
+  // أُزيل سؤال الميراث: باب المواريث محجوب في المساعد (يُحال لأهل العلم)،
+  // فاقتراحه يوهم المستخدم بأن المنصة تُفتي فيه.
+  "ما فضل ذكر الله وما أنواعه؟",
   "ما هي أركان الإيمان الستة؟",
   "ما فضل الصلاة على النبي ﷺ؟",
+  "ما هي أركان الإسلام الخمسة؟",
+  "ما هي أذكار الصباح والمساء المسنونة؟",
+  "ما شروط الوضوء وكيفيته؟",
+  "ما هي المحرمات في الزواج في الإسلام؟",
+  "ما حكم زيارة القبور وما آدابها؟",
+  "ما هي فضائل شهر رمضان؟",
 ];
 
 const RESEARCHER_LINKS = [
   { href: "/fiqh-council/research-assistant", label: "الباحث الفقهي" },
   { href: "/scholarly-research", label: "البحث الشرعي" },
-  { href: "/fatwa", label: "الفتاوى" },
   { href: "/rulings", label: "الأحكام" },
 ];
 
 export default function AssistantPage() {
   const chat = useAssistantChat();
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/assistant",
+      title: "المساعد العلمي الذكي | المجلس العلمي",
+      description: "مساعد شرعي ذكي يجيب على أسئلتك في الفقه والعقيدة والقرآن والحديث، مدعوم بالذكاء الاصطناعي.",
+      keywords: ["مساعد إسلامي", "مساعد شرعي", "أسئلة شرعية", "الذكاء الاصطناعي الإسلامي"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "المساعد العلمي الذكي",
+          url: "https://www.majlisilm.com/assistant",
+          description: "مساعد شرعي ذكي يجيب على أسئلتك في الفقه والعقيدة والقرآن والحديث",
+          applicationCategory: "EducationalApplication",
+          inLanguage: "ar",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        },
+      ],
+    });
+  }, []);
 
   return (
     <div className="assistant-page">
@@ -34,22 +65,12 @@ export default function AssistantPage() {
           عالم مختص.
         </p>
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginTop: "0.75rem" }}>
+        <div className="asp-researcher-links">
           {RESEARCHER_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              style={{
-                display: "inline-block",
-                padding: "0.3rem 0.75rem",
-                borderRadius: "2rem",
-                background: "rgba(6,78,59,0.08)",
-                border: "1px solid rgba(6,78,59,0.2)",
-                fontSize: "0.78rem",
-                color: "var(--ds-emerald-deep, #064e3b)",
-                fontWeight: 600,
-                textDecoration: "none",
-              }}
+              className="asp-researcher-link"
             >
               {link.label} ←
             </Link>
@@ -57,26 +78,17 @@ export default function AssistantPage() {
         </div>
 
         {chat.messages.length === 0 && (
-          <div style={{ marginTop: "1rem" }}>
-            <p style={{ margin: "0 0 0.5rem", fontSize: "0.8rem", color: "var(--majalis-ink-soft, #5c564c)" }}>
+          <div className="asp-quick-prompts">
+            <p className="asp-quick-prompts__label">
               أسئلة مقترحة:
             </p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+            <div className="asp-quick-prompts__grid">
               {QUICK_PROMPTS.map((prompt) => (
                 <button
                   key={prompt}
                   type="button"
                   onClick={() => chat.sendQuestion(prompt)}
-                  style={{
-                    padding: "0.35rem 0.8rem",
-                    borderRadius: "2rem",
-                    background: "#fff",
-                    border: "1px solid var(--ds-line-color, #e5e1d9)",
-                    fontSize: "0.8rem",
-                    cursor: "pointer",
-                    color: "var(--majalis-ink, #2c2412)",
-                    transition: "background 0.15s",
-                  }}
+                  className="asp-quick-btn"
                 >
                   {prompt}
                 </button>
@@ -94,19 +106,13 @@ export default function AssistantPage() {
           onInputChange={chat.setInput}
           onSubmit={chat.submit}
           bottomRef={chat.bottomRef}
-          onQuickPrompt={chat.sendQuestion}
+          onQuickPrompt={chat.submitQuestion}
+          onRetry={chat.retryLast}
         />
       </section>
 
-      <footer style={{
-        padding: "0.75rem 1rem",
-        fontSize: "0.75rem",
-        color: "var(--majalis-ink-soft, #5c564c)",
-        borderTop: "1px solid var(--ds-line-color, #e5e1d9)",
-        textAlign: "center",
-        direction: "rtl",
-      }}>
-        ⚠️ الإجابات مولَّدة آليًا وتحتمل الخطأ — راجع أهل العلم في المسائل الشخصية الدقيقة.
+      <footer className="asp-footer">
+        <AlertTriangle size={13} className="inline ml-1" />الإجابات مولَّدة آليًا وتحتمل الخطأ، راجع أهل العلم في المسائل الشخصية الدقيقة.
       </footer>
     </div>
   );

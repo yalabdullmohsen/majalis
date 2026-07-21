@@ -1,6 +1,49 @@
+import "@/styles/rulings-encyclopedia.css";
 import { useCallback, useEffect, useState } from "react";
+import { Banknote, BookOpen, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, MapPin, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { Link, useSearch } from "wouter";
+import { AdminQuickEdit } from "@/components/AdminQuickEdit";
+import { ShareButtons } from "@/components/ContentActions";
 import { useAuth } from "@/components/AuthProvider";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
+import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
+
+const RULINGS_ICON_MAP: Record<string, LucideIcon> = {
+  Landmark, Droplets, Banknote, Moon, MapPin, Handshake, Utensils, Shirt, Users,
+  ScrollText, Scale, FileSignature, Shield, Heart, BookOpen, GraduationCap, FlaskConical, Flame,
+};
+function CatIcon({ name }: { name?: string }) {
+  const I: LucideIcon = (name ? RULINGS_ICON_MAP[name] : undefined) ?? BookOpen;
+  return <I size={16} className="inline ml-1" />;
+}
+
+const FIQH_HUB_TABS = [
+  { key: "rulings", label: "الأحكام الشرعية", href: "/rulings" },
+  { key: "qa",      label: "الأسئلة الشرعية", href: "/qa" },
+  { key: "council", label: "المجمع الفقهي",   href: "/fiqh-council" },
+] as const;
+type FiqhTab = (typeof FIQH_HUB_TABS)[number]["key"];
+
+function FiqhHubStrip({ current }: { current: FiqhTab }) {
+  return (
+    <nav className="fiqh-hub-strip" dir="rtl" aria-label="الأقسام الشرعية">
+      <Link href="/fiqh" className="fiqh-hub-strip__brand"><Scale size={14} className="inline ml-1" />الفقه الإسلامي</Link>
+      <span className="fiqh-hub-strip__sep" aria-hidden="true">·</span>
+      {FIQH_HUB_TABS.map((item) => (
+        <Link
+          key={item.key}
+          href={item.href}
+          className={`fiqh-hub-strip__tab${item.key === current ? " fiqh-hub-strip__tab--active" : ""}`}
+          aria-current={item.key === current ? "page" : undefined}
+        >
+          {item.label}
+        </Link>
+      ))}
+    </nav>
+  );
+}
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { RulingCard } from "@/components/rulings/RulingCard";
 import { RulingCategoryGrid } from "@/components/rulings/RulingCategoryGrid";
@@ -12,6 +55,7 @@ import {
 } from "@/lib/rulings-service";
 import type { CategoryStat, RulingSortMode, ShariaRulingExtended } from "@/lib/rulings-types";
 import { usePageView } from "@/hooks/usePageView";
+import { usePersistedState } from "@/hooks/usePersistedState";
 import { RequestManager } from "@/lib/request-manager";
 import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
 
@@ -30,20 +74,57 @@ export default function RulingsPage() {
   const { isAdmin } = useAuth();
   const [items, setItems] = useState<ShariaRulingExtended[]>([]);
   const [total, setTotal] = useState(0);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = usePersistedState("filters:/rulings:page", 1);
   const [loading, setLoading] = useState(true);
   const [dbState, setDbState] = useState<{ needsSeed?: boolean; dbError?: string }>({});
   const [stats, setStats] = useState<CategoryStat[]>([]);
   const [encyclopediaTotal, setEncyclopediaTotal] = useState(0);
-  const [category, setCategory] = useState("الكل");
-  const [subcategory, setSubcategory] = useState<string | undefined>();
-  const [search, setSearch] = useState("");
-  const [sort, setSort] = useState<RulingSortMode>("importance");
+  const [category, setCategory] = usePersistedState("filters:/rulings:category", "الكل");
+  const [subcategory, setSubcategory] = usePersistedState<string | undefined>("filters:/rulings:subcategory", undefined);
+  const [search, setSearch] = usePersistedState("filters:/rulings:search", "");
+  const [sort, setSort] = usePersistedState<RulingSortMode>("filters:/rulings:sort", "importance");
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const debouncedSearch = useDebouncedValue(search);
+  const urlSearch = useSearch();
 
   usePageView("rulings", null);
+
+  // رابط وارد بـ`?category=...` (من RulingDetailPage/FiqhPage) كان يُتجاهَل
+  // كليًا هنا: الحالة تُقرأ فقط من usePersistedState بلا مزامنة مع رابط
+  // URL الفعلي عند الوصول — نفس عائلة عطل TYPE_HREF.scholar الصامت
+  // (رابط يُبنى صحيحًا لكن لا يُقرأ في الوجهة، فيهبط المستخدم على الفلتر
+  // الافتراضي/السابق بلا أي خطأ ظاهر). اكتُشف بالفحص المباشر 2026-07-18.
+  // امتداد 2026-07-19: أُضيف دعم `?subcategory=...` بنفس المنطق — بعض بطاقات
+  // FiqhPage تحتاج الهبوط على تصنيف فرعي محدد (مثل «الطب» ضمن «النوازل
+  // المعاصرة») لا القسم الرئيسي فقط.
+  useEffect(() => {
+    const params = new URLSearchParams(urlSearch);
+    const cat = params.get("category");
+    const sub = params.get("subcategory");
+    if (cat) setCategory(cat);
+    if (sub) setSubcategory(sub);
+  }, [urlSearch]);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/rulings",
+      title: "الأحكام الشرعية | المجلس العلمي",
+      description: "موسوعة الأحكام الشرعية في الفقه الإسلامي، استعرض الأحكام مرتّبةً حسب الأبواب الفقهية والتصنيفات.",
+      keywords: ["أحكام شرعية", "فقه إسلامي", "الأحكام الفقهية", "حكم شرعي", "موسوعة فقهية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "موسوعة الأحكام الشرعية",
+          url: "https://www.majlisilm.com/rulings",
+          description: "أحكام الفقه الإسلامي مرتّبةً حسب الأبواب والتصنيفات الفقهية",
+          about: { "@type": "Thing", name: "الأحكام الشرعية في الفقه الإسلامي" },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+        },
+      ],
+    });
+  }, []);
 
   const loadStats = useCallback(async () => {
     const [catStats, totalCount] = await Promise.all([
@@ -122,11 +203,13 @@ export default function RulingsPage() {
           onSelect={handleCategorySelect}
         />
       ) : (
-        <div className="content-hub-chips ruling-quick-chips">
+        <div className="content-hub-chips ruling-quick-chips" role="tablist" aria-label="تصفية الأحكام">
           <button
+            role="tab"
             type="button"
             className={category === "الكل" ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
             onClick={() => handleCategorySelect("الكل")}
+            aria-selected={category === "الكل"}
           >
             {isAdmin ? `الكل (${encyclopediaTotal || total})` : "الكل"}
           </button>
@@ -136,18 +219,20 @@ export default function RulingsPage() {
             return (
               <button
                 key={cat.slug}
+                role="tab"
                 type="button"
                 className={
                   category === cat.name ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"
                 }
                 onClick={() => handleCategorySelect(cat.name)}
+                aria-selected={category === cat.name}
               >
-                {cat.icon} {cat.name}{isAdmin ? ` (${count})` : ""}
+                <CatIcon name={cat.icon} />{cat.name}{isAdmin ? ` (${count})` : ""}
               </button>
             );
           })}
           <button type="button" className="content-hub-chip" onClick={() => setShowAdvanced(true)}>
-            المزيد...
+            كل الأبواب...
           </button>
         </div>
       )}
@@ -159,12 +244,14 @@ export default function RulingsPage() {
       <PageHeader
         eyebrow="موسوعة الفقه"
         title="الأحكام الشرعية"
-        subtitle="مكتبة علمية شاملة للأحكام — موثقة بالأدلة والمراجع."
+        subtitle="مكتبة علمية شاملة للأحكام، موثقة بالأدلة والمراجع."
       />
+
+      <FiqhHubStrip current="rulings" />
 
       <div className="ds-section__head">
         {isAdmin && (
-          <div className="page-stats-row ruling-stats-bar" style={{ marginBottom: 0 }}>
+          <div className="page-stats-row ruling-stats-bar page-stats-row--flush">
             <span>{encyclopediaTotal || total} حكم</span>
             <span>{mainCategories} قسم</span>
             <span>{stats.length} تصنيف</span>
@@ -174,17 +261,24 @@ export default function RulingsPage() {
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid />
+      ) : dbState.dbError && !dbState.needsSeed ? (
+        <ErrorState
+          text={
+            isAdmin
+              ? dbState.dbError === "table_missing"
+                ? "جدول sharia_rulings غير موجود، طبّق migrations التفعيل أولاً."
+                : `تعذّر تحميل الأحكام: ${dbState.dbError}`
+              : "تعذّر تحميل الأحكام الشرعية حاليًا. يرجى المحاولة مرة أخرى بعد قليل."
+          }
+          onRetry={loadRulings}
+        />
       ) : items.length === 0 ? (
         <Empty
           text={
             dbState.needsSeed
               ? "قاعدة البيانات جاهزة لكن لم تُستورد الأحكام بعد. شغّل Production Activation من لوحة الإدارة."
-              : dbState.dbError === "table_missing"
-                ? "جدول sharia_rulings غير موجود — طبّق migrations التفعيل أولاً."
-                : dbState.dbError
-                  ? `تعذّر تحميل الأحكام: ${dbState.dbError}`
-                  : "لا توجد أحكام مطابقة."
+              : "لا توجد أحكام مطابقة."
           }
         />
       ) : (
@@ -226,9 +320,16 @@ export default function RulingsPage() {
         {filtersPanel}
       </aside>
 
+      <div className="twh-share">
+        <ShareButtons title="الأحكام الشرعية — المجلس العلمي" url="https://www.majlisilm.com/rulings" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الأحكام الشرعية" count={4} />
+      </div>
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}
       </FilterBottomSheet>
+      <AdminQuickEdit section="rulings" />
     </div>
   );
 }

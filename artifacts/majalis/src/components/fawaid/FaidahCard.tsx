@@ -1,5 +1,5 @@
 import { displayText } from "@/lib/display-text";
-import { isDemoId } from "@/lib/demo-content";
+import { isDemoId } from "@/lib/demo-id";
 import { HighlightedContentCard } from "@/components/reading/HighlightedContentCard";
 
 type FaidahLike = {
@@ -33,7 +33,12 @@ export function FaidahCard({ item }: Props) {
       showSave={!isDemoId(item.id)}
       shareTitle={item.category || "فائدة"}
       shareText={cleaned}
+      showImageCard
+      imageCardCategory={item.category}
+      imageCardSource={item.source}
       className="faidah-card"
+      adminEditType="fawaid"
+      adminEditData={{ text: item.text, source: item.source || "", category: item.category || "" }}
     />
   );
 }

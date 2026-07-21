@@ -3,8 +3,6 @@ import { requestFetch } from "@/lib/request-manager";
  * Digital Learning Platform — client service
  */
 
-import { adminFetch as apiFetch } from "@/lib/admin-api";
-
 export type LearningPath = {
   slug: string;
   title: string;
@@ -56,9 +54,10 @@ export type Certificate = {
 };
 
 const LEVEL_LABELS: Record<string, string> = {
-  beginner: "مبتدئ",
+  foundation:   "تأسيسي",
+  beginner:     "مبتدئ",
   intermediate: "متوسط",
-  advanced: "متقدم",
+  advanced:     "متقدم",
 };
 
 export function levelLabel(level: string) {
@@ -166,18 +165,4 @@ export async function fetchLearningNotes() {
 
 export async function fetchLessonInsights(body: { pathSlug: string; moduleId: string; moduleTitle: string }) {
   return dlFetch("ai-insights", { method: "POST", body });
-}
-
-export async function fetchAdminLearningStats() {
-  const res = await apiFetch("/api/admin/digital-learning?action=dashboard");
-  if (!res.ok) return null;
-  const json = await res.json();
-  return json.stats;
-}
-
-export async function generateLearningReport() {
-  const res = await apiFetch("/api/admin/digital-learning?action=report");
-  if (!res.ok) return null;
-  const json = await res.json();
-  return json.report;
 }

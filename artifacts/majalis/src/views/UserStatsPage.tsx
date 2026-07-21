@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
+import { Award, BookMarked, BookOpen, BookOpenCheck, BookText, Bookmark, FileText, Flame, Gem, GraduationCap, HelpCircle, Landmark, Leaf, Library, Lock, MapPin, Medal, Mic, Mic2, Moon, Repeat2, RotateCw, Scale, ScrollText, Sparkles, Star } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { ShareButtons } from "@/components/ContentActions";
 import { PageHeader } from "@/components/ui-common";
 import {
   getUserProfileStats,
@@ -11,6 +14,23 @@ import {
   type ResumeItem,
 } from "@/lib/user-profile-service";
 import { BADGE_DEFS, BADGE_MAP } from "@/lib/user-badges";
+import { applyPageSeo } from "@/lib/seo";
+import {
+  fetchUserCategoryPerformance,
+  weakestCategories,
+  strongestCategories,
+  type CategoryPerformance,
+} from "@/lib/quiz-performance-service";
+
+const BADGE_ICON_MAP: Record<string, LucideIcon> = {
+  Flame, Moon, Star, BookOpen, Library, GraduationCap, BookMarked, Repeat2, Sparkles,
+  Leaf, Landmark, Scale, Bookmark, Gem, Medal, ScrollText, HelpCircle, FileText,
+  Mic, Mic2, Award, BookOpenCheck,
+};
+function BadgeIcon({ name }: { name: string }) {
+  const I = BADGE_ICON_MAP[name] ?? Medal;
+  return <I size={20} />;
+}
 
 // ─── Stat card ───────────────────────────────────────────────────────────────
 
@@ -18,20 +38,65 @@ function StatCard({
   label,
   value,
   sub,
-  icon,
+  Icon,
 }: {
   label: string;
   value: string | number;
   sub?: string;
-  icon: string;
+  Icon: LucideIcon;
 }) {
   return (
     <div className="profile-stat-card">
-      <span className="profile-stat-card__icon">{icon}</span>
+      <span className="profile-stat-card__icon" aria-hidden="true"><Icon size={20} strokeWidth={1.6} /></span>
       <strong className="profile-stat-card__value">{value}</strong>
       <span className="profile-stat-card__label">{label}</span>
       {sub && <span className="profile-stat-card__sub">{sub}</span>}
     </div>
+  );
+}
+
+// ─── تحليل أداء الأسئلة (نقاط القوة والضعف) ──────────────────────────────────
+
+function QuizPerformancePanel({ perf }: { perf: CategoryPerformance[] }) {
+  if (perf.length === 0) return null;
+  const weak = weakestCategories(perf, 3);
+  const strong = strongestCategories(perf, 2);
+
+  return (
+    <section className="profile-quiz-perf-section">
+      <h2 className="profile-section-title"><HelpCircle size={18} strokeWidth={1.8} aria-hidden="true" /> تحليل مستواك في الأسئلة</h2>
+      {weak.length > 0 ? (
+        <div className="profile-quiz-perf__weak">
+          <p className="profile-quiz-perf__hint">
+            بناءً على إجاباتك، هذه المواضيع تحتاج مراجعة أكثر:
+          </p>
+          <ul className="profile-quiz-perf__list">
+            {weak.map((c) => (
+              <li key={c.categoryId} className="profile-quiz-perf__item profile-quiz-perf__item--weak">
+                <span className="profile-quiz-perf__cat">{c.categoryName}</span>
+                <span className="profile-quiz-perf__pct">{c.accuracy}% صحيحة ({c.correct}/{c.total})</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <p className="profile-quiz-perf__hint">أداؤك متوازن في كل المواضيع التي خضتها حتى الآن — واصل!</p>
+      )}
+      {strong.length > 0 && (
+        <div className="profile-quiz-perf__strong">
+          <p className="profile-quiz-perf__hint profile-quiz-perf__hint--strong">أقوى مواضيعك:</p>
+          <ul className="profile-quiz-perf__list">
+            {strong.map((c) => (
+              <li key={c.categoryId} className="profile-quiz-perf__item profile-quiz-perf__item--strong">
+                <span className="profile-quiz-perf__cat">{c.categoryName}</span>
+                <span className="profile-quiz-perf__pct">{c.accuracy}%</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <Link href="/quiz" className="profile-quick-link">تدرّب أكثر ←</Link>
+    </section>
   );
 }
 
@@ -45,11 +110,9 @@ function LevelBar({ stats }: { stats: ProfileStats }) {
       : 100;
 
   return (
-    <div className="profile-level-bar">
+    <div className="profile-level-bar" style={{ "--level-color": level.color } as React.CSSProperties}>
       <div className="profile-level-bar__head">
-        <span className="profile-level-bar__title" style={{ color: level.color }}>
-          {level.titleAr}
-        </span>
+        <span className="profile-level-bar__title">{level.titleAr}</span>
         <span className="profile-level-bar__xp">
           {level.xp.toLocaleString("ar-KW")} / {level.nextLevelXp.toLocaleString("ar-KW")} XP
         </span>
@@ -57,7 +120,7 @@ function LevelBar({ stats }: { stats: ProfileStats }) {
       <div className="profile-level-bar__track">
         <div
           className="profile-level-bar__fill"
-          style={{ width: `${pct}%`, background: level.color }}
+          style={{ "--level-pct": `${pct}%` } as React.CSSProperties}
         />
       </div>
       <div className="profile-level-bar__meta">
@@ -78,6 +141,7 @@ function BadgeGrid({ earned }: { earned: Set<string> }) {
     tasbih: "الذكر والتسبيح",
     path: "المسارات الشرعية",
     content: "المحتوى المحفوظ",
+    recitation: "اختبار التسميع بالذكاء الاصطناعي",
   };
 
   const byCategory = BADGE_DEFS.reduce<Record<string, typeof BADGE_DEFS>>((acc, b) => {
@@ -97,9 +161,9 @@ function BadgeGrid({ earned }: { earned: Set<string> }) {
                 <div
                   key={def.key}
                   className={`profile-badge${isEarned ? " profile-badge--earned" : ""}`}
-                  title={`${def.titleAr} — ${def.descAr}`}
+                  title={`${def.titleAr}، ${def.descAr}`}
                 >
-                  <span className="profile-badge__icon">{def.icon}</span>
+                  <span className="profile-badge__icon"><BadgeIcon name={def.icon} /></span>
                   <span className="profile-badge__title">{def.titleAr}</span>
                   {!isEarned && (
                     <span className="profile-badge__locked">{def.descAr}</span>
@@ -138,11 +202,11 @@ function ResumeList({
 
   return (
     <section className="profile-resume">
-      <h2 className="profile-section-title">📍 تابع من حيث توقفت</h2>
+      <h2 className="profile-section-title"><MapPin size={16} className="inline ml-1" /> تابع من حيث توقفت</h2>
       <div className="profile-resume__list">
         {items.map((item) => (
           <div key={`${item.content_type}-${item.content_id}`} className="profile-resume__item">
-            <span className="profile-resume__icon">{item.thumbnail_icon || "📄"}</span>
+            <span className="profile-resume__icon">{item.thumbnail_icon || <FileText size={18} strokeWidth={1.5} />}</span>
             <div className="profile-resume__body">
               <Link href={item.content_url} className="profile-resume__title">
                 {item.content_title}
@@ -159,7 +223,7 @@ function ResumeList({
                 <div className="profile-resume__track">
                   <div
                     className="profile-resume__fill"
-                    style={{ width: `${item.position.pct}%` }}
+                    style={{ "--resume-pct": `${item.position.pct}%` } as React.CSSProperties}
                   />
                 </div>
               )}
@@ -170,7 +234,7 @@ function ResumeList({
             <button
               type="button"
               className="profile-resume__del"
-              title="إزالة"
+              aria-label="إزالة"
               onClick={() => {
                 deleteResumeItem(userId, item.content_type, item.content_id);
                 onDelete(item.content_type, item.content_id);
@@ -202,7 +266,7 @@ function NewBadgesFlash({ keys }: { keys: string[] }) {
         if (!def) return null;
         return (
           <div key={key} className="profile-new-badge">
-            <span>{def.icon}</span>
+            <BadgeIcon name={def.icon} />
             <span>أحرزت شارة جديدة: <strong>{def.titleAr}</strong></span>
           </div>
         );
@@ -216,9 +280,20 @@ function NewBadgesFlash({ keys }: { keys: string[] }) {
 export default function UserStatsPage() {
   const { user, isLoggedIn, loading: authLoading } = useAuth();
   const [stats, setStats] = useState<ProfileStats | null>(null);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/my-profile",
+      title: "إحصائياتي | المجلس العلمي",
+      description: "إحصائياتي وشاراتي وسجل تعلمي في المجلس العلمي، تابع تقدمك في رحلتك العلمية.",
+      keywords: ["إحصائيات", "شارات", "نشاط المستخدم", "تقدم علمي", "المجلس العلمي"],
+      robots: "noindex, follow",
+    });
+  }, []);
   const [resumeItems, setResumeItems] = useState<ResumeItem[]>([]);
   const [newBadges, setNewBadges] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const [quizPerf, setQuizPerf] = useState<CategoryPerformance[]>([]);
 
   const earnedSet = useMemo(
     () => new Set(stats?.earnedBadges.map((b) => b.key) ?? []),
@@ -266,6 +341,8 @@ export default function UserStatsPage() {
       })
       .catch(() => {})
       .finally(() => setLoading(false));
+
+    void fetchUserCategoryPerformance().then(setQuizPerf).catch(() => setQuizPerf([]));
   }, [isLoggedIn, user?.id]);
 
   // ── Guards ────────────────────────────────────────────────────────
@@ -283,11 +360,9 @@ export default function UserStatsPage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="page-shell narrow" dir="rtl" style={{ textAlign: "center", paddingTop: "3rem" }}>
-        <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🔐</div>
-        <p style={{ color: "var(--majalis-ink-soft)", marginBottom: "1rem" }}>
-          سجّل الدخول لعرض ملفك الشخصي وإنجازاتك.
-        </p>
+      <div className="page-shell narrow usp-login-prompt" dir="rtl">
+        <div className="usp-login-icon"><Lock size={36} strokeWidth={1.3} /></div>
+        <p className="usp-login-msg">سجّل الدخول لعرض ملفك الشخصي وإنجازاتك.</p>
         <Link href="/login?next=/profile" className="ui-card-btn">
           تسجيل الدخول
         </Link>
@@ -305,32 +380,26 @@ export default function UserStatsPage() {
       <PageHeader
         eyebrow="ملفك الشخصي"
         title={`أهلاً، ${displayName}`}
-        subtitle="إنجازاتك ومستواك وتقدمك في تطبيق المجالس."
+        subtitle="إنجازاتك ومستواك وتقدمك في المجلس العلمي."
       />
 
       {/* ── بطاقة الهوية ── */}
       {stats && (
-        <div className="profile-identity ui-card">
+        <div className="profile-identity ui-card" style={{ "--level-color": stats.level.color } as React.CSSProperties}>
           <div className="profile-identity__left">
-            <div
-              className="profile-identity__avatar"
-              style={{ background: stats.level.color }}
-            >
+            <div className="profile-identity__avatar">
               {displayName.slice(0, 1)}
             </div>
             <div>
               <div className="profile-identity__name">{displayName}</div>
-              <div
-                className="profile-identity__level-badge"
-                style={{ color: stats.level.color, borderColor: stats.level.color }}
-              >
+              <div className="profile-identity__level-badge">
                 {stats.level.titleAr}
               </div>
             </div>
           </div>
           <div className="profile-identity__streak">
             <span className="profile-identity__streak-num">{stats.streakDays}</span>
-            <span className="profile-identity__streak-label">🔥 يوم متواصل</span>
+            <span className="profile-identity__streak-label"><Flame size={14} strokeWidth={2} aria-hidden="true" /> يوم متواصل</span>
           </div>
         </div>
       )}
@@ -343,20 +412,23 @@ export default function UserStatsPage() {
         <section className="profile-stats-section">
           <h2 className="profile-section-title">إحصاءاتك</h2>
           <div className="profile-stats-grid">
-            <StatCard icon="🔥" label="أيام متواصلة" value={stats.streakDays} />
-            <StatCard icon="📖" label="دروس مكتملة" value={stats.completedLessons} />
-            <StatCard icon="📕" label="كتب مقروءة" value={stats.booksRead} />
+            <StatCard Icon={Flame}         label="أيام متواصلة" value={stats.streakDays} />
+            <StatCard Icon={GraduationCap} label="دروس مكتملة" value={stats.completedLessons} />
+            <StatCard Icon={BookText}      label="كتب مقروءة" value={stats.booksRead} />
             <StatCard
-              icon="📿"
+              Icon={RotateCw}
               label="تسبيحات اليوم"
               value={stats.tasbihToday.toLocaleString("ar-KW")}
               sub={`${stats.tasbihLifetime.toLocaleString("ar-KW")} إجمالي`}
             />
-            <StatCard icon="🔖" label="محفوظات" value={stats.savedItems} />
-            <StatCard icon="🏅" label="شارات محرزة" value={stats.earnedBadges.length} sub={`من ${BADGE_DEFS.length}`} />
+            <StatCard Icon={Bookmark} label="محفوظات" value={stats.savedItems} />
+            <StatCard Icon={Award}    label="شارات محرزة" value={stats.earnedBadges.length} sub={`من ${BADGE_DEFS.length}`} />
           </div>
         </section>
       )}
+
+      {/* ── تحليل أداء الأسئلة ── */}
+      <QuizPerformancePanel perf={quizPerf} />
 
       {/* ── الاستئناف ── */}
       {user?.id && resumeItems.length > 0 && (
@@ -374,7 +446,7 @@ export default function UserStatsPage() {
       {/* ── لوحة الشارات ── */}
       {stats && (
         <section className="profile-badges-section">
-          <h2 className="profile-section-title">🏅 الإنجازات والشارات</h2>
+          <h2 className="profile-section-title"><Medal size={18} strokeWidth={1.8} aria-hidden="true" /> الإنجازات والشارات</h2>
           <p className="profile-badges-hint">
             {stats.earnedBadges.length} من {BADGE_DEFS.length} شارة محرزة
           </p>
@@ -384,11 +456,15 @@ export default function UserStatsPage() {
 
       {/* ── روابط سريعة ── */}
       <nav className="profile-quick-links" aria-label="روابط الملف">
-        <Link href="/lessons" className="profile-quick-link">📚 الدروس</Link>
-        <Link href="/library" className="profile-quick-link">📕 المكتبة</Link>
-        <Link href="/tasbih" className="profile-quick-link">📿 التسبيح</Link>
-        <Link href="/adhkar" className="profile-quick-link">🌿 الأذكار</Link>
+        <Link href="/lessons" className="profile-quick-link"><GraduationCap size={15} strokeWidth={1.8} aria-hidden="true" /> الدروس</Link>
+        <Link href="/library" className="profile-quick-link"><BookOpen size={15} strokeWidth={1.8} aria-hidden="true" /> المكتبة</Link>
+        <Link href="/tasbih" className="profile-quick-link"><RotateCw size={15} strokeWidth={1.8} aria-hidden="true" /> التسبيح</Link>
+        <Link href="/adhkar" className="profile-quick-link"><Leaf size={15} strokeWidth={1.8} aria-hidden="true" /> الأذكار</Link>
       </nav>
+
+      <div className="twh-share">
+        <ShareButtons title="إحصاءات التعلم — المجلس العلمي" url="https://www.majlisilm.com/my-stats" />
+      </div>
     </div>
   );
 }

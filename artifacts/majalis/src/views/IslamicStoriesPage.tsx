@@ -1,10 +1,27 @@
-"use client";
-
 import { useState, useEffect } from "react";
+import { AlertTriangle, Bird, BookOpen, Castle, Compass, Flower2, Gem, Landmark, Leaf, Lightbulb, Map as MapIcon, Moon, Ruler, Sailboat, Scale, Search, Shield, Star, Sun, Sword, Users } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { supabase } from "@/lib/supabase";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
+import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
+import { ISLAMIC_STORIES_SEED } from "@/lib/islamic-stories-seed";
+import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
+import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { truncateAtWord } from "@/lib/utils";
 
-// ─────────────────── Types ───────────────────────────────────────────────────
+const STORY_ICON_MAP: Record<string, LucideIcon> = {
+  Star, Scale, Sword, Landmark, Bird, Compass, Gem, BookOpen, Moon, Castle,
+  Sun, Sailboat, Flower2, MapIcon, Ruler, Leaf, Shield,
+};
+function StoryIconEl({ name }: { name: string }) {
+  const I = STORY_ICON_MAP[name] ?? BookOpen;
+  return <I size={22} strokeWidth={1.5} />;
+}
+
+// ─────────────────── Types ────────────────────────────────────────────────────
 type Category = "الكل" | "صحابة" | "فتوحات" | "تاريخ";
 type Era = "الكل" | "نبوي" | "راشدي" | "أموي" | "عباسي" | "عثماني" | "حديث";
 
@@ -24,232 +41,78 @@ interface IslamicStory {
   is_approved: boolean;
 }
 
-// ─────────────────── Palette ─────────────────────────────────────────────────
-const GOLD = "#D4AF37";
-const DARK_BG = "#0F1A2E";
-const CARD_BG = "#162035";
-const ACCENT_GREEN = "#1A6B4A";
-const ACCENT_PURPLE = "#4A2D7B";
-
-const CATEGORY_COLORS: Record<string, string> = {
-  صحابة: "#B8860B",
-  فتوحات: "#8B1A1A",
-  تاريخ: "#1A5C8B",
-};
-
 const ERA_LABELS: Era[] = ["الكل", "نبوي", "راشدي", "أموي", "عباسي", "عثماني", "حديث"];
 const CATEGORY_LABELS: Category[] = ["الكل", "صحابة", "فتوحات", "تاريخ"];
 
-// ─────────────────── SVG Helpers ─────────────────────────────────────────────
-function IslamicStar({ size = 28, color = GOLD, opacity = 0.8 }: { size?: number; color?: string; opacity?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 100 100" style={{ opacity }} aria-hidden="true">
-      <polygon points="50,5 61,35 93,35 67,57 78,88 50,68 22,88 33,57 7,35 39,35" fill={color} />
-    </svg>
-  );
-}
-
-function OrnamentalDivider({ color = GOLD }: { color?: string }) {
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: 8, margin: "8px 0", opacity: 0.5 }}>
-      <div style={{ flex: 1, height: 1, background: `linear-gradient(to right, transparent, ${color})` }} />
-      <IslamicStar size={14} color={color} />
-      <div style={{ flex: 1, height: 1, background: `linear-gradient(to left, transparent, ${color})` }} />
-    </div>
-  );
-}
-
 // ─────────────────── Story Card ───────────────────────────────────────────────
 function StoryCard({ story, onSelect }: { story: IslamicStory; onSelect: () => void }) {
-  const [hovered, setHovered] = useState(false);
-  const catColor = CATEGORY_COLORS[story.category] || GOLD;
-
   return (
-    <article
+    <div
+      className={`isp-card isp-card--${story.category === "صحابة" ? "companions" : story.category === "فتوحات" ? "conquests" : "history"}`}
       onClick={onSelect}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onKeyDown={e => e.key === "Enter" && onSelect()}
+      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onSelect()}
       tabIndex={0}
       role="button"
       aria-label={`اقرأ قصة: ${story.title}`}
-      style={{
-        background: hovered
-          ? `linear-gradient(145deg, ${catColor}18, ${CARD_BG})`
-          : CARD_BG,
-        border: `1px solid ${hovered ? catColor : catColor + "44"}`,
-        borderRadius: 12,
-        padding: "20px 18px",
-        cursor: "pointer",
-        transition: "all 0.2s ease",
-        transform: hovered ? "translateY(-2px)" : "none",
-        boxShadow: hovered ? `0 8px 24px ${catColor}22` : "none",
-        display: "flex",
-        flexDirection: "column",
-        gap: 10,
-        textAlign: "right",
-        direction: "rtl",
-      }}
     >
-      {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8 }}>
-        <div style={{ fontSize: 28 }}>{story.icon}</div>
-        <div style={{ flex: 1 }}>
-          <div style={{ display: "flex", gap: 6, marginBottom: 6, flexWrap: "wrap" }}>
-            <span style={{
-              background: catColor + "33",
-              color: catColor,
-              border: `1px solid ${catColor}55`,
-              borderRadius: 20,
-              padding: "2px 10px",
-              fontSize: 11,
-              fontWeight: 700,
-            }}>{story.category}</span>
-            <span style={{
-              background: "#ffffff11",
-              color: "#aaa",
-              borderRadius: 20,
-              padding: "2px 10px",
-              fontSize: 11,
-            }}>{story.era}</span>
-          </div>
-          <h3 style={{ color: "#fff", fontSize: 14, fontWeight: 700, margin: 0, lineHeight: 1.4 }}>
-            {story.title}
-          </h3>
+      <div className="isp-card__head">
+        <span className="isp-card__icon"><StoryIconEl name={story.icon} /></span>
+        <div className="isp-card__meta-badges">
+          <span className="isp-badge isp-badge--cat">{story.category}</span>
+          <span className="isp-badge isp-badge--era">{story.era}</span>
         </div>
       </div>
 
-      <OrnamentalDivider color={catColor} />
+      <div className="isp-card__divider" aria-hidden="true">
+        <AdminQuickEdit section="islamic-stories" />
+      </div>
 
-      <p style={{ color: "#ccc", fontSize: 13, lineHeight: 1.6, margin: 0, flex: 1 }}>
-        {story.summary.slice(0, 120)}…
-      </p>
+      <h3 className="isp-card__title">{story.title}</h3>
+      <p className="isp-card__summary">{truncateAtWord(story.summary, 120)}</p>
 
-      {/* Tags */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-        {story.tags.slice(0, 3).map(tag => (
-          <span key={tag} style={{
-            background: "#ffffff0a",
-            color: "#888",
-            borderRadius: 20,
-            padding: "2px 8px",
-            fontSize: 10,
-          }}>#{tag}</span>
+      <div className="isp-card__tags">
+        {story.tags.slice(0, 3).map((tag) => (
+          <span key={tag} className="isp-tag">#{tag}</span>
         ))}
       </div>
 
-      <div style={{
-        color: catColor,
-        fontSize: 12,
-        fontWeight: 600,
-        display: "flex",
-        alignItems: "center",
-        gap: 4,
-        marginTop: 4,
-      }}>
-        <span>اقرأ القصة</span>
-        <span>←</span>
-      </div>
-    </article>
+      <span className="isp-card__cta">اقرأ القصة ←</span>
+    </div>
   );
 }
 
 // ─────────────────── Story Detail ────────────────────────────────────────────
 function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => void }) {
-  const catColor = CATEGORY_COLORS[story.category] || GOLD;
-
   useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [story.slug]);
 
   return (
-    <div style={{ maxWidth: 820, margin: "0 auto", padding: "0 16px 40px", direction: "rtl", textAlign: "right" }}>
-      {/* Back */}
-      <button
-        onClick={onBack}
-        style={{
-          background: "none",
-          border: `1px solid ${catColor}55`,
-          color: catColor,
-          borderRadius: 8,
-          padding: "8px 18px",
-          cursor: "pointer",
-          fontSize: 14,
-          marginBottom: 24,
-          display: "flex",
-          alignItems: "center",
-          gap: 6,
-        }}
-      >
+    <div className="isp-detail">
+      <button type="button" className="isp-detail__back" onClick={onBack}>
         ← العودة إلى القصص
       </button>
 
-      {/* Hero */}
-      <div style={{
-        background: `linear-gradient(135deg, ${catColor}22, ${DARK_BG})`,
-        border: `1px solid ${catColor}44`,
-        borderRadius: 16,
-        padding: "32px 28px",
-        marginBottom: 28,
-      }}>
-        <div style={{ display: "flex", gap: 12, marginBottom: 12, flexWrap: "wrap" }}>
-          <span style={{
-            background: catColor + "33",
-            color: catColor,
-            border: `1px solid ${catColor}55`,
-            borderRadius: 20,
-            padding: "4px 14px",
-            fontSize: 13,
-            fontWeight: 700,
-          }}>{story.category}</span>
-          <span style={{
-            background: "#ffffff11",
-            color: "#aaa",
-            borderRadius: 20,
-            padding: "4px 14px",
-            fontSize: 13,
-          }}>{story.era}</span>
+      <div className="isp-detail__hero">
+        <div className="isp-detail__badges">
+          <span className="isp-badge isp-badge--cat">{story.category}</span>
+          <span className="isp-badge isp-badge--era">{story.era}</span>
         </div>
-        <div style={{ fontSize: 42, marginBottom: 12 }}>{story.icon}</div>
-        <h1 style={{ color: "#fff", fontSize: "clamp(20px, 4vw, 28px)", fontWeight: 800, margin: "0 0 12px" }}>
-          {story.title}
-        </h1>
-        <p style={{ color: "#ccc", fontSize: 15, lineHeight: 1.7, margin: 0 }}>{story.summary}</p>
+        <div className="isp-detail__icon"><StoryIconEl name={story.icon} /></div>
+        <h1 className="isp-detail__title">{story.title}</h1>
+        <p className="isp-detail__summary">{story.summary}</p>
       </div>
 
-      {/* Full Content */}
-      <section style={{
-        background: CARD_BG,
-        border: `1px solid ${catColor}33`,
-        borderRadius: 12,
-        padding: "28px 24px",
-        marginBottom: 20,
-      }}>
-        <h2 style={{ color: catColor, fontSize: 16, fontWeight: 700, marginBottom: 16 }}>📖 تفاصيل القصة</h2>
-        <div style={{ color: "#ddd", fontSize: 15, lineHeight: 1.9, whiteSpace: "pre-wrap" }}>
-          {story.full_content}
-        </div>
+      <section className="isp-detail__section isp-detail__section--content">
+        <h2 className="isp-detail__section-title"><BookOpen size={18} strokeWidth={1.8} aria-hidden="true" /> تفاصيل القصة</h2>
+        <div className="isp-detail__body">{story.full_content}</div>
       </section>
 
-      {/* Key Lessons */}
       {story.key_lessons.length > 0 && (
-        <section style={{
-          background: `${ACCENT_GREEN}22`,
-          border: `1px solid ${ACCENT_GREEN}44`,
-          borderRadius: 12,
-          padding: "24px 20px",
-          marginBottom: 20,
-        }}>
-          <h2 style={{ color: "#4ADE80", fontSize: 16, fontWeight: 700, marginBottom: 16 }}>💡 الدروس المستفادة</h2>
-          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+        <section className="isp-detail__section isp-detail__section--lessons">
+          <h2 className="isp-detail__section-title isp-detail__section-title--green"><Lightbulb size={18} strokeWidth={1.8} aria-hidden="true" /> الدروس المستفادة</h2>
+          <ul className="isp-lessons-list">
             {story.key_lessons.map((lesson, i) => (
-              <li key={i} style={{
-                display: "flex",
-                gap: 10,
-                color: "#ccc",
-                fontSize: 14,
-                lineHeight: 1.6,
-                alignItems: "flex-start",
-              }}>
-                <IslamicStar size={16} color="#4ADE80" />
+              <li key={i} className="isp-lessons-list__item">
+                <span className="isp-lessons-list__star">✦</span>
                 <span>{lesson}</span>
               </li>
             ))}
@@ -257,75 +120,40 @@ function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => voi
         </section>
       )}
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-        {/* Related Figures */}
+      <div className="isp-detail__grid">
         {story.related_figures.length > 0 && (
-          <section style={{
-            background: `${ACCENT_PURPLE}22`,
-            border: `1px solid ${ACCENT_PURPLE}44`,
-            borderRadius: 12,
-            padding: "20px 18px",
-          }}>
-            <h2 style={{ color: "#A78BFA", fontSize: 14, fontWeight: 700, marginBottom: 12 }}>👥 الشخصيات</h2>
-            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          <section className="isp-detail__section isp-detail__section--figures">
+            <h2 className="isp-detail__section-title isp-detail__section-title--purple"><Users size={18} strokeWidth={1.8} aria-hidden="true" /> الشخصيات</h2>
+            <div className="isp-detail__list">
               {story.related_figures.map((fig, i) => (
-                <span key={i} style={{ color: "#bbb", fontSize: 13 }}>• {fig}</span>
+                <span key={i} className="isp-detail__list-item">• {fig}</span>
               ))}
             </div>
           </section>
         )}
 
-        {/* Sources */}
         {story.sources.length > 0 && (
-          <section style={{
-            background: "#B8860B22",
-            border: "1px solid #B8860B44",
-            borderRadius: 12,
-            padding: "20px 18px",
-          }}>
-            <h2 style={{ color: GOLD, fontSize: 14, fontWeight: 700, marginBottom: 12 }}>📚 المصادر</h2>
-            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          <section className="isp-detail__section isp-detail__section--sources">
+            <h2 className="isp-detail__section-title isp-detail__section-title--gold"><BookOpen size={18} strokeWidth={1.8} aria-hidden="true" /> المصادر</h2>
+            <div className="isp-detail__list">
               {story.sources.map((src, i) => (
-                <span key={i} style={{ color: "#bbb", fontSize: 12 }}>• {src}</span>
+                <span key={i} className="isp-detail__list-item">• {src}</span>
               ))}
             </div>
           </section>
         )}
       </div>
 
-      {/* Tags */}
       {story.tags.length > 0 && (
-        <div style={{ marginTop: 20, display: "flex", flexWrap: "wrap", gap: 8 }}>
-          {story.tags.map(tag => (
-            <span key={tag} style={{
-              background: "#ffffff0a",
-              color: "#888",
-              border: "1px solid #ffffff11",
-              borderRadius: 20,
-              padding: "4px 12px",
-              fontSize: 12,
-            }}>#{tag}</span>
+        <div className="isp-detail__tags">
+          {story.tags.map((tag) => (
+            <span key={tag} className="isp-tag isp-tag--large">#{tag}</span>
           ))}
         </div>
       )}
-    </div>
-  );
-}
-
-// ─────────────────── Loading State ───────────────────────────────────────────
-function LoadingGrid() {
-  return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 16 }}>
-      {[...Array(6)].map((_, i) => (
-        <div key={i} style={{
-          background: CARD_BG,
-          borderRadius: 12,
-          padding: 20,
-          height: 200,
-          animation: "pulse 1.5s ease-in-out infinite",
-          opacity: 0.6,
-        }} />
-      ))}
+      <div className="isp-detail__share">
+        <ShareButtons title={story.title} url={`https://www.majlisilm.com/stories`} />
+      </div>
     </div>
   );
 }
@@ -340,213 +168,200 @@ export default function IslamicStoriesPage() {
   const [era, setEra] = useState<Era>("الكل");
   const [search, setSearch] = useState("");
 
+  // رابط `?cat=...` في JSON-LD أسفل هذه الصفحة نفسها كان يُتجاهَل كليًا:
+  // `category` تُهيَّأ دائماً بـ"الكل" بلا قراءة أي شيء من الرابط الفعلي —
+  // عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف بالفحص المباشر
+  // 2026-07-18.
+  useEffect(() => {
+    const cat = new URLSearchParams(window.location.search).get("cat");
+    const valid: Category[] = ["الكل", "صحابة", "فتوحات", "تاريخ"];
+    if (cat && (valid as string[]).includes(cat)) setCategory(cat as Category);
+  }, []);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/stories",
+      title: "قصص الصحابة والفتوحات الإسلامية | المجلس العلمي",
+      description: "قصص الصحابة الكرام والفتوحات الإسلامية والأحداث التاريخية، من الهجرة النبوية إلى فتح مكة وما بعدها من عصور الإسلام.",
+      keywords: ["قصص إسلامية", "الصحابة", "الفتوحات الإسلامية", "التاريخ الإسلامي", "السيرة"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أقسام القصص الإسلامية",
+          description: "قصص الصحابة والفتوحات والتاريخ الإسلامي عبر العصور",
+          itemListElement: CATEGORY_LABELS.filter(c => c !== "الكل").map((cat, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: cat,
+            url: `https://www.majlisilm.com/stories?cat=${encodeURIComponent(cat)}`,
+          })),
+        },
+      ],
+    });
+  }, []);
+
   useEffect(() => {
     if (!isSupabaseConfigured()) {
-      setError("قاعدة البيانات غير مُهيأة.");
+      setStories(ISLAMIC_STORIES_SEED as unknown as IslamicStory[]);
       setLoading(false);
       return;
     }
-    supabase
-      .from("islamic_stories")
-      .select("*")
-      .eq("is_approved", true)
-      .order("category")
-      .order("era")
+    Promise.resolve(
+      supabase
+        .from("islamic_stories")
+        .select("*")
+        .eq("is_approved", true)
+        .order("category")
+        .order("era"),
+    )
       .then(({ data, error: err }) => {
-        if (err) { setError("تعذّر تحميل القصص."); }
-        else { setStories((data || []) as IslamicStory[]); }
-        setLoading(false);
-      });
+        if (err) {
+          setError("تعذّر تحميل القصص.");
+          setStories(ISLAMIC_STORIES_SEED as unknown as IslamicStory[]);
+        } else {
+          const rows = (data || []) as IslamicStory[];
+          setStories(rows.length > 0 ? rows : ISLAMIC_STORIES_SEED as unknown as IslamicStory[]);
+        }
+      })
+      .catch(() => {
+        setError("تعذّر تحميل القصص.");
+        setStories(ISLAMIC_STORIES_SEED as unknown as IslamicStory[]);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
-  const filtered = stories.filter(s => {
+  const filtered = stories.filter((s) => {
     if (category !== "الكل" && s.category !== category) return false;
     if (era !== "الكل" && s.era !== era) return false;
     if (search.trim()) {
-      const q = search.toLowerCase();
-      return (
-        s.title.toLowerCase().includes(q) ||
-        s.summary.toLowerCase().includes(q) ||
-        s.tags.some(t => t.toLowerCase().includes(q))
-      );
+      return arabicMatchAny([s.title, s.summary, ...s.tags], search);
     }
     return true;
   });
 
-  const selectedStory = selectedSlug ? stories.find(s => s.slug === selectedSlug) : null;
+  const selectedStory = selectedSlug ? stories.find((s) => s.slug === selectedSlug) : null;
 
   const counts = {
-    صحابة: stories.filter(s => s.category === "صحابة").length,
-    فتوحات: stories.filter(s => s.category === "فتوحات").length,
-    تاريخ: stories.filter(s => s.category === "تاريخ").length,
+    صحابة: stories.filter((s) => s.category === "صحابة").length,
+    فتوحات: stories.filter((s) => s.category === "فتوحات").length,
+    تاريخ: stories.filter((s) => s.category === "تاريخ").length,
   };
 
   if (selectedStory) {
     return (
-      <div style={{ minHeight: "100vh", background: DARK_BG, paddingTop: 32 }}>
+      <div className="page-shell narrow isp-page">
         <StoryDetail story={selectedStory} onBack={() => setSelectedSlug(null)} />
       </div>
     );
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: DARK_BG, direction: "rtl", textAlign: "right" }}>
-      <style>{`
-        @keyframes pulse { 0%,100%{opacity:0.6} 50%{opacity:0.3} }
-        .isp-filter-btn { background: none; border: 1px solid #333; color: #aaa; border-radius: 20px; padding: 6px 16px; cursor: pointer; font-size: 13px; transition: all 0.2s; font-family: inherit; }
-        .isp-filter-btn:hover { border-color: #888; color: #fff; }
-        .isp-filter-btn.active { background: var(--ac); border-color: var(--ac); color: #fff; font-weight: 700; }
-        .isp-search { width: 100%; background: #162035; border: 1px solid #333; border-radius: 10px; padding: 10px 16px; color: #fff; font-size: 14px; font-family: inherit; outline: none; transition: border 0.2s; direction: rtl; }
-        .isp-search:focus { border-color: ${GOLD}88; }
-        .isp-search::placeholder { color: #666; }
-      `}</style>
+    <div className="page-shell narrow isp-page">
+      <PageHeader
+        eyebrow="التاريخ الإسلامي"
+        title="القصص الإسلامية"
+        subtitle="صحابة الكرام · الفتوحات الإسلامية · التاريخ الحضاري"
+      />
 
-      {/* Hero */}
-      <div style={{
-        background: `linear-gradient(180deg, #0A1525 0%, ${DARK_BG} 100%)`,
-        padding: "48px 20px 40px",
-        textAlign: "center",
-        position: "relative",
-        overflow: "hidden",
-      }}>
-        <div style={{ position: "absolute", top: -20, left: "50%", transform: "translateX(-50%)", opacity: 0.05, pointerEvents: "none" }}>
-          <IslamicStar size={300} color={GOLD} />
+      {/* إحصائيات التصنيفات */}
+      {!loading && stories.length > 0 && (
+        <div className="isp-stats-row">
+          {(["صحابة", "فتوحات", "تاريخ"] as const).map((cat) => (
+            <div key={cat} className={`isp-stat-chip isp-stat-chip--${cat === "صحابة" ? "companions" : cat === "فتوحات" ? "conquests" : "history"}`}>
+              {cat} · {counts[cat]}
+            </div>
+          ))}
         </div>
-        <div style={{ position: "relative" }}>
-          <div style={{ display: "flex", justifyContent: "center", gap: 12, marginBottom: 20 }}>
-            <IslamicStar size={22} color={GOLD} opacity={0.5} />
-            <IslamicStar size={30} color={GOLD} />
-            <IslamicStar size={22} color={GOLD} opacity={0.5} />
-          </div>
-          <h1 style={{
-            color: "#fff",
-            fontSize: "clamp(26px, 5vw, 42px)",
-            fontWeight: 900,
-            margin: "0 0 8px",
-            letterSpacing: "-0.5px",
-          }}>القصص الإسلامية</h1>
-          <div style={{
-            color: GOLD,
-            fontSize: "clamp(13px, 2vw, 16px)",
-            fontWeight: 400,
-            marginBottom: 20,
-          }}>صحابة الكرام · الفتوحات الإسلامية · التاريخ الحضاري</div>
+      )}
 
-          {/* Stats */}
-          <div style={{ display: "flex", justifyContent: "center", gap: 24, flexWrap: "wrap" }}>
-            {(["صحابة", "فتوحات", "تاريخ"] as const).map(cat => (
-              <div key={cat} style={{
-                background: `${CATEGORY_COLORS[cat]}22`,
-                border: `1px solid ${CATEGORY_COLORS[cat]}44`,
-                borderRadius: 10,
-                padding: "8px 20px",
-                color: CATEGORY_COLORS[cat],
-                fontSize: 13,
-                fontWeight: 700,
-              }}>
-                {cat} · {counts[cat]}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Controls */}
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "24px 16px" }}>
-        {/* Search */}
-        <div style={{ marginBottom: 18 }}>
+      {/* البحث والفلاتر */}
+      {!loading && (
+        <div className="isp-controls">
           <input
             className="isp-search"
-            placeholder="🔍 ابحث في القصص…"
+            aria-label="ابحث في القصص…" placeholder="ابحث في القصص…"
             value={search}
-            onChange={e => setSearch(e.target.value)}
+            onChange={(e) => setSearch(e.target.value)}
           />
-        </div>
 
-        {/* Category Filter */}
-        <div style={{ marginBottom: 14 }}>
-          <div style={{ color: "#666", fontSize: 11, marginBottom: 8 }}>التصنيف</div>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            {CATEGORY_LABELS.map(cat => (
-              <button
-                key={cat}
-                className={`isp-filter-btn${category === cat ? " active" : ""}`}
-                style={{ "--ac": cat === "الكل" ? GOLD : CATEGORY_COLORS[cat] } as React.CSSProperties}
-                onClick={() => setCategory(cat)}
-              >{cat}</button>
-            ))}
+          <div className="isp-filter-group">
+            <span className="isp-filter-label">التصنيف</span>
+            <div className="isp-filter-chips">
+              {CATEGORY_LABELS.map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  className={`isp-chip${category === cat ? " is-active" : ""}`}
+                  onClick={() => setCategory(cat)}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Era Filter */}
-        <div style={{ marginBottom: 24 }}>
-          <div style={{ color: "#666", fontSize: 11, marginBottom: 8 }}>الحقبة الزمنية</div>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            {ERA_LABELS.map(e => (
-              <button
-                key={e}
-                className={`isp-filter-btn${era === e ? " active" : ""}`}
-                style={{ "--ac": GOLD } as React.CSSProperties}
-                onClick={() => setEra(e)}
-              >{e}</button>
-            ))}
+          <div className="isp-filter-group">
+            <span className="isp-filter-label">الحقبة الزمنية</span>
+            <div className="isp-filter-chips">
+              {ERA_LABELS.map((e) => (
+                <button
+                  key={e}
+                  type="button"
+                  className={`isp-chip${era === e ? " is-active" : ""}`}
+                  onClick={() => setEra(e)}
+                >
+                  {e}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Results count */}
-        {!loading && (
-          <div style={{ color: "#666", fontSize: 13, marginBottom: 16 }}>
+          <p className="isp-result-count" aria-live="polite" aria-atomic="true">
             {filtered.length} قصة
-            {search && ` — نتائج البحث عن "${search}"`}
-          </div>
-        )}
+            {search && `، نتائج البحث عن "${search}"`}
+          </p>
+        </div>
+      )}
 
-        {/* Content */}
-        {loading ? (
-          <LoadingGrid />
-        ) : error ? (
-          <div style={{
-            textAlign: "center",
-            padding: 48,
-            color: "#ff6b6b",
-            background: "#ff6b6b11",
-            borderRadius: 12,
-            border: "1px solid #ff6b6b33",
-          }}>
-            <div style={{ fontSize: 32, marginBottom: 8 }}>⚠️</div>
-            <div>{error}</div>
-          </div>
-        ) : stories.length === 0 ? (
-          <div style={{
-            textAlign: "center",
-            padding: 60,
-            color: "#666",
-          }}>
-            <IslamicStar size={48} color={GOLD} opacity={0.3} />
-            <div style={{ marginTop: 16, fontSize: 15 }}>لا توجد قصص معتمدة بعد.</div>
-            <div style={{ fontSize: 13, marginTop: 8, color: "#444" }}>يمكن اعتماد القصص من لوحة التحكم.</div>
-          </div>
-        ) : filtered.length === 0 ? (
-          <div style={{ textAlign: "center", padding: 48, color: "#666" }}>
-            <div style={{ fontSize: 32, marginBottom: 8 }}>🔍</div>
-            <div>لا توجد نتائج للبحث أو الفلتر المحدد.</div>
-          </div>
-        ) : (
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-            gap: 16,
-          }}>
-            {filtered.map(story => (
-              <StoryCard
-                key={story.slug}
-                story={story}
-                onSelect={() => setSelectedSlug(story.slug)}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+      {/* المحتوى */}
+      {loading ? (
+        <SkeletonCardGrid count={6} />
+      ) : error ? (
+        <div className="isp-error">
+          <span className="isp-error__icon"><AlertTriangle size={20} strokeWidth={1.5} /></span>
+          <span>{error}</span>
+        </div>
+      ) : stories.length === 0 ? (
+        <div className="isp-empty">
+          <span className="isp-empty__icon">✦</span>
+          <p>لا توجد قصص معتمدة بعد.</p>
+          <p className="isp-empty__hint">يمكن اعتماد القصص من لوحة التحكم.</p>
+        </div>
+      ) : filtered.length === 0 ? (
+        <div className="isp-empty">
+          <span className="isp-empty__icon"><Search size={32} strokeWidth={1.4} aria-hidden="true" /></span>
+          <p>لا توجد نتائج للبحث أو الفلتر المحدد.</p>
+        </div>
+      ) : (
+        <div className="isp-grid">
+          {filtered.map((story) => (
+            <StoryCard
+              key={story.slug}
+              story={story}
+              onSelect={() => setSelectedSlug(story.slug)}
+            />
+          ))}
+        </div>
+      )}
+
+      {!loading && (
+        <SectionQuiz
+          categoryId={["tarikh", "sira", "akhlaq"]}
+          title="اختبر معلوماتك في التاريخ الإسلامي"
+          count={4}
+        />
+      )}
     </div>
   );
 }

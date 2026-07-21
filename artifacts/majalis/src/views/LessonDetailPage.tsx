@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
+import { AdminInlineEdit } from "@/components/AdminInlineEdit";
+import { ReadingProgressBar } from "@/components/ReadingProgressBar";
 import { getLessonById, getSheikhs } from "@/lib/supabase";
-import { Loading, Empty } from "@/components/ui-common";
+import { SkeletonPage, Empty } from "@/components/ui-common";
 import ContentActions from "@/components/ContentActions";
-import { isDemoId } from "@/lib/demo-content";
+import { ContentReportButton } from "@/components/ContentReportButton";
+import { isDemoId } from "@/lib/demo-id";
 import { extractLessonSchedule, hasValue } from "@/lib/lesson-display";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { OptimizedSheikhImage } from "@/components/sheikh/OptimizedSheikhImage";
@@ -36,6 +39,8 @@ import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
 import { ScholarFollowButton } from "@/components/ScholarFollowButton";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
+import { ContentMindMap } from "@/components/ContentMindMap";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   if (url?.includes("google.com/maps") || url?.includes("goo.gl/maps") || url?.includes("maps.app")) {
@@ -114,6 +119,17 @@ export default function LessonDetailPage({
   initialLesson?: KuwaitLessonRecord | null;
 }) {
   const [lesson, setLesson] = useState<any>(null);
+
+  // كانت هنا فعليًا ثلاث آليات SEO متنافسة على نفس الصفحة: (1) placeholder
+  // عام بعنوان/مسار خاطئين تمامًا (`path: "/lessons"` — صفحة الفهرس لا
+  // صفحة الدرس نفسها) يُطبَّق فوراً بلا انتظار البيانات، (2) نسخة تعمل فقط
+  // مع مصدر `kuwaitLesson` (لا تعمل إطلاقاً للدروس القادمة من `getLessonById`
+  // مباشرة عبر DB fallback) بمخطط JSON-LD "Event" مكرَّر، (3) الخُطّاف
+  // الصحيح `useLessonSeo(seoLesson, ...)` أدناه (يغطي كلا المصدرين، ينتظر
+  // `loading`، ويبني `lessonJsonLd` الأشمل عبر `lessonSeoMeta`). أُزيلت (1)
+  // و(2) — كانتا تُنتجان "ومضة" عنوان/JSON-LD خاطئ عند كل تحميل صفحة قبل أن
+  // يُصحِّحهما (3)، وتُبقيان العنوان خاطئاً بلا تصحيح أبداً لأي درس مصدره
+  // DB مباشرة لا `kuwaitLesson` الثابت.
   const [kuwaitLesson, setKuwaitLesson] = useState<KuwaitLessonRecord | null>(initialLesson ?? null);
   const [similar, setSimilar] = useState<KuwaitLessonRecord[]>([]);
   const [sameSheikh, setSameSheikh] = useState<KuwaitLessonRecord[]>([]);
@@ -235,10 +251,10 @@ export default function LessonDetailPage({
     };
   }, [kuwaitLesson, lesson, unified]);
 
-  useLessonSeo(seoLesson, `/lessons/${params.id}`);
+  useLessonSeo(seoLesson, `/lessons/${params.id}`, loading);
   usePageView("lesson", params.id);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonPage />;
   if (!unified) return <Empty text="لم يُعثر على الدرس." />;
 
   const sheikhName = unified.sheikhName;
@@ -248,7 +264,6 @@ export default function LessonDetailPage({
   const mapsEmbed = buildMapsEmbed(unified.mapsUrl, unified.mosque, unified.region);
   const activityLabel = normalizeActivityLabel(unified.activityType);
   const keywords = unified.keywords || [];
-  const tags = [...new Set([unified.category, activityLabel, ...(keywords.slice(0, 6))].filter(Boolean))];
   const level = inferLessonLevel(unified.category);
   const addedDate = lesson?.created_at || lesson?.updated_at || unified.gregorianDate;
 
@@ -269,6 +284,7 @@ export default function LessonDetailPage({
 
   return (
     <div className="page-shell narrow lesson-detail-page">
+      <ReadingProgressBar />
       <nav className="lesson-detail-breadcrumb" aria-label="مسار التصفح">
         <Link href="/">الرئيسية</Link>
         <span aria-hidden="true"> / </span>
@@ -295,8 +311,8 @@ export default function LessonDetailPage({
           )}
           <div className="lesson-detail-hero__copy">
             {hasValue(sheikhName) && (
-              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
-                <p className="lesson-card-pro__sheikh" style={{ margin: 0 }}>{sheikhName}</p>
+              <div className="lesson-detail-sheikh-row">
+                <p className="lesson-card-pro__sheikh">{sheikhName}</p>
                 {lesson?.sheikhs?.id && (
                   <ScholarFollowButton sheikhId={lesson.sheikhs.id} compact />
                 )}
@@ -311,9 +327,9 @@ export default function LessonDetailPage({
               {unified.hasLiveStream && <span className="page-soft-tag">بث مباشر</span>}
               {unified.hasRecording && <span className="page-soft-tag">تسجيل</span>}
             </div>
-            {(unified.note || unified.description) && (
+            {unified.note && (
               <p className="lesson-detail-summary">
-                {cleanDisplayText(unified.note || unified.description?.slice(0, 220) || "")}
+                {cleanDisplayText(unified.note)}
               </p>
             )}
           </div>
@@ -377,16 +393,16 @@ export default function LessonDetailPage({
           </div>
         )}
 
-        {tags.length > 0 && (
-          <div className="lesson-detail-body">
-            <h2>الوسوم</h2>
-            <div className="lesson-detail-tags">
-              {tags.map((tag) => (
-                <span key={tag} className="page-soft-tag">{tag}</span>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* الخريطة الذهنية للدرس */}
+        <div className="lesson-detail-body">
+          <ContentMindMap
+            title={unified.title}
+            category={unified.category}
+            keywords={keywords}
+            author={sheikhName}
+            type="lesson"
+          />
+        </div>
 
         {unified.linkedLessons && unified.linkedLessons.length > 0 && (
           <div className="lesson-detail-body">
@@ -416,6 +432,19 @@ export default function LessonDetailPage({
           <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--primary" onClick={handleShare}>
             مشاركة
           </button>
+          <AdminInlineEdit
+            contentType="lesson"
+            contentId={unified.id}
+            initialData={{
+              title: unified.title,
+              category: unified.category,
+              mosque: unified.mosque,
+              region: unified.region,
+              day_of_week: unified.day,
+              lesson_time: unified.time,
+              description: unified.description,
+            }}
+          />
           <FavoriteButton contentType="lesson" contentId={unified.id} />
           <button
             type="button"
@@ -442,11 +471,12 @@ export default function LessonDetailPage({
           {!isDemoId(unified.id) && !unified.id.startsWith("kw-") && (
             <ContentActions contentType="lesson" contentId={unified.id} />
           )}
+          <ContentReportButton contentType="درس" contentId={unified.id} title={unified.title} />
         </div>
 
         {unified.qrCodeUrl && (
           <div className="lesson-detail-qr">
-            <img src={unified.qrCodeUrl} alt={`رمز QR للدرس: ${unified.title}`} title={unified.title} loading="lazy" decoding="async" />
+            <img src={unified.qrCodeUrl} alt={`رمز QR للدرس: ${unified.title}`} loading="lazy" decoding="async" width="200" height="200" />
           </div>
         )}
       </article>
@@ -508,6 +538,9 @@ export default function LessonDetailPage({
           />
         </SectionErrorBoundary>
       )}
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["fiqh","aqeeda","hadith","quran"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
+      </div>
     </div>
   );
 }

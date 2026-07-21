@@ -9,7 +9,7 @@ import { detectPlatform, isSupportedImportPlatform } from "../lib/cms/url-import
 const SCENARIOS = [
   {
     name: "رابط صحيح (صفحة ويب)",
-    url: "https://majlisilm.com/lessons",
+    url: "https://www.majlisilm.com/lessons",
     expectOk: true,
   },
   {

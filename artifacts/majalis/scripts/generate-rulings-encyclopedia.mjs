@@ -103,6 +103,38 @@ function splitEvidence(text, reference) {
   return evidence;
 }
 
+/**
+ * مصادر «ذاتية» — المنصة نفسها ليست مصدرًا خارجيًا يُعتمد عليه في التوثيق.
+ * أي مرجع يطابق هذه الأنماط لا يُحتسب مصدرًا خارجيًا.
+ */
+const SELF_SOURCE_RE = /المجلس العلمي|المجمع الفقهي — مسائل فقهية|qa-seed|fawaid-seed|rulings-seed|fatwa-seed|fiqh-issues-seed|quiz_questions/i;
+
+function hasExternalSource(partial) {
+  const refs = [...(partial.references || []), ...(partial.evidence || [])];
+  return refs.some((r) => {
+    if (!r) return false;
+    const text = `${r.source || ""} ${r.text || ""}`.trim();
+    if (!text) return false;
+    return !SELF_SOURCE_RE.test(text);
+  });
+}
+
+/**
+ * لا يُوسم أي سجل «approved» إلا إذا راجعه إنسان مُسمّى (reviewed_by + reviewed_at)
+ * وكان له مصدر خارجي غير ذاتي. وإلا فهو «pending_review».
+ */
+function resolveReviewState(partial) {
+  const reviewedBy = partial.reviewed_by || null;
+  const reviewedAt = partial.reviewed_at || null;
+  const approved = Boolean(reviewedBy && reviewedAt && hasExternalSource(partial));
+  return {
+    reviewed_by: reviewedBy,
+    reviewed_at: reviewedAt,
+    status: approved ? "approved" : "pending_review",
+    verification_status: approved ? "approved" : "pending_review",
+  };
+}
+
 function makeRuling(partial) {
   const category = partial.category;
   const refs = partial.references || [];
@@ -112,6 +144,7 @@ function makeRuling(partial) {
   const hasRef = refs.length > 0 || evidence.length > 0 || quran.length > 0 || sunnah.length > 0;
   if (!partial.title || !partial.body || !hasRef) return null;
 
+  const review = resolveReviewState(partial);
   const id = partial.external_key || `ruling-${slugify(partial.title)}`;
   return {
     id,
@@ -132,11 +165,16 @@ function makeRuling(partial) {
     keywords: partial.keywords || [],
     benefits: partial.benefits || [],
     importance_score: partial.importance_score ?? 50,
-    popularity_score: partial.popularity_score ?? partial.view_count ?? 0,
-    view_count: partial.view_count ?? 0,
-    search_count: partial.search_count ?? 0,
-    status: "approved",
-    verification_status: "approved",
+    // عدّادات التفاعل تبدأ من صفر دائمًا. أي رقم قادم من البذور أرقامٌ ملفّقة
+    // (لا تُقاس من استخدام حقيقي) وكانت تُبثّ إلى schema.org — فلا تُمرَّر.
+    popularity_score: 0,
+    view_count: 0,
+    search_count: 0,
+    status: review.status,
+    verification_status: review.verification_status,
+    reviewed_by: review.reviewed_by,
+    reviewed_at: review.reviewed_at,
+    provenance: partial.provenance || "seed_transform",
     source_origin: partial.source_origin,
     linked_qa_ids: partial.linked_qa_ids || [],
     linked_fatwa_ids: partial.linked_fatwa_ids || [],
@@ -147,22 +185,8 @@ function makeRuling(partial) {
   };
 }
 
-function decomposeListRuling(ruling) {
-  const lines = ruling.body.split("\n").filter((l) => /^\d+\.|^[-*]\s/.test(l.trim()));
-  if (lines.length < 3) return [ruling];
-
-  return lines.map((line, i) => {
-    const text = line.replace(/^\d+\.\s*|^[-*]\s*/, "").trim();
-    return makeRuling({
-      ...ruling,
-      external_key: `${ruling.external_key}-part-${i + 1}`,
-      title: `${ruling.title}: ${text.slice(0, 60)}`,
-      summary: text.slice(0, 160),
-      body: `${text}\n\n**من:** ${ruling.title}`,
-      importance_score: (ruling.importance_score ?? 50) - 5,
-    });
-  }).filter(Boolean);
-}
+// ملاحظة حوكمة: أُزيلت decomposeListRuling() — كانت تُقطّع القوائم المرقّمة إلى «أحكام»
+// مستقلة، فيرث كل بندٍ دليلَ الأصل، ما أنتج نسبة أدلة خاطئة. لا يجوز تصنيع أحكام بالتقطيع.
 
 function fromQaSeed() {
   const items = parseSeedArray(path.resolve(ROOT, "src/lib/qa-seed.ts"), "SEED_QA");
@@ -179,7 +203,7 @@ function fromQaSeed() {
       const evidenceArr = ev ? splitEvidence(ev, ref) : [];
       const refs = ref
         ? [{ text: ref, source: ref }]
-        : [{ text: "مجالس العلم — الأسئلة والأجوبة", source: "qa-seed" }];
+        : [{ text: "المجلس العلمي — الأسئلة والأجوبة", source: "qa-seed" }];
 
       return makeRuling({
         external_key: `qa-ruling-${q.id}`,
@@ -197,7 +221,6 @@ function fromQaSeed() {
         source_origin: "qa-seed",
         linked_qa_ids: [q.id],
         importance_score: ev ? 70 : 50,
-        view_count: Math.floor(Math.random() * 500) + 100,
       });
     })
     .filter(Boolean);
@@ -246,7 +269,7 @@ function fromFawaidSeed() {
           body: unesc(body),
           category: "طلب العلم والدعوة",
           subcategory: "طلب العلم",
-          references: [{ text: "فوائد فقهية — مجالس العلم", source: "fawaid-seed" }],
+          references: [{ text: "فوائد فقهية — المجلس العلمي", source: "fawaid-seed" }],
           keywords: ["فوائد", "فقه"],
           source_origin: "fawaid-seed",
           importance_score: 55,
@@ -268,45 +291,9 @@ function fromRulingsSeed() {
       source_origin: "rulings-seed",
       importance_score: 85,
     });
-    if (base) {
-      out.push(base);
-      out.push(...decomposeListRuling(base));
-    }
+    if (base) out.push(base);
   }
   return out.filter(Boolean);
-}
-
-function fromFatwaSeed() {
-  const items = parseSeedArray(path.resolve(ROOT, "src/lib/fatwa-seed.ts"), "FATWA_SEED");
-  const catMap = {
-    الصلاة: { category: "الصلاة", subcategory: "أحكام الصلاة" },
-    الزكاة: { category: "الزكاة", subcategory: "زكاة المال" },
-    "فقه عام": { category: "طلب العلم والدعوة", subcategory: "آداب الفتوى" },
-    المعاملات: { category: "المعاملات", subcategory: "البيع" },
-    الأسرة: { category: "الأسرة", subcategory: "النكاح" },
-    النوازل: { category: "النوازل المعاصرة", subcategory: "التقنية" },
-  };
-
-  return items
-    .map((f) => {
-      const cat = catMap[f.category] || { category: "طلب العلم والدعوة", subcategory: "آداب الفتوى" };
-      return makeRuling({
-        external_key: `fatwa-ruling-${f.external_key || f.id}`,
-        title: f.question,
-        summary: f.summary,
-        body: f.answer,
-        category: cat.category,
-        subcategory: cat.subcategory,
-        references: f.mufti_name ? [{ text: f.mufti_name, source: "فتوى معتمدة" }] : [],
-        keywords: f.keywords,
-        source_origin: "fatwa-seed",
-        linked_fatwa_ids: [f.id],
-        view_count: f.view_count,
-        search_count: f.search_count,
-        importance_score: 75,
-      });
-    })
-    .filter(Boolean);
 }
 
 function fromFiqhCouncilSeed() {
@@ -341,41 +328,8 @@ function fromFiqhCouncilSeed() {
   return out.filter(Boolean);
 }
 
-function fromQuizCsv() {
-  const csvPath = path.resolve(ROOT, "data/quiz_questions.csv");
-  if (!fs.existsSync(csvPath)) return [];
-  const lines = fs.readFileSync(csvPath, "utf8").split(/\r?\n/).slice(1);
-  const map = {
-    "الأحكام|الصلاة": { category: "الصلاة", subcategory: "أحكام الصلاة" },
-    "الأحكام|الطهارة": { category: "الطهارة", subcategory: "الوضوء" },
-    "الأحكام|الزكاة": { category: "الزكاة", subcategory: "زكاة المال" },
-    "الأحكام|الصيام": { category: "الصيام", subcategory: "صيام رمضان" },
-    "الأحكام|الحج": { category: "الحج والعمرة", subcategory: "أحكام الحج" },
-  };
-
-  return lines
-    .map((line, i) => {
-      const m = line.match(/^"([^"]*)","([^"]*)","([^"]*)","([^"]*)","([^"]*)"/);
-      if (!m) return null;
-      const [, section, category, , question, answer] = m;
-      const key = `${section}|${category}`;
-      const cat = map[key];
-      if (!cat) return null;
-      return makeRuling({
-        external_key: `quiz-ruling-${i}`,
-        title: question,
-        summary: answer.slice(0, 160),
-        body: `**السؤال:** ${question}\n\n**الجواب:** ${answer}`,
-        category: cat.category,
-        subcategory: cat.subcategory,
-        references: [{ text: "اختبار مجالس العلم — قسم الأحكام", source: "مجالس العلم" }],
-        keywords: [section, category],
-        source_origin: "quiz_questions.csv",
-        importance_score: 45,
-      });
-    })
-    .filter(Boolean);
-}
+// ملاحظة حوكمة: أُزيلت fromQuizCsv() — أسئلة المسابقة (data/quiz_questions.csv)
+// ليست أحكامًا شرعية ولا يجوز تحويلها إلى سجلات في موسوعة الأحكام.
 
 function fromCurriculumRegistry() {
   const regPath = path.resolve(ROOT, "data/rulings-encyclopedia/curriculum-topics.json");
@@ -419,11 +373,9 @@ function main() {
   const all = dedupe([
     ...fromRulingsSeed(),
     ...fromQaSeed(),
-    ...fromFatwaSeed(),
     ...fromFiqhCouncilSeed(),
     ...fromFiqhIssuesSeed(),
     ...fromFawaidSeed(),
-    ...fromQuizCsv(),
     ...fromCurriculumRegistry(),
   ]);
 
@@ -451,7 +403,7 @@ function main() {
   const seedOut = path.resolve(ROOT, "src/lib/rulings-encyclopedia-seed.generated.ts");
   fs.writeFileSync(
     seedOut,
-    `// AUTO-GENERATED — run: pnpm --filter @workspace/majalis run generate:rulings\n/* eslint-disable */\nimport type { ShariaRulingExtended } from "./rulings-types";\n\nexport const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = ${JSON.stringify(top, null, 2)} as ShariaRulingExtended[];\n\nexport const RULINGS_ENCYCLOPEDIA_TOTAL = ${all.length};\n`,
+    `// AUTO-GENERATED — run: pnpm --filter @workspace/majalis run generate:rulings\n// حوكمة: كل سجل هنا "pending_review" ما لم يحمل reviewed_by + reviewed_at + مصدرًا خارجيًا.\n/* eslint-disable */\nimport type { ShariaRulingExtended } from "./rulings-types";\n\nexport const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = ${JSON.stringify(top, null, 2)} as unknown as ShariaRulingExtended[];\n\nexport const RULINGS_ENCYCLOPEDIA_TOTAL = ${all.length};\n`,
   );
 
   console.log(`Generated ${all.length} rulings in ${manifest.chunks.length} chunks`);

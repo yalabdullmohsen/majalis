@@ -6,7 +6,7 @@ import { createClient } from "@supabase/supabase-js";
 
 const url = process.env.VITE_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const key = process.env.VITE_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-const base = process.argv.find((a) => a.startsWith("--base="))?.slice(7) || "https://majlisilm.com";
+const base = process.argv.find((a) => a.startsWith("--base="))?.slice(7) || "https://www.majlisilm.com";
 
 if (!url || !key) {
   console.error("Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY");

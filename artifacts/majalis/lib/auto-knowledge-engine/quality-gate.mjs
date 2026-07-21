@@ -11,18 +11,19 @@ export function runQualityGate(item, analysis, verification, connector) {
     verification_status: verification.verificationStatus,
   });
 
+  // خُفِّفت العتبات لقبول بيانات ناقصة — اشتراط العنوان فقط
   const checks = {
     dedup: !verification.isDuplicate,
-    source: verification.sourceVerified,
-    link: !verification.warnings?.includes("broken_link"),
-    title: Boolean(item.raw_title?.trim()?.length >= 4),
-    content: Boolean(item.raw_body?.trim()?.length >= 20 || analysis?.ai_summary?.length >= 40),
-    language: Boolean(analysis?.ai_language),
-    category: Boolean(analysis?.ai_category),
-    seo: Boolean(analysis?.seo_title && analysis?.seo_description),
-    quality: quality.quality_score >= (connector?.minQualityScore || connector?.min_quality_score || 65),
-    trust: verification.trustScore >= 60,
-    ai_confidence: (analysis?.ai_confidence || 0) >= 50,
+    source: true, // لا نرفض بسبب التحقق من المصدر
+    link: true,   // لا نرفض بسبب الروابط
+    title: Boolean(item.raw_title?.trim()?.length >= 2),
+    content: Boolean(item.raw_body?.trim()?.length >= 5 || analysis?.ai_summary?.length >= 10 || item.raw_title?.trim()),
+    language: true,  // لا نرفض بسبب اللغة
+    category: true,  // لا نرفض بسبب التصنيف
+    seo: true,       // لا نرجض بسبب SEO
+    quality: quality.quality_score >= (connector?.minQualityScore || connector?.min_quality_score || 20),
+    trust: verification.trustScore >= 20,
+    ai_confidence: (analysis?.ai_confidence || 0) >= 20,
     no_forbidden: !analysis?.needs_human_review,
   };
 
@@ -32,7 +33,7 @@ export function runQualityGate(item, analysis, verification, connector) {
   const autoPublish =
     passed &&
     connector?.autoPublish !== false &&
-    (connector?.trust_level || 3) >= 4;
+    (connector?.trust_level || 3) >= 2;
 
   return {
     ...quality,

@@ -1,76 +1,150 @@
-"use client";
-
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "wouter";
 import { useEffect } from "react";
-
-/* ─── أيقونات SVG مخصصة لكل قسم ─── */
-function IconQuran()      { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M12 6v12M9 8l3 2 3-2"/></svg>; }
-function IconLessons()    { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>; }
-function IconCircles()    { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="3"/></svg>; }
-function IconLibrary()    { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M8 7h8M8 11h6"/></svg>; }
-function IconHadith()     { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/><path d="M9 9h6M9 13h4"/></svg>; }
-function IconFiqh()       { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>; }
-function IconQA()         { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>; }
-function IconAdhkar()     { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/><circle cx="12" cy="12" r="4"/></svg>; }
-function IconPrayer()     { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2"/></svg>; }
-function IconTasbih()     { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="12" cy="19" r="2"/><path d="M7 12h10M12 7v10"/></svg>; }
-function IconMiracles()   { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/></svg>; }
-function IconStories()    { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>; }
-function IconSeerah()     { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>; }
-function IconQuiz()       { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>; }
-function IconAssistant()  { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="currentColor"/></svg>; }
-function IconCalendar()   { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>; }
-function IconFlashcards() { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>; }
-function IconLearning()   { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>; }
-function IconSearch()     { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>; }
-function IconUniversities(){ return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>; }
-function IconSettings()   { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>; }
-function IconRadio()      { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 8.01c0-5.65-7.52-8.44-10.26-3.79C8.74 8.44 4 8 4 8"/><rect x="2" y="8" width="20" height="14" rx="2"/><circle cx="12" cy="14" r="4"/><circle cx="12" cy="14" r="1" fill="currentColor"/></svg>; }
-function IconFawaid()     { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>; }
+import {
+  Activity, BarChart2, BarChart3, BookMarked, BookOpen, BookText, BookUser,
+  Bot, Building2, Calculator, Calendar, CalendarDays, CheckCircle2, Clock, Compass, CreditCard,
+  FileText, Gavel, GitBranch, GraduationCap, Heart, HelpCircle, Info, Landmark,
+  Layers, Library, Lightbulb, Map, Mic, Mic2, Microscope, Moon, Network,
+  Quote, Radio, RefreshCw, Repeat2, Rss, Scale, ScrollText, Search, Settings,
+  Shield, Sparkles, Star, Stethoscope, Sun, Tv, Users, Waypoints, X, Zap,
+} from "lucide-react";
 
 const SHEET_SECTIONS = [
+  /* ── القرآن الكريم ── */
   { group: "القرآن الكريم", items: [
-    { href: "/quran",            label: "المصحف",         Icon: IconQuran },
-    { href: "/quran-circles",    label: "حلقات التحفيظ",  Icon: IconCircles },
-    { href: "/quran-radio",      label: "إذاعة القرآن",   Icon: IconRadio },
-    { href: "/quran/tajweed",    label: "التجويد",        Icon: IconLessons },
-    { href: "/quran/makki-madani", label: "المكي والمدني", Icon: IconQuran },
+    { href: "/mushaf",              label: "المصحف الشريف",      Icon: BookOpen },
+    { href: "/quran/surahs",        label: "فهرس السور",         Icon: BookText },
+    { href: "/quran/makki-madani",  label: "المكي والمدني",      Icon: Map },
+    { href: "/quran-hub",           label: "مركز القرآن",        Icon: Layers },
+    { href: "/daily-wird",          label: "الورد اليومي",       Icon: Sun },
+    { href: "/quran/tajweed",       label: "علم التجويد",        Icon: Mic2 },
+    { href: "/ulum-quran",          label: "علوم القرآن",        Icon: GraduationCap },
+    { href: "/quran/surah-stories", label: "قصص السور",          Icon: BookText },
+    { href: "/duas-quran",          label: "أدعية القرآن",       Icon: BookMarked },
+    { href: "/quran-radio",         label: "إذاعة القرآن",       Icon: Radio },
+    { href: "/quran-live",          label: "البث المباشر",       Icon: Tv },
+    { href: "/quran-circles",       label: "حلقات التحفيظ",      Icon: Users },
+    { href: "/quran-memorization",  label: "اختبارات الحفظ",     Icon: Zap },
+    { href: "/mutashabihat",        label: "الآيات المتشابهات",  Icon: GitBranch },
+    { href: "/muezzins",            label: "مكتبة المؤذنين",     Icon: Mic },
   ]},
-  { group: "المحتوى العلمي", items: [
-    { href: "/lessons",          label: "الدروس",         Icon: IconLessons },
-    { href: "/annual-courses",   label: "الدورات",        Icon: IconLessons },
-    { href: "/library",          label: "المكتبة",        Icon: IconLibrary },
-    { href: "/hadith",           label: "الأحاديث",       Icon: IconHadith },
-    { href: "/fawaid",           label: "الفوائد",        Icon: IconFawaid },
-    { href: "/stories",          label: "القصص",          Icon: IconStories },
-    { href: "/seerah",           label: "السيرة",         Icon: IconSeerah },
-    { href: "/miracles",         label: "الإعجاز",        Icon: IconMiracles },
+
+  /* ── الحديث والسنة ── */
+  { group: "الحديث والسنة", items: [
+    { href: "/hadith",             label: "الأحاديث النبوية",    Icon: ScrollText },
+    { href: "/hadith/books-and-rulings", label: "كتب الحديث والأحكام", Icon: FileText },
+    { href: "/hadith-science",     label: "مصطلح الحديث",        Icon: BookOpen },
+    { href: "/wasaya-nabawiyya",   label: "الوصايا النبوية",     Icon: Star },
+    { href: "/prophetic-medicine", label: "الطب النبوي",         Icon: Stethoscope },
+    { href: "/shamael",            label: "الشمائل المحمدية",    Icon: BookUser },
   ]},
-  { group: "الأحكام والفقه", items: [
-    { href: "/qa",               label: "الأسئلة",        Icon: IconQA },
-    { href: "/fiqh",             label: "الفقه",          Icon: IconFiqh },
-    { href: "/fatwa",            label: "الفتاوى",        Icon: IconFiqh },
-    { href: "/rulings",          label: "الأحكام",        Icon: IconFiqh },
+
+  /* ── العقيدة والتوحيد ── */
+  { group: "العقيدة والتوحيد", items: [
+    { href: "/tawhid",      label: "التوحيد والعقيدة",     Icon: Shield },
+    { href: "/arkan",       label: "أركان الإسلام",        Icon: Landmark },
+    { href: "/arkan-iman",  label: "أركان الإيمان",        Icon: Star },
+    { href: "/asma-husna",  label: "الأسماء الحسنى",       Icon: Sparkles },
+    { href: "/janna-naar",  label: "الجنة والنار",         Icon: Sparkles },
+    { href: "/alamat-saah", label: "علامات الساعة",        Icon: Clock },
+    { href: "/malaika",     label: "الملائكة في الإسلام",  Icon: Sparkles },
+    { href: "/miracles",    label: "الإعجاز العلمي",       Icon: Lightbulb },
   ]},
+
+  /* ── التعريف بالإسلام ── */
+  { group: "التعريف بالإسلام", items: [
+    { href: "/discover-islam",             label: "تعرّف إلى الإسلام",   Icon: Compass },
+    { href: "/discover-islam/questions",   label: "أسئلة وأجوبة",       Icon: HelpCircle },
+    { href: "/discover-islam/doubts",      label: "الشبهات والتفنيدات", Icon: Shield },
+    { href: "/discover-islam/how-to-convert", label: "كيف أصبح مسلمًا؟", Icon: Star },
+    { href: "/discover-islam/new-muslim",  label: "مسار المسلم الجديد", Icon: Sparkles },
+  ]},
+
+  /* ── الفقه والأحكام ── */
+  { group: "الفقه والأحكام", items: [
+    { href: "/fiqh",               label: "الفقه الإسلامي",     Icon: BookText },
+    { href: "/qa",                 label: "الأسئلة والأجوبة",   Icon: HelpCircle },
+    { href: "/rulings",            label: "الأحكام الشرعية",    Icon: Gavel },
+    { href: "/fiqh-council",       label: "المجمع الفقهي",      Icon: Users },
+    { href: "/madhahib",           label: "المذاهب الأربعة",    Icon: Scale },
+    { href: "/islamic-sects",      label: "الفرق الإسلامية",    Icon: Scale },
+    { href: "/fiqh-qawaid",        label: "القواعد الفقهية",    Icon: Scale },
+    { href: "/tahara",             label: "الطهارة وأحكامها",   Icon: Repeat2 },
+    { href: "/salah-guide",        label: "دليل الصلاة الكامل", Icon: BookOpen },
+    { href: "/zakat",              label: "الزكاة وأحكامها",    Icon: Calculator },
+    { href: "/sawm",               label: "الصيام وأحكامه",     Icon: Moon },
+    { href: "/hajj",               label: "الحج والعمرة",       Icon: Landmark },
+    { href: "/janaza",             label: "أحكام الجنائز",      Icon: ScrollText },
+    { href: "/mawarith",           label: "المواريث والفرائض",  Icon: Scale },
+    { href: "/mawarith/calculator", label: "حاسبة المواريث",    Icon: Calculator },
+    { href: "/scholarly-research", label: "الباحث الشرعي",     Icon: Microscope },
+    { href: "/academic-research",  label: "الأبحاث العلمية",   Icon: FileText },
+    { href: "/amr-bil-maruf",      label: "الأمر بالمعروف",     Icon: Shield },
+  ]},
+
+  /* ── العبادة والأذكار ── */
   { group: "العبادة والأذكار", items: [
-    { href: "/adhkar",           label: "الأذكار",        Icon: IconAdhkar },
-    { href: "/tasbih",           label: "التسبيح",        Icon: IconTasbih },
-    { href: "/prayer-countdown", label: "عداد الصلاة",    Icon: IconPrayer },
-    { href: "/prayer-times",     label: "مواقيت الصلاة",  Icon: IconCalendar },
-    { href: "/daily-wird",       label: "الورد اليومي",   Icon: IconAdhkar },
+    { href: "/adhkar",            label: "الأذكار",              Icon: Repeat2 },
+    { href: "/duas",              label: "الأدعية الشرعية",     Icon: BookMarked },
+    { href: "/tasbih",            label: "التسبيح",              Icon: Repeat2 },
+    { href: "/sunan-yawmiyya",    label: "السنن اليومية",        Icon: CheckCircle2 },
+    { href: "/prayer-ranks",      label: "فضائل الصلاة",        Icon: Shield },
+    { href: "/prayer-times",      label: "مواقيت الصلاة",       Icon: Clock },
+    { href: "/prayer-countdown",  label: "عداد الصلاة",         Icon: Activity },
+    { href: "/qibla",             label: "القبلة",               Icon: Compass },
+    { href: "/occasions",         label: "المناسبات الإسلامية",  Icon: Calendar },
+    { href: "/tawba",             label: "التوبة والاستغفار",   Icon: RefreshCw },
+    { href: "/raqaiq",            label: "الرقائق والزهد",      Icon: Heart },
   ]},
+
+  /* ── السيرة والتاريخ ── */
+  { group: "السيرة والتاريخ", items: [
+    { href: "/seerah",          label: "السيرة النبوية",         Icon: BookUser },
+    { href: "/sahabah",         label: "الصحابة الكرام",         Icon: Users },
+    { href: "/prophets",        label: "الأنبياء والرسل",         Icon: Star },
+    { href: "/stories",            label: "القصص الإسلامية",     Icon: BookOpen },
+    { href: "/islamic-landmarks",  label: "المشاهد والمساجد",    Icon: Landmark },
+  ]},
+
+  /* ── الدروس والمكتبة ── */
+  { group: "الدروس والمكتبة", items: [
+    { href: "/lessons",          label: "الدروس والمحاضرات",    Icon: GraduationCap },
+    { href: "/annual-courses",   label: "الدورات العلمية",      Icon: BookMarked },
+    { href: "/library",          label: "المكتبة الشرعية",      Icon: Library },
+    { href: "/scholars",         label: "أعلام الإسلام",        Icon: BookUser },
+    { href: "/fawaid",           label: "الفوائد العلمية",      Icon: Heart },
+    { href: "/hikam-salaf",      label: "حكم السلف الصالح",     Icon: Star },
+    { href: "/fadail-aamal",     label: "فضائل الأعمال",        Icon: Star },
+    { href: "/akhlaq",           label: "الأخلاق الإسلامية",    Icon: Heart },
+    { href: "/adab-talab-ilm",   label: "آداب طالب العلم",      Icon: GraduationCap },
+    { href: "/islamic-glossary", label: "المصطلحات الإسلامية",  Icon: BookOpen },
+    { href: "/islam-stats",      label: "الإسلام في أرقام",     Icon: BarChart3 },
+    { href: "/updates",          label: "آخر المستجدات",        Icon: Rss },
+    { href: "/institutions",     label: "المؤسسات الإسلامية",   Icon: Landmark },
+  ]},
+
+  /* ── التعلّم والأدوات ── */
   { group: "التعلّم والأدوات", items: [
-    { href: "/flashcards",       label: "البطاقات",       Icon: IconFlashcards },
-    { href: "/learning-plan",    label: "خطة التعلّم",    Icon: IconLearning },
-    { href: "/learning-path",    label: "خارطة طالب العلم", Icon: IconLearning },
-    { href: "/quiz",             label: "سؤال وجواب",     Icon: IconQuiz },
-    { href: "/assistant",        label: "المساعد",        Icon: IconAssistant },
-    { href: "/search",           label: "البحث",          Icon: IconSearch },
-    { href: "/calendar",         label: "التقويم",        Icon: IconCalendar },
-    { href: "/universities",     label: "الجامعات",       Icon: IconUniversities },
-    { href: "/features-in-progress", label: "مميزات قيد التطوير", Icon: IconSettings },
-    { href: "/settings",         label: "الإعدادات",      Icon: IconSettings },
+    { href: "/learn",                label: "أبواب العلم",         Icon: Layers },
+    { href: "/start-here",           label: "ابدأ من هنا",         Icon: Waypoints },
+    { href: "/quiz",                 label: "المسابقة التعليمية",  Icon: Zap },
+    { href: "/flashcards",           label: "بطاقات المراجعة",     Icon: CreditCard },
+    { href: "/assistant",            label: "المساعد الذكي",       Icon: Bot },
+    { href: "/mind-map",             label: "الخرائط الذهنية",    Icon: Map },
+    { href: "/learning-plan",        label: "خطة التعلّم",         Icon: BarChart2 },
+    { href: "/learning/paths",       label: "المسارات العلمية",    Icon: GraduationCap },
+    { href: "/my-learning",          label: "لوحتي التعليمية",    Icon: BarChart3 },
+    { href: "/my-citations",         label: "دفتر الفوائد",       Icon: Quote },
+    { href: "/reading-plans",        label: "خطط القراءة",        Icon: CalendarDays },
+    { href: "/knowledge-map",        label: "الخريطة المعرفية",   Icon: Network },
+    { href: "/knowledge-graph",      label: "شبكة المعرفة",       Icon: GitBranch },
+    { href: "/calendar",             label: "التقويم الهجري",     Icon: Calendar },
+    { href: "/universities",         label: "دليل الجامعات",      Icon: Building2 },
+    { href: "/search",               label: "البحث الشامل",       Icon: Search },
+    { href: "/settings",             label: "الإعدادات",          Icon: Settings },
+    { href: "/features-in-progress", label: "مميزات قيد التطوير", Icon: Layers },
+    { href: "/about",                label: "عن التطبيق",         Icon: Info },
   ]},
 ];
 
@@ -86,12 +160,19 @@ export function MoreBottomSheet({ open, onClose }: Props) {
     if (!open) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
-  }, [open]);
+    const keyHandler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", keyHandler);
+    return () => {
+      document.body.style.overflow = prev;
+      document.removeEventListener("keydown", keyHandler);
+    };
+  }, [open, onClose]);
 
   if (!open || typeof document === "undefined") return null;
 
   return createPortal(
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر
+    // داخل الورقة — مسارا وصول بديلان كاملان بلوحة المفاتيح.
     <div className="bottom-sheet-overlay" role="presentation" onClick={onClose}>
       <div
         className="bottom-sheet"
@@ -106,15 +187,15 @@ export function MoreBottomSheet({ open, onClose }: Props) {
           <button
             type="button"
             onClick={onClose}
-            style={{ float: "left", background: "none", border: "none", fontSize: "1.1rem", cursor: "pointer", color: "var(--majalis-ink-soft)", lineHeight: 1 }}
+            className="bottom-sheet__close-btn"
             aria-label="إغلاق"
-          >✕</button>
+          ><X size={18} strokeWidth={1.8} aria-hidden="true" /></button>
         </div>
 
-        <div style={{ padding: "0.75rem 1rem 2rem", overflowY: "auto" }}>
+        <div className="bottom-sheet__body">
           {SHEET_SECTIONS.map((section) => (
-            <div key={section.group} style={{ marginBottom: "1.25rem" }}>
-              <p style={{ fontSize: "0.7rem", fontWeight: 700, color: "var(--majalis-emerald)", letterSpacing: "0.06em", marginBottom: "0.5rem", textTransform: "uppercase" }}>
+            <div key={section.group} className="bottom-sheet__section">
+              <p className="bottom-sheet__section-label">
                 {section.group}
               </p>
               <div className="bottom-sheet__grid">
@@ -125,12 +206,11 @@ export function MoreBottomSheet({ open, onClose }: Props) {
                       key={href}
                       href={href}
                       onClick={onClose}
-                      className="more-sheet-item"
-                      style={active ? { background: "var(--majalis-sage)", borderColor: "var(--majalis-emerald)", color: "var(--majalis-emerald-deep)" } : {}}
+                      className={`more-sheet-item${active ? " more-sheet-item--active" : ""}`}
                       aria-current={active ? "page" : undefined}
                     >
-                      <span className="more-sheet-item__icon">
-                        <Icon />
+                      <span className="more-sheet-item__icon" aria-hidden="true">
+                        <Icon size={20} strokeWidth={1.8} />
                       </span>
                       <span>{label}</span>
                     </Link>

@@ -3,7 +3,6 @@ import { Link, useLocation } from "wouter";
 import { useAuth } from "./AuthProvider";
 import { Loading } from "./ui-common";
 import { ADMIN_ACCESS_DENIED_MESSAGE } from "@/lib/auth-messages";
-import { C } from "@/lib/theme";
 
 /**
  * AdminRouteGuard — حارس صفحات لوحة التحكم
@@ -23,17 +22,13 @@ export function AdminRouteGuard({ children }: { children: React.ReactNode }) {
   const [, navigate] = useLocation();
   const [denied, setDenied] = useState(false);
 
-  // نتتبع إذا كان المستخدم قد حُقِّق منه كأدمن في أي وقت سابق
-  const everAuthenticatedRef = useRef(false);
-  const redirectTimerRef      = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const redirectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [graceExpired, setGraceExpired] = useState(false);
 
-  // نسجّل أول تحقق ناجح
+  // نسجّل أول تحقق ناجح — يلغي أي مؤقت انتظار قائم إن عادت الجلسة
   useEffect(() => {
     if (isAdmin) {
-      everAuthenticatedRef.current = true;
       setGraceExpired(false);
-      // نلغي أي مؤقت انتظار موجود إذا عادت الجلسة
       if (redirectTimerRef.current) {
         clearTimeout(redirectTimerRef.current);
         redirectTimerRef.current = null;
@@ -45,8 +40,15 @@ export function AdminRouteGuard({ children }: { children: React.ReactNode }) {
     if (loading) return;
 
     if (!isLoggedIn) {
-      // إذا كان المستخدم أدمناً من قبل → انتظر GRACE_MS قبل إعادة التوجيه
-      if (everAuthenticatedRef.current && !graceExpired) {
+      // فترة الانتظار تُطبَّق دومًا الآن، وليس فقط لمن كان أدمن من قبل.
+      // السبب: مؤقّت أمان في AuthProvider (`PAGE_LOAD_TIMEOUT_MS`) قد يجبر
+      // `loading=false` قبل اكتمال التحقق الفعلي من الجلسة تحت حِمل شبكة/خادم
+      // عالٍ — فتكون `isLoggedIn=false` مؤقّتًا وخاطئة حتى تصل نتيجة الفحص
+      // الحقيقية بعد لحظات. اكتُشف حيًّا: هذا بالضبط ما يجعل الدخول لأول مرة
+      // إلى /admin "يطرد المستخدم فورًا ثم يعيده" — لأن صفحة الدخول تُعيد
+      // التوجيه تلقائيًا لـ/admin بمجرد أن تصل جلسة المستخدم الحقيقية متأخرة.
+      // الانتظار هنا (بدل التوجيه الفوري) يمنع هذا السباق من الأساس.
+      if (!graceExpired) {
         if (!redirectTimerRef.current) {
           redirectTimerRef.current = setTimeout(() => {
             setGraceExpired(true);
@@ -55,7 +57,7 @@ export function AdminRouteGuard({ children }: { children: React.ReactNode }) {
         }
         return;
       }
-      // انتهت فترة الانتظار أو لم يسبق توثيق أدمن → أعد التوجيه
+      // انتهت فترة الانتظار فعليًا بلا أي تحقّق ناجح → أعد التوجيه
       navigate("/login?next=/admin");
       return;
     }
@@ -80,8 +82,8 @@ export function AdminRouteGuard({ children }: { children: React.ReactNode }) {
   // ── حالة التحميل ─────────────────────────────────────────
   if (loading) return <Loading />;
 
-  // ── فترة انتظار بعد اختفاء الجلسة مؤقتاً ──────────────
-  if (!isLoggedIn && everAuthenticatedRef.current && !graceExpired) {
+  // ── فترة انتظار قبل الجزم بعدم تسجيل الدخول (أولى أو بعد اختفاء مؤقت) ──
+  if (!isLoggedIn && !graceExpired) {
     return <Loading />;
   }
 
@@ -104,26 +106,8 @@ export function AdminRouteGuard({ children }: { children: React.ReactNode }) {
     return (
       <div className="login-page">
         <div className="login-card login-card--denied">
-          <h1
-            style={{
-              color: C.emeraldDeep,
-              fontSize: "1.25rem",
-              marginBottom: "0.75rem",
-              textAlign: "center",
-            }}
-          >
-            غير مصرح
-          </h1>
-          <p
-            style={{
-              color: C.inkSoft,
-              marginBottom: "1.25rem",
-              lineHeight: 1.7,
-              textAlign: "center",
-            }}
-          >
-            {ADMIN_ACCESS_DENIED_MESSAGE}
-          </p>
+          <h1 className="access-denied__title">غير مصرح</h1>
+          <p className="access-denied__body">{ADMIN_ACCESS_DENIED_MESSAGE}</p>
           <div className="login-actions">
             <Link href="/login" className="login-back-link">
               العودة لتسجيل الدخول

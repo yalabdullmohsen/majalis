@@ -1,41 +1,12 @@
 /**
- * Majlis Design System v3 — compact, unified, minimal.
- * Applied globally across all pages.
+ * Majlis Design System — applied globally across all pages.
+ * تعريف القيم الفعلي في كتلة ":root" الأحدث أسفل هذا الملف ("Design
+ * System v5") — كانت كتلة أقدم (v3) هنا تُعيد تعريف كل هذه المتغيرات
+ * نفسها بقيم مختلفة، فتُلغيها الكتلة الأحدث بترتيب الـcascade دون أن
+ * تُستخدَم فعليًا في أي مكان (تحقّق: getComputedStyle على المتصفح الحي
+ * يطابق قيم v5 حصرًا) — أُزيلت لمنع الالتباس المستقبلي، بلا أي تغيير
+ * بصري (القيم الفعلية المطبَّقة لم تتغيّر).
  */
-
-:root {
-  --ds-base: 15px;
-  --ds-space-1: 0.25rem;
-  --ds-space-2: 0.5rem;
-  --ds-space-3: 0.75rem;
-  --ds-space-4: 1rem;
-  --ds-space-5: 1.25rem;
-  --ds-space-6: 1.5rem;
-  --ds-radius-sm: 0.375rem;
-  --ds-radius: 0.5rem;
-  --ds-radius-lg: 0.625rem;
-  --ds-shadow-sm: 0 1px 2px rgba(22, 78, 60, 0.05);
-  --ds-shadow: 0 2px 8px rgba(22, 78, 60, 0.07);
-  --ds-shadow-lg: 0 8px 24px rgba(22, 78, 60, 0.09);
-  --ds-text-xs: 0.6875rem;
-  --ds-text-sm: 0.8125rem;
-  --ds-text-base: 0.875rem;
-  --ds-text-md: 0.9375rem;
-  --ds-text-lg: 1.0625rem;
-  --ds-text-xl: 1.25rem;
-  --ds-text-2xl: 1.375rem;
-  --ds-line: 1.55;
-  --ds-emerald: #1a6b52;
-  --ds-emerald-deep: #134a3a;
-  --ds-emerald-soft: #e8f3ed;
-  --ds-parchment: #faf7f0;
-  --ds-parchment-deep: #f0ebe0;
-  --ds-ink: #1f1c17;
-  --ds-ink-soft: #5c564c;
-  --ds-line-color: #e4ddd0;
-  --ds-max: 72rem;
-  --ds-content-max: 48rem;
-}
 
 html {
   font-size: var(--ds-base);
@@ -103,7 +74,7 @@ html {
 .ds-page-header__eyebrow {
   font-size: var(--ds-text-xs);
   font-weight: 700;
-  color: var(--majalis-brass-deep, #8a6d1e);
+  color: var(--majalis-brass-deep, #173D35);
   margin: 0 0 var(--ds-space-1);
   letter-spacing: 0.02em;
 }
@@ -133,19 +104,28 @@ html {
 /* ── Cards ── */
 .ui-card,
 .ds-card {
-  background: var(--majalis-panel, #fff);
+  background: var(--majalis-panel, #F7F4ED);
   border: 1px solid var(--ds-line-color);
   border-radius: var(--ds-radius-lg);
   padding: var(--ds-space-3);
-  box-shadow: var(--ds-shadow-sm);
-  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  box-shadow: 0 1px 4px rgba(31,77,58,0.05), 0 2px 8px rgba(31,77,58,0.04);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .ui-card:hover,
 .ds-card:hover {
-  box-shadow: var(--ds-shadow);
-  border-color: rgba(26, 107, 82, 0.18);
+  box-shadow: 0 4px 16px rgba(31,77,58,0.10), 0 2px 6px rgba(31,77,58,0.06);
+  border-color: rgba(31,77,58,0.18);
+  transform: translateY(-1px);
 }
+
+/* ── محل الاتفاق والخلاف (المسائل الخلافية) ── */
+.fiqh-comparative-section h3 { font-size: 0.95rem; margin: 0.75rem 0 0.4rem; }
+.fiqh-opinions-list ul { margin: 0; padding-inline-start: 1.1rem; display: flex; flex-direction: column; gap: 0.4rem; }
+.fiqh-opinion-evidence { color: var(--ds-ink-soft); font-size: 0.88em; }
+.fiqh-adopted-opinion { margin-top: 0.75rem; padding: 0.6rem 0.8rem; background: var(--ds-emerald-soft, rgba(23,61,53,.08)); border-radius: var(--ds-radius-md, 0.5rem); }
+.fiqh-context-disclaimer { margin-top: 0.5rem; font-size: 0.82rem; color: var(--ds-ink-soft); font-style: italic; }
+.fiqh-comparative-pending { font-size: 0.82rem; color: var(--ds-ink-soft); font-style: italic; margin: 0.25rem 0 0.75rem; }
 
 /* ── Buttons ── */
 .ds-btn,
@@ -199,8 +179,7 @@ html {
 /* ── Forms ── */
 .ds-input,
 .login-field input,
-.lessons-v2-search input,
-.quran-v2-toolbar__search {
+.lessons-v2-search input {
   width: 100%;
   min-height: 2.25rem;
   padding: 0.4rem 0.65rem;
@@ -286,7 +265,10 @@ html {
 /* ── Bottom sheet ── */
 .ds-sheet-backdrop {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 200;
   background: rgba(0, 0, 0, 0.4);
   display: flex;
@@ -299,7 +281,7 @@ html {
   overflow-y: auto;
   background: var(--majalis-panel, #fff);
   border-radius: var(--ds-radius-lg) var(--ds-radius-lg) 0 0;
-  padding: var(--ds-space-4) var(--ds-space-3);
+  padding: var(--ds-space-4) var(--ds-space-3) calc(var(--ds-space-4) + var(--safe-bottom, 0px));
 }
 
 /* ── Empty / loading ── */
@@ -317,6 +299,7 @@ html {
   border-radius: var(--ds-radius-sm);
   /* يحترم تفضيل تقليل الحركة */
 }
+.ds-skeleton--line { width: var(--sk-w, 100%); height: var(--sk-h, 0.75rem); }
 
 @keyframes ds-shimmer {
   from { background-position: 200% 0; }
@@ -460,26 +443,6 @@ html {
 
 .qa-v2-category-card {
   padding: var(--ds-space-3);
-}
-
-/* ── Quran toolbar minimal ── */
-.quran-v2-toolbar__tools {
-  display: none;
-}
-
-.quran-v2-toolbar__settings-link {
-  font-size: var(--ds-text-xs);
-  font-weight: 700;
-  color: var(--ds-emerald);
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.quran-v2-toolbar__search-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ds-space-2);
-  align-items: center;
 }
 
 /* ── Login ── */
@@ -911,7 +874,7 @@ p, li {
 
 .miracle-item__ref {
   font-size: var(--ds-text-xs);
-  color: var(--majalis-brass-deep, #8a6d1e);
+  color: var(--majalis-brass-deep, #173D35);
   font-style: italic;
   margin: var(--ds-space-1) 0;
 }
@@ -1093,7 +1056,7 @@ p, li {
 .surah-story-num {
   font-size: var(--ds-text-xs);
   font-weight: 800;
-  color: var(--majalis-brass-deep, #8a6d1e);
+  color: var(--majalis-brass-deep, #173D35);
 }
 
 .surah-story-meta {
@@ -1168,6 +1131,9 @@ p, li {
   color: var(--ds-ink-soft);
   margin-bottom: var(--ds-space-3);
 }
+.seo-listing-intro--flush { margin-top: 0; }
+
+.sheikh-detail-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
 
 .content-submit-panel {
   margin-top: var(--ds-space-5);
@@ -1258,20 +1224,20 @@ p, li {
   --ds-shadow-md: 0 10px 15px -3px rgba(26,23,20,.07), 0 4px 6px -2px rgba(26,23,20,.04);
   --ds-shadow-lg: 0 20px 25px -5px rgba(26,23,20,.07), 0 10px 10px -5px rgba(26,23,20,.03);
 
-  /* ── Colors ── */
-  --ds-emerald:        #166048;
-  --ds-emerald-deep:   #0F4433;
-  --ds-emerald-soft:   #EAF5EE;
-  --ds-emerald-muted:  rgba(22, 96, 72, 0.08);
-  --ds-gold:           #9A6D1A;
-  --ds-gold-soft:      #FDF4E0;
-  --ds-parchment:      #F9F6EF;
-  --ds-parchment-deep: #F0EBE0;
-  --ds-ink:            #1A1714;
-  --ds-ink-soft:       #6B6460;
-  --ds-ink-muted:      #A09A94;
-  --ds-line-color:     #E8E2D8;
-  --ds-line-strong:    #D8D0C4;
+  /* ── Colors — مرتبطة بـ msk tokens من index.css ── */
+  --ds-emerald:        var(--msk-gold,        #28584D);
+  --ds-emerald-deep:   var(--msk-gold-deep,   #173D35);
+  --ds-emerald-soft:   var(--majalis-sage,    #EAF3EF);
+  --ds-emerald-muted:  var(--msk-gold-dim,    rgba(23,61,53,.12));
+  --ds-gold:           var(--msk-gold,        #28584D);
+  --ds-gold-soft:      var(--majalis-sage,    #EAF3EF);
+  --ds-parchment:      var(--msk-canvas,      #FAF8F5);
+  --ds-parchment-deep: var(--msk-canvas-2,    #F0EDE8);
+  --ds-ink:            var(--msk-text,        #202725);
+  --ds-ink-soft:       var(--msk-text-2,      #68716D);
+  --ds-ink-muted:      var(--msk-text-3,      #929995);
+  --ds-line-color:     var(--msk-border,      #E7E2D8);
+  --ds-line-strong:    var(--msk-border,      #E7E2D8);
 
   /* ── Heading token — أسود بدل زمرد ── */
   --ds-heading: var(--ds-ink);
@@ -1301,30 +1267,10 @@ p, li {
   --ds-transition-slow: 350ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-html[data-theme="dark"] {
-  --ds-parchment:      #0D1410;
-  --ds-parchment-deep: #151E1A;
-  --ds-ink:            #F4F1EC;
-  --ds-ink-soft:       #B5ADA6;
-  --ds-ink-muted:      #7A736C;
-  --ds-line-color:     #263D33;
-  --ds-line-strong:    #304D42;
-  --ds-emerald:        #4DB88E;
-  --ds-emerald-deep:   #8FD4B4;
-  --ds-emerald-soft:   #0F2A20;
-  --ds-emerald-muted:  rgba(77, 184, 142, 0.1);
-  --ds-gold:           #D4AD50;
-  --ds-gold-soft:      #231A08;
-  --ds-heading:        var(--ds-ink);
-  --ds-shadow-xs: 0 1px 2px rgba(0,0,0,0.25);
-  --ds-shadow-sm: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
-  --ds-shadow:    0 4px 6px -1px rgba(0,0,0,0.3), 0 2px 4px -1px rgba(0,0,0,0.2);
-  --ds-shadow-md: 0 10px 15px -3px rgba(0,0,0,0.35), 0 4px 6px -2px rgba(0,0,0,0.2);
-}
 
 body {
-  background: var(--ds-parchment);
-  color: var(--ds-ink);
+  background: var(--msk-canvas, var(--ds-parchment));
+  color: var(--msk-text, var(--ds-ink));
   font-size: var(--ds-text-base);
   line-height: 1.55;
 }
@@ -1376,6 +1322,8 @@ body {
   max-height: min(70vh, 640px);
   overflow-y: auto;
 }
+.ds-virtual-list__track { height: var(--vl-total, 0px); position: relative; }
+.ds-virtual-list__item  { position: absolute; top: var(--vl-top, 0); left: 0; right: 0; height: var(--vl-h, 48px); }
 
 .reading-toolbar--minimal {
   margin-top: var(--ds-space-2);
@@ -1525,7 +1473,7 @@ hr.decorative,
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 0.75rem;
-  color: #9ca3af;
+  color: var(--majalis-ink-soft);
   font-size: 0.8rem;
 }
 
@@ -1534,7 +1482,7 @@ hr.decorative,
   content: "";
   flex: 1;
   height: 1px;
-  background: #e5e7eb;
+  background: var(--majalis-line);
 }
 
 .login-oauth__btn {
@@ -1545,19 +1493,19 @@ hr.decorative,
   width: 100%;
   min-height: 2.5rem;
   padding: 0.5rem 1rem;
-  border: 1.5px solid #e5e7eb;
+  border: 1.5px solid var(--majalis-line);
   border-radius: var(--ds-radius);
-  background: #fff;
+  background: var(--majalis-panel);
   font-family: inherit;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--majalis-ink);
   cursor: pointer;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 .login-oauth__btn:hover:not(:disabled) {
-  border-color: #d1d5db;
+  border-color: var(--majalis-emerald);
   box-shadow: 0 1px 4px rgba(0,0,0,.08);
 }
 
@@ -1566,11 +1514,6 @@ hr.decorative,
   cursor: not-allowed;
 }
 
-html[data-theme="dark"] .login-oauth__btn {
-  background: #1f2937;
-  border-color: #374151;
-  color: #d1d5db;
-}
 
 /* ══════════════════════════════════════════════════════════════
    Home Polish Additions (home/full-polish)
@@ -1579,7 +1522,7 @@ html[data-theme="dark"] .login-oauth__btn {
 /* ── البند 1: Home Quiz Card ─────────────────────────────── */
 .ds-quiz-home-card {
   background: linear-gradient(135deg, #f0f7f3 0%, #fefdf5 100%);
-  border: 1.5px solid rgba(176, 141, 46, 0.45);
+  border: 1.5px solid rgba(23,61,53, 0.45);
   border-radius: 1rem;
   padding: 1.75rem;
 }
@@ -1599,8 +1542,8 @@ html[data-theme="dark"] .login-oauth__btn {
 .ds-quiz-home-card__badge {
   display: inline-block;
   padding: 0.2rem 0.625rem;
-  background: rgba(176, 141, 46, 0.12);
-  color: #8a6a1a;
+  background: rgba(23,61,53, 0.12);
+  color: var(--clr-primary, #28584D);
   border-radius: 999px;
   font-size: 0.73rem;
   font-weight: 700;
@@ -1611,7 +1554,7 @@ html[data-theme="dark"] .login-oauth__btn {
 .ds-quiz-home-card__title {
   font-size: 1.3rem;
   font-weight: 800;
-  color: var(--ds-emerald-deep, #134a3a);
+  color: var(--ds-emerald-deep, #173D35);
   margin: 0 0 0.5rem;
   line-height: 1.3;
 }
@@ -1627,7 +1570,7 @@ html[data-theme="dark"] .login-oauth__btn {
 .ds-quiz-home-card__btn {
   display: inline-block;
   padding: 0.6rem 1.4rem;
-  background: var(--ds-emerald-deep, #134a3a);
+  background: var(--ds-emerald-deep, #173D35);
   color: #fff;
   border-radius: 0.5rem;
   font-size: 0.875rem;
@@ -1637,7 +1580,7 @@ html[data-theme="dark"] .login-oauth__btn {
 }
 
 .ds-quiz-home-card__btn:hover {
-  background: #0c3020;
+  background: #173D35;
 }
 
 .ds-quiz-home-card__grid {
@@ -1652,7 +1595,7 @@ html[data-theme="dark"] .login-oauth__btn {
   align-items: center;
   gap: 0.35rem;
   font-size: 0.75rem;
-  color: var(--ds-emerald-deep, #134a3a);
+  color: var(--ds-emerald-deep, #173D35);
   font-weight: 600;
   padding: 0.25rem 0.4rem;
   background: rgba(22, 78, 60, 0.07);
@@ -1662,7 +1605,31 @@ html[data-theme="dark"] .login-oauth__btn {
 
 .ds-quiz-home-card__cat svg {
   flex-shrink: 0;
-  color: #8a6a1a;
+  color: var(--clr-primary, #28584D);
+}
+
+/* المرحلة 6 — إحصاءات/تحدي اليوم، قيم أساسية آمنة للسياق الفاتح (تُستبدَل
+   بتجاوزات .home-main--v3 في elite-2026.css عند الاستخدام الفعلي بالرئيسية). */
+.ds-quiz-home-card__stat {
+  color: var(--ds-emerald-deep, #173D35);
+  background: rgba(22, 78, 60, 0.07);
+}
+.ds-quiz-home-card__stats-empty,
+.ds-quiz-home-card__challenge-cat {
+  color: #4b5563;
+}
+.ds-quiz-home-card__challenge {
+  background: rgba(23,61,53, 0.06);
+  border: 1px solid rgba(23,61,53, 0.18);
+}
+.ds-quiz-home-card__challenge-badge {
+  color: var(--clr-primary, #28584D);
+}
+.ds-quiz-home-card__challenge-q {
+  color: var(--ds-emerald-deep, #173D35);
+}
+.ds-quiz-home-card__stats-skel {
+  background: rgba(22, 78, 60, 0.08);
 }
 
 @media (max-width: 600px) {
@@ -1682,7 +1649,7 @@ html[data-theme="dark"] .login-oauth__btn {
 /* ── البند 4: Compact Prayer Strip ──────────────────────── */
 .hcp-strip {
   background: #fafdf8;
-  border: 1px solid rgba(176, 141, 46, 0.28);
+  border: 1px solid rgba(23,61,53, 0.28);
   border-radius: 0.75rem;
   padding: 0.75rem 1rem;
 }
@@ -1697,7 +1664,7 @@ html[data-theme="dark"] .login-oauth__btn {
 .hcp-strip__label {
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--ds-emerald-deep, #134a3a);
+  color: var(--ds-emerald-deep, #173D35);
   display: flex;
   align-items: center;
   gap: 0.3rem;
@@ -1705,7 +1672,7 @@ html[data-theme="dark"] .login-oauth__btn {
 
 .hcp-strip__link {
   font-size: 0.73rem;
-  color: #8a6a1a;
+  color: var(--clr-primary, #28584D);
   text-decoration: none;
   font-weight: 600;
 }
@@ -1732,17 +1699,17 @@ html[data-theme="dark"] .login-oauth__btn {
 
 .hcp-prayer-cell--next {
   background: rgba(19, 74, 58, 0.08);
-  border-color: var(--ds-emerald-deep, #134a3a);
+  border-color: var(--ds-emerald-deep, #173D35);
 }
 
 .hcp-prayer-cell__name {
   font-size: 0.68rem;
-  color: #6b7280;
+  color: var(--majalis-ink-soft);
   font-weight: 600;
 }
 
 .hcp-prayer-cell--next .hcp-prayer-cell__name {
-  color: var(--ds-emerald-deep, #134a3a);
+  color: var(--ds-emerald-deep, #173D35);
 }
 
 .hcp-prayer-cell__time {
@@ -1754,22 +1721,22 @@ html[data-theme="dark"] .login-oauth__btn {
 }
 
 .hcp-prayer-cell--next .hcp-prayer-cell__time {
-  color: var(--ds-emerald-deep, #134a3a);
+  color: var(--ds-emerald-deep, #173D35);
 }
 
 /* ── البند 2: About Section ─────────────────────────────── */
 .home-about {
-  background: linear-gradient(135deg, rgba(22,78,60,0.03) 0%, rgba(176,141,46,0.04) 100%);
+  background: linear-gradient(135deg, rgba(22,78,60,0.03) 0%, rgba(23,61,53,0.04) 100%);
   border-radius: 1rem;
   padding: 2rem;
-  border: 1px solid rgba(176, 141, 46, 0.2);
+  border: 1px solid rgba(23,61,53, 0.2);
 }
 
 .home-about__eyebrow {
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.07em;
-  color: #8a6a1a;
+  color: var(--clr-primary, #28584D);
   text-transform: uppercase;
   margin: 0 0 0.45rem;
 }
@@ -1777,14 +1744,14 @@ html[data-theme="dark"] .login-oauth__btn {
 .home-about__title {
   font-size: 1.4rem;
   font-weight: 800;
-  color: var(--ds-emerald-deep, #134a3a);
+  color: var(--ds-emerald-deep, #173D35);
   margin: 0 0 1rem;
 }
 
 .home-about__body {
   font-size: 0.9rem;
   line-height: 1.9;
-  color: #374151;
+  color: #68716D;
   max-width: 700px;
 }
 
@@ -1804,7 +1771,7 @@ html[data-theme="dark"] .login-oauth__btn {
 }
 
 .site-footer-email a:hover {
-  color: var(--ds-gold, #C9A84C);
+  color: var(--majalis-emerald, #28584D);
 }
 
 /* ── Compact Prayer countdown row ───────────────────────── */
@@ -1816,16 +1783,21 @@ html[data-theme="dark"] .login-oauth__btn {
 
 .hcp-strip__countdown {
   font-size: 0.7rem;
-  color: #6b7280;
+  color: var(--majalis-ink-soft);
   font-weight: 500;
 }
 
 .hcp-strip__countdown-time {
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--ds-emerald-deep, #134a3a);
+  color: var(--ds-emerald-deep, #173D35);
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.01em;
+}
+
+.hcp-strip__countdown--elapsed {
+  color: var(--ds-emerald-deep, #173D35);
+  font-weight: 600;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1866,7 +1838,10 @@ html[data-theme="dark"] .login-oauth__btn {
 /* SVG ring */
 .tc-ring-svg {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   overflow: visible;
@@ -1874,23 +1849,20 @@ html[data-theme="dark"] .login-oauth__btn {
 
 .tc-ring-track {
   fill: none;
-  stroke: #e5e7eb;
+  stroke: var(--majalis-line);
   stroke-width: 9;
 }
 
 .tc-ring-fill {
   fill: none;
-  stroke: var(--majalis-emerald, #164E3C);
+  stroke: var(--majalis-emerald, #173D35);
   stroke-width: 9;
 }
 
 .tc-ring-fill--done {
-  stroke: var(--majalis-gold, #B08D2E);
+  stroke: var(--majalis-emerald, #28584D);
 }
 
-html[data-theme="dark"] .tc-ring-track { stroke: #2a2a2a; }
-html[data-theme="dark"] .tc-ring-fill  { stroke: #22a370; }
-html[data-theme="dark"] .tc-ring-fill--done { stroke: #d4a93a; }
 
 /* Content inside ring */
 .tc-ring-inner {
@@ -1908,7 +1880,7 @@ html[data-theme="dark"] .tc-ring-fill--done { stroke: #d4a93a; }
 .tc-ring-rounds {
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--majalis-gold, #B08D2E);
+  color: var(--majalis-emerald, #28584D);
   letter-spacing: 0.04em;
   line-height: 1;
 }
@@ -1916,40 +1888,38 @@ html[data-theme="dark"] .tc-ring-fill--done { stroke: #d4a93a; }
 .tc-ring-count {
   font-size: clamp(2rem, 8vw, 3.2rem);
   font-weight: 800;
-  color: var(--majalis-emerald-deep, #134a3a);
+  color: var(--majalis-emerald-deep, #173D35);
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
 
 .tc-ring-btn--done .tc-ring-count {
-  color: var(--majalis-gold, #B08D2E);
+  color: var(--majalis-emerald, #28584D);
 }
 
 .tc-ring-total {
   font-size: 0.68rem;
-  color: #9ca3af;
+  color: var(--majalis-ink-soft);
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
 .tc-ring-hint {
   font-size: 0.65rem;
-  color: #9ca3af;
+  color: var(--majalis-ink-soft);
   margin-top: 0.15rem;
   line-height: 1;
 }
 
 .tc-ring-btn--done .tc-ring-hint {
-  color: var(--majalis-gold, #B08D2E);
+  color: var(--majalis-emerald, #28584D);
 }
 
-html[data-theme="dark"] .tc-ring-count { color: #d1fae5; }
-html[data-theme="dark"] .tc-ring-btn--done .tc-ring-count { color: #d4a93a; }
 
 /* Keyboard hint below counter */
 .tc-keyboard-hint {
   font-size: 0.65rem;
-  color: #9ca3af;
+  color: var(--majalis-ink-soft);
   text-align: center;
   margin: 0.25rem 0 0.75rem;
 }
@@ -1983,12 +1953,12 @@ html[data-theme="dark"] .tc-ring-btn--done .tc-ring-count { color: #d4a93a; }
   scroll-snap-align: start;
   padding: 0.45rem 0.85rem;
   border-radius: 99px;
-  border: 1.5px solid #e5e7eb;
-  background: #fff;
+  border: 1.5px solid var(--majalis-line);
+  background: var(--majalis-panel);
   font-family: inherit;
   font-size: 0.82rem;
   font-weight: 500;
-  color: #374151;
+  color: var(--majalis-ink);
   cursor: pointer;
   transition: border-color 0.15s, background 0.15s, color 0.15s;
   white-space: nowrap;
@@ -1996,13 +1966,13 @@ html[data-theme="dark"] .tc-ring-btn--done .tc-ring-count { color: #d4a93a; }
 }
 
 .tasbih-wird-pill:hover {
-  border-color: var(--majalis-emerald, #164E3C);
-  color: var(--majalis-emerald, #164E3C);
+  border-color: var(--majalis-emerald, #173D35);
+  color: var(--majalis-emerald, #173D35);
 }
 
 .tasbih-wird-pill.is-active {
-  border-color: var(--majalis-emerald, #164E3C);
-  background: var(--majalis-emerald, #164E3C);
+  border-color: var(--majalis-emerald, #173D35);
+  background: var(--majalis-emerald, #173D35);
   color: #fff;
   font-weight: 700;
 }
@@ -2027,15 +1997,10 @@ html[data-theme="dark"] .tc-ring-btn--done .tc-ring-count { color: #d4a93a; }
 }
 
 .tasbih-wird-pill:not(.is-active) .tasbih-pill-badge {
-  background: #f3f4f6;
-  color: #6b7280;
+  background: var(--majalis-parchment-deep);
+  color: var(--majalis-ink-soft);
 }
 
-html[data-theme="dark"] .tasbih-wird-pill {
-  background: #1e1e1e;
-  border-color: #333;
-  color: #d1d5db;
-}
 
 /* ═══════════════════════════════════════════════════════
    Push Notification Prompt
@@ -2053,7 +2018,7 @@ html[data-theme="dark"] .tasbih-wird-pill {
   margin-bottom: 0.75rem;
 }
 
-.push-prompt--warn { border-color: #fcd34d; background: #fffbeb; }
+.push-prompt--warn { border-color: #fcd34d; background: rgba(23,61,53,0.06); }
 .push-prompt--info { border-color: #93c5fd; background: #eff6ff; font-size: 0.82rem; color: #1e40af; }
 
 .push-prompt__text {
@@ -2084,100 +2049,29 @@ html[data-theme="dark"] .tasbih-wird-pill {
 .push-prompt__btn--off:hover:not(:disabled) { background: #b91c1c; }
 
 /* ═══════════════════════════════════════════════════════
-   البند 7 — Dark Mode: تغطية شاملة للعناصر المضافة
-   ═══════════════════════════════════════════════════════ */
-
-html[data-theme="dark"] {
-  /* خلفية العناصر التي تستخدم #fff صريحاً */
-  --majalis-panel: #1C2A23;
-  color-scheme: dark;
-}
 
 /* شريط الصلاة المدمج */
-html[data-theme="dark"] .hcp-strip {
-  background: var(--majalis-panel);
-  border-color: var(--majalis-line);
-}
 
-html[data-theme="dark"] .hcp-prayer-cell {
-  background: var(--majalis-parchment-deep);
-  border-color: var(--majalis-line);
-  color: var(--majalis-ink);
-}
 
-html[data-theme="dark"] .hcp-prayer-cell--next {
-  background: color-mix(in srgb, var(--majalis-emerald) 15%, var(--majalis-panel));
-  border-color: var(--majalis-emerald);
-}
 
-html[data-theme="dark"] .hcp-strip__label { color: var(--majalis-ink-soft); }
-html[data-theme="dark"] .hcp-strip__link  { color: var(--majalis-emerald); }
-html[data-theme="dark"] .hcp-strip__countdown { color: var(--majalis-ink-soft); }
-html[data-theme="dark"] .hcp-strip__countdown-time { color: var(--majalis-emerald-deep); }
 
 /* بطاقات عامة */
-html[data-theme="dark"] .ui-card,
-html[data-theme="dark"] .ds-card {
-  background: var(--majalis-panel);
-  border-color: var(--majalis-line);
-}
 
 /* نماذج إدخال */
-html[data-theme="dark"] .ds-input,
-html[data-theme="dark"] .login-field input,
-html[data-theme="dark"] .tasbih-add-row input {
-  background: var(--majalis-parchment-deep);
-  border-color: var(--majalis-line);
-  color: var(--majalis-ink);
-}
 
 /* أزرار ثانوية */
-html[data-theme="dark"] .tasbeeh-counter__btn,
-html[data-theme="dark"] .tasbeeh-counter__preset {
-  background: var(--majalis-parchment-deep);
-  border-color: var(--majalis-line);
-  color: var(--majalis-ink);
-}
 
-html[data-theme="dark"] .tasbeeh-counter__preset.is-active {
-  background: color-mix(in srgb, var(--majalis-emerald) 20%, var(--majalis-panel));
-  border-color: var(--majalis-emerald);
-  color: var(--majalis-emerald-deep);
-}
 
 /* الحلقة */
-html[data-theme="dark"] .tasbeeh-counter--pro {
-  background: var(--majalis-parchment-deep);
-  border-color: var(--majalis-line);
-}
 
 /* إشعارات Push */
-html[data-theme="dark"] .push-prompt {
-  background: var(--majalis-panel);
-  border-color: var(--majalis-line);
-}
 
 /* صفحة تسجيل الدخول */
-html[data-theme="dark"] .login-card {
-  background: var(--majalis-panel);
-  border-color: var(--majalis-line);
-}
 
-html[data-theme="dark"] .login-page {
-  background: var(--majalis-parchment);
-}
 
 /* إحصاء التسبيح */
-html[data-theme="dark"] .tasbih-stat {
-  background: var(--majalis-panel);
-  border-color: var(--majalis-line);
-}
 
 /* الإضافات الأخيرة للصفحة الرئيسية */
-html[data-theme="dark"] .home-about-section {
-  background: var(--majalis-panel);
-  border-color: var(--majalis-line);
-}
 
 /* ═══════════════════════════════════════════════════════
    User Stats Page — البند 9
@@ -2235,17 +2129,11 @@ html[data-theme="dark"] .home-about-section {
   text-decoration: none;
 }
 
-html[data-theme="dark"] .user-stat-card__value { color: var(--majalis-emerald-deep); }
 
-html[data-theme="dark"] .tasbih-wird-pill.is-active {
-  background: #22a370;
-  border-color: #22a370;
-  color: #fff;
-}
 
 /* Streak stat cell */
 .tasbih-stat--streak strong {
-  color: #f59e0b;
+  color: var(--majalis-emerald, #28584D);
 }
 
 /* Danger button variant */
@@ -2468,6 +2356,25 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
 .profile-stat-card__value { font-size: 1.35rem; font-weight: 800; color: var(--ds-emerald-deep); line-height: 1.1; }
 .profile-stat-card__label { font-size: 0.72rem; color: var(--majalis-ink-soft); font-weight: 600; }
 .profile-stat-card__sub { font-size: 0.65rem; color: var(--majalis-ink-soft); }
+
+/* ── تحليل أداء الأسئلة ──────────────────────────────────────────── */
+.profile-quiz-perf-section { margin-bottom: 1.25rem; }
+.profile-quiz-perf__hint { font-size: 0.8rem; color: var(--majalis-ink-soft); margin: 0 0 0.5rem; }
+.profile-quiz-perf__hint--strong { margin-top: 0.75rem; }
+.profile-quiz-perf__list { display: flex; flex-direction: column; gap: 0.4rem; margin: 0 0 0.5rem; padding: 0; list-style: none; }
+.profile-quiz-perf__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--ds-radius-lg, 0.625rem);
+  border: 1px solid var(--ds-line-color);
+  font-size: 0.82rem;
+}
+.profile-quiz-perf__item--weak { background: rgba(220, 38, 38, 0.06); border-color: rgba(220, 38, 38, 0.18); }
+.profile-quiz-perf__item--strong { background: rgba(23, 107, 87, 0.06); border-color: rgba(23, 107, 87, 0.18); }
+.profile-quiz-perf__cat { font-weight: 700; color: var(--majalis-ink); }
+.profile-quiz-perf__pct { font-size: 0.75rem; color: var(--majalis-ink-soft); }
 
 /* ── لوحة الشارات ───────────────────────────────────────────────── */
 .profile-badges-section { margin-bottom: 1.25rem; }
@@ -2814,6 +2721,256 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
 }
 .lp-wizard__back:hover { border-color: var(--majalis-ink-soft); }
 
+/* ── حاسبة المواريث (mwc-*) ──────────────────────────────────────── */
+.mwc-presets { margin: 1rem 0; }
+.mwc-presets__label, .mwc-saved__label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--majalis-ink-soft);
+  margin-bottom: 0.5rem;
+}
+.mwc-presets__scroll {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+}
+.mwc-preset-chip {
+  flex: 0 0 auto;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--ds-line-color);
+  background: #fff;
+  color: var(--majalis-ink);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.15s;
+}
+.mwc-preset-chip:hover { border-color: var(--ds-emerald); }
+
+.mwc-saved { margin: 1rem 0; }
+.mwc-saved__list { display: flex; flex-direction: column; gap: 0.4rem; }
+.mwc-saved__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--ds-line-color);
+  border-radius: var(--ds-radius, 0.5rem);
+}
+.mwc-saved__open {
+  flex: 1;
+  text-align: right;
+  background: none;
+  border: none;
+  color: var(--majalis-ink);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.mwc-saved__delete {
+  background: none;
+  border: none;
+  color: var(--majalis-ink-soft);
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0.15rem 0.4rem;
+}
+.mwc-saved__delete:hover { color: #C0392B; }
+
+.mwc-heir-group { margin-top: 1.5rem; }
+.mwc-heir-group__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--majalis-ink);
+  margin-bottom: 0.6rem;
+}
+.mwc-counter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--ds-line-color);
+  border-radius: var(--ds-radius, 0.5rem);
+  margin-bottom: 0.5rem;
+}
+.mwc-counter-row__label { font-size: 0.9rem; color: var(--majalis-ink); }
+.mwc-counter-row__control { display: flex; align-items: center; gap: 0.75rem; }
+.mwc-counter-row__btn {
+  width: 32px;
+  height: 32px;
+  min-height: 32px;
+  border-radius: 999px;
+  border: 1.5px solid var(--ds-line-color);
+  background: #fff;
+  color: var(--ds-emerald);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mwc-counter-row__btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.mwc-counter-row__btn:not(:disabled):hover { border-color: var(--ds-emerald); }
+.mwc-counter-row__value { min-width: 1.5rem; text-align: center; font-weight: 700; }
+
+.mwc-hint { font-size: 0.82rem; color: var(--majalis-ink-soft); margin-top: 0.5rem; text-align: center; }
+
+.mwc-assets { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+.mwc-asset-row { display: flex; gap: 0.5rem; align-items: center; }
+.mwc-asset-row__label, .mwc-asset-row__value {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--ds-line-color);
+  border-radius: var(--ds-radius, 0.5rem);
+  font-size: 0.88rem;
+  background: #fff;
+  color: var(--majalis-ink);
+}
+.mwc-asset-row__label { flex: 2; }
+.mwc-asset-row__value { flex: 1; min-width: 0; }
+.mwc-asset-row__remove {
+  background: none;
+  border: none;
+  color: var(--majalis-ink-soft);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.3rem;
+}
+.mwc-asset-row__remove:hover { color: #C0392B; }
+.mwc-add-asset {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: var(--ds-emerald);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.3rem 0;
+}
+
+.mwc-field { margin-bottom: 0.9rem; }
+.mwc-field__label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--majalis-ink-soft); margin-bottom: 0.35rem; }
+.mwc-field__input {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--ds-line-color);
+  border-radius: var(--ds-radius, 0.5rem);
+  font-size: 0.9rem;
+  background: #fff;
+  color: var(--majalis-ink);
+}
+.mwc-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--majalis-ink);
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+}
+.mwc-checkbox input { margin-top: 0.2rem; }
+
+.mwc-advanced-toggle {
+  display: block;
+  width: 100%;
+  text-align: right;
+  background: none;
+  border: none;
+  color: var(--ds-emerald);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  border-top: 1px dashed var(--ds-line-color);
+  margin-top: 0.5rem;
+}
+.mwc-advanced { padding: 0.75rem; background: rgba(23,61,53,0.04); border-radius: var(--ds-radius, 0.5rem); margin-top: 0.5rem; }
+
+.mwc-error {
+  padding: 0.85rem 1rem;
+  background: rgba(192,57,43,0.08);
+  border: 1px solid rgba(192,57,43,0.25);
+  border-radius: var(--ds-radius, 0.5rem);
+  color: #A9302A;
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+.mwc-warning {
+  padding: 0.85rem 1rem;
+  background: rgba(217,164,6,0.10);
+  border: 1px solid rgba(217,164,6,0.3);
+  border-radius: var(--ds-radius, 0.5rem);
+  color: #7A5C00;
+  font-size: 0.84rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+
+.mwc-section-title { font-size: 1.05rem; font-weight: 800; color: var(--majalis-ink); margin: 1.25rem 0 0.75rem; }
+
+.mwc-estate-summary { border: 1px solid var(--ds-line-color); border-radius: var(--ds-radius, 0.75rem); padding: 1rem; }
+.mwc-estate-row { display: flex; justify-content: space-between; padding: 0.4rem 0; font-size: 0.88rem; color: var(--majalis-ink); }
+.mwc-estate-row--total {
+  border-top: 1.5px solid var(--ds-line-color);
+  margin-top: 0.4rem;
+  padding-top: 0.6rem;
+  font-weight: 800;
+  color: var(--ds-emerald);
+}
+.mwc-estate-note { font-size: 0.78rem; color: #7A5C00; margin-top: 0.5rem; }
+
+.mwc-shares-table { overflow-x: auto; }
+.mwc-shares-table__head, .mwc-shares-table__row {
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr 1.4fr 1fr 1fr;
+  gap: 0.5rem;
+  padding: 0.6rem 0.5rem;
+  font-size: 0.8rem;
+  align-items: center;
+  min-width: 480px;
+}
+.mwc-shares-table__head { font-weight: 700; color: var(--majalis-ink-soft); border-bottom: 1.5px solid var(--ds-line-color); }
+.mwc-shares-table__row { border-bottom: 1px solid var(--ds-line-color); }
+.mwc-shares-table__heir { font-weight: 700; color: var(--majalis-ink); }
+.mwc-shares-table__basis { color: var(--ds-emerald); font-weight: 600; }
+
+.mwc-base-info { font-size: 0.8rem; color: var(--majalis-ink-soft); margin: 0.9rem 0; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.mwc-steps { margin: 0.9rem 0; border: 1px solid var(--ds-line-color); border-radius: var(--ds-radius, 0.5rem); padding: 0.75rem 1rem; }
+.mwc-steps summary { cursor: pointer; font-weight: 700; font-size: 0.88rem; color: var(--majalis-ink); }
+.mwc-steps__list { margin-top: 0.6rem; display: flex; flex-direction: column; gap: 0.45rem; font-size: 0.82rem; color: var(--majalis-ink); line-height: 1.7; }
+
+.mwc-result-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.25rem; }
+.mwc-save-row { display: flex; gap: 0.5rem; margin-top: 0.9rem; }
+.mwc-save-row__input {
+  flex: 1;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--ds-line-color);
+  border-radius: var(--ds-radius, 0.5rem);
+  font-size: 0.85rem;
+}
+.mwc-save-row__btn {
+  padding: 0.6rem 1.25rem;
+  background: var(--ds-emerald);
+  color: #fff;
+  border: none;
+  border-radius: var(--ds-radius, 0.5rem);
+  font-weight: 700;
+  cursor: pointer;
+}
+.mwc-save-row__btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+@media print {
+  .mwc-page .no-print { display: none !important; }
+  .mwc-page .mwc-print-area { padding: 0; }
+  .mwc-page .mwc-steps { border: none; padding: 0; }
+}
+
 /* ── Plan display ─────────────────────────────────────────────────── */
 .lp-plan { margin-top: 1.5rem; }
 .lp-plan__header {
@@ -2987,7 +3144,10 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
 .fc-card__front,
 .fc-card__back {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   backface-visibility: hidden;
   border-radius: var(--ds-radius-lg, 0.625rem);
   border: 1.5px solid var(--ds-line-color);
@@ -3164,10 +3324,10 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   width: 88px;
   height: 88px;
   font-size: 2.25rem;
-  background: var(--ds-emerald, #2a7a4f);
+  background: var(--ds-emerald, #28584D);
   box-shadow: 0 4px 20px rgba(42,122,79,0.45);
 }
-.car-mode__btn--play:hover { background: var(--ds-emerald-deep, #1d5c3a); }
+.car-mode__btn--play:hover { background: var(--ds-emerald-deep, #28584D); }
 
 .car-mode__playlist {
   max-height: 240px;
@@ -3227,7 +3387,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   align-items: center;
   gap: 0.75rem;
   padding: 0.85rem 1.25rem;
-  background: #1d5c3a;
+  background: #28584D;
   color: #fff;
   font-size: 0.9rem;
   font-weight: 600;
@@ -3262,7 +3422,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   border: 1px solid #ddd;
   border-radius: 0.5rem;
 }
-.mosque-mode__label { font-size: 1rem; font-weight: 700; color: #1d5c3a; }
+.mosque-mode__label { font-size: 1rem; font-weight: 700; color: #28584D; }
 
 .mosque-mode__prayer-box {
   display: flex;
@@ -3271,7 +3431,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   justify-content: center;
   padding: 2.5rem 1.5rem;
   text-align: center;
-  background: linear-gradient(135deg, #1d5c3a 0%, #2a7a4f 100%);
+  background: linear-gradient(135deg, #28584D 0%, #28584D 100%);
   color: #fff;
   gap: 0.4rem;
 }
@@ -3284,6 +3444,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   letter-spacing: 0.05em;
 }
 .mosque-mode__prayer-time { font-size: 1rem; opacity: 0.7; }
+.mosque-mode__countdown--elapsed { font-size: clamp(2.5rem, 10vw, 3.5rem); opacity: 0.9; }
 
 .mosque-mode__grid {
   display: grid;
@@ -3312,7 +3473,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
 }
 .mosque-mode__link:active { transform: scale(0.97); }
 .mosque-mode__link-icon { font-size: 2rem; }
-.mosque-mode__link-label { font-size: 0.88rem; font-weight: 700; color: #1d5c3a; text-align: center; }
+.mosque-mode__link-label { font-size: 0.88rem; font-weight: 700; color: #28584D; text-align: center; }
 .mosque-mode__pwa-hint {
   text-align: center;
   font-size: 0.78rem;
@@ -3328,7 +3489,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   font-size: 0.88rem;
   font-weight: 600;
 }
-.notif-banner--warn { background: #fef9c3; color: #854d0e; border: 1px solid #fde68a; }
+.notif-banner--warn { background: rgba(24,54,42,0.06); color: #173D35; border: 1px solid rgba(24,54,42,0.25); }
 .notif-banner--err  { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
 
 .notif-card {
@@ -3371,7 +3532,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   cursor: pointer;
   transition: background 0.2s;
 }
-.notif-toggle--on { background: var(--ds-emerald, #2a7a4f); }
+.notif-toggle--on { background: var(--ds-emerald, #28584D); }
 .notif-toggle__thumb {
   position: absolute;
   top: 3px; right: 3px;
@@ -3530,15 +3691,18 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
 }
 .sr-timer__ring-fill {
   fill: none;
-  stroke: var(--ds-emerald, #2a7a4f);
+  stroke: var(--ds-emerald, #28584D);
   stroke-width: 8;
   stroke-linecap: round;
   transition: stroke-dashoffset 1s linear, stroke 0.3s;
 }
-.sr-timer--rest .sr-timer__ring-fill { stroke: #f59e0b; }
+.sr-timer--rest .sr-timer__ring-fill { stroke: var(--ds-emerald-deep, #173D35); }
 .sr-timer__content {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3573,7 +3737,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
 }
 .sr-btn--start { background: var(--ds-emerald); color: #fff; border-color: var(--ds-emerald); }
 .sr-btn--start:hover { background: var(--ds-emerald-deep); }
-.sr-btn--pause { background: #f59e0b; color: #fff; border-color: #f59e0b; }
+.sr-btn--pause { background: var(--ds-emerald-deep, #173D35); color: #fff; border-color: var(--ds-emerald-deep, #173D35); }
 .sr-btn--reset:hover { border-color: var(--ds-emerald); }
 
 .sr-stats {
@@ -3964,7 +4128,10 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
 /* Modal */
 .vault-modal-backdrop {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: rgba(0,0,0,0.45);
   display: flex;
   align-items: center;
@@ -4220,7 +4387,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
 }
 .inst-card__link:hover { opacity: 0.8; }
 .inst-card__link--web { background: var(--ds-emerald-soft); color: var(--ds-emerald-deep); }
-.inst-card__link--map { background: #fff3e0; color: #b45309; }
+.inst-card__link--map { background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent); color: var(--majalis-emerald, #28584D); }
 
 .inst-disclaimer {
   font-size: 0.78rem;
@@ -4238,8 +4405,8 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   font-size: 0.7rem;
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
-  background: #fef3c7;
-  color: #92400e;
+  background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent);
+  color: var(--majalis-emerald, #28584D);
   font-weight: 600;
 }
 
@@ -4344,7 +4511,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  background: var(--majalis-emerald, #164E3C);
+  background: var(--majalis-emerald, #173D35);
   color: #fff;
   font-size: 1rem;
   font-weight: 700;
@@ -4354,7 +4521,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   margin: 0;
   font-size: 1rem;
   font-weight: 800;
-  color: var(--majalis-emerald, #164E3C);
+  color: var(--majalis-emerald, #173D35);
 }
 .tawheed-type-card__subtitle {
   margin: 0;
@@ -4372,7 +4539,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
 .tawheed-type-card__ayah {
   margin: 0.5rem 0 0;
   padding: 0.6rem 0.75rem;
-  border-right: 3px solid var(--majalis-gold, #B08D2E);
+  border-right: 3px solid var(--majalis-emerald, #28584D);
   background: var(--bg-base, #faf9f6);
   border-radius: 0 0.375rem 0.375rem 0;
   font-family: "Amiri Quran", "Scheherazade New", serif;
@@ -4385,7 +4552,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   display: block;
   font-style: normal;
   font-size: 0.7rem;
-  color: var(--majalis-gold, #B08D2E);
+  color: var(--majalis-emerald, #28584D);
   font-weight: 700;
   margin-top: 0.25rem;
   font-family: inherit;
@@ -4395,7 +4562,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
 .tawheed-principles-heading {
   font-size: 1.1rem;
   font-weight: 800;
-  color: var(--majalis-emerald, #164E3C);
+  color: var(--majalis-emerald, #173D35);
   margin: 0 0 1rem;
   direction: rtl;
   border-bottom: 2px solid var(--ds-line-color, #e5e3dd);
@@ -4432,7 +4599,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   margin: 0;
   font-size: 0.83rem;
   line-height: 1.75;
-  color: var(--text-body, #374151);
+  color: var(--text-body, #68716D);
 }
 
 /* ── صفحة التوحيد المستقلة (/tawhid) ── */
@@ -4445,11 +4612,11 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   margin-bottom: 1.25rem;
   direction: rtl;
 }
-.tawheed-breadcrumb a { color: var(--majalis-emerald, #1a6b52); text-decoration: none; }
+.tawheed-breadcrumb a { color: var(--majalis-emerald, #28584D); text-decoration: none; }
 .tawheed-breadcrumb a:hover { text-decoration: underline; }
 
 .tawheed-page-header {
-  background: linear-gradient(135deg, var(--majalis-emerald, #1a6b52) 0%, #0f4a38 100%);
+  background: linear-gradient(135deg, var(--majalis-emerald, #28584D) 0%, #173D35 100%);
   color: #fff;
   border-radius: 1rem;
   padding: 2rem 1.5rem;
@@ -4484,7 +4651,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
   display: block;
   font-style: normal;
   font-size: 0.72rem;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255,255,255,0.82);
   margin-top: 0.2rem;
   font-family: inherit;
 }
@@ -4529,7 +4696,7 @@ html[data-theme="dark"] .tasbih-wird-pill.is-active {
 .tawheed-related-card__label {
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #1a6b52);
+  color: var(--majalis-emerald, #28584D);
 }
 .tawheed-related-card__desc {
   font-size: 0.75rem;
@@ -4602,7 +4769,7 @@ h1, h2, h3 {
 
 .ds-btn--primary,
 .ui-card-btn,
-.page-action-btn,
+.page-action-btn:not(.page-action-btn--secondary),
 .login-submit {
   background: var(--ds-emerald);
   border-color: var(--ds-emerald);
@@ -4611,7 +4778,7 @@ h1, h2, h3 {
 
 .ds-btn--primary:hover:not(:disabled),
 .ui-card-btn:hover:not(:disabled),
-.page-action-btn:hover:not(:disabled),
+.page-action-btn:hover:not(.page-action-btn--secondary):not(:disabled),
 .login-submit:hover:not(:disabled) {
   background: var(--ds-emerald-deep);
   box-shadow: 0 4px 12px rgba(22, 96, 72, 0.3);
@@ -4764,7 +4931,10 @@ h1, h2, h3 {
 .majalis-geo-bg::before {
   content: "";
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-image:
     repeating-linear-gradient(
       45deg,
@@ -4833,29 +5003,9 @@ h1, h2, h3 {
 }
 
 /* ── 17. الوضع الداكن — Premium layer overrides ── */
-html[data-theme="dark"] .ui-card,
-html[data-theme="dark"] .ds-card,
-html[data-theme="dark"] .page-card {
-  background: var(--majalis-panel, #1A2820);
-  border-color: var(--ds-line-color);
-  box-shadow: var(--ds-shadow-xs);
-}
 
-html[data-theme="dark"] .navbar-v3 {
-  background: color-mix(in srgb, var(--majalis-parchment) 90%, transparent) !important;
-}
 
-html[data-theme="dark"] .bottom-nav {
-  background: color-mix(in srgb, var(--majalis-panel) 88%, transparent);
-  border-top-color: var(--ds-line-color);
-}
 
-html[data-theme="dark"] .ds-input,
-html[data-theme="dark"] .login-field input {
-  background: var(--majalis-parchment-deep);
-  border-color: var(--ds-line-color);
-  color: var(--ds-ink);
-}
 
 /* ── 18. تحسين الانتقالات العامة ── */
 @media (prefers-reduced-motion: no-preference) {
@@ -4896,5 +5046,304 @@ html[data-theme="dark"] .login-field input {
   color: var(--ds-ink);
   font-weight: 700;
 }
+
+/* ══════════════════════════════════════════════════════════════════ */
+
+/* ── 21. نظام القراءة العميقة — line-height للنصوص الطويلة ── */
+.reading-prose,
+.full-content,
+.story-content,
+.lesson-content,
+.fatwa-content,
+.hadith-content {
+  font-family: var(--font-reading, "Noto Naskh Arabic", serif);
+  font-size: clamp(1rem, 2.5vw, 1.0625rem);
+  line-height: 1.9;
+  color: var(--ds-ink);
+  max-width: 68ch;
+}
+
+.reading-prose p,
+.full-content p {
+  margin-bottom: 1.1em;
+}
+
+/* ── 22. زر رئيسي موحّد — حالات كاملة ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  background: var(--majalis-emerald, #28584D);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.15s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px rgba(31,77,58,0.20);
+}
+
+.btn-primary:hover {
+  background: var(--majalis-emerald-deep, #173D35);
+  box-shadow: 0 4px 14px rgba(31,77,58,0.28);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(31,77,58,0.18);
+}
+
+.btn-primary:focus-visible {
+  outline: 3px solid rgba(31,77,58,0.35);
+  outline-offset: 2px;
+}
+
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── 23. زر ثانوي موحّد ── */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  background: transparent;
+  color: var(--majalis-emerald, #28584D);
+  border: 1.5px solid rgba(31,77,58,0.25);
+  border-radius: 0.5rem;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, transform 0.15s;
+}
+
+.btn-secondary:hover {
+  background: rgba(31,77,58,0.06);
+  border-color: rgba(31,77,58,0.40);
+  transform: translateY(-1px);
+}
+
+/* ── 24. حالات الإدخال — focus راقٍ ── */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid rgba(31,77,58,0.35);
+  outline-offset: 1px;
+  border-color: var(--majalis-emerald, #28584D) !important;
+}
+
+/* ── 25. تأثير الانتقال الصفحي (page-enter) ── */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: page-enter 0.25s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter {
+    animation: none;
+  }
+}
+
+/* ── 26. فاصل زخرفي إسلامي دقيق ── */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  color: rgba(31,77,58,0.25);
+  user-select: none;
+  pointer-events: none;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(31,77,58,0.15), transparent);
+}
+
+.section-divider__gem {
+  width: 8px;
+  height: 8px;
+  background: rgba(31,77,58,0.20);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* ── تخصيص الصفحة الرئيسية (hcz-*) ───────────────────────────────── */
+.hcz-hint { font-size: 0.82rem; color: var(--majalis-ink-soft); margin: 0 0 1rem; line-height: 1.6; }
+.hcz-list { display: flex; flex-direction: column; gap: 0.4rem; }
+.hcz-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--ds-line-color);
+  border-radius: var(--ds-radius, 0.6rem);
+  background: #fff;
+}
+.hcz-row--hidden { opacity: 0.5; }
+.hcz-row__visibility {
+  width: 30px;
+  height: 30px;
+  min-height: 30px;
+  border-radius: 999px;
+  border: 1.5px solid var(--ds-line-color);
+  background: #fff;
+  color: var(--ds-emerald);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.hcz-row__label { flex: 1; font-size: 0.88rem; font-weight: 600; color: var(--majalis-ink); }
+.hcz-row__move { display: flex; gap: 0.3rem; flex-shrink: 0; }
+.hcz-row__move button {
+  width: 28px;
+  height: 28px;
+  min-height: 28px;
+  border-radius: 0.5rem;
+  border: 1.5px solid var(--ds-line-color);
+  background: #fff;
+  color: var(--majalis-ink-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.hcz-row__move button:disabled { opacity: 0.3; cursor: not-allowed; }
+.hcz-row__move button:not(:disabled):hover { border-color: var(--ds-emerald); color: var(--ds-emerald); }
+.hcz-reset {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.65rem;
+  background: none;
+  border: 1px dashed var(--ds-line-color);
+  border-radius: var(--ds-radius, 0.6rem);
+  color: var(--majalis-ink-soft);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.hcz-reset:hover { border-color: var(--ds-emerald); color: var(--ds-emerald); }
+
+.hpv4-customize-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.75rem 0 0;
+  padding: 0.4rem 0.85rem;
+  background: none;
+  border: 1px solid var(--ds-line-color);
+  border-radius: 999px;
+  color: var(--majalis-ink-soft);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.hpv4-customize-trigger:hover { border-color: var(--ds-emerald); color: var(--ds-emerald); }
+
+/* ── أداء التقييمات (am-*) ──────────────────────────────────────── */
+.am-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 200;
+}
+@media (min-width: 640px) {
+  .am-overlay { align-items: center; }
+}
+.am-modal {
+  background: #fff;
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh;
+  border-radius: 1rem 1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+@media (min-width: 640px) {
+  .am-modal { border-radius: 1rem; }
+}
+.am-modal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid var(--ds-line-color);
+  font-weight: 800;
+  color: var(--majalis-ink);
+}
+.am-modal__close { background: none; border: none; color: var(--majalis-ink-soft); cursor: pointer; }
+.am-modal__body { padding: 1rem 1.1rem; overflow-y: auto; }
+.am-loading { font-size: 0.85rem; color: var(--majalis-ink-soft); text-align: center; padding: 1.5rem 0; }
+
+.am-question { margin-bottom: 1.25rem; }
+.am-question__text { font-size: 0.9rem; font-weight: 700; color: var(--majalis-ink); margin-bottom: 0.6rem; line-height: 1.6; }
+.am-options { display: flex; flex-direction: column; gap: 0.5rem; }
+.am-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--ds-line-color);
+  border-radius: 0.6rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.am-option:has(input:checked) { border-color: var(--ds-emerald); background: rgba(23,61,53,.05); }
+.am-text-input {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--ds-line-color);
+  border-radius: 0.6rem;
+  font-size: 0.85rem;
+}
+.am-submit-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--ds-emerald);
+  color: #fff;
+  border: none;
+  border-radius: 0.6rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+.am-submit-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.am-result { text-align: center; padding: 1.5rem 0; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+.am-result--passed { color: var(--ds-emerald); }
+.am-result--failed { color: #C0392B; }
+.am-result__score { font-size: 2rem; font-weight: 800; margin: 0; }
+.am-result__msg { font-size: 0.88rem; color: var(--majalis-ink); margin: 0 0 0.75rem; }
 
 /* ══════════════════════════════════════════════════════════════════ */

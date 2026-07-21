@@ -11,7 +11,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "aqeedah",
     name: "العقيدة",
-    icon: "🕌",
+    icon: "Landmark",
     children: [
       { slug: "tawhid", name: "التوحيد" },
       { slug: "names", name: "أسماء الله وصفاته" },
@@ -23,7 +23,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "tahara",
     name: "الطهارة",
-    icon: "💧",
+    icon: "Droplets",
     children: [
       { slug: "wudu", name: "الوضوء" },
       { slug: "ghusl", name: "الغسل" },
@@ -35,7 +35,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "salah",
     name: "الصلاة",
-    icon: "🕋",
+    icon: "Landmark",
     children: [
       { slug: "salah-ahkam", name: "أحكام الصلاة" },
       { slug: "salah-arkan", name: "أركان الصلاة" },
@@ -49,7 +49,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "zakat",
     name: "الزكاة",
-    icon: "🪙",
+    icon: "Banknote",
     children: [
       { slug: "zakat-mal", name: "زكاة المال" },
       { slug: "zakat-fitr", name: "زكاة الفطر" },
@@ -60,7 +60,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "sawm",
     name: "الصيام",
-    icon: "🌙",
+    icon: "Moon",
     children: [
       { slug: "ramadan", name: "صيام رمضان" },
       { slug: "qiyam", name: "قيام الليل" },
@@ -71,7 +71,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "hajj",
     name: "الحج والعمرة",
-    icon: "🕋",
+    icon: "MapPin",
     children: [
       { slug: "hajj-ahkam", name: "أحكام الحج" },
       { slug: "umrah", name: "العمرة" },
@@ -82,7 +82,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "transactions",
     name: "المعاملات",
-    icon: "🤝",
+    icon: "Handshake",
     children: [
       { slug: "bay", name: "البيع" },
       { slug: "shira", name: "الشراء" },
@@ -96,7 +96,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "food-drink",
     name: "الأطعمة والأشربة",
-    icon: "🍽️",
+    icon: "Utensils",
     children: [
       { slug: "halal", name: "الحلال" },
       { slug: "haram", name: "الحرام" },
@@ -107,7 +107,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "clothing",
     name: "اللباس والزينة",
-    icon: "👔",
+    icon: "Shirt",
     children: [
       { slug: "hijab", name: "الحجاب" },
       { slug: "sitr", name: "الستر" },
@@ -118,7 +118,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "family",
     name: "الأسرة",
-    icon: "👨‍👩‍👧",
+    icon: "Users",
     children: [
       { slug: "nikah", name: "النكاح" },
       { slug: "talaq", name: "الطلاق" },
@@ -131,7 +131,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "inheritance",
     name: "المواريث والوصايا",
-    icon: "📜",
+    icon: "ScrollText",
     children: [
       { slug: "mirath", name: "الميراث" },
       { slug: "wasaya", name: "الوصايا" },
@@ -141,7 +141,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "judiciary",
     name: "القضاء والحدود",
-    icon: "⚖️",
+    icon: "Scale",
     children: [
       { slug: "qada-judiciary", name: "القضاء" },
       { slug: "hudud", name: "الحدود" },
@@ -152,7 +152,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "oaths",
     name: "الأيمان والنذور",
-    icon: "✋",
+    icon: "FileSignature",
     children: [
       { slug: "ayman", name: "الأيمان" },
       { slug: "nudhur", name: "النذور" },
@@ -162,7 +162,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "jihad",
     name: "الجهاد والسياسة الشرعية",
-    icon: "🛡️",
+    icon: "Shield",
     children: [
       { slug: "jihad-rules", name: "أحكام الجهاد" },
       { slug: "siyasa", name: "السياسة الشرعية" },
@@ -172,7 +172,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "ethics",
     name: "الأخلاق والآداب",
-    icon: "💚",
+    icon: "Heart",
     children: [
       { slug: "akhlaq", name: "الأخلاق" },
       { slug: "adab", name: "الآداب" },
@@ -183,7 +183,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "dhikr",
     name: "الأذكار والدعاء",
-    icon: "📿",
+    icon: "BookOpen",
     children: [
       { slug: "adhkar", name: "الأذكار" },
       { slug: "dua", name: "الدعاء" },
@@ -193,7 +193,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "quran-hadith",
     name: "القرآن والحديث",
-    icon: "📖",
+    icon: "BookOpen",
     children: [
       { slug: "quran-ahkam", name: "أحكام القرآن" },
       { slug: "hadith-ahkam", name: "أحكام الحديث" },
@@ -203,7 +203,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "knowledge",
     name: "طلب العلم والدعوة",
-    icon: "🎓",
+    icon: "GraduationCap",
     children: [
       { slug: "talab-ilm", name: "طلب العلم" },
       { slug: "dawah", name: "الدعوة" },
@@ -213,7 +213,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "nawazil",
     name: "النوازل المعاصرة",
-    icon: "🔬",
+    icon: "FlaskConical",
     children: [
       { slug: "medicine", name: "الطب" },
       { slug: "economy", name: "الاقتصاد" },
@@ -225,7 +225,7 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
   {
     slug: "funerals",
     name: "الجنائز",
-    icon: "🕯️",
+    icon: "Flame",
     children: [
       { slug: "taharah-mayyit", name: "تغسيل الميت" },
       { slug: "burial", name: "الدفن" },
@@ -233,6 +233,17 @@ export const RULINGS_CATEGORY_TREE: RulingCategoryNode[] = [
     ],
   },
 ];
+
+/** تسطيح شجرة التصنيفات لاستخدامها في قوائم الاختيار */
+export function flattenCategories(): { slug: string; sub: string }[] {
+  const result: { slug: string; sub: string }[] = [];
+  for (const main of RULINGS_CATEGORY_TREE) {
+    for (const child of main.children ?? []) {
+      result.push({ slug: child.slug, sub: child.name });
+    }
+  }
+  return result;
+}
 
 /** تصنيفات مسطّحة للتوافق مع المخطط القديم */
 export const LEGACY_RULING_CATEGORIES = [
@@ -250,67 +261,3 @@ export const LEGACY_RULING_CATEGORIES = [
   "النوازل",
   "السياسة الشرعية",
 ] as const;
-
-export type LegacyRulingCategory = (typeof LEGACY_RULING_CATEGORIES)[number];
-
-/** ربط التصنيف الجديد بالتصنيف القديم في قاعدة البيانات */
-export const CATEGORY_TO_LEGACY: Record<string, LegacyRulingCategory> = {
-  العقيدة: "العبادات",
-  الطهارة: "الطهارة",
-  الصلاة: "الصلاة",
-  الزكاة: "الزكاة",
-  الصيام: "الصيام",
-  "الحج والعمرة": "الحج",
-  المعاملات: "المعاملات",
-  "الأطعمة والأشربة": "المعاملات",
-  "اللباس والزينة": "البيوت",
-  الأسرة: "الأسرة",
-  "المواريث والوصايا": "المواريث",
-  "القضاء والحدود": "القضاء",
-  "الأيمان والنذور": "العبادات",
-  "الجهاد والسياسة الشرعية": "السياسة الشرعية",
-  "الأخلاق والآداب": "البيوت",
-  "الأذكار والدعاء": "العبادات",
-  "القرآن والحديث": "العبادات",
-  "طلب العلم والدعوة": "العبادات",
-  "النوازل المعاصرة": "النوازل",
-  الجنائز: "العبادات",
-};
-
-export function getMainCategories(): RulingCategoryNode[] {
-  return RULINGS_CATEGORY_TREE;
-}
-
-export function getSubcategories(mainName: string): RulingCategoryNode[] {
-  return RULINGS_CATEGORY_TREE.find((c) => c.name === mainName)?.children ?? [];
-}
-
-export function flattenCategories(): { main: string; sub: string; slug: string; icon?: string }[] {
-  const out: { main: string; sub: string; slug: string; icon?: string }[] = [];
-  for (const main of RULINGS_CATEGORY_TREE) {
-    for (const sub of main.children ?? []) {
-      out.push({ main: main.name, sub: sub.name, slug: sub.slug, icon: main.icon });
-    }
-  }
-  return out;
-}
-
-export function toLegacyCategory(category: string): LegacyRulingCategory {
-  return CATEGORY_TO_LEGACY[category] ?? "العبادات";
-}
-
-export function mapQaSlugToCategory(slug: string): { category: string; subcategory?: string } {
-  const map: Record<string, { category: string; subcategory: string }> = {
-    tahara: { category: "الطهارة", subcategory: "أحكام الطهارة" },
-    salah: { category: "الصلاة", subcategory: "أحكام الصلاة" },
-    zakat: { category: "الزكاة", subcategory: "زكاة المال" },
-    sawm: { category: "الصيام", subcategory: "صيام رمضان" },
-    hajj: { category: "الحج والعمرة", subcategory: "أحكام الحج" },
-    aqeedah: { category: "العقيدة", subcategory: "الإيمان" },
-    quran: { category: "القرآن والحديث", subcategory: "أحكام القرآن" },
-    hadith: { category: "القرآن والحديث", subcategory: "أحكام الحديث" },
-    adhkar: { category: "الأذكار والدعاء", subcategory: "الأذكار" },
-    adab: { category: "الأخلاق والآداب", subcategory: "الآداب" },
-  };
-  return map[slug] ?? { category: "طلب العلم والدعوة", subcategory: "طلب العلم" };
-}

@@ -1,10 +1,6 @@
-"use client";
-
 import { useCallback, useEffect, useState } from "react";
 import { useAdminShell } from "@/views/admin/AdminShell";
-import { C } from "@/lib/theme";
-
-// ── Types ─────────────────────────────────────────────────────────────────────
+import { Building2, CalendarDays, Clock, Folder, MapPin, Send, User } from "lucide-react";
 
 type TgTab = "status" | "channels" | "review" | "stats";
 
@@ -68,8 +64,6 @@ type TgStats = {
   successRate: number;
 };
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
-
 const API = "/api/admin/telegram";
 
 async function tgPost(action: string, extra: Record<string, unknown> = {}) {
@@ -90,7 +84,7 @@ async function tgGet(action: string, params: Record<string, string> = {}) {
 
 const QUALITY_COLORS: Record<string, string> = {
   complete: "#16a34a",
-  needs_review: "#d97706",
+  needs_review: "#929995",
   incomplete: "#dc2626",
   duplicate: "#7c3aed",
   rejected: "#9ca3af",
@@ -104,14 +98,98 @@ const QUALITY_AR: Record<string, string> = {
   rejected: "مرفوض",
 };
 
-// ── Status Tab ────────────────────────────────────────────────────────────────
+function Spinner() {
+  return (
+    <div className="tgm-spinner">
+      <div className="tgm-spinner-ring" />
+    </div>
+  );
+}
+
+function EmptyState({ text }: { text: string }) {
+  return <div className="tgm-empty">{text}</div>;
+}
+
+function Badge({ ok, label }: { ok: boolean; label: string }) {
+  return (
+    <span
+      className={`tgm-badge tgm-badge--${ok ? "ok" : "error"}`}
+    >
+      {ok ? "✓" : "✗"} {label}
+    </span>
+  );
+}
+
+function InfoCard({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="tgm-info-card">
+      <div className="tgm-info-title">{title}</div>
+      <div className="tgm-info-body">{children}</div>
+    </div>
+  );
+}
+
+function Row({ label, value, mono = false, error = false }: { label: string; value: string; mono?: boolean; error?: boolean }) {
+  return (
+    <div className="tgm-row">
+      <span className="tgm-row-label">{label}</span>
+      <span className={`tgm-row-val${mono ? " tgm-row-val--mono" : ""}${error ? " tgm-row-val--err" : ""}`}>{value}</span>
+    </div>
+  );
+}
+
+function StatCard({ label, value, color }: { label: string; value: number | string; color: string }) {
+  return (
+    <div className="tgm-stat-card">
+      <div className="tgm-stat-val" style={{ "--tgm-sv-color": color } as React.CSSProperties}>{value}</div>
+      <div className="tgm-stat-label">{label}</div>
+    </div>
+  );
+}
+
+function ProgressRow({ label, value, total, color = "var(--majalis-emerald)" }: { label: string; value: number; total: number; color?: string }) {
+  const pct = total > 0 ? Math.round((value / total) * 100) : 0;
+  return (
+    <div className="tgm-progress-row">
+      <div className="tgm-progress-head">
+        <span>{label}</span>
+        <span className="tgm-progress-sub">{value} ({pct}%)</span>
+      </div>
+      <div className="tgm-progress-bar">
+        <div className="tgm-progress-fill" style={{ "--tgm-pf-w": `${pct}%`, "--tgm-pf-color": color } as React.CSSProperties} />
+      </div>
+    </div>
+  );
+}
+
+function Btn({
+  children, onClick, loading = false, variant = "primary", small = false, className: extraClass,
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
+  loading?: boolean;
+  variant?: "primary" | "secondary" | "danger";
+  small?: boolean;
+  className?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={loading}
+      className={`tgm-btn tgm-btn--${variant}${small ? " tgm-btn--small" : ""}${extraClass ? ` ${extraClass}` : ""}`}
+    >
+      {loading ? "…" : children}
+    </button>
+  );
+}
 
 function StatusTab() {
   const { showSuccess, showError } = useAdminShell();
   const [data, setData] = useState<BotStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [acting, setActing] = useState<string | null>(null);
-  const [webhookUrl, setWebhookUrl] = useState("https://majlisilm.com/api/webhook/telegram");
+  const [webhookUrl, setWebhookUrl] = useState("https://www.majlisilm.com/api/webhook/telegram");
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -137,16 +215,14 @@ function StatusTab() {
   if (!data) return <EmptyState text="تعذّر تحميل حالة البوت." />;
 
   return (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      {/* Config indicators */}
-      <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+    <div className="tgm-status-grid">
+      <div className="tgm-badges-row">
         <Badge ok={data.tokenConfigured} label="Telegram Token" />
         <Badge ok={data.anthropicConfigured} label="Anthropic API" />
-        <Badge ok={!!data.bot} label="Bot Connected" />
-        <Badge ok={!!data.webhook?.url} label="Webhook Active" />
+        <Badge ok={!!data.bot} label="البوت متصل" />
+        <Badge ok={!!data.webhook?.url} label="Webhook نشط" />
       </div>
 
-      {/* Bot info */}
       {data.bot && (
         <InfoCard title="معلومات البوت">
           <Row label="الاسم" value={data.bot.first_name} />
@@ -156,8 +232,7 @@ function StatusTab() {
         </InfoCard>
       )}
 
-      {/* Webhook info */}
-      <InfoCard title="Webhook">
+      <InfoCard title="Webhook التيليغرام">
         <Row label="الرابط" value={data.webhook?.url || "غير مُعيَّن"} mono />
         {data.webhook?.pending_update_count !== undefined && (
           <Row label="طلبات معلقة" value={String(data.webhook.pending_update_count)} />
@@ -167,16 +242,15 @@ function StatusTab() {
         )}
       </InfoCard>
 
-      {/* Webhook control */}
       <InfoCard title="ضبط الـ Webhook">
-        <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.75rem" }}>
+        <div className="tgm-webhook-row">
           <input
             value={webhookUrl}
-            onChange={e => setWebhookUrl(e.target.value)}
-            style={{ flex: 1, padding: "0.4rem 0.6rem", fontSize: "0.8rem", border: `1px solid ${C.line}`, borderRadius: "0.375rem", background: C.parchment, color: C.ink, fontFamily: "monospace" }}
+            onChange={(e) => setWebhookUrl(e.target.value)}
+            className="tgm-webhook-input"
           />
         </div>
-        <div style={{ display: "flex", gap: "0.5rem" }}>
+        <div className="tgm-btn-group">
           <Btn loading={acting === "set-webhook"} onClick={() => act("set-webhook", { webhookUrl })}>
             تعيين Webhook
           </Btn>
@@ -191,8 +265,6 @@ function StatusTab() {
     </div>
   );
 }
-
-// ── Channels Tab ──────────────────────────────────────────────────────────────
 
 function ChannelsTab() {
   const { showSuccess, showError } = useAdminShell();
@@ -246,56 +318,42 @@ function ChannelsTab() {
   };
 
   return (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      {/* Add channel */}
+    <div className="tgm-grid-gap">
       <InfoCard title="إضافة قناة جديدة">
-        <div style={{ display: "flex", gap: "0.5rem" }}>
+        <div className="tgm-ch-add-row">
           <input
             placeholder="@channel_username"
             value={newUsername}
-            onChange={e => setNewUsername(e.target.value)}
-            onKeyDown={e => e.key === "Enter" && addChannel()}
-            style={{ flex: 1, padding: "0.4rem 0.6rem", fontSize: "0.875rem", border: `1px solid ${C.line}`, borderRadius: "0.375rem", background: C.parchment, color: C.ink }}
+            onChange={(e) => setNewUsername(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && addChannel()}
+            className="tgm-ch-input"
           />
           <Btn loading={adding} onClick={addChannel}>إضافة</Btn>
         </div>
       </InfoCard>
 
-      {/* Channels list */}
       {loading ? <Spinner /> : channels.length === 0 ? (
         <EmptyState text="لا توجد قنوات مُراقَبة." />
       ) : (
-        <div style={{ display: "grid", gap: "0.75rem" }}>
-          {channels.map(ch => (
-            <div key={ch.id} style={{
-              background: C.panel,
-              border: `1px solid ${C.line}`,
-              borderRadius: "0.625rem",
-              padding: "0.875rem 1rem",
-              display: "flex",
-              alignItems: "center",
-              gap: "1rem",
-              flexWrap: "wrap",
-            }}>
-              {/* Status dot */}
-              <span style={{ width: 10, height: 10, borderRadius: "50%", background: ch.is_active ? "#16a34a" : "#9ca3af", flexShrink: 0 }} />
-
-              {/* Channel info */}
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontWeight: 700, fontSize: "0.9rem" }}>
+        <div className="tgm-channels-list">
+          {channels.map((ch) => (
+            <div key={ch.id} className="tgm-ch-card">
+              <span
+                className={`tgm-ch-dot${ch.is_active ? " tgm-ch-dot--active" : ""}`}
+              />
+              <div className="tgm-ch-info">
+                <div className="tgm-ch-name">
                   @{ch.channel_username}
-                  {ch.channel_title && <span style={{ fontWeight: 400, color: C.inkSoft, marginRight: "0.5rem" }}>{ch.channel_title}</span>}
+                  {ch.channel_title && <span className="tgm-ch-title-span">{ch.channel_title}</span>}
                 </div>
-                <div style={{ fontSize: "0.75rem", color: C.inkSoft, marginTop: "0.2rem", display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+                <div className="tgm-ch-meta">
                   <span>رسائل: {ch.total_messages || 0}</span>
                   <span>دروس: {ch.total_lessons || 0}</span>
                   <span>مكررة: {ch.total_duplicates || 0}</span>
                   {ch.last_message_at && <span>آخر رسالة: {new Date(ch.last_message_at).toLocaleDateString("ar-KW")}</span>}
                 </div>
               </div>
-
-              {/* Actions */}
-              <div style={{ display: "flex", gap: "0.5rem" }}>
+              <div className="tgm-ch-actions">
                 <Btn
                   loading={acting === ch.channel_username}
                   variant={ch.is_active ? "secondary" : "primary"}
@@ -315,8 +373,6 @@ function ChannelsTab() {
     </div>
   );
 }
-
-// ── Review Tab ────────────────────────────────────────────────────────────────
 
 function ReviewTab() {
   const { showSuccess, showError } = useAdminShell();
@@ -370,7 +426,7 @@ function ReviewTab() {
   };
 
   const toggleSelect = (id: string) => {
-    setSelected(prev => {
+    setSelected((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id); else next.add(id);
       return next;
@@ -378,19 +434,21 @@ function ReviewTab() {
   };
 
   return (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      {/* Filters + bulk actions */}
-      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
-        {["all", "complete", "needs_review", "incomplete"].map(q => (
-          <button key={q} onClick={() => setQualityFilter(q)}
-            style={{ padding: "0.3rem 0.75rem", borderRadius: "999px", border: "none", cursor: "pointer", fontSize: "0.8rem", fontWeight: 600,
-              background: qualityFilter === q ? C.emeraldDeep : C.line, color: qualityFilter === q ? "#fff" : C.ink }}>
+    <div className="tgm-grid-gap">
+      <div className="tgm-filters-row">
+        {["all", "complete", "needs_review", "incomplete"].map((q) => (
+          <button
+            key={q}
+            type="button"
+            onClick={() => setQualityFilter(q)}
+            className={`tgm-filter-btn${qualityFilter === q ? " tgm-filter-btn--active" : ""}`}
+          >
             {q === "all" ? "الكل" : QUALITY_AR[q] || q}
           </button>
         ))}
         {selected.size > 0 && (
-          <Btn loading={acting === "bulk"} small onClick={bulkApprove} style={{ marginRight: "auto" }}>
-            ✓ موافقة جماعية ({selected.size})
+          <Btn loading={acting === "bulk"} small onClick={bulkApprove} className="tgm-btn--auto">
+            موافقة جماعية ({selected.size})
           </Btn>
         )}
         <Btn small variant="secondary" onClick={load}>↻ تحديث</Btn>
@@ -399,70 +457,70 @@ function ReviewTab() {
       {loading ? <Spinner /> : lessons.length === 0 ? (
         <EmptyState text="لا توجد دروس معلقة." />
       ) : (
-        <div style={{ display: "grid", gap: "0.75rem" }}>
-          {lessons.map(lesson => {
+        <div className="tgm-lessons-list">
+          {lessons.map((lesson) => {
             const isExpanded = expanded === lesson.id;
             const raw = lesson.tg_raw_messages;
             return (
-              <div key={lesson.id} style={{
-                background: C.panel,
-                border: `1px solid ${selected.has(lesson.id) ? C.emerald : C.line}`,
-                borderRadius: "0.625rem",
-                padding: "0.875rem 1rem",
-                display: "grid",
-                gap: "0.5rem",
-              }}>
-                {/* Header row */}
-                <div style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
-                  <input type="checkbox" checked={selected.has(lesson.id)} onChange={() => toggleSelect(lesson.id)}
-                    style={{ marginTop: 3, flexShrink: 0, accentColor: C.emerald }} />
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "0.2rem" }}>
-                      {lesson.title || <span style={{ color: C.inkSoft }}>بدون عنوان</span>}
+              <div
+                key={lesson.id}
+                className={`tgm-lesson-card${selected.has(lesson.id) ? " tgm-lesson-card--selected" : ""}`}
+              >
+                <div className="tgm-lesson-header">
+                  <input
+                    type="checkbox"
+                    checked={selected.has(lesson.id)}
+                    onChange={() => toggleSelect(lesson.id)}
+                    className="tgm-lesson-check"
+                  />
+                  <div className="tgm-lesson-info">
+                    <div className="tgm-lesson-title">
+                      {lesson.title || <span className="tgm-no-title">بدون عنوان</span>}
                     </div>
-                    <div style={{ fontSize: "0.78rem", color: C.inkSoft, display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-                      {lesson.sheikh_name && <span>👤 {lesson.sheikh_name}</span>}
-                      {lesson.mosque && <span>🕌 {lesson.mosque}</span>}
-                      {lesson.area && <span>📍 {lesson.area}</span>}
-                      {lesson.event_date && <span>📅 {lesson.event_date}</span>}
-                      {lesson.event_time && <span>🕐 {lesson.event_time}</span>}
-                      {lesson.category && <span>📂 {lesson.category}</span>}
+                    <div className="tgm-lesson-meta">
+                      {lesson.sheikh_name && <span><User size={11} className="inline ml-0.5" aria-hidden="true" /> {lesson.sheikh_name}</span>}
+                      {lesson.mosque && <span><Building2 size={11} className="inline ml-0.5" aria-hidden="true" /> {lesson.mosque}</span>}
+                      {lesson.area && <span><MapPin size={11} className="inline ml-0.5" aria-hidden="true" /> {lesson.area}</span>}
+                      {lesson.event_date && <span><CalendarDays size={11} className="inline ml-0.5" />{lesson.event_date}</span>}
+                      {lesson.event_time && <span><Clock size={11} className="inline ml-0.5" />{lesson.event_time}</span>}
+                      {lesson.category && <span><Folder size={11} className="inline ml-0.5" />{lesson.category}</span>}
                     </div>
                   </div>
-                  {/* Quality badge */}
-                  <span style={{
-                    padding: "0.15rem 0.5rem", borderRadius: "999px", fontSize: "0.72rem", fontWeight: 700, flexShrink: 0,
-                    background: `${QUALITY_COLORS[lesson.quality_status] ?? "#999999"}20`,
-                    color: QUALITY_COLORS[lesson.quality_status] || C.inkSoft,
-                  }}>
+                  <span
+                    className="tgm-quality-badge"
+                    style={{
+                      "--tgm-qb-bg": `${QUALITY_COLORS[lesson.quality_status] ?? "#999999"}20`,
+                      "--tgm-qb-color": QUALITY_COLORS[lesson.quality_status] || "var(--majalis-ink-soft)",
+                    } as React.CSSProperties}
+                  >
                     {QUALITY_AR[lesson.quality_status] || lesson.quality_status}
                     {lesson.quality_score > 0 && ` (${Math.round(lesson.quality_score * 100)}%)`}
                   </span>
                 </div>
 
-                {/* Channel + source info */}
                 {raw && (
-                  <div style={{ fontSize: "0.75rem", color: C.inkSoft, paddingRight: "1.5rem" }}>
-                    {raw.channel_username && <span>📢 @{raw.channel_username}</span>}
-                    {raw.message_date && <span style={{ marginRight: "0.75rem" }}>🗓 {new Date(raw.message_date).toLocaleDateString("ar-KW")}</span>}
+                  <div className="tgm-raw-source">
+                    {raw.channel_username && <span><Send size={11} className="inline ml-0.5" aria-hidden="true" /> @{raw.channel_username}</span>}
+                    {raw.message_date && <span className="tgm-date-span"><CalendarDays size={11} className="inline ml-0.5" />{new Date(raw.message_date).toLocaleDateString("ar-KW")}</span>}
                   </div>
                 )}
 
-                {/* Expand/collapse raw text */}
                 {(raw?.raw_text || raw?.raw_caption || lesson.description) && (
-                  <button onClick={() => setExpanded(isExpanded ? null : lesson.id)}
-                    style={{ textAlign: "right", background: "none", border: "none", cursor: "pointer", color: C.emerald, fontSize: "0.78rem", padding: "0 1.5rem" }}>
+                  <button
+                    type="button"
+                    onClick={() => setExpanded(isExpanded ? null : lesson.id)}
+                    className="tgm-expand-btn"
+                  >
                     {isExpanded ? "▲ إخفاء النص الأصلي" : "▼ عرض النص الأصلي"}
                   </button>
                 )}
                 {isExpanded && (
-                  <pre style={{ fontSize: "0.75rem", background: C.parchmentDeep, padding: "0.625rem", borderRadius: "0.375rem", whiteSpace: "pre-wrap", wordBreak: "break-word", margin: "0 0 0 1.5rem", maxHeight: "12rem", overflow: "auto", direction: "rtl", textAlign: "right" }}>
+                  <pre className="tgm-raw-pre">
                     {raw?.raw_caption || raw?.raw_text || lesson.description}
                   </pre>
                 )}
 
-                {/* Actions */}
-                <div style={{ display: "flex", gap: "0.5rem", paddingRight: "1.5rem" }}>
+                <div className="tgm-lesson-actions">
                   <Btn loading={acting === lesson.id} small onClick={() => approve(lesson.id)}>✓ قبول</Btn>
                   <Btn loading={acting === `reject-${lesson.id}`} small variant="danger" onClick={() => reject(lesson.id)}>✗ رفض</Btn>
                 </div>
@@ -474,8 +532,6 @@ function ReviewTab() {
     </div>
   );
 }
-
-// ── Stats Tab ─────────────────────────────────────────────────────────────────
 
 function StatsTab() {
   const [data, setData] = useState<TgStats | null>(null);
@@ -498,74 +554,69 @@ function StatsTab() {
   const lessons = data?.extractedLessons ?? ({} as TgStats["extractedLessons"]);
 
   return (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      {/* Summary cards */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "0.75rem" }}>
-        <StatCard label="إجمالي الرسائل" value={raw.total ?? 0} color={C.emerald} />
+    <div className="tgm-grid-gap">
+      <div className="tgm-stats-grid">
+        <StatCard label="إجمالي الرسائل" value={raw.total ?? 0} color="var(--majalis-emerald)" />
         <StatCard label="دروس مُستخرجة" value={lessons.total ?? 0} color="#2563eb" />
-        <StatCard label="بانتظار المراجعة" value={lessons.byReview?.pending ?? 0} color="#d97706" />
+        <StatCard label="بانتظار المراجعة" value={lessons.byReview?.pending ?? 0} color="#929995" />
         <StatCard label="مُعتمدة" value={lessons.byReview?.approved ?? 0} color="#16a34a" />
         <StatCard label="معدل النجاح" value={`${data.successRate}%`} color="#7c3aed" />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1rem" }}>
-        {/* Raw message breakdown */}
+      <div className="tgm-panels-grid">
         <InfoCard title="حالة استخراج الرسائل">
           {Object.entries(raw.byStatus ?? {}).map(([status, count]) => (
             <ProgressRow key={status} label={status} value={count as number} total={raw.total ?? 0} />
           ))}
         </InfoCard>
 
-        {/* Review breakdown */}
         <InfoCard title="حالة المراجعة">
           {Object.entries(lessons.byReview ?? {}).map(([status, count]) => (
             <ProgressRow key={status} label={status} value={count as number} total={lessons.total ?? 0} />
           ))}
         </InfoCard>
 
-        {/* Quality breakdown */}
         <InfoCard title="جودة الدروس">
           {Object.entries(lessons.byQuality ?? {}).map(([q, count]) => (
             <ProgressRow key={q} label={QUALITY_AR[q] || q} value={count as number} total={lessons.total ?? 0} color={QUALITY_COLORS[q]} />
           ))}
         </InfoCard>
 
-        {/* Top sheikhs */}
         <InfoCard title="أكثر المشايخ حضوراً">
           {(lessons.topSheikhs ?? []).length === 0 ? (
-            <span style={{ color: C.inkSoft, fontSize: "0.8rem" }}>لا توجد بيانات.</span>
-          ) : (lessons.topSheikhs ?? []).map((s, i) => (
-            <div key={s.name} style={{ display: "flex", justifyContent: "space-between", padding: "0.2rem 0", fontSize: "0.82rem", borderBottom: i < (lessons.topSheikhs ?? []).length - 1 ? `1px solid ${C.line}` : "none" }}>
+            <span className="tgm-sheikh-empty">لا توجد بيانات.</span>
+          ) : (lessons.topSheikhs ?? []).map((s) => (
+            <div key={s.name} className="tgm-sheikh-row">
               <span>{s.name}</span>
-              <span style={{ fontWeight: 700, color: C.emerald }}>{s.count}</span>
+              <span className="tgm-sheikh-count">{s.count}</span>
             </div>
           ))}
         </InfoCard>
+
       </div>
 
-      {/* Channels table */}
       {data.channels.list.length > 0 && (
         <InfoCard title="القنوات">
-          <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.82rem" }}>
+          <div className="tgm-table-wrap">
+            <table className="tgm-table">
               <thead>
-                <tr style={{ borderBottom: `2px solid ${C.line}`, color: C.inkSoft }}>
-                  <th style={{ padding: "0.4rem 0.5rem", textAlign: "right" }}>القناة</th>
-                  <th style={{ padding: "0.4rem 0.5rem", textAlign: "center" }}>رسائل</th>
-                  <th style={{ padding: "0.4rem 0.5rem", textAlign: "center" }}>دروس</th>
-                  <th style={{ padding: "0.4rem 0.5rem", textAlign: "center" }}>مكررة</th>
-                  <th style={{ padding: "0.4rem 0.5rem", textAlign: "center" }}>الحالة</th>
+                <tr className="tgm-thead-row">
+                  <th className="tgm-th">القناة</th>
+                  <th className="tgm-th tgm-th--center">رسائل</th>
+                  <th className="tgm-th tgm-th--center">دروس</th>
+                  <th className="tgm-th tgm-th--center">مكررة</th>
+                  <th className="tgm-th tgm-th--center">الحالة</th>
                 </tr>
               </thead>
               <tbody>
-                {data.channels.list.map(ch => (
-                  <tr key={ch.channel_username} style={{ borderBottom: `1px solid ${C.line}` }}>
-                    <td style={{ padding: "0.4rem 0.5rem" }}>@{ch.channel_username}</td>
-                    <td style={{ padding: "0.4rem 0.5rem", textAlign: "center" }}>{ch.total_messages || 0}</td>
-                    <td style={{ padding: "0.4rem 0.5rem", textAlign: "center" }}>{ch.total_lessons || 0}</td>
-                    <td style={{ padding: "0.4rem 0.5rem", textAlign: "center" }}>{ch.total_duplicates || 0}</td>
-                    <td style={{ padding: "0.4rem 0.5rem", textAlign: "center" }}>
-                      <span style={{ fontSize: "0.72rem", padding: "0.1rem 0.4rem", borderRadius: "999px", background: ch.is_active ? "#dcfce7" : "#f3f4f6", color: ch.is_active ? "#166534" : "#6b7280" }}>
+                {data.channels.list.map((ch) => (
+                  <tr key={ch.channel_username} className="tgm-tr">
+                    <td className="tgm-td">@{ch.channel_username}</td>
+                    <td className="tgm-td tgm-td--center">{ch.total_messages || 0}</td>
+                    <td className="tgm-td tgm-td--center">{ch.total_lessons || 0}</td>
+                    <td className="tgm-td tgm-td--center">{ch.total_duplicates || 0}</td>
+                    <td className="tgm-td tgm-td--center">
+                      <span className={ch.is_active ? "tgm-ch-active-badge" : "tgm-ch-inactive-badge"}>
                         {ch.is_active ? "نشطة" : "متوقفة"}
                       </span>
                     </td>
@@ -580,8 +631,6 @@ function StatsTab() {
   );
 }
 
-// ── Main Section ──────────────────────────────────────────────────────────────
-
 export function TelegramSection() {
   const [tab, setTab] = useState<TgTab>("status");
 
@@ -594,139 +643,25 @@ export function TelegramSection() {
 
   return (
     <div>
-      <h2 style={{ fontSize: "1.25rem", fontWeight: 700, margin: "0 0 1rem 0" }}>بوت Telegram + مراقبة القنوات</h2>
+      <h2 className="tgm-title">بوت Telegram + مراقبة القنوات</h2>
 
-      {/* Tabs */}
-      <div style={{ display: "flex", gap: "0.375rem", marginBottom: "1.25rem", borderBottom: `2px solid ${C.line}`, paddingBottom: "0" }}>
-        {TABS.map(t => (
-          <button key={t.key} onClick={() => setTab(t.key)}
-            style={{
-              padding: "0.5rem 1rem",
-              border: "none",
-              background: "none",
-              cursor: "pointer",
-              fontWeight: tab === t.key ? 700 : 400,
-              fontSize: "0.875rem",
-              color: tab === t.key ? C.emeraldDeep : C.inkSoft,
-              borderBottom: tab === t.key ? `3px solid ${C.emeraldDeep}` : "3px solid transparent",
-              marginBottom: "-2px",
-              transition: "all 0.15s",
-            }}>
+      <div className="tgm-tabs">
+        {TABS.map((t) => (
+          <button
+            key={t.key}
+            type="button"
+            onClick={() => setTab(t.key)}
+            className={`tgm-tab${tab === t.key ? " tgm-tab--active" : ""}`}
+          >
             {t.label}
           </button>
         ))}
       </div>
 
-      {/* Tab content */}
       {tab === "status" && <StatusTab />}
       {tab === "channels" && <ChannelsTab />}
       {tab === "review" && <ReviewTab />}
       {tab === "stats" && <StatsTab />}
     </div>
-  );
-}
-
-// ── Shared UI primitives ──────────────────────────────────────────────────────
-
-function Spinner() {
-  return (
-    <div style={{ display: "flex", justifyContent: "center", padding: "2rem" }}>
-      <div style={{ width: 28, height: 28, border: `3px solid ${C.line}`, borderTop: `3px solid ${C.emerald}`, borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-    </div>
-  );
-}
-
-function EmptyState({ text }: { text: string }) {
-  return <div style={{ textAlign: "center", color: C.inkSoft, padding: "2rem", fontSize: "0.875rem" }}>{text}</div>;
-}
-
-function Badge({ ok, label }: { ok: boolean; label: string }) {
-  return (
-    <span style={{
-      display: "inline-flex", alignItems: "center", gap: "0.3rem",
-      padding: "0.2rem 0.6rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 600,
-      background: ok ? "#dcfce7" : "#fee2e2", color: ok ? "#166534" : "#991b1b",
-    }}>
-      {ok ? "✓" : "✗"} {label}
-    </span>
-  );
-}
-
-function InfoCard({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "0.875rem 1rem" }}>
-      <div style={{ fontWeight: 700, fontSize: "0.85rem", marginBottom: "0.625rem", color: C.inkSoft }}>{title}</div>
-      <div style={{ display: "grid", gap: "0.3rem" }}>{children}</div>
-    </div>
-  );
-}
-
-function Row({ label, value, mono = false, error = false }: { label: string; value: string; mono?: boolean; error?: boolean }) {
-  return (
-    <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", fontSize: "0.82rem", alignItems: "flex-start" }}>
-      <span style={{ color: C.inkSoft, flexShrink: 0 }}>{label}</span>
-      <span style={{ fontFamily: mono ? "monospace" : "inherit", textAlign: "left", wordBreak: "break-all", color: error ? "#dc2626" : C.ink }}>{value}</span>
-    </div>
-  );
-}
-
-function StatCard({ label, value, color }: { label: string; value: number | string; color: string }) {
-  return (
-    <div style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.625rem", padding: "1rem", textAlign: "center" }}>
-      <div style={{ fontSize: "1.6rem", fontWeight: 800, color }}>{value}</div>
-      <div style={{ fontSize: "0.75rem", color: C.inkSoft, marginTop: "0.25rem" }}>{label}</div>
-    </div>
-  );
-}
-
-function ProgressRow({ label, value, total, color = C.emerald }: { label: string; value: number; total: number; color?: string }) {
-  const pct = total > 0 ? Math.round((value / total) * 100) : 0;
-  return (
-    <div style={{ fontSize: "0.82rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.15rem" }}>
-        <span>{label}</span>
-        <span style={{ color: C.inkSoft }}>{value} ({pct}%)</span>
-      </div>
-      <div style={{ height: 4, background: C.line, borderRadius: 2 }}>
-        <div style={{ height: 4, width: `${pct}%`, background: color, borderRadius: 2, transition: "width 0.4s" }} />
-      </div>
-    </div>
-  );
-}
-
-function Btn({
-  children, onClick, loading = false, variant = "primary", small = false, style: extraStyle,
-}: {
-  children: React.ReactNode;
-  onClick?: () => void;
-  loading?: boolean;
-  variant?: "primary" | "secondary" | "danger";
-  small?: boolean;
-  style?: React.CSSProperties;
-}) {
-  const bg = variant === "primary" ? C.emeraldDeep : variant === "danger" ? "#dc2626" : C.line;
-  const color = variant === "secondary" ? C.ink : "#fff";
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={loading}
-      style={{
-        padding: small ? "0.3rem 0.65rem" : "0.45rem 1rem",
-        fontSize: small ? "0.78rem" : "0.85rem",
-        fontWeight: 600,
-        background: loading ? C.line : bg,
-        color: loading ? C.inkSoft : color,
-        border: "none",
-        borderRadius: "0.375rem",
-        cursor: loading ? "not-allowed" : "pointer",
-        transition: "opacity 0.15s",
-        whiteSpace: "nowrap",
-        ...extraStyle,
-      }}
-    >
-      {loading ? "…" : children}
-    </button>
   );
 }

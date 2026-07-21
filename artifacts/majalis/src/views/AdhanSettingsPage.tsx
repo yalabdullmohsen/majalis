@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { CloudMoon, CloudSun, MapPin, Moon, Music, Bell, ChevronLeft, Sunrise, Sun, Sunset, Star } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import {
   loadAdhanPrefs,
@@ -14,9 +16,76 @@ import {
 } from "@/lib/adhan-preferences";
 import { getMuezzin, stopAdhan } from "@/lib/adhan-audio";
 import { MuezzinPicker } from "@/components/adhan/MuezzinPicker";
-import { requestPrayerNotificationPermission } from "@/lib/adhan-scheduler";
+import { PrayerAlertSettingsCard } from "@/components/adhan/PrayerAlertSettingsCard";
+import {
+  KUWAIT_GOVERNORATES,
+  getSelectedGovernorate,
+  setSelectedGovernorate,
+} from "@/lib/prayer-times";
+import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
+import { applyPageSeo } from "@/lib/seo";
+import { undismissFridayBanner } from "@/lib/friday-prayer";
+import { computeNotificationDiagnostics, type NotificationDiagnostics } from "@/lib/notification-diagnostics";
 
 const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 20, 30];
+
+const PRAYER_ICON_MAP: Record<string, LucideIcon> = {
+  Moon, Sun, CloudSun, Sunset, CloudMoon,
+};
+
+function Toggle({
+  checked,
+  onChange,
+  id,
+  label,
+}: {
+  checked: boolean;
+  onChange: (v: boolean) => void;
+  id?: string;
+  label: string;
+}) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      aria-label={label}
+      id={id}
+      onClick={() => onChange(!checked)}
+      className={`ads-toggle${checked ? " is-on" : ""}`}
+    >
+      <span className="ads-toggle__thumb" />
+    </button>
+  );
+}
+
+// "default" من Notification.permission و"prompt" من navigator.permissions.query()
+// يمثّلان نفس الحالة (لم يُطلب الإذن بعد) لكن باسمين مختلفين حسب الـ API.
+type PermissionState = "granted" | "denied" | "default" | "prompt" | "unsupported";
+
+function PermissionBadge({ value }: { value: PermissionState }) {
+  const MAP: Record<PermissionState, { label: string; cls: string }> = {
+    granted:     { label: "مفعّل ✓",        cls: "ads-perm--ok" },
+    denied:      { label: "محجوب ✕",         cls: "ads-perm--err" },
+    default:     { label: "لم يُطلب بعد",    cls: "ads-perm--warn" },
+    prompt:      { label: "لم يُطلب بعد",    cls: "ads-perm--warn" },
+    unsupported: { label: "غير مدعوم",       cls: "ads-perm--muted" },
+  };
+  const { label, cls } = MAP[value];
+  return <span className={`ads-perm-badge ${cls}`}>{label}</span>;
+}
+
+function LocationPermBadge() {
+  const [state, setState] = useState<PermissionState>("default");
+  useEffect(() => {
+    if (!navigator.permissions) { setState("unsupported"); return; }
+    navigator.permissions.query({ name: "geolocation" }).then((res) => {
+      setState(res.state as PermissionState);
+      res.onchange = () => setState(res.state as PermissionState);
+    }).catch(() => setState("unsupported"));
+  }, []);
+  return <PermissionBadge value={state} />;
+}
 
 export default function AdhanSettingsPage() {
   const [prefs, setPrefs] = useState<AdhanPreferences>(() => loadAdhanPrefs());
@@ -24,7 +93,41 @@ export default function AdhanSettingsPage() {
   const [saved, setSaved] = useState(false);
   const savedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => () => { if (savedTimerRef.current) clearTimeout(savedTimerRef.current); }, []);
+  const [selectedGovId, setSelectedGovId] = useState(
+    () => getSelectedGovernorate().id,
+  );
+
+  const { data: prayerData } = usePrayerCountdown(selectedGovId);
+  const [diagnostics, setDiagnostics] = useState<NotificationDiagnostics | null>(null);
+  const [diagnosticsOpen, setDiagnosticsOpen] = useState(false);
+
+  useEffect(() => {
+    if (!diagnosticsOpen) return;
+    let cancelled = false;
+    computeNotificationDiagnostics(prayerData ?? null).then((d) => { if (!cancelled) setDiagnostics(d); });
+    return () => { cancelled = true; };
+  }, [diagnosticsOpen, prayerData, prefs]);
+
+  const sunriseTime =
+    prayerData?.prayers.find((p: { key: string }) => p.key === "Sunrise")
+      ?.time ?? null;
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/adhan-settings",
+      title: "إعدادات الأذان | المجلس العلمي",
+      description: "خصّص إعدادات الأذان، اختر المؤذن والمحافظة وأوقات التنبيه لكل صلاة.",
+      keywords: ["إعدادات أذان", "تنبيه الصلاة", "أوقات الصلاة", "مؤذن", "الكويت"],
+      robots: "noindex, follow",
+    });
+  }, []);
+
+  useEffect(
+    () => () => {
+      if (savedTimerRef.current) clearTimeout(savedTimerRef.current);
+    },
+    [],
+  );
 
   const refresh = useCallback(() => setPrefs(loadAdhanPrefs()), []);
 
@@ -37,13 +140,6 @@ export default function AdhanSettingsPage() {
   function toggleGlobal(enabled: boolean) {
     const next = patchAdhanPrefs({ ...prefs, globalEnabled: enabled });
     setPrefs(next);
-  }
-
-  async function enableBrowserNotifications() {
-    const granted = await requestPrayerNotificationPermission();
-    const next = patchAdhanPrefs({ ...prefs, browserNotificationsEnabled: granted });
-    setPrefs(next);
-    flashSaved();
   }
 
   function setDefaultMuezzin(id: string) {
@@ -68,195 +164,289 @@ export default function AdhanSettingsPage() {
     setPrefs(next);
   }
 
+  function handleGovChange(id: string) {
+    setSelectedGovernorate(id);
+    setSelectedGovId(id);
+  }
+
   const defaultMuezzin = getMuezzin(prefs.defaultMuezzinId);
 
   return (
-    <div style={{ direction: "rtl", maxWidth: 600, margin: "0 auto", padding: "1.25rem 1rem 4rem" }}>
-      <h1 style={{ fontSize: "1.25rem", fontWeight: 800, color: "#134a3a", marginBottom: "0.25rem" }}>
-        🕌 إعدادات الأذان
-      </h1>
-      <p style={{ fontSize: "0.82rem", color: "#6b7280", marginBottom: "0.875rem" }}>
-        خصّص المؤذن والتنبيهات لكل صلاة بشكل مستقل.
-      </p>
-      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.25rem" }}>
-        <Link href="/muezzins" style={{ flex: 1 }}>
-          <div style={{
-            display: "flex", alignItems: "center", gap: "0.5rem",
-            padding: "0.65rem 0.875rem",
-            background: "#f0fdf4", border: "1px solid #bbf7d0",
-            borderRadius: "0.75rem",
-            cursor: "pointer", textDecoration: "none",
-          }}>
-            <span style={{ fontSize: "1rem" }}>🎙️</span>
-            <span style={{ fontSize: "0.82rem", color: "#134a3a", fontWeight: 600 }}>
-              مكتبة المؤذنين
-            </span>
-            <span style={{ marginRight: "auto", color: "#6b7280", fontSize: "0.8rem" }}>←</span>
-          </div>
-        </Link>
-        <Link href="/upload">
-          <div style={{
-            display: "flex", alignItems: "center", gap: "0.35rem",
-            padding: "0.65rem 0.875rem",
-            background: "#eff6ff", border: "1px solid #bfdbfe",
-            borderRadius: "0.75rem",
-            cursor: "pointer", textDecoration: "none",
-            whiteSpace: "nowrap",
-          }}>
-            <span style={{ fontSize: "0.9rem" }}>📤</span>
-            <span style={{ fontSize: "0.82rem", color: "#1d4ed8", fontWeight: 600 }}>
-              ارفع أذانك
-            </span>
-          </div>
-        </Link>
-      </div>
+    <div className="ads-page">
+      <h1 className="ads-title">إعدادات الأذان</h1>
+      <p className="ads-subtitle">خصّص المؤذن والتنبيهات لكل صلاة بشكل مستقل.</p>
 
       {saved && (
-        <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "0.5rem", padding: "0.5rem 0.875rem", marginBottom: "1rem", fontSize: "0.82rem", color: "#065f46", fontWeight: 600 }}>
-          ✓ تم الحفظ
+        <div className="ads-saved">
+          <span>✓</span> تم الحفظ
         </div>
       )}
 
-      {/* ── Master Toggle ───────────────────────────────────────── */}
-      <Section title="🔔 الإشعارات">
-        <ToggleRow
-          label="تفعيل إشعارات الأذان"
-          desc="تشغيل الأذان وإرسال تنبيه عند كل وقت صلاة"
-          checked={prefs.globalEnabled}
-          onChange={toggleGlobal}
-        />
-        <div style={{ marginTop: "1rem", paddingTop: "1rem", borderTop: "1px solid #e5e7eb" }}>
-          <p style={{ margin: "0 0 0.65rem", fontSize: "0.78rem", lineHeight: 1.7, color: "#4b5563" }}>
-            نطلب إذن النظام فقط لإرسال تذكير الصلاة عندما لا تكون الصفحة أمامك. يمكنك إيقافه
-            في أي وقت، ولن يحوّل التطبيق الهاتف إلى الوضع الصامت تلقائيًا.
-          </p>
-          <button type="button" onClick={enableBrowserNotifications} style={smallBtn("#134a3a")}>
-            {prefs.browserNotificationsEnabled ? "الإشعارات مفعّلة" : "تفعيل إشعارات النظام"}
-          </button>
+      {/* ══ الموقع ══ */}
+      <div className="ads-card">
+        <div className="ads-card__head">
+          <MapPin size={15} strokeWidth={2} />
+          <span>الموقع</span>
         </div>
-        <div style={{ marginTop: "0.9rem" }}>
-          <ToggleRow
-            label="تذكير الوضع الصامت"
-            desc="إرسال التذكير بصمت قبل الصلاة وعند دخول وقتها"
-            checked={prefs.silentReminderEnabled}
-            onChange={(enabled) => setPrefs(patchAdhanPrefs({ ...prefs, silentReminderEnabled: enabled }))}
-          />
-        </div>
-        {!prefs.globalEnabled && (
-          <div style={{ fontSize: "0.78rem", color: "#b45309", background: "#fefce8", padding: "0.5rem 0.75rem", borderRadius: "0.4rem", marginTop: "0.5rem" }}>
-            الإشعارات معطلة — لن يُشغَّل أذان ولن تصل تنبيهات.
+        <div className="ads-card__body">
+          <div className="ads-row-sep">
+            <label htmlFor="gov-select" className="ads-gov-label">المحافظة</label>
+            <select
+              id="gov-select"
+              value={selectedGovId}
+              onChange={(e) => handleGovChange(e.target.value)}
+              className="ads-gov-select"
+            >
+              {KUWAIT_GOVERNORATES.map((g) => (
+                <option key={g.id} value={g.id}>{g.name}</option>
+              ))}
+            </select>
           </div>
-        )}
-      </Section>
 
-      {/* ── Default Muezzin ─────────────────────────────────────── */}
-      <Section title="🎙️ المؤذن الافتراضي">
-        <p style={{ fontSize: "0.8rem", color: "#6b7280", marginBottom: "0.75rem" }}>
-          يُستخدم لجميع الصلوات ما لم تحدد مؤذناً مختلفاً لكل صلاة.
-        </p>
-        <MuezzinRow
-          name={defaultMuezzin.name}
-          origin={defaultMuezzin.origin}
-          style={defaultMuezzin.style}
-          onPick={() => setPickerFor("default")}
-        />
-      </Section>
+          <div className="ads-row">
+            <div className="ads-sunrise-inner">
+              <Sunrise size={16} strokeWidth={2} color="#173D35" />
+              الشروق
+              <span className="ads-sunrise-tag">وقت الكراهة</span>
+            </div>
+            <span className="ads-sunrise-time">{sunriseTime ?? "—"}</span>
+          </div>
+        </div>
+      </div>
 
-      {/* ── Per-Prayer Settings ──────────────────────────────────── */}
-      <Section title="⏰ إعدادات كل صلاة">
-        {PRAYER_KEYS.map((key) => {
-          const p = prefs.prayers[key];
-          const effectiveMuezzinId = getEffectiveMuezzinId(prefs, key);
-          const muezzin = getMuezzin(effectiveMuezzinId);
-          const hasOverride = !!p.muezzinId;
-          return (
-            <div key={key} style={{
-              borderRadius: "0.75rem",
-              border: `1.5px solid ${p.enabled ? "#e5e7eb" : "#f3f4f6"}`,
-              padding: "0.875rem 1rem",
-              marginBottom: "0.75rem",
-              background: p.enabled ? "#fff" : "#fafafa",
-              opacity: p.enabled ? 1 : 0.7,
-            }}>
-              {/* Header */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.75rem" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <span style={{ fontSize: "1.1rem" }}>{PRAYER_ICON[key]}</span>
-                  <span style={{ fontWeight: 700, fontSize: "0.95rem", color: "#111827" }}>
-                    {PRAYER_ARABIC[key]}
-                  </span>
-                </div>
-                <label style={{ display: "flex", alignItems: "center", gap: "0.4rem", cursor: "pointer", fontSize: "0.8rem", color: "#374151" }}>
-                  <input
-                    type="checkbox"
-                    checked={p.enabled}
-                    onChange={(e) => togglePrayer(key, e.target.checked)}
-                    style={{ width: 16, height: 16, accentColor: "#134a3a" }}
-                  />
-                  {p.enabled ? "مفعّل" : "معطّل"}
-                </label>
+      {/* ══ الأذان ══ */}
+      <div className="ads-card">
+        <div className="ads-card__head">
+          <Music size={15} strokeWidth={2} />
+          <span>الأذان</span>
+        </div>
+        <div className="ads-card__body">
+          <p className="ads-adhan-desc">
+            المؤذن الافتراضي، يُستخدم لجميع الصلوات ما لم تخصّص مؤذناً لكل صلاة.
+          </p>
+
+          <div className="ads-row">
+            <div>
+              <div className="ads-muezzin-name">{defaultMuezzin.name}</div>
+              <div className="ads-muezzin-origin">
+                {defaultMuezzin.origin} · {defaultMuezzin.style}
               </div>
+            </div>
+            <button type="button" onClick={() => setPickerFor("default")} className="ads-pill-btn">
+              تغيير
+            </button>
+          </div>
 
-              {p.enabled && (
-                <>
-                  {/* Muezzin */}
-                  <div style={{ marginBottom: "0.625rem" }}>
-                    <div style={{ fontSize: "0.75rem", color: "#6b7280", marginBottom: "0.3rem" }}>المؤذن</div>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                      <span style={{ fontSize: "0.85rem", color: "#111827" }}>
+          <div className="ads-quick-links">
+            <Link href="/muezzins" className="ads-quick-link-anchor ads-quick-link-anchor--full">
+              <div className="ads-quick-link">
+                <span className="ads-quick-link__label">مكتبة المؤذنين</span>
+                <ChevronLeft size={14} color="var(--msk-text-3)" />
+              </div>
+            </Link>
+            <Link href="/upload" className="ads-quick-link-anchor">
+              <div className="ads-quick-link ads-quick-link--upload">
+                <span className="ads-quick-link__label">ارفع أذانك</span>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* ══ الإشعارات ══ */}
+      <div className="ads-card">
+        <div className="ads-card__head">
+          <Bell size={15} strokeWidth={2} />
+          <span>الإشعارات</span>
+        </div>
+        <div className="ads-card__body">
+          <div className="ads-row-sep">
+            <div>
+              <div className="ads-global-label">تفعيل إشعارات الأذان</div>
+              <div className="ads-global-desc">تشغيل الأذان وإرسال تنبيه عند كل وقت صلاة</div>
+            </div>
+            <Toggle checked={prefs.globalEnabled} onChange={toggleGlobal} id="global-toggle" label="تفعيل إشعارات الأذان" />
+          </div>
+
+          {!prefs.globalEnabled && (
+            <div className="ads-global-disabled">
+              الإشعارات معطلة، لن يُشغَّل أذان ولن تصل تنبيهات.
+            </div>
+          )}
+
+          {PRAYER_KEYS.map((key, idx) => {
+            const p = prefs.prayers[key];
+            const effectiveMuezzinId = getEffectiveMuezzinId(prefs, key);
+            const muezzin = getMuezzin(effectiveMuezzinId);
+            const hasOverride = !!p.muezzinId;
+            const isLast = idx === PRAYER_KEYS.length - 1;
+
+            return (
+              <div
+                key={key}
+                className={`ads-prayer-item${isLast ? " is-last" : ""}${!p.enabled ? " is-disabled" : ""}`}
+              >
+                <div className="ads-row">
+                  <div className="ads-prayer-icon-row">
+                    {(() => { const I = PRAYER_ICON_MAP[PRAYER_ICON[key]] ?? Moon; return <I size={16} className="ads-prayer-icon" />; })()}
+                    <span className="ads-prayer-name">{PRAYER_ARABIC[key]}</span>
+                  </div>
+                  <Toggle checked={p.enabled} onChange={(v) => togglePrayer(key, v)} label={`تفعيل أذان ${PRAYER_ARABIC[key]}`} />
+                </div>
+
+                {p.enabled && (
+                  <div className="ads-prayer-details">
+                    <div className="ads-prayer-muezzin-row">
+                      <span className="ads-prayer-muezzin-name">
                         {muezzin.name}
-                        {!hasOverride && <span style={{ fontSize: "0.7rem", color: "#9ca3af", marginRight: "0.35rem" }}>(افتراضي)</span>}
+                        {!hasOverride && (
+                          <span className="ads-prayer-muezzin-override">(افتراضي)</span>
+                        )}
                       </span>
-                      <div style={{ display: "flex", gap: "0.35rem" }}>
-                        <button type="button" onClick={() => setPickerFor(key)} style={smallBtn("#134a3a")}>
+                      <div className="ads-prayer-muezzin-btns">
+                        <button type="button" onClick={() => setPickerFor(key)} className="ads-pill-btn">
                           تغيير
                         </button>
                         {hasOverride && (
-                          <button type="button" onClick={() => { patchPrayerPrefs(key, { muezzinId: "" }); refresh(); }} style={smallBtn("#6b7280")}>
+                          <button
+                            type="button"
+                            onClick={() => { patchPrayerPrefs(key, { muezzinId: "" }); refresh(); }}
+                            className="ads-pill-btn-ghost"
+                          >
                             إلغاء
                           </button>
                         )}
                       </div>
                     </div>
-                  </div>
 
-                  {/* Advance reminder */}
-                  <div>
-                    <div style={{ fontSize: "0.75rem", color: "#6b7280", marginBottom: "0.3rem" }}>
-                      تنبيه مسبق
-                    </div>
-                    <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
-                      {ADVANCE_OPTIONS.map((min) => (
-                        <button
-                          key={min}
-                          type="button"
-                          onClick={() => setAdvance(key, min)}
-                          style={{
-                            padding: "0.25rem 0.6rem",
-                            borderRadius: "999px",
-                            border: "1.5px solid",
-                            borderColor: p.advanceMinutes === min ? "#134a3a" : "#e5e7eb",
-                            background: p.advanceMinutes === min ? "#134a3a" : "#fff",
-                            color: p.advanceMinutes === min ? "#fff" : "#374151",
-                            fontSize: "0.75rem",
-                            fontWeight: 600,
-                            cursor: "pointer",
-                            fontFamily: "inherit",
-                          }}
-                        >
-                          {min === 0 ? "بدون" : `${min} د`}
-                        </button>
-                      ))}
+                    <div>
+                      <div className="ads-advance-label">تنبيه مسبق</div>
+                      <div className="ads-advance-row">
+                        {ADVANCE_OPTIONS.map((min) => (
+                          <button
+                            key={min}
+                            type="button"
+                            onClick={() => setAdvance(key, min)}
+                            className={`ads-advance-btn${p.advanceMinutes === min ? " is-active" : ""}`}
+                          >
+                            {min === 0 ? "بدون" : `${min} د`}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </>
-              )}
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <PrayerAlertSettingsCard />
+
+      {/* ══ تذكير يوم الجمعة ══ */}
+      <div className="ads-card">
+        <div className="ads-card__head">
+          <Star size={15} strokeWidth={2} />
+          <span>تذكير يوم الجمعة</span>
+        </div>
+        <div className="ads-card__body">
+          <div className="ads-row-sep">
+            <div>
+              <div className="ads-global-label">عرض إعلان ليلة الجمعة ويومها</div>
+              <div className="ads-global-desc">
+                يظهر شعار الآية الكريمة من مغرب الخميس حتى مغرب الجمعة
+              </div>
             </div>
-          );
-        })}
-      </Section>
+            <Toggle
+              checked={prefs.fridayBannerEnabled}
+              onChange={(v) => {
+                const next = patchAdhanPrefs({ ...prefs, fridayBannerEnabled: v });
+                setPrefs(next);
+                // إذا أُعيد التفعيل نمسح الإغلاق السابق للجلسة
+                if (v) undismissFridayBanner();
+              }}
+              id="friday-banner-toggle"
+              label="عرض إعلان ليلة الجمعة ويومها"
+            />
+          </div>
+          <p className="ads-adhan-desc">
+            الآية المعروضة: «إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ ۚ يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا» — الأحزاب: ٥٦
+          </p>
+        </div>
+      </div>
 
-      {/* Muezzin Picker Modal */}
+      {/* ══ حالة الأذونات ══ */}
+      <div className="ads-card">
+        <div className="ads-card__head">
+          <Bell size={15} strokeWidth={2} />
+          <span>حالة الأذونات</span>
+        </div>
+        <div className="ads-card__body">
+          <div className="ads-row-sep">
+            <span className="ads-adhan-desc">إذن الإشعارات</span>
+            <PermissionBadge value={
+              "Notification" in window
+                ? Notification.permission === "granted" ? "granted"
+                : Notification.permission === "denied" ? "denied" : "default"
+                : "unsupported"
+            } />
+          </div>
+          <div className="ads-row">
+            <span className="ads-adhan-desc">إذن الموقع الجغرافي</span>
+            <LocationPermBadge />
+          </div>
+        </div>
+      </div>
+
+      {/* ══ تشخيص: لماذا لا تصلني تنبيهات؟ ══ */}
+      <div className="ads-card">
+        <button
+          type="button"
+          className="ads-row-sep ads-diagnostics-toggle"
+          onClick={() => setDiagnosticsOpen((v) => !v)}
+          aria-expanded={diagnosticsOpen}
+        >
+          <div className="ads-card__head" style={{ margin: 0 }}>
+            <Bell size={15} strokeWidth={2} />
+            <span>لماذا لا تصلني تنبيهات؟</span>
+          </div>
+          <span aria-hidden="true">{diagnosticsOpen ? "▲" : "▼"}</span>
+        </button>
+        {diagnosticsOpen && (
+          <div className="ads-card__body">
+            {!diagnostics ? (
+              <p className="ads-adhan-desc">جارٍ الفحص…</p>
+            ) : (
+              <>
+                <div className="ads-row-sep">
+                  <span className="ads-adhan-desc">الصلاة القادمة</span>
+                  <span>{diagnostics.nextPrayer ? `${diagnostics.nextPrayer.name} — ${diagnostics.nextPrayer.time}` : "—"}</span>
+                </div>
+                <div className="ads-row-sep">
+                  <span className="ads-adhan-desc">تنبيه هذه الصلاة</span>
+                  <span>{diagnostics.nextPrayerEnabled ? "مفعّل ✓" : "معطّل ✕"}</span>
+                </div>
+                {diagnostics.blockingReasons.length === 0 ? (
+                  <p className="ads-adhan-desc" style={{ marginTop: ".5rem" }}>
+                    لا يوجد سبب ظاهر يمنع وصول التنبيهات — كل الإعدادات سليمة.
+                  </p>
+                ) : (
+                  <div style={{ marginTop: ".5rem" }}>
+                    <p className="ads-adhan-desc"><strong>أسباب محتملة لعدم وصول التنبيه:</strong></p>
+                    <ul style={{ margin: ".35rem 0 0", paddingInlineStart: "1.2rem", display: "flex", flexDirection: "column", gap: ".3rem" }}>
+                      {diagnostics.blockingReasons.map((r, i) => (
+                        <li key={i} className="ads-adhan-desc">{r}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        )}
+      </div>
+
       {pickerFor && (
         <MuezzinPicker
           selected={
@@ -274,69 +464,4 @@ export default function AdhanSettingsPage() {
       )}
     </div>
   );
-}
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div style={{ marginBottom: "1.5rem" }}>
-      <h2 style={{ fontSize: "0.875rem", fontWeight: 700, color: "#374151", margin: "0 0 0.75rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-        {title}
-      </h2>
-      <div style={{ background: "#fff", borderRadius: "0.875rem", border: "1px solid #e5e7eb", padding: "0.875rem 1rem" }}>
-        {children}
-      </div>
-    </div>
-  );
-}
-
-function ToggleRow({ label, desc, checked, onChange }: {
-  label: string;
-  desc: string;
-  checked: boolean;
-  onChange: (v: boolean) => void;
-}) {
-  return (
-    <label style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", cursor: "pointer" }}>
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={(e) => onChange(e.target.checked)}
-        style={{ marginTop: "0.25rem", width: 18, height: 18, accentColor: "#134a3a", flexShrink: 0 }}
-      />
-      <div>
-        <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "#111827" }}>{label}</div>
-        <div style={{ fontSize: "0.75rem", color: "#6b7280", marginTop: "0.1rem" }}>{desc}</div>
-      </div>
-    </label>
-  );
-}
-
-function MuezzinRow({ name, origin, style: muStyle, onPick }: {
-  name: string; origin: string; style: string; onPick: () => void;
-}) {
-  return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-      <div>
-        <div style={{ fontWeight: 600, fontSize: "0.9rem" }}>{name}</div>
-        <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>{origin} · {muStyle}</div>
-      </div>
-      <button type="button" onClick={onPick} style={smallBtn("#134a3a")}>
-        تغيير
-      </button>
-    </div>
-  );
-}
-
-function smallBtn(bg: string) {
-  return {
-    padding: "0.3rem 0.75rem",
-    borderRadius: "0.4rem",
-    border: "none",
-    background: bg,
-    color: "#fff",
-    fontSize: "0.78rem",
-    fontWeight: 600,
-    cursor: "pointer",
-    fontFamily: "inherit",
-  } as const;
 }

@@ -48,7 +48,7 @@ export function useAchievementCheck() {
           key,
           titleAr: def?.titleAr ?? key,
           descAr: def?.descAr ?? "",
-          icon: def?.icon ?? "🏅",
+          icon: def?.icon ?? "Medal",
           category: def?.category ?? "general",
           earned_at: new Date().toISOString(),
         };

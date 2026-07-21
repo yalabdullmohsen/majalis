@@ -1,13 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
+import { applyPageSeo } from "@/lib/seo";
 import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { DEMO_FAWAID, FAWAID_CATEGORIES } from "@/lib/demo-content";
 import { canSubmitForm } from "@/lib/form-rate-limit";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { useAuth } from "@/components/AuthProvider";
 import { FaidahCard } from "@/components/fawaid/FaidahCard";
+import { ShareButtons } from "@/components/ContentActions";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 const LEGACY_CATEGORIES = [
@@ -18,6 +21,20 @@ const LEGACY_CATEGORIES = [
   "فوائد تربوية",
   "فوائد دعوية",
   "فوائد سلوكية",
+  // الثلاثة التالية: اكتُشف بالفحص المباشر 2026-07-18 أن 142 من 515 فائدة
+  // في fawaid-seed.ts (SEED_FAWAID) كانت تحمل قيم category لا تطابق أي شريحة
+  // فلترة معروضة هنا إطلاقاً (لا في FAWAID_CATEGORIES المُستورَدة من
+  // fawaid-curated-seed.ts ولا في LEGACY_CATEGORIES أعلاه) — فتختفي صامتاً
+  // عند الفلترة بأي تصنيف محدَّد رغم ظهورها تحت "الكل"، نفس عطل "أخلاق
+  // إسلامية" في لعبة المسابقات لكن على نطاق أوسع بكثير. 126 من الـ142 حالة
+  // أُعيد تسميتها في المصدر لتطابق تصنيفاً قائماً هنا (مثل "فوائد علمية"
+  // → "طلب العلم"، "فوائد لغوية" → "اللغة")، والـ16 المتبقية ("فوائد
+  // تاريخية") لا تصنيف قريب لها فأُضيفت هنا كتصنيف أصيل جديد، إضافة
+  // لتوحيد "الرقائق والمواعظ"/"الرقائق والزهد" → "الرقائق" و"الذكر
+  // والدعاء"/"الدعاء والذكر" → "الذكر والدعاء" (متغيّرا ترتيب لنفس المعنى).
+  "فوائد تاريخية",
+  "الرقائق",
+  "الذكر والدعاء",
 ] as const;
 
 const DISPLAY_CATEGORIES = ["الكل", ...FAWAID_CATEGORIES, ...LEGACY_CATEGORIES.filter((c) => !FAWAID_CATEGORIES.includes(c as never))] as const;
@@ -46,8 +63,45 @@ export default function FawaidPage({
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const { user, isLoggedIn, isAdmin } = useAuth() as any;
+  const { user, isLoggedIn, isAdmin } = useAuth();
+
+  // رابط `?cat=...` في JSON-LD أسفل هذه الصفحة نفسها كان يُتجاهَل كليًا:
+  // `category` تُهيَّأ دائماً بـ"الكل" بلا قراءة أي شيء من الرابط الفعلي —
+  // عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف بالفحص المباشر
+  // 2026-07-18. امتداد 2026-07-20: `search-suggestions.ts` يبني روابط
+  // `/fawaid?q=...` لاقتراحات البحث العام — لم يكن `q` يُقرأ إطلاقًا،
+  // فتهبط كل نقرة على اقتراح فوائد على القائمة الكاملة غير المُصفّاة.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get("cat");
+    const q = params.get("q");
+    if (cat) setCategory(cat);
+    if (q) setSearch(q);
+  }, []);
   const debouncedSearch = useDebouncedValue(search);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/fawaid",
+      title: "الفوائد العلمية | المجلس العلمي",
+      description: "منصة لنشر ومشاركة الفوائد العلمية والشرعية، فوائد قرآنية وحديثية وعقدية وفقهية وتربوية.",
+      keywords: ["فوائد علمية", "فوائد شرعية", "فوائد قرآنية", "فوائد حديثية", "الفوائد الإسلامية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أقسام الفوائد العلمية",
+          description: "أقسام الفوائد العلمية والشرعية على المنصة",
+          itemListElement: FAWAID_CATEGORIES.map((cat, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: cat,
+            url: `https://www.majlisilm.com/fawaid?cat=${encodeURIComponent(cat)}`,
+          })),
+        },
+      ],
+    });
+  }, []);
 
   useEffect(() => {
     if (initialFawaid) return;
@@ -62,7 +116,15 @@ export default function FawaidPage({
       .finally(() => setLoading(false));
   }, [initialFawaid]);
 
-  const normalized = useMemo(() => fawaid, [fawaid]);
+  const normalized = useMemo(() => {
+    const arr = [...fawaid];
+    const seed = Date.now();
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(((seed * (i + 1)) % 2147483647) / 2147483647 * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }, [fawaid]);
 
   const displayItems = useMemo(() => {
     let items = normalized;
@@ -85,10 +147,11 @@ export default function FawaidPage({
       setSubmitError("يرجى الانتظار قليلًا قبل إرسال فائدة أخرى.");
       return;
     }
+    if (!user) return;
     setSubmitError("");
     setSubmitting(true);
     try {
-      const { error: insertError } = await submitFawaid(user.id, text, authorName || user?.profile?.full_name || "");
+      const { error: insertError } = await submitFawaid(user.id, text, authorName || user.profile?.full_name || "");
       if (insertError) throw insertError;
       setSubmitted(true);
       setText("");
@@ -109,13 +172,15 @@ export default function FawaidPage({
         className="page-search-input full content-hub-search"
         aria-label="بحث في الفوائد"
       />
-      <div className="content-hub-chips">
+      <div className="content-hub-chips" role="tablist" aria-label="تصفية الفوائد">
         {DISPLAY_CATEGORIES.map((cat) => (
           <button
             key={cat}
+            role="tab"
             type="button"
             onClick={() => setCategory(cat)}
             className={category === cat ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+            aria-selected={category === cat}
           >
             {cat}
           </button>
@@ -134,7 +199,7 @@ export default function FawaidPage({
 
       <div className="ds-section__head">
         {isAdmin && (
-          <div className="page-stats-row" style={{ marginBottom: 0 }}>
+          <div className="page-stats-row page-stats-row--flush">
             <span>{displayItems.length} فائدة</span>
             <span>{FAWAID_CATEGORIES.length} تصنيف</span>
           </div>
@@ -143,7 +208,7 @@ export default function FawaidPage({
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={8} />
       ) : displayItems.length === 0 ? (
         <Empty text={debouncedSearch.trim() ? `لا توجد فوائد مطابقة لـ «${debouncedSearch.trim()}».` : "لا توجد فوائد في هذا القسم."} />
       ) : (
@@ -162,18 +227,19 @@ export default function FawaidPage({
           {submitted ? (
             <p className="content-submit-success">شكرًا. سيتم مراجعة الفائدة قبل نشرها.</p>
           ) : (
-            <form onSubmit={handleSubmit} className="content-submit-form">
+            <form onSubmit={handleSubmit} className="content-submit-form" aria-label="إرسال فائدة علمية">
               {submitError && <p className="content-submit-error" role="alert">{submitError}</p>}
               <textarea
                 value={text}
                 onChange={(e) => setText(e.target.value)}
+                aria-label="نص الفائدة"
                 placeholder="اكتب الفائدة هنا..."
                 rows={4}
               />
               <input
                 value={authorName}
                 onChange={(e) => setAuthorName(e.target.value)}
-                placeholder="اسم الكاتب (اختياري)"
+                aria-label="اسم الكاتب (اختياري)" placeholder="اسم الكاتب (اختياري)"
               />
               <button type="submit" disabled={submitting || !text.trim()}>
                 {submitting ? "جارٍ الإرسال..." : "إرسال الفائدة"}
@@ -190,9 +256,16 @@ export default function FawaidPage({
         {filtersPanel}
       </aside>
 
+      <div className="twh-share">
+        <ShareButtons title="الفوائد العلمية — المجلس العلمي" url="https://www.majlisilm.com/fawaid" />
+      </div>
+
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}
       </FilterBottomSheet>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في الحديث والفوائد" count={4} />
+      </div>
     </div>
   );
 }

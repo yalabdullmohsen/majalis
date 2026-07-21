@@ -1,4 +1,4 @@
-import { C } from "@/lib/theme";
+import * as React from "react";
 
 interface AdminModalProps {
   title: string;
@@ -9,67 +9,50 @@ interface AdminModalProps {
   children: React.ReactNode;
 }
 
-export const inputSt: React.CSSProperties = {
-  width: "100%", boxSizing: "border-box", padding: "0.5rem 0.75rem",
-  borderRadius: "0.375rem", border: `1px solid ${C.line}`,
-  background: C.panel, color: C.ink, fontSize: "0.875rem", fontFamily: "inherit",
-  outline: "none",
-};
-export const selectSt: React.CSSProperties = { ...inputSt, cursor: "pointer" };
-export const textareaSt: React.CSSProperties = { ...inputSt, minHeight: "5rem", resize: "vertical" as const };
-
 export function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  const autoId = React.useId();
+  const canLink = React.Children.count(children) === 1 && React.isValidElement(children);
+  const child = canLink
+    ? React.cloneElement(children as React.ReactElement<{ id?: string }>, {
+        id: (children as React.ReactElement<{ id?: string }>).props.id ?? autoId,
+      })
+    : children;
   return (
-    <div style={{ marginBottom: "0.875rem" }}>
-      <label style={{ display: "block", fontSize: "0.8125rem", fontWeight: 600, color: C.emeraldDeep, marginBottom: "0.3rem" }}>
+    <div className="adm-field">
+      <label className="adm-field__label" htmlFor={canLink ? ((children as React.ReactElement<{ id?: string }>).props.id ?? autoId) : undefined}>
         {label}
       </label>
-      {children}
+      {child}
     </div>
   );
 }
 
 export function FieldRow({ children }: { children: React.ReactNode }) {
-  return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "0.75rem" }}>
-      {children}
-    </div>
-  );
+  return <div className="adm-field-row">{children}</div>;
 }
 
 export function AdminModal({ title, open, onClose, onSave, saving, children }: AdminModalProps) {
+  React.useEffect(() => {
+    if (!open) return;
+    const keyHandler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  }, [open, onClose]);
+
   if (!open) return null;
   return (
-    <div
-      style={{ position: "fixed", inset: 0, background: "rgba(36,31,24,0.6)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}
-      onClick={onClose}
-    >
-      <div
-        style={{ width: "100%", maxWidth: "40rem", background: C.parchment, borderRadius: "0.5rem", border: `1px solid ${C.line}`, maxHeight: "90vh", display: "flex", flexDirection: "column", boxShadow: "0 8px 32px rgba(0,0,0,0.2)" }}
-        onClick={e => e.stopPropagation()}
-      >
-        <div style={{ padding: "1rem 1.25rem", borderBottom: `1px solid ${C.line}`, display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0 }}>
-          <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: C.inkSoft, fontSize: "1.25rem", lineHeight: 1, padding: "0.25rem 0.5rem" }}>×</button>
-          <h2 style={{ margin: 0, fontSize: "1.0625rem", fontWeight: 700, color: C.emeraldDeep }}>{title}</h2>
+    <div className="adm-modal__overlay" onClick={onClose}>
+      <div className="adm-modal__dialog" onClick={(e) => e.stopPropagation()}>
+        <div className="adm-modal__header">
+          <button type="button" onClick={onClose} className="adm-modal__close" aria-label="إغلاق">×</button>
+          <h2 className="adm-modal__title">{title}</h2>
         </div>
-        <div style={{ flex: 1, overflowY: "auto", padding: "1.25rem" }}>
-          {children}
-        </div>
-        <div style={{ padding: "0.875rem 1.25rem", borderTop: `1px solid ${C.line}`, display: "flex", gap: "0.625rem", justifyContent: "flex-start", flexShrink: 0 }}>
-          <button
-            onClick={onSave}
-            disabled={saving}
-            style={{ padding: "0.5rem 1.5rem", borderRadius: "0.375rem", border: "none", background: saving ? C.sage : C.emerald, color: C.parchment, cursor: saving ? "default" : "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}
-          >
+        <div className="adm-modal__body">{children}</div>
+        <div className="adm-modal__footer">
+          <button type="button" onClick={onSave} disabled={saving} className={`adm-modal__save${saving ? " adm-modal__save--saving" : ""}`}>
             {saving ? "جارٍ الحفظ..." : "حفظ التغييرات"}
           </button>
-          <button
-            onClick={onClose}
-            disabled={saving}
-            style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.panel, color: C.inkSoft, cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem" }}
-          >
-            إلغاء
-          </button>
+          <button type="button" onClick={onClose} disabled={saving} className="adm-modal__cancel">إلغاء</button>
         </div>
       </div>
     </div>

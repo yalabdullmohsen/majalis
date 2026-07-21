@@ -53,7 +53,7 @@ export const OFFICIAL_SOURCES = [
     name: "بذور المجلس العلمي",
     country: "KW",
     entity_type: "publisher",
-    official_url: "https://majlisilm.com",
+    official_url: "https://www.majlisilm.com",
     trust_level: 5,
     allowed_kinds: ["lesson", "fawaid", "book", "miracle", "qa", "article"],
     crawl_interval_h: 24,
@@ -64,7 +64,7 @@ export const OFFICIAL_SOURCES = [
     name: "دروس الكويت — مصادر محلية",
     country: "KW",
     entity_type: "government",
-    official_url: "https://majlisilm.com",
+    official_url: "https://www.majlisilm.com",
     trust_level: 4,
     allowed_kinds: ["lesson", "lecture", "course"],
     crawl_interval_h: 6,
@@ -81,8 +81,9 @@ export const FORBIDDEN_AI_GENERATION = [
   "religious_decision",
 ];
 
-export const MIN_QUALITY_TO_PUBLISH = 55;
-export const MIN_TRUST_TO_PUBLISH = 40;
+// خُفِّفت العتبات لقبول بيانات ناقصة أو جزئية
+export const MIN_QUALITY_TO_PUBLISH = 30;
+export const MIN_TRUST_TO_PUBLISH = 20;
 export const DUPLICATE_THRESHOLD = 0.88;
 
 export function isAllowedKind(source, kind) {

@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { useAdminShell } from "@/views/admin/AdminShell";
 import {
   bootstrapVerifiedKnowledge,
@@ -13,24 +12,24 @@ import {
 
 function StatCard({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
   return (
-    <div style={{ padding: "1rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel }}>
-      <p style={{ margin: 0, fontSize: "0.75rem", color: C.inkSoft }}>{label}</p>
-      <p style={{ margin: "0.25rem 0 0", fontSize: "1.5rem", fontWeight: 700, color: C.emeraldDeep }}>{value}</p>
-      {sub && <p style={{ margin: "0.25rem 0 0", fontSize: "0.75rem", color: C.inkSoft }}>{sub}</p>}
+    <div className="svs-stat">
+      <p className="svs-stat__label">{label}</p>
+      <p className="svs-stat__value">{value}</p>
+      {sub && <p className="svs-stat__sub">{sub}</p>}
     </div>
   );
 }
 
 function gapLabel(reason: string) {
-  if (reason === "empty_section") return "قسم فارغ";
-  if (reason === "unverified_content") return "محتوى غير موثّق";
+  if (reason === "empty_section") return "\u0642\u0633\u0645 \u0641\u0627\u0631\u063a";
+  if (reason === "unverified_content") return "\u0645\u062d\u062a\u0648\u0649 \u063a\u064a\u0631 \u0645\u0648\u062b\u0651\u0642";
   return reason;
 }
 
 function priorityColor(priority: QualityGap["priority"]) {
   if (priority === "high") return "#991B1B";
-  if (priority === "medium") return "#B45309";
-  return C.inkSoft;
+  if (priority === "medium") return "#173D35";
+  return "var(--majalis-ink-soft)";
 }
 
 export function VerifiedKnowledgeSection() {
@@ -49,7 +48,7 @@ export function VerifiedKnowledgeSection() {
       const result = await fetchVerifiedKnowledgeDashboard();
       setData(result);
     } catch {
-      showError("تعذر تحميل لوحة المعرفة الموثقة.");
+      showError("\u062a\u0639\u0630\u0631 \u062a\u062d\u0645\u064a\u0644 \u0644\u0648\u062d\u0629 \u0627\u0644\u0645\u0639\u0631\u0641\u0629 \u0627\u0644\u0645\u0648\u062b\u0642\u0629.");
     } finally {
       setLoading(false);
     }
@@ -63,10 +62,10 @@ export function VerifiedKnowledgeSection() {
     setRunning(true);
     try {
       await runVerifiedKnowledgeCycle({ checkLinks, persistVerification: true });
-      showSuccess("اكتملت دورة الاستيراد والتحقق.");
+      showSuccess("\u0627\u0643\u062a\u0645\u0644\u062a \u062f\u0648\u0631\u0629 \u0627\u0644\u0627\u0633\u062a\u064a\u0631\u0627\u062f \u0648\u0627\u0644\u062a\u062d\u0642\u0642.");
       await load();
     } catch {
-      showError("فشلت دورة المعرفة الموثقة.");
+      showError("\u0641\u0634\u0644\u062a \u062f\u0648\u0631\u0629 \u0627\u0644\u0645\u0639\u0631\u0641\u0629 \u0627\u0644\u0645\u0648\u062b\u0642\u0629.");
     } finally {
       setRunning(false);
     }
@@ -76,16 +75,16 @@ export function VerifiedKnowledgeSection() {
     setBootstrapping(true);
     try {
       await bootstrapVerifiedKnowledge({ persistProvenance: true });
-      showSuccess("اكتملت تهيئة الأذكار والأحاديث.");
+      showSuccess("\u0627\u0643\u062a\u0645\u0644\u062a \u062a\u0647\u064a\u0626\u0629 \u0627\u0644\u0623\u0630\u0643\u0627\u0631 \u0648\u0627\u0644\u0623\u062d\u0627\u062f\u064a\u062b.");
       await load();
     } catch {
-      showError("فشلت تهيئة المحتوى الموثق.");
+      showError("\u0641\u0634\u0644\u062a \u062a\u0647\u064a\u0626\u0629 \u0627\u0644\u0645\u062d\u062a\u0648\u0649 \u0627\u0644\u0645\u0648\u062b\u0642.");
     } finally {
       setBootstrapping(false);
     }
   };
 
-  if (loading && !data) return <Loading />;
+  if (loading && !data) return <SkeletonCardGrid count={6} />;
 
   const totals = report?.totals ?? {};
   const gaps = report?.gaps ?? [];
@@ -93,54 +92,39 @@ export function VerifiedKnowledgeSection() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1rem", gap: "1rem", flexWrap: "wrap" }}>
+      <div className="svs-header">
         <div>
-          <h2 style={{ margin: 0, color: C.emeraldDeep }}>قاعدة المعرفة الموثقة</h2>
-          <p style={{ margin: "0.25rem 0 0", fontSize: "0.875rem", color: C.inkSoft }}>
-            استيراد ذكي — مصادر رسمية — نشر تلقائي عند ثقة ≥ 90%
+          <h2 className="svs-title">\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0645\u0639\u0631\u0641\u0629 \u0627\u0644\u0645\u0648\u062b\u0642\u0629</h2>
+          <p className="svs-subtitle">
+            \u0627\u0633\u062a\u064a\u0631\u0627\u062f \u0630\u0643\u064a \u2014 \u0645\u0635\u0627\u062f\u0631 \u0631\u0633\u0645\u064a\u0629 \u2014 \u0646\u0634\u0631 \u062a\u0644\u0642\u0627\u0626\u064a \u0639\u0646\u062f \u062b\u0642\u0629 \u2265 90%
           </p>
         </div>
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-          <button
-            type="button"
-            disabled={running}
-            onClick={() => handleRun(false)}
-            style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", border: "none", background: C.emerald, color: "#fff", cursor: "pointer" }}
-          >
-            {running ? "جاري التشغيل…" : "تشغيل الدورة"}
+        <div className="svs-btn-group">
+          <button type="button" disabled={running} onClick={() => handleRun(false)} className="svs-btn--primary">
+            {running ? "\u062c\u0627\u0631\u064a \u0627\u0644\u062a\u0634\u063a\u064a\u0644\u2026" : "\u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u062f\u0648\u0631\u0629"}
           </button>
-          <button
-            type="button"
-            disabled={running}
-            onClick={() => handleRun(true)}
-            style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.panel, cursor: "pointer" }}
-          >
-            دورة + فحص روابط
+          <button type="button" disabled={running} onClick={() => handleRun(true)} className="svs-btn">
+            \u062f\u0648\u0631\u0629 + \u0641\u062d\u0635 \u0631\u0648\u0627\u0628\u0637
           </button>
-          <button
-            type="button"
-            disabled={bootstrapping}
-            onClick={handleBootstrap}
-            style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.panel, cursor: "pointer" }}
-          >
-            {bootstrapping ? "جاري التهيئة…" : "تهيئة الأذكار/الأحاديث"}
+          <button type="button" disabled={bootstrapping} onClick={handleBootstrap} className="svs-btn">
+            {bootstrapping ? "\u062c\u0627\u0631\u064a \u0627\u0644\u062a\u0647\u064a\u0626\u0629\u2026" : "\u062a\u0647\u064a\u0626\u0629 \u0627\u0644\u0623\u0630\u0643\u0627\u0631/\u0627\u0644\u0623\u062d\u0627\u062f\u064a\u062b"}
           </button>
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: "0.75rem", marginBottom: "1.5rem" }}>
-        <StatCard label="المصادر" value={sources?.total ?? totals.sources_total ?? 0} sub={`${sources?.active ?? totals.sources_active ?? 0} نشط`} />
-        <StatCard label="أذكار موثّقة" value={totals.verified_adhkar ?? 0} />
-        <StatCard label="أحاديث موثّقة" value={totals.verified_hadith ?? 0} />
-        <StatCard label="سجل المصادر" value={totals.provenance_verified ?? 0} />
-        <StatCard label="فجوات" value={totals.gaps_count ?? gaps.length} />
+      <div className="svs-stats-grid">
+        <StatCard label="\u0627\u0644\u0645\u0635\u0627\u062f\u0631" value={sources?.total ?? totals.sources_total ?? 0} sub={`${sources?.active ?? totals.sources_active ?? 0} \u0646\u0634\u0637`} />
+        <StatCard label="\u0623\u0630\u0643\u0627\u0631 \u0645\u0648\u062b\u0651\u0642\u0629" value={totals.verified_adhkar ?? 0} />
+        <StatCard label="\u0623\u062d\u0627\u062f\u064a\u062b \u0645\u0648\u062b\u0651\u0642\u0629" value={totals.verified_hadith ?? 0} />
+        <StatCard label="\u0633\u062c\u0644 \u0627\u0644\u0645\u0635\u0627\u062f\u0631" value={totals.provenance_verified ?? 0} />
+        <StatCard label="\u0641\u062c\u0648\u0627\u062a" value={totals.gaps_count ?? gaps.length} />
         <StatCard label="Seed corpus" value={totals.seed_corpus_total ?? 0} />
       </div>
 
       {(report?.recommendations?.length ?? 0) > 0 && (
-        <div style={{ marginBottom: "1.5rem", padding: "0.75rem 1rem", borderRadius: "0.5rem", background: "#FEF3C7", border: "1px solid #F59E0B" }}>
-          <p style={{ margin: 0, fontWeight: 600, color: "#92400E" }}>توصيات</p>
-          <ul style={{ margin: "0.5rem 0 0", paddingRight: "1.25rem", color: "#78350F", fontSize: "0.875rem" }}>
+        <div className="vks-recs">
+          <p className="vks-recs-title">\u062a\u0648\u0635\u064a\u0627\u062a</p>
+          <ul className="vks-recs-list">
             {report?.recommendations?.map((rec) => (
               <li key={rec}>{rec}</li>
             ))}
@@ -148,29 +132,34 @@ export function VerifiedKnowledgeSection() {
         </div>
       )}
 
-      <h3 style={{ color: C.emeraldDeep }}>فجوات المحتوى</h3>
-      <div style={{ overflowX: "auto", marginBottom: "1.5rem" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
+      <h3 className="svs-section-h3">\u0641\u062c\u0648\u0627\u062a \u0627\u0644\u0645\u062d\u062a\u0648\u0649</h3>
+      <div className="svs-table-wrap">
+        <table className="svs-table">
           <thead>
-            <tr style={{ textAlign: "right", background: C.panel }}>
-              <th style={{ padding: "0.5rem", borderBottom: `2px solid ${C.line}` }}>القسم</th>
-              <th style={{ padding: "0.5rem", borderBottom: `2px solid ${C.line}` }}>السبب</th>
-              <th style={{ padding: "0.5rem", borderBottom: `2px solid ${C.line}` }}>الأولوية</th>
+            <tr className="svs-thead-row">
+              <th className="svs-th">\u0627\u0644\u0642\u0633\u0645</th>
+              <th className="svs-th">\u0627\u0644\u0633\u0628\u0628</th>
+              <th className="svs-th">\u0627\u0644\u0623\u0648\u0644\u0648\u064a\u0629</th>
             </tr>
           </thead>
           <tbody>
             {gaps.length === 0 ? (
               <tr>
-                <td colSpan={3} style={{ padding: "0.75rem", textAlign: "center", color: C.inkSoft }}>
-                  لا توجد فجوات — جميع الأقسام تحتوي على محتوى
+                <td colSpan={3} className="svs-td svs-td--center">
+                  \u0644\u0627 \u062a\u0648\u062c\u062f \u0641\u062c\u0648\u0627\u062a \u2014 \u062c\u0645\u064a\u0639 \u0627\u0644\u0623\u0642\u0633\u0627\u0645 \u062a\u062d\u062a\u0648\u064a \u0639\u0644\u0649 \u0645\u062d\u062a\u0648\u0649
                 </td>
               </tr>
             ) : (
               gaps.map((gap) => (
                 <tr key={`${gap.section}-${gap.reason}`}>
-                  <td style={{ padding: "0.5rem", borderBottom: `1px solid ${C.line}` }}>{gap.section}</td>
-                  <td style={{ padding: "0.5rem", borderBottom: `1px solid ${C.line}` }}>{gapLabel(gap.reason)}</td>
-                  <td style={{ padding: "0.5rem", borderBottom: `1px solid ${C.line}`, color: priorityColor(gap.priority) }}>{gap.priority}</td>
+                  <td className="svs-td">{gap.section}</td>
+                  <td className="svs-td">{gapLabel(gap.reason)}</td>
+                  <td
+                    className="vks-td--priority"
+                    style={{ "--vks-priority-color": priorityColor(gap.priority) } as React.CSSProperties}
+                  >
+                    {gap.priority}
+                  </td>
                 </tr>
               ))
             )}
@@ -178,51 +167,54 @@ export function VerifiedKnowledgeSection() {
         </table>
       </div>
 
-      <h3 style={{ color: C.emeraldDeep }}>جودة الأقسام</h3>
-      <div style={{ overflowX: "auto", marginBottom: "1.5rem" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
+      <h3 className="svs-section-h3">\u062c\u0648\u062f\u0629 \u0627\u0644\u0623\u0642\u0633\u0627\u0645</h3>
+      <div className="svs-table-wrap">
+        <table className="svs-table">
           <thead>
-            <tr style={{ textAlign: "right", background: C.panel }}>
-              <th style={{ padding: "0.5rem", borderBottom: `2px solid ${C.line}` }}>القسم</th>
-              <th style={{ padding: "0.5rem", borderBottom: `2px solid ${C.line}` }}>Seed</th>
-              <th style={{ padding: "0.5rem", borderBottom: `2px solid ${C.line}` }}>DB</th>
-              <th style={{ padding: "0.5rem", borderBottom: `2px solid ${C.line}` }}>موثّق</th>
+            <tr className="svs-thead-row">
+              <th className="svs-th">\u0627\u0644\u0642\u0633\u0645</th>
+              <th className="svs-th">Seed</th>
+              <th className="svs-th">DB</th>
+              <th className="svs-th">\u0645\u0648\u062b\u0651\u0642</th>
             </tr>
           </thead>
           <tbody>
             {Object.entries(sections).map(([key, stats]) => (
               <tr key={key}>
-                <td style={{ padding: "0.5rem", borderBottom: `1px solid ${C.line}` }}>{key}</td>
-                <td style={{ padding: "0.5rem", borderBottom: `1px solid ${C.line}` }}>
-                  {stats.seed ?? stats.seed_items ?? stats.seed_categories ?? "—"}
+                <td className="svs-td">{key}</td>
+                <td className="svs-td">
+                  {stats.seed ?? stats.seed_items ?? stats.seed_categories ?? "\u2014"}
                 </td>
-                <td style={{ padding: "0.5rem", borderBottom: `1px solid ${C.line}` }}>{stats.db?.total ?? 0}</td>
-                <td style={{ padding: "0.5rem", borderBottom: `1px solid ${C.line}`, color: C.emeraldDeep }}>{stats.db?.verified ?? 0}</td>
+                <td className="svs-td">{stats.db?.total ?? 0}</td>
+                <td className="svs-td svs-td--accent">{stats.db?.verified ?? 0}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      <h3 style={{ color: C.emeraldDeep }}>سجل المصادر الرسمية</h3>
-      <div style={{ overflowX: "auto" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
+      <h3 className="svs-section-h3">\u0633\u062c\u0644 \u0627\u0644\u0645\u0635\u0627\u062f\u0631 \u0627\u0644\u0631\u0633\u0645\u064a\u0629</h3>
+      <div className="svs-table-wrap">
+        <table className="svs-table">
           <thead>
-            <tr style={{ textAlign: "right", background: C.panel }}>
-              <th style={{ padding: "0.5rem", borderBottom: `2px solid ${C.line}` }}>المصدر</th>
-              <th style={{ padding: "0.5rem", borderBottom: `2px solid ${C.line}` }}>النوع</th>
-              <th style={{ padding: "0.5rem", borderBottom: `2px solid ${C.line}` }}>الثقة</th>
-              <th style={{ padding: "0.5rem", borderBottom: `2px solid ${C.line}` }}>الحالة</th>
+            <tr className="svs-thead-row">
+              <th className="svs-th">\u0627\u0644\u0645\u0635\u062f\u0631</th>
+              <th className="svs-th">\u0627\u0644\u0646\u0648\u0639</th>
+              <th className="svs-th">\u0627\u0644\u062b\u0642\u0629</th>
+              <th className="svs-th">\u0627\u0644\u062d\u0627\u0644\u0629</th>
             </tr>
           </thead>
           <tbody>
             {(sources?.sources ?? []).slice(0, 30).map((src) => (
               <tr key={src.slug}>
-                <td style={{ padding: "0.5rem", borderBottom: `1px solid ${C.line}` }}>{src.name_ar ?? src.name}</td>
-                <td style={{ padding: "0.5rem", borderBottom: `1px solid ${C.line}` }}>{src.import_method ?? src.source_type}</td>
-                <td style={{ padding: "0.5rem", borderBottom: `1px solid ${C.line}` }}>{src.trust_level}%</td>
-                <td style={{ padding: "0.5rem", borderBottom: `1px solid ${C.line}`, color: src.is_active ? C.emeraldDeep : C.inkSoft }}>
-                  {src.is_active ? "نشط" : "معطّل"}
+                <td className="svs-td">{src.name_ar ?? src.name}</td>
+                <td className="svs-td">{src.import_method ?? src.source_type}</td>
+                <td className="svs-td">{src.trust_level}%</td>
+                <td
+                  className="vks-td--active"
+                  style={{ "--vks-src-color": src.is_active ? "var(--majalis-emerald-deep)" : "var(--majalis-ink-soft)" } as React.CSSProperties}
+                >
+                  {src.is_active ? "\u0646\u0634\u0637" : "\u0645\u0639\u0637\u0651\u0644"}
                 </td>
               </tr>
             ))}

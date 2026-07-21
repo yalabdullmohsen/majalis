@@ -1,6 +1,5 @@
 import { searchFiqhCouncilSeed } from "./fiqh-council-service";
 import {
-  FATWA_SEED,
   RULINGS_SEED,
   ANNUAL_COURSES_SEED,
   UPDATES_SEED,
@@ -9,7 +8,6 @@ import { arabicMatchAny } from "./arabic-search";
 
 export type PlatformSearchResults = {
   fiqh_decisions: Array<{ id: string; slug?: string; title: string; category?: string; decision_type?: string; searchMeta?: string }>;
-  fatwas: Array<{ id: string; question: string; category?: string; format?: string; searchMeta?: string }>;
   rulings: Array<{ id: string; title: string; category?: string; searchMeta?: string }>;
   courses: Array<{ id: string; title: string; course_type?: string; venue_city?: string; searchMeta?: string }>;
   updates: Array<{ id: string; title: string; update_type?: string; searchMeta?: string }>;
@@ -17,7 +15,6 @@ export type PlatformSearchResults = {
 
 const EMPTY: PlatformSearchResults = {
   fiqh_decisions: [],
-  fatwas: [],
   rulings: [],
   courses: [],
   updates: [],
@@ -28,16 +25,6 @@ export function searchPlatformSeed(query: string): PlatformSearchResults {
   if (!q) return EMPTY;
 
   const fiqh_decisions = searchFiqhCouncilSeed(q);
-
-  const fatwas = FATWA_SEED.filter((f) =>
-    arabicMatchAny([f.question, f.answer, f.summary, f.category, ...(f.keywords || [])], q),
-  ).map((f) => ({
-    id: f.id,
-    question: f.question,
-    category: f.category,
-    format: f.format,
-    searchMeta: [f.category, f.mufti_name].filter(Boolean).join(" · "),
-  }));
 
   const rulings = RULINGS_SEED.filter((r) =>
     arabicMatchAny([r.title, r.summary, r.body, r.category, ...(r.keywords || [])], q),
@@ -74,5 +61,5 @@ export function searchPlatformSeed(query: string): PlatformSearchResults {
     searchMeta: u.update_type,
   }));
 
-  return { fiqh_decisions, fatwas, rulings, courses, updates };
+  return { fiqh_decisions, rulings, courses, updates };
 }

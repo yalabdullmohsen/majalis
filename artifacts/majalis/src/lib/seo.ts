@@ -105,14 +105,6 @@ function routeForPath(path: string) {
     };
   }
 
-  if (normalized.startsWith("/fatwa/")) {
-    return {
-      ...requiredRoute("/fatwa"),
-      title: "فتوى شرعية | المجلس العلمي",
-      description: "تفاصيل فتوى شرعية — السؤال والجواب والمراجع.",
-    };
-  }
-
   if (normalized.startsWith("/rulings/")) {
     return {
       ...requiredRoute("/rulings"),
@@ -126,6 +118,82 @@ function routeForPath(path: string) {
       ...requiredRoute("/annual-courses"),
       title: "دورة علمية | المجلس العلمي",
       description: "تفاصيل دورة علمية — الجدول والمشايخ والتسجيل.",
+    };
+  }
+
+  if (normalized.startsWith("/library/")) {
+    return {
+      ...requiredRoute("/library"),
+      title: "كتاب شرعي | المجلس العلمي",
+      description: "تفاصيل الكتاب — المؤلف، التصنيف، ملخص المحتوى، وروابط التحميل.",
+      ogType: "book",
+    };
+  }
+
+  if (normalized.startsWith("/topics/")) {
+    const slug = decodeURIComponent(normalized.slice("/topics/".length));
+    return {
+      ...requiredRoute("/topics"),
+      title: `موضوع: ${slug} | المجلس العلمي`,
+      description: `موضوع ${slug} — مقالات وروابط ومحتوى ذو صلة من المجلس العلمي.`,
+    };
+  }
+
+  if (normalized.startsWith("/universities/") && normalized !== "/universities/compare") {
+    return {
+      ...requiredRoute("/universities"),
+      title: "جامعة إسلامية | المجلس العلمي",
+      description: "ملف الجامعة — التخصصات، شروط القبول، معلومات التواصل.",
+    };
+  }
+
+  if (normalized.startsWith("/muezzins/")) {
+    return {
+      ...requiredRoute("/muezzins"),
+      title: "ملف المؤذن | المجلس العلمي",
+      description: "ملف المؤذن — تلاوات، تقييمات، مناطق الخدمة على المجلس العلمي.",
+    };
+  }
+
+  if (normalized.startsWith("/learning/paths/")) {
+    return {
+      ...requiredRoute("/learning/paths"),
+      title: "مسار التعلم | المجلس العلمي",
+      description: "مسار تعلم مفصّل — المراحل والكتب والاختبارات وشهادة الإتمام.",
+    };
+  }
+
+  if (normalized.startsWith("/learning/quiz/")) {
+    return {
+      ...requiredRoute("/learning/quiz"),
+      title: "اختبار علمي | المجلس العلمي",
+      description: "اختبار في مسار التعلم — أسئلة متدرجة الصعوبة لتقييم مستواك.",
+    };
+  }
+
+  if (normalized.startsWith("/learning/certificates/")) {
+    return {
+      ...requiredRoute("/learning"),
+      title: "التحقق من الشهادة | المجلس العلمي",
+      description: "التحقق من صحة شهادة إتمام مسار التعلم الشرعي.",
+    };
+  }
+
+if (normalized.startsWith("/quran/surah-stories/")) {
+    return {
+      ...requiredRoute("/quran/surah-stories"),
+      title: "قصة سورة | المجلس العلمي",
+      description: "تفاصيل سورة قرآنية — سبب النزول، المحاور، والفوائد.",
+      ogType: "article",
+    };
+  }
+
+  if (normalized.startsWith("/c/")) {
+    return {
+      ...requiredRoute("/fiqh-council"),
+      title: "مقالة علمية | المجلس العلمي",
+      description: "مقالة شرعية موثقة من المجلس العلمي.",
+      ogType: "article",
     };
   }
 
@@ -204,17 +272,21 @@ export function applyPageSeo(options: PageSeoOptions) {
   upsertMeta("name", "description", options.description);
   upsertMeta("name", "keywords", keywords);
   upsertMeta("name", "robots", robots);
-  upsertMeta("name", "theme-color", "#164E3C");
+  // theme-color ديناميكي (فاتح/داكن) مُدار حصريًا عبر src/lib/theme-preference.ts
+  // (applyThemePreference) — لا تكتبه هنا بقيمة ثابتة، فذلك كان يُلغي التزامن مع
+  // الوضع الفعلي عند كل تنقّل بين الصفحات (2026-07-18).
   upsertMeta("name", "author", seoData.siteName);
 
   upsertMeta("property", "og:site_name", seoData.siteName);
-  upsertMeta("property", "og:locale", "ar_AR");
+  upsertMeta("property", "og:locale", "ar_KW");
   upsertMeta("property", "og:type", ogType);
   upsertMeta("property", "og:title", options.title);
   upsertMeta("property", "og:description", options.description);
   upsertMeta("property", "og:url", canonical);
   upsertMeta("property", "og:image", image);
   upsertMeta("property", "og:image:alt", options.title);
+  upsertMeta("property", "og:image:width", "1200");
+  upsertMeta("property", "og:image:height", "630");
 
   upsertMeta("name", "twitter:card", "summary_large_image");
   upsertMeta("name", "twitter:title", options.title);
@@ -275,9 +347,21 @@ export function usePageSeo(path: string) {
   }, [path]);
 }
 
-export function useLessonSeo(lesson: KuwaitLessonRecord | null, path: string) {
+export function useLessonSeo(lesson: KuwaitLessonRecord | null, path: string, loading = false) {
   useEffect(() => {
-    if (!lesson) return;
+    if (!lesson) {
+      // لا نضع عنوان/ميتا "غير موجود" أثناء التحميل — فقط بعد تأكّد الفشل،
+      // لتفادي وميض عنوان خاطئ قبل وصول البيانات.
+      if (loading) return;
+      applyPageSeo({
+        path,
+        title: "الدرس غير موجود | المجلس العلمي",
+        description: "لم يُعثر على هذا الدرس.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
 
     const meta = lessonSeoMeta(lesson);
     const breadcrumbs = breadcrumbJsonLd([
@@ -296,5 +380,5 @@ export function useLessonSeo(lesson: KuwaitLessonRecord | null, path: string) {
       canonicalPath: meta.canonicalPath,
       jsonLd: [lessonJsonLd(lesson), breadcrumbs, ...defaultSiteJsonLd()],
     });
-  }, [lesson, path]);
+  }, [lesson, path, loading]);
 }

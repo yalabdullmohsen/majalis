@@ -1,7 +1,9 @@
 /**
- * In-app admin notifications when automation discovers new drafts.
+ * In-app + Telegram admin notifications when automation discovers new drafts.
  */
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
+import { sendMessage } from "../telegram/bot.mjs";
+import { createNotification } from "../notifications/create-notification.mjs";
 
 async function listAdminUserIds(admin) {
   try {
@@ -19,6 +21,24 @@ async function listAdminUserIds(admin) {
   return [];
 }
 
+async function notifyAdminViaTelegram({ newCount, sourceName, link }) {
+  const chatId = String(process.env.TELEGRAM_ADMIN_CHAT_ID || "").trim();
+  if (!chatId) return; // لم يُهيَّأ بعد — تخطَّ بصمت
+
+  const headline =
+    newCount === 1
+      ? "📚 درس جديد تلقائي بانتظار مراجعتك"
+      : `📚 ${newCount} دروس جديدة تلقائياً بانتظار مراجعتك`;
+  const sourceText = sourceName ? `\nالمصدر: <b>${sourceName}</b>` : "";
+  const text = `${headline}${sourceText}\n\n🔗 <a href="https://www.majlisilm.com${link}">فتح مركز المراجعة</a>`;
+
+  try {
+    await sendMessage(chatId, text, { parse_mode: "HTML", disable_web_page_preview: true });
+  } catch {
+    /* Telegram best-effort — لا توقف التدفق الرئيسي */
+  }
+}
+
 export async function notifyAdminsNewDrafts({ newCount, sourceName, link = "/admin/review-center" } = {}) {
   if (!newCount || newCount <= 0) return { ok: true, sent: 0 };
 
@@ -26,7 +46,6 @@ export async function notifyAdminsNewDrafts({ newCount, sourceName, link = "/adm
   if (!admin) return { ok: false, error: "supabase_admin_missing" };
 
   const userIds = await listAdminUserIds(admin);
-  if (!userIds.length) return { ok: true, sent: 0, reason: "no_admins" };
 
   const title =
     newCount === 1
@@ -36,22 +55,15 @@ export async function notifyAdminsNewDrafts({ newCount, sourceName, link = "/adm
     ? `المصدر: ${sourceName} — راجع المسودات في مركز المراجعة.`
     : "راجع المسودات في مركز المراجعة.";
 
+  // إشعار داخلي لكل مشرف
   let sent = 0;
   for (const userId of userIds) {
-    try {
-      await admin.from("notifications").insert({
-        user_id: userId,
-        title,
-        body,
-        type: "system",
-        link,
-        is_read: false,
-      });
-      sent += 1;
-    } catch {
-      /* continue */
-    }
+    const result = await createNotification(admin, { userId, title, body, type: "system", actionUrl: link });
+    if (result.ok) sent += 1;
   }
+
+  // إشعار Telegram (best-effort — لا يوقف العملية)
+  await notifyAdminViaTelegram({ newCount, sourceName, link });
 
   return { ok: true, sent };
 }

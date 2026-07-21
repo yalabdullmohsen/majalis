@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { C } from "@/lib/theme";
+import { useEffect, useState } from "react";
 
 interface BulkImportProps {
   title: string;
@@ -8,20 +7,6 @@ interface BulkImportProps {
   importRow: (row: any) => Promise<any>;
   onDone: () => void;
 }
-
-const BTN_IMPORT: React.CSSProperties = {
-  padding: "0.5rem 1.1rem", borderRadius: "0.375rem",
-  border: `1px solid ${C.emerald}`, background: C.panel, color: C.emeraldDeep,
-  cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600,
-};
-
-const monoTextarea: React.CSSProperties = {
-  width: "100%", boxSizing: "border-box", minHeight: "16rem", resize: "vertical",
-  padding: "0.75rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`,
-  background: "#fffdf8", color: C.ink, fontSize: "0.8125rem", lineHeight: 1.6,
-  fontFamily: "ui-monospace, 'SF Mono', Menlo, monospace", direction: "ltr", textAlign: "left",
-  outline: "none",
-};
 
 export function BulkImport({ title, template, hint, importRow, onDone }: BulkImportProps) {
   const [open, setOpen] = useState(false);
@@ -33,6 +18,13 @@ export function BulkImport({ title, template, hint, importRow, onDone }: BulkImp
   const reset = () => { setText(""); setRunning(false); setProgress({ done: 0, total: 0 }); setResult(null); };
   const close = () => { setOpen(false); reset(); };
   const fillTemplate = () => setText(JSON.stringify(template, null, 2));
+
+  useEffect(() => {
+    if (!open) return;
+    const keyHandler = (e: KeyboardEvent) => { if (e.key === "Escape") close(); };
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  }, [open, close]);
 
   const run = async () => {
     let rows: any[];
@@ -69,37 +61,27 @@ export function BulkImport({ title, template, hint, importRow, onDone }: BulkImp
 
   return (
     <>
-      <button onClick={() => setOpen(true)} style={BTN_IMPORT}>⇪ استيراد جماعي</button>
+      <button type="button" onClick={() => setOpen(true)} className="blk-trigger-btn">⇪ استيراد جماعي</button>
 
       {open && (
-        <div
-          style={{ position: "fixed", inset: 0, background: "rgba(36,31,24,0.6)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}
-          onClick={close}
-        >
-          <div
-            style={{ width: "100%", maxWidth: "44rem", background: C.parchment, borderRadius: "0.5rem", border: `1px solid ${C.line}`, maxHeight: "92vh", display: "flex", flexDirection: "column", boxShadow: "0 8px 32px rgba(0,0,0,0.2)" }}
-            onClick={e => e.stopPropagation()}
-          >
-            <div style={{ padding: "1rem 1.25rem", borderBottom: `1px solid ${C.line}`, display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0 }}>
-              <button onClick={close} style={{ background: "none", border: "none", cursor: "pointer", color: C.inkSoft, fontSize: "1.25rem", lineHeight: 1, padding: "0.25rem 0.5rem" }}>×</button>
-              <h2 style={{ margin: 0, fontSize: "1.0625rem", fontWeight: 700, color: C.emeraldDeep }}>{title}</h2>
+        <div className="adm-modal__overlay" onClick={close}>
+          <div className="blk-dialog" onClick={e => e.stopPropagation()}>
+            <div className="blk-header">
+              <button type="button" onClick={close} className="blk-close" aria-label="إغلاق">×</button>
+              <h2 className="blk-title">{title}</h2>
             </div>
 
-            <div style={{ flex: 1, overflowY: "auto", padding: "1.25rem" }}>
-              <p style={{ margin: "0 0 0.5rem", fontSize: "0.85rem", color: C.inkSoft, lineHeight: 1.8 }}>
+            <div className="blk-body">
+              <p className="blk-desc">
                 الصق قائمة بصيغة <strong>JSON</strong> (مصفوفة من العناصر) لإضافة عدة سجلات دفعة واحدة. كل عنصر يصبح سجلًا جديدًا.
                 {hint ? ` ${hint}` : ""}
               </p>
-              <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.625rem", flexWrap: "wrap" }}>
-                <button onClick={fillTemplate} style={{ ...BTN_IMPORT, fontSize: "0.8125rem", padding: "0.3rem 0.75rem" }}>
-                  إدراج نموذج جاهز
-                </button>
-                <button onClick={() => setText("")} style={{ fontSize: "0.8125rem", padding: "0.3rem 0.75rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.panel, color: C.inkSoft, cursor: "pointer", fontFamily: "inherit" }}>
-                  مسح
-                </button>
+              <div className="blk-tool-row">
+                <button type="button" onClick={fillTemplate} className="blk-tmpl-btn">إدراج نموذج جاهز</button>
+                <button type="button" onClick={() => setText("")} className="blk-clear-btn">مسح</button>
               </div>
               <textarea
-                style={monoTextarea}
+                className="blk-mono-textarea"
                 value={text}
                 onChange={e => setText(e.target.value)}
                 placeholder={JSON.stringify(template, null, 2)}
@@ -108,37 +90,36 @@ export function BulkImport({ title, template, hint, importRow, onDone }: BulkImp
               />
 
               {running && (
-                <div style={{ marginTop: "0.875rem" }}>
-                  <div style={{ height: "0.5rem", borderRadius: "999px", background: C.parchmentDeep, overflow: "hidden" }}>
-                    <div style={{ height: "100%", width: `${progress.total ? (progress.done / progress.total) * 100 : 0}%`, background: C.emerald, transition: "width 0.15s" }} />
+                <div className="blk-progress">
+                  <div className="blk-progress__track">
+                    <div
+                      className="blk-progress__fill"
+                      style={{ "--blk-pct": `${progress.total ? (progress.done / progress.total) * 100 : 0}%` } as React.CSSProperties}
+                    />
                   </div>
-                  <p style={{ margin: "0.375rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>جارٍ الاستيراد… {progress.done} / {progress.total}</p>
+                  <p className="blk-progress__text">جارٍ الاستيراد… {progress.done} / {progress.total}</p>
                 </div>
               )}
 
               {result && (
-                <div style={{ marginTop: "0.875rem", padding: "0.875rem 1rem", borderRadius: "0.375rem", background: result.fail > 0 ? "#FEF3C7" : "#D1FAE5", border: `1px solid ${C.line}` }}>
-                  <p style={{ margin: 0, fontSize: "0.875rem", fontWeight: 600, color: result.fail > 0 ? "#92400E" : C.emeraldDeep }}>
+                <div className={`blk-result${result.fail > 0 ? " blk-result--fail" : " blk-result--ok"}`}>
+                  <p className="blk-result__text">
                     تم استيراد {result.ok} سجلًا بنجاح{result.fail > 0 ? ` · فشل ${result.fail}` : ""}
                   </p>
                   {result.errors.length > 0 && (
-                    <ul style={{ margin: "0.5rem 0 0", paddingInlineStart: "1.1rem", fontSize: "0.8125rem", color: "#92400E", maxHeight: "8rem", overflowY: "auto" }}>
-                      {result.errors.map((er, i) => <li key={i} style={{ marginBottom: "0.2rem" }}>{er}</li>)}
+                    <ul className="blk-result__errors">
+                      {result.errors.map((er, i) => <li key={i} className="blk-result__err-item">{er}</li>)}
                     </ul>
                   )}
                 </div>
               )}
             </div>
 
-            <div style={{ padding: "0.875rem 1.25rem", borderTop: `1px solid ${C.line}`, display: "flex", gap: "0.625rem", justifyContent: "flex-start", flexShrink: 0 }}>
-              <button
-                onClick={run}
-                disabled={running || !text.trim()}
-                style={{ padding: "0.5rem 1.5rem", borderRadius: "0.375rem", border: "none", background: running || !text.trim() ? C.sage : C.emerald, color: C.parchment, cursor: running || !text.trim() ? "default" : "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}
-              >
+            <div className="blk-footer">
+              <button type="button" onClick={run} disabled={running || !text.trim()} className="blk-run-btn">
                 {running ? "جارٍ الاستيراد…" : "بدء الاستيراد"}
               </button>
-              <button onClick={close} disabled={running} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.panel, color: C.inkSoft, cursor: running ? "default" : "pointer", fontFamily: "inherit", fontSize: "0.875rem" }}>
+              <button type="button" onClick={close} disabled={running} className="blk-cancel-btn">
                 {result ? "إغلاق" : "إلغاء"}
               </button>
             </div>

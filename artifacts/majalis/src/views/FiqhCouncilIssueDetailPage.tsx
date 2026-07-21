@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
-import { Loading, Empty } from "@/components/ui-common";
+import { SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { ContentDetailLayout } from "@/components/platform/ContentDetailLayout";
 import { FiqhTimeline } from "@/components/fiqh-council/FiqhTimeline";
 import { getFiqhIssueBySlug } from "@/lib/fiqh-council-issues-service";
@@ -39,11 +39,21 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
   }, [params.slug]);
 
   useEffect(() => {
-    if (!issue) return;
+    if (loading) return;
+    if (!issue) {
+      applyPageSeo({
+        path: fiqhIssueHref(params.slug),
+        title: "المسألة غير موجودة | المجلس العلمي",
+        description: "لم يُعثر على هذه المسألة الفقهية أو لم تُنشَر بعد.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     const path = fiqhIssueHref(issue.slug);
     applyPageSeo({
       path,
-      title: `${issue.title} | المسائل الفقهية — المجلس العلمي`,
+      title: `${issue.title} | المسائل الفقهية، المجلس العلمي`,
       description: issue.summary || issue.title,
       keywords: [issue.category, "مسألة فقهية", "المجمع الفقهي"],
       ogType: "article",
@@ -58,7 +68,7 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
           dateModified: issue.updated_at,
           datePublished: issue.published_at,
           inLanguage: "ar",
-          url: `https://majlisilm.com${path}`,
+          url: `https://www.majlisilm.com${path}`,
         },
         breadcrumbJsonLd([
           { name: "الرئيسية", path: "/" },
@@ -68,9 +78,9 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
         ]),
       ],
     });
-  }, [issue]);
+  }, [issue, loading, params.slug]);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonCardGrid />;
   if (!issue) return <Empty text="المسألة غير موجودة أو غير منشورة." />;
 
   const grouped = groupItemsByType(issue);
@@ -137,6 +147,48 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
             <p>{issue.evidence_summary}</p>
           </section>
         )}
+
+        {/* ── محل الاتفاق ومحل الخلاف والأقوال — سياسة التحرير العلمي
+            للمسائل الخلافية. لا تُملأ آليًا؛ فارغة حتى تُراجَع المسألة
+            علميًا بهذا التفصيل، وتُعرض كذلك صراحة بدل الإخفاء. ── */}
+        {(issue.area_of_agreement || issue.area_of_disagreement || (issue.opinions && issue.opinions.length > 0)) ? (
+          <section className="content-detail-evidence ui-card fiqh-comparative-section">
+            <h2>محل الاتفاق والخلاف</h2>
+            {issue.area_of_agreement && (
+              <p><strong>محل الاتفاق:</strong> {issue.area_of_agreement}</p>
+            )}
+            {issue.area_of_disagreement && (
+              <p><strong>محل الخلاف:</strong> {issue.area_of_disagreement}</p>
+            )}
+            {issue.opinions && issue.opinions.length > 0 && (
+              <div className="fiqh-opinions-list">
+                <h3>أشهر الأقوال</h3>
+                <ul>
+                  {issue.opinions.map((op, i) => (
+                    <li key={i}>
+                      <strong>{op.holder}:</strong> {op.position}
+                      {op.evidence && <span className="fiqh-opinion-evidence"> — {op.evidence}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {issue.adopted_opinion && (
+              <p className="fiqh-adopted-opinion">
+                <strong>القول المعتمد في المنصة:</strong> {issue.adopted_opinion}
+                {issue.adopted_reason && <span> — {issue.adopted_reason}</span>}
+              </p>
+            )}
+            {issue.context_disclaimer && (
+              <p className="fiqh-context-disclaimer">{issue.context_disclaimer}</p>
+            )}
+          </section>
+        ) : issue.documentation_level === "official_verified" ? (
+          <p className="fiqh-comparative-pending">
+            لم تُراجَع هذه المسألة بعد بتفصيل محل الاتفاق والخلاف وتعدد الأقوال —
+            الخلاصة أعلاه هي الحد الأدنى الموثَّق حاليًا.
+          </p>
+        ) : null}
 
         <p className="fiqh-research-disclaimer-inline">{FIQH_RESEARCH_DISCLAIMER}</p>
 

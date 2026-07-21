@@ -1,0 +1,76 @@
+
+/* ============================================================
+   §145 — QaSection (qa-*)
+   ============================================================ */
+.qa-header          { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem; }
+.qa-title           { margin: 0; font-size: 1.125rem; font-weight: 700; color: var(--majalis-emerald-deep); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.qa-badge           { padding: 0.1rem 0.5rem; border-radius: 0.75rem; background: var(--qa-badge-bg); color: var(--qa-badge-color); font-size: 0.7rem; }
+.qa-actions         { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.qa-add-btn         { padding: 0.5rem 1.25rem; border-radius: 0.375rem; background: var(--majalis-emerald); color: var(--majalis-parchment); border: none; cursor: pointer; font-family: inherit; font-size: 0.875rem; font-weight: 600; }
+.qa-filters         { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; margin-bottom: 1.25rem; }
+.qa-search          { flex: 1 1 220px; }
+.qa-filter-select   { flex: 0 1 200px; }
+.qa-table-wrap      { overflow-x: auto; }
+.qa-table           { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.qa-thead-row       { background: var(--majalis-parchment-deep); }
+.qa-th              { padding: 0.625rem 0.75rem; text-align: right; color: var(--majalis-emerald-deep); font-weight: 700; border-bottom: 1px solid var(--majalis-line); white-space: nowrap; }
+.qa-tr              { border-bottom: 1px solid var(--majalis-line); }
+.qa-td              { padding: 0.625rem 0.75rem; }
+.qa-td--question    { color: var(--majalis-ink); font-weight: 600; max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.qa-td--muted       { color: var(--majalis-ink-soft); white-space: nowrap; }
+.qa-ruling-badge    { padding: 0.125rem 0.5rem; border-radius: 999px; background: var(--qa-rb-bg, var(--majalis-parchment-deep)); color: var(--qa-rb-color, var(--majalis-ink-soft)); font-size: 0.7rem; font-weight: 700; }
+.qa-ruling-none     { color: var(--majalis-ink-soft); }
+.qa-review-badge    { padding: 0.125rem 0.5rem; border-radius: 999px; background: var(--qa-rev-bg); color: var(--qa-rev-color); font-size: 0.7rem; font-weight: 700; white-space: nowrap; }
+.qa-publish-btn     { padding: 0.2rem 0.625rem; border-radius: 999px; border: none; cursor: pointer; font-family: inherit; font-size: 0.7rem; font-weight: 700; white-space: nowrap; background: var(--qa-pub-bg); color: var(--qa-pub-color); }
+.qa-cell-actions    { display: flex; gap: 0.375rem; }
+.qa-btn-edit        { padding: 0.25rem 0.625rem; border-radius: 0.25rem; border: 1px solid var(--majalis-line); background: var(--majalis-panel); color: var(--majalis-emerald-deep); cursor: pointer; font-size: 0.75rem; font-family: inherit; }
+.qa-btn-del         { padding: 0.25rem 0.625rem; border-radius: 0.25rem; border: 1px solid var(--majalis-line); background: var(--majalis-panel); color: #dc2626; cursor: pointer; font-size: 0.75rem; font-family: inherit; }
+.qa-empty           { text-align: center; color: var(--majalis-ink-soft); padding: 2rem; }
+.qa-textarea--sm    { min-height: 3.5rem; }
+.qa-textarea--lg    { min-height: 8rem; }
+.qa-ruling-select--faded { opacity: 0.5; }
+.qa-status-label    { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.875rem; color: var(--majalis-ink); }
+.qa-status-checkbox { width: 1rem; height: 1rem; cursor: pointer; }
+
+/* ============================================================
+   §146 — RelationshipsSection (rel-*)
+   ============================================================ */
+.rel-page           { direction: rtl; max-width: 900px; }
+.rel-title          { font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; color: #065f46; }
+.rel-stats-row      { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.rel-stat           { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 0.5rem; padding: 0.75rem 1.25rem; text-align: center; min-width: 100px; }
+.rel-stat__value    { font-size: 1.5rem; font-weight: 700; color: #065f46; }
+.rel-stat__label    { font-size: 0.75rem; color: #6b7280; }
+.rel-form           { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.25rem; margin-bottom: 1.5rem; }
+.rel-form-h3        { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; color: #1f2937; }
+.rel-form-grid      { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.75rem; }
+.rel-field          { display: flex; flex-direction: column; }
+.rel-label          { display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.25rem; color: #374151; }
+.rel-input, .rel-select { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem; font-family: inherit; background: #fff; box-sizing: border-box; }
+.rel-full-col       { grid-column: 1 / -1; }
+.rel-verified-row   { grid-column: 1 / -1; display: flex; align-items: center; gap: 0.5rem; }
+.rel-verified-lbl   { font-size: 0.875rem; cursor: pointer; }
+.rel-form-actions   { display: flex; gap: 0.75rem; margin-top: 1rem; }
+.rel-save-btn       { padding: 0.625rem 1.5rem; background: #065f46; color: #fff; border: none; border-radius: 0.375rem; cursor: pointer; font-weight: 600; font-size: 0.875rem; font-family: inherit; }
+.rel-save-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+.rel-cancel-btn     { padding: 0.625rem 1rem; background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; border-radius: 0.375rem; cursor: pointer; font-size: 0.875rem; font-family: inherit; }
+.rel-filters        { display: flex; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center; }
+.rel-search         { max-width: 260px; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem; font-family: inherit; background: #fff; }
+.rel-filter-btn     { padding: 0.375rem 0.875rem; border: 1px solid #d1d5db; border-radius: 999px; background: var(--rel-fb-bg, #fff); color: var(--rel-fb-color, #374151); cursor: pointer; font-size: 0.8125rem; font-family: inherit; }
+.rel-list           { display: flex; flex-direction: column; gap: 0.5rem; }
+.rel-card           { background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.rel-card-body      { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
+.rel-card-info      { display: flex; flex-direction: column; gap: 0.25rem; flex: 1; }
+.rel-card-tags      { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+.rel-source-tag     { font-size: 0.7rem; background: #e0f2fe; color: #0369a1; border-radius: 4px; padding: 2px 6px; }
+.rel-target-tag     { font-size: 0.7rem; background: rgba(14,110,82,0.08); color: #0E6E52; border-radius: 4px; padding: 2px 6px; }
+.rel-code           { font-size: 0.75rem; color: #374151; }
+.rel-rel-type       { color: #9ca3af; font-size: 0.75rem; }
+.rel-label-text     { font-size: 0.8125rem; color: #374151; font-weight: 500; }
+.rel-ref-text       { font-size: 0.75rem; color: #6b7280; }
+.rel-card-actions   { display: flex; gap: 0.5rem; flex-shrink: 0; align-items: center; }
+.rel-verified-badge { font-size: 0.7rem; border-radius: 999px; padding: 2px 8px; background: var(--rel-vb-bg); color: var(--rel-vb-color); }
+.rel-toggle-btn     { padding: 0.25rem 0.625rem; font-size: 0.75rem; background: var(--rel-tb-bg); border: 1px solid #d1d5db; border-radius: 0.25rem; cursor: pointer; font-family: inherit; }
+.rel-edit-btn       { padding: 0.25rem 0.625rem; font-size: 0.75rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.25rem; cursor: pointer; font-family: inherit; color: #1d4ed8; }
+.rel-del-btn        { padding: 0.25rem 0.625rem; font-size: 0.75rem; background: #fee2e2; border: 1px solid #fecaca; border-radius: 0.25rem; cursor: pointer; font-family: inherit; color: #dc2626; }
+.rel-empty          { color: #6b7280; text-align: center; padding: 2rem; }

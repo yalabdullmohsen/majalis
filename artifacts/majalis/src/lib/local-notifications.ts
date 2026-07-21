@@ -93,7 +93,7 @@ function markSentToday(tag: string): void {
 export function scheduleFlashcardsReminder(dueCount: number): void {
   if (dueCount === 0 || alreadySentToday("flashcards")) return;
   sendLocalNotification("📇 لديك بطاقات مستحقة", {
-    body: `${dueCount} بطاقة تنتظر مراجعتك اليوم في منصة المجالس.`,
+    body: `${dueCount} بطاقة تنتظر مراجعتك اليوم في المجلس العلمي.`,
     tag: "flashcards",
   });
   markSentToday("flashcards");
@@ -116,4 +116,75 @@ export function schedulePrayerReminder(prayerName: string, minutesLeft: number):
     tag: `prayer-${prayerName}`,
   });
   markSentToday(`prayer-${prayerName}`);
+}
+
+// ── تذكير العبادات الإسلامية حسب التقويم الهجري ────────────────────────────
+
+type IslamicRemindersPool = { icon: string; title: string; body: string }[];
+
+function getIslamicReminders(): IslamicRemindersPool {
+  try {
+    const formatter = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura", {
+      timeZone: "Asia/Kuwait",
+      day: "numeric",
+      month: "numeric",
+    });
+    const parts = formatter.formatToParts(new Date());
+    const month = parseInt(parts.find((p) => p.type === "month")?.value ?? "0", 10);
+    const day   = parseInt(parts.find((p) => p.type === "day")?.value ?? "0", 10);
+
+    // رمضان
+    if (month === 9) {
+      if (day >= 21) return [
+        { icon: "✨", title: "ليلة القدر في انتظارك", body: "العشر الأواخر من رمضان — ابحث عن ليلة القدر بالقيام والدعاء." },
+        { icon: "🤲", title: "دعاء العشر الأواخر",   body: "اللهم إنك عفو تحب العفو فاعفُ عنّا." },
+      ];
+      return [
+        { icon: "🌙", title: "صُم يومك احتساباً",    body: "رمضان المبارك — الصيام والتلاوة والقيام والصدقة." },
+        { icon: "📖", title: "ورد القرآن اليومي",    body: "خصّص ساعة للتلاوة اليوم — رمضان شهر القرآن." },
+      ];
+    }
+
+    // عشر ذي الحجة
+    if (month === 12 && day <= 9) return [
+      { icon: "⭐", title: "أفضل أيام الدنيا",       body: `يوم ${day} من ذي الحجة — أكثر من التكبير والصيام والذكر.` },
+      { icon: "🌙", title: "صيام التسع",             body: "صيام الأيام التسع من أفضل الأعمال — لا تُفوّتها." },
+    ];
+
+    // عاشوراء
+    if (month === 1 && day <= 10) return [
+      { icon: "🌙", title: "صيام عاشوراء",           body: day === 10 ? "اليوم عاشوراء — صيامه يُكفّر السنة الماضية." : `تبقّى ${10 - day} أيام على عاشوراء.` },
+    ];
+
+    // ست شوال
+    if (month === 10 && day <= 6) return [
+      { icon: "🌙", title: "الست من شوال لا تزال",   body: "من صام رمضان وأتبعه ستاً من شوال كصيام الدهر." },
+    ];
+
+    // تذكيرات يومية عامة
+    const general: IslamicRemindersPool = [
+      { icon: "🕌", title: "لا تُفوّت صلاة الجماعة",   body: "المحافظة على الصلوات في أوقاتها أعظم الأعمال." },
+      { icon: "📿", title: "أذكار الصباح والمساء",      body: "لا تبدأ يومك دون أذكار الصباح — هي حصنك اليومي." },
+      { icon: "📖", title: "ورد القرآن اليومي",          body: "اجعل لك حزباً يومياً من القرآن لا تُخلّ به." },
+      { icon: "🌙", title: "صيام الاثنين والخميس",       body: "سنّة النبي ﷺ — وفيهما تُعرض الأعمال على الله." },
+      { icon: "💝", title: "تصدّق اليوم",               body: "الصدقة تدفع البلاء وتُطفئ غضب الرب." },
+      { icon: "🤲", title: "الاستغفار",                  body: "أكثر من الاستغفار — فللمستغفرين من الله رزق وفرج." },
+    ];
+    const pick = general[new Date().getDay() % general.length];
+    return [pick];
+  } catch {
+    return [{ icon: "🕌", title: "تذكير", body: "حافظ على صلواتك وأذكارك اليومية." }];
+  }
+}
+
+export function scheduleIslamicReminder(): void {
+  if (alreadySentToday("islamic-reminder")) return;
+  const pool = getIslamicReminders();
+  if (!pool.length) return;
+  const pick = pool[Math.floor(Math.random() * pool.length)];
+  sendLocalNotification(`${pick.icon} ${pick.title}`, {
+    body: pick.body,
+    tag: "islamic-reminder",
+  });
+  markSentToday("islamic-reminder");
 }

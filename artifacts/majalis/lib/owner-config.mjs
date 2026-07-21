@@ -1,11 +1,25 @@
 /**
- * Permanent platform owners — bootstrap list retained even if DB roles are reset.
- * Server-only; mirror emails in src/lib/owner-config.ts for client guards.
+ * قائمة مالكي المنصة (bootstrap) — **خادم فقط**.
+ *
+ * أمن: كان البريد الشخصي مكتوبًا هنا وفي نظيره في العميل (src/lib/owner-config.ts)
+ * فيُشحن إلى المتصفح ضمن حزمة JS. الآن يُقرأ من متغير البيئة OWNER_EMAILS
+ * (قائمة مفصولة بفواصل)، والقيمة الافتراضية فارغة — بلا أي بريد في الكود.
+ * إن لم يُضبط المتغير فلا مالك bootstrap، ويبقى فحص الملكية عبر قاعدة البيانات
+ * (عمود is_owner) وحده.
+ *
+ * مثال: OWNER_EMAILS="owner@example.com,second@example.com"
  */
 
-export const BOOTSTRAP_OWNER_EMAILS = Object.freeze([
-  "yalabdullmohsen1@gmail.com",
-]);
+function readOwnerEmailsFromEnv() {
+  const raw = String(process.env.OWNER_EMAILS || "").trim();
+  if (!raw) return [];
+  return raw
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+export const BOOTSTRAP_OWNER_EMAILS = Object.freeze(readOwnerEmailsFromEnv());
 
 export function normalizeOwnerEmail(email) {
   return String(email || "").trim().toLowerCase();

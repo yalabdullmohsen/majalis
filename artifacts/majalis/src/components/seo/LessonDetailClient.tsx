@@ -1,5 +1,3 @@
-"use client";
-
 import LessonDetailPage from "@/views/LessonDetailPage";
 import { Empty } from "@/components/ui-common";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";

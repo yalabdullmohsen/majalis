@@ -5,7 +5,7 @@
 import { test, expect } from "@playwright/test";
 import { waitForContent } from "./helpers";
 
-const KEY_PAGES = ["/", "/lessons", "/hadith", "/quran", "/adhkar", "/muezzins"];
+const KEY_PAGES = ["/", "/lessons", "/hadith", "/quran-hub", "/adhkar", "/muezzins"];
 
 test.describe("Responsive — التجاوب مع الشاشات", () => {
   for (const path of KEY_PAGES) {
@@ -43,8 +43,8 @@ test.describe("Responsive — التجاوب مع الشاشات", () => {
     expect(scrollW).toBeLessThanOrEqual(width + 2);
   });
 
-  test("quran page — surah list scrollable vertically on mobile", async ({ page }) => {
-    await page.goto("/quran");
+  test("quran hub page — sections grid scrollable vertically on mobile", async ({ page }) => {
+    await page.goto("/quran-hub");
     await waitForContent(page);
     await page.waitForTimeout(600);
     const scrollH = await page.evaluate(() => document.documentElement.scrollHeight);

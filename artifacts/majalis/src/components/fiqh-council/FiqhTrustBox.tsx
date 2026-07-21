@@ -62,7 +62,7 @@ export function FiqhTrustBox({
         {!publicMode && (
           <div>
             <dt>موثق</dt>
-            <dd>{verified ? "نعم — مصدر رسمي ورابط متوفر" : "لا — يحتاج مراجعة أو مصدر"}</dd>
+            <dd>{verified ? "نعم، مصدر رسمي ورابط متوفر" : "لا، يحتاج مراجعة أو مصدر"}</dd>
           </div>
         )}
       </dl>

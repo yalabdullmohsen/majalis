@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { Loading, Empty } from "@/components/ui-common";
+import { SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { ContentDetailLayout } from "@/components/platform/ContentDetailLayout";
 import { fetchLiveAutoContentBySlug, getPublishedAutoContentBySlug } from "@/lib/auto-content-service";
 import { mapContentTypeToUpdateType } from "@/lib/auto-content/auto-content-utils";
@@ -29,11 +29,21 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
   }, [params.slug]);
 
   useEffect(() => {
-    if (!item) return;
+    if (loading) return;
+    if (!item) {
+      applyPageSeo({
+        path: `/updates/auto/${params.slug}`,
+        title: "المادة غير موجودة | المجلس العلمي",
+        description: "لم يُعثر على هذه المادة أو لم تُعتمد بعد.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     const path = `/updates/auto/${item.slug}`;
     applyPageSeo({
       path,
-      title: item.seo_title || `${item.title} | المستجدات — المجلس العلمي`,
+      title: item.seo_title || `${item.title} | المستجدات، المجلس العلمي`,
       description: item.seo_description || item.summary || item.title,
       keywords: [...(item.tags || []), item.category || "", "مستجدات", "علوم شرعية"].filter(Boolean),
       ogType: "article",
@@ -52,9 +62,9 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
         ]),
       ],
     });
-  }, [item]);
+  }, [item, loading, params.slug]);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonCardGrid />;
   if (!item) return <Empty text="المادة غير موجودة أو لم تُعتمد بعد." />;
 
   const updateType = mapContentTypeToUpdateType(item.content_type);
@@ -74,7 +84,7 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
       sourceUrls={item.original_url ? [item.original_url] : undefined}
       copyText={`${item.title}\n\n${item.summary || ""}\n\n${item.content || ""}`}
       related={
-        <p style={{ fontSize: "0.875rem" }}>
+        <p className="acd-detail-hint">
           <Link href="/updates">← العودة للمستجدات</Link>
         </p>
       }

@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { useAdminShell } from "@/views/admin/AdminShell";
 import {
   fetchScholarlyDashboard,
@@ -12,10 +11,10 @@ import {
 
 function StatCard({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
   return (
-    <div style={{ padding: "1rem", borderRadius: "0.5rem", border: `1px solid ${C.line}`, background: C.panel }}>
-      <p style={{ margin: 0, fontSize: "0.75rem", color: C.inkSoft }}>{label}</p>
-      <p style={{ margin: "0.25rem 0 0", fontSize: "1.5rem", fontWeight: 700, color: C.emeraldDeep }}>{value}</p>
-      {sub && <p style={{ margin: "0.25rem 0 0", fontSize: "0.75rem", color: C.inkSoft }}>{sub}</p>}
+    <div className="svs-stat">
+      <p className="svs-stat__label">{label}</p>
+      <p className="svs-stat__value">{value}</p>
+      {sub && <p className="svs-stat__sub">{sub}</p>}
     </div>
   );
 }
@@ -36,7 +35,7 @@ export function ScholarlyVerificationSection() {
       const result = await fetchScholarlyDashboard();
       setData(result);
     } catch {
-      showError("تعذر تحميل لوحة التوثيق العلمي.");
+      showError("\u062a\u0639\u0630\u0631 \u062a\u062d\u0645\u064a\u0644 \u0644\u0648\u062d\u0629 \u0627\u0644\u062a\u0648\u062b\u064a\u0642 \u0627\u0644\u0639\u0644\u0645\u064a.");
     } finally {
       setLoading(false);
     }
@@ -50,10 +49,10 @@ export function ScholarlyVerificationSection() {
     setScanning(true);
     try {
       await runScholarlyScan({ checkLinks, persist: false });
-      showSuccess("اكتمل فحص التوثيق.");
+      showSuccess("\u0627\u0643\u062a\u0645\u0644 \u0641\u062d\u0635 \u0627\u0644\u062a\u0648\u062b\u064a\u0642.");
       await load();
     } catch {
-      showError("فشل فحص التوثيق.");
+      showError("\u0641\u0634\u0644 \u0641\u062d\u0635 \u0627\u0644\u062a\u0648\u062b\u064a\u0642.");
     } finally {
       setScanning(false);
     }
@@ -64,106 +63,96 @@ export function ScholarlyVerificationSection() {
       const result = await searchScholarly({ query: searchQ, limit: 20 });
       setSearchResults(result.results ?? []);
     } catch {
-      showError("فشل البحث العلمي.");
+      showError("\u0641\u0634\u0644 \u0627\u0644\u0628\u062d\u062b \u0627\u0644\u0639\u0644\u0645\u064a.");
     }
   };
 
-  if (loading && !data) return <Loading />;
+  if (loading && !data) return <SkeletonCardGrid count={6} />;
 
   const sectionStats = report?.section_stats ?? {};
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1rem", gap: "1rem", flexWrap: "wrap" }}>
+      <div className="svs-header">
         <div>
-          <h2 style={{ margin: 0, color: C.emeraldDeep }}>التوثيق والتحقق العلمي</h2>
-          <p style={{ margin: "0.25rem 0 0", fontSize: "0.875rem", color: C.inkSoft }}>
-            لا نشر بدون مصدر — مراجعة شاملة قبل الظهور العام
+          <h2 className="svs-title">\u0627\u0644\u062a\u0648\u062b\u064a\u0642 \u0648\u0627\u0644\u062a\u062d\u0642\u0642 \u0627\u0644\u0639\u0644\u0645\u064a</h2>
+          <p className="svs-subtitle">
+            \u0644\u0627 \u0646\u0634\u0631 \u0628\u062f\u0648\u0646 \u0645\u0635\u062f\u0631 \u2014 \u0645\u0631\u0627\u062c\u0639\u0629 \u0634\u0627\u0645\u0644\u0629 \u0642\u0628\u0644 \u0627\u0644\u0638\u0647\u0648\u0631 \u0627\u0644\u0639\u0627\u0645
           </p>
         </div>
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-          <button
-            type="button"
-            disabled={scanning}
-            onClick={() => handleScan(false)}
-            style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", border: "none", background: C.emerald, color: "#fff", cursor: "pointer" }}
-          >
-            {scanning ? "جاري الفحص…" : "فحص التوثيق"}
+        <div className="svs-btn-group">
+          <button type="button" disabled={scanning} onClick={() => handleScan(false)} className="svs-btn--primary">
+            {scanning ? "\u062c\u0627\u0631\u064a \u0627\u0644\u0641\u062d\u0635\u2026" : "\u0641\u062d\u0635 \u0627\u0644\u062a\u0648\u062b\u064a\u0642"}
           </button>
-          <button
-            type="button"
-            disabled={scanning}
-            onClick={() => handleScan(true)}
-            style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.panel, cursor: "pointer" }}
-          >
-            فحص + روابط
+          <button type="button" disabled={scanning} onClick={() => handleScan(true)} className="svs-btn">
+            \u0641\u062d\u0635 + \u0631\u0648\u0627\u0628\u0637
           </button>
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: "0.75rem", marginBottom: "1.5rem" }}>
-        <StatCard label="اكتمال التوثيق" value={`${report?.documentation_completeness_percent ?? 0}%`} />
-        <StatCard label="موثّق" value={report?.verified_count ?? 0} />
-        <StatCard label="يحتاج مراجعة" value={report?.needs_review_count ?? 0} />
-        <StatCard label="مرفوض" value={report?.rejected_count ?? 0} />
-        <StatCard label="مكرر" value={report?.duplicate_count ?? 0} />
-        <StatCard label="روابط معطلة" value={report?.broken_links_count ?? 0} />
-        <StatCard label="جاهزية المرجع" value={`${report?.readiness_score ?? 0}%`} sub={`${report?.items_scanned ?? 0} عنصر`} />
+      <div className="svs-stats-grid">
+        <StatCard label="\u0627\u0643\u062a\u0645\u0627\u0644 \u0627\u0644\u062a\u0648\u062b\u064a\u0642" value={`${report?.documentation_completeness_percent ?? 0}%`} />
+        <StatCard label="\u0645\u0648\u062b\u0651\u0642" value={report?.verified_count ?? 0} />
+        <StatCard label="\u064a\u062d\u062a\u0627\u062c \u0645\u0631\u0627\u062c\u0639\u0629" value={report?.needs_review_count ?? 0} />
+        <StatCard label="\u0645\u0631\u0641\u0648\u0636" value={report?.rejected_count ?? 0} />
+        <StatCard label="\u0645\u0643\u0631\u0631" value={report?.duplicate_count ?? 0} />
+        <StatCard label="\u0631\u0648\u0627\u0628\u0637 \u0645\u0639\u0637\u0644\u0629" value={report?.broken_links_count ?? 0} />
+        <StatCard label="\u062c\u0627\u0647\u0632\u064a\u0629 \u0627\u0644\u0645\u0631\u062c\u0639" value={`${report?.readiness_score ?? 0}%`} sub={`${report?.items_scanned ?? 0} \u0639\u0646\u0635\u0631`} />
       </div>
 
-      <h3 style={{ color: C.emeraldDeep }}>جودة كل قسم</h3>
-      <div style={{ overflowX: "auto", marginBottom: "1.5rem" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
+      <h3 className="svs-section-h3">\u062c\u0648\u062f\u0629 \u0643\u0644 \u0642\u0633\u0645</h3>
+      <div className="svs-table-wrap">
+        <table className="svs-table">
           <thead>
-            <tr style={{ textAlign: "right", background: C.panel }}>
-              <th style={{ padding: "0.5rem", borderBottom: `2px solid ${C.line}` }}>القسم</th>
-              <th style={{ padding: "0.5rem", borderBottom: `2px solid ${C.line}` }}>الإجمالي</th>
-              <th style={{ padding: "0.5rem", borderBottom: `2px solid ${C.line}` }}>موثّق</th>
-              <th style={{ padding: "0.5rem", borderBottom: `2px solid ${C.line}` }}>مراجعة</th>
-              <th style={{ padding: "0.5rem", borderBottom: `2px solid ${C.line}` }}>مرفوض</th>
+            <tr className="svs-thead-row">
+              <th className="svs-th">\u0627\u0644\u0642\u0633\u0645</th>
+              <th className="svs-th">\u0627\u0644\u0625\u062c\u0645\u0627\u0644\u064a</th>
+              <th className="svs-th">\u0645\u0648\u062b\u0651\u0642</th>
+              <th className="svs-th">\u0645\u0631\u0627\u062c\u0639\u0629</th>
+              <th className="svs-th">\u0645\u0631\u0641\u0648\u0636</th>
             </tr>
           </thead>
           <tbody>
             {Object.entries(sectionStats).map(([type, stats]) => (
               <tr key={type}>
-                <td style={{ padding: "0.5rem", borderBottom: `1px solid ${C.line}` }}>{type}</td>
-                <td style={{ padding: "0.5rem", borderBottom: `1px solid ${C.line}` }}>{stats.total}</td>
-                <td style={{ padding: "0.5rem", borderBottom: `1px solid ${C.line}`, color: C.emeraldDeep }}>{stats.verified}</td>
-                <td style={{ padding: "0.5rem", borderBottom: `1px solid ${C.line}` }}>{stats.needs_review}</td>
-                <td style={{ padding: "0.5rem", borderBottom: `1px solid ${C.line}`, color: "#991B1B" }}>{stats.rejected}</td>
+                <td className="svs-td">{type}</td>
+                <td className="svs-td">{stats.total}</td>
+                <td className="svs-td svs-td--accent">{stats.verified}</td>
+                <td className="svs-td">{stats.needs_review}</td>
+                <td className="svs-td svs-td--red">{stats.rejected}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      <h3 style={{ color: C.emeraldDeep }}>بحث علمي متقدم</h3>
-      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem", flexWrap: "wrap" }}>
+      <h3 className="svs-section-h3">\u0628\u062d\u062b \u0639\u0644\u0645\u064a \u0645\u062a\u0642\u062f\u0645</h3>
+      <div className="svs-search-row">
         <input
           type="search"
           value={searchQ}
           onChange={(e) => setSearchQ(e.target.value)}
-          placeholder="مصدر، مؤلف، عنوان…"
-          style={{ flex: 1, minWidth: "200px", padding: "0.5rem", borderRadius: "0.375rem", border: `1px solid ${C.line}` }}
+          placeholder="\u0645\u0635\u062f\u0631\u060c \u0645\u0624\u0644\u0641\u060c \u0639\u0646\u0648\u0627\u0646\u2026"
+          className="svs-search-input"
         />
-        <button type="button" onClick={handleSearch} style={{ padding: "0.5rem 1rem", borderRadius: "0.375rem", border: "none", background: C.emerald, color: "#fff" }}>
-          بحث
+        <button type="button" onClick={handleSearch} className="svs-search-btn">
+          \u0628\u062d\u062b
         </button>
       </div>
       {searchResults.length > 0 && (
-        <ul style={{ fontSize: "0.875rem", paddingInlineStart: "1.25rem" }}>
+        <ul className="svs-results">
           {searchResults.map((r, i) => (
             <li key={`${r.content_id}-${i}`}>
-              <strong>{String(r.title ?? r.content_id)}</strong> — {String(r.source_name)} ({String(r.verification_status)})
+              <strong>{String(r.title ?? r.content_id)}</strong> \u2014 {String(r.source_name)} ({String(r.verification_status)})
             </li>
           ))}
         </ul>
       )}
 
       {report?.next_priorities && report.next_priorities.length > 0 && (
-        <div style={{ marginTop: "1.5rem", padding: "1rem", borderRadius: "0.5rem", border: `1px solid ${C.line}` }}>
-          <h3 style={{ margin: "0 0 0.5rem", color: C.emeraldDeep }}>أولويات التطوير</h3>
-          <ul style={{ margin: 0, paddingInlineStart: "1.25rem", color: C.inkSoft, fontSize: "0.875rem" }}>
+        <div className="svs-priorities">
+          <h3 className="svs-priorities-h3">\u0623\u0648\u0644\u0648\u064a\u0627\u062a \u0627\u0644\u062a\u0637\u0648\u064a\u0631</h3>
+          <ul className="svs-priorities-ul">
             {report.next_priorities.map((p) => (
               <li key={p}>{p}</li>
             ))}

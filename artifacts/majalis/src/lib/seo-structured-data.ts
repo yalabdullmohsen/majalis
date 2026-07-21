@@ -38,10 +38,7 @@ export function websiteJsonLd() {
     },
     potentialAction: {
       "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${SITE_URL}/search/{search_term_string}`,
-      },
+      target: `${SITE_URL}/search?q={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
   };
@@ -200,6 +197,47 @@ export function faqPageJsonLd(items: { question: string; answer: string }[]) {
         text: item.answer,
       },
     })),
+  };
+}
+
+export function prophetArticleJsonLd(prophet: {
+  name: string;
+  slug: string;
+  description?: string;
+  image?: string;
+}) {
+  const url = `/prophets/${prophet.slug}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: `قصة ${prophet.name} عليه السلام`,
+    description: prophet.description || `قصة نبي الله ${prophet.name} عليه السلام من المصادر الموثوقة.`,
+    url: absoluteUrl(url),
+    inLanguage: "ar",
+    image: prophet.image ? absoluteUrl(prophet.image) : absoluteUrl(seoData.defaultImage),
+    author: { "@type": "Organization", name: SITE_NAME },
+    publisher: { "@type": "Organization", name: SITE_NAME, logo: absoluteUrl(seoData.defaultImage) },
+    about: { "@type": "Person", name: prophet.name, description: `نبي الله ${prophet.name} عليه السلام` },
+  };
+}
+
+export function islamicStoryJsonLd(story: {
+  id: string | number;
+  title: string;
+  body?: string;
+  category?: string;
+}) {
+  const url = `/stories/${story.id}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: story.title,
+    description: story.body ? story.body.slice(0, 160) : `${story.title} — قصة إسلامية موثقة.`,
+    url: absoluteUrl(url),
+    inLanguage: "ar",
+    author: { "@type": "Organization", name: SITE_NAME },
+    publisher: { "@type": "Organization", name: SITE_NAME, logo: absoluteUrl(seoData.defaultImage) },
+    genre: story.category || "قصة إسلامية",
   };
 }
 

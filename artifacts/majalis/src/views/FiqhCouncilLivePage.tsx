@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
-import { PageHeader, Loading } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { FiqhTrustBox } from "@/components/fiqh-council/FiqhTrustBox";
 import { getFiqhLiveData, unavailableLabel } from "@/lib/fiqh-council-sessions-service";
@@ -14,6 +15,7 @@ import {
 } from "@/lib/fiqh-council-types";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 function SessionBlock({
   title,
@@ -63,8 +65,8 @@ export default function FiqhCouncilLivePage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fiqh-council/live",
-      title: "البيانات الحية | المجمع الفقهي — المجلس العلمي",
-      description: "آخر جلسات المجمع الفقهي والقرارات والتوصيات والفتاوى الموثقة — بيانات حية من مصادر رسمية.",
+      title: "البيانات الحية | المجمع الفقهي، المجلس العلمي",
+      description: "آخر جلسات المجمع الفقهي والقرارات والتوصيات والفتاوى الموثقة، بيانات حية من مصادر رسمية.",
       keywords: ["المجمع الفقهي", "جلسات", "قرارات", "بيانات حية"],
       jsonLd: [
         breadcrumbJsonLd([
@@ -80,7 +82,7 @@ export default function FiqhCouncilLivePage() {
     getFiqhLiveData().then(({ data }) => setLive(data)).finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonCardGrid />;
 
   const data = live || {
     last_session: null,
@@ -95,7 +97,7 @@ export default function FiqhCouncilLivePage() {
       <PageHeader
         eyebrow="بيانات حية"
         title="البيانات الحية للمجمع الفقهي"
-        subtitle="آخر الجلسات والقرارات والتوصيات — من مصادر موثقة فقط، دون اختلاق."
+        subtitle="آخر الجلسات والقرارات والتوصيات، من مصادر موثقة فقط، دون اختلاق."
       />
 
       <FiqhCouncilSubnav />
@@ -138,6 +140,13 @@ export default function FiqhCouncilLivePage() {
           )}
         </section>
       ))}
+
+      <div className="twh-share">
+        <ShareButtons title="جلسات المجمع الفقهي الحية — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/live" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
+      </div>
     </div>
   );
 }

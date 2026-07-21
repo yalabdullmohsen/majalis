@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "wouter";
 import { Empty } from "@/components/ui-common";
 import {
@@ -7,6 +7,8 @@ import {
   getLocationLabel,
   getScientificAnnouncementById,
 } from "@/lib/scientific-announcements";
+import { applyPageSeo } from "@/lib/seo";
+import { ContentDetailLayout } from "@/components/platform/ContentDetailLayout";
 
 function safeHref(url?: string): string | undefined {
   if (!url) return undefined;
@@ -32,48 +34,49 @@ export default function ScientificAnnouncementDetailPage({
   params: { id: string };
 }) {
   const item = getScientificAnnouncementById(params.id);
-  const [copied, setCopied] = useState(false);
-  const [shared, setShared] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);
 
+  useEffect(() => {
+    if (!item) {
+      applyPageSeo({
+        path: `/scientific-announcements/${params.id}`,
+        title: "الإعلان غير موجود | المجلس العلمي",
+        description: "لم يُعثر على هذا الإعلان العلمي.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
+    applyPageSeo({
+      path: `/scientific-announcements/${params.id}`,
+      title: `${item.announcementTitle} | المجلس العلمي`,
+      description: `${item.announcementTitle}، تفاصيل الإعلان العلمي والمؤتمرات والدورات الإسلامية.`,
+      keywords: ["إعلانات علمية", "مؤتمرات إسلامية", "دورات علمية", "فعاليات شرعية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Event",
+          name: item.announcementTitle,
+          url: `https://www.majlisilm.com/scientific-announcements/${params.id}`,
+          description: `${item.announcementTitle} — تفاصيل الحدث العلمي`,
+          organizer: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+        },
+      ],
+    });
+  }, [item, params.id]);
+
+  // نصّ النسخ ورابط الصفحة: يُمرَّران الآن إلى ContentDetailLayout بدل زرّي
+  // "مشاركة"/"نسخ التفاصيل" المخصَّصين سابقًا (navigator.share يدويًا مع
+  // احتياط نسخ). ShareButtons المشتركة (المستخدَمة في 14+ صفحة أخرى) تدعم
+  // navigator.share فعليًا أيضًا (زر سناب شات)، فلا فقد وظيفي — والفائدة
+  // الحقيقية: أزرار المشاركة/النسخ في هذه الصفحة لم يكن لها أي تنسيق CSS
+  // مخصَّص إطلاقًا (لا قاعدة واحدة لـ.sci-ann-btn في أي ملف أنماط)، فكانت
+  // تظهر كأزرار متصفح افتراضية بلا تصميم — القالب الموحّد يمنحها تصميمًا
+  // حقيقيًا فعليًا مجانًا.
   const shareText = item ? buildShareText(item) : "";
   const pageUrl =
     typeof window !== "undefined"
       ? `${window.location.origin}${(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}/scientific-announcements/${params.id}`
       : "";
-
-  const handleCopy = useCallback(async () => {
-    if (!item) return;
-    try {
-      await navigator.clipboard.writeText(shareText);
-      setCopied(true);
-      if (timerRef.current) clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => setCopied(false), 2000);
-    } catch {
-      alert("تعذّر النسخ — انسخ النص يدوياً.");
-    }
-  }, [item, shareText]);
-
-  const handleShare = useCallback(async () => {
-    if (!item) return;
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: item.lessonTitle,
-          text: shareText,
-          url: pageUrl,
-        });
-        setShared(true);
-        if (timerRef.current) clearTimeout(timerRef.current);
-        timerRef.current = setTimeout(() => setShared(false), 2000);
-        return;
-      } catch {
-        /* user cancelled or unsupported */
-      }
-    }
-    await handleCopy();
-  }, [item, shareText, pageUrl, handleCopy]);
 
   if (!item) {
     return (
@@ -102,24 +105,26 @@ export default function ScientificAnnouncementDetailPage({
     : undefined;
 
   return (
-    <div className="page-shell narrow sci-ann-detail-page">
-      <Link href="/lessons#scientific-announcements" className="sci-ann-detail__back">
-        ← العودة إلى الإعلانات
-      </Link>
+    <ContentDetailLayout
+      breadcrumbs={[
+        { label: "الرئيسية", href: "/" },
+        { label: "الدروس", href: "/lessons#scientific-announcements" },
+        { label: item.lessonTitle },
+      ]}
+      title={item.lessonTitle}
+      subtitle={item.sheikh}
+      meta={item.announcementTitle}
+      tags={item.tags}
+      copyText={shareText}
+      shareUrl={pageUrl}
+    >
+      {item.posterImage && (
+        <figure className="sci-ann-detail__poster">
+          <img src={item.posterImage} alt={item.lessonTitle} loading="lazy" decoding="async" width="800" height="600" />
+        </figure>
+      )}
 
       <article className="sci-ann-detail">
-        {item.posterImage && (
-          <figure className="sci-ann-detail__poster">
-            <img src={item.posterImage} alt={item.lessonTitle} loading="lazy" />
-          </figure>
-        )}
-
-        <header className="sci-ann-detail__header">
-          <span className="sci-ann-detail__ribbon">{item.announcementTitle}</span>
-          <h1>{item.lessonTitle}</h1>
-          <p className="sci-ann-detail__sheikh">{item.sheikh}</p>
-        </header>
-
         {(item.bookTitle || item.bookAuthor) && (
           <section className="sci-ann-detail__block">
             <h2>المتن أو الكتاب</h2>
@@ -150,7 +155,7 @@ export default function ScientificAnnouncementDetailPage({
             )}
             {!item.mapUrl && (
               <p className="sci-ann-detail__muted">
-                خريطة تقريبية — راجع العنوان في التفاصيل للتأكد.
+                خريطة تقريبية، راجع العنوان في التفاصيل للتأكد.
               </p>
             )}
             <div className="sci-ann-detail__map">
@@ -188,8 +193,7 @@ export default function ScientificAnnouncementDetailPage({
                 <a
                   key={link.url}
                   href={safeHref(link.url)}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target="_blank" rel="noopener noreferrer"
                   className="sci-ann-btn sci-ann-btn--secondary"
                 >
                   {link.label}
@@ -210,25 +214,15 @@ export default function ScientificAnnouncementDetailPage({
           </section>
         )}
 
-        {(item.tags?.length ?? 0) > 0 && (
-          <div className="sci-ann-detail__tags">
-            {(item.tags ?? []).map((tag: string) => (
-              <span key={tag} className="sci-ann-card__tag">
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
-
-        <div className="sci-ann-detail__actions">
-          <button type="button" className="sci-ann-btn sci-ann-btn--primary" onClick={handleShare}>
-            {shared ? "تمت المشاركة" : "مشاركة"}
-          </button>
-          <button type="button" className="sci-ann-btn sci-ann-btn--secondary" onClick={handleCopy}>
-            {copied ? "تم النسخ" : "نسخ التفاصيل"}
-          </button>
-        </div>
+        {/* الوسوم (tags) والمشاركة/النسخ: انتقلا إلى الخصائص tags/copyText/
+            shareUrl أعلاه — يعرضهما القالب الموحّد عبر content-hub-chip
+            وShareButtons الحقيقيَّين بدل عناصر بلا أي تنسيق CSS مخصَّص.
+            SectionQuiz المستقل حُذف من هنا أيضًا — ContentDetailLayout يعرض
+            واحدًا مُدمَجًا بالفعل في نهايته (نفس ما تعتمد عليه كل الصفحات
+            الأخرى المهاجَرة إليه، بلا استدعاء مكرَّر)؛ وجود الاثنين معًا كان
+            يُظهر قسمي "اختبر معلوماتك" متتاليين فعليًا — عطل تكرار حقيقي
+            اكتُشف بمراجعة اللقطة البصرية بعد الهجرة، لا افتراضًا. */}
       </article>
-    </div>
+    </ContentDetailLayout>
   );
 }

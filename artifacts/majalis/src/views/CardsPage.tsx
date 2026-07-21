@@ -1,6 +1,9 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import html2canvas from "html2canvas";
+import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { applyPageSeo } from "@/lib/seo";
 
 type SizeKey = "square" | "story" | "wide";
 
@@ -23,8 +26,8 @@ const TEMPLATES: Template[] = [
     name: "أسود هادئ",
     bg: "linear-gradient(160deg, #0f0f0f 0%, #1a1a1a 100%)",
     textColor: "#ffffff",
-    subColor: "#c9a962",
-    border: "1px solid rgba(201, 169, 98, 0.45)",
+    subColor: "#FAF5EA",
+    border: "1px solid rgba(250, 245, 234, 0.3)",
     swatch: "#0f0f0f",
   },
   {
@@ -32,18 +35,18 @@ const TEMPLATES: Template[] = [
     name: "أبيض نظيف",
     bg: "#ffffff",
     textColor: "#164E3C",
-    subColor: "#5B5446",
+    subColor: "#4D7A64",
     border: "1px solid #164E3C",
     swatch: "#ffffff",
   },
   {
-    id: "gold_elegant",
-    name: "ذهبي خفيف",
-    bg: "linear-gradient(135deg, #1a1814 0%, #2a241c 100%)",
-    textColor: "#d4b86a",
-    subColor: "#f5f0e6",
-    border: "1px solid #c9a962",
-    swatch: "#1a1814",
+    id: "ivory_deep",
+    name: "أخضر الليل",
+    bg: "linear-gradient(135deg, #0a1f18 0%, #0d2e24 100%)",
+    textColor: "#FAF5EA",
+    subColor: "#CFE0D3",
+    border: "1px solid rgba(250, 245, 234, 0.35)",
+    swatch: "#0a1f18",
   },
   {
     id: "emerald",
@@ -64,6 +67,28 @@ const SIZE_MAP: Record<SizeKey, { width: number; height: number; label: string }
 
 export default function CardsPage() {
   const [quote, setQuote] = useState(DEFAULT_QUOTE);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/cards",
+      title: "بطاقات الاقتباسات الإسلامية | المجلس العلمي",
+      description: "أنشئ بطاقات اقتباسات إسلامية جميلة قابلة للمشاركة، اختر القالب والحجم وصدّر بجودة عالية.",
+      keywords: ["بطاقات إسلامية", "اقتباسات إسلامية", "بطاقات دينية", "صور إسلامية", "بطاقات قرآنية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "صانع البطاقات الإسلامية",
+          url: "https://www.majlisilm.com/cards",
+          description: "أنشئ بطاقات اقتباسات إسلامية جميلة قابلة للمشاركة",
+          applicationCategory: "ReligiousApplication",
+          operatingSystem: "Web",
+          inLanguage: "ar",
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+        },
+      ],
+    });
+  }, []);
   const [source, setSource] = useState(DEFAULT_SOURCE);
   const [selectedTemplate, setSelectedTemplate] = useState(TEMPLATES[0]);
   const [size, setSize] = useState<SizeKey>("square");
@@ -111,7 +136,7 @@ export default function CardsPage() {
           المجلس العلمي
         </Link>
         <h1 className="cards-page-title">البطاقات الدعوية</h1>
-        <p className="cond-page-desc">صمّم بطاقة للمشاركة على واتساب وإنستغرام — بدون حقوق أو شعار افتراضي.</p>
+        <p className="cond-page-desc">صمّم بطاقة للمشاركة على واتساب وإنستغرام، بدون حقوق أو شعار افتراضي.</p>
 
         <div className="cards-layout">
           <div className="cards-controls">
@@ -121,13 +146,13 @@ export default function CardsPage() {
                 value={quote}
                 onChange={(e) => setQuote(e.target.value)}
                 rows={4}
-                placeholder="أدخل الاقتباس أو الفائدة..."
+                aria-label="أدخل الاقتباس أو الفائدة" placeholder="أدخل الاقتباس أو الفائدة..."
                 className="cards-textarea"
               />
               <input
                 value={source}
                 onChange={(e) => setSource(e.target.value)}
-                placeholder="المصدر — مثال: رواه البخاري"
+                aria-label="المصدر، مثال: رواه البخاري" placeholder="المصدر، مثال: رواه البخاري"
                 className="cards-input"
               />
             </div>
@@ -142,7 +167,7 @@ export default function CardsPage() {
                     onClick={() => setSelectedTemplate(t)}
                     className={`cards-template-btn${selectedTemplate.id === t.id ? " is-active" : ""}`}
                   >
-                    <span className="cards-template-swatch" style={{ background: t.swatch }} />
+                    <span className="cards-template-swatch" style={{ "--swatch-bg": t.swatch } as React.CSSProperties} />
                     {t.name}
                   </button>
                 ))}
@@ -185,54 +210,43 @@ export default function CardsPage() {
             <div
               className="cards-preview-frame"
               style={{
-                width: dimensions.width * previewScale,
-                height: dimensions.height * previewScale,
-              }}
+                "--cpf-w": `${dimensions.width * previewScale}px`,
+                "--cpf-h": `${dimensions.height * previewScale}px`,
+                "--cpf-scale": previewScale,
+                "--cpf-cw": `${dimensions.width}px`,
+                "--cpf-ch": `${dimensions.height}px`,
+                "--card-bg": selectedTemplate.bg,
+                "--card-border": selectedTemplate.border,
+                "--card-text": selectedTemplate.textColor,
+                "--card-sub": selectedTemplate.subColor,
+                "--card-quote-fs": `${dimensions.width > 500 ? 34 : 26}px`,
+              } as React.CSSProperties}
             >
-              <div
-                style={{
-                  transform: `scale(${previewScale})`,
-                  transformOrigin: "top right",
-                  width: dimensions.width,
-                  height: dimensions.height,
-                }}
-              >
+              <div className="cards-export-scaler">
                 <div
                   ref={cardRef}
                   className="cards-export-canvas"
-                  style={{
-                    width: dimensions.width,
-                    height: dimensions.height,
-                    background: selectedTemplate.bg,
-                    border: selectedTemplate.border,
-                  }}
                 >
-                  <p
-                    className="cards-export-quote"
-                    style={{
-                      fontSize: dimensions.width > 500 ? 34 : 26,
-                      color: selectedTemplate.textColor,
-                    }}
-                  >
+                  <p className="cards-export-quote">
                     {quote || "أدخل اقتباسك هنا"}
                   </p>
-                  <div
-                    className="cards-export-source"
-                    style={{
-                      color: selectedTemplate.subColor,
-                      borderTop: `1px solid ${selectedTemplate.subColor}40`,
-                    }}
-                  >
+                  <div className="cards-export-source">
                     {source}
                   </div>
                   {showLogo && (
-                    <img src="/logo.png" alt="" className="cards-export-logo" aria-hidden="true" />
+                    <img src="/logo.png" alt="" className="cards-export-logo" aria-hidden="true" loading="eager" decoding="sync" width="512" height="512" />
                   )}
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div className="twh-share">
+        <ShareButtons title="البطاقات الدعوية — المجلس العلمي" url="https://www.majlisilm.com/cards" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["akhlaq", "aqeeda"]} title="اختبر معلوماتك في الأخلاق والعقيدة" count={4} />
       </div>
     </div>
   );

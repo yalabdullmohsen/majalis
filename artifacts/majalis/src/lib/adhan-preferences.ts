@@ -20,11 +20,11 @@ export const PRAYER_ARABIC: Record<PrayerKey, string> = {
 };
 
 export const PRAYER_ICON: Record<PrayerKey, string> = {
-  fajr:    "🌙",
-  dhuhr:   "☀️",
-  asr:     "🌤️",
-  maghrib: "🌅",
-  isha:    "🌃",
+  fajr:    "Moon",
+  dhuhr:   "Sun",
+  asr:     "CloudSun",
+  maghrib: "Sunset",
+  isha:    "CloudMoon",
 };
 
 /** Minutes before the adhan to trigger an advance reminder. 0 = disabled. */
@@ -42,6 +42,7 @@ export type AdhanPreferences = {
   silentReminderEnabled: boolean;
   defaultMuezzinId: string;         // fallback muezzin for all prayers
   prayers: Record<PrayerKey, PerPrayerPrefs>;
+  fridayBannerEnabled: boolean;     // show Friday Jumuah banner
 };
 
 const DEFAULT_ADVANCE: Record<PrayerKey, AdvanceMinutes> = {
@@ -67,6 +68,7 @@ function defaultPrefs(): AdhanPreferences {
     silentReminderEnabled: true,
     defaultMuezzinId: DEFAULT_MUEZZIN_ID,
     prayers,
+    fridayBannerEnabled: true,
   };
 }
 
@@ -82,6 +84,7 @@ export function loadAdhanPrefs(): AdhanPreferences {
       silentReminderEnabled: parsed.silentReminderEnabled ?? base.silentReminderEnabled,
       defaultMuezzinId: parsed.defaultMuezzinId ?? base.defaultMuezzinId,
       prayers: { ...base.prayers, ...parsed.prayers },
+      fridayBannerEnabled: parsed.fridayBannerEnabled ?? base.fridayBannerEnabled,
     };
   } catch {
     return defaultPrefs();

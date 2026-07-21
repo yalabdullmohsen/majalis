@@ -1,7 +1,7 @@
-"use client";
-
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
+import { GraduationCap } from "lucide-react";
 import { Link } from "wouter";
+import { applyPageSeo } from "@/lib/seo";
 
 const CONTENT_TYPES = ["درس", "فائدة", "معلومة", "سؤال لعبة", "فكرة"] as const;
 type ContentType = (typeof CONTENT_TYPES)[number];
@@ -10,6 +10,25 @@ type Status = "idle" | "loading" | "success" | "error";
 
 export default function SubmitContentPage() {
   const [contentType, setContentType] = useState<ContentType>("درس");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/submit",
+      title: "أضف محتوى | المجلس العلمي",
+      description: "شارك في إثراء المجلس العلمي، أرسل درساً أو فائدة أو سؤالاً وساهم في نشر العلم الشرعي.",
+      keywords: ["إضافة محتوى", "مشاركة علمية", "إرسال درس", "نشر العلم", "المجلس العلمي"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "إضافة محتوى — المجلس العلمي",
+          url: "https://www.majlisilm.com/submit",
+          description: "أرسل درساً أو فائدة أو سؤالاً وشارك في إثراء المجلس العلمي",
+          about: { "@type": "Thing", name: "نشر العلم الشرعي والمشاركة المجتمعية" },
+        },
+      ],
+    });
+  }, []);
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
   const [author, setAuthor] = useState("");
@@ -45,68 +64,45 @@ export default function SubmitContentPage() {
   };
 
   return (
-    <div style={{ maxWidth: 600, margin: "2rem auto", padding: "1.5rem", background: "#fff", borderRadius: "0.75rem", boxShadow: "0 2px 12px rgba(0,0,0,.08)", direction: "rtl" }}>
-      <div style={{ marginBottom: "1.25rem" }}>
-        <Link href="/" style={{ color: "#6b7280", fontSize: "0.85rem", textDecoration: "none" }}>
-          ← الرئيسية
-        </Link>
+    <div className="scp-page">
+      <div className="scp-back-row">
+        <Link href="/" className="scp-back-link">← الرئيسية</Link>
       </div>
 
-      <h1 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.5rem", color: "#0D1B2A" }}>
-        أضف محتوى
-      </h1>
-      <p style={{ color: "#6b7280", fontSize: "0.9rem", marginBottom: "1rem" }}>
-        يصل مقترحك للأدمن لمراجعته قبل النشر.
-      </p>
+      <h1 className="scp-title">أضف محتوى</h1>
+      <p className="scp-subtitle">يصل مقترحك للأدمن لمراجعته قبل النشر.</p>
 
-      {/* Banner بارز للدروس */}
       <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.75rem",
-          padding: "0.875rem 1rem",
-          background: "linear-gradient(135deg, #f0f7f3, #fefdf5)",
-          border: "1.5px solid rgba(176,141,46,0.4)",
-          borderRadius: "0.625rem",
-          marginBottom: "1.5rem",
-          cursor: "pointer",
-        }}
+        className="scp-banner"
         onClick={() => setContentType("درس")}
         role="button"
         tabIndex={0}
-        onKeyDown={(e) => e.key === "Enter" && setContentType("درس")}
+        onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setContentType("درس")}
       >
-        <div style={{ fontSize: "1.5rem" }}>📚</div>
+        <div className="scp-banner__emoji" aria-hidden="true"><GraduationCap size={32} strokeWidth={1.4} /></div>
         <div>
-          <p style={{ margin: 0, fontWeight: 700, fontSize: "0.9rem", color: "#134a3a" }}>أضف درساً علمياً</p>
-          <p style={{ margin: "0.15rem 0 0", fontSize: "0.78rem", color: "#6b7280" }}>
-            شارك درساً، محاضرة، أو موضوعاً علمياً مفيداً
-          </p>
+          <p className="scp-banner__heading">أضف درساً علمياً</p>
+          <p className="scp-banner__desc">شارك درساً، محاضرة، أو موضوعاً علمياً مفيداً</p>
         </div>
       </div>
 
       {status === "success" && (
-        <div role="status" style={{ padding: "1rem", background: "#f0fdf4", border: "1px solid #86efac", borderRadius: "0.5rem", color: "#166534", marginBottom: "1.25rem", fontWeight: 600 }}>
-          {message}
-        </div>
+        <div role="status" className="scp-feedback scp-feedback--success">{message}</div>
       )}
 
       {status === "error" && (
-        <div role="alert" style={{ padding: "1rem", background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: "0.5rem", color: "#991b1b", marginBottom: "1.25rem" }}>
-          {message}
-        </div>
+        <div role="alert" className="scp-feedback scp-feedback--error">{message}</div>
       )}
 
       <form onSubmit={handleSubmit}>
-        <label style={labelStyle}>
+        <label className="scp-label">
           نوع المحتوى
           <select
             name="content-type"
             value={contentType}
             onChange={(e) => setContentType(e.target.value as ContentType)}
             required
-            style={inputStyle}
+            className="scp-input"
           >
             {CONTENT_TYPES.map((t) => (
               <option key={t} value={t}>{t}</option>
@@ -114,7 +110,7 @@ export default function SubmitContentPage() {
           </select>
         </label>
 
-        <label style={{ ...labelStyle, marginTop: "1rem" }}>
+        <label className="scp-label scp-label--mt">
           عنوان الموضوع
           <input
             type="text"
@@ -123,12 +119,12 @@ export default function SubmitContentPage() {
             required
             minLength={3}
             maxLength={500}
-            placeholder="اكتب عنواناً مختصراً للموضوع"
-            style={inputStyle}
+            aria-label="اكتب عنواناً مختصراً للموضوع" placeholder="اكتب عنواناً مختصراً للموضوع"
+            className="scp-input"
           />
         </label>
 
-        <label style={{ ...labelStyle, marginTop: "1rem" }}>
+        <label className="scp-label scp-label--mt">
           التفاصيل
           <textarea
             value={details}
@@ -137,27 +133,27 @@ export default function SubmitContentPage() {
             minLength={3}
             maxLength={8000}
             rows={6}
-            placeholder="اكتب التفاصيل هنا..."
-            style={{ ...inputStyle, resize: "vertical" }}
+            aria-label="اكتب التفاصيل هنا" placeholder="اكتب التفاصيل هنا..."
+            className="scp-input scp-input--textarea"
           />
         </label>
 
-        <label style={{ ...labelStyle, marginTop: "1rem", marginBottom: "1.5rem" }}>
+        <label className="scp-label scp-label--mt scp-label--mb">
           اسمك (اختياري)
           <input
             type="text"
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
             maxLength={200}
-            placeholder="للنسب الصحيح"
-            style={inputStyle}
+            aria-label="للنسب الصحيح" placeholder="للنسب الصحيح"
+            className="scp-input"
           />
         </label>
 
         <button
           type="submit"
           disabled={status === "loading"}
-          style={{ width: "100%", padding: "0.75rem", background: status === "loading" ? "#9ca3af" : "#C9A84C", color: "#fff", border: "none", borderRadius: "0.5rem", fontSize: "1rem", fontWeight: 700, cursor: status === "loading" ? "not-allowed" : "pointer", fontFamily: "inherit" }}
+          className={`scp-submit-btn${status === "loading" ? " is-loading" : ""}`}
         >
           {status === "loading" ? "جارٍ الإرسال..." : "إرسال المقترح"}
         </button>
@@ -165,28 +161,3 @@ export default function SubmitContentPage() {
     </div>
   );
 }
-
-const labelStyle: React.CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-  fontWeight: 600,
-  fontSize: "0.875rem",
-  color: "#374151",
-  gap: "0.4rem",
-  marginBottom: "0",
-};
-
-const inputStyle: React.CSSProperties = {
-  marginTop: "0.375rem",
-  padding: "0.6rem 0.75rem",
-  border: "1px solid #d1d5db",
-  borderRadius: "0.4rem",
-  fontSize: "0.9rem",
-  fontFamily: "inherit",
-  background: "#fafafa",
-  color: "#0D1B2A",
-  outline: "none",
-  width: "100%",
-  boxSizing: "border-box",
-  direction: "rtl",
-};

@@ -1,15 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { adminGetAllRulings, adminUpsertRuling, adminDeleteRuling } from "@/lib/platform-supabase";
 import { getAllRulingsForAdmin } from "@/lib/rulings-service";
-import { RULING_CATEGORIES } from "@/lib/platform-types";
 import { RULINGS_CATEGORY_TREE, flattenCategories } from "@/lib/rulings-categories";
 import { importRulingsFromText, RULINGS_CSV_TEMPLATE } from "@/lib/rulings-import";
 import { validateRuling, findSimilarRulings } from "@/lib/rulings-validator";
-import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { adminListLoad } from "@/lib/admin-list-load";
 import { StatusBadge } from "./AdminUI";
-import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { AdminModal, Field } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 import type { ShariaRulingExtended } from "@/lib/rulings-types";
 
@@ -38,7 +37,7 @@ export function RulingsSection() {
   const [importText, setImportText] = useState("");
   const [importFormat, setImportFormat] = useState<"csv" | "json" | "markdown">("csv");
   const [importResult, setImportResult] = useState<string | null>(null);
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState(() => { const p = new URLSearchParams(window.location.search); return p.get("q") || ""; });
 
   const subcategoryOptions = useMemo(() => flattenCategories(), []);
 
@@ -75,17 +74,14 @@ export function RulingsSection() {
     };
   }, [items]);
 
-  const filtered = useMemo(() => {
-    if (!filter.trim()) return items;
-    const q = filter.trim().toLowerCase();
-    return items.filter(
-      (i) => (i.title ?? "").toLowerCase().includes(q) || (i.category ?? "").toLowerCase().includes(q),
-    );
-  }, [items, filter]);
+  const filtered = useMemo(
+    () => items.filter((i) => arabicMatchAny([i.title ?? "", i.category ?? ""], filter)),
+    [items, filter],
+  );
 
   const handleSave = async () => {
     const validation = validateRuling(form, items);
-    if (!validation.valid) return showError(validation.errors.join(" — "));
+    if (!validation.valid) return showError(validation.errors.join("، "));
 
     const similar = findSimilarRulings(form, items);
     if (similar.length > 0 && !confirm(`يوجد ${similar.length} حكم مشابه. متابعة الحفظ؟`)) return;
@@ -119,16 +115,16 @@ export function RulingsSection() {
 
   return (
     <div className="rulings-admin">
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
-        <h2 style={{ margin: 0, color: C.emeraldDeep }}>موسوعة الأحكام ({stats.total})</h2>
-        <div style={{ display: "flex", gap: "0.5rem" }}>
+      <div className="rls-header">
+        <h2 className="rls-title">موسوعة الأحكام ({stats.total})</h2>
+        <div className="rls-btn-group">
           <button
             type="button"
             onClick={() => {
               setForm({ ...EMPTY });
               setOpen(true);
             }}
-            style={{ padding: "0.5rem 1rem", background: C.emerald, color: C.parchment, border: "none", borderRadius: "0.375rem", cursor: "pointer" }}
+            className="rls-add-btn"
           >
             + إضافة حكم
           </button>
@@ -155,21 +151,14 @@ export function RulingsSection() {
       </div>
 
       <div className="rulings-admin-import">
-        <h3 style={{ marginTop: 0 }}>استيراد جماعي (CSV / JSON / Markdown)</h3>
-        <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
+        <h3 className="rls-import-h3">استيراد جماعي (CSV / JSON / Markdown)</h3>
+        <div className="rls-fmt-row">
           {(["csv", "json", "markdown"] as const).map((f) => (
             <button
               key={f}
               type="button"
               onClick={() => setImportFormat(f)}
-              style={{
-                padding: "0.35rem 0.75rem",
-                background: importFormat === f ? C.emerald : C.panel,
-                color: importFormat === f ? C.parchment : C.ink,
-                border: `1px solid ${C.line}`,
-                borderRadius: "0.25rem",
-                cursor: "pointer",
-              }}
+              className={`rls-fmt-btn${importFormat === f ? " rls-fmt-btn--active" : ""}`}
             >
               {f.toUpperCase()}
             </button>
@@ -177,7 +166,7 @@ export function RulingsSection() {
           <button
             type="button"
             onClick={() => setImportText(RULINGS_CSV_TEMPLATE)}
-            style={{ fontSize: "0.8rem" }}
+            className="rls-tmpl-btn"
           >
             تحميل قالب CSV
           </button>
@@ -187,44 +176,41 @@ export function RulingsSection() {
           onChange={(e) => setImportText(e.target.value)}
           rows={5}
           placeholder="الصق محتوى الاستيراد هنا..."
-          style={{ ...textareaSt, width: "100%", marginBottom: "0.5rem" }}
+          className="adm-textarea rls-textarea--mb"
         />
-        <button type="button" onClick={handleImport} style={{ padding: "0.45rem 0.85rem", cursor: "pointer" }}>
+        <button type="button" onClick={handleImport} className="rls-import-btn">
           استيراد
         </button>
-        {importResult && <p style={{ fontSize: "0.85rem", marginTop: "0.5rem" }}>{importResult}</p>}
+        {importResult && <p className="rls-import-result">{importResult}</p>}
       </div>
 
       <input
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
         placeholder="بحث في الأحكام..."
-        style={{ ...inputSt, width: "100%", marginBottom: "0.75rem" }}
+        className="adm-input rls-filter-mb"
       />
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : (
         <>
         {filtered.length > 100 && (
-          <p style={{ fontSize: "0.8125rem", color: C.inkSoft, marginBottom: "0.75rem" }}>
-            عرض 100 من {filtered.length.toLocaleString("ar")} — استخدم البحث لتضييق النتائج.
+          <p className="rls-hint">
+            عرض 100 من {filtered.length.toLocaleString("ar")}، استخدم البحث لتضييق النتائج.
           </p>
         )}
         {filtered.slice(0, 100).map((item) => (
-          <div
-            key={item.id}
-            style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.375rem", padding: "1rem", marginBottom: "0.75rem" }}
-          >
+          <div key={item.id} className="adm-item-card">
             <strong>{item.title}</strong>{" "}
             <StatusBadge status={item.verification_status} />
-            {" — "}
-            <span style={{ fontSize: "0.875rem", color: C.inkSoft }}>
+            {"، "}
+            <span className="rls-item-cat">
               {item.category}
               {item.subcategory ? ` / ${item.subcategory}` : ""}
             </span>
-            <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem", flexWrap: "wrap" }}>
-              <button type="button" onClick={() => { setForm({ ...item }); setOpen(true); }} style={{ fontSize: "0.75rem" }}>
+            <div className="rls-item-actions">
+              <button type="button" onClick={() => { setForm({ ...item }); setOpen(true); }} className="rls-edit-btn">
                 تعديل
               </button>
               <button
@@ -232,7 +218,7 @@ export function RulingsSection() {
                 onClick={() => {
                   if (confirm("حذف؟")) adminDeleteRuling(item.id).then(load);
                 }}
-                style={{ fontSize: "0.75rem", color: "#dc2626" }}
+                className="rls-del-btn"
               >
                 حذف
               </button>
@@ -240,7 +226,7 @@ export function RulingsSection() {
                 <button
                   type="button"
                   onClick={() => adminUpsertRuling({ ...item, verification_status: "approved" }).then(load)}
-                  style={{ fontSize: "0.75rem", color: C.emerald }}
+                  className="rls-approve-btn"
                 >
                   اعتماد
                 </button>
@@ -259,20 +245,24 @@ export function RulingsSection() {
         saving={saving}
       >
         <Field label="العنوان">
-          <input style={inputSt} value={form.title || ""} onChange={(e) => set("title", e.target.value)} />
+          <input className="adm-input" value={form.title || ""} onChange={(e) => set("title", e.target.value)} />
         </Field>
         <Field label="التصنيف">
-          <select style={selectSt} value={form.category} onChange={(e) => set("category", e.target.value)}>
-            {RULING_CATEGORIES.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
+          <select className="adm-select" value={form.category} onChange={(e) => set("category", e.target.value)}>
+            {/* كان هذا الـselect يعرض RULING_CATEGORIES (13 تصنيفاً قديماً
+                من platform-types.ts) و RULINGS_CATEGORY_TREE (20 تصنيفاً
+                حالياً من rulings-categories.ts) معاً في نفس القائمة —
+                تكرار وبقايا ترحيل غير مكتمل تسمح للإداري باختيار تصنيف
+                قديم ("الحج" بدل "الحج والعمرة" مثلاً) فيختفي الحكم صامتاً
+                من فلاتر RulingsPage الحية. أُزيلت القائمة القديمة، أُبقي
+                المصدر الحالي وحده. اكتُشف بالفحص المباشر 2026-07-18. */}
             {RULINGS_CATEGORY_TREE.map((c) => (
               <option key={c.slug} value={c.name}>{c.name}</option>
             ))}
           </select>
         </Field>
         <Field label="التصنيف الفرعي">
-          <select style={selectSt} value={form.subcategory || ""} onChange={(e) => set("subcategory", e.target.value)}>
+          <select className="adm-select" value={form.subcategory || ""} onChange={(e) => set("subcategory", e.target.value)}>
             <option value="">—</option>
             {subcategoryOptions.map((s) => (
               <option key={s.slug} value={s.sub}>{s.sub}</option>
@@ -280,27 +270,27 @@ export function RulingsSection() {
           </select>
         </Field>
         <Field label="الملخص">
-          <textarea style={textareaSt} value={form.summary || ""} onChange={(e) => set("summary", e.target.value)} rows={2} />
+          <textarea className="adm-textarea" value={form.summary || ""} onChange={(e) => set("summary", e.target.value)} rows={2} />
         </Field>
         <Field label="التفصيل">
-          <textarea style={textareaSt} value={form.body || ""} onChange={(e) => set("body", e.target.value)} rows={8} />
+          <textarea className="adm-textarea" value={form.body || ""} onChange={(e) => set("body", e.target.value)} rows={8} />
         </Field>
         <Field label="الراجح">
-          <input style={inputSt} value={form.prevailing_view || ""} onChange={(e) => set("prevailing_view", e.target.value)} />
+          <input className="adm-input" value={form.prevailing_view || ""} onChange={(e) => set("prevailing_view", e.target.value)} />
         </Field>
         <Field label="درجة الحديث">
-          <input style={inputSt} value={form.hadith_grade || ""} onChange={(e) => set("hadith_grade", e.target.value)} />
+          <input className="adm-input" value={form.hadith_grade || ""} onChange={(e) => set("hadith_grade", e.target.value)} />
         </Field>
         <Field label="الكلمات المفتاحية (فاصلة)">
           <input
-            style={inputSt}
+            className="adm-input"
             value={(form.keywords || []).join("، ")}
             onChange={(e) => set("keywords", e.target.value.split(/[،,]/).map((s) => s.trim()).filter(Boolean))}
           />
         </Field>
         <Field label="المراجع (JSON)">
           <textarea
-            style={textareaSt}
+            className="adm-textarea"
             value={JSON.stringify(form.references || [], null, 2)}
             onChange={(e) => {
               try { set("references", JSON.parse(e.target.value)); } catch { /* ignore */ }
@@ -313,13 +303,13 @@ export function RulingsSection() {
             type="number"
             min={1}
             max={100}
-            style={inputSt}
+            className="adm-input"
             value={form.importance_score ?? 50}
             onChange={(e) => set("importance_score", Number(e.target.value))}
           />
         </Field>
         <Field label="الحالة">
-          <select style={selectSt} value={form.status || "approved"} onChange={(e) => set("status", e.target.value)}>
+          <select className="adm-select" value={form.status || "approved"} onChange={(e) => set("status", e.target.value)}>
             <option value="approved">منشور</option>
             <option value="pending">معلّق</option>
             <option value="draft">مسودة</option>
@@ -327,7 +317,7 @@ export function RulingsSection() {
         </Field>
         <Field label="التحقق">
           <select
-            style={selectSt}
+            className="adm-select"
             value={form.verification_status || "approved"}
             onChange={(e) => set("verification_status", e.target.value)}
           >

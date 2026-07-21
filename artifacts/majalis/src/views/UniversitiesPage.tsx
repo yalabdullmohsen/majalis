@@ -1,7 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
+import { AlertTriangle, GraduationCap, Landmark, Search } from "lucide-react";
 import { CompareProvider } from "@/components/universities/CompareContext";
 import { CompareBar } from "@/components/universities/CompareBar";
 import { UniversityCard } from "@/components/universities/UniversityCard";
+import { ShareButtons } from "@/components/ContentActions";
+import { applyPageSeo } from "@/lib/seo";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
+import { usePersistedState } from "@/hooks/usePersistedState";
 import {
   fetchUniversities,
   DEGREE_LEVELS,
@@ -27,13 +33,11 @@ function FilterSelect({
 }) {
   return (
     <label className="flex flex-col gap-1 min-w-0">
-      <span className="text-xs font-medium text-[var(--majalis-ink-soft)]">{label}</span>
+      <span className="up-filter-label">{label}</span>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="px-3 py-2 text-sm rounded-xl border border-[var(--majalis-line)]
-          bg-[var(--majalis-parchment)] text-[var(--majalis-ink)]
-          focus:outline-none focus:ring-2 focus:ring-[var(--majalis-emerald)]"
+        className="up-filter-select"
       >
         <option value="">{placeholder}</option>
         {options.map((o) => <option key={o} value={o}>{o}</option>)}
@@ -47,9 +51,11 @@ function UniversitiesContent() {
   const [loading, setLoading]           = useState(true);
   const [, setTotal]                     = useState(0);
   const [seedNeeded, setSeedNeeded]     = useState(false);
-  const [search, setSearch]             = useState("");
-  const [searchInput, setSearchInput]   = useState("");
-  const [filters, setFilters]           = useState<UniversityFilters>({});
+  const [search, setSearch]             = usePersistedState("filters:/universities:search", "");
+  const [searchInput, setSearchInput]   = usePersistedState("filters:/universities:searchInput", "");
+  const [filters, setFilters]           = usePersistedState<UniversityFilters>("filters:/universities:filters", {});
+  const [filtersOpen, setFiltersOpen]   = useState(false);
+  const activeFilterCount = Object.values(filters).filter(Boolean).length;
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -65,7 +71,42 @@ function UniversitiesContent() {
     }
   }, [filters, search]);
 
+  useEffect(() => {
+    applyPageSeo({
+      path: "/universities",
+      title: "دليل الجامعات الإسلامية | المجلس العلمي",
+      description: "دليل شامل للجامعات والمعاهد الإسلامية حول العالم، ابحث وقارن بين الجامعات حسب التخصص والمستوى وطريقة الدراسة.",
+      keywords: ["جامعات إسلامية", "كليات شريعة", "دراسة شرعية", "جامعة إسلامية", "معهد ديني"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "دليل الجامعات الإسلامية حول العالم",
+          description: "جامعات ومعاهد إسلامية في عشرات الدول العربية والإسلامية",
+          numberOfItems: COUNTRIES.length,
+          itemListElement: COUNTRIES.map((country, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `الجامعات الإسلامية في ${country}`,
+            url: `https://www.majlisilm.com/universities?country=${encodeURIComponent(country)}`,
+          })),
+        },
+      ],
+    });
+  }, []);
+
   useEffect(() => { load(); }, [load]);
+
+  // رابط `?country=...` في JSON-LD أعلى (لكل دولة بـCOUNTRIES) كان يُتجاهَل
+  // كليًا: `filters` تُهيَّأ فقط من usePersistedState بلا قراءة أي شيء من
+  // الرابط الفعلي — عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف
+  // بالفحص المباشر 2026-07-18.
+  useEffect(() => {
+    const country = new URLSearchParams(window.location.search).get("country");
+    if (country && COUNTRIES.includes(country)) {
+      setFilters((prev) => ({ ...prev, country }));
+    }
+  }, []);
 
   function setFilter(key: keyof UniversityFilters, value: string | boolean | undefined) {
     setFilters((prev) => ({ ...prev, [key]: value || undefined }));
@@ -77,12 +118,15 @@ function UniversitiesContent() {
   }
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[var(--majalis-parchment)] pb-24">
+    <div dir="rtl" className="up-root">
       {/* Header */}
-      <div className="text-white py-10 px-4" style={{ background: "linear-gradient(to left, var(--majalis-emerald-deep), var(--majalis-emerald))" }}>
+      <div className="text-white py-10 px-4 ldb-hero">
         <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-2xl font-bold mb-2">🎓 دليل الجامعات والكليات الشرعية</h1>
-          <p className="text-emerald-100 text-sm max-w-xl mx-auto leading-relaxed">
+          <h1 className="text-2xl font-bold mb-2 flex items-center justify-center gap-2">
+            <GraduationCap size={22} strokeWidth={1.5} aria-hidden="true" />
+            دليل الجامعات والكليات الشرعية
+          </h1>
+          <p className="text-white/85 text-sm max-w-xl mx-auto leading-relaxed">
             موسوعة شاملة للجامعات التي تُقدّم دراسات شرعية حول العالم.
             ابحث وقارن وصل لرابط التقديم الرسمي مباشرة.
           </p>
@@ -94,12 +138,11 @@ function UniversitiesContent() {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="ابحث عن جامعة أو تخصص…"
-              className="flex-1 px-4 py-2.5 rounded-xl text-gray-800 text-sm focus:outline-none
-                focus:ring-2 focus:ring-white/50"
+              aria-label="بحث عن جامعة أو تخصص"
+              className="flex-1 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-white/50 up-search-input"
             />
             <button type="submit"
-              className="px-4 py-2.5 bg-white/20 hover:bg-white/30 text-white text-sm
-                rounded-xl font-medium transition-colors">
+              className="px-4 py-2.5 bg-white/20 hover:bg-white/30 text-white text-sm rounded-xl font-medium transition-colors">
               بحث
             </button>
           </form>
@@ -108,48 +151,41 @@ function UniversitiesContent() {
 
       <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
         {/* تنبيه البيانات التجريبية */}
-        <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800
-          rounded-xl px-4 py-3 text-sm text-amber-700 dark:text-amber-300">
-          ⚠️ <strong>تنبيه:</strong> البيانات المعروضة تجريبية وتحتاج تحقق بشري. تأكد دائماً من الموقع
+        <div className="up-alert" role="note">
+          <AlertTriangle size={14} aria-hidden="true" className="inline ml-1" />
+          <strong>تنبيه:</strong> البيانات المعروضة تجريبية وتحتاج تحقق بشري. تأكد دائماً من الموقع
           الرسمي للجامعة قبل اتخاذ أي قرار.
         </div>
 
-        {/* فلاتر */}
-        <div className="bg-[var(--majalis-panel)] border border-[var(--majalis-line)]
-          rounded-2xl p-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-          <FilterSelect label="الدولة"         value={filters.country || ""} onChange={(v) => setFilter("country", v)}       options={COUNTRIES} />
-          <FilterSelect label="الدرجة العلمية" value={filters.degree_level || ""} onChange={(v) => setFilter("degree_level", v as UniversityFilters["degree_level"])} options={DEGREE_LEVELS} />
-          <FilterSelect label="نظام الدراسة"   value={filters.study_mode || ""}   onChange={(v) => setFilter("study_mode", v as UniversityFilters["study_mode"])}   options={STUDY_MODES} />
-          <FilterSelect label="لغة الدراسة"    value={filters.study_language || ""} onChange={(v) => setFilter("study_language", v)} options={LANGUAGES} />
-          <div className="flex flex-col gap-1">
-            <span className="text-xs font-medium text-[var(--majalis-ink-soft)]">خيارات</span>
-            <div className="flex flex-col gap-1.5 mt-1">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked={!!filters.has_scholarship}
-                  onChange={(e) => setFilter("has_scholarship", e.target.checked || undefined)}
-                  className="accent-emerald-600" />
-                <span className="text-sm text-[var(--majalis-ink-soft)]">منح متاحة</span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked={!!filters.is_verified}
-                  onChange={(e) => setFilter("is_verified", e.target.checked || undefined)}
-                  className="accent-emerald-600" />
-                <span className="text-sm text-[var(--majalis-ink-soft)]">موثقة فقط</span>
-              </label>
-            </div>
+        {/* رقائق الدولة السريعة + زر التصفية المتقدمة */}
+        <div className="up-quick-filters">
+          <div className="content-hub-chips up-country-chips" role="tablist" aria-label="تصفية حسب الدولة">
+            <button
+              type="button" role="tab" aria-selected={!filters.country}
+              className={!filters.country ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+              onClick={() => setFilter("country", undefined)}
+            >كل الدول</button>
+            {COUNTRIES.map((c) => (
+              <button
+                key={c} type="button" role="tab" aria-selected={filters.country === c}
+                className={filters.country === c ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+                onClick={() => setFilter("country", filters.country === c ? undefined : c)}
+              >{c}</button>
+            ))}
           </div>
+          <FilterToggle onClick={() => setFiltersOpen(true)} label={`تصفية متقدمة${activeFilterCount ? ` (${activeFilterCount})` : ""}`} />
         </div>
 
         {/* إحصائية */}
         <div className="flex items-center justify-between">
-          <p className="text-sm text-[var(--majalis-ink-soft)]">
+          <p className="up-count-text">
             {loading ? "جارٍ التحميل…" : `${universities.length} جامعة`}
-            {search && ` — نتائج "${search}"`}
+            {search && `، نتائج "${search}"`}
           </p>
           {Object.values(filters).some(Boolean) || search ? (
             <button type="button"
               onClick={() => { setFilters({}); setSearch(""); setSearchInput(""); }}
-              className="text-sm text-[var(--majalis-emerald)] hover:underline">
+              className="up-clear-btn">
               مسح الفلاتر
             </button>
           ) : null}
@@ -157,24 +193,24 @@ function UniversitiesContent() {
 
         {/* Grid */}
         {seedNeeded && (
-          <div className="text-center py-10 text-[var(--majalis-ink-soft)] opacity-60">
-            <p className="text-4xl mb-3">🏛️</p>
+          <div className="up-empty-state">
+            <Landmark size={40} strokeWidth={1.3} className="mx-auto mb-3" aria-hidden="true" />
             <p>جداول الجامعات لم تُطبَّق بعد على قاعدة البيانات.</p>
-            <p className="text-xs mt-2">شغّل: <code className="bg-[var(--majalis-parchment-deep)] px-1 rounded">node scripts/apply-universities-migrations.mjs</code></p>
+            <p className="text-xs mt-2">شغّل: <code className="up-code">node scripts/apply-universities-migrations.mjs</code></p>
           </div>
         )}
 
         {!seedNeeded && loading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[1,2,3,4,5,6].map((i) => (
-              <div key={i} className="bg-[var(--majalis-panel)] rounded-2xl h-64 animate-pulse border border-[var(--majalis-line)]" />
+              <div key={i} className="up-skeleton" />
             ))}
           </div>
         )}
 
         {!seedNeeded && !loading && universities.length === 0 && (
-          <div className="text-center py-12 text-[var(--majalis-ink-soft)] opacity-60">
-            <p className="text-4xl mb-3">🔍</p>
+          <div className="up-empty-state up-empty-state--py12">
+            <Search size={40} strokeWidth={1.3} className="mx-auto mb-3" aria-hidden="true" />
             <p>لا توجد نتائج مطابقة للبحث الحالي.</p>
           </div>
         )}
@@ -188,7 +224,40 @@ function UniversitiesContent() {
         )}
       </div>
 
+      <div className="twh-share">
+        <ShareButtons title="الجامعات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/universities" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
+      </div>
+
       <CompareBar />
+
+      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="تصفية متقدمة">
+        <div className="up-sheet-filters">
+          <FilterSelect label="الدرجة العلمية" value={filters.degree_level || ""} onChange={(v) => setFilter("degree_level", v as UniversityFilters["degree_level"])} options={DEGREE_LEVELS} />
+          <FilterSelect label="نظام الدراسة"   value={filters.study_mode || ""}   onChange={(v) => setFilter("study_mode", v as UniversityFilters["study_mode"])}   options={STUDY_MODES} />
+          <FilterSelect label="لغة الدراسة"    value={filters.study_language || ""} onChange={(v) => setFilter("study_language", v)} options={LANGUAGES} />
+          <div className="flex flex-col gap-1.5">
+            <span className="up-filter-label">خيارات إضافية</span>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={!!filters.has_scholarship}
+                onChange={(e) => setFilter("has_scholarship", e.target.checked || undefined)}
+                className="accent-emerald-600" />
+              <span className="up-filter-opt-label">منح متاحة</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={!!filters.is_verified}
+                onChange={(e) => setFilter("is_verified", e.target.checked || undefined)}
+                className="accent-emerald-600" />
+              <span className="up-filter-opt-label">موثقة فقط</span>
+            </label>
+          </div>
+          <button type="button" className="up-clear-btn" onClick={() => setFiltersOpen(false)}>
+            تطبيق
+          </button>
+        </div>
+      </FilterBottomSheet>
     </div>
   );
 }

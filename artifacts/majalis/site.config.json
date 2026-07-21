@@ -1,0 +1,26 @@
+{
+  "$comment": "المصدر الوحيد لهوية المنصة. يُقرأ من التطبيق (src/lib/site-config.ts) ومن سكربتات البناء (scripts/*.mjs). لا تكتب اسم المنصة أو نطاقها أو بريدها يدويًا في أي ملف آخر.",
+
+  "siteName": "المجلس العلمي",
+  "siteShortName": "المجلس العلمي",
+  "siteDescription": "منصة علمية عربية للدروس الشرعية والدورات العلمية وطلب العلم.",
+
+  "$domainNote": "النطاق المعتمد هو www — لأن الخادم يحوّل النطاق المجرّد إليه بـ308. لقلبه إلى النطاق المجرّد: غيّر siteUrl هنا، وغيّر النطاق الرئيسي في لوحة Vercel، ثم أعد البناء.",
+  "siteUrl": "https://www.majlisilm.com",
+  "legacyOrigins": [
+    "https://majlisilm.com",
+    "http://majlisilm.com",
+    "http://www.majlisilm.com"
+  ],
+
+  "titleSuffix": " | المجلس العلمي",
+
+  "$emailNote": "بريد التواصل الرسمي الوحيد للمنصة كاملةً — استفسارات عامة، ملاحظات تقنية، تصحيح محتوى علمي، إبلاغ عن خطأ، اقتراحات وشراكات. لا بريد آخر معتمد.",
+  "contactEmail": "Majlisilm.app@gmail.com",
+
+  "$forbiddenNote": "أسماء وعناوين ممنوعة في أي نص معروض للمستخدم — يحرسها scripts/test-identity.mjs. استثناء وحيد: contactEmail أعلاه معتمَد رغم كونه على نطاق gmail.com.",
+  "forbiddenBrandNames": ["مجالس العلم", "منصة المجالس", "مجالس العلمية"],
+  "forbiddenEmailDomains": ["gmail.com", "hotmail.com", "outlook.com", "yahoo.com"],
+
+  "defaultImage": "/logo.png"
+}

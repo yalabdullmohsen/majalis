@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { PageHeader, Loading, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { PlatformContentCard } from "@/components/platform/ContentDetailLayout";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
 import { getAllNawazilItems, getNawazilTopicItems } from "@/lib/fiqh-council-service";
+import { applyPageSeo } from "@/lib/seo";
+import { ShareButtons } from "@/components/ContentActions";
 import { NAWAZIL_TOPICS } from "@/lib/fiqh-council-nawazil";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   FIQH_ITEM_TYPE_LABELS,
   fiqhItemHref,
@@ -19,6 +22,16 @@ export default function FiqhCouncilNawazilPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    applyPageSeo({
+      path: "/fiqh-council/nawazil",
+      title: "النوازل المعاصرة | المجمع الفقهي | المجلس العلمي",
+      description: "النوازل الفقهية المعاصرة، مسائل العصر الحديث من التقنية والاقتصاد الرقمي والطب والبيئة.",
+      keywords: ["نوازل معاصرة", "مسائل معاصرة", "فقه معاصر", "نوازل فقهية", "مستجدات فقهية"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "النوازل المعاصرة", url: "https://www.majlisilm.com/fiqh-council/nawazil", about: { "@type": "Thing", name: "النوازل الفقهية والمستجدات المعاصرة" } }],
+    });
+  }, []);
+
+  useEffect(() => {
     setLoading(true);
     const load = activeTopic
       ? getNawazilTopicItems(activeTopic, 20)
@@ -31,25 +44,29 @@ export default function FiqhCouncilNawazilPage() {
       <PageHeader
         eyebrow="الفقه المعاصر"
         title="فقه النوازل"
-        subtitle="قضايا معاصرة مرتبطة بقرارات وفتاوى موثّقة — دون إصدار أحكام مستقلة."
+        subtitle="قضايا معاصرة مرتبطة بقرارات وفتاوى موثّقة، دون إصدار أحكام مستقلة."
       />
 
       <FiqhCouncilSubnav />
 
-      <div className="content-hub-chips fiqh-nawazil-chips">
+      <div className="content-hub-chips fiqh-nawazil-chips" role="tablist" aria-label="تصفية النوازل الفقهية">
         <button
+          role="tab"
           type="button"
           className={!activeTopic ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
           onClick={() => setActiveTopic(null)}
+          aria-selected={!activeTopic}
         >
           الكل
         </button>
         {NAWAZIL_TOPICS.map((topic) => (
           <button
             key={topic.slug}
+            role="tab"
             type="button"
             className={activeTopic === topic.slug ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
             onClick={() => setActiveTopic(topic.slug)}
+            aria-selected={activeTopic === topic.slug}
           >
             {topic.title}
           </button>
@@ -63,7 +80,7 @@ export default function FiqhCouncilNawazilPage() {
       )}
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : items.length === 0 ? (
         <Empty text="لا توجد مواد موثّقة لهذا الموضوع حالياً." />
       ) : (
@@ -102,6 +119,13 @@ export default function FiqhCouncilNawazilPage() {
         المحتوى المعروض مستمد من قرارات وفتاوى رسمية منشورة. للمراجعة الكاملة، راجع
         {" "}<Link href="/fiqh-council">صفحة المجمع الفقهي</Link>.
       </p>
+
+      <div className="twh-share">
+        <ShareButtons title="نوازل فقهية معاصرة — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/nawazil" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في النوازل الفقهية" count={4} />
+      </div>
     </div>
   );
 }

@@ -1,16 +1,21 @@
-"use client";
-
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { BookOpen, CircleHelp, GraduationCap, Home, LayoutGrid } from "lucide-react";
+import { BookOpen, GraduationCap, HelpCircle, Home, LayoutGrid } from "lucide-react";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 
-const NAV_TABS = [
-  { href: "/",        label: "الرئيسية", Icon: Home },
-  { href: "/quran",   label: "القرآن",   Icon: BookOpen },
-  { href: "/qa",      label: "سؤال وجواب", Icon: CircleHelp },
-  { href: "/learning/paths", label: "تعلّم", Icon: GraduationCap },
-] as const;
+type NavTab = {
+  href: string;
+  label: string;
+  Icon: React.ComponentType<{ size?: number; strokeWidth?: number; "aria-hidden"?: boolean }>;
+};
+
+/* خمس وجهات ثابتة فقط على الهاتف. تبقى الصلاة وبقية الخدمات متاحة من "المزيد". */
+const NAV_TABS: NavTab[] = [
+  { href: "/",             label: "الرئيسية",    Icon: Home },
+  { href: "/quran-hub",    label: "القرآن",      Icon: BookOpen },
+  { href: "/qa",           label: "سؤال وجواب", Icon: HelpCircle },
+  { href: "/lessons",      label: "تعلّم",       Icon: GraduationCap },
+];
 
 export function BottomNavBar() {
   const [location] = useLocation();
@@ -21,28 +26,32 @@ export function BottomNavBar() {
     return location === href || location.startsWith(href + "/");
   };
 
-  const renderTab = ({ href, label, Icon }: { href: string; label: string; Icon: typeof Home }) => {
-    const active = isActive(href);
-    return (
-      <Link
-        key={href}
-        href={href}
-        className={`bottom-nav__tab${active ? " is-active" : ""}`}
-        aria-current={active ? "page" : undefined}
-      >
-        <span className="bottom-nav__tab-icon">
-          <Icon size={22} strokeWidth={active ? 2.3 : 1.6} aria-hidden="true" />
-        </span>
-        <span className="bottom-nav__tab-label">{label}</span>
-      </Link>
-    );
-  };
+  // قارئ المصحف /mushaf غامر مخصَّص بتنقّله الخاص (pager/سحب صفحات) —
+  // شريط تنقّل سفلي عام فوقه يجعله يبدو صفحة ويب لا تطبيق قراءة، ويحجز
+  // مساحة (--bottom-nav-h) كانت ستبقى محسوبة في تخطيط المصحف بلا داعٍ.
+  if (location.startsWith("/mushaf")) return null;
 
   return (
     <>
-      <nav className="bottom-nav" aria-label="التنقل السفلي">
-        {NAV_TABS.map(renderTab)}
+      <nav className="bottom-nav bottom-nav--v2" aria-label="التنقل السفلي">
+        {NAV_TABS.map(({ href, label, Icon }) => {
+          const active = isActive(href);
+          return (
+            <Link
+              key={href}
+              href={href}
+              className={`bottom-nav__tab${active ? " is-active" : ""}`}
+              aria-current={active ? "page" : undefined}
+            >
+              <span className="bottom-nav__tab-icon">
+                <Icon size={22} strokeWidth={active ? 2.4 : 1.6} aria-hidden={true} />
+              </span>
+              <span className="bottom-nav__tab-label">{label}</span>
+            </Link>
+          );
+        })}
 
+        {/* تبويب المزيد */}
         <button
           type="button"
           className={`bottom-nav__tab${moreOpen ? " is-active" : ""}`}
@@ -52,7 +61,7 @@ export function BottomNavBar() {
           aria-expanded={moreOpen}
         >
           <span className="bottom-nav__tab-icon">
-            <LayoutGrid size={22} strokeWidth={moreOpen ? 2.3 : 1.6} aria-hidden="true" />
+            <LayoutGrid size={22} strokeWidth={moreOpen ? 2.4 : 1.6} aria-hidden={true} />
           </span>
           <span className="bottom-nav__tab-label">المزيد</span>
         </button>

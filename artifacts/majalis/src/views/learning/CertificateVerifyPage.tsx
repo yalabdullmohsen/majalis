@@ -1,43 +1,214 @@
 import { useEffect, useState } from "react";
+import { GraduationCap } from "lucide-react";
 import { useParams, Link } from "wouter";
-import { verifyLearningCertificate } from "@/lib/digital-learning-service";
+import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { verifyCertificate } from "@/lib/learning-paths-service";
+import { applyPageSeo } from "@/lib/seo";
+
+type CertResult = {
+  valid: boolean;
+  message?: string;
+  certificate?: {
+    title?: string;
+    holder?: string;
+    issued_at?: string;
+    path?: string;
+    level?: string;
+  };
+};
 
 export default function CertificateVerifyPage() {
   const params = useParams();
-  const code = params.code || "";
-  const [result, setResult] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [code, setCode] = useState(params.code || "");
 
   useEffect(() => {
-    if (!code) {
-      setLoading(false);
-      return;
-    }
-    verifyLearningCertificate(code)
-      .then(setResult)
+    applyPageSeo({
+      path: "/learning/certificates",
+      title: "التحقق من الشهادة | المجلس العلمي",
+      description: "تحقق من صحة الشهادة العلمية الصادرة من المجلس العلمي، أدخل رمز الشهادة للتحقق منها.",
+      keywords: ["تحقق شهادة", "شهادة علمية", "اعتماد علمي", "المجلس العلمي"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "التحقق من الشهادة العلمية",
+          url: "https://www.majlisilm.com/learning/certificates",
+          description: "التحقق من صحة الشهادات العلمية الصادرة من المجلس العلمي",
+          about: { "@type": "Thing", name: "الشهادات العلمية الإسلامية" },
+        },
+      ],
+    });
+  }, []);
+  const [inputCode, setInputCode] = useState(params.code || "");
+  const [result, setResult] = useState<CertResult | null>(null);
+  const [loading, setLoading] = useState(Boolean(params.code));
+
+  useEffect(() => {
+    if (!code) return;
+    setLoading(true);
+    setResult(null);
+    verifyCertificate(code)
+      .then((c) => {
+        if (!c) {
+          setResult({ valid: false });
+          return;
+        }
+        setResult({
+          valid: true,
+          certificate: {
+            title: c.path_title_snapshot,
+            holder: c.holder_name,
+            issued_at: c.issued_at,
+            path: c.path_title_snapshot,
+            level: c.level ?? undefined,
+          },
+        });
+      })
       .finally(() => setLoading(false));
   }, [code]);
 
-  return (
-    <div className="page-shell narrow" style={{ textAlign: "center", paddingTop: "3rem" }}>
-      <h1 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "1.5rem" }}>التحقق من الشهادة</h1>
+  function handleVerify(e: React.FormEvent) {
+    e.preventDefault();
+    const trimmed = inputCode.trim();
+    if (trimmed) setCode(trimmed);
+  }
 
-      {loading ? (
-        <p>جاري التحقق...</p>
-      ) : result?.valid ? (
-        <div style={{ padding: "2rem", borderRadius: "0.5rem", border: "2px solid var(--emerald-deep)", background: "var(--panel)" }}>
-          <p style={{ fontSize: "3rem", marginBottom: "0.5rem" }}>✓</p>
-          <h2 style={{ fontWeight: 700, marginBottom: "0.5rem" }}>شهادة صالحة</h2>
-          <p style={{ color: "var(--ink-soft)" }}>{result.certificate?.title}</p>
-          <p style={{ fontSize: "0.875rem", marginTop: "0.5rem" }}>رمز: {code}</p>
+  return (
+    <div className="page-shell narrow cvp-shell">
+      <div className="cvp-hero">
+        <div className="cvp-hero-icon"><GraduationCap size={48} strokeWidth={1.3} /></div>
+        <h1 className="cvp-title">التحقق من الشهادة</h1>
+        <p className="cvp-subtitle">
+          أدخل رمز الشهادة للتحقق من صحتها وصلاحيتها
+        </p>
+      </div>
+
+      {/* Input form */}
+      <form className="cvp-form" onSubmit={handleVerify}>
+        <div className="cvp-input-wrap">
+          <input
+            className="cvp-input"
+            type="text"
+            placeholder="أدخل رمز الشهادة…"
+            value={inputCode}
+            onChange={(e) => setInputCode(e.target.value)}
+            dir="ltr"
+            aria-label="رمز الشهادة"
+          />
+          <button type="submit" className="cvp-submit-btn">
+            تحقق
+          </button>
         </div>
-      ) : (
-        <div style={{ padding: "2rem", borderRadius: "0.5rem", border: "1px solid var(--line)" }}>
-          <p style={{ color: "var(--ink-soft)" }}>{result?.message || "لم يتم العثور على شهادة بهذا الرمز"}</p>
+        <p className="cvp-input-hint">الرمز مكوّن من حروف وأرقام، مثال: ABC-12345</p>
+      </form>
+
+      {/* Result area */}
+      {loading && (
+        <div className="cvp-loading">
+          <span className="cvp-loading-dot" />
+          <span className="cvp-loading-dot" />
+          <span className="cvp-loading-dot" />
+          <p>جاري التحقق…</p>
         </div>
       )}
 
-      <Link href="/learning/paths" style={{ display: "inline-block", marginTop: "2rem" }}>المسارات العلمية</Link>
+      {!loading && result?.valid && (
+        <div className="cvp-result cvp-result--valid">
+          <div className="cvp-result-badge">✓</div>
+          <h2 className="cvp-result-title">شهادة صالحة</h2>
+          {result.certificate?.title && (
+            <p className="cvp-cert-name">{result.certificate.title}</p>
+          )}
+          <div className="cvp-cert-details">
+            {result.certificate?.holder && (
+              <div className="cvp-cert-row">
+                <span className="cvp-cert-label">المستفيد</span>
+                <span className="cvp-cert-value">{result.certificate.holder}</span>
+              </div>
+            )}
+            {result.certificate?.path && (
+              <div className="cvp-cert-row">
+                <span className="cvp-cert-label">المسار العلمي</span>
+                <span className="cvp-cert-value">{result.certificate.path}</span>
+              </div>
+            )}
+            {result.certificate?.level && (
+              <div className="cvp-cert-row">
+                <span className="cvp-cert-label">المستوى</span>
+                <span className="cvp-cert-value">{result.certificate.level}</span>
+              </div>
+            )}
+            {result.certificate?.issued_at && (
+              <div className="cvp-cert-row">
+                <span className="cvp-cert-label">تاريخ الإصدار</span>
+                <span className="cvp-cert-value">
+                  {new Date(result.certificate.issued_at).toLocaleDateString("ar-KW", {
+                    year: "numeric", month: "long", day: "numeric",
+                  })}
+                </span>
+              </div>
+            )}
+            <div className="cvp-cert-row">
+              <span className="cvp-cert-label">رمز الشهادة</span>
+              <span className="cvp-cert-value cvp-cert-code">{code}</span>
+            </div>
+          </div>
+          <p className="cvp-cert-note">
+            هذه الشهادة صادرة عن المجلس العلمي وهي موثّقة رقمياً.
+          </p>
+        </div>
+      )}
+
+      {!loading && result && !result.valid && (
+        <div className="cvp-result cvp-result--invalid">
+          <div className="cvp-result-badge cvp-result-badge--invalid">✗</div>
+          <h2 className="cvp-result-title cvp-result-title--invalid">شهادة غير صالحة</h2>
+          <p className="cvp-result-msg">
+            {result.message || "لم يتم العثور على شهادة بهذا الرمز. تأكد من صحة الرمز وأعد المحاولة."}
+          </p>
+        </div>
+      )}
+
+      {/* How to get a certificate */}
+      <section className="cvp-info-section">
+        <h2 className="cvp-info-title">كيف تحصل على شهادة؟</h2>
+        <div className="cvp-steps">
+          <div className="cvp-step">
+            <span className="cvp-step-num">١</span>
+            <div>
+              <strong>اختر مساراً علمياً</strong>
+              <p>ابدأ بأحد المسارات التعليمية المتاحة على المنصة</p>
+            </div>
+          </div>
+          <div className="cvp-step">
+            <span className="cvp-step-num">٢</span>
+            <div>
+              <strong>أكمل الدروس والاختبارات</strong>
+              <p>تابع الدروس وأجب عن الاختبارات بنجاح</p>
+            </div>
+          </div>
+          <div className="cvp-step">
+            <span className="cvp-step-num">٣</span>
+            <div>
+              <strong>احصل على شهادتك</strong>
+              <p>تصدر شهادتك الرقمية عند إتمام المسار بنجاح</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="cvp-links">
+        <Link href="/learning/paths" className="cvp-back-link">المسارات العلمية</Link>
+        <Link href="/quiz" className="cvp-back-link">المسابقات التعليمية</Link>
+        <Link href="/contact" className="cvp-back-link">تواصل معنا</Link>
+      </div>
+      <div className="twh-share">
+        <ShareButtons title="التحقق من الشهادة — المجلس العلمي" url="https://www.majlisilm.com/learning/certificate" />
+      </div>
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 1rem 1.5rem" }}>
+        <SectionQuiz categoryId={["fiqh","aqeeda","hadith"]} title="اختبر معلوماتك الشرعية" count={3} />
+      </div>
     </div>
   );
 }

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
-import { Loading } from "@/components/ui-common";
-import { C } from "@/lib/theme";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import {
   adminApproveAutoContent,
   adminGetAutoImportedContent,
@@ -20,28 +20,37 @@ import type {
 } from "@/lib/auto-content/auto-content-utils";
 
 const STATUS_FILTERS = [
-  ["all", "الكل"],
-  ["needs_review", "قيد المراجعة"],
-  ["published", "منشور"],
-  ["rejected", "مرفوض"],
+  ["all", "\u0627\u0644\u0643\u0644"],
+  ["needs_review", "\u0642\u064a\u062f \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629"],
+  ["published", "\u0645\u0646\u0634\u0648\u0631"],
+  ["rejected", "\u0645\u0631\u0641\u0648\u0636"],
 ] as const;
 
 const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
-  needs_review: { bg: "#FEF3C7", text: "#92400E" },
-  published: { bg: "#D1FAE5", text: C.emeraldDeep },
+  needs_review: { bg: "rgba(23,61,53,0.08)", text: "#173D35" },
+  published: { bg: "#D1FAE5", text: "var(--majalis-emerald-deep)" },
   rejected: { bg: "#FEE2E2", text: "#991B1B" },
   running: { bg: "#DBEAFE", text: "#1D4ED8" },
-  completed: { bg: "#D1FAE5", text: C.emeraldDeep },
+  completed: { bg: "#D1FAE5", text: "var(--majalis-emerald-deep)" },
   failed: { bg: "#FEE2E2", text: "#991B1B" },
 };
 
 function formatDate(iso?: string) {
-  if (!iso) return "—";
+  if (!iso) return "\u2014";
   try {
     return new Intl.DateTimeFormat("ar", { dateStyle: "short", timeStyle: "short" }).format(new Date(iso));
   } catch {
     return iso.slice(0, 16);
   }
+}
+
+function Stat({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="acp-stat">
+      <p className="acp-stat__label">{label}</p>
+      <p className="acp-stat__value">{value}</p>
+    </div>
+  );
 }
 
 function AutoContentAdmin() {
@@ -71,7 +80,7 @@ function AutoContentAdmin() {
       setLogs(logsRes.data || []);
       setRuns(runsRes.data || []);
     } catch {
-      showError("تعذر تحميل المحتوى المستورد.");
+      showError("\u062a\u0639\u0630\u0631 \u062a\u062d\u0645\u064a\u0644 \u0627\u0644\u0645\u062d\u062a\u0648\u0649 \u0627\u0644\u0645\u0633\u062a\u0648\u0631\u062f.");
     } finally {
       setLoading(false);
     }
@@ -83,16 +92,10 @@ function AutoContentAdmin() {
     return () => clearInterval(interval);
   }, [load]);
 
-  const filtered = useMemo(() => {
-    const q = search.trim();
-    if (!q) return items;
-    return items.filter(
-      (i) =>
-        (i.title ?? "").includes(q) ||
-        (i.source_name ?? "").includes(q) ||
-        (i.category || "").includes(q),
-    );
-  }, [items, search]);
+  const filtered = useMemo(
+    () => items.filter((i) => arabicMatchAny([i.title ?? "", i.source_name ?? "", i.category ?? ""], search)),
+    [items, search],
+  );
 
   const errorLogs = useMemo(
     () => logs.filter((l) => l.status === "failed" || l.error_details),
@@ -106,11 +109,11 @@ function AutoContentAdmin() {
     try {
       const result = await triggerAutoContentSync();
       showSuccess(
-        `تمت المزامنة: ${result.imported ?? 0} جديد، ${result.skipped ?? 0} متخطى، ${result.failed ?? 0} فشل (${Math.round((result.durationMs || 0) / 1000)}ث)`,
+        `\u062a\u0645\u062a \u0627\u0644\u0645\u0632\u0627\u0645\u0646\u0629: ${result.imported ?? 0} \u062c\u062f\u064a\u062f\u060c ${result.skipped ?? 0} \u0645\u062a\u062e\u0637\u0649\u060c ${result.failed ?? 0} \u0641\u0634\u0644 (${Math.round((result.durationMs || 0) / 1000)}\u062b)`,
       );
       await load();
     } catch (err) {
-      showError(err instanceof Error ? err.message : "فشل تشغيل المزامنة.");
+      showError(err instanceof Error ? err.message : "\u0641\u0634\u0644 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0645\u0632\u0627\u0645\u0646\u0629.");
     } finally {
       setSyncing(false);
     }
@@ -119,15 +122,15 @@ function AutoContentAdmin() {
   const handleApprove = async (id: string) => {
     const { error } = await adminApproveAutoContent(id);
     if (error) return showError(error.message);
-    showSuccess("تم اعتماد المادة ونشرها — ستظهر في /updates فوراً.");
+    showSuccess("\u062a\u0645 \u0627\u0639\u062a\u0645\u0627\u062f \u0627\u0644\u0645\u0627\u062f\u0629 \u0648\u0646\u0634\u0631\u0647\u0627 \u2014 \u0633\u062a\u0638\u0647\u0631 \u0641\u064a /updates \u0641\u0648\u0631\u0627\u064b.");
     load();
   };
 
   const handleReject = async (id: string) => {
-    if (!confirm("رفض هذه المادة؟")) return;
+    if (!confirm("\u0631\u0641\u0636 \u0647\u0630\u0647 \u0627\u0644\u0645\u0627\u062f\u0629\u061f")) return;
     const { error } = await adminRejectAutoContent(id);
     if (error) return showError(error.message);
-    showSuccess("تم رفض المادة.");
+    showSuccess("\u062a\u0645 \u0631\u0641\u0636 \u0627\u0644\u0645\u0627\u062f\u0629.");
     load();
   };
 
@@ -136,63 +139,55 @@ function AutoContentAdmin() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.25rem", flexWrap: "wrap", gap: "0.75rem" }}>
+      <div className="acp-header">
         <div>
-          <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep }}>
-            الاستيراد التلقائي للمحتوى
-          </h2>
-          <p style={{ margin: "0.25rem 0 0", fontSize: "0.8125rem", color: C.inkSoft }}>
-            خط أنابيب: إزالة التكرار → التحقق من المصدر → التصنيف → تحليل AI → slug → SEO → needs_review
-            · Cron كل 6 ساعات
+          <h2 className="acp-title">\u0627\u0644\u0627\u0633\u062a\u064a\u0631\u0627\u062f \u0627\u0644\u062a\u0644\u0642\u0627\u0626\u064a \u0644\u0644\u0645\u062d\u062a\u0648\u0649</h2>
+          <p className="acp-subtitle">
+            \u062e\u0637 \u0623\u0646\u0627\u0628\u064a\u0628: \u0625\u0632\u0627\u0644\u0629 \u0627\u0644\u062a\u0643\u0631\u0627\u0631 \u2192 \u0627\u0644\u062a\u062d\u0642\u0642 \u0645\u0646 \u0627\u0644\u0645\u0635\u062f\u0631 \u2192 \u0627\u0644\u062a\u0635\u0646\u064a\u0641 \u2192 \u062a\u062d\u0644\u064a\u0644 AI \u2192 slug \u2192 SEO \u2192 needs_review
+            \u00b7 Cron \u0643\u0644 6 \u0633\u0627\u0639\u0627\u062a
           </p>
         </div>
-        <button
-          type="button"
-          onClick={handleSync}
-          disabled={syncing}
-          style={{
-            padding: "0.5rem 1.25rem",
-            borderRadius: "0.375rem",
-            background: C.emerald,
-            color: "white",
-            border: "none",
-            cursor: syncing ? "wait" : "pointer",
-            opacity: syncing ? 0.7 : 1,
-          }}
-        >
-          {syncing ? "جارٍ المزامنة..." : "▶ تشغيل المزامنة الآن"}
+        <button type="button" onClick={handleSync} disabled={syncing} className="acp-sync-btn">
+          {syncing ? "\u062c\u0627\u0631\u0650 \u0627\u0644\u0645\u0632\u0627\u0645\u0646\u0629..." : "\u25b6 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0645\u0632\u0627\u0645\u0646\u0629 \u0627\u0644\u0622\u0646"}
         </button>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: "0.75rem", marginBottom: "1.25rem" }}>
-        <Stat label="قيد المراجعة" value={reviewCount} />
-        <Stat label="مصادر نشطة" value={sources.filter((s) => s.is_active).length} />
-        <Stat label="إجمالي المواد" value={items.length} />
-        <Stat label="منشور" value={items.filter((i) => i.status === "published").length} />
-        <Stat label="أخطاء السجل" value={errorLogs.length} />
+      <div className="acp-stats-grid">
+        <Stat label="\u0642\u064a\u062f \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629" value={reviewCount} />
+        <Stat label="\u0645\u0635\u0627\u062f\u0631 \u0646\u0634\u0637\u0629" value={sources.filter((s) => s.is_active).length} />
+        <Stat label="\u0625\u062c\u0645\u0627\u0644\u064a \u0627\u0644\u0645\u0648\u0627\u062f" value={items.length} />
+        <Stat label="\u0645\u0646\u0634\u0648\u0631" value={items.filter((i) => i.status === "published").length} />
+        <Stat label="\u0623\u062e\u0637\u0627\u0621 \u0627\u0644\u0633\u062c\u0644" value={errorLogs.length} />
       </div>
 
       {lastRun && (
-        <div style={{ padding: "0.75rem 1rem", marginBottom: "1rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.panel, fontSize: "0.8125rem" }}>
-          <strong>آخر تشغيل:</strong>{" "}
-          {formatDate(lastRun.started_at)} —{" "}
-          <span style={{ color: STATUS_COLORS[lastRun.status]?.text }}>{lastRun.status}</span>
-          {" · "}
-          {lastRun.imported_count} مستورد، {lastRun.skipped_count} متخطى، {lastRun.failed_count} فشل
-          {lastRun.duration_ms ? ` · ${Math.round(lastRun.duration_ms / 1000)}ث` : ""}
+        <div className="acp-last-run">
+          <strong>\u0622\u062e\u0631 \u062a\u0634\u063a\u064a\u0644:</strong>{" "}
+          {formatDate(lastRun.started_at)} \u2014{" "}
+          <span
+            className="acp-last-run-status"
+            style={{ "--acp-lrs-color": STATUS_COLORS[lastRun.status]?.text } as React.CSSProperties}
+          >
+            {lastRun.status}
+          </span>
+          {" \u00b7 "}
+          {lastRun.imported_count} \u0645\u0633\u062a\u0648\u0631\u062f\u060c {lastRun.skipped_count} \u0645\u062a\u062e\u0637\u0649\u060c {lastRun.failed_count} \u0641\u0634\u0644
+          {lastRun.duration_ms ? ` \u00b7 ${Math.round(lastRun.duration_ms / 1000)}\u062b` : ""}
         </div>
       )}
 
       {sources.length > 0 && (
-        <div style={{ marginBottom: "1.25rem" }}>
-          <h3 style={{ fontSize: "0.875rem", fontWeight: 700, color: C.emeraldDeep, marginBottom: "0.5rem" }}>حالة المصادر</h3>
-          <div style={{ display: "grid", gap: "0.35rem" }}>
+        <div className="acp-sources">
+          <h3 className="acp-sources-h3">\u062d\u0627\u0644\u0629 \u0627\u0644\u0645\u0635\u0627\u062f\u0631</h3>
+          <div className="acp-sources-list">
             {sources.map((s) => (
-              <div key={s.id} style={{ fontSize: "0.75rem", color: C.inkSoft, display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-                <span style={{ color: s.is_active ? C.emeraldDeep : "#991B1B" }}>{s.is_active ? "●" : "○"}</span>
+              <div key={s.id} className="acp-source-item">
+                <span className="acp-source-dot" style={{ "--acp-dot-color": s.is_active ? "var(--majalis-emerald-deep)" : "#991B1B" } as React.CSSProperties}>
+                  {s.is_active ? "\u25cf" : "\u25cb"}
+                </span>
                 <span>{s.name}</span>
-                <span>· ثقة {s.trust_level}%</span>
-                <span>· آخر مزامنة: {formatDate(s.last_synced_at)}</span>
+                <span>\u00b7 \u062b\u0642\u0629 {s.trust_level}%</span>
+                <span>\u00b7 \u0622\u062e\u0631 \u0645\u0632\u0627\u0645\u0646\u0629: {formatDate(s.last_synced_at)}</span>
               </div>
             ))}
           </div>
@@ -202,26 +197,22 @@ function AutoContentAdmin() {
       <input
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="بحث..."
-        style={{ width: "100%", maxWidth: "20rem", marginBottom: "0.75rem", padding: "0.5rem 0.75rem", borderRadius: "0.375rem", border: `1px solid ${C.line}` }}
+        placeholder="\u0628\u062d\u062b..."
+        className="acp-search"
       />
 
-      <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+      <div className="acp-filter-row">
         {STATUS_FILTERS.map(([v, l]) => (
           <button
             key={v}
             type="button"
             onClick={() => setFilter(v)}
-            style={{
-              padding: "0.375rem 0.75rem",
-              borderRadius: "0.375rem",
-              border: `1px solid ${filter === v ? C.emerald : C.line}`,
-              background: filter === v ? C.sage : C.panel,
-              color: filter === v ? C.emeraldDeep : C.inkSoft,
-              cursor: "pointer",
-              fontFamily: "inherit",
-              fontSize: "0.8125rem",
-            }}
+            className="acp-filter-btn"
+            style={filter === v ? {
+              "--acp-fb-border": "var(--majalis-emerald)",
+              "--acp-fb-bg": "var(--majalis-sage)",
+              "--acp-fb-color": "var(--majalis-emerald-deep)",
+            } as React.CSSProperties : undefined}
           >
             {l}
           </button>
@@ -229,50 +220,39 @@ function AutoContentAdmin() {
       </div>
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : filtered.length === 0 ? (
-        <p style={{ color: C.inkSoft, fontSize: "0.875rem" }}>لا توجد مواد مستوردة. شغّل المزامنة أو أضف مصادر RSS في Supabase.</p>
+        <p className="acp-empty">\u0644\u0627 \u062a\u0648\u062c\u062f \u0645\u0648\u0627\u062f \u0645\u0633\u062a\u0648\u0631\u062f\u0629. \u0634\u063a\u0651\u0644 \u0627\u0644\u0645\u0632\u0627\u0645\u0646\u0629 \u0623\u0648 \u0623\u0636\u0641 \u0645\u0635\u0627\u062f\u0631 RSS \u0641\u064a Supabase.</p>
       ) : (
-        <div style={{ display: "grid", gap: "0.75rem" }}>
+        <div className="acp-list">
           {filtered.map((item) => (
-            <article
-              key={item.id}
-              style={{
-                padding: "1rem",
-                borderRadius: "0.5rem",
-                border: `1px solid ${C.line}`,
-                background: C.panel,
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "space-between", gap: "0.75rem", flexWrap: "wrap" }}>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <p style={{ margin: 0, fontWeight: 700, color: C.emeraldDeep }}>{item.title}</p>
-                  <p style={{ margin: "0.25rem 0", fontSize: "0.8125rem", color: C.inkSoft }}>
-                    {item.source_name} · {item.content_type} · {item.category || "—"}
-                    {item.pipeline_stage ? ` · ${item.pipeline_stage}` : ""}
+            <article key={item.id} className="acp-card">
+              <div className="acp-card-body">
+                <div className="acp-card-info">
+                  <p className="acp-card-title">{item.title}</p>
+                  <p className="acp-card-meta">
+                    {item.source_name} \u00b7 {item.content_type} \u00b7 {item.category || "\u2014"}
+                    {item.pipeline_stage ? ` \u00b7 ${item.pipeline_stage}` : ""}
                   </p>
                   {item.summary && (
-                    <p style={{ margin: "0.5rem 0 0", fontSize: "0.875rem", color: C.ink, lineHeight: 1.6 }}>
-                      {item.summary.slice(0, 200)}{item.summary.length > 200 ? "…" : ""}
+                    <p className="acp-card-summary">
+                      {item.summary.slice(0, 200)}{item.summary.length > 200 ? "\u2026" : ""}
                     </p>
                   )}
                 </div>
-                <div style={{ textAlign: "left" }}>
+                <div className="acp-card-badge-area">
                   <span
+                    className="acp-card-badge"
                     style={{
-                      display: "inline-block",
-                      padding: "0.125rem 0.5rem",
-                      borderRadius: "0.25rem",
-                      fontSize: "0.75rem",
-                      background: STATUS_COLORS[item.status]?.bg || C.parchmentDeep,
-                      color: STATUS_COLORS[item.status]?.text || C.ink,
-                    }}
+                      "--acp-cb-bg": STATUS_COLORS[item.status]?.bg,
+                      "--acp-cb-color": STATUS_COLORS[item.status]?.text,
+                    } as React.CSSProperties}
                   >
                     {item.status}
                   </span>
-                  <p style={{ margin: "0.25rem 0 0", fontSize: "0.75rem", color: C.inkSoft }}>
-                    جودة: {item.quality_score}%
-                    {item.source_verified ? " · ✓ مصدر" : ""}
+                  <p className="acp-card-quality">
+                    \u062c\u0648\u062f\u0629: {item.quality_score}%
+                    {item.source_verified ? " \u00b7 \u2713 \u0645\u0635\u062f\u0631" : ""}
                   </p>
                 </div>
               </div>
@@ -280,33 +260,33 @@ function AutoContentAdmin() {
               <button
                 type="button"
                 onClick={() => setExpandedId(expandedId === item.id ? null : item.id)}
-                style={{ marginTop: "0.5rem", fontSize: "0.75rem", background: "none", border: "none", color: C.brassDeep, cursor: "pointer", fontFamily: "inherit" }}
+                className="acp-expand-btn"
               >
-                {expandedId === item.id ? "▲ إخفاء SEO" : "▼ SEO & slug"}
+                {expandedId === item.id ? "\u25b2 \u0625\u062e\u0641\u0627\u0621 SEO" : "\u25bc SEO & slug"}
               </button>
 
               {expandedId === item.id && (
-                <div style={{ marginTop: "0.5rem", padding: "0.75rem", background: C.parchmentDeep, borderRadius: "0.375rem", fontSize: "0.8125rem" }}>
+                <div className="acp-seo-box">
                   <p><strong>Slug:</strong> {item.slug}</p>
-                  <p><strong>SEO Title:</strong> {item.seo_title || "—"}</p>
-                  <p><strong>SEO Description:</strong> {item.seo_description || "—"}</p>
-                  {item.tags && item.tags.length > 0 && <p><strong>Tags:</strong> {item.tags.join("، ")}</p>}
+                  <p><strong>SEO Title:</strong> {item.seo_title || "\u2014"}</p>
+                  <p><strong>SEO Description:</strong> {item.seo_description || "\u2014"}</p>
+                  {item.tags && item.tags.length > 0 && <p><strong>Tags:</strong> {item.tags.join("\u060c ")}</p>}
                 </div>
               )}
 
-              <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.75rem", flexWrap: "wrap" }}>
+              <div className="acp-card-actions">
                 {item.status === "needs_review" && (
                   <>
-                    <button type="button" onClick={() => handleApprove(item.id)} style={btnPrimary}>اعتماد</button>
-                    <button type="button" onClick={() => handleReject(item.id)} style={btnDanger}>رفض</button>
+                    <button type="button" onClick={() => handleApprove(item.id)} className="acp-approve-btn">\u0627\u0639\u062a\u0645\u0627\u062f</button>
+                    <button type="button" onClick={() => handleReject(item.id)} className="acp-reject-btn">\u0631\u0641\u0636</button>
                   </>
                 )}
                 {item.status === "published" && item.slug && (
-                  <Link href={`/updates/auto/${item.slug}`} style={btnLink}>معاينة عامة</Link>
+                  <Link href={`/updates/auto/${item.slug}`} className="acp-view-link">\u0645\u0639\u0627\u064a\u0646\u0629 \u0639\u0627\u0645\u0629</Link>
                 )}
                 {item.original_url && (
-                  <a href={item.original_url} target="_blank" rel="noopener noreferrer" style={btnLink}>
-                    فتح المصدر
+                  <a href={item.original_url} target="_blank" rel="noopener noreferrer" className="acp-view-link">
+                    \u0641\u062a\u062d \u0627\u0644\u0645\u0635\u062f\u0631
                   </a>
                 )}
               </div>
@@ -316,44 +296,50 @@ function AutoContentAdmin() {
       )}
 
       {runs.length > 0 && (
-        <div style={{ marginTop: "2rem" }}>
-          <h3 style={{ fontSize: "0.9375rem", fontWeight: 700, color: C.emeraldDeep, marginBottom: "0.75rem" }}>سجل تشغيلات Pipeline</h3>
+        <div className="acp-runs-section">
+          <h3 className="acp-section-h3">\u0633\u062c\u0644 \u062a\u0634\u063a\u064a\u0644\u0627\u062a Pipeline</h3>
           {runs.map((run) => (
-            <div key={run.id} style={{ fontSize: "0.75rem", color: C.inkSoft, padding: "0.35rem 0", borderBottom: `1px solid ${C.line}` }}>
-              {formatDate(run.started_at)} — {run.trigger_type} —{" "}
-              <span style={{ color: STATUS_COLORS[run.status]?.text }}>{run.status}</span>
-              {" · "}
-              {run.imported_count} مستورد، {run.skipped_count} متخطى، {run.failed_count} فشل
-              {run.error_summary ? ` · ${run.error_summary}` : ""}
+            <div key={run.id} className="acp-run-item">
+              {formatDate(run.started_at)} \u2014 {run.trigger_type} \u2014{" "}
+              <span
+                className="acp-run-status"
+                style={{ "--acp-rs-color": STATUS_COLORS[run.status]?.text } as React.CSSProperties}
+              >
+                {run.status}
+              </span>
+              {" \u00b7 "}
+              {run.imported_count} \u0645\u0633\u062a\u0648\u0631\u062f\u060c {run.skipped_count} \u0645\u062a\u062e\u0637\u0649\u060c {run.failed_count} \u0641\u0634\u0644
+              {run.error_summary ? ` \u00b7 ${run.error_summary}` : ""}
             </div>
           ))}
         </div>
       )}
 
       {displayedLogs.length > 0 && (
-        <div style={{ marginTop: "2rem" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem" }}>
-            <h3 style={{ fontSize: "0.9375rem", fontWeight: 700, color: C.emeraldDeep, margin: 0 }}>
-              سجل العمليات {showErrorsOnly ? "(أخطاء فقط)" : ""}
+        <div className="acp-logs-wrap">
+          <div className="acp-logs-header">
+            <h3 className="acp-section-h3 acp-section-h3--flush">
+              \u0633\u062c\u0644 \u0627\u0644\u0639\u0645\u0644\u064a\u0627\u062a {showErrorsOnly ? "(\u0623\u062e\u0637\u0627\u0621 \u0641\u0642\u0637)" : ""}
             </h3>
-            <button
-              type="button"
-              onClick={() => setShowErrorsOnly(!showErrorsOnly)}
-              style={{ fontSize: "0.75rem", background: "none", border: `1px solid ${C.line}`, borderRadius: "0.25rem", padding: "0.25rem 0.5rem", cursor: "pointer", fontFamily: "inherit" }}
-            >
-              {showErrorsOnly ? "عرض الكل" : "أخطاء فقط"}
+            <button type="button" onClick={() => setShowErrorsOnly(!showErrorsOnly)} className="acp-logs-toggle">
+              {showErrorsOnly ? "\u0639\u0631\u0636 \u0627\u0644\u0643\u0644" : "\u0623\u062e\u0637\u0627\u0621 \u0641\u0642\u0637"}
             </button>
           </div>
           {displayedLogs.map((log) => (
-            <div key={log.id} style={{ fontSize: "0.75rem", color: C.inkSoft, padding: "0.35rem 0", borderBottom: `1px solid ${C.line}` }}>
-              <span style={{ color: log.status === "failed" ? "#991B1B" : C.emeraldDeep }}>{log.status}</span>
-              {log.pipeline_stage ? ` · ${log.pipeline_stage}` : ""}
-              {" · "}
-              {log.imported_count} مستورد، {log.skipped_count} متخطى
-              {log.item_title ? ` · ${log.item_title.slice(0, 40)}` : ""}
-              {log.message ? ` — ${log.message}` : ""}
+            <div key={log.id} className="acp-log-item">
+              <span
+                className="acp-log-status"
+                style={{ "--acp-ls-color": log.status === "failed" ? "#991B1B" : "var(--majalis-emerald-deep)" } as React.CSSProperties}
+              >
+                {log.status}
+              </span>
+              {log.pipeline_stage ? ` \u00b7 ${log.pipeline_stage}` : ""}
+              {" \u00b7 "}
+              {log.imported_count} \u0645\u0633\u062a\u0648\u0631\u062f\u060c {log.skipped_count} \u0645\u062a\u062e\u0637\u0649
+              {log.item_title ? ` \u00b7 ${log.item_title.slice(0, 40)}` : ""}
+              {log.message ? ` \u2014 ${log.message}` : ""}
               {log.error_details && (
-                <pre style={{ margin: "0.25rem 0 0", fontSize: "0.6875rem", whiteSpace: "pre-wrap", color: "#991B1B" }}>
+                <pre className="acp-log-err">
                   {JSON.stringify(log.error_details, null, 2)}
                 </pre>
               )}
@@ -365,44 +351,11 @@ function AutoContentAdmin() {
   );
 }
 
-function Stat({ label, value }: { label: string; value: number }) {
-  return (
-    <div style={{ padding: "0.75rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.panel }}>
-      <p style={{ margin: 0, fontSize: "0.75rem", color: C.inkSoft }}>{label}</p>
-      <p style={{ margin: "0.125rem 0 0", fontSize: "1.25rem", fontWeight: 700, color: C.emeraldDeep }}>{value}</p>
-    </div>
-  );
-}
-
-const btnPrimary = {
-  padding: "0.375rem 0.75rem",
-  borderRadius: "0.375rem",
-  background: C.emerald,
-  color: "white",
-  border: "none",
-  cursor: "pointer",
-  fontSize: "0.8125rem",
-} as const;
-
-const btnDanger = {
-  ...btnPrimary,
-  background: "#dc2626",
-} as const;
-
-const btnLink = {
-  padding: "0.375rem 0.75rem",
-  borderRadius: "0.375rem",
-  background: C.parchmentDeep,
-  color: C.emeraldDeep,
-  textDecoration: "none",
-  fontSize: "0.8125rem",
-} as const;
-
 export default function AutoContentPage() {
   return (
     <AdminShell section="dashboard" onSectionChange={() => {}}>
-      <Link href="/admin" style={{ display: "inline-block", marginBottom: "1rem", fontSize: "0.8125rem", color: C.brassDeep }}>
-        ← العودة للوحة التحكم
+      <Link href="/admin" className="acp-back-link">
+        \u2190 \u0627\u0644\u0639\u0648\u062f\u0629 \u0644\u0644\u0648\u062d\u0629 \u0627\u0644\u062a\u062d\u0643\u0645
       </Link>
       <AutoContentAdmin />
     </AdminShell>

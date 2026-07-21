@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { Loading, Empty } from "@/components/ui-common";
+import { SkeletonPage, Empty } from "@/components/ui-common";
 import { ContentDetailLayout, RelatedLinks } from "@/components/platform/ContentDetailLayout";
 import { getAnnualCourseById, getRelatedCourses } from "@/lib/platform-content-service";
 import { applyPageSeo } from "@/lib/seo";
@@ -38,11 +38,21 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
   usePageView("annual-courses", params.id);
 
   useEffect(() => {
-    if (!item) return;
+    if (loading) return;
+    if (!item) {
+      applyPageSeo({
+        path: `/annual-courses/${params.id}`,
+        title: "الدورة غير موجودة | المجلس العلمي",
+        description: "لم يُعثر على هذه الدورة العلمية.",
+        robots: "noindex, follow",
+        jsonLd: [],
+      });
+      return;
+    }
     const path = `/annual-courses/${item.id}`;
     applyPageSeo({
       path,
-      title: `${item.title} | الدورات العلمية — المجلس العلمي`,
+      title: `${item.title} | الدورات العلمية، المجلس العلمي`,
       description: item.summary || item.title,
       keywords: [...(item.keywords || []), item.course_type, "دورات شرعية", "طلب العلم"],
       ogType: "website",
@@ -63,9 +73,9 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
         ]),
       ],
     });
-  }, [item]);
+  }, [item, loading, params.id]);
 
-  if (loading) return <Loading />;
+  if (loading) return <SkeletonPage />;
   if (!item) return <Empty text="الدورة غير موجودة." />;
 
   const mapEmbed = buildMapsEmbed(item.map_url, item.venue_name, item.venue_city);
@@ -84,6 +94,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
       tags={item.keywords}
       body={item.body}
       copyText={copyText}
+      adminEdit={{ contentType: "annual-course", contentId: item.id, initialData: { title: item.title, description: item.body, location: item.location, start_date: item.start_date } }}
       related={
         <RelatedLinks
           items={related.map((r) => ({
@@ -132,13 +143,13 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
       {(item.venue_name || item.venue_city) && (
         <section className="ui-card content-detail-section">
           <h2>مكان الإقامة</h2>
-          <p>{[item.venue_name, item.venue_address, item.venue_city].filter(Boolean).join(" — ")}</p>
+          <p>{[item.venue_name, item.venue_address, item.venue_city].filter(Boolean).join("، ")}</p>
           {mapEmbed && (
             <iframe
               title="خريطة مكان الدورة"
               src={mapEmbed}
               loading="lazy"
-              style={{ width: "100%", height: "280px", border: 0, borderRadius: "0.5rem", marginTop: "1rem" }}
+              className="acd-map-iframe"
               allowFullScreen
             />
           )}
@@ -149,7 +160,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
         <section className="ui-card content-detail-section">
           <Link
             href={item.registration_url}
-            style={{ display: "inline-block", padding: "0.75rem 1.5rem", borderRadius: "0.5rem", background: "var(--emerald, #164E3C)", color: "#fff", fontWeight: 700, textDecoration: "none" }}
+            className="acd-register-link"
           >
             التسجيل في الدورة
           </Link>

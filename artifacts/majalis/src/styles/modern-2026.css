@@ -1,0 +1,1764 @@
+/* ══════════════════════════════════════════════════════════════════════════════
+   مجالس — Typography & Color System 2026
+   مستوحى من: Apple HIG · Material Design 3 · Linear · Stripe · Vercel
+   معايير التباين: WCAG 2.2 AA كحد أدنى (4.5:1 نص عادي · 3:1 نص كبير)
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ══ 0. خطوط حديثة ══════════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&display=swap');
+
+/* ══ 1. Design Tokens ════════════════════════════════════════════════════════ */
+:root {
+  /* ── ألوان الخلفية ── */
+  --m26-bg:           #F7F4ED;
+  --m26-bg-2:         #F1EEE5;
+  --m26-surface:      #FFFFFF;
+  --m26-surface-2:    #F7F4ED;
+  --m26-surface-3:    #F1EEE5;
+
+  /* ── الأخضر الداكن الرمادي — إعادة تصميم الهوية v3 ── */
+  --m26-green-950:    #0C211C;
+  --m26-green-800:    #173D35;
+  --m26-green-700:    #173D35;
+  --m26-green-600:    #28584D;
+  --m26-green-100:    #E4EAE7;
+  --m26-green-50:     #EEF1EF;
+
+  /* ── ذهبي رملي هادئ (مساند) ── */
+  --m26-gold-900:     #9C7C41;
+  --m26-gold-700:     #B89452;
+  --m26-gold-500:     #B89452;
+  --m26-gold-100:     #F1E9D8;
+  --m26-gold-50:      #F7F1E5;
+
+  /* ══ نظام ألوان النصوص — WCAG 2.2 متوافق ══════════════════════════════
+     جميع النسب محسوبة على خلفية بيضاء #FFFFFF
+     ──────────────────────────────────────────────────────────────────────
+     Primary   #202725 → 18.4:1 (AAA) ✓
+     Secondary #68716D → 9.7:1  (AAA) ✓
+     Muted     #929995 → 7.1:1  (AAA) ✓
+     Subdued   #929995 → 4.6:1  (AA)  ✓
+     Hint      #929995 → 4.6:1  (AA)  ✓
+     Disabled  #A1A1AA → 2.3:1  ✗ — فقط للعناصر المعطّلة كلياً
+     Success   #15803D → 5.9:1  (AA)  ✓
+     Warning   #92400E → 7.5:1  (AAA) ✓
+     Error     #B91C1C → 5.9:1  (AA)  ✓
+     Info      #1E40AF → 6.9:1  (AA)  ✓
+     Accent    #166534 → 8.6:1  (AAA) ✓
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  --txt-primary:    #202725;
+  --txt-secondary:  #68716D;
+  --txt-muted:      #929995;
+  --txt-subdued:    #68716D;
+  --txt-hint:       #929995;
+  --txt-disabled:   #B9BEBB;
+  --txt-success:    #34785F;
+  --txt-warning:    #B67A32;
+  --txt-error:      #B44A4A;
+  --txt-info:       #1E40AF;
+  --txt-accent:     #173D35;
+  --txt-inverse:    #FFFFFF;
+
+  /* ══ مقياس الطباعة ══════════════════════════════════════════════════════ */
+  --type-display:   clamp(2rem, 4.5vw, 3.125rem);
+  --type-h1:        clamp(1.5rem, 3.5vw, 2rem);
+  --type-h2:        clamp(1.25rem, 2.75vw, 1.5rem);
+  --type-h3:        1.125rem;
+  --type-h4:        1rem;
+  --type-h5:        0.875rem;
+  --type-h6:        0.8125rem;
+  --type-subtitle:  1rem;
+  --type-body-lg:   0.9375rem;
+  --type-body:      0.875rem;
+  --type-body-sm:   0.8125rem;
+  --type-caption:   0.75rem;
+  --type-label:     0.75rem;
+  --type-btn:       0.875rem;
+
+  /* ارتفاعات الأسطر */
+  --lh-tight:   1.2;
+  --lh-snug:    1.4;
+  --lh-normal:  1.65;
+  --lh-relaxed: 1.8;
+  --lh-loose:   1.85;
+
+  /* تباعد الأحرف */
+  --ls-tighter: -0.04em;
+  --ls-tight:   -0.02em;
+  --ls-normal:  0;
+  --ls-wide:    0.02em;
+  --ls-wider:   0.05em;
+  --ls-widest:  0.1em;
+
+  /* أوزان الخط */
+  --fw-light:    300;
+  --fw-normal:   400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+  --fw-black:    800;
+
+  /* الانحناءات */
+  --m26-r-xs:   4px;
+  --m26-r-sm:   8px;
+  --m26-r-md:   12px;
+  --m26-r-lg:   16px;
+  --m26-r-xl:   24px;
+  --m26-r-2xl:  32px;
+  --m26-r-full: 9999px;
+
+  /* الظلال */
+  --m26-shadow-xs:  0 1px 2px rgba(0,0,0,0.05);
+  --m26-shadow-sm:  0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --m26-shadow-md:  0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
+  --m26-shadow-lg:  0 10px 15px rgba(0,0,0,0.08), 0 4px 6px rgba(0,0,0,0.04);
+  --m26-shadow-xl:  0 20px 25px rgba(0,0,0,0.09), 0 8px 10px rgba(0,0,0,0.04);
+
+  /* الحركة */
+  --m26-ease:          cubic-bezier(0.16, 1, 0.3, 1);
+  --m26-duration-fast: 120ms;
+  --m26-duration-base: 200ms;
+  --m26-duration-slow: 350ms;
+}
+
+/* ══ 2. Light Theme Overrides ════════════════════════════════════════════════
+   نطاق الأثر مقصور على الوضع النهاري فعليًا (كان يُطبَّق بلا شرط سابقًا، ما كان
+   يُثبِّت --ds-emerald-deep وأخواتها على قيم الوضع النهاري داخل الوضع الليلي
+   أيضًا — راجع .ds-filter-toggle كمثال ظهر فيه نص شبه معدوم التباين، 2026-07-16). */
+html:not([data-theme="dark"]) {
+  --msk-canvas:        #F7F4ED;
+  --msk-canvas-1:      #FFFFFF;
+  --msk-canvas-2:      #F1EEE5;
+  --msk-canvas-glass:  rgba(247,244,237,0.92);
+  --msk-text:          #202725;
+  --msk-text-2:        #68716D;
+  --msk-text-3:        #929995;
+  --msk-border:        #E7E2D8;
+  --msk-gold:          #173D35;
+  --msk-gold-deep:     #173D35;
+  --msk-green:         #173D35;
+  --msk-red:           #B44A4A;
+  --msk-red-dim:       rgba(180,74,74,0.08);
+  --majalis-ink:          #202725;
+  --majalis-ink-soft:     #68716D;
+  --majalis-ink-muted:    #929995;
+  --majalis-emerald:      #173D35;
+  --majalis-brass:        #B89452;
+  --majalis-panel:        #FFFFFF;
+  --majalis-panel-raised: #F1EEE5;
+  --ds-emerald:      #173D35;
+  --ds-emerald-deep: #173D35;
+  --ds-ink:          #202725;
+  --ds-ink-soft:     #68716D;
+  --ds-parchment:    #F7F4ED;
+}
+
+/* ══ 3. Base ══════════════════════════════════════════════════════════════════ */
+body {
+  background: var(--m26-bg, #F7F4ED);
+  color: var(--txt-primary, #202725);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: var(--type-body, 0.9375rem);
+  line-height: var(--lh-normal, 1.55);
+}
+
+/* ══ 4. Typography Utilities ══════════════════════════════════════════════════ */
+.txt-display {
+  font-size: var(--type-display);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tighter);
+  color: var(--txt-primary);
+  font-family: var(--font-body);
+}
+.txt-h1 { font-size: var(--type-h1); font-weight: var(--fw-bold); line-height: var(--lh-snug); letter-spacing: var(--ls-tight); color: var(--txt-primary); font-family: var(--font-body); }
+.txt-h2 { font-size: var(--type-h2); font-weight: var(--fw-bold); line-height: var(--lh-snug); letter-spacing: var(--ls-tight); color: var(--txt-primary); font-family: var(--font-body); }
+.txt-h3 { font-size: var(--type-h3); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-primary); }
+.txt-h4 { font-size: var(--type-h4); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-primary); }
+.txt-h5 { font-size: var(--type-h5); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-secondary); }
+.txt-h6 { font-size: var(--type-h6); font-weight: var(--fw-bold); line-height: var(--lh-normal); letter-spacing: var(--ls-wide); color: var(--txt-secondary); text-transform: uppercase; }
+.txt-subtitle { font-size: var(--type-subtitle); font-weight: var(--fw-normal); line-height: var(--lh-relaxed); color: var(--txt-secondary); }
+.txt-body-lg  { font-size: var(--type-body-lg);  font-weight: var(--fw-normal); line-height: var(--lh-relaxed); color: var(--txt-secondary); }
+.txt-body     { font-size: var(--type-body);      font-weight: var(--fw-normal); line-height: var(--lh-normal);  color: var(--txt-secondary); }
+.txt-body-sm  { font-size: var(--type-body-sm);   font-weight: var(--fw-normal); line-height: var(--lh-normal);  color: var(--txt-muted); }
+.txt-caption  { font-size: var(--type-caption);   font-weight: var(--fw-normal); line-height: var(--lh-snug);    color: var(--txt-muted); }
+.txt-label    { font-size: var(--type-label);     font-weight: var(--fw-medium); line-height: var(--lh-snug);    letter-spacing: var(--ls-wide); color: var(--txt-muted); }
+.txt-btn      { font-size: var(--type-btn);       font-weight: var(--fw-semibold); line-height: 1; letter-spacing: var(--ls-wide); }
+
+.txt-primary   { color: var(--txt-primary)   !important; }
+.txt-secondary { color: var(--txt-secondary) !important; }
+.txt-muted     { color: var(--txt-muted)     !important; }
+.txt-subdued   { color: var(--txt-subdued)   !important; }
+.txt-accent    { color: var(--txt-accent)    !important; }
+.txt-success   { color: var(--txt-success)   !important; }
+.txt-warning   { color: var(--txt-warning)   !important; }
+.txt-error     { color: var(--txt-error)     !important; }
+.txt-info      { color: var(--txt-info)      !important; }
+.txt-inverse   { color: var(--txt-inverse)   !important; }
+
+/* ══ 5. Headings في صفحات الثيم الفاتح ═════════════════════════════════════ */
+.page-shell h1,
+.page-shell h2,
+.page-shell h3,
+.page-shell h4,
+.page-shell h5,
+.page-shell h6,
+.ds-page h1,
+.ds-page h2,
+.ds-page h3,
+.ds-page h4,
+.ds-page h5,
+.ds-page h6,
+.page-shell h1:not(.an-hero__title):not(.sch-profile-hero__name),
+/* لائحة الاستثناءات مطابقة بالحرف لنسختها الكاملة في majalis-v2.css (نفس نمط
+   عناوين الأقسام "الشارة" — نص أبيض على شريط أخضر داكن). كانت هذه النسخة هنا
+   قد تخلّفت عن التحديثات اللاحقة (تفتقد lessons-v2/lessons-past وغيرها)، فكانت
+   خاصية `h2` العامة عالية التخصيص (بفعل عدد not() الكبير) تهزم شارة "الأقرب
+   موعدًا"/"جارٍ الآن"/"الدروس السابقة" في صفحة الدروس، منتجة نصًا داكنًا فوق
+   الخلفية الخضراء الداكنة لنفس الشارة (تباين ~1.27:1 — نفس نمط عطل [class$="-hero"]
+   المُصلَح سابقًا: قاعدة عامة تفترض سياقًا خاطئًا بسبب استثناءات ناقصة). */
+.page-shell h2:not(.sq-title):not(.jn-section__title):not(.jn-subtitle):not(.jn-related__title):not(.sw-related__title):not(.hj-section__title):not(.hj-related__title):not(.th-section__title):not(.th-related__title):not(.fa-related__title):not(.seerah-panel__title):not(.fq-ref__title):not(.sh-step__title):not(.ds-section__title):not(.cards-page-title):not(.search-page-title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title):not(.lessons-v2-section__title):not(.lessons-past-section__title),
+.page-shell h3:not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title),
+.page-shell h4,
+.page-shell h5,
+.page-shell h6,
+.ds-page h1,
+.ds-page h2,
+.ds-page h3 {
+  color: var(--txt-primary, #202725) !important;
+}
+.page-shell p,
+.ds-page p,
+.page-shell p,
+.ds-page p {
+  color: var(--txt-secondary, #68716D);
+}
+.ds-eyebrow {
+  color: var(--m26-green-700, #15803D) !important;
+  font-size: var(--type-label) !important;
+  font-weight: var(--fw-semibold) !important;
+  letter-spacing: var(--ls-wider) !important;
+  text-transform: uppercase !important;
+}
+
+/* ══ 6. Navbar ══════════════════════════════════════════════════════════════ */
+.navbar-v3 {
+  background: rgba(255,255,255,0.92) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.04) !important;
+}
+.site-brand-name {
+  color: var(--m26-green-800, #166534) !important;
+  text-shadow: none !important;
+}
+.navbar-menu-btn,
+.navbar-menu-btn { color: var(--txt-primary, #202725) !important; }
+.navbar-search-cmd {
+  background: var(--m26-bg, #F7F4ED) !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  color: var(--txt-subdued, #929995) !important;
+}
+
+/* ══ 7. Side Drawer ══════════════════════════════════════════════════════════ */
+.side-nav-drawer--v2 {
+  background: #FFFFFF !important;
+  border-inline-end: 1px solid rgba(0,0,0,0.06) !important;
+  box-shadow: var(--m26-shadow-xl) !important;
+}
+.side-nav-close,
+.side-nav-close { color: var(--txt-muted, #929995) !important; }
+.side-nav-group__title {
+  color: var(--txt-hint, #929995) !important;
+  font-size: var(--type-label) !important;
+  letter-spacing: var(--ls-wider) !important;
+  text-transform: uppercase !important;
+}
+.side-nav-item {
+  color: var(--txt-secondary, #68716D) !important;
+  border-radius: var(--m26-r-md) !important;
+}
+.side-nav-item:hover {
+  background: var(--m26-green-50, #F0FDF4) !important;
+  color: var(--m26-green-800, #166534) !important;
+}
+.side-nav-item--active {
+  background: var(--m26-green-100, #DCFCE7) !important;
+  color: var(--m26-green-800, #166534) !important;
+  font-weight: var(--fw-bold) !important;
+}
+
+/* ══ 8. Bottom Nav ══════════════════════════════════════════════════════════ */
+.bottom-nav {
+  background: rgba(255,255,255,0.95) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  border-top: 1px solid rgba(0,0,0,0.06) !important;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.05) !important;
+}
+.bottom-nav__item,
+.bottom-nav__item { color: var(--txt-muted, #929995) !important; }
+.bottom-nav__item--active,
+.bottom-nav__item--active { color: var(--m26-green-800, #166534) !important; }
+
+/* ══ 9. Cards ════════════════════════════════════════════════════════════════ */
+.lesson-unified-card,
+.ui-card,
+.card-v2,
+.page-card,
+.ds-card,
+.lesson-unified-card,
+.ui-card,
+.card-v2,
+.page-card,
+.ds-card {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(0,0,0,0.07) !important;
+  border-radius: var(--m26-r-lg) !important;
+  box-shadow: var(--m26-shadow-sm) !important;
+  transition: box-shadow var(--m26-duration-base) var(--m26-ease),
+              transform var(--m26-duration-base) var(--m26-ease),
+              border-color var(--m26-duration-base) var(--m26-ease) !important;
+}
+.lesson-unified-card:hover,
+.ui-card:hover,
+.page-card:hover,
+.ds-card:hover,
+.lesson-unified-card:hover,
+.ui-card:hover,
+.page-card:hover,
+.ds-card:hover {
+  box-shadow: var(--m26-shadow-md) !important;
+  border-color: rgba(0,0,0,0.12) !important;
+  transform: translateY(-2px) !important;
+}
+.lesson-unified-card__header {
+  background: var(--m26-green-50) !important;
+  border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+}
+.lesson-unified-card__status {
+  background: var(--m26-green-100) !important;
+  color: var(--m26-green-800) !important;
+  border: none !important;
+  border-radius: var(--m26-r-full) !important;
+  font-size: var(--type-caption) !important;
+  font-weight: var(--fw-bold) !important;
+}
+.ds-card__title,
+.ds-card__title { color: var(--txt-primary, #202725) !important; font-weight: var(--fw-bold) !important; }
+.ds-card__body,
+.ds-card__body { color: var(--txt-secondary, #68716D) !important; }
+.ds-card__meta,
+.ds-card__meta { color: var(--txt-muted, #929995) !important; }
+
+/* ══ 10. Buttons ══════════════════════════════════════════════════════════ */
+.ds-btn {
+  font-family: var(--font-body);
+  font-size: var(--type-btn);
+  font-weight: var(--fw-semibold);
+  border-radius: var(--m26-r-md);
+  letter-spacing: var(--ls-wide);
+  transition: all var(--m26-duration-fast) var(--m26-ease);
+}
+.ds-btn--primary {
+  background: var(--m26-green-800, #166534) !important;
+  color: #FFFFFF !important;
+  border-color: transparent !important;
+  box-shadow: 0 1px 2px rgba(22,101,52,0.20) !important;
+}
+.ds-btn--primary:hover {
+  background: var(--m26-green-950, #052E16) !important;
+  box-shadow: 0 4px 12px rgba(22,101,52,0.25) !important;
+}
+.ds-btn--secondary {
+  background: #FFFFFF !important;
+  color: var(--m26-green-800, #166534) !important;
+  border: 1.5px solid var(--m26-green-600, #16A34A) !important;
+}
+.ds-btn--ghost {
+  background: transparent !important;
+  color: var(--txt-secondary, #68716D) !important;
+  border: 1px solid rgba(0,0,0,0.10) !important;
+}
+.ds-btn--ghost:hover {
+  background: var(--m26-bg-2, #F1F3F5) !important;
+  border-color: rgba(0,0,0,0.16) !important;
+}
+.ds-btn:disabled {
+  background: var(--m26-bg-2, #F1F3F5) !important;
+  color: var(--txt-disabled, #A1A1AA) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ds-btn:active,
+  .ds-btn:active { transform: scale(0.97); }
+}
+
+/* ══ 11. Forms ═══════════════════════════════════════════════════════════════ */
+input[type="text"],
+input[type="email"],
+input[type="search"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+select,
+textarea,
+input[type="text"],
+input[type="email"],
+input[type="search"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+select,
+textarea {
+  background: #FFFFFF;
+  border: 1.5px solid rgba(0,0,0,0.12);
+  border-radius: var(--m26-r-md);
+  color: var(--txt-primary, #202725);
+  font-family: var(--font-body);
+  padding: 0.625rem 0.875rem;
+  font-size: var(--type-body);
+  transition: border-color var(--m26-duration-fast), box-shadow var(--m26-duration-fast);
+}
+input::placeholder,
+textarea::placeholder,
+input::placeholder,
+textarea::placeholder {
+  color: var(--txt-hint, #929995);
+}
+input:focus,
+select:focus,
+textarea:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--m26-green-600, #16A34A);
+  box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
+}
+label {
+  color: var(--txt-secondary, #68716D);
+  font-size: var(--type-label);
+  font-weight: var(--fw-medium);
+}
+
+/* ══ 12. Tabs ════════════════════════════════════════════════════════════════ */
+.kuwait-tab {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(0,0,0,0.10) !important;
+  color: var(--txt-muted, #929995) !important;
+  font-size: var(--type-label) !important;
+  font-weight: var(--fw-medium) !important;
+  border-radius: var(--m26-r-sm) !important;
+  transition: all var(--m26-duration-base) !important;
+}
+.kuwait-tab:hover:not(.kuwait-tab--active) {
+  border-color: var(--m26-green-600, #16A34A) !important;
+  color: var(--m26-green-800, #166534) !important;
+  background: var(--m26-green-50, #F0FDF4) !important;
+}
+.kuwait-tab--active {
+  background: var(--m26-green-800, #166534) !important;
+  color: #FFFFFF !important;
+  border-color: transparent !important;
+  box-shadow: 0 2px 8px rgba(22,101,52,0.25) !important;
+}
+
+/* ══ 13. Prayer Times Page ═══════════════════════════════════════════════════
+   تعارض الخلفية/الألوان مع تصميم elite-2026.css (أخضر غامق + نص أبيض) أُزيل
+   (2026-07-16) — كانت الخلفية تُرث من هنا (بيضاء) بينما تُرث كل ألوان النصوص
+   من elite-2026.css (أبيضاء)، فينتج نصًا أبيض على خلفية بيضاء غير مرئي البتة.
+   أُبقي على القياسات (font-size/weight/letter-spacing) فقط، لا الألوان. */
+.pt-hero__name {
+  font-family: var(--font-body) !important;
+  font-size: clamp(1.5rem, 4vw, 2.25rem) !important;
+  font-weight: var(--fw-bold) !important;
+}
+.pt-hero__countdown {
+  animation: none !important;
+  font-size: clamp(1.75rem, 5vw, 2.5rem) !important;
+  font-weight: var(--fw-black) !important;
+  letter-spacing: -0.02em !important;
+}
+.pt-hero__label {
+  font-size: var(--type-label) !important;
+  font-weight: var(--fw-semibold) !important;
+  letter-spacing: var(--ls-wider) !important;
+  text-transform: uppercase !important;
+}
+.pt-prayer,
+.pt-prayer { background: #FFFFFF !important; border-color: rgba(0,0,0,0.07) !important; }
+.pt-prayer:hover {
+  border-color: var(--m26-green-600, #16A34A) !important;
+  background: var(--m26-green-50, #F0FDF4) !important;
+}
+.pt-prayer--next {
+  border-color: var(--m26-green-600) !important;
+  background: var(--m26-green-50) !important;
+}
+.pt-prayer--pinned {
+  border-color: var(--m26-gold-500, #28584D) !important;
+  background: var(--m26-gold-50, #f0faf5) !important;
+}
+.pt-prayer__name {
+  color: var(--txt-primary, #202725) !important;
+  font-weight: var(--fw-semibold) !important;
+}
+.pt-prayer--next .pt-prayer__name,
+.pt-prayer--next .pt-prayer__time,
+.pt-prayer--next .pt-prayer__name,
+.pt-prayer--next .pt-prayer__time {
+  color: var(--m26-green-800, #166534) !important;
+}
+.pt-prayer__time {
+  color: var(--txt-muted, #929995) !important;
+  font-weight: var(--fw-semibold) !important;
+}
+/* أيقونة الصلاة */
+.pt-prayer__icon { font-size: 1.1rem; line-height: 1; flex-shrink: 0; }
+.pt-prayer { display: flex !important; align-items: center !important; gap: 0.5rem !important; }
+.pt-prayer__name { flex: 1 !important; text-align: right !important; }
+/* صلاة فائتة */
+.pt-prayer--past {
+  opacity: 0.45 !important;
+}
+/* :not شطب اسم الصلاة نفسه (لا الوقت فقط) عبر حروف عربية متصلة يقلّل
+   وضوحها بشدة (خط أفقي يمرّ خلال حروف مرتبطة أصعب قراءة من نظيره اللاتيني)،
+   خصوصًا مع opacity:.45 أعلاه معًا — نص شبه غير مقروء (شُخِّص 2026-07-19
+   عبر Playwright حي على /prayer-times). التعتيم + شطب الوقت فقط يكفيان
+   لإفادة "صلاة فائتة" دون التضحية بوضوح اسم الصلاة. */
+.pt-prayer--past .pt-prayer__time { text-decoration: line-through; }
+.pt-prayer__done { color: var(--m26-green-600, #16A34A) !important; font-size: 0.8rem; font-weight: 700; }
+/* أيقونة في العداد */
+.pt-hero__icon { display: block; font-size: 2rem; margin-bottom: 0.25rem; line-height: 1; }
+.pt-hero__name { display: flex !important; flex-direction: column !important; align-items: center !important; gap: 0 !important; }
+/* شريط التاريخ */
+.pt-date-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0.6rem 1rem 0.25rem;
+  text-align: center;
+}
+.pt-date-hijri { font-size: 0.88rem; font-weight: 700; color: var(--m26-green-700, #15803D) !important; }
+.pt-date-sep   { color: var(--txt-muted, #929995); font-size: 0.8rem; }
+.pt-date-greg  { font-size: 0.8rem; color: var(--txt-muted, #929995) !important; }
+/* بادج غداً */
+.pt-tomorrow-badge {
+  background: rgba(255,255,255,0.15);
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.pt-hero__hint-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+/* منتقي المحافظة */
+.pt-gov-section {
+  padding: 0.75rem 1rem 0.25rem;
+  text-align: center;
+}
+.pt-gov-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--txt-muted, #929995) !important;
+  margin-bottom: 0.5rem;
+}
+.pt-gov-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+}
+.pt-gov-chip {
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--txt-primary, #202725);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.pt-gov-chip:hover {
+  border-color: var(--m26-green-600, #16A34A);
+  background: var(--m26-green-50, #F0FDF4);
+}
+.pt-gov-chip--active {
+  background: var(--m26-green-700, #15803D) !important;
+  border-color: var(--m26-green-700, #15803D) !important;
+  color: #fff !important;
+}
+/* روابط سريعة */
+.pt-quick-links {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  padding: 0.75rem 1rem 1.25rem;
+  flex-wrap: wrap;
+}
+.pt-quick-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.10);
+  background: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--txt-primary, #202725) !important;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+.pt-quick-link:hover {
+  border-color: var(--m26-green-500, #22C55E);
+  background: var(--m26-green-50, #F0FDF4);
+}
+
+/* ══ 14. Login Page ══════════════════════════════════════════════════════════ */
+.login-page {
+  background: linear-gradient(160deg, #F0FDF4 0%, #FAFAFA 60%, #f0faf5 100%) !important;
+}
+.login-card {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(0,0,0,0.07) !important;
+  border-radius: var(--m26-r-xl) !important;
+  box-shadow: var(--m26-shadow-xl) !important;
+  padding: 2.5rem !important;
+}
+.login-card__title {
+  color: var(--txt-primary, #202725) !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--type-h2) !important;
+  font-weight: var(--fw-bold) !important;
+}
+.login-card__subtitle,
+.login-card__subtitle { color: var(--txt-muted, #929995) !important; }
+.login-submit {
+  background: var(--m26-green-800, #166534) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: var(--m26-r-md) !important;
+  font-weight: var(--fw-bold) !important;
+  width: 100% !important;
+  box-shadow: 0 2px 8px rgba(22,101,52,0.25) !important;
+}
+.login-submit:hover {
+  background: var(--m26-green-950, #052E16) !important;
+}
+.login-oauth__btn {
+  background: #FFFFFF !important;
+  border: 1.5px solid rgba(0,0,0,0.10) !important;
+  color: var(--txt-secondary, #68716D) !important;
+  border-radius: var(--m26-r-md) !important;
+}
+
+/* ══ 15. قصص الأنبياء — بطاقات القائمة (ثيم فاتح فقط) ══════════════════════
+
+   الأقسام الداكنة (.prophet-detail-lux, .prophets-lux-hero) تبقى كما هي —
+   تصميمها المظلم مقصود ومتوافق مع WCAG على خلفياتها الداكنة.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.prophet-lux-card {
+  background: #FFFFFF !important;
+  border-color: rgba(0,0,0,0.07) !important;
+  box-shadow: var(--m26-shadow-sm) !important;
+}
+.prophet-lux-card__name {
+  color: var(--txt-primary, #202725) !important;
+  font-size: 1.15rem !important;
+  font-weight: var(--fw-bold) !important;
+}
+/* #6b7280 → 4.35:1 → نرفعه لـ #929995 → 7.1:1 */
+.prophet-lux-card__pbuh {
+  color: var(--txt-muted, #929995) !important;
+  font-size: var(--type-caption) !important;
+}
+.prophet-lux-card__place {
+  color: var(--txt-muted, #929995) !important;
+  font-size: var(--type-caption) !important;
+}
+.prophet-lux-card__bio {
+  color: var(--txt-secondary, #68716D) !important;
+  font-size: var(--type-body-sm) !important;
+  line-height: var(--lh-relaxed) !important;
+}
+/* #9ca3af → 2.85:1 → FAILS → نرفعه لـ #929995 → 7.1:1 */
+.prophet-lux-card__surahs {
+  color: var(--txt-muted, #929995) !important;
+  font-size: var(--type-caption) !important;
+}
+.prophets-lux-count,
+.prophets-lux-count { color: var(--txt-muted, #929995) !important; }
+.prophets-lux-empty,
+.prophets-lux-empty { color: var(--txt-muted, #929995) !important; }
+.prophets-lux-disclaimer {
+  color: var(--txt-warning, #173D35) !important;
+  border-color: rgba(202,138,4,0.30) !important;
+  background: var(--m26-gold-50, #f0faf5) !important;
+}
+.prophets-lux-tab {
+  color: var(--txt-muted, #929995) !important;
+  border-color: rgba(0,0,0,0.12) !important;
+  background: #FFFFFF !important;
+}
+.prophets-lux-tab--active {
+  color: var(--m26-green-800, #166534) !important;
+  border-color: var(--m26-green-600, #16A34A) !important;
+  background: var(--m26-green-50, #F0FDF4) !important;
+  font-weight: var(--fw-bold) !important;
+}
+
+/* ══ 16. Notifications ═══════════════════════════════════════════════════════ */
+.nh-section {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(0,0,0,0.07) !important;
+  border-radius: var(--m26-r-lg) !important;
+}
+.nh-header__title,
+.nh-header__title { color: var(--txt-primary, #202725) !important; }
+.nh-row,
+.nh-row { border-color: rgba(0,0,0,0.06) !important; }
+.nh-row:hover,
+.nh-row:hover { background: var(--m26-green-50, #F0FDF4) !important; }
+.nh-row__title,
+.nh-row__title { color: var(--txt-primary, #202725) !important; }
+.nh-row__body-text,
+.nh-row__body-text { color: var(--txt-secondary, #68716D) !important; }
+.nh-row__meta,
+.nh-row__meta { color: var(--txt-muted, #929995) !important; }
+.nh-tab,
+.nh-tab { color: var(--txt-muted, #929995) !important; }
+.nh-tab--active {
+  color: var(--m26-green-800, #166534) !important;
+  border-bottom-color: var(--m26-green-800) !important;
+}
+.nh-search {
+  background: var(--m26-bg, #F7F4ED) !important;
+  border: 1.5px solid rgba(0,0,0,0.10) !important;
+  color: var(--txt-primary, #202725) !important;
+  border-radius: var(--m26-r-md) !important;
+}
+
+/* ══ 17. Notif Settings ══════════════════════════════════════════════════════ */
+.notif-card {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(0,0,0,0.07) !important;
+  border-radius: var(--m26-r-lg) !important;
+}
+.notif-card__title,
+.notif-card__title { color: var(--txt-primary, #202725) !important; }
+.notif-row__label,
+.notif-row__label { color: var(--txt-primary, #202725) !important; }
+.notif-row__sub,
+.notif-row__sub { color: var(--txt-muted, #929995) !important; }
+.notif-toggle,
+.notif-toggle { background: rgba(0,0,0,0.12) !important; }
+.notif-toggle--on,
+.notif-toggle--on { background: var(--m26-green-600, #16A34A) !important; }
+.notif-test-btn {
+  background: var(--m26-green-800, #166534) !important;
+  color: #FFFFFF !important;
+  border-radius: var(--m26-r-md) !important;
+}
+.notif-saved {
+  background: var(--m26-green-50, #F0FDF4) !important;
+  color: var(--m26-green-800, #166534) !important;
+  border: 1px solid rgba(22,163,74,0.25) !important;
+}
+.notif-time__label,
+.notif-time__label { color: var(--txt-secondary, #68716D) !important; }
+.notif-time__hint,
+.notif-time__hint { color: var(--txt-muted, #929995) !important; }
+.notif-banner--warn {
+  background: var(--m26-gold-50, #f0faf5) !important;
+  border-color: rgba(202,138,4,0.35) !important;
+  color: var(--txt-warning, #173D35) !important;
+}
+.notif-banner--err {
+  background: #FEF2F2 !important;
+  border-color: rgba(185,28,28,0.25) !important;
+  color: var(--txt-error, #B91C1C) !important;
+}
+
+/* ══ 18. Home Page ═══════════════════════════════════════════════════════════ */
+.home-hero {
+  background: linear-gradient(160deg,
+    #FFFFFF 0%, var(--m26-green-50) 60%, var(--m26-green-50) 100%) !important;
+  border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+}
+.home-hero__title {
+  color: var(--m26-green-950, #052E16) !important;
+  font-family: var(--font-body) !important;
+  font-weight: var(--fw-bold) !important;
+}
+.home-hero__sub,
+.home-hero__sub { color: var(--txt-secondary, #68716D) !important; }
+.home-story-card,
+.home-feature-strip-card,
+.home-more-card,
+.home-story-card,
+.home-feature-strip-card,
+.home-more-card {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(0,0,0,0.07) !important;
+}
+.home-about__body,
+.home-about__body { color: var(--txt-secondary, #68716D) !important; }
+
+/* ══ 19. Page Shell / Global Text ═══════════════════════════════════════════ */
+.page-shell,
+.page-shell { color: var(--txt-primary, #202725) !important; }
+.page-meta,
+.page-meta { color: var(--txt-muted, #929995) !important; }
+.page-desc,
+.page-desc { color: var(--txt-secondary, #68716D) !important; }
+.page-tag {
+  background: var(--m26-green-100, #DCFCE7) !important;
+  color: var(--m26-green-800, #166534) !important;
+  border: none !important;
+  border-radius: var(--m26-r-full) !important;
+  font-size: var(--type-caption) !important;
+  font-weight: var(--fw-bold) !important;
+}
+
+/* PageHeader */
+.ds-page-header .ds-heading {
+  color: var(--txt-primary, #202725) !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--type-h1) !important;
+  font-weight: var(--fw-bold) !important;
+  letter-spacing: var(--ls-tight) !important;
+  line-height: var(--lh-snug) !important;
+}
+.ds-page-header .ds-subtitle {
+  color: var(--txt-secondary, #68716D) !important;
+  font-size: var(--type-body-lg) !important;
+  line-height: var(--lh-relaxed) !important;
+}
+
+/* ══ 20. Admin Shell ══════════════════════════════════════════════════════ */
+.admin-shell,
+.admin-shell { background: var(--m26-bg, #F7F4ED) !important; }
+.admin-shell__sidebar {
+  background: #FFFFFF !important;
+  border-inline-end: 1px solid rgba(0,0,0,0.07) !important;
+}
+
+/* ══ 21. Tables ══════════════════════════════════════════════════════════════ */
+table,
+table { background: #FFFFFF; border-collapse: collapse; }
+th {
+  background: var(--m26-bg, #F7F4ED) !important;
+  color: var(--txt-secondary, #68716D) !important;
+  font-weight: var(--fw-bold) !important;
+  font-size: var(--type-label) !important;
+  letter-spacing: var(--ls-wide) !important;
+  border-color: rgba(0,0,0,0.07) !important;
+}
+td {
+  color: var(--txt-primary, #202725) !important;
+  border-color: rgba(0,0,0,0.06) !important;
+}
+/* لا نسخة ليلية سابقًا لعنصر table/th/td العام — خلفية بيضاء ونص داكن
+   ثابتان حتى في الوضع الليلي (كل جدول في الموقع، مثال: صفحات تفاصيل
+   جلسات المجمع الفقهي) (2026-07-17). */
+html[data-theme="dark"] table {
+  background: #173D35 !important;
+}
+html[data-theme="dark"] th {
+  background: rgba(92,196,154,.12) !important;
+  color: #C8D5CE !important;
+  border-color: rgba(255,255,255,.08) !important;
+}
+html[data-theme="dark"] td {
+  color: #E5F0EC !important;
+  border-color: rgba(255,255,255,.06) !important;
+}
+
+/* ══ 22. Empty States ═════════════════════════════════════════════════════ */
+.empty-state {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(0,0,0,0.07) !important;
+  border-radius: var(--m26-r-xl) !important;
+  color: var(--txt-muted, #929995) !important;
+}
+.empty-state h2,
+.empty-state h3,
+.empty-state h2,
+.empty-state h3 { color: var(--txt-primary, #202725) !important; }
+.empty-state p,
+.empty-state p { color: var(--txt-muted, #929995) !important; }
+
+/* ══ 23. Skeleton ════════════════════════════════════════════════════════════ */
+@keyframes m26-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.skeleton-block,
+[aria-busy="true"] .skeleton-item {
+  background: linear-gradient(90deg, #F0F0F0 25%, #E8E8E8 50%, #F0F0F0 75%) !important;
+  background-size: 200% 100% !important;
+  animation: m26-shimmer 1.5s ease-in-out infinite !important;
+  border-radius: var(--m26-r-md) !important;
+  color: transparent !important;
+}
+
+/* ══ 24. Seerah Bridge ═══════════════════════════════════════════════════════ */
+.prophets-seerah-bridge {
+  background: linear-gradient(135deg, var(--m26-green-50), var(--m26-green-100, #dcfce7)) !important;
+  border: 1px solid rgba(22,163,74,0.25) !important;
+  border-radius: var(--m26-r-lg) !important;
+}
+.prophets-seerah-bridge:hover {
+  border-color: rgba(22,163,74,0.50) !important;
+  box-shadow: var(--m26-shadow-md) !important;
+}
+.prophets-seerah-bridge__title,
+.prophets-seerah-bridge__title { color: var(--m26-green-950, #052E16) !important; }
+.prophets-seerah-bridge__eyebrow,
+.prophets-seerah-bridge__eyebrow { color: var(--m26-gold-700, #28584D) !important; }
+.prophets-seerah-bridge__desc,
+.prophets-seerah-bridge__desc { color: var(--txt-secondary, #68716D) !important; }
+.prophets-seerah-bridge__arrow,
+.prophets-seerah-bridge__arrow { color: var(--m26-green-600, #16A34A) !important; }
+.seerah-back-link {
+  color: var(--m26-green-800, #166534) !important;
+  border-color: rgba(22,163,74,0.25) !important;
+}
+.seerah-back-link:hover {
+  background: var(--m26-green-50) !important;
+  border-color: rgba(22,163,74,0.50) !important;
+}
+
+/* ══ 25. Footer ══════════════════════════════════════════════════════════════ */
+.site-footer {
+  background: var(--m26-bg-2, #F1F3F5) !important;
+  border-top: 1px solid rgba(0,0,0,0.07) !important;
+  color: var(--txt-muted, #929995) !important;
+}
+.site-footer a {
+  color: var(--txt-secondary, #68716D) !important;
+  text-decoration: none;
+}
+.site-footer a:hover,
+.site-footer a:hover { color: var(--m26-green-800, #166534) !important; }
+
+/* ══ 26. Text-on-image Protection ════════════════════════════════════════════ */
+.text-on-image {
+  text-shadow: 0 1px 3px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.20);
+}
+.text-on-image-overlay { position: relative; }
+.text-on-image-overlay::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.20) 50%, transparent 100%);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+}
+.text-on-image-overlay > * { position: relative; z-index: 2; }
+
+/* ══ 27. Accessibility ════════════════════════════════════════════════════════ */
+:focus-visible {
+  outline: 2px solid var(--m26-green-600, #16A34A);
+  outline-offset: 2px;
+  border-radius: var(--m26-r-sm);
+}
+:focus:not(:focus-visible) { outline: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ══ 28. Micro-interactions ══════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: no-preference) {
+  .ds-btn,
+  .kuwait-tab,
+  .page-card,
+  .prophet-lux-card,
+  .ds-btn,
+  .kuwait-tab,
+  .page-card,
+  .prophet-lux-card {
+    transition: all var(--m26-duration-base) var(--m26-ease);
+  }
+}
+
+/* ══ 29. Profile / Quick Links ═══════════════════════════════════════════════ */
+.profile-quick-link {
+  color: var(--txt-secondary, #68716D) !important;
+  border-color: rgba(0,0,0,0.10) !important;
+}
+.profile-quick-link:hover {
+  color: var(--m26-green-800, #166534) !important;
+  border-color: var(--m26-green-600, #16A34A) !important;
+  background: var(--m26-green-50, #F0FDF4) !important;
+}
+
+/* ══ 30. Dividers / Separators ════════════════════════════════════════════════ */
+hr,
+hr { border-color: rgba(0,0,0,0.07) !important; }
+
+/* ══ 31. Mosque Mode / Prayer Countdown ══════════════════════════════════════ */
+.mosque-mode-card {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(0,0,0,0.07) !important;
+  box-shadow: var(--m26-shadow-md) !important;
+}
+
+/* ══ 32. Adhkar ══════════════════════════════════════════════════════════════ */
+.adhkar-card {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(0,0,0,0.07) !important;
+}
+.adhkar-card__text,
+.adhkar-card__text { color: var(--txt-primary, #202725) !important; }
+.adhkar-card__source,
+.adhkar-card__source { color: var(--txt-muted, #929995) !important; }
+
+/* ══ 33. Flashcards ══════════════════════════════════════════════════════════ */
+.flashcard {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(0,0,0,0.07) !important;
+  box-shadow: var(--m26-shadow-lg) !important;
+}
+.flashcard__front,
+.flashcard__back,
+.flashcard__front,
+.flashcard__back { color: var(--txt-primary, #202725) !important; }
+
+/* ══ 34. KPI Stats ═══════════════════════════════════════════════════════════ */
+.stat-card {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(0,0,0,0.07) !important;
+}
+.stat-card__value {
+  color: var(--txt-primary, #202725) !important;
+  font-weight: var(--fw-black) !important;
+}
+.stat-card__label,
+.stat-card__label { color: var(--txt-muted, #929995) !important; }
+
+/* ══ 35. Prayer Rank / Lesson Detail ════════════════════════════════════════ */
+.hcp-prayer-cell__time,
+.hcp-prayer-cell__time { color: var(--txt-primary, #202725) !important; }
+.hcp-prayer-cell__name,
+.hcp-prayer-cell__name { color: var(--txt-secondary, #68716D) !important; }
+
+/* ══ 36. تاريخ الإسلامي / أذكار / تسبيح ════════════════════════════════════ */
+.tasbih-count {
+  color: var(--txt-primary, #202725) !important;
+  font-weight: var(--fw-black) !important;
+}
+.tasbih-label,
+.tasbih-label { color: var(--txt-muted, #929995) !important; }
+
+/* ══ 37. Prophet Stories — Light Card Contrast Fixes ════════════════════════ */
+.prophets-lux-count,
+.prophets-lux-count { color: var(--txt-muted, #929995) !important; }
+
+.prophet-lux-card__place,
+.prophet-lux-card__place { color: var(--txt-muted, #929995) !important; }
+
+.prophets-lux-empty,
+.prophets-lux-empty { color: var(--txt-muted, #929995) !important; }
+
+.prophet-timeline__title,
+.prophet-timeline__title { color: var(--txt-muted, #929995) !important; }
+
+.prophet-timeline__era,
+.prophet-timeline__era { color: var(--txt-muted, #929995) !important; }
+
+.prophet-quiz__remark,
+.prophet-quiz__remark { color: var(--txt-muted, #929995) !important; }
+
+.prophets-lux-search-clear,
+.prophets-lux-search-clear { color: var(--txt-muted, #929995) !important; }
+
+/* ══ 38. Seerah Page — Timeline Contrast ════════════════════════════════════ */
+.seerah-timeline__dot,
+.seerah-timeline__dot { color: var(--txt-muted, #929995) !important; }
+
+.seerah-timeline__year,
+.seerah-timeline__year { color: var(--txt-muted, #929995) !important; }
+
+/* ══ 39. Muezzin Detail / Favorites — Contrast Fixes ════════════════════════ */
+.muezzin-meta,
+.muezzin-meta { color: var(--txt-muted, #929995) !important; }
+
+.muezzin-bio,
+.muezzin-bio { color: var(--txt-muted, #929995) !important; }
+
+/* ══ 39b. Back Button — زر الرجوع العالمي ══════════════════════════════════ */
+.ds-page-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.375rem 0.875rem;
+  margin-bottom: 0.75rem;
+  border: 1.5px solid var(--majalis-line, #e5e7eb);
+  border-radius: 9999px;
+  background: var(--majalis-panel, #fff);
+  color: var(--txt-secondary, #68716D);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  line-height: 1;
+}
+.ds-page-back-btn:hover {
+  background: var(--m26-green-50, #F0FDF4);
+  border-color: var(--majalis-emerald, #16A34A);
+  color: var(--majalis-emerald, #16A34A);
+}
+
+/* زر الرجوع داخل legal-page-hero (خلفية داكنة) */
+.legal-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.375rem 0.875rem;
+  margin-bottom: 0.75rem;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.9);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  line-height: 1;
+}
+.legal-back-btn:hover {
+  background: rgba(255,255,255,0.22);
+  border-color: rgba(255,255,255,0.7);
+}
+
+/* ══ 40. Adhkar Focus Mode ══════════════════════════════════════════════════ */
+.adhkar-page--focus .adhkar-focus-shell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 0 2rem;
+}
+
+.adhkar-focus-counter {
+  font-size: 0.875rem;
+  color: var(--txt-subdued, #929995);
+  letter-spacing: 0.05em;
+}
+
+.adhkar-focus-card {
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--majalis-line, #e5e7eb);
+  border-radius: 1.25rem;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  max-width: 640px;
+  width: 100%;
+  box-shadow: 0 2px 16px rgba(0,0,0,.06);
+}
+
+.adhkar-focus-text {
+  font-family: var(--font-body);
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  line-height: 2.2;
+  color: var(--txt-primary, #202725);
+  margin: 0 0 1rem;
+}
+
+.adhkar-focus-count {
+  font-size: 0.85rem;
+  color: var(--majalis-emerald, #16A34A);
+  font-weight: 600;
+  margin: 0;
+}
+
+.adhkar-focus-nav {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.adhkar-focus-btn {
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.75rem;
+  border: 1.5px solid var(--majalis-line, #e5e7eb);
+  background: var(--majalis-panel, #fff);
+  color: var(--txt-primary, #202725);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, opacity 0.15s;
+}
+.adhkar-focus-btn:hover:not(:disabled) {
+  background: var(--m26-green-50, #F0FDF4);
+  border-color: var(--majalis-emerald, #16A34A);
+}
+.adhkar-focus-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.adhkar-focus-btn--next {
+  background: var(--majalis-emerald, #16A34A);
+  color: #fff;
+  border-color: transparent;
+}
+.adhkar-focus-btn--next:hover:not(:disabled) {
+  background: var(--m26-green-800, #166534);
+}
+.adhkar-focus-btn--details {
+  color: var(--majalis-emerald, #16A34A);
+  border-color: var(--majalis-emerald, #16A34A);
+}
+
+.adhkar-focus-progress {
+  width: 100%;
+  max-width: 640px;
+  height: 4px;
+  background: var(--majalis-line, #e5e7eb);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.adhkar-focus-progress-fill {
+  height: 100%;
+  background: var(--majalis-emerald, #16A34A);
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+
+@keyframes adhkarFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.adhkar-anim-fade {
+  animation: adhkarFadeIn 0.3s ease forwards;
+}
+
+/* ══ عدّاد التسبيح (Tap Counter) ══ */
+/* منطقة ثابتة الارتفاع تحتوي العداد أو "مرة واحدة" لإبقاء أزرار التنقل في مكانها */
+.adhkar-tapper-zone {
+  min-height: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.adhkar-tapper-wrap {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 0.5rem;
+}
+
+.adhkar-tapper {
+  position: relative;
+  width: 120px; height: 120px;
+  border: none; background: transparent;
+  cursor: pointer; padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.1s ease;
+}
+.adhkar-tapper:active { transform: scale(0.93); }
+.adhkar-tapper--done { cursor: default; }
+.adhkar-tapper--done:active { transform: none; }
+
+.adhkar-ring {
+  position: absolute; inset: 0;
+  pointer-events: none;
+}
+
+.adhkar-tapper__inner {
+  position: absolute; inset: 0;
+  display: flex; align-items: center;
+  justify-content: center; gap: 0.15rem;
+  background: var(--majalis-panel, #fff);
+  border-radius: 50%;
+  margin: 6px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.adhkar-tapper__cur {
+  font-size: 1.6rem; font-weight: 800;
+  color: var(--majalis-emerald, #16A34A);
+  line-height: 1; font-variant-numeric: tabular-nums;
+}
+.adhkar-tapper__sep {
+  font-size: 1rem; color: rgba(0,0,0,0.2);
+  align-self: flex-end; margin-bottom: 0.15rem;
+}
+.adhkar-tapper__tot {
+  font-size: 0.85rem; font-weight: 600;
+  color: rgba(0,0,0,0.35); align-self: flex-end;
+  margin-bottom: 0.1rem;
+}
+.adhkar-tapper__check {
+  font-size: 2.2rem; color: var(--majalis-emerald, #16A34A);
+  animation: adhkarCheckPop 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes adhkarCheckPop {
+  from { transform: scale(0.4); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.adhkar-tapper__hint {
+  font-size: 0.78rem; color: var(--txt-subdued, #929995);
+  margin: 0; text-align: center;
+}
+.adhkar-tapper__complete {
+  font-size: 0.875rem; font-weight: 600;
+  color: var(--majalis-emerald, #16A34A);
+  margin: 0; text-align: center;
+}
+
+/* Bottom Sheet */
+.adhkar-sheet-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+}
+.adhkar-sheet {
+  background: var(--majalis-panel, #fff);
+  border-radius: 1.5rem 1.5rem 0 0;
+  padding: 1.5rem 1.5rem 2rem;
+  width: 100%;
+  max-width: 640px;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  animation: sheetSlideUp 0.28s cubic-bezier(.32,.72,0,1) forwards;
+}
+@keyframes sheetSlideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+.adhkar-sheet-handle {
+  width: 3rem;
+  height: 4px;
+  background: var(--majalis-line, #e5e7eb);
+  border-radius: 9999px;
+  margin: 0 auto 1.25rem;
+}
+.adhkar-sheet-close {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--txt-subdued, #929995);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+}
+.adhkar-sheet-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--txt-primary, #202725);
+  text-align: center;
+  margin: 0 0 1rem;
+}
+.adhkar-sheet-text {
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  line-height: 2;
+  color: var(--txt-primary, #202725);
+  text-align: center;
+  padding: 1rem;
+  background: var(--m26-green-50, #F0FDF4);
+  border-radius: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+.adhkar-sheet-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  margin: 0 0 1.5rem;
+}
+.adhkar-sheet-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  font-size: 0.875rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--majalis-line, #e5e7eb);
+}
+.adhkar-sheet-row dt {
+  color: var(--txt-subdued, #929995);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.adhkar-sheet-row dd {
+  color: var(--txt-primary, #202725);
+  text-align: start;
+  margin: 0;
+}
+.adhkar-grade {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.adhkar-grade--sahih { background: #DCFCE7; color: #166534; }
+.adhkar-grade--hasan { background: #e8f5f0; color: #28584D; }
+.adhkar-grade--other { background: #F3F4F6; color: #68716D; }
+.adhkar-sheet-share {
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+.adhkar-sheet-dismiss {
+  display: block;
+  width: 100%;
+  padding: 0.875rem;
+  background: var(--majalis-emerald, #16A34A);
+  color: #fff;
+  border: none;
+  border-radius: 0.875rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ══ 40. Legacy Token Bridge — إعادة تعريف الرموز القديمة للتوافق ═══════════ */
+:root {
+  --text-base:       var(--txt-primary,   #202725);
+  --text-soft:       var(--txt-secondary, #68716D);
+  --text-muted:      var(--txt-muted,     #929995);
+  --text-subtle:     var(--txt-subdued,   #68716D);
+  --text-disabled:   var(--txt-disabled,  #B9BEBB);
+  --text-accent:     var(--txt-accent,    #173D35);
+  --text-inverse:    var(--txt-inverse,   #F7F4ED);
+
+  /* ── تحديث رموز m26 لتطابق إعادة تصميم الهوية v3 ── */
+  --m26-bg:           #F7F4ED;
+  --m26-bg-2:         #F1EEE5;
+  --m26-surface:      #FFFFFF;
+  --m26-surface-2:    #F1EEE5;
+  --m26-surface-3:    #EFE9DC;
+  --m26-green-950:    #0C211C;
+  --m26-green-800:    #173D35;
+  --m26-green-700:    #173D35;
+  --m26-green-600:    #173D35;
+  --m26-green-100:    #E4EAE7;
+  --m26-green-50:     #EEF1EF;
+}
+
+/* ══ 41. نقش نجمة ثمانية الأضلاع — سطح الأبطال والرؤوس ════════════════════ */
+/*
+ * الاستخدام: أضف .majalis-star-bg لأي عنصر تريده يحمل نقش النجمة.
+ * يُسمح فقط لـ: hero sections, page headers, featured cards.
+ * يُمنع تماماً خلف: نص قرآني، نص حديث، نماذج، جداول.
+ */
+.majalis-star-bg {
+  background-color: #173D35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E");
+  background-size: 100px 100px;
+  color: #F7F4ED;
+}
+
+/* رأس النجمة — الوضع الاحتفالي للصفحات الرئيسية */
+.majalis-star-hero {
+  position: relative;
+  background-color: #28584D;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.06' stroke-width='1.2'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.09'/%3E%3C/svg%3E");
+  background-size: 100px 100px;
+  color: #F7F4ED;
+  padding: 2.5rem 1.5rem;
+}
+
+/* ══ Calendar Improvements 2026 ══════════════════════════════════════════════ */
+/* خلايا التقويم — تخطيط مرن مع أحداث */
+.cal-cell {
+  aspect-ratio: unset !important;
+  min-height: 3.5rem !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  padding: 0.35rem 0.3rem !important;
+  flex-direction: column !important;
+  gap: 0.15rem !important;
+}
+.cal-cell.has-events { min-height: 5.5rem !important; }
+.cal-cell-head {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.15rem;
+  margin-bottom: 0.1rem;
+}
+.cal-cell-num {
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  color: var(--txt-primary, #202725) !important;
+}
+.cal-cell-hijri {
+  font-size: 0.62rem !important;
+  font-weight: 500 !important;
+  color: var(--m26-green-700, #15803D) !important;
+  opacity: 0.75;
+  line-height: 1 !important;
+}
+/* اليوم الحالي */
+.cal-cell.is-today { background: var(--m26-green-50, #F0FDF4) !important; border-color: var(--m26-green-400, #4ADE80) !important; }
+.cal-cell.is-today .cal-cell-num { color: var(--m26-green-700, #15803D) !important; }
+/* حدث داخل الخلية */
+.cal-cell-event {
+  display: block;
+  width: 100%;
+  font-size: 0.58rem !important;
+  font-weight: 600 !important;
+  background: var(--m26-green-100, #DCFCE7) !important;
+  color: var(--m26-green-800, #166534) !important;
+  border-radius: 0.25rem;
+  padding: 0.08rem 0.25rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: right;
+  line-height: 1.4;
+}
+.cal-cell.is-selected .cal-cell-event,
+.cal-cell.is-today .cal-cell-event {
+  background: rgba(22,163,74,0.18) !important;
+  color: #14532D !important;
+}
+.cal-cell-more {
+  display: block;
+  font-size: 0.58rem !important;
+  font-weight: 700 !important;
+  color: var(--m26-green-600, #16A34A) !important;
+  text-align: right;
+  line-height: 1.2;
+}
+/* زر "اليوم" في التولبار */
+.cal-today-btn {
+  border: 1.5px solid var(--m26-green-600, #16A34A) !important;
+  color: var(--m26-green-700, #15803D) !important;
+  background: transparent !important;
+  border-radius: 999px !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  padding: 0.2rem 0.7rem !important;
+  cursor: pointer !important;
+  transition: background 0.15s !important;
+  margin-right: 0.35rem !important;
+}
+.cal-today-btn:hover {
+  background: var(--m26-green-50, #F0FDF4) !important;
+}
+
+/* ── شريط تقدم القراءة ── */
+.reading-progress-bar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(to left, var(--color-primary, #28584D), #34d399);
+  width: var(--rpb-pct, 0%);
+  z-index: 9999;
+  transition: width 0.1s linear;
+  pointer-events: none;
+  border-radius: 0 0 2px 2px;
+}
+
+/* ── رأس صفحة التفاصيل ── */
+.content-detail-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.content-detail-readtime {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--txt-secondary, #6b7280);
+  background: var(--surface-2, #f4f4f4);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   نظام الخطوط والألوان — مراجعة شاملة 2026
+   القاعدة: أبيض نقي (#FFFFFF) فوق الخلفيات الخضراء/الداكنة دائماً
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ─── متغيرات عالمية لنص على الأسطح الخضراء ─── */
+:root {
+  --on-emerald-primary:   #FFFFFF;
+  --on-emerald-secondary: rgba(255, 255, 255, 0.92);
+  --on-emerald-muted:     rgba(255, 255, 255, 0.75);
+  --on-dark-primary:      #FFFFFF;
+  --on-dark-secondary:    rgba(255, 255, 255, 0.88);
+  --txt-body:             #1E1E1E;
+  --txt-body-light:       #68716D;
+}
+
+/* ─── تحسين وزن الخط العام ─── */
+body {
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  line-height: var(--lh-normal, 1.65);
+}
+
+p { line-height: var(--lh-normal, 1.65); }
+
+/* ─── نص أبيض على جميع Hero sections ─── */
+.lpth-hero,
+.lpth-hero *:not(.lpth-hero__btn-primary):not(.lpth-hero__btn-primary *) {
+  color: var(--on-emerald-primary);
+}
+.lpth-hero__subtitle,
+.lpth-hero__eyebrow,
+.lpth-hero__stat-label {
+  color: var(--on-emerald-secondary) !important;
+}
+
+.ldb-hero,
+.ldb-hero * {
+  color: var(--on-emerald-primary);
+}
+.ldb-hero__subtitle,
+.ldb-hero__back { color: var(--on-emerald-secondary) !important; }
+
+/* ─── Hero عام لجميع الأقسام ─── */
+.prophets-hero,
+.seerah-hero,
+.prophets-hero *,
+.seerah-hero * {
+  color: var(--on-emerald-primary) !important;
+}
+
+.lesson-detail-hero,
+.lesson-detail-hero * {
+  color: var(--on-emerald-primary) !important;
+}
+
+/* ─── home hero v3 ─── */
+.home-hero--v3 .home-hero-title,
+.home-hero--v3 .home-hero-subtitle,
+.home-hero--v3 .home-hero-desc {
+  color: var(--on-emerald-primary) !important;
+}
+
+/* ─── الأزرار الزمردية: أبيض دائماً ─── */
+.btn-emerald,
+[class*="btn--primary"],
+[class*="btn--emerald"],
+.citation-btn--primary,
+.qzg-btn-gold,
+.lpth-hero__btn-primary,
+.ldb-hero__btn-primary {
+  color: #FFFFFF !important;
+}
+
+/* ─── النص فوق البطاقات الخضراء المائلة ─── */
+[class*="-card--emerald"] *,
+[class*="-card--dark"] *,
+[class*="-card--green"] * {
+  color: var(--on-emerald-primary);
+}
+
+/* ─── نص أبيض على badge وchip فوق الخضراء ─── */
+.content-hub-chip--active {
+  color: #FFFFFF !important;
+}
+
+/* ─── ظل نصي خفيف للعناوين فوق الصور/التدرجات ─── */
+.lesson-detail-hero .lesson-detail-title,
+.lesson-detail-hero h1,
+.lesson-detail-hero h2,
+.prophets-hero h1,
+.prophets-hero h2,
+.seerah-hero h1,
+.seerah-hero h2,
+.lpth-hero__title,
+.ldb-hero__title {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+}
+
+/* ─── تحسين وضوح النصوص الثانوية على الأسطح الفاتحة ─── */
+.page-meta,
+.page-desc,
+.content-detail-meta {
+  color: #68716D;
+  line-height: var(--lh-normal, 1.65);
+}
+
+/* ─── المناطق البيضاء: نص داكن ─── */
+.ui-card,
+.page-card,
+.majalis-panel {
+  color: #1E1E1E;
+}
+
+/* ─── تحسين الفقرات النصية ─── */
+.content-detail-body p {
+  line-height: 1.85;
+  color: #1E1E1E;
+  font-size: 1rem;
+}
+
+/* ─── ضمان النص الأبيض على شريط القراءة ─── */
+.reading-progress-bar {
+  background: linear-gradient(to right, var(--majalis-emerald, #28584D), #28584D);
+}
+
+/* ─── تحسين الفهرس والتسميات المرئية ─── */
+.page-eyebrow,
+.home-eyebrow,
+.ds-page-header__eyebrow {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* ─── تباين نص الجداول والقوائم ─── */
+.site-footer * { color: inherit; }
+.site-footer-link { color: rgba(255,255,255,0.75); }
+.site-footer-link:hover { color: #FFFFFF; }
+
+/* ─── ضمان قابلية قراءة النص المعطّل فقط للعناصر disabled ─── */
+[disabled], [aria-disabled="true"] { opacity: 0.5; }

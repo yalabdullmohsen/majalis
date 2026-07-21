@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
+import { Link2, Lock } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   getResearcherProfile,
   saveResearcherProfile,
@@ -9,6 +12,7 @@ import {
   INTEREST_TAGS,
   type ResearcherProfile,
 } from "@/lib/researcher-profile-service";
+import { applyPageSeo } from "@/lib/seo";
 
 // ─── Interest Tag Toggle ───────────────────────────────────────────────────────
 
@@ -26,6 +30,7 @@ function InterestTag({
       type="button"
       className={`rp-tag${selected ? " rp-tag--active" : ""}`}
       onClick={onToggle}
+      aria-pressed={selected}
     >
       {label}
     </button>
@@ -76,7 +81,7 @@ function ShareBanner({ userId }: { userId: string }) {
 
   return (
     <div className="rp-share-banner">
-      <span className="rp-share-banner__label">🔗 رابط ملفك العام:</span>
+      <span className="rp-share-banner__label flex items-center gap-1"><Link2 size={14} aria-hidden="true" /> رابط ملفك العام:</span>
       <span className="rp-share-banner__url">{url}</span>
       <button type="button" className="vault-btn vault-btn--sm vault-btn--primary" onClick={copy}>
         {copied ? "✓ تم النسخ" : "نسخ"}
@@ -104,19 +109,31 @@ export default function ResearcherProfilePage() {
   const [pubInput, setPubInput] = useState<string[]>([""]);
   const savedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  useEffect(() => {
+    applyPageSeo({
+      path: "/researcher-profile",
+      title: "الملف الشخصي للباحث | المجلس العلمي",
+      description: "أنشئ ملفك الشخصي كباحث إسلامي، تخصصاتك واهتماماتك ومنشوراتك العلمية.",
+      keywords: ["باحث إسلامي", "ملف أكاديمي", "بحث شرعي", "باحث شرعي"],
+      robots: "noindex, follow",
+    });
+  }, []);
+
   useEffect(() => () => { if (savedTimerRef.current) clearTimeout(savedTimerRef.current); }, []);
 
   useEffect(() => {
     if (!user?.id) return;
-    getResearcherProfile(user.id).then((data) => {
-      if (data) {
-        setProfile(data);
-        if (data.publications && data.publications.length > 0) {
-          setPubInput([...data.publications, ""]);
+    getResearcherProfile(user.id)
+      .then((data) => {
+        if (data) {
+          setProfile(data);
+          if (data.publications && data.publications.length > 0) {
+            setPubInput([...data.publications, ""]);
+          }
         }
-      }
-      setLoading(false);
-    });
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, [user?.id]);
 
   const toggleInterest = (tag: string) => {
@@ -155,9 +172,9 @@ export default function ResearcherProfilePage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="page-shell narrow" dir="rtl" style={{ textAlign: "center", paddingTop: "3rem" }}>
-        <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🔐</div>
-        <p style={{ color: "var(--majalis-ink-soft)", marginBottom: "1rem" }}>
+      <div className="page-shell narrow rpr-login-prompt" dir="rtl">
+        <div className="rpr-login-icon"><Lock size={40} strokeWidth={1.3} aria-hidden="true" /></div>
+        <p className="rpr-login-msg">
           سجّل الدخول لإنشاء ملفك البحثي.
         </p>
         <Link href="/login?next=/researcher" className="ui-card-btn">تسجيل الدخول</Link>
@@ -168,7 +185,7 @@ export default function ResearcherProfilePage() {
   if (loading) {
     return (
       <div className="page-shell narrow" dir="rtl">
-        <div className="profile-loading" style={{ margin: "3rem auto" }}>
+        <div className="profile-loading rpr-loading-center">
           <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
         </div>
       </div>
@@ -179,7 +196,7 @@ export default function ResearcherProfilePage() {
     <div className="page-shell narrow rp-page" dir="rtl">
       <PageHeader
         eyebrow="البحث العلمي"
-        title="🎓 ملف الباحث"
+        title="ملف الباحث"
         subtitle="أنشئ ملفاً بحثياً يُعرّف بك وباهتماماتك العلمية في الدراسات الإسلامية."
       />
 
@@ -201,8 +218,9 @@ export default function ResearcherProfilePage() {
         <div className="rp-section">
           <h2 className="rp-section-title">المعلومات الأساسية</h2>
 
-          <label className="rp-label">الاسم العلمي</label>
+          <label htmlFor="rp-display-name" className="rp-label">الاسم العلمي</label>
           <input
+            id="rp-display-name"
             type="text"
             className="rp-input"
             placeholder="الاسم الذي تُعرَّف به في البحث العلمي"
@@ -210,8 +228,9 @@ export default function ResearcherProfilePage() {
             onChange={(e) => setProfile((p) => ({ ...p, display_name: e.target.value }))}
           />
 
-          <label className="rp-label">الجهة / المؤسسة</label>
+          <label htmlFor="rp-institution" className="rp-label">الجهة / المؤسسة</label>
           <input
+            id="rp-institution"
             type="text"
             className="rp-input"
             placeholder="الجامعة أو المعهد أو المركز البحثي"
@@ -219,8 +238,9 @@ export default function ResearcherProfilePage() {
             onChange={(e) => setProfile((p) => ({ ...p, institution: e.target.value }))}
           />
 
-          <label className="rp-label">التخصص</label>
+          <label htmlFor="rp-specialization" className="rp-label">التخصص</label>
           <select
+            id="rp-specialization"
             className="rp-input rp-select"
             value={profile.specialization ?? ""}
             onChange={(e) => setProfile((p) => ({ ...p, specialization: e.target.value }))}
@@ -231,8 +251,9 @@ export default function ResearcherProfilePage() {
             ))}
           </select>
 
-          <label className="rp-label">نبذة بحثية</label>
+          <label htmlFor="rp-bio" className="rp-label">نبذة بحثية</label>
           <textarea
+            id="rp-bio"
             className="rp-input rp-textarea"
             placeholder="تعريف موجز بمسارك البحثي وأهدافك العلمية…"
             value={profile.bio ?? ""}
@@ -300,6 +321,12 @@ export default function ResearcherProfilePage() {
             {saving ? "جارٍ الحفظ…" : "حفظ الملف"}
           </button>
         </div>
+      </div>
+      <div className="twh-share">
+        <ShareButtons title="ملف الباحث الشرعي — المجلس العلمي" url="https://www.majlisilm.com/researcher-profile" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["hadith", "fiqh", "aqeeda"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </div>
   );

@@ -46,17 +46,22 @@ export async function getDueFlashCards(userId: string, limit = 20): Promise<Flas
 
   const cards: FlashCard[] = [];
 
-  // Map due reviews → cards (fetch source content)
-  for (const r of dueReviews) {
-    if (r.card_type === "hadith") {
-      const { data: h } = await supabase
-        .from("verified_hadith_items")
-        .select("id,text,narrator,source_name,collection,grade")
-        .eq("id", r.card_id)
-        .maybeSingle();
-      if (h) {
-        cards.push(hadithToCard(h as any, r as any));
-      }
+  // Map due reviews → cards. استعلام واحد مجمّع بدل استعلام لكل بطاقة (N+1).
+  const dueHadithReviews = dueReviews.filter((r: any) => r.card_type === "hadith");
+  const dueHadithIds = [...new Set(dueHadithReviews.map((r: any) => r.card_id as string))];
+
+  if (dueHadithIds.length > 0) {
+    const { data: dueHadiths } = await supabase
+      .from("verified_hadith_items")
+      .select("id,text,narrator,source_name,collection,grade")
+      .in("id", dueHadithIds);
+
+    const byId = new Map<string, any>((dueHadiths ?? []).map((h: any) => [h.id, h]));
+
+    // نحافظ على ترتيب الاستحقاق (next_review_at تصاعديًا) كما كان
+    for (const r of dueHadithReviews) {
+      const h = byId.get(r.card_id as string);
+      if (h) cards.push(hadithToCard(h as any, r as any));
     }
   }
 

@@ -1,21 +1,15 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { runInstagramManualAssist } from "@/lib/instagram-integration-api";
-import { C } from "@/lib/theme";
 import type { TrustedLessonSource } from "@/lib/lesson-automation-api";
-
-const inputSt: React.CSSProperties = {
-  width: "100%",
-  padding: "0.4rem",
-  borderRadius: "0.375rem",
-  border: `1px solid ${C.line}`,
-  fontFamily: "inherit",
-  fontSize: "0.8125rem",
-};
 
 type Props = {
   source: TrustedLessonSource;
   onDone: () => void;
+};
+
+const CONTENT_TYPE_LABELS: Record<string, string> = {
+  lesson: "درس", course: "دورة", event: "فعالية", benefit: "فائدة", announcement: "إعلان",
 };
 
 export function InstagramManualAssistPanel({ source, onDone }: Props) {
@@ -26,6 +20,8 @@ export function InstagramManualAssistPanel({ source, onDone }: Props) {
   const [imageUrl, setImageUrl] = useState("");
   const [caption, setCaption] = useState("");
   const [result, setResult] = useState("");
+  const allowedTypes = source.content_types_allowed?.length ? source.content_types_allowed : ["lesson"];
+  const [contentType, setContentType] = useState<string>(allowedTypes[0]);
 
   const onFile = (file: File | null) => {
     if (!file || !source.id) return;
@@ -40,6 +36,7 @@ export function InstagramManualAssistPanel({ source, onDone }: Props) {
           mode: "upload",
           imageBase64: base64,
           mimeType: file.type || "image/jpeg",
+          contentType: contentType as "lesson" | "course" | "event" | "benefit" | "announcement",
         });
         setResult(r.ok ? `✓ ${r.outcome?.decision || "تم"}` : `✗ ${r.error}`);
         if (r.ok) onDone();
@@ -65,6 +62,7 @@ export function InstagramManualAssistPanel({ source, onDone }: Props) {
         postUrl: mode === "url" ? postUrl : undefined,
         imageUrl: mode === "url" ? imageUrl : undefined,
         caption: mode === "caption" ? caption : undefined,
+        contentType: contentType as "lesson" | "course" | "event" | "benefit" | "announcement",
       });
       setResult(r.ok ? `✓ ${r.outcome?.decision || "تم"}` : `✗ ${r.error}`);
       if (r.ok) onDone();
@@ -76,49 +74,45 @@ export function InstagramManualAssistPanel({ source, onDone }: Props) {
   if (source.source_type !== "instagram" && source.platform !== "instagram") return null;
 
   return (
-    <div style={{ marginTop: "0.5rem", paddingTop: "0.5rem", borderTop: `1px dashed ${C.line}` }}>
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem", cursor: "pointer", fontFamily: "inherit", color: C.emeraldDeep, fontWeight: 600 }}
-      >
-        {open ? "▾" : "▸"} Manual Assist — رفع إعلان يدويًا
+    <div className="igp-panel">
+      <button type="button" onClick={() => setOpen(!open)} className="igp-toggle-btn">
+        {open ? "▾" : "▸"} Manual Assist، رفع إعلان يدويًا
       </button>
       {open && (
-        <div style={{ marginTop: "0.5rem", display: "grid", gap: "0.5rem" }}>
-          <p style={{ margin: 0, fontSize: "0.75rem", color: C.inkSoft }}>
+        <div className="igp-body">
+          <p className="igp-info">
             Instagram Graph API غير مفعّل أو محدود —{" "}
-            <Link href="/admin/integrations/instagram" style={{ color: C.emeraldDeep }}>ربط Graph API</Link>
+            <Link href="/admin/integrations/instagram" className="igp-link">ربط Graph API</Link>
           </p>
-          <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
+          <div className="igp-mode-tabs">
             {(["upload", "url", "caption"] as const).map((m) => (
-              <button key={m} type="button" onClick={() => setMode(m)} style={{
-                fontSize: "0.7rem", padding: "0.2rem 0.45rem", cursor: "pointer", fontFamily: "inherit",
-                background: mode === m ? C.emeraldDeep : C.panel,
-                color: mode === m ? "#fff" : C.inkSoft,
-                border: `1px solid ${C.line}`, borderRadius: "0.25rem",
-              }}>
+              <button key={m} type="button" onClick={() => setMode(m)} className={`igp-mode-tab${mode === m ? " igp-mode-tab--active" : ""}`}>
                 {m === "upload" ? "رفع صورة" : m === "url" ? "رابط + صورة" : "Caption"}
               </button>
             ))}
           </div>
+          {allowedTypes.length > 1 && (
+            <select value={contentType} onChange={(e) => setContentType(e.target.value)} className="adm-input" style={{ marginBottom: "0.5rem" }}>
+              {allowedTypes.map((t) => <option key={t} value={t}>{CONTENT_TYPE_LABELS[t] || t}</option>)}
+            </select>
+          )}
           {mode === "upload" && (
-            <input type="file" accept="image/*" disabled={busy} onChange={(e) => onFile(e.target.files?.[0] || null)} style={{ fontSize: "0.75rem" }} />
+            <input type="file" accept="image/*" disabled={busy} onChange={(e) => onFile(e.target.files?.[0] || null)} className="igp-file-input" />
           )}
           {mode === "url" && (
             <>
-              <input placeholder="رابط المنشور" value={postUrl} onChange={(e) => setPostUrl(e.target.value)} style={inputSt} dir="ltr" />
-              <input placeholder="رابط الصورة (اختياري)" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} style={inputSt} dir="ltr" />
-              <button type="button" disabled={busy} onClick={onSubmit} style={{ fontSize: "0.75rem", padding: "0.3rem 0.6rem", cursor: "pointer", fontFamily: "inherit" }}>فحص بالذكاء الاصطناعي</button>
+              <input placeholder="رابط المنشور" value={postUrl} onChange={(e) => setPostUrl(e.target.value)} className="adm-input" dir="ltr" />
+              <input placeholder="رابط الصورة (اختياري)" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} className="adm-input" dir="ltr" />
+              <button type="button" disabled={busy} onClick={onSubmit} className="igp-action-btn">فحص بالذكاء الاصطناعي</button>
             </>
           )}
           {mode === "caption" && (
             <>
-              <textarea placeholder="الصق Caption الإعلان" value={caption} onChange={(e) => setCaption(e.target.value)} rows={3} style={inputSt} />
-              <button type="button" disabled={busy} onClick={onSubmit} style={{ fontSize: "0.75rem", padding: "0.3rem 0.6rem", cursor: "pointer", fontFamily: "inherit" }}>إنشاء مسودة</button>
+              <textarea placeholder="الصق Caption الإعلان" value={caption} onChange={(e) => setCaption(e.target.value)} rows={3} className="adm-input" />
+              <button type="button" disabled={busy} onClick={onSubmit} className="igp-action-btn">إنشاء مسودة</button>
             </>
           )}
-          {result && <p style={{ margin: 0, fontSize: "0.75rem" }}>{result}</p>}
+          {result && <p className="igp-result">{result}</p>}
         </div>
       )}
     </div>

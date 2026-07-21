@@ -2,40 +2,152 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>أنت غير متصل — المجلس العلمي</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#153025" />
+  <title>غير متصل — المجلس العلمي</title>
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: "Segoe UI", Tahoma, sans-serif;
+      font-family: "Times New Roman", Times, serif;
+      min-height: 100svh;
+      background: #F0F5F2;
+      color: #1F4D3A;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      margin: 0;
-      background: #FAF7F0;
-      color: #1f1c17;
+      padding: 1.5rem;
       text-align: center;
-      padding: 2rem;
-      box-sizing: border-box;
     }
-    h1 { color: #134a3a; font-size: 1.5rem; margin-bottom: 0.5rem; }
-    p  { color: #5c564c; font-size: 0.95rem; max-width: 28rem; line-height: 1.6; }
-    a  {
-      display: inline-block; margin-top: 1.5rem;
-      padding: 0.6rem 1.5rem;
-      background: #1a6b52; color: #fff;
-      border-radius: 0.5rem; text-decoration: none;
+
+    .offline-card {
+      background: #fff;
+      border: 1px solid rgba(31,77,58,0.15);
+      border-radius: 1.5rem;
+      padding: 2.5rem 2rem;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 8px 32px rgba(31,77,58,0.1);
+    }
+
+    .offline-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 1.25rem;
+      background: #EEF7F2;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      border: 2px solid rgba(31,77,58,0.12);
+    }
+
+    h1 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #1F4D3A;
+      margin-bottom: .6rem;
+    }
+
+    .subtitle {
+      font-size: .92rem;
+      color: #4E6658;
+      line-height: 1.75;
+      margin-bottom: 1.75rem;
+    }
+
+    .offline-actions {
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+    }
+
+    .btn {
+      display: block;
+      padding: .75rem 1.25rem;
+      border-radius: .75rem;
+      font-size: .9rem;
       font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+      transition: opacity .15s, transform .15s;
+    }
+    .btn:hover { opacity: .88; transform: translateY(-1px); }
+    .btn--primary  { background: #1F4D3A; color: #ffffff; }
+    .btn--secondary { background: #EEF7F2; color: #1F4D3A; border: 1px solid rgba(31,77,58,0.2); }
+
+    .offline-cached {
+      margin-top: 1.75rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(31,77,58,0.12);
+    }
+    .offline-cached p {
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: #607D6E;
+      margin-bottom: .75rem;
+    }
+    .cached-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      justify-content: center;
+    }
+    .cached-link {
+      display: inline-block;
+      padding: .3rem .75rem;
+      border-radius: 999px;
+      font-size: .82rem;
+      font-weight: 600;
+      background: #F0F5F2;
+      color: #1F4D3A;
+      text-decoration: none;
+      border: 1px solid rgba(31,77,58,0.15);
+      transition: background .15s;
+    }
+    .cached-link:hover { background: #EEF7F2; }
+
+    .offline-footer {
+      margin-top: 1.5rem;
+      font-size: .75rem;
+      color: #4E6658;
     }
   </style>
 </head>
 <body>
-  <h1>📶 أنت غير متصل بالإنترنت</h1>
-  <p>
-    يمكنك قراءة القرآن والدروس المحفوظة مسبقاً دون اتصال.
-    سيتم تحديث المحتوى تلقائياً عند استعادة الاتصال.
-  </p>
-  <a href="/">العودة للرئيسية</a>
+  <div class="offline-card">
+    <div class="offline-icon">📡</div>
+    <h1>أنت غير متصل بالإنترنت</h1>
+    <p class="subtitle">
+      تعذّر الاتصال بمنصة المجلس العلمي. يمكنك الوصول إلى المحتوى المحفوظ مسبقاً
+      أو المحاولة مجدداً عند استعادة الاتصال.
+    </p>
+
+    <div class="offline-actions">
+      <button class="btn btn--primary" onclick="window.location.reload()">
+        ↻ إعادة المحاولة
+      </button>
+      <a href="/" class="btn btn--secondary">العودة للرئيسية</a>
+    </div>
+
+    <div class="offline-cached">
+      <p>متاح دون اتصال</p>
+      <div class="cached-links">
+        <a href="/adhkar" class="cached-link">🤲 الأذكار</a>
+        <a href="/quran-hub" class="cached-link">📖 القرآن</a>
+        <a href="/prayer-times" class="cached-link">🕌 مواقيت الصلاة</a>
+        <a href="/tasbih" class="cached-link">📿 التسبيح</a>
+        <a href="/daily-wird" class="cached-link">📅 الورد اليومي</a>
+        <a href="/sunan-yawmiyya" class="cached-link">☀️ السنن اليومية</a>
+        <a href="/start-here" class="cached-link">🎓 ابدأ من هنا</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="offline-footer">🕌 المجلس العلمي — منصة العلوم الشرعية</p>
 </body>
 </html>

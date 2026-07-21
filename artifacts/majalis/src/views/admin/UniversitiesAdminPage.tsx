@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { AlertTriangle, Bell, Clock, Globe, RotateCw } from "lucide-react";
 import { Link } from "wouter";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
 import {
@@ -23,7 +24,6 @@ import {
 
 type Section = "list" | "add" | "edit" | "reminders";
 
-/* ── نموذج الجامعة ─────────────────────────────────────────────────────── */
 function UniversityForm({
   initial,
   onSave,
@@ -46,7 +46,7 @@ function UniversityForm({
   }
 
   function autoSlug(nameAr: string) {
-    if (form.id) return; // لا تغيّر الـ slug عند التعديل
+    if (form.id) return;
     const slug = nameAr.trim()
       .toLowerCase()
       .replace(/\s+/g, "-")
@@ -67,43 +67,40 @@ function UniversityForm({
     }
   }
 
-  const inputCls = "w-full px-3 py-2 text-sm rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500";
-  const labelCls = "block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1";
-
   return (
     <form dir="rtl" onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className={labelCls}>الاسم بالعربية *</label>
-          <input className={inputCls} required value={form.name_ar || ""} onChange={(e) => { set("name_ar", e.target.value); autoSlug(e.target.value); }} />
+          <label className="uap-label" htmlFor="uap-name_ar">الاسم بالعربية *</label>
+          <input id="uap-name_ar" className="uap-input" required value={form.name_ar || ""} onChange={(e) => { set("name_ar", e.target.value); autoSlug(e.target.value); }} />
         </div>
         <div>
-          <label className={labelCls}>الاسم بالإنجليزية</label>
-          <input className={inputCls} value={form.name_en || ""} onChange={(e) => set("name_en", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-name_en">الاسم بالإنجليزية</label>
+          <input id="uap-name_en" className="uap-input" value={form.name_en || ""} onChange={(e) => set("name_en", e.target.value)} />
         </div>
         <div>
-          <label className={labelCls}>Slug (رابط) *</label>
-          <input className={inputCls} required value={form.slug || ""} onChange={(e) => set("slug", e.target.value)} dir="ltr" />
+          <label className="uap-label" htmlFor="uap-slug">Slug (رابط) *</label>
+          <input id="uap-slug" className="uap-input" required value={form.slug || ""} onChange={(e) => set("slug", e.target.value)} dir="ltr" />
         </div>
         <div>
-          <label className={labelCls}>الدولة *</label>
-          <input className={inputCls} required value={form.country || ""} onChange={(e) => set("country", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-country">الدولة *</label>
+          <input id="uap-country" className="uap-input" required value={form.country || ""} onChange={(e) => set("country", e.target.value)} />
         </div>
         <div>
-          <label className={labelCls}>المدينة</label>
-          <input className={inputCls} value={form.city || ""} onChange={(e) => set("city", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-city">المدينة</label>
+          <input id="uap-city" className="uap-input" value={form.city || ""} onChange={(e) => set("city", e.target.value)} />
         </div>
         <div>
-          <label className={labelCls}>رابط الشعار (logo_url)</label>
-          <input className={inputCls} dir="ltr" value={form.logo_url || ""} onChange={(e) => set("logo_url", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-logo_url">رابط الشعار (logo_url)</label>
+          <input id="uap-logo_url" className="uap-input" dir="ltr" value={form.logo_url || ""} onChange={(e) => set("logo_url", e.target.value)} />
         </div>
         <div>
-          <label className={labelCls}>الموقع الرسمي</label>
-          <input className={inputCls} dir="ltr" value={form.website_url || ""} onChange={(e) => set("website_url", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-website_url">الموقع الرسمي</label>
+          <input id="uap-website_url" className="uap-input" dir="ltr" value={form.website_url || ""} onChange={(e) => set("website_url", e.target.value)} />
         </div>
         <div>
-          <label className={labelCls}>حالة الاعتماد</label>
-          <select className={inputCls} value={form.accreditation_status || "unknown"} onChange={(e) => set("accreditation_status", e.target.value as AccreditationStatus)}>
+          <label className="uap-label" htmlFor="uap-accreditation_status">حالة الاعتماد</label>
+          <select id="uap-accreditation_status" className="uap-input" value={form.accreditation_status || "unknown"} onChange={(e) => set("accreditation_status", e.target.value as AccreditationStatus)}>
             {Object.entries(ACCREDITATION_LABELS).map(([k, v]) => (
               <option key={k} value={k}>{v}</option>
             ))}
@@ -112,36 +109,31 @@ function UniversityForm({
       </div>
 
       <div>
-        <label className={labelCls}>نبذة عن الجامعة</label>
-        <textarea className={inputCls} rows={4} value={form.about || ""} onChange={(e) => set("about", e.target.value)} />
+        <label className="uap-label" htmlFor="uap-about">نبذة عن الجامعة</label>
+        <textarea id="uap-about" className="uap-input" rows={4} value={form.about || ""} onChange={(e) => set("about", e.target.value)} />
       </div>
 
       <div className="flex gap-4">
         <label className="flex items-center gap-2 cursor-pointer">
           <input type="checkbox" className="accent-emerald-600" checked={!!form.is_verified} onChange={(e) => set("is_verified", e.target.checked)} />
-          <span className="text-sm text-gray-700 dark:text-gray-200">موثقة</span>
+          <span className="uap-check-label">موثقة</span>
         </label>
         <label className="flex items-center gap-2 cursor-pointer">
           <input type="checkbox" className="accent-emerald-600" checked={!!form.is_published} onChange={(e) => set("is_published", e.target.checked)} />
-          <span className="text-sm text-gray-700 dark:text-gray-200">منشورة</span>
+          <span className="uap-check-label">منشورة</span>
         </label>
       </div>
 
       <div className="flex gap-2">
-        <button type="submit" disabled={loading}
-          className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-xl disabled:opacity-50 transition-colors">
+        <button type="submit" disabled={loading} className="uap-save-btn">
           {loading ? "جارٍ الحفظ…" : "حفظ"}
         </button>
-        <button type="button" onClick={onCancel}
-          className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm rounded-xl hover:bg-gray-200 transition-colors">
-          إلغاء
-        </button>
+        <button type="button" onClick={onCancel} className="uap-cancel-btn">إلغاء</button>
       </div>
     </form>
   );
 }
 
-/* ── نموذج البرنامج ─────────────────────────────────────────────────────── */
 function ProgramForm({
   universityId,
   onSave,
@@ -158,8 +150,6 @@ function ProgramForm({
   });
   const [loading, setLoading] = useState(false);
   const set = (k: keyof UniversityProgram, v: unknown) => setForm((p) => ({ ...p, [k]: v }));
-  const inputCls = "w-full px-3 py-2 text-sm rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500";
-  const labelCls = "block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1";
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -172,64 +162,63 @@ function ProgramForm({
   }
 
   return (
-    <form dir="rtl" onSubmit={handleSubmit} className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4 space-y-3">
-      <h4 className="font-semibold text-gray-800 dark:text-gray-100 text-sm">إضافة برنامج جديد</h4>
+    <form dir="rtl" onSubmit={handleSubmit} className="uap-prog-form-box space-y-3">
+      <h4 className="uap-form-title">إضافة برنامج جديد</h4>
       <div className="grid grid-cols-2 gap-3">
         <div className="col-span-2">
-          <label className={labelCls}>اسم البرنامج *</label>
-          <input className={inputCls} required value={form.program_name || ""} onChange={(e) => set("program_name", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-program_name">اسم البرنامج *</label>
+          <input id="uap-program_name" className="uap-input" required value={form.program_name || ""} onChange={(e) => set("program_name", e.target.value)} />
         </div>
         <div>
-          <label className={labelCls}>الكلية / القسم</label>
-          <input className={inputCls} value={form.faculty_department || ""} onChange={(e) => set("faculty_department", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-faculty_department">الكلية / القسم</label>
+          <input id="uap-faculty_department" className="uap-input" value={form.faculty_department || ""} onChange={(e) => set("faculty_department", e.target.value)} />
         </div>
         <div>
-          <label className={labelCls}>التخصص</label>
-          <input className={inputCls} value={form.specialization || ""} onChange={(e) => set("specialization", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-specialization">التخصص</label>
+          <input id="uap-specialization" className="uap-input" value={form.specialization || ""} onChange={(e) => set("specialization", e.target.value)} />
         </div>
         <div>
-          <label className={labelCls}>الدرجة العلمية *</label>
-          <select className={inputCls} value={form.degree_level || "بكالوريوس"} onChange={(e) => set("degree_level", e.target.value as DegreeLevel)}>
+          <label className="uap-label" htmlFor="uap-degree_level">الدرجة العلمية *</label>
+          <select id="uap-degree_level" className="uap-input" value={form.degree_level || "بكالوريوس"} onChange={(e) => set("degree_level", e.target.value as DegreeLevel)}>
             {DEGREE_LEVELS.map((d) => <option key={d} value={d}>{d}</option>)}
           </select>
         </div>
         <div>
-          <label className={labelCls}>لغة الدراسة</label>
-          <select className={inputCls} value={form.study_language || "العربية"} onChange={(e) => set("study_language", e.target.value)}>
+          <label className="uap-label" htmlFor="uap-study_language">لغة الدراسة</label>
+          <select id="uap-study_language" className="uap-input" value={form.study_language || "العربية"} onChange={(e) => set("study_language", e.target.value)}>
             {LANGUAGES.map((l) => <option key={l} value={l}>{l}</option>)}
           </select>
         </div>
         <div>
-          <label className={labelCls}>نظام الدراسة</label>
-          <select className={inputCls} value={form.study_mode || "حضوري"} onChange={(e) => set("study_mode", e.target.value as StudyMode)}>
+          <label className="uap-label" htmlFor="uap-study_mode">نظام الدراسة</label>
+          <select id="uap-study_mode" className="uap-input" value={form.study_mode || "حضوري"} onChange={(e) => set("study_mode", e.target.value as StudyMode)}>
             {STUDY_MODES.map((m) => <option key={m} value={m}>{m}</option>)}
           </select>
         </div>
         <div>
-          <label className={labelCls}>المدة</label>
-          <input className={inputCls} placeholder="مثال: 4 سنوات" value={form.duration || ""} onChange={(e) => set("duration", e.target.value)} />
+          <label className="uap-label" htmlFor="uap-duration">المدة</label>
+          <input id="uap-duration" className="uap-input" placeholder="مثال: 4 سنوات" value={form.duration || ""} onChange={(e) => set("duration", e.target.value)} />
         </div>
         <div className="col-span-2">
           <label className="flex items-center gap-2 cursor-pointer mb-2">
             <input type="checkbox" className="accent-emerald-600" checked={!!form.has_scholarship} onChange={(e) => set("has_scholarship", e.target.checked)} />
-            <span className="text-sm text-gray-700 dark:text-gray-200">يوجد منح دراسية</span>
+            <span className="uap-check-label">يوجد منح دراسية</span>
           </label>
           {form.has_scholarship && (
-            <textarea className={inputCls} rows={2} placeholder="تفاصيل المنحة…" value={form.scholarship_details || ""} onChange={(e) => set("scholarship_details", e.target.value)} />
+            <textarea className="uap-input" rows={2} placeholder="تفاصيل المنحة…" value={form.scholarship_details || ""} onChange={(e) => set("scholarship_details", e.target.value)} />
           )}
         </div>
       </div>
       <div className="flex gap-2">
-        <button type="submit" disabled={loading} className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm rounded-xl disabled:opacity-50 transition-colors">
+        <button type="submit" disabled={loading} className="uap-save-btn">
           {loading ? "جارٍ الحفظ…" : "إضافة البرنامج"}
         </button>
-        <button type="button" onClick={onCancel} className="px-3 py-2 text-sm text-gray-500 hover:text-gray-700 transition-colors">إلغاء</button>
+        <button type="button" onClick={onCancel} className="uap-text-cancel">إلغاء</button>
       </div>
     </form>
   );
 }
 
-/* ── محتوى الإدارة ─────────────────────────────────────────────────────── */
 function AdminContent() {
   const { showSuccess, showError } = useAdminShell();
   const [section, setSection]           = useState<Section>("list");
@@ -289,15 +278,11 @@ function AdminContent() {
   return (
     <div dir="rtl" className="space-y-6 max-w-4xl mx-auto">
       {/* Subnav */}
-      <div className="flex gap-1 border-b border-gray-200 dark:border-gray-700">
+      <div className="uap-subnav">
         {(["list","add","reminders"] as Section[]).map((s) => (
           <button key={s} type="button" onClick={() => { setSection(s); setEditTarget(null); }}
-            className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
-              section === s
-                ? "border-emerald-600 text-emerald-700 dark:text-emerald-400"
-                : "border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-            }`}>
-            {s === "list" ? "قائمة الجامعات" : s === "add" ? "+ إضافة جامعة" : `🔔 التذكيرات (${reminders.length})`}
+            className={`uap-tab${section === s ? " uap-tab--active" : ""}`}>
+            {s === "list" ? "قائمة الجامعات" : s === "add" ? "+ إضافة جامعة" : <><Bell size={13} className="inline ml-1" />التذكيرات ({reminders.length})</>}
           </button>
         ))}
       </div>
@@ -306,52 +291,49 @@ function AdminContent() {
       {(section === "list" || section === "edit") && (
         <div className="space-y-4">
           {section === "edit" && editTarget && (
-            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-5">
-              <h3 className="font-bold text-gray-800 dark:text-gray-100 mb-4">تعديل: {editTarget.name_ar}</h3>
+            <div className="uap-form-box">
+              <h3 className="uap-box-title">تعديل: {editTarget.name_ar}</h3>
               <UniversityForm initial={editTarget} onSave={handleUpdate} onCancel={() => { setSection("list"); setEditTarget(null); }} />
             </div>
           )}
 
-          {loading && <div className="text-center py-10 text-gray-400">جارٍ التحميل…</div>}
+          {loading && <div className="uap-empty">جارٍ التحميل…</div>}
 
           {!loading && universities.length === 0 && (
-            <div className="text-center py-10 text-gray-400">
+            <div className="uap-empty">
               <p>لا توجد جامعات بعد.</p>
-              <button type="button" onClick={() => setSection("add")}
-                className="mt-3 text-sm text-emerald-600 hover:underline">+ إضافة جامعة</button>
+              <button type="button" onClick={() => setSection("add")} className="uap-add-link">+ إضافة جامعة</button>
             </div>
           )}
 
           {!loading && universities.map((u) => (
-            <div key={u.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-4 space-y-3">
+            <div key={u.id} className="uap-uni-card space-y-3">
               <div className="flex items-start gap-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm">{u.name_ar}</p>
-                    {u.is_verified && <span className="text-xs bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.5 rounded">✓ موثقة</span>}
-                    {!u.is_published && <span className="text-xs bg-red-50 dark:bg-red-900/20 text-red-500 px-1.5 py-0.5 rounded">غير منشورة</span>}
+                    <p className="uap-uni-name">{u.name_ar}</p>
+                    {u.is_verified && <span className="uap-verified-badge">✓ موثقة</span>}
+                    {!u.is_published && <span className="uap-unpublished-badge">غير منشورة</span>}
                   </div>
-                  <p className="text-xs text-gray-400 mt-0.5">{u.country}{u.city ? ` — ${u.city}` : ""} | {u.university_programs?.length || 0} برنامج</p>
-                  <p className="text-xs text-gray-300 dark:text-gray-600">آخر تحديث: {new Date(u.last_updated_at).toLocaleDateString("ar-SA")}</p>
+                  <p className="uap-uni-meta">{u.country}{u.city ? `، ${u.city}` : ""} | {u.university_programs?.length || 0} برنامج</p>
+                  <p className="uap-uni-date">آخر تحديث: {new Date(u.last_updated_at).toLocaleDateString("ar-SA")}</p>
                 </div>
                 <div className="flex gap-1.5 flex-shrink-0">
-                  <Link href={`/universities/${u.slug}`} className="px-2.5 py-1.5 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-200 transition-colors">عرض</Link>
-                  <button type="button" onClick={() => { setEditTarget(u); setSection("edit"); }}
-                    className="px-2.5 py-1.5 text-xs bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 rounded-lg hover:bg-emerald-100 transition-colors">
+                  <Link href={`/universities/${u.slug}`} className="uap-view-btn">عرض</Link>
+                  <button type="button" onClick={() => { setEditTarget(u); setSection("edit"); }} className="uap-edit-btn">
                     تعديل
                   </button>
                 </div>
               </div>
 
-              {/* برامج */}
               {u.university_programs && u.university_programs.length > 0 && (
-                <div className="space-y-1 pr-2 border-r border-gray-100 dark:border-gray-700">
+                <div className="uap-progs-list space-y-1">
                   {u.university_programs.map((p) => (
-                    <div key={p.id} className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                      <span className="text-emerald-500">•</span>
+                    <div key={p.id} className="uap-prog-item">
+                      <span className="uap-prog-dot">•</span>
                       <span>{p.program_name}</span>
-                      <span className="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded">{p.degree_level}</span>
-                      {!p.is_active && <span className="text-red-400">(غير نشط)</span>}
+                      <span className="uap-deg-badge">{p.degree_level}</span>
+                      {!p.is_active && <span className="icon-danger icon-ghost">(غير نشط)</span>}
                     </div>
                   ))}
                 </div>
@@ -360,8 +342,7 @@ function AdminContent() {
               {showProgForm === u.id ? (
                 <ProgramForm universityId={u.id} onSave={(d) => handleAddProgram(u.id, d)} onCancel={() => setShowProgForm(null)} />
               ) : (
-                <button type="button" onClick={() => setShowProgForm(u.id)}
-                  className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline">
+                <button type="button" onClick={() => setShowProgForm(u.id)} className="uap-add-prog-btn">
                   + إضافة برنامج
                 </button>
               )}
@@ -372,8 +353,8 @@ function AdminContent() {
 
       {/* نموذج إضافة */}
       {section === "add" && (
-        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-5">
-          <h3 className="font-bold text-gray-800 dark:text-gray-100 mb-4">إضافة جامعة جديدة</h3>
+        <div className="uap-form-box">
+          <h3 className="uap-box-title">إضافة جامعة جديدة</h3>
           <UniversityForm onSave={handleCreate} onCancel={() => setSection("list")} />
         </div>
       )}
@@ -381,40 +362,33 @@ function AdminContent() {
       {/* التذكيرات */}
       {section === "reminders" && (
         <div className="space-y-3">
-          <p className="text-xs text-gray-400 dark:text-gray-500">
-            هذه تذكيرات للمراجعة البشرية — لا يُحدَّث أي محتوى تلقائياً.
+          <p className="uap-note">
+            هذه تذكيرات للمراجعة البشرية، لا يُحدَّث أي محتوى تلقائياً.
           </p>
           {reminders.length === 0 && (
-            <div className="text-center py-10 text-gray-400">لا توجد تذكيرات معلّقة. ✅</div>
+            <div className="uap-empty">لا توجد تذكيرات معلّقة. ✅</div>
           )}
           {reminders.map((r) => (
-            <div key={r.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+            <div key={r.id} className="uap-reminder-card">
               <div className="flex items-start gap-3">
                 <span className="text-lg flex-shrink-0">
-                  {r.reminder_type === "annual_check" ? "🔄" : r.reminder_type === "deadline_approaching" ? "⏰" : "⚠️"}
+                  {r.reminder_type === "annual_check" ? <RotateCw size={16} /> : r.reminder_type === "deadline_approaching" ? <Clock size={16} /> : <AlertTriangle size={16} />}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-sm text-gray-800 dark:text-gray-100">
-                    {r.universities?.name_ar || "جامعة غير معروفة"}
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{r.notes}</p>
-                  <p className="text-xs text-gray-300 dark:text-gray-600 mt-0.5">
-                    موعد المراجعة: {new Date(r.due_date).toLocaleDateString("ar-SA")}
-                  </p>
+                  <p className="uap-reminder-title">{r.universities?.name_ar || "جامعة غير معروفة"}</p>
+                  <p className="uap-uni-meta">{r.notes}</p>
+                  <p className="uap-uni-date">موعد المراجعة: {new Date(r.due_date).toLocaleDateString("ar-SA")}</p>
                   {r.universities?.website_url && (
-                    <a href={r.universities.website_url} target="_blank" rel="noopener noreferrer"
-                      className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline mt-1 block">
-                      🌐 فتح الموقع الرسمي للمراجعة ↗
+                    <a href={r.universities.website_url} target="_blank" rel="noopener noreferrer" className="uap-reminder-link">
+                      <Globe size={12} className="inline ml-1" />فتح الموقع الرسمي للمراجعة ↗
                     </a>
                   )}
                 </div>
                 <div className="flex gap-1.5 flex-shrink-0">
-                  <button type="button" onClick={() => handleReminderStatus(r.id, "reviewed")}
-                    className="px-2.5 py-1.5 text-xs bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 rounded-lg hover:bg-emerald-100 transition-colors">
+                  <button type="button" onClick={() => handleReminderStatus(r.id, "reviewed")} className="uap-edit-btn">
                     تمت المراجعة
                   </button>
-                  <button type="button" onClick={() => handleReminderStatus(r.id, "dismissed")}
-                    className="px-2.5 py-1.5 text-xs bg-gray-100 dark:bg-gray-700 text-gray-500 rounded-lg hover:bg-gray-200 transition-colors">
+                  <button type="button" onClick={() => handleReminderStatus(r.id, "dismissed")} className="uap-view-btn">
                     تجاهل
                   </button>
                 </div>

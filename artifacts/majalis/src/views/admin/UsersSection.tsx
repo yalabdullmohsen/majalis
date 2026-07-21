@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { adminGetUsers, adminUpdateUserRole } from "@/lib/supabase";
 import { assignGovernanceRole, syncLegacyRoles, LEGACY_ROLE_MAP } from "@/lib/governance-service";
-import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { useAdminShell } from "./AdminShell";
 
 const ROLES: Record<string, { label: string; bg: string; text: string }> = {
-  admin:  { label: "مشرف",    bg: "#FEF3C7", text: "#92400E" },
-  sheikh: { label: "شيخ",     bg: "#D1FAE5", text: C.emeraldDeep },
-  user:   { label: "مستخدم",  bg: C.parchmentDeep, text: C.inkSoft },
+  admin:  { label: "مشرف",    bg: "rgba(23,61,53,0.08)", text: "#173D35" },
+  sheikh: { label: "شيخ",     bg: "#D1FAE5", text: "var(--majalis-emerald-deep)" },
+  user:   { label: "مستخدم",  bg: "var(--majalis-parchment-deep)", text: "var(--majalis-ink-soft)" },
 };
 const ROLE_OPTIONS = ["user", "sheikh", "admin"];
 const ROLE_AR: Record<string, string> = { user: "مستخدم", sheikh: "شيخ", admin: "مشرف" };
@@ -39,7 +39,7 @@ export function UsersSection() {
     try {
       const { error } = await adminUpdateUserRole(userId, newRole);
       if (error) {
-        showError("تعذّر تغيير الصلاحية — تحقّق من صلاحياتك (RLS).");
+        showError("تعذّر تغيير الصلاحية، تحقّق من صلاحياتك (RLS).");
         return;
       }
       const governanceRole = LEGACY_ROLE_MAP[newRole] || "read_only";
@@ -59,7 +59,7 @@ export function UsersSection() {
 
   const filtered = users
     .filter(u => filter === "all" || u.role === filter)
-    .filter(u => !search || (u.full_name || "").includes(search) || (u.city || "").includes(search));
+    .filter(u => arabicMatchAny([u.full_name ?? "", u.city ?? ""], search));
 
   const counts = {
     all: users.length,
@@ -70,38 +70,36 @@ export function UsersSection() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.75rem" }}>
-        <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep }}>
-          المستخدمون ({users.length})
-        </h2>
+      <div className="usr-header">
+        <h2 className="usr-title">المستخدمون ({users.length})</h2>
         <input
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="بحث بالاسم أو المحافظة..."
-          style={{ padding: "0.375rem 0.75rem", borderRadius: "0.375rem", border: `1px solid ${C.line}`, background: C.panel, color: C.ink, fontSize: "0.875rem", fontFamily: "inherit", outline: "none", minWidth: "200px" }}
+          className="usr-search"
         />
       </div>
 
-      {/* Role filter tabs */}
-      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.25rem", flexWrap: "wrap" }}>
+      <div className="usr-filter-row">
         {FILTERS.map(([v, l]) => (
           <button
+            type="button"
             key={v}
             onClick={() => setFilter(v)}
-            style={{ padding: "0.375rem 0.875rem", borderRadius: "0.375rem", border: `1px solid ${filter === v ? C.emerald : C.line}`, background: filter === v ? C.emerald : C.panel, color: filter === v ? C.parchment : C.inkSoft, cursor: "pointer", fontSize: "0.8125rem", fontFamily: "inherit" }}
+            className={`usr-filter-btn${filter === v ? " usr-filter-btn--active" : ""}`}
           >
             {l} ({counts[v as keyof typeof counts]})
           </button>
         ))}
       </div>
 
-      {loading ? <Loading /> : (
-        <div style={{ overflowX: "auto" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
+      {loading ? <SkeletonCardGrid count={6} /> : (
+        <div className="usr-table-wrap">
+          <table className="usr-table">
             <thead>
-              <tr style={{ background: C.parchmentDeep }}>
+              <tr className="usr-thead-row">
                 {["الاسم الكامل", "المحافظة", "النقاط", "المستوى", "تاريخ الانضمام", "الدور", "تغيير الدور"].map(h => (
-                  <th key={h} style={{ padding: "0.625rem 0.75rem", textAlign: "right", color: C.emeraldDeep, fontWeight: 700, borderBottom: `1px solid ${C.line}`, whiteSpace: "nowrap" }}>{h}</th>
+                  <th key={h} className="usr-th">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -109,27 +107,30 @@ export function UsersSection() {
               {filtered.map(u => {
                 const role = ROLES[u.role] || ROLES.user;
                 return (
-                  <tr key={u.id} style={{ borderBottom: `1px solid ${C.line}` }}>
-                    <td style={{ padding: "0.625rem 0.75rem", color: C.ink, fontWeight: 600 }}>
-                      {u.full_name || <span style={{ color: C.inkSoft, fontStyle: "italic" }}>بدون اسم</span>}
+                  <tr key={u.id} className="usr-tr">
+                    <td className="usr-td usr-td--name">
+                      {u.full_name || <span className="usr-noname">بدون اسم</span>}
                     </td>
-                    <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft }}>{u.city || "—"}</td>
-                    <td style={{ padding: "0.625rem 0.75rem", color: C.brass, fontWeight: 700, textAlign: "center" }}>{u.points ?? 0}</td>
-                    <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft, textAlign: "center" }}>{u.level ?? 1}</td>
-                    <td style={{ padding: "0.625rem 0.75rem", color: C.inkSoft, whiteSpace: "nowrap" }}>
+                    <td className="usr-td usr-td--muted">{u.city || "—"}</td>
+                    <td className="usr-td usr-td--points">{u.points ?? 0}</td>
+                    <td className="usr-td usr-td--center">{u.level ?? 1}</td>
+                    <td className="usr-td usr-td--nowrap">
                       {new Date(u.created_at).toLocaleDateString("ar-KW")}
                     </td>
-                    <td style={{ padding: "0.625rem 0.75rem" }}>
-                      <span style={{ padding: "0.125rem 0.5rem", borderRadius: "0.25rem", background: role.bg, color: role.text, fontSize: "0.75rem", whiteSpace: "nowrap" }}>
+                    <td className="usr-td">
+                      <span
+                        className="usr-role-badge"
+                        style={{ "--usr-role-bg": role.bg, "--usr-role-color": role.text } as React.CSSProperties}
+                      >
                         {role.label}
                       </span>
                     </td>
-                    <td style={{ padding: "0.625rem 0.75rem" }}>
+                    <td className="usr-td">
                       <select
                         value={u.role}
                         disabled={updatingId === u.id}
                         onChange={e => handleRoleChange(u.id, e.target.value)}
-                        style={{ padding: "0.25rem 0.5rem", borderRadius: "0.25rem", border: `1px solid ${C.line}`, background: C.panel, color: C.ink, fontSize: "0.8125rem", fontFamily: "inherit", cursor: "pointer", opacity: updatingId === u.id ? 0.5 : 1 }}
+                        className="usr-role-select"
                       >
                         {ROLE_OPTIONS.map(r => <option key={r} value={r}>{ROLE_AR[r]}</option>)}
                       </select>
@@ -140,7 +141,7 @@ export function UsersSection() {
             </tbody>
           </table>
           {filtered.length === 0 && (
-            <p style={{ textAlign: "center", color: C.inkSoft, padding: "2rem" }}>
+            <p className="usr-empty">
               {search ? "لا يوجد مستخدمون يطابقون البحث" : "لا يوجد مستخدمون مسجّلون"}
             </p>
           )}

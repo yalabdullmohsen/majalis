@@ -53,9 +53,10 @@ export const DECISIONS = [
   "approved", "pending_review", "duplicate", "rejected", "archived", "expired",
 ];
 
-export const AUTO_PUBLISH_MIN_CONFIDENCE = 0.95;
-export const VISION_MIN_CONFIDENCE = 0.45;
-export const OCR_MIN_CONFIDENCE = 0.35;
+// خُفِّفت العتبات لقبول أكبر كمية من المحتوى الناقص
+export const AUTO_PUBLISH_MIN_CONFIDENCE = 0.65;
+export const VISION_MIN_CONFIDENCE = 0.25;
+export const OCR_MIN_CONFIDENCE = 0.20;
 
 export const QUEUE_DEFAULTS = {
   maxRetries: 3,

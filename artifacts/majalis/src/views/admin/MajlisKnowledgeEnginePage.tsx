@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "wouter";
 import { getMkeDashboard, runMkeEngine } from "@/lib/majlis-knowledge-engine-api";
-import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminShell } from "@/views/admin/AdminShell";
 
 type AkpStats = {
@@ -62,24 +61,23 @@ type MkeStats = {
 
 function StatCard({ label, value, color }: { label: string; value: number | string; color?: string }) {
   return (
-    <div style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.5rem", padding: "1rem", minWidth: "110px" }}>
-      <div style={{ fontSize: "1.35rem", fontWeight: 700, color: color || C.emeraldDeep }}>{value}</div>
-      <div style={{ fontSize: "0.78rem", color: C.inkSoft, marginTop: "0.25rem" }}>{label}</div>
+    <div className="mke-stat" style={color ? { "--mke-val-color": color } as React.CSSProperties : undefined}>
+      <div className="mke-stat__value">{value}</div>
+      <div className="mke-stat__label">{label}</div>
     </div>
   );
 }
 
 function StatusBadge({ ok, label }: { ok: boolean; label: string }) {
   return (
-    <span style={{
-      display: "inline-block",
-      padding: "0.2rem 0.5rem",
-      borderRadius: "0.25rem",
-      fontSize: "0.75rem",
-      background: ok ? "#D1FAE5" : "#FEE2E2",
-      color: ok ? C.emeraldDeep : "#991B1B",
-    }}>
-      {label}: {ok ? "✓" : "✗"}
+    <span
+      className="mke-service-badge"
+      style={{
+        "--mke-sb-bg": ok ? "#D1FAE5" : "#FEE2E2",
+        "--mke-sb-color": ok ? "var(--majalis-emerald-deep)" : "#991B1B",
+      } as React.CSSProperties}
+    >
+      {label}: {ok ? "\u2713" : "\u2717"}
     </span>
   );
 }
@@ -118,11 +116,11 @@ function MajlisKnowledgeEngineContent() {
     try {
       const r = await runMkeEngine("full");
       setRunResult(r.ok
-        ? `✓ ${r.published ?? 0} منشور · ${r.pendingReview ?? 0} مراجعة · ${r.duplicates ?? 0} مكرر`
-        : `✗ ${r.error || "فشل"}`);
+        ? `\u2713 ${r.published ?? 0} \u0645\u0646\u0634\u0648\u0631 \u00b7 ${r.pendingReview ?? 0} \u0645\u0631\u0627\u062c\u0639\u0629 \u00b7 ${r.duplicates ?? 0} \u0645\u0643\u0631\u0631`
+        : `\u2717 ${r.error || "\u0641\u0634\u0644"}`);
       load();
     } catch {
-      setRunResult("✗ خطأ في التشغيل");
+      setRunResult("\u2717 \u062e\u0637\u0623 \u0641\u064a \u0627\u0644\u062a\u0634\u063a\u064a\u0644");
     } finally {
       setRunning(false);
     }
@@ -130,102 +128,85 @@ function MajlisKnowledgeEngineContent() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "0.75rem", marginBottom: "1rem" }}>
+      <div className="mke-header">
         <div>
-          <h2 style={{ margin: "0 0 0.35rem", color: C.emeraldDeep }}>
+          <h2 className="mke-title">
             Majlis Autonomous Platform v{engineVersion}
           </h2>
-          <p style={{ margin: 0, color: C.inkSoft, fontSize: "0.875rem" }}>
-            نظام تشغيل ذاتي 24/7 — اكتشاف · جودة · قرار · نشر · شفاء · تعلم
+          <p className="mke-subtitle">
+            \u0646\u0638\u0627\u0645 \u062a\u0634\u063a\u064a\u0644 \u0630\u0627\u062a\u064a 24/7 \u2014 \u0627\u0643\u062a\u0634\u0627\u0641 \u00b7 \u062c\u0648\u062f\u0629 \u00b7 \u0642\u0631\u0627\u0631 \u00b7 \u0646\u0634\u0631 \u00b7 \u0634\u0641\u0627\u0621 \u00b7 \u062a\u0639\u0644\u0645
           </p>
         </div>
-        <div style={{ display: "flex", gap: "0.75rem", fontSize: "0.8125rem", alignItems: "center" }}>
-          <Link href="/admin/automation/dashboard" style={{ color: C.emeraldDeep }}>Phase 5</Link>
-          <Link href="/admin/automation/center" style={{ color: C.emeraldDeep }}>Phase 6</Link>
-          <Link href="/admin/sources" style={{ color: C.emeraldDeep }}>المصادر</Link>
-          <button
-            type="button"
-            onClick={handleRun}
-            disabled={running}
-            style={{
-              padding: "0.4rem 0.75rem",
-              background: C.emeraldDeep,
-              color: "#fff",
-              border: "none",
-              borderRadius: "0.375rem",
-              cursor: running ? "wait" : "pointer",
-              fontSize: "0.8125rem",
-            }}
-          >
-            {running ? "جاري التشغيل…" : "تشغيل المحرك"}
+        <div className="mke-actions">
+          <Link href="/admin/automation/dashboard" className="mke-link">Phase 5</Link>
+          <Link href="/admin/automation/center" className="mke-link">Phase 6</Link>
+          <Link href="/admin/sources" className="mke-link">\u0627\u0644\u0645\u0635\u0627\u062f\u0631</Link>
+          <button type="button" onClick={handleRun} disabled={running} className="mke-run-btn">
+            {running ? "\u062c\u0627\u0631\u064a \u0627\u0644\u062a\u0634\u063a\u064a\u0644\u2026" : "\u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0645\u062d\u0631\u0643"}
           </button>
         </div>
       </div>
 
-      {runResult && (
-        <p style={{ fontSize: "0.8125rem", marginBottom: "1rem", color: C.inkSoft }}>{runResult}</p>
-      )}
+      {runResult && <p className="mke-run-result">{runResult}</p>}
 
-      {loading ? <Loading /> : (
+      {loading ? <SkeletonCardGrid count={6} /> : (
         <>
-          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginBottom: "1.25rem" }}>
-            <StatCard label="صحة النظام" value={stats?.health?.score ?? "—"} color={stats?.health?.status === "healthy" ? C.emeraldDeep : "#92400E"} />
-            <StatCard label="المصادر" value={stats?.counts?.sources ?? (stats?.subsystems as { sources?: { total?: number } } | undefined)?.sources?.total ?? stats?.sourcesTotal ?? 0} />
-            <StatCard label="المنصات" value={stats?.platformsSupported ?? platforms.length} />
-            <StatCard label="مسودات" value={stats?.counts?.drafts ?? stats?.drafts ?? 0} />
-            <StatCard label="بانتظار المراجعة" value={stats?.counts?.pendingReview ?? stats?.pendingReview ?? 0} color="#92400E" />
-            <StatCard label="منشور اليوم" value={stats?.counts?.publishedToday ?? stats?.publishedToday ?? 0} />
+          <div className="mke-stats-row">
+            <StatCard label="\u0635\u062d\u0629 \u0627\u0644\u0646\u0638\u0627\u0645" value={stats?.health?.score ?? "\u2014"} color={stats?.health?.status === "healthy" ? "var(--majalis-emerald-deep)" : "#173D35"} />
+            <StatCard label="\u0627\u0644\u0645\u0635\u0627\u062f\u0631" value={stats?.counts?.sources ?? (stats?.subsystems as { sources?: { total?: number } } | undefined)?.sources?.total ?? stats?.sourcesTotal ?? 0} />
+            <StatCard label="\u0627\u0644\u0645\u0646\u0635\u0627\u062a" value={stats?.platformsSupported ?? platforms.length} />
+            <StatCard label="\u0645\u0633\u0648\u062f\u0627\u062a" value={stats?.counts?.drafts ?? stats?.drafts ?? 0} />
+            <StatCard label="\u0628\u0627\u0646\u062a\u0638\u0627\u0631 \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629" value={stats?.counts?.pendingReview ?? stats?.pendingReview ?? 0} color="#173D35" />
+            <StatCard label="\u0645\u0646\u0634\u0648\u0631 \u0627\u0644\u064a\u0648\u0645" value={stats?.counts?.publishedToday ?? stats?.publishedToday ?? 0} />
             <StatCard label="Queue" value={stats?.subsystems?.queue ? (stats.subsystems.queue as { pending?: number }).pending ?? 0 : stats?.queue?.pending ?? 0} />
-            <StatCard label="Self-Heal" value={stats?.counts?.self_heal_log ?? "—"} />
+            <StatCard label="Self-Heal" value={stats?.counts?.self_heal_log ?? "\u2014"} />
             {akp && (
               <>
-                <StatCard label="AKP جاهزية %" value={akp.readinessPct ?? "—"} />
-                <StatCard label="منشور AKP اليوم" value={akp.counts?.published ?? akp.productionVelocity?.itemsToday ?? 0} />
+                <StatCard label="AKP \u062c\u0627\u0647\u0632\u064a\u0629 %" value={akp.readinessPct ?? "\u2014"} />
+                <StatCard label="\u0645\u0646\u0634\u0648\u0631 AKP \u0627\u0644\u064a\u0648\u0645" value={akp.counts?.published ?? akp.productionVelocity?.itemsToday ?? 0} />
                 <StatCard label="DLQ" value={akp.counts?.dlq ?? 0} color="#991B1B" />
-                <StatCard label="مراجعة AKP" value={akp.counts?.reviewPending ?? 0} color="#92400E" />
+                <StatCard label="\u0645\u0631\u0627\u062c\u0639\u0629 AKP" value={akp.counts?.reviewPending ?? 0} color="#173D35" />
               </>
             )}
           </div>
 
           {akp?.pipelines && (
-            <section style={{ marginBottom: "1.25rem" }}>
-              <h3 style={{ color: C.emeraldDeep, fontSize: "0.9375rem" }}>خطوط الإنتاج (Phase 2)</h3>
-              <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginTop: "0.5rem" }}>
+            <section className="mke-section">
+              <h3 className="mke-section-h3">\u062e\u0637\u0648\u0637 \u0627\u0644\u0625\u0646\u062a\u0627\u062c (Phase 2)</h3>
+              <div className="mke-row-wrap">
                 {Object.entries(akp.pipelines).map(([key, p]) => (
                   <StatCard
                     key={key}
-                    label={`${p.label || key} (${p.publishedToday ?? 0}/${p.quota ?? "—"})`}
+                    label={`${p.label || key} (${p.publishedToday ?? 0}/${p.quota ?? "\u2014"})`}
                     value={p.publishedToday ?? 0}
                   />
                 ))}
               </div>
               {akp.lastRun && (
-                <p style={{ fontSize: "0.75rem", color: C.inkSoft, marginTop: "0.5rem" }}>
-                  آخر Run: {akp.lastRun.status} — {akp.lastRun.started_at ? new Date(akp.lastRun.started_at).toLocaleString("ar-KW") : "—"}
+                <p className="mke-small-info">
+                  \u0622\u062e\u0631 Run: {akp.lastRun.status} \u2014 {akp.lastRun.started_at ? new Date(akp.lastRun.started_at).toLocaleString("ar-KW") : "\u2014"}
                 </p>
               )}
               {akp.lastError && (
-                <p style={{ fontSize: "0.75rem", color: "#991B1B", marginTop: "0.25rem" }}>
-                  آخر خطأ: {akp.lastError.message}
+                <p className="mke-small-err">
+                  \u0622\u062e\u0631 \u062e\u0637\u0623: {akp.lastError.message}
                 </p>
               )}
               {akp.health?.score != null && (
-                <p style={{ fontSize: "0.75rem", color: C.inkSoft, marginTop: "0.35rem" }}>
-                  Health Score: {akp.health.score}% · متوسط التنفيذ: {akp.avgDurationMs ?? "—"}ms · Retry Queue: {akp.retryQueue?.total ?? akp.counts?.retryQueue ?? 0}
+                <p className="mke-small-info">
+                  Health Score: {akp.health.score}% \u00b7 \u0645\u062a\u0648\u0633\u0637 \u0627\u0644\u062a\u0646\u0641\u064a\u0630: {akp.avgDurationMs ?? "\u2014"}ms \u00b7 Retry Queue: {akp.retryQueue?.total ?? akp.counts?.retryQueue ?? 0}
                 </p>
               )}
               {akp.sourceStatuses && akp.sourceStatuses.length > 0 && (
-                <div style={{ marginTop: "0.75rem", display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
+                <div className="mke-source-statuses">
                   {akp.sourceStatuses.map((s) => (
                     <span
                       key={s.slug}
+                      className="mke-source-status"
                       style={{
-                        fontSize: "0.7rem",
-                        padding: "0.2rem 0.45rem",
-                        borderRadius: "0.25rem",
-                        background: s.status === "available" || s.status === "slow" ? "#ecfdf5" : "#fef2f2",
-                        color: s.status === "available" || s.status === "slow" ? C.emeraldDeep : "#991B1B",
-                      }}
+                        "--mke-ss-bg": s.status === "available" || s.status === "slow" ? "#ecfdf5" : "#fef2f2",
+                        "--mke-ss-color": s.status === "available" || s.status === "slow" ? "var(--majalis-emerald-deep)" : "#991B1B",
+                      } as React.CSSProperties}
                       title={s.lastError || s.status}
                     >
                       {s.name}: {s.status}
@@ -237,61 +218,59 @@ function MajlisKnowledgeEngineContent() {
           )}
 
           {intelligenceLayers.length > 0 && (
-            <section style={{ marginBottom: "1.25rem" }}>
-              <h3 style={{ color: C.emeraldDeep, fontSize: "0.9375rem" }}>Intelligence Layers ({intelligenceLayers.length})</h3>
-              <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginTop: "0.5rem" }}>
+            <section className="mke-section">
+              <h3 className="mke-section-h3">Intelligence Layers ({intelligenceLayers.length})</h3>
+              <div className="mke-row-wrap">
                 {intelligenceLayers.map((l) => (
-                  <span key={l.id} style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem", background: C.parchmentDeep, borderRadius: "0.25rem" }}>
-                    {l.label}
-                  </span>
+                  <span key={l.id} className="mke-tag">{l.label}</span>
                 ))}
               </div>
             </section>
           )}
 
-          <section style={{ marginBottom: "1.25rem" }}>
-            <h3 style={{ color: C.emeraldDeep, fontSize: "0.9375rem" }}>حالة الخدمات</h3>
-            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginTop: "0.5rem" }}>
+          <section className="mke-section">
+            <h3 className="mke-section-h3">\u062d\u0627\u0644\u0629 \u0627\u0644\u062e\u062f\u0645\u0627\u062a</h3>
+            <div className="mke-service-badges">
               <StatusBadge ok={stats?.vision?.visionEnabled ?? false} label="Vision AI" />
-              <StatusBadge ok={(stats?.subsystems?.vision as { visionEnabled?: boolean })?.visionEnabled ?? stats?.vision?.visionEnabled ?? false} label="Vision v2" />
-              <StatusBadge ok={stats?.database?.status === "connected"} label="Database" />
-              <StatusBadge ok={stats?.search?.embeddings ?? stats?.search?.status === "embeddings_ready"} label="Semantic Search" />
-              <StatusBadge ok={Boolean(stats?.subsystems?.notifications)} label="Notifications" />
+              <StatusBadge ok={(stats?.subsystems?.vision as { visionEnabled?: boolean })?.visionEnabled ?? stats?.vision?.visionEnabled ?? false} label="Vision AI v2" />
+              <StatusBadge ok={stats?.database?.status === "connected"} label="قاعدة البيانات" />
+              <StatusBadge ok={stats?.search?.embeddings ?? stats?.search?.status === "embeddings_ready"} label="البحث الدلالي" />
+              <StatusBadge ok={Boolean(stats?.subsystems?.notifications)} label="الإشعارات" />
             </div>
           </section>
 
           {stats?.extractionMetrics && (
-            <section style={{ marginBottom: "1.25rem" }}>
-              <h3 style={{ color: C.emeraldDeep, fontSize: "0.9375rem" }}>دقة الاستخراج</h3>
-              <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-                <StatCard label="Vision AI %" value={stats.extractionMetrics.visionAccuracy ?? "—"} />
-                <StatCard label="كشف التكرار %" value={stats.extractionMetrics.duplicateDetectionRate ?? "—"} />
-                <StatCard label="ربط الشيوخ %" value={stats.extractionMetrics.sheikhMatchRate ?? "—"} />
+            <section className="mke-section">
+              <h3 className="mke-section-h3">\u062f\u0642\u0629 \u0627\u0644\u0627\u0633\u062a\u062e\u0631\u0627\u062c</h3>
+              <div className="mke-row-wrap">
+                <StatCard label="Vision AI %" value={stats.extractionMetrics.visionAccuracy ?? "\u2014"} />
+                <StatCard label="\u0643\u0634\u0641 \u0627\u0644\u062a\u0643\u0631\u0627\u0631 %" value={stats.extractionMetrics.duplicateDetectionRate ?? "\u2014"} />
+                <StatCard label="\u0631\u0628\u0637 \u0627\u0644\u0634\u064a\u0648\u062e %" value={stats.extractionMetrics.sheikhMatchRate ?? "\u2014"} />
               </div>
             </section>
           )}
 
-          <section style={{ marginBottom: "1.25rem" }}>
-            <h3 style={{ color: C.emeraldDeep, fontSize: "0.9375rem" }}>Pipeline ({pipelineStages.length} مراحل)</h3>
-            <p style={{ fontSize: "0.75rem", color: C.inkSoft }}>
-              {pipelineStages.map((s) => s.label).join(" → ")}
+          <section className="mke-section">
+            <h3 className="mke-section-h3">Pipeline ({pipelineStages.length} \u0645\u0631\u0627\u062d\u0644)</h3>
+            <p className="mke-pipeline-text">
+              {pipelineStages.map((s) => s.label).join(" \u2192 ")}
             </p>
           </section>
 
-          <section style={{ marginBottom: "1.25rem" }}>
-            <h3 style={{ color: C.emeraldDeep, fontSize: "0.9375rem" }}>المنصات المدعومة ({platforms.length})</h3>
-            <p style={{ fontSize: "0.75rem", color: C.inkSoft, lineHeight: 1.6 }}>
-              {platforms.slice(0, 30).map((p) => p.type).join(" · ")}
-              {platforms.length > 30 ? " …" : ""}
+          <section className="mke-section">
+            <h3 className="mke-section-h3">\u0627\u0644\u0645\u0646\u0635\u0627\u062a \u0627\u0644\u0645\u062f\u0639\u0648\u0645\u0629 ({platforms.length})</h3>
+            <p className="mke-pipeline-text mke-pipeline-text--spaced">
+              {platforms.slice(0, 30).map((p) => p.type).join(" \u00b7 ")}
+              {platforms.length > 30 ? " \u2026" : ""}
             </p>
           </section>
 
           {stats?.sourcesByType && Object.keys(stats.sourcesByType).length > 0 && (
-            <section>
-              <h3 style={{ color: C.emeraldDeep, fontSize: "0.9375rem" }}>المصادر حسب النوع</h3>
-              <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+            <section className="mke-section">
+              <h3 className="mke-section-h3">\u0627\u0644\u0645\u0635\u0627\u062f\u0631 \u062d\u0633\u0628 \u0627\u0644\u0646\u0648\u0639</h3>
+              <div className="mke-row-wrap">
                 {Object.entries(stats.sourcesByType).map(([type, count]) => (
-                  <span key={type} style={{ fontSize: "0.75rem", padding: "0.2rem 0.5rem", background: C.parchmentDeep, borderRadius: "0.25rem" }}>
+                  <span key={type} className="mke-tag-tiny">
                     {type}: {count}
                   </span>
                 ))}

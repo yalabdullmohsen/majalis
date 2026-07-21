@@ -1,17 +1,47 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
+import { Menu, Moon, Search, Sun, User, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { useLanguage } from "./LanguageProvider";
 import NotificationBell from "./NotificationBell";
+import { SectionErrorBoundary } from "./ErrorBoundary";
 import { SearchSuggestions } from "./SearchSuggestions";
 import { SideNavDrawer } from "./SideNavDrawer";
-import { MobileMoreMenu } from "./MobileMoreMenu";
+import { useThemePreference } from "./ThemePreferenceProvider";
 
-import { C } from "@/lib/theme";
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
+import { fetchPrayerTimes, computePrayerCountdown, type PrayerCountdown } from "@/lib/prayer-times";
+
+function PrayerChip() {
+  const [cd, setCd] = useState<PrayerCountdown | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    let prayers: Parameters<typeof computePrayerCountdown>[0] = [];
+    fetchPrayerTimes()
+      .then((payload) => {
+        prayers = payload.prayers;
+        setCd(computePrayerCountdown(prayers));
+        intervalRef.current = setInterval(() => setCd(computePrayerCountdown(prayers)), 1000);
+      })
+      .catch(() => {});
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+  }, []);
+
+  if (!cd?.next) return null;
+  // خلال فترة السماح (٣٠ دقيقة بعد الأذان) لا نعرض 00:00:00 للصلاة التي أذّنت للتو،
+  // بل نتحوّل مباشرة لاسم وعدّاد الصلاة الفعلية التالية — نفس منطق PrayerTimesPage.
+  const inGrace = cd.sinceSeconds != null;
+  const displayName = inGrace && cd.graceNextSlot ? cd.graceNextSlot.name : cd.next.name;
+  const displayHms = inGrace && cd.graceNextHms ? cd.graceNextHms : cd.remainingHms;
+  return (
+    <Link href="/prayer-times" className="navbar-prayer-chip" aria-label={`الصلاة القادمة: ${displayName}`}>
+      <span className="navbar-prayer-chip__name">{displayName}</span>
+      <span className="navbar-prayer-chip__hms" aria-live="off">{displayHms}</span>
+    </Link>
+  );
+}
 
 function useIsMobile() {
   const [mobile, setMobile] = useState(typeof window !== "undefined" ? window.innerWidth <= 879 : false);
@@ -23,20 +53,8 @@ function useIsMobile() {
   return mobile;
 }
 
-function tabStyle(active: boolean): React.CSSProperties {
-  return {
-    fontSize: "0.875rem",
-    padding: "0.375rem 0.875rem",
-    borderRadius: "0.5rem",
-    whiteSpace: "nowrap",
-    textDecoration: "none",
-    color: active ? C.emeraldDeep : C.inkSoft,
-    background: active
-      ? "color-mix(in srgb, var(--majalis-emerald) 10%, transparent)"
-      : "transparent",
-    fontWeight: active ? 700 : 500,
-    transition: "background 120ms ease, color 120ms ease",
-  };
+function tabCls(active: boolean, extra = "") {
+  return `nav-tab${active ? " nav-tab--active" : ""}${extra ? " " + extra : ""}`;
 }
 
 function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
@@ -51,6 +69,8 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
   };
   return (
     <form
+      role="search"
+      aria-label="البحث في المجلس العلمي"
       onSubmit={(e) => {
         e.preventDefault();
         submit(term);
@@ -73,10 +93,11 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
 
 export default function NavBar() {
   const { isAdmin, isLoggedIn, user, logout } = useAuth();
-  const { lang, setLang, t } = useLanguage();
+  const { t } = useLanguage();
+  const { resolvedTheme, toggleDark } = useThemePreference();
   const [location, navigate] = useLocation();
   const isMobile = useIsMobile();
-  const { isMenuOpen, moreOpen, toggleMenu, openMenu, closeMenu, closeMore, closeAll } = useMobileNavState();
+  const { isMenuOpen, toggleMenu, openMenu, closeMenu, closeAll } = useMobileNavState();
 
   const isActive = (href: string) => {
     const path = href.split("?")[0];
@@ -99,7 +120,11 @@ export default function NavBar() {
   // Desktop only: full auth bar
   const desktopAuthLinks = isLoggedIn ? (
     <div className="navbar-auth">
-      {isAdmin && <NotificationBell />}
+      {isAdmin && (
+        <SectionErrorBoundary name="NotificationBell">
+          <NotificationBell />
+        </SectionErrorBoundary>
+      )}
       <Link href="/stats" className="navbar-user-link">{user?.profile?.full_name || user?.email || t("nav_my_account")}</Link>
       {isAdmin && (
         <Link href="/admin" className="navbar-admin-link">
@@ -121,48 +146,69 @@ export default function NavBar() {
     </div>
   );
 
+  // قارئ المصحف /mushaf غامر مخصَّص بهيدره/تنقّله الخاصين — شريط الموقع
+  // الكامل (بحث/دخول/قوائم) فوقه يجعله يبدو صفحة ويب لا تطبيق قراءة.
+  if (location.startsWith("/mushaf")) return null;
+
   return (
     <>
       <header
-        className={`navbar-v3 sticky top-0 border-b${isMenuOpen || moreOpen ? " navbar-v3--menu-open" : ""}`}
+        className={`navbar-v3 sticky top-0 border-b${isMenuOpen ? " navbar-v3--menu-open" : ""}`}
       >
         <div className="navbar-v3__inner">
           <div className="navbar-v3__start">
             {/* Hamburger — always visible, opens SideNavDrawer */}
             <button
               type="button"
-              className="navbar-menu-btn navbar-menu-btn--drawer"
+              className={`navbar-menu-btn navbar-menu-btn--drawer${isMenuOpen ? " navbar-menu-btn--open" : ""}`}
               onClick={toggleMenu}
               aria-expanded={isMenuOpen}
               aria-controls="main-navigation-drawer"
               aria-label={isMenuOpen ? t("nav_close") : t("nav_menu")}
             >
-              {isMenuOpen ? t("nav_close") : t("nav_menu")}
+              <span className="navbar-menu-btn__geo" aria-hidden="true" />
+              {isMenuOpen
+                ? <X className="navbar-menu-btn__icon" size={16} strokeWidth={1.8} aria-hidden="true" />
+                : <Menu className="navbar-menu-btn__icon" size={16} strokeWidth={1.7} aria-hidden="true" />
+              }
+              <span className="navbar-menu-btn__label">{isMenuOpen ? t("nav_close") : t("nav_menu")}</span>
             </button>
-            <Link href="/" className="navbar-brand">
-              <img
-                src="/logo.png"
-                alt=""
-                className="navbar-logo"
-                width={40}
-                height={40}
-                loading="eager"
-                decoding="async"
-              />
-              <span className="site-brand-name">المجلس العلمي</span>
+            <Link href="/" className="navbar-brand" aria-label="المجلس العلمي">
+              {/*
+                الشعار مرشّح LCP في كل صفحة. الأصل PNG بعرض 2044px = ١.١MB بينما
+                يُعرض بعرض ≤180px. نقدّم WebP بعرض 400/800 (~37KB / ~89KB) مع
+                احتياطي PNG مصغّر (79KB). display:contents يُبقي <img> نفسه عنصرَ
+                الـflex فلا يتغيّر أي شيء في التنسيق.
+              */}
+              <picture style={{ display: "contents" }}>
+                <source
+                  type="image/webp"
+                  srcSet="/logo-calligraphy-400.webp 1x, /logo-calligraphy-800.webp 2x"
+                />
+                <img
+                  src="/logo-calligraphy-400.png"
+                  alt="المجلس العلمي"
+                  className="navbar-logo navbar-logo--calligraphy"
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  width="400"
+                  height="154"
+                />
+              </picture>
             </Link>
           </div>
 
           {/* Desktop tabs */}
           {!isMobile && (
-            <nav className="navbar-v3__tabs" aria-label={lang === "en" ? "Main navigation" : "التنقل الرئيسي"}>
+            <nav className="navbar-v3__tabs" aria-label="التنقل الرئيسي">
               {PRIMARY_NAV_ITEMS.map((item) => (
-                <Link key={item.href} href={item.href} style={tabStyle(isActive(item.href))}>
+                <Link key={item.href} href={item.href} className={tabCls(isActive(item.href))} aria-current={isActive(item.href) ? "page" : undefined}>
                   {item.label}
                 </Link>
               ))}
               {isAdmin && (
-                <Link href="/admin" style={{ ...tabStyle(location.startsWith("/admin")), color: C.brassDeep }}>
+                <Link href="/admin" className={tabCls(location.startsWith("/admin"), "nav-tab--admin")} aria-current={location.startsWith("/admin") ? "page" : undefined}>
                   {t("nav_admin_panel")}
                 </Link>
               )}
@@ -170,38 +216,55 @@ export default function NavBar() {
           )}
 
           <div className="navbar-v3__end">
-            {/* زر البحث الشامل */}
+            {/* عداد الصلاة التالية — سطح المكتب فقط */}
+            {!isMobile && <PrayerChip />}
+            {/* زر الوضع الليلي */}
+            <button
+              type="button"
+              onClick={toggleDark}
+              aria-label={resolvedTheme === "dark" ? "التحويل إلى الوضع النهاري" : "التحويل إلى الوضع الليلي"}
+              title={resolvedTheme === "dark" ? "وضع نهاري" : "وضع ليلي"}
+              className="navbar-theme-toggle"
+            >
+              {resolvedTheme === "dark"
+                ? <Sun size={17} strokeWidth={1.6} aria-hidden="true" />
+                : <Moon size={17} strokeWidth={1.6} aria-hidden="true" />
+              }
+            </button>
+            {/* زر البحث الشامل — أيقونة عدسة فقط على الجوال، أيقونة+كلمة "بحث"
+                على الشاشات الأكبر. اختصار Ctrl/Cmd+K يبقى فعالاً (مُدار في
+                App.tsx عبر مستمع keydown مستقل) لكن لا يُعرض بصريًا هنا —
+                طلب صريح من المالك: إزالة حرف K والمربع المحيط به نهائيًا. */}
             <button
               type="button"
               onClick={() => window.dispatchEvent(new Event("global-search-open"))}
-              aria-label="البحث الشامل (⌘K)"
-              title="البحث الشامل (⌘K)"
+              aria-label="بحث"
               className="navbar-search-cmd"
             >
-              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-                <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" strokeWidth="1.4"/>
-                <path d="M11 11L13.5 13.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-              </svg>
+              <Search size={17} strokeWidth={1.8} aria-hidden="true" />
               <span className="navbar-search-hint">بحث</span>
-              <kbd className="navbar-search-kbd">⌘K</kbd>
             </button>
             {/* Desktop: search + auth + lang */}
             {!isMobile && <SearchBox />}
             {!isMobile && desktopAuthLinks}
-            {!isMobile && (
-              <button
-                type="button"
-                className="navbar-lang-btn"
-                onClick={() => setLang(lang === "ar" ? "en" : "ar")}
-                aria-label={lang === "ar" ? "Switch to English" : "التبديل إلى العربية"}
-                title={lang === "ar" ? "EN" : "عر"}
-              >
-                {lang === "ar" ? "EN" : "عر"}
-              </button>
-            )}
 
-            {/* Mobile: single auth icon only (no more / lang — those are in bottom nav + side nav) */}
-            {isMobile && isAdmin && <NotificationBell />}
+            {/* Mobile: زر دخول/حساب واضح دائمًا — لا يُترك مخفيًا داخل قائمة الهامبرغر فقط */}
+            {isMobile && !isLoggedIn && (
+              <Link href="/login" className="navbar-mobile-login" aria-label="تسجيل الدخول">
+                <User size={16} strokeWidth={1.8} aria-hidden="true" />
+                <span className="navbar-mobile-login__label">دخول</span>
+              </Link>
+            )}
+            {isMobile && isLoggedIn && (
+              <Link href="/stats" className="navbar-mobile-login navbar-mobile-login--active" aria-label="حسابي">
+                <User size={16} strokeWidth={1.8} aria-hidden="true" />
+              </Link>
+            )}
+            {isMobile && isAdmin && (
+              <SectionErrorBoundary name="NotificationBell">
+                <NotificationBell />
+              </SectionErrorBoundary>
+            )}
           </div>
         </div>
       </header>
@@ -209,25 +272,8 @@ export default function NavBar() {
       <SideNavDrawer
         open={isMenuOpen}
         onClose={closeMenu}
-        lang={lang}
-        onLangToggle={() => setLang(lang === "ar" ? "en" : "ar")}
         onLogout={handleLogout}
       />
-
-      {/* Mobile "more" menu — still used if ever triggered, but hidden on mobile now */}
-      {!isMobile && (
-        <MobileMoreMenu
-          open={moreOpen}
-          onClose={closeMore}
-          isActive={isActive}
-          isAdmin={isAdmin}
-          isLoggedIn={isLoggedIn}
-          onLogout={handleLogout}
-          searchBox={<SearchBox onSubmitDone={closeMore} />}
-          tabStyle={tabStyle}
-          location={location}
-        />
-      )}
     </>
   );
 }

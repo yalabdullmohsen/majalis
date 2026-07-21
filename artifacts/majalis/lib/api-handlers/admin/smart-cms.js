@@ -1,6 +1,6 @@
 import { sendJson } from "../../api/_http.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
-import { extractLessonFromImage, extractLessonFromText } from "../../../lib/cms/lesson-extractor.mjs";
+import { extractLessonFromImage, extractLessonFromText, extractContentFromText } from "../../../lib/cms/lesson-extractor.mjs";
 import { importFromUrl } from "../../../lib/cms/url-importer.mjs";
 import { matchSheikhByName } from "../../../lib/cms/sheikh-matcher.mjs";
 import {
@@ -50,6 +50,47 @@ export default async function handler(req, res) {
       sendJson(res, draft.ok ? 200 : 422, {
         ok: draft.ok,
         vision_enabled: result.visionEnabled !== false,
+        message: result.message,
+        ...result,
+        sheikhMatch,
+        draft: draft.draft,
+        error: draft.error,
+      });
+      return;
+    }
+
+    if (action === "extract-from-text") {
+      const rawText = String(body.rawText || body.text || "").trim();
+      if (!rawText) {
+        sendJson(res, 400, { ok: false, error: "missing_text", message: "يُرجى إدخال نص قبل التحليل." });
+        return;
+      }
+      const hint = String(body.hint || "").trim();
+      console.log(`[smart-cms] extract-from-text hint="${hint}" len=${rawText.length}`);
+      const result = await extractContentFromText({ text: rawText, hint });
+      if (result.extraction_failed) {
+        sendJson(res, 422, {
+          ok: false,
+          error: result.errorCode || "extraction_failed",
+          message: result.errorArabic || "تعذّر تحليل المحتوى — يُرجى المحاولة مرة أخرى.",
+        });
+        return;
+      }
+      const sheikhMatch = await matchSheikhByName(result.extracted?.speaker_name);
+      const draft = await createContentDraft({
+        contentKind: hint || "lesson",
+        sourceType: "text",
+        rawText,
+        extracted: result.extracted,
+        aiSuggestions: result.aiSuggestions,
+        validation: result.validation,
+        matchedSheikhId: sheikhMatch.matched?.id,
+        proposedSheikh: sheikhMatch.proposedDraft,
+        createdBy: auth.user?.id,
+        metadata: { hint, confidence: result.confidence_score },
+      });
+      sendJson(res, draft.ok ? 200 : 422, {
+        ok: draft.ok,
         message: result.message,
         ...result,
         sheikhMatch,
@@ -155,18 +196,22 @@ export default async function handler(req, res) {
       return;
     }
 
+    const supportedActions = [
+      "list-drafts",
+      "extract-from-text",
+      "extract-from-image",
+      "extract-from-url",
+      "validate-draft",
+      "approve-draft",
+      "reject-draft",
+      "revision-history",
+    ];
+    console.warn(`[smart-cms] unknown_action received action="${action}"`);
     sendJson(res, 400, {
       ok: false,
       error: "unknown_action",
-      actions: [
-        "list-drafts",
-        "extract-from-image",
-        "extract-from-url",
-        "validate-draft",
-        "approve-draft",
-        "reject-draft",
-        "revision-history",
-      ],
+      message: `الإجراء "${action || "(فارغ)"}" غير معروف. الإجراءات المدعومة: ${supportedActions.join(", ")}`,
+      supported_actions: supportedActions,
     });
   } catch (err) {
     console.error("[admin/smart-cms]", err);

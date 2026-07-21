@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { arabicMatchAny } from "@/lib/arabic-search";
 import { adminGetAllFawaid, moderateFawaid, adminDeleteFawaid, adminUpsertFawaid } from "@/lib/supabase";
-import { C } from "@/lib/theme";
-import { Loading } from "@/components/ui-common";
-import { AdminModal, Field, inputSt, selectSt, textareaSt } from "./AdminModal";
+import { SkeletonCardGrid } from "@/components/ui-common";
+import { AdminModal, Field } from "./AdminModal";
 import { BulkImport } from "./BulkImport";
 
 const STATUS_OPTIONS: Record<string, string> = { approved: "مقبول", pending: "معلّق", rejected: "مرفوض" };
@@ -10,8 +10,8 @@ const EMPTY_FAWAID: any = { text: "", author_name: "", status: "approved" };
 
 const STATUS_AR: Record<string, string> = { approved: "مقبول", pending: "معلّق", rejected: "مرفوض" };
 const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
-  approved: { bg: "#D1FAE5", text: C.emeraldDeep },
-  pending:  { bg: "#FEF3C7", text: "#92400E" },
+  approved: { bg: "#D1FAE5", text: "var(--majalis-emerald-deep)" },
+  pending:  { bg: "rgba(23,61,53,0.08)", text: "#173D35" },
   rejected: { bg: "#FEE2E2", text: "#991B1B" },
 };
 const FILTERS: [string, string][] = [["all", "الكل"], ["pending", "معلّقة"], ["approved", "مقبولة"], ["rejected", "مرفوضة"]];
@@ -20,7 +20,7 @@ export function FawaidSection() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(() => { const p = new URLSearchParams(window.location.search); return p.get("q") || ""; });
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<any>(EMPTY_FAWAID);
   const [saving, setSaving] = useState(false);
@@ -45,84 +45,80 @@ export function FawaidSection() {
 
   const filtered = items
     .filter((i) => filter === "all" || i.status === filter)
-    .filter((i) => {
-      const q = search.trim();
-      if (!q) return true;
-      return `${i.text} ${i.author_name ?? ""}`.includes(q);
-    });
+    .filter((i) => arabicMatchAny([i.text, i.author_name ?? ""], search));
   const pendingCount = items.filter(i => i.status === "pending").length;
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.75rem" }}>
-        <h2 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: C.emeraldDeep, display: "flex", alignItems: "center", gap: "0.5rem" }}>
+      <div className="faw-header">
+        <h2 className="faw-title">
           الفوائد ({items.length})
           {pendingCount > 0 && (
-            <span style={{ padding: "0.1rem 0.5rem", borderRadius: "0.75rem", background: "#dc2626", color: "#fff", fontSize: "0.75rem" }}>{pendingCount} بانتظار الموافقة</span>
+            <span className="faw-pending-badge">{pendingCount} بانتظار الموافقة</span>
           )}
         </h2>
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+        <div className="faw-actions">
           <BulkImport
             title="استيراد الفوائد"
             template={[{ text: "نص الفائدة العلمية أو الأثر…", author_name: "ابن القيم رحمه الله", status: "approved" }]}
             importRow={(row) => adminUpsertFawaid({ status: "approved", ...row })}
             onDone={load}
           />
-          <button onClick={openAdd} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.375rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "0.875rem", fontWeight: 600 }}>+ إضافة فائدة</button>
+          <button type="button" onClick={openAdd} className="faw-add-btn">+ إضافة فائدة</button>
         </div>
       </div>
 
-      <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في الفوائد..." style={{ ...inputSt, maxWidth: "20rem", marginBottom: "0.75rem" }} />
+      <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="بحث في الفوائد..." className="adm-input faw-search" />
 
-      <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.25rem" }}>
-          {FILTERS.map(([v, l]) => (
-            <button
-              key={v}
-              onClick={() => setFilter(v)}
-              style={{ padding: "0.375rem 0.875rem", borderRadius: "0.375rem", border: `1px solid ${filter === v ? C.emerald : C.line}`, background: filter === v ? C.emerald : C.panel, color: filter === v ? C.parchment : C.inkSoft, cursor: "pointer", fontSize: "0.8125rem", fontFamily: "inherit" }}
-            >
-              {l}
-            </button>
-          ))}
+      <div className="faw-filter-row">
+        {FILTERS.map(([v, l]) => (
+          <button
+            type="button"
+            key={v}
+            onClick={() => setFilter(v)}
+            className={`faw-filter-btn${filter === v ? " faw-filter-btn--active" : ""}`}
+          >
+            {l}
+          </button>
+        ))}
       </div>
 
-      {loading ? <Loading /> : (
-        <div style={{ display: "grid", gap: "0.75rem" }}>
+      {loading ? <SkeletonCardGrid count={6} /> : (
+        <div className="faw-grid">
           {filtered.map(item => {
-            const sc = STATUS_COLORS[item.status] || { bg: C.parchmentDeep, text: C.inkSoft };
+            const sc = STATUS_COLORS[item.status] || { bg: "var(--majalis-parchment-deep)", text: "var(--majalis-ink-soft)" };
             return (
-              <div key={item.id} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: "0.375rem", padding: "1rem 1.25rem" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem", marginBottom: "0.5rem" }}>
-                  <span style={{ padding: "0.125rem 0.5rem", borderRadius: "0.25rem", background: sc.bg, color: sc.text, fontSize: "0.75rem", flexShrink: 0, alignSelf: "flex-start", marginTop: "0.2rem" }}>
+              <div key={item.id} className="faw-card">
+                <div className="faw-card__header">
+                  <span
+                    className="faw-status-badge"
+                    style={{ "--faw-status-bg": sc.bg, "--faw-status-color": sc.text } as React.CSSProperties}
+                  >
                     {STATUS_AR[item.status] || item.status}
                   </span>
-                  <p style={{ margin: 0, fontSize: "0.9375rem", color: C.ink, lineHeight: "1.75", flex: 1, textAlign: "right" }}>{item.text}</p>
+                  <p className="faw-card__text">{item.text}</p>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "0.625rem" }}>
-                  <div style={{ display: "flex", gap: "0.5rem" }}>
+                <div className="faw-card__footer">
+                  <div className="faw-card__actions">
                     {item.status !== "approved" && (
-                      <button onClick={() => moderate(item.id, "approved")} style={{ padding: "0.25rem 0.75rem", borderRadius: "0.25rem", background: C.emerald, color: C.parchment, border: "none", cursor: "pointer", fontSize: "0.75rem", fontFamily: "inherit" }}>
+                      <button type="button" onClick={() => moderate(item.id, "approved")} className="faw-approve-btn">
                         قبول
                       </button>
                     )}
                     {item.status !== "rejected" && (
-                      <button onClick={() => moderate(item.id, "rejected")} style={{ padding: "0.25rem 0.75rem", borderRadius: "0.25rem", background: C.panel, color: "#dc2626", border: `1px solid ${C.line}`, cursor: "pointer", fontSize: "0.75rem", fontFamily: "inherit" }}>
+                      <button type="button" onClick={() => moderate(item.id, "rejected")} className="faw-reject-btn">
                         رفض
                       </button>
                     )}
                     {item.status === "approved" && (
-                      <button onClick={() => moderate(item.id, "pending")} style={{ padding: "0.25rem 0.75rem", borderRadius: "0.25rem", background: C.panel, color: C.inkSoft, border: `1px solid ${C.line}`, cursor: "pointer", fontSize: "0.75rem", fontFamily: "inherit" }}>
+                      <button type="button" onClick={() => moderate(item.id, "pending")} className="faw-pending-btn">
                         إعادة للانتظار
                       </button>
                     )}
-                    <button onClick={() => openEdit(item)} style={{ padding: "0.25rem 0.75rem", borderRadius: "0.25rem", background: C.panel, color: C.emeraldDeep, border: `1px solid ${C.line}`, cursor: "pointer", fontSize: "0.75rem", fontFamily: "inherit" }}>
-                      تعديل
-                    </button>
-                    <button onClick={() => handleDelete(item.id)} style={{ padding: "0.25rem 0.75rem", borderRadius: "0.25rem", background: C.panel, color: C.inkSoft, border: `1px solid ${C.line}`, cursor: "pointer", fontSize: "0.75rem", fontFamily: "inherit" }}>
-                      حذف
-                    </button>
+                    <button type="button" onClick={() => openEdit(item)} className="faw-edit-btn">تعديل</button>
+                    <button type="button" onClick={() => handleDelete(item.id)} className="faw-del-btn">حذف</button>
                   </div>
-                  <div style={{ textAlign: "left", fontSize: "0.75rem", color: C.inkSoft }}>
+                  <div className="faw-card__meta">
                     {item.author_name && <span>{item.author_name} · </span>}
                     <span>{new Date(item.created_at).toLocaleDateString("ar-KW")}</span>
                   </div>
@@ -130,19 +126,19 @@ export function FawaidSection() {
               </div>
             );
           })}
-          {filtered.length === 0 && <p style={{ textAlign: "center", color: C.inkSoft, padding: "2.5rem" }}>لا توجد فوائد في هذه الفئة</p>}
+          {filtered.length === 0 && <p className="faw-empty">لا توجد فوائد في هذه الفئة</p>}
         </div>
       )}
 
       <AdminModal title={form.id ? "تعديل الفائدة" : "إضافة فائدة جديدة"} open={open} onClose={() => setOpen(false)} onSave={handleSave} saving={saving}>
         <Field label="نص الفائدة *">
-          <textarea style={{ ...textareaSt, minHeight: "7rem" }} value={form.text} onChange={e => set("text", e.target.value)} placeholder="اكتب نص الفائدة العلمية أو الأثر..." />
+          <textarea className="adm-textarea faw-textarea--tall" value={form.text} onChange={e => set("text", e.target.value)} placeholder="اكتب نص الفائدة العلمية أو الأثر..." />
         </Field>
         <Field label="القائل / المصدر">
-          <input style={inputSt} value={form.author_name || ""} onChange={e => set("author_name", e.target.value)} placeholder="اسم العالم أو المرجع (اختياري)" />
+          <input className="adm-input" value={form.author_name || ""} onChange={e => set("author_name", e.target.value)} placeholder="اسم العالم أو المرجع (اختياري)" />
         </Field>
         <Field label="الحالة">
-          <select style={selectSt} value={form.status} onChange={e => set("status", e.target.value)}>
+          <select className="adm-select" value={form.status} onChange={e => set("status", e.target.value)}>
             {Object.entries(STATUS_OPTIONS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
           </select>
         </Field>

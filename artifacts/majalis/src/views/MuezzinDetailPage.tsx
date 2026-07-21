@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { BookOpen, Building2, CloudMoon, CloudSun, Cog, Heart, MapPin, Mic2, Moon, Music2, Star, Sun, Sunset, Tag } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link, useRoute } from "wouter";
+import { ShareButtons } from "@/components/ContentActions";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   getMuezzin,
   playAdhan,
@@ -19,19 +23,24 @@ import {
   saveRating,
   getUserRating,
 } from "@/lib/muezzin-favorites";
+import { applyPageSeo } from "@/lib/seo";
 
-const STYLE_COLOR: Record<string, { bg: string; text: string; border: string }> = {
-  "خاشع":    { bg: "#f0fdf4", text: "#065f46", border: "#bbf7d0" },
-  "رسمي":    { bg: "#eff6ff", text: "#1d4ed8", border: "#bfdbfe" },
-  "تقليدي":  { bg: "#faf5ff", text: "#6d28d9", border: "#ddd6fe" },
-  "كلاسيكي": { bg: "#fff7ed", text: "#92400e", border: "#fed7aa" },
+const PRAYER_ICON_MAP: Record<string, LucideIcon> = {
+  Moon, Sun, CloudSun, Sunset, CloudMoon,
+};
+
+const STYLE_CLASS: Record<string, string> = {
+  "خاشع":    "khashi",
+  "رسمي":    "rasmi",
+  "تقليدي":  "taqlidi",
+  "كلاسيكي": "kilasiki",
 };
 
 function StarRating({ rating }: { rating: number }) {
   return (
-    <span style={{ display: "inline-flex", gap: "0.1rem" }}>
+    <span className="mzd-stars-row">
       {[1, 2, 3, 4, 5].map((i) => (
-        <span key={i} style={{ color: i <= Math.round(rating) ? "#f59e0b" : "#e5e7eb", fontSize: "1.1rem" }}>★</span>
+        <span key={i} className={`mzd-star${i <= Math.round(rating) ? " is-active" : ""}`}><Star size={13} fill={i <= Math.round(rating) ? "currentColor" : "none"} strokeWidth={1.5} /></span>
       ))}
     </span>
   );
@@ -56,6 +65,25 @@ export default function MuezzinDetailPage() {
   const id = params?.id ?? "";
   const muezzin = getMuezzin(id);
 
+  useEffect(() => {
+    applyPageSeo({
+      path: `/muezzins/${id}`,
+      title: `${muezzin?.name || "مؤذن"} | أذان | المجلس العلمي`,
+      description: `استمع لتلاوات ${muezzin?.name || "المؤذن"}، أذان مباشر وتسجيلات إسلامية متنوعة.`,
+      keywords: ["أذان", "مؤذن", "تلاوات أذان", "صوت مؤذن", "أذان إسلامي"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: muezzin?.name || "مؤذن",
+          url: `https://www.majlisilm.com/muezzins/${id}`,
+          jobTitle: "مؤذن",
+          description: `تسجيلات أذان ${muezzin?.name || "المؤذن"} الإسلامية`,
+        },
+      ],
+    });
+  }, [muezzin?.name, id]);
+
   const [playState, setPlayState] = useState<PlayState>({ key: null });
   const [saved, setSaved] = useState(false);
   const [fav, setFav] = useState(() => isFavorite(muezzin.id));
@@ -66,8 +94,7 @@ export default function MuezzinDetailPage() {
 
   const prefs = loadAdhanPrefs();
   const isDefault = prefs.defaultMuezzinId === muezzin.id;
-
-  const sc = STYLE_COLOR[muezzin.style] ?? { bg: "#f9fafb", text: "#374151", border: "#e5e7eb" };
+  const styleMod = STYLE_CLASS[muezzin.style] ?? "khashi";
 
   useEffect(() => () => {
     stopAdhan();
@@ -106,140 +133,81 @@ export default function MuezzinDetailPage() {
     timerRef.current = setTimeout(() => setRatedFlash(false), 2000);
   }
 
-  // Other muezzins for "قد يعجبك"
   const related = MUEZZINS
     .filter((m) => m.id !== muezzin.id && (m.style === muezzin.style || m.country === muezzin.country))
     .slice(0, 3);
 
   return (
-    <div style={{ direction: "rtl", maxWidth: 600, margin: "0 auto", padding: "1rem 1rem 5rem" }}>
+    <div className="mzd-page">
       {/* Back */}
       <Link href="/muezzins">
-        <button type="button" style={backBtnStyle}>
+        <button type="button" className="mzd-back-btn">
           ← مكتبة المؤذنين
         </button>
       </Link>
 
       {/* Hero Card */}
-      <div style={{
-        background: "linear-gradient(135deg, #134a3a 0%, #0c3020 100%)",
-        borderRadius: "1.25rem",
-        padding: "1.5rem 1.25rem",
-        color: "#fff",
-        marginBottom: "1.25rem",
-        position: "relative",
-        overflow: "hidden",
-      }}>
-        {/* Background pattern */}
-        <div style={{
-          position: "absolute", inset: 0, opacity: 0.05,
-          backgroundImage: "repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%)",
-          backgroundSize: "12px 12px",
-        }} />
+      <div className="mzd-hero">
+        <div className="mzd-hero__pattern" aria-hidden="true" />
 
-        {/* Muezzin icon */}
-        <div style={{
-          width: 64, height: 64, borderRadius: "50%",
-          background: "rgba(255,255,255,0.15)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: "2rem", marginBottom: "0.875rem",
-        }}>
-          🎙️
-        </div>
+        <div className="mzd-hero__icon" aria-hidden="true"><Mic2 size={36} strokeWidth={1.4} /></div>
 
-        <h1 style={{ fontSize: "1.35rem", fontWeight: 800, margin: "0 0 0.2rem" }}>
-          {muezzin.name}
-        </h1>
-        <div style={{ fontSize: "0.82rem", opacity: 0.8, marginBottom: "0.75rem" }}>
-          📍 {muezzin.origin} · {muezzin.country}
-        </div>
+        <h1 className="mzd-hero__name">{muezzin.name}</h1>
+        <div className="mzd-hero__origin"><MapPin size={13} strokeWidth={2} aria-hidden="true" /> {muezzin.origin} · {muezzin.country}</div>
 
-        {/* Style badge */}
-        <span style={{
-          display: "inline-block",
-          padding: "0.2rem 0.7rem",
-          borderRadius: "999px",
-          fontSize: "0.72rem",
-          fontWeight: 700,
-          background: sc.bg,
-          color: sc.text,
-          border: `1px solid ${sc.border}`,
-          marginBottom: "1rem",
-        }}>
+        <span className={`mzd-style-badge mzd-style-badge--${styleMod}`}>
           {muezzin.style} · {muezzin.category}
         </span>
 
-        {/* Stats row */}
-        <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
-          <div style={{ textAlign: "center" }}>
-            <div style={{ fontSize: "1.2rem", fontWeight: 700 }}>{muezzin.rating}</div>
-            <div style={{ fontSize: "0.68rem", opacity: 0.75 }}>التقييم</div>
+        <div className="mzd-hero__stats">
+          <div className="mzd-hero__stat">
+            <div className="mzd-hero__stat-value">{muezzin.rating}</div>
+            <div className="mzd-hero__stat-label">التقييم</div>
           </div>
-          <div style={{ textAlign: "center" }}>
-            <div style={{ fontSize: "1.2rem", fontWeight: 700 }}>{formatNum(muezzin.totalRatings)}</div>
-            <div style={{ fontSize: "0.68rem", opacity: 0.75 }}>تقييم</div>
+          <div className="mzd-hero__stat">
+            <div className="mzd-hero__stat-value">{formatNum(muezzin.totalRatings)}</div>
+            <div className="mzd-hero__stat-label">تقييم</div>
           </div>
-          <div style={{ textAlign: "center" }}>
-            <div style={{ fontSize: "1.2rem", fontWeight: 700 }}>{formatNum(muezzin.followers)}</div>
-            <div style={{ fontSize: "0.68rem", opacity: 0.75 }}>متابع</div>
+          <div className="mzd-hero__stat">
+            <div className="mzd-hero__stat-value">{formatNum(muezzin.followers)}</div>
+            <div className="mzd-hero__stat-label">متابع</div>
           </div>
         </div>
 
-        {/* Favorite button */}
         <button
           type="button"
           onClick={handleToggleFav}
-          style={{
-            display: "inline-flex", alignItems: "center", gap: "0.4rem",
-            padding: "0.45rem 1rem",
-            borderRadius: "999px",
-            border: `1.5px solid ${fav ? "#fca5a5" : "rgba(255,255,255,0.35)"}`,
-            background: fav ? "rgba(239,68,68,0.2)" : "rgba(255,255,255,0.1)",
-            color: "#fff",
-            fontSize: "0.82rem",
-            fontWeight: 600,
-            cursor: "pointer",
-            fontFamily: "inherit",
-          }}
+          className={`mzd-fav-btn${fav ? " is-fav" : ""}`}
         >
-          {fav ? "❤️ في المفضلة" : "🤍 أضف للمفضلة"}
+          <Heart size={15} strokeWidth={1.8} aria-hidden="true" /> {fav ? "في المفضلة" : "أضف للمفضلة"}
         </button>
       </div>
 
-      {/* Default muezzin status */}
-      {isDefault ? (
-        <div style={bannerStyle("#f0fdf4", "#065f46", "#bbf7d0")}>
-          ✓ هذا هو مؤذنك الافتراضي الحالي
+      {/* Default status banner */}
+      {(isDefault || saved) && (
+        <div className="mzd-banner">
+          ✓ {isDefault ? "هذا هو مؤذنك الافتراضي الحالي" : "تم تعيينه كمؤذن افتراضي بنجاح"}
         </div>
-      ) : saved ? (
-        <div style={bannerStyle("#f0fdf4", "#065f46", "#bbf7d0")}>
-          ✓ تم تعيينه كمؤذن افتراضي بنجاح
-        </div>
-      ) : null}
+      )}
 
       {/* Biography */}
-      <Section title="📖 نبذة">
-        <p style={{ fontSize: "0.875rem", color: "#374151", lineHeight: 1.7, margin: 0 }}>
-          {muezzin.biography}
-        </p>
+      <Section title={<><BookOpen size={16} strokeWidth={1.8} aria-hidden="true" /> نبذة</>}>
+        <p className="mzd-bio">{muezzin.biography}</p>
       </Section>
 
-      {/* Rating display + user rating */}
-      <Section title="⭐ التقييم">
-        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.875rem" }}>
+      {/* Rating */}
+      <Section title={<><Star size={16} strokeWidth={1.8} aria-hidden="true" /> التقييم</>}>
+        <div className="mzd-rating-row">
           <StarRating rating={muezzin.rating} />
-          <span style={{ fontSize: "1.5rem", fontWeight: 800, color: "#111827" }}>{muezzin.rating}</span>
-          <span style={{ fontSize: "0.8rem", color: "#6b7280" }}>
-            من أصل 5.0 · {formatNum(muezzin.totalRatings)} تقييم
-          </span>
+          <span className="mzd-rating-num">{muezzin.rating}</span>
+          <span className="mzd-rating-label">من أصل 5.0 · {formatNum(muezzin.totalRatings)} تقييم</span>
         </div>
 
-        {/* Interactive user rating */}
-        <div style={{ borderTop: "1px solid #f3f4f6", paddingTop: "0.75rem" }}>
-          <div style={{ fontSize: "0.78rem", color: "#374151", fontWeight: 600, marginBottom: "0.5rem" }}>
+        <div className="mzd-user-rating">
+          <div className="mzd-user-rating__label">
             {userRating > 0 ? "تقييمك:" : "قيّم هذا المؤذن:"}
           </div>
-          <div style={{ display: "flex", gap: "0.3rem" }}>
+          <div className="mzd-user-rating__stars">
             {[1, 2, 3, 4, 5].map((star) => (
               <button
                 key={star}
@@ -247,62 +215,41 @@ export default function MuezzinDetailPage() {
                 onMouseEnter={() => setHoverStar(star)}
                 onMouseLeave={() => setHoverStar(0)}
                 onClick={() => handleRate(star)}
-                style={{
-                  background: "none", border: "none", cursor: "pointer",
-                  fontSize: "1.6rem", padding: "0.1rem",
-                  color: star <= (hoverStar || userRating) ? "#f59e0b" : "#e5e7eb",
-                  transition: "color 0.1s",
-                }}
-                title={`${star} نجوم`}
+                className={`mzd-star-btn${star <= (hoverStar || userRating) ? " is-active" : ""}`}
+                aria-label={`تقييم ${star} من 5 نجوم`}
               >
                 ★
               </button>
             ))}
           </div>
-          {ratedFlash && (
-            <div style={{ fontSize: "0.75rem", color: "#065f46", fontWeight: 600, marginTop: "0.35rem" }}>
-              ✓ شكراً على تقييمك!
-            </div>
-          )}
+          {ratedFlash && <div className="mzd-flash">✓ شكراً على تقييمك!</div>}
         </div>
       </Section>
 
       {/* Tags */}
-      <Section title="🏷️ التصنيفات">
-        <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+      <Section title={<><Tag size={16} strokeWidth={1.8} aria-hidden="true" /> التصنيفات</>}>
+        <div className="mzd-tags">
           {muezzin.tags.map((tag) => (
-            <span key={tag} style={{
-              padding: "0.25rem 0.7rem",
-              borderRadius: "999px",
-              fontSize: "0.78rem",
-              fontWeight: 600,
-              background: "#f3f4f6",
-              color: "#374151",
-              border: "1px solid #e5e7eb",
-            }}>
-              {tag}
-            </span>
+            <span key={tag} className="mzd-tag">{tag}</span>
           ))}
         </div>
       </Section>
 
       {/* Audio player */}
-      <Section title="🎵 أذانات الفريضة الخمس">
-        <p style={{ fontSize: "0.75rem", color: "#6b7280", marginBottom: "0.875rem" }}>
+      <Section title={<><Music2 size={16} strokeWidth={1.8} aria-hidden="true" /> أذانات الفريضة الخمس</>}>
+        <p className="mzd-audio-hint">
           اضغط على أي وقت للاستماع · الأذانات بصوت {muezzin.name}
         </p>
 
-        {/* General adhan (plays for all prayers except fajr override) */}
         <AudioRow
           label="الأذان العام"
           sublabel="يُشغَّل للظهر والعصر والمغرب والعشاء"
           duration={muezzin.durationSec}
           isPlaying={playState.key === "general"}
           onPlay={() => handlePlay("general")}
-          icon="🕌"
+          icon={<Building2 size={18} strokeWidth={1.5} />}
         />
 
-        {/* Fajr — special version if available */}
         {muezzin.fajrUrl ? (
           <AudioRow
             label="أذان الفجر"
@@ -310,38 +257,30 @@ export default function MuezzinDetailPage() {
             duration={muezzin.durationSec + 15}
             isPlaying={playState.key === "fajr"}
             onPlay={() => handlePlay("fajr")}
-            icon="🌙"
+            icon={<Moon size={18} strokeWidth={1.5} />}
             highlight
           />
         ) : (
-          <div style={{
-            display: "flex", alignItems: "center", gap: "0.5rem",
-            padding: "0.75rem", borderRadius: "0.6rem",
-            background: "#fafafa", border: "1px solid #f3f4f6",
-            marginBottom: "0.4rem",
-          }}>
-            <span style={{ fontSize: "1rem" }}>🌙</span>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: "0.85rem", color: "#374151", fontWeight: 600 }}>أذان الفجر</div>
-              <div style={{ fontSize: "0.72rem", color: "#9ca3af" }}>يُستخدم الأذان العام للفجر لهذا المؤذن</div>
+          <div className="mzd-fajr-fallback">
+            <span className="mzd-fajr-fallback__icon" aria-hidden="true"><Moon size={20} strokeWidth={1.5} /></span>
+            <div className="mzd-fajr-fallback__info">
+              <div className="mzd-fajr-fallback__title">أذان الفجر</div>
+              <div className="mzd-fajr-fallback__subtitle">يُستخدم الأذان العام للفجر لهذا المؤذن</div>
             </div>
           </div>
         )}
 
-        {/* Per-prayer preview labels */}
-        <div style={{ marginTop: "0.5rem", padding: "0.75rem", borderRadius: "0.6rem", background: "#f8fafc", border: "1px solid #e5e7eb" }}>
-          <div style={{ fontSize: "0.75rem", color: "#6b7280", marginBottom: "0.5rem", fontWeight: 600 }}>
-            توزيع الأذانات على الصلوات:
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+        <div className="mzd-prayer-grid">
+          <div className="mzd-prayer-grid__title">توزيع الأذانات على الصلوات:</div>
+          <div className="mzd-prayer-rows">
             {PRAYER_KEYS.map((key) => (
-              <div key={key} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.8rem" }}>
-                <span>{PRAYER_ICON[key]}</span>
-                <span style={{ fontWeight: 600, color: "#374151", width: "3.5rem" }}>{PRAYER_ARABIC[key]}</span>
-                <span style={{ color: "#6b7280" }}>
+              <div key={key} className="mzd-prayer-row">
+                {(() => { const I = PRAYER_ICON_MAP[PRAYER_ICON[key]] ?? Moon; return <I size={16} />; })()}
+                <span className="mzd-prayer-row__name">{PRAYER_ARABIC[key]}</span>
+                <span className="mzd-prayer-row__type">
                   {key === "fajr" && muezzin.fajrUrl ? "أذان الفجر الخاص" : "الأذان العام"}
                 </span>
-                <span style={{ marginRight: "auto", color: "#9ca3af", fontSize: "0.72rem" }}>
+                <span className="mzd-prayer-row__duration">
                   {key === "fajr" && muezzin.fajrUrl
                     ? formatDuration(muezzin.durationSec + 15)
                     : formatDuration(muezzin.durationSec)}
@@ -354,73 +293,43 @@ export default function MuezzinDetailPage() {
 
       {/* Set as default */}
       {!isDefault && (
-        <button
-          type="button"
-          onClick={handleSetDefault}
-          style={{
-            width: "100%",
-            padding: "0.875rem",
-            borderRadius: "0.875rem",
-            border: "none",
-            background: "linear-gradient(135deg, #134a3a, #0c3020)",
-            color: "#fff",
-            fontSize: "0.9rem",
-            fontWeight: 700,
-            cursor: "pointer",
-            fontFamily: "inherit",
-            marginBottom: "0.75rem",
-          }}
-        >
-          🎙️ تعيين كمؤذن افتراضي
+        <button type="button" onClick={handleSetDefault} className="mzd-set-default-btn">
+          <Mic2 size={15} strokeWidth={1.8} aria-hidden="true" /> تعيين كمؤذن افتراضي
         </button>
       )}
 
       <Link href="/adhan-settings">
-        <button type="button" style={{
-          width: "100%",
-          padding: "0.75rem",
-          borderRadius: "0.875rem",
-          border: "1.5px solid #134a3a",
-          background: "transparent",
-          color: "#134a3a",
-          fontSize: "0.875rem",
-          fontWeight: 600,
-          cursor: "pointer",
-          fontFamily: "inherit",
-          marginBottom: "2rem",
-        }}>
-          ⚙️ إعدادات الأذان التفصيلية
+        <button type="button" className="mzd-settings-link">
+          <Cog size={15} strokeWidth={1.8} aria-hidden="true" /> إعدادات الأذان التفصيلية
         </button>
       </Link>
 
       {/* Related muezzins */}
       {related.length > 0 && (
-        <Section title="🎙️ قد يعجبك أيضاً">
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <Section title={<><Mic2 size={16} strokeWidth={1.8} aria-hidden="true" /> قد يعجبك أيضاً</>}>
+          <div className="mzd-related-list">
             {related.map((m) => (
               <Link key={m.id} href={`/muezzins/${m.id}`}>
-                <div style={{
-                  display: "flex", alignItems: "center", gap: "0.75rem",
-                  padding: "0.75rem 0.875rem",
-                  borderRadius: "0.75rem",
-                  border: "1.5px solid #f3f4f6",
-                  background: "#fff",
-                  cursor: "pointer",
-                }}>
-                  <span style={{ fontSize: "1.25rem" }}>🎙️</span>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "#111827" }}>{m.name}</div>
-                    <div style={{ fontSize: "0.72rem", color: "#9ca3af" }}>{m.origin} · {m.style}</div>
+                <div className="mzd-related-card">
+                  <span className="mzd-related-card__icon" aria-hidden="true"><Mic2 size={18} strokeWidth={1.5} /></span>
+                  <div className="mzd-related-card__info">
+                    <div className="mzd-related-card__name">{m.name}</div>
+                    <div className="mzd-related-card__meta">{m.origin} · {m.style}</div>
                   </div>
-                  <div style={{ fontSize: "0.8rem", color: "#f59e0b", fontWeight: 600 }}>
-                    ★ {m.rating}
-                  </div>
+                  <div className="mzd-related-card__rating"><Star size={12} fill="currentColor" strokeWidth={1.5} className="inline ml-0.5" /> {m.rating}</div>
                 </div>
               </Link>
             ))}
           </div>
         </Section>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title={`${muezzin.name} — مكتبة المؤذنين | المجلس العلمي`} url={`https://www.majlisilm.com/muezzins/${muezzin.id}`} />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />
+      </div>
     </div>
   );
 }
@@ -431,39 +340,22 @@ function AudioRow({ label, sublabel, duration, isPlaying, onPlay, icon, highligh
   duration: number;
   isPlaying: boolean;
   onPlay: () => void;
-  icon: string;
+  icon: React.ReactNode;
   highlight?: boolean;
 }) {
   return (
-    <div style={{
-      display: "flex", alignItems: "center", gap: "0.75rem",
-      padding: "0.75rem 0.875rem",
-      borderRadius: "0.75rem",
-      border: `1.5px solid ${highlight ? "#bbf7d0" : "#e5e7eb"}`,
-      background: highlight ? "#f0fdf4" : "#fafafa",
-      marginBottom: "0.5rem",
-    }}>
-      <span style={{ fontSize: "1.1rem" }}>{icon}</span>
-      <div style={{ flex: 1 }}>
-        <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "#111827" }}>{label}</div>
-        <div style={{ fontSize: "0.72rem", color: "#6b7280" }}>{sublabel}</div>
+    <div className={`mzd-audio-row${highlight ? " mzd-audio-row--highlight" : ""}`}>
+      <span className="mzd-audio-row__icon" aria-hidden="true">{icon}</span>
+      <div className="mzd-audio-row__info">
+        <div className="mzd-audio-row__title">{label}</div>
+        <div className="mzd-audio-row__subtitle">{sublabel}</div>
       </div>
-      <span style={{ fontSize: "0.72rem", color: "#9ca3af" }}>{formatDuration(duration)}</span>
+      <span className="mzd-audio-row__duration">{formatDuration(duration)}</span>
       <button
         type="button"
         onClick={onPlay}
-        style={{
-          width: 36, height: 36,
-          borderRadius: "50%",
-          border: "none",
-          background: isPlaying ? "#ef4444" : "#134a3a",
-          color: "#fff",
-          cursor: "pointer",
-          fontSize: "0.9rem",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          flexShrink: 0,
-        }}
-        title={isPlaying ? "إيقاف" : "استمع"}
+        className={`mzd-audio-row__play${isPlaying ? " is-playing" : ""}`}
+        aria-label={isPlaying ? "إيقاف التشغيل" : "استمع للأذان"}
       >
         {isPlaying ? "⏹" : "▶"}
       </button>
@@ -471,44 +363,11 @@ function AudioRow({ label, sublabel, duration, isPlaying, onPlay, icon, highligh
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({ title, children }: { title: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div style={{ marginBottom: "1.25rem" }}>
-      <h2 style={{ fontSize: "0.82rem", fontWeight: 700, color: "#374151", margin: "0 0 0.625rem", textTransform: "uppercase", letterSpacing: "0.04em" }}>
-        {title}
-      </h2>
-      <div style={{ background: "#fff", borderRadius: "0.875rem", border: "1px solid #e5e7eb", padding: "0.875rem 1rem" }}>
-        {children}
-      </div>
+    <div className="mzd-section">
+      <h2 className="mzd-section__title">{title}</h2>
+      <div className="mzd-section__body">{children}</div>
     </div>
   );
 }
-
-function bannerStyle(bg: string, color: string, border: string): React.CSSProperties {
-  return {
-    background: bg,
-    border: `1px solid ${border}`,
-    borderRadius: "0.6rem",
-    padding: "0.6rem 0.875rem",
-    marginBottom: "1rem",
-    fontSize: "0.82rem",
-    color,
-    fontWeight: 600,
-  };
-}
-
-const backBtnStyle: React.CSSProperties = {
-  display: "inline-flex",
-  alignItems: "center",
-  gap: "0.35rem",
-  marginBottom: "1rem",
-  padding: "0.4rem 0.875rem",
-  borderRadius: "0.5rem",
-  border: "1.5px solid #e5e7eb",
-  background: "#fff",
-  color: "#374151",
-  fontSize: "0.8rem",
-  fontWeight: 600,
-  cursor: "pointer",
-  fontFamily: "inherit",
-};

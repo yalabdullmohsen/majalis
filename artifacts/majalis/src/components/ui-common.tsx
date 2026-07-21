@@ -4,7 +4,7 @@ import { C } from "@/lib/theme";
 
 /** خط نص واحد بعرض قابل للتخصيص */
 export function SkeletonLine({ width = "100%", height = "0.75rem" }: { width?: string; height?: string }) {
-  return <div className="ds-skeleton" style={{ width, height }} aria-hidden="true" />;
+  return <div className="ds-skeleton ds-skeleton--line" style={{ "--sk-w": width, "--sk-h": height } as React.CSSProperties} aria-hidden="true" />;
 }
 
 /** بطاقة هيكلية: صورة + عنوان + سطرا نص */
@@ -47,7 +47,7 @@ export function SkeletonTable({ rows = 5, cols = 4 }: { rows?: number; cols?: nu
         {Array.from({ length: rows }).map((_, r) => (
           <div key={r} className="sk-table__row">
             {Array.from({ length: cols }).map((_, c) => (
-              <div key={c} className="ds-skeleton sk-table__cell" style={{ width: c === 0 ? "45%" : "15%" }} />
+              <div key={c} className={`ds-skeleton sk-table__cell${c === 0 ? " sk-table__cell--wide" : ""}`} />
             ))}
           </div>
         ))}
@@ -56,25 +56,59 @@ export function SkeletonTable({ rows = 5, cols = 4 }: { rows?: number; cols?: nu
   );
 }
 
-/** حالة تحميل صفحة كاملة — عمود من الأسطر الهيكلية */
+/** حالة تحميل صفحة تفصيلية — مقال أو محتوى مفرد */
 export function SkeletonPage() {
   return (
     <div role="status" aria-live="polite">
       <span className="sr-only">جارٍ التحميل…</span>
-      <div className="sk-page" aria-hidden="true">
+      <div className="sk-page sk-page--article" aria-hidden="true">
+        <div className="ds-skeleton sk-page__meta" />
         <div className="ds-skeleton sk-page__title" />
         <div className="ds-skeleton sk-page__subtitle" />
-        <div className="sk-card-grid">
-          {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
-        </div>
+        <div className="ds-skeleton sk-page__divider" />
+        {[95, 88, 93, 75, 82].map((w, i) => (
+          <div key={i} className="ds-skeleton sk-page__line"
+            style={{ "--sk-lw": `${w}%` } as React.CSSProperties}
+          />
+        ))}
+        <div className="ds-skeleton sk-page__line sk-page__line--section" />
+        {[90, 83, 96, 60].map((w, i) => (
+          <div key={i} className="ds-skeleton sk-page__line"
+            style={{ "--sk-lw": `${w}%` } as React.CSSProperties}
+          />
+        ))}
       </div>
     </div>
   );
 }
 
-export function PageHeader({ eyebrow, title, subtitle }: { eyebrow?: string; title: string; subtitle?: string }) {
+export function PageHeader({
+  eyebrow,
+  title,
+  subtitle,
+  showBack = true,
+}: {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  showBack?: boolean;
+}) {
   return (
     <header className="ds-page-header" dir="rtl">
+      {showBack && (
+        <button
+          type="button"
+          className="ds-page-back-btn"
+          onClick={() =>
+            window.history.length > 1
+              ? window.history.back()
+              : (window.location.href = "/")
+          }
+          aria-label="رجوع"
+        >
+          ← رجوع
+        </button>
+      )}
       {eyebrow && <p className="ds-page-header__eyebrow">{eyebrow}</p>}
       <h1 className="ds-page-header__title">{title}</h1>
       {subtitle && <p className="ds-page-header__subtitle">{subtitle}</p>}
@@ -88,10 +122,9 @@ export function Card({ children, className = "" }: { children: React.ReactNode; 
 
 export function Loading({ label = "جارٍ التحميل…" }: { label?: string } = {}) {
   return (
-    <div className="ds-empty" role="status" aria-live="polite" aria-label={label}
-      style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.875rem", padding: "2.5rem 1rem" }}>
+    <div className="ds-empty ds-loading-wrap" role="status" aria-live="polite" aria-label={label}>
       <IslamicLoaderInline />
-      <p style={{ fontSize: "0.85rem", color: "var(--v2-ink-3, #8A847E)", margin: 0 }}>{label}</p>
+      <p className="ds-loading-label">{label}</p>
     </div>
   );
 }
@@ -102,12 +135,10 @@ function IslamicLoaderInline() {
   const pts = star8Pts(cx, cx, size * 0.43, size * 0.22);
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true"
-      style={{ display: "block", animation: "ui-common-rotate 2s linear infinite", flexShrink: 0 }}>
-      <style>{`@keyframes ui-common-rotate{to{transform:rotate(360deg)}}
-        @media(prefers-reduced-motion:reduce){svg[aria-hidden]{animation:none!important}}`}</style>
-      <polygon points={pts} fill="none" stroke="var(--v2-green,#1F6F52)" strokeWidth="1.6"
+      className="ds-loader-svg">
+      <polygon points={pts} fill="none" stroke="var(--majalis-emerald,#173D35)" strokeWidth="1.6"
         strokeLinejoin="round" opacity="0.85" />
-      <circle cx={cx} cy={cx} r={size * 0.09} fill="var(--v2-green,#1F6F52)" opacity="0.6" />
+      <circle cx={cx} cy={cx} r={size * 0.09} fill="var(--majalis-emerald,#173D35)" opacity="0.6" />
     </svg>
   );
 }
@@ -123,7 +154,7 @@ function star8Pts(cx: number, cy: number, r1: number, r2: number) {
 export function ErrorState({ text, onRetry }: { text: string; onRetry?: () => void }) {
   return (
     <div className="ui-card ds-empty" role="alert">
-      <p style={{ color: "#b91c1c", marginBottom: onRetry ? "0.75rem" : 0 }}>{text}</p>
+      <p className={`ds-error-text${onRetry ? " ds-error-text--mb" : ""}`}>{text}</p>
       {onRetry && (
         <button type="button" className="ds-btn ds-btn--primary" onClick={onRetry}>
           إعادة المحاولة

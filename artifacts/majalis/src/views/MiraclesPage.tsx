@@ -1,66 +1,77 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import {
+  Bone, BookOpen, Bug, Clock, Cloud, Cog, Dna,
+  Droplets, Globe, Globe2, Leaf, Lightbulb, Microscope,
+  Mountain, ScrollText, Sparkles, Star, Stethoscope,
+  Telescope, Waves, Wind,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { useAuth } from "@/components/AuthProvider";
 import { getMiracles } from "@/lib/supabase";
-import { PageHeader, Chip } from "@/components/ui-common";
+import { Chip } from "@/components/ui-common";
 import { AsyncDataView } from "@/components/AsyncDataView";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { MIRACLE_CATEGORIES } from "@/lib/miracles-seed";
 import { safeLoadEffect } from "@/lib/safe-load";
 import { GeometricPattern } from "@/components/design/GeometricPattern";
+import { applyPageSeo } from "@/lib/seo";
+import { arabicMatchAny } from "@/lib/arabic-search";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { ShareButtons } from "@/components/ContentActions";
 
 const CATEGORIES = MIRACLE_CATEGORIES;
 const SOURCE_TYPES = ["الكل", "قرآن", "سنة"];
 
 type PatternType = "honeycomb" | "stars" | "waves" | "mountains" | "orbits" | "vines" | "metallic" | "circles";
 
-// نمط بصري مستوحى من موضوع كل فئة
 const CATEGORY_PATTERN: Record<string, PatternType> = {
-  "علم الأحياء":   "honeycomb",   // خلية النحل
-  "علم الفلك":     "orbits",      // مسارات كوكبية
-  "علم الأرض":     "mountains",   // طبقات صخرية
-  "الطب":          "circles",     // حلقات نمو
-  "الفيزياء":      "metallic",    // بنية بلورية
-  "علم البحار":    "waves",       // أمواج
-  "علم الأجنة":    "circles",     // أطوار متداخلة
-  "الرياضيات":     "stars",       // هندسة
-  "التاريخ":       "stars",       // نجوم إسلامية
-  "الإعجاز اللغوي": "vines",     // تشعبات لغوية
+  "الكون": "orbits", "الفلك": "orbits", "الجبال": "mountains",
+  "البحار": "waves", "الأجنة": "circles", "النبات": "honeycomb",
+  "الحيوان": "vines", "الطب": "circles", "المياه": "waves",
+  "الحديد": "metallic", "الرياح": "waves", "السحاب": "orbits",
+  "الحشرات": "honeycomb", "الأرض": "mountains", "الزمن": "stars",
+  "الضوء": "metallic", "الجلد": "circles", "العظام": "metallic",
+  "النجوم": "stars", "الدم": "circles",
 };
 
-// ألوان رأس البطاقة حسب الفئة
-const CATEGORY_PALETTE: Record<string, { bg: string; accent: string }> = {
-  "علم الأحياء":   { bg: "#064e3b", accent: "#34d399" },
-  "علم الفلك":     { bg: "#1e1b4b", accent: "#a5b4fc" },
-  "علم الأرض":     { bg: "#451a03", accent: "#fbbf24" },
-  "الطب":          { bg: "#500724", accent: "#f9a8d4" },
-  "الفيزياء":      { bg: "#0c4a6e", accent: "#7dd3fc" },
-  "علم البحار":    { bg: "#0c4a6e", accent: "#38bdf8" },
-  "علم الأجنة":    { bg: "#2e1065", accent: "#c4b5fd" },
-  "الرياضيات":     { bg: "#1c1917", accent: "#d6d3d1" },
-  "التاريخ":       { bg: "#422006", accent: "#fde68a" },
-  "الإعجاز اللغوي": { bg: "#14532d", accent: "#86efac" },
+const MK_CAT_MOD: Record<string, string> = {
+  "الكون": "mk-cat--alkawn", "الفلك": "mk-cat--alfalak",
+  "الجبال": "mk-cat--aljibaal", "البحار": "mk-cat--albihaar",
+  "الأجنة": "mk-cat--alajinna", "النبات": "mk-cat--alnabaat",
+  "الحيوان": "mk-cat--alhayawan", "الطب": "mk-cat--altib",
+  "المياه": "mk-cat--almiyaah", "الحديد": "mk-cat--alhadeed",
+  "الرياح": "mk-cat--alriyaah", "السحاب": "mk-cat--alsahaab",
+  "الحشرات": "mk-cat--alhasharat", "الأرض": "mk-cat--alarth",
+  "الزمن": "mk-cat--alzaman", "الضوء": "mk-cat--althaw",
+  "الجلد": "mk-cat--aljild", "العظام": "mk-cat--alithaam",
+  "النجوم": "mk-cat--alnujoom", "الدم": "mk-cat--aldam",
 };
 
-const CATEGORY_ICONS: Record<string, string> = {
-  "علم الأحياء": "🧬",
-  "علم الفلك": "🌌",
-  "علم الأرض": "🌍",
-  "الطب": "⚕️",
-  "الفيزياء": "⚛️",
-  "علم البحار": "🌊",
-  "علم الأجنة": "🔬",
-  "الرياضيات": "📐",
-  "التاريخ": "📜",
-  "الإعجاز اللغوي": "📖",
+const MK_CAT_ACCENT: Record<string, string> = {
+  "الكون": "#D6CFC0", "الفلك": "#D6CFC0", "الجبال": "#929995",
+  "البحار": "#D6CFC0", "الأجنة": "#929995", "النبات": "#929995",
+  "الحيوان": "#929995", "الطب": "#D6CFC0", "المياه": "#D6CFC0",
+  "الحديد": "#929995", "الرياح": "#D6CFC0", "السحاب": "#D6CFC0",
+  "الحشرات": "#929995", "الأرض": "#929995", "الزمن": "#D6CFC0",
+  "الضوء": "#d4e8a0", "الجلد": "#D6CFC0", "العظام": "#d4c8a0",
+  "النجوم": "#c8d4e8", "الدم": "#e8a0a0",
 };
 
-const SOURCE_COLORS: Record<string, string> = {
-  "قرآن": "#1a5c35",
-  "سنة":  "#78350f",
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  "الكون": Globe, "الفلك": Telescope, "الجبال": Mountain,
+  "البحار": Waves, "الأجنة": Microscope, "النبات": Leaf,
+  "الحيوان": Bug, "الطب": Stethoscope, "المياه": Droplets,
+  "الحديد": Cog, "الرياح": Wind, "السحاب": Cloud,
+  "الحشرات": Bug, "الأرض": Globe2, "الزمن": Clock,
+  "الضوء": Lightbulb, "الجلد": Dna, "العظام": Bone,
+  "النجوم": Star, "الدم": Droplets,
 };
 
-const DISCLAIMER =
-  "تنبيه: الملاحظات العلمية قد تتطور مع البحث، والقرآن لا يُبنى على نظريات غير مستقرة؛ نعرض ما يُستدل به للتفكر لا كحكم علمي نهائي.";
+const MK_SRC_MOD: Record<string, string> = {
+  "قرآن": "mk-src--quran",
+  "سنة":  "mk-src--sunna",
+};
 
 export default function MiraclesPage({
   initialItems,
@@ -76,23 +87,53 @@ export default function MiraclesPage({
   const [expanded, setExpanded] = useState<string | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
+  const [search, setSearch] = useState("");
+
+  // رابط `?cat=...` في JSON-LD أسفل هذه الصفحة نفسها كان يُتجاهَل كليًا:
+  // `category` تُهيَّأ دائماً بـ"الكل" بلا قراءة أي شيء من الرابط الفعلي —
+  // عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف بالفحص المباشر
+  // 2026-07-18.
+  useEffect(() => {
+    const cat = new URLSearchParams(window.location.search).get("cat");
+    if (cat) setCategory(cat);
+  }, []);
+
+  const displayed = useMemo(() => {
+    if (!search.trim()) return items;
+    return items.filter((i) => arabicMatchAny([i.title ?? "", i.body ?? "", i.category ?? "", i.scholarly_source ?? ""], search));
+  }, [items, search]);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/miracles",
+      title: "الإعجاز العلمي في القرآن والسنة | المجلس العلمي",
+      description: "موضوعات الإعجاز العلمي في القرآن الكريم والسنة النبوية، إعجاز طبي وكوني وعددي وبيولوجي موثّق بالأدلة العلمية.",
+      keywords: ["إعجاز علمي", "إعجاز قرآني", "معجزات", "علم وإسلام"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "أقسام الإعجاز العلمي",
+          description: "أقسام ومجالات الإعجاز العلمي في القرآن الكريم والسنة النبوية",
+          itemListElement: CATEGORIES.filter(c => c !== "الكل").map((cat, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: cat,
+            url: `https://www.majlisilm.com/miracles?cat=${encodeURIComponent(cat)}`,
+          })),
+        },
+      ],
+    });
+  }, []);
 
   useEffect(() => {
     if (initialItems && category === "الكل" && sourceType === "الكل" && reloadKey === 0) return;
-
     setError(null);
     return safeLoadEffect(
       setLoading,
-      () =>
-        getMiracles({
-          category: category === "الكل" ? undefined : category,
-          sourceType: sourceType === "الكل" ? undefined : sourceType,
-        }),
+      () => getMiracles({ category: category === "الكل" ? undefined : category, sourceType: sourceType === "الكل" ? undefined : sourceType }),
       ({ data }) => setItems(data ?? []),
-      (msg) => {
-        setError(msg);
-        setItems([]);
-      },
+      (msg) => { setError(msg); setItems([]); },
       { label: `miracles:${category}:${sourceType}:${reloadKey}` },
     );
   }, [category, sourceType, initialItems, reloadKey]);
@@ -115,57 +156,124 @@ export default function MiraclesPage({
   );
 
   return (
-    <div className="page-shell ds-page">
-      <PageHeader
-        eyebrow="علم وإيمان"
-        title="الإعجاز العلمي"
-        subtitle="مقالات موثّقة تربط الاكتشافات العلمية بالآيات القرآنية والأحاديث النبوية."
-      />
+    <div className="page-shell ds-page mk-page">
 
-      <p className="miracles-disclaimer">{DISCLAIMER}</p>
+      {/* ══ Hero ══ */}
+      <header className="mk-hero">
+        <div className="mk-hero__inner">
+          <p className="mk-hero__eyebrow">علم وإيمان</p>
+          <h1 className="mk-hero__title">الإعجاز العلمي</h1>
+          <p className="mk-hero__sub">
+            مقالات موثّقة تربط الاكتشافات العلمية بالآيات القرآنية والأحاديث النبوية
+          </p>
+          <p className="mk-hero__note">
+            ⚠️ الملاحظات العلمية قد تتطور مع البحث، نعرضها للتفكر لا كحكم نهائي
+          </p>
+        </div>
+      </header>
 
-      <div className="ds-section__head">
-        {isAdmin && <p className="ds-section__title" style={{ margin: 0 }}>{items.length} مقالة</p>}
-        <FilterToggle onClick={() => setFiltersOpen(true)} label="تصفية" />
+      {/* ══ فئات سريعة ══ */}
+      <section className="mk-cats-bar" aria-label="تصفية حسب الفئة">
+        <div className="mk-cats-bar__grid">
+          <button
+            type="button"
+            onClick={() => setCategory("الكل")}
+            className={`mk-cat-pill${category === "الكل" ? " mk-cat-pill--active" : ""}`}
+          >
+            <span>🔍</span>
+            <span>الكل</span>
+          </button>
+          {(CATEGORIES as readonly string[]).filter(c => c !== "الكل").map((c) => {
+            const PillIcon: LucideIcon = CATEGORY_ICONS[c] ?? Microscope;
+            return (
+              <button
+                key={c}
+                type="button"
+                onClick={() => setCategory(c)}
+                className={`mk-cat-pill${category === c ? " mk-cat-pill--active" : ""}`}
+              >
+                <PillIcon size={14} strokeWidth={2} aria-hidden="true" />
+                <span>{c}</span>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ══ مصدر + عدد ══ */}
+      <div className="mk-toolbar">
+        <div className="mk-src-tabs">
+          {SOURCE_TYPES.map((s) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => setSourceType(s)}
+              className={`mk-src-tab${sourceType === s ? " mk-src-tab--active" : ""}`}
+            >
+              {s === "قرآن" ? "📖 قرآن" : s === "سنة" ? "📜 سنة" : "الجميع"}
+            </button>
+          ))}
+        </div>
+        <div className="mk-toolbar__right">
+          {!loading && status === "success" && (
+            <span className="mk-count">{displayed.length} موضوع</span>
+          )}
+          <FilterToggle onClick={() => setFiltersOpen(true)} label="فلاتر" />
+        </div>
       </div>
 
+      {status === "success" && (
+        <div className="prefix-search-wrap">
+          <input
+            type="search"
+            className="ds-input prefix-search-input"
+            placeholder="ابحث في موضوعات الإعجاز..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            aria-label="بحث في الإعجاز العلمي"
+          />
+        </div>
+      )}
+
+      {/* ══ شبكة المحتوى ══ */}
       <AsyncDataView
         status={status}
         error={error}
         onRetry={() => setReloadKey((k) => k + 1)}
         emptyText="لا توجد بيانات حالياً"
       >
-        <div className="ds-grid">
-          {items.map((item: any) => {
-            const icon        = CATEGORY_ICONS[item.category] ?? "✨";
-            const borderColor = SOURCE_COLORS[item.source_type] ?? "#c9a84c";
-            const palette     = CATEGORY_PALETTE[item.category] ?? { bg: "#1a5c35", accent: "#86efac" };
-            const pattern     = CATEGORY_PATTERN[item.category] ?? "stars";
+        <div className="mk-grid">
+          {displayed.map((item: any) => {
+            const ItemIcon: LucideIcon = CATEGORY_ICONS[item.category] ?? Sparkles;
+            const catMod    = MK_CAT_MOD[item.category]    ?? "mk-cat--alkawn";
+            const catAccent = MK_CAT_ACCENT[item.category] ?? "#86efac";
+            const srcMod    = MK_SRC_MOD[item.source_type] ?? "mk-src--quran";
+            const pattern   = CATEGORY_PATTERN[item.category] ?? "stars";
             const isExpanded  = expanded === item.id;
             const bodyText: string = item.body ?? "";
-            const preview = bodyText.slice(0, 220);
+            const preview = bodyText.slice(0, 240);
             return (
-              <article
-                key={item.id}
-                className="miracle-item"
-                style={{ border: "1px solid var(--majalis-line)", borderRadius: "1rem", overflow: "hidden", background: "var(--majalis-panel)", display: "flex", flexDirection: "column" }}
-              >
-                {/* رأس ملوّن بنمط موضوعي */}
-                <div style={{ background: palette.bg, padding: "1rem", position: "relative", overflow: "hidden" }}>
-                  <GeometricPattern pattern={pattern} color={palette.accent} opacity={0.15} />
-                  <div style={{ position: "relative", display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                    <span style={{ fontSize: "1.8rem", lineHeight: 1, flexShrink: 0, filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.3))" }}>{icon}</span>
-                    <div style={{ flex: 1 }}>
-                      <p className="miracle-item__title" style={{ color: "#fff", marginBottom: "0.25rem" }}>{item.title}</p>
-                      <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+              <article key={item.id} className={`miracle-item mk-card ${catMod} ${srcMod}`}>
+                {/* رأس */}
+                <div className="miracle-item__head mk-card__head">
+                  <GeometricPattern pattern={pattern} color={catAccent} opacity={0.13} />
+                  <div className="miracle-item__head-row">
+                    <span className="miracle-item__icon" aria-hidden="true">
+                      <ItemIcon size={20} strokeWidth={1.5} />
+                    </span>
+                    <div className="miracle-item__head-info">
+                      <p className="miracle-item__title mk-card__title">{item.title}</p>
+                      <div className="miracle-item__badges">
                         {item.category && (
-                          <span style={{ padding: "0.15rem 0.6rem", borderRadius: "1rem", fontSize: "0.7rem", background: `${palette.accent}25`, color: palette.accent, fontWeight: 600, border: `1px solid ${palette.accent}40` }}>
-                            {item.category}
+                          <span className="miracle-item__cat-badge mk-badge">
+                            <ItemIcon size={11} strokeWidth={2} aria-hidden="true" /> {item.category}
                           </span>
                         )}
                         {item.source_type && (
-                          <span style={{ padding: "0.15rem 0.6rem", borderRadius: "1rem", fontSize: "0.7rem", background: "rgba(255,255,255,0.15)", color: "#fff", fontWeight: 600 }}>
-                            {item.source_type === "قرآن" ? "📖 قرآن" : "📚 سنة"}
+                          <span className="miracle-item__src-badge mk-src-badge">
+                            {item.source_type === "قرآن"
+                              ? <><BookOpen size={10} strokeWidth={2} aria-hidden="true" /> قرآن</>
+                              : <><ScrollText size={10} strokeWidth={2} aria-hidden="true" /> سنة</>}
                           </span>
                         )}
                       </div>
@@ -173,36 +281,40 @@ export default function MiraclesPage({
                   </div>
                 </div>
 
-                {/* المحتوى */}
-                <div style={{ padding: "1rem", flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                {/* محتوى */}
+                <div className="miracle-item__body-wrap mk-card__body">
                   {item.reference && (
-                    <p className="miracle-item__ref" style={{ fontFamily: "var(--font-quran)", fontSize: "1rem", color: borderColor, borderRight: `3px solid ${borderColor}`, paddingRight: "0.5rem", lineHeight: 1.8 }}>
-                      ﴾ {item.reference} ﴿
-                    </p>
+                    <p className="miracle-item__ref mk-card__ref">﴿ {item.reference} ﴾</p>
                   )}
                   {bodyText && (
                     <>
-                      <p className="miracle-item__body" style={{ fontSize: "0.875rem", lineHeight: 1.75, flex: 1 }}>
-                        {isExpanded ? bodyText : `${preview}${bodyText.length > 220 ? "..." : ""}`}
+                      <p className="miracle-item__body mk-card__text">
+                        {isExpanded ? bodyText : `${preview}${bodyText.length > 240 ? "…" : ""}`}
                       </p>
-                      {bodyText.length > 220 && (
+                      {bodyText.length > 240 && (
                         <button
                           type="button"
-                          className="miracle-item__toggle"
+                          className="mk-expand-btn"
                           onClick={() => setExpanded(isExpanded ? null : item.id)}
-                          style={{ color: "var(--majalis-emerald)", background: "none", border: "none", cursor: "pointer", fontSize: "0.82rem", fontWeight: 600, padding: "0.25rem 0", alignSelf: "flex-start" }}
                         >
-                          {isExpanded ? "▲ عرض أقل" : "▼ اقرأ المزيد"}
+                          {isExpanded ? "▲ طوِّ التفاصيل" : "▼ تفاصيل المعجزة"}
                         </button>
                       )}
                     </>
                   )}
                   {item.scholarly_source && (
-                    <p className="miracle-item__source" style={{ fontSize: "0.75rem", color: "var(--majalis-ink-soft)", marginTop: "auto", paddingTop: "0.5rem", borderTop: "1px solid var(--majalis-line)" }}>
-                      📚 {item.scholarly_source}
+                    <p className="miracle-item__source mk-card__source">
+                      <ScrollText size={12} strokeWidth={1.8} aria-hidden="true" /> {item.scholarly_source}
                     </p>
                   )}
                 </div>
+                <div className="mk-card__actions">
+                  <ShareButtons
+                    title={item.title}
+                    url={`https://www.majlisilm.com/miracles`}
+                  />
+                </div>
+                {isAdmin && <AdminQuickEdit section="miracles" searchTerm={item.title} />}
               </article>
             );
           })}
@@ -210,15 +322,17 @@ export default function MiraclesPage({
       </AsyncDataView>
 
       <aside className="ds-filters-panel ds-filters-panel--desktop">
-        <div className="ds-filters-panel__head">
-          <h2>تصفية المقالات</h2>
-        </div>
+        <div className="ds-filters-panel__head"><h2>تصفية المقالات</h2></div>
         {filterPanel}
       </aside>
 
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="تصفية المقالات">
         {filterPanel}
       </FilterBottomSheet>
+      {isAdmin && <AdminQuickEdit section="miracles" />}
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة والإعجاز" count={4} />
+      </div>
     </div>
   );
 }

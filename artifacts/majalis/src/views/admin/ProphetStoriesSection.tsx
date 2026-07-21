@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useAdminShell } from "./AdminShell";
+import { AlertTriangle, BookOpen, Save } from "lucide-react";
 
 type Citation = { surah: string; ayahs: string; note: string };
 
@@ -15,161 +16,6 @@ type ProphetStory = {
   approved_at: string | null;
   created_at: string;
 };
-
-const CSS = `
-.ps-wrap { direction: rtl; font-family: inherit; }
-.ps-header { margin-bottom: 1.5rem; }
-.ps-title { font-size: 1.375rem; font-weight: 700; color: #1e293b; margin: 0 0 0.25rem; }
-.ps-subtitle { font-size: 0.8125rem; color: #64748b; margin: 0; }
-.ps-stats { display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
-.ps-stat { background: #f1f5f9; border-radius: 0.5rem; padding: 0.5rem 0.9rem; font-size: 0.8125rem; }
-.ps-stat strong { color: #0f172a; }
-.ps-stat span { color: #64748b; margin-right: 0.25rem; }
-.ps-list { display: flex; flex-direction: column; gap: 1rem; }
-.ps-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 0.75rem; overflow: hidden; }
-.ps-card.approved { border-color: #bbf7d0; }
-.ps-card.editing { border-color: #93c5fd; }
-.ps-card-head {
-  display: flex; align-items: center; gap: 0.75rem;
-  padding: 0.875rem 1.1rem;
-  cursor: pointer;
-  background: #f8fafc;
-  border-bottom: 1px solid transparent;
-  transition: background 0.15s;
-}
-.ps-card.approved .ps-card-head { background: #f0fdf4; }
-.ps-card.editing .ps-card-head { background: #eff6ff; cursor: default; }
-.ps-card-head:hover { background: #f1f5f9; }
-.ps-card.approved .ps-card-head:hover { background: #dcfce7; }
-.ps-card.editing .ps-card-head:hover { background: #eff6ff; }
-.ps-name { font-size: 1.05rem; font-weight: 700; color: #1e293b; flex: 1; }
-.ps-badge {
-  font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem;
-  border-radius: 9999px; letter-spacing: 0.03em;
-}
-.ps-badge.pending { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
-.ps-badge.done { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-.ps-badge.edit-mode { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
-.ps-toggle { font-size: 0.8rem; color: #94a3b8; }
-.ps-body { padding: 1.1rem 1.25rem; border-top: 1px solid #e2e8f0; }
-.ps-citations-label {
-  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.06em; color: #64748b; margin-bottom: 0.6rem;
-}
-.ps-citations { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
-.ps-cit {
-  display: flex; align-items: flex-start; gap: 0.6rem;
-  background: #f8fafc; border: 1px solid #e2e8f0;
-  border-radius: 0.375rem; padding: 0.45rem 0.65rem;
-  font-size: 0.8125rem;
-}
-.ps-cit-ref { font-weight: 700; color: #0f172a; white-space: nowrap; }
-.ps-cit-note { color: #475569; }
-.ps-full-toggle {
-  background: none; border: 1px solid #cbd5e1; border-radius: 0.375rem;
-  padding: 0.35rem 0.75rem; font-size: 0.8rem; color: #475569;
-  cursor: pointer; font-family: inherit; margin-bottom: 0.75rem;
-  transition: border-color 0.15s;
-}
-.ps-full-toggle:hover { border-color: #94a3b8; color: #1e293b; }
-.ps-content {
-  background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.5rem;
-  padding: 1rem 1.1rem; font-size: 0.875rem; line-height: 1.7;
-  color: #334155; white-space: pre-wrap; margin-bottom: 0.9rem;
-  max-height: 400px; overflow-y: auto;
-}
-.ps-actions { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; }
-.ps-approve-btn {
-  background: #16a34a; color: #fff; border: none;
-  border-radius: 0.5rem; padding: 0.5rem 1.1rem;
-  font-size: 0.875rem; font-weight: 700; cursor: pointer;
-  font-family: inherit; transition: background 0.15s;
-}
-.ps-approve-btn:hover:not(:disabled) { background: #15803d; }
-.ps-approve-btn:disabled { background: #86efac; cursor: not-allowed; }
-.ps-revoke-btn {
-  background: none; color: #dc2626; border: 1px solid #fca5a5;
-  border-radius: 0.5rem; padding: 0.5rem 0.9rem;
-  font-size: 0.8125rem; cursor: pointer; font-family: inherit;
-  transition: background 0.15s;
-}
-.ps-revoke-btn:hover:not(:disabled) { background: #fee2e2; }
-.ps-revoke-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.ps-edit-btn {
-  background: none; color: #2563eb; border: 1px solid #93c5fd;
-  border-radius: 0.5rem; padding: 0.5rem 0.9rem;
-  font-size: 0.8125rem; cursor: pointer; font-family: inherit;
-  transition: background 0.15s;
-}
-.ps-edit-btn:hover:not(:disabled) { background: #dbeafe; }
-.ps-edit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.ps-approved-info { font-size: 0.8rem; color: #16a34a; }
-.ps-error { color: #dc2626; font-size: 0.8125rem; }
-.ps-loading { text-align: center; padding: 3rem; color: #64748b; }
-.ps-empty { text-align: center; padding: 3rem; color: #64748b; }
-.ps-warning {
-  background: #fffbeb; border: 1px solid #fde68a; border-radius: 0.5rem;
-  padding: 0.75rem 1rem; font-size: 0.8125rem; color: #78350f;
-  margin-bottom: 1.25rem; line-height: 1.6;
-}
-
-/* ── Edit Form ── */
-.ps-edit-form { display: flex; flex-direction: column; gap: 1.1rem; }
-.ps-edit-section-label {
-  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.06em; color: #64748b; margin-bottom: 0.5rem;
-}
-.ps-edit-cits { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.5rem; }
-.ps-edit-cit-row {
-  display: grid; grid-template-columns: 1fr 1fr 2fr auto;
-  gap: 0.4rem; align-items: center;
-}
-.ps-edit-input {
-  border: 1px solid #cbd5e1; border-radius: 0.375rem;
-  padding: 0.35rem 0.55rem; font-size: 0.8125rem;
-  font-family: inherit; color: #0f172a; background: #fff;
-  direction: rtl; width: 100%;
-}
-.ps-edit-input:focus { outline: none; border-color: #3b82f6; }
-.ps-edit-del-cit {
-  background: none; border: 1px solid #fca5a5; border-radius: 0.375rem;
-  color: #dc2626; cursor: pointer; padding: 0.3rem 0.55rem;
-  font-size: 0.8rem; font-family: inherit; white-space: nowrap;
-  flex-shrink: 0;
-}
-.ps-edit-del-cit:hover { background: #fee2e2; }
-.ps-add-cit-btn {
-  background: none; border: 1px dashed #93c5fd; border-radius: 0.375rem;
-  color: #2563eb; cursor: pointer; padding: 0.35rem 0.75rem;
-  font-size: 0.8125rem; font-family: inherit; width: 100%;
-  transition: background 0.15s;
-}
-.ps-add-cit-btn:hover { background: #dbeafe; }
-.ps-edit-textarea {
-  border: 1px solid #cbd5e1; border-radius: 0.5rem;
-  padding: 0.75rem 0.9rem; font-size: 0.875rem; line-height: 1.7;
-  font-family: inherit; color: #0f172a; background: #fff;
-  direction: rtl; resize: vertical; min-height: 320px; width: 100%;
-}
-.ps-edit-textarea:focus { outline: none; border-color: #3b82f6; }
-.ps-edit-actions { display: flex; gap: 0.6rem; align-items: center; }
-.ps-save-btn {
-  background: #2563eb; color: #fff; border: none;
-  border-radius: 0.5rem; padding: 0.5rem 1.2rem;
-  font-size: 0.875rem; font-weight: 700; cursor: pointer;
-  font-family: inherit; transition: background 0.15s;
-}
-.ps-save-btn:hover:not(:disabled) { background: #1d4ed8; }
-.ps-save-btn:disabled { background: #93c5fd; cursor: not-allowed; }
-.ps-cancel-btn {
-  background: none; color: #64748b; border: 1px solid #cbd5e1;
-  border-radius: 0.5rem; padding: 0.5rem 0.9rem;
-  font-size: 0.875rem; cursor: pointer; font-family: inherit;
-  transition: background 0.15s;
-}
-.ps-cancel-btn:hover { background: #f1f5f9; color: #1e293b; }
-.ps-edit-hint { font-size: 0.75rem; color: #94a3b8; }
-`;
 
 function CitationsList({ citations }: { citations: Citation[] }) {
   const list = citations ?? [];
@@ -268,7 +114,7 @@ function EditForm({
 
       <div className="ps-edit-actions">
         <button type="button" className="ps-save-btn" onClick={handleSave} disabled={saving}>
-          {saving ? "جاري الحفظ…" : "💾 حفظ التعديلات"}
+          {saving ? "جاري الحفظ…" : <><Save size={13} className="inline ml-1" aria-hidden="true" /> حفظ التعديلات</>}
         </button>
         <button type="button" className="ps-cancel-btn" onClick={onCancel} disabled={saving}>
           إلغاء
@@ -309,7 +155,15 @@ function StoryCard({
 
   return (
     <div className={`ps-card ${story.is_approved ? "approved" : ""} ${editing ? "editing" : ""}`}>
-      <div className="ps-card-head" onClick={handleHeadClick}>
+      <div
+        className="ps-card-head"
+        onClick={handleHeadClick}
+        role="button"
+        tabIndex={0}
+        aria-expanded={open}
+        aria-label={`${open ? "طي" : "توسيع"} ${story.arabic_name}`}
+        onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && handleHeadClick()}
+      >
         <span className="ps-name">{story.arabic_name}</span>
         {editing
           ? <span className="ps-badge edit-mode">✏ تعديل</span>
@@ -344,7 +198,7 @@ function StoryCard({
                 <span className="ps-approved-info">
                   ✓ معتمدة
                   {story.approved_at
-                    ? ` — ${new Date(story.approved_at).toLocaleDateString("ar-SA")}`
+                    ? `، ${new Date(story.approved_at).toLocaleDateString("ar-SA")}`
                     : ""}
                 </span>
                 <button type="button" className="ps-revoke-btn" onClick={handleRevoke} disabled={busy}>
@@ -444,24 +298,23 @@ export function ProphetStoriesSection() {
 
   return (
     <div className="ps-wrap">
-      <style>{CSS}</style>
 
       <div className="ps-header">
-        <h2 className="ps-title">📖 قصص الأنبياء — مراجعة الاعتماد</h2>
+        <h2 className="ps-title flex items-center gap-2"><BookOpen size={18} strokeWidth={1.6} aria-hidden="true" /> قصص الأنبياء، مراجعة الاعتماد</h2>
         <p className="ps-subtitle">
           كل قصة محفوظة كمسودة (is_approved = false) ولا تظهر للمستخدمين حتى تعتمدها يدوياً
         </p>
         <div className="ps-stats">
           <div className="ps-stat"><strong>{stories.length}</strong><span>إجمالي</span></div>
-          <div className="ps-stat"><strong style={{ color: "#16a34a" }}>{approved}</strong><span>معتمد</span></div>
-          <div className="ps-stat"><strong style={{ color: "#d97706" }}>{pending}</strong><span>ينتظر</span></div>
+          <div className="ps-stat"><strong className="text-approved">{approved}</strong><span>معتمد</span></div>
+          <div className="ps-stat"><strong className="text-forest">{pending}</strong><span>ينتظر</span></div>
         </div>
       </div>
 
       <div className="ps-warning">
-        ⚠️ <strong>تنبيه ديني:</strong> كل قصة مصدرها «قصص الأنبياء» لابن كثير والآيات القرآنية المذكورة.
+        <AlertTriangle size={13} className="inline ml-1" aria-hidden="true" /> <strong>تنبيه ديني:</strong> كل قصة مصدرها «قصص الأنبياء» لابن كثير والآيات القرآنية المذكورة.
         اقرأ الاستشهادات أولاً، ثم النص الكامل إن أردت، ثم اضغط «اعتماد» إذا اقتنعت بدقّتها.
-        لا تُنشر قصة واحدة تلقائياً — الاعتماد قرارك وحدك.
+        لا تُنشر قصة واحدة تلقائياً، الاعتماد قرارك وحدك.
       </div>
 
       {loading && <div className="ps-loading">جاري التحميل…</div>}

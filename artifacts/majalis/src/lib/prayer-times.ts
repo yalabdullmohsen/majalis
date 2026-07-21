@@ -9,12 +9,15 @@ export type KuwaitGovernorate = {
   lon: number;
 };
 
+// الإحداثيات مضبوطة على مراكز المحافظات الجغرافية الفعلية
+// المصدر: خرائط الكويت الرسمية + WGS84
+// الطريقة: Method 9 (Kuwait Ministry of Awqaf) — زاوية الفجر 18° / العشاء 17.5°
 export const KUWAIT_GOVERNORATES: KuwaitGovernorate[] = [
-  { id: "capital",   name: "العاصمة",        lat: 29.3759, lon: 47.9774 },
-  { id: "hawalli",   name: "حولي",            lat: 29.3241, lon: 48.0318 },
-  { id: "farwaniya", name: "الفروانية",       lat: 29.2786, lon: 47.9598 },
-  { id: "mubarak",   name: "مبارك الكبير",   lat: 29.2183, lon: 48.0796 },
-  { id: "jahra",     name: "الجهراء",         lat: 29.3375, lon: 47.6581 },
+  { id: "capital",   name: "العاصمة",        lat: 29.3697, lon: 47.9783 },
+  { id: "hawalli",   name: "حولي",            lat: 29.3339, lon: 48.0668 },
+  { id: "farwaniya", name: "الفروانية",       lat: 29.2800, lon: 47.9600 },
+  { id: "mubarak",   name: "مبارك الكبير",   lat: 29.2200, lon: 48.0800 },
+  { id: "jahra",     name: "الجهراء",         lat: 29.3418, lon: 47.6583 },
   { id: "ahmadi",    name: "الأحمدي",         lat: 29.0769, lon: 48.0838 },
 ];
 
@@ -142,17 +145,63 @@ function buildPayload(
   };
 }
 
-/** Approximate Kuwait prayer times when all network sources fail. */
-function staticPrayerFallback(cityName = "الكويت – محافظة العاصمة"): PrayerTimesPayload {
-  const timings: Record<string, string> = {
-    Fajr: "04:30",
-    Sunrise: "05:50",
-    Dhuhr: "11:45",
-    Asr: "15:10",
-    Maghrib: "17:35",
-    Isha: "19:00",
-  };
+function pad2(n: number) { return String(Math.floor(n)).padStart(2, "0"); }
+function toKuwaitTime(date: Date): string {
+  try {
+    const parts = new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Asia/Kuwait",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    }).formatToParts(date);
+    const h = parts.find((p) => p.type === "hour")?.value ?? "00";
+    const m = parts.find((p) => p.type === "minute")?.value ?? "00";
+    return `${h}:${m}`;
+  } catch {
+    const h = date.getUTCHours() + 3; // Kuwait UTC+3
+    const m = date.getUTCMinutes();
+    return `${pad2(h % 24)}:${pad2(m)}`;
+  }
+}
 
+async function computePrayerTimesLocal(
+  lat: number,
+  lon: number,
+  cityName: string,
+): Promise<PrayerTimesPayload> {
+  const { Coordinates, CalculationMethod, PrayerTimes, Madhab } = await import("adhan");
+  const coordinates = new Coordinates(lat, lon);
+  const params = CalculationMethod.Kuwait();
+  params.madhab = Madhab.Shafi;
+  const now = new Date();
+  const pt = new PrayerTimes(coordinates, now, params);
+  const timings: Record<string, string> = {
+    Fajr:    toKuwaitTime(pt.fajr),
+    Sunrise: toKuwaitTime(pt.sunrise),
+    Dhuhr:   toKuwaitTime(pt.dhuhr),
+    Asr:     toKuwaitTime(pt.asr),
+    Maghrib: toKuwaitTime(pt.maghrib),
+    Isha:    toKuwaitTime(pt.isha),
+  };
+  const readable = new Intl.DateTimeFormat("ar-KW", {
+    timeZone: "Asia/Kuwait",
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(now);
+  return {
+    ...buildPayload(timings, { timezone: "Asia/Kuwait" }, { readable }, cityName),
+    source: "حساب محلي (adhan-js، طريقة الكويت)",
+  };
+}
+
+function staticPrayerFallback(cityName = "الكويت – محافظة العاصمة"): PrayerTimesPayload {
+  const month = new Date().getMonth() + 1;
+  const isSummer = month >= 5 && month <= 9;
+  const timings: Record<string, string> = isSummer
+    ? { Fajr: "04:00", Sunrise: "05:30", Dhuhr: "12:05", Asr: "16:35", Maghrib: "19:10", Isha: "20:35" }
+    : { Fajr: "05:10", Sunrise: "06:30", Dhuhr: "12:00", Asr: "15:05", Maghrib: "17:25", Isha: "18:45" };
   const readable = new Intl.DateTimeFormat("ar-KW", {
     timeZone: "Asia/Kuwait",
     weekday: "long",
@@ -160,7 +209,6 @@ function staticPrayerFallback(cityName = "الكويت – محافظة العا
     month: "long",
     day: "numeric",
   }).format(new Date());
-
   return {
     ...buildPayload(timings, { timezone: "Asia/Kuwait" }, { readable }, cityName),
     source: "تقديري (بدون اتصال)",
@@ -174,9 +222,11 @@ async function fetchAlAdhanDirect(
   cityName: string,
 ): Promise<PrayerTimesPayload> {
   const dateParam = kuwaitDateParam();
+  // school=0: حساب العصر على مذهب الشافعية (ظل الشيء مساوٍ لطوله) — المعتمد لدى الأوقاف الكويتية
+  // timezonestring: صريح لمنع أي خطأ في التوقيت
   const url =
     `https://api.aladhan.com/v1/timings/${dateParam}` +
-    `?latitude=${lat}&longitude=${lon}&method=${KUWAIT_METHOD}`;
+    `?latitude=${lat}&longitude=${lon}&method=${KUWAIT_METHOD}&school=0&timezonestring=Asia%2FKuwait`;
 
   const response = await requestFetch(url, {
     headers: { Accept: "application/json" },
@@ -225,6 +275,14 @@ function formatRemaining(ms: number): string {
 
 export type PrayerCountdown = PrayerStatus & {
   remainingHms: string;
+  /** ثواني مضت منذ الأذان الأخير (خلال نافذة 30 دقيقة)، وإلا null */
+  sinceSeconds: number | null;
+  /** ثواني متبقية للصلاة التالية الفعلية أثناء فترة السماح، وإلا null */
+  graceNextSeconds: number | null;
+  /** HH:MM:SS للصلاة التالية الفعلية أثناء فترة السماح، وإلا null */
+  graceNextHms: string | null;
+  /** الصلاة الفعلية التالية (بعد التي أذّنت للتو) أثناء فترة السماح، وإلا null */
+  graceNextSlot: PrayerSlot | null;
 };
 
 function kuwaitNowParts(): { minutes: number; seconds: number } {
@@ -250,16 +308,43 @@ function formatHms(totalSeconds: number): string {
   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
+const PRAYER_GRACE_MINUTES = 30;
+
 export function computePrayerCountdown(prayers: PrayerSlot[]): PrayerCountdown {
   const status = computePrayerStatus(prayers);
   const now = kuwaitNowParts();
   let remainingSeconds = 0;
+  let sinceSeconds: number | null = null;
 
   if (status.next?.minutes != null) {
     if (status.next.minutes > now.minutes) {
       remainingSeconds = (status.next.minutes - now.minutes) * 60 - now.seconds;
+    } else if (now.minutes - status.next.minutes < PRAYER_GRACE_MINUTES) {
+      // فترة السماح: احسب كم مضى من الدقائق منذ الأذان
+      sinceSeconds = (now.minutes - status.next.minutes) * 60 + now.seconds;
+      remainingSeconds = 0;
     } else {
       remainingSeconds = ((24 * 60 - now.minutes) + status.next.minutes) * 60 - now.seconds;
+    }
+  }
+
+  // أثناء فترة السماح: احسب الوقت المتبقي للصلاة التالية الفعلية (بعد التي أذّنت)
+  let graceNextSeconds: number | null = null;
+  let graceNextSlot: PrayerSlot | null = null;
+  if (sinceSeconds != null && status.next?.minutes != null) {
+    const obligatorySlots = prayers.filter((p) => OBLIGATORY_KEYS.has(p.key) && p.minutes != null);
+    const ranIdx = obligatorySlots.findIndex((p) => p.key === status.next!.key);
+    if (ranIdx >= 0) {
+      const actualNext = obligatorySlots[(ranIdx + 1) % obligatorySlots.length];
+      if (actualNext?.minutes != null) {
+        graceNextSlot = actualNext;
+        const pm = actualNext.minutes;
+        if (pm > now.minutes) {
+          graceNextSeconds = (pm - now.minutes) * 60 - now.seconds;
+        } else {
+          graceNextSeconds = ((24 * 60 - now.minutes) + pm) * 60 - now.seconds;
+        }
+      }
     }
   }
 
@@ -268,6 +353,10 @@ export function computePrayerCountdown(prayers: PrayerSlot[]): PrayerCountdown {
     remainingMs: remainingSeconds * 1000,
     remainingLabel: formatHms(remainingSeconds),
     remainingHms: formatHms(remainingSeconds),
+    sinceSeconds,
+    graceNextSeconds,
+    graceNextHms: graceNextSeconds != null ? formatHms(graceNextSeconds) : null,
+    graceNextSlot,
   };
 }
 
@@ -280,10 +369,17 @@ export function computePrayerStatus(prayers: PrayerSlot[]): PrayerStatus {
   let next: PrayerSlot | null = null;
 
   for (const prayer of obligatory) {
-    if (prayer.minutes! <= nowMinutes) {
+    const elapsed = nowMinutes - prayer.minutes!;
+    if (elapsed >= PRAYER_GRACE_MINUTES) {
+      // مضى عليها 30 دقيقة أو أكثر — انتهى وقتها
       previous = prayer;
       current = prayer;
-    } else if (!next) {
+    } else if (elapsed >= 0) {
+      // بدأت منذ أقل من 30 دقيقة — فترة السماح: العداد يبقى عليها
+      next = prayer;
+      break;
+    } else {
+      // لم تحن بعد
       next = prayer;
       break;
     }
@@ -303,6 +399,8 @@ export function computePrayerStatus(prayers: PrayerSlot[]): PrayerStatus {
   if (next?.minutes != null) {
     if (next.minutes > nowMinutes) {
       remainingMs = (next.minutes - nowMinutes) * 60_000;
+    } else if (nowMinutes - next.minutes < PRAYER_GRACE_MINUTES) {
+      remainingMs = 0;
     } else {
       remainingMs = ((24 * 60 - nowMinutes) + next.minutes) * 60_000;
     }
@@ -373,6 +471,12 @@ export async function fetchPrayerTimes(governorateId?: string): Promise<PrayerTi
 
   try {
     return await fetchAlAdhanDirect(gov.lat, gov.lon, cityName);
+  } catch {
+    /* API فشل — استخدم الحساب المحلي بدون اتصال */
+  }
+
+  try {
+    return await computePrayerTimesLocal(gov.lat, gov.lon, cityName);
   } catch {
     return staticPrayerFallback(cityName);
   }

@@ -1,7 +1,7 @@
 import { GOVERNORATES } from "@/lib/theme";
 import { resolveLessonPosterUrl } from "@/lib/lesson-image";
 import { normalizeActivityType } from "@/lib/activity-label";
-import { arabicIncludes } from "@/lib/arabic-search";
+import { arabicIncludes, arabicMatchAny, normalizeArabic } from "@/lib/arabic-search";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { resolveGovernorateForUi, resolveRegion, displayGovernorate } from "@/lib/kuwait-regions";
 import { formatSheikhName, sheikhNameKey } from "@/lib/sheikh-name";
@@ -11,6 +11,7 @@ import {
   formatGregorianDate,
   formatHijriDate,
   formatRelativeTimeDetailed,
+  isLessonInProgress,
   isOccurrencePast,
 } from "@/lib/lesson-time";
 
@@ -97,7 +98,7 @@ export const ACTIVITY_TYPES = ["الكل", "درس", "دورة"] as const;
 export const CONTENT_KINDS = ["الكل", "دورة", "درس"] as const;
 
 function normalizeText(value: string) {
-  return String(value || "").trim().toLowerCase();
+  return normalizeArabic(String(value || "").trim());
 }
 
 function lessonDedupeKey(lesson: KuwaitLessonRecord) {
@@ -217,6 +218,25 @@ function isExpired(lesson: KuwaitLessonRecord): boolean {
   return false;
 }
 
+/**
+ * "محتوى فعلي مكتمل" لدرس/دورة في هذا المشروع = عنوان حقيقي + اسم شيخ/متحدث
+ * حقيقي + موعد أسبوعي كامل (يوم ووقت) — هذه الحقول الثلاثة هي التي تُبنى
+ * عليها بطاقة الدرس (العنوان والراوي) وحساب حالته (جارٍ الآن/الوقت المتبقي
+ * عبر isLessonInProgress/computeNextOccurrenceMs في lesson-time.ts، وترتيبه
+ * في القائمة عبر sortKuwaitLessons أدناه). صف يفتقد أيًا منها ليس "درسًا
+ * ناقص حقل واحد" بل بلا هوية أو جدول فعلي — يُعرض كبطاقة شبه فارغة أو
+ * يكسر حساب الوقت (NaN/دائمًا الآن). دروس بلا صورة/وصف/رابط بث تبقى دروسًا
+ * مكتملة تمامًا (هذه الحقول اختيارية بطبيعتها في KuwaitLessonRecord).
+ */
+export function isLessonComplete(lesson: KuwaitLessonRecord): boolean {
+  return Boolean(
+    lesson.title?.trim() &&
+    lesson.sheikhName?.trim() &&
+    lesson.day?.trim() &&
+    lesson.time?.trim(),
+  );
+}
+
 export function splitKuwaitLessons(lessons: KuwaitLessonRecord[]) {
   const active: KuwaitLessonRecord[] = [];
   const archived: KuwaitLessonRecord[] = [];
@@ -243,7 +263,14 @@ export function dedupeKuwaitLessons(lessons: KuwaitLessonRecord[]): KuwaitLesson
 }
 
 export function sortKuwaitLessons(lessons: KuwaitLessonRecord[]): KuwaitLessonRecord[] {
-  return [...lessons].sort((a, b) => {
+  const now = new Date();
+  const enriched = lessons.map((l) => {
+    const inProgress = isLessonInProgress(l.day, l.time, now);
+    // الدرس الجاري: nextOccurrenceMs = 0 → يظهر في أعلى القائمة
+    const nextMs = inProgress ? 0 : computeNextOccurrenceMs(l.day, l.time, now);
+    return { ...l, nextOccurrenceMs: nextMs };
+  });
+  return enriched.sort((a, b) => {
     if (a.nextOccurrenceMs !== b.nextOccurrenceMs) return a.nextOccurrenceMs - b.nextOccurrenceMs;
     const gov = a.governorate.localeCompare(b.governorate, "ar");
     if (gov !== 0) return gov;
@@ -352,7 +379,7 @@ export function buildSearchSuggestions(lessons: KuwaitLessonRecord[], query: str
   }
 
   return Array.from(pool)
-    .filter((item) => normalizeText(item).includes(q))
+    .filter((item) => arabicMatchAny([item], q))
     .sort((a, b) => a.localeCompare(b, "ar"))
     .slice(0, limit);
 }

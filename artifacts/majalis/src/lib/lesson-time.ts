@@ -26,17 +26,36 @@ const EN_WEEKDAY_TO_INDEX: Record<string, number> = {
 };
 
 /**
- * أوقات الصلاة الثابتة — قيم متوسطة للكويت (تُستخدم فقط عند غياب الوقت المحدد)
- * المستخدم يُدخل وقت الصلاة الفعلي أو النص ("بعد الفجر") فيُحوّل بدقة
+ * أوقات الصلاة الافتراضية — متوسطات سنوية دقيقة للكويت.
+ * تُستبدَل تلقائياً بالأوقات الفعلية من API عبر setPrayerTimesCache().
+ *
+ * ملاحظة: القيم القديمة (الفجر 4:15، العصر 15:30، المغرب 18:30) كانت قاصرة
+ * في الصيف — الصيف الكويتي يؤخّر العصر لـ16:35+ والمغرب لـ19:10+.
  */
 const PRAYER_TIME_MINUTES: Record<string, number> = {
-  الفجر:   4 * 60 + 15,   // 4:15 ص متوسط سنوي في الكويت
-  الشروق:  5 * 60 + 45,   // 5:45 ص
+  الفجر:   4 * 60 + 20,   // 4:20 ص متوسط سنوي
+  الشروق:  5 * 60 + 40,   // 5:40 ص
   الظهر:  12 * 60 +  5,   // 12:05 م
-  العصر:  15 * 60 + 30,   // 3:30 م
-  المغرب: 18 * 60 + 30,   // 6:30 م (يتغير موسمياً)
-  العشاء: 20 * 60,         // 8:00 م
+  العصر:  16 * 60 +  5,   // 4:05 م (متوسط حنفي+شافعي سنوي في الكويت)
+  المغرب: 18 * 60 + 45,   // 6:45 م (متوسط سنوي)
+  العشاء: 20 * 60 + 10,   // 8:10 م (متوسط سنوي)
 };
+
+/**
+ * كاش الأوقات الفعلية من API — يُحدَّث عند جلب مواقيت الصلاة.
+ * المفاتيح: "الفجر" | "الشروق" | "الظهر" | "العصر" | "المغرب" | "العشاء"
+ */
+let _livePrayerCache: Record<string, number> | null = null;
+
+/** يُستدعى من مكون مواقيت الصلاة عند نجاح الجلب */
+export function setPrayerTimesCache(times: Record<string, number>): void {
+  _livePrayerCache = { ...times };
+}
+
+/** يُعيد وقت الصلاة: من الكاش الحي أولاً، ثم الافتراضي */
+function effectivePrayerMinutes(key: string): number {
+  return _livePrayerCache?.[key] ?? PRAYER_TIME_MINUTES[key];
+}
 
 export type KuwaitClock = {
   year:    number;
@@ -122,14 +141,14 @@ export function getKuwaitClock(date = new Date()): KuwaitClock {
   };
 }
 
-// جذور أسماء الصلوات للمطابقة مع/بدون "ال"
-const PRAYER_ROOTS: Array<[RegExp, number]> = [
-  [/فجر/u,   PRAYER_TIME_MINUTES.الفجر],
-  [/شروق/u,  PRAYER_TIME_MINUTES.الشروق],
-  [/ظهر/u,   PRAYER_TIME_MINUTES.الظهر],
-  [/عصر/u,   PRAYER_TIME_MINUTES.العصر],
-  [/مغرب/u,  PRAYER_TIME_MINUTES.المغرب],
-  [/عشاء/u,  PRAYER_TIME_MINUTES.العشاء],
+// ترتيب مطابقة الصلوات — يُقرأ وقتها من effectivePrayerMinutes (كاش حي أولاً)
+const PRAYER_ROOT_KEYS: Array<[RegExp, string]> = [
+  [/فجر/u,   "الفجر"],
+  [/شروق/u,  "الشروق"],
+  [/ظهر/u,   "الظهر"],
+  [/عصر/u,   "العصر"],
+  [/مغرب/u,  "المغرب"],
+  [/عشاء/u,  "العشاء"],
 ];
 
 /** تحويل الأرقام العربية-الهندية (٠-٩) إلى لاتينية. */
@@ -169,9 +188,10 @@ export function parseTimeToMinutes(timeRaw: string): number | null {
     return Math.max(0, Math.min(23, hour)) * 60;
   }
 
-  // أسماء الصلوات
-  for (const [root, baseMinutes] of PRAYER_ROOTS) {
+  // أسماء الصلوات — يستخدم الأوقات الفعلية من API إن وُجدت
+  for (const [root, prayerKey] of PRAYER_ROOT_KEYS) {
     if (root.test(time)) {
+      const baseMinutes = effectivePrayerMinutes(prayerKey);
       if (/بعد/u.test(time)) return baseMinutes + 20;
       if (/قبل/u.test(time)) return Math.max(0, baseMinutes - 60);
       return baseMinutes;
@@ -201,22 +221,50 @@ function kuwaitDateAt(dayOffset: number, minutes: number, base = new Date()): Da
  * 2. إذا كان الدرس اليوم ووقته مرّ (ولو بدقيقة) → الأسبوع القادم (درس أسبوعي متكرر).
  * 3. إذا كان الدرس في يوم آخر → أقرب تكرار له.
  */
+/**
+ * تُحلِّل اسم اليوم بأي صيغة وتُعيد رقمه (0=أحد … 6=سبت)، أو null إذا لم تُعرف.
+ * تدعم: أسماء عربية كاملة، أسماء إنجليزية، أرقام، همزات متنوعة، بادئة "يوم ".
+ */
+function resolveDayIndex(day: string): number | null {
+  const d = day.trim();
+  // عربي مباشر
+  if (DAY_INDEX[d] != null) return DAY_INDEX[d];
+  // إنجليزي
+  if (EN_WEEKDAY_TO_INDEX[d] != null) return EN_WEEKDAY_TO_INDEX[d];
+  // رقم صحيح 0-6
+  const num = Number(d);
+  if (Number.isInteger(num) && num >= 0 && num <= 6) return num;
+  // إزالة بادئة "يوم " ثم إعادة المحاولة
+  const stripped = d.replace(/^يوم\s+/u, "");
+  if (DAY_INDEX[stripped] != null) return DAY_INDEX[stripped];
+  // تطبيع الهمزات (إ/أ → ا) ثم إعادة المحاولة — يعالج "الإثنين" و"الأحد"
+  const normalized = stripped.replace(/[إأ]/gu, "ا");
+  if (DAY_INDEX[normalized] != null) return DAY_INDEX[normalized];
+  // بحث جزئي: أول مطابقة للاسم العربي داخل النص
+  for (const [name, idx] of Object.entries(DAY_INDEX)) {
+    if (d.includes(name)) return idx;
+  }
+  return null;
+}
+
 export function computeNextOccurrenceMs(day: string, time: string, now = new Date()): number {
-  // دعم الأيام المتعددة المفصولة بـ ، — يُعاد أقرب تكرار قادم
-  if (day.includes("،")) {
-    const days = day.split("،").map(d => d.trim()).filter(Boolean);
-    const occurrences = days.map(d => computeNextOccurrenceMs(d, time, now));
-    return Math.min(...occurrences);
+  // دعم الأيام المتعددة: مفصولة بـ ، أو / أو " و " — يُعاد أقرب تكرار قادم
+  if (/[،/]/.test(day) || / و /.test(day)) {
+    const days = day.split(/[،/]| و /).map(d => d.trim()).filter(Boolean);
+    if (days.length > 1) {
+      const occurrences = days.map(d => computeNextOccurrenceMs(d, time, now));
+      return Math.min(...occurrences);
+    }
   }
 
-  const targetDay = DAY_INDEX[day];
+  const targetDay = resolveDayIndex(day);
   if (targetDay == null) {
     // يوم غير معروف → إعادة قيمة بعيدة
     return now.getTime() + 365 * 24 * 60 * 60_000;
   }
 
   const clock        = getKuwaitClock(now);
-  const timeMinutes  = parseTimeToMinutes(time) ?? PRAYER_TIME_MINUTES.المغرب;
+  const timeMinutes  = parseTimeToMinutes(time) ?? effectivePrayerMinutes("المغرب");
   const nowMinutes   = clock.hour * 60 + clock.minute;
 
   let daysUntil = (targetDay - clock.weekday + 7) % 7;
@@ -243,16 +291,43 @@ export function isLessonToday(nextOccurrenceMs: number, now = new Date()): boole
 }
 
 /**
+ * هل يوم الدرس هو يوم اليوم الحالي في الكويت؟
+ * تعيد true لكل دروس يوم اليوم — سواء مرّ وقتها أم لا.
+ * تُستخدَم لإبراز دروس اليوم كاملةً في الواجهة.
+ */
+export function isLessonThisDay(day: string, now = new Date()): boolean {
+  const target = resolveDayIndex(day);
+  if (target == null) return false;
+  return target === getKuwaitClock(now).weekday;
+}
+
+/**
  * هل مرّ وقت الدرس اليوم؟
- * يُستخدم لإخفاء الدروس المنتهية من قسم "دروس اليوم".
  */
 export function isLessonTimePassedToday(day: string, time: string, now = new Date()): boolean {
-  const targetDay = DAY_INDEX[day];
+  const targetDay = resolveDayIndex(day);
   if (targetDay == null) return false;
   const clock       = getKuwaitClock(now);
   const timeMinutes = parseTimeToMinutes(time) ?? PRAYER_TIME_MINUTES.المغرب;
   const nowMinutes  = clock.hour * 60 + clock.minute;
   return targetDay === clock.weekday && nowMinutes >= timeMinutes;
+}
+
+/** مدة الدرس الافتراضية (دقيقة) — نافذة "الآن" */
+const LESSON_DURATION_MIN = 90;
+
+/**
+ * هل الدرس قائم الآن (بدأ ولم تنته نافذته الافتراضية البالغة 90 دقيقة)؟
+ */
+export function isLessonInProgress(day: string, time: string, now = new Date()): boolean {
+  const targetDay = resolveDayIndex(day);
+  if (targetDay == null) return false;
+  const clock       = getKuwaitClock(now);
+  if (clock.weekday !== targetDay) return false;
+  const timeMinutes = parseTimeToMinutes(time);
+  if (timeMinutes == null) return false;
+  const nowMinutes  = clock.hour * 60 + clock.minute;
+  return nowMinutes >= timeMinutes && nowMinutes < timeMinutes + LESSON_DURATION_MIN;
 }
 
 export function formatGregorianDate(date: Date): string {
@@ -307,13 +382,12 @@ export function formatRelativeTime(targetMs: number, now = Date.now()): string {
     if (minutes <= 10)      return `بعد ${minutes} دقائق`;
     return                  `بعد ${minutes} دقيقة`;
   }
-  if (minutes < 90)         return "بعد أقل من ساعة";
-
   const hours = Math.floor(minutes / 60);
+  const remMin = minutes % 60;
   if (hours < 24) {
-    if (hours === 1)        return "بعد ساعة";
-    if (hours === 2)        return "بعد ساعتين";
-    return                  `بعد ${hours} ساعات`;
+    const hStr = hours === 1 ? "ساعة" : hours === 2 ? "ساعتين" : `${hours} ساعات`;
+    if (remMin === 0) return `بعد ${hStr}`;
+    return `بعد ${hStr} و${remMin} دقيقة`;
   }
 
   const days = Math.floor(minutes / (24 * 60));
@@ -344,7 +418,7 @@ export function formatRelativeTimeDetailed(targetMs: number, time: string, now =
 
 export function isOccurrencePast(day: string, time: string, recurring = true, now = new Date()): boolean {
   if (!day) return false;
-  const targetDay   = DAY_INDEX[day];
+  const targetDay   = resolveDayIndex(day);
   if (targetDay == null) return false;
   const clock       = getKuwaitClock(now);
   const timeMinutes = parseTimeToMinutes(time) ?? PRAYER_TIME_MINUTES.المغرب;

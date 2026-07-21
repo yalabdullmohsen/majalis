@@ -1,9 +1,15 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
+import { Pencil, Trash2 } from "lucide-react";
+import { AdminQuickEdit } from "@/components/AdminQuickEdit";
+import { ShareButtons } from "@/components/ContentActions";
 import { useLocation } from "wouter";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { PageHeader } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { useAuth } from "@/components/AuthProvider";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
+import { computeNextOccurrenceMs, isLessonInProgress } from "@/lib/lesson-time";
+import { supabase } from "@/lib/supabase";
 import {
   DEFAULT_KUWAIT_FILTERS,
   buildSearchSuggestions,
@@ -18,15 +24,23 @@ import { RequestManager } from "@/lib/request-manager";
 import { regionsForGovernorate } from "@/lib/kuwait-regions";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
+import { applyPageSeo } from "@/lib/seo";
 
-type TabId = "all" | "men" | "women" | "courses";
+type TabId = "all" | "men" | "women" | "courses" | "makkah" | "madinah";
 
 const TAB_LABELS: Record<TabId, string> = {
   all: "الكل",
   men: "الدروس الرجالية",
   women: "الدروس النسائية",
   courses: "دورات",
+  makkah: "الحرم المكي",
+  madinah: "المسجد النبوي",
 };
+
+// لا توجد بيانات دروس فعلية من الحرمين الشريفين في مصدر البيانات الحالي
+// (دروس كويتية محليًا) — نُبقي التبويبين ظاهرين ونُعلمِ المستخدم صراحةً بدل
+// عرضهما فارغين بلا تفسير.
+const TAB_COMING_SOON: Partial<Record<TabId, boolean>> = { makkah: true, madinah: true };
 
 function useTabFromUrl(): [TabId, (tab: TabId) => void] {
   const [, setLocation] = useLocation();
@@ -54,7 +68,7 @@ function readTabFromUrl(): TabId {
   if (typeof window === "undefined") return "all";
   const params = new URLSearchParams(window.location.search);
   const value = params.get("tab");
-  if (value === "courses" || value === "men" || value === "women") return value;
+  if (value === "courses" || value === "men" || value === "women" || value === "makkah" || value === "madinah") return value;
   return "all";
 }
 
@@ -62,6 +76,12 @@ function filterByTab(lessons: KuwaitLessonRecord[], tab: TabId): KuwaitLessonRec
   if (tab === "courses") return lessons.filter((l) => l.isCourse || l.activityType === "دورة");
   if (tab === "men") return lessons.filter((l) => !l.hasWomenSection);
   if (tab === "women") return lessons.filter((l) => l.hasWomenSection);
+  if (tab === "makkah") return lessons.filter((l) =>
+    /مك[ةه]|الحرم المك|المسجد الحرام|البيت الحرام/u.test(l.mosque || "")
+  );
+  if (tab === "madinah") return lessons.filter((l) =>
+    /المدين[ةه]|المسجد النبوي|الحرم النبوي/u.test(l.mosque || "")
+  );
   return lessons;
 }
 
@@ -103,11 +123,16 @@ function LessonsFilterPanel({
           onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
           placeholder="ابحث: عنوان، شيخ، مسجد..."
           aria-label="بحث في الدروس"
+          role="combobox"
+          aria-expanded={showSuggestions && suggestions.length > 0}
+          aria-autocomplete="list"
+          aria-controls="lessons-search-listbox"
+          aria-haspopup="listbox"
         />
         {showSuggestions && suggestions.length > 0 && (
-          <ul className="lessons-search-suggestions" role="listbox">
+          <ul id="lessons-search-listbox" className="lessons-search-suggestions" role="listbox" aria-label="اقتراحات البحث">
             {suggestions.map((item) => (
-              <li key={item}>
+              <li key={item} role="option" aria-selected={false}>
                 <button type="button" onMouseDown={() => setFilter("search", item)}>
                   {item}
                 </button>
@@ -189,6 +214,7 @@ function LessonsFilterPanel({
           </select>
         </label>
       </div>
+      <AdminQuickEdit section="lessons" />
     </div>
   );
 }
@@ -210,7 +236,46 @@ export default function LessonsPage({
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [myReg, setMyReg] = useState<string[]>([]);
   const [tab, setTab] = useTabFromUrl();
-  const { user, isLoggedIn, isAdmin } = useAuth() as any;
+  const [, navigateTo] = useLocation();
+  const { user, isLoggedIn, isAdmin } = useAuth();
+
+  // رابط وارد بـ`?search=...` (من rulings-relations.ts، يُعرَض في بطاقات
+  // "مواد ذات صلة" بصفحات الأحكام الشرعية) كان يُتجاهَل كليًا: `filters`
+  // يُهيَّأ دائماً بـDEFAULT_KUWAIT_FILTERS بلا قراءة أي شيء غير `tab` من
+  // الرابط الفعلي — عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف
+  // بالفحص المباشر 2026-07-18.
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("search");
+    if (q) setFilters((prev) => ({ ...prev, search: q }));
+  }, []);
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/lessons",
+      title: "الدروس الشرعية والعلمية | المجلس العلمي",
+      description: "دروس شرعية وعلمية من أئمة وعلماء الكويت والعالم، فقه وعقيدة وقرآن وسيرة ولغة عربية.",
+      keywords: ["دروس شرعية", "دروس دينية", "دروس علمية", "علماء الكويت", "حلقات علمية"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "الدروس الشرعية والدورات العلمية",
+          description: "دروس ودورات علمية من أئمة وعلماء الكويت في الفقه والعقيدة والقرآن والسيرة",
+          numberOfItems: 8,
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "الدروس الشرعية", url: "https://www.majlisilm.com/lessons?tab=lessons" },
+            { "@type": "ListItem", position: 2, name: "الدورات العلمية", url: "https://www.majlisilm.com/lessons?tab=courses" },
+            { "@type": "ListItem", position: 3, name: "الفقه وأصوله", url: "https://www.majlisilm.com/lessons?topic=فقه" },
+            { "@type": "ListItem", position: 4, name: "العقيدة الإسلامية", url: "https://www.majlisilm.com/lessons?topic=عقيدة" },
+            { "@type": "ListItem", position: 5, name: "علوم القرآن والتفسير", url: "https://www.majlisilm.com/lessons?topic=قرآن" },
+            { "@type": "ListItem", position: 6, name: "السيرة النبوية", url: "https://www.majlisilm.com/lessons?topic=سيرة" },
+            { "@type": "ListItem", position: 7, name: "الحديث الشريف", url: "https://www.majlisilm.com/lessons?topic=حديث" },
+            { "@type": "ListItem", position: 8, name: "اللغة العربية", url: "https://www.majlisilm.com/lessons?topic=لغة" },
+          ],
+        },
+      ],
+    });
+  }, []);
 
   useEffect(() => {
     if (initialActive) return;
@@ -235,17 +300,14 @@ export default function LessonsPage({
     }
   }, [isLoggedIn, user]);
 
-  const tabLessons = useMemo(() => filterByTab(activeLessons, tab), [activeLessons, tab]);
+  useEffect(() => {
+    if (!filtersOpen) return;
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") setFiltersOpen(false); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [filtersOpen]);
 
-  const tabCounts = useMemo(
-    () => ({
-      all: activeLessons.length,
-      men: filterByTab(activeLessons, "men").length,
-      women: filterByTab(activeLessons, "women").length,
-      courses: filterByTab(activeLessons, "courses").length,
-    }),
-    [activeLessons],
-  );
+  const tabLessons = useMemo(() => filterByTab(activeLessons, tab), [activeLessons, tab]);
 
   const options = useMemo(() => extractFilterOptions(tabLessons), [tabLessons]);
 
@@ -281,9 +343,15 @@ export default function LessonsPage({
 
   const featuredSections = useMemo(() => {
     const sorted = sortKuwaitLessons(tabLessons);
+    const now    = Date.now();
+    const THRESHOLD_MS = 36 * 60 * 60 * 1000; // 36 ساعة
 
-    // كل قسم يستبعد ما ظهر في الأقسام السابقة
-    const upcoming = sorted.slice(0, 4);
+    // "الأقرب موعدًا": فقط الدروس الجارية الآن أو التي تبدأ خلال 36 ساعة
+    const upcoming = sorted.filter((l) =>
+      isLessonInProgress(l.day, l.time) ||
+      computeNextOccurrenceMs(l.day, l.time) - now <= THRESHOLD_MS
+    ).slice(0, 4);
+
     const upcomingIds = new Set(upcoming.map((l) => l.id));
 
     const popular = [...tabLessons]
@@ -300,7 +368,7 @@ export default function LessonsPage({
     return { upcoming, popular, featured };
   }, [tabLessons]);
 
-  // الدروس المعروضة في الأقسام المميزة — لاستبعادها من القائمة الرئيسية
+  // الدروس المعروضة في الأقسام المميزة، لاستبعادها من القائمة الرئيسية
   const featuredIds = useMemo(() => {
     const showFeatured = !filters.search && filters.governorate === "كل المحافظات";
     if (!showFeatured) return new Set<string>();
@@ -327,8 +395,26 @@ export default function LessonsPage({
     });
   };
 
+  const activeFilterCount = useMemo(() => {
+    let n = 0;
+    if (filters.search.trim()) n++;
+    if (filters.governorate !== DEFAULT_KUWAIT_FILTERS.governorate) n++;
+    if (filters.region !== DEFAULT_KUWAIT_FILTERS.region) n++;
+    if (filters.mosque !== DEFAULT_KUWAIT_FILTERS.mosque) n++;
+    if (filters.sheikh !== DEFAULT_KUWAIT_FILTERS.sheikh) n++;
+    if (filters.day !== DEFAULT_KUWAIT_FILTERS.day) n++;
+    if (filters.category !== DEFAULT_KUWAIT_FILTERS.category) n++;
+    if (filters.timeSlot !== DEFAULT_KUWAIT_FILTERS.timeSlot) n++;
+    if (filters.activityType !== DEFAULT_KUWAIT_FILTERS.activityType) n++;
+    if (filters.hasLiveStream !== DEFAULT_KUWAIT_FILTERS.hasLiveStream) n++;
+    return n;
+  }, [filters]);
+
   const toggleReg = async (lessonId: string) => {
-    if (!isLoggedIn) return alert("يرجى تسجيل الدخول أولاً");
+    if (!isLoggedIn || !user) {
+      navigateTo(`/login?next=${encodeURIComponent(window.location.pathname)}`);
+      return;
+    }
     try {
       if (myReg.includes(lessonId)) {
         await unregisterFromLesson(user.id, lessonId);
@@ -342,26 +428,95 @@ export default function LessonsPage({
     }
   };
 
+  const handleAdminDelete = useCallback(async (lessonId: string) => {
+    if (!isAdmin) return;
+    if (!window.confirm("هل أنت متأكد من حذف هذا الدرس؟")) return;
+    try {
+      const { error } = await supabase.from("lessons").delete().eq("id", lessonId);
+      if (error) throw error;
+      setActiveLessons((prev) => prev.filter((l) => l.id !== lessonId));
+      setArchivedLessons((prev) => prev.filter((l) => l.id !== lessonId));
+    } catch (err) {
+      alert(`فشل الحذف: ${(err as Error)?.message || err}`);
+    }
+  }, [isAdmin]);
+
   const renderGrid = (lessons: KuwaitLessonRecord[], prefix = "") => (
     <div className="page-card-grid lesson-unified-grid">
       {lessons.map((lesson) => (
-        <UnifiedLessonCard
-          key={`${prefix}${lesson.id}`}
-          lesson={fromKuwaitLesson(lesson, prefix.startsWith("archived"))}
-          showRegister={isLoggedIn && !lesson.id.startsWith("kw-")}
-          registered={myReg.includes(lesson.id)}
-          onToggleRegister={() => toggleReg(lesson.id)}
-        />
+        <div key={`${prefix}${lesson.id}`} className={isAdmin ? "lesson-card-admin-wrap" : ""}>
+          <UnifiedLessonCard
+            lesson={fromKuwaitLesson(lesson, prefix.startsWith("archived"))}
+            showRegister={isLoggedIn && !lesson.id.startsWith("kw-")}
+            registered={myReg.includes(lesson.id)}
+            onToggleRegister={() => toggleReg(lesson.id)}
+          />
+          {isAdmin && (
+            <div className="lesson-admin-toolbar">
+              <a
+                href={`/admin?edit=${lesson.id}`}
+                className="lesson-admin-btn lesson-admin-btn--edit"
+                aria-label="تعديل"
+              >
+                <Pencil size={13} strokeWidth={1.4} aria-hidden="true" />
+                تعديل
+              </a>
+              {!lesson.id.startsWith("kw-") && (
+                <button
+                  type="button"
+                  className="lesson-admin-btn lesson-admin-btn--delete"
+                  aria-label="حذف"
+                  onClick={() => handleAdminDelete(lesson.id)}
+                >
+                  <Trash2 size={13} strokeWidth={1.4} aria-hidden="true" />
+                  حذف
+                </button>
+              )}
+            </div>
+          )}
+        </div>
       ))}
     </div>
   );
 
   return (
     <div className="page-shell lessons-page-v2 ds-page">
+      {/* نمط هندسي إسلامي، أطباق نجمية كلاسيكية */}
+      <div className="lessons-geo-banner" aria-hidden="true">
+        <svg className="lessons-geo-banner__pattern" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+          <defs>
+            {/* نمط الأطباق النجمية الثمانية مع الموصلات الهندسية */}
+            <pattern id="girih-8star" x="0" y="0" width="112" height="112" patternUnits="userSpaceOnUse">
+              <g fill="none" stroke="currentColor" strokeWidth="0.75">
+                {/* نجمة ثمانية مركزية */}
+                <polygon points="56,34 60.4,45.6 72,41.2 67.6,52.8 79.2,57.2 67.6,61.6 72,73.2 60.4,68.8 56,80.4 51.6,68.8 40,73.2 44.4,61.6 32.8,57.2 44.4,52.8 40,41.2 51.6,45.6" opacity="0.65"/>
+                {/* مثمن داخلي */}
+                <polygon points="56,42 62.5,47.5 68,47.5 70,54 68,60.5 62.5,66 56,68 49.5,66 44,60.5 42,54 44,47.5 49.5,42" opacity="0.35"/>
+                {/* نجوم ربعية في الزوايا */}
+                <polygon points="0,0 5.6,11.2 17.2,6.8 11.6,18.4 23.2,22.8 11.6,27.2 17.2,38.8 5.6,34.4 0,45.6 -5.6,34.4 -17.2,38.8 -11.6,27.2 -23.2,22.8 -11.6,18.4 -17.2,6.8 -5.6,11.2" opacity="0.55"/>
+                <polygon points="112,0 117.6,11.2 129.2,6.8 123.6,18.4 135.2,22.8 123.6,27.2 129.2,38.8 117.6,34.4 112,45.6 106.4,34.4 94.8,38.8 100.4,27.2 88.8,22.8 100.4,18.4 94.8,6.8 106.4,11.2" opacity="0.55"/>
+                <polygon points="0,112 5.6,123.2 17.2,118.8 11.6,130.4 23.2,134.8 11.6,139.2 17.2,150.8 5.6,146.4 0,157.6 -5.6,146.4 -17.2,150.8 -11.6,139.2 -23.2,134.8 -11.6,130.4 -17.2,118.8 -5.6,123.2" opacity="0.55"/>
+                <polygon points="112,112 117.6,123.2 129.2,118.8 123.6,130.4 135.2,134.8 123.6,139.2 129.2,150.8 117.6,146.4 112,157.6 106.4,146.4 94.8,150.8 100.4,139.2 88.8,134.8 100.4,130.4 94.8,118.8 106.4,123.2" opacity="0.55"/>
+                {/* خطوط الوصل الهندسية */}
+                <line x1="56" y1="34" x2="56" y2="0" opacity="0.2"/>
+                <line x1="56" y1="80.4" x2="56" y2="112" opacity="0.2"/>
+                <line x1="32.8" y1="57.2" x2="0" y2="57.2" opacity="0.2"/>
+                <line x1="79.2" y1="57.2" x2="112" y2="57.2" opacity="0.2"/>
+                {/* موصلات قطرية */}
+                <line x1="40" y1="41.2" x2="17.2" y2="18.4" opacity="0.15"/>
+                <line x1="72" y1="41.2" x2="94.8" y2="18.4" opacity="0.15"/>
+                <line x1="40" y1="73.2" x2="17.2" y2="96" opacity="0.15"/>
+                <line x1="72" y1="73.2" x2="94.8" y2="96" opacity="0.15"/>
+              </g>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#girih-8star)"/>
+        </svg>
+      </div>
       <PageHeader
         eyebrow="المجلس العلمي"
         title="الدروس"
-        subtitle="جميع الدروس والدورات العلمية — مرتّبة حسب أقرب موعد."
+        subtitle="جميع الدروس والدورات العلمية، مرتّبة حسب أقرب موعد."
       />
 
       <div className="lessons-v2-toolbar">
@@ -375,19 +530,45 @@ export default function LessonsPage({
               className={`kuwait-tab${tab === tabId ? " kuwait-tab--active" : ""}`}
               onClick={() => setTab(tabId)}
             >
-              {TAB_LABELS[tabId]} ({tabCounts[tabId]})
+              {TAB_LABELS[tabId]}
+              {TAB_COMING_SOON[tabId] && <span className="kuwait-tab__soon">قريبًا</span>}
             </button>
           ))}
         </div>
-        <button
-          type="button"
-          className="lessons-v2-filter-toggle"
-          onClick={() => setFiltersOpen(true)}
-          aria-label="فتح التصفية"
-        >
-          تصفية وبحث
-        </button>
+        <div className="lessons-v2-toolbar-actions">
+          {activeFilterCount > 0 && (
+            <button
+              type="button"
+              className="lessons-v2-clear-btn"
+              onClick={() => setFilters(DEFAULT_KUWAIT_FILTERS)}
+              aria-label="مسح جميع الفلاتر"
+            >
+              مسح ✕
+            </button>
+          )}
+          <button
+            type="button"
+            className={`lessons-v2-filter-toggle${activeFilterCount > 0 ? " lessons-v2-filter-toggle--active" : ""}`}
+            onClick={() => setFiltersOpen(true)}
+            aria-label="فتح التصفية"
+          >
+            تصفية وبحث
+            {activeFilterCount > 0 && (
+              <span className="lessons-v2-filter-badge" aria-label={`${activeFilterCount} فلتر نشط`}>
+                {activeFilterCount}
+              </span>
+            )}
+          </button>
+        </div>
       </div>
+
+      {activeFilterCount > 0 && !loading && (
+        <p className="lessons-v2-result-count" aria-live="polite">
+          {filtered.length === 0
+            ? "لا توجد نتائج مطابقة"
+            : `${filtered.length} ${filtered.length === 1 ? "نتيجة" : "نتائج"} مطابقة`}
+        </p>
+      )}
 
       <div className="lessons-v2-layout">
         <main className="lessons-v2-main">
@@ -401,13 +582,19 @@ export default function LessonsPage({
             <>
               {!filters.search && filters.governorate === "كل المحافظات" && (
                 <>
-                  <section className="lessons-v2-section">
-                    <h2 className="lessons-v2-section__title">الأقرب موعدًا</h2>
-                    {renderGrid(featuredSections.upcoming)}
-                  </section>
+                  {featuredSections.upcoming.length > 0 && (
+                    <section className="lessons-v2-section">
+                      <h2 className="lessons-v2-section__title">
+                        {featuredSections.upcoming.some(l => isLessonInProgress(l.day, l.time))
+                          ? "جارٍ الآن"
+                          : "الأقرب موعدًا"}
+                      </h2>
+                      {renderGrid(featuredSections.upcoming)}
+                    </section>
+                  )}
                   {featuredSections.featured.length > 0 && (
                     <section className="lessons-v2-section">
-                      <h2 className="lessons-v2-section__title">المميز — بث مباشر</h2>
+                      <h2 className="lessons-v2-section__title">المميز: بث مباشر</h2>
                       {renderGrid(featuredSections.featured, "feat-")}
                     </section>
                   )}
@@ -424,7 +611,11 @@ export default function LessonsPage({
                   {isAdmin && ` (${filtered.filter((l) => !featuredIds.has(l.id)).length})`}
                 </h2>
                 {filtered.filter((l) => !featuredIds.has(l.id)).length === 0 ? (
-                  <p className="lessons-empty-state">لا توجد {TAB_LABELS[tab]} مطابقة حاليًا.</p>
+                  <p className="lessons-empty-state">
+                    {TAB_COMING_SOON[tab]
+                      ? `دروس ${TAB_LABELS[tab]} قادمة قريبًا بإذن الله — نعمل على إضافتها.`
+                      : `لا توجد ${TAB_LABELS[tab]} مطابقة حاليًا.`}
+                  </p>
                 ) : (
                   renderGrid(filtered.filter((l) => !featuredIds.has(l.id)))
                 )}
@@ -462,6 +653,8 @@ export default function LessonsPage({
       </div>
 
       {filtersOpen && (
+        // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار بديل
+        // كامل بلوحة المفاتيح.
         <div className="lessons-v2-sheet-backdrop" onClick={() => setFiltersOpen(false)} role="presentation">
           <div className="lessons-v2-sheet" onClick={(e) => e.stopPropagation()}>
             <LessonsFilterPanel
@@ -478,6 +671,12 @@ export default function LessonsPage({
         </div>
       )}
 
+      <div className="twh-share">
+        <ShareButtons aria-label="الدروس العلمية — المجلس العلمي" url="https://www.majlisilm.com/lessons" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId={["hadith", "fiqh"]} aria-label="اختبر معلوماتك في الدروس الشرعية" count={4} />
+      </div>
     </div>
   );
 }

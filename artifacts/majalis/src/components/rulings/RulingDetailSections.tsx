@@ -3,6 +3,7 @@ import type { RulingRelationLink } from "@/lib/rulings-types";
 import { RELATION_TYPE_LABELS } from "@/lib/rulings-relations";
 import { Link } from "wouter";
 import FavoriteButton from "@/components/FavoriteButton";
+import { AdminInlineEdit } from "@/components/AdminInlineEdit";
 
 type Props = {
   ruling: ShariaRulingExtended;
@@ -27,6 +28,12 @@ export function RulingDetailSections({ ruling, relations }: Props) {
         <button type="button" className="ui-card-btn" onClick={share}>
           مشاركة
         </button>
+        <AdminInlineEdit
+          contentType="ruling"
+          contentId={ruling.id}
+          initialData={{ title: ruling.title, category: ruling.category, subcategory: ruling.subcategory, content: ruling.body, evidence: ruling.evidence }}
+          className="ui-card-btn"
+        />
         <button type="button" className="ui-card-btn" onClick={copyLink}>
           نسخ الرابط
         </button>

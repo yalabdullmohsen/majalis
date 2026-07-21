@@ -1,18 +1,16 @@
-"use client";
-
+import { useEffect } from "react";
 import { Link } from "wouter";
+import { applyPageSeo } from "@/lib/seo";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { useAuth } from "@/components/AuthProvider";
 import { useFontPreference } from "@/components/FontPreferenceProvider";
-import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { useUserPreferences } from "@/components/UserPreferencesProvider";
-import { FONT_OPTIONS, type FontPreference } from "@/lib/font-preference";
-import { THEME_OPTIONS, type ThemePreference } from "@/lib/theme-preference";
 import { clearQuranCache } from "@/lib/quran-api";
 import { DEFAULT_PREFERENCES, type UserPreferences } from "@/lib/user-preferences";
 import { useQuranPreferences, type QuranFontId } from "@/hooks/useQuranPreferences";
 import { PushPrompt } from "@/components/PushPrompt";
 import { useLanguage } from "@/components/LanguageProvider";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 function ToggleRow({
   label,
@@ -38,9 +36,18 @@ function ToggleRow({
 
 export default function SettingsPage() {
   const { user, isLoggedIn, logout } = useAuth();
-  const { lang, setLang, t } = useLanguage();
-  const { preference: fontPreference, setPreference: setFontPreference } = useFontPreference();
-  const { preference: themePreference, resolvedTheme, setPreference: setThemePreference } = useThemePreference();
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/settings",
+      title: "الإعدادات | المجلس العلمي",
+      description: "إعدادات حساب المجلس العلمي، اللغة والخط والوضع الليلي وتفضيلات الأذان.",
+      keywords: ["إعدادات", "المجلس العلمي", "تفضيلات"],
+      robots: "noindex, follow",
+    });
+  }, []);
+  const { t } = useLanguage();
+  const { preference: fontPreference } = useFontPreference();
   const { preferences, updatePreferences } = useUserPreferences();
   const { prefs: quranPrefs, setPref: setQuranPref, bumpFont } = useQuranPreferences();
 
@@ -71,27 +78,20 @@ export default function SettingsPage() {
               <Link href="/register" className="page-action-btn page-action-btn--secondary">{t("settings_register")}</Link>
             </>
           )}
-          <button type="button" className="settings-danger-btn" disabled>
-            {t("settings_delete_account")}
-          </button>
+          {isLoggedIn && (
+            <Link href="/account-deletion" className="settings-danger-btn settings-danger-btn--link">
+              {t("settings_delete_account")}
+            </Link>
+          )}
         </div>
       </LegalSection>
 
       <LegalSection title={t("settings_interface")}>
-        <div className="settings-option-grid" role="group" aria-label="اختيار الوضع">
-          {THEME_OPTIONS.map((option) => (
-            <button
-              key={option.id}
-              type="button"
-              className={`settings-choice${themePreference === option.id ? " is-active" : ""}`}
-              onClick={() => setThemePreference(option.id as ThemePreference)}
-            >
-              <strong>{option.label}</strong>
-              <span>{option.description}</span>
-            </button>
-          ))}
+        {/* محوّل اللغة */}
+        <div className="settings-field settings-field--lang">
+          <span>{t("settings_language")}</span>
+          <LanguageSwitcher />
         </div>
-        <p className="settings-note">{t("settings_current_mode")}: {resolvedTheme === "dark" ? t("settings_dark") : t("settings_light")}</p>
         <label className="settings-field">
           <span>{t("settings_font_size")}</span>
           <select name="interface-font-size" value={preferences.fontSize} onChange={(e) => update("fontSize", e.target.value as UserPreferences["fontSize"])}>
@@ -100,33 +100,9 @@ export default function SettingsPage() {
             <option>كبير</option>
           </select>
         </label>
-        <label className="settings-field">
-          <span>{t("settings_language")}</span>
-          <select
-            name="interface-language"
-            value={lang}
-            onChange={(e) => setLang(e.target.value as "ar" | "en")}
-          >
-            <option value="ar">العربية</option>
-            <option value="en">English</option>
-          </select>
-        </label>
       </LegalSection>
 
       <LegalSection title={t("settings_reading")}>
-        <div className="settings-option-grid" role="group" aria-label={t("settings_reading")}>
-          {FONT_OPTIONS.map((option) => (
-            <button
-              key={option.id}
-              type="button"
-              className={`settings-choice${fontPreference === option.id ? " is-active" : ""}`}
-              onClick={() => setFontPreference(option.id as FontPreference)}
-            >
-              <strong>{option.label}</strong>
-              <span>{option.description}</span>
-            </button>
-          ))}
-        </div>
         <label className="settings-field">
           <span>{t("settings_reading_size")}</span>
           <input
@@ -214,9 +190,16 @@ export default function SettingsPage() {
 
       <LegalSection title={t("settings_privacy")}>
         <p>{t("settings_privacy_desc")}</p>
+        <div className="settings-legal-links">
+          <Link href="/privacy" className="settings-legal-link">سياسة الخصوصية</Link>
+          <Link href="/terms" className="settings-legal-link">الشروط والأحكام</Link>
+          {isLoggedIn && (
+            <Link href="/account-deletion" className="settings-legal-link settings-legal-link--danger">حذف الحساب نهائياً</Link>
+          )}
+        </div>
         <div className="settings-actions">
           <button type="button" className="ui-card-btn" onClick={() => {
-            const blob = new Blob([JSON.stringify({ preferences, fontPreference, themePreference }, null, 2)], { type: "application/json" });
+            const blob = new Blob([JSON.stringify({ preferences, fontPreference }, null, 2)], { type: "application/json" });
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;

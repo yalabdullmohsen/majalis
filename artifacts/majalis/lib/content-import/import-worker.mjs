@@ -7,8 +7,9 @@ import { jobLog } from "./import-jobs.mjs";
 
 const WORKER_SECRET = process.env.IMPORT_WORKER_SECRET || process.env.CRON_SECRET || "";
 
+// BUG-004 fix: sync processing for very small jobs only — everything else goes through cron queue
 /** Rows at or below this count are processed synchronously in the commit handler. */
-export const IMPORT_SYNC_ROW_THRESHOLD = Number(process.env.IMPORT_SYNC_ROW_THRESHOLD) || 5000;
+export const IMPORT_SYNC_ROW_THRESHOLD = Number(process.env.IMPORT_SYNC_ROW_THRESHOLD) || 50;
 
 /**
  * Schedule import processing after HTTP response (Vercel waitUntil).

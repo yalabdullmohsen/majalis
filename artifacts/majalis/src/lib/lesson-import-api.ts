@@ -67,7 +67,7 @@ async function safeApiCall(
     };
   }
 
-  let body: AnthropicErrorBody & LessonImportResponse;
+  let body!: AnthropicErrorBody & LessonImportResponse;
   try {
     body = await res.json();
   } catch {

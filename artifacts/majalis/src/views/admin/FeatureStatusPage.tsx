@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
+import { Ban, CheckCircle2, XCircle } from "lucide-react";
 import { Link } from "wouter";
-import { Loading } from "@/components/ui-common";
+import { SkeletonCardGrid } from "@/components/ui-common";
 import { adminFetch } from "@/lib/admin-api";
 import registry from "../../../data/feature-registry.json";
 
@@ -146,7 +147,7 @@ export default function FeatureStatusPage() {
       <header className="admin-feature-status__head ui-card">
         <div>
           <p className="admin-feature-status__eyebrow">Production Activation</p>
-          <h1>حالة المنصة — Platform Health</h1>
+          <h1>حالة المنصة، Platform Health</h1>
           <p className="admin-feature-status__intro">
             Release Gate يعتمد على فحوصات حقيقية: جداول DB، Secrets، APIs، Cron، MKE، والأتمتة.
           </p>
@@ -185,7 +186,7 @@ export default function FeatureStatusPage() {
       )}
 
       {loading && !health ? (
-        <Loading />
+        <SkeletonCardGrid count={6} />
       ) : (
         <>
           <section className="ui-card admin-feature-status__bootstrap">
@@ -202,7 +203,7 @@ export default function FeatureStatusPage() {
                 const ok = health?.bootstrap?.[key] === true;
                 return (
                   <div key={key} className={`admin-bootstrap-flag${ok ? " admin-bootstrap-flag--ok" : ""}`}>
-                    <strong>{ok ? "✅" : "⛔"}</strong>
+                    {ok ? <CheckCircle2 size={15} className="text-green-600" /> : <Ban size={15} className="text-red-500" />}
                     <span>{label}</span>
                   </div>
                 );
@@ -219,7 +220,7 @@ export default function FeatureStatusPage() {
                 <ul>
                   {(health.bootstrap?.ownerActions || health.bootstrapDetail?.ownerActions || []).map((a) => (
                     <li key={a.secret}>
-                      <code>{a.secret}</code> — {a.hint}
+                      <code>{a.secret}</code>، {a.hint}
                       <br />
                       <small>{a.addTo}</small>
                     </li>
@@ -228,7 +229,7 @@ export default function FeatureStatusPage() {
               </div>
             ) : null}
             {health?.bootstrapDetail?.migrationStatus && (
-              <p style={{ fontSize: "0.8125rem", color: "var(--ds-ink-soft)" }}>
+              <p className="fsp-meta-note">
                 Migrations: {health.bootstrapDetail.migrationStatus.appliedCount} applied,{" "}
                 {health.bootstrapDetail.migrationStatus.pendingCount} pending
               </p>
@@ -236,16 +237,16 @@ export default function FeatureStatusPage() {
           </section>
 
           <section className="ui-card admin-feature-status__deploy">
-            <h2>Release Gate — {health?.ok ? "✅ Operational" : "⛔ BLOCKED"}</h2>
+            <h2>Release Gate، {health?.ok ? <><CheckCircle2 size={16} className="inline text-green-600 ml-1" />Operational</> : <><Ban size={16} className="inline text-red-500 ml-1" />BLOCKED</>}</h2>
             {health?.at && <p>آخر فحص: {health.at}</p>}
             {health?.blockers?.length ? (
               <ul>
                 {health.blockers.map((b) => (
-                  <li key={b}>⛔ {b}</li>
+                  <li key={b}><Ban size={13} className="inline text-red-500 ml-1" />{b}</li>
                 ))}
               </ul>
             ) : (
-              <p>لا توجد عوائق — جميع الفحوصات الأساسية ناجحة.</p>
+              <p>لا توجد عوائق، جميع الفحوصات الأساسية ناجحة.</p>
             )}
           </section>
 
@@ -267,17 +268,17 @@ export default function FeatureStatusPage() {
             <section className="ui-card admin-feature-status__deploy">
               <h2>Services</h2>
               <ul>
-                <li>Database: {health.services.database?.ok ? "✅" : "❌"}</li>
+                <li>Database: {health.services.database?.ok ? <CheckCircle2 size={13} className="inline text-green-600 ml-1" /> : <XCircle size={13} className="inline text-red-500 ml-1" />}</li>
                 <li>
-                  sharia_rulings: {health.services.database?.rulings_using_db ? "✅ DB" : "❌"} (
+                  sharia_rulings: {health.services.database?.rulings_using_db ? <><CheckCircle2 size={13} className="inline text-green-600 ml-1" />DB</> : <XCircle size={13} className="inline text-red-500 ml-1" />} (
                   {health.services.database?.sharia_rulings_count ?? 0} rows, seed:{" "}
                   {health.services.database?.rulings_seed_available ?? 0})
                 </li>
-                <li>Supabase service role: {health.services.supabase?.serviceRole ? "✅" : "❌"}</li>
-                <li>Cron secrets: {health.services.cron?.ok ? "✅" : "❌"}</li>
-                <li>Assistant (Anthropic): {health.services.assistant?.anthropic ? "✅" : "❌"}</li>
-                <li>MKE: {health.services.mke?.ok ? "✅" : "❌"}</li>
-                <li>Automation: {health.services.automation?.ok ? "✅" : "❌"}</li>
+                <li>Supabase service role: {health.services.supabase?.serviceRole ? <CheckCircle2 size={13} className="inline text-green-600 ml-1" /> : <XCircle size={13} className="inline text-red-500 ml-1" />}</li>
+                <li>Cron secrets: {health.services.cron?.ok ? <CheckCircle2 size={13} className="inline text-green-600 ml-1" /> : <XCircle size={13} className="inline text-red-500 ml-1" />}</li>
+                <li>Assistant (Anthropic): {health.services.assistant?.anthropic ? <CheckCircle2 size={13} className="inline text-green-600 ml-1" /> : <XCircle size={13} className="inline text-red-500 ml-1" />}</li>
+                <li>MKE: {health.services.mke?.ok ? <CheckCircle2 size={13} className="inline text-green-600 ml-1" /> : <XCircle size={13} className="inline text-red-500 ml-1" />}</li>
+                <li>Automation: {health.services.automation?.ok ? <CheckCircle2 size={13} className="inline text-green-600 ml-1" /> : <XCircle size={13} className="inline text-red-500 ml-1" />}</li>
               </ul>
               {health.services.database?.tables && (
                 <details>
@@ -347,8 +348,7 @@ export default function FeatureStatusPage() {
                           {f.routes?.[0] && (
                             <a
                               href={`https://www.majlisilm.com${f.routes[0]}`}
-                              target="_blank"
-                              rel="noreferrer"
+                              target="_blank" rel="noopener noreferrer"
                               className="ui-card-btn ui-card-btn--compact"
                             >
                               فتح
@@ -369,7 +369,7 @@ export default function FeatureStatusPage() {
               <ul>
                 {Object.entries(health.apiChecks).map(([k, v]) => (
                   <li key={k}>
-                    {v.ok ? "✅" : "❌"} {k} — HTTP {v.status}
+                    {v.ok ? <CheckCircle2 size={13} className="inline text-green-600 ml-1" /> : <XCircle size={13} className="inline text-red-500 ml-1" />}{k}، HTTP {v.status}
                   </li>
                 ))}
               </ul>
@@ -379,7 +379,7 @@ export default function FeatureStatusPage() {
           {activateResult && (
             <section className="ui-card">
               <h2>نتيجة التفعيل</h2>
-              <pre style={{ overflow: "auto", maxHeight: 320, fontSize: 12 }}>{activateResult}</pre>
+              <pre className="fsp-result-pre">{activateResult}</pre>
             </section>
           )}
         </>

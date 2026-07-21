@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
-import { PageHeader, Loading } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
+import { ShareButtons } from "@/components/ContentActions";
 import { getIssuesForTopicSection } from "@/lib/fiqh-council-issues-service";
 import {
   FIQH_TOPIC_INDEX_SECTIONS,
@@ -13,6 +14,7 @@ import {
 } from "@/lib/fiqh-council-types";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
+import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 type SectionData = {
   label: string;
@@ -27,8 +29,8 @@ export default function FiqhCouncilTopicIndexPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/fiqh-council/index",
-      title: "الفهرس الموضوعي | المجمع الفقهي — المجلس العلمي",
-      description: "فهرس موضوعي للمسائل والقرارات الفقهية — العبادات، المعاملات، النوازل، الاقتصاد، الطب، التقنية.",
+      title: "الفهرس الموضوعي | المجمع الفقهي، المجلس العلمي",
+      description: "فهرس موضوعي للمسائل والقرارات الفقهية، العبادات، المعاملات، النوازل، الاقتصاد، الطب، التقنية.",
       keywords: ["فهرس فقهي", "المجمع الفقهي", "مسائل فقهية", "تصنيفات"],
       jsonLd: [
         breadcrumbJsonLd([
@@ -65,7 +67,7 @@ export default function FiqhCouncilTopicIndexPage() {
       <FiqhCouncilSubnav />
 
       {loading ? (
-        <Loading />
+        <SkeletonCardGrid />
       ) : (
         <div className="fiqh-topic-index">
           {sections.map((sec) => {
@@ -107,6 +109,13 @@ export default function FiqhCouncilTopicIndexPage() {
           })}
         </div>
       )}
+
+      <div className="twh-share">
+        <ShareButtons title="الفهرس الموضوعي للمجمع الفقهي — المجلس العلمي" url="https://www.majlisilm.com/fiqh-council/index" />
+      </div>
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
+      </div>
     </div>
   );
 }

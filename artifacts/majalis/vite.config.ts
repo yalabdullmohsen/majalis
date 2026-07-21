@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
+import { visualizer } from "rollup-plugin-visualizer";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { majalisApiPlugin } from "./server/vite-plugin-api.mjs";
 
@@ -30,6 +31,7 @@ export default defineConfig({
     tailwindcss(),
     majalisApiPlugin(),
     runtimeErrorOverlay(),
+    ...(process.env.ANALYZE === "1" ? [visualizer({ open: false, filename: "dist/bundle-stats.html", gzipSize: true, brotliSize: true })] : []),
     ...(process.env.NODE_ENV !== "production" &&
     process.env.REPL_ID !== undefined
       ? [
@@ -59,17 +61,34 @@ export default defineConfig({
     chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
+        /**
+         * ⚠️ لا تُضِف قواعد لمسارات `src/` هنا.
+         *
+         * القواعد القديمة كانت تُجبر ملفات التطبيق على حزم مسمّاة (admin،
+         * content-catalog…). حين يُشارك ملفٌ واحد من الحزمة بين مسار كسول
+         * (lazy) ونقطة الدخول، تتحوّل الحزمة كلها إلى commons يستوردها ملف
+         * الدخول استيرادًا ساكنًا — فصارت حزمة `admin` (٥٠٣KB) تنزل عند كل
+         * زائر مجهول. التقسيم التلقائي في Rollup يحترم رسم lazy() (١٦٤ استدعاء)
+         * ويولّد الحزم المشتركة بأمان.
+         *
+         * التقسيم اليدوي هنا مقتصر على node_modules (تخزين مؤقت طويل الأمد).
+         */
         manualChunks(id) {
-          if (id.includes("node_modules")) {
-            if (id.includes("@supabase")) return "supabase";
-            if (id.includes("html2canvas") || id.includes("html-to-image")) return "html2canvas";
-            if (id.includes("date-fns")) return "date-fns";
-            if (id.includes("lucide-react")) return "icons";
-            if (id.includes("@radix-ui")) return "radix";
-            if (id.includes("recharts") || id.includes("d3-") || id.includes("victory")) return "charts";
-            if (id.includes("adhan")) return "adhan";
-            if (id.includes("react") || id.includes("wouter") || id.includes("scheduler")) return "vendor";
-          }
+          if (!id.includes("node_modules")) return;
+
+          if (id.includes("@supabase")) return "supabase";
+          if (id.includes("html2canvas") || id.includes("html-to-image")) return "html2canvas";
+          if (id.includes("date-fns")) return "date-fns";
+          if (id.includes("lucide-react")) return "icons";
+          if (id.includes("@radix-ui")) return "radix";
+          if (id.includes("recharts") || id.includes("d3-") || id.includes("victory")) return "charts";
+          if (id.includes("adhan")) return "adhan";
+          if (id.includes("@tanstack")) return "query";
+          if (id.includes("react") || id.includes("wouter") || id.includes("scheduler")) return "vendor";
+          if (id.includes("zod") || id.includes("react-hook-form") || id.includes("@hookform")) return "forms";
+          if (id.includes("framer-motion") || id.includes("motion")) return "animation";
+          if (id.includes("cmdk") || id.includes("vaul") || id.includes("sonner")) return "ui-extra";
+          if (id.includes("mapbox") || id.includes("leaflet") || id.includes("maplibre")) return "maps";
         },
       },
     },

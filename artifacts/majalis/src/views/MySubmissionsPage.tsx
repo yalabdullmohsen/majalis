@@ -1,15 +1,19 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { CheckCircle2, ClipboardList, Clock, FileText, GraduationCap, Mic2, PartyPopper, Search, Upload, XCircle } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { formatFileSize, type UserSubmission, type SubmissionStatus } from "@/lib/user-submissions-service";
 import { Link } from "wouter";
+import { ShareButtons } from "@/components/ContentActions";
+import { applyPageSeo } from "@/lib/seo";
 
-const STATUS_META: Record<SubmissionStatus, { icon: string; label: string; bg: string; color: string; border: string }> = {
-  pending:  { icon: "⏳", label: "قيد المراجعة",  bg: "#fffbeb", color: "#92400e", border: "#fde68a" },
-  approved: { icon: "✅", label: "مقبول",          bg: "#f0fdf4", color: "#065f46", border: "#86efac" },
-  rejected: { icon: "❌", label: "مرفوض",          bg: "#fef2f2", color: "#991b1b", border: "#fca5a5" },
+const STATUS_META: Record<SubmissionStatus, { Icon: LucideIcon; label: string; mod: string }> = {
+  pending:  { Icon: Clock,        label: "قيد المراجعة", mod: "msr-status--pending"  },
+  approved: { Icon: CheckCircle2, label: "مقبول",         mod: "msr-status--approved" },
+  rejected: { Icon: XCircle,      label: "مرفوض",         mod: "msr-status--rejected" },
 };
 
-const TYPE_ICON: Record<string, string> = { adhan: "🎙️", lesson: "📚" };
+const TYPE_ICON: Record<string, LucideIcon> = { adhan: Mic2, lesson: GraduationCap };
 const TYPE_LABEL: Record<string, string> = { adhan: "أذان",   lesson: "درس" };
 
 function SubmissionRow({ sub }: { sub: UserSubmission }) {
@@ -34,29 +38,23 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
   }
 
   return (
-    <div style={{
-      background: "#fff",
-      borderRadius: "1rem",
-      border: `1.5px solid ${sm.border}`,
-      overflow: "hidden",
-      marginBottom: "0.875rem",
-    }}>
+    <div className={`msr-card ${sm.mod}`}>
       {/* Status bar */}
-      <div style={{ background: sm.bg, padding: "0.5rem 1rem", display: "flex", alignItems: "center", gap: "0.4rem", borderBottom: `1px solid ${sm.border}` }}>
-        <span>{sm.icon}</span>
-        <span style={{ fontSize: "0.78rem", fontWeight: 700, color: sm.color }}>{sm.label}</span>
-        <span style={{ marginRight: "auto", fontSize: "0.72rem", color: "#9ca3af" }}>
+      <div className="msr-card__status-bar">
+        <span aria-hidden="true"><sm.Icon size={15} strokeWidth={2} /></span>
+        <span className="msr-card__status-label">{sm.label}</span>
+        <span className="msr-card__date">
           {new Date(sub.created_at).toLocaleDateString("ar-KW", { dateStyle: "medium" })}
         </span>
       </div>
 
-      <div style={{ padding: "0.875rem 1rem" }}>
+      <div className="msr-card__body">
         {/* Title row */}
-        <div style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start", marginBottom: "0.5rem" }}>
-          <span style={{ fontSize: "1.25rem" }}>{TYPE_ICON[sub.type] ?? "📄"}</span>
-          <div style={{ flex: 1 }}>
-            <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#111827" }}>{sub.title}</div>
-            <div style={{ fontSize: "0.72rem", color: "#6b7280", marginTop: "0.15rem" }}>
+        <div className="msr-card__title-row">
+          <span className="msr-card__type-icon" aria-hidden="true">{(() => { const I = TYPE_ICON[sub.type] ?? FileText; return <I size={18} strokeWidth={1.6} />; })()}</span>
+          <div className="msr-card__info">
+            <div className="msr-card__title">{sub.title}</div>
+            <div className="msr-card__meta">
               {TYPE_LABEL[sub.type] ?? sub.type}
               {sub.file_name && ` · ${sub.file_name} (${formatFileSize(sub.file_size_kb)})`}
             </div>
@@ -68,19 +66,7 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
           <button
             type="button"
             onClick={toggleAudio}
-            style={{
-              display: "inline-flex", alignItems: "center", gap: "0.3rem",
-              padding: "0.3rem 0.65rem",
-              borderRadius: "0.4rem",
-              border: "none",
-              background: audioPlaying ? "#ef4444" : "#134a3a",
-              color: "#fff",
-              fontSize: "0.75rem",
-              fontWeight: 600,
-              cursor: "pointer",
-              fontFamily: "inherit",
-              marginBottom: "0.5rem",
-            }}
+            className={`msr-card__audio-btn${audioPlaying ? " is-playing" : ""}`}
           >
             {audioPlaying ? "⏹ إيقاف" : "▶ استمع للتسجيل"}
           </button>
@@ -88,39 +74,30 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
 
         {/* Reviewer note */}
         {sub.reviewer_note && (
-          <div style={{
-            padding: "0.6rem 0.875rem",
-            background: sub.status === "approved" ? "#f0fdf4" : "#fef2f2",
-            borderRadius: "0.5rem",
-            fontSize: "0.82rem",
-            color: sub.status === "approved" ? "#065f46" : "#991b1b",
-            marginTop: "0.5rem",
-          }}>
+          <div className={`msr-card__reviewer-note msr-card__reviewer-note--${sub.status}`}>
             <strong>ملاحظة الفريق:</strong> {sub.reviewer_note}
           </div>
         )}
 
         {/* Approved adhan notice */}
         {sub.status === "approved" && sub.type === "adhan" && (
-          <div style={{ marginTop: "0.5rem", fontSize: "0.78rem", color: "#065f46", fontWeight: 600 }}>
-            🎉 تهانينا! تسجيلك قُبِل وسيُضاف قريباً إلى مكتبة المؤذنين.
+          <div className="msr-card__notice">
+            <PartyPopper size={14} className="inline ml-1" />تهانينا! تسجيلك قُبِل وسيُضاف قريباً إلى مكتبة المؤذنين.
           </div>
         )}
 
         {/* Approved lesson notice */}
         {sub.status === "approved" && sub.type === "lesson" && (
-          <div style={{ marginTop: "0.5rem", fontSize: "0.78rem", color: "#065f46", fontWeight: 600 }}>
-            🎉 تهانينا! درسك قُبِل وسيُضاف قريباً إلى قسم الدروس.
+          <div className="msr-card__notice">
+            <PartyPopper size={14} className="inline ml-1" />تهانينا! درسك قُبِل وسيُضاف قريباً إلى قسم الدروس.
           </div>
         )}
 
-        {/* Rejected — encourage resubmit */}
+        {/* Rejected، encourage resubmit */}
         {sub.status === "rejected" && (
-          <div style={{ marginTop: "0.75rem" }}>
+          <div className="msr-card__resubmit">
             <Link href="/upload">
-              <span style={{ fontSize: "0.78rem", color: "#134a3a", fontWeight: 600, textDecoration: "underline", cursor: "pointer" }}>
-                إعادة الإرسال بعد التعديل ←
-              </span>
+              <span className="msr-card__resubmit-link">إعادة الإرسال بعد التعديل ←</span>
             </Link>
           </div>
         )}
@@ -131,6 +108,16 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
 
 export default function MySubmissionsPage() {
   const [email, setEmail]     = useState("");
+
+  useEffect(() => {
+    applyPageSeo({
+      path: "/my-submissions",
+      title: "مقدّماتي | المجلس العلمي",
+      description: "تتبع حالة المحتوى الذي أرسلته للمجلس العلمي، قيد المراجعة، مقبول، أو مرفوض.",
+      keywords: ["مقدماتي", "تقديم محتوى", "متابعة مقدمة", "المجلس العلمي"],
+      robots: "noindex, follow",
+    });
+  }, []);
   const [list, setList]       = useState<UserSubmission[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [err, setErr]         = useState("");
@@ -169,58 +156,31 @@ export default function MySubmissionsPage() {
     : null;
 
   return (
-    <div style={{ direction: "rtl", maxWidth: 620, margin: "0 auto", padding: "1.25rem 1rem 5rem" }}>
+    <div className="msp-page">
       {/* Header */}
-      <div style={{ marginBottom: "1.5rem" }}>
-        <p style={{ fontSize: "0.75rem", color: "#134a3a", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 0.25rem" }}>
-          المساهمات
-        </p>
-        <h1 style={{ fontSize: "1.4rem", fontWeight: 800, color: "#111827", margin: "0 0 0.35rem" }}>
-          📋 مساهماتي
-        </h1>
-        <p style={{ fontSize: "0.82rem", color: "#6b7280", margin: 0 }}>
-          تتبّع حالة الأذانات والدروس التي أرسلتها للمراجعة.
-        </p>
+      <div className="msp-header">
+        <p className="msp-eyebrow">المساهمات</p>
+        <h1 className="msp-title"><ClipboardList size={22} className="inline ml-2" />مساهماتي</h1>
+        <p className="msp-subtitle">تتبّع حالة الأذانات والدروس التي أرسلتها للمراجعة.</p>
       </div>
 
       {/* Search by email */}
-      <div style={{ background: "#fff", borderRadius: "1rem", border: "1.5px solid #e5e7eb", padding: "1.25rem", marginBottom: "1.5rem" }}>
-        <p style={{ fontSize: "0.85rem", fontWeight: 600, color: "#374151", margin: "0 0 0.875rem" }}>
-          🔍 ابحث بالبريد الإلكتروني الذي أدخلته عند الإرسال:
-        </p>
-        <form onSubmit={handleSearch} style={{ display: "flex", gap: "0.5rem" }}>
+      <div className="msp-search-box">
+        <p className="msp-search-label"><Search size={13} className="inline ml-1" />ابحث بالبريد الإلكتروني الذي أدخلته عند الإرسال:</p>
+        <form onSubmit={handleSearch} className="msp-search-form" role="search" aria-label="البحث عن المساهمات">
           <input
             type="email"
+            autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            placeholder="example@email.com"
-            style={{
-              flex: 1,
-              padding: "0.65rem 0.875rem",
-              borderRadius: "0.6rem",
-              border: "1.5px solid #e5e7eb",
-              fontSize: "0.875rem",
-              fontFamily: "inherit",
-              direction: "ltr",
-              outline: "none",
-            }}
+            aria-label="بريدك@مثال.com" placeholder="بريدك@مثال.com"
+            className="msp-email-input"
           />
           <button
             type="submit"
             disabled={loading}
-            style={{
-              padding: "0.65rem 1.25rem",
-              borderRadius: "0.6rem",
-              border: "none",
-              background: loading ? "#9ca3af" : "#134a3a",
-              color: "#fff",
-              fontSize: "0.875rem",
-              fontWeight: 600,
-              cursor: loading ? "not-allowed" : "pointer",
-              fontFamily: "inherit",
-              flexShrink: 0,
-            }}
+            className={`msp-search-btn${loading ? " is-loading" : ""}`}
           >
             {loading ? "..." : "بحث"}
           </button>
@@ -228,85 +188,62 @@ export default function MySubmissionsPage() {
       </div>
 
       {/* Error */}
-      {err && (
-        <div style={{ padding: "0.75rem 1rem", background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: "0.6rem", color: "#991b1b", fontSize: "0.85rem", marginBottom: "1rem" }}>
-          {err}
-        </div>
-      )}
+      {err && <div className="msp-error">{err}</div>}
 
       {/* Stats */}
       {stats && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.5rem", marginBottom: "1.25rem" }}>
-          {[
-            { label: "الكل",          val: stats.total,    bg: "#f3f4f6", color: "#374151" },
-            { label: "⏳ قيد المراجعة", val: stats.pending,  bg: "#fffbeb", color: "#92400e" },
-            { label: "✅ مقبول",       val: stats.approved, bg: "#f0fdf4", color: "#065f46" },
-            { label: "❌ مرفوض",       val: stats.rejected, bg: "#fef2f2", color: "#991b1b" },
-          ].map((s) => (
-            <div key={s.label} style={{ background: s.bg, borderRadius: "0.75rem", padding: "0.75rem", textAlign: "center" }}>
-              <div style={{ fontSize: "1.4rem", fontWeight: 800, color: s.color }}>{s.val}</div>
-              <div style={{ fontSize: "0.65rem", color: s.color, marginTop: "0.1rem", fontWeight: 600 }}>{s.label}</div>
-            </div>
-          ))}
+        <div className="msp-stats">
+          <div className="msp-stat msp-stat--total">
+            <div className="msp-stat__val">{stats.total}</div>
+            <div className="msp-stat__label">الكل</div>
+          </div>
+          <div className="msp-stat msp-stat--pending">
+            <div className="msp-stat__val">{stats.pending}</div>
+            <div className="msp-stat__label"><Clock size={13} strokeWidth={2} aria-hidden="true" /> قيد المراجعة</div>
+          </div>
+          <div className="msp-stat msp-stat--approved">
+            <div className="msp-stat__val">{stats.approved}</div>
+            <div className="msp-stat__label"><CheckCircle2 size={13} strokeWidth={2} aria-hidden="true" /> مقبول</div>
+          </div>
+          <div className="msp-stat msp-stat--rejected">
+            <div className="msp-stat__val">{stats.rejected}</div>
+            <div className="msp-stat__label"><XCircle size={13} strokeWidth={2} aria-hidden="true" /> مرفوض</div>
+          </div>
         </div>
       )}
 
       {/* Results */}
       {list !== null && list.length === 0 && (
-        <div style={{ textAlign: "center", padding: "3rem 1rem" }}>
-          <div style={{ fontSize: "2.5rem", marginBottom: "0.75rem" }}>📭</div>
-          <p style={{ color: "#9ca3af", fontSize: "0.9rem" }}>لا توجد مساهمات مرتبطة بهذا البريد.</p>
+        <div className="msp-empty-state">
+          <div className="msp-empty-state__icon" aria-hidden="true"><FileText size={40} strokeWidth={1.3} /></div>
+          <p className="msp-empty-state__msg">لا توجد مساهمات مرتبطة بهذا البريد.</p>
           <Link href="/upload">
-            <button type="button" style={{
-              marginTop: "0.75rem",
-              padding: "0.6rem 1.5rem",
-              borderRadius: "0.6rem",
-              border: "none",
-              background: "#134a3a",
-              color: "#fff",
-              fontFamily: "inherit",
-              fontSize: "0.875rem",
-              fontWeight: 600,
-              cursor: "pointer",
-            }}>
-              ارفع أذاناً أو درساً
-            </button>
+            <button type="button" className="msp-cta-btn">ارفع أذاناً أو درساً</button>
           </Link>
         </div>
       )}
 
       {list !== null && list.length > 0 && (
         <div>
-          <div style={{ fontSize: "0.78rem", color: "#6b7280", marginBottom: "0.875rem" }}>
-            {list.length} مساهمة
-          </div>
+          <div className="msp-results-count">{list.length} مساهمة</div>
           {list.map((sub) => <SubmissionRow key={sub.id} sub={sub} />)}
         </div>
       )}
 
       {/* CTA if no search yet */}
       {list === null && !loading && (
-        <div style={{ textAlign: "center", padding: "1rem" }}>
-          <div style={{ fontSize: "0.82rem", color: "#9ca3af", marginBottom: "1rem" }}>
-            أو ارفع محتوىً جديداً:
-          </div>
+        <div className="msp-cta">
+          <div className="msp-cta__text">أو ارفع محتوىً جديداً:</div>
           <Link href="/upload">
-            <button type="button" style={{
-              padding: "0.7rem 2rem",
-              borderRadius: "0.875rem",
-              border: "none",
-              background: "linear-gradient(135deg, #134a3a, #0c3020)",
-              color: "#fff",
-              fontSize: "0.9rem",
-              fontWeight: 700,
-              cursor: "pointer",
-              fontFamily: "inherit",
-            }}>
-              📤 رفع أذان أو درس
+            <button type="button" className="msp-cta-btn msp-cta-btn--gradient">
+              <Upload size={15} strokeWidth={2} aria-hidden="true" /> رفع أذان أو درس
             </button>
           </Link>
         </div>
       )}
+      <div className="twh-share">
+        <ShareButtons title="مساهماتي — المجلس العلمي" url="https://www.majlisilm.com/my-submissions" />
+      </div>
     </div>
   );
 }

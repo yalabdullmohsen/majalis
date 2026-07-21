@@ -1,6 +1,3 @@
-import { C } from "@/lib/theme";
-import { inputSt } from "./AdminModal";
-
 type Props = {
   title: string;
   count?: number;
@@ -23,45 +20,23 @@ export function AdminSectionToolbar({
   filters,
 }: Props) {
   return (
-    <div style={{ marginBottom: "1.25rem" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: filters || onSearchChange ? "0.875rem" : 0,
-          flexWrap: "wrap",
-          gap: "0.75rem",
-        }}
-      >
-        <h2
-          style={{
-            margin: 0,
-            fontSize: "1.125rem",
-            fontWeight: 700,
-            color: C.emeraldDeep,
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            flexWrap: "wrap",
-          }}
-        >
+    <div className="ast-wrap">
+      <div className={`ast-header${filters || onSearchChange ? " ast-header--padded" : ""}`}>
+        <h2 className="ast-title">
           {title}
           {count !== undefined && ` (${count})`}
           {badge}
         </h2>
-        {actions && (
-          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>{actions}</div>
-        )}
+        {actions && <div className="ast-actions">{actions}</div>}
       </div>
       {(onSearchChange || filters) && (
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", alignItems: "center" }}>
+        <div className="ast-toolbar">
           {onSearchChange && (
             <input
               value={search ?? ""}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder={searchPlaceholder}
-              style={{ ...inputSt, maxWidth: "20rem", flex: "1 1 12rem" }}
+              className="adm-input ast-search"
               aria-label="بحث"
             />
           )}
