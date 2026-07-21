@@ -34,11 +34,21 @@ if (!/importScripts\(["']\/sw-version\.js["']\)/.test(swJs)) {
 if (/majalis-shell-v\d+["'`]/.test(swJs) || /majalis-data-v\d+["'`]/.test(swJs)) {
   failures.push("sw.js: عاد رقم كاش يدوي ثابت (مثل v18) بدل SW_BUILD_ID الديناميكي");
 }
-if (!/SHELL_CACHE\s*=\s*`majalis-shell-\$\{SW_BUILD_ID\}`/.test(swJs)) {
-  failures.push("sw.js: SHELL_CACHE غير مبني فعليًا من SW_BUILD_ID");
+if (!/OFFLINE_CACHE\s*=\s*`majalis-offline-\$\{SW_BUILD_ID\}`/.test(swJs)) {
+  failures.push("sw.js: OFFLINE_CACHE غير مبني فعليًا من SW_BUILD_ID");
 }
 if (!/DATA_CACHE\s*=\s*`majalis-data-\$\{SW_BUILD_ID\}`/.test(swJs)) {
   failures.push("sw.js: DATA_CACHE غير مبني فعليًا من SW_BUILD_ID");
+}
+if (/SHELL_ROUTES|cache\.addAll\(\[?["']\//.test(swJs)) {
+  failures.push("sw.js: لا يجوز تخزين shell routes أو صفحات التنقل مسبقًا");
+}
+if (!/req\.mode === ["']navigate["'][\s\S]*networkFirstNavigation\(req\)/.test(swJs)) {
+  failures.push("sw.js: صفحات التنقل لا تستخدم network-first الصريح");
+}
+const navigationHandler = swJs.match(/async function networkFirstNavigation\(req\) \{([\s\S]*?)\n\}/)?.[1] || "";
+if (/cache\.put|caches\.match\(req\)/.test(navigationHandler)) {
+  failures.push("sw.js: معالج التنقل ما زال يخزن HTML أو يرجع صفحة قديمة");
 }
 
 if (failures.length > 0) {

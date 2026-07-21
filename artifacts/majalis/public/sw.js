@@ -1,5 +1,5 @@
 /**
- * PWA service worker — network-first for app shell, cache-first for static Quran/lesson data.
+ * PWA service worker — network-only for navigations, cache-first for selected data.
  *
  * Cache-name versioning: SHELL_CACHE/DATA_CACHE used to be a hand-bumped
  * literal ("v18") — easy to forget when touching this file, which silently
@@ -22,7 +22,7 @@ try {
   // /sw-version.js missing or failed to load — keep the fallback above.
 }
 
-const SHELL_CACHE   = `majalis-shell-${SW_BUILD_ID}`;
+const OFFLINE_CACHE = `majalis-offline-${SW_BUILD_ID}`;
 const DATA_CACHE    = `majalis-data-${SW_BUILD_ID}`;
 const VERSION_CACHE = "majalis-version";
 const FETCH_TIMEOUT = 8000;
@@ -43,35 +43,12 @@ const CACHEABLE_API_PATHS = [
   "/api/library",
 ];
 
-const SHELL_ROUTES = [
-  "/",
-  "/offline.html",
-  "/start-here",
-  "/adhkar",
-  "/prayer-times",
-  "/tasbih",
-  "/daily-wird",
-  "/sunan-yawmiyya",
-  "/quran-hub",
-  "/fawaid",
-  "/duas",
-  "/asma-husna",
-  "/lessons",
-  "/library",
-  "/scholars",
-  "/quiz",
-  "/fatwa",
-  "/islamic-glossary",
-  "/hadith-science",
-  "/stories",
-  "/fiqh",
-  "/tajweed",
-];
-
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(SHELL_CACHE)
-      .then((cache) => cache.addAll(SHELL_ROUTES).catch(() => cache.addAll(["/", "/offline.html"])))
+    // Never pre-cache /, index.html, or route documents. A cached document can
+    // pin a returning PWA to the hashed assets of an older deployment.
+    caches.open(OFFLINE_CACHE)
+      .then((cache) => cache.add("/offline.html"))
       .catch(() => undefined),
   );
   self.skipWaiting();
@@ -84,18 +61,18 @@ self.addEventListener("activate", (event) => {
       const verCache = await caches.open(VERSION_CACHE);
       const prev = await verCache.match("/sw-version");
       const prevVersion = prev ? await prev.text() : null;
-      const isUpdate = prevVersion !== null && prevVersion !== SHELL_CACHE;
+      const isUpdate = prevVersion !== null && prevVersion !== SW_BUILD_ID;
 
       // حذف الكاشات القديمة
       const keys = await caches.keys();
       await Promise.all(
         keys
-          .filter((k) => k !== SHELL_CACHE && k !== DATA_CACHE && k !== VERSION_CACHE)
+          .filter((k) => k !== OFFLINE_CACHE && k !== DATA_CACHE && k !== VERSION_CACHE)
           .map((k) => caches.delete(k)),
       );
 
       // تخزين النسخة الحالية
-      await verCache.put("/sw-version", new Response(SHELL_CACHE));
+      await verCache.put("/sw-version", new Response(SW_BUILD_ID));
 
       // السيطرة على كل النوافذ
       await self.clients.claim();
@@ -139,19 +116,13 @@ async function cacheFirst(req, cacheName) {
   }
 }
 
-/** Network-first: try network, fall back to cache. */
-async function networkFirst(req, cacheName) {
+/** Navigations must never be stored: current network document or offline page only. */
+async function networkFirstNavigation(req) {
   try {
-    const res = await fetchWithTimeout(req);
-    if (res.ok) {
-      const cache = await caches.open(cacheName);
-      cache.put(req, res.clone()).catch(() => undefined);
-    }
-    return res;
+    return await fetchWithTimeout(req);
   } catch {
-    const cached = await caches.match(req);
-    if (cached) return cached;
-    return (await caches.match("/offline.html")) || caches.match("/");
+    return (await caches.match("/offline.html", { cacheName: OFFLINE_CACHE })) ||
+      new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain; charset=utf-8" } });
   }
 }
 
@@ -184,9 +155,10 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // App shell navigation → network-first with shell fallback
+  // HTML/navigation → network-first, never cache the response or fall back to
+  // a previous build's document. Only the build-neutral offline page is cached.
   if (req.mode === "navigate") {
-    event.respondWith(networkFirst(req, SHELL_CACHE));
+    event.respondWith(networkFirstNavigation(req));
     return;
   }
 });
