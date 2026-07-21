@@ -1,6 +1,6 @@
 /**
  * Quran tests — hub page loads, section navigation, radio controls.
- * قارئ المصحف صفحة-بصفحة حُذف (2026-07-14)؛ /quran و/mushaf يُحوَّلان الآن إلى /quran-hub.
+ * /quran اختصار لمركز القرآن، بينما /mushaf قارئ حي مستقل.
  */
 import { test, expect } from "@playwright/test";
 import { waitForContent } from "./helpers";

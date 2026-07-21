@@ -32,6 +32,7 @@ const PUBLIC_ROUTES: Array<{ href: string; label: string }> = [
   { href: "/universities",        label: "دليل الجامعات" },
   { href: "/learning-path",       label: "خارطة طالب العلم" },
   { href: "/quran-hub",      label: "القرآن" },
+  { href: "/mushaf",         label: "المصحف" },
   { href: "/quran/memorization-plans", label: "خطط حفظ القرآن" },
   { href: "/quran-radio",    label: "إذاعة القرآن" },
   { href: "/adhkar",         label: "الأذكار" },
@@ -50,7 +51,6 @@ const PUBLIC_ROUTES: Array<{ href: string; label: string }> = [
 
 // مسارات الاختصار التي يجب أن تُعيد التوجيه بدلاً من الفشل
 const REDIRECT_ROUTES: Array<{ href: string; redirectsTo: string }> = [
-  { href: "/mushaf",   redirectsTo: "/quran-hub" },
   { href: "/quran",    redirectsTo: "/quran-hub" }, // قارئ المصحف صفحة-بصفحة حُذف (2026-07-14)
   { href: "/research", redirectsTo: "/fiqh-council/research" },
 ];
