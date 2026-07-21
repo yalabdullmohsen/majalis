@@ -57,12 +57,12 @@ const ASSERTIONS = [
   // زر CTA أخضر (.btn-primary وما شابه) كان يفقد لونه الصحيح (أبيض/داكن)
   // أمام قاعدة "كل <a> أخضر في الوضع الليلي" العامة (تخصيص أعلى).
   { route: "/account-deletion", selector: ".btn-primary", mode: "dark", min: 3 },
-  // بطاقات الرئيسية الداكنة (.ui-card/.ds-quiz-home-card/.home-library-card)
-  // — عناوين h2/h3 بداخلها كانت تُصبح بلون الخلفية نفسه تقريبًا (--elite-forest
-  // الداكن) عبر قاعدة `[class*="card"] h*` العامة الأعلى تخصيصًا.
-  { route: "/", selector: ".hnh__title", mode: "light", min: 3 },
-  { route: "/", selector: ".ds-quiz-home-card__title", mode: "light", min: 3 },
-  { route: "/", selector: ".home-library-card__title", mode: "light", min: 3 },
+  // الرئيسية المركّزة في إصدار الإطلاق: نفحص العناصر الثابتة الظاهرة بدل
+  // ودجتات الحديث/المسابقة/المكتبة التي أصبحت اختيارية من شاشة التخصيص.
+  // لا تتغير عتبات WCAG؛ تغيرت فقط أهداف DOM لتطابق البنية المنشورة فعليًا.
+  { route: "/", selector: ".hpv4-hero__cta-primary", mode: "light", min: 4.5 },
+  { route: "/", selector: ".hsh-title", mode: "light", min: 4.5 },
+  { route: "/", selector: ".hsh-step__title", mode: "light", min: 4.5 },
   // ── تكليف ثانٍ (2026-07-19، بند 7): عناوين "شارة" أقسام (نص أبيض/خلفية
   // خضراء داكنة، §4c في elite-2026.css) كانت تخسر لونها الأبيض المقصود أمام
   // قواعد `.home-section h2`/`.page-shell h2:not(...)` عالية التخصيص (بفعل
@@ -71,10 +71,8 @@ const ASSERTIONS = [
   // تبقى هذه التأكيدات ملاصقة لتأكيدات "/" الأخرى أعلاه — routeCache في
   // main() لا يُعيد زيارة مسار سبقت زيارته، فتأكيد "/" بعيد عن مجموعته هنا
   // يُقاس فعليًا على آخر مسار آخر تمت زيارته (فشل زائف، لا عطل تباين حقيقي). ──
-  // "المكتبة العلمية" (HomeFeaturedLibrary) داخل .home-section على الرئيسية
-  // — معرِّف فريد #home-library-heading لا الصنف العام (.ds-section__title
-  // يطابق أيضًا "مواسم التعلّم" السابق له في DOM، فيختبر عنصرًا مختلفًا خطأً).
-  { route: "/", selector: "#home-library-heading", mode: "light", min: 4.5 },
+  // زر التخصيص ثابت في البنية الجديدة ويجب أن يبقى مقروءًا على السطح العاجي.
+  { route: "/", selector: ".hpv4-customize-trigger", mode: "light", min: 4.5 },
   // "مواسم التعلّم" (.ds-section__title نفسه، بطاقة مختلفة بلا .home-section
   // تعارض) — في الوضع الليلي فقط: --elite-forest يتحوّل لأخضر نعناعي أفتح
   // فلا يكفي نص أبيض ثابت (color:#fff) فوقه.
