@@ -43,7 +43,7 @@ const FOOTER_GROUPS = [
       { href: "/tawba",          label: "التوبة والاستغفار" },
       { href: "/ulum-quran",     label: "علوم القرآن" },
       { href: "/qa",             label: "الأسئلة" },
-      { href: "/hadith/books-and-rulings", label: "كتب الحديث والأحكام" },
+      { href: "/hadith/books-and-rulings", label: "المتون الحديثية وأحاديث الأحكام" },
       { href: "/updates",        label: "آخر المستجدات" },
     ],
   },

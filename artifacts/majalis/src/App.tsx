@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useRef, useState, type ComponentType } from "react";
 import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useParams } from "wouter";
-import { AuthProvider } from "@/components/AuthProvider";
+import { AuthProvider, useAuth } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { ThemePreferenceProvider } from "@/components/ThemePreferenceProvider";
 import { UserPreferencesProvider } from "@/components/UserPreferencesProvider";
@@ -11,10 +11,8 @@ import SiteFooter from "@/components/SiteFooter";
 import { BottomNavBar } from "@/components/BottomNavBar";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { GlobalBackButton } from "@/components/GlobalBackButton";
-import { AdminSiteEditBar } from "@/components/AdminSiteEditBar";
 import { AchievementToast } from "@/components/AchievementToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
-import { GlobalSearchModal } from "@/components/GlobalSearchModal";
 import NotFound from "@/views/not-found";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
@@ -43,6 +41,14 @@ const lazy = lazyWithRetry;
 const AssistantFloatingWidget = lazyWithRetry(
   () => import("@/components/assistant/AssistantFloatingWidget").then((m) => ({ default: m.AssistantFloatingWidget })),
   "AssistantFloatingWidget",
+);
+const AdminSiteEditBar = lazyWithRetry(
+  () => import("@/components/AdminSiteEditBar").then((m) => ({ default: m.AdminSiteEditBar })),
+  "AdminSiteEditBar",
+);
+const GlobalSearchModal = lazyWithRetry(
+  () => import("@/components/GlobalSearchModal").then((m) => ({ default: m.GlobalSearchModal })),
+  "GlobalSearchModal",
 );
 
 const HomePage = lazy(() => import("@/views/HomePage"));
@@ -658,6 +664,7 @@ function Router() {
 
 function AppShell() {
   const { dir, t } = useLanguage();
+  const { isAdmin } = useAuth();
   const { newBadges, dismissBadges } = useAchievementCheck();
   const [searchOpen, setSearchOpen] = useState(false);
   const pullTouchRef = useRef<{ y: number; triggered: boolean } | null>(null);
@@ -723,14 +730,22 @@ function AppShell() {
         <Suspense fallback={null}>
           <AssistantFloatingWidget />
         </Suspense>
-        <AdminSiteEditBar />
+        {isAdmin && (
+          <Suspense fallback={null}>
+            <AdminSiteEditBar />
+          </Suspense>
+        )}
         <ScrollToTop />
         <GlobalBackButton />
         <BottomNavBar />
         {newBadges.length > 0 && (
           <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
         )}
-        {searchOpen && <GlobalSearchModal onClose={() => setSearchOpen(false)} />}
+        {searchOpen && (
+          <Suspense fallback={null}>
+            <GlobalSearchModal onClose={() => setSearchOpen(false)} />
+          </Suspense>
+        )}
       </div>
     </WouterRouter>
   );

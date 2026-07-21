@@ -5,7 +5,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { PageHeader } from "@/components/ui-common";
 
 /**
- * "كتب الحديث والأحكام" — تصنيف أوسع يجمع الأربعين النووية (المحتوى القائم،
+ * "المتون الحديثية وأحاديث الأحكام" — تصنيف أوسع يجمع الأربعين النووية (المحتوى القائم،
  * بلا أي تغيير عليه) مع كتب أحكام حديثية أخرى معروفة. غيّرنا اسم/تصنيف
  * الملاحة فقط (كانت تشير مباشرة إلى /arbaeen-nawawi باسم "الأربعون
  * النووية") — المحتوى نفسه لم يُمسّ، فقط أُضيف مسار تصنيفي أوسع فوقه.
@@ -14,16 +14,16 @@ import { PageHeader } from "@/components/ui-common";
  * service.ts، مصدره fawazahmed0/hadith-api) — لا يوفّر عمدة الأحكام ولا
  * بلوغ المرام ولا المنتقى من أخبار المصطفى (تحقّق مباشر من editions.json:
  * فقط bukhari/muslim/abudawud/tirmidhi/nasai/ibnmajah/malik/nawawi/qudsi/
- * dehlawi). لذا هذه الكتب الثلاثة بطاقات "قريبًا" بلا أي محتوى مُختلَق —
+ * dehlawi). لذا لا نعرض مادة هذه الكتب قبل اعتماد مصدر موثوق —
  * تحتاج استيراد بيانات فعلي من مصدر موثوق لاحقًا قبل تفعيلها.
  */
 export default function HadithBooksAndRulingsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/hadith/books-and-rulings",
-      title: "كتب الحديث والأحكام | المجلس العلمي",
-      description: "كتب الحديث والأحكام الفقهية: الأربعون النووية، وعمدة الأحكام، وبلوغ المرام، والمنتقى من أخبار المصطفى.",
-      keywords: ["كتب الحديث والأحكام", "الأربعون النووية", "عمدة الأحكام", "بلوغ المرام", "المنتقى من أخبار المصطفى"],
+      title: "المتون الحديثية وأحاديث الأحكام | المجلس العلمي",
+      description: "المتون الحديثية وأحاديث الأحكام: الأربعون النووية، وعمدة الأحكام، وبلوغ المرام، والمنتقى من أخبار المصطفى.",
+      keywords: ["المتون الحديثية", "أحاديث الأحكام", "الأربعون النووية", "عمدة الأحكام", "بلوغ المرام", "المنتقى من أخبار المصطفى"],
     });
   }, []);
 
@@ -31,8 +31,8 @@ export default function HadithBooksAndRulingsPage() {
     <div className="page-shell">
       <PageHeader
         eyebrow="السنة النبوية الشريفة"
-        title="كتب الحديث والأحكام"
-        subtitle="مجموعة كتب الحديث الجامعة لأحكام الفقه — الأربعون النووية متاحة كاملة الآن، وبقية الكتب قيد الاستيراد."
+        title="المتون الحديثية وأحاديث الأحكام"
+        subtitle="الأربعون النووية متاحة بمادتها المعتمدة؛ ولا يُنشر متن أو حكم على حديث في بقية الكتب حتى اعتماد مصدر موثوق ومراجعة علمية."
       />
 
       <div className="hadith-index-grid">
@@ -58,7 +58,7 @@ export default function HadithBooksAndRulingsPage() {
           <p className="hadith-index-card__desc">
             جمع الإمام عبد الغني المقدسي للأحاديث المتفق عليها بين البخاري ومسلم في الأحكام الفقهية.
           </p>
-          <span className="hadith-index-card__count">قريباً</span>
+          <span className="hadith-index-card__count">بانتظار مصدر معتمد</span>
         </div>
 
         <div className="hadith-index-card hadith-index-card--soon" aria-disabled="true">
@@ -69,7 +69,7 @@ export default function HadithBooksAndRulingsPage() {
           <p className="hadith-index-card__desc">
             جمع الحافظ ابن حجر العسقلاني لأحاديث الأحكام مع بيان درجتها، من أشهر مراجع فقه الحديث.
           </p>
-          <span className="hadith-index-card__count">قريباً</span>
+          <span className="hadith-index-card__count">بانتظار مصدر معتمد</span>
         </div>
 
         <div className="hadith-index-card hadith-index-card--soon" aria-disabled="true">
@@ -80,7 +80,7 @@ export default function HadithBooksAndRulingsPage() {
           <p className="hadith-index-card__desc">
             جمع مجد الدين ابن تيمية (جدّ شيخ الإسلام) لأحاديث الأحكام مرتّبة على أبواب الفقه.
           </p>
-          <span className="hadith-index-card__count">قريباً</span>
+          <span className="hadith-index-card__count">بانتظار مصدر معتمد</span>
         </div>
       </div>
     </div>
