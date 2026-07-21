@@ -14042,14 +14042,6 @@ html[data-theme="dark"] .global-back-btn {
   white-space: nowrap !important;
 }
 
-.lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__top--compact {
-  padding: var(--rd-pad-card) !important;
-  padding-bottom: 10px !important;
-  display: flex !important;
-  align-items: flex-start !important;
-  gap: 12px !important;
-}
-
 .lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__title {
   font-size: 1rem !important;
   font-weight: 700 !important;

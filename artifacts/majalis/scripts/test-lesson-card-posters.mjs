@@ -10,8 +10,8 @@ const homeCourses = await readFile(resolve(root, "src/components/home/HomeUpcomi
 const detailPage = await readFile(resolve(root, "src/views/LessonDetailPage.tsx"), "utf8");
 
 const failures = [];
-if (/lessonImage|posterUrl|__poster|__media/.test(card)) {
-  failures.push("UnifiedLessonCard must not render lesson poster images");
+if (/<img\b|SheikhAvatar|lessonImage|posterUrl|qrCodeUrl|__poster|__media|__qr|__top/.test(card)) {
+  failures.push("UnifiedLessonCard must not contain an image or an image slot");
 }
 for (const [name, source] of [
   ["LessonsPage", lessonsPage],
