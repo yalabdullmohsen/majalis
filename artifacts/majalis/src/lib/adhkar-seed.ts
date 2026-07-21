@@ -2979,17 +2979,6 @@ export const ADHKAR_ITEMS: AdhkarItem[] = [
     keywords: ["صباح", "عافية", "عفو", "أهل"],
   },
   {
-    id: "adh-289",
-    categoryId: "adh-misc",
-    text: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
-    count: 100,
-    narrator: "أبو موسى الأشعري",
-    source: "رواه البخاري ومسلم",
-    grade: "صحيح",
-    reference: "حصن المسلم، الحوقلة",
-    keywords: ["حوقلة", "لا حول", "كنز الجنة"],
-  },
-  {
     id: "adh-290",
     categoryId: "adh-misc",
     text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",
