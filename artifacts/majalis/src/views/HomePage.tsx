@@ -577,9 +577,11 @@ export default function HomePage() {
 
         <div style={{ maxWidth: 640, margin: "0 auto", position: "relative", textAlign: "center" }}>
 
-          {/* ── التحية اليومية الديناميكية (h1 دلالي وحيد للصفحة) ── */}
+          <h1 className="hpv4-vision-title">رؤيتنا: بناء الإسلام الرقمي</h1>
+
+          {/* ── التحية اليومية الديناميكية ── */}
           <div style={{ marginBottom: "1.1rem" }}>
-            <h1 style={{
+            <p style={{
               color: "rgba(250,248,242,0.92)",
               fontSize: "clamp(0.88rem, 2.4vw, 1.05rem)",
               fontWeight: 700,
@@ -588,7 +590,7 @@ export default function HomePage() {
               margin: "0 0 0.35rem",
             }}>
               {dailyCtx.greeting}
-            </h1>
+            </p>
             {dailyCtx.subGreeting && (
               <p style={{
                 color: "rgba(250,248,242,0.55)",

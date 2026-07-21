@@ -1267,18 +1267,6 @@
       "robots": "noindex, follow"
     },
     {
-      "path": "/developers",
-      "title": "للمطورين",
-      "description": "معلومات تقنية للمطورين حول منصة المجلس العلمي وواجهات برمجة التطبيقات.",
-      "keywords": [
-        "API المجلس العلمي",
-        "للمطورين",
-        "تكامل تقني"
-      ],
-      "sitemap": false,
-      "robots": "noindex, nofollow"
-    },
-    {
       "path": "/register",
       "title": "إنشاء حساب",
       "description": "انضم إلى منصة المجلس العلمي وابدأ رحلتك في طلب العلم الشرعي.",

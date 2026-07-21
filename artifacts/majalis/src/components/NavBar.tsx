@@ -176,14 +176,6 @@ export default function NavBar() {
             </button>
           </div>
 
-          <Link href="/" className="navbar-brand" aria-label="المجلس العلمي — الرئيسية">
-            <img src="/logo-calligraphy.png" alt="" className="navbar-brand__mark" width="42" height="42" />
-            <span className="navbar-brand__copy">
-              <strong>المجلس العلمي</strong>
-              <small>علمٌ موثوق، قريبٌ منك</small>
-            </span>
-          </Link>
-
           {/* Desktop tabs */}
           {!isMobile && (
             <nav className="navbar-v3__tabs" aria-label="التنقل الرئيسي">
@@ -228,6 +220,7 @@ export default function NavBar() {
                 className="navbar-search-cmd"
               >
                 <Search size={17} strokeWidth={1.8} aria-hidden="true" />
+                <span>بحث</span>
               </button>
             )}
             {/* Desktop: search + auth + lang */}

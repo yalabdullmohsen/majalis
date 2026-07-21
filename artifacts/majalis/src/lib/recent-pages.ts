@@ -222,7 +222,7 @@ function labelFor(href: string): string {
 const SKIP_PATHS = new Set([
   "/login", "/register", "/admin", "/auth",
   "/privacy", "/terms", "/about", "/contact", "/404",
-  "/settings", "/developer", "/developers", "/account-deletion",
+  "/settings", "/account-deletion",
 ]);
 
 function shouldSkip(href: string): boolean {
