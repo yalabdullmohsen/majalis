@@ -63,7 +63,7 @@ function prayerMs(slot: PrayerSlot): number | null {
   return slot.minutes * 60_000;
 }
 
-async function requestNotificationPermission(): Promise<boolean> {
+export async function requestPrayerNotificationPermission(): Promise<boolean> {
   if (!("Notification" in window)) return false;
   if (Notification.permission === "granted") return true;
   if (Notification.permission === "denied") return false;
@@ -72,13 +72,15 @@ async function requestNotificationPermission(): Promise<boolean> {
 }
 
 function showBrowserNotification(event: AdhanEvent) {
+  const prefs = loadAdhanPrefs();
+  if (!prefs.browserNotificationsEnabled) return;
   if (!("Notification" in window) || Notification.permission !== "granted") return;
   const title = event.type === "advance"
     ? `تنبيه: ${event.prayerName} بعد ${event.minutesBefore} دقيقة`
     : `حان وقت ${event.prayerName}`;
   const body = event.type === "advance"
-    ? `استعد لصلاة ${event.prayerName}`
-    : "الصلاة خير من النوم — حي على الصلاة";
+    ? "اقترب وقت الصلاة، تذكّر ضبط هاتفك على الوضع الصامت احترامًا للمصلين واستعدادًا للصلاة."
+    : "حان وقت الصلاة؛ يرجى ضبط الهاتف على الوضع الصامت وعدم إشغال المصلين.";
 
   try {
     new Notification(title, {
@@ -86,12 +88,18 @@ function showBrowserNotification(event: AdhanEvent) {
       icon: "/icon-192.png",
       badge: "/icon-72.png",
       tag: `adhan-${event.prayerKey}-${event.type}`,
-      silent: false,
+      silent: prefs.silentReminderEnabled,
     });
   } catch { /* ignore */ }
 }
 
 function dispatchAdhanEvent(event: AdhanEvent) {
+  const day = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kuwait" }).format(new Date());
+  const dedupeKey = `majalis-prayer-reminder:${day}:${event.prayerKey}:${event.type}`;
+  try {
+    if (localStorage.getItem(dedupeKey)) return;
+    localStorage.setItem(dedupeKey, String(Date.now()));
+  } catch { /* continue without persistence */ }
   window.dispatchEvent(new CustomEvent(ADHAN_EVENT_NAME, { detail: event }));
   showBrowserNotification(event);
 }
@@ -130,7 +138,7 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
 
   // ── Advance reminder timer ──
   const advMin = prayerPrefs.advanceMinutes;
-  if (advMin > 0) {
+  if (advMin > 0 && prefs.silentReminderEnabled) {
     let advDelay = slotMs - nowMs - advMin * 60_000;
     if (advDelay < 0) advDelay += 24 * 3600_000;
     if (advDelay < 24 * 3600_000) {
@@ -139,6 +147,7 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
         if (Date.now() - advTargetEpoch > STALE_TOLERANCE_MS) return; // تذكير متأخّر — تجاهله
         const fresh = loadAdhanPrefs();
         if (!fresh.globalEnabled || !fresh.prayers[key].enabled) return;
+        if (!fresh.silentReminderEnabled) return;
         if (fresh.prayers[key].advanceMinutes === 0) return;
         dispatchAdhanEvent({
           type: "advance",
@@ -155,7 +164,6 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
 /** Start the scheduler for the current prayer data. Call once on app load. */
 export async function startAdhanScheduler(payload: PrayerTimesPayload): Promise<void> {
   clearAllTimers();
-  await requestNotificationPermission();
 
   const SLOT_KEYS: Array<[string, PrayerKey]> = [
     ["Fajr", "fajr"],

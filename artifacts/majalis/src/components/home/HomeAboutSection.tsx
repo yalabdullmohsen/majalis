@@ -1,9 +1,14 @@
+import { SITE_CONFIG } from "@/lib/site-config";
+
 export function HomeAboutSection() {
   return (
     <section className="home-about home-section" aria-labelledby="about-home-heading" dir="rtl">
       <p className="home-about__eyebrow">من نحن</p>
       <h2 id="about-home-heading" className="home-about__title">عن المجلس العلمي</h2>
       <div className="home-about__body">
+        <p>
+          رؤيتنا: {SITE_CONFIG.vision}
+        </p>
         <p>
           المجلس العلمي تطبيق علمي رقمي متخصص يجمع طلاب العلم الشرعي وعموم المسلمين في مكان واحد،
           تُقدّم دروساً علمية من مشايخ متخصصين، وفتاوى شرعية معتمدة، ومحتوى يومياً في

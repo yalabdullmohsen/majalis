@@ -10,9 +10,9 @@ test.describe("Quran — المصحف", () => {
     await waitForContent(page);
     await page.waitForTimeout(800);
     const body = await page.locator("body").innerText();
-    // قسم القرآن أُحيل لـ"قريباً" — نتحقق فقط من تحميل الصفحة بمحتوى
-    const hasContent = body.length > 10;
-    expect(hasContent, "صفحة القرآن يجب أن تحمّل بمحتوى").toBe(true);
+    expect(body).toContain("المصحف");
+    expect(body).toContain("7 آية · مكية");
+    expect(body).not.toContain("قسم القرآن الكريم قيد التطوير");
   });
 
   test("clicking on Surah Al-Fatiha navigates to its page", async ({ page }) => {
@@ -61,5 +61,22 @@ test.describe("Quran — المصحف", () => {
       const body = await page.locator("body").innerText();
       expect(body.length).toBeGreaterThan(5);
     }
+  });
+
+  test("surah stories index and detail routes use the implemented experience", async ({ page }) => {
+    await page.goto("/quran/surah-stories");
+    await waitForContent(page);
+    await expect(page.getByRole("heading", { name: "قصص القرآن" })).toBeVisible();
+    await page.goto("/quran/surah-stories/1");
+    await waitForContent(page);
+    await expect(page.getByRole("heading", { name: "الفاتحة" })).toBeVisible();
+  });
+
+  test("quran circles route is not hidden behind coming soon", async ({ page }) => {
+    await page.goto("/quran-circles");
+    await waitForContent(page);
+    const body = await page.locator("body").innerText();
+    expect(body).toContain("حلقات التحفيظ");
+    expect(body).not.toContain("قسم القرآن الكريم قيد التطوير");
   });
 });

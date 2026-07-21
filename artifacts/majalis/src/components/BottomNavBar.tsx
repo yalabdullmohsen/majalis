@@ -2,32 +2,24 @@
 
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { BookOpen, GraduationCap, Home, LayoutGrid, Sunset } from "lucide-react";
+import { BookOpen, CircleHelp, GraduationCap, Home, LayoutGrid } from "lucide-react";
 import { MoreBottomSheet } from "./MoreBottomSheet";
-import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 
-const LEFT_TABS = [
+const NAV_TABS = [
   { href: "/",        label: "الرئيسية", Icon: Home },
-  { href: "/lessons", label: "الدروس",   Icon: GraduationCap },
-] as const;
-
-const RIGHT_TABS = [
   { href: "/quran",   label: "القرآن",   Icon: BookOpen },
+  { href: "/qa",      label: "سؤال وجواب", Icon: CircleHelp },
+  { href: "/learning/paths", label: "تعلّم", Icon: GraduationCap },
 ] as const;
 
 export function BottomNavBar() {
   const [location] = useLocation();
   const [moreOpen, setMoreOpen] = useState(false);
-  const { countdown } = usePrayerCountdown();
 
   const isActive = (href: string) => {
     if (href === "/") return location === "/";
     return location === href || location.startsWith(href + "/");
   };
-
-  const prayerActive =
-    location.startsWith("/prayer-countdown") || location.startsWith("/prayer-times");
-  const next = countdown?.next;
 
   const renderTab = ({ href, label, Icon }: { href: string; label: string; Icon: typeof Home }) => {
     const active = isActive(href);
@@ -49,31 +41,7 @@ export function BottomNavBar() {
   return (
     <>
       <nav className="bottom-nav" aria-label="التنقل السفلي">
-        {LEFT_TABS.map(renderTab)}
-
-        {/* زرّ الصلاة المركزي */}
-        <Link
-          href="/prayer-countdown"
-          className={`bottom-nav__center${prayerActive ? " is-active" : ""}`}
-          aria-current={prayerActive ? "page" : undefined}
-          aria-label={next ? `الصلاة القادمة: ${next.name} ${next.time}` : "مواقيت الصلاة"}
-        >
-          <span className="bottom-nav__center-btn">
-            <Sunset size={22} strokeWidth={1.8} aria-hidden="true" />
-          </span>
-          <span className="bottom-nav__center-meta">
-            {next ? (
-              <>
-                <span className="bottom-nav__center-name">{next.name}</span>
-                <span className="bottom-nav__center-time">{next.time}</span>
-              </>
-            ) : (
-              <span className="bottom-nav__center-name">الصلاة</span>
-            )}
-          </span>
-        </Link>
-
-        {RIGHT_TABS.map(renderTab)}
+        {NAV_TABS.map(renderTab)}
 
         <button
           type="button"

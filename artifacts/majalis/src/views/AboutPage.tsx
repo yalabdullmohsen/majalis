@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export default function AboutPage() {
   return (
@@ -15,6 +16,12 @@ export default function AboutPage() {
         <p>
           نسعى إلى تيسير الوصول إلى العلم الشرعي الموثّق، وربط طالب العلم بالدروس والدورات العلمية
           والمصادر العلمية المعتمدة، مع مراعاة الدقة والأدب في عرض المحتوى.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="رؤيتنا">
+        <p>
+          {SITE_CONFIG.vision}
         </p>
       </LegalSection>
 

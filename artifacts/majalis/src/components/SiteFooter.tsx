@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 function IslamicStarFooter() {
   const cx = 16, r1 = 13, r2 = 7;
@@ -58,7 +59,7 @@ export function SiteFooter() {
             <strong>المجلس العلمي</strong>
             <p>تطبيق علمي شرعي للدروس والعبادة والمحتوى اليومي.</p>
             <p className="site-footer-email">
-              <a href="mailto:yalabdullmohsen1@gmail.com">yalabdullmohsen1@gmail.com</a>
+              <a href={`mailto:${SITE_CONFIG.contactEmail}`} dir="ltr">{SITE_CONFIG.contactEmail}</a>
             </p>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export default function ContactPage() {
   return (
@@ -12,10 +13,7 @@ export default function ContactPage() {
 
       <LegalSection title="البريد الإلكتروني">
         <p>
-          <a href="mailto:info@majlisilm.com">info@majlisilm.com</a>
-        </p>
-        <p>
-          <a href="mailto:yalabdullmohsen1@gmail.com">yalabdullmohsen1@gmail.com</a>
+          <a href={`mailto:${SITE_CONFIG.contactEmail}`} dir="ltr">{SITE_CONFIG.contactEmail}</a>
         </p>
       </LegalSection>
 

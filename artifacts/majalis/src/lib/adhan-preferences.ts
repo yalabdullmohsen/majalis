@@ -38,6 +38,8 @@ export type PerPrayerPrefs = {
 
 export type AdhanPreferences = {
   globalEnabled: boolean;           // master on/off
+  browserNotificationsEnabled: boolean;
+  silentReminderEnabled: boolean;
   defaultMuezzinId: string;         // fallback muezzin for all prayers
   prayers: Record<PrayerKey, PerPrayerPrefs>;
 };
@@ -61,6 +63,8 @@ function defaultPrefs(): AdhanPreferences {
   }
   return {
     globalEnabled: true,
+    browserNotificationsEnabled: false,
+    silentReminderEnabled: true,
     defaultMuezzinId: DEFAULT_MUEZZIN_ID,
     prayers,
   };
@@ -74,6 +78,8 @@ export function loadAdhanPrefs(): AdhanPreferences {
     const base = defaultPrefs();
     return {
       globalEnabled: parsed.globalEnabled ?? base.globalEnabled,
+      browserNotificationsEnabled: parsed.browserNotificationsEnabled ?? base.browserNotificationsEnabled,
+      silentReminderEnabled: parsed.silentReminderEnabled ?? base.silentReminderEnabled,
       defaultMuezzinId: parsed.defaultMuezzinId ?? base.defaultMuezzinId,
       prayers: { ...base.prayers, ...parsed.prayers },
     };

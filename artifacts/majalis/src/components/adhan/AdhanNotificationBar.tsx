@@ -84,8 +84,8 @@ function AdhanToast({ event, onDismiss }: { event: ActiveEvent; onDismiss: () =>
         </div>
         <div style={{ fontSize: "0.78rem", opacity: 0.85 }}>
           {isAdhan
-            ? "الله أكبر — حي على الصلاة"
-            : `${event.prayerName} بعد ${event.minutesBefore} دقيقة`}
+            ? "حان وقت الصلاة؛ يرجى ضبط الهاتف على الوضع الصامت وعدم إشغال المصلين."
+            : `اقترب وقت الصلاة (${event.minutesBefore} د)، تذكّر ضبط هاتفك على الوضع الصامت احترامًا للمصلين.`}
         </div>
       </div>
       <div style={{ display: "flex", gap: "0.35rem", flexShrink: 0 }}>

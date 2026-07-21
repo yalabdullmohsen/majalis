@@ -14,6 +14,7 @@ import {
 } from "@/lib/adhan-preferences";
 import { getMuezzin, stopAdhan } from "@/lib/adhan-audio";
 import { MuezzinPicker } from "@/components/adhan/MuezzinPicker";
+import { requestPrayerNotificationPermission } from "@/lib/adhan-scheduler";
 
 const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 20, 30];
 
@@ -36,6 +37,13 @@ export default function AdhanSettingsPage() {
   function toggleGlobal(enabled: boolean) {
     const next = patchAdhanPrefs({ ...prefs, globalEnabled: enabled });
     setPrefs(next);
+  }
+
+  async function enableBrowserNotifications() {
+    const granted = await requestPrayerNotificationPermission();
+    const next = patchAdhanPrefs({ ...prefs, browserNotificationsEnabled: granted });
+    setPrefs(next);
+    flashSaved();
   }
 
   function setDefaultMuezzin(id: string) {
@@ -117,6 +125,23 @@ export default function AdhanSettingsPage() {
           checked={prefs.globalEnabled}
           onChange={toggleGlobal}
         />
+        <div style={{ marginTop: "1rem", paddingTop: "1rem", borderTop: "1px solid #e5e7eb" }}>
+          <p style={{ margin: "0 0 0.65rem", fontSize: "0.78rem", lineHeight: 1.7, color: "#4b5563" }}>
+            نطلب إذن النظام فقط لإرسال تذكير الصلاة عندما لا تكون الصفحة أمامك. يمكنك إيقافه
+            في أي وقت، ولن يحوّل التطبيق الهاتف إلى الوضع الصامت تلقائيًا.
+          </p>
+          <button type="button" onClick={enableBrowserNotifications} style={smallBtn("#134a3a")}>
+            {prefs.browserNotificationsEnabled ? "الإشعارات مفعّلة" : "تفعيل إشعارات النظام"}
+          </button>
+        </div>
+        <div style={{ marginTop: "0.9rem" }}>
+          <ToggleRow
+            label="تذكير الوضع الصامت"
+            desc="إرسال التذكير بصمت قبل الصلاة وعند دخول وقتها"
+            checked={prefs.silentReminderEnabled}
+            onChange={(enabled) => setPrefs(patchAdhanPrefs({ ...prefs, silentReminderEnabled: enabled }))}
+          />
+        </div>
         {!prefs.globalEnabled && (
           <div style={{ fontSize: "0.78rem", color: "#b45309", background: "#fefce8", padding: "0.5rem 0.75rem", borderRadius: "0.4rem", marginTop: "0.5rem" }}>
             الإشعارات معطلة — لن يُشغَّل أذان ولن تصل تنبيهات.
