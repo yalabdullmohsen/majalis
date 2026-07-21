@@ -109,7 +109,7 @@ export function getNodeHref(node: KnNode): string {
   switch (node.node_type) {
     case "quran_ayah":    return "/quran-hub";
     case "hadith":        return "/hadith";
-    case "fatwa":         return ref ? `/fatwa/${ref}` : "/fatwa";
+    case "fatwa":         return "/rulings";
     case "scholar":       return "/lessons";
     case "book":          return ref ? `/library/${ref}` : "/library";
     case "lesson":        return ref ? `/lessons/${ref}` : "/lessons";

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { BookOpen, Gamepad2, GraduationCap, Home, LayoutGrid, Sunset } from "lucide-react";
+import { BookOpen, GraduationCap, HelpCircle, Home, LayoutGrid } from "lucide-react";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 
 type NavTab = {
@@ -9,17 +9,12 @@ type NavTab = {
   Icon: React.ComponentType<{ size?: number; strokeWidth?: number; "aria-hidden"?: boolean }>;
 };
 
-/* 5 وجهات أساسية + "المزيد" = 6 إجمالاً — إعادة تصميم الهوية v3 (2026-07-19):
-   يُلغي قرار توحيد الشريط لـ4+المزيد السابق (2026-07-18) ويضيف "الصلاة"
-   صراحةً كوجهة سادسة (مواقيت + عد تنازلي + قبلة + إعدادات أذان، جميعها
-   موجودة فعلاً عبر /prayer-times ولوحاتها الفرعية). المكتبة/العلماء/الفقه
-   تبقى متاحة عبر "المزيد" (MoreBottomSheet) — إعادة تموضع لا حذف وظيفة. */
+/* خمس وجهات ثابتة فقط على الهاتف. تبقى الصلاة وبقية الخدمات متاحة من "المزيد". */
 const NAV_TABS: NavTab[] = [
   { href: "/",             label: "الرئيسية",    Icon: Home },
   { href: "/quran-hub",    label: "القرآن",      Icon: BookOpen },
-  { href: "/quiz",         label: "سؤال وجواب", Icon: Gamepad2 },
+  { href: "/qa",           label: "سؤال وجواب", Icon: HelpCircle },
   { href: "/lessons",      label: "تعلّم",       Icon: GraduationCap },
-  { href: "/prayer-times", label: "الصلاة",      Icon: Sunset },
 ];
 
 export function BottomNavBar() {

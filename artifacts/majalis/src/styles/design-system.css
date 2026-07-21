@@ -45,6 +45,27 @@ html {
   max-width: var(--ds-content-max);
 }
 
+.revelation-rule, .revelation-why, .revelation-sources { margin-block-end: var(--ds-space-5); line-height: 1.8; }
+.revelation-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-space-4); margin-block-end: var(--ds-space-5); }
+.revelation-comparison h2, .revelation-rule h2, .revelation-why h2, .revelation-sources h2 { color: var(--ds-emerald-deep); font-size: var(--ds-text-lg); margin-block-end: var(--ds-space-2); }
+.revelation-toolbar { display: flex; align-items: center; justify-content: space-between; gap: var(--ds-space-3); margin-block-end: var(--ds-space-3); }
+.revelation-toolbar label { flex: 1; max-width: 28rem; }
+.filter-tabs { display: flex; gap: var(--ds-space-1); overflow-x: auto; }
+.filter-tabs button { min-height: 44px; padding-inline: var(--ds-space-4); border: 1px solid var(--ds-line-color); border-radius: var(--ds-radius); background: var(--majalis-panel, #fff); color: var(--ds-ink-soft); font: inherit; cursor: pointer; }
+.filter-tabs button.is-active { background: var(--ds-emerald-soft); border-color: var(--ds-emerald); color: var(--ds-emerald-deep); font-weight: 700; }
+.revelation-review-note { color: var(--ds-ink-soft); font-size: var(--ds-text-sm); line-height: 1.7; margin-block-end: var(--ds-space-4); }
+.surah-info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: var(--ds-space-3); margin-block-end: var(--ds-space-6); }
+.surah-info-card { display: grid; grid-template-columns: auto 1fr; gap: var(--ds-space-3); align-items: start; }
+.surah-info-card__number { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: var(--ds-radius); background: var(--ds-emerald-soft); color: var(--ds-emerald-deep); font-weight: 800; }
+.surah-info-card__body h2 { margin: 0; color: var(--ds-ink); font-size: var(--ds-text-lg); }
+.surah-info-card__body p { margin: var(--ds-space-1) 0; color: var(--ds-ink-soft); font-size: var(--ds-text-sm); }
+.surah-info-card__meta { display: flex; align-items: center; flex-wrap: wrap; gap: var(--ds-space-2); font-size: var(--ds-text-xs); color: var(--ds-ink-soft); }
+.surah-info-card__link { grid-column: 2; color: var(--ds-emerald-deep); font-weight: 700; font-size: var(--ds-text-sm); }
+.revelation-badge { display: inline-flex; padding: .2rem .55rem; border-radius: 999px; font-weight: 800; }
+.revelation-badge--makki { background: #fff4d6; color: #765510; }
+.revelation-badge--madani { background: var(--ds-emerald-soft); color: var(--ds-emerald-deep); }
+@media (max-width: 640px) { .revelation-comparison { grid-template-columns: 1fr; } .revelation-toolbar { align-items: stretch; flex-direction: column; } .revelation-toolbar label { max-width: none; } }
+
 /* ── Typography ── */
 .ds-page-header {
   margin-bottom: var(--ds-space-4);

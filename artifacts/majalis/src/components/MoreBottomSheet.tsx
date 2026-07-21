@@ -15,6 +15,7 @@ const SHEET_SECTIONS = [
   { group: "القرآن الكريم", items: [
     { href: "/mushaf",              label: "المصحف الشريف",      Icon: BookOpen },
     { href: "/quran/surahs",        label: "فهرس السور",         Icon: BookText },
+    { href: "/quran/makki-madani",  label: "المكي والمدني",      Icon: Map },
     { href: "/quran-hub",           label: "مركز القرآن",        Icon: Layers },
     { href: "/daily-wird",          label: "الورد اليومي",       Icon: Sun },
     { href: "/quran/tajweed",       label: "علم التجويد",        Icon: Mic2 },
