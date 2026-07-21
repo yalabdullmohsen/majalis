@@ -32,6 +32,7 @@ const PUBLIC_ROUTES: Array<{ href: string; label: string }> = [
   { href: "/universities",        label: "دليل الجامعات" },
   { href: "/learning-path",       label: "خارطة طالب العلم" },
   { href: "/quran-hub",      label: "القرآن" },
+  { href: "/quran/memorization-plans", label: "خطط حفظ القرآن" },
   { href: "/quran-radio",    label: "إذاعة القرآن" },
   { href: "/adhkar",         label: "الأذكار" },
   { href: "/tasbih",         label: "التسبيح" },

@@ -26,6 +26,7 @@ const SHEET_SECTIONS = [
     { href: "/quran-live",          label: "البث المباشر",       Icon: Tv },
     { href: "/quran-circles",       label: "حلقات التحفيظ",      Icon: Users },
     { href: "/quran-memorization",  label: "اختبارات الحفظ",     Icon: Zap },
+    { href: "/quran/memorization-plans", label: "خطط الحفظ",     Icon: CalendarDays },
     { href: "/mutashabihat",        label: "الآيات المتشابهات",  Icon: GitBranch },
     { href: "/muezzins",            label: "مكتبة المؤذنين",     Icon: Mic },
   ]},

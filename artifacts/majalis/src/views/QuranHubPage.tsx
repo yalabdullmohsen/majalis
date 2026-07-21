@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import {
   Radio, Mic2, Layers, Circle, Star,
   ChevronLeft, BookMarked, BookOpen, Headphones, GraduationCap,
-  Moon, Heart, Sparkles, Mic, History,
+  Moon, Heart, Sparkles, Mic, History, CalendarCheck,
   type LucideIcon,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
@@ -14,6 +14,14 @@ type QuranSection = { href: string; title: string; desc: string; Icon: LucideIco
 
 /* ── بيانات أقسام القرآن ──────────────────────────────────── */
 const QURAN_SECTIONS: QuranSection[] = [
+  {
+    href: "/quran/memorization-plans",
+    title: "خطط الحفظ والمراجعة",
+    desc: "خطط مرنة من سنة إلى خمس سنوات، ومراجعة مكثفة وتثبيت، مع حفظ تقدمك محليًا",
+    Icon: CalendarCheck,
+    accent: "#176B57",
+    tag: "خطط مرنة",
+  },
   {
     href: "/quran/recitation-test-ai",
     title: "اختبار التسميع بالذكاء الاصطناعي",

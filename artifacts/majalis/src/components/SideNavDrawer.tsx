@@ -229,6 +229,7 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/quran-live",          label: "البث المباشر",       Icon: Tv,            desc: "من مكة والمدينة" },
       { href: "/quran-circles",       label: "حلقات التحفيظ",      Icon: Users,         desc: "دليل حلقات القرآن" },
       { href: "/quran-memorization",  label: "اختبارات الحفظ",     Icon: Zap,           desc: "12 نوعًا من اختبارات الحفظ" },
+      { href: "/quran/memorization-plans", label: "خطط الحفظ",     Icon: CalendarDays,  desc: "خطط مرنة للحفظ والمراجعة والتثبيت" },
       { href: "/mutashabihat",        label: "الآيات المتشابهات",  Icon: GitBranch,     desc: "تمييز الآيات المتشابهة لفظًا" },
       { href: "/muezzins",            label: "مكتبة القراء",       Icon: Mic,           desc: "مقاطع صوتية للقراء" },
     ],
