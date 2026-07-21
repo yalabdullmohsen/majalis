@@ -56,7 +56,7 @@
     "smoke:production-loading": "node scripts/smoke-production-loading.mjs",
     "bootstrap:platform": "node scripts/run-platform-bootstrap.mjs",
     "bootstrap:platform:status": "node scripts/run-platform-bootstrap.mjs status",
-    "build": "pnpm run generate:seo && pnpm run generate:rulings && vite build --config vite.config.ts && node scripts/generate-version.mjs",
+    "build": "pnpm run generate:seo && pnpm run generate:rulings && vite build --config vite.config.ts && node scripts/publish-prerender.mjs && node scripts/test-prerender-output.mjs && node scripts/generate-version.mjs",
     "build:next": "next build",
     "preview": "vite preview --config vite.config.ts --host 0.0.0.0",
     "start": "vite preview --config vite.config.ts --host 0.0.0.0 --port ${PORT:-24216}",
@@ -64,6 +64,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint src lib --ext .ts,.tsx --max-warnings 50",
     "test:sm2": "node scripts/test-sm2.mjs",
+    "test:prerender": "node scripts/test-prerender-output.mjs",
     "generate:version": "node scripts/generate-version.mjs"
   },
   "devDependencies": {
