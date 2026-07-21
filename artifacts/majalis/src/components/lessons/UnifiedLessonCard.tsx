@@ -1,5 +1,4 @@
 import { memo, useCallback, useEffect, useState } from "react";
-import { resolveLessonPosterUrl } from "@/lib/lesson-image";
 import { Link } from "wouter";
 import { AdminInlineEdit } from "@/components/AdminInlineEdit";
 import {
@@ -106,7 +105,6 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
     await handleCopy();
   }, [lesson, handleCopy]);
 
-  const posterUrl = resolveLessonPosterUrl(lesson.lessonImage);
   const flags = [
     lesson.hasLiveStream ? "بث مباشر" : "",
     lesson.hasRecording ? "تسجيل متاح" : "",
@@ -138,12 +136,6 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
             )}
           </div>
         </div>
-
-        {!compact && posterUrl && (
-          <div className="lesson-unified-card__media">
-            <LazyImage src={posterUrl} alt={lesson.title} className="lesson-unified-card__poster" />
-          </div>
-        )}
 
         {flags.length > 0 && (
           <div className="lesson-unified-card__flags">
