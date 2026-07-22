@@ -108,7 +108,20 @@ html[data-theme="dark"] .mf2-line { --mf2-ink: #F0EDE4; }
 .mf2-ayah-group--active {
   background: color-mix(in srgb, #0E6E52 16%, transparent);
 }
+/* ⚠️ إصلاح جذري (2026-07-22): كل كلمة تُصيَّر كعنصر <span> منفصل (لتفعيل
+   الملاءمة الدقيقة لحجم الخط لكل سطر، وربط النقر بالآية)، ونص الكلمة
+   نفسه (text_qpc_hafs/glyphText) لا يحوي أي حرف مسافة زائد — هذا يعني
+   أن الكلمات المتجاورة كانت تُصيَّر بلا أي فاصل بينها إطلاقًا (0px قياسًا
+   فعليًا عبر getBoundingClientRect)، فتبدو ملتصقة وقد يُربك ذلك محرك
+   تشكيل الحروف عند حدود الكلمة. الحل: مسافة CSS صريحة بين كل كلمتين
+   متتاليتين — لا تُغيّر محتوى النص إطلاقًا (نص كل كلمة يبقى كما هو
+   حرفيًا)، ولا تكسر خوارزمية البحث الثنائي للتحجيم (تقيس scrollWidth
+   الفعلي المعروض، فتتكيّف تلقائيًا مع العرض الإضافي). */
 .mf2-word { display: inline; }
+.mf2-word + .mf2-word,
+.mf2-ayah-group + .mf2-ayah-group .mf2-word:first-child {
+  margin-inline-start: 0.24em;
+}
 
 .mf2-sajda-badge {
   display: inline-flex;
