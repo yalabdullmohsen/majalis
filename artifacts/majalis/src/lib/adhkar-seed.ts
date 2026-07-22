@@ -3378,10 +3378,10 @@ export const ADHKAR_ITEMS: AdhkarItem[] = [
     categoryId: "adh-misc",
     text: "أَسْتَغْفِرُ اللَّهَ الَّذِي لَا إِلَهَ إِلَّا هُوَ الْحَيَّ الْقَيُّومَ وَأَتُوبُ إِلَيْهِ",
     count: 3,
-    narrator: "شداد بن أوس",
+    narrator: "عبد الله بن مسعود",
     source: "رواه أبو داود والترمذي",
     grade: "صحيح",
-    reference: "حصن المسلم — سيد الاستغفار",
+    reference: "حصن المسلم — الاستغفار",
     keywords: ["استغفار", "حي", "قيوم", "توبة"],
   },
   {
@@ -3398,7 +3398,7 @@ export const ADHKAR_ITEMS: AdhkarItem[] = [
   {
     id: "adh-328",
     categoryId: "adh-sleep",
-    text: "اللَّهُمَّ بِاسْمِكَ أَمُوتُ وَأَحْيَا",
+    text: "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
     count: 1,
     narrator: "حذيفة",
     source: "رواه البخاري",
