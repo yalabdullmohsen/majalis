@@ -24,9 +24,9 @@ CONTENT_PROMPT_FILE="$SCRIPT_DIR/content-runner-content-prompt.txt"
 AUDIT_PROMPT_FILE="$SCRIPT_DIR/content-runner-audit-prompt.txt"
 CYCLE_COUNT_FILE="$SCRIPT_DIR/content-runner.cycle-count"
 DAILY_COUNT_FILE="$SCRIPT_DIR/content-runner.daily-count"
-INTERVAL_SECONDS=2700   # 45 دقيقة — بطلب صريح من المالك لترشيد رصيد Claude Code الأسبوعي
+INTERVAL_SECONDS=3600   # 60 دقيقة — بطلب صريح من المالك (2026-07-22) لترشيد رصيد Claude Code الأسبوعي
 AUDIT_EVERY_N=5
-MAX_CYCLES_PER_DAY=20   # سقف يومي صريح — بطلب المالك. عدّله هنا فقط إن أردت تغييره.
+MAX_CYCLES_PER_DAY=10   # سقف يومي صريح — بطلب المالك (2026-07-22). عدّله هنا فقط إن أردت تغييره.
 
 log_line() {
   # سطر واحد فقط لكل دورة: الوقت | النوع | الملخص المستخرج من مخرجات claude
