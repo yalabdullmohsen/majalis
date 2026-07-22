@@ -225,7 +225,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الدجال يخرج من المشرق؛ وعلامة قربه ظهور الفتن وكثرة الكذب.", category: "العقيدة", source: "رواه البخاري ومسلم — أشراط الساعة", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الحديث ── */
-  { text: "اتقوا الله وصلوا أرحامكم.", category: "الحديث", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "اتقوا الله وصلوا أرحامكم.", category: "الحديث", source: "رواه البيهقي في شعب الإيمان عن ابن مسعود — حسّنه الألباني في صحيح الجامع", author_name: "صحيح الجامع للألباني", status: "approved", verification_status: "verified" },
   { text: "إن الله يحب إذا عمل أحدكم عملاً أن يتقنه.", category: "الحديث", source: "رواه البيهقي — صحيح الألباني", author_name: "السلسلة الصحيحة", status: "approved", verification_status: "verified" },
   { text: "من صمت نجا — السكوت أمان، والكلام مسؤولية.", category: "الحديث", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
 
