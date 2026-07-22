@@ -41,7 +41,7 @@ export const COLOR = {
 
   /* ── الوضع الداكن ── */
   dark: {
-    gold:    "#3BAD8A",
+    gold:    "#5CC49A",
     canvas:  "#111714",
     canvas1: "#1A2120",
     ink:     "#E5F0EC",
