@@ -3,11 +3,11 @@
  * أضِف هنا فقط، ولا تكتب رابط انستغرام أو غيره يدويًا في أي مكوّن آخر.
  */
 
-/** اسم حساب أكاديمية ورثة الأنبياء كما يظهر للمستخدم. */
-export const ACADEMY_NAME = "أكاديمية ورثة الأنبياء";
+/** اسم الحساب الرسمي كما يظهر للمستخدم. */
+export const ACADEMY_NAME = "المجلس العلمي";
 
 /** معرّف حساب انستغرام (بلا @). */
-export const ACADEMY_INSTAGRAM_HANDLE = "w_alanbiya";
+export const ACADEMY_INSTAGRAM_HANDLE = "majlisilm";
 
 /** الرابط الآمن على متصفح الويب — يُستخدم كـ href الأساسي دائمًا (يعمل حتى بلا JavaScript). */
 export const ACADEMY_INSTAGRAM_URL = `https://www.instagram.com/${ACADEMY_INSTAGRAM_HANDLE}`;
