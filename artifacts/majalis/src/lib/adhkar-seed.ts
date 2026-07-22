@@ -177,7 +177,7 @@ export const ADHKAR_ITEMS: AdhkarItem[] = [
     categoryId: "adh-salah",
     text: "اللَّهُمَّ بَاعِدْ بَيْنِي وَبَيْنَ خَطَايَايَ كَمَا بَاعَدْتَ بَيْنَ الْمَشْرِقِ وَالْمَغْرِبِ",
     count: 1,
-    narrator: "علي بن أبي طalib",
+    narrator: "علي بن أبي طالب",
     source: "متفق عليه",
     grade: "صحيح",
     reference: "حصن المسلم، دعاء الاستفتاح",
