@@ -67,7 +67,7 @@ function NodeBox({ placed, onClick }: {
   const isUlul  = node.isUlulAzm;
   const isLast  = node.id === "muhammad";
   const fill    = isLast ? EMERALD : isAnc ? ANCESTOR_CLR : "#FFFFFF";
-  const stroke  = isUlul ? "#D97706" : isAnc ? "#929995" : EMERALD;
+  const stroke  = isUlul ? "#D97706" : isAnc ? "#5E655F" : EMERALD;
   const textClr = (isLast || isAnc) ? "#FFFFFF" : "#1F2937";
   const sw      = isUlul ? 2.5 : 1.5;
   const rx      = isLast ? 12 : 8;
@@ -107,7 +107,7 @@ function NodeBox({ placed, onClick }: {
           x={NODE_W / 2} y={NODE_H / 2 + 11}
           textAnchor="middle" dominantBaseline="middle"
           fontSize={8.5} fontFamily="IBM Plex Sans Arabic, Noto Sans Arabic, sans-serif"
-          fill={isLast ? "rgba(255,255,255,0.8)" : "#929995"}
+          fill={isLast ? "rgba(255,255,255,0.8)" : "#5E655F"}
         >
           {truncateAtWord(node.era, 20)}
         </text>
@@ -353,7 +353,7 @@ export default function ProphetsFamilyTreePage() {
                 </span>
               )}
             </h2>
-            <button type="button" onClick={() => setSelected(null)} aria-label="إغلاق" style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.2rem", color: "#929995" }}>×</button>
+            <button type="button" onClick={() => setSelected(null)} aria-label="إغلاق" style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.2rem", color: "#5E655F" }}>×</button>
           </div>
           {selectedNode.era && (
             <p style={{ margin: "0.25rem 0", color: "#68716D", fontSize: "0.85rem" }}>
@@ -366,7 +366,7 @@ export default function ProphetsFamilyTreePage() {
             </p>
           )}
           {selectedNode.linkNote && (
-            <p style={{ margin: "0.25rem 0", color: "#929995", fontSize: "0.8rem", fontStyle: "italic" }}>
+            <p style={{ margin: "0.25rem 0", color: "#5E655F", fontSize: "0.8rem", fontStyle: "italic" }}>
               {selectedNode.linkNote}
             </p>
           )}

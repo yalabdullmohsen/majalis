@@ -2070,7 +2070,7 @@
   border: none;
   font-size: 1.1rem;
   cursor: pointer;
-  color: var(--msk-text-3, #929995);
+  color: var(--msk-text-3, #5E655F);
   width: 2rem;
   height: 2rem;
   display: grid;
@@ -2198,7 +2198,7 @@
 }
 .notif-banner--warn {
   background: rgba(24, 54, 42, 0.10) !important;
-  color: #929995 !important;
+  color: #5E655F !important;
   border-color: rgba(24, 54, 42, 0.25) !important;
 }
 .notif-banner--err {

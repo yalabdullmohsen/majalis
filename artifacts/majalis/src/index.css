@@ -82,14 +82,14 @@ html {
   --clr-divider:       rgba(23,61,53,.07);
   --clr-text-1:        var(--ink, #202725);
   --clr-text-2:        #68716D;
-  --clr-text-muted:    #929995;
+  --clr-text-muted:    #5E655F;
   --clr-text-on-pri:   #FFFFFF;
   --clr-accent:        var(--sand, #B89452);
   --clr-accent-soft:   var(--sand-soft, #F1E9D8);
   --clr-emerald:       var(--emerald-500, #173D35);
   --clr-ink:           var(--ink, #202725);
   --clr-ink-soft:      #68716D;
-  --clr-ink-muted:     #929995;
+  --clr-ink-muted:     #5E655F;
 
   /* ── سُلَّم Emerald المحدَّث 2026 ── */
   --emerald-50:  #EEF1F0;
@@ -145,7 +145,7 @@ html {
   --msk-sky-dim:       rgba(30,122,154,.10);
   --msk-text:          var(--ink);
   --msk-text-2:        #68716D;
-  --msk-text-3:        #929995;
+  --msk-text-3:        #5E655F;
   --msk-green:         var(--emerald-500);
   --msk-red:           #B44A4A;
   --msk-red-dim:       rgba(180,74,74,.08);
@@ -205,7 +205,7 @@ html {
   --bg-base:             var(--msk-canvas-1, #F7F4ED);
   --text-base:           var(--msk-text,     #202725);
   --text-body:           var(--msk-text-2,   #68716D);
-  --text-muted:          var(--msk-text-3,   #929995);
+  --text-muted:          var(--msk-text-3,   #5E655F);
   --majalis-accent:      var(--msk-gold,     #173D35);
   --majalis-surface-2:   var(--msk-canvas-1, #F7F4ED);
   --majalis-surface-hover: rgba(23,61,53,0.04);
@@ -291,7 +291,7 @@ html {
   --msk-sky-dim:       rgba(30,122,154,.10);
   --msk-text:          #202725;
   --msk-text-2:        #68716D;
-  --msk-text-3:        #929995;
+  --msk-text-3:        #5E655F;
   --msk-green:         #173D35;
   --msk-red:           #B44A4A;
   --msk-red-dim:       rgba(180,74,74,.08);
@@ -305,7 +305,7 @@ html {
 
   --majalis-ink:           #202725;
   --majalis-ink-soft:      #68716D;
-  --majalis-ink-muted:     #929995;
+  --majalis-ink-muted:     #5E655F;
   --majalis-charcoal:      #202725;
   --majalis-parchment:     #F7F4ED;
   --majalis-parchment-deep:#EFE9DC;
@@ -343,7 +343,7 @@ html {
   --v2-gold-soft:    rgba(184,148,82,.06);
   --v2-ink:          #202725;
   --v2-ink-2:        #68716D;
-  --v2-ink-3:        #929995;
+  --v2-ink-3:        #5E655F;
   --v2-surface-0:    #FFFFFF;
   --v2-surface-1:    #F7F4ED;
   --v2-surface-2:    #F1EEE5;
@@ -10626,7 +10626,7 @@ body.mobile-nav-body-lock {
 .side-nav-user-info {
   padding: 0.3rem 0.6rem;
   font-size: 0.78rem;
-  color: #929995;
+  color: #5E655F;
 }
 .side-nav-user-name { font-weight: 700; color: var(--majalis-ink, #173D35); }
 

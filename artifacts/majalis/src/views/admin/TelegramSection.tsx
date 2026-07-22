@@ -84,7 +84,7 @@ async function tgGet(action: string, params: Record<string, string> = {}) {
 
 const QUALITY_COLORS: Record<string, string> = {
   complete: "#16a34a",
-  needs_review: "#929995",
+  needs_review: "#5E655F",
   incomplete: "#dc2626",
   duplicate: "#7c3aed",
   rejected: "#9ca3af",
@@ -558,7 +558,7 @@ function StatsTab() {
       <div className="tgm-stats-grid">
         <StatCard label="إجمالي الرسائل" value={raw.total ?? 0} color="var(--majalis-emerald)" />
         <StatCard label="دروس مُستخرجة" value={lessons.total ?? 0} color="#2563eb" />
-        <StatCard label="بانتظار المراجعة" value={lessons.byReview?.pending ?? 0} color="#929995" />
+        <StatCard label="بانتظار المراجعة" value={lessons.byReview?.pending ?? 0} color="#5E655F" />
         <StatCard label="مُعتمدة" value={lessons.byReview?.approved ?? 0} color="#16a34a" />
         <StatCard label="معدل النجاح" value={`${data.successRate}%`} color="#7c3aed" />
       </div>

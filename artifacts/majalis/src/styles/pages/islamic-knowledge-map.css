@@ -395,7 +395,7 @@
 }
 .ikm-rel-reason {
   font-size: 0.75rem;
-  color: #929995;
+  color: #5E655F;
   margin-top: 0.1rem;
 }
 .ikm-rel-link {
@@ -408,7 +408,7 @@
 .ikm-detail__tags-title {
   font-size: 0.82rem;
   font-weight: 600;
-  color: #929995;
+  color: #5E655F;
   margin: 0 0 0.5rem;
 }
 .ikm-detail__tags {
@@ -457,7 +457,7 @@
 }
 .ikm-conn-label {
   font-size: 0.72rem;
-  color: #929995;
+  color: #5E655F;
   white-space: nowrap;
 }
 .ikm-conn-arrow {

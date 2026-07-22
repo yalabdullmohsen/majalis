@@ -35,7 +35,7 @@
   --elite-ink-2:        #202725;
   --elite-ink-3:        #202725;
   --elite-ink-soft:     #68716D;
-  --elite-ink-muted:    #929995;
+  --elite-ink-muted:    #5E655F;
   --elite-ink-faint:    #D6CFC0;
 
   /* ── الحدود ── */
@@ -2575,7 +2575,7 @@ button.hcp-prayer-cell:focus-visible {
 }
 .lessons-v2-result-count {
   font-size: 0.8rem !important;
-  color: var(--txt-muted, #929995) !important;
+  color: var(--txt-muted, #5E655F) !important;
   padding: 0.25rem 1rem 0 !important;
   margin: 0 !important;
   font-weight: 500 !important;
@@ -3923,7 +3923,7 @@ html[data-theme="dark"] .notif-row__label {
 .qibla-info-label {
   font-size: 0.68rem;
   font-weight: 600;
-  color: var(--txt-muted, #929995);
+  color: var(--txt-muted, #5E655F);
   text-align: center;
 }
 .qibla-info-value {
@@ -3943,13 +3943,13 @@ html[data-theme="dark"] .notif-row__label {
 }
 .qibla-hint {
   font-size: 0.8rem;
-  color: var(--txt-muted, #929995);
+  color: var(--txt-muted, #5E655F);
   text-align: center;
   max-width: 260px;
 }
 .qibla-loading, .qibla-error {
   font-size: 0.9rem;
-  color: var(--txt-muted, #929995);
+  color: var(--txt-muted, #5E655F);
   text-align: center;
   padding: 2rem 1rem;
 }
@@ -4059,7 +4059,7 @@ html[data-theme="dark"] .notif-row__label {
 .wird-stat span {
   font-size: 0.7rem;
   font-weight: 600;
-  color: var(--elite-ink-muted, #929995);
+  color: var(--elite-ink-muted, #5E655F);
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
@@ -4298,7 +4298,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 
 .occasions-filter__count {
   font-size: 0.8rem;
-  color: var(--elite-ink-muted, #929995);
+  color: var(--elite-ink-muted, #5E655F);
 }
 
 .occasions-filter__sacred-note {
@@ -4352,7 +4352,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 .occasion-detail__countdown {
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--elite-ink-muted, #929995);
+  color: var(--elite-ink-muted, #5E655F);
   white-space: nowrap;
   background: var(--elite-cream, #F1EEE5);
   border-radius: 999px;
@@ -4477,7 +4477,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 
 .search-response-ms {
   font-size: 0.72rem;
-  color: var(--elite-ink-faint, #929995);
+  color: var(--elite-ink-faint, #5E655F);
   margin-right: auto;
 }
 
@@ -4690,7 +4690,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 .search-results-count {
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--elite-ink-faint, #929995);
+  color: var(--elite-ink-faint, #5E655F);
   background: var(--elite-sage-2, #F1EEE5);
   border-radius: 999px;
   padding: 0.1rem 0.5rem;
@@ -4754,7 +4754,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 
 .search-result-meta {
   font-size: 0.75rem;
-  color: var(--elite-ink-muted, #929995);
+  color: var(--elite-ink-muted, #5E655F);
   line-height: 1.4;
 }
 
@@ -4970,7 +4970,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 /* ملاحظة نصية */
 .settings-note {
   font-size: 0.78rem !important;
-  color: var(--elite-ink-muted, #929995) !important;
+  color: var(--elite-ink-muted, #5E655F) !important;
   line-height: 1.6 !important;
   margin: 0.25rem 0 0 !important;
 }
@@ -5072,7 +5072,7 @@ html[data-theme="dark"] .khatma-bar-fill {
   border: 1px solid;
 }
 
-.isp-stat-chip--companions { background: rgba(151,165,159,0.12); color: #929995; border-color: rgba(151,165,159,0.3); }
+.isp-stat-chip--companions { background: rgba(151,165,159,0.12); color: #5E655F; border-color: rgba(151,165,159,0.3); }
 .isp-stat-chip--conquests  { background: rgba(122,144,144,0.12); color: #7A9090; border-color: rgba(122,144,144,0.3); }
 .isp-stat-chip--history    { background: rgba(107,136,136,0.12); color: #6B8888; border-color: rgba(107,136,136,0.3); }
 
@@ -5103,7 +5103,7 @@ html[data-theme="dark"] .khatma-bar-fill {
   box-shadow: 0 0 0 3px rgba(24,54,42,0.08);
 }
 
-.isp-search::placeholder { color: var(--elite-ink-muted, #929995); }
+.isp-search::placeholder { color: var(--elite-ink-muted, #5E655F); }
 
 .isp-filter-group {
   display: flex;
@@ -5114,7 +5114,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 .isp-filter-label {
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--elite-ink-muted, #929995);
+  color: var(--elite-ink-muted, #5E655F);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -5151,7 +5151,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 
 .isp-result-count {
   font-size: 0.8rem;
-  color: var(--elite-ink-muted, #929995);
+  color: var(--elite-ink-muted, #5E655F);
   margin: 0;
 }
 
@@ -5307,7 +5307,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 }
 
 .isp-empty__icon { font-size: 2.5rem; opacity: 0.4; }
-.isp-empty__hint { font-size: 0.82rem; color: var(--elite-ink-muted, #929995); margin: 0; }
+.isp-empty__hint { font-size: 0.82rem; color: var(--elite-ink-muted, #5E655F); margin: 0; }
 
 /* ── صفحة التفاصيل ── */
 .isp-detail {
@@ -5667,7 +5667,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 .mzp-header__top { display: flex; align-items: flex-start; justify-content: space-between; }
 .mzp-eyebrow { font-size: 0.75rem; color: var(--majalis-emerald); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 0.25rem; }
 .mzp-title { font-size: 1.4rem; font-weight: 800; color: var(--majalis-ink); margin: 0 0 0.35rem; }
-.mzp-subtitle { font-size: 0.82rem; color: var(--txt-subdued, #929995); margin: 0; }
+.mzp-subtitle { font-size: 0.82rem; color: var(--txt-subdued, #5E655F); margin: 0; }
 .mzp-fav-link-btn {
   display: flex; align-items: center; gap: 0.35rem;
   padding: 0.4rem 0.875rem; border-radius: 999px;
@@ -5687,7 +5687,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 }
 .mzp-search-icon {
   position: absolute; right: 0.75rem; top: 50%;
-  transform: translateY(-50%); color: var(--txt-muted, #929995); font-size: 1rem;
+  transform: translateY(-50%); color: var(--txt-muted, #5E655F); font-size: 1rem;
   pointer-events: none;
 }
 .mzp-search-input {
@@ -5705,7 +5705,7 @@ html[data-theme="dark"] .khatma-bar-fill {
   font-size: 0.8rem; font-family: inherit;
   color: var(--majalis-ink-soft); cursor: pointer; direction: rtl;
 }
-.mzp-results-meta { font-size: 0.78rem; color: var(--txt-subdued, #929995); margin-bottom: 0.875rem; }
+.mzp-results-meta { font-size: 0.78rem; color: var(--txt-subdued, #5E655F); margin-bottom: 0.875rem; }
 .mzp-clear-btn {
   margin-right: 0.5rem; color: #ef4444;
   background: none; border: none; cursor: pointer;
@@ -5722,10 +5722,10 @@ html[data-theme="dark"] .khatma-bar-fill {
 .mzp-set-default-btn {
   width: 100%; margin-top: 0.35rem; padding: 0.35rem;
   border-radius: 0.5rem; border: 1px dashed var(--majalis-line);
-  background: transparent; color: var(--txt-subdued, #929995);
+  background: transparent; color: var(--txt-subdued, #5E655F);
   font-size: 0.72rem; cursor: pointer; font-family: inherit;
 }
-.mzp-empty { text-align: center; padding: 3rem 1rem; color: var(--txt-muted, #929995); font-size: 0.9rem; }
+.mzp-empty { text-align: center; padding: 3rem 1rem; color: var(--txt-muted, #5E655F); font-size: 0.9rem; }
 /* MuezzinCard */
 .mzp-card {
   background: var(--majalis-panel, rgba(255,255,255,0.08));
@@ -5737,7 +5737,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 .mzp-card__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; }
 .mzp-card__info { flex: 1; min-width: 0; }
 .mzp-card__name { font-weight: 700; font-size: 0.95rem; color: var(--majalis-ink); margin-bottom: 0.15rem; }
-.mzp-card__origin { font-size: 0.75rem; color: var(--txt-subdued, #929995); }
+.mzp-card__origin { font-size: 0.75rem; color: var(--txt-subdued, #5E655F); }
 .mzp-card__head-actions { display: flex; gap: 0.3rem; align-items: center; flex-shrink: 0; }
 .mzp-fav-btn {
   background: none; border: none; cursor: pointer;
@@ -5753,11 +5753,11 @@ html[data-theme="dark"] .khatma-bar-fill {
 .mzp-style-badge--rasmi    { background: var(--majalis-parchment-deep); color: var(--majalis-ink); }
 .mzp-style-badge--taqlidi  { background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
 .mzp-style-badge--kilasiki { background: var(--majalis-emerald-muted); color: var(--majalis-emerald); }
-.mzp-card__category { font-size: 0.72rem; color: var(--txt-muted, #929995); }
+.mzp-card__category { font-size: 0.72rem; color: var(--txt-muted, #5E655F); }
 .mzp-card__rating-row { display: flex; align-items: center; gap: 0.4rem; }
 .mzp-card__rating-num { font-size: 0.78rem; font-weight: 600; color: var(--majalis-ink-soft); }
-.mzp-card__rating-count { font-size: 0.72rem; color: var(--txt-muted, #929995); }
-.mzp-card__followers { font-size: 0.75rem; color: var(--txt-subdued, #929995); }
+.mzp-card__rating-count { font-size: 0.72rem; color: var(--txt-muted, #5E655F); }
+.mzp-card__followers { font-size: 0.75rem; color: var(--txt-subdued, #5E655F); }
 .mzp-card__btns { display: flex; gap: 0.5rem; margin-top: 0.25rem; }
 .mzp-card__preview-btn, .mzp-card__detail-btn {
   flex: 1; padding: 0.45rem 0; border-radius: 0.5rem;
@@ -5786,10 +5786,10 @@ html[data-theme="dark"] .khatma-bar-fill {
 }
 .mzp-com-card__head { display: flex; align-items: flex-start; justify-content: space-between; }
 .mzp-com-card__name { font-weight: 700; font-size: 0.875rem; color: var(--majalis-ink); }
-.mzp-com-card__origin { font-size: 0.72rem; color: var(--txt-subdued, #929995); }
+.mzp-com-card__origin { font-size: 0.72rem; color: var(--txt-subdued, #5E655F); }
 .mzp-com-badge { padding: 0.15rem 0.45rem; border-radius: 999px; font-size: 0.65rem; font-weight: 700; background: var(--majalis-emerald-muted); color: var(--majalis-emerald); }
-.mzp-com-card__bio { font-size: 0.72rem; color: var(--txt-muted, #929995); margin: 0; line-height: 1.5; }
-.mzp-com-card__meta { display: flex; gap: 0.4rem; font-size: 0.72rem; color: var(--txt-subdued, #929995); }
+.mzp-com-card__bio { font-size: 0.72rem; color: var(--txt-muted, #5E655F); margin: 0; line-height: 1.5; }
+.mzp-com-card__meta { display: flex; gap: 0.4rem; font-size: 0.72rem; color: var(--txt-subdued, #5E655F); }
 .mzp-com-card__play-btn {
   width: 100%; padding: 0.45rem; border-radius: 0.5rem;
   border: none; background: #1d4ed8; color: #fff;
@@ -5808,7 +5808,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 .mzp-cta__icon { font-size: 2rem; }
 .mzp-cta__info { flex: 1; }
 .mzp-cta__title { font-weight: 700; font-size: 0.95rem; color: var(--majalis-emerald); margin-bottom: 0.2rem; }
-.mzp-cta__desc { font-size: 0.8rem; color: var(--txt-subdued, #929995); }
+.mzp-cta__desc { font-size: 0.8rem; color: var(--txt-subdued, #5E655F); }
 .mzp-cta__btns { display: flex; gap: 0.5rem; flex-shrink: 0; }
 .mzp-cta__upload-btn {
   padding: 0.55rem 1.1rem; border-radius: 0.6rem;
@@ -5997,9 +5997,9 @@ html[data-theme="dark"] .khatma-bar-fill {
   border-radius: 1rem;
   font-size: 0.7rem;
   font-weight: 600;
-  background: color-mix(in srgb, var(--mk-accent, #929995) 25%, transparent);
-  color: var(--mk-accent, #929995);
-  border: 1px solid color-mix(in srgb, var(--mk-accent, #929995) 40%, transparent);
+  background: color-mix(in srgb, var(--mk-accent, #5E655F) 25%, transparent);
+  color: var(--mk-accent, #5E655F);
+  border: 1px solid color-mix(in srgb, var(--mk-accent, #5E655F) 40%, transparent);
 }
 .miracle-item__src-badge {
   padding: 0.15rem 0.6rem;
@@ -6037,18 +6037,18 @@ html[data-theme="dark"] .khatma-bar-fill {
 /* miracle-item — category palette modifiers (--mk-bg / --mk-accent) */
 .mk-cat--alkawn    { --mk-bg: #173D35; --mk-accent: #D6CFC0; }
 .mk-cat--alfalak   { --mk-bg: #173D35; --mk-accent: #D6CFC0; }
-.mk-cat--aljibaal  { --mk-bg: #173D35; --mk-accent: #929995; }
+.mk-cat--aljibaal  { --mk-bg: #173D35; --mk-accent: #5E655F; }
 .mk-cat--albihaar  { --mk-bg: #173D35; --mk-accent: #D6CFC0; }
-.mk-cat--alajinna  { --mk-bg: #173D35; --mk-accent: #929995; }
-.mk-cat--alnabaat  { --mk-bg: #173D35; --mk-accent: #929995; }
-.mk-cat--alhayawan { --mk-bg: #173D35; --mk-accent: #929995; }
+.mk-cat--alajinna  { --mk-bg: #173D35; --mk-accent: #5E655F; }
+.mk-cat--alnabaat  { --mk-bg: #173D35; --mk-accent: #5E655F; }
+.mk-cat--alhayawan { --mk-bg: #173D35; --mk-accent: #5E655F; }
 .mk-cat--altib     { --mk-bg: #173D35; --mk-accent: #D6CFC0; }
 .mk-cat--almiyaah  { --mk-bg: #173D35; --mk-accent: #D6CFC0; }
-.mk-cat--alhadeed  { --mk-bg: #173D35; --mk-accent: #929995; }
+.mk-cat--alhadeed  { --mk-bg: #173D35; --mk-accent: #5E655F; }
 .mk-cat--alriyaah  { --mk-bg: #173D35; --mk-accent: #D6CFC0; }
 .mk-cat--alsahaab  { --mk-bg: #173D35; --mk-accent: #D6CFC0; }
-.mk-cat--alhasharat { --mk-bg: #173D35; --mk-accent: #929995; }
-.mk-cat--alarth    { --mk-bg: #173D35; --mk-accent: #929995; }
+.mk-cat--alhasharat { --mk-bg: #173D35; --mk-accent: #5E655F; }
+.mk-cat--alarth    { --mk-bg: #173D35; --mk-accent: #5E655F; }
 .mk-cat--alzaman   { --mk-bg: #173D35; --mk-accent: #D6CFC0; }
 .mk-cat--althaw    { --mk-bg: #173D35; --mk-accent: #d4e8a0; }
 .mk-cat--aljild    { --mk-bg: #173D35; --mk-accent: #D6CFC0; }
@@ -6337,7 +6337,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
 /* ─ Empty state ─ */
 .mzf-empty { text-align: center; padding: 3rem 1rem; }
 .mzf-empty__icon { font-size: 3rem; margin-bottom: 0.75rem; }
-.mzf-empty__msg { color: var(--txt-muted, #929995); font-size: 0.9rem; }
+.mzf-empty__msg { color: var(--txt-muted, #5E655F); font-size: 0.9rem; }
 .mzf-explore-btn { margin-top: 0.75rem; padding: 0.6rem 1.5rem; border-radius: 0.6rem; border: none; background: #173D35; color: #fff; font-family: inherit; font-size: 0.875rem; font-weight: 600; cursor: pointer; }
 
 /* ─ List ─ */
@@ -6352,7 +6352,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
 .mzf-card__origin { font-size: 0.72rem; color: var(--majalis-ink-muted, #9BA3B5); }
 .mzf-card__tags { display: flex; gap: 0.35rem; margin-top: 0.35rem; flex-wrap: wrap; align-items: center; }
 .mzf-card__rating   { font-size: 0.7rem; color: var(--majalis-emerald, #28584D); font-weight: 600; }
-.mzf-card__followers { font-size: 0.7rem; color: var(--txt-muted, #929995); }
+.mzf-card__followers { font-size: 0.7rem; color: var(--txt-muted, #5E655F); }
 
 /* ─ Style badges ─ */
 .mzf-style-badge { padding: 0.15rem 0.45rem; border-radius: 999px; font-size: 0.65rem; font-weight: 600; }
@@ -6448,7 +6448,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
 
 /* ─ Hero ─ */
 .pmp-hero { border-radius: 1.25rem; margin-bottom: 1.5rem; text-align: center; }
-.pmp-hero__eyebrow { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; color: #929995; margin-bottom: 0.5rem; text-transform: uppercase; }
+.pmp-hero__eyebrow { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; color: #5E655F; margin-bottom: 0.5rem; text-transform: uppercase; }
 .pmp-hero__title   { font-size: clamp(1.6rem, 4vw, 2.25rem); font-weight: 800; color: #F7F4ED; margin: 0 0 0.6rem; }
 .pmp-hero__subtitle { font-size: 0.95rem; color: #D6CFC0; max-width: 520px; margin: 0 auto; line-height: 1.7; }
 
@@ -6465,9 +6465,9 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
 
 /* ─ Card ─ */
 .pmp-cat--ilaj    { --pm-bg: #173D35; --pm-accent: #D6CFC0; }
-.pmp-cat--ghidha  { --pm-bg: #173D35; --pm-accent: #929995; }
+.pmp-cat--ghidha  { --pm-bg: #173D35; --pm-accent: #5E655F; }
 .pmp-cat--ibada   { --pm-bg: #173D35; --pm-accent: #D6CFC0; }
-.pmp-cat--nathafa { --pm-bg: #173D35; --pm-accent: #929995; }
+.pmp-cat--nathafa { --pm-bg: #173D35; --pm-accent: #5E655F; }
 .pmp-card { border: 1px solid var(--msk-border); border-radius: 1rem; overflow: hidden; background: var(--msk-canvas-1, var(--msk-canvas)); display: flex; flex-direction: column; }
 .pmp-card__head { background: var(--pm-bg, #173D35); background-image: url("/star-pattern.svg"); background-size: 100px 100px; padding: 1rem 1rem 0.875rem; display: flex; align-items: center; gap: 0.75rem; }
 .pmp-card__icon { font-size: 1.75rem; line-height: 1; flex-shrink: 0; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.35)); }
@@ -8772,7 +8772,7 @@ html[data-theme="dark"] .twh-hub-card__current-tag {
 .qzs-tag--intermediate { background: rgba(23,61,53,0.08); color: #28584D; }
 .qzs-tag--advanced     { background: #FEE2E2; color: #991B1B; }
 .qzs-tag--published    { background: #D1FAE5; color: var(--majalis-emerald-deep); }
-.qzs-tag--draft        { background: #F3F4F6; color: #929995; }
+.qzs-tag--draft        { background: #F3F4F6; color: #5E655F; }
 .qzs-tag--used      { background: rgba(31,77,58,0.08); color: #28584D; font-weight: 400; }
 .qzs-tag--section   { font-size: 0.7rem; color: var(--majalis-ink-soft); font-weight: 400; }
 .qzs-item-question  { font-weight: 600; font-size: 0.9375rem; margin-bottom: 0.25rem; color: var(--majalis-ink); }
@@ -13784,7 +13784,7 @@ html[data-theme="dark"] .global-back-btn {
   --rd-dark-card:     #173D35; /* Dark sections */
   --rd-ink:           #202725; /* Text on light bg */
   --rd-ink-soft:      #68716D; /* Muted text on light */
-  --rd-ink-muted:     #929995; /* Placeholder */
+  --rd-ink-muted:     #5E655F; /* Placeholder */
   --rd-white:         #FFFFFF;
   --rd-nav-bg:        rgba(255,255,255,0.97);
   --rd-nav-border:    rgba(0,0,0,0.07);
@@ -14553,7 +14553,7 @@ img[loading="lazy"]:not([src=""]) {
 .msk-toast__desc {
   font-size: 0.8rem !important;
   line-height: 1.5 !important;
-  color: var(--majalis-ink-soft, #929995) !important;
+  color: var(--majalis-ink-soft, #5E655F) !important;
 }
 
 /* زر الإجراء */
@@ -15459,7 +15459,7 @@ html[data-theme="dark"] .tj-cat-badge { color: #8BABA3 !important; }
 .qlive-ch-flag { font-size: 1.6rem; flex-shrink: 0; }
 .qlive-ch-info { flex: 1; text-align: right; }
 .qlive-ch-name { display: block; font-size: 0.92rem; font-weight: 700; color: var(--elite-forest, #052E16); }
-.qlive-ch-loc { display: block; font-size: 0.77rem; color: #929995; margin-top: 0.1rem; }
+.qlive-ch-loc { display: block; font-size: 0.77rem; color: #5E655F; margin-top: 0.1rem; }
 .qlive-ch-live {
   font-size: 0.7rem;
   font-weight: 700;
@@ -15505,7 +15505,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .qlive-player__loc {
   font-size: 0.78rem;
-  color: #929995;
+  color: #5E655F;
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -15594,7 +15594,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .qlive-yt-flag { font-size: 1.4rem; flex-shrink: 0; }
 .qlive-yt-name { font-size: 0.88rem; font-weight: 600; color: var(--elite-forest, #052E16); margin: 0; }
-.qlive-yt-handle { font-size: 0.76rem; color: #929995; margin: 0.1rem 0 0; }
+.qlive-yt-handle { font-size: 0.76rem; color: #5E655F; margin: 0.1rem 0 0; }
 
 /* Schedule */
 .qlive-schedule-list {
@@ -15730,7 +15730,7 @@ html[data-theme="dark"] .qlive-player {
   top: 50%;
   right: 1rem;
   transform: translateY(-50%);
-  color: #929995;
+  color: #5E655F;
   pointer-events: none;
 }
 .sch-search-input {
@@ -15755,7 +15755,7 @@ html[data-theme="dark"] .qlive-player {
   gap: 0.4rem;
   flex-wrap: wrap;
   font-size: 0.78rem;
-  color: #929995;
+  color: #5E655F;
 }
 .sch-filter-btn {
   padding: 0.25rem 0.65rem;
@@ -15775,7 +15775,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .sch-results-count {
   font-size: 0.8rem;
-  color: #929995;
+  color: #5E655F;
   margin: 0.75rem 0 1rem;
 }
 
@@ -15827,7 +15827,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .sch-card__fullname {
   font-size: 0.78rem;
-  color: #929995;
+  color: #5E655F;
   margin: 0 0 0.4rem;
 }
 .sch-card__tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
@@ -15922,7 +15922,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .sch-card__region {
   font-size: 0.78rem;
-  color: #929995;
+  color: #5E655F;
   margin: 0;
 }
 .sch-card__close {
@@ -18407,7 +18407,7 @@ html[data-theme="dark"] .qlive-player {
 .sw-card__icon { font-size: 1.6rem; flex-shrink: 0; }
 .sw-card__info { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: .1rem; }
 .sw-card__title { font-size: .95rem; font-weight: 700; color: #111; }
-.sw-card__sub { font-size: .78rem; color: #929995; }
+.sw-card__sub { font-size: .78rem; color: #5E655F; }
 .sw-card__chevron { font-size: 1rem; color: #9CA3AF; transition: transform .25s; margin-right: auto; flex-shrink: 0; }
 .sw-card__chevron--open { transform: rotate(180deg); }
 .sw-card__body { padding: 0 1.1rem 1.1rem; border-top: 1px solid #F3F4F6; display: flex; flex-direction: column; gap: .75rem; }
@@ -18545,7 +18545,7 @@ html[data-theme="dark"] .qlive-player {
 .sw-virtue-card__icon { font-size: 1.8rem; }
 .sw-virtue-card__title { font-size: .9rem; font-weight: 700; color: var(--majalis-emerald, #28584D); margin: 0; }
 .sw-virtue-card__text { font-size: .87rem; line-height: 1.85; color: #1F2937; font-style: normal; background: #F0F5F2; border-radius: .45rem; padding: .6rem .75rem; margin: 0; border-right: 3px solid var(--majalis-emerald, #28584D); }
-.sw-virtue-card__source { font-size: .72rem; color: #929995; }
+.sw-virtue-card__source { font-size: .72rem; color: #5E655F; }
 
 /* related */
 .sw-related { margin-top: 2.5rem; }
@@ -18997,7 +18997,7 @@ html[data-theme="dark"] .qlive-player {
 .fa-cat-btn:hover { border-color: var(--majalis-emerald, #28584D); color: var(--majalis-emerald, #28584D); }
 .fa-cat-btn--active { background: var(--majalis-emerald, #28584D); border-color: var(--majalis-emerald, #28584D); color: #fff; }
 
-.fa-count { font-size: .78rem; color: #929995; margin: 0 0 1rem; }
+.fa-count { font-size: .78rem; color: #5E655F; margin: 0 0 1rem; }
 
 .fa-grid {
   display: grid;
@@ -19023,7 +19023,7 @@ html[data-theme="dark"] .qlive-player {
 .fa-card__head { display: flex; justify-content: space-between; align-items: center; }
 .fa-card__icon { font-size: 1.7rem; }
 .fa-card__meta { display: flex; flex-direction: column; align-items: flex-end; gap: .2rem; }
-.fa-card__cat { font-size: .7rem; color: #929995; }
+.fa-card__cat { font-size: .7rem; color: #5E655F; }
 .fa-card__grade {
   font-size: .7rem;
   font-weight: 700;
@@ -19045,7 +19045,7 @@ html[data-theme="dark"] .qlive-player {
   margin: 0;
   font-style: normal;
 }
-.fa-card__source { font-size: .72rem; color: #929995; font-style: normal; }
+.fa-card__source { font-size: .72rem; color: #5E655F; font-style: normal; }
 
 .fa-empty {
   text-align: center;
@@ -19477,7 +19477,7 @@ html[data-theme="dark"] .qlive-player {
   border-color: var(--majalis-emerald,#28584D);
   color: #fff;
 }
-.sb-count { font-size: .8rem; color: #929995; margin: 0 0 1rem; }
+.sb-count { font-size: .8rem; color: #5E655F; margin: 0 0 1rem; }
 
 /* card list */
 .sb-list { display: flex; flex-direction: column; gap: .75rem; }
@@ -19506,7 +19506,7 @@ html[data-theme="dark"] .qlive-player {
 .sb-card__icon { font-size: 1.5rem; flex-shrink: 0; }
 .sb-card__info { flex: 1; min-width: 0; }
 .sb-card__name  { display: block; font-weight: 700; font-size: .95rem; color: #111; }
-.sb-card__kunya { display: block; font-size: .75rem; color: #929995; margin-top: .15rem; }
+.sb-card__kunya { display: block; font-size: .75rem; color: #5E655F; margin-top: .15rem; }
 .sb-card__tags  { display: flex; flex-wrap: wrap; gap: .3rem; }
 .sb-card__tag {
   background: #F0F5F2;
@@ -19709,7 +19709,7 @@ html[data-theme="dark"] .qlive-player {
   padding: .65rem .8rem; border: none; background: transparent;
   cursor: pointer; font-family: inherit; white-space: nowrap;
   border-bottom: 2px solid transparent; margin-bottom: -2px;
-  transition: all .15s; color: #929995; font-size: .72rem;
+  transition: all .15s; color: #5E655F; font-size: .72rem;
 }
 .uq-tab--active { border-bottom-color: var(--majalis-emerald,#28584D); color: var(--majalis-emerald,#28584D); font-weight: 700; }
 
@@ -19794,7 +19794,7 @@ html[data-theme="dark"] .qlive-player {
 .uq-mufassir-name { font-weight: 700; font-size: .85rem; color: #111; }
 .uq-mufassir-era  { font-size: .72rem; color: #9CA3AF; }
 .uq-mufassir-kitab { display: block; font-size: .83rem; font-weight: 600; color: var(--majalis-emerald,#28584D); }
-.uq-mufassir-note  { display: block; font-size: .72rem; color: #929995; }
+.uq-mufassir-note  { display: block; font-size: .72rem; color: #5E655F; }
 
 /* إعجاز */
 .uq-ijaz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1.5rem; }
@@ -19923,7 +19923,7 @@ html[data-theme="dark"] .qlive-player {
   padding: .65rem .8rem; border: none; background: transparent;
   cursor: pointer; font-family: inherit; white-space: nowrap;
   border-bottom: 2px solid transparent; margin-bottom: -2px;
-  transition: all .15s; color: #929995; font-size: .72rem;
+  transition: all .15s; color: #5E655F; font-size: .72rem;
 }
 .mw-tab--active { border-bottom-color: #4F46E5; color: #4F46E5; font-weight: 700; }
 
@@ -20062,7 +20062,7 @@ html[data-theme="dark"] .qlive-player {
 .mw-masala-title { font-weight: 700; font-size: .88rem; color: #111; margin: 0 0 .3rem; display: block; }
 .mw-masala-desc  { font-size: .82rem; color: #68716D; line-height: 1.6; margin: 0 0 .5rem; }
 .mw-masala-formula { display: flex; gap: .4rem; align-items: center; flex-wrap: wrap; }
-.mw-masala-formula__label { font-size: .72rem; font-weight: 700; color: #929995; }
+.mw-masala-formula__label { font-size: .72rem; font-weight: 700; color: #5E655F; }
 .mw-masala-formula__code  { font-family: monospace; font-size: .8rem; color: #4F46E5; background: #EEF2FF; padding: .2rem .5rem; border-radius: .35rem; }
 
 .mw-hadith-box {
@@ -20161,7 +20161,7 @@ html[data-theme="dark"] .qlive-player {
   cursor: pointer; font-family: inherit; transition: all .15s;
 }
 .dq-cat-btn--active { background: #1E40AF; border-color: #1E40AF; color: #fff; }
-.dq-count { font-size: .8rem; color: #929995; margin: 0 0 1rem; }
+.dq-count { font-size: .8rem; color: #5E655F; margin: 0 0 1rem; }
 
 /* list */
 .dq-list { display: flex; flex-direction: column; gap: .75rem; }
@@ -20289,7 +20289,7 @@ html[data-theme="dark"] .qlive-player {
 .fq-tab {
   flex: none; padding: .55rem .8rem;
   border: none; border-radius: .7rem; background: transparent;
-  color: #929995; font-family: inherit; font-size: .82rem; font-weight: 600;
+  color: #5E655F; font-family: inherit; font-size: .82rem; font-weight: 600;
   cursor: pointer; transition: background .15s, color .15s;
   white-space: nowrap;
 }
@@ -20359,7 +20359,7 @@ html[data-theme="dark"] .qlive-player {
 /* مؤلفون */
 .fq-card__scholars {
   display: flex; align-items: center; gap: .4rem;
-  color: #929995; font-size: .78rem; padding-top: .5rem;
+  color: #5E655F; font-size: .78rem; padding-top: .5rem;
   border-top: 1px solid #F3F4F6;
 }
 
@@ -20416,7 +20416,7 @@ html[data-theme="dark"] .qlive-player {
 .fq-daabit__rule-text { font-size: .95rem; font-weight: 700; color: #0F172A; margin: 0; font-family: var(--font-body); }
 .fq-daabit__rule-ex {
   display: flex; align-items: flex-start; gap: .35rem;
-  font-size: .8rem; color: #929995; line-height: 1.5;
+  font-size: .8rem; color: #5E655F; line-height: 1.5;
 }
 
 /* تطبيقات معاصرة */
@@ -20456,7 +20456,7 @@ html[data-theme="dark"] .qlive-player {
   color: var(--majalis-emerald,#28584D);
 }
 .fq-ref__book-title { font-size: .85rem; font-weight: 700; color: #0F172A; margin: 0; }
-.fq-ref__book-author { font-size: .75rem; color: #929995; margin: 0; }
+.fq-ref__book-author { font-size: .75rem; color: #5E655F; margin: 0; }
 
 @media (max-width: 640px) {
   .fq-hero__title { font-size: 1.45rem; }
@@ -20543,7 +20543,7 @@ html[data-theme="dark"] .qlive-player {
 .sh-tab {
   flex: none; padding: .55rem .7rem;
   border: none; border-radius: .7rem; background: transparent;
-  color: #929995; font-family: inherit; font-size: .8rem; font-weight: 600;
+  color: #5E655F; font-family: inherit; font-size: .8rem; font-weight: 600;
   cursor: pointer; transition: background .15s, color .15s; white-space: nowrap;
 }
 .sh-tab--active { background: #28584D; color: #fff; }
@@ -20840,7 +20840,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .is-science-card__disc-label { font-size: .65rem; font-weight: 800; color: #173D35; letter-spacing: .05em; }
 .is-science-card__disc-text { font-size: .82rem; color: #1E293B; font-weight: 600; }
-.is-science-card__disc-year { font-size: .72rem; color: #929995; }
+.is-science-card__disc-year { font-size: .72rem; color: #5E655F; }
 
 @media (max-width: 640px) {
   .is-hero__title { font-size: 1.5rem; }
@@ -21424,7 +21424,7 @@ html[data-theme="dark"] .qlive-player {
   font-family: var(--font-body);
   font-size: 1.1rem; color: #0F172A; line-height: 1.9; margin: 0;
 }
-.jn-dua-source { font-size: .75rem; color: #929995; margin: 0; }
+.jn-dua-source { font-size: .75rem; color: #5E655F; margin: 0; }
 
 @media (max-width: 640px) {
   .jn-hero__title { font-size: 1.5rem; }
@@ -24860,7 +24860,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 }
 .prophet-geo-border { display: flex; gap: 4px; align-items: center; opacity: 0.6; }
 .prophet-not-found { padding: 2rem; text-align: center; }
-.prophet-not-found__msg { color: var(--txt-muted, #929995); margin-top: 1rem; }
+.prophet-not-found__msg { color: var(--txt-muted, #5E655F); margin-top: 1rem; }
 .prophet-db-para { margin-bottom: 1rem; }
 .prophets-seerah-link { text-decoration: none; display: block; margin-top: 1.5rem; }
 
@@ -25142,7 +25142,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 }
 .hit-card__desc {
   font-size: 0.68rem;
-  color: #929995;
+  color: #5E655F;
   line-height: 1.4;
 }
 
@@ -25211,7 +25211,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 }
 .hmm-card__desc {
   font-size: 0.75rem;
-  color: #929995;
+  color: #5E655F;
   line-height: 1.4;
   margin: 0;
 }
@@ -25338,7 +25338,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   background: transparent;
   font-size: 0.78rem;
   font-weight: 600;
-  color: #929995;
+  color: #5E655F;
   cursor: pointer;
   transition: background 0.12s, color 0.12s;
 }
@@ -29283,7 +29283,7 @@ html[data-theme="dark"] mark.srch-hl {
   --elite-ink-2:     #202725;
   --elite-ink-3:     #202725;
   --elite-ink-soft:  var(--clr-text-2, #68716D);
-  --elite-ink-muted: var(--clr-text-muted, #929995);
+  --elite-ink-muted: var(--clr-text-muted, #5E655F);
 
   /* حدود */
   --elite-border:   #E7E2D8;
@@ -29388,7 +29388,7 @@ a:hover { color: var(--clr-primary-hov, #28584D); }
   --color-surface-sec:   #F1EEE5;
   --color-text:          var(--clr-text-1, #202725);
   --color-text-2:        var(--clr-text-2, #68716D);
-  --color-text-muted:    var(--clr-text-muted, #929995);
+  --color-text-muted:    var(--clr-text-muted, #5E655F);
   --color-border:        var(--clr-border, #E7E2D8);
   --color-border-strong: var(--clr-border-strong, #CBD2CE);
   --color-accent:        var(--sand, #B89452);
@@ -29592,7 +29592,7 @@ input:focus, textarea:focus, select:focus {
   box-shadow: 0 0 0 3px rgba(23,61,53,.10) !important;
 }
 input::placeholder, textarea::placeholder {
-  color: var(--color-text-muted, #929995) !important;
+  color: var(--color-text-muted, #5E655F) !important;
   font-weight: 400 !important;
 }
 select {
@@ -29663,7 +29663,7 @@ label {
 }
 
 .bottom-nav__tab {
-  color: var(--color-text-muted, #929995) !important;
+  color: var(--color-text-muted, #5E655F) !important;
   font-family: var(--font-body) !important;
   font-size: 0.68rem !important;
   font-weight: 500 !important;
@@ -29784,7 +29784,7 @@ label {
   text-align: center;
   gap: 1rem;
   padding: 3rem 1.5rem;
-  color: var(--color-text-muted, #929995);
+  color: var(--color-text-muted, #5E655F);
 }
 .empty-state__icon {
   width: 56px;
@@ -30002,8 +30002,26 @@ html[data-theme="dark"] .jnz-related__title {
    .dvp-btn (صفحة المطوّرين)، .hadith-books-banner__btn, .lqp2-btn،
    .citation-btn--primary (حذف الحساب/مقارنة الجامعات)، .ar-contribute-banner__btn،
    .lsw-featured__cta — كلها أزرار CTA بخلفية خضراء خاصة بها فقدت لون
-   نصها المقصود (أبيض/داكن) لنفس السبب بالضبط. */
-html[data-theme="dark"] a:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab):not(.quran-subnav__link):not(.page-action-btn):not(.fiqh-hub-strip__tab):not(.tj-related-link):not(.lesson-unified-card__btn--primary):not(.fiqh-council-subnav-link):not(.btn-primary):not(.btn--primary):not(.ds-btn--primary):not(.dvp-btn):not(.hadith-books-banner__btn):not(.lqp2-btn):not(.citation-btn--primary):not(.ar-contribute-banner__btn):not(.lsw-featured__cta) { color: #3BAD8A !important; }
+   نصها المقصود (أبيض/داكن) لنفس السبب بالضبط. تدقيق تباين آلي حي إضافي
+   (2026-07-21، 154 مسارًا عامًا) وجد 32 رابطًا إضافيًا بنفس العطل بالضبط —
+   نص أخضر فاتح شبه غير مرئي (تباين 1.3–2.79:1) فوق خلفيات بيضاء/فاتحة أو
+   خضراء متوسطة خاصة بها. */
+html[data-theme="dark"] a:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab):not(.quran-subnav__link):not(.page-action-btn):not(.fiqh-hub-strip__tab):not(.tj-related-link):not(.lesson-unified-card__btn--primary):not(.fiqh-council-subnav-link):not(.btn-primary):not(.btn--primary):not(.ds-btn--primary):not(.dvp-btn):not(.hadith-books-banner__btn):not(.lqp2-btn):not(.citation-btn--primary):not(.ar-contribute-banner__btn):not(.lsw-featured__cta):not(.hsh-step__cta):not(.twh-jumpnav__btn):not(.sb-related__link):not(.tw-related__link):not(.sg-related__link):not(.zk-related__link):not(.sw-related__link):not(.hj-related__link):not(.th-related__link):not(.jnz-related__link):not(.mw-related__link):not(.mdb-related__link):not(.arkan-related__link):not(.ai-related__link):not(.dq-related__link):not(.sy-related__link):not(.hs-related__link):not(.uq-related__link):not(.hk-related__link):not(.fa-related__link):not(.jn-related__link):not(.qcp-reg-banner__btn):not(.lesson-unified-card__btn):not(.surah-info-card__link):not(.lpp-nav-link):not(.myl2-empty__cta):not(.fiqh-council-section-link):not(.ui-card-btn):not(.mzp-cta__submissions-btn):not(.qc-card__wa-link):not(.snr-topic-chip) { color: #3BAD8A !important; }
+/* .nf2-btn (404) و.qs-subnav__link (إذاعات القرآن) يظهران في سياقين
+   مختلفين بخلفيتين مختلفتين تمامًا على نفس الصفحة (فاتحة في حالة وداكنة
+   خضراء في أخرى) — لا لون ثابت واحد يخدم الحالتين معًا، فبقيا ضمن
+   القاعدة العامة أعلاه دون استثناء إلى حين مراجعة كل حالة على حدة. */
+/* المجموعة أعلاه المُستثناة من الأخضر الفاتح تسقط افتراضيًا إلى
+   html[data-theme="dark"] a { color: #7DD4B0 } (src/index.css) — يعطي
+   تباينًا جيدًا (~6.8:1) على خلفياتها الخضراء الداكنة الثابتة (rgb(23,61,53))
+   للفئات غير المذكورة أدناه؛ أما التي خلفيتها بيضاء/فاتحة ثابتة (نمط
+   "روابط ذات صلة" ونظائرها) فتحتاج لونًا داكنًا صريحًا بدل ذلك: */
+html[data-theme="dark"] .hsh-step__cta,
+html[data-theme="dark"] .twh-jumpnav__btn,
+html[data-theme="dark"] .qcp-reg-banner__btn,
+html[data-theme="dark"] [class*="-related__link"] {
+  color: #173D35 !important;
+}
 html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab) { color: #4DC09A !important; }
 
 /* ════════════════════════════════════
@@ -30106,7 +30124,7 @@ html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero
   align-items: center !important;
   gap: 0.4rem !important;
   font-size: 0.8125rem !important;
-  color: var(--color-text-muted, #929995) !important;
+  color: var(--color-text-muted, #5E655F) !important;
   flex-wrap: wrap !important;
   margin-bottom: 1rem !important;
 }
@@ -30483,7 +30501,7 @@ html[data-theme="dark"] ::-webkit-scrollbar-thumb {
   color: var(--color-text-2, #68716D) !important;
 }
 .lesson-unified-card__meta-label {
-  color: var(--color-text-muted, #929995) !important;
+  color: var(--color-text-muted, #5E655F) !important;
   font-size: 0.75rem !important;
 }
 
@@ -30533,7 +30551,7 @@ html[data-theme="dark"] ::-webkit-scrollbar-thumb {
   font-weight: 500 !important;
 }
 [role="status"]:not(.lesson-now-badge) {
-  color: var(--color-text-muted, #929995) !important;
+  color: var(--color-text-muted, #5E655F) !important;
   font-size: 0.875rem !important;
 }
 
@@ -30667,7 +30685,7 @@ svg:not([class*="pattern"]):not([class*="geo"]):not([class*="star"]) {
 .search-no-results {
   text-align: center !important;
   padding: 2.5rem 1rem !important;
-  color: var(--color-text-muted, #929995) !important;
+  color: var(--color-text-muted, #5E655F) !important;
 }
 
 
