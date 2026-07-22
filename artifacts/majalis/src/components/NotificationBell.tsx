@@ -101,26 +101,48 @@ export default function NotificationBell() {
     // insecure" أثناء تنقّل الصفحة) يجب ألا يُسقِط الشجرة كاملة عبر
     // ErrorBoundary. try/catch + status callback بدل fire-and-forget
     // (عطل حقيقي على الإنتاج، 2026-07-17: MJL-20260717-191326-NR11UV).
+    //
+    // فشل النقل (transport failure) على iOS شائع جدًا (تعليق التطبيق في
+    // الخلفية) وغالبًا عابر، لكن الكود السابق كان يستسلم نهائيًا من أول
+    // فشل دون إعادة محاولة — يبقى المستخدم بلا إشعارات حية لبقية الجلسة
+    // حتى يُعيد تحميل الصفحة يدويًا (رُصد حيًّا: 28 حالة/٥ أيام، iOS فقط،
+    // 2026-07-22). أُضيفت إعادة محاولة محدودة (٣ مرات بتأخير متصاعد) قبل
+    // تسجيله كخطأ فعلي.
+    let cancelled = false;
     let channel: ReturnType<typeof supabase.channel> | null = null;
     let lessonChannel: ReturnType<typeof supabase.channel> | null = null;
-    const onChannelError = (source: string) => (status: string, err?: Error) => {
-      if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
-        void logClientError(
-          buildErrorReport(err || new Error(`Realtime ${status}`), {
-            errorId: createErrorId("RT"),
-            component: "NotificationBell",
-            section: source,
-          }),
-        );
-      }
-    };
-    try {
+    const retryTimers: ReturnType<typeof setTimeout>[] = [];
+    const MAX_RETRIES = 3;
+    const RETRY_DELAYS_MS = [2000, 5000, 10000];
+
+    const setupNotificationsChannel = (attempt: number) => {
+      if (cancelled) return;
       channel = supabase
         .channel("notifications")
         .on("postgres_changes", { event: "INSERT", schema: "public", table: "notifications" },
           (payload) => setNotifications((prev) => [payload.new as any, ...prev]))
-        .subscribe(onChannelError("notifications"));
+        .subscribe((status: string, err?: Error) => {
+          if (status !== "CHANNEL_ERROR" && status !== "TIMED_OUT") return;
+          if (attempt < MAX_RETRIES) {
+            const timer = setTimeout(() => {
+              if (channel) supabase.removeChannel(channel);
+              setupNotificationsChannel(attempt + 1);
+            }, RETRY_DELAYS_MS[attempt]);
+            retryTimers.push(timer);
+            return;
+          }
+          void logClientError(
+            buildErrorReport(err || new Error(`Realtime ${status}`), {
+              errorId: createErrorId("RT"),
+              component: "NotificationBell",
+              section: "notifications",
+            }),
+          );
+        });
+    };
 
+    const setupLessonChannel = (attempt: number) => {
+      if (cancelled) return;
       lessonChannel = supabase
         .channel("kuwait-lessons-auto-notify")
         .on("postgres_changes", { event: "INSERT", schema: "public", table: "kuwait_lessons" },
@@ -136,7 +158,29 @@ export default function NotificationBell() {
               actionUrl: lesson.id != null ? `/lessons/${lesson.id}` : null,
             });
           })
-        .subscribe(onChannelError("kuwait-lessons-auto-notify"));
+        .subscribe((status: string, err?: Error) => {
+          if (status !== "CHANNEL_ERROR" && status !== "TIMED_OUT") return;
+          if (attempt < MAX_RETRIES) {
+            const timer = setTimeout(() => {
+              if (lessonChannel) supabase.removeChannel(lessonChannel);
+              setupLessonChannel(attempt + 1);
+            }, RETRY_DELAYS_MS[attempt]);
+            retryTimers.push(timer);
+            return;
+          }
+          void logClientError(
+            buildErrorReport(err || new Error(`Realtime ${status}`), {
+              errorId: createErrorId("RT"),
+              component: "NotificationBell",
+              section: "kuwait-lessons-auto-notify",
+            }),
+          );
+        });
+    };
+
+    try {
+      setupNotificationsChannel(0);
+      setupLessonChannel(0);
     } catch (err) {
       void logClientError(
         buildErrorReport(err instanceof Error ? err : new Error(String(err)), {
@@ -148,6 +192,8 @@ export default function NotificationBell() {
     }
 
     return () => {
+      cancelled = true;
+      retryTimers.forEach(clearTimeout);
       if (channel) supabase.removeChannel(channel);
       if (lessonChannel) supabase.removeChannel(lessonChannel);
     };
