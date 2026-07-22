@@ -59,5 +59,5 @@ await browser.close();
 
 const totalIssues = Object.values(byRoute).reduce((n, arr) => n + arr.length, 0);
 writeFileSync(outJson, JSON.stringify({ routesWithIssues: Object.keys(byRoute).length, totalIssues, byRoute }, null, 2));
-console.error(`\nصفحات فيها أزرار بلا اسم وصول: ${Object.keys(byRoute).length} — إجمالي الأزرار: ${totalIssues}`);
+console.error(`\nصفحات فيها أزرار بلا اسم وصول: ${Object.keys(byRoute).length} — إجمالي الأزرار المخالفة: ${totalIssues}`);
 console.error(`التقرير: ${outJson}`);
