@@ -22639,7 +22639,16 @@ html[data-theme="dark"] .share-btn--copy { background: #173D35 !important; }
   border-bottom: 1px solid var(--majalis-line);
 }
 .fqp-tabs-nav--bare { background: none !important; box-shadow: none !important; }
-.fqp-tabs-scroll { display: flex; gap: .25rem; overflow-x: auto; padding-bottom: .5rem; }
+.fqp-tabs-scroll {
+  display: flex;
+  /* !important ضروري: [role="tablist"]{gap:0 !important} (قاعدة إتاحة
+     عامة أدناه في هذا الملف) كانت تُلغي هذه الفجوة صامتًا فتتلاصق
+     التبويبات حرفيًا بلا أي مسافة (تحقّق حي عبر getBoundingClientRect:
+     0px بين كل تبويبين، 2026-07-22). */
+  gap: .25rem !important;
+  overflow-x: auto;
+  padding-bottom: .5rem;
+}
 .fqp-tab {
   display: inline-flex; align-items: center; gap: .375rem;
   padding: .875rem 1.25rem; font-size: .875rem; font-weight: 500;
@@ -25725,7 +25734,7 @@ html[data-theme="dark"] .sq-hint { color: #8AA89E; }
 .hb-tabs-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch;
   scrollbar-width: none; margin-bottom: 1.5rem; }
 .hb-tabs-wrap::-webkit-scrollbar { display: none; }
-.hb-tabs { display: flex; gap: .4rem; padding-bottom: .15rem; min-width: max-content; }
+.hb-tabs { display: flex; gap: .4rem !important; padding-bottom: .15rem; min-width: max-content; }
 .hb-tab { display: flex; flex-direction: column; align-items: center;
   gap: .1rem; padding: .5rem .85rem; border-radius: 8px;
   border: 1.5px solid var(--elite-border-2, rgba(24,54,42,.15));
@@ -30228,10 +30237,16 @@ html[data-theme="dark"] ::-webkit-scrollbar-thumb {
 }
 
 /* ── Tabs Component Accessibility ── */
+/* لا gap هنا: كانت gap:0 !important تُلغي صامتًا الفجوة المقصودة لأكثر
+   من 50 مكوّن تبويبات/فلاتر عبر الموقع (كل عنصر role="tablist" يستهدفه
+   هذا المحدد العام)، فتبدو التبويبات متلاصقة بلا مسافة بصرف النظر عمّا
+   يحدده كل مكوّن بنفسه — سبب جذري حقيقي مكتشَف حيًّا (getBoundingClientRect
+   أظهر 0px بين تبويبات fqp-tabs-scroll رغم gap:.25rem في تعريفها،
+   2026-07-22). المكوّنات الثلاثة التي تريد فعليًا gap:0 (nh-tabs,
+   mw-tabs-bar, uq-tabs-bar) تُعرِّفه بنفسها فلا تتأثر بإزالة هذا السطر. */
 [role="tablist"] {
   border-bottom: 1px solid var(--color-border, #E7E2D8) !important;
   display: flex !important;
-  gap: 0 !important;
 }
 [role="tab"] {
   padding: 0.6rem 1rem !important;
