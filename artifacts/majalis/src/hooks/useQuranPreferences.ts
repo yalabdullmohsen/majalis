@@ -41,7 +41,11 @@ const DEFAULTS: QuranPreferences = {
   showAyahNumbers: true,
   nightMode: false,
   readingTheme: "standard",
-  frameStyle: "emerald",
+  /* "none" افتراضيًا (2026-07-22، بطلب المالك): إلغاء شكل "الورقة"
+     (الإطار المزدوج + الزخارف الذهبية بالزوايا) لدمج صفحة المصحف بصريًا
+     مع خلفية التطبيق العادية بدل بطاقة منفصلة — الخيارات الأخرى (emerald/
+     gold-classic/paper/minimal) تبقى متاحة من الإعدادات لمن يفضّلها. */
+  frameStyle: "none",
   highlightStyle: "wash",
   pageMode: "light",
 };
