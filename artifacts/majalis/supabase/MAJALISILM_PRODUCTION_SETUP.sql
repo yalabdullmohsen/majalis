@@ -1,3 +1,5 @@
+-- ملاحظة: يُستخدم الرمز __OWNER_EMAIL__ بدلًا من بريد المالك الفعلي حتى لا يُخزَّن بريد شخصي في المستودع.
+-- قبل التشغيل استبدله ببريد المالك، أو مرِّر MAJALIS_OWNER_EMAILS لسكربت التطبيق ليستبدله تلقائيًا.
 -- =====================================================================
 --  MAJALISILM.COM — إعداد قاعدة البيانات (ملف موحد)
 --  آمن للتشغيل مرات متعددة — كل الأوامر تستخدم IF NOT EXISTS
@@ -108,7 +110,7 @@ SET search_path = public
 AS $$
 DECLARE
   owner_email    TEXT;
-  protected_emails TEXT[] := ARRAY['yalabdullmohsen1@gmail.com'];
+  protected_emails TEXT[] := ARRAY['__OWNER_EMAIL__'];
 BEGIN
   SELECT lower(trim(u.email)) INTO owner_email
   FROM auth.users u
@@ -182,7 +184,7 @@ SET search_path = public
 AS $$
 DECLARE
   uid              UUID;
-  protected_emails TEXT[] := ARRAY['yalabdullmohsen1@gmail.com'];
+  protected_emails TEXT[] := ARRAY['__OWNER_EMAIL__'];
   normalized       TEXT   := lower(trim(target_email));
 BEGIN
   IF normalized IS NULL OR normalized = '' THEN
@@ -2732,7 +2734,7 @@ CREATE POLICY notifications_own ON notifications USING (auth.uid() = user_id);
 --      (سيُرجع خطأ "user_not_found" إذا لم يسجّل المستخدم بعد — طبيعي)
 -- ════════════════════════════════════════════════════════════════════
 
-SELECT promote_bootstrap_owner('yalabdullmohsen1@gmail.com');
+SELECT promote_bootstrap_owner('__OWNER_EMAIL__');
 
 -- ════════════════════════════════════════════════════════════════════
 --  اكتمل الإعداد ✓

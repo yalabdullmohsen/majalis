@@ -606,7 +606,7 @@ function Router() {
       <Route path="/quran-memorization"><SafeLazyRoute component={QuranMemorizationPage} /></Route>
       <Route path="/quran/memorization-plans"><SafeLazyRoute component={QuranMemorizationPlansPage} /></Route>
       <Route path="/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
-      <Route path="/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
+      <Route path="/surah-stories"><Redirect to="/quran/surah-stories" /></Route>
       <Route path="/quran/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
       {/* مسارات الاختصار — public redirects */}
       <Route path="/research"><Redirect to="/fiqh-council/research" /></Route>

@@ -4,7 +4,7 @@
  *
  * Usage:
  *   node scripts/smoke-production-loading.mjs
- *   node scripts/smoke-production-loading.mjs --base=https://www.majlisilm.com
+ *   node scripts/smoke-production-loading.mjs --base=https://majlisilm.com
  */
 import { spawnSync } from "node:child_process";
 import { dirname, join } from "node:path";

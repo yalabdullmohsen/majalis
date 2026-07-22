@@ -21,7 +21,7 @@ function resolvePublicBaseUrl() {
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL.replace(/^https?:\/\//, "")}`;
   }
-  return "https://www.majlisilm.com";
+  return "https://majlisilm.com";
 }
 
 function loadSeedItemsFromFilesystem() {
