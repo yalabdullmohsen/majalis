@@ -7,7 +7,7 @@ import { isBootstrapOwnerEmail, hasUnrestrictedAdminAccess } from "../lib/owner-
 import { hasPermission, canImportContent } from "../lib/admin-auth.mjs";
 
 const TARGET_EMAIL = "yalabdullmohsen1@gmail.com";
-const PRODUCTION = "https://www.majlisilm.com";
+const PRODUCTION = "https://majlisilm.com";
 
 const checks = [];
 

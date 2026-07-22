@@ -370,6 +370,12 @@
       "source": "/scholars/fakhr-al-razi",
       "destination": "/scholars/fakhr-razi",
       "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.majlisilm.com" }],
+      "destination": "https://majlisilm.com/:path*",
+      "permanent": true
     }
   ],
   "rewrites": [

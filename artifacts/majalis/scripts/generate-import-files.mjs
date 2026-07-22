@@ -10,7 +10,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
 const outDir = join(root, "data", "import");
 
-const SITE = "https://www.majlisilm.com";
+const SITE = "https://majlisilm.com";
 
 const CATEGORY_FROM_TAGS = {
   تفسير: "تفسير",
