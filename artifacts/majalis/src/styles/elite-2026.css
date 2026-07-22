@@ -6881,6 +6881,9 @@ html[data-theme="dark"] .twh-hub-card__current-tag {
 .twh-book-level--beginner { background: #D1FAE5; color: #065F46; }
 .twh-book-level--mid      { background: rgba(23,61,53,.12); color: #28584D; }
 .twh-book-level--adv      { background: #EDE9FE; color: #5B21B6; }
+/* --mid وحدها خلفيتها شفافة (تتلوّن بلون البطاقة المحيطة) فتصبح داكنة في
+   الوضع الليلي بينما نصها #28584D يبقى داكنًا — نفس تصادم .sw-badge--wajib. */
+html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 
 /* ── مسألة التوحيد اليوم (.tpod-card) ── */
 .tpod-card {
@@ -17956,7 +17959,15 @@ html[data-theme="dark"] .qlive-player {
 
 /* hero */
 .sw-hero {
-  background: linear-gradient(160deg, var(--majalis-emerald-deep, #173D35) 0%, var(--majalis-emerald, #28584D) 100%);
+  /* ألوان حرفية لا متغيّرات (بخلاف بقية أخوات هذا القسم .hj-hero/.th-hero/
+     .jnz-hero التي استخدمت hex ثابتة أصلًا) — [class$="-hero"] في هذا
+     الملف (§"② الحاويات الداكنة") يُعيد تعريف --majalis-emerald-deep إلى
+     var(--text-on-primary) (أبيض) عمدًا لتحييد ألوان العناوين الداخلية،
+     لكن هذا العنصر بالذات كان يستهلك نفس المتغيّر لبناء تدرّج خلفيته هو،
+     فينقلب أول لون في التدرّج إلى أبيض في الوضع الليلي (تحقّق حي: تدرّج
+     أبيض←أخضر بدل أخضر داكن←أخضر، يُخفي نص التبويبات الأبيض فوقه،
+     2026-07-22). */
+  background: linear-gradient(160deg, #173D35 0%, #28584D 100%);
   color: #fff;
   padding: 2.5rem 1.25rem 0;
   text-align: center;
@@ -18090,6 +18101,11 @@ html[data-theme="dark"] .qlive-player {
 }
 .sw-badge--fard { background: #FEF2F2; color: #B91C1C; }
 .sw-badge--wajib { background: rgba(23,61,53,.10); color: #28584D; }
+/* --fard/--nafl خلفياتهما لونان فاتحان صلبان (لا شفافية) فيبقيان واضحين
+   بصرف النظر عن الوضع؛ --wajib وحدها خلفيتها شفافة (10% من لون البطاقة
+   المحيطة نفسه) فتصبح داكنة تلقائيًا حين تصير البطاقة داكنة في الوضع
+   الليلي، بينما نصها #28584D يبقى داكنًا أيضًا — تصادم لون على لون. */
+html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 .sw-badge--nafl { background: #F0F5F2; color: #15803D; }
 
 /* dalil */
@@ -25448,11 +25464,16 @@ html[data-theme="dark"] .side-nav-link--v2.is-active {
    لون نصها الافتراضي (--twh-hub-clr، أخضر داكن) بالضبط — تباين 1:1 (شُخِّص
    عبر تدقيق آلي حي 2026-07-19). */
 html[data-theme="dark"] .card,
-html[data-theme="dark"] [class*="-card"]:not(.twh-hub-card__current-tag),
-html[data-theme="dark"] [class*="__card"]:not(.twh-hub-card__current-tag) {
+html[data-theme="dark"] [class*="-card"]:not(.twh-hub-card__current-tag):not(.quran-hub-card__link),
+html[data-theme="dark"] [class*="__card"]:not(.twh-hub-card__current-tag):not(.quran-hub-card__link) {
   background: #173D35 !important;
   border-color: rgba(92,196,154,.10) !important;
 }
+/* .quran-hub-card__link مستبعَد أعلاه من فرض خلفية البطاقة الداكنة (رابط
+   نصي داخل بطاقة، لا بطاقة بذاته) — لكن لونه الخاص #173D35 يبقى بلا
+   تكيّف مع الوضع الليلي، فيتطابق حرفيًا مع خلفية البطاقة الأم الداكنة
+   (نفس اللون تمامًا) — نص غير مرئي بآلية مختلفة. */
+html[data-theme="dark"] .quran-hub-card__link { color: #5CC49A !important; }
 
 /* Inputs dark */
 html[data-theme="dark"] input,
@@ -29680,7 +29701,7 @@ html[data-theme="dark"] .jnz-related__title {
    (2026-07-21، 154 مسارًا عامًا) وجد 32 رابطًا إضافيًا بنفس العطل بالضبط —
    نص أخضر فاتح شبه غير مرئي (تباين 1.3–2.79:1) فوق خلفيات بيضاء/فاتحة أو
    خضراء متوسطة خاصة بها. */
-html[data-theme="dark"] a:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab):not(.quran-subnav__link):not(.page-action-btn):not(.fiqh-hub-strip__tab):not(.tj-related-link):not(.lesson-unified-card__btn--primary):not(.fiqh-council-subnav-link):not(.btn-primary):not(.btn--primary):not(.ds-btn--primary):not(.dvp-btn):not(.hadith-books-banner__btn):not(.lqp2-btn):not(.citation-btn--primary):not(.ar-contribute-banner__btn):not(.lsw-featured__cta):not(.hsh-step__cta):not(.twh-jumpnav__btn):not(.sb-related__link):not(.tw-related__link):not(.sg-related__link):not(.zk-related__link):not(.sw-related__link):not(.hj-related__link):not(.th-related__link):not(.jnz-related__link):not(.mw-related__link):not(.mdb-related__link):not(.arkan-related__link):not(.ai-related__link):not(.dq-related__link):not(.sy-related__link):not(.hs-related__link):not(.uq-related__link):not(.hk-related__link):not(.fa-related__link):not(.jn-related__link):not(.qcp-reg-banner__btn):not(.lesson-unified-card__btn):not(.surah-info-card__link):not(.lpp-nav-link):not(.myl2-empty__cta):not(.fiqh-council-section-link):not(.ui-card-btn):not(.mzp-cta__submissions-btn):not(.qc-card__wa-link):not(.snr-topic-chip) { color: #3BAD8A !important; }
+html[data-theme="dark"] a:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab):not(.quran-subnav__link):not(.page-action-btn):not(.fiqh-hub-strip__tab):not(.tj-related-link):not(.lesson-unified-card__btn--primary):not(.fiqh-council-subnav-link):not(.btn-primary):not(.btn--primary):not(.ds-btn--primary):not(.dvp-btn):not(.hadith-books-banner__btn):not(.lqp2-btn):not(.citation-btn--primary):not(.ar-contribute-banner__btn):not(.lsw-featured__cta):not(.hsh-step__cta):not(.twh-jumpnav__btn):not(.sb-related__link):not(.tw-related__link):not(.sg-related__link):not(.zk-related__link):not(.sw-related__link):not(.hj-related__link):not(.th-related__link):not(.jnz-related__link):not(.mw-related__link):not(.mdb-related__link):not(.arkan-related__link):not(.ai-related__link):not(.dq-related__link):not(.sy-related__link):not(.hs-related__link):not(.uq-related__link):not(.hk-related__link):not(.fa-related__link):not(.jn-related__link):not(.qcp-reg-banner__btn):not(.lesson-unified-card__btn):not(.surah-info-card__link):not(.lpp-nav-link):not(.myl2-empty__cta):not(.fiqh-council-section-link):not(.ui-card-btn):not(.mzp-cta__submissions-btn):not(.qc-card__wa-link):not(.snr-topic-chip):not(.wird-quran-link) { color: #3BAD8A !important; }
 /* .nf2-btn (404) و.qs-subnav__link (إذاعات القرآن) يظهران في سياقين
    مختلفين بخلفيتين مختلفتين تمامًا على نفس الصفحة (فاتحة في حالة وداكنة
    خضراء في أخرى) — لا لون ثابت واحد يخدم الحالتين معًا، فبقيا ضمن
@@ -30292,8 +30313,14 @@ html[data-theme="dark"] [role="alert"] {
   border-color: #EF9898 !important;
   color: #EF9898 !important;
 }
+/* لا color هنا (بخلاف الإصدار السابق): نفس علّة [role="tab"] الأصلية
+   (وضع النهار) المُصلَحة سابقًا، لها توأم في الوضع الليلي لم يُصلَح وقتها
+   — عشرات شارات/تبويبات الفلاتر النشطة (كـ.content-hub-chip--active)
+   تملأ نفسها بخلفية زمردية ونص أبيض !important عمدًا، وهذا المحدد العام
+   كان يفرض color:#3BAD8A !important فوقها، فيتطابق النص مع الخلفية
+   الزمردية تمامًا (اختفاء كامل، تحقّق حي: fg=bg=rgb(59,173,138) بالضبط
+   على .content-hub-chip--active، 2026-07-22). */
 html[data-theme="dark"] [role="tab"][aria-selected="true"] {
-  color: #3BAD8A !important;
   border-bottom-color: #3BAD8A !important;
 }
 html[data-theme="dark"] [role="tab"]:hover {
@@ -31252,15 +31279,12 @@ button.primary,
 .zk-calc__btn:hover,
 .zk-calc__result,
 .sw-hero,
-.sw-tab--active,
 .sw-section__intro,
 .sw-related__link:hover,
 .hj-hero,
-.hj-tab--active,
 .hj-umra-step__num,
 .hj-related__link:hover,
 .th-hero,
-.th-tab--active,
 .th-step-item__num,
 .th-related__link:hover,
 .fa-hero,
