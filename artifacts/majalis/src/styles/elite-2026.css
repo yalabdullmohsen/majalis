@@ -30248,21 +30248,23 @@ html[data-theme="dark"] ::-webkit-scrollbar-thumb {
   border-bottom: 1px solid var(--color-border, #E7E2D8) !important;
   display: flex !important;
 }
+/* لا padding/font-size/color/background/border-radius هنا (بخلاف الإصدار
+   السابق): كانت !important تُسطِّح تصميم عشرات شارات/رقاقات الفلاتر
+   المخصصة (مثل .duas-cat: حبة كاملة الاستدارة 2rem بخلفية بيضاء) إلى مربع
+   شفاف بلا حدود مرئية — وفي الحالة النشطة (aria-selected) كانت الخلفية
+   الممتلئة المقصودة (كـ.duas-cat--active) تختفي تمامًا (شفافة)، فيفقد
+   المستخدم أي مؤشر بصري على الفلتر المُحدَّد حاليًا. تحقّق حي مباشر أكّد
+   هذا (border-radius:0px بدل 2rem، background شفاف بدل أبيض/أخضر ممتلئ،
+   2026-07-22). الخصائص الهيكلية غير المتعارضة (border-bottom كمؤشر
+   تسطير تبويب تقليدي، cursor، transition) بقيت لأنها آمنة كقيمة افتراضية
+   لأي تبويب لا يملك تصميمًا خاصًا. */
 [role="tab"] {
-  padding: 0.6rem 1rem !important;
-  font-size: 0.875rem !important;
-  font-weight: 500 !important;
-  color: var(--color-text-2, #68716D) !important;
   border-bottom: 2px solid transparent !important;
   cursor: pointer !important;
-  transition: color 120ms, border-color 120ms !important;
-  background: none !important;
-  border-radius: 0 !important;
+  transition: color 120ms, border-color 120ms, background 120ms !important;
 }
 [role="tab"][aria-selected="true"] {
-  color: var(--color-primary, #28584D) !important;
   border-bottom-color: var(--color-primary, #28584D) !important;
-  font-weight: 700 !important;
 }
 [role="tab"]:hover {
   color: var(--color-primary, #28584D) !important;
