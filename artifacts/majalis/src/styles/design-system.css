@@ -107,7 +107,11 @@ html {
   background: var(--majalis-panel, #F7F4ED);
   border: 1px solid var(--ds-line-color);
   border-radius: var(--ds-radius-lg);
-  padding: var(--ds-space-3);
+  /* ⚠️ 2026-07-22: كانت --ds-space-3 (0.75rem) — ضيقة جدًا لبطاقات محتوى
+     طويل (مقالات/تفاصيل)، سبب رئيسي في شكوى "تلوث بصري/تلاصق". بطاقات
+     الشبكة الصغيرة (.page-card/.library-card) لم تُغيَّر — هذا يخص فقط
+     البطاقات المستخدَمة كحاوية مقال (article) طويل. */
+  padding: var(--ds-space-6);
   box-shadow: 0 1px 4px rgba(31,77,58,0.05), 0 2px 8px rgba(31,77,58,0.04);
   transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
@@ -117,6 +121,70 @@ html {
   box-shadow: 0 4px 16px rgba(31,77,58,0.10), 0 2px 6px rgba(31,77,58,0.06);
   border-color: rgba(31,77,58,0.18);
   transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   نظام الإيقاع البصري للمحتوى الطويل (Prose Rhythm) — 2026-07-22
+   السبب الجذري لشكوى "تلوث بصري/نصوص متلاصقة": العناصر الدلالية الخام
+   (h2-h4/p/ul/ol/li) المستخدَمة مباشرة في عشرات الصفحات (مثال:
+   SurahStoryDetailPage: <section><h2/><p/></section>) لم يكن لها أي قاعدة
+   مسافات مركزية إطلاقًا — فقط لون العناوين (h1,h2,h3 أسفل الملف). كل ما
+   يلي عبر :where() (تخصيص = صفر) عمدًا: أي تنسيق أدق خاص بصفحة معيّنة
+   (كمثال .fiqh-comparative-section أدناه) يستمر بالفوز تلقائيًا بلا
+   !important. لا يشمل هذا صفحات المصحف (quran-shell, mf2, mpv)
+   لأنها لا تستخدم .ui-card/.ds-card/article/.ds-page/.page-shell على
+   الإطلاق — مُستثناة ببنية الشجرة نفسها، لا بقاعدة استثناء صريحة. ── */
+.ui-card :where(h2, h3, h4),
+.ds-card :where(h2, h3, h4),
+article :where(h2, h3, h4),
+.ds-page :where(h2, h3, h4),
+.page-shell :where(h2, h3, h4) {
+  margin-block-start: var(--ds-space-8);
+  margin-block-end: var(--ds-space-2);
+  line-height: 1.4;
+}
+.ui-card > :where(h2, h3, h4):first-child,
+.ds-card > :where(h2, h3, h4):first-child,
+article > :where(h2, h3, h4):first-child,
+.ui-card > section:first-child > :where(h2, h3, h4):first-child,
+.ds-card > section:first-child > :where(h2, h3, h4):first-child,
+article > section:first-child > :where(h2, h3, h4):first-child {
+  margin-block-start: 0;
+}
+.ui-card :where(p),
+.ds-card :where(p),
+article :where(p),
+.ds-page :where(p),
+.page-shell :where(p) {
+  line-height: var(--ds-line-prose, 1.8);
+  margin-block-end: var(--ds-space-4);
+  letter-spacing: normal;
+}
+.ui-card :where(ul, ol),
+.ds-card :where(ul, ol),
+article :where(ul, ol),
+.ds-page :where(ul, ol),
+.page-shell :where(ul, ol) {
+  margin-block-end: var(--ds-space-4);
+  padding-inline-start: var(--ds-space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-2);
+}
+.ui-card :where(ul), .ds-card :where(ul), article :where(ul), .ds-page :where(ul), .page-shell :where(ul) { list-style: disc; }
+.ui-card :where(ol), .ds-card :where(ol), article :where(ol), .ds-page :where(ol), .page-shell :where(ol) { list-style: decimal; }
+.ui-card :where(li),
+.ds-card :where(li),
+article :where(li),
+.ds-page :where(li),
+.page-shell :where(li) {
+  line-height: var(--ds-line-prose, 1.8);
+}
+/* عرض أقصى مريح لأسطر مقال طويل — يعيد استخدام --ds-content-max الموجود
+   أصلًا (كان مقصورًا على .page-shell.narrow فقط). */
+article {
+  max-width: var(--ds-content-max);
+  margin-inline: auto;
 }
 
 /* ── محل الاتفاق والخلاف (المسائل الخلافية) ── */
@@ -1257,6 +1325,9 @@ p, li {
   --ds-max:         75rem;
   --ds-content-max: 44rem;
   --ds-line:        1.65;
+  /* ارتفاع سطر مريح خصيصًا للفقرات العربية الطويلة (نظام إيقاع المحتوى
+     أدناه) — العربية تحتاج ارتفاعًا أعلى من --ds-line العام (تشكيل/مدّات). */
+  --ds-line-prose:  1.8;
 
   /* ── Motion — Spring curves ── */
   --ds-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
