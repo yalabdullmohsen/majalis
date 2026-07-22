@@ -253,7 +253,7 @@ export default function MushafPageView() {
 
   const activeSurahForPlayer = primarySegment?.segment.surah ?? 1;
   const activeSurahAyahCount = primarySegment ? getSurahMeta(activeSurahForPlayer).ayahs : 0;
-  const { currentAyah, playerState, togglePlayAyah } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
+  const { currentAyah, playerState, togglePlayAyah, reciterId, setReciterId } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
 
   // ── جسر بين مكوّني تخطيط السطر الحقيقي (V2/خفيف) وحالة الآية المختارة/المُشغَّلة القائمة أصلًا ──
   const handleV2AyahPress = useCallback((verseKey: string) => {
@@ -575,6 +575,8 @@ export default function MushafPageView() {
             setSelectedAyah({ surah: next.surahNumber!, ayah: next.numberInSurah });
           } : undefined}
           onClose={() => setSelectedAyah(null)}
+          reciterId={reciterId}
+          onSetReciter={setReciterId}
         />
       )}
     </div>,
