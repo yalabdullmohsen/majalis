@@ -162,8 +162,8 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "حق الولد على والده أن يحسن اسمه ويحسن تربيته.", category: "التربية", source: "رواه البيهقي", author_name: "شعب الإيمان", status: "approved", verification_status: "verified" },
 
   /* ── اللغة ── */
-  { text: "أعربوا القرآن والتمسوا غرائبه.", category: "اللغة", source: "أثر منسوب للنبي ﷺ — يُستحسن في أدب العربية", author_name: "أدب اللغة", status: "approved", verification_status: "needs_review" },
-  { text: "أحبوا العرب لثلاث: لأني عربي والقرآن عربي ولسان أهل الجنة عربي.", category: "اللغة", source: "رواه الطبراني — ضعيف في السند", author_name: "المعجم الأوسط", status: "approved", verification_status: "needs_review" },
+  { text: "أعربوا القرآن والتمسوا غرائبه.", category: "اللغة", source: "رواه البيهقي مرفوعاً عن أبي هريرة بإسناد ضعيف، وروي موقوفاً على عمر وابن عمر وابن مسعود — ضعيف الإسناد لا موضوع، والمعنى صحيح", author_name: "أدب اللغة", status: "approved", verification_status: "needs_review" },
+  { text: "أحبوا العرب لثلاث: لأني عربي والقرآن عربي ولسان أهل الجنة عربي.", category: "اللغة", source: "رواه الطبراني في المعجم الأوسط — موضوع (لا أصل له)، حكم عليه بذلك العقيلي وابن الجوزي والذهبي وابن حبان والألباني؛ في سنده العلاء بن عمرو مجمع على ضعفه", author_name: "حديث موضوع — لا يُحتج به", status: "approved", verification_status: "needs_review" },
 
   /* ── إضافات العقيدة ── */
   { text: "من أحبّ للمسلمين ما يُحب لنفسه فقد كمل إيمانه.", category: "العقيدة", source: "لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه — متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
