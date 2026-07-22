@@ -1,0 +1,90 @@
+name: Auto Deploy main → production
+
+# نشر إنتاجي تلقائي مجدوَل كل ساعة (مُفوَّض صراحة من مالك المشروع،
+# راجع CLAUDE.md § النشر والفروع). لا يدمج شيئًا إن لم توجد تحديثات جديدة
+# في main، ولا يدمج شيئًا إن فشل البناء أو ظهر تعارض — production يبقى
+# كما هو في كلتا الحالتين.
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch: {}
+
+# يمنع تشغيل نسختين متزامنتين. لا نُلغي تشغيلًا جاريًا (cancel-in-progress:
+# false) — نشر إنتاجي منتصف الطريق لا يجوز قطعه، فقط نمنع تشغيلًا جديدًا
+# متداخلًا معه.
+concurrency:
+  group: auto-deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    if: github.repository == 'yalabdullmohsen/majalis'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout main (بتاريخ كامل لمقارنة الفروع)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: مقارنة main مع production
+        id: diff
+        run: |
+          git fetch origin production --quiet
+          AHEAD=$(git rev-list --count origin/production..origin/main)
+          echo "ahead=$AHEAD" >> "$GITHUB_OUTPUT"
+          if [ "$AHEAD" -eq 0 ]; then
+            echo "لا توجد commits جديدة في main — لا شيء لنشره."
+          else
+            echo "main متقدم بـ$AHEAD commit عن production."
+          fi
+
+      - name: Setup pnpm
+        if: steps.diff.outputs.ahead != '0'
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        if: steps.diff.outputs.ahead != '0'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        if: steps.diff.outputs.ahead != '0'
+        run: pnpm install --frozen-lockfile
+
+      - name: Type check
+        if: steps.diff.outputs.ahead != '0'
+        run: |
+          pnpm run typecheck:libs
+          pnpm --filter @workspace/majalis run typecheck
+
+      - name: Build كامل (تحقق قبل أي دمج)
+        if: steps.diff.outputs.ahead != '0'
+        run: pnpm --filter @workspace/majalis run build
+
+      - name: دمج main في production ودفعه (فقط بعد نجاح البناء أعلاه)
+        if: steps.diff.outputs.ahead != '0'
+        run: |
+          git config user.name "majlisilm-auto-deploy"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -B production origin/production
+
+          if ! git merge --no-ff --no-edit origin/main \
+            -m "auto-deploy: نشر إنتاجي تلقائي مجدوَل من main"; then
+            echo "::error::تعارض دمج بين main وproduction — تم الإيقاف بلا أي دفع. production لم يتأثر."
+            git merge --abort || true
+            exit 1
+          fi
+
+          # دفع عادي بلا force — يفشل بأمان إن تحرك production من تحتنا
+          # أثناء هذا التشغيل بدل الكتابة فوق أي شيء.
+          git push origin production:production
