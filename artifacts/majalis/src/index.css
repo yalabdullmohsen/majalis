@@ -4169,6 +4169,9 @@ input, textarea, select { font-family: inherit; }
   font-weight: 700;
   font-size: 1.0625rem;
   white-space: nowrap;
+  color: var(--majalis-emerald-deep);
+  letter-spacing: 0.03em;
+  line-height: 1.2;
 }
 
 .sheikh-avatar-ring {
@@ -5424,7 +5427,7 @@ input, textarea, select { font-family: inherit; }
 /* ── Mobile UX & touch targets ── */
 @media (max-width: 880px) {
   .site-brand-name {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     max-width: 9rem;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -10007,6 +10010,42 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   height: 36px;
   transition: all 0.15s ease;
 }
+.navbar-menu-btn--drawer {
+  font-family: "Aref Ruqaa", "Amiri", serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: #fff;
+  color: var(--majalis-emerald-deep);
+  border-color: rgba(22,78,60,0.18);
+}
+.navbar-search-global {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(22,78,60,0.18);
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--majalis-emerald-deep);
+  font-family: inherit;
+  font-weight: 600;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.navbar-search-global:hover {
+  border-color: var(--majalis-emerald);
+  box-shadow: 0 0 0 3px rgba(22,78,60,0.06);
+}
+.navbar-search-kbd {
+  font-size: 0.6rem;
+  opacity: 0.55;
+  padding: 0.05rem 0.3rem;
+  border: 1px solid var(--majalis-line);
+  border-radius: 0.25rem;
+  background: var(--majalis-parchment-deep);
+  font-family: inherit;
+}
 
 /* زر القائمة — تصميم محسَّن */
 .navbar-menu-btn {
@@ -10431,6 +10470,12 @@ body.mobile-nav-body-lock {
   font-weight: 700;
   color: var(--majalis-emerald-deep, #173D35);
   text-decoration: none;
+}
+.side-nav-drawer__brand strong {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.03em;
 }
 
 /* ── Close button ── */
@@ -15134,6 +15179,83 @@ body.has-assistant-fab .app-main {
   background: #173D35;
   border-color: rgba(24,54,42,0.4);
   color: #D6CFC0;
+}
+
+/* ─── Prophets tabs ─── */
+.prophets-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  direction: rtl;
+}
+.prophets-tab {
+  padding: 0.45rem 1.1rem;
+  border-radius: 8px;
+  border: 1px solid var(--majalis-border, #e2e8f0);
+  background: var(--majalis-surface, #fff);
+  color: var(--majalis-ink-soft, #6b7280);
+  font-size: 0.88rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.prophets-tab--active {
+  background: #064e3b;
+  color: #fff;
+  border-color: #064e3b;
+  font-weight: 700;
+}
+.prophets-tab:hover:not(.prophets-tab--active) {
+  background: #f0fdf4;
+  border-color: #6ee7b7;
+  color: #065f46;
+}
+
+/* ─── Genealogy Tree ─── */
+.prophet-tree-wrap {
+  direction: rtl;
+}
+.prophet-tree-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  color: var(--majalis-ink-soft, #6b7280);
+}
+.prophet-tree-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+.prophet-tree-legend__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.prophet-tree-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--majalis-border, #e2e8f0);
+  border-radius: 12px;
+  background: var(--majalis-surface, #fff);
+  padding: 0.75rem;
+}
+.dark .prophet-tree-scroll {
+  background: #1a2636;
+  border-color: #334155;
+}
+.prophet-tree-svg {
+  display: block;
+  max-width: 100%;
+}
+.prophet-tree-note {
+  margin-top: 0.75rem;
+  font-size: 0.78rem;
+  color: var(--majalis-ink-soft, #6b7280);
+  text-align: center;
+  padding: 0 0.5rem;
 }
 
 .prophets-search {
