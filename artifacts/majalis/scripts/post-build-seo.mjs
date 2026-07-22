@@ -63,13 +63,22 @@ function buildMergedHtml(seoTags, spaAssets, prerenderBody, spaBody) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     ${seoTags}
+    <style>
+      /* shell مرئي بدون JS (للزواحف غير المُنفِّذة) — root مخفي */
+      #root{display:none}
+      /* بعد إضافة js-ready: shell مخفي، root مرئي */
+      .js-ready #seo-shell{display:none!important}
+      .js-ready #root{display:block!important}
+    </style>
+    <script>(function(){document.documentElement.classList.add('js-ready');})()</script>
     ${spaAssets}
   </head>
   <body>
-    <noscript>
+    <!-- محتوى SEO مرئي للزواحف غير المُنفِّذة للـ JS -->
+    <div id="seo-shell">
       ${prerenderBody}
-    </noscript>
-    <!-- جذر React -->
+    </div>
+    <!-- جذر React — يُفعَّل بعد تشغيل JavaScript -->
     <div id="root"></div>
     <!-- سكريبت تهيئة الثيم فوراً لمنع الوميض -->
     <script>try{var _dsv="v4-light-2026";if(localStorage.getItem("majalis-design-v")!==_dsv){localStorage.setItem("majalis-design-v",_dsv);localStorage.removeItem("majalis-theme-preference");}var st=localStorage.getItem("majalis-theme-preference");var res=st==="dark"?"dark":"light";document.documentElement.dataset.theme=res;document.documentElement.classList.toggle("dark",res==="dark");}catch(e){}</script>

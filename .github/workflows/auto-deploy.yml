@@ -1,11 +1,14 @@
 name: Auto Deploy main → production
 
-# نشر إنتاجي تلقائي مجدوَل كل ساعة (مُفوَّض صراحة من مالك المشروع،
-# راجع CLAUDE.md § النشر والفروع). لا يدمج شيئًا إن لم توجد تحديثات جديدة
-# في main، ولا يدمج شيئًا إن فشل البناء أو ظهر تعارض — production يبقى
-# كما هو في كلتا الحالتين.
+# نشر إنتاجي تلقائي فور كل push على main (2026-07-22، بطلب صريح من المالك
+# لإزالة تأخير الساعة)، مع إبقاء الجدولة الساعية كشبكة أمان احتياطية تلتقط
+# أي حالة فاتها push-trigger (مثل تشغيل فشل أو انقطاع). لا يدمج شيئًا إن لم
+# توجد تحديثات جديدة في main، ولا يدمج شيئًا إن فشل البناء أو ظهر تعارض —
+# production يبقى كما هو في كلتا الحالتين. راجع CLAUDE.md § النشر والفروع.
 
 on:
+  push:
+    branches: [main]
   schedule:
     - cron: "0 * * * *"
   workflow_dispatch: {}
@@ -85,6 +88,13 @@ jobs:
         run: |
           git config user.name "majlisilm-auto-deploy"
           git config user.email "actions@users.noreply.github.com"
+          # خطوة البناء أعلاه تُولِّد ملفات مصدرية كأثر جانبي (feed.xml،
+          # content-counts.json...) وتترك working tree غير نظيف. بلا هذا
+          # التنظيف يفشل checkout التالي بـ"local changes would be
+          # overwritten" (مؤكَّد بتشغيل فعلي فشل بهذا تحديدًا 2026-07-22) —
+          # كان هذا يُسقِط كل تشغيل صامتًا ويُبقي production عالقًا خلف main.
+          git checkout -- .
+          git clean -fd
           git checkout -B production origin/production
 
           if ! git merge --no-ff --no-edit origin/main \

@@ -2,7 +2,7 @@
 /**
  * Verify production feature-health + auth-context endpoints.
  */
-const PRODUCTION = process.env.MAJALIS_PRODUCTION_URL || "https://www.majlisilm.com";
+const PRODUCTION = process.env.MAJALIS_PRODUCTION_URL || "https://majlisilm.com";
 
 const checks = [];
 function record(name, ok, detail = "") {

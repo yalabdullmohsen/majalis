@@ -136,7 +136,9 @@ function PlanDisplay({
 
   const toggleDone = async (itemId: string, done: boolean) => {
     setItems((prev) => prev.map((i) => (i.id === itemId ? { ...i, done } : i)));
-    await markPlanItemDone(userId, itemId, done);
+    if (plan.id !== "local") {
+      await markPlanItemDone(userId, itemId, done);
+    }
   };
 
   const TYPE_LABEL: Record<string, string> = { lesson: "درس", book: "كتاب", path: "مسار" };
@@ -252,12 +254,27 @@ export default function LearningPlanPage() {
     setStep("loading");
     try {
       const items = await generatePlanItems(level as PlanLevel, interests, dailyMinutes);
-      const saved = await saveLearningPlan(user.id, {
-        level: level as PlanLevel,
-        interests,
-        daily_minutes: dailyMinutes,
-        plan_items: items,
-      });
+      let saved: LearningPlan;
+      try {
+        saved = await saveLearningPlan(user.id, {
+          level: level as PlanLevel,
+          interests,
+          daily_minutes: dailyMinutes,
+          plan_items: items,
+        });
+      } catch {
+        // DB unavailable — show plan locally without persisting
+        saved = {
+          id: "local",
+          user_id: user.id,
+          level: level as PlanLevel,
+          interests,
+          daily_minutes: dailyMinutes,
+          plan_items: items,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        };
+      }
       setPlan(saved);
       setStep("plan");
     } catch {

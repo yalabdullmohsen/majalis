@@ -4,9 +4,9 @@
  *
  * Usage:
  *   node scripts/apply-production-activation-tables.mjs
- *   MAJALIS_PRODUCTION_URL=https://www.majlisilm.com node scripts/apply-production-activation-tables.mjs
+ *   MAJALIS_PRODUCTION_URL=https://majlisilm.com node scripts/apply-production-activation-tables.mjs
  */
-const PRODUCTION = process.env.MAJALIS_PRODUCTION_URL || "https://www.majlisilm.com";
+const PRODUCTION = process.env.MAJALIS_PRODUCTION_URL || "https://majlisilm.com";
 
 async function call(path) {
   const url = `${PRODUCTION}${path}`;

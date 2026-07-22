@@ -29,6 +29,7 @@ import { NavProgressBar } from "@/components/NavProgressBar";
 import { recordRecentPage } from "@/lib/recent-pages";
 import { OfflineBanner } from "@/components/OfflineBanner";
 import { UpdateAvailableBanner } from "@/components/UpdateAvailableBanner";
+import { setPrayerTimesCache } from "@/lib/lesson-time";
 
 const lazy = lazyWithRetry;
 
@@ -127,6 +128,19 @@ const OccasionsPage = lazy(() => import("@/views/OccasionsPage"));
 const FeaturesInProgressPage = lazy(() => import("@/views/FeaturesInProgressPage"));
 const ArbaeenNawawiPage = lazy(() => import("@/views/ArbaeenNawawiPage"));
 const ArbaeenHadithDetailPage = lazy(() => import("@/views/ArbaeenHadithDetailPage"));
+const SujoodSahwPage = lazy(() => import("@/views/SujoodSahwPage"));
+const AmradQalbiyyaPage = lazy(() => import("@/views/AmradQalbiyyaPage"));
+const DurusImaniyyaPage = lazy(() => import("@/views/DurusImaniyyaPage"));
+const DurusMutanawwiaPage = lazy(() => import("@/views/DurusMutanawwiaPage"));
+const ImanTopicsPage = lazy(() => import("@/views/ImanTopicsPage"));
+const QuranStudiesPage = lazy(() => import("@/views/QuranStudiesPage"));
+const SunnahStudiesPage = lazy(() => import("@/views/SunnahStudiesPage"));
+const TazkiyaTopicsPage = lazy(() => import("@/views/TazkiyaTopicsPage"));
+const TarikhIslamiPage = lazy(() => import("@/views/TarikhIslamiPage"));
+const UsraMujtamaPage = lazy(() => import("@/views/UsraMujtamaPage"));
+const FikrWaqiaPage = lazy(() => import("@/views/FikrWaqiaPage"));
+const MawsuaatPage = lazy(() => import("@/views/MawsuaatPage"));
+const MasaratPage = lazy(() => import("@/views/MasaratPage"));
 const SettingsPage = lazy(() => import("@/views/SettingsPage"));
 const AccountDeletionPage = lazy(() => import("@/views/AccountDeletionPage"));
 const AnnualCoursesPage = lazy(() => import("@/views/AnnualCoursesPage"));
@@ -267,7 +281,17 @@ const UniversitiesAdminPage = lazyWithRetry(() => import("@/views/admin/Universi
 function SeoManager() {
   const [location] = useLocation();
   usePageSeo(location);
-  useEffect(() => { recordRecentPage(location); }, [location]);
+  useEffect(() => {
+    // تأخير قصير يمنح صفحة التفاصيل (مثلًا عنوان درس حقيقي بعد جلبه من
+    // Supabase) فرصة لضبط document.title الخاص بها قبل أن نسجّله في "زرت
+    // مؤخرًا" — بلا هذا التأخير قد نلتقط عنوان الصفحة السابقة أو عنوانًا
+    // عامًا مؤقتًا فقط.
+    const timer = window.setTimeout(() => {
+      const rawTitle = document.title.split(" | ")[0]?.trim();
+      recordRecentPage(location, rawTitle);
+    }, 400);
+    return () => window.clearTimeout(timer);
+  }, [location]);
   return null;
 }
 
@@ -334,7 +358,16 @@ function AdhanSchedulerBootstrap() {
   const { data } = usePrayerCountdown();
   const started = useRef(false);
   useEffect(() => {
-    if (!data || started.current) return;
+    if (!data) return;
+    // مزامنة كاش أوقات الصلاة في lesson-time بالبيانات الحية الفعلية من كل
+    // جلب — بدل الاعتماد على المتوسطات السنوية الثابتة. المفاتيح بالعربية
+    // (name) لا الإنجليزية (key) لتطابق PRAYER_TIME_MINUTES في lesson-time.ts.
+    const liveMinutes: Record<string, number> = {};
+    for (const slot of data.prayers) {
+      if (slot.minutes != null) liveMinutes[slot.name] = slot.minutes;
+    }
+    setPrayerTimesCache(liveMinutes);
+    if (started.current) return;
     started.current = true;
     startAdhanScheduler(data).catch(() => {});
   }, [data]);
@@ -380,7 +413,6 @@ function SafeLazyRoute({ component: Component }: { component: ComponentType<any>
     </ErrorBoundary>
   );
 }
-
 
 function AdminLazyRoute({ component: Component }: { component: ComponentType }) {
   return (
@@ -574,7 +606,7 @@ function Router() {
       <Route path="/quran-memorization"><SafeLazyRoute component={QuranMemorizationPage} /></Route>
       <Route path="/quran/memorization-plans"><SafeLazyRoute component={QuranMemorizationPlansPage} /></Route>
       <Route path="/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
-      <Route path="/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
+      <Route path="/surah-stories"><Redirect to="/quran/surah-stories" /></Route>
       <Route path="/quran/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
       {/* مسارات الاختصار — public redirects */}
       <Route path="/research"><Redirect to="/fiqh-council/research" /></Route>
@@ -608,6 +640,19 @@ function Router() {
       <Route path="/features-in-progress"><SafeLazyRoute component={FeaturesInProgressPage} /></Route>
       <Route path="/arbaeen-nawawi/:id"><SafeLazyRoute component={ArbaeenHadithDetailPage} /></Route>
       <Route path="/arbaeen-nawawi"><SafeLazyRoute component={ArbaeenNawawiPage} /></Route>
+      <Route path="/sujood-sahw"><SafeLazyRoute component={SujoodSahwPage} /></Route>
+      <Route path="/amrad-qalbiyya"><SafeLazyRoute component={AmradQalbiyyaPage} /></Route>
+      <Route path="/durus-imaniyya"><SafeLazyRoute component={DurusImaniyyaPage} /></Route>
+      <Route path="/durus-mutanawwia"><SafeLazyRoute component={DurusMutanawwiaPage} /></Route>
+      <Route path="/iman-topics"><SafeLazyRoute component={ImanTopicsPage} /></Route>
+      <Route path="/quran-studies"><SafeLazyRoute component={QuranStudiesPage} /></Route>
+      <Route path="/sunnah-studies"><SafeLazyRoute component={SunnahStudiesPage} /></Route>
+      <Route path="/tazkiya-topics"><SafeLazyRoute component={TazkiyaTopicsPage} /></Route>
+      <Route path="/tarikh-islami"><SafeLazyRoute component={TarikhIslamiPage} /></Route>
+      <Route path="/usra-mujtama"><SafeLazyRoute component={UsraMujtamaPage} /></Route>
+      <Route path="/fikr-waqia"><SafeLazyRoute component={FikrWaqiaPage} /></Route>
+      <Route path="/mawsuaat"><SafeLazyRoute component={MawsuaatPage} /></Route>
+      <Route path="/masarat"><SafeLazyRoute component={MasaratPage} /></Route>
       <Route path="/cards"><SafeLazyRoute component={CardsPage} /></Route>
       <Route path="/annual-courses/:id"><SafeLazyRoute component={AnnualCourseDetailPage} /></Route>
       <Route path="/annual-courses"><SafeLazyRoute component={AnnualCoursesPage} /></Route>

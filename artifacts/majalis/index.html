@@ -13,27 +13,30 @@
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#FFFFFF" />
     <meta name="author" content="المجلس العلمي" />
-    <link rel="canonical" href="https://www.majlisilm.com/" />
+    <link rel="canonical" href="https://majlisilm.com/" />
     <meta property="og:site_name" content="المجلس العلمي" />
     <meta property="og:locale" content="ar_KW" />
     <meta property="og:title" content="المجلس العلمي، دروس شرعية ودورات علمية" />
     <meta property="og:description" content="تطبيق علمي عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.majlisilm.com/" />
-    <meta property="og:image" content="https://www.majlisilm.com/opengraph.jpg" />
+    <meta property="og:url" content="https://majlisilm.com/" />
+    <meta property="og:image" content="https://majlisilm.com/opengraph.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="المجلس العلمي، منصة الدروس الشرعية" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="المجلس العلمي، دروس شرعية ودورات علمية" />
     <meta name="twitter:description" content="تطبيق علمي عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم." />
-    <meta name="twitter:image" content="https://www.majlisilm.com/opengraph.jpg" />
+    <meta name="twitter:image" content="https://majlisilm.com/opengraph.jpg" />
     <meta name="twitter:image:alt" content="المجلس العلمي، منصة الدروس الشرعية" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" href="/favicon.png" sizes="512x512" />
+    <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/favicon-48.png" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/icon-96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="/icon-192.png" sizes="192x192" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- DNS prefetch for external assets -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
@@ -48,28 +51,30 @@
          2026-07-19، بدل Almarai). IBM Plex Sans Arabic يبقى مُحمَّلاً كبديل احتياطي فقط
          (توافقًا مع مسارات توليد الصور/PDF القائمة التي ما زالت تشير إليه صراحةً).
          الاستثناء الوحيد: خطوط الرسم القرآني/الصيغ الشرعية العثمانية للعناوين المميزة
-         والمصحف فقط. -->
+         والمصحف فقط. تحميل غير حاجب (media=print/onload) لتحسين Core Web Vitals. -->
     <!-- Amiri Quran مُستضاف محليًا (public/fonts/amiri-quran/) لا عبر Google Fonts —
          خط نص المصحف الافتراضي (الوضع الخفيف) لا يجوز أن يعتمد على شبكة CDN خارجية:
          تطبيق iOS عبر Capacitor (WKWebView) قد يفتح بلا اتصال فوري، وأي تأخر/فشل هنا
          يعني ظهور القرآن بخط بديل غير مقروء ولو للحظة — راجع @font-face في quran.css. -->
     <link rel="preload" href="/fonts/amiri-quran/AmiriQuran-Regular.woff2" as="font" type="font/woff2" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
     <noscript>
       <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet" />
     </noscript>
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@graph": [
           {
             "@type": "Organization",
-            "@id": "https://www.majlisilm.com/#organization",
+            "@id": "https://majlisilm.com/#organization",
             "name": "المجلس العلمي",
-            "url": "https://www.majlisilm.com/",
+            "url": "https://majlisilm.com/",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://www.majlisilm.com/logo.png",
+              "url": "https://majlisilm.com/logo.png",
               "width": 512,
               "height": 512
             },
@@ -79,26 +84,26 @@
           },
           {
             "@type": "WebSite",
-            "@id": "https://www.majlisilm.com/#website",
+            "@id": "https://majlisilm.com/#website",
             "name": "المجلس العلمي",
-            "url": "https://www.majlisilm.com/",
+            "url": "https://majlisilm.com/",
             "description": "منصة علمية عربية تجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد.",
             "inLanguage": "ar",
-            "publisher": { "@id": "https://www.majlisilm.com/#organization" },
+            "publisher": { "@id": "https://majlisilm.com/#organization" },
             "potentialAction": {
               "@type": "SearchAction",
               "target": {
                 "@type": "EntryPoint",
-                "urlTemplate": "https://www.majlisilm.com/search/{search_term_string}"
+                "urlTemplate": "https://majlisilm.com/search/{search_term_string}"
               },
               "query-input": "required name=search_term_string"
             }
           },
           {
             "@type": "WebApplication",
-            "@id": "https://www.majlisilm.com/#webapp",
+            "@id": "https://majlisilm.com/#webapp",
             "name": "المجلس العلمي",
-            "url": "https://www.majlisilm.com/",
+            "url": "https://majlisilm.com/",
             "applicationCategory": "EducationApplication",
             "operatingSystem": "Any",
             "inLanguage": "ar",
