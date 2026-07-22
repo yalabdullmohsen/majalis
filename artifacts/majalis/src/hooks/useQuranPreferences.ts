@@ -11,6 +11,16 @@ export type QuranFrameStyle = "emerald" | "gold-classic" | "paper" | "minimal" |
 /** نمط تمييز الآية المختارة في وضع الصفحة. */
 export type QuranHighlightStyle = "wash" | "border" | "underline" | "text-color" | "spotlight" | "side-indicator";
 
+/**
+ * وضع عرض صفحة المصحف: "light" (افتراضي، إلزامي) — خط حفص العثماني
+ * الموحّد (Amiri Quran) لكل الصفحات، بلا تحميل خط منفصل لكل صفحة،
+ * استهلاك بيانات منخفض. "precision" (اختياري صريح) — خط QPC V2 الرقمي
+ * الخاص بكل صفحة (مطابقة حرفية للمطبوع)، يُحمَّل عند الطلب فقط
+ * (~155kb/صفحة)، يعرض حجمه للمستخدم قبل التفعيل. راجع
+ * docs/mushaf-rebuild-inventory.md للتفاصيل.
+ */
+export type QuranPageMode = "light" | "precision";
+
 export type QuranPreferences = {
   fontScale: number;
   fontId: QuranFontId;
@@ -19,6 +29,7 @@ export type QuranPreferences = {
   readingTheme: QuranReadingTheme;
   frameStyle: QuranFrameStyle;
   highlightStyle: QuranHighlightStyle;
+  pageMode: QuranPageMode;
 };
 
 const KEY = "mj-quran-prefs-v4";
@@ -32,6 +43,7 @@ const DEFAULTS: QuranPreferences = {
   readingTheme: "standard",
   frameStyle: "emerald",
   highlightStyle: "wash",
+  pageMode: "light",
 };
 
 function load(): QuranPreferences {

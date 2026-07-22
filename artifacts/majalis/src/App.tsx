@@ -82,8 +82,8 @@ const QuranHubPage = lazy(() => import("@/views/QuranHubPage"));
 const SurahIndexPage = lazy(() => import("@/views/SurahIndexPage"));
 const RevelationOrderPage = lazy(() => import("@/views/RevelationOrderPage"));
 const MakkiMadaniPage = lazy(() => import("@/views/MakkiMadaniPage"));
-const MushafPage = lazy(() => import("@/views/MushafPage"));
 const MushafPageView = lazy(() => import("@/views/MushafPageView"));
+const MushafEditionInfoPage = lazy(() => import("@/views/MushafEditionInfoPage"));
 const MushafReaderV2Preview = lazy(() => import("@/views/MushafReaderV2Preview"));
 const RecitationTestPage = lazy(() => import("@/views/RecitationTestPage"));
 const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
@@ -552,10 +552,17 @@ function Router() {
       <Route path="/quran"><Redirect to="/quran-hub" /></Route>
       <Route path="/mushaf/page/:page"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf/page"><SafeLazyRoute component={MushafPageView} /></Route>
-      <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafPage} /></Route>
-      <Route path="/mushaf"><SafeLazyRoute component={MushafPage} /></Route>
-      {/* معاينة داخلية لـPhase 3 من إعادة بناء المصحف المطابق لمصحف
-          المدينة — لا تستبدل /mushaf الحيّ بعد، راجع docs/mushaf-rebuild-inventory.md. */}
+      {/* ⚠️ ترتيب حرج: المسار الحرفي /mushaf/about-edition يجب أن يسبق
+          /mushaf/:surah أدناه — وإلا طابقه :surah أولًا بوصفه رقم سورة
+          (Switch يُصيّر أول تطابق فقط)، مطابق تمامًا لتحذير wouter العام
+          بترتيب المسارات الحرفية قبل الديناميكية على نفس البادئة. */}
+      <Route path="/mushaf/about-edition"><SafeLazyRoute component={MushafEditionInfoPage} /></Route>
+      {/* /mushaf و/mushaf/:surah أصبحا يستخدمان MushafPageView (تخطيط
+          سطري حقيقي مطابق لمصحف المدينة، وضعا عرض خفيف/دقة مطبعية) بدل
+          MushafPage.tsx القديم (نص مستمر) — الملف القديم لم يُحذف، فقط
+          استُبدل ترويجه بمكوّن أكمل يحقق كل ميزاته وأكثر. */}
+      <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafPageView} /></Route>
+      <Route path="/mushaf"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf-v2-preview"><SafeLazyRoute component={MushafReaderV2Preview} /></Route>
       <Route path="/quran-hub"><SafeLazyRoute component={QuranHubPage} /></Route>
       <Route path="/quran/recitation-test-ai"><SafeLazyRoute component={RecitationTestPage} /></Route>

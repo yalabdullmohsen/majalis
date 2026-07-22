@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useParams, useLocation } from "wouter";
 import {
@@ -11,11 +11,14 @@ import {
   type Ayah, type SurahSummary,
 } from "@/lib/quran-api";
 import { loadPageJuzIndex, getSegmentsForPage, type QuranSegment } from "@/lib/recitation-ai/page-juz-lookup";
-import { useQuranPreferences, type QuranReadingTheme, type QuranFrameStyle, type QuranHighlightStyle } from "@/hooks/useQuranPreferences";
+import { useQuranPreferences, type QuranReadingTheme, type QuranFrameStyle, type QuranHighlightStyle, type QuranPageMode } from "@/hooks/useQuranPreferences";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
 import { SurahList } from "@/components/quran/SurahList";
 import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
+import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
+import { MushafPageV2 } from "@/components/quran/MushafPageV2";
 import "@/styles/quran.css";
+import "@/styles/mushaf-v2.css";
 
 const TOTAL_PAGES = 604;
 
@@ -28,6 +31,21 @@ function toArabicDigits(n: number): string {
 
 function clampPage(n: number): number {
   return Math.min(TOTAL_PAGES, Math.max(1, n));
+}
+
+/** عرض كلمة للوضع الخفيف: نص Unicode عادي (لا PUA خاص بخط الصفحة) —
+ * شارة نجمية زمردية زخرفية موحّدة لرقم نهاية الآية بدل glyph خط الصفحة
+ * (خط QPC غير مُحمَّل أصلًا في هذا الوضع). */
+function renderLightWord(w: QpcWord) {
+  if (w.charType === "end") {
+    return (
+      <Fragment key={w.id}>
+        <span className="qs-ayah-num">{toArabicDigits(Number(w.textUthmani.replace(/\D/g, "")) || 0)}</span>
+        {w.sajdahNumber !== null && <span className="mf2-sajda-badge">سجدة</span>}
+      </Fragment>
+    );
+  }
+  return <span key={w.id} className="mf2-word">{w.textQpcHafs}</span>;
 }
 
 const THEME_OPTIONS: { id: QuranReadingTheme; label: string }[] = [
@@ -51,15 +69,26 @@ const HIGHLIGHT_OPTIONS: { id: QuranHighlightStyle; label: string }[] = [
   { id: "spotlight", label: "مصباح القراءة" },
   { id: "side-indicator", label: "مؤشر جانبي" },
 ];
+const PAGE_MODE_OPTIONS: { id: QuranPageMode; label: string; hint: string }[] = [
+  { id: "light", label: "خفيف (موصى به)", hint: "خط موحّد لكل الصفحات — بلا تحميل إضافي" },
+  { id: "precision", label: "دقة مطبعية", hint: "خط QPC مطابق للمطبوع لكل صفحة — ~155 كيلوبايت/صفحة عند الفتح" },
+];
 
 export default function MushafPageView() {
-  const params = useParams<{ page?: string }>();
+  // مُثبَّت أيضًا على المسار القديم /mushaf/:surah (رقم سورة) — يُحوَّل
+  // مباشرة لأول صفحته عبر SURAH_START_PAGES، دون مسار/مكوّن منفصل مكرَّر.
+  const params = useParams<{ page?: string; surah?: string }>();
   const [, navigate] = useLocation();
   const { prefs, setPref } = useQuranPreferences();
 
-  const routePage = params.page ? Number(params.page) : null;
+  const routePage = params.page
+    ? Number(params.page)
+    : params.surah && Number(params.surah) >= 1 && Number(params.surah) <= 114
+      ? SURAH_START_PAGES[Number(params.surah) - 1]
+      : null;
   const [page, setPageState] = useState<number>(() => clampPage(routePage ?? loadPagePosition() ?? 1));
   const [segAyahs, setSegAyahs] = useState<SegmentAyahs[] | null>(null);
+  const [v2Layout, setV2Layout] = useState<MushafPageLayout | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [displayMode, setDisplayMode] = useState<"text" | "image">("text");
@@ -143,6 +172,17 @@ export default function MushafPageView() {
     return () => { cancelled = true; };
   }, [page, loadPage]);
 
+  // ── تخطيط السطر الحقيقي (line_number) من نفس بيانات quran-v2 — مصدر
+  // واحد يُستهلَك من كلا وضعي العرض (خفيف/دقة مطبعية)، لا تحميل مزدوج. ──
+  useEffect(() => {
+    let cancelled = false;
+    setV2Layout(null);
+    loadMushafPage(page).then((layout) => { if (!cancelled) setV2Layout(layout); }).catch(() => {});
+    if (page > 1) prefetchMushafPage(page - 1);
+    if (page < TOTAL_PAGES) prefetchMushafPage(page + 1);
+    return () => { cancelled = true; };
+  }, [page]);
+
   useEffect(() => {
     setImgLoaded(false);
     setImgTriedFallback(false);
@@ -209,6 +249,17 @@ export default function MushafPageView() {
   const activeSurahForPlayer = primarySegment?.segment.surah ?? 1;
   const activeSurahAyahCount = primarySegment ? getSurahMeta(activeSurahForPlayer).ayahs : 0;
   const { currentAyah, playerState, togglePlayAyah } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
+
+  // ── جسر بين مكوّني تخطيط السطر الحقيقي (V2/خفيف) وحالة الآية المختارة/المُشغَّلة القائمة أصلًا ──
+  const handleV2AyahPress = useCallback((verseKey: string) => {
+    const [s, a] = verseKey.split(":").map(Number);
+    setSelectedAyah({ surah: s, ayah: a });
+  }, []);
+  const v2ActiveKey = selectedAyah
+    ? `${selectedAyah.surah}:${selectedAyah.ayah}`
+    : playerState === "playing" && currentAyah !== null
+      ? `${activeSurahForPlayer}:${currentAyah}`
+      : null;
 
   const shellThemeClass = `quran-shell--${prefs.readingTheme}`;
   const frameClass = prefs.frameStyle === "emerald" ? "" : `qs-mushaf-frame--${prefs.frameStyle}`;
@@ -290,44 +341,20 @@ export default function MushafPageView() {
                 </div>
 
                 <div className={`qs-mushaf-body ${prefs.highlightStyle === "spotlight" && selectedAyah ? "qs-mushaf-body--spotlight" : ""}`} style={{ ["--qs-font-size" as string]: `${prefs.fontScale}px` }}>
-                  {segAyahs.map(({ segment, ayahs }) => (
-                    <div key={`${segment.surah}-${segment.ayahFrom}`}>
-                      {segment.ayahFrom === 1 && (
-                        <>
-                          <div className="qs-surah-name-box">
-                            <span className="qs-surah-name-box__orn" aria-hidden="true">۞</span>
-                            <span className="qs-surah-name-box__title">سورة {getSurahMeta(segment.surah).name}</span>
-                            <span className="qs-surah-name-box__orn" aria-hidden="true">۞</span>
-                          </div>
-                          {segment.surah !== 1 && segment.surah !== 9 && (
-                            <p className="qs-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
-                          )}
-                        </>
-                      )}
-                      <p className="qs-mushaf-body__text">
-                        {ayahs.map((a) => {
-                          const isSel = selectedAyah?.surah === a.surahNumber && selectedAyah?.ayah === a.numberInSurah;
-                          const isPlayingThis = a.surahNumber === activeSurahForPlayer && currentAyah === a.numberInSurah && playerState === "playing";
-                          return (
-                            <span
-                              key={`${a.surahNumber}:${a.numberInSurah}`}
-                              className={`qs-ayah-inline qs-ayah-inline--hl-${prefs.highlightStyle} ${isSel ? "is-selected" : ""} ${isPlayingThis ? "qs-ayah-inline--playing" : ""}`}
-                            >
-                              <span
-                                className="qs-ayah-inline__text"
-                                onClick={() => setSelectedAyah({ surah: a.surahNumber!, ayah: a.numberInSurah })}
-                              >
-                                {a.text}
-                              </span>
-                              {a.sajda && <span className="qs-sajda-mark" role="img" aria-label="موضع سجدة">۩</span>}
-                              <span className="qs-ayah-num">{toArabicDigits(a.numberInSurah)}</span>
-                              {" "}
-                            </span>
-                          );
-                        })}
-                      </p>
-                    </div>
-                  ))}
+                  <div style={{ height: "100%", transform: `scale(${prefs.fontScale / 26})`, transformOrigin: "top center" }}>
+                    {prefs.pageMode === "precision" ? (
+                      <MushafPageV2 layout={v2Layout} activeAyahKey={v2ActiveKey} onAyahPress={handleV2AyahPress} bare />
+                    ) : (
+                      <MushafPageV2
+                        layout={v2Layout}
+                        activeAyahKey={v2ActiveKey}
+                        onAyahPress={handleV2AyahPress}
+                        sharedFontFamily={'"Amiri Quran", "Scheherazade New", serif'}
+                        renderWord={renderLightWord}
+                        bare
+                      />
+                    )}
+                  </div>
                 </div>
 
                 <div className="qs-mushaf-footer-row">
@@ -467,6 +494,21 @@ export default function MushafPageView() {
                 <span className="mpv-chip is-active">{prefs.fontScale}px</span>
                 <button type="button" className="mpv-chip" onClick={() => setPref("fontScale", Math.min(42, prefs.fontScale + 2))}>أكبر +</button>
               </div>
+            </div>
+
+            <div className="mpv-settings-group">
+              <span className="mpv-settings-group__label">وضع عرض الصفحة</span>
+              <div className="mpv-settings-group__grid">
+                {PAGE_MODE_OPTIONS.map((o) => (
+                  <button key={o.id} type="button" className={`mpv-chip ${prefs.pageMode === o.id ? "is-active" : ""}`} onClick={() => setPref("pageMode", o.id)}>
+                    {o.label}
+                  </button>
+                ))}
+              </div>
+              <small style={{ display: "block", opacity: .7, marginTop: ".35rem" }}>
+                {PAGE_MODE_OPTIONS.find((o) => o.id === prefs.pageMode)?.hint}{" "}
+                <a href="/mushaf/about-edition" target="_blank" rel="noopener noreferrer">عن طبعة المصحف</a>
+              </small>
             </div>
 
             <div className="mpv-settings-group">
