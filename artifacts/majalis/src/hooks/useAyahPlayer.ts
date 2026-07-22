@@ -4,7 +4,7 @@
  * Reports currently-playing ayah number for visual highlight.
  */
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getAyahAudioUrl, loadReciterId, saveReciterId } from "@/lib/quran-audio";
+import { getAyahAudioUrl, loadReciterId, saveReciterId, loadPlaybackRate, savePlaybackRate } from "@/lib/quran-audio";
 import { getSurahMeta } from "@/lib/quran-api";
 import { useMediaSession } from "@/hooks/useMediaSession";
 
@@ -16,16 +16,34 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   const [reciterId, setReciterIdState] = useState<string>(loadReciterId);
   const [currentAyah, setCurrentAyah] = useState<number | null>(null);
   const [playerState, setPlayerState] = useState<PlayerState>("idle");
+  const [playbackRate, setPlaybackRateState] = useState<number>(loadPlaybackRate);
+  /** تكرار الآية الحالية عوضًا عن الانتقال للتالية عند الانتهاء — للحفظ. */
+  const [repeatOn, setRepeatOnState] = useState(false);
+  const repeatOnRef = useRef(repeatOn);
+  const playbackRateRef = useRef(playbackRate);
 
   const setReciterId = useCallback((id: string) => {
     setReciterIdState(id);
     saveReciterId(id);
   }, []);
 
+  const setPlaybackRate = useCallback((rate: number) => {
+    playbackRateRef.current = rate;
+    setPlaybackRateState(rate);
+    savePlaybackRate(rate);
+    if (audioRef.current) audioRef.current.playbackRate = rate;
+  }, []);
+
+  const setRepeatOn = useCallback((on: boolean) => {
+    repeatOnRef.current = on;
+    setRepeatOnState(on);
+  }, []);
+
   // create audio element once
   useEffect(() => {
     const audio = new Audio();
     audio.preload = "none";
+    audio.playbackRate = playbackRateRef.current;
     audioRef.current = audio;
     return () => {
       pauseCleanupRef.current?.();
@@ -45,6 +63,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
 
     audio.pause();
     audio.src = getAyahAudioUrl(surah, ayah, reciter);
+    audio.playbackRate = playbackRateRef.current;
     setCurrentAyah(ayah);
     setPlayerState("loading");
 
@@ -59,7 +78,9 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     const onEnded = () => {
       pauseCleanupRef.current?.();
       pauseCleanupRef.current = null;
-      if (ayah < totalAyahs) {
+      if (repeatOnRef.current) {
+        loadAndPlay(surah, ayah, reciter);
+      } else if (ayah < totalAyahs) {
         loadAndPlay(surah, ayah + 1, reciter);
       } else {
         setCurrentAyah(null);
@@ -135,6 +156,10 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     playerState,
     reciterId,
     setReciterId,
+    playbackRate,
+    setPlaybackRate,
+    repeatOn,
+    setRepeatOn,
     playFromAyah,
     togglePlayAyah,
     pause,

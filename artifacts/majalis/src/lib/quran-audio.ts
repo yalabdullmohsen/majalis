@@ -131,3 +131,19 @@ export function loadReciterId(): string {
 export function saveReciterId(id: string) {
   try { localStorage.setItem(RECITER_KEY, id); } catch { /* ignore */ }
 }
+
+// ─── Playback speed preference (0.5x–2x) ───────────────────────────────────
+const PLAYBACK_RATE_KEY = "mj-quran-playback-rate-v1";
+const VALID_RATES = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
+
+export function loadPlaybackRate(): number {
+  try {
+    const stored = Number(localStorage.getItem(PLAYBACK_RATE_KEY));
+    if (VALID_RATES.includes(stored)) return stored;
+    return 1;
+  } catch { return 1; }
+}
+
+export function savePlaybackRate(rate: number) {
+  try { localStorage.setItem(PLAYBACK_RATE_KEY, String(rate)); } catch { /* ignore */ }
+}
