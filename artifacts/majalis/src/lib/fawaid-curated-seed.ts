@@ -231,7 +231,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── إضافات السيرة ── */
   { text: "الفتح الأكبر كان بلا حرب؛ دخل النبي ﷺ مكة وعفا عن أهلها — قدوة في العفو والرحمة.", category: "السيرة", source: "صحيح البخاري — كتاب المغازي", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
-  { text: "غزوة بدر نُصر فيها ثلاثمائة وثلاثة عشر على الألف؛ دليل أن النصر من عند الله.", category: "السيرة", source: "صحيح البخاري — كتاب المغازي", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
+  { text: "غزوة بدر نُصر فيها ثلاثمائة وثلاثة عشر على الألف؛ دليل أن النصر من عند الله.", category: "السيرة", source: "رواه الترمذي عن البراء بن عازب بلفظ العدد المحدد؛ وأصله في صحيح البخاري بلفظ عام «ثلاثمائة وبضعة عشر»", author_name: "سنن الترمذي", status: "approved", verification_status: "needs_review" },
 
   /* ── إضافات اللغة ── */
   { text: "اللغة العربية لغة القرآن؛ من أتقنها أعان فهمه لكتاب الله.", category: "اللغة", source: "فضل عربية القرآن — ابن تيمية: اقتضاء الصراط المستقيم", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
@@ -278,7 +278,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── إضافات القرآن ── */
   { text: "من أراد علم الأولين والآخرين فليتدبّر القرآن — فيه جواب كل سؤال وشفاء كل داء.", category: "القرآن", source: "مقدمة في أصول التفسير — ابن تيمية", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
-  { text: "الحافظ للقرآن يُقال له يوم القيامة: اقرأ وارقَ ورتّل — فمنزلته عند آخر آية يحفظها.", category: "القرآن", source: "رواه الترمذي وأبو داود — صحيح", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "verified" },
+  { text: "الحافظ للقرآن يُقال له يوم القيامة: اقرأ وارتقِ ورتّل — فمنزلته عند آخر آية يقرؤها.", category: "القرآن", source: "رواه الترمذي وأبو داود — حسن صحيح", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "needs_review" },
 
   /* ── إضافات التربية ── */
   { text: "التربية الصحيحة تبدأ بتربية النفس قبل تربية الأبناء — المُربّي القدوة أبلغ من المُربّي الواعظ.", category: "التربية", source: "تربية الأولاد في الإسلام — عبد الله ناصح علوان", author_name: "عبد الله ناصح علوان", status: "approved", verification_status: "needs_review" },
