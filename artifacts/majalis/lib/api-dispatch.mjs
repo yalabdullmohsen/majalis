@@ -180,6 +180,9 @@ export const API_ROUTES = [
   { prefix: "/api/admin/ai-agents", module: "./api-handlers/admin/ai-agents.js", allowGet: true },
   { prefix: "/api/sitemap", module: "./api-handlers/sitemap.js", allowGet: true, exact: true },
   { prefix: "/api/feed", module: "./api-handlers/feed.js", allowGet: true, exact: true },
+  // SSR وقت الطلب لدروس Supabase الحيّة (لا مصدر ثابت لها وقت البناء، بخلاف
+  // /scholars و/library). راجع /lessons/:id في vercel.json rewrites.
+  { prefix: "/api/lessons", module: "./api-handlers/lesson-page.js", allowGet: true },
   { prefix: "/api/admin/smart-cms", module: "./api-handlers/admin/smart-cms.js" },
   { prefix: "/api/admin/lesson-from-image", module: "./api-handlers/admin/lesson-from-image.js", rateLimit: lessonFromImageRateLimit },
   { prefix: "/api/admin/lesson-from-url", module: "./api-handlers/admin/lesson-from-url.js", rateLimit: lessonFromUrlRateLimit },
