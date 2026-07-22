@@ -29982,10 +29982,17 @@ footer,
   font-weight: 800 !important;
 }
 
-/* أزرار الفلتر / Chips الإدخال */
+/* أزرار الفلتر / Chips الإدخال — .filter-chip/.filter-btn الحرفيتان غير
+   مُستخدَمتين في أي مكوّن فعليًا (تحقّقتُ)؛ ما يهم هو المحدد العريض
+   [class*="filter-chip"] الذي كان يطابق substring في عشرات الفئات
+   المخصصة (.ar-filter-chip، .kng-filter-chip...) ويفرض عليها لونًا/خلفية/
+   حوافّ !important تُلغي تصميمها الخاص — نفس نمط علّة [role="tab"]
+   المُصلَحة سابقًا. تحقّق حي: .ar-filter-chip--active (خلفية زمردية
+   داكنة ونص أبيض مقصودان) كانت تُعرَض بخلفية بيج فاتحة ونص أبيض — غير
+   مقروء تمامًا، لأن الخلفية البيج مفروضة هنا بينما النص الأبيض يأتي من
+   قاعدة عامة أخرى صحيحة افترضت خلفية داكنة (2026-07-22). */
 .filter-chip,
-.filter-btn,
-[class*="filter-chip"] {
+.filter-btn {
   background: var(--color-surface-sec, #F2F1EC) !important;
   color: var(--color-text-2, #68716D) !important;
   border: 1px solid var(--color-border, #E7E2D8) !important;
