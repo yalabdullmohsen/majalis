@@ -9,14 +9,12 @@ import { History } from "lucide-react";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeAboutSection } from "@/components/home/HomeAboutSection";
 import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
-import { HomeSawmReminder } from "@/components/home/HomeSawmReminder";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeContinueWidget } from "@/components/home/HomeContinueWidget";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
 import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
 import { HomeMajlisToday } from "@/components/home/HomeMajlisToday";
 import { FridayBanner } from "@/components/FridayBanner";
-import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import { getHijriDateString } from "@/lib/hijri-utils";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerTimesPayload } from "@/lib/prayer-times";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
@@ -773,19 +771,16 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* ══ بانرات المناسبات المؤقتة (جمعة/صيام/شهر هجري) — مجمّعة في حاوية
-          واحدة بتباعد داخلي موحّد بدل ثلاث حاويات منفصلة، تقليلاً للتكرار
-          البصري. كل بانر يبقى شرطي الظهور كما كان تماماً. ══ */}
+      {/* ══ بانر صلاة الجمعة — إشعار صلاة، يبقى بحسب تعليمات الحفاظ على
+          إشعارات الأذان والصلوات. بانرا التذكير بالصيام والشهر الهجري
+          أُزيلا من الرئيسية (2026-07-22)؛ شهر الهجري يستمر بالعمل في
+          صفحة التقويم كما هو. ══ */}
       <div style={{
         maxWidth: 760, margin: "2rem auto 0", padding: "0 1rem",
         display: "flex", flexDirection: "column", gap: "0.75rem",
       }}>
         <SafeHomeSection name="FridayBanner">
           <FridayBanner />
-        </SafeHomeSection>
-        <HomeSawmReminder />
-        <SafeHomeSection name="HijriSacredMonthBanner">
-          <HijriSacredMonthBanner />
         </SafeHomeSection>
       </div>
 
