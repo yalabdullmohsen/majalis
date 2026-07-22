@@ -1,0 +1,60 @@
+name: Auto-merge claude branches to main
+
+# نطاق مُضيَّق عمدًا (2026-07-22، بطلب صريح من المالك بعد تنبيه حول الخطر):
+# يعمل فقط على فرع الاختبار المحدَّد بالاسم صراحةً، لا على أنماط عامة مثل
+# claude/** أو fix/** — هذه الأنماط تطابق عشرات الفروع الحيّة الفعلية
+# (كل جلسة تفاعلية تُلزَم بالدفع إلى فرع بهذه التسمية بعد كل مهمة)، ودمجها
+# التلقائي بلا مراجعة كان سيدفع مباشرة لـmain ثم production (auto-deploy.yml
+# ينشر تلقائيًا فور push على main). توسيع النطاق يتطلب قرارًا صريحًا لاحقًا.
+
+on:
+  push:
+    branches:
+      - 'claude/test-auto-merge'
+
+concurrency:
+  group: auto-merge-main
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Merge branch into main
+        run: |
+          git config user.name "auto-merge-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git merge origin/${{ github.ref_name }} --no-ff -m "دمج تلقائي: ${{ github.ref_name }}"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type check
+        run: pnpm --filter @workspace/majalis run typecheck
+
+      - name: Build and test merged result
+        run: pnpm --filter @workspace/majalis run build
+
+      - name: Regression tests
+        run: pnpm --filter @workspace/majalis run test:regression
+
+      - name: Push to main
+        run: git push origin main
