@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # حلقة تشغيل مستمر لملء محتوى منصة المجلس العلمي وتدقيقه عبر claude -p.
+# مُعدَّلة 2026-07-22: من جدولة كل ساعة إلى حلقة متواصلة (دفعة فور انتهاء
+# سابقتها، فاصل دقيقة واحدة فقط)، مع معالجة خاصة لنفاد الرصيد ونفاد المحتوى.
 #
 # تشغيل يدوي (طرفية مفتوحة):
 #   bash /Users/alabdullmohsen/majalis-content-fill/scripts/content-runner.sh
@@ -10,7 +12,7 @@
 # إيقاف فوري: Ctrl+C إن كان يعمل في الطرفية، أو عبر launchd:
 #   launchctl unload ~/Library/LaunchAgents/com.majalis.content-runner.plist
 #
-# دورة واحدة فقط (اختبار، بلا حلقة):
+# دورة واحدة فقط (اختبار، بلا حلقة، بلا إعادة محاولة تلقائية عند نفاد الرصيد):
 #   bash content-runner.sh --once
 #   bash content-runner.sh --once --audit
 
@@ -23,34 +25,53 @@ STOP_FILE="$SCRIPT_DIR/content-runner.stop"
 CONTENT_PROMPT_FILE="$SCRIPT_DIR/content-runner-content-prompt.txt"
 AUDIT_PROMPT_FILE="$SCRIPT_DIR/content-runner-audit-prompt.txt"
 CYCLE_COUNT_FILE="$SCRIPT_DIR/content-runner.cycle-count"
-DAILY_COUNT_FILE="$SCRIPT_DIR/content-runner.daily-count"
-INTERVAL_SECONDS=3600   # 60 دقيقة — بطلب صريح من المالك (2026-07-22) لترشيد رصيد Claude Code الأسبوعي
 AUDIT_EVERY_N=5
-MAX_CYCLES_PER_DAY=10   # سقف يومي صريح — بطلب المالك (2026-07-22). عدّله هنا فقط إن أردت تغييره.
+
+BETWEEN_BATCHES_SECONDS=60        # فاصل عادي بين الدفعات (بند 2)
+QUOTA_RETRY_SECONDS=1800          # 30 دقيقة عند نفاد الرصيد/حد الاستخدام (بند 3)
+NO_CONTENT_WAIT_SECONDS=3600      # ساعة عند عدم توفر محتوى معتمد جاهز (بند 4)
+
+# رموز حالة داخلية يرجعها run_one_cycle لتحديد سلوك main_loop
+STATUS_NORMAL=0
+STATUS_NO_CONTENT=2
 
 log_line() {
-  # سطر واحد فقط لكل دورة: الوقت | النوع | الملخص المستخرج من مخرجات claude
   echo "$1" >> "$LOG_FILE"
 }
 
-# يرجع 0 (مسموح) إن لم يُستنفد سقف اليوم بعد، وإلا 1. يُحدّث العدّاد تلقائيًا مع تصفير عند تغيّر التاريخ.
-daily_cap_check_and_increment() {
-  local today
-  today=$(date -u +"%Y-%m-%d")
-  local stored_date="" stored_count=0
-  if [[ -f "$DAILY_COUNT_FILE" ]]; then
-    read -r stored_date stored_count < "$DAILY_COUNT_FILE" 2>/dev/null || true
-  fi
-  if [[ "$stored_date" != "$today" ]]; then
-    stored_date="$today"
-    stored_count=0
-  fi
-  if (( stored_count >= MAX_CYCLES_PER_DAY )); then
-    return 1
-  fi
-  stored_count=$((stored_count + 1))
-  echo "$stored_date $stored_count" > "$DAILY_COUNT_FILE"
-  return 0
+# فحص نصي واسع لعلامات نفاد الرصيد/حد الاستخدام في مخرجات claude (بند 3).
+# النمط غير مؤكَّد 100% (لا اختبار حي لحالة نفاد رصيد فعلية توفّر وقت الكتابة)؛
+# عدّل القائمة إن ظهرت صياغة فعلية مختلفة في اللوق لاحقًا.
+looks_like_quota_exhausted() {
+  local text="$1"
+  echo "$text" | grep -qiE "usage limit|rate limit|rate_limit|quota exceeded|usage_limit_reached|limit reached|too many requests|429 |resets at|try again later|weekly limit|5-hour limit"
+}
+
+run_claude_with_quota_retry() {
+  # يستدعي claude -p، وعند اكتشاف نفاد رصيد يعيد المحاولة كل 30 دقيقة إلى
+  # ما لا نهاية (نفس استدعاء الدورة، فيقرأ CONTINUATION_PLAN.md من جديد
+  # فيكمل تلقائيًا من حيث توقف — لا حاجة لحفظ حالة وسيطة).
+  local prompt_file="$1"
+  local mode="$2"
+  local output
+  while true; do
+    if [[ -f "$STOP_FILE" ]]; then
+      echo "__STOP__"
+      return 0
+    fi
+    output=$(claude --print \
+      --dangerously-skip-permissions \
+      --allowed-tools "Bash,Read,Edit,Write,Grep,WebSearch,WebFetch" \
+      -- "$(cat "$prompt_file")" \
+      2>&1)
+    if looks_like_quota_exhausted "$output"; then
+      log_line "$(date -u +"%Y-%m-%dT%H:%M:%SZ") | انتظار رصيد | ($mode) اكتُشف نفاد رصيد/حد استخدام — إعادة محاولة خلال ${QUOTA_RETRY_SECONDS}s"
+      sleep "$QUOTA_RETRY_SECONDS"
+      continue
+    fi
+    echo "$output"
+    return 0
+  done
 }
 
 run_one_cycle() {
@@ -72,43 +93,50 @@ run_one_cycle() {
   local ts
   ts=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
-  cd "$WORKDIR" || { log_line "$ts | $mode | فشل: تعذّر الدخول إلى $WORKDIR"; return 1; }
+  cd "$WORKDIR" || { log_line "$ts | $mode | فشل: تعذّر الدخول إلى $WORKDIR"; return $STATUS_NORMAL; }
 
   local output
-  output=$(claude --print \
-    --dangerously-skip-permissions \
-    --allowed-tools "Bash,Read,Edit,Write,Grep,WebSearch,WebFetch" \
-    -- "$(cat "$prompt_file")" \
-    2>&1)
-  local exit_code=$?
+  output=$(run_claude_with_quota_retry "$prompt_file" "$mode")
 
+  if [[ "$output" == "__STOP__" ]]; then
+    return $STATUS_NORMAL
+  fi
+
+  ts=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
   local result_line
   result_line=$(echo "$output" | grep '^RESULT:' | tail -1)
   if [[ -z "$result_line" ]]; then
-    if [[ $exit_code -ne 0 ]]; then
-      result_line="RESULT: فشل | (لا مخرجات RESULT) | exit_code=$exit_code"
-    else
-      result_line="RESULT: غير معروف | (لم يطبع claude سطر RESULT) | راجع مخرجات كاملة إن لزم"
-    fi
+    result_line="RESULT: غير معروف | (لم يطبع claude سطر RESULT) | راجع مخرجات كاملة إن لزم"
   fi
 
   log_line "$ts | دورة #$n ($mode) | $result_line"
+
+  # بند 4: عدم توفر محتوى معتمد جاهز للنقل — الوكيل الداخلي يُصرّح بذلك عبر
+  # "RESULT: لا محتوى متاح" (راجع بروتوكولي الدورة). هذا ليس فشلاً.
+  if echo "$result_line" | grep -q "^RESULT: لا محتوى متاح"; then
+    return $STATUS_NO_CONTENT
+  fi
+
+  return $STATUS_NORMAL
 }
 
 main_loop() {
-  echo "بدأ content-runner.sh — الدورات كل ${INTERVAL_SECONDS}s (~$((86400/INTERVAL_SECONDS)) دورة نظريًا/يوم)، سقف فعلي ${MAX_CYCLES_PER_DAY} دورة/يوم، تدقيق كل ${AUDIT_EVERY_N} دورات. إيقاف نظيف: touch $STOP_FILE"
+  echo "بدأ content-runner.sh (وضع الحلقة المتواصلة) — فاصل ${BETWEEN_BATCHES_SECONDS}s بين الدفعات، تدقيق كل ${AUDIT_EVERY_N} دورات، تراجع 30 دقيقة عند نفاد الرصيد، انتظار ساعة عند نفاد المحتوى. إيقاف نظيف: touch $STOP_FILE"
   while true; do
     if [[ -f "$STOP_FILE" ]]; then
       log_line "$(date -u +"%Y-%m-%dT%H:%M:%SZ") | إيقاف | وُجد ملف stop — إنهاء نظيف"
       rm -f "$STOP_FILE"
       break
     fi
-    if daily_cap_check_and_increment; then
-      run_one_cycle || true
+
+    local status=0
+    run_one_cycle || status=$?
+
+    if [[ "$status" == "$STATUS_NO_CONTENT" ]]; then
+      sleep "$NO_CONTENT_WAIT_SECONDS"
     else
-      log_line "$(date -u +"%Y-%m-%dT%H:%M:%SZ") | تخطٍّ | بلغ السقف اليومي ($MAX_CYCLES_PER_DAY دورة) — انتظار حتى اليوم التالي"
+      sleep "$BETWEEN_BATCHES_SECONDS"
     fi
-    sleep "$INTERVAL_SECONDS"
   done
 }
 
