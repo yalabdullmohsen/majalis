@@ -9061,24 +9061,71 @@ rulings-encyclopedia/*، feed.xml، seo-prerender/*،
 rulings-encyclopedia-seed.generated.ts — دون تغيير حقيقي)، ودُفعت لـ
 `main` بنجاح (`3c4aa9f3`) عبر نفس hook Pre-Push (نجح كذلك).
 
-**المهمة التالية**: عنقود `fara-mawarith` مكتمل 100% الآن (4/4 منشور،
-مؤكَّد من DB). التالي حسب القائمة المكتشفة سابقًا (16 عنقودًا متبقيًا
-الآن بعد استبعاد fara-mawarith المكتمل): يُفضَّل التالي بالحجم —
-`madhahib-fiqh-muqaran` 4، `tibb-ahkam-shariyya` 4، `tarikh-tashri` 4،
-`qada-dawa-ithbat` 4، `alaqat-dawliyya` 4، ثم `seerah-nabawiyya` 4/11
-(جزئي)، `adhkar-adiya` 5، `mara-muslima` 5/6 (جزئي)، `ahkam-quran` 5
-(تحت quran-uloom)، `maqasid-sharia` 5، `fiqh-aqalliyat` 5،
-`shabab-nashia` 6، `fatawa-muwaththaqa` 6، `usrah-mujtama` 6،
-`munasabat-islamiyya` 6، `nawazil-muasira` 6. **أعد التحقق المباشر من DB
-قبل البدء بأي عنقود** (`npx supabase link --project-ref
-ngmvmlulzacrlicuagyp` ثم `SELECT id, slug, name, sort_order, status FROM
-categories WHERE parent_id=(SELECT id FROM categories WHERE
-slug='<العنقود المختار>') ORDER BY sort_order`) لضمان تطابق الأرقام
-الفعلية مع ما وُثِّق أعلاه. بنفس المنهجية الثابتة: درس واحد حقيقي لكل
-تصنيف draft (`lessons`+`lesson_sections`+`lesson_citations`) بمصدر
-معتمد مسمّى مناسب لموضوع العنقود، تحقَّق من أي آية حرفياً محلياً من
-`public/data/quran` عبر حقل `numberInSurah` (لا `number`)، تحقَّق من أي
-حديث عبر WebSearch قبل الإدراج (فقط من الصحيحين/متفق عليه أو بإسناد
-صحيح مصرَّح بدرجته بدقة)، ثم `status: draft→published`. وسم
-`needs-post-review.jsonl` فوراً لكل درس عند إنشائه. لا تنتقل لعنقود
-ثانٍ في نفس الدورة حتى لو تبقّى وقت ضمن سقف الدفعة (~30 عنصرًا).
+**المهمة التالية (سابقة، منجزة أدناه)**: عنقود `fara-mawarith` مكتمل
+100% الآن (4/4 منشور، مؤكَّد من DB). التالي حسب القائمة المكتشفة سابقًا
+(16 عنقودًا متبقيًا الآن بعد استبعاد fara-mawarith المكتمل): يُفضَّل
+التالي بالحجم — `madhahib-fiqh-muqaran` 4، `tibb-ahkam-shariyya` 4،
+`tarikh-tashri` 4، `qada-dawa-ithbat` 4، `alaqat-dawliyya` 4، ثم
+`seerah-nabawiyya` 4/11 (جزئي)، `adhkar-adiya` 5، `mara-muslima` 5/6
+(جزئي)، `ahkam-quran` 5 (تحت quran-uloom)، `maqasid-sharia` 5،
+`fiqh-aqalliyat` 5، `shabab-nashia` 6، `fatawa-muwaththaqa` 6،
+`usrah-mujtama` 6، `munasabat-islamiyya` 6، `nawazil-muasira` 6.
+
+## دورة محتوى جديدة (2026-07-23، وكيل تنفيذ محتوى تلقائي، تكملة 19)
+
+**✅ استُنفِد عنقود madhahib-fiqh-muqaran بالكامل (4/4)**: تحقَّقتُ أولاً
+مباشرة من DB (`SELECT id, slug, name, sort_order, status FROM categories
+WHERE parent_id=(SELECT id FROM categories WHERE
+slug='madhahib-fiqh-muqaran')`) فوُجد أن العنقود يضم أربعة تصنيفات
+فرعية، كلها `draft`: `tarif-madhahib-arbaa` (التعريف بالمذاهب الأربعة)،
+`asbab-ikhtilaf` (أسباب اختلاف الفقهاء)، `adab-khilaf-fiqhi` (أدب
+الخلاف)، `manhajiyyat-muqaran` (منهجية دراسة الفقه المقارن) — يطابق
+التوثيق السابق تمامًا. طُبِّق SQL جديد
+(`artifacts/majalis/supabase/learn_library_v2_madhahib_fiqh_muqaran_batch1.sql`)
+عبر `supabase db query --linked -f` يغطي الأربعة، بنفس بنية الدفعات
+السابقة (`lessons`+`lesson_sections`+`lesson_citations`، درس واحد لكل
+تصنيف، قسمان: body + examples). المصادر المعتمدة المسمّاة: الفقه على
+المذاهب الأربعة لعبد الرحمن الجزيري (تعريف المذاهب)، أسباب اختلاف
+الفقهاء لعلي الخفيف (أسباب الاختلاف)، أدب الخلاف في الإسلام لطه جابر
+العلواني (أدب الخلاف)، بداية المجتهد ونهاية المقتصد لابن رشد الحفيد
+(منهجية الفقه المقارن). حديثان صحيحان استُشهد بهما، تحقَّقا حرفياً عبر
+WebSearch قبل الإدراج: "إذا حكم الحاكم فاجتهد ثم أصاب فله أجران..."
+(متفق عليه، البخاري 7352 ومسلم 1716، عن عمرو بن العاص)، وحديث صلاة
+العصر في بني قريظة (رواه البخاري، عن ابن عمر — قبول اجتهادين متعارضين
+دون تعنيف أحد الفريقين). آيتان تحقَّقتا حرفياً محلياً من
+`public/data/quran` عبر حقل `numberInSurah`: النحل 43 (فاسألوا أهل
+الذكر)، النساء 83 (أصل مصطلح الاستنباط). `status: draft→published`
+للأربعة، تحقَّق مباشرة من DB (4/4 منشور تحت `madhahib-fiqh-muqaran`).
+الدروس الأربعة كلها اجتهاد صياغي واختيار مصدر ومثال → وُسمت في
+`needs-post-review.jsonl` فوراً بعد التطبيق (378→382). بوابة الجودة:
+التعديل اقتصر على ملف SQL وملف JSONL، فحُوطي عبر hook Pre-Commit
+المدمج (typecheck+lint+فحص الخط+Vite build لباقة majalis) — نجحت كلها.
+commit وpush على `majalis-content-fill` (commit `6a0faa1b`) نجحا، ثم
+دُمج في `main` على `/Users/alabdullmohsen/majalis-task-2` (`git merge
+--no-edit` نظيف، typecheck وbuild الكامل للتطبيق نجحا هناك أيضًا، وأعيدت
+ملفات الضجيج المولَّدة كما هي: quran/pages-manifest.json،
+rulings-encyclopedia/*، feed.xml، seo-prerender/*،
+rulings-encyclopedia-seed.generated.ts — دون تغيير حقيقي)، ودُفعت لـ
+`main` بنجاح (`d82c7181`) عبر نفس hook Pre-Push (نجح كذلك).
+
+**المهمة التالية**: عنقود `madhahib-fiqh-muqaran` مكتمل 100% الآن (4/4
+منشور، مؤكَّد من DB). التالي حسب القائمة المكتشفة سابقًا (15 عنقودًا
+متبقيًا الآن بعد استبعاد madhahib-fiqh-muqaran المكتمل): يُفضَّل التالي
+بالحجم — `tibb-ahkam-shariyya` 4، `tarikh-tashri` 4، `qada-dawa-ithbat`
+4، `alaqat-dawliyya` 4، ثم `seerah-nabawiyya` 4/11 (جزئي)،
+`adhkar-adiya` 5، `mara-muslima` 5/6 (جزئي)، `ahkam-quran` 5 (تحت
+quran-uloom)، `maqasid-sharia` 5، `fiqh-aqalliyat` 5، `shabab-nashia` 6،
+`fatawa-muwaththaqa` 6، `usrah-mujtama` 6، `munasabat-islamiyya` 6،
+`nawazil-muasira` 6. **أعد التحقق المباشر من DB قبل البدء بأي عنقود**
+(`npx supabase link --project-ref ngmvmlulzacrlicuagyp` ثم `SELECT id,
+slug, name, sort_order, status FROM categories WHERE parent_id=(SELECT id
+FROM categories WHERE slug='<العنقود المختار>') ORDER BY sort_order`)
+لضمان تطابق الأرقام الفعلية مع ما وُثِّق أعلاه. بنفس المنهجية الثابتة:
+درس واحد حقيقي لكل تصنيف draft (`lessons`+`lesson_sections`+
+`lesson_citations`) بمصدر معتمد مسمّى مناسب لموضوع العنقود، تحقَّق من أي
+آية حرفياً محلياً من `public/data/quran` عبر حقل `numberInSurah` (لا
+`number`)، تحقَّق من أي حديث عبر WebSearch قبل الإدراج (فقط من
+الصحيحين/متفق عليه أو بإسناد صحيح مصرَّح بدرجته بدقة)، ثم `status:
+draft→published`. وسم `needs-post-review.jsonl` فوراً لكل درس عند
+إنشائه. لا تنتقل لعنقود ثانٍ في نفس الدورة حتى لو تبقّى وقت ضمن سقف
+الدفعة (~30 عنصرًا).
