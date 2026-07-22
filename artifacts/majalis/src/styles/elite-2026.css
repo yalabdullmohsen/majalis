@@ -13454,7 +13454,7 @@ html[data-theme="dark"] .global-back-btn {
   border-radius: 50%;
   border: none;
   background: var(--color-primary, #28584D);
-  color: #fff;
+  color: var(--text-on-primary, #fff);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21494,7 +21494,7 @@ html[data-theme="dark"] .qlive-player {
 .as-tab:hover { border-color: var(--clr-primary); color: var(--clr-primary); }
 .as-tab--active {
   background: var(--clr-primary); border-color: var(--clr-primary);
-  color: #fff; font-weight: 600;
+  color: var(--text-on-primary, #fff); font-weight: 600;
 }
 
 /* Container */
@@ -21546,7 +21546,7 @@ html[data-theme="dark"] .qlive-player {
 .as-alama-card__num {
   width: 2rem; height: 2rem; flex-shrink: 0;
   border-radius: 50%; background: var(--clr-primary);
-  color: #fff; font-weight: 700; font-size: .85rem;
+  color: var(--text-on-primary, #fff); font-weight: 700; font-size: .85rem;
   display: flex; align-items: center; justify-content: center;
   margin-top: .1rem;
 }
@@ -21567,7 +21567,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .as-kubra-num {
   width: 2.2rem; height: 2.2rem; border-radius: 50%;
-  background: var(--clr-primary); color: #fff;
+  background: var(--clr-primary); color: var(--text-on-primary, #fff);
   display: flex; align-items: center; justify-content: center;
   font-size: 1rem; font-weight: 800; margin-bottom: .75rem;
 }
@@ -25554,7 +25554,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 .sh-steps { list-style: none; padding: 0; margin: 0 0 2rem; display: flex; flex-direction: column; gap: .9rem; }
 .sh-step { display: flex; gap: .9rem; }
 .sh-step__num {
-  width: 32px; height: 32px; flex-shrink: 0; background: var(--clr-primary,#28584D); color: #fff;
+  width: 32px; height: 32px; flex-shrink: 0; background: var(--clr-primary,#28584D); color: var(--text-on-primary, #fff);
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
   font-size: .8rem; font-weight: 900; margin-top: .15rem;
 }
@@ -25594,7 +25594,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   border-radius: .7rem; font-size: .9rem; font-weight: 700; text-decoration: none; transition: opacity .14s;
 }
 .sh-cta__btn:hover { opacity: .88; }
-.sh-cta__btn--primary { background: var(--clr-primary,#28584D); color: #fff; }
+.sh-cta__btn--primary { background: var(--clr-primary,#28584D); color: var(--text-on-primary, #fff); }
 .sh-cta__btn--secondary { background: rgba(23,61,53,.1); color: var(--clr-primary,#28584D); border: 1px solid rgba(23,61,53,.2); }
 
 /* ═══════════════════════════════════════════════════════════
@@ -29816,6 +29816,10 @@ html[data-theme="dark"] {
   --clr-primary-hov:  #6ED4AC;
   --clr-primary-soft: rgba(92,196,154,.12);
   --clr-primary-subtle: rgba(92,196,154,.06);
+  /* --clr-primary الفاتح (#5CC49A) في الوضع الداكن لا يسمح بنص أبيض مقروء
+     فوقه كخلفية زر (تباين ~2:1 فقط)؛ #173D35 هنا يحقق ٥.٥٩:١ — لا تستخدم
+     --clr-primary-deep (يحلّ هنا لـ#28584D، تباينه ٣.٧٩:١ فقط، غير كافٍ) */
+  --text-on-primary:  #173D35;
   --color-bg:         #111714;
   --color-surface:    #1A2120;
   --color-surface-sec:#1F2926;
@@ -31729,6 +31733,26 @@ progress,
 .skip-nav-link,
 .tag-new {
   color: #FFFFFF !important;
+}
+
+/* استثناء من §79: هذه المحدِّدات خلفيتها الفعلية ثابتة في الوضع الداكن وهي
+   --clr-primary الفاتح (#5CC49A تقريبًا) لا أخضر داكن فعليًا، ففرض الأبيض
+   أعلاه ينتج نصًّا شبه غير مرئي (تباين ~2:1-2.9:1)، مُشخَّص وتحقّق منه عبر
+   تدقيق Playwright حي (2026-07-22).
+   ملاحظة: .kng-source-btn/.ikm-conn-node/.ar-thesis-badge استُبعدت عمدًا —
+   خلفيتها الفعلية متغيّرة (حالات/متغيّرات متعددة، بعضها داكن فعلاً)، وتطبيق
+   نص داكن ثابت عليها ينتج نصًّا غير مرئي في تلك الحالات الأخرى (تحقّق حي). */
+html[data-theme="dark"] .lsw-featured__now,
+html[data-theme="dark"] .lsw-featured__cta,
+html[data-theme="dark"] .ar-contribute-banner__btn,
+html[data-theme="dark"] .hadith-books-banner__btn,
+html[data-theme="dark"] .notif-saved,
+html[data-theme="dark"] .isp-chip,
+html[data-theme="dark"] .trp-tab,
+html[data-theme="dark"] .trp-submit-btn,
+html[data-theme="dark"] .qzg-btn-primary,
+html[data-theme="dark"] .lpp-cat-btn {
+  color: var(--text-on-primary, #173D35) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
