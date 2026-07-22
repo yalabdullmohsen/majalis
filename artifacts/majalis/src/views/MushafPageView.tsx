@@ -101,6 +101,11 @@ export default function MushafPageView() {
   const [imgSrc, setImgSrc] = useState(() => getMushafPageUrl(page));
   const [imgTriedFallback, setImgTriedFallback] = useState(false);
   const [chromeVisible, setChromeVisible] = useState(true);
+  /* تجربة قراءة غامرة بنمط "آية"/"ترتيل": نقرة واحدة على جسم الصفحة (لا
+     على آية — onClick على .mf2-ayah-group يوقف الانتشار propagation)
+     تُبدِّل ظهور الشريطين العلوي/السفلي، مستقلة عن chromeVisible الخاصة
+     بوضع الصورة (سلوك مختلف: تبديل دائم لا اختفاء تلقائي بعد مهلة). */
+  const [textChromeVisible, setTextChromeVisible] = useState(true);
   const touchStartX = useRef<number | null>(null);
   const chromeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -294,7 +299,7 @@ export default function MushafPageView() {
     <div className={`quran-shell quran-shell--immersive ${shellThemeClass}`} dir="rtl">
       {displayMode === "text" && (
         <>
-          <div className="mpv-toolbar">
+          <div className={`mpv-toolbar ${textChromeVisible ? "" : "mpv-toolbar--hidden"}`}>
             <button type="button" className="mpv-toolbar__btn" onClick={goBack} aria-label="رجوع">
               <ArrowRight size={16} aria-hidden="true" />
             </button>
@@ -314,7 +319,12 @@ export default function MushafPageView() {
             </button>
           </div>
 
-          <div className="mpv-body" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+          <div
+            className="mpv-body"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+            onClick={() => setTextChromeVisible((v) => !v)}
+          >
             {resumeBanner && (
               <div className="mpv-resume-banner">
                 <span>تابعت القراءة تلقائيًا من الصفحة {toArabicDigits(resumeBanner)}</span>
@@ -366,7 +376,7 @@ export default function MushafPageView() {
             )}
           </div>
 
-          <nav className="mpv-navbar" aria-label="التنقل بين صفحات المصحف">
+          <nav className={`mpv-navbar ${textChromeVisible ? "" : "mpv-navbar--hidden"}`} aria-label="التنقل بين صفحات المصحف">
             <button type="button" className="mpv-navbar__btn" onClick={prevPage} disabled={page <= 1} aria-label="الصفحة السابقة">
               <ChevronRight size={18} aria-hidden="true" />
             </button>

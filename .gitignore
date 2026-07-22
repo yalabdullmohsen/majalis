@@ -18,3 +18,11 @@ supabase/.temp/
 **/xcshareddata/swiftpm/
 .vercel
 .env*
+
+# content-runner: ملفات حالة تشغيلية محلية، ليست مصدرًا
+scripts/content-runner.log
+scripts/content-runner.cycle-count
+scripts/content-runner.daily-count
+scripts/content-runner.stop
+scripts/content-runner.launchd.out.log
+scripts/content-runner.launchd.err.log

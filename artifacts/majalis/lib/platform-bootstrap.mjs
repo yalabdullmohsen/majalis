@@ -20,7 +20,7 @@ import {
   isBootstrapRunning,
 } from "./platform-bootstrap-state.mjs";
 
-const PRODUCTION_BASE = process.env.MAJALIS_PRODUCTION_URL || "https://www.majlisilm.com";
+const PRODUCTION_BASE = process.env.MAJALIS_PRODUCTION_URL || "https://majlisilm.com";
 
 const SECRET_HINTS = {
   VITE_SUPABASE_URL: "Supabase project URL (https://xxx.supabase.co)",

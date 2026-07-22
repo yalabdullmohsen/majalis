@@ -4,7 +4,9 @@ import { applyPageSeo } from "@/lib/seo";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { useAuth } from "@/components/AuthProvider";
 import { useFontPreference } from "@/components/FontPreferenceProvider";
+import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { useUserPreferences } from "@/components/UserPreferencesProvider";
+import { THEME_OPTIONS, type ThemePreference } from "@/lib/theme-preference";
 import { clearQuranCache } from "@/lib/quran-api";
 import { DEFAULT_PREFERENCES, type UserPreferences } from "@/lib/user-preferences";
 import { useQuranPreferences, type QuranFontId } from "@/hooks/useQuranPreferences";
@@ -48,8 +50,9 @@ export default function SettingsPage() {
   }, []);
   const { t } = useLanguage();
   const { preference: fontPreference } = useFontPreference();
-  const { preferences, updatePreferences } = useUserPreferences();
+  const { preference: themePreference, resolvedTheme, setPreference: setThemePreference } = useThemePreference();
   const { prefs: quranPrefs, setPref: setQuranPref, bumpFont } = useQuranPreferences();
+  const { preferences, updatePreferences } = useUserPreferences();
 
   const update = <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => {
     updatePreferences({ [key]: value });
@@ -92,12 +95,37 @@ export default function SettingsPage() {
           <span>{t("settings_language")}</span>
           <LanguageSwitcher />
         </div>
+        <div className="settings-option-grid" role="group" aria-label="اختيار الوضع (فاتح/داكن)">
+          {THEME_OPTIONS.map((option) => (
+            <button
+              key={option.id}
+              type="button"
+              className={`settings-choice${themePreference === option.id ? " is-active" : ""}`}
+              onClick={() => setThemePreference(option.id as ThemePreference)}
+            >
+              <strong>{option.label}</strong>
+              <span>{option.description}</span>
+            </button>
+          ))}
+        </div>
+        <p className="settings-note">الوضع الحالي: {resolvedTheme === "dark" ? "داكن" : "فاتح"}</p>
         <label className="settings-field">
           <span>{t("settings_font_size")}</span>
           <select name="interface-font-size" value={preferences.fontSize} onChange={(e) => update("fontSize", e.target.value as UserPreferences["fontSize"])}>
             <option>صغير</option>
             <option>متوسط</option>
             <option>كبير</option>
+          </select>
+        </label>
+        <label className="settings-field">
+          <span>نظام الأرقام</span>
+          <select
+            name="numeral-system"
+            value={preferences.numeralSystem}
+            onChange={(e) => update("numeralSystem", e.target.value as UserPreferences["numeralSystem"])}
+          >
+            <option value="عربي">عربي (٠١٢٣)</option>
+            <option value="إنجليزي">إنجليزي (0123)</option>
           </select>
         </label>
       </LegalSection>

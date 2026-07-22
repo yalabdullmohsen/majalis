@@ -605,6 +605,7 @@ export default function LessonsPage({
                 </>
               )}
 
+              {(filters.search || filters.governorate !== "كل المحافظات") && (
               <section className="lessons-v2-section">
                 <h2 className="lessons-v2-section__title">
                   {tab === "courses" ? "دورات" : tab === "women" ? "نشاطات للنساء" : tab === "men" ? "دروس رجالية" : "جميع الدروس"}
@@ -620,6 +621,7 @@ export default function LessonsPage({
                   renderGrid(filtered.filter((l) => !featuredIds.has(l.id)))
                 )}
               </section>
+              )}
 
               {filteredArchived.length > 0 && (
                 <section className="lessons-past-section" aria-labelledby="past-lessons-heading">

@@ -162,7 +162,7 @@ export function MushafPageV2({ layout, activeAyahKey, onAyahPress, sharedFontFam
                     role="button"
                     tabIndex={0}
                     aria-label={`آية ${verseKey}`}
-                    onClick={() => onAyahPress?.(verseKey)}
+                    onClick={(e) => { e.stopPropagation(); onAyahPress?.(verseKey); }}
                     onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onAyahPress?.(verseKey); } }}
                   >
                     {group.map((w) => wordRenderer(w))}

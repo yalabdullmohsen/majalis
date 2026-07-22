@@ -2,16 +2,16 @@
  * قائمة مالكي المنصة (bootstrap) — **خادم فقط**.
  *
  * أمن: كان البريد الشخصي مكتوبًا هنا وفي نظيره في العميل (src/lib/owner-config.ts)
- * فيُشحن إلى المتصفح ضمن حزمة JS. الآن يُقرأ من متغير البيئة OWNER_EMAILS
- * (قائمة مفصولة بفواصل)، والقيمة الافتراضية فارغة — بلا أي بريد في الكود.
- * إن لم يُضبط المتغير فلا مالك bootstrap، ويبقى فحص الملكية عبر قاعدة البيانات
- * (عمود is_owner) وحده.
+ * فيُشحن إلى المتصفح ضمن حزمة JS. الآن يُقرأ من متغير البيئة MAJALIS_OWNER_EMAILS
+ * (قائمة مفصولة بفواصل، راجع PRE-DEPLOY.md)، والقيمة الافتراضية فارغة — بلا أي
+ * بريد في الكود. إن لم يُضبط المتغير فلا مالك bootstrap، ويبقى فحص الملكية عبر
+ * قاعدة البيانات (عمود is_owner) وحده.
  *
- * مثال: OWNER_EMAILS="owner@example.com,second@example.com"
+ * مثال: MAJALIS_OWNER_EMAILS="owner@example.com,second@example.com"
  */
 
 function readOwnerEmailsFromEnv() {
-  const raw = String(process.env.OWNER_EMAILS || "").trim();
+  const raw = String(process.env.MAJALIS_OWNER_EMAILS || process.env.BOOTSTRAP_OWNER_EMAILS || "").trim();
   if (!raw) return [];
   return raw
     .split(",")

@@ -1,3 +1,5 @@
+-- ملاحظة: يُستخدم الرمز __OWNER_EMAIL__ بدلًا من بريد المالك الفعلي حتى لا يُخزَّن بريد شخصي في المستودع.
+-- قبل التشغيل استبدله ببريد المالك، أو مرِّر MAJALIS_OWNER_EMAILS لسكربت التطبيق ليستبدله تلقائيًا.
 -- ═══════════════════════════════════════════════════════════════════════════
 -- ensure_admin_delete_v1.sql
 -- حلّ جذري لمشكلة "لا يسمح بحذف الدرس". السبب الشائع: is_admin() تُرجع false على
@@ -15,7 +17,7 @@ DO $$
 DECLARE v_owner_id UUID;
 BEGIN
   SELECT id INTO v_owner_id FROM auth.users
-  WHERE lower(trim(email)) = 'yalabdullmohsen1@gmail.com' LIMIT 1;
+  WHERE lower(trim(email)) = '__OWNER_EMAIL__' LIMIT 1;
 
   IF v_owner_id IS NULL THEN
     RAISE NOTICE '⚠️ حساب المالك غير موجود في auth.users.';

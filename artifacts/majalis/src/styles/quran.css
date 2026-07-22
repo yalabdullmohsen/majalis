@@ -1,8 +1,12 @@
 /* ============================================================
    Quran Section — rebuilt from scratch
-   Font: Amiri Quran (Google Fonts — already in index.html)
+   Font: Amiri Quran (مُستضاف محليًا الآن، لا Google Fonts — انظر أدناه)
    Direction: RTL throughout
    ============================================================ */
+
+/* @font-face الفعلي في src/index.css (يُحمَّل عالميًا في كل صفحات
+   التطبيق، لا هنا فقط — "Amiri Quran" تستخدمه ملفات أخرى غير مرتبطة
+   بمسارات المصحف مثل elite-2026.css/majalis-v2.css). */
 
 /* ── Layout shell ── */
 .quran-shell {
@@ -2389,6 +2393,9 @@ html[data-theme="dark"] .rtp-transcript {
   z-index: 10010;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  /* يمنع سحب "لإعادة التحميل" (bounce/rubber-band) من سلسلة التمرير إلى
+     الصفحة الأم خلف القارئ الغامر — خاص بمشغّلات القراءة الغامرة. */
+  overscroll-behavior-y: contain;
 }
 body.has-immersive-mushaf { overflow: hidden; }
 
@@ -2399,6 +2406,10 @@ body.has-immersive-mushaf { overflow: hidden; }
   justify-content: space-between;
   gap: .5rem;
   padding: .6rem .9rem;
+  /* ⚠️ إصلاح جذري (2026-07-22): كانت بلا أي مراعاة للنوتش/الجزيرة الديناميكية
+     (env(safe-area-inset-top)) — الشريط السفلي .mpv-navbar كان يراعي
+     inset-bottom أصلًا، هذا يوازيه للأعلى. */
+  padding-top: max(.6rem, env(safe-area-inset-top));
   background: var(--bg-card, #fff);
   border-bottom: 1px solid var(--border, #e5e3dd);
   direction: rtl;
@@ -2409,8 +2420,13 @@ body.has-immersive-mushaf { overflow: hidden; }
 .mpv-toolbar__btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: .3rem;
-  min-height: 40px;
+  /* ⚠️ إصلاح جذري (2026-07-22): 40px أقل من حد Apple HIG الأدنى لأهداف
+     اللمس (44×44pt)؛ min-width إضافي ضروري للأزرار الأيقونة-فقط
+     (الإعدادات/تبديل الصورة) التي لا نص مرئي فيها يمنحها عرضًا كافيًا. */
+  min-height: 44px;
+  min-width: 44px;
   padding: .4rem .7rem;
   border: 1px solid var(--border, #e5e3dd);
   border-radius: .6rem;
@@ -2421,6 +2437,7 @@ body.has-immersive-mushaf { overflow: hidden; }
   font-weight: 600;
   cursor: pointer;
   transition: background .15s;
+  -webkit-tap-highlight-color: transparent;
 }
 .mpv-toolbar__btn:hover { background: var(--bg-hover, #f3f0eb); }
 .mpv-toolbar__btn.is-active {
@@ -2432,7 +2449,14 @@ body.has-immersive-mushaf { overflow: hidden; }
 .mpv-toolbar__title small { display: block; font-size: .68rem; font-weight: 500; color: var(--text-muted, #6b7280); }
 
 /* ── حاوية الصفحة ── */
-.mpv-body { max-width: 720px; margin: 0 auto; padding: 1rem 1rem 7rem; direction: rtl; }
+/* ⚠️ إصلاح جذري (2026-07-22): .mpv-body ابن flex عمودي مباشر لـ.quran-shell
+   (flex-direction:column) بلا width صريح — كان يعتمد ضمنيًا على
+   align-items:stretch الافتراضي لملء العرض، لكنه كان يقف عمليًا عند
+   ٢٧٥px فقط على شاشة ٣٧٥px (قياس فعلي)، تاركًا صفحة المصحف بطاقة صغيرة
+   وسط فراغ. width:100% صريح (بدل الاعتماد على stretch الضمني) يضمن ملء
+   العرض المتاح فعليًا على كل المقاسات — تحقّقتُ أنه يرفعها لـ343px
+   (العرض الكامل ناقص الحشو) على نفس القياس. */
+.mpv-body { width: 100%; max-width: 720px; margin: 0 auto; padding: 1rem 1rem 7rem; direction: rtl; box-sizing: border-box; }
 .mpv-resume-banner {
   display: flex;
   align-items: center;
@@ -2472,6 +2496,22 @@ body.has-immersive-mushaf { overflow: hidden; }
   background: var(--bg-card, #fff);
   border-top: 1px solid var(--border, #e5e3dd);
   direction: rtl;
+  transition: transform .25s ease, opacity .25s ease;
+}
+
+/* ── تجربة قراءة غامرة: نقرة على الصفحة تُخفي/تُظهر الشريطين (2026-07-22) ── */
+.mpv-toolbar {
+  transition: transform .25s ease, opacity .25s ease;
+}
+.mpv-toolbar--hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+.mpv-navbar--hidden {
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
 }
 .mpv-navbar__btn {
   min-width: 44px;

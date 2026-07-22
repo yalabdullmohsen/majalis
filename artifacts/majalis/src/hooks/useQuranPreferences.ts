@@ -46,10 +46,22 @@ const DEFAULTS: QuranPreferences = {
   pageMode: "light",
 };
 
+/** أول زيارة بلا أي تفضيل محفوظ فقط: يحترم prefers-color-scheme النظامي
+ * (وضع ليلي تلقائي إن كان نظام المستخدم داكنًا) — أي اختيار يدوي لاحق من
+ * الإعدادات يُخزَّن في localStorage ويعلو عليه دومًا. */
+function systemPrefersDark(): boolean {
+  try {
+    return typeof window !== "undefined" && window.matchMedia?.("(prefers-color-scheme: dark)").matches === true;
+  } catch {
+    return false;
+  }
+}
+
 function load(): QuranPreferences {
   try {
     const raw = localStorage.getItem(KEY) ?? localStorage.getItem(LEGACY_KEY);
-    return raw ? { ...DEFAULTS, ...JSON.parse(raw) } : { ...DEFAULTS };
+    if (raw) return { ...DEFAULTS, ...JSON.parse(raw) };
+    return { ...DEFAULTS, readingTheme: systemPrefersDark() ? "night" : "standard" };
   } catch {
     return { ...DEFAULTS };
   }

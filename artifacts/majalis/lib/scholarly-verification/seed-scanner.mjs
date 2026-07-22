@@ -64,7 +64,7 @@ function loadLessonsFromAds() {
     return blocks.map((t, i) => ({
       id: `lesson-ad-${i}`,
       title: t.replace(/title:\s*"/, '').replace('"', ''),
-      source_url: 'https://www.majlisilm.com/lessons',
+      source_url: 'https://majlisilm.com/lessons',
       source_name: 'المجلس العلمي',
       category: 'درس',
     }));
@@ -87,7 +87,7 @@ function loadFawaidFromSeed() {
         text: match[1].replace(/\\"/g, '"'),
         author_name: 'المجلس العلمي',
         category: 'عام',
-        source_url: 'https://www.majlisilm.com',
+        source_url: 'https://majlisilm.com',
         source_name: 'المجلس العلمي',
       });
     }
@@ -110,7 +110,7 @@ function loadQaFromSeed() {
         question: m[2].replace(/\\"/g, '"'),
         answer: 'جواب',
         category: 'فقه',
-        source_url: 'https://www.majlisilm.com',
+        source_url: 'https://majlisilm.com',
         source_name: 'المجلس العلمي',
       });
     }
@@ -153,7 +153,7 @@ function loadLibrary() {
       id: `lib-${i}`,
       title: t.replace(/title:\s*"/, '').replace('"', ''),
       description: 'مرجع علمي',
-      source_url: 'https://www.majlisilm.com/library',
+      source_url: 'https://majlisilm.com/library',
       source_name: 'المكتبة العلمية',
       category: 'كتب',
     }));
@@ -209,9 +209,9 @@ function defaultSourceUrl(type) {
     fiqh_council_item: 'https://www.islamweb.net',
     hadith: 'https://sunnah.com',
     adhkar: 'https://hisn.alim.net',
-    lesson: 'https://www.majlisilm.com/lessons',
+    lesson: 'https://majlisilm.com/lessons',
   };
-  return map[type] ?? 'https://www.majlisilm.com';
+  return map[type] ?? 'https://majlisilm.com';
 }
 
 export function countSeedItemsByType() {

@@ -2208,10 +2208,13 @@
         "الأنبياء",
         "قصص الأنبياء",
         "الرسل",
-        "سيرة الأنبياء"
+        "سيرة الأنبياء",
+        "المجلس العلمي"
       ],
-      "sitemap": false,
-      "robots": "noindex, follow"
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "robots": "index, follow"
     },
     {
       "path": "/auth/callback",
@@ -2231,14 +2234,18 @@
     },
     {
       "path": "/learning",
-      "title": "مسارات التعلم",
-      "description": "اكتشف مسارات التعلم المتاحة على منصة المجلس العلمي.",
+      "title": "مسارات التعلم الشرعي | المجلس العلمي",
+      "description": "اكتشف مسارات التعلم الشرعي المنظّمة على منصة المجلس العلمي من العقيدة والفقه والتفسير وعلوم الحديث.",
       "keywords": [
         "مسارات تعلم",
-        "طلب العلم"
+        "طلب العلم",
+        "منهج دراسي إسلامي",
+        "المجلس العلمي"
       ],
-      "sitemap": false,
-      "robots": "noindex, follow"
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": "0.75",
+      "robots": "index, follow"
     },
     {
       "path": "/muezzins/favorites",

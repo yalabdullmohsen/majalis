@@ -213,8 +213,8 @@ export default function AboutPage() {
 
       <LegalSection title="تابعونا">
         <p>
-          تعاون المجلس العلمي مع أكاديمية ورثة الأنبياء لتقديم محتوى علمي إضافي عبر
-          حسابها على انستغرام.
+          تابع حساب المجلس العلمي الرسمي على انستغرام لمحتوى علمي إضافي وتحديثات
+          المنصة.
         </p>
         <div className="contact-channels">
           <InstagramAcademyLink variant="card" />

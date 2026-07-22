@@ -30,10 +30,13 @@
     <meta name="twitter:image" content="https://www.majlisilm.com/opengraph.jpg" />
     <meta name="twitter:image:alt" content="المجلس العلمي، منصة الدروس الشرعية" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" href="/favicon.png" sizes="512x512" />
+    <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/favicon-48.png" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/icon-96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="/icon-192.png" sizes="192x192" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- DNS prefetch for external assets -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
@@ -48,11 +51,18 @@
          2026-07-19، بدل Almarai). IBM Plex Sans Arabic يبقى مُحمَّلاً كبديل احتياطي فقط
          (توافقًا مع مسارات توليد الصور/PDF القائمة التي ما زالت تشير إليه صراحةً).
          الاستثناء الوحيد: خطوط الرسم القرآني/الصيغ الشرعية العثمانية للعناوين المميزة
-         والمصحف فقط. -->
-    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Amiri+Quran&family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+         والمصحف فقط. تحميل غير حاجب (media=print/onload) لتحسين Core Web Vitals. -->
+    <!-- Amiri Quran مُستضاف محليًا (public/fonts/amiri-quran/) لا عبر Google Fonts —
+         خط نص المصحف الافتراضي (الوضع الخفيف) لا يجوز أن يعتمد على شبكة CDN خارجية:
+         تطبيق iOS عبر Capacitor (WKWebView) قد يفتح بلا اتصال فوري، وأي تأخر/فشل هنا
+         يعني ظهور القرآن بخط بديل غير مقروء ولو للحظة — راجع @font-face في quran.css. -->
+    <link rel="preload" href="/fonts/amiri-quran/AmiriQuran-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
     <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Amiri+Quran&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet" />
     </noscript>
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
