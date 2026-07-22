@@ -43,11 +43,11 @@ function KhatmaRing({ pagesInKhatma, khatmasCompleted }: { pagesInKhatma: number
           {toAr(khatmasCompleted)}
         </text>
       )}
-      <text x="62" y={khatmasCompleted > 0 ? "70" : "66"} textAnchor="middle" fill="var(--majalis-ink-soft, rgba(23,61,53,.45))" fontSize="9" fontWeight="600" fontFamily="inherit">
+      <text x="62" y={khatmasCompleted > 0 ? "70" : "66"} textAnchor="middle" fill="var(--majalis-ink-soft, rgba(23,61,53,.45))" fontSize="12" fontWeight="600" fontFamily="inherit">
         {khatmasCompleted > 0 ? "ختمة كاملة" : "ص " + toAr(pagesInKhatma) + " / ٦٠٤"}
       </text>
       {khatmasCompleted > 0 && (
-        <text x="62" y="85" textAnchor="middle" fill="var(--majalis-ink-soft)" fontSize="8.5" fontWeight="600" fontFamily="inherit">
+        <text x="62" y="85" textAnchor="middle" fill="var(--majalis-ink-soft)" fontSize="12" fontWeight="600" fontFamily="inherit">
           ص {toAr(pagesInKhatma)} من ختمة جديدة
         </text>
       )}
@@ -79,7 +79,7 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
         {toAr(pages)}
       </text>
       <text x="74" y="84" textAnchor="middle" fill="var(--majalis-ink-soft, rgba(23,61,53,0.45))"
-        fontSize="10.5" fontWeight="600" fontFamily="inherit">
+        fontSize="12.5" fontWeight="600" fontFamily="inherit">
         من {toAr(target)} صفحة
       </text>
       {done && (

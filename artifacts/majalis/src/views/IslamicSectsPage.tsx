@@ -917,10 +917,10 @@ export default function IslamicSectsPage() {
             موسوعة علمية تاريخية في الفرق والمذاهب الإسلامية — نشأتها وعقائدها وأبرز علمائها وكتبها
           </p>
           <div style={{ marginTop: "1rem", display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-            <span className="badge" style={{ background: "rgba(255,255,255,0.2)", color: "#fff", padding: "0.4rem 1rem", borderRadius: "999px" }}>
+            <span className="badge" style={{ background: "rgba(255,255,255,0.2)", color: "#fff", padding: "0.4rem 1rem", borderRadius: "999px", fontSize: "0.85rem" }}>
               {SECTS.length} فرقة ومدرسة
             </span>
-            <span className="badge" style={{ background: "rgba(255,255,255,0.2)", color: "#fff", padding: "0.4rem 1rem", borderRadius: "999px" }}>
+            <span className="badge" style={{ background: "rgba(255,255,255,0.2)", color: "#fff", padding: "0.4rem 1rem", borderRadius: "999px", fontSize: "0.85rem" }}>
               {SECTS.filter((s) => s.status === "قائمة").length} قائمة •{" "}
               {SECTS.filter((s) => s.status === "تاريخية").length} تاريخية
             </span>

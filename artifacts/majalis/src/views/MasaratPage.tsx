@@ -37,7 +37,7 @@ function MasarCard({ masar }: { masar: Masar }) {
           <span style={{ fontSize: "2rem", lineHeight: 1 }} aria-hidden="true">{masar.icon}</span>
           <div style={{ display: "flex", gap: "0.4rem", flexShrink: 0 }}>
             <span style={{
-              fontSize: "0.7rem",
+              fontSize: "0.8rem",
               padding: "0.2rem 0.55rem",
               borderRadius: "1rem",
               fontWeight: 700,
@@ -48,7 +48,7 @@ function MasarCard({ masar }: { masar: Masar }) {
               {masar.level}
             </span>
             <span style={{
-              fontSize: "0.7rem",
+              fontSize: "0.8rem",
               padding: "0.2rem 0.55rem",
               borderRadius: "1rem",
               fontWeight: 600,

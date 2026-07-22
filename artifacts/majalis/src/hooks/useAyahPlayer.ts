@@ -48,9 +48,6 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     setCurrentAyah(ayah);
     setPlayerState("loading");
 
-    const onCanPlay = () => {
-      audio.play().catch(() => setPlayerState("error"));
-    };
     const onPlaying = () => setPlayerState("playing");
     const onPause = () => {
       if (audio.ended) return;
@@ -68,7 +65,6 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     };
     const onError = () => setPlayerState("error");
 
-    audio.addEventListener("canplay", onCanPlay, { once: true });
     audio.addEventListener("playing", onPlaying, { once: true });
     audio.addEventListener("pause", onPause);
     audio.addEventListener("ended", onEnded, { once: true });
@@ -77,6 +73,14 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     pauseCleanupRef.current = () => audio.removeEventListener("pause", onPause);
 
     audio.load();
+    /* استدعاء play() فورًا ومتزامنًا مع نفس استدعاء لمسة المستخدم — لا ننتظر
+       حدث canplay غير المتزامن. iOS Safari/WebKit (Capacitor WebView أيضًا)
+       يُسقِط صلاحية user-gesture لتشغيل صوت إن استُدعيت play() بعد أي جولة
+       event-loop لاحقة للمسة الأصلية، فيرفض التشغيل صامتًا (NotAllowedError)
+       — هذا هو السبب الجذري الفعلي لعطل التشغيل على iOS تحديدًا (مؤكَّد
+       2026-07-22). المتصفح يدير الانتظار الداخلي لتوفر البيانات بنفسه طالما
+       استُدعيت play() بالتوقيت الصحيح؛ لا حاجة لانتظار canplay يدويًا. */
+    audio.play().catch(() => setPlayerState("error"));
   }, [totalAyahs]);
 
   const playFromAyah = useCallback((ayah: number) => {

@@ -81,7 +81,7 @@ export function HomeAboutSection() {
               <Icon size={15} strokeWidth={2} />
             </span>
             <strong style={{ fontSize: "0.83rem", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.35 }}>{title}</strong>
-            <span style={{ fontSize: "0.72rem", color: "#5a6b63", lineHeight: 1.5 }}>{desc}</span>
+            <span style={{ fontSize: "0.8rem", color: "#5a6b63", lineHeight: 1.5 }}>{desc}</span>
           </div>
         ))}
       </div>

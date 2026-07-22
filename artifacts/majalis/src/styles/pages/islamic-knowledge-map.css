@@ -246,7 +246,7 @@
   margin-top: 0.25rem;
 }
 .ikm-tag {
-  font-size: 0.68rem;
+  font-size: 0.8rem;
   padding: 0.15rem 0.45rem;
   border-radius: 2rem;
   background: rgba(255,255,255,0.15);
@@ -456,7 +456,7 @@
   min-width: 80px;
 }
 .ikm-conn-label {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   color: #5E655F;
   white-space: nowrap;
 }

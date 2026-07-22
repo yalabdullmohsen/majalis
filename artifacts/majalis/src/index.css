@@ -3067,7 +3067,7 @@ input, textarea, select { font-family: inherit; }
 .qa-badge {
   padding: 0.125rem 0.625rem;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -8063,7 +8063,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   display: inline-block;
   border-radius: 999px;
   padding: 0.15em 0.65em;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 600;
   white-space: nowrap;
 }
@@ -8123,7 +8123,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   display: inline-block;
   border-radius: 999px;
   padding: 0.15em 0.65em;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -8426,7 +8426,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .hadith-section-eyebrow {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -9424,7 +9424,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .lesson-unified-card__status {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 600;
   padding: 0.18rem 0.5rem;
   border-radius: 999px;
@@ -9563,7 +9563,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .lesson-unified-card__flag {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 700;
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
@@ -10848,7 +10848,14 @@ body.side-nav-open { overflow: hidden; }
 .app-shell {
   --assistant-fab-size: 3.35rem;
   --assistant-fab-gap: calc(1rem + env(safe-area-inset-bottom, 0px));
-  overflow-x: hidden;
+  /* overflow-x: hidden كان يفرض overflow-y: auto ضمنيًا (توأمة المحورين حسب
+     مواصفة CSS)، فيسجّل .app-shell كـ"أقرب سلف قابل للتمرير" لعنصر
+     position:sticky للهيدر — رغم أن .app-shell لا يمرَّر فعليًا أبدًا
+     (المحتوى ينمو بلا قصّ، والتمرير الحقيقي يقع على <html>)، فيفقد الهيدر
+     ثباته ويزحف مع المحتوى. overflow-x: clip يمنع نفس التمرير الأفقي غير
+     المرغوب بلا توأمة المحور الرأسي — هذا هو السبب الجذري لعطل ثبات الهيدر
+     (ومعه زر البحث) عند التمرير، 2026-07-22. */
+  overflow-x: clip;
   max-width: 100%;
 }
 
@@ -12762,7 +12769,7 @@ body.assistant-panel-open {
    ═══════════════════════════════════════════════════════════════════ */
 
 .app-shell {
-  overflow-x: hidden;
+  overflow-x: clip; /* لا hidden — يكسر ثبات الهيدر sticky، راجع التعليق أعلى تعريف .app-shell الأول */
   max-width: 100%;
 }
 
@@ -13455,7 +13462,7 @@ svg {
 
 /* Phase 1 — critical mobile fixes */
 body {
-  overflow-x: hidden;
+  overflow-x: clip; /* لا hidden — يكسر ثبات الهيدر sticky، راجع التعليق أعلى تعريف .app-shell */
   max-width: 100vw;
 }
 
@@ -14306,7 +14313,7 @@ body.has-assistant-fab .app-main {
   font-size: 0.85rem !important;
   font-weight: 600 !important;
   min-height: unset !important;
-  padding: 0.2rem 0 !important;
+  padding: 0.4rem 0 !important;
   transition: color var(--ds-t-fast);
 }
 .site-footer-link:hover { color: var(--majalis-emerald) !important; }
@@ -14505,7 +14512,7 @@ body.has-assistant-fab .app-main {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: var(--color-success-fg);
   background: var(--color-success-bg);
@@ -14609,7 +14616,7 @@ body.has-assistant-fab .app-main {
   line-height: 1.4;
 }
 .sheikh-card__link {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--majalis-emerald-deep);
 }
@@ -16014,7 +16021,7 @@ body.has-assistant-fab .app-main {
 .qc-card__badges { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .qc-badge {
   padding: 0.2rem 0.6rem; border-radius: 1rem;
-  font-size: 0.68rem; font-weight: 600;
+  font-size: 0.8rem; font-weight: 600;
 }
 .qc-badge--level  { background: var(--majalis-sage); color: var(--majalis-emerald-deep); }
 .qc-badge--mode   { background: #eff6ff; color: #1d4ed8; }
@@ -16700,7 +16707,7 @@ body.has-assistant-fab .app-main {
   flex-shrink: 0;
   padding: 0.15rem 0.55rem;
   border-radius: 999px;
-  font-size: 0.65rem;
+  font-size: 0.8rem;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -18242,7 +18249,7 @@ body.has-assistant-fab .app-main {
 
 .prv-virtue-narrator,
 .prv-virtue-source {
-  font-size: 0.73rem;
+  font-size: 0.8rem;
   color: var(--majalis-ink-soft, #5D726A);
 }
 
@@ -18419,7 +18426,7 @@ body.has-assistant-fab .app-main {
 .hsh-eyebrow {
   background: var(--clr-primary, #173D35);
   color: #fff;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 700;
   padding: 0.25rem 0.7rem;
   border-radius: 999px;
