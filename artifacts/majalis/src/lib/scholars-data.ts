@@ -407,7 +407,7 @@ export const SCHOLARS: Scholar[] = [
     region: "بغداد / دار القطن",
     madhhab: "شافعي",
     quote: "السنن ثلاث: سنة واجبة، وسنة فاضلة، وسنة مباحة",
-    sources: ["سير أعلام النبلاء — الذهبي"],
+    sources: ["سير أعلام النبلاء — الذهبي", "تاريخ بغداد — الخطيب البغدادي"],
     verificationStatus: "reviewed",
   },
   {
@@ -428,7 +428,7 @@ export const SCHOLARS: Scholar[] = [
     region: "بيهق / نيسابور، خراسان",
     madhhab: "شافعي",
     quote: "من أراد أن يتفقه في الدين فليحفظ السنة",
-    sources: ["سير أعلام النبلاء — الذهبي"],
+    sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
   {
@@ -565,7 +565,7 @@ export const SCHOLARS: Scholar[] = [
     region: "بغداد",
     madhhab: "اجتهادي",
     quote: "العالم لا يكون عالماً حتى يجمع بين الرواية والدراية",
-    sources: ["سير أعلام النبلاء — الذهبي"],
+    sources: ["سير أعلام النبلاء — الذهبي", "تاريخ بغداد — الخطيب البغدادي"],
     verificationStatus: "reviewed",
   },
   {
@@ -580,7 +580,7 @@ export const SCHOLARS: Scholar[] = [
     region: "بغداد",
     madhhab: "حنبلي",
     quote: "الوقت أعزّ الأشياء على المرء فلا يُضيّعه في ما لا ينفع",
-    sources: ["سير أعلام النبلاء — الذهبي"],
+    sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
   {
@@ -595,7 +595,7 @@ export const SCHOLARS: Scholar[] = [
     region: "دمشق",
     madhhab: "حنبلي",
     quote: "طوبى لمن أخمل نفسه وأشغلها بمعرفة عيوبها",
-    sources: ["الدرر الكامنة — ابن حجر العسقلاني"],
+    sources: ["الدرر الكامنة — ابن حجر العسقلاني", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
   {
@@ -736,7 +736,7 @@ export const SCHOLARS: Scholar[] = [
     region: "الكوفة / بغداد",
     madhhab: "حنفي",
     quote: "ما من شيء أبعد عن العلماء من صحبة السلطان",
-    sources: ["سير أعلام النبلاء — الذهبي"],
+    sources: ["سير أعلام النبلاء — الذهبي", "تاريخ بغداد — الخطيب البغدادي"],
     verificationStatus: "reviewed",
   },
   {
@@ -751,7 +751,7 @@ export const SCHOLARS: Scholar[] = [
     region: "الكوفة / بغداد / الري",
     madhhab: "حنفي",
     quote: "من لا يعرف الخلاف لا تشمّ أنفه رائحة الفقه",
-    sources: ["سير أعلام النبلاء — الذهبي"],
+    sources: ["سير أعلام النبلاء — الذهبي", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
   {
@@ -766,7 +766,7 @@ export const SCHOLARS: Scholar[] = [
     region: "مصر",
     madhhab: "شافعي",
     quote: "فقه الشافعي محيط وأنا ناقل لا مستنبط",
-    sources: ["سير أعلام النبلاء — الذهبي"],
+    sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
   {
