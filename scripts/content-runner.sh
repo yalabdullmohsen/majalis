@@ -22,10 +22,32 @@ WORKDIR="/Users/alabdullmohsen/majalis-content-fill"
 SCRIPT_DIR="$WORKDIR/scripts"
 LOG_FILE="$SCRIPT_DIR/content-runner.log"
 STOP_FILE="$SCRIPT_DIR/content-runner.stop"
+LOCK_FILE="$SCRIPT_DIR/content-runner.lock"
 CONTENT_PROMPT_FILE="$SCRIPT_DIR/content-runner-content-prompt.txt"
 AUDIT_PROMPT_FILE="$SCRIPT_DIR/content-runner-audit-prompt.txt"
 CYCLE_COUNT_FILE="$SCRIPT_DIR/content-runner.cycle-count"
 AUDIT_EVERY_N=5
+
+# قفل عملية واحدة فقط: نسخة ثانية من هذا السكربت (طرفية يدوية أخرى، أو
+# نافذة/جلسة أخرى) تعمل بالتوازي على نفس WORKDIR تُسبِّب تصادم git حقيقي
+# (commit/push متزامنين على نفس الشجرة). اكتُشف هذا فعليًا أثناء اختبار
+# 2026-07-22 (نسخة يدوية + نسخة من نافذة أخرى عملتا معًا فأفسدتا استخراج
+# نتيجة عدة دورات). يُطبَّق على كل أوضاع التشغيل (--once أيضًا).
+acquire_lock_or_exit() {
+  mkdir -p "$SCRIPT_DIR"
+  if [[ -f "$LOCK_FILE" ]]; then
+    local existing_pid
+    existing_pid=$(cat "$LOCK_FILE" 2>/dev/null || echo "")
+    if [[ -n "$existing_pid" ]] && kill -0 "$existing_pid" 2>/dev/null; then
+      echo "نسخة أخرى تعمل بالفعل (PID $existing_pid) — إنهاء بلا تنفيذ." >&2
+      exit 1
+    fi
+    echo "قفل سابق متروك (PID $existing_pid غير حيّ) — تجاوزه." >&2
+  fi
+  echo $$ > "$LOCK_FILE"
+  trap 'rm -f "$LOCK_FILE"' EXIT
+}
+acquire_lock_or_exit
 
 BETWEEN_BATCHES_SECONDS=60        # فاصل عادي بين الدفعات (بند 2)
 QUOTA_RETRY_SECONDS=1800          # 30 دقيقة عند نفاد الرصيد/حد الاستخدام (بند 3)
