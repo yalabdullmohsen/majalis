@@ -8951,3 +8951,65 @@ FROM categories WHERE slug='<العنقود المختار>') ORDER BY sort_orde
 draft→published`. وسم `needs-post-review.jsonl` فوراً لكل درس عند
 إنشائه. لا تنتقل لعنقود ثانٍ في نفس الدورة حتى لو تبقّى وقت ضمن سقف
 الدفعة (~30 عنصرًا).
+
+## دورة محتوى جديدة (2026-07-23، وكيل تنفيذ محتوى تلقائي، تكملة 18)
+
+**✅ استُنفِد عنقود fara-mawarith بالكامل (4/4)**: تحقَّقتُ أولاً مباشرة
+من DB (`SELECT id, slug, name, sort_order, status FROM categories WHERE
+parent_id=(SELECT id FROM categories WHERE slug='fara-mawarith')`) فوُجد
+أن العنقود يضم أربعة تصنيفات فرعية، كلها `draft`: `muqaddimat-fara`
+(مقدمات الفرائض)، `as-hab-furud` (أصحاب الفروض والعصبات)، `hajb-tasib`
+(الحجب والتعصيب)، `manasikhat-tatbiqat` (المناسخات والتطبيقات العملية)
+— يطابق التوثيق السابق تمامًا. طُبِّق SQL جديد
+(`artifacts/majalis/supabase/learn_library_v2_fara_mawarith_batch1.sql`)
+عبر `supabase db query --linked -f` يغطي الأربعة، بنفس بنية الدفعات
+السابقة (`lessons`+`lesson_sections`+`lesson_citations`، درس واحد لكل
+تصنيف، قسمان: body + examples). المصدر المعتمد المسمّى الموحَّد للعنقود
+كله (كتاب متخصص في الفرائض تحديدًا): "المواريث في الشريعة الإسلامية في
+ضوء الكتاب والسنة" — محمد علي الصابوني. حديث واحد استُشهد به، تحقَّق
+حرفياً عبر WebSearch قبل الإدراج (متفق عليه): "ألحقوا الفرائض بأهلها فما
+تركت الفرائض فلأولى رجل ذكر" (البخاري 6732 ومسلم 1615، عن ابن عباس).
+ثلاث آيات تحقَّقت حرفياً محلياً من `public/data/quran` عبر حقل
+`numberInSurah`: النساء 11 (آية المواريث الأساسية للأولاد والأبوين)،
+النساء 12 (فروض الزوج والزوجة والإخوة لأم)، النساء 176 (آية الكلالة —
+مثال على التعصيب مع الغير). درس المناسخات تضمَّن مثالاً حسابيًا تطبيقيًا
+مبتكرًا (تصحيح مسألتين ثم جامعة 480 سهمًا)، تحقَّقت مجاميعه يدويًا قبل
+الإدراج. `status: draft→published` للأربعة، تحقَّق مباشرة من DB (4/4
+منشور تحت `fara-mawarith`). الدروس الأربعة كلها اجتهاد صياغي واختيار
+مصدر ومثال (ودرس المناسخات تضمَّن أيضًا مثالاً حسابيًا مبتكرًا) → وُسمت
+في `needs-post-review.jsonl` فوراً بعد التطبيق (374→378). بوابة الجودة:
+التعديل اقتصر على ملف SQL وملف JSONL (لا كود TypeScript)، فتحقَّق فقط من
+عدم وجود انحراف كودي؛ فشل عام في `pnpm run typecheck` على مستوى الـ
+monorepo كان موجودًا مسبقًا حتى على HEAD نظيف (خطأ TS6305 في
+`artifacts/api-server` بسبب `lib/api-zod/dist` غير مبني، لا علاقة له
+بالتعديل)، فتم تجاوزه بثقة. commit وpush على `majalis-content-fill`
+(commit `75876964`) نجحا عبر hook Pre-Commit المدمج (typecheck+lint+فحص
+الخط+Vite build لباقة majalis تحديدًا، كلها نجحت). دُمج بعدها في `main`
+على `/Users/alabdullmohsen/majalis-task-2` (`git merge --no-edit`
+نظيف، typecheck وbuild الكامل للتطبيق نجحا هناك أيضًا، وأعيدت ملفات
+الضجيج المولَّدة كما هي: quran/pages-manifest.json،
+rulings-encyclopedia/*، feed.xml، seo-prerender/*،
+rulings-encyclopedia-seed.generated.ts — دون تغيير حقيقي)، ودُفعت لـ
+`main` بنجاح (`3c4aa9f3`) عبر نفس hook Pre-Push (نجح كذلك).
+
+**المهمة التالية**: عنقود `fara-mawarith` مكتمل 100% الآن (4/4 منشور،
+مؤكَّد من DB). التالي حسب القائمة المكتشفة سابقًا (16 عنقودًا متبقيًا
+الآن بعد استبعاد fara-mawarith المكتمل): يُفضَّل التالي بالحجم —
+`madhahib-fiqh-muqaran` 4، `tibb-ahkam-shariyya` 4، `tarikh-tashri` 4،
+`qada-dawa-ithbat` 4، `alaqat-dawliyya` 4، ثم `seerah-nabawiyya` 4/11
+(جزئي)، `adhkar-adiya` 5، `mara-muslima` 5/6 (جزئي)، `ahkam-quran` 5
+(تحت quran-uloom)، `maqasid-sharia` 5، `fiqh-aqalliyat` 5،
+`shabab-nashia` 6، `fatawa-muwaththaqa` 6، `usrah-mujtama` 6،
+`munasabat-islamiyya` 6، `nawazil-muasira` 6. **أعد التحقق المباشر من DB
+قبل البدء بأي عنقود** (`npx supabase link --project-ref
+ngmvmlulzacrlicuagyp` ثم `SELECT id, slug, name, sort_order, status FROM
+categories WHERE parent_id=(SELECT id FROM categories WHERE
+slug='<العنقود المختار>') ORDER BY sort_order`) لضمان تطابق الأرقام
+الفعلية مع ما وُثِّق أعلاه. بنفس المنهجية الثابتة: درس واحد حقيقي لكل
+تصنيف draft (`lessons`+`lesson_sections`+`lesson_citations`) بمصدر
+معتمد مسمّى مناسب لموضوع العنقود، تحقَّق من أي آية حرفياً محلياً من
+`public/data/quran` عبر حقل `numberInSurah` (لا `number`)، تحقَّق من أي
+حديث عبر WebSearch قبل الإدراج (فقط من الصحيحين/متفق عليه أو بإسناد
+صحيح مصرَّح بدرجته بدقة)، ثم `status: draft→published`. وسم
+`needs-post-review.jsonl` فوراً لكل درس عند إنشائه. لا تنتقل لعنقود
+ثانٍ في نفس الدورة حتى لو تبقّى وقت ضمن سقف الدفعة (~30 عنصرًا).
