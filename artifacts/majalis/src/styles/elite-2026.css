@@ -31739,9 +31739,10 @@ progress,
    --clr-primary الفاتح (#5CC49A تقريبًا) لا أخضر داكن فعليًا، ففرض الأبيض
    أعلاه ينتج نصًّا شبه غير مرئي (تباين ~2:1-2.9:1)، مُشخَّص وتحقّق منه عبر
    تدقيق Playwright حي (2026-07-22).
-   ملاحظة: .kng-source-btn/.ikm-conn-node/.ar-thesis-badge استُبعدت عمدًا —
-   خلفيتها الفعلية متغيّرة (حالات/متغيّرات متعددة، بعضها داكن فعلاً)، وتطبيق
-   نص داكن ثابت عليها ينتج نصًّا غير مرئي في تلك الحالات الأخرى (تحقّق حي). */
+   ملاحظة: .kng-source-btn استُهدفت هنا بحالتها is-active فقط (أسفل)، لا
+   الأساسية (خلفية شفافة سليمة). .ikm-conn-node أُصلحت من جذرها في
+   islamic-knowledge-map.css (متغيرات --ikm-domain-bg الناقصة لستة نطاقات)
+   لا هنا، لأن خلفيتها الحقيقية بيانات لكل نطاق لا --clr-primary. */
 html[data-theme="dark"] .lsw-featured__now,
 html[data-theme="dark"] .lsw-featured__cta,
 html[data-theme="dark"] .ar-contribute-banner__btn,
@@ -31753,6 +31754,20 @@ html[data-theme="dark"] .trp-submit-btn,
 html[data-theme="dark"] .qzg-btn-primary,
 html[data-theme="dark"] .lpp-cat-btn {
   color: var(--text-on-primary, #173D35) !important;
+}
+
+/* .kng-source-btn.is-active: نفس علّة §79، لكن محدِّدها الفعلي بحالة
+   is-active تحديدًا (الحالة الافتراضية بخلفية شفافة سليمة، لا تُمس). */
+html[data-theme="dark"] .kng-source-btn.is-active {
+  color: var(--text-on-primary, #173D35) !important;
+}
+
+/* .ar-thesis-badge--phd: خلفيتها الفعلية في الوضع الداكن #4BA882 (قيمة
+   مختلفة عن --clr-primary، مصدرها --majalis-emerald-deep غير معروف
+   السلسلة الدقيقة)؛ #173D35 يحقق ٤.١١:١ فقط (دون عتبة النص العادي)،
+   فاستُخدم لون أدكن مخصص (٥.٨:١) بدل إعادة استخدام --text-on-primary. */
+html[data-theme="dark"] .ar-thesis-badge--phd {
+  color: #0B2119 !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
