@@ -1235,7 +1235,7 @@ p, li {
   --ds-parchment-deep: var(--msk-canvas-2,    #F0EDE8);
   --ds-ink:            var(--msk-text,        #202725);
   --ds-ink-soft:       var(--msk-text-2,      #68716D);
-  --ds-ink-muted:      var(--msk-text-3,      #929995);
+  --ds-ink-muted:      var(--msk-text-3,      #5E655F);
   --ds-line-color:     var(--msk-border,      #E7E2D8);
   --ds-line-strong:    var(--msk-border,      #E7E2D8);
 

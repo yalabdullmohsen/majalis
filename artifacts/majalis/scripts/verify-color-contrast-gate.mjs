@@ -101,6 +101,20 @@ const ASSERTIONS = [
   // وغيرها).
   { route: "/lessons", selector: ".lessons-v2-section__title", mode: "light", min: 4.5 },
   { route: "/lessons", selector: ".lessons-past-section__title", mode: "light", min: 4.5 },
+  // ── تدقيق تباين آلي حي إضافي (2026-07-21، 154 مسارًا عامًا، خارج /admin):
+  // اثنان من العطلين المنهجيين الأوسع أثرًا.
+  // 1) --txt-muted/--msk-text-3 (#929995) كانت مُحسَبة أصلًا مقابل أبيض
+  // نقي (تعليق صريح في modern-2026.css)، لا مقابل --msk-canvas الفعلية
+  // (#F7F4ED العاجية) — 48+ عنصر نص خافت بتباين ~2.5:1 فقط. اللون الجديد
+  // #5E655F (5.5:1 مقابل #F7F4ED) عُمِّم عبر src/ كاملة (نفس القيمة
+  // القديمة كانت مكرَّرة حرفيًا 150+ مرة).
+  { route: "/prayer-times", selector: ".pt-date-greg", mode: "light", min: 4.5 },
+  { route: "/quran-radio", selector: ".qs-radio-card__type", mode: "light", min: 4.5 },
+  // 2) نفس نمط "كل <a> أخضر فاتح في الوضع الليلي" الموثَّق أعلاه — 32
+  // رابطًا إضافيًا لم يكونا مستثنَيَين (نص شبه غير مرئي فوق خلفيات بيضاء
+  // أو خضراء متوسطة خاصة بها، تباين 1.3–2.79:1).
+  { route: "/tawba", selector: ".tw-related__link", mode: "dark", min: 4.5 },
+  { route: "/hajj", selector: ".hj-related__link", mode: "dark", min: 4.5 },
 ];
 
 const RATIO_FN = `(selector) => {

@@ -23,7 +23,7 @@ function StatCard({ label, value, sub }: { label: string; value: string | number
 
 const HEALTH_COLORS: Record<string, string> = {
   healthy: "var(--majalis-emerald-deep)",
-  degraded: "#929995",
+  degraded: "#5E655F",
   down: "#991B1B",
   unknown: "var(--majalis-ink-soft)",
 };

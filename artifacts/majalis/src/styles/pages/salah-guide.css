@@ -92,7 +92,7 @@
   padding: .65rem .5rem; border: none; background: transparent;
   cursor: pointer; font-family: inherit;
   border-bottom: 2px solid transparent; margin-bottom: -2px;
-  transition: all .15s; color: #929995; font-size: .72rem;
+  transition: all .15s; color: #5E655F; font-size: .72rem;
   /* عرض ثابت (لا min-width فقط) ليمنع النص الحرفي (نمط تسمية سطرين تحت
      الأيقونة) من التمدد بعرض المحتوى؛ white-space الافتراضي (normal) على
      تسمية النص يسمح لها بالالتفاف على سطرين بدل الفيض أفقيًا فوق التبويبات
@@ -141,7 +141,7 @@
   font-size: .7rem; font-weight: 800; flex-shrink: 0;
 }
 .sg-rukn-title { display: block; font-weight: 700; font-size: .85rem; color: #111; margin-bottom: .1rem; }
-.sg-rukn-desc  { display: block; font-size: .77rem; color: #929995; line-height: 1.4; }
+.sg-rukn-desc  { display: block; font-size: .77rem; color: #5E655F; line-height: 1.4; }
 
 /* كيفية */
 .sg-steps-list { display: flex; flex-direction: column; gap: .55rem; }
