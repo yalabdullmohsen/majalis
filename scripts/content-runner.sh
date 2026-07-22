@@ -128,7 +128,10 @@ run_one_cycle() {
   local result_line
   result_line=$(echo "$output" | grep '^RESULT:' | tail -1)
   if [[ -z "$result_line" ]]; then
-    result_line="RESULT: غير معروف | (لم يطبع claude سطر RESULT) | راجع مخرجات كاملة إن لزم"
+    mkdir -p "$SCRIPT_DIR/debug"
+    local debug_file="$SCRIPT_DIR/debug/cycle-${n}-$(date -u +%Y%m%dT%H%M%SZ).txt"
+    echo "$output" > "$debug_file"
+    result_line="RESULT: غير معروف | (لم يطبع claude سطر RESULT) | راجع $debug_file"
   fi
 
   log_line "$ts | دورة #$n ($mode) | $result_line"
