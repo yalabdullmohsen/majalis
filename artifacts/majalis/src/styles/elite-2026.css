@@ -6839,7 +6839,7 @@ html[data-theme="dark"] .twh-hub-card__current-tag {
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -17724,7 +17724,7 @@ html[data-theme="dark"] .qlive-player {
   min-width: 72px;
 }
 .zk-hero__stat strong { font-size: 1.6rem; font-weight: 900; color: #FFFFFF; line-height: 1.1; }
-.zk-hero__stat span { font-size: 0.72rem; color: rgba(255,255,255,0.78); margin-top: 0.15rem; }
+.zk-hero__stat span { font-size: 0.8rem; color: rgba(255,255,255,0.78); margin-top: 0.15rem; }
 
 /* ── نوع الزكاة اليوم (.zkod-card) ── */
 .zkod-card {
@@ -19374,7 +19374,7 @@ html[data-theme="dark"] .qlive-player {
   padding: .65rem .8rem; border: none; background: transparent;
   cursor: pointer; font-family: inherit; white-space: nowrap;
   border-bottom: 2px solid transparent; margin-bottom: -2px;
-  transition: all .15s; color: #5E655F; font-size: .72rem;
+  transition: all .15s; color: #5E655F; font-size: .8rem;
 }
 .uq-tab--active { border-bottom-color: var(--majalis-emerald,#28584D); color: var(--majalis-emerald,#28584D); font-weight: 700; }
 
@@ -19588,7 +19588,7 @@ html[data-theme="dark"] .qlive-player {
   padding: .65rem .8rem; border: none; background: transparent;
   cursor: pointer; font-family: inherit; white-space: nowrap;
   border-bottom: 2px solid transparent; margin-bottom: -2px;
-  transition: all .15s; color: #5E655F; font-size: .72rem;
+  transition: all .15s; color: #5E655F; font-size: .8rem;
 }
 .mw-tab--active { border-bottom-color: #4F46E5; color: #4F46E5; font-weight: 700; }
 
@@ -20396,7 +20396,7 @@ html[data-theme="dark"] .qlive-player {
   flex: none; display: flex; align-items: center; gap: .4rem;
   justify-content: center; padding: .55rem .7rem;
   border: none; border-radius: .7rem; background: transparent;
-  color: #64748B; font-family: inherit; font-size: .8rem; font-weight: 600;
+  color: #64748B; font-family: inherit; font-size: .8rem !important; font-weight: 600;
   cursor: pointer; transition: background .15s, color .15s; white-space: nowrap;
 }
 .is-tab--active { background: var(--majalis-emerald,#28584D); color: #fff; }
@@ -24938,7 +24938,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: rgba(255,255,255,0.55);
   background: rgba(255,255,255,0.08);
   border-radius: 0.5rem;
@@ -25086,7 +25086,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: #9CA3AF;
   margin: 0.5rem 0 0;
   border-top: 1px solid #f3f4f6;
@@ -25579,7 +25579,7 @@ html[data-theme="dark"] .qcp-stat { background: rgba(92,196,154,.10); }
 .qc-badge--gov {
   background: rgba(23,61,53,.10);
   color: var(--ds-emerald, #28584D);
-  font-size: .7rem; border-radius: 99px; padding: .15rem .55rem;
+  font-size: .8rem; border-radius: 99px; padding: .15rem .55rem;
   font-weight: 600;
 }
 .qc-badge--mode-inperson { background: #d1fae5; color: #065f46; }

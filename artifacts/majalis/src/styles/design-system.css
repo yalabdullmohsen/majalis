@@ -4661,7 +4661,7 @@ hr.decorative,
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   line-height: 1.4;
   color: var(--text-muted, #6b7280);
   background: var(--bg-base, #f3f4f6);

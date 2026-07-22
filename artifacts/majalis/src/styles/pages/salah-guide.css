@@ -92,7 +92,7 @@
   padding: .65rem .5rem; border: none; background: transparent;
   cursor: pointer; font-family: inherit;
   border-bottom: 2px solid transparent; margin-bottom: -2px;
-  transition: all .15s; color: #5E655F; font-size: .72rem;
+  transition: all .15s; color: #5E655F; font-size: .78rem;
   /* عرض ثابت (لا min-width فقط) ليمنع النص الحرفي (نمط تسمية سطرين تحت
      الأيقونة) من التمدد بعرض المحتوى؛ white-space الافتراضي (normal) على
      تسمية النص يسمح لها بالالتفاف على سطرين بدل الفيض أفقيًا فوق التبويبات

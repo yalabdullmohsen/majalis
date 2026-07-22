@@ -76,7 +76,7 @@ export default function AmrBilMarufPage() {
         padding: "1.4rem 1.5rem",
         marginBottom: "1.75rem",
       }}>
-        <p style={{ fontSize: "0.72rem", color: "#5E655F", marginBottom: "0.4rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+        <p style={{ fontSize: "0.8rem", color: "#5E655F", marginBottom: "0.4rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}>
           الأساس الشرعي
         </p>
         <blockquote style={{
@@ -171,7 +171,7 @@ export default function AmrBilMarufPage() {
                   <h3 style={{ margin: 0, color: "#fff", fontWeight: 800, fontSize: "1.05rem", lineHeight: 1.2 }}>
                     {level.title}
                   </h3>
-                  <span style={{ fontSize: "0.74rem", color: "rgba(255,255,255,0.85)" }}>
+                  <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.85)" }}>
                     {level.is_obligatory ? "فرض عين" : "فرض كفاية"} — {level.who_can_do}
                   </span>
                 </div>
@@ -213,7 +213,7 @@ export default function AmrBilMarufPage() {
                       <p style={{ margin: "0.15rem 0 0.1rem", fontSize: "0.84rem", color: "#1F2937", lineHeight: 1.6, fontWeight: 500 }}>
                         {ev.type === "حديث" ? `«${ev.text}»` : ev.text}
                       </p>
-                      <p style={{ margin: 0, fontSize: "0.74rem", color: "#5E655F" }}>{ev.source}</p>
+                      <p style={{ margin: 0, fontSize: "0.8rem", color: "#5E655F" }}>{ev.source}</p>
                     </div>
                   ))}
                 </div>
