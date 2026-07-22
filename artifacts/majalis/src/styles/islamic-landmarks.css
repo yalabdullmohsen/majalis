@@ -267,7 +267,7 @@
   position: absolute;
   bottom: 8px;
   right: 10px;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: rgba(255,255,255,0.6);
   font-weight: 600;
 }
@@ -304,7 +304,7 @@
 .ilm-badge {
   padding: 0.2rem 0.5rem;
   border-radius: 6px;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -366,7 +366,7 @@
   border-radius: 4px;
   background: var(--ds-surface-2, #f3f4f6);
   color: var(--ds-text-2, #6b7280);
-  font-size: 0.68rem;
+  font-size: 0.8rem;
   font-weight: 600;
 }
 

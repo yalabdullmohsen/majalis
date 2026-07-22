@@ -19,7 +19,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 }
 .hjod-card__badge {
   display: inline-flex; align-items: center; gap: 0.35rem;
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
   color: #FFFFFF; background: rgba(255,255,255,0.18);
   border: 1px solid rgba(255,255,255,0.25);
   padding: 0.25rem 0.7rem; border-radius: 100px; margin-bottom: 0.25rem;
@@ -130,7 +130,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   box-shadow: 0 1px 3px rgba(0,0,0,.05);
 }
 .hj-stat-card__icon { font-size: 1.4rem; }
-.hj-stat-card__label { font-size: .72rem; color: #5E655F; font-weight: 600; }
+.hj-stat-card__label { font-size: 0.8rem; color: #5E655F; font-weight: 600; }
 .hj-stat-card__value { font-size: .88rem; color: #111; font-weight: 600; line-height: 1.4; }
 
 .hj-hadith-box {
@@ -141,7 +141,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   margin-bottom: .5rem;
 }
 .hj-hadith-box__text { font-size: .93rem; line-height: 2; color: #052E16; font-style: normal; margin: 0 0 .4rem; }
-.hj-hadith-box__ref { font-size: .72rem; color: #16A34A; }
+.hj-hadith-box__ref { font-size: 0.8rem; color: #16A34A; }
 
 .hj-fadl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; margin-bottom: .5rem; }
 .hj-fadl-card {
@@ -156,7 +156,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 }
 .hj-fadl-card__icon { font-size: 1.4rem; }
 .hj-fadl-card__text { font-size: .84rem; line-height: 1.65; color: #1F2937; flex: 1; margin: 0; }
-.hj-fadl-card__ref { font-size: .7rem; color: #5E655F; }
+.hj-fadl-card__ref { font-size: 0.8rem; color: #5E655F; }
 
 .hj-types-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; }
 .hj-type-card {
@@ -376,7 +376,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   .hj-mahzurat-grid { grid-template-columns: repeat(2, 1fr); }
   .hj-related__grid { grid-template-columns: repeat(2, 1fr); }
   .hj-tab { min-width: 4.5rem; padding: .4rem .5rem; }
-  .hj-tab__label { font-size: .68rem; }
+  .hj-tab__label { font-size: 0.8rem; }
 }
 
 /* ── نهاية §229 ─────────────────────────────────────────── */

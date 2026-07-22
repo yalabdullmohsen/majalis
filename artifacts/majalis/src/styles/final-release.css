@@ -254,7 +254,7 @@ body {
 .bottom-nav--v2 .bottom-nav__tab { min-width: 44px; min-height: 44px; border-radius: var(--radius-md); color: var(--color-text-muted); }
 .bottom-nav--v2 .bottom-nav__tab.is-active { color: var(--color-primary); background: var(--color-surface-muted); }
 .bottom-nav--v2 .bottom-nav__tab-icon { width: 1.65rem; height: 1.65rem; background: transparent; }
-.bottom-nav--v2 .bottom-nav__tab-label { font-size: .69rem; font-weight: 650; }
+.bottom-nav--v2 .bottom-nav__tab-label { font-size: .75rem; font-weight: 650; }
 
 /* Footer is a concise trust/navigation surface, not a duplicate sitemap. */
 .site-footer--v3 { margin-block-start: clamp(2rem, 5vw, 4rem); }
