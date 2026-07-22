@@ -2514,7 +2514,7 @@ table th {
 .prophets-seerah-bridge__ornament { flex-shrink: 0; }
 .prophets-seerah-bridge__body { flex: 1; min-width: 0; }
 .prophets-seerah-bridge__eyebrow {
-  font-size: 0.68rem;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   color: var(--majalis-brass, #28584D);

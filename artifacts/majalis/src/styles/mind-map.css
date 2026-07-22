@@ -147,7 +147,7 @@
 
 .mm-card__category {
   display: inline-block;
-  font-size: 0.68rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: #173D35;
   background: rgba(31,77,58,0.1);
@@ -366,7 +366,7 @@
   .mm-card__head { padding: 0.85rem 0.9rem; }
   .mm-card__body { padding: 0.5rem 0.9rem 0.9rem; }
   .mm-filters { gap: 0.3rem; }
-  .mm-filter-btn { font-size: 0.72rem; padding: 0.3rem 0.65rem; }
+  .mm-filter-btn { font-size: 0.8rem; padding: 0.3rem 0.65rem; }
 }
 
 /* ═══════════════════════════════════════════════════

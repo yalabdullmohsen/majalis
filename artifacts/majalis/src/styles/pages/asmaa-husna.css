@@ -118,7 +118,12 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 1rem 0.75rem 0.85rem;
+  /* padding-top موسَّع (كان 1rem): بعد تحويل .ah-card__num لموضع مطلق
+     (راجع تعليقه)، تدفّق .ah-card__name العادي كان سيرتفع إلى منطقة
+     الشارتين المطلقتين (num يمينًا، fav يسارًا بعرض 44px إلزامي) فيتقاطع
+     معهما مجددًا — 3.25rem يضمن مساحة كافية أسفل كلتا الشارتين
+     (top:0.5rem + ارتفاع حتى 44px). */
+  padding: 3.25rem 0.75rem 0.85rem;
   border-radius: 1rem;
   border: 1.5px solid #D4E3DB;
   background: #FFFFFF;
@@ -133,6 +138,15 @@
   transform: translateY(-2px);
 }
 .ah-card__num {
+  /* موضع مطلق بالزاوية المقابلة لزر المفضلة (position: absolute؛
+     left: 0.5rem أدناه) — بدل التدفّق العادي المُوسَّط الذي كان يضع
+     الشارة أعلى المنتصف، فتتقاطع مع زر المفضلة عندما يُكبَّر الأخير إلى
+     44×44px إلزاميًا (قاعدة حد أدنى لمساحة النقر WCAG 2.5.5 العامة، لا
+     يصح تصغيره لتفادي التقاطع). تحقّق حي: 199 حالة تقاطع مقاسة عبر
+     بطاقات /asma-husna كلها كانت هذا النمط نفسه، 2026-07-22. */
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
   font-size: 0.7rem;
   color: #173D35;
   font-weight: 700;
@@ -149,12 +163,12 @@
   line-height: 1.3;
 }
 .ah-card__trans {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: #5A8070;
   font-style: italic;
 }
 .ah-card__meaning {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   color: #3A5A4A;
   line-height: 1.5;
 }
@@ -332,7 +346,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: #FFFFFF;
   background: rgba(255,255,255,0.18);
@@ -410,7 +424,7 @@
 
 @media (max-width: 600px) {
   .ah-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 0.5rem; }
-  .ah-card { padding: 0.75rem 0.5rem; }
+  .ah-card { padding: 3.25rem 0.5rem 0.75rem; } /* padding-top موسَّع لنفس سبب القاعدة الأساسية أعلاه — كانت هذه القاعدة الفعلية الفائزة على الجوّال (max-width:600px) وتُبقي التراكب قائمًا رغم إصلاح القاعدة الأساسية */
   .ah-card__name { font-size: 1.1rem; }
   .ah-hero__title { font-size: 1.75rem; }
   .ah-modal { padding: 1.25rem; }

@@ -62,12 +62,12 @@
 }
 .sgod-card__badge {
   display: inline-flex; align-items: center; gap: 0.35rem;
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
   color: #FFFFFF; background: rgba(255,255,255,0.18);
   border: 1px solid rgba(255,255,255,0.25);
   padding: 0.25rem 0.7rem; border-radius: 100px;
 }
-.sgod-card__num   { font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.65); }
+.sgod-card__num   { font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.65); }
 .sgod-card__title { font-size: 1.05rem; font-weight: 700; color: #FFFFFF; margin: 0; }
 .sgod-card__dhikr {
   font-family: var(--font-body);
@@ -126,7 +126,7 @@
   font-size: .68rem; font-weight: 800; flex-shrink: 0;
 }
 .sg-shart-title { display: block; font-weight: 700; font-size: .82rem; color: #052E16; margin-bottom: .15rem; }
-.sg-shart-desc  { display: block; font-size: .73rem; color: #68716D; line-height: 1.4; }
+.sg-shart-desc  { display: block; font-size: 0.8rem; color: #68716D; line-height: 1.4; }
 
 /* أركان */
 .sg-arkan-list { display: flex; flex-direction: column; gap: .45rem; }

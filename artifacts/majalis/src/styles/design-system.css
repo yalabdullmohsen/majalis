@@ -4362,7 +4362,7 @@ hr.decorative,
 .inst-card__location { font-size: 0.78rem; color: var(--majalis-ink-soft); }
 .inst-card__type-badge {
   flex-shrink: 0;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 600;
   padding: 0.2rem 0.55rem;
   border-radius: 999px;
@@ -4551,7 +4551,7 @@ hr.decorative,
 .tawheed-type-card__ayah cite {
   display: block;
   font-style: normal;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: var(--majalis-emerald, #28584D);
   font-weight: 700;
   margin-top: 0.25rem;
