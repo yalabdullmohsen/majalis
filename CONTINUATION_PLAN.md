@@ -9039,24 +9039,74 @@ rulings-encyclopedia/*، feed.xml، seo-prerender/*،
 rulings-encyclopedia-seed.generated.ts — دون تغيير حقيقي)، ودُفعت لـ
 `main` بنجاح (`d82c7181`) عبر نفس hook Pre-Push (نجح كذلك).
 
-**المهمة التالية**: عنقود `madhahib-fiqh-muqaran` مكتمل 100% الآن (4/4
-منشور، مؤكَّد من DB). التالي حسب القائمة المكتشفة سابقًا (15 عنقودًا
-متبقيًا الآن بعد استبعاد madhahib-fiqh-muqaran المكتمل): يُفضَّل التالي
-بالحجم — `tibb-ahkam-shariyya` 4، `tarikh-tashri` 4، `qada-dawa-ithbat`
-4، `alaqat-dawliyya` 4، ثم `seerah-nabawiyya` 4/11 (جزئي)،
-`adhkar-adiya` 5، `mara-muslima` 5/6 (جزئي)، `ahkam-quran` 5 (تحت
-quran-uloom)، `maqasid-sharia` 5، `fiqh-aqalliyat` 5، `shabab-nashia` 6،
-`fatawa-muwaththaqa` 6، `usrah-mujtama` 6، `munasabat-islamiyya` 6،
-`nawazil-muasira` 6. **أعد التحقق المباشر من DB قبل البدء بأي عنقود**
-(`npx supabase link --project-ref ngmvmlulzacrlicuagyp` ثم `SELECT id,
-slug, name, sort_order, status FROM categories WHERE parent_id=(SELECT id
-FROM categories WHERE slug='<العنقود المختار>') ORDER BY sort_order`)
-لضمان تطابق الأرقام الفعلية مع ما وُثِّق أعلاه. بنفس المنهجية الثابتة:
-درس واحد حقيقي لكل تصنيف draft (`lessons`+`lesson_sections`+
+**المهمة التالية (سابقة، منجزة أدناه)**: عنقود `madhahib-fiqh-muqaran`
+مكتمل 100% الآن (4/4 منشور، مؤكَّد من DB). التالي حسب القائمة المكتشفة
+سابقًا (15 عنقودًا متبقيًا الآن بعد استبعاد madhahib-fiqh-muqaran
+المكتمل): يُفضَّل التالي بالحجم — `tibb-ahkam-shariyya` 4،
+`tarikh-tashri` 4، `qada-dawa-ithbat` 4، `alaqat-dawliyya` 4، ثم
+`seerah-nabawiyya` 4/11 (جزئي)، `adhkar-adiya` 5، `mara-muslima` 5/6
+(جزئي)، `ahkam-quran` 5 (تحت quran-uloom)، `maqasid-sharia` 5،
+`fiqh-aqalliyat` 5، `shabab-nashia` 6، `fatawa-muwaththaqa` 6،
+`usrah-mujtama` 6، `munasabat-islamiyya` 6، `nawazil-muasira` 6.
+
+## دورة محتوى جديدة (2026-07-23، وكيل تنفيذ محتوى تلقائي، تكملة 20)
+
+**✅ استُنفِد عنقود tibb-ahkam-shariyya بالكامل (4/4)**: تحقَّقتُ أولاً
+مباشرة من DB (`SELECT id, slug, name, sort_order, status FROM categories
+WHERE parent_id=(SELECT id FROM categories WHERE
+slug='tibb-ahkam-shariyya')`) فوُجد أن العنقود يضم أربعة تصنيفات فرعية،
+كلها `draft`: `tadawi` (التداوي)، `nawazil-tibbiyya` (النوازل الطبية
+المعاصرة)، `ahkam-marid` (أحكام المريض)، `akhlaqiyyat-mumarasa`
+(أخلاقيات الممارسة الطبية). طُبِّق SQL جديد
+(`artifacts/majalis/supabase/learn_library_v2_tibb_ahkam_shariyya_batch1.sql`)
+عبر `supabase db query --linked -f` يغطي الأربعة، بنفس بنية الدفعات
+السابقة (`lessons`+`lesson_sections`+`lesson_citations`، درس واحد لكل
+تصنيف، قسمان: body + examples). المصادر المعتمدة المسمّاة: الطب النبوي
+لابن قيم الجوزية (التداوي)، قرارات مجمع الفقه الإسلامي الدولي — القرار
+رقم 26 (1/4) بشأن انتفاع الإنسان بأعضاء جسم إنسان آخر، جدة 1408هـ/1988م
+(النوازل الطبية)، الفقه الإسلامي وأدلته لوهبة الزحيلي (أحكام المريض)،
+أحكام الجراحة الطبية والآثار المترتبة عليها لمحمد المختار الشنقيطي
+(أخلاقيات الممارسة الطبية). حديثان صحيحان استُشهد بهما، تحقَّقا حرفياً
+عبر WebSearch قبل الإدراج: "ما أنزل الله داء إلا أنزل له شفاء" (رواه
+البخاري 5678 عن أبي هريرة)، و"من ستر مسلمًا ستره الله في الدنيا والآخرة"
+(رواه مسلم 2699 عن أبي هريرة) — تعمّدت تفادي حديث "من تطبب ولم يعلم منه
+طب فهو ضامن" رغم شهرته لأن درجته حسن لا صحيح عند التحقق (اختلاف بين
+الألباني والأرناؤط، وبعض الطرق مرسلة)، فاستبدلته بحديث صحيح مسلم عن
+كتمان السر يخدم نفس موضوع أخلاقيات المهنة. آيتان تحقَّقتا حرفياً محلياً
+من `public/data/quran` عبر حقل `numberInSurah`: البقرة 173 (قاعدة
+الضرورة)، البقرة 184 (رخصة فطر المريض). `status: draft→published`
+للأربعة، تحقَّق مباشرة من DB (4/4 منشور تحت `tibb-ahkam-shariyya`).
+الدروس الأربعة كلها اجتهاد صياغي واختيار مصدر ومثال → وُسمت في
+`needs-post-review.jsonl` فوراً بعد التطبيق (382→386). بوابة الجودة:
+التعديل اقتصر على ملف SQL وملف JSONL، فحُوطي عبر hook Pre-Commit المدمج
+(typecheck+lint+فحص الخط+Vite build لباقة majalis) — نجحت كلها. commit
+وpush على `majalis-content-fill` (commit `0e5338c1`) نجحا، ثم دُمج في
+`main` على `/Users/alabdullmohsen/majalis-task-2` (`git merge --no-edit`
+نظيف، typecheck وbuild الكامل للتطبيق نجحا هناك أيضًا، وأعيدت ملفات
+الضجيج المولَّدة كما هي: quran/pages-manifest.json،
+rulings-encyclopedia/*، feed.xml، seo-prerender/*،
+rulings-encyclopedia-seed.generated.ts — دون تغيير حقيقي)، ودُفعت لـ
+`main` بنجاح (`23acc044`) عبر نفس hook Pre-Push (نجح كذلك).
+
+**المهمة التالية**: عنقود `tibb-ahkam-shariyya` مكتمل 100% الآن (4/4
+منشور، مؤكَّد من DB). التالي حسب القائمة المكتشفة سابقًا (14 عنقودًا
+متبقيًا الآن بعد استبعاد tibb-ahkam-shariyya المكتمل): يُفضَّل التالي
+بالحجم — `tarikh-tashri` 4، `qada-dawa-ithbat` 4، `alaqat-dawliyya` 4،
+ثم `seerah-nabawiyya` 4/11 (جزئي)، `adhkar-adiya` 5، `mara-muslima` 5/6
+(جزئي)، `ahkam-quran` 5 (تحت quran-uloom)، `maqasid-sharia` 5،
+`fiqh-aqalliyat` 5، `shabab-nashia` 6، `fatawa-muwaththaqa` 6،
+`usrah-mujtama` 6، `munasabat-islamiyya` 6، `nawazil-muasira` 6. **أعد
+التحقق المباشر من DB قبل البدء بأي عنقود** (`npx supabase link
+--project-ref ngmvmlulzacrlicuagyp` ثم `SELECT id, slug, name,
+sort_order, status FROM categories WHERE parent_id=(SELECT id FROM
+categories WHERE slug='<العنقود المختار>') ORDER BY sort_order`) لضمان
+تطابق الأرقام الفعلية مع ما وُثِّق أعلاه. بنفس المنهجية الثابتة: درس
+واحد حقيقي لكل تصنيف draft (`lessons`+`lesson_sections`+
 `lesson_citations`) بمصدر معتمد مسمّى مناسب لموضوع العنقود، تحقَّق من أي
 آية حرفياً محلياً من `public/data/quran` عبر حقل `numberInSurah` (لا
 `number`)، تحقَّق من أي حديث عبر WebSearch قبل الإدراج (فقط من
-الصحيحين/متفق عليه أو بإسناد صحيح مصرَّح بدرجته بدقة)، ثم `status:
-draft→published`. وسم `needs-post-review.jsonl` فوراً لكل درس عند
-إنشائه. لا تنتقل لعنقود ثانٍ في نفس الدورة حتى لو تبقّى وقت ضمن سقف
+الصحيحين/متفق عليه أو بإسناد صحيح مصرَّح بدرجته بدقة — تجنَّب أحاديث
+الحسن أو المختلَف في تصحيحها إن أمكن إيجاد بديل صحيح لنفس المعنى)، ثم
+`status: draft→published`. وسم `needs-post-review.jsonl` فوراً لكل درس
+عند إنشائه. لا تنتقل لعنقود ثانٍ في نفس الدورة حتى لو تبقّى وقت ضمن سقف
 الدفعة (~30 عنصرًا).
