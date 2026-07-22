@@ -88,6 +88,13 @@ jobs:
         run: |
           git config user.name "majlisilm-auto-deploy"
           git config user.email "actions@users.noreply.github.com"
+          # خطوة البناء أعلاه تُولِّد ملفات مصدرية كأثر جانبي (feed.xml،
+          # content-counts.json...) وتترك working tree غير نظيف. بلا هذا
+          # التنظيف يفشل checkout التالي بـ"local changes would be
+          # overwritten" (مؤكَّد بتشغيل فعلي فشل بهذا تحديدًا 2026-07-22) —
+          # كان هذا يُسقِط كل تشغيل صامتًا ويُبقي production عالقًا خلف main.
+          git checkout -- .
+          git clean -fd
           git checkout -B production origin/production
 
           if ! git merge --no-ff --no-edit origin/main \
