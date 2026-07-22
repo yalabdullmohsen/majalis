@@ -12,27 +12,36 @@ export type HomeWidgetId =
   | "lessons" | "prayer" | "continue" | "daily-progress" | "week-streak"
   | "asma" | "hadith" | "sunnah-time" | "explore" | "learning-seasons"
   | "occasions" | "latest-updates" | "library" | "quiz" | "daily-corner"
-  | "prayer-ranks" | "interesting-topics" | "mind-map";
+  | "prayer-ranks" | "interesting-topics" | "mind-map" | "daily-benefits" | "upcoming-events";
 
+/* ترتيب افتراضي — تحديث 2026-07-19 (تكليف ثانٍ، بند 4): "التقدم اليومي" كان
+   ثاني ودجت (مباشرة بعد "استمر من حيث توقفت")؛ نُقل إلى آخر القائمة فعليًا
+   (نهاية الرئيسية)، وحلّ "الدروس والدورات" مكانه — بطاقات دروس مختصرة مباشرة
+   بعد ودجت المتابعة، بدل "تقدم الورد اليومي". بقية الترتيب لم يتغيّر. هذا
+   الترتيب للمستخدمين الجدد/بلا تفضيل محفوظ فقط — أي مستخدم خصَّص ترتيبه
+   سابقاً (محلياً أو عبر user_homepage_prefs) يبقى ترتيبه كما هو. لا حذف لأي
+   ودجت — "التقدم اليومي" ما زال ظاهرًا، فقط آخر القائمة. */
 export const HOME_WIDGET_DEFS: { id: HomeWidgetId; label: string }[] = [
-  { id: "lessons", label: "الدروس والدورات" },
-  { id: "prayer", label: "مواقيت الصلاة" },
   { id: "continue", label: "استمر من حيث توقفت" },
-  { id: "daily-progress", label: "التقدم اليومي" },
-  { id: "week-streak", label: "سجل الأسبوع" },
-  { id: "asma", label: "اسم الله اليومي" },
-  { id: "hadith", label: "حديث اليوم" },
-  { id: "sunnah-time", label: "سنن الوقت" },
-  { id: "explore", label: "استكشف المنصة" },
+  { id: "lessons", label: "الدروس والدورات" },
   { id: "learning-seasons", label: "مواسم التعلم" },
-  { id: "occasions", label: "المناسبات الإسلامية" },
-  { id: "latest-updates", label: "آخر التحديثات" },
+  { id: "hadith", label: "حديث اليوم" },
+  { id: "asma", label: "اسم الله اليومي" },
+  { id: "daily-corner", label: "الركن اليومي" },
+  { id: "daily-benefits", label: "فوائد منتقاة" },
+  { id: "upcoming-events", label: "فعاليات وإعلانات علمية" },
   { id: "library", label: "المكتبة العلمية" },
   { id: "quiz", label: "المسابقة" },
-  { id: "daily-corner", label: "الركن اليومي" },
-  { id: "prayer-ranks", label: "مراتب الصلاة" },
-  { id: "interesting-topics", label: "مواضيع مشوقة" },
+  { id: "sunnah-time", label: "سنن الوقت" },
+  { id: "week-streak", label: "سجل الأسبوع" },
   { id: "mind-map", label: "الخرائط الذهنية" },
+  { id: "prayer-ranks", label: "مراتب الصلاة" },
+  { id: "occasions", label: "المناسبات الإسلامية" },
+  { id: "latest-updates", label: "آخر التحديثات" },
+  { id: "interesting-topics", label: "مواضيع مشوقة" },
+  { id: "prayer", label: "مواقيت الصلاة" },
+  { id: "explore", label: "استكشف المنصة" },
+  { id: "daily-progress", label: "التقدم اليومي" },
 ];
 
 const DEFAULT_ORDER: HomeWidgetId[] = HOME_WIDGET_DEFS.map((w) => w.id);
@@ -43,7 +52,23 @@ export type HomepagePrefs = {
   hidden: HomeWidgetId[];
 };
 
-const DEFAULT_PREFS: HomepagePrefs = { order: DEFAULT_ORDER, hidden: [] };
+/* تخفيف الازدحام الافتراضي (تحديث 2026-07-19): خمسة ودجتات ذات أولوية
+   أدنى أو متداخلة مع محتوى آخر ظاهر أصلاً في الصفحة تُخفى افتراضياً فقط
+   للمستخدم الجديد/بلا تفضيل محفوظ. لا حذف لأي وظيفة — كل ودجت يبقى قابلاً
+   لإعادة الإظهار فوراً عبر "تخصيص الصفحة الرئيسية":
+   - occasions: يتداخل مع تذكير الشهر الهجري الظاهر أعلى الصفحة أصلاً.
+   - prayer-ranks: يتداخل موضوعياً مع ودجت الصلاة البارز أصلاً.
+   - interesting-topics: محتوى اكتشاف ثانوي (موثّق أنه "قُرب النهاية").
+   - latest-updates: تغذية تحديثات عامة، أولوية أقل من التقدم الشخصي.
+   - prayer: أصبح مكرَّرًا بعد إعادة الهيكلة — البطاقة اليومية أعلى الصفحة
+     تعرض الصلاة القادمة والعد التنازلي فعلاً، وتبويب "الصلاة" الجديد في
+     الشريط السفلي يفتح التفاصيل الكاملة مباشرة (2026-07-19). */
+const DEFAULT_HIDDEN: HomeWidgetId[] = [
+  "occasions", "prayer-ranks", "interesting-topics", "latest-updates", "prayer",
+  "asma", "sunnah-time", "explore", "week-streak", "mind-map",
+  "daily-benefits", "upcoming-events", "quiz", "hadith", "daily-corner", "library",
+];
+const DEFAULT_PREFS: HomepagePrefs = { order: DEFAULT_ORDER, hidden: DEFAULT_HIDDEN };
 const STORAGE_KEY = "majalis-homepage-prefs-v1";
 
 function sanitizePrefs(raw: unknown): HomepagePrefs {

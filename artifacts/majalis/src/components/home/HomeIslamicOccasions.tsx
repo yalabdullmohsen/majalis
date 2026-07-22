@@ -6,6 +6,13 @@ import {
   sortOccasionsByUpcoming,
   type IslamicOccasionView,
 } from "@/lib/islamic-occasions";
+import { Widget } from "@/components/widgets/Widget";
+
+const OccasionsIcon = () => (
+  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" style={{ marginTop: "0.15rem", flexShrink: 0 }}>
+    <polygon points="9,1 11,6.5 17,6.5 12.5,10 14.5,16 9,12.5 3.5,16 5.5,10 1,6.5 7,6.5" fill="none" stroke="#173D35" strokeWidth="1.2"/>
+  </svg>
+);
 
 export function HomeIslamicOccasions() {
   const [items, setItems] = useState<IslamicOccasionView[]>([]);
@@ -31,20 +38,16 @@ export function HomeIslamicOccasions() {
   if (!loading && items.length === 0) return null;
 
   return (
-    <section className="home-section" aria-labelledby="occasions-heading">
-      <div className="home-section-head">
-        <div style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
-          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" style={{ marginTop: "0.15rem", flexShrink: 0 }}>
-            <polygon points="9,1 11,6.5 17,6.5 12.5,10 14.5,16 9,12.5 3.5,16 5.5,10 1,6.5 7,6.5" fill="none" stroke="#176B57" strokeWidth="1.2"/>
-          </svg>
-          <div>
-            <p className="home-eyebrow">تذكير</p>
-            <h2 id="occasions-heading">المناسبات الإسلامية</h2>
-            <p>مناسبات معتمدة مع الأعمال المستحبة والأدلة.</p>
-          </div>
-        </div>
-        <Link href="/occasions" className="home-section-link">كل المناسبات</Link>
-      </div>
+    <Widget
+      id="occasions"
+      icon={<OccasionsIcon />}
+      eyebrow="تذكير"
+      title="المناسبات الإسلامية"
+      description="مناسبات معتمدة مع الأعمال المستحبة والأدلة."
+      moreHref="/occasions"
+      moreLabel="كل المناسبات"
+      state="ready"
+    >
       {loading ? (
         <SkeletonCardGrid count={4} />
       ) : (
@@ -64,7 +67,7 @@ export function HomeIslamicOccasions() {
           ))}
         </div>
       )}
-    </section>
+    </Widget>
   );
 }
 

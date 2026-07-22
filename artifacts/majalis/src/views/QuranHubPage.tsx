@@ -2,29 +2,73 @@ import { Link } from "wouter";
 import {
   Radio, Mic2, Layers, Circle, Star,
   ChevronLeft, BookMarked, BookOpen, Headphones, GraduationCap,
-  Moon, Heart, Sparkles,
+  Moon, Heart, Sparkles, Mic, History, CalendarCheck,
+  type LucideIcon,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { useEffect } from "react";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
+type QuranSection = { href: string; title: string; desc: string; Icon: LucideIcon; accent: string; tag: string; featured?: boolean };
+
 /* ── بيانات أقسام القرآن ──────────────────────────────────── */
-const QURAN_SECTIONS = [
+const QURAN_SECTIONS: QuranSection[] = [
+  {
+    href: "/quran/memorization-plans",
+    title: "خطط الحفظ والمراجعة",
+    desc: "خطط مرنة من سنة إلى خمس سنوات، ومراجعة مكثفة وتثبيت، مع حفظ تقدمك محليًا",
+    Icon: CalendarCheck,
+    accent: "#176B57",
+    tag: "خطط مرنة",
+  },
+  {
+    href: "/quran/recitation-test-ai",
+    title: "اختبار التسميع بالذكاء الاصطناعي",
+    desc: "سمّع من حفظك واستمع التطبيق لتلاوتك لحظيًا، ويكشف المصحف الآيات كلما نطقتها صحيحة",
+    Icon: Mic,
+    accent: "#176B57",
+    tag: "بالذكاء الاصطناعي",
+    featured: true,
+  },
   {
     href: "/mushaf",
     title: "المصحف الشريف",
     desc: "اقرأ القرآن الكريم كاملاً سورة سورة، مع الاستماع لكل آية ومشاركتها",
     Icon: BookOpen,
-    accent: "#176B57",
+    accent: "#173D35",
     tag: "٦٠٤ صفحة",
+  },
+  {
+    href: "/mushaf/page",
+    title: "المصحف بنظام الصفحات",
+    desc: "صفحات مصحف حقيقية مطابقة لتقسيم مصحف المدينة، مع إطارات وأوضاع قراءة وإشارات مرجعية وملاحظات",
+    Icon: Layers,
+    accent: "#176B57",
+    tag: "جديد",
+  },
+  {
+    href: "/quran/surahs",
+    title: "فهرس السور",
+    desc: "تصفّح السور الـ١١٤ كاملة: رقمها واسمها وعدد آياتها وتصنيفها، مع بحث ومفضلة",
+    Icon: BookMarked,
+    accent: "#173D35",
+    tag: "١١٤ سورة",
+  },
+  {
+    href: "/quran/revelation-order",
+    title: "ترتيب نزول القرآن",
+    desc: "خريطة زمنية للسور الـ١١٤ حسب تسلسل نزولها التاريخي الفعلي، لا حسب ترقيم المصحف",
+    Icon: History,
+    accent: "#173D35",
+    tag: "١١٤ سورة",
   },
   {
     href: "/quran/surah-stories",
     title: "قصص القرآن",
     desc: "أسباب النزول ومحاور ١١٤ سورة قرآنية مع العبر والفوائد",
     Icon: BookMarked,
-    accent: "#176B57",
+    accent: "#173D35",
     tag: "١١٤ سورة",
   },
   {
@@ -32,7 +76,7 @@ const QURAN_SECTIONS = [
     title: "علم التجويد",
     desc: "أحكام التجويد الشاملة مصنَّفة في ستة أبواب رئيسية",
     Icon: GraduationCap,
-    accent: "#176B57",
+    accent: "#173D35",
     tag: "١٤ حكماً",
   },
   {
@@ -40,7 +84,7 @@ const QURAN_SECTIONS = [
     title: "إذاعات القرآن",
     desc: "استمع للقرآن الكريم من كبار القراء حول العالم",
     Icon: Radio,
-    accent: "#123F36",
+    accent: "#173D35",
     tag: "مباشر",
   },
   {
@@ -48,7 +92,7 @@ const QURAN_SECTIONS = [
     title: "البث المباشر",
     desc: "بث مباشر من الحرمين الشريفين، مكة المكرمة والمدينة المنورة",
     Icon: Mic2,
-    accent: "#176B57",
+    accent: "#173D35",
     tag: "٢٤ ساعة",
   },
   {
@@ -56,7 +100,7 @@ const QURAN_SECTIONS = [
     title: "حلقات القرآن",
     desc: "انضم لحلقات الحفظ والمراجعة وتلاوة القرآن الكريم",
     Icon: Circle,
-    accent: "#176B57",
+    accent: "#173D35",
     tag: "مجتمع",
   },
   {
@@ -64,7 +108,7 @@ const QURAN_SECTIONS = [
     title: "الورد اليومي",
     desc: "تتبع ورد قراءة القرآن اليومي مع السلسلة المتواصلة",
     Icon: Moon,
-    accent: "#123F36",
+    accent: "#173D35",
     tag: "يومي",
   },
   {
@@ -72,7 +116,7 @@ const QURAN_SECTIONS = [
     title: "أذكار القرآن",
     desc: "أذكار وأدعية مستمدة من القرآن الكريم والسنة النبوية",
     Icon: Sparkles,
-    accent: "#176B57",
+    accent: "#173D35",
     tag: "أذكار",
   },
   {
@@ -80,7 +124,7 @@ const QURAN_SECTIONS = [
     title: "علوم القرآن",
     desc: "النزول والجمع والتدوين والتفسير وطبقات المفسِّرين عبر القرون",
     Icon: Layers,
-    accent: "#123F36",
+    accent: "#173D35",
     tag: "علم",
   },
   {
@@ -88,7 +132,7 @@ const QURAN_SECTIONS = [
     title: "أدعية القرآن الكريم",
     desc: "٣٠+ دعاءً قرآنياً مصنَّفاً بحسب النبي والمناسبة والفائدة",
     Icon: Star,
-    accent: "#176B57",
+    accent: "#173D35",
     tag: "دعاء",
   },
   {
@@ -96,13 +140,13 @@ const QURAN_SECTIONS = [
     title: "إعجاز القرآن ومعجزاته",
     desc: "المعجزات النبوية والإعجاز العلمي والبياني في القرآن الكريم",
     Icon: Heart,
-    accent: "#176B57",
+    accent: "#173D35",
     tag: "إعجاز",
   },
 ];
 
 function qhcAccentMod(a: string) {
-  if (a === "#123F36") return "qhc-accent--deep";
+  if (a === "#173D35") return "qhc-accent--deep";
   return "qhc-accent--base";
 }
 
@@ -176,7 +220,7 @@ export default function QuranHubPage() {
         <h2 className="quran-hub-sections__title">أقسام القرآن</h2>
         <div className="quran-hub-grid">
           {QURAN_SECTIONS.map(s => (
-            <Link key={s.href} href={s.href} className="quran-hub-card">
+            <Link key={s.href} href={s.href} className={`quran-hub-card ${s.featured ? "quran-hub-card--featured" : ""}`}>
               <div className={`quran-hub-card__header ${qhcAccentMod(s.accent)}`}>
                 <s.Icon size={28} className="quran-hub-card__icon" />
                 <span className="quran-hub-card__tag">{s.tag}</span>

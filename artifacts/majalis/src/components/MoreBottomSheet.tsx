@@ -7,13 +7,15 @@ import {
   FileText, Gavel, GitBranch, GraduationCap, Heart, HelpCircle, Info, Landmark,
   Layers, Library, Lightbulb, Map, Mic, Mic2, Microscope, Moon, Network,
   Quote, Radio, RefreshCw, Repeat2, Rss, Scale, ScrollText, Search, Settings,
-  Shield, Sparkles, Star, Stethoscope, Sun, Tv, Users, X, Zap,
+  Shield, Sparkles, Star, Stethoscope, Sun, Tv, Users, Waypoints, X, Zap,
 } from "lucide-react";
 
 const SHEET_SECTIONS = [
   /* ── القرآن الكريم ── */
   { group: "القرآن الكريم", items: [
     { href: "/mushaf",              label: "المصحف الشريف",      Icon: BookOpen },
+    { href: "/quran/surahs",        label: "فهرس السور",         Icon: BookText },
+    { href: "/quran/makki-madani",  label: "المكي والمدني",      Icon: Map },
     { href: "/quran-hub",           label: "مركز القرآن",        Icon: Layers },
     { href: "/daily-wird",          label: "الورد اليومي",       Icon: Sun },
     { href: "/quran/tajweed",       label: "علم التجويد",        Icon: Mic2 },
@@ -24,6 +26,7 @@ const SHEET_SECTIONS = [
     { href: "/quran-live",          label: "البث المباشر",       Icon: Tv },
     { href: "/quran-circles",       label: "حلقات التحفيظ",      Icon: Users },
     { href: "/quran-memorization",  label: "اختبارات الحفظ",     Icon: Zap },
+    { href: "/quran/memorization-plans", label: "خطط الحفظ",     Icon: CalendarDays },
     { href: "/mutashabihat",        label: "الآيات المتشابهات",  Icon: GitBranch },
     { href: "/muezzins",            label: "مكتبة المؤذنين",     Icon: Mic },
   ]},
@@ -31,7 +34,7 @@ const SHEET_SECTIONS = [
   /* ── الحديث والسنة ── */
   { group: "الحديث والسنة", items: [
     { href: "/hadith",             label: "الأحاديث النبوية",    Icon: ScrollText },
-    { href: "/arbaeen-nawawi",     label: "الأربعون النووية",    Icon: FileText },
+    { href: "/hadith/books-and-rulings", label: "المتون الحديثية وأحاديث الأحكام", Icon: FileText },
     { href: "/hadith-science",     label: "مصطلح الحديث",        Icon: BookOpen },
     { href: "/wasaya-nabawiyya",   label: "الوصايا النبوية",     Icon: Star },
     { href: "/prophetic-medicine", label: "الطب النبوي",         Icon: Stethoscope },
@@ -48,6 +51,15 @@ const SHEET_SECTIONS = [
     { href: "/alamat-saah", label: "علامات الساعة",        Icon: Clock },
     { href: "/malaika",     label: "الملائكة في الإسلام",  Icon: Sparkles },
     { href: "/miracles",    label: "الإعجاز العلمي",       Icon: Lightbulb },
+  ]},
+
+  /* ── التعريف بالإسلام ── */
+  { group: "التعريف بالإسلام", items: [
+    { href: "/discover-islam",             label: "تعرّف إلى الإسلام",   Icon: Compass },
+    { href: "/discover-islam/questions",   label: "أسئلة وأجوبة",       Icon: HelpCircle },
+    { href: "/discover-islam/doubts",      label: "الشبهات والتفنيدات", Icon: Shield },
+    { href: "/discover-islam/how-to-convert", label: "كيف أصبح مسلمًا؟", Icon: Star },
+    { href: "/discover-islam/new-muslim",  label: "مسار المسلم الجديد", Icon: Sparkles },
   ]},
 
   /* ── الفقه والأحكام ── */
@@ -69,6 +81,7 @@ const SHEET_SECTIONS = [
     { href: "/mawarith/calculator", label: "حاسبة المواريث",    Icon: Calculator },
     { href: "/scholarly-research", label: "الباحث الشرعي",     Icon: Microscope },
     { href: "/academic-research",  label: "الأبحاث العلمية",   Icon: FileText },
+    { href: "/amr-bil-maruf",      label: "الأمر بالمعروف",     Icon: Shield },
   ]},
 
   /* ── العبادة والأذكار ── */
@@ -109,10 +122,13 @@ const SHEET_SECTIONS = [
     { href: "/islamic-glossary", label: "المصطلحات الإسلامية",  Icon: BookOpen },
     { href: "/islam-stats",      label: "الإسلام في أرقام",     Icon: BarChart3 },
     { href: "/updates",          label: "آخر المستجدات",        Icon: Rss },
+    { href: "/institutions",     label: "المؤسسات الإسلامية",   Icon: Landmark },
   ]},
 
   /* ── التعلّم والأدوات ── */
   { group: "التعلّم والأدوات", items: [
+    { href: "/learn",                label: "أبواب العلم",         Icon: Layers },
+    { href: "/start-here",           label: "ابدأ من هنا",         Icon: Waypoints },
     { href: "/quiz",                 label: "المسابقة التعليمية",  Icon: Zap },
     { href: "/flashcards",           label: "بطاقات المراجعة",     Icon: CreditCard },
     { href: "/assistant",            label: "المساعد الذكي",       Icon: Bot },
@@ -156,6 +172,8 @@ export function MoreBottomSheet({ open, onClose }: Props) {
   if (!open || typeof document === "undefined") return null;
 
   return createPortal(
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر
+    // داخل الورقة — مسارا وصول بديلان كاملان بلوحة المفاتيح.
     <div className="bottom-sheet-overlay" role="presentation" onClick={onClose}>
       <div
         className="bottom-sheet"

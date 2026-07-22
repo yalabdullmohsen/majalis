@@ -35,7 +35,7 @@
 }
 .qs-subnav__link:hover,
 .qs-subnav__link.is-active {
-  background: var(--majalis-emerald, #176B57);
+  background: var(--majalis-emerald, #173D35);
   color: #fff;
 }
 
@@ -105,7 +105,7 @@
   direction: rtl;
 }
 .qs-search-input:focus {
-  outline: 2px solid var(--majalis-gold, #176B57);
+  outline: 2px solid var(--majalis-gold, #173D35);
   border-color: transparent;
 }
 .qs-surah-items {
@@ -137,7 +137,7 @@
 }
 .qs-surah-item.is-active {
   background: var(--majalis-emerald-soft, #F0F5F2);
-  color: var(--majalis-emerald, #176B57);
+  color: var(--majalis-emerald, #173D35);
   font-weight: 700;
 }
 .qs-surah-num {
@@ -179,7 +179,7 @@
 }
 .qs-surah-header__ornament {
   font-size: 2rem;
-  color: var(--majalis-gold, #176B57);
+  color: var(--majalis-gold, #173D35);
   line-height: 1;
   margin-bottom: .5rem;
 }
@@ -198,7 +198,7 @@
   font-weight: 700;
   direction: rtl;
   margin: .25rem 0;
-  color: var(--majalis-emerald, #176B57);
+  color: var(--majalis-emerald, #173D35);
 }
 
 /* ── Ayah display — Mushaf flowing layout ── */
@@ -207,16 +207,20 @@
 }
 
 /* Continuous paragraph — all ayahs inline like a real Mushaf page */
+/* ⚠️ لا text-align:justify ولا letter-spacing/word-spacing يدوي هنا (2026-07-19،
+   شكوى "مسافات مفرطة وأقواس مشوهة" على صفحات المصحف): تمديد الكلمات آليًا
+   ليملأ التبرير عرض السطر ينتج تباعدًا غير منتظم بين الكلمات، بمقدار
+   يختلف بشدة من سطر لآخر، ويُبعِد شارة رقم الآية عن النص بمسافة مطّاطة.
+   محاذاة يمين طبيعية لـRTL بلا أي تمديد آلي — النص نفسه غير مُقاس أصلًا
+   بلا حرف/word-spacing إضافي. */
 .qs-mushaf-body {
   font-family: "Amiri Quran", "Scheherazade New", serif;
   font-size: var(--qs-font-size, 26px);
   line-height: 2.6;
-  text-align: justify;
+  text-align: right;
   direction: rtl;
   color: var(--text-body, #1a1a1a);
   padding: 1.25rem .5rem 2rem;
-  word-spacing: .05em;
-  letter-spacing: .01em;
 }
 
 /* Each ayah: pure inline, no block breaking */
@@ -226,7 +230,7 @@
 
 /* Playing ayah: تغيير اللون فقط — لا صندوق يقطع السطر */
 .qs-ayah-inline--playing .qs-ayah-inline__text {
-  color: var(--majalis-emerald-deep, #123F36);
+  color: var(--majalis-emerald-deep, #173D35);
   text-decoration: underline;
   text-decoration-color: rgba(22, 78, 60, 0.4);
   text-underline-offset: 3px;
@@ -235,7 +239,7 @@
 
 /* Target ayah (jump destination) */
 .qs-ayah-inline--target .qs-ayah-inline__text {
-  color: var(--majalis-emerald, #176B57);
+  color: var(--majalis-emerald, #173D35);
 }
 
 /* Ayah text span — inline, cursor pointer for tap-to-select */
@@ -254,7 +258,7 @@
   display: inline;
   font-family: "Amiri Quran", "Scheherazade New", serif;
   font-size: .72em;
-  color: var(--majalis-gold, #176B57);
+  color: var(--majalis-gold, #173D35);
   margin: 0 .15em;
   line-height: inherit;
   vertical-align: baseline;
@@ -281,13 +285,13 @@
   color: var(--text-muted, #6b7280);
 }
 .qs-ayah-inline__play:hover:not(:disabled) {
-  background: var(--majalis-emerald, #176B57);
-  border-color: var(--majalis-emerald, #176B57);
+  background: var(--majalis-emerald, #173D35);
+  border-color: var(--majalis-emerald, #173D35);
   color: #fff;
 }
 .qs-ayah-inline__play.is-playing {
-  background: var(--majalis-gold, #176B57);
-  border-color: var(--majalis-gold, #176B57);
+  background: var(--majalis-gold, #173D35);
+  border-color: var(--majalis-gold, #173D35);
   color: #fff;
 }
 .qs-ayah-inline__play:disabled {
@@ -325,8 +329,8 @@
   border-color: var(--majalis-line);
 }
 .qs-ayah-inline__share--img:hover:not(:disabled) {
-  background: var(--majalis-gold, #176B57);
-  border-color: var(--majalis-gold, #176B57);
+  background: var(--majalis-gold, #173D35);
+  border-color: var(--majalis-gold, #173D35);
   color: #fff;
 }
 .qs-ayah-inline__share:disabled { opacity: .4; cursor: default; }
@@ -364,7 +368,7 @@
   font-size: .9rem;
   min-width: 4rem;
   text-align: center;
-  color: var(--majalis-emerald, #176B57);
+  color: var(--majalis-emerald, #173D35);
 }
 .qs-player-bar__status {
   display: flex;
@@ -377,7 +381,7 @@
   color: var(--text-muted, #6b7280);
 }
 .qs-pb-state-label--active {
-  color: var(--majalis-emerald, #176B57);
+  color: var(--majalis-emerald, #173D35);
   font-weight: 600;
 }
 .qs-pb-ayah-info {
@@ -412,12 +416,12 @@
   cursor: default;
 }
 .qs-pb-btn--primary {
-  background: var(--majalis-emerald, #176B57);
+  background: var(--majalis-emerald, #173D35);
   color: #fff;
-  border-color: var(--majalis-emerald, #176B57);
+  border-color: var(--majalis-emerald, #173D35);
 }
 .qs-pb-btn--primary:hover:not(:disabled) {
-  background: var(--majalis-emerald-deep, #123F36);
+  background: var(--majalis-emerald-deep, #173D35);
 }
 .qs-pb-font-ctrl {
   display: flex;
@@ -465,7 +469,7 @@
   background: var(--bg-hover, #f3f0eb);
 }
 .qs-reciter-option.is-selected {
-  color: var(--majalis-emerald, #176B57);
+  color: var(--majalis-emerald, #173D35);
   font-weight: 700;
   background: var(--majalis-emerald-soft, #F0F5F2);
 }
@@ -493,12 +497,12 @@
   background: var(--bg-base, #faf9f6);
 }
 .qs-search__input:focus {
-  outline: 2px solid var(--majalis-gold, #176B57);
+  outline: 2px solid var(--majalis-gold, #173D35);
   border-color: transparent;
 }
 .qs-search__btn {
   padding: .5rem 1rem;
-  background: var(--majalis-emerald, #176B57);
+  background: var(--majalis-emerald, #173D35);
   color: #fff;
   border: none;
   border-radius: .5rem;
@@ -541,7 +545,7 @@
 }
 .qs-search__result-ref {
   font-size: .76rem;
-  color: var(--majalis-emerald, #176B57);
+  color: var(--majalis-emerald, #173D35);
   font-weight: 700;
 }
 .qs-search__result-text {
@@ -561,7 +565,7 @@
     align-items: center;
     gap: .4rem;
     padding: .4rem .8rem;
-    background: var(--majalis-emerald, #176B57);
+    background: var(--majalis-emerald, #173D35);
     color: #fff;
     border: none;
     border-radius: .4rem;
@@ -634,16 +638,16 @@
 }
 .qs-tafsir__source-btn:hover,
 .qs-tafsir__source-btn.is-active {
-  background: var(--majalis-emerald, #176B57);
+  background: var(--majalis-emerald, #173D35);
   color: #fff;
-  border-color: var(--majalis-emerald, #176B57);
+  border-color: var(--majalis-emerald, #173D35);
 }
 .qs-tafsir__ayah {
   margin-bottom: 1.25rem;
 }
 .qs-tafsir__ayah-ref {
   font-size: .76rem;
-  color: var(--majalis-gold, #176B57);
+  color: var(--majalis-gold, #173D35);
   font-weight: 700;
   margin-bottom: .25rem;
 }
@@ -677,7 +681,7 @@
   flex-wrap: wrap;
 }
 .qs-radio-card.is-active {
-  border-color: var(--majalis-emerald, #176B57);
+  border-color: var(--majalis-emerald, #173D35);
   background: var(--majalis-emerald-soft, #F0F5F2);
 }
 .qs-radio-card__info {
@@ -707,7 +711,7 @@
 }
 .qs-radio-status--live {
   background: var(--majalis-emerald-soft, #F0F5F2);
-  color: var(--majalis-emerald-deep, #123F36);
+  color: var(--majalis-emerald-deep, #173D35);
 }
 .qs-radio-status--error {
   background: var(--majalis-danger-muted, rgba(155,28,28,.08));
@@ -716,7 +720,7 @@
 .qs-radio-play-btn {
   padding: .35rem .85rem;
   border-radius: .4rem;
-  background: var(--majalis-emerald, #176B57);
+  background: var(--majalis-emerald, #173D35);
   color: #fff;
   border: none;
   font-size: .85rem;
@@ -724,7 +728,7 @@
   cursor: pointer;
 }
 .qs-radio-play-btn:hover {
-  background: var(--majalis-emerald-deep, #123F36);
+  background: var(--majalis-emerald-deep, #173D35);
 }
 .qs-live-section {
   margin-top: 2rem;
@@ -788,7 +792,7 @@
   flex: 1;
   min-width: 80px;
   max-width: 180px;
-  accent-color: var(--majalis-emerald, #176B57);
+  accent-color: var(--majalis-emerald, #173D35);
 }
 
 /* ── Source note ── */
@@ -824,7 +828,7 @@
   transition: background .15s, color .15s;
 }
 .qs-view-tab.is-active {
-  background: var(--majalis-emerald, #176B57);
+  background: var(--majalis-emerald, #173D35);
   color: #fff;
 }
 
@@ -852,11 +856,11 @@
 }
 .qs-ctrl-btn:hover { background: var(--bg-hover, #f5f3ef); }
 .qs-ctrl-btn--accent {
-  background: var(--majalis-emerald, #176B57);
+  background: var(--majalis-emerald, #173D35);
   color: #fff;
-  border-color: var(--majalis-emerald, #176B57);
+  border-color: var(--majalis-emerald, #173D35);
 }
-.qs-ctrl-btn--accent:hover { background: var(--majalis-emerald-deep, #123F36); }
+.qs-ctrl-btn--accent:hover { background: var(--majalis-emerald-deep, #173D35); }
 
 /* ── Qiraat selector ── */
 .qs-qiraat-row {
@@ -1055,11 +1059,11 @@
 }
 .qs-context-sheet__btn:hover { background: var(--majalis-emerald-soft, #F0F5F2); }
 .qs-context-sheet__btn--primary {
-  background: var(--majalis-emerald, #176B57);
+  background: var(--majalis-emerald, #173D35);
   color: #fff;
-  border-color: var(--majalis-emerald, #176B57);
+  border-color: var(--majalis-emerald, #173D35);
 }
-.qs-context-sheet__btn--primary:hover { background: var(--majalis-emerald-deep, #123F36); }
+.qs-context-sheet__btn--primary:hover { background: var(--majalis-emerald-deep, #173D35); }
 .qs-context-sheet__btn--close {
   background: transparent;
   color: var(--text-muted, #6b7280);
@@ -1140,7 +1144,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 3px solid var(--majalis-emerald, #176B57);
+  border: 3px solid var(--majalis-emerald, #173D35);
   border-top-color: transparent;
   animation: spin .9s linear infinite;
 }
@@ -1157,7 +1161,7 @@
 .qs-page-view__retry-btn {
   padding: .5rem 1.25rem;
   border-radius: 2rem;
-  background: var(--majalis-emerald, #176B57);
+  background: var(--majalis-emerald, #173D35);
   color: #fff;
   border: none;
   font-size: .88rem;
@@ -1225,7 +1229,7 @@
   align-items: center;
   margin-bottom: .625rem;
 }
-.qs-verse-tafsir__title { font-weight: 700; font-size: .88rem; color: var(--majalis-emerald, #176B57); }
+.qs-verse-tafsir__title { font-weight: 700; font-size: .88rem; color: var(--majalis-emerald, #173D35); }
 .qs-verse-tafsir__sources { display: flex; gap: .3rem; }
 .qs-verse-tafsir__body { margin: 0; font-size: .95rem; line-height: 1.9; color: var(--text-base, #1a1a1a); }
 .qs-verse-view__jump {
@@ -1262,15 +1266,15 @@
   transition: background .15s;
 }
 .qs-juz-btn.is-active {
-  background: var(--majalis-emerald, #176B57);
+  background: var(--majalis-emerald, #173D35);
   color: #fff;
-  border-color: var(--majalis-emerald, #176B57);
+  border-color: var(--majalis-emerald, #173D35);
   font-weight: 700;
 }
 .qs-juz-progress { margin-bottom: .875rem; direction: rtl; }
 .qs-juz-progress__labels { display: flex; justify-content: space-between; font-size: .72rem; color: var(--text-muted, #6b7280); margin-bottom: .25rem; }
 .qs-juz-progress__bar { height: 6px; background: var(--border, #e5e3dd); border-radius: 999px; overflow: hidden; }
-.qs-juz-progress__fill { height: 100%; background: var(--majalis-emerald, #176B57); border-radius: 999px; transition: width .2s; }
+.qs-juz-progress__fill { height: 100%; background: var(--majalis-emerald, #173D35); border-radius: 999px; transition: width .2s; }
 .qs-juz-surah-header {
   background: var(--majalis-emerald-soft, #F0F5F2);
   border: 1px solid var(--majalis-line, rgba(0,0,0,0.07));
@@ -1280,12 +1284,12 @@
   text-align: center;
   font-size: 1rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #176B57);
+  color: var(--majalis-emerald, #173D35);
 }
 .qs-juz-ayah { display: flex; gap: .75rem; margin-bottom: .5rem; align-items: flex-start; direction: rtl; }
 .qs-juz-ayah__num {
   flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
-  background: var(--majalis-emerald-soft, #F0F5F2); color: var(--majalis-emerald, #176B57);
+  background: var(--majalis-emerald-soft, #F0F5F2); color: var(--majalis-emerald, #173D35);
   font-size: .65rem; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
@@ -1306,7 +1310,11 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 200;
+  /* أعلى من .navbar-v3 (9999) و.navbar-v3--menu-open (10001) — بلا هذا
+     يظهر رأس/تذييل الموقع العام مضغوطًا حول هذا الوضع الغامر بدل تغطيته
+     كليًا كما يقتضي الاسم "MUSHAF IMMERSIVE READER" (اكتُشف حيًّا عبر
+     لقطة شاشة أثناء تحقّق MushafPageView.tsx — راجع .quran-shell--immersive). */
+  z-index: 10010;
   display: flex;
   flex-direction: column;
   background: #0e0c09;
@@ -1712,6 +1720,8 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ─── لوحة الألوان — مستوحاة من نظام تصميم التطبيق ─────────────────────── */
+/* --mf-gold-* هنا زمردي فعليًا لا ذهبي — انظر ملاحظة src/index.css
+   وREADY_FOR_MERGE.md §15/16 لتفاصيل هذا الاسم التاريخي المتبقّي. */
 :root {
   --mf-gold:       #6ab58e;
   --mf-gold-soft:  rgba(106,181,142,0.45);
@@ -1870,7 +1880,7 @@
 .qs-mushaf-frame {
   position: relative;
   background: var(--qs-parchment, #F8F2E4);
-  border: 1.5px solid var(--mf-gold, #176B57);
+  border: 1.5px solid var(--mf-gold, #173D35);
   border-radius: 1px;
   margin: 0.5rem 0;
   padding: 0;
@@ -1899,7 +1909,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--mf-gold, #176B57);
+  color: var(--mf-gold, #173D35);
   font-size: 9px;
   line-height: 1;
   user-select: none;
@@ -1948,7 +1958,7 @@
   color: var(--mf-ink, #1A1610);
 }
 .qs-surah-name-box__orn {
-  color: var(--mf-gold, #176B57);
+  color: var(--mf-gold, #173D35);
   font-size: 0.72rem;
   flex-shrink: 0;
   opacity: 0.8;
@@ -1981,7 +1991,7 @@
   background-repeat: no-repeat;
   font-size:   0.56em;
   font-weight: 700;
-  color: var(--majalis-emerald-deep, #123F36); /* حبر زمردي داكن — تباين عالٍ على العاجي */
+  color: var(--majalis-emerald-deep, #173D35); /* حبر زمردي داكن — تباين عالٍ على العاجي */
   vertical-align: middle;
   margin: 0 0.22em;
   user-select: none;
@@ -2077,21 +2087,21 @@
 /* ── وضع دافئ ── */
 .quran-shell--warm .qs-mushaf-frame {
   background: #fdf0d8;
-  border-color: #176B57;
+  border-color: #173D35;
 }
 .quran-shell--warm .qs-mushaf-frame::before {
   border-color: rgba(31,77,58,0.30);
 }
 .quran-shell--warm .qs-mushaf-frame .qs-mushaf-body { color: #1a2e1c; }
-.quran-shell--warm .qs-surah-header__title { color: var(--majalis-emerald-deep, #123F36); }
-.quran-shell--warm .qs-mushaf-header-row { color: var(--majalis-emerald, #176B57); }
+.quran-shell--warm .qs-surah-header__title { color: var(--majalis-emerald-deep, #173D35); }
+.quran-shell--warm .qs-mushaf-header-row { color: var(--majalis-emerald, #173D35); }
 .quran-shell--warm .qs-surah-name-box { border-color: rgba(31,77,58,0.40); }
-.quran-shell--warm .qs-surah-name-box__title { color: var(--majalis-emerald-deep, #123F36); }
-.quran-shell--warm .qs-mushaf-footer-row__page { color: var(--majalis-emerald, #176B57); }
+.quran-shell--warm .qs-surah-name-box__title { color: var(--majalis-emerald-deep, #173D35); }
+.quran-shell--warm .qs-mushaf-footer-row__page { color: var(--majalis-emerald, #173D35); }
 .quran-shell--warm .qs-ayah-num {
   background-color: #fdf0d8;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,6 62,22 81,19 78,39 94,50 78,62 81,81 62,78 50,94 38,78 19,81 22,62 6,50 22,39 19,19 38,22' fill='%230E6E52'/%3E%3Ccircle cx='50' cy='50' r='19' fill='%23fdf0d8'/%3E%3C/svg%3E");
-  color: var(--majalis-emerald, #176B57);
+  color: var(--majalis-emerald, #173D35);
 }
 .quran-shell--warm .qs-bismillah { color: #1a2e1c; }
 
@@ -2115,6 +2125,33 @@
   .mf-page-frame { padding: 1.5rem 2.5rem; }
 }
 
+/* ── صفحة المصحف: زر "سمّع هذه السورة" — ظاهر على كل المقاسات ── */
+.qs-recitation-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  margin: .9rem auto 0;
+  padding: .55rem 1.1rem;
+  border: 1px solid rgba(23,61,53, .3);
+  border-radius: .7rem;
+  background: rgba(23,61,53, .06);
+  color: var(--majalis-emerald, #173D35);
+  font-size: .88rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+.qs-recitation-cta:hover { background: rgba(23,61,53, .12); }
+.qs-recitation-cta__badge {
+  font-size: .68rem;
+  font-weight: 700;
+  padding: .12rem .5rem;
+  border-radius: 1rem;
+  background: #C9A227;
+  color: #2b2205;
+}
+html[data-theme="dark"] .qs-recitation-cta { background: rgba(94,196,154,.1); border-color: rgba(94,196,154,.3); color: #5CC49A; }
+
 /* ── صفحة المصحف: زر فهرس السور على الهاتف + التنقل بين السور ── */
 .qs-mobile-sidebar-toggle {
   display: none;
@@ -2129,7 +2166,7 @@
     border: 1px solid var(--border, #e5e3dd);
     border-radius: .6rem;
     background: var(--bg-card, #fff);
-    color: var(--majalis-emerald, #176B57);
+    color: var(--majalis-emerald, #173D35);
     font-size: .85rem;
     font-weight: 600;
     cursor: pointer;
@@ -2165,7 +2202,7 @@
   margin: 0 0 .6rem;
 }
 .rtp-consent__btn {
-  background: var(--majalis-emerald, #176B57);
+  background: var(--majalis-emerald, #173D35);
   color: #fff;
   border: none;
   border-radius: 999px;
@@ -2181,7 +2218,7 @@
   display: inline-flex;
   align-items: center;
   gap: .4rem;
-  background: var(--majalis-emerald, #176B57);
+  background: var(--majalis-emerald, #173D35);
   color: #fff;
   border: none;
   border-radius: 999px;
@@ -2221,7 +2258,7 @@
 }
 .rtp-result__score {
   font-weight: 700;
-  color: var(--majalis-emerald-deep, #123F36);
+  color: var(--majalis-emerald-deep, #173D35);
   margin: 0 0 .5rem;
 }
 .rtp-result__words {
@@ -2229,7 +2266,7 @@
   line-height: 2.1;
   margin: 0 0 .6rem;
 }
-.rtp-word--ok { color: var(--majalis-emerald, #176B57); }
+.rtp-word--ok { color: var(--majalis-emerald, #173D35); }
 .rtp-word--miss { color: #B91C1C; text-decoration: underline wavy; }
 .rtp-retry-btn {
   display: inline-flex;
@@ -2247,4 +2284,319 @@ html[data-theme="dark"] .rtp-consent,
 html[data-theme="dark"] .rtp-result,
 html[data-theme="dark"] .rtp-transcript {
   background: rgba(23, 107, 87, 0.18);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MUSHAF PAGE VIEW — وضع "الصفحة" الحقيقي  (.mpv-*)
+   يُعيد استخدام .qs-mushaf-frame/.qs-ayah-num/.qs-surah-name-box/
+   .qs-mushaf-corner/.qs-bismillah الموجودة أعلاه (كانت مبنية وغير مُستخدَمة
+   من أي مكوّن قبل هذه الميزة) — هنا فقط إضافات جديدة فعلاً: ألوان إطار
+   بديلة، علامة سجدة، أنماط تمييز الآية، وشريط تنقّل/إعدادات الصفحة.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── ألوان إطار بديلة — تبديل متغيرات CSS على .qs-mushaf-frame نفسها، لا تصميم مكرَّر ── */
+.qs-mushaf-frame--gold-classic { --mf-gold: #B08D2E; --mf-gold-soft: rgba(176,141,46,0.45); --mf-gold-faint: rgba(176,141,46,0.18); }
+.qs-mushaf-frame--paper { --mf-gold: #8a6d3b; --mf-gold-soft: rgba(138,109,59,0.4); --mf-gold-faint: rgba(138,109,59,0.15); background: #FBF3E1; }
+.qs-mushaf-frame--minimal { border-width: 1px; box-shadow: none; }
+.qs-mushaf-frame--minimal::before { display: none; }
+.qs-mushaf-frame--none { border: none; box-shadow: none; background: transparent; }
+.qs-mushaf-frame--none::before { display: none; }
+.qs-mushaf-frame--none .qs-mushaf-corner { display: none; }
+
+/* ── علامة السجدة — دائرة صغيرة داخل تدفّق النص، بلا قطع للسطر ── */
+.qs-sajda-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  background: var(--majalis-emerald-soft, #F0F5F2);
+  color: var(--majalis-emerald, #176B57);
+  font-size: 0.62em;
+  margin: 0 0.2em;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+/* ── أنماط تمييز الآية المختارة (6 أنماط) — القسم و. من المهمة ── */
+.qs-ayah-inline--hl-wash.is-selected .qs-ayah-inline__text {
+  background: rgba(23,107,87,0.15);
+  border-radius: 3px;
+}
+.qs-ayah-inline--hl-border.is-selected .qs-ayah-inline__text {
+  box-shadow: inset 0 0 0 1.5px var(--majalis-emerald, #176B57);
+  border-radius: 3px;
+}
+.qs-ayah-inline--hl-underline.is-selected .qs-ayah-inline__text {
+  text-decoration: underline;
+  text-decoration-color: var(--majalis-emerald, #176B57);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.qs-ayah-inline--hl-text-color.is-selected .qs-ayah-inline__text {
+  color: var(--majalis-emerald, #176B57);
+  font-weight: 700;
+}
+.qs-ayah-inline--hl-side.is-selected .qs-ayah-inline__text {
+  border-right: 3px solid var(--majalis-emerald, #176B57);
+  padding-right: 0.2em;
+}
+/* المصباح: يُطبَّق على حاوية الصفحة كلها عبر .qs-mushaf-body--spotlight، لا على كل آية */
+.qs-mushaf-body--spotlight .qs-ayah-inline__text { opacity: 0.35; transition: opacity 0.2s; }
+.qs-mushaf-body--spotlight .qs-ayah-inline.is-selected .qs-ayah-inline__text { opacity: 1; }
+
+/* ── عالي التباين — نص أسود صرف على أبيض صرف، بلا زخرفة تُضعف التباين ── */
+.quran-shell--high-contrast { background: #fff !important; color: #000 !important; }
+.quran-shell--high-contrast .qs-mushaf-frame { background: #fff; border-color: #000; border-width: 2px; box-shadow: none; }
+.quran-shell--high-contrast .qs-mushaf-frame::before { border-color: #000; }
+.quran-shell--high-contrast .qs-mushaf-frame .qs-mushaf-body { color: #000; }
+.quran-shell--high-contrast .qs-mushaf-corner { color: #000; opacity: 1; }
+.quran-shell--high-contrast .qs-ayah-num { background-image: none; background-color: #000; color: #fff; border-radius: 50%; }
+.quran-shell--high-contrast .qs-surah-name-box { border-color: #000; border-width: 2px; }
+.quran-shell--high-contrast .qs-surah-name-box__title { color: #000; }
+.quran-shell--high-contrast .qs-mushaf-header-row,
+.quran-shell--high-contrast .qs-mushaf-footer-row__page { color: #000; border-color: #000; }
+.quran-shell--high-contrast .qs-bismillah { color: #000; }
+.quran-shell--high-contrast .qs-ayah-inline--hl-wash.is-selected .qs-ayah-inline__text { background: #ffe680; }
+.quran-shell--high-contrast .qs-ayah-inline--hl-text-color.is-selected .qs-ayah-inline__text,
+.quran-shell--high-contrast .qs-ayah-inline--hl-border.is-selected .qs-ayah-inline__text,
+.quran-shell--high-contrast .qs-ayah-inline--hl-side.is-selected .qs-ayah-inline__text { color: #000; box-shadow: inset 0 0 0 2px #000; border-color: #000; }
+
+/* ── الوضع الغامر (وضع النص) — يُغطّي رأس/تذييل الموقع العام كليًا، تمامًا
+   كوضع الصورة .mf-shell المبنيّ أصلاً بنفس النية ("MUSHAF IMMERSIVE
+   READER... Overlays the entire screen") — دون هذا يظهر شريطا الموقع
+   العلوي والسفلي مضغوطين حول محتوى الصفحة (اكتُشف حيًّا عبر لقطة شاشة).
+   ⚠️ position:fixed وحدها لا تكفي: .app-shell يضبط overflow-x:hidden، ما
+   يفرض حسابيًا overflow-y:auto ضمنًا (لا يمكن ترك محور "مرئيًا" بينما
+   الآخر مقصوص حسب مواصفة CSS) — فيتحوّل .app-shell إلى حاوية قصّ تُقيّد
+   أي عنصر fixed داخلها بحدود صندوقها هو (لا نافذة العرض الحقيقية)، فينكشف
+   المحتوى العادي للصفحة (كالتذييل) عبر العنصر الغامر عند اختبار حي فعلي.
+   الحل المطابق للنمط القائم فعلاً في SideNavDrawer.tsx: تصيير المكوّن عبر
+   createPortal إلى document.body مباشرة، خارج .app-shell كليًا. ── */
+.quran-shell--immersive {
+  position: fixed;
+  inset: 0;
+  z-index: 10010;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+body.has-immersive-mushaf { overflow: hidden; }
+
+/* ── شريط أدوات علوي لصفحة المصحف ── */
+.mpv-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  padding: .6rem .9rem;
+  background: var(--bg-card, #fff);
+  border-bottom: 1px solid var(--border, #e5e3dd);
+  direction: rtl;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+.mpv-toolbar__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  min-height: 40px;
+  padding: .4rem .7rem;
+  border: 1px solid var(--border, #e5e3dd);
+  border-radius: .6rem;
+  background: var(--bg-base, #faf9f6);
+  color: var(--text-base, #1a1a1a);
+  font-family: inherit;
+  font-size: .82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+}
+.mpv-toolbar__btn:hover { background: var(--bg-hover, #f3f0eb); }
+.mpv-toolbar__btn.is-active {
+  background: var(--majalis-emerald, #176B57);
+  border-color: var(--majalis-emerald, #176B57);
+  color: #fff;
+}
+.mpv-toolbar__title { flex: 1; text-align: center; font-size: .85rem; font-weight: 700; color: var(--text-base, #1a1a1a); }
+.mpv-toolbar__title small { display: block; font-size: .68rem; font-weight: 500; color: var(--text-muted, #6b7280); }
+
+/* ── حاوية الصفحة ── */
+.mpv-body { max-width: 720px; margin: 0 auto; padding: 1rem 1rem 7rem; direction: rtl; }
+.mpv-resume-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .6rem;
+  background: linear-gradient(135deg, #f8f5ec, #f2ead8);
+  border: 1px solid rgba(31,77,58,0.20);
+  border-radius: .75rem;
+  padding: .6rem .9rem;
+  margin-bottom: .9rem;
+  font-size: .85rem;
+}
+.mpv-resume-banner__btn {
+  border: none;
+  background: var(--majalis-emerald, #176B57);
+  color: #fff;
+  border-radius: .5rem;
+  padding: .35rem .8rem;
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ── شريط تنقّل سفلي ثابت ── */
+.mpv-navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .6rem .9rem;
+  padding-bottom: max(.6rem, env(safe-area-inset-bottom));
+  background: var(--bg-card, #fff);
+  border-top: 1px solid var(--border, #e5e3dd);
+  direction: rtl;
+}
+.mpv-navbar__btn {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border, #e5e3dd);
+  border-radius: .6rem;
+  background: var(--bg-base, #faf9f6);
+  color: var(--text-base, #1a1a1a);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.mpv-navbar__btn:disabled { opacity: .35; cursor: not-allowed; }
+.mpv-navbar__page-input-wrap { flex: 1; display: flex; align-items: center; justify-content: center; gap: .35rem; font-size: .8rem; color: var(--text-muted, #6b7280); }
+.mpv-navbar__page-input {
+  width: 3.4rem;
+  min-height: 38px;
+  text-align: center;
+  border: 1px solid var(--border, #e5e3dd);
+  border-radius: .5rem;
+  font-family: inherit;
+  font-size: .9rem;
+  font-weight: 700;
+}
+
+/* ── لوحة الإعدادات (منزلقة من الأسفل) ── */
+.mpv-settings-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: flex-end;
+}
+.mpv-settings-panel {
+  width: 100%;
+  max-height: 82dvh;
+  overflow-y: auto;
+  background: var(--bg-card, #fff);
+  border-radius: 1.1rem 1.1rem 0 0;
+  padding: 1rem 1.1rem calc(1.5rem + env(safe-area-inset-bottom));
+  direction: rtl;
+}
+.mpv-settings-panel__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: .9rem; }
+.mpv-settings-panel__title { font-size: 1rem; font-weight: 700; margin: 0; }
+.mpv-settings-group { margin-bottom: 1.1rem; }
+.mpv-settings-group__label { display: block; font-size: .8rem; color: var(--text-muted, #6b7280); margin-bottom: .5rem; font-weight: 600; }
+.mpv-settings-group__grid { display: flex; gap: .4rem; flex-wrap: wrap; }
+.mpv-chip {
+  padding: .4rem .85rem;
+  border-radius: 999px;
+  border: 1px solid var(--border, #e5e3dd);
+  background: var(--bg-base, #faf9f6);
+  color: var(--text-base, #1a1a1a);
+  font-family: inherit;
+  font-size: .8rem;
+  cursor: pointer;
+  transition: background .15s;
+}
+.mpv-chip.is-active { background: var(--majalis-emerald, #176B57); border-color: var(--majalis-emerald, #176B57); color: #fff; font-weight: 700; }
+
+/* ── ورقة إجراءات الآية ── */
+.aas-sheet { position: fixed; inset: 0; z-index: 55; background: rgba(0,0,0,0.45); display: flex; align-items: flex-end; }
+.aas-panel {
+  width: 100%;
+  max-height: 78dvh;
+  overflow-y: auto;
+  background: var(--bg-card, #fff);
+  border-radius: 1.1rem 1.1rem 0 0;
+  padding: .5rem 0 calc(1rem + env(safe-area-inset-bottom));
+  direction: rtl;
+}
+.aas-panel__handle { width: 36px; height: 4px; border-radius: 99px; background: var(--border, #e5e3dd); margin: .5rem auto .75rem; }
+.aas-panel__ref { text-align: center; font-size: .78rem; color: var(--text-muted, #6b7280); margin-bottom: .5rem; }
+.aas-panel__text { font-family: "Amiri Quran", "Scheherazade New", serif; font-size: 1.3rem; text-align: center; padding: 0 1.2rem 1rem; line-height: 2; color: var(--text-base, #1a1a1a); }
+.aas-panel__note { margin: 0 1rem 1rem; }
+.aas-panel__note textarea {
+  width: 100%;
+  min-height: 70px;
+  border: 1px solid var(--border, #e5e3dd);
+  border-radius: .6rem;
+  padding: .6rem .7rem;
+  font-family: inherit;
+  font-size: .88rem;
+  resize: vertical;
+}
+.aas-panel__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; padding: 0 1rem; }
+.aas-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3rem;
+  padding: .7rem .4rem;
+  border: 1px solid var(--border, #e5e3dd);
+  border-radius: .75rem;
+  background: var(--bg-base, #faf9f6);
+  color: var(--text-base, #1a1a1a);
+  font-family: inherit;
+  font-size: .74rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .15s;
+}
+.aas-action-btn:hover { background: var(--bg-hover, #f3f0eb); }
+.aas-action-btn.is-active { background: var(--majalis-emerald-soft, #F0F5F2); border-color: var(--majalis-emerald, #176B57); color: var(--majalis-emerald, #176B57); }
+.aas-action-btn--report { color: #B91C1C; }
+
+/* ── ليلي/دافئ/عالي التباين — امتدادات لعناصر mpv/aas الجديدة ── */
+.quran-shell--night .mpv-toolbar,
+.quran-shell--night .mpv-navbar,
+.quran-shell--night .mpv-settings-panel,
+.quran-shell--night .aas-panel { background: #161b22; border-color: #30363d; color: #c9d1d9; }
+.quran-shell--night .mpv-toolbar__title,
+.quran-shell--night .mpv-settings-panel__title,
+.quran-shell--night .aas-panel__text { color: #e8d5b0; }
+.quran-shell--night .mpv-toolbar__btn,
+.quran-shell--night .mpv-navbar__btn,
+.quran-shell--night .mpv-chip,
+.quran-shell--night .aas-action-btn { background: #21262d; border-color: #30363d; color: #c9d1d9; }
+.quran-shell--night .mpv-resume-banner { background: #1a2332; border-color: #30363d; color: #c9d1d9; }
+
+.quran-shell--warm .mpv-toolbar,
+.quran-shell--warm .mpv-navbar,
+.quran-shell--warm .mpv-settings-panel,
+.quran-shell--warm .aas-panel { background: #f5e8d0; border-color: #d4b896; color: #3d2b1f; }
+.quran-shell--warm .mpv-toolbar__btn,
+.quran-shell--warm .mpv-navbar__btn,
+.quran-shell--warm .mpv-chip,
+.quran-shell--warm .aas-action-btn { background: #f0dcc0; border-color: #d4b896; color: #4a3020; }
+
+@media (min-width: 640px) {
+  .mpv-settings-sheet, .aas-sheet { align-items: center; justify-content: center; }
+  .mpv-settings-panel, .aas-panel { max-width: 460px; border-radius: 1.1rem; max-height: 85dvh; }
 }

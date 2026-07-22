@@ -38,7 +38,7 @@ const DELIVERY = ["حضور فقط", "بث مباشر", "كلاهما"];
 const STATUSES: Record<string, string> = { approved: "معتمد", pending: "معلّق", rejected: "مرفوض" };
 const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
   approved: { bg: "#D1FAE5", text: "var(--majalis-emerald-deep)" },
-  pending:  { bg: "rgba(14,110,82,0.08)", text: "#176B57" },
+  pending:  { bg: "rgba(23,61,53,0.08)", text: "#173D35" },
   rejected: { bg: "#FEE2E2", text: "#991B1B" },
 };
 const EMPTY: any = {
@@ -153,7 +153,6 @@ export function LessonsSection() {
     const dayOfWeek = Array.isArray(form.days_of_week) && form.days_of_week.length > 0
       ? form.days_of_week.join("،")
       : "";
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { venue_type: _vt, days_of_week: _dw, ...rest } = form;
     const payload = {
       ...rest,

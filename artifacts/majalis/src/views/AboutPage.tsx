@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { InstagramAcademyLink } from "@/components/InstagramAcademyLink";
 import { applyPageSeo } from "@/lib/seo";
 
 export default function AboutPage() {
@@ -44,6 +45,14 @@ export default function AboutPage() {
           العربي؛ فبدلاً من تشتيت المستخدم بين مصادر متعددة قد يتعذّر التحقق من موثوقيتها،
           يجد في المجلس العلمي مرجعاً واحداً يُعنى بالدقة والتوثيق والأمانة العلمية، ويستهدف
           طالب العلم المبتدئ والمتوسط والمتخصص على حدٍّ سواء.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="رؤيتنا: بناء منظومة الإسلام الرقمي">
+        <p>
+          بناء منظومة الإسلام الرقمي؛ منصة موثوقة تجمع أصالة العلم الشرعي بقوة التقنية
+          الحديثة، وتقرّب القرآن والمعرفة والعبادة إلى الناس بتجربة آمنة، ميسّرة، جميلة،
+          ومتاحة للجميع.
         </p>
       </LegalSection>
 
@@ -200,6 +209,16 @@ export default function AboutPage() {
           بشرية من متخصص وتوثيق من يُزكّيه (<code>verified_by</code>). هذا ليس مجرد سياسة
           تقنية، بل التزام ديني وأمانة علمية لا نتساهل فيها.
         </p>
+      </LegalSection>
+
+      <LegalSection title="تابعونا">
+        <p>
+          تعاون المجلس العلمي مع أكاديمية ورثة الأنبياء لتقديم محتوى علمي إضافي عبر
+          حسابها على انستغرام.
+        </p>
+        <div className="contact-channels">
+          <InstagramAcademyLink variant="card" />
+        </div>
       </LegalSection>
 
       <LegalSection title="روابط مفيدة">

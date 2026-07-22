@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import { AlertTriangle, Code2, Lock, Mail, Plus, Settings2, Users2 } from "lucide-react";
+import { AlertTriangle, Lock, Mail, Plus, Settings2, Users2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
+import { InstagramAcademyLink } from "@/components/InstagramAcademyLink";
 import { applyPageSeo } from "@/lib/seo";
 import { CONTACT_EMAIL, mailtoWithSubject } from "@/lib/site-config";
 
@@ -35,7 +36,6 @@ const TOPICS: { Icon: LucideIcon; label: string; note: string; subject: string }
   { Icon: Settings2,     label: "مشكلة تقنية في المنصة",          note: "خلل في عرض الصفحات أو الأدوات", subject: "ملاحظة تقنية" },
   { Icon: Lock,          label: "طلب حذف أو تعديل بيانات الحساب", note: "خصوصيتك مكفولة", subject: "استفسار عام" },
   { Icon: Users2,        label: "شراكات مؤسسية وعلمية",           note: "مؤسسات / هيئات / جامعات", subject: "اقتراح أو شراكة" },
-  { Icon: Code2,         label: "واجهة برمجية (API) والمطورين",   note: "مفاتيح API / التكامل", subject: "استفسار عام" },
 ];
 
 export default function ContactPage() {
@@ -70,6 +70,12 @@ export default function ContactPage() {
               للاستفسارات العامة، والملاحظات التقنية، وتصحيح المحتوى العلمي، والاقتراحات والشراكات.
             </p>
           </div>
+        </div>
+      </LegalSection>
+
+      <LegalSection title="تابعونا">
+        <div className="contact-channels">
+          <InstagramAcademyLink variant="card" />
         </div>
       </LegalSection>
 

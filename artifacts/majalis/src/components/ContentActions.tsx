@@ -35,7 +35,7 @@ export function ShareButtons({ title, url }: { title?: string; url?: string }) {
           const canvas = await html2canvas(main, {
             useCORS: true,
             scale: 1.5,
-            backgroundColor: "#FAF8F4",
+            backgroundColor: "#F7F4ED",
             logging: false,
           });
           const blob = await new Promise<Blob | null>((res) => canvas.toBlob(res, "image/png"));

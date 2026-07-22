@@ -153,6 +153,15 @@
       "priority": 0.84
     },
     {
+      "path": "/quran/makki-madani",
+      "title": "السور المكية والمدنية | المجلس العلمي",
+      "description": "مدخل علمي مبسط إلى ضابط المكي والمدني وخصائصهما وأثر معرفة زمن النزول في فهم القرآن.",
+      "keywords": ["السور المكية", "السور المدنية", "علوم القرآن", "زمن النزول"],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.82
+    },
+    {
       "path": "/prayer-ranks",
       "title": "مراتب الناس في الصلاة",
       "description": "مراتب الناس في الصلاة الخمس — من الظالم لنفسه إلى المقرّب، مع أدلة ومصادر.",
@@ -1258,18 +1267,6 @@
       "robots": "noindex, follow"
     },
     {
-      "path": "/developers",
-      "title": "للمطورين",
-      "description": "معلومات تقنية للمطورين حول منصة المجلس العلمي وواجهات برمجة التطبيقات.",
-      "keywords": [
-        "API المجلس العلمي",
-        "للمطورين",
-        "تكامل تقني"
-      ],
-      "sitemap": false,
-      "robots": "noindex, nofollow"
-    },
-    {
       "path": "/register",
       "title": "إنشاء حساب",
       "description": "انضم إلى منصة المجلس العلمي وابدأ رحلتك في طلب العلم الشرعي.",
@@ -2130,6 +2127,20 @@
       "sitemap": true,
       "changefreq": "monthly",
       "priority": 0.8
+    },
+    {
+      "path": "/quran/memorization-plans",
+      "title": "خطط حفظ القرآن ومراجعته | المجلس العلمي",
+      "description": "خطط مرنة لحفظ القرآن ومراجعته حسب الوقت والعمر، مع متابعة محلية وأيام تعويض واختبار تسميع.",
+      "keywords": [
+        "خطة حفظ القرآن",
+        "مراجعة القرآن",
+        "تثبيت الحفظ",
+        "مصحف المدينة"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.82
     },
     {
       "path": "/mutashabihat",

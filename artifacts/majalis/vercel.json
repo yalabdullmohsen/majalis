@@ -40,6 +40,10 @@
       "schedule": "15 3 * * *"
     },
     {
+      "path": "/api/cron/daily-benefit-rotation",
+      "schedule": "0 * * * *"
+    },
+    {
       "path": "/api/cron/system-health",
       "schedule": "45 3 * * *"
     },
@@ -474,6 +478,15 @@
       ]
     },
     {
+      "source": "/sw-version.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
       "source": "/logo.png",
       "headers": [
         {
@@ -546,7 +559,7 @@
       ]
     },
     {
-      "source": "/(manifest\\.webmanifest|site\\.webmanifest|robots\\.txt)",
+      "source": "/robots.txt",
       "headers": [
         {
           "key": "Cache-Control",

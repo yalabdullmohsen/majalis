@@ -15,7 +15,13 @@ type LanguageContextValue = {
   dir: "rtl" | "ltr";
 };
 
-const DICTS: Record<Lang, Record<TranslationKey, string>> = { ar, en, fr, tr, ur, id };
+// اللغات العشر المتبقية (بنية جاهزة من language-preference.ts) لم
+// تُترجَم واجهتها بعد — تعود تلقائيًا للإنجليزية حتى تُضاف قواميسها
+// (إضافة قاموس لاحقًا = ملف جديد + سطر واحد هنا، لا إعادة بناء).
+const DICTS: Record<Lang, Record<TranslationKey, string>> = {
+  ar, en, fr, tr, ur, id,
+  es: en, de: en, ru: en, zh: en, hi: en, bn: en, tl: en, fa: en, sw: en, pt: en,
+};
 
 const LanguageContext = createContext<LanguageContextValue>({
   lang: "ar",

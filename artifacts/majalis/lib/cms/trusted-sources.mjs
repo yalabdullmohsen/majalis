@@ -48,6 +48,10 @@ export function mapContentSourceToLegacy(row) {
     last_success_at: row.last_success_at,
     failure_count: row.failure_count || 0,
     last_error: row.last_error,
+    content_types_allowed: row.content_types_allowed || ["lesson"],
+    default_attribution_name: row.default_attribution_name || null,
+    default_organization_name: row.default_organization_name || null,
+    attribute_to_person: row.attribute_to_person !== false,
     config: {
       ...config,
       handle: row.instagram_username || config.handle,

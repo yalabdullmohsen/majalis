@@ -94,17 +94,17 @@ function QiblaCompass({
         {/* جسم السهم */}
         <polygon
           points="100,18 96,78 100,88 104,78"
-          fill={aligned ? "var(--majalis-emerald, #176B57)" : "#22C55E"}
+          fill={aligned ? "var(--majalis-emerald, #173D35)" : "#22C55E"}
           opacity={aligned ? 1 : 0.9}
         />
         <polygon
           points="100,182 96,122 100,112 104,122"
-          fill="var(--majalis-emerald-muted, rgba(14,110,82,0.18))"
+          fill="var(--majalis-emerald-muted, rgba(23,61,53,0.18))"
         />
         {/* رأس السهم: القبلة */}
-        <polygon points="100,6 93,20 107,20" fill="var(--majalis-emerald, #176B57)" opacity="0.75" />
+        <polygon points="100,6 93,20 107,20" fill="var(--majalis-emerald, #173D35)" opacity="0.75" />
         {/* مركز الوصلة */}
-        <circle cx="100" cy="100" r="7" fill={aligned ? "var(--majalis-emerald, #176B57)" : "#22C55E"} />
+        <circle cx="100" cy="100" r="7" fill={aligned ? "var(--majalis-emerald, #173D35)" : "#22C55E"} />
         <circle cx="100" cy="100" r="3" fill="#fff" />
       </g>
 

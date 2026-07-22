@@ -8,6 +8,10 @@ type Props = {
   onDone: () => void;
 };
 
+const CONTENT_TYPE_LABELS: Record<string, string> = {
+  lesson: "درس", course: "دورة", event: "فعالية", benefit: "فائدة", announcement: "إعلان",
+};
+
 export function InstagramManualAssistPanel({ source, onDone }: Props) {
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -16,6 +20,8 @@ export function InstagramManualAssistPanel({ source, onDone }: Props) {
   const [imageUrl, setImageUrl] = useState("");
   const [caption, setCaption] = useState("");
   const [result, setResult] = useState("");
+  const allowedTypes = source.content_types_allowed?.length ? source.content_types_allowed : ["lesson"];
+  const [contentType, setContentType] = useState<string>(allowedTypes[0]);
 
   const onFile = (file: File | null) => {
     if (!file || !source.id) return;
@@ -30,6 +36,7 @@ export function InstagramManualAssistPanel({ source, onDone }: Props) {
           mode: "upload",
           imageBase64: base64,
           mimeType: file.type || "image/jpeg",
+          contentType: contentType as "lesson" | "course" | "event" | "benefit" | "announcement",
         });
         setResult(r.ok ? `✓ ${r.outcome?.decision || "تم"}` : `✗ ${r.error}`);
         if (r.ok) onDone();
@@ -55,6 +62,7 @@ export function InstagramManualAssistPanel({ source, onDone }: Props) {
         postUrl: mode === "url" ? postUrl : undefined,
         imageUrl: mode === "url" ? imageUrl : undefined,
         caption: mode === "caption" ? caption : undefined,
+        contentType: contentType as "lesson" | "course" | "event" | "benefit" | "announcement",
       });
       setResult(r.ok ? `✓ ${r.outcome?.decision || "تم"}` : `✗ ${r.error}`);
       if (r.ok) onDone();
@@ -83,6 +91,11 @@ export function InstagramManualAssistPanel({ source, onDone }: Props) {
               </button>
             ))}
           </div>
+          {allowedTypes.length > 1 && (
+            <select value={contentType} onChange={(e) => setContentType(e.target.value)} className="adm-input" style={{ marginBottom: "0.5rem" }}>
+              {allowedTypes.map((t) => <option key={t} value={t}>{CONTENT_TYPE_LABELS[t] || t}</option>)}
+            </select>
+          )}
           {mode === "upload" && (
             <input type="file" accept="image/*" disabled={busy} onChange={(e) => onFile(e.target.files?.[0] || null)} className="igp-file-input" />
           )}

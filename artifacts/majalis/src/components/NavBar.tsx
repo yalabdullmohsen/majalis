@@ -7,7 +7,6 @@ import NotificationBell from "./NotificationBell";
 import { SectionErrorBoundary } from "./ErrorBoundary";
 import { SearchSuggestions } from "./SearchSuggestions";
 import { SideNavDrawer } from "./SideNavDrawer";
-import { MobileMoreMenu } from "./MobileMoreMenu";
 import { useThemePreference } from "./ThemePreferenceProvider";
 
 import { useMobileNavState } from "@/hooks/useMobileNavState";
@@ -82,11 +81,12 @@ function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
         value={term}
         onChange={setTerm}
         onSubmit={submit}
-        placeholder="بحث..."
+        placeholder="ابحث في المجلس العلمي..."
         compact
       />
-      <button type="button" onClick={() => submit(term)} aria-label="بحث" className="navbar-search-submit">
-        بحث
+      <button type="submit" aria-label="تنفيذ البحث" className="navbar-search-submit">
+        <Search size={15} strokeWidth={1.8} aria-hidden="true" />
+        <span>بحث</span>
       </button>
     </form>
   );
@@ -98,7 +98,7 @@ export default function NavBar() {
   const { resolvedTheme, toggleDark } = useThemePreference();
   const [location, navigate] = useLocation();
   const isMobile = useIsMobile();
-  const { isMenuOpen, moreOpen, toggleMenu, openMenu, closeMenu, closeMore, closeAll } = useMobileNavState();
+  const { isMenuOpen, toggleMenu, openMenu, closeMenu, closeAll } = useMobileNavState();
 
   const isActive = (href: string) => {
     const path = href.split("?")[0];
@@ -147,10 +147,14 @@ export default function NavBar() {
     </div>
   );
 
+  // قارئ المصحف /mushaf غامر مخصَّص بهيدره/تنقّله الخاصين — شريط الموقع
+  // الكامل (بحث/دخول/قوائم) فوقه يجعله يبدو صفحة ويب لا تطبيق قراءة.
+  if (location.startsWith("/mushaf")) return null;
+
   return (
     <>
       <header
-        className={`navbar-v3 sticky top-0 border-b${isMenuOpen || moreOpen ? " navbar-v3--menu-open" : ""}`}
+        className={`navbar-v3 sticky top-0 border-b${isMenuOpen ? " navbar-v3--menu-open" : ""}`}
       >
         <div className="navbar-v3__inner">
           <div className="navbar-v3__start">
@@ -170,30 +174,6 @@ export default function NavBar() {
               }
               <span className="navbar-menu-btn__label">{isMenuOpen ? t("nav_close") : t("nav_menu")}</span>
             </button>
-            <Link href="/" className="navbar-brand" aria-label="المجلس العلمي">
-              {/*
-                الشعار مرشّح LCP في كل صفحة. الأصل PNG بعرض 2044px = ١.١MB بينما
-                يُعرض بعرض ≤180px. نقدّم WebP بعرض 400/800 (~37KB / ~89KB) مع
-                احتياطي PNG مصغّر (79KB). display:contents يُبقي <img> نفسه عنصرَ
-                الـflex فلا يتغيّر أي شيء في التنسيق.
-              */}
-              <picture style={{ display: "contents" }}>
-                <source
-                  type="image/webp"
-                  srcSet="/logo-calligraphy-400.webp 1x, /logo-calligraphy-800.webp 2x"
-                />
-                <img
-                  src="/logo-calligraphy-400.png"
-                  alt="المجلس العلمي"
-                  className="navbar-logo navbar-logo--calligraphy"
-                  loading="eager"
-                  fetchPriority="high"
-                  decoding="async"
-                  width="400"
-                  height="154"
-                />
-              </picture>
-            </Link>
           </div>
 
           {/* Desktop tabs */}
@@ -228,18 +208,21 @@ export default function NavBar() {
                 : <Moon size={17} strokeWidth={1.6} aria-hidden="true" />
               }
             </button>
-            {/* زر البحث الشامل */}
-            <button
-              type="button"
-              onClick={() => window.dispatchEvent(new Event("global-search-open"))}
-              aria-label="البحث الشامل (Ctrl+K)"
-              title="البحث الشامل — Ctrl+K"
-              className="navbar-search-cmd"
-            >
-              <Search size={15} strokeWidth={1.4} aria-hidden="true" />
-              <span className="navbar-search-hint">بحث</span>
-              <kbd className="navbar-search-kbd" aria-hidden="true">K</kbd>
-            </button>
+            {/* زر البحث الشامل — أيقونة عدسة فقط على الجوال، أيقونة+كلمة "بحث"
+                على الشاشات الأكبر. اختصار Ctrl/Cmd+K يبقى فعالاً (مُدار في
+                App.tsx عبر مستمع keydown مستقل) لكن لا يُعرض بصريًا هنا —
+                طلب صريح من المالك: إزالة حرف K والمربع المحيط به نهائيًا. */}
+            {isMobile && (
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new Event("global-search-open"))}
+                aria-label="فتح البحث"
+                className="navbar-search-cmd"
+              >
+                <Search size={17} strokeWidth={1.8} aria-hidden="true" />
+                <span>بحث</span>
+              </button>
+            )}
             {/* Desktop: search + auth + lang */}
             {!isMobile && <SearchBox />}
             {!isMobile && desktopAuthLinks}
@@ -270,20 +253,6 @@ export default function NavBar() {
         onClose={closeMenu}
         onLogout={handleLogout}
       />
-
-      {/* Mobile "more" menu — still used if ever triggered, but hidden on mobile now */}
-      {!isMobile && (
-        <MobileMoreMenu
-          open={moreOpen}
-          onClose={closeMore}
-          isActive={isActive}
-          isAdmin={isAdmin}
-          isLoggedIn={isLoggedIn}
-          onLogout={handleLogout}
-          searchBox={<SearchBox onSubmitDone={closeMore} />}
-          location={location}
-        />
-      )}
     </>
   );
 }

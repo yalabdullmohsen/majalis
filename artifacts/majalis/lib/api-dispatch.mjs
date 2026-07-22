@@ -102,6 +102,25 @@ const clientErrorLogRateLimit = createRateLimiter({
   keyPrefix: "client-error-log",
 });
 
+// اختبار التسميع بالذكاء الاصطناعي — مقطع صوتي كل 2-4 ثوانٍ تقريبًا أثناء
+// الاستماع الفعلي؛ سقف سخي نسبيًا (يسمح بجلسة تسميع طويلة) لكن يمنع إساءة
+// استخدام واضحة (استدعاءات Groq مدفوعة خلف هذا المسار).
+const recitationTranscribeRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 60,
+  keyPrefix: "recitation-transcribe",
+});
+
+// تطبيق iOS/Android الأصلي (Capacitor) يستدعي هذا المسار برابط مطلق
+// (server-provider.ts) لأنه لا يملك خادمًا محليًا خاصًا به — أصله ليس
+// https://www.majlisilm.com بل أحد هذه المخططات المحلية، فيحتاج طلب
+// POST (Content-Type: application/json، لا "طلب بسيط" حسب CORS) إلى
+// preflight ناجح. الفرع العام لـOPTIONS أدناه ينهي الطلب فورًا قبل بلوغ
+// الوحدة (recitation-transcribe.js) نفسها — corsPreflightOrigins هنا هو
+// الآلية الوحيدة التي تتيح لمسار واحد محدَّد الإفلات من ذلك دون تغيير
+// سلوك كل مسار OPTIONS آخر في النظام.
+const NATIVE_APP_ORIGINS = new Set(["capacitor://localhost", "https://localhost", "http://localhost"]);
+
 /** Route table uses dynamic imports so Vercel bundles one lightweight function entrypoint. */
 export const API_ROUTES = [
   { prefix: "/api/healthz", module: "./api-handlers/healthz.js", allowGet: true, exact: true },
@@ -125,6 +144,7 @@ export const API_ROUTES = [
   { prefix: "/api/knowledge-search", module: "./api-handlers/knowledge-search.js", allowGet: true },
   { prefix: "/api/cron/auto-content-sync", module: "./api-handlers/cron/auto-content-sync.js", allowGet: true, exact: true },
   { prefix: "/api/cron/auto-content-health", module: "./api-handlers/cron/auto-content-health.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/daily-benefit-rotation", module: "./api-handlers/cron/daily-benefit-rotation.js", allowGet: true, exact: true },
   { prefix: "/api/cron/system-health", module: "./api-handlers/cron/system-health.js", allowGet: true, exact: true },
   { prefix: "/api/cron/apply-migrations", module: "./api-handlers/cron/apply-migrations.js", allowGet: true, exact: true },
   { prefix: "/api/cron/bootstrap-database", module: "./api-handlers/cron/bootstrap-database.js", allowGet: true, exact: true },
@@ -204,6 +224,7 @@ export const API_ROUTES = [
   { prefix: "/api/client-error-log", module: "./api-handlers/client-error-log.js", allowGet: true, rateLimit: clientErrorLogRateLimit },
   { prefix: "/api/test-anthropic", module: "./api-handlers/test-anthropic.js", allowGet: true },
   { prefix: "/api/transcribe", module: "./api-handlers/transcribe.js", rateLimit: transcribeRateLimit },
+  { prefix: "/api/recitation-transcribe", module: "./api-handlers/recitation-transcribe.js", rateLimit: recitationTranscribeRateLimit, allowGet: true, exact: true, corsPreflightOrigins: NATIVE_APP_ORIGINS },
   { prefix: "/api/submissions", module: "./api-handlers/submissions.js", exact: true, rateLimit: submissionsRateLimit },
   { prefix: "/api/admin/submissions", module: "./api-handlers/admin/submissions.js", allowGet: true },
   { prefix: "/api/account/delete", module: "./api-handlers/account/delete.js", exact: true, rateLimit: accountDeleteRateLimit },
@@ -329,6 +350,15 @@ export async function dispatchApiRequest(req, res) {
   const handler = await loadHandler(route);
 
   if (req.method === "OPTIONS") {
+    if (route.corsPreflightOrigins) {
+      const origin = String(req.headers?.origin || "");
+      if (route.corsPreflightOrigins.has(origin)) {
+        res.setHeader("Access-Control-Allow-Origin", origin);
+        res.setHeader("Vary", "Origin");
+      }
+      res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+      res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    }
     res.statusCode = 204;
     res.end();
     return;

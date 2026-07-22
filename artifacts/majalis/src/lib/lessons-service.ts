@@ -10,6 +10,7 @@ import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { sheikhNameKey } from "@/lib/sheikh-name";
 import {
   dedupeKuwaitLessons,
+  isLessonComplete,
   mapLessonRow,
   sortKuwaitLessons,
   splitKuwaitLessons,
@@ -49,7 +50,14 @@ export async function fetchLessons(options?: { bypassCache?: boolean }): Promise
   try {
     const { data } = await fetchApprovedLessonsFromDb();
     if (data.length > 0) {
-      const dbMapped = dedupeKuwaitLessons(data.map((row) => mapLessonRow({ ...row, source: "supabase" })));
+      // isLessonComplete: يستبعد صفوفًا من Supabase بلا عنوان/شيخ/موعد فعلي
+      // (بطاقات شبه فارغة أو Placeholder) قبل وصولها لأي شاشة — نقطة تصفية
+      // واحدة تغطي كل المستهلكين (الرئيسية، /lessons، الدروس المرتبطة...)
+      // بدل استثناء كل شاشة على حدة. بيانات seed المحلية مكتملة دومًا فتمر
+      // هذا الفلتر بلا أثر.
+      const dbMapped = dedupeKuwaitLessons(
+        data.map((row) => mapLessonRow({ ...row, source: "supabase" })).filter(isLessonComplete),
+      );
       const lessons = sortKuwaitLessons(mergeDbWithSeed(dbMapped));
       const source: LessonsSource = lessons.length > dbMapped.length ? "merged" : "supabase";
       cachedResult = { lessons, source };

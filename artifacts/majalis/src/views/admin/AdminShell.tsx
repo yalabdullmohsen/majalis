@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState, ty
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import {
-  AlertTriangle, BookOpen, Bot, Brain, Building2, CalendarClock, CheckCircle2, Dna, FolderTree,
+  AlertTriangle, BookOpen, Bot, Brain, Building2, CalendarClock, CheckCircle2, Compass, Dna, FolderTree,
   FlaskConical, Flag, GraduationCap, Globe, HelpCircle, Heart, Image, Landmark,
   LayoutDashboard, Library, Lightbulb, MessageCircle, MessageSquare,
   Network, PlayCircle, Radio, RefreshCw, Route, Scale, School, Search,
@@ -28,6 +28,7 @@ export type AdminSection =
   | "fiqh-council"
   | "rulings"
   | "annual-courses"
+  | "dawah"
   | "updates"
   | "knowledge-engine"
   | "scholarly-verification"
@@ -82,6 +83,7 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
       { key: "fiqh-council",   label: "المجمع الفقهي",   Icon: Scale },
       { key: "rulings",        label: "الأحكام الشرعية",  Icon: Landmark },
       { key: "annual-courses", label: "الدورات العلمية",  Icon: GraduationCap },
+      { key: "dawah",          label: "التعريف بالإسلام", Icon: Compass },
       { key: "learning-paths", label: "المسارات العلمية", Icon: Route },
       { key: "week-day-facts", label: "أيام الأسبوع",     Icon: CalendarClock },
       { key: "arbaeen-love",   label: "الأربعون في محبة رب العالمين", Icon: Heart },

@@ -81,7 +81,7 @@ function ContentProductionDashboardContent() {
             <StatCard label="\u0625\u0646\u062a\u0627\u062c \u0627\u0644\u064a\u0648\u0645" value={prod?.today?.published ?? 0} />
             <StatCard label="\u0625\u0646\u062a\u0627\u062c \u0627\u0644\u0623\u0633\u0628\u0648\u0639" value={prod?.week?.published ?? 0} />
             <StatCard label="\u0625\u0646\u062a\u0627\u062c \u0627\u0644\u0634\u0647\u0631" value={prod?.month?.published ?? 0} />
-            <StatCard label="\u0645\u0631\u0641\u0648\u0636 \u0627\u0644\u064a\u0648\u0645" value={prod?.today?.rejected ?? 0} color="#176B57" />
+            <StatCard label="\u0645\u0631\u0641\u0648\u0636 \u0627\u0644\u064a\u0648\u0645" value={prod?.today?.rejected ?? 0} color="#173D35" />
             <StatCard label="\u0645\u0643\u0631\u0631 \u0627\u0644\u064a\u0648\u0645" value={prod?.today?.duplicate ?? 0} />
             <StatCard label="\u0645\u0635\u0627\u062f\u0631 \u0646\u0634\u0637\u0629" value={data?.readiness?.activeSources ?? 0} />
             <StatCard label="\u062a\u0646\u0628\u064a\u0647\u0627\u062a" value={data?.readiness?.openAlerts ?? 0} color="#991B1B" />

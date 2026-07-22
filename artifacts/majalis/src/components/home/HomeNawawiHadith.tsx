@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Link } from "wouter";
 import { ARBAEEN_NAWAWI } from "@/lib/arbaeen-nawawi-seed";
+import { truncateAtWord } from "@/lib/utils";
 
 function getTodayHadith() {
   const start = new Date(new Date().getFullYear(), 0, 0);
@@ -11,14 +12,14 @@ function getTodayHadith() {
 
 export function HomeNawawiHadith() {
   const hadith = useMemo(() => getTodayHadith(), []);
-  const shortText = hadith.text.length > 160 ? hadith.text.slice(0, 157) + "…" : hadith.text;
+  const shortText = hadith.text.length > 160 ? truncateAtWord(hadith.text, 157) : hadith.text;
 
   return (
     <section className="hnh" aria-labelledby="hnh-heading">
       <div className="hnh__eyebrow">
         <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
           <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16">
-            <polygon points="8,1 10,6 15.5,6 11,9.5 13,15 8,11.5 3,15 5,9.5 0.5,6 6,6" fill="#176B57" opacity="0.9"/>
+            <polygon points="8,1 10,6 15.5,6 11,9.5 13,15 8,11.5 3,15 5,9.5 0.5,6 6,6" fill="#173D35" opacity="0.9"/>
           </svg>
           <p className="home-eyebrow">حديث اليوم</p>
         </div>

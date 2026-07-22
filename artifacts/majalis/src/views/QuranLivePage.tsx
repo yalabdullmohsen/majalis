@@ -164,7 +164,8 @@ export default function QuranLivePage() {
         </div>
         <p className="qlive-player__desc">{activeChannel.description}</p>
 
-        {/* مشغّل الصوت */}
+        {/* مشغّل الصوت. لا <track> ممكن هنا: بث مباشر (live radio stream) بلا
+            نهاية زمنية معروفة، لا يمكن توفير ترجمة/تفريغ متزامن لمحتوى حي. */}
         {playing && activeChannel.id !== "makkah" && activeChannel.id !== "madinah" && (
           <div className="qlive-audio-wrap">
             <audio

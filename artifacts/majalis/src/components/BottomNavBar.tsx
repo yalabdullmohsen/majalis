@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { BookOpen, GraduationCap, Home, LayoutGrid, Library, Scale, Sunset, Users } from "lucide-react";
+import { BookOpen, GraduationCap, HelpCircle, Home, LayoutGrid } from "lucide-react";
 import { MoreBottomSheet } from "./MoreBottomSheet";
-import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 
 type NavTab = {
   href: string;
@@ -10,26 +9,27 @@ type NavTab = {
   Icon: React.ComponentType<{ size?: number; strokeWidth?: number; "aria-hidden"?: boolean }>;
 };
 
+/* خمس وجهات ثابتة فقط على الهاتف. تبقى الصلاة وبقية الخدمات متاحة من "المزيد". */
 const NAV_TABS: NavTab[] = [
-  { href: "/",          label: "الرئيسية", Icon: Home },
-  { href: "/lessons",   label: "تعلّم",    Icon: GraduationCap },
-  { href: "/quran-hub", label: "القرآن",   Icon: BookOpen },
-  { href: "/library",   label: "المكتبة",  Icon: Library },
-  { href: "/scholars",  label: "العلماء",  Icon: Users },
-  { href: "/fiqh",      label: "الفقه",    Icon: Scale },
+  { href: "/",             label: "الرئيسية",    Icon: Home },
+  { href: "/quran-hub",    label: "القرآن",      Icon: BookOpen },
+  { href: "/qa",           label: "سؤال وجواب", Icon: HelpCircle },
+  { href: "/lessons",      label: "تعلّم",       Icon: GraduationCap },
 ];
 
 export function BottomNavBar() {
   const [location] = useLocation();
   const [moreOpen, setMoreOpen] = useState(false);
-  const { countdown } = usePrayerCountdown();
 
   const isActive = (href: string) => {
     if (href === "/") return location === "/";
     return location === href || location.startsWith(href + "/");
   };
 
-  const next = countdown?.next;
+  // قارئ المصحف /mushaf غامر مخصَّص بتنقّله الخاص (pager/سحب صفحات) —
+  // شريط تنقّل سفلي عام فوقه يجعله يبدو صفحة ويب لا تطبيق قراءة، ويحجز
+  // مساحة (--bottom-nav-h) كانت ستبقى محسوبة في تخطيط المصحف بلا داعٍ.
+  if (location.startsWith("/mushaf")) return null;
 
   return (
     <>
@@ -66,14 +66,6 @@ export function BottomNavBar() {
           <span className="bottom-nav__tab-label">المزيد</span>
         </button>
       </nav>
-
-      {/* شارة الصلاة القادمة — تظهر فوق تبويب الدروس عند الحاجة */}
-      {next && (
-        <div className="bottom-nav__prayer-float" aria-hidden="true">
-          <Sunset size={12} />
-          <span>{next.name} · {next.time}</span>
-        </div>
-      )}
 
       <MoreBottomSheet open={moreOpen} onClose={() => setMoreOpen(false)} />
     </>

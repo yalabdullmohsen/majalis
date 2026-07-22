@@ -54,9 +54,13 @@ function FileDropZone({ accept, maxMb, onFile, file, hint }: {
     <div>
       <div
         onClick={() => inputRef.current?.click()}
+        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); inputRef.current?.click(); } }}
         onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
         onDragLeave={() => setDragging(false)}
         onDrop={handleDrop}
+        role="button"
+        tabIndex={0}
+        aria-label="اختر ملفًا للرفع أو اسحبه هنا"
         className={`ulp-dropzone${dragging ? " is-dragging" : file ? " has-file" : ""}`}
       >
         <input

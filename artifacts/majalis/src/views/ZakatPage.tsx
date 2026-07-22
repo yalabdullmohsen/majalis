@@ -5,6 +5,7 @@ import { Calculator, ChevronDown, ChevronUp, Info, Sparkles } from "lucide-react
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { toWesternDigits } from "@/shared/arabic-normalize";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 /* ─── بيانات الأصناف ─── */
@@ -226,9 +227,12 @@ function ZakatCalc() {
   const NISAB_VALUE = NISAB_GOLD_GRAMS * GOLD_PRICE_PER_GRAM;
 
   function calculate() {
-    const g = parseFloat(gold) || 0;
-    const s = parseFloat(silver) || 0;
-    const c = parseFloat(cash) || 0;
+    // toWesternDigits: بعض أجهزة iOS/Android بإعداد لغة عربية تُدخل أرقامًا
+    // هندية (٥٢) حتى داخل حقل type="number"؛ parseFloat الأصلي في JS لا
+    // يفهم هذه الأرقام ويعيد NaN صامتًا، فتُحسَب الزكاة خطأً كصفر.
+    const g = parseFloat(toWesternDigits(gold)) || 0;
+    const s = parseFloat(toWesternDigits(silver)) || 0;
+    const c = parseFloat(toWesternDigits(cash)) || 0;
     const goldValue = g * GOLD_PRICE_PER_GRAM;
     const silverValue = s * 0.9; /* سعر تقريبي للجرام فضة */
     const total = goldValue + silverValue + c;

@@ -11,6 +11,8 @@ import { usePageView } from "@/hooks/usePageView";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { fetchAllCourses, type CourseListItem } from "@/lib/learning-paths-service";
+import { getCourses as getIgCourses } from "@/lib/unified-content-service";
+import type { AutoImportedContent } from "@/lib/auto-content/auto-content-utils";
 
 const LEVEL_LABEL: Record<string, string> = {
   beginner: "مبتدئ", foundational: "تأسيسي", intermediate: "متوسط", advanced: "متقدم", specialist: "تخصصي",
@@ -33,6 +35,7 @@ export default function AnnualCoursesPage() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebouncedValue(search);
   const [pathCourses, setPathCourses] = useState<CourseListItem[]>([]);
+  const [igCourses, setIgCourses] = useState<AutoImportedContent[]>([]);
 
   usePageView("annual-courses", null);
 
@@ -54,6 +57,10 @@ export default function AnnualCoursesPage() {
 
   useEffect(() => {
     fetchAllCourses().then(setPathCourses).catch(() => setPathCourses([]));
+  }, []);
+
+  useEffect(() => {
+    getIgCourses(9).then(setIgCourses).catch(() => setIgCourses([]));
   }, []);
 
   useEffect(() => {
@@ -144,6 +151,32 @@ export default function AnnualCoursesPage() {
                 meta={c.pathTitle}
                 summary={c.description ?? undefined}
               />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {igCourses.length > 0 && (
+        <section aria-labelledby="ig-courses-heading" style={{ marginTop: "2.5rem" }}>
+          <h2 id="ig-courses-heading" className="page-section-title">دورات من مصادر معتمَدة على Instagram</h2>
+          <p className="page-desc">دورات أعلنتها جهات ومشايخ موثوقون على حساباتهم الرسمية — روابط خارجية للتسجيل والتفاصيل الكاملة.</p>
+          <div className="page-card-grid">
+            {igCourses.map((c) => (
+              <a
+                key={c.id}
+                href={c.registration_url || c.original_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="platform-card-link"
+              >
+                <article className="page-card platform-content-card">
+                  <div className="page-card-header">
+                    <p>{c.title}</p>
+                    <span className="page-tag">{c.attribution_name || c.organization_name || c.source_name}</span>
+                  </div>
+                  {c.summary && <p className="page-desc">{c.summary}</p>}
+                </article>
+              </a>
             ))}
           </div>
         </section>

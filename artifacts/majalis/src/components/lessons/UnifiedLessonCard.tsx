@@ -1,5 +1,4 @@
 import { memo, useCallback, useEffect, useState } from "react";
-import { resolveLessonPosterUrl } from "@/lib/lesson-image";
 import { Link } from "wouter";
 import { AdminInlineEdit } from "@/components/AdminInlineEdit";
 import {
@@ -12,7 +11,6 @@ import {
 import { cleanDisplayText } from "@/lib/display-text";
 import { computeNextOccurrenceMs, formatRelativeTimeDetailed, isLessonInProgress } from "@/lib/lesson-time";
 import { FavoriteButton } from "@/components/FavoriteButton";
-import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 
 type Props = {
   lesson: UnifiedLesson;
@@ -30,20 +28,6 @@ function MetaCell({ label, value }: { label: string; value?: string | number }) 
       <span className="lesson-unified-card__meta-label">{label}</span>
       <strong>{text}</strong>
     </div>
-  );
-}
-
-function LazyImage({ src, alt, className }: { src: string; alt: string; className?: string }) {
-  return (
-    <img
-      src={src}
-      alt={alt}
-      className={className}
-      loading="lazy"
-      decoding="async"
-      width={320}
-      height={180}
-    />
   );
 }
 
@@ -106,7 +90,6 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
     await handleCopy();
   }, [lesson, handleCopy]);
 
-  const posterUrl = resolveLessonPosterUrl(lesson.lessonImage);
   const flags = [
     lesson.hasLiveStream ? "بث مباشر" : "",
     lesson.hasRecording ? "تسجيل متاح" : "",
@@ -129,20 +112,9 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
       </header>
 
       <div className="lesson-unified-card__body">
-        <div className={`lesson-unified-card__top${compact ? " lesson-unified-card__top--compact" : ""}`}>
-          <SheikhAvatar src={lesson.sheikhImage} name={lesson.sheikhName} size={compact ? 64 : 76} />
-          <div className="lesson-unified-card__headline">
-            <h3 className="lesson-unified-card__title">{lesson.title}</h3>
-            {lesson.sheikhName && (
-              <p className="lesson-unified-card__sheikh">{lesson.sheikhName}</p>
-            )}
-          </div>
-        </div>
-
-        {!compact && posterUrl && (
-          <div className="lesson-unified-card__media">
-            <LazyImage src={posterUrl} alt={lesson.title} className="lesson-unified-card__poster" />
-          </div>
+        <h3 className="lesson-unified-card__title">{lesson.title}</h3>
+        {lesson.sheikhName && (
+          <p className="lesson-unified-card__sheikh">{lesson.sheikhName}</p>
         )}
 
         {flags.length > 0 && (
@@ -166,12 +138,6 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
             <MetaCell label="الجلسات" value={lesson.linkedLessons.join(" · ")} />
           )}
         </div>
-
-        {!compact && lesson.qrCodeUrl && (
-          <div className="lesson-unified-card__qr">
-            <LazyImage src={lesson.qrCodeUrl} alt={`رمز QR: ${lesson.title}`} className="lesson-unified-card__qr-img" />
-          </div>
-        )}
 
         {!compact && lesson.note && (
           <p className="lesson-unified-card__note">{lesson.note}</p>

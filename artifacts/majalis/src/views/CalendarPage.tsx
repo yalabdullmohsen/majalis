@@ -85,6 +85,8 @@ function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => v
   }, [onClose]);
 
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار بديل كامل
+    // بلوحة المفاتيح.
     <div className="cal-modal-backdrop" onClick={onClose} role="presentation">
       <div className="cal-modal ui-card" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="cal-modal-title">
         <h3 id="cal-modal-title">{event.title}</h3>

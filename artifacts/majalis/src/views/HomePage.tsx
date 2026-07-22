@@ -1,39 +1,26 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import contentCounts from "@/data/content-counts.json";
 import { applyPageSeo } from "@/lib/seo";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
 import { useDailyContext } from "@/lib/daily-context";
 import { useAuth } from "@/components/AuthProvider";
 import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
 import { History } from "lucide-react";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
-import { HomeCompactPrayer } from "@/components/home/HomeCompactPrayer";
 import { HomeAboutSection } from "@/components/home/HomeAboutSection";
 import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
-import { HomeDailyCorner } from "@/components/home/HomeDailyCorner";
-import { HomeSunnahByTime } from "@/components/home/HomeSunnahByTime";
 import { HomeSawmReminder } from "@/components/home/HomeSawmReminder";
-import { HomeIslamicOccasions } from "@/components/home/HomeIslamicOccasions";
-import { HomeLatestUpdates } from "@/components/home/HomeLatestUpdates";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeContinueWidget } from "@/components/home/HomeContinueWidget";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
 import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
-import { HomePrayerRanks } from "@/components/home/HomePrayerRanks";
-import { HomeFeaturedLibrary } from "@/components/home/HomeFeaturedLibrary";
-import { HomeQuizCard } from "@/components/home/HomeQuizCard";
-import { HomeAsmaCard } from "@/components/home/HomeAsmaCard";
-import { HomeWeekStreak } from "@/components/home/HomeWeekStreak";
-import { HomeNawawiHadith } from "@/components/home/HomeNawawiHadith";
-import { HomeInterestingTopics } from "@/components/home/HomeInterestingTopics";
-import { HomeMindMapSection } from "@/components/home/HomeMindMapSection";
 import { HomeMajlisToday } from "@/components/home/HomeMajlisToday";
-import { HomePersonalDashboard } from "@/components/home/HomePersonalDashboard";
 import { FridayBanner } from "@/components/FridayBanner";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import { getHijriDateString } from "@/lib/hijri-utils";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerTimesPayload } from "@/lib/prayer-times";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
+import { toArabicDigits } from "@/lib/utils";
 import { HomeCustomizeSheet } from "@/components/home/HomeCustomizeSheet";
 import {
   HOME_WIDGET_DEFS,
@@ -51,27 +38,35 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
+// الودجتات الاختيارية لا تدخل حزمة الرئيسية للمستخدم الجديد. تُحمَّل فقط
+// إذا فعّلها المستخدم من شاشة التخصيص، مع بقاء الوظيفة والحالة المحفوظة.
+const HomeCompactPrayer = lazy(() => import("@/components/home/HomeCompactPrayer").then((m) => ({ default: m.HomeCompactPrayer })));
+const HomeDailyCorner = lazy(() => import("@/components/home/HomeDailyCorner").then((m) => ({ default: m.HomeDailyCorner })));
+const HomeDailyBenefits = lazy(() => import("@/components/home/HomeDailyBenefits").then((m) => ({ default: m.HomeDailyBenefits })));
+const HomeUpcomingEvents = lazy(() => import("@/components/home/HomeUpcomingEvents").then((m) => ({ default: m.HomeUpcomingEvents })));
+const HomeSunnahByTime = lazy(() => import("@/components/home/HomeSunnahByTime").then((m) => ({ default: m.HomeSunnahByTime })));
+const HomeIslamicOccasions = lazy(() => import("@/components/home/HomeIslamicOccasions").then((m) => ({ default: m.HomeIslamicOccasions })));
+const HomeLatestUpdates = lazy(() => import("@/components/home/HomeLatestUpdates").then((m) => ({ default: m.HomeLatestUpdates })));
+const HomePrayerRanks = lazy(() => import("@/components/home/HomePrayerRanks").then((m) => ({ default: m.HomePrayerRanks })));
+const HomeFeaturedLibrary = lazy(() => import("@/components/home/HomeFeaturedLibrary").then((m) => ({ default: m.HomeFeaturedLibrary })));
+const HomeQuizCard = lazy(() => import("@/components/home/HomeQuizCard").then((m) => ({ default: m.HomeQuizCard })));
+const HomeAsmaCard = lazy(() => import("@/components/home/HomeAsmaCard").then((m) => ({ default: m.HomeAsmaCard })));
+const HomeWeekStreak = lazy(() => import("@/components/home/HomeWeekStreak").then((m) => ({ default: m.HomeWeekStreak })));
+const HomeNawawiHadith = lazy(() => import("@/components/home/HomeNawawiHadith").then((m) => ({ default: m.HomeNawawiHadith })));
+const HomeInterestingTopics = lazy(() => import("@/components/home/HomeInterestingTopics").then((m) => ({ default: m.HomeInterestingTopics })));
+const HomeMindMapSection = lazy(() => import("@/components/home/HomeMindMapSection").then((m) => ({ default: m.HomeMindMapSection })));
+
 /* ── روابط الوصول السريع ── */
+/* إجراءات سريعة مختصرة — 4 عناصر فقط (إعادة هيكلة الرئيسية، الأولوية 3):
+   أكمل وردك / تابع تعلّمك / اختبر معلوماتك / أذكار اليوم، بالحرف كما ورد
+   بالتكليف. القائمة الطويلة السابقة (١٩ رابطًا) كانت تكرارًا شبه كامل
+   لتبويب "المزيد" في الشريط السفلي — لا حذف وظيفة، كل تلك الروابط تبقى
+   متاحة عبر "المزيد" (MoreBottomSheet) أو /sitemap. */
 const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc: string }[] = [
-  { href: "/adhkar",         Icon: Star,          label: "الأذكار",         desc: "صباح ومساء ونوم" },
-  { href: "/prayer-times",   Icon: Clock,         label: "أوقات الصلاة",    desc: "الكويت لحظياً" },
-  { href: "/lessons",        Icon: GraduationCap, label: "الدروس",           desc: "علماء الكويت" },
-  { href: "/hadith",         Icon: Scroll,        label: "الأحاديث",         desc: "صحيح وضعيف" },
-  { href: "/quran-hub",      Icon: BookMarked,    label: "القرآن",            desc: "تجويد، تلاوة، وأكثر" },
-  { href: "/fawaid",         Icon: Lightbulb,     label: "الفوائد",          desc: "فوائد منتقاة" },
-  { href: "/qa",             Icon: HelpCircle,    label: "الأسئلة",           desc: "أسئلة شرعية موثّقة" },
-  { href: "/tasbih",         Icon: RotateCw,      label: "التسبيح",          desc: "عداد إلكتروني" },
-  { href: "/seerah",         Icon: Moon,          label: "السيرة",            desc: "حياته ﷺ كاملة" },
-  { href: "/rulings",        Icon: Scale,         label: "الأحكام الشرعية",  desc: "مسائل معاصرة" },
-  { href: "/quiz",           Icon: Target,        label: "المسابقات",         desc: "اختبار المعلومات" },
-  { href: "/muezzins",       Icon: Mic2,          label: "المؤذنون",          desc: "أجمل الأصوات" },
-  { href: "/library",        Icon: BookOpen,      label: "المكتبة",           desc: "كتب ومتون علمية" },
-  { href: "/qibla",          Icon: Compass,       label: "القِبلة",           desc: "اتجاه الكعبة" },
-  { href: "/salah-guide",    Icon: Scroll,        label: "دليل الصلاة",       desc: "للمبتدئ والمتقن" },
-  { href: "/calendar",       Icon: CalendarDays,  label: "التقويم",           desc: "التاريخ الهجري" },
-  { href: "/mawarith",       Icon: Scale,         label: "المواريث",          desc: "الفرائض والتركات" },
-  { href: "/knowledge-map",  Icon: Map,           label: "خريطة المعرفة",     desc: "حقول العلوم الشرعية مترابطة" },
-  { href: "/scholars",       Icon: Users,         label: "العلماء",            desc: "رواد الفقه والحديث" },
+  { href: "/daily-wird", Icon: Star,          label: "أكمل وردك",       desc: "الورد اليومي" },
+  { href: "/lessons",    Icon: GraduationCap, label: "تابع تعلّمك",     desc: "الدروس والدورات" },
+  { href: "/quiz",       Icon: Target,        label: "اختبر معلوماتك",  desc: "مسابقة معرفية" },
+  { href: "/adhkar",     Icon: RotateCw,      label: "أذكار اليوم",     desc: "صباح ومساء ونوم" },
 ];
 
 
@@ -177,6 +172,7 @@ const FEATURE_CATS: FeatureCat[] = [
     label: "القرآن الكريم",
     items: [
       { href: "/quran-hub",            Icon: BookMarked, title: "مركز القرآن",       desc: "جميع أقسام القرآن في مكان واحد" },
+      { href: "/quran/recitation-test-ai", Icon: Bot,    title: "اختبار التسميع بالذكاء الاصطناعي", desc: "سمّع من حفظك واستمع لتلاوتك لحظيًا" },
       { href: "/quran/surah-stories",  Icon: Star,       title: "قصص القرآن",        desc: "أسباب النزول و١١٤ سورة" },
       { href: "/quran/tajweed",        Icon: Mic2,       title: "علم التجويد",        desc: "أحكام التجويد الشاملة" },
       { href: "/ulum-quran",           Icon: GraduationCap, title: "علوم القرآن",      desc: "النزول والجمع والإعجاز والتفسير" },
@@ -193,13 +189,20 @@ const FEATURE_CATS: FeatureCat[] = [
       { href: "/prayer-times", Icon: Clock,       title: "مواقيت الصلاة",   desc: "أوقات دقيقة للكويت" },
       { href: "/muezzins",     Icon: Mic2,        title: "مكتبة المؤذنين", desc: "تلاوات وأذان بأجمل الأصوات" },
       { href: "/quran-radio",  Icon: Radio,       title: "إذاعة القرآن",    desc: "بث مستمر للقرآن الكريم" },
+      { href: "/mosque-mode",  Icon: Landmark,    title: "وضع المسجد",      desc: "عدّاد الصلاة مع تذكير بالصمت وإطفاء الصوت" },
       { href: "/submit",       Icon: Upload,      title: "أضف محتوى",       desc: "ساهم في إثراء المنصة" },
     ],
   },
 ];
 
 function SafeHomeSection({ name, children }: { name: string; children: React.ReactNode }) {
-  return <SectionErrorBoundary name={name}>{children}</SectionErrorBoundary>;
+  return (
+    <SectionErrorBoundary name={name}>
+      <Suspense fallback={<div className="skeleton-base" style={{ minHeight: 96 }} aria-label={`تحميل ${name}`} />}>
+        {children}
+      </Suspense>
+    </SectionErrorBoundary>
+  );
 }
 
 /** خريطة مُعرِّف القسم القابل للتخصيص ← عرضه. تُستهلَك عبر homepage-layout.ts. */
@@ -219,17 +222,14 @@ const WIDGET_RENDERERS: Record<string, () => React.ReactNode> = {
   "library": () => <HomeFeaturedLibrary />,
   "quiz": () => <HomeQuizCard />,
   "daily-corner": () => <HomeDailyCorner />,
+  "daily-benefits": () => <HomeDailyBenefits />,
+  "upcoming-events": () => <HomeUpcomingEvents />,
   "prayer-ranks": () => <HomePrayerRanks />,
   "interesting-topics": () => <HomeInterestingTopics />,
   "mind-map": () => <HomeMindMapSection />,
 };
 
 const WIDGET_LABEL: Record<string, string> = Object.fromEntries(HOME_WIDGET_DEFS.map((w) => [w.id, w.label]));
-
-const ARABIC_DIGITS = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
-function toArabicDigits(n: number): string {
-  return String(n).replace(/[0-9]/g, (d) => ARABIC_DIGITS[Number(d)]);
-}
 
 function RecentPagesBar() {
   const [pages, setPages] = useState<RecentPage[]>([]);
@@ -277,7 +277,7 @@ const START_STEPS = [
   {
     num: "٤",
     title: "دليل طالب العلم المبتدئ",
-    desc: "٨ محطات علمية مرتبة من العقيدة إلى التوسع، ٣ روابط لكل محطة",
+    desc: "٩ محطات علمية مرتبة من العقيدة إلى التوسع، بروابط مباشرة لكل محطة",
     href: "/start-here",
     cta: "ابدأ من هنا",
   },
@@ -312,8 +312,8 @@ function ExplorePlatformSection() {
       <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.1rem" }}>
         {/* أيقونة هندسية للعنوان */}
         <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
-          <polygon points="11,1 13.5,8 21,8 15,13 17.5,20 11,16 4.5,20 7,13 1,8 8.5,8" fill="none" stroke="#176B57" strokeWidth="1.2"/>
-          <circle cx="11" cy="11" r="3.5" fill="none" stroke="#176B57" strokeWidth="0.8"/>
+          <polygon points="11,1 13.5,8 21,8 15,13 17.5,20 11,16 4.5,20 7,13 1,8 8.5,8" fill="none" stroke="#173D35" strokeWidth="1.2"/>
+          <circle cx="11" cy="11" r="3.5" fill="none" stroke="#173D35" strokeWidth="0.8"/>
         </svg>
         <h2 id="features-heading" style={{ fontSize: "1.1rem", fontWeight: 800, color: "#1a1a1a", margin: 0 }}>
           استكشف المنصة
@@ -329,7 +329,7 @@ function ExplorePlatformSection() {
           <Link key={href} href={href} aria-label={title} style={{
             display: "flex", flexDirection: "column", gap: "0.65rem",
             padding: "1.2rem 1.1rem", borderRadius: "1.1rem", textDecoration: "none",
-            background: "linear-gradient(145deg, #112a1e 0%, #1a3d2b 40%, #176B57 80%, #176B57 100%)",
+            background: "linear-gradient(145deg, #112a1e 0%, #1a3d2b 40%, #173D35 80%, #173D35 100%)",
             color: "#fff",
             boxShadow: "0 4px 16px rgba(15,50,30,0.28), inset 0 1px 0 rgba(255,255,255,0.1)",
             border: "1px solid rgba(255,255,255,0.12)",
@@ -355,66 +355,108 @@ function ExplorePlatformSection() {
         ))}
       </div>
 
-      {/* أقسام بالتصنيف */}
-      {FEATURE_CATS.map(cat => (
-        <div key={cat.id} style={{ marginBottom: "2rem" }}>
-          <div style={{
-            display: "flex", alignItems: "center", gap: "0.6rem",
-            marginBottom: "0.85rem", paddingBottom: "0.7rem",
-            borderBottom: "1.5px solid #ddeee5",
-          }}>
-            {/* زخرفة هندسية بدل المربع */}
-            <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" style={{ flexShrink: 0 }}>
-              <polygon points="14,2 20,9 27,9 22,16 25,24 14,20 3,24 6,16 1,9 8,9" fill="#176B57"/>
-              <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="#176B57" opacity="0.6"/>
-              <circle cx="14" cy="14" r="3" fill="#FAF8F2"/>
-            </svg>
-            <h3 style={{ fontSize: "0.98rem", fontWeight: 800, color: "#176B57", margin: 0 }}>{cat.label}</h3>
-            <span style={{
-              marginRight: "auto", fontSize: "0.68rem", color: "#176B57", fontWeight: 700,
-              background: "#e8f4ed", padding: "0.15rem 0.6rem", borderRadius: "999px",
-              border: "1px solid #c8e6d5",
-            }}>{cat.items.length} قسم</span>
-          </div>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(165px, 1fr))",
-            gap: "0.5rem",
-          }}>
-            {cat.items.map(({ href, Icon: ItemIcon, title, desc }) => (
-              <Link key={href} href={href} style={{
-                display: "flex", alignItems: "flex-start", gap: "0.6rem",
-                padding: "0.75rem 0.8rem", borderRadius: "0.8rem",
-                textDecoration: "none", background: "#fafcfb",
-                border: "1px solid #e2ede8",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
-              }}>
-                <span style={{
-                  background: "linear-gradient(135deg,#176B57,#176B57)", color: "#FAF8F2",
-                  padding: "0.38rem", borderRadius: "0.4rem",
-                  display: "flex", flexShrink: 0, marginTop: "0.05rem",
-                  boxShadow: "0 1px 3px rgba(15,50,30,0.2)",
+      {/* أقسام بالتصنيف — معاينة مختصرة (٤ عناصر) + رابط لعرض الكل، تقليلاً للازدحام.
+          القائمة الكاملة (والأشمل) متاحة دائماً عبر /sitemap. لا حذف لأي رابط —
+          كل عنصر لا يظهر هنا موجود ضمن دليل "كل الأقسام". */}
+      {FEATURE_CATS.map(cat => {
+        const PREVIEW_COUNT = 4;
+        const preview = cat.items.slice(0, PREVIEW_COUNT);
+        const remaining = cat.items.length - preview.length;
+        return (
+          <div key={cat.id} style={{ marginBottom: "2rem" }}>
+            <div style={{
+              display: "flex", alignItems: "center", gap: "0.6rem",
+              marginBottom: "0.85rem", paddingBottom: "0.7rem",
+              borderBottom: "1.5px solid #ddeee5",
+            }}>
+              {/* زخرفة هندسية بدل المربع */}
+              <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" style={{ flexShrink: 0 }}>
+                <polygon points="14,2 20,9 27,9 22,16 25,24 14,20 3,24 6,16 1,9 8,9" fill="#173D35"/>
+                <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="#173D35" opacity="0.6"/>
+                <circle cx="14" cy="14" r="3" fill="#F7F4ED"/>
+              </svg>
+              <h3 style={{ fontSize: "0.98rem", fontWeight: 800, color: "#173D35", margin: 0 }}>{cat.label}</h3>
+              <span style={{
+                marginRight: "auto", fontSize: "0.68rem", color: "#173D35", fontWeight: 700,
+                background: "#e8f4ed", padding: "0.15rem 0.6rem", borderRadius: "999px",
+                border: "1px solid #c8e6d5",
+              }}>{cat.items.length} قسم</span>
+            </div>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(165px, 1fr))",
+              gap: "0.5rem",
+            }}>
+              {preview.map(({ href, Icon: ItemIcon, title, desc }) => (
+                <Link key={href} href={href} style={{
+                  display: "flex", alignItems: "flex-start", gap: "0.6rem",
+                  padding: "0.75rem 0.8rem", borderRadius: "0.8rem",
+                  textDecoration: "none", background: "#fafcfb",
+                  border: "1px solid #e2ede8",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
                 }}>
-                  <ItemIcon size={14} strokeWidth={2} />
-                </span>
-                <div style={{ minWidth: 0 }}>
-                  <strong style={{ display: "block", fontSize: "0.81rem", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.35 }}>{title}</strong>
-                  <span style={{ fontSize: "0.7rem", color: "#666", lineHeight: 1.45, display: "block", marginTop: "0.1rem" }}>{desc}</span>
-                </div>
-              </Link>
-            ))}
+                  <span style={{
+                    background: "linear-gradient(135deg,#173D35,#173D35)", color: "#F7F4ED",
+                    padding: "0.38rem", borderRadius: "0.4rem",
+                    display: "flex", flexShrink: 0, marginTop: "0.05rem",
+                    boxShadow: "0 1px 3px rgba(15,50,30,0.2)",
+                  }}>
+                    <ItemIcon size={14} strokeWidth={2} />
+                  </span>
+                  <div style={{ minWidth: 0 }}>
+                    <strong style={{ display: "block", fontSize: "0.81rem", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.35 }}>{title}</strong>
+                    <span style={{ fontSize: "0.7rem", color: "#666", lineHeight: 1.45, display: "block", marginTop: "0.1rem" }}>{desc}</span>
+                  </div>
+                </Link>
+              ))}
+              {remaining > 0 && (
+                <Link href="/sitemap" style={{
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem",
+                  padding: "0.75rem 0.8rem", borderRadius: "0.8rem",
+                  textDecoration: "none", background: "#eef6f2",
+                  border: "1.5px dashed #b9dbcb",
+                  color: "#173D35", fontSize: "0.78rem", fontWeight: 700,
+                  textAlign: "center",
+                }}>
+                  +{remaining} أقسام أخرى ←
+                </Link>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
+
+      {/* رابط ختامي واحد لدليل الأقسام الكامل (أشمل من القائمة أعلاه) */}
+      <div style={{ textAlign: "center", marginTop: "0.5rem" }}>
+        <Link href="/sitemap" style={{
+          display: "inline-flex", alignItems: "center", gap: "0.4rem",
+          padding: "0.6rem 1.4rem", borderRadius: "0.7rem",
+          textDecoration: "none", background: "#173D35", color: "#F7F4ED",
+          fontSize: "0.83rem", fontWeight: 800,
+        }}>
+          تصفّح كل أقسام المنصة ←
+        </Link>
+      </div>
     </section>
   );
 }
 
 export default function HomePage() {
-  const [term, setTerm] = useState("");
-  const [, navigate] = useLocation();
   const { isAdmin, user } = useAuth();
   const dailyCtx = useDailyContext();
+
+  // زر المتابعة الوحيد في البطاقة اليومية: آخر صفحة زارها المستخدم فعليًا،
+  // أو دعوة افتراضية لزائر جديد بلا سجل تصفّح (يُقرأ بعد التركيب لتفادي
+  // اختلاف الترطيب SSR/prerender، بنفس نمط RecentPagesBar أدناه).
+  const [lastVisited, setLastVisited] = useState<RecentPage | null>(null);
+  useEffect(() => {
+    const pages = getRecentPages(2);
+    // أول عنصر هو الصفحة الحالية غالبًا ("/")، فنأخذ أول صفحة مختلفة عنها
+    const last = pages.find((p) => p.href !== "/") ?? null;
+    setLastVisited(last);
+  }, []);
+  const continueHref  = lastVisited?.href ?? "/daily-wird";
+  const continueLabel = lastVisited ? `تابع: ${lastVisited.label}` : "ابدأ يومك: الورد اليومي";
 
   // تخصيص أقسام الصفحة الرئيسية: محلي فورًا، مع مزامنة اختيارية من Supabase عند تسجيل الدخول
   const [homePrefs, setHomePrefs] = useState<HomepagePrefs>(() => getLocalHomepagePrefs());
@@ -480,11 +522,6 @@ export default function HomePage() {
     });
   }, []);
 
-  const submitSearch = (e: FormEvent) => {
-    e.preventDefault();
-    const q = term.trim();
-    if (q) navigate(`/search/${encodeURIComponent(q)}`);
-  };
 
   return (
     <div className="home-page home-page--v4" dir="rtl">
@@ -499,8 +536,9 @@ export default function HomePage() {
         className="hpv4-hero"
         aria-label="الصفحة الرئيسية"
         style={{
-          background: "linear-gradient(165deg, #071E18 0%, #123F36 40%, #0E4437 70%, #071E18 100%)",
-          padding: "clamp(2rem,5vw,3rem) 1rem clamp(1.75rem,4vw,2.5rem)",
+          /* تدرّج هادئ محدود بدرجتين فقط من لوحة الهوية v3 (لا تدرّج قوي متعدد المراحل) */
+          background: "linear-gradient(135deg, #173D35 0%, #28584D 100%)",
+          padding: "clamp(1.5rem,4vw,2rem) 1rem clamp(1.25rem,3vw,1.75rem)",
           position: "relative",
           overflow: "hidden",
         }}
@@ -539,9 +577,11 @@ export default function HomePage() {
 
         <div style={{ maxWidth: 640, margin: "0 auto", position: "relative", textAlign: "center" }}>
 
-          {/* ── التحية اليومية الديناميكية (h1 دلالي وحيد للصفحة) ── */}
+          <h1 className="hpv4-vision-title">رؤيتنا: بناء الإسلام الرقمي</h1>
+
+          {/* ── التحية اليومية الديناميكية ── */}
           <div style={{ marginBottom: "1.1rem" }}>
-            <h1 style={{
+            <p style={{
               color: "rgba(250,248,242,0.92)",
               fontSize: "clamp(0.88rem, 2.4vw, 1.05rem)",
               fontWeight: 700,
@@ -550,7 +590,7 @@ export default function HomePage() {
               margin: "0 0 0.35rem",
             }}>
               {dailyCtx.greeting}
-            </h1>
+            </p>
             {dailyCtx.subGreeting && (
               <p style={{
                 color: "rgba(250,248,242,0.55)",
@@ -568,7 +608,7 @@ export default function HomePage() {
                 marginTop: "0.5rem",
                 background: `${dailyCtx.accentColor}33`,
                 border: `1px solid ${dailyCtx.accentColor}66`,
-                color: "#FAF8F2",
+                color: "#F7F4ED",
                 padding: "0.22rem 0.9rem",
                 borderRadius: "999px",
                 fontSize: "0.75rem",
@@ -604,7 +644,7 @@ export default function HomePage() {
                   display: "inline-flex", alignItems: "center", gap: "0.35rem",
                   background: "rgba(255,255,255,0.16)",
                   border: "1px solid rgba(255,255,255,0.3)",
-                  color: "#FAF8F2",
+                  color: "#F7F4ED",
                   padding: "0.18rem 0.75rem",
                   borderRadius: "999px",
                   fontSize: "0.72rem",
@@ -632,107 +672,17 @@ export default function HomePage() {
             </svg>
           </div>
 
-          {/* الوصف */}
-          <p style={{ color: "rgba(255,255,255,0.82)", fontSize: "clamp(0.84rem, 2.2vw, 0.96rem)", lineHeight: 1.8, maxWidth: 510, margin: "0 auto 1.1rem" }}>
-            بوّابتك الشاملة إلى العلوم الشرعية: القرآن الكريم، السنة النبوية الموثّقة، دروس علماء الكويت، الفقه والأحكام المعاصرة، والأذكار اليومية
-          </p>
-
-          {/* شريحات الجمهور */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem", justifyContent: "center", marginBottom: "1.1rem" }}>
-            {([
-              {
-                icon: <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 3 1 7l8 4 8-4-8-4z"/><path d="M5 9.5v3.5a4 4 0 0 0 8 0V9.5"/></svg>,
-                label: "طالب العلم", href: "/lessons",
-              },
-              {
-                icon: <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M1 17h16"/><path d="M3 17v-6a6 6 0 0 1 12 0v6"/><path d="M9 5V3"/><path d="M7.5 8h3"/></svg>,
-                label: "المسلم اليومي", href: "/adhkar",
-              },
-              {
-                icon: <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="7" cy="6" r="3"/><path d="M1 17c0-3 2.7-5 6-5s6 2 6 5"/><circle cx="14" cy="6" r="2"/><path d="M14 11c1.7 0 3 1.3 3 4"/></svg>,
-                label: "الأسرة المسلمة", href: "/qa",
-              },
-              {
-                icon: <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M9 12v3"/><path d="M6 15h6"/><path d="M12 5l2-3"/><path d="M6 5 4 2"/></svg>,
-                label: "العالم والباحث", href: "/library",
-              },
-            ] as { icon: React.ReactNode; label: string; href: string }[]).map(({ icon, label, href }, i) => (
-              <Link key={label} href={href} style={{
-                background: i === 0 ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.08)",
-                color: "#FAF8F2",
-                padding: "0.32rem 0.85rem", borderRadius: "999px",
-                fontSize: "0.77rem", fontWeight: 700,
-                border: `1px solid ${i === 0 ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.18)"}`,
-                display: "inline-flex", alignItems: "center", gap: "0.35rem",
-                textDecoration: "none",
-              }}>
-                {icon}{label}
-              </Link>
-            ))}
-          </div>
-
-          {/* خانة البحث */}
-          <form onSubmit={submitSearch} style={{
-            display: "flex", borderRadius: "0.75rem", overflow: "hidden",
-            boxShadow: "0 6px 24px rgba(0,0,0,0.4)", maxWidth: 460, margin: "0 auto 1rem",
-            border: "1px solid rgba(255,255,255,0.18)",
-          }} aria-label="البحث">
-            <input
-              value={term}
-              onChange={(e) => setTerm(e.target.value)}
-              placeholder="ابحث في المنصة..."
-              aria-label="البحث"
-              className="hpv4-hero__search-input"
-              style={{
-                flex: 1, padding: "0.75rem 1rem", border: "none", outline: "none",
-                fontSize: "0.88rem", direction: "rtl", fontFamily: "inherit",
-                background: "rgba(255,255,255,0.97)", color: "#1a1a1a",
-              }}
-            />
-            <button type="submit" style={{
-              background: "linear-gradient(135deg,#176B57,#176B57)", color: "#FAF8F2", border: "none", cursor: "pointer",
-              padding: "0.75rem 1.3rem", fontWeight: 800, fontSize: "0.85rem", fontFamily: "inherit",
-              whiteSpace: "nowrap",
-            }}>بحث</button>
-          </form>
-
-          {/* أزرار الإجراء — شبكة 2×2 */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,auto)", gap: "0.45rem", justifyContent: "center" }}>
-            <Link href="/lessons" className="hpv4-hero__cta-primary" style={{
-              background: "#FAF8F2", color: "#176B57", padding: "0.6rem 1.2rem",
-              borderRadius: "0.6rem", fontWeight: 800, fontSize: "0.86rem",
-              textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.3rem",
+          {/* زر متابعة واحد — العنصر الثالث من البطاقة اليومية (ديناميكي: آخر صفحة
+              زارها المستخدم، أو دعوة افتراضية لبدء الورد اليومي لزائر جديد) */}
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Link href={continueHref} className="hpv4-hero__cta-primary" style={{
+              background: "#F7F4ED", color: "#173D35", padding: "0.7rem 1.6rem",
+              borderRadius: "0.65rem", fontWeight: 800, fontSize: "0.9rem",
+              textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.4rem",
               boxShadow: "0 2px 10px rgba(0,0,0,0.25)",
             }}>
-              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 3 1 7l8 4 8-4-8-4z"/><path d="M5 9.5v3.5a4 4 0 0 0 8 0V9.5"/></svg>
-              الدروس
-            </Link>
-            <Link href="/quran-hub" style={{
-              background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1rem",
-              borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.86rem",
-              textDecoration: "none", border: "1px solid rgba(255,255,255,0.28)",
-              display: "inline-flex", alignItems: "center", gap: "0.3rem",
-            }}>
-              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 15V4C8 2.5 6 2 3 2.5v12c3-.5 5 0 6 1.5z"/><path d="M9 15V4c1-1.5 3-2 6-1.5v12c-3-.5-5 0-6 1.5z"/></svg>
-              القرآن
-            </Link>
-            <Link href="/adhkar" style={{
-              background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1rem",
-              borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.86rem",
-              textDecoration: "none", border: "1px solid rgba(255,255,255,0.28)",
-              display: "inline-flex", alignItems: "center", gap: "0.3rem",
-            }}>
-              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="9" cy="9" r="2"/><path d="M9 2v2M9 14v2M2 9h2M14 9h2"/><path d="M4.2 4.2l1.4 1.4M12.4 12.4l1.4 1.4M4.2 13.8l1.4-1.4M12.4 5.6l1.4-1.4"/></svg>
-              الأذكار
-            </Link>
-            <Link href="/prayer-times" style={{
-              background: "rgba(255,255,255,0.1)", color: "#FAF8F2", padding: "0.6rem 1rem",
-              borderRadius: "0.6rem", fontWeight: 700, fontSize: "0.86rem",
-              textDecoration: "none", border: "1px solid rgba(255,255,255,0.28)",
-              display: "inline-flex", alignItems: "center", gap: "0.3rem",
-            }}>
-              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M1 17h16"/><path d="M3 17v-6a6 6 0 0 1 12 0v6"/><path d="M9 5V3"/><path d="M7.5 8h3"/></svg>
-              الصلاة
+              <svg width="15" height="15" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 3l8 6-8 6V3z"/></svg>
+              {continueLabel}
             </Link>
           </div>
 
@@ -754,7 +704,7 @@ export default function HomePage() {
                   borderRadius: "0.65rem", padding: "0.65rem 0.4rem", textAlign: "center",
                 }}>
                   <div style={{ fontSize: "1rem", marginBottom: "0.15rem", lineHeight: 1 }}>{icon}</div>
-                  <div style={{ color: "#FAF8F2", fontSize: "1.1rem", fontWeight: 800, lineHeight: 1.1 }}>{num}</div>
+                  <div style={{ color: "#F7F4ED", fontSize: "1.1rem", fontWeight: 800, lineHeight: 1.1 }}>{num}</div>
                   <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.62rem", marginTop: "0.18rem", lineHeight: 1.3 }}>{label}</div>
                 </div>
               ))}
@@ -773,25 +723,26 @@ export default function HomePage() {
       {/* ══ زرتَ مؤخراً ══ */}
       <RecentPagesBar />
 
-      {/* ══ لوحة المستخدم الشخصية — للمسجلين فقط ══ */}
-      <SectionErrorBoundary name="PersonalDashboard">
-        <HomePersonalDashboard />
-      </SectionErrorBoundary>
+      {/* ملاحظة: "لوحة المستخدم الشخصية" (ترحيب + آخر نشاطين) حُذفت من هنا —
+          كانت تكرارًا حرفيًا لودجت "استمر من حيث توقفت" (HomeContinueWidget)
+          الذي يعرض نفس البيانات (useRecentProgress) بمعالجة حالات أشمل
+          (تسجيل دخول/تحميل/فراغ) ضمن قسم "أكمل من حيث توقفت" أدناه — لا حذف
+          وظيفة، فقط إزالة ازدواج بصري (إعادة هيكلة الرئيسية، الأولوية 1). */}
 
       {/* ══ وصول سريع ══ */}
-      <nav aria-label="وصول سريع" style={{ maxWidth: 760, margin: "1.5rem auto 0", padding: "0 1rem" }}>
+      <nav aria-label="وصول سريع" style={{ maxWidth: 760, margin: "2rem auto 0", padding: "0 1rem" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.7rem" }}>
           <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
-            <polygon points="9,1 12,7 18,7 13,11 15,17 9,13 3,17 5,11 0,7 6,7" fill="#176B57" opacity="0.85"/>
+            <polygon points="9,1 12,7 18,7 13,11 15,17 9,13 3,17 5,11 0,7 6,7" fill="#173D35" opacity="0.85"/>
           </svg>
-          <p style={{ color: "#176B57", fontSize: "0.82rem", fontWeight: 800, margin: 0, letterSpacing: "0.03em" }}>وصول سريع</p>
+          <p style={{ color: "#173D35", fontSize: "0.82rem", fontWeight: 800, margin: 0, letterSpacing: "0.03em" }}>وصول سريع</p>
         </div>
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(126px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
           gap: "0.45rem",
         }}>
-          {[...QUICK_LINKS, { href: "/sitemap", Icon: Layers, label: "كل الأقسام", desc: "خريطة الموقع" }].map(({ href, Icon: Ico, label, desc }) => (
+          {QUICK_LINKS.map(({ href, Icon: Ico, label, desc }) => (
             <Link key={label + href} href={href} aria-label={label} style={{
               display: "flex", alignItems: "center", gap: "0.5rem",
               padding: "0.6rem 0.65rem",
@@ -803,34 +754,36 @@ export default function HomePage() {
             }}>
               <span style={{
                 background: "linear-gradient(135deg,#edf6f1,#daf0e8)",
-                color: "#176B57", padding: "0.38rem", borderRadius: "0.4rem",
+                color: "#173D35", padding: "0.38rem", borderRadius: "0.4rem",
                 display: "flex", flexShrink: 0,
               }}>
                 <Ico size={14} strokeWidth={2} />
               </span>
               <div style={{ minWidth: 0 }}>
-                <div style={{ color: "#111827", fontSize: "0.77rem", fontWeight: 700, lineHeight: 1.25 }}>{label}</div>
-                <div style={{ color: "#9ca3af", fontSize: "0.66rem", lineHeight: 1.3, marginTop: 1 }}>{desc}</div>
+                {/* لون ثابت (#202725/#9ca3af) لا يتكيّف مع السمة الليلية — بطاقة
+                    "وصول سريع" تتحول خلفيتها للداكن في الوضع الليلي (قاعدة
+                    CSS منفصلة) بينما بقي النص هنا داكنًا ثابتًا = شبه غير
+                    مقروء (تباين ~1:1، شُخِّص 2026-07-19). متغيّرات CSS تعمل
+                    داخل style inline في React وتتكيّف تلقائيًا مع السمة. */}
+                <div style={{ color: "var(--majalis-ink, #202725)", fontSize: "0.77rem", fontWeight: 700, lineHeight: 1.25 }}>{label}</div>
+                <div style={{ color: "var(--majalis-ink-soft, #9ca3af)", fontSize: "0.66rem", lineHeight: 1.3, marginTop: 1 }}>{desc}</div>
               </div>
             </Link>
           ))}
         </div>
       </nav>
 
-      {/* ══ بانر يوم الجمعة ══ */}
-      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 1rem" }}>
+      {/* ══ بانرات المناسبات المؤقتة (جمعة/صيام/شهر هجري) — مجمّعة في حاوية
+          واحدة بتباعد داخلي موحّد بدل ثلاث حاويات منفصلة، تقليلاً للتكرار
+          البصري. كل بانر يبقى شرطي الظهور كما كان تماماً. ══ */}
+      <div style={{
+        maxWidth: 760, margin: "2rem auto 0", padding: "0 1rem",
+        display: "flex", flexDirection: "column", gap: "0.75rem",
+      }}>
         <SafeHomeSection name="FridayBanner">
           <FridayBanner />
         </SafeHomeSection>
-      </div>
-
-      {/* ══ تذكير صيام ══ */}
-      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 1rem" }}>
         <HomeSawmReminder />
-      </div>
-
-      {/* ══ تذكير الشهر الهجري ══ */}
-      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 1rem" }}>
         <SafeHomeSection name="HijriSacredMonthBanner">
           <HijriSacredMonthBanner />
         </SafeHomeSection>

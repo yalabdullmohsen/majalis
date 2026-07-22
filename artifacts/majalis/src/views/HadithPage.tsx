@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AlertTriangle, BookOpen, Star } from "lucide-react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { truncateAtWord } from "@/lib/utils";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { getVerifiedHadith } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
@@ -145,7 +146,7 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
   const compRef = h.metadata?.companion as string | undefined;
 
   return (
-    <article
+    <div
       className="hadith-card ui-card"
       onClick={() => onExpand(h)}
       onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onExpand(h)}
@@ -208,7 +209,9 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
         </div>
       )}
 
-      {/* Actions */}
+      {/* Actions. onClick لمنع انتشار النقر إلى البطاقة الأم (التي تفتح تفاصيل
+          الحديث عند النقر) — لا إجراء فعلي هنا يحتاج مكافئ لوحة مفاتيح؛ كل
+          الأزرار الفعلية داخل هذا الصف قابلة للوصول بلوحة المفاتيح أصلًا. */}
       <div className="hadith-card__actions" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
@@ -240,7 +243,7 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
           url="https://www.majlisilm.com/hadith"
         />
       </div>
-    </article>
+    </div>
   );
 }
 
@@ -401,7 +404,7 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
             id: h.id,
             content_type: "hadith",
             reference_id: h.hadith_number ? String(h.hadith_number) : null,
-            title_ar: h.title ?? h.text.slice(0, 60),
+            title_ar: h.title ?? truncateAtWord(h.text, 60),
             author_name: h.narrator ?? null,
             book_name: h.source_name ?? null,
             is_approved: true,

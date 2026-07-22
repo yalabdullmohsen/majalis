@@ -14,6 +14,7 @@ import {
   type IntelligentSearchResult,
 } from "@/lib/scholarly-intelligence-service";
 import { RecitationTestPanel } from "@/components/quran/RecitationTestPanel";
+import { fetchSurahDetail, stripEmbeddedBismillah } from "@/lib/quran-api";
 
 type Props = {
   surahNum: number;
@@ -80,10 +81,28 @@ function Skeleton() {
   );
 }
 
-export function ExploreAyahPanel({ ayahNum, surahName, ayahText, onClose }: Props) {
+export function ExploreAyahPanel({ surahNum, ayahNum, surahName, ayahText, onClose }: Props) {
   const [results, setResults] = useState<IntelligentSearchResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [, navigate] = useLocation();
+  // اختبار التلاوة كان مقصورًا على الآية المفتوحة فقط — أُتيح الآن لكامل
+  // السورة (طلب صريح: "التسميع مفتوح لجميع السور وليس آيات معينة")،
+  // بجلب نص السورة كاملاً وضمّ آياتها (مع إزالة البسملة المدمَجة من الآية
+  // الأولى — نفس منطق العرض في MushafPage.tsx، لا نسخة موازية).
+  const [surahFullText, setSurahFullText] = useState<string | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    fetchSurahDetail(surahNum)
+      .then((detail) => {
+        if (cancelled) return;
+        const joined = detail.ayahs
+          .map((a) => stripEmbeddedBismillah(surahNum, a.numberInSurah, a.text))
+          .join(" ");
+        setSurahFullText(joined);
+      })
+      .catch(() => { if (!cancelled) setSurahFullText(null); });
+    return () => { cancelled = true; };
+  }, [surahNum]);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -147,7 +166,10 @@ export function ExploreAyahPanel({ ayahNum, surahName, ayahText, onClose }: Prop
           <p dir="rtl" lang="ar" className="eap-ayah-text">{ayahText}</p>
         </div>
 
-        <RecitationTestPanel ayahText={ayahText} />
+        <RecitationTestPanel
+          referenceText={surahFullText ?? ayahText}
+          referenceLabel={surahFullText ? `سورة ${surahName} كاملة` : `آية ${ayahNum} (تعذّر تحميل باقي السورة)`}
+        />
 
         <div className="eap-results">
           {loading && <Skeleton />}

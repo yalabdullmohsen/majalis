@@ -16,6 +16,7 @@ import { createLessonImportDraft } from "./lesson-import-draft.mjs";
 import { publishLessonDraft } from "./publish-lesson.mjs";
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { enrichParsedFromSourceConfig, INSTAGRAM_CONNECTOR_HINTS, discoverInstagramSource } from "./instagram-connector.mjs";
+import { isMultiTypeInstagramSource } from "./instagram-content-classifier.mjs";
 import { resolveSheikhIdForDraft } from "./lesson-import-actions.mjs";
 import { createAndEnrichSheikh } from "./sheikh-enricher.mjs";
 import { resolveMosqueIdForLesson } from "./mosque-matcher.mjs";
@@ -312,7 +313,15 @@ export async function runLessonSourceMonitor({ dryRun = false, sourceId = null, 
   const startedAt = runStart.startedAt || Date.now();
 
   let sources = await listTrustedSources({ activeOnly: true });
-  if (sourceId) sources = sources.filter((s) => s.id === sourceId);
+  if (sourceId) {
+    sources = sources.filter((s) => s.id === sourceId);
+  } else {
+    // الحسابات الخمسة المعتمدة لخط instagram-multitype-sync.mjs (كرون
+    // auto-content-sync، عبر Apify) — تُستبعَد من الجولة اليومية العامة هنا
+    // لمنع جلب/معالجة مزدوجة لنفس المنشورات؛ "فحص الآن" الفردي لمصدر محدَّد
+    // (sourceId أعلاه) يبقى يعمل لها كما هو لأغراض الاختبار الإداري.
+    sources = sources.filter((s) => !isMultiTypeInstagramSource(s));
+  }
 
   const results = [];
   let published = 0;

@@ -206,7 +206,7 @@ export default function TaharaPage() {
           <cite className="th-ayah__ref">البقرة: 222</cite>
         </div>
 
-        <nav className="th-tabs" aria-label="أقسام الطهارة" role="tablist">
+        <div className="th-tabs" aria-label="أقسام الطهارة" role="tablist">
           {TABS.map((t) => (
             <button
               key={t.id}
@@ -222,7 +222,7 @@ export default function TaharaPage() {
               <span className="th-tab__label">{t.label}</span>
             </button>
           ))}
-        </nav>
+        </div>
       </section>
 
       {/* فرض الوضوء اليوم */}

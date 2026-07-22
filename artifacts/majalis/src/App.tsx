@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useRef, useState, type ComponentType } from "react";
 import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useParams } from "wouter";
-import { AuthProvider } from "@/components/AuthProvider";
+import { AuthProvider, useAuth } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { ThemePreferenceProvider } from "@/components/ThemePreferenceProvider";
 import { UserPreferencesProvider } from "@/components/UserPreferencesProvider";
@@ -11,10 +11,8 @@ import SiteFooter from "@/components/SiteFooter";
 import { BottomNavBar } from "@/components/BottomNavBar";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { GlobalBackButton } from "@/components/GlobalBackButton";
-import { AdminSiteEditBar } from "@/components/AdminSiteEditBar";
 import { AchievementToast } from "@/components/AchievementToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
-import { GlobalSearchModal } from "@/components/GlobalSearchModal";
 import NotFound from "@/views/not-found";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
@@ -23,12 +21,14 @@ import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { startAdhanScheduler } from "@/lib/adhan-scheduler";
 import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
+import { PrayerRespectBanner } from "@/components/adhan/PrayerRespectBanner";
 import { startPrayerAlertScheduler, recheckPrayerAlertWindow } from "@/lib/prayer-alert-scheduler";
 import { PrayerCountdownBanner } from "@/components/prayer/PrayerCountdownBanner";
 import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
 import { NavProgressBar } from "@/components/NavProgressBar";
 import { recordRecentPage } from "@/lib/recent-pages";
 import { OfflineBanner } from "@/components/OfflineBanner";
+import { UpdateAvailableBanner } from "@/components/UpdateAvailableBanner";
 
 const lazy = lazyWithRetry;
 
@@ -41,6 +41,14 @@ const lazy = lazyWithRetry;
 const AssistantFloatingWidget = lazyWithRetry(
   () => import("@/components/assistant/AssistantFloatingWidget").then((m) => ({ default: m.AssistantFloatingWidget })),
   "AssistantFloatingWidget",
+);
+const AdminSiteEditBar = lazyWithRetry(
+  () => import("@/components/AdminSiteEditBar").then((m) => ({ default: m.AdminSiteEditBar })),
+  "AdminSiteEditBar",
+);
+const GlobalSearchModal = lazyWithRetry(
+  () => import("@/components/GlobalSearchModal").then((m) => ({ default: m.GlobalSearchModal })),
+  "GlobalSearchModal",
 );
 
 const HomePage = lazy(() => import("@/views/HomePage"));
@@ -66,11 +74,18 @@ const HadithPage = lazy(() => import("@/views/HadithPage"));
 const HadithDaifPage = lazy(() => import("@/views/HadithDaifPage"));
 const HadithMawduPage = lazy(() => import("@/views/HadithMawduPage"));
 const HadithBooksPage = lazy(() => import("@/views/HadithBooksPage"));
+const HadithBooksAndRulingsPage = lazy(() => import("@/views/HadithBooksAndRulingsPage"));
 const ArbaeenLovePage = lazy(() => import("@/views/ArbaeenLovePage"));
 const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
 const QuranCirclesPage = lazy(() => import("@/views/QuranCirclesPage"));
 const QuranHubPage = lazy(() => import("@/views/QuranHubPage"));
+const SurahIndexPage = lazy(() => import("@/views/SurahIndexPage"));
+const RevelationOrderPage = lazy(() => import("@/views/RevelationOrderPage"));
+const MakkiMadaniPage = lazy(() => import("@/views/MakkiMadaniPage"));
 const MushafPage = lazy(() => import("@/views/MushafPage"));
+const MushafPageView = lazy(() => import("@/views/MushafPageView"));
+const MushafReaderV2Preview = lazy(() => import("@/views/MushafReaderV2Preview"));
+const RecitationTestPage = lazy(() => import("@/views/RecitationTestPage"));
 const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
 const QuranTajweedPage = lazy(() => import("@/views/QuranTajweedPage"));
 const SurahStoryDetailRoute = lazy(() =>
@@ -82,6 +97,16 @@ const SurahStoryDetailRoute = lazy(() =>
   }))
 );
 const TawhidPage = lazy(() => import("@/views/TawhidPage"));
+const DiscoverIslamPage = lazy(() => import("@/views/DiscoverIslamPage"));
+const DiscoverIslamQuestionsPage = lazy(() => import("@/views/DiscoverIslamQuestionsPage"));
+const DiscoverIslamQuestionDetailPage = lazy(() => import("@/views/DiscoverIslamQuestionDetailPage"));
+const DiscoverIslamDoubtsPage = lazy(() => import("@/views/DiscoverIslamDoubtsPage"));
+const DiscoverIslamDoubtDetailPage = lazy(() => import("@/views/DiscoverIslamDoubtDetailPage"));
+const DiscoverIslamArticleDetailPage = lazy(() => import("@/views/DiscoverIslamArticleDetailPage"));
+const HowToBecomeMuslimPage = lazy(() => import("@/views/HowToBecomeMuslimPage"));
+const NewMuslimPathPage = lazy(() => import("@/views/NewMuslimPathPage"));
+const NewMuslimDayDetailPage = lazy(() => import("@/views/NewMuslimDayDetailPage"));
+const DiscoverIslamContactPage = lazy(() => import("@/views/DiscoverIslamContactPage"));
 const AdhkarPage = lazy(() => import("@/views/AdhkarPage"));
 const QaPage = lazy(() => import("@/views/QaPage"));
 const QuizPage = lazy(() => import("@/views/QuizPage"));
@@ -101,6 +126,7 @@ const DailyWirdPage = lazy(() => import("@/views/DailyWirdPage"));
 const OccasionsPage = lazy(() => import("@/views/OccasionsPage"));
 const FeaturesInProgressPage = lazy(() => import("@/views/FeaturesInProgressPage"));
 const ArbaeenNawawiPage = lazy(() => import("@/views/ArbaeenNawawiPage"));
+const ArbaeenHadithDetailPage = lazy(() => import("@/views/ArbaeenHadithDetailPage"));
 const SettingsPage = lazy(() => import("@/views/SettingsPage"));
 const AccountDeletionPage = lazy(() => import("@/views/AccountDeletionPage"));
 const AnnualCoursesPage = lazy(() => import("@/views/AnnualCoursesPage"));
@@ -129,7 +155,6 @@ const RulingsPage = lazy(() => import("@/views/RulingsPage"));
 const RulingDetailPage = lazy(() => import("@/views/RulingDetailPage"));
 const UpdatesPage = lazy(() => import("@/views/UpdatesPage"));
 const AutoContentDetailPage = lazy(() => import("@/views/AutoContentDetailPage"));
-const DeveloperPage = lazy(() => import("@/views/DeveloperPage"));
 const KnowledgeGraphPage = lazy(() => import("@/views/KnowledgeGraphPage"));
 const IslamicKnowledgeMapPage = lazy(() => import("@/views/IslamicKnowledgeMapPage"));
 const MindMapPage = lazy(() => import("@/views/MindMapPage"));
@@ -137,6 +162,7 @@ const IslamicLandmarksPage = lazy(() => import("@/views/IslamicLandmarksPage"));
 const MutashabihatPage = lazy(() => import("@/views/MutashabihatPage"));
 const QuranLivePage = lazy(() => import("@/views/QuranLivePage"));
 const QuranMemorizationPage = lazy(() => import("@/views/QuranMemorizationPage"));
+const QuranMemorizationPlansPage = lazy(() => import("@/views/QuranMemorizationPlansPage"));
 const IslamicScholarsPage = lazy(() => import("@/views/IslamicScholarsPage"));
 const ScholarProfilePage = lazy(() => import("@/views/ScholarProfilePage"));
 const AsmaaHusnaPage = lazy(() => import("@/views/AsmaaHusnaPage"));
@@ -404,6 +430,7 @@ function Router() {
       <Route path="/quran-circles"><SafeLazyRoute component={QuranCirclesPage} /></Route>
       <Route path="/fawaid"><SafeLazyRoute component={FawaidPage} /></Route>
       <Route path="/hadith/books"><SafeLazyRoute component={HadithBooksPage} /></Route>
+      <Route path="/hadith/books-and-rulings"><SafeLazyRoute component={HadithBooksAndRulingsPage} /></Route>
       <Route path="/hadith/arbaeen-love-of-allah"><SafeLazyRoute component={ArbaeenLovePage} /></Route>
       <Route path="/hadith/sahih"><SafeLazyRoute component={HadithPage} /></Route>
       <Route path="/hadith/daif"><SafeLazyRoute component={HadithDaifPage} /></Route>
@@ -523,12 +550,22 @@ function Router() {
         </ErrorBoundary>
       </Route>
       <Route path="/quran"><Redirect to="/quran-hub" /></Route>
+      <Route path="/mushaf/page/:page"><SafeLazyRoute component={MushafPageView} /></Route>
+      <Route path="/mushaf/page"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafPage} /></Route>
       <Route path="/mushaf"><SafeLazyRoute component={MushafPage} /></Route>
+      {/* معاينة داخلية لـPhase 3 من إعادة بناء المصحف المطابق لمصحف
+          المدينة — لا تستبدل /mushaf الحيّ بعد، راجع docs/mushaf-rebuild-inventory.md. */}
+      <Route path="/mushaf-v2-preview"><SafeLazyRoute component={MushafReaderV2Preview} /></Route>
       <Route path="/quran-hub"><SafeLazyRoute component={QuranHubPage} /></Route>
+      <Route path="/quran/recitation-test-ai"><SafeLazyRoute component={RecitationTestPage} /></Route>
+      <Route path="/quran/surahs"><SafeLazyRoute component={SurahIndexPage} /></Route>
+      <Route path="/quran/revelation-order"><SafeLazyRoute component={RevelationOrderPage} /></Route>
+      <Route path="/quran/makki-madani"><SafeLazyRoute component={MakkiMadaniPage} /></Route>
       <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
       <Route path="/quran-live"><SafeLazyRoute component={QuranLivePage} /></Route>
       <Route path="/quran-memorization"><SafeLazyRoute component={QuranMemorizationPage} /></Route>
+      <Route path="/quran/memorization-plans"><SafeLazyRoute component={QuranMemorizationPlansPage} /></Route>
       <Route path="/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
       <Route path="/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
       <Route path="/quran/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
@@ -536,6 +573,16 @@ function Router() {
       <Route path="/research"><Redirect to="/fiqh-council/research" /></Route>
       {/* الفقه الإسلامي الموحّد + السيرة النبوية */}
       <Route path="/tawhid"><SafeLazyRoute component={TawhidPage} /></Route>
+      <Route path="/discover-islam"><SafeLazyRoute component={DiscoverIslamPage} /></Route>
+      <Route path="/discover-islam/questions"><SafeLazyRoute component={DiscoverIslamQuestionsPage} /></Route>
+      <Route path="/discover-islam/questions/:slug"><SafeLazyRoute component={DiscoverIslamQuestionDetailPage} /></Route>
+      <Route path="/discover-islam/doubts"><SafeLazyRoute component={DiscoverIslamDoubtsPage} /></Route>
+      <Route path="/discover-islam/doubts/:slug"><SafeLazyRoute component={DiscoverIslamDoubtDetailPage} /></Route>
+      <Route path="/discover-islam/articles/:slug"><SafeLazyRoute component={DiscoverIslamArticleDetailPage} /></Route>
+      <Route path="/discover-islam/how-to-convert"><SafeLazyRoute component={HowToBecomeMuslimPage} /></Route>
+      <Route path="/discover-islam/new-muslim"><SafeLazyRoute component={NewMuslimPathPage} /></Route>
+      <Route path="/discover-islam/new-muslim/:day"><SafeLazyRoute component={NewMuslimDayDetailPage} /></Route>
+      <Route path="/discover-islam/contact"><SafeLazyRoute component={DiscoverIslamContactPage} /></Route>
       <Route path="/fiqh"><SafeLazyRoute component={FiqhPage} /></Route>
       <Route path="/seerah"><SafeLazyRoute component={SeerahPage} /></Route>
       <Route path="/quran/surah-stories/:number"><SafeLazyRoute component={SurahStoryDetailRoute} /></Route>
@@ -552,6 +599,7 @@ function Router() {
       <Route path="/daily-wird"><SafeLazyRoute component={DailyWirdPage} /></Route>
       <Route path="/occasions"><SafeLazyRoute component={OccasionsPage} /></Route>
       <Route path="/features-in-progress"><SafeLazyRoute component={FeaturesInProgressPage} /></Route>
+      <Route path="/arbaeen-nawawi/:id"><SafeLazyRoute component={ArbaeenHadithDetailPage} /></Route>
       <Route path="/arbaeen-nawawi"><SafeLazyRoute component={ArbaeenNawawiPage} /></Route>
       <Route path="/cards"><SafeLazyRoute component={CardsPage} /></Route>
       <Route path="/annual-courses/:id"><SafeLazyRoute component={AnnualCourseDetailPage} /></Route>
@@ -580,7 +628,6 @@ function Router() {
       <Route path="/rulings"><SafeLazyRoute component={RulingsPage} /></Route>
       <Route path="/updates/auto/:slug"><SafeLazyRoute component={AutoContentDetailPage} /></Route>
       <Route path="/updates"><SafeLazyRoute component={UpdatesPage} /></Route>
-      <Route path="/developers"><SafeLazyRoute component={DeveloperPage} /></Route>
       <Route path="/login"><SafeLazyRoute component={LoginPage} /></Route>
       <Route path="/register"><SafeLazyRoute component={RegisterPage} /></Route>
       <Route path="/auth/register"><Redirect to="/register" /></Route>
@@ -615,6 +662,7 @@ function Router() {
 
 function AppShell() {
   const { dir, t } = useLanguage();
+  const { isAdmin } = useAuth();
   const { newBadges, dismissBadges } = useAchievementCheck();
   const [searchOpen, setSearchOpen] = useState(false);
   const pullTouchRef = useRef<{ y: number; triggered: boolean } | null>(null);
@@ -662,6 +710,7 @@ function AppShell() {
       >
         <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
         <OfflineBanner />
+        <UpdateAvailableBanner />
         <NavProgressBar />
         <SeoManager />
         <ScrollResetOnNav />
@@ -671,6 +720,7 @@ function AppShell() {
         <NavBar />
         <PrayerCountdownBanner />
         <AdhanNotificationBar />
+        <PrayerRespectBanner />
         <main id="main-content" className="app-main" tabIndex={-1}>
           <Router />
         </main>
@@ -678,14 +728,22 @@ function AppShell() {
         <Suspense fallback={null}>
           <AssistantFloatingWidget />
         </Suspense>
-        <AdminSiteEditBar />
+        {isAdmin && (
+          <Suspense fallback={null}>
+            <AdminSiteEditBar />
+          </Suspense>
+        )}
         <ScrollToTop />
         <GlobalBackButton />
         <BottomNavBar />
         {newBadges.length > 0 && (
           <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
         )}
-        {searchOpen && <GlobalSearchModal onClose={() => setSearchOpen(false)} />}
+        {searchOpen && (
+          <Suspense fallback={null}>
+            <GlobalSearchModal onClose={() => setSearchOpen(false)} />
+          </Suspense>
+        )}
       </div>
     </WouterRouter>
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface BulkImportProps {
   title: string;
@@ -18,6 +18,13 @@ export function BulkImport({ title, template, hint, importRow, onDone }: BulkImp
   const reset = () => { setText(""); setRunning(false); setProgress({ done: 0, total: 0 }); setResult(null); };
   const close = () => { setOpen(false); reset(); };
   const fillTemplate = () => setText(JSON.stringify(template, null, 2));
+
+  useEffect(() => {
+    if (!open) return;
+    const keyHandler = (e: KeyboardEvent) => { if (e.key === "Escape") close(); };
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  }, [open, close]);
 
   const run = async () => {
     let rows: any[];

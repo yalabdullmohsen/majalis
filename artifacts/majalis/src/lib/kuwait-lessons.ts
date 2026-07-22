@@ -218,6 +218,25 @@ function isExpired(lesson: KuwaitLessonRecord): boolean {
   return false;
 }
 
+/**
+ * "محتوى فعلي مكتمل" لدرس/دورة في هذا المشروع = عنوان حقيقي + اسم شيخ/متحدث
+ * حقيقي + موعد أسبوعي كامل (يوم ووقت) — هذه الحقول الثلاثة هي التي تُبنى
+ * عليها بطاقة الدرس (العنوان والراوي) وحساب حالته (جارٍ الآن/الوقت المتبقي
+ * عبر isLessonInProgress/computeNextOccurrenceMs في lesson-time.ts، وترتيبه
+ * في القائمة عبر sortKuwaitLessons أدناه). صف يفتقد أيًا منها ليس "درسًا
+ * ناقص حقل واحد" بل بلا هوية أو جدول فعلي — يُعرض كبطاقة شبه فارغة أو
+ * يكسر حساب الوقت (NaN/دائمًا الآن). دروس بلا صورة/وصف/رابط بث تبقى دروسًا
+ * مكتملة تمامًا (هذه الحقول اختيارية بطبيعتها في KuwaitLessonRecord).
+ */
+export function isLessonComplete(lesson: KuwaitLessonRecord): boolean {
+  return Boolean(
+    lesson.title?.trim() &&
+    lesson.sheikhName?.trim() &&
+    lesson.day?.trim() &&
+    lesson.time?.trim(),
+  );
+}
+
 export function splitKuwaitLessons(lessons: KuwaitLessonRecord[]) {
   const active: KuwaitLessonRecord[] = [];
   const archived: KuwaitLessonRecord[] = [];

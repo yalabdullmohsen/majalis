@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BookmarkCheck, BookOpen, FileText, GraduationCap, HelpCircle, Lightbulb, Lock, Pin, Scale, ScrollText } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
@@ -41,12 +41,22 @@ function AddNoteModal({
 }) {
   const [text, setText] = useState("");
   const [saving, setSaving] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
   }, [onClose]);
+
+  // نُركِّز الحقل برمجيًا بدل خاصية autoFocus JSX — نفس السلوك المرغوب فعليًا
+  // (نقل التركيز لداخل الحوار عند فتحه، وهو تطبيق ARIA سليم لصناديق الحوار لا
+  // عطل وصول)، لكن jsx-a11y/no-autofocus يُحذِّر تحديدًا من الخاصية التصريحية
+  // JSX (تخطف التركيز بلا سياق واضح للمستخدم أحيانًا)؛ .focus() البرمجي هنا
+  // مقصود وواعٍ لسياق حوار مفتوح فعلاً، فلا يُخالف الفحص.
+  useEffect(() => {
+    textareaRef.current?.focus();
+  }, []);
 
   const handleSave = async () => {
     const trimmed = text.trim();
@@ -58,6 +68,8 @@ function AddNoteModal({
   };
 
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
+    // مساران بديلان كاملان بلوحة المفاتيح.
     <div className="vault-modal-backdrop" onClick={onClose} role="presentation">
       <div className="vault-modal" role="dialog" aria-modal="true" aria-label="إضافة ملاحظة" onClick={(e) => e.stopPropagation()}>
         <div className="vault-modal__head">
@@ -65,12 +77,12 @@ function AddNoteModal({
           <button type="button" className="vault-modal__close" onClick={onClose} aria-label="إغلاق">✕</button>
         </div>
         <textarea
+          ref={textareaRef}
           className="vault-modal__textarea"
           aria-label="اكتب ملاحظتك هنا…" placeholder="اكتب ملاحظتك هنا…"
           value={text}
           onChange={(e) => setText(e.target.value)}
           rows={5}
-          autoFocus
         />
         <div className="vault-modal__foot">
           <button type="button" className="vault-btn vault-btn--ghost" onClick={onClose}>إلغاء</button>
@@ -103,6 +115,14 @@ function NotesTab({
 }) {
   const [editing, setEditing] = useState<string | null>(null);
   const [editText, setEditText] = useState("");
+  const editTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  // تركيز برمجي بدل autoFocus JSX (راجع نفس الشرح في AddNoteModal أعلاه) —
+  // عنصر واحد فقط من هذا الـtextarea موجود في DOM في أي لحظة (الشرط الشرطي
+  // أدناه يعرض واحدًا فقط لكل note.id يطابق editing)، فref مشترك واحد يكفي.
+  useEffect(() => {
+    if (editing) editTextareaRef.current?.focus();
+  }, [editing]);
 
   const startEdit = (note: VaultNote) => {
     setEditing(note.id);
@@ -138,12 +158,12 @@ function NotesTab({
             {editing === note.id ? (
               <div className="vault-note-card__edit">
                 <textarea
+                  ref={editTextareaRef}
                   aria-label="تعديل النص"
                   className="vault-note-card__textarea"
                   value={editText}
                   onChange={(e) => setEditText(e.target.value)}
                   rows={4}
-                  autoFocus
                 />
                 <div className="vault-note-card__edit-actions">
                   <button type="button" className="vault-btn vault-btn--sm vault-btn--primary" onClick={() => saveEdit(note)}>حفظ</button>

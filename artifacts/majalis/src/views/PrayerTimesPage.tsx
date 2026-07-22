@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { Link } from "wouter";
-import { Compass, Moon, RotateCw, Star, Sun, SunDim, Sunset, Sunrise } from "lucide-react";
+import { Bell, Compass, Moon, RotateCw, Star, Sun, SunDim, Sunset, Sunrise } from "lucide-react";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import type { LucideIcon } from "lucide-react";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
@@ -235,21 +235,21 @@ export default function PrayerTimesPage() {
 
       {/* ── شريط الصلوات ── */}
       {prayers.length > 0 && (
-        <nav className="pt-prayers" role="list" aria-label="صلوات اليوم">
+        <nav className="pt-prayers" aria-label="صلوات اليوم">
           {prayers.map((p) => (
             <button
               key={p.key}
               type="button"
-              role="listitem"
               className={[
                 "pt-prayer",
                 isNext(p.key)   ? "pt-prayer--next"   : "",
                 isPinned(p.key) ? "pt-prayer--pinned" : "",
                 isPast(p)       ? "pt-prayer--past"   : "",
+                p.key === "Sunrise" ? "pt-prayer--sunrise" : "",
               ].filter(Boolean).join(" ")}
               onClick={() => setPinnedKey(p.key === pinnedKey ? null : p.key)}
               aria-pressed={isPinned(p.key)}
-              aria-label={`صلاة ${PRAYER_AR[p.key] ?? p.name}، ${p.time}`}
+              aria-label={`صلاة ${PRAYER_AR[p.key] ?? p.name}${p.key === "Sunrise" ? " (غير مفروضة)" : ""}، ${p.time}`}
             >
               <span className="pt-prayer__icon" aria-hidden="true">
                 {(() => { const I = PRAYER_ICON[p.key] ?? Sunset; return <I size={20} strokeWidth={1.6} />; })()}
@@ -294,6 +294,9 @@ export default function PrayerTimesPage() {
         </Link>
         <Link href="/salah-guide?tab=suwar" className="pt-quick-link">
           <Moon size={16} strokeWidth={1.8} aria-hidden="true" /> سور الصلاة والنوافل
+        </Link>
+        <Link href="/adhan-settings" className="pt-quick-link">
+          <Bell size={16} strokeWidth={1.8} aria-hidden="true" /> إعدادات الأذان والتنبيهات
         </Link>
       </div>
 

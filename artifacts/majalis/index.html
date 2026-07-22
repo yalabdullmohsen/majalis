@@ -11,7 +11,7 @@
     <meta name="description" content="تطبيق علمي عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم." />
     <meta name="keywords" content="المجلس العلمي, دروس علمية, دروس شرعية, محاضرات إسلامية, دورات شرعية, طلب العلم, القرآن الكريم, السنة النبوية, الفوائد العلمية, الأذكار" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#153025" />
+    <meta name="theme-color" content="#FFFFFF" />
     <meta name="author" content="المجلس العلمي" />
     <link rel="canonical" href="https://www.majlisilm.com/" />
     <meta property="og:site_name" content="المجلس العلمي" />
@@ -43,12 +43,15 @@
     <link rel="dns-prefetch" href="https://api.alquran.cloud" />
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
     <meta name="color-scheme" content="light dark" />
-    <!-- خط المنصة الموحَّد: IBM Plex Sans Arabic لواجهة الاستخدام (نصوص، عناوين، قراءة) —
-         خط عربي حديث مصمَّم خصيصًا للعربية بتباين ووضوح عاليين على كل الأوزان.
-         الاستثناء الوحيد: خطوط الرسم القرآني/الصيغ الشرعية العثمانية للعناوين المميزة والمصحف فقط (2026-07-16). -->
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Amiri+Quran&family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- خط المنصة الموحَّد: Alexandria لواجهة الاستخدام (نصوص، عناوين، قراءة) — خط عربي
+         حديث هادئ بثراء أوزان يناسب هوية فاخرة منخفضة الضجيج (إعادة تصميم الهوية v3،
+         2026-07-19، بدل Almarai). IBM Plex Sans Arabic يبقى مُحمَّلاً كبديل احتياطي فقط
+         (توافقًا مع مسارات توليد الصور/PDF القائمة التي ما زالت تشير إليه صراحةً).
+         الاستثناء الوحيد: خطوط الرسم القرآني/الصيغ الشرعية العثمانية للعناوين المميزة
+         والمصحف فقط. -->
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Amiri+Quran&family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Amiri+Quran&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Amiri+Quran&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet" />
     </noscript>
     <script type="application/ld+json">
       {
@@ -129,6 +132,9 @@
         document.documentElement.dataset.theme = resolved;
         document.documentElement.classList.toggle("dark", resolved === "dark");
         document.documentElement.style.colorScheme = resolved === "light" ? "light" : "dark";
+        /* theme-color متزامن فورًا قبل الطلاء الأول (يطابق src/lib/theme-preference.ts) */
+        var _themeMeta = document.querySelector('meta[name="theme-color"]');
+        if (_themeMeta) _themeMeta.setAttribute("content", resolved === "dark" ? "#0D1A14" : "#FFFFFF");
 
         var storedFont = localStorage.getItem("majalis-font-preference-v2");
         document.documentElement.dataset.font =
@@ -148,10 +154,10 @@
     <!-- محتوى للزواحف (noscript) — يضمن فهرسة محركات البحث للمحتوى الأساسي -->
     <noscript>
       <style>
-        body{font-family:"IBM Plex Sans Arabic","Noto Sans Arabic",system-ui,sans-serif;direction:rtl;background:#f9f7f2;color:#153025;max-width:960px;margin:0 auto;padding:1rem 1.5rem}
-        h1{color:#0E6E52;font-size:1.8rem}h2{color:#153025;font-size:1.2rem;margin-top:1.5rem}
-        nav a{color:#0E6E52;margin-left:1rem;text-decoration:none}
-        ul{line-height:2}a{color:#0E6E52}
+        body{font-family:"Alexandria","IBM Plex Sans Arabic","Noto Sans Arabic",system-ui,sans-serif;direction:rtl;background:#F7F4ED;color:#202725;max-width:960px;margin:0 auto;padding:1rem 1.5rem}
+        h1{color:#173D35;font-size:1.8rem}h2{color:#173D35;font-size:1.2rem;margin-top:1.5rem}
+        nav a{color:#173D35;margin-left:1rem;text-decoration:none}
+        ul{line-height:2}a{color:#173D35}
       </style>
       <main>
         <h1>المجلس العلمي — منصة الدروس الشرعية والعلوم الإسلامية</h1>

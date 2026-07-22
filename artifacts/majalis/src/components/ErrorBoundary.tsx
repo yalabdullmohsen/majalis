@@ -20,6 +20,25 @@ function isChunkLoadError(error: Error): boolean {
   );
 }
 
+/**
+ * حارس ضد حلقة إعادة تحميل لا نهائية: reload التلقائي أدناه يُصلح الحالة
+ * الشائعة الحقيقية (chunk قديم في تبويب مفتوح منذ قبل نشر جديد — التحديث
+ * يجلب index.html جديدًا بمراجع chunks صحيحة)، لكن لو كان الفشل من مشكلة
+ * شبكة حقيقية مستمرة لا كاش قديم فقط، سيتكرر نفس الخطأ فور التحميل من
+ * جديد إلى ما لا نهاية. مرة واحدة فقط لكل جلسة تبويب (sessionStorage) —
+ * بعدها تُعرض واجهة الخطأ العادية بأزرارها بدل إعادة تحميل صامتة متكررة.
+ */
+const CHUNK_RELOAD_GUARD_KEY = "mj-chunk-reload-attempted";
+function shouldAutoReloadForChunkError(): boolean {
+  try {
+    if (sessionStorage.getItem(CHUNK_RELOAD_GUARD_KEY) === "1") return false;
+    sessionStorage.setItem(CHUNK_RELOAD_GUARD_KEY, "1");
+    return true;
+  } catch {
+    return true; // sessionStorage غير متاح (وضع خاص صارم) — لا حارس، لكن أيضًا لا خطر تكرار عبر التخزين
+  }
+}
+
 export class ErrorBoundary extends Component<Props, State> {
   state: State = { error: null, copied: false, errorId: "", componentStack: null };
 
@@ -39,7 +58,7 @@ export class ErrorBoundary extends Component<Props, State> {
       }),
     );
 
-    if (isChunkLoadError(error)) {
+    if (isChunkLoadError(error) && shouldAutoReloadForChunkError()) {
       window.location.reload();
     }
   }

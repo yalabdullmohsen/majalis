@@ -9,7 +9,7 @@
   position: relative;
   padding: 3.5rem 1.5rem 2.5rem;
   text-align: center;
-  background: linear-gradient(160deg, #0d3026 0%, #153025 50%, #1a4535 100%);
+  background: linear-gradient(160deg, #0d3026 0%, #173D35 50%, #1a4535 100%);
   overflow: hidden;
 }
 
@@ -113,9 +113,9 @@
 
 .ilm-tab--active,
 .ilm-tab:hover {
-  background: var(--majalis-emerald, #0E6E52);
+  background: var(--majalis-emerald, #28584D);
   color: #fff;
-  border-color: var(--majalis-emerald, #0E6E52);
+  border-color: var(--majalis-emerald, #28584D);
 }
 
 .ilm-filter-row {
@@ -151,7 +151,7 @@
 
 .ilm-search:focus, .ilm-select:focus {
   outline: none;
-  border-color: var(--majalis-emerald, #0E6E52);
+  border-color: var(--majalis-emerald, #28584D);
 }
 
 .ilm-view-toggle {
@@ -173,9 +173,9 @@
 }
 
 .ilm-view-btn--active {
-  background: var(--majalis-emerald, #0E6E52);
+  background: var(--majalis-emerald, #28584D);
   color: #fff;
-  border-color: var(--majalis-emerald, #0E6E52);
+  border-color: var(--majalis-emerald, #28584D);
 }
 
 /* ── Map Container ────────────────────────────────────────────── */
@@ -233,8 +233,8 @@
 }
 
 .ilm-card:hover {
-  box-shadow: 0 6px 24px rgba(14,110,82,0.12);
-  border-color: var(--majalis-emerald, #0E6E52);
+  box-shadow: 0 6px 24px rgba(23,61,53,0.12);
+  border-color: var(--majalis-emerald, #28584D);
 }
 
 .ilm-card--list {
@@ -244,7 +244,7 @@
 /* card image placeholder */
 .ilm-card__img {
   height: 160px;
-  background: linear-gradient(135deg, #153025 0%, #0E6E52 100%);
+  background: linear-gradient(135deg, #173D35 0%, #28584D 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -310,8 +310,8 @@
 }
 
 .ilm-badge--type {
-  background: rgba(14,110,82,0.1);
-  color: var(--majalis-emerald, #0E6E52);
+  background: rgba(23,61,53,0.1);
+  color: var(--majalis-emerald, #28584D);
 }
 
 .ilm-badge--era {
@@ -403,7 +403,7 @@
 
 .ilm-modal__img {
   height: 200px;
-  background: linear-gradient(135deg, #153025 0%, #0E6E52 60%, #176B57 100%);
+  background: linear-gradient(135deg, #173D35 0%, #28584D 60%, #173D35 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -432,7 +432,7 @@
 .ilm-modal__section-title {
   font-size: 0.82rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #0E6E52);
+  color: var(--majalis-emerald, #28584D);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin: 1rem 0 0.4rem;
@@ -483,7 +483,7 @@
   gap: 0.5rem;
   margin-top: 1.25rem;
   padding: 0.6rem 1.25rem;
-  background: var(--majalis-emerald, #0E6E52);
+  background: var(--majalis-emerald, #28584D);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -494,7 +494,7 @@
   text-decoration: none;
 }
 
-.ilm-map-btn:hover { background: #123F36; }
+.ilm-map-btn:hover { background: #173D35; }
 
 /* ── Share ─────────────────────────────────────────────────────── */
 .ilm-share-wrap {

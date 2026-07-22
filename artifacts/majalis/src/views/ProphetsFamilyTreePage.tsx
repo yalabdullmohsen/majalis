@@ -3,14 +3,15 @@ import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { PROPHETS_LINEAGE, type LineageNode } from "@/lib/prophets-lineage";
 import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
+import { truncateAtWord } from "@/lib/utils";
 
 // ── ثوابت التخطيط ──────────────────────────────────────────────────────────
 const NODE_W  = 110;
 const NODE_H  = 52;
 const H_GAP   = 50;   // الفجوة الأفقية بين الأعمدة
 const V_GAP   = 28;   // الفجوة الرأسية بين الإخوة
-const EMERALD = "#0E6E52";
-const ANCESTOR_CLR = "#374151";
+const EMERALD = "#28584D";
+const ANCESTOR_CLR = "#68716D";
 
 // ── حساب تخطيط الشجرة ─────────────────────────────────────────────────────
 
@@ -66,7 +67,7 @@ function NodeBox({ placed, onClick }: {
   const isUlul  = node.isUlulAzm;
   const isLast  = node.id === "muhammad";
   const fill    = isLast ? EMERALD : isAnc ? ANCESTOR_CLR : "#FFFFFF";
-  const stroke  = isUlul ? "#D97706" : isAnc ? "#6B7280" : EMERALD;
+  const stroke  = isUlul ? "#D97706" : isAnc ? "#5E655F" : EMERALD;
   const textClr = (isLast || isAnc) ? "#FFFFFF" : "#1F2937";
   const sw      = isUlul ? 2.5 : 1.5;
   const rx      = isLast ? 12 : 8;
@@ -106,9 +107,9 @@ function NodeBox({ placed, onClick }: {
           x={NODE_W / 2} y={NODE_H / 2 + 11}
           textAnchor="middle" dominantBaseline="middle"
           fontSize={8.5} fontFamily="IBM Plex Sans Arabic, Noto Sans Arabic, sans-serif"
-          fill={isLast ? "rgba(255,255,255,0.8)" : "#6B7280"}
+          fill={isLast ? "rgba(255,255,255,0.8)" : "#5E655F"}
         >
-          {node.era.slice(0, 20)}{node.era.length > 20 ? "…" : ""}
+          {truncateAtWord(node.era, 20)}
         </text>
       )}
       {isAnc && (
@@ -210,7 +211,7 @@ export default function ProphetsFamilyTreePage() {
       {/* Header */}
       <header style={{
         background: "linear-gradient(135deg,#0c2318,#1a3d2b)",
-        color: "#FAF8F2", padding: "1rem 1.25rem",
+        color: "#F7F4ED", padding: "1rem 1.25rem",
         display: "flex", alignItems: "center", gap: "1rem",
       }}>
         <Link href="/prophets" style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none", fontSize: "0.9rem" }}>
@@ -231,7 +232,7 @@ export default function ProphetsFamilyTreePage() {
           ].map(({ icon, fn, title }) => (
             <button key={title} type="button" onClick={fn} aria-label={title} style={{
               background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)",
-              color: "#FAF8F2", borderRadius: "0.5rem", padding: "0.4rem 0.6rem",
+              color: "#F7F4ED", borderRadius: "0.5rem", padding: "0.4rem 0.6rem",
               cursor: "pointer", display: "flex", alignItems: "center",
             }}>{icon}</button>
           ))}
@@ -242,26 +243,30 @@ export default function ProphetsFamilyTreePage() {
       <div style={{
         display: "flex", gap: "1rem", flexWrap: "wrap",
         padding: "0.6rem 1.25rem", background: "#fff",
-        borderBottom: "1px solid #E5E7EB", fontSize: "0.75rem",
+        borderBottom: "1px solid #E7E2D8", fontSize: "0.75rem",
       }}>
         {[
           { color: EMERALD,       label: "خاتم الأنبياء ﷺ" },
           { color: "#D97706",     label: "أولو العزم", border: true },
-          { color: "#374151",     label: "حلقة وصل" },
+          { color: "#68716D",     label: "حلقة وصل" },
           { color: "#FFFFFF",     label: "سائر الأنبياء", border2: true },
         ].map(({ color, label, border, border2 }) => (
           <div key={label} style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
             <div style={{
               width: 14, height: 14, borderRadius: 4,
               background: color,
-              border: border ? "2px solid #D97706" : border2 ? "1.5px solid #0E6E52" : "none",
+              border: border ? "2px solid #D97706" : border2 ? "1.5px solid #28584D" : "none",
             }}/>
-            <span style={{ color: "#374151" }}>{label}</span>
+            <span style={{ color: "#68716D" }}>{label}</span>
           </div>
         ))}
       </div>
 
-      {/* Canvas */}
+      {/* Canvas. لوحة سحب/تحريك (pan) بالماوس واللمس فقط — نفس القيد المعماري
+          الموثَّق سابقًا لـ MindMapCanvas: التحريك بالسحب مفهوم مرتبط بمؤشر/لمس
+          جوهريًا، لا مكافئ مباشر له بلوحة المفاتيح. التكبير/التصغير (الوظيفة
+          الأهم فعليًا) له بديل كامل بلوحة المفاتيح عبر زرّي "تكبير"/"تصغير"
+          الظاهرين (button حقيقي)، فلا حظر فعلي للوصول للمحتوى. */}
       <div
         style={{
           overflow: "hidden", cursor: "grab", userSelect: "none",
@@ -308,7 +313,7 @@ export default function ProphetsFamilyTreePage() {
                   key={`${p.parentId}-${p.node.id}`}
                   d={`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`}
                   fill="none"
-                  stroke={isDash ? "#9CA3AF" : "#0E6E52"}
+                  stroke={isDash ? "#9CA3AF" : "#28584D"}
                   strokeWidth={isDash ? 1 : 1.5}
                   strokeDasharray={isDash ? "5,4" : undefined}
                   opacity={0.6}
@@ -348,20 +353,20 @@ export default function ProphetsFamilyTreePage() {
                 </span>
               )}
             </h2>
-            <button type="button" onClick={() => setSelected(null)} aria-label="إغلاق" style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.2rem", color: "#6B7280" }}>×</button>
+            <button type="button" onClick={() => setSelected(null)} aria-label="إغلاق" style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.2rem", color: "#5E655F" }}>×</button>
           </div>
           {selectedNode.era && (
-            <p style={{ margin: "0.25rem 0", color: "#374151", fontSize: "0.85rem" }}>
+            <p style={{ margin: "0.25rem 0", color: "#68716D", fontSize: "0.85rem" }}>
               <strong>الحقبة: </strong>{selectedNode.era}
             </p>
           )}
           {selectedNode.people && (
-            <p style={{ margin: "0.25rem 0", color: "#374151", fontSize: "0.85rem" }}>
+            <p style={{ margin: "0.25rem 0", color: "#68716D", fontSize: "0.85rem" }}>
               <strong>القوم أو المكان: </strong>{selectedNode.people}
             </p>
           )}
           {selectedNode.linkNote && (
-            <p style={{ margin: "0.25rem 0", color: "#6B7280", fontSize: "0.8rem", fontStyle: "italic" }}>
+            <p style={{ margin: "0.25rem 0", color: "#5E655F", fontSize: "0.8rem", fontStyle: "italic" }}>
               {selectedNode.linkNote}
             </p>
           )}

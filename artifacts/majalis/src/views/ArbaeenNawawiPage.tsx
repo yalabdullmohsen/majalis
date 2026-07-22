@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "wouter";
+import { GraduationCap } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ARBAEEN_NAWAWI } from "@/lib/arbaeen-nawawi-seed";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { truncateAtWord } from "@/lib/utils";
 
 /* ══════════════════════════════════════════════════════════════════
    §178b، الأربعون النووية (.an-*)
@@ -244,7 +247,7 @@ export default function ArbaeenNawawiPage() {
                 </div>
                 <blockquote className="an-card__text">
                   {h.text.length > 120 && !isExp
-                    ? `«${h.text.slice(0, 117)}…»`
+                    ? `«${truncateAtWord(h.text, 117)}»`
                     : `«${h.text}»`}
                 </blockquote>
                 {isExp && (
@@ -269,6 +272,9 @@ export default function ArbaeenNawawiPage() {
                     >
                       {isExp ? "طيّ" : "تفصيل"}
                     </button>
+                    <Link href={`/arbaeen-nawawi/${h.id}`} className="an-expand-btn" aria-label={`صفحة تعلّم واختبار الحديث ${h.id}`}>
+                      <GraduationCap size={13} strokeWidth={1.8} aria-hidden="true" /> اختبر نفسك
+                    </Link>
                     <button
                       type="button"
                       className={`an-read-btn an-read-btn--sm${isRead ? " an-read-btn--done" : ""}`}

@@ -212,8 +212,9 @@ function LessonImportUrlContent() {
 
       <section className="liu-section">
         <h3 className="liu-section__h3">1. رابط الإعلان</h3>
-        <label style={labelStyle}>URL</label>
+        <label style={labelStyle} htmlFor="liu-url">URL</label>
         <input
+          id="liu-url"
           className="adm-input liu-input--mb"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
@@ -221,8 +222,8 @@ function LessonImportUrlContent() {
           dir="ltr"
           disabled={busy}
         />
-        <label style={labelStyle}>ملاحظات (اختياري)</label>
-        <input className="adm-input liu-input--mb" value={notes} onChange={(e) => setNotes(e.target.value)} disabled={busy} />
+        <label style={labelStyle} htmlFor="liu-notes">ملاحظات (اختياري)</label>
+        <input id="liu-notes" className="adm-input liu-input--mb" value={notes} onChange={(e) => setNotes(e.target.value)} disabled={busy} />
         <button
           type="button"
           disabled={busy}

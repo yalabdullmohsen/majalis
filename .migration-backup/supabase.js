@@ -46,8 +46,18 @@ export async function getCurrentUser() {
 
 export async function getSheikhs() {
   const { data, error } = await supabase
-    .from("sheikhs").select("*").order("name");
+    .from("sheikhs").select("*").eq("status", "approved").order("name");
   return { data: data || [], error };
+}
+
+export async function getAllSheikhs() {
+  const { data, error } = await supabase
+    .from("sheikhs").select("id, name, status, is_verified, created_at").order("name");
+  return { data: data || [], error };
+}
+
+export async function deleteSheikh(id) {
+  return await supabase.from("sheikhs").delete().eq("id", id);
 }
 
 export async function getSheikhById(id) {

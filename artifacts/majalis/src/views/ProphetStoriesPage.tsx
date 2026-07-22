@@ -7,6 +7,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { prophetArticleJsonLd, breadcrumbJsonLd, defaultSiteJsonLd } from "@/lib/seo-structured-data";
 import { supabase } from "@/lib/supabase";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { truncateAtWord } from "@/lib/utils";
 
 type Citation = { surah: string; ayahs: string; note: string };
 
@@ -14,15 +15,15 @@ type Citation = { surah: string; ayahs: string; note: string };
 
 const PROPHET_HUE: Record<string, string> = {
   adam: "#5D726A", idris: "#4A6B6B", nuh: "#3D6560", hud: "#5A7066",
-  salih: "#5B6B60", ibrahim: "#123F36", lut: "#3A6A4A", ismail: "#2A5E42",
+  salih: "#5B6B60", ibrahim: "#173D35", lut: "#3A6A4A", ismail: "#2A5E42",
   "is-haq": "#3D6050", yaqub: "#356055", yusuf: "#2D5545", ayyub: "#4A6055",
-  shuayb: "#25504A", musa: "#123F36", harun: "#1E4A38", "dhul-kifl": "#354A42",
-  dawud: "#2A3E35", sulayman: "#153025", ilyas: "#3A5548", "al-yasa": "#266050",
+  shuayb: "#25504A", musa: "#173D35", harun: "#1E4A38", "dhul-kifl": "#354A42",
+  dawud: "#2A3E35", sulayman: "#173D35", ilyas: "#3A5548", "al-yasa": "#266050",
   yunus: "#1A5555", zakariyya: "#2A503C", yahya: "#205540", isa: "#1E3F50",
-  muhammad: "#123F36",
+  muhammad: "#173D35",
 };
 
-const IVORY = "#BEC7C3";
+const IVORY = "#D6CFC0";
 
 /* بيانات تكميلية: عدد الذكر، المعجزة، الكتاب، المواضع القرآنية */
 type Supplement = { mentioned: number; miracle?: string; book?: string; quranRef?: string };
@@ -155,7 +156,7 @@ function ProphetCard({
   const isUlulAzm = ULUL_AZM_SLUGS.includes(prophet.slug);
 
   return (
-    <article
+    <div
       className={`prophet-lux-card${isUlulAzm ? " prophet-lux-card--azm" : ""}`}
       style={{
         "--prophet-color": color,
@@ -181,11 +182,11 @@ function ProphetCard({
           <span className="prophet-lux-card__pbuh"> عليه السلام</span>
         </h3>
         {prophet.quranTitle && (
-          <div className="prophet-lux-card__quran">﴾ {prophet.quranTitle} ﴿</div>
+          <div className="prophet-lux-card__quran">﴿ {prophet.quranTitle} ﴾</div>
         )}
         <p className="prophet-lux-card__title">{prophet.title}</p>
         <p className="prophet-lux-card__place">{prophet.peopleOrPlace}</p>
-        <p className="prophet-lux-card__bio">{prophet.briefBio.slice(0, 100)}…</p>
+        <p className="prophet-lux-card__bio">{truncateAtWord(prophet.briefBio, 100)}</p>
 
         <div className="prophet-lux-card__footer">
           {sup && (
@@ -211,7 +212,7 @@ function ProphetCard({
 
       {isUlulAzm && <div className="prophet-lux-card__azm-tag">أولو العزم</div>}
       <div className="prophet-lux-card__border" />
-    </article>
+    </div>
   );
 }
 
@@ -254,7 +255,7 @@ function ProphetDetailView({
     applyPageSeo({
       path: `/prophets/${p.slug}`,
       title: `قصة ${p.arabicName} عليه السلام | المجلس العلمي`,
-      description: p.briefBio?.slice(0, 160) || `قصة نبي الله ${p.arabicName} عليه السلام من القرآن والسنة.`,
+      description: p.briefBio ? truncateAtWord(p.briefBio, 160) : `قصة نبي الله ${p.arabicName} عليه السلام من القرآن والسنة.`,
       keywords: ["قصص الأنبياء", p.arabicName, "أنبياء الإسلام", "معجزات الأنبياء"],
       ogType: "article",
       jsonLd,
@@ -289,7 +290,7 @@ function ProphetDetailView({
   const isUlulAzm = ULUL_AZM_SLUGS.includes(p.slug);
 
   const share = async () => {
-    const text = `${p.arabicName} عليه السلام، ${p.title}\n${p.briefBio.slice(0, 200)}…\n\nمن قصص الأنبياء في المجلس العلمي`;
+    const text = `${p.arabicName} عليه السلام، ${p.title}\n${truncateAtWord(p.briefBio, 200)}\n\nمن قصص الأنبياء في المجلس العلمي`;
     const url = `https://www.majlisilm.com/prophets/${p.slug}`;
     try {
       if (navigator.share) {
@@ -340,7 +341,7 @@ function ProphetDetailView({
           <h1 className="prophet-detail-lux__name">{p.arabicName}</h1>
           <p className="prophet-detail-lux__pbuh">صلوات الله وسلامه عليه</p>
           {p.quranTitle && (
-            <div className="prophet-detail-lux__quran-title">﴾ {p.quranTitle} ﴿</div>
+            <div className="prophet-detail-lux__quran-title">﴿ {p.quranTitle} ﴾</div>
           )}
           <p className="prophet-detail-lux__hero-title">{p.title}</p>
           <GeometricBorder color="var(--prophet-color-on-dark)" size={20} />
@@ -568,7 +569,7 @@ function UlulAzmView({ onSelect }: { onSelect: (slug: string) => void }) {
               <div className="nb-azm-star"><IslamicStar size={32} color={prophetColor(p.slug)} /></div>
               <h3 className="nb-azm-name">{p.arabicName} ﷺ</h3>
               <div className="nb-azm-book">{sup?.book ? `كتابه: ${sup.book}` : "لا كتاب مستقل"}</div>
-              <p className="nb-azm-story">{p.briefBio.slice(0, 140)}…</p>
+              <p className="nb-azm-story">{truncateAtWord(p.briefBio, 140)}</p>
               {sup?.miracle && (
                 <div className="nb-azm-miracle">
                   <strong>معجزته:</strong> {sup.miracle}
@@ -919,6 +920,23 @@ export default function ProphetStoriesPage() {
                     />
                   ))}
                 </div>
+                {!search && (
+                  <Link href="/prophets/tree" className="prophets-seerah-link">
+                    <div className="prophets-seerah-bridge">
+                      <div className="prophets-seerah-bridge__ornament" aria-hidden="true">
+                        <IslamicStar size={28} color={IVORY} opacity={0.7} />
+                      </div>
+                      <div className="prophets-seerah-bridge__body">
+                        <div className="prophets-seerah-bridge__eyebrow">عرض تفاعلي</div>
+                        <h3 className="prophets-seerah-bridge__title">شجرة أنساب الأنبياء</h3>
+                        <p className="prophets-seerah-bridge__desc">
+                          شاهد صلة النسب بين الأنبياء عليهم السلام من آدم إلى محمد ﷺ في شجرة تفاعلية واحدة.
+                        </p>
+                      </div>
+                      <div className="prophets-seerah-bridge__arrow" aria-hidden="true">←</div>
+                    </div>
+                  </Link>
+                )}
                 {!search && (
                   <Link href="/seerah" className="prophets-seerah-link">
                     <div className="prophets-seerah-bridge">

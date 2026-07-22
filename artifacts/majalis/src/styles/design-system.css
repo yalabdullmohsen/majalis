@@ -45,6 +45,27 @@ html {
   max-width: var(--ds-content-max);
 }
 
+.revelation-rule, .revelation-why, .revelation-sources { margin-block-end: var(--ds-space-5); line-height: 1.8; }
+.revelation-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-space-4); margin-block-end: var(--ds-space-5); }
+.revelation-comparison h2, .revelation-rule h2, .revelation-why h2, .revelation-sources h2 { color: var(--ds-emerald-deep); font-size: var(--ds-text-lg); margin-block-end: var(--ds-space-2); }
+.revelation-toolbar { display: flex; align-items: center; justify-content: space-between; gap: var(--ds-space-3); margin-block-end: var(--ds-space-3); }
+.revelation-toolbar label { flex: 1; max-width: 28rem; }
+.filter-tabs { display: flex; gap: var(--ds-space-1); overflow-x: auto; }
+.filter-tabs button { min-height: 44px; padding-inline: var(--ds-space-4); border: 1px solid var(--ds-line-color); border-radius: var(--ds-radius); background: var(--majalis-panel, #fff); color: var(--ds-ink-soft); font: inherit; cursor: pointer; }
+.filter-tabs button.is-active { background: var(--ds-emerald-soft); border-color: var(--ds-emerald); color: var(--ds-emerald-deep); font-weight: 700; }
+.revelation-review-note { color: var(--ds-ink-soft); font-size: var(--ds-text-sm); line-height: 1.7; margin-block-end: var(--ds-space-4); }
+.surah-info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: var(--ds-space-3); margin-block-end: var(--ds-space-6); }
+.surah-info-card { display: grid; grid-template-columns: auto 1fr; gap: var(--ds-space-3); align-items: start; }
+.surah-info-card__number { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: var(--ds-radius); background: var(--ds-emerald-soft); color: var(--ds-emerald-deep); font-weight: 800; }
+.surah-info-card__body h2 { margin: 0; color: var(--ds-ink); font-size: var(--ds-text-lg); }
+.surah-info-card__body p { margin: var(--ds-space-1) 0; color: var(--ds-ink-soft); font-size: var(--ds-text-sm); }
+.surah-info-card__meta { display: flex; align-items: center; flex-wrap: wrap; gap: var(--ds-space-2); font-size: var(--ds-text-xs); color: var(--ds-ink-soft); }
+.surah-info-card__link { grid-column: 2; color: var(--ds-emerald-deep); font-weight: 700; font-size: var(--ds-text-sm); }
+.revelation-badge { display: inline-flex; padding: .2rem .55rem; border-radius: 999px; font-weight: 800; }
+.revelation-badge--makki { background: #fff4d6; color: #765510; }
+.revelation-badge--madani { background: var(--ds-emerald-soft); color: var(--ds-emerald-deep); }
+@media (max-width: 640px) { .revelation-comparison { grid-template-columns: 1fr; } .revelation-toolbar { align-items: stretch; flex-direction: column; } .revelation-toolbar label { max-width: none; } }
+
 /* ── Typography ── */
 .ds-page-header {
   margin-bottom: var(--ds-space-4);
@@ -53,7 +74,7 @@ html {
 .ds-page-header__eyebrow {
   font-size: var(--ds-text-xs);
   font-weight: 700;
-  color: var(--majalis-brass-deep, #123F36);
+  color: var(--majalis-brass-deep, #173D35);
   margin: 0 0 var(--ds-space-1);
   letter-spacing: 0.02em;
 }
@@ -83,7 +104,7 @@ html {
 /* ── Cards ── */
 .ui-card,
 .ds-card {
-  background: var(--majalis-panel, #FAF8F4);
+  background: var(--majalis-panel, #F7F4ED);
   border: 1px solid var(--ds-line-color);
   border-radius: var(--ds-radius-lg);
   padding: var(--ds-space-3);
@@ -102,7 +123,7 @@ html {
 .fiqh-comparative-section h3 { font-size: 0.95rem; margin: 0.75rem 0 0.4rem; }
 .fiqh-opinions-list ul { margin: 0; padding-inline-start: 1.1rem; display: flex; flex-direction: column; gap: 0.4rem; }
 .fiqh-opinion-evidence { color: var(--ds-ink-soft); font-size: 0.88em; }
-.fiqh-adopted-opinion { margin-top: 0.75rem; padding: 0.6rem 0.8rem; background: var(--ds-emerald-soft, rgba(23,107,87,.08)); border-radius: var(--ds-radius-md, 0.5rem); }
+.fiqh-adopted-opinion { margin-top: 0.75rem; padding: 0.6rem 0.8rem; background: var(--ds-emerald-soft, rgba(23,61,53,.08)); border-radius: var(--ds-radius-md, 0.5rem); }
 .fiqh-context-disclaimer { margin-top: 0.5rem; font-size: 0.82rem; color: var(--ds-ink-soft); font-style: italic; }
 .fiqh-comparative-pending { font-size: 0.82rem; color: var(--ds-ink-soft); font-style: italic; margin: 0.25rem 0 0.75rem; }
 
@@ -853,7 +874,7 @@ p, li {
 
 .miracle-item__ref {
   font-size: var(--ds-text-xs);
-  color: var(--majalis-brass-deep, #123F36);
+  color: var(--majalis-brass-deep, #173D35);
   font-style: italic;
   margin: var(--ds-space-1) 0;
 }
@@ -1035,7 +1056,7 @@ p, li {
 .surah-story-num {
   font-size: var(--ds-text-xs);
   font-weight: 800;
-  color: var(--majalis-brass-deep, #123F36);
+  color: var(--majalis-brass-deep, #173D35);
 }
 
 .surah-story-meta {
@@ -1204,19 +1225,19 @@ p, li {
   --ds-shadow-lg: 0 20px 25px -5px rgba(26,23,20,.07), 0 10px 10px -5px rgba(26,23,20,.03);
 
   /* ── Colors — مرتبطة بـ msk tokens من index.css ── */
-  --ds-emerald:        var(--msk-gold,        #176B57);
-  --ds-emerald-deep:   var(--msk-gold-deep,   #123F36);
+  --ds-emerald:        var(--msk-gold,        #28584D);
+  --ds-emerald-deep:   var(--msk-gold-deep,   #173D35);
   --ds-emerald-soft:   var(--majalis-sage,    #EAF3EF);
-  --ds-emerald-muted:  var(--msk-gold-dim,    rgba(14,110,82,.12));
-  --ds-gold:           var(--msk-gold,        #176B57);
+  --ds-emerald-muted:  var(--msk-gold-dim,    rgba(23,61,53,.12));
+  --ds-gold:           var(--msk-gold,        #28584D);
   --ds-gold-soft:      var(--majalis-sage,    #EAF3EF);
   --ds-parchment:      var(--msk-canvas,      #FAF8F5);
   --ds-parchment-deep: var(--msk-canvas-2,    #F0EDE8);
-  --ds-ink:            var(--msk-text,        #1C1A18);
-  --ds-ink-soft:       var(--msk-text-2,      #5C5550);
-  --ds-ink-muted:      var(--msk-text-3,      #918A85);
-  --ds-line-color:     var(--msk-border,      #E0DBD5);
-  --ds-line-strong:    var(--msk-border,      #E0DBD5);
+  --ds-ink:            var(--msk-text,        #202725);
+  --ds-ink-soft:       var(--msk-text-2,      #68716D);
+  --ds-ink-muted:      var(--msk-text-3,      #5E655F);
+  --ds-line-color:     var(--msk-border,      #E7E2D8);
+  --ds-line-strong:    var(--msk-border,      #E7E2D8);
 
   /* ── Heading token — أسود بدل زمرد ── */
   --ds-heading: var(--ds-ink);
@@ -1501,7 +1522,7 @@ hr.decorative,
 /* ── البند 1: Home Quiz Card ─────────────────────────────── */
 .ds-quiz-home-card {
   background: linear-gradient(135deg, #f0f7f3 0%, #fefdf5 100%);
-  border: 1.5px solid rgba(14, 110, 82, 0.45);
+  border: 1.5px solid rgba(23,61,53, 0.45);
   border-radius: 1rem;
   padding: 1.75rem;
 }
@@ -1521,8 +1542,8 @@ hr.decorative,
 .ds-quiz-home-card__badge {
   display: inline-block;
   padding: 0.2rem 0.625rem;
-  background: rgba(14, 110, 82, 0.12);
-  color: var(--clr-primary, #176B57);
+  background: rgba(23,61,53, 0.12);
+  color: var(--clr-primary, #28584D);
   border-radius: 999px;
   font-size: 0.73rem;
   font-weight: 700;
@@ -1533,7 +1554,7 @@ hr.decorative,
 .ds-quiz-home-card__title {
   font-size: 1.3rem;
   font-weight: 800;
-  color: var(--ds-emerald-deep, #134a3a);
+  color: var(--ds-emerald-deep, #173D35);
   margin: 0 0 0.5rem;
   line-height: 1.3;
 }
@@ -1549,7 +1570,7 @@ hr.decorative,
 .ds-quiz-home-card__btn {
   display: inline-block;
   padding: 0.6rem 1.4rem;
-  background: var(--ds-emerald-deep, #134a3a);
+  background: var(--ds-emerald-deep, #173D35);
   color: #fff;
   border-radius: 0.5rem;
   font-size: 0.875rem;
@@ -1559,7 +1580,7 @@ hr.decorative,
 }
 
 .ds-quiz-home-card__btn:hover {
-  background: #0c3020;
+  background: #173D35;
 }
 
 .ds-quiz-home-card__grid {
@@ -1574,7 +1595,7 @@ hr.decorative,
   align-items: center;
   gap: 0.35rem;
   font-size: 0.75rem;
-  color: var(--ds-emerald-deep, #134a3a);
+  color: var(--ds-emerald-deep, #173D35);
   font-weight: 600;
   padding: 0.25rem 0.4rem;
   background: rgba(22, 78, 60, 0.07);
@@ -1584,7 +1605,31 @@ hr.decorative,
 
 .ds-quiz-home-card__cat svg {
   flex-shrink: 0;
-  color: var(--clr-primary, #176B57);
+  color: var(--clr-primary, #28584D);
+}
+
+/* المرحلة 6 — إحصاءات/تحدي اليوم، قيم أساسية آمنة للسياق الفاتح (تُستبدَل
+   بتجاوزات .home-main--v3 في elite-2026.css عند الاستخدام الفعلي بالرئيسية). */
+.ds-quiz-home-card__stat {
+  color: var(--ds-emerald-deep, #173D35);
+  background: rgba(22, 78, 60, 0.07);
+}
+.ds-quiz-home-card__stats-empty,
+.ds-quiz-home-card__challenge-cat {
+  color: #4b5563;
+}
+.ds-quiz-home-card__challenge {
+  background: rgba(23,61,53, 0.06);
+  border: 1px solid rgba(23,61,53, 0.18);
+}
+.ds-quiz-home-card__challenge-badge {
+  color: var(--clr-primary, #28584D);
+}
+.ds-quiz-home-card__challenge-q {
+  color: var(--ds-emerald-deep, #173D35);
+}
+.ds-quiz-home-card__stats-skel {
+  background: rgba(22, 78, 60, 0.08);
 }
 
 @media (max-width: 600px) {
@@ -1604,7 +1649,7 @@ hr.decorative,
 /* ── البند 4: Compact Prayer Strip ──────────────────────── */
 .hcp-strip {
   background: #fafdf8;
-  border: 1px solid rgba(14, 110, 82, 0.28);
+  border: 1px solid rgba(23,61,53, 0.28);
   border-radius: 0.75rem;
   padding: 0.75rem 1rem;
 }
@@ -1619,7 +1664,7 @@ hr.decorative,
 .hcp-strip__label {
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--ds-emerald-deep, #134a3a);
+  color: var(--ds-emerald-deep, #173D35);
   display: flex;
   align-items: center;
   gap: 0.3rem;
@@ -1627,7 +1672,7 @@ hr.decorative,
 
 .hcp-strip__link {
   font-size: 0.73rem;
-  color: var(--clr-primary, #176B57);
+  color: var(--clr-primary, #28584D);
   text-decoration: none;
   font-weight: 600;
 }
@@ -1654,7 +1699,7 @@ hr.decorative,
 
 .hcp-prayer-cell--next {
   background: rgba(19, 74, 58, 0.08);
-  border-color: var(--ds-emerald-deep, #134a3a);
+  border-color: var(--ds-emerald-deep, #173D35);
 }
 
 .hcp-prayer-cell__name {
@@ -1664,7 +1709,7 @@ hr.decorative,
 }
 
 .hcp-prayer-cell--next .hcp-prayer-cell__name {
-  color: var(--ds-emerald-deep, #134a3a);
+  color: var(--ds-emerald-deep, #173D35);
 }
 
 .hcp-prayer-cell__time {
@@ -1676,22 +1721,22 @@ hr.decorative,
 }
 
 .hcp-prayer-cell--next .hcp-prayer-cell__time {
-  color: var(--ds-emerald-deep, #134a3a);
+  color: var(--ds-emerald-deep, #173D35);
 }
 
 /* ── البند 2: About Section ─────────────────────────────── */
 .home-about {
-  background: linear-gradient(135deg, rgba(22,78,60,0.03) 0%, rgba(14,110,82,0.04) 100%);
+  background: linear-gradient(135deg, rgba(22,78,60,0.03) 0%, rgba(23,61,53,0.04) 100%);
   border-radius: 1rem;
   padding: 2rem;
-  border: 1px solid rgba(14, 110, 82, 0.2);
+  border: 1px solid rgba(23,61,53, 0.2);
 }
 
 .home-about__eyebrow {
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.07em;
-  color: var(--clr-primary, #176B57);
+  color: var(--clr-primary, #28584D);
   text-transform: uppercase;
   margin: 0 0 0.45rem;
 }
@@ -1699,14 +1744,14 @@ hr.decorative,
 .home-about__title {
   font-size: 1.4rem;
   font-weight: 800;
-  color: var(--ds-emerald-deep, #134a3a);
+  color: var(--ds-emerald-deep, #173D35);
   margin: 0 0 1rem;
 }
 
 .home-about__body {
   font-size: 0.9rem;
   line-height: 1.9;
-  color: #374151;
+  color: #68716D;
   max-width: 700px;
 }
 
@@ -1726,7 +1771,7 @@ hr.decorative,
 }
 
 .site-footer-email a:hover {
-  color: var(--majalis-emerald, #176B57);
+  color: var(--majalis-emerald, #28584D);
 }
 
 /* ── Compact Prayer countdown row ───────────────────────── */
@@ -1745,13 +1790,13 @@ hr.decorative,
 .hcp-strip__countdown-time {
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--ds-emerald-deep, #134a3a);
+  color: var(--ds-emerald-deep, #173D35);
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.01em;
 }
 
 .hcp-strip__countdown--elapsed {
-  color: var(--ds-emerald-deep, #134a3a);
+  color: var(--ds-emerald-deep, #173D35);
   font-weight: 600;
 }
 
@@ -1810,12 +1855,12 @@ hr.decorative,
 
 .tc-ring-fill {
   fill: none;
-  stroke: var(--majalis-emerald, #164E3C);
+  stroke: var(--majalis-emerald, #173D35);
   stroke-width: 9;
 }
 
 .tc-ring-fill--done {
-  stroke: var(--majalis-emerald, #176B57);
+  stroke: var(--majalis-emerald, #28584D);
 }
 
 
@@ -1835,7 +1880,7 @@ hr.decorative,
 .tc-ring-rounds {
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #176B57);
+  color: var(--majalis-emerald, #28584D);
   letter-spacing: 0.04em;
   line-height: 1;
 }
@@ -1843,13 +1888,13 @@ hr.decorative,
 .tc-ring-count {
   font-size: clamp(2rem, 8vw, 3.2rem);
   font-weight: 800;
-  color: var(--majalis-emerald-deep, #134a3a);
+  color: var(--majalis-emerald-deep, #173D35);
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
 
 .tc-ring-btn--done .tc-ring-count {
-  color: var(--majalis-emerald, #176B57);
+  color: var(--majalis-emerald, #28584D);
 }
 
 .tc-ring-total {
@@ -1867,7 +1912,7 @@ hr.decorative,
 }
 
 .tc-ring-btn--done .tc-ring-hint {
-  color: var(--majalis-emerald, #176B57);
+  color: var(--majalis-emerald, #28584D);
 }
 
 
@@ -1921,13 +1966,13 @@ hr.decorative,
 }
 
 .tasbih-wird-pill:hover {
-  border-color: var(--majalis-emerald, #164E3C);
-  color: var(--majalis-emerald, #164E3C);
+  border-color: var(--majalis-emerald, #173D35);
+  color: var(--majalis-emerald, #173D35);
 }
 
 .tasbih-wird-pill.is-active {
-  border-color: var(--majalis-emerald, #164E3C);
-  background: var(--majalis-emerald, #164E3C);
+  border-color: var(--majalis-emerald, #173D35);
+  background: var(--majalis-emerald, #173D35);
   color: #fff;
   font-weight: 700;
 }
@@ -1973,7 +2018,7 @@ hr.decorative,
   margin-bottom: 0.75rem;
 }
 
-.push-prompt--warn { border-color: #fcd34d; background: rgba(14,110,82,0.06); }
+.push-prompt--warn { border-color: #fcd34d; background: rgba(23,61,53,0.06); }
 .push-prompt--info { border-color: #93c5fd; background: #eff6ff; font-size: 0.82rem; color: #1e40af; }
 
 .push-prompt__text {
@@ -2088,7 +2133,7 @@ hr.decorative,
 
 /* Streak stat cell */
 .tasbih-stat--streak strong {
-  color: var(--majalis-emerald, #176B57);
+  color: var(--majalis-emerald, #28584D);
 }
 
 /* Danger button variant */
@@ -2843,7 +2888,7 @@ hr.decorative,
   border-top: 1px dashed var(--ds-line-color);
   margin-top: 0.5rem;
 }
-.mwc-advanced { padding: 0.75rem; background: rgba(14,110,82,0.04); border-radius: var(--ds-radius, 0.5rem); margin-top: 0.5rem; }
+.mwc-advanced { padding: 0.75rem; background: rgba(23,61,53,0.04); border-radius: var(--ds-radius, 0.5rem); margin-top: 0.5rem; }
 
 .mwc-error {
   padding: 0.85rem 1rem;
@@ -3279,10 +3324,10 @@ hr.decorative,
   width: 88px;
   height: 88px;
   font-size: 2.25rem;
-  background: var(--ds-emerald, #2a7a4f);
+  background: var(--ds-emerald, #28584D);
   box-shadow: 0 4px 20px rgba(42,122,79,0.45);
 }
-.car-mode__btn--play:hover { background: var(--ds-emerald-deep, #1d5c3a); }
+.car-mode__btn--play:hover { background: var(--ds-emerald-deep, #28584D); }
 
 .car-mode__playlist {
   max-height: 240px;
@@ -3342,7 +3387,7 @@ hr.decorative,
   align-items: center;
   gap: 0.75rem;
   padding: 0.85rem 1.25rem;
-  background: #1d5c3a;
+  background: #28584D;
   color: #fff;
   font-size: 0.9rem;
   font-weight: 600;
@@ -3377,7 +3422,7 @@ hr.decorative,
   border: 1px solid #ddd;
   border-radius: 0.5rem;
 }
-.mosque-mode__label { font-size: 1rem; font-weight: 700; color: #1d5c3a; }
+.mosque-mode__label { font-size: 1rem; font-weight: 700; color: #28584D; }
 
 .mosque-mode__prayer-box {
   display: flex;
@@ -3386,7 +3431,7 @@ hr.decorative,
   justify-content: center;
   padding: 2.5rem 1.5rem;
   text-align: center;
-  background: linear-gradient(135deg, #1d5c3a 0%, #2a7a4f 100%);
+  background: linear-gradient(135deg, #28584D 0%, #28584D 100%);
   color: #fff;
   gap: 0.4rem;
 }
@@ -3428,7 +3473,7 @@ hr.decorative,
 }
 .mosque-mode__link:active { transform: scale(0.97); }
 .mosque-mode__link-icon { font-size: 2rem; }
-.mosque-mode__link-label { font-size: 0.88rem; font-weight: 700; color: #1d5c3a; text-align: center; }
+.mosque-mode__link-label { font-size: 0.88rem; font-weight: 700; color: #28584D; text-align: center; }
 .mosque-mode__pwa-hint {
   text-align: center;
   font-size: 0.78rem;
@@ -3444,7 +3489,7 @@ hr.decorative,
   font-size: 0.88rem;
   font-weight: 600;
 }
-.notif-banner--warn { background: rgba(24,54,42,0.06); color: #18362A; border: 1px solid rgba(24,54,42,0.25); }
+.notif-banner--warn { background: rgba(24,54,42,0.06); color: #173D35; border: 1px solid rgba(24,54,42,0.25); }
 .notif-banner--err  { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
 
 .notif-card {
@@ -3487,7 +3532,7 @@ hr.decorative,
   cursor: pointer;
   transition: background 0.2s;
 }
-.notif-toggle--on { background: var(--ds-emerald, #2a7a4f); }
+.notif-toggle--on { background: var(--ds-emerald, #28584D); }
 .notif-toggle__thumb {
   position: absolute;
   top: 3px; right: 3px;
@@ -3646,12 +3691,12 @@ hr.decorative,
 }
 .sr-timer__ring-fill {
   fill: none;
-  stroke: var(--ds-emerald, #2a7a4f);
+  stroke: var(--ds-emerald, #28584D);
   stroke-width: 8;
   stroke-linecap: round;
   transition: stroke-dashoffset 1s linear, stroke 0.3s;
 }
-.sr-timer--rest .sr-timer__ring-fill { stroke: var(--ds-emerald-deep, #134a3a); }
+.sr-timer--rest .sr-timer__ring-fill { stroke: var(--ds-emerald-deep, #173D35); }
 .sr-timer__content {
   position: absolute;
   top: 0;
@@ -3692,7 +3737,7 @@ hr.decorative,
 }
 .sr-btn--start { background: var(--ds-emerald); color: #fff; border-color: var(--ds-emerald); }
 .sr-btn--start:hover { background: var(--ds-emerald-deep); }
-.sr-btn--pause { background: var(--ds-emerald-deep, #134a3a); color: #fff; border-color: var(--ds-emerald-deep, #134a3a); }
+.sr-btn--pause { background: var(--ds-emerald-deep, #173D35); color: #fff; border-color: var(--ds-emerald-deep, #173D35); }
 .sr-btn--reset:hover { border-color: var(--ds-emerald); }
 
 .sr-stats {
@@ -4342,7 +4387,7 @@ hr.decorative,
 }
 .inst-card__link:hover { opacity: 0.8; }
 .inst-card__link--web { background: var(--ds-emerald-soft); color: var(--ds-emerald-deep); }
-.inst-card__link--map { background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent); color: var(--majalis-emerald, #176B57); }
+.inst-card__link--map { background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent); color: var(--majalis-emerald, #28584D); }
 
 .inst-disclaimer {
   font-size: 0.78rem;
@@ -4361,7 +4406,7 @@ hr.decorative,
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
   background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent);
-  color: var(--majalis-emerald, #176B57);
+  color: var(--majalis-emerald, #28584D);
   font-weight: 600;
 }
 
@@ -4466,7 +4511,7 @@ hr.decorative,
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  background: var(--majalis-emerald, #164E3C);
+  background: var(--majalis-emerald, #173D35);
   color: #fff;
   font-size: 1rem;
   font-weight: 700;
@@ -4476,7 +4521,7 @@ hr.decorative,
   margin: 0;
   font-size: 1rem;
   font-weight: 800;
-  color: var(--majalis-emerald, #164E3C);
+  color: var(--majalis-emerald, #173D35);
 }
 .tawheed-type-card__subtitle {
   margin: 0;
@@ -4494,7 +4539,7 @@ hr.decorative,
 .tawheed-type-card__ayah {
   margin: 0.5rem 0 0;
   padding: 0.6rem 0.75rem;
-  border-right: 3px solid var(--majalis-emerald, #176B57);
+  border-right: 3px solid var(--majalis-emerald, #28584D);
   background: var(--bg-base, #faf9f6);
   border-radius: 0 0.375rem 0.375rem 0;
   font-family: "Amiri Quran", "Scheherazade New", serif;
@@ -4507,7 +4552,7 @@ hr.decorative,
   display: block;
   font-style: normal;
   font-size: 0.7rem;
-  color: var(--majalis-emerald, #176B57);
+  color: var(--majalis-emerald, #28584D);
   font-weight: 700;
   margin-top: 0.25rem;
   font-family: inherit;
@@ -4517,7 +4562,7 @@ hr.decorative,
 .tawheed-principles-heading {
   font-size: 1.1rem;
   font-weight: 800;
-  color: var(--majalis-emerald, #164E3C);
+  color: var(--majalis-emerald, #173D35);
   margin: 0 0 1rem;
   direction: rtl;
   border-bottom: 2px solid var(--ds-line-color, #e5e3dd);
@@ -4554,7 +4599,7 @@ hr.decorative,
   margin: 0;
   font-size: 0.83rem;
   line-height: 1.75;
-  color: var(--text-body, #374151);
+  color: var(--text-body, #68716D);
 }
 
 /* ── صفحة التوحيد المستقلة (/tawhid) ── */
@@ -4567,11 +4612,11 @@ hr.decorative,
   margin-bottom: 1.25rem;
   direction: rtl;
 }
-.tawheed-breadcrumb a { color: var(--majalis-emerald, #1a6b52); text-decoration: none; }
+.tawheed-breadcrumb a { color: var(--majalis-emerald, #28584D); text-decoration: none; }
 .tawheed-breadcrumb a:hover { text-decoration: underline; }
 
 .tawheed-page-header {
-  background: linear-gradient(135deg, var(--majalis-emerald, #1a6b52) 0%, #0f4a38 100%);
+  background: linear-gradient(135deg, var(--majalis-emerald, #28584D) 0%, #173D35 100%);
   color: #fff;
   border-radius: 1rem;
   padding: 2rem 1.5rem;
@@ -4651,7 +4696,7 @@ hr.decorative,
 .tawheed-related-card__label {
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #1a6b52);
+  color: var(--majalis-emerald, #28584D);
 }
 .tawheed-related-card__desc {
   font-size: 0.75rem;
@@ -4724,7 +4769,7 @@ h1, h2, h3 {
 
 .ds-btn--primary,
 .ui-card-btn,
-.page-action-btn,
+.page-action-btn:not(.page-action-btn--secondary),
 .login-submit {
   background: var(--ds-emerald);
   border-color: var(--ds-emerald);
@@ -4733,7 +4778,7 @@ h1, h2, h3 {
 
 .ds-btn--primary:hover:not(:disabled),
 .ui-card-btn:hover:not(:disabled),
-.page-action-btn:hover:not(:disabled),
+.page-action-btn:hover:not(.page-action-btn--secondary):not(:disabled),
 .login-submit:hover:not(:disabled) {
   background: var(--ds-emerald-deep);
   box-shadow: 0 4px 12px rgba(22, 96, 72, 0.3);
@@ -5029,7 +5074,7 @@ h1, h2, h3 {
   align-items: center;
   gap: 0.4rem;
   padding: 0.5rem 1.1rem;
-  background: var(--majalis-emerald, #176B57);
+  background: var(--majalis-emerald, #28584D);
   color: #fff;
   border: none;
   border-radius: 0.5rem;
@@ -5042,7 +5087,7 @@ h1, h2, h3 {
 }
 
 .btn-primary:hover {
-  background: var(--majalis-emerald-deep, #123F36);
+  background: var(--majalis-emerald-deep, #173D35);
   box-shadow: 0 4px 14px rgba(31,77,58,0.28);
   transform: translateY(-1px);
 }
@@ -5070,7 +5115,7 @@ h1, h2, h3 {
   gap: 0.4rem;
   padding: 0.5rem 1.1rem;
   background: transparent;
-  color: var(--majalis-emerald, #176B57);
+  color: var(--majalis-emerald, #28584D);
   border: 1.5px solid rgba(31,77,58,0.25);
   border-radius: 0.5rem;
   font-family: inherit;
@@ -5092,7 +5137,7 @@ textarea:focus-visible,
 select:focus-visible {
   outline: 2px solid rgba(31,77,58,0.35);
   outline-offset: 1px;
-  border-color: var(--majalis-emerald, #176B57) !important;
+  border-color: var(--majalis-emerald, #28584D) !important;
 }
 
 /* ── 25. تأثير الانتقال الصفحي (page-enter) ── */
@@ -5274,7 +5319,7 @@ select:focus-visible {
   font-size: 0.85rem;
   cursor: pointer;
 }
-.am-option:has(input:checked) { border-color: var(--ds-emerald); background: rgba(14,110,82,.05); }
+.am-option:has(input:checked) { border-color: var(--ds-emerald); background: rgba(23,61,53,.05); }
 .am-text-input {
   width: 100%;
   padding: 0.6rem 0.85rem;

@@ -1,6 +1,6 @@
 /**
  * Quran tests — hub page loads, section navigation, radio controls.
- * قارئ المصحف صفحة-بصفحة حُذف (2026-07-14)؛ /quran و/mushaf يُحوَّلان الآن إلى /quran-hub.
+ * /quran اختصار لمركز القرآن، بينما /mushaf قارئ حي مستقل.
  */
 import { test, expect } from "@playwright/test";
 import { waitForContent } from "./helpers";
@@ -36,6 +36,27 @@ test.describe("Quran — مركز القرآن", () => {
     const hasCards = await cards.count() > 0;
     const hasList = await page.locator("body").innerText().then((t) => t.length > 50);
     expect(hasCards || hasList).toBe(true);
+  });
+
+  test("خطط الحفظ تحفظ التقدم وتعرض خطة الشهر كمراجعة", async ({ page }) => {
+    await page.goto("/quran/memorization-plans");
+    await waitForContent(page);
+
+    await expect(page.getByRole("heading", { name: "خطط الحفظ والمراجعة" })).toBeVisible();
+    await expect(page.getByRole("button", { name: /مراجعة مكثفة، 30 يومًا/ })).toContainText("ليست وعدًا بحفظ جديد");
+
+    await page.getByRole("button", { name: /خطة سنة/ }).click();
+    await page.getByRole("button", { name: "أتممت الجلسة" }).click();
+    await expect(page.getByRole("heading", { name: "جلسة اليوم 2" })).toBeVisible();
+
+    await page.reload();
+    await expect(page.getByRole("heading", { name: "جلسة اليوم 2" })).toBeVisible();
+
+    const dimensions = await page.evaluate(() => ({
+      scrollWidth: document.documentElement.scrollWidth,
+      clientWidth: document.documentElement.clientWidth,
+    }));
+    expect(dimensions.scrollWidth).toBe(dimensions.clientWidth);
   });
 
   test("quran radio page loads and shows station list", async ({ page }) => {

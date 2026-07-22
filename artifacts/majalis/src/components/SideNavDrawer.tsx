@@ -11,6 +11,7 @@ import {
   Sun, Trophy, Tv, Users, UserPlus, Waypoints, X, Zap,
 } from "lucide-react";
 import { useAuth } from "./AuthProvider";
+import { usePageSwipe } from "@/hooks/usePageSwipe";
 
 type DrawerProps = {
   open: boolean;
@@ -134,7 +135,7 @@ const DRAWER_GROUPS: NavGroup[] = [
         title: "الحديث والسنة",
         items: [
           { href: "/hadith",             label: "الأحاديث النبوية",   Icon: ScrollText,  desc: "موسوعة الأحاديث بالتصنيف" },
-          { href: "/arbaeen-nawawi",     label: "الأربعون النووية",   Icon: FileText,    desc: "٤٠ حديثاً مع شرح وتتبع" },
+          { href: "/hadith/books-and-rulings", label: "المتون الحديثية وأحاديث الأحكام", Icon: FileText, desc: "الأربعون النووية ومتون الأحكام الموثقة" },
           { href: "/hadith-science",     label: "مصطلح الحديث",       Icon: BookOpen,    desc: "السند والمتن والدرجات" },
           { href: "/hikam-salaf",        label: "حكم السلف الصالح",   Icon: BookMarked,  desc: "حِكَم وأقوال العلماء المأثورة" },
           { href: "/wasaya-nabawiyya",   label: "الوصايا النبوية",    Icon: Star,        desc: "خلاصة الوصايا الجامعة" },
@@ -215,6 +216,9 @@ const DRAWER_GROUPS: NavGroup[] = [
     icon: <IcoQuran />,
     items: [
       { href: "/mushaf",              label: "المصحف الشريف",      Icon: BookOpen,      desc: "اقرأ القرآن الكريم كاملاً" },
+      { href: "/quran/surahs",        label: "فهرس السور",         Icon: BookText,      desc: "دليل 114 سورة بالبحث والفلاتر" },
+      { href: "/mushaf/page",         label: "المصحف بنظام الصفحات", Icon: Library,     desc: "صفحات مصحف حقيقية بتقسيم مصحف المدينة" },
+      { href: "/quran/recitation-test-ai", label: "اختبار التسميع بالذكاء الاصطناعي", Icon: Bot, desc: "سمّع من حفظك ويكشف المصحف الآيات فور نطقها" },
       { href: "/quran-hub",           label: "مركز القرآن",        Icon: Layers,        desc: "بوابة كل ما يتعلق بالقرآن" },
       { href: "/daily-wird",          label: "الورد اليومي",       Icon: Sun,           desc: "ختمة متجددة يومياً" },
       { href: "/quran/tajweed",       label: "علم التجويد",        Icon: Mic2,          desc: "أحكام التجويد بالأمثلة" },
@@ -225,6 +229,7 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/quran-live",          label: "البث المباشر",       Icon: Tv,            desc: "من مكة والمدينة" },
       { href: "/quran-circles",       label: "حلقات التحفيظ",      Icon: Users,         desc: "دليل حلقات القرآن" },
       { href: "/quran-memorization",  label: "اختبارات الحفظ",     Icon: Zap,           desc: "12 نوعًا من اختبارات الحفظ" },
+      { href: "/quran/memorization-plans", label: "خطط الحفظ",     Icon: CalendarDays,  desc: "خطط مرنة للحفظ والمراجعة والتثبيت" },
       { href: "/mutashabihat",        label: "الآيات المتشابهات",  Icon: GitBranch,     desc: "تمييز الآيات المتشابهة لفظًا" },
       { href: "/muezzins",            label: "مكتبة القراء",       Icon: Mic,           desc: "مقاطع صوتية للقراء" },
     ],
@@ -359,6 +364,15 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
     }
   }, [open]);
 
+  // سحب لليمين (فعليًا) يُغلق الدرج — إعادة استخدام أداة السحب الموجودة
+  // (usePageSwipe، مُستخدَمة أصلاً لتقليب صفحات المصحف) بلا آلية جديدة.
+  const { swipeHandlers } = usePageSwipe({
+    onPrev: onClose,
+    onNext: () => {},
+    threshold: 70,
+    disabled: !open,
+  });
+
   if (!open || typeof document === "undefined") return null;
 
   const isActive = (href: string) => {
@@ -374,6 +388,8 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
         aria-label="إغلاق القائمة الجانبية"
         onClick={onClose}
       />
+      {/* onClick هنا لمنع انتشار النقر إلى الخلفية (button حقيقي أعلاه، مغلِق
+          فعليًا وقابل للوصول بلوحة المفاتيح أصلًا) — لا إجراء مستقل هنا. */}
       <aside
         id="main-navigation-drawer"
         className="side-nav-drawer--v2"
@@ -381,6 +397,7 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
         aria-modal="true"
         aria-label="القائمة الجانبية"
         onClick={(e) => e.stopPropagation()}
+        {...swipeHandlers}
       >
         {/* Header */}
         <div className="side-nav-drawer__head side-nav-drawer__head--v2">

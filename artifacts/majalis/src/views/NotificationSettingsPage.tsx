@@ -77,6 +77,9 @@ function NotifRow({ rec, onRead, onArchive, onDelete }: {
         {rec.body && <div className="nh-row__body-text">{rec.body}</div>}
         <div className="nh-row__meta">{dateStr} · {timeStr}</div>
       </div>
+      {/* onClick لمنع انتشار النقر إلى صف الإشعار الأب — لا إجراء فعلي هنا
+          يحتاج مكافئ لوحة مفاتيح؛ الأزرار الفعلية داخل هذا الصف قابلة للوصول
+          بلوحة المفاتيح أصلًا. */}
       <div className="nh-row__actions" onClick={e => e.stopPropagation()}>
         {!rec.isArchived && (
           <button type="button" className="nh-action" onClick={onArchive} aria-label="أرشفة">

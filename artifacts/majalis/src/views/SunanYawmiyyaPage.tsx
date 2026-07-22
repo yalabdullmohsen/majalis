@@ -1006,12 +1006,11 @@ export default function SunanYawmiyyaPage() {
             </button>
           )}
         </div>
-        <div className="sy-cats" role="list">
+        <div className="sy-cats">
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
               type="button"
-              role="listitem"
               className={`sy-cat-chip${category === cat ? " sy-cat-chip--active" : ""}`}
               onClick={() => setCategory(cat)}
             >

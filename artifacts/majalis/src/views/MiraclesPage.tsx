@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  Bone, BookOpen, Bug, Clock, Cloud, Cog, Dna,
+  AlertTriangle, Bone, BookOpen, Bug, Clock, Cloud, Cog, Dna,
   Droplets, Globe, Globe2, Leaf, Lightbulb, Microscope,
-  Mountain, ScrollText, Sparkles, Star, Stethoscope,
+  Mountain, ScrollText, Search, Sparkles, Star, Stethoscope,
   Telescope, Waves, Wind,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -49,12 +49,12 @@ const MK_CAT_MOD: Record<string, string> = {
 };
 
 const MK_CAT_ACCENT: Record<string, string> = {
-  "الكون": "#BEC7C3", "الفلك": "#BEC7C3", "الجبال": "#97A59F",
-  "البحار": "#BEC7C3", "الأجنة": "#97A59F", "النبات": "#97A59F",
-  "الحيوان": "#97A59F", "الطب": "#BEC7C3", "المياه": "#BEC7C3",
-  "الحديد": "#97A59F", "الرياح": "#BEC7C3", "السحاب": "#BEC7C3",
-  "الحشرات": "#97A59F", "الأرض": "#97A59F", "الزمن": "#BEC7C3",
-  "الضوء": "#d4e8a0", "الجلد": "#BEC7C3", "العظام": "#d4c8a0",
+  "الكون": "#D6CFC0", "الفلك": "#D6CFC0", "الجبال": "#5E655F",
+  "البحار": "#D6CFC0", "الأجنة": "#5E655F", "النبات": "#5E655F",
+  "الحيوان": "#5E655F", "الطب": "#D6CFC0", "المياه": "#D6CFC0",
+  "الحديد": "#5E655F", "الرياح": "#D6CFC0", "السحاب": "#D6CFC0",
+  "الحشرات": "#5E655F", "الأرض": "#5E655F", "الزمن": "#D6CFC0",
+  "الضوء": "#d4e8a0", "الجلد": "#D6CFC0", "العظام": "#d4c8a0",
   "النجوم": "#c8d4e8", "الدم": "#e8a0a0",
 };
 
@@ -66,14 +66,6 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
   "الحشرات": Bug, "الأرض": Globe2, "الزمن": Clock,
   "الضوء": Lightbulb, "الجلد": Dna, "العظام": Bone,
   "النجوم": Star, "الدم": Droplets,
-};
-
-const CAT_EMOJIS: Record<string, string> = {
-  "الكون": "🌌", "الفلك": "🔭", "الجبال": "⛰️", "البحار": "🌊",
-  "الأجنة": "🔬", "النبات": "🌿", "الحيوان": "🦋", "الطب": "🩺",
-  "المياه": "💧", "الحديد": "⚙️", "الرياح": "🌬️", "السحاب": "☁️",
-  "الحشرات": "🐝", "الأرض": "🌍", "الزمن": "⏳", "الضوء": "💡",
-  "الجلد": "🧬", "العظام": "🦴", "النجوم": "⭐", "الدم": "🩸",
 };
 
 const MK_SRC_MOD: Record<string, string> = {
@@ -175,7 +167,8 @@ export default function MiraclesPage({
             مقالات موثّقة تربط الاكتشافات العلمية بالآيات القرآنية والأحاديث النبوية
           </p>
           <p className="mk-hero__note">
-            ⚠️ الملاحظات العلمية قد تتطور مع البحث، نعرضها للتفكر لا كحكم نهائي
+            <AlertTriangle size={16} strokeWidth={1.8} aria-hidden="true" />
+            <span>الملاحظات العلمية قد تتطور مع البحث، نعرضها للتفكر لا كحكم نهائي</span>
           </p>
         </div>
       </header>
@@ -188,20 +181,23 @@ export default function MiraclesPage({
             onClick={() => setCategory("الكل")}
             className={`mk-cat-pill${category === "الكل" ? " mk-cat-pill--active" : ""}`}
           >
-            <span>🔍</span>
+            <Search size={14} strokeWidth={2} aria-hidden="true" />
             <span>الكل</span>
           </button>
-          {(CATEGORIES as readonly string[]).filter(c => c !== "الكل").map((c) => (
-            <button
-              key={c}
-              type="button"
-              onClick={() => setCategory(c)}
-              className={`mk-cat-pill${category === c ? " mk-cat-pill--active" : ""}`}
-            >
-              <span>{CAT_EMOJIS[c] ?? "🔬"}</span>
-              <span>{c}</span>
-            </button>
-          ))}
+          {(CATEGORIES as readonly string[]).filter(c => c !== "الكل").map((c) => {
+            const PillIcon: LucideIcon = CATEGORY_ICONS[c] ?? Microscope;
+            return (
+              <button
+                key={c}
+                type="button"
+                onClick={() => setCategory(c)}
+                className={`mk-cat-pill${category === c ? " mk-cat-pill--active" : ""}`}
+              >
+                <PillIcon size={14} strokeWidth={2} aria-hidden="true" />
+                <span>{c}</span>
+              </button>
+            );
+          })}
         </div>
       </section>
 
@@ -215,7 +211,11 @@ export default function MiraclesPage({
               onClick={() => setSourceType(s)}
               className={`mk-src-tab${sourceType === s ? " mk-src-tab--active" : ""}`}
             >
-              {s === "قرآن" ? "📖 قرآن" : s === "سنة" ? "📜 سنة" : "الجميع"}
+              {s === "قرآن" ? (
+                <><BookOpen size={14} strokeWidth={2} aria-hidden="true" /> قرآن</>
+              ) : s === "سنة" ? (
+                <><ScrollText size={14} strokeWidth={2} aria-hidden="true" /> سنة</>
+              ) : "الجميع"}
             </button>
           ))}
         </div>
@@ -271,7 +271,7 @@ export default function MiraclesPage({
                       <div className="miracle-item__badges">
                         {item.category && (
                           <span className="miracle-item__cat-badge mk-badge">
-                            {CAT_EMOJIS[item.category] ?? "🔬"} {item.category}
+                            <ItemIcon size={11} strokeWidth={2} aria-hidden="true" /> {item.category}
                           </span>
                         )}
                         {item.source_type && (
@@ -289,7 +289,7 @@ export default function MiraclesPage({
                 {/* محتوى */}
                 <div className="miracle-item__body-wrap mk-card__body">
                   {item.reference && (
-                    <p className="miracle-item__ref mk-card__ref">﴾ {item.reference} ﴿</p>
+                    <p className="miracle-item__ref mk-card__ref">﴿ {item.reference} ﴾</p>
                   )}
                   {bodyText && (
                     <>

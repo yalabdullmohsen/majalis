@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Award, BookMarked, BookOpen, BookText, Bookmark, FileText, Flame, Gem, GraduationCap, HelpCircle, Landmark, Leaf, Library, Lock, MapPin, Medal, Moon, Repeat2, RotateCw, Scale, ScrollText, Sparkles, Star } from "lucide-react";
+import { Award, BookMarked, BookOpen, BookOpenCheck, BookText, Bookmark, FileText, Flame, Gem, GraduationCap, HelpCircle, Landmark, Leaf, Library, Lock, MapPin, Medal, Mic, Mic2, Moon, Repeat2, RotateCw, Scale, ScrollText, Sparkles, Star } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
@@ -25,6 +25,7 @@ import {
 const BADGE_ICON_MAP: Record<string, LucideIcon> = {
   Flame, Moon, Star, BookOpen, Library, GraduationCap, BookMarked, Repeat2, Sparkles,
   Leaf, Landmark, Scale, Bookmark, Gem, Medal, ScrollText, HelpCircle, FileText,
+  Mic, Mic2, Award, BookOpenCheck,
 };
 function BadgeIcon({ name }: { name: string }) {
   const I = BADGE_ICON_MAP[name] ?? Medal;
@@ -140,6 +141,7 @@ function BadgeGrid({ earned }: { earned: Set<string> }) {
     tasbih: "الذكر والتسبيح",
     path: "المسارات الشرعية",
     content: "المحتوى المحفوظ",
+    recitation: "اختبار التسميع بالذكاء الاصطناعي",
   };
 
   const byCategory = BADGE_DEFS.reduce<Record<string, typeof BADGE_DEFS>>((acc, b) => {

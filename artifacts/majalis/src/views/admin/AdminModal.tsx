@@ -32,6 +32,13 @@ export function FieldRow({ children }: { children: React.ReactNode }) {
 }
 
 export function AdminModal({ title, open, onClose, onSave, saving, children }: AdminModalProps) {
+  React.useEffect(() => {
+    if (!open) return;
+    const keyHandler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  }, [open, onClose]);
+
   if (!open) return null;
   return (
     <div className="adm-modal__overlay" onClick={onClose}>

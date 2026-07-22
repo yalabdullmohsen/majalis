@@ -11,6 +11,7 @@ import {
   type CdnCollectionMeta,
 } from "@/lib/hadith-cdn-service";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { truncateAtWord } from "@/lib/utils";
 
 // ─── Chapter index built from hadith data ─────────────────────────────────────
 
@@ -103,7 +104,7 @@ function HadithRow({ h, index }: { h: CdnHadith; index: number }) {
   }
 
   return (
-    <article
+    <div
       className={`hb-hadith-row${expanded ? " hb-hadith-row--expanded" : ""}`}
       onClick={() => setExpanded((x) => !x)}
       onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setExpanded((x) => !x)}
@@ -115,7 +116,7 @@ function HadithRow({ h, index }: { h: CdnHadith; index: number }) {
       <div className="hb-hadith-row__head">
         <span className="hb-hadith-row__num">{index}</span>
         <p className="hb-hadith-row__preview">
-          {expanded ? h.text : h.text.slice(0, 140) + (h.text.length > 140 ? "…" : "")}
+          {expanded ? h.text : truncateAtWord(h.text, 140)}
         </p>
         <ChevronRight
           size={14}
@@ -124,6 +125,8 @@ function HadithRow({ h, index }: { h: CdnHadith; index: number }) {
         />
       </div>
       {expanded && (
+        // onClick هنا لمنع انتشار النقر إلى صف الحديث الأب (الذي يطوي/يبسط
+        // عند النقر) — لا إجراء فعلي يحتاج مكافئ لوحة مفاتيح.
         <div className="hb-hadith-row__detail" onClick={(e) => e.stopPropagation()}>
           <div className="hb-hadith-row__meta">
             {chapter && <span className="hb-hadith-row__chapter">{chapter}</span>}
@@ -142,7 +145,7 @@ function HadithRow({ h, index }: { h: CdnHadith; index: number }) {
           </button>
         </div>
       )}
-    </article>
+    </div>
   );
 }
 

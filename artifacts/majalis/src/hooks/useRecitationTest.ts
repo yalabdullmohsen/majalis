@@ -102,6 +102,7 @@ export function useRecitationTest(canonicalText: string) {
       lang: string;
       interimResults: boolean;
       maxAlternatives: number;
+      continuous: boolean;
       onresult: ((event: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void) | null;
       onerror: (() => void) | null;
       onend: (() => void) | null;
@@ -117,6 +118,10 @@ export function useRecitationTest(canonicalText: string) {
       recognition.lang = "ar-SA";
       recognition.interimResults = true;
       recognition.maxAlternatives = 1;
+      // النطاق أصبح سورة كاملة قد تمتد لعدة آيات (كان مقصورًا على آية
+      // واحدة) — continuous الافتراضي false يُنهي الجلسة تلقائيًا عند أول
+      // سكتة قصيرة بين الآيات، فيقطع التسميع قبل اكتماله.
+      recognition.continuous = true;
       webRecognitionRef.current = { stop: () => recognition.stop() };
 
       recognition.onresult = (event) => {

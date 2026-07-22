@@ -22,8 +22,14 @@ export const MANUAL_ASSIST_MODES = ["upload", "url", "caption"];
 export function isInstagramBlocked(imported, err) {
   if (err) return true;
   const body = String(imported?.rawText || imported?.description || "").toLowerCase();
-  const title = String(imported?.title || "").toLowerCase();
-  if (title.includes("login") || title.includes("instagram")) return true;
+  const title = String(imported?.title || "").trim().toLowerCase();
+  // عنوان صفحة الحظر الفعلية لإنستغرام هو "Instagram" وحدها أو "Login • Instagram"
+  // — بلا "photos and videos" ولا اسم حساب. عنوان أي ملف شخصي عام ناجح يتضمّن
+  // "Instagram" دومًا ضمن الصيغة القياسية "… • Instagram photos and videos"، لذلك
+  // فحص substring وحده ("instagram" ضمن العنوان) كان يُصنِّف كل ملف شخصي ناجح
+  // كمحظور خطأً (رُصد فعليًا: جلب حقيقي ناجح بعدد متابعين/منشورات حقيقي، مصنَّف
+  // "blocked" رغم ذلك) — الفحص الآن يستهدف صيغة صفحة الحظر تحديدًا.
+  if (title === "instagram" || title.startsWith("login")) return true;
   if (body.includes("login • instagram") || body.includes("log in to instagram")) return true;
   if (!imported?.title && !imported?.description && !imported?.imageUrl) return true;
   return false;

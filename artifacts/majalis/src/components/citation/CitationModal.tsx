@@ -48,6 +48,13 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
     });
   }, [source.id, style]);
 
+  // إغلاق بمفتاح Escape (بديل للنقر خارج النافذة، أو زر الإغلاق الظاهر)
+  useEffect(() => {
+    const keyHandler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  }, [onClose]);
+
   // إنشاء الاقتباس عند فتح التبويب الثاني أو الثالث
   const ensureCitation = useCallback(async () => {
     if (citation) return citation;

@@ -3,6 +3,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { applyFontPreference, readFontPreference } from "./lib/font-preference";
+import { readThemePreference, resolveTheme } from "./lib/theme-preference";
 import { initClientErrorReporting } from "./lib/error-report";
 import { resetMobileNavBodyLock } from "./lib/mobile-nav-body-lock";
 import { bootstrapSupabaseFromServer, resetSupabaseClient } from "./lib/supabase-bootstrap";
@@ -18,6 +19,8 @@ import "./styles/majalis-v2.css";
 import "./styles/modern-2026.css";
 import "./styles/elite-2026.css";
 import "./styles/sins-rights.css";
+// Final release layer: one authoritative visual contract loaded after legacy page styles.
+import "./styles/final-release.css";
 
 const queryClient = createAppQueryClient();
 
@@ -45,14 +48,23 @@ async function mount() {
   if (renderMs > PERF_SLOW_MS) {
     console.warn(`[perf:slow] render "app-mount" ${renderMs}ms`);
   }
+
+  // بعد استقرار الإقلاع (لا خطأ chunk خلال 8 ثوانٍ)، يُحرَّر حارس إعادة
+  // التحميل لخطأ chunk في ErrorBoundary.tsx — فيبقى خطأ chunk لاحق (نشر
+  // جديد بعد ساعات مثلاً بينما التبويب مفتوح) قادرًا على إعادة تحميل
+  // تلقائية واحدة أيضًا، لا محظورًا للأبد لبقية عمر التبويب.
+  setTimeout(() => {
+    try { sessionStorage.removeItem("mj-chunk-reload-attempted"); } catch { /* تجاهل */ }
+  }, 8000);
 }
 
 void mount();
 
 registerProductionServiceWorker();
 
-// إعداد Capacitor Native (يُهمَل تلقائياً على الويب)
-void setupStatusBar();
+// إعداد Capacitor Native (يُهمَل تلقائياً على الويب) — بلون/نمط الوضع الفعلي
+// عند الإقلاع، لا قيمة ثابتة (ThemePreferenceProvider يُعيد المزامنة عند أي تبديل لاحق).
+void setupStatusBar(resolveTheme(readThemePreference()));
 void setupKeyboard();
 
 // معالجة زر الرجوع في Android

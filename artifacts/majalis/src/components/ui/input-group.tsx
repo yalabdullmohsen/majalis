@@ -60,6 +60,12 @@ function InputGroupAddon({
   align = "inline-start",
   ...props
 }: React.ComponentProps<"div"> & VariantProps<typeof inputGroupAddonVariants>) {
+  // onClick هنا لا يمثّل إجراءً مستقلًا؛ فقط ينقل التركيز إلى حقل الإدخال
+  // المجاور (سلوك مماثل تمامًا لنقر <label> على حقله)، وهو أصلًا قابل
+  // للوصول بالتنقّل الطبيعي (Tab). إضافة role/tabIndex/onKeyDown هنا كانت
+  // ستُنشئ محطة Tab زائدة تكرّر نفس الحقل. هذا المكوّن غير مُستخدَم فعليًا
+  // في src/ حاليًا (بقايا قالب shadcn/ui) — موثَّق دون تعديل لعدم وجود أي
+  // فائدة وصولية حقيقية من إضافة دلالة تفاعلية زائفة هنا.
   return (
     <div
       role="group"

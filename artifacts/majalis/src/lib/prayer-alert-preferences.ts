@@ -91,3 +91,31 @@ export function dismissBannerFor(prayerKey: string): void {
     sessionStorage.setItem(DISMISSED_KEY, prayerKey);
   } catch { /* تجاهل */ }
 }
+
+/**
+ * تذكير "احترام وقت الصلاة" (ضع هاتفك على الصامت) — مرة واحدة فقط لكل صلاة
+ * فعلياً، وليس لكل تبويب/جلسة فقط: نستخدم localStorage (لا sessionStorage)
+ * كي لا يتكرر التنبيه إن أُغلق التطبيق وأُعيد فتحه ضمن نفس نافذة الصلاة
+ * (مثلاً: فُتح مرتين خلال الـ١٥ دقيقة قبل الظهر). المفتاح المخزَّن هو
+ * "تاريخ_مفتاحالصلاة" بتوقيت الكويت — يُعاد تلقائياً لصلاة جديدة غدًا لأن
+ * التاريخ يختلف، بلا حاجة لتنظيف يدوي.
+ */
+const RESPECT_REMINDER_KEY = "majalis-prayer-respect-reminder-shown-v1";
+
+function kuwaitDateKeyForReminder(date = new Date()): string {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kuwait" }).format(date);
+}
+
+export function hasShownRespectReminder(prayerKey: string): boolean {
+  try {
+    return localStorage.getItem(RESPECT_REMINDER_KEY) === `${kuwaitDateKeyForReminder()}_${prayerKey}`;
+  } catch {
+    return false;
+  }
+}
+
+export function markRespectReminderShown(prayerKey: string): void {
+  try {
+    localStorage.setItem(RESPECT_REMINDER_KEY, `${kuwaitDateKeyForReminder()}_${prayerKey}`);
+  } catch { /* تجاهل */ }
+}
