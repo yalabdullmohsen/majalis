@@ -14313,7 +14313,7 @@ body.has-assistant-fab .app-main {
   font-size: 0.85rem !important;
   font-weight: 600 !important;
   min-height: unset !important;
-  padding: 0.2rem 0 !important;
+  padding: 0.4rem 0 !important;
   transition: color var(--ds-t-fast);
 }
 .site-footer-link:hover { color: var(--majalis-emerald) !important; }

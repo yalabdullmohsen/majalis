@@ -645,7 +645,7 @@ export default function HomePage() {
                   background: "rgba(255,255,255,0.16)",
                   border: "1px solid rgba(255,255,255,0.3)",
                   color: "#F7F4ED",
-                  padding: "0.18rem 0.75rem",
+                  padding: "0.5rem 0.75rem",
                   borderRadius: "999px",
                   fontSize: "0.8rem",
                   fontWeight: 700,
