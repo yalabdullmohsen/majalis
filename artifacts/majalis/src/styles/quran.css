@@ -1378,6 +1378,13 @@
   margin: 0.5rem 0;
   padding: 0;
   box-shadow: 0 2px 16px rgba(31,77,58,0.10);
+  /* يملأ الارتفاع المتاح فعليًا في .mpv-body (flex:1 أعلاه) بدل الاكتفاء
+     بارتفاع محتواه الداخلي فقط — ضروري ليحصل .qs-mushaf-body على ارتفاع
+     محدَّد يحسب max-height منه (أدناه). */
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 /* الحد الذهبي الداخلي الثاني — يكمّل الإطار المزدوج */
 .qs-mushaf-frame::before {
@@ -1467,10 +1474,19 @@
   -moz-osx-font-smoothing: grayscale;
   /* نسبة عرض/ارتفاع صفحة مصحف حقيقية — ضرورية لتخطيط الأسطر الخمسة
      عشر (MushafPageV2 بوضعيه، mode="bare") الذي يحتاج ارتفاعًا محدَّدًا
-     ليقسّمه بالتساوي (flex-direction:column على .mf2-lines). */
+     ليقسّمه بالتساوي (flex-direction:column على .mf2-lines).
+     ⚠️ 2026-07-22: width كانت تُشتقّ ضمنيًا 100% دومًا فيُحسَب الارتفاع
+     منها فقط — على شاشات طويلة (آيباد/آيفون طويل) هذا يترك الصفحة أقصر
+     من المساحة المتاحة بكثير (قياس فعلي: 380px من أصل ~1055px على آيباد).
+     max-height:100% (من ارتفاع .qs-mushaf-frame المحدَّد أعلاه) يجعل
+     المتصفح يُعيد حساب العرض من الارتفاع تلقائيًا كلما كان الارتفاع هو
+     القيد الفعلي — سلوك قياسي لصناديق aspect-ratio (مطابق object-fit:
+     contain)، بلا أي قيمة مفروضة يدويًا. */
   display: flex;
   flex-direction: column;
   aspect-ratio: 0.72;
+  max-height: 100%;
+  margin-inline: auto;
 }
 
 /* ── فاصلة نهاية الآية: دائرة ذهبية مسنّنة (٨ نتوءات) + رقم شرقي — بصري خالص ── */
@@ -1942,7 +1958,28 @@ body.has-immersive-mushaf { overflow: hidden; }
    وسط فراغ. width:100% صريح (بدل الاعتماد على stretch الضمني) يضمن ملء
    العرض المتاح فعليًا على كل المقاسات — تحقّقتُ أنه يرفعها لـ343px
    (العرض الكامل ناقص الحشو) على نفس القياس. */
-.mpv-body { width: 100%; max-width: 720px; margin: 0 auto; padding: 1rem 1rem 7rem; direction: rtl; box-sizing: border-box; }
+/* ⚠️ إصلاح جذري إضافي (2026-07-22): width:100% وحدها (الإصلاح السابق)
+   ملأت العرض الأفقي فعلًا، لكن الارتفاع ظل يُشتَقّ من العرض فقط عبر
+   aspect-ratio على .qs-mushaf-frame — على الشاشات الطويلة (آيفون 15،
+   آيباد) هذا يترك فراغًا رأسيًا ضخمًا فارغًا لأن .mpv-body لم يكن له
+   flex:1 يجعله يملأ الارتفاع المتاح فعليًا أصلًا (قياس مباشر: آيباد
+   820×1180 كانت البطاقة 380px ارتفاعًا من أصل ~1055px متاحة). flex:1
+   هنا يجعل الارتفاع المتاح حقيقيًا، وmax-height:100% على .qs-mushaf-frame
+   (أدناه) يجعل المتصفح يعيد حساب العرض تلقائيًا من الارتفاع كلما كان
+   الارتفاع هو القيد الفعلي (سلوك قياسي لصناديق aspect-ratio، كـ
+   object-fit:contain) — بلا فرض أي بُعد ثابت يدويًا. */
+.mpv-body {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1rem 1rem 7rem;
+  direction: rtl;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
 .mpv-resume-banner {
   display: flex;
   align-items: center;
