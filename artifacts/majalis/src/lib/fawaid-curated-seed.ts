@@ -308,7 +308,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── الطب النبوي والصحة ── */
   { text: "عليكم بهذا العود الهندي فإن فيه سبعة أشفية.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "الحجامة أو الفصد أو شربة عسل — ثلاثة في شفاء الجسم بإذن الله.", category: "الحديث", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "الشفاء في ثلاثة: شربة عسل، وحجامة (شرطة مِحجم)، وكية بالنار — ونهى النبي ﷺ أمته عن الكي.", category: "الحديث", source: "رواه البخاري (٥٦٨٠) عن ابن عباس", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "المعدة بيت الداء والحمية رأس كل دواء — وأعطِ كل جسم ما عوّدته.", category: "الحديث", source: "أثر يُنسب للحارث بن كلدة — ويُستشهد به في الطب النبوي", author_name: "الطب النبوي", status: "approved", verification_status: "needs_review" },
   { text: "في كل صباح تصدق على كل سلامى منك؛ وصيام يوم سنة للمسلم.", category: "الحديث", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
 
@@ -325,7 +325,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── العلم والإبداع من منظور إسلامي ── */
   { text: "العقل أكبر نعمة أنعمها الله على الإنسان؛ ومن لم يستعمله في خدمة الحق فقد أضاع أعز ما أُعطي.", category: "طلب العلم", source: "إحياء علوم الدين — الغزالي", author_name: "الإمام الغزالي", status: "approved", verification_status: "verified" },
-  { text: "الإسلام يأمر بالتعلم من المهد إلى اللحد؛ فالعلم لا يتوقف بنبل ولا جاه ولا سن.", category: "طلب العلم", source: "طلب العلم فريضة على كل مسلم — ابن ماجه", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
+  { text: "طلب العلم فريضة على كل مسلم؛ فهو واجب لا يتوقف بنبل ولا جاه ولا سن.", category: "طلب العلم", source: "رواه ابن ماجه — حسّنه الألباني في صحيح ابن ماجه بمجموع طرقه", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
   { text: "التفكر في خلق الله ساعة خير من عبادة سبعين سنة — فالتأمل في الكون طريق إلى معرفة الخالق.", category: "طلب العلم", source: "رواه أبو الشيخ — يُستشهد به في الفقه", author_name: "أبو الشيخ الأصبهاني", status: "approved", verification_status: "needs_review" },
 
   /* ── الدعاء والتوسل ── */
@@ -348,7 +348,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── الوقت والتخطيط ── */
   { text: "نعمتان مغبون فيهما كثير من الناس: الصحة والفراغ — من عرف قدرهما ربح دنياه وآخرته.", category: "الحديث", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "اغتنم خمساً قبل خمس: شبابك قبل هرمك، وصحتك قبل سقمك، وغناك قبل فقرك، وفراغك قبل شغلك، وحياتك قبل موتك.", category: "الحديث", source: "رواه ابن المبارك في الزهد — حسن", author_name: "ابن المبارك", status: "approved", verification_status: "verified" },
+  { text: "اغتنم خمساً قبل خمس: شبابك قبل هرمك، وصحتك قبل سقمك، وغناك قبل فقرك، وفراغك قبل شغلك، وحياتك قبل موتك.", category: "الحديث", source: "رواه الحاكم في المستدرك (٧٨٤٦) عن ابن عباس وصححه على شرط الشيخين، والبيهقي في شعب الإيمان — صححه الألباني في صحيح الجامع وصحيح الترغيب", author_name: "المستدرك", status: "approved", verification_status: "verified" },
 
   /* ── ذكر الله وتلاوة القرآن ── */
   { text: "ألا بذكر الله تطمئن القلوب — الذكر دواء القلوب وغذاؤها وقوتها في كل وقت.", category: "العقيدة", source: "الرعد: 28", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
