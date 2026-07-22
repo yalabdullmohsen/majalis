@@ -149,7 +149,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الحزن على الماضي مضيعة للحاضر.", category: "الأخلاق", source: "قاعدة نبوية — ابن القيم: مدارج السالكين", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
 
   /* ── طلب العلم ── */
-  { text: "العالم والمتعلم في الأجر سواء وسائر الناس لا خير فيهم.", category: "طلب العلم", source: "رواه ابن ماجه — حسنه الألباني", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
+  { text: "العالم والمتعلم في الأجر سواء وسائر الناس لا خير فيهم.", category: "طلب العلم", source: "رواه ابن ماجه — اختُلف في تصحيحه؛ ضعّفه الألباني في ضعيف الجامع، وإسناده فيه عثمان بن أبي عاتكة وعلي بن يزيد وكلاهما ضعيف", author_name: "سنن ابن ماجه", status: "approved", verification_status: "needs_review" },
   { text: "قيد العلم بالكتابة.", category: "طلب العلم", source: "أثر الإمام الشافعي", author_name: "الإمام الشافعي", status: "approved", verification_status: "verified" },
   { text: "من أراد الدنيا فعليه بالعلم، ومن أراد الآخرة فعليه بالعلم.", category: "طلب العلم", source: "أثر يُنسب للإمام الشافعي", author_name: "الإمام الشافعي", status: "approved", verification_status: "needs_review" },
 
@@ -225,13 +225,13 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الدجال يخرج من المشرق؛ وعلامة قربه ظهور الفتن وكثرة الكذب.", category: "العقيدة", source: "رواه البخاري ومسلم — أشراط الساعة", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الحديث ── */
-  { text: "اتقوا الله وصلوا أرحامكم.", category: "الحديث", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "اتقوا الله وصلوا أرحامكم.", category: "الحديث", source: "رواه البيهقي في شعب الإيمان عن ابن مسعود — حسّنه الألباني في صحيح الجامع", author_name: "صحيح الجامع للألباني", status: "approved", verification_status: "verified" },
   { text: "إن الله يحب إذا عمل أحدكم عملاً أن يتقنه.", category: "الحديث", source: "رواه البيهقي — صحيح الألباني", author_name: "السلسلة الصحيحة", status: "approved", verification_status: "verified" },
   { text: "من صمت نجا — السكوت أمان، والكلام مسؤولية.", category: "الحديث", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
 
   /* ── إضافات السيرة ── */
   { text: "الفتح الأكبر كان بلا حرب؛ دخل النبي ﷺ مكة وعفا عن أهلها — قدوة في العفو والرحمة.", category: "السيرة", source: "صحيح البخاري — كتاب المغازي", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
-  { text: "غزوة بدر نُصر فيها ثلاثمائة وثلاثة عشر على الألف؛ دليل أن النصر من عند الله.", category: "السيرة", source: "صحيح البخاري — كتاب المغازي", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
+  { text: "غزوة بدر نُصر فيها ثلاثمائة وثلاثة عشر على الألف؛ دليل أن النصر من عند الله.", category: "السيرة", source: "رواه الترمذي عن البراء بن عازب بلفظ العدد المحدد؛ وأصله في صحيح البخاري بلفظ عام «ثلاثمائة وبضعة عشر»", author_name: "سنن الترمذي", status: "approved", verification_status: "needs_review" },
 
   /* ── إضافات اللغة ── */
   { text: "اللغة العربية لغة القرآن؛ من أتقنها أعان فهمه لكتاب الله.", category: "اللغة", source: "فضل عربية القرآن — ابن تيمية: اقتضاء الصراط المستقيم", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
@@ -278,7 +278,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── إضافات القرآن ── */
   { text: "من أراد علم الأولين والآخرين فليتدبّر القرآن — فيه جواب كل سؤال وشفاء كل داء.", category: "القرآن", source: "مقدمة في أصول التفسير — ابن تيمية", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
-  { text: "الحافظ للقرآن يُقال له يوم القيامة: اقرأ وارقَ ورتّل — فمنزلته عند آخر آية يحفظها.", category: "القرآن", source: "رواه الترمذي وأبو داود — صحيح", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "verified" },
+  { text: "الحافظ للقرآن يُقال له يوم القيامة: اقرأ وارتقِ ورتّل — فمنزلته عند آخر آية يقرؤها.", category: "القرآن", source: "رواه الترمذي وأبو داود — حسن صحيح", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "needs_review" },
 
   /* ── إضافات التربية ── */
   { text: "التربية الصحيحة تبدأ بتربية النفس قبل تربية الأبناء — المُربّي القدوة أبلغ من المُربّي الواعظ.", category: "التربية", source: "تربية الأولاد في الإسلام — عبد الله ناصح علوان", author_name: "عبد الله ناصح علوان", status: "approved", verification_status: "needs_review" },
