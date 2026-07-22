@@ -3067,7 +3067,7 @@ input, textarea, select { font-family: inherit; }
 .qa-badge {
   padding: 0.125rem 0.625rem;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -8063,7 +8063,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   display: inline-block;
   border-radius: 999px;
   padding: 0.15em 0.65em;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 600;
   white-space: nowrap;
 }
@@ -8123,7 +8123,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   display: inline-block;
   border-radius: 999px;
   padding: 0.15em 0.65em;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -8426,7 +8426,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .hadith-section-eyebrow {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -9424,7 +9424,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .lesson-unified-card__status {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 600;
   padding: 0.18rem 0.5rem;
   border-radius: 999px;
@@ -9563,7 +9563,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .lesson-unified-card__flag {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 700;
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
@@ -18426,7 +18426,7 @@ body.has-assistant-fab .app-main {
 .hsh-eyebrow {
   background: var(--clr-primary, #173D35);
   color: #fff;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 700;
   padding: 0.25rem 0.7rem;
   border-radius: 999px;

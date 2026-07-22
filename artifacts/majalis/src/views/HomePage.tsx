@@ -630,7 +630,7 @@ export default function HomePage() {
                 color: "rgba(250,248,242,0.75)",
                 padding: "0.18rem 0.75rem",
                 borderRadius: "999px",
-                fontSize: "0.72rem",
+                fontSize: "0.8rem",
                 fontWeight: 600,
                 letterSpacing: "0.02em",
               }}>
@@ -647,7 +647,7 @@ export default function HomePage() {
                   color: "#F7F4ED",
                   padding: "0.18rem 0.75rem",
                   borderRadius: "999px",
-                  fontSize: "0.72rem",
+                  fontSize: "0.8rem",
                   fontWeight: 700,
                   letterSpacing: "0.02em",
                   textDecoration: "none",
@@ -765,8 +765,8 @@ export default function HomePage() {
                     CSS منفصلة) بينما بقي النص هنا داكنًا ثابتًا = شبه غير
                     مقروء (تباين ~1:1، شُخِّص 2026-07-19). متغيّرات CSS تعمل
                     داخل style inline في React وتتكيّف تلقائيًا مع السمة. */}
-                <div style={{ color: "var(--majalis-ink, #202725)", fontSize: "0.77rem", fontWeight: 700, lineHeight: 1.25 }}>{label}</div>
-                <div style={{ color: "var(--majalis-ink-soft, #9ca3af)", fontSize: "0.66rem", lineHeight: 1.3, marginTop: 1 }}>{desc}</div>
+                <div style={{ color: "var(--majalis-ink, #202725)", fontSize: "0.85rem", fontWeight: 700, lineHeight: 1.25 }}>{label}</div>
+                <div style={{ color: "var(--majalis-ink-soft, #9ca3af)", fontSize: "0.78rem", lineHeight: 1.3, marginTop: 1 }}>{desc}</div>
               </div>
             </Link>
           ))}
