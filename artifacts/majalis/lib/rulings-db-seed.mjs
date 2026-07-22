@@ -16,7 +16,7 @@ function resolvePublicBaseUrl() {
     return process.env.MAJALIS_PRODUCTION_URL.replace(/\/$/, "");
   }
   if (process.env.VERCEL_ENV === "production") {
-    return "https://www.majlisilm.com";
+    return "https://majlisilm.com";
   }
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL.replace(/^https?:\/\//, "")}`;

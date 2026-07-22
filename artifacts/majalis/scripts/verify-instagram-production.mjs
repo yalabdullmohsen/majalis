@@ -3,7 +3,7 @@
  * Production activation check for Instagram Phase 7.
  * Usage: BASE_URL=https://www.majlisilm.com node scripts/verify-instagram-production.mjs
  */
-const BASE = process.env.BASE_URL || "https://www.majlisilm.com";
+const BASE = process.env.BASE_URL || "https://majlisilm.com";
 
 const routes = [
   "/admin/sources",

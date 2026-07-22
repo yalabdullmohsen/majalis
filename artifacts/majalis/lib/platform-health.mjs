@@ -11,7 +11,7 @@ import { getSystemHealth } from "./system-health.mjs";
 import { runMkeHealthCheck } from "./majlis-knowledge-engine/orchestrator.mjs";
 import { getSeedItemCount } from "./rulings-db-seed.mjs";
 
-const PRODUCTION_BASE = process.env.MAJALIS_PRODUCTION_URL || "https://www.majlisilm.com";
+const PRODUCTION_BASE = process.env.MAJALIS_PRODUCTION_URL || "https://majlisilm.com";
 
 async function probeAssistantPost() {
   try {

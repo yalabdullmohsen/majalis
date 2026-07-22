@@ -8,11 +8,14 @@ import { formatSheikhName, sheikhNameKey } from "@/lib/sheikh-name";
 import {
   cleanTimeText,
   computeNextOccurrenceMs,
+  DAY_INDEX,
   formatGregorianDate,
   formatHijriDate,
   formatRelativeTimeDetailed,
   isLessonInProgress,
+  getKuwaitClock,
   isOccurrencePast,
+  parseTimeToMinutes,
 } from "@/lib/lesson-time";
 
 export type ActivityType = "درس" | "دورة";
@@ -55,6 +58,8 @@ export type KuwaitLessonRecord = {
   isWomenOnly?: boolean;
   source?: "supabase" | "seed";
   archivedAt?: string | null;
+  completeness?: number;
+  missingFields?: string[];
 };
 
 export type KuwaitLessonFilters = {
@@ -101,15 +106,53 @@ function normalizeText(value: string) {
   return normalizeArabic(String(value || "").trim());
 }
 
+// Strips diacritics + normalizes Arabic letter variants so that spelling
+// differences (تشكيل, أ/ا/إ, ة/ه, ى/ي) don't defeat deduplication.
+function normDedup(value: string) {
+  return normalizeArabic(String(value || "")).replace(/\s+/g, "");
+}
+
+// Primary key: normalized title + mosque + day.
+// Sheikh name is a secondary tiebreaker — included when mosque is empty to
+// avoid collapsing different lessons at different (unknown) locations.
 function lessonDedupeKey(lesson: KuwaitLessonRecord) {
-  // Intentionally excludes sheikhName and time — both are prone to data-entry
-  // inconsistencies between the DB and seed rows, causing false duplicates.
-  // Title + mosque + day uniquely identifies a Kuwait lesson in practice.
-  return [
-    normalizeText(lesson.title),
-    normalizeText(lesson.mosque),
-    normalizeText(lesson.day),
-  ].join("|");
+  const title  = normDedup(lesson.title);
+  const mosque = normDedup(lesson.mosque);
+  const day    = normDedup(lesson.day);
+  const sheikh = normDedup(lesson.sheikhName);
+  // When mosque is known, (title+mosque+day) uniquely identifies the lesson.
+  // When mosque is absent, add sheikh to avoid false merges.
+  const secondary = mosque || sheikh;
+  return [title, secondary, day].join("|");
+}
+
+function computeCompleteness(lesson: KuwaitLessonRecord): { score: number; missing: string[] } {
+  const missing: string[] = [];
+  let score = 0;
+  const checks: Array<[keyof KuwaitLessonRecord, number]> = [
+    ["sheikhName", 0.20],
+    ["mosque",     0.20],
+    ["day",        0.20],
+    ["time",       0.15],
+    ["category",   0.10],
+    ["governorate",0.15],
+  ];
+  for (const [field, weight] of checks) {
+    const val = lesson[field];
+    if (val && String(val).trim()) {
+      score += weight;
+    } else {
+      missing.push(field as string);
+    }
+  }
+  return { score: Math.round(score * 100) / 100, missing };
+}
+
+/** Is the lesson ready for public display (has all three essential fields)? */
+export function isLessonPublicReady(lesson: KuwaitLessonRecord): boolean {
+  return Boolean(lesson.sheikhName?.trim()) &&
+         Boolean(lesson.mosque?.trim()) &&
+         Boolean(lesson.day?.trim() || lesson.time?.trim());
 }
 
 function parseDayFromSchedule(schedule?: string): string {
@@ -163,7 +206,7 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
   // Colons in URL path segments break Vercel routing; replace with dashes
   const id = String(row.external_key || row.id || "").replace(/:/g, "-");
 
-  return enrichScheduleFields({
+  const partialLesson = enrichScheduleFields({
     id,
     title: row.title,
     sheikhName: rawSheikh,
@@ -197,6 +240,10 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
     recurring: row.is_recurring !== false && !row.end_date,
     archivedAt: row.archived_at || null,
   });
+  const { score, missing } = computeCompleteness(partialLesson);
+  partialLesson.completeness = row.completeness_score != null ? Number(row.completeness_score) : score;
+  partialLesson.missingFields = missing;
+  return partialLesson;
 }
 
 function isExpired(lesson: KuwaitLessonRecord): boolean {
@@ -251,15 +298,25 @@ export function splitKuwaitLessons(lessons: KuwaitLessonRecord[]) {
 }
 
 export function dedupeKuwaitLessons(lessons: KuwaitLessonRecord[]): KuwaitLessonRecord[] {
-  const seen = new Set<string>();
-  const result: KuwaitLessonRecord[] = [];
+  // Keep the most-complete record when duplicates exist.
+  // "supabase" source beats "seed" when scores are equal.
+  const best = new Map<string, KuwaitLessonRecord>();
   for (const lesson of lessons) {
     const key = lessonDedupeKey(lesson);
-    if (seen.has(key)) continue;
-    seen.add(key);
-    result.push(lesson);
+    const existing = best.get(key);
+    if (!existing) {
+      best.set(key, lesson);
+      continue;
+    }
+    const existingScore = existing.completeness ?? 0;
+    const newScore = lesson.completeness ?? 0;
+    const newIsDb = lesson.source === "supabase";
+    const existingIsDb = existing.source === "supabase";
+    if (newScore > existingScore || (newScore === existingScore && newIsDb && !existingIsDb)) {
+      best.set(key, lesson);
+    }
   }
-  return result;
+  return Array.from(best.values());
 }
 
 export function sortKuwaitLessons(lessons: KuwaitLessonRecord[]): KuwaitLessonRecord[] {
@@ -428,5 +485,25 @@ export const DEFAULT_KUWAIT_FILTERS: KuwaitLessonFilters = {
 
 export function getRelativeStatusLabel(lesson: KuwaitLessonRecord, archived = false): string {
   if (archived) return "منتهٍ";
+
+  const now = Date.now();
+  const diffMs = lesson.nextOccurrenceMs - now;
+
+  // الدرس جارٍ الآن (بدأ قبل ≤٩٠ دقيقة ولم ينتهِ بعد)
+  if (diffMs <= 0 && diffMs > -90 * 60_000) return "جارٍ الآن";
+
+  // تحقّق من انتهاء حصة اليوم فعليًا (nextOccurrenceMs قفز للأسبوع القادم)
+  if (lesson.day) {
+    const clock = getKuwaitClock();
+    const targetDay = DAY_INDEX[lesson.day];
+    if (targetDay !== undefined && targetDay === clock.weekday) {
+      const timeMin = parseTimeToMinutes(lesson.time);
+      if (timeMin !== null) {
+        const nowMin = clock.hour * 60 + clock.minute;
+        if (nowMin > timeMin + 90) return "انتهى اليوم";
+      }
+    }
+  }
+
   return formatRelativeTimeDetailed(lesson.nextOccurrenceMs, lesson.time);
 }
