@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-07-17T23:05:11.767Z",
-  "total": 515,
+  "generated_at": "2026-07-22T05:52:21.534Z",
+  "total": 533,
   "chunks": [
     {
       "category": "الطهارة",
@@ -19,9 +19,9 @@
       "count": 35
     },
     {
-      "category": "الحج",
-      "file": "chunks/الحج.json",
-      "count": 5
+      "category": "الحج والعمرة",
+      "file": "chunks/الحج-والعمرة.json",
+      "count": 27
     },
     {
       "category": "المعاملات",
@@ -29,8 +29,8 @@
       "count": 10
     },
     {
-      "category": "المواريث",
-      "file": "chunks/المواريث.json",
+      "category": "المواريث والوصايا",
+      "file": "chunks/المواريث-والوصايا.json",
       "count": 5
     },
     {
@@ -44,9 +44,39 @@
       "count": 9
     },
     {
-      "category": "النوازل",
-      "file": "chunks/النوازل.json",
-      "count": 9
+      "category": "النوازل المعاصرة",
+      "file": "chunks/النوازل-المعاصرة.json",
+      "count": 73
+    },
+    {
+      "category": "الأطعمة والأشربة",
+      "file": "chunks/الأطعمة-والأشربة.json",
+      "count": 2
+    },
+    {
+      "category": "اللباس والزينة",
+      "file": "chunks/اللباس-والزينة.json",
+      "count": 2
+    },
+    {
+      "category": "القضاء والحدود",
+      "file": "chunks/القضاء-والحدود.json",
+      "count": 2
+    },
+    {
+      "category": "الجنائز",
+      "file": "chunks/الجنائز.json",
+      "count": 2
+    },
+    {
+      "category": "الجهاد والسياسة الشرعية",
+      "file": "chunks/الجهاد-والسياسة-الشرعية.json",
+      "count": 2
+    },
+    {
+      "category": "الأيمان والنذور",
+      "file": "chunks/الأيمان-والنذور.json",
+      "count": 2
     },
     {
       "category": "طلب العلم والدعوة",
@@ -57,11 +87,6 @@
       "category": "العقيدة",
       "file": "chunks/العقيدة.json",
       "count": 38
-    },
-    {
-      "category": "الحج والعمرة",
-      "file": "chunks/الحج-والعمرة.json",
-      "count": 22
     },
     {
       "category": "القرآن والحديث",
@@ -77,11 +102,6 @@
       "category": "الأخلاق والآداب",
       "file": "chunks/الأخلاق-والآداب.json",
       "count": 16
-    },
-    {
-      "category": "النوازل المعاصرة",
-      "file": "chunks/النوازل-المعاصرة.json",
-      "count": 58
     }
   ]
 }
