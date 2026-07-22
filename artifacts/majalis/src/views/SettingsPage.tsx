@@ -100,6 +100,17 @@ export default function SettingsPage() {
             <option>كبير</option>
           </select>
         </label>
+        <label className="settings-field">
+          <span>نظام الأرقام</span>
+          <select
+            name="numeral-system"
+            value={preferences.numeralSystem}
+            onChange={(e) => update("numeralSystem", e.target.value as UserPreferences["numeralSystem"])}
+          >
+            <option value="عربي">عربي (٠١٢٣)</option>
+            <option value="إنجليزي">إنجليزي (0123)</option>
+          </select>
+        </label>
       </LegalSection>
 
       <LegalSection title={t("settings_reading")}>

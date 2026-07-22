@@ -267,7 +267,17 @@ const UniversitiesAdminPage = lazyWithRetry(() => import("@/views/admin/Universi
 function SeoManager() {
   const [location] = useLocation();
   usePageSeo(location);
-  useEffect(() => { recordRecentPage(location); }, [location]);
+  useEffect(() => {
+    // تأخير قصير يمنح صفحة التفاصيل (مثلًا عنوان درس حقيقي بعد جلبه من
+    // Supabase) فرصة لضبط document.title الخاص بها قبل أن نسجّله في "زرت
+    // مؤخرًا" — بلا هذا التأخير قد نلتقط عنوان الصفحة السابقة أو عنوانًا
+    // عامًا مؤقتًا فقط.
+    const timer = window.setTimeout(() => {
+      const rawTitle = document.title.split(" | ")[0]?.trim();
+      recordRecentPage(location, rawTitle);
+    }, 400);
+    return () => window.clearTimeout(timer);
+  }, [location]);
   return null;
 }
 
