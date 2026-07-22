@@ -1,5 +1,6 @@
 name: Auto-merge claude branches to main
 
+# اختبار عملي 2026-07-22: تعليق غير مؤثر للتحقق من نجاح دورة الدمج التلقائي كاملة.
 # نطاق مُضيَّق عمدًا (2026-07-22، بطلب صريح من المالك بعد تنبيه حول الخطر):
 # يعمل فقط على فرع الاختبار المحدَّد بالاسم صراحةً، لا على أنماط عامة مثل
 # claude/** أو fix/** — هذه الأنماط تطابق عشرات الفروع الحيّة الفعلية
@@ -46,6 +47,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browser (لبوابة تباين الألوان ضمن test:regression)
+        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
 
       - name: Type check
         run: pnpm --filter @workspace/majalis run typecheck
