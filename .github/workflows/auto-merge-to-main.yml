@@ -48,6 +48,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Install Playwright browser (لبوابة تباين الألوان ضمن test:regression)
+        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
+
       - name: Type check
         run: pnpm --filter @workspace/majalis run typecheck
 
