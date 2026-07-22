@@ -2346,7 +2346,7 @@ table th {
   padding: 2.5rem 2rem;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(23,61,53,0.20);
-  border-radius: 1.25rem;
+  border-radius: var(--ds-radius-2xl);
   width: 100%;
   max-width: 480px;
   backdrop-filter: blur(4px);
@@ -2428,7 +2428,7 @@ table th {
   align-items: center;
   gap: 0.3rem;
   padding: 0.75rem 0.5rem;
-  border-radius: 0.75rem;
+  border-radius: var(--ds-radius-lg);
   border: 1px solid rgba(255,255,255,0.08);
   background: rgba(255,255,255,0.04);
   cursor: pointer;
@@ -2499,7 +2499,7 @@ table th {
   align-items: center;
   gap: 1rem;
   padding: 1.25rem 1.5rem;
-  border-radius: 1rem;
+  border-radius: var(--ds-radius-xl);
   background: linear-gradient(135deg, rgba(23,61,53,0.08) 0%, rgba(46,139,103,0.08) 100%);
   border: 1.5px solid rgba(23,61,53,0.30);
   cursor: pointer;
@@ -2576,7 +2576,7 @@ table th {
   display: block;
   text-align: center;
   padding: 0.7rem 1.25rem;
-  border-radius: 0.5rem;
+  border-radius: var(--ds-radius);
   background: rgba(46,139,103,0.15);
   border: 1.5px solid var(--majalis-emerald, #28584D);
   color: var(--majalis-emerald, #28584D) !important;
@@ -2667,7 +2667,7 @@ table th {
   padding: 0.45rem 2rem 0.45rem 0.65rem;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.10);
-  border-radius: 0.5rem;
+  border-radius: var(--ds-radius);
   color: var(--majalis-ink, #EDE9DD);
   font-family: inherit;
   font-size: 0.85rem;
@@ -2748,7 +2748,7 @@ table th {
   color: var(--majalis-ink-muted, #9BA3B5);
   cursor: pointer;
   padding: 0.2rem;
-  border-radius: 0.25rem;
+  border-radius: var(--ds-radius-xs);
   display: flex;
   align-items: center;
   transition: color 0.15s;
@@ -2871,7 +2871,7 @@ table th {
   align-items: center;
   gap: 0.75rem;
   padding: 0.875rem 1rem;
-  border-radius: 0.75rem;
+  border-radius: var(--ds-radius-lg);
   text-decoration: none;
   color: inherit;
   transition: background 0.15s, transform 0.15s;
@@ -3024,7 +3024,7 @@ table th {
   color: #28584D;
   padding: 0.5rem 0.75rem;
   border: 1px solid rgba(23,61,53,0.3);
-  border-radius: 0.5rem;
+  border-radius: var(--ds-radius);
   transition: background 0.15s;
 }
 .sch-profile-pager__btn:hover { background: rgba(23,61,53,0.08); }
@@ -3058,13 +3058,13 @@ table th {
 
 .accd-actions { display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-start; }
 .accd-actions__email { font-size: 0.9rem; opacity: 0.7; }
-.btn-danger { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.25rem; background: #DC2626; color: #fff; border: none; border-radius: 0.5rem; font-weight: 700; cursor: pointer; font-size: 0.92rem; }
+.btn-danger { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.25rem; background: #DC2626; color: #fff; border: none; border-radius: var(--ds-radius); font-weight: 700; cursor: pointer; font-size: 0.92rem; }
 .btn-danger:hover { background: #B91C1C; }
 .btn-danger:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .accd-confirm { margin-bottom: 1.5rem; }
 .accd-confirm__warning { font-size: 0.92rem; margin-bottom: 1rem; }
-.accd-confirm__input { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid #DC2626; border-radius: 0.5rem; font-size: 1rem; text-align: right; }
+.accd-confirm__input { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid #DC2626; border-radius: var(--ds-radius); font-size: 1rem; text-align: right; }
 .accd-confirm__error { color: #DC2626; font-size: 0.85rem; margin-top: 0.5rem; }
 .accd-confirm__btns { display: flex; gap: 0.75rem; margin-top: 1rem; }
 
@@ -3077,6 +3077,6 @@ table th {
 .accd-done h1 { font-size: 1.4rem; margin-bottom: 0.5rem; }
 .accd-done p { opacity: 0.7; margin-bottom: 1.5rem; }
 
-.accd-login-prompt { padding: 1.5rem; background: rgba(23,61,53,0.06); border-radius: 0.75rem; text-align: center; margin-bottom: 1.5rem; }
+.accd-login-prompt { padding: 1.5rem; background: rgba(23,61,53,0.06); border-radius: var(--ds-radius-lg); text-align: center; margin-bottom: 1.5rem; }
 .accd-footer { display: flex; gap: 1.5rem; margin-top: 2rem; font-size: 0.85rem; opacity: 0.65; }
 /* ══ نهاية صفحة حذف الحساب ══════════════════════════════════════════════════ */
