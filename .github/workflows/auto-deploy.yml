@@ -27,12 +27,21 @@ jobs:
     timeout-minutes: 25
 
     steps:
+      # GITHUB_TOKEN الافتراضي (هوية github-actions[bot]) مرفوض من حماية
+      # فرع production (GH006: Changes must be made through a pull request) —
+      # مؤكَّد بتشغيل فعلي فشل بهذا الخطأ تحديدًا (2026-07-22). هذا المستودع
+      # لا يدعم bypass_pull_request_allowances (حساب شخصي، لا Team/Enterprise)،
+      # فلا استثناء نظيف على مستوى الحماية نفسها متاح. البديل الوحيد العملي:
+      # PROD_DEPLOY_TOKEN — نفس توكن المالك الشخصي (يتجاوز الحماية فعليًا
+      # لأن enforce_admins=false)، مُخزَّن كـ Secret بموافقة صريحة من المالك.
+      # الحماية نفسها لم تُعدَّل إطلاقًا؛ أي دفع بشري بلا هذا الـSecret يبقى
+      # ممنوعًا تمامًا كما كان.
       - name: Checkout main (بتاريخ كامل لمقارنة الفروع)
         uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PROD_DEPLOY_TOKEN }}
 
       - name: مقارنة main مع production
         id: diff
