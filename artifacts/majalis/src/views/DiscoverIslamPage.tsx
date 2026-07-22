@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import * as LucideIcons from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { useLanguage } from "@/components/LanguageProvider";
 import { LANG_META } from "@/lib/language-preference";
-import { getFeaturedQuestions, getFeaturedShubuhat, type DawahQuestion, type DawahShubha } from "@/lib/dawah-service";
+import { getFeaturedQuestions, getFeaturedShubuhat, getDawahCategories, type DawahQuestion, type DawahShubha, type DawahCategory } from "@/lib/dawah-service";
 import "@/styles/discover-islam.css";
+
+function CategoryIcon({ name }: { name: string | null }) {
+  const Icon = (name && (LucideIcons as unknown as Record<string, LucideIcon>)[name]) || LucideIcons.Sparkles;
+  return <Icon size={22} aria-hidden="true" />;
+}
 
 type VisitorPath = {
   id: string;
@@ -40,6 +47,7 @@ export default function DiscoverIslamPage() {
   const { lang, setLang } = useLanguage();
   const [questions, setQuestions] = useState<DawahQuestion[]>([]);
   const [shubuhat, setShubuhat] = useState<DawahShubha[]>([]);
+  const [categories, setCategories] = useState<DawahCategory[]>([]);
 
   useEffect(() => {
     applyPageSeo({
@@ -53,6 +61,7 @@ export default function DiscoverIslamPage() {
   useEffect(() => {
     getFeaturedQuestions(6).then(setQuestions);
     getFeaturedShubuhat(6).then(setShubuhat);
+    getDawahCategories().then(setCategories);
   }, []);
 
   return (
@@ -98,6 +107,21 @@ export default function DiscoverIslamPage() {
           ))}
         </div>
       </section>
+
+      {categories.length > 0 && (
+        <section aria-labelledby="dii-categories-heading" style={{ marginTop: "2.5rem" }}>
+          <h2 id="dii-categories-heading" className="page-section-title">تصفّح حسب الموضوع</h2>
+          <div className="dii-categories-grid">
+            {categories.map((c) => (
+              <Link key={c.id} href={`/discover-islam/questions?category=${c.slug}`} className="dii-category-card ui-card">
+                <span className="dii-category-icon"><CategoryIcon name={c.icon} /></span>
+                <strong>{c.name_ar}</strong>
+                {c.description_ar && <span>{c.description_ar}</span>}
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {questions.length > 0 && (
         <section aria-labelledby="dii-questions-heading" style={{ marginTop: "2.5rem" }}>
