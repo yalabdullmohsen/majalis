@@ -12735,6 +12735,15 @@ svg {
   height: auto;
 }
 
+/* .inline/.ml-1 هما اسما فئتَي Tailwind (className="inline ml-1" على أيقونات
+   قبل نص عربي مباشرة، مثل <Users className="inline ml-1" />نمط اللعب) —
+   Tailwind v4 نفسه مُفعَّل فعليًا في vite.config.ts، لكن هاتين الفئتين تحديدًا
+   لا تُولَّدان في التنسيق النهائي (margin-left المحسوب فعليًا: 0px، تحقَّق
+   مباشرة عبر متصفح حي)، فتلتصق الأيقونة بالنص العربي التالي بلا أي مسافة —
+   103 موضعًا عبر 39 ملفًا. بدل تعديل كل ملف، قاعدة واحدة تطابق قيمة Tailwind
+   الأصلية (0.25rem) تُصلح الجميع دفعة واحدة (2026-07-22). */
+.ml-1 { margin-left: 0.25rem; }
+
 /* ── Hero v3: logo card + mobile stack ── */
 .home-hero-copy--v3 {
   display: flex;
