@@ -340,7 +340,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── الأسرة والمجتمع ── */
   { text: "المجتمع المسلم كالجسد الواحد؛ إذا اشتكى منه عضو تداعى له سائر الجسد بالسهر والحمى.", category: "الحديث", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "المؤمن للمؤمن كالبنيان المرصوص يشد بعضه بعضاً — التماسك الاجتماعي فريضة إسلامية.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "من كان في حاجة أخيه كان الله في حاجته; ومن فرّج كربة فرّج الله عنه كربة من كرب يوم القيامة.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "من كان في حاجة أخيه كان الله في حاجته، ومن فرّج كربة فرّج الله عنه كربة من كرب يوم القيامة.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
 
   /* ── التوبة والمغفرة ── */
   { text: "قل يا عبادي الذين أسرفوا على أنفسهم لا تقنطوا من رحمة الله — فالرحمة تسع كل ذنب.", category: "العقيدة", source: "الزمر: 53", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
