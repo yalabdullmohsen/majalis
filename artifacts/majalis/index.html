@@ -49,9 +49,14 @@
          (توافقًا مع مسارات توليد الصور/PDF القائمة التي ما زالت تشير إليه صراحةً).
          الاستثناء الوحيد: خطوط الرسم القرآني/الصيغ الشرعية العثمانية للعناوين المميزة
          والمصحف فقط. -->
-    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Amiri+Quran&family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Amiri Quran مُستضاف محليًا (public/fonts/amiri-quran/) لا عبر Google Fonts —
+         خط نص المصحف الافتراضي (الوضع الخفيف) لا يجوز أن يعتمد على شبكة CDN خارجية:
+         تطبيق iOS عبر Capacitor (WKWebView) قد يفتح بلا اتصال فوري، وأي تأخر/فشل هنا
+         يعني ظهور القرآن بخط بديل غير مقروء ولو للحظة — راجع @font-face في quran.css. -->
+    <link rel="preload" href="/fonts/amiri-quran/AmiriQuran-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Amiri+Quran&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet" />
     </noscript>
     <script type="application/ld+json">
       {

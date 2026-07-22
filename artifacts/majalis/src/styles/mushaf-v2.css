@@ -67,6 +67,12 @@ html[data-theme="dark"] .mf2-frame {
   line-height: 1;
   color: var(--mf2-ink, #1C1A18);
   white-space: nowrap;
+  /* منع تحديد النص بالسحب العرضي (يتعارض مع سحب تقليب الصفحات RTL) —
+     النسخ الشرعي محفوظ عبر زر "نسخ بالتشكيل" في قائمة إجراءات الآية
+     (PageAyahActionSheet)، فلا حاجة للتحديد اليدوي بالسحب. */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
   /* شبكة أمان: التحجيم التلقائي عبر JS (useLayoutEffect) دقيق في الغالبية
      العظمى من الأسطر لكن ليس مضمونًا 100% رياضيًا لكل سطر (راجع تعليق
      المكوّن) — overflow:hidden يمنع أي فيضان مرئي متبقٍّ من كسر إطار
@@ -90,6 +96,11 @@ html[data-theme="dark"] .mf2-line { --mf2-ink: #F0EDE4; }
   cursor: pointer;
   border-radius: 3px;
   transition: background-color .15s;
+  /* يمنع تأخير/بادرة التكبير المزدوج غير المقصودة عند النقر السريع
+     لفتح قائمة إجراءات الآية، بلا المساس بإمكانية التكبير بإصبعين
+     (pinch-zoom) — بخلاف user-scalable=no على viewport (يضرّ الإتاحة). */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   /* !important ضروري هنا تحديدًا: قاعدة WCAG 2.5.5 العامة نفسها
      !important (elite-2026.css:30100) — لا شيء أضعف يهزمها بصرف النظر
      عن الخصوصية. هذا استثناء مقصود ومحدود لفئة مختلفة فعليًا عمّا تستهدفه
