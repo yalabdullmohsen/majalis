@@ -7,7 +7,7 @@
 export const ACADEMY_NAME = "المجلس العلمي";
 
 /** معرّف حساب انستغرام (بلا @). */
-export const ACADEMY_INSTAGRAM_HANDLE = "majlisilm";
+export const ACADEMY_INSTAGRAM_HANDLE = "Majlisalilm";
 
 /** الرابط الآمن على متصفح الويب — يُستخدم كـ href الأساسي دائمًا (يعمل حتى بلا JavaScript). */
 export const ACADEMY_INSTAGRAM_URL = `https://www.instagram.com/${ACADEMY_INSTAGRAM_HANDLE}`;

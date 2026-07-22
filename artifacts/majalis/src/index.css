@@ -10848,7 +10848,14 @@ body.side-nav-open { overflow: hidden; }
 .app-shell {
   --assistant-fab-size: 3.35rem;
   --assistant-fab-gap: calc(1rem + env(safe-area-inset-bottom, 0px));
-  overflow-x: hidden;
+  /* overflow-x: hidden كان يفرض overflow-y: auto ضمنيًا (توأمة المحورين حسب
+     مواصفة CSS)، فيسجّل .app-shell كـ"أقرب سلف قابل للتمرير" لعنصر
+     position:sticky للهيدر — رغم أن .app-shell لا يمرَّر فعليًا أبدًا
+     (المحتوى ينمو بلا قصّ، والتمرير الحقيقي يقع على <html>)، فيفقد الهيدر
+     ثباته ويزحف مع المحتوى. overflow-x: clip يمنع نفس التمرير الأفقي غير
+     المرغوب بلا توأمة المحور الرأسي — هذا هو السبب الجذري لعطل ثبات الهيدر
+     (ومعه زر البحث) عند التمرير، 2026-07-22. */
+  overflow-x: clip;
   max-width: 100%;
 }
 
@@ -12762,7 +12769,7 @@ body.assistant-panel-open {
    ═══════════════════════════════════════════════════════════════════ */
 
 .app-shell {
-  overflow-x: hidden;
+  overflow-x: clip; /* لا hidden — يكسر ثبات الهيدر sticky، راجع التعليق أعلى تعريف .app-shell الأول */
   max-width: 100%;
 }
 
@@ -13455,7 +13462,7 @@ svg {
 
 /* Phase 1 — critical mobile fixes */
 body {
-  overflow-x: hidden;
+  overflow-x: clip; /* لا hidden — يكسر ثبات الهيدر sticky، راجع التعليق أعلى تعريف .app-shell */
   max-width: 100vw;
 }
 
