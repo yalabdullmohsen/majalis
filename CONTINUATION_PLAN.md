@@ -9171,3 +9171,61 @@ ORDER BY sort_order"`) لضمان تطابق الأرقام الفعلية مع 
 أمكن إيجاد بديل صحيح لنفس المعنى)، ثم `status: draft→published`. وسم
 `needs-post-review.jsonl` فوراً لكل درس عند إنشائه. لا تنتقل لعنقود ثانٍ
 في نفس الدورة حتى لو تبقّى وقت ضمن سقف الدفعة (~30 عنصرًا).
+
+---
+
+## دورة 2026-07-23 — عنقود qada-dawa-ithbat
+
+نُفِّذ عنقود `qada-dawa-ithbat` (القضاء والدعوى والإثبات) بالكامل: 4/4
+تصنيفات draft، كل تصنيف حصل على درس واحد (lessons+lesson_sections+
+lesson_citations) — شروط القاضي وأطراف الدعوى (shurut-qadi)، وسائل
+الإثبات الخمسة: البينة والشهادة والقرائن والإقرار واليمين
+(wasail-ithbat)، الكتابة والإثبات الإلكتروني (ithbat-electronic)،
+التحكيم والصلح وتنفيذ الأحكام (tahkim-tanfidh). المصادر المعتمدة:
+الأحكام السلطانية للماوردي (شروط القاضي، والتحكيم والصلح ضمن أبواب
+ولاية القضاء بالتراضي)، أدلة الإثبات في الفقه الإسلامي لأحمد فراج حسين
+(وسائل الإثبات)، الفقه الإسلامي وأدلته لوهبة الزحيلي (الكتابة والإثبات
+الإلكتروني بالقياس على أصل حجية الكتابة). ثلاثة أحاديث استُشهد بها،
+تحقَّقت حرفياً عبر WebSearch قبل الإدراج (كلها متفق عليها، تعمَّدت تفادي
+حديث "القضاة ثلاثة" رغم شهرته لكون إسناده حسنًا لا صحيحًا مجمعًا عليه):
+"إذا حكم الحاكم فاجتهد ثم أصاب فله أجران..." (البخاري 7352 ومسلم 1716،
+عن عمرو بن العاص)، "لو يعطى الناس بدعواهم..." (البخاري 4552 ومسلم 1711،
+عن ابن عباس)، تحكيم سعد بن معاذ في بني قريظة (البخاري 4121 ومسلم، عن
+أبي سعيد الخدري). ثلاث آيات (النساء 58، البقرة 282 [مقطعان مختلفان
+مستشهَد بهما في درسين]، النساء 35) تحقَّقت حرفياً محلياً من
+`public/data/quran` عبر `numberInSurah`. `status: draft→published`
+للأربعة، تحقَّق مباشرة من DB (4/4 منشور تحت `qada-dawa-ithbat`). الدروس
+الأربعة اجتهاد صياغي واختيار مصدر ومثال → وُسمت في
+`needs-post-review.jsonl` فوراً (390→394). بوابة الجودة: التعديل اقتصر
+على ملف SQL وملف JSONL، فحُوطي عبر hook Pre-Commit المدمج (typecheck+
+lint+فحص الخط+Vite build) — نجحت كلها. commit وpush على
+`majalis-content-fill` (commit `5b04aefd`) نجحا، ثم دُمج في `main` على
+`/Users/alabdullmohsen/majalis-task-2` (`git merge --no-edit` نظيف،
+typecheck وbuild الكامل نجحا هناك أيضًا، وأعيدت ملفات الضجيج المولَّدة
+كما هي: quran/pages-manifest.json، rulings-encyclopedia/*، feed.xml،
+seo-prerender/*، rulings-encyclopedia-seed.generated.ts — دون تغيير
+حقيقي)، ودُفعت لـ`main` بنجاح (`171b9e00`) عبر نفس hook Pre-Push (نجح
+كذلك، تحذير sourcemap غير مؤثر لملف SectionAccordionLayout.tsx ظهر أيضًا
+في هذه الدورة، غير حاجب للبناء).
+
+**المهمة التالية**: عنقود `qada-dawa-ithbat` مكتمل 100% الآن (4/4 منشور،
+مؤكَّد من DB). التالي حسب القائمة المكتشفة سابقًا (12 عنقودًا متبقيًا
+الآن بعد استبعاد qada-dawa-ithbat المكتمل): يُفضَّل التالي بالحجم —
+`alaqat-dawliyya` 4، ثم `seerah-nabawiyya` 4/11 (جزئي)، `adhkar-adiya`
+5، `mara-muslima` 5/6 (جزئي)، `ahkam-quran` 5 (تحت quran-uloom)،
+`maqasid-sharia` 5، `fiqh-aqalliyat` 5، `shabab-nashia` 6،
+`fatawa-muwaththaqa` 6، `usrah-mujtama` 6، `munasabat-islamiyya` 6،
+`nawazil-muasira` 6. **أعد التحقق المباشر من DB قبل البدء بأي عنقود**
+(`npx supabase link --project-ref ngmvmlulzacrlicuagyp` ثم `npx supabase
+db query --linked "SELECT id, slug, name, sort_order, status FROM
+categories WHERE parent_id=(SELECT id FROM categories WHERE
+slug='<العنقود المختار>') ORDER BY sort_order"`) لضمان تطابق الأرقام
+الفعلية مع ما وُثِّق أعلاه. بنفس المنهجية الثابتة: درس واحد حقيقي لكل
+تصنيف draft (`lessons`+`lesson_sections`+`lesson_citations`) بمصدر
+معتمد مسمّى مناسب لموضوع العنقود، تحقَّق من أي آية حرفياً محلياً من
+`public/data/quran` عبر حقل `numberInSurah` (لا `number`)، تحقَّق من أي
+حديث عبر WebSearch قبل الإدراج (فقط من الصحيحين/متفق عليه أو بإسناد
+صحيح مصرَّح بدرجته بدقة — تجنَّب أحاديث الحسن أو المختلَف في تصحيحها إن
+أمكن إيجاد بديل صحيح لنفس المعنى)، ثم `status: draft→published`. وسم
+`needs-post-review.jsonl` فوراً لكل درس عند إنشائه. لا تنتقل لعنقود ثانٍ
+في نفس الدورة حتى لو تبقّى وقت ضمن سقف الدفعة (~30 عنصرًا).
