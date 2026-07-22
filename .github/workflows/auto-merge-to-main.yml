@@ -1,5 +1,6 @@
 name: Auto-merge claude branches to main
 
+# اختبار عملي 2026-07-22: تعليق غير مؤثر للتحقق من نجاح دورة الدمج التلقائي كاملة.
 # نطاق مُضيَّق عمدًا (2026-07-22، بطلب صريح من المالك بعد تنبيه حول الخطر):
 # يعمل فقط على فرع الاختبار المحدَّد بالاسم صراحةً، لا على أنماط عامة مثل
 # claude/** أو fix/** — هذه الأنماط تطابق عشرات الفروع الحيّة الفعلية
@@ -24,10 +25,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main
+        # PROD_DEPLOY_TOKEN لا GITHUB_TOKEN الافتراضي: GitHub يمنع عمدًا أي
+        # push بـGITHUB_TOKEN من تشغيل workflows أخرى (حماية من حلقات لا
+        # نهائية) — فبلا هذا التوكن كان push هذه الخطوة لن يُطلق auto-deploy.yml
+        # إطلاقًا رغم نجاح الدمج نفسه (مؤكَّد: التشغيل التجريبي الأول 663a53b7
+        # وصل main فعليًا ولم يُطلق أي نشر). نفس التوكن المستخدَم بالفعل في
+        # auto-deploy.yml لنفس السبب تمامًا.
         uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
+          token: ${{ secrets.PROD_DEPLOY_TOKEN }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -46,6 +54,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browser (لبوابة تباين الألوان ضمن test:regression)
+        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
 
       - name: Type check
         run: pnpm --filter @workspace/majalis run typecheck
