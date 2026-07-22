@@ -25,10 +25,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main
+        # PROD_DEPLOY_TOKEN لا GITHUB_TOKEN الافتراضي: GitHub يمنع عمدًا أي
+        # push بـGITHUB_TOKEN من تشغيل workflows أخرى (حماية من حلقات لا
+        # نهائية) — فبلا هذا التوكن كان push هذه الخطوة لن يُطلق auto-deploy.yml
+        # إطلاقًا رغم نجاح الدمج نفسه (مؤكَّد: التشغيل التجريبي الأول 663a53b7
+        # وصل main فعليًا ولم يُطلق أي نشر). نفس التوكن المستخدَم بالفعل في
+        # auto-deploy.yml لنفس السبب تمامًا.
         uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
+          token: ${{ secrets.PROD_DEPLOY_TOKEN }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
