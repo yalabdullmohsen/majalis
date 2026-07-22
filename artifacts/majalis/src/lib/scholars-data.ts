@@ -202,7 +202,7 @@ export const SCHOLARS: Scholar[] = [
     died: "١٤٢٠ هـ",
     region: "السعودية",
     quote: "العلم النافع يورث الخشية والإنابة والتواضع",
-    sources: ["الموقع الرسمي للشيخ ابن باز (binbaz.org.sa) — السيرة الذاتية"],
+    sources: ["الموقع الرسمي للشيخ ابن باز (binbaz.org.sa) — السيرة الذاتية", "الدرر السنية — dorar.net"],
     verificationStatus: "reviewed",
   },
   {
@@ -216,7 +216,7 @@ export const SCHOLARS: Scholar[] = [
     died: "١٤٢١ هـ",
     region: "عنيزة، السعودية",
     quote: "أنعم الله علينا بنعمة الإسلام فاشكروا الله عليها",
-    sources: ["الموقع الرسمي للشيخ ابن عثيمين (binothaimeen.net) — السيرة الذاتية"],
+    sources: ["الموقع الرسمي للشيخ ابن عثيمين (binothaimeen.net) — السيرة الذاتية", "الموسوعة الحديثية — دُرر السنية (dorar.net/hadith/mhd/1421)"],
     verificationStatus: "reviewed",
   },
   {
@@ -230,7 +230,7 @@ export const SCHOLARS: Scholar[] = [
     died: "١٤٢٠ هـ",
     region: "ألبانيا / الأردن",
     quote: "التمسك بالسنة هو الطريق الصحيح المأمون",
-    sources: ["دُرر السنية — الإيجاز في بعض ما اختلف فيه الألباني وابن عثيمين وابن باز"],
+    sources: ["دُرر السنية — الإيجاز في بعض ما اختلف فيه الألباني وابن عثيمين وابن باز", "طريق الإسلام — islamway.net"],
     verificationStatus: "reviewed",
   },
   {
@@ -334,7 +334,7 @@ export const SCHOLARS: Scholar[] = [
     region: "تونس",
     madhhab: "مالكي",
     quote: "الشريعة كلها مبنية على تحقيق مصالح العباد في العاجل والآجل",
-    sources: ["موسوعة أعلام تونس — الرابطة المحمدية للعلماء"],
+    sources: ["موسوعة أعلام تونس — الرابطة المحمدية للعلماء", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
   {
@@ -348,7 +348,7 @@ export const SCHOLARS: Scholar[] = [
     died: "—",
     region: "المملكة العربية السعودية",
     quote: "العلم الشرعي فريضة، والجهل به خطر على الفرد والمجتمع",
-    sources: ["الموقع الرسمي للشيخ صالح الفوزان (dralfawzann.com) — السيرة الذاتية"],
+    sources: ["الموقع الرسمي للشيخ صالح الفوزان (dralfawzann.com) — السيرة الذاتية", "الدرر السنية — dorar.net"],
     verificationStatus: "reviewed",
   },
   {
@@ -363,7 +363,7 @@ export const SCHOLARS: Scholar[] = [
     region: "مصر / القاهرة",
     madhhab: "شافعي",
     quote: "أهل الحديث حملة الإسلام والمدافعون عنه إلى يوم القيامة",
-    sources: ["الضوء اللامع لأهل القرن التاسع — شمس الدين السخاوي"],
+    sources: ["الضوء اللامع لأهل القرن التاسع — شمس الدين السخاوي", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
   {
@@ -378,7 +378,7 @@ export const SCHOLARS: Scholar[] = [
     region: "سجستان / البصرة",
     madhhab: "حنبلي",
     quote: "انظروا كيف كانت أفعاله ﷺ فاتبعوه",
-    sources: ["سير أعلام النبلاء — الذهبي"],
+    sources: ["سير أعلام النبلاء — الذهبي", "تهذيب الكمال في أسماء الرجال — المزي"],
     verificationStatus: "reviewed",
   },
   {
@@ -392,7 +392,7 @@ export const SCHOLARS: Scholar[] = [
     died: "٣٠٣ هـ",
     region: "نسا (تركمانستان) / مصر",
     quote: "الكذاب على رسول الله ﷺ يجب أن يُرد حديثه ويُكذَّب",
-    sources: ["سير أعلام النبلاء — الذهبي"],
+    sources: ["سير أعلام النبلاء — الذهبي", "تهذيب الكمال في أسماء الرجال — المزي"],
     verificationStatus: "reviewed",
   },
   {
