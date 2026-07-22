@@ -8819,3 +8819,68 @@ FROM categories WHERE parent_id='<id>' ORDER BY sort_order` لرؤية
 احذر تكرار خطأ استخدام أحاديث مختلَف في تصحيحها كما اكتُشف في هذه
 الدورة)، ثم `status: draft→published`. وسم `needs-post-review.jsonl`
 فوراً لكل درس عند إنشائه.
+
+## دورة محتوى جديدة (2026-07-23، وكيل تنفيذ محتوى تلقائي، تكملة 16)
+
+**اكتشاف مهم**: التوثيق السابق (نهاية تكملة 15) افترض خطأً أنه "لا توجد
+قائمة موثَّقة تتجاوز usul-fiqh وmustalah-hadith". استعلام شامل جديد
+مباشر من DB (تجميع كل `categories` حسب `parent_id` مع عدّ `status='draft'`
+لكل مجموعة) كشف أن هناك **~19 عنقودًا آخر لم يُلمَس بعد**، معظمها فارغ
+100% (لا درس واحد منشور). القائمة الكاملة (parent_slug: draft/total):
+`fara-mawarith` 4/4، `seerah-nabawiyya` 4/11 (جزئي)، `adhkar-adiya` 5/5،
+`usrah-mujtama` 6/6، `mara-muslima` 5/6 (جزئي)، `ahkam-quran` 5/5 (تحت
+quran-uloom)، `shabab-nashia` 6/6، `fatawa-muwaththaqa` 6/6،
+`maqasid-sharia` 5/5، `madhahib-fiqh-muqaran` 4/4، `tibb-ahkam-shariyya`
+4/4، `munasabat-islamiyya` 6/6، `nawazil-muasira` 6/6، `fiqh-aqalliyat`
+5/5، `tarikh-tashri` 4/4، `qada-dawa-ithbat` 4/4، `wilaya-islamiyya` 2/2،
+`alaqat-dawliyya` 4/4. **هذا يُلغي الافتراض بأن usul-fiqh/mustalah-hadith
+هما آخر فجوتين** — يجب دومًا التحقق المباشر من DB بدل الاعتماد على قوائم
+موثَّقة سابقًا، تمامًا كما نبّهت تكملة 15.
+
+**✅ استُنفِد عنقود qawaid-fiqhiyya بالكامل (4/4)**: اختير كأولوية تالية
+طبيعية (رقم 6 في ترتيب `sort_order` لتصنيفات "تعلّم" الرئيسة، يسبق
+usul-fiqh رقم 7 مباشرة، ومتصل موضوعيًا بنفس سلسلة أصول الفقه المكتملة
+للتو). طُبِّق SQL جديد
+(`artifacts/majalis/supabase/learn_library_v2_qawaid_fiqhiyya_batch1.sql`)
+عبر `supabase db query --linked -f` يغطي الأربعة: القواعد الخمس الكبرى،
+القواعد الكلية والتابعة، الضوابط الفقهية، تطبيقات في العبادات والمعاملات
+المعاصرة. نفس بنية الدفعات السابقة (`lessons`+`lesson_sections`+
+`lesson_citations`، درس واحد لكل تصنيف). المصادر المعتمدة المسمّاة:
+الأشباه والنظائر للسيوطي، الوجيز في إيضاح قواعد الفقه الكلية لمحمد صدقي
+البورنو، القواعد لابن رجب الحنبلي، موسوعة القواعد الفقهية لمحمد صدقي
+البورنو. حديثان صحيحان متفق عليهما استُشهد بهما، تحقَّقا حرفياً عبر
+WebSearch قبل الإدراج: "إنما الأعمال بالنيات..." (البخاري ومسلم، أساس
+قاعدة الأمور بمقاصدها)، و"من نسي وهو صائم فأكل أو شرب فليتم صومه فإنما
+أطعمه الله وسقاه" (البخاري 6669 ومسلم 1155، مثال ضابط خاص بباب الصيام).
+آيتان تحقَّقتا حرفياً محلياً من `public/data/quran` عبر حقل
+`numberInSurah`: البقرة 173 (أصل الضرورات تبيح المحظورات)، البقرة 286
+(لا يكلف الله نفسًا إلا وسعها). `status: draft→published` للأربعة، تحقَّق
+مباشرة من DB (4/4 منشور تحت `qawaid-fiqhiyya`). ملحوظة: حالة التصنيف
+الأعلى `qawaid-fiqhiyya` نفسه (top-level) بقيت `draft` رغم اكتمال أبنائه
+— نفس السلوك المُلاحَظ سابقًا مع `usul-fiqh` (سياسة ثابتة في هذا المشروع،
+لا تُغيَّر). كل الأربعة اجتهاد صياغي واختيار مصدر ومثال → وُسمت في
+`needs-post-review.jsonl` فوراً بعد التطبيق (368→372). كل بوابات الجودة
+نجحت (typecheck/lint/فحص الخط/build) عند commit وpush على
+`majalis-content-fill` (commit `9f1b88c6`)، ثم دُمجت في `main` على
+`/Users/alabdullmohsen/majalis-task-2` (typecheck وbuild نجحا هناك أيضًا،
+وأعيدت ملفات الضجيج المولَّدة كما هي دون تغيير حقيقي)، ودُفعت لـ`main`
+بنجاح (`5410ace3`).
+
+**المهمة التالية**: اختر عنقودًا واحدًا من القائمة أعلاه (يُفضَّل الأصغر
+حجمًا أولاً لإنجاز أسرع: `wilaya-islamiyya` 2، ثم `fara-mawarith`،
+`madhahib-fiqh-muqaran`، `tibb-ahkam-shariyya`، `tarikh-tashri`،
+`qada-dawa-ithbat`، `alaqat-dawliyya` كلها 4، ثم البقية 5-6). **أعد
+التحقق المباشر من DB قبل البدء** (`npx supabase link --project-ref
+ngmvmlulzacrlicuagyp` ثم `SELECT id, slug, name, sort_order, status FROM
+categories WHERE parent_id=(SELECT id FROM categories WHERE
+slug='<العنقود المختار>') ORDER BY sort_order`) لضمان تطابق الأرقام
+الفعلية مع ما وُثِّق أعلاه، إذ ثبت مرارًا أن التوثيق قد ينحرف عن واقع DB.
+بنفس المنهجية الثابتة: درس واحد حقيقي لكل تصنيف draft
+(`lessons`+`lesson_sections`+`lesson_citations`) بمصدر معتمد مسمّى مناسب
+لموضوع العنقود، تحقَّق من أي آية حرفياً محلياً من `public/data/quran` عبر
+حقل `numberInSurah` (لا `number`)، تحقَّق من أي حديث عبر WebSearch قبل
+الإدراج (فقط من الصحيحين/متفق عليه أو بإسناد صحيح مصرَّح بدرجته بدقة)،
+ثم `status: draft→published`. وسم `needs-post-review.jsonl` فوراً لكل
+درس عند إنشائه. لا تنتقل لعنقود ثانٍ في نفس الدورة حتى لو تبقّى وقت ضمن
+سقف الدفعة (~30 عنصرًا)؛ أنجز عنقودًا واحدًا كاملاً ووثّق الباقي كمهمة
+تالية.
