@@ -1,4 +1,4 @@
-import { Fragment, useLayoutEffect, useRef, useState } from "react";
+import { Fragment, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { useMushafPageFont, mushafPageFontFamily } from "@/hooks/useMushafPageFont";
 import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
 
@@ -9,7 +9,7 @@ import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
  * حقيقية (WCAG 2.5.5 — elite-2026.css:30100) تفرض min-width:44px!important
  * على أي [role="button"]، فكسرت تحجيم الأسطر تمامًا على الموبايل (رُصد
  * ودُقِّق فعليًا: تطابق حسابي تام بين عدد الكلمات×44px والفيضان المُقاس). */
-function groupWordsByAyah(words: QpcWord[]): QpcWord[][] {
+export function groupWordsByAyah(words: QpcWord[]): QpcWord[][] {
   const groups: QpcWord[][] = [];
   for (const w of words) {
     const last = groups[groups.length - 1];
@@ -23,13 +23,40 @@ type Props = {
   layout: MushafPageLayout | null;
   activeAyahKey?: string | null;
   onAyahPress?: (verseKey: string) => void;
+  /** خط موحّد بديل (الوضع الخفيف) — يتخطى تحميل خط QPC الخاص بالصفحة
+   * كليًا (لا طلب شبكة إضافي)، يفترض أن الخط مُحمَّل أصلًا في التطبيق.
+   * افتراضيًا: خط QPC الرقمي الخاص بكل صفحة (وضع الدقة المطبعية). */
+  sharedFontFamily?: string;
+  /** عرض كلمة مخصَّص — الوضع الخفيف يستبدل شارة رقم الآية الافتراضية
+   * (glyph من خط الصفحة) بشارة زخرفية موحّدة ونص Unicode عادي. المُعِدّ
+   * مسؤول عن وضع key={w.id} على العقدة المُعادة. افتراضيًا: نفس عرض
+   * وضع الدقة المطبعية (glyph الصفحة + شارة سجدة نصية). */
+  renderWord?: (w: QpcWord) => ReactNode;
+  /** true: يُصدَّر .mf2-lines وحدها بلا .mf2-page/.mf2-frame الخاصين بها
+   * (بلا إطار/outline/خلفية/aspect-ratio مستقلة) — لاستخدام هذا المكوّن
+   * متداخلاً داخل إطار صفحة قائم أصلًا (مثل .qs-mushaf-frame في
+   * MushafPageView) بلا إطارين متداخلين بصريًا. المُستدعي عندها مسؤول
+   * عن توفير حاوية بنسبة عرض/ارتفاع صفحة ثابتة (aspect-ratio) لتعمل
+   * flex:1 الخاصة بكل سطر بشكل صحيح. */
+  bare?: boolean;
 };
 
 const ROW_COUNT_APPROX = 15;
 
-export function MushafPageV2({ layout, activeAyahKey, onAyahPress }: Props) {
-  const fontReady = useMushafPageFont(layout?.pageNumber ?? null);
-  const fontFamily = layout ? mushafPageFontFamily(layout.pageNumber) : undefined;
+const defaultRenderWord = (w: QpcWord) => (
+  <Fragment key={w.id}>
+    <span className="mf2-word">{w.glyphText}</span>
+    {w.charType === "end" && w.sajdahNumber !== null && (
+      <span className="mf2-sajda-badge">سجدة</span>
+    )}
+  </Fragment>
+);
+
+export function MushafPageV2({ layout, activeAyahKey, onAyahPress, sharedFontFamily, renderWord, bare }: Props) {
+  const perPageFontReady = useMushafPageFont(sharedFontFamily ? null : (layout?.pageNumber ?? null));
+  const fontReady = sharedFontFamily ? true : perPageFontReady;
+  const fontFamily = sharedFontFamily ?? (layout ? mushafPageFontFamily(layout.pageNumber) : undefined);
+  const wordRenderer = renderWord ?? defaultRenderWord;
   const lineRefs = useRef(new Map<number, HTMLDivElement>());
   const [lineFontSizes, setLineFontSizes] = useState<Map<number, number>>(new Map());
   const [centeredLines, setCenteredLines] = useState<Set<number>>(new Set());
@@ -111,56 +138,55 @@ export function MushafPageV2({ layout, activeAyahKey, onAyahPress }: Props) {
     return <MushafPageSkeleton />;
   }
 
+  const lines = (
+    <>
+      <div className="mf2-lines" style={{ opacity: fitted ? 1 : 0 }}>
+        {layout.rows.map((row, idx) => {
+          if (row.kind === "surah-header") {
+            return <SurahHeaderBanner key={`h-${row.surah.id}-${idx}`} chapter={row.surah} spanRows={row.spanRows} />;
+          }
+          const fittedSize = lineFontSizes.get(row.lineNumber);
+          return (
+            <div
+              key={`l-${row.lineNumber}`}
+              ref={(el) => { if (el) lineRefs.current.set(row.lineNumber, el); else lineRefs.current.delete(row.lineNumber); }}
+              className={`mf2-line${centeredLines.has(row.lineNumber) ? " mf2-line--short" : ""}`}
+              style={{ fontFamily, fontSize: fittedSize ? `${fittedSize}px` : undefined }}
+            >
+              {groupWordsByAyah(row.words).map((group) => {
+                const verseKey = group[0].verseKey;
+                return (
+                  <span
+                    key={verseKey}
+                    className={`mf2-ayah-group${verseKey === activeAyahKey ? " mf2-ayah-group--active" : ""}`}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`آية ${verseKey}`}
+                    onClick={() => onAyahPress?.(verseKey)}
+                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onAyahPress?.(verseKey); } }}
+                  >
+                    {group.map((w) => wordRenderer(w))}
+                  </span>
+                );
+              })}
+            </div>
+          );
+        })}
+      </div>
+      {!fitted && <MushafPageSkeleton overlay />}
+    </>
+  );
+
+  if (bare) return <div dir="rtl" style={{ height: "100%" }}>{lines}</div>;
+
   return (
     <div className="mf2-page" dir="rtl">
-      <div className="mf2-frame">
-        <div className="mf2-lines" style={{ opacity: fitted ? 1 : 0 }}>
-          {layout.rows.map((row, idx) => {
-            if (row.kind === "surah-header") {
-              return <SurahHeaderBanner key={`h-${row.surah.id}-${idx}`} chapter={row.surah} spanRows={row.spanRows} />;
-            }
-            const fittedSize = lineFontSizes.get(row.lineNumber);
-            return (
-              <div
-                key={`l-${row.lineNumber}`}
-                ref={(el) => { if (el) lineRefs.current.set(row.lineNumber, el); else lineRefs.current.delete(row.lineNumber); }}
-                className={`mf2-line${centeredLines.has(row.lineNumber) ? " mf2-line--short" : ""}`}
-                style={{ fontFamily, fontSize: fittedSize ? `${fittedSize}px` : undefined }}
-              >
-                {groupWordsByAyah(row.words).map((group) => {
-                  const verseKey = group[0].verseKey;
-                  return (
-                    <span
-                      key={verseKey}
-                      className={`mf2-ayah-group${verseKey === activeAyahKey ? " mf2-ayah-group--active" : ""}`}
-                      role="button"
-                      tabIndex={0}
-                      aria-label={`آية ${verseKey}`}
-                      onClick={() => onAyahPress?.(verseKey)}
-                      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onAyahPress?.(verseKey); } }}
-                    >
-                      {group.map((w) => (
-                        <Fragment key={w.id}>
-                          <span className="mf2-word">{w.glyphText}</span>
-                          {w.charType === "end" && w.sajdahNumber !== null && (
-                            <span className="mf2-sajda-badge">سجدة</span>
-                          )}
-                        </Fragment>
-                      ))}
-                    </span>
-                  );
-                })}
-              </div>
-            );
-          })}
-        </div>
-        {!fitted && <MushafPageSkeleton overlay />}
-      </div>
+      <div className="mf2-frame">{lines}</div>
     </div>
   );
 }
 
-function SurahHeaderBanner({ chapter, spanRows }: { chapter: MushafPageLayout["surahsOnPage"][number]; spanRows: number }) {
+export function SurahHeaderBanner({ chapter, spanRows }: { chapter: MushafPageLayout["surahsOnPage"][number]; spanRows: number }) {
   return (
     <div className="mf2-surah-header" style={{ flex: spanRows }}>
       <div className="mf2-surah-header__frame">

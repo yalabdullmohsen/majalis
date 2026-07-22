@@ -1972,6 +1972,12 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* نسبة عرض/ارتفاع صفحة مصحف حقيقية — ضرورية لتخطيط الأسطر الخمسة
+     عشر (MushafPageV2 بوضعيه، mode="bare") الذي يحتاج ارتفاعًا محدَّدًا
+     ليقسّمه بالتساوي (flex-direction:column على .mf2-lines). */
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 0.72;
 }
 
 /* ── فاصلة نهاية الآية: دائرة ذهبية مسنّنة (٨ نتوءات) + رقم شرقي — بصري خالص ── */
