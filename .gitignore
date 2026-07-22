@@ -26,3 +26,5 @@ scripts/content-runner.daily-count
 scripts/content-runner.stop
 scripts/content-runner.launchd.out.log
 scripts/content-runner.launchd.err.log
+scripts/content-runner.lock
+scripts/debug/

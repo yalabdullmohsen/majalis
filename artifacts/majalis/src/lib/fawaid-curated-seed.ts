@@ -49,9 +49,9 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "رضا الرب في رضا الوالد، وسخطه في سخطهما.", category: "الآداب", source: "رواه الترمذي وصححه الألباني", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "لا ينبغي لأحد أن يموت إلا وهو يحسن الظن بالله.", category: "العقيدة", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "الوتر سنة مؤكدة؛ وتر الصلاة من سنة النبي ﷺ.", category: "الفقه", source: "رواه أبو داود والترمذي", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
-  { text: "لا صلاة لمن لا وضوء له.", category: "الفقه", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
+  { text: "لا صلاة لمن لا وضوء له.", category: "الفقه", source: "رواه الترمذي وابن ماجه — ضعيف الإسناد عند جمع من العلماء، وحسّنه ابن كثير لكثرة طرقه", author_name: "سنن الترمذي", status: "approved", verification_status: "needs_review" },
   { text: "صلاة الجماعة أفضل من صلاة الفذ بسبع وعشرين درجة.", category: "الفقه", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "إن لله وإن إليه راجعون — أولئك عليهم صلوات من ربهم ورحمة.", category: "الأخلاق", source: "البقرة: 156-157", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
+  { text: "إنا لله وإنا إليه راجعون — أولئك عليهم صلوات من ربهم ورحمة.", category: "الأخلاق", source: "البقرة: 156-157", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
   { text: "الهجرة انتقال للدعوة من الاضطهاد إلى بناء مجتمع مسلم.", category: "السيرة", source: "السيرة النبوية — ابن هشام", author_name: "ابن هشام", status: "approved", verification_status: "verified" },
   { text: "بدر أول معركة فاصلة؛ وفيها نصر الله المؤمنين.", category: "السيرة", source: "صحيح البخاري — كتاب المغازي", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
   { text: "ادعُ إلى سبيل ربك بالحكمة والموعظة الحسنة.", category: "الدعوة", source: "النحل: 125", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
@@ -75,8 +75,8 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "أتدرون ما الغيبة؟ ذكرك أخاك بما يكره.", category: "الآداب", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "الحياء لا يأتي إلا بخير.", category: "الأخلاق", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "المرء على دين خليله فلينظر أحدكم من يخالل.", category: "التربية", source: "رواه أبو داود — حسنه الألباني", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
-  { text: "الدعاء بين الأذان والإقامة لا يرد.", category: "الفقه", source: "رواه أبو داود — حسنه الألباني", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
-  { text: "من قرأ آية الكرسي دبر كل صلاة لم يمنعه من دخول الجنة إلا أن يموت.", category: "القرآن", source: "رواه النسائي — حسنه الألباني", author_name: "سنن النسائي", status: "approved", verification_status: "verified" },
+  { text: "الدعاء بين الأذان والإقامة لا يرد.", category: "الفقه", source: "رواه أبو داود والترمذي — صححه الألباني في صحيح الترمذي", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
+  { text: "من قرأ آية الكرسي دبر كل صلاة لم يمنعه من دخول الجنة إلا أن يموت.", category: "القرآن", source: "رواه النسائي — صححه الألباني في السلسلة الصحيحة (972)", author_name: "سنن النسائي", status: "approved", verification_status: "verified" },
   { text: "يريد الله بكم اليسر ولا يريد بكم العسر.", category: "الفقه", source: "البقرة: 185", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
   { text: "الاستغفار سبب لدفع البلاء ونزول الرحمة.", category: "التفسير", source: "الأنفال: 33 — تفسير ابن كثير", author_name: "ابن كثير", status: "approved", verification_status: "verified" },
   { text: "من سلك طريقاً يلتمس فيه علماً سهّل الله له طريقاً إلى الجنة.", category: "طلب العلم", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
@@ -88,7 +88,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "كل بدعة ضلالة وكل ضلالة في النار.", category: "العقيدة", source: "رواه النسائي — صحيح", author_name: "سنن النسائي", status: "approved", verification_status: "verified" },
   { text: "خيركم من تعلّم القرآن وعلّمه.", category: "القرآن", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "إذا مات الإنسان انقطع عنه عمله إلا من ثلاثة: صدقة جارية أو علم ينتفع به أو ولد صالح يدعو له.", category: "الحديث", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
-  { text: "الدعاء سلاح المؤمن وعماد الدين ونور السموات والأرض.", category: "الفقه", source: "رواه الحاكم — حسنه الألباني", author_name: "المستدرك", status: "approved", verification_status: "verified" },
+  { text: "الدعاء سلاح المؤمن وعماد الدين ونور السموات والأرض.", category: "الفقه", source: "رواه الحاكم في المستدرك — ضعّفه الألباني في السلسلة الضعيفة وضعيف الجامع (انقطاع في الإسناد)", author_name: "المستدرك", status: "approved", verification_status: "needs_review" },
   { text: "البر حسن الخلق والإثم ما حاك في صدرك وكرهت أن يطّلع عليه الناس.", category: "الأخلاق", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "أكمل المؤمنين إيماناً أحسنهم خلقاً.", category: "الأخلاق", source: "رواه أبو داود والترمذي — حسن", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
   { text: "الغنى غنى النفس.", category: "الآداب", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
@@ -149,7 +149,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الحزن على الماضي مضيعة للحاضر.", category: "الأخلاق", source: "قاعدة نبوية — ابن القيم: مدارج السالكين", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
 
   /* ── طلب العلم ── */
-  { text: "العالم والمتعلم في الأجر سواء وسائر الناس لا خير فيهم.", category: "طلب العلم", source: "رواه ابن ماجه — حسنه الألباني", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
+  { text: "العالم والمتعلم في الأجر سواء وسائر الناس لا خير فيهم.", category: "طلب العلم", source: "رواه ابن ماجه — اختُلف في تصحيحه؛ ضعّفه الألباني في ضعيف الجامع، وإسناده فيه عثمان بن أبي عاتكة وعلي بن يزيد وكلاهما ضعيف", author_name: "سنن ابن ماجه", status: "approved", verification_status: "needs_review" },
   { text: "قيد العلم بالكتابة.", category: "طلب العلم", source: "أثر الإمام الشافعي", author_name: "الإمام الشافعي", status: "approved", verification_status: "verified" },
   { text: "من أراد الدنيا فعليه بالعلم، ومن أراد الآخرة فعليه بالعلم.", category: "طلب العلم", source: "أثر يُنسب للإمام الشافعي", author_name: "الإمام الشافعي", status: "approved", verification_status: "needs_review" },
 
@@ -225,13 +225,13 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الدجال يخرج من المشرق؛ وعلامة قربه ظهور الفتن وكثرة الكذب.", category: "العقيدة", source: "رواه البخاري ومسلم — أشراط الساعة", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الحديث ── */
-  { text: "اتقوا الله وصلوا أرحامكم.", category: "الحديث", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "اتقوا الله وصلوا أرحامكم.", category: "الحديث", source: "رواه البيهقي في شعب الإيمان عن ابن مسعود — حسّنه الألباني في صحيح الجامع", author_name: "صحيح الجامع للألباني", status: "approved", verification_status: "verified" },
   { text: "إن الله يحب إذا عمل أحدكم عملاً أن يتقنه.", category: "الحديث", source: "رواه البيهقي — صحيح الألباني", author_name: "السلسلة الصحيحة", status: "approved", verification_status: "verified" },
   { text: "من صمت نجا — السكوت أمان، والكلام مسؤولية.", category: "الحديث", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
 
   /* ── إضافات السيرة ── */
   { text: "الفتح الأكبر كان بلا حرب؛ دخل النبي ﷺ مكة وعفا عن أهلها — قدوة في العفو والرحمة.", category: "السيرة", source: "صحيح البخاري — كتاب المغازي", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
-  { text: "غزوة بدر نُصر فيها ثلاثمائة وثلاثة عشر على الألف؛ دليل أن النصر من عند الله.", category: "السيرة", source: "صحيح البخاري — كتاب المغازي", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
+  { text: "غزوة بدر نُصر فيها ثلاثمائة وثلاثة عشر على الألف؛ دليل أن النصر من عند الله.", category: "السيرة", source: "رواه الترمذي عن البراء بن عازب بلفظ العدد المحدد؛ وأصله في صحيح البخاري بلفظ عام «ثلاثمائة وبضعة عشر»", author_name: "سنن الترمذي", status: "approved", verification_status: "needs_review" },
 
   /* ── إضافات اللغة ── */
   { text: "اللغة العربية لغة القرآن؛ من أتقنها أعان فهمه لكتاب الله.", category: "اللغة", source: "فضل عربية القرآن — ابن تيمية: اقتضاء الصراط المستقيم", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
@@ -278,7 +278,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── إضافات القرآن ── */
   { text: "من أراد علم الأولين والآخرين فليتدبّر القرآن — فيه جواب كل سؤال وشفاء كل داء.", category: "القرآن", source: "مقدمة في أصول التفسير — ابن تيمية", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
-  { text: "الحافظ للقرآن يُقال له يوم القيامة: اقرأ وارقَ ورتّل — فمنزلته عند آخر آية يحفظها.", category: "القرآن", source: "رواه الترمذي وأبو داود — صحيح", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "verified" },
+  { text: "الحافظ للقرآن يُقال له يوم القيامة: اقرأ وارتقِ ورتّل — فمنزلته عند آخر آية يقرؤها.", category: "القرآن", source: "رواه الترمذي وأبو داود — حسن صحيح", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "needs_review" },
 
   /* ── إضافات التربية ── */
   { text: "التربية الصحيحة تبدأ بتربية النفس قبل تربية الأبناء — المُربّي القدوة أبلغ من المُربّي الواعظ.", category: "التربية", source: "تربية الأولاد في الإسلام — عبد الله ناصح علوان", author_name: "عبد الله ناصح علوان", status: "approved", verification_status: "needs_review" },
@@ -308,7 +308,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── الطب النبوي والصحة ── */
   { text: "عليكم بهذا العود الهندي فإن فيه سبعة أشفية.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "الحجامة أو الفصد أو شربة عسل — ثلاثة في شفاء الجسم بإذن الله.", category: "الحديث", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "الشفاء في ثلاثة: شربة عسل، وحجامة (شرطة مِحجم)، وكية بالنار — ونهى النبي ﷺ أمته عن الكي.", category: "الحديث", source: "رواه البخاري (٥٦٨٠) عن ابن عباس", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "المعدة بيت الداء والحمية رأس كل دواء — وأعطِ كل جسم ما عوّدته.", category: "الحديث", source: "أثر يُنسب للحارث بن كلدة — ويُستشهد به في الطب النبوي", author_name: "الطب النبوي", status: "approved", verification_status: "needs_review" },
   { text: "في كل صباح تصدق على كل سلامى منك؛ وصيام يوم سنة للمسلم.", category: "الحديث", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
 
@@ -325,7 +325,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── العلم والإبداع من منظور إسلامي ── */
   { text: "العقل أكبر نعمة أنعمها الله على الإنسان؛ ومن لم يستعمله في خدمة الحق فقد أضاع أعز ما أُعطي.", category: "طلب العلم", source: "إحياء علوم الدين — الغزالي", author_name: "الإمام الغزالي", status: "approved", verification_status: "verified" },
-  { text: "الإسلام يأمر بالتعلم من المهد إلى اللحد؛ فالعلم لا يتوقف بنبل ولا جاه ولا سن.", category: "طلب العلم", source: "طلب العلم فريضة على كل مسلم — ابن ماجه", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
+  { text: "طلب العلم فريضة على كل مسلم؛ فهو واجب لا يتوقف بنبل ولا جاه ولا سن.", category: "طلب العلم", source: "رواه ابن ماجه — حسّنه الألباني في صحيح ابن ماجه بمجموع طرقه", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
   { text: "التفكر في خلق الله ساعة خير من عبادة سبعين سنة — فالتأمل في الكون طريق إلى معرفة الخالق.", category: "طلب العلم", source: "رواه أبو الشيخ — يُستشهد به في الفقه", author_name: "أبو الشيخ الأصبهاني", status: "approved", verification_status: "needs_review" },
 
   /* ── الدعاء والتوسل ── */
@@ -340,7 +340,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── الأسرة والمجتمع ── */
   { text: "المجتمع المسلم كالجسد الواحد؛ إذا اشتكى منه عضو تداعى له سائر الجسد بالسهر والحمى.", category: "الحديث", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "المؤمن للمؤمن كالبنيان المرصوص يشد بعضه بعضاً — التماسك الاجتماعي فريضة إسلامية.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "من كان في حاجة أخيه كان الله في حاجته; ومن فرّج كربة فرّج الله عنه كربة من كرب يوم القيامة.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "من كان في حاجة أخيه كان الله في حاجته، ومن فرّج كربة فرّج الله عنه كربة من كرب يوم القيامة.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
 
   /* ── التوبة والمغفرة ── */
   { text: "قل يا عبادي الذين أسرفوا على أنفسهم لا تقنطوا من رحمة الله — فالرحمة تسع كل ذنب.", category: "العقيدة", source: "الزمر: 53", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
@@ -348,7 +348,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── الوقت والتخطيط ── */
   { text: "نعمتان مغبون فيهما كثير من الناس: الصحة والفراغ — من عرف قدرهما ربح دنياه وآخرته.", category: "الحديث", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "اغتنم خمساً قبل خمس: شبابك قبل هرمك، وصحتك قبل سقمك، وغناك قبل فقرك، وفراغك قبل شغلك، وحياتك قبل موتك.", category: "الحديث", source: "رواه ابن المبارك في الزهد — حسن", author_name: "ابن المبارك", status: "approved", verification_status: "verified" },
+  { text: "اغتنم خمساً قبل خمس: شبابك قبل هرمك، وصحتك قبل سقمك، وغناك قبل فقرك، وفراغك قبل شغلك، وحياتك قبل موتك.", category: "الحديث", source: "رواه الحاكم في المستدرك (٧٨٤٦) عن ابن عباس وصححه على شرط الشيخين، والبيهقي في شعب الإيمان — صححه الألباني في صحيح الجامع وصحيح الترغيب", author_name: "المستدرك", status: "approved", verification_status: "verified" },
 
   /* ── ذكر الله وتلاوة القرآن ── */
   { text: "ألا بذكر الله تطمئن القلوب — الذكر دواء القلوب وغذاؤها وقوتها في كل وقت.", category: "العقيدة", source: "الرعد: 28", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
