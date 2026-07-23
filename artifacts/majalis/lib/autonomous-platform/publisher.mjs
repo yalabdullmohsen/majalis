@@ -104,9 +104,14 @@ async function publishStories(admin, payloads) {
   return { ok: true, imported: published };
 }
 
+function isValidHadithText(text) {
+  return typeof text === "string" && text.trim().length > 0 && text.trim() !== "[object Object]";
+}
+
 async function publishHadith(admin, payloads) {
   let published = 0;
   for (const row of payloads) {
+    if (!isValidHadithText(row.text)) continue;
     const { error } = await admin.from("verified_hadith_items").upsert(row, { onConflict: "id" });
     if (error) throw new Error(error.message);
     published += 1;

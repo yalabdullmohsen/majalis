@@ -97,27 +97,48 @@ function mapRssItem(item, contentType) {
   }
 }
 
+function hadithEntryText(h) {
+  if (typeof h === "string") return h;
+  if (Array.isArray(h)) return typeof h[0] === "string" ? h[0] : hadithEntryText(h[0]);
+  if (h && typeof h === "object") return typeof h.text === "string" ? h.text : "";
+  return "";
+}
+
+function collectionArabicName(source, collectionSlug) {
+  const raw = source?.name || collectionSlug || "";
+  return raw.replace(/\s*[—-]\s*Hadith API\s*$/i, "").trim() || collectionSlug;
+}
+
 function parseHadithJson(raw, source, limit = 25) {
   const json = JSON.parse(raw);
-  const hadiths = json.hadiths || {};
-  const keys = Object.keys(hadiths).sort((a, b) => Number(a) - Number(b));
-  const offset = Number(source.metadata?.cursor_offset || source.metadata?.offset || 0);
-  const slice = keys.slice(offset, offset + limit);
-  const collection = source.metadata?.collection || json.metadata?.name || "hadith";
+  // مصدر fawazahmed0/hadith-api يُرجع hadiths كمصفوفة كائنات
+  // {hadithnumber, text, grades, reference, ...}، وليست خريطة نصوص —
+  // معالجتها كنص خام مباشرة (String(object)) تنتج "[object Object]".
+  const hadiths = json.hadiths || [];
+  const entries = Array.isArray(hadiths)
+    ? hadiths.map((h, i) => ({
+        number: (h && typeof h === "object" && (h.hadithnumber ?? h.arabicnumber)) ?? i,
+        entry: h,
+      }))
+    : Object.keys(hadiths).map((k) => ({ number: k, entry: hadiths[k] }));
+  entries.sort((a, b) => Number(a.number) - Number(b.number));
 
-  return slice.map((k) => {
-    const h = hadiths[k];
-    const text = Array.isArray(h) ? h[0] : String(h);
-    return {
-      text,
-      title: `حديث ${k}`,
-      source_name: collection,
-      source_url: `${source.source_url}#${k}`,
+  const offset = Number(source.metadata?.cursor_offset || source.metadata?.offset || 0);
+  const slice = entries.slice(offset, offset + limit);
+  const collection = source.metadata?.collection || json.metadata?.name || "hadith";
+  const sourceName = collectionArabicName(source, collection);
+
+  return slice
+    .map(({ number, entry: h }) => ({
+      text: hadithEntryText(h).trim(),
+      title: `حديث ${number}`,
+      source_name: sourceName,
+      source_url: `${source.source_url}#${number}`,
       collection,
-      hadith_number: k,
+      hadith_number: String(number),
       grade: "صحيح",
-    };
-  });
+    }))
+    .filter((item) => item.text.length > 0);
 }
 
 function parseQuranAyahJson(raw, source, limit = 20) {
