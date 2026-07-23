@@ -21,7 +21,7 @@
   font-family: var(--font-quran, serif);
   color: rgba(255,255,255,0.85);
   margin-bottom: 0.75rem;
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
 }
 .ah-hero__title {
   font-size: 2.2rem;
@@ -353,7 +353,7 @@
   border: 1px solid rgba(255,255,255,0.25);
   padding: 0.25rem 0.75rem;
   border-radius: var(--ds-radius-full);
-  letter-spacing: 0.03em;
+  letter-spacing: normal;
 }
 .ah-nod-num {
   font-size: var(--ds-text-xs);

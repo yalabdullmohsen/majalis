@@ -791,7 +791,7 @@
   color: var(--msk-gold, #28584D);
   font-weight: 700;
   margin-top: 0.3rem;
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
 }
 /* على خلفية زمردية (hero) */
 .msk-quran-box--on-green {
@@ -963,7 +963,7 @@
   font-size: clamp(1.25rem, 4vw, 1.65rem) !important;
   font-weight: 700 !important;
   color: #28584D !important;
-  letter-spacing: 0.01em !important;
+  letter-spacing: normal !important;
   white-space: nowrap !important;
   line-height: 1.1 !important;
   text-shadow: 0 1px 4px rgba(196,149,64,0.18) !important;
@@ -1182,7 +1182,7 @@
 /* عناوين إرشادية أصغر (اختياري) */
 .ds-section__eyebrow {
   font-family: var(--mj-font-seal) !important;
-  letter-spacing: 0.04em !important;
+  letter-spacing: normal !important;
 }
 
 /* ══ تذييل الصفحة — خلفية زمردية داكنة (emerald-950) ══ */
@@ -1936,7 +1936,7 @@
   box-shadow: 0 4px 16px rgba(23,61,53,0.40), 0 1px 4px rgba(0,0,0,0.15);
   transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s;
   opacity: 0.88;
-  letter-spacing: 0.01em;
+  letter-spacing: normal;
   white-space: nowrap;
 }
 .admin-quick-edit-fab:hover {
@@ -2372,13 +2372,13 @@ table th {
   color: var(--majalis-ink-muted, #9BA3B5);
   direction: ltr;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.04em;
+  letter-spacing: normal;
 }
 .pt-hero__countdown {
   font-size: clamp(2.8rem, 10vw, 4.5rem);
   font-weight: 700;
   color: var(--majalis-emerald, #28584D);
-  letter-spacing: 0.05em;
+  letter-spacing: normal;
   font-variant-numeric: tabular-nums;
   font-family: var(--font-body);
   line-height: 1.1;

@@ -35,7 +35,7 @@
 .ikm-hero__ornament {
   font-size: 0.85rem;
   color: rgba(168,223,192,0.6);
-  letter-spacing: 0.06em;
+  letter-spacing: normal;
   margin-bottom: 0.75rem;
 }
 .ikm-hero__title {

@@ -1865,7 +1865,7 @@ input, textarea, select { font-family: inherit; }
   color: var(--majalis-brass);
   font-size: 0.82rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: normal;
   margin-bottom: 0.55rem;
 }
 
@@ -2229,7 +2229,7 @@ input, textarea, select { font-family: inherit; }
   color: var(--majalis-brass);
   font-size: 0.82rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: normal;
   margin-bottom: 0.65rem;
 }
 
@@ -3343,7 +3343,7 @@ input, textarea, select { font-family: inherit; }
   font-weight: 400;
   line-height: 1.45;
   color: #ffffff;
-  letter-spacing: 0.01em;
+  letter-spacing: normal;
 }
 
 .cond-card__ayah {
@@ -3452,7 +3452,7 @@ input, textarea, select { font-family: inherit; }
   color: #ffffff;
   max-width: 100%;
   overflow-wrap: anywhere;
-  letter-spacing: 0.01em;
+  letter-spacing: normal;
 }
 
 .cond-card__logo {
@@ -3651,7 +3651,7 @@ input, textarea, select { font-family: inherit; }
   font-weight: 700;
   line-height: 1.4;
   color: #ffffff;
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
   max-width: 100%;
   overflow-wrap: anywhere;
   direction: rtl;
@@ -4048,7 +4048,7 @@ input, textarea, select { font-family: inherit; }
 
 .la-section-bar__eyebrow {
   font-size: 0.82rem;
-  letter-spacing: 0.04em;
+  letter-spacing: normal;
   color: var(--majalis-brass-deep);
   font-weight: 700;
   margin-bottom: 0.35rem;
@@ -4170,7 +4170,7 @@ input, textarea, select { font-family: inherit; }
   font-size: var(--ds-text-md);
   white-space: nowrap;
   color: var(--majalis-emerald-deep);
-  letter-spacing: 0.03em;
+  letter-spacing: normal;
   line-height: 1.2;
 }
 
@@ -4404,7 +4404,7 @@ input, textarea, select { font-family: inherit; }
   color: #fff;
   font-size: 0.82rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
   box-shadow: 0 4px 12px rgba(22, 78, 60, 0.25);
 }
 
@@ -4430,7 +4430,7 @@ input, textarea, select { font-family: inherit; }
   font-size: 0.78rem;
   color: var(--majalis-brass-deep);
   font-weight: 700;
-  letter-spacing: 0.03em;
+  letter-spacing: normal;
 }
 
 .la-poster__sheikh {
@@ -4466,7 +4466,7 @@ input, textarea, select { font-family: inherit; }
   color: var(--majalis-brass-deep);
   font-weight: 700;
   margin-bottom: 0.25rem;
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
 }
 
 .la-poster__info-grid {
@@ -5613,7 +5613,7 @@ input, textarea, select { font-family: inherit; }
 
 .prayer-countdown {
   font-size: 1.15rem !important;
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
 }
 
 .home-prayer-cell.is-current {
@@ -8582,7 +8582,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   font-size: var(--ds-text-xs);
   font-weight: 700;
   color: var(--majalis-brass-deep);
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
 }
 
 .home-daily-card {
@@ -9096,7 +9096,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .sci-ann-card__ribbon {
   font-size: 0.82rem;
   font-weight: 700;
-  letter-spacing: 0.01em;
+  letter-spacing: normal;
 }
 
 .sci-ann-card__badge {
@@ -9761,7 +9761,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .prayer-countdown-hms {
   font-variant-numeric: tabular-nums;
   font-size: clamp(1.35rem, 4vw, 1.85rem);
-  letter-spacing: 0.04em;
+  letter-spacing: normal;
   font-weight: 800;
   color: var(--majalis-emerald-deep);
 }
@@ -9992,7 +9992,7 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--majalis-emerald-deep, #173D35);
-  letter-spacing: 0.01em;
+  letter-spacing: normal;
   white-space: nowrap;
 }
 
@@ -10124,7 +10124,7 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   background: transparent;
   color: var(--msk-text-2, #68716D);
   cursor: pointer;
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
   transition: border-color 0.15s, color 0.15s;
 }
 .navbar-lang-btn:hover { border-color: var(--majalis-emerald-deep); color: var(--majalis-emerald-deep); }
@@ -10475,7 +10475,7 @@ body.mobile-nav-body-lock {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 1.2rem;
-  letter-spacing: 0.03em;
+  letter-spacing: normal;
 }
 
 /* ── Close button ── */
@@ -10665,7 +10665,7 @@ body.mobile-nav-body-lock {
   font-weight: 700;
   color: var(--majalis-emerald, #28584D);
   text-align: start;
-  letter-spacing: 0.01em;
+  letter-spacing: normal;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   transition: background 0.13s ease;
@@ -14294,7 +14294,7 @@ body.has-assistant-fab .app-main {
 
 .site-footer-brand strong {
   font-size: 1.1rem;
-  letter-spacing: 0.01em;
+  letter-spacing: normal;
 }
 
 .site-footer-groups {
@@ -15960,7 +15960,7 @@ body.has-assistant-fab .app-main {
   font-family: var(--font-display);
   font-size: clamp(3rem, 14vw, 6rem);
   font-weight: 700; color: var(--majalis-ink);
-  letter-spacing: 0.02em; line-height: 1;
+  letter-spacing: normal; line-height: 1;
   margin: 0.5rem 0 1.5rem;
   font-variant-numeric: tabular-nums;
 }
@@ -16622,7 +16622,7 @@ body.has-assistant-fab .app-main {
   margin: 0 0 0.6rem;
   font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: normal;
   color: var(--majalis-brass-deep, #8a6d1e);
 }
 .uc-features__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
@@ -16846,7 +16846,7 @@ body.has-assistant-fab .app-main {
   font-size: 0.68rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.70);
-  letter-spacing: 0.04em;
+  letter-spacing: normal;
 }
 
 .home-hero-stat-sep {
@@ -18025,7 +18025,7 @@ body.has-assistant-fab .app-main {
   font-size: 0.8rem;
   font-weight: 500;
   color: var(--msk-text-2);
-  letter-spacing: 0.05em;
+  letter-spacing: normal;
   margin: 0 0 0.25rem;
 }
 .prayer-card__name {
@@ -18046,7 +18046,7 @@ body.has-assistant-fab .app-main {
   font-size: clamp(2.75rem, 14vw, 5.5rem);
   font-weight: 700;
   color: var(--msk-text);
-  letter-spacing: 0.03em;
+  letter-spacing: normal;
   line-height: 1;
   font-variant-numeric: tabular-nums;
   font-family: var(--font-display, inherit);
@@ -18430,7 +18430,7 @@ body.has-assistant-fab .app-main {
   font-weight: 700;
   padding: 0.25rem 0.7rem;
   border-radius: 999px;
-  letter-spacing: 0.04em;
+  letter-spacing: normal;
 }
 .hsh-title {
   font-size: 1.05rem;

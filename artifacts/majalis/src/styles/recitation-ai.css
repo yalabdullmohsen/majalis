@@ -55,7 +55,7 @@ html[data-theme="dark"] .rai-header__sub { color: #8BABA3; }
   border-radius: var(--ds-radius-xl);
   background: #C9A227;
   color: #2b2205;
-  letter-spacing: .01em;
+  letter-spacing: normal;
 }
 
 .rai-pre-session-warning {

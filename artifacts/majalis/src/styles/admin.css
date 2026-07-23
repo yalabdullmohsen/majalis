@@ -381,7 +381,7 @@
   font-size: 0.72rem;
   color: rgba(255,255,255,0.55);
   margin: 0 0 0.25rem;
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
 }
 .admin-welcome__name {
   font-size: var(--ds-text-lg);
@@ -1120,7 +1120,7 @@ a.admin-info-panel__item-title:hover { color: var(--majalis-emerald-deep); }
   color: var(--majalis-ink-soft, #6b7280);
   font-size: 0.78rem;
   font-weight: 600;
-  letter-spacing: 0.03em;
+  letter-spacing: normal;
 }
 .dsc-divider::before,
 .dsc-divider::after {

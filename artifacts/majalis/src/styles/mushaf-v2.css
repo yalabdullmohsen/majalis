@@ -187,7 +187,7 @@ html[data-theme="dark"] .mf2-sajda-badge {
   font-size: 4.2cqw;
   font-weight: 700;
   color: var(--mf-gold, #0E6E52);
-  letter-spacing: .02em;
+  letter-spacing: normal;
 }
 html[data-theme="dark"] .mf2-surah-header__name { color: #5EC49A; }
 .quran-shell--night .mf2-surah-header__name { color: #5EC49A; }
