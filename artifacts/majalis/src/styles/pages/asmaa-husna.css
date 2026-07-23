@@ -42,7 +42,7 @@
   margin-right: 0.5rem;
   font-size: 0.78rem;
   color: rgba(255,255,255,0.65);
-  font-style: italic;
+  font-style: normal;
 }
 .ah-hero__stats {
   display: flex;

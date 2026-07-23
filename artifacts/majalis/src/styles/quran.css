@@ -932,7 +932,7 @@
   font-size: .72rem;
   color: var(--text-muted, #6b7280);
   margin: .25rem 0 0;
-  font-style: italic;
+  font-style: normal;
 }
 
 /* ── Page navigation within surah ── */

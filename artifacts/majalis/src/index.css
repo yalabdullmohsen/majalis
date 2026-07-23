@@ -8144,7 +8144,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   font-size: 0.8125rem;
   color: var(--msk-text-2, #68716D);
   margin: 0;
-  font-style: italic;
+  font-style: normal;
 }
 
 /* Hadith text */
@@ -8299,7 +8299,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   font-size: var(--ds-text-sm);
   color: var(--msk-text-2, #68716D);
   margin: 0;
-  font-style: italic;
+  font-style: normal;
 }
 .hadith-modal__text {
   margin: 0;
@@ -12032,7 +12032,7 @@ body.assistant-panel-open {
   margin: 0.65rem 0 0;
   font-size: var(--ds-text-xs);
   color: #6b7280;
-  font-style: italic;
+  font-style: normal;
 }
 
 .fiqh-research-form {
@@ -12451,7 +12451,7 @@ body.assistant-panel-open {
 .fiqh-live-unavailable {
   color: var(--ink-soft, #5c5348);
   font-size: var(--ds-text-sm);
-  font-style: italic;
+  font-style: normal;
 }
 
 .fiqh-live-topics ul {

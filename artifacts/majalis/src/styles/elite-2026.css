@@ -698,7 +698,7 @@ html[data-theme="dark"] .rp-section-title {
 .myt-block__text { font-size: .85rem; font-weight: 600; color: #fff !important; margin: 0; line-height: 1.5; }
 .myt-block__text--lesson { font-size: .82rem; }
 .myt-block__source { font-size: .8rem; color: rgba(255,255,255,.55) !important; margin: .15rem 0 0; }
-.myt-block__source--muted { font-style: italic; color: rgba(255,255,255,.4) !important; }
+.myt-block__source--muted { font-style: normal; color: rgba(255,255,255,.4) !important; }
 .myt-prayer-time { margin-inline-start: .5rem; font-weight: 800; font-size: .95rem; }
 .myt-block__link {
   display: flex;
@@ -3856,7 +3856,7 @@ html[data-theme="dark"] .notif-row__label {
   font-size: 0.83rem;
   color: var(--majalis-emerald-deep, #173D35);
   font-weight: 600;
-  font-style: italic;
+  font-style: normal;
   border-right: 2px solid var(--majalis-emerald, #28584D);
   padding-right: 0.6rem;
 }
@@ -6158,7 +6158,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
 .pmp-benefits { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .pmp-benefit-badge { padding: 0.2rem 0.6rem; border-radius: var(--ds-radius-xl); font-size: 0.8rem; background: rgba(24,54,42,0.08); color: var(--msk-gold); font-weight: 600; border: 1px solid rgba(24,54,42,0.18); }
 .pmp-body-text { font-size: var(--ds-text-sm); line-height: 1.75; color: var(--msk-text); margin: 0; }
-.pmp-item-disclaimer { font-size: var(--ds-text-xs); color: var(--msk-text-2); margin: 0; font-style: italic; border-top: 1px solid var(--msk-border); padding-top: 0.5rem; }
+.pmp-item-disclaimer { font-size: var(--ds-text-xs); color: var(--msk-text-2); margin: 0; font-style: normal; border-top: 1px solid var(--msk-border); padding-top: 0.5rem; }
 .pmp-toggle-btn { color: var(--msk-gold); background: none; border: none; cursor: pointer; font-size: 0.82rem; font-weight: 600; padding: 0.2rem 0; align-self: flex-start; font-family: inherit; }
 
 /* ── موضوع الطب اليوم (.pmod-card) ── */
@@ -6183,7 +6183,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
   font-size: 0.95rem; line-height: 1.85; color: rgba(255,255,255,0.93);
   margin: 0; border: none; padding: 0; font-family: var(--font-quran, serif);
 }
-.pmod-card__source { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.65); font-style: italic; }
+.pmod-card__source { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.65); font-style: normal; }
 .pmod-card__benefits { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .pmod-card__benefit {
   padding: 0.25rem 0.65rem; border-radius: var(--ds-radius-full); font-size: 0.8rem; font-weight: 600;
@@ -6905,7 +6905,7 @@ html[data-theme="dark"] .twh-hub-card__current-tag {
   border-radius: var(--ds-radius-lg); padding: 0.65rem 0.9rem;
   display: flex; flex-direction: column; gap: 0.3rem;
 }
-.tpod-card__hadith-text { font-size: 0.9rem; font-style: italic; color: rgba(255,255,255,0.95); margin: 0; }
+.tpod-card__hadith-text { font-size: 0.9rem; font-style: normal; color: rgba(255,255,255,0.95); margin: 0; }
 .tpod-card__hadith-meta { font-size: 0.72rem; color: rgba(255,255,255,0.65); }
 
 /* §69c — FiqhPage Hub (fqh-hub-*) */
@@ -8223,7 +8223,7 @@ html[data-theme="dark"] .twh-hub-card__current-tag {
 .usr-td--points       { color: var(--majalis-brass); font-weight: 700; text-align: center; }
 .usr-td--center       { color: var(--majalis-ink-soft); text-align: center; }
 .usr-td--nowrap       { color: var(--majalis-ink-soft); white-space: nowrap; }
-.usr-noname           { color: var(--majalis-ink-soft); font-style: italic; }
+.usr-noname           { color: var(--majalis-ink-soft); font-style: normal; }
 .usr-role-badge       { padding: 0.125rem 0.5rem; border-radius: var(--ds-radius-xs); background: var(--usr-role-bg, var(--majalis-parchment-deep)); color: var(--usr-role-color, var(--majalis-ink-soft)); font-size: var(--ds-text-xs); white-space: nowrap; }
 .usr-role-select      { padding: 0.25rem 0.5rem; border-radius: var(--ds-radius-xs); border: 1px solid var(--majalis-line); background: var(--majalis-panel); color: var(--majalis-ink); font-size: 0.8125rem; font-family: inherit; cursor: pointer; }
 .usr-role-select:disabled { opacity: 0.5; cursor: default; }
@@ -14591,7 +14591,7 @@ img[loading="lazy"]:not([src=""]) {
 }
 .tj-intro-box p { margin: 0 0 0.75rem; color: var(--majalis-ink); font-size: 0.92rem; line-height: 1.7; }
 .tj-intro-box p:last-child { margin-bottom: 0; }
-.tj-hadith { font-style: italic; color: var(--majalis-emerald-deep, #173D35) !important; font-size: 0.88rem !important; border-right: 3px solid var(--majalis-emerald); padding-right: 0.75rem; }
+.tj-hadith { font-style: normal; color: var(--majalis-emerald-deep, #173D35) !important; font-size: 0.88rem !important; border-right: 3px solid var(--majalis-emerald); padding-right: 0.75rem; }
 
 .tj-grid { display: grid; gap: var(--ds-space-3); margin-bottom: 2rem; }
 
@@ -15369,7 +15369,7 @@ html[data-theme="dark"] .qlive-player {
 .schod-card__fullname { font-size: 0.8rem; color: rgba(255,255,255,0.75); }
 .schod-card__bio      { font-size: 0.88rem; line-height: 1.8; color: rgba(255,255,255,0.92); margin: 0; max-width: 540px; }
 .schod-card__quote    {
-  font-size: 0.85rem; font-style: italic; color: rgba(255,255,255,0.9);
+  font-size: 0.85rem; font-style: normal; color: rgba(255,255,255,0.9);
   background: rgba(255,255,255,0.1); border-radius: 0.65rem; padding: 0.5rem 1rem; margin: 0;
 }
 .schod-card__tags     { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center; }
@@ -15688,7 +15688,7 @@ html[data-theme="dark"] .qlive-player {
   font-family: inherit;
   font-size: 0.76rem;
   color: rgba(255,255,255,0.55);
-  font-style: italic;
+  font-style: normal;
   margin-top: 0.25rem;
 }
 .akl-hero__badges {
@@ -15847,7 +15847,7 @@ html[data-theme="dark"] .qlive-player {
   color: #173D35;
   line-height: 1.75;
   margin: 0 0 0.25rem;
-  font-style: italic;
+  font-style: normal;
 }
 .akl-block__ref {
   font-size: 0.72rem;
@@ -15857,7 +15857,7 @@ html[data-theme="dark"] .qlive-player {
 .akl-block__quote {
   font-size: 0.88rem;
   color: #173D35;
-  font-style: italic;
+  font-style: normal;
   line-height: 1.75;
   margin: 0 0 0.25rem;
   padding: 0;
@@ -15962,14 +15962,14 @@ html[data-theme="dark"] .qlive-player {
   border-radius: 0.625rem; padding: 0.65rem 0.85rem; display: flex; flex-direction: column; gap: 0.2rem;
 }
 .klod-card__ayah-text { font-size: var(--ds-text-base); color: #FFFFFF; font-family: var(--font-quran, serif); line-height: 1.7; }
-.klod-card__ayah-ref { font-size: 0.72rem; color: rgba(255,255,255,0.6); font-style: italic; }
+.klod-card__ayah-ref { font-size: 0.72rem; color: rgba(255,255,255,0.6); font-style: normal; }
 .klod-card__hadith {
   font-size: 0.88rem; line-height: 1.8; color: rgba(255,255,255,0.9);
   margin: 0; border-right: 2px solid rgba(255,255,255,0.35); padding-right: 0.75rem;
 }
 .klod-card__hadith footer { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-top: 0.25rem; }
 .klod-card__scholar { display: flex; flex-direction: column; gap: 0.15rem; }
-.klod-card__scholar-quote { font-size: 0.85rem; color: rgba(255,255,255,0.85); font-style: italic; line-height: 1.65; }
+.klod-card__scholar-quote { font-size: 0.85rem; color: rgba(255,255,255,0.85); font-style: normal; line-height: 1.65; }
 .klod-card__scholar-name { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.6); font-weight: 600; }
 .klod-card__practices {
   margin: 0; padding-right: 1.25rem; display: flex; flex-direction: column; gap: 0.3rem;
@@ -16244,7 +16244,7 @@ html[data-theme="dark"] .qlive-player {
   font-size: var(--ds-text-xs);
   color: rgba(255,255,255,0.72);
 }
-.dua-of-day__src { font-style: italic; }
+.dua-of-day__src { font-style: normal; }
 .dua-of-day__virtue {
   display: flex;
   align-items: flex-start;
@@ -16450,7 +16450,7 @@ html[data-theme="dark"] .qlive-player {
 .arkan-dalil--hadith .arkan-dalil__text {
   font-family: inherit;
   font-size: 0.85rem;
-  font-style: italic;
+  font-style: normal;
   color: #173D35;
   line-height: 1.7;
 }
@@ -16493,7 +16493,7 @@ html[data-theme="dark"] .qlive-player {
 .arkan-scholar__quote {
   font-size: 0.88rem;
   color: #173D35;
-  font-style: italic;
+  font-style: normal;
   line-height: 1.7;
   margin: 0;
   padding: 0;
@@ -16557,7 +16557,7 @@ html[data-theme="dark"] .qlive-player {
 .arod-card__sub   { font-size: 0.8rem; color: rgba(255,255,255,0.75); margin: 0; }
 .arod-card__summary { font-size: 0.9rem; line-height: 1.85; color: rgba(255,255,255,0.92); margin: 0; max-width: 560px; }
 .arod-card__quote {
-  font-size: 0.82rem; font-style: italic; color: rgba(255,255,255,0.85);
+  font-size: 0.82rem; font-style: normal; color: rgba(255,255,255,0.85);
   background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
   border-radius: 0.65rem; padding: 0.55rem 0.85rem; margin: 0;
 }
@@ -16677,7 +16677,7 @@ html[data-theme="dark"] .qlive-player {
 .ai-dalil__quote { margin: 0 0 0.6rem; padding: 0; border: none; }
 .ai-dalil__quote:last-child { margin-bottom: 0; }
 .ai-dalil__text { font-size: 0.92rem; color: #052E16; line-height: 1.7; font-weight: 600; margin: 0 0 0.2rem; }
-.ai-dalil__ref { font-size: 0.78rem; color: #28584D; font-style: italic; }
+.ai-dalil__ref { font-size: 0.78rem; color: #28584D; font-style: normal; }
 
 /* تفاصيل عقدية */
 .ai-details { display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 1rem; }
@@ -16702,7 +16702,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .ai-scholar__star { flex-shrink: 0; margin-top: 0.2rem; color: rgba(255,255,255,0.7); }
 .ai-scholar blockquote { margin: 0; padding: 0; border: none; }
-.ai-scholar blockquote p { font-size: 0.88rem; color: #FFFFFF; font-style: italic; line-height: 1.65; margin: 0 0 0.3rem; }
+.ai-scholar blockquote p { font-size: 0.88rem; color: #FFFFFF; font-style: normal; line-height: 1.65; margin: 0 0 0.3rem; }
 .ai-scholar blockquote footer { font-size: 0.78rem; color: rgba(255,255,255,0.75); font-weight: 700; }
 
 /* صفحات ذات صلة */
@@ -16754,7 +16754,7 @@ html[data-theme="dark"] .qlive-player {
 .aiod-card__sub   { font-size: 0.8rem; color: rgba(255,255,255,0.75); margin: 0; }
 .aiod-card__summary { font-size: 0.9rem; line-height: 1.85; color: rgba(255,255,255,0.92); margin: 0; max-width: 560px; }
 .aiod-card__quote {
-  font-size: 0.82rem; font-style: italic; color: rgba(255,255,255,0.85);
+  font-size: 0.82rem; font-style: normal; color: rgba(255,255,255,0.85);
   background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
   border-radius: 0.65rem; padding: 0.55rem 0.85rem; margin: 0;
 }
@@ -16788,7 +16788,7 @@ html[data-theme="dark"] .qlive-player {
 .hsod-card__def { font-size: 0.88rem; color: rgba(255,255,255,0.87); max-width: 480px; margin: 0; line-height: 1.65; }
 .hsod-card__ex { font-size: 0.82rem; color: rgba(255,255,255,0.75); max-width: 480px; margin: 0; }
 .hsod-card__ex-label { font-weight: 700; }
-.hsod-card__note { font-size: 0.8rem; color: rgba(255,255,255,0.65); max-width: 460px; margin: 0; font-style: italic; }
+.hsod-card__note { font-size: 0.8rem; color: rgba(255,255,255,0.65); max-width: 460px; margin: 0; font-style: normal; }
 
 /* هيرو */
 .hs-hero {
@@ -17006,7 +17006,7 @@ html[data-theme="dark"] .qlive-player {
 .mdbod-card__summary { font-size: 0.88rem; color: rgba(255,255,255,0.87); max-width: 500px; margin: 0.2rem 0 0; line-height: 1.65; }
 .mdbod-card__quote {
   font-size: 0.85rem; color: rgba(255,255,255,0.8); max-width: 460px;
-  margin: 0.25rem 0 0; font-style: italic; line-height: 1.6;
+  margin: 0.25rem 0 0; font-style: normal; line-height: 1.6;
 }
 .mdbod-card__quote-src { color: rgba(255,255,255,0.6); font-style: normal; font-size: 0.78rem; }
 
@@ -17158,7 +17158,7 @@ html[data-theme="dark"] .qlive-player {
   color: #FFFFFF;
 }
 .mdb-quote blockquote { margin: 0; padding: 0; border: none; }
-.mdb-quote blockquote p { font-size: 0.9rem; color: #FFFFFF; font-style: italic; line-height: 1.65; margin: 0 0 0.3rem; }
+.mdb-quote blockquote p { font-size: 0.9rem; color: #FFFFFF; font-style: normal; line-height: 1.65; margin: 0 0 0.3rem; }
 .mdb-quote blockquote footer { font-size: 0.78rem; color: rgba(255,255,255,0.75); font-weight: 700; }
 
 /* تنبيه */
@@ -17410,7 +17410,7 @@ html[data-theme="dark"] .qlive-player {
 .sod-card__cat { font-size: 0.78rem; color: rgba(255,255,255,0.72); }
 .sod-card__title { font-size: 1.1rem; font-weight: 700; color: #FFFFFF; margin: 0; }
 .sod-card__text { font-size: 0.95rem; line-height: 1.85; color: rgba(255,255,255,0.93); margin: 0; }
-.sod-card__source { font-size: 0.78rem; color: rgba(255,255,255,0.65); font-style: italic; }
+.sod-card__source { font-size: 0.78rem; color: rgba(255,255,255,0.65); font-style: normal; }
 .sod-card__reward {
   font-size: 0.85rem; color: rgba(255,255,255,0.9);
   background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
@@ -17553,7 +17553,7 @@ html[data-theme="dark"] .qlive-player {
 .hk-card__footer { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; }
 .hk-card__scholar { font-size: 0.8rem; font-weight: 700; color: #28584D; }
 .hk-card__died { font-size: 0.8rem; color: #6B9E86; }
-.hk-card__source { font-size: 0.8rem; color: #28584D; font-style: italic; }
+.hk-card__source { font-size: 0.8rem; color: #28584D; font-style: normal; }
 
 /* أزرار */
 .hk-card__actions { display: flex; gap: 0.45rem; align-items: center; }
@@ -17658,7 +17658,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .hod-card__scholar { font-size: 0.82rem; font-weight: 700; color: rgba(255,255,255,0.9); }
 .hod-card__died { font-size: 0.8rem; color: rgba(255,255,255,0.65); }
-.hod-card__source { font-size: 0.72rem; color: rgba(255,255,255,0.6); font-style: italic; }
+.hod-card__source { font-size: 0.72rem; color: rgba(255,255,255,0.6); font-style: normal; }
 .hod-card__copy {
   display: inline-flex;
   align-items: center;
@@ -17906,7 +17906,7 @@ html[data-theme="dark"] .qlive-player {
   margin-bottom: 0.65rem;
 }
 .zk-dalil__text { font-size: 0.88rem; color: #052E16; line-height: 1.7; font-weight: 600; }
-.zk-dalil__ref { font-size: var(--ds-text-xs); color: #28584D; font-style: italic; margin-top: 0.2rem; }
+.zk-dalil__ref { font-size: var(--ds-text-xs); color: #28584D; font-style: normal; margin-top: 0.2rem; }
 .zk-mustahiq-inline { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
 .zk-chip {
   background: rgba(31,77,58,0.08);
@@ -18038,7 +18038,7 @@ html[data-theme="dark"] .qlive-player {
   font-family: var(--font-body);
   font-size: var(--ds-text-base); line-height: 1.9; color: rgba(255,255,255,0.95); margin: 0; max-width: 560px;
 }
-.swod-card__source { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.65); font-style: italic; }
+.swod-card__source { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.65); font-style: normal; }
 
 /* body */
 .sw-body { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem; }
@@ -19301,7 +19301,7 @@ html[data-theme="dark"] .qlive-player {
   font-size: 0.85rem; line-height: 1.75; color: rgba(255,255,255,0.88);
   margin: 0; border: none; padding: 0.6rem 0.9rem;
   background: rgba(255,255,255,0.08); border-radius: 0.625rem;
-  font-style: italic;
+  font-style: normal;
 }
 
 /* ── نهاية §233 ─────────────────────────────────────────── */
@@ -20007,7 +20007,7 @@ html[data-theme="dark"] .qlive-player {
 /* lists */
 .fq-list { margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: .35rem; }
 .fq-list li { font-size: .88rem; color: #68716D; line-height: 1.6; }
-.fq-list--faraa li { color: #173D35; font-weight: 600; font-style: italic; }
+.fq-list--faraa li { color: #173D35; font-weight: 600; font-style: normal; }
 .fq-list--exception li { color: #173D35; }
 
 /* أمثلة */
@@ -20109,7 +20109,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .fq-tatbiq__q p { margin: 0; }
 .fq-tatbiq__a { font-size: .88rem; color: #68716D; line-height: 1.7; margin: 0; }
-.fq-tatbiq__source { font-size: .75rem; color: #9CA3AF; margin: 0; font-style: italic; }
+.fq-tatbiq__source { font-size: .75rem; color: #9CA3AF; margin: 0; font-style: normal; }
 
 /* مراجع */
 .fq-ref { margin-top: 2.5rem; padding: var(--ds-space-6); background: #fff; border: 1px solid #E7E2D8; border-radius: var(--ds-radius-xl); }
@@ -20148,7 +20148,7 @@ html[data-theme="dark"] .qlive-player {
   border: 1px solid rgba(255,255,255,0.25);
   padding: 0.25rem 0.7rem; border-radius: var(--ds-radius-full); width: fit-content; margin: 0 auto;
 }
-.fqod-card__text { font-size: 1.35rem; font-weight: 900; color: #FFFFFF; margin: 0; font-style: italic; }
+.fqod-card__text { font-size: 1.35rem; font-weight: 900; color: #FFFFFF; margin: 0; font-style: normal; }
 .fqod-card__meaning { font-size: 0.9rem; line-height: 1.8; color: rgba(255,255,255,0.9); margin: 0; }
 .fqod-card__origin { font-size: 0.8rem; color: rgba(255,255,255,0.7); line-height: 1.65; }
 .fqod-card__faraa {
@@ -20158,7 +20158,7 @@ html[data-theme="dark"] .qlive-player {
 .fqod-card__faraa-title { font-size: 0.78rem; font-weight: 700; color: rgba(255,255,255,0.8); margin-bottom: 0.3rem; }
 .fqod-card__faraa-list { margin: 0; padding-right: 1.1rem; display: flex; flex-direction: column; gap: 0.2rem; }
 .fqod-card__faraa-list li { font-size: 0.82rem; color: rgba(255,255,255,0.85); }
-.fqod-card__scholars { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.65); font-style: italic; }
+.fqod-card__scholars { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.65); font-style: normal; }
 
 /* ══════════════════════════════════════════════════════════════════════
    §240 — الشمائل المحمدية  (.sh-*)
@@ -20264,7 +20264,7 @@ html[data-theme="dark"] .qlive-player {
   font-size: .75rem; color: #28584D; font-weight: 700;
   background: rgba(23,61,53,.08); padding: .15rem .6rem; border-radius: var(--ds-radius-full);
 }
-.sh-hadith__src { font-size: .72rem; color: #9CA3AF; font-style: italic; }
+.sh-hadith__src { font-size: .72rem; color: #9CA3AF; font-style: normal; }
 
 /* محبة */
 .sh-mahabbah-intro {
@@ -20350,7 +20350,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .shod-card__footer { display: flex; flex-direction: column; gap: 0.15rem; align-items: center; }
 .shod-card__rawi { font-size: 0.82rem; color: rgba(255,255,255,0.85); font-weight: 600; }
-.shod-card__source { font-size: 0.8rem; color: rgba(255,255,255,0.6); font-style: italic; }
+.shod-card__source { font-size: 0.8rem; color: rgba(255,255,255,0.6); font-style: normal; }
 
 /* ══════════════════════════════════════════════════════════════════════
    §241 — الإسلام في أرقام  (.is-*)
@@ -20692,10 +20692,10 @@ html[data-theme="dark"] .qlive-player {
 }
 .glod-card__cat { font-size: 0.78rem; color: rgba(255,255,255,0.72); }
 .glod-card__term { font-size: var(--ds-text-xl); font-weight: 800; color: #FFFFFF; margin: 0; }
-.glod-card__plural { font-size: 0.8rem; color: rgba(255,255,255,0.7); font-style: italic; }
+.glod-card__plural { font-size: 0.8rem; color: rgba(255,255,255,0.7); font-style: normal; }
 .glod-card__definition { font-size: 0.92rem; line-height: 1.8; color: rgba(255,255,255,0.93); margin: 0; }
 .glod-card__detail { font-size: 0.85rem; line-height: 1.75; color: rgba(255,255,255,0.82); margin: 0; }
-.glod-card__source { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.6); font-style: italic; }
+.glod-card__source { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.6); font-style: normal; }
 .glod-card__related { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: rgba(255,255,255,0.72); }
 .glod-card__rel-tag {
   padding: 0.18rem 0.6rem; border-radius: var(--ds-radius-full); font-size: 0.8rem;
@@ -20876,7 +20876,7 @@ html[data-theme="dark"] .qlive-player {
 .atod-card__cat { font-size: 0.78rem; color: rgba(255,255,255,0.72); }
 .atod-card__title { font-size: 1.05rem; font-weight: 700; color: #FFFFFF; margin: 0; }
 .atod-card__text { font-size: 0.92rem; line-height: 1.85; color: rgba(255,255,255,0.93); margin: 0; }
-.atod-card__source { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.65); font-style: italic; }
+.atod-card__source { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.65); font-style: normal; }
 
 /* ══════════════════════════════════════════════════════════════════
    §244 — AnbiyaPage  (.nb-*)
@@ -21115,7 +21115,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .jnod-card__title { font-size: 1.1rem; font-weight: 700; color: #FFFFFF; margin: 0; }
 .jnod-card__text { font-size: 0.92rem; line-height: 1.85; color: rgba(255,255,255,0.92); margin: 0; }
-.jnod-card__ref { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.65); font-style: italic; }
+.jnod-card__ref { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.65); font-style: normal; }
 
 /* ══════════════════════════════════════════════════════════════════
    §246 — علامات الساعة  (.as-*)
@@ -21139,7 +21139,7 @@ html[data-theme="dark"] .qlive-player {
 .as-hero__title { font-size: 2.1rem; font-weight: 800; margin: 0 0 .6rem; }
 .as-hero__sub { font-size: var(--ds-text-base); opacity: .82; margin: 0 0 1.2rem; line-height: 1.7; }
 .as-hero__ayah {
-  font-size: .97rem; font-style: italic; opacity: .75;
+  font-size: .97rem; font-style: normal; opacity: .75;
   border-top: 1px solid rgba(255,255,255,.15); padding-top: .9rem;
 }
 .as-hero__ayah span { font-size: .82rem; opacity: .65; margin-right: .4rem; }
@@ -21293,7 +21293,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .asod-card__title { font-size: 1.1rem; font-weight: 700; color: #FFFFFF; margin: 0; }
 .asod-card__desc { font-size: 0.9rem; line-height: 1.85; color: rgba(255,255,255,0.92); margin: 0; }
-.asod-card__source { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.65); font-style: italic; }
+.asod-card__source { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.65); font-style: normal; }
 
 /* ══════════════════════════════════════════════════════════════════
    §247 — الملائكة في الإسلام  (.mk-*)
@@ -21459,7 +21459,7 @@ html[data-theme="dark"] .qlive-player {
   border: 1px solid rgba(255,255,255,0.2); color: #FFFFFF;
 }
 .mkod-card__detail { font-size: 0.9rem; line-height: 1.8; color: rgba(255,255,255,0.9); margin: 0; }
-.mkod-card__ref { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.6); font-style: italic; }
+.mkod-card__ref { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.6); font-style: normal; }
 
 /* ══════════════════════════════════════════════════════════════════
    §248 — الوصايا النبوية  (.wn-*)
@@ -21553,7 +21553,7 @@ html[data-theme="dark"] .qlive-player {
 .isod-card__cause { font-size: 0.88rem; color: rgba(255,255,255,0.87); max-width: 460px; margin: 0; line-height: 1.65; }
 .isod-card__quote {
   font-family: var(--font-body); font-size: 0.88rem; line-height: 1.7;
-  color: rgba(255,255,255,0.72); max-width: 480px; margin: 0.2rem 0 0; font-style: italic;
+  color: rgba(255,255,255,0.72); max-width: 480px; margin: 0.2rem 0 0; font-style: normal;
 }
 
 /* PrayerRanksPage of-the-day */
@@ -21700,7 +21700,7 @@ html[data-theme="dark"] .qlive-player {
   padding: 1.25rem 1.5rem; text-align: center;
 }
 .wn-amal-cta__icon { font-size: var(--ds-text-2xl); margin-bottom: .5rem; }
-.wn-amal-cta__text { font-size: .92rem; color: #5a490a; line-height: 1.7; font-style: italic; margin: 0; }
+.wn-amal-cta__text { font-size: .92rem; color: #5a490a; line-height: 1.7; font-style: normal; margin: 0; }
 
 /* Responsive */
 @media (max-width: 640px) {
@@ -21729,7 +21729,7 @@ html[data-theme="dark"] .qlive-player {
 .wod-card__title { font-size: 1.1rem; font-weight: 700; color: #FFFFFF; margin: 0; }
 .wod-card__quote { margin: 0; border: none; padding: 0; }
 .wod-card__text { font-size: 0.98rem; line-height: 1.9; color: rgba(255,255,255,0.95); margin: 0 0 0.35rem; font-family: var(--font-quran, serif); }
-.wod-card__source { font-size: 0.78rem; color: rgba(255,255,255,0.65); font-style: italic; }
+.wod-card__source { font-size: 0.78rem; color: rgba(255,255,255,0.65); font-style: normal; }
 .wod-card__benefit {
   font-size: 0.85rem; line-height: 1.75; color: rgba(255,255,255,0.88);
   background: rgba(255,255,255,0.08); border-radius: 0.625rem;
@@ -21857,7 +21857,7 @@ html[data-theme="dark"] .qlive-player {
 .rq-muhasaba-note {
   background: #e8f4f8; border: 1px solid #b0d4e3; border-radius: .6rem;
   padding: .85rem 1.1rem; font-size: .88rem; line-height: 1.7; color: #1c3a4a;
-  font-style: italic;
+  font-style: normal;
 }
 
 /* Musab */
@@ -21906,7 +21906,7 @@ html[data-theme="dark"] .qlive-player {
 .rod-card__title { font-size: 1.1rem; font-weight: 700; color: #FFFFFF; margin: 0; }
 .rod-card__quote { margin: 0; border: none; padding: 0; }
 .rod-card__text { font-size: 0.95rem; line-height: 1.9; color: rgba(255,255,255,0.93); margin: 0 0 0.4rem; }
-.rod-card__source { font-size: 0.78rem; color: rgba(255,255,255,0.65); font-style: italic; }
+.rod-card__source { font-size: 0.78rem; color: rgba(255,255,255,0.65); font-style: normal; }
 .rod-card__copy {
   display: inline-flex; align-items: center; gap: 0.45rem; margin: 0.25rem auto 0;
   font-size: 0.82rem; font-weight: 600; cursor: pointer;
@@ -22623,7 +22623,7 @@ html[data-theme="dark"] .share-btn--copy { background: #173D35 !important; }
 .trp-blockquote {
   border-right: 4px solid var(--majalis-emerald);
   padding-right: 1rem;
-  font-style: italic;
+  font-style: normal;
   color: var(--majalis-ink-soft);
 }
 
@@ -22974,7 +22974,7 @@ html[data-theme="dark"] .share-btn--copy { background: #173D35 !important; }
   color: var(--majalis-ink-soft); background: none; cursor: pointer;
 }
 .mcp-note-icon { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; }
-.mcp-note-text { font-size: .75rem; color: var(--majalis-ink-soft); font-style: italic; }
+.mcp-note-text { font-size: .75rem; color: var(--majalis-ink-soft); font-style: normal; }
 .mcp-edit-note-btn { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; flex-shrink: 0; background: none; border: none; cursor: pointer; transition: opacity .15s, color .15s; }
 .mcp-edit-note-btn:hover { opacity: 1; color: var(--majalis-emerald); }
 .mcp-cit-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; padding-top: .25rem; border-top: 1px solid var(--majalis-line); }
@@ -25653,7 +25653,7 @@ html[data-theme="dark"] .qc-badge--gov { background: rgba(92,196,154,.15); color
 .sq-answer-label { font-size: .8rem; font-weight: 700; color: var(--ds-emerald, #28584D); white-space: nowrap; padding-top: .05rem; }
 .sq-answer-text { font-size: .9rem; color: var(--ds-ink, #1C1C1C); font-weight: 500; line-height: 1.5; }
 
-.sq-hint { font-size: .8rem; color: var(--ds-ink-soft, #5A5A5A); margin: .3rem 0 .6rem; font-style: italic; }
+.sq-hint { font-size: .8rem; color: var(--ds-ink-soft, #5A5A5A); margin: .3rem 0 .6rem; font-style: normal; }
 
 .sq-score-btns { display: flex; gap: .6rem; margin-top: .7rem; flex-wrap: wrap; }
 .sq-btn {
@@ -26003,7 +26003,7 @@ html[data-theme="dark"] .hb-mutafaq-info { background: rgba(23,61,53,.09); borde
   color: rgba(250,248,242,0.6);
   margin: 0;
   line-height: 1.65;
-  font-style: italic;
+  font-style: normal;
 }
 @media (max-width: 480px) {
   .frb-wrap { padding: 1.3rem 1rem 1.2rem; border-radius: 10px; }
@@ -26807,7 +26807,7 @@ html[data-theme="dark"] .srch-quick-card:hover {
   color: var(--clr-ink-soft, #6b7280);
   margin-top: -0.25rem;
   margin-bottom: 0.4rem;
-  font-style: italic;
+  font-style: normal;
 }
 
 /* ── Quality buttons: SM2 preview row ── */

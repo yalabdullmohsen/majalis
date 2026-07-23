@@ -268,7 +268,7 @@
 }
 .sg-rank-card__ruling--high { background: rgba(23,61,53,.2); }
 .sg-rank-card__text { font-size: .83rem; color: #444; line-height: 1.7; margin: 0 0 .4rem; }
-.sg-rank-card__benefit { font-size: .78rem; color: #555; font-style: italic; margin: 0; }
+.sg-rank-card__benefit { font-size: .78rem; color: #555; font-style: normal; margin: 0; }
 
 /* ── سور الصلاة والنوافل ── */
 .sg-suwar-grid { display: grid; grid-template-columns: 1fr; gap: .7rem; }
