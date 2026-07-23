@@ -1600,7 +1600,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "category": "عام",
     "level": "متوسط",
     "question": "ما الصلاة التي تُعدل صلاة قيام نصف الليل؟",
-    "answer": "صلاة الوتر"
+    "answer": "صلاة العشاء في جماعة"
   },
   {
     "id": "demo-quiz-207",
@@ -1608,7 +1608,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "category": "عام",
     "level": "متوسط",
     "question": "ما يوم من أيام السنة يكون صيامه كفارة لسنتين؟",
-    "answer": "يوم عاشوراء (وقيل صيام عرفة كفارة سنتين)"
+    "answer": "يوم عرفة (وصيام يوم عاشوراء يكفر سنة واحدة)"
   },
   {
     "id": "demo-quiz-208",
