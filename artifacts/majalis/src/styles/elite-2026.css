@@ -23793,6 +23793,13 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   color: rgba(255,255,255,0.7);
   margin: 0;
 }
+.prophets-lux-hero__note {
+  font-size: 0.76rem;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.55);
+  max-width: 520px;
+  margin: 0.5rem 0 0;
+}
 
 /* ── Tabs ── */
 .prophets-lux-tabs {

@@ -8,6 +8,7 @@ import { prophetArticleJsonLd, breadcrumbJsonLd, defaultSiteJsonLd } from "@/lib
 import { supabase } from "@/lib/supabase";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { truncateAtWord } from "@/lib/utils";
+import { ScholarlyTrustBadge } from "@/components/ScholarlyTrustBadge";
 
 type Citation = { surah: string; ayahs: string; note: string };
 
@@ -392,6 +393,11 @@ function ProphetDetailView({
           <p className="prophet-section-lux__text">{p.briefBio}</p>
         </section>
 
+        <ScholarlyTrustBadge
+          compact
+          data={{ contentType: "نقل", source: "القرآن الكريم وكتب التفسير والسيرة", methodologyPath: "/methodology", reportContentType: "prophet", reportContentId: p.slug }}
+        />
+
         {sup?.miracle && (
           <section className="prophet-section-lux">
             <div className="prophet-section-lux__header">
@@ -451,7 +457,7 @@ function ProphetDetailView({
           <section className="prophet-section-lux">
             <div className="prophet-section-lux__header">
               <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
-              <h2 className="prophet-section-lux__title">القصة الكاملة</h2>
+              <h2 className="prophet-section-lux__title">القصة بالتفصيل</h2>
             </div>
             <div className="prophet-db-story">
               {dbStory.content.split("\n").filter(Boolean).map((para, i) => (
@@ -816,8 +822,11 @@ export default function ProphetStoriesPage() {
             <span>·</span>
             <span>٥ أولو العزم</span>
             <span>·</span>
-            <span>١٢٤٫٠٠٠ نبي (حديث)</span>
+            <span>١٢٤٫٠٠٠ نبي (حديث لا يصح سنده)</span>
           </div>
+          <p className="prophets-lux-hero__note">
+            هؤلاء الأنبياء والرسل الذين ذكرهم الله بأسمائهم في القرآن الكريم؛ وقد أخبر سبحانه أنه أرسل رسلاً آخرين لم يقصصهم علينا: ﴿وَرُسُلًا قَدْ قَصَصْنَاهُمْ عَلَيْكَ مِن قَبْلُ وَرُسُلًا لَّمْ نَقْصُصْهُمْ عَلَيْكَ﴾ [النساء: 164].
+          </p>
           <GeometricBorder color={IVORY} size={24} />
         </div>
       </div>
