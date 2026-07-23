@@ -625,7 +625,7 @@ img:not(.navbar-logo) {
   border-radius: var(--ds-radius-xl);
   background: rgba(31,77,58,0.08);
   color: #173D35;
-  padding: 1rem;
+  padding: var(--ds-space-4);
   display: grid;
   gap: 0.35rem;
 }
@@ -717,9 +717,9 @@ input, textarea, select { font-family: inherit; }
 .settings-account-card {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   align-items: center;
-  padding: 1rem;
+  padding: var(--ds-space-4);
   border: 1px solid var(--msk-border, #E7E2D8);
   border-radius: var(--ds-radius-xl);
   background: transparent;
@@ -747,7 +747,7 @@ input, textarea, select { font-family: inherit; }
 .settings-option-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-top: 1rem;
 }
 
@@ -764,7 +764,7 @@ input, textarea, select { font-family: inherit; }
   padding: 0.85rem;
   text-align: right;
   display: grid;
-  gap: 0.25rem;
+  gap: var(--ds-space-1);
 }
 
 .settings-choice span {
@@ -1058,7 +1058,7 @@ input, textarea, select { font-family: inherit; }
 .home-hero-meta {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   color: rgba(250, 245, 234, 0.78);
   font-size: 0.78rem;
   font-weight: 600;
@@ -1092,7 +1092,7 @@ input, textarea, select { font-family: inherit; }
 .home-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  gap: var(--ds-space-4);
   margin-top: -2.1rem;
   position: relative;
   z-index: 2;
@@ -1198,7 +1198,7 @@ input, textarea, select { font-family: inherit; }
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   margin-bottom: 1.5rem;
 }
 
@@ -1238,7 +1238,7 @@ input, textarea, select { font-family: inherit; }
 .home-qa-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .home-sheikhs-grid {
@@ -1250,7 +1250,7 @@ input, textarea, select { font-family: inherit; }
   overflow: hidden;
   min-height: 270px;
   border-radius: 1.55rem;
-  padding: 1.25rem;
+  padding: var(--ds-space-5);
   display: flex;
   flex-direction: column;
   transition: transform 0.16s ease, box-shadow 0.16s ease;
@@ -1321,7 +1321,7 @@ input, textarea, select { font-family: inherit; }
 
 .home-sheikh-card {
   border-radius: 1.6rem;
-  padding: 1.25rem;
+  padding: var(--ds-space-5);
   text-align: center;
   transition: transform 0.16s ease, box-shadow 0.16s ease;
 }
@@ -1392,7 +1392,7 @@ input, textarea, select { font-family: inherit; }
 .home-library-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .home-library-card {
@@ -1400,7 +1400,7 @@ input, textarea, select { font-family: inherit; }
   border-radius: 1.5rem;
   padding: 1.15rem;
   display: flex;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   transition: transform 0.16s ease, box-shadow 0.16s ease;
 }
 
@@ -1488,7 +1488,7 @@ input, textarea, select { font-family: inherit; }
 .home-trust-strip {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  gap: var(--ds-space-4);
   padding-top: 2rem;
   border-top: 1px solid rgba(31, 77, 58, 0.28);
 }
@@ -1538,7 +1538,7 @@ input, textarea, select { font-family: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: var(--ds-space-6);
   flex-wrap: wrap;
   margin-top: 2rem;
   padding: clamp(1.25rem, 4vw, 2rem);
@@ -1614,7 +1614,7 @@ input, textarea, select { font-family: inherit; }
 
   .home-search {
     grid-template-columns: 1fr;
-    gap: 0.5rem;
+    gap: var(--ds-space-2);
     border-radius: 1.1rem;
   }
 
@@ -1706,7 +1706,7 @@ input, textarea, select { font-family: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   flex-wrap: wrap;
   margin-bottom: 0.65rem;
 }
@@ -1777,10 +1777,10 @@ input, textarea, select { font-family: inherit; }
 }
 
 .assistant-page-minimal .assistant-messages {
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   min-height: 0;
   max-height: 18rem;
-  padding: 0.75rem;
+  padding: var(--ds-space-3);
 }
 
 .assistant-page-minimal .assistant-message {
@@ -1829,8 +1829,8 @@ input, textarea, select { font-family: inherit; }
 }
 
 .assistant-page-minimal .assistant-form {
-  gap: 0.5rem;
-  padding: 0.75rem;
+  gap: var(--ds-space-2);
+  padding: var(--ds-space-3);
 }
 
 .assistant-page-minimal .assistant-form textarea {
@@ -1946,7 +1946,7 @@ input, textarea, select { font-family: inherit; }
 .assistant-quick-prompts {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   padding: 0.85rem 1rem;
   border-bottom: 1px solid var(--majalis-line);
   background: transparent;
@@ -1972,7 +1972,7 @@ input, textarea, select { font-family: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin: 0 1rem;
 }
 
@@ -1998,7 +1998,7 @@ input, textarea, select { font-family: inherit; }
 
 .assistant-guidelines {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   align-items: center;
   padding: 0.9rem 1rem;
   border-bottom: 1px solid var(--majalis-line);
@@ -2015,11 +2015,11 @@ input, textarea, select { font-family: inherit; }
 .assistant-messages {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   min-height: 14rem;
   max-height: min(28rem, 52vh);
   overflow-y: auto;
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 
 .assistant-message {
@@ -2131,8 +2131,8 @@ input, textarea, select { font-family: inherit; }
 .assistant-form {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 0.75rem;
-  padding: 1rem;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-4);
   border-top: 1px solid var(--majalis-line);
   background: transparent;
 }
@@ -2250,7 +2250,7 @@ input, textarea, select { font-family: inherit; }
 .condolence-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(340px, 0.9fr);
-  gap: 1.25rem;
+  gap: var(--ds-space-5);
   align-items: start;
   margin-top: 1.25rem;
 }
@@ -2314,7 +2314,7 @@ input, textarea, select { font-family: inherit; }
 .condolence-two {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .condolence-template-grid {
@@ -2389,7 +2389,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .condolence-preview-wrap {
-  padding: 1rem;
+  padding: var(--ds-space-4);
   position: sticky;
   top: 5.5rem;
 }
@@ -2507,7 +2507,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .condolence-archive {
-  padding: 1rem;
+  padding: var(--ds-space-4);
   margin-top: 1rem;
 }
 
@@ -2521,7 +2521,7 @@ input, textarea, select { font-family: inherit; }
   border: 1px solid var(--msk-border, #E7E2D8);
   border-radius: 0.8rem;
   background: var(--majalis-parchment);
-  padding: 0.75rem;
+  padding: var(--ds-space-3);
   margin-top: 0.5rem;
   text-align: right;
 }
@@ -2571,7 +2571,7 @@ input, textarea, select { font-family: inherit; }
 
 .page-stats-row {
   display: flex;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   flex-wrap: wrap;
   margin-bottom: 1rem;
   font-size: 0.8125rem;
@@ -2580,7 +2580,7 @@ input, textarea, select { font-family: inherit; }
 
 .page-search-form {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin-bottom: 1rem;
 }
 
@@ -2618,7 +2618,7 @@ input, textarea, select { font-family: inherit; }
 
 .page-chip-row {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
   margin-bottom: 0.75rem;
 }
@@ -2630,7 +2630,7 @@ input, textarea, select { font-family: inherit; }
 
 .page-toolbar {
   display: flex;
-  gap: 0.625rem;
+  gap: var(--ds-space-2-5);
   flex-wrap: wrap;
   align-items: center;
   margin-bottom: 1.5rem;
@@ -2658,7 +2658,7 @@ input, textarea, select { font-family: inherit; }
 .page-card-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.875rem;
+  gap: var(--ds-space-3-5);
 }
 
 .page-card {
@@ -2708,7 +2708,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .library-grid {
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .library-parts {
@@ -2740,7 +2740,7 @@ input, textarea, select { font-family: inherit; }
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 0.5rem;
 }
 
@@ -2777,7 +2777,7 @@ input, textarea, select { font-family: inherit; }
 .page-card-footer {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
 }
 
@@ -2805,7 +2805,7 @@ input, textarea, select { font-family: inherit; }
 .sheikh-card-top {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 0.875rem;
 }
 
@@ -2851,7 +2851,7 @@ input, textarea, select { font-family: inherit; }
 /* ── شريط أدوات الجوال السريع ── */
 .mobile-quick-nav {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   overflow-x: auto;
   padding: 0.5rem 1rem 0.65rem;
   border-top: 1px solid var(--majalis-line);
@@ -2947,7 +2947,7 @@ input, textarea, select { font-family: inherit; }
 
 .qa-disclaimer {
   display: flex;
-  gap: 0.625rem;
+  gap: var(--ds-space-2-5);
   align-items: flex-start;
   padding: 0.875rem 1rem;
   border-radius: var(--ds-radius);
@@ -2970,7 +2970,7 @@ input, textarea, select { font-family: inherit; }
 
 .qa-chip-row {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
   margin-bottom: 1.75rem;
 }
@@ -2996,7 +2996,7 @@ input, textarea, select { font-family: inherit; }
 
 .qa-list {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .qa-item {
@@ -3010,7 +3010,7 @@ input, textarea, select { font-family: inherit; }
   width: 100%;
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   padding: 1rem 1.25rem;
   background: transparent;
   border: none;
@@ -3049,7 +3049,7 @@ input, textarea, select { font-family: inherit; }
 
 .qa-item__meta {
   display: flex;
-  gap: 0.375rem;
+  gap: var(--ds-space-1-5);
   flex-wrap: wrap;
   margin-top: 0.5rem;
   align-items: center;
@@ -3112,7 +3112,7 @@ input, textarea, select { font-family: inherit; }
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin-top: 0.875rem;
   font-size: var(--ds-text-xs);
   color: var(--msk-text-2, #68716D);
@@ -3145,7 +3145,7 @@ input, textarea, select { font-family: inherit; }
 
 .qa-skeleton-list {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .qa-skeleton-item {
@@ -3159,7 +3159,7 @@ input, textarea, select { font-family: inherit; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .qa-skeleton-line {
@@ -3193,7 +3193,7 @@ input, textarea, select { font-family: inherit; }
 .search-result-row {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   padding: 0.875rem 1.125rem;
   border-radius: var(--ds-radius);
   border: 1px solid var(--msk-border, #E7E2D8);
@@ -3205,7 +3205,7 @@ input, textarea, select { font-family: inherit; }
   flex: 1;
   justify-content: space-between;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   min-width: 0;
 }
 
@@ -3704,7 +3704,7 @@ input, textarea, select { font-family: inherit; }
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.25rem;
+  gap: var(--ds-space-1);
   width: 100%;
   padding: 0.85rem 1rem;
   border-radius: var(--ds-radius-lg);
@@ -3745,7 +3745,7 @@ input, textarea, select { font-family: inherit; }
 .cond-gender-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .cond-gender-option {
@@ -3790,7 +3790,7 @@ input, textarea, select { font-family: inherit; }
 
 .condolences-panel {
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .condolences-block {
@@ -3811,13 +3811,13 @@ input, textarea, select { font-family: inherit; }
 .cond-template-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .cond-template-btn {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   padding: 0.625rem 0.75rem;
   border-radius: var(--ds-radius);
   border: 1px solid #333;
@@ -3846,7 +3846,7 @@ input, textarea, select { font-family: inherit; }
 .cond-size-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .cond-size-btn {
@@ -3871,7 +3871,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-form {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .cond-field {
@@ -3907,7 +3907,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-actions {
   display: grid;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .cond-btn {
@@ -4043,7 +4043,7 @@ input, textarea, select { font-family: inherit; }
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .la-section-bar__eyebrow {
@@ -4102,7 +4102,7 @@ input, textarea, select { font-family: inherit; }
   padding-inline: clamp(1rem, 4vw, 2rem);
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .la-home-cta {
@@ -4131,7 +4131,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .la-card--compact .la-poster {
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 
 .la-card--compact .la-poster__title {
@@ -4219,7 +4219,7 @@ input, textarea, select { font-family: inherit; }
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin-bottom: 0.75rem;
 }
 
@@ -4236,7 +4236,7 @@ input, textarea, select { font-family: inherit; }
 .home-lesson-card-top {
   display: flex;
   align-items: flex-start;
-  gap: 0.875rem;
+  gap: var(--ds-space-3-5);
   margin-bottom: 0.75rem;
 }
 
@@ -4250,7 +4250,7 @@ input, textarea, select { font-family: inherit; }
 .lesson-card-header {
   display: flex;
   align-items: flex-start;
-  gap: 0.875rem;
+  gap: var(--ds-space-3-5);
   margin-bottom: 0.875rem;
 }
 
@@ -4275,7 +4275,7 @@ input, textarea, select { font-family: inherit; }
 .lesson-card-meta-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin-bottom: 0.75rem;
 }
 
@@ -4415,7 +4415,7 @@ input, textarea, select { font-family: inherit; }
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   margin-bottom: 1.1rem;
 }
 
@@ -4534,7 +4534,7 @@ input, textarea, select { font-family: inherit; }
 .la-poster__weekly {
   position: relative;
   z-index: 2;
-  padding: 0.75rem;
+  padding: var(--ds-space-3);
   border-radius: 0.65rem;
   background: rgba(255, 255, 255, 0.75);
   border: 1px dashed rgba(31, 77, 58, 0.45);
@@ -4596,7 +4596,7 @@ input, textarea, select { font-family: inherit; }
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .la-poster__qr {
@@ -4759,9 +4759,9 @@ input, textarea, select { font-family: inherit; }
 .cl-filters {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 1.75rem;
-  padding: 1rem;
+  padding: var(--ds-space-4);
   border-radius: 0.85rem;
   background: #fff;
   border: 1px solid var(--msk-border, #E7E2D8);
@@ -4834,7 +4834,7 @@ input, textarea, select { font-family: inherit; }
 .la-courses-stack {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: var(--ds-space-8);
 }
 
 .la-course-panel {
@@ -4849,8 +4849,8 @@ input, textarea, select { font-family: inherit; }
 .la-course-header {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.25rem;
-  padding: 1.5rem;
+  gap: var(--ds-space-5);
+  padding: var(--ds-space-6);
   align-items: flex-start;
   background: linear-gradient(135deg, rgba(22, 78, 60, 0.08), rgba(31, 77, 58, 0.08));
   border-bottom: 1px solid var(--majalis-line);
@@ -4945,9 +4945,9 @@ input, textarea, select { font-family: inherit; }
 
 .la-lecture-item {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   align-items: flex-start;
-  padding: 0.75rem;
+  padding: var(--ds-space-3);
   border-radius: 0.65rem;
   background: var(--majalis-parchment);
   border: 1px solid var(--msk-border, #E7E2D8);
@@ -5015,7 +5015,7 @@ input, textarea, select { font-family: inherit; }
 .la-course-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin-top: 1.5rem;
   padding-top: 1.25rem;
   border-top: 1px solid var(--majalis-line);
@@ -5062,7 +5062,7 @@ input, textarea, select { font-family: inherit; }
   margin: 0 auto;
   padding-inline: clamp(1rem, 4vw, 2rem);
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .lad-home-grid {
@@ -5071,7 +5071,7 @@ input, textarea, select { font-family: inherit; }
 
 .lad-page-grid {
   grid-template-columns: 1fr;
-  gap: 1.25rem;
+  gap: var(--ds-space-5);
 }
 
 .lad-card {
@@ -5089,8 +5089,8 @@ input, textarea, select { font-family: inherit; }
 .lad-card__grid {
   display: grid;
   grid-template-columns: minmax(120px, 150px) minmax(0, 1fr);
-  gap: 1rem;
-  padding: 1rem;
+  gap: var(--ds-space-4);
+  padding: var(--ds-space-4);
 }
 
 .lad-teacher-photo {
@@ -5187,7 +5187,7 @@ input, textarea, select { font-family: inherit; }
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.55rem;
   margin-top: 0.85rem;
-  padding: 0.75rem;
+  padding: var(--ds-space-3);
   border-radius: 0.85rem;
   border: 1px solid var(--msk-border, #E7E2D8);
   background: var(--majalis-parchment-deep);
@@ -5269,7 +5269,7 @@ input, textarea, select { font-family: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 
 .lad-modal__backdrop {
@@ -5294,8 +5294,8 @@ input, textarea, select { font-family: inherit; }
 .lad-modal__layout {
   display: grid;
   grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
-  gap: 1.25rem;
-  padding: 1.25rem;
+  gap: var(--ds-space-5);
+  padding: var(--ds-space-5);
 }
 
 .lad-modal__aside {
@@ -5308,7 +5308,7 @@ input, textarea, select { font-family: inherit; }
   border: 1px solid var(--msk-border, #E7E2D8);
   border-radius: var(--ds-radius-xl);
   background: #fff;
-  padding: 0.5rem;
+  padding: var(--ds-space-2);
 }
 
 .lad-modal__poster-img {
@@ -5322,7 +5322,7 @@ input, textarea, select { font-family: inherit; }
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .lad-modal__provider {
@@ -5540,7 +5540,7 @@ input, textarea, select { font-family: inherit; }
 .home-prayer-skel-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-top: 0.75rem;
 }
 .home-prayer-skel-cell {
@@ -5558,14 +5558,14 @@ input, textarea, select { font-family: inherit; }
 
 .prayer-status-card {
   margin-bottom: 1rem;
-  padding: 1rem;
+  padding: var(--ds-space-4);
   background: linear-gradient(180deg, #fff, #f9f4ea);
 }
 
 .prayer-status-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .prayer-status-block {
@@ -5649,7 +5649,7 @@ input, textarea, select { font-family: inherit; }
 .kuwait-filters-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 1.25rem;
 }
 
@@ -5702,7 +5702,7 @@ input, textarea, select { font-family: inherit; }
 .home-kuwait-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .home-kuwait-card {
@@ -5740,7 +5740,7 @@ input, textarea, select { font-family: inherit; }
 .home-kuwait-meta > div {
   display: flex;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   font-size: 0.85rem;
 }
 
@@ -5768,7 +5768,7 @@ input, textarea, select { font-family: inherit; }
 .home-prayer-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   padding: 1.15rem;
 }
 
@@ -5892,7 +5892,7 @@ input, textarea, select { font-family: inherit; }
 
 .cond-page-inner {
   display: grid;
-  gap: 1.5rem;
+  gap: var(--ds-space-6);
   grid-template-columns: minmax(280px, 380px) 1fr;
   align-items: start;
 }
@@ -5911,7 +5911,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .cond-form-panel {
-  padding: 1.25rem;
+  padding: var(--ds-space-5);
 }
 
 .cond-page-title,
@@ -5983,7 +5983,7 @@ input, textarea, select { font-family: inherit; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .cond-preview-title {
@@ -6002,14 +6002,14 @@ input, textarea, select { font-family: inherit; }
 .cards-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 1.5rem;
+  gap: var(--ds-space-6);
   margin-top: 1rem;
 }
 
 .cards-controls {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .cards-panel {
@@ -6070,7 +6070,7 @@ input, textarea, select { font-family: inherit; }
 .cards-size-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .cards-size-btn {
@@ -6108,7 +6108,7 @@ input, textarea, select { font-family: inherit; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 3rem;
+  padding: var(--ds-space-12);
   position: relative;
   direction: rtl;
   box-sizing: border-box;
@@ -6278,7 +6278,7 @@ input, textarea, select { font-family: inherit; }
   display: grid;
   gap: 0.45rem;
   min-height: 100%;
-  padding: 1rem;
+  padding: var(--ds-space-4);
   border: 1px solid var(--msk-border, #E7E2D8);
   border-radius: var(--ds-radius-xl);
   background: transparent;
@@ -6315,7 +6315,7 @@ input, textarea, select { font-family: inherit; }
   min-height: 48px;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   border: 1px solid var(--msk-border, #E7E2D8);
   border-radius: 0.85rem;
   background: transparent;
@@ -6342,13 +6342,13 @@ input, textarea, select { font-family: inherit; }
 .fiqh-mobile-category-deck {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin: 1rem 0 1.25rem;
 }
 
 .fiqh-mobile-category-card {
   display: grid;
-  gap: 0.25rem;
+  gap: var(--ds-space-1);
   border: 1px solid var(--msk-border, #E7E2D8);
   border-radius: var(--ds-radius-xl);
   padding: 0.9rem;
@@ -6371,7 +6371,7 @@ input, textarea, select { font-family: inherit; }
 .prayer-stat-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 1rem;
 }
 
@@ -6394,7 +6394,7 @@ input, textarea, select { font-family: inherit; }
 .tasbih-layout {
   display: grid;
   grid-template-columns: minmax(13rem, 0.8fr) minmax(0, 1.4fr);
-  gap: 1rem;
+  gap: var(--ds-space-4);
   align-items: start;
 }
 
@@ -6402,7 +6402,7 @@ input, textarea, select { font-family: inherit; }
 .tasbih-pro-card,
 .tasbih-add-card,
 .tasbih-achievements {
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 
 .tasbih-wird-list {
@@ -6427,7 +6427,7 @@ input, textarea, select { font-family: inherit; }
   border-radius: 0.85rem;
   background: transparent;
   color: var(--majalis-ink);
-  padding: 0.75rem;
+  padding: var(--ds-space-3);
   text-align: right;
   display: grid;
   gap: 0.2rem;
@@ -6512,13 +6512,13 @@ input, textarea, select { font-family: inherit; }
 /* ── Prayer tracking ─────────────────────────────────────────────────────── */
 .prayer-tracker-card {
   margin-top: 1rem;
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 
 .prayer-tracker-head {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   align-items: center;
   margin-bottom: 1rem;
 }
@@ -6531,7 +6531,7 @@ input, textarea, select { font-family: inherit; }
 .prayer-tracker-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .prayer-track-cell {
@@ -6540,7 +6540,7 @@ input, textarea, select { font-family: inherit; }
   padding: 0.85rem;
   background: transparent;
   display: grid;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .prayer-track-cell.is-done {
@@ -6587,7 +6587,7 @@ input, textarea, select { font-family: inherit; }
 /* ── Prayer page tabs ────────────────────────────────────────────────────── */
 .prayer-page-tabs {
   display: flex;
-  gap: 0.375rem;
+  gap: var(--ds-space-1-5);
   margin-bottom: 1.25rem;
   border-bottom: 1px solid var(--ds-line-color, #e4ddd0);
   padding-bottom: 0;
@@ -6621,20 +6621,20 @@ input, textarea, select { font-family: inherit; }
 /* ── Prayer ranks page ───────────────────────────────────────────────────── */
 .prayer-ranks-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
   margin-bottom: 1rem;
 }
 
 .prayer-ranks-source,
 .prayer-ranks-notes {
-  padding: 1rem;
+  padding: var(--ds-space-4);
   margin-bottom: 1rem;
 }
 
 .prayer-ranks-timeline {
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   position: relative;
 }
 
@@ -6642,8 +6642,8 @@ input, textarea, select { font-family: inherit; }
   position: relative;
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 1rem;
-  padding: 1rem;
+  gap: var(--ds-space-4);
+  padding: var(--ds-space-4);
 }
 
 .prayer-rank-card__num {
@@ -6684,7 +6684,7 @@ input, textarea, select { font-family: inherit; }
   font-size: var(--ds-text-xs);
   color: var(--msk-text-2, #68716D);
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
 }
 
@@ -6715,7 +6715,7 @@ input, textarea, select { font-family: inherit; }
 
 .content-submit-panel {
   margin-top: 2rem;
-  padding: 1.25rem;
+  padding: var(--ds-space-5);
 }
 
 .content-submit-panel h2 {
@@ -6729,7 +6729,7 @@ input, textarea, select { font-family: inherit; }
   width: 100%;
   border: 1px solid var(--msk-border, #E7E2D8);
   border-radius: 0.65rem;
-  padding: 0.75rem;
+  padding: var(--ds-space-3);
   margin-bottom: 0.65rem;
   font-family: inherit;
   background: var(--majalis-parchment);
@@ -6937,8 +6937,8 @@ input, textarea, select { font-family: inherit; }
 .mj-tabs-list {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem;
+  gap: var(--ds-space-1);
+  padding: var(--ds-space-1);
   background: var(--majalis-parchment-deep);
   border-radius: 0.625rem;
   border: 1px solid var(--mn-border-default);
@@ -7029,7 +7029,7 @@ input, textarea, select { font-family: inherit; }
   position: relative;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   padding: 0.55rem 0.75rem;
   border-radius: 0.45rem;
   font-size: var(--ds-text-sm);
@@ -7155,7 +7155,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .home-two-column {
-  gap: 1.25rem;
+  gap: var(--ds-space-5);
 }
 
 .home-primary-action,
@@ -7201,7 +7201,7 @@ input, textarea, select { font-family: inherit; }
 
   .home-search {
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--ds-space-2);
   }
 
   .home-search button {
@@ -7257,7 +7257,7 @@ input, textarea, select { font-family: inherit; }
   margin: 0 0 0.875rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .search-results-count {
@@ -7271,13 +7271,13 @@ input, textarea, select { font-family: inherit; }
 
 .search-results-list {
   display: grid;
-  gap: 0.625rem;
+  gap: var(--ds-space-2-5);
 }
 
 .lesson-card-pro {
   display: flex;
   flex-direction: column;
-  gap: 0.875rem;
+  gap: var(--ds-space-3-5);
   padding: 1.15rem;
   height: 100%;
 }
@@ -7285,7 +7285,7 @@ input, textarea, select { font-family: inherit; }
 .lesson-card-pro__header {
   display: flex;
   align-items: flex-start;
-  gap: 0.875rem;
+  gap: var(--ds-space-3-5);
 }
 
 .lesson-card-pro__head-copy {
@@ -7344,7 +7344,7 @@ input, textarea, select { font-family: inherit; }
   margin-top: auto;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .lesson-card-pro__tags {
@@ -7356,7 +7356,7 @@ input, textarea, select { font-family: inherit; }
 .lesson-card-pro__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   align-items: center;
 }
 
@@ -7411,7 +7411,7 @@ input, textarea, select { font-family: inherit; }
 
 .lesson-detail-hero {
   display: flex;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   align-items: flex-start;
   margin-bottom: 1rem;
 }
@@ -7458,7 +7458,7 @@ input, textarea, select { font-family: inherit; }
 .lesson-detail-actions {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-top: 1rem;
 }
 
@@ -7466,7 +7466,7 @@ input, textarea, select { font-family: inherit; }
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin-bottom: 1rem;
   padding-bottom: 0.25rem;
   -webkit-overflow-scrolling: touch;
@@ -7579,7 +7579,7 @@ input, textarea, select { font-family: inherit; }
 .sheikh-detail-social-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .sheikh-social-link {
@@ -7603,7 +7603,7 @@ input, textarea, select { font-family: inherit; }
 .sheikh-courses-grid,
 .sheikh-series-grid {
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
 }
 
@@ -7612,7 +7612,7 @@ input, textarea, select { font-family: inherit; }
   padding: 1.1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .sheikh-course-desc {
@@ -7762,7 +7762,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .hadith-grid,
 .stories-grid {
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .adhkar-card,
@@ -7771,14 +7771,14 @@ html[data-theme="dark"] .search-suggestions-panel {
   padding: 1.1rem 1.15rem;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .adhkar-card__head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .adhkar-card__count {
@@ -7829,7 +7829,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .tasbeeh-counter {
-  padding: 0.75rem;
+  padding: var(--ds-space-3);
   border-radius: 0.85rem;
   background: var(--majalis-parchment);
   border: 1px solid var(--msk-border, #E7E2D8);
@@ -7860,7 +7860,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 
 .tasbeeh-counter__actions {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .tasbeeh-counter__btn {
@@ -7889,7 +7889,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .reading-toolbar {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   justify-content: space-between;
   align-items: center;
   padding-top: 0.35rem;
@@ -7952,7 +7952,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .faidah-card__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -7965,7 +7965,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .hadith-stats-row {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   flex-wrap: wrap;
 }
 .hadith-stat {
@@ -7990,7 +7990,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 /* Quick category strip */
 .hadith-quick-cats {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   overflow-x: auto;
   padding-bottom: 0.25rem;
   scrollbar-width: none;
@@ -8024,7 +8024,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .hadith-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 @media (max-width: 680px) {
   .hadith-grid { grid-template-columns: 1fr; }
@@ -8032,7 +8032,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 
 /* Card */
 .hadith-card {
-  padding: 1.25rem;
+  padding: var(--ds-space-5);
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
@@ -8049,7 +8049,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
 }
 .hadith-card__badges {
@@ -8195,7 +8195,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 /* Card actions */
 .hadith-card__actions {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin-top: auto;
   padding-top: 0.5rem;
   border-top: 1px solid var(--majalis-border, #e2e8f0);
@@ -8230,7 +8230,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: var(--ds-space-4);
   backdrop-filter: blur(2px);
 }
 .hadith-modal {
@@ -8240,17 +8240,17 @@ html[data-theme="dark"] .search-suggestions-panel {
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  padding: 2rem;
+  padding: var(--ds-space-8);
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: var(--ds-space-5);
   box-shadow: 0 20px 60px rgba(0,0,0,0.25);
   position: relative;
 }
 @media (max-width: 680px) {
   .hadith-modal {
     max-height: 95vh;
-    padding: 1.25rem;
+    padding: var(--ds-space-5);
     border-radius: 16px 16px 0 0;
     position: fixed;
     bottom: 0;
@@ -8264,7 +8264,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 .hadith-modal__badges {
   display: flex;
@@ -8315,7 +8315,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .hadith-modal__meta-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 @media (max-width: 480px) { .hadith-modal__meta-grid { grid-template-columns: 1fr; } }
 .hadith-modal__meta-item {
@@ -8367,7 +8367,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 .hadith-modal__actions {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   flex-wrap: wrap;
 }
 .hadith-modal-btn {
@@ -8392,7 +8392,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 /* ─── Filters panel ──────────────────────────────────── */
-.hadith-filters-panel { display: flex; flex-direction: column; gap: 1rem; }
+.hadith-filters-panel { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .hadith-filter-section { display: flex; flex-direction: column; gap: 0.4rem; }
 .hadith-filter-label {
   font-size: 0.78rem;
@@ -8415,13 +8415,13 @@ html[data-theme="dark"] .search-suggestions-panel {
 .hadith-embedded-section {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .hadith-section-header {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--ds-space-1);
   padding-bottom: 0.5rem;
 }
 
@@ -8455,8 +8455,8 @@ html[data-theme="dark"] .search-suggestions-panel {
 .story-card {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 1.25rem;
+  gap: var(--ds-space-2);
+  padding: var(--ds-space-5);
 }
 
 .story-card__title {
@@ -8485,7 +8485,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .story-card__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   font-size: 0.8rem;
   color: var(--msk-text-2, #68716D);
   margin-top: auto;
@@ -8541,7 +8541,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 
 .qa-random-highlight {
   margin-bottom: 1.25rem;
-  padding: 1rem;
+  padding: var(--ds-space-4);
   border-radius: var(--ds-radius-xl);
   background: rgba(207, 224, 211, 0.25);
   border: 1px solid rgba(31, 110, 84, 0.15);
@@ -8573,7 +8573,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 
 .home-daily-grid {
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
 }
 
@@ -8622,15 +8622,15 @@ html[data-theme="dark"] .search-suggestions-panel {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem;
+  gap: var(--ds-space-4);
+  padding: var(--ds-space-4);
   margin-bottom: 1rem;
 }
 
 .cal-nav {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .cal-nav-btn {
@@ -8686,7 +8686,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .cal-month {
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 
 .cal-weekdays {
@@ -8715,7 +8715,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.25rem;
+  gap: var(--ds-space-1);
   cursor: pointer;
   font-family: inherit;
 }
@@ -8739,8 +8739,8 @@ html[data-theme="dark"] .search-suggestions-panel {
 .cal-week {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 0.5rem;
-  padding: 1rem;
+  gap: var(--ds-space-2);
+  padding: var(--ds-space-4);
   overflow-x: auto;
 }
 
@@ -8753,7 +8753,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   border: none;
   background: var(--majalis-parchment-deep);
   border-radius: var(--ds-radius);
-  padding: 0.5rem;
+  padding: var(--ds-space-2);
   font-weight: 700;
   font-size: 0.78rem;
   cursor: pointer;
@@ -8773,7 +8773,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   border: 1px solid var(--msk-border, #E7E2D8);
   background: transparent;
   border-radius: var(--ds-radius);
-  padding: 0.5rem;
+  padding: var(--ds-space-2);
   margin-bottom: 0.35rem;
   cursor: pointer;
   font-family: inherit;
@@ -8781,12 +8781,12 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .cal-day {
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 
 .cal-day-list {
   display: grid;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .cal-day-item strong {
@@ -8808,13 +8808,13 @@ html[data-theme="dark"] .search-suggestions-panel {
   align-items: center;
   justify-content: center;
   z-index: 100;
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 
 .cal-modal {
   max-width: 28rem;
   width: 100%;
-  padding: 1.25rem;
+  padding: var(--ds-space-5);
 }
 
 .cal-modal-meta {
@@ -8836,7 +8836,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 
 .cal-modal-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
 }
 
@@ -8862,13 +8862,13 @@ html[data-theme="dark"] .search-suggestions-panel {
   max-width: 56rem;
   margin: 0 auto;
   display: grid;
-  gap: 1.25rem;
+  gap: var(--ds-space-5);
 }
 
 .site-footer-brand {
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .site-footer-logo {
@@ -8994,14 +8994,14 @@ html[data-theme="dark"] .search-suggestions-panel {
 
 .home-section-head-links {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   flex-wrap: wrap;
 }
 
 .home-quick-links-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .home-quick-link {
@@ -9056,7 +9056,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   margin-bottom: 1.25rem;
 }
 
@@ -9071,7 +9071,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .sci-ann-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .sci-ann-card {
@@ -9087,7 +9087,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   padding: 0.75rem 1rem;
   background: var(--majalis-emerald-deep);
   color: var(--majalis-parchment);
@@ -9110,7 +9110,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .sci-ann-card__body {
-  padding: 1rem;
+  padding: var(--ds-space-4);
   display: grid;
   gap: 0.65rem;
 }
@@ -9183,7 +9183,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .sci-ann-detail__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .sci-ann-btn {
@@ -9286,7 +9286,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   display: grid;
   gap: 0.55rem;
   margin: 0 1.25rem 1rem;
-  padding: 1rem;
+  padding: var(--ds-space-4);
   border-radius: 0.65rem;
   background: rgba(255, 255, 255, 0.7);
   border: 1px solid rgba(26, 60, 46, 0.08);
@@ -9373,7 +9373,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .lesson-unified-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .lesson-unified-card {
@@ -9411,7 +9411,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   padding: 0.55rem 1rem;
   background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent);
   border-bottom: 1px solid rgba(31,77,58,0.10);
@@ -9445,7 +9445,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .lesson-unified-card__body {
-  padding: 1rem;
+  padding: var(--ds-space-4);
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
@@ -9649,7 +9649,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .lesson-detail-actions--row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .lesson-detail-qr img {
@@ -9661,7 +9661,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 
 .lessons-empty-state {
   margin: 2rem 0;
-  padding: 1.5rem;
+  padding: var(--ds-space-6);
   text-align: center;
   color: var(--msk-text-2, #68716D);
   font-size: 0.95rem;
@@ -9741,7 +9741,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   margin-top: 1rem;
   grid-template-columns: 1fr auto;
   padding: 0.35rem;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .home-search--v3 button {
@@ -9812,7 +9812,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .home-banner {
-  padding: 1.25rem;
+  padding: var(--ds-space-5);
   margin-bottom: 1.25rem;
   background: linear-gradient(135deg, #fff 0%, #f3ede0 100%);
   border: 1px solid var(--msk-border, #E7E2D8);
@@ -9820,7 +9820,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .home-banner__title { margin: 0.35rem 0; color: var(--majalis-emerald-deep); font-size: 1.35rem; }
 .home-banner__lead { margin: 0; color: var(--majalis-ink-soft); line-height: 1.7; }
 .home-banner__prayer { margin: 0.75rem 0 0; font-weight: 700; color: var(--majalis-brass-deep); }
-.home-banner__actions { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
+.home-banner__actions { display: flex; gap: var(--ds-space-2); margin-top: 1rem; flex-wrap: wrap; }
 .home-banner__btn {
   min-height: 42px; padding: 0.55rem 1rem; border-radius: var(--ds-radius); font-weight: 700;
   text-decoration: none; font-size: 0.88rem;
@@ -9860,14 +9860,14 @@ html[data-theme="dark"] .search-suggestions-panel {
 .home-progress-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 .home-progress-card {
   padding: 0.85rem;
   text-decoration: none;
   color: inherit;
 }
-.home-progress-card__head { display: flex; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.5rem; }
+.home-progress-card__head { display: flex; justify-content: space-between; gap: var(--ds-space-2); margin-bottom: 0.5rem; }
 .home-progress-card__bar {
   height: 6px; border-radius: 999px; background: var(--majalis-parchment-deep); overflow: hidden;
 }
@@ -9877,7 +9877,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .home-progress-card__meta { margin: 0.45rem 0 0; font-size: 0.82rem; color: var(--majalis-ink-soft); }
 
 .home-more-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr)); gap: 0.75rem;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr)); gap: var(--ds-space-3);
 }
 .home-more-card {
   padding: 1rem 1.1rem;
@@ -9901,10 +9901,10 @@ html[data-theme="dark"] .search-suggestions-panel {
 .home-more-card span { font-size: 0.78rem; color: var(--msk-text-2); }
 
 .home-occasions-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: 0.75rem;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: var(--ds-space-3);
 }
 .home-occasion-card {
-  padding: 1rem; text-decoration: none; color: inherit; display: grid; gap: 0.45rem;
+  padding: var(--ds-space-4); text-decoration: none; color: inherit; display: grid; gap: 0.45rem;
 }
 .home-occasion-card strong { color: var(--majalis-emerald-deep); }
 .home-occasion-card p { margin: 0; font-size: 0.88rem; color: var(--majalis-ink-soft); line-height: 1.65; }
@@ -9914,7 +9914,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr));
 }
 .home-sheikh-card {
-  padding: 1rem; text-align: center; text-decoration: none; color: inherit; display: grid; gap: 0.5rem; justify-items: center;
+  padding: var(--ds-space-4); text-align: center; text-decoration: none; color: inherit; display: grid; gap: var(--ds-space-2); justify-items: center;
 }
 .home-sheikh-card h3 { margin: 0; font-size: 0.95rem; color: var(--majalis-emerald-deep); }
 .home-sheikh-card p { margin: 0; font-size: 0.82rem; color: var(--majalis-ink-soft); }
@@ -9926,7 +9926,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .navbar-v3 {
@@ -9966,7 +9966,7 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
 .navbar-v3__end {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .navbar-v3__tabs { display: flex; gap: 0.2rem; flex-wrap: wrap; justify-content: center; flex: 1; }
@@ -10251,7 +10251,7 @@ body.mobile-nav-body-lock {
 .login-card {
   width: 100%;
   max-width: 24rem;
-  padding: 2rem;
+  padding: var(--ds-space-8);
   border-radius: var(--ds-radius-lg);
   border: 1px solid var(--msk-border, #E7E2D8);
   background: transparent;
@@ -10286,7 +10286,7 @@ body.mobile-nav-body-lock {
 
 .login-alert {
   margin: 0 0 1rem;
-  padding: 0.75rem;
+  padding: var(--ds-space-3);
   border-radius: var(--ds-radius);
   font-size: var(--ds-text-sm);
   line-height: 1.6;
@@ -10356,7 +10356,7 @@ body.mobile-nav-body-lock {
 .login-actions {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin-top: 1.25rem;
   text-align: center;
 }
@@ -10706,13 +10706,13 @@ body.side-nav-open { overflow: hidden; }
 .site-footer--v3 { margin-top: 2rem; }
 .site-footer-inner--v3 { max-width: 72rem; }
 .site-footer-groups {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 1rem; margin-top: 1rem;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: var(--ds-space-4); margin-top: 1rem;
 }
 .site-footer-group p,
 .site-footer-group__title { margin: 0 0 0.35rem; font-weight: 700; color: var(--majalis-emerald-deep); font-size: 0.88rem; }
-.site-footer-group nav { display: grid; gap: 0.25rem; }
+.site-footer-group nav { display: grid; gap: var(--ds-space-1); }
 
-.prayer-status-card { padding: 1.25rem; margin-bottom: 1rem; text-align: center; }
+.prayer-status-card { padding: var(--ds-space-5); margin-bottom: 1rem; text-align: center; }
 .prayer-status-card__label { margin: 0; font-size: 0.82rem; color: var(--majalis-ink-soft); }
 .prayer-status-card h2 { margin: 0.35rem 0; color: var(--majalis-emerald-deep); }
 .prayer-status-card__countdown { font-size: var(--ds-text-2xl); font-weight: 800; color: var(--majalis-brass-deep); margin: 0; }
@@ -10720,7 +10720,7 @@ body.side-nav-open { overflow: hidden; }
 .prayer-time-cell { padding: 0.85rem; text-align: center; }
 .prayer-time-cell.is-next { border-color: var(--majalis-emerald); background: var(--majalis-sage); }
 
-.qibla-panel { padding: 1.25rem; text-align: center; }
+.qibla-panel { padding: var(--ds-space-5); text-align: center; }
 .qibla-compass {
   width: 12rem; height: 12rem; margin: 1rem auto; border-radius: 50%;
   border: 2px solid var(--majalis-line); position: relative; background: #fff;
@@ -10731,13 +10731,13 @@ body.side-nav-open { overflow: hidden; }
 }
 .qibla-meta, .qibla-help { color: var(--majalis-ink-soft); font-size: 0.9rem; }
 
-.quran-toolbar { display: grid; gap: 0.65rem; padding: 1rem; margin-bottom: 1rem; }
+.quran-toolbar { display: grid; gap: 0.65rem; padding: var(--ds-space-4); margin-bottom: 1rem; }
 .quran-search, .quran-select { width: 100%; min-height: 42px; font-family: inherit; }
-.quran-reader { padding: 1.25rem; }
+.quran-reader { padding: var(--ds-space-5); }
 .quran-surah-header {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   align-items: flex-start;
   margin-bottom: 1rem;
 }
@@ -10760,7 +10760,7 @@ body.side-nav-open { overflow: hidden; }
   border: 1px solid var(--msk-border, #E7E2D8);
   border-radius: var(--ds-radius-xl);
   background: color-mix(in srgb, var(--majalis-panel) 78%, var(--majalis-sage));
-  padding: 1rem;
+  padding: var(--ds-space-4);
   margin-bottom: 1.25rem;
 }
 .quran-meta-grid {
@@ -10773,7 +10773,7 @@ body.side-nav-open { overflow: hidden; }
 .quran-link-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin-top: 0.75rem;
 }
 .quran-link-row a {
@@ -10789,7 +10789,7 @@ body.side-nav-open { overflow: hidden; }
   border-radius: var(--ds-radius-lg);
   background: rgba(31,77,58,0.08);
   color: #173D35;
-  padding: 1rem;
+  padding: var(--ds-space-4);
   margin-bottom: 1rem;
 }
 .quran-ayah { margin: 0 0 0.85rem; line-height: 2; }
@@ -10802,22 +10802,22 @@ body.side-nav-open { overflow: hidden; }
 .quran-page--night .quran-science-card { background: #202b25; border-color: #28584D; }
 
 .radio-grid { display: grid; gap: 0.65rem; margin-bottom: 1rem; }
-.radio-card { padding: 1rem; text-align: right; cursor: pointer; font-family: inherit; width: 100%; }
+.radio-card { padding: var(--ds-space-4); text-align: right; cursor: pointer; font-family: inherit; width: 100%; }
 .radio-card.is-active { border-color: var(--majalis-emerald); background: var(--majalis-sage); }
-.radio-player { padding: 1rem; }
+.radio-player { padding: var(--ds-space-4); }
 .radio-audio, .quran-audio { width: 100%; }
 
-.tasbih-page-card { padding: 1.25rem; text-align: center; }
+.tasbih-page-card { padding: var(--ds-space-5); text-align: center; }
 .tasbih-phrase { font-size: 1.2rem; font-weight: 700; color: var(--majalis-emerald-deep); }
 
-.wird-card { padding: 1.25rem; display: grid; gap: 0.75rem; }
+.wird-card { padding: var(--ds-space-5); display: grid; gap: var(--ds-space-3); }
 .wird-card label { display: grid; gap: 0.35rem; font-weight: 700; font-size: 0.88rem; }
 .wird-card input, .wird-card select { min-height: 42px; font-family: inherit; }
-.wird-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.wird-actions { display: flex; gap: var(--ds-space-2); flex-wrap: wrap; }
 
-.occasions-list, .nawawi-grid { display: grid; gap: 1rem; }
+.occasions-list, .nawawi-grid { display: grid; gap: var(--ds-space-4); }
 .occasion-detail, .nawawi-card { padding: 1.15rem; }
-.occasion-detail__head { display: flex; justify-content: space-between; gap: 0.5rem; align-items: baseline; }
+.occasion-detail__head { display: flex; justify-content: space-between; gap: var(--ds-space-2); align-items: baseline; }
 .nawawi-num {
   display: inline-block; padding: 0.2rem 0.55rem; border-radius: 999px;
   background: var(--majalis-sage); font-size: 0.78rem; font-weight: 800;
@@ -10831,13 +10831,13 @@ body.side-nav-open { overflow: hidden; }
 
 .home-prayer-widget {
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .home-prayer-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .home-daily-single .home-daily-card {
@@ -10962,7 +10962,7 @@ body.assistant-panel-open {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   padding: 0.85rem 1rem 0.35rem;
   border-bottom: 1px solid var(--majalis-line);
   background: linear-gradient(180deg, #fff, var(--majalis-parchment-deep));
@@ -11122,7 +11122,7 @@ body.assistant-panel-open {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin-top: auto;
   padding-top: 0.15rem;
 }
@@ -11419,7 +11419,7 @@ body.assistant-panel-open {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin-top: 1rem;
 }
 
@@ -11504,7 +11504,7 @@ body.assistant-panel-open {
 .fiqh-council-subnav {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin: 0 0 1.25rem;
 }
 
@@ -11537,7 +11537,7 @@ body.assistant-panel-open {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 0.85rem;
 }
 
@@ -11557,13 +11557,13 @@ body.assistant-panel-open {
 .fiqh-council-category-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .fiqh-council-category-card {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--ds-space-1);
   padding: 0.9rem 1rem;
   border-radius: var(--ds-radius-lg);
   border: 1px solid rgba(22, 78, 60, 0.12);
@@ -11600,14 +11600,14 @@ body.assistant-panel-open {
 .fiqh-council-filter-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-top: 0.75rem;
 }
 
 .fiqh-council-select-label {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--ds-space-1);
   font-size: var(--ds-text-xs);
   color: #6b7280;
 }
@@ -11693,7 +11693,7 @@ body.assistant-panel-open {
 .fiqh-council-admin-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin-bottom: 1rem;
 }
 
@@ -11724,7 +11724,7 @@ body.assistant-panel-open {
 .fiqh-hub-quick-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin: 0 0 1.25rem;
 }
 
@@ -11741,7 +11741,7 @@ body.assistant-panel-open {
 .fiqh-sources-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .fiqh-source-card {
@@ -11772,7 +11772,7 @@ body.assistant-panel-open {
 .fiqh-nawazil-topics-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .fiqh-nawazil-topic-card {
@@ -11805,7 +11805,7 @@ body.assistant-panel-open {
 }
 
 .fiqh-advanced-search-form {
-  padding: 1rem;
+  padding: var(--ds-space-4);
   margin-bottom: 1rem;
 }
 
@@ -11814,7 +11814,7 @@ body.assistant-panel-open {
 }
 
 .fiqh-compare-picker {
-  padding: 1rem;
+  padding: var(--ds-space-4);
   margin-bottom: 1.25rem;
 }
 
@@ -11828,7 +11828,7 @@ body.assistant-panel-open {
 
 .fiqh-compare-picker-item {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   align-items: flex-start;
   font-size: 0.8125rem;
   cursor: pointer;
@@ -11846,10 +11846,10 @@ body.assistant-panel-open {
 }
 
 .fiqh-compare-insights {
-  padding: 1rem;
+  padding: var(--ds-space-4);
   margin-bottom: 1rem;
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .fiqh-compare-insights h3 {
@@ -11860,7 +11860,7 @@ body.assistant-panel-open {
 
 .fiqh-compare-grid {
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .fiqh-compare-grid--2 { grid-template-columns: repeat(2, 1fr); }
@@ -11868,7 +11868,7 @@ body.assistant-panel-open {
 .fiqh-compare-grid--4 { grid-template-columns: repeat(2, 1fr); }
 
 .fiqh-compare-column {
-  padding: 1rem;
+  padding: var(--ds-space-4);
   border: 1px solid rgba(22, 78, 60, 0.12);
   border-radius: var(--ds-radius-lg);
   background: #fff;
@@ -11899,7 +11899,7 @@ body.assistant-panel-open {
 
 .fiqh-compare-actions {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   flex-wrap: wrap;
   margin-top: 0.75rem;
 }
@@ -11921,7 +11921,7 @@ body.assistant-panel-open {
 
 .fiqh-category-tree {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 1.25rem;
 }
 
@@ -11941,12 +11941,12 @@ body.assistant-panel-open {
 .fiqh-admin-stats {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 1rem;
 }
 
 .fiqh-admin-stat {
-  padding: 0.75rem;
+  padding: var(--ds-space-3);
   border-radius: var(--ds-radius);
   border: 1px solid rgba(22, 78, 60, 0.12);
   background: #fff;
@@ -11999,12 +11999,12 @@ body.assistant-panel-open {
 }
 
 .fiqh-research-assistant-view {
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 
 .fiqh-research-messages {
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   margin-bottom: 1rem;
   max-height: 28rem;
   overflow-y: auto;
@@ -12042,7 +12042,7 @@ body.assistant-panel-open {
 
 .fiqh-research-input {
   width: 100%;
-  padding: 0.75rem;
+  padding: var(--ds-space-3);
   border: 1px solid rgba(22, 78, 60, 0.15);
   border-radius: var(--ds-radius);
   font-family: inherit;
@@ -12052,7 +12052,7 @@ body.assistant-panel-open {
 
 .fiqh-research-form-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
 }
 
@@ -12157,17 +12157,17 @@ body.assistant-panel-open {
 
 .updates-timeline {
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .updates-timeline-item {
-  padding: 1.25rem;
+  padding: var(--ds-space-5);
 }
 
 .updates-timeline-meta {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 0.5rem;
   font-size: 0.8125rem;
   color: var(--ink-soft, #5c5348);
@@ -12202,12 +12202,12 @@ body.assistant-panel-open {
 /* ── Fiqh v9: issues, timeline, trust, export ── */
 .fiqh-issues-grid {
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .fiqh-issue-card {
   display: block;
-  padding: 1.25rem;
+  padding: var(--ds-space-5);
   text-decoration: none;
   color: inherit;
   transition: box-shadow 0.2s;
@@ -12288,12 +12288,12 @@ body.assistant-panel-open {
 }
 
 .fiqh-timeline-body {
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 
 .fiqh-timeline-meta {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   font-size: var(--ds-text-xs);
   color: var(--ink-soft, #5c5348);
   margin-bottom: 0.35rem;
@@ -12340,7 +12340,7 @@ body.assistant-panel-open {
 .fiqh-citation-menu {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   align-items: center;
 }
 
@@ -12355,12 +12355,12 @@ body.assistant-panel-open {
 .fiqh-export-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .fiqh-topic-index {
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .fiqh-topic-section h2 {
@@ -12395,7 +12395,7 @@ body.assistant-panel-open {
 
 .fiqh-stats-section {
   margin-bottom: 1rem;
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 
 .fiqh-stats-section h2 {
@@ -12426,7 +12426,7 @@ body.assistant-panel-open {
 
 .fiqh-live-page .fiqh-live-grid {
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
   margin-bottom: 1rem;
 }
@@ -12461,7 +12461,7 @@ body.assistant-panel-open {
 
 .fiqh-trust-box {
   margin: 1rem 0;
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 
 .fiqh-trust-box-title {
@@ -12472,7 +12472,7 @@ body.assistant-panel-open {
 
 .fiqh-trust-box-list {
   display: grid;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin: 0;
   font-size: 0.8125rem;
 }
@@ -12488,10 +12488,10 @@ body.assistant-panel-open {
 
 .fiqh-hub-live-banner {
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
   margin-bottom: 1.5rem;
-  padding: 1.25rem;
+  padding: var(--ds-space-5);
 }
 
 .fiqh-hub-live-meta {
@@ -12541,12 +12541,12 @@ body.assistant-panel-open {
 }
 
 .fiqh-admin-alerts {
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 
 .fiqh-admin-subnav {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   flex-wrap: wrap;
   margin-bottom: 1rem;
 }
@@ -12577,7 +12577,7 @@ body.assistant-panel-open {
 
 .fiqh-completion-bar {
   display: grid;
-  gap: 0.25rem;
+  gap: var(--ds-space-1);
   margin: 0.5rem 0;
 }
 
@@ -12604,7 +12604,7 @@ body.assistant-panel-open {
 
 .fiqh-review-filters {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
   margin-bottom: 1rem;
 }
@@ -12637,17 +12637,17 @@ body.assistant-panel-open {
 
 .fiqh-review-list {
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 .fiqh-review-card {
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 
 .fiqh-review-card-head {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   flex-wrap: wrap;
   align-items: flex-start;
 }
@@ -12691,7 +12691,7 @@ body.assistant-panel-open {
 
 .fiqh-review-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
   align-items: center;
 }
@@ -12705,12 +12705,12 @@ body.assistant-panel-open {
 .fiqh-quality-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 1rem;
 }
 
 .fiqh-quality-stat {
-  padding: 1rem;
+  padding: var(--ds-space-4);
   text-align: center;
 }
 
@@ -12732,7 +12732,7 @@ body.assistant-panel-open {
 .fiqh-quality-stat--error .fiqh-quality-stat-value { color: #b91c1c; }
 
 .fiqh-quality-meta {
-  padding: 1rem;
+  padding: var(--ds-space-4);
   margin-bottom: 1rem;
   font-size: var(--ds-text-sm);
 }
@@ -13082,7 +13082,7 @@ svg {
 
   .fiqh-council-category-card {
     min-height: var(--mobile-touch-min);
-    padding: 0.75rem;
+    padding: var(--ds-space-3);
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -13331,7 +13331,7 @@ svg {
 .lesson-detail-breadcrumb {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem;
+  gap: var(--ds-space-1);
   margin-bottom: 0.75rem;
   font-size: 0.8125rem;
   color: var(--msk-text-2, #68716D);
@@ -13378,7 +13378,7 @@ svg {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 0.5rem;
 }
 
@@ -13395,7 +13395,7 @@ svg {
 .radio-player__controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin-bottom: 0.75rem;
 }
 
@@ -13492,7 +13492,7 @@ body.has-assistant-fab .app-main {
   }
 
   .page-card-grid {
-    gap: 0.75rem;
+    gap: var(--ds-space-3);
   }
 
   .lesson-unified-card {
@@ -13545,7 +13545,7 @@ body.has-assistant-fab .app-main {
   flex-direction: column;
   align-items: flex-start;
   gap: 0.2rem;
-  padding: 0.875rem;
+  padding: var(--ds-space-3-5);
   border: 1px solid var(--msk-border, #E7E2D8);
   border-radius: var(--ds-radius-lg);
   background: transparent;
@@ -13674,7 +13674,7 @@ body.has-assistant-fab .app-main {
   background: transparent;
   border: 1px solid var(--msk-border, #E7E2D8);
   border-radius: var(--ds-radius-lg);
-  padding: 0.75rem;
+  padding: var(--ds-space-3);
   text-align: center;
 }
 
@@ -13694,7 +13694,7 @@ body.has-assistant-fab .app-main {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 1rem;
 }
 
@@ -13725,7 +13725,7 @@ body.has-assistant-fab .app-main {
 .lessons-v2-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.25rem;
+  gap: var(--ds-space-5);
 }
 
 @media (min-width: 960px) {
@@ -13763,7 +13763,7 @@ body.has-assistant-fab .app-main {
 }
 
 .lessons-v2-filters {
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 
 .lessons-v2-filters__head {
@@ -13818,7 +13818,7 @@ body.has-assistant-fab .app-main {
 .lessons-v2-filters-grid label {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--ds-space-1);
   font-size: 0.8rem;
   color: var(--mn-text-default);
 }
@@ -13853,7 +13853,7 @@ body.has-assistant-fab .app-main {
   overflow-y: auto;
   background: #fff;
   border-radius: 1.25rem 1.25rem 0 0;
-  padding: 0.5rem;
+  padding: var(--ds-space-2);
 }
 
 /* Feature Status Dashboard */
@@ -13865,7 +13865,7 @@ body.has-assistant-fab .app-main {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   padding: 1rem 1.25rem;
   margin-bottom: 1rem;
 }
@@ -13885,7 +13885,7 @@ body.has-assistant-fab .app-main {
 
 .admin-feature-status__actions {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   align-items: flex-start;
 }
 
@@ -13944,7 +13944,7 @@ body.has-assistant-fab .app-main {
 }
 
 .admin-feature-status__error {
-  padding: 1rem;
+  padding: var(--ds-space-4);
   margin-bottom: 1rem;
   border-color: #fca5a5;
   background: #fef2f2;
@@ -14070,7 +14070,7 @@ body.has-assistant-fab .app-main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   margin-bottom: 1.25rem;
   padding-bottom: 0.875rem;
   border-bottom: 1.5px solid var(--majalis-line);
@@ -14191,7 +14191,7 @@ body.has-assistant-fab .app-main {
 .home-quick-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 8rem), 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .home-quick-link {
@@ -14251,7 +14251,7 @@ body.has-assistant-fab .app-main {
 .home-daily-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
-  gap: 1rem;
+  gap: var(--ds-space-4);
   margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
 }
 
@@ -14298,7 +14298,7 @@ body.has-assistant-fab .app-main {
 }
 
 .site-footer-groups {
-  gap: 1.25rem;
+  gap: var(--ds-space-5);
 }
 
 .site-footer-group p,
@@ -14342,7 +14342,7 @@ body.has-assistant-fab .app-main {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin: clamp(1rem, 3vw, 1.75rem) 0;
   padding: 0;
   opacity: 0.6;
@@ -14382,7 +14382,7 @@ body.has-assistant-fab .app-main {
 .islamic-section-rule {
   display: flex;
   align-items: center;
-  gap: 0.875rem;
+  gap: var(--ds-space-3-5);
   margin: clamp(1.25rem, 3.5vw, 2.25rem) 0;
   color: var(--majalis-brass);
 }
@@ -14416,7 +14416,7 @@ body.has-assistant-fab .app-main {
   .ds-section__head {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: var(--ds-space-2);
   }
   .ds-section__link { align-self: flex-start; }
   .site-footer-inner--v3 { padding-block: 2rem 1rem; }
@@ -14439,7 +14439,7 @@ body.has-assistant-fab .app-main {
 
 /* ── Janaza Page ── */
 .janaza-card {
-  padding: 1.25rem;
+  padding: var(--ds-space-5);
   border-radius: var(--ds-radius-lg);
   overflow: hidden;
 }
@@ -14477,7 +14477,7 @@ body.has-assistant-fab .app-main {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   flex-wrap: wrap;
   margin-bottom: 2rem;
   padding-bottom: 1.25rem;
@@ -14563,7 +14563,7 @@ body.has-assistant-fab .app-main {
 .sheikh-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
-  gap: 1rem;
+  gap: var(--ds-space-4);
   margin-top: 1rem;
 }
 .sheikh-card {
@@ -14624,7 +14624,7 @@ body.has-assistant-fab .app-main {
 /* ── Home lessons gender tabs ── */
 .home-lessons-tabs {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
   margin-bottom: 1rem;
 }
@@ -14663,7 +14663,7 @@ body.has-assistant-fab .app-main {
 /* ── Home prayer + ranks side-by-side layout ── */
 .home-prayer-row {
   display: grid;
-  gap: 2rem;
+  gap: var(--ds-space-8);
 }
 @media (min-width: 900px) {
   .home-prayer-row {
@@ -14676,12 +14676,12 @@ body.has-assistant-fab .app-main {
 .home-prayer-ranks-list {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 .home-prayer-rank-row {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   padding: 0.75rem 1rem;
 }
 .home-prayer-rank-num {
@@ -14725,7 +14725,7 @@ body.has-assistant-fab .app-main {
 /* ─── Layout ─────────────────────────────────────────────────── */
 .cb-layout {
   display: flex;
-  gap: 2rem;
+  gap: var(--ds-space-8);
   align-items: flex-start;
   flex-direction: row-reverse; /* sidebar RTL: sidebar on right, preview on left */
 }
@@ -15200,7 +15200,7 @@ body.has-assistant-fab .app-main {
 /* ─── Prophets tabs ─── */
 .prophets-tabs {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin-bottom: 1.5rem;
   direction: rtl;
 }
@@ -15256,7 +15256,7 @@ body.has-assistant-fab .app-main {
   border: 1px solid var(--majalis-border, #e2e8f0);
   border-radius: 12px;
   background: var(--majalis-surface, #fff);
-  padding: 0.75rem;
+  padding: var(--ds-space-3);
 }
 .dark .prophet-tree-scroll {
   background: #1a2636;
@@ -15315,14 +15315,14 @@ body.has-assistant-fab .app-main {
 .prophets-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 /* ─── Card ─── */
 .prophet-card {
   display: flex;
   gap: 12px;
-  padding: 1rem;
+  padding: var(--ds-space-4);
   border-radius: 12px;
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
@@ -15407,7 +15407,7 @@ body.has-assistant-fab .app-main {
 
 .prophets-empty {
   text-align: center;
-  padding: 3rem;
+  padding: var(--ds-space-12);
   color: var(--majalis-ink-soft, #6b7280);
   direction: rtl;
 }
@@ -15427,7 +15427,7 @@ body.has-assistant-fab .app-main {
 .prophet-detail {
   direction: rtl;
   text-align: right;
-  padding: 2rem;
+  padding: var(--ds-space-8);
 }
 .prophet-detail__header {
   text-align: center;
@@ -15588,7 +15588,7 @@ body.has-assistant-fab .app-main {
     grid-template-columns: 1fr;
   }
   .prophet-detail {
-    padding: 1.25rem;
+    padding: var(--ds-space-5);
   }
   .prophet-detail__name {
     font-size: var(--ds-text-2xl);
@@ -15738,7 +15738,7 @@ body.has-assistant-fab .app-main {
 .home-search-compact {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   max-width: 680px;
   margin: 0 auto;
   background: var(--majalis-panel, #fff);
@@ -15908,7 +15908,7 @@ body.has-assistant-fab .app-main {
 .bottom-sheet__grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   padding: 1rem 1rem 2rem;
 }
 .more-sheet-item {
@@ -15975,7 +15975,7 @@ body.has-assistant-fab .app-main {
   text-transform: none; letter-spacing: 0;
 }
 .prayer-countdown__prev {
-  display: flex; align-items: center; gap: 0.5rem;
+  display: flex; align-items: center; gap: var(--ds-space-2);
   padding: 0.5rem 1.25rem;
   border-radius: 2rem;
   background: var(--majalis-sage);
@@ -15985,7 +15985,7 @@ body.has-assistant-fab .app-main {
 .prayer-countdown__prev-timer { font-variant-numeric: tabular-nums; }
 .prayer-countdown__slots {
   display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem; width: 100%; max-width: 22rem;
+  gap: var(--ds-space-2); width: 100%; max-width: 22rem;
   margin-top: 2rem;
 }
 .prayer-slot-chip {
@@ -16017,7 +16017,7 @@ body.has-assistant-fab .app-main {
 }
 .qc-card__title { color: #fff; font-weight: 700; font-size: var(--ds-text-base); margin-bottom: 0.25rem; }
 .qc-card__sheikh { color: rgba(255,255,255,0.8); font-size: 0.8rem; }
-.qc-card__body { padding: 0.9rem 1rem; flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+.qc-card__body { padding: 0.9rem 1rem; flex: 1; display: flex; flex-direction: column; gap: var(--ds-space-2); }
 .qc-card__badges { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .qc-badge {
   padding: 0.2rem 0.6rem; border-radius: var(--ds-radius-xl);
@@ -16031,7 +16031,7 @@ body.has-assistant-fab .app-main {
   background: var(--majalis-line); overflow: hidden; margin-top: auto;
 }
 .qc-card__capacity-bar { height: 100%; background: var(--majalis-emerald); border-radius: 2px; }
-.qc-card__footer { padding: 0.75rem 1rem; border-top: 1px solid var(--majalis-line); display: flex; gap: 0.5rem; }
+.qc-card__footer { padding: 0.75rem 1rem; border-top: 1px solid var(--majalis-line); display: flex; gap: var(--ds-space-2); }
 
 /* Display font for major headings */
 .font-display { font-family: var(--font-display) !important; }
@@ -16040,8 +16040,8 @@ body.has-assistant-fab .app-main {
 .rec-mini-card {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem;
+  gap: var(--ds-space-2);
+  padding: var(--ds-space-4);
   background: transparent;
   border: 1px solid var(--msk-border, #E7E2D8);
   border-radius: var(--ds-radius-lg);
@@ -16121,7 +16121,7 @@ body.has-assistant-fab .app-main {
   padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 .univ-card__head-avatar {
   width: 2.5rem; height: 2.5rem;
@@ -16151,7 +16151,7 @@ body.has-assistant-fab .app-main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.375rem;
+  gap: var(--ds-space-1-5);
   padding: 0.5rem 0.75rem;
   border-radius: var(--ds-radius-lg);
   font-size: var(--ds-text-sm);
@@ -16182,7 +16182,7 @@ body.has-assistant-fab .app-main {
   margin-inline: auto;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   flex-wrap: wrap;
 }
 .compare-bar__label {
@@ -16194,7 +16194,7 @@ body.has-assistant-fab .app-main {
 .compare-chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.375rem;
+  gap: var(--ds-space-1-5);
   background: var(--mn-surface-active);
   color: var(--mn-text-active);
   font-size: var(--ds-text-xs);
@@ -16227,7 +16227,7 @@ body.has-assistant-fab .app-main {
 .citation-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.375rem;
+  gap: var(--ds-space-1-5);
   padding: 0.5rem 0.875rem;
   border-radius: var(--ds-radius);
   font-size: var(--ds-text-sm);
@@ -16259,7 +16259,7 @@ body.has-assistant-fab .app-main {
 .sk-card {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   padding: var(--card-padding, 1rem);
   border-radius: var(--card-radius, 1rem);
   background: transparent;
@@ -16269,7 +16269,7 @@ body.has-assistant-fab .app-main {
   height: 10rem;
   border-radius: 0.625rem;
 }
-.sk-card__body { display: flex; flex-direction: column; gap: 0.5rem; }
+.sk-card__body { display: flex; flex-direction: column; gap: var(--ds-space-2); }
 .sk-card__title { height: 1rem; width: 70%; border-radius: var(--ds-radius-sm); }
 .sk-card__line  { height: 0.75rem; width: 90%; border-radius: var(--ds-radius-sm); }
 .sk-card__line--short { width: 55%; }
@@ -16277,14 +16277,14 @@ body.has-assistant-fab .app-main {
 /* شبكة بطاقات هيكلية */
 .sk-card-grid {
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
 }
 
 /* جدول هيكلي */
 .sk-table { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-lg); overflow: hidden; }
 .sk-table__head, .sk-table__row {
-  display: flex; gap: 0.75rem; padding: 0.75rem 1rem;
+  display: flex; gap: var(--ds-space-3); padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--majalis-line);
 }
 .sk-table__head { background: var(--majalis-parchment-deep); }
@@ -16294,7 +16294,7 @@ body.has-assistant-fab .app-main {
 .sk-table__cell--wide  { width: 45%; flex: none; }
 
 /* صفحة هيكلية */
-.sk-page { display: flex; flex-direction: column; gap: 0.75rem; padding: 1.5rem; }
+.sk-page { display: flex; flex-direction: column; gap: var(--ds-space-3); padding: var(--ds-space-6); }
 .sk-page--article  { max-width: 52rem; margin-inline: auto; }
 .sk-page__meta     { height: 0.75rem; width: 30%; border-radius: var(--ds-radius-sm); }
 .sk-page__title    { height: 1.75rem; width: 55%; border-radius: var(--ds-radius); margin-bottom: 0.25rem; }
@@ -16340,7 +16340,7 @@ body.has-assistant-fab .app-main {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 /* Admin sidebar — responsive (تبويب أفقي على الشاشات الصغيرة) */
@@ -16356,7 +16356,7 @@ body.has-assistant-fab .app-main {
     overflow-x: auto;
     overflow-y: hidden;
     padding: 0.5rem 0.75rem;
-    gap: 0.375rem;
+    gap: var(--ds-space-1-5);
     /* scroll snap for mobile UX */
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
@@ -16382,7 +16382,7 @@ body.has-assistant-fab .app-main {
     border-right-color: transparent;
     border-bottom-color: var(--mn-border-active);
   }
-  .admin-main { padding: 1rem; }
+  .admin-main { padding: var(--ds-space-4); }
 }
 
 .admin-sidebar__title {
@@ -16474,7 +16474,7 @@ body.has-assistant-fab .app-main {
 
 .admin-main {
   flex: 1;
-  padding: 1.5rem;
+  padding: var(--ds-space-6);
   overflow-y: auto;
 }
 
@@ -16483,7 +16483,7 @@ body.has-assistant-fab .app-main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   padding: 0.75rem 1rem;
   border-radius: var(--ds-radius);
   margin-bottom: 1rem;
@@ -16650,7 +16650,7 @@ body.has-assistant-fab .app-main {
 .uc-back {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   min-height: 44px;
   padding: 0.6rem 1.4rem;
   border-radius: 0.6rem;
@@ -16676,7 +16676,7 @@ body.has-assistant-fab .app-main {
 .fip-overall {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin-top: 0.5rem;
   padding: 0.4rem 1rem;
   border-radius: 999px;
@@ -16688,19 +16688,19 @@ body.has-assistant-fab .app-main {
 .fip-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 .fip-card {
   background: var(--majalis-panel, #fff);
   border: 1px solid var(--majalis-line, #e5ddd0);
   border-radius: 0.9rem;
-  padding: 1.25rem;
+  padding: var(--ds-space-5);
   box-shadow: var(--ds-shadow, 0 2px 8px rgba(22, 78, 60, 0.07));
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
-.fip-card__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; }
+.fip-card__top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--ds-space-2); }
 .fip-card__title { margin: 0; font-size: var(--ds-text-base); font-weight: 700; color: var(--majalis-emerald-deep, #173D35); line-height: 1.5; }
 .fip-card__desc { margin: 0; font-size: 0.85rem; color: var(--majalis-ink-soft, #5c564c); line-height: 1.7; flex: 1; }
 .fip-status {
@@ -16719,7 +16719,7 @@ body.has-assistant-fab .app-main {
 .hadith-index-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1rem;
+  gap: var(--ds-space-4);
   margin-top: 1rem;
 }
 .hadith-index-card {
@@ -16823,7 +16823,7 @@ body.has-assistant-fab .app-main {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+  gap: var(--ds-space-6);
   flex-wrap: wrap;
   padding-top: 0.25rem;
 }
@@ -16890,7 +16890,7 @@ body.has-assistant-fab .app-main {
 .home-feature-strip {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 .home-feature-strip-card {
@@ -16953,12 +16953,12 @@ body.has-assistant-fab .app-main {
 .home-stories-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 .home-story-card {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   padding: 1rem 1.1rem;
   background: #FFFFFF;
   border: 1px solid rgba(31,77,58,0.10);
@@ -17029,7 +17029,7 @@ body.has-assistant-fab .app-main {
   background: #ffffff;
   border: 1px solid rgba(31,77,58,0.12);
   border-radius: var(--ds-radius-2xl);
-  padding: 1.25rem;
+  padding: var(--ds-space-5);
   box-shadow: 0 2px 12px rgba(31,77,58,0.06);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
@@ -17068,7 +17068,7 @@ body.has-assistant-fab .app-main {
 .home-learning-path-card {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: var(--ds-space-5);
   padding: 1.35rem 1.5rem;
   border-radius: var(--ds-radius-xl);
   background: linear-gradient(135deg, #173D35 0%, #173D35 100%);
@@ -17132,7 +17132,7 @@ body.has-assistant-fab .app-main {
 .home-quiz-card {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: var(--ds-space-5);
   padding: 1.15rem 1.4rem;
   border-radius: var(--ds-radius-xl);
   background: transparent;
@@ -17187,7 +17187,7 @@ body.has-assistant-fab .app-main {
   }
 
   .home-hero-stats {
-    gap: 2rem;
+    gap: var(--ds-space-8);
   }
 }
 
@@ -17421,7 +17421,7 @@ body.has-assistant-fab .app-main {
 
 /* زر تسجيل الدخول */
 .login-submit {
-  padding: 0.75rem;
+  padding: var(--ds-space-3);
   border-radius: var(--ds-radius-lg);
   background: var(--majalis-emerald, #28584D);
   color: #fff;
@@ -17448,7 +17448,7 @@ body.has-assistant-fab .app-main {
 .login-oauth__divider {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin: 1.25rem 0 0.875rem;
   color: var(--majalis-ink-muted, #A09A94);
   font-size: 0.78rem;
@@ -17998,7 +17998,7 @@ body.has-assistant-fab .app-main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.25rem;
+  gap: var(--ds-space-5);
   min-height: calc(100dvh - var(--mobile-header-h, 4rem) - var(--bottom-nav-h, 56px) - env(safe-area-inset-bottom, 0px));
   padding: 2rem 1rem 1.5rem;
   direction: rtl;
@@ -18064,7 +18064,7 @@ body.has-assistant-fab .app-main {
 .prayer-today-strip {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   width: 100%;
   max-width: 22rem;
 }
@@ -18126,7 +18126,7 @@ body.has-assistant-fab .app-main {
 .prophets-lux-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   padding: 1rem 1rem 0;
 }
 .prophets-lux-tab {
@@ -18191,13 +18191,13 @@ body.has-assistant-fab .app-main {
 .prv-virtues-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-  gap: 0.875rem;
+  gap: var(--ds-space-3-5);
 }
 
 .prv-virtue-card {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .prv-virtue-title {
@@ -18308,13 +18308,13 @@ body.has-assistant-fab .app-main {
 .mtd-section--highlight {
   background: var(--majalis-panel, #f5f9f6);
   border: 1px solid var(--majalis-line, #d4e6de);
-  border-radius: var(--ds-radius-lg); padding: 1.25rem;
+  border-radius: var(--ds-radius-lg); padding: var(--ds-space-5);
 }
 .mtd-section__title { font-size: 1.1rem; font-weight: 700; color: #28584D; margin-bottom: 0.85rem; }
 .mtd-section__body { font-size: 0.92rem; line-height: 1.8; color: var(--majalis-ink, #173D35); }
 .mtd-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.85rem; }
 .mtd-step {
-  display: flex; align-items: flex-start; gap: 0.75rem;
+  display: flex; align-items: flex-start; gap: var(--ds-space-3);
   background: var(--majalis-panel, #fff);
   border: 1px solid var(--majalis-line, #d4e6de);
   border-radius: 0.65rem; padding: 0.85rem 1rem;
@@ -18329,9 +18329,9 @@ body.has-assistant-fab .app-main {
 .mtd-step__body { flex: 1; }
 .mtd-step__title { font-size: 0.9rem; font-weight: 700; color: var(--majalis-ink, #173D35); display: block; margin-bottom: 0.2rem; }
 .mtd-step__desc { font-size: 0.82rem; color: var(--majalis-muted, #28584D); margin: 0; line-height: 1.6; }
-.mtd-sources { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.mtd-sources { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--ds-space-2); }
 .mtd-source {
-  display: flex; align-items: center; gap: 0.75rem;
+  display: flex; align-items: center; gap: var(--ds-space-3);
   padding: 0.6rem 0.85rem;
   background: var(--majalis-panel, #fff); border: 1px solid var(--majalis-line, #d4e6de);
   border-radius: var(--ds-radius);
@@ -18346,7 +18346,7 @@ body.has-assistant-fab .app-main {
 .tg-banner {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   background: linear-gradient(135deg, #28584D 0%, #173D35 100%);
   border-radius: 0.85rem;
   padding: 0.85rem 1rem;
@@ -18420,7 +18420,7 @@ body.has-assistant-fab .app-main {
 .hsh-header {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 1rem;
 }
 .hsh-eyebrow {
@@ -18441,16 +18441,16 @@ body.has-assistant-fab .app-main {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 .hsh-step {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   align-items: flex-start;
   background: #fff;
   border: 1px solid #e4ede9;
   border-radius: 0.875rem;
-  padding: 0.875rem;
+  padding: var(--ds-space-3-5);
   box-shadow: 0 1px 4px rgba(31,77,58,0.06);
 }
 .hsh-step__num {
@@ -18687,7 +18687,7 @@ button,
 .offline-banner {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   justify-content: center;
   padding: 0.4rem 1rem;
   background: #173D35;
@@ -18833,7 +18833,7 @@ html[data-theme="dark"] .skeleton-base {
   border: none; border-radius: .6rem; padding: .55rem 1rem;
   font-size: .88rem; font-weight: 600; cursor: pointer;
 }
-.rp-plans-list { display: flex; flex-direction: column; gap: 1rem; }
+.rp-plans-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .rp-plan-card { padding: 1rem 1.1rem; }
 .rp-plan-card__head { display: flex; justify-content: space-between; align-items: center; gap: .5rem; margin-bottom: .6rem; }
 .rp-plan-card__title { font-size: var(--ds-text-base); font-weight: 700; margin: 0; }

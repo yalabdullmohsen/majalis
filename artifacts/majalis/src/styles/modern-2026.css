@@ -544,7 +544,7 @@ label {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
   padding: 0.6rem 1rem 0.25rem;
   text-align: center;
@@ -563,7 +563,7 @@ label {
 .pt-hero__hint-inner {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -609,7 +609,7 @@ label {
 /* روابط سريعة */
 .pt-quick-links {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   justify-content: center;
   padding: 0.75rem 1rem 1.25rem;
   flex-wrap: wrap;
@@ -1165,7 +1165,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: var(--ds-space-6);
   padding: 1.5rem 0 2rem;
 }
 
@@ -1203,7 +1203,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 
 .adhkar-focus-nav {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -1276,7 +1276,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 
 .adhkar-tapper-wrap {
   display: flex; flex-direction: column;
-  align-items: center; gap: 0.5rem;
+  align-items: center; gap: var(--ds-space-2);
 }
 
 .adhkar-tapper {
@@ -1400,7 +1400,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   line-height: 2;
   color: var(--txt-primary, #202725);
   text-align: center;
-  padding: 1rem;
+  padding: var(--ds-space-4);
   background: var(--m26-green-50, #F0FDF4);
   border-radius: var(--ds-radius-lg);
   margin-bottom: 1.25rem;
@@ -1408,14 +1408,14 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 .adhkar-sheet-details {
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
+  gap: var(--ds-space-2-5);
   margin: 0 0 1.5rem;
 }
 .adhkar-sheet-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   font-size: var(--ds-text-sm);
   padding: 0.5rem 0;
   border-bottom: 1px solid var(--majalis-line, #e5e7eb);
@@ -1448,7 +1448,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 .adhkar-sheet-dismiss {
   display: block;
   width: 100%;
-  padding: 0.875rem;
+  padding: var(--ds-space-3-5);
   background: var(--majalis-emerald, #16A34A);
   color: #fff;
   border: none;
@@ -1607,13 +1607,13 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
 }
 .content-detail-readtime {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: var(--ds-space-1);
   font-size: var(--ds-text-xs);
   color: var(--txt-secondary, #6b7280);
   background: var(--surface-2, #f4f4f4);
