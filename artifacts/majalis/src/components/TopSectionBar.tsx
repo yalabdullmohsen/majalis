@@ -14,14 +14,14 @@ type SectionTab = {
    (5 عناصر) وإن تشاركا بعض الوجهات (الرئيسية/تعلّم/القرآن): الحالة النشطة
    في كليهما تُحسب من نفس location الحالي فتبقى متّسقة تلقائيًا بلا حالة
    مشتركة إضافية. "الأطفال" وجهة جديدة لا مقابل لها في الشريط السفلي. */
-const SECTION_TABS: SectionTab[] = [
+export const SECTION_TABS: SectionTab[] = [
   { href: "/",         label: "الرئيسية", Icon: Home,          prefetch: () => import("@/views/HomePage") },
   { href: "/learn",    label: "تعلّم",    Icon: GraduationCap, prefetch: () => import("@/views/learn/LearnHubPage") },
   { href: "/quran-hub", label: "القرآن",  Icon: BookOpen,      prefetch: () => import("@/views/QuranHubPage") },
   { href: "/kids",     label: "الأطفال",  Icon: Baby,          prefetch: () => import("@/views/KidsPage") },
 ];
 
-function isTabActive(location: string, href: string): boolean {
+export function isTabActive(location: string, href: string): boolean {
   if (href === "/") return location === "/";
   return location === href || location.startsWith(href + "/");
 }

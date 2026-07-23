@@ -74,7 +74,7 @@ const DEFAULT_HIDDEN: HomeWidgetId[] = [
 const DEFAULT_PREFS: HomepagePrefs = { order: DEFAULT_ORDER, hidden: DEFAULT_HIDDEN };
 const STORAGE_KEY = "majalis-homepage-prefs-v1";
 
-function sanitizePrefs(raw: unknown): HomepagePrefs {
+export function sanitizePrefs(raw: unknown): HomepagePrefs {
   const obj = (raw ?? {}) as Partial<HomepagePrefs>;
   const rawOrder = Array.isArray(obj.order) ? obj.order.filter((id): id is HomeWidgetId => VALID_IDS.has(id)) : [];
   const missing = DEFAULT_ORDER.filter((id) => !rawOrder.includes(id));
