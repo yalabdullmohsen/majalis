@@ -486,13 +486,13 @@ export const ANNUAL_COURSES_SEED: AnnualCourse[] = [
   {
     id: "course-umdat-al-talib-2026",
     external_key: "course-umdat-al-talib-2026",
-    title: "عمدة الطالب في فقه الإمام أحمد",
-    summary: "دراسة متن عمدة الطالب وهو مختصر في الفقه الحنبلي للمبتدئين.",
+    title: "عمدة الطالب لنيل المآرب — في الفقه الحنبلي",
+    summary: "دراسة متن عمدة الطالب لنيل المآرب للبهوتي، وهو مختصر في الفقه الحنبلي للمبتدئين.",
     course_type: "برنامج",
     season: "1447هـ",
     year: 2026,
     sheikh_names: ["د. مطلق الجاسر"],
-    mutoon: ["عمدة الطالب"],
+    mutoon: ["عمدة الطالب لنيل المآرب"],
     schedule: [
       { day: "الأربعاء", time: "بعد الفجر", topic: "شرح عمدة الطالب", sheikh: "د. مطلق الجاسر" },
     ],
