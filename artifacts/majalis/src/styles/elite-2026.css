@@ -13125,7 +13125,7 @@ html[data-theme="dark"] .global-back-btn {
   border-radius: 50%;
   border: none;
   background: var(--color-primary, #28584D);
-  color: #fff;
+  color: var(--text-on-primary, #fff);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21178,7 +21178,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 .as-tab:hover { border-color: var(--clr-primary); color: var(--clr-primary); }
 .as-tab--active {
   background: var(--clr-primary); border-color: var(--clr-primary);
-  color: #fff; font-weight: 600;
+  color: var(--text-on-primary, #fff); font-weight: 600;
 }
 
 /* Container */
@@ -21230,7 +21230,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 .as-alama-card__num {
   width: 2rem; height: 2rem; flex-shrink: 0;
   border-radius: 50%; background: var(--clr-primary);
-  color: #fff; font-weight: 700; font-size: .85rem;
+  color: var(--text-on-primary, #fff); font-weight: 700; font-size: .85rem;
   display: flex; align-items: center; justify-content: center;
   margin-top: .1rem;
 }
@@ -21251,7 +21251,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 .as-kubra-num {
   width: 2.2rem; height: 2.2rem; border-radius: 50%;
-  background: var(--clr-primary); color: #fff;
+  background: var(--clr-primary); color: var(--text-on-primary, #fff);
   display: flex; align-items: center; justify-content: center;
   font-size: 1rem; font-weight: 800; margin-bottom: .75rem;
 }
@@ -25247,7 +25247,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 .sh-steps { list-style: none; padding: 0; margin: 0 0 2rem; display: flex; flex-direction: column; gap: .9rem; }
 .sh-step { display: flex; gap: .9rem; }
 .sh-step__num {
-  width: 32px; height: 32px; flex-shrink: 0; background: var(--clr-primary,#28584D); color: #fff;
+  width: 32px; height: 32px; flex-shrink: 0; background: var(--clr-primary,#28584D); color: var(--text-on-primary, #fff);
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
   font-size: .8rem; font-weight: 900; margin-top: .15rem;
 }
@@ -25287,7 +25287,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   border-radius: .7rem; font-size: .9rem; font-weight: 700; text-decoration: none; transition: opacity .14s;
 }
 .sh-cta__btn:hover { opacity: .88; }
-.sh-cta__btn--primary { background: var(--clr-primary,#28584D); color: #fff; }
+.sh-cta__btn--primary { background: var(--clr-primary,#28584D); color: var(--text-on-primary, #fff); }
 .sh-cta__btn--secondary { background: rgba(23,61,53,.1); color: var(--clr-primary,#28584D); border: 1px solid rgba(23,61,53,.2); }
 
 /* ═══════════════════════════════════════════════════════════
@@ -29509,11 +29509,15 @@ html[data-theme="dark"] {
   --clr-text-1:       #E5F0EC;
   --clr-text-2:       #8BABA3;
   --clr-text-muted:   #5E7870;
-  --clr-primary:      #3BAD8A;
+  --clr-primary:      #5CC49A;
   --clr-primary-deep: #28584D;
-  --clr-primary-hov:  #4DC09A;
-  --clr-primary-soft: rgba(59,173,138,.12);
-  --clr-primary-subtle: rgba(59,173,138,.06);
+  --clr-primary-hov:  #6ED4AC;
+  --clr-primary-soft: rgba(92,196,154,.12);
+  --clr-primary-subtle: rgba(92,196,154,.06);
+  /* --clr-primary الفاتح (#5CC49A) في الوضع الداكن لا يسمح بنص أبيض مقروء
+     فوقه كخلفية زر (تباين ~2:1 فقط)؛ #173D35 هنا يحقق ٥.٥٩:١ — لا تستخدم
+     --clr-primary-deep (يحلّ هنا لـ#28584D، تباينه ٣.٧٩:١ فقط، غير كافٍ) */
+  --text-on-primary:  #173D35;
   --color-bg:         #111714;
   --color-surface:    #1A2120;
   --color-surface-sec:#1F2926;
@@ -29522,10 +29526,10 @@ html[data-theme="dark"] {
   --color-text:       #E5F0EC;
   --color-text-2:     #8BABA3;
   --color-text-muted: #5E7870;
-  --color-primary:    #3BAD8A;
+  --color-primary:    #5CC49A;
   --color-primary-deep: #28584D;
-  --color-primary-hover: #4DC09A;
-  --color-primary-soft: rgba(59,173,138,.12);
+  --color-primary-hover: #6ED4AC;
+  --color-primary-soft: rgba(92,196,154,.12);
   --ivory:            #111714;
   --ink:              #E5F0EC;
   --msk-canvas:       #111714;
@@ -29536,14 +29540,14 @@ html[data-theme="dark"] {
   --msk-text-3:       #5E7870;
   /* --msk-gold-* هنا زمردي فعليًا لا ذهبي — انظر ملاحظة src/index.css
      وREADY_FOR_MERGE.md §15/16 لتفاصيل هذا الاسم التاريخي المتبقّي. */
-  --msk-gold:         #3BAD8A;
+  --msk-gold:         #5CC49A;
   --msk-gold-deep:    #28584D;
   --msk-border:       rgba(255,255,255,.07);
   --msk-border-strong: rgba(255,255,255,.12);
   --msk-divider:      rgba(255,255,255,.04);
   --elite-white:      #111714;
   --elite-cream:      #111714;
-  --elite-forest:     #3BAD8A;
+  --elite-forest:     #5CC49A;
   --elite-ink:        #E5F0EC;
   --elite-ink-soft:   #8BABA3;
   --elite-ink-muted:  #5E7870;
@@ -29607,7 +29611,7 @@ html[data-theme="dark"] .ds-card {
 }
 html[data-theme="dark"] .ui-card:hover,
 html[data-theme="dark"] .card-v2:hover {
-  border-color: rgba(59,173,138,.22) !important;
+  border-color: rgba(92,196,154,.22) !important;
 }
 html[data-theme="dark"] .navbar-v3 {
   background: rgba(17,23,20,0.94) !important;
@@ -29624,7 +29628,7 @@ html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab {
   color: #9CA3AF !important;
 }
 html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab.is-active {
-  color: #3BAD8A !important;
+  color: #5CC49A !important;
 }
 html[data-theme="dark"] .ds-page-header {
   background: #173D35 !important;
@@ -29638,14 +29642,14 @@ html[data-theme="dark"] select {
 }
 html[data-theme="dark"] input:focus,
 html[data-theme="dark"] textarea:focus {
-  border-color: #3BAD8A !important;
-  box-shadow: 0 0 0 3px rgba(59,173,138,.10) !important;
+  border-color: #5CC49A !important;
+  box-shadow: 0 0 0 3px rgba(92,196,154,.10) !important;
 }
 html[data-theme="dark"] .btn--primary,
 html[data-theme="dark"] .ds-btn--primary,
 html[data-theme="dark"] .btn-primary {
-  background: #3BAD8A !important;
-  border-color: #3BAD8A !important;
+  background: #5CC49A !important;
+  border-color: #5CC49A !important;
   color: #111714 !important;
 }
 html[data-theme="dark"] .btn--primary:hover {
@@ -29656,14 +29660,14 @@ html[data-theme="dark"] .btn--ghost {
   color: #8BABA3 !important;
 }
 html[data-theme="dark"] .btn--ghost:hover {
-  background: rgba(59,173,138,.08) !important;
-  border-color: rgba(59,173,138,.2) !important;
-  color: #3BAD8A !important;
+  background: rgba(92,196,154,.08) !important;
+  border-color: rgba(92,196,154,.2) !important;
+  color: #5CC49A !important;
 }
 html[data-theme="dark"] .page-tag, html[data-theme="dark"] .sch-tag {
-  background: rgba(59,173,138,.12) !important;
-  color: #3BAD8A !important;
-  border-color: rgba(59,173,138,.18) !important;
+  background: rgba(92,196,154,.12) !important;
+  color: #5CC49A !important;
+  border-color: rgba(92,196,154,.18) !important;
 }
 html[data-theme="dark"] .page-soft-tag {
   background: rgba(255,255,255,.06) !important;
@@ -29678,7 +29682,7 @@ html[data-theme="dark"] .page-soft-tag {
    استثناء .jnz-subtitle أعلاه — بلا هذا الاستثناء تفوز هذه القاعدة العامة
    (تخصيص html+h2+not = أعلى من شارة .page-shell .ds-section__title نفسها)
    فتُبقي نصًا فاتحًا ثابتًا (#E5F0EC) فوق خلفية --elite-forest التي تصبح
-   فاتحة نسبيًا (#3BAD8A) في الوضع الليلي، فينتج تباين 2.39:1 فقط. */
+   فاتحة نسبيًا (#5CC49A) في الوضع الليلي، فينتج تباين 2.39:1 فقط. */
 html[data-theme="dark"] h1, html[data-theme="dark"] h2:not(.jnz-subtitle):not(.jnz-related__title):not(.ds-section__title):not(.lessons-v2-section__title):not(.lessons-past-section__title):not(.cards-page-title):not(.search-page-title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title),
 html[data-theme="dark"] h3, html[data-theme="dark"] h4 {
   color: #E5F0EC !important;
@@ -29704,7 +29708,7 @@ html[data-theme="dark"] .jnz-related__title {
    (2026-07-21، 154 مسارًا عامًا) وجد 32 رابطًا إضافيًا بنفس العطل بالضبط —
    نص أخضر فاتح شبه غير مرئي (تباين 1.3–2.79:1) فوق خلفيات بيضاء/فاتحة أو
    خضراء متوسطة خاصة بها. */
-html[data-theme="dark"] a:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab):not(.quran-subnav__link):not(.page-action-btn):not(.fiqh-hub-strip__tab):not(.tj-related-link):not(.lesson-unified-card__btn--primary):not(.fiqh-council-subnav-link):not(.btn-primary):not(.btn--primary):not(.ds-btn--primary):not(.dvp-btn):not(.hadith-books-banner__btn):not(.lqp2-btn):not(.citation-btn--primary):not(.ar-contribute-banner__btn):not(.lsw-featured__cta):not(.hsh-step__cta):not(.twh-jumpnav__btn):not(.sb-related__link):not(.tw-related__link):not(.sg-related__link):not(.zk-related__link):not(.sw-related__link):not(.hj-related__link):not(.th-related__link):not(.jnz-related__link):not(.mw-related__link):not(.mdb-related__link):not(.arkan-related__link):not(.ai-related__link):not(.dq-related__link):not(.sy-related__link):not(.hs-related__link):not(.uq-related__link):not(.hk-related__link):not(.fa-related__link):not(.jn-related__link):not(.qcp-reg-banner__btn):not(.lesson-unified-card__btn):not(.surah-info-card__link):not(.lpp-nav-link):not(.myl2-empty__cta):not(.fiqh-council-section-link):not(.ui-card-btn):not(.mzp-cta__submissions-btn):not(.qc-card__wa-link):not(.snr-topic-chip):not(.wird-quran-link) { color: #3BAD8A !important; }
+html[data-theme="dark"] a:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab):not(.quran-subnav__link):not(.page-action-btn):not(.fiqh-hub-strip__tab):not(.tj-related-link):not(.lesson-unified-card__btn--primary):not(.fiqh-council-subnav-link):not(.btn-primary):not(.btn--primary):not(.ds-btn--primary):not(.dvp-btn):not(.hadith-books-banner__btn):not(.lqp2-btn):not(.citation-btn--primary):not(.ar-contribute-banner__btn):not(.lsw-featured__cta):not(.hsh-step__cta):not(.twh-jumpnav__btn):not(.sb-related__link):not(.tw-related__link):not(.sg-related__link):not(.zk-related__link):not(.sw-related__link):not(.hj-related__link):not(.th-related__link):not(.jnz-related__link):not(.mw-related__link):not(.mdb-related__link):not(.arkan-related__link):not(.ai-related__link):not(.dq-related__link):not(.sy-related__link):not(.hs-related__link):not(.uq-related__link):not(.hk-related__link):not(.fa-related__link):not(.jn-related__link):not(.qcp-reg-banner__btn):not(.lesson-unified-card__btn):not(.surah-info-card__link):not(.lpp-nav-link):not(.myl2-empty__cta):not(.fiqh-council-section-link):not(.ui-card-btn):not(.mzp-cta__submissions-btn):not(.qc-card__wa-link):not(.snr-topic-chip):not(.wird-quran-link) { color: #5CC49A !important; }
 /* .nf2-btn (404) و.qs-subnav__link (إذاعات القرآن) يظهران في سياقين
    مختلفين بخلفيتين مختلفتين تمامًا على نفس الصفحة (فاتحة في حالة وداكنة
    خضراء في أخرى) — لا لون ثابت واحد يخدم الحالتين معًا، فبقيا ضمن
@@ -30073,7 +30077,7 @@ html[data-theme="dark"] .quran-page-header {
 html[data-theme="dark"] .section-title,
 html[data-theme="dark"] .page-section-title,
 html[data-theme="dark"] .ds-section-heading {
-  color: #3BAD8A !important;
+  color: #5CC49A !important;
 }
 html[data-theme="dark"] .filter-chip,
 html[data-theme="dark"] .filter-btn {
@@ -30084,16 +30088,16 @@ html[data-theme="dark"] .filter-btn {
 html[data-theme="dark"] .filter-chip.active,
 html[data-theme="dark"] .filter-chip--active,
 html[data-theme="dark"] .filter-btn.active {
-  background: rgba(59,173,138,.12) !important;
-  color: #3BAD8A !important;
-  border-color: rgba(59,173,138,.20) !important;
+  background: rgba(92,196,154,.12) !important;
+  color: #5CC49A !important;
+  border-color: rgba(92,196,154,.20) !important;
 }
 html[data-theme="dark"] mark.srch-hl {
-  background: rgba(59,173,138,.15) !important;
-  color: #3BAD8A !important;
+  background: rgba(92,196,154,.15) !important;
+  color: #5CC49A !important;
 }
 html[data-theme="dark"] ::-webkit-scrollbar-thumb {
-  background: rgba(59,173,138,.25) !important;
+  background: rgba(92,196,154,.25) !important;
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
@@ -30324,11 +30328,11 @@ html[data-theme="dark"] [role="alert"] {
    الزمردية تمامًا (اختفاء كامل، تحقّق حي: fg=bg=rgb(59,173,138) بالضبط
    على .content-hub-chip--active، 2026-07-22). */
 html[data-theme="dark"] [role="tab"][aria-selected="true"] {
-  border-bottom-color: #3BAD8A !important;
+  border-bottom-color: #5CC49A !important;
 }
 html[data-theme="dark"] [role="tab"]:hover {
-  background: rgba(59,173,138,.08) !important;
-  color: #3BAD8A !important;
+  background: rgba(92,196,154,.08) !important;
+  color: #5CC49A !important;
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
@@ -30509,15 +30513,15 @@ tr:hover td {
 }
 
 html[data-theme="dark"] th {
-  background: rgba(59,173,138,.12) !important;
-  color: #3BAD8A !important;
+  background: rgba(92,196,154,.12) !important;
+  color: #5CC49A !important;
 }
 html[data-theme="dark"] td {
   border-color: rgba(255,255,255,.07) !important;
   color: #E5F0EC !important;
 }
 html[data-theme="dark"] tr:hover td {
-  background: rgba(59,173,138,.06) !important;
+  background: rgba(92,196,154,.06) !important;
 }
 
 /* ── Tag "جديد" / "قريباً" ── */
@@ -31445,6 +31449,41 @@ progress,
 .skip-nav-link,
 .tag-new {
   color: #FFFFFF !important;
+}
+
+/* استثناء من §79: هذه المحدِّدات خلفيتها الفعلية ثابتة في الوضع الداكن وهي
+   --clr-primary الفاتح (#5CC49A تقريبًا) لا أخضر داكن فعليًا، ففرض الأبيض
+   أعلاه ينتج نصًّا شبه غير مرئي (تباين ~2:1-2.9:1)، مُشخَّص وتحقّق منه عبر
+   تدقيق Playwright حي (2026-07-22).
+   ملاحظة: .kng-source-btn استُهدفت هنا بحالتها is-active فقط (أسفل)، لا
+   الأساسية (خلفية شفافة سليمة). .ikm-conn-node أُصلحت من جذرها في
+   islamic-knowledge-map.css (متغيرات --ikm-domain-bg الناقصة لستة نطاقات)
+   لا هنا، لأن خلفيتها الحقيقية بيانات لكل نطاق لا --clr-primary. */
+html[data-theme="dark"] .lsw-featured__now,
+html[data-theme="dark"] .lsw-featured__cta,
+html[data-theme="dark"] .ar-contribute-banner__btn,
+html[data-theme="dark"] .hadith-books-banner__btn,
+html[data-theme="dark"] .notif-saved,
+html[data-theme="dark"] .isp-chip,
+html[data-theme="dark"] .trp-tab,
+html[data-theme="dark"] .trp-submit-btn,
+html[data-theme="dark"] .qzg-btn-primary,
+html[data-theme="dark"] .lpp-cat-btn {
+  color: var(--text-on-primary, #173D35) !important;
+}
+
+/* .kng-source-btn.is-active: نفس علّة §79، لكن محدِّدها الفعلي بحالة
+   is-active تحديدًا (الحالة الافتراضية بخلفية شفافة سليمة، لا تُمس). */
+html[data-theme="dark"] .kng-source-btn.is-active {
+  color: var(--text-on-primary, #173D35) !important;
+}
+
+/* .ar-thesis-badge--phd: خلفيتها الفعلية في الوضع الداكن #4BA882 (قيمة
+   مختلفة عن --clr-primary، مصدرها --majalis-emerald-deep غير معروف
+   السلسلة الدقيقة)؛ #173D35 يحقق ٤.١١:١ فقط (دون عتبة النص العادي)،
+   فاستُخدم لون أدكن مخصص (٥.٨:١) بدل إعادة استخدام --text-on-primary. */
+html[data-theme="dark"] .ar-thesis-badge--phd {
+  color: #0B2119 !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
