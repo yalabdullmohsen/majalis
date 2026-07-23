@@ -1428,7 +1428,7 @@ async function searchHadithFallback(term: string) {
       supabase
         .from("verified_hadith_items")
         .select("id, title, text, narrator, collection, grade")
-        .eq("status", "published")
+        .eq("verification_status", "verified")
         .or(orIlikeFilter(["title", "text", "narrator"], chunk))
         .limit(10)
     )
@@ -1450,7 +1450,7 @@ async function searchStoriesFallback(term: string) {
       supabase
         .from("akp_stories")
         .select("id, title, topic, summary, category, source_name")
-        .eq("status", "published")
+        .eq("verification_status", "verified")
         .or(orIlikeFilter(["title", "topic", "summary"], chunk))
         .limit(10)
     )
