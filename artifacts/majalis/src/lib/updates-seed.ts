@@ -498,7 +498,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     title: "تحديث: قرارات المجمع الفقهي — 17 قراراً",
     summary: "إضافة 5 قرارات: حكم تغيير الجنس، البيع بالتقسيط، التبرع بالدم وبيعه، صيام المناطق القطبية، شهادات الحلال.",
     update_type: "قرار",
-    source_url: "/fiqh",
+    source_url: "/fiqh-council",
     published_at: "2026-07-08T09:00:00Z",
     status: "approved",
   },
