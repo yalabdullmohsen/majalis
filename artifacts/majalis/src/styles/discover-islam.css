@@ -34,6 +34,28 @@
 .dii-path-card strong { color: var(--majalis-emerald-deep, #173D35); font-size: .95rem; }
 .dii-path-card span { font-size: .8rem; color: var(--majalis-ink-soft, #5A6660); }
 
+.dii-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: .75rem;
+}
+.dii-category-card {
+  display: flex; flex-direction: column; gap: .35rem;
+  padding: 1rem; border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.dii-category-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(14,110,82,.12); }
+.dii-category-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.25rem; height: 2.25rem; border-radius: 10px;
+  background: var(--majalis-emerald-soft, rgba(14,110,82,.1));
+  color: var(--majalis-emerald, #0E6E52);
+}
+.dii-category-card strong { color: var(--majalis-emerald-deep, #173D35); font-size: .92rem; }
+.dii-category-card span { font-size: .78rem; color: var(--majalis-ink-soft, #5A6660); line-height: 1.6; }
+
 .dii-journey { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .5rem; }
 .dii-journey-step {
   display: flex; align-items: center; gap: .75rem;
