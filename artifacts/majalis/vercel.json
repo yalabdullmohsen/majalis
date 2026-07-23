@@ -182,6 +182,11 @@
   ],
   "redirects": [
     {
+      "source": "/scholarly-research",
+      "destination": "/qa",
+      "permanent": true
+    },
+    {
       "source": "/islamic-stories",
       "destination": "/stories",
       "permanent": true

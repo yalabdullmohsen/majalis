@@ -41,7 +41,6 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/fiqh-council",       label: "المجمع الفقهي" },
   { href: "/rulings",            label: "الأحكام الشرعية" },
   { href: "/seerah",             label: "السيرة النبوية" },
-  { href: "/scholarly-research", label: "الباحث الشرعي" },
   { href: "/scholars",          label: "أعلام الإسلام" },
   { href: "/knowledge-map",     label: "الخريطة المعرفية" },
   { href: "/asma-husna",        label: "الأسماء الحسنى" },

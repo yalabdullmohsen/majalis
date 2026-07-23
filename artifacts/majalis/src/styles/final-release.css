@@ -95,6 +95,146 @@ body {
   backdrop-filter: blur(18px) saturate(1.2);
 }
 .navbar-v3::after { content: none; }
+
+/* شريط الأقسام العلوي (TopSectionBar) — أربع وجهات ثابتة، لاصق أسفل الهيدر
+   مباشرة (لا يغطيه ولا الـ Dynamic Island: يبدأ بعد ارتفاع الهيدر الكامل
+   بما فيه safe-area-inset-top الذي يحسبه الهيدر نفسه). الحالة النشطة عبر
+   لون/خلفية/حدّ فقط — لا تغيير في الحشو أو حجم الخط أو الوزن، فلا يحدث
+   Layout Shift عند التبديل بين الأقسام. */
+.top-section-bar {
+  position: sticky;
+  top: calc(var(--header-height, 4rem) + env(safe-area-inset-top, 0px));
+  z-index: 190;
+  background: color-mix(in srgb, var(--color-surface, #FAF8F5) 96%, transparent);
+  border-block-end: 1px solid var(--color-border, #E7E2D8);
+  backdrop-filter: blur(14px) saturate(1.15);
+}
+.top-section-bar__scroll {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0.4rem 0.75rem;
+  max-width: min(100%, var(--page-width));
+  margin-inline: auto;
+}
+.top-section-bar__scroll::-webkit-scrollbar { display: none; }
+.top-section-bar__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.6rem 1rem;
+  min-height: 44px;
+  border-radius: 9999px;
+  color: var(--color-text-muted, #68716D);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  flex-shrink: 0;
+  border: 1.5px solid transparent;
+  background: transparent;
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+.top-section-bar__tab:hover { color: var(--color-primary-deep, #173D35); }
+.top-section-bar__tab.is-active {
+  color: var(--color-primary-deep, #173D35);
+  background: color-mix(in srgb, var(--color-primary, #28584D) 10%, transparent);
+  border-color: color-mix(in srgb, var(--color-primary, #28584D) 22%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  .top-section-bar { background: color-mix(in srgb, #14201c 92%, transparent); }
+}
+html[data-theme="dark"] .top-section-bar {
+  background: color-mix(in srgb, #14201c 92%, transparent);
+  border-block-end-color: rgba(255,255,255,0.08);
+}
+
+/* ══ قسم الأطفال — لمسات ألطف ضمن نفس الهوية الزمردية (لا ألوان دخيلة) ══ */
+.kids-hub-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1rem 1rem 3rem;
+}
+.kids-hub-intro {
+  text-align: center;
+  padding: 1.75rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border-radius: 1.5rem;
+  background: linear-gradient(160deg, #E8F2EE 0%, #F7F4ED 100%);
+  border: 1px solid rgba(23,61,53,0.10);
+}
+.kids-hub-intro__icon { color: #28584D; margin-bottom: 0.5rem; }
+.kids-hub-intro__title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #173D35;
+  margin: 0 0 0.4rem;
+}
+.kids-hub-intro__sub {
+  font-size: 0.9rem;
+  color: #5E655F;
+  margin: 0;
+  line-height: 1.6;
+}
+.kids-hub-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+@media (min-width: 480px) {
+  .kids-hub-grid { grid-template-columns: 1fr 1fr; }
+}
+.kids-hub-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  border-radius: 1.25rem;
+  text-decoration: none;
+  min-height: 44px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.kids-hub-card:hover { transform: translateY(-1px); }
+.kids-hub-card__icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: #E8F2EE;
+  color: #28584D;
+}
+.kids-hub-card__body { flex: 1; min-width: 0; }
+.kids-hub-card__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #173D35;
+  margin: 0 0 0.2rem;
+}
+.kids-hub-card__desc {
+  font-size: 0.8rem;
+  color: #68716D;
+  margin: 0;
+  line-height: 1.5;
+}
+.kids-hub-card__chevron { flex-shrink: 0; color: #A8B5AE; }
+
+html[data-theme="dark"] .kids-hub-intro {
+  background: linear-gradient(160deg, #17251f 0%, #1a2620 100%);
+  border-color: rgba(255,255,255,0.08);
+}
+html[data-theme="dark"] .kids-hub-intro__title,
+html[data-theme="dark"] .kids-hub-card__title { color: #E9F3EE; }
+html[data-theme="dark"] .kids-hub-intro__sub,
+html[data-theme="dark"] .kids-hub-card__desc { color: #A8B5AE; }
+html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1); color: #7ED4B5; }
 .navbar-v3__inner {
   width: min(100%, var(--page-width));
   min-height: var(--header-height);
