@@ -158,10 +158,22 @@ export default function ProphetsFamilyTreePage() {
   const svgH = maxY - minY + 80;
 
   // ── تحكم Zoom/Pan ──────────────────────────────────────────────────────────
+  // القيمة الافتراضية 0.75 لا تلائم الجوال: عقد الشجرة تبدأ من إحداثيات x
+  // بعيدة (500px+) في نظام الإحداثيات الأصلي، فتظل خارج نافذة عرض 375px
+  // تمامًا ما لم يُحسب تكبير/تحريك ابتدائي يناسب عرض الحاوية الفعلي.
+  const containerRef    = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.75);
   const [pan, setPan]   = useState({ x: 40, y: 40 });
   const isDragging      = useRef(false);
   const dragStart       = useRef({ x: 0, y: 0, px: 0, py: 0 });
+
+  useEffect(() => {
+    const w = containerRef.current?.clientWidth;
+    if (!w) return;
+    const fitScale = Math.min(0.75, Math.max(0.3, w / svgW));
+    setScale(fitScale);
+    setPan({ x: 20, y: 20 });
+  }, []);
 
   const [selected, setSelected] = useState<string | null>(null);
 
@@ -268,6 +280,7 @@ export default function ProphetsFamilyTreePage() {
           الأهم فعليًا) له بديل كامل بلوحة المفاتيح عبر زرّي "تكبير"/"تصغير"
           الظاهرين (button حقيقي)، فلا حظر فعلي للوصول للمحتوى. */}
       <div
+        ref={containerRef}
         style={{
           overflow: "hidden", cursor: "grab", userSelect: "none",
           height: "calc(100vh - 130px)",
@@ -285,7 +298,23 @@ export default function ProphetsFamilyTreePage() {
         <svg
           width={svgW * scale + 80}
           height={svgH * scale + 80}
-          style={{ transform: `translate(${pan.x}px,${pan.y}px)`, display: "block" }}
+          style={{
+            transform: `translate(${pan.x}px,${pan.y}px)`,
+            display: "block",
+            // يُلغي قاعدة svg{max-width:100%;height:auto} العامة (index.css)
+            // المخصَّصة لأيقونات/رسوم عادية؛ هذه لوحة قماشية قابلة للسحب
+            // بأبعادها الحقيقية بالبكسل تتحكم بها منطق pan/scale في JS، فتقييدها
+            // بعرض الحاوية يُفسد حساب pan/scale ويُخفي الشجرة عن الجوال بالكامل.
+            maxWidth: "none",
+            // position:absolute + top/left:0 يُخرج SVG من تدفق dir="rtl" الموروث
+            // من الحاوية الأب — بلا هذا، يُحاذي المتصفح الصندوق العريض (1300px+)
+            // لحافة الحاوية اليمنى تلقائيًا فيدفع محتواه (المرتَّب بإحداثيات x
+            // تصاعدية من الصفر) بالكامل خارج نافذة العرض على الجوال (375px)،
+            // فتظهر الشجرة فارغة تمامًا رغم أن pan/scale صحيحان حسابيًا.
+            position: "absolute",
+            top: 0,
+            left: 0,
+          }}
         >
           <defs>
             <filter id="glow">
