@@ -634,7 +634,7 @@ export async function adminGetDashboardStats() {
     supabase.from("lessons").select("activity_type, is_course, status"),
     supabase.from("lessons").select("id, title, updated_at, activity_type").order("updated_at", { ascending: false }).limit(6),
     supabase.from("content_views").select("content_type, content_id").eq("content_type", "lesson").order("viewed_at", { ascending: false }).limit(300),
-    supabase.from("search_queries").select("query").order("searched_at", { ascending: false }).limit(200),
+    supabase.from("search_queries").select("query").order("created_at", { ascending: false }).limit(200),
   ]);
 
   const rows = lessonRows || [];
