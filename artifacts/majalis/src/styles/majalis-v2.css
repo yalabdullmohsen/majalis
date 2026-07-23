@@ -163,12 +163,12 @@
 .text-v2-display { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; line-height: 1.15; color: var(--v2-ink); letter-spacing: -0.02em; }
 .text-v2-h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; line-height: 1.2; color: var(--v2-ink); }
 .text-v2-h2 { font-size: clamp(1.375rem, 3vw, 2rem);  font-weight: 700; line-height: 1.3; color: var(--v2-ink); }
-.text-v2-h3 { font-size: 1.25rem; font-weight: 700; line-height: 1.4; color: var(--v2-ink); }
-.text-v2-body { font-size: 1rem; line-height: 1.7; color: var(--v2-ink-2); }
-.text-v2-small { font-size: 0.875rem; line-height: 1.55; color: var(--v2-ink-2); }
-.text-v2-caption { font-size: 0.75rem; line-height: 1.45; color: var(--v2-ink-3); }
+.text-v2-h3 { font-size: var(--ds-text-xl); font-weight: 700; line-height: 1.4; color: var(--v2-ink); }
+.text-v2-body { font-size: var(--ds-text-base); line-height: 1.7; color: var(--v2-ink-2); }
+.text-v2-small { font-size: var(--ds-text-sm); line-height: 1.55; color: var(--v2-ink-2); }
+.text-v2-caption { font-size: var(--ds-text-xs); line-height: 1.45; color: var(--v2-ink-3); }
 .text-v2-reading {
-  font-size: 1.125rem;
+  font-size: var(--ds-text-lg);
   line-height: 2;
   color: var(--v2-ink);
   max-width: 72ch;
@@ -176,7 +176,7 @@
 }
 .text-v2-quran {
   font-family: var(--font-quran, "Amiri Quran", serif);
-  font-size: 1.5rem;
+  font-size: var(--ds-text-2xl);
   line-height: 2.1;
   color: var(--v2-ink);
   direction: rtl;
@@ -339,7 +339,7 @@
 }
 .empty-v2__icon { font-size: 2.5rem; opacity: 0.5; }
 .empty-v2__title { font-size: 1.1rem; font-weight: 700; color: var(--v2-ink-2); margin: 0; }
-.empty-v2__desc { font-size: 0.875rem; line-height: 1.65; max-width: 40ch; margin: 0; }
+.empty-v2__desc { font-size: var(--ds-text-sm); line-height: 1.65; max-width: 40ch; margin: 0; }
 .empty-v2__action { margin-top: 0.5rem; }
 
 /* ── 12. Section Layout v2 ── */
@@ -458,7 +458,7 @@
 .tabs-v2__tab {
   position: relative;
   padding: 0.625rem 1rem;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: 500;
   color: var(--v2-ink-2);
   background: none;
@@ -522,7 +522,7 @@
   gap: 0.625rem;
   padding: 0.875rem 1rem;
   border-radius: var(--v2-r-md);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   box-shadow: var(--v2-shadow-3);
   max-width: 360px;
   direction: rtl;
@@ -557,7 +557,7 @@
   pointer-events: none;
 }
 .page-hero-v2__eyebrow {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -572,7 +572,7 @@
   color: #fff;
 }
 .page-hero-v2__subtitle {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   line-height: 1.75;
   color: rgba(255,255,255,0.82);
   margin: 0;
@@ -861,7 +861,7 @@
   background: var(--msk-accent, var(--majalis-emerald));
 }
 .msk-featured-card__icon {
-  font-size: 1.5rem;
+  font-size: var(--ds-text-2xl);
   line-height: 1;
 }
 .msk-featured-card__badge {
@@ -893,7 +893,7 @@
   padding: 1rem;
 }
 .msk-numbered-card__title {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-weight: 700;
   color: var(--msk-text, #202725);
   margin: 0 0 0.75rem;
@@ -919,7 +919,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   color: #FFFFFF;
   margin-top: 0.1rem;
@@ -1411,7 +1411,7 @@
 }
 .achievement-card__name {
   font-family: var(--mj-font-display) !important;
-  font-size: 1.5rem;
+  font-size: var(--ds-text-2xl);
   font-weight: 700;
   color: var(--mj-emerald-950, #173D35);
   border-bottom: 1px solid rgba(23,61,53,0.20);
@@ -2394,7 +2394,7 @@ table th {
   to   { opacity: 1; transform: translateY(0); }
 }
 .pt-hero__hint {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--majalis-ink-muted, #9BA3B5);
   margin-top: 0.25rem;
 }
@@ -2535,7 +2535,7 @@ table th {
   margin: 0;
 }
 .prophets-seerah-bridge__arrow {
-  font-size: 1.25rem;
+  font-size: var(--ds-text-xl);
   color: var(--majalis-brass, #28584D);
   flex-shrink: 0;
   transition: transform 0.2s;
@@ -2685,7 +2685,7 @@ table th {
   border: none;
   color: var(--majalis-ink-muted);
   cursor: pointer;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   padding: 0.25rem;
 }
 
@@ -2731,7 +2731,7 @@ table th {
   transition: background 0.15s;
 }
 .nh-row__body { flex: 1; min-width: 0; }
-.nh-row__title { font-size: 0.875rem; font-weight: 600; color: var(--majalis-ink, #EDE9DD); margin-bottom: 0.15rem; }
+.nh-row__title { font-size: var(--ds-text-sm); font-weight: 600; color: var(--majalis-ink, #EDE9DD); margin-bottom: 0.15rem; }
 .nh-row--read .nh-row__title { color: var(--majalis-ink-soft, #C9C5B8); font-weight: 400; }
 .nh-row__body-text { font-size: 0.78rem; color: var(--majalis-ink-soft, #C9C5B8); margin-bottom: 0.2rem; line-height: 1.5; }
 .nh-row__meta { font-size: 0.68rem; color: var(--majalis-ink-muted, #9BA3B5); }
@@ -2755,7 +2755,7 @@ table th {
 }
 .nh-action:hover { color: var(--majalis-ink); }
 .nh-action--del:hover { color: var(--msk-red, #C1595A); }
-.nh-empty { padding: 2rem; text-align: center; color: var(--majalis-ink-muted, #9BA3B5); font-size: 0.875rem; }
+.nh-empty { padding: 2rem; text-align: center; color: var(--majalis-ink-muted, #9BA3B5); font-size: var(--ds-text-sm); }
 /* ══ نهاية تاريخ الإشعارات ════════════════════════════════════════════════ */
 
 /* ══ تبويبات الدروس — override للتصميم الداكن ══════════════════════════════ */
@@ -2911,7 +2911,7 @@ table th {
   border-radius: 2px;
   transition: width 0.3s;
 }
-.hcw-card__pct { font-size: 0.75rem; opacity: 0.65; }
+.hcw-card__pct { font-size: var(--ds-text-xs); opacity: 0.65; }
 .hcw-card__go { flex-shrink: 0; opacity: 0.4; }
 .hcw-card--skeleton {
   height: 76px;
@@ -3046,11 +3046,11 @@ table th {
    inline style على العنصر مباشرة (AccountDeletionPage.tsx) — يتفوّق دومًا
    بصرف النظر عن أي غموض في الـcascade. هذه القاعدة أُبقيت كخط دفاع ثانٍ
    لا كإصلاح أساسي. */
-.accd-hero h1 { font-size: 1.5rem; color: #DC2626 !important; }
+.accd-hero h1 { font-size: var(--ds-text-2xl); color: #DC2626 !important; }
 .accd-hero p { opacity: 0.65; margin-top: 0.4rem; }
 
 .accd-info { margin-bottom: 1.5rem; border: 1px solid rgba(220,38,38,0.2); }
-.accd-info__title { font-size: 1rem; font-weight: 700; color: #DC2626; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem; }
+.accd-info__title { font-size: var(--ds-text-base); font-weight: 700; color: #DC2626; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem; }
 .accd-info__list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.75rem; }
 .accd-info__list li { font-size: 0.9rem; padding-right: 0.75rem; }
 .accd-info__list li::before { content: "✗ "; color: #DC2626; }
@@ -3064,7 +3064,7 @@ table th {
 
 .accd-confirm { margin-bottom: 1.5rem; }
 .accd-confirm__warning { font-size: 0.92rem; margin-bottom: 1rem; }
-.accd-confirm__input { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid #DC2626; border-radius: var(--ds-radius); font-size: 1rem; text-align: right; }
+.accd-confirm__input { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid #DC2626; border-radius: var(--ds-radius); font-size: var(--ds-text-base); text-align: right; }
 .accd-confirm__error { color: #DC2626; font-size: 0.85rem; margin-top: 0.5rem; }
 .accd-confirm__btns { display: flex; gap: 0.75rem; margin-top: 1rem; }
 

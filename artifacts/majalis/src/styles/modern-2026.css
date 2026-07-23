@@ -1170,7 +1170,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 }
 
 .adhkar-focus-counter {
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: var(--txt-subdued, #5E655F);
   letter-spacing: 0.05em;
 }
@@ -1312,7 +1312,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   line-height: 1; font-variant-numeric: tabular-nums;
 }
 .adhkar-tapper__sep {
-  font-size: 1rem; color: rgba(0,0,0,0.2);
+  font-size: var(--ds-text-base); color: rgba(0,0,0,0.2);
   align-self: flex-end; margin-bottom: 0.15rem;
 }
 .adhkar-tapper__tot {
@@ -1334,7 +1334,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   margin: 0; text-align: center;
 }
 .adhkar-tapper__complete {
-  font-size: 0.875rem; font-weight: 600;
+  font-size: var(--ds-text-sm); font-weight: 600;
   color: var(--majalis-emerald, #16A34A);
   margin: 0; text-align: center;
 }
@@ -1388,7 +1388,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   border-radius: var(--ds-radius);
 }
 .adhkar-sheet-title {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-weight: 700;
   color: var(--txt-primary, #202725);
   text-align: center;
@@ -1416,7 +1416,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   justify-content: space-between;
   align-items: flex-start;
   gap: 1rem;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   padding: 0.5rem 0;
   border-bottom: 1px solid var(--majalis-line, #e5e7eb);
 }
@@ -1614,7 +1614,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--txt-secondary, #6b7280);
   background: var(--surface-2, #f4f4f4);
   padding: 0.15rem 0.5rem;
@@ -1741,7 +1741,7 @@ p { line-height: var(--lh-normal, 1.65); }
 .content-detail-body p {
   line-height: 1.85;
   color: #1E1E1E;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
 }
 
 /* ─── ضمان النص الأبيض على شريط القراءة ─── */

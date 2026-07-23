@@ -923,7 +923,7 @@ input, textarea, select { font-family: inherit; }
 
 .home-hero h1 {
   font-family: var(--font-body);
-  font-size: 1.5rem;
+  font-size: var(--ds-text-2xl);
   font-weight: 700;
   line-height: 1.45;
   max-width: 800px;
@@ -970,7 +970,7 @@ input, textarea, select { font-family: inherit; }
   outline: 0;
   color: var(--majalis-ink);
   background: transparent;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   padding: 0.85rem 0.2rem;
 }
 
@@ -1609,7 +1609,7 @@ input, textarea, select { font-family: inherit; }
   }
 
   .home-hero h1 {
-    font-size: 1.5rem;
+    font-size: var(--ds-text-2xl);
   }
 
   .home-search {
@@ -1733,7 +1733,7 @@ input, textarea, select { font-family: inherit; }
 
 .assistant-reply-title {
   margin: 0;
-  font-size: 1.125rem;
+  font-size: var(--ds-text-lg);
   font-weight: 700;
   line-height: 1.85;
   color: var(--majalis-emerald-deep);
@@ -1741,7 +1741,7 @@ input, textarea, select { font-family: inherit; }
 
 .assistant-reply-line {
   margin: 0;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   line-height: 1.85;
   color: var(--majalis-ink);
 }
@@ -1879,7 +1879,7 @@ input, textarea, select { font-family: inherit; }
 .assistant-hero p {
   max-width: 46rem;
   color: rgba(250, 245, 234, 0.85);
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   line-height: 2;
 }
 
@@ -1940,7 +1940,7 @@ input, textarea, select { font-family: inherit; }
   background: rgba(254, 226, 226, 0.15);
   border: 1px solid rgba(254, 202, 202, 0.45);
   color: #fecaca;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
 }
 
 .assistant-quick-prompts {
@@ -2243,7 +2243,7 @@ input, textarea, select { font-family: inherit; }
 .condolence-hero p {
   max-width: 44rem;
   color: rgba(250, 245, 234, 0.84);
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   line-height: 1.85;
 }
 
@@ -2278,7 +2278,7 @@ input, textarea, select { font-family: inherit; }
 
 .condolence-panel h3 {
   color: var(--majalis-emerald-deep);
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   margin: 1.25rem 0 0.75rem;
 }
 
@@ -2611,7 +2611,7 @@ input, textarea, select { font-family: inherit; }
   border: none;
   cursor: pointer;
   font-family: inherit;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: 700;
   white-space: nowrap;
 }
@@ -2712,7 +2712,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .library-parts {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
 }
 
 .library-detail-read {
@@ -2732,7 +2732,7 @@ input, textarea, select { font-family: inherit; }
 
 .library-detail-note {
   margin-top: 1rem;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
 }
 
 
@@ -2747,13 +2747,13 @@ input, textarea, select { font-family: inherit; }
 .page-card-header p {
   font-weight: 700;
   color: var(--majalis-emerald-deep);
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   margin: 0;
   font-family: var(--font-body);
 }
 
 .page-tag {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   padding: 0.125rem 0.5rem;
   border-radius: var(--ds-radius-xs);
   background: var(--majalis-sage);
@@ -2782,7 +2782,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .page-soft-tag {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   padding: 0.125rem 0.5rem;
   border-radius: var(--ds-radius-xs);
   border: 1px solid var(--msk-border, #E7E2D8);
@@ -2791,7 +2791,7 @@ input, textarea, select { font-family: inherit; }
 
 .page-action-btn {
   margin-right: auto;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   padding: 0.375rem 0.75rem;
 }
 
@@ -2827,7 +2827,7 @@ input, textarea, select { font-family: inherit; }
 .sheikh-name {
   font-weight: 700;
   color: var(--majalis-emerald-deep);
-  font-size: 1.0625rem;
+  font-size: var(--ds-text-md);
   margin: 0;
   font-family: var(--font-body);
 }
@@ -3056,7 +3056,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .qa-item__category {
-  font-size: 0.6875rem;
+  font-size: var(--ds-text-2xs);
   color: var(--majalis-emerald-deep);
   background: var(--majalis-sage);
   padding: 0.1rem 0.5rem;
@@ -3095,14 +3095,14 @@ input, textarea, select { font-family: inherit; }
 
 .qa-item__evidence-label {
   margin: 0 0 0.375rem;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   color: var(--majalis-emerald-deep);
 }
 
 .qa-item__evidence p:last-child {
   margin: 0;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   line-height: 1.8;
   white-space: pre-wrap;
 }
@@ -3114,7 +3114,7 @@ input, textarea, select { font-family: inherit; }
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: 0.875rem;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--msk-text-2, #68716D);
 }
 
@@ -3220,7 +3220,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .search-result-meta {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--majalis-brass-deep);
   white-space: nowrap;
 }
@@ -3801,7 +3801,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .condolences-block h2 {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-weight: 700;
   color: var(--majalis-emerald-deep);
   margin: 0 0 0.875rem;
@@ -3880,7 +3880,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .cond-field span {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   color: var(--msk-text-2, #68716D);
 }
@@ -3895,7 +3895,7 @@ input, textarea, select { font-family: inherit; }
   background: transparent;
   color: var(--majalis-ink);
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   outline: none;
 }
 
@@ -3956,7 +3956,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .cond-preview-title {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-weight: 700;
   color: var(--majalis-ink);
   margin: 0 0 0.75rem;
@@ -4167,7 +4167,7 @@ input, textarea, select { font-family: inherit; }
 .site-brand-name {
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 1.0625rem;
+  font-size: var(--ds-text-md);
   white-space: nowrap;
   color: var(--majalis-emerald-deep);
   letter-spacing: 0.03em;
@@ -4267,7 +4267,7 @@ input, textarea, select { font-family: inherit; }
 
 .lesson-card-title {
   margin: 0;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-weight: 700;
   color: var(--majalis-ink);
 }
@@ -4281,7 +4281,7 @@ input, textarea, select { font-family: inherit; }
 
 .lesson-card-label {
   display: block;
-  font-size: 0.6875rem;
+  font-size: var(--ds-text-2xs);
   color: var(--msk-text-2, #68716D);
   margin-bottom: 0.15rem;
 }
@@ -4729,7 +4729,7 @@ input, textarea, select { font-family: inherit; }
 .la-page-lead {
   max-width: 42rem;
   color: rgba(250, 245, 234, 0.88);
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   line-height: 1.85;
 }
 
@@ -4750,7 +4750,7 @@ input, textarea, select { font-family: inherit; }
   border-radius: 999px;
   background: rgba(22, 78, 60, 0.08);
   border: 1px solid rgba(22, 78, 60, 0.14);
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--majalis-emerald-deep);
   font-weight: 700;
 }
@@ -5463,7 +5463,7 @@ input, textarea, select { font-family: inherit; }
   }
 
   .assistant-title {
-    font-size: 1.25rem;
+    font-size: var(--ds-text-xl);
   }
 
   .assistant-message-reply {
@@ -5580,7 +5580,7 @@ input, textarea, select { font-family: inherit; }
 
 .prayer-status-block strong {
   color: var(--majalis-emerald-deep);
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   line-height: 1.45;
 }
 
@@ -5727,7 +5727,7 @@ input, textarea, select { font-family: inherit; }
 
 .home-kuwait-card h3 {
   color: var(--majalis-emerald-deep);
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   line-height: 1.5;
 }
 
@@ -5975,7 +5975,7 @@ input, textarea, select { font-family: inherit; }
 .cond-download-btn,
 .cards-download-btn {
   width: 100%;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   padding-block: 0.85rem;
 }
 
@@ -5989,7 +5989,7 @@ input, textarea, select { font-family: inherit; }
 .cond-preview-title {
   align-self: flex-start;
   color: var(--majalis-emerald-deep);
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
 }
 
 .cond-bw-logo {
@@ -6018,7 +6018,7 @@ input, textarea, select { font-family: inherit; }
 
 .cards-panel h2 {
   color: var(--majalis-ink);
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   margin-bottom: 0.75rem;
 }
 
@@ -6031,7 +6031,7 @@ input, textarea, select { font-family: inherit; }
   margin-bottom: 0.65rem;
   background: var(--majalis-parchment-deep);
   color: var(--majalis-ink);
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   line-height: 1.8;
   outline: none;
 }
@@ -6093,7 +6093,7 @@ input, textarea, select { font-family: inherit; }
 
 .cards-preview-wrap h2 {
   color: var(--majalis-emerald-deep);
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   margin-bottom: 0.75rem;
 }
 
@@ -6122,7 +6122,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .cards-export-source {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   text-align: center;
   padding-top: 1rem;
   width: 65%;
@@ -6681,7 +6681,7 @@ input, textarea, select { font-family: inherit; }
 
 .content-mini-card__meta {
   margin: 0;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--msk-text-2, #68716D);
   display: flex;
   gap: 0.5rem;
@@ -6719,7 +6719,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .content-submit-panel h2 {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   color: var(--majalis-emerald-deep);
   margin: 0 0 1rem;
 }
@@ -6749,13 +6749,13 @@ input, textarea, select { font-family: inherit; }
 
 .content-submit-error {
   color: #b91c1c;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   margin-bottom: 0.75rem;
 }
 
 .content-submit-success {
   color: var(--majalis-emerald-deep);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
 }
 
 /* ── Template actions ── */
@@ -6892,7 +6892,7 @@ input, textarea, select { font-family: inherit; }
   text-align: center;
   color: var(--mn-text-default);
   padding: 2rem 1rem;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
 }
 
 .notif-item {
@@ -6911,7 +6911,7 @@ input, textarea, select { font-family: inherit; }
 
 .notif-item__title {
   margin: 0;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: 600;
   color: var(--majalis-ink);
   line-height: 1.5;
@@ -7032,7 +7032,7 @@ input, textarea, select { font-family: inherit; }
   gap: 0.5rem;
   padding: 0.55rem 0.75rem;
   border-radius: 0.45rem;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: 600;
   font-family: inherit;
   color: var(--majalis-ink);
@@ -7145,7 +7145,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .home-feature-card h3 {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   margin-bottom: 0.35rem;
 }
 
@@ -7251,7 +7251,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .search-results-group-title {
-  font-size: 1.125rem;
+  font-size: var(--ds-text-lg);
   font-weight: 700;
   color: var(--majalis-emerald-deep);
   margin: 0 0 0.875rem;
@@ -7295,7 +7295,7 @@ input, textarea, select { font-family: inherit; }
 
 .lesson-card-pro__sheikh {
   margin: 0 0 0.35rem;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: var(--majalis-brass-deep);
   font-weight: 700;
 }
@@ -7320,7 +7320,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .lesson-card-pro__meta dt {
-  font-size: 0.6875rem;
+  font-size: var(--ds-text-2xs);
   color: var(--msk-text-2, #68716D);
   margin-bottom: 0.15rem;
   font-weight: 600;
@@ -7328,14 +7328,14 @@ input, textarea, select { font-family: inherit; }
 
 .lesson-card-pro__meta dd {
   margin: 0;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: 700;
   color: var(--majalis-ink);
 }
 
 .lesson-card-pro__desc {
   margin: 0;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: var(--msk-text-2, #68716D);
   line-height: 1.75;
 }
@@ -7399,7 +7399,7 @@ input, textarea, select { font-family: inherit; }
 .lesson-detail-back {
   display: inline-block;
   margin-bottom: 1.25rem;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: var(--majalis-brass-deep);
   text-decoration: none;
   font-weight: 700;
@@ -7444,7 +7444,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .lesson-detail-body h2 {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   margin: 0 0 0.5rem;
   color: var(--majalis-emerald-deep);
 }
@@ -7480,7 +7480,7 @@ input, textarea, select { font-family: inherit; }
   color: var(--msk-text-2, #68716D);
   border-radius: 999px;
   padding: 0.45rem 1rem;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: 700;
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
@@ -7543,7 +7543,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .sheikh-detail-badge {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   padding: 0.25rem 0.75rem;
   border-radius: 999px;
   background: var(--majalis-sage);
@@ -7570,7 +7570,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .sheikh-detail-section-title {
-  font-size: 1.125rem;
+  font-size: var(--ds-text-lg);
   font-weight: 700;
   color: var(--majalis-emerald-deep);
   margin: 0 0 1rem;
@@ -7619,14 +7619,14 @@ input, textarea, select { font-family: inherit; }
   margin: 0;
   color: var(--msk-text-2, #68716D);
   line-height: 1.75;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
 }
 
 .sheikh-series-list {
   margin: 0;
   padding-right: 1.1rem;
   color: var(--majalis-ink);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   line-height: 1.75;
 }
 
@@ -7680,7 +7680,7 @@ input, textarea, select { font-family: inherit; }
   border-radius: 0.55rem;
   cursor: pointer;
   padding: 0.3rem 0.65rem;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   font-family: inherit;
 }
@@ -7708,7 +7708,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 
 .search-suggestions-group-label {
   margin: 0.35rem 0.5rem 0.25rem;
-  font-size: 0.6875rem;
+  font-size: var(--ds-text-2xs);
   font-weight: 700;
   color: var(--msk-text-2, #68716D);
 }
@@ -7735,7 +7735,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .search-suggestion-meta {
-  font-size: 0.6875rem;
+  font-size: var(--ds-text-2xs);
   color: var(--msk-text-2, #68716D);
 }
 
@@ -7923,7 +7923,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .reading-toolbar__size {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   color: var(--msk-text-2, #68716D);
   min-width: 2.5rem;
@@ -7969,7 +7969,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   flex-wrap: wrap;
 }
 .hadith-stat {
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: var(--msk-text-2, #68716D);
 }
 .hadith-stat strong {
@@ -8155,7 +8155,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   border-inline-start: 4px solid var(--majalis-accent, #2563eb);
   background: var(--majalis-surface-2, #f8fafc);
   border-radius: 0 6px 6px 0;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   line-height: 2;
   color: var(--majalis-ink);
   font-weight: 500;
@@ -8278,7 +8278,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   border-radius: 999px;
   width: 2rem;
   height: 2rem;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   cursor: pointer;
   color: var(--msk-text-2, #68716D);
   display: flex;
@@ -8296,7 +8296,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   line-height: 1.5;
 }
 .hadith-modal__chapter {
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: var(--msk-text-2, #68716D);
   margin: 0;
   font-style: italic;
@@ -8327,7 +8327,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   padding: 0.6rem 0.85rem;
 }
 .hadith-modal__meta-item strong {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--msk-text-2, #68716D);
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -8343,7 +8343,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   padding: 1rem 1.25rem;
 }
 .hadith-modal__explanation h3 {
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: 700;
   color: #1d4ed8;
   margin: 0 0 0.5rem;
@@ -8443,7 +8443,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .hadith-section-subtitle {
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: var(--msk-text-2, #68716D);
   margin: 0.25rem 0 0;
   line-height: 1.55;
@@ -8460,7 +8460,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .story-card__title {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-weight: 700;
   color: var(--majalis-ink);
   margin: 0;
@@ -8500,7 +8500,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   border-radius: 0.3rem;
   padding: 0.15rem 0.5rem;
   font-weight: 600;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
 }
 
 .qa-card__head {
@@ -8522,7 +8522,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .qa-card__views {
-  font-size: 0.6875rem;
+  font-size: var(--ds-text-2xs);
   color: var(--msk-text-2, #68716D);
   font-weight: 700;
 }
@@ -8549,7 +8549,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 
 .qa-random-title {
   margin: 0 0 0.75rem;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   color: var(--majalis-emerald-deep);
 }
 
@@ -8568,7 +8568,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .home-daily-strip-lead {
   margin: 0.25rem 0 0;
   color: var(--msk-text-2, #68716D);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
 }
 
 .home-daily-grid {
@@ -8579,7 +8579,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 
 .home-daily-label {
   margin: 0 0 0.5rem;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   color: var(--majalis-brass-deep);
   letter-spacing: 0.02em;
@@ -8694,7 +8694,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   grid-template-columns: repeat(7, 1fr);
   gap: 0.35rem;
   margin-bottom: 0.5rem;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   color: var(--msk-text-2, #68716D);
   text-align: center;
@@ -8899,7 +8899,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .site-footer-copy {
   margin: 0;
   color: var(--msk-text-2, #68716D);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   line-height: 1.7;
 }
 
@@ -8913,7 +8913,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .site-footer-link {
   color: var(--majalis-emerald-deep);
   text-decoration: none;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: 600;
   min-height: 44px;
   display: inline-flex;
@@ -8953,7 +8953,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 
 .legal-section h2 {
   margin: 0 0 0.65rem;
-  font-size: 1.125rem;
+  font-size: var(--ds-text-lg);
   color: var(--majalis-emerald-deep);
 }
 
@@ -8988,7 +8988,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   border-bottom: 1px solid rgba(24,54,42,0.35);
   padding: 0.75rem 1rem;
   text-align: center;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: var(--majalis-emerald);
 }
 
@@ -9278,7 +9278,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 
 .sci-ann-detail__block h2 {
   margin: 0 0 0.65rem;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   color: var(--majalis-emerald-deep);
 }
 
@@ -9298,7 +9298,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .sci-ann-detail__row dt {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   color: var(--msk-text-2, #68716D);
 }
@@ -9418,7 +9418,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .lesson-unified-card__category {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   color: var(--majalis-emerald, #173D35);
 }
@@ -10093,7 +10093,7 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
 }
 
 .navbar-login--compact {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   padding: 0.35rem 0.65rem;
 }
 .navbar-admin-link {
@@ -10265,21 +10265,21 @@ body.mobile-nav-body-lock {
 
 .login-card__brand {
   margin: 0.75rem 0 0;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-weight: 700;
   color: var(--majalis-emerald-deep);
 }
 
 .login-card__title {
   margin: 1rem 0 0.35rem;
-  font-size: 1.125rem;
+  font-size: var(--ds-text-lg);
   font-weight: 700;
   color: var(--majalis-emerald-deep);
 }
 
 .login-card__subtitle {
   margin: 0;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: var(--msk-text-2, #68716D);
   line-height: 1.6;
 }
@@ -10288,7 +10288,7 @@ body.mobile-nav-body-lock {
   margin: 0 0 1rem;
   padding: 0.75rem;
   border-radius: var(--ds-radius);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   line-height: 1.6;
   text-align: center;
 }
@@ -10313,7 +10313,7 @@ body.mobile-nav-body-lock {
 .login-field label {
   display: block;
   margin-bottom: 0.35rem;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: var(--majalis-ink);
   font-weight: 600;
 }
@@ -10326,7 +10326,7 @@ body.mobile-nav-body-lock {
   border: 1px solid var(--msk-border, #E7E2D8);
   background: var(--majalis-parchment);
   color: var(--majalis-ink);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-family: inherit;
 }
 
@@ -10342,7 +10342,7 @@ body.mobile-nav-body-lock {
   border-radius: var(--ds-radius);
   background: var(--majalis-emerald);
   color: var(--majalis-parchment);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
@@ -10362,7 +10362,7 @@ body.mobile-nav-body-lock {
 }
 
 .login-back-link {
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: var(--majalis-brass-deep);
   font-weight: 700;
   text-decoration: none;
@@ -10377,7 +10377,7 @@ body.mobile-nav-body-lock {
   border-radius: 0.45rem;
   background: #fff;
   color: #991b1b;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
@@ -10585,7 +10585,7 @@ body.mobile-nav-body-lock {
   border-radius: 0.55rem;
   text-decoration: none;
   color: #4A4A55;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: 500;
   background: transparent;
   border: none;
@@ -10622,7 +10622,7 @@ body.mobile-nav-body-lock {
   flex: 1;
 }
 .side-nav-link__label {
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: inherit;
   color: inherit;
   white-space: nowrap;
@@ -10715,7 +10715,7 @@ body.side-nav-open { overflow: hidden; }
 .prayer-status-card { padding: 1.25rem; margin-bottom: 1rem; text-align: center; }
 .prayer-status-card__label { margin: 0; font-size: 0.82rem; color: var(--majalis-ink-soft); }
 .prayer-status-card h2 { margin: 0.35rem 0; color: var(--majalis-emerald-deep); }
-.prayer-status-card__countdown { font-size: 1.5rem; font-weight: 800; color: var(--majalis-brass-deep); margin: 0; }
+.prayer-status-card__countdown { font-size: var(--ds-text-2xl); font-weight: 800; color: var(--majalis-brass-deep); margin: 0; }
 .prayer-times-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); gap: 0.65rem; }
 .prayer-time-cell { padding: 0.85rem; text-align: center; }
 .prayer-time-cell.is-next { border-color: var(--majalis-emerald); background: var(--majalis-sage); }
@@ -10826,7 +10826,7 @@ body.side-nav-open { overflow: hidden; }
 .nawawi-source { font-size: 0.85rem; color: var(--majalis-brass-deep); font-weight: 700; }
 
 .lesson-unified-card--compact .lesson-unified-card__title {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
 }
 
 .home-prayer-widget {
@@ -11135,7 +11135,7 @@ body.assistant-panel-open {
   border-radius: 999px;
   background: var(--majalis-sage);
   color: var(--majalis-emerald-deep);
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   line-height: 1.4;
   overflow: hidden;
@@ -11191,7 +11191,7 @@ body.assistant-panel-open {
   background: var(--majalis-emerald-deep);
   color: #fff;
   text-decoration: none;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   transition: top 0.2s ease;
 }
 
@@ -11208,7 +11208,7 @@ body.assistant-panel-open {
   background: transparent;
   color: var(--msk-text-2, #68716D);
   font-family: inherit;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   cursor: pointer;
   text-align: right;
 }
@@ -11382,7 +11382,7 @@ body.assistant-panel-open {
 }
 
 .content-detail-meta {
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: var(--ink-soft, #5c5348);
   margin-bottom: 0.5rem;
 }
@@ -11410,7 +11410,7 @@ body.assistant-panel-open {
 }
 
 .content-detail-heading {
-  font-size: 1.0625rem;
+  font-size: var(--ds-text-md);
   color: var(--emerald-deep, #173D35);
   margin: 1rem 0 0.5rem;
 }
@@ -11465,7 +11465,7 @@ body.assistant-panel-open {
 .content-detail-related h2,
 .content-detail-evidence h2,
 .content-detail-sources h2 {
-  font-size: 1.125rem;
+  font-size: var(--ds-text-lg);
   color: var(--emerald-deep, #173D35);
   margin-bottom: 0.75rem;
 }
@@ -11477,7 +11477,7 @@ body.assistant-panel-open {
 .content-detail-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
 }
 
 .content-detail-table th,
@@ -11582,17 +11582,17 @@ body.assistant-panel-open {
 .fiqh-council-category-name {
   color: var(--fiqh-accent, #173D35);
   font-weight: 700;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
 }
 
 .fiqh-council-category-count {
   color: var(--msk-text-2, #68716D);
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
 }
 
 .fiqh-council-filter-label {
   align-self: center;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: #6b7280;
   margin-inline-end: 0.35rem;
 }
@@ -11608,7 +11608,7 @@ body.assistant-panel-open {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: #6b7280;
 }
 
@@ -11656,7 +11656,7 @@ body.assistant-panel-open {
 .fiqh-search-label {
   display: block;
   margin-bottom: 0.35rem;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: #6b7280;
 }
 
@@ -11682,11 +11682,11 @@ body.assistant-panel-open {
 
 .fiqh-search-result strong {
   color: var(--fiqh-accent, #173D35);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
 }
 
 .fiqh-search-result span {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: #6b7280;
 }
 
@@ -11765,7 +11765,7 @@ body.assistant-panel-open {
 
 .fiqh-nawazil-desc {
   margin: 0 0 1rem;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: #5c5348;
 }
 
@@ -11790,11 +11790,11 @@ body.assistant-panel-open {
 
 .fiqh-nawazil-topic-card strong {
   color: var(--fiqh-accent, #173D35);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
 }
 
 .fiqh-nawazil-topic-card span {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: #6b7280;
 }
 
@@ -11876,18 +11876,18 @@ body.assistant-panel-open {
 
 .fiqh-compare-column h3 {
   margin: 0 0 0.5rem;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   color: var(--fiqh-accent, #173D35);
 }
 
 .fiqh-compare-meta {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: #6b7280;
   margin: 0 0 0.75rem;
 }
 
 .fiqh-compare-summary {
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   margin: 0 0 0.75rem;
 }
 
@@ -11955,12 +11955,12 @@ body.assistant-panel-open {
 
 .fiqh-admin-stat strong {
   display: block;
-  font-size: 1.25rem;
+  font-size: var(--ds-text-xl);
   color: var(--fiqh-accent, #173D35);
 }
 
 .fiqh-admin-stat span {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: #6b7280;
 }
 
@@ -11976,7 +11976,7 @@ body.assistant-panel-open {
   }
 
   .fiqh-council-subnav-link {
-    font-size: 0.75rem;
+    font-size: var(--ds-text-xs);
     padding: 0.35rem 0.65rem;
   }
 }
@@ -12013,7 +12013,7 @@ body.assistant-panel-open {
 .fiqh-research-msg {
   padding: 0.85rem 1rem;
   border-radius: var(--ds-radius-lg);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   line-height: 1.6;
 }
 
@@ -12030,7 +12030,7 @@ body.assistant-panel-open {
 
 .fiqh-research-msg-disclaimer {
   margin: 0.65rem 0 0;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: #6b7280;
   font-style: italic;
 }
@@ -12046,7 +12046,7 @@ body.assistant-panel-open {
   border: 1px solid rgba(22, 78, 60, 0.15);
   border-radius: var(--ds-radius);
   font-family: inherit;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   resize: vertical;
 }
 
@@ -12078,7 +12078,7 @@ body.assistant-panel-open {
 
 .fiqh-research-citations-title {
   margin: 0 0 0.5rem;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: var(--fiqh-accent, #173D35);
 }
 
@@ -12100,12 +12100,12 @@ body.assistant-panel-open {
 .fiqh-research-citation-link {
   color: var(--fiqh-accent, #173D35);
   text-decoration: none;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
 }
 
 .fiqh-research-citation-meta {
   margin: 0.25rem 0;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: #6b7280;
 }
 
@@ -12146,12 +12146,12 @@ body.assistant-panel-open {
 
 .fiqh-item-relations .fiqh-relations-group h3 {
   margin: 0 0 0.35rem;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: var(--fiqh-accent, #173D35);
 }
 
 .fiqh-relations-meta {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: #6b7280;
 }
 
@@ -12177,12 +12177,12 @@ body.assistant-panel-open {
   color: #fff;
   padding: 0.15rem 0.6rem;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
 }
 
 .updates-timeline-title {
-  font-size: 1.0625rem;
+  font-size: var(--ds-text-md);
   color: var(--emerald-deep, #173D35);
   margin: 0 0 0.35rem;
 }
@@ -12218,13 +12218,13 @@ body.assistant-panel-open {
 }
 
 .fiqh-issue-category {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--emerald, #28584D);
   font-weight: 600;
 }
 
 .fiqh-issue-card h2 {
-  font-size: 1.0625rem;
+  font-size: var(--ds-text-md);
   margin: 0.35rem 0;
   color: var(--emerald-deep, #173D35);
 }
@@ -12237,7 +12237,7 @@ body.assistant-panel-open {
 
 .fiqh-issue-date {
   display: block;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: #9ca3af;
   margin-top: 0.5rem;
 }
@@ -12258,7 +12258,7 @@ body.assistant-panel-open {
 
 .fiqh-issue-item-meta {
   display: block;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--ink-soft, #5c5348);
   margin-top: 0.15rem;
 }
@@ -12294,7 +12294,7 @@ body.assistant-panel-open {
 .fiqh-timeline-meta {
   display: flex;
   gap: 0.75rem;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--ink-soft, #5c5348);
   margin-bottom: 0.35rem;
 }
@@ -12364,13 +12364,13 @@ body.assistant-panel-open {
 }
 
 .fiqh-topic-section h2 {
-  font-size: 1.125rem;
+  font-size: var(--ds-text-lg);
   color: var(--emerald-deep, #173D35);
   margin: 0 0 0.75rem;
 }
 
 .fiqh-topic-subheading {
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: var(--ink-soft, #5c5348);
   margin: 0.75rem 0 0.35rem;
 }
@@ -12399,7 +12399,7 @@ body.assistant-panel-open {
 }
 
 .fiqh-stats-section h2 {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   color: var(--emerald-deep, #173D35);
   margin: 0 0 0.75rem;
 }
@@ -12410,7 +12410,7 @@ body.assistant-panel-open {
   margin: 0;
   display: grid;
   gap: 0.35rem;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
 }
 
 .fiqh-stats-list a {
@@ -12432,7 +12432,7 @@ body.assistant-panel-open {
 }
 
 .fiqh-live-block h2 {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   color: var(--emerald-deep, #173D35);
   margin: 0 0 0.75rem;
 }
@@ -12440,7 +12440,7 @@ body.assistant-panel-open {
 .fiqh-live-meta {
   display: grid;
   gap: 0.35rem;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
 }
 
 .fiqh-live-meta dt {
@@ -12450,7 +12450,7 @@ body.assistant-panel-open {
 
 .fiqh-live-unavailable {
   color: var(--ink-soft, #5c5348);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-style: italic;
 }
 
@@ -12572,7 +12572,7 @@ body.assistant-panel-open {
 .fiqh-admin-page-header p {
   margin: 0 0 1.25rem;
   color: var(--ink-soft, #5c5348);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
 }
 
 .fiqh-completion-bar {
@@ -12582,7 +12582,7 @@ body.assistant-panel-open {
 }
 
 .fiqh-completion-bar-label {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--ink-soft, #5c5348);
 }
 
@@ -12654,7 +12654,7 @@ body.assistant-panel-open {
 
 .fiqh-review-card h2 {
   margin: 0 0 0.35rem;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
 }
 
 .fiqh-review-meta {
@@ -12698,7 +12698,7 @@ body.assistant-panel-open {
 
 .fiqh-review-actions button,
 .fiqh-review-actions a {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   cursor: pointer;
 }
 
@@ -12716,14 +12716,14 @@ body.assistant-panel-open {
 
 .fiqh-quality-stat-value {
   display: block;
-  font-size: 1.5rem;
+  font-size: var(--ds-text-2xl);
   font-weight: 700;
   color: var(--emerald-deep, #173D35);
 }
 
 .fiqh-quality-stat-label {
   display: block;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--ink-soft, #5c5348);
   margin-top: 0.25rem;
 }
@@ -12734,7 +12734,7 @@ body.assistant-panel-open {
 .fiqh-quality-meta {
   padding: 1rem;
   margin-bottom: 1rem;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
 }
 
 .fiqh-quality-log-list {
@@ -13365,12 +13365,12 @@ svg {
 }
 
 .lesson-detail-stat span {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--msk-text-2, #68716D);
 }
 
 .lesson-detail-stat strong {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   color: var(--majalis-emerald-deep);
 }
 
@@ -13389,7 +13389,7 @@ svg {
 .radio-player__status {
   margin: 0.35rem 0 0.75rem;
   color: var(--msk-text-2, #68716D);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
 }
 
 .radio-player__controls {
@@ -13515,7 +13515,7 @@ body.has-assistant-fab .app-main {
 }
 
 .qa-v2-section-title {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-weight: 800;
   color: var(--majalis-emerald-deep);
   margin: 0 0 0.75rem;
@@ -13572,7 +13572,7 @@ body.has-assistant-fab .app-main {
 }
 
 .qa-v2-category-card__count {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   color: var(--mn-text-active);
   background: var(--majalis-emerald-muted);
@@ -13587,7 +13587,7 @@ body.has-assistant-fab .app-main {
 }
 
 .qa-corrections-badge {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--majalis-emerald);
   background: rgba(31,77,58,0.08);
   padding: 0.2rem 0.5rem;
@@ -13631,7 +13631,7 @@ body.has-assistant-fab .app-main {
   gap: 0.3rem;
   padding: 0.25rem 0.6rem;
   border-radius: 0.35rem;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   font-family: inherit;
   text-decoration: none;
@@ -13680,12 +13680,12 @@ body.has-assistant-fab .app-main {
 
 .lessons-v2-stat strong {
   display: block;
-  font-size: 1.25rem;
+  font-size: var(--ds-text-xl);
   color: var(--majalis-emerald-deep);
 }
 
 .lessons-v2-stat span {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--mn-text-default);
 }
 
@@ -13775,14 +13775,14 @@ body.has-assistant-fab .app-main {
 
 .lessons-v2-filters__head h2 {
   margin: 0;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   color: var(--majalis-emerald-deep);
 }
 
 .lessons-v2-filters__close {
   border: none;
   background: none;
-  font-size: 1.5rem;
+  font-size: var(--ds-text-2xl);
   cursor: pointer;
   line-height: 1;
 }
@@ -13871,7 +13871,7 @@ body.has-assistant-fab .app-main {
 }
 
 .admin-feature-status__eyebrow {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--msk-text-2, #68716D);
   margin: 0 0 0.25rem;
 }
@@ -13921,7 +13921,7 @@ body.has-assistant-fab .app-main {
   display: inline-block;
   padding: 0.15rem 0.45rem;
   border-radius: 0.35rem;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
 }
 
@@ -14009,7 +14009,7 @@ body.has-assistant-fab .app-main {
 .ds-btn:disabled { opacity: 0.48; cursor: not-allowed; transform: none !important; }
 .ds-btn-pill { border-radius: var(--ds-r-full); }
 .ds-btn-sm  { min-height: 36px; padding: 0.38rem 0.875rem; font-size: 0.8rem; }
-.ds-btn-lg  { min-height: 52px; padding: 0.75rem 1.75rem; font-size: 1rem; }
+.ds-btn-lg  { min-height: 52px; padding: 0.75rem 1.75rem; font-size: var(--ds-text-base); }
 
 .ds-btn-primary {
   background: var(--ds-gold-grad);
@@ -14484,7 +14484,7 @@ body.has-assistant-fab .app-main {
   border-bottom: 1px solid var(--majalis-line);
 }
 .kuwait-lessons-eyebrow {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -14542,7 +14542,7 @@ body.has-assistant-fab .app-main {
 }
 .kuwait-lessons-feed-wrap iframe { width: 100% !important; border: none !important; }
 .kuwait-lessons-attribution {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--msk-text-2, #68716D);
   margin-top: 0.6rem;
 }
@@ -14597,7 +14597,7 @@ body.has-assistant-fab .app-main {
   justify-content: center;
   color: #fff;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
 }
 .sheikh-card__body { flex: 1; min-width: 0; }
 .sheikh-card__name {
@@ -14610,7 +14610,7 @@ body.has-assistant-fab .app-main {
   text-overflow: ellipsis;
 }
 .sheikh-card__specialty {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--msk-text-2, #68716D);
   margin: 0 0 0.35rem;
   line-height: 1.4;
@@ -15279,7 +15279,7 @@ body.has-assistant-fab .app-main {
   padding: 10px 14px;
   border: 1px solid var(--majalis-border, #e2e8f0);
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-family: inherit;
   background: var(--majalis-surface, #fff);
   color: var(--majalis-ink, #0d1b2a);
@@ -15361,7 +15361,7 @@ body.has-assistant-fab .app-main {
   margin: 0 0 2px;
 }
 .prophet-card__pbuh {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 400;
   color: var(--majalis-ink-soft, #6b7280);
 }
@@ -15401,7 +15401,7 @@ body.has-assistant-fab .app-main {
 .prophet-card__footer {
   display: flex;
   gap: 12px;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--majalis-ink-soft, #6b7280);
 }
 
@@ -15448,7 +15448,7 @@ body.has-assistant-fab .app-main {
   margin: 0 0 4px;
 }
 .prophet-detail__title {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   color: var(--majalis-accent, #1d6fa4);
   font-weight: 600;
   margin: 0 0 8px;
@@ -15591,7 +15591,7 @@ body.has-assistant-fab .app-main {
     padding: 1.25rem;
   }
   .prophet-detail__name {
-    font-size: 1.5rem;
+    font-size: var(--ds-text-2xl);
   }
 }
 
@@ -16015,7 +16015,7 @@ body.has-assistant-fab .app-main {
   padding: 1rem 1rem 0.75rem;
   position: relative; overflow: hidden;
 }
-.qc-card__title { color: #fff; font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; }
+.qc-card__title { color: #fff; font-weight: 700; font-size: var(--ds-text-base); margin-bottom: 0.25rem; }
 .qc-card__sheikh { color: rgba(255,255,255,0.8); font-size: 0.8rem; }
 .qc-card__body { padding: 0.9rem 1rem; flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
 .qc-card__badges { display: flex; flex-wrap: wrap; gap: 0.35rem; }
@@ -16056,7 +16056,7 @@ body.has-assistant-fab .app-main {
 }
 .rec-mini-card__arrow {
   color: var(--majalis-line);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   transition: color var(--mn-transition);
 }
 .rec-mini-card:hover .rec-mini-card__arrow {
@@ -16128,10 +16128,10 @@ body.has-assistant-fab .app-main {
   border-radius: 50%;
   background: rgba(255,255,255,0.2);
   display: flex; align-items: center; justify-content: center;
-  color: #fff; font-size: 1.125rem; font-weight: 700;
+  color: #fff; font-size: var(--ds-text-lg); font-weight: 700;
   flex-shrink: 0;
 }
-.univ-card__head-en { color: rgba(255,255,255,0.8); font-size: 0.75rem; }
+.univ-card__head-en { color: rgba(255,255,255,0.8); font-size: var(--ds-text-xs); }
 
 .univ-badge {
   display: inline-flex;
@@ -16154,7 +16154,7 @@ body.has-assistant-fab .app-main {
   gap: 0.375rem;
   padding: 0.5rem 0.75rem;
   border-radius: var(--ds-radius-lg);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: 600;
   text-decoration: none;
   border: none;
@@ -16186,7 +16186,7 @@ body.has-assistant-fab .app-main {
   flex-wrap: wrap;
 }
 .compare-bar__label {
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: 600;
   color: var(--majalis-ink);
   flex-shrink: 0;
@@ -16197,7 +16197,7 @@ body.has-assistant-fab .app-main {
   gap: 0.375rem;
   background: var(--mn-surface-active);
   color: var(--mn-text-active);
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   padding: 0.25rem 0.5rem;
   border-radius: 999px;
 }
@@ -16215,7 +16215,7 @@ body.has-assistant-fab .app-main {
   background: transparent;
   border: none;
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: var(--msk-text-2, #68716D);
   padding: 0.375rem 0.5rem;
   border-radius: var(--ds-radius-sm);
@@ -16230,7 +16230,7 @@ body.has-assistant-fab .app-main {
   gap: 0.375rem;
   padding: 0.5rem 0.875rem;
   border-radius: var(--ds-radius);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: 600;
   border: none;
   cursor: pointer;
@@ -16634,7 +16634,7 @@ body.has-assistant-fab .app-main {
   border-radius: 0.6rem;
   border: 1px solid var(--majalis-line, #e5ddd0);
   background: var(--majalis-parchment, #faf5ea);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
 }
 .uc-feat__label { flex: 1; color: var(--majalis-ink, #241f18); }
 .uc-feat__status { font-size: 0.7rem; font-weight: 700; white-space: nowrap; }
@@ -16684,7 +16684,7 @@ body.has-assistant-fab .app-main {
   font-size: 0.8rem;
   color: var(--majalis-ink-soft, #5c564c);
 }
-.fip-overall strong { color: var(--majalis-emerald, #28584D); font-size: 1rem; font-variant-numeric: tabular-nums; }
+.fip-overall strong { color: var(--majalis-emerald, #28584D); font-size: var(--ds-text-base); font-variant-numeric: tabular-nums; }
 .fip-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -16701,7 +16701,7 @@ body.has-assistant-fab .app-main {
   gap: 0.75rem;
 }
 .fip-card__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; }
-.fip-card__title { margin: 0; font-size: 1rem; font-weight: 700; color: var(--majalis-emerald-deep, #173D35); line-height: 1.5; }
+.fip-card__title { margin: 0; font-size: var(--ds-text-base); font-weight: 700; color: var(--majalis-emerald-deep, #173D35); line-height: 1.5; }
 .fip-card__desc { margin: 0; font-size: 0.85rem; color: var(--majalis-ink-soft, #5c564c); line-height: 1.7; flex: 1; }
 .fip-status {
   flex-shrink: 0;
@@ -16751,7 +16751,7 @@ body.has-assistant-fab .app-main {
   padding: 0.2rem 0.7rem;
   border-radius: 999px;
   background: var(--majalis-parchment-deep, #f0e8d6);
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   color: var(--majalis-ink, #241f18);
 }
@@ -17015,7 +17015,7 @@ body.has-assistant-fab .app-main {
   display: block;
 }
 .home-story-card__arrow {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   color: var(--majalis-emerald, #173D35);
   flex-shrink: 0;
   opacity: 0.6;
@@ -17108,7 +17108,7 @@ body.has-assistant-fab .app-main {
 
 .home-learning-path-card-title {
   margin: 0 0 0.3rem;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-weight: 800;
   color: #fff;
   line-height: 1.4;
@@ -17473,7 +17473,7 @@ body.has-assistant-fab .app-main {
   border-radius: var(--ds-radius-lg);
   border: 1.5px solid var(--majalis-line, #E8E2D8);
   background: var(--majalis-panel, #fff);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: 600;
   color: var(--majalis-ink, #1A1714);
   font-family: inherit;
@@ -17724,7 +17724,7 @@ body.has-assistant-fab .app-main {
 
 .prose-content h3,
 .lesson-detail-body h3 {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-weight: 700;
   color: var(--majalis-emerald-deep, #173D35);
   margin: 1.5em 0 0.5em;
@@ -17906,7 +17906,7 @@ body.has-assistant-fab .app-main {
 
 /* رأس بطاقة الذكر */
 .adhkar-card__count {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   background: var(--majalis-emerald-soft, #EAF5EE);
   color: var(--majalis-emerald-deep, #173D35);
   padding: 0.2rem 0.6rem;
@@ -18036,7 +18036,7 @@ body.has-assistant-fab .app-main {
   font-family: var(--font-display, inherit);
 }
 .prayer-card__time {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-weight: 500;
   color: var(--msk-text-2);
   margin: 0 0 1rem;
@@ -18056,7 +18056,7 @@ body.has-assistant-fab .app-main {
   margin-bottom: 0.5rem;
 }
 .prayer-card__hint {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--msk-text-2);
   margin: 0;
 }
@@ -18100,7 +18100,7 @@ body.has-assistant-fab .app-main {
   display: flex; flex-direction: column; align-items: center;
   justify-content: center; min-height: 60dvh; text-align: center;
 }
-.prayer-times-clean__label { font-size: 0.875rem; color: var(--msk-text-2); }
+.prayer-times-clean__label { font-size: var(--ds-text-sm); color: var(--msk-text-2); }
 .prayer-times-clean__name  { font-size: 2.5rem; font-weight: 700; color: var(--msk-gold); }
 .prayer-times-clean__timer { font-size: 4rem; font-weight: 700; color: var(--msk-text); font-variant-numeric: tabular-nums; }
 .prayer-times-clean__hint  { font-size: 0.9rem; color: var(--msk-text-2); }
@@ -18157,7 +18157,7 @@ body.has-assistant-fab .app-main {
   border: 1px solid var(--majalis-line, #E7E2D8);
   background: var(--majalis-panel, #fff);
   color: var(--majalis-emerald, #173D35);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
@@ -18278,7 +18278,7 @@ body.has-assistant-fab .app-main {
   background: var(--majalis-emerald, #173D35);
   color: #fff;
   font-weight: 900;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18372,7 +18372,7 @@ body.has-assistant-fab .app-main {
   color: #fff;
 }
 .tg-banner__sub {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: rgba(255,255,255,0.8);
   margin: 0;
   line-height: 1.4;
@@ -18473,7 +18473,7 @@ body.has-assistant-fab .app-main {
 }
 .hsh-step__title {
   display: block;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: 800;
   color: #1a1a1a;
   margin-bottom: 0.25rem;
@@ -18836,7 +18836,7 @@ html[data-theme="dark"] .skeleton-base {
 .rp-plans-list { display: flex; flex-direction: column; gap: 1rem; }
 .rp-plan-card { padding: 1rem 1.1rem; }
 .rp-plan-card__head { display: flex; justify-content: space-between; align-items: center; gap: .5rem; margin-bottom: .6rem; }
-.rp-plan-card__title { font-size: 1rem; font-weight: 700; margin: 0; }
+.rp-plan-card__title { font-size: var(--ds-text-base); font-weight: 700; margin: 0; }
 .rp-badge { font-size: .72rem; font-weight: 700; padding: .2rem .6rem; border-radius: 99px; white-space: nowrap; background: var(--bg-hover, #f0f0f0); color: var(--text-muted, #6b7280); }
 .rp-badge--ahead { background: rgba(23,61,53,.12); color: #28584D; }
 .rp-badge--behind { background: rgba(190,60,40,.12); color: #B33C28; }
