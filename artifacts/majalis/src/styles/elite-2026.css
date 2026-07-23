@@ -13100,6 +13100,14 @@ a:focus-visible {
 }
 .global-back-btn:hover { opacity: 1; transform: translateY(-2px); }
 .global-back-btn:active { transform: scale(.93); }
+/* يظهر فقط بعد تمرير طفيف (راجع تعليق GlobalBackButton.tsx للسبب
+   الجذري): يمنع تراكبه مع محتوى الصفحة الحقيقي عند وضع التمرير صفر،
+   ويبقى قابلاً للنقر فقط حين ظاهر فعليًا (pointer-events). */
+.global-back-btn--hidden {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
 html[data-theme="dark"] .global-back-btn {
   background: var(--clr-surface, #1A2120) !important;
   color: var(--clr-text-1, #E5F0EC) !important;
