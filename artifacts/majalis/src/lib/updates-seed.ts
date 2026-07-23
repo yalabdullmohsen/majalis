@@ -123,7 +123,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-decision-human-cloning",
     title: "قرار جديد: تحريم الاستنساخ البشري التكاثري",
-    summary: "قرار فقهي بتحريم الاستنساخ البشري التكاثري وبيان ضوابط العلاجي.",
+    summary: "قرار فقهي بتحريم الاستنساخ البشري التكاثري وبيان ضوابط الاستنساخ العلاجي.",
     update_type: "قرار",
     source_type: "fiqh_decision",
     source_url: "/fiqh-council/issues/human-cloning",
@@ -201,7 +201,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-decision-health-insurance",
     title: "قرار جديد: حكم التأمين الصحي",
-    summary: "قرار فقهي في جواز التأمين الصحي التعاوني وضوابط التجاري.",
+    summary: "قرار فقهي في جواز التأمين الصحي التعاوني وضوابط التأمين التجاري.",
     update_type: "قرار",
     source_type: "fiqh_decision",
     source_url: "/fiqh-council/issues/health-insurance-ruling",
