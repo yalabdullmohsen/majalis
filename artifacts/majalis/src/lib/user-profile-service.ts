@@ -96,7 +96,7 @@ export async function getUserProfileStats(userId: string): Promise<ProfileStats>
   const [lessonsRes, bookmarksRes, badgesRes, pathsRes, recitationRes] = await Promise.all([
     supabase
       .from("lesson_registrations")
-      .select("id", { count: "exact", head: true })
+      .select("user_id", { count: "exact", head: true })
       .eq("user_id", userId)
       .eq("status", "completed"),
 

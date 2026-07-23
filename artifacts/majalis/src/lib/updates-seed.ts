@@ -568,7 +568,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-sheikhs-76",
     title: "تحديث: قاعدة العلماء تضم 76 عالماً",
-    summary: "إضافة 6 علماء: البخاري ومسلم وابن تيمية وابن القيم والنووي إلى قائمة أئمة الأمة الكبار.",
+    summary: "إضافة 5 علماء: البخاري ومسلم وابن تيمية وابن القيم والنووي إلى قائمة أئمة الأمة الكبار.",
     update_type: "إعلان",
     source_url: "/scholars",
     published_at: "2026-07-08T17:00:00Z",
@@ -577,7 +577,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-prophetic-medicine-46",
     title: "تحديث: الطب النبوي — 46 مادة طبية",
-    summary: "إضافة 5 مداخل: زيت الزيتون والتمر والحجامة والقرآن شفاء والصيام ونظرية الـ Autophagy.",
+    summary: "إضافة 6 مداخل: زيت الزيتون والتمر والحجامة والقرآن شفاء والصيام ونظرية الـ Autophagy.",
     update_type: "إعلان",
     source_url: "/prophetic-medicine",
     published_at: "2026-07-08T18:00:00Z",
@@ -622,7 +622,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-sheikhs-81",
     title: "تحديث: العلماء والمشايخ — 81 عالماً",
-    summary: "إضافة 7 علماء جدد: أبو داود السجستاني والترمذي وابن ماجه والبيهقي والليث بن سعد وابن قدامة وعبد الرزاق الصنعاني وابن الجوزي.",
+    summary: "إضافة 8 علماء جدد: أبو داود السجستاني والترمذي وابن ماجه والبيهقي والليث بن سعد وابن قدامة وعبد الرزاق الصنعاني وابن الجوزي.",
     update_type: "إعلان",
     source_url: "/scholars",
     published_at: "2026-07-11T10:00:00Z",
@@ -631,7 +631,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-library-148",
     title: "تحديث: المكتبة الإسلامية — 148+ كتاب",
-    summary: "إضافة 8 كتب: فتح الباري وإعلام الموقعين والأذكار النووية والمبسوط والأم والتحرير والتنوير.",
+    summary: "إضافة 6 كتب: فتح الباري وإعلام الموقعين والأذكار النووية والمبسوط والأم والتحرير والتنوير.",
     update_type: "إعلان",
     source_url: "/library",
     published_at: "2026-07-11T11:00:00Z",
@@ -685,7 +685,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-fatwas-105",
     title: "تحديث: الفتاوى الشرعية — 105 فتوى",
-    summary: "إضافة 5 فتاوى في فئات نحيفة: وقت الشاشة للأطفال، الخلاف الأسري، الحنث باليمين، النذر المشروط، إضافات الطعام (E-numbers).",
+    summary: "إضافة 5 فتاوى في فئات متنوعة: وقت الشاشة للأطفال، الخلاف الأسري، الحنث باليمين، النذر المشروط، إضافات الطعام (E-numbers).",
     update_type: "فتوى",
     source_url: "/rulings",
     published_at: "2026-07-11T17:00:00Z",
@@ -741,7 +741,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     title: "تحديث: قاعدة العلماء — 86 عالماً",
     summary: "إضافة 5 علماء: الإمام الذهبي، الإمام السيوطي، ابن حجر العسقلاني، الكاساني، الشوكاني.",
     update_type: "إعلان",
-    source_url: "/sheikhs",
+    source_url: "/scholars",
     published_at: "2026-07-11T23:00:00Z",
     status: "approved",
   },
@@ -757,7 +757,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-prophetic-medicine-80",
     title: "تحديث: الطب النبوي — 80 موضوع",
-    summary: "إضافة 4 موضوعات: الرمان وفوائده القرآنية، الصيام الصحي وجائزة نوبل 2016، السواك ومضادات البكتيريا.",
+    summary: "إضافة 3 موضوعات: الرمان وفوائده القرآنية، الصيام الصحي وجائزة نوبل 2016، السواك ومضادات البكتيريا.",
     update_type: "إعلان",
     source_url: "/prophetic-medicine",
     published_at: "2026-07-12T00:00:00Z",
@@ -777,7 +777,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     title: "تحديث: قاعدة العلماء — 91 عالماً",
     summary: "إضافة 5 علماء معاصرين وكلاسيكيين: ابن باز، ابن عثيمين، الألباني، ابن جبرين، ابن القيم الجوزية.",
     update_type: "إعلان",
-    source_url: "/sheikhs",
+    source_url: "/scholars",
     published_at: "2026-07-12T02:00:00Z",
     status: "approved",
   },
