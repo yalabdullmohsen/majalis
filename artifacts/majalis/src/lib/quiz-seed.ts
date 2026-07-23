@@ -2360,7 +2360,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "section": "العقيدة",
     "category": "الملائكة",
     "level": "سهل",
-    "question": "من خُلق الملائكة من نور؟",
+    "question": "مِمَّ خُلقت الملائكة؟",
     "answer": "خُلقت الملائكة من نور كما في صحيح مسلم"
   },
   {
