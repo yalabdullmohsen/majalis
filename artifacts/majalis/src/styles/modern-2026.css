@@ -202,7 +202,12 @@ body {
 .txt-inverse   { color: var(--txt-inverse)   !important; }
 
 /* ══ 5. Headings في صفحات الثيم الفاتح ═════════════════════════════════════ */
-.page-shell h1,
+/* ⚠️ حُذف هنا محدد ".page-shell h1," الفضفاض الذي كان يسبق النسخة المستثناة
+   أدناه في نفس قائمة المحددات — لأن قوائم محددات CSS تُجمَع بـ"أو"، فأي h1
+   يطابق المحدد الفضفاض بصرف النظر عن كل not() في المحدد الآخر، فيُلغي كل
+   الاستثناءات فعليًا (اكتُشف عبر AmrBilMarufPage/ProphetsFamilyTreePage —
+   نص أبيض مقصود فوق خلفية بطل داكنة يظهر شبه مختفٍ). قائمة استثناءات h1
+   الآن مطابقة بالحرف لنسختها الكاملة في majalis-v2.css. */
 .page-shell h2,
 .page-shell h3,
 .page-shell h4,
@@ -214,7 +219,7 @@ body {
 .ds-page h4,
 .ds-page h5,
 .ds-page h6,
-.page-shell h1:not(.an-hero__title):not(.sch-profile-hero__name),
+.page-shell h1:not(.ds-page-header__title):not(.cards-page-title):not(.search-page-title):not(.ds-section__title):not(.fqh-hub-hero__title):not(.twh-hub-hero__title):not(.akl-hero__title):not(.arkan-hero__title):not(.ds-hero__title):not(.duas-hero__title):not(.mk-hero__title):not(.sm-hero__title):not(.an-hero__title):not(.sch-profile-hero__name):not(.prophet-detail-lux__name):not(.amr-hero__title):not(.pft-hero__title),
 /* لائحة الاستثناءات مطابقة بالحرف لنسختها الكاملة في majalis-v2.css (نفس نمط
    عناوين الأقسام "الشارة" — نص أبيض على شريط أخضر داكن). كانت هذه النسخة هنا
    قد تخلّفت عن التحديثات اللاحقة (تفتقد lessons-v2/lessons-past وغيرها)، فكانت
