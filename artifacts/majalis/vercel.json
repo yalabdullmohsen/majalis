@@ -4,6 +4,12 @@
   "installCommand": "corepack enable && cd ../.. && corepack pnpm install --frozen-lockfile --prod=false",
   "buildCommand": "pnpm run build",
   "outputDirectory": "dist",
+  "git": {
+    "deploymentEnabled": {
+      "*": false,
+      "main": true
+    }
+  },
   "functions": {
     "api/index.js": {
       "maxDuration": 60,
