@@ -10011,3 +10011,50 @@ c.parent_id=p.id WHERE c.status='draft' ORDER BY p.slug, c.sort_order`
 الشامل، وثّق ذلك بوضوح ("لا أولوية تالية قابلة للتنفيذ الآن") بدل اختلاق
 مهمة، عملاً بحالة "لا يوجد محتوى معتمد جاهز للنقل" الموثَّقة في تعليمات
 النظام.
+
+## دورة 2026-07-23 (١٢) — إصلاح جذري: 24 عنقودًا جذريًا كانت غير مرئية على الموقع
+نُفِّذ الفحص الشامل الموصى به أعلاه: استعلام مباشر عن DB
+(`SELECT c.slug, c.status, p.slug FROM categories c LEFT JOIN categories p
+ON c.parent_id=p.id WHERE c.status='draft' ORDER BY p.slug, c.sort_order`)
+كشف أن كل التصنيفات الفرعية (leaf) ضمن learn_library_v2 منشورة فعلاً (0
+تصنيف فرعي draft متبقٍ)، لكن **24 من أصل 32 تصنيفًا جذريًا (parent_id IS
+NULL) — أي العناقيد نفسها مثل usul-fiqh وqawaid-fiqhiyya وnawazil-muasira
+وmunasabat-islamiyya وغيرها — ظلّت status='draft'** رغم أن 100% من
+تصنيفاتها الفرعية ودروسها منشورة (تحقَّق بـGROUP BY لكل عنقود: عدد
+الأبناء = عدد الأبناء المنشورين تمامًا، بلا استثناء واحد). السبب الجذري:
+`src/lib/learn-library-service.ts` سطر 49 يجلب قائمة عناقيد مكتبة التعلّم
+الرئيسية بشرط `.eq("status","published")` على التصنيف الجذري نفسه — وكل
+ملفات SQL عبر عشرات الدورات السابقة (batch1 لكل عنقود) كانت تُحدّث حالة
+التصنيفات الفرعية فقط، ونسيت تحديث سجل العنقود الجذري ذاته. الأثر: كل
+هذا المحتوى (مئات الدروس عبر 24 عنقودًا اكتملت على مدى الدورات السابقة)
+كان **غير مرئي إطلاقًا** في قائمة مكتبة التعلّم على الموقع الحي، رغم
+اكتمال محتواه وصحته 100%.
+الإصلاح: `artifacts/majalis/supabase/learn_library_v2_root_clusters_status_fix.sql`
+(idempotent، `UPDATE categories SET status='published' WHERE parent_id IS
+NULL AND status='draft' AND slug IN (...)` لأسماء الـ24 عنقودًا فقط بعد
+تحقّق مسبق أن كل واحد منها 0 تصنيف فرعي draft)، طُبِّق عبر `npx supabase
+db query --linked -f`. تحقَّق مباشرة بعد التطبيق: `SELECT status,
+count(*) FROM categories WHERE parent_id IS NULL GROUP BY status` → 32
+published، 0 draft (كل العناقيد الجذرية منشورة الآن). هذا تحديث حالة
+إداري بحت لمحتوى منشور ومُراجَع مسبقًا عبر دورات سابقة موثَّقة بالكامل
+في هذا الملف — وليس توليد محتوى جديد أو اجتهادًا تحريريًا جديدًا، فلم
+يُوسَم في `needs-post-review.jsonl`. بوابة الجودة: `pnpm run typecheck`
+و`pnpm run build` نجحا بلا أخطاء (لم تتغيّر أي ملفات كود، فقط DB + ملف
+SQL جديد للتوثيق). ملفات ضجيج البناء (rulings-encyclopedia،
+feed.xml/sitemap.xml، content-counts.json، seo-prerender) أُعيدت لحالتها
+الأصلية عبر `git checkout HEAD -- artifacts/majalis` بعد تأكيد أن
+`content-runner.sh` يعمل بالتوازي (عدة عمليات عبر `ps aux`، مسارين
+launchd منفصلين). Commit على `majalis-content-fill`: راجع الالتزام
+التالي مباشرة بعد هذا القسم لمعرفة الهاش الفعلي بعد الدفع.
+
+**المهمة التالية**: تم إصلاح الفجوة الأكبر (رؤية العناقيد الجذرية).
+الدورة القادمة يجب أن تكرر نفس نمط الفحص الشامل من الصفر (لا تفترض
+اكتمال العمل): 1) `SELECT c.slug, c.status, p.slug AS parent_slug FROM
+categories c LEFT JOIN categories p ON c.parent_id=p.id WHERE
+c.status='draft' ORDER BY p.slug NULLS FIRST, c.sort_order` — إن ظهرت أي
+صفوف (تصنيف فرعي جديد أُضيف لاحقًا، أو عنقود جذري جديد)، نفّذ بنفس منهجية
+درس واحد لكل تصنيف draft. 2) إن لم يظهر أي صف، افحص أولويات أخرى محتملة
+في المنصة غير learn_library_v2 (مثال: هل توجد جداول أخرى بنمط status
+مشابه [lesson_series، lessons مباشرة بلا تصنيف، إلخ] فيها محتوى منشور
+لكن غير مرئي لنفس سبب فلترة الحالة على مستوى أعلى؟). 3) إن لم تجد أي عمل
+تنفيذي فعلي، وثّق "لا أولوية تالية قابلة للتنفيذ الآن" بدل اختلاق مهمة.
