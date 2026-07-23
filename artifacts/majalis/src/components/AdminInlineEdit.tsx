@@ -164,7 +164,7 @@ async function saveContent(
         const { supabase } = await import("@/lib/supabase");
         const { error } = await supabase
           .from("islamic_stories")
-          .update({ title: data.title, summary: data.summary, content: data.content, category: data.category })
+          .update({ title: data.title, summary: data.summary, full_content: data.content, category: data.category })
           .eq("id", contentId);
         if (error) return { error: error.message };
         return {};
