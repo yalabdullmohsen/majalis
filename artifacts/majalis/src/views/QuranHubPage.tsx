@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import {
-  Radio, Mic2, Layers, Circle, Star,
+  Layers, Circle, Star,
   ChevronLeft, BookMarked, BookOpen, Headphones, GraduationCap,
   Moon, Heart, Sparkles, Mic, History, CalendarCheck,
   type LucideIcon,
@@ -78,22 +78,6 @@ const QURAN_SECTIONS: QuranSection[] = [
     Icon: GraduationCap,
     accent: "#173D35",
     tag: "١٤ حكماً",
-  },
-  {
-    href: "/quran-radio",
-    title: "إذاعات القرآن",
-    desc: "استمع للقرآن الكريم من كبار القراء حول العالم",
-    Icon: Radio,
-    accent: "#173D35",
-    tag: "مباشر",
-  },
-  {
-    href: "/quran-live",
-    title: "البث المباشر",
-    desc: "بث مباشر من الحرمين الشريفين، مكة المكرمة والمدينة المنورة",
-    Icon: Mic2,
-    accent: "#173D35",
-    tag: "٢٤ ساعة",
   },
   {
     href: "/quran-circles",

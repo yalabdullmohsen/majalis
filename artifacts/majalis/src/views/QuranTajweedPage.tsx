@@ -438,8 +438,6 @@ export default function QuranTajweedPage() {
         <Link href="/quran-hub"            className="quran-subnav__link">مركز القرآن</Link>
         <Link href="/quran/tajweed"        className="quran-subnav__link is-active">التجويد</Link>
         <Link href="/quran/surah-stories"  className="quran-subnav__link">قصص القرآن</Link>
-        <Link href="/quran-live"           className="quran-subnav__link">البث المباشر</Link>
-        <Link href="/quran-radio"          className="quran-subnav__link">الإذاعات</Link>
       </nav>
 
       {/* مقدمة */}

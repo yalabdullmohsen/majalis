@@ -13,8 +13,6 @@ const pages = [
   "/library",
   "/qa",
   "/quran-hub",
-  "/quran-live",
-  "/quran-radio",
   "/prayer-times",
   "/calendar",
   "/tasbih",

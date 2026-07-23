@@ -13426,10 +13426,6 @@ svg {
   color: var(--msk-text-2, #68716D);
 }
 
-.quran-radio-page .radio-card {
-  min-height: 7.5rem;
-}
-
 @media (max-width: 640px) {
   .lesson-detail-page {
     padding-bottom: max(1rem, env(safe-area-inset-bottom));

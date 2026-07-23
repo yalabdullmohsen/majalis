@@ -5,9 +5,9 @@ import {
   Activity, BarChart2, BarChart3, BookMarked, BookOpen, BookText, BookUser,
   Bot, Building2, Calculator, Calendar, CalendarDays, CheckCircle2, Clock, Compass, CreditCard,
   FileText, Gavel, GitBranch, GraduationCap, Heart, HelpCircle, Info, Landmark,
-  Layers, Library, Lightbulb, Map, Mic, Mic2, Moon, Network,
-  Quote, Radio, RefreshCw, Repeat2, Rss, Scale, ScrollText, Search, Settings,
-  Shield, Sparkles, Star, Stethoscope, Sun, Tv, Users, Waypoints, X, Zap,
+  Layers, Library, Lightbulb, Map, Mic2, Moon, Network,
+  Quote, RefreshCw, Repeat2, Rss, Scale, ScrollText, Search, Settings,
+  Shield, Sparkles, Star, Stethoscope, Sun, Users, Waypoints, X, Zap,
 } from "lucide-react";
 
 const SHEET_SECTIONS = [
@@ -22,13 +22,10 @@ const SHEET_SECTIONS = [
     { href: "/ulum-quran",          label: "علوم القرآن",        Icon: GraduationCap },
     { href: "/quran/surah-stories", label: "قصص السور",          Icon: BookText },
     { href: "/duas-quran",          label: "أدعية القرآن",       Icon: BookMarked },
-    { href: "/quran-radio",         label: "إذاعة القرآن",       Icon: Radio },
-    { href: "/quran-live",          label: "البث المباشر",       Icon: Tv },
     { href: "/quran-circles",       label: "حلقات التحفيظ",      Icon: Users },
     { href: "/quran-memorization",  label: "اختبارات الحفظ",     Icon: Zap },
     { href: "/quran/memorization-plans", label: "خطط الحفظ",     Icon: CalendarDays },
     { href: "/mutashabihat",        label: "الآيات المتشابهات",  Icon: GitBranch },
-    { href: "/muezzins",            label: "مكتبة المؤذنين",     Icon: Mic },
   ]},
 
   /* ── الحديث والسنة ── */

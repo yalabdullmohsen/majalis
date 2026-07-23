@@ -397,7 +397,8 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], mode: GameMode, nam
     <div className="qzg-setup">
       <div className="qzg-setup__hero">
         <div className="qzg-setup__icon"><Landmark size={40} strokeWidth={1.3} /></div>
-        <h1 className="qzg-setup__title">لعبة سؤال وجواب</h1>
+        <h1 className="qzg-setup__title">لعبة سين جيم – أسئلة وأجوبة</h1>
+        <p className="qzg-setup__sub">اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة</p>
         <p className="qzg-setup__sub">
           {mode === "solo"
             ? "تحدَّ نفسك في اختبار معلوماتك الإسلامية"
@@ -918,7 +919,7 @@ export function IslamicQuizGame() {
       <div className="qzg-inner">
         {(state.phase === "board" || state.phase === "question") && (
           <div className="qzg-game-title-bar">
-            <span className="qzg-game-title"><Landmark size={16} className="inline ml-1" />لعبة سؤال وجواب الإسلامية</span>
+            <span className="qzg-game-title"><Landmark size={16} className="inline ml-1" />سين جيم</span>
           </div>
         )}
 

@@ -59,27 +59,4 @@ test.describe("Quran — مركز القرآن", () => {
     expect(dimensions.scrollWidth).toBe(dimensions.clientWidth);
   });
 
-  test("quran radio page loads and shows station list", async ({ page }) => {
-    await page.goto("/quran-radio");
-    await waitForContent(page);
-    await page.waitForTimeout(600);
-    const body = await page.locator("body").innerText();
-    expect(body.length, "صفحة راديو القرآن فارغة").toBeGreaterThan(20);
-  });
-
-  test("quran radio play button is clickable", async ({ page }) => {
-    // Grant autoplay
-    await page.context().grantPermissions(["camera", "microphone"]);
-    await page.goto("/quran-radio");
-    await waitForContent(page);
-    await page.waitForTimeout(600);
-    const playBtn = page.locator('button').filter({ hasText: /تشغيل|▶|play/i }).first();
-    if (await playBtn.count() > 0) {
-      await playBtn.click();
-      await page.waitForTimeout(600);
-      // Should not crash — just verify page is still responsive
-      const body = await page.locator("body").innerText();
-      expect(body.length).toBeGreaterThan(5);
-    }
-  });
 });
