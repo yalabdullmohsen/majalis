@@ -52,7 +52,7 @@ html[data-theme="dark"] .rai-header__sub { color: #8BABA3; }
   font-size: .62rem;
   font-weight: 700;
   padding: .2rem .6rem;
-  border-radius: 1rem;
+  border-radius: var(--ds-radius-xl);
   background: #C9A227;
   color: #2b2205;
   letter-spacing: .01em;
@@ -73,7 +73,7 @@ html[data-theme="dark"] .rai-header__sub { color: #8BABA3; }
 html[data-theme="dark"] .rai-pre-session-warning { background: rgba(220,38,38,.15); color: #FCA5A5; border-color: rgba(220,38,38,.35); }
 
 /* ── شاشة الإعداد ─────────────────────────────────────────── */
-.rai-setup { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem; }
+.rai-setup { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--ds-space-5); }
 .rai-setup__group {
   background: #fff;
   border: 1px solid rgba(14,110,82,.12);
@@ -175,7 +175,7 @@ html[data-theme="dark"] .rai-surah-select, html[data-theme="dark"] .rai-range-in
   padding: .9rem 1.5rem;
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   cursor: pointer;
   box-shadow: 0 4px 16px rgba(14,110,82,.25);
 }
@@ -349,7 +349,7 @@ html[data-theme="dark"] .rai-correction-card__dismiss { color: #E8DED4; border-c
 }
 html[data-theme="dark"] .rai-icon-btn { background: #1A2120; color: #E5F0EC; }
 
-.rai-plain-words { font-family: "Amiri Quran", "Scheherazade New", serif; font-size: 1.5rem; line-height: 1.9; color: #1A1A1A; text-align: justify; }
+.rai-plain-words { font-family: "Amiri Quran", "Scheherazade New", serif; font-size: var(--ds-text-2xl); line-height: 1.9; color: #1A1A1A; text-align: justify; }
 html[data-theme="dark"] .rai-plain-words { color: #E5F0EC; }
 .rai-plain-word--correct { color: var(--rai-emerald-deep); }
 .rai-plain-word--error { color: var(--rai-error); text-decoration: underline wavy var(--rai-error); }
@@ -441,7 +441,7 @@ html[data-theme="dark"] .imr-ayah--recited {
 .imr-ayah-mark--glow { text-shadow: 0 0 12px rgba(201,162,39,.9); color: var(--rai-gold); }
 
 /* ── شاشة التقرير ─────────────────────────────────────────── */
-.rai-report { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem; }
+.rai-report { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--ds-space-5); }
 .rai-report__ring-wrap { display: flex; justify-content: center; padding: 1rem 0; }
 .rai-report__stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: .75rem; }
 .rai-report__stat { background: #fff; border-radius: 14px; padding: .8rem; text-align: center; border: 1px solid rgba(14,110,82,.12); }
