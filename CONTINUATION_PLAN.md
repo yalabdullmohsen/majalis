@@ -9787,10 +9787,76 @@ content-counts.json (تغيّر `generatedAt` فقط بلا رقم حقيقي)) 
 [object Object]) قبل بدء هذه الدورة ودُمج تلقائيًا دون تعارض عبر
 `git merge`؛ لم تُلمَس أي ملفات غير متعلقة بهذه المهمة يدويًا.
 
-**المهمة التالية**: عنقود `fatawa-muwaththaqa` مكتمل 100% الآن (6/6
-منشور، مؤكَّد من DB). التالي حسب القائمة (3 عناقيد متبقية): `usrah-mujtama`
-6، `munasabat-islamiyya` 6، `nawazil-muasira` 6. **أعد التحقق المباشر
-من DB قبل البدء بأي عنقود** (`npx supabase link --project-ref
+**المهمة التالية (سابقة، منجزة أدناه)**: عنقود `fatawa-muwaththaqa`
+مكتمل 100% الآن (6/6 منشور، مؤكَّد من DB). التالي حسب القائمة (3 عناقيد
+متبقية): `usrah-mujtama` 6، `munasabat-islamiyya` 6، `nawazil-muasira`
+6. **أعد التحقق المباشر من DB قبل البدء بأي عنقود** (`npx supabase
+link --project-ref ngmvmlulzacrlicuagyp` ثم `npx supabase db query
+--linked "SELECT id, slug, name, sort_order, status FROM categories
+WHERE parent_id=(SELECT id FROM categories WHERE
+slug='<العنقود المختار>') ORDER BY sort_order"`) لضمان تطابق الأرقام
+الفعلية مع ما وُثِّق أعلاه. بنفس المنهجية الثابتة: درس واحد حقيقي لكل
+تصنيف draft (`lessons`+`lesson_sections`+`lesson_citations`) بمصدر
+معتمد مسمّى مناسب لموضوع العنقود (أو مصدر مستقل لكل تصنيف إن تنوّعت
+الموضوعات داخل العنقود)، تحقَّق من أي آية حرفياً محليًا من
+`public/data/quran` عبر حقل `numberInSurah` (لا `number`)، تحقَّق من
+أي حديث عبر WebSearch قبل الإدراج (فقط من الصحيحين/متفق عليه أو
+بإسناد صحيح مصرَّح بدرجته بدقة)، ثم `status: draft→published`. **تذكّر
+أن `lesson_citations.source_type` مقيَّد بـ
+book/scholar_verbal/fatwa_body/website/manuscript فقط — لا `hadith`
+ولا قيم أخرى؛ استخدم `fatwa_body` إن كان المصدر فتوى فعلية، و`book`
+إن كان كتابًا/نصًا كلاسيكيًا.** وسم `needs-post-review.jsonl` فوراً
+لكل درس عند إنشائه. طبّق ملف SQL عبر `npx supabase db query --linked
+-f <ملف>` (لا `db push`). **تحقّق أولاً من `ps aux | grep
+content-runner`** قبل أي `git checkout HEAD --` على ملفات ضجيج. لا
+تنتقل لعنقود ثانٍ في نفس الدورة حتى لو تبقّى وقت ضمن سقف الدفعة
+
+## دورة 2026-07-23 (٩) — عنقود usrah-mujtama مكتمل (6/6)
+نُفِّذت المهمة أعلاه: تحقّق مباشر من DB أكّد 6 تصنيفات draft تحت عنقود
+`usrah-mujtama` (الأسرة والمجتمع): بناء الأسرة (`bina-usrah`)، تربية
+الأبناء والمراهقين (`tarbiyat-abna`)، المشكلات الأسرية والإصلاح
+(`mushkilat-usariyya`)، التكافل وحقوق الفئات (`takaful-ijtimai`)،
+العمل التطوعي (`amal-tatawwui`)، حماية الأسرة رقميًا
+(`himayat-usrah-raqmiyya`). كل تصنيف تحقَّق عبر WebSearch/WebFetch من
+مصدر مسمّى قبل الصياغة: أسس اختيار الزوجة (إسلام ويب فتوى 124273)،
+نصائح تربية الأولاد (إسلام ويب فتوى 286906)، أحكام جلسات التحكيم بين
+الزوجين (دار الإفتاء المصرية فتوى 4237، أ.د/ أحمد الطيب)، التكافل
+الاجتماعي في الإسلام (دار الإفتاء المصرية، مقال قسم "ديننا"،
+source_type='website')، العمل التطوعي وفضله (دار الإفتاء المصرية فتوى
+7360، أ.د/ شوقي علام)، والوعي الرقمي الوقائي لحماية الأبناء (دار
+الإفتاء المصرية، مقال "المؤشر العالمي للفتوى" 7 يوليو 2026م،
+source_type='website'؛ آخر تصنيفين استخدما مصدر مقالة لا فتوى مرقّمة
+لعدم توفر فتوى مباشرة مطابقة بدقة، فعُوِّض بحديث/آية مستقلين تحقَّقا
+عبر WebSearch لضمان الدقة الشرعية). ست آيات تحقَّقت حرفياً محليًا عبر
+`numberInSurah`: الروم 21، التحريم 6، النساء 35، النساء 36، البقرة
+184، الإسراء 36. ستة أحاديث تحقَّقت عبر WebSearch بنصها وتخريجها ودرجتها
+بدقة: "تنكح المرأة لأربع" (متفق عليه، البخاري 5090 ومسلم 1466)، "مروا
+أبناءكم بالصلاة" (أبو داود 495 وأحمد، صححه ابن الملقن)، "ألا أخبركم
+بأفضل من درجة الصيام... صلاح ذات البين" (أحمد، أبو داود 4919، الترمذي
+2509 حسن صحيح، صححه الألباني)، "أنا وكافل اليتيم في الجنة هكذا"
+(البخاري 6005)، "ما من مسلم يغرس غرسًا" (متفق عليه، أنس بن مالك)،
+"كلكم راع وكلكم مسؤول عن رعيته" (متفق عليه، ابن عمر). `status:
+draft→published` للستة، تحقَّق مباشرة من DB (6/6 منشور). ملف SQL
+موثَّق بالكامل (idempotent، طُبِّق عبر `supabase db query --linked
+-f`): `artifacts/majalis/supabase/learn_library_v2_usrah_mujtama_batch1.sql`.
+الدروس الستة اجتهاد صياغي واختيار مصدر (فتوى/مقال واحد من عدة متاحة)
+وآيات وأحاديث داعمة → وُسمت في `needs-post-review.jsonl` فوراً
+(442→448). بوابة الجودة: `pnpm run typecheck` و`pnpm run build` نجحا
+بلا أخطاء داخل `artifacts/majalis`. Commit على `majalis-content-fill`:
+راجع hash أدناه. ملفات الضجيج المولَّدة (rulings-encyclopedia/*،
+quran/pages-manifest.json، feed.xml، sitemap.xml، seo-prerender/*،
+content-counts.json، rulings-encyclopedia-seed.generated.ts) أُعيدت
+كما كانت قبل commit. تأكَّد أن `content-runner.sh` يعمل بالتوازي طوال
+هذه الدورة (عدة عمليات عبر `ps aux`، مسارين launchd منفصلين لوحظا
+9:15AM و5:24AM — ملاحظة للمتابعة لا تصادم فعلي لوحظ)؛ لم تُلمَس أي
+ملفات غير متعلقة بهذه المهمة يدويًا (ملفات rulings-encyclopedia/
+seo-prerender/sheikhs غير المتتبَّعة الموجودة أصلاً منذ بداية الدورة
+تُركت كما هي دون لمس).
+
+**المهمة التالية**: عنقود `usrah-mujtama` مكتمل 100% الآن (6/6 منشور،
+مؤكَّد من DB). التالي حسب القائمة (عنقودان متبقيان):
+`munasabat-islamiyya` 6، `nawazil-muasira` 6. **أعد التحقق المباشر من
+DB قبل البدء بأي عنقود** (`npx supabase link --project-ref
 ngmvmlulzacrlicuagyp` ثم `npx supabase db query --linked "SELECT id,
 slug, name, sort_order, status FROM categories WHERE
 parent_id=(SELECT id FROM categories WHERE slug='<العنقود المختار>')
@@ -9804,10 +9870,11 @@ ORDER BY sort_order"`) لضمان تطابق الأرقام الفعلية مع 
 بدقة)، ثم `status: draft→published`. **تذكّر أن
 `lesson_citations.source_type` مقيَّد بـ
 book/scholar_verbal/fatwa_body/website/manuscript فقط — لا `hadith`
-ولا قيم أخرى؛ استخدم `fatwa_body` إن كان المصدر فتوى فعلية، و`book`
-إن كان كتابًا/نصًا كلاسيكيًا.** وسم `needs-post-review.jsonl` فوراً
-لكل درس عند إنشائه. طبّق ملف SQL عبر `npx supabase db query --linked
--f <ملف>` (لا `db push`). **تحقّق أولاً من `ps aux | grep
-content-runner`** قبل أي `git checkout HEAD --` على ملفات ضجيج. لا
-تنتقل لعنقود ثانٍ في نفس الدورة حتى لو تبقّى وقت ضمن سقف الدفعة
+ولا قيم أخرى؛ استخدم `fatwa_body` إن كان المصدر فتوى فعلية، و`website`
+إن كان مقالاً تحريريًا لا فتوى مرقّمة، و`book` إن كان كتابًا/نصًا
+كلاسيكيًا.** وسم `needs-post-review.jsonl` فوراً لكل درس عند إنشائه.
+طبّق ملف SQL عبر `npx supabase db query --linked -f <ملف>` (لا `db
+push`). **تحقّق أولاً من `ps aux | grep content-runner`** قبل أي `git
+checkout HEAD --` على ملفات ضجيج. لا تنتقل لعنقود ثانٍ في نفس الدورة
+حتى لو تبقّى وقت ضمن سقف الدفعة
 (~30 عنصرًا).
