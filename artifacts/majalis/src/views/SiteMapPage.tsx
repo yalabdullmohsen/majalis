@@ -95,7 +95,7 @@ const SECTIONS = [
     links: [
       { href: "/seerah",           label: "السيرة النبوية",       desc: "من المولد حتى الوفاة ﷺ" },
       { href: "/sahabah",          label: "الصحابة الكرام",       desc: "سِيَر الصحابة وفضائلهم" },
-      { href: "/prophets",         label: "الأنبياء والرسل",      desc: "٢٥ نبياً بقصصهم" },
+      { href: "/prophets",         label: "الأنبياء والرسل",      desc: "٢٥ نبياً مذكورًا بالاسم في القرآن، بقصصهم" },
       { href: "/anbiya",           label: "قصص الأنبياء",         desc: "عرض تفاعلي بقصص وعبر" },
       { href: "/islamic-landmarks", label: "المعالم الإسلامية",   desc: "معالم ومواقع تاريخية إسلامية" },
       { href: "/stories",          label: "القصص الإسلامية",      desc: "قصص الصحابة والفتوحات والتاريخ الإسلامي" },

@@ -61,7 +61,7 @@ const TOPICS: { href: string; icon: string; label: string; desc: string; color: 
     href: "/prophets",
     icon: '<path d="M17 11.5a6.5 6.5 0 1 1-7-7 5.5 5.5 0 0 0 7 7z"/><circle cx="16" cy="5" r="1.2" fill="currentColor" stroke="none"/>',
     label: "قصص الأنبياء",
-    desc: "٢٥ نبياً بالمعجزة والدرس",
+    desc: "٢٥ نبياً مذكورًا بالاسم في القرآن، بالمعجزة والدرس",
     color: "#065F46",
   },
   {

@@ -232,7 +232,7 @@ export default function ProphetsFamilyTreePage() {
         <div style={{ flex: 1 }}>
           <h1 className="pft-hero__title" style={{ margin: 0, fontSize: "1.2rem", fontWeight: 800, color: "#F7F4ED" }}>شجرة أنساب الأنبياء</h1>
           <p style={{ margin: 0, fontSize: "0.75rem", color: "rgba(255,255,255,0.6)" }}>
-            ٢٥ نبياً من آدم إلى محمد ﷺ — اسحب للتنقل، اضغط على نبي للتفاصيل
+            ٢٥ نبياً مذكورًا بالاسم في القرآن، من آدم إلى محمد ﷺ — اسحب للتنقل، اضغط على نبي للتفاصيل
           </p>
         </div>
         {/* أزرار التحكم */}

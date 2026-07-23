@@ -205,7 +205,7 @@ const DRAWER_GROUPS: NavGroup[] = [
         items: [
           { href: "/seerah",          label: "السيرة النبوية",   Icon: BookUser,  desc: "من المولد حتى الوفاة ﷺ" },
           { href: "/sahabah",         label: "الصحابة الكرام",  Icon: Users,     desc: "سِيَر الصحابة وفضائلهم" },
-          { href: "/prophets",        label: "قصص الأنبياء",    Icon: Star,      desc: "٢٥ نبياً بقصصهم ومعجزاتهم" },
+          { href: "/prophets",        label: "قصص الأنبياء",    Icon: Star,      desc: "٢٥ نبياً مذكورًا بالاسم في القرآن" },
           { href: "/stories",         label: "القصص الإسلامية", Icon: BookOpen,  desc: "قصص الصحابة والفتوحات والتاريخ الإسلامي" },
         ],
       },
