@@ -1151,7 +1151,7 @@ export default function IslamicSectsPage() {
                         borderRight: "3px solid #173D35",
                         paddingRight: "0.75rem",
                         color: "#444",
-                        fontStyle: "italic",
+                        fontStyle: "normal",
                         lineHeight: "1.7",
                       }}
                     >

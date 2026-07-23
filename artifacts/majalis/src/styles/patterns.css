@@ -132,7 +132,7 @@
    ══════════════════════════════════════════════════ */
 .geo-frame {
   border: 2px solid color-mix(in srgb, var(--clr-primary, #173D35) 30%, transparent);
-  border-radius: 1rem;
+  border-radius: var(--ds-radius-xl);
   position: relative;
 }
 
@@ -342,7 +342,7 @@
   background-image: radial-gradient(circle, rgba(31,77,58,0.06) 1px, transparent 1px);
   background-size: 20px 20px;
   background-position: 0 0;
-  padding: 1rem;
+  padding: var(--ds-space-4);
   border-radius: .75rem;
 }
 

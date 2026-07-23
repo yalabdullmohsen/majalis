@@ -17,12 +17,22 @@ import { ADMIN_ACCESS_DENIED_MESSAGE } from "@/lib/auth-messages";
 const GRACE_MS = 4_000;
 
 export function AdminRouteGuard({ children }: { children: React.ReactNode }) {
-  const { isAdmin, isLoggedIn, loading } = useAuth();
+  const { isAdmin, isLoggedIn, loading, refreshUser } = useAuth();
   const [, navigate] = useLocation();
   const [denied, setDenied] = useState(false);
 
   const redirectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [graceExpired, setGraceExpired] = useState(false);
+
+  // AuthProvider يستخدم getSession() المحلي السريع على المسارات العامة
+  // (تحسين أداء: getUser() وحده كان مصدر بطء 9-11 ثانية على iOS)، وهذا
+  // لا يكتشف جلسة أُلغيت من الخادم. صفحات الأدمن حسّاسة، فنطلب هنا تحقّقًا
+  // فعليًا من الخادم (getCurrentUser داخليًا يتحول لـgetUser() تلقائيًا
+  // لأن المسار الحالي يبدأ بـ/admin) فور دخول الحارس — دون حجب العرض إن
+  // كانت الحالة المحلية صحيحة أصلاً، فقط تصحيحها إن اختلف الخادم.
+  useEffect(() => {
+    void refreshUser();
+  }, []);
 
   // نسجّل أول تحقق ناجح — يلغي أي مؤقت انتظار قائم إن عادت الجلسة
   useEffect(() => {
