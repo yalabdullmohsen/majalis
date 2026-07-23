@@ -13106,6 +13106,14 @@ a:focus-visible {
 /* يتراكب فعليًا مع محتوى ورقة الفلاتر (FilterBottomSheet) رغم z-index أدنى
    اسميًا — راجع التعليق في FilterBottomSheet.tsx. */
 body.filter-sheet-open .global-back-btn { display: none; }
+/* يظهر فقط بعد تمرير طفيف (راجع تعليق GlobalBackButton.tsx للسبب
+   الجذري): يمنع تراكبه مع محتوى الصفحة الحقيقي عند وضع التمرير صفر،
+   ويبقى قابلاً للنقر فقط حين ظاهر فعليًا (pointer-events). */
+.global-back-btn--hidden {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
 html[data-theme="dark"] .global-back-btn {
   background: var(--clr-surface, #1A2120) !important;
   color: var(--clr-text-1, #E5F0EC) !important;

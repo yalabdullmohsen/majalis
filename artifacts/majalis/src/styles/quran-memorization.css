@@ -224,6 +224,13 @@
   color: var(--ds-text-2, #6b7280);
   white-space: nowrap;
   font-weight: 600;
+  /* ⚠️ إصلاح جذري (2026-07-23): النص المنطقي "١ / ٥" (currentIdx+1 قبل
+     questions.length، صحيح في الكود) كان يُصيَّر بصريًا معكوسًا "٥ / ١"
+     داخل سياق RTL المحيط — خوارزمية bidi تُعيد ترتيب تتابع رقم/شرطة
+     مائلة/رقم بلا عزل اتجاهي صريح. عزل LTR هنا يضمن ترتيب العرض الصحيح
+     بصرف النظر عن السياق المحيط، بلا أي تغيير في البيانات/المنطق. */
+  direction: ltr;
+  unicode-bidi: isolate;
 }
 
 .qmem-card {
@@ -496,6 +503,9 @@
   font-size: 2.5rem;
   font-weight: 700;
   color: var(--majalis-emerald, #28584D);
+  /* نفس إصلاح bidi أعلاه (.qmem-progress__text) — نفس النمط "رقم/رقم". */
+  direction: ltr;
+  unicode-bidi: isolate;
 }
 
 .qmem-end__score-lbl {

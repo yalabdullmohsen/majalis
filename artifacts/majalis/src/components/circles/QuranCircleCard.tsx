@@ -93,7 +93,11 @@ export function QuranCircleCard({ circle: c }: Props) {
         {pct !== null && (
           <div>
             <p className="qc-card__capacity-label">
-              {c.enrolled_count}/{c.capacity} مشترك
+              {/* bdi (لا direction:ltr على العنصر كله) لأن السطر يخلط رقمين
+                  بنص عربي — عزل الرقمين فقط يمنع انعكاس bidi البصري
+                  (نفس عطل QuranMemorizationPage المُصلَح سابقًا) بلا قلب
+                  اتجاه "مشترك"/"المقاعد تنتهي" خطأً. */}
+              <bdi>{c.enrolled_count}/{c.capacity}</bdi> مشترك
               {pct >= 90 && " · المقاعد تنتهي"}
             </p>
             <div className="qc-card__capacity">
