@@ -14955,10 +14955,10 @@ html[data-theme="dark"] .tj-cat-badge { color: #8BABA3 !important; }
    قسم)، فتحتاج نصًا أبيض لا زمرديًا داكنًا (كانت تُنتج نصًّا داكنًا فوق
    خلفية داكنة — غير مقروء تقريبًا، 2026-07-17). */
 .bg-white h1, .bg-white h2, .bg-white h3, .bg-white h4,
-[class*="card"] h1:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title),
-[class*="card"] h2:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title),
-[class*="card"] h3:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title),
-[class*="card"] h4:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title) {
+[class*="card"] h1:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title):not(.ikm-card__title),
+[class*="card"] h2:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title):not(.ikm-card__title),
+[class*="card"] h3:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title):not(.ikm-card__title),
+[class*="card"] h4:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title):not(.ikm-card__title) {
   color: var(--elite-forest, #052E16) !important;
 }
 /* استثناء .sq-title (عنوان SectionQuiz، h2 داخل .sq-header الداكن — «اختبر
