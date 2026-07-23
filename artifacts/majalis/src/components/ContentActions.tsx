@@ -165,7 +165,7 @@ export default function ContentActions({ contentType, contentId, shareTitle, sha
     setSubmitting(true);
     const { data: { user } } = await supabase.auth.getUser();
     await supabase.from("error_reports").insert({
-      user_id: user?.id,
+      reporter_id: user?.id,
       content_type: contentType,
       content_id: contentId,
       report_type: reportType,

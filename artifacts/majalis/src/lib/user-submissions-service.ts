@@ -278,15 +278,15 @@ export async function publishLessonAsDraft(
   const { error } = await supabase
     .from("lessons")
     .insert({
-      title:       sub.title,
-      description: sub.description ?? "",
-      sheikh:      String(meta.sheikh ?? sub.submitter_name),
-      duration:    meta.duration_min ? `${meta.duration_min} دقيقة` : null,
-      topic:       String(meta.topic ?? "أخرى"),
-      source_url:  meta.source_url ? String(meta.source_url) : null,
-      media_url:   sub.file_url ?? null,
-      status:      "draft",
-      source:      "community",
+      title:        sub.title,
+      description:  sub.description ?? "",
+      speaker_name: String(meta.sheikh ?? sub.submitter_name),
+      duration:     meta.duration_min ? `${meta.duration_min} دقيقة` : null,
+      category:     String(meta.topic ?? "أخرى"),
+      source_url:   meta.source_url ? String(meta.source_url) : null,
+      media_url:    sub.file_url ?? null,
+      status:       "draft",
+      source:       "community",
       submitted_by: sub.submitter_name,
     })
     .select("id")
