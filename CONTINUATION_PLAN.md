@@ -9667,3 +9667,62 @@ ORDER BY sort_order"`) لضمان تطابق الأرقام الفعلية مع 
 من `ps aux | grep content-runner`** قبل أي `git checkout HEAD --` على
 ملفات ضجيج. لا تنتقل لعنقود ثانٍ في نفس الدورة حتى لو تبقّى وقت ضمن
 سقف الدفعة (~30 عنصرًا).
+
+## دورة 2026-07-23 (٦) — عنقود fiqh-aqalliyat مكتمل (5/5)
+نُفِّذت المهمة أعلاه: تحقّق مباشر من DB أكّد 5 تصنيفات draft تحت عنقود
+`fiqh-aqalliyat` (فقه الأقليات): العبادات والطعام (`aqalliyat-ibadat`)،
+العمل والمعاملات (`aqalliyat-amal-muamalat`)، الأسرة وتعليم الأبناء
+(`aqalliyat-usrah-abna`)، المواطنة والاندماج والعلاقات المجتمعية
+(`aqalliyat-muwatana`)، الضرورة والحاجة واختلاف البلاد
+(`aqalliyat-darura`). كل تصنيف حصل على درس واحد (lessons +
+lesson_sections + lesson_citations) بمصدر معتمد واحد مناسب لكل موضوعات
+العنقود: يوسف القرضاوي "في فقه الأقليات المسلمة: حياة المسلمين وسط
+المجتمعات الأخرى" (المصدر التأسيسي المعاصر لهذا الحقل الفقهي، يغطي
+مباشرة الأبواب الخمسة). خمس آيات تحقَّقت حرفياً محليًا من
+`public/data/quran` عبر `numberInSurah`: المائدة 5 (طعام أهل الكتاب)،
+الجمعة 10 (الانتشار طلبًا للرزق)، التحريم 6 (وقاية الأهل)، الممتحنة 8
+(البر بغير المحاربين)، البقرة 173 (الضرورة). خمسة أحاديث استُشهد بها،
+تحقَّقت عبر WebSearch قبل الإدراج: «جمع بين الظهر والعصر... من غير خوف
+ولا مطر... أراد أن لا يحرج أمته» عن ابن عباس (مسلم 705)، «ما أكل أحد
+طعامًا قط خيرًا من أن يأكل من عمل يده، وإن نبي الله داود كان يأكل من
+عمل يده» عن المقدام (البخاري 2072)، «كل مولود يولد على الفطرة فأبواه
+يهودانه أو ينصرانه أو يمجسانه» عن أبي هريرة (متفق عليه، البخاري 1385
+ومسلم 2658)، «ما زال جبريل يوصيني بالجار حتى ظننت أنه سيورثه» عن
+عائشة (متفق عليه، البخاري 6014 ومسلم 2624)، «ما خُيِّر رسول الله بين
+أمرين إلا اختار أيسرهما ما لم يكن إثمًا» عن عائشة (البخاري 3560).
+`status: draft→published` للخمسة، تحقَّق مباشرة من DB (5/5 منشور). ملف
+SQL موثَّق بالكامل (idempotent):
+`artifacts/majalis/supabase/learn_library_v2_fiqh_aqalliyat_batch1.sql`.
+الدروس الخمسة اجتهاد صياغي واختيار مصدر ومثال → وُسمت في
+`needs-post-review.jsonl` فوراً (424→429). بوابة الجودة: `pnpm run
+typecheck` و`pnpm run build` نجحا بلا أخطاء على فرعي
+`majalis-content-fill` و`main` كليهما (فحص إضافي عبر git hooks
+pre-commit/pre-push المفعّلة في المستودع نجح أيضًا تلقائيًا). Commit
+على `majalis-content-fill`: `f7121a17`. دُمج إلى `main` ودُفع:
+`cf8496d5`. ملفات الضجيج المولَّدة (rulings-encyclopedia/*،
+quran/pages-manifest.json، feed.xml، sitemap.xml، seo-prerender/*،
+content-counts.json، rulings-encyclopedia-seed.generated.ts) أُعيدت
+كما كانت في الفرعين. تأكَّد أن `content-runner.sh` يعمل بالتوازي طوال
+هذه الدورة (عدة عمليات عبر `ps aux`)؛ اكتُشف أثناء العمل commit إضافي
+من دورة متزامنة (`52568966` — إصلاح أحاديث تالفة في
+`verified_hadith_items`) دُمج تلقائيًا بلا تعارض عبر `git pull
+--ff-only`/`git merge`؛ لم تُلمَس أي ملفات غير متعلقة بهذه المهمة.
+
+**المهمة التالية**: عنقود `fiqh-aqalliyat` مكتمل 100% الآن (5/5 منشور،
+مؤكَّد من DB). التالي حسب القائمة (5 عناقيد متبقية): `shabab-nashia`
+6، `fatawa-muwaththaqa` 6، `usrah-mujtama` 6، `munasabat-islamiyya` 6،
+`nawazil-muasira` 6. **أعد التحقق المباشر من DB قبل البدء بأي عنقود**
+(`npx supabase link --project-ref ngmvmlulzacrlicuagyp` ثم `npx
+supabase db query --linked "SELECT id, slug, name, sort_order, status
+FROM categories WHERE parent_id=(SELECT id FROM categories WHERE
+slug='<العنقود المختار>') ORDER BY sort_order"`) لضمان تطابق الأرقام
+الفعلية مع ما وُثِّق أعلاه. بنفس المنهجية الثابتة: درس واحد حقيقي لكل
+تصنيف draft (`lessons`+`lesson_sections`+`lesson_citations`) بمصدر
+معتمد مسمّى مناسب لموضوع العنقود، تحقَّق من أي آية حرفياً محليًا من
+`public/data/quran` عبر حقل `numberInSurah` (لا `number`)، تحقَّق من
+أي حديث عبر WebSearch قبل الإدراج (فقط من الصحيحين/متفق عليه أو بإسناد
+صحيح مصرَّح بدرجته بدقة)، ثم `status: draft→published`. وسم
+`needs-post-review.jsonl` فوراً لكل درس عند إنشائه. **تحقّق أولاً من
+`ps aux | grep content-runner`** قبل أي `git checkout HEAD --` على
+ملفات ضجيج. لا تنتقل لعنقود ثانٍ في نفس الدورة حتى لو تبقّى وقت ضمن
+سقف الدفعة (~30 عنصرًا).
