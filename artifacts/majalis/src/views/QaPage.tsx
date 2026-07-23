@@ -230,11 +230,6 @@ export default function QaPage({
     return "لا توجد أسئلة منشورة.";
   }, [categorySlug, debouncedSearch]);
 
-  const correctionsCount = useMemo(
-    () => items.filter((q) => q._categoryCorrected).length,
-    [items],
-  );
-
   const filtersPanel = (
     <>
       <input
@@ -309,9 +304,6 @@ export default function QaPage({
           <div className="page-stats-row page-stats-row--flush">
             <span>{sortedItems.length} سؤال</span>
             <span>{categoryGrid.length} تصنيف</span>
-            {correctionsCount > 0 && (
-              <span className="qa-corrections-badge">تم تصحيح {correctionsCount} تصنيف</span>
-            )}
           </div>
         )}
         <FilterToggle onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />

@@ -1,10 +1,5 @@
 /** QA helpers — view counts, sorting, favorites, and category correction */
 
-import {
-  applyCategoryCorrection,
-  classifyQuestion,
-  type QaClassificationResult,
-} from "./qa-category-validator";
 import { resolveCategorySlug, getCategoryBySlug } from "./qa-categories";
 
 export type QaSortMode =
@@ -18,7 +13,6 @@ export type QaSortMode =
 
 const FAVORITES_KEY = "majalis-qa-favorites-v1";
 const SEEN_KEY = "majalis-qa-seen-v1";
-const CORRECTION_LOG_KEY = "majalis-qa-category-corrections-v1";
 
 function hashId(id: string): number {
   let h = 0;
@@ -81,24 +75,6 @@ export function getQaSeen(): Set<string> {
   return readJsonSet(SEEN_KEY);
 }
 
-export function logCategoryCorrection(id: string, result: QaClassificationResult) {
-  if (!result.corrected) return;
-  try {
-    const raw = localStorage.getItem(CORRECTION_LOG_KEY);
-    const log = raw ? JSON.parse(raw) : [];
-    log.unshift({
-      id,
-      at: new Date().toISOString(),
-      from: result.currentSlug,
-      to: result.suggestedSlug,
-      reason: result.reason,
-    });
-    localStorage.setItem(CORRECTION_LOG_KEY, JSON.stringify(log.slice(0, 200)));
-  } catch {
-    /* ignore */
-  }
-}
-
 export type QaItem = {
   id: string;
   question: string;
@@ -108,38 +84,27 @@ export type QaItem = {
   qa_categories?: { name?: string; slug?: string };
   created_at?: string;
   view_count?: number | null;
-  _categoryCorrected?: boolean;
-  _correctionReason?: string;
 };
 
 export function normalizeQaItem(item: QaItem): QaItem {
+  // ملاحظة: كان يُطبَّق هنا مصنِّف كلمات مفتاحية (classifyQuestion/applyCategoryCorrection)
+  // يستبدل تصنيف قاعدة البيانات المؤكَّد بتخمين تلقائي. تبيّن أن التخمين يخالف
+  // التصنيف الفعلي في نحو 62% من الحالات (مثال: "صالح" كتخمين "الأنبياء" لمجرد
+  // ورود "الصالحين"، و"حج" كتخمين "الحج" لمجرد ورود "حجة")، فأصبح التصنيف
+  // المعروض للمستخدمين خاطئًا في الغالب. عُطِّل الاستبدال؛ تصنيف قاعدة البيانات
+  // هو المصدر الموثوق دائمًا.
   const slug =
     item.qa_categories?.slug ||
     item.category_slug ||
     resolveCategorySlug(item.category_id?.replace("seed-cat-", "") || "misc");
 
-  const classification = classifyQuestion({
-    question: item.question,
-    answer: item.answer || undefined,
-    category_slug: slug,
-    category_name: item.qa_categories?.name,
-  });
-
-  if (classification.corrected) {
-    logCategoryCorrection(item.id, classification);
-  }
-
-  const corrected = applyCategoryCorrection(
-    { ...item, category_slug: slug },
-    classification,
-  );
-
-  const cat = getCategoryBySlug(corrected.category_slug);
+  const cat = getCategoryBySlug(slug);
   return {
-    ...corrected,
+    ...item,
+    category_slug: slug,
     qa_categories: {
-      slug: corrected.category_slug,
-      name: cat?.name || corrected.qa_categories?.name,
+      slug,
+      name: item.qa_categories?.name || cat?.name,
     },
   };
 }
