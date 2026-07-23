@@ -168,7 +168,7 @@ export default function AmrBilMarufPage() {
                   {level.rank}
                 </span>
                 <div>
-                  <h3 style={{ margin: 0, color: "#fff", fontWeight: 800, fontSize: "1.05rem", lineHeight: 1.2 }}>
+                  <h3 className="amr-level__title" style={{ margin: 0, color: "#fff", fontWeight: 800, fontSize: "1.05rem", lineHeight: 1.2 }}>
                     {level.title}
                   </h3>
                   <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.85)" }}>

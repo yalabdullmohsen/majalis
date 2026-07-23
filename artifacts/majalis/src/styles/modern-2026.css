@@ -229,7 +229,7 @@ body {
    الخلفية الخضراء الداكنة لنفس الشارة (تباين ~1.27:1 — نفس نمط عطل [class$="-hero"]
    المُصلَح سابقًا: قاعدة عامة تفترض سياقًا خاطئًا بسبب استثناءات ناقصة). */
 .page-shell h2:not(.sq-title):not(.jn-section__title):not(.jn-subtitle):not(.jn-related__title):not(.sw-related__title):not(.hj-section__title):not(.hj-related__title):not(.th-section__title):not(.th-related__title):not(.fa-related__title):not(.seerah-panel__title):not(.fq-ref__title):not(.sh-step__title):not(.ds-section__title):not(.cards-page-title):not(.search-page-title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title):not(.lessons-v2-section__title):not(.lessons-past-section__title),
-.page-shell h3:not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title),
+.page-shell h3:not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title):not(.amr-level__title),
 .page-shell h4,
 .page-shell h5,
 .page-shell h6,
@@ -1164,6 +1164,21 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 .legal-back-btn:hover {
   background: rgba(255,255,255,0.22);
   border-color: rgba(255,255,255,0.7);
+}
+/* .legal-back-btn الأساسي مصمَّم لسياق داكن (.legal-page-hero) فقط. مكوّن
+   LegalBackLink المستقل (يُستخدم في نهاية الإعدادات/حول/الشروط/اتصل بنا/
+   معلومات الطبعة/الخصوصية) يُعيد استخدام نفس الصنف خارج أي حاوية داكنة —
+   نص أبيض شبه شفاف فوق خلفية الصفحة الفاتحة العادية (تباين ~1.1:1، اكتُشف
+   عبر تدقيق تباين حي شامل). هذه القاعدة الأكثر تخصيصًا (صنفان) تفوز طبيعيًا
+   بلا !important وتُصحح الألوان لسياق فاتح فقط، دون المساس بزر الهيرو. */
+.legal-back .legal-back-btn {
+  border-color: rgba(23,61,53,0.25);
+  background: transparent;
+  color: var(--majalis-emerald-deep, #173D35);
+}
+.legal-back .legal-back-btn:hover {
+  background: rgba(23,61,53,0.06);
+  border-color: rgba(23,61,53,0.4);
 }
 
 /* ══ 40. Adhkar Focus Mode ══════════════════════════════════════════════════ */

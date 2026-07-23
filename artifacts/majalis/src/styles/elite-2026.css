@@ -29111,7 +29111,7 @@ a:hover { color: var(--clr-primary-hov, #28584D); }
    هنا عند المصدر هو الإصلاح الموثوق فعليًا، لا محاولات تجاوزها لاحقًا
    بقواعد !important تنافسية كانت تفشل أحيانًا حسب ترتيب حقن CSS). */
 [class$="od-card"],
-[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.dvp-hero):not(.sch-profile-hero):not(.accd-hero),
+[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.dvp-hero):not(.sch-profile-hero):not(.accd-hero):not(.surah-index-hero):not(.cvp-hero),
 .an-today__card {
   --clr-text-1:            var(--text-on-dark);
   --clr-text:              var(--text-on-dark);
@@ -29968,8 +29968,15 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
 
 
 /* Footer الرئيسي */
+/* ⚠️ حُذف هنا محدد وسم "footer," الخام (2026-07-23): كان يطابق أي عنصر
+   <footer> HTML5 دلالي في الموقع، لا التذييل الرئيسي فقط — مثل
+   .an-card__footer (تذييل بطاقات الأربعين النووية)، ففرض عليه خلفية
+   خضراء داكنة !important رغم أن أبناءه (an-card__source, an-expand-btn,
+   an-read-btn--sm) مصمَّمة بألوان رمادية فاتحة لخلفية بيضاء — نص شبه
+   مختفٍ (تباين ~1.27:1، اكتُشف عبر تدقيق تباين حي شامل). التذييل الرئيسي
+   الفعلي يحمل دومًا className="site-footer" (راجع SiteFooter.tsx)، فلا
+   حاجة لمحدد الوسم الخام إطلاقًا. */
 .site-footer,
-footer,
 [class*="footer-wrap"] {
   background: var(--color-primary-deep, #173D35) !important;
 }
@@ -30549,8 +30556,8 @@ footer *,
 .page-hero-wrap *,
 [class*="page-header"][class*="dark"],
 [class*="page-header"][class*="dark"] *,
-[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.dvp-hero):not(.sch-profile-hero):not(.accd-hero):not(.hpv4-hero),
-[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.dvp-hero):not(.sch-profile-hero):not(.accd-hero):not(.hpv4-hero) *,
+[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.dvp-hero):not(.sch-profile-hero):not(.accd-hero):not(.hpv4-hero):not(.surah-index-hero):not(.cvp-hero),
+[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.dvp-hero):not(.sch-profile-hero):not(.accd-hero):not(.hpv4-hero):not(.surah-index-hero):not(.cvp-hero) *,
 .dark-section,
 .dark-section *,
 .dark-bg,
