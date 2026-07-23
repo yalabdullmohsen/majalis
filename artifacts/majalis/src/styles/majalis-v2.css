@@ -70,7 +70,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   min-height: 44px;
   padding: 0 1.25rem;
   border-radius: 999px;
@@ -130,7 +130,7 @@
 .card-v2--flat:hover { box-shadow: var(--v2-shadow-2); transform: translateY(-2px); }
 .card-v2--accent-left { border-right: 3px solid var(--v2-green); }
 .card-v2--accent-gold { border-right: 3px solid var(--v2-gold); }
-.card-v2__body { padding: 1.25rem; }
+.card-v2__body { padding: var(--ds-space-5); }
 .card-v2__header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--v2-border-soft); }
 .card-v2__footer { padding: 0.875rem 1.25rem; border-top: 1px solid var(--v2-border-soft); background: var(--v2-surface-1); }
 
@@ -163,12 +163,12 @@
 .text-v2-display { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; line-height: 1.15; color: var(--v2-ink); letter-spacing: -0.02em; }
 .text-v2-h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; line-height: 1.2; color: var(--v2-ink); }
 .text-v2-h2 { font-size: clamp(1.375rem, 3vw, 2rem);  font-weight: 700; line-height: 1.3; color: var(--v2-ink); }
-.text-v2-h3 { font-size: 1.25rem; font-weight: 700; line-height: 1.4; color: var(--v2-ink); }
-.text-v2-body { font-size: 1rem; line-height: 1.7; color: var(--v2-ink-2); }
-.text-v2-small { font-size: 0.875rem; line-height: 1.55; color: var(--v2-ink-2); }
-.text-v2-caption { font-size: 0.75rem; line-height: 1.45; color: var(--v2-ink-3); }
+.text-v2-h3 { font-size: var(--ds-text-xl); font-weight: 700; line-height: 1.4; color: var(--v2-ink); }
+.text-v2-body { font-size: var(--ds-text-base); line-height: 1.7; color: var(--v2-ink-2); }
+.text-v2-small { font-size: var(--ds-text-sm); line-height: 1.55; color: var(--v2-ink-2); }
+.text-v2-caption { font-size: var(--ds-text-xs); line-height: 1.45; color: var(--v2-ink-3); }
 .text-v2-reading {
-  font-size: 1.125rem;
+  font-size: var(--ds-text-lg);
   line-height: 2;
   color: var(--v2-ink);
   max-width: 72ch;
@@ -176,7 +176,7 @@
 }
 .text-v2-quran {
   font-family: var(--font-quran, "Amiri Quran", serif);
-  font-size: 1.5rem;
+  font-size: var(--ds-text-2xl);
   line-height: 2.1;
   color: var(--v2-ink);
   direction: rtl;
@@ -200,7 +200,7 @@
   padding: 0 1.5rem;
 }
 .navbar-brand {
-  gap: 0.625rem;
+  gap: var(--ds-space-2-5);
   font-weight: 800;
   font-size: 1.05rem;
   color: var(--v2-ink) !important;
@@ -271,11 +271,11 @@
 .islamic-divider {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   margin: 2.5rem 0;
   color: var(--v2-ink-3);
   font-size: 0.7rem;
-  letter-spacing: 0.1em;
+  letter-spacing: normal;
   text-transform: uppercase;
 }
 .islamic-divider::before,
@@ -331,7 +331,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   padding: 3rem 2rem;
   text-align: center;
   color: var(--v2-ink-3);
@@ -339,7 +339,7 @@
 }
 .empty-v2__icon { font-size: 2.5rem; opacity: 0.5; }
 .empty-v2__title { font-size: 1.1rem; font-weight: 700; color: var(--v2-ink-2); margin: 0; }
-.empty-v2__desc { font-size: 0.875rem; line-height: 1.65; max-width: 40ch; margin: 0; }
+.empty-v2__desc { font-size: var(--ds-text-sm); line-height: 1.65; max-width: 40ch; margin: 0; }
 .empty-v2__action { margin-top: 0.5rem; }
 
 /* ── 12. Section Layout v2 ── */
@@ -351,7 +351,7 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   margin-bottom: 1.5rem;
   direction: rtl;
 }
@@ -359,7 +359,7 @@
   font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: normal;
   color: var(--v2-green);
   margin: 0 0 0.35rem;
 }
@@ -384,7 +384,7 @@
 /* شبكة بطاقات متجاوبة */
 .grid-v2 {
   display: grid;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
 .grid-v2--sm { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
@@ -458,7 +458,7 @@
 .tabs-v2__tab {
   position: relative;
   padding: 0.625rem 1rem;
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   font-weight: 500;
   color: var(--v2-ink-2);
   background: none;
@@ -519,10 +519,10 @@
 .toast-v2 {
   display: flex;
   align-items: flex-start;
-  gap: 0.625rem;
+  gap: var(--ds-space-2-5);
   padding: 0.875rem 1rem;
   border-radius: var(--v2-r-md);
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   box-shadow: var(--v2-shadow-3);
   max-width: 360px;
   direction: rtl;
@@ -557,10 +557,10 @@
   pointer-events: none;
 }
 .page-hero-v2__eyebrow {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: normal;
   color: rgba(255,255,255,0.65);
   margin: 0 0 0.5rem;
 }
@@ -572,7 +572,7 @@
   color: #fff;
 }
 .page-hero-v2__subtitle {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   line-height: 1.75;
   color: rgba(255,255,255,0.82);
   margin: 0;
@@ -791,7 +791,7 @@
   color: var(--msk-gold, #28584D);
   font-weight: 700;
   margin-top: 0.3rem;
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
 }
 /* على خلفية زمردية (hero) */
 .msk-quran-box--on-green {
@@ -847,7 +847,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  padding: 1rem;
+  padding: var(--ds-space-4);
   text-decoration: none;
   position: relative;
   overflow: hidden;
@@ -861,7 +861,7 @@
   background: var(--msk-accent, var(--majalis-emerald));
 }
 .msk-featured-card__icon {
-  font-size: 1.5rem;
+  font-size: var(--ds-text-2xl);
   line-height: 1;
 }
 .msk-featured-card__badge {
@@ -890,10 +890,10 @@
 
 /* NumberedListCard */
 .msk-numbered-card {
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 .msk-numbered-card__title {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-weight: 700;
   color: var(--msk-text, #202725);
   margin: 0 0 0.75rem;
@@ -904,7 +904,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 .msk-numbered-card__item {
   display: flex;
@@ -919,7 +919,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   color: #FFFFFF;
   margin-top: 0.1rem;
@@ -963,7 +963,7 @@
   font-size: clamp(1.25rem, 4vw, 1.65rem) !important;
   font-weight: 700 !important;
   color: #28584D !important;
-  letter-spacing: 0.01em !important;
+  letter-spacing: normal !important;
   white-space: nowrap !important;
   line-height: 1.1 !important;
   text-shadow: 0 1px 4px rgba(196,149,64,0.18) !important;
@@ -1182,7 +1182,7 @@
 /* عناوين إرشادية أصغر (اختياري) */
 .ds-section__eyebrow {
   font-family: var(--mj-font-seal) !important;
-  letter-spacing: 0.04em !important;
+  letter-spacing: normal !important;
 }
 
 /* ══ تذييل الصفحة — خلفية زمردية داكنة (emerald-950) ══ */
@@ -1411,7 +1411,7 @@
 }
 .achievement-card__name {
   font-family: var(--mj-font-display) !important;
-  font-size: 1.5rem;
+  font-size: var(--ds-text-2xl);
   font-weight: 700;
   color: var(--mj-emerald-950, #173D35);
   border-bottom: 1px solid rgba(23,61,53,0.20);
@@ -1604,9 +1604,9 @@
    الاستثناء الشاملة أدناه، سطر ~1803) — بدونها كانت هذه القاعدة الأقدم تفوز
    بخصوصية أعلى من نص pill الأبيض فيصبح النص أخضر داكن فوق خلفية خضراء داكنة
    (نص مختفٍ فعليًا، اكتُشف عبر Playwright على /fiqh-council و/quran-radio). */
-.page-shell h1:not([class*="ds-page-header"]):not(.fqh-hub-hero__title):not(.twh-hub-hero__title):not(.akl-hero__title):not(.arkan-hero__title):not(.ds-hero__title):not(.duas-hero__title):not(.mk-hero__title):not(.sm-hero__title):not(.an-hero__title):not(.sch-profile-hero__name):not(.prophet-detail-lux__name):not(.cards-page-title):not(.search-page-title):not(.ds-section__title),
+.page-shell h1:not([class*="ds-page-header"]):not(.fqh-hub-hero__title):not(.twh-hub-hero__title):not(.akl-hero__title):not(.arkan-hero__title):not(.ds-hero__title):not(.duas-hero__title):not(.mk-hero__title):not(.sm-hero__title):not(.an-hero__title):not(.sch-profile-hero__name):not(.prophet-detail-lux__name):not(.amr-hero__title):not(.pft-hero__title):not(.cards-page-title):not(.search-page-title):not(.ds-section__title),
 .page-shell h2:not([class*="ds-page-header"]):not(.sq-title):not(.jn-section__title):not(.jn-subtitle):not(.jn-related__title):not(.sw-related__title):not(.hj-section__title):not(.hj-related__title):not(.th-section__title):not(.th-related__title):not(.fa-related__title):not(.seerah-panel__title):not(.fq-ref__title):not(.sh-step__title):not(.ds-section__title):not(.cards-page-title):not(.search-page-title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title):not(.lessons-v2-section__title):not(.lessons-past-section__title),
-.page-shell h3:not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title):not(.ds-section__title),
+.page-shell h3:not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title):not(.ds-section__title):not(.amr-level__title),
 .page-shell h4 {
   font-family: var(--mj-font-display) !important;
   color: var(--majalis-emerald-deep, #173D35) !important;
@@ -1808,9 +1808,9 @@
 
 /* ── 2. عناوين الصفحات العامة → El Messiri + أخضر زمردي ── */
 /* مستثنى: عناوين elite-2026 المصممة (تأخذ ألوانها من elite-2026.css) */
-.page-shell h1:not(.ds-page-header__title):not(.cards-page-title):not(.search-page-title):not(.ds-section__title):not(.fqh-hub-hero__title):not(.twh-hub-hero__title):not(.akl-hero__title):not(.arkan-hero__title):not(.ds-hero__title):not(.duas-hero__title):not(.mk-hero__title):not(.sm-hero__title):not(.an-hero__title):not(.sch-profile-hero__name):not(.prophet-detail-lux__name),
+.page-shell h1:not(.ds-page-header__title):not(.cards-page-title):not(.search-page-title):not(.ds-section__title):not(.fqh-hub-hero__title):not(.twh-hub-hero__title):not(.akl-hero__title):not(.arkan-hero__title):not(.ds-hero__title):not(.duas-hero__title):not(.mk-hero__title):not(.sm-hero__title):not(.an-hero__title):not(.sch-profile-hero__name):not(.prophet-detail-lux__name):not(.amr-hero__title):not(.pft-hero__title),
 .page-shell h2:not(.ds-page-header__title):not(.lessons-v2-section__title):not(.lessons-past-section__title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title):not(.ds-section__title):not(.sq-title):not(.jn-section__title):not(.jn-subtitle):not(.jn-related__title):not(.sw-related__title):not(.hj-section__title):not(.hj-related__title):not(.th-section__title):not(.th-related__title):not(.fa-related__title):not(.seerah-panel__title):not(.fq-ref__title):not(.sh-step__title),
-.page-shell h3:not(.ds-section__title):not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title) {
+.page-shell h3:not(.ds-section__title):not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title):not(.amr-level__title) {
   font-family: var(--mj-font-display) !important;
   color: var(--majalis-emerald-deep, #173D35) !important;
 }
@@ -1936,7 +1936,7 @@
   box-shadow: 0 4px 16px rgba(23,61,53,0.40), 0 1px 4px rgba(0,0,0,0.15);
   transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s;
   opacity: 0.88;
-  letter-spacing: 0.01em;
+  letter-spacing: normal;
   white-space: nowrap;
 }
 .admin-quick-edit-fab:hover {
@@ -2027,7 +2027,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: var(--ds-space-4);
   animation: aie-fade-in 0.18s ease;
 }
 @keyframes aie-fade-in { from { opacity: 0; } to { opacity: 1; } }
@@ -2084,10 +2084,10 @@
 .aie-modal__body {
   flex: 1;
   overflow-y: auto;
-  padding: 1.25rem;
+  padding: var(--ds-space-5);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--ds-space-4);
 }
 
 /* حقول النموذج */
@@ -2145,7 +2145,7 @@
 }
 .aie-modal__actions {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   justify-content: flex-end;
   flex-direction: row-reverse;
 }
@@ -2330,7 +2330,7 @@ table th {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: var(--ds-space-6);
   padding: 2rem 1rem 5rem;
   min-height: 80vh;
   direction: rtl;
@@ -2341,12 +2341,12 @@ table th {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   text-align: center;
   padding: 2.5rem 2rem;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(23,61,53,0.20);
-  border-radius: 1.25rem;
+  border-radius: var(--ds-radius-2xl);
   width: 100%;
   max-width: 480px;
   backdrop-filter: blur(4px);
@@ -2355,7 +2355,7 @@ table th {
 .pt-hero__label {
   font-size: 0.78rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: normal;
   text-transform: uppercase;
   color: var(--majalis-brass, #28584D);
 }
@@ -2372,13 +2372,13 @@ table th {
   color: var(--majalis-ink-muted, #9BA3B5);
   direction: ltr;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.04em;
+  letter-spacing: normal;
 }
 .pt-hero__countdown {
   font-size: clamp(2.8rem, 10vw, 4.5rem);
   font-weight: 700;
   color: var(--majalis-emerald, #28584D);
-  letter-spacing: 0.05em;
+  letter-spacing: normal;
   font-variant-numeric: tabular-nums;
   font-family: var(--font-body);
   line-height: 1.1;
@@ -2394,7 +2394,7 @@ table th {
   to   { opacity: 1; transform: translateY(0); }
 }
 .pt-hero__hint {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: var(--majalis-ink-muted, #9BA3B5);
   margin-top: 0.25rem;
 }
@@ -2418,7 +2418,7 @@ table th {
 .pt-prayers {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   width: 100%;
   max-width: 560px;
 }
@@ -2428,7 +2428,7 @@ table th {
   align-items: center;
   gap: 0.3rem;
   padding: 0.75rem 0.5rem;
-  border-radius: 0.75rem;
+  border-radius: var(--ds-radius-lg);
   border: 1px solid rgba(255,255,255,0.08);
   background: rgba(255,255,255,0.04);
   cursor: pointer;
@@ -2489,7 +2489,7 @@ table th {
 .pt-error {
   color: var(--msk-red, #C1595A);
   text-align: center;
-  padding: 2rem;
+  padding: var(--ds-space-8);
 }
 /* ══ نهاية صفحة مواقيت الصلاة ══════════════════════════════════════════════ */
 
@@ -2497,9 +2497,9 @@ table th {
 .prophets-seerah-bridge {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   padding: 1.25rem 1.5rem;
-  border-radius: 1rem;
+  border-radius: var(--ds-radius-xl);
   background: linear-gradient(135deg, rgba(23,61,53,0.08) 0%, rgba(46,139,103,0.08) 100%);
   border: 1.5px solid rgba(23,61,53,0.30);
   cursor: pointer;
@@ -2516,7 +2516,7 @@ table th {
 .prophets-seerah-bridge__eyebrow {
   font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: normal;
   color: var(--majalis-brass, #28584D);
   text-transform: uppercase;
   margin-bottom: 0.25rem;
@@ -2535,7 +2535,7 @@ table th {
   margin: 0;
 }
 .prophets-seerah-bridge__arrow {
-  font-size: 1.25rem;
+  font-size: var(--ds-text-xl);
   color: var(--majalis-brass, #28584D);
   flex-shrink: 0;
   transition: transform 0.2s;
@@ -2576,7 +2576,7 @@ table th {
   display: block;
   text-align: center;
   padding: 0.7rem 1.25rem;
-  border-radius: 0.5rem;
+  border-radius: var(--ds-radius);
   background: rgba(46,139,103,0.15);
   border: 1.5px solid var(--majalis-emerald, #28584D);
   color: var(--majalis-emerald, #28584D) !important;
@@ -2619,7 +2619,7 @@ table th {
   border-bottom: 1px solid color-mix(in srgb, var(--mj-emerald-950, #173D35) 8%, transparent);
   background: var(--mj-ivory-50, #F7F4ED);
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 .nh-header__title {
   font-size: 0.95rem;
@@ -2628,7 +2628,7 @@ table th {
   margin: 0;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 .nh-header__badge {
   display: inline-flex;
@@ -2753,7 +2753,7 @@ table th {
 .nh-row {
   position: relative;
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   padding: 0.875rem 1rem;
   background: #fff;
   border-bottom: 1px solid color-mix(in srgb, var(--mj-emerald-950, #173D35) 6%, transparent);
@@ -2873,7 +2873,7 @@ table th {
   gap: 0.4rem;
   flex-wrap: wrap;
   margin-bottom: 1rem;
-  padding: 0.5rem;
+  padding: var(--ds-space-2);
   background: rgba(255,255,255,0.03);
   border-radius: 0.875rem;
   border: 1px solid rgba(255,255,255,0.07);
@@ -2951,14 +2951,14 @@ table th {
 .hcw-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 0.875rem;
+  gap: var(--ds-space-3-5);
 }
 .hcw-card {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   padding: 0.875rem 1rem;
-  border-radius: 0.75rem;
+  border-radius: var(--ds-radius-lg);
   text-decoration: none;
   color: inherit;
   transition: background 0.15s, transform 0.15s;
@@ -2998,7 +2998,7 @@ table th {
   border-radius: 2px;
   transition: width 0.3s;
 }
-.hcw-card__pct { font-size: 0.75rem; opacity: 0.65; }
+.hcw-card__pct { font-size: var(--ds-text-xs); opacity: 0.65; }
 .hcw-card__go { flex-shrink: 0; opacity: 0.4; }
 .hcw-card--skeleton {
   height: 76px;
@@ -3031,7 +3031,7 @@ table th {
 
 .sch-profile-hero {
   display: flex;
-  gap: 1.5rem;
+  gap: var(--ds-space-6);
   align-items: flex-start;
   margin-bottom: 2rem;
 }
@@ -3083,10 +3083,10 @@ table th {
   border-radius: 0 0.5rem 0.5rem 0;
 }
 .sch-profile-quote__icon { color: #28584D; margin-bottom: 0.5rem; }
-.sch-profile-quote p { font-size: 1.05rem; line-height: 1.8; font-style: italic; }
+.sch-profile-quote p { font-size: 1.05rem; line-height: 1.8; font-style: normal; }
 .sch-profile-quote footer { font-size: 0.82rem; opacity: 0.65; margin-top: 0.5rem; }
 
-.sch-profile-works { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.sch-profile-works { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--ds-space-2); }
 .sch-profile-works li {
   padding: 0.5rem 0.75rem;
   background: rgba(23,61,53,0.06);
@@ -3098,7 +3098,7 @@ table th {
 .sch-profile-pager {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   margin-top: 2rem;
 }
 .sch-profile-pager__btn {
@@ -3111,7 +3111,7 @@ table th {
   color: #28584D;
   padding: 0.5rem 0.75rem;
   border: 1px solid rgba(23,61,53,0.3);
-  border-radius: 0.5rem;
+  border-radius: var(--ds-radius);
   transition: background 0.15s;
 }
 .sch-profile-pager__btn:hover { background: rgba(23,61,53,0.08); }
@@ -3133,29 +3133,29 @@ table th {
    inline style على العنصر مباشرة (AccountDeletionPage.tsx) — يتفوّق دومًا
    بصرف النظر عن أي غموض في الـcascade. هذه القاعدة أُبقيت كخط دفاع ثانٍ
    لا كإصلاح أساسي. */
-.accd-hero h1 { font-size: 1.5rem; color: #DC2626 !important; }
+.accd-hero h1 { font-size: var(--ds-text-2xl); color: #DC2626 !important; }
 .accd-hero p { opacity: 0.65; margin-top: 0.4rem; }
 
 .accd-info { margin-bottom: 1.5rem; border: 1px solid rgba(220,38,38,0.2); }
-.accd-info__title { font-size: 1rem; font-weight: 700; color: #DC2626; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem; }
+.accd-info__title { font-size: var(--ds-text-base); font-weight: 700; color: #DC2626; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem; }
 .accd-info__list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.75rem; }
 .accd-info__list li { font-size: 0.9rem; padding-right: 0.75rem; }
 .accd-info__list li::before { content: "✗ "; color: #DC2626; }
 .accd-info__note { font-size: 0.82rem; opacity: 0.6; border-top: 1px solid var(--clr-border); padding-top: 0.5rem; }
 
-.accd-actions { display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-start; }
+.accd-actions { display: flex; flex-direction: column; gap: var(--ds-space-3); align-items: flex-start; }
 .accd-actions__email { font-size: 0.9rem; opacity: 0.7; }
-.btn-danger { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.25rem; background: #DC2626; color: #fff; border: none; border-radius: 0.5rem; font-weight: 700; cursor: pointer; font-size: 0.92rem; }
+.btn-danger { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.25rem; background: #DC2626; color: #fff; border: none; border-radius: var(--ds-radius); font-weight: 700; cursor: pointer; font-size: 0.92rem; }
 .btn-danger:hover { background: #B91C1C; }
 .btn-danger:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .accd-confirm { margin-bottom: 1.5rem; }
 .accd-confirm__warning { font-size: 0.92rem; margin-bottom: 1rem; }
-.accd-confirm__input { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid #DC2626; border-radius: 0.5rem; font-size: 1rem; text-align: right; }
+.accd-confirm__input { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid #DC2626; border-radius: var(--ds-radius); font-size: var(--ds-text-base); text-align: right; }
 .accd-confirm__error { color: #DC2626; font-size: 0.85rem; margin-top: 0.5rem; }
-.accd-confirm__btns { display: flex; gap: 0.75rem; margin-top: 1rem; }
+.accd-confirm__btns { display: flex; gap: var(--ds-space-3); margin-top: 1rem; }
 
-.accd-deleting { text-align: center; padding: 2rem; }
+.accd-deleting { text-align: center; padding: var(--ds-space-8); }
 .accd-deleting__spinner { width: 40px; height: 40px; border: 3px solid rgba(23,61,53,0.2); border-top-color: #28584D; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -3164,6 +3164,6 @@ table th {
 .accd-done h1 { font-size: 1.4rem; margin-bottom: 0.5rem; }
 .accd-done p { opacity: 0.7; margin-bottom: 1.5rem; }
 
-.accd-login-prompt { padding: 1.5rem; background: rgba(23,61,53,0.06); border-radius: 0.75rem; text-align: center; margin-bottom: 1.5rem; }
-.accd-footer { display: flex; gap: 1.5rem; margin-top: 2rem; font-size: 0.85rem; opacity: 0.65; }
+.accd-login-prompt { padding: var(--ds-space-6); background: rgba(23,61,53,0.06); border-radius: var(--ds-radius-lg); text-align: center; margin-bottom: 1.5rem; }
+.accd-footer { display: flex; gap: var(--ds-space-6); margin-top: 2rem; font-size: 0.85rem; opacity: 0.65; }
 /* ══ نهاية صفحة حذف الحساب ══════════════════════════════════════════════════ */

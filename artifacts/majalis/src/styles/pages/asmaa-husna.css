@@ -10,18 +10,18 @@
 /* Hero */
 .ah-hero {
   background: linear-gradient(160deg, #173D35 0%, #173D35 60%, #0E5A45 100%);
-  border-radius: 1.25rem;
+  border-radius: var(--ds-radius-2xl);
   padding: 2.5rem 1.5rem 2rem;
   text-align: center;
   color: #FFFFFF;
   margin-bottom: 1.5rem;
 }
 .ah-hero__bismillah {
-  font-size: 1.25rem;
+  font-size: var(--ds-text-xl);
   font-family: var(--font-quran, serif);
   color: rgba(255,255,255,0.85);
   margin-bottom: 0.75rem;
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
 }
 .ah-hero__title {
   font-size: 2.2rem;
@@ -42,13 +42,13 @@
   margin-right: 0.5rem;
   font-size: 0.78rem;
   color: rgba(255,255,255,0.65);
-  font-style: italic;
+  font-style: normal;
 }
 .ah-hero__stats {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   font-size: 0.85rem;
   color: rgba(255,255,255,0.8);
   font-weight: 600;
@@ -59,7 +59,7 @@
 .ah-controls {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 1.5rem;
 }
 .ah-search-wrap {
@@ -77,7 +77,7 @@
   width: 100%;
   padding: 0.65rem 2.5rem 0.65rem 1rem;
   border: 1.5px solid #C6D6CE;
-  border-radius: 0.75rem;
+  border-radius: var(--ds-radius-lg);
   font-size: 0.92rem;
   background: #FFFFFF;
   color: #202725;
@@ -109,7 +109,7 @@
 .ah-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 2rem;
 }
 .ah-card {
@@ -124,12 +124,12 @@
      معهما مجددًا — 3.25rem يضمن مساحة كافية أسفل كلتا الشارتين
      (top:0.5rem + ارتفاع حتى 44px). */
   padding: 3.25rem 0.75rem 0.85rem;
-  border-radius: 1rem;
+  border-radius: var(--ds-radius-xl);
   border: 1.5px solid #D4E3DB;
   background: #FFFFFF;
   cursor: pointer;
   transition: all 0.18s;
-  gap: 0.25rem;
+  gap: var(--ds-space-1);
   box-shadow: 0 1px 4px rgba(23,61,53,0.06);
 }
 .ah-card:hover {
@@ -151,12 +151,12 @@
   color: #173D35;
   font-weight: 700;
   background: rgba(23,61,53,0.08);
-  border-radius: 1rem;
+  border-radius: var(--ds-radius-xl);
   padding: 0.1rem 0.45rem;
   line-height: 1.4;
 }
 .ah-card__name {
-  font-size: 1.25rem;
+  font-size: var(--ds-text-xl);
   font-weight: 800;
   color: #173D35;
   font-family: var(--font-quran, serif);
@@ -192,7 +192,7 @@
 .ah-empty {
   text-align: center;
   color: #6B9E8A;
-  padding: 2rem;
+  padding: var(--ds-space-8);
   font-size: 0.95rem;
 }
 
@@ -208,11 +208,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 .ah-modal {
   background: #FFFFFF;
-  border-radius: 1.25rem;
+  border-radius: var(--ds-radius-2xl);
   padding: 1.75rem;
   max-width: 480px;
   width: 100%;
@@ -226,13 +226,13 @@
 .ah-modal__head {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 1.25rem;
   padding-bottom: 1rem;
   border-bottom: 1.5px solid #E8F2EE;
 }
 .ah-modal__num {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   color: #FFFFFF;
   background: #173D35;
   border-radius: 50%;
@@ -279,7 +279,7 @@
   color: #173D35;
   margin-bottom: 0.3rem;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: normal;
 }
 .ah-modal__text {
   font-size: 0.9rem;
@@ -293,7 +293,7 @@
   color: #173D35;
   background: rgba(23,61,53,0.04);
   padding: 0.5rem 0.75rem;
-  border-radius: 0.5rem;
+  border-radius: var(--ds-radius);
   border-right: 3px solid #173D35;
 }
 .ah-modal__cat-badge {
@@ -312,7 +312,7 @@
   background: #173D35;
   color: #FFFFFF;
   border: none;
-  border-radius: 0.75rem;
+  border-radius: var(--ds-radius-lg);
   font-size: 0.9rem;
   font-weight: 700;
   cursor: pointer;
@@ -326,7 +326,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 0.375rem;
+  gap: var(--ds-space-1-5);
   padding: 1.5rem 1.25rem 1.25rem;
   margin-bottom: 1.25rem;
   border-radius: 1.125rem;
@@ -352,15 +352,15 @@
   background: rgba(255,255,255,0.18);
   border: 1px solid rgba(255,255,255,0.25);
   padding: 0.25rem 0.75rem;
-  border-radius: 999px;
-  letter-spacing: 0.03em;
+  border-radius: var(--ds-radius-full);
+  letter-spacing: normal;
 }
 .ah-nod-num {
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   color: rgba(255,255,255,0.8);
   background: rgba(255,255,255,0.12);
-  border-radius: 999px;
+  border-radius: var(--ds-radius-full);
   padding: 0.15rem 0.55rem;
 }
 .ah-nod-arabic {
@@ -376,7 +376,7 @@
   font-style: italic;
 }
 .ah-nod-meaning {
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: rgba(255,255,255,0.88);
   line-height: 1.6;
   max-width: 400px;
@@ -390,7 +390,7 @@
   background: rgba(255,255,255,0.12);
   border: 1px solid rgba(255,255,255,0.2);
   padding: 0.3rem 0.9rem;
-  border-radius: 999px;
+  border-radius: var(--ds-radius-full);
 }
 
 /* ── شريط تقدم المحفوظات ─────────────────────────────────── */
@@ -398,7 +398,7 @@
   margin-bottom: 1.25rem;
   padding: 0.75rem 1rem;
   background: var(--clr-canvas-1, #F7F4ED);
-  border-radius: 0.75rem;
+  border-radius: var(--ds-radius-lg);
   border: 1px solid rgba(23,61,53,0.08);
 }
 .ah-progress-bar-labels {
@@ -412,22 +412,22 @@
 .ah-progress-bar-track {
   height: 6px;
   background: rgba(23,61,53,0.1);
-  border-radius: 999px;
+  border-radius: var(--ds-radius-full);
   overflow: hidden;
 }
 .ah-progress-bar-fill {
   height: 100%;
   background: linear-gradient(90deg, #173D35, #3BAD8A);
-  border-radius: 999px;
+  border-radius: var(--ds-radius-full);
   transition: width 0.4s ease;
 }
 
 @media (max-width: 600px) {
-  .ah-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 0.5rem; }
+  .ah-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: var(--ds-space-2); }
   .ah-card { padding: 3.25rem 0.5rem 0.75rem; } /* padding-top موسَّع لنفس سبب القاعدة الأساسية أعلاه — كانت هذه القاعدة الفعلية الفائزة على الجوّال (max-width:600px) وتُبقي التراكب قائمًا رغم إصلاح القاعدة الأساسية */
   .ah-card__name { font-size: 1.1rem; }
   .ah-hero__title { font-size: 1.75rem; }
-  .ah-modal { padding: 1.25rem; }
+  .ah-modal { padding: var(--ds-space-5); }
   .ah-nod-arabic { font-size: 2rem; }
 }
 

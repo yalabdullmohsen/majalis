@@ -54,7 +54,7 @@
 
 /* ── واجب الصلاة اليوم (.sgod-card) ── */
 .sgod-card {
-  display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-2); text-align: center;
   padding: 1.5rem 1.25rem 1.25rem; margin-bottom: 0;
   background: linear-gradient(145deg, #173D35 0%, #173D35 60%, #146248 100%);
   box-shadow: 0 4px 20px rgba(23,61,53,0.22);
@@ -62,10 +62,10 @@
 }
 .sgod-card__badge {
   display: inline-flex; align-items: center; gap: 0.35rem;
-  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: normal; text-transform: uppercase;
   color: #FFFFFF; background: rgba(255,255,255,0.18);
   border: 1px solid rgba(255,255,255,0.25);
-  padding: 0.25rem 0.7rem; border-radius: 100px;
+  padding: 0.25rem 0.7rem; border-radius: var(--ds-radius-full);
 }
 .sgod-card__num   { font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.65); }
 .sgod-card__title { font-size: 1.05rem; font-weight: 700; color: #FFFFFF; margin: 0; }
@@ -110,7 +110,7 @@
 .sg-section { animation: sg-fade .25s ease; }
 @keyframes sg-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .sg-lead    { font-size: .88rem; color: #68716D; line-height: 1.7; margin: 0 0 1.2rem; border-right: 3px solid var(--majalis-emerald,#173D35); padding-right: .75rem; }
-.sg-subhead { font-size: 1rem; font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.sg-subhead { font-size: var(--ds-text-base); font-weight: 700; color: #111; margin: 0 0 .75rem; }
 .sg-subhead--mt { margin-top: 1.5rem; }
 
 /* شروط */
@@ -171,7 +171,7 @@
   font-family: var(--font-body);
 }
 .sg-dhikr-box__label { font-size: .68rem; font-weight: 700; color: var(--majalis-emerald,#173D35); display: block; margin-bottom: .25rem; font-family: inherit; }
-.sg-dhikr-box__text  { font-size: 1rem; color: #052E16; line-height: 1.8; }
+.sg-dhikr-box__text  { font-size: var(--ds-text-base); color: #052E16; line-height: 1.8; }
 .sg-step-note {
   display: flex; gap: .4rem; align-items: flex-start;
   font-size: .78rem; color: #68716D; line-height: 1.5;
@@ -183,7 +183,7 @@
   display: flex; gap: .7rem; align-items: flex-start;
   background: #FFF1F2; border: 1px solid #FECDD3; border-radius: .75rem; padding: .75rem .9rem;
 }
-.sg-mubtil-icon  { font-size: 1rem; color: #DC2626; font-weight: 800; flex-shrink: 0; margin-top: .1rem; }
+.sg-mubtil-icon  { font-size: var(--ds-text-base); color: #DC2626; font-weight: 800; flex-shrink: 0; margin-top: .1rem; }
 .sg-mubtil-title { display: block; font-weight: 700; font-size: .85rem; color: #991B1B; margin-bottom: .2rem; }
 .sg-mubtil-desc  { display: block; font-size: .8rem; color: #68716D; line-height: 1.5; }
 
@@ -210,7 +210,7 @@
 .sg-khushuu-card {
   background: #fff; border: 1.5px solid #E7E2D8; border-radius: .8rem; padding: .85rem; text-align: center;
 }
-.sg-khushuu-icon  { font-size: 1.5rem; display: block; margin-bottom: .4rem; }
+.sg-khushuu-icon  { font-size: var(--ds-text-2xl); display: block; margin-bottom: .4rem; }
 .sg-khushuu-title { font-size: .82rem; font-weight: 700; color: #111; display: block; margin-bottom: .3rem; }
 .sg-khushuu-desc  { font-size: .73rem; color: #68716D; line-height: 1.5; margin: 0; }
 
@@ -253,7 +253,7 @@
 
 /* ── مراتب المصلين ── */
 .sg-ranks-list { display: flex; flex-direction: column; gap: .75rem; }
-.sg-rank-card { background: #fff; border: 1px solid #E7E2D8; border-radius: .75rem; padding: 1rem; }
+.sg-rank-card { background: #fff; border: 1px solid #E7E2D8; border-radius: .75rem; padding: var(--ds-space-4); }
 .sg-rank-card__header { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: .6rem; }
 .sg-rank-card__num {
   width: 28px; height: 28px; background: var(--clr-primary,#28584D); color: #fff;
@@ -268,7 +268,7 @@
 }
 .sg-rank-card__ruling--high { background: rgba(23,61,53,.2); }
 .sg-rank-card__text { font-size: .83rem; color: #444; line-height: 1.7; margin: 0 0 .4rem; }
-.sg-rank-card__benefit { font-size: .78rem; color: #555; font-style: italic; margin: 0; }
+.sg-rank-card__benefit { font-size: .78rem; color: #555; font-style: normal; margin: 0; }
 
 /* ── سور الصلاة والنوافل ── */
 .sg-suwar-grid { display: grid; grid-template-columns: 1fr; gap: .7rem; }
@@ -296,7 +296,7 @@
 
 /* related */
 .sg-related { margin-top: 2.5rem; }
-.sg-related__title { font-size: 1rem; font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.sg-related__title { font-size: var(--ds-text-base); font-weight: 700; color: #111; margin: 0 0 .75rem; }
 .sg-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .sg-related__link {
   background: #fff; border: 1px solid #E7E2D8; border-radius: .6rem;

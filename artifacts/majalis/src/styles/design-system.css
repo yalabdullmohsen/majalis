@@ -76,7 +76,7 @@ html {
   font-weight: 700;
   color: var(--majalis-brass-deep, #173D35);
   margin: 0 0 var(--ds-space-1);
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
 }
 
 .ds-page-header__title {
@@ -192,8 +192,8 @@ article {
 .fiqh-opinions-list ul { margin: 0; padding-inline-start: 1.1rem; display: flex; flex-direction: column; gap: 0.4rem; }
 .fiqh-opinion-evidence { color: var(--ds-ink-soft); font-size: 0.88em; }
 .fiqh-adopted-opinion { margin-top: 0.75rem; padding: 0.6rem 0.8rem; background: var(--ds-emerald-soft, rgba(23,61,53,.08)); border-radius: var(--ds-radius-md, 0.5rem); }
-.fiqh-context-disclaimer { margin-top: 0.5rem; font-size: 0.82rem; color: var(--ds-ink-soft); font-style: italic; }
-.fiqh-comparative-pending { font-size: 0.82rem; color: var(--ds-ink-soft); font-style: italic; margin: 0.25rem 0 0.75rem; }
+.fiqh-context-disclaimer { margin-top: 0.5rem; font-size: 0.82rem; color: var(--ds-ink-soft); font-style: normal; }
+.fiqh-comparative-pending { font-size: 0.82rem; color: var(--ds-ink-soft); font-style: normal; margin: 0.25rem 0 0.75rem; }
 
 /* ── Buttons ── */
 .ds-btn,
@@ -943,7 +943,7 @@ p, li {
 .miracle-item__ref {
   font-size: var(--ds-text-xs);
   color: var(--majalis-brass-deep, #173D35);
-  font-style: italic;
+  font-style: normal;
   margin: var(--ds-space-1) 0;
 }
 
@@ -1619,7 +1619,7 @@ hr.decorative,
   font-size: 0.73rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  letter-spacing: 0.03em;
+  letter-spacing: normal;
 }
 
 .ds-quiz-home-card__title {
@@ -1806,7 +1806,7 @@ hr.decorative,
 .home-about__eyebrow {
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.07em;
+  letter-spacing: normal;
   color: var(--clr-primary, #28584D);
   text-transform: uppercase;
   margin: 0 0 0.45rem;
@@ -1863,7 +1863,7 @@ hr.decorative,
   font-weight: 700;
   color: var(--ds-emerald-deep, #173D35);
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.01em;
+  letter-spacing: normal;
 }
 
 .hcp-strip__countdown--elapsed {
@@ -1952,7 +1952,7 @@ hr.decorative,
   font-size: 0.75rem;
   font-weight: 700;
   color: var(--majalis-emerald, #28584D);
-  letter-spacing: 0.04em;
+  letter-spacing: normal;
   line-height: 1;
 }
 
@@ -2401,7 +2401,7 @@ hr.decorative,
   color: var(--ds-emerald-deep);
   margin: 0 0 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: normal;
 }
 .profile-stats-section { margin-bottom: 1.25rem; }
 .profile-stats-grid {
@@ -2456,7 +2456,7 @@ hr.decorative,
   font-weight: 700;
   color: var(--majalis-ink-soft);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: normal;
   margin: 0 0 0.5rem;
 }
 .profile-badges__row {
@@ -2647,7 +2647,7 @@ hr.decorative,
   font-weight: 600;
   color: var(--majalis-ink-soft);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: normal;
 }
 .home-resume__card-title {
   font-size: 0.875rem;
@@ -3239,7 +3239,7 @@ hr.decorative,
 .fc-card__label {
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: normal;
   color: var(--majalis-ink-soft);
   text-transform: uppercase;
 }
@@ -3358,7 +3358,7 @@ hr.decorative,
 }
 .car-mode--playing .car-mode__disk { animation-play-state: running; }
 @keyframes carDiskSpin { to { transform: rotate(360deg); } }
-.car-mode__category { font-size: 0.85rem; color: rgba(255,255,255,0.45); letter-spacing: 0.08em; }
+.car-mode__category { font-size: 0.85rem; color: rgba(255,255,255,0.45); letter-spacing: normal; }
 .car-mode__title {
   font-size: clamp(1.25rem, 5vw, 2rem);
   font-weight: 800;
@@ -3512,7 +3512,7 @@ hr.decorative,
   font-size: clamp(2.5rem, 10vw, 4rem);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.05em;
+  letter-spacing: normal;
 }
 .mosque-mode__prayer-time { font-size: 1rem; opacity: 0.7; }
 .mosque-mode__countdown--elapsed { font-size: clamp(2.5rem, 10vw, 3.5rem); opacity: 0.9; }
@@ -3578,7 +3578,7 @@ hr.decorative,
   font-weight: 700;
   color: var(--majalis-ink-soft);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: normal;
   margin: 0 0 0.25rem;
 }
 
@@ -3786,7 +3786,7 @@ hr.decorative,
   font-weight: 800;
   font-variant-numeric: tabular-nums;
   color: var(--majalis-ink);
-  letter-spacing: 0.04em;
+  letter-spacing: normal;
 }
 
 .sr-controls {
@@ -3835,7 +3835,7 @@ hr.decorative,
   font-weight: 700;
   color: var(--majalis-ink-soft);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: normal;
   margin: 0 0 0.75rem;
 }
 .sr-history__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem; }
@@ -3936,7 +3936,7 @@ hr.decorative,
 .fm-invite-card__code {
   font-size: 1.5rem;
   font-weight: 900;
-  letter-spacing: 0.1em;
+  letter-spacing: normal;
   color: var(--ds-emerald-deep);
   font-family: monospace;
 }
