@@ -13100,6 +13100,9 @@ a:focus-visible {
 }
 .global-back-btn:hover { opacity: 1; transform: translateY(-2px); }
 .global-back-btn:active { transform: scale(.93); }
+/* يتراكب فعليًا مع محتوى ورقة الفلاتر (FilterBottomSheet) رغم z-index أدنى
+   اسميًا — راجع التعليق في FilterBottomSheet.tsx. */
+body.filter-sheet-open .global-back-btn { display: none; }
 html[data-theme="dark"] .global-back-btn {
   background: var(--clr-surface, #1A2120) !important;
   color: var(--clr-text-1, #E5F0EC) !important;
