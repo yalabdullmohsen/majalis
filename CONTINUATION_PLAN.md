@@ -9292,3 +9292,53 @@ ORDER BY sort_order"`) لضمان تطابق الأرقام الفعلية مع 
 نجح لتنفيذ ملفات DO $$ (وليس فقط SELECT)؛ فشل مرة واحدة بخطأ اتصال
 عارض (LegacyDbConfigConnectTempRoleError) نجحت بإعادة المحاولة فورًا
 بلا تدخل بشري.
+
+---
+
+## دورة 2026-07-23 — عنقود seerah-nabawiyya مكتمل (الجزء المتبقي 4/4)
+نُفِّذت المهمة أعلاه: التصنيفات الأربعة الأخيرة المتبقية draft تحت عنقود
+`seerah-nabawiyya` (السيرة النبوية) مُلئت بالكامل، كل تصنيف حصل على درس
+واحد (lessons+lesson_sections+lesson_citations): الشمائل المحمدية
+(shamail)، الأخلاق النبوية (akhlaq-nabawiyya)، دلائل النبوة
+(dalail-nubuwwa)، فقه السيرة والدروس التربوية (fiqh-seerah). المصادر
+المعتمدة: الشمائل المحمدية للترمذي (شمائل)، الشفا بتعريف حقوق المصطفى
+للقاضي عياض (أخلاق نبوية)، دلائل النبوة ومعرفة أحوال صاحب الشريعة
+للبيهقي (دلائل النبوة)، فقه السيرة النبوية لمحمد سعيد رمضان البوطي
+(فقه السيرة). أربعة أحاديث استُشهد بها، تحقَّقت حرفياً عبر WebSearch قبل
+الإدراج: وصف البراء بن عازب لهيئة النبي صلى الله عليه وسلم (متفق عليه،
+البخاري 3551 ومسلم 2337)، «كان خُلُق نبي الله القرآن» عن عائشة (مسلم
+منفردًا 746)، انشقاق القمر عن ابن مسعود (متفق عليه، البخاري 4864 ومسلم
+2802)، حديث بعث معاذ بن جبل إلى اليمن والتدرج في الدعوة (متفق عليه،
+البخاري 1458 ومسلم 19). ثلاث آيات (القلم 4، القمر 1، الأحزاب 21)
+تحقَّقت حرفياً محلياً من `public/data/quran` عبر `numberInSurah`.
+`status: draft→published` للأربعة، تحقَّق مباشرة من DB (4/4 منشور تحت
+`seerah-nabawiyya`، والعنقود بالكامل 11/11 منشور الآن). الدروس الأربعة
+اجتهاد صياغي واختيار مصدر ومثال → وُسمت في `needs-post-review.jsonl`
+فوراً (398→402). بوابة الجودة: التعديل اقتصر على ملف SQL وملف JSONL،
+فحُوطي عبر `pnpm run typecheck` و`pnpm run build` يدويًا (نجحا كلاهما)،
+وأُعيدت ملفات الضجيج المولَّدة من البناء كما كانت قبل الـcommit
+(rulings-encyclopedia/*، quran/pages-manifest.json، feed.xml،
+sitemap.xml، seo-prerender/*، content-counts.json،
+rulings-encyclopedia-seed.generated.ts — دون تغيير حقيقي).
+
+**المهمة التالية**: عنقود `seerah-nabawiyya` مكتمل 100% الآن (11/11
+منشور، مؤكَّد من DB). التالي حسب القائمة المكتشفة سابقًا (10 عناقيد
+متبقية الآن بعد استبعاد seerah-nabawiyya المكتمل): يُفضَّل التالي
+بالحجم — `adhkar-adiya` 5، `mara-muslima` 5/6 (جزئي)، `ahkam-quran` 5
+(تحت quran-uloom)، `maqasid-sharia` 5، `fiqh-aqalliyat` 5،
+`shabab-nashia` 6، `fatawa-muwaththaqa` 6، `usrah-mujtama` 6،
+`munasabat-islamiyya` 6، `nawazil-muasira` 6. **أعد التحقق المباشر من
+DB قبل البدء بأي عنقود** (`npx supabase link --project-ref
+ngmvmlulzacrlicuagyp` ثم `npx supabase db query --linked "SELECT id,
+slug, name, sort_order, status FROM categories WHERE
+parent_id=(SELECT id FROM categories WHERE slug='<العنقود المختار>')
+ORDER BY sort_order"`) لضمان تطابق الأرقام الفعلية مع ما وُثِّق أعلاه.
+بنفس المنهجية الثابتة: درس واحد حقيقي لكل تصنيف draft
+(`lessons`+`lesson_sections`+`lesson_citations`) بمصدر معتمد مسمّى
+مناسب لموضوع العنقود، تحقَّق من أي آية حرفياً محلياً من
+`public/data/quran` عبر حقل `numberInSurah` (لا `number`)، تحقَّق من أي
+حديث عبر WebSearch قبل الإدراج (فقط من الصحيحين/متفق عليه أو بإسناد
+صحيح مصرَّح بدرجته بدقة — تجنَّب أحاديث الحسن أو المختلَف في تصحيحها إن
+أمكن إيجاد بديل صحيح لنفس المعنى)، ثم `status: draft→published`. وسم
+`needs-post-review.jsonl` فوراً لكل درس عند إنشائه. لا تنتقل لعنقود ثانٍ
+في نفس الدورة حتى لو تبقّى وقت ضمن سقف الدفعة (~30 عنصرًا).
