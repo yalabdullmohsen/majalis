@@ -15797,7 +15797,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .akl-card__cat {
   font-size: 0.8rem;
-  color: #6B9E8A;
+  color: #497061;
   font-weight: 600;
 }
 .akl-card__chevron { color: #28584D; flex-shrink: 0; }
@@ -15851,7 +15851,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .akl-block__ref {
   font-size: 0.72rem;
-  color: #6B9E8A;
+  color: #497061;
   font-weight: 600;
 }
 .akl-block__quote {
@@ -15891,7 +15891,7 @@ html[data-theme="dark"] .qlive-player {
 /* Empty */
 .akl-empty {
   text-align: center;
-  color: #6B9E8A;
+  color: #497061;
   padding: var(--ds-space-8);
   font-size: 0.95rem;
 }
@@ -15925,7 +15925,7 @@ html[data-theme="dark"] .qlive-player {
   background: #FFFFFF;
 }
 .akl-related__card strong { font-size: 0.88rem; color: #052E16; }
-.akl-related__card span { font-size: var(--ds-text-xs); color: #6B9E8A; }
+.akl-related__card span { font-size: var(--ds-text-xs); color: #497061; }
 .akl-related__card:hover { border-color: #28584D; background: rgba(31,77,58,0.04); }
 
 @media (max-width: 600px) {
@@ -16076,7 +16076,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .duas-empty {
   text-align: center;
-  color: #6B9E8A;
+  color: #497061;
   padding: var(--ds-space-8);
 }
 
@@ -16119,7 +16119,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .dua-card__cat {
   font-size: 0.8rem;
-  color: #6B9E8A;
+  color: #497061;
   background: rgba(31,77,58,0.08);
   padding: 0.15rem 0.5rem;
   border-radius: var(--ds-radius-xl);
@@ -16131,7 +16131,7 @@ html[data-theme="dark"] .qlive-player {
   border-radius: var(--ds-radius);
   cursor: pointer;
   padding: 0.35rem;
-  color: #6B9E8A;
+  color: #497061;
   transition: all 0.15s;
   flex-shrink: 0;
   display: flex;
@@ -16400,7 +16400,7 @@ html[data-theme="dark"] .qlive-player {
   margin: 0.15rem 0;
   line-height: 1.4;
 }
-.arkan-card__sub { font-size: var(--ds-text-xs); color: #6B9E8A; }
+.arkan-card__sub { font-size: var(--ds-text-xs); color: #497061; }
 .arkan-card__chevron { color: #28584D; flex-shrink: 0; }
 .arkan-card__summary {
   padding: 0 1.25rem 1rem;
@@ -16456,7 +16456,7 @@ html[data-theme="dark"] .qlive-player {
 }
 .arkan-dalil__ref {
   font-size: 0.8rem;
-  color: #6B9E8A;
+  color: #497061;
   font-weight: 600;
 }
 
