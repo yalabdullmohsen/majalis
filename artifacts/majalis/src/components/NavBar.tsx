@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, Moon, Search, Sun, User, X } from "lucide-react";
+import { Menu, Moon, Sun, User, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { useLanguage } from "./LanguageProvider";
-import { SearchSuggestions } from "./SearchSuggestions";
+import { HeaderTicker } from "./HeaderTicker";
 import { SideNavDrawer } from "./SideNavDrawer";
 import { useThemePreference } from "./ThemePreferenceProvider";
 
@@ -53,41 +53,6 @@ function useIsMobile() {
 
 function tabCls(active: boolean, extra = "") {
   return `nav-tab${active ? " nav-tab--active" : ""}${extra ? " " + extra : ""}`;
-}
-
-function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
-  const [term, setTerm] = useState("");
-  const [, navigate] = useLocation();
-  const submit = (value: string) => {
-    const q = value.trim();
-    if (!q) return;
-    navigate(`/search/${encodeURIComponent(q)}`);
-    setTerm("");
-    onSubmitDone?.();
-  };
-  return (
-    <form
-      role="search"
-      aria-label="البحث في المجلس العلمي"
-      onSubmit={(e) => {
-        e.preventDefault();
-        submit(term);
-      }}
-      className="navbar-search-form"
-    >
-      <SearchSuggestions
-        value={term}
-        onChange={setTerm}
-        onSubmit={submit}
-        placeholder="ابحث في المجلس العلمي..."
-        compact
-      />
-      <button type="submit" aria-label="تنفيذ البحث" className="navbar-search-submit">
-        <Search size={15} strokeWidth={1.8} aria-hidden="true" />
-        <span>بحث</span>
-      </button>
-    </form>
-  );
 }
 
 export default function NavBar() {
@@ -185,6 +150,13 @@ export default function NavBar() {
             </nav>
           )}
 
+          {/* الشريط المتحرك — يحلّ محل زر البحث في الهيدر (تكليف 2026-07-24).
+              البحث نفسه لم يُحذف: يبقى متاحًا عبر القائمة الجانبية (ابحث ←
+              البحث الشامل) واختصار Ctrl/Cmd+K القائم أصلاً. على الجوال
+              يشغل المساحة الوسطى الفارغة أصلاً؛ على سطح المكتب يحلّ محل
+              مربع البحث المضمّن تحديدًا. */}
+          {isMobile && <HeaderTicker />}
+
           <div className="navbar-v3__end">
             {/* عداد الصلاة التالية — سطح المكتب فقط */}
             {!isMobile && <PrayerChip />}
@@ -201,23 +173,7 @@ export default function NavBar() {
                 : <Moon size={17} strokeWidth={1.6} aria-hidden="true" />
               }
             </button>
-            {/* زر البحث الشامل — أيقونة عدسة فقط على الجوال، أيقونة+كلمة "بحث"
-                على الشاشات الأكبر. اختصار Ctrl/Cmd+K يبقى فعالاً (مُدار في
-                App.tsx عبر مستمع keydown مستقل) لكن لا يُعرض بصريًا هنا —
-                طلب صريح من المالك: إزالة حرف K والمربع المحيط به نهائيًا. */}
-            {isMobile && (
-              <button
-                type="button"
-                onClick={() => window.dispatchEvent(new Event("global-search-open"))}
-                aria-label="فتح البحث"
-                className="navbar-search-cmd"
-              >
-                <Search size={17} strokeWidth={1.8} aria-hidden="true" />
-                <span>بحث</span>
-              </button>
-            )}
-            {/* Desktop: search + auth + lang */}
-            {!isMobile && <SearchBox />}
+            {!isMobile && <HeaderTicker />}
             {!isMobile && desktopAuthLinks}
 
             {/* Mobile: زر دخول/حساب واضح دائمًا — لا يُترك مخفيًا داخل قائمة الهامبرغر فقط */}
