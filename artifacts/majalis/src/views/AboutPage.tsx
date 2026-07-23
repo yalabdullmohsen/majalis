@@ -125,9 +125,6 @@ export default function AboutPage() {
           <li>
             <strong>فضائل الصلاة ومراتبها:</strong> المراتب الخمسة في الصلاة بحسب ابن القيم، فضائل الصلاة من القرآن والسنة الصحيحة، ووصايا عملية لإصلاح الصلاة.
           </li>
-          <li>
-            <strong>إذاعة القرآن الكريم:</strong> بث مباشر متواصل بأصوات أبرز القراء، عبد الباسط، المنشاوي، المعيقلي، الدوسري، وغيرهم، مع قناتَي الحرمين الشريفين المباشرتين.
-          </li>
         </ul>
       </LegalSection>
 
@@ -137,7 +134,7 @@ export default function AboutPage() {
           <li><strong>125</strong> كتاباً في المكتبة الشرعية</li>
           <li><strong>76+</strong> عالماً وشيخاً في قاعدة بيانات العلماء</li>
           <li><strong>53</strong> حكماً شرعياً موثّقاً</li>
-          <li><strong>780+</strong> سؤال في المسابقة التعليمية</li>
+          <li><strong>780+</strong> سؤال في لعبة سين جيم</li>
           <li><strong>49+</strong> دورة علمية مجدولة</li>
           <li><strong>64+</strong> موضوع في الإعجاز العلمي</li>
           <li><strong>350+</strong> فائدة علمية منتقاة</li>
@@ -145,7 +142,6 @@ export default function AboutPage() {
           <li><strong>59+</strong> موضوع في الطب النبوي</li>
           <li><strong>42</strong> حديثاً نووياً مشروحاً</li>
           <li><strong>30</strong> قاعدة تجويدية مفصّلة</li>
-          <li><strong>15+</strong> إذاعة قرآنية بث مباشر</li>
         </ul>
       </LegalSection>
 
@@ -228,8 +224,6 @@ export default function AboutPage() {
           <Link href="/lessons?tab=courses">الدورات العلمية</Link>
           {" · "}
           <Link href="/quran-hub">مركز القرآن</Link>
-          {" · "}
-          <Link href="/quran-radio">إذاعة القرآن</Link>
           {" · "}
           <Link href="/adhkar">الأذكار</Link>
           {" · "}

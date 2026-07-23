@@ -47,7 +47,7 @@ export function HomeQuizCard() {
   const totalQuestions = totalQuestionBankSize();
 
   return (
-    <section className="ds-quiz-home-card" dir="rtl" aria-label="لعبة سؤال وجواب الإسلامية"
+    <section className="ds-quiz-home-card" dir="rtl" aria-label="لعبة سين جيم – أسئلة وأجوبة"
       style={{ position: "relative", overflow: "hidden" }}>
       {/* زخرفة هندسية خلفية */}
       <svg aria-hidden="true" style={{
@@ -63,7 +63,7 @@ export function HomeQuizCard() {
       <div className="ds-quiz-home-card__content">
         <div className="ds-quiz-home-card__text">
           <span className="ds-quiz-home-card__badge">تنافسي • جماعي</span>
-          <h2 className="ds-quiz-home-card__title">لعبة سؤال وجواب الإسلامية</h2>
+          <h2 className="ds-quiz-home-card__title">لعبة سين جيم – أسئلة وأجوبة</h2>
           <p className="ds-quiz-home-card__desc">
             اختبر معلوماتك الشرعية وتحدَّ نفسك في أسئلة متنوعة — {totalQuestions} سؤالاً
             عبر {CATS.length} فئات: القرآن والحديث والسيرة والفقه والعقيدة والتاريخ والأخلاق

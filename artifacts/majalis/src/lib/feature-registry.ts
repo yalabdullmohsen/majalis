@@ -38,7 +38,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "daily-wird",   label: "الورد اليومي",       path: "/daily-wird",   group: "عبادات",        status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "tasbih",       label: "التسبيح",            path: "/tasbih",       group: "عبادات",        status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "qa",           label: "الأسئلة والأجوبة",  path: "/qa",           group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "quiz",         label: "المسابقة",           path: "/quiz",         group: "تفاعلي",        status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "quiz",         label: "لعبة سين جيم – أسئلة وأجوبة", path: "/quiz",   group: "تفاعلي",        status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "stories",      label: "القصص الإسلامية",   path: "/stories",      group: "قصص",           status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "prophets",     label: "قصص الأنبياء",      path: "/prophets",     group: "قصص",           status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "updates",      label: "آخر المستجدات",     path: "/updates",      group: "أخبار",         status: "active",       inSideNav: true,  inBottomNav: false },
@@ -54,8 +54,6 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "mushaf",        label: "المصحف الشريف",   path: "/mushaf",       group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "quran",        label: "القرآن الكريم",    path: "/quran-hub",    group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "quran-circles",label:"حلقات التحفيظ",     path: "/quran-circles",group:"قرآن",           status: "coming-soon",  inSideNav: true,  inBottomNav: false },
-  { id: "quran-radio",  label: "إذاعة القرآن",     path: "/quran-radio",  group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "muezzins",     label: "الأذان والمؤذنون",  path: "/muezzins",     group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
 
   // ── الأدوات والتفاعل ─────────────────────────────────────────
   { id: "prayer-times", label: "مواقيت الصلاة",    path: "/prayer-times", group: "صلاة",          status: "active",       inSideNav: true,  inBottomNav: true  },

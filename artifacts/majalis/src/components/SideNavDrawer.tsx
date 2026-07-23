@@ -6,9 +6,9 @@ import {
   Bot, Building2, Calculator, Calendar, CalendarDays, CheckCircle2, ChevronDown, ChevronUp,
   Clock, Compass, CreditCard, FileText, GitBranch, GraduationCap,
   Heart, HelpCircle, Home, Landmark, Layers, Library, Lightbulb,
-  LogIn, Map, MapPin, Mic, Mic2, Moon, Network, Quote, Radio, RefreshCw, Repeat2,
+  LogIn, Map, MapPin, Mic2, Moon, Network, Quote, RefreshCw, Repeat2,
   Rss, Scale, ScrollText, Search, Settings, Shield, Sparkles, Star, Stethoscope,
-  Sun, Trophy, Tv, Users, UserPlus, Waypoints, X, Zap,
+  Sun, Trophy, Users, UserPlus, Waypoints, X, Zap,
 } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { usePageSwipe } from "@/hooks/usePageSwipe";
@@ -226,13 +226,10 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/ulum-quran",          label: "علوم القرآن",        Icon: GraduationCap, desc: "التفسير والناسخ والمنسوخ" },
       { href: "/quran/surah-stories", label: "قصص السور",          Icon: BookText,      desc: "أسباب النزول ومحاور السور" },
       { href: "/duas-quran",          label: "أدعية القرآن",       Icon: BookMarked,    desc: "الأدعية القرآنية المختارة" },
-      { href: "/quran-radio",         label: "إذاعة القرآن",       Icon: Radio,         desc: "استماع مباشر" },
-      { href: "/quran-live",          label: "البث المباشر",       Icon: Tv,            desc: "من مكة والمدينة" },
       { href: "/quran-circles",       label: "حلقات التحفيظ",      Icon: Users,         desc: "دليل حلقات القرآن" },
       { href: "/quran-memorization",  label: "اختبارات الحفظ",     Icon: Zap,           desc: "12 نوعًا من اختبارات الحفظ" },
       { href: "/quran/memorization-plans", label: "خطط الحفظ",     Icon: CalendarDays,  desc: "خطط مرنة للحفظ والمراجعة والتثبيت" },
       { href: "/mutashabihat",        label: "الآيات المتشابهات",  Icon: GitBranch,     desc: "تمييز الآيات المتشابهة لفظًا" },
-      { href: "/muezzins",            label: "مكتبة القراء",       Icon: Mic,           desc: "مقاطع صوتية للقراء" },
     ],
   },
   {

@@ -971,7 +971,6 @@ export const SCIENTIFIC_ANNOUNCEMENTS: ScientificAnnouncement[] = [
     sheikh: "أ. د. محمد السلمي",
     day: "الثلاثاء",
     time: "7:30 مساءً",
-    liveUrl: "https://majlisilm.com/quran-live",
     notes: [
       "دورة مكثفة تُعنى بتعليم أساسيات اللغة العربية لفهم القرآن.",
       "تشمل: الإعراب الأساسي، الأفعال الثلاثية وأوزانها، أسلوب التوكيد والشرط.",

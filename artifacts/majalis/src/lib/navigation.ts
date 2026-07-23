@@ -77,7 +77,6 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/universities",       label: "دليل الجامعات" },
   // القرآن
   { href: "/quran-hub",           label: "مركز القرآن" },
-  { href: "/quran-radio",         label: "إذاعة القرآن" },
   { href: "/quran/surah-stories", label: "قصص القرآن" },
   { href: "/quran/recitation-test-ai", label: "اختبار التسميع بالذكاء الاصطناعي" },
   // الأذكار
@@ -86,11 +85,10 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/tasbih",        label: "التسبيح" },
   // الأدوات
   { href: "/prayer-times",  label: "مواقيت الصلاة" },
-  { href: "/muezzins",      label: "مكتبة المؤذنين" },
   { href: "/qibla",         label: "القبلة" },
   { href: "/occasions",     label: "المناسبات" },
   { href: "/calendar",      label: "التقويم" },
-  { href: "/quiz",          label: "المسابقات" },
+  { href: "/quiz",          label: "سين جيم" },
   // عام
   { href: "/search",        label: "البحث" },
   { href: "/settings",      label: "الإعدادات" },
@@ -106,7 +104,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
 export const PRIMARY_NAV_ITEMS: NavLink[] = [
   { href: "/",          label: "الرئيسية" },
   { href: "/lessons",   label: "تعلّم",    description: "حديث · عقيدة · فقه · سيرة" },
-  { href: "/quran-hub", label: "القرآن",   description: "مصحف · تجويد · قراء · إذاعة" },
+  { href: "/quran-hub", label: "القرآن",   description: "مصحف · تجويد · قراء" },
   { href: "/library",   label: "المكتبة",  description: "كتب · مخطوطات · مؤسسات" },
   { href: "/scholars",  label: "العلماء",  description: "تراجم العلماء والمشايخ" },
   { href: "/fiqh",      label: "الفقه",    description: "أحكام · مسائل · مجمع فقهي" },
@@ -136,12 +134,6 @@ export const HOME_FEATURE_CARDS = [
     title: "التسابيح",
     description: "مسبحة إلكترونية",
     icon: "circle-dot",
-  },
-  {
-    href: "/quran-radio",
-    title: "إذاعة القرآن",
-    description: "بث مباشر للقرآن",
-    icon: "radio",
   },
   {
     href: "/hadith",
@@ -182,7 +174,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/library", title: "المكتبة", description: "كتب ومتون" },
   { href: "/learning/paths", title: "المسارات العلمية", description: "تعلم منظم من المبتدئ للمتقدم" },
   { href: "/my-learning", title: "لوحتي التعليمية", description: "تقدمك وإنجازاتك" },
-  { href: "/quiz", title: "المسابقات", description: "اختبر معلوماتك" },
+  { href: "/quiz", title: "لعبة سين جيم – أسئلة وأجوبة", description: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة" },
   { href: "/scholars",     title: "أعلام الإسلام",        description: `${COUNTS.scholars} عالِمًا من الأئمة الأربعة حتى العلماء المعاصرين` },
   { href: "/asma-husna",  title: "الأسماء الحسنى",       description: "أسماء الله التسعة والتسعون — كل اسم بمعناه وآيته ومنفعته" },
   { href: "/akhlaq",     title: "الأخلاق الإسلامية",    description: "أخلاق إسلامية مع آيات وأحاديث وأقوال العلماء والتطبيق العملي" },
@@ -206,7 +198,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/salah-guide",   title: "دليل الصلاة الكامل",  description: "الشروط والأركان وكيفية الصلاة والمبطلات والخشوع وفضائل الصلاة الخمس" },
   { href: "/duas-quran",    title: "أدعية القرآن الكريم",  description: "أدعية قرآنية مأثورة: دعاء الأنبياء والمؤمنين مع سياقها وفوائدها" },
   { href: "/knowledge-map", title: "الخريطة المعرفية",   description: "حقول العلوم الشرعية بروابط تفاعلية ومحرك بحث" },
-  { href: "/quran-hub",    title: "مركز القرآن",          description: "بوابتك الشاملة للمصحف والتجويد والإذاعات والبث المباشر" },
+  { href: "/quran-hub",    title: "مركز القرآن",          description: "بوابتك الشاملة للمصحف والتجويد وعلوم القرآن" },
   { href: "/study-room",   title: "غرفة الدراسة",         description: "مؤقت بومودورو وتتبع جلسات المذاكرة وإحصائيات التعلم" },
   { href: "/vault",        title: "مخزن المعرفة",          description: "المفضلات والملاحظات الشخصية واستئناف القراءة" },
   { href: "/learning/calendar", title: "تقويم الدروس",    description: "مواعيد الدروس والدورات الإسلامية القادمة مع تصدير ICS" },

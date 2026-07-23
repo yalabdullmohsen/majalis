@@ -542,7 +542,6 @@ const LIST_JSON_LD = {
     "المسارات العلمية",
   ),
   "/topics": itemListJsonLdScript(TOPICS.map((t) => ({ name: t.title, url: `/topics/${t.slug}` })), "المواضيع الإسلامية"),
-  "/muezzins": itemListJsonLdScript(MUEZZINS.map((m) => ({ name: m.name, url: `/muezzins/${m.id}` })), "المؤذنون"),
   "/quran/surah-stories": itemListJsonLdScript(
     SURAH_STORIES.map((s) => ({ name: `سورة ${s.name}`, url: `/quran/surah-stories/${s.number}` })),
     "قصص سور القرآن",
@@ -589,7 +588,6 @@ const RICH_BODY_MAP = {
     LEARNING_PATHS.map((p) => ({ name: p.title, url: `/learning/paths/${p.slug}` })),
   ),
   "/topics": linkList("المواضيع الإسلامية", TOPICS.map((t) => ({ name: t.title, url: `/topics/${t.slug}` }))),
-  "/muezzins": linkList("المؤذنون", MUEZZINS.map((m) => ({ name: m.name, url: `/muezzins/${m.id}`, note: m.origin }))),
   "/quran/surah-stories": linkList(
     "قصص السور",
     SURAH_STORIES.slice(0, 30).map((s) => ({ name: `سورة ${s.name}`, url: `/quran/surah-stories/${s.number}` })),
@@ -890,31 +888,6 @@ for (const t of TOPICS) {
       keywords: [t.title, "مواضيع إسلامية", "أحكام شرعية"],
     },
     { parents: [{ name: "المواضيع الإسلامية", path: "/topics" }], priority: 0.66, changefreq: "monthly" },
-  );
-}
-
-// المؤذنون — من MUEZZINS في adhan-audio.ts
-for (const m of MUEZZINS) {
-  addPage(
-    {
-      path: `/muezzins/${m.id}`,
-      title: `${m.name} — أذان`,
-      description: clamp(padDesc(m.biography, `صوت الأذان للمؤذن ${m.name} من ${m.country || "—"} على منصة ${SITE_NAME}`), 300),
-      keywords: [m.name, "أذان", "مؤذنون", m.country, m.style].filter(Boolean),
-      ogType: "profile",
-    },
-    {
-      parents: [{ name: "المؤذنون وأصوات الأذان", path: "/muezzins" }],
-      richBody: `<h2>نبذة</h2>
-<p>${escapeHtml(m.biography || "")}</p>
-<ul>
-  ${m.origin ? `<li>المنشأ: ${escapeHtml(m.origin)}</li>` : ""}
-  ${m.country ? `<li>الدولة: ${escapeHtml(m.country)}</li>` : ""}
-  ${m.style ? `<li>الأسلوب: ${escapeHtml(m.style)}</li>` : ""}
-</ul>`,
-      priority: 0.6,
-      changefreq: "monthly",
-    },
   );
 }
 
