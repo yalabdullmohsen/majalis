@@ -5,7 +5,7 @@ import {
   Activity, BarChart2, BarChart3, BookMarked, BookOpen, BookText, BookUser,
   Bot, Building2, Calculator, Calendar, CalendarDays, CheckCircle2, Clock, Compass, CreditCard,
   FileText, Gavel, GitBranch, GraduationCap, Heart, HelpCircle, Info, Landmark,
-  Layers, Library, Lightbulb, Map, Mic, Mic2, Microscope, Moon, Network,
+  Layers, Library, Lightbulb, Map, Mic, Mic2, Moon, Network,
   Quote, Radio, RefreshCw, Repeat2, Rss, Scale, ScrollText, Search, Settings,
   Shield, Sparkles, Star, Stethoscope, Sun, Tv, Users, Waypoints, X, Zap,
 } from "lucide-react";
@@ -79,7 +79,6 @@ const SHEET_SECTIONS = [
     { href: "/janaza",             label: "أحكام الجنائز",      Icon: ScrollText },
     { href: "/mawarith",           label: "المواريث والفرائض",  Icon: Scale },
     { href: "/mawarith/calculator", label: "حاسبة المواريث",    Icon: Calculator },
-    { href: "/scholarly-research", label: "الباحث الشرعي",     Icon: Microscope },
     { href: "/academic-research",  label: "الأبحاث العلمية",   Icon: FileText },
     { href: "/amr-bil-maruf",      label: "الأمر بالمعروف",     Icon: Shield },
   ]},

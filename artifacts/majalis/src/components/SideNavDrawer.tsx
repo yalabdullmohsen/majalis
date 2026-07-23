@@ -240,7 +240,6 @@ const DRAWER_GROUPS: NavGroup[] = [
     icon: <IcoSearch />,
     items: [
       { href: "/search",              label: "البحث الشامل",        Icon: Search,    desc: "ابحث في كل محتوى التطبيق" },
-      { href: "/scholarly-research",  label: "الباحث الشرعي",      Icon: BookOpen,  desc: "بحث بالذكاء الاصطناعي في المصادر" },
       { href: "/academic-research",   label: "الأبحاث العلمية",    Icon: FileText,  desc: "أبحاث ودراسات شرعية" },
       { href: "/knowledge-graph",     label: "شبكة المعرفة",        Icon: GitBranch, desc: "العلاقات بين المفاهيم والمصطلحات" },
       { href: "/knowledge-map",       label: "الخريطة المعرفية",   Icon: Network,   desc: "خريطة العلوم الشرعية مرئية" },

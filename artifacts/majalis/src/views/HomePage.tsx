@@ -30,7 +30,7 @@ import {
 } from "@/lib/homepage-layout";
 import {
   BookMarked, BookOpen, Bot, CalendarDays, Car, Check, Clock,
-  Compass, Droplets, FlaskConical, GraduationCap, Heart, HelpCircle, Landmark, Layers,
+  Compass, Droplets, GraduationCap, Heart, HelpCircle, Landmark, Layers,
   Lightbulb, Map, Mic2, Monitor, Moon, Network,
   Radio, RotateCw, Scale, Scroll, Sparkles, Star, Target, Upload, Users, Wrench,
 } from "lucide-react";
@@ -39,7 +39,6 @@ import type { LucideIcon } from "lucide-react";
 // الودجتات الاختيارية لا تدخل حزمة الرئيسية للمستخدم الجديد. تُحمَّل فقط
 // إذا فعّلها المستخدم من شاشة التخصيص، مع بقاء الوظيفة والحالة المحفوظة.
 const HomeCompactPrayer = lazy(() => import("@/components/home/HomeCompactPrayer").then((m) => ({ default: m.HomeCompactPrayer })));
-const HomeDailyCorner = lazy(() => import("@/components/home/HomeDailyCorner").then((m) => ({ default: m.HomeDailyCorner })));
 const HomeDailyBenefits = lazy(() => import("@/components/home/HomeDailyBenefits").then((m) => ({ default: m.HomeDailyBenefits })));
 const HomeUpcomingEvents = lazy(() => import("@/components/home/HomeUpcomingEvents").then((m) => ({ default: m.HomeUpcomingEvents })));
 const HomeSunnahByTime = lazy(() => import("@/components/home/HomeSunnahByTime").then((m) => ({ default: m.HomeSunnahByTime })));
@@ -50,7 +49,6 @@ const HomeFeaturedLibrary = lazy(() => import("@/components/home/HomeFeaturedLib
 const HomeQuizCard = lazy(() => import("@/components/home/HomeQuizCard").then((m) => ({ default: m.HomeQuizCard })));
 const HomeAsmaCard = lazy(() => import("@/components/home/HomeAsmaCard").then((m) => ({ default: m.HomeAsmaCard })));
 const HomeWeekStreak = lazy(() => import("@/components/home/HomeWeekStreak").then((m) => ({ default: m.HomeWeekStreak })));
-const HomeNawawiHadith = lazy(() => import("@/components/home/HomeNawawiHadith").then((m) => ({ default: m.HomeNawawiHadith })));
 const HomeInterestingTopics = lazy(() => import("@/components/home/HomeInterestingTopics").then((m) => ({ default: m.HomeInterestingTopics })));
 const HomeMindMapSection = lazy(() => import("@/components/home/HomeMindMapSection").then((m) => ({ default: m.HomeMindMapSection })));
 
@@ -120,7 +118,6 @@ const FEATURE_CATS: FeatureCat[] = [
       { href: "/mawarith",            Icon: Scale,        title: "المواريث والفرائض",      desc: "حصص الورثة والعَصَبة والحجب والعَوْل والردّ" },
       { href: "/salah-guide",         Icon: Scroll,       title: "دليل الصلاة الكامل",     desc: "الشروط والأركان والخشوع والمبطلات وفضائل الصلاة" },
       { href: "/fiqh-qawaid",         Icon: Scale,        title: "القواعد الفقهية الكبرى", desc: "القواعد الخمس الكبرى وفروعها وضوابطها وتطبيقاتها المعاصرة" },
-      { href: "/scholarly-research", Icon: FlaskConical, title: "الباحث الشرعي",     desc: "بحث بالذكاء الاصطناعي" },
       { href: "/academic-research",  Icon: GraduationCap, title: "الأبحاث العلمية", desc: "رسائل وأبحاث أكاديمية" },
     ],
   },
@@ -211,7 +208,6 @@ const WIDGET_RENDERERS: Record<string, () => React.ReactNode> = {
   "daily-progress": () => <HomeDailyProgress />,
   "week-streak": () => <HomeWeekStreak />,
   "asma": () => <HomeAsmaCard />,
-  "hadith": () => <HomeNawawiHadith />,
   "sunnah-time": () => <HomeSunnahByTime />,
   "explore": () => <ExplorePlatformSection />,
   "learning-seasons": () => <HomeLearningSeasonsWidget />,
@@ -219,7 +215,6 @@ const WIDGET_RENDERERS: Record<string, () => React.ReactNode> = {
   "latest-updates": () => <HomeLatestUpdates />,
   "library": () => <HomeFeaturedLibrary />,
   "quiz": () => <HomeQuizCard />,
-  "daily-corner": () => <HomeDailyCorner />,
   "daily-benefits": () => <HomeDailyBenefits />,
   "upcoming-events": () => <HomeUpcomingEvents />,
   "prayer-ranks": () => <HomePrayerRanks />,

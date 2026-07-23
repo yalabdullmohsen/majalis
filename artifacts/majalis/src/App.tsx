@@ -271,7 +271,8 @@ const IslamicStoriesPage = lazy(() => import("@/views/IslamicStoriesPage"));
 const CitationPublicPage = lazy(() => import("@/views/CitationPublicPage"));
 const MethodologyPage = lazy(() => import("@/views/MethodologyPage"));
 const MyCitationsPage = lazy(() => import("@/views/MyCitationsPage"));
-const ScholarlyResearchPage = lazy(() => import("@/views/ScholarlyResearchPage"));
+// ScholarlyResearchPage عُطِّلت 2026-07-23 — الاستيراد الكسول أُزيل (لم يعد
+// يُستهلَك)؛ ملف المكوّن نفسه باقٍ بلا حذف (راجع feature-registry.ts).
 const AcademicResearchPage  = lazy(() => import("@/views/AcademicResearchPage"));
 const UniversitiesPage = lazy(() => import("@/views/UniversitiesPage"));
 const UniversityDetailPage = lazy(() => import("@/views/UniversityDetailPage"));
@@ -563,7 +564,9 @@ function Router() {
           </Suspense>
         </ErrorBoundary>
       </Route>
-      <Route path="/scholarly-research"><SafeLazyRoute component={ScholarlyResearchPage} /></Route>
+      {/* عُطِّلت 2026-07-23: توجيه دائم إلى الأسئلة والأجوبة، وvercel.json يوجّه
+          الطلبات المباشرة على مستوى الخادم بنفس الوجهة. */}
+      <Route path="/scholarly-research"><Redirect to="/qa" /></Route>
       <Route path="/academic-research"><SafeLazyRoute component={AcademicResearchPage} /></Route>
       <Route path="/learning-path/dashboard"><Redirect to="/my-learning" /></Route>
       <Route path="/learning-path/book/:bookId"><Redirect to="/learning/paths" /></Route>

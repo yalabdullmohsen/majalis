@@ -122,7 +122,6 @@ const SECTIONS = [
       { href: "/knowledge-map",    label: "خريطة المعرفة",        desc: "تخطيط المعرفة الإسلامية" },
       { href: "/mind-map",         label: "الخرائط الذهنية",      desc: "تنظيم المعلومات مرئياً" },
       { href: "/learning/paths",   label: "مسارات التعلم",        desc: "مسارات علمية منظمة بالمستويات" },
-      { href: "/scholarly-research", label: "الباحث الشرعي",      desc: "بحث بالذكاء الاصطناعي" },
       { href: "/topics",           label: "الموضوعات الشرعية",    desc: "محتوى مجمّع حسب الموضوع" },
       { href: "/start-here",       label: "ابدأ من هنا",          desc: "دليل طالب العلم المبتدئ" },
       { href: "/calendar",         label: "التقويم الهجري",      desc: "التقويم والمناسبات" },

@@ -71,7 +71,6 @@ export const MASARAT: Masar[] = [
       { id: "e5", title: "الفقه الإسلامي والأحكام", href: "/fiqh" },
       { id: "e6", title: "الأربعون النووية بالشرح", href: "/arbaeen-nawawi" },
       { id: "e7", title: "المجمع الفقهي والفتاوى", href: "/fiqh-council" },
-      { id: "e8", title: "الباحث الشرعي المتقدم", href: "/scholarly-research" },
       { id: "e9", title: "خريطة المعرفة الإسلامية", href: "/knowledge-graph" },
     ],
   },

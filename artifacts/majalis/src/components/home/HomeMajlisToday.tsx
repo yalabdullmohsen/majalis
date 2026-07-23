@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { BookOpen, CalendarClock, Lightbulb, Star } from "lucide-react";
-import { getDailyFaida } from "@/lib/daily-content";
+import { BookOpen, CalendarClock, Lightbulb, Quote, Star } from "lucide-react";
+import { getDailyFaida, getDailyHadith, getDayIndex } from "@/lib/daily-content";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import { computeNextOccurrenceMs } from "@/lib/lesson-time";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
@@ -10,8 +10,33 @@ import { RequestManager } from "@/lib/request-manager";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import {
   fetchWeekDayFacts, todayWeekDayCode, weekDayInfoTypeLabel,
-  NO_MATERIAL_MESSAGE, type WeekDayFact,
+  type WeekDayFact,
 } from "@/lib/week-day-facts-service";
+
+/* ══ مادة «مجلس اليوم» — فتحة واحدة فقط، لا تكرار ══
+   الأولوية: مادة يوم الأسبوع (محتوى محرَّر من قاعدة البيانات) إن توفرت
+   لليوم الحالي، وإلا فحديث/فائدة يتبادلان يوميًا بحسب زوجية اليوم —
+   يوحّد ما كان مبعثرًا سابقًا في HomeNawawiHadith/HomeDailyCorner
+   (2026-07-23، توحيد الأقسام اليومية). كل عنصر يعرض نوعه ومصدره دومًا. */
+type TodayItem =
+  | { kind: "weekday"; label: string; text: string; source: string }
+  | { kind: "hadith"; text: string; source: string }
+  | { kind: "faida"; text: string; source: string };
+
+function pickTodayItem(weekDayFacts: WeekDayFact[] | null): TodayItem | null {
+  if (weekDayFacts && weekDayFacts.length > 0) {
+    const f = weekDayFacts[0];
+    return { kind: "weekday", label: weekDayInfoTypeLabel(f.info_type), text: f.title, source: f.body };
+  }
+  const useHadith = getDayIndex() % 2 === 0;
+  if (useHadith) {
+    const h = getDailyHadith();
+    const grade = h.grade ? ` — ${h.grade}` : "";
+    return { kind: "hadith", text: h.text, source: `${h.narrator} — ${h.source}${grade}` };
+  }
+  const f = getDailyFaida();
+  return { kind: "faida", text: f.text, source: f.source || f.category };
+}
 
 function kuwaitDateStr(): string {
   return new Intl.DateTimeFormat("ar-KW", {
@@ -23,7 +48,6 @@ function kuwaitDateStr(): string {
 }
 
 export function HomeMajlisToday() {
-  const faida = getDailyFaida();
   const [nextLesson, setNextLesson] = useState<KuwaitLessonRecord | null>(null);
   const govId = getSelectedGovernorate().id;
   const { countdown } = usePrayerCountdown(govId);
@@ -45,8 +69,15 @@ export function HomeMajlisToday() {
   }, []);
 
   useEffect(() => {
-    void fetchWeekDayFacts(todayWeekDayCode()).then(setWeekDayFacts).catch(() => setWeekDayFacts([]));
+    void fetchWeekDayFacts(todayWeekDayCode()).then(setWeekDayFacts).catch(() => setWeekDayFacts(null));
   }, []);
+
+  const todayItem = pickTodayItem(weekDayFacts);
+  const itemIcon = todayItem?.kind === "weekday" ? CalendarClock : todayItem?.kind === "hadith" ? Quote : Lightbulb;
+  const itemLabel = todayItem?.kind === "weekday" ? todayItem.label
+    : todayItem?.kind === "hadith" ? "حديث اليوم" : "فائدة اليوم";
+  const itemLink = todayItem?.kind === "hadith" ? "/hadith" : "/fawaid";
+  const ItemIcon = itemIcon;
 
   return (
     <section className="myt-card" dir="rtl" aria-labelledby="myt-heading">
@@ -62,43 +93,18 @@ export function HomeMajlisToday() {
 
       <div className="myt-body">
 
-        {/* ── الفائدة اليومية ── */}
-        <div className="myt-block myt-block--faida">
-          <div className="myt-block__icon" aria-hidden="true">
-            <Lightbulb size={18} strokeWidth={1.8} />
-          </div>
-          <div className="myt-block__content">
-            <p className="myt-block__label">فائدة اليوم</p>
-            <p className="myt-block__text">{faida.text}</p>
-            {faida.source && (
-              <p className="myt-block__source">— {faida.source}</p>
-            )}
-          </div>
-          <Link href="/fawaid" className="myt-block__link" aria-label="المزيد من الفوائد">›</Link>
-        </div>
-
-        {/* ── مادة اليوم من "أيام الأسبوع" ── */}
-        {weekDayFacts !== null && (
-          <div className="myt-block myt-block--weekday">
+        {/* ── مادة اليوم: فتحة واحدة فقط (مادة يوم الأسبوع، وإلا حديث/فائدة بالتناوب) ── */}
+        {todayItem && (
+          <div className="myt-block myt-block--faida">
             <div className="myt-block__icon" aria-hidden="true">
-              <CalendarClock size={18} strokeWidth={1.8} />
+              <ItemIcon size={18} strokeWidth={1.8} />
             </div>
             <div className="myt-block__content">
-              {weekDayFacts.length > 0 ? (
-                <>
-                  <p className="myt-block__label">
-                    {weekDayInfoTypeLabel(weekDayFacts[0].info_type)}
-                  </p>
-                  <p className="myt-block__text">{weekDayFacts[0].title}</p>
-                  <p className="myt-block__source">{weekDayFacts[0].body}</p>
-                </>
-              ) : (
-                <>
-                  <p className="myt-block__label">مادة اليوم</p>
-                  <p className="myt-block__source myt-block__source--muted">{NO_MATERIAL_MESSAGE}</p>
-                </>
-              )}
+              <p className="myt-block__label">{itemLabel}</p>
+              <p className="myt-block__text">{todayItem.text}</p>
+              <p className="myt-block__source">— {todayItem.source}</p>
             </div>
+            <Link href={itemLink} className="myt-block__link" aria-label={`المزيد من ${itemLabel}`}>›</Link>
           </div>
         )}
 
