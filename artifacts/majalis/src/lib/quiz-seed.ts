@@ -3224,7 +3224,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "section": "الآداب",
     "category": "الجوار",
     "level": "متوسط",
-    "question": "كم جاراً حددت السنة حقه على المسلم؟",
+    "question": "بمَ عبّر النبي ﷺ عن عِظَم حق الجار؟",
     "answer": "أوصى النبي ﷺ بالجار حتى ظن الصحابة أنه سيُورِّثه"
   },
   {
