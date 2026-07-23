@@ -42,7 +42,6 @@ const COUNCIL_SECTIONS = [
   { href: "/fiqh-council/nawazil",     label: "النوازل المعاصرة",  desc: "مسائل العصر ومستجداته" },
   { href: "/fiqh-council/research",   label: "البحوث الفقهية",    desc: "دراسات معمّقة في القضايا" },
   { href: "/fiqh-council/compare",    label: "المقارنة الفقهية",  desc: "قارن بين القرارات والفتاوى" },
-  { href: "/scholarly-research",      label: "الباحث الشرعي",     desc: "بحث وتوثيق بالمصادر" },
 ];
 
 const RULINGS_CATEGORIES = RULINGS_CATEGORY_TREE.slice(0, 8);
@@ -64,7 +63,6 @@ const FIQH_TOPICS: FiqhTopic[] = [
   { emoji: "❓", title: "الأسئلة والأجوبة",  desc: "أسئلة شرعية موثقة",              href: "/qa",           color: "#0F766E" },
   { emoji: "🏛️", title: "المجمع الفقهي",    desc: "قرارات المجامع الفقهية",          href: "/fiqh-council", color: "#0F5132" },
   { emoji: "📋", title: "الأحكام الشرعية",   desc: "أحكام شرعية موثقة بالأدلة",        href: "/rulings",      color: "#065F46" },
-  { emoji: "🔬", title: "الباحث الشرعي",    desc: "بحث وتوثيق بالمصادر",             href: "/scholarly-research", color: "#68716D" },
   { emoji: "💍", title: "النكاح والطلاق",   desc: "أحكام عقد الزواج والفراق",         href: `/rulings?category=${encodeURIComponent("الأسرة")}`, color: "#7C3AED" },
   { emoji: "🤝", title: "المعاملات",        desc: "البيع والإجارة والشركات",           href: `/rulings?category=${encodeURIComponent("المعاملات")}`, color: "#0F766E" },
   { emoji: "🥩", title: "الأطعمة",          desc: "الحلال والحرام والذبائح",           href: `/rulings?category=${encodeURIComponent("الأطعمة والأشربة")}`, color: "#DC2626" },

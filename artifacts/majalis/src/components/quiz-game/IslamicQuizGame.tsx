@@ -40,26 +40,26 @@ function CategoryIcon({ name, size = 18 }: { name: string; size?: number }) {
 // تتناوب الأدوار). TeamId أصبح string ديناميكيًا ("team1".."team4" أو "solo")
 // بدل union ثابت بقيمتين — teams أصبح مصفوفة بطول 1-4 بدل Tuple ثابت.
 
-type GameMode = "solo" | "team";
-type TeamId = string;
-interface Lifelines { penalize: boolean; eliminate: boolean; pass: boolean; }
+export type GameMode = "solo" | "team";
+export type TeamId = string;
+export interface Lifelines { penalize: boolean; eliminate: boolean; pass: boolean; }
 
-interface Team {
+export interface Team {
   id: TeamId;
   name: string;
   score: number;
   lifelines: Lifelines;
 }
 
-interface Cell {
+export interface Cell {
   categoryId: string;
   points: PointValue;
   used: boolean;
 }
 
-type Phase = "setup" | "board" | "question" | "winner";
+export type Phase = "setup" | "board" | "question" | "winner";
 
-interface GameState {
+export interface GameState {
   mode: GameMode;
   phase: Phase;
   teams: Team[];
@@ -74,7 +74,7 @@ interface GameState {
   showHint: boolean;
 }
 
-type Action =
+export type Action =
   | { type: "START_GAME"; mode: GameMode; categories: string[]; names: string[] }
   | { type: "SELECT_CELL"; cell: Cell; pool: Record<string, CategoryQuestions>; persistedUsedIds?: Set<string> }
   | { type: "REVEAL_HINT" }
@@ -107,23 +107,23 @@ const S = {
 
 // ─── Reducer helpers ───────────────────────────────────────────────────────
 
-function makeTeam(id: TeamId, name: string): Team {
+export function makeTeam(id: TeamId, name: string): Team {
   return { id, name, score: 0, lifelines: { penalize: true, eliminate: true, pass: true } };
 }
 
 /** دوران الأدوار العام: يعمل لأي عدد فرق (1-4) — يدور للفريق التالي في المصفوفة.
  *  لفريق واحد (وضع فردي) يعيد نفس المعرّف دائمًا (idx+1 % 1 === idx). */
-function nextTeamId(teams: Team[], currentId: TeamId): TeamId {
+export function nextTeamId(teams: Team[], currentId: TeamId): TeamId {
   const idx = teams.findIndex((t) => t.id === currentId);
   if (idx === -1) return currentId;
   return teams[(idx + 1) % teams.length].id;
 }
 
-function isBoardDone(board: Cell[][]): boolean {
+export function isBoardDone(board: Cell[][]): boolean {
   return board.every((col) => col.every((c) => c.used));
 }
 
-function buildBoard(categories: string[]): Cell[][] {
+export function buildBoard(categories: string[]): Cell[][] {
   return categories.map((catId) =>
     ([200, 400, 600] as PointValue[]).map((pts) => ({ categoryId: catId, points: pts, used: false })),
   );
@@ -131,7 +131,7 @@ function buildBoard(categories: string[]): Cell[][] {
 
 const DEFAULT_TEAM_NAMES = ["الفريق الأول", "الفريق الثاني", "الفريق الثالث", "الفريق الرابع"];
 
-const initial: GameState = {
+export const initial: GameState = {
   mode: "team",
   phase: "setup",
   teams: [makeTeam("team1", DEFAULT_TEAM_NAMES[0]), makeTeam("team2", DEFAULT_TEAM_NAMES[1])],
@@ -145,7 +145,7 @@ const initial: GameState = {
   showHint: false,
 };
 
-function reducer(state: GameState, action: Action): GameState {
+export function reducer(state: GameState, action: Action): GameState {
   switch (action.type) {
     case "START_GAME": {
       const teams = action.mode === "solo"

@@ -1117,7 +1117,6 @@ export default function HadithSciencePage() {
             { href: "/hadith/daif",    label: "الأحاديث الضعيفة" },
             { href: "/hadith/mawdu",   label: "الأحاديث الموضوعة" },
             { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
-            { href: "/scholarly-research", label: "الباحث الشرعي" },
           ].map(({ href, label }) => (
             <Link key={href} href={href} className="hs-related__link">{label}</Link>
           ))}

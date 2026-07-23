@@ -9,6 +9,7 @@ import { LanguageProvider, useLanguage } from "@/components/LanguageProvider";
 import NavBar from "@/components/NavBar";
 import SiteFooter from "@/components/SiteFooter";
 import { BottomNavBar } from "@/components/BottomNavBar";
+import { TopSectionBar } from "@/components/TopSectionBar";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { GlobalBackButton } from "@/components/GlobalBackButton";
 import { AchievementToast } from "@/components/AchievementToast";
@@ -80,6 +81,7 @@ const ArbaeenLovePage = lazy(() => import("@/views/ArbaeenLovePage"));
 const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
 const QuranCirclesPage = lazy(() => import("@/views/QuranCirclesPage"));
 const QuranHubPage = lazy(() => import("@/views/QuranHubPage"));
+const KidsPage = lazy(() => import("@/views/KidsPage"));
 const SurahIndexPage = lazy(() => import("@/views/SurahIndexPage"));
 const RevelationOrderPage = lazy(() => import("@/views/RevelationOrderPage"));
 const MakkiMadaniPage = lazy(() => import("@/views/MakkiMadaniPage"));
@@ -271,7 +273,8 @@ const IslamicStoriesPage = lazy(() => import("@/views/IslamicStoriesPage"));
 const CitationPublicPage = lazy(() => import("@/views/CitationPublicPage"));
 const MethodologyPage = lazy(() => import("@/views/MethodologyPage"));
 const MyCitationsPage = lazy(() => import("@/views/MyCitationsPage"));
-const ScholarlyResearchPage = lazy(() => import("@/views/ScholarlyResearchPage"));
+// ScholarlyResearchPage عُطِّلت 2026-07-23 — الاستيراد الكسول أُزيل (لم يعد
+// يُستهلَك)؛ ملف المكوّن نفسه باقٍ بلا حذف (راجع feature-registry.ts).
 const AcademicResearchPage  = lazy(() => import("@/views/AcademicResearchPage"));
 const UniversitiesPage = lazy(() => import("@/views/UniversitiesPage"));
 const UniversityDetailPage = lazy(() => import("@/views/UniversityDetailPage"));
@@ -295,12 +298,18 @@ function SeoManager() {
   return null;
 }
 
+/* وجهات شريط الأقسام العلوي (TopSectionBar) — التبديل بينها يُعامَل معاملة
+   "الرجوع" (استعادة آخر موضع تمرير)، لا "تنقّل للأمام" (تمرير للأعلى)،
+   لأن المستخدم يُنهي غالبًا جولة في قسم ثم يعود إليه لاحقًا عبر تبويبه. */
+const SECTION_BAR_PATHS = new Set(["/", "/learn", "/quran-hub", "/kids"]);
+
 /**
  * كان يفرض scrollTo(0,0) على كل تغيير مسار بلا استثناء، فيُفقِد موضع
  * التمرير حتى عند الرجوع (زر الرجوع العام أو زر رجوع المتصفح) — طلب صريح
  * من المالك بحفظ حالة الصفحة (تمرير) عند الرجوع. الآن: يميّز بين تنقّل
- * "للأمام" (رابط/بطاقة جديدة → تمرير للأعلى كالمعتاد) و"للخلف"
- * (popstate → استعادة آخر موضع تمرير محفوظ لذلك المسار من sessionStorage).
+ * "للأمام" (رابط/بطاقة جديدة → تمرير للأعلى كالمعتاد) و"للخلف" (popstate،
+ * أو التبديل بين أقسام TopSectionBar → استعادة آخر موضع تمرير محفوظ لذلك
+ * المسار من sessionStorage).
  */
 function ScrollResetOnNav() {
   const [location] = useLocation();
@@ -322,8 +331,9 @@ function ScrollResetOnNav() {
     }
     lastLocationRef.current = location;
 
-    if (isPopRef.current) {
-      isPopRef.current = false;
+    const shouldRestore = isPopRef.current || SECTION_BAR_PATHS.has(location);
+    isPopRef.current = false;
+    if (shouldRestore) {
       const saved = sessionStorage.getItem(`scroll-pos:${location}`);
       if (saved != null) {
         const top = Number(saved);
@@ -563,7 +573,9 @@ function Router() {
           </Suspense>
         </ErrorBoundary>
       </Route>
-      <Route path="/scholarly-research"><SafeLazyRoute component={ScholarlyResearchPage} /></Route>
+      {/* عُطِّلت 2026-07-23: توجيه دائم إلى الأسئلة والأجوبة، وvercel.json يوجّه
+          الطلبات المباشرة على مستوى الخادم بنفس الوجهة. */}
+      <Route path="/scholarly-research"><Redirect to="/qa" /></Route>
       <Route path="/academic-research"><SafeLazyRoute component={AcademicResearchPage} /></Route>
       <Route path="/learning-path/dashboard"><Redirect to="/my-learning" /></Route>
       <Route path="/learning-path/book/:bookId"><Redirect to="/learning/paths" /></Route>
@@ -597,6 +609,7 @@ function Router() {
       <Route path="/mushaf"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf-v2-preview"><SafeLazyRoute component={MushafReaderV2Preview} /></Route>
       <Route path="/quran-hub"><SafeLazyRoute component={QuranHubPage} /></Route>
+      <Route path="/kids"><SafeLazyRoute component={KidsPage} /></Route>
       <Route path="/quran/recitation-test-ai"><SafeLazyRoute component={RecitationTestPage} /></Route>
       <Route path="/quran/surahs"><SafeLazyRoute component={SurahIndexPage} /></Route>
       <Route path="/quran/revelation-order"><SafeLazyRoute component={RevelationOrderPage} /></Route>
@@ -770,6 +783,7 @@ function AppShell() {
         <AdhanSchedulerBootstrap />
         <PrayerAlertSchedulerBootstrap />
         <NavBar />
+        <TopSectionBar />
         <PrayerCountdownBanner />
         <AdhanNotificationBar />
         <PrayerRespectBanner />
