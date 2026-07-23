@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import { useState, useMemo, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import {
-  Activity, BarChart2, BarChart3, BookMarked, BookOpen, BookText, BookUser,
+  Activity, Baby, BarChart2, BarChart3, BookMarked, BookOpen, BookText, BookUser,
   Bot, Building2, Calculator, Calendar, CalendarDays, CheckCircle2, ChevronDown, ChevronUp,
   Clock, Compass, CreditCard, FileText, GitBranch, GraduationCap,
   Heart, HelpCircle, Home, Landmark, Layers, Library, Lightbulb,
@@ -90,6 +90,7 @@ const DRAWER_GROUPS: NavGroup[] = [
     icon: <IcoHome />,
     items: [
       { href: "/",        label: "الصفحة الرئيسية",    Icon: Home },
+      { href: "/kids",    label: "الأطفال",             Icon: Baby,      desc: "ركن تعليمي آمن وبسيط للأطفال" },
       { href: "/updates", label: "آخر المستجدات",       Icon: Rss },
       { href: "/calendar", label: "التقويم الهجري",     Icon: Calendar,  desc: "التقويم والمناسبات الإسلامية" },
       { href: "/occasions", label: "المناسبات الإسلامية", Icon: Star,     desc: "أذكار المناسبات والأعياد" },
