@@ -9739,3 +9739,75 @@ book/scholar_verbal/fatwa_body/website/manuscript فقط — لا `hadith`
 `db push`). **تحقّق أولاً من `ps aux | grep content-runner`** قبل أي
 `git checkout HEAD --` على ملفات ضجيج. لا تنتقل لعنقود ثانٍ في نفس
 الدورة حتى لو تبقّى وقت ضمن سقف الدفعة (~30 عنصرًا).
+
+## دورة 2026-07-23 (٨) — عنقود fatawa-muwaththaqa مكتمل (6/6)
+نُفِّذت المهمة أعلاه: تحقّق مباشر من DB أكّد 6 تصنيفات draft تحت عنقود
+`fatawa-muwaththaqa` (الفتاوى الموثقة): فتاوى العبادات
+(`fatawa-ibadat`)، فتاوى الأسرة (`fatawa-usrah`)، فتاوى المعاملات
+(`fatawa-muamalat`)، فتاوى طبية (`fatawa-tibbiyya`)، فتاوى تقنية
+(`fatawa-tiqniyya`)، فتاوى الذكاء الاصطناعي (`fatawa-ai`). خصوصية هذا
+العنقود أن موضوعه فتاوى فعلية من جهات إفتاء معتمدة مسمّاة صراحة، فتم
+لأول مرة استخدام `lesson_citations.source_type='fatwa_body'` (بدل
+`'book'` المستخدم في كل العناقيد السابقة) بعد التحقق من القيد
+`lesson_citations_source_type_check` أنه يسمح بهذه القيمة. كل تصنيف
+تحقَّق عبر WebSearch/WebFetch من نص فتوى حقيقية من مصدرها الرسمي قبل
+الصياغة: قصر وجمع الصلاة للمسافر (إسلام ويب فتوى 197189)، نفقة الزوجة
+العاملة وملكيتها لراتبها (إسلام ويب فتوى 296344)، البيع بالتقسيط
+والفرق بينه وبين الربا (دار الإفتاء المصرية فتوى 8924)، التبرع
+بالأعضاء البشرية (مجمع الفقه الإسلامي الدولي قرار 26(1/4))، العملات
+الرقمية المشفرة (مجمع الفقه الإسلامي الدولي قرار 237(8/24) — توصية
+بمزيد من الدراسة لا حكم قطعي)، الاعتماد على الذكاء الاصطناعي في
+الفتوى (دار الإفتاء المصرية فتوى 8784). سبع آيات تحقَّقت حرفياً محليًا
+عبر `numberInSurah`: النساء 101، البقرة 275, النساء 34، المائدة 32،
+النساء 29، البقرة 219، النحل 43. خمسة أحاديث استُشهد بها بعد تحقق
+WebSearch (متفق عليها أو في الصحيحين إلا حديث جابر في حجة الوداع
+فمسلم منفردًا): عائشة في فرض الصلاة ركعتين (البخاري 350، مسلم 685)،
+جابر في حجة الوداع «ولهن عليكم رزقهن وكسوتهن بالمعروف» (مسلم 1218)،
+ابن عباس في السلم بأجل معلوم (البخاري 2240 ومسلم)، أبو هريرة في النهي
+عن بيع الغرر (مسلم 1513)، عبد الله بن عمرو في قبض العلم بقبض العلماء
+(البخاري 100، مسلم 2673). `status: draft→published` للستة، تحقَّق
+مباشرة من DB (6/6 منشور). ملف SQL موثَّق بالكامل (idempotent، طُبِّق
+عبر `supabase db query --linked -f`):
+`artifacts/majalis/supabase/learn_library_v2_fatawa_muwaththaqa_batch1.sql`.
+الدروس الستة اجتهاد صياغي واختيار مصدر (فتوى واحدة من عدة متاحة) وآيات
+داعمة → وُسمت في `needs-post-review.jsonl` فوراً (436→442). بوابة
+الجودة: `pnpm run typecheck` و`pnpm run build` نجحا بلا أخطاء على فرعي
+`majalis-content-fill` و`main` كليهما (خطأ typecheck منفصل غير متعلق
+ظهر عند تشغيل `pnpm run typecheck` من جذر مونوريبو `majalis-task-2`
+بخصوص `artifacts/api-server` و`lib/api-zod/dist` غير مبني — تحقَّق أنه
+عطل بنية بناء سابق موجود قبل هذه الدورة (لا صلة بملفات هذه الدورة)،
+وتم تشغيل `pnpm run typecheck` داخل `artifacts/majalis` تحديدًا فنجح
+بلا أخطاء). Commit على `majalis-content-fill`: `cd4df129`. دُمج إلى
+`main` ودُفع: `a79b67ef`. ملفات الضجيج المولَّدة (rulings-encyclopedia/*،
+quran/pages-manifest.json، feed.xml، sitemap.xml، seo-prerender/*،
+content-counts.json (تغيّر `generatedAt` فقط بلا رقم حقيقي)) أُعيدت
+كما كانت في الفرعين. تأكَّد أن `content-runner.sh` يعمل بالتوازي طوال
+هذه الدورة (عدة عمليات عبر `ps aux`)، ولوحظ أن دورة متزامنة أخرى كانت
+قد التزمت ودفعت تحديثًا لـ`CONTINUATION_PLAN.md` (تدقيق Phase 4 وفحص
+[object Object]) قبل بدء هذه الدورة ودُمج تلقائيًا دون تعارض عبر
+`git merge`؛ لم تُلمَس أي ملفات غير متعلقة بهذه المهمة يدويًا.
+
+**المهمة التالية**: عنقود `fatawa-muwaththaqa` مكتمل 100% الآن (6/6
+منشور، مؤكَّد من DB). التالي حسب القائمة (3 عناقيد متبقية): `usrah-mujtama`
+6، `munasabat-islamiyya` 6، `nawazil-muasira` 6. **أعد التحقق المباشر
+من DB قبل البدء بأي عنقود** (`npx supabase link --project-ref
+ngmvmlulzacrlicuagyp` ثم `npx supabase db query --linked "SELECT id,
+slug, name, sort_order, status FROM categories WHERE
+parent_id=(SELECT id FROM categories WHERE slug='<العنقود المختار>')
+ORDER BY sort_order"`) لضمان تطابق الأرقام الفعلية مع ما وُثِّق أعلاه.
+بنفس المنهجية الثابتة: درس واحد حقيقي لكل تصنيف draft
+(`lessons`+`lesson_sections`+`lesson_citations`) بمصدر معتمد مسمّى
+مناسب لموضوع العنقود (أو مصدر مستقل لكل تصنيف إن تنوّعت الموضوعات
+داخل العنقود)، تحقَّق من أي آية حرفياً محليًا من `public/data/quran`
+عبر حقل `numberInSurah` (لا `number`)، تحقَّق من أي حديث عبر WebSearch
+قبل الإدراج (فقط من الصحيحين/متفق عليه أو بإسناد صحيح مصرَّح بدرجته
+بدقة)، ثم `status: draft→published`. **تذكّر أن
+`lesson_citations.source_type` مقيَّد بـ
+book/scholar_verbal/fatwa_body/website/manuscript فقط — لا `hadith`
+ولا قيم أخرى؛ استخدم `fatwa_body` إن كان المصدر فتوى فعلية، و`book`
+إن كان كتابًا/نصًا كلاسيكيًا.** وسم `needs-post-review.jsonl` فوراً
+لكل درس عند إنشائه. طبّق ملف SQL عبر `npx supabase db query --linked
+-f <ملف>` (لا `db push`). **تحقّق أولاً من `ps aux | grep
+content-runner`** قبل أي `git checkout HEAD --` على ملفات ضجيج. لا
+تنتقل لعنقود ثانٍ في نفس الدورة حتى لو تبقّى وقت ضمن سقف الدفعة
+(~30 عنصرًا).
