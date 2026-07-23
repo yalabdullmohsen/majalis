@@ -9332,21 +9332,54 @@ ORDER BY sort_order"`) لضمان تطابق الأرقام الفعلية مع 
 sitemap.xml، seo-prerender/*، content-counts.json،
 rulings-encyclopedia-seed.generated.ts — دون تغيير حقيقي).
 
-**المهمة التالية**: عنقود `seerah-nabawiyya` مكتمل 100% الآن (11/11
-منشور، مؤكَّد من DB). التالي حسب القائمة المكتشفة سابقًا (10 عناقيد
-متبقية الآن بعد استبعاد seerah-nabawiyya المكتمل): يُفضَّل التالي
-بالحجم — `adhkar-adiya` 5، `mara-muslima` 5/6 (جزئي)، `ahkam-quran` 5
-(تحت quran-uloom)، `maqasid-sharia` 5، `fiqh-aqalliyat` 5،
-`shabab-nashia` 6، `fatawa-muwaththaqa` 6، `usrah-mujtama` 6،
-`munasabat-islamiyya` 6، `nawazil-muasira` 6. **أعد التحقق المباشر من
-DB قبل البدء بأي عنقود** (`npx supabase link --project-ref
-ngmvmlulzacrlicuagyp` ثم `npx supabase db query --linked "SELECT id,
-slug, name, sort_order, status FROM categories WHERE
-parent_id=(SELECT id FROM categories WHERE slug='<العنقود المختار>')
-ORDER BY sort_order"`) لضمان تطابق الأرقام الفعلية مع ما وُثِّق أعلاه.
-بنفس المنهجية الثابتة: درس واحد حقيقي لكل تصنيف draft
-(`lessons`+`lesson_sections`+`lesson_citations`) بمصدر معتمد مسمّى
-مناسب لموضوع العنقود، تحقَّق من أي آية حرفياً محلياً من
+**المهمة التالية (سابقة، منجزة أدناه)**: عنقود `seerah-nabawiyya` مكتمل
+100% الآن (11/11 منشور، مؤكَّد من DB).
+
+---
+
+## دورة 2026-07-23 (٢) — عنقود adhkar-adiya مكتمل (5/5)
+نُفِّذت المهمة أعلاه: عنقود `adhkar-adiya` (الأذكار والأدعية) كان
+بالكامل 5 تصنيفات draft، تحقَّق مباشرة من DB قبل البدء. مُلئ كل تصنيف
+بدرس واحد (lessons+lesson_sections+lesson_citations): أذكار اليوم
+والليلة (adhkar-yawm-layla)، أذكار المناسبات والأحوال
+(adhkar-munasabat)، أدعية القرآن والسنة (adiya-quran-sunnah)، الرقية
+الشرعية (ruqya-shariyya)، فقه الدعاء والذكر (fiqh-dua-dhikr). المصادر
+المعتمدة: الأذكار للنووي، حصن المسلم من أذكار الكتاب والسنة للقحطاني،
+الكلم الطيب لشيخ الإسلام ابن تيمية، زاد المعاد لابن قيم الجوزية، الوابل
+الصيب من الكلم الطيب لابن قيم الجوزية. خمسة أحاديث استُشهد بها، تحقَّقت
+حرفياً عبر WebSearch قبل الإدراج: «من قال حين يصبح وحين يمسي: سبحان
+الله وبحمده مائة مرة...» عن أبي هريرة (رواه مسلم 2692)، دعاء السفر عن
+ابن عمر (رواه مسلم 1342)، «كان أكثر دعاء النبي: اللهم ربنا آتنا في
+الدنيا حسنة...» عن أنس (متفق عليه، البخاري 6389 ومسلم 2690)، «كان إذا
+اشتكى يقرأ على نفسه بالمعوذات وينفث» عن عائشة (متفق عليه، البخاري 5016
+ومسلم 2192)، «مثل الذي يذكر ربه والذي لا يذكر ربه مثل الحي والميت» عن
+أبي موسى الأشعري (متفق عليه، البخاري 6407 ومسلم 779). آيتان تحقَّقتا
+حرفياً محلياً من `public/data/quran` عبر `numberInSurah`: البقرة 201،
+الزخرف 13-14 (مضمّنة في دعاء السفر). `status: draft→published` للخمسة،
+تحقَّق مباشرة من DB (5/5 منشور، العنقود بالكامل مكتمل الآن). الدروس
+الخمسة اجتهاد صياغي واختيار مصدر ومثال → وُسمت في
+`needs-post-review.jsonl` فوراً (404→409). بوابة الجودة: `pnpm run
+typecheck` و`pnpm run build` نجحا على فرعي `majalis-content-fill`
+و`main` كليهما. Commit على `majalis-content-fill`: `d81172c4`. دُمج إلى
+`main` ودُفع: `30521d66`. ملفات الضجيج المولَّدة (rulings-encyclopedia/*،
+quran/pages-manifest.json، feed.xml، sitemap.xml، seo-prerender/*،
+content-counts.json، rulings-encyclopedia-seed.generated.ts) أُعيدت كما
+كانت في الفرعين (لا تغيير حقيقي في الأرقام، فقط `generatedAt`).
+
+**المهمة التالية**: عنقود `adhkar-adiya` مكتمل 100% الآن (5/5 منشور).
+التالي حسب القائمة أعلاه (9 عناقيد متبقية بعد استبعاد
+seerah-nabawiyya وadhkar-adiya المكتملين): يُفضَّل التالي بالحجم —
+`mara-muslima` 5/6 (جزئي)، `ahkam-quran` 5 (تحت quran-uloom)،
+`maqasid-sharia` 5، `fiqh-aqalliyat` 5، `shabab-nashia` 6،
+`fatawa-muwaththaqa` 6، `usrah-mujtama` 6، `munasabat-islamiyya` 6،
+`nawazil-muasira` 6. **أعد التحقق المباشر من DB قبل البدء بأي عنقود**
+(`npx supabase link --project-ref ngmvmlulzacrlicuagyp` ثم `npx
+supabase db query --linked "SELECT id, slug, name, sort_order, status
+FROM categories WHERE parent_id=(SELECT id FROM categories WHERE
+slug='<العنقود المختار>') ORDER BY sort_order"`) لضمان تطابق الأرقام
+الفعلية مع ما وُثِّق أعلاه. بنفس المنهجية الثابتة: درس واحد حقيقي لكل
+تصنيف draft (`lessons`+`lesson_sections`+`lesson_citations`) بمصدر
+معتمد مسمّى مناسب لموضوع العنقود، تحقَّق من أي آية حرفياً محلياً من
 `public/data/quran` عبر حقل `numberInSurah` (لا `number`)، تحقَّق من أي
 حديث عبر WebSearch قبل الإدراج (فقط من الصحيحين/متفق عليه أو بإسناد
 صحيح مصرَّح بدرجته بدقة — تجنَّب أحاديث الحسن أو المختلَف في تصحيحها إن
