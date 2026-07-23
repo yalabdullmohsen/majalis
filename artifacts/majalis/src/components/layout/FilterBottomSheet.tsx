@@ -15,6 +15,16 @@ export function FilterBottomSheet({ open, onClose, title = "تصفية وبحث"
     return () => document.removeEventListener("keydown", handler);
   }, [open, onClose]);
 
+  // زر الرجوع العام (GlobalBackButton) يتراكب فعليًا مع شرائح الفلاتر هنا رغم
+  // z-index أدنى اسميًا — نفس علّة /mushaf/page الموثَّقة سابقًا (اكتُشفت حيًّا
+  // بفحص Playwright مباشر: 3 شرائح "فوائد دعوية" وغيرها مغطاة جزئيًا بالزر).
+  // نفس الحل: نخفيه صراحةً أثناء فتح هذه الورقة بدل الاعتماد على z-index وحده.
+  useEffect(() => {
+    if (!open) return;
+    document.body.classList.add("filter-sheet-open");
+    return () => document.body.classList.remove("filter-sheet-open");
+  }, [open]);
+
   if (!open) return null;
 
   return (
