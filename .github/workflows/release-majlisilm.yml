@@ -1,0 +1,89 @@
+name: Release Majlisilm (يدوي فقط)
+
+# تشغيل يدوي فقط (workflow_dispatch) — لا push، لا schedule. يدمج
+# automation/content وautomation/tasks إلى main، ويشغّل بوابة الجودة
+# (typecheck + build + test:regression) مرة واحدة على نتيجة الدمج
+# المجتمعة، ولا يدفع لـmain إلا بعد نجاحها بالكامل. راجع CLAUDE.md —
+# النافذتان تدفعان لفرعيهما فقط عبر scripts/commit-and-push-branch.sh
+# ولا تلمسان main إطلاقًا؛ هذا الـworkflow هو المسار الوحيد لدمج main.
+
+on:
+  workflow_dispatch: {}
+
+concurrency:
+  group: release-majlisilm
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: github.repository == 'yalabdullmohsen/majalis'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      # PROD_DEPLOY_TOKEN لا GITHUB_TOKEN الافتراضي: GitHub يمنع عمدًا أي
+      # push بـGITHUB_TOKEN من تشغيل workflows أخرى، فبلا هذا التوكن لن
+      # يُطلق push هذا الـjob لـmain نشر auto-deploy.yml إطلاقًا رغم نجاح
+      # الدمج (نفس السبب الموثَّق في auto-merge-to-main.yml وauto-deploy.yml).
+      - name: Checkout main (بتاريخ كامل)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.PROD_DEPLOY_TOKEN }}
+
+      - name: إعداد هوية git
+        run: |
+          git config user.name "majlisilm-release-bot"
+          git config user.email "release-bot@users.noreply.github.com"
+
+      - name: جلب أحدث automation/content وautomation/tasks
+        run: git fetch origin automation/content automation/tasks
+
+      - name: دمج automation/content إلى main
+        run: |
+          if ! git merge origin/automation/content --no-ff -m "release: دمج automation/content"; then
+            echo "::error::تعارض دمج في automation/content — أُلغي الإصدار بالكامل، main لم يتأثر."
+            git merge --abort || true
+            exit 1
+          fi
+
+      - name: دمج automation/tasks إلى main
+        run: |
+          if ! git merge origin/automation/tasks --no-ff -m "release: دمج automation/tasks"; then
+            echo "::error::تعارض دمج في automation/tasks — أُلغي الإصدار بالكامل، main لم يتأثر."
+            git merge --abort || true
+            exit 1
+          fi
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: تثبيت الاعتماديات
+        run: pnpm install --frozen-lockfile
+
+      - name: تثبيت متصفح Playwright (لبوابة تباين الألوان ضمن test:regression)
+        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
+
+      - name: Typecheck
+        run: |
+          pnpm run typecheck:libs
+          pnpm --filter @workspace/majalis run typecheck
+
+      - name: Build (بوابة الجودة على نتيجة الدمج المجتمعة)
+        run: pnpm --filter @workspace/majalis run build
+
+      - name: اختبارات الانحدار
+        run: pnpm --filter @workspace/majalis run test:regression
+
+      - name: Push واحد إلى main (بلا force، يفشل بأمان إن تحرك main من تحتنا)
+        run: git push origin HEAD:main
