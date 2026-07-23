@@ -22,7 +22,7 @@
 .snr-hero-eyebrow {
   font-size: var(--ds-text-xs);
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: normal;
   color: var(--elite-green, #18362A);
   text-transform: uppercase;
   margin-bottom: 0.75rem;

@@ -62,7 +62,7 @@
 }
 .sgod-card__badge {
   display: inline-flex; align-items: center; gap: 0.35rem;
-  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: normal; text-transform: uppercase;
   color: #FFFFFF; background: rgba(255,255,255,0.18);
   border: 1px solid rgba(255,255,255,0.25);
   padding: 0.25rem 0.7rem; border-radius: var(--ds-radius-full);

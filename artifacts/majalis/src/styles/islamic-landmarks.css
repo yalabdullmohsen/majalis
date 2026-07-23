@@ -434,7 +434,7 @@
   font-weight: 700;
   color: var(--majalis-emerald, #28584D);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: normal;
   margin: 1rem 0 0.4rem;
 }
 

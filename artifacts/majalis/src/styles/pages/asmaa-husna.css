@@ -279,7 +279,7 @@
   color: #173D35;
   margin-bottom: 0.3rem;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: normal;
 }
 .ah-modal__text {
   font-size: 0.9rem;

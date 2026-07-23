@@ -19,14 +19,14 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 }
 .hjod-card__badge {
   display: inline-flex; align-items: center; gap: 0.35rem;
-  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: normal; text-transform: uppercase;
   color: #FFFFFF; background: rgba(255,255,255,0.18);
   border: 1px solid rgba(255,255,255,0.25);
   padding: 0.25rem 0.7rem; border-radius: var(--ds-radius-full); margin-bottom: 0.25rem;
 }
 .hjod-card__icon { font-size: 2rem; line-height: 1; }
 .hjod-card__num {
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: normal; text-transform: uppercase;
   color: rgba(255,255,255,0.7);
 }
 .hjod-card__title { font-size: 1.35rem; font-weight: 800; margin: 0; color: #FFFFFF; }

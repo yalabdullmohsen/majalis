@@ -181,7 +181,7 @@ body {
 .txt-h3 { font-size: var(--type-h3); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-primary); }
 .txt-h4 { font-size: var(--type-h4); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-primary); }
 .txt-h5 { font-size: var(--type-h5); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-secondary); }
-.txt-h6 { font-size: var(--type-h6); font-weight: var(--fw-bold); line-height: var(--lh-normal); letter-spacing: var(--ls-wide); color: var(--txt-secondary); text-transform: uppercase; }
+.txt-h6 { font-size: var(--type-h6); font-weight: var(--fw-bold); line-height: var(--lh-normal); letter-spacing: normal; color: var(--txt-secondary); text-transform: uppercase; }
 .txt-subtitle { font-size: var(--type-subtitle); font-weight: var(--fw-normal); line-height: var(--lh-relaxed); color: var(--txt-secondary); }
 .txt-body-lg  { font-size: var(--type-body-lg);  font-weight: var(--fw-normal); line-height: var(--lh-relaxed); color: var(--txt-secondary); }
 .txt-body     { font-size: var(--type-body);      font-weight: var(--fw-normal); line-height: var(--lh-normal);  color: var(--txt-secondary); }
@@ -242,7 +242,7 @@ body {
   color: var(--m26-green-700, #15803D) !important;
   font-size: var(--type-label) !important;
   font-weight: var(--fw-semibold) !important;
-  letter-spacing: var(--ls-wider) !important;
+  letter-spacing: normal !important;
   text-transform: uppercase !important;
 }
 
@@ -277,7 +277,7 @@ body {
 .side-nav-group__title {
   color: var(--txt-hint, #5E655F) !important;
   font-size: var(--type-label) !important;
-  letter-spacing: var(--ls-wider) !important;
+  letter-spacing: normal !important;
   text-transform: uppercase !important;
 }
 .side-nav-item {
@@ -490,7 +490,7 @@ label {
 .pt-hero__label {
   font-size: var(--type-label) !important;
   font-weight: var(--fw-semibold) !important;
-  letter-spacing: var(--ls-wider) !important;
+  letter-spacing: normal !important;
   text-transform: uppercase !important;
 }
 .pt-prayer,
@@ -576,7 +576,7 @@ label {
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: normal;
   color: var(--txt-muted, #5E655F) !important;
   margin-bottom: 0.5rem;
 }

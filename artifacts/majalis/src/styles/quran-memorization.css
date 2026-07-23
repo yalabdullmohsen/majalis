@@ -238,7 +238,7 @@
   font-size: 0.72rem;
   font-weight: 700;
   color: var(--majalis-emerald, #28584D);
-  letter-spacing: 0.06em;
+  letter-spacing: normal;
   margin-bottom: 0.75rem;
   text-transform: uppercase;
   display: flex;

@@ -916,7 +916,7 @@ input, textarea, select { font-family: inherit; }
   color: var(--majalis-brass);
   font-size: 0.82rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: normal;
   margin-bottom: 0.7rem;
   text-transform: uppercase;
 }
@@ -7072,7 +7072,7 @@ input, textarea, select { font-family: inherit; }
   padding: 0.4rem 0.75rem 0.25rem;
   font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.06em;
+  letter-spacing: normal;
   color: var(--majalis-brass-deep);
   text-transform: uppercase;
 }
@@ -8330,7 +8330,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   font-size: var(--ds-text-xs);
   color: var(--msk-text-2, #68716D);
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: normal;
 }
 .hadith-modal__meta-item span {
   font-size: 0.9rem;
@@ -8398,7 +8398,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: normal;
   color: var(--msk-text-2, #68716D);
   margin: 0;
 }
@@ -8429,7 +8429,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: normal;
   color: var(--msk-gold, #173D35);
   opacity: 0.85;
 }
@@ -14487,7 +14487,7 @@ body.has-assistant-fab .app-main {
   font-size: var(--ds-text-xs);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: normal;
   color: var(--majalis-emerald-deep);
   margin-bottom: 0.25rem;
 }
@@ -15947,7 +15947,7 @@ body.has-assistant-fab .app-main {
 }
 .prayer-countdown__next-label {
   font-size: 0.95rem; color: var(--majalis-ink-soft);
-  letter-spacing: 0.05em; text-transform: uppercase;
+  letter-spacing: normal; text-transform: uppercase;
   margin-bottom: 0.5rem;
 }
 .prayer-countdown__next-name {
@@ -16814,7 +16814,7 @@ body.has-assistant-fab .app-main {
   color: #f0c96b;
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: normal;
   text-transform: uppercase;
 }
 
@@ -17279,7 +17279,7 @@ body.has-assistant-fab .app-main {
   font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: normal;
   color: rgba(255,255,255,0.82);
   margin: 0 0 0.4rem;
 }
