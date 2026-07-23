@@ -425,8 +425,10 @@ export async function adminGetFiqhUnanswered(limit = 30) {
 export async function adminSetFiqhResearchEnabled(enabled: boolean) {
   return supabase
     .from("fiqh_research_settings")
-    .update({ is_enabled: enabled, updated_at: now() })
-    .eq("id", 1);
+    .upsert(
+      { setting_key: "research_enabled", value: enabled, updated_at: now() },
+      { onConflict: "setting_key" },
+    );
 }
 
 export async function adminLinkUnansweredQuestion(id: string, itemId: string) {
