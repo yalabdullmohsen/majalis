@@ -43,26 +43,16 @@ const LIVE_CHANNELS: LiveChannel[] = [
     lang: "ar",
     flag: "🕌",
   },
-  {
-    id: "saudi",
-    name: "إذاعة القرآن السعودية",
-    location: "المملكة العربية السعودية",
-    description: "بث مستمر لأجمل التلاوات من الإذاعة السعودية",
-    streamUrl: "https://stream.radiojar.com/0tpy1h0kxtzuv",
-    isActive: true,
-    lang: "ar",
-    flag: "🇸🇦",
-  },
-  {
-    id: "egypt",
-    name: "إذاعة القرآن المصرية",
-    location: "مصر",
-    description: "إذاعة القرآن الكريم من القاهرة",
-    streamUrl: "https://www.quranradio.com/",
-    isActive: true,
-    lang: "ar",
-    flag: "🇪🇬",
-  },
+  // ⚠️ حُذف "إذاعة القرآن السعودية" و"إذاعة القرآن المصرية" (2026-07-23):
+  // مصدرا بث ميتان فعليًا، مُتحقَّق منهما مباشرة لا افتراضًا — كلاهما كان
+  // يُغذَّى في <audio><source> فيفشل صامتًا لكل مستخدم ضغط "ابدأ الاستماع":
+  //   stream.radiojar.com/0tpy1h0kxtzuv  → 404 (المسار غير موجود إطلاقًا)
+  //   www.quranradio.com/                → 302 يُحوَّل فعليًا لموقع غير
+  //     ذي صلة (survey-smiles.com)، ما يعني النطاق نفسه مهجور/انتُزع —
+  //     إبقاؤه في القائمة يخاطر بتوجيه المستخدم لموقع مجهول لا علاقة له
+  //     بالقرآن الكريم إطلاقًا لو أُلغي حجب CSP مستقبلًا دون تفقّد الرابط.
+  // لم أُخمِّن رابطًا بديلاً (يُمنع تخمين الروابط) — يحتاج مصدر بث حقيقي
+  // موثّق قبل إعادة أي منهما.
 ];
 
 /* ── روابط يوتيوب للمشايخ ─────────────────────────────────── */
@@ -106,7 +96,7 @@ export default function QuranLivePage() {
         </div>
         <h1 className="qlive-hero__title">البث المباشر للقرآن الكريم</h1>
         <p className="qlive-hero__sub">
-          استمع وشاهد البث المباشر من الحرمين الشريفين والإذاعات القرآنية العالمية
+          شاهد البث المباشر من الحرمين الشريفين، والمزيد من قنوات اليوتيوب الموصى بها أدناه
         </p>
         <nav className="qlive-subnav" aria-label="تنقل البث">
           <Link href="/quran-hub" className="qlive-subnav__link">مركز القرآن</Link>
@@ -202,7 +192,10 @@ export default function QuranLivePage() {
           </div>
         )}
 
-        {!playing && (
+        {/* مخفي لمكة/المدينة عمدًا: لا مشغّل صوت لهما (البث عبر يوتيوب أعلاه
+            فقط) — بلا هذا الشرط يظهر الزر ثم يختفي بلا أثر عند الضغط
+            (لا صوت يبدأ، ولا أي محتوى بديل يظهر مكانه). */}
+        {!playing && activeChannel.id !== "makkah" && activeChannel.id !== "madinah" && (
           <button type="button" className="qlive-play-btn" onClick={() => setPlaying(true)}>
             <Volume2 size={20} /> ابدأ الاستماع
           </button>
