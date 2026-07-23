@@ -90,6 +90,9 @@ function RecitationTestPageInner() {
   const [hizbNumber, setHizbNumber] = useState(1);
   const [rubNumber, setRubNumber] = useState(1);
   const [recentSession, setRecentSession] = useState<{ surahNumber: number; ayahFrom: number | null; ayahTo: number | null; accuracyPct: number | null } | null>(null);
+  /** تقدم حقيقي عبر كل الجلسات (لا جلسة واحدة فقط) — القسم 10، من نفس
+   * استعلام getRecentRecitationSessions أدناه بلا أي طلب شبكي إضافي. */
+  const [progressStats, setProgressStats] = useState<{ totalSessions: number; avgAccuracy: number; streakDays: number } | null>(null);
 
   // جلسة
   const [referenceWords, setReferenceWords] = useState<ReferenceWord[]>([]);
@@ -233,19 +236,38 @@ function RecitationTestPageInner() {
   // "متابعة من آخر جلسة" / "مراجعة آخر محفوظ" (القسم 1) — آخر جلسة
   // مكتملة للمستخدم، تُعرض كاختصار سريع لإعادة نفس النطاق.
   useEffect(() => {
-    if (!user?.id) { setRecentSession(null); return; }
+    if (!user?.id) { setRecentSession(null); setProgressStats(null); return; }
     let cancelled = false;
     (async () => {
       try {
-        const sessions = await getRecentRecitationSessions(user.id, 1);
+        const sessions = await getRecentRecitationSessions(user.id, 30);
+        if (cancelled) return;
         const last = sessions[0];
-        if (!cancelled && last?.surah_number) {
+        if (last?.surah_number) {
           setRecentSession({
             surahNumber: last.surah_number,
             ayahFrom: last.ayah_from,
             ayahTo: last.ayah_to,
             accuracyPct: last.accuracy_pct,
           });
+        }
+        if (sessions.length > 0) {
+          const withAccuracy = sessions.filter((s) => s.accuracy_pct !== null);
+          const avgAccuracy = withAccuracy.length > 0
+            ? Math.round(withAccuracy.reduce((sum, s) => sum + (s.accuracy_pct ?? 0), 0) / withAccuracy.length)
+            : 0;
+          // سلسلة الأيام المتتالية (streak): أيام متتالية بلا انقطاع فيها جلسة واحدة على الأقل، بدءًا من اليوم أو أمس.
+          const days = new Set(sessions.map((s) => (s.completed_at ?? s.started_at ?? "").slice(0, 10)).filter(Boolean));
+          let streakDays = 0;
+          const cursor = new Date();
+          cursor.setHours(0, 0, 0, 0);
+          // اسمح ببدء العدّ من أمس إن لم تكن هناك جلسة اليوم بعد (لا ينقطع streak المستخدم لمجرد أنه لم يبدأ اليوم بعد).
+          if (!days.has(cursor.toISOString().slice(0, 10))) cursor.setDate(cursor.getDate() - 1);
+          while (days.has(cursor.toISOString().slice(0, 10))) {
+            streakDays += 1;
+            cursor.setDate(cursor.getDate() - 1);
+          }
+          setProgressStats({ totalSessions: sessions.length, avgAccuracy, streakDays });
         }
       } catch {
         // تجاهل — لا حاجة لإفشال الصفحة كاملة
@@ -1044,6 +1066,21 @@ function RecitationTestPageInner() {
             (خصوصًا تفاصيل التجويد الدقيقة) لا يزال قيد التطوير.
           </p>
         </div>
+
+        {progressStats && progressStats.totalSessions > 0 && (
+          <div className="rai-setup" style={{ marginBottom: "1.25rem" }}>
+            <div className="rai-setup__group">
+              <span className="rai-setup__label">تقدمك</span>
+              <div className="rai-report__stats" style={{ justifyContent: "center" }}>
+                <div className="rai-report__stat"><span className="rai-report__stat-val">{progressStats.totalSessions}</span><span className="rai-report__stat-lbl">جلسة مكتملة</span></div>
+                <div className="rai-report__stat"><span className="rai-report__stat-val">{progressStats.avgAccuracy}%</span><span className="rai-report__stat-lbl">متوسط الدقة</span></div>
+                {progressStats.streakDays > 0 && (
+                  <div className="rai-report__stat"><span className="rai-report__stat-val">{progressStats.streakDays}</span><span className="rai-report__stat-lbl">يوم متتالي</span></div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         {errorMsg && errorCode !== "PERMISSION_DENIED" && (
           <p className="rai-tajweed-disabled-note" style={{ maxWidth: 720, margin: "0 auto 1rem" }}>{errorMsg}</p>
