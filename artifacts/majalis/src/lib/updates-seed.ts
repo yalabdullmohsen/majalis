@@ -867,7 +867,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     title: "تحديث: قاعدة العلماء — 101+ عالماً",
     summary: "إضافة 10 علماء: القرضاوي، الزرقا، الزحيلي، الفوزان، الطنطاوي، أبو زيد، الغزالي، زرّوق، القنوجي، وعلماء آخرون من الخليج والعالم.",
     update_type: "إعلان",
-    source_url: "/sheikhs",
+    source_url: "/scholars",
     published_at: "2026-07-12T07:00:00Z",
     status: "approved",
   },
