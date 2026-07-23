@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { BookOpen, ChevronDown, ChevronUp, GraduationCap, Lightbulb, Scale, Sparkles, Star } from "lucide-react";
+import { BookOpen, ChevronDown, ChevronUp, GraduationCap, Lightbulb, Scale, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
@@ -458,38 +458,11 @@ const KUTUB: MurtabaKitab[] = [
   },
 ];
 
-/* ─── أدب اليوم ─── */
-const ALL_ADAB_ITEMS: (AdabItem & { tab: string })[] = [
-  ...FADL_ITEMS.map(i => ({ ...i, tab: "فضل العلم" })),
-  ...ADAB_NAFS.map(i => ({ ...i, tab: "آداب مع النفس" })),
-  ...ADAB_SHEIKH.map(i => ({ ...i, tab: "آداب مع الشيخ" })),
-  ...ADAB_DARS.map(i => ({ ...i, tab: "آداب في الدرس" })),
-];
-
-function todaysAdab(): AdabItem & { tab: string } {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
-  return ALL_ADAB_ITEMS[(dayOfYear - 1 + ALL_ADAB_ITEMS.length) % ALL_ADAB_ITEMS.length];
-}
-
-function AdabOfDayCard({ item }: { item: AdabItem & { tab: string } }) {
-  return (
-    <div className="atod-card">
-      <div className="atod-card__badge"><Sparkles size={11} aria-hidden="true" /> أدب اليوم</div>
-      <div className="atod-card__cat">{item.tab}</div>
-      <h2 className="atod-card__title">{item.title}</h2>
-      <p className="atod-card__text">{item.text}</p>
-      {item.source && <div className="atod-card__source">{item.source}</div>}
-    </div>
-  );
-}
 
 export default function AdabTalabIlmPage() {
   const [activeTab, setActiveTab] = useState<TabType>("fadl");
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [search, setSearch] = useState("");
-  const todayAdab = useMemo(() => todaysAdab(), []);
 
   const filteredFadl = useMemo(() =>
     search.trim() ? FADL_ITEMS.filter(i => arabicMatchAny([i.title, i.text, i.source ?? ""], search)) : FADL_ITEMS,
@@ -548,8 +521,6 @@ export default function AdabTalabIlmPage() {
         </div>
       </section>
 
-      {/* أدب اليوم */}
-      <AdabOfDayCard item={todayAdab} />
 
       {/* Tabs */}
       <div className="atl-tabs-bar">

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { BookOpen, ChevronDown, ChevronUp, Search, Sparkles, X } from "lucide-react";
+import { BookOpen, ChevronDown, ChevronUp, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -1598,45 +1598,11 @@ const TERMS: GlossaryTerm[] = [
   },
 ];
 
-/* ─── مصطلح اليوم ─── */
-function todaysTerm(): GlossaryTerm {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
-  return TERMS[(dayOfYear - 1 + TERMS.length) % TERMS.length];
-}
-
-const CAT_LABELS: Record<string, string> = {
-  aqeedah: "العقيدة", fiqh: "الفقه", hadith: "علم الحديث",
-  quran: "علوم القرآن", seerah: "السيرة", tazkiya: "التزكية",
-};
-
-function TermOfDayCard({ term }: { term: GlossaryTerm }) {
-  return (
-    <div className="glod-card">
-      <div className="glod-card__badge"><Sparkles size={11} aria-hidden="true" /> مصطلح اليوم</div>
-      <div className="glod-card__cat">{CAT_LABELS[term.category] ?? term.category}</div>
-      <h2 className="glod-card__term">{term.term}</h2>
-      {term.plural && <div className="glod-card__plural">الجمع: {term.plural}</div>}
-      <p className="glod-card__definition">{term.definition}</p>
-      {term.detail && <p className="glod-card__detail">{term.detail}</p>}
-      {term.source && <div className="glod-card__source">{term.source}</div>}
-      {term.related && term.related.length > 0 && (
-        <div className="glod-card__related">
-          <span>ذات صلة: </span>
-          {term.related.map(r => <span key={r} className="glod-card__rel-tag">{r}</span>)}
-        </div>
-      )}
-    </div>
-  );
-}
-
 export default function IslamicGlossaryPage() {
   const [activeCategory, setActiveCategory] = useState<Category>("all");
   const [search, setSearch] = useState("");
   const [openTerm, setOpenTerm] = useState<number | null>(null);
   const [alpha, setAlpha] = useState<string>("");
-  const todayTerm = useMemo(() => todaysTerm(), []);
 
   useEffect(() => {
     applyPageSeo({
@@ -1719,8 +1685,6 @@ export default function IslamicGlossaryPage() {
         </div>
       </section>
 
-      {/* مصطلح اليوم */}
-      <TermOfDayCard term={todayTerm} />
 
       <div className="gl-container">
         {/* الفئات */}

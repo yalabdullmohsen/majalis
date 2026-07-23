@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { BookOpen, Search, Sparkles, X } from "lucide-react";
+import { BookOpen, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -942,12 +942,6 @@ const TERMS: HadithTerm[] = [
 ];
 
 export default function HadithSciencePage() {
-  const todayTerm = useMemo(() => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
-    return TERMS[(day - 1 + TERMS.length) % TERMS.length];
-  }, []);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("الكل");
   const [openId, setOpenId] = useState<string | null>(null);
@@ -1013,15 +1007,6 @@ export default function HadithSciencePage() {
         </div>
       </section>
 
-      {/* مصطلح الحديث اليوم */}
-      <div className="hsod-card">
-        <div className="hsod-card__badge"><Sparkles size={11} aria-hidden="true" /> مصطلح الحديث اليوم</div>
-        <div className="hsod-card__cat">{todayTerm.category}</div>
-        <h2 className="hsod-card__term">{todayTerm.term}</h2>
-        <p className="hsod-card__def">{todayTerm.definition}</p>
-        {todayTerm.example && <p className="hsod-card__ex"><span className="hsod-card__ex-label">مثال: </span>{todayTerm.example}</p>}
-        {todayTerm.note && <p className="hsod-card__note">{todayTerm.note}</p>}
-      </div>
 
       {/* شريط التحكم */}
       <div className="hs-controls">

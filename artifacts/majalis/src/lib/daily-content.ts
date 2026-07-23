@@ -438,7 +438,3 @@ export function getDailyDhikr(date = new Date()): DailyDhikrEntry {
     source: item.source,
   };
 }
-
-export function getDailyQa<T extends { id?: string }>(items: T[], date = new Date()): T {
-  return pickDailyItem(items, date);
-}

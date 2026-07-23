@@ -1,6 +1,5 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
-import { useEffect, useState, useMemo } from "react";
-import { Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -353,12 +352,6 @@ export default function DuasQuranPage() {
     });
   }, []);
 
-  const todayDua = useMemo(() => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
-    return DUAS[(day - 1 + DUAS.length) % DUAS.length];
-  }, []);
   const [activeCat, setActiveCat] = useState<DuaCategory>("الكل");
   const [search, setSearch] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);
@@ -386,16 +379,6 @@ export default function DuasQuranPage() {
           <cite className="dq-hero-ayah__ref">البقرة: 186</cite>
         </div>
       </section>
-
-      {/* دعاء قرآني اليوم */}
-      <div className="dqod-card">
-        <div className="dqod-card__badge"><Sparkles size={11} aria-hidden="true" /> دعاء قرآني اليوم</div>
-        {todayDua.prophet && <div className="dqod-card__prophet">{todayDua.prophet}</div>}
-        <h2 className="dqod-card__name">{todayDua.name}</h2>
-        <p className="dqod-card__arabic">{todayDua.arabic}</p>
-        <cite className="dqod-card__ref">{todayDua.ref}</cite>
-        {todayDua.context && <p className="dqod-card__context">{todayDua.context}</p>}
-      </div>
 
       <div className="dq-body">
         {/* search */}

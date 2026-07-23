@@ -1,6 +1,6 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useMemo, useState } from "react";
-import { Heart, Star, Users, BookOpen, ChevronDown, ChevronUp, Sparkles } from "lucide-react";
+import { Heart, Star, Users, BookOpen, ChevronDown, ChevronUp } from "lucide-react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -1100,47 +1100,10 @@ const AKHLAQ: AkhlaqEntry[] = [
 ];
 
 
-/* ─── خُلُق اليوم ─── */
-function todaysAkhlaq(): AkhlaqEntry {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
-  return AKHLAQ[(dayOfYear - 1 + AKHLAQ.length) % AKHLAQ.length];
-}
-
-function AkhlaqOfDayCard({ entry }: { entry: AkhlaqEntry }) {
-  return (
-    <div className="klod-card">
-      <div className="klod-card__badge"><Sparkles size={11} aria-hidden="true" /> خُلُق اليوم</div>
-      <div className="klod-card__cat">
-        <SectionIcon name={entry.icon} size={15} />
-        {entry.category}
-      </div>
-      <h2 className="klod-card__title">{entry.title}</h2>
-      <p className="klod-card__summary">{entry.summary}</p>
-      <div className="klod-card__ayah">
-        <span className="klod-card__ayah-text">﴿{entry.ayah}﴾</span>
-        <span className="klod-card__ayah-ref">{entry.ayahRef}</span>
-      </div>
-      <blockquote className="klod-card__hadith">«{entry.hadith}»<footer>{entry.hadithSource}</footer></blockquote>
-      <div className="klod-card__scholar">
-        <span className="klod-card__scholar-quote">"{entry.scholarQuote}"</span>
-        <span className="klod-card__scholar-name">— {entry.scholarName}</span>
-      </div>
-      {entry.practices.length > 0 && (
-        <ul className="klod-card__practices">
-          {entry.practices.slice(0, 3).map(p => <li key={p}>{p}</li>)}
-        </ul>
-      )}
-    </div>
-  );
-}
-
 export default function AkhlaqPage() {
   const [category, setCategory] = useState("الكل");
   const [expanded, setExpanded] = useState<string | null>(null);
   const [search, setSearch] = useState("");
-  const todayAkhlaq = useMemo(() => todaysAkhlaq(), []);
 
   useEffect(() => {
     applyPageSeo({
@@ -1195,8 +1158,6 @@ export default function AkhlaqPage() {
         </div>
       </div>
 
-      {/* ═══ خُلُق اليوم ═══ */}
-      <AkhlaqOfDayCard entry={todayAkhlaq} />
 
       {/* ═══ فلاتر وبحث ═══ */}
       <div className="akl-controls">

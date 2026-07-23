@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo } from "react";
-import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -572,12 +571,6 @@ export default function SawmPage() {
     });
   }, []);
 
-  const todayVirtue = useMemo(() => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
-    return VIRTUES[(day - 1 + VIRTUES.length) % VIRTUES.length];
-  }, []);
   const [tab, setTab] = useState<SawmTab>("types");
   const [openType, setOpenType] = useState<string | null>("ramadan");
   const [search, setSearch] = useState("");
@@ -633,15 +626,6 @@ export default function SawmPage() {
           ))}
         </div>
       </section>
-
-      {/* فضيلة الصيام اليوم */}
-      <div className="swod-card">
-        <div className="swod-card__badge"><Sparkles size={11} aria-hidden="true" /> فضيلة الصيام اليوم</div>
-        <span className="swod-card__icon"><SectionIcon name={todayVirtue.icon} size={26} /></span>
-        <h2 className="swod-card__title">{todayVirtue.title}</h2>
-        <p className="swod-card__text">« {todayVirtue.text} »</p>
-        <span className="swod-card__source">{todayVirtue.source}</span>
-      </div>
 
       {tab !== "conditions" && (
         <div className="sw-search-wrap">

@@ -5,7 +5,6 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { Sparkles } from "lucide-react";
 
 // ─── أقسام العقيدة والتوحيد ──────────────────────────────────────────────────
 
@@ -299,31 +298,6 @@ const RECOMMENDED_BOOKS = [
   { title: "شرح العقيدة السفارينية", author: "محمد بن صالح العثيمين", level: "متقدم", desc: "شرح موسَّع على منظومة السفاريني في العقيدة، يُعالج مسائل الأسماء والصفات والقضاء والقدر واليوم الآخر." },
 ];
 
-// ─── مسألة التوحيد اليوم ────────────────────────────────────────────────────
-
-function todaysPrinciple(): Principle {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
-  return PRINCIPLES[(dayOfYear - 1 + PRINCIPLES.length) % PRINCIPLES.length];
-}
-
-function PrincipleOfDayCard({ p }: { p: Principle }) {
-  return (
-    <div className="tpod-card">
-      <div className="tpod-card__badge"><Sparkles size={11} aria-hidden="true" /> مسألة التوحيد اليوم</div>
-      <h2 className="tpod-card__title">{p.title}</h2>
-      <p className="tpod-card__body">{p.body}</p>
-      {p.hadith && (
-        <div className="tpod-card__hadith">
-          <p className="tpod-card__hadith-text">« {p.hadith.text} »</p>
-          <span className="tpod-card__hadith-meta">{p.hadith.grade} · {p.hadith.source} ({p.hadith.number}) · رواه {p.hadith.narrator}</span>
-        </div>
-      )}
-    </div>
-  );
-}
-
 // ─── مكوّنات مساعدة ─────────────────────────────────────────────────────────
 
 function HadithBadge({ h }: { h: HadithRef }) {
@@ -350,7 +324,6 @@ function SectionLabel({ emoji, label }: { emoji: string; label: string }) {
 // ─── الصفحة ────────────────────────────────────────────────────────────────
 
 export default function TawhidPage() {
-  const todayPrinciple = useMemo(() => todaysPrinciple(), []);
   const [search, setSearch] = useState("");
   const filteredPrinciples = useMemo(() =>
     search.trim() ? PRINCIPLES.filter(p => arabicMatchAny([p.title, p.body, p.hadith?.text ?? "", p.hadith?.source ?? ""], search)) : PRINCIPLES,
@@ -434,8 +407,6 @@ export default function TawhidPage() {
         </div>
       </section>
 
-      {/* ══ مسألة التوحيد اليوم ══ */}
-      <PrincipleOfDayCard p={todayPrinciple} />
 
       {/* ══ قفز سريع ══ */}
       <nav aria-label="انتقل إلى" className="twh-jumpnav">

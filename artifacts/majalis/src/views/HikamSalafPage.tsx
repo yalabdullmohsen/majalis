@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { Copy, Heart, Search, Sparkles, X } from "lucide-react";
+import { Copy, Heart, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -1285,39 +1285,6 @@ const HIKAM: Hikma[] = [
   },
 ];
 
-function todaysHikma(): Hikma {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
-  return HIKAM[(dayOfYear - 1 + HIKAM.length) % HIKAM.length];
-}
-
-function HikmaOfDayCard({ hikma, onCopy, copied }: { hikma: Hikma; onCopy: (h: Hikma) => void; copied: string | null }) {
-  return (
-    <div className="hod-card">
-      <div className="hod-card__badge"><Sparkles size={11} aria-hidden="true" /> حكمة اليوم</div>
-      <span className="hod-card__cat">{hikma.category}</span>
-      <blockquote className="hod-card__quote">
-        <p className="hod-card__text">«{hikma.text}»</p>
-        <footer className="hod-card__footer">
-          <span className="hod-card__scholar">— {hikma.scholar}</span>
-          {hikma.died && <span className="hod-card__died">(ت{hikma.died})</span>}
-          {hikma.source && <span className="hod-card__source">[{hikma.source}]</span>}
-        </footer>
-      </blockquote>
-      <button
-        type="button"
-        className="hod-card__copy"
-        onClick={() => onCopy(hikma)}
-        aria-label="نسخ الحكمة"
-      >
-        <Copy size={13} aria-hidden="true" />
-        {copied === hikma.id ? "تم النسخ ✓" : "نسخ الحكمة"}
-      </button>
-    </div>
-  );
-}
-
 export default function HikamSalafPage() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("الكل");
@@ -1329,8 +1296,6 @@ export default function HikamSalafPage() {
   });
   const [copied, setCopied] = useState<string | null>(null);
   const [showFavsOnly, setShowFavsOnly] = useState(false);
-  const todayHikma = useMemo(() => todaysHikma(), []);
-
   useEffect(() => {
     applyPageSeo({
       path: "/hikam-salaf",
@@ -1400,9 +1365,6 @@ export default function HikamSalafPage() {
           <span>{favorites.size} محفوظ</span>
         </div>
       </section>
-
-      {/* حكمة اليوم */}
-      <HikmaOfDayCard hikma={todayHikma} onCopy={copyHikma} copied={copied} />
 
       {/* تحكم */}
       <div className="hk-controls">

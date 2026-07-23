@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo } from "react";
-import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
@@ -161,29 +160,9 @@ const TABS: { id: Tab; label: string; color: string }[] = [
   { id: "duas",        label: "أدعية الآخرة",     color: "#312E81" },
 ];
 
-/* ─── سبب الجنة اليوم ─── */
-function todaysAsbabJanna(): DescCard {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
-  return ASBAB_JANNA[(dayOfYear - 1 + ASBAB_JANNA.length) % ASBAB_JANNA.length];
-}
-
-function JannaOfDayCard({ card }: { card: DescCard }) {
-  return (
-    <div className="jnod-card">
-      <div className="jnod-card__badge"><Sparkles size={11} aria-hidden="true" /> من أسباب دخول الجنة</div>
-      <h2 className="jnod-card__title">{card.title}</h2>
-      <p className="jnod-card__text">{card.text}</p>
-      {card.ref && <div className="jnod-card__ref">{card.ref}</div>}
-    </div>
-  );
-}
-
 export default function JannaNaarPage() {
   const [activeTab, setActiveTab] = useState<Tab>("janna");
   const [search, setSearch] = useState("");
-  const todayJanna = useMemo(() => todaysAsbabJanna(), []);
 
   const filteredAsbabJanna = useMemo(() =>
     search.trim() ? ASBAB_JANNA.filter(i => arabicMatchAny([i.title, i.text, i.ref ?? ""], search)) : ASBAB_JANNA,
@@ -240,9 +219,6 @@ export default function JannaNaarPage() {
           </p>
         </div>
       </section>
-
-      {/* سبب الجنة اليوم */}
-      <JannaOfDayCard card={todayJanna} />
 
       {/* Tabs */}
       <div className="jn-tabs" role="tablist" aria-label="الجنة والنار">
