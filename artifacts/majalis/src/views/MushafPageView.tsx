@@ -322,7 +322,7 @@ export default function MushafPageView() {
                 </div>
 
                 <div className={`qs-mushaf-body ${prefs.highlightStyle === "spotlight" && selectedAyah ? "qs-mushaf-body--spotlight" : ""}`} style={{ ["--qs-font-size" as string]: `${prefs.fontScale}px` }}>
-                  <div style={{ height: "100%", transform: `scale(${prefs.fontScale / 26})`, transformOrigin: "top center" }}>
+                  <div className="qs-mushaf-body-inner" style={{ transform: `scale(${prefs.fontScale / 26})`, transformOrigin: "top center" }}>
                     {prefs.pageMode === "precision" ? (
                       <MushafPageV2 layout={v2Layout} activeAyahKey={v2ActiveKey} onAyahPress={handleV2AyahPress} bare />
                     ) : (
