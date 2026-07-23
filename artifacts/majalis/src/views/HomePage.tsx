@@ -9,14 +9,12 @@ import { History } from "lucide-react";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeAboutSection } from "@/components/home/HomeAboutSection";
 import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
-import { HomeSawmReminder } from "@/components/home/HomeSawmReminder";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeContinueWidget } from "@/components/home/HomeContinueWidget";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
 import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
 import { HomeMajlisToday } from "@/components/home/HomeMajlisToday";
 import { FridayBanner } from "@/components/FridayBanner";
-import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import { getHijriDateString } from "@/lib/hijri-utils";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerTimesPayload } from "@/lib/prayer-times";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
@@ -585,7 +583,7 @@ export default function HomePage() {
               color: "rgba(250,248,242,0.92)",
               fontSize: "clamp(0.88rem, 2.4vw, 1.05rem)",
               fontWeight: 700,
-              letterSpacing: "0.01em",
+              letterSpacing: "normal",
               lineHeight: 1.5,
               margin: "0 0 0.35rem",
             }}>
@@ -632,7 +630,7 @@ export default function HomePage() {
                 borderRadius: "999px",
                 fontSize: "0.8rem",
                 fontWeight: 600,
-                letterSpacing: "0.02em",
+                letterSpacing: "normal",
               }}>
                 <svg width="11" height="11" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
                   <circle cx="9" cy="9" r="7"/><path d="M9 2C6.5 4 5 6.3 5 9s1.5 5 4 7"/><path d="M9 2c2.5 2 4 4.3 4 7s-1.5 5-4 7"/><path d="M2 9h14"/>
@@ -649,7 +647,7 @@ export default function HomePage() {
                   borderRadius: "999px",
                   fontSize: "0.8rem",
                   fontWeight: 700,
-                  letterSpacing: "0.02em",
+                  letterSpacing: "normal",
                   textDecoration: "none",
                 }}>
                   <svg width="11" height="11" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -735,7 +733,7 @@ export default function HomePage() {
           <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
             <polygon points="9,1 12,7 18,7 13,11 15,17 9,13 3,17 5,11 0,7 6,7" fill="#173D35" opacity="0.85"/>
           </svg>
-          <p style={{ color: "#173D35", fontSize: "0.82rem", fontWeight: 800, margin: 0, letterSpacing: "0.03em" }}>وصول سريع</p>
+          <p style={{ color: "#173D35", fontSize: "0.82rem", fontWeight: 800, margin: 0, letterSpacing: "normal" }}>وصول سريع</p>
         </div>
         <div style={{
           display: "grid",
@@ -773,19 +771,16 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* ══ بانرات المناسبات المؤقتة (جمعة/صيام/شهر هجري) — مجمّعة في حاوية
-          واحدة بتباعد داخلي موحّد بدل ثلاث حاويات منفصلة، تقليلاً للتكرار
-          البصري. كل بانر يبقى شرطي الظهور كما كان تماماً. ══ */}
+      {/* ══ بانر صلاة الجمعة — إشعار صلاة، يبقى بحسب تعليمات الحفاظ على
+          إشعارات الأذان والصلوات. بانرا التذكير بالصيام والشهر الهجري
+          أُزيلا من الرئيسية (2026-07-22)؛ شهر الهجري يستمر بالعمل في
+          صفحة التقويم كما هو. ══ */}
       <div style={{
         maxWidth: 760, margin: "2rem auto 0", padding: "0 1rem",
         display: "flex", flexDirection: "column", gap: "0.75rem",
       }}>
         <SafeHomeSection name="FridayBanner">
           <FridayBanner />
-        </SafeHomeSection>
-        <HomeSawmReminder />
-        <SafeHomeSection name="HijriSacredMonthBanner">
-          <HijriSacredMonthBanner />
         </SafeHomeSection>
       </div>
 

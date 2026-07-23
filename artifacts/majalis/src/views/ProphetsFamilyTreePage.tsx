@@ -230,7 +230,7 @@ export default function ProphetsFamilyTreePage() {
           ← الأنبياء
         </Link>
         <div style={{ flex: 1 }}>
-          <h1 style={{ margin: 0, fontSize: "1.2rem", fontWeight: 800 }}>شجرة أنساب الأنبياء</h1>
+          <h1 className="pft-hero__title" style={{ margin: 0, fontSize: "1.2rem", fontWeight: 800, color: "#F7F4ED" }}>شجرة أنساب الأنبياء</h1>
           <p style={{ margin: 0, fontSize: "0.75rem", color: "rgba(255,255,255,0.6)" }}>
             ٢٥ نبياً من آدم إلى محمد ﷺ — اسحب للتنقل، اضغط على نبي للتفاصيل
           </p>
@@ -395,7 +395,7 @@ export default function ProphetsFamilyTreePage() {
             </p>
           )}
           {selectedNode.linkNote && (
-            <p style={{ margin: "0.25rem 0", color: "#5E655F", fontSize: "0.8rem", fontStyle: "italic" }}>
+            <p style={{ margin: "0.25rem 0", color: "#5E655F", fontSize: "0.8rem", fontStyle: "normal" }}>
               {selectedNode.linkNote}
             </p>
           )}

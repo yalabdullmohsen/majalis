@@ -207,7 +207,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
                 {topic.repentanceConditions.restitutionDetails}
               </div>
               {topic.repentanceConditions.ifOwnerUnreachable && (
-                <div style={{ marginTop: "0.5rem", fontStyle: "italic", fontSize: "0.85rem" }}>
+                <div style={{ marginTop: "0.5rem", fontStyle: "normal", fontSize: "0.85rem" }}>
                   💡 عند تعذر الوصول: {topic.repentanceConditions.ifOwnerUnreachable}
                 </div>
               )}

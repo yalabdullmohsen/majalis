@@ -181,14 +181,14 @@ body {
 .txt-h3 { font-size: var(--type-h3); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-primary); }
 .txt-h4 { font-size: var(--type-h4); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-primary); }
 .txt-h5 { font-size: var(--type-h5); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-secondary); }
-.txt-h6 { font-size: var(--type-h6); font-weight: var(--fw-bold); line-height: var(--lh-normal); letter-spacing: var(--ls-wide); color: var(--txt-secondary); text-transform: uppercase; }
+.txt-h6 { font-size: var(--type-h6); font-weight: var(--fw-bold); line-height: var(--lh-normal); letter-spacing: normal; color: var(--txt-secondary); text-transform: uppercase; }
 .txt-subtitle { font-size: var(--type-subtitle); font-weight: var(--fw-normal); line-height: var(--lh-relaxed); color: var(--txt-secondary); }
 .txt-body-lg  { font-size: var(--type-body-lg);  font-weight: var(--fw-normal); line-height: var(--lh-relaxed); color: var(--txt-secondary); }
 .txt-body     { font-size: var(--type-body);      font-weight: var(--fw-normal); line-height: var(--lh-normal);  color: var(--txt-secondary); }
 .txt-body-sm  { font-size: var(--type-body-sm);   font-weight: var(--fw-normal); line-height: var(--lh-normal);  color: var(--txt-muted); }
 .txt-caption  { font-size: var(--type-caption);   font-weight: var(--fw-normal); line-height: var(--lh-snug);    color: var(--txt-muted); }
-.txt-label    { font-size: var(--type-label);     font-weight: var(--fw-medium); line-height: var(--lh-snug);    letter-spacing: var(--ls-wide); color: var(--txt-muted); }
-.txt-btn      { font-size: var(--type-btn);       font-weight: var(--fw-semibold); line-height: 1; letter-spacing: var(--ls-wide); }
+.txt-label    { font-size: var(--type-label);     font-weight: var(--fw-medium); line-height: var(--lh-snug);    letter-spacing: normal; color: var(--txt-muted); }
+.txt-btn      { font-size: var(--type-btn);       font-weight: var(--fw-semibold); line-height: 1; letter-spacing: normal; }
 
 .txt-primary   { color: var(--txt-primary)   !important; }
 .txt-secondary { color: var(--txt-secondary) !important; }
@@ -202,9 +202,15 @@ body {
 .txt-inverse   { color: var(--txt-inverse)   !important; }
 
 /* ══ 5. Headings في صفحات الثيم الفاتح ═════════════════════════════════════ */
-.page-shell h1,
-.page-shell h2,
-.page-shell h3,
+/* ⚠️ حُذفت هنا محددات ".page-shell h1,"/".page-shell h2,"/".page-shell h3,"
+   الفضفاضة التي كانت تسبق نسخها المستثناة (:not(...)) أدناه في نفس قائمة
+   المحددات — لأن قوائم محددات CSS تُجمَع بـ"أو"، فأي h1/h2/h3 يطابق
+   المحدد الفضفاض بصرف النظر عن كل not() في نظيره المستثنى، فيُلغي كل
+   الاستثناءات فعليًا (اكتُشف عبر AmrBilMarufPage/ProphetsFamilyTreePage
+   لـ h1 — نص أبيض مقصود فوق خلفية بطل داكنة يظهر شبه مختفٍ؛ نفس النمط
+   بالحرف كان قائمًا لـ h2/h3 أيضًا، ما يعني أن "إصلاح" التعليق أدناه
+   (lessons-v2/lessons-past) لم يكن فعّالاً فعليًا رغم توثيقه). قائمة
+   استثناءات h1 مطابقة بالحرف لنسختها الكاملة في majalis-v2.css. */
 .page-shell h4,
 .page-shell h5,
 .page-shell h6,
@@ -214,7 +220,7 @@ body {
 .ds-page h4,
 .ds-page h5,
 .ds-page h6,
-.page-shell h1:not(.an-hero__title):not(.sch-profile-hero__name),
+.page-shell h1:not(.ds-page-header__title):not(.cards-page-title):not(.search-page-title):not(.ds-section__title):not(.fqh-hub-hero__title):not(.twh-hub-hero__title):not(.akl-hero__title):not(.arkan-hero__title):not(.ds-hero__title):not(.duas-hero__title):not(.mk-hero__title):not(.sm-hero__title):not(.an-hero__title):not(.sch-profile-hero__name):not(.prophet-detail-lux__name):not(.amr-hero__title):not(.pft-hero__title),
 /* لائحة الاستثناءات مطابقة بالحرف لنسختها الكاملة في majalis-v2.css (نفس نمط
    عناوين الأقسام "الشارة" — نص أبيض على شريط أخضر داكن). كانت هذه النسخة هنا
    قد تخلّفت عن التحديثات اللاحقة (تفتقد lessons-v2/lessons-past وغيرها)، فكانت
@@ -223,7 +229,7 @@ body {
    الخلفية الخضراء الداكنة لنفس الشارة (تباين ~1.27:1 — نفس نمط عطل [class$="-hero"]
    المُصلَح سابقًا: قاعدة عامة تفترض سياقًا خاطئًا بسبب استثناءات ناقصة). */
 .page-shell h2:not(.sq-title):not(.jn-section__title):not(.jn-subtitle):not(.jn-related__title):not(.sw-related__title):not(.hj-section__title):not(.hj-related__title):not(.th-section__title):not(.th-related__title):not(.fa-related__title):not(.seerah-panel__title):not(.fq-ref__title):not(.sh-step__title):not(.ds-section__title):not(.cards-page-title):not(.search-page-title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title):not(.lessons-v2-section__title):not(.lessons-past-section__title),
-.page-shell h3:not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title),
+.page-shell h3:not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title):not(.amr-level__title),
 .page-shell h4,
 .page-shell h5,
 .page-shell h6,
@@ -242,7 +248,7 @@ body {
   color: var(--m26-green-700, #15803D) !important;
   font-size: var(--type-label) !important;
   font-weight: var(--fw-semibold) !important;
-  letter-spacing: var(--ls-wider) !important;
+  letter-spacing: normal !important;
   text-transform: uppercase !important;
 }
 
@@ -277,7 +283,7 @@ body {
 .side-nav-group__title {
   color: var(--txt-hint, #5E655F) !important;
   font-size: var(--type-label) !important;
-  letter-spacing: var(--ls-wider) !important;
+  letter-spacing: normal !important;
   text-transform: uppercase !important;
 }
 .side-nav-item {
@@ -362,7 +368,7 @@ body {
   font-size: var(--type-btn);
   font-weight: var(--fw-semibold);
   border-radius: var(--m26-r-md);
-  letter-spacing: var(--ls-wide);
+  letter-spacing: normal;
   transition: all var(--m26-duration-fast) var(--m26-ease);
 }
 .ds-btn--primary {
@@ -490,7 +496,7 @@ label {
 .pt-hero__label {
   font-size: var(--type-label) !important;
   font-weight: var(--fw-semibold) !important;
-  letter-spacing: var(--ls-wider) !important;
+  letter-spacing: normal !important;
   text-transform: uppercase !important;
 }
 .pt-prayer,
@@ -544,7 +550,7 @@ label {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
   padding: 0.6rem 1rem 0.25rem;
   text-align: center;
@@ -563,7 +569,7 @@ label {
 .pt-hero__hint-inner {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -576,7 +582,7 @@ label {
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: normal;
   color: var(--txt-muted, #5E655F) !important;
   margin-bottom: 0.5rem;
 }
@@ -609,7 +615,7 @@ label {
 /* روابط سريعة */
 .pt-quick-links {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   justify-content: center;
   padding: 0.75rem 1rem 1.25rem;
   flex-wrap: wrap;
@@ -870,7 +876,7 @@ th {
   color: var(--txt-secondary, #68716D) !important;
   font-weight: var(--fw-bold) !important;
   font-size: var(--type-label) !important;
-  letter-spacing: var(--ls-wide) !important;
+  letter-spacing: normal !important;
   border-color: rgba(0,0,0,0.07) !important;
 }
 td {
@@ -1159,26 +1165,41 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   background: rgba(255,255,255,0.22);
   border-color: rgba(255,255,255,0.7);
 }
+/* .legal-back-btn الأساسي مصمَّم لسياق داكن (.legal-page-hero) فقط. مكوّن
+   LegalBackLink المستقل (يُستخدم في نهاية الإعدادات/حول/الشروط/اتصل بنا/
+   معلومات الطبعة/الخصوصية) يُعيد استخدام نفس الصنف خارج أي حاوية داكنة —
+   نص أبيض شبه شفاف فوق خلفية الصفحة الفاتحة العادية (تباين ~1.1:1، اكتُشف
+   عبر تدقيق تباين حي شامل). هذه القاعدة الأكثر تخصيصًا (صنفان) تفوز طبيعيًا
+   بلا !important وتُصحح الألوان لسياق فاتح فقط، دون المساس بزر الهيرو. */
+.legal-back .legal-back-btn {
+  border-color: rgba(23,61,53,0.25);
+  background: transparent;
+  color: var(--majalis-emerald-deep, #173D35);
+}
+.legal-back .legal-back-btn:hover {
+  background: rgba(23,61,53,0.06);
+  border-color: rgba(23,61,53,0.4);
+}
 
 /* ══ 40. Adhkar Focus Mode ══════════════════════════════════════════════════ */
 .adhkar-page--focus .adhkar-focus-shell {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: var(--ds-space-6);
   padding: 1.5rem 0 2rem;
 }
 
 .adhkar-focus-counter {
-  font-size: 0.875rem;
+  font-size: var(--ds-text-sm);
   color: var(--txt-subdued, #5E655F);
-  letter-spacing: 0.05em;
+  letter-spacing: normal;
 }
 
 .adhkar-focus-card {
   background: var(--majalis-panel, #fff);
   border: 1px solid var(--majalis-line, #e5e7eb);
-  border-radius: 1.25rem;
+  border-radius: var(--ds-radius-2xl);
   padding: 2.5rem 2rem;
   text-align: center;
   max-width: 640px;
@@ -1203,14 +1224,14 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 
 .adhkar-focus-nav {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .adhkar-focus-btn {
   padding: 0.625rem 1.25rem;
-  border-radius: 0.75rem;
+  border-radius: var(--ds-radius-lg);
   border: 1.5px solid var(--majalis-line, #e5e7eb);
   background: var(--majalis-panel, #fff);
   color: var(--txt-primary, #202725);
@@ -1276,7 +1297,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 
 .adhkar-tapper-wrap {
   display: flex; flex-direction: column;
-  align-items: center; gap: 0.5rem;
+  align-items: center; gap: var(--ds-space-2);
 }
 
 .adhkar-tapper {
@@ -1312,7 +1333,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   line-height: 1; font-variant-numeric: tabular-nums;
 }
 .adhkar-tapper__sep {
-  font-size: 1rem; color: rgba(0,0,0,0.2);
+  font-size: var(--ds-text-base); color: rgba(0,0,0,0.2);
   align-self: flex-end; margin-bottom: 0.15rem;
 }
 .adhkar-tapper__tot {
@@ -1334,7 +1355,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   margin: 0; text-align: center;
 }
 .adhkar-tapper__complete {
-  font-size: 0.875rem; font-weight: 600;
+  font-size: var(--ds-text-sm); font-weight: 600;
   color: var(--majalis-emerald, #16A34A);
   margin: 0; text-align: center;
 }
@@ -1385,10 +1406,10 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   color: var(--txt-subdued, #5E655F);
   cursor: pointer;
   padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
+  border-radius: var(--ds-radius);
 }
 .adhkar-sheet-title {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-weight: 700;
   color: var(--txt-primary, #202725);
   text-align: center;
@@ -1400,23 +1421,23 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   line-height: 2;
   color: var(--txt-primary, #202725);
   text-align: center;
-  padding: 1rem;
+  padding: var(--ds-space-4);
   background: var(--m26-green-50, #F0FDF4);
-  border-radius: 0.75rem;
+  border-radius: var(--ds-radius-lg);
   margin-bottom: 1.25rem;
 }
 .adhkar-sheet-details {
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
+  gap: var(--ds-space-2-5);
   margin: 0 0 1.5rem;
 }
 .adhkar-sheet-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 1rem;
-  font-size: 0.875rem;
+  gap: var(--ds-space-4);
+  font-size: var(--ds-text-sm);
   padding: 0.5rem 0;
   border-bottom: 1px solid var(--majalis-line, #e5e7eb);
 }
@@ -1448,7 +1469,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 .adhkar-sheet-dismiss {
   display: block;
   width: 100%;
-  padding: 0.875rem;
+  padding: var(--ds-space-3-5);
   background: var(--majalis-emerald, #16A34A);
   color: #fff;
   border: none;
@@ -1549,7 +1570,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   font-weight: 600 !important;
   background: var(--m26-green-100, #DCFCE7) !important;
   color: var(--m26-green-800, #166534) !important;
-  border-radius: 0.25rem;
+  border-radius: var(--ds-radius-xs);
   padding: 0.08rem 0.25rem;
   overflow: hidden;
   white-space: nowrap;
@@ -1607,14 +1628,14 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
 }
 .content-detail-readtime {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  font-size: 0.75rem;
+  gap: var(--ds-space-1);
+  font-size: var(--ds-text-xs);
   color: var(--txt-secondary, #6b7280);
   background: var(--surface-2, #f4f4f4);
   padding: 0.15rem 0.5rem;
@@ -1741,7 +1762,7 @@ p { line-height: var(--lh-normal, 1.65); }
 .content-detail-body p {
   line-height: 1.85;
   color: #1E1E1E;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
 }
 
 /* ─── ضمان النص الأبيض على شريط القراءة ─── */
@@ -1754,7 +1775,7 @@ p { line-height: var(--lh-normal, 1.65); }
 .home-eyebrow,
 .ds-page-header__eyebrow {
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: normal;
 }
 
 /* ─── تباين نص الجداول والقوائم ─── */

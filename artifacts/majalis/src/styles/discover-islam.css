@@ -25,7 +25,7 @@
 }
 .dii-path-card {
   display: flex; flex-direction: column; gap: .35rem;
-  padding: 1rem; border-radius: 12px;
+  padding: var(--ds-space-4); border-radius: 12px;
   text-decoration: none;
   color: inherit;
   transition: transform .15s ease, box-shadow .15s ease;
@@ -79,7 +79,7 @@ html[data-theme="dark"] .dii-journey-step { background: rgba(255,255,255,.05); c
 
 .dii-shahada-ar {
   font-family: var(--font-quran, "Amiri Quran", serif);
-  font-size: 1.5rem; text-align: center; line-height: 2;
+  font-size: var(--ds-text-2xl); text-align: center; line-height: 2;
   color: var(--majalis-emerald-deep, #173D35);
   margin: .75rem 0 .25rem;
 }
@@ -111,7 +111,7 @@ html[data-theme="dark"] .dii-journey-step { background: rgba(255,255,255,.05); c
 .dii-contact-method-row input { flex: 1; min-width: 180px; }
 .dii-form-error { color: #B91C1C; font-size: .85rem; margin: 0; }
 .dii-tracking-code {
-  font-family: monospace; font-size: 1.3rem; letter-spacing: .1em;
+  font-family: monospace; font-size: 1.3rem; letter-spacing: normal;
   text-align: center; padding: .6rem; border-radius: 8px;
   background: color-mix(in srgb, var(--majalis-emerald, #0E6E52) 10%, transparent);
   color: var(--majalis-emerald-deep, #173D35);

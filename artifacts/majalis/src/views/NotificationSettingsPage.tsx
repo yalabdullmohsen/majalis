@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { Link } from "wouter";
-import { Archive, Trash2 } from "lucide-react";
+import { Archive, Bell, CheckCheck, Trash2 } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
+import { hapticTap } from "@/lib/capacitor-utils";
+import { toArabicDigits } from "@/lib/utils";
 import {
   loadNotifPrefs,
   saveNotifPrefs,
@@ -24,6 +26,29 @@ import { applyPageSeo } from "@/lib/seo";
 
 type Permission = ReturnType<typeof getPermissionStatus>;
 type HistoryTab = "inbox" | "archived";
+
+/** تسمية اليوم بالعربية لرأس التجميع: اليوم / أمس / تاريخ مختصر. */
+function dayLabel(iso: string): string {
+  const d = new Date(iso);
+  const today = new Date();
+  const startOf = (x: Date) => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
+  const diffDays = Math.round((startOf(today) - startOf(d)) / 86_400_000);
+  if (diffDays === 0) return "اليوم";
+  if (diffDays === 1) return "أمس";
+  return d.toLocaleDateString("ar-KW", { day: "numeric", month: "long", year: diffDays > 300 ? "numeric" : undefined });
+}
+
+/** تجميع سجل مرتّب تنازليًا حسب اليوم — يحافظ على الترتيب الزمني داخل كل مجموعة. */
+function groupByDay(records: NotifRecord[]): { label: string; items: NotifRecord[] }[] {
+  const groups: { label: string; items: NotifRecord[] }[] = [];
+  for (const rec of records) {
+    const label = dayLabel(rec.createdAt);
+    const last = groups[groups.length - 1];
+    if (last && last.label === label) last.items.push(rec);
+    else groups.push({ label, items: [rec] });
+  }
+  return groups;
+}
 
 // ── مكوّن Toggle ────────────────────────────────────────────────────────────
 function ToggleRow({
@@ -53,42 +78,96 @@ function ToggleRow({
 }
 
 // ── صف إشعار ────────────────────────────────────────────────────────────────
+/** أقصى إزاحة سحب (px) لكشف زر الحذف خلف البطاقة — لمسة iOS القياسية. */
+const SWIPE_REVEAL = 76;
+
 function NotifRow({ rec, onRead, onArchive, onDelete }: {
   rec: NotifRecord;
   onRead: () => void;
   onArchive: () => void;
   onDelete: () => void;
 }) {
-  const date = new Date(rec.createdAt);
-  const dateStr = date.toLocaleDateString("ar-KW", { month: "short", day: "numeric" });
-  const timeStr = date.toLocaleTimeString("ar-KW", { hour: "2-digit", minute: "2-digit" });
+  const timeStr = new Date(rec.createdAt).toLocaleTimeString("ar-KW", { hour: "2-digit", minute: "2-digit" });
+
+  const [dragX, setDragX] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const startX = useRef<number | null>(null);
+  const baseX = useRef(0);
+  const pointerId = useRef<number | null>(null);
+  const revealed = useRef(false);
+
+  const onPointerDown = (e: ReactPointerEvent) => {
+    if (e.pointerType === "mouse") return; // السحب للمس فقط؛ سطح المكتب يستخدم أزرار الإجراءات الظاهرة عند hover
+    startX.current = e.clientX;
+    baseX.current = dragX;
+    pointerId.current = e.pointerId;
+    revealed.current = dragX <= -SWIPE_REVEAL / 2;
+  };
+  const onPointerMove = (e: ReactPointerEvent) => {
+    if (startX.current === null || pointerId.current !== e.pointerId) return;
+    const next = Math.min(0, Math.max(baseX.current + (e.clientX - startX.current), -SWIPE_REVEAL - 24));
+    setDragging(true);
+    setDragX(next);
+    const nowRevealed = next <= -SWIPE_REVEAL / 2;
+    if (nowRevealed !== revealed.current) {
+      revealed.current = nowRevealed;
+      void hapticTap("light");
+    }
+  };
+  const endDrag = () => {
+    if (startX.current === null) return;
+    setDragX(revealed.current ? -SWIPE_REVEAL : 0);
+    startX.current = null;
+    pointerId.current = null;
+    setDragging(false);
+  };
 
   return (
-    <div
-      className={`nh-row${rec.isRead ? " nh-row--read" : ""}`}
-      onClick={onRead}
-      role="button"
-      tabIndex={0}
-      onKeyDown={e => (e.key === "Enter" || e.key === " ") && onRead()}
-    >
-      <div className="nh-row__dot" aria-hidden="true" />
-      <div className="nh-row__body">
-        <div className="nh-row__title">{rec.title}</div>
-        {rec.body && <div className="nh-row__body-text">{rec.body}</div>}
-        <div className="nh-row__meta">{dateStr} · {timeStr}</div>
-      </div>
-      {/* onClick لمنع انتشار النقر إلى صف الإشعار الأب — لا إجراء فعلي هنا
-          يحتاج مكافئ لوحة مفاتيح؛ الأزرار الفعلية داخل هذا الصف قابلة للوصول
-          بلوحة المفاتيح أصلًا. */}
-      <div className="nh-row__actions" onClick={e => e.stopPropagation()}>
-        {!rec.isArchived && (
-          <button type="button" className="nh-action" onClick={onArchive} aria-label="أرشفة">
-            <Archive size={14} strokeWidth={2} aria-hidden="true" />
+    <div className="nh-row-wrap">
+      <button
+        type="button"
+        className="nh-row__swipe-del"
+        onClick={() => { setDragX(0); onDelete(); }}
+        aria-label={`حذف: ${rec.title}`}
+        tabIndex={dragX <= -SWIPE_REVEAL / 2 ? 0 : -1}
+      >
+        <Trash2 size={18} strokeWidth={2} aria-hidden="true" />
+      </button>
+
+      <div
+        className={`nh-row${rec.isRead ? " nh-row--read" : ""}`}
+        style={dragX !== 0 || dragging ? { transform: `translateX(${dragX}px)`, transition: dragging ? "none" : undefined } : undefined}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onClick={() => { if (dragX === 0) onRead(); }}
+        role="button"
+        tabIndex={0}
+        onKeyDown={e => (e.key === "Enter" || e.key === " ") && onRead()}
+      >
+        <div className="nh-row__icon" aria-hidden="true">
+          <Bell size={16} strokeWidth={1.8} />
+        </div>
+        <div className="nh-row__body">
+          <div className="nh-row__title">{rec.title}</div>
+          {rec.body && <div className="nh-row__body-text">{rec.body}</div>}
+          <div className="nh-row__meta">{timeStr}</div>
+        </div>
+        {!rec.isRead && <span className="nh-row__unread" aria-label="غير مقروء" />}
+        {/* onClick لمنع انتشار النقر إلى صف الإشعار الأب — لا إجراء فعلي هنا
+            يحتاج مكافئ لوحة مفاتيح؛ الأزرار الفعلية داخل هذا الصف قابلة للوصول
+            بلوحة المفاتيح أصلًا. */}
+        <div className="nh-row__actions" onClick={e => e.stopPropagation()}>
+          {!rec.isArchived && (
+            <button type="button" className="nh-action" onClick={onArchive} aria-label="أرشفة">
+              <Archive size={14} strokeWidth={2} aria-hidden="true" />
+            </button>
+          )}
+          <button type="button" className="nh-action nh-action--del" onClick={onDelete} aria-label="حذف">
+            <Trash2 size={14} strokeWidth={2} aria-hidden="true" />
           </button>
-        )}
-        <button type="button" className="nh-action nh-action--del" onClick={onDelete} aria-label="حذف">
-          <Trash2 size={14} strokeWidth={2} aria-hidden="true" />
-        </button>
+        </div>
       </div>
     </div>
   );
@@ -152,11 +231,12 @@ export default function NotificationSettingsPage() {
     histTab === "archived" ? r.isArchived : !r.isArchived,
   );
   const unread = history.filter(r => !r.isRead && !r.isArchived).length;
+  const dayGroups = useMemo(() => groupByDay(visibleHistory), [visibleHistory]);
 
   const handleMarkRead = (id: string) => { markRead(id); refreshHistory(); };
   const handleArchive = (id: string) => { archiveRecord(id); refreshHistory(); };
-  const handleDelete = (id: string) => { deleteRecord(id); refreshHistory(); };
-  const handleMarkAll = () => { markAllRead(); refreshHistory(); };
+  const handleDelete = (id: string) => { void hapticTap("medium"); deleteRecord(id); refreshHistory(); };
+  const handleMarkAll = () => { void hapticTap("light"); markAllRead(); refreshHistory(); };
   const handleClearAll = () => { clearAll(); setHistory([]); setConfirmClear(false); };
 
   return (
@@ -227,11 +307,14 @@ export default function NotificationSettingsPage() {
         <div className="nh-header">
           <h2 className="nh-header__title">
             سجل الإشعارات
-            {unread > 0 && <span className="nh-header__badge">{unread}</span>}
+            {unread > 0 && <span className="nh-header__badge">{toArabicDigits(unread)}</span>}
           </h2>
           <div className="nh-header__actions">
             {unread > 0 && (
-              <button type="button" className="nh-btn" onClick={handleMarkAll}>تعليم الكل مقروءاً</button>
+              <button type="button" className="nh-btn nh-btn--mark-all" onClick={handleMarkAll}>
+                <CheckCheck size={14} strokeWidth={2} aria-hidden="true" />
+                تعليم الكل مقروءاً
+              </button>
             )}
             {!confirmClear ? (
               <button type="button" className="nh-btn nh-btn--danger" onClick={() => setConfirmClear(true)}>
@@ -263,28 +346,39 @@ export default function NotificationSettingsPage() {
         {/* تبويبات */}
         <div className="nh-tabs" role="tablist" aria-label="تبويبات الإشعارات">
           <button role="tab" type="button" className={`nh-tab${histTab === "inbox" ? " nh-tab--active" : ""}`} onClick={() => setHistTab("inbox")} aria-selected={histTab === "inbox"}>
-            الصندوق {unread > 0 && `(${unread})`}
+            الصندوق {unread > 0 && `(${toArabicDigits(unread)})`}
           </button>
           <button role="tab" type="button" className={`nh-tab${histTab === "archived" ? " nh-tab--active" : ""}`} onClick={() => setHistTab("archived")} aria-selected={histTab === "archived"}>
             المؤرشف
           </button>
         </div>
 
-        {/* القائمة */}
+        {/* القائمة — مجمّعة حسب اليوم */}
         <div className="nh-list">
           {visibleHistory.length === 0 ? (
-            <p className="nh-empty">
-              {searchQ ? `لا نتائج لـ «${searchQ}»` : histTab === "archived" ? "لا توجد إشعارات مؤرشفة." : "لا توجد إشعارات بعد."}
-            </p>
+            <div className="nh-empty">
+              <div className="nh-empty__ring" aria-hidden="true">
+                <Bell size={26} strokeWidth={1.5} />
+              </div>
+              <p className="nh-empty__msg">
+                {searchQ ? `لا نتائج لـ «${searchQ}»` : histTab === "archived" ? "لا توجد إشعارات مؤرشفة" : "لا توجد إشعارات"}
+              </p>
+              {!searchQ && <p className="nh-empty__sub">سنُخبرك هنا بكل جديد يخصّ رحلتك العلمية</p>}
+            </div>
           ) : (
-            visibleHistory.map(rec => (
-              <NotifRow
-                key={rec.id}
-                rec={rec}
-                onRead={() => handleMarkRead(rec.id)}
-                onArchive={() => handleArchive(rec.id)}
-                onDelete={() => handleDelete(rec.id)}
-              />
+            dayGroups.map(group => (
+              <div key={group.label} className="nh-day-group">
+                <div className="nh-day-group__label">{group.label}</div>
+                {group.items.map(rec => (
+                  <NotifRow
+                    key={rec.id}
+                    rec={rec}
+                    onRead={() => handleMarkRead(rec.id)}
+                    onArchive={() => handleArchive(rec.id)}
+                    onDelete={() => handleDelete(rec.id)}
+                  />
+                ))}
+              </div>
             ))
           )}
         </div>
