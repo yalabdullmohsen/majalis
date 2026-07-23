@@ -1058,7 +1058,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
-    "question": "من النبي الذي كان يُعدّ من أولي العزم من الرسل وعاش في بطن الحوت؟",
+    "question": "من النبي الذي عاش في بطن الحوت؟",
     "answer": "يونس عليه السلام"
   },
   {
