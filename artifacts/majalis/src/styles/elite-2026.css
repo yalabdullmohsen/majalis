@@ -10229,7 +10229,10 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 
 
 /* ── §176 — AppShell, SiteFooter, RelatedKnowledge ──────────────────────── */
-.app-shell { min-height: 100vh; direction: var(--app-dir, rtl); }
+/* min-height: 100vh حُذف (2026-07-25) — كان ميتًا فعليًا (final-release.css
+   المحمَّل لاحقًا يفرض 100dvh دومًا على نفس الخاصية)، لكنه بقي مصدر التباس
+   محتمل عند تدقيق فراغ 100vh/100dvh. direction يبقى كما هو. */
+.app-shell { direction: var(--app-dir, rtl); }
 .navbar-v3-placeholder { min-height: 4rem; }
 .footer-star { opacity: 0.4; }
 
@@ -13440,8 +13443,10 @@ html[data-theme="dark"] .global-back-btn {
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 4px !important;
-  padding: 8px 4px 10px !important;
+  /* حشو/فجوة مخفَّضان (2026-07-25) ليلائما ارتفاع الشريط المُصغَّر
+     (--bottom-nav-height: 3rem) بلا اقتصاص المحتوى — راجع final-release.css. */
+  gap: 2px !important;
+  padding: 3px 4px !important;
   /* لا var(--rd-ink-muted): هذا المتغير مخصَّص أصلًا لنص placeholder
      (#9CA3AF رمادي فاتح جدًا)، واستُخدم هنا خطأً لتسمية تنقّل أساسية
      تظهر في كل صفحة — تباين 2.39:1 فقط ضد عتبة 4.5:1 (2026-07-17). */
@@ -13476,8 +13481,10 @@ html[data-theme="dark"] .global-back-btn {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  width: 40px !important;
-  height: 32px !important;
+  /* 22px يحيط بالأيقونة الفعلية (SVG بحجم 20، BottomNavBar.tsx) بلا الحشو
+     الزائد الذي كان يضخّم ارتفاع الشريط كاملاً (2026-07-25). */
+  width: 22px !important;
+  height: 22px !important;
   border-radius: 8px !important;
   transition: background 0.2s ease !important;
 }
@@ -29253,7 +29260,12 @@ label {
   box-shadow: 0 1px 0 rgba(23,61,53,.04), 0 2px 12px rgba(18,32,25,.04) !important;
   height: 60px !important;
   position: sticky !important;
-  top: 0 !important;
+  /* top:0 !important (قديم) كان يتجاهل TopTicker كليًا — بعد التمرير كان
+     الهيدر "يصعد" ليلتصق بأعلى الشاشة فوق الشريط المتحرك مباشرة، فيتراكب
+     معه، ويصبح حساب top الخاص بـ.top-section-bar (المعتمِد على ارتفاع
+     الهيدر الحقيقي) خاطئًا فيتراكب هو الآخر مع الهيدر. إصلاح جذري
+     2026-07-25: يلتصق أسفل الشريط المتحرك دومًا كباقي أسطح التنقّل. */
+  top: calc(var(--ticker-height, 1.875rem) + env(safe-area-inset-top, 0px)) !important;
   z-index: var(--z-nav, 200) !important;
 }
 /* z-index:200 !important أعلاه يهزم .navbar-v3--menu-open{z-index:10001}

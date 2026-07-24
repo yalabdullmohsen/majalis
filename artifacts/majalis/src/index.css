@@ -15597,7 +15597,10 @@ body.has-assistant-fab .app-main {
    ================================================================ */
 
 :root {
-  --bottom-nav-h: 56px;
+  /* مصدر واحد فعلي: يُطابِق --bottom-nav-height (final-release.css) دومًا،
+     بدل قيمة ثابتة منفصلة كانت تنحرف عنها وتُنتج padding-bottom أكبر من
+     ارتفاع الشريط الحقيقي (فراغ زائف أعلى الشريط) — إصلاح جذري 2026-07-25. */
+  --bottom-nav-h: var(--bottom-nav-height, 48px);
 }
 
 .bottom-nav {
@@ -15696,13 +15699,16 @@ body.has-assistant-fab .app-main {
     border-radius: var(--ds-radius);
   }
 
-  /* ── Push main content above the bar ── */
+  /* ── Push main content above the bar ──
+     ‎+1rem: فسحة تصميمية مقصودة كي لا تلتصق آخر بطاقة بالشريط مباشرة —
+     ليست فراغًا زائدًا، فارتفاع الشريط نفسه (--bottom-nav-h) محسوب بدقة
+     الآن ليطابق ارتفاعه الفعلي المُصيَّر (راجع التعليق أعلى --bottom-nav-h). */
   .app-main {
-    padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px)) !important;
+    padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px) + 1rem) !important;
   }
 
   body.has-assistant-fab .app-main {
-    padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px)) !important;
+    padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px) + 1rem) !important;
   }
 
   /* ── Hide floating assistant button (it's in bottom nav now) ── */
