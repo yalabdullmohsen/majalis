@@ -1,7 +1,7 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b021",
+  "lastCompletedId": "b023",
   "resumeFromId": "b011",
   "items": [
     {
@@ -224,6 +224,32 @@
       ],
       "finding": "سلمان الفارسي كان مسجلاً مرتين (id: salman وid: salman-farisi) بمحتوى متداخل. النسخة المحذوفة كانت تجزم بعمره \"150+ سنة تقريباً\" وهي رواية مبالغ فيها مشهورة (بعض الروايات الشعبية تصل بها إلى 250-350 سنة) غير موثَّقة تاريخياً؛ أُبقيت النسخة الأخرى الأكثر انضباطاً (تواريخ ميلاد/وفاة مُقدَّرة بـ\"نحو\" تعطي عمراً معقولاً ~72 سنة)، مع نقل حقل kunya (سلمان المحمدي) إليها. 65→64 صحابياً. فحصت بقية الـ64 لادعاءات \"أول من/أعظم/الوحيد\" — كلها إما نص حديثي مباشر أو حقيقة تاريخية موثّقة (كزيد بن حارثة الصحابي الوحيد المذكور بالاسم في القرآن) أو أعمار معقولة (~100 سنة، موثقة لأعلام كأنس بن مالك) لا تحتاج تعديلاً.",
       "commit": "batch-2026-07-24-08"
+    },
+    {
+      "id": "b022",
+      "section": "islamic_glossary",
+      "title": "إزالة 27 مصطلحاً مكرراً حرفياً في IslamicGlossaryPage.tsx (218→191)",
+      "severity": "high",
+      "status": "done",
+      "files": [
+        "artifacts/majalis/src/views/IslamicGlossaryPage.tsx",
+        "artifacts/majalis/src/views/FeaturesInProgressPage.tsx"
+      ],
+      "finding": "فحص برمجي: 23 مصطلحاً مكرراً (19 زوجاً + 4 مجموعات ثلاثية: الزهد، المراقبة، الورع، الوقف والابتداء) من أصل 218. أُبقيت النسخة الأطول/الأغنى تفصيلاً من كل مجموعة وحُذفت البقية (27 سجلاً). راجعتُ يدوياً 3 حالات حساسة عقدياً قبل الحذف الآلي (الإجماع/عبارة التكفير المقيّدة بإجماع قطعي، الولاء والبراء، الاستدراج) — كلها مضبوطة منهجياً بلا غلو. صُحِّح الرقم المقابل في خارطة طريق الميزات تبعاً لذلك (كان صُحِّح سابقاً إلى 218، الآن 191).",
+      "commit": "batch-2026-07-24-09"
+    },
+    {
+      "id": "b023",
+      "section": "hadith_science_terms",
+      "title": "إزالة 4 مصطلحات مكررة في HadithSciencePage.tsx (102→98)",
+      "severity": "medium",
+      "status": "done",
+      "files": [
+        "artifacts/majalis/src/views/HadithSciencePage.tsx",
+        "artifacts/majalis/src/views/FeaturesInProgressPage.tsx"
+      ],
+      "finding": "الحديث المتواتر (3 نسخ بمعرّفات id مختلفة الصياغة: muttawatir/mutawatir/al-mutawatir)، الثقة، الرواية بالمعنى. أُبقيت الأطول من كل مجموعة. صُحِّح الرقم المقابل في خارطة الميزات إلى 98.",
+      "commit": "batch-2026-07-24-09"
     }
   ]
 }
