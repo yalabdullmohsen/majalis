@@ -40,6 +40,36 @@
 5. **بناء الجذر مكسور لأي worktree جديد** — 5 ملفات `tsconfig.tsbuildinfo` مُتتبَّعة في git رغم `.gitignore`، تُفسد cache `tsc --build` فتُفشل `artifacts/api-server` بخطأ TS6305. أُصلح جذريًا بـ`git rm --cached` (commit `c23bc94f`).
 6. **بوابة `commit-and-push-branch.sh` كانت مكسورة فعليًا** — تستخدم `pnpm run build` الجذري الذي يُشغّل حزمًا تسويقية Replit هامشية (`majalis-pitch`, `majalis-promo`) تتطلب `PORT`/`BASE_PATH` غير مُعرَّفين، بلا علاقة بعمل النافذتين. أُعيد تقييده لـ`@workspace/majalis` فقط (commit `4e3ce08a`). **نفس الخلل لا يزال موجودًا في نسخة automation/content من هذا السكربت** — لم أُصلحه هناك (ممنوع تعديل فرعها)؛ يحتاج تنبيه المالك.
 
+## الدفعة 2 (2026-07-24) — مراجعة docs/design-system.md + اكتشاف بنية CSS الحقيقية
+
+نفّذت `docs-design-system-v2-reconcile` (الآن `done`): راجعت كل قسم في
+`docs/design-system.md` (180 سطرًا) مقابل الكود الحي عبر `rg` فعلي —
+لا افتراض. النتيجة: الألوان/الخطوط/التباعد v2/التدرجات/`IslamicOrnament`
+**ميتة**؛ `.ds-btn`/`.ds-card`/`.ds-input`/`.ds-section__head`/
+`IslamicDivider`/نقاط الانكسار **حية**؛ الحواف/الظلال `--ds-r-*` حية
+لكن ضيّقة النطاق. كل قسم في الملف موسوم الآن ✅/⚠️/❌ بدليله.
+
+**اكتشاف أكبر أثناء هذا التحقق (لم يكن مخطَّطًا):** الموقع يحمّل **9
+ملفات CSS متتالية** (`index.css` 18879 سطرًا ... `elite-2026.css`
+33306 سطرًا) — **+60 ألف سطر CSS إجمالًا**، بأنظمة توكِن متوازية متعددة
+(`--ds-*`, `--m26-*`, `--elite-*`, `--txt-*`, `--msk-*`, `--majalis-*`)
+متراكمة من عدة جلسات إعادة تصميم لم تُوحَّد قط. القيم الفعلية متسقة
+(كلها v3 `#173D35`) فقط التسمية/البنية مبعثرة. **هذا تغيير عالي
+المخاطر يحتاج قرار المالك الصريح — لم أبدأ أي توحيد أو حذف ملف.** سُجِّل
+كبند backlog منفصل بأولوية 1 وحالة `pending-owner-decision`، لا `pending`
+عادية — لا تنفّذه تلقائيًا حتى لو كان أعلى البنود.
+
+**ملاحظة تشغيلية (لا تُصلَح، طبيعية):** كل `git commit`/`push` يُشغّل
+pre-commit/pre-push hooks تُعيد توليد `feed.xml`،
+`rulings-encyclopedia/manifest.json` وملفات chunks، و`*.generated.ts`
+(بها `generated_at` طابع زمني يتغيّر كل مرة) — هذا يترك `git status`
+"متسخًا" بعد أي push حتى بلا تعديل محتوى فعلي. تحقّقت فعليًا (diff) أنه
+تغيير طابع زمني فقط، لا محتوى. **لا تُضِف هذه الملفات لأي commit عبر
+`git add -A` عرضًا** — تحقّق بـ`git diff` أولًا؛ إن كان طابعًا زمنيًا
+فقط نفّذ `git checkout -- <المسار>` لتنظيفها، لا commit.
+
 ## أول عنصر للبدء منه في الدفعة القادمة
 
-راجع `backlog.json` مرتبًا حسب `priority` — أعلى بند بحالة `pending` هو نقطة الاستئناف (حاليًا: `docs-design-system-v2-reconcile`).
+راجع `backlog.json`. **تنبيه:** أعلى بند (`css-architecture-consolidation`)
+حالته `pending-owner-decision` — لا تبدأه بلا إذن صريح مُجدَّد. أول بند
+قابل للتنفيذ التلقائي هو `hex-literal-tokenization` (أولوية 3).

@@ -20,14 +20,31 @@
     "src/components/SideNavDrawer.tsx"
   ],
   "design_tokens": {
-    "authoritative_source": "src/styles/modern-2026.css (:root + html:not([data-theme=\"dark\"]))",
+    "authoritative_source": "لا مصدر واحد فعليًا — راجع css_architecture أدناه",
     "human_docs": [
-      "docs/design-tokens.md (أُعيد كتابته 2026-07-24 ليطابق modern-2026.css)",
-      "docs/design-system.md (Design System v2 قديم جزئيًا — وُسم بتنبيه تعارض 2026-07-24، لم يُراجَع كاملًا بعد)"
+      "docs/design-tokens.md (أُعيد كتابته 2026-07-24 ليطابق القيم الفعلية v3)",
+      "docs/design-system.md (Design System v2 — رُوجع سطرًا بسطر مقابل الكود الحي 2026-07-24، كل قسم موسوم ✅/⚠️/❌)"
     ],
-    "current_primary_color": "#173D35 (هوية v3)",
+    "current_primary_color": "#173D35 (هوية v3 — متسقة القيمة عبر modern-2026.css وelite-2026.css رغم اختلاف أسماء المتغيّرات)",
     "raw_hex_literal_count_outside_tokens": 7220,
     "raw_hex_unique_values": 674
+  },
+  "css_architecture": {
+    "finding_date": "2026-07-24",
+    "load_order_in_main_tsx": [
+      "index.css (18879 سطرًا)",
+      "design-system.css (5420)",
+      "patterns.css",
+      "highlighted-content.css",
+      "majalis-v2.css (3169)",
+      "modern-2026.css (1787)",
+      "elite-2026.css (33306 — الأكبر والأخير تحميلًا، يسود عند تعارض specificity متساوٍ)",
+      "sins-rights.css",
+      "final-release.css"
+    ],
+    "total_lines_approx": 60000,
+    "parallel_token_prefixes": ["--ds-*", "--m26-*", "--elite-*", "--txt-*", "--msk-*", "--majalis-*"],
+    "risk_note": "توحيد هذه البنية تغيير عالي المخاطر يحتاج قرار مالك صريح — راجع backlog.json → css-architecture-consolidation. لا تبدأ توحيدًا تلقائيًا."
   },
   "seo_prerender": {
     "output_dir": "seo-prerender/ (736 ملف index.html مُتتبَّع في git — راجع docs/ui-audit/technical-findings.md لمخاطرة ذلك)",

@@ -3,18 +3,28 @@
   "instructions": "أعلى بند بحالة pending هو نقطة الاستئناف. لا تُعِد فحص بنود done إلا إذا تغيّر الكود المرتبط بها.",
   "items": [
     {
-      "id": "docs-design-system-v2-reconcile",
+      "id": "css-architecture-consolidation",
       "priority": 1,
-      "severity": "medium",
+      "severity": "high",
+      "area": "design-system-architecture",
+      "status": "pending-owner-decision",
+      "summary": "9 ملفات CSS متتالية التحميل في src/main.tsx (index.css 18879 سطرًا، design-system.css 5420، patterns.css، highlighted-content.css، majalis-v2.css 3169، modern-2026.css 1787، elite-2026.css 33306 [أكبرها وآخرها تحميلًا]، sins-rights.css، final-release.css) — أكثر من 60 ألف سطر CSS إجمالًا، أنظمة توكِن متوازية متعددة (--ds-*, --m26-*, --elite-*, --txt-*, --msk-*, --majalis-*) تراكمت عبر عدة جلسات إعادة تصميم لم تُوحَّد قط. القيم الفعلية للألوان الأساسية متسقة (كلها #173D35 v3) لكن التسمية والبنية مبعثرة.",
+      "next_action": "تغيير عالي المخاطر — يحتاج قرار المالك الصريح قبل أي محاولة توحيد أو حذف ملف. لا تبدأ من هذه النافذة بلا إذن مباشر مُجدَّد. إن أُذن: ابدأ بجرد كل متغيّر مُعرَّف أكثر من مرة عبر الملفس، لا بحذف ملفات كاملة دفعة واحدة.",
+      "evidence": "wc -l + rg فعليين على src/main.tsx وكل ملف CSS مذكور، 2026-07-24."
+    },
+    {
+      "id": "docs-design-system-v2-reconcile",
+      "priority": 2,
+      "severity": "low",
       "area": "design-system-docs",
-      "status": "pending",
-      "summary": "docs/design-system.md (Design System v2) يحتاج مراجعة سطر بسطر مقابل src/styles/modern-2026.css الفعلي: أي متغيّرات/مكوّنات (.ds-btn, .ds-card, --ds-r-*, --ds-shadow-*, IslamicDivider, IslamicOrnament) لا تزال حية بعد استبدال هوية v3، وأيها ماتت.",
-      "next_action": "rg كل اسم صنف/متغيّر مذكور في design-system.md داخل src/ فعليًا، صنّف حي/ميت، أعد كتابة الملف ليعكس الواقع فقط.",
-      "evidence": "وُسم الملف بتنبيه تعارض في 2026-07-24 بدل إعادة كتابة كاملة غير موثّقة."
+      "status": "done",
+      "summary": "docs/design-system.md (Design System v2) رُوجع سطرًا بسطر مقابل الكود الحي عبر rg فعلي لكل صنف/متغيّر: ألوان وخطوط وتباعد v2 وتدرجات وIslamicOrnament ميتة؛ .ds-btn/.ds-card/.ds-input/.ds-section__head وIslamicDivider ونقاط الانكسار حية؛ حواف/ظلال --ds-r-*/--ds-shadow-* حية لكن ضيّقة النطاق (design-system.css فقط).",
+      "next_action": null,
+      "evidence": "commit التالي بعد هذا التحديث — راجع docs/design-system.md نفسه للتفاصيل الكاملة لكل قسم."
     },
     {
       "id": "hex-literal-tokenization",
-      "priority": 2,
+      "priority": 3,
       "severity": "medium",
       "area": "design-tokens",
       "status": "pending",
@@ -24,7 +34,7 @@
     },
     {
       "id": "playwright-full-route-audit",
-      "priority": 3,
+      "priority": 4,
       "severity": "low",
       "area": "seo-routing",
       "status": "pending",
@@ -34,7 +44,7 @@
     },
     {
       "id": "admin-meta-descriptions-short",
-      "priority": 4,
+      "priority": 5,
       "severity": "low",
       "area": "seo",
       "status": "pending",
