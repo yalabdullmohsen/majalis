@@ -50,7 +50,12 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
   }
 
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار وصول
+    // بديل كامل بلوحة المفاتيح.
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div className="mzp-overlay" onClick={onClose}>
+      {/* onClick هنا لمنع انتشار النقر للخلفية فقط — لا إجراء مستقل يحتاج مكافئ لوحة مفاتيح. */}
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
       <div className="mzp-sheet" onClick={(e) => e.stopPropagation()}>
         <div className="mzp-handle-row">
           <div className="mzp-handle" />

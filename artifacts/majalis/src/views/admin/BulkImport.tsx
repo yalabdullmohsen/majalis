@@ -64,7 +64,11 @@ export function BulkImport({ title, template, hint, importRow, onDone }: BulkImp
       <button type="button" onClick={() => setOpen(true)} className="blk-trigger-btn">⇪ استيراد جماعي</button>
 
       {open && (
+        // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
+        // مساران بديلان كاملان بلوحة المفاتيح.
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div className="adm-modal__overlay" onClick={close}>
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div className="blk-dialog" onClick={e => e.stopPropagation()}>
             <div className="blk-header">
               <button type="button" onClick={close} className="blk-close" aria-label="إغلاق">×</button>

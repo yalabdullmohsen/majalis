@@ -1,6 +1,6 @@
 {
   "$comment": "مُولَّد آليًا من public/data/quran/surah-*.json عبر scripts/generate-quran-pages-manifest.mjs — لا تحرّره يدويًا. لا يحتوي نص أي آية، إشارات (سورة/نطاق رقم آية، وأول صفحة لكل جزء) فقط.",
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-24",
   "totalPages": 604,
   "pages": [
     {

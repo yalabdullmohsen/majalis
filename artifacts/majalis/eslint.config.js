@@ -1,6 +1,7 @@
 import js from "@eslint/js";
 import tseslint from "typescript-eslint";
 import globals from "globals";
+import jsxA11y from "eslint-plugin-jsx-a11y";
 
 const nodeFiles = ["lib/**/*.{js,mjs}", "scripts/**/*.{js,mjs}", "server/**/*.{js,mjs}", "api/**/*.js"];
 
@@ -50,6 +51,13 @@ export default tseslint.config(
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
       "no-useless-assignment": "warn",
+    },
+  },
+  {
+    files: ["src/**/*.{tsx,jsx}"],
+    plugins: { "jsx-a11y": jsxA11y },
+    rules: {
+      ...jsxA11y.flatConfigs.recommended.rules,
     },
   },
 );

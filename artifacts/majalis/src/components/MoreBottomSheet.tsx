@@ -170,6 +170,7 @@ export function MoreBottomSheet({ open, onClose }: Props) {
   return createPortal(
     // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر
     // داخل الورقة — مسارا وصول بديلان كاملان بلوحة المفاتيح.
+    /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */
     <div className="bottom-sheet-overlay" role="presentation" onClick={onClose}>
       <div
         className="bottom-sheet"

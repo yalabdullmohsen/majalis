@@ -305,6 +305,9 @@ export default function AsmaaHusnaPage() {
 
       {/* ═══ نافذة التفاصيل ═══ */}
       {selected && (
+        // onKeyDown يعالج Escape فعليًا هنا؛ role="presentation" يُبقي العنصر
+        // خارج شجرة الوصول عمدًا (الخلفية زخرفية بصريًا)، فلا تعارض فعليًا.
+        /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */
         <div
           className="ah-modal-backdrop"
           onClick={() => setSelected(null)}

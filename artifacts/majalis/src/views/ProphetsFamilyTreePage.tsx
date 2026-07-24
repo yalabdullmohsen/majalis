@@ -279,6 +279,7 @@ export default function ProphetsFamilyTreePage() {
           جوهريًا، لا مكافئ مباشر له بلوحة المفاتيح. التكبير/التصغير (الوظيفة
           الأهم فعليًا) له بديل كامل بلوحة المفاتيح عبر زرّي "تكبير"/"تصغير"
           الظاهرين (button حقيقي)، فلا حظر فعلي للوصول للمحتوى. */}
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         ref={containerRef}
         style={{

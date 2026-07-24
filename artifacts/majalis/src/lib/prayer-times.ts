@@ -275,8 +275,10 @@ function formatRemaining(ms: number): string {
 
 export type PrayerCountdown = PrayerStatus & {
   remainingHms: string;
-  /** ثواني مضت منذ الأذان الأخير (خلال نافذة 30 دقيقة)، وإلا null */
+  /** ثواني مضت منذ الأذان الأخير (خلال نافذة السماح PRAYER_GRACE_MINUTES)، وإلا null */
   sinceSeconds: number | null;
+  /** HH:MM:SS تصاعدي منذ الأذان الأخير (نفس sinceSeconds مُنسَّقًا)، وإلا null */
+  sinceHms: string | null;
   /** ثواني متبقية للصلاة التالية الفعلية أثناء فترة السماح، وإلا null */
   graceNextSeconds: number | null;
   /** HH:MM:SS للصلاة التالية الفعلية أثناء فترة السماح، وإلا null */
@@ -308,7 +310,7 @@ function formatHms(totalSeconds: number): string {
   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
-const PRAYER_GRACE_MINUTES = 30;
+const PRAYER_GRACE_MINUTES = 35;
 
 export function computePrayerCountdown(prayers: PrayerSlot[]): PrayerCountdown {
   const status = computePrayerStatus(prayers);
@@ -354,6 +356,7 @@ export function computePrayerCountdown(prayers: PrayerSlot[]): PrayerCountdown {
     remainingLabel: formatHms(remainingSeconds),
     remainingHms: formatHms(remainingSeconds),
     sinceSeconds,
+    sinceHms: sinceSeconds != null ? formatHms(sinceSeconds) : null,
     graceNextSeconds,
     graceNextHms: graceNextSeconds != null ? formatHms(graceNextSeconds) : null,
     graceNextSlot,

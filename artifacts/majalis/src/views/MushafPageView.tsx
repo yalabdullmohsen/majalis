@@ -290,6 +290,10 @@ export default function MushafPageView() {
             </button>
           </div>
 
+          {/* onClick هنا ميزة راحة بالماوس/اللمس فقط (تبديل ظهور أدوات القراءة)،
+              لا إجراء أساسي وحيد — كل التحكمات الفعلية أزرار حقيقية قابلة
+              للوصول بلوحة المفاتيح في مكان آخر بالصفحة. */}
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div
             className="mpv-body"
             onTouchStart={onTouchStart}
@@ -372,7 +376,11 @@ export default function MushafPageView() {
         </>
 
       {sidebarOpen && (
+        // نقر الخلفية للإغلاق مصحوب بزر إغلاق حقيقي وظاهر داخل اللوحة — مسار
+        // وصول بديل كامل بلوحة المفاتيح.
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
         <div className="mpv-settings-sheet" onClick={() => setSidebarOpen(false)} role="presentation">
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div className="mpv-settings-panel" onClick={(e) => e.stopPropagation()} style={{ height: "70vh", display: "flex", flexDirection: "column" }}>
             <div className="mpv-settings-panel__head">
               <h2 className="mpv-settings-panel__title">فهرس السور</h2>
@@ -393,7 +401,11 @@ export default function MushafPageView() {
       )}
 
       {settingsOpen && (
+        // نقر الخلفية للإغلاق مصحوب بزر إغلاق حقيقي وظاهر داخل اللوحة — مسار
+        // وصول بديل كامل بلوحة المفاتيح.
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
         <div className="mpv-settings-sheet" onClick={() => setSettingsOpen(false)} role="presentation">
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div className="mpv-settings-panel" onClick={(e) => e.stopPropagation()}>
             <div className="mpv-settings-panel__head">
               <h2 className="mpv-settings-panel__title">إعدادات القراءة</h2>
