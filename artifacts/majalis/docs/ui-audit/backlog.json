@@ -23,8 +23,18 @@
       "evidence": "commit التالي بعد هذا التحديث — راجع docs/design-system.md نفسه للتفاصيل الكاملة لكل قسم."
     },
     {
+      "id": "jsx-a11y-lint-enable-and-fix",
+      "priority": 2,
+      "severity": "medium",
+      "area": "accessibility",
+      "status": "pending",
+      "summary": "eslint-plugin-jsx-a11y مُثبَّت لكن غير مُفعَّل في eslint.config.js. اختُبر فعليًا (بلا commit): تفعيله يُظهر 85 خطأ حقيقي (jsx-a11y/click-events-have-key-events + no-static-element-interactions أساسًا — عناصر div بـonClick بلا دعم لوحة مفاتيح) عبر عشرات الملفات.",
+      "next_action": "دفعة مخصَّصة: أعد نفس تعديل eslint.config.js (import jsxA11y + files: src/**/*.{tsx,jsx} + jsxA11y.flatConfigs.recommended.rules)، أصلح الـ85 حالة ملفًا فملف (onKeyDown حقيقي أو تحويل لـ<button> دلالي، لا auto-fix أعمى)، تحقّق بصري لكل تفاعل، ثم فعِّل الإعداد بشكل دائم فقط بعد نظافة كاملة كي لا يكسر بوابة lint المشتركة بين النافذتين.",
+      "evidence": "تشغيل فعلي محلي 2026-07-24 (تم التراجع، لم يُثبَّت)."
+    },
+    {
       "id": "hex-literal-tokenization",
-      "priority": 3,
+      "priority": 4,
       "severity": "medium",
       "area": "design-tokens",
       "status": "pending",
@@ -34,7 +44,7 @@
     },
     {
       "id": "playwright-full-route-audit",
-      "priority": 4,
+      "priority": 5,
       "severity": "low",
       "area": "seo-routing",
       "status": "pending",
@@ -44,7 +54,7 @@
     },
     {
       "id": "admin-meta-descriptions-short",
-      "priority": 5,
+      "priority": 6,
       "severity": "low",
       "area": "seo",
       "status": "pending",
