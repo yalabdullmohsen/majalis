@@ -520,7 +520,7 @@ export const SCHOLARS: Scholar[] = [
     died: "١٤٢٩ هـ",
     region: "القصيم، المملكة العربية السعودية",
     quote: "اللغة وعاء الهوية، والتهاون بها تهاون بالدين وبالأمة",
-    sources: ["ويكيبيديا العربية — مقالة بكر أبو زيد (شيوخه ووفاته ومناصبه العلمية)", "islamweb.net — الشيخ بكر بن عبد الله أبو زيد في سطور"],
+    sources: ["ويكيبيديا العربية — مقالة بكر أبو زيد (شيوخه ووفاته ومناصبه العلمية)"],
     verificationStatus: "reviewed",
   },
   {
@@ -535,7 +535,7 @@ export const SCHOLARS: Scholar[] = [
     region: "مصر / السعودية",
     madhhab: "شافعي",
     quote: "الإسلام في أمة تجهله غريب كما كان في أول يوم جاء",
-    sources: ["موسوعة أعلام القرن العشرين — islamstory.com", "islamweb.net — نبذة حول الشيخ محمد الغزالي ومؤلفاته"],
+    sources: ["موسوعة أعلام القرن العشرين — islamstory.com"],
     verificationStatus: "reviewed",
   },
   {
@@ -936,7 +936,7 @@ export const SCHOLARS: Scholar[] = [
     region: "دمشق / جدة",
     madhhab: "اجتهادي",
     quote: "لا أحسد الناس على شيء إلا على العلم الذي يُنفَع به",
-    sources: ["ويكيبيديا العربية — مقالة علي الطنطاوي (أساتذته ووفاته)", "islamweb.net — الشيخ علي الطنطاوي"],
+    sources: ["ويكيبيديا العربية — مقالة علي الطنطاوي (أساتذته ووفاته)"],
     verificationStatus: "reviewed",
   },
   {
@@ -951,7 +951,7 @@ export const SCHOLARS: Scholar[] = [
     region: "مصر",
     madhhab: "شافعي",
     quote: "القرآن ليس للحفظ فقط، بل للفهم والعمل",
-    sources: ["موسوعة أعلام القرن العشرين — aljazeera.net", "islamweb.net — محمد متولي الشعراوي"],
+    sources: ["موسوعة أعلام القرن العشرين — aljazeera.net"],
     verificationStatus: "reviewed",
   },
   {
@@ -1203,7 +1203,7 @@ export const SCHOLARS: Scholar[] = [
     region: "الرياض، المملكة العربية السعودية",
     madhhab: "حنبلي",
     quote: "التعلم في الصغر كالنقش في الحجر",
-    sources: ["الموقع الرسمي للشيخ ابن جبرين (ibn-jebreen.com) — السيرة الذاتية", "islamweb.net — الشيخ عبد الله بن عبد الرحمن الجبرين"],
+    sources: ["الموقع الرسمي للشيخ ابن جبرين (ibn-jebreen.com) — السيرة الذاتية"],
     verificationStatus: "reviewed",
   },
   {

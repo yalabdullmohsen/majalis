@@ -68,7 +68,7 @@ export const ANSWER_QUALITY = {
 /** رسالة منع الاختلاق */
 export const NO_SOURCES_MSG =
   "لا توجد مادة موثّقة كافية في قاعدة بيانات المنصة للإجابة عن هذا السؤال. " +
-  "يُنصح بمراجعة: islamqa.info / binbaz.org.sa / islamweb.net/ar/fatwa";
+  "يُنصح بمراجعة: islamqa.info / binbaz.org.sa";
 
 /** رسالة المسائل الشخصية */
 export const PERSONAL_FATWA_MSG =

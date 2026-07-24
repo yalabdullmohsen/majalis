@@ -188,7 +188,7 @@ export default function AboutPage() {
         <p>
           <strong>المصادر الرئيسية المعتمدة:</strong>{" "}
           الموسوعة الحديثية (<strong>sunnah.com</strong>)، الدرر السنية (<strong>dorar.net</strong>)،
-          الشبكة الإسلامية (<strong>islamweb.net</strong>)، موقع الإسلام سؤال وجواب (<strong>islamqa.info</strong>)،
+          موقع الإسلام سؤال وجواب (<strong>islamqa.info</strong>)،
           وكتب السنة الصحيحة (البخاري، مسلم، أبو داود، الترمذي، النسائي، ابن ماجة).
         </p>
       </LegalSection>

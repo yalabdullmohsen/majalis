@@ -205,8 +205,6 @@ function normalizeSeedItem(item, type) {
 
 function defaultSourceUrl(type) {
   const map = {
-    fatwa: 'https://www.islamweb.net',
-    fiqh_council_item: 'https://www.islamweb.net',
     hadith: 'https://sunnah.com',
     adhkar: 'https://hisn.alim.net',
     lesson: 'https://majlisilm.com/lessons',

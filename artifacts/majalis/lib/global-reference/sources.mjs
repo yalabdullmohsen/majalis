@@ -7,7 +7,6 @@ import { getSupabaseAdmin } from "../supabase-admin.mjs";
 const SEED_SOURCES = [
   { slug: "iifa", name: "International Islamic Fiqh Academy", name_ar: "مجمع الفقه الإسلامي", source_type: "official", url: "https://iifa-aifi.org", trust_level: 95 },
   { slug: "alifta", name: "Saudi Ifta", name_ar: "الإفتاء السعودية", source_type: "official", url: "https://alifta.gov.sa", trust_level: 95 },
-  { slug: "islamweb", name: "IslamWeb", name_ar: "إسلام ويب", source_type: "website", url: "https://islamweb.net", trust_level: 80 },
   { slug: "sunnah-com", name: "Sunnah.com", name_ar: "سنّة", source_type: "database", url: "https://sunnah.com", trust_level: 90 },
   { slug: "quran-com", name: "Quran.com", name_ar: "قرآن", source_type: "database", url: "https://quran.com", trust_level: 95 },
   { slug: "majalis-local", name: "Majalis Scientific Council", name_ar: "المجلس العلمي", source_type: "official", url: "https://majalis.app", trust_level: 90 },

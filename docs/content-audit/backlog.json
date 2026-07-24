@@ -1,7 +1,7 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b032",
+  "lastCompletedId": "b033",
   "resumeFromId": "b011",
   "items": [
     {
@@ -350,6 +350,28 @@
       ],
       "finding": "قراءة كاملة لـUlumQuranPage.tsx (564 سطراً — النزول، الجمع، التفسير، الإعجاز، المتشابه، القراءات السبع، الناسخ والمنسوخ): دقة تاريخية عالية (تواريخ وفاة القرّاء والمفسرين صحيحة)، وتمييز منهجي دقيق (الأحرف السبعة ليست القراءات السبع، تنبيهات على انحرافات علمية كاعتزاليات الزمخشري وتطويل الرازي). MutashabihatPage.tsx يجلب نص الآيات حيًا من api.alquran.cloud بدل تخزينه — يُصفّر خطر خطأ النقل تمامًا؛ mutashabihat-data.ts مبني على 3 مصادر كلاسيكية حقيقية مذكورة صراحة (درة التنزيل، البرهان في متشابه القرآن، ملاك التأويل)، وكل أرقام السور والآيات المفحوصة عيّنة صحيحة. أُصلح خطأ إملائي بسيط واحد فقط في تعليق داخلي (\"الهذه\"→\"هذه\"). QuranStudiesPage/quran-studies-data.ts مجرد فهرس عناوين دروس بلا محتوى فعلي، لا خطر دقة.",
       "commit": "batch-2026-07-24-14"
+    },
+    {
+      "id": "b033",
+      "section": "site_identity",
+      "title": "إلغاء مصدر إسلام ويب (islamweb.net) من كامل الموقع — بطلب مباشر من المالك",
+      "severity": "high",
+      "status": "done",
+      "files": [
+        "artifacts/majalis/src/lib/scholars-data.ts (5 استشهادات)",
+        "artifacts/majalis/src/lib/fiqh-council-service.ts",
+        "artifacts/majalis/src/lib/rulings-seed.ts + rulings-encyclopedia-seed.generated.ts (مُعاد توليده)",
+        "artifacts/majalis/src/lib/adhkar-seed.ts",
+        "artifacts/majalis/src/views/{AboutPage,MethodologyPage,InstitutionsPage}.tsx",
+        "artifacts/majalis/lib/{islamic-answer-guardrails,fiqh-council-sync,rag/constants,global-reference/sources,scholarly-verification/provenance,scholarly-verification/seed-scanner,knowledge-engine/sources-registry}.mjs",
+        "artifacts/majalis/lib/api-handlers/assistant.js",
+        "artifacts/majalis/data/autonomous-platform/sources.json (سجلان محذوفان)",
+        "artifacts/majalis/data/fiqh-official-manifest.json (حُذف الملف بالكامل)",
+        "artifacts/majalis/public/data/rulings-encyclopedia/chunks/*.json (مُعاد توليدها)"
+      ],
+      "finding": "إزالة شاملة من: بيوغرافيات العلماء (استُبقيت مصادر بديلة موجودة أصلاً)، محرك مزامنة المجمع الفقهي، سجلات المصادر الرسمية (3 نسخ مختلفة عبر الملف)، رسائل المساعد الذكي الاحتياطية (guardrails + RAG)، دالة تصنيف مصداقية الروابط (provenance regex)، صفحتَي المنهجية ومن نحن، دليل المؤسسات. حُذف ملف بيانات كامل (fiqh-official-manifest.json) كان محتواه بالكامل فتاوى مستوردة من IslamWeb فقط. **عُمداً لم يُمسّ**: SQL migrations في supabase/ (خطر على بيانات إنتاج فعلية، خارج صلاحية نافذة المحتوى)، وملفا سجل تاريخي (data/needs-post-review.jsonl وdata/global-reference-report.json) — يوثّقان استخدام IslamWeb كأداة تحقق في دورات تدقيق سابقة فعلية؛ تعديلهما تزوير لسجل تاريخي حقيقي، لا إزالة مصدر حي.",
+      "nextAction": "نافذة automation/tasks: حسم مراجع SQL في supabase/*.sql إن رغب المالك بإزالتها من قواعد البيانات الفعلية أيضاً (خارج صلاحية هذه الجلسة).",
+      "commit": "batch-2026-07-24-15"
     }
   ]
 }

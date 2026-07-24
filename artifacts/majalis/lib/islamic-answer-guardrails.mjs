@@ -171,7 +171,6 @@ export function buildScholarRedirectAnswer(classification) {
       `${REQUIRES_SCHOLAR_MESSAGE}\n\n` +
       "يمكنك الاستفسار من المصادر الموثوقة:\n" +
       "• الإسلام سؤال وجواب: islamqa.info\n" +
-      "• إسلام ويب: islamweb.net/ar/fatwa\n" +
       "• موقع ابن باز: binbaz.org.sa\n\n" +
       ISLAMIC_DISCLAIMER
     );
@@ -190,7 +189,6 @@ export function buildInsufficientSourcesPayload(userQuery = "") {
       "لم أجد فتوى موثقة مباشرة لهذا الموضوع في قاعدة المعرفة الحالية.\n\n" +
       "للحصول على إجابة موثوقة راجع:\n" +
       "📚 إسلام سؤال وجواب: islamqa.info\n" +
-      "📚 إسلام ويب: islamweb.net/ar/fatwa\n" +
       "📚 موقع ابن باز: binbaz.org.sa\n" +
       "📚 الدرر السنية: dorar.net" +
       suggestionsText +
@@ -199,7 +197,6 @@ export function buildInsufficientSourcesPayload(userQuery = "") {
     // مُختلَقة. الإشراف والنسبة مذكوران كما هي معروفة رسميًا للمصدر.
     references: [
       { title: "إسلام سؤال وجواب", href: "https://islamqa.info/ar", source_name: "بإشراف الشيخ محمد صالح المنجد" },
-      { title: "إسلام ويب — الفتاوى", href: "https://www.islamweb.net/ar/fatwa", source_name: "الشبكة الإسلامية (إسلام ويب)" },
       { title: "موقع الشيخ ابن باز", href: "https://binbaz.org.sa", source_name: "موقع سماحة الشيخ عبد العزيز بن باز رحمه الله" },
       { title: "الدرر السنية", href: "https://dorar.net", source_name: "مؤسسة الدرر السنية" },
     ],

@@ -504,7 +504,6 @@ export function detectSeedDuplicates(incoming: FiqhCouncilItem, pool = FIQH_COUN
 }
 
 const PUBLIC_FIQH_SOURCES_SEED = [
-  { id: "seed-src-1", slug: "islamweb-majlis", name: "IslamWeb — المجمع الفقهي", organization: "IslamWeb.net", source_type: "json_manifest" as const, base_url: "https://www.islamweb.net", trust_level: "official" as const, is_active: true },
   { id: "seed-src-2", slug: "iifa-oic", name: "الأكاديمية الإسلامية للفقه", organization: "OIC", source_type: "rss" as const, base_url: "https://www.iifa-aifi.org", trust_level: "official" as const, is_active: true },
 ];
 

@@ -4,17 +4,6 @@
 
 export const OFFICIAL_SOURCES = [
   {
-    slug: "islamweb-news",
-    name: "IslamWeb — الأخبار والمقالات",
-    country: "SA",
-    entity_type: "islamic_org",
-    official_url: "https://www.islamweb.net",
-    rss_url: "https://www.islamweb.net/ar/rss/news",
-    trust_level: 4,
-    allowed_kinds: ["news", "article"],
-    crawl_interval_h: 6,
-  },
-  {
     slug: "iifa-oic",
     name: "الأكاديمية الإسلامية للفقه (OIC-IIFA)",
     country: "SA",
