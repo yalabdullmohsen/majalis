@@ -24,8 +24,8 @@
   --radius-md: 0.625rem;
   --radius-lg: 0.875rem;
   --shadow-soft: 0 1px 2px rgb(23 61 53 / 5%), 0 12px 30px rgb(23 61 53 / 6%);
-  --header-height: 4rem;
-  --bottom-nav-height: 4.5rem;
+  --header-height: 3.5rem;
+  --bottom-nav-height: 3.75rem;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --page-gutter: clamp(1rem, 3vw, 2rem);
   --page-width: 76rem;
@@ -396,7 +396,7 @@ html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1)
 }
 .bottom-nav--v2 .bottom-nav__tab { min-width: 44px; min-height: 44px; border-radius: var(--radius-md); color: var(--color-text-muted); }
 .bottom-nav--v2 .bottom-nav__tab.is-active { color: var(--color-primary); background: var(--color-surface-muted); }
-.bottom-nav--v2 .bottom-nav__tab-icon { width: 1.65rem; height: 1.65rem; background: transparent; }
+.bottom-nav--v2 .bottom-nav__tab-icon { width: 1.4rem; height: 1.4rem; background: transparent; }
 .bottom-nav--v2 .bottom-nav__tab-label { font-size: .75rem; font-weight: 600; }
 
 /* Footer is a concise trust/navigation surface, not a duplicate sitemap. */
@@ -416,7 +416,7 @@ html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1)
 }
 
 @media (max-width: 879px) {
-  :root { --header-height: 3.75rem; }
+  :root { --header-height: 3.25rem; }
   .navbar-v3__inner { grid-template-columns: auto 1fr; }
   .navbar-v3__end { justify-self: end; }
   .navbar-theme-toggle { display: none; }
