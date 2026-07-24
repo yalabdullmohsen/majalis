@@ -46,7 +46,16 @@ jobs:
       - name: دمج automation/content إلى main
         run: |
           if ! git merge origin/automation/content --no-ff -m "release: دمج automation/content"; then
+            CONFLICTS=$(git diff --name-only --diff-filter=U)
             echo "::error::تعارض دمج في automation/content — أُلغي الإصدار بالكامل، main لم يتأثر."
+            echo "## ❌ تعارض دمج في automation/content" >> "$GITHUB_STEP_SUMMARY"
+            echo "الملفات المتعارضة:" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            echo "$CONFLICTS" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            while IFS= read -r f; do
+              [ -n "$f" ] && echo "::error file=$f::تعارض دمج في هذا الملف بين main وautomation/content"
+            done <<< "$CONFLICTS"
             git merge --abort || true
             exit 1
           fi
@@ -54,7 +63,16 @@ jobs:
       - name: دمج automation/tasks إلى main
         run: |
           if ! git merge origin/automation/tasks --no-ff -m "release: دمج automation/tasks"; then
+            CONFLICTS=$(git diff --name-only --diff-filter=U)
             echo "::error::تعارض دمج في automation/tasks — أُلغي الإصدار بالكامل، main لم يتأثر."
+            echo "## ❌ تعارض دمج في automation/tasks" >> "$GITHUB_STEP_SUMMARY"
+            echo "الملفات المتعارضة:" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            echo "$CONFLICTS" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            while IFS= read -r f; do
+              [ -n "$f" ] && echo "::error file=$f::تعارض دمج في هذا الملف بين main (بعد دمج automation/content) وautomation/tasks"
+            done <<< "$CONFLICTS"
             git merge --abort || true
             exit 1
           fi
