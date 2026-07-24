@@ -235,6 +235,7 @@ function AdminEditModal({ contentType, contentId, initialData = {}, onClose, onS
   return (
     // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر
     // داخل النافذة — مساران بديلان كاملان بلوحة المفاتيح.
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
     <div className="aie-overlay" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }} role="dialog" aria-modal="true" aria-label={`تعديل ${LABELS[contentType]}`}>
       <div className="aie-modal" dir="rtl">
         {/* رأس المودال */}

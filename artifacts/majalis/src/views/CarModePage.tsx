@@ -164,6 +164,7 @@ export default function CarModePage() {
           (transcript) لا مسار ترجمة متزامنة — إضافة نص كامل للدروس تتطلب بنية
           تحتية جديدة (تفريغ صوتي)، خارج نطاق تنظيف الوصولية الحالي. */}
       {audioSrc && (
+        // eslint-disable-next-line jsx-a11y/media-has-caption
         <audio
           ref={audioRef}
           src={audioSrc}

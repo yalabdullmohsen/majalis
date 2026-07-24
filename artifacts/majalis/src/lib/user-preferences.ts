@@ -27,7 +27,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   fontSize: "متوسط",
   interfaceLanguage: "العربية",
   direction: "rtl",
-  readingTextSize: "20",
+  readingTextSize: "17",
   readingSpacing: "واسع",
   readingMode: false,
   imageQuality: "متوسط",

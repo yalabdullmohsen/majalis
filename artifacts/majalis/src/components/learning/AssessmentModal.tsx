@@ -56,6 +56,9 @@ export function AssessmentModal({
   const allAnswered = questions.length > 0 && questions.every((q) => answers[q.id]?.trim());
 
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار وصول
+    // بديل كامل بلوحة المفاتيح.
+    /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions */
     <div className="am-overlay" role="presentation" onClick={onClose}>
       <div className="am-modal" role="dialog" aria-modal="true" aria-label={title || "التقييم"} onClick={(e) => e.stopPropagation()}>
         <div className="am-modal__head">

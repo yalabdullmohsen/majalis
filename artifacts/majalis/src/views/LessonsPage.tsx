@@ -657,7 +657,9 @@ export default function LessonsPage({
       {filtersOpen && (
         // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار بديل
         // كامل بلوحة المفاتيح.
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div className="lessons-v2-sheet-backdrop" onClick={() => setFiltersOpen(false)} role="presentation">
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div className="lessons-v2-sheet" onClick={(e) => e.stopPropagation()}>
             <LessonsFilterPanel
               filters={filters}

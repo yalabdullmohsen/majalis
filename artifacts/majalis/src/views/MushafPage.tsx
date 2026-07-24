@@ -260,6 +260,7 @@ export default function MushafPage() {
           إلى "زر" واحد ضخم يمكن التبويب إليه يضرّ بمستخدمي لوحة المفاتيح/قارئ
           الشاشة أكثر مما ينفعهم (محطة Tab واحدة مربكة تغطي كل نص القرآن). ترك
           هذا التبديل كميزة مريحة بالماوس/اللمس فقط قرار واعٍ، لا إغفال. */}
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
       <main
         className="mushaf-v2__page"
         {...swipeHandlers}
@@ -279,6 +280,7 @@ export default function MushafPage() {
           // onClick هنا لا يفعل شيئًا سوى e.stopPropagation() (منع تفعيل تبديل
           // "الوضع الهادئ" في main الأب عند النقر داخل نص الآيات) — لا إجراء
           // فعليًا يحتاج مكافئ لوحة مفاتيح.
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
           <div className="mushaf-v2__ayahs" dir="rtl" lang="ar" onClick={(e) => e.stopPropagation()}>
             {content.ayahs.map((a) => {
               const isPlaying = currentAyah === a.numberInSurah && a.surahNumber === activeSurahForPlayer && playerState === "playing";
@@ -369,7 +371,9 @@ export default function MushafPage() {
         // ملاحظة z-index:10000 في elite-2026.css بخصوص .navbar-v3 المُثبَّت 9999/200.
         // نقر الخلفية للإغلاق مصحوب الآن بمعالج Escape فعلي (أعلاه) — مسار
         // بديل كامل بلوحة المفاتيح.
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
         <div className="mushaf-v2__sidebar-overlay" role="presentation" onClick={() => setSidebarOpen(false)}>
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, jsx-a11y/no-noninteractive-element-interactions */}
           <aside className="mushaf-v2__sidebar" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="فهرس السور والأجزاء والصفحات">
             <div className="mushaf-v2__sidebar-head">
               <div className="mushaf-v2__sidebar-tabs" role="tablist">

@@ -71,7 +71,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الحج مرة في العمر واجب على المستطيع.", category: "الفقه", source: "وجوب الحج من آل عمران: 97، وتحديد المرة الواحدة من حديث «الحج مرة، فمن زاد فهو تطوع» — رواه أبو داود (1721) وابن ماجه (2886)، صححه الألباني", author_name: "القرآن الكريم والحديث النبوي", status: "approved", verification_status: "verified" },
   { text: "الصدقة تطفئ الخطيئة كما يطفئ الماء النار.", category: "الحديث", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "إن الله رفيق يحب الرفق في الأمر كله.", category: "الدعوة", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
-  { text: "تعاهدوا القرآن؛ فوالذي نفسي بيده لهو أشد تفلتاً من الإبل.", category: "القرآن", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "تعاهدوا القرآن؛ فوالذي نفسي بيده لهو أشد تفلتاً من الإبل في عقلها.", category: "القرآن", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "أتدرون ما الغيبة؟ ذكرك أخاك بما يكره.", category: "الآداب", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "الحياء لا يأتي إلا بخير.", category: "الأخلاق", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "المرء على دين خليله فلينظر أحدكم من يخالل.", category: "التربية", source: "رواه أبو داود — حسنه الألباني", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
@@ -83,7 +83,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الجنة أقرب إلى أحدكم من شراك نعله والنار مثل ذلك.", category: "العقيدة", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "من آتاه الله علماً فكتمه أُلجم بلجام من نار يوم القيامة.", category: "طلب العلم", source: "رواه أبو داود — حسنه الألباني", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
   { text: "اقرأوا سورة البقرة فإن أخذها بركة وتركها حسرة ولا تستطيعها البطلة.", category: "القرآن", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
-  { text: "التثاؤب من الشيطان فإذا تثاءب أحدكم فليكظم ما استطاع.", category: "الآداب", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "التثاؤب من الشيطان فإذا تثاءب أحدكم فليكظم ما استطاع.", category: "الآداب", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "الدنيا سجن المؤمن وجنة الكافر.", category: "العقيدة", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "كل بدعة ضلالة وكل ضلالة في النار.", category: "العقيدة", source: "رواه النسائي — صحيح", author_name: "سنن النسائي", status: "approved", verification_status: "verified" },
   { text: "خيركم من تعلّم القرآن وعلّمه.", category: "القرآن", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
@@ -91,31 +91,31 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الدعاء سلاح المؤمن وعماد الدين ونور السموات والأرض.", category: "الفقه", source: "رواه الحاكم في المستدرك — ضعّفه الألباني في السلسلة الضعيفة وضعيف الجامع (انقطاع في الإسناد)", author_name: "المستدرك", status: "approved", verification_status: "needs_review" },
   { text: "البر حسن الخلق والإثم ما حاك في صدرك وكرهت أن يطّلع عليه الناس.", category: "الأخلاق", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "أكمل المؤمنين إيماناً أحسنهم خلقاً.", category: "الأخلاق", source: "رواه أبو داود والترمذي — حسن", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
-  { text: "الغنى غنى النفس.", category: "الآداب", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "الغنى غنى النفس.", category: "الآداب", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "اليد العليا خير من اليد السفلى.", category: "الأخلاق", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "ما نقصت صدقة من مال.", category: "الفقه", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "صلوا كما رأيتموني أصلي.", category: "الفقه", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "من أسرّ سريرة ألبسه الله رداءها — خيراً كانت أم شراً.", category: "العقيدة", source: "رواه أحمد — حسنه الألباني", author_name: "مسند أحمد", status: "approved", verification_status: "verified" },
-  { text: "ليس منا من لم يوقّر الكبير ويرحم الصغير.", category: "الآداب", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "ليس منا من لم يرحم صغيرنا ويوقّر كبيرنا.", category: "الآداب", source: "رواه الترمذي (1919) — صححه الألباني في السلسلة الصحيحة (2196) بمجموع طرقه", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "كل سلامى من الناس عليه صدقة كل يوم.", category: "الأخلاق", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "الحكمة ضالة المؤمن أنّى وجدها فهو أحق بها.", category: "طلب العلم", source: "رواه الترمذي — ضعيف، وأثر مشهور", author_name: "سنن الترمذي", status: "approved", verification_status: "needs_review" },
 
   /* ── عقيدة ── */
   { text: "أفضل الأعمال بعد الإسلام الصلاة لوقتها، ثم بر الوالدين، ثم الجهاد في سبيل الله.", category: "العقيدة", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "قلب المؤمن بين إصبعين من أصابع الرحمن يقلبه كيف يشاء.", category: "العقيدة", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
+  { text: "إن قلوب بني آدم كلها بين إصبعين من أصابع الرحمن، كقلب واحد، يصرّفه حيث يشاء.", category: "العقيدة", source: "رواه مسلم (2654) عن عبدالله بن عمرو بن العاص", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "لو يعلم المؤمن ما عند الله من العقوبة ما طمع بجنته أحد، ولو يعلم الكافر ما عند الله من الرحمة ما قنط من جنته أحد.", category: "العقيدة", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "أعوذ بكلمات الله التامات من شر ما خلق — من قالها لم يضره شيء.", category: "العقيدة", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
-  { text: "الإيمان بضع وسبعون شعبة؛ أعلاها لا إله إلا الله، وأدناها إماطة الأذى عن الطريق.", category: "العقيدة", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
+  { text: "الإيمان بضع وسبعون شعبة؛ فأفضلها لا إله إلا الله، وأدناها إماطة الأذى عن الطريق.", category: "العقيدة", source: "رواه مسلم (35)", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
 
   /* ── تفسير ── */
   { text: "الفاتحة أم القرآن وأم الكتاب والسبع المثاني.", category: "التفسير", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "{وَعَسَىٰ أَن تَكْرَهُوا شَيْئًا وَهُوَ خَيْرٌ لَّكُمْ} — وراء كل قدر حكمة لا تراها.", category: "التفسير", source: "البقرة: 216", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
-  { text: "الصبر والشكر جناحا الإيمان؛ وبهما كمال المؤمن.", category: "التفسير", source: "تفسير ابن القيم — مدارج السالكين", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "الصبر والشكر مطيتان للإيمان لا يُحمل إلا عليهما.", category: "التفسير", source: "مدارج السالكين — فصل منزلة الصبر", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
   { text: "{إِنَّ مَعَ الْعُسْرِ يُسْرًا} — تكررت مرتين إشارة إلى أن العسر واحد واليسر اثنان.", category: "التفسير", source: "الشرح: 5-6 — تفسير ابن كثير", author_name: "ابن كثير", status: "approved", verification_status: "verified" },
 
   /* ── حديث ── */
   { text: "لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه.", category: "الحديث", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "شهر رمضان شهر الصبر، وثواب الصبر الجنة.", category: "الحديث", source: "رواه البيهقي — حسنه الألباني", author_name: "شعب الإيمان", status: "approved", verification_status: "verified" },
+  { text: "شهر رمضان شهر الصبر، وثواب الصبر الجنة.", category: "الحديث", source: "رواه البيهقي في شعب الإيمان عن سلمان ضمن خطبة استقبال رمضان — ضعّفه الألباني في السلسلة الضعيفة (منكر)، وفي سنده علي بن زيد بن جدعان", author_name: "شعب الإيمان", status: "approved", verification_status: "needs_review" },
   { text: "سبعة يظلهم الله في ظله يوم لا ظل إلا ظله — إمام عادل...", category: "الحديث", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "كلمتان خفيفتان على اللسان ثقيلتان في الميزان حبيبتان إلى الرحمن: سبحان الله وبحمده سبحان الله العظيم.", category: "الحديث", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "لا تحاسدوا ولا تناجشوا ولا تباغضوا ولا تدابروا وكونوا عباد الله إخواناً.", category: "الحديث", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
@@ -130,15 +130,15 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── القرآن ── */
   { text: "حافظ على قراءة القرآن في الصلاة وخارجها حتى يكون شفيعك يوم القيامة.", category: "القرآن", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "إن الذي يتعتع في القرآن وهو عليه شاق له أجران.", category: "القرآن", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "من قرأ حرفاً من كتاب الله فله حسنة والحسنة بعشر أمثالها.", category: "القرآن", source: "رواه الترمذي — صحيح", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "من قرأ حرفاً من كتاب الله فله به حسنة والحسنة بعشر أمثالها.", category: "القرآن", source: "رواه الترمذي — صحيح", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
 
   /* ── السيرة ── */
-  { text: "فتح مكة كان بلا قتال تقريباً — ودخل النبي ﷺ مكة وهو يقرأ: {إِنَّا فَتَحْنَا لَكَ فَتْحًا مُّبِينًا}.", category: "السيرة", source: "صحيح البخاري — كتاب المغازي", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
-  { text: "غزوة أحد ففيها شهد بعضهم بشهادة لم تُوضح للنبي ﷺ إلا بعد المعركة.", category: "السيرة", source: "صحيح البخاري — غزوة أحد", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
+  { text: "فتح مكة كان بلا قتال تقريباً — ودخل النبي ﷺ مكة وهو يقرأ: {إِنَّا فَتَحْنَا لَكَ فَتْحًا مُّبِينًا}.", category: "السيرة", source: "صحيح البخاري — كتاب فضائل القرآن، باب الترجيع", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
+  { text: "خالف الرماة أمر النبي ﷺ بلزوم الجبل في غزوة أحد فانكشف ظهر المسلمين وانقلبت دفة المعركة.", category: "السيرة", source: "صحيح البخاري، حديث 3039 — كتاب المغازي", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
   { text: "معاذ بن جبل أعلم الأمة بالحلال والحرام.", category: "السيرة", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
 
   /* ── الآداب ── */
-  { text: "أقرب الناس من الله مجلساً يوم القيامة أحاسنهم خلقاً.", category: "الآداب", source: "رواه الطبراني — صحيح الألباني", author_name: "المعجم الكبير", status: "approved", verification_status: "verified" },
+  { text: "أقرب الناس من النبي ﷺ مجلساً يوم القيامة أحاسنهم خلقاً.", category: "الآداب", source: "رواه الترمذي عن جابر — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "إياكم والجلوس على الطرقات إلا أن تؤدوا حقها.", category: "الآداب", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "زينوا القرآن بأصواتكم.", category: "الآداب", source: "رواه أبو داود — صحيح الألباني", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
   { text: "لا يشكر الله من لا يشكر الناس.", category: "الآداب", source: "رواه أبو داود — صحيح", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
@@ -150,7 +150,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── طلب العلم ── */
   { text: "العالم والمتعلم في الأجر سواء وسائر الناس لا خير فيهم.", category: "طلب العلم", source: "رواه ابن ماجه — اختُلف في تصحيحه؛ ضعّفه الألباني في ضعيف الجامع، وإسناده فيه عثمان بن أبي عاتكة وعلي بن يزيد وكلاهما ضعيف", author_name: "سنن ابن ماجه", status: "approved", verification_status: "needs_review" },
-  { text: "قيد العلم بالكتابة.", category: "طلب العلم", source: "أثر الإمام الشافعي", author_name: "الإمام الشافعي", status: "approved", verification_status: "verified" },
+  { text: "قيدوا العلم بالكتاب.", category: "طلب العلم", source: "أثر موقوف — رواه الدارمي وابن أبي شيبة، وصححه الحاكم في المستدرك", author_name: "عمر بن الخطاب", status: "approved", verification_status: "verified" },
   { text: "من أراد الدنيا فعليه بالعلم، ومن أراد الآخرة فعليه بالعلم.", category: "طلب العلم", source: "أثر يُنسب للإمام الشافعي", author_name: "الإمام الشافعي", status: "approved", verification_status: "needs_review" },
 
   /* ── الدعوة ── */
@@ -158,7 +158,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "بلّغوا عني ولو آية.", category: "الدعوة", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
 
   /* ── التربية ── */
-  { text: "لأن يؤدب أحدكم ولده خير من أن يتصدق بصاع.", category: "التربية", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "لأن يؤدب أحدكم ولده خير من أن يتصدق بصاع.", category: "التربية", source: "رواه الترمذي عن جابر بن سمرة — ضعيف (قال الترمذي: غريب، وفي سنده ناصح أبو عبدالله ضعيف)", author_name: "سنن الترمذي", status: "approved", verification_status: "needs_review" },
   { text: "حق الولد على والده أن يحسن اسمه ويحسن تربيته.", category: "التربية", source: "رواه البيهقي", author_name: "شعب الإيمان", status: "approved", verification_status: "verified" },
 
   /* ── اللغة ── */
@@ -187,13 +187,13 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الأمور بمقاصدها — فالعبرة في الأحكام الشرعية بالنوايا والمآلات.", category: "الفقه", source: "القاعدة الأولى من القواعد الخمس الكبرى", author_name: "المجلة الأحكام العدلية", status: "approved", verification_status: "verified" },
 
   /* ── إضافات السيرة ── */
-  { text: "الهجرة النبوية درس في الصبر والتخطيط؛ فما أسس النبي ﷺ دولة إلا بعد 13 سنة من الجهر والدعوة.", category: "السيرة", source: "السيرة النبوية — ابن هشام وابن كثير", author_name: "ابن هشام", status: "approved", verification_status: "verified" },
+  { text: "الهجرة النبوية درس في الصبر والتخطيط؛ فما أسس النبي ﷺ دولة إلا بعد 13 سنة من الدعوة (3 سنوات سرًا و10 سنوات جهرًا).", category: "السيرة", source: "السيرة النبوية — ابن هشام وابن كثير", author_name: "ابن هشام", status: "approved", verification_status: "verified" },
   { text: "غزوة بدر برهان على أن النصر بالله لا بالعدد.", category: "السيرة", source: "صحيح البخاري — كتاب المغازي", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
   { text: "فتح مكة كان فتح الرحمة، ولم يُقتل فيه إلا من أبى التسليم وقاتل.", category: "السيرة", source: "البداية والنهاية — ابن كثير", author_name: "ابن كثير", status: "approved", verification_status: "verified" },
 
   /* ── إضافات طلب العلم ── */
   { text: "ما نقص مال من صدقة، وما زاد الله عبداً بعفو إلا عزاً، وما تواضع أحد لله إلا رفعه الله.", category: "طلب العلم", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
-  { text: "خير ما يكسبه المرء العلم النافع والذرية الصالحة.", category: "طلب العلم", source: "رواه ابن ماجه — حسنه الألباني", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
+  { text: "خير ما يخلّف الرجل من بعده ثلاث: ولد صالح يدعو له، وصدقة تجري يبلغه أجرها، وعلم يُعمل به من بعده.", category: "طلب العلم", source: "رواه ابن ماجه (242) — حسنه الألباني", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
   { text: "العلم يُورث الخشية، والخشية تُورث العمل، والعمل يُورث الجنة.", category: "طلب العلم", source: "إِنَّمَا يَخْشَى اللَّهَ مِنْ عِبَادِهِ الْعُلَمَاءُ — فاطر: 28", author_name: "الإمام ابن القيم", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الدعوة ── */
@@ -215,13 +215,13 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الغيبة ذكرك أخاك بما يكره — فيها إثم عظيم وإن كان المقول فيه كذلك.", category: "الأخلاق", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
 
   /* ── إضافات القرآن ── */
-  { text: "تلاوة آية بتدبّر وفهم خير من ختمة بلا تفكّر.", category: "القرآن", source: "أثر سلفي — ابن القيم: بدائع الفوائد", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "تلاوة آية بتدبّر وفهم خير من ختمة بلا تفكّر.", category: "القرآن", source: "أثر سلفي — ابن القيم: مفتاح دار السعادة", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
   { text: "من قرأ حرفاً من كتاب الله فله به حسنة والحسنة بعشر أمثالها.", category: "القرآن", source: "رواه الترمذي — صحيح", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "أهل القرآن هم أهل الله وخاصته.", category: "القرآن", source: "رواه النسائي وابن ماجه — صحيح الألباني", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
 
   /* ── إضافات العقيدة ── */
-  { text: "من عرف نفسه عرف ربه — فالتفكر في الخلق دليل إلى الخالق.", category: "العقيدة", source: "أثر منسوب للإمام الشافعي — الأمالي", author_name: "الإمام الشافعي", status: "approved", verification_status: "needs_review" },
-  { text: "الحياء شعبة من شعب الإيمان؛ ومن قلّ حياؤه ضعف إيمانه.", category: "العقيدة", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "من عرف نفسه عرف ربه — فالتفكر في الخلق دليل إلى الخالق.", category: "العقيدة", source: "قول لا أصل له كحديث مرفوع (أنكره النووي وابن تيمية)؛ ينسبه أغلب أهل العلم إلى يحيى بن معاذ الرازي لا إلى الإمام الشافعي", author_name: "يحيى بن معاذ الرازي (نسبة مشهورة، غير مؤكَّدة)", status: "approved", verification_status: "needs_review" },
+  { text: "الحياء شعبة من شعب الإيمان؛ ومن قلّ حياؤه ضعف إيمانه.", category: "العقيدة", source: "الشطر الأول حديث متفق عليه: «الإيمان بضع وستون شعبة، والحياء شعبة من الإيمان»؛ الشطر الثاني تعليق تفسيري وليس من نص الحديث", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "الدجال يخرج من المشرق؛ وعلامة قربه ظهور الفتن وكثرة الكذب.", category: "العقيدة", source: "رواه البخاري ومسلم — أشراط الساعة", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الحديث ── */
@@ -238,8 +238,8 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "إعراب الكلمة يكشف معناها؛ فمن أتقن الإعراب أمن اللحن في تلاوته.", category: "اللغة", source: "شرح ألفية ابن مالك — ابن عقيل", author_name: "ابن عقيل", status: "approved", verification_status: "verified" },
 
   /* ── إضافات طلب العلم ── */
-  { text: "العلم لا يُعطيك بعضه حتى تعطيه كلك.", category: "طلب العلم", source: "قولٌ مأثور عن مالك بن أنس", author_name: "الإمام مالك", status: "approved", verification_status: "needs_review" },
-  { text: "أول العلم الصمت، ثم الاستماع، ثم الحفظ، ثم العمل، ثم النشر.", category: "طلب العلم", source: "أثر عن الإمام الشافعي — مناقبه للبيهقي", author_name: "الإمام الشافعي", status: "approved", verification_status: "needs_review" },
+  { text: "العلم لا يُعطيك بعضه حتى تعطيه كلك.", category: "طلب العلم", source: "قولٌ مأثور يُنسب للإمام الشافعي (وبصيغة قريبة للجاحظ) — لم يثبت له إسناد لمالك بن أنس", author_name: "الإمام الشافعي (نسبة مشهورة، غير مؤكَّدة الإسناد)", status: "approved", verification_status: "needs_review" },
+  { text: "أول العلم الصمت، ثم الاستماع، ثم الحفظ، ثم العمل، ثم النشر.", category: "طلب العلم", source: "قول مأثور عن الأصمعي (عبد الملك بن قريب)، لا عن الإمام الشافعي", author_name: "الأصمعي", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الدعوة ── */
   { text: "الداعية يحتاج إلى فقه المقاصد؛ فلا يضيّع واجباً بحجة مستحب.", category: "الدعوة", source: "الموافقات — الإمام الشاطبي", author_name: "الإمام الشاطبي", status: "approved", verification_status: "verified" },
@@ -248,7 +248,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── إضافات الزهد والرقائق ── */
   { text: "الزهد في الدنيا ليس ترك أسبابها؛ بل ألا تستعبدك ولا تملأ قلبك.", category: "الرقائق", source: "مدارج السالكين — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
   { text: "ما أُفرغ في جوف ابن آدم أشد من الحب والغضب؛ فداوِهما بالصبر والاستعاذة.", category: "الرقائق", source: "إغاثة اللهفان — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
-  { text: "أكبر الكبائر حب الدنيا والأمن من مكر الله والقنوط من رحمته.", category: "الرقائق", source: "الزهد — الإمام أحمد بن حنبل", author_name: "الإمام أحمد بن حنبل", status: "approved", verification_status: "needs_review" },
+  { text: "أكبر الكبائر: الإشراك بالله، والأمن من مكر الله، والقنوط من رحمة الله، واليأس من روح الله.", category: "الرقائق", source: "أثر عن عبدالله بن مسعود — رواه عبدالرزاق والطبراني في الكبير وذكره ابن جرير، إسناده صحيح", author_name: "عبدالله بن مسعود", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الأخلاق ── */
   { text: "الإنسان كثير بأخلاقه؛ لا بماله ولا بجاهه.", category: "الأخلاق", source: "ديوان الإمام الشافعي", author_name: "الإمام الشافعي", status: "approved", verification_status: "needs_review" },
@@ -277,7 +277,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "طالب العلم لا ينضجُ حتى يستوي عنده الثناء والذم سواء في طلبه.", category: "طلب العلم", source: "الجامع لأخلاق الراوي — الخطيب البغدادي", author_name: "الخطيب البغدادي", status: "approved", verification_status: "needs_review" },
 
   /* ── إضافات القرآن ── */
-  { text: "من أراد علم الأولين والآخرين فليتدبّر القرآن — فيه جواب كل سؤال وشفاء كل داء.", category: "القرآن", source: "مقدمة في أصول التفسير — ابن تيمية", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
+  { text: "من أراد علم الأولين والآخرين فليتدبّر القرآن — فيه جواب كل سؤال وشفاء كل داء.", category: "القرآن", source: "أثر عن عبدالله بن مسعود — رواه أحمد في الزهد وابن أبي شيبة والطبراني في الكبير والبيهقي في شعب الإيمان، نقله ابن تيمية في مقدمة في أصول التفسير", author_name: "عبدالله بن مسعود", status: "approved", verification_status: "verified" },
   { text: "الحافظ للقرآن يُقال له يوم القيامة: اقرأ وارتقِ ورتّل — فمنزلته عند آخر آية يقرؤها.", category: "القرآن", source: "رواه الترمذي وأبو داود — حسن صحيح", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "needs_review" },
 
   /* ── إضافات التربية ── */
@@ -310,7 +310,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "عليكم بهذا العود الهندي فإن فيه سبعة أشفية.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "الشفاء في ثلاثة: شربة عسل، وحجامة (شرطة مِحجم)، وكية بالنار — ونهى النبي ﷺ أمته عن الكي.", category: "الحديث", source: "رواه البخاري (٥٦٨٠) عن ابن عباس", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "المعدة بيت الداء والحمية رأس كل دواء — وأعطِ كل جسم ما عوّدته.", category: "الحديث", source: "أثر يُنسب للحارث بن كلدة — ويُستشهد به في الطب النبوي", author_name: "الطب النبوي", status: "approved", verification_status: "needs_review" },
-  { text: "في كل صباح تصدق على كل سلامى منك؛ وصيام يوم سنة للمسلم.", category: "الحديث", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
+  { text: "يصبح على كل سلامى من أحدكم صدقة: فكل تسبيحة صدقة، وكل تحميدة صدقة، وكل تهليلة صدقة، وكل تكبيرة صدقة، وأمر بالمعروف صدقة، ونهي عن المنكر صدقة، ويجزئ من ذلك ركعتان يركعهما من الضحى.", category: "الحديث", source: "رواه مسلم عن أبي ذر (٧٢٠)", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
 
   /* ── المعاملات والأخلاق التجارية ── */
   { text: "البيّعان بالخيار ما لم يتفرّقا؛ فإن صدقا وبيّنا بورك لهما، وإن كتما وكذبا مُحقت بركة بيعهما.", category: "الفقه", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
@@ -320,7 +320,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── مواقف المؤمن من الابتلاء ── */
   { text: "عجباً لأمر المؤمن إن أمره كله خير؛ إن أصابته سراء شكر فكان خيراً له، وإن أصابته ضراء صبر فكان خيراً له.", category: "العقيدة", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
-  { text: "ما يصيب المؤمن من وصب ولا نصب ولا سقم حتى الشوكة يُشاكها إلا كُفّر بها خطاياه.", category: "العقيدة", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "ما يصيب المسلم من نصب ولا وصب، ولا هم ولا حزن، ولا أذى ولا غم، حتى الشوكة يُشاكها، إلا كفّر الله بها من خطاياه.", category: "العقيدة", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "إن الله إذا أحب قوماً ابتلاهم؛ فمن رضي فله الرضا، ومن سخط فله السخط.", category: "العقيدة", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
 
   /* ── العلم والإبداع من منظور إسلامي ── */
@@ -339,7 +339,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── الأسرة والمجتمع ── */
   { text: "المجتمع المسلم كالجسد الواحد؛ إذا اشتكى منه عضو تداعى له سائر الجسد بالسهر والحمى.", category: "الحديث", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "المؤمن للمؤمن كالبنيان المرصوص يشد بعضه بعضاً — التماسك الاجتماعي فريضة إسلامية.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "المؤمن للمؤمن كالبنيان يشد بعضه بعضاً — التماسك الاجتماعي فريضة إسلامية.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "من كان في حاجة أخيه كان الله في حاجته، ومن فرّج كربة فرّج الله عنه كربة من كرب يوم القيامة.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
 
   /* ── التوبة والمغفرة ── */

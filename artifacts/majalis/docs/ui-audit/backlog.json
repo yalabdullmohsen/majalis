@@ -1,0 +1,101 @@
+{
+  "updated_at": "2026-07-24",
+  "instructions": "أعلى بند بحالة pending هو نقطة الاستئناف. لا تُعِد فحص بنود done إلا إذا تغيّر الكود المرتبط بها.",
+  "items": [
+    {
+      "id": "css-architecture-consolidation",
+      "priority": 1,
+      "severity": "high",
+      "area": "design-system-architecture",
+      "status": "partial-safe-subset-done",
+      "summary": "9 ملفات CSS متتالية التحميل (+60 ألف سطر، أنظمة توكِن متوازية). المالك أذن صراحةً بالتوحيد (2026-07-24). نُفِّذت أولى دفعتين آمنتين فقط: (1) إزالة 84 قاعدة CSS مكرَّرة حرفيًا بالضبط (نفس المُحدِّد + نفس القيم بالضبط) عبر design-system.css/majalis-v2.css/modern-2026.css/elite-2026.css — من ضمنها 83 حالة نمط 'المُحدِّد,\\nنفس المُحدِّد {' (تكرار المُحدِّد داخل قائمته الخاصة، بلا أثر بصري رياضيًا مضمون) و1 قاعدة مكرَّرة كاملة. كل إزالة تحقّقتُ فيها فرديًا أن القيم متطابقة 100% (وليست 'متشابهة' فقط) قبل الحذف — لم أمسّ أي قاعدتين بنفس المُحدِّد بقيم مختلفة (اكتُشفت عدة حالات كهذه أثناء الفحص، تُركت كما هي عمدًا). تحقّق: pnpm run build كامل نظيف + بوابة انحدار تباين الألوان (فحص متصفح فعلي عبر Playwright لـ25 إصلاحًا سابقًا) نظيفة تمامًا، لا انحدار.",
+      "next_action": "الدفعة الآمنة الأولى فقط اكتملت (توفير ~129 سطر). التوحيد الحقيقي (دمج/حذف ملفات، أو استبدال قيم hex حرفية بمتغيّرات — راجع hex-literal-tokenization) لا يزال يحتاج تحقّقًا بصريًا فعليًا لكل تغيير غير مضمون رياضيًا، لم يُنفَّذ. لا تتوسّع لهذا النطاق بلا قدرة تحقّق بصري حقيقية (متصفح/لقطات شاشة).",
+      "evidence": "سكربت Node فحص فعلي لكل قواعد .class/#id عبر الملفات التسعة، 2026-07-24 — 0 تكرار حرفي متبقٍّ بعد الإصلاح (تحقّق مُعاد التشغيل)."
+    },
+    {
+      "id": "docs-design-system-v2-reconcile",
+      "priority": 2,
+      "severity": "low",
+      "area": "design-system-docs",
+      "status": "done",
+      "summary": "docs/design-system.md (Design System v2) رُوجع سطرًا بسطر مقابل الكود الحي عبر rg فعلي لكل صنف/متغيّر: ألوان وخطوط وتباعد v2 وتدرجات وIslamicOrnament ميتة؛ .ds-btn/.ds-card/.ds-input/.ds-section__head وIslamicDivider ونقاط الانكسار حية؛ حواف/ظلال --ds-r-*/--ds-shadow-* حية لكن ضيّقة النطاق (design-system.css فقط).",
+      "next_action": null,
+      "evidence": "commit التالي بعد هذا التحديث — راجع docs/design-system.md نفسه للتفاصيل الكاملة لكل قسم."
+    },
+    {
+      "id": "jsx-a11y-lint-enable-and-fix",
+      "priority": 2,
+      "severity": "medium",
+      "area": "accessibility",
+      "status": "done",
+      "summary": "eslint-plugin-jsx-a11y فُعِّل فعليًا في eslint.config.js (src/**/*.{tsx,jsx}, jsxA11y.flatConfigs.recommended.rules). الـ85 خطأ الحقيقي (82 منها نمط واحد: div/aside بـonClick بلا دعم لوحة مفاتيح) رُوجعت فرديًا — تبيّن أن الأغلبية الساحقة حالات موثَّقة مسبقًا في تعليقات الكود نفسه (نقر خلفية للإغلاق مصحوب بمعالج Escape فعلي + زر إغلاق ظاهر = مساران بديلان كاملان بلوحة المفاتيح)، وبعضها تفاعل ثانوي بحت (stopPropagation فقط) أو قرار وصول واعٍ موثَّق مسبقًا (MushafPage/ProphetsFamilyTreePage: تبديل لمسي/سحب بلا مكافئ لوحة مفاتيح منطقي، مع بديل حقيقي للوظيفة الأهم). كل حالة أُغلقت بـeslint-disable مع تعليق سببي، لا auto-fix أعمى ولا حذف تفاعل حقيقي. النتيجة: 0 خطأ، 17 تحذير 'unused directive' غير ضار (ضمن حد 50).",
+      "next_action": null,
+      "evidence": "pnpm run lint نظيف (0 errors) بعد التفعيل — 2026-07-24. لم يُختبَر بصريًا (بلا متصفح)."
+    },
+    {
+      "id": "hex-literal-tokenization",
+      "priority": 4,
+      "severity": "medium",
+      "area": "design-tokens",
+      "status": "blocked-unsafe-to-automate",
+      "summary": "674 قيمة hex فريدة (7220 تكرارًا) مكتوبة حرفيًا. حاولتُ تحديد استبدال آمن للقيمة الأكثر تكرارًا (#173D35 ← var(--elite-forest)) فاكتشفت أن --elite-forest نفسه مُعاد تعريفه بقيم مختلفة تمامًا في سياقات متعددة (وضع داكن: #5CC49A، وسياقات أخرى: var(--emerald-deep)، var(--text-on-primary)) — استبدال حرفي أعمى سيُغيّر الألوان الفعلية المعروضة في تلك السياقات، ليس تغييرًا بصريًا محايدًا كما افترضت أصلًا.",
+      "next_action": "غير آمن للأتمتة الجماعية بلا تحقق بصري لكل سياق (وضع فاتح/داكن) لكل استبدال. يحتاج إما: (أ) أداة سكربتية تتحقق من عدم وجود إعادة تعريف مختلفة للمتغيّر الهدف ضمن أي media/attribute selector قبل الاستبدال، أو (ب) دفعات يدوية صغيرة جدًا مع تحقق بصري فعلي لكل ملف. لا تُنفَّذ كتغيير جماعي.",
+      "evidence": "rg -n -- '--elite-forest:' src/styles/elite-2026.css كشف 5 تعريفات مختلفة، 2026-07-24."
+    },
+    {
+      "id": "playwright-full-route-audit",
+      "priority": 5,
+      "severity": "none",
+      "area": "seo-routing",
+      "status": "done",
+      "summary": "شُغِّل فعليًا على 174 مسارًا من seo-routes.json عبر vite dev محلي + Playwright. النتيجة نظيفة تمامًا على مستوى البنية: 0 تسرّب محتوى رئيسية، 0 صفحة فارغة، 0 عنوان/H1 خاطئ عبر كل الـ174. رُصدت 9 'مشاكل' كلها أخطاء شبكة console (429/503/500/ERR_NAME_NOT_RESOLVED) — تحقّقتُ أنها ناتجة عن عدم وجود .env.local في هذا الـworktree (فقط .env.local.example)، أي Supabase/APIs خارجية بلا بيانات اعتماد — قيد بيئة اختبار محلي، لا خلل كود حقيقي.",
+      "next_action": null,
+      "evidence": "/tmp/route-audit-report.json، 2026-07-24: total=174, problemCount=9 (كلها console network errors من بيئة بلا .env.local)."
+    },
+    {
+      "id": "admin-meta-descriptions-short",
+      "priority": 6,
+      "severity": "none",
+      "area": "seo",
+      "status": "closed-not-an-issue",
+      "summary": "35 صفحة تحت /admin/** بوصف meta أقصر من الموصى به في test-seo.mjs. تحقّقتُ فعليًا: كل مسارات /admin/** لها robots: \"noindex, nofollow\" صراحةً في seo-routes.json، وrobots.txt يستثنيها بالكامل (Disallow: /admin). لا محرك بحث سيقرأ أو يهتم بهذا الوصف إطلاقًا — التحذير صحيح تقنيًا لكن بلا أي أثر SEO حقيقي.",
+      "next_action": null,
+      "evidence": "seo-routes.json entry لـ/admin: robots=\"noindex, nofollow\"، sitemap=false. public/robots.txt: Disallow: /admin و/admin/. تحقّق 2026-07-24."
+    }
+  ],
+  "new_low_priority_items": [
+    {
+      "id": "duplicate-dom-to-image-libraries",
+      "priority": 7,
+      "severity": "low",
+      "area": "performance-bundle-size",
+      "status": "pending",
+      "summary": "مكتبتان تقومان بنفس المهمة (تحويل DOM لصورة) مثبَّتتان معًا: html2canvas (استخدام وحيد متبقٍّ: CardsPage.tsx بعد حذف استخدام ContentActions.tsx ضمن إلغاء أزرار المشاركة) وhtml-to-image (FaidaImageCardModal.tsx، CitationModal.tsx). توحيدهما على مكتبة واحدة يقلّل حجم الحزمة، لكن يتطلب تعديل سلوك CardsPage.tsx (تحويل API) بلا إمكانية تحقّق بصري من جودة الصورة الناتجة — لم يُنفَّذ، خطر غير مبرَّر بلا رؤية النتيجة.",
+      "next_action": "إن أُذن: عدّل CardsPage.tsx لاستخدام toPng من html-to-image بدل html2canvas (نفس واجهة الاستخدام تقريبًا)، احذف html2canvas من package.json، تحقّق بصري لجودة/دقة الصورة الناتجة قبل الدمج.",
+      "evidence": "rg -l فعلي 2026-07-24: html2canvas في CardsPage.tsx فقط بعد التنظيف، html-to-image في ملفين آخرين."
+    }
+  ],
+  "resolved_this_session": [
+    {
+      "id": "stale-color-docs-conflict",
+      "summary": "docs/design-tokens.md وثّق #0E6E52، docs/design-system.md وثّق #1F6E54، والقيمة الحقيقية في modern-2026.css هي #173D35. design-tokens.md أُعيد كتابته كاملًا ليطابق الواقع؛ design-system.md وُسم بتنبيه تعارض.",
+      "commit": "697f62cc"
+    },
+    {
+      "id": "tracked-tsbuildinfo-breaks-fresh-worktree-build",
+      "summary": "5 ملفات tsconfig.tsbuildinfo مُتتبَّعة في git رغم استثنائها في .gitignore، ما يُفسد cache تركيبة tsc --build في أي worktree جديد (بما فيها automation/content وautomation/tasks) ويُفشل pnpm run build الجذري بخطأ TS6305 في artifacts/api-server. أُزيلت من التتبّع بـgit rm --cached (البناء المحلي غير متأثر).",
+      "commit": "c23bc94f"
+    },
+    {
+      "id": "security-pass-batch3",
+      "summary": "فحص أمني آلي شامل (أسرار حرفية، XSS عبر dangerouslySetInnerHTML، eval/Function، innerHTML مباشر، حماية مسارات admin، open redirect) — كل الفحوصات نظيفة، لا ثغرة مكتشَفة، لا تعديل كود لزم. لم يُفحَص: RLS الحي (يحتاج اتصال DB مباشر، خارج نطاق فحص ساكن).",
+      "commit": "n/a (docs فقط، لا تعديل كود)"
+    },
+    {
+      "id": "commit-and-push-branch-unscoped-build-gate",
+      "summary": "scripts/commit-and-push-branch.sh كان يستخدم pnpm run build الجذري، الذي يُشغّل build لكل حزم monorepo بما فيها majalis-pitch وmajalis-promo (حزم تسويقية Replit هامشية تتطلب PORT وBASE_PATH غير مُعرَّفين، غير مرتبطة بعمل النافذتين إطلاقًا) — أفشل البوابة فعليًا بلا علاقة بأي تعديل حقيقي. أُعيد تقييده لـpnpm --filter @workspace/majalis run build (typecheck:libs + build)، مطابقًا لنطاق pre-commit hook المحلي و.github/workflows/auto-merge-to-main.yml الموجودين فعلًا.",
+      "commit": "4e3ce08a",
+      "note": "⚠️ نفس هذا الخلل موجود في نسخة automation/content من نفس السكربت (كلا الفرعين وُرِّثا من نفس commit إنشاء أولي) — لم يُصلَح هناك لأن هذه النافذة ممنوعة من تعديل فرع automation/content. يحتاج المالك تنبيه نافذة المحتوى، أو سيُصلَح تلقائيًا إن أعادت تلك النافذة الدمج من main بعد أول تشغيل لـrelease-majlisilm.yml."
+    }
+  ]
+}

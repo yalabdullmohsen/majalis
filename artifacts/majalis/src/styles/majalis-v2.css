@@ -411,28 +411,7 @@
   color: var(--v2-ink-2);
 }
 
-/* ── 14. NavBar — زر Command Search ── */
-.navbar-search-cmd {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.375rem 0.75rem;
-  border-radius: 0.65rem;
-  border: 1px solid rgba(23,61,53,0.15);
-  background: #FFFFFF;
-  cursor: pointer;
-  font-size: 0.825rem;
-  color: var(--v2-ink-2);
-  font-family: inherit;
-  height: 38px;
-  box-shadow: 0 1px 4px rgba(23,61,53,0.10), 0 0 0 1px rgba(23,61,53,0.10);
-  transition: all 0.15s ease;
-}
-.navbar-search-cmd:hover {
-  background: #f0faf5;
-  border-color: rgba(23,61,53,0.20);
-  box-shadow: 0 2px 8px rgba(23,61,53,0.15);
-}
+/* ── 14. NavBar — زر Command Search أُزيل بالكامل من الهيدر (2026-07-24) ── */
 .navbar-search-kbd {
   display: none;
 }
@@ -548,10 +527,10 @@
 .page-hero-v2::before {
   content: "";
   position: absolute;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpolygon points='20,2.5 22.9,13.3 33.5,8.5 26.4,17.5 37.5,20 26.4,22.5 33.5,31.5 22.9,26.7 20,37.5 17.1,26.7 6.5,31.5 13.6,22.5 2.5,20 13.6,17.5 6.5,8.5 17.1,13.3' fill='none' stroke='white' stroke-width='0.6' opacity='0.08'/%3E%3C/svg%3E");
   background-size: 40px 40px;
   pointer-events: none;
@@ -657,33 +636,23 @@
   transform: translateY(-2px) !important;
 }
 
-/* ── أزرار الـ navbar ── */
+/* ── أزرار الـ navbar (زر البحث أُزيل من هذه القائمة — لم يعد موجودًا) ── */
 .navbar-menu-btn,
-.navbar-logout,
-/* ── أطراف ذهبية: القائمة + البحث ── */
-.navbar-menu-btn,
-.navbar-search-cmd {
+.navbar-logout {
   border: 1.5px solid #28584D !important;
   box-shadow:
     0 0 0 1px rgba(217,174,92,0.25),
     0 1px 6px rgba(196,149,64,0.20) !important;
   transition: all 0.15s ease !important;
 }
-.navbar-search-cmd {
-  background: #FFFFFF !important;
-  border-radius: 0.65rem !important;
-  height: 38px !important;
-}
-.navbar-menu-btn:hover,
-.navbar-search-cmd:hover {
+.navbar-menu-btn:hover {
   background: #fffdf5 !important;
   border-color: #28584D !important;
   box-shadow:
     0 0 0 2px rgba(217,174,92,0.30),
     0 2px 10px rgba(196,149,64,0.28) !important;
 }
-.navbar-menu-btn:active,
-.navbar-search-cmd:active {
+.navbar-menu-btn:active {
   transform: scale(0.97) !important;
 }
 
@@ -997,10 +966,6 @@
   color: #28584D !important;
   font-weight: 700 !important;
 }
-.navbar-search-cmd svg {
-  color: #28584D !important;
-}
-
 /* Navbar brand — اسم التطبيق بجانب الشعار */
 .navbar-brand {
   color: #28584D !important;
@@ -1814,35 +1779,15 @@
   font-family: var(--mj-font-display) !important;
   color: var(--majalis-emerald-deep, #173D35) !important;
 }
-/* ── 3. خلفية الصفحة — ظل خفيف ── */
-.page-shell {
-  background: var(--msk-canvas-1, #F7FBF9) !important;
-}
+/* ── 3. خلفية الصفحة — ظل خفيف (مطابقة .page-shell أعلى الملف، لا تكرار) ── */
 
-/* ── 4. صفحة الأسئلة والأجوبة ── */
-.qa-item {
-  background: var(--msk-canvas, #FFFFFF) !important;
-}
-.qa-item__question {
-  color: var(--majalis-emerald-deep, #173D35) !important;
-  font-family: var(--mj-font-display) !important;
-}
-.qa-item__answer {
-  color: var(--msk-text, #202725) !important;
-}
+/* ── 4. صفحة الأسئلة والأجوبة (خلفية/سؤال/جواب مطابقة أعلى الملف؛ الفئة أدناه فقط قيمتها مختلفة هنا) ── */
 .qa-item__category {
   background: rgba(23,61,53,0.08) !important;
   color: var(--majalis-emerald, #28584D) !important;
 }
 
-/* ── 5. صفحة الحديث ── */
-.hadith-card {
-  background: var(--msk-canvas, #FFFFFF) !important;
-}
-.hadith-card__title {
-  color: var(--majalis-emerald-deep, #173D35) !important;
-  font-family: var(--mj-font-display) !important;
-}
+/* ── 5. صفحة الحديث (الخلفية/العنوان مطابقان أعلى الملف؛ الفروق أدناه فقط) ── */
 .hadith-card__chapter {
   color: var(--majalis-emerald, #28584D) !important;
 }
@@ -1853,13 +1798,9 @@
   border-bottom-color: rgba(23,61,53,0.12) !important;
 }
 
-/* ── 6. صفحة المكتبة ── */
+/* ── 6. صفحة المكتبة (عنوان البطاقة مطابق أعلى الملف، لا تكرار) ── */
 .library-card {
   background: var(--msk-canvas, #FFFFFF) !important;
-}
-.home-library-card h3 {
-  color: var(--majalis-emerald-deep, #173D35) !important;
-  font-family: var(--mj-font-display) !important;
 }
 
 /* ── 7. الأذكار والفوائد ── */
@@ -2016,10 +1957,10 @@
 /* طبقة التعتيم */
 .aie-overlay {
   position: fixed;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 9999;
   background: rgba(14, 31, 22, 0.65);
   backdrop-filter: blur(3px);
@@ -2512,7 +2453,8 @@ table th {
   transform: translateY(-2px);
 }
 .prophets-seerah-bridge__ornament { flex-shrink: 0; }
-.prophets-seerah-bridge__body { flex: 1; min-width: 0; }
+/* .prophets-seerah-bridge__body مطابقة حرفيًا لتعريفها في elite-2026.css
+   (يحمَّل لاحقًا فيفوز بالـcascade أصلًا) — أُزيل التكرار هنا. */
 .prophets-seerah-bridge__eyebrow {
   font-size: 0.8rem;
   font-weight: 700;
@@ -2540,9 +2482,8 @@ table th {
   flex-shrink: 0;
   transition: transform 0.2s;
 }
-.prophets-seerah-bridge:hover .prophets-seerah-bridge__arrow {
-  transform: translateX(-4px);
-}
+/* .prophets-seerah-bridge:hover .prophets-seerah-bridge__arrow مطابقة
+   حرفيًا لتعريفها في elite-2026.css — أُزيل التكرار هنا. */
 
 /* رابط عكسي من السيرة لقصص الأنبياء */
 .seerah-back-link {

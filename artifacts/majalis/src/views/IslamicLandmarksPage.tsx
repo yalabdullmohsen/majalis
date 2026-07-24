@@ -102,6 +102,7 @@ function LandmarkModal({
   return (
     // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار بديل كامل
     // بلوحة المفاتيح (بالإضافة لزر إغلاق ظاهر داخل النافذة إن وُجد).
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
     <div
       className="ilm-modal-backdrop"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}

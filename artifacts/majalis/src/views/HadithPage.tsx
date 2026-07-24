@@ -212,6 +212,7 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
       {/* Actions. onClick لمنع انتشار النقر إلى البطاقة الأم (التي تفتح تفاصيل
           الحديث عند النقر) — لا إجراء فعلي هنا يحتاج مكافئ لوحة مفاتيح؛ كل
           الأزرار الفعلية داخل هذا الصف قابلة للوصول بلوحة المفاتيح أصلًا. */}
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, jsx-a11y/no-noninteractive-element-interactions */}
       <div className="hadith-card__actions" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
@@ -274,6 +275,9 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
   const meta = h.metadata ?? {};
 
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
+    // مساران بديلان كاملان بلوحة المفاتيح.
+    /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, jsx-a11y/no-noninteractive-element-interactions */
     <div
       className="hadith-modal-overlay"
       ref={overlayRef}
@@ -383,20 +387,6 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
           >
             {copied ? "✓ تم النسخ" : "⎘ نسخ الحديث"}
           </button>
-          {typeof navigator.share === "function" && (
-            <button
-              type="button"
-              className="hadith-modal-btn"
-              onClick={() =>
-                navigator.share({
-                  title: h.title ?? "حديث شريف",
-                  text: `${h.text}\n\n— ${h.source_name ?? ""}`,
-                })
-              }
-            >
-              ↑ مشاركة
-            </button>
-          )}
         </div>
 
         <CitationActionBar
