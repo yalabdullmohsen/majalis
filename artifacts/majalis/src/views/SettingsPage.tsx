@@ -183,10 +183,6 @@ export default function SettingsPage() {
           <button type="button" className="ds-btn ds-btn--ghost" onClick={() => bumpFont(2)}>{t("settings_quran_font_up")}</button>
           <button type="button" className="ds-btn ds-btn--ghost" onClick={() => bumpFont(-2)}>{t("settings_quran_font_down")}</button>
         </div>
-        <label className="settings-field">
-          <span>{t("settings_radio_volume")}</span>
-          <input type="range" min="0" max="100" value={preferences.radioVolume} onChange={(e) => update("radioVolume", e.target.value)} />
-        </label>
         <button type="button" className="ui-card-btn" onClick={() => clearQuranCache()}>{t("settings_clear_quran_cache")}</button>
       </LegalSection>
 

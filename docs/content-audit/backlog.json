@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b012",
-  "resumeFromId": "b009",
+  "lastCompletedId": "b009",
+  "resumeFromId": "b013",
   "items": [
     {
       "id": "b001",
@@ -90,10 +90,19 @@
     {
       "id": "b009",
       "section": "content_gate_items_4-11",
-      "title": "بقية البنود المؤكدة في التكليف الأصلي (فتاوى/إذاعات/بث، عناوين SEO عامة أخرى، تكرار مقدمة/نبذة، تواريخ، Slugs)",
+      "title": "إزالة بقايا ميزة الإذاعة الملغاة (b009 — مكتمل)",
       "severity": "high",
-      "status": "pending",
-      "nextAction": "فحص آلي منهجي لكل بند بالتتابع، بدءاً بمسح 74 إشارة «فتاوى» لتصنيفها (محتوى شرعي مشروع vs بقايا خدمة ملغاة)."
+      "status": "done",
+      "nextAction": "فحص آلي منهجي لكل بند بالتتابع، بدءاً بمسح 74 إشارة «فتاوى» لتصنيفها (محتوى شرعي مشروع vs بقايا خدمة ملغاة).",
+      "finding": "فحص شامل لكل إشارات \"فتاوى\"/\"إذاعة\"/\"بث مباشر\": الغالبية العظمى محتوى شرعي مشروع (علامات دروس مبثوثة خارجياً، أحكام فقهية عن الاقتداء بالبث، redirects متعمدة /fatwa→/fiqh). وُجدت 4 بقايا حقيقية لميزة \"إذاعة قرآن\" لم تعد موجودة: (1) AboutPage.tsx SEO description تدّعي وجودها، (2) QuranHubPage.tsx SEO description+keywords كذلك، (3) حقل radioVolume في user-preferences.ts (مُعرَّف، لا يقرأه أي مكوّن — ميت فعلياً)، (4) عنصر واجهة \"مستوى صوت الإذاعة\" في SettingsPage.tsx وعنوان قسم \"القرآن والإذاعة\" في 6 ملفات لغة. أُزيلت جميعها؛ /fatwa و/fatwa/:id تحويلات متعمدة سليمة، لا حاجة لمسّها.",
+      "files": [
+        "artifacts/majalis/src/views/AboutPage.tsx",
+        "artifacts/majalis/src/views/QuranHubPage.tsx",
+        "artifacts/majalis/src/views/SettingsPage.tsx",
+        "artifacts/majalis/src/lib/user-preferences.ts",
+        "artifacts/majalis/src/locales/{ar,en,fr,tr,ur,id}.ts"
+      ],
+      "commit": "batch-2026-07-24-04"
     },
     {
       "id": "b010",
