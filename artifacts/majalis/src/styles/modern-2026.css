@@ -505,8 +505,6 @@ label {
   font-weight: var(--fw-semibold) !important;
 }
 .pt-prayer--next .pt-prayer__name,
-.pt-prayer--next .pt-prayer__time,
-.pt-prayer--next .pt-prayer__name,
 .pt-prayer--next .pt-prayer__time {
   color: var(--m26-green-800, #166534) !important;
 }

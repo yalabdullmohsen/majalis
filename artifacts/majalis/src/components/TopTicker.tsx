@@ -41,10 +41,14 @@ export function TopTicker() {
     const list: TickerItem[] = [];
     const slot = countdown?.next;
     if (slot && countdown) {
-      list.push({
-        id: "prayer",
-        text: `المتبقي على صلاة ${slot.name}: ${fmt(countdown.remainingHms)}`,
-      });
+      // نافذة سماح 35 دقيقة بعد الأذان: عدّاد تصاعدي منذ الأذان بدل القفز
+      // فورًا لعدّ الصلاة القادمة — نفس منطق PrayerTimesPage.
+      const inGrace = countdown.sinceSeconds != null;
+      list.push(
+        inGrace && countdown.sinceHms
+          ? { id: "prayer", text: `مضى على أذان ${slot.name}: ${fmt(countdown.sinceHms)}` }
+          : { id: "prayer", text: `المتبقي على صلاة ${slot.name}: ${fmt(countdown.remainingHms)}` }
+      );
     }
     const hadith = getDailyHadith();
     if (hadith?.text) {
@@ -55,7 +59,7 @@ export function TopTicker() {
       list.push({ id: "dhikr", text: dhikr.text, source: dhikr.source });
     }
     return list;
-  }, [countdown?.next?.key, countdown?.remainingHms, fmt]);
+  }, [countdown?.next?.key, countdown?.remainingHms, countdown?.sinceHms, fmt]);
 
   useEffect(() => {
     if (!reducedMotion || items.length === 0) return;

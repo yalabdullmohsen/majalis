@@ -148,18 +148,14 @@ export default function PrayerTimesPage() {
   const prayers: PrayerSlot[] = (data?.prayers ?? []).filter((p) => p.time);
   const nowInfo = kuwaitNowSeconds();
 
+  // نافذة السماح (PRAYER_GRACE_MINUTES = 35 دقيقة): عدّاد تصاعدي منذ أذان
+  // الصلاة التي رنّت للتو (لا قفز فوري لعدّ الصلاة القادمة). بعد انتهاء
+  // الـ35 دقيقة يعود sinceSeconds تلقائيًا null من computePrayerCountdown،
+  // فيسقط العرض للحالة العادية (عدّ تنازلي للصلاة القادمة الفعلية).
   const inGrace = !pinnedKey && countdown.sinceSeconds != null;
-  const sinceMinutes = inGrace ? Math.floor((countdown.sinceSeconds ?? 0) / 60) : 0;
-
-  // During grace: find the actual next prayer (after the one that rang)
   const ranKey = countdown.next.key;
-  const OBLIGATORY_KEYS = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
-  const ranIdx = OBLIGATORY_KEYS.indexOf(ranKey);
-  const actualNextKey = inGrace
-    ? (ranIdx >= 0 ? OBLIGATORY_KEYS[(ranIdx + 1) % OBLIGATORY_KEYS.length] : null)
-    : null;
 
-  const displayKey  = pinnedKey ?? (inGrace && actualNextKey ? actualNextKey : countdown.next.key);
+  const displayKey  = pinnedKey ?? (inGrace ? ranKey : countdown.next.key);
   const displayItem = prayers.find((p) => p.key === displayKey);
   const displayName = PRAYER_AR[displayKey] ?? countdown.next.name;
   const displayTime = displayItem?.time ?? countdown.next.time;
@@ -170,9 +166,8 @@ export default function PrayerTimesPage() {
     const { seconds, isTomorrow: tmrw } = secondsUntilPrayer(displayItem?.minutes ?? null);
     displayHms = formatHms(seconds);
     isTomorrow = tmrw;
-  } else if (inGrace && countdown.graceNextHms) {
-    displayHms = countdown.graceNextHms;
-    isTomorrow = (displayItem?.minutes ?? Infinity) < nowInfo.totalMinutes;
+  } else if (inGrace && countdown.sinceHms) {
+    displayHms = countdown.sinceHms;
   } else {
     displayHms = countdown.remainingHms ?? "--:--:--";
   }
@@ -201,7 +196,7 @@ export default function PrayerTimesPage() {
           {pinnedKey && pinnedKey !== countdown.next.key
             ? "الوقت المتبقي لـ"
             : inGrace
-              ? `مضى على أذان ${PRAYER_AR[ranKey] ?? countdown.next.name} ${sinceMinutes} دقيقة · الصلاة القادمة`
+              ? "الوقت منذ أذان"
               : "الصلاة القادمة"}
         </div>
         <h1 className="pt-hero__name" key={displayKey}>
