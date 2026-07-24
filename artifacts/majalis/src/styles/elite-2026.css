@@ -1319,7 +1319,6 @@ html[data-theme="dark"] .rp-section-title {
   letter-spacing: normal !important;
 }
 
-.pt-hero__time,
 .pt-hero__time { color: rgba(255,255,255,0.70) !important; }
 
 .pt-prayer {
@@ -2440,7 +2439,6 @@ button.hcp-prayer-cell:focus-visible {
 
 
 /* §58 — صفحة التوحيد: ID selector (specificity 1-0-X) يتغلب على أي كمية !important بالـ classes */
-#tawhid-header,
 #tawhid-header h1,
 #tawhid-header h2,
 #tawhid-header h3,
@@ -7391,9 +7389,10 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 }
 
 /* ============================================================
-   §80 — FiqhPage  (fqp-*)
+   §80 — FiqhPage  (fqp-*) — القاعدة الوحيدة هنا مطابقة لـ.fqp-cta-btn
+   الأحدث (مع :hover) في §~قسم fqp لاحقًا في هذا الملف؛ أُزيلت هنا لمنع
+   التكرار الحرفي.
    ============================================================ */
-.fqp-cta-btn { background: var(--majalis-emerald); }
 
 /* ============================================================
    §81 — VaultPage additions  (vault-login-*)
@@ -9147,7 +9146,6 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .tgm-no-title       { color: var(--majalis-ink-soft); }
 .tgm-date-span      { margin-right: 0.75rem; }
 .tgm-sheikh-empty   { color: var(--majalis-ink-soft); font-size: 0.8rem; }
-.tgm-tr             { border-bottom: 1px solid var(--majalis-line); }
 .tgm-tr             { border-bottom: 1px solid var(--majalis-line); }
 
 /* ── §159 — FiqhCouncilSection (fcs-*) ───────────────────────────────────── */
@@ -12839,7 +12837,6 @@ a:focus-visible {
 }
 .isp-detail__section-title--green { color: var(--majalis-emerald-deep) !important; }
 .isp-detail__section-title--purple { color: #7c3aed !important; }
-.isp-detail__section-title--gold { color: var(--majalis-emerald,#28584D) !important; }
 .isp-detail__body {
   font-size: 0.92rem !important;
   color: var(--v2-ink-2, #4A453F) !important;
@@ -30569,66 +30566,41 @@ html[data-theme="dark"] tr:hover td {
    قائمة الحاويات ذات الخلفية الداكنة:
    Hero / Page Headers / Card Headers / Footer / Learning Path / Dark Banners
 */
-.hpv4-hero,
 .hpv4-hero :not(.hpv4-hero__cta-primary):not(.hpv4-hero__cta-primary *),
-.lesson-unified-card__header,
 .lesson-unified-card__header *,
-.ds-page-header,
 .ds-page-header *,
-.home-hero,
 .home-hero *,
-.home-learning-path-card,
 .home-learning-path-card *,
-.lessons-page-header,
 .lessons-page-header *,
-.scholars-page-header,
 .scholars-page-header *,
-.courses-page-header,
 .courses-page-header *,
-.library-page-header,
 .library-page-header *,
-.quran-page-header,
 .quran-page-header *,
-.fiqh-page-header,
 .fiqh-page-header *,
-.fatwas-page-header,
 .fatwas-page-header *,
-.hadith-page-header,
 .hadith-page-header *,
-.adhkar-page-header,
 .adhkar-page-header *,
-.site-footer,
 .site-footer *,
 footer,
 footer *,
-.page-hero-wrap,
 .page-hero-wrap *,
 [class*="page-header"][class*="dark"],
 [class*="page-header"][class*="dark"] *,
 [class$="-hero"]:not(.revord-hero):not(.an-hero):not(.dvp-hero):not(.sch-profile-hero):not(.accd-hero):not(.hpv4-hero):not(.surah-index-hero):not(.cvp-hero),
 [class$="-hero"]:not(.revord-hero):not(.an-hero):not(.dvp-hero):not(.sch-profile-hero):not(.accd-hero):not(.hpv4-hero):not(.surah-index-hero):not(.cvp-hero) *,
-.dark-section,
 .dark-section *,
-.dark-bg,
 .dark-bg *,
 /* Navbar dark elements */
 .navbar-v3 .site-brand-name,
 .navbar-v3 .site-brand-logotype__main,
 /* Prayer chip */
-.navbar-prayer-chip,
 .navbar-prayer-chip *,
 /* رأس صفحات أخرى بخلفية داكنة */
-.tawheed-page-header,
 .tawheed-page-header *,
-.seerah-page-header,
 .seerah-page-header *,
-.hadith-page-header,
 .hadith-page-header *,
-.adhkar-page-header,
 .adhkar-page-header *,
-.fiqh-page-header,
 .fiqh-page-header *,
-.quiz-page-header,
 .quiz-page-header * {
   color: #FFFFFF !important;
 }
@@ -30636,7 +30608,6 @@ footer *,
 /* استثناء .sch-profile-hero (صفحة بروفايل العالم) — تطابق [class*="-hero"] عن طريق
    الخطأ رغم أن خلفيتها فاتحة (بلا لون خلفية أصلاً)، فكانت وسوم التخصص/العصر
    (sch-tag) تُصبح بيضاء على خلفية شبه بيضاء — تباين شبه معدوم (WCAG). */
-.sch-profile-hero,
 .sch-profile-hero * {
   color: inherit !important;
 }
@@ -30649,7 +30620,6 @@ footer *,
 
 /* استثناء .dvp-hero (رأس صفحة المطوّرين /developers) — نفس الخلل: لا خلفية
    فعلية فبقي العنوان والمقدّمة أبيضين على خلفية فاتحة (غير مقروءين تقريبًا). */
-.dvp-hero,
 .dvp-hero * {
   color: inherit !important;
 }

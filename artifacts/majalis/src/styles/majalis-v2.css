@@ -1814,35 +1814,15 @@
   font-family: var(--mj-font-display) !important;
   color: var(--majalis-emerald-deep, #173D35) !important;
 }
-/* ── 3. خلفية الصفحة — ظل خفيف ── */
-.page-shell {
-  background: var(--msk-canvas-1, #F7FBF9) !important;
-}
+/* ── 3. خلفية الصفحة — ظل خفيف (مطابقة .page-shell أعلى الملف، لا تكرار) ── */
 
-/* ── 4. صفحة الأسئلة والأجوبة ── */
-.qa-item {
-  background: var(--msk-canvas, #FFFFFF) !important;
-}
-.qa-item__question {
-  color: var(--majalis-emerald-deep, #173D35) !important;
-  font-family: var(--mj-font-display) !important;
-}
-.qa-item__answer {
-  color: var(--msk-text, #202725) !important;
-}
+/* ── 4. صفحة الأسئلة والأجوبة (خلفية/سؤال/جواب مطابقة أعلى الملف؛ الفئة أدناه فقط قيمتها مختلفة هنا) ── */
 .qa-item__category {
   background: rgba(23,61,53,0.08) !important;
   color: var(--majalis-emerald, #28584D) !important;
 }
 
-/* ── 5. صفحة الحديث ── */
-.hadith-card {
-  background: var(--msk-canvas, #FFFFFF) !important;
-}
-.hadith-card__title {
-  color: var(--majalis-emerald-deep, #173D35) !important;
-  font-family: var(--mj-font-display) !important;
-}
+/* ── 5. صفحة الحديث (الخلفية/العنوان مطابقان أعلى الملف؛ الفروق أدناه فقط) ── */
 .hadith-card__chapter {
   color: var(--majalis-emerald, #28584D) !important;
 }
@@ -1853,13 +1833,9 @@
   border-bottom-color: rgba(23,61,53,0.12) !important;
 }
 
-/* ── 6. صفحة المكتبة ── */
+/* ── 6. صفحة المكتبة (عنوان البطاقة مطابق أعلى الملف، لا تكرار) ── */
 .library-card {
   background: var(--msk-canvas, #FFFFFF) !important;
-}
-.home-library-card h3 {
-  color: var(--majalis-emerald-deep, #173D35) !important;
-  font-family: var(--mj-font-display) !important;
 }
 
 /* ── 7. الأذكار والفوائد ── */
@@ -2512,7 +2488,8 @@ table th {
   transform: translateY(-2px);
 }
 .prophets-seerah-bridge__ornament { flex-shrink: 0; }
-.prophets-seerah-bridge__body { flex: 1; min-width: 0; }
+/* .prophets-seerah-bridge__body مطابقة حرفيًا لتعريفها في elite-2026.css
+   (يحمَّل لاحقًا فيفوز بالـcascade أصلًا) — أُزيل التكرار هنا. */
 .prophets-seerah-bridge__eyebrow {
   font-size: 0.8rem;
   font-weight: 700;
@@ -2540,9 +2517,8 @@ table th {
   flex-shrink: 0;
   transition: transform 0.2s;
 }
-.prophets-seerah-bridge:hover .prophets-seerah-bridge__arrow {
-  transform: translateX(-4px);
-}
+/* .prophets-seerah-bridge:hover .prophets-seerah-bridge__arrow مطابقة
+   حرفيًا لتعريفها في elite-2026.css — أُزيل التكرار هنا. */
 
 /* رابط عكسي من السيرة لقصص الأنبياء */
 .seerah-back-link {
