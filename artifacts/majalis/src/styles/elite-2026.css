@@ -5158,10 +5158,10 @@ html[data-theme="dark"] .khatma-bar-fill {
 }
 .mzd-hero__pattern {
   position: absolute;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   opacity: 0.05;
   background-image: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%);
   background-size: 12px 12px;
@@ -9395,10 +9395,10 @@ body {
 /* ── §163 — GlobalSearchModal (gsm-*) ───────────────────────────────────── */
 .gsm-overlay {
   position: fixed;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 10000;
   display: flex;
   align-items: flex-start;
@@ -9890,10 +9890,10 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 /* ── §169 — ExploreAyahPanel (eap-*) ────────────────────────────────────── */
 .eap-backdrop {
   position: fixed;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 9000;
   background: rgba(0,0,0,0.45);
 }
@@ -11226,10 +11226,10 @@ button, .btn {
 /* ── §191 — MuezzinPicker bottom-sheet ─────────────────────────────────────── */
 .mzp-overlay {
   position: fixed;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 3000;
   background: rgba(0,0,0,0.65);
   display: flex;
@@ -14431,10 +14431,10 @@ img[loading="lazy"]:not([src=""]) {
 .bottom-sheet__head::before {
   content: "";
   position: absolute;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-image:
     radial-gradient(circle at 15% 50%, rgba(255,255,255,0.04) 0%, transparent 50%),
     radial-gradient(circle at 85% 50%, rgba(255,255,255,0.03) 0%, transparent 45%);
@@ -14584,10 +14584,10 @@ img[loading="lazy"]:not([src=""]) {
 .tj-hero::before {
   content: "";
   position: absolute;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06) 0%, transparent 50%),
                     radial-gradient(circle at 80% 70%, rgba(255,255,255,0.04) 0%, transparent 45%);
   pointer-events: none;
@@ -14725,10 +14725,10 @@ html[data-theme="dark"] .tj-cat-badge { color: #8BABA3 !important; }
 .quran-hub-hero::before {
   content: "";
   position: absolute;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.04) 0%, transparent 50%),
                     radial-gradient(circle at 80% 70%, rgba(255,255,255,0.03) 0%, transparent 50%);
   pointer-events: none;
@@ -23210,10 +23210,10 @@ html[data-theme="dark"] .share-btn--copy { background: #173D35 !important; }
 .seerah-hero::before {
   content: "";
   position: absolute;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(255,255,255,0.04), transparent);
   pointer-events: none;
 }
@@ -29288,7 +29288,7 @@ input[type="text"], input[type="email"], input[type="password"],
 input[type="search"], input[type="number"], input[type="tel"],
 textarea, select {
   font-family: var(--font-body) !important;
-  font-size: 0.9375rem !important;
+  font-size: 1rem !important;
   color: var(--color-text, #202725) !important;
   background: var(--color-surface, #FFFFFF) !important;
   border: 1px solid var(--color-border, #E7E2D8) !important;
