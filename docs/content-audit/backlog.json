@@ -1,7 +1,7 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b039",
+  "lastCompletedId": "b037-content",
   "resumeFromId": "b011",
   "items": [
     {
@@ -402,9 +402,9 @@
       "section": "arabic_language",
       "title": "فجوة تغطية حقيقية: لا يوجد قسم \"اللغة العربية والنحو والصرف والبلاغة\" في المنصة إطلاقاً",
       "severity": "medium",
-      "status": "pending",
-      "finding": "بحث شامل في src/App.tsx والملاحة وTopicsIndexPage.tsx: لا مسار ولا صفحة ولا حتى إشارة مخطَّطة لقسم اللغة العربية (نحو/صرف/بلاغة) رغم ذكره صراحةً في مصفوفة تغطية البند 5 الأصلي. هذا فجوة تغطية حقيقية لا مشكلة دقة — يحتاج قراراً: هل يُبنى قسم جديد كامل (نطاق إنشاء محتوى تعليمي جديد من الصفر، أكبر من نطاق التدقيق/الإصلاح المعتاد لهذه الجلسة) أم يبقى خارج النطاق الحالي للمنصة عمداً؟",
-      "nextAction": "يحتاج قراراً من المالك: بناء قسم جديد (نحو/صرف/بلاغة أساسية لطالب العلم) هو مهمة إنشاء محتوى كبيرة تستحق تخطيطاً منفصلاً، وليست \"إصلاح محتوى ناقص\" عادياً."
+      "status": "partially_done",
+      "finding": "بطلب مباشر من المالك (\"أنشئ وأكمل\")، أُنشئ المحتوى وصفحة العرض كاملَين من نافذة المحتوى: src/lib/arabic-language-data.ts (7 أبواب، 74 درساً: نحو أساسي/متقدم، صرف، معاني، بيان، بديع، اللغة وخدمة القرآن) وsrc/views/ArabicLanguagePage.tsx (بنفس نمط TarikhIslamiPage.tsx الموجود). تعمّدت عدم لمس App.tsx (تسجيل المسار) لأنه بنية تطبيق لا محتوى وقد يتعارض مع عمل نافذة automation/tasks المتزامنة — التفاصيل الدقيقة لسطرَي الربط موثّقة في technical-handoff.md §-1.",
+      "nextAction": "نافذة automation/tasks: إضافة سطرين في App.tsx فقط (lazy import + Route) — لا محتوى إضافي مطلوب، كل شيء جاهز."
     },
     {
       "id": "b038",
