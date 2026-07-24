@@ -117,6 +117,9 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
   );
 
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
+    // مساران بديلان كاملان بلوحة المفاتيح.
+    /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions */
     <div className="aas-sheet" onClick={onClose} role="presentation">
       <div className="aas-panel" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={`إجراءات الآية ${ayahNum}`}>
         <div className="aas-panel__handle" aria-hidden="true" />

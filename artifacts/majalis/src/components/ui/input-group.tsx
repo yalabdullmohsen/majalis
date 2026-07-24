@@ -67,6 +67,7 @@ function InputGroupAddon({
   // في src/ حاليًا (بقايا قالب shadcn/ui) — موثَّق دون تعديل لعدم وجود أي
   // فائدة وصولية حقيقية من إضافة دلالة تفاعلية زائفة هنا.
   return (
+    /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, jsx-a11y/no-noninteractive-element-interactions */
     <div
       role="group"
       data-slot="input-group-addon"

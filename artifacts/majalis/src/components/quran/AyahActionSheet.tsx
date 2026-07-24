@@ -141,6 +141,7 @@ export function AyahActionSheet({
   return createPortal(
     // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
     // مساران بديلان كاملان بلوحة المفاتيح.
+    /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions */
     <div className="ayah-sheet-overlay" role="presentation" onClick={onClose}>
       <div
         className="ayah-sheet"

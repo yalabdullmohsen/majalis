@@ -76,6 +76,7 @@ export function HomeCustomizeSheet({
   return createPortal(
     // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر
     // داخل الورقة — مساران بديلان كاملان بلوحة المفاتيح.
+    /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions */
     <div className="bottom-sheet-overlay" role="presentation" onClick={onClose}>
       <div className="bottom-sheet" role="dialog" aria-modal="true" aria-label="تخصيص الصفحة الرئيسية" onClick={(e) => e.stopPropagation()}>
         <div className="bottom-sheet__handle" />

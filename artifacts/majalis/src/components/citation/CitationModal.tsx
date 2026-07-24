@@ -138,6 +138,9 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
   const typeMod = citTypeClass(source.content_type);
 
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
+    // مساران بديلان كاملان بلوحة المفاتيح.
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
       dir="rtl"
       className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 p-4"

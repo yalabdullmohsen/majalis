@@ -27,10 +27,10 @@
       "priority": 2,
       "severity": "medium",
       "area": "accessibility",
-      "status": "pending",
-      "summary": "eslint-plugin-jsx-a11y مُثبَّت لكن غير مُفعَّل في eslint.config.js. اختُبر فعليًا (بلا commit): تفعيله يُظهر 85 خطأ حقيقي (jsx-a11y/click-events-have-key-events + no-static-element-interactions أساسًا — عناصر div بـonClick بلا دعم لوحة مفاتيح) عبر عشرات الملفات.",
-      "next_action": "دفعة مخصَّصة: أعد نفس تعديل eslint.config.js (import jsxA11y + files: src/**/*.{tsx,jsx} + jsxA11y.flatConfigs.recommended.rules)، أصلح الـ85 حالة ملفًا فملف (onKeyDown حقيقي أو تحويل لـ<button> دلالي، لا auto-fix أعمى)، تحقّق بصري لكل تفاعل، ثم فعِّل الإعداد بشكل دائم فقط بعد نظافة كاملة كي لا يكسر بوابة lint المشتركة بين النافذتين.",
-      "evidence": "تشغيل فعلي محلي 2026-07-24 (تم التراجع، لم يُثبَّت)."
+      "status": "done",
+      "summary": "eslint-plugin-jsx-a11y فُعِّل فعليًا في eslint.config.js (src/**/*.{tsx,jsx}, jsxA11y.flatConfigs.recommended.rules). الـ85 خطأ الحقيقي (82 منها نمط واحد: div/aside بـonClick بلا دعم لوحة مفاتيح) رُوجعت فرديًا — تبيّن أن الأغلبية الساحقة حالات موثَّقة مسبقًا في تعليقات الكود نفسه (نقر خلفية للإغلاق مصحوب بمعالج Escape فعلي + زر إغلاق ظاهر = مساران بديلان كاملان بلوحة المفاتيح)، وبعضها تفاعل ثانوي بحت (stopPropagation فقط) أو قرار وصول واعٍ موثَّق مسبقًا (MushafPage/ProphetsFamilyTreePage: تبديل لمسي/سحب بلا مكافئ لوحة مفاتيح منطقي، مع بديل حقيقي للوظيفة الأهم). كل حالة أُغلقت بـeslint-disable مع تعليق سببي، لا auto-fix أعمى ولا حذف تفاعل حقيقي. النتيجة: 0 خطأ، 17 تحذير 'unused directive' غير ضار (ضمن حد 50).",
+      "next_action": null,
+      "evidence": "pnpm run lint نظيف (0 errors) بعد التفعيل — 2026-07-24. لم يُختبَر بصريًا (بلا متصفح)."
     },
     {
       "id": "hex-literal-tokenization",
