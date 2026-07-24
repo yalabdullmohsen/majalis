@@ -1,7 +1,7 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b020",
+  "lastCompletedId": "b021",
   "resumeFromId": "b011",
   "items": [
     {
@@ -212,6 +212,18 @@
       "severity": "low",
       "status": "done",
       "finding": "كل الفحوصات نظيفة: 0 عنوان/وصف SEO مكرر بين 175 مساراً، 0 تناقض noindex+sitemap:true، 0 تكرار في qa-seed(360)/quiz-seed(978). تكرار نصي حقيقي بين fawaid-seed.ts وfawaid-curated-seed.ts (7 عناصر) موجود في الملفات الخام لكن mergeFawaidSeeds() في demo-content.ts يُصفّيه فعلياً بمفتاح النص — لا يظهر مكرراً للمستخدم، لا حاجة لتعديل."
+    },
+    {
+      "id": "b021",
+      "section": "sahabah",
+      "title": "دمج سجل مكرر لسلمان الفارسي وتصحيح ادعاء عمره المبالغ فيه (150+ سنة)",
+      "severity": "high",
+      "status": "done",
+      "files": [
+        "artifacts/majalis/src/views/SahabahPage.tsx"
+      ],
+      "finding": "سلمان الفارسي كان مسجلاً مرتين (id: salman وid: salman-farisi) بمحتوى متداخل. النسخة المحذوفة كانت تجزم بعمره \"150+ سنة تقريباً\" وهي رواية مبالغ فيها مشهورة (بعض الروايات الشعبية تصل بها إلى 250-350 سنة) غير موثَّقة تاريخياً؛ أُبقيت النسخة الأخرى الأكثر انضباطاً (تواريخ ميلاد/وفاة مُقدَّرة بـ\"نحو\" تعطي عمراً معقولاً ~72 سنة)، مع نقل حقل kunya (سلمان المحمدي) إليها. 65→64 صحابياً. فحصت بقية الـ64 لادعاءات \"أول من/أعظم/الوحيد\" — كلها إما نص حديثي مباشر أو حقيقة تاريخية موثّقة (كزيد بن حارثة الصحابي الوحيد المذكور بالاسم في القرآن) أو أعمار معقولة (~100 سنة، موثقة لأعلام كأنس بن مالك) لا تحتاج تعديلاً.",
+      "commit": "batch-2026-07-24-08"
     }
   ]
 }
