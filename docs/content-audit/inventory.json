@@ -38,11 +38,11 @@
       "scholarlyAudit": "لم يُراجَع بالكامل",
       "linguisticAudit": "غير مكتمل",
       "sourcesStatus": "verificationStatus: pending_review لمعظم السجلات في library-catalog.json",
-      "seoStatus": "مشكلة مؤكدة: عنوان fallback عام «كتاب شرعي» يظهر لصفحات كتب فردية غير مُدرَجة في seo-routes.json (راجع technical-handoff.md)",
+      "seoStatus": "مُتحقَّق فعلياً في dist/: 133/133 كتاباً لها صفحة مُصيَّرة فردية بعنوان صحيح (تحقّق مباشر من book-hisn-al-muslim). لا مشكلة — تصحيح لتشخيص سابق خاطئ.",
       "linksStatus": "لم يُفحص",
-      "severity": "critical",
+      "severity": "medium",
       "lastReviewed": "2026-07-24",
-      "nextAction": "توثيق فني تم (b005/b006). محتوى: فحص أوصاف الكتب لعبارات دعائية مطلقة."
+      "nextAction": "محتوى فقط: فحص أوصاف الكتب لعبارات دعائية مطلقة. لا حاجة لعمل تقني."
     },
     {
       "section": "سؤال وجواب (لعبة معرفية)",
@@ -94,11 +94,11 @@
       "scholarlyAudit": "غير مراجَع",
       "linguisticAudit": "غير مراجَع",
       "sourcesStatus": "غير مؤكد",
-      "seoStatus": "مشكلة مؤكدة (بند 4-9 الأصلي): لا مسارات فردية seo-routes.json — احتمال ظهور محتوى الرئيسية للزواحف. تقني بحت.",
+      "seoStatus": "مشكلة مؤكدة فعلياً (تحقّق مباشر من dist/rulings/): 7/533 فقط لها صفحة فردية — platform-seed.snapshot.json مجمَّد. راجع technical-handoff.md §1.",
       "linksStatus": "لم يُفحص",
       "severity": "critical",
       "lastReviewed": "2026-07-24",
-      "nextAction": "توثيق فني تم (b005). محتوى: مراجعة لاحقة بعد الحل التقني."
+      "nextAction": "توثيق فني تم (b005 مُحدَّث). محتوى: مراجعة لاحقة بعد الحل التقني."
     },
     {
       "section": "الأقسام غير المفحوصة بعد",

@@ -19,7 +19,10 @@
       "title": "تصحيح الجزم في صفحة اليسع (خليفة إلياس)",
       "severity": "high",
       "status": "done",
-      "files": ["artifacts/majalis/src/lib/prophets-data.ts", "artifacts/majalis/src/lib/prophets-lineage.ts"],
+      "files": [
+        "artifacts/majalis/src/lib/prophets-data.ts",
+        "artifacts/majalis/src/lib/prophets-lineage.ts"
+      ],
       "commit": "batch-2026-07-24-01"
     },
     {
@@ -28,7 +31,10 @@
       "title": "بيان الخلاف في نبوة ذي الكفل وعدم الجزم بمكانه/زمنه",
       "severity": "high",
       "status": "done",
-      "files": ["artifacts/majalis/src/lib/prophets-data.ts", "artifacts/majalis/src/lib/prophets-lineage.ts"],
+      "files": [
+        "artifacts/majalis/src/lib/prophets-data.ts",
+        "artifacts/majalis/src/lib/prophets-lineage.ts"
+      ],
       "commit": "batch-2026-07-24-01"
     },
     {
@@ -37,18 +43,21 @@
       "title": "تصحيح «تُهفة النظار» إلى «تحفة النظار» + مزامنة المرآة",
       "severity": "medium",
       "status": "done",
-      "files": ["artifacts/majalis/src/lib/scholars-data.ts", "artifacts/majalis/src/data/scholars-seo.json"],
+      "files": [
+        "artifacts/majalis/src/lib/scholars-data.ts",
+        "artifacts/majalis/src/data/scholars-seo.json"
+      ],
       "sideEffect": "مزامنة sync-seo-data.ts كشفت أن scholars-seo.json كان متجمداً منذ فترة طويلة (بيوغرافيات قصيرة قديمة) — أُعيد توليده بالكامل بنفس الحركة، تحسين جودة حقيقي إضافي.",
       "commit": "batch-2026-07-24-01"
     },
     {
       "id": "b005",
       "section": "technical_seo",
-      "title": "فجوة seo-routes.json: لا مسارات فردية لـ/library/*, /rulings/*, /sheikhs/*, /annual-courses/*",
-      "severity": "critical",
+      "title": "platform-seed.snapshot.json مجمَّد — يفوّت 527 من 533 حكماً في seo-prerender",
+      "severity": "high",
       "status": "technical_handoff",
-      "detail": "راجع docs/content-audit/technical-handoff.md — السبب الجذري لمشكلة «كتاب شرعي» العامة (حصن المسلم) ولاحتمال ظهور محتوى الرئيسية بدل الأحكام لمحركات البحث. يتطلب تعديل scripts/generate-seo.mjs — خارج صلاحية نافذة المحتوى.",
-      "nextAction": "نافذة automation/tasks تنفّذ التوليد الفردي، بعد حسم تعارض library-catalog.json (راجع b006)."
+      "detail": "راجع docs/content-audit/technical-handoff.md §1 (مُصحَّح 2026-07-24) — التشخيص الأول (b005 القديم) كان خاطئاً جزئياً؛ library/scholars مغطّيان بالكامل فعلياً وتحقّق منهما مباشرة في dist/. الفجوة الحقيقية محصورة في rulings/fiqh_decisions/courses/fiqh_sessions/qa_items عبر platform-seed.snapshot.json المجمَّد.",
+      "nextAction": "نافذة automation/tasks: سكربت يُحدّث platform-seed.snapshot.json من المصادر الحيّة، أو تعديل generate-seo.mjs ليقرأ مباشرة منها. أولوية قصوى: rulings."
     },
     {
       "id": "b006",
