@@ -1,7 +1,7 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b015",
+  "lastCompletedId": "b017",
   "resumeFromId": "b011",
   "items": [
     {
@@ -159,6 +159,30 @@
       "severity": "low",
       "status": "done",
       "finding": "فحص برمجي شامل (grep + استيراد فعلي): 0 نتائج placeholder/TODO/lorem في src/lib+src/views+src/data. 0 وصف فارغ/قصير(<20حرف) في 133 كتاباً و92 شيخاً. 0 حقل فارغ في 73 حكماً و34 قرار مجمع فقهي و64 مسألة فقهية معاصرة."
+    },
+    {
+      "id": "b016",
+      "section": "annual_courses",
+      "title": "إغلاق تسجيل 11 دورة علمية منتهية فعلياً كانت تظهر «التسجيل مفتوح» (بند 4-10 الأصلي)",
+      "severity": "high",
+      "status": "done",
+      "files": [
+        "artifacts/majalis/src/lib/annual-courses-seed.ts"
+      ],
+      "finding": "فحص برمجي بمقارنة start_date/end_date بتاريخ اليوم (2026-07-24): 29 دورة registration_open=true رغم مرور start_date، منها 11 دورة انتهى end_date أيضاً فعلياً (فرق شهور، بعضها من يناير 2026) — صُحِّحت إلى false. الـ18 الباقية لها end_date لم يحن بعد (دورات متعددة الأشهر جارية فعلاً) فتُركت دون تغيير عن قصد.",
+      "commit": "batch-2026-07-24-06"
+    },
+    {
+      "id": "b017",
+      "section": "prophets",
+      "title": "تصحيح صفحة إدريس — فصل الثناء القرآني عن رواية «أول من خاط/كتب» غير الثابتة",
+      "severity": "medium",
+      "status": "done",
+      "files": [
+        "artifacts/majalis/src/lib/prophets-data.ts"
+      ],
+      "finding": "title/peopleOrPlace/era/briefBio/keyAttributes صُحِّحت لعدم الجزم بمكانه (بابل) وزمنه (قبل نوح) ونسبة رواية الخياطة/الكتابة إليه كحقيقة قطعية — بنفس منهج إصلاح اليسع وذي الكفل. فحصت بقية الأنبياء الـ23 لنفس النمط (أول من/أعظم/مؤسس): كلها إما إجماع تاريخي أو مأخوذة حرفياً من نص قرآني (نوح 950 سنة، سليمان الملك، يحيى التسمية) — لا حاجة لتعديل.",
+      "commit": "batch-2026-07-24-06"
     }
   ]
 }
