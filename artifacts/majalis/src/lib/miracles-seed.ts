@@ -528,7 +528,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 كذلك يدخل الحديد في صناعة الأدوات والمعدات الطبية والجراحية، مما جعله ركيزة أساسية للحضارة الطبية البشرية.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "الطب في القرآن والسنة — د. محمود الناظر",
+    scholarly_source: "الطب في القرآن والسنة بين تشخيص الداء ومعرفة الدواء — محمد محمود عبد الله",
     verification_status: "verified",
     status: "approved",
   },
@@ -584,9 +584,11 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 يوافق هذا الوصف ما توصّل إليه علم الأجنة الحديث (د. كيث مور) من تطابق هذه المصطلحات مع مراحل التطور الجنيني.
 
+تنبيه: دقة هذا "التطابق" الحرفي بين المصطلحين محل نقاش أكاديمي، وليست محل إجماع علمي.
+
 ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — الحج",
-    verification_status: "verified",
+    verification_status: "needs_review",
     status: "approved",
   },
   {
