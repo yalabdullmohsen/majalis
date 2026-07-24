@@ -110,12 +110,12 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── تفسير ── */
   { text: "الفاتحة أم القرآن وأم الكتاب والسبع المثاني.", category: "التفسير", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "{وَعَسَىٰ أَن تَكْرَهُوا شَيْئًا وَهُوَ خَيْرٌ لَّكُمْ} — وراء كل قدر حكمة لا تراها.", category: "التفسير", source: "البقرة: 216", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
-  { text: "الصبر والشكر جناحا الإيمان؛ وبهما كمال المؤمن.", category: "التفسير", source: "تفسير ابن القيم — مدارج السالكين", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "الصبر والشكر مطيتان للإيمان لا يُحمل إلا عليهما.", category: "التفسير", source: "مدارج السالكين — فصل منزلة الصبر", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
   { text: "{إِنَّ مَعَ الْعُسْرِ يُسْرًا} — تكررت مرتين إشارة إلى أن العسر واحد واليسر اثنان.", category: "التفسير", source: "الشرح: 5-6 — تفسير ابن كثير", author_name: "ابن كثير", status: "approved", verification_status: "verified" },
 
   /* ── حديث ── */
   { text: "لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه.", category: "الحديث", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "شهر رمضان شهر الصبر، وثواب الصبر الجنة.", category: "الحديث", source: "رواه البيهقي — حسنه الألباني", author_name: "شعب الإيمان", status: "approved", verification_status: "verified" },
+  { text: "شهر رمضان شهر الصبر، وثواب الصبر الجنة.", category: "الحديث", source: "رواه البيهقي في شعب الإيمان عن سلمان ضمن خطبة استقبال رمضان — ضعّفه الألباني في السلسلة الضعيفة (منكر)، وفي سنده علي بن زيد بن جدعان", author_name: "شعب الإيمان", status: "approved", verification_status: "needs_review" },
   { text: "سبعة يظلهم الله في ظله يوم لا ظل إلا ظله — إمام عادل...", category: "الحديث", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "كلمتان خفيفتان على اللسان ثقيلتان في الميزان حبيبتان إلى الرحمن: سبحان الله وبحمده سبحان الله العظيم.", category: "الحديث", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "لا تحاسدوا ولا تناجشوا ولا تباغضوا ولا تدابروا وكونوا عباد الله إخواناً.", category: "الحديث", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
@@ -130,15 +130,15 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── القرآن ── */
   { text: "حافظ على قراءة القرآن في الصلاة وخارجها حتى يكون شفيعك يوم القيامة.", category: "القرآن", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "إن الذي يتعتع في القرآن وهو عليه شاق له أجران.", category: "القرآن", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "من قرأ حرفاً من كتاب الله فله حسنة والحسنة بعشر أمثالها.", category: "القرآن", source: "رواه الترمذي — صحيح", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "من قرأ حرفاً من كتاب الله فله به حسنة والحسنة بعشر أمثالها.", category: "القرآن", source: "رواه الترمذي — صحيح", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
 
   /* ── السيرة ── */
-  { text: "فتح مكة كان بلا قتال تقريباً — ودخل النبي ﷺ مكة وهو يقرأ: {إِنَّا فَتَحْنَا لَكَ فَتْحًا مُّبِينًا}.", category: "السيرة", source: "صحيح البخاري — كتاب المغازي", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
-  { text: "غزوة أحد ففيها شهد بعضهم بشهادة لم تُوضح للنبي ﷺ إلا بعد المعركة.", category: "السيرة", source: "صحيح البخاري — غزوة أحد", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
+  { text: "فتح مكة كان بلا قتال تقريباً — ودخل النبي ﷺ مكة وهو يقرأ: {إِنَّا فَتَحْنَا لَكَ فَتْحًا مُّبِينًا}.", category: "السيرة", source: "صحيح البخاري — كتاب فضائل القرآن، باب الترجيع", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
+  { text: "خالف الرماة أمر النبي ﷺ بلزوم الجبل في غزوة أحد فانكشف ظهر المسلمين وانقلبت دفة المعركة.", category: "السيرة", source: "صحيح البخاري، حديث 3039 — كتاب المغازي", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
   { text: "معاذ بن جبل أعلم الأمة بالحلال والحرام.", category: "السيرة", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
 
   /* ── الآداب ── */
-  { text: "أقرب الناس من الله مجلساً يوم القيامة أحاسنهم خلقاً.", category: "الآداب", source: "رواه الطبراني — صحيح الألباني", author_name: "المعجم الكبير", status: "approved", verification_status: "verified" },
+  { text: "أقرب الناس من النبي ﷺ مجلساً يوم القيامة أحاسنهم خلقاً.", category: "الآداب", source: "رواه الترمذي عن جابر — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "إياكم والجلوس على الطرقات إلا أن تؤدوا حقها.", category: "الآداب", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "زينوا القرآن بأصواتكم.", category: "الآداب", source: "رواه أبو داود — صحيح الألباني", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
   { text: "لا يشكر الله من لا يشكر الناس.", category: "الآداب", source: "رواه أبو داود — صحيح", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
@@ -150,7 +150,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── طلب العلم ── */
   { text: "العالم والمتعلم في الأجر سواء وسائر الناس لا خير فيهم.", category: "طلب العلم", source: "رواه ابن ماجه — اختُلف في تصحيحه؛ ضعّفه الألباني في ضعيف الجامع، وإسناده فيه عثمان بن أبي عاتكة وعلي بن يزيد وكلاهما ضعيف", author_name: "سنن ابن ماجه", status: "approved", verification_status: "needs_review" },
-  { text: "قيد العلم بالكتابة.", category: "طلب العلم", source: "أثر الإمام الشافعي", author_name: "الإمام الشافعي", status: "approved", verification_status: "verified" },
+  { text: "قيدوا العلم بالكتاب.", category: "طلب العلم", source: "أثر موقوف — رواه الدارمي وابن أبي شيبة، وصححه الحاكم في المستدرك", author_name: "عمر بن الخطاب", status: "approved", verification_status: "verified" },
   { text: "من أراد الدنيا فعليه بالعلم، ومن أراد الآخرة فعليه بالعلم.", category: "طلب العلم", source: "أثر يُنسب للإمام الشافعي", author_name: "الإمام الشافعي", status: "approved", verification_status: "needs_review" },
 
   /* ── الدعوة ── */
@@ -158,7 +158,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "بلّغوا عني ولو آية.", category: "الدعوة", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
 
   /* ── التربية ── */
-  { text: "لأن يؤدب أحدكم ولده خير من أن يتصدق بصاع.", category: "التربية", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "لأن يؤدب أحدكم ولده خير من أن يتصدق بصاع.", category: "التربية", source: "رواه الترمذي عن جابر بن سمرة — ضعيف (قال الترمذي: غريب، وفي سنده ناصح أبو عبدالله ضعيف)", author_name: "سنن الترمذي", status: "approved", verification_status: "needs_review" },
   { text: "حق الولد على والده أن يحسن اسمه ويحسن تربيته.", category: "التربية", source: "رواه البيهقي", author_name: "شعب الإيمان", status: "approved", verification_status: "verified" },
 
   /* ── اللغة ── */
