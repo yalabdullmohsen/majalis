@@ -1,7 +1,7 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b023",
+  "lastCompletedId": "b025",
   "resumeFromId": "b011",
   "items": [
     {
@@ -250,6 +250,34 @@
       ],
       "finding": "الحديث المتواتر (3 نسخ بمعرّفات id مختلفة الصياغة: muttawatir/mutawatir/al-mutawatir)، الثقة، الرواية بالمعنى. أُبقيت الأطول من كل مجموعة. صُحِّح الرقم المقابل في خارطة الميزات إلى 98.",
       "commit": "batch-2026-07-24-09"
+    },
+    {
+      "id": "b024",
+      "section": "akhlaq",
+      "title": "إزالة 6 مقالات أخلاق مكررة حرفياً/شبه حرفياً في AkhlaqPage.tsx (77→70) وحل تعارض نسبة اقتباس لعالمين مختلفين",
+      "severity": "high",
+      "status": "done",
+      "files": [
+        "artifacts/majalis/src/views/AkhlaqPage.tsx"
+      ],
+      "finding": "اكتُشفت بفحص عتبة أقصر من فحص السجلات الأخرى (عناوين قصيرة كـ\"الحياء\"/\"الرحمة\" فاتت الفحص الأول بعتبة 8 أحرف). خمس مجموعات: الإصلاح بين الناس(2→1)، التوكل على الله(2→1)، الرحمة(2→1)، الحياء(3→2، مع حل تعارض حقيقي: نفس الاقتباس منسوب لعالمين مختلفين \"ابن حجر\" و\"أحمد بن حنبل\" في نسختين — حُذفت إحداهما فزال التعارض، وأُبقيت الثالثة \"الحياء من الله\" بعنوان مُميَّز لمحتواها المختلف فعلياً عن حديث ابن مسعود)، الإيثار(3→1، أُبقيت النسخة بالآية الأدق دلالة على الإيثار تحديداً — الحشر:9 بدل الإنسان:8 — وحُذفت أخرى استشهدت بحديث غير متعلق بالإيثار فعلياً).",
+      "commit": "batch-2026-07-24-10"
+    },
+    {
+      "id": "b025",
+      "section": "multi_page_dedup",
+      "title": "إزالة تكرار حرفي عبر 5 صفحات إضافية: AlamatSaah، Duas، FadailAamal، HikamSalaf، Institutions (10 سجلات محذوفة)",
+      "severity": "high",
+      "status": "done",
+      "files": [
+        "artifacts/majalis/src/views/AlamatSaahPage.tsx",
+        "artifacts/majalis/src/views/DuasPage.tsx",
+        "artifacts/majalis/src/views/FadailAamalPage.tsx",
+        "artifacts/majalis/src/views/HikamSalafPage.tsx",
+        "artifacts/majalis/src/views/InstitutionsPage.tsx"
+      ],
+      "finding": "اكتُشفت هذه المجموعة عبر فحص عام لكل الملفات ذات المصفوفات المضمّنة الكبيرة (نمط seed داخل .tsx بدل ملف مستقل). ملاحظة مهمة: أحد أزواج الأدعية (دعاء الاستخارة) كانت النسخة المحذوفة منه ناقصة النص الكامل للدعاء الصحيح (تحوي بداية الدعاء فقط) — فحذفها ليس مجرد إزالة تكرار بل تصحيح نص شرعي غير مكتمل كان معروضاً كأنه كامل. حالة واحدة (حكمة الشكر عن ابن القيم) بها تعارض في نسبة الكتاب المصدر (مدارج السالكين مقابل عدة الصابرين) لم أستطع حسمه بثقة كاملة — رجّحت \"عدة الصابرين\" لتوافقه الموضوعي الأقرب مع حكم الصبر والشكر تحديداً، مع تسجيل الشك هنا.",
+      "commit": "batch-2026-07-24-11"
     }
   ]
 }

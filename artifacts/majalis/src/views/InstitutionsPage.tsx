@@ -62,16 +62,6 @@ const INSTITUTIONS: Institution[] = [
   },
   // مراكز إسلامية
   {
-    id: "rabita",
-    name: "رابطة العالم الإسلامي",
-    type: "center",
-    city: "مكة المكرمة",
-    country: "المملكة العربية السعودية",
-    description: "منظمة إسلامية دولية تعنى بشؤون المسلمين ونشر الوسطية وتعزيز الحوار.",
-    website: "https://www.themwl.org",
-    mapQuery: "رابطة العالم الإسلامي مكة",
-  },
-  {
     id: "ium",
     name: "الجامعة الإسلامية العالمية في ماليزيا",
     type: "university",
