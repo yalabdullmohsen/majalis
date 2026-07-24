@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b009",
-  "resumeFromId": "b013",
+  "lastCompletedId": "b013",
+  "resumeFromId": "b011",
   "items": [
     {
       "id": "b001",
@@ -138,8 +138,10 @@
       "section": "features_roadmap",
       "title": "تحديد مصدر أعداد المصطلحات (115+ فقهية/عقدية، 86+ حديثية) في FeaturesInProgressPage.tsx",
       "severity": "medium",
-      "status": "pending",
-      "nextAction": "البحث عن مصدر بيانات IslamicGlossaryPage.tsx وHadithSciencePage.tsx (قد يكون Supabase حياً لا seed ثابت) والتحقق من الرقمين."
+      "status": "done",
+      "nextAction": "البحث عن مصدر بيانات IslamicGlossaryPage.tsx وHadithSciencePage.tsx (قد يكون Supabase حياً لا seed ثابت) والتحقق من الرقمين.",
+      "finding": "المصدر: مصفوفة TERMS مضمّنة داخل كل صفحة (لا ملف seed منفصل). العدّ الفعلي عبر عدّ حقول id: الفعلي: مصطلحات العقيدة/الفقه/إلخ (IslamicGlossaryPage.tsx) = 218 وليس 115+، ومصطلحات علوم الحديث (HadithSciencePage.tsx) = 102 وليس 86+. كلا الصفحتين تعرضان فعلياً TERMS.length ديناميكياً في واجهتهما — التناقض كان فقط في نص خارطة الطريق الثابت. صُحِّح.",
+      "commit": "batch-2026-07-24-05"
     }
   ]
 }
