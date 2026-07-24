@@ -238,8 +238,8 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "إعراب الكلمة يكشف معناها؛ فمن أتقن الإعراب أمن اللحن في تلاوته.", category: "اللغة", source: "شرح ألفية ابن مالك — ابن عقيل", author_name: "ابن عقيل", status: "approved", verification_status: "verified" },
 
   /* ── إضافات طلب العلم ── */
-  { text: "العلم لا يُعطيك بعضه حتى تعطيه كلك.", category: "طلب العلم", source: "قولٌ مأثور عن مالك بن أنس", author_name: "الإمام مالك", status: "approved", verification_status: "needs_review" },
-  { text: "أول العلم الصمت، ثم الاستماع، ثم الحفظ، ثم العمل، ثم النشر.", category: "طلب العلم", source: "أثر عن الإمام الشافعي — مناقبه للبيهقي", author_name: "الإمام الشافعي", status: "approved", verification_status: "needs_review" },
+  { text: "العلم لا يُعطيك بعضه حتى تعطيه كلك.", category: "طلب العلم", source: "قولٌ مأثور يُنسب للإمام الشافعي (وبصيغة قريبة للجاحظ) — لم يثبت له إسناد لمالك بن أنس", author_name: "الإمام الشافعي (نسبة مشهورة، غير مؤكَّدة الإسناد)", status: "approved", verification_status: "needs_review" },
+  { text: "أول العلم الصمت، ثم الاستماع، ثم الحفظ، ثم العمل، ثم النشر.", category: "طلب العلم", source: "قول مأثور عن الأصمعي (عبد الملك بن قريب)، لا عن الإمام الشافعي", author_name: "الأصمعي", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الدعوة ── */
   { text: "الداعية يحتاج إلى فقه المقاصد؛ فلا يضيّع واجباً بحجة مستحب.", category: "الدعوة", source: "الموافقات — الإمام الشاطبي", author_name: "الإمام الشاطبي", status: "approved", verification_status: "verified" },
@@ -248,7 +248,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── إضافات الزهد والرقائق ── */
   { text: "الزهد في الدنيا ليس ترك أسبابها؛ بل ألا تستعبدك ولا تملأ قلبك.", category: "الرقائق", source: "مدارج السالكين — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
   { text: "ما أُفرغ في جوف ابن آدم أشد من الحب والغضب؛ فداوِهما بالصبر والاستعاذة.", category: "الرقائق", source: "إغاثة اللهفان — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
-  { text: "أكبر الكبائر حب الدنيا والأمن من مكر الله والقنوط من رحمته.", category: "الرقائق", source: "الزهد — الإمام أحمد بن حنبل", author_name: "الإمام أحمد بن حنبل", status: "approved", verification_status: "needs_review" },
+  { text: "أكبر الكبائر: الإشراك بالله، والأمن من مكر الله، والقنوط من رحمة الله، واليأس من روح الله.", category: "الرقائق", source: "أثر عن عبدالله بن مسعود — رواه عبدالرزاق والطبراني في الكبير وذكره ابن جرير، إسناده صحيح", author_name: "عبدالله بن مسعود", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الأخلاق ── */
   { text: "الإنسان كثير بأخلاقه؛ لا بماله ولا بجاهه.", category: "الأخلاق", source: "ديوان الإمام الشافعي", author_name: "الإمام الشافعي", status: "approved", verification_status: "needs_review" },
@@ -277,7 +277,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "طالب العلم لا ينضجُ حتى يستوي عنده الثناء والذم سواء في طلبه.", category: "طلب العلم", source: "الجامع لأخلاق الراوي — الخطيب البغدادي", author_name: "الخطيب البغدادي", status: "approved", verification_status: "needs_review" },
 
   /* ── إضافات القرآن ── */
-  { text: "من أراد علم الأولين والآخرين فليتدبّر القرآن — فيه جواب كل سؤال وشفاء كل داء.", category: "القرآن", source: "مقدمة في أصول التفسير — ابن تيمية", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
+  { text: "من أراد علم الأولين والآخرين فليتدبّر القرآن — فيه جواب كل سؤال وشفاء كل داء.", category: "القرآن", source: "أثر عن عبدالله بن مسعود — رواه أحمد في الزهد وابن أبي شيبة والطبراني في الكبير والبيهقي في شعب الإيمان، نقله ابن تيمية في مقدمة في أصول التفسير", author_name: "عبدالله بن مسعود", status: "approved", verification_status: "verified" },
   { text: "الحافظ للقرآن يُقال له يوم القيامة: اقرأ وارتقِ ورتّل — فمنزلته عند آخر آية يقرؤها.", category: "القرآن", source: "رواه الترمذي وأبو داود — حسن صحيح", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "needs_review" },
 
   /* ── إضافات التربية ── */
