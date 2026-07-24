@@ -55,12 +55,12 @@
     {
       "id": "admin-meta-descriptions-short",
       "priority": 6,
-      "severity": "low",
+      "severity": "none",
       "area": "seo",
-      "status": "pending",
-      "summary": "35 صفحة تحت /admin/** بوصف meta أقصر من الموصى به في test-seo.mjs — صفحات إدارية غير مفهرَسة، أولوية منخفضة جدًا وليست حرجة (0 مشاكل P0).",
-      "next_action": "node scripts/test-seo.mjs للحصول على القائمة الكاملة، وسّع الوصف في src/lib/seo-routes.json لكل مسار admin مذكور إن رغب المالك، وإلا تجاهل — لا يؤثر في SEO العام.",
-      "evidence": "node scripts/test-seo.mjs، 2026-07-24: 736 صفحة، 0 P0، 35 تحذير."
+      "status": "closed-not-an-issue",
+      "summary": "35 صفحة تحت /admin/** بوصف meta أقصر من الموصى به في test-seo.mjs. تحقّقتُ فعليًا: كل مسارات /admin/** لها robots: \"noindex, nofollow\" صراحةً في seo-routes.json، وrobots.txt يستثنيها بالكامل (Disallow: /admin). لا محرك بحث سيقرأ أو يهتم بهذا الوصف إطلاقًا — التحذير صحيح تقنيًا لكن بلا أي أثر SEO حقيقي.",
+      "next_action": null,
+      "evidence": "seo-routes.json entry لـ/admin: robots=\"noindex, nofollow\"، sitemap=false. public/robots.txt: Disallow: /admin و/admin/. تحقّق 2026-07-24."
     }
   ],
   "resolved_this_session": [
