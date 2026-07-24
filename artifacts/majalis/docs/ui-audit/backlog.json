@@ -63,6 +63,18 @@
       "evidence": "seo-routes.json entry لـ/admin: robots=\"noindex, nofollow\"، sitemap=false. public/robots.txt: Disallow: /admin و/admin/. تحقّق 2026-07-24."
     }
   ],
+  "new_low_priority_items": [
+    {
+      "id": "duplicate-dom-to-image-libraries",
+      "priority": 7,
+      "severity": "low",
+      "area": "performance-bundle-size",
+      "status": "pending",
+      "summary": "مكتبتان تقومان بنفس المهمة (تحويل DOM لصورة) مثبَّتتان معًا: html2canvas (استخدام وحيد متبقٍّ: CardsPage.tsx بعد حذف استخدام ContentActions.tsx ضمن إلغاء أزرار المشاركة) وhtml-to-image (FaidaImageCardModal.tsx، CitationModal.tsx). توحيدهما على مكتبة واحدة يقلّل حجم الحزمة، لكن يتطلب تعديل سلوك CardsPage.tsx (تحويل API) بلا إمكانية تحقّق بصري من جودة الصورة الناتجة — لم يُنفَّذ، خطر غير مبرَّر بلا رؤية النتيجة.",
+      "next_action": "إن أُذن: عدّل CardsPage.tsx لاستخدام toPng من html-to-image بدل html2canvas (نفس واجهة الاستخدام تقريبًا)، احذف html2canvas من package.json، تحقّق بصري لجودة/دقة الصورة الناتجة قبل الدمج.",
+      "evidence": "rg -l فعلي 2026-07-24: html2canvas في CardsPage.tsx فقط بعد التنظيف، html-to-image في ملفين آخرين."
+    }
+  ],
   "resolved_this_session": [
     {
       "id": "stale-color-docs-conflict",
