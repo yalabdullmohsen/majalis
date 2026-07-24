@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b004",
-  "resumeFromId": "b005",
+  "lastCompletedId": "b008",
+  "resumeFromId": "b007",
   "items": [
     {
       "id": "b001",
@@ -73,16 +73,19 @@
       "section": "scholars_seo",
       "title": "فحص بقية بيوغرافيات scholars-data.ts للتحقق من نفس نمط الركاكة/القصر القديم بعد المزامنة",
       "severity": "medium",
-      "status": "pending",
-      "nextAction": "قراءة عيّنة من scholars-seo.json بعد التوليد الجديد (99 عالماً) والتأكد من عدم وجود بيوغرافيات مكررة حرفياً مع النبذة."
+      "status": "done",
+      "nextAction": "قراءة عيّنة من scholars-seo.json بعد التوليد الجديد (99 عالماً) والتأكد من عدم وجود بيوغرافيات مكررة حرفياً مع النبذة.",
+      "finding": "فحص آلي: 0 من 99 بيوغرافيا أقل من 40 حرفاً بعد التوليد الجديد. لا حاجة لعمل إضافي."
     },
     {
       "id": "b008",
       "section": "adhkar",
       "title": "4 تكرارات في adhkar-seed.ts رصدها audit-data-quality.mjs",
       "severity": "medium",
-      "status": "pending",
-      "nextAction": "قراءة data/data-quality-audit.json وتحديد التكرارات الأربعة ومعالجتها."
+      "status": "done",
+      "nextAction": "قراءة data/data-quality-audit.json وتحديد التكرارات الأربعة ومعالجتها.",
+      "finding": "دُمج تكراران حقيقيان (adh-322→adh-196، adh-290→adh-197: نفس الحديث/الراوي/العدد بصياغة مصدر مختلفة). تُرك زوج ثالث (adh-328 حذيفة مقابل adh-6 البراء بن عازب) بلا حذف — نفس النص لكن راويين مختلفين، يحتاج تحققاً من مصدر موثوق قبل الحسم (راجع b011).",
+      "commit": "batch-2026-07-24-02"
     },
     {
       "id": "b009",
@@ -99,6 +102,15 @@
       "severity": "medium",
       "status": "pending",
       "nextAction": "توسيع inventory.json تدريجياً قسماً قسماً بدل جرد 252 مساراً دفعة واحدة (تقليل استهلاك الرصيد)."
+    },
+    {
+      "id": "b011",
+      "section": "adhkar",
+      "title": "التحقق من ازدواج الراوي في adh-6 (البراء بن عازب) مقابل adh-328 (حذيفة) — نفس نص «باسمك اللهم أموت وأحيا»",
+      "severity": "low",
+      "status": "needs_source",
+      "detail": "نص الذكر متطابق حرفياً بين الاثنين لكن الراوي والتخريج مختلفان (متفق عليه مقابل رواه البخاري فقط). قد يكونا حديثين صحيحين مستقلين بنفس اللفظ القصير، أو خطأ نسبة في أحدهما. لا يوجد مصدر تحقق موثوق متاح محلياً — لم يُحذف أي منهما التزاماً بقاعدة عدم التخمين.",
+      "nextAction": "يحتاج مراجعة شرعية بمصدر تخريج حديثي موثوق (مثل موسوعة الحديث أو تصحيح الألباني لحصن المسلم) قبل أي حذف أو دمج."
     }
   ]
 }
