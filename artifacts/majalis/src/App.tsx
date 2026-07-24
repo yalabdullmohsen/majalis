@@ -7,6 +7,7 @@ import { UserPreferencesProvider } from "@/components/UserPreferencesProvider";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import { LanguageProvider, useLanguage } from "@/components/LanguageProvider";
 import NavBar from "@/components/NavBar";
+import { TopTicker } from "@/components/TopTicker";
 import SiteFooter from "@/components/SiteFooter";
 import { BottomNavBar } from "@/components/BottomNavBar";
 import { TopSectionBar } from "@/components/TopSectionBar";
@@ -764,6 +765,7 @@ function AppShell() {
         onTouchEnd={onTouchEnd}
       >
         <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
+        <TopTicker />
         <OfflineBanner />
         <UpdateAvailableBanner />
         <NavProgressBar />

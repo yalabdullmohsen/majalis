@@ -26,6 +26,7 @@
   --shadow-soft: 0 1px 2px rgb(23 61 53 / 5%), 0 12px 30px rgb(23 61 53 / 6%);
   --header-height: 3.25rem;
   --bottom-nav-height: 3.25rem;
+  --ticker-height: 1.875rem;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --page-gutter: clamp(1rem, 3vw, 2rem);
   --page-width: 76rem;
@@ -59,7 +60,7 @@ body {
 
 .app-shell { min-height: 100dvh; background: transparent; color: var(--color-text); }
 .app-main {
-  min-height: calc(100dvh - var(--header-height));
+  min-height: calc(100dvh - var(--header-height) - var(--ticker-height));
   padding-block-end: calc(var(--bottom-nav-height) + var(--safe-bottom) + 1.5rem);
 }
 
@@ -81,13 +82,77 @@ body {
   outline-offset: 3px;
 }
 
-/* App header */
-.navbar-v3 {
+/* الشريط المتحرك أعلى الشاشة (TopTicker) — أعلى طبقة، يمتص
+   env(safe-area-inset-top) وحده فلا يتداخل مع النوتش/Dynamic Island،
+   والهيدر يلتصق أسفله مباشرة (راجع .navbar-v3 أدناه). */
+.top-ticker {
   position: sticky;
   inset-block-start: 0;
-  z-index: var(--z-nav, 200);
-  min-height: calc(var(--header-height) + env(safe-area-inset-top, 0px));
+  z-index: calc(var(--z-nav, 200) + 1);
+  height: calc(var(--ticker-height) + env(safe-area-inset-top, 0px));
   padding-block-start: env(safe-area-inset-top, 0px);
+  overflow: hidden;
+  background: var(--elite-forest, #173D35);
+  display: flex;
+  align-items: center;
+}
+.top-ticker__track {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  white-space: nowrap;
+  padding-inline-end: 2.5rem;
+  animation: top-ticker-scroll 32s linear infinite;
+}
+.top-ticker__track.is-paused {
+  animation-play-state: paused;
+}
+.top-ticker__item {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #F7F4ED;
+  flex-shrink: 0;
+}
+.top-ticker__item-source {
+  opacity: 0.75;
+  font-weight: 400;
+}
+.top-ticker--static,
+.top-ticker--empty {
+  justify-content: center;
+  padding-inline: 1rem;
+}
+.top-ticker--static .top-ticker__item {
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.top-ticker__empty-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #F7F4ED;
+  opacity: 0.85;
+}
+@keyframes top-ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .top-ticker__track { animation: none; }
+}
+
+/* App header */
+/* الهيدر يلتصق أسفل TopTicker مباشرة (لا أعلى الشاشة) — TopTicker وحده
+   يمتص env(safe-area-inset-top) الآن (طبقة علوية واحدة متّسقة)، فالهيدر
+   لم يعد بحاجة لحشوه الخاص لأنه لم يعد يلامس الحافة العلوية الحقيقية. */
+.navbar-v3 {
+  position: sticky;
+  inset-block-start: calc(var(--ticker-height) + env(safe-area-inset-top, 0px));
+  z-index: var(--z-nav, 200);
+  min-height: var(--header-height);
   background: color-mix(in srgb, var(--color-surface) 92%, transparent);
   border: 0;
   border-block-end: 1px solid var(--color-border);
@@ -106,7 +171,7 @@ body {
    بين الأقسام. white-space: nowrap يمنع التفاف اسم أي قسم لأكثر من سطر. */
 .top-section-bar {
   position: sticky;
-  top: calc(var(--header-height, 4rem) + env(safe-area-inset-top, 0px));
+  top: calc(var(--ticker-height) + env(safe-area-inset-top, 0px) + var(--header-height, 4rem));
   z-index: 190;
   background: color-mix(in srgb, var(--color-surface, #FAF8F5) 96%, transparent);
   border-block-end: 1px solid var(--color-border, #E7E2D8);
@@ -396,8 +461,8 @@ html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1)
 }
 .bottom-nav--v2 .bottom-nav__tab { min-width: 44px; min-height: 44px; border-radius: var(--radius-md); color: var(--color-text-muted); }
 .bottom-nav--v2 .bottom-nav__tab.is-active { color: var(--color-primary); background: var(--color-surface-muted); }
-.bottom-nav--v2 .bottom-nav__tab-icon { width: 1.4rem; height: 1.4rem; background: transparent; }
-.bottom-nav--v2 .bottom-nav__tab-label { font-size: .75rem; font-weight: 600; }
+.bottom-nav--v2 .bottom-nav__tab-icon { width: 1.25rem; height: 1.25rem; background: transparent; }
+.bottom-nav--v2 .bottom-nav__tab-label { font-size: .7rem; font-weight: 600; }
 
 /* Footer is a concise trust/navigation surface, not a duplicate sitemap. */
 .site-footer--v3 { margin-block-start: clamp(2rem, 5vw, 4rem); }

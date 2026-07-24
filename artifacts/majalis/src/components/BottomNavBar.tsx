@@ -45,7 +45,7 @@ export function BottomNavBar() {
               aria-current={active ? "page" : undefined}
             >
               <span className="bottom-nav__tab-icon">
-                <Icon size={22} strokeWidth={active ? 2.4 : 1.6} aria-hidden={true} />
+                <Icon size={20} strokeWidth={active ? 2.4 : 1.6} aria-hidden={true} />
               </span>
               <span className="bottom-nav__tab-label">{label}</span>
             </Link>
@@ -62,7 +62,7 @@ export function BottomNavBar() {
           aria-expanded={moreOpen}
         >
           <span className="bottom-nav__tab-icon">
-            <LayoutGrid size={22} strokeWidth={moreOpen ? 2.4 : 1.6} aria-hidden={true} />
+            <LayoutGrid size={20} strokeWidth={moreOpen ? 2.4 : 1.6} aria-hidden={true} />
           </span>
           <span className="bottom-nav__tab-label">المزيد</span>
         </button>
