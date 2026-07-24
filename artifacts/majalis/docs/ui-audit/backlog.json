@@ -47,7 +47,12 @@
     {
       "id": "stale-color-docs-conflict",
       "summary": "docs/design-tokens.md وثّق #0E6E52، docs/design-system.md وثّق #1F6E54، والقيمة الحقيقية في modern-2026.css هي #173D35. design-tokens.md أُعيد كتابته كاملًا ليطابق الواقع؛ design-system.md وُسم بتنبيه تعارض.",
-      "commit": "pending (سيُسجَّل بعد commit-and-push-branch.sh)"
+      "commit": "697f62cc"
+    },
+    {
+      "id": "tracked-tsbuildinfo-breaks-fresh-worktree-build",
+      "summary": "5 ملفات tsconfig.tsbuildinfo مُتتبَّعة في git رغم استثنائها في .gitignore، ما يُفسد cache تركيبة tsc --build في أي worktree جديد (بما فيها automation/content وautomation/tasks) ويُفشل pnpm run build الجذري بخطأ TS6305 في artifacts/api-server. أُزيلت من التتبّع بـgit rm --cached (البناء المحلي غير متأثر).",
+      "commit": "pending (الدفعة التالية)"
     }
   ]
 }

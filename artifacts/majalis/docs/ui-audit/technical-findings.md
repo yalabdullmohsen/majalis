@@ -25,3 +25,17 @@
 **اكتُشف وأُصلح هذه الدفعة:** تعارض ثلاثي بين `docs/design-tokens.md`
 (`#0E6E52`)، `docs/design-system.md` (`#1F6E54`)، والقيمة الحقيقية في
 `modern-2026.css` (`#173D35`). التفاصيل والإصلاح في `progress.md`.
+
+**اكتُشف وأُصلح هذه الدفعة (P1 — يمنع البناء في أي worktree جديد):**
+خمسة ملفات `tsconfig.tsbuildinfo` (`lib/api-client-react`, `lib/api-zod`,
+`lib/db`, `scripts`, وجذر المستودع) كانت مُتتبَّعة في git رغم أن
+`.gitignore` يستثنيها صراحةً (`**/*.tsbuildinfo`) — على الأرجح أُضيفت
+قبل قاعدة gitignore هذه. الأثر: أي `git worktree add` جديد (بما فيها
+`automation/content` و`automation/tasks` نفسيهما) يستنسخ cache بناء
+"مُحدَّث" كذبًا يخبر `tsc --build` أن `lib/api-zod` مبني فعلًا رغم عدم
+وجود `dist/` أصلًا — فيفشل `pnpm run build` الجذري بخطأ TS6305 في
+`artifacts/api-server` (وربما مستهلكين آخرين لاحقًا). **مُؤكَّد فعليًا:**
+هذا بالضبط ما حدث عند أول `pnpm run build` في هذه الدفعة. الإصلاح:
+`git rm --cached` للملفات الخمسة (البناء المحلي يبقى يعمل، فقط تتوقف عن
+التتبّع في git من الآن). تحقّق بعد الإصلاح: `pnpm run typecheck:libs`
+و`pnpm --filter @workspace/api-server run typecheck` كلاهما نظيف.
