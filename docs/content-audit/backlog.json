@@ -1,7 +1,7 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b037-content",
+  "lastCompletedId": "b040",
   "resumeFromId": "b011",
   "items": [
     {
@@ -424,6 +424,22 @@
       "severity": "low",
       "status": "done",
       "finding": "تحقّق: تغطية كاملة لكل السور الـ114 بلا نقص (0 رقم سورة مفقود)، وعيّنة موسّعة من أسباب التسمية (البقرة، آل عمران، يونس، هود، يوسف، الكهف، مريم، طه، الأنبياء، الحج، النور، الفرقان، الشعراء، النمل، القصص، العنكبوت، الروم، لقمان، السجدة، الأحزاب، سبأ، فاطر) مطابقة تماماً لإجماع كتب التفسير. تعليق داخلي صريح يحصر المحتوى بما هو \"مستقر في كتب التفسير\" فقط. لا حاجة لأي تعديل."
+    },
+    {
+      "id": "b040",
+      "section": "content_creation",
+      "title": "إنشاء محتوى قسمين إضافيين ناقصين تماماً: مقاصد الشريعة ودلائل النبوة",
+      "severity": "medium",
+      "status": "done",
+      "files": [
+        "artifacts/majalis/src/lib/maqasid-sharia-data.ts",
+        "artifacts/majalis/src/views/MaqasidShariaPage.tsx",
+        "artifacts/majalis/src/lib/dalail-nubuwwah-data.ts",
+        "artifacts/majalis/src/views/DalailNubuwwahPage.tsx"
+      ],
+      "finding": "بعد فحص مصفوفة البند 5 الأصلية ضد المسارات الفعلية في App.tsx، اكتُشف قسمان آخران ناقصان تماماً (بالإضافة لـb037 اللغة العربية): مقاصد الشريعة (6 أبواب، 35 درساً) ودلائل النبوة (6 أبواب، 30 درساً). أُنشئ المحتوى وصفحات العرض بنفس نمط TarikhIslamiPage.tsx القائم. تنبيه خاص لدلائل النبوة: الفهرس عناوين دروس فقط بلا محتوى تفصيلي مؤكَّد؛ أي إضافة تفصيلية مستقبلية (خصوصاً باب المعجزات الحسية) يجب الالتزام بضوابط تخريج الحديث الصارمة الموثقة في b035.",
+      "nextAction": "نافذة automation/tasks: إضافة سطرين ربط لكل قسم في App.tsx (التفاصيل الدقيقة في technical-handoff.md §-1). لا محتوى إضافي مطلوب.",
+      "commit": "batch-2026-07-24-27"
     }
   ]
 }
