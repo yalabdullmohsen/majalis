@@ -187,13 +187,13 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الأمور بمقاصدها — فالعبرة في الأحكام الشرعية بالنوايا والمآلات.", category: "الفقه", source: "القاعدة الأولى من القواعد الخمس الكبرى", author_name: "المجلة الأحكام العدلية", status: "approved", verification_status: "verified" },
 
   /* ── إضافات السيرة ── */
-  { text: "الهجرة النبوية درس في الصبر والتخطيط؛ فما أسس النبي ﷺ دولة إلا بعد 13 سنة من الجهر والدعوة.", category: "السيرة", source: "السيرة النبوية — ابن هشام وابن كثير", author_name: "ابن هشام", status: "approved", verification_status: "verified" },
+  { text: "الهجرة النبوية درس في الصبر والتخطيط؛ فما أسس النبي ﷺ دولة إلا بعد 13 سنة من الدعوة (3 سنوات سرًا و10 سنوات جهرًا).", category: "السيرة", source: "السيرة النبوية — ابن هشام وابن كثير", author_name: "ابن هشام", status: "approved", verification_status: "verified" },
   { text: "غزوة بدر برهان على أن النصر بالله لا بالعدد.", category: "السيرة", source: "صحيح البخاري — كتاب المغازي", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
   { text: "فتح مكة كان فتح الرحمة، ولم يُقتل فيه إلا من أبى التسليم وقاتل.", category: "السيرة", source: "البداية والنهاية — ابن كثير", author_name: "ابن كثير", status: "approved", verification_status: "verified" },
 
   /* ── إضافات طلب العلم ── */
   { text: "ما نقص مال من صدقة، وما زاد الله عبداً بعفو إلا عزاً، وما تواضع أحد لله إلا رفعه الله.", category: "طلب العلم", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
-  { text: "خير ما يكسبه المرء العلم النافع والذرية الصالحة.", category: "طلب العلم", source: "رواه ابن ماجه — حسنه الألباني", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
+  { text: "خير ما يخلّف الرجل من بعده ثلاث: ولد صالح يدعو له، وصدقة تجري يبلغه أجرها، وعلم يُعمل به من بعده.", category: "طلب العلم", source: "رواه ابن ماجه (242) — حسنه الألباني", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
   { text: "العلم يُورث الخشية، والخشية تُورث العمل، والعمل يُورث الجنة.", category: "طلب العلم", source: "إِنَّمَا يَخْشَى اللَّهَ مِنْ عِبَادِهِ الْعُلَمَاءُ — فاطر: 28", author_name: "الإمام ابن القيم", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الدعوة ── */
@@ -215,13 +215,13 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الغيبة ذكرك أخاك بما يكره — فيها إثم عظيم وإن كان المقول فيه كذلك.", category: "الأخلاق", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
 
   /* ── إضافات القرآن ── */
-  { text: "تلاوة آية بتدبّر وفهم خير من ختمة بلا تفكّر.", category: "القرآن", source: "أثر سلفي — ابن القيم: بدائع الفوائد", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "تلاوة آية بتدبّر وفهم خير من ختمة بلا تفكّر.", category: "القرآن", source: "أثر سلفي — ابن القيم: مفتاح دار السعادة", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
   { text: "من قرأ حرفاً من كتاب الله فله به حسنة والحسنة بعشر أمثالها.", category: "القرآن", source: "رواه الترمذي — صحيح", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "أهل القرآن هم أهل الله وخاصته.", category: "القرآن", source: "رواه النسائي وابن ماجه — صحيح الألباني", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
 
   /* ── إضافات العقيدة ── */
-  { text: "من عرف نفسه عرف ربه — فالتفكر في الخلق دليل إلى الخالق.", category: "العقيدة", source: "أثر منسوب للإمام الشافعي — الأمالي", author_name: "الإمام الشافعي", status: "approved", verification_status: "needs_review" },
-  { text: "الحياء شعبة من شعب الإيمان؛ ومن قلّ حياؤه ضعف إيمانه.", category: "العقيدة", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "من عرف نفسه عرف ربه — فالتفكر في الخلق دليل إلى الخالق.", category: "العقيدة", source: "قول لا أصل له كحديث مرفوع (أنكره النووي وابن تيمية)؛ ينسبه أغلب أهل العلم إلى يحيى بن معاذ الرازي لا إلى الإمام الشافعي", author_name: "يحيى بن معاذ الرازي (نسبة مشهورة، غير مؤكَّدة)", status: "approved", verification_status: "needs_review" },
+  { text: "الحياء شعبة من شعب الإيمان؛ ومن قلّ حياؤه ضعف إيمانه.", category: "العقيدة", source: "الشطر الأول حديث متفق عليه: «الإيمان بضع وستون شعبة، والحياء شعبة من الإيمان»؛ الشطر الثاني تعليق تفسيري وليس من نص الحديث", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "الدجال يخرج من المشرق؛ وعلامة قربه ظهور الفتن وكثرة الكذب.", category: "العقيدة", source: "رواه البخاري ومسلم — أشراط الساعة", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الحديث ── */
