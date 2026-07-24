@@ -342,7 +342,7 @@ html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1)
 .navbar-v3__tabs .nav-tab:hover,
 .navbar-v3__tabs .nav-tab--active { color: var(--color-primary); background: var(--color-surface-muted); }
 .navbar-v3__start, .navbar-v3__end { gap: .45rem; }
-.navbar-menu-btn, .navbar-theme-toggle, .navbar-search-cmd, .navbar-mobile-login {
+.navbar-menu-btn, .navbar-theme-toggle, .navbar-mobile-login {
   min-width: 44px;
   min-height: 44px;
   border: 1px solid var(--color-border);
@@ -351,20 +351,6 @@ html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1)
   color: var(--color-primary);
   box-shadow: none;
 }
-.navbar-search-cmd {
-  width: auto;
-  padding-inline: .8rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .4rem;
-  font: inherit;
-  font-size: .82rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-.navbar-search-cmd:hover { background: var(--color-surface-muted); }
-.navbar-search-cmd:focus-visible { outline: 3px solid color-mix(in srgb, var(--color-primary) 28%, transparent); outline-offset: 2px; }
 
 /* Shared page rhythm and cards */
 :where(.page-container, .container, .home-container, .lessons-page, .library-page) {
@@ -495,7 +481,6 @@ html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1)
   .navbar-v3__inner { gap: .35rem; padding-inline: .65rem; }
   .navbar-brand__copy strong { font-size: .76rem; }
   .navbar-menu-btn, .navbar-mobile-login { min-width: 42px; width: 42px; }
-  .navbar-search-cmd { min-width: 64px; padding-inline: .65rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -265,11 +265,6 @@ body {
   text-shadow: none !important;
 }
 .navbar-menu-btn { color: var(--txt-primary, #202725) !important; }
-.navbar-search-cmd {
-  background: var(--m26-bg, #F7F4ED) !important;
-  border: 1px solid rgba(0,0,0,0.08) !important;
-  color: var(--txt-subdued, #5E655F) !important;
-}
 
 /* ══ 7. Side Drawer ══════════════════════════════════════════════════════════ */
 .side-nav-drawer--v2 {

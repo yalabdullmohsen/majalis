@@ -411,28 +411,7 @@
   color: var(--v2-ink-2);
 }
 
-/* ── 14. NavBar — زر Command Search ── */
-.navbar-search-cmd {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.375rem 0.75rem;
-  border-radius: 0.65rem;
-  border: 1px solid rgba(23,61,53,0.15);
-  background: #FFFFFF;
-  cursor: pointer;
-  font-size: 0.825rem;
-  color: var(--v2-ink-2);
-  font-family: inherit;
-  height: 38px;
-  box-shadow: 0 1px 4px rgba(23,61,53,0.10), 0 0 0 1px rgba(23,61,53,0.10);
-  transition: all 0.15s ease;
-}
-.navbar-search-cmd:hover {
-  background: #f0faf5;
-  border-color: rgba(23,61,53,0.20);
-  box-shadow: 0 2px 8px rgba(23,61,53,0.15);
-}
+/* ── 14. NavBar — زر Command Search أُزيل بالكامل من الهيدر (2026-07-24) ── */
 .navbar-search-kbd {
   display: none;
 }
@@ -657,33 +636,23 @@
   transform: translateY(-2px) !important;
 }
 
-/* ── أزرار الـ navbar ── */
+/* ── أزرار الـ navbar (زر البحث أُزيل من هذه القائمة — لم يعد موجودًا) ── */
 .navbar-menu-btn,
-.navbar-logout,
-/* ── أطراف ذهبية: القائمة + البحث ── */
-.navbar-menu-btn,
-.navbar-search-cmd {
+.navbar-logout {
   border: 1.5px solid #28584D !important;
   box-shadow:
     0 0 0 1px rgba(217,174,92,0.25),
     0 1px 6px rgba(196,149,64,0.20) !important;
   transition: all 0.15s ease !important;
 }
-.navbar-search-cmd {
-  background: #FFFFFF !important;
-  border-radius: 0.65rem !important;
-  height: 38px !important;
-}
-.navbar-menu-btn:hover,
-.navbar-search-cmd:hover {
+.navbar-menu-btn:hover {
   background: #fffdf5 !important;
   border-color: #28584D !important;
   box-shadow:
     0 0 0 2px rgba(217,174,92,0.30),
     0 2px 10px rgba(196,149,64,0.28) !important;
 }
-.navbar-menu-btn:active,
-.navbar-search-cmd:active {
+.navbar-menu-btn:active {
   transform: scale(0.97) !important;
 }
 
@@ -997,10 +966,6 @@
   color: #28584D !important;
   font-weight: 700 !important;
 }
-.navbar-search-cmd svg {
-  color: #28584D !important;
-}
-
 /* Navbar brand — اسم التطبيق بجانب الشعار */
 .navbar-brand {
   color: #28584D !important;
