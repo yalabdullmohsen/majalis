@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b008",
-  "resumeFromId": "b007",
+  "lastCompletedId": "b012",
+  "resumeFromId": "b009",
   "items": [
     {
       "id": "b001",
@@ -111,6 +111,26 @@
       "status": "needs_source",
       "detail": "نص الذكر متطابق حرفياً بين الاثنين لكن الراوي والتخريج مختلفان (متفق عليه مقابل رواه البخاري فقط). قد يكونا حديثين صحيحين مستقلين بنفس اللفظ القصير، أو خطأ نسبة في أحدهما. لا يوجد مصدر تحقق موثوق متاح محلياً — لم يُحذف أي منهما التزاماً بقاعدة عدم التخمين.",
       "nextAction": "يحتاج مراجعة شرعية بمصدر تخريج حديثي موثوق (مثل موسوعة الحديث أو تصحيح الألباني لحصن المسلم) قبل أي حذف أو دمج."
+    },
+    {
+      "id": "b012",
+      "section": "features_roadmap",
+      "title": "أرقام ثابتة قديمة متراكمة في FeaturesInProgressPage.tsx (بند 4-3 الأصلي)",
+      "severity": "high",
+      "status": "done",
+      "files": [
+        "artifacts/majalis/src/views/FeaturesInProgressPage.tsx"
+      ],
+      "finding": "صُحِّحت 7 أرقام مقارنة بمصادرها الحية (library 156→133، scholars 111→99، quiz 856→978، rulings encyclopedia 62→533، courses 64→63، miracles 90→89، fawaid 393→496، stories 59→64). أُزيلت أرقام غير قابلة للتحقق بثقة (61+ صحابي، والتفصيل الرباعي في وصف \"قسم الفتاوى والأحكام\") بدل تخمينها. تُركت 115+/86+ مصطلح (glossary/hadith-science) دون تعديل — لم يُعثر على ملف seed مصدري لهما بالبحث السريع؛ يحتاج فحصاً إضافياً.",
+      "commit": "batch-2026-07-24-03"
+    },
+    {
+      "id": "b013",
+      "section": "features_roadmap",
+      "title": "تحديد مصدر أعداد المصطلحات (115+ فقهية/عقدية، 86+ حديثية) في FeaturesInProgressPage.tsx",
+      "severity": "medium",
+      "status": "pending",
+      "nextAction": "البحث عن مصدر بيانات IslamicGlossaryPage.tsx وHadithSciencePage.tsx (قد يكون Supabase حياً لا seed ثابت) والتحقق من الرقمين."
     }
   ]
 }
