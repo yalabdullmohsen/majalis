@@ -1,0 +1,95 @@
+{
+  "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
+  "generatedAt": "2026-07-24",
+  "lastCompletedId": "b004",
+  "resumeFromId": "b005",
+  "items": [
+    {
+      "id": "b001",
+      "section": "site_identity",
+      "title": "توحيد البريد الرسمي",
+      "severity": "critical",
+      "status": "done",
+      "verifiedAt": "2026-07-24",
+      "finding": "لا حاجة لتعديل — مركزي بالفعل عبر site.config.json (Majlisilm.app@gmail.com)، محروس بـtest-identity.mjs، لا بريد قديم في أي ملف بالمستودع."
+    },
+    {
+      "id": "b002",
+      "section": "prophets",
+      "title": "تصحيح الجزم في صفحة اليسع (خليفة إلياس)",
+      "severity": "high",
+      "status": "done",
+      "files": ["artifacts/majalis/src/lib/prophets-data.ts", "artifacts/majalis/src/lib/prophets-lineage.ts"],
+      "commit": "batch-2026-07-24-01"
+    },
+    {
+      "id": "b003",
+      "section": "prophets",
+      "title": "بيان الخلاف في نبوة ذي الكفل وعدم الجزم بمكانه/زمنه",
+      "severity": "high",
+      "status": "done",
+      "files": ["artifacts/majalis/src/lib/prophets-data.ts", "artifacts/majalis/src/lib/prophets-lineage.ts"],
+      "commit": "batch-2026-07-24-01"
+    },
+    {
+      "id": "b004",
+      "section": "scholars",
+      "title": "تصحيح «تُهفة النظار» إلى «تحفة النظار» + مزامنة المرآة",
+      "severity": "medium",
+      "status": "done",
+      "files": ["artifacts/majalis/src/lib/scholars-data.ts", "artifacts/majalis/src/data/scholars-seo.json"],
+      "sideEffect": "مزامنة sync-seo-data.ts كشفت أن scholars-seo.json كان متجمداً منذ فترة طويلة (بيوغرافيات قصيرة قديمة) — أُعيد توليده بالكامل بنفس الحركة، تحسين جودة حقيقي إضافي.",
+      "commit": "batch-2026-07-24-01"
+    },
+    {
+      "id": "b005",
+      "section": "technical_seo",
+      "title": "فجوة seo-routes.json: لا مسارات فردية لـ/library/*, /rulings/*, /sheikhs/*, /annual-courses/*",
+      "severity": "critical",
+      "status": "technical_handoff",
+      "detail": "راجع docs/content-audit/technical-handoff.md — السبب الجذري لمشكلة «كتاب شرعي» العامة (حصن المسلم) ولاحتمال ظهور محتوى الرئيسية بدل الأحكام لمحركات البحث. يتطلب تعديل scripts/generate-seo.mjs — خارج صلاحية نافذة المحتوى.",
+      "nextAction": "نافذة automation/tasks تنفّذ التوليد الفردي، بعد حسم تعارض library-catalog.json (راجع b006)."
+    },
+    {
+      "id": "b006",
+      "section": "technical_tooling",
+      "title": "تعارض كاتبَين على src/data/library-catalog.json بمخططين مختلفين",
+      "severity": "high",
+      "status": "technical_handoff",
+      "detail": "scripts/sync-seo-data.ts وscripts/regen-library-catalog-json.mjs يكتبان لنفس الملف بمخططين غير متوافقين. راجع technical-handoff.md.",
+      "nextAction": "نافذة automation/tasks تقرر أيهما مصدر الحقيقة وتوحّد، أو تفصل الملفين."
+    },
+    {
+      "id": "b007",
+      "section": "scholars_seo",
+      "title": "فحص بقية بيوغرافيات scholars-data.ts للتحقق من نفس نمط الركاكة/القصر القديم بعد المزامنة",
+      "severity": "medium",
+      "status": "pending",
+      "nextAction": "قراءة عيّنة من scholars-seo.json بعد التوليد الجديد (99 عالماً) والتأكد من عدم وجود بيوغرافيات مكررة حرفياً مع النبذة."
+    },
+    {
+      "id": "b008",
+      "section": "adhkar",
+      "title": "4 تكرارات في adhkar-seed.ts رصدها audit-data-quality.mjs",
+      "severity": "medium",
+      "status": "pending",
+      "nextAction": "قراءة data/data-quality-audit.json وتحديد التكرارات الأربعة ومعالجتها."
+    },
+    {
+      "id": "b009",
+      "section": "content_gate_items_4-11",
+      "title": "بقية البنود المؤكدة في التكليف الأصلي (فتاوى/إذاعات/بث، عناوين SEO عامة أخرى، تكرار مقدمة/نبذة، تواريخ، Slugs)",
+      "severity": "high",
+      "status": "pending",
+      "nextAction": "فحص آلي منهجي لكل بند بالتتابع، بدءاً بمسح 74 إشارة «فتاوى» لتصنيفها (محتوى شرعي مشروع vs بقايا خدمة ملغاة)."
+    },
+    {
+      "id": "b010",
+      "section": "coverage_matrix",
+      "title": "بناء مصفوفة تغطية كاملة لكل الأقسام المذكورة في البند 5 من التكليف",
+      "severity": "medium",
+      "status": "pending",
+      "nextAction": "توسيع inventory.json تدريجياً قسماً قسماً بدل جرد 252 مساراً دفعة واحدة (تقليل استهلاك الرصيد)."
+    }
+  ]
+}

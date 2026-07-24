@@ -1,0 +1,61 @@
+{
+  "$comment": "سجل مصدر الحقيقة لكل قسم محتوى — أين تُقرأ الصفحة فعلياً من الكود. الجذر: artifacts/majalis (وليس /src بجذر المستودع، وهو نسخة ميتة مكررة — راجع AGENTS.md).",
+  "generatedAt": "2026-07-24",
+  "criticalNote": "جذر git الصحيح للcommit: worktree هذا (automation/content). المسار الحي: artifacts/majalis/src/**. لا تعدّل جذر src/ بجذر المستودع مطلقاً.",
+  "sections": {
+    "prophets": {
+      "route": "/prophets/:slug, /anbiya",
+      "sources": ["artifacts/majalis/src/lib/prophets-data.ts", "artifacts/majalis/src/lib/prophets-lineage.ts"],
+      "notes": "prophets-data.ts = 25 نبياً المذكورين بالاسم بحقول كاملة. prophets-lineage.ts = شجرة نسب تاريخية منفصلة (بها linkNote لبيان الروابط غير المؤكدة)."
+    },
+    "scholars": {
+      "route": "/scholars/:id",
+      "sources": ["artifacts/majalis/src/lib/scholars-data.ts"],
+      "mirrors": [
+        {"file": "artifacts/majalis/src/data/scholars-seo.json", "generatedBy": "artifacts/majalis/scripts/sync-seo-data.ts", "usage": "بيانات Person لبطاقات SEO + seo-routes.json"},
+        {"file": "artifacts/majalis/src/data/scholars-list.json", "generatedBy": "artifacts/majalis/scripts/regen-scholars-list-json.mjs", "usage": "حيّ في الإنتاج: lib/cms/sitemap-builder.mjs يبني منه /api/sitemap و/api/feed الفعليين"}
+      ],
+      "notes": "لا تُعدّل المرايا يدوياً — عدّل scholars-data.ts ثم شغّل السكربتين أعلاه."
+    },
+    "library": {
+      "route": "/library/:id",
+      "sources": ["artifacts/majalis/src/lib/library-catalog.ts"],
+      "mirrors": [
+        {"file": "artifacts/majalis/src/data/library-catalog.json", "generatedBy": "artifacts/majalis/scripts/regen-library-catalog-json.mjs", "usage": "test:library-integrity + إثراء (authorId/editions/verificationStatus)"}
+      ],
+      "warning": "⚠️ scripts/sync-seo-data.ts يكتب أيضاً إلى نفس هذا الملف بمخطط JSON مختلف (أبسط، يفقد authorId/editions/verificationStatus/sources). لا تُشغّل sync-seo-data.ts بلا مراجعة تعارضه مع regen-library-catalog-json.mjs — موثّق في technical-handoff.md."
+    },
+    "qa_quiz": {
+      "route": "/qa, /quiz",
+      "sources": ["artifacts/majalis/src/lib/qa-seed.ts (SEED_QA)", "artifacts/majalis/src/lib/quiz-seed.ts (DEMO_QUIZ_QUESTIONS)"]
+    },
+    "fawaid": {
+      "route": "/fawaid",
+      "sources": ["artifacts/majalis/src/lib/fawaid-seed.ts (SEED_FAWAID)", "artifacts/majalis/src/lib/fawaid-curated-seed.ts"]
+    },
+    "rulings": {
+      "route": "/rulings/:id",
+      "sources": ["artifacts/majalis/src/lib/rulings-seed.ts", "artifacts/majalis/src/lib/rulings-encyclopedia-seed.generated.ts", "artifacts/majalis/scripts/generate-rulings-encyclopedia.mjs"],
+      "notes": "الموسوعة تُبنى من 3 مصادر مدموجة — راجع generate-rulings-encyclopedia.mjs. لا يوجد مسار seo-routes.json فردي لكل حكم (فجوة موثّقة في technical-handoff.md)."
+    },
+    "fiqh_council": {
+      "route": "/fiqh-council/:id",
+      "sources": ["artifacts/majalis/src/lib/fiqh-council-seed.ts"],
+      "notes": "الوحيد بين الأقسام الديناميكية الذي له 14 مسار seo-routes.json فردي بالفعل."
+    },
+    "sheikhs": { "route": "/sheikhs/:id", "sources": ["artifacts/majalis/src/lib/sheikhs-seed.ts"] },
+    "sahabah": { "route": "/sahabah", "sources": ["artifacts/majalis/src/lib/tarikh-islami-data.ts أو ملف مخصص — يتطلب تأكيد إضافي"] },
+    "lessons": { "route": "/lessons/:id", "sources": ["artifacts/majalis/src/lib/lessons-seed.ts", "Supabase (محتوى حي)"] },
+    "annual_courses": { "route": "/annual-courses/:id", "sources": ["artifacts/majalis/src/lib/annual-courses-seed.ts"] },
+    "adhkar": { "route": "/adhkar", "sources": ["artifacts/majalis/src/lib/adhkar-seed.ts"] },
+    "seo_titles": {
+      "route": "كل المسارات (fallback عام)",
+      "sources": ["artifacts/majalis/src/lib/seo.ts (routeForPath fallback)", "artifacts/majalis/src/lib/seo-routes.json (توليد ثابت)"],
+      "generatedBy": "artifacts/majalis/scripts/generate-seo.mjs + sync-seo-data.ts"
+    },
+    "site_identity": {
+      "sources": ["artifacts/majalis/site.config.json"],
+      "notes": "المصدر الوحيد للاسم/النطاق/البريد. يحرسه scripts/test-identity.mjs. البريد موحّد بالفعل: Majlisilm.app@gmail.com — لا حاجة لتعديل."
+    }
+  }
+}
