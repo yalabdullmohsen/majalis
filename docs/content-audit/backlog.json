@@ -1,7 +1,7 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b013",
+  "lastCompletedId": "b015",
   "resumeFromId": "b011",
   "items": [
     {
@@ -142,6 +142,23 @@
       "nextAction": "البحث عن مصدر بيانات IslamicGlossaryPage.tsx وHadithSciencePage.tsx (قد يكون Supabase حياً لا seed ثابت) والتحقق من الرقمين.",
       "finding": "المصدر: مصفوفة TERMS مضمّنة داخل كل صفحة (لا ملف seed منفصل). العدّ الفعلي عبر عدّ حقول id: الفعلي: مصطلحات العقيدة/الفقه/إلخ (IslamicGlossaryPage.tsx) = 218 وليس 115+، ومصطلحات علوم الحديث (HadithSciencePage.tsx) = 102 وليس 86+. كلا الصفحتين تعرضان فعلياً TERMS.length ديناميكياً في واجهتهما — التناقض كان فقط في نص خارطة الطريق الثابت. صُحِّح.",
       "commit": "batch-2026-07-24-05"
+    },
+    {
+      "id": "b014",
+      "section": "annual_courses",
+      "title": "18 من 63 دورة علمية سنوية بلا حقل body (محتوى تفصيلي) — فقط summary مختصر",
+      "severity": "medium",
+      "status": "needs_source",
+      "detail": "فحص برمجي لـ ANNUAL_COURSES_SEED (annual-courses-seed.ts): 63 دورة، summary مكتمل 100%، لكن 18 دورة بلا body (المتون، البرنامج، التفاصيل). الحقل يحوي بيانات لوجستية دقيقة (أسماء مشايخ، تواريخ، مساجد) لا يجوز اختلاقها.",
+      "nextAction": "يحتاج تزويد الإدارة بتفاصيل الدورات الـ18 الناقصة (لا يمكن تأليفها من نافذة المحتوى) — أو تصنيفها needs_source دائم إذا تعذر الحصول على التفاصيل."
+    },
+    {
+      "id": "b015",
+      "section": "data_quality_general",
+      "title": "فحص شامل نظيف: لا Placeholder/TODO/Lorem، لا حقول فارغة أو قصيرة في المكتبة/المشايخ/الأحكام/المجمع الفقهي/المسائل الفقهية",
+      "severity": "low",
+      "status": "done",
+      "finding": "فحص برمجي شامل (grep + استيراد فعلي): 0 نتائج placeholder/TODO/lorem في src/lib+src/views+src/data. 0 وصف فارغ/قصير(<20حرف) في 133 كتاباً و92 شيخاً. 0 حقل فارغ في 73 حكماً و34 قرار مجمع فقهي و64 مسألة فقهية معاصرة."
     }
   ]
 }
