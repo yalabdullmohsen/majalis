@@ -310,7 +310,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "عليكم بهذا العود الهندي فإن فيه سبعة أشفية.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "الشفاء في ثلاثة: شربة عسل، وحجامة (شرطة مِحجم)، وكية بالنار — ونهى النبي ﷺ أمته عن الكي.", category: "الحديث", source: "رواه البخاري (٥٦٨٠) عن ابن عباس", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "المعدة بيت الداء والحمية رأس كل دواء — وأعطِ كل جسم ما عوّدته.", category: "الحديث", source: "أثر يُنسب للحارث بن كلدة — ويُستشهد به في الطب النبوي", author_name: "الطب النبوي", status: "approved", verification_status: "needs_review" },
-  { text: "في كل صباح تصدق على كل سلامى منك؛ وصيام يوم سنة للمسلم.", category: "الحديث", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
+  { text: "يصبح على كل سلامى من أحدكم صدقة: فكل تسبيحة صدقة، وكل تحميدة صدقة، وكل تهليلة صدقة، وكل تكبيرة صدقة، وأمر بالمعروف صدقة، ونهي عن المنكر صدقة، ويجزئ من ذلك ركعتان يركعهما من الضحى.", category: "الحديث", source: "رواه مسلم عن أبي ذر (٧٢٠)", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
 
   /* ── المعاملات والأخلاق التجارية ── */
   { text: "البيّعان بالخيار ما لم يتفرّقا؛ فإن صدقا وبيّنا بورك لهما، وإن كتما وكذبا مُحقت بركة بيعهما.", category: "الفقه", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
@@ -320,7 +320,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── مواقف المؤمن من الابتلاء ── */
   { text: "عجباً لأمر المؤمن إن أمره كله خير؛ إن أصابته سراء شكر فكان خيراً له، وإن أصابته ضراء صبر فكان خيراً له.", category: "العقيدة", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
-  { text: "ما يصيب المؤمن من وصب ولا نصب ولا سقم حتى الشوكة يُشاكها إلا كُفّر بها خطاياه.", category: "العقيدة", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "ما يصيب المسلم من نصب ولا وصب، ولا هم ولا حزن، ولا أذى ولا غم، حتى الشوكة يُشاكها، إلا كفّر الله بها من خطاياه.", category: "العقيدة", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "إن الله إذا أحب قوماً ابتلاهم؛ فمن رضي فله الرضا، ومن سخط فله السخط.", category: "العقيدة", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
 
   /* ── العلم والإبداع من منظور إسلامي ── */
@@ -339,7 +339,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── الأسرة والمجتمع ── */
   { text: "المجتمع المسلم كالجسد الواحد؛ إذا اشتكى منه عضو تداعى له سائر الجسد بالسهر والحمى.", category: "الحديث", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "المؤمن للمؤمن كالبنيان المرصوص يشد بعضه بعضاً — التماسك الاجتماعي فريضة إسلامية.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
+  { text: "المؤمن للمؤمن كالبنيان يشد بعضه بعضاً — التماسك الاجتماعي فريضة إسلامية.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "من كان في حاجة أخيه كان الله في حاجته، ومن فرّج كربة فرّج الله عنه كربة من كرب يوم القيامة.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
 
   /* ── التوبة والمغفرة ── */
