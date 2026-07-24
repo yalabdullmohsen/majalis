@@ -52,7 +52,13 @@
     {
       "id": "tracked-tsbuildinfo-breaks-fresh-worktree-build",
       "summary": "5 ملفات tsconfig.tsbuildinfo مُتتبَّعة في git رغم استثنائها في .gitignore، ما يُفسد cache تركيبة tsc --build في أي worktree جديد (بما فيها automation/content وautomation/tasks) ويُفشل pnpm run build الجذري بخطأ TS6305 في artifacts/api-server. أُزيلت من التتبّع بـgit rm --cached (البناء المحلي غير متأثر).",
-      "commit": "pending (الدفعة التالية)"
+      "commit": "c23bc94f"
+    },
+    {
+      "id": "commit-and-push-branch-unscoped-build-gate",
+      "summary": "scripts/commit-and-push-branch.sh كان يستخدم pnpm run build الجذري، الذي يُشغّل build لكل حزم monorepo بما فيها majalis-pitch وmajalis-promo (حزم تسويقية Replit هامشية تتطلب PORT وBASE_PATH غير مُعرَّفين، غير مرتبطة بعمل النافذتين إطلاقًا) — أفشل البوابة فعليًا بلا علاقة بأي تعديل حقيقي. أُعيد تقييده لـpnpm --filter @workspace/majalis run build (typecheck:libs + build)، مطابقًا لنطاق pre-commit hook المحلي و.github/workflows/auto-merge-to-main.yml الموجودين فعلًا.",
+      "commit": "4e3ce08a",
+      "note": "⚠️ نفس هذا الخلل موجود في نسخة automation/content من نفس السكربت (كلا الفرعين وُرِّثا من نفس commit إنشاء أولي) — لم يُصلَح هناك لأن هذه النافذة ممنوعة من تعديل فرع automation/content. يحتاج المالك تنبيه نافذة المحتوى، أو سيُصلَح تلقائيًا إن أعادت تلك النافذة الدمج من main بعد أول تشغيل لـrelease-majlisilm.yml."
     }
   ]
 }

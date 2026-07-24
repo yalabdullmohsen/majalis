@@ -36,6 +36,10 @@
 3. 35 صفحة admin بوصف meta أقصر من الموصى به (غير عام/SEO حرج، أولوية منخفضة).
 4. لم يُشغَّل بعد `scripts/audit-all-routes.mjs` (تدقيق Playwright شامل لكل الـ736 مسارًا حيًّا عبر متصفح) — أداة جاهزة موجودة، تحتاج خادم dev محلي وتستغرق وقتًا؛ مجدول للدفعة التالية بدل تشغيله الآن.
 
+اكتُشف وأُصلح أيضًا هذه الدفعة (لم يكن مخطَّطًا، اكتُشف أثناء أول محاولة push):
+5. **بناء الجذر مكسور لأي worktree جديد** — 5 ملفات `tsconfig.tsbuildinfo` مُتتبَّعة في git رغم `.gitignore`، تُفسد cache `tsc --build` فتُفشل `artifacts/api-server` بخطأ TS6305. أُصلح جذريًا بـ`git rm --cached` (commit `c23bc94f`).
+6. **بوابة `commit-and-push-branch.sh` كانت مكسورة فعليًا** — تستخدم `pnpm run build` الجذري الذي يُشغّل حزمًا تسويقية Replit هامشية (`majalis-pitch`, `majalis-promo`) تتطلب `PORT`/`BASE_PATH` غير مُعرَّفين، بلا علاقة بعمل النافذتين. أُعيد تقييده لـ`@workspace/majalis` فقط (commit `4e3ce08a`). **نفس الخلل لا يزال موجودًا في نسخة automation/content من هذا السكربت** — لم أُصلحه هناك (ممنوع تعديل فرعها)؛ يحتاج تنبيه المالك.
+
 ## أول عنصر للبدء منه في الدفعة القادمة
 
-راجع `backlog.json` مرتبًا حسب `priority` — أعلى بند غير `done` هو نقطة الاستئناف.
+راجع `backlog.json` مرتبًا حسب `priority` — أعلى بند بحالة `pending` هو نقطة الاستئناف (حاليًا: `docs-design-system-v2-reconcile`).
