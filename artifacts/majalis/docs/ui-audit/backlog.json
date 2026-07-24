@@ -65,6 +65,11 @@
       "commit": "c23bc94f"
     },
     {
+      "id": "security-pass-batch3",
+      "summary": "فحص أمني آلي شامل (أسرار حرفية، XSS عبر dangerouslySetInnerHTML، eval/Function، innerHTML مباشر، حماية مسارات admin، open redirect) — كل الفحوصات نظيفة، لا ثغرة مكتشَفة، لا تعديل كود لزم. لم يُفحَص: RLS الحي (يحتاج اتصال DB مباشر، خارج نطاق فحص ساكن).",
+      "commit": "n/a (docs فقط، لا تعديل كود)"
+    },
+    {
       "id": "commit-and-push-branch-unscoped-build-gate",
       "summary": "scripts/commit-and-push-branch.sh كان يستخدم pnpm run build الجذري، الذي يُشغّل build لكل حزم monorepo بما فيها majalis-pitch وmajalis-promo (حزم تسويقية Replit هامشية تتطلب PORT وBASE_PATH غير مُعرَّفين، غير مرتبطة بعمل النافذتين إطلاقًا) — أفشل البوابة فعليًا بلا علاقة بأي تعديل حقيقي. أُعيد تقييده لـpnpm --filter @workspace/majalis run build (typecheck:libs + build)، مطابقًا لنطاق pre-commit hook المحلي و.github/workflows/auto-merge-to-main.yml الموجودين فعلًا.",
       "commit": "4e3ce08a",
