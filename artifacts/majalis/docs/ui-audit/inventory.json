@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-07-24",
+  "method": "آلي عبر rg/find/git grep على src/App.tsx وشجرة src — لا قراءة يدوية ملفًا بملف. أعِد التوليد فقط عند تغيّر بنيوي حقيقي (إضافة/حذف مسارات جماعية)، لا لكل دفعة.",
+  "routing": {
+    "library": "wouter (نمط <Route path=\"...\"><Component/></Route>، ليس react-router createBrowserRouter)",
+    "definition_file": "src/App.tsx",
+    "total_routes_declared": 250,
+    "note": "العدد يشمل مسارات admin/** الداخلية؛ الجزء العام منها موثّق بمقابله في src/lib/seo-routes.json (736 مسار مُولَّد فعليًا في seo-prerender/ عند آخر build محلي)."
+  },
+  "source_tree": {
+    "views_files": 263,
+    "components_files": 207,
+    "styles_files": 24
+  },
+  "shared_shell_components": [
+    "src/components/AppShell.tsx",
+    "src/components/BottomNavBar.tsx",
+    "src/components/NavBar.tsx",
+    "src/components/NavProgressBar.tsx",
+    "src/components/SideNavDrawer.tsx"
+  ],
+  "design_tokens": {
+    "authoritative_source": "src/styles/modern-2026.css (:root + html:not([data-theme=\"dark\"]))",
+    "human_docs": [
+      "docs/design-tokens.md (أُعيد كتابته 2026-07-24 ليطابق modern-2026.css)",
+      "docs/design-system.md (Design System v2 قديم جزئيًا — وُسم بتنبيه تعارض 2026-07-24، لم يُراجَع كاملًا بعد)"
+    ],
+    "current_primary_color": "#173D35 (هوية v3)",
+    "raw_hex_literal_count_outside_tokens": 7220,
+    "raw_hex_unique_values": 674
+  },
+  "seo_prerender": {
+    "output_dir": "seo-prerender/ (736 ملف index.html مُتتبَّع في git — راجع docs/ui-audit/technical-findings.md لمخاطرة ذلك)",
+    "generator": "scripts/generate-seo.mjs",
+    "merger": "scripts/post-build-seo.mjs (يدمج seo-prerender/ مع dist/index.html)",
+    "runtime_server": "server/index.mjs (يخدم seo-prerender/ مباشرة لطلبات الزحف)"
+  },
+  "existing_audit_docs_not_duplicated_here": [
+    "docs/audit-baseline.md — خط أساس P0-P3 قبل إعادة الهيكلة (2026-07-10)",
+    "docs/redesign-audit.md — تدقيق ما قبل redesign/unified-ui-v2 (2026-07-18، فعلي بقياسات typecheck/build حقيقية)",
+    "docs/platform-limitations.md — قيود iOS/Android/الويب موثّقة بقراءة كود فعلية",
+    "docs/performance-security-audit.md",
+    "docs/test-report.md — آخر تشغيل Playwright موثّق (2026-07-04، 296 اختبارًا)"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "updated_at": "2026-07-24",
+  "instructions": "أعلى بند بحالة pending هو نقطة الاستئناف. لا تُعِد فحص بنود done إلا إذا تغيّر الكود المرتبط بها.",
+  "items": [
+    {
+      "id": "docs-design-system-v2-reconcile",
+      "priority": 1,
+      "severity": "medium",
+      "area": "design-system-docs",
+      "status": "pending",
+      "summary": "docs/design-system.md (Design System v2) يحتاج مراجعة سطر بسطر مقابل src/styles/modern-2026.css الفعلي: أي متغيّرات/مكوّنات (.ds-btn, .ds-card, --ds-r-*, --ds-shadow-*, IslamicDivider, IslamicOrnament) لا تزال حية بعد استبدال هوية v3، وأيها ماتت.",
+      "next_action": "rg كل اسم صنف/متغيّر مذكور في design-system.md داخل src/ فعليًا، صنّف حي/ميت، أعد كتابة الملف ليعكس الواقع فقط.",
+      "evidence": "وُسم الملف بتنبيه تعارض في 2026-07-24 بدل إعادة كتابة كاملة غير موثّقة."
+    },
+    {
+      "id": "hex-literal-tokenization",
+      "priority": 2,
+      "severity": "medium",
+      "area": "design-tokens",
+      "status": "pending",
+      "summary": "674 قيمة hex فريدة (7220 تكرارًا) مكتوبة حرفيًا في src/styles+src/components+src/views بدل var(--token) — أبرزها #173D35 (1164×) و#28584D (1076×) وهما القيمة الصحيحة لكن غير مرمّزة.",
+      "next_action": "ابدأ بأعلى 10 قيم تكرارًا (rg -o --no-filename '#[0-9a-fA-F]{6}\\b' src/styles src/components src/views | sort | uniq -c | sort -rn | head), استبدل كل قيمة بمتغيّر modern-2026.css المطابق عبر بحث/استبدال آمن ملف-تلو-ملف، لا يدويًا سطرًا بسطر.",
+      "evidence": "rg -o --no-filename محسوب فعليًا 2026-07-24."
+    },
+    {
+      "id": "playwright-full-route-audit",
+      "priority": 3,
+      "severity": "low",
+      "area": "seo-routing",
+      "status": "pending",
+      "summary": "scripts/audit-all-routes.mjs (تدقيق Playwright آلي شامل لكل مسار: تسرّب محتوى رئيسية، تطابق عنوان، أخطاء console) موجود جاهز لكن لم يُشغَّل هذه الجلسة على الـ736 مسارًا كاملة — فقط test-seo.mjs وtest-no-homepage-leak.mjs (فحوصات أخف) شُغِّلت ونجحتا.",
+      "next_action": "node scripts/audit-all-routes.mjs http://localhost:PORT src/lib/seo-routes-paths.txt /tmp/route-audit-report.json بعد تشغيل vite dev محليًا؛ راجع النتائج، أضف بنودًا جديدة هنا فقط للفشل الفعلي.",
+      "evidence": null
+    },
+    {
+      "id": "admin-meta-descriptions-short",
+      "priority": 4,
+      "severity": "low",
+      "area": "seo",
+      "status": "pending",
+      "summary": "35 صفحة تحت /admin/** بوصف meta أقصر من الموصى به في test-seo.mjs — صفحات إدارية غير مفهرَسة، أولوية منخفضة جدًا وليست حرجة (0 مشاكل P0).",
+      "next_action": "node scripts/test-seo.mjs للحصول على القائمة الكاملة، وسّع الوصف في src/lib/seo-routes.json لكل مسار admin مذكور إن رغب المالك، وإلا تجاهل — لا يؤثر في SEO العام.",
+      "evidence": "node scripts/test-seo.mjs، 2026-07-24: 736 صفحة، 0 P0، 35 تحذير."
+    }
+  ],
+  "resolved_this_session": [
+    {
+      "id": "stale-color-docs-conflict",
+      "summary": "docs/design-tokens.md وثّق #0E6E52، docs/design-system.md وثّق #1F6E54، والقيمة الحقيقية في modern-2026.css هي #173D35. design-tokens.md أُعيد كتابته كاملًا ليطابق الواقع؛ design-system.md وُسم بتنبيه تعارض.",
+      "commit": "pending (سيُسجَّل بعد commit-and-push-branch.sh)"
+    }
+  ]
+}
