@@ -158,6 +158,7 @@ function NotifRow({ rec, onRead, onArchive, onDelete }: {
         {/* onClick لمنع انتشار النقر إلى صف الإشعار الأب — لا إجراء فعلي هنا
             يحتاج مكافئ لوحة مفاتيح؛ الأزرار الفعلية داخل هذا الصف قابلة للوصول
             بلوحة المفاتيح أصلًا. */}
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
         <div className="nh-row__actions" onClick={e => e.stopPropagation()}>
           {!rec.isArchived && (
             <button type="button" className="nh-action" onClick={onArchive} aria-label="أرشفة">

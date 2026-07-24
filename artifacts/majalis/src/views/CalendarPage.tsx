@@ -87,7 +87,9 @@ function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => v
   return (
     // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار بديل كامل
     // بلوحة المفاتيح.
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
     <div className="cal-modal-backdrop" onClick={onClose} role="presentation">
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, jsx-a11y/no-noninteractive-element-interactions */}
       <div className="cal-modal ui-card" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="cal-modal-title">
         <h3 id="cal-modal-title">{event.title}</h3>
         <dl className="cal-modal-meta">

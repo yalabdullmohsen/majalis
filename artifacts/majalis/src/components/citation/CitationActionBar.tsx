@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ClipboardCopy, Link2, Printer, Quote, Star } from "lucide-react";
+import { ClipboardCopy, Printer, Quote, Star } from "lucide-react";
 import { CitationModal } from "./CitationModal";
 import { type CitationSource, type CitationContentType, citTypeClass } from "@/lib/citation-service";
 
@@ -136,18 +136,6 @@ export function CitationActionBar({
     setTimeout(() => { printRef.current = false; }, 3000);
   };
 
-  const handleShare = async () => {
-    if (!src) return;
-    const url = window.location.href;
-    if (navigator.share) {
-      await navigator.share({ title: src.title_ar, url }).catch(() => {});
-    } else {
-      await navigator.clipboard.writeText(url).catch(() => {});
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
-
   if (!src && !sourceId) return null;
 
   const btnClass = compact
@@ -190,15 +178,6 @@ export function CitationActionBar({
           aria-label="حفظ"
         >
           <Star size={13} className="inline ml-1" />{!compact && "حفظ"}
-        </button>
-
-        <button
-          type="button"
-          onClick={handleShare}
-          className={btnClass}
-          aria-label="مشاركة"
-        >
-          <Link2 size={13} className="inline ml-1" />{!compact && "مشاركة"}
         </button>
 
         <button

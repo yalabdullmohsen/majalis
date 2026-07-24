@@ -264,13 +264,7 @@ body {
   color: var(--m26-green-800, #166534) !important;
   text-shadow: none !important;
 }
-.navbar-menu-btn,
 .navbar-menu-btn { color: var(--txt-primary, #202725) !important; }
-.navbar-search-cmd {
-  background: var(--m26-bg, #F7F4ED) !important;
-  border: 1px solid rgba(0,0,0,0.08) !important;
-  color: var(--txt-subdued, #5E655F) !important;
-}
 
 /* ══ 7. Side Drawer ══════════════════════════════════════════════════════════ */
 .side-nav-drawer--v2 {
@@ -278,7 +272,6 @@ body {
   border-inline-end: 1px solid rgba(0,0,0,0.06) !important;
   box-shadow: var(--m26-shadow-xl) !important;
 }
-.side-nav-close,
 .side-nav-close { color: var(--txt-muted, #5E655F) !important; }
 .side-nav-group__title {
   color: var(--txt-hint, #5E655F) !important;
@@ -307,9 +300,7 @@ body {
   border-top: 1px solid rgba(0,0,0,0.06) !important;
   box-shadow: 0 -2px 12px rgba(0,0,0,0.05) !important;
 }
-.bottom-nav__item,
 .bottom-nav__item { color: var(--txt-muted, #5E655F) !important; }
-.bottom-nav__item--active,
 .bottom-nav__item--active { color: var(--m26-green-800, #166534) !important; }
 
 /* ══ 9. Cards ════════════════════════════════════════════════════════════════ */
@@ -355,11 +346,8 @@ body {
   font-size: var(--type-caption) !important;
   font-weight: var(--fw-bold) !important;
 }
-.ds-card__title,
 .ds-card__title { color: var(--txt-primary, #202725) !important; font-weight: var(--fw-bold) !important; }
-.ds-card__body,
 .ds-card__body { color: var(--txt-secondary, #68716D) !important; }
-.ds-card__meta,
 .ds-card__meta { color: var(--txt-muted, #5E655F) !important; }
 
 /* ══ 10. Buttons ══════════════════════════════════════════════════════════ */
@@ -499,7 +487,6 @@ label {
   letter-spacing: normal !important;
   text-transform: uppercase !important;
 }
-.pt-prayer,
 .pt-prayer { background: #FFFFFF !important; border-color: rgba(0,0,0,0.07) !important; }
 .pt-prayer:hover {
   border-color: var(--m26-green-600, #16A34A) !important;
@@ -517,8 +504,6 @@ label {
   color: var(--txt-primary, #202725) !important;
   font-weight: var(--fw-semibold) !important;
 }
-.pt-prayer--next .pt-prayer__name,
-.pt-prayer--next .pt-prayer__time,
 .pt-prayer--next .pt-prayer__name,
 .pt-prayer--next .pt-prayer__time {
   color: var(--m26-green-800, #166534) !important;
@@ -656,7 +641,6 @@ label {
   font-size: var(--type-h2) !important;
   font-weight: var(--fw-bold) !important;
 }
-.login-card__subtitle,
 .login-card__subtitle { color: var(--txt-muted, #5E655F) !important; }
 .login-submit {
   background: var(--m26-green-800, #166534) !important;
@@ -711,9 +695,7 @@ label {
   color: var(--txt-muted, #5E655F) !important;
   font-size: var(--type-caption) !important;
 }
-.prophets-lux-count,
 .prophets-lux-count { color: var(--txt-muted, #5E655F) !important; }
-.prophets-lux-empty,
 .prophets-lux-empty { color: var(--txt-muted, #5E655F) !important; }
 .prophets-lux-disclaimer {
   color: var(--txt-warning, #173D35) !important;
@@ -738,19 +720,12 @@ label {
   border: 1px solid rgba(0,0,0,0.07) !important;
   border-radius: var(--m26-r-lg) !important;
 }
-.nh-header__title,
 .nh-header__title { color: var(--txt-primary, #202725) !important; }
-.nh-row,
 .nh-row { border-color: rgba(0,0,0,0.06) !important; }
-.nh-row:hover,
 .nh-row:hover { background: var(--m26-green-50, #F0FDF4) !important; }
-.nh-row__title,
 .nh-row__title { color: var(--txt-primary, #202725) !important; }
-.nh-row__body-text,
 .nh-row__body-text { color: var(--txt-secondary, #68716D) !important; }
-.nh-row__meta,
 .nh-row__meta { color: var(--txt-muted, #5E655F) !important; }
-.nh-tab,
 .nh-tab { color: var(--txt-muted, #5E655F) !important; }
 .nh-tab--active {
   color: var(--m26-green-800, #166534) !important;
@@ -769,15 +744,10 @@ label {
   border: 1px solid rgba(0,0,0,0.07) !important;
   border-radius: var(--m26-r-lg) !important;
 }
-.notif-card__title,
 .notif-card__title { color: var(--txt-primary, #202725) !important; }
-.notif-row__label,
 .notif-row__label { color: var(--txt-primary, #202725) !important; }
-.notif-row__sub,
 .notif-row__sub { color: var(--txt-muted, #5E655F) !important; }
-.notif-toggle,
 .notif-toggle { background: rgba(0,0,0,0.12) !important; }
-.notif-toggle--on,
 .notif-toggle--on { background: var(--m26-green-600, #16A34A) !important; }
 .notif-test-btn {
   background: var(--m26-green-800, #166534) !important;
@@ -789,9 +759,7 @@ label {
   color: var(--m26-green-800, #166534) !important;
   border: 1px solid rgba(22,163,74,0.25) !important;
 }
-.notif-time__label,
 .notif-time__label { color: var(--txt-secondary, #68716D) !important; }
-.notif-time__hint,
 .notif-time__hint { color: var(--txt-muted, #5E655F) !important; }
 .notif-banner--warn {
   background: var(--m26-gold-50, #f0faf5) !important;
@@ -815,7 +783,6 @@ label {
   font-family: var(--font-body) !important;
   font-weight: var(--fw-bold) !important;
 }
-.home-hero__sub,
 .home-hero__sub { color: var(--txt-secondary, #68716D) !important; }
 .home-story-card,
 .home-feature-strip-card,
@@ -826,15 +793,11 @@ label {
   background: #FFFFFF !important;
   border: 1px solid rgba(0,0,0,0.07) !important;
 }
-.home-about__body,
 .home-about__body { color: var(--txt-secondary, #68716D) !important; }
 
 /* ══ 19. Page Shell / Global Text ═══════════════════════════════════════════ */
-.page-shell,
 .page-shell { color: var(--txt-primary, #202725) !important; }
-.page-meta,
 .page-meta { color: var(--txt-muted, #5E655F) !important; }
-.page-desc,
 .page-desc { color: var(--txt-secondary, #68716D) !important; }
 .page-tag {
   background: var(--m26-green-100, #DCFCE7) !important;
@@ -861,7 +824,6 @@ label {
 }
 
 /* ══ 20. Admin Shell ══════════════════════════════════════════════════════ */
-.admin-shell,
 .admin-shell { background: var(--m26-bg, #F7F4ED) !important; }
 .admin-shell__sidebar {
   background: #FFFFFF !important;
@@ -937,13 +899,9 @@ html[data-theme="dark"] td {
   border-color: rgba(22,163,74,0.50) !important;
   box-shadow: var(--m26-shadow-md) !important;
 }
-.prophets-seerah-bridge__title,
 .prophets-seerah-bridge__title { color: var(--m26-green-950, #052E16) !important; }
-.prophets-seerah-bridge__eyebrow,
 .prophets-seerah-bridge__eyebrow { color: var(--m26-gold-700, #28584D) !important; }
-.prophets-seerah-bridge__desc,
 .prophets-seerah-bridge__desc { color: var(--txt-secondary, #68716D) !important; }
-.prophets-seerah-bridge__arrow,
 .prophets-seerah-bridge__arrow { color: var(--m26-green-600, #16A34A) !important; }
 .seerah-back-link {
   color: var(--m26-green-800, #166534) !important;
@@ -1043,9 +1001,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   background: #FFFFFF !important;
   border: 1px solid rgba(0,0,0,0.07) !important;
 }
-.adhkar-card__text,
 .adhkar-card__text { color: var(--txt-primary, #202725) !important; }
-.adhkar-card__source,
 .adhkar-card__source { color: var(--txt-muted, #5E655F) !important; }
 
 /* ══ 33. Flashcards ══════════════════════════════════════════════════════════ */
@@ -1068,13 +1024,10 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   color: var(--txt-primary, #202725) !important;
   font-weight: var(--fw-black) !important;
 }
-.stat-card__label,
 .stat-card__label { color: var(--txt-muted, #5E655F) !important; }
 
 /* ══ 35. Prayer Rank / Lesson Detail ════════════════════════════════════════ */
-.hcp-prayer-cell__time,
 .hcp-prayer-cell__time { color: var(--txt-primary, #202725) !important; }
-.hcp-prayer-cell__name,
 .hcp-prayer-cell__name { color: var(--txt-secondary, #68716D) !important; }
 
 /* ══ 36. تاريخ الإسلامي / أذكار / تسبيح ════════════════════════════════════ */
@@ -1082,43 +1035,29 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   color: var(--txt-primary, #202725) !important;
   font-weight: var(--fw-black) !important;
 }
-.tasbih-label,
 .tasbih-label { color: var(--txt-muted, #5E655F) !important; }
 
-/* ══ 37. Prophet Stories — Light Card Contrast Fixes ════════════════════════ */
-.prophets-lux-count,
-.prophets-lux-count { color: var(--txt-muted, #5E655F) !important; }
-
-.prophet-lux-card__place,
+/* ══ 37. Prophet Stories — Light Card Contrast Fixes ════════════════════════
+   (.prophets-lux-count و.prophets-lux-empty مطابقتان حرفيًا لتعريفهما أعلى
+   الملف — أُزيل التكرار هنا) ═══════════════════════════════════════════ */
 .prophet-lux-card__place { color: var(--txt-muted, #5E655F) !important; }
 
-.prophets-lux-empty,
-.prophets-lux-empty { color: var(--txt-muted, #5E655F) !important; }
-
-.prophet-timeline__title,
 .prophet-timeline__title { color: var(--txt-muted, #5E655F) !important; }
 
-.prophet-timeline__era,
 .prophet-timeline__era { color: var(--txt-muted, #5E655F) !important; }
 
-.prophet-quiz__remark,
 .prophet-quiz__remark { color: var(--txt-muted, #5E655F) !important; }
 
-.prophets-lux-search-clear,
 .prophets-lux-search-clear { color: var(--txt-muted, #5E655F) !important; }
 
 /* ══ 38. Seerah Page — Timeline Contrast ════════════════════════════════════ */
-.seerah-timeline__dot,
 .seerah-timeline__dot { color: var(--txt-muted, #5E655F) !important; }
 
-.seerah-timeline__year,
 .seerah-timeline__year { color: var(--txt-muted, #5E655F) !important; }
 
 /* ══ 39. Muezzin Detail / Favorites — Contrast Fixes ════════════════════════ */
-.muezzin-meta,
 .muezzin-meta { color: var(--txt-muted, #5E655F) !important; }
 
-.muezzin-bio,
 .muezzin-bio { color: var(--txt-muted, #5E655F) !important; }
 
 /* ══ 39b. Back Button — زر الرجوع العالمي ══════════════════════════════════ */
@@ -1670,7 +1609,6 @@ body {
 p { line-height: var(--lh-normal, 1.65); }
 
 /* ─── نص أبيض على جميع Hero sections ─── */
-.lpth-hero,
 .lpth-hero *:not(.lpth-hero__btn-primary):not(.lpth-hero__btn-primary *) {
   color: var(--on-emerald-primary);
 }
@@ -1680,7 +1618,6 @@ p { line-height: var(--lh-normal, 1.65); }
   color: var(--on-emerald-secondary) !important;
 }
 
-.ldb-hero,
 .ldb-hero * {
   color: var(--on-emerald-primary);
 }
@@ -1695,7 +1632,6 @@ p { line-height: var(--lh-normal, 1.65); }
   color: var(--on-emerald-primary) !important;
 }
 
-.lesson-detail-hero,
 .lesson-detail-hero * {
   color: var(--on-emerald-primary) !important;
 }

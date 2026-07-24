@@ -181,15 +181,6 @@ export function PrayerRanksContent() {
     search.trim() ? PRAYER_TIPS.filter(t => arabicMatchAny([t.tip], search)) : PRAYER_TIPS,
   [search]);
 
-  const share = async () => {
-    const url = window.location.href;
-    if (navigator.share) {
-      await navigator.share({ title: "مراتب الناس في الصلاة", url }).catch(() => {});
-    } else {
-      await navigator.clipboard?.writeText(url).catch(() => {});
-    }
-  };
-
   return (
     <div className="prayer-ranks-page">
       {/* فضيلة الصلاة اليوم */}
@@ -204,7 +195,6 @@ export function PrayerRanksContent() {
         </div>
       </div>
       <div className="prayer-ranks-actions">
-        <button type="button" className="ui-card-btn" onClick={share}>مشاركة</button>
         <button type="button" className="ui-card-btn" onClick={() => window.print()}>طباعة / PDF</button>
       </div>
 

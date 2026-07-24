@@ -41,10 +41,6 @@ html {
   padding: var(--ds-space-4) var(--ds-space-3);
 }
 
-.page-shell.narrow {
-  max-width: var(--ds-content-max);
-}
-
 .revelation-rule, .revelation-why, .revelation-sources { margin-block-end: var(--ds-space-5); line-height: 1.8; }
 .revelation-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-space-4); margin-block-end: var(--ds-space-5); }
 .revelation-comparison h2, .revelation-rule h2, .revelation-why h2, .revelation-sources h2 { color: var(--ds-emerald-deep); font-size: var(--ds-text-lg); margin-block-end: var(--ds-space-2); }

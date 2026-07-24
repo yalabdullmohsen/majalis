@@ -99,7 +99,11 @@ export function Phase2TrialImport({ onDone }: Phase2TrialImportProps) {
       </button>
 
       {open && (
+        // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار وصول
+        // بديل كامل بلوحة المفاتيح.
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div className="adm-modal__overlay" onClick={close}>
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div className="p2t-dialog" onClick={(e) => e.stopPropagation()}>
             <h2 className="p2t-title">استيراد تجريبي Phase 2</h2>
             <p className="p2t-desc">

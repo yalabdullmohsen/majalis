@@ -147,65 +147,10 @@ body {
 
 
 
-/* ── شريط البحث الأنيق ─────────────────────────────────────────────────── */
-.navbar-search-form {
-  border-radius: 2rem !important;
-  padding: 0.1rem 0.1rem 0.1rem 0.6rem !important;
-  border-color: var(--elite-border-2, rgba(24,54,42,0.13)) !important;
-  width: clamp(12rem, 20vw, 18rem) !important;
-  max-width: 18rem !important;
-  transition: max-width 0.25s ease, border-color 0.15s !important;
-}
-.navbar-search-form:focus-within {
-  max-width: 20rem !important;
-  border-color: var(--majalis-emerald) !important;
-  box-shadow: 0 0 0 2px rgba(31,77,58,0.08) !important;
-}
-.navbar-search-submit {
-  border-radius: 1.5rem !important;
-  padding: 0.25rem 0.65rem !important;
-  font-size: 0.72rem !important;
-}
-
-/* زر البحث في الشريط العلوي — أيقونة عدسة حقيقية (Lucide Search)، بلا حرف
-   K وبلا مربع اختصار لوحة المفاتيح ظاهر بصريًا (الاختصار Ctrl/Cmd+K يبقى
-   فعالاً عبر مستمع مستقل في App.tsx). مساحة لمس ≥44×44px على الجوال
-   (أيقونة فقط)، أيقونة + كلمة "بحث" على الشاشات الأوسع (>640px عبر
-   .navbar-search-hint في index.css)، بنفس منطق ونمط زر القائمة
-   (.navbar-menu-btn) وزر الوضع الداكن (.navbar-theme-toggle) لاتساق بصري. */
-.navbar-search-cmd {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 0.4rem !important;
-  min-width: 44px !important;
-  min-height: 44px !important;
-  background: var(--elite-off-white, #F5F5F4) !important;
-  border: 1px solid var(--elite-border, rgba(0,0,0,0.07)) !important;
-  color: var(--elite-ink-muted, #6B6B6B) !important;
-  border-radius: var(--elite-r-md) !important;
-  padding: 0.375rem 0.75rem !important;
-  cursor: pointer !important;
-  transition: all var(--elite-fast) var(--elite-ease) !important;
-}
-.navbar-search-cmd:hover {
-  background: var(--elite-white) !important;
-  border-color: var(--elite-border-2) !important;
-  box-shadow: var(--elite-shadow-sm) !important;
-}
-.navbar-search-cmd:active {
-  transform: scale(0.97) !important;
-}
-.navbar-search-cmd:focus-visible {
-  outline: 2px solid var(--majalis-emerald-deep, #173D35) !important;
-  outline-offset: 2px !important;
-}
-@media (min-width: 641px) {
-  .navbar-search-cmd {
-    min-width: auto !important;
-    min-height: 36px !important;
-  }
-}
+/* زر/شريط البحث في الهيدر أُزيلا بالكامل (2026-07-24، طلب مباشر من
+   المالك ضمن إعادة تصميم الهيدر) — البحث يبقى متاحًا عبر Ctrl/Cmd+K
+   وصفحة /search. قواعد .navbar-search-form/.navbar-search-submit/
+   .navbar-search-cmd حُذفت هنا لأنها لم تعد تُطابِق أي عنصر في JSX. */
 
 /* Night mode toggle button */
 .navbar-theme-toggle {
@@ -275,9 +220,6 @@ html[data-theme="dark"] .navbar-mobile-login {
 .navbar-search-hint {
   color: var(--elite-ink-muted) !important;
   font-weight: 500 !important;
-}
-.navbar-search-cmd svg {
-  color: var(--elite-ink-muted) !important;
 }
 /* .navbar-search-kbd (حرف K + مربع الاختصار) أُزيل نهائيًا من العرض بطلب
    صريح — لم يعد يُستخدَم في NavBar.tsx، وحُذفت قاعدته هنا معه (كان سيبقى
@@ -1319,7 +1261,6 @@ html[data-theme="dark"] .rp-section-title {
   letter-spacing: normal !important;
 }
 
-.pt-hero__time,
 .pt-hero__time { color: rgba(255,255,255,0.70) !important; }
 
 .pt-prayer {
@@ -2440,7 +2381,6 @@ button.hcp-prayer-cell:focus-visible {
 
 
 /* §58 — صفحة التوحيد: ID selector (specificity 1-0-X) يتغلب على أي كمية !important بالـ classes */
-#tawhid-header,
 #tawhid-header h1,
 #tawhid-header h2,
 #tawhid-header h3,
@@ -5158,10 +5098,10 @@ html[data-theme="dark"] .khatma-bar-fill {
 }
 .mzd-hero__pattern {
   position: absolute;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   opacity: 0.05;
   background-image: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%);
   background-size: 12px 12px;
@@ -7391,9 +7331,10 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 }
 
 /* ============================================================
-   §80 — FiqhPage  (fqp-*)
+   §80 — FiqhPage  (fqp-*) — القاعدة الوحيدة هنا مطابقة لـ.fqp-cta-btn
+   الأحدث (مع :hover) في §~قسم fqp لاحقًا في هذا الملف؛ أُزيلت هنا لمنع
+   التكرار الحرفي.
    ============================================================ */
-.fqp-cta-btn { background: var(--majalis-emerald); }
 
 /* ============================================================
    §81 — VaultPage additions  (vault-login-*)
@@ -9148,7 +9089,6 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .tgm-date-span      { margin-right: 0.75rem; }
 .tgm-sheikh-empty   { color: var(--majalis-ink-soft); font-size: 0.8rem; }
 .tgm-tr             { border-bottom: 1px solid var(--majalis-line); }
-.tgm-tr             { border-bottom: 1px solid var(--majalis-line); }
 
 /* ── §159 — FiqhCouncilSection (fcs-*) ───────────────────────────────────── */
 .fcs-header         { display: flex; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: var(--ds-space-3); align-items: center; }
@@ -9395,10 +9335,10 @@ body {
 /* ── §163 — GlobalSearchModal (gsm-*) ───────────────────────────────────── */
 .gsm-overlay {
   position: fixed;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 10000;
   display: flex;
   align-items: flex-start;
@@ -9890,10 +9830,10 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 /* ── §169 — ExploreAyahPanel (eap-*) ────────────────────────────────────── */
 .eap-backdrop {
   position: fixed;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 9000;
   background: rgba(0,0,0,0.45);
 }
@@ -11226,10 +11166,10 @@ button, .btn {
 /* ── §191 — MuezzinPicker bottom-sheet ─────────────────────────────────────── */
 .mzp-overlay {
   position: fixed;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 3000;
   background: rgba(0,0,0,0.65);
   display: flex;
@@ -12839,7 +12779,6 @@ a:focus-visible {
 }
 .isp-detail__section-title--green { color: var(--majalis-emerald-deep) !important; }
 .isp-detail__section-title--purple { color: #7c3aed !important; }
-.isp-detail__section-title--gold { color: var(--majalis-emerald,#28584D) !important; }
 .isp-detail__body {
   font-size: 0.92rem !important;
   color: var(--v2-ink-2, #4A453F) !important;
@@ -13806,20 +13745,6 @@ html[data-theme="dark"] .global-back-btn {
   font-size: 1.05rem !important;
 }
 
-.navbar-search-cmd {
-  background: rgba(0,0,0,0.04) !important;
-  border: 1px solid rgba(0,0,0,0.08) !important;
-  border-radius: 8px !important;
-  color: var(--rd-ink-soft) !important;
-  transition: background 0.2s, border-color 0.2s !important;
-}
-
-.navbar-search-cmd:hover {
-  background: rgba(16,185,129,0.07) !important;
-  border-color: var(--rd-emerald) !important;
-  color: var(--rd-emerald-deep) !important;
-}
-
 /* ─── Featured Cards (Phase 5 colors) ─────────────────────────── */
 
 
@@ -14431,10 +14356,10 @@ img[loading="lazy"]:not([src=""]) {
 .bottom-sheet__head::before {
   content: "";
   position: absolute;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-image:
     radial-gradient(circle at 15% 50%, rgba(255,255,255,0.04) 0%, transparent 50%),
     radial-gradient(circle at 85% 50%, rgba(255,255,255,0.03) 0%, transparent 45%);
@@ -14584,10 +14509,10 @@ img[loading="lazy"]:not([src=""]) {
 .tj-hero::before {
   content: "";
   position: absolute;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06) 0%, transparent 50%),
                     radial-gradient(circle at 80% 70%, rgba(255,255,255,0.04) 0%, transparent 45%);
   pointer-events: none;
@@ -14725,10 +14650,10 @@ html[data-theme="dark"] .tj-cat-badge { color: #8BABA3 !important; }
 .quran-hub-hero::before {
   content: "";
   position: absolute;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.04) 0%, transparent 50%),
                     radial-gradient(circle at 80% 70%, rgba(255,255,255,0.03) 0%, transparent 50%);
   pointer-events: none;
@@ -23210,10 +23135,10 @@ html[data-theme="dark"] .share-btn--copy { background: #173D35 !important; }
 .seerah-hero::before {
   content: "";
   position: absolute;
-  top: 0None;
-  right: 0None;
-  bottom: 0None;
-  left: 0None;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(255,255,255,0.04), transparent);
   pointer-events: none;
 }
@@ -25436,15 +25361,6 @@ html[data-theme="dark"] .navbar-v3 {
   border-color: rgba(92,196,154,.10) !important;
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
-}
-html[data-theme="dark"] .navbar-search-cmd {
-  background: #173D35 !important;
-  border-color: rgba(92,196,154,.12) !important;
-  color: #A8BDB6 !important;
-}
-html[data-theme="dark"] .navbar-search-cmd:hover {
-  background: #173D35 !important;
-  border-color: rgba(92,196,154,.22) !important;
 }
 html[data-theme="dark"] .navbar-prayer-chip {
   background: rgba(92,196,154,.08) !important;
@@ -29288,7 +29204,7 @@ input[type="text"], input[type="email"], input[type="password"],
 input[type="search"], input[type="number"], input[type="tel"],
 textarea, select {
   font-family: var(--font-body) !important;
-  font-size: 0.9375rem !important;
+  font-size: 1rem !important;
   color: var(--color-text, #202725) !important;
   background: var(--color-surface, #FFFFFF) !important;
   border: 1px solid var(--color-border, #E7E2D8) !important;
@@ -29351,17 +29267,6 @@ label {
 }
 
 
-
-/* البحث في الـ Navbar */
-.navbar-search-form {
-  background: var(--color-surface, #fff) !important;
-  border: 1px solid var(--color-border, #E7E2D8) !important;
-  border-radius: var(--elite-r-pill) !important;
-}
-.navbar-search-form:focus-within {
-  border-color: var(--color-primary, #28584D) !important;
-  box-shadow: 0 0 0 3px rgba(23,61,53,.08) !important;
-}
 
 /* ════════════════════════════════════
    §77g — Bottom Navigation محسَّن
@@ -30569,66 +30474,41 @@ html[data-theme="dark"] tr:hover td {
    قائمة الحاويات ذات الخلفية الداكنة:
    Hero / Page Headers / Card Headers / Footer / Learning Path / Dark Banners
 */
-.hpv4-hero,
 .hpv4-hero :not(.hpv4-hero__cta-primary):not(.hpv4-hero__cta-primary *),
-.lesson-unified-card__header,
 .lesson-unified-card__header *,
-.ds-page-header,
 .ds-page-header *,
-.home-hero,
 .home-hero *,
-.home-learning-path-card,
 .home-learning-path-card *,
-.lessons-page-header,
 .lessons-page-header *,
-.scholars-page-header,
 .scholars-page-header *,
-.courses-page-header,
 .courses-page-header *,
-.library-page-header,
 .library-page-header *,
-.quran-page-header,
 .quran-page-header *,
-.fiqh-page-header,
 .fiqh-page-header *,
-.fatwas-page-header,
 .fatwas-page-header *,
-.hadith-page-header,
 .hadith-page-header *,
-.adhkar-page-header,
 .adhkar-page-header *,
-.site-footer,
 .site-footer *,
 footer,
 footer *,
-.page-hero-wrap,
 .page-hero-wrap *,
 [class*="page-header"][class*="dark"],
 [class*="page-header"][class*="dark"] *,
 [class$="-hero"]:not(.revord-hero):not(.an-hero):not(.dvp-hero):not(.sch-profile-hero):not(.accd-hero):not(.hpv4-hero):not(.surah-index-hero):not(.cvp-hero),
 [class$="-hero"]:not(.revord-hero):not(.an-hero):not(.dvp-hero):not(.sch-profile-hero):not(.accd-hero):not(.hpv4-hero):not(.surah-index-hero):not(.cvp-hero) *,
-.dark-section,
 .dark-section *,
-.dark-bg,
 .dark-bg *,
 /* Navbar dark elements */
 .navbar-v3 .site-brand-name,
 .navbar-v3 .site-brand-logotype__main,
 /* Prayer chip */
-.navbar-prayer-chip,
 .navbar-prayer-chip *,
 /* رأس صفحات أخرى بخلفية داكنة */
-.tawheed-page-header,
 .tawheed-page-header *,
-.seerah-page-header,
 .seerah-page-header *,
-.hadith-page-header,
 .hadith-page-header *,
-.adhkar-page-header,
 .adhkar-page-header *,
-.fiqh-page-header,
 .fiqh-page-header *,
-.quiz-page-header,
 .quiz-page-header * {
   color: #FFFFFF !important;
 }
@@ -30636,7 +30516,6 @@ footer *,
 /* استثناء .sch-profile-hero (صفحة بروفايل العالم) — تطابق [class*="-hero"] عن طريق
    الخطأ رغم أن خلفيتها فاتحة (بلا لون خلفية أصلاً)، فكانت وسوم التخصص/العصر
    (sch-tag) تُصبح بيضاء على خلفية شبه بيضاء — تباين شبه معدوم (WCAG). */
-.sch-profile-hero,
 .sch-profile-hero * {
   color: inherit !important;
 }
@@ -30649,7 +30528,6 @@ footer *,
 
 /* استثناء .dvp-hero (رأس صفحة المطوّرين /developers) — نفس الخلل: لا خلفية
    فعلية فبقي العنوان والمقدّمة أبيضين على خلفية فاتحة (غير مقروءين تقريبًا). */
-.dvp-hero,
 .dvp-hero * {
   color: inherit !important;
 }
@@ -33191,23 +33069,16 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
 }
 
 /* ============================================================
-   §223 — أسماء الصلوات بخط زخرفي (المرحلة 12، 2026-07-18)
-   لا خط ثلث جلي مرخَّص متاح، ولا يمكن رسم SVG خط ثلث حقيقي موثوق يدويًا في
-   هذه الجلسة — البديل الصادق المُطبَّق: "Aref Ruqaa" (خط عربي زخرفي مرخَّص
-   مُحمَّل بالفعل في index.html، غير مُستخدَم فعليًا بأي مكان قبل هذا)، يليه
-   Amiri كما يتطلب fallback النصي. لا استخدام جديد لخط غير محمَّل مسبقًا،
-   فلا CLS إضافي. الأرقام (.pt-hero__time/.pt-prayer__time) تبقى على
-   var(--font-body)/Alexandria كما هي أصلاً (لم تُغيَّر). !important إلزامية
-   هنا لتجاوز .pt-hero__name!important الموجود فعلاً في modern-2026.css
-   (نفس فخّ "!important خارجي" الموثَّق — الحل الوحيد الفعلي محاذاة نفس
-   القاعدة بتحميل لاحق في elite-2026.css، لا استخدام style.prop مباشر). */
+   §223 — أسماء الصلوات: خط الموقع الموحَّد (2026-07-24)
+   خُطّ "Aref Ruqaa" الزخرفي (مُطبَّق سابقًا 2026-07-18) أُلغي بطلب مباشر
+   من المالك — أسماء الصلوات تستخدم الآن Alexandria (var(--font-body))
+   كباقي الموقع، بلا استثناء. !important يبقى لازمًا لتجاوز
+   .pt-hero__name!important الموجود في modern-2026.css. */
 .pt-hero__name,
 .pt-prayer__name {
-  font-family: "Aref Ruqaa", "Amiri", var(--font-body) !important;
-  line-height: 1.5 !important; /* مساحة كافية لحروف الخط الزخرفي الممتدة — لا قص */
-  overflow: visible !important;
+  font-family: var(--font-body) !important;
 }
-.pt-hero__name { font-weight: 700 !important; } /* Aref Ruqaa ثقيل بصريًا أصلاً؛ 700 كافٍ بدل 800 المُورَّث */
+.pt-hero__name { font-weight: 700 !important; }
 
 /* الشروق مميَّز بصريًا كصلاة غير مفروضة — لا يُخلَط بصريًا بالخمس المفروضة */
 .pt-prayer--sunrise {
