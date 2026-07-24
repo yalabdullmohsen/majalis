@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import {
-  Pause, Play, Repeat, Copy, Check, Share2, BookOpen, Compass, Mic2, ChevronDown, X, StickyNote,
+  Pause, Play, Repeat, Copy, Check, BookOpen, Compass, Mic2, ChevronDown, X, StickyNote,
 } from "lucide-react";
 import { RECITERS } from "@/lib/quran-audio";
-import { copyAyahText, copyAyahTextPlain, shareAyahAsImage, shareAyahAsText } from "@/lib/share-ayah";
+import { copyAyahText, copyAyahTextPlain } from "@/lib/share-ayah";
 import { fetchTafsirAyahs } from "@/lib/quran-api";
 import { getNote, saveNote } from "@/lib/quran-personal";
 import { FavoriteButton } from "@/components/FavoriteButton";
@@ -20,8 +20,7 @@ import type { PlayerState } from "@/hooks/useAyahPlayer";
  * موازية): استماع + اختيار قارئ (useAyahPlayer + RECITERS الموجودان)،
  * تكرار (توليف فوق useAyahPlayer)، نسخ مع/دون تشكيل (copyAyahText /
  * copyAyahTextPlain — الثانية تزيل الحركات فقط بلا توحيد همزات، مضافة
- * الآن)، مشاركة كصورة أو نص (shareAyahAsImage الموجودة + shareAyahAsText
- * الجديدة عبر Web Share)، حفظ (FavoriteButton بجدول bookmarks الحقيقي،
+ * الآن)، حفظ (FavoriteButton بجدول bookmarks الحقيقي،
  * تحقّقتُ من RLS حيًّا)، **ملاحظة شخصية** (quran-personal.ts — كان مبنيًّا
  * فعليًا محليًا (localStorage) منذ جلسة سابقة لكن بلا أي واجهة تستخدمه؛
  * الفجوة الموثَّقة صراحة أدناه كانت "غير منفَّذ" — أُغلقت الآن)، تفسير
@@ -106,10 +105,6 @@ export function AyahActionSheet({
     saveNote(surahNumber, ayahNumberInSurah, noteText);
     setNoteSaved(true);
     setTimeout(() => setNoteSaved(false), 1500);
-  };
-
-  const handleShare = () => {
-    void shareAyahAsImage({ text: ayahText, surahName, ayahNum: ayahNumberInSurah, surahNum: surahNumber });
   };
 
   const handleToggleTafsir = async () => {
@@ -203,16 +198,6 @@ export function AyahActionSheet({
           <button type="button" className="ayah-sheet__action" onClick={handleCopyPlain}>
             {copiedPlain ? <Check size={18} aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
             <span>{copiedPlain ? "نُسخت" : "نسخ بلا تشكيل"}</span>
-          </button>
-
-          <button type="button" className="ayah-sheet__action" onClick={handleShare}>
-            <Share2 size={18} aria-hidden="true" />
-            <span>مشاركة صورة</span>
-          </button>
-
-          <button type="button" className="ayah-sheet__action" onClick={() => shareAyahAsText(ayahText, surahName, ayahNumberInSurah)}>
-            <Share2 size={18} aria-hidden="true" />
-            <span>مشاركة نص</span>
           </button>
 
           <div className="ayah-sheet__action ayah-sheet__action--fav">

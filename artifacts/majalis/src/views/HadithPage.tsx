@@ -383,20 +383,6 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
           >
             {copied ? "✓ تم النسخ" : "⎘ نسخ الحديث"}
           </button>
-          {typeof navigator.share === "function" && (
-            <button
-              type="button"
-              className="hadith-modal-btn"
-              onClick={() =>
-                navigator.share({
-                  title: h.title ?? "حديث شريف",
-                  text: `${h.text}\n\n— ${h.source_name ?? ""}`,
-                })
-              }
-            >
-              ↑ مشاركة
-            </button>
-          )}
         </div>
 
         <CitationActionBar

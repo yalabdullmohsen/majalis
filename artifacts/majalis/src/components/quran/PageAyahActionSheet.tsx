@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { X, Copy, Check, Share2, Bookmark, StickyNote, Play, Pause, ChevronRight, ChevronLeft, ChevronDown, Flag, Image as ImageIcon, BookOpen, Mic2, Repeat, Gauge } from "lucide-react";
-import { copyAyahText, copyAyahTextPlain, shareAyahAsText, shareAyahAsImage } from "@/lib/share-ayah";
+import { X, Copy, Check, Bookmark, StickyNote, Play, Pause, ChevronRight, ChevronLeft, ChevronDown, Flag, BookOpen, Mic2, Repeat, Gauge } from "lucide-react";
+import { copyAyahText, copyAyahTextPlain } from "@/lib/share-ayah";
 import { addBookmark, removeBookmark, isBookmarked, getNote, saveNote } from "@/lib/quran-personal";
 import { fetchTafsirAyahs } from "@/lib/quran-api";
 import { RECITERS } from "@/lib/quran-audio";
@@ -10,7 +10,7 @@ import { CONTACT_EMAIL } from "@/lib/site-config";
  * ورقة إجراءات الآية — القسم "ز. التفاعل مع الآية" من مواصفة نواة المصحف
  * الرقمي. تربط أدوات كانت موجودة فعليًا لكنها غير مُستخدَمة في أي واجهة:
  * quran-personal.ts (إشارات مرجعية وملاحظات — محلي بالكامل، لا خادم) و
- * share-ayah.ts (نسخ/مشاركة نص وصورة).
+ * share-ayah.ts (نسخ نص، مع/دون تشكيل — أزرار المشاركة أُلغيت 2026-07-24).
  *
  * ملاحظة دمج: يستخدمه MushafPageView.tsx (قارئ /mushaf/page بنظام
  * الصفحات). قارئ /mushaf التقليدي (MushafPage.tsx) يستخدم مكوّنًا منفصلًا
@@ -240,14 +240,6 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
           <button type="button" className="aas-action-btn" onClick={() => handleCopy(true)}>
             {copiedKind === "plain" ? <Check size={18} aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
             نسخ بلا تشكيل
-          </button>
-          <button type="button" className="aas-action-btn" onClick={() => shareAyahAsText(ayahText, surahName, ayahNum)}>
-            <Share2 size={18} aria-hidden="true" />
-            مشاركة نص
-          </button>
-          <button type="button" className="aas-action-btn" onClick={() => shareAyahAsImage({ text: ayahText, surahName, ayahNum, surahNum })}>
-            <ImageIcon size={18} aria-hidden="true" />
-            مشاركة صورة
           </button>
           {onPrev && (
             <button type="button" className="aas-action-btn" onClick={onPrev}>

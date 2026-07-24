@@ -290,18 +290,6 @@ function ProphetDetailView({
   const color = prophetColor(p.slug);
   const isUlulAzm = ULUL_AZM_SLUGS.includes(p.slug);
 
-  const share = async () => {
-    const text = `${p.arabicName} عليه السلام، ${p.title}\n${truncateAtWord(p.briefBio, 200)}\n\nمن قصص الأنبياء في المجلس العلمي`;
-    const url = `https://www.majlisilm.com/prophets/${p.slug}`;
-    try {
-      if (navigator.share) {
-        await navigator.share({ title: `قصة ${p.arabicName}`, text, url });
-      } else {
-        await navigator.clipboard.writeText(`${text}\n${url}`);
-        alert("تم نسخ الرابط إلى الحافظة ✓");
-      }
-    } catch { /* share cancelled */ }
-  };
 
   return (
     <div className="prophet-detail-lux" style={{ "--prophet-color": color } as React.CSSProperties}>
@@ -316,9 +304,6 @@ function ProphetDetailView({
             {isBookmarked
               ? <><Heart size={13} className="inline icon-danger--filled ml-1" />محفوظ</>
               : <><Heart size={13} className="inline ml-1" />احفظ</>}
-          </button>
-          <button type="button" className="prophet-action-btn" onClick={share}>
-            شارك
           </button>
           <div className="prophet-font-controls">
             <button type="button" onClick={() => setFontSize(s => Math.max(13, s - 1))} aria-label="تصغير الخط">أ−</button>
