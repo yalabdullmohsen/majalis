@@ -91,6 +91,15 @@ body {
   z-index: calc(var(--z-nav, 200) + 1);
   height: calc(var(--ticker-height) + env(safe-area-inset-top, 0px));
   padding-block-start: env(safe-area-inset-top, 0px);
+  /* قصّة الشاشة أفقيًا: كان الشريط يمتصّ safe-area-inset-top وحده، فيمرّ
+     نصّه تحت النوتش والحافة المنحنية في الوضع الأفقي على iPhone فيبدو
+     مقصوصًا من الطرفين. المحاكيات المكتبية تُرجع env(safe-area-inset-*)=0
+     دائمًا فلا يظهر هذا الخلل إلا على جهاز حقيقي.
+     max() تعني: بلا أثر إطلاقًا حين تكون القصّة صفرًا. */
+  padding-inline: max(0px, env(safe-area-inset-right, 0px)) max(0px, env(safe-area-inset-left, 0px));
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   overflow: hidden;
   background: var(--elite-forest, #143F35);
   display: flex;
@@ -171,6 +180,12 @@ body {
   position: sticky;
   top: calc(var(--ticker-height) + env(safe-area-inset-top, 0px) + var(--header-height, 4rem));
   z-index: 190;
+  /* حاوية الشريط نفسها لا تتجاوز الشاشة مهما كان محتواها؛ التمرير الأفقي
+     يقع داخل .top-section-bar__scroll وحده لا في الصفحة. */
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
   background: color-mix(in srgb, var(--color-surface, #FAF8F5) 96%, transparent);
   border-block-end: 1px solid var(--color-border, #E8E7E2);
   backdrop-filter: blur(14px) saturate(1.15);
