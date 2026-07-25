@@ -23,31 +23,31 @@ export type AdhkarItem = {
 export const ADHKAR_CATEGORIES: AdhkarCategory[] = [
   { id: "adh-morning", name: "أذكار الصباح", slug: "morning", description: "أذكار ما بعد الفجر إلى طلوع الشمس" },
   { id: "adh-evening", name: "أذكار المساء", slug: "evening", description: "أذكار ما بعد العصر إلى المغرب" },
-  { id: "adh-sleep", name: "أذكار النوم", slug: "sleep", description: "ما يقال عند النوم" },
-  { id: "adh-wakeup", name: "أذكار الاستيقاظ", slug: "wakeup", description: "ما يقال عند الاستيقاظ من النوم" },
-  { id: "adh-home-in", name: "دخول المنزل", slug: "home-in", description: "دعاء دخول البيت" },
-  { id: "adh-home-out", name: "الخروج من المنزل", slug: "home-out", description: "دعاء الخروج من البيت" },
+  { id: "adh-sleep", name: "أذكار النوم", slug: "sleep", description: "أذكار وآيات تُقال عند النوم للحفظ والبركة" },
+  { id: "adh-wakeup", name: "أذكار الاستيقاظ", slug: "wakeup", description: "ما يُقال عند الاستيقاظ من النوم وشكر الله على الحياة" },
+  { id: "adh-home-in", name: "دخول المنزل", slug: "home-in", description: "دعاء دخول البيت وذكر اسم الله عند العبور" },
+  { id: "adh-home-out", name: "الخروج من المنزل", slug: "home-out", description: "دعاء الخروج والتوكل على الله عند مغادرة البيت" },
   { id: "adh-mosque", name: "المسجد", slug: "mosque", description: "أذكار دخول المسجد والخروج منه" },
   { id: "adh-food", name: "الطعام", slug: "food", description: "أذكار قبل الطعام وبعده" },
   { id: "adh-travel", name: "السفر", slug: "travel", description: "أذكار السفر والركوب" },
-  { id: "adh-wudu", name: "الوضوء", slug: "wudu", description: "ما يقال عند الوضوء" },
-  { id: "adh-salah", name: "الصلاة", slug: "salah", description: "أذكار قبل الصلاة وبعدها" },
-  { id: "adh-after-salah", name: "بعد الصلاة", slug: "after-salah", description: "أذكار ما بعد الصلوات المفروضة" },
-  { id: "adh-distress", name: "الكرب", slug: "distress", description: "أدعية الكرب والهم" },
-  { id: "adh-istikharah", name: "الاستخارة", slug: "istikharah", description: "دعاء الاستخارة" },
-  { id: "adh-istighfar", name: "الاستغفار", slug: "istighfar", description: "أذكار الاستغفار والتوبة" },
+  { id: "adh-wudu", name: "الوضوء", slug: "wudu", description: "ما يُقال عند الوضوء وعند انتهائه" },
+  { id: "adh-salah", name: "الصلاة", slug: "salah", description: "أذكار قبل الصلاة وبعدها وبين الأذان والإقامة" },
+  { id: "adh-after-salah", name: "بعد الصلاة", slug: "after-salah", description: "أذكار ما بعد الصلوات المفروضة من تسبيح واستغفار" },
+  { id: "adh-distress", name: "الكرب", slug: "distress", description: "أدعية الكرب والهم والغم من السنة" },
+  { id: "adh-istikharah", name: "الاستخارة", slug: "istikharah", description: "دعاء الاستخارة وصلاة الاستخارة عند الحيرة في الأمر" },
+  { id: "adh-istighfar", name: "الاستغفار", slug: "istighfar", description: "أذكار الاستغفار والتوبة وصيغ السيد الاستغفار" },
   // اكتُشف بالفحص المباشر 2026-07-18: 5 أذكار كانت تحمل categoryId
   // "adh-salawat" غير موجود إطلاقاً في هذه القائمة، فكانت تختفي صامتاً من
   // أي فلترة بفئة محدَّدة (لا تظهر إلا ضمن "الكل") — نفس عطل "أخلاق
   // إسلامية". أُضيفت هذه الفئة الأصيلة بدل إعادة التسمية لفئة قائمة، لأن
   // الصلاة على النبي ﷺ جنس ذكر مستقل بذاته (كالاستغفار أعلاه بالضبط).
   { id: "adh-salawat", name: "الصلاة على النبي ﷺ", slug: "salawat", description: "صيغ الصلاة والسلام على النبي ﷺ" },
-  { id: "adh-rain", name: "المطر", slug: "rain", description: "ما يقال عند نزول المطر" },
-  { id: "adh-wind", name: "الرياح", slug: "wind", description: "ما يقال عند هبوب الريح" },
-  { id: "adh-market", name: "دخول السوق", slug: "market", description: "دعاء دخول السوق" },
-  { id: "adh-clothing", name: "اللباس", slug: "clothing", description: "ما يقال عند لبس الثوب الجديد" },
-  { id: "adh-vehicle", name: "ركوب السيارة", slug: "vehicle", description: "دعاء الركوب والسفر" },
-  { id: "adh-misc", name: "أذكار متنوعة", slug: "misc", description: "أذكار نافعة متفرقة" },
+  { id: "adh-rain", name: "المطر", slug: "rain", description: "ما يُقال عند نزول المطر وعند رؤيته" },
+  { id: "adh-wind", name: "الرياح", slug: "wind", description: "ما يُقال عند هبوب الريح الشديدة" },
+  { id: "adh-market", name: "دخول السوق", slug: "market", description: "دعاء دخول السوق وما يُستحب فيه من الذكر" },
+  { id: "adh-clothing", name: "اللباس", slug: "clothing", description: "ما يُقال عند لبس الثوب الجديد وعند خلعه" },
+  { id: "adh-vehicle", name: "ركوب السيارة", slug: "vehicle", description: "دعاء الركوب والسفر وما يُقال عند الصعود والهبوط" },
+  { id: "adh-misc", name: "أذكار متنوعة", slug: "misc", description: "أذكار نافعة متفرقة لم تندرج تحت فئة محددة" },
 ];
 
 export const ADHKAR_ITEMS: AdhkarItem[] = [
