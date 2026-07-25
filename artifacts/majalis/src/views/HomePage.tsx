@@ -567,7 +567,7 @@ export default function HomePage() {
 
         <div style={{ maxWidth: 640, margin: "0 auto", position: "relative", textAlign: "center" }}>
 
-          <h1 className="hpv4-vision-title">رؤيتنا: بناء الإسلام الرقمي</h1>
+          <h1 className="hpv4-vision-title">ريادة المعرفة الإسلامية الرقمية</h1>
 
           {/* ── التحية اليومية الديناميكية ── */}
           <div style={{ marginBottom: "1.1rem" }}>
