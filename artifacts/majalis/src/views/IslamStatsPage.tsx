@@ -353,10 +353,10 @@ export default function IslamStatsPage() {
           </div>
           <h1 className="is-hero__title">الإسلام في أرقام</h1>
           <p className="is-hero__sub">
-            حقائق وإحصاءات موثقة عن الإسلام، من انتشاره في العالم إلى إعجاز القرآن وإسهامات الحضارة الإسلامية
+            حقائق وإحصاءات عن الإسلام مع ذكر مصدر كل رقم وسنته — من انتشاره في العالم إلى القرآن وإسهامات الحضارة الإسلامية
           </p>
           <div className="is-hero__kpis">
-            <div className="is-kpi"><Users size={22} aria-hidden="true" /><span>١.٩ مليار مسلم</span></div>
+            <div className="is-kpi"><Users size={22} aria-hidden="true" /><span>٢ مليار مسلم</span></div>
             <div className="is-kpi"><Star size={22} aria-hidden="true" /><span>٦٢٣٦ آية قرآنية</span></div>
             <div className="is-kpi"><Heart size={22} aria-hidden="true" /><span>١٤٠٠+ سنة حضارة</span></div>
           </div>
