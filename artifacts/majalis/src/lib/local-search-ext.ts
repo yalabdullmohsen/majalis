@@ -5,11 +5,12 @@ import { filterAdhkar } from "@/lib/adhkar-seed";
 import { searchSurahStories } from "@/lib/surah-stories";
 import { filterIslamicStoriesSeed } from "@/lib/islamic-stories-seed";
 import { getSurahList } from "@/lib/quran-api";
+import { searchNations } from "@/lib/nations-seed";
 
 export function searchLocalExtensions(query: string) {
   const q = query.trim();
   if (!q) {
-    return { occasions: [], nawawi: [], quran: [], adhkar: [], surahStories: [], islamicStories: [] };
+    return { occasions: [], nawawi: [], quran: [], adhkar: [], surahStories: [], islamicStories: [], nations: [] };
   }
 
   const occasions = filterOccasions(q).map((o) => ({
@@ -63,5 +64,14 @@ export function searchLocalExtensions(query: string) {
       href: `/stories/${s.slug}`,
     }));
 
-  return { occasions, nawawi, quran, adhkar, surahStories, islamicStories };
+  const nations = searchNations(q)
+    .slice(0, 5)
+    .map((n) => ({
+      id: n.slug,
+      title: n.name,
+      meta: `${n.punishment.type} · ${n.prophetKnown && n.prophet ? n.prophet.name : "لم يُسمَّ نبيّهم"}`,
+      href: `/nations/${n.slug}`,
+    }));
+
+  return { occasions, nawawi, quran, adhkar, surahStories, islamicStories, nations };
 }

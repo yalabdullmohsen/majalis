@@ -117,7 +117,14 @@ function SectionCard({
                   >
                     {idx + 1}
                   </span>
-                  <span className="leading-snug">{lesson.title}</span>
+                  <span className="leading-snug">
+                    {lesson.title}
+                    {lesson.summary && (
+                      <span className="block mt-1 text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
+                        {lesson.summary}
+                      </span>
+                    )}
+                  </span>
                 </div>
               </li>
             ))}

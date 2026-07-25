@@ -576,7 +576,7 @@ export default function LessonsPage({
             loading={loading}
             error={loadError}
             empty={!loading && !loadError && activeLessons.length === 0 && archivedLessons.length === 0}
-            emptyText="لا توجد بيانات حالياً"
+            emptyText="لا توجد دروس مطابقة للفلاتر الحالية. أعد ضبط المنطقة أو التصنيف لعرض المزيد."
             onRetry={() => window.location.reload()}
           >
             <>
@@ -614,8 +614,8 @@ export default function LessonsPage({
                 {filtered.filter((l) => !featuredIds.has(l.id)).length === 0 ? (
                   <p className="lessons-empty-state">
                     {TAB_COMING_SOON[tab]
-                      ? `دروس ${TAB_LABELS[tab]} قادمة قريبًا بإذن الله — نعمل على إضافتها.`
-                      : `لا توجد ${TAB_LABELS[tab]} مطابقة حاليًا.`}
+                      ? `لم تُوثَّق بعدُ دروس ${TAB_LABELS[tab]} من مصدر معتمد؛ ولا يُدرَج هنا درس إلا بعد التحقق من مكانه ووقته وشيخه. تصفّح تبويب «جميع الدروس» للمتاح الآن.`
+                      : `لا توجد ${TAB_LABELS[tab]} مطابقة للفلاتر الحالية — جرّب توسيع المنطقة أو التصنيف.`}
                   </p>
                 ) : (
                   renderGrid(filtered.filter((l) => !featuredIds.has(l.id)))

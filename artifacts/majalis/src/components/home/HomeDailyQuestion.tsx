@@ -45,7 +45,7 @@ export function HomeDailyQuestion() {
         </div>
         <Link href="/qa" className="home-section-link">كل الأسئلة</Link>
       </div>
-      <PageLoadingGuard loading={loading} empty={!loading && !question} emptyText="لا توجد بيانات حالياً">
+      <PageLoadingGuard loading={loading} empty={!loading && !question} emptyText="سؤال اليوم غير متاح الآن — جرّب مسابقة الأسئلة لاختبار معلوماتك.">
         {question ? (
           <Link href="/qa" className="home-qa-card ui-card home-daily-card">
             <div className="home-qa-card__body">

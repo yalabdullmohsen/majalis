@@ -258,7 +258,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-31",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الصلاة",
     "level": "متوسط",
     "question": "ما أول ما يحاسب عليه العبد من عمله؟",
@@ -266,7 +266,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-32",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الصلاة",
     "level": "متوسط",
     "question": "كم عدد الصلوات المفروضة في اليوم والليلة؟",
@@ -274,7 +274,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-33",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الصلاة",
     "level": "متوسط",
     "question": "ما القبلة التي يتجه إليها المسلمون في الصلاة؟",
@@ -282,7 +282,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-34",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الطهارة",
     "level": "متوسط",
     "question": "بماذا يتطهر المسلم عند عدم وجود الماء؟",
@@ -290,7 +290,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-35",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الطهارة",
     "level": "متوسط",
     "question": "ما الطهارة المطلوبة قبل الصلاة؟",
@@ -298,7 +298,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-36",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
     "question": "في أي شهر يصوم المسلمون؟",
@@ -306,7 +306,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-37",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
     "question": "ما الوجبة التي تكون قبل الفجر للصائم؟",
@@ -314,7 +314,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-38",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
     "question": "ما العبادة المالية الواجبة على المال بشروطها؟",
@@ -322,7 +322,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-39",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الحج",
     "level": "متوسط",
     "question": "ما الركن الأعظم في الحج؟",
@@ -330,7 +330,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-40",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الحج",
     "level": "متوسط",
     "question": "ما البيت الذي يقصده المسلمون في الحج؟",
@@ -596,7 +596,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // ── الأحاديث النبوية ──────────────────────────────────────
   {
     "id": "demo-quiz-76",
-    "section": "الأحاديث النبوية",
+    "section": "الحديث",
     "category": "المصطلح",
     "level": "سهل",
     "question": "ما الحديث الذي يُعدّ من جوامع كلمه صلى الله عليه وسلم ويبدأ بـ (إنما الأعمال)؟",
@@ -604,7 +604,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-78",
-    "section": "الأحاديث النبوية",
+    "section": "الحديث",
     "category": "الكتب",
     "level": "سهل",
     "question": "ما الكتاب الذي يأتي في المرتبة الثانية بعد صحيح البخاري في الصحة؟",
@@ -612,7 +612,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-79",
-    "section": "الأحاديث النبوية",
+    "section": "الحديث",
     "category": "الكتب",
     "level": "متوسط",
     "question": "ما الكتب الستة الصحاح في الحديث النبوي؟",
@@ -620,7 +620,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-80",
-    "section": "الأحاديث النبوية",
+    "section": "الحديث",
     "category": "الكتب",
     "level": "متوسط",
     "question": "من ألّف مسند الإمام أحمد؟",
@@ -628,7 +628,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-81",
-    "section": "الأحاديث النبوية",
+    "section": "الحديث",
     "category": "الكتب",
     "level": "متوسط",
     "question": "ما الكتاب الأول المصنَّف في الحديث النبوي الجامع بين الفقه والحديث؟",
@@ -636,7 +636,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-82",
-    "section": "الأحاديث النبوية",
+    "section": "الحديث",
     "category": "المصطلح",
     "level": "متوسط",
     "question": "ما الحديث القدسي؟",
@@ -644,7 +644,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-83",
-    "section": "الأحاديث النبوية",
+    "section": "الحديث",
     "category": "المصطلح",
     "level": "متوسط",
     "question": "ما الحديث المتواتر؟",
@@ -652,7 +652,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-85",
-    "section": "الأحاديث النبوية",
+    "section": "الحديث",
     "category": "الرواة",
     "level": "متوسط",
     "question": "من الصحابي الذي روى أكثر من أربعة آلاف حديث؟",
@@ -660,7 +660,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-86",
-    "section": "الأحاديث النبوية",
+    "section": "الحديث",
     "category": "الرواة",
     "level": "متوسط",
     "question": "من أول من أمر بتدوين الحديث رسمياً من الخلفاء؟",
@@ -668,7 +668,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-87",
-    "section": "الأحاديث النبوية",
+    "section": "الحديث",
     "category": "الأحاديث الجامعة",
     "level": "متوسط",
     "question": "ما الحديث الذي يُعدّ من جوامع كلمه ويبدأ بـ (من حسن إسلام المرء)؟",
@@ -676,7 +676,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-88",
-    "section": "الأحاديث النبوية",
+    "section": "الحديث",
     "category": "الأحاديث الجامعة",
     "level": "متوسط",
     "question": "ما أثقل شيء في الميزان يوم القيامة كما جاء في الحديث؟",
@@ -684,7 +684,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-89",
-    "section": "الأحاديث النبوية",
+    "section": "الحديث",
     "category": "الأحاديث الجامعة",
     "level": "سهل",
     "question": "أكمل الحديث: لا يؤمن أحدكم حتى يحب لأخيه...",
@@ -692,7 +692,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-90",
-    "section": "الأحاديث النبوية",
+    "section": "الحديث",
     "category": "الأربعون النووية",
     "level": "متوسط",
     "question": "من جمع الأربعين النووية في الحديث النبوي؟",
@@ -931,14 +931,6 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "level": "سهل",
     "question": "ما اسم الملك الموكّل بالوحي؟",
     "answer": "جبريل عليه السلام"
-  },
-  {
-    "id": "demo-quiz-122",
-    "section": "العقيدة",
-    "category": "الملائكة",
-    "level": "سهل",
-    "question": "ما اسم الملك الموكّل بقبض الأرواح؟",
-    "answer": "ملك الموت (عزرائيل)"
   },
   {
     "id": "demo-quiz-123",
@@ -1232,14 +1224,6 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في الأربعين من عمره"
   },
   {
-    "id": "demo-quiz-159",
-    "section": "السيرة",
-    "category": "الهجرة",
-    "level": "متوسط",
-    "question": "كم سنة مكث النبي في مكة بعد البعثة قبل الهجرة؟",
-    "answer": "ثلاث عشرة سنة"
-  },
-  {
     "id": "demo-quiz-160",
     "section": "السيرة",
     "category": "الوفاة",
@@ -1330,7 +1314,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // ── الأحكام الشرعية (إضافة) ──────────────────────────────
   {
     "id": "demo-quiz-171",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
     "question": "كم ركعة صلاة الفجر؟",
@@ -1338,7 +1322,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-172",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
     "question": "كم ركعة صلاة الظهر؟",
@@ -1346,7 +1330,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-173",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
     "question": "كم ركعة صلاة المغرب؟",
@@ -1354,7 +1338,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-174",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
     "question": "ما الركعات السنن الراتبة اليومية؟",
@@ -1362,7 +1346,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-175",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الطهارة",
     "level": "سهل",
     "question": "ما أركان الوضوء؟",
@@ -1370,7 +1354,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-176",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الطهارة",
     "level": "متوسط",
     "question": "ما الذي ينقض الوضوء؟",
@@ -1378,7 +1362,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-177",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
     "question": "ما نسبة زكاة المال (زكاة النقود)؟",
@@ -1386,7 +1370,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-179",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
     "question": "ما الصيام المحرّم شرعاً؟",
@@ -1394,7 +1378,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-180",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
     "question": "ما زكاة الفطر؟",
@@ -1402,7 +1386,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-182",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الحج",
     "level": "متوسط",
     "question": "ما يوم عرفة؟",
@@ -1410,7 +1394,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-183",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الحج",
     "level": "متوسط",
     "question": "ما الفرق بين الحج والعمرة؟",
@@ -1418,7 +1402,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-184",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الحلال والحرام",
     "level": "سهل",
     "question": "ما حكم أكل لحم الخنزير في الإسلام؟",
@@ -1426,7 +1410,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-185",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الحلال والحرام",
     "level": "متوسط",
     "question": "ما شروط الذبح الشرعي؟",
@@ -1434,7 +1418,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-186",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "النكاح",
     "level": "متوسط",
     "question": "ما أركان عقد الزواج في الإسلام؟",
@@ -1442,7 +1426,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-187",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "النكاح",
     "level": "متوسط",
     "question": "ما الصداق في الزواج؟",
@@ -1450,7 +1434,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-188",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "المواريث",
     "level": "صعب",
     "question": "ما نصيب البنت الواحدة في الميراث عند عدم وجود ابن؟",
@@ -1458,7 +1442,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-189",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "المواريث",
     "level": "صعب",
     "question": "ما نصيب الزوجة في ميراث زوجها إذا كان له أولاد؟",
@@ -1466,7 +1450,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-190",
-    "section": "الأحكام",
+    "section": "الفقه",
     "category": "الصلاة",
     "level": "متوسط",
     "question": "ما وقت صلاة الجمعة؟",
@@ -1637,7 +1621,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // ── الأخلاق الإسلامية ─────────────────────────────────────
   {
     "id": "demo-quiz-211",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "الأخلاق العامة",
     "level": "سهل",
     "question": "ما الصفة التي قال عنها النبي إنه بُعث ليتمم مكارمها؟",
@@ -1645,7 +1629,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-212",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "الأخلاق العامة",
     "level": "سهل",
     "question": "ما الصدقة التي لا تكلف شيئاً كما وصفها النبي؟",
@@ -1653,7 +1637,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-213",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "الأخلاق العامة",
     "level": "متوسط",
     "question": "ما الغيبة في الإسلام؟",
@@ -1661,7 +1645,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-215",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "بر الوالدين",
     "level": "سهل",
     "question": "ما الحكم الشرعي لبر الوالدين؟",
@@ -1669,7 +1653,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-216",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "بر الوالدين",
     "level": "متوسط",
     "question": "من قرن الله طاعته بطاعته في القرآن؟",
@@ -1677,7 +1661,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-217",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "الصدق والأمانة",
     "level": "سهل",
     "question": "ما اللقب الذي كان يُطلق على النبي محمد قبل البعثة؟",
@@ -1685,7 +1669,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-218",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "الصدق والأمانة",
     "level": "متوسط",
     "question": "ما علامات المنافق كما جاء في الحديث؟",
@@ -1989,7 +1973,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-257",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "إسلام الصحابة",
     "level": "متوسط",
     "question": "من الصحابي الذي كان في طريقه لقتل النبي ثم أسلم؟",
@@ -1997,7 +1981,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-258",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "متوسط",
     "question": "من الصحابي الذي قال عنه علي بن أبي طالب: (سلمان منا آل البيت)؟",
@@ -2005,7 +1989,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-259",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "حفظة القرآن",
     "level": "متوسط",
     "question": "من الصحابي الذي كان يكتب الوحي وأشرف على جمع القرآن؟",
@@ -2013,7 +1997,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-260",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "صعب",
     "question": "من آخر الصحابة وفاةً؟",
@@ -2021,7 +2005,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-261",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "صعب",
     "question": "من أول من رمى بسهم في سبيل الله من الصحابة؟",
@@ -2029,7 +2013,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-262",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "الأذان",
     "level": "متوسط",
     "question": "من الصحابي الذي رأى الأذان في المنام أول مرة؟",
@@ -2037,7 +2021,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-263",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "خدمة النبي",
     "level": "سهل",
     "question": "من الصحابي الذي خدم النبي عشر سنوات؟",
@@ -2045,7 +2029,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-264",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "أزواج النبي",
     "level": "متوسط",
     "question": "من زوجة النبي التي كانت الأعلم في الفقه والفتوى؟",
@@ -2053,7 +2037,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-265",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "أزواج النبي",
     "level": "صعب",
     "question": "من آخر زوجة تزوجها النبي صلى الله عليه وسلم؟",
@@ -2061,7 +2045,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-266",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "سهل",
     "question": "من خادم النبي المشهور الذي لازمه منذ الطفولة؟",
@@ -2069,7 +2053,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-267",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "متوسط",
     "question": "من الصحابي الذي نزلت فيه آية (لا ترفعوا أصواتكم فوق صوت النبي)؟",
@@ -2077,7 +2061,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-268",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "المعارك",
     "level": "متوسط",
     "question": "كم كان عدد المشركين في غزوة بدر؟",
@@ -2085,7 +2069,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-269",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "صعب",
     "question": "ما لقب الصحابي سلمان الفارسي باللغة الفارسية؟",
@@ -2093,7 +2077,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-270",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "متوسط",
     "question": "من الصحابي الملقّب بـ (حواري رسول الله)؟",
@@ -2101,7 +2085,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-271",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "إسلام الصحابة",
     "level": "سهل",
     "question": "من الصحابي الذي آمن بالنبي فور سماع آيات القرآن في بداية الدعوة من الرجال؟",
@@ -2109,7 +2093,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-272",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "صعب",
     "question": "من الصحابي الذي قيل في وصف إيمانه: (لو وُزن إيمانه بإيمان الأمة لرجح)؟",
@@ -2117,7 +2101,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-273",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "خاتم النبيين",
     "level": "سهل",
     "question": "من خاتم الأنبياء والمرسلين؟",
@@ -2125,7 +2109,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-274",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "صعب",
     "question": "من آخر الصحابيات وفاةً على الراجح؟",
@@ -2133,7 +2117,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-275",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "متوسط",
     "question": "من الصحابي الذي يُكنى بـ (أبي الدرداء) وعُرف بالحكمة؟",
@@ -2141,7 +2125,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-276",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "متوسط",
     "question": "من الصحابي الذي أسلم وقد سبق أن كان تبنّاه النبي صلى الله عليه وسلم؟",
@@ -2149,7 +2133,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-277",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "أركان الإيمان",
     "level": "سهل",
     "question": "ما الفرق الجوهري بين الإسلام والإيمان والإحسان؟",
@@ -2157,7 +2141,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-278",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "الكبائر",
     "level": "متوسط",
     "question": "ما الكبيرة الأولى بعد الشرك؟",
@@ -2165,7 +2149,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-279",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "أركان الإيمان",
     "level": "سهل",
     "question": "ما معنى الإحسان كما جاء في حديث جبريل؟",
@@ -2173,7 +2157,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-280",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "الشرك",
     "level": "متوسط",
     "question": "ما الشرك الأصغر الخفي؟",
@@ -2181,7 +2165,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-281",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "أخلاق مذمومة",
     "level": "متوسط",
     "question": "ما تعريف الكبر في الإسلام كما وصفه النبي؟",
@@ -2189,7 +2173,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-282",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "أخلاق مذمومة",
     "level": "متوسط",
     "question": "ما الحسد المذموم؟",
@@ -2197,7 +2181,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-283",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "متوسط",
     "question": "ما الغبطة المباحة؟",
@@ -2205,7 +2189,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-284",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "متوسط",
     "question": "ما أقسام الصبر؟",
@@ -2213,7 +2197,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-285",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "سهل",
     "question": "ما القناعة وما فضلها؟",
@@ -2221,7 +2205,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-286",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "سهل",
     "question": "ما تعريف الشكر الحقيقي لله؟",
@@ -2229,7 +2213,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-287",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "متوسط",
     "question": "ما التوكل الصحيح على الله؟",
@@ -2237,7 +2221,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-289",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "الزهد",
     "level": "متوسط",
     "question": "ما الزهد الحقيقي في الإسلام؟",
@@ -2245,7 +2229,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-290",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "الابتلاء",
     "level": "متوسط",
     "question": "ما الحكمة الإلهية من الابتلاء؟",
@@ -2253,7 +2237,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-291",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "أهل السنة",
     "level": "متوسط",
     "question": "ما شعار أهل السنة والجماعة في التلقي والاستدلال؟",
@@ -2261,7 +2245,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-292",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "عقيدة الأنبياء",
     "level": "متوسط",
     "question": "ما المقصود بعصمة الأنبياء في الإسلام؟",
@@ -2269,7 +2253,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-293",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "أصول الفقه",
     "level": "متوسط",
     "question": "ما الإجماع في أصول الفقه؟",
@@ -2277,7 +2261,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-294",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "أصول الفقه",
     "level": "متوسط",
     "question": "ما القياس في أصول الفقه؟",
@@ -2285,7 +2269,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-295",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "الكبائر",
     "level": "متوسط",
     "question": "ما علامات حسن الخاتمة؟",
@@ -2293,7 +2277,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-296",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "سهل",
     "question": "ما التواضع الممدوح في الإسلام؟",
@@ -2301,7 +2285,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-297",
-    "section": "العقيدة والأخلاق",
+    "section": "العقيدة",
     "category": "أركان الإسلام",
     "level": "سهل",
     "question": "كم عدد أركان الإسلام؟",
@@ -2410,14 +2394,6 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "level": "سهل",
     "question": "هل القدر يُسقط المسؤولية عن العبد؟",
     "answer": "لا، فللعبد إرادة واختيار ويُحاسب على عمله"
-  },
-  {
-    "id": "demo-quiz-314",
-    "section": "العقيدة",
-    "category": "القضاء والقدر",
-    "level": "متوسط",
-    "question": "ما مراتب الإيمان بالقدر الأربع؟",
-    "answer": "العلم والكتابة والمشيئة والخلق"
   },
   {
     "id": "demo-quiz-315",
@@ -2548,14 +2524,6 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإنجيل"
   },
   {
-    "id": "demo-quiz-332",
-    "section": "الأنبياء",
-    "category": "الرسل",
-    "level": "صعب",
-    "question": "من أولو العزم من الرسل؟",
-    "answer": "نوح وإبراهيم وموسى وعيسى ومحمد عليهم الصلاة والسلام"
-  },
-  {
     "id": "demo-quiz-333",
     "section": "الأنبياء",
     "category": "الرسل",
@@ -2658,14 +2626,6 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "level": "متوسط",
     "question": "من رافق النبي ﷺ في الهجرة؟",
     "answer": "أبو بكر الصديق رضي الله عنه"
-  },
-  {
-    "id": "demo-quiz-347",
-    "section": "السيرة",
-    "category": "الغزوات",
-    "level": "متوسط",
-    "question": "كم عدد المسلمين في غزوة بدر؟",
-    "answer": "ثلاثمئة وثلاثة عشر مقاتلاً"
   },
   {
     "id": "demo-quiz-348",
@@ -2917,7 +2877,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-381",
-    "section": "القرآن",
+    "section": "القرآن الكريم",
     "category": "السور",
     "level": "سهل",
     "question": "ما أول سورة في القرآن؟",
@@ -2925,7 +2885,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-382",
-    "section": "القرآن",
+    "section": "القرآن الكريم",
     "category": "السور",
     "level": "سهل",
     "question": "ما آخر سورة في القرآن؟",
@@ -2933,7 +2893,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-383",
-    "section": "القرآن",
+    "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
     "question": "ما أول ما نزل من القرآن؟",
@@ -2941,7 +2901,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-384",
-    "section": "القرآن",
+    "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
     "question": "ما آخر ما نزل من القرآن؟",
@@ -2949,7 +2909,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-385",
-    "section": "القرآن",
+    "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
     "question": "ما السور المدنية الطويلة؟",
@@ -2957,7 +2917,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-386",
-    "section": "القرآن",
+    "section": "القرآن الكريم",
     "category": "الآيات",
     "level": "سهل",
     "question": "ما أعظم آية في القرآن؟",
@@ -2965,7 +2925,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-387",
-    "section": "القرآن",
+    "section": "القرآن الكريم",
     "category": "الآيات",
     "level": "متوسط",
     "question": "ما آية الدَّين ومكانتها؟",
@@ -2973,7 +2933,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-388",
-    "section": "القرآن",
+    "section": "القرآن الكريم",
     "category": "الآيات",
     "level": "متوسط",
     "question": "كم آية في سورة البقرة؟",
@@ -3117,7 +3077,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-406",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الصباح والمساء",
     "level": "سهل",
     "question": "ما أول ذكر يُقال في الصباح؟",
@@ -3125,7 +3085,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-407",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الصباح والمساء",
     "level": "متوسط",
     "question": "ما فضل قراءة آية الكرسي صباحاً ومساءً؟",
@@ -3133,7 +3093,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-408",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الصلاة",
     "level": "سهل",
     "question": "ما يُقال في الركوع؟",
@@ -3141,7 +3101,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-409",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الصلاة",
     "level": "سهل",
     "question": "ما يُقال في السجود؟",
@@ -3149,7 +3109,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-410",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "بعد الصلاة",
     "level": "متوسط",
     "question": "ما فضل قول سبحان الله 33 والحمد لله 33 والله أكبر 33 بعد الصلاة؟",
@@ -3157,7 +3117,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-411",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب الطعام",
     "level": "سهل",
     "question": "ما يُقال قبل الأكل؟",
@@ -3165,7 +3125,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-412",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب الطعام",
     "level": "سهل",
     "question": "ما يُقال بعد الأكل؟",
@@ -3173,7 +3133,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-413",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب الطعام",
     "level": "متوسط",
     "question": "ما السنة في الأكل؟",
@@ -3181,7 +3141,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-414",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب السلام",
     "level": "سهل",
     "question": "ما آداب السلام؟",
@@ -3189,7 +3149,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-415",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب المجلس",
     "level": "سهل",
     "question": "ما كفارة المجلس؟",
@@ -3197,7 +3157,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-416",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "بر الوالدين",
     "level": "سهل",
     "question": "ما الكبيرة المقترنة بالشرك في البر؟",
@@ -3205,7 +3165,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-417",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "بر الوالدين",
     "level": "متوسط",
     "question": "ما حد عقوق الوالدين؟",
@@ -3213,7 +3173,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-418",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "صلة الرحم",
     "level": "سهل",
     "question": "ما جزاء صلة الرحم؟",
@@ -3221,7 +3181,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-419",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "الجوار",
     "level": "متوسط",
     "question": "بمَ عبّر النبي ﷺ عن عِظَم حق الجار؟",
@@ -3229,7 +3189,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-420",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "أخلاق المسلم",
     "level": "سهل",
     "question": "ما خُلق الرفق في الإسلام؟",
@@ -3301,7 +3261,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-431",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "دعاء الكرب",
     "level": "سهل",
     "question": "ما دعاء الكرب الأعظم؟",
@@ -3309,7 +3269,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-432",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "دعاء الكرب",
     "level": "متوسط",
     "question": "ما الذكر عند المصيبة؟",
@@ -3317,7 +3277,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-433",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الاستغفار",
     "level": "سهل",
     "question": "ما أفضل الاستغفار (سيد الاستغفار)؟",
@@ -3325,7 +3285,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-434",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الاستغفار",
     "level": "متوسط",
     "question": "ما فضل الاستغفار السبعين في اليوم؟",
@@ -3333,7 +3293,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-435",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الصلاة على النبي",
     "level": "سهل",
     "question": "ما الصلاة الإبراهيمية؟",
@@ -3341,7 +3301,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-436",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الصلاة على النبي",
     "level": "متوسط",
     "question": "ما فضل الصلاة على النبي؟",
@@ -3349,7 +3309,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-437",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "التسبيح",
     "level": "سهل",
     "question": "ما معنى سبحان الله؟",
@@ -3357,7 +3317,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-438",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "التسبيح",
     "level": "متوسط",
     "question": "ما أثقل كلمتين في الميزان؟",
@@ -3365,7 +3325,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-439",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الدعاء",
     "level": "سهل",
     "question": "ما شروط إجابة الدعاء؟",
@@ -3373,7 +3333,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-440",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الدعاء",
     "level": "متوسط",
     "question": "ما أوقات إجابة الدعاء؟",
@@ -3381,7 +3341,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-441",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الدعاء",
     "level": "متوسط",
     "question": "ما دعاء الاستخارة؟",
@@ -3389,7 +3349,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-442",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الحوقلة",
     "level": "سهل",
     "question": "ما معنى «لا حول ولا قوة إلا بالله»؟",
@@ -3397,7 +3357,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-443",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الحوقلة",
     "level": "متوسط",
     "question": "ما فضل «لا حول ولا قوة إلا بالله»؟",
@@ -3405,7 +3365,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-444",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "التوبة",
     "level": "سهل",
     "question": "ما شروط التوبة الصحيحة؟",
@@ -3413,7 +3373,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-445",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "التوبة",
     "level": "متوسط",
     "question": "ما الفرق بين التوبة والاستغفار؟",
@@ -3421,7 +3381,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-446",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الشكر",
     "level": "سهل",
     "question": "ما فضل الحمد لله؟",
@@ -3429,7 +3389,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-447",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الشكر",
     "level": "متوسط",
     "question": "ما دعاء شكر النعمة؟",
@@ -3437,7 +3397,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-448",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "العوذ",
     "level": "سهل",
     "question": "بم يُستعاذ من الشيطان؟",
@@ -3485,7 +3445,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-454",
-    "section": "الأخلاق",
+    "section": "الآداب والأخلاق",
     "category": "المصطلح",
     "level": "سهل",
     "question": "ما معنى «الزهد» في الاصطلاح؟",
@@ -3493,7 +3453,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-455",
-    "section": "الأخلاق",
+    "section": "الآداب والأخلاق",
     "category": "المصطلح",
     "level": "سهل",
     "question": "ما معنى «الورع» في الاصطلاح؟",
@@ -3509,7 +3469,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-457",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "الحج",
     "level": "سهل",
     "question": "ما أركان الحج؟",
@@ -3517,7 +3477,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-459",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "الحج",
     "level": "متوسط",
     "question": "ما الميقات المكاني لأهل المدينة النبوية؟",
@@ -3525,7 +3485,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-460",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "الحج",
     "level": "متوسط",
     "question": "ما طواف الإفاضة؟",
@@ -3533,7 +3493,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-461",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "الحج",
     "level": "متوسط",
     "question": "كم عدد أشواط السعي بين الصفا والمروة؟",
@@ -3541,7 +3501,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-462",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "الحج",
     "level": "سهل",
     "question": "ما معنى الإحرام؟",
@@ -3549,7 +3509,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-463",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "الحج",
     "level": "صعب",
     "question": "ما الفرق بين الحج القِران والحج التمتع والحج الإفراد؟",
@@ -3557,7 +3517,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-464",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "الحج",
     "level": "متوسط",
     "question": "ما الإحصار في الحج؟",
@@ -3661,7 +3621,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-478",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "المعارك",
     "level": "متوسط",
     "question": "ما معركة اليرموك؟",
@@ -3669,7 +3629,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-479",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "المعارك",
     "level": "متوسط",
     "question": "من قائد المسلمين في معركة القادسية؟",
@@ -3677,7 +3637,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-480",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "المعارك",
     "level": "صعب",
     "question": "ما معركة حطين وما أهميتها؟",
@@ -3685,7 +3645,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-483",
-    "section": "التاريخ",
+    "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
     "question": "من أسّس الدولة الأموية؟",
@@ -3693,7 +3653,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-484",
-    "section": "التاريخ",
+    "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
     "question": "من أسّس الدولة العباسية؟",
@@ -3701,7 +3661,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-485",
-    "section": "التاريخ",
+    "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
     "question": "متى سقطت الخلافة العثمانية؟",
@@ -3709,7 +3669,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-486",
-    "section": "التاريخ",
+    "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
     "question": "من أسّس السلطنة العثمانية؟",
@@ -3717,7 +3677,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-487",
-    "section": "التاريخ",
+    "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "صعب",
     "question": "ما أطول دولة إسلامية حكمت في التاريخ؟",
@@ -3725,7 +3685,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-488",
-    "section": "التاريخ",
+    "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
     "question": "ما الدولة الإسلامية التي حكمت الأندلس لأطول مدة؟",
@@ -3733,7 +3693,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-489",
-    "section": "التاريخ",
+    "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "صعب",
     "question": "في أي سنة سقطت بغداد على يد المغول؟",
@@ -3837,7 +3797,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-502",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "سهل",
     "question": "في أي عام فُتحت مكة المكرمة؟",
@@ -3845,7 +3805,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-503",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "متوسط",
     "question": "من قاد فتح القسطنطينية وفي أي عام؟",
@@ -3853,7 +3813,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-504",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "متوسط",
     "question": "من فتح الشام في عهد أبي بكر الصديق ثم عمر بن الخطاب؟",
@@ -3861,7 +3821,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-505",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "متوسط",
     "question": "من فتح مصر وفي أي عهد؟",
@@ -3869,7 +3829,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-506",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "متوسط",
     "question": "من قاد فتح الأندلس وفي أي عام؟",
@@ -3877,7 +3837,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-507",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "الغزوات",
     "level": "سهل",
     "question": "كم كان عدد المسلمين في غزوة بدر الكبرى؟",
@@ -3885,7 +3845,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-508",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "الغزوات",
     "level": "سهل",
     "question": "متى كانت غزوة أُحد؟",
@@ -3893,7 +3853,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-509",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "الغزوات",
     "level": "متوسط",
     "question": "لماذا سُميت غزوة الأحزاب بالخندق؟",
@@ -3901,7 +3861,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-510",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "متوسط",
     "question": "من قاد الجيوش الإسلامية لفتح فارس وما أشهر معاركه؟",
@@ -3909,7 +3869,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-511",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "الغزوات",
     "level": "صعب",
     "question": "ما الغزوة التي نزل فيها قوله تعالى: (إنا فتحنا لك فتحاً مبيناً)؟",
@@ -3973,7 +3933,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-522",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "آداب الطعام",
     "level": "سهل",
     "question": "ما آداب الأكل الواجبة في الإسلام؟",
@@ -3981,7 +3941,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-523",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "صفات المؤمن",
     "level": "سهل",
     "question": "ما الحياء وما منزلته في الإسلام؟",
@@ -3989,7 +3949,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-524",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "الصدق",
     "level": "سهل",
     "question": "ما ثمرة الصدق كما وردت في الحديث النبوي؟",
@@ -3997,7 +3957,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-525",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "الأمانة",
     "level": "سهل",
     "question": "ما الأمانة في الإسلام وما أهميتها؟",
@@ -4005,7 +3965,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-526",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "آداب النوم",
     "level": "سهل",
     "question": "ما آداب النوم في الإسلام؟",
@@ -4013,7 +3973,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-527",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "صفات المؤمن",
     "level": "سهل",
     "question": "ما واجب المسلم تجاه جاره؟",
@@ -4021,7 +3981,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-528",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "المحرمات الأخلاقية",
     "level": "متوسط",
     "question": "ما الغيبة وما حكمها في الإسلام؟",
@@ -4029,7 +3989,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-529",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "المحرمات الأخلاقية",
     "level": "متوسط",
     "question": "ما الفرق بين الغيبة والبهتان؟",
@@ -4037,7 +3997,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-530",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "النفاق",
     "level": "سهل",
     "question": "ما علامات المنافق الثلاث كما ذكرها النبي صلى الله عليه وسلم؟",
@@ -4045,7 +4005,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-531",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "الكبر والتواضع",
     "level": "متوسط",
     "question": "ما تعريف الكبر الوارد في الحديث النبوي؟",
@@ -4053,7 +4013,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-532",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "الكبر والتواضع",
     "level": "سهل",
     "question": "ما ضد الكبر وما فضله في الإسلام؟",
@@ -4061,7 +4021,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-533",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "الزهد",
     "level": "متوسط",
     "question": "ما معنى الزهد في الإسلام وهل يعني ترك الدنيا كلياً؟",
@@ -4133,7 +4093,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-542",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب الاستئذان",
     "level": "سهل",
     "question": "ما آداب الاستئذان في الإسلام؟",
@@ -4141,7 +4101,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-543",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب الضيافة",
     "level": "متوسط",
     "question": "ما حق الضيف على المضيف وكم مدة الضيافة؟",
@@ -4149,7 +4109,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-544",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب الكلام",
     "level": "سهل",
     "question": "ما آداب الكلام في الإسلام؟",
@@ -4157,7 +4117,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-545",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب السفر",
     "level": "متوسط",
     "question": "ما آداب السفر في الإسلام؟",
@@ -4165,7 +4125,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-546",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب المسجد",
     "level": "سهل",
     "question": "ما آداب دخول المسجد؟",
@@ -4173,7 +4133,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-547",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب تلاوة القرآن",
     "level": "سهل",
     "question": "ما آداب تلاوة القرآن الكريم؟",
@@ -4181,7 +4141,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-548",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب العطاس",
     "level": "سهل",
     "question": "ما آداب العطاس في الإسلام؟",
@@ -4189,7 +4149,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-549",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب السلام",
     "level": "سهل",
     "question": "ما ترتيب البداية بالسلام المستحب في الإسلام؟",
@@ -4197,7 +4157,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-550",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "أركان الحج",
     "level": "سهل",
     "question": "ما أركان الحج الأساسية؟",
@@ -4205,23 +4165,15 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-551",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "مناسك الحج",
     "level": "متوسط",
     "question": "ما يوم عرفة ولماذا يُعدّ أهم أيام الحج؟",
     "answer": "هو التاسع من ذي الحجة، وفيه الوقوف بعرفة الذي هو ركن الحج الأعظم، وصيامه يكفّر سنتين"
   },
   {
-    "id": "demo-quiz-552",
-    "section": "الحج",
-    "category": "مناسك الحج",
-    "level": "متوسط",
-    "question": "ما الفرق بين الحج المفرد والقران والتمتع؟",
-    "answer": "المفرد: إحرام بالحج فقط. القران: إحرام بالحج والعمرة معاً. التمتع: إحرام بالعمرة ثم إحرام بالحج في نفس الموسم"
-  },
-  {
     "id": "demo-quiz-553",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "مناسك الحج",
     "level": "سهل",
     "question": "ما الإحرام في الحج؟",
@@ -4229,7 +4181,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-554",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "مناسك الحج",
     "level": "صعب",
     "question": "ما محظورات الإحرام؟",
@@ -4237,7 +4189,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-555",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "رمي الجمرات",
     "level": "متوسط",
     "question": "متى تُرمى جمرة العقبة؟",
@@ -4245,7 +4197,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-556",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "مواقيت الحج",
     "level": "صعب",
     "question": "ما مواقيت الحج الزمانية؟",
@@ -4253,7 +4205,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-557",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "السعي",
     "level": "سهل",
     "question": "ما مكانة السعي بين الصفا والمروة؟",
@@ -4261,7 +4213,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-558",
-    "section": "القرآن",
+    "section": "القرآن الكريم",
     "category": "أسماء القرآن",
     "level": "متوسط",
     "question": "ما أشهر أسماء القرآن الكريم؟",
@@ -4269,23 +4221,15 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-560",
-    "section": "القرآن",
+    "section": "القرآن الكريم",
     "category": "إحصاءات القرآن",
     "level": "سهل",
     "question": "كم عدد أجزاء القرآن الكريم وأحزابه؟",
     "answer": "30 جزءاً و60 حزباً"
   },
   {
-    "id": "demo-quiz-563",
-    "section": "القرآن",
-    "category": "فضائل السور",
-    "level": "متوسط",
-    "question": "ما السورة التي تعدل ثلث القرآن؟",
-    "answer": "سورة الإخلاص، لقوله ﷺ: إنها تعدل ثلث القرآن (رواه البخاري ومسلم)"
-  },
-  {
     "id": "demo-quiz-564",
-    "section": "القرآن",
+    "section": "القرآن الكريم",
     "category": "مكي ومدني",
     "level": "متوسط",
     "question": "ما الفرق الرئيسي بين السور المكية والمدنية موضوعاً؟",
@@ -4293,7 +4237,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-565",
-    "section": "التاريخ",
+    "section": "التاريخ الإسلامي",
     "category": "الخلفاء الراشدون",
     "level": "سهل",
     "question": "من هم الخلفاء الراشدون بالترتيب؟",
@@ -4301,7 +4245,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-566",
-    "section": "التاريخ",
+    "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
     "question": "في عهد أي خليفة وقعت معركة القادسية وفتح الشام ومصر؟",
@@ -4309,7 +4253,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-567",
-    "section": "التاريخ",
+    "section": "التاريخ الإسلامي",
     "category": "الدولة الأموية",
     "level": "متوسط",
     "question": "من أسس الدولة الأموية ومن أين؟",
@@ -4317,7 +4261,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-568",
-    "section": "التاريخ",
+    "section": "التاريخ الإسلامي",
     "category": "الدولة العباسية",
     "level": "متوسط",
     "question": "ما عاصمة الدولة العباسية؟",
@@ -4325,7 +4269,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-569",
-    "section": "التاريخ",
+    "section": "التاريخ الإسلامي",
     "category": "فتح الأندلس",
     "level": "متوسط",
     "question": "من قاد الفتح الإسلامي للأندلس وفي أي سنة؟",
@@ -4333,7 +4277,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-570",
-    "section": "التاريخ",
+    "section": "التاريخ الإسلامي",
     "category": "فتح القسطنطينية",
     "level": "متوسط",
     "question": "من فتح القسطنطينية وفي أي سنة؟",
@@ -4341,7 +4285,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-571",
-    "section": "التاريخ",
+    "section": "التاريخ الإسلامي",
     "category": "حروب الردة",
     "level": "صعب",
     "question": "من قاد حروب الردة بعد وفاة النبي ﷺ؟",
@@ -4349,7 +4293,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-572",
-    "section": "التاريخ",
+    "section": "التاريخ الإسلامي",
     "category": "حادثة الفيل",
     "level": "سهل",
     "question": "ما حادثة الفيل وما أثرها على مكة؟",
@@ -4357,7 +4301,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-573",
-    "section": "الأخلاق",
+    "section": "الآداب والأخلاق",
     "category": "مكارم الأخلاق",
     "level": "سهل",
     "question": "ما أثقل شيء في ميزان المؤمن يوم القيامة؟",
@@ -4365,7 +4309,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-574",
-    "section": "الأخلاق",
+    "section": "الآداب والأخلاق",
     "category": "الأخلاق الذميمة",
     "level": "سهل",
     "question": "ما الكِبر وما خطره؟",
@@ -4373,7 +4317,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-575",
-    "section": "الأخلاق",
+    "section": "الآداب والأخلاق",
     "category": "الاجتماعيات",
     "level": "سهل",
     "question": "ما حق المسلم على أخيه المسلم؟",
@@ -4413,7 +4357,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-580",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "فتح مكة",
     "level": "سهل",
     "question": "في أي سنة فُتِحت مكة المكرمة؟",
@@ -4421,7 +4365,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-581",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الشامية",
     "level": "متوسط",
     "question": "ما معركة اليرموك وما نتيجتها؟",
@@ -4429,7 +4373,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-582",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الفارسية",
     "level": "متوسط",
     "question": "ما معركة نهاوند وما لقبها؟",
@@ -4437,7 +4381,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-583",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "فتح مصر",
     "level": "متوسط",
     "question": "من قاد فتح مصر ومتى؟",
@@ -4445,7 +4389,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-584",
-    "section": "الأحاديث النبوية",
+    "section": "الحديث",
     "category": "حديث جبريل",
     "level": "متوسط",
     "question": "ما حديث جبريل المشهور وما أهميته؟",
@@ -4453,7 +4397,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-585",
-    "section": "الأحاديث النبوية",
+    "section": "الحديث",
     "category": "الأحاديث الجامعة",
     "level": "سهل",
     "question": "ما معنى حديث: الدين النصيحة؟",
@@ -4461,7 +4405,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-586",
-    "section": "الأحاديث النبوية",
+    "section": "الحديث",
     "category": "صحيح البخاري",
     "level": "سهل",
     "question": "ما أول حديث في صحيح البخاري؟",
@@ -4469,7 +4413,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-587",
-    "section": "الأخلاق",
+    "section": "الآداب والأخلاق",
     "category": "الصدق",
     "level": "سهل",
     "question": "ما ثمرة الصدق؟",
@@ -4477,7 +4421,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-588",
-    "section": "الأخلاق",
+    "section": "الآداب والأخلاق",
     "category": "الصبر",
     "level": "سهل",
     "question": "ما أنواع الصبر في الإسلام؟",
@@ -4485,7 +4429,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-589",
-    "section": "الأخلاق",
+    "section": "الآداب والأخلاق",
     "category": "حسن الظن",
     "level": "متوسط",
     "question": "ما حكم سوء الظن بالمسلمين؟",
@@ -4493,7 +4437,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-590",
-    "section": "الأخلاق",
+    "section": "الآداب والأخلاق",
     "category": "التواضع",
     "level": "سهل",
     "question": "ما التواضع وما ضده؟",
@@ -4501,7 +4445,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-591",
-    "section": "الأخلاق",
+    "section": "الآداب والأخلاق",
     "category": "الصدق",
     "level": "سهل",
     "question": "ما المقصود بالصدق في الإسلام؟",
@@ -4509,7 +4453,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-592",
-    "section": "الأخلاق",
+    "section": "الآداب والأخلاق",
     "category": "الحلم",
     "level": "متوسط",
     "question": "ما الحلم وما فضله في الإسلام؟",
@@ -4517,7 +4461,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-593",
-    "section": "الأخلاق",
+    "section": "الآداب والأخلاق",
     "category": "العفو",
     "level": "سهل",
     "question": "ما ثمرة العفو عن المسيء؟",
@@ -4525,7 +4469,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-594",
-    "section": "الأخلاق",
+    "section": "الآداب والأخلاق",
     "category": "الأمانة",
     "level": "متوسط",
     "question": "كيف تتجلى الأمانة في حياة المسلم؟",
@@ -4533,7 +4477,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-595",
-    "section": "الأخلاق",
+    "section": "الآداب والأخلاق",
     "category": "الكرم",
     "level": "سهل",
     "question": "ما الفرق بين الكرم والإسراف؟",
@@ -4581,7 +4525,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-601",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب الطعام",
     "level": "سهل",
     "question": "ما آداب الأكل في الإسلام؟",
@@ -4589,7 +4533,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-602",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب المجلس",
     "level": "سهل",
     "question": "ما آداب الجلوس في مجالس العلم؟",
@@ -4597,7 +4541,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-603",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب النوم",
     "level": "سهل",
     "question": "ما الأذكار والآداب المستحبة عند النوم؟",
@@ -4605,7 +4549,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-604",
-    "section": "الآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب السفر",
     "level": "متوسط",
     "question": "ما آداب السفر التي حثّ عليها الإسلام؟",
@@ -4701,7 +4645,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-616",
-    "section": "السيرة النبوية",
+    "section": "السيرة",
     "category": "الغزوات",
     "level": "سهل",
     "question": "في أي سنة وقعت غزوة بدر الكبرى؟",
@@ -4709,7 +4653,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-617",
-    "section": "السيرة النبوية",
+    "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
     "question": "من كان قائد المشركين في غزوة أُحد وكيف انتهت؟",
@@ -4797,7 +4741,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-630",
-    "section": "السيرة النبوية",
+    "section": "السيرة",
     "category": "الصحابة",
     "level": "متوسط",
     "question": "من أول من آمن بالنبي ﷺ من الرجال والنساء والصبيان والعبيد؟",
@@ -4941,7 +4885,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-648",
-    "section": "السيرة النبوية",
+    "section": "السيرة",
     "category": "الهجرة",
     "level": "سهل",
     "question": "من كان رفيق النبي ﷺ في الهجرة إلى المدينة؟",
@@ -4962,14 +4906,6 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "level": "متوسط",
     "question": "ما نصاب زكاة الذهب؟",
     "answer": "عشرون مثقالاً وهو ما يعادل 85 غراماً من الذهب الخالص تقريباً، إذا بلغها المسلم وحال عليها الحول وجبت فيها الزكاة بمقدار ربع العُشر (2.5٪)."
-  },
-  {
-    "id": "demo-quiz-651",
-    "section": "الحديث",
-    "category": "مصطلح الحديث",
-    "level": "صعب",
-    "question": "ما الفرق بين الحديث الشاذ والحديث المنكر؟",
-    "answer": "الشاذ: ما رواه الثقة مخالفاً لمن هو أوثق منه أو أكثر عدداً. المنكر: ما رواه الضعيف مخالفاً للثقة. فالشاذ يرويه ثقة والمنكر يرويه ضعيف — وكلاهما مردود."
   },
   {
     "id": "demo-quiz-652",
@@ -5005,7 +4941,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-656",
-    "section": "السيرة النبوية",
+    "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
     "question": "ما الغزوة التي أُمر فيها المسلمون بحفر الخندق؟",
@@ -5069,7 +5005,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-664",
-    "section": "السيرة النبوية",
+    "section": "السيرة",
     "category": "الصحابة",
     "level": "متوسط",
     "question": "من أول من أسلم من النساء؟",
@@ -5141,7 +5077,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-674",
-    "section": "القرآن",
+    "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "متوسط",
     "question": "ما المقصود بالناسخ والمنسوخ في القرآن الكريم؟",
@@ -5157,7 +5093,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-676",
-    "section": "التاريخ",
+    "section": "التاريخ الإسلامي",
     "category": "الخلافة الإسلامية",
     "level": "متوسط",
     "question": "من هو أول من لُقّب بأمير المؤمنين في الإسلام؟",
@@ -5165,7 +5101,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-677",
-    "section": "الأخلاق والرقائق",
+    "section": "الرقائق",
     "category": "التوبة والاستغفار",
     "level": "سهل",
     "question": "ما شروط التوبة الصحيحة من الذنب؟",
@@ -5421,7 +5357,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-709",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "فتوح الشام",
     "level": "متوسط",
     "question": "ما معركة اليرموك وما أهميتها؟",
@@ -5429,7 +5365,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-710",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "فتوح العراق",
     "level": "متوسط",
     "question": "ما معركة القادسية ومن قائدها؟",
@@ -5437,7 +5373,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-711",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "فتوح مصر",
     "level": "متوسط",
     "question": "من فاتح مصر للإسلام وما العام الذي فُتحت فيه؟",
@@ -5445,7 +5381,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-712",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "فتوح فارس",
     "level": "متوسط",
     "question": "ما المدائن وما أهميتها في الفتوحات الإسلامية؟",
@@ -5453,7 +5389,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-713",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "فتوح المغرب",
     "level": "متوسط",
     "question": "من قاد فتح شمال أفريقيا (إفريقية) وبنى مدينة القيروان لتكون قاعدة الفتح الإسلامي هناك؟",
@@ -5461,7 +5397,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-714",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "فتح مكة",
     "level": "سهل",
     "question": "في أي عام فُتحت مكة المكرمة؟ ومن أعلن أمان أهلها؟",
@@ -5469,7 +5405,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-715",
-    "section": "الفتوحات",
+    "section": "الفتوحات الإسلامية",
     "category": "فتح فلسطين",
     "level": "متوسط",
     "question": "من الخليفة الذي تسلّم مفاتح بيت المقدس في الفتح الإسلامي الأول؟",
@@ -5557,7 +5493,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-726",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "فريضة الحج",
     "level": "سهل",
     "question": "كم مرة حج النبي ﷺ؟ وما حجة الوداع؟",
@@ -5565,7 +5501,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-727",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "مناسك الحج",
     "level": "متوسط",
     "question": "ما الفرق بين الحج المفرد والقِران والتمتع؟",
@@ -5573,7 +5509,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-728",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "أركان الحج",
     "level": "متوسط",
     "question": "ما أركان الحج التي لا يصح إلا بها؟",
@@ -5581,7 +5517,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-729",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "الميقات",
     "level": "متوسط",
     "question": "ما ميقات أهل الكويت للحج والعمرة؟",
@@ -5589,7 +5525,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-730",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "الصدق",
     "level": "سهل",
     "question": "ما الحديث الشهير في فضل الصدق والنهي عن الكذب؟",
@@ -5677,7 +5613,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-741",
-    "section": "الحديث الشريف",
+    "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
     "question": "ما الفرق بين الحديث المتواتر والآحاد؟ وما حجية كل منهما؟",
@@ -5685,7 +5621,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-742",
-    "section": "الحديث الشريف",
+    "section": "الحديث",
     "category": "رجال الحديث",
     "level": "متوسط",
     "question": "من هم المكثرون من الصحابة رضي الله عنهم في رواية الحديث؟",
@@ -5693,7 +5629,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-743",
-    "section": "الحديث الشريف",
+    "section": "الحديث",
     "category": "كتب الحديث",
     "level": "سهل",
     "question": "ما أصح الكتب بعد كتاب الله؟ وما الكتب الستة في الحديث؟",
@@ -5701,7 +5637,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-744",
-    "section": "الحديث الشريف",
+    "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "صعب",
     "question": "ما علم الجرح والتعديل؟ ولماذا نشأ؟",
@@ -5709,7 +5645,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-745",
-    "section": "الحديث الشريف",
+    "section": "الحديث",
     "category": "أحاديث مشهورة",
     "level": "سهل",
     "question": "ما الحديث الأول الذي يُفتتح به صحيح البخاري؟ وما مناسبته؟",
@@ -5917,7 +5853,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-771",
-    "section": "الحديث الشريف",
+    "section": "الحديث",
     "category": "علوم الحديث",
     "level": "متوسط",
     "question": "ما الفرق بين الحديث الصحيح والحسن والضعيف؟ وما شروط كل منها؟",
@@ -5925,7 +5861,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-772",
-    "section": "الحديث الشريف",
+    "section": "الحديث",
     "category": "علوم الحديث",
     "level": "سهل",
     "question": "من هو أكثر الصحابة رواية للحديث النبوي؟ وكم بلغ عدد أحاديثه؟",
@@ -5933,7 +5869,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-773",
-    "section": "الفقه الإسلامي",
+    "section": "الفقه",
     "category": "أركان الإسلام",
     "level": "سهل",
     "question": "ما شروط وجوب الزكاة؟ وما النصاب في زكاة الذهب والفضة؟",
@@ -5941,7 +5877,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-774",
-    "section": "الفقه الإسلامي",
+    "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
     "question": "ما المفطرات التي تستوجب القضاء فقط، وما التي تستوجب القضاء والكفارة؟",
@@ -5949,7 +5885,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-775",
-    "section": "العقيدة الإسلامية",
+    "section": "العقيدة",
     "category": "التوحيد",
     "level": "متوسط",
     "question": "ما أقسام التوحيد عند أهل السنة والجماعة؟ وما الفرق بين كل قسم؟",
@@ -5957,7 +5893,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-776",
-    "section": "العقيدة الإسلامية",
+    "section": "العقيدة",
     "category": "الإيمان",
     "level": "سهل",
     "question": "ما أركان الإيمان الستة؟ واذكر الدليل عليها.",
@@ -5965,7 +5901,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-777",
-    "section": "السيرة النبوية",
+    "section": "السيرة",
     "category": "غزوات وأحداث",
     "level": "متوسط",
     "question": "ما سبب غزوة بدر الكبرى؟ ومتى وقعت؟ وما أبرز نتائجها؟",
@@ -5973,7 +5909,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-778",
-    "section": "السيرة النبوية",
+    "section": "السيرة",
     "category": "الصحابة الكرام",
     "level": "سهل",
     "question": "من هم العشرة المبشرون بالجنة؟ واذكر المصدر.",
@@ -5981,7 +5917,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-779",
-    "section": "الأخلاق والآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب المسلم",
     "level": "سهل",
     "question": "ما آداب الطعام في الإسلام؟ واذكر أبرز خمسة منها مع أدلتها.",
@@ -5989,7 +5925,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-780",
-    "section": "الأخلاق والآداب",
+    "section": "الآداب والأخلاق",
     "category": "الزهد والرقائق",
     "level": "متوسط",
     "question": "ما حقيقة الزهد في الإسلام؟ وهل يعني ترك الدنيا؟",
@@ -5997,7 +5933,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-781",
-    "section": "الأخلاق والرقائق",
+    "section": "الرقائق",
     "category": "التوبة والاستغفار",
     "level": "سهل",
     "question": "ما شروط التوبة النصوح؟",
@@ -6005,7 +5941,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-782",
-    "section": "الأخلاق والرقائق",
+    "section": "الرقائق",
     "category": "الورع والتقوى",
     "level": "متوسط",
     "question": "ما الفرق بين الورع والتقوى؟",
@@ -6013,7 +5949,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-783",
-    "section": "الأخلاق والرقائق",
+    "section": "الرقائق",
     "category": "المراقبة والمحاسبة",
     "level": "متوسط",
     "question": "ما المقصود بمحاسبة النفس؟ وكيف يُطبَّق عملياً؟",
@@ -6021,7 +5957,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-784",
-    "section": "العقيدة الإسلامية",
+    "section": "العقيدة",
     "category": "أركان الإيمان",
     "level": "سهل",
     "question": "ما أركان الإيمان الستة مع دليلها؟",
@@ -6029,7 +5965,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-785",
-    "section": "العقيدة الإسلامية",
+    "section": "العقيدة",
     "category": "صفات الله",
     "level": "متوسط",
     "question": "ما القاعدة العقدية في التعامل مع صفات الله تعالى؟",
@@ -6037,7 +5973,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-786",
-    "section": "العقيدة الإسلامية",
+    "section": "العقيدة",
     "category": "الشرك وأنواعه",
     "level": "متوسط",
     "question": "ما أنواع الشرك؟ وما الفرق بين الأكبر والأصغر؟",
@@ -6045,7 +5981,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-787",
-    "section": "الفقه الإسلامي",
+    "section": "الفقه",
     "category": "مقاصد الشريعة",
     "level": "متوسط",
     "question": "ما مقاصد الشريعة الإسلامية الخمسة الكلية؟",
@@ -6053,7 +5989,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-788",
-    "section": "الفقه الإسلامي",
+    "section": "الفقه",
     "category": "أصول الفقه",
     "level": "متوسط",
     "question": "ما مصادر التشريع الإسلامي الأربعة المتفق عليها؟",
@@ -6061,7 +5997,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-789",
-    "section": "الفقه الإسلامي",
+    "section": "الفقه",
     "category": "الفقه الميسر",
     "level": "سهل",
     "question": "ما الحكم التكليفي وما أقسامه؟",
@@ -6101,7 +6037,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-794",
-    "section": "الأخلاق والآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب الحديث والكلام",
     "level": "سهل",
     "question": "ما آداب الكلام في الإسلام؟ اذكر أبرز خمسة منها.",
@@ -6109,7 +6045,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-795",
-    "section": "الأخلاق والآداب",
+    "section": "الآداب والأخلاق",
     "category": "آداب الصداقة والإخاء",
     "level": "متوسط",
     "question": "ما حقوق الأخ المسلم على أخيه؟ اذكر ستة حقوق من الحديث النبوي.",
@@ -6117,7 +6053,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-796",
-    "section": "الأخلاق والآداب",
+    "section": "الآداب والأخلاق",
     "category": "الحِلم والأناة",
     "level": "متوسط",
     "question": "ما الفرق بين الحِلم والضعف في الإسلام؟ وكيف يُوازن المسلم بينهما؟",
@@ -6125,7 +6061,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-797",
-    "section": "الحديث الشريف",
+    "section": "الحديث",
     "category": "علم مصطلح الحديث",
     "level": "متوسط",
     "question": "ما الفرق بين الحديث المتواتر والآحاد؟ وما حكم كل منهما؟",
@@ -6133,7 +6069,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-798",
-    "section": "الحديث الشريف",
+    "section": "الحديث",
     "category": "علم الرجال",
     "level": "متوسط",
     "question": "ما شروط قبول الراوي في علم الحديث؟",
@@ -6141,7 +6077,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-799",
-    "section": "الحديث الشريف",
+    "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "سهل",
     "question": "ما المقصود بالحديث الحسن؟ وما مثاله؟",
@@ -6149,7 +6085,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-800",
-    "section": "السيرة النبوية",
+    "section": "السيرة",
     "category": "مراحل البعثة",
     "level": "متوسط",
     "question": "كم استمرت مرحلة الدعوة السرية؟ ومن أبرز من أسلم فيها؟",
@@ -6157,7 +6093,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-801",
-    "section": "السيرة النبوية",
+    "section": "السيرة",
     "category": "الهجرة",
     "level": "متوسط",
     "question": "ما أسباب هجرة النبي ﷺ إلى المدينة؟ ومتى كانت؟",
@@ -6165,7 +6101,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-802",
-    "section": "السيرة النبوية",
+    "section": "السيرة",
     "category": "وفاة النبي",
     "level": "سهل",
     "question": "متى توفي النبي محمد ﷺ؟ وما عمره؟ وأين دُفن؟",
@@ -6173,7 +6109,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-803",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "سهل",
     "question": "من هو الصحابي الملقّب بـ«أمين الأمة»؟ ولماذا لُقّب بذلك؟",
@@ -6181,7 +6117,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-804",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "الألقاب",
     "level": "متوسط",
     "question": "ما لقب عبد الله بن عباس رضي الله عنهما؟ وبمَ اشتهر؟",
@@ -6221,7 +6157,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-809",
-    "section": "الفقه الإسلامي",
+    "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
     "question": "ما شروط صحة الصلاة؟ اذكرها مرتّبة.",
@@ -6229,7 +6165,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-810",
-    "section": "الفقه الإسلامي",
+    "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
     "question": "ما نصاب زكاة الذهب؟ وما مقدار الزكاة الواجبة؟",
@@ -6253,7 +6189,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-813",
-    "section": "العقيدة الإسلامية",
+    "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "متوسط",
     "question": "ما مراحل يوم القيامة بالترتيب؟",
@@ -6261,7 +6197,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-814",
-    "section": "العقيدة الإسلامية",
+    "section": "العقيدة",
     "category": "الملائكة",
     "level": "سهل",
     "question": "ما وظيفة كل من: جبريل، وميكائيل، وإسرافيل، وعزرائيل؟",
@@ -6269,7 +6205,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-815",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "أخلاق محمودة",
     "level": "سهل",
     "question": "ما معنى «الوَرَع» في الإسلام؟ وكيف يختلف عن التقوى؟",
@@ -6277,7 +6213,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-816",
-    "section": "الآداب الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "عام",
     "level": "سهل",
     "question": "ما آداب زيارة المريض في الإسلام؟",
@@ -6301,7 +6237,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-819",
-    "section": "الأنبياء والرسل",
+    "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
     "question": "ما المعجزات الخمس الكبرى لموسى عليه السلام؟",
@@ -6309,7 +6245,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-820",
-    "section": "الأنبياء والرسل",
+    "section": "الأنبياء",
     "category": "الرسل",
     "level": "سهل",
     "question": "كم عدد الأنبياء والرسل المذكورين في القرآن الكريم بأسمائهم؟",
@@ -6349,7 +6285,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-825",
-    "section": "الآداب الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "عام",
     "level": "سهل",
     "question": "ما حق الوالدين على الأبناء في الإسلام؟",
@@ -6357,7 +6293,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-826",
-    "section": "الفقه الإسلامي",
+    "section": "الفقه",
     "category": "الطهارة",
     "level": "سهل",
     "question": "ما الفرق بين الحدث الأصغر والأكبر؟ وما يوجبهما؟",
@@ -6381,7 +6317,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-829",
-    "section": "الأنبياء والرسل",
+    "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
     "question": "ما قصة سيدنا يوسف عليه السلام؟ ولماذا سُميت قصته أحسن القصص؟",
@@ -6421,7 +6357,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-834",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "متوسط",
     "question": "من هم العشرة المبشرون بالجنة؟ واذكرهم بالترتيب.",
@@ -6429,7 +6365,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-835",
-    "section": "الصحابة الكرام",
+    "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "سهل",
     "question": "من أول من أسلم من الرجال والنساء والصبيان والموالي؟",
@@ -6437,7 +6373,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-836",
-    "section": "العقيدة الإسلامية",
+    "section": "العقيدة",
     "category": "التوحيد",
     "level": "متوسط",
     "question": "ما الفرق بين توحيد الربوبية وتوحيد الألوهية؟",
@@ -6445,7 +6381,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-837",
-    "section": "الحديث الشريف",
+    "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "صعب",
     "question": "ما درجات الحديث من حيث الصحة؟ اشرحها بإيجاز.",
@@ -6453,7 +6389,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-838",
-    "section": "الفقه الإسلامي",
+    "section": "الفقه",
     "category": "الأمر بالمعروف والنهي عن المنكر",
     "level": "متوسط",
     "question": "ما هي مراتب الأمر بالمعروف والنهي عن المنكر الثلاث؟",
@@ -6461,7 +6397,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-839",
-    "section": "الفقه الإسلامي",
+    "section": "الفقه",
     "category": "الأمر بالمعروف والنهي عن المنكر",
     "level": "صعب",
     "question": "ما الشروط التي يجب توافرها قبل الإنكار باليد؟",
@@ -6469,7 +6405,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-840",
-    "section": "الفقه الإسلامي",
+    "section": "الفقه",
     "category": "الفتاوى المعاصرة",
     "level": "متوسط",
     "question": "ما المجامع الفقهية الدولية الكبرى التي تُصدر الفتاوى والقرارات للمسلمين؟",
@@ -6477,7 +6413,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-841",
-    "section": "الفقه الإسلامي",
+    "section": "الفقه",
     "category": "الطهارة",
     "level": "سهل",
     "question": "ما الفرق بين الحدث الأصغر والحدث الأكبر؟",
@@ -6485,7 +6421,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-842",
-    "section": "السيرة النبوية",
+    "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
     "question": "ما سبب تسمية غزوة الأحزاب بهذا الاسم وما نتيجتها؟",
@@ -6501,7 +6437,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-844",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "الأخلاق",
     "level": "سهل",
     "question": "ما أهمية صدق اللسان في الإسلام؟",
@@ -6517,7 +6453,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-846",
-    "section": "العقيدة الإسلامية",
+    "section": "العقيدة",
     "category": "التوحيد",
     "level": "سهل",
     "question": "ما معنى شهادة أن لا إله إلا الله؟",
@@ -6525,7 +6461,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-847",
-    "section": "الفقه الإسلامي",
+    "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
     "question": "من مصارف الزكاة الثمانية؟",
@@ -6541,7 +6477,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-849",
-    "section": "الحديث النبوي",
+    "section": "الحديث",
     "category": "علوم الحديث",
     "level": "متوسط",
     "question": "ما الفرق بين الحديث الصحيح والحديث الحسن؟",
@@ -6549,7 +6485,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-850",
-    "section": "الفقه الإسلامي",
+    "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
     "question": "ما هي واجبات الصلاة التي يُجبرها سجود السهو إذا تُركت سهواً؟",
@@ -6557,7 +6493,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-851",
-    "section": "السيرة النبوية",
+    "section": "السيرة",
     "category": "الهجرة",
     "level": "متوسط",
     "question": "كم سنة مكث النبي ﷺ في مكة بعد البعثة قبل الهجرة؟",
@@ -6565,7 +6501,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-852",
-    "section": "العقيدة الإسلامية",
+    "section": "العقيدة",
     "category": "الأسماء والصفات",
     "level": "متوسط",
     "question": "ما مذهب أهل السنة في صفات الله تعالى؟",
@@ -6573,7 +6509,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-853",
-    "section": "الأخلاق الإسلامية",
+    "section": "الآداب والأخلاق",
     "category": "السيرة والآداب",
     "level": "سهل",
     "question": "ما أدب الدخول على المسجد والخروج منه في السنة النبوية؟",
@@ -6581,7 +6517,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-854",
-    "section": "الفقه الإسلامي",
+    "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
     "question": "ما الفرق بين صيام الكفارة وصيام القضاء؟",
@@ -6925,7 +6861,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-897",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الصباح والمساء",
     "level": "سهل",
     "question": "ما ذكر الصباح الذي يُقال مئة مرة فيُعدل عشر رقاب؟",
@@ -6933,7 +6869,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-898",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "أذكار النوم",
     "level": "سهل",
     "question": "ما الذكر الذي كان النبي ﷺ يقوله عند النوم ويضع يده اليمنى تحت خده؟",
@@ -6941,7 +6877,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-899",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "التسبيح",
     "level": "سهل",
     "question": "ما معنى قول «سبحان الله وبحمده سبحان الله العظيم» وما فضله؟",
@@ -6949,7 +6885,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-900",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الاستغفار",
     "level": "متوسط",
     "question": "ما سيد الاستغفار وما أركانه؟",
@@ -6957,7 +6893,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-901",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الذكر العام",
     "level": "متوسط",
     "question": "ما المقصود بـ«الباقيات الصالحات» ؟",
@@ -6965,7 +6901,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-902",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الدعاء",
     "level": "متوسط",
     "question": "ما شروط قبول الدعاء عند العلماء؟",
@@ -6973,7 +6909,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-903",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "التعوذات",
     "level": "متوسط",
     "question": "من أي شيء كان النبي ﷺ كثيراً ما يتعوذ في دعائه؟",
@@ -6981,7 +6917,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-904",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الأدعية النبوية",
     "level": "صعب",
     "question": "ما دعاء النبي ﷺ الجامع الذي طلب فيه الثبات على الهداية؟",
@@ -6989,7 +6925,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-905",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الصلاة على النبي",
     "level": "سهل",
     "question": "ما الصلاة الإبراهيمية التي تُقال في التشهد؟",
@@ -6997,7 +6933,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-906",
-    "section": "الأذكار",
+    "section": "الأذكار والأدعية",
     "category": "الأوقات الفاضلة",
     "level": "صعب",
     "question": "ما الساعة التي يُستجاب فيها الدعاء يوم الجمعة وما الخلاف فيها؟",
@@ -7077,7 +7013,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-917",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "الفرائض",
     "level": "سهل",
     "question": "ما واجبات الحج التي يجبر تركها بالدم؟",
@@ -7085,7 +7021,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-918",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "العمرة",
     "level": "سهل",
     "question": "ما أركان العمرة؟",
@@ -7093,7 +7029,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-919",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "المحظورات",
     "level": "متوسط",
     "question": "ما المحظورات التي لا يجوز للمحرم فعلها؟",
@@ -7101,7 +7037,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-920",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "المناسك",
     "level": "متوسط",
     "question": "ما ترتيب مناسك يوم النحر (العاشر من ذي الحجة)؟",
@@ -7109,7 +7045,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-921",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "المشاعر",
     "level": "متوسط",
     "question": "ما المشاعر المقدسة في الحج وما أهميتها؟",
@@ -7117,7 +7053,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-922",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "أنواع الحج",
     "level": "متوسط",
     "question": "ما أنواع الحج الثلاثة وما أفضلها؟",
@@ -7125,7 +7061,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-923",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "الهدي",
     "level": "متوسط",
     "question": "ما الهدي في الحج ومتى يجب؟",
@@ -7133,7 +7069,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-924",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "الوقوف بعرفة",
     "level": "صعب",
     "question": "ما وقت الوقوف بعرفة ومتى ينتهي؟",
@@ -7141,7 +7077,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-925",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "التاريخ",
     "level": "صعب",
     "question": "ما حجة الوداع ومتى كانت وماذا قال النبي ﷺ فيها؟",
@@ -7149,7 +7085,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-926",
-    "section": "الحج",
+    "section": "الحج والعمرة",
     "category": "الكفارات",
     "level": "صعب",
     "question": "ما الجزاء الشرعي لمن أفسد حجه بالجماع قبل التحلل الأول؟",
@@ -7167,7 +7103,6 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   { "id": "demo-quiz-936", "section": "الفرائض والمواريث", "category": "مسائل", "level": "صعب", "question": "من الوارثون الذين لا يُحجبون حجب حرمان بأي حال؟", "answer": "ستة: الزوج، والزوجة، والأب، والأم، والابن، والبنت — هؤلاء لا يُسقطهم أحد بل يُقلِّل نصيبهم أحياناً" },
   { "id": "demo-quiz-937", "section": "الأسماء الحسنى", "category": "المعنى", "level": "سهل", "question": "ما معنى اسم الله (الرحمن الرحيم)؟", "answer": "الرحمن: ذو الرحمة الواسعة الشاملة للخلق أجمعين. الرحيم: ذو الرحمة الخاصة بالمؤمنين يوم القيامة" },
   { "id": "demo-quiz-938", "section": "الأسماء الحسنى", "category": "المعنى", "level": "سهل", "question": "ما معنى اسم الله (الرزاق)؟", "answer": "الذي يرزق جميع الخلق ويُوصل إليهم أرزاقهم، ورزقه لا ينقطع: ﴿إِنَّ اللَّهَ هُوَ الرَّزَّاقُ ذُو الْقُوَّةِ الْمَتِينُ﴾" },
-  { "id": "demo-quiz-939", "section": "الأسماء الحسنى", "category": "المعنى", "level": "متوسط", "question": "ما الفرق بين اسمَي الله (العزيز) و(القوي)؟", "answer": "العزيز: الغالب الذي لا يُغلَب. القوي: الشديد البالغ في القدرة، وهو الكمال المطلق في القوة" },
   { "id": "demo-quiz-940", "section": "الأسماء الحسنى", "category": "المعنى", "level": "متوسط", "question": "ما معنى اسم الله (الغني) وما أثره في حياة المسلم؟", "answer": "الغني: المستغني عن كل ما سواه، لا يحتاج إلى أحد بينما يحتاج إليه الجميع. أثره: اليأس مما في أيدي الناس والتعلق بالله وحده" },
   { "id": "demo-quiz-941", "section": "الأسماء الحسنى", "category": "الفضل", "level": "متوسط", "question": "ما الأسماء الستة التي قال عنها النبي ﷺ إن فيها اسم الله الأعظم؟", "answer": "اختلف العلماء، والمشهور: الحي القيوم، وذو الجلال والإكرام، والرحمن الرحيم، إلى جانب الله والصمد" },
   { "id": "demo-quiz-942", "section": "الأسماء الحسنى", "category": "العدد", "level": "سهل", "question": "كم عدد الأسماء الحسنى الواردة في الحديث الصحيح؟", "answer": "تسعة وتسعون اسماً: قال ﷺ: «إن لله تسعة وتسعين اسماً من أحصاها دخل الجنة» — رواه البخاري ومسلم" },
@@ -7184,15 +7119,15 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // أقسام ناقصة فعلياً (كانت 1-4 أسئلة فقط)، كل سؤال بحقلي explanation
   // وreference جديدين (اختياريان، راجع تعليق النوع أعلاه لسبب عدم
   // استهلاكهما بعد في واجهة اللعبة الحية) ──────────────────────────────
-  { "id": "demo-quiz-951", "section": "الآداب الإسلامية", "category": "آداب الاستئذان", "level": "سهل", "question": "كم مرة يُستحب للمسلم أن يستأذن قبل دخول بيت غيره؟ وماذا يفعل إن لم يُؤذَن له؟", "answer": "ثلاث مرات، فإن لم يُؤذَن له فليرجع.", "explanation": "دليله حديث أبي موسى الأشعري رضي الله عنه أن النبي ﷺ قال: «الاستئذان ثلاث، فإن أُذِن لك وإلا فارجع».", "reference": "رواه البخاري (6245) ومسلم (2153)" },
-  { "id": "demo-quiz-952", "section": "الآداب الإسلامية", "category": "آداب المجلس", "level": "سهل", "question": "ما حكم إقامة الرجل من مجلسه ثم الجلوس فيه؟", "answer": "لا يجوز؛ نهى النبي ﷺ عن أن يُقيم الرجل أخاه من مجلسه ثم يجلس فيه، بل يُقال: تفسَّحوا وتوسَّعوا.", "explanation": "من آداب المجالس احترام من سبق إلى مكانه، والأمر بالتوسع بدل إخراج الجالس.", "reference": "رواه البخاري (6270) ومسلم (2177) من حديث ابن عمر رضي الله عنهما" },
-  { "id": "demo-quiz-953", "section": "الآداب الإسلامية", "category": "آداب الطريق", "level": "متوسط", "question": "ما حق الطريق الذي أمر النبي ﷺ بأدائه عند الجلوس على الطرقات؟", "answer": "غض البصر، وكف الأذى، ورد السلام، والأمر بالمعروف والنهي عن المنكر.", "explanation": "لما قال الصحابة: ما لنا بدّ من مجالسنا نتحدث فيها، قال ﷺ: «فإذا أبيتم إلا المجلس فأعطوا الطريق حقه» فذكروا هذه الحقوق.", "reference": "رواه البخاري (2465) ومسلم (2121) من حديث أبي سعيد الخدري رضي الله عنه" },
+  { "id": "demo-quiz-951", "section": "الآداب والأخلاق", "category": "آداب الاستئذان", "level": "سهل", "question": "كم مرة يُستحب للمسلم أن يستأذن قبل دخول بيت غيره؟ وماذا يفعل إن لم يُؤذَن له؟", "answer": "ثلاث مرات، فإن لم يُؤذَن له فليرجع.", "explanation": "دليله حديث أبي موسى الأشعري رضي الله عنه أن النبي ﷺ قال: «الاستئذان ثلاث، فإن أُذِن لك وإلا فارجع».", "reference": "رواه البخاري (6245) ومسلم (2153)" },
+  { "id": "demo-quiz-952", "section": "الآداب والأخلاق", "category": "آداب المجلس", "level": "سهل", "question": "ما حكم إقامة الرجل من مجلسه ثم الجلوس فيه؟", "answer": "لا يجوز؛ نهى النبي ﷺ عن أن يُقيم الرجل أخاه من مجلسه ثم يجلس فيه، بل يُقال: تفسَّحوا وتوسَّعوا.", "explanation": "من آداب المجالس احترام من سبق إلى مكانه، والأمر بالتوسع بدل إخراج الجالس.", "reference": "رواه البخاري (6270) ومسلم (2177) من حديث ابن عمر رضي الله عنهما" },
+  { "id": "demo-quiz-953", "section": "الآداب والأخلاق", "category": "آداب الطريق", "level": "متوسط", "question": "ما حق الطريق الذي أمر النبي ﷺ بأدائه عند الجلوس على الطرقات؟", "answer": "غض البصر، وكف الأذى، ورد السلام، والأمر بالمعروف والنهي عن المنكر.", "explanation": "لما قال الصحابة: ما لنا بدّ من مجالسنا نتحدث فيها، قال ﷺ: «فإذا أبيتم إلا المجلس فأعطوا الطريق حقه» فذكروا هذه الحقوق.", "reference": "رواه البخاري (2465) ومسلم (2121) من حديث أبي سعيد الخدري رضي الله عنه" },
   { "id": "demo-quiz-954", "section": "الحج والعمرة", "category": "أركان الحج", "level": "متوسط", "question": "ما أركان الحج الأربعة عند جمهور الفقهاء؟", "answer": "الإحرام، والوقوف بعرفة، وطواف الإفاضة، والسعي بين الصفا والمروة.", "explanation": "هذه الأركان الأربعة لا يصح الحج بدونها ولا يُجبَر تركها بدم. ملاحظة: الحنفية يرون أن الأركان اثنان فقط (الوقوف بعرفة وطواف الإفاضة) ويعدّون الإحرام شرطاً والسعي واجباً لا ركناً — خلاف فقهي معروف بين المذاهب.", "reference": "الفقه على المذاهب الأربعة — عبد الرحمن الجزيري" },
   { "id": "demo-quiz-955", "section": "الحج والعمرة", "category": "محظورات الإحرام", "level": "متوسط", "question": "اذكر ثلاثة من محظورات الإحرام العامة (المشتركة بين الرجل والمرأة).", "answer": "تقليم الأظفار، وإزالة الشعر، والتطيب، وقتل الصيد البري، وعقد النكاح.", "explanation": "محظورات الإحرام أحد عشر محظوراً، بعضها خاص بالرجل (كتغطية الرأس ولبس المخيط) وبعضها خاص بالمرأة (كتغطية الوجه والكفين)، وبعضها مشترك بين الجميع كالمذكور في الإجابة.", "reference": "الفقه الإسلامي وأدلته — وهبة الزحيلي، كتاب الحج" },
   { "id": "demo-quiz-956", "section": "الحج والعمرة", "category": "الفرق بين الحج والعمرة", "level": "سهل", "question": "ما الفرق الرئيسي بين الحج والعمرة من حيث الزمن والأركان؟", "answer": "الحج له وقت محدد (أشهر الحج، ويجب أداؤه في أيام معينة من ذي الحجة) وله أركان إضافية كالوقوف بعرفة، بينما العمرة تصح في أي وقت من العام وأركانها أقل (الإحرام والطواف والسعي والحلق أو التقصير).", "explanation": "لذلك تُسمى العمرة أحياناً بـ«الحج الأصغر»، وكلاهما عبادة مستقلة لهما نفس الميقات المكاني لكن يختلفان في الزمن والأركان.", "reference": "الفقه الإسلامي وأدلته — وهبة الزحيلي، كتاب الحج والعمرة" },
-  { "id": "demo-quiz-957", "section": "الأنبياء والرسل", "category": "أولو العزم", "level": "سهل", "question": "من هم أولو العزم من الرسل الخمسة؟", "answer": "نوح، وإبراهيم، وموسى، وعيسى، ومحمد صلى الله عليهم وسلم.", "explanation": "سُمّوا أولي العزم لعظيم صبرهم وثباتهم على الدعوة رغم شدة الأذى الذي لاقوه من أقوامهم. قال تعالى: ﴿فَٱصْبِرْ كَمَا صَبَرَ أُو۟لُوا۟ ٱلْعَزْمِ مِنَ ٱلرُّسُلِ﴾.", "reference": "سورة الأحقاف: 35" },
-  { "id": "demo-quiz-958", "section": "الأنبياء والرسل", "category": "قصص الأنبياء", "level": "متوسط", "question": "ما معجزة سيدنا صالح عليه السلام التي أرسلها الله لقومه ثمود؟", "answer": "الناقة، التي أخرجها الله له من صخرة بمعجزة خاصة، وأمر قومه بعدم إيذائها وإعطائها نصيبها من الماء.", "explanation": "لما عقروا الناقة عصياناً لأمر نبيهم، أخذهم الله بصيحة أهلكتهم جميعاً إلا صالحاً ومن آمن معه.", "reference": "سورة الأعراف: 73-79، وسورة الشمس: 11-14" },
-  { "id": "demo-quiz-959", "section": "الأنبياء والرسل", "category": "قصص الأنبياء", "level": "سهل", "question": "كم المدة التي مكثها نبي الله نوح عليه السلام يدعو قومه كما وردت في القرآن الكريم؟", "answer": "ألف سنة إلا خمسين عاماً (950 سنة).", "explanation": "قال تعالى: ﴿وَلَقَدْ أَرْسَلْنَا نُوحًا إِلَىٰ قَوْمِهِۦ فَلَبِثَ فِيهِمْ أَلْفَ سَنَةٍ إِلَّا خَمْسِينَ عَامًا فَأَخَذَهُمُ ٱلطُّوفَانُ وَهُمْ ظَٰلِمُونَ﴾ — وهذه أطول مدة دعوة مذكورة لنبي في القرآن الكريم.", "reference": "سورة العنكبوت: 14" },
+  { "id": "demo-quiz-957", "section": "الأنبياء", "category": "أولو العزم", "level": "سهل", "question": "من هم أولو العزم من الرسل الخمسة؟", "answer": "نوح، وإبراهيم، وموسى، وعيسى، ومحمد صلى الله عليهم وسلم.", "explanation": "سُمّوا أولي العزم لعظيم صبرهم وثباتهم على الدعوة رغم شدة الأذى الذي لاقوه من أقوامهم. قال تعالى: ﴿فَٱصْبِرْ كَمَا صَبَرَ أُو۟لُوا۟ ٱلْعَزْمِ مِنَ ٱلرُّسُلِ﴾.", "reference": "سورة الأحقاف: 35" },
+  { "id": "demo-quiz-958", "section": "الأنبياء", "category": "قصص الأنبياء", "level": "متوسط", "question": "ما معجزة سيدنا صالح عليه السلام التي أرسلها الله لقومه ثمود؟", "answer": "الناقة، التي أخرجها الله له من صخرة بمعجزة خاصة، وأمر قومه بعدم إيذائها وإعطائها نصيبها من الماء.", "explanation": "لما عقروا الناقة عصياناً لأمر نبيهم، أخذهم الله بصيحة أهلكتهم جميعاً إلا صالحاً ومن آمن معه.", "reference": "سورة الأعراف: 73-79، وسورة الشمس: 11-14" },
+  { "id": "demo-quiz-959", "section": "الأنبياء", "category": "قصص الأنبياء", "level": "سهل", "question": "كم المدة التي مكثها نبي الله نوح عليه السلام يدعو قومه كما وردت في القرآن الكريم؟", "answer": "ألف سنة إلا خمسين عاماً (950 سنة).", "explanation": "قال تعالى: ﴿وَلَقَدْ أَرْسَلْنَا نُوحًا إِلَىٰ قَوْمِهِۦ فَلَبِثَ فِيهِمْ أَلْفَ سَنَةٍ إِلَّا خَمْسِينَ عَامًا فَأَخَذَهُمُ ٱلطُّوفَانُ وَهُمْ ظَٰلِمُونَ﴾ — وهذه أطول مدة دعوة مذكورة لنبي في القرآن الكريم.", "reference": "سورة العنكبوت: 14" },
   { "id": "demo-quiz-960", "section": "الفرائض والمواريث", "category": "الفروض المقدرة", "level": "صعب", "question": "ما الفروض الستة المقدَّرة في علم المواريث؟", "answer": "النصف، والربع، والثمن، والثلثان، والثلث، والسدس.", "explanation": "هذه هي الأنصبة الستة التي حدَّدها الشرع لأصحاب الفروض (كالزوج والزوجة والأبناء والوالدين)، ولكل صنف من الورثة نصيب من هذه الفروض حسب حالته وقربه من المتوفى ووجود أو عدم وجود ورثة آخرين معه.", "reference": "الفقه الإسلامي وأدلته — وهبة الزحيلي، كتاب الفرائض" },
   { "id": "demo-quiz-961", "section": "الفرائض والمواريث", "category": "ميراث الزوجة", "level": "متوسط", "question": "كم نصيب الزوجة من ميراث زوجها إن كان له منها أو من غيرها أولاد؟", "answer": "الثُّمن.", "explanation": "أما إن لم يكن للزوج أولاد فنصيب الزوجة يرتفع إلى الرُّبع. قال تعالى: ﴿وَلَهُنَّ ٱلرُّبُعُ مِمَّا تَرَكْتُمْ إِن لَّمْ يَكُن لَّكُمْ وَلَدٌ ۚ فَإِن كَانَ لَكُمْ وَلَدٌ فَلَهُنَّ ٱلثُّمُنُ مِمَّا تَرَكْتُم﴾.", "reference": "سورة النساء: 12" },
   { "id": "demo-quiz-962", "section": "الفرائض والمواريث", "category": "العول", "level": "صعب", "question": "ما المقصود بـ«العول» في علم الفرائض؟", "answer": "زيادة مجموع أنصبة أصحاب الفروض عن أصل التركة (أي تتجاوز سهامهم مجموع المال)، فيُنقَص نصيب كل وارث بنسبة متساوية ليتساوى المجموع مع أصل التركة.", "explanation": "أول من قضى بالعول هو الخليفة عمر بن الخطاب رضي الله عنه حين اجتمع عنده فرضيّون في مسألة زادت فيها الفروض عن التركة، فاستشار الصحابة وقضى بالعول.", "reference": "الفقه الإسلامي وأدلته — وهبة الزحيلي، كتاب الفرائض (باب العول)" },
@@ -7205,21 +7140,21 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   { "id": "demo-quiz-966", "section": "الأذكار والأدعية", "category": "أذكار الصلاة", "level": "سهل", "question": "ماذا يُشرع للمصلي أن يقول عقب السلام من الصلاة المكتوبة (أول الأذكار)؟", "answer": "أستغفر الله (ثلاثاً)، ثم: اللهم أنت السلام ومنك السلام تباركت يا ذا الجلال والإكرام.", "explanation": "هذا أول ما يُبدَأ به من أذكار ما بعد الصلاة المكتوبة، ثم تتلوه بقية الأذكار المعروفة (التسبيح والتحميد والتكبير، وآية الكرسي، والمعوذات).", "reference": "رواه مسلم (591) من حديث ثوبان رضي الله عنه" },
   { "id": "demo-quiz-967", "section": "الأذكار والأدعية", "category": "فضل الاستغفار", "level": "متوسط", "question": "ما الأثران اللذان وعد الله بهما من لازم الاستغفار كما في سورة نوح؟", "answer": "إرسال المطر (الغيث) عليهم مدراراً، وإمدادهم بالأموال والبنين.", "explanation": "قال تعالى على لسان نوح عليه السلام: ﴿فَقُلْتُ ٱسْتَغْفِرُوا۟ رَبَّكُمْ إِنَّهُۥ كَانَ غَفَّارًا * يُرْسِلِ ٱلسَّمَآءَ عَلَيْكُم مِّدْرَارًا * وَيُمْدِدْكُم بِأَمْوَٰلٍ وَبَنِينَ وَيَجْعَل لَّكُمْ جَنَّٰتٍ وَيَجْعَل لَّكُمْ أَنْهَٰرًا﴾.", "reference": "سورة نوح: 10-12" },
   { "id": "demo-quiz-968", "section": "الأذكار والأدعية", "category": "أذكار الصباح والمساء", "level": "سهل", "question": "لماذا شُرعت أذكار الصباح والمساء تحديداً في هذين الوقتين؟", "answer": "لأنهما وقتا تبدُّل الحراسة الملائكية وبداية يوم جديد أو ليلة جديدة، ولحاجة العبد للاستعانة بالله وحفظه في مطلع النهار ومطلع الليل من شرور الجن والإنس وآفات النفس.", "explanation": "وردت أحاديث كثيرة صحيحة في فضل المحافظة على أذكار الصباح والمساء وأنها حرز للعبد من الآفات والمكاره بإذن الله طوال يومه أو ليلته.", "reference": "الأذكار النووية — الإمام النووي، باب أذكار الصباح والمساء" },
-  { "id": "demo-quiz-969", "section": "الحديث النبوي", "category": "مصطلح الحديث", "level": "متوسط", "question": "ما شروط الحديث الصحيح الخمسة عند علماء الحديث؟", "answer": "اتصال السند، وعدالة الرواة، وتمام ضبطهم، والسلامة من الشذوذ، والسلامة من العلة القادحة.", "explanation": "إذا اختل شرط واحد من هذه الشروط الخمسة خرج الحديث من رتبة الصحيح إلى مرتبة أدنى (حسن أو ضعيف) بحسب الشرط المختل وشدة الخلل فيه.", "reference": "نخبة الفكر في مصطلح أهل الأثر — ابن حجر العسقلاني" },
-  { "id": "demo-quiz-970", "section": "الحديث النبوي", "category": "مصطلح الحديث", "level": "صعب", "question": "ما تعريف الحديث المتواتر؟ وما حكمه من حيث القبول؟", "answer": "هو ما رواه جمع كثير عن جمع كثير يستحيل عادةً تواطؤهم على الكذب، في كل طبقات السند، عن شيء محسوس. حكمه: يفيد العلم اليقيني القطعي، ولا يُبحث في عدالة رواته لكثرتهم.", "explanation": "المتواتر أعلى مراتب الحديث من حيث القبول، ويقابله خبر الآحاد (ما لم يبلغ حد التواتر) الذي يفيد الظن الغالب لا اليقين القطعي عند جمهور الأصوليين، وإن كان العمل به واجباً إذا صح.", "reference": "نزهة النظر شرح نخبة الفكر — ابن حجر العسقلاني" },
-  { "id": "demo-quiz-971", "section": "الحديث النبوي", "category": "أول التصنيف", "level": "صعب", "question": "ما أول كتاب حديثي مُصنَّف على الأبواب الفقهية وصل إلينا كاملاً؟", "answer": "الموطأ للإمام مالك بن أنس.", "explanation": "سبق تصنيف مالك للموطأ تصنيف صحيح البخاري بأكثر من قرن ونصف؛ ولذلك يُعدّ الموطأ من أقدم وأوثق المصنفات الحديثية الفقهية التي وصلت إلينا كاملة، وقد وصفه الإمام الشافعي بأنه أصح كتاب بعد كتاب الله في زمانه (قبل ظهور الصحيحين).", "reference": "موطأ الإمام مالك — مقدمة التحقيق، وسير أعلام النبلاء للذهبي" },
+  { "id": "demo-quiz-969", "section": "الحديث", "category": "مصطلح الحديث", "level": "متوسط", "question": "ما شروط الحديث الصحيح الخمسة عند علماء الحديث؟", "answer": "اتصال السند، وعدالة الرواة، وتمام ضبطهم، والسلامة من الشذوذ، والسلامة من العلة القادحة.", "explanation": "إذا اختل شرط واحد من هذه الشروط الخمسة خرج الحديث من رتبة الصحيح إلى مرتبة أدنى (حسن أو ضعيف) بحسب الشرط المختل وشدة الخلل فيه.", "reference": "نخبة الفكر في مصطلح أهل الأثر — ابن حجر العسقلاني" },
+  { "id": "demo-quiz-970", "section": "الحديث", "category": "مصطلح الحديث", "level": "صعب", "question": "ما تعريف الحديث المتواتر؟ وما حكمه من حيث القبول؟", "answer": "هو ما رواه جمع كثير عن جمع كثير يستحيل عادةً تواطؤهم على الكذب، في كل طبقات السند، عن شيء محسوس. حكمه: يفيد العلم اليقيني القطعي، ولا يُبحث في عدالة رواته لكثرتهم.", "explanation": "المتواتر أعلى مراتب الحديث من حيث القبول، ويقابله خبر الآحاد (ما لم يبلغ حد التواتر) الذي يفيد الظن الغالب لا اليقين القطعي عند جمهور الأصوليين، وإن كان العمل به واجباً إذا صح.", "reference": "نزهة النظر شرح نخبة الفكر — ابن حجر العسقلاني" },
+  { "id": "demo-quiz-971", "section": "الحديث", "category": "أول التصنيف", "level": "صعب", "question": "ما أول كتاب حديثي مُصنَّف على الأبواب الفقهية وصل إلينا كاملاً؟", "answer": "الموطأ للإمام مالك بن أنس.", "explanation": "سبق تصنيف مالك للموطأ تصنيف صحيح البخاري بأكثر من قرن ونصف؛ ولذلك يُعدّ الموطأ من أقدم وأوثق المصنفات الحديثية الفقهية التي وصلت إلينا كاملة، وقد وصفه الإمام الشافعي بأنه أصح كتاب بعد كتاب الله في زمانه (قبل ظهور الصحيحين).", "reference": "موطأ الإمام مالك — مقدمة التحقيق، وسير أعلام النبلاء للذهبي" },
 
   // ── دفعة توسيع Phase 9 الثالثة (2026-07-18) — استهدفت أرقّ خلية فعلية
   // في اللعبة الحية (مستوى "صعب" لفئتي sira وanbiya بعد فحص SECTION_TO_
   // CATEGORY في islamicQuizData.ts، لا فحص section الخام فقط) ──────────
-  { "id": "demo-quiz-972", "section": "السيرة النبوية", "category": "الرضاعة", "level": "صعب", "question": "من أول من أرضع النبي ﷺ قبل حليمة السعدية؟", "answer": "ثويبة مولاة أبي لهب، أرضعته أياماً قليلة بلبن ابنها مسروح قبل قدوم حليمة السعدية.", "explanation": "أرضعت ثويبة مع النبي ﷺ عمّه حمزة بن عبد المطلب وأبا سلمة بن عبد الأسد المخزومي فصاروا إخوته من الرضاعة؛ ثم أكملت حليمة السعدية رضاعته بلبن ابنها عبد الله.", "reference": "الرحيق المختوم — صفي الرحمن المباركفوري" },
-  { "id": "demo-quiz-973", "section": "السيرة النبوية", "category": "الحصار والمقاطعة", "level": "صعب", "question": "من الذي كتب صحيفة مقاطعة قريش لبني هاشم وبني المطلب، وماذا أصابه بدعوة النبي ﷺ؟", "answer": "كتبها منصور بن عكرمة العبدري، فدعا عليه النبي ﷺ فشلَّت يده (أصابعه).", "explanation": "عُلِّقت الصحيفة في جوف الكعبة، وحين انتهت المقاطعة بعد نحو ثلاث سنوات وُجدت قد أكلتها الأرضة ولم يبقَ فيها إلا اسم الله تعالى.", "reference": "الرحيق المختوم — صفي الرحمن المباركفوري؛ البداية والنهاية — ابن كثير" },
-  { "id": "demo-quiz-974", "section": "السيرة النبوية", "category": "الهجرة إلى الحبشة", "level": "صعب", "question": "كم كان عدد المهاجرين في الهجرة الأولى إلى الحبشة، ومتى كانت؟", "answer": "أحد عشر رجلاً وأربع نسوة على أشهر الروايات، في رجب من السنة الخامسة من البعثة، بقيادة عثمان بن مظعون رضي الله عنه.", "explanation": "أشار النبي ﷺ على ضعفاء المسلمين بالهجرة إلى الحبشة لوجود ملك عادل هناك (النجاشي) لا يُظلم عنده أحد.", "reference": "الرحيق المختوم — صفي الرحمن المباركفوري، فصل الهجرة إلى الحبشة" },
-  { "id": "demo-quiz-975", "section": "السيرة النبوية", "category": "شعب أبي طالب", "level": "صعب", "question": "في أي سنة من البعثة النبوية خرج بنو هاشم وبنو المطلب من شعب أبي طالب بعد انتهاء المقاطعة؟", "answer": "السنة العاشرة من البعثة.", "explanation": "استمر الحصار نحو ثلاث سنوات، وتُوفيت في هذه السنة أيضاً خديجة رضي الله عنها وأبو طالب، فسُمِّيت «عام الحزن».", "reference": "البداية والنهاية — ابن كثير؛ الرحيق المختوم — المباركفوري" },
-  { "id": "demo-quiz-976", "section": "الأنبياء والرسل", "category": "شعيب عليه السلام", "level": "صعب", "question": "هل نبي الله شعيب عليه السلام هو نفسه صهر موسى عليه السلام الذي زوّجه إحدى ابنتيه في مدين؟", "answer": "هذا قول مشهور غير محقَّق؛ رجّح محققون من أهل العلم (منهم ابن تيمية وابن القيم والسعدي) أنهما شخصان مختلفان.", "explanation": "القرآن لم يُسمِّ صهر موسى في قصة مدين، والربط بينه وبين شعيب اجتهاد من بعض المفسرين المتقدمين لا نص قطعي، والراجح عند المحققين أنهما غير متعاصرَين.", "reference": "تفسير السعدي، سورة القصص" },
-  { "id": "demo-quiz-977", "section": "الأنبياء والرسل", "category": "إدريس عليه السلام", "level": "صعب", "question": "إلى أي سماء رُفع نبي الله إدريس عليه السلام كما ثبت في حديث الإسراء والمعراج؟", "answer": "السماء الرابعة.", "explanation": "رآه النبي ﷺ فيها ليلة الإسراء والمعراج كما في الحديث الصحيح، وهذا ما رجّحه ابن كثير في تفسيره لقوله تعالى: ﴿وَرَفَعْنَٰهُ مَكَانًا عَلِيًّا﴾.", "reference": "سورة مريم: 57؛ تفسير ابن كثير؛ صحيح البخاري ومسلم (حديث الإسراء)" },
-  { "id": "demo-quiz-978", "section": "الأنبياء والرسل", "category": "يونس عليه السلام", "level": "صعب", "question": "كم المدة الدقيقة التي بقيها نبي الله يونس عليه السلام في بطن الحوت كما وردت في القرآن الكريم؟", "answer": "لم يرد نص قرآني أو حديث نبوي صحيح يحدد مدة زمنية دقيقة؛ اختلف المفسرون فيها اختلافاً واسعاً من بضع ساعات إلى أربعين يوماً، فلا يصح الجزم برقم معين.", "explanation": "الثابت قرآنياً هو المعنى لا العدد: أن الله أنجاه بعد أن نادى في الظلمات: ﴿لَّآ إِلَٰهَ إِلَّآ أَنتَ سُبْحَٰنَكَ إِنِّى كُنتُ مِنَ ٱلظَّٰلِمِينَ﴾.", "reference": "سورة الأنبياء: 87" },
-  { "id": "demo-quiz-979", "section": "الأنبياء والرسل", "category": "شعيب عليه السلام", "level": "صعب", "question": "ما اسم القوم الذين أُرسل إليهم نبي الله شعيب عليه السلام؟", "answer": "قوم مدين، ويُذكرون في بعض الآيات أيضاً بـ«أصحاب الأيكة».", "explanation": "أهلكهم الله بصيحة وبعذاب يوم الظلة بعد تكذيبهم لشعيب عليه السلام وبخسهم الكيل والميزان.", "reference": "سورة الأعراف: 85؛ سورة الشعراء: 176-189" },
+  { "id": "demo-quiz-972", "section": "السيرة", "category": "الرضاعة", "level": "صعب", "question": "من أول من أرضع النبي ﷺ قبل حليمة السعدية؟", "answer": "ثويبة مولاة أبي لهب، أرضعته أياماً قليلة بلبن ابنها مسروح قبل قدوم حليمة السعدية.", "explanation": "أرضعت ثويبة مع النبي ﷺ عمّه حمزة بن عبد المطلب وأبا سلمة بن عبد الأسد المخزومي فصاروا إخوته من الرضاعة؛ ثم أكملت حليمة السعدية رضاعته بلبن ابنها عبد الله.", "reference": "الرحيق المختوم — صفي الرحمن المباركفوري" },
+  { "id": "demo-quiz-973", "section": "السيرة", "category": "الحصار والمقاطعة", "level": "صعب", "question": "من الذي كتب صحيفة مقاطعة قريش لبني هاشم وبني المطلب، وماذا أصابه بدعوة النبي ﷺ؟", "answer": "كتبها منصور بن عكرمة العبدري، فدعا عليه النبي ﷺ فشلَّت يده (أصابعه).", "explanation": "عُلِّقت الصحيفة في جوف الكعبة، وحين انتهت المقاطعة بعد نحو ثلاث سنوات وُجدت قد أكلتها الأرضة ولم يبقَ فيها إلا اسم الله تعالى.", "reference": "الرحيق المختوم — صفي الرحمن المباركفوري؛ البداية والنهاية — ابن كثير" },
+  { "id": "demo-quiz-974", "section": "السيرة", "category": "الهجرة إلى الحبشة", "level": "صعب", "question": "كم كان عدد المهاجرين في الهجرة الأولى إلى الحبشة، ومتى كانت؟", "answer": "أحد عشر رجلاً وأربع نسوة على أشهر الروايات، في رجب من السنة الخامسة من البعثة، بقيادة عثمان بن مظعون رضي الله عنه.", "explanation": "أشار النبي ﷺ على ضعفاء المسلمين بالهجرة إلى الحبشة لوجود ملك عادل هناك (النجاشي) لا يُظلم عنده أحد.", "reference": "الرحيق المختوم — صفي الرحمن المباركفوري، فصل الهجرة إلى الحبشة" },
+  { "id": "demo-quiz-975", "section": "السيرة", "category": "شعب أبي طالب", "level": "صعب", "question": "في أي سنة من البعثة النبوية خرج بنو هاشم وبنو المطلب من شعب أبي طالب بعد انتهاء المقاطعة؟", "answer": "السنة العاشرة من البعثة.", "explanation": "استمر الحصار نحو ثلاث سنوات، وتُوفيت في هذه السنة أيضاً خديجة رضي الله عنها وأبو طالب، فسُمِّيت «عام الحزن».", "reference": "البداية والنهاية — ابن كثير؛ الرحيق المختوم — المباركفوري" },
+  { "id": "demo-quiz-976", "section": "الأنبياء", "category": "شعيب عليه السلام", "level": "صعب", "question": "هل نبي الله شعيب عليه السلام هو نفسه صهر موسى عليه السلام الذي زوّجه إحدى ابنتيه في مدين؟", "answer": "هذا قول مشهور غير محقَّق؛ رجّح محققون من أهل العلم (منهم ابن تيمية وابن القيم والسعدي) أنهما شخصان مختلفان.", "explanation": "القرآن لم يُسمِّ صهر موسى في قصة مدين، والربط بينه وبين شعيب اجتهاد من بعض المفسرين المتقدمين لا نص قطعي، والراجح عند المحققين أنهما غير متعاصرَين.", "reference": "تفسير السعدي، سورة القصص" },
+  { "id": "demo-quiz-977", "section": "الأنبياء", "category": "إدريس عليه السلام", "level": "صعب", "question": "إلى أي سماء رُفع نبي الله إدريس عليه السلام كما ثبت في حديث الإسراء والمعراج؟", "answer": "السماء الرابعة.", "explanation": "رآه النبي ﷺ فيها ليلة الإسراء والمعراج كما في الحديث الصحيح، وهذا ما رجّحه ابن كثير في تفسيره لقوله تعالى: ﴿وَرَفَعْنَٰهُ مَكَانًا عَلِيًّا﴾.", "reference": "سورة مريم: 57؛ تفسير ابن كثير؛ صحيح البخاري ومسلم (حديث الإسراء)" },
+  { "id": "demo-quiz-978", "section": "الأنبياء", "category": "يونس عليه السلام", "level": "صعب", "question": "كم المدة الدقيقة التي بقيها نبي الله يونس عليه السلام في بطن الحوت كما وردت في القرآن الكريم؟", "answer": "لم يرد نص قرآني أو حديث نبوي صحيح يحدد مدة زمنية دقيقة؛ اختلف المفسرون فيها اختلافاً واسعاً من بضع ساعات إلى أربعين يوماً، فلا يصح الجزم برقم معين.", "explanation": "الثابت قرآنياً هو المعنى لا العدد: أن الله أنجاه بعد أن نادى في الظلمات: ﴿لَّآ إِلَٰهَ إِلَّآ أَنتَ سُبْحَٰنَكَ إِنِّى كُنتُ مِنَ ٱلظَّٰلِمِينَ﴾.", "reference": "سورة الأنبياء: 87" },
+  { "id": "demo-quiz-979", "section": "الأنبياء", "category": "شعيب عليه السلام", "level": "صعب", "question": "ما اسم القوم الذين أُرسل إليهم نبي الله شعيب عليه السلام؟", "answer": "قوم مدين، ويُذكرون في بعض الآيات أيضاً بـ«أصحاب الأيكة».", "explanation": "أهلكهم الله بصيحة وبعذاب يوم الظلة بعد تكذيبهم لشعيب عليه السلام وبخسهم الكيل والميزان.", "reference": "سورة الأعراف: 85؛ سورة الشعراء: 176-189" },
 
   // ── دفعة توسيع Phase 9 الرابعة (2026-07-18) — استهدفت أرقّ خلية فعلية
   // حية بعد إصلاح مزامنة quiz_questions هذه الجلسة (فحص مباشر عبر DB:
@@ -7290,14 +7225,67 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   { "id": "demo-quiz-1008", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "متوسط", "question": "في أي ثلاثة أشياء حصر النبي ﷺ الشفاء كما ورد في الحديث الصحيح؟", "answer": "«شرطة محجم» (الحجامة)، و«شربة عسل»، و«كيَّة بنار» (الكي، مع كراهته لها).", "explanation": "عن ابن عباس رضي الله عنهما: «الشفاء في ثلاثة: في شرطة محجم، أو شربة عسل، أو كيَّة بنار، وأنا أنهى أمتي عن الكي» — رواه البخاري، كتاب الطب (حديث 5680-5681).", "reference": "صحيح البخاري، حديث 5680-5681" },
   { "id": "demo-quiz-1009", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "سهل", "question": "بم وصف النبي ﷺ الحمى، وبم أمر لعلاجها؟", "answer": "وصفها بأنها «من فيح جهنم»، وأمر بتبريدها بالماء.", "explanation": "عن النبي ﷺ: «الحمى من فيح جهنم، فأبردوها بالماء» — رواه البخاري، كتاب الطب (حديث 5726).", "reference": "صحيح البخاري، حديث 5726" },
   { "id": "demo-quiz-1010", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "صعب", "question": "ماذا أمر النبي ﷺ من وقع الذباب في إنائه أن يفعل؟", "answer": "أن يغمس الذباب كله في الإناء ثم يطرحه، لأن في أحد جناحيه داء وفي الآخر شفاء.", "explanation": "عن أبي هريرة رضي الله عنه: «إذا وقع الذباب في إناء أحدكم فليغمسه كله، ثم ليطرحه، فإن في أحد جناحيه شفاء وفي الآخر داء» — رواه البخاري، كتاب الطب (حديث 5782).", "reference": "صحيح البخاري، حديث 5782" },
-  { "id": "demo-quiz-1011", "section": "الجغرافيا الإسلامية", "category": "المعالم المقدسة", "level": "متوسط", "question": "أين يقع الجبل الذي فيه غار حراء الذي بدأ فيه الوحي على النبي ﷺ؟", "answer": "جبل النور، بالقرب من مكة المكرمة.", "explanation": "كان النبي ﷺ يتعبد في غار حراء بجبل النور قبل البعثة، وفيه نزل عليه الوحي أول مرة بقوله تعالى: ﴿اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ﴾.", "reference": "سورة العلق: 1؛ كتب السيرة النبوية" },
-  { "id": "demo-quiz-1012", "section": "الجغرافيا الإسلامية", "category": "المعالم المقدسة", "level": "متوسط", "question": "في أي جبل اختبأ النبي ﷺ وأبو بكر الصديق رضي الله عنه أثناء الهجرة إلى المدينة؟", "answer": "جبل ثور، جنوب مكة المكرمة (عكس اتجاه المدينة، تمويهاً على المشركين).", "explanation": "مكثا في غار ثور ثلاث ليالٍ حتى هدأ الطلب، ثم انطلقا إلى المدينة المنورة، وفي ذلك نزل قوله تعالى: ﴿إِذْ هُمَا فِي الْغَارِ إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا﴾.", "reference": "سورة التوبة: 40؛ كتب السيرة النبوية" },
-  { "id": "demo-quiz-1013", "section": "الجغرافيا الإسلامية", "category": "المعالم المقدسة", "level": "صعب", "question": "ما هي أول قبلة صلَّى إليها المسلمون قبل تحويل القبلة إلى الكعبة؟", "answer": "بيت المقدس (المسجد الأقصى) في القدس.", "explanation": "صلَّى المسلمون إلى بيت المقدس نحو 16-17 شهراً بعد الهجرة، ثم حُوِّلت القبلة إلى الكعبة المشرَّفة بمكة بأمر إلهي، لقوله تعالى: ﴿فَوَلِّ وَجْهَكَ شَطْرَ الْمَسْجِدِ الْحَرَامِ﴾.", "reference": "سورة البقرة: 144" },
-  { "id": "demo-quiz-1014", "section": "الجغرافيا الإسلامية", "category": "التضاريس", "level": "سهل", "question": "في أي شبه جزيرة تقع مكة المكرمة والمدينة المنورة؟", "answer": "شبه الجزيرة العربية.", "explanation": "تقع مكة والمدينة في منطقة الحجاز غرب شبه الجزيرة العربية، وهي منطقة جبلية تطل على البحر الأحمر، وتُعَدُّ مهد الإسلام ومهبط الوحي.", "reference": "جغرافيا الجزيرة العربية — معرفة عامة" },
+  { "id": "demo-quiz-1011", "section": "التاريخ الإسلامي", "category": "المعالم المقدسة", "level": "متوسط", "question": "أين يقع الجبل الذي فيه غار حراء الذي بدأ فيه الوحي على النبي ﷺ؟", "answer": "جبل النور، بالقرب من مكة المكرمة.", "explanation": "كان النبي ﷺ يتعبد في غار حراء بجبل النور قبل البعثة، وفيه نزل عليه الوحي أول مرة بقوله تعالى: ﴿اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ﴾.", "reference": "سورة العلق: 1؛ كتب السيرة النبوية" },
+  { "id": "demo-quiz-1012", "section": "التاريخ الإسلامي", "category": "المعالم المقدسة", "level": "متوسط", "question": "في أي جبل اختبأ النبي ﷺ وأبو بكر الصديق رضي الله عنه أثناء الهجرة إلى المدينة؟", "answer": "جبل ثور، جنوب مكة المكرمة (عكس اتجاه المدينة، تمويهاً على المشركين).", "explanation": "مكثا في غار ثور ثلاث ليالٍ حتى هدأ الطلب، ثم انطلقا إلى المدينة المنورة، وفي ذلك نزل قوله تعالى: ﴿إِذْ هُمَا فِي الْغَارِ إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا﴾.", "reference": "سورة التوبة: 40؛ كتب السيرة النبوية" },
+  { "id": "demo-quiz-1013", "section": "التاريخ الإسلامي", "category": "المعالم المقدسة", "level": "صعب", "question": "ما هي أول قبلة صلَّى إليها المسلمون قبل تحويل القبلة إلى الكعبة؟", "answer": "بيت المقدس (المسجد الأقصى) في القدس.", "explanation": "صلَّى المسلمون إلى بيت المقدس نحو 16-17 شهراً بعد الهجرة، ثم حُوِّلت القبلة إلى الكعبة المشرَّفة بمكة بأمر إلهي، لقوله تعالى: ﴿فَوَلِّ وَجْهَكَ شَطْرَ الْمَسْجِدِ الْحَرَامِ﴾.", "reference": "سورة البقرة: 144" },
+  { "id": "demo-quiz-1014", "section": "التاريخ الإسلامي", "category": "التضاريس", "level": "سهل", "question": "في أي شبه جزيرة تقع مكة المكرمة والمدينة المنورة؟", "answer": "شبه الجزيرة العربية.", "explanation": "تقع مكة والمدينة في منطقة الحجاز غرب شبه الجزيرة العربية، وهي منطقة جبلية تطل على البحر الأحمر، وتُعَدُّ مهد الإسلام ومهبط الوحي.", "reference": "جغرافيا الجزيرة العربية — معرفة عامة" },
   { "id": "demo-quiz-1015", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "متوسط", "question": "بم وصف النبي ﷺ الحجامة في الحديث الصحيح؟", "answer": "بأنها خير ما يُتداوى به.", "explanation": "عن ابن عباس رضي الله عنهما مرفوعاً: «إن كان في شيء مما تداووا به خيرٌ فالحجامة» — رواه أبو داود (3857) وابن ماجه (3476).", "reference": "سنن أبي داود، حديث 3857؛ سنن ابن ماجه، حديث 3476" },
   { "id": "demo-quiz-1016", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "سهل", "question": "بم أمر النبي ﷺ أمته في السواك، وما الحكمة التي بيّنها لولا خشية المشقة عليهم؟", "answer": "أمر بالسواك عند كل صلاة، وبيّن أنه كان يأمرهم به وجوباً لولا خشية المشقة عليهم.", "explanation": "عن أبي هريرة رضي الله عنه مرفوعاً: «لولا أن أشقّ على أمتي لأمرتهم بالسواك عند كل صلاة» — رواه البخاري (887) ومسلم (252).", "reference": "صحيح البخاري، حديث 887؛ صحيح مسلم، حديث 252" },
   { "id": "demo-quiz-1017", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "متوسط", "question": "كم تمرة أوصى النبي ﷺ بتناولها صباحاً من تمر العجوة، وما الفائدة التي ذكرها؟", "answer": "سبع تمرات، وذكر أنها تقي متناولها في ذلك اليوم من السم والسحر.", "explanation": "عن سعد بن أبي وقاص رضي الله عنه مرفوعاً: «من تصبَّح بسبع تمرات عَجوة لم يضرّه ذلك اليوم سُمٌّ ولا سِحر» — رواه البخاري (5445) ومسلم (2047).", "reference": "صحيح البخاري، حديث 5445؛ صحيح مسلم، حديث 2047" },
   { "id": "demo-quiz-1018", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "سهل", "question": "بم وصف النبي ﷺ زيت الزيتون في الحديث، وبماذا أمر فيه؟", "answer": "وصفه بأنه من شجرة مباركة، وأمر بأكله والادّهان به.", "explanation": "عن النبي ﷺ: «كلوا الزيت وادّهنوا به، فإنه من شجرة مباركة» — رواه الترمذي (1851) وابن ماجه (3319)، وصححه الألباني.", "reference": "سنن الترمذي، حديث 1851؛ سنن ابن ماجه، حديث 3319" },
   { "id": "demo-quiz-1019", "section": "الطب النبوي", "category": "أطعمة نبوية", "level": "متوسط", "question": "أي نبات ذكره القرآن الكريم ضمن وصف شراب أهل الجنة؟", "answer": "الزنجبيل.", "explanation": "قال تعالى: ﴿وَيُسْقَوْنَ فِيهَا كَأْسًا كَانَ مِزَاجُهَا زَنجَبِيلًا﴾ — سورة الإنسان: 17. وذكره ابن القيم في «زاد المعاد» ضمن الأغذية النافعة التي وردت بها السنة.", "reference": "سورة الإنسان: 17" },
-  { "id": "demo-quiz-1020", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "صعب", "question": "ما معنى قول النبي ﷺ «ماء زمزم لما شُرب له»؟", "answer": "أن ماء زمزم يُستشفى ويُستفاد به بحسب النية التي يشربه المرء من أجلها، فإن شربه للشفاء أو لقضاء حاجة رجا حصول ذلك بإذن الله.", "explanation": "رواه ابن ماجه (3062) وصححه الألباني بمجموع طرقه (صحيح لغيره). بيّن أهل العلم استحباب استحضار النية الصالحة عند شربه.", "reference": "سنن ابن ماجه، حديث 3062" }
+  { "id": "demo-quiz-1020", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "صعب", "question": "ما معنى قول النبي ﷺ «ماء زمزم لما شُرب له»؟", "answer": "أن ماء زمزم يُستشفى ويُستفاد به بحسب النية التي يشربه المرء من أجلها، فإن شربه للشفاء أو لقضاء حاجة رجا حصول ذلك بإذن الله.", "explanation": "رواه ابن ماجه (3062) وصححه الألباني بمجموع طرقه (صحيح لغيره). بيّن أهل العلم استحباب استحضار النية الصالحة عند شربه.", "reference": "سنن ابن ماجه، حديث 3062" },
+  {"id": "demo-quiz-1021", "section": "اللغة العربية", "category": "النحو", "level": "صعب", "question": "ما وجه رفع «الصابرون» في قوله تعالى: ﴿وَالْمُوفُونَ بِعَهْدِهِمْ إِذَا عَاهَدُوا وَالصَّابِرِينَ فِي الْبَأْسَاءِ﴾؟", "answer": "«الصابرين» منصوبة لا مرفوعة، على الاختصاص أو المدح، أي: وأخصُّ الصابرين.", "explanation": "وهو أسلوب عربي فصيح يُقطع فيه النعت عن المنعوت للنصب على المدح، ذكره سيبويه وأكثر المعربين.", "reference": "سورة البقرة: 177"},
+  {"id": "demo-quiz-1022", "section": "اللغة العربية", "category": "البلاغة", "level": "صعب", "question": "ما نوع المجاز في قوله تعالى: ﴿وَاسْأَلِ الْقَرْيَةَ﴾؟", "answer": "مجاز مرسل علاقته المحلية، أي: واسأل أهل القرية.", "explanation": "أُطلق المحل (القرية) وأُريد الحالّ فيه (أهلها)، وهو من أشهر أمثلة المجاز المرسل في كتب البلاغة.", "reference": "سورة يوسف: 82"},
+  {"id": "demo-quiz-1023", "section": "اللغة العربية", "category": "الصرف", "level": "متوسط", "question": "ما وزن كلمة «استغفر» في الميزان الصرفي؟", "answer": "استفعل.", "explanation": "الهمزة والسين والتاء زوائد، والأصول: غ ف ر، فوزنه استفعل، ويفيد الطلب."},
+  {"id": "demo-quiz-1024", "section": "اللغة العربية", "category": "النحو", "level": "متوسط", "question": "لماذا مُنع «مساجد» من الصرف؟", "answer": "لأنه على صيغة منتهى الجموع، وهي علة واحدة تقوم مقام علتين.", "explanation": "صيغ منتهى الجموع كمفاعل ومفاعيل ممنوعة من الصرف، فتُجرّ بالفتحة ما لم تُعرَّف أو تُضَف."},
+  {"id": "demo-quiz-1025", "section": "العلماء والأئمة", "category": "المحدثون", "level": "صعب", "question": "من صاحب كتاب «العلل» الذي يُعدّ من أدق ما صُنّف في علل الحديث الخفية؟", "answer": "الإمام علي بن المديني، وللدارقطني وابن أبي حاتم كتب في العلل كذلك.", "explanation": "قال البخاري: ما استصغرت نفسي عند أحد إلا عند علي بن المديني. وعلم العلل من أدق علوم الحديث وأعزّها."},
+  {"id": "demo-quiz-1026", "section": "العلماء والأئمة", "category": "الأصوليون", "level": "صعب", "question": "من مؤلف كتاب «الموافقات» الذي أرسى قواعد علم مقاصد الشريعة؟", "answer": "الإمام أبو إسحاق الشاطبي (ت 790 هـ).", "explanation": "جعل المقاصد قطعية مستقرأة من مجموع أدلة الشريعة لا من دليل مفرد، وهو أول من أفرد المقاصد بتصنيف منهجي مستقل."},
+  {"id": "demo-quiz-1027", "section": "العلماء والأئمة", "category": "المفسرون", "level": "متوسط", "question": "من مؤلف تفسير «التحرير والتنوير»؟", "answer": "الشيخ محمد الطاهر ابن عاشور التونسي (ت 1393 هـ).", "explanation": "من أوسع تفاسير القرن الرابع عشر الهجري، وله عناية ظاهرة بالمقاصد والبلاغة والمناسبات بين الآيات."},
+  {"id": "demo-quiz-1028", "section": "الفرائض والمواريث", "category": "أصحاب الفروض", "level": "صعب", "question": "ما المسألة المشهورة بـ«المشرَّكة» أو «الحمارية»؟", "answer": "زوج وأمّ وإخوة لأمّ وإخوة أشقاء، فيأخذ الأشقاء مع الإخوة لأمّ الثلث بالتشريك عند عمر وعثمان ﵄، ولا شيء لهم عند علي ﵁.", "explanation": "سُميت حمارية لأن الأشقاء قالوا: هبْ أن أبانا كان حماراً، أليست أمنا واحدة؟ والمسألة من مواضع الخلاف المعتبر بين الصحابة."},
+  {"id": "demo-quiz-1029", "section": "الفرائض والمواريث", "category": "الحجب", "level": "متوسط", "question": "من الذي لا يُحجب حجب حرمان بحال من الأحوال؟", "answer": "الأبوان والولدان والزوجان: الأب والأم والابن والبنت والزوج والزوجة.", "explanation": "هؤلاء الستة لا يسقطون بالكلية، وإن نقص نصيبهم بالحجب النقصاني."},
+  {"id": "demo-quiz-1030", "section": "الفرائض والمواريث", "category": "العول", "level": "صعب", "question": "ما العول في علم الفرائض، ومن أول من قضى به؟", "answer": "زيادة سهام الفروض على أصل المسألة فيُنقص نصيب كل وارث بالنسبة، وأول من قضى به عمر بن الخطاب ﵁ بمشورة الصحابة.", "explanation": "مثاله: زوج وأختان شقيقتان؛ أصلها ستة وتعول إلى سبعة."},
+  {"id": "demo-quiz-1031", "section": "التجويد", "category": "أحكام النون", "level": "متوسط", "question": "ما حكم النون الساكنة في قوله تعالى: ﴿مِن وَالٍ﴾؟", "answer": "إدغام بغير غنّة (إدغام ناقص عند من يعدّه كذلك)، لوقوع الواو بعد النون الساكنة.", "explanation": "حروف الإدغام ستة يجمعها «يرملون»، ويكون بغنّة في (ينمو) وبغير غنّة في اللام والراء؛ والواو من حروف الإدغام بغنّة عند حفص. — راجع المتون: تحفة الأطفال والجزرية."},
+  {"id": "demo-quiz-1032", "section": "التجويد", "category": "المدود", "level": "صعب", "question": "ما مقدار مدّ اللازم الكلمي المثقَّل ومثاله؟", "answer": "ست حركات وجوباً، ومثاله ﴿وَلَا الضَّالِّينَ﴾.", "explanation": "سُمي لازماً للزوم مدّه ست حركات وصلاً ووقفاً، ومثقَّلاً لأن بعد حرف المد حرفاً مشدداً."},
+  {"id": "demo-quiz-1033", "section": "التجويد", "category": "الوقف", "level": "صعب", "question": "ما الفرق بين الوقف اللازم والوقف الممنوع في المصحف؟", "answer": "اللازم (م) يجب الوقف عنده لأن وصله يوهم معنى فاسداً، والممنوع (لا) لا يُبتدأ بما بعده لارتباطه بما قبله ارتباطاً يفسد بالوقف.", "explanation": "وعلامات الوقف اصطلاحية وضعها العلماء لخدمة المعنى، وليست جزءاً من الرسم العثماني الأصلي."},
+  {"id": "demo-quiz-1034", "section": "الأسماء الحسنى", "category": "الدلالة", "level": "صعب", "question": "ما الفرق بين اسمَي الله «الخالق» و«البارئ» و«المصوّر»؟", "answer": "الخالق: المقدِّر المُوجِد من العدم، والبارئ: المُنشئ للخلق بريئاً من التفاوت، والمصوّر: الذي أعطى كل مخلوق صورته الخاصة به.", "explanation": "جُمعت الثلاثة في قوله تعالى: ﴿هُوَ اللَّهُ الْخَالِقُ الْبَارِئُ الْمُصَوِّرُ﴾ — الحشر: 24، وبين معانيها ابن القيم وابن كثير.", "reference": "سورة الحشر: 24"},
+  {"id": "demo-quiz-1035", "section": "الأسماء الحسنى", "category": "العقيدة", "level": "صعب", "question": "ما ضابط أسماء الله الحسنى عند أهل السنة؟", "answer": "أنها توقيفية لا تُثبت إلا بنص من الكتاب أو السنة الصحيحة، ولا مجال فيها للقياس أو الاجتهاد.", "explanation": "لأن الإخبار عن الله بما لم يُخبر به عن نفسه قولٌ على الله بغير علم، وهو محرّم بنص القرآن."},
+  {"id": "demo-quiz-1036", "section": "الطب النبوي", "category": "منهج", "level": "صعب", "question": "ما الضابط الذي قرّره ابن القيم في التعامل مع الطب النبوي؟", "answer": "التفريق بين ما ثبت عنه ﷺ على وجه الشرع والتعبد وبين ما كان من عادات أهل زمانه وطبّهم، فالأول مُتَّبع والثاني اجتهادي يُنظر فيه.", "explanation": "قرّر ذلك في «زاد المعاد»، وعليه فلا يُلزَم المسلم بترك الطب الحديث المجرَّب."},
+  {"id": "demo-quiz-1037", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "متوسط", "question": "ما الحكمة النبوية في النهي عن الدخول إلى أرضٍ وقع بها الطاعون؟", "answer": "قال ﷺ: «إذا سمعتم بالطاعون بأرضٍ فلا تقدموا عليها، وإذا وقع بأرضٍ وأنتم بها فلا تخرجوا فراراً منه» — متفق عليه.", "explanation": "أصلٌ نبويّ في الحجر الصحي، جمع بين الأخذ بالأسباب ومنع نقل الوباء إلى غير أهله.", "reference": "متفق عليه من حديث عبدالرحمن بن عوف وأسامة بن زيد ﵄"},
+  {"id": "demo-quiz-1038", "section": "علوم القرآن", "category": "الرسم", "level": "صعب", "question": "ما المقصود بالرسم العثماني، وما حكم الالتزام به؟", "answer": "هو هيئة كتابة المصحف التي أقرّها عثمان ﵁ في المصاحف الإمام، وجمهور العلماء على وجوب الالتزام به في كتابة المصحف.", "explanation": "خالف في ذلك بعض المتأخرين فأجازوا الكتابة الإملائية للتعليم، مع بقاء المصحف على الرسم العثماني."},
+  {"id": "demo-quiz-1039", "section": "علوم القرآن", "category": "النسخ", "level": "صعب", "question": "ما أقسام النسخ في القرآن عند العلماء؟", "answer": "ثلاثة: نسخ التلاوة والحكم معاً، ونسخ الحكم وبقاء التلاوة، ونسخ التلاوة وبقاء الحكم.", "explanation": "ومثال الثاني آية العدة بالحول في البقرة، ومثال الثالث ما ورد في آية الرجم على قول من أثبته."},
+  {"id": "demo-quiz-1040", "section": "علوم القرآن", "category": "أسباب النزول", "level": "متوسط", "question": "ما القاعدة المشهورة عند الأصوليين في العلاقة بين سبب النزول وعموم اللفظ؟", "answer": "«العبرة بعموم اللفظ لا بخصوص السبب» عند جمهور العلماء.", "explanation": "فالآية تشمل كل من انطبق عليه وصفها وإن نزلت في واقعة معيّنة، وخالف بعض أهل العلم فقصرها على سببها."},
+  {"id": "demo-quiz-1041", "section": "الحديث", "category": "مصطلح", "level": "صعب", "question": "ما الحديث المدرَج؟", "answer": "ما أُدخل في متنه أو سنده ما ليس منه من كلام الراوي بلا فصل يميّزه.", "explanation": "ومن أمثلته الشهيرة زيادة «أسبغوا الوضوء» في بعض الروايات، ويُعرف الإدراج بورود الرواية مفصولة في طريق آخر."},
+  {"id": "demo-quiz-1042", "section": "الحديث", "category": "مصطلح", "level": "صعب", "question": "ما الفرق بين الحديث الشاذ والحديث المنكر؟", "answer": "الشاذ: ما خالف فيه المقبول من هو أولى منه، والمنكر: ما خالف فيه الضعيف الثقات.", "explanation": "وهذا تحرير الحافظ ابن حجر في «نخبة الفكر»، وكلاهما من أقسام الحديث المردود بسبب المخالفة."},
+  {"id": "demo-quiz-1043", "section": "الحديث", "category": "مصطلح", "level": "متوسط", "question": "ما معنى قول المحدثين «متفق عليه»؟", "answer": "أن الحديث رواه البخاري ومسلم كلاهما في صحيحيهما.", "explanation": "وهو أعلى درجات الصحة عند أهل الحديث، ولا يعني اتفاق الأمة كلها كما يظنه بعض الناس."},
+  {"id": "demo-quiz-1044", "section": "الصالحون", "category": "التابعون", "level": "صعب", "question": "من سيد التابعين الذي قال عنه النبي ﷺ إنه يشفع في مثل ربيعة ومُضَر؟", "answer": "أويس القرني رحمه الله.", "explanation": "ورد في صحيح مسلم أن النبي ﷺ أوصى عمر ﵁ أن يطلب منه الاستغفار إن لقيه، ولم يرَ النبيَّ ﷺ لكنه أدرك زمانه.", "reference": "صحيح مسلم"},
+  {"id": "demo-quiz-1045", "section": "الصالحون", "category": "العُبّاد", "level": "متوسط", "question": "من الإمام الذي اشتُهر بقوله: «إن في الدنيا جنة، من لم يدخلها لم يدخل جنة الآخرة»؟", "answer": "شيخ الإسلام ابن تيمية رحمه الله، يعني جنة معرفة الله ومحبته.", "explanation": "نقلها عنه تلميذه ابن القيم في «الوابل الصيب» وغيره، وفيها بيان أثر الإيمان في طمأنينة القلب."},
+  {"id": "demo-quiz-1046", "section": "الفتوحات الإسلامية", "category": "القادة", "level": "صعب", "question": "من القائد الذي فتح بلاد السند وهو دون العشرين من عمره؟", "answer": "محمد بن القاسم الثقفي، فتح السند سنة 92 هـ تقريباً.", "explanation": "وكان فتحه بابَ دخول الإسلام إلى شبه القارة الهندية، وسار فيه بسياسة حفظت للناس معابدهم وأمنهم."},
+  {"id": "demo-quiz-1047", "section": "الفتوحات الإسلامية", "category": "المعارك", "level": "متوسط", "question": "في أي معركة أُوقف الزحف المغولي وانكسرت أسطورة عدم هزيمتهم؟", "answer": "معركة عين جالوت سنة 658 هـ / 1260 م بقيادة قطز والظاهر بيبرس.", "explanation": "كانت بعد سقوط بغداد بسنتين، وأعادت التوازن للعالم الإسلامي في المشرق."},
+  {"id": "demo-quiz-1048", "section": "التاريخ الإسلامي", "category": "الدول", "level": "صعب", "question": "ما الدولة التي أسسها يوسف بن تاشفين وانتصرت في معركة الزلاقة؟", "answer": "دولة المرابطين، وكانت الزلاقة سنة 479 هـ / 1086 م.", "explanation": "أخّرت الزلاقة سقوط الأندلس قروناً، وجاءت بعد استنجاد ملوك الطوائف بيوسف بن تاشفين."},
+  {"id": "demo-quiz-1049", "section": "التاريخ الإسلامي", "category": "الحضارة", "level": "صعب", "question": "ما وظيفة «المحتسب» في الدولة الإسلامية؟", "answer": "مراقبة الأسواق والمرافق العامة، ومنع الغش والتطفيف، والقيام بالأمر بالمعروف والنهي عن المنكر فيما يتعلق بالحقوق العامة.", "explanation": "صُنّفت فيها كتب مستقلة مثل «معالم القربة في أحكام الحسبة» لابن الأخوة."},
+  {"id": "demo-quiz-1050", "section": "الفقه", "category": "القواعد", "level": "صعب", "question": "ما القواعد الفقهية الخمس الكبرى؟", "answer": "الأمور بمقاصدها، واليقين لا يزول بالشك، والمشقة تجلب التيسير، والضرر يُزال، والعادة محكَّمة.", "explanation": "تُردّ إليها أكثر مسائل الفقه، وقد بسطها السيوطي في «الأشباه والنظائر» وابن نجيم في كتابه بالاسم نفسه."},
+  {"id": "demo-quiz-1051", "section": "الفقه", "category": "أصول", "level": "صعب", "question": "ما الفرق بين الواجب والفرض عند جمهور العلماء وعند الحنفية؟", "answer": "هما مترادفان عند الجمهور، وفرّق الحنفية: فالفرض ما ثبت بدليل قطعي، والواجب ما ثبت بدليل ظني.", "explanation": "وبنوا على التفريق أحكاماً، منها أن جاحد الفرض يكفر دون جاحد الواجب."},
+  {"id": "demo-quiz-1052", "section": "الفقه", "category": "العبادات", "level": "متوسط", "question": "ما حكم من تذكّر صلاة فائتة وهو في صلاة حاضرة؟", "answer": "يمضي في صلاته الحاضرة ثم يقضي الفائتة عند الجمهور، وتلزم الترتيب رواية عند الحنابلة ما لم يخشَ فوات الحاضرة.", "explanation": "والمسألة من مواضع الخلاف المعتبر بين الفقهاء، وسعة الشرع فيها ظاهرة."},
+  {"id": "demo-quiz-1053", "section": "العقيدة", "category": "الأسماء والصفات", "level": "صعب", "question": "ما قاعدة أهل السنة في باب الصفات؟", "answer": "إثبات ما أثبته الله لنفسه وأثبته له رسوله ﷺ من غير تحريف ولا تعطيل ولا تكييف ولا تمثيل.", "explanation": "قال تعالى: ﴿لَيْسَ كَمِثْلِهِ شَيْءٌ وَهُوَ السَّمِيعُ الْبَصِيرُ﴾ — ففي أولها نفي التمثيل وفي آخرها إثبات الصفات.", "reference": "سورة الشورى: 11"},
+  {"id": "demo-quiz-1054", "section": "العقيدة", "category": "القدر", "level": "صعب", "question": "ما مراتب الإيمان بالقدر الأربع؟", "answer": "العلم، والكتابة، والمشيئة، والخلق.", "explanation": "فيعلم أن الله علم كل شيء أزلاً، وكتبه في اللوح المحفوظ، وأن ما شاء كان وما لم يشأ لم يكن، وأنه خالق كل شيء ومنه أفعال العباد."},
+  {"id": "demo-quiz-1055", "section": "الآداب والأخلاق", "category": "أدب النفس", "level": "متوسط", "question": "ما ضابط الغيبة الجائزة عند العلماء؟", "answer": "تُباح لغرض صحيح لا يمكن الوصول إليه إلا بها، كالتظلم والاستفتاء والتحذير من مفسدة وتعريف المجهول.", "explanation": "عدّها النووي في «رياض الصالحين» ستة أسباب، ونظمها بعضهم في بيتين مشهورين."},
+  {"id": "demo-quiz-1056", "section": "الرقائق", "category": "محاسبة", "level": "صعب", "question": "ما الفرق بين المحاسبة والمراقبة عند أهل السلوك؟", "answer": "المراقبة قبل العمل وأثناءه باستحضار اطلاع الله، والمحاسبة بعده بوزن ما كان منه.", "explanation": "قال عمر ﵁: «حاسبوا أنفسكم قبل أن تُحاسَبوا»، وبسط ذلك ابن القيم في «مدارج السالكين»."},
+  {"id": "demo-quiz-1057", "section": "الأذكار والأدعية", "category": "الفقه", "level": "صعب", "question": "ما حكم الذكر الجماعي بصوت واحد عقب الصلاة؟", "answer": "مسألة خلافية: منعها جمهور المتأخرين من أهل السنة لعدم ورودها عن النبي ﷺ وأصحابه، وأجازها بعض أهل العلم إذا قُصد بها التعليم.", "explanation": "والمتفق عليه أن أصل الذكر عقب الصلاة سنة ثابتة، وإنما الخلاف في هيئة الاجتماع عليه بصوت واحد."},
+  {"id": "demo-quiz-1058", "section": "الحج والعمرة", "category": "المناسك", "level": "صعب", "question": "ما حكم من ترك طواف الوداع من الحجاج؟", "answer": "عليه دم عند جمهور الفقهاء لتركه واجباً، وسقط عن الحائض والنفساء بالنص.", "explanation": "لحديث ابن عباس ﵄: «أُمر الناس أن يكون آخر عهدهم بالبيت، إلا أنه خُفّف عن الحائض» — متفق عليه.", "reference": "متفق عليه"},
+  {"id": "demo-quiz-1059", "section": "الصحابة", "category": "الفقهاء", "level": "صعب", "question": "من الصحابي الذي لقّبه النبي ﷺ بـ«ترجمان القرآن» بالدعاء له بالفقه في الدين؟", "answer": "عبدالله بن عباس ﵄، قال له النبي ﷺ: «اللهم فقّهه في الدين وعلّمه التأويل».", "explanation": "وكان عمر ﵁ يُدخله مع أشياخ بدر لسعة علمه رغم صغر سنه."},
+  {"id": "demo-quiz-1060", "section": "الأنبياء", "category": "أولو العزم", "level": "متوسط", "question": "من أولو العزم من الرسل؟", "answer": "نوح وإبراهيم وموسى وعيسى ومحمد عليهم الصلاة والسلام.", "explanation": "جُمعوا في آيتين: ﴿وَإِذْ أَخَذْنَا مِنَ النَّبِيِّينَ مِيثَاقَهُمْ﴾ — الأحزاب: 7، و﴿شَرَعَ لَكُم مِّنَ الدِّينِ﴾ — الشورى: 13.", "reference": "سورة الأحزاب: 7، والشورى: 13"},
+  {"id": "demo-quiz-1061", "section": "العقيدة", "category": "الإيمان", "level": "صعب", "question": "ما الفرق بين الإسلام والإيمان إذا اجتمعا وإذا افترقا؟", "answer": "إذا اجتمعا في نصٍّ واحد فُسِّر الإسلام بالأعمال الظاهرة والإيمان بالأعمال الباطنة، وإذا افترقا شمل كلٌّ منهما الدين كله.", "explanation": "وهي قاعدة مشهورة: «إذا اجتمعا افترقا، وإذا افترقا اجتمعا»، ودليل الاجتماع حديث جبريل عليه السلام — رواه مسلم."},
+  {"id": "demo-quiz-1062", "section": "الأنبياء", "category": "القصص", "level": "صعب", "question": "ما النبي الذي ذُكر اسمه صريحاً في القرآن أكثر من غيره؟", "answer": "موسى عليه السلام، ذُكر في أكثر من مئة وثلاثين موضعاً.", "explanation": "وتكرار قصته لتنوّع العبر فيها: في الدعوة والصبر على الأذى وقيادة الأمة وابتلاءات الطريق."},
+  {"id": "demo-quiz-1063", "section": "الحديث", "category": "مصطلح", "level": "صعب", "question": "ما الحديث المعلَّق، وأين يكثر وروده؟", "answer": "ما حُذف من أول إسناده راوٍ فأكثر على التوالي، ويكثر في صحيح البخاري في التراجم والمتابعات.", "explanation": "وما جزم به البخاري بصيغة الجزم (قال، رَوى) فهو صحيح إلى من عُلِّق عنه، وما ذكره بصيغة التمريض (يُروى، يُذكر) ففيه نظر."},
+  {"id": "demo-quiz-1064", "section": "الأنبياء", "category": "الأمم السابقة", "level": "سهل", "question": "ما نوع العذاب الذي أُهلكت به عاد؟", "answer": "ريح صرصر عاتية سُخِّرت عليهم سبع ليالٍ وثمانية أيام حُسوماً.", "explanation": "﴿وَأَمَّا عَادٌ فَأُهْلِكُوا بِرِيحٍ صَرْصَرٍ عَاتِيَةٍ﴾ — الحاقة: 6، ويؤيده حديث «أُهلكت عادٌ بالدَّبور» متفق عليه.", "reference": "سورة الحاقة: 6-7"},
+  {"id": "demo-quiz-1065", "section": "الأنبياء", "category": "الأمم السابقة", "level": "متوسط", "question": "ما الآية التي طلبها ثمود فأعطاهم الله إياها، وما الشرط الذي نقضوه؟", "answer": "الناقة، وشرطُها قسمة الماء: ﴿لَّهَا شِرْبٌ وَلَكُمْ شِرْبُ يَوْمٍ مَّعْلُومٍ﴾، فعقروها.", "explanation": "نسب الله العقر إليهم جميعاً ﴿فَعَقَرُوهَا﴾ وإن باشره واحد، لأنهم رضوا وتمالؤوا.", "reference": "سورة الشعراء: 155-157"},
+  {"id": "demo-quiz-1066", "section": "الأنبياء", "category": "الأمم السابقة", "level": "متوسط", "question": "كم لبث نوح عليه السلام في قومه؟", "answer": "ألف سنة إلا خمسين عاماً.", "explanation": "﴿فَلَبِثَ فِيهِمْ أَلْفَ سَنَةٍ إِلَّا خَمْسِينَ عَامًا﴾ — العنكبوت: 14، واختلف المفسرون: أهي مدة الدعوة وحدها أم عمره كله؟", "reference": "سورة العنكبوت: 14"},
+  {"id": "demo-quiz-1067", "section": "الأنبياء", "category": "الأمم السابقة", "level": "صعب", "question": "ما الذنب الذي اشتُهر به أهل مدين قومُ شعيب بعد الشرك؟", "answer": "بخس المكيال والميزان وتطفيفه، وقطع السبيل والإفساد في الأرض.", "explanation": "﴿وَيَا قَوْمِ أَوْفُوا الْمِكْيَالَ وَالْمِيزَانَ بِالْقِسْطِ وَلَا تَبْخَسُوا النَّاسَ أَشْيَاءَهُمْ﴾ — هود: 85.", "reference": "سورة هود: 85"},
+  {"id": "demo-quiz-1068", "section": "الأنبياء", "category": "الأمم السابقة", "level": "صعب", "question": "من الفريق الذي نصّ القرآن على نجاته من أصحاب السبت؟", "answer": "الذين ينهون عن السوء: ﴿أَنجَيْنَا الَّذِينَ يَنْهَوْنَ عَنِ السُّوءِ وَأَخَذْنَا الَّذِينَ ظَلَمُوا بِعَذَابٍ بَئِيسٍ﴾.", "explanation": "وأما الفريق الساكت الذي قال ﴿لِمَ تَعِظُونَ قَوْمًا﴾ فقد اختُلف في مصيره بين المفسرين، ولم ينصّ القرآن عليه.", "reference": "سورة الأعراف: 165"},
+  {"id": "demo-quiz-1069", "section": "الأنبياء", "category": "الأمم السابقة", "level": "متوسط", "question": "بم أُهلك أصحاب الفيل؟", "answer": "بطيرٍ أبابيل ترميهم بحجارة من سجّيل فجعلهم كعصفٍ مأكول.", "explanation": "سورة الفيل كاملة، ويؤيدها قول النبي ﷺ يوم الحديبية: «حبسها حابس الفيل» — رواه البخاري.", "reference": "سورة الفيل: 3-5"},
+  {"id": "demo-quiz-1070", "section": "الأنبياء", "category": "الأمم السابقة", "level": "صعب", "question": "ما سبب زوال نعمة سبأ، وما العقوبة التي نزلت بهم؟", "answer": "الإعراض عن شكر النعمة، فأُرسل عليهم سيل العرم وبُدّلت جنّتاهم، وجعلهم الله أحاديث ومزّقهم كل ممزّق.", "explanation": "﴿فَأَعْرَضُوا فَأَرْسَلْنَا عَلَيْهِمْ سَيْلَ الْعَرِمِ﴾ — سبأ: 16. وقد أسلمت ملكتهم في زمن سليمان عليه السلام قبل ذلك.", "reference": "سورة سبأ: 15-19"},
+  {"id": "demo-quiz-1071", "section": "الأنبياء", "category": "الأمم السابقة", "level": "صعب", "question": "ما الحكم الشرعي في تحديد هوية أصحاب الرسّ؟", "answer": "لا يصح تعيينهم؛ ذكرهم القرآن مرتين في سياق المكذبين دون تفصيل، وأقوال المفسرين فيهم متعارضة لا يصح منها شيء مرفوع.", "explanation": "موضعا ذكرهم: الفرقان: 38، وق: 12. والموقف العلمي هو التوقف عند حدّ النص.", "reference": "سورة الفرقان: 38"},
+  {"id": "demo-quiz-1072", "section": "الأنبياء", "category": "الأمم السابقة", "level": "متوسط", "question": "من الذي بنى الردم الحابس ليأجوج ومأجوج، وماذا قال بعد إتمامه؟", "answer": "ذو القرنين، وقال: ﴿هَٰذَا رَحْمَةٌ مِّن رَّبِّي فَإِذَا جَاءَ وَعْدُ رَبِّي جَعَلَهُ دَكَّاءَ﴾.", "explanation": "ورفض المال الذي عُرض عليه وقال ﴿مَا مَكَّنِّي فِيهِ رَبِّي خَيْرٌ فَأَعِينُونِي بِقُوَّةٍ﴾ — طلب العمل لا الأجر.", "reference": "سورة الكهف: 95-98"},
+  {"id": "demo-quiz-1073", "section": "الأنبياء", "category": "الأمم السابقة", "level": "صعب", "question": "ما الذي عزم عليه أصحاب الجنة في سورة القلم، وما الذي أخطؤوا فيه في قسمهم؟", "answer": "عزموا على جذاذ بستانهم مبكراً ليمنعوا حق المساكين، وأقسموا على ذلك ولم يستثنوا فيقولوا «إن شاء الله».", "explanation": "﴿إِذْ أَقْسَمُوا لَيَصْرِمُنَّهَا مُصْبِحِينَ * وَلَا يَسْتَثْنُونَ﴾ — القلم: 17-18، ثم طاف عليها طائف من ربهم وهم نائمون.", "reference": "سورة القلم: 17-20"}
 ];

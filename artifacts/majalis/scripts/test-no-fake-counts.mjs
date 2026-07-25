@@ -18,6 +18,7 @@ const WATCHED = [
   "src/views/HomePage.tsx",
   "src/components/home/HomeAboutSection.tsx",
   "src/components/home/HomeQuizCard.tsx",
+  "src/views/FeaturesInProgressPage.tsx",
 ];
 
 /** وحدات تدل على «عدد محتوى» — أي رقم قبلها كذبة تتقادم. */

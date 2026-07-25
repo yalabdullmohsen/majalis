@@ -164,6 +164,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/prayer-ranks", title: "فضائل الصلاة ومراتبها", description: "المراتب الخمسة في الصلاة وفضائلها من القرآن والسنة" },
   { href: "/stories", title: "القصص الإسلامية", description: "قصص من السيرة النبوية والأنبياء والصحابة" },
   { href: "/prophets", title: "قصص الأنبياء", description: "الأنبياء الخمسة والعشرون في القرآن — نبذات وعبر" },
+  { href: "/nations", title: "الأمم السابقة", description: "أخبار الأقوام في القرآن والسنة: الذنب والعقوبة ومن نجا" },
   { href: "/fiqh", title: "الفقه الإسلامي", description: "الأحكام والأسئلة والمجمع الفقهي" },
   { href: "/rulings", title: "الأحكام الشرعية", description: "مكتبة الأحكام والأدلة" },
   { href: "/seerah", title: "السيرة النبوية", description: "حياة النبي محمد ﷺ من المولد إلى الوفاة" },
