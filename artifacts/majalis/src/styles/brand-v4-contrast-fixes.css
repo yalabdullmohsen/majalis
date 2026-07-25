@@ -382,3 +382,44 @@ html[data-theme="dark"] .mk-cat-pill--active.mk-cat-pill--active,
 html[data-theme="dark"] .mk-cat-pill--active.mk-cat-pill--active.mk-cat-pill--active span {
   color: #FFFFFF !important;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   ي) مواضع لا تظهر إلا على الإنتاج (بيانات حيّة من Supabase)
+   ══════════════════════════════════════════════════════════════
+   المعاينة المحلية لا تصل إلى قاعدة البيانات، فصفحات مثل /qa و/rulings
+   و/learning/paths تُصيَّر فارغة محليًا ولا يرى الكاشف شاراتها وتصنيفاتها
+   إطلاقًا. تشغيل الكاشف على majlisilm.com نفسه كشف هذه التسعة بعد أن
+   أعطى الفحص المحلي صفرًا — التغطية تشمل حالة البيانات لا المسارات فقط. */
+
+/* شارة الحكم «مباح» وحدها خلفيتها زرقاء فاتحة ثابتة؛ بقية صيغ .qa-badge
+   (واجب/سنة/…) خلفيتها داكنة، فتقييد القاعدة بالصنف الفرعي ضروري —
+   تعميمها على .qa-badge كلها قلبها إلى نص داكن على داكن (1.49:1). */
+html[data-theme="dark"] .qa-badge.qa-ruling--mubah {
+  color: var(--n-900) !important;
+}
+
+/* أزرار التصنيف وعدّاداتها في المسارات: خلفياتها بقيت فاتحة في الداكن. */
+html[data-theme="dark"] :is(.lpp-cat-count, .lpp-cat-btn) {
+  color: var(--n-800) !important;
+}
+html[data-theme="dark"] .lpp-cat-btn {
+  background-color: var(--surface-2) !important;
+  color: var(--text) !important;
+}
+
+/* شارة مستوى المسار: نص أبيض فوق سطح العلامة الفاتح في الوضع الفاتح. */
+.lpp-path-card__badge {
+  background-color: var(--brand) !important;
+  color: var(--text-on-brand) !important;
+}
+
+/* أخضر باهت فوق أسطح داكنة (2.8–4.03:1) — يُرفع للون العلامة الفاتح. */
+html[data-theme="dark"] :is(
+  .ruling-card__category, .login-card__brand, .hadith-grade,
+  .login-card__subtitle
+) {
+  color: var(--text-brand) !important;
+}
+html[data-theme="dark"] .ruling-pagination button {
+  color: var(--text-brand) !important;
+}
