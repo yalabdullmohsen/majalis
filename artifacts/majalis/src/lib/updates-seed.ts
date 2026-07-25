@@ -4,7 +4,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-fiqh-crypto",
     title: "قرار جديد: حكم التعامل بالعملات الرقمية",
-    summary: "صدر قرار المجمع الفقهي بشأن العملات الرقمية.",
+    summary: "صدر قرار المجمع الفقهي في حكم التعامل بالعملات الرقمية وضوابطه.",
     update_type: "قرار",
     source_type: "fiqh_decision",
     source_id: "fiqh-crypto-2024",
@@ -15,7 +15,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-course-ijazah",
     title: "فتح التسجيل: دورة الإجازة 1447هـ",
-    summary: "بدء التسجيل في الدورة السنوية للإجازة.",
+    summary: "فُتح باب التسجيل في الدورة السنوية لنيل الإجازة العلمية لعام 1447هـ.",
     update_type: "دورة",
     source_type: "annual_course",
     source_id: "course-ijazah-tahrir-2026",
@@ -56,7 +56,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-news-conference",
     title: "خبر علمي: مؤتمر الفقه المعاصر",
-    summary: "انعقاد مؤتمر الفقه المعاصر ونشر أبحاثه.",
+    summary: "انعقد مؤتمر الفقه المعاصر ونُشرت أبحاثه في منصة المجمع الفقهي.",
     update_type: "خبر علمي",
     source_url: "/fiqh-council",
     published_at: "2025-10-01T05:00:00Z",
