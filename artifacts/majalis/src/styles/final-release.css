@@ -708,6 +708,67 @@ html[data-theme="dark"] .bottom-nav--v2 {
   opacity: 0.55;
   cursor: not-allowed;
 }
+.adv-error-state--section {
+  padding-block: 1.25rem;
+  min-height: 0;
+}
+.error-boundary-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: min(60vh, 28rem);
+  padding: clamp(1.5rem, 5vw, 2.5rem) var(--page-gutter);
+  text-align: center;
+}
+.error-boundary-page__title {
+  margin: 0;
+  color: var(--color-text);
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+}
+.error-boundary-page__body,
+.error-boundary-page__id {
+  margin: 0;
+  max-width: 28rem;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+.error-boundary-page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-block-start: 0.5rem;
+}
+.error-boundary-btn {
+  min-height: 44px;
+  min-width: 44px;
+  padding-inline: 1rem;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  cursor: pointer;
+}
+.error-boundary-btn--primary {
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
+  border: 0;
+}
+.error-boundary-btn--secondary {
+  background: var(--color-surface);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+}
+.error-boundary-btn--ghost {
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+.lrf-label {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
 
 .site-footer-logo--calligraphy {
   display: block;
@@ -716,6 +777,275 @@ html[data-theme="dark"] .bottom-nav--v2 {
   max-height: 3.25rem;
   object-fit: contain;
   object-position: start center;
+}
+
+/* ══ مكوّنات مشتركة: أزرار، رجوع، شرائح، drawer، بانرات ══ */
+.ds-btn,
+.ui-card-btn,
+.page-action-btn,
+.login-submit {
+  min-height: 44px;
+  border-radius: var(--radius-md);
+  transition: background var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast), transform var(--motion-fast);
+}
+.ds-btn:disabled,
+.ui-card-btn:disabled,
+.page-action-btn:disabled,
+.login-submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.ds-btn:focus-visible,
+.ui-card-btn:focus-visible,
+.page-action-btn:focus-visible,
+.login-submit:focus-visible,
+.ds-page-back-btn:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-accent) 72%, white);
+  outline-offset: 2px;
+}
+.ds-page-back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.4rem 0.95rem;
+  margin-block-end: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.ds-page-back-btn:hover {
+  color: var(--color-primary);
+  border-color: color-mix(in srgb, var(--color-primary) 28%, var(--color-border));
+  background: var(--color-surface-muted);
+}
+.ds-page-back-btn:active { transform: scale(0.98); }
+
+.side-nav-drawer--v2 {
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: -8px 0 28px rgb(23 61 53 / 12%);
+}
+.side-nav-drawer__head--v2 {
+  padding-block-start: max(0.85rem, env(safe-area-inset-top, 0px));
+  background: var(--color-surface);
+  border-bottom-color: var(--color-border);
+}
+.side-nav-group__toggle {
+  min-height: 44px;
+}
+.side-nav-link--v2 {
+  min-height: 44px;
+  color: var(--color-text);
+  border-radius: var(--radius-md);
+}
+.side-nav-link--v2.is-active {
+  color: var(--color-primary);
+  background: var(--color-surface-muted);
+}
+.side-nav-close:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-accent) 72%, white);
+  outline-offset: 2px;
+}
+
+.offline-banner,
+.update-available-banner {
+  padding-inline: max(0.75rem, env(safe-area-inset-left)) max(0.75rem, env(safe-area-inset-right));
+}
+.update-available-banner__btn {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.hp-recent-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 0.85rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.home-quick-link {
+  min-height: 44px;
+  border-radius: var(--radius-lg);
+  border-color: var(--color-border);
+  color: var(--color-primary);
+  background: var(--color-surface);
+  box-shadow: none;
+}
+.home-quick-link:active { transform: scale(0.98); }
+
+html[data-theme="dark"] .side-nav-drawer--v2,
+html[data-theme="dark"] .side-nav-drawer__head--v2 {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+html[data-theme="dark"] .side-nav-link--v2 { color: var(--color-text); }
+html[data-theme="dark"] .side-nav-link--v2.is-active {
+  color: var(--color-primary);
+  background: var(--color-surface-muted);
+}
+html[data-theme="dark"] .ds-page-back-btn {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+}
+
+/* ══ صفحات أساسية: لمس، مسافات، بطاقات ══ */
+.hsh-step__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 0.15rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+.hsh-step__cta:hover { text-decoration: underline; }
+.site-footer--v3 .site-footer-link,
+.site-footer--v3 .site-footer-email a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.pt-gov-chip,
+.pt-quick-link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+}
+.pt-prayer {
+  min-height: 44px;
+}
+.quran-hub-card {
+  min-height: 44px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+  text-decoration: none;
+  color: inherit;
+}
+.quran-hub-hero {
+  padding-block: clamp(1.5rem, 4vw, 2.5rem);
+}
+.lessons-v2-filter-toggle {
+  min-height: 44px;
+}
+.adhkar-chips button,
+.adhkar-chips a,
+.adhkar-chips .ds-btn {
+  min-height: 44px;
+}
+.up-root,
+.ucp-root,
+.udp-root {
+  padding-bottom: 1.25rem;
+}
+
+/* ══ صفحات ثانوية: إعدادات، حديث، مكتبة، سؤال وجواب ══ */
+.settings-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 44px;
+  padding-block: 0.55rem;
+  cursor: pointer;
+}
+.settings-toggle-row input[type="checkbox"] {
+  width: 44px;
+  height: 28px;
+  flex-shrink: 0;
+}
+.filter-chip,
+.ar-filter-chip,
+.kng-filter-chip,
+[class*="filter-chip"] {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.qa-card,
+.book-card,
+.hadith-card,
+.library-card,
+.content-card {
+  border-radius: var(--radius-lg);
+  border-color: var(--color-border);
+}
+.about-page,
+.settings-page,
+.ds-page {
+  padding-inline: var(--page-gutter);
+  padding-block: 1rem 1.25rem;
+}
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="hidden"]),
+select,
+textarea {
+  min-height: 44px;
+  border-radius: var(--radius-md);
+  font: inherit;
+}
+
+/* صفحات كثيرة كانت تضيف 4–6rem أسفل المحتوى فوق حشو .app-main — فراغ زائد */
+:is(
+  .sw-page, .th-page, .fa-page, .jnz-page, .lp-page, .fc-page, .sr-page,
+  .fm-page, .vault-page, .rp-page, .inst-page, .hj-page, .nations-page,
+  .ikm-page, .legal-page
+) {
+  padding-bottom: 1.25rem;
+}
+.legal-back-btn {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+}
+.lrn-hub-card {
+  min-height: 44px;
+  border-radius: var(--radius-lg);
+}
+.lrn-hub-search__input {
+  min-height: 44px;
+}
+
+@media (max-width: 879px) {
+  .ds-btn--sm {
+    min-height: 44px;
+    padding-inline: 0.85rem;
+  }
+  .home-main--v3 {
+    padding-block: 0.85rem 1.25rem;
+  }
+  .home-section {
+    margin-bottom: clamp(1.25rem, 4vw, 2rem);
+  }
+  .home-quick-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+  .quran-hub-page,
+  .qlive-page,
+  .sch-page {
+    padding-bottom: 1rem;
+  }
 }
 
 @media (max-width: 359px) {
