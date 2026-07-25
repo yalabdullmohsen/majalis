@@ -36,6 +36,12 @@ for(const f of files){
     const q=norm(m[1]); if(q.length<12)continue; checked++;
     if(!corpus.includes(q)){bad++;issues.push(`${path.relative(ROOT,f)}  «${m[1].slice(0,55)}» [${m[2]}]`);}
   }
+  // 2ب) بنية quranEvidence: [{ text, source: "سورة X: N" }] — نصوص قرآنية بلا أقواس
+  for(const m of s.matchAll(/text:\s*"((?:[^"\\]|\\.){12,})",\s*\n?\s*source:\s*"سورة\s+([^":]+):\s*([\d\-،, ]+)"/g)){
+    const q=norm(m[1]); if(q.length<12)continue; checked++;
+    if(!corpus.includes(q)){bad++;issues.push(`${path.relative(ROOT,f)}  «${m[1].slice(0,55)}» [سورة ${m[2]}: ${m[3]}]`);}
+  }
+
   // 3) صحة أرقام الآيات في المراجع «سورة كذا: رقم»
   for(const m of s.matchAll(/سورة\s+([ء-ي]{3,14})\s*:\s*(\d{1,3})/g)){
     const su=byName.get(nn(m[1])); if(!su)continue; refs++;

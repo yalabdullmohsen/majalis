@@ -17725,6 +17725,10 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 .th-fardh-card__icon { font-size: 1.2rem; }
 .th-fardh-card__title { font-size: .88rem; font-weight: 700; color: #111; }
 .th-fardh-card__desc { font-size: .8rem; color: #4B5563; line-height: 1.5; margin: 0; }
+/* دليل الحكم داخل بطاقات الطهارة — يرث ألوان النظام ولا يعرّف لوناً جديداً. */
+.th-fardh-card__evidence, .th-card__evidence { font-size: .72rem; color: #4B5563; line-height: 1.85; margin: .5rem 0 0; padding-top: .5rem; border-top: 1px dashed rgba(0,0,0,.12); }
+.th-ayah-note { font-size: .82rem; line-height: 2; color: #374151; background: rgba(20,63,53,.06); border-inline-start: 3px solid #143F35; border-radius: .6rem; padding: .7rem .85rem; margin: 0 0 1rem; }
+
 
 /* sunnah */
 .th-sunnah-list { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: .4rem; }
@@ -30831,6 +30835,9 @@ html[data-theme="dark"] .tasbeeh-counter__preset,
 html[data-theme="dark"] .tasbih-phrase,
 html[data-theme="dark"] .tasbih-progress-label,
 html[data-theme="dark"] .tc-keyboard-hint,
+html[data-theme="dark"] .th-fardh-card__evidence,
+html[data-theme="dark"] .th-card__evidence,
+html[data-theme="dark"] .th-ayah-note,
 html[data-theme="dark"] .th-fardh-card__desc,
 html[data-theme="dark"] .th-fardh-card__title,
 html[data-theme="dark"] .th-naqidh-card__desc,
