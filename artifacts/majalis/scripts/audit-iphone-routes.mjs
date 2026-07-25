@@ -86,9 +86,11 @@ async function auditPage(page, path, width, theme) {
   const url = new URL(path, base).toString();
   try {
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: 25_000 });
-    await page.waitForTimeout(700);
+    await page.waitForTimeout(900);
+    // انتظر ظهور عنوان دلالي إن وُجد (صفحات async مثل مواقيت الصلاة)
+    await page.waitForSelector("h1", { timeout: 4_000 }).catch(() => {});
   } catch (e) {
-    return [{ code: "NAV_FAIL", detail: String(e.message || e).slice(0, 120) }];
+    return { issues: [{ code: "NAV_FAIL", detail: String(e.message || e).slice(0, 120) }], metrics: {} };
   }
 
   await page.evaluate((t) => {

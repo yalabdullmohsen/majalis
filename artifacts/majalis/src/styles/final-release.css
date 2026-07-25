@@ -1034,8 +1034,6 @@ textarea {
   line-height: 1.35;
   text-align: center;
 }
-/* عند اكتمال التحميل يبقى عنوان الصلاة داخل البطل هو h1 الوحيد */
-.pt-wrap:has(.pt-hero__name) > .pt-page-title { display: none; }
 
 @media (max-width: 879px) {
   .ds-btn--sm {
