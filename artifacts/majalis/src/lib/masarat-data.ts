@@ -126,7 +126,7 @@ export const MASARAT: Masar[] = [
       { id: "n4", title: "أذكار يومية أساسية", href: "/adhkar?cat=morning", description: "أذكار يسهل حفظها للمبتدئ: الصباح والمساء وأذكار ما بعد الصلاة." },
       { id: "n5", title: "تعرف على النبي ﷺ وسيرته", href: "/seerah", description: "مدخل موجز إلى سيرة النبي ﷺ لمعرفة من تتبعه." },
       { id: "n6", title: "مدخل إلى القرآن الكريم", href: "/quran-studies", description: "كيف تبدأ قراءة القرآن وفهمه بخطوات يسيرة." },
-      { id: "n7", title: "تصحيح مفاهيم شائعة عن الإسلام", href: "/tazkiya-topics", description: "ردّ المفاهيم الم distorted عن الإسلام بصياغة واضحة." },
+      { id: "n7", title: "تصحيح مفاهيم شائعة عن الإسلام", href: "/tazkiya-topics", description: "ردّ المفاهيم المشوهة عن الإسلام بصياغة واضحة." },
       { id: "n8", title: "بناء مجتمعك المسلم", href: "/usra-mujtama", description: "البحث عن صحبة صالحة ومسجد قريب ومصادر تعلم موثوقة." },
     ],
   },
