@@ -6,16 +6,20 @@
  * (انظر src/lib/__tests__/ticker-content.test.ts).
  *
  * المصادر كلها **موجودة مسبقًا وموثّقة داخل المستودع**؛ لا محتوى جديد
- * أُنشئ هنا ولا نص وُلِّد آليًا:
- *   • DAILY_HADITH_POOL  (49)  — أحاديث بدرجاتها ورواتها
- *   • ARBAEEN_NAWAWI     (42)  — الأربعون النووية
- *   • ADHKAR_ITEMS       (51)  — أذكار الصباح والمساء فقط (من أصل 304)
- *   • DAILY_AYAH_POOL    (30)  — آيات بمراجعها
- *   • DAILY_FAIDA_POOL    (6)  — فوائد بمصادرها
- * المجموع 178 عنصرًا — نحو 8.9 أضعاف نافذة منع التكرار (20)، وكلها محلية:
- * لا طلب شبكة إضافي إطلاقًا.
+ * أُنشئ هنا ولا نص وُلِّد آليًا، ولا يُقصّ أي نص: كل حديث/ذكر/آية/فائدة
+ * يُعرض كاملًا من أوله إلى آخره كما هو مخزَّن في مصدره:
+ *   • DAILY_HADITH_POOL  — أحاديث بدرجاتها ورواتها (تشمل الأربعين النووية
+ *     مدمَجةً مسبقًا؛ لا يُستورَد ARBAEEN_NAWAWI هنا مرة ثانية كي لا يتكرر
+ *     نفس الحديث بمعرّفين مختلفين في الشريط)
+ *   • ADHKAR_ITEMS       — أذكار الصباح والمساء فقط
+ *   • DAILY_AYAH_POOL    — آيات بمراجعها
+ *   • DAILY_FAIDA_POOL   — فوائد بمصادرها
+ * كلها محلية: لا طلب شبكة إضافي إطلاقًا. `buildTickerPool` تُسقط أي عنصر
+ * بلا نص كامل تلقائيًا (حرص أول)، ثم تُزيل أي تكرار نصّي حرفي عبر كل
+ * المصادر (حرص ثانٍ — بعض أذكار الصباح والمساء يتطابق نصّها).
  *
- * قواعد منع التكرار المطلوبة والمطبَّقة:
+ * قواعد منع التكرار المطلوبة والمطبَّقة أثناء الدوران (مستقلة عن إزالة
+ * التكرار البنيوي أعلاه):
  *   ١) لا يتكرر عنصر ظهر ضمن آخر RECENT_LIMIT (=20) عرضًا.
  *   ٢) لا يظهر العنصر نفسه مرتين متتاليتين (حالة خاصة من ١، وتبقى قائمة
  *      حتى لو نفدت العناصر واضطررنا لإعادة الخلط).
@@ -24,7 +28,6 @@
 
 import { DAILY_HADITH_POOL, DAILY_AYAH_POOL, DAILY_FAIDA_POOL } from "./daily-content";
 import { ADHKAR_ITEMS } from "./adhkar-seed";
-import { ARBAEEN_NAWAWI } from "./arbaeen-nawawi-seed";
 
 export type TickerKind = "hadith" | "dhikr" | "ayah" | "faida";
 
@@ -38,9 +41,6 @@ export type TickerContentItem = {
   href: string;
 };
 
-/** أقصى طول للنص المعروض في الشريط. */
-export const MAX_TICKER_TEXT = 110;
-
 /** عدد العناصر المعروضة في دورة واحدة من الشريط. */
 export const VISIBLE_ITEMS = 4;
 
@@ -49,51 +49,32 @@ export const RECENT_LIMIT = 20;
 
 export const RECENT_STORAGE_KEY = "majlis:ticker:recent:v1";
 
-/**
- * يقصّ النص عند حدّ الكلمات لا الحروف، فلا تنقطع كلمة عربية في منتصفها.
- * السبب العملي: عنصر واحد بطوله الكامل (أطول حديث = 1369 حرفًا) كان يُنتج
- * كتلة عرضها ~5450px داخل نافذة عرضها ~290px، فيزحف ~25 ثانية وحده —
- * يبدو للمستخدم كأن الشريط فارغ أو عالق على نفس المحتوى.
- * النص الكامل يبقى متاحًا عند فتح الرابط.
- */
-export function truncateForTicker(text: string, max = MAX_TICKER_TEXT): string {
-  const clean = String(text || "").replace(/\s+/g, " ").trim();
-  if (clean.length <= max) return clean;
-  const cut = clean.slice(0, max);
-  const lastSpace = cut.lastIndexOf(" ");
-  return `${(lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut).trimEnd()}…`;
+/** يُطبِّع المسافات فقط (لا يقصّ الطول) — التطبيع يمنع اختلافات شكلية
+    زائفة عند مقارنة النصوص لإزالة التكرار. */
+function normalizeText(text: string): string {
+  return String(text || "").replace(/\s+/g, " ").trim();
 }
 
-/** يبني المجمّع الموحَّد من المصادر المحلية. نقي: نفس المدخلات ⇒ نفس المخرجات. */
+/** يبني المجمّع الموحَّد من المصادر المحلية. نقي: نفس المدخلات ⇒ نفس المخرجات.
+    كل عنصر بلا نص كامل يُستبعَد (لا يُعرض ناقصًا)، والنص المعروض هو المتن
+    الكامل من مصدره دون أي قصّ أو تلخيص. */
 export function buildTickerPool(): TickerContentItem[] {
   const pool: TickerContentItem[] = [];
 
   for (const h of DAILY_HADITH_POOL) {
-    if (!h?.text) continue;
+    if (!h?.text?.trim()) continue;
     pool.push({
       id: `hadith:${h.id}`,
       kind: "hadith",
       label: "حديث",
-      text: truncateForTicker(h.text),
+      text: normalizeText(h.text),
       source: [h.narrator, h.source].filter(Boolean).join(" — ") || undefined,
       href: "/hadith",
     });
   }
 
-  for (const a of ARBAEEN_NAWAWI) {
-    if (!a?.text) continue;
-    pool.push({
-      id: `arbaeen:${a.id}`,
-      kind: "hadith",
-      label: "الأربعون النووية",
-      text: truncateForTicker(a.text),
-      source: a.title || undefined,
-      href: "/arbaeen-nawawi",
-    });
-  }
-
   for (const d of ADHKAR_ITEMS) {
-    if (!d?.text) continue;
+    if (!d?.text?.trim()) continue;
     // أذكار الصباح والمساء فقط: بقية التصنيفات (أذكار النوم/السفر…) مرتبطة
     // بسياق لا يناسب شريطًا يعمل طوال اليوم.
     if (d.categoryId !== "adh-morning" && d.categoryId !== "adh-evening") continue;
@@ -101,37 +82,44 @@ export function buildTickerPool(): TickerContentItem[] {
       id: `dhikr:${d.id}`,
       kind: "dhikr",
       label: d.categoryId === "adh-morning" ? "أذكار الصباح" : "أذكار المساء",
-      text: truncateForTicker(d.text),
+      text: normalizeText(d.text),
       source: d.source || undefined,
       href: "/adhkar",
     });
   }
 
   for (const v of DAILY_AYAH_POOL) {
-    if (!v?.text) continue;
+    if (!v?.text?.trim()) continue;
     pool.push({
       id: `ayah:${v.id}`,
       kind: "ayah",
       label: "آية",
-      text: truncateForTicker(v.text),
+      text: normalizeText(v.text),
       source: v.reference || v.surah || undefined,
       href: "/quran-hub",
     });
   }
 
   for (const f of DAILY_FAIDA_POOL) {
-    if (!f?.text) continue;
+    if (!f?.text?.trim()) continue;
     pool.push({
       id: `faida:${f.id}`,
       kind: "faida",
       label: f.category || "فائدة",
-      text: truncateForTicker(f.text),
+      text: normalizeText(f.text),
       source: f.source || undefined,
       href: "/fawaid",
     });
   }
 
-  return pool;
+  // إزالة التكرار النصّي الحرفي عبر كل المصادر (مثلًا: بعض أذكار الصباح
+  // والمساء نصّها متطابق تمامًا) — يُبقي أول ظهور فقط.
+  const seenText = new Set<string>();
+  return pool.filter((item) => {
+    if (seenText.has(item.text)) return false;
+    seenText.add(item.text);
+    return true;
+  });
 }
 
 /* ── سجل آخر ما عُرض ─────────────────────────────────────────────── */

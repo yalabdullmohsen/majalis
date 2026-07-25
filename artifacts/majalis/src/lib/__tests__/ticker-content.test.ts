@@ -5,13 +5,11 @@
 import {
   buildTickerPool,
   pickNextBatch,
-  truncateForTicker,
   nextRotationDelayMs,
   readRecent,
   writeRecent,
   RECENT_LIMIT,
   RECENT_STORAGE_KEY,
-  MAX_TICKER_TEXT,
   VISIBLE_ITEMS,
 } from "../ticker-content";
 
@@ -37,19 +35,20 @@ assert(pool.length >= RECENT_LIMIT * 4, `المجمّع أكبر بكثير من
 assert(new Set(pool.map((p) => p.id)).size === pool.length, "كل المعرّفات فريدة عبر كل المصادر");
 assert(pool.every((p) => p.text.trim().length > 0), "لا عنصر بنص فارغ");
 assert(pool.every((p) => p.href.startsWith("/")), "كل عنصر له رابط داخلي صالح");
-assert(pool.every((p) => p.text.length <= MAX_TICKER_TEXT + 1), `لا نص يتجاوز الحد (${MAX_TICKER_TEXT})`);
 assert(new Set(pool.map((p) => p.kind)).size >= 4, "المجمّع يغطي أربعة أنواع محتوى على الأقل");
 
-console.log("\n=== تقصير النص ===");
-assert(truncateForTicker("نص قصير") === "نص قصير", "النص القصير يبقى كما هو");
+console.log("\n=== سلامة النص (بلا قصّ، بلا تكرار) ===");
+assert(!pool.some((p) => p.text.trim().endsWith("…")), "لا عنصر واحد ينتهي بعلامة حذف (لا قصّ للنص)");
+assert(pool.some((p) => p.text.length > 200), "توجد نصوص طويلة كاملة (أطول من 200 حرف) — دليل عدم القصّ");
 {
-  const long = "كلمة ".repeat(80);
-  const out = truncateForTicker(long);
-  assert(out.length <= MAX_TICKER_TEXT + 1, "النص الطويل يُقصّ إلى الحد");
-  assert(out.endsWith("…"), "النص المقصوص ينتهي بعلامة حذف");
-  assert(!out.includes("  "), "لا مسافات مزدوجة بعد التطبيع");
+  const seen = new Set<string>();
+  const dupes = pool.filter((p) => {
+    if (seen.has(p.text)) return true;
+    seen.add(p.text);
+    return false;
+  });
+  assert(dupes.length === 0, `لا نص مكرر حرفيًا عبر المجمّع (تكرارات: ${dupes.length})`);
 }
-assert(truncateForTicker("  أ   ب  ") === "أ ب", "المسافات الزائدة تُطبَّع");
 
 console.log("\n=== منع التكرار ===");
 {
