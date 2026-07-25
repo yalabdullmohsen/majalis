@@ -1025,7 +1025,8 @@ textarea {
 .lrn-hub-search__input {
   min-height: 44px;
 }
-.pt-page-title {
+.pt-page-title,
+.page-status-shell__title {
   margin: 0 0 0.75rem;
   padding-inline: var(--page-gutter, 1rem);
   color: var(--color-text);
@@ -1033,6 +1034,19 @@ textarea {
   font-weight: 800;
   line-height: 1.35;
   text-align: center;
+}
+.hb-header__source-link,
+.hb-notice__link,
+.kuwait-lessons-source-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 0.35rem;
+}
+.mosque-mode__label {
+  margin: 0;
+  font: inherit;
+  font-weight: 700;
 }
 
 @media (max-width: 879px) {

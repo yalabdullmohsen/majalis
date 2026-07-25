@@ -130,17 +130,20 @@ async function auditPage(page, path, width, theme) {
     }
 
     // أهداف لمس صغيرة في المحتوى الرئيسي (تجاهل الفوتر/الـskip)
+    // استثناءات مقصودة: آيات المصحف المضمونة (نص قرآني كثيف)، عقد الرسوم البيانية SVG
     const small = [];
     for (const el of document.querySelectorAll("a, button, [role='button']")) {
-      if (el.closest(".site-footer, .skip-link, .sr-only, [aria-hidden='true']")) continue;
+      if (el.closest(".site-footer, .skip-link, .sr-only, [aria-hidden='true'], .mf2-ayah-group, svg, .knowledge-graph, .kng-canvas, .pft-svg, .prophets-tree")) continue;
+      if (el.classList?.contains("mf2-ayah-group")) continue;
       const st = getComputedStyle(el);
       if (st.display === "none" || st.visibility === "hidden" || st.pointerEvents === "none") continue;
       const r = el.getBoundingClientRect();
       if (r.width < 1 || r.height < 1) continue;
       if (r.top > window.innerHeight * 2.5) continue; // خارج منطقة الاهتمام الأولى
       if (r.width < 44 || r.height < 44) {
+        const cls = typeof el.className === "string" ? el.className : (el.getAttribute("class") || "");
         small.push({
-          cls: String(el.className || "").slice(0, 48),
+          cls: cls.slice(0, 48),
           w: Math.round(r.width),
           h: Math.round(r.height),
           t: (el.getAttribute("aria-label") || el.textContent || "").trim().slice(0, 28),

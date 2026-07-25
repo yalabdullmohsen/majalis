@@ -4,7 +4,7 @@ import { BookOpen, ClipboardList, Gem, Landmark, Lock, Moon, Repeat2, ScrollText
 import type { LucideIcon } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 import { ShareButtons } from "@/components/ContentActions";
-import { PageHeader } from "@/components/ui-common";
+import { PageHeader, PageStatusShell } from "@/components/ui-common";
 import {
   getUserLearningPlan,
   saveLearningPlan,
@@ -284,19 +284,19 @@ export default function LearningPlanPage() {
 
   if (authLoading || pageLoading) {
     return (
-      <div className="page-shell narrow" dir="rtl">
-        <div className="profile-loading">
+      <PageStatusShell title="خطة تعلّمك الشخصية">
+        <div className="profile-loading" aria-busy="true">
           <span className="profile-loading__dot" />
           <span className="profile-loading__dot" />
           <span className="profile-loading__dot" />
         </div>
-      </div>
+      </PageStatusShell>
     );
   }
 
   if (!isLoggedIn) {
     return (
-      <div className="page-shell narrow lpn-login-prompt" dir="rtl">
+      <PageStatusShell title="خطة تعلّمك الشخصية" className="page-shell narrow lpn-login-prompt">
         <div className="lpn-login-icon"><Lock size={40} strokeWidth={1.3} aria-hidden="true" /></div>
         <p className="lpn-login-msg">
           سجّل الدخول لإنشاء خطة تعلّم شخصية.
@@ -304,7 +304,7 @@ export default function LearningPlanPage() {
         <Link href="/login?next=/learning-plan" className="ui-card-btn">
           تسجيل الدخول
         </Link>
-      </div>
+      </PageStatusShell>
     );
   }
 

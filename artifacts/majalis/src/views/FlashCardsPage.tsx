@@ -6,7 +6,7 @@ import {
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { ShareButtons } from "@/components/ContentActions";
-import { PageHeader } from "@/components/ui-common";
+import { PageHeader, PageStatusShell } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import {
   getDueFlashCards,
@@ -321,24 +321,24 @@ export default function FlashCardsPage() {
   // حالة التحميل
   if (authLoading || loading) {
     return (
-      <div className="page-shell narrow" dir="rtl">
-        <div className="profile-loading">
+      <PageStatusShell title="بطاقات المراجعة">
+        <div className="profile-loading" aria-busy="true">
           <span className="profile-loading__dot" />
           <span className="profile-loading__dot" />
           <span className="profile-loading__dot" />
         </div>
-      </div>
+      </PageStatusShell>
     );
   }
 
   // غير مسجّل
   if (!isLoggedIn) {
     return (
-      <div className="page-shell narrow flc-login-prompt" dir="rtl">
+      <PageStatusShell title="بطاقات المراجعة" className="page-shell narrow flc-login-prompt">
         <div className="flc-login-icon"><Lock size={40} strokeWidth={1.3} /></div>
         <p className="flc-login-msg">سجّل الدخول للوصول إلى بطاقات المراجعة.</p>
         <Link href="/login?next=/flashcards" className="ui-card-btn">تسجيل الدخول</Link>
-      </div>
+      </PageStatusShell>
     );
   }
 

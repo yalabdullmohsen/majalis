@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { Link2, Lock } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
-import { PageHeader } from "@/components/ui-common";
+import { PageHeader, PageStatusShell } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
@@ -162,33 +162,33 @@ export default function ResearcherProfilePage() {
 
   if (authLoading) {
     return (
-      <div className="page-shell narrow" dir="rtl">
-        <div className="profile-loading">
+      <PageStatusShell title="ملف الباحث">
+        <div className="profile-loading" aria-busy="true">
           <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
         </div>
-      </div>
+      </PageStatusShell>
     );
   }
 
   if (!isLoggedIn) {
     return (
-      <div className="page-shell narrow rpr-login-prompt" dir="rtl">
+      <PageStatusShell title="ملف الباحث" className="page-shell narrow rpr-login-prompt">
         <div className="rpr-login-icon"><Lock size={40} strokeWidth={1.3} aria-hidden="true" /></div>
         <p className="rpr-login-msg">
           سجّل الدخول لإنشاء ملفك البحثي.
         </p>
         <Link href="/login?next=/researcher" className="ui-card-btn">تسجيل الدخول</Link>
-      </div>
+      </PageStatusShell>
     );
   }
 
   if (loading) {
     return (
-      <div className="page-shell narrow" dir="rtl">
-        <div className="profile-loading rpr-loading-center">
+      <PageStatusShell title="ملف الباحث">
+        <div className="profile-loading rpr-loading-center" aria-busy="true">
           <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
         </div>
-      </div>
+      </PageStatusShell>
     );
   }
 
