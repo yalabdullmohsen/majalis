@@ -1025,6 +1025,17 @@ textarea {
 .lrn-hub-search__input {
   min-height: 44px;
 }
+.pt-page-title {
+  margin: 0 0 0.75rem;
+  padding-inline: var(--page-gutter, 1rem);
+  color: var(--color-text);
+  font-size: clamp(1.25rem, 3.5vw, 1.6rem);
+  font-weight: 800;
+  line-height: 1.35;
+  text-align: center;
+}
+/* عند اكتمال التحميل يبقى عنوان الصلاة داخل البطل هو h1 الوحيد */
+.pt-wrap:has(.pt-hero__name) > .pt-page-title { display: none; }
 
 @media (max-width: 879px) {
   .ds-btn--sm {
