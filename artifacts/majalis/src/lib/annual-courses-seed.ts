@@ -89,7 +89,7 @@ export const ANNUAL_COURSES_SEED: AnnualCourse[] = [
     id: "mutoon-alfiyyah",
     external_key: "mutoon-alfiyyah",
     title: "متن الألفية في النحو",
-    summary: "حلقة علمية لحفظ وشرح متن الألفية.",
+    summary: "حلقة علمية لحفظ وشرح متن ألفية ابن مالك في النحو العربي.",
     course_type: "متن",
     year: 2026,
     sheikh_names: ["د. أسامة الشاوي"],

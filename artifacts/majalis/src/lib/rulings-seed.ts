@@ -5,7 +5,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-wudu-nullifiers",
     external_key: "ruling-wudu-nullifiers",
     title: "نواقض الوضوء",
-    summary: "ما يُبطل الوضوء من أحداث ونواقض.",
+    summary: "خمسة نواقض مشهورة: خروج من السبيلين، النوم، مسّ الفرج بشهوة، لحم الإبل، والردة.",
     body: `**نواقض الوضوء:**
 1. خروج شيء من السبيلين (بول، غائط، ريح).
 2. النوم الخفيف أو الثقيل.
@@ -28,7 +28,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-prayer-pillars",
     external_key: "ruling-prayer-pillars",
     title: "أركان الصلاة",
-    summary: "الأركان التي لا تصح الصلاة إلا بها.",
+    summary: "اثنا عشر ركناً من القيام إلى التسليم؛ يُبطل ترك أيٍّ منها متعمداً.",
     body: `**أركان الصلاة:**
 1. القيام مع القدرة.
 2. تكبيرة الإحرام.
@@ -76,7 +76,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-hajj-pillars",
     external_key: "ruling-hajj-pillars",
     title: "أركان الحج",
-    summary: "ما لا يتم الحج إلا به.",
+    summary: "أربعة أركان لا يُعدّ الحج تاماً بدونها: الإحرام، والوقوف بعرفة، وطواف الإفاضة، والسعي.",
     body: `**أركان الحج:**
 1. الإحرام.
 2. الوقوف بعرفة.
@@ -97,7 +97,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-trade-conditions",
     external_key: "ruling-trade-conditions",
     title: "شروط صحة البيع",
-    summary: "ما يشترط لصحة عقد البيع في الشريعة.",
+    summary: "خمسة شروط: الرضا، معلومية المبيع والثمن، التمكين، حلّ المبيع، وسلامته من الغرر الفاحش.",
     body: `**شروط صحة البيع:**
 1. رضا الطرفين.
 2. معلومية المبيع والثمن.
@@ -139,7 +139,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-wudu-conditions",
     external_key: "ruling-wudu-conditions",
     title: "شروط صحة الوضوء",
-    summary: "الشروط الواجب توافرها لصحة الوضوء.",
+    summary: "سبعة شروط: الإسلام والعقل والنية والماء الطهور وإزالة الحائل والموالاة وانقطاع الحدث.",
     body: `**شروط صحة الوضوء:**
 1. الإسلام.
 2. العقل والتمييز.
@@ -164,7 +164,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-ghusl-obligations",
     external_key: "ruling-ghusl-obligations",
     title: "موجبات الغسل",
-    summary: "الأسباب التي توجب الاغتسال شرعاً.",
+    summary: "خمس موجبات: الجنابة، الحيض والنفاس، والولادة، وغسل الميت، ودخول الإسلام.",
     body: `**موجبات الغسل:**
 1. **الجنابة:** وتكون بإيلاج أو إنزال المني باحتلام أو غيره.
 2. **انقطاع الحيض:** يجب على المرأة الاغتسال بعد انقطاع دم الحيض.
@@ -188,7 +188,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-istinja",
     external_key: "ruling-istinja",
     title: "أحكام الاستنجاء والاستجمار",
-    summary: "كيفية إزالة النجاسة بعد قضاء الحاجة.",
+    summary: "الاستنجاء بالماء أو بالحجر الطاهر؛ والماء أولى عند توفره.",
     body: `**أحكام الاستنجاء:**
 1. **الاستنجاء بالماء:** أفضل وأكمل، ويكون بإسباغ الماء حتى تزول النجاسة وأثرها.
 2. **الاستجمار بالأحجار أو ما يقوم مقامها:** يجزئ بشرط ثلاث مسحات فأكثر حتى تنقى المحل.
@@ -212,7 +212,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-najasah-purification",
     external_key: "ruling-najasah-purification",
     title: "النجاسات وطرق تطهيرها",
-    summary: "أنواع النجاسات والكيفية الشرعية لإزالتها.",
+    summary: "النجاسة العينية تُزال بالماء أو بما يُنظّف؛ والحدث الأصغر والأكبر بالوضوء والغسل.",
     body: `**أنواع النجاسات:**
 - **مغلظة:** نجاسة الكلب والخنزير، وتُطهَّر بسبع غسلات إحداها بالتراب.
 - **مخففة:** بول الصبي الذي لم يأكل الطعام، ويكفي فيها الرش.
@@ -239,7 +239,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-prayer-conditions",
     external_key: "ruling-prayer-conditions",
     title: "شروط صحة الصلاة",
-    summary: "ما يجب توافره قبل الدخول في الصلاة.",
+    summary: "سبعة شروط: الإسلام والعقل، دخول الوقت، الطهارة، طهارة البدن والثوب والمكان، ستر العورة، استقبال القبلة، والنية.",
     body: `**شروط صحة الصلاة:**
 1. الإسلام والعقل والتمييز.
 2. دخول الوقت.
@@ -318,7 +318,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-voluntary-prayer",
     external_key: "ruling-voluntary-prayer",
     title: "صلاة التطوع وأنواعها",
-    summary: "النوافل المسنونة وأنواعها وأحكامها.",
+    summary: "السنن الرواتب وقيام الليل والضحى والوتر والتراويح — بيان أنواعها وفضلها.",
     body: `**أنواع صلاة التطوع:**
 1. **السنن الرواتب:** 12 ركعة في اليوم (ركعتان قبل الفجر، وأربع قبل الظهر، وركعتان بعده، وركعتان بعد المغرب، وركعتان بعد العشاء).
 2. **قيام الليل (التهجد):** من أفضل النوافل.
@@ -371,7 +371,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-fasting-qada",
     external_key: "ruling-fasting-qada",
     title: "أحكام قضاء الصيام",
-    summary: "من وجب عليه قضاء رمضان وكيفيته.",
+    summary: "من أفطر رمضان بعذر يقضي يوماً عن يوم؛ والكبير والمرض المزمن يُفطران بالفدية.",
     body: `**من يجب عليه القضاء:**
 1. المريض الذي أفطر بسبب المرض إذا شُفي.
 2. المسافر الذي أفطر في سفره.
@@ -398,7 +398,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-laylat-alqadr",
     external_key: "ruling-laylat-alqadr",
     title: "فضل ليلة القدر وأحكامها",
-    summary: "فضل ليلة القدر وما يُستحب فيها.",
+    summary: "ليلة خير من ألف شهر؛ تُلتمس في العشر الأواخر، ويُستحب فيها الدعاء والاجتهاد في العبادة.",
     body: `**فضل ليلة القدر:**
 - قال تعالى: ﴿لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ﴾.
 - العبادة فيها خير من العبادة في ألف شهر.
@@ -427,7 +427,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-fidyah-fasting",
     external_key: "ruling-fidyah-fasting",
     title: "فدية الصيام",
-    summary: "أحكام الفدية لمن لا يستطيع الصيام.",
+    summary: "من عجز عن الصيام يُطعم مسكيناً عن كل يوم — صاع من طعام أهل البلد.",
     body: `**من تجب عليه الفدية دون القضاء:**
 1. الشيخ الكبير العاجز عن الصيام.
 2. المريض مرضاً مزمناً لا يُرجى شفاؤه.
@@ -514,7 +514,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-zakat-recipients",
     external_key: "ruling-zakat-recipients",
     title: "مصارف الزكاة الثمانية",
-    summary: "الأصناف الثمانية المستحقة للزكاة.",
+    summary: "ثمانية أصناف: الفقير والمسكين والعامل عليها والمؤلفة قلوبهم والرقاب والغارم والفي سبيل الله وابن السبيل.",
     body: `**مصارف الزكاة بنص القرآن الكريم:**
 1. **الفقراء:** من لا مال له أو يملك أقل من نصف كفايته.
 2. **المساكين:** من يملك نصف الكفاية فأقل.
@@ -538,7 +538,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-zakat-debt",
     external_key: "ruling-zakat-debt",
     title: "الدَّين وأثره على الزكاة",
-    summary: "هل يُخصم الدَّين من المال قبل احتساب الزكاة.",
+    summary: "الدين الحالّ يُخصم من المال قبل احتساب النصاب عند جمهور العلماء.",
     body: `**مسألة الدَّين والزكاة:**
 
 **مذهب الحنفية والمالكية والحنابلة:**
@@ -566,7 +566,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-child-custody",
     external_key: "ruling-child-custody",
     title: "أحكام حضانة الأطفال",
-    summary: "من أحق بحضانة الطفل عند انفصال الوالدين.",
+    summary: "الأم أحق بالحضانة ما لم تتزوج؛ ثم الأم ثم الأقرب فالأقرب من النساء.",
     body: `**أحكام الحضانة:**
 1. **الأم أحق بالحضانة** في الصغر: عند الحنفية حتى سبع سنوات للذكر وتسع للأنثى، وعند الشافعية والحنابلة حتى التمييز.
 2. **شروط الحاضنة:** الإسلام، العقل، الأمانة، القدرة على التربية، خلو الوقت للطفل.
@@ -587,7 +587,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-wife-nafaqah",
     external_key: "ruling-wife-nafaqah",
     title: "نفقة الزوجة",
-    summary: "ما يجب للزوجة من نفقة وكسوة وسكن.",
+    summary: "النفقة واجبة على الزوج: طعام وكسوة وسكن بما يليق بيسره لا بيسر غيره.",
     body: `**وجوب النفقة:**
 - النفقة واجبة على الزوج لزوجته بالكتاب والسنة والإجماع.
 
@@ -648,7 +648,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-parents-disobedience",
     external_key: "ruling-parents-disobedience",
     title: "عقوق الوالدين وأحكامه",
-    summary: "تعريف عقوق الوالدين وحكمه ومظاهره.",
+    summary: "من أكبر الكبائر؛ يشمل القول والفعل والإهمال، ولا طاعة في معصية الوالدين.",
     body: `**تعريف العقوق:**
 إيذاء الوالدين أو أحدهما قولاً أو فعلاً أو تركاً مما فيه أذى ظاهر.
 
@@ -1574,7 +1574,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-hajj-debt",
     external_key: "ruling-hajj-debt",
     title: "حكم الحج على المديون",
-    summary: "هل يجب الحج على من عليه ديون؟",
+    summary: "يجب الحج على القادر مالياً وبدنياً؛ الدين لا يُسقط الوجوب إلا إن حال دون السفر.",
     body: `**المسألة:**
 من عليه ديون، هل يلزمه الحج قبل سداد ديونه؟
 
@@ -2009,7 +2009,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-mayyit-ghusl",
     external_key: "ruling-mayyit-ghusl",
     title: "كيفية غسل الميت",
-    summary: "صفة تغسيل الميت المسلم قبل تكفينه.",
+    summary: "غسل الميت واجب كفاية؛ يُغسل ثلاثاً أو أكثر بالماء والسدر أو ما يُطهر، مع الترتيب والستر.",
     body: `**حكم غسل الميت:**
 فرض كفاية على المسلمين؛ إذا قام به من يكفي سقط الإثم عن الباقين.
 
