@@ -64,9 +64,9 @@ const SVG_H       = 580;
 // النوع أصلاً (تحقّقتُ مباشرة)، والقيمة الافتراضية (?? "#6b7280"/nodeType)
 // تُغطّي أي قيمة غير متوقَّعة بأمان.
 const OLD_TYPE_COLOR: Record<KnowledgeSourceType, string> = {
-  scholar:  "#173D35",
+  scholar:  "#143F35",
   lesson:   "#0369a1",
-  book:     "#173D35",
+  book:     "#143F35",
   fawaid:   "#047857",
   question: "#6b7280",
 };

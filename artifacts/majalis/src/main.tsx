@@ -11,6 +11,10 @@ import { createAppQueryClient } from "./lib/query-client";
 import { PERF_SLOW_MS } from "./lib/performance-monitor";
 import { registerProductionServiceWorker } from "./lib/service-worker";
 import { setupStatusBar, setupKeyboard, isAndroid, isNative } from "./lib/capacitor-utils";
+// هوية v4: مصدر الرموز الوحيد (لون/طباعة/مسافات/حواف/ظلال/حركة). يجب أن
+// يبقى أول استيراد — كل ملفات CSS اللاحقة تستهلك رموزه، وأنظمة الرموز
+// القديمة الـ15 مُعاد توجيهها إليه داخله كـaliases.
+import "./styles/brand-v4.css";
 import "./index.css";
 import "./styles/design-system.css";
 import "./styles/patterns.css";
@@ -21,6 +25,12 @@ import "./styles/elite-2026.css";
 import "./styles/sins-rights.css";
 // Final release layer: one authoritative visual contract loaded after legacy page styles.
 import "./styles/final-release.css";
+// هوية v4 — طبقة المظهر المشتركة. تُحمَّل أخيرًا كي تحسم شكل البطاقات
+// والأزرار والحقول عبر الموقع. لا تحدّد أي لون (انظر رأس الملف).
+import "./styles/brand-v4-components.css";
+// تصحيحات تباين مُقاسة بـPlaywright (خصوصًا الوضع الداكن). تُحمَّل بعد كل
+// شيء كي تحسم التصادمات التي تنتج عن تسطيح الرموز في الثيم الداكن القديم.
+import "./styles/brand-v4-contrast-fixes.css";
 
 const queryClient = createAppQueryClient();
 

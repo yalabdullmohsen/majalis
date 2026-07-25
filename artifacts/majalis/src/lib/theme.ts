@@ -1,7 +1,7 @@
 export const C = {
   ink:           "var(--majalis-ink)",
   inkSoft:       "var(--majalis-ink-soft)",
-  inkMuted:      "var(--majalis-ink-muted, #5E655F)",
+  inkMuted:      "var(--majalis-ink-muted, #5C5C56)",
   charcoal:      "var(--majalis-charcoal)",
   parchment:     "var(--majalis-parchment)",
   parchmentDeep: "var(--majalis-parchment-deep)",
@@ -36,9 +36,9 @@ export const QA_RULING_TYPES = ["حلال", "حرام", "مكروه", "مباح"
 export const QA_RULING_COLORS: Record<string, { bg: string; text: string }> = {
   "حلال": { bg: "#D1FAE5", text: "#065F46" },
   "مباح": { bg: "#DBEAFE", text: "#1E40AF" },
-  "سنة": { bg: "rgba(23,61,53,0.08)", text: "#173D35" },
-  "مندوب": { bg: "rgba(23,61,53,0.08)", text: "#173D35" },
-  "مكروه": { bg: "rgba(21,48,37,0.08)", text: "#173D35" },
+  "سنة": { bg: "rgba(23,61,53,0.08)", text: "#143F35" },
+  "مندوب": { bg: "rgba(23,61,53,0.08)", text: "#143F35" },
+  "مكروه": { bg: "rgba(21,48,37,0.08)", text: "#143F35" },
   "حرام": { bg: "#FEE2E2", text: "#991B1B" },
 };
 

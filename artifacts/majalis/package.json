@@ -117,7 +117,8 @@
     "generate:version": "node scripts/generate-version.mjs",
     "mobile:sync": "npm run build && npx cap sync",
     "mobile:android": "npm run build && npx cap sync && npx cap open android",
-    "mobile:ios": "npm run build && npx cap sync && npx cap open ios"
+    "mobile:ios": "npm run build && npx cap sync && npx cap open ios",
+    "audit:theme-contrast": "node scripts/audit-theme-contrast.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

@@ -16,15 +16,15 @@ type Citation = { surah: string; ayahs: string; note: string };
 
 const PROPHET_HUE: Record<string, string> = {
   adam: "#5D726A", idris: "#4A6B6B", nuh: "#3D6560", hud: "#5A7066",
-  salih: "#5B6B60", ibrahim: "#173D35", lut: "#3A6A4A", ismail: "#2A5E42",
+  salih: "#5B6B60", ibrahim: "#143F35", lut: "#3A6A4A", ismail: "#2A5E42",
   "is-haq": "#3D6050", yaqub: "#356055", yusuf: "#2D5545", ayyub: "#4A6055",
-  shuayb: "#25504A", musa: "#173D35", harun: "#1E4A38", "dhul-kifl": "#354A42",
-  dawud: "#2A3E35", sulayman: "#173D35", ilyas: "#3A5548", "al-yasa": "#266050",
+  shuayb: "#25504A", musa: "#143F35", harun: "#1E4A38", "dhul-kifl": "#354A42",
+  dawud: "#2A3E35", sulayman: "#143F35", ilyas: "#3A5548", "al-yasa": "#266050",
   yunus: "#1A5555", zakariyya: "#2A503C", yahya: "#205540", isa: "#1E3F50",
-  muhammad: "#173D35",
+  muhammad: "#143F35",
 };
 
-const IVORY = "#D6CFC0";
+const IVORY = "#D6D5CE";
 
 /* بيانات تكميلية: عدد الذكر، المعجزة، الكتاب، المواضع القرآنية */
 type Supplement = { mentioned: number; miracle?: string; book?: string; quranRef?: string };

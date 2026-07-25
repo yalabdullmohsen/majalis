@@ -86,8 +86,8 @@ export const NODE_TYPE_COLOR: Record<KnNodeType, string> = {
   quran_ayah:    "#065f46", // أخضر داكن
   hadith:        "#1d4ed8", // أزرق
   fatwa:         "#7c3aed", // بنفسجي
-  scholar:       "#173D35", // ذهبي
-  book:          "#173D35", // بني
+  scholar:       "#143F35", // ذهبي
+  book:          "#143F35", // بني
   lesson:        "#0369a1", // أزرق فاتح
   benefit:       "#047857", // أخضر
   prophet_story: "#dc2626", // أحمر
