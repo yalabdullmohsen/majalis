@@ -18408,15 +18408,8 @@ body.has-assistant-fab .app-main {
   -webkit-backdrop-filter: blur(4px);
 }
 
-/* ── NavBar: خلفية العاجي الدافئ على النهار ── */
-html:not([data-theme="dark"]) .navbar-v3 {
-  background: rgba(247,244,237,0.96) !important;
-}
-
-/* ── تذييل التنقل السفلي: خلفية عاجية دافئة على النهار ── */
-html:not([data-theme="dark"]) .bottom-nav {
-  background: rgba(247,244,237,0.97) !important;
-}
+/* NavBar / bottom-nav backgrounds: مصدر واحد في final-release.css
+   (أُزيلت هنا !important التي كانت تُلغي عقد الهوية النهائي). */
 
 /* ── فواصل أقسام دقيقة بين عناصر الصفحة الرئيسية ── */
 .home-main > *:not(:last-child) {
