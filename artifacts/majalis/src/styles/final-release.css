@@ -50,6 +50,7 @@ html[data-theme="dark"] {
 html { background: var(--color-background); }
 body {
   min-width: 320px;
+  overflow-x: clip;
   background:
     radial-gradient(circle at 85% 0%, rgb(167 125 54 / 7%), transparent 24rem),
     var(--color-background);
@@ -325,6 +326,22 @@ html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1)
   background: var(--color-surface);
   color: var(--color-primary);
   box-shadow: none;
+  transition: background var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast);
+}
+.navbar-menu-btn:active,
+.navbar-theme-toggle:active,
+.navbar-mobile-login:active {
+  background: var(--color-surface-muted);
+}
+.navbar-menu-btn:focus-visible,
+.navbar-theme-toggle:focus-visible,
+.navbar-mobile-login:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-accent) 72%, white);
+  outline-offset: 2px;
+}
+.navbar-mobile-login--active {
+  background: color-mix(in srgb, var(--color-primary) 12%, var(--color-surface));
+  border-color: color-mix(in srgb, var(--color-primary) 28%, var(--color-border));
 }
 
 /* الشريط المتحرك أعلى التطبيق (HeaderTicker) — يحلّ محل زر/مربع البحث في
