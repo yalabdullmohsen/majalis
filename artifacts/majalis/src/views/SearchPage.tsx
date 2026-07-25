@@ -374,7 +374,7 @@ export default function SearchPage() {
 
   const localExtra = q.trim()
     ? searchLocalExtensions(q)
-    : { occasions: [], nawawi: [], quran: [], adhkar: [], surahStories: [], islamicStories: [] };
+    : { occasions: [], nawawi: [], quran: [], adhkar: [], surahStories: [], islamicStories: [], nations: [] };
   const hasActiveFilter = Object.values(filters).some(Boolean);
 
   const intelligentTotal = intelligentResults.length;
@@ -386,7 +386,8 @@ export default function SearchPage() {
     (results.courses?.length || 0) + (results.updates?.length || 0) +
     (results.hadith?.length || 0) + (results.stories?.length || 0) +
     localExtra.occasions.length + localExtra.nawawi.length + localExtra.quran.length +
-    localExtra.adhkar.length + localExtra.surahStories.length + localExtra.islamicStories.length;
+    localExtra.adhkar.length + localExtra.surahStories.length + localExtra.islamicStories.length +
+    localExtra.nations.length;
 
   const total = intelligentTotal > 0 ? intelligentTotal : legacyTotal;
 
@@ -653,6 +654,9 @@ export default function SearchPage() {
                       <ResultRow key={s.id} href={s.href} kind="story" query={q} title={s.title} meta={s.meta} />
                     )} />
                   )}
+                  <Group title="الأمم السابقة" items={localExtra.nations} render={(s) => (
+                    <ResultRow key={s.id} href={s.href} kind="story" query={q} title={s.title} meta={s.meta} />
+                  )} />
                   <Group title="قصص السور" items={localExtra.surahStories} render={(s) => (
                     <ResultRow key={s.id} href={s.href} kind="quran" query={q} title={s.title} meta={s.meta} />
                   )} />

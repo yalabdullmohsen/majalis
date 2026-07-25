@@ -31,8 +31,11 @@ function pickTodayItem(weekDayFacts: WeekDayFact[] | null): TodayItem | null {
   const useHadith = getDayIndex() % 2 === 0;
   if (useHadith) {
     const h = getDailyHadith();
+    // الراوي اختياري (أحاديث الأربعين النووية بلا حقل راوٍ منفصل) — لا يُطبع
+    // «undefined» في نسبة الحديث.
     const grade = h.grade ? ` — ${h.grade}` : "";
-    return { kind: "hadith", text: h.text, source: `${h.narrator} — ${h.source}${grade}` };
+    const attribution = [h.narrator, h.source].filter(Boolean).join(" — ");
+    return { kind: "hadith", text: h.text, source: `${attribution}${grade}` };
   }
   const f = getDailyFaida();
   return { kind: "faida", text: f.text, source: f.source || f.category };

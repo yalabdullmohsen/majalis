@@ -245,7 +245,7 @@ export default function MiraclesPage({
         status={status}
         error={error}
         onRetry={() => setReloadKey((k) => k + 1)}
-        emptyText="لا توجد بيانات حالياً"
+        emptyText="لا توجد مواد مطابقة في هذا التصنيف. جرّب تصنيفاً آخر أو أعد ضبط البحث."
       >
         <div className="mk-grid">
           {displayed.map((item: any) => {
