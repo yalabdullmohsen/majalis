@@ -4491,6 +4491,7 @@ html[data-theme="dark"] .khatma-bar-fill {
   align-items: center !important;
   justify-content: space-between !important;
   gap: 1rem !important;
+  min-height: 44px !important;
   padding: 0.55rem 0 !important;
   border-bottom: 1px solid var(--elite-border, rgba(0,0,0,0.06)) !important;
   cursor: pointer !important;

@@ -1002,6 +1002,30 @@ textarea {
   font: inherit;
 }
 
+/* صفحات كثيرة كانت تضيف 4–6rem أسفل المحتوى فوق حشو .app-main — فراغ زائد */
+:is(
+  .sw-page, .th-page, .fa-page, .jnz-page, .lp-page, .fc-page, .sr-page,
+  .fm-page, .vault-page, .rp-page, .inst-page, .hj-page, .nations-page,
+  .ikm-page, .legal-page
+) {
+  padding-bottom: 1.25rem;
+}
+.legal-back-btn {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+}
+.lrn-hub-card {
+  min-height: 44px;
+  border-radius: var(--radius-lg);
+}
+.lrn-hub-search__input {
+  min-height: 44px;
+}
+
 @media (max-width: 879px) {
   .ds-btn--sm {
     min-height: 44px;
