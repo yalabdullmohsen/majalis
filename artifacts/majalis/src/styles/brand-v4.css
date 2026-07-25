@@ -1,0 +1,413 @@
+/**
+ * ══════════════════════════════════════════════════════════════════════════
+ *  هوية «المجلس العلمي» البصرية — الإصدار الرابع (v4)
+ *  المصدر الوحيد للحقيقة: لون · طباعة · مسافات · حواف · ظلال · حركة
+ * ══════════════════════════════════════════════════════════════════════════
+ *
+ * لماذا هذا الملف موجود
+ * ─────────────────────
+ * قبل v4 كان في المشروع 15 نظام رموز متوازيًا (--clr-* و--elite-* و
+ * --majalis-* و--msk-* و--ds-* و--mn-* و--txt-* …) تتنافس على نفس القيم،
+ * إضافة إلى 581 لونًا صلبًا مكتوبًا يدويًا (اللونان الأساسيان وحدهما
+ * مكرران 2024 مرة). لذلك كان كل «توحيد» سابق يصمد في صفحات ويسقط في أخرى:
+ * لا يوجد مكان واحد يُغيَّر فيه اللون فيتغيّر الموقع كله.
+ *
+ * v4 يقلب المعادلة: هذا الملف يُحمَّل **أولًا** قبل كل ملفات CSS، ويعرّف
+ * السلالم الأولية (primitives). ثم تُعاد كتابة كل الأنظمة القديمة كـ
+ * aliases تشير إلى هنا (انظر آخر الملف). النتيجة: تغيير سطر واحد هنا
+ * يسري على 70 ألف سطر CSS و250 مسارًا.
+ *
+ * قاعدة صارمة
+ * ───────────
+ * لا يجوز لأي ملف آخر تعريف لون صلب جديد. كل لون جديد يُضاف هنا أولًا.
+ *
+ * التباين
+ * ───────
+ * كل زوج (نص/خلفية) في هذا الملف مُتحقَّق منه رياضيًا مقابل WCAG 2.2 AA
+ * قبل الكتابة — 33 زوجًا، نص عادي ≥4.5:1 وعناصر التحكم ≥3:1، في الوضعين
+ * الفاتح والداكن. حدود البطاقات والفواصل زخرفية ومستثناة صراحةً من 1.4.11،
+ * ولذلك يوجد رمز منفصل --border-interactive لحدود عناصر الإدخال.
+ */
+
+:root {
+  /* ══════════════════════════════════════════════════════════
+     ١) السلالم الأولية — أرقام خام، لا تُستعمل مباشرة في المكونات
+     ══════════════════════════════════════════════════════════ */
+
+  /* الزمردي — هوية المنصة. مُطوَّر من #173D35 التاريخي: نفس الروح
+     (أخضر مائل للمزرقّ، مشبع باعتدال) لكن بسُلَّم كامل 50→950 يسمح
+     بتدرّج حقيقي بدل لونين متطرفين. */
+  --em-50:  #F0F7F4;
+  --em-100: #DBEDE5;
+  --em-200: #B6DACB;
+  --em-300: #88C0AC;
+  --em-400: #57A189;
+  --em-500: #33846C;
+  --em-600: #226A56;  /* اللون التفاعلي الأساسي — 6.43:1 على أبيض */
+  --em-700: #195345;
+  --em-800: #143F35;
+  --em-900: #0F2F28;
+  --em-950: #081A16;
+
+  /* الذهبي النحاسي — لهجة ثانوية للتكريم والتمييز العلمي (لا للتنبيه).
+     مستوحى من تذهيب المخطوطات، مكبوح عمدًا كي لا يصبح لون تحذير. */
+  --gold-100: #FAF3E0;
+  --gold-200: #F2E3BE;
+  --gold-300: #E3CB8C;
+  --gold-400: #D2B063;
+  --gold-500: #B8963F;
+  --gold-600: #8F7230;
+  --gold-700: #6B5524;
+
+  /* نيوترالز دافئة — رمادي بلمسة عاجية تحفظ دفء الهوية السابقة
+     دون اصفرار الورق القديم. */
+  --n-0:   #FFFFFF;
+  --n-50:  #FAFAF8;
+  --n-100: #F4F4F1;
+  --n-200: #E8E7E2;
+  --n-300: #D6D5CE;
+  --n-400: #A9A8A0;
+  --n-450: #8C8B83;  /* أدنى رمادي يحقق 3:1 على كل الأسطح الفاتحة */
+  --n-500: #7B7A73;
+  --n-600: #5C5C56;
+  --n-700: #444440;
+  --n-800: #2A2A27;
+  --n-900: #1A1A18;
+  --n-950: #0E0E0D;
+
+  /* ألوان الحالة — كل زوج (نص/خلفية) متحقَّق ≥4.5:1 */
+  --danger:      #C62828;
+  --danger-fg:   #A81F1F;
+  --danger-bg:   #FDECEC;
+  --warn-fg:     #8A5A00;
+  --warn-bg:     #FFF6E0;
+  --info-fg:     #1B5E8A;
+  --info-bg:     #E6F2F9;
+  --ok-fg:       #1B6E43;
+  --ok-bg:       #E4F5EB;
+
+  /* ══════════════════════════════════════════════════════════
+     ٢) الرموز الدلالية — هذه ما تستعمله المكونات فعليًا
+     ══════════════════════════════════════════════════════════ */
+
+  --bg:              var(--n-50);
+  --bg-elevated:     var(--n-0);
+  --surface:         var(--n-0);
+  --surface-2:       var(--n-100);
+  --surface-3:       var(--n-200);
+  --surface-brand:   var(--em-50);
+  --surface-inverse: var(--em-900);
+
+  --text:            var(--n-900);
+  --text-2:          var(--n-600);
+  --text-muted:      var(--n-500);
+  --text-on-brand:   var(--n-0);
+  --text-on-dark:    #EDF2F0;
+  --text-brand:      var(--em-600);
+  --text-brand-deep: var(--em-700);
+
+  --border:             var(--n-200);  /* زخرفي — بطاقات وفواصل */
+  --border-strong:      var(--n-300);
+  --border-interactive: var(--n-450);  /* حقول الإدخال — 3:1 إلزامي */
+  --border-brand:       var(--em-200);
+
+  --brand:        var(--em-600);
+  --brand-hover:  var(--em-700);
+  --brand-active: var(--em-800);
+  --brand-soft:   var(--em-50);
+  --brand-deep:   var(--em-800);
+  --accent:       var(--gold-500);
+  --accent-soft:  var(--gold-100);
+  --accent-deep:  var(--gold-700);
+
+  /* ══════════════════════════════════════════════════════════
+     ٣) الطباعة — سُلَّم نسبي 1.2 (Minor Third)
+     ══════════════════════════════════════════════════════════ */
+  --font-body:    "IBM Plex Sans Arabic", "Alexandria", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-quran:   "Amiri Quran", "Scheherazade New", "Noto Naskh Arabic", serif;
+
+  --fs-xs:   0.75rem;    /* 12px */
+  --fs-sm:   0.875rem;   /* 14px */
+  --fs-base: 1rem;       /* 16px — أساس مقروء على الجوال بلا تكبير */
+  --fs-lg:   1.125rem;   /* 18px */
+  --fs-xl:   1.375rem;   /* 22px */
+  --fs-2xl:  1.75rem;    /* 28px */
+  --fs-3xl:  2.125rem;   /* 34px */
+  --fs-4xl:  2.625rem;   /* 42px */
+
+  --lh-tight:   1.25;
+  --lh-snug:    1.4;
+  --lh-normal:  1.65;   /* العربية تحتاج تنفّسًا أكثر من اللاتينية */
+  --lh-relaxed: 1.9;
+
+  --fw-normal:   400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0;
+
+  /* ══════════════════════════════════════════════════════════
+     ٤) المسافات — سُلَّم 4px
+     ══════════════════════════════════════════════════════════ */
+  --s-1:  0.25rem;
+  --s-2:  0.5rem;
+  --s-3:  0.75rem;
+  --s-4:  1rem;
+  --s-5:  1.25rem;
+  --s-6:  1.5rem;
+  --s-8:  2rem;
+  --s-10: 2.5rem;
+  --s-12: 3rem;
+  --s-16: 4rem;
+  --s-20: 5rem;
+
+  /* ══════════════════════════════════════════════════════════
+     ٥) الحواف — أكبر من v3 عمدًا: اللغة البصرية للتطبيقات 2026
+     ══════════════════════════════════════════════════════════ */
+  --r-xs:   0.5rem;    /* 8px  — شارات */
+  --r-sm:   0.75rem;   /* 12px — أزرار صغيرة، حقول */
+  --r-md:   1rem;      /* 16px — أزرار، حقول كبيرة */
+  --r-lg:   1.25rem;   /* 20px — بطاقات */
+  --r-xl:   1.5rem;    /* 24px — بطاقات بارزة */
+  --r-2xl:  2rem;      /* 32px — أوراق سفلية، حاويات */
+  --r-full: 9999px;
+
+  /* ══════════════════════════════════════════════════════════
+     ٦) الارتفاع — ظلال ملوّنة بالزمردي لا رمادية ميتة
+     ══════════════════════════════════════════════════════════ */
+  --shadow-color: 158 40% 12%;
+  --e-0: none;
+  --e-1: 0 1px 2px hsl(var(--shadow-color) / 0.05),
+         0 1px 3px hsl(var(--shadow-color) / 0.06);
+  --e-2: 0 2px 4px hsl(var(--shadow-color) / 0.05),
+         0 4px 8px hsl(var(--shadow-color) / 0.07);
+  --e-3: 0 4px 8px hsl(var(--shadow-color) / 0.06),
+         0 8px 20px hsl(var(--shadow-color) / 0.09);
+  --e-4: 0 8px 16px hsl(var(--shadow-color) / 0.08),
+         0 20px 40px hsl(var(--shadow-color) / 0.12);
+  --e-brand: 0 4px 14px hsl(158 50% 20% / 0.22);
+
+  /* ══════════════════════════════════════════════════════════
+     ٧) الحركة — منحنيات واحدة عبر الموقع
+     ══════════════════════════════════════════════════════════ */
+  --ease:         cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast:     140ms;
+  --dur:          220ms;
+  --dur-slow:     360ms;
+  --t-colors: color var(--dur-fast) var(--ease),
+              background-color var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease);
+  --t-transform: transform var(--dur) var(--ease-out);
+
+  /* ══════════════════════════════════════════════════════════
+     ٨) التركيز — حلقة واحدة موحّدة، مرئية على كل الأسطح
+     ══════════════════════════════════════════════════════════ */
+  --focus-ring:   0 0 0 2px var(--bg), 0 0 0 4px var(--brand);
+  --focus-color:  var(--brand);
+
+  /* أبعاد الهيكل */
+  --header-h:     4rem;
+  --bottom-nav-h: 3.75rem;
+  --content-max:  75rem;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   الوضع الداكن — ليس عكسًا آليًا: أسطح مزرقّة زمرديًا تحفظ الهوية،
+   ونصوص مخفّفة (#EDF2F0 لا أبيض نقي) لتقليل الوهج على OLED.
+   ══════════════════════════════════════════════════════════════ */
+html[data-theme="dark"] {
+  --bg:              var(--em-950);
+  --bg-elevated:     #12211C;
+  --surface:         #12211C;
+  --surface-2:       #182C25;
+  --surface-3:       #1F3830;
+  --surface-brand:   #16342B;
+  --surface-inverse: var(--n-50);
+
+  --text:            #EDF2F0;
+  --text-2:          #A9BDB5;
+  --text-muted:      #8AA096;
+  --text-on-dark:    #EDF2F0;
+  --text-brand:      var(--em-300);   /* روابط ونصوص العلامة — 8.08:1 على السطح */
+  --text-brand-deep: var(--em-200);
+
+  --border:             #224036;
+  --border-strong:      #2E5347;
+  --border-interactive: #4A7A69;
+  --border-brand:       #2E5347;
+
+  /* ⚠ --brand في الوضع الداكن يبقى أخضر متوسّطًا لا فاتحًا.
+     السبب: عشرات آلاف الأسطر القديمة تكتب `color: #FFFFFF` صراحةً فوق
+     خلفية --brand. لو جُعل --brand فاتحًا (em-300) لصار النص الأبيض
+     غير مقروء على كل زر في الموقع — وهو ما حدث فعلًا عند أول محاولة.
+     #2A7A63 يحقق الشرطين معًا: أبيض عليه 5.17:1 (نص AA)،
+     ومقابل السطح الداكن 3.22:1 (تمييز عنصر واجهة، 1.4.11).
+     النصوص والروابط الفاتحة تستعمل --text-brand أعلاه، لا --brand. */
+  --brand:        #2A7A63;
+  --brand-hover:  #33846C;
+  --brand-active: #3C9077;
+  --brand-soft:   #16342B;
+  --brand-deep:   #226A56;
+  --text-on-brand: #FFFFFF;
+  --accent:       var(--gold-300);
+  --accent-soft:  #33291433;
+  --accent-deep:  var(--gold-200);
+
+  --danger:      #F87171;
+  --danger-fg:   #FCA5A5;
+  --danger-bg:   #3B1717;
+  --warn-fg:     #FCD34D;
+  --warn-bg:     #37270A;
+  --info-fg:     #7DD3FC;
+  --info-bg:     #0C2A3D;
+  --ok-fg:       #6EE7B7;
+  --ok-bg:       #0D3225;
+
+  --shadow-color: 158 60% 3%;
+  --e-1: 0 1px 2px hsl(var(--shadow-color) / 0.4);
+  --e-2: 0 2px 8px hsl(var(--shadow-color) / 0.45);
+  --e-3: 0 6px 18px hsl(var(--shadow-color) / 0.5);
+  --e-4: 0 12px 36px hsl(var(--shadow-color) / 0.6);
+  --e-brand: 0 4px 16px hsl(158 60% 4% / 0.6);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   جسر التوافق — الأنظمة الـ15 القديمة تصبح aliases لـv4.
+   لا يُحذف أي رمز قديم (سيكسر 70 ألف سطر)، بل يُعاد توجيهه.
+   بهذا يتغيّر الموقع كله من مكان واحد.
+   ══════════════════════════════════════════════════════════════ */
+:root,
+html[data-theme="dark"] {
+  /* — النظام الأساسي --clr-* — */
+  --clr-primary:        var(--brand);
+  --clr-primary-deep:   var(--brand-deep);
+  --clr-primary-hov:    var(--brand-hover);
+  --clr-primary-act:    var(--brand-active);
+  --clr-primary-soft:   var(--brand-soft);
+  --clr-primary-subtle: var(--surface-brand);
+  --clr-bg:             var(--bg);
+  --clr-surface:        var(--surface);
+  --clr-surface-sec:    var(--surface-2);
+  --clr-border:         var(--border);
+  --clr-border-strong:  var(--border-strong);
+  --clr-divider:        var(--border);
+  --clr-text-1:         var(--text);
+  --clr-text-2:         var(--text-2);
+  --clr-text-muted:     var(--text-muted);
+  --clr-text-on-pri:    var(--text-on-brand);
+  --clr-accent:         var(--accent);
+  --clr-accent-soft:    var(--accent-soft);
+  --clr-emerald:        var(--brand);
+  --clr-ink:            var(--text);
+  --clr-ink-soft:       var(--text-2);
+
+  /* — سُلَّم الزمرد القديم — */
+  --emerald-50:   var(--em-50);
+  --emerald-100:  var(--em-100);
+  --emerald-200:  var(--em-200);
+  --emerald-300:  var(--em-300);
+  --emerald-400:  var(--em-400);
+  --emerald-500:  var(--brand);
+  --emerald-600:  var(--brand-hover);
+  --emerald-700:  var(--brand-active);
+  --emerald-800:  var(--em-800);
+  --emerald-900:  var(--em-900);
+  --emerald-deep: var(--brand-deep);
+  --ivory:        var(--bg);
+  --ink:          var(--text);
+  --sand:         var(--accent);
+  --sand-soft:    var(--accent-soft);
+
+  /* — نظام --color-* — */
+  --color-primary:           var(--brand);
+  --color-primary-hover:     var(--brand-hover);
+  --color-bg:                var(--bg);
+  --color-surface:           var(--surface);
+  --color-border:            var(--border);
+  --color-text:              var(--text);
+  --color-text-secondary:    var(--text-2);
+  --color-accent:            var(--accent);
+  --color-accent-fg-on-soft: var(--em-700);
+  --color-accent-soft-bg:    var(--em-50);
+  --color-success-fg:        var(--ok-fg);
+  --color-success-bg:        var(--ok-bg);
+  --color-danger:            var(--danger);
+  --color-on-dark:           var(--text-on-dark);
+
+  /* — نظام --ds-* — */
+  --ds-primary:    var(--brand);
+  --ds-bg:         var(--bg);
+  --ds-surface:    var(--surface);
+  --ds-border:     var(--border);
+  --ds-text:       var(--text);
+  --ds-text-muted: var(--text-2);
+  --ds-accent:     var(--accent);
+  --ds-radius:     var(--r-lg);
+  --ds-shadow:     var(--e-2);
+
+  /* — نظام --majalis-* — */
+  --majalis-primary:   var(--brand);
+  --majalis-secondary: var(--accent);
+  --majalis-bg:        var(--bg);
+  --majalis-surface:   var(--surface);
+  --majalis-border:    var(--border);
+  --majalis-text:      var(--text);
+  --majalis-muted:     var(--text-2);
+  --majalis-green:     var(--brand);
+  --majalis-gold:      var(--accent);
+
+  /* — نظام --elite-* — */
+  --elite-primary: var(--brand);
+  --elite-bg:      var(--bg);
+  --elite-surface: var(--surface);
+  --elite-border:  var(--border);
+  --elite-text:    var(--text);
+  --elite-muted:   var(--text-2);
+  --elite-accent:  var(--accent);
+  --elite-radius:  var(--r-lg);
+  --elite-shadow:  var(--e-2);
+
+  /* — أنظمة متفرقة — */
+  --msk-primary: var(--brand);
+  --msk-bg:      var(--bg);
+  --msk-surface: var(--surface);
+  --msk-border:  var(--border);
+  --msk-text:    var(--text);
+  --mn-primary:  var(--brand);
+  --mn-bg:       var(--bg);
+  --mn-text:     var(--text);
+  --mj-primary:  var(--brand);
+  --mj-bg:       var(--bg);
+  --txt-1:       var(--text);
+  --txt-2:       var(--text-2);
+  --txt-muted:   var(--text-muted);
+
+  /* — سلالم المسافات/الحواف القديمة — */
+  --sp-1: var(--s-1);   --sp-2: var(--s-2);   --sp-3: var(--s-3);
+  --sp-4: var(--s-4);   --sp-5: var(--s-5);   --sp-6: var(--s-6);
+  --sp-8: var(--s-8);   --sp-10: var(--s-10); --sp-12: var(--s-12);
+  --sp-16: var(--s-16);
+  --radius-sm:   var(--r-sm);
+  --radius-md:   var(--r-md);
+  --radius-lg:   var(--r-lg);
+  --radius-xl:   var(--r-xl);
+  --radius-2xl:  var(--r-2xl);
+  --radius-pill: var(--r-full);
+  --rd-sm: var(--r-sm); --rd-md: var(--r-md); --rd-lg: var(--r-lg);
+  --rd-xl: var(--r-xl); --rd-full: var(--r-full);
+
+  /* — سُلَّم الطباعة القديم — */
+  --text-xs:   var(--fs-xs);
+  --text-sm:   var(--fs-sm);
+  --text-base: var(--fs-base);
+  --text-lg:   var(--fs-lg);
+  --text-xl:   var(--fs-xl);
+  --text-2xl:  var(--fs-2xl);
+  --text-3xl:  var(--fs-3xl);
+  --text-4xl:  var(--fs-4xl);
+}

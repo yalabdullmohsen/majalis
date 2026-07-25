@@ -7,14 +7,14 @@
  */
 
 :root {
-  --color-background: #f7f4ed;
+  --color-background: #FAFAF8;
   --color-surface: #fffefa;
   --color-surface-muted: #eeeee7;
-  --color-primary: #173d35;
-  --color-primary-hover: #28584d;
+  --color-primary: #143F35;
+  --color-primary-hover: #226A56;
   --color-primary-foreground: #ffffff;
   --color-accent: #a77d36;
-  --color-text: #202725;
+  --color-text: #1A1A18;
   --color-text-muted: #5f6b66;
   --color-border: #ddd9ce;
   --color-success: #216e4e;
@@ -92,7 +92,7 @@ body {
   height: calc(var(--ticker-height) + env(safe-area-inset-top, 0px));
   padding-block-start: env(safe-area-inset-top, 0px);
   overflow: hidden;
-  background: var(--elite-forest, #173D35);
+  background: var(--elite-forest, #143F35);
   display: flex;
   align-items: center;
 }
@@ -110,7 +110,7 @@ body {
 .top-ticker__item {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #F7F4ED;
+  color: #FAFAF8;
   flex-shrink: 0;
 }
 .top-ticker__item-source {
@@ -131,7 +131,7 @@ body {
 .top-ticker__empty-text {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #F7F4ED;
+  color: #FAFAF8;
   opacity: 0.85;
 }
 @keyframes top-ticker-scroll {
@@ -172,7 +172,7 @@ body {
   top: calc(var(--ticker-height) + env(safe-area-inset-top, 0px) + var(--header-height, 4rem));
   z-index: 190;
   background: color-mix(in srgb, var(--color-surface, #FAF8F5) 96%, transparent);
-  border-block-end: 1px solid var(--color-border, #E7E2D8);
+  border-block-end: 1px solid var(--color-border, #E8E7E2);
   backdrop-filter: blur(14px) saturate(1.15);
 }
 .top-section-bar__scroll {
@@ -182,9 +182,24 @@ body {
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  padding: 0.4rem 0.75rem;
+  /* الحشوة الجانبية تحترم قصّة الشاشة (الوضع الأفقي على iPhone يزيح
+     المحتوى تحت الحافة المنحنية)، وتضمن ظهور أول وآخر تبويب كاملين
+     بدل التصاقهما بالحافة. */
+  padding-block: 0.4rem;
+  padding-inline-start: max(0.75rem, env(safe-area-inset-right, 0px));
+  padding-inline-end: max(0.75rem, env(safe-area-inset-left, 0px));
+  /* عند التمرير البرمجي لتبويب ما، لا يقف ملاصقًا للحافة. */
+  scroll-padding-inline: 0.75rem;
+  width: 100%;
   max-width: min(100%, var(--page-width));
   margin-inline: auto;
+  box-sizing: border-box;
+}
+/* التبويبات لا تنضغط: بلا هذا يقسم flex العرض بينها فيُقصّ النص داخلها
+   بدل أن يمتد الشريط ويصبح قابلًا للتمرير. */
+.top-section-bar__scroll > .top-section-bar__tab {
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 .top-section-bar__scroll::-webkit-scrollbar { display: none; }
 .top-section-bar__tab {
@@ -194,7 +209,7 @@ body {
   padding: 0.6rem 1rem;
   min-height: 44px;
   border-radius: 9999px;
-  color: var(--color-text-muted, #68716D);
+  color: var(--color-text-muted, #5C5C56);
   font-size: 0.85rem;
   font-weight: 600;
   line-height: 1;
@@ -205,11 +220,11 @@ body {
   background: transparent;
   transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
 }
-.top-section-bar__tab:hover { color: var(--color-primary-deep, #173D35); }
+.top-section-bar__tab:hover { color: var(--color-primary-deep, #143F35); }
 .top-section-bar__tab.is-active {
-  color: var(--color-primary-deep, #173D35);
-  background: color-mix(in srgb, var(--color-primary, #28584D) 10%, transparent);
-  border-color: color-mix(in srgb, var(--color-primary, #28584D) 22%, transparent);
+  color: var(--color-primary-deep, #143F35);
+  background: color-mix(in srgb, var(--color-primary, #226A56) 10%, transparent);
+  border-color: color-mix(in srgb, var(--color-primary, #226A56) 22%, transparent);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -231,19 +246,19 @@ html[data-theme="dark"] .top-section-bar {
   padding: 1.75rem 1.25rem;
   margin-bottom: 1.5rem;
   border-radius: 1.5rem;
-  background: linear-gradient(160deg, #E8F2EE 0%, #F7F4ED 100%);
+  background: linear-gradient(160deg, #E8F2EE 0%, #FAFAF8 100%);
   border: 1px solid rgba(23,61,53,0.10);
 }
-.kids-hub-intro__icon { color: #28584D; margin-bottom: 0.5rem; }
+.kids-hub-intro__icon { color: #226A56; margin-bottom: 0.5rem; }
 .kids-hub-intro__title {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #173D35;
+  color: #143F35;
   margin: 0 0 0.4rem;
 }
 .kids-hub-intro__sub {
   font-size: 0.9rem;
-  color: #5E655F;
+  color: #5C5C56;
   margin: 0;
   line-height: 1.6;
 }
@@ -275,18 +290,18 @@ html[data-theme="dark"] .top-section-bar {
   justify-content: center;
   border-radius: 9999px;
   background: #E8F2EE;
-  color: #28584D;
+  color: #226A56;
 }
 .kids-hub-card__body { flex: 1; min-width: 0; }
 .kids-hub-card__title {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #173D35;
+  color: #143F35;
   margin: 0 0 0.2rem;
 }
 .kids-hub-card__desc {
   font-size: 0.8rem;
-  color: #68716D;
+  color: #5C5C56;
   margin: 0;
   line-height: 1.5;
 }
@@ -350,6 +365,62 @@ html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1)
   box-shadow: none;
 }
 
+/* الشريط المتحرك أعلى التطبيق (HeaderTicker) — يحلّ محل زر/مربع البحث في
+   الهيدر (تكليف 2026-07-24). CSS Marquee بلا مكتبات: تكرار العناصر مرتين
+   وتحريك 0%→-50% يعطي حلقة سلسة بلا قفزة. يتوقف عند hover/لمس، ويتحول
+   لتناوب ثابت بلا حركة عند prefers-reduced-motion (مطابق فعليًا في JS
+   وCSS كطبقة حماية إضافية). ألوان/خط الهوية الحالية (--color-primary
+   #143F35 وAlexandria الموحَّد) لا #0E6E52/Almarai القديمين. */
+.header-ticker {
+  overflow: hidden;
+  min-width: 0;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  mask-image: linear-gradient(to left, transparent, #000 5%, #000 95%, transparent);
+}
+.header-ticker--empty { visibility: hidden; }
+.header-ticker__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: header-ticker-scroll 32s linear infinite;
+}
+.header-ticker:hover .header-ticker__track,
+.header-ticker:active .header-ticker__track { animation-play-state: paused; }
+/* الاتجاه موجب لأن الصفحة RTL: عناصر flex تُرصّ من اليمين لليسار، فيمتد
+   المسار كله يسار النافذة المرئية. تحريكه بـ-50% (كما كان) يدفع المحتوى
+   بعيدًا عن النافذة فيظهر الشريط فارغًا بعد أول ثوانٍ — وهو ما كان يحدث
+   فعلًا. التحريك بـ+50% يسحب النسخة الثانية إلى موضع الأولى فتكتمل
+   الحلقة بلا قفزة. */
+@keyframes header-ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(50%); }
+}
+.header-ticker--static { padding-inline: .7rem; }
+.header-ticker__item {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding-inline: .9rem;
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: .82rem;
+}
+.header-ticker__icon { color: var(--color-primary); flex-shrink: 0; }
+.header-ticker__label { color: var(--color-primary); font-weight: 700; }
+.header-ticker__source { color: var(--color-text-muted); font-size: .74rem; }
+@media (min-width: 880px) {
+  .header-ticker { width: clamp(200px, 22vw, 340px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header-ticker__track { animation: none; }
+}
+
 /* Shared page rhythm and cards */
 :where(.page-container, .container, .home-container, .lessons-page, .library-page) {
   width: min(100%, var(--page-width));
@@ -399,7 +470,7 @@ html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1)
   min-height: 48px;
   border-radius: var(--radius-md);
   background: #fffefa !important;
-  color: #173d35 !important;
+  color: #143F35 !important;
   border: 1px solid #fffefa !important;
   box-shadow: none !important;
 }
@@ -466,7 +537,12 @@ html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1)
 
 @media (max-width: 879px) {
   :root { --header-height: 3rem; }
-  .navbar-v3__inner { grid-template-columns: auto 1fr; }
+  /* ثلاثة أعمدة لا عمودان: أبناء الهيدر على الجوال ثلاثة فعليًا
+     (navbar-v3__start ثم HeaderTicker ثم navbar-v3__end). بعمودين كان
+     الابن الثالث ينتقل إلى صف ضمني ثانٍ، فيخرج زر الحساب الدائري أسفل
+     الهيدر (ارتفاعه ثابت) ويغطي شريط التصنيفات تحته. العمود الأوسط
+     minmax(0,1fr) كي ينكمش الشريط بدل أن يدفع الزر خارج الصف. */
+  .navbar-v3__inner { grid-template-columns: auto minmax(0, 1fr) auto; }
   .navbar-v3__end { justify-self: end; }
   .navbar-theme-toggle { display: none; }
   .navbar-menu-btn__label, .navbar-mobile-login__label { display: none; }

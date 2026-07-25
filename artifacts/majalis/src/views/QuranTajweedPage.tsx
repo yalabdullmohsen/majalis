@@ -1,5 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
-import { Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -21,31 +20,31 @@ const CATEGORIES = ["الكل", "النون الساكنة والتنوين", "�
 const RULES: TajweedRule[] = [
   /* ══ النون الساكنة والتنوين ══ */
   {
-    id: "izhar-halqi", category: "النون الساكنة والتنوين", color: "#173D35",
+    id: "izhar-halqi", category: "النون الساكنة والتنوين", color: "#143F35",
     title: "الإظهار الحلقي",
     definition: "النطق بالنون الساكنة أو التنوين بدون غنة إذا جاء بعدهما أحد حروف الحلق الستة: الهمزة، الهاء، العين، الحاء، الغين، الخاء.",
     example: "مَنْ آمَنَ · عَلِيمٌ حَكِيمٌ · مِنْ هَادٍ",
   },
   {
-    id: "idgham-bighunnah", category: "النون الساكنة والتنوين", color: "#173D35",
+    id: "idgham-bighunnah", category: "النون الساكنة والتنوين", color: "#143F35",
     title: "الإدغام بغنة",
     definition: "إدخال النون الساكنة أو التنوين في الحرف التالي مع الغنة إذا كان من حروف (ينمو): الياء، النون، الميم، الواو.",
     example: "مَنْ يَقُولُ · خَيْرٌ وَأَبْقَى · مِن نِّعْمَةٍ",
   },
   {
-    id: "idgham-bila-ghunnah", category: "النون الساكنة والتنوين", color: "#173D35",
+    id: "idgham-bila-ghunnah", category: "النون الساكنة والتنوين", color: "#143F35",
     title: "الإدغام بلا غنة",
     definition: "إدغام النون الساكنة أو التنوين في اللام أو الراء بدون غنة.",
     example: "مِن لَّدُنْهُ · مِن رَّبِّهِمْ · هُدًى لِّلْمُتَّقِينَ",
   },
   {
-    id: "iqlab", category: "النون الساكنة والتنوين", color: "#173D35",
+    id: "iqlab", category: "النون الساكنة والتنوين", color: "#143F35",
     title: "الإقلاب",
     definition: "قلب النون الساكنة أو التنوين ميماً مخفاةً بغنة عند حرف الباء.",
     example: "أَنبِئُونِي · سَمِيعٌ بَصِيرٌ · مِن بَعْدِ",
   },
   {
-    id: "ikhfa-haqiqi", category: "النون الساكنة والتنوين", color: "#173D35",
+    id: "ikhfa-haqiqi", category: "النون الساكنة والتنوين", color: "#143F35",
     title: "الإخفاء الحقيقي",
     definition: "النطق بالنون الساكنة أو التنوين بصفة بين الإظهار والإدغام مع بقاء الغنة عند بقية الحروف الخمسة عشر.",
     example: "أَنتُمْ · جَنَّاتٍ تَجْرِي · مِن قَبْلِ",
@@ -382,12 +381,6 @@ function RuleCard({ rule }: { rule: TajweedRule }) {
 }
 
 export default function QuranTajweedPage() {
-  const todayRule = useMemo(() => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
-    return RULES[(day - 1 + RULES.length) % RULES.length];
-  }, []);
   const [category, setCategory] = useState("الكل");
   const [search, setSearch] = useState("");
 
@@ -451,14 +444,6 @@ export default function QuranTajweedPage() {
         </p>
       </div>
 
-      {/* حكم التجويد اليوم */}
-      <div className="tjod-card">
-        <div className="tjod-card__badge"><Sparkles size={11} aria-hidden="true" /> حكم التجويد اليوم</div>
-        <div className="tjod-card__cat">{todayRule.category}</div>
-        <h2 className="tjod-card__title">{todayRule.title}</h2>
-        <p className="tjod-card__def">{todayRule.definition}</p>
-        {todayRule.example && <p className="tjod-card__ex"><span className="tjod-card__ex-label">مثال: </span>{todayRule.example}</p>}
-      </div>
 
       {/* فلتر الأحكام */}
       <div className="ds-filters-bar" role="tablist" aria-label="تصفية أحكام التجويد">

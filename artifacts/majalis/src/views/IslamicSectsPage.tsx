@@ -1,5 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
-import { Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -853,20 +852,14 @@ const CATEGORIES = ["الكل", "مدرسة سنية", "شيعة", "مدرسة �
 const STATUS_FILTER = ["الكل", "قائمة", "تاريخية"];
 
 const CATEGORY_COLOR: Record<string, string> = {
-  "مدرسة سنية": "#173D35",
+  "مدرسة سنية": "#143F35",
   "شيعة": "#2D5A8E",
   "مدرسة عقدية": "#4A6741",
-  "فرقة مستقلة": "#28584D",
+  "فرقة مستقلة": "#226A56",
   "فرقة تاريخية": "#666",
 };
 
 export default function IslamicSectsPage() {
-  const todaySect = useMemo(() => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
-    return SECTS[(day - 1 + SECTS.length) % SECTS.length];
-  }, []);
   const [category, setCategory] = useState("الكل");
   const [statusF, setStatusF] = useState("الكل");
   const [selected, setSelected] = useState<Sect | null>(null);
@@ -908,7 +901,7 @@ export default function IslamicSectsPage() {
       {/* Hero */}
       <div
         className="page-hero"
-        style={{ background: "linear-gradient(135deg, #173D35 0%, #173D35 100%)" }}
+        style={{ background: "linear-gradient(135deg, #143F35 0%, #143F35 100%)" }}
       >
         <div className="page-hero-content">
           <div className="page-hero-icon" style={{ fontSize: "3rem" }}>🕌</div>
@@ -929,17 +922,6 @@ export default function IslamicSectsPage() {
             <ShareButtons title="الفرق الإسلامية — المجلس العلمي" />
           </div>
         </div>
-      </div>
-
-      {/* فرقة اليوم */}
-      <div className="isod-card">
-        <div className="isod-card__badge"><Sparkles size={11} aria-hidden="true" /> مدرسة اليوم</div>
-        <span className="isod-card__icon">{todaySect.icon}</span>
-        <div className="isod-card__cat">{todaySect.category}</div>
-        <h2 className="isod-card__name">{todaySect.name}</h2>
-        <div className="isod-card__meta">{todaySect.era} · {todaySect.origin}</div>
-        <p className="isod-card__cause">{todaySect.foundingCause}</p>
-        {todaySect.quote && <p className="isod-card__quote">«{todaySect.quote}»</p>}
       </div>
 
       {/* Notice */}
@@ -986,9 +968,9 @@ export default function IslamicSectsPage() {
                 border: "1px solid",
                 fontSize: "0.85rem",
                 cursor: "pointer",
-                background: category === c ? "#173D35" : "transparent",
-                color: category === c ? "#fff" : "#173D35",
-                borderColor: "#173D35",
+                background: category === c ? "#143F35" : "transparent",
+                color: category === c ? "#fff" : "#143F35",
+                borderColor: "#143F35",
                 fontFamily: "inherit",
               }}
             >
@@ -1008,9 +990,9 @@ export default function IslamicSectsPage() {
                 border: "1px solid",
                 fontSize: "0.82rem",
                 cursor: "pointer",
-                background: statusF === s ? "#173D35" : "transparent",
-                color: statusF === s ? "#fff" : "#173D35",
-                borderColor: "#173D35",
+                background: statusF === s ? "#143F35" : "transparent",
+                color: statusF === s ? "#fff" : "#143F35",
+                borderColor: "#143F35",
                 fontFamily: "inherit",
               }}
             >
@@ -1049,17 +1031,17 @@ export default function IslamicSectsPage() {
               background: "#fff",
               borderRadius: "1rem",
               padding: "1.25rem",
-              boxShadow: selected?.id === sect.id ? "0 0 0 3px #173D35" : "0 2px 8px rgba(0,0,0,0.08)",
+              boxShadow: selected?.id === sect.id ? "0 0 0 3px #143F35" : "0 2px 8px rgba(0,0,0,0.08)",
               cursor: "pointer",
               transition: "box-shadow 0.2s, transform 0.15s",
-              border: `2px solid ${selected?.id === sect.id ? "#173D35" : "transparent"}`,
+              border: `2px solid ${selected?.id === sect.id ? "#143F35" : "transparent"}`,
             }}
           >
             {/* Header */}
             <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.75rem" }}>
               <span style={{ fontSize: "2rem" }}><SectionIcon name={sect.icon} size={24} /></span>
               <div>
-                <div style={{ fontWeight: "700", fontSize: "1rem", color: "#173D35" }}>{sect.name}</div>
+                <div style={{ fontWeight: "700", fontSize: "1rem", color: "#143F35" }}>{sect.name}</div>
                 <div style={{ fontSize: "0.78rem", color: "#888" }}>{sect.era}</div>
               </div>
             </div>
@@ -1091,13 +1073,13 @@ export default function IslamicSectsPage() {
                   padding: "0.2rem 0.6rem",
                   borderRadius: "999px",
                   background: sect.status === "قائمة" ? "#e8f5e9" : "#f5f5f5",
-                  color: sect.status === "قائمة" ? "#173D35" : "#888",
+                  color: sect.status === "قائمة" ? "#143F35" : "#888",
                   fontWeight: "600",
                 }}
               >
                 {sect.status === "قائمة" ? "✅ قائمة" : "📜 تاريخية"}
               </span>
-              <span style={{ fontSize: "0.75rem", color: "#173D35" }}>
+              <span style={{ fontSize: "0.75rem", color: "#143F35" }}>
                 {selected?.id === sect.id ? "▲ إغلاق" : "▼ التفاصيل"}
               </span>
             </div>
@@ -1148,7 +1130,7 @@ export default function IslamicSectsPage() {
                     <blockquote
                       style={{
                         marginTop: "0.9rem",
-                        borderRight: "3px solid #173D35",
+                        borderRight: "3px solid #143F35",
                         paddingRight: "0.75rem",
                         color: "#444",
                         fontStyle: "normal",

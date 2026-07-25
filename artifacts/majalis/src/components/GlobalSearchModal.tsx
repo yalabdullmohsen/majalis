@@ -28,24 +28,24 @@ const POPULAR_QUERIES = [
 ];
 
 const KIND_META: Record<string, { label: string; Icon: LucideIcon; color: string }> = {
-  lesson:        { label: "درس",       Icon: GraduationCap, color: "var(--majalis-emerald, #173D35)" },
+  lesson:        { label: "درس",       Icon: GraduationCap, color: "var(--majalis-emerald, #143F35)" },
   hadith:        { label: "حديث",      Icon: Scroll,        color: "#1E40AF" },
-  library:       { label: "كتاب",      Icon: BookOpen,      color: "var(--majalis-emerald, #173D35)" },
+  library:       { label: "كتاب",      Icon: BookOpen,      color: "var(--majalis-emerald, #143F35)" },
   fatwa:         { label: "فتوى",      Icon: Scale,         color: "#5B21B6" },
-  fiqh:          { label: "فقه",       Icon: Scale,         color: "var(--majalis-emerald, #173D35)" },
-  fiqh_decision: { label: "قرار فقهي", Icon: Scale,         color: "var(--majalis-emerald, #173D35)" },
+  fiqh:          { label: "فقه",       Icon: Scale,         color: "var(--majalis-emerald, #143F35)" },
+  fiqh_decision: { label: "قرار فقهي", Icon: Scale,         color: "var(--majalis-emerald, #143F35)" },
   ruling:        { label: "حكم",       Icon: FileText,      color: "#1E40AF" },
-  fawaid:        { label: "فائدة",     Icon: Lightbulb,     color: "var(--majalis-emerald, #173D35)" },
+  fawaid:        { label: "فائدة",     Icon: Lightbulb,     color: "var(--majalis-emerald, #143F35)" },
   qa:            { label: "سؤال",      Icon: HelpCircle,    color: "#5B21B6" },
-  quran:         { label: "قرآن",      Icon: BookMarked,    color: "var(--majalis-emerald, #173D35)" },
+  quran:         { label: "قرآن",      Icon: BookMarked,    color: "var(--majalis-emerald, #143F35)" },
   course:        { label: "دورة",      Icon: GraduationCap, color: "#1E40AF" },
-  miracle:       { label: "إعجاز",     Icon: Star,          color: "var(--majalis-emerald, #173D35)" },
+  miracle:       { label: "إعجاز",     Icon: Star,          color: "var(--majalis-emerald, #143F35)" },
   article:       { label: "مقال",      Icon: Newspaper,     color: "#5B21B6" },
-  update:        { label: "مستجد",     Icon: Bell,          color: "var(--majalis-emerald, #173D35)" },
+  update:        { label: "مستجد",     Icon: Bell,          color: "var(--majalis-emerald, #143F35)" },
   topic:         { label: "موضوع",     Icon: Tag,           color: "#1E40AF" },
-  knowledge:     { label: "معرفة",     Icon: Layers,        color: "var(--majalis-emerald, #173D35)" },
+  knowledge:     { label: "معرفة",     Icon: Layers,        color: "var(--majalis-emerald, #143F35)" },
   sheikh:        { label: "شيخ",       Icon: User,          color: "#5B21B6" },
-  adhkar:        { label: "ذكر",       Icon: RotateCw,      color: "var(--majalis-emerald, #173D35)" },
+  adhkar:        { label: "ذكر",       Icon: RotateCw,      color: "var(--majalis-emerald, #143F35)" },
 };
 
 const FILTER_CHIPS: { key: string; label: string }[] = [
@@ -270,7 +270,7 @@ export function GlobalSearchModal({ onClose }: Props) {
     // نقر الخلفية للإغلاق (بلا مكافئ لوحة مفاتيح مباشر) مصحوب بمعالج Escape
     // فعلي (انظر أعلاه) وزر إغلاق ظاهر داخل البطاقة — الوصول الكامل بلوحة
     // المفاتيح مكفول عبر هذين المسارين البديلين، فلا حظر فعلي للوصول.
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
       className={`gsm-overlay${isMobile ? " gsm-overlay--mobile" : ""}`}
       onClick={isMobile ? undefined : onClose}

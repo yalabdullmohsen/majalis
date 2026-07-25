@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo } from "react";
-import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -173,12 +172,6 @@ export default function JanazaPage() {
     });
   }, []);
 
-  const todayTakfin = useMemo(() => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
-    return TAKFIN_ITEMS[(day - 1 + TAKFIN_ITEMS.length) % TAKFIN_ITEMS.length];
-  }, []);
   const [tab, setTab] = useState<JanazaTab>("ghusl");
   const [search, setSearch] = useState("");
   const filteredGhusulSteps = useMemo(() =>
@@ -233,14 +226,6 @@ export default function JanazaPage() {
         </div>
       </section>
 
-      {/* حكم التكفين اليوم */}
-      <div className="jnod-card">
-        <div className="jnod-card__badge"><Sparkles size={11} aria-hidden="true" /> حكم التكفين اليوم</div>
-        <span className="jnod-card__icon">{todayTakfin.icon}</span>
-        <h2 className="jnod-card__title">{todayTakfin.title}</h2>
-        <p className="jnod-card__desc">{todayTakfin.desc}</p>
-        <p className="jnod-card__dalil">«{todayTakfin.dalil}»<span className="jnod-card__ref"> — {todayTakfin.ref}</span></p>
-      </div>
 
       <div className="jnz-body">
 
