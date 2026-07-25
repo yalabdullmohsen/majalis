@@ -86,10 +86,23 @@ body {
    (كان يقصّ نص الصلاة/السنن — طلب مباشر). الهيدر الآن أعلى عنصر لاصق في
    الصفحة، فيمتص env(safe-area-inset-top) بنفسه عبر padding بدل الاعتماد
    على طبقة منفصلة فوقه. (الشريط الأبيض HeaderTicker بقي بتصميمه وموضعه
-   الأصليين — راجع NavBar.tsx وHeaderTicker.tsx — بطلب مباشر 2026-07-25). */
+   الأصليين — راجع NavBar.tsx وHeaderTicker.tsx — بطلب مباشر 2026-07-25).
+   ─────────────────────────────────────────────────────────────────────
+   تثبيت sticky (2026-07-25، طلب مباشر) — تحقّق مُسبَق قبل أي تعديل:
+   فُحص عبر WebKit فعليًا (نفس محرّك Safari) على 390px/430px وخمس صفحات
+   مختلفة بعد تمرير 2000px: top:0 يبقى صحيحًا في كل حالة، لا عطل تقني
+   حالي. حاويتا التمرير الفعليتان (html بـ overflow-y:auto، وbody بـ
+   overflow-x:clip فقط) لا تحملان transform ولا contain ولا overflow
+   يُبطل sticky — clip (لا hidden) هي بالذات ما يمنع القص من كسر الثبات
+   (تعليق تاريخي في index.css يحذّر من هذا الخلط تحديدًا)، فلم تُمَس هنا.
+   top:0 صريحة أُضيفت بجانب inset-block-start:0 (نفس القيمة منطقيًا في
+   RTL) لأقصى توافق. z-index يبقى 200 (--z-nav) عمدًا — سلَّم مصمَّم
+   بعناية (sticky:100 < nav:200 < drawer:300 < modal:400 < toast:500)؛
+   رفعه فوق drawer/modal يكسر ظهورهما فوق الهيدر عند الفتح، وهو مقصود. */
 .navbar-v3 {
   position: sticky;
   inset-block-start: 0;
+  top: 0;
   padding-block-start: env(safe-area-inset-top, 0px);
   z-index: var(--z-nav, 200);
   min-height: var(--header-height);
