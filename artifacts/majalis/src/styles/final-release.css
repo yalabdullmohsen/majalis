@@ -26,6 +26,7 @@
   --shadow-soft: 0 1px 2px rgb(23 61 53 / 5%), 0 12px 30px rgb(23 61 53 / 6%);
   --header-height: 3.25rem;
   --bottom-nav-height: 3.25rem;
+  --bottom-nav-h: var(--bottom-nav-height);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --page-gutter: clamp(1rem, 3vw, 2rem);
   --page-width: 76rem;
@@ -60,7 +61,7 @@ body {
 .app-shell { min-height: 100dvh; background: transparent; color: var(--color-text); }
 .app-main {
   min-height: calc(100dvh - var(--header-height));
-  padding-block-end: calc(var(--bottom-nav-height) + var(--safe-bottom) + 1.5rem);
+  padding-block-end: calc(var(--bottom-nav-height) + var(--safe-bottom) + 0.75rem);
 }
 
 :where(h1, h2, h3, h4) {
@@ -464,20 +465,61 @@ html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1)
 .lesson-unified-card__btn { min-height: 44px; border-radius: var(--radius-md); }
 .lesson-unified-card__btn--primary { background: var(--color-primary); color: var(--color-primary-foreground); }
 
-/* Bottom navigation */
-.bottom-nav, .bottom-nav--v2 {
-  z-index: var(--z-nav, 200);
-  height: calc(var(--bottom-nav-height) + var(--safe-bottom));
-  padding: .35rem max(.5rem, env(safe-area-inset-left)) var(--safe-bottom) max(.5rem, env(safe-area-inset-right));
-  background: color-mix(in srgb, var(--color-surface) 94%, transparent);
-  border-block-start: 1px solid var(--color-border);
-  box-shadow: 0 -8px 28px rgb(23 61 53 / 7%);
-  backdrop-filter: blur(18px);
+/* Bottom navigation — مصدر واحد (iOS/PWA/Capacitor): fixed flush to screen edge,
+   safe-area counted once in height + padding-block-end only. */
+.bottom-nav,
+.bottom-nav--v2 {
+  display: none;
 }
-.bottom-nav--v2 .bottom-nav__tab { min-width: 44px; min-height: 44px; border-radius: var(--radius-md); color: var(--color-text-muted); }
-.bottom-nav--v2 .bottom-nav__tab.is-active { color: var(--color-primary); background: var(--color-surface-muted); }
-.bottom-nav--v2 .bottom-nav__tab-icon { width: 1.25rem; height: 1.25rem; background: transparent; }
-.bottom-nav--v2 .bottom-nav__tab-label { font-size: .7rem; font-weight: 600; }
+.bottom-nav--v2 .bottom-nav__tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.2rem 0.25rem;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--motion-fast), background var(--motion-fast);
+}
+.bottom-nav--v2 .bottom-nav__tab:active:not(.is-active) {
+  background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+}
+.bottom-nav--v2 .bottom-nav__tab.is-active {
+  color: var(--color-primary);
+  background: var(--color-surface-muted);
+}
+.bottom-nav--v2 .bottom-nav__tab-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  background: transparent;
+}
+.bottom-nav--v2 .bottom-nav__tab-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bottom-nav--v2 .bottom-nav__tab:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-accent) 72%, white);
+  outline-offset: 2px;
+}
 
 /* Footer is a concise trust/navigation surface, not a duplicate sitemap. */
 .site-footer--v3 { margin-block-start: clamp(2rem, 5vw, 4rem); }
@@ -497,6 +539,44 @@ html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1)
 
 @media (max-width: 879px) {
   :root { --header-height: 3rem; }
+
+  .bottom-nav,
+  .bottom-nav--v2 {
+    display: flex;
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: var(--z-nav, 200);
+    box-sizing: border-box;
+    align-items: stretch;
+    justify-content: space-around;
+    min-height: var(--bottom-nav-height);
+    height: calc(var(--bottom-nav-height) + var(--safe-bottom));
+    padding-block: 0.2rem var(--safe-bottom);
+    padding-inline: max(0.35rem, env(safe-area-inset-left)) max(0.35rem, env(safe-area-inset-right));
+    background: color-mix(in srgb, var(--color-surface) 94%, transparent);
+    border-block-start: 1px solid var(--color-border);
+    box-shadow: 0 -8px 28px rgb(23 61 53 / 7%);
+    backdrop-filter: blur(18px) saturate(1.15);
+    -webkit-backdrop-filter: blur(18px) saturate(1.15);
+  }
+
+  .app-main {
+    padding-block-end: calc(var(--bottom-nav-height) + var(--safe-bottom) + 0.75rem);
+  }
+
+  body.has-assistant-fab .app-main {
+    padding-block-end: calc(var(--bottom-nav-height) + var(--safe-bottom) + 0.75rem);
+  }
+
+  .site-footer-inner--v3 {
+    padding-block-end: calc(var(--bottom-nav-height) + var(--safe-bottom) + 1.25rem);
+  }
+
+  .site-footer--v3 .site-footer-link {
+    min-height: 44px;
+  }
+
   /* ثلاثة أعمدة لا عمودان: أبناء الهيدر على الجوال ثلاثة فعليًا
      (navbar-v3__start ثم HeaderTicker ثم navbar-v3__end). بعمودين كان
      الابن الثالث ينتقل إلى صف ضمني ثانٍ، فيخرج زر الحساب الدائري أسفل
@@ -509,12 +589,117 @@ html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1)
   .hpv4-hero { border-radius: var(--radius-lg); }
   .site-footer--v3 .site-footer-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .site-footer--v3 .site-footer-brand { margin-block-end: 1.25rem; }
+
+  .lrf-wrap {
+    min-height: min(42vh, 18rem);
+    padding-block: clamp(1.5rem, 6vw, 2.5rem);
+  }
+
+  .bottom-sheet-overlay { z-index: var(--z-modal, 400); }
+  .bottom-sheet {
+    max-height: min(88dvh, calc(100dvh - var(--header-height) - var(--safe-bottom)));
+  }
+  .bottom-sheet__body {
+    padding-block-end: calc(1rem + var(--safe-bottom));
+  }
+  .bottom-sheet__close-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: var(--radius-md);
+  }
+  .more-sheet-item {
+    min-height: 44px;
+  }
+
+  .scroll-to-top {
+    inset-inline-end: max(1rem, env(safe-area-inset-right));
+    bottom: calc(var(--bottom-nav-height) + var(--safe-bottom) + 0.75rem);
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .global-back-btn {
+    inset-inline-start: max(1rem, env(safe-area-inset-left));
+    bottom: calc(var(--bottom-nav-height) + var(--safe-bottom) + 0.75rem);
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+html[data-theme="dark"] .bottom-nav,
+html[data-theme="dark"] .bottom-nav--v2 {
+  background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  border-block-start-color: var(--color-border);
+  box-shadow: 0 -8px 28px rgb(0 0 0 / 22%);
+}
+
+/* ── حالات التحميل/الخطأ/الفراغ الموحَّدة ── */
+.ds-empty {
+  text-align: center;
+  padding: clamp(1.5rem, 5vw, 2.5rem) var(--page-gutter);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+.ds-empty h2,
+.ds-empty h3 {
+  color: var(--color-text);
+  font-size: 1.05rem;
+  margin-block: 0 0.5rem;
+}
+.adv-error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: clamp(1.5rem, 5vw, 2.5rem) var(--page-gutter);
+  text-align: center;
+}
+.adv-error-state__icon { color: var(--color-error); opacity: 0.85; }
+.adv-error-state__msg {
+  margin: 0;
+  max-width: 22rem;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+.adv-error-state__retry {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 44px;
+  padding-inline: 1rem;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
+  font-weight: 700;
+  cursor: pointer;
+}
+.adv-error-state__retry:hover { background: var(--color-primary-hover); }
+.adv-error-state__retry:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.site-footer-logo--calligraphy {
+  display: block;
+  width: min(100%, 9.5rem);
+  height: auto;
+  max-height: 3.25rem;
+  object-fit: contain;
+  object-position: start center;
 }
 
 @media (max-width: 359px) {
   .navbar-v3__inner { gap: .35rem; padding-inline: .65rem; }
   .navbar-brand__copy strong { font-size: .76rem; }
-  .navbar-menu-btn, .navbar-mobile-login { min-width: 42px; width: 42px; }
+  .navbar-menu-btn, .navbar-mobile-login { min-width: 44px; min-height: 44px; width: 44px; }
+  .bottom-nav--v2 .bottom-nav__tab-label { font-size: 0.625rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
