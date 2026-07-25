@@ -646,13 +646,16 @@ html[data-theme="dark"] .rp-section-title {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  height: 44px;
   color: rgba(255,255,255,.5);
   font-size: 1.2rem;
   flex-shrink: 0;
   text-decoration: none;
-  transition: color .14s;
+  border-radius: 0.5rem;
+  transition: color .14s, background .14s;
 }
 .myt-block__link:hover { color: rgba(255,255,255,.9); }
 
@@ -14399,7 +14402,8 @@ html[data-theme="dark"] .tj-cat-badge { color: #8BABA3 !important; }
   min-height: 100vh;
   background: var(--elite-white, #FAFAF8);
   color: var(--elite-ink, #1A1A18);
-  padding-bottom: 5rem;
+  /* الحشو السفلي يتكفّل به .app-main (الشريط السفلي + safe area) */
+  padding-bottom: 1.25rem;
 }
 
 /* Hero */
@@ -14724,7 +14728,7 @@ html[data-theme="dark"] .tj-cat-badge { color: #8BABA3 !important; }
   min-height: 100vh;
   background: var(--elite-white, #FAFAF8);
   color: var(--elite-ink, #1A1A18);
-  padding-bottom: 5rem;
+  padding-bottom: 1.25rem;
 }
 .qlive-hero {
   background: linear-gradient(160deg, #143F35 0%, #143F35 50%, #143F35 100%);
@@ -15014,7 +15018,7 @@ html[data-theme="dark"] .qlive-player {
   min-height: 100vh;
   background: var(--elite-white, #FAFAF8);
   color: var(--elite-ink, #1A1A18);
-  padding-bottom: 5rem;
+  padding-bottom: 1.25rem;
   max-width: 72rem;
   margin: 0 auto;
   padding-left: 1rem;
@@ -28556,7 +28560,8 @@ html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero
   margin-inline: auto !important;
   padding-inline: 1rem !important;
   padding-top: 1rem !important;
-  padding-bottom: 5rem !important;
+  /* لا تكرار مع .app-main الذي يدفع المحتوى فوق الشريط السفلي */
+  padding-bottom: 1.25rem !important;
 }
 .page-shell.narrow {
   max-width: 52rem !important;

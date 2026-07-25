@@ -902,6 +902,61 @@ html[data-theme="dark"] .ds-page-back-btn {
   color: var(--color-text-muted);
 }
 
+/* ══ صفحات أساسية: لمس، مسافات، بطاقات ══ */
+.hsh-step__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 0.15rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+.hsh-step__cta:hover { text-decoration: underline; }
+.site-footer--v3 .site-footer-link,
+.site-footer--v3 .site-footer-email a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.pt-gov-chip,
+.pt-quick-link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+}
+.pt-prayer {
+  min-height: 44px;
+}
+.quran-hub-card {
+  min-height: 44px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+  text-decoration: none;
+  color: inherit;
+}
+.quran-hub-hero {
+  padding-block: clamp(1.5rem, 4vw, 2.5rem);
+}
+.lessons-v2-filter-toggle {
+  min-height: 44px;
+}
+.adhkar-chips button,
+.adhkar-chips a,
+.adhkar-chips .ds-btn {
+  min-height: 44px;
+}
+.up-root,
+.ucp-root,
+.udp-root {
+  padding-bottom: 1.25rem;
+}
+
 @media (max-width: 879px) {
   .ds-btn--sm {
     min-height: 44px;
@@ -916,6 +971,11 @@ html[data-theme="dark"] .ds-page-back-btn {
   .home-quick-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.65rem;
+  }
+  .quran-hub-page,
+  .qlive-page,
+  .sch-page {
+    padding-bottom: 1rem;
   }
 }
 
