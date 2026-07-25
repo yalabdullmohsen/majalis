@@ -44,7 +44,9 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
       });
       return;
     }
-    const path = `/library/${item.id}`;
+    // params.id لا item.id — يطابق الرابط الفعلي في شريط العنوان دومًا
+    // (راجع نفس الإصلاح في RulingDetailPage.tsx، 2026-07-25).
+    const path = `/library/${params.id}`;
     applyPageSeo({
       path,
       title: `${item.title} | المكتبة العلمية، المجلس العلمي`,

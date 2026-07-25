@@ -2,7 +2,7 @@
   "id": "/?source=pwa",
   "name": "المجلس العلمي",
   "short_name": "المجلس العلمي",
-  "description": "منصة علمية شرعية موثقة للدروس والدورات والقرآن والأذكار والفتاوى والأسئلة والمساعد الشرعي.",
+  "description": "منصة علمية شرعية موثقة للدروس والدورات والقرآن والأذكار والفقه والأسئلة والمساعد الشرعي.",
   "lang": "ar",
   "dir": "rtl",
   "start_url": "/?source=pwa",
@@ -50,7 +50,7 @@
     {
       "name": "القرآن الكريم",
       "short_name": "القرآن",
-      "url": "/quran?source=pwa",
+      "url": "/quran-hub?source=pwa",
       "description": "المصحف الرقمي الاحترافي",
       "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
     },
@@ -76,10 +76,10 @@
       "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
     },
     {
-      "name": "الفتاوى الشرعية",
-      "short_name": "الفتاوى",
-      "url": "/fatwa?source=pwa",
-      "description": "فتاوى موثّقة بالأدلة",
+      "name": "الفقه والأحكام",
+      "short_name": "الفقه",
+      "url": "/fiqh?source=pwa",
+      "description": "أحكام شرعية موثّقة بالأدلة",
       "icons": [{ "src": "/logo-icon.png", "sizes": "256x256" }]
     },
     {
