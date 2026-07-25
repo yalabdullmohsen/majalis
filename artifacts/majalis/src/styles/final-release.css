@@ -644,6 +644,12 @@ html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1)
     min-width: 44px;
     min-height: 44px;
   }
+
+  /* المساعد الذكي متاح عبر «المزيد» — إخفاء الزر العائم على الجوال يمنع
+     تداخله مع بطاقات المحتوى فوق الشريط السفلي (تحقّق smoke-mobile). */
+  .assistant-fab {
+    display: none !important;
+  }
 }
 
 html[data-theme="dark"] .bottom-nav,
