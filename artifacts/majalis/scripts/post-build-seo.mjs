@@ -70,7 +70,7 @@ function buildMergedHtml(seoTags, spaAssets, prerenderBody, spaBody) {
       .js-ready #seo-shell{display:none!important}
       .js-ready #root{display:block!important}
     </style>
-    <script>(function(){document.documentElement.classList.add('js-ready');})()</script>
+    <script>(function(){document.documentElement.classList.add('js-ready');var s=document.getElementById('seo-shell');if(s)s.remove();})()</script>
     ${spaAssets}
   </head>
   <body>
