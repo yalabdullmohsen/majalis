@@ -49,7 +49,9 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
       });
       return;
     }
-    const path = `/annual-courses/${item.id}`;
+    // params.id لا item.id — يطابق الرابط الفعلي في شريط العنوان دومًا
+    // (راجع نفس الإصلاح في RulingDetailPage.tsx، 2026-07-25).
+    const path = `/annual-courses/${params.id}`;
     applyPageSeo({
       path,
       title: `${item.title} | الدورات العلمية، المجلس العلمي`,

@@ -8,7 +8,6 @@ export type UserPreferences = {
   imageQuality: "منخفض" | "متوسط" | "عالي";
   videoAutoplay: boolean;
   quranFontScale: string;
-  radioVolume: string;
   playerQuality: string;
   lessonNotifications: boolean;
   lectureNotifications: boolean;
@@ -34,7 +33,6 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   imageQuality: "متوسط",
   videoAutoplay: false,
   quranFontScale: "22",
-  radioVolume: "80",
   playerQuality: "128",
   lessonNotifications: true,
   lectureNotifications: true,

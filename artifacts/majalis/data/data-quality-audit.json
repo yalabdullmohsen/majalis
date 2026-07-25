@@ -1,12 +1,12 @@
 {
-  "at": "2026-07-22T02:38:51.409Z",
+  "at": "2026-07-25T12:53:31.667Z",
   "counts": {
     "qa": 360,
     "lessons": 0,
     "sheikhs": 92,
-    "quiz": 978,
+    "quiz": 997,
     "fawaid": 496,
-    "adhkar": 304
+    "adhkar": 301
   },
   "issues": {
     "qa": [],
@@ -14,16 +14,9 @@
     "sheikhs": [],
     "quiz": [],
     "fawaid": [],
-    "adhkar": [
-      {
-        "type": "duplicate_adhkar_text_same_category",
-        "id": "adh-322",
-        "otherId": "adh-206",
-        "key": "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَ"
-      }
-    ]
+    "adhkar": []
   },
   "summary": {
-    "totalIssues": 1
+    "totalIssues": 0
   }
 }

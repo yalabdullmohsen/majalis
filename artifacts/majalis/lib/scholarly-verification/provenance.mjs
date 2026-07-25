@@ -18,7 +18,7 @@ function inferSourceType(item) {
   const url = String(item.source_url ?? item.url ?? '');
   if (/\.pdf/i.test(url)) return 'book';
   if (/rss|feed|xml/i.test(url)) return 'rss';
-  if (/islamweb|alifta|dorar|sunna/i.test(url)) return 'official';
+  if (/alifta|dorar|sunna/i.test(url)) return 'official';
   if (item.type === 'كتاب' || item.bookTitle) return 'book';
   return 'website';
 }

@@ -42,7 +42,13 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
       });
       return;
     }
-    const path = `/rulings/${item.id}`;
+    // params.id لا item.id: القسم الأول من هذه الدالة يقبل UUID أو slug
+    // (getRulingById تجرّب كليهما)، لكن canonical يجب أن يطابق الرابط
+    // الفعلي في شريط العنوان — item.id هو UUID قاعدة البيانات دومًا، فكان
+    // يُحوِّل روابط slug القابلة للقراءة (?rulings/ruling-wudu-nullifiers)
+    // إلى canonical بصيغة UUID مختلفة تمامًا عن الرابط المزار فعليًا —
+    // ثغرة SEO حقيقية (اكتُشفت 2026-07-25 عبر فحص حي لموقع الإنتاج).
+    const path = `/rulings/${params.id}`;
     applyPageSeo({
       path,
       title: `${item.title} | موسوعة الأحكام، المجلس العلمي`,

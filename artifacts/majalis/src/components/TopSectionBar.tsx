@@ -82,7 +82,7 @@ export function TopSectionBar() {
               onTouchStart={() => triggerPrefetch(tab)}
               onMouseEnter={() => triggerPrefetch(tab)}
             >
-              <tab.Icon size={16} strokeWidth={active ? 2.3 : 1.8} aria-hidden="true" />
+              <tab.Icon size={14} strokeWidth={active ? 2.3 : 1.8} aria-hidden="true" />
               <span>{tab.label}</span>
             </Link>
           );

@@ -52,7 +52,12 @@ function classify(text, currentSlug) {
     }
   }
   if (SAHABAH_RE.test(text)) {
-    if (currentSlug !== "sahabah" && currentSlug !== "seerah") {
+    // ذِكر الصحابي عَرَضاً لا يجعل السؤال في بابه: سؤال عن جمع القرآن في عهد
+    // أبي بكر وعثمان ﵄ هو من علوم القرآن لا من تراجم الصحابة. فإذا حمل النص
+    // مصطلحاً صريحاً من باب آخر قُدِّم عليه ولم يُعدّ سوء تصنيف.
+    const OTHER_TOPIC_RE =
+      /جمع القرآن|رسم المصحف|المصحف|نزول القرآن|النسخ|أسباب النزول|القراءات|تدوين السنة|علوم القرآن/;
+    if (currentSlug !== "sahabah" && currentSlug !== "seerah" && !OTHER_TOPIC_RE.test(text)) {
       return { slug: "sahabah", reason: "سؤال عن الصحابة" };
     }
   }
