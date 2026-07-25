@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Clock } from "lucide-react";
+import { useNumerals } from "@/hooks/useNumerals";
 import {
   computePrayerCountdown,
   fetchPrayerTimes,
@@ -80,6 +81,7 @@ function useCompactPrayer() {
 
 export function HomeCompactPrayer() {
   const { data, nextKey, countdown, sinceSeconds, graceNextHms } = useCompactPrayer();
+  const fmt = useNumerals();
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [selectedCountdown, setSelectedCountdown] = useState<string>("");
 
@@ -127,7 +129,7 @@ export function HomeCompactPrayer() {
             <span className="hcp-strip__countdown hcp-strip__countdown--sel" aria-live="polite">
               متبقٍّ لـ{selectedPrayer.name}:{" "}
               <span className="hcp-strip__countdown-time" dir="ltr">
-                {selectedCountdown || "—"}
+                {selectedCountdown ? fmt(selectedCountdown) : "—"}
               </span>
             </span>
           ) : sinceSeconds != null && justRangPrayer ? (

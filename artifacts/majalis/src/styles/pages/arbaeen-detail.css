@@ -42,7 +42,7 @@
 .ahd-level {
   display: inline-block;
   padding: .2rem .7rem;
-  border-radius: 999px;
+  border-radius: var(--ds-radius-full);
   font-size: .72rem;
   font-weight: 700;
 }
@@ -52,11 +52,11 @@
 .ahd-level--mastered  { background: var(--majalis-emerald-deep); color: #fff; }
 
 .ahd-text {
-  font-size: 1.25rem;
+  font-size: var(--ds-text-xl);
   line-height: 2.1;
   text-align: center;
   color: var(--majalis-ink);
-  padding: 1rem;
+  padding: var(--ds-space-4);
   margin: 0 0 .5rem;
   border-radius: .85rem;
   background: color-mix(in srgb, var(--majalis-emerald-deep) 5%, transparent);
@@ -102,7 +102,7 @@
 .ahd-quiz {
   border: 1px solid var(--majalis-line);
   border-radius: .85rem;
-  padding: 1rem;
+  padding: var(--ds-space-4);
   margin: 1.5rem 0;
 }
 .ahd-quiz__progress {
@@ -111,7 +111,7 @@
   margin: 0 0 .5rem;
 }
 .ahd-quiz__prompt {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-weight: 700;
   color: var(--majalis-ink);
   white-space: pre-line;

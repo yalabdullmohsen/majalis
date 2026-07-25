@@ -5,10 +5,10 @@
   "siteShortName": "المجلس العلمي",
   "siteDescription": "منصة علمية عربية للدروس الشرعية والدورات العلمية وطلب العلم.",
 
-  "$domainNote": "النطاق المعتمد هو www — لأن الخادم يحوّل النطاق المجرّد إليه بـ308. لقلبه إلى النطاق المجرّد: غيّر siteUrl هنا، وغيّر النطاق الرئيسي في لوحة Vercel، ثم أعد البناء.",
-  "siteUrl": "https://www.majlisilm.com",
+  "$domainNote": "النطاق المعتمد هو المجرّد (بلا www) منذ 2026-07-22 — الخادم يحوّل www إليه بـ308 (Vercel Primary Domain غُيِّر من طرف المالك مباشرة بعد حلقة إعادة توجيه لا نهائية كانت تُعطِّل كل مسار غير الرئيسية). للعودة لـwww: اعكس القيم هنا وفي لوحة Vercel معًا، ثم أعد البناء.",
+  "siteUrl": "https://majlisilm.com",
   "legacyOrigins": [
-    "https://majlisilm.com",
+    "https://www.majlisilm.com",
     "http://majlisilm.com",
     "http://www.majlisilm.com"
   ],

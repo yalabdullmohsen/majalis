@@ -7,14 +7,14 @@
  */
 
 :root {
-  --color-background: #f7f4ed;
+  --color-background: #FAFAF8;
   --color-surface: #fffefa;
   --color-surface-muted: #eeeee7;
-  --color-primary: #173d35;
-  --color-primary-hover: #28584d;
+  --color-primary: #143F35;
+  --color-primary-hover: #226A56;
   --color-primary-foreground: #ffffff;
   --color-accent: #a77d36;
-  --color-text: #202725;
+  --color-text: #1A1A18;
   --color-text-muted: #5f6b66;
   --color-border: #ddd9ce;
   --color-success: #216e4e;
@@ -24,8 +24,9 @@
   --radius-md: 0.625rem;
   --radius-lg: 0.875rem;
   --shadow-soft: 0 1px 2px rgb(23 61 53 / 5%), 0 12px 30px rgb(23 61 53 / 6%);
-  --header-height: 4rem;
-  --bottom-nav-height: 4.5rem;
+  --header-height: 3.25rem;
+  --bottom-nav-height: 3.25rem;
+  --ticker-height: 1.875rem;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --page-gutter: clamp(1rem, 3vw, 2rem);
   --page-width: 76rem;
@@ -59,7 +60,7 @@ body {
 
 .app-shell { min-height: 100dvh; background: transparent; color: var(--color-text); }
 .app-main {
-  min-height: calc(100dvh - var(--header-height));
+  min-height: calc(100dvh - var(--header-height) - var(--ticker-height));
   padding-block-end: calc(var(--bottom-nav-height) + var(--safe-bottom) + 1.5rem);
 }
 
@@ -81,13 +82,77 @@ body {
   outline-offset: 3px;
 }
 
-/* App header */
-.navbar-v3 {
+/* الشريط المتحرك أعلى الشاشة (TopTicker) — أعلى طبقة، يمتص
+   env(safe-area-inset-top) وحده فلا يتداخل مع النوتش/Dynamic Island،
+   والهيدر يلتصق أسفله مباشرة (راجع .navbar-v3 أدناه). */
+.top-ticker {
   position: sticky;
   inset-block-start: 0;
-  z-index: var(--z-nav, 200);
-  min-height: calc(var(--header-height) + env(safe-area-inset-top, 0px));
+  z-index: calc(var(--z-nav, 200) + 1);
+  height: calc(var(--ticker-height) + env(safe-area-inset-top, 0px));
   padding-block-start: env(safe-area-inset-top, 0px);
+  overflow: hidden;
+  background: var(--elite-forest, #143F35);
+  display: flex;
+  align-items: center;
+}
+.top-ticker__track {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  white-space: nowrap;
+  padding-inline-end: 2.5rem;
+  animation: top-ticker-scroll 32s linear infinite;
+}
+.top-ticker__track.is-paused {
+  animation-play-state: paused;
+}
+.top-ticker__item {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #FAFAF8;
+  flex-shrink: 0;
+}
+.top-ticker__item-source {
+  opacity: 0.75;
+  font-weight: 400;
+}
+.top-ticker--static,
+.top-ticker--empty {
+  justify-content: center;
+  padding-inline: 1rem;
+}
+.top-ticker--static .top-ticker__item {
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.top-ticker__empty-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #FAFAF8;
+  opacity: 0.85;
+}
+@keyframes top-ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .top-ticker__track { animation: none; }
+}
+
+/* App header */
+/* الهيدر يلتصق أسفل TopTicker مباشرة (لا أعلى الشاشة) — TopTicker وحده
+   يمتص env(safe-area-inset-top) الآن (طبقة علوية واحدة متّسقة)، فالهيدر
+   لم يعد بحاجة لحشوه الخاص لأنه لم يعد يلامس الحافة العلوية الحقيقية. */
+.navbar-v3 {
+  position: sticky;
+  inset-block-start: calc(var(--ticker-height) + env(safe-area-inset-top, 0px));
+  z-index: var(--z-nav, 200);
+  min-height: var(--header-height);
   background: color-mix(in srgb, var(--color-surface) 92%, transparent);
   border: 0;
   border-block-end: 1px solid var(--color-border);
@@ -95,6 +160,149 @@ body {
   backdrop-filter: blur(18px) saturate(1.2);
 }
 .navbar-v3::after { content: none; }
+
+/* شريط الأقسام العلوي (TopSectionBar) — أهم الأقسام الفعلية من القائمة
+   الجانبية (تحديث 2026-07-23: 22 وجهة بترتيب أولوية)، لاصق أسفل الهيدر
+   مباشرة (لا يغطيه ولا الـ Dynamic Island: يبدأ بعد ارتفاع الهيدر الكامل
+   بما فيه safe-area-inset-top الذي يحسبه الهيدر نفسه). تمرير أفقي سلس
+   بلا شريط تمرير ظاهر، وتمرير تلقائي للقسم النشط داخل الشاشة عند التنقل
+   (JS في TopSectionBar.tsx). الحالة النشطة عبر لون/خلفية/حدّ فقط — لا
+   تغيير في الحشو أو حجم الخط أو الوزن، فلا يحدث Layout Shift عند التبديل
+   بين الأقسام. white-space: nowrap يمنع التفاف اسم أي قسم لأكثر من سطر. */
+.top-section-bar {
+  position: sticky;
+  top: calc(var(--ticker-height) + env(safe-area-inset-top, 0px) + var(--header-height, 4rem));
+  z-index: 190;
+  background: color-mix(in srgb, var(--color-surface, #FAF8F5) 96%, transparent);
+  border-block-end: 1px solid var(--color-border, #E8E7E2);
+  backdrop-filter: blur(14px) saturate(1.15);
+}
+.top-section-bar__scroll {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0.4rem 0.75rem;
+  max-width: min(100%, var(--page-width));
+  margin-inline: auto;
+}
+.top-section-bar__scroll::-webkit-scrollbar { display: none; }
+.top-section-bar__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.6rem 1rem;
+  min-height: 44px;
+  border-radius: 9999px;
+  color: var(--color-text-muted, #5C5C56);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  flex-shrink: 0;
+  border: 1.5px solid transparent;
+  background: transparent;
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+.top-section-bar__tab:hover { color: var(--color-primary-deep, #143F35); }
+.top-section-bar__tab.is-active {
+  color: var(--color-primary-deep, #143F35);
+  background: color-mix(in srgb, var(--color-primary, #226A56) 10%, transparent);
+  border-color: color-mix(in srgb, var(--color-primary, #226A56) 22%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  .top-section-bar { background: color-mix(in srgb, #14201c 92%, transparent); }
+}
+html[data-theme="dark"] .top-section-bar {
+  background: color-mix(in srgb, #14201c 92%, transparent);
+  border-block-end-color: rgba(255,255,255,0.08);
+}
+
+/* ══ قسم الأطفال — لمسات ألطف ضمن نفس الهوية الزمردية (لا ألوان دخيلة) ══ */
+.kids-hub-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1rem 1rem 3rem;
+}
+.kids-hub-intro {
+  text-align: center;
+  padding: 1.75rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border-radius: 1.5rem;
+  background: linear-gradient(160deg, #E8F2EE 0%, #FAFAF8 100%);
+  border: 1px solid rgba(23,61,53,0.10);
+}
+.kids-hub-intro__icon { color: #226A56; margin-bottom: 0.5rem; }
+.kids-hub-intro__title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #143F35;
+  margin: 0 0 0.4rem;
+}
+.kids-hub-intro__sub {
+  font-size: 0.9rem;
+  color: #5C5C56;
+  margin: 0;
+  line-height: 1.6;
+}
+.kids-hub-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+@media (min-width: 480px) {
+  .kids-hub-grid { grid-template-columns: 1fr 1fr; }
+}
+.kids-hub-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  border-radius: 1.25rem;
+  text-decoration: none;
+  min-height: 44px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.kids-hub-card:hover { transform: translateY(-1px); }
+.kids-hub-card__icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: #E8F2EE;
+  color: #226A56;
+}
+.kids-hub-card__body { flex: 1; min-width: 0; }
+.kids-hub-card__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #143F35;
+  margin: 0 0 0.2rem;
+}
+.kids-hub-card__desc {
+  font-size: 0.8rem;
+  color: #5C5C56;
+  margin: 0;
+  line-height: 1.5;
+}
+.kids-hub-card__chevron { flex-shrink: 0; color: #A8B5AE; }
+
+html[data-theme="dark"] .kids-hub-intro {
+  background: linear-gradient(160deg, #17251f 0%, #1a2620 100%);
+  border-color: rgba(255,255,255,0.08);
+}
+html[data-theme="dark"] .kids-hub-intro__title,
+html[data-theme="dark"] .kids-hub-card__title { color: #E9F3EE; }
+html[data-theme="dark"] .kids-hub-intro__sub,
+html[data-theme="dark"] .kids-hub-card__desc { color: #A8B5AE; }
+html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1); color: #7ED4B5; }
 .navbar-v3__inner {
   width: min(100%, var(--page-width));
   min-height: var(--header-height);
@@ -126,7 +334,7 @@ body {
   border-radius: var(--radius-md);
   color: var(--color-text-muted);
   font-size: .86rem;
-  font-weight: 650;
+  font-weight: 600;
   text-decoration: none;
   transition: color var(--motion-fast), background var(--motion-fast);
 }
@@ -134,7 +342,7 @@ body {
 .navbar-v3__tabs .nav-tab:hover,
 .navbar-v3__tabs .nav-tab--active { color: var(--color-primary); background: var(--color-surface-muted); }
 .navbar-v3__start, .navbar-v3__end { gap: .45rem; }
-.navbar-menu-btn, .navbar-theme-toggle, .navbar-search-cmd, .navbar-mobile-login {
+.navbar-menu-btn, .navbar-theme-toggle, .navbar-mobile-login {
   min-width: 44px;
   min-height: 44px;
   border: 1px solid var(--color-border);
@@ -143,20 +351,62 @@ body {
   color: var(--color-primary);
   box-shadow: none;
 }
-.navbar-search-cmd {
-  width: auto;
-  padding-inline: .8rem;
+
+/* الشريط المتحرك أعلى التطبيق (HeaderTicker) — يحلّ محل زر/مربع البحث في
+   الهيدر (تكليف 2026-07-24). CSS Marquee بلا مكتبات: تكرار العناصر مرتين
+   وتحريك 0%→-50% يعطي حلقة سلسة بلا قفزة. يتوقف عند hover/لمس، ويتحول
+   لتناوب ثابت بلا حركة عند prefers-reduced-motion (مطابق فعليًا في JS
+   وCSS كطبقة حماية إضافية). ألوان/خط الهوية الحالية (--color-primary
+   #143F35 وAlexandria الموحَّد) لا #0E6E52/Almarai القديمين. */
+.header-ticker {
+  overflow: hidden;
+  min-width: 0;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  mask-image: linear-gradient(to left, transparent, #000 5%, #000 95%, transparent);
+}
+.header-ticker--empty { visibility: hidden; }
+.header-ticker__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: header-ticker-scroll 32s linear infinite;
+}
+.header-ticker:hover .header-ticker__track,
+.header-ticker:active .header-ticker__track { animation-play-state: paused; }
+/* الاتجاه موجب لأن الصفحة RTL: عناصر flex تُرصّ من اليمين لليسار، فيمتد
+   المسار كله يسار النافذة المرئية. تحريكه بـ-50% (كما كان) يدفع المحتوى
+   بعيدًا عن النافذة فيظهر الشريط فارغًا بعد أول ثوانٍ — وهو ما كان يحدث
+   فعلًا. التحريك بـ+50% يسحب النسخة الثانية إلى موضع الأولى فتكتمل
+   الحلقة بلا قفزة. */
+@keyframes header-ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(50%); }
+}
+.header-ticker--static { padding-inline: .7rem; }
+.header-ticker__item {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: .4rem;
-  font: inherit;
+  padding-inline: .9rem;
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--color-text);
   font-size: .82rem;
-  font-weight: 700;
-  cursor: pointer;
 }
-.navbar-search-cmd:hover { background: var(--color-surface-muted); }
-.navbar-search-cmd:focus-visible { outline: 3px solid color-mix(in srgb, var(--color-primary) 28%, transparent); outline-offset: 2px; }
+.header-ticker__icon { color: var(--color-primary); flex-shrink: 0; }
+.header-ticker__label { color: var(--color-primary); font-weight: 700; }
+.header-ticker__source { color: var(--color-text-muted); font-size: .74rem; }
+@media (min-width: 880px) {
+  .header-ticker { width: clamp(200px, 22vw, 340px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header-ticker__track { animation: none; }
+}
 
 /* Shared page rhythm and cards */
 :where(.page-container, .container, .home-container, .lessons-page, .library-page) {
@@ -207,7 +457,7 @@ body {
   min-height: 48px;
   border-radius: var(--radius-md);
   background: #fffefa !important;
-  color: #173d35 !important;
+  color: #143F35 !important;
   border: 1px solid #fffefa !important;
   box-shadow: none !important;
 }
@@ -233,7 +483,7 @@ body {
 /* Lesson cards intentionally have no media slot. */
 .lesson-unified-card { padding: 0; overflow: hidden; }
 .lesson-unified-card__header { padding: .8rem 1rem; background: var(--color-surface-muted); border-block-end: 1px solid var(--color-border); }
-.lesson-unified-card__body { padding: 1rem; }
+.lesson-unified-card__body { padding: var(--ds-space-4); }
 .lesson-unified-card__title { color: var(--color-text); font-size: 1.05rem; line-height: 1.55; }
 .lesson-unified-card__sheikh, .lesson-unified-card__meta-label { color: var(--color-text-muted); }
 .lesson-unified-card__meta { gap: .5rem; }
@@ -253,8 +503,8 @@ body {
 }
 .bottom-nav--v2 .bottom-nav__tab { min-width: 44px; min-height: 44px; border-radius: var(--radius-md); color: var(--color-text-muted); }
 .bottom-nav--v2 .bottom-nav__tab.is-active { color: var(--color-primary); background: var(--color-surface-muted); }
-.bottom-nav--v2 .bottom-nav__tab-icon { width: 1.65rem; height: 1.65rem; background: transparent; }
-.bottom-nav--v2 .bottom-nav__tab-label { font-size: .69rem; font-weight: 650; }
+.bottom-nav--v2 .bottom-nav__tab-icon { width: 1.25rem; height: 1.25rem; background: transparent; }
+.bottom-nav--v2 .bottom-nav__tab-label { font-size: .7rem; font-weight: 600; }
 
 /* Footer is a concise trust/navigation surface, not a duplicate sitemap. */
 .site-footer--v3 { margin-block-start: clamp(2rem, 5vw, 4rem); }
@@ -263,7 +513,7 @@ body {
   margin-inline: auto;
   padding: clamp(1.5rem, 4vw, 3rem) var(--page-gutter) calc(1rem + var(--safe-bottom));
 }
-.site-footer--v3 .site-footer-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+.site-footer--v3 .site-footer-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-space-6); }
 .site-footer--v3 .site-footer-group nav { display: grid; gap: .35rem; }
 .site-footer--v3 .site-footer-link { min-height: 36px; display: inline-flex; align-items: center; }
 
@@ -273,7 +523,7 @@ body {
 }
 
 @media (max-width: 879px) {
-  :root { --header-height: 3.75rem; }
+  :root { --header-height: 3rem; }
   .navbar-v3__inner { grid-template-columns: auto 1fr; }
   .navbar-v3__end { justify-self: end; }
   .navbar-theme-toggle { display: none; }
@@ -287,7 +537,6 @@ body {
   .navbar-v3__inner { gap: .35rem; padding-inline: .65rem; }
   .navbar-brand__copy strong { font-size: .76rem; }
   .navbar-menu-btn, .navbar-mobile-login { min-width: 42px; width: 42px; }
-  .navbar-search-cmd { min-width: 64px; padding-inline: .65rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

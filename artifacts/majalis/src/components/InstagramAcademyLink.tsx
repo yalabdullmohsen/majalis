@@ -9,7 +9,7 @@ interface InstagramAcademyLinkProps {
 }
 
 /**
- * رابط حساب انستغرام لأكاديمية ورثة الأنبياء — المصدر الوحيد المعتمد لعرضه.
+ * رابط حساب انستغرام الرسمي للمجلس العلمي — المصدر الوحيد المعتمد لعرضه.
  * على iOS يحاول فتح تطبيق انستغرام مباشرةً، وإلا يفتح المتصفح الآمن في تبويب جديد.
  */
 export function InstagramAcademyLink({ variant = "card", className }: InstagramAcademyLinkProps) {

@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo } from "react";
-import { Sparkles } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
@@ -164,13 +163,6 @@ function GradeBadge({ grade }: { grade: string }) {
 
 export function PrayerRanksContent() {
   const [search, setSearch] = useState("");
-  const todayVirtue = useMemo(() => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
-    return PRAYER_VIRTUES[(day - 1 + PRAYER_VIRTUES.length) % PRAYER_VIRTUES.length];
-  }, []);
-
   const filteredRanks = useMemo(() =>
     search.trim() ? RANKS.filter(r => arabicMatchAny([r.title, r.label, r.ruling, r.text, r.benefit], search)) : RANKS,
   [search]);
@@ -181,30 +173,9 @@ export function PrayerRanksContent() {
     search.trim() ? PRAYER_TIPS.filter(t => arabicMatchAny([t.tip], search)) : PRAYER_TIPS,
   [search]);
 
-  const share = async () => {
-    const url = window.location.href;
-    if (navigator.share) {
-      await navigator.share({ title: "مراتب الناس في الصلاة", url }).catch(() => {});
-    } else {
-      await navigator.clipboard?.writeText(url).catch(() => {});
-    }
-  };
-
   return (
     <div className="prayer-ranks-page">
-      {/* فضيلة الصلاة اليوم */}
-      <div className="prvod-card">
-        <div className="prvod-card__badge"><Sparkles size={11} aria-hidden="true" /> فضيلة الصلاة اليوم</div>
-        <h2 className="prvod-card__title">{todayVirtue.title}</h2>
-        <p className="prvod-card__text">{todayVirtue.text}</p>
-        <div className="prvod-card__meta">
-          <GradeBadge grade={todayVirtue.grade} />
-          {todayVirtue.narrator && <span className="prvod-card__narrator">رواه {todayVirtue.narrator}</span>}
-          <span className="prvod-card__source">{todayVirtue.source}</span>
-        </div>
-      </div>
       <div className="prayer-ranks-actions">
-        <button type="button" className="ui-card-btn" onClick={share}>مشاركة</button>
         <button type="button" className="ui-card-btn" onClick={() => window.print()}>طباعة / PDF</button>
       </div>
 

@@ -746,13 +746,6 @@ export default function AcademicResearchPage() {
         )}
       </div>
 
-      {/* رابط الباحث الشرعي */}
-      <div className="ar-footer-link">
-        <Link href="/scholarly-research" className="ar-footer-link__btn">
-          <Search size={16} strokeWidth={2} aria-hidden="true" />
-          البحث بالذكاء الاصطناعي في المصادر الشرعية
-        </Link>
-      </div>
 
       <div className="twh-share">
         <ShareButtons title="البحث الأكاديمي الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/academic-research" />

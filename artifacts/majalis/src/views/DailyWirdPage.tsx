@@ -31,7 +31,7 @@ function KhatmaRing({ pagesInKhatma, khatmasCompleted }: { pagesInKhatma: number
       <circle cx="62" cy="62" r={r} fill="none" stroke="var(--majalis-emerald-muted, rgba(23,61,53,.12))" strokeWidth="8" />
       <circle
         cx="62" cy="62" r={r} fill="none"
-        stroke={done ? "#28584D" : "var(--majalis-emerald, #173D35)"}
+        stroke={done ? "#226A56" : "var(--majalis-emerald, #143F35)"}
         strokeWidth="8" strokeLinecap="round"
         strokeDasharray={circ}
         strokeDashoffset={circ * (1 - pct)}
@@ -39,15 +39,15 @@ function KhatmaRing({ pagesInKhatma, khatmasCompleted }: { pagesInKhatma: number
         opacity={done ? "1" : "0.75"}
       />
       {khatmasCompleted > 0 && (
-        <text x="62" y="55" textAnchor="middle" fill={done ? "#28584D" : "var(--majalis-emerald)"} fontSize="20" fontWeight="800" fontFamily="inherit">
+        <text x="62" y="55" textAnchor="middle" fill={done ? "#226A56" : "var(--majalis-emerald)"} fontSize="20" fontWeight="800" fontFamily="inherit">
           {toAr(khatmasCompleted)}
         </text>
       )}
-      <text x="62" y={khatmasCompleted > 0 ? "70" : "66"} textAnchor="middle" fill="var(--majalis-ink-soft, rgba(23,61,53,.45))" fontSize="9" fontWeight="600" fontFamily="inherit">
+      <text x="62" y={khatmasCompleted > 0 ? "70" : "66"} textAnchor="middle" fill="var(--majalis-ink-soft, rgba(23,61,53,.45))" fontSize="12" fontWeight="600" fontFamily="inherit">
         {khatmasCompleted > 0 ? "ختمة كاملة" : "ص " + toAr(pagesInKhatma) + " / ٦٠٤"}
       </text>
       {khatmasCompleted > 0 && (
-        <text x="62" y="85" textAnchor="middle" fill="var(--majalis-ink-soft)" fontSize="8.5" fontWeight="600" fontFamily="inherit">
+        <text x="62" y="85" textAnchor="middle" fill="var(--majalis-ink-soft)" fontSize="12" fontWeight="600" fontFamily="inherit">
           ص {toAr(pagesInKhatma)} من ختمة جديدة
         </text>
       )}
@@ -65,7 +65,7 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
       <circle
         cx="74" cy="74" r={r}
         fill="none"
-        stroke="var(--majalis-emerald, #173D35)"
+        stroke="var(--majalis-emerald, #143F35)"
         strokeWidth="9"
         strokeLinecap="round"
         strokeDasharray={circ}
@@ -74,16 +74,16 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
         className="dwd-ring-fill"
         opacity={done ? "1" : "0.7"}
       />
-      <text x="74" y="67" textAnchor="middle" fill="var(--majalis-emerald, #173D35)"
+      <text x="74" y="67" textAnchor="middle" fill="var(--majalis-emerald, #143F35)"
         fontSize="24" fontWeight="800" fontFamily="inherit">
         {toAr(pages)}
       </text>
       <text x="74" y="84" textAnchor="middle" fill="var(--majalis-ink-soft, rgba(23,61,53,0.45))"
-        fontSize="10.5" fontWeight="600" fontFamily="inherit">
+        fontSize="12.5" fontWeight="600" fontFamily="inherit">
         من {toAr(target)} صفحة
       </text>
       {done && (
-        <text x="74" y="100" textAnchor="middle" fill="var(--majalis-emerald, #173D35)"
+        <text x="74" y="100" textAnchor="middle" fill="var(--majalis-emerald, #143F35)"
           fontSize="12" fontWeight="700" fontFamily="inherit">✓ اكتمل</text>
       )}
     </svg>

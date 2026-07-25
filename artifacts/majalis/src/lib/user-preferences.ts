@@ -19,6 +19,7 @@ export type UserPreferences = {
   sourceDetailLevel: string;
   searchHistory: boolean;
   assistantVerbose: boolean;
+  numeralSystem: "عربي" | "إنجليزي";
 };
 
 export const SETTINGS_KEY = "majalis-user-settings-v1";
@@ -27,7 +28,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   fontSize: "متوسط",
   interfaceLanguage: "العربية",
   direction: "rtl",
-  readingTextSize: "20",
+  readingTextSize: "17",
   readingSpacing: "واسع",
   readingMode: false,
   imageQuality: "متوسط",
@@ -44,6 +45,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   sourceDetailLevel: "مختصر",
   searchHistory: true,
   assistantVerbose: false,
+  numeralSystem: "عربي",
 };
 
 export function readPreferences(): UserPreferences {

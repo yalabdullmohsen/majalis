@@ -14,7 +14,7 @@ function loadSeoConfig() {
     const raw = readFileSync(join(APP_ROOT, "src/lib/seo-routes.json"), "utf8");
     return JSON.parse(raw);
   } catch {
-    return { siteUrl: "https://www.majlisilm.com", routes: [] };
+    return { siteUrl: "https://majlisilm.com", routes: [] };
   }
 }
 

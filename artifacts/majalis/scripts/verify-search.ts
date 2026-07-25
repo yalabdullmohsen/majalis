@@ -385,7 +385,7 @@ async function runApiTests() {
 
 async function main(): Promise<void> {
   console.log("══════════════════════════════════════════════════════════════");
-  console.log(`${BOLD}  مجالس العلم — التحقق من محرك البحث العربي الموحد${RESET}`);
+  console.log(`${BOLD}  المجلس العلمي — التحقق من محرك البحث العربي الموحد${RESET}`);
   console.log("══════════════════════════════════════════════════════════════");
   console.log(`  الوقت: ${new Date().toISOString()}\n`);
 

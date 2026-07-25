@@ -26,7 +26,7 @@ function mapDraftToLesson(extracted, opts = {}) {
   const startDate = d.start_date || d.gregorian_date || null;
   const keywords = Array.isArray(d.keywords) ? d.keywords.filter(Boolean) : [];
 
-  return {
+  const row = {
     title: d.title,
     speaker_name: d.speaker_name || d.sheikh_name || null,
     sheikh_id: opts.sheikhId || null,
@@ -70,6 +70,7 @@ function mapDraftToLesson(extracted, opts = {}) {
     imported_by: opts.importedBy || null,
     poster_image_hash: opts.posterImageHash || null,
   };
+  return row;
 }
 
 export async function publishLessonDraft({

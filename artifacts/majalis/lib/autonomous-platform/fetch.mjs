@@ -16,7 +16,7 @@ async function fetchUrl(url, opts = {}) {
     const res = await fetch(url, {
       signal: controller.signal,
       headers: {
-        "User-Agent": "MajlisIlm-AKP/2.0 (+https://www.majlisilm.com)",
+        "User-Agent": "MajlisIlm-AKP/2.0 (+https://majlisilm.com)",
         Accept: opts.accept || "application/rss+xml, application/json, application/xml, text/xml, */*",
       },
       redirect: "follow",

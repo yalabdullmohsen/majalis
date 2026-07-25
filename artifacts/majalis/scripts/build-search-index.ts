@@ -184,7 +184,7 @@ async function verifyQuranIndex(): Promise<void> {
 
 async function main(): Promise<void> {
   console.log("════════════════════════════════════════════════════════════");
-  console.log("  مجالس العلم — بناء فهرس البحث الموحد");
+  console.log("  المجلس العلمي — بناء فهرس البحث الموحد");
   console.log("════════════════════════════════════════════════════════════");
   console.log(`  الوقت: ${new Date().toISOString()}`);
   console.log("  الأعمدة مولَّدة تلقائياً (GENERATED ALWAYS AS) — التحقق فقط\n");

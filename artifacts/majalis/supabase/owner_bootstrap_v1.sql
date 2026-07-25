@@ -1,3 +1,5 @@
+-- ملاحظة: يُستخدم الرمز __OWNER_EMAIL__ بدلًا من بريد المالك الفعلي حتى لا يُخزَّن بريد شخصي في المستودع.
+-- قبل التشغيل استبدله ببريد المالك، أو مرِّر MAJALIS_OWNER_EMAILS لسكربت التطبيق ليستبدله تلقائيًا.
 -- =====================================================================
 --  Owner bootstrap v1 — permanent super admin / owner privileges
 --  Run in Supabase SQL Editor after base schema.
@@ -49,7 +51,7 @@ SET search_path = public
 AS $$
 DECLARE
   owner_email TEXT;
-  protected_emails TEXT[] := ARRAY['yalabdullmohsen1@gmail.com'];
+  protected_emails TEXT[] := ARRAY['__OWNER_EMAIL__'];
 BEGIN
   SELECT lower(trim(u.email)) INTO owner_email
   FROM auth.users u
@@ -132,7 +134,7 @@ SET search_path = public
 AS $$
 DECLARE
   uid UUID;
-  protected_emails TEXT[] := ARRAY['yalabdullmohsen1@gmail.com'];
+  protected_emails TEXT[] := ARRAY['__OWNER_EMAIL__'];
   normalized TEXT := lower(trim(target_email));
 BEGIN
   IF normalized IS NULL OR normalized = '' THEN

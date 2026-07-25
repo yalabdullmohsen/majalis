@@ -10,8 +10,8 @@ const NODE_W  = 110;
 const NODE_H  = 52;
 const H_GAP   = 50;   // الفجوة الأفقية بين الأعمدة
 const V_GAP   = 28;   // الفجوة الرأسية بين الإخوة
-const EMERALD = "#28584D";
-const ANCESTOR_CLR = "#68716D";
+const EMERALD = "#226A56";
+const ANCESTOR_CLR = "#5C5C56";
 
 // ── حساب تخطيط الشجرة ─────────────────────────────────────────────────────
 
@@ -67,7 +67,7 @@ function NodeBox({ placed, onClick }: {
   const isUlul  = node.isUlulAzm;
   const isLast  = node.id === "muhammad";
   const fill    = isLast ? EMERALD : isAnc ? ANCESTOR_CLR : "#FFFFFF";
-  const stroke  = isUlul ? "#D97706" : isAnc ? "#5E655F" : EMERALD;
+  const stroke  = isUlul ? "#D97706" : isAnc ? "#5C5C56" : EMERALD;
   const textClr = (isLast || isAnc) ? "#FFFFFF" : "#1F2937";
   const sw      = isUlul ? 2.5 : 1.5;
   const rx      = isLast ? 12 : 8;
@@ -107,7 +107,7 @@ function NodeBox({ placed, onClick }: {
           x={NODE_W / 2} y={NODE_H / 2 + 11}
           textAnchor="middle" dominantBaseline="middle"
           fontSize={8.5} fontFamily="IBM Plex Sans Arabic, Noto Sans Arabic, sans-serif"
-          fill={isLast ? "rgba(255,255,255,0.8)" : "#5E655F"}
+          fill={isLast ? "rgba(255,255,255,0.8)" : "#5C5C56"}
         >
           {truncateAtWord(node.era, 20)}
         </text>
@@ -219,20 +219,20 @@ export default function ProphetsFamilyTreePage() {
   const selectedNode = placed.find(p => p.node.id === selected)?.node;
 
   return (
-    <div dir="rtl" style={{ minHeight: "100vh", background: "#F0F5F2", fontFamily: "IBM Plex Sans Arabic, Noto Sans Arabic, sans-serif" }}>
+    <div dir="rtl" style={{ minHeight: "100vh", background: "#F0F7F4", fontFamily: "IBM Plex Sans Arabic, Noto Sans Arabic, sans-serif" }}>
       {/* Header */}
       <header style={{
         background: "linear-gradient(135deg,#0c2318,#1a3d2b)",
-        color: "#F7F4ED", padding: "1rem 1.25rem",
+        color: "#FAFAF8", padding: "1rem 1.25rem",
         display: "flex", alignItems: "center", gap: "1rem",
       }}>
         <Link href="/prophets" style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none", fontSize: "0.9rem" }}>
           ← الأنبياء
         </Link>
         <div style={{ flex: 1 }}>
-          <h1 style={{ margin: 0, fontSize: "1.2rem", fontWeight: 800 }}>شجرة أنساب الأنبياء</h1>
+          <h1 className="pft-hero__title" style={{ margin: 0, fontSize: "1.2rem", fontWeight: 800, color: "#FAFAF8" }}>شجرة أنساب الأنبياء</h1>
           <p style={{ margin: 0, fontSize: "0.75rem", color: "rgba(255,255,255,0.6)" }}>
-            ٢٥ نبياً من آدم إلى محمد ﷺ — اسحب للتنقل، اضغط على نبي للتفاصيل
+            ٢٥ نبياً مذكورًا بالاسم في القرآن، من آدم إلى محمد ﷺ — اسحب للتنقل، اضغط على نبي للتفاصيل
           </p>
         </div>
         {/* أزرار التحكم */}
@@ -244,7 +244,7 @@ export default function ProphetsFamilyTreePage() {
           ].map(({ icon, fn, title }) => (
             <button key={title} type="button" onClick={fn} aria-label={title} style={{
               background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)",
-              color: "#F7F4ED", borderRadius: "0.5rem", padding: "0.4rem 0.6rem",
+              color: "#FAFAF8", borderRadius: "0.5rem", padding: "0.4rem 0.6rem",
               cursor: "pointer", display: "flex", alignItems: "center",
             }}>{icon}</button>
           ))}
@@ -255,21 +255,21 @@ export default function ProphetsFamilyTreePage() {
       <div style={{
         display: "flex", gap: "1rem", flexWrap: "wrap",
         padding: "0.6rem 1.25rem", background: "#fff",
-        borderBottom: "1px solid #E7E2D8", fontSize: "0.75rem",
+        borderBottom: "1px solid #E8E7E2", fontSize: "0.75rem",
       }}>
         {[
           { color: EMERALD,       label: "خاتم الأنبياء ﷺ" },
           { color: "#D97706",     label: "أولو العزم", border: true },
-          { color: "#68716D",     label: "حلقة وصل" },
+          { color: "#5C5C56",     label: "حلقة وصل" },
           { color: "#FFFFFF",     label: "سائر الأنبياء", border2: true },
         ].map(({ color, label, border, border2 }) => (
           <div key={label} style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
             <div style={{
               width: 14, height: 14, borderRadius: 4,
               background: color,
-              border: border ? "2px solid #D97706" : border2 ? "1.5px solid #28584D" : "none",
+              border: border ? "2px solid #D97706" : border2 ? "1.5px solid #226A56" : "none",
             }}/>
-            <span style={{ color: "#68716D" }}>{label}</span>
+            <span style={{ color: "#5C5C56" }}>{label}</span>
           </div>
         ))}
       </div>
@@ -279,6 +279,7 @@ export default function ProphetsFamilyTreePage() {
           جوهريًا، لا مكافئ مباشر له بلوحة المفاتيح. التكبير/التصغير (الوظيفة
           الأهم فعليًا) له بديل كامل بلوحة المفاتيح عبر زرّي "تكبير"/"تصغير"
           الظاهرين (button حقيقي)، فلا حظر فعلي للوصول للمحتوى. */}
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         ref={containerRef}
         style={{
@@ -342,7 +343,7 @@ export default function ProphetsFamilyTreePage() {
                   key={`${p.parentId}-${p.node.id}`}
                   d={`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`}
                   fill="none"
-                  stroke={isDash ? "#9CA3AF" : "#28584D"}
+                  stroke={isDash ? "#9CA3AF" : "#226A56"}
                   strokeWidth={isDash ? 1 : 1.5}
                   strokeDasharray={isDash ? "5,4" : undefined}
                   opacity={0.6}
@@ -382,20 +383,20 @@ export default function ProphetsFamilyTreePage() {
                 </span>
               )}
             </h2>
-            <button type="button" onClick={() => setSelected(null)} aria-label="إغلاق" style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.2rem", color: "#5E655F" }}>×</button>
+            <button type="button" onClick={() => setSelected(null)} aria-label="إغلاق" style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.2rem", color: "#5C5C56" }}>×</button>
           </div>
           {selectedNode.era && (
-            <p style={{ margin: "0.25rem 0", color: "#68716D", fontSize: "0.85rem" }}>
+            <p style={{ margin: "0.25rem 0", color: "#5C5C56", fontSize: "0.85rem" }}>
               <strong>الحقبة: </strong>{selectedNode.era}
             </p>
           )}
           {selectedNode.people && (
-            <p style={{ margin: "0.25rem 0", color: "#68716D", fontSize: "0.85rem" }}>
+            <p style={{ margin: "0.25rem 0", color: "#5C5C56", fontSize: "0.85rem" }}>
               <strong>القوم أو المكان: </strong>{selectedNode.people}
             </p>
           )}
           {selectedNode.linkNote && (
-            <p style={{ margin: "0.25rem 0", color: "#5E655F", fontSize: "0.8rem", fontStyle: "italic" }}>
+            <p style={{ margin: "0.25rem 0", color: "#5C5C56", fontSize: "0.8rem", fontStyle: "normal" }}>
               {selectedNode.linkNote}
             </p>
           )}

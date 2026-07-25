@@ -31,15 +31,15 @@
   justify-content: center;
   background: rgba(31,77,58,0.1);
   border-radius: 50%;
-  color: #173D35;
+  color: #143F35;
 }
 
 .mm-hero__title {
   font-size: 1.6rem;
   font-weight: 900;
-  color: #173D35;
+  color: #143F35;
   margin: 0;
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
 }
 
 .mm-hero__sub {
@@ -62,7 +62,7 @@
 .mm-filter-btn {
   padding: 0.35rem 0.85rem;
   border: 1.5px solid rgba(31,77,58,0.18);
-  border-radius: 999px;
+  border-radius: var(--ds-radius-full);
   background: transparent;
   color: var(--majalis-ink-soft);
   font-family: inherit;
@@ -73,17 +73,17 @@
   transition: background 0.15s, border-color 0.15s, color 0.15s;
   -webkit-tap-highlight-color: transparent;
 }
-.mm-filter-btn:hover { background: rgba(31,77,58,0.06); border-color: rgba(31,77,58,0.35); color: #173D35; }
+.mm-filter-btn:hover { background: rgba(31,77,58,0.06); border-color: rgba(31,77,58,0.35); color: #143F35; }
 .mm-filter-btn--active {
-  background: #173D35;
-  border-color: #173D35;
+  background: #143F35;
+  border-color: #143F35;
   color: #FFFFFF;
 }
 
 /* ── أزرار التوسيع/الطيّ الجماعي ── */
 .mm-batch-btns {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   justify-content: flex-end;
   margin-bottom: 0.85rem;
 }
@@ -97,20 +97,20 @@
   background: transparent;
   color: var(--majalis-ink-soft);
   font-family: inherit;
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 600;
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s, color 0.15s;
   -webkit-tap-highlight-color: transparent;
 }
-.mm-batch-btn:hover { background: rgba(31,77,58,0.06); border-color: rgba(31,77,58,0.35); color: #173D35; }
-.mm-batch-btn--active { background: rgba(31,77,58,0.09); border-color: rgba(31,77,58,0.4); color: #173D35; }
+.mm-batch-btn:hover { background: rgba(31,77,58,0.06); border-color: rgba(31,77,58,0.35); color: #143F35; }
+.mm-batch-btn--active { background: rgba(31,77,58,0.09); border-color: rgba(31,77,58,0.4); color: #143F35; }
 
 /* ── قائمة البطاقات ── */
 .mm-list {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 /* ── بطاقة واحدة ── */
@@ -131,7 +131,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   padding: 1rem 1.1rem;
   width: 100%;
   text-align: right;
@@ -143,22 +143,22 @@
 }
 .mm-card__head:hover { background: rgba(31,77,58,0.04); }
 
-.mm-card__meta { flex: 1; display: flex; flex-direction: column; gap: 0.25rem; }
+.mm-card__meta { flex: 1; display: flex; flex-direction: column; gap: var(--ds-space-1); }
 
 .mm-card__category {
   display: inline-block;
-  font-size: 0.68rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  color: #173D35;
+  color: #143F35;
   background: rgba(31,77,58,0.1);
-  border-radius: 999px;
+  border-radius: var(--ds-radius-full);
   padding: 0.15rem 0.6rem;
   align-self: flex-start;
-  letter-spacing: 0.04em;
+  letter-spacing: normal;
 }
 
 .mm-card__title {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-weight: 800;
   color: #1A2E1A;
   margin: 0;
@@ -173,7 +173,7 @@
 }
 
 .mm-card__toggle {
-  color: #173D35;
+  color: #143F35;
   opacity: 0.7;
   flex-shrink: 0;
   margin-top: 0.1rem;
@@ -192,9 +192,9 @@
 
 /* العقدة الجذر */
 .mm-node--d0 > .mm-node__label {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-weight: 900;
-  color: #173D35;
+  color: #143F35;
   background: rgba(31,77,58,0.1);
   border-color: rgba(31,77,58,0.25);
 }
@@ -274,7 +274,7 @@
   transition: color 0.13s, background 0.13s;
   text-decoration: none;
 }
-.mm-node__link:hover { color: #173D35; background: rgba(31,77,58,0.12); }
+.mm-node__link:hover { color: #143F35; background: rgba(31,77,58,0.12); }
 
 .mm-node__children {
   display: flex;
@@ -287,7 +287,7 @@
 
 .cm-mindmap {
   border: 1.5px solid rgba(31,77,58,0.16);
-  border-radius: 1rem;
+  border-radius: var(--ds-radius-xl);
   overflow: hidden;
   margin: 1.5rem 0;
 }
@@ -304,7 +304,7 @@
   font-family: inherit;
   font-size: 0.88rem;
   font-weight: 700;
-  color: #173D35;
+  color: #143F35;
   cursor: pointer;
   transition: background 0.14s;
   -webkit-tap-highlight-color: transparent;
@@ -347,7 +347,7 @@
   .mm-hero__title { color: #7ED6A8; }
   .mm-hero__icon { background: rgba(100,200,150,0.1); color: #7ED6A8; }
   .mm-filter-btn { border-color: rgba(100,200,150,0.2); color: rgba(140,210,175,0.8); }
-  .mm-filter-btn--active { background: #173D35; border-color: #7ED6A8; color: #FFFFFF; }
+  .mm-filter-btn--active { background: #143F35; border-color: #7ED6A8; color: #FFFFFF; }
   .mm-node__label { color: #E0F0E8; border-color: rgba(100,200,150,0.12); }
   .mm-node__label:hover { background: rgba(100,200,150,0.08); }
   .mm-node--d0 > .mm-node__label { color: #7ED6A8; background: rgba(100,200,150,0.12); }
@@ -366,7 +366,7 @@
   .mm-card__head { padding: 0.85rem 0.9rem; }
   .mm-card__body { padding: 0.5rem 0.9rem 0.9rem; }
   .mm-filters { gap: 0.3rem; }
-  .mm-filter-btn { font-size: 0.72rem; padding: 0.3rem 0.65rem; }
+  .mm-filter-btn { font-size: 0.8rem; padding: 0.3rem 0.65rem; }
 }
 
 /* ═══════════════════════════════════════════════════
@@ -387,7 +387,7 @@
   gap: 0.35rem;
   padding: 0.35rem 0.75rem;
   border: 1px solid rgba(31,77,58,0.18);
-  border-radius: 999px;
+  border-radius: var(--ds-radius-full);
   background: transparent;
   color: var(--majalis-ink-soft);
   font-family: inherit;
@@ -398,8 +398,8 @@
 }
 .mmv-view-toggle-btn:hover { border-color: rgba(31,77,58,0.35); }
 .mmv-view-toggle-btn--active {
-  background: #173D35;
-  border-color: #173D35;
+  background: #143F35;
+  border-color: #143F35;
   color: #FFFFFF;
 }
 
@@ -414,7 +414,7 @@
   min-height: 340px;
   max-height: 560px;
   overflow: hidden;
-  border-radius: 1rem;
+  border-radius: var(--ds-radius-xl);
   border: 1px solid rgba(31,77,58,0.14);
   background:
     radial-gradient(rgba(31,77,58,0.10) 1px, transparent 1px) 0 0 / 22px 22px,
@@ -484,14 +484,14 @@
   font-size: 0.8rem;
   font-weight: 900;
   line-height: 1;
-  color: #173D35;
+  color: #143F35;
   background: rgba(31,77,58,0.1);
   border-radius: 50%;
 }
 
 .mmv-node--d0 .mmv-node__btn {
-  background: #173D35;
-  border-color: #173D35;
+  background: #143F35;
+  border-color: #143F35;
 }
 .mmv-node--d0 .mmv-node__text { color: #FFFFFF; font-size: 0.86rem; font-weight: 900; }
 .mmv-node--d0 .mmv-node__badge { background: rgba(255,255,255,0.22); color: #FFFFFF; }
@@ -515,7 +515,7 @@
   border-radius: 50%;
   background: #FFFFFF;
   border: 1px solid rgba(31,77,58,0.2);
-  color: #173D35;
+  color: #143F35;
   text-decoration: none;
   transition: background 0.13s;
 }
@@ -539,7 +539,7 @@
   border-radius: 50%;
   border: 1px solid rgba(31,77,58,0.2);
   background: #FFFFFF;
-  color: #173D35;
+  color: #143F35;
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(20,40,30,0.12);
   transition: background 0.13s;
@@ -556,13 +556,13 @@
   font-weight: 700;
   color: var(--majalis-ink-soft);
   background: rgba(255,255,255,0.85);
-  border-radius: 999px;
+  border-radius: var(--ds-radius-full);
   padding: 0.15rem 0.6rem;
 }
 
 @media (prefers-color-scheme: dark) {
   .mmv-view-toggle-btn { border-color: rgba(100,200,150,0.2); color: rgba(140,210,175,0.8); }
-  .mmv-view-toggle-btn--active { background: #173D35; border-color: #7ED6A8; color: #FFFFFF; }
+  .mmv-view-toggle-btn--active { background: #143F35; border-color: #7ED6A8; color: #FFFFFF; }
   .mmv-viewport {
     border-color: rgba(100,200,150,0.14);
     background:
@@ -572,7 +572,7 @@
   .mmv-edges path { stroke: rgba(100,200,150,0.35); }
   .mmv-node__btn { background: #0D1F16; border-color: rgba(100,200,150,0.22); }
   .mmv-node__text { color: #E0F0E8; }
-  .mmv-node--d0 .mmv-node__btn { background: #173D35; border-color: #7ED6A8; }
+  .mmv-node--d0 .mmv-node__btn { background: #143F35; border-color: #7ED6A8; }
   .mmv-node--d1 .mmv-node__btn { background: rgba(100,200,150,0.1); }
   .mmv-node--d2 .mmv-node__btn { background: rgba(100,200,150,0.05); }
   .mmv-node--d3 .mmv-node__btn,

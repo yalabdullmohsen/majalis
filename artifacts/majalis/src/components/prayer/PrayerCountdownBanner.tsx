@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { X } from "lucide-react";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
+import { useNumerals } from "@/hooks/useNumerals";
 import { PRE_ALERT_MINUTES, isBannerDismissedFor, dismissBannerFor } from "@/lib/prayer-alert-preferences";
 
 const PRAYER_ICON_EMOJI: Record<string, string> = {
@@ -20,6 +21,7 @@ const PRAYER_ICON_EMOJI: Record<string, string> = {
  */
 export function PrayerCountdownBanner() {
   const { countdown } = usePrayerCountdown();
+  const fmt = useNumerals();
   const [dismissedKey, setDismissedKey] = useState<string | null>(null);
 
   const inGrace = countdown?.sinceSeconds != null;
@@ -55,7 +57,7 @@ export function PrayerCountdownBanner() {
           {PRAYER_ICON_EMOJI[displaySlot.name] ?? "🕌"}
         </span>
         <span className="pcb-bar__text">
-          متبقي {minutesRemaining} {minutesRemaining === 1 ? "دقيقة" : "دقائق"} على صلاة {displaySlot.name}
+          متبقي {fmt(minutesRemaining)} {minutesRemaining === 1 ? "دقيقة" : "دقائق"} على صلاة {displaySlot.name}
         </span>
       </Link>
       <button

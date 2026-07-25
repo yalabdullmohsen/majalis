@@ -70,7 +70,7 @@ export async function probeEndpoint(url, opts = {}) {
     const res = await fetch(url, {
       signal: AbortSignal.timeout(opts.timeoutMs || FETCH_TIMEOUT),
       headers: {
-        "User-Agent": "MajlisIlm-AKP/2.0 (+https://www.majlisilm.com)",
+        "User-Agent": "MajlisIlm-AKP/2.0 (+https://majlisilm.com)",
         Accept: "application/rss+xml, application/json, application/xml, text/xml, */*",
       },
       redirect: "follow",

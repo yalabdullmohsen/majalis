@@ -17,8 +17,6 @@ const LABEL_MAP: Record<string, string> = {
   "/":                              "الرئيسية",
 
   // ─── القرآن الكريم ────────────────────────────────────────────────
-  "/quran-radio":                   "إذاعة القرآن",
-  "/quran-live":                    "القرآن المباشر",
   "/quran-circles":                 "حلقات القرآن",
   "/quran-hub":                     "مركز القرآن",
   "/quran/tajweed":                 "أحكام التجويد",
@@ -43,7 +41,6 @@ const LABEL_MAP: Record<string, string> = {
   "/janaza":                        "أحكام الجنازة",
   "/tahara":                        "أحكام الطهارة",
   "/adhan-settings":                "إعدادات الأذان",
-  "/muezzins":                      "المؤذنون",
 
   // ─── الدروس والدورات ──────────────────────────────────────────────
   "/lessons":                       "الدروس",
@@ -147,7 +144,7 @@ const LABEL_MAP: Record<string, string> = {
   "/stories":                       "القصص",
 
   // ─── المسابقات والاختبارات ────────────────────────────────────────
-  "/quiz":                          "المسابقات",
+  "/quiz":                          "سين جيم",
 
   // ─── الأدوات والخدمات ─────────────────────────────────────────────
   "/assistant":                     "المساعد العلمي",
@@ -244,14 +241,30 @@ function migrateStoredPages(pages: RecentPage[]): RecentPage[] {
   }));
 }
 
-export function recordRecentPage(href: string): void {
+/**
+ * عنوان صفحة تفصيل حقيقي (مثلًا عنوان الدرس نفسه) أدق من التسمية العامة
+ * للقسم ("الدروس") — يُقبل فقط لصفحات تفصيل حقيقية (مسار بأكثر من جزء)
+ * وعنوان مغاير فعلًا عن التسمية العامة، تفاديًا لقبول عناوين حالة تحميل
+ * عابرة أو انتقال غير مكتمل.
+ */
+function preferSpecificTitle(href: string, specificTitle: string | undefined, generic: string): string {
+  if (!specificTitle) return generic;
+  const cleaned = specificTitle.trim();
+  if (!cleaned || cleaned === generic) return generic;
+  const segments = href.split("/").filter(Boolean);
+  if (segments.length < 2) return generic; // صفحة قسم جذرية، لا تفصيل
+  return cleaned;
+}
+
+export function recordRecentPage(href: string, specificTitle?: string): void {
   if (shouldSkip(href)) return;
   try {
     const raw = localStorage.getItem(KEY);
     const stored: RecentPage[] = raw ? JSON.parse(raw) : [];
     const migrated = migrateStoredPages(stored);
     const filtered = migrated.filter((p) => p.href !== href);
-    filtered.unshift({ href, label: labelFor(href), visitedAt: Date.now() });
+    const generic = labelFor(href);
+    filtered.unshift({ href, label: preferSpecificTitle(href, specificTitle, generic), visitedAt: Date.now() });
     localStorage.setItem(KEY, JSON.stringify(filtered.slice(0, MAX)));
   } catch {
     // localStorage might be unavailable

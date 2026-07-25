@@ -5,6 +5,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SCHOLARS, findScholarById } from "@/lib/scholars-data";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { ContentReportButton } from "@/components/ContentReportButton";
 
 // ── تحويل أرقام عربية-هندية إلى رقم ─────────────────────────────────────
 const AR_DIGITS: Record<string, number> = {
@@ -77,7 +78,7 @@ function ScholarTimeline({ died }: { died: string }) {
               style={{
                 flex: 1,
                 background: c === century
-                  ? "var(--elite-green, #28584D)"
+                  ? "var(--elite-green, #226A56)"
                   : c <= 3
                     ? "var(--ds-parchment-deep, #ede8e0)"
                     : "var(--ds-parchment, #f5f0e8)",
@@ -99,7 +100,7 @@ function ScholarTimeline({ died }: { died: string }) {
               key={c}
               style={{
                 fontSize: "0.62rem",
-                color: c === century ? "var(--elite-green, #28584D)" : "var(--ds-ink-soft, #9ca3af)",
+                color: c === century ? "var(--elite-green, #226A56)" : "var(--ds-ink-soft, #9ca3af)",
                 fontWeight: c === century ? 700 : 400,
                 direction: "ltr",
               }}
@@ -123,7 +124,7 @@ function ScholarTimeline({ died }: { died: string }) {
                 fontSize: "0.68rem",
                 padding: "1px 6px",
                 borderRadius: "4px",
-                background: Number(c) === century ? "var(--elite-green, #28584D)" : "var(--ds-parchment-deep, #ede8e0)",
+                background: Number(c) === century ? "var(--elite-green, #226A56)" : "var(--ds-parchment-deep, #ede8e0)",
                 color: Number(c) === century ? "#fff" : "var(--ds-ink-soft, #6b7280)",
                 border: "1px solid var(--ds-line-color, #d4ccc2)",
               }}
@@ -244,24 +245,27 @@ export default function ScholarProfilePage() {
         </blockquote>
       )}
 
-      {/* Key Works */}
-      <section className="sch-profile-section" aria-labelledby="works-heading">
-        <h2 id="works-heading" className="sch-profile-section__title">
-          <BookOpen size={16} aria-hidden="true" /> أبرز المؤلفات
-        </h2>
-        <ul className="sch-profile-works">
-          {scholar.key_works.map(w => (
-            <li key={w}>{w}</li>
-          ))}
-        </ul>
-      </section>
+      {/* Key Works — تُعرض فقط عند وجود مؤلفات موثّقة */}
+      {scholar.key_works.length > 0 && (
+        <section className="sch-profile-section" aria-labelledby="works-heading">
+          <h2 id="works-heading" className="sch-profile-section__title">
+            <BookOpen size={16} aria-hidden="true" /> أبرز المؤلفات
+          </h2>
+          <ul className="sch-profile-works">
+            {scholar.key_works.map(w => (
+              <li key={w}>{w}</li>
+            ))}
+          </ul>
+        </section>
+      )}
 
-      {/* Share */}
-      <div className="twh-share">
+      {/* Share + إبلاغ عن خطأ */}
+      <div className="twh-share" style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
         <ShareButtons
           title={`${scholar.name} — المجلس العلمي`}
           url={`https://www.majlisilm.com/scholars/${scholar.id}`}
         />
+        <ContentReportButton contentType="scholar" contentId={scholar.id} title={scholar.name} />
       </div>
 
       {/* Prev / Next */}

@@ -40,26 +40,26 @@ function CategoryIcon({ name, size = 18 }: { name: string; size?: number }) {
 // تتناوب الأدوار). TeamId أصبح string ديناميكيًا ("team1".."team4" أو "solo")
 // بدل union ثابت بقيمتين — teams أصبح مصفوفة بطول 1-4 بدل Tuple ثابت.
 
-type GameMode = "solo" | "team";
-type TeamId = string;
-interface Lifelines { penalize: boolean; eliminate: boolean; pass: boolean; }
+export type GameMode = "solo" | "team";
+export type TeamId = string;
+export interface Lifelines { penalize: boolean; eliminate: boolean; pass: boolean; }
 
-interface Team {
+export interface Team {
   id: TeamId;
   name: string;
   score: number;
   lifelines: Lifelines;
 }
 
-interface Cell {
+export interface Cell {
   categoryId: string;
   points: PointValue;
   used: boolean;
 }
 
-type Phase = "setup" | "board" | "question" | "winner";
+export type Phase = "setup" | "board" | "question" | "winner";
 
-interface GameState {
+export interface GameState {
   mode: GameMode;
   phase: Phase;
   teams: Team[];
@@ -74,7 +74,7 @@ interface GameState {
   showHint: boolean;
 }
 
-type Action =
+export type Action =
   | { type: "START_GAME"; mode: GameMode; categories: string[]; names: string[] }
   | { type: "SELECT_CELL"; cell: Cell; pool: Record<string, CategoryQuestions>; persistedUsedIds?: Set<string> }
   | { type: "REVEAL_HINT" }
@@ -101,29 +101,29 @@ const S = {
   emerald:     "var(--ds-emerald)",
   emeraldDeep: "var(--ds-emerald-deep)",
   emeraldSoft: "var(--ds-emerald-soft)",
-  correct:     "var(--majalis-emerald, #173D35)",
+  correct:     "var(--majalis-emerald, #143F35)",
   wrong:       "var(--majalis-danger, #9B1C1C)",
 } as const;
 
 // ─── Reducer helpers ───────────────────────────────────────────────────────
 
-function makeTeam(id: TeamId, name: string): Team {
+export function makeTeam(id: TeamId, name: string): Team {
   return { id, name, score: 0, lifelines: { penalize: true, eliminate: true, pass: true } };
 }
 
 /** دوران الأدوار العام: يعمل لأي عدد فرق (1-4) — يدور للفريق التالي في المصفوفة.
  *  لفريق واحد (وضع فردي) يعيد نفس المعرّف دائمًا (idx+1 % 1 === idx). */
-function nextTeamId(teams: Team[], currentId: TeamId): TeamId {
+export function nextTeamId(teams: Team[], currentId: TeamId): TeamId {
   const idx = teams.findIndex((t) => t.id === currentId);
   if (idx === -1) return currentId;
   return teams[(idx + 1) % teams.length].id;
 }
 
-function isBoardDone(board: Cell[][]): boolean {
+export function isBoardDone(board: Cell[][]): boolean {
   return board.every((col) => col.every((c) => c.used));
 }
 
-function buildBoard(categories: string[]): Cell[][] {
+export function buildBoard(categories: string[]): Cell[][] {
   return categories.map((catId) =>
     ([200, 400, 600] as PointValue[]).map((pts) => ({ categoryId: catId, points: pts, used: false })),
   );
@@ -131,7 +131,7 @@ function buildBoard(categories: string[]): Cell[][] {
 
 const DEFAULT_TEAM_NAMES = ["الفريق الأول", "الفريق الثاني", "الفريق الثالث", "الفريق الرابع"];
 
-const initial: GameState = {
+export const initial: GameState = {
   mode: "team",
   phase: "setup",
   teams: [makeTeam("team1", DEFAULT_TEAM_NAMES[0]), makeTeam("team2", DEFAULT_TEAM_NAMES[1])],
@@ -145,7 +145,7 @@ const initial: GameState = {
   showHint: false,
 };
 
-function reducer(state: GameState, action: Action): GameState {
+export function reducer(state: GameState, action: Action): GameState {
   switch (action.type) {
     case "START_GAME": {
       const teams = action.mode === "solo"
@@ -285,7 +285,7 @@ function markCellUsed(board: Cell[][], cell: Cell | null): Cell[][] {
 
 function TimerBar({ seconds, maxSeconds }: { seconds: number; maxSeconds: number }) {
   const pct = maxSeconds > 0 ? seconds / maxSeconds : 0;
-  const color = pct > 0.4 ? "#22c55e" : pct > 0.2 ? "#173D35" : "#ef4444";
+  const color = pct > 0.4 ? "#22c55e" : pct > 0.2 ? "#143F35" : "#ef4444";
   const label = seconds <= 0 ? "انتهى الوقت" : `${seconds}ث`;
   const urgent = seconds > 0 && seconds <= 10;
   return (
@@ -397,7 +397,8 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], mode: GameMode, nam
     <div className="qzg-setup">
       <div className="qzg-setup__hero">
         <div className="qzg-setup__icon"><Landmark size={40} strokeWidth={1.3} /></div>
-        <h1 className="qzg-setup__title">لعبة سؤال وجواب</h1>
+        <h1 className="qzg-setup__title">لعبة سين جيم – أسئلة وأجوبة</h1>
+        <p className="qzg-setup__sub">اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة</p>
         <p className="qzg-setup__sub">
           {mode === "solo"
             ? "تحدَّ نفسك في اختبار معلوماتك الإسلامية"
@@ -918,7 +919,7 @@ export function IslamicQuizGame() {
       <div className="qzg-inner">
         {(state.phase === "board" || state.phase === "question") && (
           <div className="qzg-game-title-bar">
-            <span className="qzg-game-title"><Landmark size={16} className="inline ml-1" />لعبة سؤال وجواب الإسلامية</span>
+            <span className="qzg-game-title"><Landmark size={16} className="inline ml-1" />سين جيم</span>
           </div>
         )}
 

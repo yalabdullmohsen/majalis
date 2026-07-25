@@ -241,13 +241,20 @@ if (withWarns.length > 0) {
 
 // ── فحص توحيد النطاق: index.html (جذر Vite، خارج seo-prerender لأن
 // prerender.mjs يتخطّى "/" عمدًا) وpublic/ يجب ألا يحملا نطاقًا مخالفًا لـsiteUrl.
-// اكتُشف فعليًا: index.html كان يحمل canonical/og:url/JSON-LD بالنطاق المجرّد
-// (majlisilm.com) بينما siteUrl الحقيقي www.majlisilm.com — كل زاحف يقرأ HTML
-// الرئيسية الخام (بلا JS) كان يرى canonical مخالفًا لما تعلنه بقية الموقع.
+// اكتُشف فعليًا أول مرة (2026-07-19): index.html كان يحمل canonical/og:url/
+// JSON-LD بالنطاق المجرّد بينما siteUrl الحقيقي وقتها www.majlisilm.com.
+// بعد انقلاب النطاق الأساسي في Vercel (2026-07-22، www→مجرّد)، صار المنطق
+// الثابت "www صحيح دومًا" خطأً بنيويًا هو نفسه — الفحص الآن ديناميكي حسب
+// siteUrl الفعلي في seo-routes.json/site.config.json لا افتراضًا مجمَّدًا:
+// أيًّا كانا (www أو مجرّد)، الآخر هو "الخطأ" المطلوب رصده.
 {
   const wrongDomainIssues = [];
-  const bareDomain = new URL(siteUrl).hostname.replace(/^www\./, "");
-  const wrongDomainPattern = new RegExp(`https?://(?!www\\.)${bareDomain.replace(/\./g, "\\.")}\\b`, "g");
+  const siteUrlHost = new URL(siteUrl).hostname;
+  const isWwwCanonical = siteUrlHost.startsWith("www.");
+  const bareDomain = siteUrlHost.replace(/^www\./, "");
+  const wrongDomainPattern = isWwwCanonical
+    ? new RegExp(`https?://(?!www\\.)${bareDomain.replace(/\./g, "\\.")}\\b`, "g")
+    : new RegExp(`https?://www\\.${bareDomain.replace(/\./g, "\\.")}\\b`, "g");
 
   const rootIndexPath = resolve(appRoot, "index.html");
   const rootIndexHtml = await readFile(rootIndexPath, "utf8");

@@ -31,7 +31,7 @@ function RingProgress({ pct, size = 120 }: { pct: number; size?: number }) {
       <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--majalis-emerald-muted, rgba(23,61,53,0.12))" strokeWidth="6" />
       <circle
         cx={size / 2} cy={size / 2} r={r}
-        fill="none" stroke="var(--majalis-emerald, #173D35)" strokeWidth="6"
+        fill="none" stroke="var(--majalis-emerald, #143F35)" strokeWidth="6"
         strokeLinecap="round"
         strokeDasharray={circ}
         strokeDashoffset={circ * (1 - pct)}
@@ -53,6 +53,7 @@ function DhikrSheet({ item, onClose }: { item: AdhkarItem; onClose: () => void }
   return (
     // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
     // مساران بديلان كاملان بلوحة المفاتيح.
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
     <div
       className="adhkar-sheet-overlay"
       role="dialog" aria-modal="true" aria-label="تفاصيل الذكر"

@@ -11,7 +11,7 @@ function truncate(value, max = 500) {
   return text.length <= max ? text : `${text.slice(0, max - 1)}…`;
 }
 
-const SYSTEM_PROMPT = `You are an Islamic content metadata assistant for Majalis Al-Ilm.
+const SYSTEM_PROMPT = `You are an Islamic content metadata assistant for Al-Majlis Al-Ilmi (المجلس العلمي).
 Analyze the provided content and return ONLY valid JSON with keys:
 summary (string, max 200 chars),
 keywords (string array, max 10),

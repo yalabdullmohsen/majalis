@@ -5,7 +5,7 @@
 import { test, expect } from "@playwright/test";
 import { waitForContent } from "./helpers";
 
-const KEY_PAGES = ["/", "/lessons", "/hadith", "/quran-hub", "/adhkar", "/muezzins"];
+const KEY_PAGES = ["/", "/lessons", "/hadith", "/quran-hub", "/adhkar"];
 
 test.describe("Responsive — التجاوب مع الشاشات", () => {
   for (const path of KEY_PAGES) {

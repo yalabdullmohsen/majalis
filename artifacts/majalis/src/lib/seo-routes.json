@@ -1,6 +1,6 @@
 {
   "$comment": "titleSuffix يُضاف برمجيًا من site.config.json — لا تكتب «| المجلس العلمي» داخل title. siteUrl/siteName/defaultImage مرآة لـ site.config.json (يحرسها scripts/test-seo.mjs).",
-  "siteUrl": "https://www.majlisilm.com",
+  "siteUrl": "https://majlisilm.com",
   "siteName": "المجلس العلمي",
   "defaultImage": "/logo.png",
   "defaultKeywords": [
@@ -96,33 +96,6 @@
       "sitemap": true,
       "changefreq": "weekly",
       "priority": 0.82
-    },
-    {
-      "path": "/quran-radio",
-      "title": "إذاعة القرآن",
-      "description": "استمع إلى بث مباشر من إذاعات القرآن الكريم الموثوقة حول العالم.",
-      "keywords": [
-        "إذاعة القرآن",
-        "راديو قرآن"
-      ],
-      "sitemap": true,
-      "changefreq": "monthly",
-      "priority": 0.78
-    },
-    {
-      "path": "/quran-live",
-      "title": "البث المباشر للقرآن",
-      "description": "بث مباشر لقنوات القرآن الكريم ومكة والمدينة والسنة النبوية.",
-      "keywords": [
-        "بث مباشر",
-        "قناة القرآن",
-        "مكة",
-        "المدينة",
-        "السنة النبوية"
-      ],
-      "sitemap": true,
-      "changefreq": "weekly",
-      "priority": 0.8
     },
     {
       "path": "/quran/tajweed",
@@ -503,9 +476,10 @@
     },
     {
       "path": "/quiz",
-      "title": "المسابقات الشرعية",
-      "description": "اختبر معلوماتك في الأنبياء والصحابة والسيرة والأحكام والصالحين عبر مسابقات تعليمية تفاعلية.",
+      "title": "لعبة سين جيم – أسئلة وأجوبة",
+      "description": "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة.",
       "keywords": [
+        "سين جيم",
         "مسابقات شرعية",
         "أسئلة دينية",
         "اختبار معلومات",
@@ -1102,21 +1076,6 @@
       "sitemap": false,
       "changefreq": "monthly",
       "priority": 0.6
-    },
-    {
-      "path": "/scholarly-research",
-      "title": "الباحث الشرعي",
-      "description": "بحث شرعي موثق بالمصادر والمراجع العلمية المعتمدة، مدعوم بالذكاء الاصطناعي للمساعدة في البحث والتوثيق.",
-      "keywords": [
-        "البحث الشرعي",
-        "الباحث الشرعي",
-        "بحث في المصادر",
-        "توثيق شرعي",
-        "بحث إسلامي"
-      ],
-      "sitemap": true,
-      "changefreq": "weekly",
-      "priority": 0.78
     },
     {
       "path": "/seerah",
@@ -1795,20 +1754,6 @@
       "priority": 0.75
     },
     {
-      "path": "/muezzins",
-      "title": "المؤذنون وأصوات الأذان",
-      "description": "مكتبة الأذان بأصوات المؤذنين — أجمل أصوات الأذان العربية مع الاستماع والمفضلة.",
-      "keywords": [
-        "أصوات الأذان",
-        "المؤذنون",
-        "الأذان الإسلامي",
-        "أذان الحرمين"
-      ],
-      "sitemap": true,
-      "changefreq": "weekly",
-      "priority": 0.78
-    },
-    {
       "path": "/mushaf",
       "title": "المصحف الشريف",
       "description": "المصحف الشريف كاملاً — اقرأ القرآن الكريم سورة سورة بخط عثماني واضح، مع الاستماع لكل آية ومشاركتها.",
@@ -1826,7 +1771,7 @@
     {
       "path": "/quran-hub",
       "title": "مركز القرآن الكريم",
-      "description": "مركز القرآن الكريم — المصحف الرقمي والتجويد والقراءات والإذاعة القرآنية والقرآن البث.",
+      "description": "مركز القرآن الكريم — المصحف الرقمي والتجويد والقراءات وعلوم القرآن.",
       "keywords": [
         "مركز القرآن",
         "قرآن كريم",
@@ -1836,6 +1781,20 @@
       "sitemap": true,
       "changefreq": "weekly",
       "priority": 0.85
+    },
+    {
+      "path": "/kids",
+      "title": "قسم الأطفال",
+      "description": "ركن آمن وبسيط للأطفال: تعلّم القرآن والسيرة والأذكار والأخلاق الإسلامية بأسلوب ميسَّر وجذاب.",
+      "keywords": [
+        "الأطفال",
+        "تعليم الأطفال",
+        "قصص الأنبياء للأطفال",
+        "تعليم القرآن للأطفال"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.8
     },
     {
       "path": "/mind-map",
@@ -2221,10 +2180,13 @@
         "الأنبياء",
         "قصص الأنبياء",
         "الرسل",
-        "سيرة الأنبياء"
+        "سيرة الأنبياء",
+        "المجلس العلمي"
       ],
-      "sitemap": false,
-      "robots": "noindex, follow"
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "robots": "index, follow"
     },
     {
       "path": "/auth/callback",
@@ -2244,25 +2206,18 @@
     },
     {
       "path": "/learning",
-      "title": "مسارات التعلم",
-      "description": "اكتشف مسارات التعلم المتاحة على منصة المجلس العلمي.",
+      "title": "مسارات التعلم الشرعي | المجلس العلمي",
+      "description": "اكتشف مسارات التعلم الشرعي المنظّمة على منصة المجلس العلمي من العقيدة والفقه والتفسير وعلوم الحديث.",
       "keywords": [
         "مسارات تعلم",
-        "طلب العلم"
+        "طلب العلم",
+        "منهج دراسي إسلامي",
+        "المجلس العلمي"
       ],
-      "sitemap": false,
-      "robots": "noindex, follow"
-    },
-    {
-      "path": "/muezzins/favorites",
-      "title": "المؤذنون المفضلون",
-      "description": "قائمة المؤذنين المفضلين لديك على منصة المجلس العلمي.",
-      "keywords": [
-        "مؤذنون",
-        "أذان"
-      ],
-      "sitemap": false,
-      "robots": "noindex, follow"
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": "0.75",
+      "robots": "index, follow"
     },
     {
       "path": "/profile",

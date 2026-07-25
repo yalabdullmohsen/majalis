@@ -16,11 +16,11 @@ const PHASES: { id: string; num: number; title: string; year: string; Icon: Luci
     title: "النسب والمولد",
     year: "عام الفيل، 571م",
     Icon: Moon,
-    color: "#173D35",
+    color: "#143F35",
     desc: "وُلد النبي ﷺ في مكة المكرمة عام الفيل، من نسب قريشي شريف يمتد إلى إبراهيم الخليل عليه السلام. وفي ذلك العام حمى الله الكعبة المشرفة من أبرهة وجنده.",
     topics: ["نسبه الشريف ﷺ", "مولده في مكة", "حادثة الفيل"],
     keyEvents: [
-      "مولده ﷺ في الثاني عشر من ربيع الأول عام الفيل (571م)",
+      "وُلد ﷺ يوم الاثنين في عام الفيل (571م تقريبًا)، واختلف أهل السيرة في تحديد يوم وشهر مولده الشريف — والمشهور بينهم 12 ربيع الأول",
       "نسبه: محمد بن عبد الله بن عبد المطلب من بني هاشم، قريش",
       "توفي والده عبد الله قبل ولادته في رحلة تجارية إلى المدينة",
       "في العام نفسه: أرسل الله الطير الأبابيل على جيش أبرهة دفاعاً عن الكعبة",
@@ -32,7 +32,7 @@ const PHASES: { id: string; num: number; title: string; year: string; Icon: Luci
     title: "الطفولة والرضاعة",
     year: "571–576م",
     Icon: Sprout,
-    color: "#173D35",
+    color: "#143F35",
     desc: "أُرضع ﷺ عند حليمة السعدية في بني سعد، وفُقد والده قبل ولادته. توفيت أمه آمنة وهو في السادسة، فكفله جده عبد المطلب ثم عمه أبو طالب.",
     topics: ["رضاعته عند حليمة", "يتمه ﷺ", "كفالة جده وعمه"],
     keyEvents: [
@@ -50,14 +50,14 @@ const PHASES: { id: string; num: number; title: string; year: string; Icon: Luci
     title: "الشباب قبل البعثة",
     year: "576–610م",
     Icon: ScrollText,
-    color: "#173D35",
+    color: "#143F35",
     desc: "عُرف ﷺ في قومه بالصادق الأمين، شارك في حلف الفضول لنصرة المظلومين، عمل بالتجارة، وتزوج خديجة رضي الله عنها، وكان يتحنث في غار حراء.",
     topics: ["الصادق الأمين", "حلف الفضول", "زواجه من خديجة ﷢", "تحنّثه في حراء"],
     keyEvents: [
-      "سافر مع عمه إلى الشام وتنبأ الراهب بحيرا بنبوته",
+      "سافر مع عمه إلى الشام، وتذكر بعض الروايات التاريخية ملاحظة الراهب بحيرا لعلامات النبوة عليه (رواية تاريخية، تفاصيلها المطوَّلة تحتاج تحقيقًا)",
       "لقّبه أهل مكة «الصادق الأمين» لأمانته وصدقه",
       "شارك في حلف الفضول لنصرة المظلوم وقال: لو دُعيت إليه في الإسلام لأجبت",
-      "تزوج خديجة بنت خويلد وعمره 25 وهي 40، عشا معاً 25 عاماً",
+      "تزوج خديجة بنت خويلد وعمره 25، والمشهور أنها كانت في الأربعين وقيل دون ذلك ولا يثبت في تحديد عمرها حديث صحيح",
       "أنجب منها: القاسم والزينب ورقية وأم كلثوم وفاطمة وعبد الله",
       "كان يتحنث في غار حراء كل عام في رمضان قبيل البعثة",
       "أعاد وضع الحجر الأسود مكانه عام 605م دون إراقة دماء: جعل الزعماء يحملونه معاً على ثوب بيده الشريفة",
@@ -69,7 +69,7 @@ const PHASES: { id: string; num: number; title: string; year: string; Icon: Luci
     title: "البعثة",
     year: "610م",
     Icon: Sparkles,
-    color: "#173D35",
+    color: "#143F35",
     desc: "نزل جبريل عليه السلام على النبي ﷺ في غار حراء بأوائل سورة العلق، فكانت بداية الوحي والرسالة المحمدية الخاتمة.",
     topics: ["نزول الوحي الأول", "غار حراء", "أوائل المؤمنين"],
     keyEvents: [
@@ -141,7 +141,7 @@ const PHASES: { id: string; num: number; title: string; year: string; Icon: Luci
     title: "الهجرة إلى المدينة",
     year: "622م",
     Icon: MapPin,
-    color: "#173D35",
+    color: "#143F35",
     desc: "أذن الله بالهجرة إلى يثرب، فخرج النبي ﷺ مع أبي بكر رضي الله عنه وآثرا غار ثور مأوىً، ثم وصل المدينة فاستُقبل بالفرح والترحيب. كانت هذه الهجرة بداية التقويم الهجري.",
     topics: ["مغادرة مكة", "الوصول للمدينة", "بناء المسجد النبوي", "الأخوّة بين المهاجرين والأنصار"],
     keyEvents: [
@@ -179,7 +179,7 @@ const PHASES: { id: string; num: number; title: string; year: string; Icon: Luci
     title: "الحديبية وفتح مكة",
     year: "628–630م",
     Icon: Landmark,
-    color: "#173D35",
+    color: "#143F35",
     desc: "كان صلح الحديبية فتحاً مبيناً مهّد لانتشار الإسلام أفواجاً. تُوّج ذلك بدخول مكة المكرمة عام ثمانية للهجرة بلا قتال، وعفا النبي ﷺ عمن آذاه.",
     topics: ["صلح الحديبية", "فتح مكة", "العفو العام"],
     keyEvents: [
@@ -199,7 +199,7 @@ const PHASES: { id: string; num: number; title: string; year: string; Icon: Luci
     title: "حجة الوداع",
     year: "السنة العاشرة، 632م",
     Icon: Gem,
-    color: "#173D35",
+    color: "#143F35",
     desc: "أدّى النبي ﷺ فريضة الحج وألقى خطبته الجامعة في عرفات بين مئة ألف من الصحابة. وأُنزل في ذلك اليوم العظيم: ﴿الْيَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ﴾.",
     topics: ["حجة الوداع", "خطبة عرفة", "اكتمال الدين"],
     keyEvents: [
@@ -254,13 +254,6 @@ export default function SeerahPage() {
   usePageView("seerah", null);
   const [activeId, setActiveId] = useState(PHASES[0].id);
   const [search, setSearch] = useState("");
-  const todayPhase = useMemo(() => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
-    return PHASES[(day - 1 + PHASES.length) % PHASES.length];
-  }, []);
-
   const filteredPhases = useMemo(() =>
     search.trim()
       ? PHASES.filter(p => arabicMatchAny([p.title, p.year, p.desc, ...p.topics, ...p.keyEvents], search))
@@ -329,22 +322,6 @@ export default function SeerahPage() {
           <p className="seerah-hero__sub">
             امتداداً لرسالة الأنبياء، حياة خاتمهم محمد ﷺ من المولد إلى الوفاة في 12 مرحلة
           </p>
-        </div>
-
-        {/* مرحلة السيرة اليوم */}
-        <div className="srod-card">
-          <div className="srod-card__badge"><Sparkles size={11} aria-hidden="true" /> مرحلة السيرة اليوم</div>
-          <span className="srod-card__icon"><todayPhase.Icon size={26} aria-hidden="true" /></span>
-          <div className="srod-card__year">{todayPhase.year}</div>
-          <h2 className="srod-card__title">{todayPhase.title}</h2>
-          <p className="srod-card__desc">{todayPhase.desc}</p>
-          {todayPhase.keyEvents.length > 0 && (
-            <ul className="srod-card__events">
-              {todayPhase.keyEvents.slice(0, 2).map((ev, i) => (
-                <li key={i} className="srod-card__event">{ev}</li>
-              ))}
-            </ul>
-          )}
         </div>
 
         {/* Notice */}

@@ -25,7 +25,7 @@ const jsonOut = process.argv.includes("--json");
 const base =
   process.argv.find((a) => a.startsWith("--base="))?.slice(7) ||
   JSON.parse(fs.readFileSync(DATA, "utf8")).productionUrl ||
-  "https://www.majlisilm.com";
+  "https://majlisilm.com";
 
 const ENV_KEYS = [
   "VITE_SUPABASE_URL",

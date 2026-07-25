@@ -5,7 +5,7 @@
  * 3. Fallback كامل للـ seed عند فراغ الجدول
  */
 import { fetchApprovedLessonsFromDb } from "@/lib/supabase";
-import { LESSONS_SEED, findSeedLessonById, type LessonSeedRow } from "@/lib/lessons-seed";
+import { LESSONS_SEED, findSeedLessonById } from "@/lib/lessons-seed";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { sheikhNameKey } from "@/lib/sheikh-name";
 import {
@@ -28,16 +28,12 @@ let cachedResult: FetchLessonsResult | null = null;
 let cacheTs = 0;
 const CACHE_MS = 60_000;
 
-function seedKey(row: LessonSeedRow): string {
-  return String(row.external_key || row.id);
-}
-
 function mergeDbWithSeed(dbRows: KuwaitLessonRecord[]): KuwaitLessonRecord[] {
-  const seen = new Set(dbRows.map((l) => l.id));
-  const supplemental = LESSONS_SEED.filter((row) => !seen.has(seedKey(row))).map((row) =>
-    mapLessonRow({ ...row, source: "seed" }),
-  );
-  return dedupeKuwaitLessons([...dbRows, ...supplemental]);
+  // Pass DB rows + all seed rows to dedupeKuwaitLessons together.
+  // dedupeKuwaitLessons uses content-based Arabic-normalized keys and keeps
+  // the most complete record — DB rows win when scores are equal.
+  const seedRows = LESSONS_SEED.map((row) => mapLessonRow({ ...row, source: "seed" }));
+  return dedupeKuwaitLessons([...dbRows, ...seedRows]);
 }
 
 /** جلب جميع الدروس المعتمدة — المصدر الموحد للمنصة. */

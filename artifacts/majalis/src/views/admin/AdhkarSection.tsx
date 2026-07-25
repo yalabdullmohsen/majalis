@@ -188,7 +188,11 @@ export function AdhkarSection() {
       </AdminModal>
 
       {preview && (
+        // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار وصول
+        // بديل كامل بلوحة المفاتيح.
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div className="adm-modal__overlay" onClick={() => setPreview(null)}>
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div className="adh-preview-box" onClick={(e) => e.stopPropagation()}>
             <h3 className="adh-preview-h3">معاينة الذكر</h3>
             <p className="adh-preview-text">{preview.text}</p>

@@ -25,7 +25,7 @@ import { resolveDatabaseUrl } from "../lib/database.mjs";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
 const production = process.argv.includes("--production");
-const PRODUCTION = process.env.MAJALIS_PRODUCTION_URL || "https://www.majlisilm.com";
+const PRODUCTION = process.env.MAJALIS_PRODUCTION_URL || "https://majlisilm.com";
 
 let passed = 0;
 let failed = 0;

@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  border-radius: 1rem;
+  border-radius: var(--ds-radius-xl);
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
@@ -18,7 +18,7 @@
 .highlighted-card__head-btn {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .highlighted-card__head-btn {
@@ -44,13 +44,13 @@
   font-weight: 700;
   color: var(--majalis-emerald-deep);
   padding: 0.15rem 0.5rem;
-  border-radius: 999px;
+  border-radius: var(--ds-radius-full);
   background: color-mix(in srgb, var(--majalis-emerald) 12%, transparent);
 }
 
 .highlighted-card__title {
   margin: 0;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   color: var(--majalis-emerald-deep);
 }
 
@@ -120,7 +120,7 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
   border: none;
   background: transparent;
   color: var(--majalis-emerald-deep);
-  font-size: 0.75rem;
+  font-size: var(--ds-text-xs);
   font-weight: 700;
   cursor: pointer;
   font-family: inherit;
@@ -225,7 +225,7 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
 .adhkar-hero__stats {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   align-items: center;
 }
 
@@ -266,7 +266,7 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
 /* Tasbeeh counter v2 */
 .tasbeeh-counter--pro {
   padding: 0.85rem;
-  border-radius: 1rem;
+  border-radius: var(--ds-radius-xl);
   background: var(--majalis-parchment);
   border: 1px solid var(--majalis-line);
 }
@@ -291,7 +291,7 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
 .tasbeeh-counter__preset {
   min-height: 34px;
   padding: 0.25rem 0.65rem;
-  border-radius: 999px;
+  border-radius: var(--ds-radius-full);
   border: 1px solid var(--majalis-line);
   background: var(--majalis-panel);
   font-weight: 700;
@@ -315,7 +315,7 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
 .tasbeeh-counter__custom-target input {
   width: 4.5rem;
   min-height: 34px;
-  border-radius: 0.5rem;
+  border-radius: var(--ds-radius);
   border: 1px solid var(--majalis-line);
   font-family: inherit;
   text-align: center;
@@ -325,7 +325,7 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
   width: 100%;
   min-height: 120px;
   border: none;
-  border-radius: 1rem;
+  border-radius: var(--ds-radius-xl);
   background: linear-gradient(160deg, var(--majalis-emerald-deep), var(--majalis-emerald));
   color: #fff;
   cursor: pointer;
@@ -334,7 +334,7 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.25rem;
+  gap: var(--ds-space-1);
   margin-bottom: 0.65rem;
   box-shadow: 0 10px 24px rgba(15, 61, 46, 0.18);
   transition: transform 0.12s ease;
@@ -374,7 +374,7 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
 .tasbih-pro-card--v2 {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
 }
 
 @media print {
@@ -394,7 +394,7 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
 
 @media (max-width: 640px) {
   .highlighted-content-card {
-    padding: 1rem;
+    padding: var(--ds-space-4);
   }
 
   .tasbeeh-counter__tap {

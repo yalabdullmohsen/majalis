@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { BookOpen, GraduationCap, HelpCircle, Home, LayoutGrid } from "lucide-react";
+import { BookOpen, Clock, GraduationCap, Home, LayoutGrid } from "lucide-react";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 
 type NavTab = {
@@ -9,11 +9,12 @@ type NavTab = {
   Icon: React.ComponentType<{ size?: number; strokeWidth?: number; "aria-hidden"?: boolean }>;
 };
 
-/* خمس وجهات ثابتة فقط على الهاتف. تبقى الصلاة وبقية الخدمات متاحة من "المزيد". */
+/* خمس وجهات ثابتة فقط على الهاتف. "سؤال وجواب" انتقل إلى "المزيد" لإفساح
+   مكان لعنصر الصلاة المخصَّص (استخدام يومي متكرر يستحق وصولاً مباشرًا). */
 const NAV_TABS: NavTab[] = [
   { href: "/",             label: "الرئيسية",    Icon: Home },
   { href: "/quran-hub",    label: "القرآن",      Icon: BookOpen },
-  { href: "/qa",           label: "سؤال وجواب", Icon: HelpCircle },
+  { href: "/prayer-times", label: "الصلاة",      Icon: Clock },
   { href: "/lessons",      label: "تعلّم",       Icon: GraduationCap },
 ];
 
@@ -44,7 +45,7 @@ export function BottomNavBar() {
               aria-current={active ? "page" : undefined}
             >
               <span className="bottom-nav__tab-icon">
-                <Icon size={22} strokeWidth={active ? 2.4 : 1.6} aria-hidden={true} />
+                <Icon size={20} strokeWidth={active ? 2.4 : 1.6} aria-hidden={true} />
               </span>
               <span className="bottom-nav__tab-label">{label}</span>
             </Link>
@@ -61,7 +62,7 @@ export function BottomNavBar() {
           aria-expanded={moreOpen}
         >
           <span className="bottom-nav__tab-icon">
-            <LayoutGrid size={22} strokeWidth={moreOpen ? 2.4 : 1.6} aria-hidden={true} />
+            <LayoutGrid size={20} strokeWidth={moreOpen ? 2.4 : 1.6} aria-hidden={true} />
           </span>
           <span className="bottom-nav__tab-label">المزيد</span>
         </button>

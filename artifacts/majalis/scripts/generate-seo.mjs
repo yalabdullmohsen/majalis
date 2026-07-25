@@ -542,7 +542,6 @@ const LIST_JSON_LD = {
     "المسارات العلمية",
   ),
   "/topics": itemListJsonLdScript(TOPICS.map((t) => ({ name: t.title, url: `/topics/${t.slug}` })), "المواضيع الإسلامية"),
-  "/muezzins": itemListJsonLdScript(MUEZZINS.map((m) => ({ name: m.name, url: `/muezzins/${m.id}` })), "المؤذنون"),
   "/quran/surah-stories": itemListJsonLdScript(
     SURAH_STORIES.map((s) => ({ name: `سورة ${s.name}`, url: `/quran/surah-stories/${s.number}` })),
     "قصص سور القرآن",
@@ -589,7 +588,6 @@ const RICH_BODY_MAP = {
     LEARNING_PATHS.map((p) => ({ name: p.title, url: `/learning/paths/${p.slug}` })),
   ),
   "/topics": linkList("المواضيع الإسلامية", TOPICS.map((t) => ({ name: t.title, url: `/topics/${t.slug}` }))),
-  "/muezzins": linkList("المؤذنون", MUEZZINS.map((m) => ({ name: m.name, url: `/muezzins/${m.id}`, note: m.origin }))),
   "/quran/surah-stories": linkList(
     "قصص السور",
     SURAH_STORIES.slice(0, 30).map((s) => ({ name: `سورة ${s.name}`, url: `/quran/surah-stories/${s.number}` })),
@@ -599,13 +597,6 @@ const RICH_BODY_MAP = {
     "المسائل الفقهية المعاصرة",
     PUBLIC_FIQH_ISSUES.slice(0, 25).map((i) => ({ name: i.title, url: `/fiqh-council/issues/${i.slug}` })),
   ),
-  "/scholarly-research": `<h2>ما الباحث الشرعي؟</h2>
-<p>أداة بحث تعتمد على الذكاء الاصطناعي للإجابة عن الأسئلة الشرعية بالاستناد إلى مصادر موثّقة من محتوى المنصة (الكتب والفتاوى والدروس)، مع ذكر مصدر كل معلومة. لا تصدر الأداة فتوى شخصية في المسائل التي تحتاج تفصيلاً دقيقاً؛ عند الحاجة تُوجّه السائل لعالم مؤهل.</p>
-${linkList("روابط ذات صلة", [
-  { name: "فتاوى المجمع الفقهي الإسلامي", url: "/fiqh-council/fatwas" },
-  { name: "الأسئلة والأجوبة", url: "/qa" },
-  { name: "مصادر المكتبة العلمية", url: "/library" },
-])}`,
   "/knowledge-graph": `<h2>ما خريطة المعرفة؟</h2>
 <p>عرض بصري تفاعلي يربط بين مفاهيم العلوم الشرعية (كالفقه والعقيدة والحديث والتفسير) ويُظهر علاقاتها ببعضها، ليساعد طالب العلم على فهم كيف يتصل كل علم بغيره بدل دراسته منعزلاً.</p>
 ${linkList("روابط ذات صلة", [
@@ -900,31 +891,6 @@ for (const t of TOPICS) {
   );
 }
 
-// المؤذنون — من MUEZZINS في adhan-audio.ts
-for (const m of MUEZZINS) {
-  addPage(
-    {
-      path: `/muezzins/${m.id}`,
-      title: `${m.name} — أذان`,
-      description: clamp(padDesc(m.biography, `صوت الأذان للمؤذن ${m.name} من ${m.country || "—"} على منصة ${SITE_NAME}`), 300),
-      keywords: [m.name, "أذان", "مؤذنون", m.country, m.style].filter(Boolean),
-      ogType: "profile",
-    },
-    {
-      parents: [{ name: "المؤذنون وأصوات الأذان", path: "/muezzins" }],
-      richBody: `<h2>نبذة</h2>
-<p>${escapeHtml(m.biography || "")}</p>
-<ul>
-  ${m.origin ? `<li>المنشأ: ${escapeHtml(m.origin)}</li>` : ""}
-  ${m.country ? `<li>الدولة: ${escapeHtml(m.country)}</li>` : ""}
-  ${m.style ? `<li>الأسلوب: ${escapeHtml(m.style)}</li>` : ""}
-</ul>`,
-      priority: 0.6,
-      changefreq: "monthly",
-    },
-  );
-}
-
 // ─────────────────────────────────────────────────────────────────────────────
 // كتابة صفحات التصيير المسبق
 // ─────────────────────────────────────────────────────────────────────────────
@@ -988,7 +954,12 @@ Disallow: /search/
 Sitemap: ${SITE_URL}/sitemap.xml
 `;
 
-const BUILD_DATE = new Date().toUTCString();
+// تواريخ التغذية ثابتة لا لحظة البناء. سجلات المصدر (fiqh_decisions/rulings/
+// courses) لا تحمل أي حقل تاريخ، وكان BUILD_DATE يُكتب في pubDate لكل عنصر —
+// فيرى قارئ RSS كل العناصر «نُشرت للتو» بعد كل نشر، وهو ادّعاء غير صحيح
+// ويُعيد كتابة feed.xml المُتتبَّع في git في كل بناء بلا تغيّر محتوى.
+// حين تُضاف تواريخ حقيقية للسجلات يُشتق pubDate منها لكل عنصر.
+const FEED_DATE = new Date("2026-07-25T00:00:00Z").toUTCString();
 const rssItems = [
   ...(PLATFORM_SEED.fiqh_decisions || []).slice(0, 6).map((row) => ({
     title: `[قرار مجمعي] ${row.title}`,
@@ -1017,7 +988,7 @@ const feed = `<?xml version="1.0" encoding="UTF-8"?>
     <link>${escapeXml(SITE_URL)}</link>
     <description>آخر المستجدات العلمية — قرارات وفتاوى وأحكام ودورات</description>
     <language>ar</language>
-    <lastBuildDate>${BUILD_DATE}</lastBuildDate>
+    <lastBuildDate>${FEED_DATE}</lastBuildDate>
     <managingEditor>${escapeXml(SITE.contactEmail)} (${escapeXml(SITE_NAME)})</managingEditor>
     <image>
       <url>${escapeXml(absoluteUrl(DEFAULT_IMAGE))}</url>
@@ -1031,7 +1002,7 @@ const feed = `<?xml version="1.0" encoding="UTF-8"?>
       <title>${escapeXml(item.title)}</title>
       <link>${escapeXml(item.link)}</link>
       <description>${escapeXml(item.description)}</description>
-      <pubDate>${BUILD_DATE}</pubDate>
+      <pubDate>${item.pubDate || FEED_DATE}</pubDate>
       ${item.category ? `<dc:subject>${escapeXml(item.category)}</dc:subject>` : ""}
       <guid isPermaLink="true">${escapeXml(item.link)}</guid>
     </item>`,

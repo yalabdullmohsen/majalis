@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, Moon, Search, Sun, User, X } from "lucide-react";
+import { Menu, Moon, Sun, User, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { useLanguage } from "./LanguageProvider";
-import NotificationBell from "./NotificationBell";
-import { SectionErrorBoundary } from "./ErrorBoundary";
-import { SearchSuggestions } from "./SearchSuggestions";
+import { HeaderTicker } from "./HeaderTicker";
 import { SideNavDrawer } from "./SideNavDrawer";
 import { useThemePreference } from "./ThemePreferenceProvider";
 
@@ -30,11 +28,11 @@ function PrayerChip() {
   }, []);
 
   if (!cd?.next) return null;
-  // خلال فترة السماح (٣٠ دقيقة بعد الأذان) لا نعرض 00:00:00 للصلاة التي أذّنت للتو،
-  // بل نتحوّل مباشرة لاسم وعدّاد الصلاة الفعلية التالية — نفس منطق PrayerTimesPage.
+  // خلال فترة السماح (٣٥ دقيقة بعد الأذان) نعرض عدّادًا تصاعديًا منذ أذان
+  // الصلاة التي رنّت للتو — نفس منطق PrayerTimesPage وTopTicker.
   const inGrace = cd.sinceSeconds != null;
-  const displayName = inGrace && cd.graceNextSlot ? cd.graceNextSlot.name : cd.next.name;
-  const displayHms = inGrace && cd.graceNextHms ? cd.graceNextHms : cd.remainingHms;
+  const displayName = cd.next.name;
+  const displayHms = inGrace && cd.sinceHms ? cd.sinceHms : cd.remainingHms;
   return (
     <Link href="/prayer-times" className="navbar-prayer-chip" aria-label={`الصلاة القادمة: ${displayName}`}>
       <span className="navbar-prayer-chip__name">{displayName}</span>
@@ -55,41 +53,6 @@ function useIsMobile() {
 
 function tabCls(active: boolean, extra = "") {
   return `nav-tab${active ? " nav-tab--active" : ""}${extra ? " " + extra : ""}`;
-}
-
-function SearchBox({ onSubmitDone }: { onSubmitDone?: () => void }) {
-  const [term, setTerm] = useState("");
-  const [, navigate] = useLocation();
-  const submit = (value: string) => {
-    const q = value.trim();
-    if (!q) return;
-    navigate(`/search/${encodeURIComponent(q)}`);
-    setTerm("");
-    onSubmitDone?.();
-  };
-  return (
-    <form
-      role="search"
-      aria-label="البحث في المجلس العلمي"
-      onSubmit={(e) => {
-        e.preventDefault();
-        submit(term);
-      }}
-      className="navbar-search-form"
-    >
-      <SearchSuggestions
-        value={term}
-        onChange={setTerm}
-        onSubmit={submit}
-        placeholder="ابحث في المجلس العلمي..."
-        compact
-      />
-      <button type="submit" aria-label="تنفيذ البحث" className="navbar-search-submit">
-        <Search size={15} strokeWidth={1.8} aria-hidden="true" />
-        <span>بحث</span>
-      </button>
-    </form>
-  );
 }
 
 export default function NavBar() {
@@ -121,11 +84,6 @@ export default function NavBar() {
   // Desktop only: full auth bar
   const desktopAuthLinks = isLoggedIn ? (
     <div className="navbar-auth">
-      {isAdmin && (
-        <SectionErrorBoundary name="NotificationBell">
-          <NotificationBell />
-        </SectionErrorBoundary>
-      )}
       <Link href="/stats" className="navbar-user-link">{user?.profile?.full_name || user?.email || t("nav_my_account")}</Link>
       {isAdmin && (
         <Link href="/admin" className="navbar-admin-link">
@@ -192,6 +150,13 @@ export default function NavBar() {
             </nav>
           )}
 
+          {/* الشريط المتحرك — يحلّ محل زر البحث في الهيدر (تكليف 2026-07-24).
+              البحث نفسه لم يُحذف: يبقى متاحًا عبر القائمة الجانبية (ابحث ←
+              البحث الشامل) واختصار Ctrl/Cmd+K القائم أصلاً. على الجوال
+              يشغل المساحة الوسطى الفارغة أصلاً؛ على سطح المكتب يحلّ محل
+              مربع البحث المضمّن تحديدًا. */}
+          {isMobile && <HeaderTicker />}
+
           <div className="navbar-v3__end">
             {/* عداد الصلاة التالية — سطح المكتب فقط */}
             {!isMobile && <PrayerChip />}
@@ -208,23 +173,13 @@ export default function NavBar() {
                 : <Moon size={17} strokeWidth={1.6} aria-hidden="true" />
               }
             </button>
-            {/* زر البحث الشامل — أيقونة عدسة فقط على الجوال، أيقونة+كلمة "بحث"
-                على الشاشات الأكبر. اختصار Ctrl/Cmd+K يبقى فعالاً (مُدار في
-                App.tsx عبر مستمع keydown مستقل) لكن لا يُعرض بصريًا هنا —
-                طلب صريح من المالك: إزالة حرف K والمربع المحيط به نهائيًا. */}
-            {isMobile && (
-              <button
-                type="button"
-                onClick={() => window.dispatchEvent(new Event("global-search-open"))}
-                aria-label="فتح البحث"
-                className="navbar-search-cmd"
-              >
-                <Search size={17} strokeWidth={1.8} aria-hidden="true" />
-                <span>بحث</span>
-              </button>
-            )}
-            {/* Desktop: search + auth + lang */}
-            {!isMobile && <SearchBox />}
+            {/* زر البحث أُزيل من الهيدر (طلب مباشر من المالك، تنحيف الهيدر) —
+                البحث يبقى متاحًا كاملًا عبر اختصار Ctrl/Cmd+K (مُدار في
+                App.tsx عبر مستمع keydown مستقل تمامًا عن هذا الزر) وصفحة
+                /search وSearchSuggestions المستخدَم في صفحات أخرى — لا حذف
+                لأي وظيفة بحث فعلية، فقط زر الهيدر تحديدًا.
+                مكانه في سطح المكتب يشغله الآن الشريط المتحرك (HeaderTicker). */}
+            {!isMobile && <HeaderTicker />}
             {!isMobile && desktopAuthLinks}
 
             {/* Mobile: زر دخول/حساب واضح دائمًا — لا يُترك مخفيًا داخل قائمة الهامبرغر فقط */}
@@ -238,11 +193,6 @@ export default function NavBar() {
               <Link href="/stats" className="navbar-mobile-login navbar-mobile-login--active" aria-label="حسابي">
                 <User size={16} strokeWidth={1.8} aria-hidden="true" />
               </Link>
-            )}
-            {isMobile && isAdmin && (
-              <SectionErrorBoundary name="NotificationBell">
-                <NotificationBell />
-              </SectionErrorBoundary>
             )}
           </div>
         </div>

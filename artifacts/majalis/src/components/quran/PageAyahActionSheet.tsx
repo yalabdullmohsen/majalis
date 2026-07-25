@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { X, Copy, Check, Share2, Bookmark, StickyNote, Play, Pause, ChevronRight, ChevronLeft, ChevronDown, Flag, Image as ImageIcon, BookOpen, Mic2 } from "lucide-react";
-import { copyAyahText, copyAyahTextPlain, shareAyahAsText, shareAyahAsImage } from "@/lib/share-ayah";
+import { X, Copy, Check, Bookmark, StickyNote, Play, Pause, ChevronRight, ChevronLeft, ChevronDown, Flag, BookOpen, Mic2, Repeat, Gauge } from "lucide-react";
+import { copyAyahText, copyAyahTextPlain } from "@/lib/share-ayah";
 import { addBookmark, removeBookmark, isBookmarked, getNote, saveNote } from "@/lib/quran-personal";
 import { fetchTafsirAyahs } from "@/lib/quran-api";
 import { RECITERS } from "@/lib/quran-audio";
@@ -10,7 +10,7 @@ import { CONTACT_EMAIL } from "@/lib/site-config";
  * ورقة إجراءات الآية — القسم "ز. التفاعل مع الآية" من مواصفة نواة المصحف
  * الرقمي. تربط أدوات كانت موجودة فعليًا لكنها غير مُستخدَمة في أي واجهة:
  * quran-personal.ts (إشارات مرجعية وملاحظات — محلي بالكامل، لا خادم) و
- * share-ayah.ts (نسخ/مشاركة نص وصورة).
+ * share-ayah.ts (نسخ نص، مع/دون تشكيل — أزرار المشاركة أُلغيت 2026-07-24).
  *
  * ملاحظة دمج: يستخدمه MushafPageView.tsx (قارئ /mushaf/page بنظام
  * الصفحات). قارئ /mushaf التقليدي (MushafPage.tsx) يستخدم مكوّنًا منفصلًا
@@ -31,15 +31,21 @@ type Props = {
   /** اختياريان — عند تمريرهما فقط يظهر منتقي القارئ (لا يكسر MushafPageView.tsx القائم الذي لا يمرّرهما). */
   reciterId?: string;
   onSetReciter?: (id: string) => void;
+  /** اختياريان أيضًا — سرعة التلاوة (0.5x–2x) وتكرار الآية للحفظ. */
+  playbackRate?: number;
+  onSetPlaybackRate?: (rate: number) => void;
+  repeatOn?: boolean;
+  onToggleRepeat?: () => void;
 };
 
-export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, isPlaying, onTogglePlay, canPlay = true, onPrev, onNext, onClose, reciterId, onSetReciter }: Props) {
+export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, isPlaying, onTogglePlay, canPlay = true, onPrev, onNext, onClose, reciterId, onSetReciter, playbackRate, onSetPlaybackRate, repeatOn, onToggleRepeat }: Props) {
   const [bookmarked, setBookmarked] = useState(() => isBookmarked(surahNum, ayahNum));
   const [copiedKind, setCopiedKind] = useState<"full" | "plain" | null>(null);
   const [noteOpen, setNoteOpen] = useState(false);
   const [noteText, setNoteText] = useState(() => getNote(surahNum, ayahNum));
   const [noteSaved, setNoteSaved] = useState(false);
   const [reciterPickerOpen, setReciterPickerOpen] = useState(false);
+  const [speedPickerOpen, setSpeedPickerOpen] = useState(false);
   const [tafsirOpen, setTafsirOpen] = useState(false);
   const [tafsirText, setTafsirText] = useState<string | null>(null);
   const [tafsirLoading, setTafsirLoading] = useState(false);
@@ -111,6 +117,9 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
   );
 
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
+    // مساران بديلان كاملان بلوحة المفاتيح.
+    /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */
     <div className="aas-sheet" onClick={onClose} role="presentation">
       <div className="aas-panel" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={`إجراءات الآية ${ayahNum}`}>
         <div className="aas-panel__handle" aria-hidden="true" />
@@ -141,6 +150,32 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
                     onClick={() => { onSetReciter(r.id); setReciterPickerOpen(false); }}
                   >
                     {r.nameAr}
+                  </button>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
+        {playbackRate !== undefined && onSetPlaybackRate && (
+          <>
+            <button type="button" className="ayah-sheet__speed-toggle" onClick={() => setSpeedPickerOpen((v) => !v)}>
+              <Gauge size={14} aria-hidden="true" />
+              <span>سرعة التلاوة: {playbackRate}×</span>
+              <ChevronDown size={14} aria-hidden="true" className={speedPickerOpen ? "is-open" : ""} />
+            </button>
+            {speedPickerOpen && (
+              <div className="ayah-sheet__speed-list" role="listbox" aria-label="اختيار سرعة التلاوة">
+                {[0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map((rate) => (
+                  <button
+                    key={rate}
+                    type="button"
+                    role="option"
+                    aria-selected={rate === playbackRate}
+                    className={`ayah-sheet__speed-item${rate === playbackRate ? " is-active" : ""}`}
+                    onClick={() => { onSetPlaybackRate(rate); setSpeedPickerOpen(false); }}
+                  >
+                    {rate}×
                   </button>
                 ))}
               </div>
@@ -195,6 +230,12 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
               {isPlaying ? "إيقاف" : "استماع"}
             </button>
           )}
+          {canPlay && onToggleRepeat && (
+            <button type="button" className={`aas-action-btn ${repeatOn ? "is-active" : ""}`} onClick={onToggleRepeat} aria-pressed={repeatOn}>
+              <Repeat size={18} aria-hidden="true" />
+              {repeatOn ? "التكرار: مُفعَّل" : "تكرار الآية"}
+            </button>
+          )}
           <button type="button" className="aas-action-btn" onClick={() => handleCopy(false)}>
             {copiedKind === "full" ? <Check size={18} aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
             نسخ بالتشكيل
@@ -202,14 +243,6 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
           <button type="button" className="aas-action-btn" onClick={() => handleCopy(true)}>
             {copiedKind === "plain" ? <Check size={18} aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
             نسخ بلا تشكيل
-          </button>
-          <button type="button" className="aas-action-btn" onClick={() => shareAyahAsText(ayahText, surahName, ayahNum)}>
-            <Share2 size={18} aria-hidden="true" />
-            مشاركة نص
-          </button>
-          <button type="button" className="aas-action-btn" onClick={() => shareAyahAsImage({ text: ayahText, surahName, ayahNum, surahNum })}>
-            <ImageIcon size={18} aria-hidden="true" />
-            مشاركة صورة
           </button>
           {onPrev && (
             <button type="button" className="aas-action-btn" onClick={onPrev}>

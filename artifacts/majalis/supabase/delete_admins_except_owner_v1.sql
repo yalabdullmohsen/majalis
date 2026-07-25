@@ -1,8 +1,10 @@
+-- ملاحظة: يُستخدم الرمز __OWNER_EMAIL__ بدلًا من بريد المالك الفعلي حتى لا يُخزَّن بريد شخصي في المستودع.
+-- قبل التشغيل استبدله ببريد المالك، أو مرِّر MAJALIS_OWNER_EMAILS لسكربت التطبيق ليستبدله تلقائيًا.
 -- ═══════════════════════════════════════════════════════════════════════════
 -- delete_admins_except_owner_v1.sql
 -- حذف جميع حسابات المشرفين نهائياً عدا الحساب الرسمي الوحيد للمالك.
 --
---   الحساب المُبقى (المالك): yalabdullmohsen1@gmail.com
+--   الحساب المُبقى (المالك): __OWNER_EMAIL__
 --   (نفس الإيميل المحمي في owner_bootstrap_v1.sql / protect_bootstrap_owners)
 --
 -- تعريف "حساب مشرف" = أي حساب يحقّق أحد شروط is_admin():
@@ -33,7 +35,7 @@ SELECT u.email,
        (SELECT g.role_id FROM governance_user_roles g WHERE g.user_id = p.id) AS governance_role
 FROM profiles p
 JOIN auth.users u ON u.id = p.id
-WHERE lower(trim(u.email)) <> 'yalabdullmohsen1@gmail.com'
+WHERE lower(trim(u.email)) <> '__OWNER_EMAIL__'
   AND (
     p.role IN ('admin', 'super_admin')
     OR p.is_admin OR p.is_super_admin OR p.is_owner
@@ -51,7 +53,7 @@ ORDER BY u.email;
 -- ─────────────────────────────────────────────────────────────────────────
 DO $$
 DECLARE
-  v_owner_email TEXT := 'yalabdullmohsen1@gmail.com';
+  v_owner_email TEXT := '__OWNER_EMAIL__';
   v_owner_id    UUID;
   v_targets     UUID[];
   v_deleted     INTEGER := 0;

@@ -8,7 +8,7 @@
 .qmem-hero {
   padding: 2.5rem 1.25rem 2rem;
   text-align: center;
-  background: linear-gradient(160deg, #0d2d22 0%, #173D35 60%, #1a4535 100%);
+  background: linear-gradient(160deg, #0d2d22 0%, #143F35 60%, #1a4535 100%);
   position: relative;
   overflow: hidden;
 }
@@ -53,7 +53,7 @@
 /* ── Stats bar ────────────────────────────────────────────────── */
 .qmem-stats {
   display: flex;
-  gap: 1rem;
+  gap: var(--ds-space-4);
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -69,14 +69,14 @@
 
 .qmem-stat__num {
   display: block;
-  font-size: 1.5rem;
+  font-size: var(--ds-text-2xl);
   font-weight: 700;
   color: #fff;
   line-height: 1.1;
 }
 
 .qmem-stat__lbl {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   color: rgba(255,255,255,0.6);
 }
 
@@ -102,12 +102,12 @@
 .qmem-types {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 2rem;
 }
 
 .qmem-type-card {
-  padding: 1rem;
+  padding: var(--ds-space-4);
   border-radius: 12px;
   border: 1.5px solid var(--ds-border, #e5e7eb);
   background: var(--ds-surface, #fff);
@@ -122,7 +122,7 @@
 
 .qmem-type-card:hover,
 .qmem-type-card--active {
-  border-color: var(--majalis-emerald, #28584D);
+  border-color: var(--majalis-emerald, #226A56);
   background: rgba(23,61,53,0.05);
   box-shadow: 0 4px 12px rgba(23,61,53,0.1);
 }
@@ -130,8 +130,8 @@
 .qmem-type-card__num {
   font-size: 0.7rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #28584D);
-  letter-spacing: 0.05em;
+  color: var(--majalis-emerald, #226A56);
+  letter-spacing: normal;
 }
 
 .qmem-type-card__name {
@@ -149,7 +149,7 @@
 /* ── Surah picker ─────────────────────────────────────────────── */
 .qmem-surah-row {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 1.5rem;
@@ -169,13 +169,13 @@
 
 .qmem-surah-select:focus {
   outline: none;
-  border-color: var(--majalis-emerald, #28584D);
+  border-color: var(--majalis-emerald, #226A56);
 }
 
 .qmem-start-btn {
   padding: 0.6rem 1.5rem;
   border-radius: 10px;
-  background: var(--majalis-emerald, #28584D);
+  background: var(--majalis-emerald, #226A56);
   color: #fff;
   border: none;
   font-size: 0.9rem;
@@ -185,10 +185,10 @@
   transition: background 0.15s;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
-.qmem-start-btn:hover { background: #173D35; }
+.qmem-start-btn:hover { background: #143F35; }
 .qmem-start-btn:disabled { background: #9ca3af; cursor: not-allowed; }
 
 /* ── Quiz Session ─────────────────────────────────────────────── */
@@ -200,7 +200,7 @@
 .qmem-progress {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   margin-bottom: 1.25rem;
 }
 
@@ -214,7 +214,7 @@
 
 .qmem-progress__fill {
   height: 100%;
-  background: var(--majalis-emerald, #28584D);
+  background: var(--majalis-emerald, #226A56);
   border-radius: 3px;
   transition: width 0.3s ease;
 }
@@ -224,6 +224,13 @@
   color: var(--ds-text-2, #6b7280);
   white-space: nowrap;
   font-weight: 600;
+  /* ⚠️ إصلاح جذري (2026-07-23): النص المنطقي "١ / ٥" (currentIdx+1 قبل
+     questions.length، صحيح في الكود) كان يُصيَّر بصريًا معكوسًا "٥ / ١"
+     داخل سياق RTL المحيط — خوارزمية bidi تُعيد ترتيب تتابع رقم/شرطة
+     مائلة/رقم بلا عزل اتجاهي صريح. عزل LTR هنا يضمن ترتيب العرض الصحيح
+     بصرف النظر عن السياق المحيط، بلا أي تغيير في البيانات/المنطق. */
+  direction: ltr;
+  unicode-bidi: isolate;
 }
 
 .qmem-card {
@@ -237,17 +244,17 @@
 .qmem-card__type {
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #28584D);
-  letter-spacing: 0.06em;
+  color: var(--majalis-emerald, #226A56);
+  letter-spacing: normal;
   margin-bottom: 0.75rem;
   text-transform: uppercase;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .qmem-card__prompt {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   color: var(--ds-text-1, #1a1a1a);
   line-height: 1.8;
   margin-bottom: 1.25rem;
@@ -257,11 +264,11 @@
 
 .qmem-ayah-text {
   font-family: "Amiri Quran", "Scheherazade New", serif;
-  font-size: 1.25rem;
+  font-size: var(--ds-text-xl);
   line-height: 2;
   color: var(--ds-text-1, #1a1a1a);
   background: rgba(23,61,53,0.04);
-  border-right: 3px solid var(--majalis-emerald, #28584D);
+  border-right: 3px solid var(--majalis-emerald, #226A56);
   padding: 0.75rem 1rem;
   border-radius: 0 8px 8px 0;
   direction: rtl;
@@ -270,7 +277,7 @@
 /* options */
 .qmem-options {
   display: grid;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   grid-template-columns: 1fr 1fr;
 }
 
@@ -295,7 +302,7 @@
 }
 
 .qmem-option:hover:not(:disabled) {
-  border-color: var(--majalis-emerald, #28584D);
+  border-color: var(--majalis-emerald, #226A56);
   background: rgba(23,61,53,0.05);
 }
 
@@ -317,7 +324,7 @@
 .qmem-input-wrap {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
 }
 
 .qmem-input-row {
@@ -348,8 +355,8 @@
 }
 
 .qmem-voice-btn:hover {
-  border-color: var(--majalis-emerald, #28584D);
-  color: var(--majalis-emerald, #28584D);
+  border-color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, #226A56);
 }
 
 .qmem-voice-btn--active {
@@ -371,7 +378,7 @@
   border: 1.5px solid var(--ds-border, #e5e7eb);
   background: var(--ds-surface, #fff);
   color: var(--ds-text-1, #1a1a1a);
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-family: "Amiri Quran", "Scheherazade New", serif;
   direction: rtl;
   line-height: 1.7;
@@ -379,14 +386,14 @@
 
 .qmem-answer-input:focus {
   outline: none;
-  border-color: var(--majalis-emerald, #28584D);
+  border-color: var(--majalis-emerald, #226A56);
 }
 
 .qmem-submit-btn {
   align-self: flex-start;
   padding: 0.6rem 1.25rem;
   border-radius: 8px;
-  background: var(--majalis-emerald, #28584D);
+  background: var(--majalis-emerald, #226A56);
   color: #fff;
   border: none;
   font-size: 0.88rem;
@@ -397,7 +404,7 @@
 
 /* result */
 .qmem-result {
-  padding: 1rem;
+  padding: var(--ds-space-4);
   border-radius: 10px;
   margin-top: 0.75rem;
 }
@@ -422,7 +429,7 @@
 .qmem-rating {
   margin-top: 1rem;
   display: flex;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
   align-items: center;
 }
@@ -459,7 +466,7 @@
   width: 100%;
   padding: 0.7rem;
   border-radius: 10px;
-  background: var(--majalis-emerald, #28584D);
+  background: var(--majalis-emerald, #226A56);
   color: #fff;
   border: none;
   font-size: 0.9rem;
@@ -469,7 +476,7 @@
   transition: background 0.15s;
 }
 
-.qmem-next-btn:hover { background: #173D35; }
+.qmem-next-btn:hover { background: #143F35; }
 
 /* ── Session End ──────────────────────────────────────────────── */
 .qmem-end {
@@ -495,7 +502,10 @@
 .qmem-end__score {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #28584D);
+  color: var(--majalis-emerald, #226A56);
+  /* نفس إصلاح bidi أعلاه (.qmem-progress__text) — نفس النمط "رقم/رقم". */
+  direction: ltr;
+  unicode-bidi: isolate;
 }
 
 .qmem-end__score-lbl {
@@ -505,7 +515,7 @@
 
 .qmem-end__actions {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 1.5rem;
@@ -514,7 +524,7 @@
 /* ── Review Queue ─────────────────────────────────────────────── */
 .qmem-review-section {
   margin-top: 2rem;
-  padding: 1.25rem;
+  padding: var(--ds-space-5);
   border-radius: 14px;
   border: 1.5px solid var(--ds-border, #e5e7eb);
   background: var(--ds-surface, #fff);
@@ -522,7 +532,7 @@
 
 .qmem-review-list {
   display: grid;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   margin-top: 0.75rem;
 }
 
@@ -555,7 +565,7 @@
   font-size: 0.7rem;
   font-weight: 700;
   background: rgba(23,61,53,0.1);
-  color: var(--majalis-emerald, #28584D);
+  color: var(--majalis-emerald, #226A56);
 }
 
 /* ── Dark ─────────────────────────────────────────────────────── */

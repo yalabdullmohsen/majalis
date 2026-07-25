@@ -18,7 +18,15 @@ async function main() {
     process.exit(0);
   }
 
-  const sql = readFileSync(sqlPath, "utf8");
+  const ownerEmail = (process.env.MAJALIS_OWNER_EMAILS || "").split(",")[0].trim().toLowerCase();
+  if (!ownerEmail) {
+    console.log(JSON.stringify({ ok: false, skipped: true, reason: "no_owner_email_env (set MAJALIS_OWNER_EMAILS)" }));
+    await client.end();
+    process.exit(0);
+  }
+  const rawSql = readFileSync(sqlPath, "utf8");
+  // The SQL uses the __OWNER_EMAIL__ placeholder so no personal address is committed.
+  const sql = rawSql.replaceAll("__OWNER_EMAIL__", ownerEmail);
   await client.query(sql);
   await client.end();
   console.log(JSON.stringify({ ok: true, file: "owner_bootstrap_v1.sql" }, null, 2));

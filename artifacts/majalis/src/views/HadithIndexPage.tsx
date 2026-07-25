@@ -29,7 +29,7 @@ const SECTIONS: SectionDef[] = [
     cls: "daif",
     href: "/hadith/daif",
     description: "الأحاديث الضعيفة الإسناد، تُبيَّن درجتها للتحذير من الاحتجاج بها.",
-    accent: "#173D35",
+    accent: "#143F35",
     Icon: AlertTriangle,
   },
   {

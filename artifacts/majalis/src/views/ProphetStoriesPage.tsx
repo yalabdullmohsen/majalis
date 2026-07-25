@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect, useMemo, useRef } from "react";
-import { CalendarDays, Heart, HelpCircle, LayoutList, Sparkles } from "lucide-react";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { CalendarDays, Heart, HelpCircle, LayoutList } from "lucide-react";
 import { Link } from "wouter";
 import { PROPHETS, getProphet, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
 import { applyPageSeo } from "@/lib/seo";
@@ -8,6 +8,7 @@ import { prophetArticleJsonLd, breadcrumbJsonLd, defaultSiteJsonLd } from "@/lib
 import { supabase } from "@/lib/supabase";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { truncateAtWord } from "@/lib/utils";
+import { ScholarlyTrustBadge } from "@/components/ScholarlyTrustBadge";
 
 type Citation = { surah: string; ayahs: string; note: string };
 
@@ -15,15 +16,15 @@ type Citation = { surah: string; ayahs: string; note: string };
 
 const PROPHET_HUE: Record<string, string> = {
   adam: "#5D726A", idris: "#4A6B6B", nuh: "#3D6560", hud: "#5A7066",
-  salih: "#5B6B60", ibrahim: "#173D35", lut: "#3A6A4A", ismail: "#2A5E42",
+  salih: "#5B6B60", ibrahim: "#143F35", lut: "#3A6A4A", ismail: "#2A5E42",
   "is-haq": "#3D6050", yaqub: "#356055", yusuf: "#2D5545", ayyub: "#4A6055",
-  shuayb: "#25504A", musa: "#173D35", harun: "#1E4A38", "dhul-kifl": "#354A42",
-  dawud: "#2A3E35", sulayman: "#173D35", ilyas: "#3A5548", "al-yasa": "#266050",
+  shuayb: "#25504A", musa: "#143F35", harun: "#1E4A38", "dhul-kifl": "#354A42",
+  dawud: "#2A3E35", sulayman: "#143F35", ilyas: "#3A5548", "al-yasa": "#266050",
   yunus: "#1A5555", zakariyya: "#2A503C", yahya: "#205540", isa: "#1E3F50",
-  muhammad: "#173D35",
+  muhammad: "#143F35",
 };
 
-const IVORY = "#D6CFC0";
+const IVORY = "#D6D5CE";
 
 /* بيانات تكميلية: عدد الذكر، المعجزة، الكتاب، المواضع القرآنية */
 type Supplement = { mentioned: number; miracle?: string; book?: string; quranRef?: string };
@@ -289,18 +290,6 @@ function ProphetDetailView({
   const color = prophetColor(p.slug);
   const isUlulAzm = ULUL_AZM_SLUGS.includes(p.slug);
 
-  const share = async () => {
-    const text = `${p.arabicName} عليه السلام، ${p.title}\n${truncateAtWord(p.briefBio, 200)}\n\nمن قصص الأنبياء في المجلس العلمي`;
-    const url = `https://www.majlisilm.com/prophets/${p.slug}`;
-    try {
-      if (navigator.share) {
-        await navigator.share({ title: `قصة ${p.arabicName}`, text, url });
-      } else {
-        await navigator.clipboard.writeText(`${text}\n${url}`);
-        alert("تم نسخ الرابط إلى الحافظة ✓");
-      }
-    } catch { /* share cancelled */ }
-  };
 
   return (
     <div className="prophet-detail-lux" style={{ "--prophet-color": color } as React.CSSProperties}>
@@ -315,9 +304,6 @@ function ProphetDetailView({
             {isBookmarked
               ? <><Heart size={13} className="inline icon-danger--filled ml-1" />محفوظ</>
               : <><Heart size={13} className="inline ml-1" />احفظ</>}
-          </button>
-          <button type="button" className="prophet-action-btn" onClick={share}>
-            شارك
           </button>
           <div className="prophet-font-controls">
             <button type="button" onClick={() => setFontSize(s => Math.max(13, s - 1))} aria-label="تصغير الخط">أ−</button>
@@ -392,6 +378,11 @@ function ProphetDetailView({
           <p className="prophet-section-lux__text">{p.briefBio}</p>
         </section>
 
+        <ScholarlyTrustBadge
+          compact
+          data={{ contentType: "نقل", source: "القرآن الكريم وكتب التفسير والسيرة", methodologyPath: "/methodology", reportContentType: "prophet", reportContentId: p.slug }}
+        />
+
         {sup?.miracle && (
           <section className="prophet-section-lux">
             <div className="prophet-section-lux__header">
@@ -451,7 +442,7 @@ function ProphetDetailView({
           <section className="prophet-section-lux">
             <div className="prophet-section-lux__header">
               <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
-              <h2 className="prophet-section-lux__title">القصة الكاملة</h2>
+              <h2 className="prophet-section-lux__title">القصة بالتفصيل</h2>
             </div>
             <div className="prophet-db-story">
               {dbStory.content.split("\n").filter(Boolean).map((para, i) => (
@@ -738,12 +729,6 @@ const TABS: { id: View; label: string }[] = [
 ];
 
 export default function ProphetStoriesPage() {
-  const todayMiracle = useMemo(() => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
-    return MIRACLES_LIST[(day - 1 + MIRACLES_LIST.length) % MIRACLES_LIST.length];
-  }, []);
   const [search, setSearch] = useState("");
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [view, setView] = useState<View>("grid");
@@ -816,18 +801,13 @@ export default function ProphetStoriesPage() {
             <span>·</span>
             <span>٥ أولو العزم</span>
             <span>·</span>
-            <span>١٢٤٫٠٠٠ نبي (حديث)</span>
+            <span>١٢٤٫٠٠٠ نبي (حديث لا يصح سنده)</span>
           </div>
+          <p className="prophets-lux-hero__note">
+            هؤلاء الأنبياء والرسل الذين ذكرهم الله بأسمائهم في القرآن الكريم؛ وقد أخبر سبحانه أنه أرسل رسلاً آخرين لم يقصصهم علينا: ﴿وَرُسُلًا قَدْ قَصَصْنَاهُمْ عَلَيْكَ مِن قَبْلُ وَرُسُلًا لَّمْ نَقْصُصْهُمْ عَلَيْكَ﴾ [النساء: 164].
+          </p>
           <GeometricBorder color={IVORY} size={24} />
         </div>
-      </div>
-
-      {/* معجزة اليوم */}
-      <div className="psod-card">
-        <div className="psod-card__badge"><Sparkles size={11} aria-hidden="true" /> معجزة اليوم</div>
-        <div className="psod-card__nabi">{todayMiracle.nabi}</div>
-        <h2 className="psod-card__miracle">{todayMiracle.miracle}</h2>
-        <div className="psod-card__ayah">{todayMiracle.ayah}</div>
       </div>
 
       {/* تبويبات العرض */}

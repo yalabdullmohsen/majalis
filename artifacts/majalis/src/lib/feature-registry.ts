@@ -6,7 +6,7 @@
  * قاعدة: أي صفحة تُضاف لـ App.tsx يجب أن تُضاف هنا.
  */
 
-export type FeatureStatus = "active" | "coming-soon" | "admin-only" | "requires-auth";
+export type FeatureStatus = "active" | "coming-soon" | "admin-only" | "requires-auth" | "disabled";
 
 export type FeatureEntry = {
   id: string;
@@ -21,6 +21,7 @@ export type FeatureEntry = {
 export const FEATURE_REGISTRY: FeatureEntry[] = [
   // ── الصفحة الرئيسية ──────────────────────────────────────────
   { id: "home",         label: "الرئيسية",          path: "/",             group: "رئيسي",         status: "active",       inSideNav: true,  inBottomNav: true  },
+  { id: "kids",         label: "الأطفال",           path: "/kids",         group: "رئيسي",         status: "active",       inSideNav: true,  inBottomNav: false },
 
   // ── المحتوى التعليمي ─────────────────────────────────────────
   { id: "lessons",      label: "الدروس",             path: "/lessons",      group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: true  },
@@ -37,7 +38,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "daily-wird",   label: "الورد اليومي",       path: "/daily-wird",   group: "عبادات",        status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "tasbih",       label: "التسبيح",            path: "/tasbih",       group: "عبادات",        status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "qa",           label: "الأسئلة والأجوبة",  path: "/qa",           group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "quiz",         label: "المسابقة",           path: "/quiz",         group: "تفاعلي",        status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "quiz",         label: "لعبة سين جيم – أسئلة وأجوبة", path: "/quiz",   group: "تفاعلي",        status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "stories",      label: "القصص الإسلامية",   path: "/stories",      group: "قصص",           status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "prophets",     label: "قصص الأنبياء",      path: "/prophets",     group: "قصص",           status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "updates",      label: "آخر المستجدات",     path: "/updates",      group: "أخبار",         status: "active",       inSideNav: true,  inBottomNav: false },
@@ -53,8 +54,6 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "mushaf",        label: "المصحف الشريف",   path: "/mushaf",       group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "quran",        label: "القرآن الكريم",    path: "/quran-hub",    group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "quran-circles",label:"حلقات التحفيظ",     path: "/quran-circles",group:"قرآن",           status: "coming-soon",  inSideNav: true,  inBottomNav: false },
-  { id: "quran-radio",  label: "إذاعة القرآن",     path: "/quran-radio",  group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "muezzins",     label: "الأذان والمؤذنون",  path: "/muezzins",     group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
 
   // ── الأدوات والتفاعل ─────────────────────────────────────────
   { id: "prayer-times", label: "مواقيت الصلاة",    path: "/prayer-times", group: "صلاة",          status: "active",       inSideNav: true,  inBottomNav: true  },
@@ -65,7 +64,11 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "assistant",    label: "المساعد الذكي",     path: "/assistant",    group: "أدوات",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "flashcards",   label: "بطاقات المراجعة",  path: "/flashcards",   group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "knowledge-graph",label:"خارطة المعرفة",   path: "/knowledge-graph",group:"أدوات",        status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "scholarly-research",label:"الباحث الشرعي",path: "/scholarly-research",group:"أدوات",    status: "active",       inSideNav: true,  inBottomNav: false },
+  /* عُطِّلت 2026-07-23: أُزيلت من كل نقاط الدخول (رئيسية/قوائم/خرائط ذهنية/
+     مسارات)، والمسار القديم يُعاد توجيهه دائمًا إلى /qa (App.tsx + vercel.json).
+     الكود (ScholarlyResearchPage.tsx وrag-service.ts) لم يُحذف عمدًا — بلا
+     أي معتمِد آخر (تحقّقتُ)، فيمكن إعادة تفعيله لاحقًا دون إعادة بناء. */
+  { id: "scholarly-research",label:"الباحث الشرعي",path: "/scholarly-research",group:"أدوات",    status: "disabled",     inSideNav: false, inBottomNav: false },
   { id: "universities", label: "دليل الجامعات",    path: "/universities", group: "مؤسسات",        status: "active",       inSideNav: true,  inBottomNav: false },
 
   // ── التعلم ───────────────────────────────────────────────────

@@ -76,20 +76,6 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
     }
   }, [lesson]);
 
-  const handleShare = useCallback(async () => {
-    const url = buildLessonShareUrl(lesson);
-    const text = buildLessonCopyText(lesson);
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: lesson.title, text, url });
-        return;
-      } catch {
-        /* cancelled */
-      }
-    }
-    await handleCopy();
-  }, [lesson, handleCopy]);
-
   const flags = [
     lesson.hasLiveStream ? "بث مباشر" : "",
     lesson.hasRecording ? "تسجيل متاح" : "",
@@ -149,9 +135,6 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
           </Link>
           {!compact && (
             <>
-              <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--secondary" onClick={handleShare}>
-                مشاركة
-              </button>
               <AdminInlineEdit
                 contentType="lesson"
                 contentId={lesson.id}

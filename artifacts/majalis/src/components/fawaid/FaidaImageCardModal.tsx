@@ -33,31 +33,10 @@ export function FaidaImageCardModal({ text, source, category, onClose }: Props) 
     }
   }, []);
 
-  const handleShare = useCallback(async () => {
-    if (!cardRef.current) return;
-    setStatus("generating");
-    try {
-      const dataUrl = await toPng(cardRef.current, { pixelRatio: 3, cacheBust: true });
-      const blob = await (await fetch(dataUrl)).blob();
-      const file = new File([blob], "فائدة.png", { type: "image/png" });
-      if (navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file], title: "فائدة من المجلس العلمي" });
-        setStatus("idle");
-      } else {
-        const link = document.createElement("a");
-        link.download = "فائدة-المجلس-العلمي.png";
-        link.href = dataUrl;
-        link.click();
-        setStatus("done");
-      }
-    } catch {
-      setStatus("error");
-    }
-  }, []);
-
   return (
     // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
     // مساران بديلان كاملان بلوحة المفاتيح.
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
     <div
       className="fic-backdrop"
       role="dialog"
@@ -97,18 +76,10 @@ export function FaidaImageCardModal({ text, source, category, onClose }: Props) 
           <button
             type="button"
             className="fic-btn fic-btn--primary"
-            onClick={handleShare}
-            disabled={status === "generating"}
-          >
-            {status === "generating" ? "جارٍ التحضير…" : "مشاركة كصورة"}
-          </button>
-          <button
-            type="button"
-            className="fic-btn fic-btn--secondary"
             onClick={handleDownload}
             disabled={status === "generating"}
           >
-            تنزيل PNG
+            {status === "generating" ? "جارٍ التحضير…" : "تنزيل PNG"}
           </button>
         </div>
 

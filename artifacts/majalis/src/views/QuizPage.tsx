@@ -7,16 +7,16 @@ export default function QuizPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/quiz",
-      title: "مسابقة المعلومات الإسلامية | المجلس العلمي",
-      description: "اختبر معلوماتك الإسلامية في التاريخ والفقه والقرآن والسيرة النبوية، مسابقة تفاعلية بمستويات متدرجة.",
-      keywords: ["مسابقة إسلامية", "اختبار معلومات", "أسئلة إسلامية", "تحدي قرآني", "مسابقة فقهية"],
+      title: "لعبة سين جيم – أسئلة وأجوبة | المجلس العلمي",
+      description: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة.",
+      keywords: ["سين جيم", "مسابقة إسلامية", "اختبار معلومات", "أسئلة إسلامية", "تحدي قرآني", "مسابقة فقهية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "Quiz",
-          name: "مسابقة المعلومات الإسلامية",
+          name: "لعبة سين جيم – أسئلة وأجوبة",
           url: "https://www.majlisilm.com/quiz",
-          description: "اختبر معلوماتك الإسلامية في الفقه والقرآن والسيرة والتاريخ",
+          description: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة",
           educationalLevel: "متعدد المستويات",
           inLanguage: "ar",
           provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
@@ -29,7 +29,7 @@ export default function QuizPage() {
     <>
       <IslamicQuizGame />
       <div className="twh-share">
-        <ShareButtons title="مسابقة المعلومات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/quiz" />
+        <ShareButtons title="لعبة سين جيم – أسئلة وأجوبة — المجلس العلمي" url="https://www.majlisilm.com/quiz" />
       </div>
     </>
   );

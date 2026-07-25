@@ -4,14 +4,14 @@
  *
  * Usage:
  *   node scripts/smoke-production-loading.mjs
- *   node scripts/smoke-production-loading.mjs --base=https://www.majlisilm.com
+ *   node scripts/smoke-production-loading.mjs --base=https://majlisilm.com
  */
 import { spawnSync } from "node:child_process";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const base = process.argv.find((a) => a.startsWith("--base="))?.slice(7) || "https://www.majlisilm.com";
+const base = process.argv.find((a) => a.startsWith("--base="))?.slice(7) || "https://majlisilm.com";
 
 const ROUTES = ["/", "/lessons", "/courses", "/qa", "/adhkar", "/library", "/admin"];
 

@@ -13,8 +13,6 @@ import { OptimizedSheikhImage } from "@/components/sheikh/OptimizedSheikhImage";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import {
-  buildLessonCopyText,
-  buildLessonShareUrl,
   downloadUnifiedCalendar,
   fromDbLesson,
   fromKuwaitLesson,
@@ -267,21 +265,6 @@ export default function LessonDetailPage({
   const level = inferLessonLevel(unified.category);
   const addedDate = lesson?.created_at || lesson?.updated_at || unified.gregorianDate;
 
-  const handleShare = async () => {
-    const url = buildLessonShareUrl(unified);
-    const text = buildLessonCopyText(unified);
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: unified.title, text, url });
-        return;
-      } catch {
-        /* cancelled */
-      }
-    }
-    await navigator.clipboard.writeText(`${text}\n${url}`);
-    alert("تم نسخ تفاصيل الدرس.");
-  };
-
   return (
     <div className="page-shell narrow lesson-detail-page">
       <ReadingProgressBar />
@@ -429,9 +412,6 @@ export default function LessonDetailPage({
         )}
 
         <div className="lesson-detail-actions lesson-detail-actions--row">
-          <button type="button" className="lesson-unified-card__btn lesson-unified-card__btn--primary" onClick={handleShare}>
-            مشاركة
-          </button>
           <AdminInlineEdit
             contentType="lesson"
             contentId={unified.id}

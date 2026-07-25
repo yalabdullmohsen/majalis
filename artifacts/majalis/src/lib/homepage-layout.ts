@@ -10,8 +10,8 @@ import { supabase } from "@/lib/supabase";
 
 export type HomeWidgetId =
   | "lessons" | "prayer" | "continue" | "daily-progress" | "week-streak"
-  | "asma" | "hadith" | "sunnah-time" | "explore" | "learning-seasons"
-  | "occasions" | "latest-updates" | "library" | "quiz" | "daily-corner"
+  | "asma" | "sunnah-time" | "explore" | "learning-seasons"
+  | "occasions" | "latest-updates" | "library" | "quiz"
   | "prayer-ranks" | "interesting-topics" | "mind-map" | "daily-benefits" | "upcoming-events";
 
 /* ترتيب افتراضي — تحديث 2026-07-19 (تكليف ثانٍ، بند 4): "التقدم اليومي" كان
@@ -25,9 +25,7 @@ export const HOME_WIDGET_DEFS: { id: HomeWidgetId; label: string }[] = [
   { id: "continue", label: "استمر من حيث توقفت" },
   { id: "lessons", label: "الدروس والدورات" },
   { id: "learning-seasons", label: "مواسم التعلم" },
-  { id: "hadith", label: "حديث اليوم" },
   { id: "asma", label: "اسم الله اليومي" },
-  { id: "daily-corner", label: "الركن اليومي" },
   { id: "daily-benefits", label: "فوائد منتقاة" },
   { id: "upcoming-events", label: "فعاليات وإعلانات علمية" },
   { id: "library", label: "المكتبة العلمية" },
@@ -52,7 +50,7 @@ export type HomepagePrefs = {
   hidden: HomeWidgetId[];
 };
 
-/* تخفيف الازدحام الافتراضي (تحديث 2026-07-19): خمسة ودجتات ذات أولوية
+/* تخفيف الازدحام الافتراضي (تحديث 2026-07-19): ودجتات ذات أولوية
    أدنى أو متداخلة مع محتوى آخر ظاهر أصلاً في الصفحة تُخفى افتراضياً فقط
    للمستخدم الجديد/بلا تفضيل محفوظ. لا حذف لأي وظيفة — كل ودجت يبقى قابلاً
    لإعادة الإظهار فوراً عبر "تخصيص الصفحة الرئيسية":
@@ -62,16 +60,21 @@ export type HomepagePrefs = {
    - latest-updates: تغذية تحديثات عامة، أولوية أقل من التقدم الشخصي.
    - prayer: أصبح مكرَّرًا بعد إعادة الهيكلة — البطاقة اليومية أعلى الصفحة
      تعرض الصلاة القادمة والعد التنازلي فعلاً، وتبويب "الصلاة" الجديد في
-     الشريط السفلي يفتح التفاصيل الكاملة مباشرة (2026-07-19). */
+     الشريط السفلي يفتح التفاصيل الكاملة مباشرة (2026-07-19).
+   تحديث 2026-07-23 (توحيد الأقسام اليومية): ودجتا "حديث اليوم" (hadith)
+   و"الركن اليومي" (daily-corner) أُزيلا نهائيًا من HOME_WIDGET_DEFS نفسها
+   (لا مجرد إخفاء) — محتواهما الآن جزء من «مجلس اليوم» الموحّد
+   (HomeMajlisToday، ثابت أعلى الصفحة، غير قابل للتخصيص أصلاً). أي تفضيل
+   محلي محفوظ يحوي هذين المعرّفين يُفلتَر تلقائيًا عبر VALID_IDS أدناه. */
 const DEFAULT_HIDDEN: HomeWidgetId[] = [
   "occasions", "prayer-ranks", "interesting-topics", "latest-updates", "prayer",
   "asma", "sunnah-time", "explore", "week-streak", "mind-map",
-  "daily-benefits", "upcoming-events", "quiz", "hadith", "daily-corner", "library",
+  "daily-benefits", "upcoming-events", "quiz", "library",
 ];
 const DEFAULT_PREFS: HomepagePrefs = { order: DEFAULT_ORDER, hidden: DEFAULT_HIDDEN };
 const STORAGE_KEY = "majalis-homepage-prefs-v1";
 
-function sanitizePrefs(raw: unknown): HomepagePrefs {
+export function sanitizePrefs(raw: unknown): HomepagePrefs {
   const obj = (raw ?? {}) as Partial<HomepagePrefs>;
   const rawOrder = Array.isArray(obj.order) ? obj.order.filter((id): id is HomeWidgetId => VALID_IDS.has(id)) : [];
   const missing = DEFAULT_ORDER.filter((id) => !rawOrder.includes(id));

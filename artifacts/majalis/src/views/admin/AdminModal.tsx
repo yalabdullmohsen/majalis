@@ -41,7 +41,11 @@ export function AdminModal({ title, open, onClose, onSave, saving, children }: A
 
   if (!open) return null;
   return (
+    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
+    // مساران بديلان كاملان بلوحة المفاتيح.
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div className="adm-modal__overlay" onClick={onClose}>
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
       <div className="adm-modal__dialog" onClick={(e) => e.stopPropagation()}>
         <div className="adm-modal__header">
           <button type="button" onClick={onClose} className="adm-modal__close" aria-label="إغلاق">×</button>

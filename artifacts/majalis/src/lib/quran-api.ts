@@ -564,26 +564,6 @@ export async function fetchJuz(juzNumber: number, edition = "quran-uthmani"): Pr
   return result;
 }
 
-// ─── Mushaf Page Images ────────────────────────────────────────────────────
-// Source: King Fahad Quran Printing Complex (KFGQPC) — Hafs 'an 'Asim
-// Primary:  jsDelivr CDN (pinned commit for stable cache)
-// Fallback: GitHub raw content (bypasses CDN cache)
-
-// Pinned commit avoids @main cache-miss 503s that occur when jsDelivr
-// hasn't yet cached a given page from GitHub's API.
-const MUSHAF_CDN_PRIMARY  = "https://cdn.jsdelivr.net/gh/QuranHub/quran-pages-images@main/kfgqpc/hafs-wasat";
-const MUSHAF_CDN_FALLBACK = "https://raw.githubusercontent.com/QuranHub/quran-pages-images/main/kfgqpc/hafs-wasat";
-
-export function getMushafPageUrl(page: number): string {
-  const p = Math.max(1, Math.min(604, page));
-  return `${MUSHAF_CDN_PRIMARY}/${p}.jpg`;
-}
-
-export function getMushafPageFallbackUrl(page: number): string {
-  const p = Math.max(1, Math.min(604, page));
-  return `${MUSHAF_CDN_FALLBACK}/${p}.jpg`;
-}
-
 export async function fetchAyahsOnPage(page: number, edition = "quran-uthmani"): Promise<{ surahNumber: number; ayahNumber: number }[]> {
   const key = `page-${page}-${edition}`;
   const cached = readCache<{ surahNumber: number; ayahNumber: number }[]>(key);

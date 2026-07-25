@@ -7,8 +7,10 @@ import { UserPreferencesProvider } from "@/components/UserPreferencesProvider";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import { LanguageProvider, useLanguage } from "@/components/LanguageProvider";
 import NavBar from "@/components/NavBar";
+import { TopTicker } from "@/components/TopTicker";
 import SiteFooter from "@/components/SiteFooter";
 import { BottomNavBar } from "@/components/BottomNavBar";
+import { TopSectionBar } from "@/components/TopSectionBar";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { GlobalBackButton } from "@/components/GlobalBackButton";
 import { AchievementToast } from "@/components/AchievementToast";
@@ -29,6 +31,7 @@ import { NavProgressBar } from "@/components/NavProgressBar";
 import { recordRecentPage } from "@/lib/recent-pages";
 import { OfflineBanner } from "@/components/OfflineBanner";
 import { UpdateAvailableBanner } from "@/components/UpdateAvailableBanner";
+import { setPrayerTimesCache } from "@/lib/lesson-time";
 
 const lazy = lazyWithRetry;
 
@@ -76,14 +79,14 @@ const HadithMawduPage = lazy(() => import("@/views/HadithMawduPage"));
 const HadithBooksPage = lazy(() => import("@/views/HadithBooksPage"));
 const HadithBooksAndRulingsPage = lazy(() => import("@/views/HadithBooksAndRulingsPage"));
 const ArbaeenLovePage = lazy(() => import("@/views/ArbaeenLovePage"));
-const QuranRadioPage = lazy(() => import("@/views/QuranRadioPage"));
 const QuranCirclesPage = lazy(() => import("@/views/QuranCirclesPage"));
 const QuranHubPage = lazy(() => import("@/views/QuranHubPage"));
+const KidsPage = lazy(() => import("@/views/KidsPage"));
 const SurahIndexPage = lazy(() => import("@/views/SurahIndexPage"));
 const RevelationOrderPage = lazy(() => import("@/views/RevelationOrderPage"));
 const MakkiMadaniPage = lazy(() => import("@/views/MakkiMadaniPage"));
-const MushafPage = lazy(() => import("@/views/MushafPage"));
 const MushafPageView = lazy(() => import("@/views/MushafPageView"));
+const MushafEditionInfoPage = lazy(() => import("@/views/MushafEditionInfoPage"));
 const MushafReaderV2Preview = lazy(() => import("@/views/MushafReaderV2Preview"));
 const RecitationTestPage = lazy(() => import("@/views/RecitationTestPage"));
 const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
@@ -127,6 +130,19 @@ const OccasionsPage = lazy(() => import("@/views/OccasionsPage"));
 const FeaturesInProgressPage = lazy(() => import("@/views/FeaturesInProgressPage"));
 const ArbaeenNawawiPage = lazy(() => import("@/views/ArbaeenNawawiPage"));
 const ArbaeenHadithDetailPage = lazy(() => import("@/views/ArbaeenHadithDetailPage"));
+const SujoodSahwPage = lazy(() => import("@/views/SujoodSahwPage"));
+const AmradQalbiyyaPage = lazy(() => import("@/views/AmradQalbiyyaPage"));
+const DurusImaniyyaPage = lazy(() => import("@/views/DurusImaniyyaPage"));
+const DurusMutanawwiaPage = lazy(() => import("@/views/DurusMutanawwiaPage"));
+const ImanTopicsPage = lazy(() => import("@/views/ImanTopicsPage"));
+const QuranStudiesPage = lazy(() => import("@/views/QuranStudiesPage"));
+const SunnahStudiesPage = lazy(() => import("@/views/SunnahStudiesPage"));
+const TazkiyaTopicsPage = lazy(() => import("@/views/TazkiyaTopicsPage"));
+const TarikhIslamiPage = lazy(() => import("@/views/TarikhIslamiPage"));
+const UsraMujtamaPage = lazy(() => import("@/views/UsraMujtamaPage"));
+const FikrWaqiaPage = lazy(() => import("@/views/FikrWaqiaPage"));
+const MawsuaatPage = lazy(() => import("@/views/MawsuaatPage"));
+const MasaratPage = lazy(() => import("@/views/MasaratPage"));
 const SettingsPage = lazy(() => import("@/views/SettingsPage"));
 const AccountDeletionPage = lazy(() => import("@/views/AccountDeletionPage"));
 const AnnualCoursesPage = lazy(() => import("@/views/AnnualCoursesPage"));
@@ -160,7 +176,6 @@ const IslamicKnowledgeMapPage = lazy(() => import("@/views/IslamicKnowledgeMapPa
 const MindMapPage = lazy(() => import("@/views/MindMapPage"));
 const IslamicLandmarksPage = lazy(() => import("@/views/IslamicLandmarksPage"));
 const MutashabihatPage = lazy(() => import("@/views/MutashabihatPage"));
-const QuranLivePage = lazy(() => import("@/views/QuranLivePage"));
 const QuranMemorizationPage = lazy(() => import("@/views/QuranMemorizationPage"));
 const QuranMemorizationPlansPage = lazy(() => import("@/views/QuranMemorizationPlansPage"));
 const IslamicScholarsPage = lazy(() => import("@/views/IslamicScholarsPage"));
@@ -233,9 +248,6 @@ const LearnCategoryPage = lazy(() => import("@/views/learn/LearnCategoryPage"));
 const LearnSeriesPage = lazy(() => import("@/views/learn/LearnSeriesPage"));
 const LearnLessonPage = lazy(() => import("@/views/learn/LearnLessonPage"));
 const AdhanSettingsPage = lazy(() => import("@/views/AdhanSettingsPage"));
-const MuezzinsPage = lazy(() => import("@/views/MuezzinsPage"));
-const MuezzinDetailPage = lazy(() => import("@/views/MuezzinDetailPage"));
-const MuezzinFavoritesPage = lazy(() => import("@/views/MuezzinFavoritesPage"));
 const UploadPage = lazy(() => import("@/views/UploadPage"));
 const MySubmissionsPage = lazy(() => import("@/views/MySubmissionsPage"));
 const UserStatsPage = lazy(() => import("@/views/UserStatsPage"));
@@ -257,7 +269,8 @@ const IslamicStoriesPage = lazy(() => import("@/views/IslamicStoriesPage"));
 const CitationPublicPage = lazy(() => import("@/views/CitationPublicPage"));
 const MethodologyPage = lazy(() => import("@/views/MethodologyPage"));
 const MyCitationsPage = lazy(() => import("@/views/MyCitationsPage"));
-const ScholarlyResearchPage = lazy(() => import("@/views/ScholarlyResearchPage"));
+// ScholarlyResearchPage عُطِّلت 2026-07-23 — الاستيراد الكسول أُزيل (لم يعد
+// يُستهلَك)؛ ملف المكوّن نفسه باقٍ بلا حذف (راجع feature-registry.ts).
 const AcademicResearchPage  = lazy(() => import("@/views/AcademicResearchPage"));
 const UniversitiesPage = lazy(() => import("@/views/UniversitiesPage"));
 const UniversityDetailPage = lazy(() => import("@/views/UniversityDetailPage"));
@@ -267,16 +280,32 @@ const UniversitiesAdminPage = lazyWithRetry(() => import("@/views/admin/Universi
 function SeoManager() {
   const [location] = useLocation();
   usePageSeo(location);
-  useEffect(() => { recordRecentPage(location); }, [location]);
+  useEffect(() => {
+    // تأخير قصير يمنح صفحة التفاصيل (مثلًا عنوان درس حقيقي بعد جلبه من
+    // Supabase) فرصة لضبط document.title الخاص بها قبل أن نسجّله في "زرت
+    // مؤخرًا" — بلا هذا التأخير قد نلتقط عنوان الصفحة السابقة أو عنوانًا
+    // عامًا مؤقتًا فقط.
+    const timer = window.setTimeout(() => {
+      const rawTitle = document.title.split(" | ")[0]?.trim();
+      recordRecentPage(location, rawTitle);
+    }, 400);
+    return () => window.clearTimeout(timer);
+  }, [location]);
   return null;
 }
+
+/* وجهات شريط الأقسام العلوي (TopSectionBar) — التبديل بينها يُعامَل معاملة
+   "الرجوع" (استعادة آخر موضع تمرير)، لا "تنقّل للأمام" (تمرير للأعلى)،
+   لأن المستخدم يُنهي غالبًا جولة في قسم ثم يعود إليه لاحقًا عبر تبويبه. */
+const SECTION_BAR_PATHS = new Set(["/", "/learn", "/quran-hub", "/kids"]);
 
 /**
  * كان يفرض scrollTo(0,0) على كل تغيير مسار بلا استثناء، فيُفقِد موضع
  * التمرير حتى عند الرجوع (زر الرجوع العام أو زر رجوع المتصفح) — طلب صريح
  * من المالك بحفظ حالة الصفحة (تمرير) عند الرجوع. الآن: يميّز بين تنقّل
- * "للأمام" (رابط/بطاقة جديدة → تمرير للأعلى كالمعتاد) و"للخلف"
- * (popstate → استعادة آخر موضع تمرير محفوظ لذلك المسار من sessionStorage).
+ * "للأمام" (رابط/بطاقة جديدة → تمرير للأعلى كالمعتاد) و"للخلف" (popstate،
+ * أو التبديل بين أقسام TopSectionBar → استعادة آخر موضع تمرير محفوظ لذلك
+ * المسار من sessionStorage).
  */
 function ScrollResetOnNav() {
   const [location] = useLocation();
@@ -298,8 +327,9 @@ function ScrollResetOnNav() {
     }
     lastLocationRef.current = location;
 
-    if (isPopRef.current) {
-      isPopRef.current = false;
+    const shouldRestore = isPopRef.current || SECTION_BAR_PATHS.has(location);
+    isPopRef.current = false;
+    if (shouldRestore) {
       const saved = sessionStorage.getItem(`scroll-pos:${location}`);
       if (saved != null) {
         const top = Number(saved);
@@ -334,7 +364,16 @@ function AdhanSchedulerBootstrap() {
   const { data } = usePrayerCountdown();
   const started = useRef(false);
   useEffect(() => {
-    if (!data || started.current) return;
+    if (!data) return;
+    // مزامنة كاش أوقات الصلاة في lesson-time بالبيانات الحية الفعلية من كل
+    // جلب — بدل الاعتماد على المتوسطات السنوية الثابتة. المفاتيح بالعربية
+    // (name) لا الإنجليزية (key) لتطابق PRAYER_TIME_MINUTES في lesson-time.ts.
+    const liveMinutes: Record<string, number> = {};
+    for (const slot of data.prayers) {
+      if (slot.minutes != null) liveMinutes[slot.name] = slot.minutes;
+    }
+    setPrayerTimesCache(liveMinutes);
+    if (started.current) return;
     started.current = true;
     startAdhanScheduler(data).catch(() => {});
   }, [data]);
@@ -380,7 +419,6 @@ function SafeLazyRoute({ component: Component }: { component: ComponentType<any>
     </ErrorBoundary>
   );
 }
-
 
 function AdminLazyRoute({ component: Component }: { component: ComponentType }) {
   return (
@@ -531,7 +569,9 @@ function Router() {
           </Suspense>
         </ErrorBoundary>
       </Route>
-      <Route path="/scholarly-research"><SafeLazyRoute component={ScholarlyResearchPage} /></Route>
+      {/* عُطِّلت 2026-07-23: توجيه دائم إلى الأسئلة والأجوبة، وvercel.json يوجّه
+          الطلبات المباشرة على مستوى الخادم بنفس الوجهة. */}
+      <Route path="/scholarly-research"><Redirect to="/qa" /></Route>
       <Route path="/academic-research"><SafeLazyRoute component={AcademicResearchPage} /></Route>
       <Route path="/learning-path/dashboard"><Redirect to="/my-learning" /></Route>
       <Route path="/learning-path/book/:bookId"><Redirect to="/learning/paths" /></Route>
@@ -552,22 +592,28 @@ function Router() {
       <Route path="/quran"><Redirect to="/quran-hub" /></Route>
       <Route path="/mushaf/page/:page"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf/page"><SafeLazyRoute component={MushafPageView} /></Route>
-      <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafPage} /></Route>
-      <Route path="/mushaf"><SafeLazyRoute component={MushafPage} /></Route>
-      {/* معاينة داخلية لـPhase 3 من إعادة بناء المصحف المطابق لمصحف
-          المدينة — لا تستبدل /mushaf الحيّ بعد، راجع docs/mushaf-rebuild-inventory.md. */}
+      {/* ⚠️ ترتيب حرج: المسار الحرفي /mushaf/about-edition يجب أن يسبق
+          /mushaf/:surah أدناه — وإلا طابقه :surah أولًا بوصفه رقم سورة
+          (Switch يُصيّر أول تطابق فقط)، مطابق تمامًا لتحذير wouter العام
+          بترتيب المسارات الحرفية قبل الديناميكية على نفس البادئة. */}
+      <Route path="/mushaf/about-edition"><SafeLazyRoute component={MushafEditionInfoPage} /></Route>
+      {/* /mushaf و/mushaf/:surah أصبحا يستخدمان MushafPageView (تخطيط
+          سطري حقيقي مطابق لمصحف المدينة، وضعا عرض خفيف/دقة مطبعية) بدل
+          MushafPage.tsx القديم (نص مستمر) — الملف القديم لم يُحذف، فقط
+          استُبدل ترويجه بمكوّن أكمل يحقق كل ميزاته وأكثر. */}
+      <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafPageView} /></Route>
+      <Route path="/mushaf"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf-v2-preview"><SafeLazyRoute component={MushafReaderV2Preview} /></Route>
       <Route path="/quran-hub"><SafeLazyRoute component={QuranHubPage} /></Route>
+      <Route path="/kids"><SafeLazyRoute component={KidsPage} /></Route>
       <Route path="/quran/recitation-test-ai"><SafeLazyRoute component={RecitationTestPage} /></Route>
       <Route path="/quran/surahs"><SafeLazyRoute component={SurahIndexPage} /></Route>
       <Route path="/quran/revelation-order"><SafeLazyRoute component={RevelationOrderPage} /></Route>
       <Route path="/quran/makki-madani"><SafeLazyRoute component={MakkiMadaniPage} /></Route>
-      <Route path="/quran-radio"><SafeLazyRoute component={QuranRadioPage} /></Route>
-      <Route path="/quran-live"><SafeLazyRoute component={QuranLivePage} /></Route>
       <Route path="/quran-memorization"><SafeLazyRoute component={QuranMemorizationPage} /></Route>
       <Route path="/quran/memorization-plans"><SafeLazyRoute component={QuranMemorizationPlansPage} /></Route>
       <Route path="/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
-      <Route path="/surah-stories"><SafeLazyRoute component={SurahStoriesPage} /></Route>
+      <Route path="/surah-stories"><Redirect to="/quran/surah-stories" /></Route>
       <Route path="/quran/tajweed"><SafeLazyRoute component={QuranTajweedPage} /></Route>
       {/* مسارات الاختصار — public redirects */}
       <Route path="/research"><Redirect to="/fiqh-council/research" /></Route>
@@ -591,9 +637,6 @@ function Router() {
       <Route path="/prayer-countdown"><SafeLazyRoute component={PrayerCountdownPage} /></Route>
       <Route path="/prayer-ranks"><SafeLazyRoute component={PrayerRanksPage} /></Route>
       <Route path="/adhan-settings"><SafeLazyRoute component={AdhanSettingsPage} /></Route>
-      <Route path="/muezzins/favorites"><SafeLazyRoute component={MuezzinFavoritesPage} /></Route>
-      <Route path="/muezzins/:id"><SafeLazyRoute component={MuezzinDetailPage} /></Route>
-      <Route path="/muezzins"><SafeLazyRoute component={MuezzinsPage} /></Route>
       <Route path="/qibla"><SafeLazyRoute component={QiblaPage} /></Route>
       <Route path="/tasbih"><SafeLazyRoute component={TasbihPage} /></Route>
       <Route path="/daily-wird"><SafeLazyRoute component={DailyWirdPage} /></Route>
@@ -601,6 +644,19 @@ function Router() {
       <Route path="/features-in-progress"><SafeLazyRoute component={FeaturesInProgressPage} /></Route>
       <Route path="/arbaeen-nawawi/:id"><SafeLazyRoute component={ArbaeenHadithDetailPage} /></Route>
       <Route path="/arbaeen-nawawi"><SafeLazyRoute component={ArbaeenNawawiPage} /></Route>
+      <Route path="/sujood-sahw"><SafeLazyRoute component={SujoodSahwPage} /></Route>
+      <Route path="/amrad-qalbiyya"><SafeLazyRoute component={AmradQalbiyyaPage} /></Route>
+      <Route path="/durus-imaniyya"><SafeLazyRoute component={DurusImaniyyaPage} /></Route>
+      <Route path="/durus-mutanawwia"><SafeLazyRoute component={DurusMutanawwiaPage} /></Route>
+      <Route path="/iman-topics"><SafeLazyRoute component={ImanTopicsPage} /></Route>
+      <Route path="/quran-studies"><SafeLazyRoute component={QuranStudiesPage} /></Route>
+      <Route path="/sunnah-studies"><SafeLazyRoute component={SunnahStudiesPage} /></Route>
+      <Route path="/tazkiya-topics"><SafeLazyRoute component={TazkiyaTopicsPage} /></Route>
+      <Route path="/tarikh-islami"><SafeLazyRoute component={TarikhIslamiPage} /></Route>
+      <Route path="/usra-mujtama"><SafeLazyRoute component={UsraMujtamaPage} /></Route>
+      <Route path="/fikr-waqia"><SafeLazyRoute component={FikrWaqiaPage} /></Route>
+      <Route path="/mawsuaat"><SafeLazyRoute component={MawsuaatPage} /></Route>
+      <Route path="/masarat"><SafeLazyRoute component={MasaratPage} /></Route>
       <Route path="/cards"><SafeLazyRoute component={CardsPage} /></Route>
       <Route path="/annual-courses/:id"><SafeLazyRoute component={AnnualCourseDetailPage} /></Route>
       <Route path="/annual-courses"><SafeLazyRoute component={AnnualCoursesPage} /></Route>
@@ -709,6 +765,7 @@ function AppShell() {
         onTouchEnd={onTouchEnd}
       >
         <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
+        <TopTicker />
         <OfflineBanner />
         <UpdateAvailableBanner />
         <NavProgressBar />
@@ -718,6 +775,7 @@ function AppShell() {
         <AdhanSchedulerBootstrap />
         <PrayerAlertSchedulerBootstrap />
         <NavBar />
+        <TopSectionBar />
         <PrayerCountdownBanner />
         <AdhanNotificationBar />
         <PrayerRespectBanner />

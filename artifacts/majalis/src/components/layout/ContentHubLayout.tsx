@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { PageShell } from "./PageShell";
 import { PageHeader } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "./FilterBottomSheet";
+import { useNumerals } from "@/hooks/useNumerals";
 
 type Stat = { label: string; value: string | number };
 
@@ -38,6 +39,7 @@ export function ContentHubLayout({
   toolbar,
   className = "",
 }: Props) {
+  const fmt = useNumerals();
   return (
     <PageShell className={`content-hub ${className}`.trim()}>
       <PageHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
@@ -46,7 +48,7 @@ export function ContentHubLayout({
         <div className="ds-stats-row" role="list">
           {stats.map((s) => (
             <div key={s.label} className="ds-stat" role="listitem">
-              <strong>{s.value}</strong>
+              <strong>{fmt(s.value)}</strong>
               <span>{s.label}</span>
             </div>
           ))}

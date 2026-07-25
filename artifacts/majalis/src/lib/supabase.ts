@@ -78,11 +78,27 @@ export async function signInWithGoogle(redirectTo?: string) {
   });
 }
 
+/**
+ * مسارات الأدمن تحتاج تحقّقًا فعليًا من الخادم (auth.getUser() يراسل
+ * خادم المصادقة ليتأكد أن الجلسة لم تُلغَ/تُحظر منذ آخر تحديث توكن محلي)
+ * — صلاحيات حسّاسة (حوكمة/إدارة) لا تحتمل نافذة ثقة بجلسة محلية قديمة.
+ * باقي المسارات العامة لا تحتاج هذا الضمان، وgetUser() كان السبب الفعلي
+ * المتبقي لبطء 9-11 ثانية على iOS (رُصد حيًّا 2026-07-22؛ توازي profile/
+ * governance أعلاه لم يكفِ لأن الاستدعاء الأول نفسه — لا الاثنان
+ * التاليان — هو عنق الزجاجة). getSession() يقرأ الجلسة محليًا بلا شبكة.
+ */
+function isAdminRoute(): boolean {
+  if (typeof window === "undefined") return true; // خادم/SSR: الأكثر أمانًا افتراضيًا
+  return window.location.pathname.startsWith("/admin");
+}
+
 export async function getCurrentUser() {
   if (!isConfigured) return null;
 
   try {
-    const { data: { user } } = await supabase.auth.getUser();
+    const user = isAdminRoute()
+      ? (await supabase.auth.getUser()).data.user
+      : (await supabase.auth.getSession()).data.session?.user ?? null;
     if (!user) return null;
 
     // profiles وgovernance_user_roles لا يعتمد أحدهما على الآخر (كلاهما

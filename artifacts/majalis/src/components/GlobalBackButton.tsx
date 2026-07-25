@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useLocation } from "wouter";
 
@@ -10,6 +11,23 @@ import { useLocation } from "wouter";
  */
 export function GlobalBackButton() {
   const [location] = useLocation();
+  // ⚠️ إصلاح جذري (2026-07-23): مُتحقَّق حيًّا (قياس تقاطع مستطيلات لا
+  // انطباع بصري) أن هذا الزر الثابت يتراكب فعليًا مع محتوى حقيقي قابل
+  // للنقر (بطاقات، تبويبات أفقية) عند وضع التمرير الابتدائي (صفر) في
+  // ست صفحات على الأقل من مركز القرآن وحده (علوم القرآن، قصص القرآن،
+  // البث المباشر، المعجزات، خطط الحفظ، ترتيب النزول) — لأن أي محتوى
+  // عادي في أعلى الصفحة قد يقع صدفة ضمن نطاقه الثابت. إظهاره فقط بعد
+  // تمرير طفيف (نمط "زر عائم" معياري وشائع) يزيل التراكب في كل الحالات
+  // المرصودة دون إخفاء الزر عن أي شاشة فعليًا (يبقى "متاحًا من كل شاشة"
+  // بمجرد أي تفاعل تمرير طبيعي معها).
+  const [pastThreshold, setPastThreshold] = useState(false);
+
+  useEffect(() => {
+    setPastThreshold(window.scrollY > 120);
+    const onScroll = () => setPastThreshold(window.scrollY > 120);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [location]);
 
   if (location === "/") return null;
   // /mushaf/page: قارئ غامر بشريط تنقّل سفلي ثابت بعرض الشاشة كاملاً
@@ -26,7 +44,7 @@ export function GlobalBackButton() {
   return (
     <button
       type="button"
-      className="global-back-btn"
+      className={`global-back-btn${pastThreshold ? "" : " global-back-btn--hidden"}`}
       onClick={goBack}
       aria-label="رجوع"
       title="رجوع"

@@ -147,14 +147,6 @@ function routeForPath(path: string) {
     };
   }
 
-  if (normalized.startsWith("/muezzins/")) {
-    return {
-      ...requiredRoute("/muezzins"),
-      title: "ملف المؤذن | المجلس العلمي",
-      description: "ملف المؤذن — تلاوات، تقييمات، مناطق الخدمة على المجلس العلمي.",
-    };
-  }
-
   if (normalized.startsWith("/learning/paths/")) {
     return {
       ...requiredRoute("/learning/paths"),

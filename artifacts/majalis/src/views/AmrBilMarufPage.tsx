@@ -11,7 +11,7 @@ import {
 } from "@/lib/amr-bil-maruf-seed";
 
 const RANK_COLOR: Record<number, { bg: string; border: string; badge: string }> = {
-  1: { bg: "rgba(23,61,53,.08)", border: "#28584D", badge: "#28584D" },
+  1: { bg: "rgba(23,61,53,.08)", border: "#226A56", badge: "#226A56" },
   2: { bg: "#ECFDF5", border: "#10B981", badge: "#059669" },
   3: { bg: "#EFF6FF", border: "#3B82F6", badge: "#1D4ED8" },
 };
@@ -39,7 +39,7 @@ export default function AmrBilMarufPage() {
     <div className="page-shell narrow" dir="rtl" style={{ paddingBottom: "3rem" }}>
       {/* ═══ الهيدر ═══ */}
       <div style={{
-        background: "linear-gradient(160deg, #173D35 0%, #163728 55%, #0e2619 100%)",
+        background: "linear-gradient(160deg, #143F35 0%, #163728 55%, #0e2619 100%)",
         borderRadius: "1rem",
         padding: "2rem 1.5rem",
         marginBottom: "2rem",
@@ -50,7 +50,7 @@ export default function AmrBilMarufPage() {
         <div className="home-hero-pattern" aria-hidden="true" style={{ pointerEvents: "none" }} />
         <div style={{ position: "relative" }}>
           <StarKhatam size={52} color="rgba(255,255,255,0.35)" opacity={0.7} />
-          <h1 style={{
+          <h1 className="amr-hero__title" style={{
             color: "#fff",
             fontSize: "clamp(1.4rem, 4vw, 2rem)",
             fontWeight: 800,
@@ -70,13 +70,13 @@ export default function AmrBilMarufPage() {
 
       {/* ═══ الآية والحديث الأساسيان ═══ */}
       <section style={{
-        background: "var(--msk-canvas, #F7F4ED)",
+        background: "var(--msk-canvas, #FAFAF8)",
         border: "1.5px solid #d1e7da",
         borderRadius: "0.75rem",
         padding: "1.4rem 1.5rem",
         marginBottom: "1.75rem",
       }}>
-        <p style={{ fontSize: "0.72rem", color: "#5E655F", marginBottom: "0.4rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+        <p style={{ fontSize: "0.8rem", color: "#5C5C56", marginBottom: "0.4rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "normal" }}>
           الأساس الشرعي
         </p>
         <blockquote style={{
@@ -85,7 +85,7 @@ export default function AmrBilMarufPage() {
           color: "#122019",
           margin: "0 0 0.6rem",
           lineHeight: 1.8,
-          borderRight: "3px solid #173D35",
+          borderRight: "3px solid #143F35",
           paddingRight: "1rem",
         }}>
           {AMR_BIL_MARUF_META.quran_basis}
@@ -95,8 +95,8 @@ export default function AmrBilMarufPage() {
         </p>
         <blockquote style={{
           fontSize: "0.95rem",
-          fontStyle: "italic",
-          color: "#68716D",
+          fontStyle: "normal",
+          color: "#5C5C56",
           margin: "0",
           borderRight: "3px solid #10B981",
           paddingRight: "1rem",
@@ -168,23 +168,23 @@ export default function AmrBilMarufPage() {
                   {level.rank}
                 </span>
                 <div>
-                  <h3 style={{ margin: 0, color: "#fff", fontWeight: 800, fontSize: "1.05rem", lineHeight: 1.2 }}>
+                  <h3 className="amr-level__title" style={{ margin: 0, color: "#fff", fontWeight: 800, fontSize: "1.05rem", lineHeight: 1.2 }}>
                     {level.title}
                   </h3>
-                  <span style={{ fontSize: "0.74rem", color: "rgba(255,255,255,0.85)" }}>
+                  <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.85)" }}>
                     {level.is_obligatory ? "فرض عين" : "فرض كفاية"} — {level.who_can_do}
                   </span>
                 </div>
               </div>
 
               <div style={{ padding: "1.2rem" }}>
-                <p style={{ margin: "0 0 1rem", color: "#68716D", lineHeight: 1.65, fontSize: "0.9rem" }}>
+                <p style={{ margin: "0 0 1rem", color: "#5C5C56", lineHeight: 1.65, fontSize: "0.9rem" }}>
                   {level.description}
                 </p>
 
                 {/* الشروط */}
                 <div style={{ marginBottom: "1rem" }}>
-                  <p style={{ fontWeight: 700, fontSize: "0.82rem", color: "#68716D", margin: "0 0 0.5rem" }}>الشروط والضوابط</p>
+                  <p style={{ fontWeight: 700, fontSize: "0.82rem", color: "#5C5C56", margin: "0 0 0.5rem" }}>الشروط والضوابط</p>
                   <ul style={{ margin: 0, paddingRight: "1.25rem", display: "flex", flexDirection: "column", gap: "0.3rem" }}>
                     {level.conditions.map((c, i) => (
                       <li key={i} style={{ fontSize: "0.83rem", color: "#4B5563", lineHeight: 1.55 }}>{c}</li>
@@ -206,14 +206,14 @@ export default function AmrBilMarufPage() {
                         fontWeight: 700,
                         color: clr.badge,
                         textTransform: "uppercase",
-                        letterSpacing: "0.04em",
+                        letterSpacing: "normal",
                       }}>
                         {ev.type}
                       </span>
                       <p style={{ margin: "0.15rem 0 0.1rem", fontSize: "0.84rem", color: "#1F2937", lineHeight: 1.6, fontWeight: 500 }}>
                         {ev.type === "حديث" ? `«${ev.text}»` : ev.text}
                       </p>
-                      <p style={{ margin: 0, fontSize: "0.74rem", color: "#5E655F" }}>{ev.source}</p>
+                      <p style={{ margin: 0, fontSize: "0.8rem", color: "#5C5C56" }}>{ev.source}</p>
                     </div>
                   ))}
                 </div>
@@ -225,7 +225,7 @@ export default function AmrBilMarufPage() {
                   padding: "0.65rem 0.9rem",
                   borderRight: `2px dashed ${clr.badge}`,
                 }}>
-                  <p style={{ margin: 0, fontSize: "0.8rem", color: "#68716D", lineHeight: 1.6, fontStyle: "italic" }}>
+                  <p style={{ margin: 0, fontSize: "0.8rem", color: "#5C5C56", lineHeight: 1.6, fontStyle: "normal" }}>
                     📚 {level.notes}
                   </p>
                 </div>
@@ -244,14 +244,14 @@ export default function AmrBilMarufPage() {
         {AMR_BIL_MARUF_CONDITIONS.map((cond, i) => (
           <div key={cond.id} style={{
             background: "#fff",
-            border: "1px solid #E7E2D8",
+            border: "1px solid #E8E7E2",
             borderRadius: "0.7rem",
             padding: "1rem",
-            borderTop: "3px solid #173D35",
+            borderTop: "3px solid #143F35",
           }}>
             <div style={{ display: "flex", gap: "0.6rem", alignItems: "flex-start" }}>
               <span style={{
-                background: "#173D35",
+                background: "#143F35",
                 color: "#fff",
                 borderRadius: "50%",
                 width: 24,
@@ -267,14 +267,14 @@ export default function AmrBilMarufPage() {
                 {i + 1}
               </span>
               <div>
-                <h3 style={{ margin: "0 0 0.35rem", fontSize: "0.88rem", fontWeight: 700, color: "#202725", lineHeight: 1.35 }}>
+                <h3 style={{ margin: "0 0 0.35rem", fontSize: "0.88rem", fontWeight: 700, color: "#1A1A18", lineHeight: 1.35 }}>
                   {cond.title}
                 </h3>
                 <p style={{ margin: "0 0 0.5rem", fontSize: "0.8rem", color: "#4B5563", lineHeight: 1.6 }}>
                   {cond.detail}
                 </p>
                 {cond.scholar_note && (
-                  <p style={{ margin: 0, fontSize: "0.75rem", color: "#5E655F", fontStyle: "italic", lineHeight: 1.5 }}>
+                  <p style={{ margin: 0, fontSize: "0.75rem", color: "#5C5C56", fontStyle: "normal", lineHeight: 1.5 }}>
                     {cond.scholar_note}
                   </p>
                 )}
@@ -360,22 +360,22 @@ export default function AmrBilMarufPage() {
         {AMR_BIL_MARUF_META.scholars_sayings.map((s, i) => (
           <figure key={i} style={{
             margin: 0,
-            background: "#F7F4ED",
-            border: "1px solid #E7E2D8",
+            background: "#FAFAF8",
+            border: "1px solid #E8E7E2",
             borderRadius: "0.7rem",
             padding: "1rem 1.2rem",
-            borderRight: "3px solid #173D35",
+            borderRight: "3px solid #143F35",
           }}>
             <blockquote style={{
               margin: "0 0 0.5rem",
               fontSize: "0.88rem",
               color: "#1F2937",
               lineHeight: 1.7,
-              fontStyle: "italic",
+              fontStyle: "normal",
             }}>
               «{s.saying}»
             </blockquote>
-            <figcaption style={{ fontSize: "0.76rem", color: "#5E655F", fontWeight: 600 }}>
+            <figcaption style={{ fontSize: "0.76rem", color: "#5C5C56", fontWeight: 600 }}>
               {s.scholar} — {s.source}
             </figcaption>
           </figure>
@@ -385,11 +385,11 @@ export default function AmrBilMarufPage() {
       {/* ═══ المراجع ═══ */}
       <section style={{
         background: "#F9FAFB",
-        border: "1px solid #E7E2D8",
+        border: "1px solid #E8E7E2",
         borderRadius: "0.7rem",
         padding: "1.2rem",
       }}>
-        <h3 style={{ fontSize: "0.95rem", fontWeight: 700, color: "#68716D", margin: "0 0 0.75rem" }}>
+        <h3 style={{ fontSize: "0.95rem", fontWeight: 700, color: "#5C5C56", margin: "0 0 0.75rem" }}>
           📚 المراجع الأساسية
         </h3>
         <ul style={{ margin: 0, paddingRight: "1.25rem", display: "flex", flexDirection: "column", gap: "0.35rem" }}>

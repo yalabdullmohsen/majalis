@@ -42,6 +42,7 @@ const AlertTitle = React.forwardRef<
   // التحليل الساكن رؤية أن المُستدعي سيمرِّر نصًا حقيقيًا (وهذا هو الاستخدام
   // المقصود الوحيد لمكوّن كهذا). غير مُستخدَم حاليًا في أي مكان بالموقع (بحث
   // فعلي أكَّد ذلك)، فلا أثر حقيقي على أي مستخدم الآن.
+  // eslint-disable-next-line jsx-a11y/heading-has-content
   <h5
     ref={ref}
     className={cn("mb-1 font-medium leading-none tracking-tight", className)}

@@ -447,7 +447,11 @@ export function ContentFileImport({ onDone }: ContentFileImportProps) {
       />
 
       {open && (
+        // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار وصول
+        // بديل كامل بلوحة المفاتيح.
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div className="adm-modal__overlay" onClick={close}>
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div className="cfi-dialog" onClick={(e) => e.stopPropagation()}>
             <h2 className="cfi-title">استيراد من ملف (JSON / CSV)</h2>
             <p className="cfi-desc">

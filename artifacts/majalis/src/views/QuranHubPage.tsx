@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import {
-  Radio, Mic2, Layers, Circle, Star,
+  Layers, Circle, Star,
   ChevronLeft, BookMarked, BookOpen, Headphones, GraduationCap,
   Moon, Heart, Sparkles, Mic, History, CalendarCheck,
   type LucideIcon,
@@ -36,7 +36,7 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "المصحف الشريف",
     desc: "اقرأ القرآن الكريم كاملاً سورة سورة، مع الاستماع لكل آية ومشاركتها",
     Icon: BookOpen,
-    accent: "#173D35",
+    accent: "#143F35",
     tag: "٦٠٤ صفحة",
   },
   {
@@ -52,7 +52,7 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "فهرس السور",
     desc: "تصفّح السور الـ١١٤ كاملة: رقمها واسمها وعدد آياتها وتصنيفها، مع بحث ومفضلة",
     Icon: BookMarked,
-    accent: "#173D35",
+    accent: "#143F35",
     tag: "١١٤ سورة",
   },
   {
@@ -60,7 +60,7 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "ترتيب نزول القرآن",
     desc: "خريطة زمنية للسور الـ١١٤ حسب تسلسل نزولها التاريخي الفعلي، لا حسب ترقيم المصحف",
     Icon: History,
-    accent: "#173D35",
+    accent: "#143F35",
     tag: "١١٤ سورة",
   },
   {
@@ -68,7 +68,7 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "قصص القرآن",
     desc: "أسباب النزول ومحاور ١١٤ سورة قرآنية مع العبر والفوائد",
     Icon: BookMarked,
-    accent: "#173D35",
+    accent: "#143F35",
     tag: "١١٤ سورة",
   },
   {
@@ -76,31 +76,15 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "علم التجويد",
     desc: "أحكام التجويد الشاملة مصنَّفة في ستة أبواب رئيسية",
     Icon: GraduationCap,
-    accent: "#173D35",
+    accent: "#143F35",
     tag: "١٤ حكماً",
-  },
-  {
-    href: "/quran-radio",
-    title: "إذاعات القرآن",
-    desc: "استمع للقرآن الكريم من كبار القراء حول العالم",
-    Icon: Radio,
-    accent: "#173D35",
-    tag: "مباشر",
-  },
-  {
-    href: "/quran-live",
-    title: "البث المباشر",
-    desc: "بث مباشر من الحرمين الشريفين، مكة المكرمة والمدينة المنورة",
-    Icon: Mic2,
-    accent: "#173D35",
-    tag: "٢٤ ساعة",
   },
   {
     href: "/quran-circles",
     title: "حلقات القرآن",
     desc: "انضم لحلقات الحفظ والمراجعة وتلاوة القرآن الكريم",
     Icon: Circle,
-    accent: "#173D35",
+    accent: "#143F35",
     tag: "مجتمع",
   },
   {
@@ -108,7 +92,7 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "الورد اليومي",
     desc: "تتبع ورد قراءة القرآن اليومي مع السلسلة المتواصلة",
     Icon: Moon,
-    accent: "#173D35",
+    accent: "#143F35",
     tag: "يومي",
   },
   {
@@ -116,7 +100,7 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "أذكار القرآن",
     desc: "أذكار وأدعية مستمدة من القرآن الكريم والسنة النبوية",
     Icon: Sparkles,
-    accent: "#173D35",
+    accent: "#143F35",
     tag: "أذكار",
   },
   {
@@ -124,7 +108,7 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "علوم القرآن",
     desc: "النزول والجمع والتدوين والتفسير وطبقات المفسِّرين عبر القرون",
     Icon: Layers,
-    accent: "#173D35",
+    accent: "#143F35",
     tag: "علم",
   },
   {
@@ -132,7 +116,7 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "أدعية القرآن الكريم",
     desc: "٣٠+ دعاءً قرآنياً مصنَّفاً بحسب النبي والمناسبة والفائدة",
     Icon: Star,
-    accent: "#173D35",
+    accent: "#143F35",
     tag: "دعاء",
   },
   {
@@ -140,13 +124,13 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "إعجاز القرآن ومعجزاته",
     desc: "المعجزات النبوية والإعجاز العلمي والبياني في القرآن الكريم",
     Icon: Heart,
-    accent: "#173D35",
+    accent: "#143F35",
     tag: "إعجاز",
   },
 ];
 
 function qhcAccentMod(a: string) {
-  if (a === "#173D35") return "qhc-accent--deep";
+  if (a === "#143F35") return "qhc-accent--deep";
   return "qhc-accent--base";
 }
 

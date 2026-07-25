@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CloudMoon, CloudSun, MapPin, Moon, Music, Bell, ChevronLeft, Sunrise, Sun, Sunset, Star } from "lucide-react";
+import { CloudMoon, CloudSun, MapPin, Moon, Music, Bell, Sunrise, Sun, Sunset, Star } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import {
@@ -205,7 +205,7 @@ export default function AdhanSettingsPage() {
 
           <div className="ads-row">
             <div className="ads-sunrise-inner">
-              <Sunrise size={16} strokeWidth={2} color="#173D35" />
+              <Sunrise size={16} strokeWidth={2} color="#143F35" />
               الشروق
               <span className="ads-sunrise-tag">وقت الكراهة</span>
             </div>
@@ -238,13 +238,7 @@ export default function AdhanSettingsPage() {
           </div>
 
           <div className="ads-quick-links">
-            <Link href="/muezzins" className="ads-quick-link-anchor ads-quick-link-anchor--full">
-              <div className="ads-quick-link">
-                <span className="ads-quick-link__label">مكتبة المؤذنين</span>
-                <ChevronLeft size={14} color="var(--msk-text-3)" />
-              </div>
-            </Link>
-            <Link href="/upload" className="ads-quick-link-anchor">
+            <Link href="/upload" className="ads-quick-link-anchor ads-quick-link-anchor--full">
               <div className="ads-quick-link ads-quick-link--upload">
                 <span className="ads-quick-link__label">ارفع أذانك</span>
               </div>

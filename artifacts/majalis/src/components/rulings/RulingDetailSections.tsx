@@ -11,23 +11,11 @@ type Props = {
 };
 
 export function RulingDetailSections({ ruling, relations }: Props) {
-  const share = async () => {
-    const url = window.location.href;
-    if (navigator.share) {
-      await navigator.share({ title: ruling.title, url }).catch(() => {});
-    } else {
-      await navigator.clipboard?.writeText(url);
-    }
-  };
-
   const copyLink = () => navigator.clipboard?.writeText(window.location.href);
 
   return (
     <>
       <div className="ruling-detail-actions">
-        <button type="button" className="ui-card-btn" onClick={share}>
-          مشاركة
-        </button>
         <AdminInlineEdit
           contentType="ruling"
           contentId={ruling.id}

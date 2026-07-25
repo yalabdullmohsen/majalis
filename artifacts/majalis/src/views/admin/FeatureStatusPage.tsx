@@ -326,7 +326,7 @@ export default function FeatureStatusPage() {
                         <td>{f.pr ? `#${f.pr}` : "—"}</td>
                         <td>
                           {(f.routes || []).map((r) => (
-                            <a key={r} href={`https://www.majlisilm.com${r}`} target="_blank" rel="noreferrer">
+                            <a key={r} href={`https://majlisilm.com${r}`} target="_blank" rel="noreferrer">
                               {r}
                             </a>
                           ))}
@@ -347,7 +347,7 @@ export default function FeatureStatusPage() {
                         <td>
                           {f.routes?.[0] && (
                             <a
-                              href={`https://www.majlisilm.com${f.routes[0]}`}
+                              href={`https://majlisilm.com${f.routes[0]}`}
                               target="_blank" rel="noopener noreferrer"
                               className="ui-card-btn ui-card-btn--compact"
                             >

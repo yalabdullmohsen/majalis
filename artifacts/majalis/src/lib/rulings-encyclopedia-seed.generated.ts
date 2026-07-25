@@ -49,7 +49,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-01-05T08:00:00Z",
     "created_at": "2024-01-05T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.754Z"
+    "updated_at": "2024-01-05T08:00:00Z"
   },
   {
     "id": "ruling-prayer-pillars",
@@ -91,7 +91,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-11-20T07:00:00Z",
     "created_at": "2023-11-20T07:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.754Z"
+    "updated_at": "2023-11-20T07:00:00Z"
   },
   {
     "id": "ruling-zakat-conditions",
@@ -133,7 +133,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-08-14T06:00:00Z",
     "created_at": "2023-08-14T06:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.754Z"
+    "updated_at": "2023-08-14T06:00:00Z"
   },
   {
     "id": "ruling-hajj-pillars",
@@ -141,7 +141,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "أركان الحج",
     "summary": "ما لا يتم الحج إلا به.",
     "body": "**أركان الحج:**\n1. الإحرام.\n2. الوقوف بعرفة.\n3. طواف الإفاضة.\n4. السعي بين الصفا والمروة.\n\n**واجبات الحج:** الوقوف بعرفة إلى الغروب، المبيت بمزدلفة، رمي الجمار، حلق أو تقصير الرأس، طواف الوداع.",
-    "category": "الحج",
+    "category": "الحج والعمرة",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -175,7 +175,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-06-01T05:00:00Z",
     "created_at": "2023-06-01T05:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.754Z"
+    "updated_at": "2023-06-01T05:00:00Z"
   },
   {
     "id": "ruling-trade-conditions",
@@ -217,7 +217,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-04-22T04:00:00Z",
     "created_at": "2023-04-22T04:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.754Z"
+    "updated_at": "2023-04-22T04:00:00Z"
   },
   {
     "id": "ruling-inheritance-shares",
@@ -225,7 +225,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "أنصبة الميراث في القرآن",
     "summary": "توزيع الميراث بين الورثة وفق الآيات القرآنية.",
     "body": "**أنصبة الميراث:**\n- للزوج النصف إن لم يكن للزوجة ولد، والربع إن كان.\n- للزوجة الربع إن لم يكن للزوج ولد، والثمن إن كان.\n- للابن ضعف نصيب البنت.\n- للأب السدس مع ولد، والتوريث مع ولد الابن.\n- للأم الثلث إن لم يكن ولد، والسدس مع ولد.",
-    "category": "المواريث",
+    "category": "المواريث والوصايا",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -259,7 +259,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2023-02-10T03:00:00Z",
     "created_at": "2023-02-10T03:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.754Z"
+    "updated_at": "2023-02-10T03:00:00Z"
   },
   {
     "id": "ruling-wudu-conditions",
@@ -306,7 +306,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-10T08:00:00Z",
     "created_at": "2024-02-10T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.754Z"
+    "updated_at": "2024-02-10T08:00:00Z"
   },
   {
     "id": "ruling-ghusl-obligations",
@@ -359,7 +359,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-15T08:00:00Z",
     "created_at": "2024-02-15T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.754Z"
+    "updated_at": "2024-02-15T08:00:00Z"
   },
   {
     "id": "ruling-istinja",
@@ -407,7 +407,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-02-20T08:00:00Z",
     "created_at": "2024-02-20T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.754Z"
+    "updated_at": "2024-02-20T08:00:00Z"
   },
   {
     "id": "ruling-najasah-purification",
@@ -428,7 +428,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       },
       {
         "type": "حديث",
-        "text": "طهور إناء أحدكم إذا ولغ فيه الكلب أن يغسله سبع مرات",
+        "text": "طهور إناء أحدكم إذا ولغ فيه الكلب أن يغسله سبع مرات أولاهن بالتراب",
         "source": "رواه مسلم"
       }
     ],
@@ -459,7 +459,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-01T08:00:00Z",
     "created_at": "2024-03-01T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.754Z"
+    "updated_at": "2024-03-01T08:00:00Z"
   },
   {
     "id": "ruling-prayer-conditions",
@@ -512,7 +512,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-10T08:00:00Z",
     "created_at": "2024-03-10T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-03-10T08:00:00Z"
   },
   {
     "id": "ruling-prayer-sunnah",
@@ -559,7 +559,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-15T08:00:00Z",
     "created_at": "2024-03-15T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-03-15T08:00:00Z"
   },
   {
     "id": "ruling-prayer-makruhat",
@@ -606,7 +606,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-03-20T08:00:00Z",
     "created_at": "2024-03-20T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-03-20T08:00:00Z"
   },
   {
     "id": "ruling-voluntary-prayer",
@@ -654,7 +654,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-01T08:00:00Z",
     "created_at": "2024-04-01T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-04-01T08:00:00Z"
   },
   {
     "id": "ruling-fasting-breakers",
@@ -701,7 +701,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-10T08:00:00Z",
     "created_at": "2024-04-10T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-04-10T08:00:00Z"
   },
   {
     "id": "ruling-fasting-qada",
@@ -748,7 +748,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-15T08:00:00Z",
     "created_at": "2024-04-15T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-04-15T08:00:00Z"
   },
   {
     "id": "ruling-laylat-alqadr",
@@ -801,7 +801,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-04-20T08:00:00Z",
     "created_at": "2024-04-20T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-04-20T08:00:00Z"
   },
   {
     "id": "ruling-fidyah-fasting",
@@ -849,7 +849,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-01T08:00:00Z",
     "created_at": "2024-05-01T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-05-01T08:00:00Z"
   },
   {
     "id": "ruling-zakat-alfitrah",
@@ -896,7 +896,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-10T08:00:00Z",
     "created_at": "2024-05-10T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-05-10T08:00:00Z"
   },
   {
     "id": "ruling-zakat-animals",
@@ -945,7 +945,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-15T08:00:00Z",
     "created_at": "2024-05-15T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-05-15T08:00:00Z"
   },
   {
     "id": "ruling-zakat-recipients",
@@ -993,7 +993,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-05-20T08:00:00Z",
     "created_at": "2024-05-20T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-05-20T08:00:00Z"
   },
   {
     "id": "ruling-zakat-debt",
@@ -1040,7 +1040,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-06-01T08:00:00Z",
     "created_at": "2024-06-01T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-06-01T08:00:00Z"
   },
   {
     "id": "ruling-child-custody",
@@ -1088,7 +1088,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-06-05T08:00:00Z",
     "created_at": "2024-06-05T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-06-05T08:00:00Z"
   },
   {
     "id": "ruling-wife-nafaqah",
@@ -1141,7 +1141,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-06-10T08:00:00Z",
     "created_at": "2024-06-10T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-06-10T08:00:00Z"
   },
   {
     "id": "ruling-parents-obedience",
@@ -1194,7 +1194,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-06-15T08:00:00Z",
     "created_at": "2024-06-15T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-06-15T08:00:00Z"
   },
   {
     "id": "ruling-parents-disobedience",
@@ -1242,7 +1242,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-06-20T08:00:00Z",
     "created_at": "2024-06-20T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-06-20T08:00:00Z"
   },
   {
     "id": "ruling-riba-prohibition",
@@ -1295,7 +1295,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-07-01T08:00:00Z",
     "created_at": "2024-07-01T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-07-01T08:00:00Z"
   },
   {
     "id": "ruling-ijarah",
@@ -1343,7 +1343,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-07-05T08:00:00Z",
     "created_at": "2024-07-05T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-07-05T08:00:00Z"
   },
   {
     "id": "ruling-hibah-wasiyyah",
@@ -1396,7 +1396,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-07-10T08:00:00Z",
     "created_at": "2024-07-10T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-07-10T08:00:00Z"
   },
   {
     "id": "ruling-ghusl-faraid",
@@ -1449,7 +1449,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-08-01T08:00:00Z",
     "created_at": "2024-08-01T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-08-01T08:00:00Z"
   },
   {
     "id": "ruling-tayammum",
@@ -1497,7 +1497,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-08-05T08:00:00Z",
     "created_at": "2024-08-05T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-08-05T08:00:00Z"
   },
   {
     "id": "ruling-hajj-wajibat",
@@ -1505,7 +1505,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "أركان الحج وواجباته",
     "summary": "الأركان التي لا يصح الحج إلا بها والواجبات التي يُجبر تركها بدم.",
     "body": "**أركان الحج (لا يصح بدونها):**\n1. **الإحرام** بنية الحج.\n2. **الوقوف بعرفة** بأي وقت من يوم عرفة وليلة النحر.\n3. **طواف الإفاضة** (الزيارة) يوم العيد أو بعده.\n4. **السعي** بين الصفا والمروة.\n\n**واجبات الحج (يُجبر تركها بدم):**\n1. الإحرام من الميقات.\n2. المبيت بمزدلفة ليلة النحر.\n3. رمي الجمرات.\n4. الحلق أو التقصير.\n5. المبيت بمنى ليالي التشريق.\n6. طواف الوداع (لغير المكيين).\n\n**الفرق:** ترك الركن يُبطل الحج، وترك الواجب يُوجب الدم ولا يُبطل.",
-    "category": "الحج",
+    "category": "الحج والعمرة",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -1551,7 +1551,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-08-10T08:00:00Z",
     "created_at": "2024-08-10T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-08-10T08:00:00Z"
   },
   {
     "id": "ruling-divorce-types",
@@ -1599,7 +1599,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-08-15T08:00:00Z",
     "created_at": "2024-08-15T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-08-15T08:00:00Z"
   },
   {
     "id": "ruling-sale-contract-conditions",
@@ -1653,7 +1653,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-08-20T08:00:00Z",
     "created_at": "2024-08-20T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-08-20T08:00:00Z"
   },
   {
     "id": "ruling-mortgage-bank",
@@ -1708,7 +1708,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-09-01T08:00:00Z",
     "created_at": "2024-09-01T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-09-01T08:00:00Z"
   },
   {
     "id": "ruling-zakat-salary",
@@ -1762,7 +1762,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-09-05T08:00:00Z",
     "created_at": "2024-09-05T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-09-05T08:00:00Z"
   },
   {
     "id": "ruling-friday-prayer-conditions",
@@ -1817,7 +1817,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-09-10T08:00:00Z",
     "created_at": "2024-09-10T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-09-10T08:00:00Z"
   },
   {
     "id": "ruling-iddah-types",
@@ -1872,7 +1872,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-09-15T08:00:00Z",
     "created_at": "2024-09-15T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-09-15T08:00:00Z"
   },
   {
     "id": "ruling-mirath-asabaat",
@@ -1880,7 +1880,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "أحكام التعصيب في الميراث",
     "summary": "من هم العصبة وكيف يرثون في الفقه الإسلامي.",
     "body": "**تعريف العَصَبة:** كل وارث يأخذ ما بقي بعد أصحاب الفروض، وإن انفرد أخذ الكل.\n\n**أنواع العصبة:**\n1. **العصبة بالنفس:** الذكور من الورثة المنتسبين للميت بلا واسطة أنثى (الابن، الأخ الشقيق، العم...).\n2. **العصبة بالغير:** الأنثى التي تعصّبت بذكر من درجتها (البنت مع الابن، الأخت الشقيقة مع الأخ الشقيق).\n3. **العصبة مع الغير:** الأخت الشقيقة أو لأب مع البنت أو بنت الابن.\n\n**قاعدة:** للذكر مثل حظ الأنثيين عند الاجتماع.\n\n**الحجب:** يحجب الابنُ الأخَ، والأبُ يحجب الجدَّ وسائر الإخوة.",
-    "category": "المواريث",
+    "category": "المواريث والوصايا",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -1927,7 +1927,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-09-20T08:00:00Z",
     "created_at": "2024-09-20T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-09-20T08:00:00Z"
   },
   {
     "id": "ruling-congregational-prayer",
@@ -1981,7 +1981,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-10-05T08:00:00Z",
     "created_at": "2024-10-05T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-10-05T08:00:00Z"
   },
   {
     "id": "ruling-backbiting-prohibition",
@@ -1989,7 +1989,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "تحريم الغيبة والنميمة",
     "summary": "حكم الغيبة والنميمة وضوابط الكلام المحرم في الإسلام.",
     "body": "**تعريف الغيبة:** ذكرك أخاك بما يكره وهو غائب، سواء كان بالقول أو الإشارة أو الكتابة.\n\n**قال ﷺ:** «أتدرون ما الغيبة؟ قالوا: الله ورسوله أعلم. قال: ذكرك أخاك بما يكره. قيل: أفرأيت إن كان في أخي ما أقول؟ قال: إن كان فيه ما تقول فقد اغتبته، وإن لم يكن فيه فقد بهتَّه».\n\n**تعريف النميمة:** نقل الكلام بين الناس بقصد الإيقاع والإفساد.\n\n**الاستثناءات الشرعية:** يُباح الكلام في شخص معين عند:\n1. التظلم عند القاضي.\n2. الاستفتاء والنصيحة في أمر المصاهرة أو الشراكة.\n3. تحذير المسلمين من شر معروف.\n4. الجرح والتعديل في رواة الحديث.",
-    "category": "النوازل",
+    "category": "النوازل المعاصرة",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -2035,7 +2035,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-10-15T08:00:00Z",
     "created_at": "2024-10-15T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-10-15T08:00:00Z"
   },
   {
     "id": "ruling-missed-prayers-qada",
@@ -2084,7 +2084,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-11-01T08:00:00Z",
     "created_at": "2024-11-01T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-11-01T08:00:00Z"
   },
   {
     "id": "ruling-hajj-istita-ah",
@@ -2092,7 +2092,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "شروط الاستطاعة في الحج",
     "summary": "الشروط التي يجب توافرها ليجب الحج على المسلم.",
     "body": "**شروط وجوب الحج:**\n1. **الإسلام:** لا يجب على كافر.\n2. **العقل:** لا يجب على المجنون.\n3. **البلوغ:** لا يجب على الصغير، وإن حجّ صح وأُجزئ عن النفل.\n4. **الحرية:** لا يجب على العبد.\n5. **الاستطاعة:** ماليةً وبدنيةً وأمنياً.\n\n**الاستطاعة المالية:** وجود زاد وراحلة فاضلَين عن حوائجه الأصلية وحوائج من يعولهم.\n\n**الاستطاعة البدنية:** القدرة على أداء المناسك ولو بالاستعانة بغيره.\n\n**حج النيابة:** يجوز لمن عجز بدنياً عجزاً مستمراً أن يُنيب عنه غيره بعد أن يتحمل نفقات النائب.",
-    "category": "الحج",
+    "category": "الحج والعمرة",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -2138,7 +2138,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-11-10T08:00:00Z",
     "created_at": "2024-11-10T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-11-10T08:00:00Z"
   },
   {
     "id": "ruling-ihram-prohibitions",
@@ -2146,7 +2146,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "محظورات الإحرام وفدية مخالفتها",
     "summary": "ما يحرم على المحرم فعله، وما يجب عليه لو ارتكب شيئاً من المحظورات.",
     "body": "**محظورات الإحرام:**\nتنقسم إلى قسمين:\n\n**أولاً — محظورات مشتركة بين الرجل والمرأة:**\n1. حلق الشعر أو قصّه.\n2. تقليم الأظافر.\n3. استعمال الطيب في البدن أو الثياب.\n4. قتل صيد البر.\n5. عقد النكاح — لحديث: «لا يَنكِحُ المُحرِمُ ولا يُنكَح» (رواه مسلم).\n6. المباشرة والجماع.\n\n**ثانياً — محظورات خاصة بالرجل:**\n7. لبس المخيط (الثياب المفصَّلة).\n8. تغطية الرأس.\n\n**ثالثاً — محظورات خاصة بالمرأة:**\n9. تغطية الوجه واليدين بالنقاب والقفازين (لا بالثوب المرسَل).\n\n**الفدية:**\nمن ارتكب محظوراً بعذر أو بغيره فعليه فدية: **صيام ثلاثة أيام، أو إطعام ستة مساكين، أو ذبح شاة** — لقوله تعالى: ﴿فَمَن كَانَ مِنكُم مَّرِيضًا أَوْ بِهِ أَذًى مِّن رَّأْسِهِ فَفِدْيَةٌ مِّن صِيَامٍ أَوْ صَدَقَةٍ أَوْ نُسُكٍ﴾ [البقرة: 196].",
-    "category": "الحج",
+    "category": "الحج والعمرة",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -2198,7 +2198,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-11-15T08:00:00Z",
     "created_at": "2024-11-15T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-11-15T08:00:00Z"
   },
   {
     "id": "ruling-inheritance-spouses",
@@ -2206,7 +2206,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "ميراث الزوجين",
     "summary": "نصيب الزوج من زوجته والزوجة من زوجها في الميراث الشرعي.",
     "body": "**ميراث الزوج من زوجته:**\n- **النصف (½):** إذا لم يكن للزوجة فرع وارث (ولد أو ولد ابن).\n- **الربع (¼):** إذا كان للزوجة فرع وارث.\n\n**ميراث الزوجة من زوجها:**\n- **الربع (¼):** إذا لم يكن للزوج فرع وارث.\n- **الثمن (⅛):** إذا كان للزوج فرع وارث.\n\n**تعدد الزوجات:**\nإذا خلّف الزوج أكثر من زوجة تشتركن في النصيب (الربع أو الثمن) بالتساوي بينهن.\n\n**ملاحظات فقهية:**\n- الزوجية المعتدّة بطلاق رجعي ترث كالزوجة الرسمية ما دامت في العدة.\n- الزواج الذي لم تتحقق أركانه الشرعية لا يُورَث به.",
-    "category": "المواريث",
+    "category": "المواريث والوصايا",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -2254,7 +2254,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-11-20T08:00:00Z",
     "created_at": "2024-11-20T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-11-20T08:00:00Z"
   },
   {
     "id": "ruling-wasiyya",
@@ -2262,7 +2262,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "أحكام الوصية",
     "summary": "حكم الوصية وشروطها وحدودها الشرعية وما يجب مراعاته فيها.",
     "body": "**تعريف الوصية:**\nتمليك مضاف إلى ما بعد الموت بطريق التبرع.\n\n**حكمها:**\n- **مستحبة** لمن عنده مال كثير وله أقارب محتاجون لا يرثون.\n- **واجبة** على من عليه حقوق شرعية (دين، أمانة) لم توثَّق رسمياً.\n- **محرمة** إذا كانت للوارث أو تجاوزت الثلث إضراراً بالورثة.\n\n**الحد الشرعي:**\nلا تزيد الوصية على ثلث التركة بعد سداد الديون — لحديث سعد بن أبي وقاص: «الثلث، والثلث كثير» (متفق عليه).\n\n**الوصية للوارث:**\nلا تجوز الوصية لوارث إلا بإجازة بقية الورثة بعد الوفاة — لحديث: «لا وصية لوارث» (رواه أبو داود والترمذي وحسّنه).\n\n**الرجوع في الوصية:**\nيجوز للموصي الرجوع في وصيته أو تعديلها ما دام حياً.",
-    "category": "المواريث",
+    "category": "المواريث والوصايا",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -2313,7 +2313,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-11-25T08:00:00Z",
     "created_at": "2024-11-25T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-11-25T08:00:00Z"
   },
   {
     "id": "ruling-commercial-insurance",
@@ -2321,7 +2321,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "حكم التأمين التجاري",
     "summary": "حكم التأمين التجاري (الصحي والسيارات وغيره) من منظور الفقه الإسلامي المعاصر.",
     "body": "**أنواع التأمين:**\n1. **التأمين التعاوني (الإسلامي):** جائز — يقوم على التبرع المشترك بين المشتركين وإدارة صندوق الوقف.\n2. **التأمين التجاري:** محل خلاف؛ وذهب جمهور الفقهاء المعاصرين إلى تحريمه.\n\n**أسباب تحريم التأمين التجاري:**\n- **الغرر الفاحش:** لا يعلم المستأمن هل سيحصل على شيء أم لا، ولا يعلم قيمة ما سيأخذ.\n- **الربا:** شركة التأمين قد تستثمر الأقساط في محافظ ربوية.\n- **القمار:** أشبه بالمراهنة — إذا لم تقع الحادثة ضاع المال، وإذا وقعت أخذ أضعاف ما دفع.\n\n**قرار المجمع الفقهي الإسلامي:**\nقرّر المجمع الفقهي الإسلامي برابطة العالم الإسلامي (القرار الثاني، مكة 1397هـ) تحريم التأمين التجاري وإباحة التأمين التعاوني.\n\n**الاضطرار والإلزام:**\nمن أُلزم بالتأمين قانوناً (كتأمين السيارات الإلزامي) فلا إثم عليه في الأخذ بقدر الضرورة، مع الحرص على التأمين الإسلامي البديل إن وُجد.",
-    "category": "النوازل",
+    "category": "النوازل المعاصرة",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -2368,7 +2368,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-12-01T08:00:00Z",
     "created_at": "2024-12-01T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-12-01T08:00:00Z"
   },
   {
     "id": "ruling-cryptocurrency",
@@ -2376,7 +2376,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "حكم التعامل بالعملات الرقمية المشفرة",
     "summary": "الحكم الشرعي في شراء وبيع وتداول العملات المشفرة كالبيتكوين وغيرها.",
     "body": "**صورة المسألة:**\nالعملات الرقمية المشفرة (Bitcoin وما شابهها) عملات افتراضية لا تصدرها دولة ولا تضمنها هيئة مركزية، وتقوم على تقنية البلوك تشين اللامركزية.\n\n**الأقوال الفقهية المعاصرة:**\n- **القول بالتحريم:** وهو قرار دار الإفتاء المصرية وعدد من هيئات الإفتاء؛ لما تنطوي عليه من غرر فاحش وجهالة شديدة في القيمة.\n- **القول بالإباحة (بضوابط):** ذهب إليه عدد من الباحثين المعاصرين؛ إذ يرون أن الأصل في المعاملات الإباحة، وأن التنظيم القانوني يمكن أن يضبطها.\n- **التوقف:** هو موقف عدد من العلماء ريثما تستقر الأوضاع ويتضح الأمر.\n\n**المحاذير الشرعية التي تستوجب الحذر:**\n1. الغرر الشديد وتقلب القيمة.\n2. احتمال استخدامها في المحرمات.\n3. عدم اعتراف بعض الدول بها مما يعرّض الملكية للمصادرة.\n\n**الخلاصة:** المسألة محل اجتهاد ولا يُجزم بقول دون استفتاء عالم موثوق يعرف حال التعامل وظروفه.",
-    "category": "النوازل",
+    "category": "النوازل المعاصرة",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -2428,7 +2428,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-12-05T08:00:00Z",
     "created_at": "2024-12-05T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-12-05T08:00:00Z"
   },
   {
     "id": "ruling-online-jumuah",
@@ -2436,7 +2436,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "حكم صلاة الجماعة عبر الإنترنت",
     "summary": "هل تصح صلاة الجمعة أو الجماعة عبر البث المباشر على الإنترنت؟",
     "body": "**المسألة:**\nظهرت هذه المسألة بشكل حاد في أزمة كوفيد-19 (2020م) حين أُغلقت المساجد وبثّ بعض الأئمة صلواتهم مباشرة على الإنترنت.\n\n**حكم صلاة الجماعة عبر الإنترنت:**\nذهب جمهور العلماء المعاصرين إلى **عدم صحتها**؛ لأن:\n1. اشتراط الاقتران والتلاقي المكاني من شروط القدوة.\n2. الإمام ومن يأتم به لا يجمعهم مكان واحد.\n3. اتصال الصفوف شرط لصحة الاقتداء.\n\n**حكم صلاة الجمعة عبر الإنترنت:**\n**لا تصح** بالإجماع تقريباً — لأن صلاة الجمعة تشترط:\n- إقامتها في مكان واحد.\n- حضور العدد المشترَط فيه معاً.\n- سماع الخطبة حضورياً.\n\n**الفتوى الراجحة:**\nأفتت لجنة الفتوى في الكويت ومصر والمملكة ودار الإفتاء في الإمارات بعدم صحة الاقتداء عبر الإنترنت، وأن من أدركه الوقت خارج المسجد يُصلي ظهراً.",
-    "category": "النوازل",
+    "category": "النوازل المعاصرة",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -2483,7 +2483,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-12-10T08:00:00Z",
     "created_at": "2024-12-10T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-12-10T08:00:00Z"
   },
   {
     "id": "ruling-photography",
@@ -2491,7 +2491,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "حكم التصوير الفوتوغرافي والرقمي",
     "summary": "حكم التقاط الصور بالكاميرا أو الهاتف للإنسان والحيوان، وما يتعلق بذلك من تفاصيل.",
     "body": "**تحرير محل النزاع:**\nالنزاع في التصوير ينقسم إلى:\n1. **تصوير ذي الروح بالرسم اليدوي:** محرّم بنص الأحاديث الصحيحة.\n2. **التصوير الفوتوغرافي والرقمي:** مسألة اجتهادية.\n\n**القول بالتحريم:**\nذهب إليه جماعة من العلماء كالشيخ ابن باز والشيخ الألباني (في البداية)؛ إذ رأوا أنه داخل في عموم النهي عن التصوير.\n\n**القول بالجواز:**\nذهب إليه كثير من العلماء المعاصرين كالشيخ ابن عثيمين وابن جبرين وجمهور الفقهاء المعاصرين؛ بحجة أن التصوير الفوتوغرافي مجرد انعكاس ضوئي لا إيجاد لصورة حقيقية بيد الإنسان.\n\n**الضوابط المتفق عليها:**\n- تحرم صور المرأة الأجنبية أو الصور الإباحية مطلقاً.\n- يُكره تعليق صور ذوات الأرواح في البيوت دون غرض.\n- تجوز الصور للتعريف والهوية والأدلة القانونية والعلم والطب.",
-    "category": "النوازل",
+    "category": "النوازل المعاصرة",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -2542,7 +2542,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-12-15T08:00:00Z",
     "created_at": "2024-12-15T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-12-15T08:00:00Z"
   },
   {
     "id": "ruling-music-singing",
@@ -2550,7 +2550,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "حكم الموسيقى والغناء",
     "summary": "الحكم الشرعي في سماع الموسيقى والغناء والمعازف، وما ورد في المسألة من أدلة وأقوال.",
     "body": "**أقوال العلماء:**\n\n**أولاً — القول بالتحريم (الجمهور):**\nذهب إليه الحنفية والمالكية والشافعية والحنابلة؛ استناداً إلى:\n- قوله تعالى: ﴿وَمِنَ النَّاسِ مَن يَشْتَرِي لَهْوَ الْحَدِيثِ﴾ — فسّرها ابن مسعود وابن عباس بالغناء.\n- حديث: «ليكونَنَّ من أمتي أقوام يستحلون الحِرَ والحرير والخمر والمعازف» (رواه البخاري).\n\n**ثانياً — القول بالجواز (الأقل):**\nذهب ابن حزم وعدد من المعاصرين إلى جواز الغناء المحتشم الخالي من المحرمات وآلاته.\n\n**الغناء الجائز بالاتفاق:**\n- نشيد الأفراح والأعراس (بضوابط الاحتشام).\n- أناشيد الحرب والتشجيع.\n- الحدو في السفر (الهَدَى).\n\n**المحرّم باتفاق:**\n- الغناء المثير للشهوة والفاحشة.\n- ما اقترن بخمر أو اختلاط محرّم.\n- ما صرف عن الصلاة والواجبات.",
-    "category": "النوازل",
+    "category": "النوازل المعاصرة",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -2601,7 +2601,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-12-20T08:00:00Z",
     "created_at": "2024-12-20T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-12-20T08:00:00Z"
   },
   {
     "id": "ruling-social-media-rules",
@@ -2609,7 +2609,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "ضوابط استخدام وسائل التواصل الاجتماعي",
     "summary": "الحكم الشرعي في استخدام منصات التواصل الاجتماعي وما يجب مراعاته من ضوابط.",
     "body": "**الأصل في استخدام وسائل التواصل:**\nالأصل الإباحة؛ فهي وسيلة تقنية كالهاتف والإذاعة، والحكم على الوسيلة يتبع استخدامها.\n\n**الاستخدام الجائز بل المستحب:**\n- نشر العلم الشرعي الصحيح والدعوة إلى الله.\n- التواصل مع الأقارب وصلة الرحم.\n- التجارة المشروعة والتسويق الحلال.\n- الإخبار بالمباح واطلاع الناس على أحوال العالم.\n\n**الاستخدام المحرم:**\n- نشر الكذب والغيبة والنميمة.\n- عرض الصور والمقاطع الفاضحة.\n- التشهير بالأشخاص وإيذاء المسلمين.\n- الاحتيال والنصب والتدليس.\n- إضاعة الصلوات والواجبات بالانشغال بها.\n\n**ضابط قاعدي:**\n«الوسائل لها أحكام المقاصد» — فما أدّى إلى محرّم حُرِّم، وما أدى إلى مستحب استُحب.",
-    "category": "النوازل",
+    "category": "النوازل المعاصرة",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -2657,7 +2657,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2024-12-25T08:00:00Z",
     "created_at": "2024-12-25T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2024-12-25T08:00:00Z"
   },
   {
     "id": "ruling-health-insurance",
@@ -2715,7 +2715,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-01-10T08:00:00Z",
     "created_at": "2025-01-10T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2025-01-10T08:00:00Z"
   },
   {
     "id": "ruling-national-celebrations",
@@ -2723,7 +2723,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "حكم الاحتفال بالأعياد الوطنية والمناسبات المدنية",
     "summary": "الحكم الشرعي في المشاركة في الاحتفالات الوطنية وأعياد المؤسسات والمناسبات المدنية.",
     "body": "**الضابط الفقهي:**\nالاحتفالات الوطنية لا تندرج في «الأعياد الدينية» المنهي عن التشبه بأهلها؛ إذ هي مناسبات مدنية تعبّر عن الهوية الوطنية.\n\n**ما يجوز:**\n- المشاركة في الفرح والاحتفاء بذكرى التأسيس أو الاستقلال دون منكر.\n- إظهار الانتماء للوطن والدعاء لله بالحفظ والرقي.\n- حضور التجمعات الرسمية الخالية من المحرمات.\n\n**ما لا يجوز:**\n- الاحتفال الذي يشتمل على اختلاط محرم أو خمر أو موسيقى محرمة.\n- إحياء مناسبات ذات طابع ديني عند غير المسلمين (أعياد دينية كريستمس ونحوها) بنية التعبد أو الاحتفاء بعقائد غير إسلامية.\n\n**الخلاصة:**\nالمناسبات الوطنية المدنية لا تدخل في النهي عن أعياد الكفار، والعبرة بالمحتوى لا بالاسم.",
-    "category": "النوازل",
+    "category": "النوازل المعاصرة",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -2773,7 +2773,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-02-15T08:00:00Z",
     "created_at": "2025-02-15T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2025-02-15T08:00:00Z"
   },
   {
     "id": "ruling-following-prayer-online",
@@ -2832,7 +2832,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-03-01T08:00:00Z",
     "created_at": "2025-03-01T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2025-03-01T08:00:00Z"
   },
   {
     "id": "ruling-hajj-debt",
@@ -2840,7 +2840,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "حكم الحج على المديون",
     "summary": "هل يجب الحج على من عليه ديون؟",
     "body": "**المسألة:**\nمن عليه ديون، هل يلزمه الحج قبل سداد ديونه؟\n\n**الحكم الراجح:**\nلا يجب الحج على من كانت ديونه تستغرق ما لديه من المال المُعدّ للحج، أو كانت حالّة يطالبه بها الدائنون.\n\n**التفصيل:**\n1. **الديون الحالّة المطالَب بها:** لا يجوز الحج قبل سدادها، لأن الحج فرض على المستطيع والمديون ليس مستطيعاً.\n2. **الديون المؤجلة (بتراضٍ):** إن أذن الدائن بالحج صحّ، وإلا فالأولى تأخيره.\n3. **دين المضمون (كالراتب المؤجل):** إن ثقة بالسداد وأذن الدائن جاز.\n\n**قاعدة جامعة:**\nحق الآدمي مقدّم على حق الله تعالى لأن الله يقبل التوبة ويعفو، والآدمي لا يملك العفو عن حقه إلا باختياره.\n\n**النصيحة العملية:**\nتفاهم مع دائنيك وأخّر الحج حتى تسدد، أو خذ إذنهم قبل الحج.",
-    "category": "الحج",
+    "category": "الحج والعمرة",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -2890,7 +2890,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-04-01T08:00:00Z",
     "created_at": "2025-04-01T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2025-04-01T08:00:00Z"
   },
   {
     "id": "ruling-fasting-diabetes",
@@ -2948,7 +2948,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-04-05T08:00:00Z",
     "created_at": "2025-04-05T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2025-04-05T08:00:00Z"
   },
   {
     "id": "ruling-inheritance-missing-person",
@@ -2956,7 +2956,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "ميراث المفقود",
     "summary": "كيف يُتعامل مع ميراث المفقود الذي انقطعت أخباره؟",
     "body": "**التعريف:**\nالمفقود: من غاب وانقطعت أخباره ولا يُعلم أحيٌّ هو أم ميت.\n\n**حكمه في الميراث:**\n1. **المفقود لا يرث ميتاً جديداً:** يُوقف نصيبه حتى يتبيّن أمره.\n2. **من مات وله وارث مفقود:** يُوقف نصيب المفقود من الميراث، ويُقسَّم الباقي على الورثة الموجودين، فإن تبيّن وفاته قبل المتوفى: لا يرث، وإن ظهر حياً: يأخذ نصيبه.\n\n**مدة انتظار الحكم:**\nاختلف العلماء في مدة انتظار الحكم بموته وأكثرهم على أن للقاضي تقديرها بحسب الحال، وقدّرها بعضهم بـ 4 سنوات لغائب الحرب وأكثر لغيره.\n\n**الحكم اليوم:**\nالقضاء يصدر حكماً بالوفاة الحكمية بعد فترة محددة يحكم فيها القاضي بحسب الدليل والقرائن.",
-    "category": "المواريث",
+    "category": "المواريث والوصايا",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -3006,7 +3006,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-05-01T08:00:00Z",
     "created_at": "2025-05-01T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2025-05-01T08:00:00Z"
   },
   {
     "id": "ruling-zakah-gold-jewelry",
@@ -3064,7 +3064,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-06-01T08:00:00Z",
     "created_at": "2025-06-01T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2025-06-01T08:00:00Z"
   },
   {
     "id": "ruling-tattooing-hukm",
@@ -3072,7 +3072,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "title": "حكم الوشم الدائم والمؤقت",
     "summary": "ما حكم الوشم على الجسم في الإسلام؟ وهل المؤقت كالدائم؟",
     "body": "**التعريف:**\nالوشم: إدخال مادة ملوّنة تحت الجلد بإبرة أو نحوها ليظهر رسم أو كتابة دائمة.\n\n**حكم الوشم الدائم:**\nمحرّم بالإجماع؛ لقوله ﷺ: «لعن الله الواشمات والمستوشمات» (متفق عليه). وهو تغيير لخلق الله ويشتمل على الأذى الجسدي.\n\n**حكم الوشم المؤقت:**\n- ما يُزال بماء أو بعد أيام (كالحنّاء): جائز للنساء.\n- ما يثبت أياماً طويلة دون أن يدخل تحت الجلد: مختلف فيه، والأقرب إلى الجواز إن لم يضر.\n\n**حكم من وشم جاهلاً:**\nإن تاب وكان في إزالته ضرر: عُفي عنه. وإن أمكن إزالته بلا ضرر: وجبت الإزالة.\n\n**مسألة الوشم الطبي:**\nالوشم لأغراض طبية (مثل التعليم على مواضع الإشعاع في علاج السرطان) يجوز للضرورة.",
-    "category": "النوازل",
+    "category": "النوازل المعاصرة",
     "subcategories": [],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -3117,7 +3117,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-06-15T08:00:00Z",
     "created_at": "2025-06-15T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2025-06-15T08:00:00Z"
   },
   {
     "id": "ruling-friday-prayer-validity-conditions",
@@ -3175,7 +3175,669 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [],
     "published_at": "2025-07-01T08:00:00Z",
     "created_at": "2025-07-01T08:00:00Z",
-    "updated_at": "2026-07-17T23:05:11.755Z"
+    "updated_at": "2025-07-01T08:00:00Z"
+  },
+  {
+    "id": "ruling-slaughter-conditions",
+    "external_key": "ruling-slaughter-conditions",
+    "title": "شروط الذكاة الشرعية",
+    "summary": "الشروط التي يجب توافرها في ذبح الحيوان ليحل أكله.",
+    "body": "**شروط الذكاة الشرعية:**\n\n**أولاً: شرط الذابح:**\nأن يكون عاقلاً مميزاً قاصداً للذبح، مسلماً أو من أهل الكتاب (اليهود والنصارى).\n\n**ثانياً: شرط الآلة:**\nأن تكون محدَّدة تُنهر الدم (تُسيله بسرعة)، من حديد أو حجر أو زجاج أو خشب ونحوه — إلا السنّ والظفر فلا يُذبح بهما.\n\n**ثالثاً: شرط الفعل (موضع الذبح):**\nقطع الحلقوم (مجرى النفس) والمريء (مجرى الطعام)، ويُستحب قطع الودجين (عرقي الرقبة) معهما؛ ويشترط الإمام أحمد قطع الودجين.\n\n**رابعاً: شرط المذبوح:**\nأن يكون حياً وقت الذبح، ولو كانت به سبب موت (كمريض مشرف على الهلاك).\n\n**التسمية عند الذبح:**\nيُشترط عند جمهور العلماء ذكر اسم الله عند الذبح؛ لقوله تعالى: ﴿وَلَا تَأْكُلُوا مِمَّا لَمْ يُذْكَرِ اسْمُ اللَّهِ عَلَيْهِ﴾.",
+    "category": "الأطعمة والأشربة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "حُرِّمَتْ عَلَيْكُمُ الْمَيْتَةُ وَالدَّمُ وَلَحْمُ الْخِنزِيرِ ... إِلَّا مَا ذَكَّيْتُمْ",
+        "source": "المائدة: 3"
+      },
+      {
+        "type": "قرآن",
+        "text": "وَلَا تَأْكُلُوا مِمَّا لَمْ يُذْكَرِ اسْمُ اللَّهِ عَلَيْهِ وَإِنَّهُ لَفِسْقٌ",
+        "source": "الأنعام: 121"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني — ابن قدامة",
+        "source": "كتاب الصيد والذبائح"
+      },
+      {
+        "text": "بداية المجتهد — ابن رشد",
+        "source": "كتاب الذبائح والصيد"
+      }
+    ],
+    "keywords": [
+      "ذكاة",
+      "ذبح",
+      "أطعمة",
+      "حلال",
+      "تسمية"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-07-18T08:00:00Z",
+    "created_at": "2025-07-18T08:00:00Z",
+    "updated_at": "2025-07-18T08:00:00Z"
+  },
+  {
+    "id": "ruling-intoxicants-prohibition",
+    "external_key": "ruling-intoxicants-prohibition",
+    "title": "تحريم المسكرات",
+    "summary": "حكم كل شراب أو مادة تُسكر أو تُذهب العقل.",
+    "body": "**القاعدة العامة:**\nكل ما أسكر كثيرُه فقليلُه حرام، سواء كان من العنب أو التمر أو الحبوب أو غيرها؛ فالعبرة بأثر الإسكار لا بمصدر الشراب.\n\n**دليل القاعدة:**\nعن ابن عمر رضي الله عنهما أن رسول الله ﷺ قال: «كل مسكر خمر، وكل مسكر حرام» — رواه مسلم في كتاب الأشربة، وفي رواية أخرى: «كل شراب أسكر فهو حرام».\n\n**حكمة التحريم:**\nذهاب العقل الذي هو مناط التكليف، وما يترتب على السُّكر من ضياع الصلاة وارتكاب المحرمات وإيذاء الآخرين.\n\n**حد شارب الخمر:**\nعقوبة تعزيرية قدَّرها الفقهاء بالجلد، واختلفوا في عددها (أربعون أو ثمانون جلدة) تبعاً لاجتهاد الصحابة رضي الله عنهم.",
+    "category": "الأطعمة والأشربة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "يَا أَيُّهَا الَّذِينَ آمَنُوا إِنَّمَا الْخَمْرُ وَالْمَيْسِرُ وَالْأَنصَابُ وَالْأَزْلَامُ رِجْسٌ مِّنْ عَمَلِ الشَّيْطَانِ فَاجْتَنِبُوهُ",
+        "source": "المائدة: 90"
+      },
+      {
+        "type": "حديث",
+        "text": "كل مسكر خمر، وكل مسكر حرام",
+        "source": "رواه مسلم، كتاب الأشربة"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني — ابن قدامة",
+        "source": "كتاب الأشربة"
+      },
+      {
+        "text": "فتح الباري — ابن حجر",
+        "source": "كتاب الأشربة"
+      }
+    ],
+    "keywords": [
+      "خمر",
+      "مسكرات",
+      "أشربة",
+      "حرام",
+      "حد الشرب"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-07-18T08:00:00Z",
+    "created_at": "2025-07-18T08:00:00Z",
+    "updated_at": "2025-07-18T08:00:00Z"
+  },
+  {
+    "id": "ruling-silk-gold-men",
+    "external_key": "ruling-silk-gold-men",
+    "title": "حكم لبس الحرير والذهب للرجال",
+    "summary": "تحريم لبس الحرير الطبيعي والتحلي بالذهب على الرجال دون النساء.",
+    "body": "**الحكم:**\nيحرم على الرجال لبس الحرير الطبيعي والتختم بالذهب أو التحلي به، ويُباح ذلك للنساء.\n\n**الدليل من السنة:**\nعن أنس بن مالك رضي الله عنه أن النبي ﷺ نهى عن لبس الحرير إلا موضع إصبعين أو ثلاث أو أربع (رواه البخاري، كتاب اللباس، حديث رقم 5490). وعن حذيفة رضي الله عنه أن النبي ﷺ قال: «الذهب والفضة والحرير والديباج، هي لهم في الدنيا، ولكم في الآخرة» (رواه البخاري، كتاب اللباس، حديث رقم 5493) — يخاطب بها المسلمين مقابل الكفار.\n\n**الاستثناءات:**\n1. أجاز جمهور الفقهاء لبس الحرير للحاجة كعلاج جرب أو حكة.\n2. يجوز يسير الحرير في الثوب (كالتطريز) على ما دلّت عليه رخصة \"موضع إصبعين\".\n\n**حكم من لبسه بلا عذر:**\nمعصية تستوجب التوبة، وقد ورد وعيد: «من لبس الحرير في الدنيا فلن يلبسه في الآخرة» (رواه البخاري، كتاب اللباس، حديث رقم 5494).",
+    "category": "اللباس والزينة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "الذهب والفضة والحرير والديباج، هي لهم في الدنيا، ولكم في الآخرة",
+        "source": "رواه البخاري، كتاب اللباس، حديث 5493"
+      },
+      {
+        "type": "حديث",
+        "text": "من لبس الحرير في الدنيا فلن يلبسه في الآخرة",
+        "source": "رواه البخاري، كتاب اللباس، حديث 5494"
+      }
+    ],
+    "references": [
+      {
+        "text": "فتح الباري — ابن حجر",
+        "source": "كتاب اللباس"
+      },
+      {
+        "text": "المغني — ابن قدامة",
+        "source": "كتاب اللباس"
+      }
+    ],
+    "keywords": [
+      "لباس",
+      "حرير",
+      "ذهب",
+      "زينة",
+      "رجال"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-07-18T08:00:00Z",
+    "created_at": "2025-07-18T08:00:00Z",
+    "updated_at": "2025-07-18T08:00:00Z"
+  },
+  {
+    "id": "ruling-isbal-garment",
+    "external_key": "ruling-isbal-garment",
+    "title": "حكم إسبال الثوب",
+    "summary": "حكم إنزال الثوب أو الإزار أسفل الكعبين.",
+    "body": "**الحكم:**\nيحرم إسبال الثوب أو الإزار أو البنطال أسفل الكعبين إذا كان على وجه الخيلاء (الكِبر والتباهي)، وهو مكروه كراهة شديدة عند كثير من العلماء حتى بغير خيلاء، واختار بعضهم التحريم مطلقاً لعموم الوعيد.\n\n**الأدلة من السنة:**\n1. عن أبي هريرة رضي الله عنه أن النبي ﷺ قال: «ما أسفل من الكعبين من الإزار ففي النار» (رواه البخاري، كتاب اللباس، حديث رقم 5450).\n2. عن ابن عمر رضي الله عنهما أن النبي ﷺ قال: «من جرّ ثوبه خُيلاء لم ينظر الله إليه يوم القيامة» (رواه البخاري، كتاب اللباس، حديث رقم 5447).\n\n**محل الخلاف:**\nاختلف العلماء هل الوعيد الشديد («لم ينظر الله إليه») خاص بمن أسبل خيلاء، أم عام لكل مسبل ولو بغير قصد الخيلاء؛ ذهب جمهور الفقهاء إلى الأول (التحريم المشدَّد مع الخيلاء والكراهة الشديدة بدونها)، بينما رأى بعض أهل العلم عموم التحريم لعموم لفظ الحديث الأول.",
+    "category": "اللباس والزينة",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "ما أسفل من الكعبين من الإزار ففي النار",
+        "source": "رواه البخاري، كتاب اللباس، حديث 5450"
+      },
+      {
+        "type": "حديث",
+        "text": "من جرّ ثوبه خُيلاء لم ينظر الله إليه يوم القيامة",
+        "source": "رواه البخاري، كتاب اللباس، حديث 5447"
+      }
+    ],
+    "references": [
+      {
+        "text": "فتح الباري — ابن حجر",
+        "source": "كتاب اللباس، باب من جرّ إزاره من غير خيلاء"
+      }
+    ],
+    "keywords": [
+      "إسبال",
+      "إزار",
+      "لباس",
+      "خيلاء",
+      "كعبين"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-07-18T08:00:00Z",
+    "created_at": "2025-07-18T08:00:00Z",
+    "updated_at": "2025-07-18T08:00:00Z"
+  },
+  {
+    "id": "ruling-theft-hadd",
+    "external_key": "ruling-theft-hadd",
+    "title": "حد السرقة ونصابه",
+    "summary": "عقوبة السرقة في الشريعة وشروط تطبيقها.",
+    "body": "**الحكم:**\nعقوبة السارق قطع اليد اليمنى من الرسغ، وهي عقوبة حدّية لا تُطبَّق إلا باستيفاء شروطها كاملة.\n\n**نصاب القطع:**\nاتفق جمهور الفقهاء على أن للسرقة نصاباً لا يُقطع دونه؛ فعن عائشة رضي الله عنها أن النبي ﷺ قال: «تُقطع اليد في ربع دينار فصاعداً» (رواه البخاري، كتاب الحدود، حديث رقم 6407)، واختلف الفقهاء في تقدير هذا النصاب بالدراهم والوزن الحديث تبعاً لاختلاف المذاهب.\n\n**شروط إقامة الحد:**\n1. أن يكون المسروق مالاً متقوَّماً يبلغ النصاب.\n2. أن يُؤخذ من حِرز مثله خُفية.\n3. ألا تكون للسارق فيه شبهة ملك.\n4. ثبوت السرقة بإقرار السارق أو شهادة عدلين.\n5. عدم القطع في المجاعة أو الضرورة (كما لم يُقِم عمر بن الخطاب رضي الله عنه الحد عام الرمادة).\n\n**درء الحد بالشبهات:**\nتُدرأ الحدود بالشبهات؛ فأي شك في توافر الشروط السابقة يمنع إقامة الحد ويُنتقل إلى التعزير.",
+    "category": "القضاء والحدود",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَالسَّارِقُ وَالسَّارِقَةُ فَاقْطَعُوا أَيْدِيَهُمَا جَزَاءً بِمَا كَسَبَا نَكَالًا مِّنَ اللَّهِ ۗ وَاللَّهُ عَزِيزٌ حَكِيمٌ",
+        "source": "المائدة: 38"
+      },
+      {
+        "type": "حديث",
+        "text": "تُقطع اليد في ربع دينار فصاعداً",
+        "source": "رواه البخاري، كتاب الحدود، حديث 6407"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني — ابن قدامة",
+        "source": "كتاب قطع السارق"
+      },
+      {
+        "text": "بداية المجتهد — ابن رشد",
+        "source": "كتاب السرقة"
+      }
+    ],
+    "keywords": [
+      "حدود",
+      "سرقة",
+      "قطع اليد",
+      "نصاب",
+      "قضاء"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-07-18T08:00:00Z",
+    "created_at": "2025-07-18T08:00:00Z",
+    "updated_at": "2025-07-18T08:00:00Z"
+  },
+  {
+    "id": "ruling-qadhf-hadd",
+    "external_key": "ruling-qadhf-hadd",
+    "title": "حد القذف",
+    "summary": "عقوبة من رمى مُحصناً أو مُحصنة بالزنا دون بيّنة.",
+    "body": "**الحكم:**\nمن رمى شخصاً بريئاً عفيفاً بالزنا (قذفه) ولم يأتِ بأربعة شهود على ما رمى به، وجب عليه حد القذف: ثمانون جلدة، مع ردّ شهادته أبداً ما لم يتب، ووصفه بالفسق.\n\n**شروط وجوب الحد على القاذف:**\n1. أن يكون المقذوف مُحصَناً (مسلماً، بالغاً، عاقلاً، عفيفاً عن الزنا).\n2. عدم إتيان القاذف بأربعة شهود عدول على ما قذف به.\n3. أن يكون القاذف مكلفاً (بالغاً عاقلاً).\n\n**اللِّعان:**\nاستثنى الفقهاء حالة قذف الزوج لزوجته، فقد شرع الله له طريق اللِّعان بدلاً من إقامة الحد عليه إن لم يأتِ ببيّنة، وهو ما فصّلته سورة النور.\n\n**آثار القذف على شهادة القاذف:**\nتُرَدّ شهادة القاذف ما لم يتب، لقوله تعالى: ﴿وَلَا تَقْبَلُوا لَهُمْ شَهَادَةً أَبَدًا﴾ إلا أن يتوب فتُقبل عند جمهور الفقهاء تبعاً لعموم آية التوبة التالية لها.",
+    "category": "القضاء والحدود",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَالَّذِينَ يَرْمُونَ الْمُحْصَنَاتِ ثُمَّ لَمْ يَأْتُوا بِأَرْبَعَةِ شُهَدَاءَ فَاجْلِدُوهُمْ ثَمَانِينَ جَلْدَةً وَلَا تَقْبَلُوا لَهُمْ شَهَادَةً أَبَدًا ۚ وَأُولَٰئِكَ هُمُ الْفَاسِقُونَ",
+        "source": "النور: 4"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني — ابن قدامة",
+        "source": "كتاب حد القذف"
+      },
+      {
+        "text": "تفسير ابن كثير",
+        "source": "سورة النور"
+      }
+    ],
+    "keywords": [
+      "حدود",
+      "قذف",
+      "شهادة",
+      "لعان",
+      "قضاء"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-07-18T08:00:00Z",
+    "created_at": "2025-07-18T08:00:00Z",
+    "updated_at": "2025-07-18T08:00:00Z"
+  },
+  {
+    "id": "ruling-mayyit-ghusl",
+    "external_key": "ruling-mayyit-ghusl",
+    "title": "كيفية غسل الميت",
+    "summary": "صفة تغسيل الميت المسلم قبل تكفينه.",
+    "body": "**حكم غسل الميت:**\nفرض كفاية على المسلمين؛ إذا قام به من يكفي سقط الإثم عن الباقين.\n\n**صفة الغسل:**\nعن أم عطية الأنصارية رضي الله عنها قالت: دخل علينا النبي ﷺ ونحن نُغسِّل ابنته فقال: «اغسلنها ثلاثاً أو خمساً أو أكثر من ذلك إن رأيتنَّ ذلك بماء وسدر، واجعلن في الآخرة كافوراً أو شيئاً من كافور» (رواه البخاري، كتاب الجنائز).\n\n**أهم آداب الغسل:**\n1. أن يكون الوتر (ثلاث أو خمس أو سبع غسلات) لا الشفع، إلا لحاجة.\n2. البدء بغسل مواضع الوضوء.\n3. الرِّفق بالميت وستر عورته وعدم كشفه إلا للحاجة.\n4. أن يتولى الغسل من هو من جنس الميت (رجال للرجال، نساء للنساء)، ويُستثنى الزوجان والصغير.\n\n**من لا يُغسَّل:**\nالشهيد الذي قُتل في المعركة يُدفن بدمائه دون غسل، على قول جمهور الفقهاء.",
+    "category": "الجنائز",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "اغسلنها ثلاثاً أو خمساً أو أكثر من ذلك إن رأيتنَّ ذلك بماء وسدر",
+        "source": "متفق عليه — رواه البخاري في كتاب الجنائز عن أم عطية"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني — ابن قدامة",
+        "source": "كتاب الجنائز، باب غسل الميت"
+      }
+    ],
+    "keywords": [
+      "جنائز",
+      "غسل الميت",
+      "تكفين",
+      "وفاة"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-07-18T08:00:00Z",
+    "created_at": "2025-07-18T08:00:00Z",
+    "updated_at": "2025-07-18T08:00:00Z"
+  },
+  {
+    "id": "ruling-burial-rules",
+    "external_key": "ruling-burial-rules",
+    "title": "أحكام دفن الميت",
+    "summary": "الأحكام المتعلقة بالإسراع بالجنازة ودفن الميت.",
+    "body": "**الإسراع بالجنازة:**\nيُستحب الإسراع بتجهيز الميت ودفنه بعد التأكد من وفاته، دون تكلُّف أو استعجال مُخِلّ؛ لقول النبي ﷺ: «أسرعوا بالجنازة، فإن تكُ صالحة فخيرٌ تقدِّمونها إليه، وإن يكُ سوى ذلك فشرٌّ تضعونه عن رقابكم» (رواه البخاري، كتاب الجنائز، حديث رقم 1252).\n\n**عمق القبر وصفته:**\nيُستحب أن يُعمَّق القبر ويُوسَّع، وأن يُوضع الميت فيه على شقه الأيمن مستقبلاً القبلة.\n\n**إخبار أهل الميت وذويه:**\nالأصل عدم الدفن دون علم من له حق الصلاة عليه؛ فقد أنكر النبي ﷺ على من دفن رجلاً ليلاً دون إخباره وقال: «ما منعكم أن تُعلموني؟» ثم أتى قبره فصلى عليه (رواه البخاري، كتاب الجنائز).\n\n**حكم البناء على القبور وتجصيصها:**\nيُكره تشييد القبور والبناء عليها، وقد ورد النهي عن تجصيص القبر والبناء عليه فيما رواه مسلم عن جابر رضي الله عنه.",
+    "category": "الجنائز",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "أسرعوا بالجنازة، فإن تكُ صالحة فخيرٌ تقدِّمونها إليه، وإن يكُ سوى ذلك فشرٌّ تضعونه عن رقابكم",
+        "source": "رواه البخاري، كتاب الجنائز، حديث 1252"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني — ابن قدامة",
+        "source": "كتاب الجنائز، باب الدفن"
+      }
+    ],
+    "keywords": [
+      "جنائز",
+      "دفن",
+      "قبر",
+      "جنازة"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-07-18T08:00:00Z",
+    "created_at": "2025-07-18T08:00:00Z",
+    "updated_at": "2025-07-18T08:00:00Z"
+  },
+  {
+    "id": "ruling-combat-rules-noncombatants",
+    "external_key": "ruling-combat-rules-noncombatants",
+    "title": "ضوابط القتال وحرمة قتل غير المقاتلين",
+    "summary": "الأصل في مشروعية الجهاد وضوابطه في التعامل مع النساء والصبيان وغيرهم من غير المقاتلين.",
+    "body": "**الأصل في القتال:**\nشُرع الجهاد لدفع العدوان ورد الاعتداء، لا للإكراه على الدين ولا لإفساد في الأرض؛ قال تعالى: ﴿وَقَاتِلُوا فِي سَبِيلِ اللَّهِ الَّذِينَ يُقَاتِلُونَكُمْ وَلَا تَعْتَدُوا إِنَّ اللَّهَ لَا يُحِبُّ الْمُعْتَدِينَ﴾، فقيَّد الله القتال بمن يقاتل المسلمين ونهى عن الاعتداء.\n\n**حرمة قتل غير المقاتلين:**\nاتفق الفقهاء على تحريم قتل النساء والصبيان والشيوخ العاجزين والرهبان المنقطعين للعبادة ممن لم يشاركوا في القتال؛ فعن ابن عمر رضي الله عنهما: «أن امرأة وُجدت في بعض مغازي النبي ﷺ مقتولة، فأنكر رسول الله ﷺ قتل النساء والصبيان» (رواه البخاري، كتاب الجهاد والسير، حديث رقم 2852).\n\n**استثناء من شارك في القتال:**\nهذا النهي في غير المقاتلة؛ فمن قاتل من النساء أو خدم جيش العدو مباشرة يخرج عن هذا الأصل عند بعض الفقهاء، وهي مسألة اجتهادية فصّلها فقهاء السير تفصيلاً واسعاً.\n\n**حرمة الغدر والتمثيل:**\nحرَّم الفقهاء الغدر بمن أُومِّن، والتمثيل بالقتلى، وقطع الأشجار المثمرة وهدم العمران إلا لضرورة حربية بيّنة، أخذاً بوصايا النبي ﷺ وخلفائه الراشدين لقادة الجيوش.",
+    "category": "الجهاد والسياسة الشرعية",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَقَاتِلُوا فِي سَبِيلِ اللَّهِ الَّذِينَ يُقَاتِلُونَكُمْ وَلَا تَعْتَدُوا ۚ إِنَّ اللَّهَ لَا يُحِبُّ الْمُعْتَدِينَ",
+        "source": "البقرة: 190"
+      },
+      {
+        "type": "حديث",
+        "text": "أن امرأة وُجدت في بعض مغازي النبي ﷺ مقتولة، فأنكر رسول الله ﷺ قتل النساء والصبيان",
+        "source": "رواه البخاري، كتاب الجهاد والسير، حديث 2852"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني — ابن قدامة",
+        "source": "كتاب الجهاد"
+      },
+      {
+        "text": "السير الكبير — الشيباني",
+        "source": "أحكام القتال"
+      }
+    ],
+    "keywords": [
+      "جهاد",
+      "قتال",
+      "سياسة شرعية",
+      "غير المقاتلين",
+      "أحكام الحرب"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-07-18T08:00:00Z",
+    "created_at": "2025-07-18T08:00:00Z",
+    "updated_at": "2025-07-18T08:00:00Z"
+  },
+  {
+    "id": "ruling-dhimmah-covenant",
+    "external_key": "ruling-dhimmah-covenant",
+    "title": "أحكام أهل الذمة وحرمة قتل المعاهَد",
+    "summary": "حقوق أهل الذمة والمعاهَدين في ظل الدولة الإسلامية وحرمة الاعتداء عليهم.",
+    "body": "**من هم أهل الذمة:**\nغير المسلمين المقيمون في ديار المسلمين إقامة دائمة بعقد ذمة يضمن لهم الأمن على أنفسهم وأموالهم ودينهم مقابل التزامهم بأحكام النظام العام ودفع الجزية لمن تجب عليه.\n\n**حرمة الاعتداء على المعاهَد:**\nاتفق الفقهاء على تحريم قتل من له عهد أو أمان من المسلمين بغير حق؛ وقد بوَّب الإمام البخاري في صحيحه باباً بعنوان «إثم من قتل معاهَداً بغير جُرم» (كتاب الجزية والموادعة)، وجاء نحو هذا المعنى أيضاً عند ابن ماجه بلفظ: «من قتل معاهَداً لم يرح رائحة الجنة».\n\n**حق أهل الذمة في الأمن على الجزية:**\nمن دخل في عقد الذمة وأدى الجزية لا يجوز الاعتداء عليه ولا تكليفه فوق طاقته؛ لقوله تعالى في شأن المستجير من المشركين طالباً الأمان: ﴿وَإِنْ أَحَدٌ مِّنَ الْمُشْرِكِينَ اسْتَجَارَكَ فَأَجِرْهُ حَتَّىٰ يَسْمَعَ كَلَامَ اللَّهِ ثُمَّ أَبْلِغْهُ مَأْمَنَهُ﴾.\n\n**حقوقهم الأخرى:**\nقرر الفقهاء لأهل الذمة حق التقاضي أمام القضاء الإسلامي، وحفظ أموالهم وأعراضهم، وحرية ممارسة شعائرهم الدينية ضمن ما اتفق عليه في عقد الذمة.",
+    "category": "الجهاد والسياسة الشرعية",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "وَإِنْ أَحَدٌ مِّنَ الْمُشْرِكِينَ اسْتَجَارَكَ فَأَجِرْهُ حَتَّىٰ يَسْمَعَ كَلَامَ اللَّهِ ثُمَّ أَبْلِغْهُ مَأْمَنَهُ",
+        "source": "التوبة: 6"
+      },
+      {
+        "type": "حديث",
+        "text": "من قتل معاهَداً لم يرح رائحة الجنة",
+        "source": "رواه ابن ماجه؛ وأصله عند البخاري بلفظ قريب في باب إثم من قتل معاهداً بغير جرم"
+      }
+    ],
+    "references": [
+      {
+        "text": "أحكام أهل الذمة — ابن القيم",
+        "source": "الجزء الأول"
+      },
+      {
+        "text": "المغني — ابن قدامة",
+        "source": "كتاب الجزية"
+      }
+    ],
+    "keywords": [
+      "أهل الذمة",
+      "جزية",
+      "معاهد",
+      "سياسة شرعية",
+      "جهاد"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-07-18T08:00:00Z",
+    "created_at": "2025-07-18T08:00:00Z",
+    "updated_at": "2025-07-18T08:00:00Z"
+  },
+  {
+    "id": "ruling-oath-kaffarah",
+    "external_key": "ruling-oath-kaffarah",
+    "title": "كفارة اليمين",
+    "summary": "ما يجب على من حلف يميناً بالله ثم حنث فيها.",
+    "body": "**متى تجب الكفارة:**\nتجب الكفارة على من حلف يميناً معقودة (قصد الحلف عليها) بالله تعالى، ثم حنث فيها (خالف ما حلف عليه)، ولا تجب في يمين اللغو التي تجري على اللسان بلا قصد.\n\n**صفة الكفارة (على الترتيب):**\n1. إطعام عشرة مساكين من أوسط ما يُطعم أهله، أو\n2. كسوتهم، أو\n3. تحرير رقبة (عتق مملوك) — وهذه الثلاثة على التخيير.\n4. فمن لم يجد شيئاً من ذلك: صيام ثلاثة أيام.\n\n**دليل الترتيب:**\nنصّت آية المائدة صراحة على هذا الترتيب: التخيير بين الإطعام والكسوة والعتق أولاً، فإن لم يستطع المرء شيئاً منها انتقل إلى الصيام.\n\n**حكم اليمين الغموس:**\nاليمين الكاذبة عمداً لاقتطاع حق الغير (اليمين الغموس) إثمها عظيم عند جمهور الفقهاء ولا كفارة لها إلا التوبة النصوح، خلافاً لليمين المعقودة على أمر مستقبل.",
+    "category": "الأيمان والنذور",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "قرآن",
+        "text": "لَا يُؤَاخِذُكُمُ اللَّهُ بِاللَّغْوِ فِي أَيْمَانِكُمْ وَلَٰكِن يُؤَاخِذُكُم بِمَا عَقَّدتُّمُ الْأَيْمَانَ ۖ فَكَفَّارَتُهُ إِطْعَامُ عَشَرَةِ مَسَاكِينَ مِنْ أَوْسَطِ مَا تُطْعِمُونَ أَهْلِيكُمْ أَوْ كِسْوَتُهُمْ أَوْ تَحْرِيرُ رَقَبَةٍ ۖ فَمَن لَّمْ يَجِدْ فَصِيَامُ ثَلَاثَةِ أَيَّامٍ ۚ ذَٰلِكَ كَفَّارَةُ أَيْمَانِكُمْ إِذَا حَلَفْتُمْ",
+        "source": "المائدة: 89"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني — ابن قدامة",
+        "source": "كتاب الأيمان"
+      },
+      {
+        "text": "تفسير ابن كثير",
+        "source": "سورة المائدة، آية 89"
+      }
+    ],
+    "keywords": [
+      "يمين",
+      "كفارة",
+      "حلف",
+      "إطعام",
+      "صيام"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-07-18T08:00:00Z",
+    "created_at": "2025-07-18T08:00:00Z",
+    "updated_at": "2025-07-18T08:00:00Z"
+  },
+  {
+    "id": "ruling-nadhr-types",
+    "external_key": "ruling-nadhr-types",
+    "title": "حكم النذر وأنواعه",
+    "summary": "حكم النذر في الشريعة وأقسامه وما يجب على الناذر.",
+    "body": "**حكم النذر ابتداءً:**\nالنذر مكروه عند جمهور الفقهاء؛ لأنه لا يجلب خيراً ولا يدفع شرّاً بذاته، وإنما «يُستخرج به من البخيل» كما جاء في الحديث.\n\n**أقسام النذر:**\n1. **نذر طاعة**: كأن ينذر صياماً أو صدقة أو حجاً — يجب الوفاء به.\n2. **نذر معصية**: كأن ينذر شرب مسكر أو قطيعة رحم — يحرم الوفاء به، وتجب فيه كفارة يمين.\n3. **نذر مباح**: كأن ينذر لبس ثوب معيّن — مخيّر بين فعله أو كفارة يمين.\n4. **نذر لجاج وغضب**: يمين مقصودها المنع أو الحث لا التقرب — حكمه حكم اليمين، فيه كفارة يمين إن لم يفِ به.\n\n**الدليل على وجوب الوفاء بنذر الطاعة:**\nعن عائشة رضي الله عنها أن النبي ﷺ قال: «من نذر أن يُطيع الله فليُطعه، ومن نذر أن يعصيه فلا يعصه» (رواه البخاري، كتاب الأيمان والنذور، حديث رقم 6318).\n\n**نذر الأصل الميت (النذر عن الميت):**\nمن مات وعليه نذر لم يفِ به، يُستحب لوليه أن يقضيه عنه؛ لما ورد في الحديث من الترخيص في قضاء النذر عن الميت.",
+    "category": "الأيمان والنذور",
+    "subcategories": [],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "حديث",
+        "text": "من نذر أن يُطيع الله فليُطعه، ومن نذر أن يعصيه فلا يعصه",
+        "source": "رواه البخاري، كتاب الأيمان والنذور، حديث 6318"
+      },
+      {
+        "type": "قرآن",
+        "text": "يُوفُونَ بِالنَّذْرِ وَيَخَافُونَ يَوْمًا كَانَ شَرُّهُ مُسْتَطِيرًا",
+        "source": "الإنسان: 7"
+      }
+    ],
+    "references": [
+      {
+        "text": "المغني — ابن قدامة",
+        "source": "كتاب النذور"
+      },
+      {
+        "text": "فتح الباري — ابن حجر",
+        "source": "كتاب الأيمان والنذور"
+      }
+    ],
+    "keywords": [
+      "نذر",
+      "أيمان",
+      "طاعة",
+      "معصية",
+      "كفارة"
+    ],
+    "benefits": [],
+    "importance_score": 85,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "rulings-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2025-07-18T08:00:00Z",
+    "created_at": "2025-07-18T08:00:00Z",
+    "updated_at": "2025-07-18T08:00:00Z"
   },
   {
     "id": "issue-ruling-crypto-currency",
@@ -3218,9 +3880,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-crypto"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-organ-donation",
@@ -3263,9 +3925,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-organ-donation"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-muslim-minorities-rights",
@@ -3307,9 +3969,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-minorities"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-zakat-stocks",
@@ -3351,9 +4013,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-zakat-stocks"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-hajj-delay",
@@ -3395,9 +4057,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-hajj"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-general-anesthesia",
@@ -3440,9 +4102,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-general-anesthesia"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-artificial-organ-transplant",
@@ -3485,9 +4147,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-artificial-organ-transplant"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-human-cloning",
@@ -3530,16 +4192,16 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-human-cloning"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-abortion-rape-cases",
     "external_key": "issue-ruling-abortion-rape-cases",
     "title": "الإجهاض في حالات الاغتصاب",
     "summary": "أجاز جمهور الفقهاء المعاصرين الإسقاط قبل نفخ الروح للضرورة القصوى في حالات الاغتصاب.",
-    "body": "تستعرض المسألة الأقوال الفقهية المعتبرة وضوابط الإجهاض في الحالات الإكراهية الاستثنائية.\n\n**الحكم:** أجاز جمهور الفقهاء المعاصرين الإسقاط قبل نفخ الروح للضرورة القصوى في حالات الاغتصاب.\n\n**الأدلة:** قاعدة الضرورات، وأحكام الجنين قبل نفخ الروح، ومقصد حفظ العقل والكرامة الإنسانية.",
+    "body": "تتناول المسألة حكم إسقاط الحمل الناتج عن اغتصاب في المراحل الأولى، وفق الرأي الراجح عند جمهور الفقهاء المعاصرين — لا مسح شامل لكل الأقوال الفقهية في المسألة.\n\n**الحكم:** أجاز جمهور الفقهاء المعاصرين الإسقاط قبل نفخ الروح للضرورة القصوى في حالات الاغتصاب.\n\n**الأدلة:** قاعدة الضرورات، وأحكام الجنين قبل نفخ الروح، ومقصد حفظ العقل والكرامة الإنسانية.",
     "category": "النوازل المعاصرة",
     "subcategory": "الطب",
     "subcategories": [
@@ -3575,9 +4237,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-abortion-rape-cases"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-misyar-marriage",
@@ -3586,9 +4248,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "summary": "يجيزه جمع من العلماء المعاصرين بتوافر أركان الزواج وشروطه مع استيفاء الولي والشهود.",
     "body": "يُقصد بزواج المسيار عقد زواج يتنازل فيه أحد الطرفين عن بعض حقوقه الشرعية كالنفقة والمبيت.\n\n**الحكم:** يجيزه جمع من العلماء المعاصرين بتوافر أركان الزواج وشروطه مع استيفاء الولي والشهود.\n\n**الأدلة:** أحكام شروط الزواج، وأن التنازل عن الحق الشخصي لصاحبه جائز.",
     "category": "النوازل المعاصرة",
-    "subcategory": "الأسرة",
+    "subcategory": "النكاح",
     "subcategories": [
-      "الأسرة"
+      "النكاح"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -3597,12 +4259,12 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الأسرة والنكاح"
+        "source": "الأسرة"
       }
     ],
     "keywords": [
-      "الأسرة والنكاح",
-      "الأسرة"
+      "الأسرة",
+      "النكاح"
     ],
     "benefits": [],
     "importance_score": 78,
@@ -3620,9 +4282,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-misyar-marriage"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-electronic-divorce",
@@ -3631,9 +4293,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "summary": "يقع الطلاق الإلكتروني الكتابي متى ثبتت صدوره من الزوج بقصد ونية الطلاق.",
     "body": "تتناول المسألة حكم الطلاق الواقع عبر الرسائل القصيرة والبريد الإلكتروني ووسائل التواصل الاجتماعي.\n\n**الحكم:** يقع الطلاق الإلكتروني الكتابي متى ثبتت صدوره من الزوج بقصد ونية الطلاق.\n\n**الأدلة:** قياس الكتابة الإلكترونية على الكتابة الخطية في باب الطلاق عند الفقهاء.",
     "category": "النوازل المعاصرة",
-    "subcategory": "الأسرة",
+    "subcategory": "الطلاق",
     "subcategories": [
-      "الأسرة"
+      "الطلاق"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -3642,12 +4304,12 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الأسرة والنكاح"
+        "source": "الأسرة"
       }
     ],
     "keywords": [
-      "الأسرة والنكاح",
-      "الأسرة"
+      "الأسرة",
+      "الطلاق"
     ],
     "benefits": [],
     "importance_score": 78,
@@ -3665,20 +4327,20 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-electronic-divorce"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-artificial-breastfeeding",
     "external_key": "issue-ruling-artificial-breastfeeding",
     "title": "الرضاعة الاصطناعية وعلاقة المحرمية",
     "summary": "تثبت المحرمية بوصول اللبن إلى الرضيع بأي طريقة وفق الراجح عند جمهور العلماء المعاصرين.",
-    "body": "تستعرض المسألة آراء الفقهاء المعاصرين في اشتراط المص المباشر أو الاكتفاء بوصول لبن المرأة إلى الرضيع.\n\n**الحكم:** تثبت المحرمية بوصول اللبن إلى الرضيع بأي طريقة وفق الراجح عند جمهور العلماء المعاصرين.\n\n**الأدلة:** الاستدلال بعلة تغذية الجسم بلبن المرأة وإنبات اللحم وإنشاز العظم.",
+    "body": "تتناول المسألة اشتراط المص المباشر أو الاكتفاء بوصول لبن المرأة إلى الرضيع في ثبوت المحرمية، وفق الرأي الراجح عند جمهور العلماء المعاصرين — لا مسح شامل لكل آراء الفقهاء في المسألة.\n\n**الحكم:** تثبت المحرمية بوصول اللبن إلى الرضيع بأي طريقة وفق الراجح عند جمهور العلماء المعاصرين.\n\n**الأدلة:** الاستدلال بعلة تغذية الجسم بلبن المرأة وإنبات اللحم وإنشاز العظم.",
     "category": "النوازل المعاصرة",
-    "subcategory": "الأسرة",
+    "subcategory": "الرضاعة",
     "subcategories": [
-      "الأسرة"
+      "الرضاعة"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -3687,12 +4349,12 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الأسرة والنكاح"
+        "source": "الأسرة"
       }
     ],
     "keywords": [
-      "الأسرة والنكاح",
-      "الأسرة"
+      "الأسرة",
+      "الرضاعة"
     ],
     "benefits": [],
     "importance_score": 78,
@@ -3710,9 +4372,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-artificial-breastfeeding"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-fasting-elderly-disabled",
@@ -3721,9 +4383,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "summary": "يسقط الصيام عن العاجز بسبب الكبر ويُفدى عنه بإطعام مسكين عن كل يوم.",
     "body": "مسألة فقهية حول حكم صيام رمضان لمن بلغ حداً من الكبر عجز معه عن الصيام كلياً.\n\n**الحكم:** يسقط الصيام عن العاجز بسبب الكبر ويُفدى عنه بإطعام مسكين عن كل يوم.\n\n**الأدلة:** الاستدلال بآية الفدية وإجماع الفقهاء على سقوط الصوم بالعجز الدائم.",
     "category": "النوازل المعاصرة",
-    "subcategory": "العبادات",
+    "subcategory": "الصيام",
     "subcategories": [
-      "العبادات"
+      "الصيام"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -3732,12 +4394,12 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الصيام والعبادات"
+        "source": "العبادات"
       }
     ],
     "keywords": [
-      "الصيام والعبادات",
-      "العبادات"
+      "العبادات",
+      "الصيام"
     ],
     "benefits": [],
     "importance_score": 78,
@@ -3755,9 +4417,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-fasting-elderly-disabled"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-astronaut-prayer",
@@ -3766,9 +4428,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "summary": "يصلي رائد الفضاء بحسب توقيت أقرب بلد أُقلع منه أو توقيت مكة المكرمة، ويتوجه نحو الكعبة تقريباً.",
     "body": "تتناول المسألة كيفية تحديد أوقات الصلاة والقبلة لمن يكون في مدار لا تُعرف فيه أوقات الشمس بصورة طبيعية.\n\n**الحكم:** يصلي رائد الفضاء بحسب توقيت أقرب بلد أُقلع منه أو توقيت مكة المكرمة، ويتوجه نحو الكعبة تقريباً.\n\n**الأدلة:** مبدأ اليسر ورفع الحرج، وأحكام القبلة للعاجز عن التحقق منها.",
     "category": "النوازل المعاصرة",
-    "subcategory": "العبادات",
+    "subcategory": "الصلاة",
     "subcategories": [
-      "العبادات"
+      "الصلاة"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -3777,12 +4439,12 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الصيام والعبادات"
+        "source": "العبادات"
       }
     ],
     "keywords": [
-      "الصيام والعبادات",
-      "العبادات"
+      "العبادات",
+      "الصلاة"
     ],
     "benefits": [],
     "importance_score": 78,
@@ -3800,9 +4462,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-astronaut-prayer"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-zakat-crypto",
@@ -3845,9 +4507,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-zakat-crypto"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-health-insurance-ruling",
@@ -3890,9 +4552,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-health-insurance-ruling"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-stock-market-trading",
@@ -3935,9 +4597,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-stock-market-trading"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-organ-donation-will",
@@ -3980,9 +4642,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-organ-donation-will"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-milk-bank-breastfeeding",
@@ -3991,9 +4653,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "summary": "يحذر أكثر الفقهاء المعاصرين من استخدام بنوك الحليب المختلط لما قد يُفضي إليه من الخلط في المحرمية.",
     "body": "تستعرض المسألة خطورة اختلاط الأنساب وضوابط التحريم بالرضاعة عند استخدام بنوك الحليب.\n\n**الحكم:** يحذر أكثر الفقهاء المعاصرين من استخدام بنوك الحليب المختلط لما قد يُفضي إليه من الخلط في المحرمية.\n\n**الأدلة:** أحكام الرضاعة المحرِّمة، وقاعدة سد الذرائع، والاحتياط في باب الأنساب.",
     "category": "النوازل المعاصرة",
-    "subcategory": "الأسرة",
+    "subcategory": "الرضاعة",
     "subcategories": [
-      "الأسرة"
+      "الرضاعة"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -4002,12 +4664,12 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الأسرة والنكاح"
+        "source": "الأسرة"
       }
     ],
     "keywords": [
-      "الأسرة والنكاح",
-      "الأسرة"
+      "الأسرة",
+      "الرضاعة"
     ],
     "benefits": [],
     "importance_score": 78,
@@ -4025,9 +4687,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-milk-bank-breastfeeding"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-minorities-kitabiyya-marriage",
@@ -4036,9 +4698,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "summary": "يجيز العلماء زواج المسلم من الكتابية مع التحذير من مخاطره على دين الأبناء وثقافتهم في بيئة الأقليات.",
     "body": "تتناول المسألة الشروط والضوابط التي وضعها العلماء لتحقيق المصلحة الدينية والأسرية لدى المسلمين في الغرب.\n\n**الحكم:** يجيز العلماء زواج المسلم من الكتابية مع التحذير من مخاطره على دين الأبناء وثقافتهم في بيئة الأقليات.\n\n**الأدلة:** نص القرآن الكريم على جواز نكاح الكتابيات، مع تقييده بأحكام المصلحة والضوابط الفقهية.",
     "category": "النوازل المعاصرة",
-    "subcategory": "الأسرة",
+    "subcategory": "النكاح",
     "subcategories": [
-      "الأسرة"
+      "النكاح"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -4047,12 +4709,12 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الأسرة والنكاح"
+        "source": "الأسرة"
       }
     ],
     "keywords": [
-      "الأسرة والنكاح",
-      "الأسرة"
+      "الأسرة",
+      "النكاح"
     ],
     "benefits": [],
     "importance_score": 78,
@@ -4070,9 +4732,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-minorities-kitabiyya-marriage"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-stem-cell-therapy",
@@ -4115,9 +4777,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-stem-cells"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-digital-waqf",
@@ -4160,16 +4822,16 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-digital-waqf"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-zakat-real-estate",
     "external_key": "issue-ruling-zakat-real-estate",
     "title": "زكاة العقارات التجارية وعروض الاستثمار العقاري",
     "summary": "العقار المعدّ للبيع تجب فيه زكاة عروض التجارة بقيمته السوقية. أما المعدّ للإيجار فتجب فيه زكاة الدخل (الغلة) إن بلغت نصاباً وحال عليها الحول.",
-    "body": "تتعدد صور امتلاك العقارات بين: السكن الخاص (لا زكاة فيه)، والعقار للبيع (عروض تجارة تُزكّى)، والعقار للإيجار (زكاة الغلة لا العين)، وصناديق الاستثمار العقاري.\n\n**الحكم:** العقار المعدّ للبيع تجب فيه زكاة عروض التجارة بقيمته السوقية. أما المعدّ للإيجار فتجب فيه زكاة الدخل (الغلة) إن بلغت نصاباً وحال عليها الحول.\n\n**الأدلة:** حديث «في الإبل صدقتها» وأصل الزكاة في عروض التجارة، وقاعدة الزكاة في المال النامي.",
+    "body": "تتعدد صور امتلاك العقارات بين: السكن الخاص (لا زكاة فيه)، والعقار للبيع (عروض تجارة تُزكّى)، والعقار للإيجار (زكاة الغلة لا العين)، وصناديق الاستثمار العقاري.\n\n**الحكم:** العقار المعدّ للبيع تجب فيه زكاة عروض التجارة بقيمته السوقية. أما المعدّ للإيجار فتجب فيه زكاة الدخل (الغلة) إن بلغت نصاباً وحال عليها الحول.\n\n**الأدلة:** أصل مشروعية الزكاة في السائمة والماشية، وأصل الزكاة في عروض التجارة، وقاعدة الزكاة في المال النامي.",
     "category": "النوازل المعاصرة",
     "subcategory": "الزكاة",
     "subcategories": [
@@ -4205,9 +4867,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-zakat-real-estate"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-gender-reassignment-surgery",
@@ -4250,9 +4912,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-gender-reassignment"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-surrogacy-mother",
@@ -4295,9 +4957,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-surrogacy"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-euthanasia-mercy-killing",
@@ -4340,9 +5002,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-euthanasia"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-covid-vaccine-ruling",
@@ -4385,9 +5047,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-covid-vaccine"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-nft-metaverse-transactions",
@@ -4430,9 +5092,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-nft-metaverse"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-social-media-dawah",
@@ -4452,11 +5114,11 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الدعوة والإعلام"
+        "source": "القضايا المعاصرة"
       }
     ],
     "keywords": [
-      "الدعوة والإعلام",
+      "القضايا المعاصرة",
       "الدعوة"
     ],
     "benefits": [],
@@ -4475,9 +5137,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-social-media-dawah"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-hair-transplant-cosmetic",
@@ -4520,9 +5182,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-hair-transplant"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-crowdfunding-investment",
@@ -4565,9 +5227,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-crowdfunding"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-polar-regions-fasting",
@@ -4610,9 +5272,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-polar-fasting"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-deception-marriage-annulment",
@@ -4621,9 +5283,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "summary": "إذا وقع التدليس في صفة جوهرية يُؤثّر على الرضا فللمغرور حق فسخ النكاح، مع ثبوت المهر لحصول الدخول.",
     "body": "يتناول الفقهاء أثر التدليس في عقد الزواج كإخفاء مرض خطير، أو إخفاء السبق للزواج، أو ادعاء حرية من هو رقيق، وما يترتب على ذلك من فسخ أو خيار.\n\n**الحكم:** إذا وقع التدليس في صفة جوهرية يُؤثّر على الرضا فللمغرور حق فسخ النكاح، مع ثبوت المهر لحصول الدخول.\n\n**الأدلة:** أحكام الخيار في العقود وشروط الرضا وعيوب النكاح في المذاهب الأربعة.",
     "category": "النوازل المعاصرة",
-    "subcategory": "الأسرة",
+    "subcategory": "النكاح",
     "subcategories": [
-      "الأسرة"
+      "النكاح"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -4632,12 +5294,12 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الأسرة والنكاح"
+        "source": "الأسرة"
       }
     ],
     "keywords": [
-      "الأسرة والنكاح",
-      "الأسرة"
+      "الأسرة",
+      "النكاح"
     ],
     "benefits": [],
     "importance_score": 78,
@@ -4655,9 +5317,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-deception-marriage-annulment"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-medicinal-cannabis-cbd",
@@ -4700,9 +5362,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-medicinal-cannabis"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-employment-in-riba-banks",
@@ -4745,9 +5407,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-bank-employment"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-life-insurance-ruling",
@@ -4790,9 +5452,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-life-insurance"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-cosmetic-surgery-ruling",
@@ -4835,9 +5497,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-cosmetic-surgery"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-etf-index-funds-investment",
@@ -4880,9 +5542,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-etf-index-funds"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-hajj-with-bank-salary",
@@ -4925,9 +5587,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-hajj-bank-money"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-repeated-umrah-ruling",
@@ -4970,9 +5632,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-repeated-umrah"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-quran-phone-in-prayer",
@@ -4981,9 +5643,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "summary": "تجوز قراءة القرآن من الهاتف في الصلاة عند الحاجة — كالإمام الذي يخشى الانقطاع — كما تجوز التلاوة من المصحف الورقي. غير أن المسّ المستمر للشاشة يُفسد الصلاة عند بعض الفقهاء لما فيه من عمل كثير. والراجح أن مسّة واحدة للانتقال بين الصفحات لا تُفسد، وكثير من العلماء المعاصرين يأخذون بهذا.",
     "body": "انتشر في العصر الحديث استخدام التطبيقات القرآنية في الصلاة بدلاً من المصحف الورقي. وقد اختلف الفقهاء المعاصرون: هل هذا مثل تلاوة المصحف المسموح بها؟ وهل مسّ الشاشة يُفسد الصلاة؟\n\n**الحكم:** تجوز قراءة القرآن من الهاتف في الصلاة عند الحاجة — كالإمام الذي يخشى الانقطاع — كما تجوز التلاوة من المصحف الورقي. غير أن المسّ المستمر للشاشة يُفسد الصلاة عند بعض الفقهاء لما فيه من عمل كثير. والراجح أن مسّة واحدة للانتقال بين الصفحات لا تُفسد، وكثير من العلماء المعاصرين يأخذون بهذا.\n\n**الأدلة:** قياس استخدام المصحف في الصلاة، وضوابط العمل الكثير في الصلاة عند الأئمة الأربعة.",
     "category": "النوازل المعاصرة",
-    "subcategory": "العبادات",
+    "subcategory": "الصلاة",
     "subcategories": [
-      "العبادات"
+      "الصلاة"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -4992,12 +5654,12 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الصيام والعبادات"
+        "source": "العبادات"
       }
     ],
     "keywords": [
-      "الصيام والعبادات",
-      "العبادات"
+      "العبادات",
+      "الصلاة"
     ],
     "benefits": [],
     "importance_score": 78,
@@ -5015,9 +5677,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-quran-phone-prayer"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-online-prayer-congregation",
@@ -5026,9 +5688,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "summary": "لا تصح صلاة الجماعة خلف إمام عبر البث المباشر على الإنترنت أو التلفزيون — وهو ما أفتت به المجالس الفقهية المعتمدة. شرط الاجتماع المكاني وانتظام الصفوف ركن أساسي في القدوة لم تتوافر فيه هذه الصورة.",
     "body": "في ظل الأزمات والأوبئة وإغلاق المساجد، وللنساء والمقيمين في المناطق النائية: هل تصح صلاة الجماعة بالاقتداء بإمام يُبثّ عبر الإنترنت أو التلفزيون في المنزل؟\n\n**الحكم:** لا تصح صلاة الجماعة خلف إمام عبر البث المباشر على الإنترنت أو التلفزيون — وهو ما أفتت به المجالس الفقهية المعتمدة. شرط الاجتماع المكاني وانتظام الصفوف ركن أساسي في القدوة لم تتوافر فيه هذه الصورة.\n\n**الأدلة:** اشتراط اتصال الصفوف ووحدة المكان في القدوة عند الحنابلة والشافعية، وفتاوى اللجنة الدائمة للإفتاء بالمملكة.",
     "category": "النوازل المعاصرة",
-    "subcategory": "العبادات",
+    "subcategory": "الصلاة",
     "subcategories": [
-      "العبادات"
+      "الصلاة"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -5037,12 +5699,12 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الصيام والعبادات"
+        "source": "العبادات"
       }
     ],
     "keywords": [
-      "الصيام والعبادات",
-      "العبادات"
+      "العبادات",
+      "الصلاة"
     ],
     "benefits": [],
     "importance_score": 78,
@@ -5060,16 +5722,16 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-online-prayer-congregation"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-online-lectures-women-scholars",
     "external_key": "issue-ruling-online-lectures-women-scholars",
     "title": "تدريس المرأة عبر الإنترنت والتلفاز",
-    "summary": "يجوز للمرأة المتخصصة في العلم الشرعي أن تُدرّس وتُحاضر ببرامج إلكترونية بضوابط: أن يكون الأسلوب حشيشماً، وأن يكون الصوت بلا فتنة، وأن لا تخضع لأجنبي بالقول. وتعليم النساء أولى وأوجب.",
-    "body": "مع انتشار منصات التعليم الإلكتروني، ظهرت فتاوى متباينة حول مشروعية أن تُقدّم المرأة المتخصصة في العلم الشرعي دروساً ومحاضرات لمخلوط الجنسين عبر الإنترنت والتلفزيون. ما الضوابط الشرعية لذلك؟\n\n**الحكم:** يجوز للمرأة المتخصصة في العلم الشرعي أن تُدرّس وتُحاضر ببرامج إلكترونية بضوابط: أن يكون الأسلوب حشيشماً، وأن يكون الصوت بلا فتنة، وأن لا تخضع لأجنبي بالقول. وتعليم النساء أولى وأوجب.\n\n**الأدلة:** سنة السيدة عائشة وأمهات المؤمنين في تعليم الصحابة والتابعين، وقاعدة تيسير الوصول إلى العلم الشرعي.",
+    "summary": "يجوز للمرأة المتخصصة في العلم الشرعي أن تُدرّس وتُحاضر ببرامج إلكترونية بضوابط: أن يكون الصوت بلا فتنة، وأن لا تخضع لأجنبي بالقول. وتعليم النساء أولى وأوجب.",
+    "body": "مع انتشار منصات التعليم الإلكتروني، ظهرت فتاوى متباينة حول مشروعية أن تُقدّم المرأة المتخصصة في العلم الشرعي دروسًا ومحاضرات لمخلوط الجنسين عبر الإنترنت والتلفزيون. تُعرض هنا إحدى الأقوال المُرجَّحة بضوابطها، لا حصر شامل لكل الفتاوى المتباينة.\n\n**الحكم:** يجوز للمرأة المتخصصة في العلم الشرعي أن تُدرّس وتُحاضر ببرامج إلكترونية بضوابط: أن يكون الصوت بلا فتنة، وأن لا تخضع لأجنبي بالقول. وتعليم النساء أولى وأوجب.\n\n**الأدلة:** سنة السيدة عائشة وأمهات المؤمنين في تعليم الصحابة والتابعين، وقاعدة تيسير الوصول إلى العلم الشرعي.",
     "category": "النوازل المعاصرة",
     "subcategory": "الدعوة",
     "subcategories": [
@@ -5082,11 +5744,11 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الدعوة والإعلام"
+        "source": "القضايا المعاصرة"
       }
     ],
     "keywords": [
-      "الدعوة والإعلام",
+      "القضايا المعاصرة",
       "الدعوة"
     ],
     "benefits": [],
@@ -5105,16 +5767,16 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-online-lectures-women"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-ai-generated-dawah-content",
     "external_key": "issue-ruling-ai-generated-dawah-content",
     "title": "استخدام الذكاء الاصطناعي في إنتاج المحتوى الدعوي",
     "summary": "لا يجوز نشر محتوى ديني شرعي يُنتجه الذكاء الاصطناعي دون مراجعة عالم متخصص — لأن الذكاء الاصطناعي قد يُخطئ في الفتاوى والأحاديث. أما توظيفه مساعداً في التحرير والبحث والصياغة مع المراجعة البشرية فجائز.",
-    "body": "باتت أدوات الذكاء الاصطناعي كـ ChatGPT وغيرها تُستخدم في إنتاج مقالات وكتب ومحتوى ديني. السؤال: هل يجوز نشر هذا المحتوى دون مراجعة بشرية؟ وما مسؤولية الناشر في صحة المعلومات الشرعية؟\n\n**الحكم:** لا يجوز نشر محتوى ديني شرعي يُنتجه الذكاء الاصطناعي دون مراجعة عالم متخصص — لأن الذكاء الاصطناعي قد يُخطئ في الفتاوى والأحاديث. أما توظيفه مساعداً في التحرير والبحث والصياغة مع المراجعة البشرية فجائز.\n\n**الأدلة:** قاعدة «لا تجوز الفتوى إلا من أهلها»، ومسؤولية الناشر عن تضليل المسلمين في دينهم.",
+    "body": "باتت أدوات الذكاء الاصطناعي كـ ChatGPT وغيرها تُستخدم في إنتاج مقالات وكتب ومحتوى ديني. السؤال: هل يجوز نشر هذا المحتوى دون مراجعة بشرية؟ وما مسؤولية الناشر في صحة المعلومات الشرعية؟\n\n**الحكم:** لا يجوز نشر محتوى ديني شرعي يُنتجه الذكاء الاصطناعي دون مراجعة عالم متخصص — لأن الذكاء الاصطناعي قد يُخطئ في الفتاوى والأحاديث. أما توظيفه مساعداً في التحرير والبحث والصياغة مع المراجعة البشرية فجائز.\n\n**الأدلة:** قاعدة «الفتوى لا تؤخذ إلا من أهلها»، ومسؤولية الناشر عن تضليل المسلمين في دينهم.",
     "category": "النوازل المعاصرة",
     "subcategory": "التقنية والفقه",
     "subcategories": [
@@ -5127,11 +5789,11 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الدعوة والإعلام"
+        "source": "القضايا المعاصرة"
       }
     ],
     "keywords": [
-      "الدعوة والإعلام",
+      "القضايا المعاصرة",
       "التقنية والفقه"
     ],
     "benefits": [],
@@ -5150,9 +5812,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-ai-content-dawah"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-minorities-work-liquor-licensed",
@@ -5195,9 +5857,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-minorities-liquor-license"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-muslim-minorities-citizenship-oath",
@@ -5240,16 +5902,16 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-minorities-citizenship"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-zakat-rental-real-estate",
     "external_key": "issue-ruling-zakat-rental-real-estate",
     "title": "زكاة العقار المُعَدّ للإيجار",
     "summary": "العقار المُعَدّ للإيجار لا تجب فيه الزكاة في عينه بل في غلّته (الإيجار) — يُزكّى الإيجار السنوي إذا بلغ نصاباً وحال عليه الحول. أما من اشترى العقار للبيع (التاجر) فيُزكّيه كعروض التجارة بقيمته السوقية.",
-    "body": "يملك كثير من المسلمين عقارات مُعدّة للإيجار — شققاً أو محلات أو مستودعات. وتختلف الرأي في كيفية إخراج زكاتها: هل تُزكّى قيمة العقار أم الإيجار؟\n\n**الحكم:** العقار المُعَدّ للإيجار لا تجب فيه الزكاة في عينه بل في غلّته (الإيجار) — يُزكّى الإيجار السنوي إذا بلغ نصاباً وحال عليه الحول. أما من اشترى العقار للبيع (التاجر) فيُزكّيه كعروض التجارة بقيمته السوقية.\n\n**الأدلة:** قرار مجمع الفقه الإسلامي الدولي (1988م) في زكاة عروض التجارة، وفتاوى ابن باز وابن عثيمين في العقار الاستثماري.",
+    "body": "يملك كثير من المسلمين عقارات مُعدّة للإيجار — شققاً أو محلات أو مستودعات. وتختلف الرأي في كيفية إخراج زكاتها: هل تُزكّى قيمة العقار أم الإيجار؟\n\n**الحكم:** العقار المُعَدّ للإيجار لا تجب فيه الزكاة في عينه بل في غلّته (الإيجار) — يُزكّى الإيجار السنوي إذا بلغ نصاباً وحال عليه الحول. أما من اشترى العقار للبيع (التاجر) فيُزكّيه كعروض التجارة بقيمته السوقية.\n\n**الأدلة:** قرار مجمع الفقه الإسلامي الدولي (1985م) في زكاة عروض التجارة، وفتاوى ابن باز وابن عثيمين في العقار الاستثماري.",
     "category": "النوازل المعاصرة",
     "subcategory": "الزكاة",
     "subcategories": [
@@ -5285,9 +5947,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-zakat-real-estate-rentals"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-music-streaming-platforms-ruling",
@@ -5307,11 +5969,11 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الدعوة والإعلام"
+        "source": "القضايا المعاصرة"
       }
     ],
     "keywords": [
-      "الدعوة والإعلام",
+      "القضايا المعاصرة",
       "التقنية والفقه"
     ],
     "benefits": [],
@@ -5330,9 +5992,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-streaming-music"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-nft-digital-assets-ruling",
@@ -5375,9 +6037,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-nft-blockchain"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-digital-waqf-online-charity",
@@ -5420,9 +6082,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-waqf-digital"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-remote-work-friday-prayer-obligation",
@@ -5431,9 +6093,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "summary": "وجوب صلاة الجمعة لا يتعلق بمكان العمل بل بالإقامة في البلد المكتمل فيها شرط النصاب والإمام. فالعامل عن بُعد المقيم في مدينة تُقام فيها الجمعة تجب عليه كما تجب على غيره. ولا أثر لكونه يعمل من المنزل على هذا الحكم.",
     "body": "انتشر العمل عن بُعد بعد جائحة كوفيد-١٩، فصار كثير من الموظفين يعملون من منازلهم. فهل يختلف حكم وجوب صلاة الجمعة عليهم عن الموظف في المكتب؟\n\n**الحكم:** وجوب صلاة الجمعة لا يتعلق بمكان العمل بل بالإقامة في البلد المكتمل فيها شرط النصاب والإمام. فالعامل عن بُعد المقيم في مدينة تُقام فيها الجمعة تجب عليه كما تجب على غيره. ولا أثر لكونه يعمل من المنزل على هذا الحكم.\n\n**الأدلة:** «الجمعة حق واجب على كل مسلم في جماعة إلا أربعة» (أبو داود: ١٠٦٧). شرط الاستيطان والإقامة في دار الإقامة.",
     "category": "النوازل المعاصرة",
-    "subcategory": "العبادات",
+    "subcategory": "الصلاة",
     "subcategories": [
-      "العبادات"
+      "الصلاة"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -5442,12 +6104,12 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الصيام والعبادات"
+        "source": "العبادات"
       }
     ],
     "keywords": [
-      "الصيام والعبادات",
-      "العبادات"
+      "العبادات",
+      "الصلاة"
     ],
     "benefits": [],
     "importance_score": 78,
@@ -5465,20 +6127,20 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-remote-work-prayer"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-genetic-testing-ancestry-ruling",
     "external_key": "issue-ruling-genetic-testing-ancestry-ruling",
     "title": "حكم اختبارات الحمض النووي لمعرفة النسب",
     "summary": "اختبار DNA دليل علمي قوي يُعتمد في إثبات النسب إذا توافرت ضوابط الصحة المخبرية والموثوقية. غير أنه لا ينفي نسباً ثبت بالفراش أو الإقرار على الوجه الصحيح، وذلك درءاً للمفسدة وحفاظاً على مقصد النسل من مقاصد الشريعة.",
-    "body": "باتت اختبارات الحمض النووي (DNA) متاحة بسهولة، وصارت تُعتمد في القضاء لإثبات النسب أو نفيه. فهل تُقبل نتائجها في الشريعة؟ وهل تنفي نسباً ثبت باللعان أو الإقرار؟\n\n**الحكم:** اختبار DNA دليل علمي قوي يُعتمد في إثبات النسب إذا توافرت ضوابط الصحة المخبرية والموثوقية. غير أنه لا ينفي نسباً ثبت بالفراش أو الإقرار على الوجه الصحيح، وذلك درءاً للمفسدة وحفاظاً على مقصد النسل من مقاصد الشريعة.\n\n**الأدلة:** «الولد للفراش وللعاهر الحجر» (البخاري: ٦٨١٨). فتوى مجمع الفقه الإسلامي الدولي (١٩٩٢م) في النسب والطب الشرعي.",
+    "body": "باتت اختبارات الحمض النووي (DNA) متاحة بسهولة، وصارت تُعتمد في القضاء لإثبات النسب أو نفيه. فهل تُقبل نتائجها في الشريعة؟ وهل تنفي نسباً ثبت باللعان أو الإقرار؟\n\n**الحكم:** اختبار DNA دليل علمي قوي يُعتمد في إثبات النسب إذا توافرت ضوابط الصحة المخبرية والموثوقية. غير أنه لا ينفي نسباً ثبت بالفراش أو الإقرار على الوجه الصحيح، وذلك درءاً للمفسدة وحفاظاً على مقصد النسل من مقاصد الشريعة.\n\n**الأدلة:** «الولد للفراش وللعاهر الحجر» (البخاري: ٦٨١٨). قرار مجمع الفقه الإسلامي الدولي رقم 194 (9/20) في دورته العشرين (2012م) بشأن الإثبات بالقرائن: لا يجوز الاعتماد على البصمة الوراثية في نفي النسب الثابت شرعاً.",
     "category": "النوازل المعاصرة",
-    "subcategory": "الأسرة",
+    "subcategory": "النسب",
     "subcategories": [
-      "الأسرة"
+      "النسب"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -5487,12 +6149,12 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الأسرة والنكاح"
+        "source": "الأسرة"
       }
     ],
     "keywords": [
-      "الأسرة والنكاح",
-      "الأسرة"
+      "الأسرة",
+      "النسب"
     ],
     "benefits": [],
     "importance_score": 78,
@@ -5510,9 +6172,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-genetic-testing-ancestry"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-ai-generated-fatwa-ruling",
@@ -5555,9 +6217,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-ai-fatwa"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-online-nikah-video-call",
@@ -5566,9 +6228,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "summary": "اختلف الفقهاء المعاصرون: فمن شرط اتحاد المجلس الحقيقي منع عقده عن بُعد. ومن أجاز التوسع في المجلس المعرفي أجاز العقد بالاتصال المرئي الفوري بشروط توثيق الهوية وحضور الشهود. والأحوط إعادة العقد بالحضور.",
     "body": "مع انتشار وسائل التواصل عبر الفيديو صار بعض الأزواج يعقدون النكاح عن بُعد. فهل يُعدّ الاجتماع المجلسي متحققاً بالاتصال المرئي الآني؟ وهل تنعقد الخطبة وإيجاب الولي وقبول الزوج في مجالس متفرقة مكاناً؟\n\n**الحكم:** اختلف الفقهاء المعاصرون: فمن شرط اتحاد المجلس الحقيقي منع عقده عن بُعد. ومن أجاز التوسع في المجلس المعرفي أجاز العقد بالاتصال المرئي الفوري بشروط توثيق الهوية وحضور الشهود. والأحوط إعادة العقد بالحضور.\n\n**الأدلة:** شروط صحة النكاح: الإيجاب والقبول والشهود والولي في المجلس. القياس على الرسائل والتوكيل في الفقه الكلاسيكي. قرارات مجمع الفقه الإسلامي الدولي في العقود الإلكترونية.",
     "category": "النوازل المعاصرة",
-    "subcategory": "الأسرة",
+    "subcategory": "النكاح",
     "subcategories": [
-      "الأسرة"
+      "النكاح"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -5577,12 +6239,12 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "الأسرة والنكاح"
+        "source": "الأسرة"
       }
     ],
     "keywords": [
-      "الأسرة والنكاح",
-      "الأسرة"
+      "الأسرة",
+      "النكاح"
     ],
     "benefits": [],
     "importance_score": 78,
@@ -5600,16 +6262,16 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-online-nikah"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-electric-vehicles-zakat",
     "external_key": "issue-ruling-electric-vehicles-zakat",
     "title": "زكاة السيارات الكهربائية وأسهم التقنية",
     "summary": "أسهم التقنية الاستثمارية تُزكّى بقيمتها السوقية عند حولان الحول بنسبة 2.5%. والسيارات المعدة للتجارة (تأجيراً أو بيعاً) تُزكّى بقيمة السوق. أما السيارة الخاصة لغير التجارة فلا زكاة فيها.",
-    "body": "مع توسع أسواق التقنية صارت شركات السيارات الكهربائية (Tesla، Lucid، وغيرها) وشركات الذكاء الاصطناعي من أكبر الأصول الاستثمارية. والمسألة: كيف تُحتسب زكاتها؟ وما وعاء زكاة الأسهم فيها؟\n\n**الحكم:** أسهم التقنية الاستثمارية تُزكّى بقيمتها السوقية عند حولان الحول بنسبة 2.5%. والسيارات المعدة للتجارة (تأجيراً أو بيعاً) تُزكّى بقيمة السوق. أما السيارة الخاصة لغير التجارة فلا زكاة فيها.\n\n**الأدلة:** قاعدة «فيما سقت السماء العشر» بالقياس على عروض التجارة، وقرارات مجمع الفقه الإسلامي في زكاة الأسهم (1992م).",
+    "body": "مع توسع أسواق التقنية صارت شركات السيارات الكهربائية (Tesla، Lucid، وغيرها) وشركات الذكاء الاصطناعي من أكبر الأصول الاستثمارية. والمسألة: كيف تُحتسب زكاتها؟ وما وعاء زكاة الأسهم فيها؟\n\n**الحكم:** أسهم التقنية الاستثمارية تُزكّى بقيمتها السوقية عند حولان الحول بنسبة 2.5%. والسيارات المعدة للتجارة (تأجيراً أو بيعاً) تُزكّى بقيمة السوق. أما السيارة الخاصة لغير التجارة فلا زكاة فيها.\n\n**الأدلة:** قاعدة زكاة عروض التجارة (تُقوَّم بسعر السوق وتُزكّى بربع العشر 2.5% لا بالعشر الزراعي)، وقرار مجمع الفقه الإسلامي الدولي رقم 28 (3/4) في زكاة الأسهم، الدورة الرابعة بجدة (1988م).",
     "category": "النوازل المعاصرة",
     "subcategory": "الزكاة",
     "subcategories": [
@@ -5645,9 +6307,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-electric-vehicle-zakat"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-metaverse-prayer-virtual",
@@ -5667,11 +6329,11 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "العبادات والصلاة"
+        "source": "العبادات"
       }
     ],
     "keywords": [
-      "العبادات والصلاة",
+      "العبادات",
       "الصلاة"
     ],
     "benefits": [],
@@ -5690,9 +6352,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-metaverse-prayer"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-biometric-authentication-banking",
@@ -5701,9 +6363,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "summary": "تصح العقود الموثقة بالبصمة البيولوجية وهي في حكم التوقيع الرسمي لأنها أكثر دقة وتحقيقاً للهوية من التوقيع اليدوي. والعبرة في العقود بالمقاصد والمعاني.",
     "body": "باتت التعاملات المصرفية تعتمد التحقق عبر البصمة البيولوجية بدلاً من التوقيع اليدوي. هل يُعدّ هذا عقداً صحيحاً شرعاً؟ وهل تترتب عليه مسؤولية قانونية كاملة؟\n\n**الحكم:** تصح العقود الموثقة بالبصمة البيولوجية وهي في حكم التوقيع الرسمي لأنها أكثر دقة وتحقيقاً للهوية من التوقيع اليدوي. والعبرة في العقود بالمقاصد والمعاني.\n\n**الأدلة:** قاعدة «العبرة في العقود بالمقاصد والمعاني لا بالألفاظ والمباني»، وأن كل ما يحقق التعريف الكامل ويمنع الجحود معتبَر شرعاً.",
     "category": "النوازل المعاصرة",
-    "subcategory": "المعاملات",
+    "subcategory": "التوثيق المصرفي",
     "subcategories": [
-      "المعاملات"
+      "التوثيق المصرفي"
     ],
     "quran_evidence": [],
     "sunnah_evidence": [],
@@ -5712,12 +6374,12 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "references": [
       {
         "text": "المجمع الفقهي — مسائل فقهية",
-        "source": "المعاملات المالية"
+        "source": "المعاملات"
       }
     ],
     "keywords": [
-      "المعاملات المالية",
-      "المعاملات"
+      "المعاملات",
+      "التوثيق المصرفي"
     ],
     "benefits": [],
     "importance_score": 78,
@@ -5735,9 +6397,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-biometric-auth-banking"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "issue-ruling-carbon-credits-islamic-ruling",
@@ -5780,9 +6442,279 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "linked_fiqh_ids": [
       "seed-issue-carbon-credits-trading"
     ],
-    "published_at": "2026-07-17T23:05:11.765Z",
-    "created_at": "2026-07-17T23:05:11.765Z",
-    "updated_at": "2026-07-17T23:05:11.765Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "issue-ruling-cultured-meat",
+    "external_key": "issue-ruling-cultured-meat",
+    "title": "اللحوم المستزرعة معملياً (المستنبتة)",
+    "summary": "يجوز تناول اللحوم المستزرعة معملياً وتسويقها بشروط: أن تُستخرج الخلايا من حيوان مأكول اللحم أو مذكّى شرعاً، وألا تُزرَع في وسط محرَّم (كالدم المسفوح) أو تحوي إضافات محرَّمة (كجيلاتين الخنزير)، وأن تخضع لإشراف جهات موثوقة مختصة، وأن يكون المنتج النهائي آمناً وصالحاً للأكل وفق المعايير الرسمية، مع عدم إحلالها محل اللحوم التقليدية بل كخيار مكمّل، ووجوب إفصاح الشركات عن المعلومات اللازمة للمستهلك.",
+    "body": "مسألة فقهية معاصرة حول حكم تناول وتسويق اللحوم المصنَّعة من خلايا حيوانية تُزرَع معملياً دون ذبح مباشر.\n\n**الحكم:** يجوز تناول اللحوم المستزرعة معملياً وتسويقها بشروط: أن تُستخرج الخلايا من حيوان مأكول اللحم أو مذكّى شرعاً، وألا تُزرَع في وسط محرَّم (كالدم المسفوح) أو تحوي إضافات محرَّمة (كجيلاتين الخنزير)، وأن تخضع لإشراف جهات موثوقة مختصة، وأن يكون المنتج النهائي آمناً وصالحاً للأكل وفق المعايير الرسمية، مع عدم إحلالها محل اللحوم التقليدية بل كخيار مكمّل، ووجوب إفصاح الشركات عن المعلومات اللازمة للمستهلك.\n\n**الأدلة:** قرار مجمع الفقه الإسلامي الدولي رقم 265 (10/26) في دورته السادسة والعشرين، الدوحة، قطر (4-8 مايو 2025)، مستنداً إلى مقاصد حفظ النفس وسد حاجات الأمن الغذائي مع الالتزام بالضوابط الشرعية.",
+    "category": "النوازل المعاصرة",
+    "subcategory": "الأطعمة الحديثة",
+    "subcategories": [
+      "الأطعمة الحديثة"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [],
+    "references": [
+      {
+        "text": "المجمع الفقهي — مسائل فقهية",
+        "source": "الأطعمة والأشربة"
+      }
+    ],
+    "keywords": [
+      "الأطعمة والأشربة",
+      "الأطعمة الحديثة"
+    ],
+    "benefits": [],
+    "importance_score": 78,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-issues-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [
+      "seed-issue-cultured-meat"
+    ],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "issue-ruling-edible-insects",
+    "external_key": "issue-ruling-edible-insects",
+    "title": "تناول الحشرات وتسويقها",
+    "summary": "لم يصدر المجمع حكماً قاطعاً في المسألة بعد، وقرَّر تأجيل البتّ فيها لمزيد من الدراسة.",
+    "body": "مسألة فقهية معاصرة حول حكم تناول الحشرات (كمصدر بديل للبروتين) وتسويقها تجارياً.\n\n**الحكم:** لم يصدر المجمع حكماً قاطعاً في المسألة بعد، وقرَّر تأجيل البتّ فيها لمزيد من الدراسة.\n\n**الأدلة:** قرار مجمع الفقه الإسلامي الدولي رقم 267 (12/26) في دورته السادسة والعشرين، الدوحة، قطر (4-8 مايو 2025)، بعد ندوة علمية مشتركة مع الهيئة العامة للغذاء والدواء السعودية (جدة، 24-25 سبتمبر 2024).",
+    "category": "النوازل المعاصرة",
+    "subcategory": "الأطعمة الحديثة",
+    "subcategories": [
+      "الأطعمة الحديثة"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [],
+    "references": [
+      {
+        "text": "المجمع الفقهي — مسائل فقهية",
+        "source": "الأطعمة والأشربة"
+      }
+    ],
+    "keywords": [
+      "الأطعمة والأشربة",
+      "الأطعمة الحديثة"
+    ],
+    "benefits": [],
+    "importance_score": 78,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-issues-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [
+      "seed-issue-edible-insects"
+    ],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "issue-ruling-encrypted-digital-currencies",
+    "external_key": "issue-ruling-encrypted-digital-currencies",
+    "title": "العملات الرقمية المشفَّرة (كالبيتكوين)",
+    "summary": "لم يصدر المجمع حكماً قاطعاً في المسألة، وقرَّر تأجيل البتّ فيها لمزيد من الدراسة، نظراً لعدم استقرار قيمة هذه العملات وارتفاع المخاطر المرتبطة بها، وعدم حسم مسألتي: هل تُعدّ سلعة أم خدمة أم أصلاً استثمارياً؟ وهل لها قيمة نقدية معتبرة شرعاً؟",
+    "body": "مسألة فقهية معاصرة حول حكم التعامل بالعملات الرقمية المشفَّرة (البيتكوين والإيثيريوم وغيرها) المبنية على تقنية سلسلة الكتل، وهل تُعدّ مالاً معتبراً شرعاً.\n\n**الحكم:** لم يصدر المجمع حكماً قاطعاً في المسألة، وقرَّر تأجيل البتّ فيها لمزيد من الدراسة، نظراً لعدم استقرار قيمة هذه العملات وارتفاع المخاطر المرتبطة بها، وعدم حسم مسألتي: هل تُعدّ سلعة أم خدمة أم أصلاً استثمارياً؟ وهل لها قيمة نقدية معتبرة شرعاً؟\n\n**الأدلة:** قرار مجمع الفقه الإسلامي الدولي رقم 237 (8/24) في دورته الرابعة والعشرين، دبي (4-6 نوفمبر 2019).",
+    "category": "النوازل المعاصرة",
+    "subcategory": "الاقتصاد الرقمي",
+    "subcategories": [
+      "الاقتصاد الرقمي"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [],
+    "references": [
+      {
+        "text": "المجمع الفقهي — مسائل فقهية",
+        "source": "النوازل المعاصرة"
+      }
+    ],
+    "keywords": [
+      "النوازل المعاصرة",
+      "الاقتصاد الرقمي"
+    ],
+    "benefits": [],
+    "importance_score": 78,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-issues-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [
+      "seed-issue-encrypted-digital-currencies"
+    ],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "issue-ruling-gmo-animal-foods",
+    "external_key": "issue-ruling-gmo-animal-foods",
+    "title": "الأطعمة المعدَّلة وراثياً من أصل حيواني",
+    "summary": "يجوز تناول الأطعمة المعدَّلة وراثياً من أصل حيواني وتسويقها بشروط: أن تكون عملية التعديل آمنة وموافقة للشرع ولا تُسبِّب ضرراً صحياً، وأن يكون التعديل بين حيوانات يحل أكلها شرعاً، ووجوب الإفصاح عن المعلومات المتعلقة بالمنتج المعدَّل وراثياً وطريقة تحضيره.",
+    "body": "مسألة فقهية معاصرة حول حكم تناول وتسويق منتجات غذائية من حيوانات جرى تعديل مادتها الوراثية بتقنيات الهندسة الجينية.\n\n**الحكم:** يجوز تناول الأطعمة المعدَّلة وراثياً من أصل حيواني وتسويقها بشروط: أن تكون عملية التعديل آمنة وموافقة للشرع ولا تُسبِّب ضرراً صحياً، وأن يكون التعديل بين حيوانات يحل أكلها شرعاً، ووجوب الإفصاح عن المعلومات المتعلقة بالمنتج المعدَّل وراثياً وطريقة تحضيره.\n\n**الأدلة:** قرار مجمع الفقه الإسلامي الدولي رقم 266 (11/26) في دورته السادسة والعشرين، الدوحة، قطر (4-8 مايو 2025).",
+    "category": "النوازل المعاصرة",
+    "subcategory": "الأطعمة الحديثة",
+    "subcategories": [
+      "الأطعمة الحديثة"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [],
+    "references": [
+      {
+        "text": "المجمع الفقهي — مسائل فقهية",
+        "source": "الأطعمة والأشربة"
+      }
+    ],
+    "keywords": [
+      "الأطعمة والأشربة",
+      "الأطعمة الحديثة"
+    ],
+    "benefits": [],
+    "importance_score": 78,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-issues-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [
+      "seed-issue-gmo-animal-foods"
+    ],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "issue-ruling-pre-slaughter-stunning",
+    "external_key": "issue-ruling-pre-slaughter-stunning",
+    "title": "صعق الطيور والحيوانات قبل الذبح",
+    "summary": "لم يصدر المجمع حكماً قاطعاً في المسألة بعد، وقرَّر تأجيل البتّ فيها لمزيد من الدراسة.",
+    "body": "مسألة فقهية معاصرة حول أثر تدويخ/صعق الحيوان أو الطائر قبل الذبح (لأغراض الرفق أو التصنيع الآلي) على شرعية الذبح.\n\n**الحكم:** لم يصدر المجمع حكماً قاطعاً في المسألة بعد، وقرَّر تأجيل البتّ فيها لمزيد من الدراسة.\n\n**الأدلة:** قرار مجمع الفقه الإسلامي الدولي رقم 263 (8/26) في دورته السادسة والعشرين، الدوحة، قطر (4-8 مايو 2025)، بعد ندوة علمية مشتركة مع الهيئة العامة للغذاء والدواء السعودية (13-14 يونيو 2022).",
+    "category": "النوازل المعاصرة",
+    "subcategory": "أحكام الذبح",
+    "subcategories": [
+      "أحكام الذبح"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [],
+    "references": [
+      {
+        "text": "المجمع الفقهي — مسائل فقهية",
+        "source": "الأطعمة والأشربة"
+      }
+    ],
+    "keywords": [
+      "الأطعمة والأشربة",
+      "أحكام الذبح"
+    ],
+    "benefits": [],
+    "importance_score": 78,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-issues-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [
+      "seed-issue-pre-slaughter-stunning"
+    ],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "issue-ruling-smart-contracts",
+    "external_key": "issue-ruling-smart-contracts",
+    "title": "العقود الذكية (Smart Contracts)",
+    "summary": "لم يصدر المجمع حكماً قاطعاً في المسألة، وقرَّر تأجيل البتّ فيها لمزيد من الدراسة، مرتبطاً ذلك بحسم مسألة العملات المشفَّرة أولاً، وريثما تُعقَد ندوة متخصصة بمشاركة خبراء تقنيين في هذا المجال.",
+    "body": "مسألة فقهية معاصرة حول حكم العقود التي تُنفَّذ تلقائياً عبر تقنية سلسلة الكتل دون وسيط بشري، وغالباً ما تُستخدَم فيها عملات مشفَّرة.\n\n**الحكم:** لم يصدر المجمع حكماً قاطعاً في المسألة، وقرَّر تأجيل البتّ فيها لمزيد من الدراسة، مرتبطاً ذلك بحسم مسألة العملات المشفَّرة أولاً، وريثما تُعقَد ندوة متخصصة بمشاركة خبراء تقنيين في هذا المجال.\n\n**الأدلة:** قرار مجمع الفقه الإسلامي الدولي رقم 230 (1/24) في دورته الرابعة والعشرين، دبي (4-6 نوفمبر 2019).",
+    "category": "النوازل المعاصرة",
+    "subcategory": "الاقتصاد الرقمي",
+    "subcategories": [
+      "الاقتصاد الرقمي"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [],
+    "references": [
+      {
+        "text": "المجمع الفقهي — مسائل فقهية",
+        "source": "النوازل المعاصرة"
+      }
+    ],
+    "keywords": [
+      "النوازل المعاصرة",
+      "الاقتصاد الرقمي"
+    ],
+    "benefits": [],
+    "importance_score": 78,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-issues-seed",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [
+      "seed-issue-smart-contracts"
+    ],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-42",
@@ -5833,9 +6765,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.759Z",
-    "created_at": "2026-07-17T23:05:11.759Z",
-    "updated_at": "2026-07-17T23:05:11.759Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-43",
@@ -5886,9 +6818,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.759Z",
-    "created_at": "2026-07-17T23:05:11.759Z",
-    "updated_at": "2026-07-17T23:05:11.759Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-44",
@@ -5945,9 +6877,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.759Z",
-    "created_at": "2026-07-17T23:05:11.759Z",
-    "updated_at": "2026-07-17T23:05:11.759Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-45",
@@ -6004,9 +6936,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.759Z",
-    "created_at": "2026-07-17T23:05:11.759Z",
-    "updated_at": "2026-07-17T23:05:11.759Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-46",
@@ -6057,9 +6989,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.759Z",
-    "created_at": "2026-07-17T23:05:11.759Z",
-    "updated_at": "2026-07-17T23:05:11.759Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-80",
@@ -6116,9 +7048,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.759Z",
-    "created_at": "2026-07-17T23:05:11.759Z",
-    "updated_at": "2026-07-17T23:05:11.759Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-92",
@@ -6175,9 +7107,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.759Z",
-    "created_at": "2026-07-17T23:05:11.759Z",
-    "updated_at": "2026-07-17T23:05:11.759Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-144",
@@ -6228,9 +7160,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.759Z",
-    "created_at": "2026-07-17T23:05:11.759Z",
-    "updated_at": "2026-07-17T23:05:11.759Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-145",
@@ -6281,9 +7213,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.759Z",
-    "created_at": "2026-07-17T23:05:11.759Z",
-    "updated_at": "2026-07-17T23:05:11.759Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-146",
@@ -6334,9 +7266,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.759Z",
-    "created_at": "2026-07-17T23:05:11.759Z",
-    "updated_at": "2026-07-17T23:05:11.759Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-147",
@@ -6386,9 +7318,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.759Z",
-    "created_at": "2026-07-17T23:05:11.759Z",
-    "updated_at": "2026-07-17T23:05:11.759Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-148",
@@ -6445,9 +7377,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.759Z",
-    "created_at": "2026-07-17T23:05:11.759Z",
-    "updated_at": "2026-07-17T23:05:11.759Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-179",
@@ -6503,9 +7435,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.759Z",
-    "created_at": "2026-07-17T23:05:11.759Z",
-    "updated_at": "2026-07-17T23:05:11.759Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-225",
@@ -6561,9 +7493,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-235",
@@ -6619,9 +7551,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-271",
@@ -6671,9 +7603,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-272",
@@ -6729,9 +7661,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-275",
@@ -6787,9 +7719,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-276",
@@ -6845,9 +7777,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-278",
@@ -6904,9 +7836,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-279",
@@ -6962,9 +7894,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-280",
@@ -7021,9 +7953,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-281",
@@ -7079,9 +8011,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-282",
@@ -7098,8 +8030,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "sunnah_evidence": [
       {
         "type": "حديث",
-        "text": "رواه البخاري ومسلم",
-        "source": "صحيح البخاري كتاب الأدب"
+        "text": "رواه مسلم (2607) بهذا اللفظ عن عبد الله بن مسعود؛ وأخرجه البخاري (6094) بنحوه دون صيغة الأمر «عليكم»",
+        "source": "صحيح مسلم، كتاب البر والصلة والآداب (2607)؛ صحيح البخاري، كتاب الأدب (6094)"
       }
     ],
     "scholar_opinions": [],
@@ -7107,14 +8039,14 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "evidence": [
       {
         "type": "حديث",
-        "text": "رواه البخاري ومسلم",
-        "source": "صحيح البخاري كتاب الأدب"
+        "text": "رواه مسلم (2607) بهذا اللفظ عن عبد الله بن مسعود؛ وأخرجه البخاري (6094) بنحوه دون صيغة الأمر «عليكم»",
+        "source": "صحيح مسلم، كتاب البر والصلة والآداب (2607)؛ صحيح البخاري، كتاب الأدب (6094)"
       }
     ],
     "references": [
       {
-        "text": "صحيح البخاري كتاب الأدب",
-        "source": "صحيح البخاري كتاب الأدب"
+        "text": "صحيح مسلم، كتاب البر والصلة والآداب (2607)؛ صحيح البخاري، كتاب الأدب (6094)",
+        "source": "صحيح مسلم، كتاب البر والصلة والآداب (2607)؛ صحيح البخاري، كتاب الأدب (6094)"
       }
     ],
     "keywords": [
@@ -7138,9 +8070,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-283",
@@ -7197,9 +8129,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-284",
@@ -7255,9 +8187,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-286",
@@ -7314,9 +8246,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-288",
@@ -7372,9 +8304,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-290",
@@ -7430,9 +8362,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-292",
@@ -7489,9 +8421,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-293",
@@ -7548,9 +8480,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-294",
@@ -7607,9 +8539,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-295",
@@ -7666,9 +8598,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-296",
@@ -7724,9 +8656,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-297",
@@ -7782,16 +8714,16 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-298",
     "external_key": "qa-ruling-seed-qa-298",
     "title": "حكم الكذب في الإسلام؟",
-    "summary": "الكذب محرَّم شرعاً وهو من الكبائر المُهلِكة. قال النبي صلى الله عليه وسلم: (إياكم والكذب؛ فإن الكذب يهدي إلى الفجور، وإن الفجور يهدي إلى النار). رواه البخاري وم",
-    "body": "**السؤال:** ما حكم الكذب في الإسلام؟\n\n**الجواب:** الكذب محرَّم شرعاً وهو من الكبائر المُهلِكة. قال النبي صلى الله عليه وسلم: (إياكم والكذب؛ فإن الكذب يهدي إلى الفجور، وإن الفجور يهدي إلى النار). رواه البخاري ومسلم. ويُستثنى منه الكذب لإصلاح ذات البين، ولإنقاذ حياة، وللحرب.",
+    "summary": "الكذب محرَّم شرعاً وهو من الكبائر المُهلِكة. قال النبي صلى الله عليه وسلم: (وإياكم والكذب؛ فإن الكذب يهدي إلى الفجور، وإن الفجور يهدي إلى النار). رواه مسلم بهذا",
+    "body": "**السؤال:** ما حكم الكذب في الإسلام؟\n\n**الجواب:** الكذب محرَّم شرعاً وهو من الكبائر المُهلِكة. قال النبي صلى الله عليه وسلم: (وإياكم والكذب؛ فإن الكذب يهدي إلى الفجور، وإن الفجور يهدي إلى النار). رواه مسلم بهذا اللفظ، وأخرجه البخاري بنحوه. ويُستثنى منه الكذب لإصلاح ذات البين، ولإنقاذ حياة، وللحرب.",
     "category": "الأخلاق والآداب",
     "subcategory": "الآداب",
     "subcategories": [
@@ -7801,8 +8733,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "sunnah_evidence": [
       {
         "type": "حديث",
-        "text": "رواه البخاري ومسلم",
-        "source": "صحيح البخاري كتاب الأدب"
+        "text": "رواه مسلم (2607) بهذا اللفظ عن عبد الله بن مسعود؛ وأخرجه البخاري (6094) بنحوه دون صيغة الأمر «إياكم»",
+        "source": "صحيح مسلم، كتاب البر والصلة والآداب (2607)؛ صحيح البخاري، كتاب الأدب (6094)"
       }
     ],
     "scholar_opinions": [],
@@ -7810,14 +8742,14 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "evidence": [
       {
         "type": "حديث",
-        "text": "رواه البخاري ومسلم",
-        "source": "صحيح البخاري كتاب الأدب"
+        "text": "رواه مسلم (2607) بهذا اللفظ عن عبد الله بن مسعود؛ وأخرجه البخاري (6094) بنحوه دون صيغة الأمر «إياكم»",
+        "source": "صحيح مسلم، كتاب البر والصلة والآداب (2607)؛ صحيح البخاري، كتاب الأدب (6094)"
       }
     ],
     "references": [
       {
-        "text": "صحيح البخاري كتاب الأدب",
-        "source": "صحيح البخاري كتاب الأدب"
+        "text": "صحيح مسلم، كتاب البر والصلة والآداب (2607)؛ صحيح البخاري، كتاب الأدب (6094)",
+        "source": "صحيح مسلم، كتاب البر والصلة والآداب (2607)؛ صحيح البخاري، كتاب الأدب (6094)"
       }
     ],
     "keywords": [
@@ -7841,16 +8773,16 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-299",
     "external_key": "qa-ruling-seed-qa-299",
     "title": "ثواب زيارة المريض في الإسلام؟",
-    "summary": "زيارة المريض من حقوق المسلم على المسلم، وقد قال النبي صلى الله عليه وسلم: (إن الله يقول يوم القيامة: يا ابن آدم مَرِضتُ فلم تَعُدني...). وللزائر نزهة في خرافة ا",
-    "body": "**السؤال:** ما ثواب زيارة المريض في الإسلام؟\n\n**الجواب:** زيارة المريض من حقوق المسلم على المسلم، وقد قال النبي صلى الله عليه وسلم: (إن الله يقول يوم القيامة: يا ابن آدم مَرِضتُ فلم تَعُدني...). وللزائر نزهة في خرافة الجنة حتى يرجع. رواه مسلم.",
+    "summary": "زيارة المريض من حقوق المسلم على المسلم، وقد قال النبي صلى الله عليه وسلم: (إن الله يقول يوم القيامة: يا ابن آدم مَرِضتُ فلم تَعُدني...). ومن عاد مريضاً لم يزل ف",
+    "body": "**السؤال:** ما ثواب زيارة المريض في الإسلام؟\n\n**الجواب:** زيارة المريض من حقوق المسلم على المسلم، وقد قال النبي صلى الله عليه وسلم: (إن الله يقول يوم القيامة: يا ابن آدم مَرِضتُ فلم تَعُدني...). ومن عاد مريضاً لم يزل في خُرفة الجنة حتى يرجع. رواه مسلم.",
     "category": "الأخلاق والآداب",
     "subcategory": "الآداب",
     "subcategories": [
@@ -7900,9 +8832,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-300",
@@ -7958,9 +8890,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-301",
@@ -8016,9 +8948,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-303",
@@ -8075,36 +9007,42 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-304",
     "external_key": "qa-ruling-seed-qa-304",
     "title": "حكم قراءة الفاتحة للمأموم خلف الإمام؟",
-    "summary": "اختلف العلماء: فذهب الشافعية والحنابلة إلى وجوبها على المأموم في السرية والجهرية. وذهب الحنفية إلى عدم وجوبها على المأموم اكتفاءً بقراءة الإمام. ومذهب المالكية ",
-    "body": "**السؤال:** ما حكم قراءة الفاتحة للمأموم خلف الإمام؟\n\n**الجواب:** اختلف العلماء: فذهب الشافعية والحنابلة إلى وجوبها على المأموم في السرية والجهرية. وذهب الحنفية إلى عدم وجوبها على المأموم اكتفاءً بقراءة الإمام. ومذهب المالكية التفريق بين السرية (تجب) والجهرية (لا تجب). والراجح وجوبها.",
+    "summary": "اختلف العلماء: فذهب الشافعية إلى وجوبها على المأموم في السرية والجهرية معاً. وذهب الحنفية إلى عدم وجوبها عليه اكتفاءً بقراءة الإمام. ومذهب المالكية ندبها في الس",
+    "body": "**السؤال:** ما حكم قراءة الفاتحة للمأموم خلف الإمام؟\n\n**الجواب:** اختلف العلماء: فذهب الشافعية إلى وجوبها على المأموم في السرية والجهرية معاً. وذهب الحنفية إلى عدم وجوبها عليه اكتفاءً بقراءة الإمام. ومذهب المالكية ندبها في السرية وكراهتها في الجهرية. ومذهب الحنابلة عدم وجوبها على المأموم لا في السرية ولا في الجهرية؛ قال ابن قدامة في المغني: «القراءة غير واجبة على المأموم فيما جهر به الإمام ولا فيما أسرّ به»، ويُستحب عندهم أن يقرأها في سكتات الإمام وفيما أسرّ فيه. ومن رجّح الوجوب استدل بحديث: «لا صلاة لمن لم يقرأ بفاتحة الكتاب»، ومن لم يوجبها استدل بقوله تعالى: ﴿وَإِذَا قُرِئَ الْقُرْآنُ فَاسْتَمِعُوا لَهُ وَأَنْصِتُوا﴾.",
     "category": "الصلاة",
     "subcategory": "أحكام الصلاة",
     "subcategories": [
       "أحكام الصلاة"
     ],
-    "quran_evidence": [],
+    "quran_evidence": [
+      {
+        "type": "قرآن",
+        "text": "«لا صلاة لمن لم يقرأ بفاتحة الكتاب» — متفق عليه؛ وسورة الأعراف: 204",
+        "source": "المغني لابن قدامة؛ كشاف القناع للبهوتي؛ الموسوعة الفقهية الكويتية"
+      }
+    ],
     "sunnah_evidence": [],
     "scholar_opinions": [],
     "prevailing_view": "خلاف",
     "evidence": [
       {
-        "type": "دليل",
-        "text": "«لا صلاة لمن لم يقرأ بفاتحة الكتاب» — متفق عليه",
-        "source": "المغني لابن قدامة"
+        "type": "قرآن",
+        "text": "«لا صلاة لمن لم يقرأ بفاتحة الكتاب» — متفق عليه؛ وسورة الأعراف: 204",
+        "source": "المغني لابن قدامة؛ كشاف القناع للبهوتي؛ الموسوعة الفقهية الكويتية"
       }
     ],
     "references": [
       {
-        "text": "المغني لابن قدامة",
-        "source": "المغني لابن قدامة"
+        "text": "المغني لابن قدامة؛ كشاف القناع للبهوتي؛ الموسوعة الفقهية الكويتية",
+        "source": "المغني لابن قدامة؛ كشاف القناع للبهوتي؛ الموسوعة الفقهية الكويتية"
       }
     ],
     "keywords": [
@@ -8128,9 +9066,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-306",
@@ -8181,9 +9119,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-307",
@@ -8239,9 +9177,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-308",
@@ -8297,9 +9235,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-309",
@@ -8355,16 +9293,16 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-310",
     "external_key": "qa-ruling-seed-qa-310",
     "title": "حكم الصيام في يوم الشك (الثلاثين من شعبان)؟",
-    "summary": "يوم الشك هو اليوم الثلاثون من شعبان إذا لم يُرَ الهلال ولم يكتمل العدد. والراجح عند جمهور العلماء تحريم صيامه احتياطاً إلا إن صادف عادة صيام كالاثنين والخميس. ق",
-    "body": "**السؤال:** ما حكم الصيام في يوم الشك (الثلاثين من شعبان)؟\n\n**الجواب:** يوم الشك هو اليوم الثلاثون من شعبان إذا لم يُرَ الهلال ولم يكتمل العدد. والراجح عند جمهور العلماء تحريم صيامه احتياطاً إلا إن صادف عادة صيام كالاثنين والخميس. قال النبي ﷺ: «لا تقدموا رمضان بصوم يوم أو يومين».",
+    "summary": "يوم الشك هو اليوم الثلاثون من شعبان إذا لم يُرَ الهلال ولم يكتمل العدد. واتفق العلماء على النهي عن صيامه بنيّة الاحتياط لرمضان، واختلفوا في درجة النهي: فذهب الح",
+    "body": "**السؤال:** ما حكم الصيام في يوم الشك (الثلاثين من شعبان)؟\n\n**الجواب:** يوم الشك هو اليوم الثلاثون من شعبان إذا لم يُرَ الهلال ولم يكتمل العدد. واتفق العلماء على النهي عن صيامه بنيّة الاحتياط لرمضان، واختلفوا في درجة النهي: فذهب الحنفية والمالكية والحنابلة إلى الكراهة، وذهب أكثر الشافعية إلى التحريم وعدم صحّة صومه. ولا يدخل في النهي من صادف عادة صيام له كالاثنين والخميس أو صيام قضاء أو نذر. قال النبي ﷺ: «لا تقدموا رمضان بصوم يوم أو يومين».",
     "category": "الصيام",
     "subcategory": "صيام رمضان",
     "subcategories": [
@@ -8373,7 +9311,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "quran_evidence": [],
     "sunnah_evidence": [],
     "scholar_opinions": [],
-    "prevailing_view": "تحريم",
+    "prevailing_view": "خلاف",
     "evidence": [
       {
         "type": "دليل",
@@ -8408,9 +9346,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-311",
@@ -8466,9 +9404,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-312",
@@ -8525,9 +9463,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-313",
@@ -8584,16 +9522,16 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-314",
     "external_key": "qa-ruling-seed-qa-314",
     "title": "يجوز قراءة القرآن الكريم بدون وضوء؟",
-    "summary": "يجوز قراءة القرآن من الذاكرة بدون وضوء بالنسبة للمحدث حدثاً أصغر عند جمهور العلماء. أما لمس المصحف فيشترط له الطهارة من الحدث الأصغر عند جمهور الفقهاء لقوله تعا",
-    "body": "**السؤال:** هل يجوز قراءة القرآن الكريم بدون وضوء؟\n\n**الجواب:** يجوز قراءة القرآن من الذاكرة بدون وضوء بالنسبة للمحدث حدثاً أصغر عند جمهور العلماء. أما لمس المصحف فيشترط له الطهارة من الحدث الأصغر عند جمهور الفقهاء لقوله تعالى: ﴿لَّا يَمَسُّهُ إِلَّا الْمُطَهَّرُونَ﴾، وهو قول مالك والشافعي وأحمد. أما الجنب فيحرم عليه القراءة مطلقاً حتى يغتسل عند جمهور العلماء.",
+    "summary": "يجوز قراءة القرآن من الذاكرة بدون وضوء بالنسبة للمحدث حدثاً أصغر عند جمهور العلماء. أما لمس المصحف فيشترط له الطهارة من الحدث الأصغر عند جمهور الفقهاء، وهو قول ",
+    "body": "**السؤال:** هل يجوز قراءة القرآن الكريم بدون وضوء؟\n\n**الجواب:** يجوز قراءة القرآن من الذاكرة بدون وضوء بالنسبة للمحدث حدثاً أصغر عند جمهور العلماء. أما لمس المصحف فيشترط له الطهارة من الحدث الأصغر عند جمهور الفقهاء، وهو قول مالك والشافعي وأحمد. أما الجنب فيمنع من القراءة حتى يغتسل عند جمهور العلماء؛ لحديث عليّ رضي الله عنه: «كان رسول الله ﷺ يُقرئنا القرآن ما لم يكن جُنُباً».",
     "category": "القرآن والحديث",
     "subcategory": "أحكام القرآن",
     "subcategories": [
@@ -8602,15 +9540,15 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "quran_evidence": [
       {
         "type": "قرآن",
-        "text": "سورة الواقعة (79)، وحديث «لا تقرأ الجنب شيئاً» — أبو داود",
-        "source": "المغني لابن قدامة، المجموع للنووي"
+        "text": "حديث عليّ: «كان رسول الله ﷺ يُقرئنا القرآن ما لم يكن جُنُباً» — رواه أبو داود (229) والترمذي (146) وقال: حسن صحيح، والنسائي وابن ماجه",
+        "source": "المغني لابن قدامة، المجموع للنووي، سنن الترمذي (146)"
       }
     ],
     "sunnah_evidence": [
       {
         "type": "قرآن",
-        "text": "سورة الواقعة (79)، وحديث «لا تقرأ الجنب شيئاً» — أبو داود",
-        "source": "المغني لابن قدامة، المجموع للنووي"
+        "text": "حديث عليّ: «كان رسول الله ﷺ يُقرئنا القرآن ما لم يكن جُنُباً» — رواه أبو داود (229) والترمذي (146) وقال: حسن صحيح، والنسائي وابن ماجه",
+        "source": "المغني لابن قدامة، المجموع للنووي، سنن الترمذي (146)"
       }
     ],
     "scholar_opinions": [],
@@ -8618,14 +9556,14 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "evidence": [
       {
         "type": "قرآن",
-        "text": "سورة الواقعة (79)، وحديث «لا تقرأ الجنب شيئاً» — أبو داود",
-        "source": "المغني لابن قدامة، المجموع للنووي"
+        "text": "حديث عليّ: «كان رسول الله ﷺ يُقرئنا القرآن ما لم يكن جُنُباً» — رواه أبو داود (229) والترمذي (146) وقال: حسن صحيح، والنسائي وابن ماجه",
+        "source": "المغني لابن قدامة، المجموع للنووي، سنن الترمذي (146)"
       }
     ],
     "references": [
       {
-        "text": "المغني لابن قدامة، المجموع للنووي",
-        "source": "المغني لابن قدامة، المجموع للنووي"
+        "text": "المغني لابن قدامة، المجموع للنووي، سنن الترمذي (146)",
+        "source": "المغني لابن قدامة، المجموع للنووي، سنن الترمذي (146)"
       }
     ],
     "keywords": [
@@ -8649,9 +9587,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-315",
@@ -8708,9 +9646,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-316",
@@ -8761,16 +9699,16 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-317",
     "external_key": "qa-ruling-seed-qa-317",
     "title": "يجب على المرأة إذن الزوج لصيام التطوع؟",
-    "summary": "نعم، يشترط إذن الزوج لصيام التطوع عند وجوده في البيت؛ لحديث: «لا تصوم المرأة وبعلها شاهد إلا بإذنه» — رواه البخاري (5192) ومسلم (1026). أما صيام الفرض (رمضان وا",
-    "body": "**السؤال:** هل يجب على المرأة إذن الزوج لصيام التطوع؟\n\n**الجواب:** نعم، يشترط إذن الزوج لصيام التطوع عند وجوده في البيت؛ لحديث: «لا تصوم المرأة وبعلها شاهد إلا بإذنه» — رواه البخاري (5192) ومسلم (1026). أما صيام الفرض (رمضان والقضاء والنذر) فلا يحتاج إذناً. والحكمة: حفظ حق الزوج في الاستمتاع. فإن غاب الزوج أو أذن فلا إشكال.",
+    "summary": "نعم، يشترط إذن الزوج لصيام التطوع عند وجوده في البيت؛ لحديث: «لا تصوم المرأة وبعلها شاهد إلا بإذنه» — رواه البخاري (5195) ومسلم (1026). أما صيام الفرض (رمضان وا",
+    "body": "**السؤال:** هل يجب على المرأة إذن الزوج لصيام التطوع؟\n\n**الجواب:** نعم، يشترط إذن الزوج لصيام التطوع عند وجوده في البيت؛ لحديث: «لا تصوم المرأة وبعلها شاهد إلا بإذنه» — رواه البخاري (5195) ومسلم (1026). أما صيام الفرض (رمضان والقضاء والنذر) فلا يحتاج إذناً. والحكمة: حفظ حق الزوج في الاستمتاع. فإن غاب الزوج أو أذن فلا إشكال.",
     "category": "الصيام",
     "subcategory": "صيام رمضان",
     "subcategories": [
@@ -8780,7 +9718,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "sunnah_evidence": [
       {
         "type": "حديث",
-        "text": "رواه البخاري (5192)، ومسلم (1026)",
+        "text": "رواه البخاري (5195)، ومسلم (1026)",
         "source": "شرح النووي على مسلم"
       }
     ],
@@ -8789,7 +9727,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "evidence": [
       {
         "type": "حديث",
-        "text": "رواه البخاري (5192)، ومسلم (1026)",
+        "text": "رواه البخاري (5195)، ومسلم (1026)",
         "source": "شرح النووي على مسلم"
       }
     ],
@@ -8820,9 +9758,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-318",
@@ -8879,9 +9817,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-319",
@@ -8938,16 +9876,16 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-320",
     "external_key": "qa-ruling-seed-qa-320",
     "title": "الفرق بين الصبر والرضا والشكر؟ وأيّها أعلى مرتبة؟",
     "summary": "الصبر: حبس النفس عن الجزع وكفّ اللسان عن التشكي وكف الجوارح عن التسخط — وهو واجب. الرضا: قبول القلب للقضاء وعدم تمنّيه لو كان غيره — وهو مستحب. الشكر: استعمال ن",
-    "body": "**السؤال:** ما الفرق بين الصبر والرضا والشكر؟ وأيّها أعلى مرتبة؟\n\n**الجواب:** الصبر: حبس النفس عن الجزع وكفّ اللسان عن التشكي وكف الجوارح عن التسخط — وهو واجب. الرضا: قبول القلب للقضاء وعدم تمنّيه لو كان غيره — وهو مستحب. الشكر: استعمال نعم الله في طاعته بالقلب واللسان والجوارح — وهو أعلى المقامات. قال ابن القيم: «الشكر على النعمة أعلى من الصبر على البلاء». والكمال الجمع بين الثلاثة.",
+    "body": "**السؤال:** ما الفرق بين الصبر والرضا والشكر؟ وأيّها أعلى مرتبة؟\n\n**الجواب:** الصبر: حبس النفس عن الجزع وكفّ اللسان عن التشكي وكف الجوارح عن التسخط — وهو واجب. الرضا: قبول القلب للقضاء وعدم تمنّيه لو كان غيره — وهو مستحب. الشكر: استعمال نعم الله في طاعته بالقلب واللسان والجوارح — وهو من أعلى المقامات. وقد بسط ابن القيم في مدارج السالكين مسألة المفاضلة بين الصابر والشاكر ورجّح أن الكمال في اجتماع الوصفين في العبد، فيكون صابراً شاكراً معاً.",
     "category": "الأخلاق والآداب",
     "subcategory": "الآداب",
     "subcategories": [
@@ -8991,9 +9929,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-321",
@@ -9050,9 +9988,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-322",
@@ -9109,16 +10047,16 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-323",
     "external_key": "qa-ruling-seed-qa-323",
     "title": "الفرق بين المجتهد والمقلِّد والمتّبع؟",
     "summary": "المجتهد: هو العالم المستوفي شروط الاجتهاد الذي يستنبط الأحكام من الأدلة التفصيلية. المقلِّد: هو من يأخذ بقول العالم دون معرفة دليله. المتّبع: هو من يأخذ بقول ال",
-    "body": "**السؤال:** ما الفرق بين المجتهد والمقلِّد والمتّبع؟\n\n**الجواب:** المجتهد: هو العالم المستوفي شروط الاجتهاد الذي يستنبط الأحكام من الأدلة التفصيلية. المقلِّد: هو من يأخذ بقول العالم دون معرفة دليله. المتّبع: هو من يأخذ بقول العالم مع معرفة دليله والاقتناع به — وهو أعلى درجة من المقلد. قال ابن القيم: «المراتب ثلاث: اجتهاد واتباع وتقليد». وعامة الناس مقلّدون، وهو جائز لمن لا يستطيع الاجتهاد.",
+    "body": "**السؤال:** ما الفرق بين المجتهد والمقلِّد والمتّبع؟\n\n**الجواب:** المجتهد: هو العالم المستوفي شروط الاجتهاد الذي يستنبط الأحكام من الأدلة التفصيلية. المقلِّد: هو من يأخذ بقول العالم دون معرفة دليله. المتّبع: هو من يأخذ بقول العالم مع معرفة دليله والاقتناع به — وهو أعلى درجة من المقلد. وقد فرّق ابن القيم في إعلام الموقعين بين الاتباع والتقليد، وأطال في ذمّ التقليد المحض الذي يُؤخذ فيه القول بلا حجة. وعامة الناس مقلّدون، وهو جائز لمن لا يستطيع الاجتهاد.",
     "category": "القرآن والحديث",
     "subcategory": "أحكام الحديث",
     "subcategories": [
@@ -9162,9 +10100,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-324",
@@ -9215,9 +10153,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-325",
@@ -9274,9 +10212,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-326",
@@ -9293,7 +10231,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "sunnah_evidence": [
       {
         "type": "حديث",
-        "text": "البقرة — 282؛ حديث «مطل الغني ظلم» متفق عليه — رواه البخاري ومسلم عن أبي هريرة",
+        "text": "البقرة — 282؛ حديث «مطل الغني ظلم» — رواه البخاري (2287) ومسلم (1564) عن أبي هريرة",
         "source": "المغني — ابن قدامة، الفقه الإسلامي — الزحيلي"
       }
     ],
@@ -9302,7 +10240,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "evidence": [
       {
         "type": "حديث",
-        "text": "البقرة — 282؛ حديث «مطل الغني ظلم» متفق عليه — رواه البخاري ومسلم عن أبي هريرة",
+        "text": "البقرة — 282؛ حديث «مطل الغني ظلم» — رواه البخاري (2287) ومسلم (1564) عن أبي هريرة",
         "source": "المغني — ابن قدامة، الفقه الإسلامي — الزحيلي"
       }
     ],
@@ -9333,9 +10271,9 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
     "id": "qa-ruling-seed-qa-327",
@@ -9349,13 +10287,19 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
       "الآداب"
     ],
     "quran_evidence": [],
-    "sunnah_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "حديث أبي مالك الأشعري: «ليكوننَّ من أمتي أقوام يستحلون الحِرَ والحرير والخمر والمعازف» — صحيح البخاري (5590)، أورده معلقًا بصيغة الجزم ووصله غيره",
+        "source": "فتاوى ابن باز، إغاثة اللهفان — ابن القيم"
+      }
+    ],
     "scholar_opinions": [],
     "prevailing_view": "خلافية",
     "evidence": [
       {
-        "type": "دليل",
-        "text": "أحاديث تحريم المعازف",
+        "type": "حديث",
+        "text": "حديث أبي مالك الأشعري: «ليكوننَّ من أمتي أقوام يستحلون الحِرَ والحرير والخمر والمعازف» — صحيح البخاري (5590)، أورده معلقًا بصيغة الجزم ووصله غيره",
         "source": "فتاوى ابن باز، إغاثة اللهفان — ابن القيم"
       }
     ],
@@ -9386,1006 +10330,10 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     ],
     "linked_fatwa_ids": [],
     "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-328",
-    "external_key": "qa-ruling-seed-qa-328",
-    "title": "أنواع الزكاة وعلى ماذا تجب؟",
-    "summary": "الزكاة تجب على: 1) الذهب والفضة والعملات النقدية (نصابها 85 غراماً للذهب — 2.5%). 2) عروض التجارة (نصابها كالنقود — 2.5%). 3) الزروع والثمار (نصابها 5 أوسق — ال",
-    "body": "**السؤال:** ما أنواع الزكاة وعلى ماذا تجب؟\n\n**الجواب:** الزكاة تجب على: 1) الذهب والفضة والعملات النقدية (نصابها 85 غراماً للذهب — 2.5%). 2) عروض التجارة (نصابها كالنقود — 2.5%). 3) الزروع والثمار (نصابها 5 أوسق — العُشر أو نصفه). 4) الأنعام: الإبل والبقر والغنم (بنصب وأسنان محددة). 5) الركاز (الكنز المدفون — خمسه). 6) زكاة الفطر: صاع من طعام البلد على كل مسلم قادر. شرطها: الإسلام والحرية والنصاب وحولان الحول (في غير الزروع).",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "فقهية",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "أحاديث الزكاة في الصحيحين",
-        "source": "المغني — ابن قدامة، فقه الزكاة — القرضاوي"
-      }
-    ],
-    "references": [
-      {
-        "text": "المغني — ابن قدامة، فقه الزكاة — القرضاوي",
-        "source": "المغني — ابن قدامة، فقه الزكاة — القرضاوي"
-      }
-    ],
-    "keywords": [
-      "زكاة المال",
-      "zakat",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-328"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-329",
-    "external_key": "qa-ruling-seed-qa-329",
-    "title": "حكم الحج للمرأة دون محرم؟",
-    "summary": "اشترط جمهور العلماء المحرم للمرأة في الحج لحديث «لا تسافر المرأة إلا مع ذي محرم» (متفق عليه). وذهب المالكية وبعض الفقهاء إلى جوازه مع جماعة مأمونة من النساء الث",
-    "body": "**السؤال:** ما حكم الحج للمرأة دون محرم؟\n\n**الجواب:** اشترط جمهور العلماء المحرم للمرأة في الحج لحديث «لا تسافر المرأة إلا مع ذي محرم» (متفق عليه). وذهب المالكية وبعض الفقهاء إلى جوازه مع جماعة مأمونة من النساء الثقات أو مع رفقة آمنة. والراجح والأحوط: اشتراط المحرم تطبيقاً للحديث. أما إن عجزت عن الحج بسبب فقد المحرم فتسقط عنها الفريضة ولا إثم عليها، والله يقول: ﴿وَلِلَّهِ عَلَى النَّاسِ حِجُّ الْبَيْتِ مَنِ اسْتَطَاعَ إِلَيْهِ سَبِيلًا﴾.",
-    "category": "الحج والعمرة",
-    "subcategory": "أحكام الحج",
-    "subcategories": [
-      "أحكام الحج"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "صحيح البخاري ومسلم — حديث المحرم",
-        "source": "المغني، الشرح الممتع — ابن عثيمين"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "خلافية",
-    "evidence": [
-      {
-        "type": "حديث",
-        "text": "صحيح البخاري ومسلم — حديث المحرم",
-        "source": "المغني، الشرح الممتع — ابن عثيمين"
-      }
-    ],
-    "references": [
-      {
-        "text": "المغني، الشرح الممتع — ابن عثيمين",
-        "source": "المغني، الشرح الممتع — ابن عثيمين"
-      }
-    ],
-    "keywords": [
-      "أحكام الحج",
-      "hajj",
-      "الحج والعمرة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-329"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-330",
-    "external_key": "qa-ruling-seed-qa-330",
-    "title": "أركان الإيمان الستة؟ واذكر دليلاً من القرآن.",
-    "summary": "أركان الإيمان الستة: 1) الإيمان بالله. 2) الإيمان بالملائكة. 3) الإيمان بالكتب. 4) الإيمان بالرسل. 5) الإيمان باليوم الآخر. 6) الإيمان بالقدر خيره وشره. الدليل ",
-    "body": "**السؤال:** ما أركان الإيمان الستة؟ واذكر دليلاً من القرآن.\n\n**الجواب:** أركان الإيمان الستة: 1) الإيمان بالله. 2) الإيمان بالملائكة. 3) الإيمان بالكتب. 4) الإيمان بالرسل. 5) الإيمان باليوم الآخر. 6) الإيمان بالقدر خيره وشره. الدليل القرآني: ﴿آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ﴾ (البقرة — 285). والدليل على القدر: جاء في حديث جبريل المشهور في صحيح مسلم.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
-    "subcategories": [
-      "الإيمان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "البقرة — 285، حديث جبريل — صحيح مسلم",
-        "source": "العقيدة الواسطية — ابن تيمية"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "تأصيل",
-    "evidence": [
-      {
-        "type": "حديث",
-        "text": "البقرة — 285، حديث جبريل — صحيح مسلم",
-        "source": "العقيدة الواسطية — ابن تيمية"
-      }
-    ],
-    "references": [
-      {
-        "text": "العقيدة الواسطية — ابن تيمية",
-        "source": "العقيدة الواسطية — ابن تيمية"
-      }
-    ],
-    "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-330"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-331",
-    "external_key": "qa-ruling-seed-qa-331",
-    "title": "حكم قراءة القرآن بدون وضوء؟",
-    "summary": "اختلف الفقهاء في هذه المسألة: ذهب جمهور الفقهاء (المالكية والشافعية والحنابلة) إلى اشتراط الوضوء لمسّ المصحف استدلالاً بقوله تعالى: ﴿لَّا يَمَسُّهُ إِلَّا الْمُ",
-    "body": "**السؤال:** ما حكم قراءة القرآن بدون وضوء؟\n\n**الجواب:** اختلف الفقهاء في هذه المسألة: ذهب جمهور الفقهاء (المالكية والشافعية والحنابلة) إلى اشتراط الوضوء لمسّ المصحف استدلالاً بقوله تعالى: ﴿لَّا يَمَسُّهُ إِلَّا الْمُطَهَّرُونَ﴾ (الواقعة — 79). أما القراءة من حفظ فبلا خلاف لا يُشترط لها الوضوء. وذهب بعض أهل العلم إلى إباحة مس المصحف لغير المتوضئ للحاجة. والمذهب الحنفي يُجيز مسّه بالكُمّ أو بحائل. والاحتياط الوضوء لمسّ المصحف.",
-    "category": "القرآن والحديث",
-    "subcategory": "أحكام القرآن",
-    "subcategories": [
-      "أحكام القرآن"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "حكم شرعي",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "الواقعة — 79",
-        "source": "المجموع — النووي، فتح الباري — ابن حجر"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجموع — النووي، فتح الباري — ابن حجر",
-        "source": "المجموع — النووي، فتح الباري — ابن حجر"
-      }
-    ],
-    "keywords": [
-      "أحكام القرآن",
-      "quran",
-      "القرآن"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-331"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-332",
-    "external_key": "qa-ruling-seed-qa-332",
-    "title": "حكم الصدقة الجارية وما أفضل صورها؟",
-    "summary": "الصدقة الجارية مشروعة ومستحبة استحباباً مؤكداً، وهي من أفضل الأعمال التي ينتفع بها الإنسان بعد موته. الدليل: قال النبي ﷺ: 'إذا مات الإنسان انقطع عنه عمله إلا من",
-    "body": "**السؤال:** ما حكم الصدقة الجارية وما أفضل صورها؟\n\n**الجواب:** الصدقة الجارية مشروعة ومستحبة استحباباً مؤكداً، وهي من أفضل الأعمال التي ينتفع بها الإنسان بعد موته. الدليل: قال النبي ﷺ: 'إذا مات الإنسان انقطع عنه عمله إلا من ثلاثة: إلا من صدقة جارية، أو علم يُنتفع به، أو ولد صالح يدعو له' (رواه مسلم). أفضل صورها: (1) بناء المساجد. (2) حفر الآبار وتوفير المياه. (3) تحبيس المصاحف ونشر العلم. (4) كفالة الأيتام والمساكين. (5) بناء المدارس والمستشفيات. والوقف هو الصيغة الشرعية المنظّمة للصدقة الجارية.",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "حكم شرعي",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "صحيح مسلم — كتاب الوصية",
-        "source": "المغني — ابن قدامة، رياض الصالحين"
-      }
-    ],
-    "references": [
-      {
-        "text": "المغني — ابن قدامة، رياض الصالحين",
-        "source": "المغني — ابن قدامة، رياض الصالحين"
-      }
-    ],
-    "keywords": [
-      "زكاة المال",
-      "zakat",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-332"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-333",
-    "external_key": "qa-ruling-seed-qa-333",
-    "title": "الفرق بين الإسلام والإيمان والإحسان؟",
-    "summary": "هذه المراتب الثلاث جاءت في حديث جبريل الشهير المتفق عليه وهو من أجمع الأحاديث: (1) الإسلام: هو الاستسلام الظاهر بالأركان الخمسة — الشهادتان، الصلاة، الزكاة، الص",
-    "body": "**السؤال:** ما الفرق بين الإسلام والإيمان والإحسان؟\n\n**الجواب:** هذه المراتب الثلاث جاءت في حديث جبريل الشهير المتفق عليه وهو من أجمع الأحاديث: (1) الإسلام: هو الاستسلام الظاهر بالأركان الخمسة — الشهادتان، الصلاة، الزكاة، الصوم، الحج. (2) الإيمان: وهو التصديق الباطن بالأركان الستة — الله، الملائكة، الكتب، الرسل، اليوم الآخر، القدر. (3) الإحسان: مرتبة أعلى وهي 'أن تعبد الله كأنك تراه، فإن لم تكن تراه فإنه يراك'. الفقه الأكبر يفرّق بين هذه المستويات ويُرتّبها تصاعدياً في الكمال الديني.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
-    "subcategories": [
-      "الإيمان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "حديث جبريل — صحيح البخاري ومسلم",
-        "source": "شرح النووي على مسلم، جامع العلوم والحكم — ابن رجب"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "تأصيل",
-    "evidence": [
-      {
-        "type": "حديث",
-        "text": "حديث جبريل — صحيح البخاري ومسلم",
-        "source": "شرح النووي على مسلم، جامع العلوم والحكم — ابن رجب"
-      }
-    ],
-    "references": [
-      {
-        "text": "شرح النووي على مسلم، جامع العلوم والحكم — ابن رجب",
-        "source": "شرح النووي على مسلم، جامع العلوم والحكم — ابن رجب"
-      }
-    ],
-    "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-333"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-334",
-    "external_key": "qa-ruling-seed-qa-334",
-    "title": "أحكام صلاة الجماعة وهل هي فرض عين أم فرض كفاية؟",
-    "summary": "اختلف الفقهاء في حكم صلاة الجماعة للرجل القادر على ثلاثة أقوال: (1) فرض عين: وهو قول الحنابلة ورواية عند الشافعي، استدلالاً بظاهر الأمر في قوله تعالى: ﴿وَارْكَع",
-    "body": "**السؤال:** ما أحكام صلاة الجماعة وهل هي فرض عين أم فرض كفاية؟\n\n**الجواب:** اختلف الفقهاء في حكم صلاة الجماعة للرجل القادر على ثلاثة أقوال: (1) فرض عين: وهو قول الحنابلة ورواية عند الشافعي، استدلالاً بظاهر الأمر في قوله تعالى: ﴿وَارْكَعُوا مَعَ الرَّاكِعِينَ﴾ وأن النبي ﷺ هَمّ بحرق بيوت المتخلفين. (2) فرض كفاية: وهو قول الشافعية في الأصح، فإذا أقامها بعضهم سقطت عن الباقين. (3) سنة مؤكدة: وهو قول المالكية والحنفية. والقول بوجوبها على الأعيان هو الأحوط، ومن تركها بلا عذر فهو آثم في أصح القولين.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "البقرة — 43، حديث الأعمى — صحيح مسلم",
-        "source": "المغني — ابن قدامة، فتح الباري"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "خلاف فقهي",
-    "evidence": [
-      {
-        "type": "حديث",
-        "text": "البقرة — 43، حديث الأعمى — صحيح مسلم",
-        "source": "المغني — ابن قدامة، فتح الباري"
-      }
-    ],
-    "references": [
-      {
-        "text": "المغني — ابن قدامة، فتح الباري",
-        "source": "المغني — ابن قدامة، فتح الباري"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-334"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-335",
-    "external_key": "qa-ruling-seed-qa-335",
-    "title": "هو أبو ذر الغفاري وما فضله في الإسلام؟",
-    "summary": "أبو ذر الغفاري (جُندب بن جنادة) رضي الله عنه من كبار الصحابة وأولهم إسلاماً. أسلم مبكراً قبل الهجرة وكان خامساً أو رابعاً في الإسلام. قال عنه النبي ﷺ: 'ما أظلّت",
-    "body": "**السؤال:** من هو أبو ذر الغفاري وما فضله في الإسلام؟\n\n**الجواب:** أبو ذر الغفاري (جُندب بن جنادة) رضي الله عنه من كبار الصحابة وأولهم إسلاماً. أسلم مبكراً قبل الهجرة وكان خامساً أو رابعاً في الإسلام. قال عنه النبي ﷺ: 'ما أظلّت الخضراء ولا أقلّت الغبراء من رجل أصدق لهجةً من أبي ذر'. عُرف بزهده الشديد ومعارضته لتراكم الثروات، وكان شديد البأس في قول الحق. عاش في آخر حياته في الرَّبَذة حيث توفي عام 32 هـ. روى عن النبي ﷺ كثيراً من الأحاديث في الزهد والأخلاق.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "تأصيل",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "سنن الترمذي — فضائل أبي ذر",
-        "source": "الإصابة في تمييز الصحابة — ابن حجر، سير أعلام النبلاء — الذهبي"
-      }
-    ],
-    "references": [
-      {
-        "text": "الإصابة في تمييز الصحابة — ابن حجر، سير أعلام النبلاء — الذهبي",
-        "source": "الإصابة في تمييز الصحابة — ابن حجر، سير أعلام النبلاء — الذهبي"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "sahabah",
-      "الصحابة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-335"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-336",
-    "external_key": "qa-ruling-seed-qa-336",
-    "title": "حكم صيام ستة أيام من شوال وما فضلها؟",
-    "summary": "صيام ستة أيام من شوال سنة مستحبة ثبتت بحديث أبي أيوب الأنصاري رضي الله عنه أن النبي ﷺ قال: 'من صام رمضان ثم أتبعه ستاً من شوال كان كصيام الدهر' (رواه مسلم). وجه",
-    "body": "**السؤال:** ما حكم صيام ستة أيام من شوال وما فضلها؟\n\n**الجواب:** صيام ستة أيام من شوال سنة مستحبة ثبتت بحديث أبي أيوب الأنصاري رضي الله عنه أن النبي ﷺ قال: 'من صام رمضان ثم أتبعه ستاً من شوال كان كصيام الدهر' (رواه مسلم). وجه الاستدلال: الحسنة بعشر أمثالها، فرمضان بعشرة أشهر والستة بشهرين = 12 شهراً. أحكام: (1) يجوز صيامها متتابعة أو متفرقة. (2) يجوز قضاء الفرض في رمضان مع صيام الست مقدماً. (3) لا يُشترط الموالاة مع يوم العيد. (4) يُبدأ بها بعد قضاء ما فات من رمضان في أصح الأقوال.",
-    "category": "الصيام",
-    "subcategory": "صيام رمضان",
-    "subcategories": [
-      "صيام رمضان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "حكم شرعي",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "صحيح مسلم — كتاب الصيام",
-        "source": "شرح النووي على مسلم، فتاوى ابن باز"
-      }
-    ],
-    "references": [
-      {
-        "text": "شرح النووي على مسلم، فتاوى ابن باز",
-        "source": "شرح النووي على مسلم، فتاوى ابن باز"
-      }
-    ],
-    "keywords": [
-      "صيام رمضان",
-      "sawm",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-336"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-337",
-    "external_key": "qa-ruling-seed-qa-337",
-    "title": "أسباب ثبات النبي ﷺ وصحابته في غزوة أحد رغم الهزيمة الجزئية؟",
-    "summary": "غزوة أحد (3 هـ) كانت ابتلاءً وامتحاناً للمسلمين، وقد ثبّت الله نبيّه والمؤمنين لأسباب عدة: (1) ثبوت القيادة النبوية: لم يفرّ النبي ﷺ بل جُرح وصمد حتى أُغمي عليه",
-    "body": "**السؤال:** ما أسباب ثبات النبي ﷺ وصحابته في غزوة أحد رغم الهزيمة الجزئية؟\n\n**الجواب:** غزوة أحد (3 هـ) كانت ابتلاءً وامتحاناً للمسلمين، وقد ثبّت الله نبيّه والمؤمنين لأسباب عدة: (1) ثبوت القيادة النبوية: لم يفرّ النبي ﷺ بل جُرح وصمد حتى أُغمي عليه، مما أعاد تجميع الصحابة حوله. (2) الصحابة الفدائيون: كطلحة بن عبيدالله وسعد بن أبي وقاص وأبي دجانة وعليّ والزبير الذين وقفوا دروعاً بشرية. (3) الدرس الرباني: نزل قوله تعالى: ﴿وَلَا تَهِنُوا وَلَا تَحْزَنُوا وَأَنتُمُ الْأَعْلَوْنَ﴾ يُثبّت القلوب. (4) التعلّم من الخطأ: كان تحوّل الرماة عن مواقعهم الدرسَ الأبلغ في أهمية الطاعة. وخرجوا من أحد أقوى إيماناً.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "تأصيل",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "آل عمران — 139-140",
-        "source": "السيرة النبوية — ابن هشام، الرحيق المختوم — المباركفوري"
-      }
-    ],
-    "references": [
-      {
-        "text": "السيرة النبوية — ابن هشام، الرحيق المختوم — المباركفوري",
-        "source": "السيرة النبوية — ابن هشام، الرحيق المختوم — المباركفوري"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "seerah",
-      "السيرة النبوية"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-337"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-338",
-    "external_key": "qa-ruling-seed-qa-338",
-    "title": "حكم الذكر الجماعي بصوت واحد وهل له أصل في السنة؟",
-    "summary": "اختلف العلماء في الذكر الجماعي المنظّم (بصوت واحد بعد الصلوات مثلاً): (1) القول بالجواز: استدل بعض العلماء بعموم فضل الذكر وأن الأصل الإباحة، وأن الاجتماع على ا",
-    "body": "**السؤال:** ما حكم الذكر الجماعي بصوت واحد وهل له أصل في السنة؟\n\n**الجواب:** اختلف العلماء في الذكر الجماعي المنظّم (بصوت واحد بعد الصلوات مثلاً): (1) القول بالجواز: استدل بعض العلماء بعموم فضل الذكر وأن الأصل الإباحة، وأن الاجتماع على الذكر جاء في أحاديث كحديث 'لا يقعد قوم يذكرون الله...'. (2) القول بالبدعة: ذهب إليه ابن تيمية وابن الجوزي وكثير من السلفيين بأن الذكر الجماعي المقيد بصورة محددة غير ثابت عن النبي ﷺ ولا عن الصحابة. والراجح: أن الذكر بصوت واحد منظّم مقيّد لم يثبت في السنة، وأن الذكر المشروع ما ثبت من الأحاديث الصحيحة فردياً أو جماعياً بدون تنظيم مخصوص.",
-    "category": "الأذكار والدعاء",
-    "subcategory": "الأذكار",
-    "subcategories": [
-      "الأذكار"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "خلاف فقهي",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "صحيح مسلم — فضل الذكر",
-        "source": "مجموع الفتاوى — ابن تيمية، تلبيس إبليس — ابن الجوزي"
-      }
-    ],
-    "references": [
-      {
-        "text": "مجموع الفتاوى — ابن تيمية، تلبيس إبليس — ابن الجوزي",
-        "source": "مجموع الفتاوى — ابن تيمية، تلبيس إبليس — ابن الجوزي"
-      }
-    ],
-    "keywords": [
-      "الأذكار",
-      "adhkar",
-      "الأذكار"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-338"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-339",
-    "external_key": "qa-ruling-seed-qa-339",
-    "title": "الفرق بين الحديث المتواتر والآحاد وما حكم الاحتجاج بكل منهما؟",
-    "summary": "(1) الحديث المتواتر: ما رواه عدد كبير من الرواة في كل طبقة يستحيل تواطؤهم على الكذب. مثاله: حديث 'من كذب عليّ متعمداً فليتبوأ مقعده من النار'. يُفيد اليقين القط",
-    "body": "**السؤال:** ما الفرق بين الحديث المتواتر والآحاد وما حكم الاحتجاج بكل منهما؟\n\n**الجواب:** (1) الحديث المتواتر: ما رواه عدد كبير من الرواة في كل طبقة يستحيل تواطؤهم على الكذب. مثاله: حديث 'من كذب عليّ متعمداً فليتبوأ مقعده من النار'. يُفيد اليقين القطعي ويجب العمل به. (2) حديث الآحاد: ما لم يبلغ حد التواتر ويشمل المشهور والعزيز والغريب. يُفيد الظن الغالب ويجب العمل به في الأحكام الفقهية عند الصحة إجماعاً. الخلاف: في الاحتجاج به في العقائد، فالجمهور يحتجون به حتى في العقيدة، والمتكلمون يشترطون التواتر. الصحيح قبوله في العقيدة إذا صح إسناده.",
-    "category": "القرآن والحديث",
-    "subcategory": "أحكام الحديث",
-    "subcategories": [
-      "أحكام الحديث"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "علوم الحديث",
-        "source": "نخبة الفكر — ابن حجر، تدريب الراوي — السيوطي"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "تأصيل",
-    "evidence": [
-      {
-        "type": "حديث",
-        "text": "علوم الحديث",
-        "source": "نخبة الفكر — ابن حجر، تدريب الراوي — السيوطي"
-      }
-    ],
-    "references": [
-      {
-        "text": "نخبة الفكر — ابن حجر، تدريب الراوي — السيوطي",
-        "source": "نخبة الفكر — ابن حجر، تدريب الراوي — السيوطي"
-      }
-    ],
-    "keywords": [
-      "أحكام الحديث",
-      "hadith",
-      "علوم الحديث"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-339"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-340",
-    "external_key": "qa-ruling-seed-qa-340",
-    "title": "أفضل الصلوات النافلة وكيف كان النبي ﷺ يُحيي الليل؟",
-    "summary": "أفضل صلاة النافلة قيام الليل (التهجد). قال النبي ﷺ: 'أفضل الصلاة بعد الفريضة صلاة الليل' (رواه مسلم). هيئة صلاة النبي ﷺ في الليل: (1) كان يقوم حتى تتورم قدماه ف",
-    "body": "**السؤال:** ما أفضل الصلوات النافلة وكيف كان النبي ﷺ يُحيي الليل؟\n\n**الجواب:** أفضل صلاة النافلة قيام الليل (التهجد). قال النبي ﷺ: 'أفضل الصلاة بعد الفريضة صلاة الليل' (رواه مسلم). هيئة صلاة النبي ﷺ في الليل: (1) كان يقوم حتى تتورم قدماه فيقال له فتقول عائشة 'أفلا أكون عبداً شكوراً'. (2) كان يُسلّم كل ركعتين. (3) كان يوتر آخر الليل بركعة أو ثلاث أو خمس أو سبع. (4) كان يقرأ في الركعة الأولى بـ﴿الأعلى﴾ وفي الثانية بـ﴿الكافرون﴾ في سنة الفجر. (5) أفضل وقته الثلث الأخير من الليل حين ينزل الله إلى السماء الدنيا.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "تأصيل",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "صحيح مسلم — كتاب صلاة المسافرين",
-        "source": "رياض الصالحين — النووي، زاد المعاد — ابن القيم"
-      }
-    ],
-    "references": [
-      {
-        "text": "رياض الصالحين — النووي، زاد المعاد — ابن القيم",
-        "source": "رياض الصالحين — النووي، زاد المعاد — ابن القيم"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-340"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-341",
-    "external_key": "qa-ruling-seed-qa-341",
-    "title": "الفرق بين الزكاة والصدقة والهبة في الفقه الإسلامي؟",
-    "summary": "(1) الزكاة: واجبة بشروطها (النصاب، الحول، الملك التام)، لها مصارف محددة في القرآن ثمانية، ولا تصح لغني أو هاشمي. (2) الصدقة: تطوعية ومستحبة، تشمل المال والعمل ا",
-    "body": "**السؤال:** ما الفرق بين الزكاة والصدقة والهبة في الفقه الإسلامي؟\n\n**الجواب:** (1) الزكاة: واجبة بشروطها (النصاب، الحول، الملك التام)، لها مصارف محددة في القرآن ثمانية، ولا تصح لغني أو هاشمي. (2) الصدقة: تطوعية ومستحبة، تشمل المال والعمل الصالح وحتى الابتسامة، لا تشترط نصاباً. (3) الهبة: تمليك بلا عوض في الحياة، يجوز ردها قبل القبض ولا يجوز بعده إلا بين الوالد وولده عند بعض العلماء. والزكاة عبادة محضة، والصدقة قربة، والهبة تبرع جائز.",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [
-      {
-        "type": "قرآن",
-        "text": "القرآن الكريم — التوبة: ٦٠",
-        "source": "المغني لابن قدامة، المجموع للنووي"
-      }
-    ],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "مقارنة",
-    "evidence": [
-      {
-        "type": "قرآن",
-        "text": "القرآن الكريم — التوبة: ٦٠",
-        "source": "المغني لابن قدامة، المجموع للنووي"
-      }
-    ],
-    "references": [
-      {
-        "text": "المغني لابن قدامة، المجموع للنووي",
-        "source": "المغني لابن قدامة، المجموع للنووي"
-      }
-    ],
-    "keywords": [
-      "زكاة المال",
-      "zakat",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-341"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-342",
-    "external_key": "qa-ruling-seed-qa-342",
-    "title": "حكم صلاة المرأة في المسجد وما شروطها؟",
-    "summary": "صلاة المرأة في المسجد جائزة باتفاق، وقد أذن النبي ﷺ للنساء بالخروج إلى المساجد فقال: 'لا تمنعوا إماء الله مساجد الله' (رواه مسلم). وشروطها: (1) أن تخرج متحشمة غ",
-    "body": "**السؤال:** ما حكم صلاة المرأة في المسجد وما شروطها؟\n\n**الجواب:** صلاة المرأة في المسجد جائزة باتفاق، وقد أذن النبي ﷺ للنساء بالخروج إلى المساجد فقال: 'لا تمنعوا إماء الله مساجد الله' (رواه مسلم). وشروطها: (1) أن تخرج متحشمة غير متطيبة. (2) أن تأمن الفتنة. (3) أن لا تمنعها أهل بيتها. وصلاتها في بيتها أفضل وأعظم أجراً لقوله ﷺ: 'وبيوتهن خير لهن'. ومسألة الإمامة: لا تؤم المرأة الرجال في الفريضة عند جمهور العلماء.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "فقه",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "صحيح مسلم — كتاب الصلاة",
-        "source": "فتح الباري لابن حجر، نيل الأوطار للشوكاني"
-      }
-    ],
-    "references": [
-      {
-        "text": "فتح الباري لابن حجر، نيل الأوطار للشوكاني",
-        "source": "فتح الباري لابن حجر، نيل الأوطار للشوكاني"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-342"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-343",
-    "external_key": "qa-ruling-seed-qa-343",
-    "title": "هي أركان عقد الزواج وما الشروط الواجبة لصحته؟",
-    "summary": "أركان عقد الزواج هي: (1) الإيجاب من ولي المرأة أو من ينوب عنه. (2) القبول من الزوج. وشروط صحته: (أ) الولي: لا نكاح إلا بولي عند جمهور العلماء لقوله ﷺ: 'لا نكاح ",
-    "body": "**السؤال:** ما هي أركان عقد الزواج وما الشروط الواجبة لصحته؟\n\n**الجواب:** أركان عقد الزواج هي: (1) الإيجاب من ولي المرأة أو من ينوب عنه. (2) القبول من الزوج. وشروط صحته: (أ) الولي: لا نكاح إلا بولي عند جمهور العلماء لقوله ﷺ: 'لا نكاح إلا بولي'. (ب) الشهود: لا بد من شاهدَين عدلَين. (ج) الصداق: واجب للمرأة وإن تنازلت عنه فلها ذلك. (د) خلو الطرفين من الموانع (المحارم، العدة، الزواج السابق غير المنحل). وعند الأحناف: المرأة الرشيدة البالغة تزوج نفسها بلا ولي وإن كان ذلك خلاف الأولى.",
-    "category": "طلب العلم والدعوة",
-    "subcategory": "طلب العلم",
-    "subcategories": [
-      "طلب العلم"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "تأصيل",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "أبو داود: ٢٠٨٥، الترمذي: ١١٠١",
-        "source": "المغني لابن قدامة، بداية المجتهد لابن رشد"
-      }
-    ],
-    "references": [
-      {
-        "text": "المغني لابن قدامة، بداية المجتهد لابن رشد",
-        "source": "المغني لابن قدامة، بداية المجتهد لابن رشد"
-      }
-    ],
-    "keywords": [
-      "طلب العلم",
-      "fiqh",
-      "الفقه"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-343"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-344",
-    "external_key": "qa-ruling-seed-qa-344",
-    "title": "المقصود بـ'أهل الحل والعقد' وما دورهم في الفقه السياسي الإسلامي؟",
-    "summary": "أهل الحل والعقد هم علماء وأعيان الأمة المؤهلون لاختيار الإمام وعزله والنظر في المصالح العامة. صفاتهم: العلم، والعدالة، والخبرة، والرأي. دورهم: (1) اختيار الإمام",
-    "body": "**السؤال:** ما المقصود بـ'أهل الحل والعقد' وما دورهم في الفقه السياسي الإسلامي؟\n\n**الجواب:** أهل الحل والعقد هم علماء وأعيان الأمة المؤهلون لاختيار الإمام وعزله والنظر في المصالح العامة. صفاتهم: العلم، والعدالة، والخبرة، والرأي. دورهم: (1) اختيار الإمام بالشورى وبيعته. (2) مراقبة الحاكم ومناصحته. (3) تقرير السياسات العامة بالمشاورة. وعند غياب تنظيمهم الرسمي يقوم بمهمتهم أهل الاختصاص والرأي في كل مجال. واشترط الماوردي في الإمام الكبير: الإسلام، والعدالة، والعلم، والكفاءة، وسلامة الحواس.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
-    "subcategories": [
-      "الإيمان"
-    ],
-    "quran_evidence": [
-      {
-        "type": "قرآن",
-        "text": "القرآن الكريم — النساء: ٥٩",
-        "source": "الأحكام السلطانية للماوردي، السياسة الشرعية لابن تيمية"
-      }
-    ],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "تأصيل",
-    "evidence": [
-      {
-        "type": "قرآن",
-        "text": "القرآن الكريم — النساء: ٥٩",
-        "source": "الأحكام السلطانية للماوردي، السياسة الشرعية لابن تيمية"
-      }
-    ],
-    "references": [
-      {
-        "text": "الأحكام السلطانية للماوردي، السياسة الشرعية لابن تيمية",
-        "source": "الأحكام السلطانية للماوردي، السياسة الشرعية لابن تيمية"
-      }
-    ],
-    "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-344"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-345",
-    "external_key": "qa-ruling-seed-qa-345",
-    "title": "حكم الصيام في السفر وكيف يكون الأفضل: الصوم أم الفطر؟",
-    "summary": "للمسافر الخيار بين الصوم والفطر بنص القرآن ﴿فَمَن كَانَ مِنكُم مَّرِيضًا أَوْ عَلَىٰ سَفَرٍ فَعِدَّةٌ مِّنْ أَيَّامٍ أُخَرَ﴾. والأفضل عند العلماء: (1) إن وجد مش",
-    "body": "**السؤال:** ما حكم الصيام في السفر وكيف يكون الأفضل: الصوم أم الفطر؟\n\n**الجواب:** للمسافر الخيار بين الصوم والفطر بنص القرآن ﴿فَمَن كَانَ مِنكُم مَّرِيضًا أَوْ عَلَىٰ سَفَرٍ فَعِدَّةٌ مِّنْ أَيَّامٍ أُخَرَ﴾. والأفضل عند العلماء: (1) إن وجد مشقة: الفطر أولى. (2) إن كان متقوياً ومتمكناً: الصوم أفضل لمن لم يتضرر. (3) قاعدة: ما كان أيسر عليه فهو أفضل. والسفر الذي تُقصر فيه الصلاة (٨٠ كم فأكثر) هو الذي يُبيح الفطر. ولا يجوز التشديد على المسافر بإلزامه الصوم مطلقاً لأن الله يُحب أن تُؤتى رُخَصُه.",
-    "category": "الصيام",
-    "subcategory": "صيام رمضان",
-    "subcategories": [
-      "صيام رمضان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "فقه",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "البقرة: ١٨٥، صحيح مسلم",
-        "source": "المجموع للنووي، بداية المجتهد لابن رشد"
-      }
-    ],
-    "references": [
-      {
-        "text": "المجموع للنووي، بداية المجتهد لابن رشد",
-        "source": "المجموع للنووي، بداية المجتهد لابن رشد"
-      }
-    ],
-    "keywords": [
-      "صيام رمضان",
-      "sawm",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-345"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-17T23:05:11.760Z",
-    "created_at": "2026-07-17T23:05:11.760Z",
-    "updated_at": "2026-07-17T23:05:11.760Z"
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   }
 ] as unknown as ShariaRulingExtended[];
 
-export const RULINGS_ENCYCLOPEDIA_TOTAL = 515;
+export const RULINGS_ENCYCLOPEDIA_TOTAL = 533;

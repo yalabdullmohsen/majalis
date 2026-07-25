@@ -127,6 +127,7 @@ function HadithRow({ h, index }: { h: CdnHadith; index: number }) {
       {expanded && (
         // onClick هنا لمنع انتشار النقر إلى صف الحديث الأب (الذي يطوي/يبسط
         // عند النقر) — لا إجراء فعلي يحتاج مكافئ لوحة مفاتيح.
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div className="hb-hadith-row__detail" onClick={(e) => e.stopPropagation()}>
           <div className="hb-hadith-row__meta">
             {chapter && <span className="hb-hadith-row__chapter">{chapter}</span>}

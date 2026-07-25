@@ -10,7 +10,7 @@
   direction: rtl;
   max-width: 720px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: var(--ds-space-4);
 }
 
 .mf2-frame {
@@ -22,14 +22,14 @@
   container-type: inline-size;
   box-shadow: 0 2px 18px rgba(14, 110, 82, .12);
   /* إطار زخرفي مزدوج — CSS بحت، منفصل كليًا عن النص (القسم 6.1). */
-  outline: 2px solid #0E6E52;
+  outline: 2px solid var(--mf-gold, #0E6E52);
   outline-offset: -8px;
 }
 .mf2-frame::before {
   content: "";
   position: absolute;
   inset: 4px;
-  border: 1px solid rgba(14, 110, 82, .45);
+  border: 1px solid var(--mf-gold-soft, rgba(14, 110, 82, .45));
   border-radius: 4px;
   pointer-events: none;
 }
@@ -37,6 +37,11 @@ html[data-theme="dark"] .mf2-frame {
   --mf2-page-bg: #153025;
   box-shadow: 0 2px 24px rgba(0,0,0,.4);
 }
+/* توحيد مع وضع القراءة المختار داخل المصحف (راجع تعليق --mf2-ink أعلاه
+   لنفس السبب الجذري). */
+.quran-shell--night .mf2-frame { --mf2-page-bg: #153025; box-shadow: 0 2px 24px rgba(0,0,0,.4); }
+.quran-shell--warm .mf2-frame { --mf2-page-bg: #fdf3e3; }
+.quran-shell--high-contrast .mf2-frame { --mf2-page-bg: #fff; }
 
 .mf2-lines {
   position: relative;
@@ -67,6 +72,12 @@ html[data-theme="dark"] .mf2-frame {
   line-height: 1;
   color: var(--mf2-ink, #1C1A18);
   white-space: nowrap;
+  /* منع تحديد النص بالسحب العرضي (يتعارض مع سحب تقليب الصفحات RTL) —
+     النسخ الشرعي محفوظ عبر زر "نسخ بالتشكيل" في قائمة إجراءات الآية
+     (PageAyahActionSheet)، فلا حاجة للتحديد اليدوي بالسحب. */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
   /* شبكة أمان: التحجيم التلقائي عبر JS (useLayoutEffect) دقيق في الغالبية
      العظمى من الأسطر لكن ليس مضمونًا 100% رياضيًا لكل سطر (راجع تعليق
      المكوّن) — overflow:hidden يمنع أي فيضان مرئي متبقٍّ من كسر إطار
@@ -74,6 +85,13 @@ html[data-theme="dark"] .mf2-frame {
   overflow: hidden;
 }
 html[data-theme="dark"] .mf2-line { --mf2-ink: #F0EDE4; }
+/* توحيد الألوان مع وضع القراءة المختار داخل المصحف نفسه (.quran-shell--*)
+   — منفصل تمامًا عن مفتاح الوضع الليلي العام للموقع (html[data-theme])
+   أعلاه؛ كانا يعملان بمعزل عن بعضهما، فيبقى نص الصفحة بلونه الفاتح حتى
+   حين يختار المستخدم وضعًا داكنًا من داخل قارئ المصحف (2026-07-22). */
+.quran-shell--night .mf2-line { --mf2-ink: #F0EDE4; }
+.quran-shell--warm .mf2-line { --mf2-ink: #2c1a0e; }
+.quran-shell--high-contrast .mf2-line { --mf2-ink: #000; }
 /* سطر قصير طبيعيًا (آية واحدة قصيرة على صفحة خاصة كالفاتحة) لا يُمدَّد
    بحجم خط ضخم ليملأ العرض — يُتوسَّط بحجمه المعقول بدلًا من ذلك. */
 .mf2-line--short { justify-content: center; gap: .5em; }
@@ -90,6 +108,11 @@ html[data-theme="dark"] .mf2-line { --mf2-ink: #F0EDE4; }
   cursor: pointer;
   border-radius: 3px;
   transition: background-color .15s;
+  /* يمنع تأخير/بادرة التكبير المزدوج غير المقصودة عند النقر السريع
+     لفتح قائمة إجراءات الآية، بلا المساس بإمكانية التكبير بإصبعين
+     (pinch-zoom) — بخلاف user-scalable=no على viewport (يضرّ الإتاحة). */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   /* !important ضروري هنا تحديدًا: قاعدة WCAG 2.5.5 العامة نفسها
      !important (elite-2026.css:30100) — لا شيء أضعف يهزمها بصرف النظر
      عن الخصوصية. هذا استثناء مقصود ومحدود لفئة مختلفة فعليًا عمّا تستهدفه
@@ -102,13 +125,26 @@ html[data-theme="dark"] .mf2-line { --mf2-ink: #F0EDE4; }
 }
 .mf2-ayah-group:hover,
 .mf2-ayah-group:focus-visible {
-  background: color-mix(in srgb, #0E6E52 10%, transparent);
+  background: color-mix(in srgb, var(--mf-gold, #0E6E52) 10%, transparent);
   outline: none;
 }
 .mf2-ayah-group--active {
-  background: color-mix(in srgb, #0E6E52 16%, transparent);
+  background: color-mix(in srgb, var(--mf-gold, #0E6E52) 16%, transparent);
 }
+/* ⚠️ إصلاح جذري (2026-07-22): كل كلمة تُصيَّر كعنصر <span> منفصل (لتفعيل
+   الملاءمة الدقيقة لحجم الخط لكل سطر، وربط النقر بالآية)، ونص الكلمة
+   نفسه (text_qpc_hafs/glyphText) لا يحوي أي حرف مسافة زائد — هذا يعني
+   أن الكلمات المتجاورة كانت تُصيَّر بلا أي فاصل بينها إطلاقًا (0px قياسًا
+   فعليًا عبر getBoundingClientRect)، فتبدو ملتصقة وقد يُربك ذلك محرك
+   تشكيل الحروف عند حدود الكلمة. الحل: مسافة CSS صريحة بين كل كلمتين
+   متتاليتين — لا تُغيّر محتوى النص إطلاقًا (نص كل كلمة يبقى كما هو
+   حرفيًا)، ولا تكسر خوارزمية البحث الثنائي للتحجيم (تقيس scrollWidth
+   الفعلي المعروض، فتتكيّف تلقائيًا مع العرض الإضافي). */
 .mf2-word { display: inline; }
+.mf2-word + .mf2-word,
+.mf2-ayah-group + .mf2-ayah-group .mf2-word:first-child {
+  margin-inline-start: 0.24em;
+}
 
 .mf2-sajda-badge {
   display: inline-flex;
@@ -119,7 +155,7 @@ html[data-theme="dark"] .mf2-line { --mf2-ink: #F0EDE4; }
   color: #7A5E14;
   background: rgba(176,141,46,.14);
   border: 1px solid rgba(176,141,46,.35);
-  border-radius: 999px;
+  border-radius: var(--ds-radius-full);
   padding: .05rem .4rem;
   margin-inline-start: .3rem;
 }
@@ -142,18 +178,19 @@ html[data-theme="dark"] .mf2-sajda-badge {
   width: 92%;
   text-align: center;
   padding: .35em 1em;
-  border-top: 1.5px solid #0E6E52;
-  border-bottom: 1.5px solid #0E6E52;
-  background: linear-gradient(180deg, rgba(14,110,82,.06), transparent);
+  border-top: 1.5px solid var(--mf-gold, #0E6E52);
+  border-bottom: 1.5px solid var(--mf-gold, #0E6E52);
+  background: linear-gradient(180deg, var(--mf-gold-faint, rgba(14,110,82,.06)), transparent);
 }
 .mf2-surah-header__name {
   font-family: var(--font-display, "Amiri", serif);
   font-size: 4.2cqw;
   font-weight: 700;
-  color: #0E6E52;
-  letter-spacing: .02em;
+  color: var(--mf-gold, #0E6E52);
+  letter-spacing: normal;
 }
 html[data-theme="dark"] .mf2-surah-header__name { color: #5EC49A; }
+.quran-shell--night .mf2-surah-header__name { color: #5EC49A; }
 .mf2-bismillah {
   font-family: var(--font-quran, "Amiri Quran", serif);
   font-size: 4.8cqw;

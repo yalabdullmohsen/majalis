@@ -605,6 +605,7 @@ export default function LessonsPage({
                 </>
               )}
 
+              {(filters.search || filters.governorate !== "كل المحافظات") && (
               <section className="lessons-v2-section">
                 <h2 className="lessons-v2-section__title">
                   {tab === "courses" ? "دورات" : tab === "women" ? "نشاطات للنساء" : tab === "men" ? "دروس رجالية" : "جميع الدروس"}
@@ -620,6 +621,7 @@ export default function LessonsPage({
                   renderGrid(filtered.filter((l) => !featuredIds.has(l.id)))
                 )}
               </section>
+              )}
 
               {filteredArchived.length > 0 && (
                 <section className="lessons-past-section" aria-labelledby="past-lessons-heading">
@@ -655,7 +657,9 @@ export default function LessonsPage({
       {filtersOpen && (
         // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) — مسار بديل
         // كامل بلوحة المفاتيح.
+         
         <div className="lessons-v2-sheet-backdrop" onClick={() => setFiltersOpen(false)} role="presentation">
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div className="lessons-v2-sheet" onClick={(e) => e.stopPropagation()}>
             <LessonsFilterPanel
               filters={filters}

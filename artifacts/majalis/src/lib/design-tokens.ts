@@ -7,32 +7,32 @@
 
 export const COLOR = {
   /* ── الأساس: أخضر داكن مائل للرمادي ── */
-  primary:      "#173D35",
-  primaryLight: "#28584D",
-  emerald:      "#173D35",              // alias توافقي مع الاستخدام القديم
-  emeraldDeep:  "#173D35",
-  emeraldHov:   "#28584D",
+  primary:      "#143F35",
+  primaryLight: "#226A56",
+  emerald:      "#143F35",              // alias توافقي مع الاستخدام القديم
+  emeraldDeep:  "#143F35",
+  emeraldHov:   "#226A56",
   emeraldSoft:  "rgba(23,61,53,0.06)",
   emeraldMid:   "rgba(23,61,53,0.12)",
   emeraldBorder:"rgba(23,61,53,0.10)",
 
   /* ── مساند ذهبي رملي هادئ (استخدام مقتصد) ── */
-  gold:      "#B89452",
+  gold:      "#B8963F",
   goldSoft:  "rgba(184,148,82,0.10)",
   goldMid:   "rgba(184,148,82,0.18)",
 
   /* ── تدرّج البطاقة اليومية الرئيسية (hero) — استخدام محدود جدًا ── */
-  heroGradient: "linear-gradient(135deg, #173D35 0%, #28584D 100%)",
+  heroGradient: "linear-gradient(135deg, #143F35 0%, #226A56 100%)",
 
   /* ── الخلفيات ── */
-  canvas:   "#F7F4ED",   // خلفية عامة — عاجي دافئ
+  canvas:   "#FAFAF8",   // خلفية عامة — عاجي دافئ
   canvas1:  "#FFFFFF",   // خلفية بطاقات
-  border:   "#E7E2D8",   // حدود خفيفة
+  border:   "#E8E7E2",   // حدود خفيفة
 
   /* ── النصوص ── */
-  ink:      "#202725",   // نص أساسي
-  inkSoft:  "#68716D",   // نص ثانوي
-  inkMuted: "#5E655F",   // نص خافت
+  ink:      "#1A1A18",   // نص أساسي
+  inkSoft:  "#5C5C56",   // نص ثانوي
+  inkMuted: "#5C5C56",   // نص خافت
 
   /* ── حالات النظام ── */
   success: "#34785F",
@@ -41,7 +41,7 @@ export const COLOR = {
 
   /* ── الوضع الداكن ── */
   dark: {
-    gold:    "#3BAD8A",
+    gold:    "#5CC49A",
     canvas:  "#111714",
     canvas1: "#1A2120",
     ink:     "#E5F0EC",

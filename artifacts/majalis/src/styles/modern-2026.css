@@ -11,37 +11,37 @@
 /* ══ 1. Design Tokens ════════════════════════════════════════════════════════ */
 :root {
   /* ── ألوان الخلفية ── */
-  --m26-bg:           #F7F4ED;
-  --m26-bg-2:         #F1EEE5;
+  --m26-bg:           #FAFAF8;
+  --m26-bg-2:         #F4F4F1;
   --m26-surface:      #FFFFFF;
-  --m26-surface-2:    #F7F4ED;
-  --m26-surface-3:    #F1EEE5;
+  --m26-surface-2:    #FAFAF8;
+  --m26-surface-3:    #F4F4F1;
 
   /* ── الأخضر الداكن الرمادي — إعادة تصميم الهوية v3 ── */
   --m26-green-950:    #0C211C;
-  --m26-green-800:    #173D35;
-  --m26-green-700:    #173D35;
-  --m26-green-600:    #28584D;
+  --m26-green-800:    #143F35;
+  --m26-green-700:    #143F35;
+  --m26-green-600:    #226A56;
   --m26-green-100:    #E4EAE7;
   --m26-green-50:     #EEF1EF;
 
   /* ── ذهبي رملي هادئ (مساند) ── */
   --m26-gold-900:     #9C7C41;
-  --m26-gold-700:     #B89452;
-  --m26-gold-500:     #B89452;
-  --m26-gold-100:     #F1E9D8;
+  --m26-gold-700:     #B8963F;
+  --m26-gold-500:     #B8963F;
+  --m26-gold-100:     #FAF3E0;
   --m26-gold-50:      #F7F1E5;
 
   /* ══ نظام ألوان النصوص — WCAG 2.2 متوافق ══════════════════════════════
-     النسب محسوبة على الخلفية الفعلية --msk-canvas #F7F4ED (عاجية دافئة)،
+     النسب محسوبة على الخلفية الفعلية --msk-canvas #FAFAF8 (عاجية دافئة)،
      لا الأبيض النقي كما كان مُفترَضًا سابقًا — الفرق كان يُسقط Muted/Hint
      تحت 4.5:1 فعليًا على كل صفحة حقيقية (48+ مخالفة مرصودة، 2026-07-21).
      ──────────────────────────────────────────────────────────────────────
-     Primary   #202725 → 17.3:1 (AAA) ✓
-     Secondary #68716D → 9.1:1  (AAA) ✓
-     Muted     #5E655F → 5.5:1  (AA)  ✓
-     Subdued   #68716D → 9.1:1  (AAA) ✓
-     Hint      #5E655F → 5.5:1  (AA)  ✓
+     Primary   #1A1A18 → 17.3:1 (AAA) ✓
+     Secondary #5C5C56 → 9.1:1  (AAA) ✓
+     Muted     #5C5C56 → 5.5:1  (AA)  ✓
+     Subdued   #5C5C56 → 9.1:1  (AAA) ✓
+     Hint      #5C5C56 → 5.5:1  (AA)  ✓
      Disabled  #A1A1AA → 2.2:1  ✗ — فقط للعناصر المعطّلة كلياً
      Success   #15803D → 5.6:1  (AA)  ✓
      Warning   #92400E → 7.1:1  (AAA) ✓
@@ -49,17 +49,17 @@
      Info      #1E40AF → 6.5:1  (AA)  ✓
      Accent    #166534 → 8.1:1  (AAA) ✓
      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-  --txt-primary:    #202725;
-  --txt-secondary:  #68716D;
-  --txt-muted:      #5E655F;
-  --txt-subdued:    #68716D;
-  --txt-hint:       #5E655F;
+  --txt-primary:    #1A1A18;
+  --txt-secondary:  #5C5C56;
+  --txt-muted:      #5C5C56;
+  --txt-subdued:    #5C5C56;
+  --txt-hint:       #5C5C56;
   --txt-disabled:   #B9BEBB;
   --txt-success:    #34785F;
   --txt-warning:    #B67A32;
   --txt-error:      #B44A4A;
   --txt-info:       #1E40AF;
-  --txt-accent:     #173D35;
+  --txt-accent:     #143F35;
   --txt-inverse:    #FFFFFF;
 
   /* ══ مقياس الطباعة ══════════════════════════════════════════════════════ */
@@ -129,37 +129,37 @@
    يُثبِّت --ds-emerald-deep وأخواتها على قيم الوضع النهاري داخل الوضع الليلي
    أيضًا — راجع .ds-filter-toggle كمثال ظهر فيه نص شبه معدوم التباين، 2026-07-16). */
 html:not([data-theme="dark"]) {
-  --msk-canvas:        #F7F4ED;
+  --msk-canvas:        #FAFAF8;
   --msk-canvas-1:      #FFFFFF;
-  --msk-canvas-2:      #F1EEE5;
+  --msk-canvas-2:      #F4F4F1;
   --msk-canvas-glass:  rgba(247,244,237,0.92);
-  --msk-text:          #202725;
-  --msk-text-2:        #68716D;
-  --msk-text-3:        #5E655F;
-  --msk-border:        #E7E2D8;
-  --msk-gold:          #173D35;
-  --msk-gold-deep:     #173D35;
-  --msk-green:         #173D35;
+  --msk-text:          #1A1A18;
+  --msk-text-2:        #5C5C56;
+  --msk-text-3:        #5C5C56;
+  --msk-border:        #E8E7E2;
+  --msk-gold:          #143F35;
+  --msk-gold-deep:     #143F35;
+  --msk-green:         #143F35;
   --msk-red:           #B44A4A;
   --msk-red-dim:       rgba(180,74,74,0.08);
-  --majalis-ink:          #202725;
-  --majalis-ink-soft:     #68716D;
-  --majalis-ink-muted:    #5E655F;
-  --majalis-emerald:      #173D35;
-  --majalis-brass:        #B89452;
+  --majalis-ink:          #1A1A18;
+  --majalis-ink-soft:     #5C5C56;
+  --majalis-ink-muted:    #5C5C56;
+  --majalis-emerald:      #143F35;
+  --majalis-brass:        #B8963F;
   --majalis-panel:        #FFFFFF;
-  --majalis-panel-raised: #F1EEE5;
-  --ds-emerald:      #173D35;
-  --ds-emerald-deep: #173D35;
-  --ds-ink:          #202725;
-  --ds-ink-soft:     #68716D;
-  --ds-parchment:    #F7F4ED;
+  --majalis-panel-raised: #F4F4F1;
+  --ds-emerald:      #143F35;
+  --ds-emerald-deep: #143F35;
+  --ds-ink:          #1A1A18;
+  --ds-ink-soft:     #5C5C56;
+  --ds-parchment:    #FAFAF8;
 }
 
 /* ══ 3. Base ══════════════════════════════════════════════════════════════════ */
 body {
-  background: var(--m26-bg, #F7F4ED);
-  color: var(--txt-primary, #202725);
+  background: var(--m26-bg, #FAFAF8);
+  color: var(--txt-primary, #1A1A18);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -181,14 +181,14 @@ body {
 .txt-h3 { font-size: var(--type-h3); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-primary); }
 .txt-h4 { font-size: var(--type-h4); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-primary); }
 .txt-h5 { font-size: var(--type-h5); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-secondary); }
-.txt-h6 { font-size: var(--type-h6); font-weight: var(--fw-bold); line-height: var(--lh-normal); letter-spacing: var(--ls-wide); color: var(--txt-secondary); text-transform: uppercase; }
+.txt-h6 { font-size: var(--type-h6); font-weight: var(--fw-bold); line-height: var(--lh-normal); letter-spacing: normal; color: var(--txt-secondary); text-transform: uppercase; }
 .txt-subtitle { font-size: var(--type-subtitle); font-weight: var(--fw-normal); line-height: var(--lh-relaxed); color: var(--txt-secondary); }
 .txt-body-lg  { font-size: var(--type-body-lg);  font-weight: var(--fw-normal); line-height: var(--lh-relaxed); color: var(--txt-secondary); }
 .txt-body     { font-size: var(--type-body);      font-weight: var(--fw-normal); line-height: var(--lh-normal);  color: var(--txt-secondary); }
 .txt-body-sm  { font-size: var(--type-body-sm);   font-weight: var(--fw-normal); line-height: var(--lh-normal);  color: var(--txt-muted); }
 .txt-caption  { font-size: var(--type-caption);   font-weight: var(--fw-normal); line-height: var(--lh-snug);    color: var(--txt-muted); }
-.txt-label    { font-size: var(--type-label);     font-weight: var(--fw-medium); line-height: var(--lh-snug);    letter-spacing: var(--ls-wide); color: var(--txt-muted); }
-.txt-btn      { font-size: var(--type-btn);       font-weight: var(--fw-semibold); line-height: 1; letter-spacing: var(--ls-wide); }
+.txt-label    { font-size: var(--type-label);     font-weight: var(--fw-medium); line-height: var(--lh-snug);    letter-spacing: normal; color: var(--txt-muted); }
+.txt-btn      { font-size: var(--type-btn);       font-weight: var(--fw-semibold); line-height: 1; letter-spacing: normal; }
 
 .txt-primary   { color: var(--txt-primary)   !important; }
 .txt-secondary { color: var(--txt-secondary) !important; }
@@ -202,9 +202,15 @@ body {
 .txt-inverse   { color: var(--txt-inverse)   !important; }
 
 /* ══ 5. Headings في صفحات الثيم الفاتح ═════════════════════════════════════ */
-.page-shell h1,
-.page-shell h2,
-.page-shell h3,
+/* ⚠️ حُذفت هنا محددات ".page-shell h1,"/".page-shell h2,"/".page-shell h3,"
+   الفضفاضة التي كانت تسبق نسخها المستثناة (:not(...)) أدناه في نفس قائمة
+   المحددات — لأن قوائم محددات CSS تُجمَع بـ"أو"، فأي h1/h2/h3 يطابق
+   المحدد الفضفاض بصرف النظر عن كل not() في نظيره المستثنى، فيُلغي كل
+   الاستثناءات فعليًا (اكتُشف عبر AmrBilMarufPage/ProphetsFamilyTreePage
+   لـ h1 — نص أبيض مقصود فوق خلفية بطل داكنة يظهر شبه مختفٍ؛ نفس النمط
+   بالحرف كان قائمًا لـ h2/h3 أيضًا، ما يعني أن "إصلاح" التعليق أدناه
+   (lessons-v2/lessons-past) لم يكن فعّالاً فعليًا رغم توثيقه). قائمة
+   استثناءات h1 مطابقة بالحرف لنسختها الكاملة في majalis-v2.css. */
 .page-shell h4,
 .page-shell h5,
 .page-shell h6,
@@ -214,7 +220,7 @@ body {
 .ds-page h4,
 .ds-page h5,
 .ds-page h6,
-.page-shell h1:not(.an-hero__title):not(.sch-profile-hero__name),
+.page-shell h1:not(.ds-page-header__title):not(.cards-page-title):not(.search-page-title):not(.ds-section__title):not(.fqh-hub-hero__title):not(.twh-hub-hero__title):not(.akl-hero__title):not(.arkan-hero__title):not(.ds-hero__title):not(.duas-hero__title):not(.mk-hero__title):not(.sm-hero__title):not(.an-hero__title):not(.sch-profile-hero__name):not(.prophet-detail-lux__name):not(.amr-hero__title):not(.pft-hero__title),
 /* لائحة الاستثناءات مطابقة بالحرف لنسختها الكاملة في majalis-v2.css (نفس نمط
    عناوين الأقسام "الشارة" — نص أبيض على شريط أخضر داكن). كانت هذه النسخة هنا
    قد تخلّفت عن التحديثات اللاحقة (تفتقد lessons-v2/lessons-past وغيرها)، فكانت
@@ -223,26 +229,26 @@ body {
    الخلفية الخضراء الداكنة لنفس الشارة (تباين ~1.27:1 — نفس نمط عطل [class$="-hero"]
    المُصلَح سابقًا: قاعدة عامة تفترض سياقًا خاطئًا بسبب استثناءات ناقصة). */
 .page-shell h2:not(.sq-title):not(.jn-section__title):not(.jn-subtitle):not(.jn-related__title):not(.sw-related__title):not(.hj-section__title):not(.hj-related__title):not(.th-section__title):not(.th-related__title):not(.fa-related__title):not(.seerah-panel__title):not(.fq-ref__title):not(.sh-step__title):not(.ds-section__title):not(.cards-page-title):not(.search-page-title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title):not(.lessons-v2-section__title):not(.lessons-past-section__title),
-.page-shell h3:not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title),
+.page-shell h3:not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title):not(.amr-level__title),
 .page-shell h4,
 .page-shell h5,
 .page-shell h6,
 .ds-page h1,
 .ds-page h2,
 .ds-page h3 {
-  color: var(--txt-primary, #202725) !important;
+  color: var(--txt-primary, #1A1A18) !important;
 }
 .page-shell p,
 .ds-page p,
 .page-shell p,
 .ds-page p {
-  color: var(--txt-secondary, #68716D);
+  color: var(--txt-secondary, #5C5C56);
 }
 .ds-eyebrow {
   color: var(--m26-green-700, #15803D) !important;
   font-size: var(--type-label) !important;
   font-weight: var(--fw-semibold) !important;
-  letter-spacing: var(--ls-wider) !important;
+  letter-spacing: normal !important;
   text-transform: uppercase !important;
 }
 
@@ -258,13 +264,7 @@ body {
   color: var(--m26-green-800, #166534) !important;
   text-shadow: none !important;
 }
-.navbar-menu-btn,
-.navbar-menu-btn { color: var(--txt-primary, #202725) !important; }
-.navbar-search-cmd {
-  background: var(--m26-bg, #F7F4ED) !important;
-  border: 1px solid rgba(0,0,0,0.08) !important;
-  color: var(--txt-subdued, #5E655F) !important;
-}
+.navbar-menu-btn { color: var(--txt-primary, #1A1A18) !important; }
 
 /* ══ 7. Side Drawer ══════════════════════════════════════════════════════════ */
 .side-nav-drawer--v2 {
@@ -272,16 +272,15 @@ body {
   border-inline-end: 1px solid rgba(0,0,0,0.06) !important;
   box-shadow: var(--m26-shadow-xl) !important;
 }
-.side-nav-close,
-.side-nav-close { color: var(--txt-muted, #5E655F) !important; }
+.side-nav-close { color: var(--txt-muted, #5C5C56) !important; }
 .side-nav-group__title {
-  color: var(--txt-hint, #5E655F) !important;
+  color: var(--txt-hint, #5C5C56) !important;
   font-size: var(--type-label) !important;
-  letter-spacing: var(--ls-wider) !important;
+  letter-spacing: normal !important;
   text-transform: uppercase !important;
 }
 .side-nav-item {
-  color: var(--txt-secondary, #68716D) !important;
+  color: var(--txt-secondary, #5C5C56) !important;
   border-radius: var(--m26-r-md) !important;
 }
 .side-nav-item:hover {
@@ -301,9 +300,7 @@ body {
   border-top: 1px solid rgba(0,0,0,0.06) !important;
   box-shadow: 0 -2px 12px rgba(0,0,0,0.05) !important;
 }
-.bottom-nav__item,
-.bottom-nav__item { color: var(--txt-muted, #5E655F) !important; }
-.bottom-nav__item--active,
+.bottom-nav__item { color: var(--txt-muted, #5C5C56) !important; }
 .bottom-nav__item--active { color: var(--m26-green-800, #166534) !important; }
 
 /* ══ 9. Cards ════════════════════════════════════════════════════════════════ */
@@ -349,12 +346,9 @@ body {
   font-size: var(--type-caption) !important;
   font-weight: var(--fw-bold) !important;
 }
-.ds-card__title,
-.ds-card__title { color: var(--txt-primary, #202725) !important; font-weight: var(--fw-bold) !important; }
-.ds-card__body,
-.ds-card__body { color: var(--txt-secondary, #68716D) !important; }
-.ds-card__meta,
-.ds-card__meta { color: var(--txt-muted, #5E655F) !important; }
+.ds-card__title { color: var(--txt-primary, #1A1A18) !important; font-weight: var(--fw-bold) !important; }
+.ds-card__body { color: var(--txt-secondary, #5C5C56) !important; }
+.ds-card__meta { color: var(--txt-muted, #5C5C56) !important; }
 
 /* ══ 10. Buttons ══════════════════════════════════════════════════════════ */
 .ds-btn {
@@ -362,7 +356,7 @@ body {
   font-size: var(--type-btn);
   font-weight: var(--fw-semibold);
   border-radius: var(--m26-r-md);
-  letter-spacing: var(--ls-wide);
+  letter-spacing: normal;
   transition: all var(--m26-duration-fast) var(--m26-ease);
 }
 .ds-btn--primary {
@@ -382,7 +376,7 @@ body {
 }
 .ds-btn--ghost {
   background: transparent !important;
-  color: var(--txt-secondary, #68716D) !important;
+  color: var(--txt-secondary, #5C5C56) !important;
   border: 1px solid rgba(0,0,0,0.10) !important;
 }
 .ds-btn--ghost:hover {
@@ -421,7 +415,7 @@ textarea {
   background: #FFFFFF;
   border: 1.5px solid rgba(0,0,0,0.12);
   border-radius: var(--m26-r-md);
-  color: var(--txt-primary, #202725);
+  color: var(--txt-primary, #1A1A18);
   font-family: var(--font-body);
   padding: 0.625rem 0.875rem;
   font-size: var(--type-body);
@@ -431,7 +425,7 @@ input::placeholder,
 textarea::placeholder,
 input::placeholder,
 textarea::placeholder {
-  color: var(--txt-hint, #5E655F);
+  color: var(--txt-hint, #5C5C56);
 }
 input:focus,
 select:focus,
@@ -444,7 +438,7 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
 }
 label {
-  color: var(--txt-secondary, #68716D);
+  color: var(--txt-secondary, #5C5C56);
   font-size: var(--type-label);
   font-weight: var(--fw-medium);
 }
@@ -453,7 +447,7 @@ label {
 .kuwait-tab {
   background: #FFFFFF !important;
   border: 1px solid rgba(0,0,0,0.10) !important;
-  color: var(--txt-muted, #5E655F) !important;
+  color: var(--txt-muted, #5C5C56) !important;
   font-size: var(--type-label) !important;
   font-weight: var(--fw-medium) !important;
   border-radius: var(--m26-r-sm) !important;
@@ -490,10 +484,9 @@ label {
 .pt-hero__label {
   font-size: var(--type-label) !important;
   font-weight: var(--fw-semibold) !important;
-  letter-spacing: var(--ls-wider) !important;
+  letter-spacing: normal !important;
   text-transform: uppercase !important;
 }
-.pt-prayer,
 .pt-prayer { background: #FFFFFF !important; border-color: rgba(0,0,0,0.07) !important; }
 .pt-prayer:hover {
   border-color: var(--m26-green-600, #16A34A) !important;
@@ -504,21 +497,19 @@ label {
   background: var(--m26-green-50) !important;
 }
 .pt-prayer--pinned {
-  border-color: var(--m26-gold-500, #28584D) !important;
+  border-color: var(--m26-gold-500, #226A56) !important;
   background: var(--m26-gold-50, #f0faf5) !important;
 }
 .pt-prayer__name {
-  color: var(--txt-primary, #202725) !important;
+  color: var(--txt-primary, #1A1A18) !important;
   font-weight: var(--fw-semibold) !important;
 }
-.pt-prayer--next .pt-prayer__name,
-.pt-prayer--next .pt-prayer__time,
 .pt-prayer--next .pt-prayer__name,
 .pt-prayer--next .pt-prayer__time {
   color: var(--m26-green-800, #166534) !important;
 }
 .pt-prayer__time {
-  color: var(--txt-muted, #5E655F) !important;
+  color: var(--txt-muted, #5C5C56) !important;
   font-weight: var(--fw-semibold) !important;
 }
 /* أيقونة الصلاة */
@@ -544,14 +535,14 @@ label {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
   padding: 0.6rem 1rem 0.25rem;
   text-align: center;
 }
 .pt-date-hijri { font-size: 0.88rem; font-weight: 700; color: var(--m26-green-700, #15803D) !important; }
-.pt-date-sep   { color: var(--txt-muted, #5E655F); font-size: 0.8rem; }
-.pt-date-greg  { font-size: 0.8rem; color: var(--txt-muted, #5E655F) !important; }
+.pt-date-sep   { color: var(--txt-muted, #5C5C56); font-size: 0.8rem; }
+.pt-date-greg  { font-size: 0.8rem; color: var(--txt-muted, #5C5C56) !important; }
 /* بادج غداً */
 .pt-tomorrow-badge {
   background: rgba(255,255,255,0.15);
@@ -563,7 +554,7 @@ label {
 .pt-hero__hint-inner {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -573,11 +564,11 @@ label {
   text-align: center;
 }
 .pt-gov-label {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--txt-muted, #5E655F) !important;
+  letter-spacing: normal;
+  color: var(--txt-muted, #5C5C56) !important;
   margin-bottom: 0.5rem;
 }
 .pt-gov-chips {
@@ -593,7 +584,7 @@ label {
   background: #fff;
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--txt-primary, #202725);
+  color: var(--txt-primary, #1A1A18);
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s;
 }
@@ -609,7 +600,7 @@ label {
 /* روابط سريعة */
 .pt-quick-links {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   justify-content: center;
   padding: 0.75rem 1rem 1.25rem;
   flex-wrap: wrap;
@@ -624,7 +615,7 @@ label {
   background: #fff;
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--txt-primary, #202725) !important;
+  color: var(--txt-primary, #1A1A18) !important;
   text-decoration: none;
   transition: background 0.15s, border-color 0.15s;
 }
@@ -645,13 +636,12 @@ label {
   padding: 2.5rem !important;
 }
 .login-card__title {
-  color: var(--txt-primary, #202725) !important;
+  color: var(--txt-primary, #1A1A18) !important;
   font-family: var(--font-body) !important;
   font-size: var(--type-h2) !important;
   font-weight: var(--fw-bold) !important;
 }
-.login-card__subtitle,
-.login-card__subtitle { color: var(--txt-muted, #5E655F) !important; }
+.login-card__subtitle { color: var(--txt-muted, #5C5C56) !important; }
 .login-submit {
   background: var(--m26-green-800, #166534) !important;
   color: #FFFFFF !important;
@@ -667,7 +657,7 @@ label {
 .login-oauth__btn {
   background: #FFFFFF !important;
   border: 1.5px solid rgba(0,0,0,0.10) !important;
-  color: var(--txt-secondary, #68716D) !important;
+  color: var(--txt-secondary, #5C5C56) !important;
   border-radius: var(--m26-r-md) !important;
 }
 
@@ -682,40 +672,38 @@ label {
   box-shadow: var(--m26-shadow-sm) !important;
 }
 .prophet-lux-card__name {
-  color: var(--txt-primary, #202725) !important;
+  color: var(--txt-primary, #1A1A18) !important;
   font-size: 1.15rem !important;
   font-weight: var(--fw-bold) !important;
 }
-/* #6b7280 → 4.35:1 → نرفعه لـ #5E655F → 7.1:1 */
+/* #6b7280 → 4.35:1 → نرفعه لـ #5C5C56 → 7.1:1 */
 .prophet-lux-card__pbuh {
-  color: var(--txt-muted, #5E655F) !important;
+  color: var(--txt-muted, #5C5C56) !important;
   font-size: var(--type-caption) !important;
 }
 .prophet-lux-card__place {
-  color: var(--txt-muted, #5E655F) !important;
+  color: var(--txt-muted, #5C5C56) !important;
   font-size: var(--type-caption) !important;
 }
 .prophet-lux-card__bio {
-  color: var(--txt-secondary, #68716D) !important;
+  color: var(--txt-secondary, #5C5C56) !important;
   font-size: var(--type-body-sm) !important;
   line-height: var(--lh-relaxed) !important;
 }
-/* #9ca3af → 2.85:1 → FAILS → نرفعه لـ #5E655F → 7.1:1 */
+/* #9ca3af → 2.85:1 → FAILS → نرفعه لـ #5C5C56 → 7.1:1 */
 .prophet-lux-card__surahs {
-  color: var(--txt-muted, #5E655F) !important;
+  color: var(--txt-muted, #5C5C56) !important;
   font-size: var(--type-caption) !important;
 }
-.prophets-lux-count,
-.prophets-lux-count { color: var(--txt-muted, #5E655F) !important; }
-.prophets-lux-empty,
-.prophets-lux-empty { color: var(--txt-muted, #5E655F) !important; }
+.prophets-lux-count { color: var(--txt-muted, #5C5C56) !important; }
+.prophets-lux-empty { color: var(--txt-muted, #5C5C56) !important; }
 .prophets-lux-disclaimer {
-  color: var(--txt-warning, #173D35) !important;
+  color: var(--txt-warning, #143F35) !important;
   border-color: rgba(202,138,4,0.30) !important;
   background: var(--m26-gold-50, #f0faf5) !important;
 }
 .prophets-lux-tab {
-  color: var(--txt-muted, #5E655F) !important;
+  color: var(--txt-muted, #5C5C56) !important;
   border-color: rgba(0,0,0,0.12) !important;
   background: #FFFFFF !important;
 }
@@ -732,28 +720,21 @@ label {
   border: 1px solid rgba(0,0,0,0.07) !important;
   border-radius: var(--m26-r-lg) !important;
 }
-.nh-header__title,
-.nh-header__title { color: var(--txt-primary, #202725) !important; }
-.nh-row,
+.nh-header__title { color: var(--txt-primary, #1A1A18) !important; }
 .nh-row { border-color: rgba(0,0,0,0.06) !important; }
-.nh-row:hover,
 .nh-row:hover { background: var(--m26-green-50, #F0FDF4) !important; }
-.nh-row__title,
-.nh-row__title { color: var(--txt-primary, #202725) !important; }
-.nh-row__body-text,
-.nh-row__body-text { color: var(--txt-secondary, #68716D) !important; }
-.nh-row__meta,
-.nh-row__meta { color: var(--txt-muted, #5E655F) !important; }
-.nh-tab,
-.nh-tab { color: var(--txt-muted, #5E655F) !important; }
+.nh-row__title { color: var(--txt-primary, #1A1A18) !important; }
+.nh-row__body-text { color: var(--txt-secondary, #5C5C56) !important; }
+.nh-row__meta { color: var(--txt-muted, #5C5C56) !important; }
+.nh-tab { color: var(--txt-muted, #5C5C56) !important; }
 .nh-tab--active {
   color: var(--m26-green-800, #166534) !important;
   border-bottom-color: var(--m26-green-800) !important;
 }
 .nh-search {
-  background: var(--m26-bg, #F7F4ED) !important;
+  background: var(--m26-bg, #FAFAF8) !important;
   border: 1.5px solid rgba(0,0,0,0.10) !important;
-  color: var(--txt-primary, #202725) !important;
+  color: var(--txt-primary, #1A1A18) !important;
   border-radius: var(--m26-r-md) !important;
 }
 
@@ -763,15 +744,10 @@ label {
   border: 1px solid rgba(0,0,0,0.07) !important;
   border-radius: var(--m26-r-lg) !important;
 }
-.notif-card__title,
-.notif-card__title { color: var(--txt-primary, #202725) !important; }
-.notif-row__label,
-.notif-row__label { color: var(--txt-primary, #202725) !important; }
-.notif-row__sub,
-.notif-row__sub { color: var(--txt-muted, #5E655F) !important; }
-.notif-toggle,
+.notif-card__title { color: var(--txt-primary, #1A1A18) !important; }
+.notif-row__label { color: var(--txt-primary, #1A1A18) !important; }
+.notif-row__sub { color: var(--txt-muted, #5C5C56) !important; }
 .notif-toggle { background: rgba(0,0,0,0.12) !important; }
-.notif-toggle--on,
 .notif-toggle--on { background: var(--m26-green-600, #16A34A) !important; }
 .notif-test-btn {
   background: var(--m26-green-800, #166534) !important;
@@ -783,14 +759,12 @@ label {
   color: var(--m26-green-800, #166534) !important;
   border: 1px solid rgba(22,163,74,0.25) !important;
 }
-.notif-time__label,
-.notif-time__label { color: var(--txt-secondary, #68716D) !important; }
-.notif-time__hint,
-.notif-time__hint { color: var(--txt-muted, #5E655F) !important; }
+.notif-time__label { color: var(--txt-secondary, #5C5C56) !important; }
+.notif-time__hint { color: var(--txt-muted, #5C5C56) !important; }
 .notif-banner--warn {
   background: var(--m26-gold-50, #f0faf5) !important;
   border-color: rgba(202,138,4,0.35) !important;
-  color: var(--txt-warning, #173D35) !important;
+  color: var(--txt-warning, #143F35) !important;
 }
 .notif-banner--err {
   background: #FEF2F2 !important;
@@ -809,8 +783,7 @@ label {
   font-family: var(--font-body) !important;
   font-weight: var(--fw-bold) !important;
 }
-.home-hero__sub,
-.home-hero__sub { color: var(--txt-secondary, #68716D) !important; }
+.home-hero__sub { color: var(--txt-secondary, #5C5C56) !important; }
 .home-story-card,
 .home-feature-strip-card,
 .home-more-card,
@@ -820,16 +793,12 @@ label {
   background: #FFFFFF !important;
   border: 1px solid rgba(0,0,0,0.07) !important;
 }
-.home-about__body,
-.home-about__body { color: var(--txt-secondary, #68716D) !important; }
+.home-about__body { color: var(--txt-secondary, #5C5C56) !important; }
 
 /* ══ 19. Page Shell / Global Text ═══════════════════════════════════════════ */
-.page-shell,
-.page-shell { color: var(--txt-primary, #202725) !important; }
-.page-meta,
-.page-meta { color: var(--txt-muted, #5E655F) !important; }
-.page-desc,
-.page-desc { color: var(--txt-secondary, #68716D) !important; }
+.page-shell { color: var(--txt-primary, #1A1A18) !important; }
+.page-meta { color: var(--txt-muted, #5C5C56) !important; }
+.page-desc { color: var(--txt-secondary, #5C5C56) !important; }
 .page-tag {
   background: var(--m26-green-100, #DCFCE7) !important;
   color: var(--m26-green-800, #166534) !important;
@@ -841,7 +810,7 @@ label {
 
 /* PageHeader */
 .ds-page-header .ds-heading {
-  color: var(--txt-primary, #202725) !important;
+  color: var(--txt-primary, #1A1A18) !important;
   font-family: var(--font-body) !important;
   font-size: var(--type-h1) !important;
   font-weight: var(--fw-bold) !important;
@@ -849,14 +818,13 @@ label {
   line-height: var(--lh-snug) !important;
 }
 .ds-page-header .ds-subtitle {
-  color: var(--txt-secondary, #68716D) !important;
+  color: var(--txt-secondary, #5C5C56) !important;
   font-size: var(--type-body-lg) !important;
   line-height: var(--lh-relaxed) !important;
 }
 
 /* ══ 20. Admin Shell ══════════════════════════════════════════════════════ */
-.admin-shell,
-.admin-shell { background: var(--m26-bg, #F7F4ED) !important; }
+.admin-shell { background: var(--m26-bg, #FAFAF8) !important; }
 .admin-shell__sidebar {
   background: #FFFFFF !important;
   border-inline-end: 1px solid rgba(0,0,0,0.07) !important;
@@ -866,22 +834,22 @@ label {
 table,
 table { background: #FFFFFF; border-collapse: collapse; }
 th {
-  background: var(--m26-bg, #F7F4ED) !important;
-  color: var(--txt-secondary, #68716D) !important;
+  background: var(--m26-bg, #FAFAF8) !important;
+  color: var(--txt-secondary, #5C5C56) !important;
   font-weight: var(--fw-bold) !important;
   font-size: var(--type-label) !important;
-  letter-spacing: var(--ls-wide) !important;
+  letter-spacing: normal !important;
   border-color: rgba(0,0,0,0.07) !important;
 }
 td {
-  color: var(--txt-primary, #202725) !important;
+  color: var(--txt-primary, #1A1A18) !important;
   border-color: rgba(0,0,0,0.06) !important;
 }
 /* لا نسخة ليلية سابقًا لعنصر table/th/td العام — خلفية بيضاء ونص داكن
    ثابتان حتى في الوضع الليلي (كل جدول في الموقع، مثال: صفحات تفاصيل
    جلسات المجمع الفقهي) (2026-07-17). */
 html[data-theme="dark"] table {
-  background: #173D35 !important;
+  background: #143F35 !important;
 }
 html[data-theme="dark"] th {
   background: rgba(92,196,154,.12) !important;
@@ -898,14 +866,14 @@ html[data-theme="dark"] td {
   background: #FFFFFF !important;
   border: 1px solid rgba(0,0,0,0.07) !important;
   border-radius: var(--m26-r-xl) !important;
-  color: var(--txt-muted, #5E655F) !important;
+  color: var(--txt-muted, #5C5C56) !important;
 }
 .empty-state h2,
 .empty-state h3,
 .empty-state h2,
-.empty-state h3 { color: var(--txt-primary, #202725) !important; }
+.empty-state h3 { color: var(--txt-primary, #1A1A18) !important; }
 .empty-state p,
-.empty-state p { color: var(--txt-muted, #5E655F) !important; }
+.empty-state p { color: var(--txt-muted, #5C5C56) !important; }
 
 /* ══ 23. Skeleton ════════════════════════════════════════════════════════════ */
 @keyframes m26-shimmer {
@@ -931,13 +899,9 @@ html[data-theme="dark"] td {
   border-color: rgba(22,163,74,0.50) !important;
   box-shadow: var(--m26-shadow-md) !important;
 }
-.prophets-seerah-bridge__title,
 .prophets-seerah-bridge__title { color: var(--m26-green-950, #052E16) !important; }
-.prophets-seerah-bridge__eyebrow,
-.prophets-seerah-bridge__eyebrow { color: var(--m26-gold-700, #28584D) !important; }
-.prophets-seerah-bridge__desc,
-.prophets-seerah-bridge__desc { color: var(--txt-secondary, #68716D) !important; }
-.prophets-seerah-bridge__arrow,
+.prophets-seerah-bridge__eyebrow { color: var(--m26-gold-700, #226A56) !important; }
+.prophets-seerah-bridge__desc { color: var(--txt-secondary, #5C5C56) !important; }
 .prophets-seerah-bridge__arrow { color: var(--m26-green-600, #16A34A) !important; }
 .seerah-back-link {
   color: var(--m26-green-800, #166534) !important;
@@ -952,10 +916,10 @@ html[data-theme="dark"] td {
 .site-footer {
   background: var(--m26-bg-2, #F1F3F5) !important;
   border-top: 1px solid rgba(0,0,0,0.07) !important;
-  color: var(--txt-muted, #5E655F) !important;
+  color: var(--txt-muted, #5C5C56) !important;
 }
 .site-footer a {
-  color: var(--txt-secondary, #68716D) !important;
+  color: var(--txt-secondary, #5C5C56) !important;
   text-decoration: none;
 }
 .site-footer a:hover,
@@ -1012,7 +976,7 @@ html[data-theme="dark"] td {
 
 /* ══ 29. Profile / Quick Links ═══════════════════════════════════════════════ */
 .profile-quick-link {
-  color: var(--txt-secondary, #68716D) !important;
+  color: var(--txt-secondary, #5C5C56) !important;
   border-color: rgba(0,0,0,0.10) !important;
 }
 .profile-quick-link:hover {
@@ -1037,10 +1001,8 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   background: #FFFFFF !important;
   border: 1px solid rgba(0,0,0,0.07) !important;
 }
-.adhkar-card__text,
-.adhkar-card__text { color: var(--txt-primary, #202725) !important; }
-.adhkar-card__source,
-.adhkar-card__source { color: var(--txt-muted, #5E655F) !important; }
+.adhkar-card__text { color: var(--txt-primary, #1A1A18) !important; }
+.adhkar-card__source { color: var(--txt-muted, #5C5C56) !important; }
 
 /* ══ 33. Flashcards ══════════════════════════════════════════════════════════ */
 .flashcard {
@@ -1051,7 +1013,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 .flashcard__front,
 .flashcard__back,
 .flashcard__front,
-.flashcard__back { color: var(--txt-primary, #202725) !important; }
+.flashcard__back { color: var(--txt-primary, #1A1A18) !important; }
 
 /* ══ 34. KPI Stats ═══════════════════════════════════════════════════════════ */
 .stat-card {
@@ -1059,61 +1021,44 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   border: 1px solid rgba(0,0,0,0.07) !important;
 }
 .stat-card__value {
-  color: var(--txt-primary, #202725) !important;
+  color: var(--txt-primary, #1A1A18) !important;
   font-weight: var(--fw-black) !important;
 }
-.stat-card__label,
-.stat-card__label { color: var(--txt-muted, #5E655F) !important; }
+.stat-card__label { color: var(--txt-muted, #5C5C56) !important; }
 
 /* ══ 35. Prayer Rank / Lesson Detail ════════════════════════════════════════ */
-.hcp-prayer-cell__time,
-.hcp-prayer-cell__time { color: var(--txt-primary, #202725) !important; }
-.hcp-prayer-cell__name,
-.hcp-prayer-cell__name { color: var(--txt-secondary, #68716D) !important; }
+.hcp-prayer-cell__time { color: var(--txt-primary, #1A1A18) !important; }
+.hcp-prayer-cell__name { color: var(--txt-secondary, #5C5C56) !important; }
 
 /* ══ 36. تاريخ الإسلامي / أذكار / تسبيح ════════════════════════════════════ */
 .tasbih-count {
-  color: var(--txt-primary, #202725) !important;
+  color: var(--txt-primary, #1A1A18) !important;
   font-weight: var(--fw-black) !important;
 }
-.tasbih-label,
-.tasbih-label { color: var(--txt-muted, #5E655F) !important; }
+.tasbih-label { color: var(--txt-muted, #5C5C56) !important; }
 
-/* ══ 37. Prophet Stories — Light Card Contrast Fixes ════════════════════════ */
-.prophets-lux-count,
-.prophets-lux-count { color: var(--txt-muted, #5E655F) !important; }
+/* ══ 37. Prophet Stories — Light Card Contrast Fixes ════════════════════════
+   (.prophets-lux-count و.prophets-lux-empty مطابقتان حرفيًا لتعريفهما أعلى
+   الملف — أُزيل التكرار هنا) ═══════════════════════════════════════════ */
+.prophet-lux-card__place { color: var(--txt-muted, #5C5C56) !important; }
 
-.prophet-lux-card__place,
-.prophet-lux-card__place { color: var(--txt-muted, #5E655F) !important; }
+.prophet-timeline__title { color: var(--txt-muted, #5C5C56) !important; }
 
-.prophets-lux-empty,
-.prophets-lux-empty { color: var(--txt-muted, #5E655F) !important; }
+.prophet-timeline__era { color: var(--txt-muted, #5C5C56) !important; }
 
-.prophet-timeline__title,
-.prophet-timeline__title { color: var(--txt-muted, #5E655F) !important; }
+.prophet-quiz__remark { color: var(--txt-muted, #5C5C56) !important; }
 
-.prophet-timeline__era,
-.prophet-timeline__era { color: var(--txt-muted, #5E655F) !important; }
-
-.prophet-quiz__remark,
-.prophet-quiz__remark { color: var(--txt-muted, #5E655F) !important; }
-
-.prophets-lux-search-clear,
-.prophets-lux-search-clear { color: var(--txt-muted, #5E655F) !important; }
+.prophets-lux-search-clear { color: var(--txt-muted, #5C5C56) !important; }
 
 /* ══ 38. Seerah Page — Timeline Contrast ════════════════════════════════════ */
-.seerah-timeline__dot,
-.seerah-timeline__dot { color: var(--txt-muted, #5E655F) !important; }
+.seerah-timeline__dot { color: var(--txt-muted, #5C5C56) !important; }
 
-.seerah-timeline__year,
-.seerah-timeline__year { color: var(--txt-muted, #5E655F) !important; }
+.seerah-timeline__year { color: var(--txt-muted, #5C5C56) !important; }
 
 /* ══ 39. Muezzin Detail / Favorites — Contrast Fixes ════════════════════════ */
-.muezzin-meta,
-.muezzin-meta { color: var(--txt-muted, #5E655F) !important; }
+.muezzin-meta { color: var(--txt-muted, #5C5C56) !important; }
 
-.muezzin-bio,
-.muezzin-bio { color: var(--txt-muted, #5E655F) !important; }
+.muezzin-bio { color: var(--txt-muted, #5C5C56) !important; }
 
 /* ══ 39b. Back Button — زر الرجوع العالمي ══════════════════════════════════ */
 .ds-page-back-btn {
@@ -1125,7 +1070,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   border: 1.5px solid var(--majalis-line, #e5e7eb);
   border-radius: 9999px;
   background: var(--majalis-panel, #fff);
-  color: var(--txt-secondary, #68716D);
+  color: var(--txt-secondary, #5C5C56);
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
@@ -1159,26 +1104,41 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   background: rgba(255,255,255,0.22);
   border-color: rgba(255,255,255,0.7);
 }
+/* .legal-back-btn الأساسي مصمَّم لسياق داكن (.legal-page-hero) فقط. مكوّن
+   LegalBackLink المستقل (يُستخدم في نهاية الإعدادات/حول/الشروط/اتصل بنا/
+   معلومات الطبعة/الخصوصية) يُعيد استخدام نفس الصنف خارج أي حاوية داكنة —
+   نص أبيض شبه شفاف فوق خلفية الصفحة الفاتحة العادية (تباين ~1.1:1، اكتُشف
+   عبر تدقيق تباين حي شامل). هذه القاعدة الأكثر تخصيصًا (صنفان) تفوز طبيعيًا
+   بلا !important وتُصحح الألوان لسياق فاتح فقط، دون المساس بزر الهيرو. */
+.legal-back .legal-back-btn {
+  border-color: rgba(23,61,53,0.25);
+  background: transparent;
+  color: var(--majalis-emerald-deep, #143F35);
+}
+.legal-back .legal-back-btn:hover {
+  background: rgba(23,61,53,0.06);
+  border-color: rgba(23,61,53,0.4);
+}
 
 /* ══ 40. Adhkar Focus Mode ══════════════════════════════════════════════════ */
 .adhkar-page--focus .adhkar-focus-shell {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: var(--ds-space-6);
   padding: 1.5rem 0 2rem;
 }
 
 .adhkar-focus-counter {
-  font-size: 0.875rem;
-  color: var(--txt-subdued, #5E655F);
-  letter-spacing: 0.05em;
+  font-size: var(--ds-text-sm);
+  color: var(--txt-subdued, #5C5C56);
+  letter-spacing: normal;
 }
 
 .adhkar-focus-card {
   background: var(--majalis-panel, #fff);
   border: 1px solid var(--majalis-line, #e5e7eb);
-  border-radius: 1.25rem;
+  border-radius: var(--ds-radius-2xl);
   padding: 2.5rem 2rem;
   text-align: center;
   max-width: 640px;
@@ -1190,7 +1150,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   font-family: var(--font-body);
   font-size: clamp(1.25rem, 4vw, 1.75rem);
   line-height: 2.2;
-  color: var(--txt-primary, #202725);
+  color: var(--txt-primary, #1A1A18);
   margin: 0 0 1rem;
 }
 
@@ -1203,17 +1163,17 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 
 .adhkar-focus-nav {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-space-3);
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .adhkar-focus-btn {
   padding: 0.625rem 1.25rem;
-  border-radius: 0.75rem;
+  border-radius: var(--ds-radius-lg);
   border: 1.5px solid var(--majalis-line, #e5e7eb);
   background: var(--majalis-panel, #fff);
-  color: var(--txt-primary, #202725);
+  color: var(--txt-primary, #1A1A18);
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
@@ -1276,7 +1236,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 
 .adhkar-tapper-wrap {
   display: flex; flex-direction: column;
-  align-items: center; gap: 0.5rem;
+  align-items: center; gap: var(--ds-space-2);
 }
 
 .adhkar-tapper {
@@ -1312,7 +1272,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   line-height: 1; font-variant-numeric: tabular-nums;
 }
 .adhkar-tapper__sep {
-  font-size: 1rem; color: rgba(0,0,0,0.2);
+  font-size: var(--ds-text-base); color: rgba(0,0,0,0.2);
   align-self: flex-end; margin-bottom: 0.15rem;
 }
 .adhkar-tapper__tot {
@@ -1330,11 +1290,11 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 }
 
 .adhkar-tapper__hint {
-  font-size: 0.78rem; color: var(--txt-subdued, #5E655F);
+  font-size: 0.78rem; color: var(--txt-subdued, #5C5C56);
   margin: 0; text-align: center;
 }
 .adhkar-tapper__complete {
-  font-size: 0.875rem; font-weight: 600;
+  font-size: var(--ds-text-sm); font-weight: 600;
   color: var(--majalis-emerald, #16A34A);
   margin: 0; text-align: center;
 }
@@ -1382,15 +1342,15 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   background: none;
   border: none;
   font-size: 1.1rem;
-  color: var(--txt-subdued, #5E655F);
+  color: var(--txt-subdued, #5C5C56);
   cursor: pointer;
   padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
+  border-radius: var(--ds-radius);
 }
 .adhkar-sheet-title {
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
   font-weight: 700;
-  color: var(--txt-primary, #202725);
+  color: var(--txt-primary, #1A1A18);
   text-align: center;
   margin: 0 0 1rem;
 }
@@ -1398,35 +1358,35 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   font-family: var(--font-body);
   font-size: 1.15rem;
   line-height: 2;
-  color: var(--txt-primary, #202725);
+  color: var(--txt-primary, #1A1A18);
   text-align: center;
-  padding: 1rem;
+  padding: var(--ds-space-4);
   background: var(--m26-green-50, #F0FDF4);
-  border-radius: 0.75rem;
+  border-radius: var(--ds-radius-lg);
   margin-bottom: 1.25rem;
 }
 .adhkar-sheet-details {
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
+  gap: var(--ds-space-2-5);
   margin: 0 0 1.5rem;
 }
 .adhkar-sheet-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 1rem;
-  font-size: 0.875rem;
+  gap: var(--ds-space-4);
+  font-size: var(--ds-text-sm);
   padding: 0.5rem 0;
   border-bottom: 1px solid var(--majalis-line, #e5e7eb);
 }
 .adhkar-sheet-row dt {
-  color: var(--txt-subdued, #5E655F);
+  color: var(--txt-subdued, #5C5C56);
   font-weight: 500;
   white-space: nowrap;
 }
 .adhkar-sheet-row dd {
-  color: var(--txt-primary, #202725);
+  color: var(--txt-primary, #1A1A18);
   text-align: start;
   margin: 0;
 }
@@ -1438,8 +1398,8 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   font-weight: 600;
 }
 .adhkar-grade--sahih { background: #DCFCE7; color: #166534; }
-.adhkar-grade--hasan { background: #e8f5f0; color: #28584D; }
-.adhkar-grade--other { background: #F3F4F6; color: #68716D; }
+.adhkar-grade--hasan { background: #e8f5f0; color: #226A56; }
+.adhkar-grade--other { background: #F3F4F6; color: #5C5C56; }
 .adhkar-sheet-share {
   width: 100%;
   justify-content: center;
@@ -1448,7 +1408,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 .adhkar-sheet-dismiss {
   display: block;
   width: 100%;
-  padding: 0.875rem;
+  padding: var(--ds-space-3-5);
   background: var(--majalis-emerald, #16A34A);
   color: #fff;
   border: none;
@@ -1460,24 +1420,24 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 
 /* ══ 40. Legacy Token Bridge — إعادة تعريف الرموز القديمة للتوافق ═══════════ */
 :root {
-  --text-base:       var(--txt-primary,   #202725);
-  --text-soft:       var(--txt-secondary, #68716D);
-  --text-muted:      var(--txt-muted,     #5E655F);
-  --text-subtle:     var(--txt-subdued,   #68716D);
+  --text-base:       var(--txt-primary,   #1A1A18);
+  --text-soft:       var(--txt-secondary, #5C5C56);
+  --text-muted:      var(--txt-muted,     #5C5C56);
+  --text-subtle:     var(--txt-subdued,   #5C5C56);
   --text-disabled:   var(--txt-disabled,  #B9BEBB);
-  --text-accent:     var(--txt-accent,    #173D35);
-  --text-inverse:    var(--txt-inverse,   #F7F4ED);
+  --text-accent:     var(--txt-accent,    #143F35);
+  --text-inverse:    var(--txt-inverse,   #FAFAF8);
 
   /* ── تحديث رموز m26 لتطابق إعادة تصميم الهوية v3 ── */
-  --m26-bg:           #F7F4ED;
-  --m26-bg-2:         #F1EEE5;
+  --m26-bg:           #FAFAF8;
+  --m26-bg-2:         #F4F4F1;
   --m26-surface:      #FFFFFF;
-  --m26-surface-2:    #F1EEE5;
+  --m26-surface-2:    #F4F4F1;
   --m26-surface-3:    #EFE9DC;
   --m26-green-950:    #0C211C;
-  --m26-green-800:    #173D35;
-  --m26-green-700:    #173D35;
-  --m26-green-600:    #173D35;
+  --m26-green-800:    #143F35;
+  --m26-green-700:    #143F35;
+  --m26-green-600:    #143F35;
   --m26-green-100:    #E4EAE7;
   --m26-green-50:     #EEF1EF;
 }
@@ -1489,19 +1449,19 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
  * يُمنع تماماً خلف: نص قرآني، نص حديث، نماذج، جداول.
  */
 .majalis-star-bg {
-  background-color: #173D35;
+  background-color: #143F35;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E");
   background-size: 100px 100px;
-  color: #F7F4ED;
+  color: #FAFAF8;
 }
 
 /* رأس النجمة — الوضع الاحتفالي للصفحات الرئيسية */
 .majalis-star-hero {
   position: relative;
-  background-color: #28584D;
+  background-color: #226A56;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.06' stroke-width='1.2'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.09'/%3E%3C/svg%3E");
   background-size: 100px 100px;
-  color: #F7F4ED;
+  color: #FAFAF8;
   padding: 2.5rem 1.5rem;
 }
 
@@ -1529,7 +1489,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   font-size: 0.88rem !important;
   font-weight: 700 !important;
   line-height: 1 !important;
-  color: var(--txt-primary, #202725) !important;
+  color: var(--txt-primary, #1A1A18) !important;
 }
 .cal-cell-hijri {
   font-size: 0.62rem !important;
@@ -1545,11 +1505,11 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 .cal-cell-event {
   display: block;
   width: 100%;
-  font-size: 0.58rem !important;
+  font-size: 0.8rem !important;
   font-weight: 600 !important;
   background: var(--m26-green-100, #DCFCE7) !important;
   color: var(--m26-green-800, #166534) !important;
-  border-radius: 0.25rem;
+  border-radius: var(--ds-radius-xs);
   padding: 0.08rem 0.25rem;
   overflow: hidden;
   white-space: nowrap;
@@ -1594,7 +1554,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   right: 0;
   left: 0;
   height: 3px;
-  background: linear-gradient(to left, var(--color-primary, #28584D), #34d399);
+  background: linear-gradient(to left, var(--color-primary, #226A56), #34d399);
   width: var(--rpb-pct, 0%);
   z-index: 9999;
   transition: width 0.1s linear;
@@ -1607,14 +1567,14 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: var(--ds-space-2);
   flex-wrap: wrap;
 }
 .content-detail-readtime {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  font-size: 0.75rem;
+  gap: var(--ds-space-1);
+  font-size: var(--ds-text-xs);
   color: var(--txt-secondary, #6b7280);
   background: var(--surface-2, #f4f4f4);
   padding: 0.15rem 0.5rem;
@@ -1636,7 +1596,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   --on-dark-primary:      #FFFFFF;
   --on-dark-secondary:    rgba(255, 255, 255, 0.88);
   --txt-body:             #1E1E1E;
-  --txt-body-light:       #68716D;
+  --txt-body-light:       #5C5C56;
 }
 
 /* ─── تحسين وزن الخط العام ─── */
@@ -1649,7 +1609,6 @@ body {
 p { line-height: var(--lh-normal, 1.65); }
 
 /* ─── نص أبيض على جميع Hero sections ─── */
-.lpth-hero,
 .lpth-hero *:not(.lpth-hero__btn-primary):not(.lpth-hero__btn-primary *) {
   color: var(--on-emerald-primary);
 }
@@ -1659,7 +1618,6 @@ p { line-height: var(--lh-normal, 1.65); }
   color: var(--on-emerald-secondary) !important;
 }
 
-.ldb-hero,
 .ldb-hero * {
   color: var(--on-emerald-primary);
 }
@@ -1674,7 +1632,6 @@ p { line-height: var(--lh-normal, 1.65); }
   color: var(--on-emerald-primary) !important;
 }
 
-.lesson-detail-hero,
 .lesson-detail-hero * {
   color: var(--on-emerald-primary) !important;
 }
@@ -1726,7 +1683,7 @@ p { line-height: var(--lh-normal, 1.65); }
 .page-meta,
 .page-desc,
 .content-detail-meta {
-  color: #68716D;
+  color: #5C5C56;
   line-height: var(--lh-normal, 1.65);
 }
 
@@ -1741,12 +1698,12 @@ p { line-height: var(--lh-normal, 1.65); }
 .content-detail-body p {
   line-height: 1.85;
   color: #1E1E1E;
-  font-size: 1rem;
+  font-size: var(--ds-text-base);
 }
 
 /* ─── ضمان النص الأبيض على شريط القراءة ─── */
 .reading-progress-bar {
-  background: linear-gradient(to right, var(--majalis-emerald, #28584D), #28584D);
+  background: linear-gradient(to right, var(--majalis-emerald, #226A56), #226A56);
 }
 
 /* ─── تحسين الفهرس والتسميات المرئية ─── */
@@ -1754,7 +1711,7 @@ p { line-height: var(--lh-normal, 1.65); }
 .home-eyebrow,
 .ds-page-header__eyebrow {
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: normal;
 }
 
 /* ─── تباين نص الجداول والقوائم ─── */
