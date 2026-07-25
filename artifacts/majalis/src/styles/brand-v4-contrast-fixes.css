@@ -37,9 +37,7 @@ html[data-theme="dark"] :is(
   .content-hub-chip--active,
   .tip-cat-btn--active,
   .lpp-cat-btn--active,
-  .adhkar-focus-btn--next,
-  .top-ticker__item,
-  .top-ticker__item-source
+  .adhkar-focus-btn--next
 ) {
   color: var(--em-950) !important;
 }

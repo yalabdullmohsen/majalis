@@ -26,7 +26,6 @@
   --shadow-soft: 0 1px 2px rgb(23 61 53 / 5%), 0 12px 30px rgb(23 61 53 / 6%);
   --header-height: 3.25rem;
   --bottom-nav-height: 3.25rem;
-  --ticker-height: 1.875rem;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --page-gutter: clamp(1rem, 3vw, 2rem);
   --page-width: 76rem;
@@ -60,7 +59,7 @@ body {
 
 .app-shell { min-height: 100dvh; background: transparent; color: var(--color-text); }
 .app-main {
-  min-height: calc(100dvh - var(--header-height) - var(--ticker-height));
+  min-height: calc(100dvh - var(--header-height));
   padding-block-end: calc(var(--bottom-nav-height) + var(--safe-bottom) + 1.5rem);
 }
 
@@ -82,84 +81,35 @@ body {
   outline-offset: 3px;
 }
 
-/* الشريط المتحرك أعلى الشاشة (TopTicker) — أعلى طبقة، يمتص
-   env(safe-area-inset-top) وحده فلا يتداخل مع النوتش/Dynamic Island،
-   والهيدر يلتصق أسفله مباشرة (راجع .navbar-v3 أدناه). */
-.top-ticker {
-  position: sticky;
-  inset-block-start: 0;
-  z-index: calc(var(--z-nav, 200) + 1);
-  height: calc(var(--ticker-height) + env(safe-area-inset-top, 0px));
-  padding-block-start: env(safe-area-inset-top, 0px);
-  /* قصّة الشاشة أفقيًا: كان الشريط يمتصّ safe-area-inset-top وحده، فيمرّ
-     نصّه تحت النوتش والحافة المنحنية في الوضع الأفقي على iPhone فيبدو
-     مقصوصًا من الطرفين. المحاكيات المكتبية تُرجع env(safe-area-inset-*)=0
-     دائمًا فلا يظهر هذا الخلل إلا على جهاز حقيقي.
-     max() تعني: بلا أثر إطلاقًا حين تكون القصّة صفرًا. */
-  padding-inline: max(0px, env(safe-area-inset-right, 0px)) max(0px, env(safe-area-inset-left, 0px));
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
-  background: var(--elite-forest, #143F35);
-  display: flex;
-  align-items: center;
-}
-.top-ticker__track {
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
-  white-space: nowrap;
-  padding-inline-end: 2.5rem;
-  animation: top-ticker-scroll 32s linear infinite;
-}
-.top-ticker__track.is-paused {
-  animation-play-state: paused;
-}
-.top-ticker__item {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #FAFAF8;
-  flex-shrink: 0;
-}
-.top-ticker__item-source {
-  opacity: 0.75;
-  font-weight: 400;
-}
-.top-ticker--static,
-.top-ticker--empty {
-  justify-content: center;
-  padding-inline: 1rem;
-}
-/* لا قصّ بـellipsis: المكوّن يقسّم النص الطويل إلى شرائح متعاقبة فيصل
-   الحديث كاملًا داخل نفس ارتفاع الشريط (راجع staticSlides في TopTicker). */
-.top-ticker--static .top-ticker__item {
-  white-space: nowrap;
-  overflow: hidden;
-}
-.top-ticker__empty-text {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #FAFAF8;
-  opacity: 0.85;
-}
-@keyframes top-ticker-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .top-ticker__track { animation: none; }
-}
-
 /* App header */
-/* الهيدر يلتصق أسفل TopTicker مباشرة (لا أعلى الشاشة) — TopTicker وحده
-   يمتص env(safe-area-inset-top) الآن (طبقة علوية واحدة متّسقة)، فالهيدر
-   لم يعد بحاجة لحشوه الخاص لأنه لم يعد يلامس الحافة العلوية الحقيقية. */
+/* الشريط الأخضر المتحرك (TopTicker) أعلى الهيدر حُذف نهائيًا 2026-07-25
+   (كان يقصّ نص الصلاة/السنن — طلب مباشر). الهيدر الآن أعلى عنصر لاصق في
+   الصفحة، فيمتص env(safe-area-inset-top) بنفسه عبر padding بدل الاعتماد
+   على طبقة منفصلة فوقه.
+   ⚠ header.navbar-v3{display:flex!important} مُعرَّفة في elite-2026.css
+   (سطر ~32011، بمحدّد أعلى تخصيصًا من .navbar-v3 وحدها) لتوسيط شعار
+   الهيدر رأسيًا حين كان الابن الوحيد .navbar-v3__inner. بعد إضافة صفّ
+   HeaderTicker كابن ثانٍ (2026-07-25)، بقيت flex-direction:row الافتراضية
+   فوضعت الصفّين جنبًا إلى جنب أفقيًا (كل منهما نصف العرض فقط) بدل التتابع
+   الرأسي المطلوب — يُصحَّح هنا بنفس محدّد header.navbar-v3 (لا .navbar-v3
+   وحدها) لضمان الفوز على specificity المتساوية بحكم ترتيب التحميل. */
+header.navbar-v3 {
+  flex-direction: column !important;
+  align-items: stretch !important;
+  height: auto !important;
+  /* @media(max-width:879px) في index.css تُقفل .navbar-v3 عند max-height:
+     4.5rem (72px) — بقيت فعّالة رغم height:auto أعلاه لأنها خاصية مختلفة.
+     قبل هذا التعديل كان مجموع ارتفاع navbar-v3__inner + header-ticker
+     (48+44=92px) يتجاوز الـ72px المسموحة، فيفيض الشريط بصريًا خارج صندوق
+     الهيدر ويتراكب مع .top-section-bar أسفله — عطل من نفس عائلة عطل
+     «القبة» (bounding box أصغر من المحتوى الفعلي). */
+  max-height: none !important;
+}
 .navbar-v3 {
   position: sticky;
-  inset-block-start: calc(var(--ticker-height) + env(safe-area-inset-top, 0px));
+  inset-block-start: 0;
+  padding-block-start: env(safe-area-inset-top, 0px);
   z-index: var(--z-nav, 200);
-  min-height: var(--header-height);
   background: color-mix(in srgb, var(--color-surface) 92%, transparent);
   border: 0;
   border-block-end: 1px solid var(--color-border);
@@ -178,7 +128,11 @@ body {
    بين الأقسام. white-space: nowrap يمنع التفاف اسم أي قسم لأكثر من سطر. */
 .top-section-bar {
   position: sticky;
-  top: calc(var(--ticker-height) + env(safe-area-inset-top, 0px) + var(--header-height, 4rem));
+  /* --navbar-total-height تُحدَّث فعليًا (ResizeObserver في NavBar.tsx) بارتفاع
+     .navbar-v3 الحقيقي، الذي صار متغيّرًا بعد إضافة شريط المحتوى الأبيض
+     داخله (نص كامل بلا سطر واحد ثابت). القيمة الاحتياطية (بلا الشريط)
+     تمنع أي وميض قبل أول قياس، وتبقى صحيحة تقريبًا لجزء من الثانية فقط. */
+  top: var(--navbar-total-height, calc(env(safe-area-inset-top, 0px) + var(--header-height, 4rem)));
   z-index: 190;
   /* حاوية الشريط نفسها لا تتجاوز الشاشة مهما كان محتواها؛ التمرير الأفقي
      يقع داخل .top-section-bar__scroll وحده لا في الصفحة. */
@@ -380,60 +334,70 @@ html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1)
   box-shadow: none;
 }
 
-/* الشريط المتحرك أعلى التطبيق (HeaderTicker) — يحلّ محل زر/مربع البحث في
-   الهيدر (تكليف 2026-07-24). CSS Marquee بلا مكتبات: تكرار العناصر مرتين
-   وتحريك 0%→-50% يعطي حلقة سلسة بلا قفزة. يتوقف عند hover/لمس، ويتحول
-   لتناوب ثابت بلا حركة عند prefers-reduced-motion (مطابق فعليًا في JS
-   وCSS كطبقة حماية إضافية). ألوان/خط الهوية الحالية (--color-primary
-   #143F35 وAlexandria الموحَّد) لا #0E6E52/Almarai القديمين. */
+/* الشريط النصي أعلى التطبيق (HeaderTicker) — صف مستقل بعرض كامل تحت
+   navbar-v3__inner (راجع NavBar.tsx)، منفصل تمامًا عن زري القائمة
+   والحساب. أُعيد تصميمه بالكامل 2026-07-25: كان CSS-marquee بعرض ثابت
+   صغير ضمن صف الأزرار، فيُقصّ نص الذكر/الحديث من الطرفين ويتداخل مع
+   الأزرار. الآن: عنصر واحد كامل النص، بلا قصّ ولا تمرير أفقي، يتمدد
+   رأسيًا حسب طول النص (سطر إلى عدة أسطر)، مع بطاقة نوع صغيرة وانتقال
+   Fade هادئ عند كل تبديل. */
 .header-ticker {
-  overflow: hidden;
-  min-width: 0;
-  min-height: 44px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-height: 2.75rem;
+  height: auto;
   display: flex;
-  align-items: center;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  padding: .6rem 1rem;
+  border-block-start: 1px solid var(--color-border);
   background: var(--color-surface);
-  mask-image: linear-gradient(to left, transparent, #000 5%, #000 95%, transparent);
 }
 .header-ticker--empty { visibility: hidden; }
-.header-ticker__track {
-  display: flex;
-  align-items: center;
-  width: max-content;
-  animation: header-ticker-scroll 32s linear infinite;
-}
-.header-ticker:hover .header-ticker__track,
-.header-ticker:active .header-ticker__track { animation-play-state: paused; }
-/* الاتجاه موجب لأن الصفحة RTL: عناصر flex تُرصّ من اليمين لليسار، فيمتد
-   المسار كله يسار النافذة المرئية. تحريكه بـ-50% (كما كان) يدفع المحتوى
-   بعيدًا عن النافذة فيظهر الشريط فارغًا بعد أول ثوانٍ — وهو ما كان يحدث
-   فعلًا. التحريك بـ+50% يسحب النسخة الثانية إلى موضع الأولى فتكتمل
-   الحلقة بلا قفزة. */
-@keyframes header-ticker-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(50%); }
-}
-.header-ticker--static { padding-inline: .7rem; }
 .header-ticker__item {
-  display: inline-flex;
-  align-items: center;
-  gap: .4rem;
-  padding-inline: .9rem;
-  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  width: 100%;
+  min-width: 0;
   text-decoration: none;
   color: var(--color-text);
-  font-size: .82rem;
+  animation: header-ticker-fade .45s ease;
+}
+.header-ticker__meta {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  flex-shrink: 0;
 }
 .header-ticker__icon { color: var(--color-primary); flex-shrink: 0; }
-.header-ticker__label { color: var(--color-primary); font-weight: 700; }
-.header-ticker__source { color: var(--color-text-muted); font-size: .74rem; }
-@media (min-width: 880px) {
-  .header-ticker { width: clamp(200px, 22vw, 340px); }
+.header-ticker__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: .1rem .5rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  color: var(--color-primary);
+  font-size: .7rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+/* لا nowrap ولا ellipsis ولا line-clamp: النص الكامل يظهر بلا حذف بدايته
+   أو نهايته، على سطر أو أكثر حسب الطول — بطلب مباشر (2026-07-25). */
+.header-ticker__text {
+  width: 100%;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: break-word;
+  line-height: 1.65;
+  font-size: .86rem;
+  color: var(--color-text);
+}
+@keyframes header-ticker-fade {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .header-ticker__track { animation: none; }
+  .header-ticker__item { animation: none; }
 }
 
 /* Shared page rhythm and cards */
