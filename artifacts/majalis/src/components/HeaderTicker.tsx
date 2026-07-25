@@ -1,9 +1,19 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
-import { Clock, Repeat2, ScrollText, Heart } from "lucide-react";
+import { Clock, Repeat2, ScrollText, Heart, BookOpen, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerCountdown, type PrayerSlot } from "@/lib/prayer-times";
-import { getDailyDhikr, getDailyHadith, getDailyFaida } from "@/lib/daily-content";
+import {
+  buildTickerPool,
+  pickNextBatch,
+  readRecent,
+  writeRecent,
+  nextRotationDelayMs,
+  truncateForTicker,
+  REFRESH_ON_RETURN_AFTER_MS,
+  type TickerContentItem,
+  type TickerKind,
+} from "@/lib/ticker-content";
 
 type TickerItem = {
   key: string;
@@ -58,31 +68,69 @@ function useReducedMotion(): boolean {
   return reduced;
 }
 
-/** عناصر ثابتة يومية — نفس مصدر «مجلس اليوم» (daily-content.ts) بلا تكرار
-    منطق جديد: أذكار/حديث/فائدة معتمدة مسبقًا بنصّها الحرفي ومصدرها. */
-function useDailyContentItems(): TickerItem[] {
-  return useMemo(() => {
-    const items: TickerItem[] = [];
-    try {
-      const dhikr = getDailyDhikr();
-      if (dhikr?.text) {
-        items.push({ key: "dhikr", Icon: Repeat2, label: dhikr.category || "ذكر", text: dhikr.text, source: dhikr.source, href: "/adhkar" });
-      }
-    } catch { /* تجاهل — عنصر واحد ناقص لا يوقف بقية الشريط */ }
-    try {
-      const hadith = getDailyHadith();
-      if (hadith?.text) {
-        items.push({ key: "hadith", Icon: ScrollText, label: "حديث", text: hadith.text, source: `${hadith.narrator} — ${hadith.source}`, href: "/hadith" });
-      }
-    } catch { /* */ }
-    try {
-      const faida = getDailyFaida();
-      if (faida?.text) {
-        items.push({ key: "faida", Icon: Heart, label: "فائدة", text: faida.text, source: faida.source, href: "/fawaid" });
-      }
-    } catch { /* */ }
-    return items;
-  }, []);
+const KIND_ICON: Record<TickerKind, LucideIcon> = {
+  hadith: ScrollText,
+  dhikr: Repeat2,
+  ayah: BookOpen,
+  faida: Heart,
+};
+
+/**
+ * دفعة المحتوى المعروضة، مع تدوير دوري ومنع تكرار.
+ *
+ * سابقًا كان الشريط يعرض ٣ عناصر «يومية» ثابتة (نفس الحديث والذكر طوال
+ * اليوم) بنصوصها الكاملة — فبدا متكررًا، وعنصر واحد بطول ١٣٦٩ حرفًا كان
+ * يزحف وحده نحو ٢٥ ثانية. الآن: مجمّع ١٧٨ عنصرًا محليًا، دفعة من ٤ تتبدّل
+ * كل ٤٥–٩٠ ثانية بلا إعادة تحميل، ولا يتكرر عنصر ضمن آخر ٢٠ عرضًا.
+ */
+function useRotatingContent(): TickerContentItem[] {
+  const pool = useMemo(() => buildTickerPool(), []);
+  const recentRef = useRef<string[]>([]);
+  const [batch, setBatch] = useState<TickerContentItem[]>([]);
+  const lastPickAtRef = useRef(0);
+
+  const rotate = useCallback(() => {
+    const { batch: next, recent } = pickNextBatch(pool, recentRef.current);
+    recentRef.current = recent;
+    writeRecent(recent);
+    lastPickAtRef.current = Date.now();
+    setBatch(next);
+  }, [pool]);
+
+  // أول تحميل: يُقرأ السجل من الجلسات السابقة كي لا يعيد الشريط نفس
+  // المحتوى بعد كل فتح للتطبيق.
+  useEffect(() => {
+    recentRef.current = readRecent();
+    rotate();
+  }, [rotate]);
+
+  // تدوير دوري بفاصل عشوائي 45–90ث. يُعاد جدولته بعد كل دورة كي لا يكون
+  // الإيقاع رتيبًا ومتوقَّعًا.
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    const schedule = () => {
+      timer = setTimeout(() => {
+        rotate();
+        schedule();
+      }, nextRotationDelayMs());
+    };
+    schedule();
+    return () => clearTimeout(timer);
+  }, [rotate]);
+
+  // العودة من الخلفية: تُحدَّث الدفعة فقط إن مرّ وقت كافٍ — بلا هذا الشرط
+  // يتبدّل المحتوى مع كل تبديل تبويب، وهو مزعج.
+  useEffect(() => {
+    const onVisible = () => {
+      if (document.visibilityState !== "visible") return;
+      if (Date.now() - lastPickAtRef.current < REFRESH_ON_RETURN_AFTER_MS) return;
+      rotate();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => document.removeEventListener("visibilitychange", onVisible);
+  }, [rotate]);
+
+  return batch;
 }
 
 function TickerEntry({ item }: { item: TickerItem }) {
@@ -90,7 +138,7 @@ function TickerEntry({ item }: { item: TickerItem }) {
     <Link href={item.href} className="header-ticker__item">
       <item.Icon size={13} strokeWidth={1.8} className="header-ticker__icon" aria-hidden="true" />
       <span className="header-ticker__label">{item.label}:</span>
-      <span className="header-ticker__text">{item.text}</span>
+      <span className="header-ticker__text">{truncateForTicker(item.text)}</span>
       {item.source && <span className="header-ticker__source">— {item.source}</span>}
     </Link>
   );
@@ -102,14 +150,21 @@ function TickerEntry({ item }: { item: TickerItem }) {
     حركة عند prefers-reduced-motion. */
 export function HeaderTicker() {
   const prayerItem = usePrayerTickerItem();
-  const dailyItems = useDailyContentItems();
+  const contentItems = useRotatingContent();
   const reducedMotion = useReducedMotion();
   const [staticIndex, setStaticIndex] = useState(0);
 
-  const items = useMemo(
-    () => (prayerItem ? [prayerItem, ...dailyItems] : dailyItems),
-    [prayerItem, dailyItems],
-  );
+  const items = useMemo<TickerItem[]>(() => {
+    const mapped: TickerItem[] = contentItems.map((c) => ({
+      key: c.id,
+      Icon: KIND_ICON[c.kind] ?? Sparkles,
+      label: c.label,
+      text: c.text,
+      source: c.source,
+      href: c.href,
+    }));
+    return prayerItem ? [prayerItem, ...mapped] : mapped;
+  }, [prayerItem, contentItems]);
 
   useEffect(() => {
     if (!reducedMotion || items.length === 0) return;
@@ -129,9 +184,15 @@ export function HeaderTicker() {
     );
   }
 
+  /* نسختان متطابقتان بالضبط: الحركة تُزيح المسار بمقدار 50% من عرضه، فتحلّ
+     النسخة الثانية محل الأولى تمامًا عند نهاية الدورة — حلقة بلا فراغ ولا
+     قفزة مرئية. أي عدد غير مزدوج من النسخ يكسر هذا التطابق.
+     مفتاح المسار مشتق من معرّفات الدفعة: عند التدوير يُعاد بناء المسار
+     فتبدأ الحركة من نقطة متسقة بدل أن تقفز في منتصفها. */
+  const trackKey = items.map((i) => i.key).join("|");
   return (
     <div className="header-ticker" role="status" aria-label="شريط معلومات متحرك">
-      <div className="header-ticker__track">
+      <div className="header-ticker__track" key={trackKey}>
         {[...items, ...items].map((item, i) => (
           <TickerEntry key={`${item.key}-${i}`} item={item} />
         ))}
