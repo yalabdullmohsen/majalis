@@ -458,6 +458,13 @@ export default function HomePage() {
     });
   }, [user?.id]);
 
+  // "دروس اليوم" (lessons) رُفعت لتصبح ثابتة مباشرة تحت «مجلس اليوم» (طلب
+  // مباشر)، فتُستثنى من حلقة الودجات القابلة لإعادة الترتيب العادية —
+  // مع إبقاء احترام تفضيل الإخفاء الشخصي (visibleWidgetOrder نفسها).
+  const visibleWidgets = visibleWidgetOrder(homePrefs);
+  const showLessonsWidget = visibleWidgets.includes("lessons");
+  const restWidgetOrder = visibleWidgets.filter((id) => id !== "lessons");
+
   // شريط الترويسة المُصغَّر: الصلاة القادمة والوقت المتبقي (بديل الشعار الكبير)
   const [heroPrayers, setHeroPrayers] = useState<PrayerTimesPayload | null>(null);
   useEffect(() => {
@@ -710,6 +717,18 @@ export default function HomePage() {
         </SectionErrorBoundary>
       </div>
 
+      {/* ══ دروس اليوم ══ — رُفعت لتصبح مباشرة تحت «مجلس اليوم» (طلب مباشر
+          2026-07-25، كانت ضمن حلقة الودجات القابلة لإعادة الترتيب أدناه
+          فتظهر بعد «زرتَ مؤخرًا» و«وصول سريع» بمسافة). استُثنيت من الحلقة
+          (restWidgetOrder) لتفادي التكرار، مع الإبقاء على احترام تفضيل
+          إخفائها إن أخفاها المستخدم من ورقة تخصيص الرئيسية — فقط ترتيبها
+          النسبي بين بقية الودجات صار ثابتًا، لا الإخفاء. */}
+      {showLessonsWidget && (
+        <SafeHomeSection name={WIDGET_LABEL["lessons"] ?? "lessons"}>
+          {WIDGET_RENDERERS["lessons"]?.()}
+        </SafeHomeSection>
+      )}
+
       {/* ══ زرتَ مؤخراً ══ */}
       <RecentPagesBar />
 
@@ -788,7 +807,7 @@ export default function HomePage() {
       {/* ══════════════════ Main Content ══════════════════ */}
       <main className="home-container home-main home-main--v3">
 
-        {visibleWidgetOrder(homePrefs).map((id) => (
+        {restWidgetOrder.map((id) => (
           <SafeHomeSection key={id} name={WIDGET_LABEL[id] ?? id}>
             {WIDGET_RENDERERS[id]?.()}
           </SafeHomeSection>
