@@ -957,6 +957,51 @@ html[data-theme="dark"] .ds-page-back-btn {
   padding-bottom: 1.25rem;
 }
 
+/* ══ صفحات ثانوية: إعدادات، حديث، مكتبة، سؤال وجواب ══ */
+.settings-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 44px;
+  padding-block: 0.55rem;
+  cursor: pointer;
+}
+.settings-toggle-row input[type="checkbox"] {
+  width: 44px;
+  height: 28px;
+  flex-shrink: 0;
+}
+.filter-chip,
+.ar-filter-chip,
+.kng-filter-chip,
+[class*="filter-chip"] {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.qa-card,
+.book-card,
+.hadith-card,
+.library-card,
+.content-card {
+  border-radius: var(--radius-lg);
+  border-color: var(--color-border);
+}
+.about-page,
+.settings-page,
+.ds-page {
+  padding-inline: var(--page-gutter);
+  padding-block: 1rem 1.25rem;
+}
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="hidden"]),
+select,
+textarea {
+  min-height: 44px;
+  border-radius: var(--radius-md);
+  font: inherit;
+}
+
 @media (max-width: 879px) {
   .ds-btn--sm {
     min-height: 44px;

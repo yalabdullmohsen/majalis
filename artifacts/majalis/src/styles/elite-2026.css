@@ -21601,7 +21601,7 @@ html[data-theme="dark"] .share-btn--copy { background: #143F35 !important; }
 /* ══════════════════════════════════════════════
    §UP. UniversitiesPage
    ══════════════════════════════════════════════ */
-.up-root { min-height: 100svh; background: var(--majalis-parchment); padding-bottom: 6rem; direction: rtl; }
+.up-root { min-height: 100svh; background: var(--majalis-parchment); padding-bottom: 1.25rem; direction: rtl; }
 .up-alert {
   background: var(--majalis-emerald-muted, rgba(31,77,58,.1));
   border: 1px solid var(--majalis-emerald);
@@ -21643,7 +21643,7 @@ html[data-theme="dark"] .share-btn--copy { background: #143F35 !important; }
 /* ══════════════════════════════════════════════
    §UCP. UniversitiesComparePage
    ══════════════════════════════════════════════ */
-.ucp-root { min-height: 100svh; background: var(--majalis-parchment); padding-bottom: 6rem; direction: rtl; }
+.ucp-root { min-height: 100svh; background: var(--majalis-parchment); padding-bottom: 1.25rem; direction: rtl; }
 
 
 
@@ -21895,7 +21895,7 @@ html[data-theme="dark"] .share-btn--copy { background: #143F35 !important; }
 /* ══════════════════════════════════════════════
    §UDP. UniversityDetailPage
    ══════════════════════════════════════════════ */
-.udp-root { min-height: 100svh; background: var(--majalis-parchment); padding-bottom: 6rem; direction: rtl; }
+.udp-root { min-height: 100svh; background: var(--majalis-parchment); padding-bottom: 1.25rem; direction: rtl; }
 .udp-update-bar {
   background: var(--majalis-emerald-muted, rgba(31,77,58,.1));
   border-bottom: 1px solid var(--majalis-emerald);
