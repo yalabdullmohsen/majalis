@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, Moon, Sun, User, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
@@ -29,7 +29,7 @@ function PrayerChip() {
 
   if (!cd?.next) return null;
   // خلال فترة السماح (٣٥ دقيقة بعد الأذان) نعرض عدّادًا تصاعديًا منذ أذان
-  // الصلاة التي رنّت للتو — نفس منطق PrayerTimesPage.
+  // الصلاة التي رنّت للتو — نفس منطق PrayerTimesPage وTopTicker.
   const inGrace = cd.sinceSeconds != null;
   const displayName = cd.next.name;
   const displayHms = inGrace && cd.sinceHms ? cd.sinceHms : cd.remainingHms;
@@ -62,25 +62,6 @@ export default function NavBar() {
   const [location, navigate] = useLocation();
   const isMobile = useIsMobile();
   const { isMenuOpen, toggleMenu, openMenu, closeMenu, closeAll } = useMobileNavState();
-  const headerRef = useRef<HTMLElement | null>(null);
-
-  // ارتفاع الهيدر صار متغيّرًا: HeaderTicker (شريط نص كامل بلا سطر ثابت)
-  // انتقل ليكون صفًا مستقلًا داخل هذا الهيدر، فطوله يتمدد حسب طول النص
-  // المعروض. .top-section-bar أسفله لاصق (sticky) بموضع top ثابت أصلًا —
-  // فيُحدَّث هنا بارتفاع الهيدر الفعلي كل مرة يتغيّر فيها (raf عبر
-  // ResizeObserver)، بدل اعتماده على --header-height الثابتة وحدها، وإلا
-  // يبدأ شريط التصنيفات قبل نهاية الهيدر فعليًا كلما طال النص لسطرين/ثلاثة.
-  useLayoutEffect(() => {
-    const el = headerRef.current;
-    if (!el || typeof ResizeObserver === "undefined") return;
-    const apply = () => {
-      document.documentElement.style.setProperty("--navbar-total-height", `${el.offsetHeight}px`);
-    };
-    apply();
-    const observer = new ResizeObserver(apply);
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
 
   const isActive = (href: string) => {
     const path = href.split("?")[0];
@@ -131,7 +112,6 @@ export default function NavBar() {
   return (
     <>
       <header
-        ref={headerRef}
         className={`navbar-v3 sticky top-0 border-b${isMenuOpen ? " navbar-v3--menu-open" : ""}`}
       >
         <div className="navbar-v3__inner">
@@ -170,6 +150,13 @@ export default function NavBar() {
             </nav>
           )}
 
+          {/* الشريط المتحرك — يحلّ محل زر البحث في الهيدر (تكليف 2026-07-24).
+              البحث نفسه لم يُحذف: يبقى متاحًا عبر القائمة الجانبية (ابحث ←
+              البحث الشامل) واختصار Ctrl/Cmd+K القائم أصلاً. على الجوال
+              يشغل المساحة الوسطى الفارغة أصلاً؛ على سطح المكتب يحلّ محل
+              مربع البحث المضمّن تحديدًا. */}
+          {isMobile && <HeaderTicker />}
+
           <div className="navbar-v3__end">
             {/* عداد الصلاة التالية — سطح المكتب فقط */}
             {!isMobile && <PrayerChip />}
@@ -190,7 +177,9 @@ export default function NavBar() {
                 البحث يبقى متاحًا كاملًا عبر اختصار Ctrl/Cmd+K (مُدار في
                 App.tsx عبر مستمع keydown مستقل تمامًا عن هذا الزر) وصفحة
                 /search وSearchSuggestions المستخدَم في صفحات أخرى — لا حذف
-                لأي وظيفة بحث فعلية، فقط زر الهيدر تحديدًا. */}
+                لأي وظيفة بحث فعلية، فقط زر الهيدر تحديدًا.
+                مكانه في سطح المكتب يشغله الآن الشريط المتحرك (HeaderTicker). */}
+            {!isMobile && <HeaderTicker />}
             {!isMobile && desktopAuthLinks}
 
             {/* Mobile: زر دخول/حساب واضح دائمًا — لا يُترك مخفيًا داخل قائمة الهامبرغر فقط */}
@@ -207,13 +196,6 @@ export default function NavBar() {
             )}
           </div>
         </div>
-
-        {/* شريط المحتوى — صف مستقل بعرض الهيدر الكامل تحت navbar-v3__inner
-            (2026-07-25: كان مضغوطًا ضمن صف الأزرار فيتداخل معها ويُقصّ
-            نصّه؛ لا علاقة له بزر البحث المُزال أعلاه). يظهر في كل الأحجام
-            (جوال وسطح مكتب) بنفس التصميم — لا مسوّغ بعد الآن لتمييزهما،
-            فالشريط لم يعد يتشارك مساحة مع أي زر. */}
-        <HeaderTicker />
       </header>
 
       <SideNavDrawer

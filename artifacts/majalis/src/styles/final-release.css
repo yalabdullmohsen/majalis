@@ -85,31 +85,14 @@ body {
 /* الشريط الأخضر المتحرك (TopTicker) أعلى الهيدر حُذف نهائيًا 2026-07-25
    (كان يقصّ نص الصلاة/السنن — طلب مباشر). الهيدر الآن أعلى عنصر لاصق في
    الصفحة، فيمتص env(safe-area-inset-top) بنفسه عبر padding بدل الاعتماد
-   على طبقة منفصلة فوقه.
-   ⚠ header.navbar-v3{display:flex!important} مُعرَّفة في elite-2026.css
-   (سطر ~32011، بمحدّد أعلى تخصيصًا من .navbar-v3 وحدها) لتوسيط شعار
-   الهيدر رأسيًا حين كان الابن الوحيد .navbar-v3__inner. بعد إضافة صفّ
-   HeaderTicker كابن ثانٍ (2026-07-25)، بقيت flex-direction:row الافتراضية
-   فوضعت الصفّين جنبًا إلى جنب أفقيًا (كل منهما نصف العرض فقط) بدل التتابع
-   الرأسي المطلوب — يُصحَّح هنا بنفس محدّد header.navbar-v3 (لا .navbar-v3
-   وحدها) لضمان الفوز على specificity المتساوية بحكم ترتيب التحميل. */
-header.navbar-v3 {
-  flex-direction: column !important;
-  align-items: stretch !important;
-  height: auto !important;
-  /* @media(max-width:879px) في index.css تُقفل .navbar-v3 عند max-height:
-     4.5rem (72px) — بقيت فعّالة رغم height:auto أعلاه لأنها خاصية مختلفة.
-     قبل هذا التعديل كان مجموع ارتفاع navbar-v3__inner + header-ticker
-     (48+44=92px) يتجاوز الـ72px المسموحة، فيفيض الشريط بصريًا خارج صندوق
-     الهيدر ويتراكب مع .top-section-bar أسفله — عطل من نفس عائلة عطل
-     «القبة» (bounding box أصغر من المحتوى الفعلي). */
-  max-height: none !important;
-}
+   على طبقة منفصلة فوقه. (الشريط الأبيض HeaderTicker بقي بتصميمه وموضعه
+   الأصليين — راجع NavBar.tsx وHeaderTicker.tsx — بطلب مباشر 2026-07-25). */
 .navbar-v3 {
   position: sticky;
   inset-block-start: 0;
   padding-block-start: env(safe-area-inset-top, 0px);
   z-index: var(--z-nav, 200);
+  min-height: var(--header-height);
   background: color-mix(in srgb, var(--color-surface) 92%, transparent);
   border: 0;
   border-block-end: 1px solid var(--color-border);
@@ -128,11 +111,7 @@ header.navbar-v3 {
    بين الأقسام. white-space: nowrap يمنع التفاف اسم أي قسم لأكثر من سطر. */
 .top-section-bar {
   position: sticky;
-  /* --navbar-total-height تُحدَّث فعليًا (ResizeObserver في NavBar.tsx) بارتفاع
-     .navbar-v3 الحقيقي، الذي صار متغيّرًا بعد إضافة شريط المحتوى الأبيض
-     داخله (نص كامل بلا سطر واحد ثابت). القيمة الاحتياطية (بلا الشريط)
-     تمنع أي وميض قبل أول قياس، وتبقى صحيحة تقريبًا لجزء من الثانية فقط. */
-  top: var(--navbar-total-height, calc(env(safe-area-inset-top, 0px) + var(--header-height, 4rem)));
+  top: calc(env(safe-area-inset-top, 0px) + var(--header-height, 4rem));
   z-index: 190;
   /* حاوية الشريط نفسها لا تتجاوز الشاشة مهما كان محتواها؛ التمرير الأفقي
      يقع داخل .top-section-bar__scroll وحده لا في الصفحة. */
@@ -334,70 +313,60 @@ html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1)
   box-shadow: none;
 }
 
-/* الشريط النصي أعلى التطبيق (HeaderTicker) — صف مستقل بعرض كامل تحت
-   navbar-v3__inner (راجع NavBar.tsx)، منفصل تمامًا عن زري القائمة
-   والحساب. أُعيد تصميمه بالكامل 2026-07-25: كان CSS-marquee بعرض ثابت
-   صغير ضمن صف الأزرار، فيُقصّ نص الذكر/الحديث من الطرفين ويتداخل مع
-   الأزرار. الآن: عنصر واحد كامل النص، بلا قصّ ولا تمرير أفقي، يتمدد
-   رأسيًا حسب طول النص (سطر إلى عدة أسطر)، مع بطاقة نوع صغيرة وانتقال
-   Fade هادئ عند كل تبديل. */
+/* الشريط المتحرك أعلى التطبيق (HeaderTicker) — يحلّ محل زر/مربع البحث في
+   الهيدر (تكليف 2026-07-24). CSS Marquee بلا مكتبات: تكرار العناصر مرتين
+   وتحريك 0%→-50% يعطي حلقة سلسة بلا قفزة. يتوقف عند hover/لمس، ويتحول
+   لتناوب ثابت بلا حركة عند prefers-reduced-motion (مطابق فعليًا في JS
+   وCSS كطبقة حماية إضافية). ألوان/خط الهوية الحالية (--color-primary
+   #143F35 وAlexandria الموحَّد) لا #0E6E52/Almarai القديمين. */
 .header-ticker {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  min-height: 2.75rem;
-  height: auto;
+  overflow: hidden;
+  min-width: 0;
+  min-height: 44px;
   display: flex;
-  padding: .6rem 1rem;
-  border-block-start: 1px solid var(--color-border);
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   background: var(--color-surface);
+  mask-image: linear-gradient(to left, transparent, #000 5%, #000 95%, transparent);
 }
 .header-ticker--empty { visibility: hidden; }
-.header-ticker__item {
-  display: flex;
-  flex-direction: column;
-  gap: .35rem;
-  width: 100%;
-  min-width: 0;
-  text-decoration: none;
-  color: var(--color-text);
-  animation: header-ticker-fade .45s ease;
-}
-.header-ticker__meta {
+.header-ticker__track {
   display: flex;
   align-items: center;
-  gap: .4rem;
-  flex-shrink: 0;
+  width: max-content;
+  animation: header-ticker-scroll 32s linear infinite;
 }
-.header-ticker__icon { color: var(--color-primary); flex-shrink: 0; }
-.header-ticker__badge {
+.header-ticker:hover .header-ticker__track,
+.header-ticker:active .header-ticker__track { animation-play-state: paused; }
+/* الاتجاه موجب لأن الصفحة RTL: عناصر flex تُرصّ من اليمين لليسار، فيمتد
+   المسار كله يسار النافذة المرئية. تحريكه بـ-50% (كما كان) يدفع المحتوى
+   بعيدًا عن النافذة فيظهر الشريط فارغًا بعد أول ثوانٍ — وهو ما كان يحدث
+   فعلًا. التحريك بـ+50% يسحب النسخة الثانية إلى موضع الأولى فتكتمل
+   الحلقة بلا قفزة. */
+@keyframes header-ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(50%); }
+}
+.header-ticker--static { padding-inline: .7rem; }
+.header-ticker__item {
   display: inline-flex;
   align-items: center;
-  padding: .1rem .5rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--color-primary) 12%, transparent);
-  color: var(--color-primary);
-  font-size: .7rem;
-  font-weight: 700;
+  gap: .4rem;
+  padding-inline: .9rem;
   white-space: nowrap;
-}
-/* لا nowrap ولا ellipsis ولا line-clamp: النص الكامل يظهر بلا حذف بدايته
-   أو نهايته، على سطر أو أكثر حسب الطول — بطلب مباشر (2026-07-25). */
-.header-ticker__text {
-  width: 100%;
-  min-width: 0;
-  white-space: normal;
-  overflow-wrap: break-word;
-  line-height: 1.65;
-  font-size: .86rem;
+  text-decoration: none;
   color: var(--color-text);
+  font-size: .82rem;
 }
-@keyframes header-ticker-fade {
-  from { opacity: 0; transform: translateY(2px); }
-  to { opacity: 1; transform: translateY(0); }
+.header-ticker__icon { color: var(--color-primary); flex-shrink: 0; }
+.header-ticker__label { color: var(--color-primary); font-weight: 700; }
+.header-ticker__source { color: var(--color-text-muted); font-size: .74rem; }
+@media (min-width: 880px) {
+  .header-ticker { width: clamp(200px, 22vw, 340px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .header-ticker__item { animation: none; }
+  .header-ticker__track { animation: none; }
 }
 
 /* Shared page rhythm and cards */
