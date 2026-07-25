@@ -116,8 +116,9 @@ export const DAILY_HADITH_POOL: DailyHadithEntry[] = [
   ...ARBAEEN_NAWAWI.filter((h) => !NAWAWI_IDS_WITH_STANDALONE_ENTRY.has(h.id)).map((h) => ({
     id: `nawawi-${h.id}`,
     text: h.text,
-    // بيانات الأربعين لا تحوي حقل راوٍ منفصل، وعنوان الحديث ليس راويه —
-    // فيُترك الحقل فارغاً بدل نسبة الحديث إلى «عنوانه».
+    // بيانات الأربعين لا تحوي حقل راوٍ منفصل، وعنوانُ الحديث ليس راويَه؛
+    // فتُنسب إلى مجموعها بوسم صريح بدل إيهام القارئ بأن العنوان راوٍ.
+    narrator: `الأربعون النووية — ${h.title}`,
     source: h.source,
     meaning: h.benefits,
   })),
