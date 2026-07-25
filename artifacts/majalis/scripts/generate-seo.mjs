@@ -108,7 +108,8 @@ const TOPICS = await extractSlugTitlePairs("src/views/TopicsIndexPage.tsx", "STA
 
 const publicDir = resolve(appRoot, "public");
 const seoPrerenderDir = resolve(appRoot, "seo-prerender");
-const buildDate = new Date().toISOString().slice(0, 10);
+// (أُزيل buildDate: كان مستهلَكه الوحيد <lastmod> في sitemap، وقد حُذف —
+//  وبإزالته لم يبقَ في هذا المولّد أي مصدر غير حتمي.)
 
 // مُخرَج بناء، لا مصدر: يُمسح كاملاً كي لا تبقى صفحات يتيمة من توليد سابق.
 await rm(seoPrerenderDir, { recursive: true, force: true });
@@ -933,7 +934,15 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 ${sitemapPages
   .map(
     (p) =>
-      `  <url>\n    <loc>${escapeXml(absoluteUrl(p.route.path))}</loc>\n    <lastmod>${buildDate}</lastmod>\n    <changefreq>${escapeXml(p.changefreq)}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>`,
+      // بلا <lastmod> عمدًا. كان يُكتب فيه تاريخ البناء لكل الـ663 مسارًا،
+      // فيُبلّغ محركات البحث أن كل صفحات الموقع تغيّرت اليوم بعد كل نشر —
+      // وهو ادّعاء غير صحيح. وتجميده على تاريخ ثابت ادّعاء معاكس لا يقلّ
+      // خطأً («لا شيء يتغيّر أبدًا»). ولا يوجد في السجلات تاريخ تعديل حقيقي
+      // يمكن الاشتقاق منه (صفر من 99 عالِمًا يحمل reviewedAt، ولا حقل تاريخ
+      // في سجلات الكتب). وتوجيه Google صريح: حذف lastmod أفضل من قيمة غير
+      // دقيقة، لأن القيمة الموحّدة تدفعه لتجاهل الحقل كليًا.
+      // متى يعود: حين تحمل السجلات تاريخ تعديل فعليًا، يُشتق لكل مسار منه.
+      `  <url>\n    <loc>${escapeXml(absoluteUrl(p.route.path))}</loc>\n    <changefreq>${escapeXml(p.changefreq)}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>`,
   )
   .join("\n")}
 </urlset>
