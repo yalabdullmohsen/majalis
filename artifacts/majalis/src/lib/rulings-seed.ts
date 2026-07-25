@@ -55,7 +55,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-zakat-conditions",
     external_key: "ruling-zakat-conditions",
     title: "شروط وجوب الزكاة",
-    summary: "الشروط التي تجب بها الزكاة في المال.",
+    summary: "تجب الزكاة بالإسلام والحرية وبلوغ النصاب وحولان الحول مع تمام الملك.",
     body: `**شروط وجوب الزكاة:**
 1. الإسلام.
 2. الحرية.
@@ -455,7 +455,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-zakat-alfitrah",
     external_key: "ruling-zakat-alfitrah",
     title: "زكاة الفطر",
-    summary: "أحكام زكاة الفطر ومقدارها ووقت إخراجها.",
+    summary: "فرض على كل مسلم قادر؛ مقدارها صاع من طعام البلد، وتُخرج قبل صلاة العيد.",
     body: `**زكاة الفطر:**
 - فرض على كل مسلم قادر عن نفسه وعمّن يعول.
 - مقدارها: صاع من طعام البلد (نحو 2.5 كغ أو 3 كغ).
@@ -481,7 +481,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-zakat-animals",
     external_key: "ruling-zakat-animals",
     title: "نصاب زكاة الإبل والبقر",
-    summary: "مقادير الزكاة الواجبة في الإبل والبقر.",
+    summary: "جدول نصاب الإبل والبقر وواجب كل درجة منها كما فصّلته السنة.",
     body: `**زكاة الإبل:**
 | العدد | الواجب |
 |-------|--------|
@@ -617,7 +617,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-parents-obedience",
     external_key: "ruling-parents-obedience",
     title: "طاعة الوالدين",
-    summary: "وجوب بر الوالدين وطاعتهما وحدود ذلك.",
+    summary: "بر الوالدين فريضة بعد التوحيد، واجبة في المعروف، وتسقط في المعصية.",
     body: `**وجوب طاعة الوالدين:**
 - بر الوالدين فريضة بعد التوحيد مباشرة في القرآن الكريم.
 - واجبة في المباح والمعروف، وتسقط في المعصية.
@@ -681,7 +681,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-riba-prohibition",
     external_key: "ruling-riba-prohibition",
     title: "تحريم الربا وأنواعه",
-    summary: "حكم الربا وأقسامه في الفقه الإسلامي.",
+    summary: "الربا حرام بالإجماع؛ منه ربا النسيئة وربا الفضل، وبديله المعاملات الشرعية.",
     body: `**حكم الربا:**
 - حرام بنص القرآن والسنة والإجماع، وهو من كبائر الذنوب.
 
@@ -708,7 +708,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-ijarah",
     external_key: "ruling-ijarah",
     title: "عقد الإجارة وأحكامه",
-    summary: "تعريف الإجارة وشروطها وما يترتب عليها.",
+    summary: "عقد على منفعة معلومة بعوض معلوم لمدة محددة؛ منه إجارة الأعيان والأشخاص.",
     body: `**تعريف الإجارة:**
 عقد على منفعة معلومة بعوض معلوم لمدة محددة.
 
@@ -1897,7 +1897,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-isbal-garment",
     external_key: "ruling-isbal-garment",
     title: "حكم إسبال الثوب",
-    summary: "حكم إنزال الثوب أو الإزار أسفل الكعبين.",
+    summary: "يحرم الإسبال مع الخيلاء، ويُكره أو يُحرَّم بدونه على خلافٍ معتبر بين العلماء.",
     body: `**الحكم:**
 يحرم إسبال الثوب أو الإزار أو البنطال أسفل الكعبين إذا كان على وجه الخيلاء (الكِبر والتباهي)، وهو مكروه كراهة شديدة عند كثير من العلماء حتى بغير خيلاء، واختار بعضهم التحريم مطلقاً لعموم الوعيد.
 
@@ -1932,7 +1932,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-theft-hadd",
     external_key: "ruling-theft-hadd",
     title: "حد السرقة ونصابه",
-    summary: "عقوبة السرقة في الشريعة وشروط تطبيقها.",
+    summary: "حد السرقة قطع اليد بشروط النصاب والحرز والخلسة؛ ولا يُقام دون استيفائها.",
     body: `**الحكم:**
 عقوبة السارق قطع اليد اليمنى من الرسغ، وهي عقوبة حدّية لا تُطبَّق إلا باستيفاء شروطها كاملة.
 
