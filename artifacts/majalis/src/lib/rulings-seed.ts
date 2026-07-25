@@ -76,7 +76,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-hajj-pillars",
     external_key: "ruling-hajj-pillars",
     title: "أركان الحج",
-    summary: "ما لا يتم الحج إلا به.",
+    summary: "أربعة أركان لا يُعدّ الحج تاماً بدونها: الإحرام، والوقوف بعرفة، وطواف الإفاضة، والسعي.",
     body: `**أركان الحج:**
 1. الإحرام.
 2. الوقوف بعرفة.
