@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { Menu, Moon, Sun, User, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { useLanguage } from "./LanguageProvider";
+import { HeaderTicker } from "./HeaderTicker";
 import { SideNavDrawer } from "./SideNavDrawer";
 import { useThemePreference } from "./ThemePreferenceProvider";
 
@@ -149,6 +150,13 @@ export default function NavBar() {
             </nav>
           )}
 
+          {/* الشريط المتحرك — يحلّ محل زر البحث في الهيدر (تكليف 2026-07-24).
+              البحث نفسه لم يُحذف: يبقى متاحًا عبر القائمة الجانبية (ابحث ←
+              البحث الشامل) واختصار Ctrl/Cmd+K القائم أصلاً. على الجوال
+              يشغل المساحة الوسطى الفارغة أصلاً؛ على سطح المكتب يحلّ محل
+              مربع البحث المضمّن تحديدًا. */}
+          {isMobile && <HeaderTicker />}
+
           <div className="navbar-v3__end">
             {/* عداد الصلاة التالية — سطح المكتب فقط */}
             {!isMobile && <PrayerChip />}
@@ -169,7 +177,9 @@ export default function NavBar() {
                 البحث يبقى متاحًا كاملًا عبر اختصار Ctrl/Cmd+K (مُدار في
                 App.tsx عبر مستمع keydown مستقل تمامًا عن هذا الزر) وصفحة
                 /search وSearchSuggestions المستخدَم في صفحات أخرى — لا حذف
-                لأي وظيفة بحث فعلية، فقط زر الهيدر تحديدًا. */}
+                لأي وظيفة بحث فعلية، فقط زر الهيدر تحديدًا.
+                مكانه في سطح المكتب يشغله الآن الشريط المتحرك (HeaderTicker). */}
+            {!isMobile && <HeaderTicker />}
             {!isMobile && desktopAuthLinks}
 
             {/* Mobile: زر دخول/حساب واضح دائمًا — لا يُترك مخفيًا داخل قائمة الهامبرغر فقط */}
