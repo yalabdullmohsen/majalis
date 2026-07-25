@@ -11,7 +11,9 @@ name: Auto-merge claude branches to main
 on:
   push:
     branches:
-      - 'claude/test-auto-merge'
+      - 'claude/**'
+      - 'session/**'
+      - 'automation/**'
 
 concurrency:
   group: auto-merge-main
