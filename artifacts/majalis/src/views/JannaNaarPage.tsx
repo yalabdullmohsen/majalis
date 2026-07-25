@@ -310,7 +310,7 @@ export default function JannaNaarPage() {
         {activeTab === "duas" && (
           <div role="tabpanel" id="jnn-panel-duas" aria-labelledby="jnn-tab-duas">
             <div className="jn-intro">
-              <p>من أعظم ما يتقرَّب به العبد إلى الله دعاؤه بالجنة والاستعاذة من النار. قال ﷺ: «من سأل الله الجنة ثلاثاً قالت الجنة: اللهم أدخله الجنة».</p>
+              <p>من أعظم ما يتقرَّب به العبد إلى الله دعاؤه بالجنة والاستعاذة من النار. قال ﷺ: «من سأل الله الجنة ثلاث مرات قالت الجنة: اللهم أدخله الجنة» — رواه الترمذي (2572) والنسائي، وصححه الألباني.</p>
             </div>
             <div className="jn-duas-list">
               {filteredDuas.map((d, i) => (
