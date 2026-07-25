@@ -13,6 +13,10 @@ const ROOT = path.resolve(__dirname, "..");
 const OUT_DIR = path.resolve(ROOT, "public/data/rulings-encyclopedia");
 const CHUNKS_DIR = path.resolve(OUT_DIR, "chunks");
 
+// طابع وقت ثابت للسجلات التي لا يحمل مصدرها أي تاريخ. ثابت مقصود (لا new Date())
+// حتى يكون توليد الموسوعة حتميًا: نفس المدخلات ⇒ نفس المخرجات بايتًا ببايت.
+const FALLBACK_TIMESTAMP = "2026-07-25T00:00:00.000Z";
+
 const QA_FIQH_SLUGS = new Set(["tahara", "salah", "zakat", "sawm", "hajj", "aqeedah", "adhkar", "adab", "quran", "hadith"]);
 
 const QA_CAT_MAP = {
@@ -179,9 +183,13 @@ function makeRuling(partial) {
     linked_qa_ids: partial.linked_qa_ids || [],
     linked_fatwa_ids: partial.linked_fatwa_ids || [],
     linked_fiqh_ids: partial.linked_fiqh_ids || [],
-    published_at: partial.created_at || partial.published_at || new Date().toISOString(),
-    created_at: partial.created_at || new Date().toISOString(),
-    updated_at: partial.updated_at || new Date().toISOString(),
+    // التواريخ تشتقّ من بيانات المصدر لا من لحظة البناء: كانت new Date() تكتب
+    // طابع وقت البناء على الحقول الثلاثة في كل بناء، فتُظهر صفحة الحكم
+    // (RulingDetailPage) «آخر تحديث» = آخر مرة بُني فيها الموقع لا آخر تعديل
+    // فعلي على الحكم — معلومة مضلِّلة على منصة علمية، وتُحدث ضجيج diff في كل بناء.
+    published_at: partial.created_at || partial.published_at || FALLBACK_TIMESTAMP,
+    created_at: partial.created_at || partial.published_at || FALLBACK_TIMESTAMP,
+    updated_at: partial.updated_at || partial.created_at || partial.published_at || FALLBACK_TIMESTAMP,
   };
 }
 
@@ -388,7 +396,9 @@ function main() {
     byCategory[key].push(item);
   }
 
-  const manifest = { version: 1, generated_at: new Date().toISOString(), total: all.length, chunks: [] };
+  // generated_at ثابت لا لحظة البناء: الملف مُتتبَّع في git ولا يقرأه أي كود،
+  // فطابع الوقت الحي كان يُنتج تعديلًا وهميًا في كل بناء بلا أي تغيّر محتوى.
+  const manifest = { version: 1, generated_at: FALLBACK_TIMESTAMP, total: all.length, chunks: [] };
 
   for (const [catKey, items] of Object.entries(byCategory)) {
     const filename = `${catKey}.json`;
