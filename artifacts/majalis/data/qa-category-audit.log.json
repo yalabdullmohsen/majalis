@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-21T23:43:13.658Z",
+  "at": "2026-07-25T11:18:07.873Z",
   "total": 360,
   "byCategory": {
     "sahabah": 22,
@@ -17,14 +17,6 @@
     "adab": 16,
     "fiqh": 31
   },
-  "misclassified": 1,
-  "corrections": [
-    {
-      "id": "seed-qa-405",
-      "question": "ما قصة جمع القرآن في عهد أبي بكر وعثمان رضي الله عنهما؟",
-      "from": "quran",
-      "to": "sahabah",
-      "reason": "سؤال عن الصحابة"
-    }
-  ]
+  "misclassified": 0,
+  "corrections": []
 }

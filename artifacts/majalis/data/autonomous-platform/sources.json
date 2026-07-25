@@ -330,39 +330,6 @@
     }
   },
   {
-    "slug": "islamweb-fatwa-rss",
-    "name": "فتاوى إسلام ويب",
-    "source_type": "rss",
-    "source_url": "https://www.islamweb.net/ar/rss/fatwa.php",
-    "fallback_urls": [
-      "https://www.islamweb.net/ar/fatwa/"
-    ],
-    "priority": 7,
-    "trust_score": 85,
-    "language": "ar",
-    "category": "rulings",
-    "content_types": [
-      "rulings",
-      "articles"
-    ],
-    "fetch_interval_hours": 6,
-    "parser": "rss",
-    "validator": "scholarly_v1",
-    "dedup_rules": {
-      "hash": true,
-      "title_match": true,
-      "semantic_threshold": 0.86
-    },
-    "publication_policy": {
-      "auto_publish": false,
-      "min_trust": 80,
-      "review_on_fail": true
-    },
-    "metadata": {
-      "requires_review": true
-    }
-  },
-  {
     "slug": "dorar-net-hadith",
     "name": "الدرر السنية — أحاديث",
     "source_type": "rss",
@@ -652,40 +619,13 @@
     }
   },
   {
-    "slug": "islamweb-fatwa-rss",
-    "name": "إسلام ويب — فتاوى RSS",
-    "source_type": "rss",
-    "source_url": "https://www.islamweb.net/ar/fatwa/feed",
-    "fallback_urls": ["https://www.islamweb.net/ar/rss/fatwa.php"],
-    "priority": 7,
-    "trust_score": 85,
-    "language": "ar",
-    "category": "qa",
-    "content_types": [
-      "questions",
-      "rulings"
-    ],
-    "fetch_interval_hours": 4,
-    "parser": "rss",
-    "validator": "scholarly_v1",
-    "dedup_rules": {
-      "hash": true,
-      "title_match": true,
-      "semantic_threshold": 0.85
-    },
-    "publication_policy": {
-      "auto_publish": false,
-      "min_trust": 80,
-      "review_on_fail": true
-    },
-    "metadata": {}
-  },
-  {
     "slug": "dorar-benefits-rss",
     "name": "الدرر السنية — فوائد وتعريفات",
     "source_type": "rss",
     "source_url": "https://dorar.net/rss",
-    "fallback_urls": ["https://dorar.net/rss/hadith"],
+    "fallback_urls": [
+      "https://dorar.net/rss/hadith"
+    ],
     "priority": 7,
     "trust_score": 88,
     "language": "ar",
@@ -714,7 +654,9 @@
     "name": "شبكة الألوكة — أسئلة وأجوبة",
     "source_type": "rss",
     "source_url": "https://fatwa.alukah.net/rss.aspx",
-    "fallback_urls": ["https://www.alukah.net/rss/"],
+    "fallback_urls": [
+      "https://www.alukah.net/rss/"
+    ],
     "priority": 6,
     "trust_score": 78,
     "language": "ar",

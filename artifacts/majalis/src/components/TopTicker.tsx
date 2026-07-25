@@ -61,13 +61,45 @@ export function TopTicker() {
     return list;
   }, [countdown?.next?.key, countdown?.remainingHms, countdown?.sinceHms, fmt]);
 
+  /**
+   * وضع «تقليل الحركة» يعرض عنصرًا واحدًا في سطر واحد، وكان النص الطويل
+   * يُقصّ بـellipsis فيظهر الحديث مبتورًا. بدل القصّ: يُقسَّم النص الطويل إلى
+   * شرائح عند حدود الكلمات وتتعاقب، فيصل الحديث كاملًا بلا تغيير في ارتفاع
+   * الشريط. الوضع المتحرك يعرض النص كاملًا أصلًا فلا يمسّه هذا.
+   */
+  const staticSlides = useMemo(() => {
+    const MAX = 90;
+    const slides: TickerItem[] = [];
+    for (const item of items) {
+      const full = item.source ? `${item.text} — ${item.source}` : item.text;
+      if (full.length <= MAX) {
+        slides.push(item);
+        continue;
+      }
+      const words = full.split(/\s+/);
+      let buf = "";
+      const chunks: string[] = [];
+      for (const w of words) {
+        if (buf && (buf + " " + w).length > MAX) {
+          chunks.push(buf);
+          buf = w;
+        } else {
+          buf = buf ? `${buf} ${w}` : w;
+        }
+      }
+      if (buf) chunks.push(buf);
+      chunks.forEach((c, i) => slides.push({ id: `${item.id}-p${i}`, text: c }));
+    }
+    return slides;
+  }, [items]);
+
   useEffect(() => {
-    if (!reducedMotion || items.length === 0) return;
+    if (!reducedMotion || staticSlides.length === 0) return;
     const timer = window.setInterval(() => {
-      setStaticIndex((i) => (i + 1) % items.length);
+      setStaticIndex((i) => (i + 1) % staticSlides.length);
     }, 6000);
     return () => window.clearInterval(timer);
-  }, [reducedMotion, items.length]);
+  }, [reducedMotion, staticSlides.length]);
 
   if (items.length === 0) {
     return (
@@ -78,7 +110,7 @@ export function TopTicker() {
   }
 
   if (reducedMotion) {
-    const item = items[staticIndex % items.length];
+    const item = staticSlides[staticIndex % staticSlides.length];
     return (
       <div className="top-ticker top-ticker--static" role="status" aria-live="polite">
         <span className="top-ticker__item">

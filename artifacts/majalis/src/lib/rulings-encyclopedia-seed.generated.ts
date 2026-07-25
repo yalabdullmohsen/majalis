@@ -2626,12 +2626,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
         "source": "الإسراء: 36"
       }
     ],
-    "references": [
-      {
-        "text": "الفتاوى الشبكية — إسلام ويب",
-        "source": "باب وسائل التواصل الاجتماعي"
-      }
-    ],
+    "references": [],
     "keywords": [
       "تواصل اجتماعي",
       "إنترنت",

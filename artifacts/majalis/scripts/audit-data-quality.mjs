@@ -72,7 +72,10 @@ function auditDuplicates(items, field, typeLabel, groupField) {
   for (const item of items) {
     const key = (item[field] || "").trim();
     if (!key) continue;
-    const scopedKey = groupField ? `${item[groupField] ?? ""}::${key}` : key;
+    const groupFields = Array.isArray(groupField) ? groupField : groupField ? [groupField] : [];
+    const scopedKey = groupFields.length
+      ? `${groupFields.map((f) => item[f] ?? "").join("::")}::${key}`
+      : key;
     if (seen.has(scopedKey)) {
       issues.push({ type: typeLabel, id: item.id, otherId: seen.get(scopedKey), key: key.slice(0, 80) });
     } else {
@@ -99,8 +102,10 @@ function main() {
       sheikhs: auditSheikhs(sheikhs),
       quiz: auditDuplicates(quiz, "question", "duplicate_quiz_question"),
       fawaid: auditDuplicates(fawaid, "text", "duplicate_fawaid_text"),
-      // مُقيَّد بـcategoryId: التكرار عبر تصنيفات مختلفة مقصود شرعاً (راجع تعليق auditDuplicates)
-      adhkar: auditDuplicates(adhkar, "text", "duplicate_adhkar_text_same_category", "categoryId"),
+      // مُقيَّد بـcategoryId: التكرار عبر تصنيفات مختلفة مقصود شرعاً (راجع تعليق auditDuplicates).
+      // ومُقيَّد كذلك بـcount: نفس الذكر بعددٍ مختلف روايةٌ مستقلة لها فضل خاص
+      // (مثل التهليل 100 مرة من حديث أبي هريرة، و10 مرات من حديث أبي أيوب) — ليس تكراراً.
+      adhkar: auditDuplicates(adhkar, "text", "duplicate_adhkar_text_same_category", ["categoryId", "count"]),
     },
   };
 

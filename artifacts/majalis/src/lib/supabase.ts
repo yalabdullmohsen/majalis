@@ -169,15 +169,49 @@ export async function getCurrentUser() {
   }
 }
 
+/**
+ * يدمج صفوف الجدول الحيّ مع البذرة المحلية بدل أن يحجب أحدُهما الآخر.
+ *
+ * السبب: `safeSupabaseQuery` يعيد `data ?? fallback`، فأي عدد ناجح ولو كان
+ * صفًّا واحدًا يُلغي البذرة كاملة. وجدول `sheikhs` الحيّ فيه ٥ صفوف والبذرة
+ * ٩٢، وجدول `fawaid` فيه ٧ صفوف المعتمدة والبذرة ٤٩٦ — فكانت الصفحتان تعرضان
+ * جزءًا يسيرًا من المحتوى المُعلن في `content-counts.json` (2026-07-25).
+ * وهذا هو نفس نمط `mergeLibraryWithCatalog` المعتمد أصلًا في المكتبة، لا نمط
+ * جديد. الأولوية لصف قاعدة البيانات عند تطابق المعرّف أو مفتاح التمييز.
+ */
+function mergeRowsWithSeed<T extends Record<string, unknown>>(
+  rows: T[],
+  seed: T[],
+  keyOf: (item: T) => string,
+): T[] {
+  if (!rows.length) return seed;
+  const seen = new Set(rows.map(keyOf).filter(Boolean));
+  const merged = [...rows];
+  for (const item of seed) {
+    const key = keyOf(item);
+    if (key && seen.has(key)) continue;
+    if (key) seen.add(key);
+    merged.push(item);
+  }
+  return merged;
+}
+
 export async function getSheikhs() {
   const { DEMO_SHEIKHS } = await loadSeedData();
-  return safeSupabaseQuery(
+  const result = await safeSupabaseQuery(
     "getSheikhs",
     // حدّ أمان ضد نموّ الجدول — المستدعون يحتاجون القائمة كاملة (بحث بالاسم/عرض)
     // والعدد الحالي ~١٠٥، فالحدّ لا يقتطع شيئًا اليوم.
     () => supabase.from("sheikhs").select("*").order("name").limit(300),
     DEMO_SHEIKHS,
   );
+  if (result.usingSeed) return result;
+  const merged = mergeRowsWithSeed<any>(
+    result.data as any[],
+    DEMO_SHEIKHS as any[],
+    (s) => String(s?.name ?? "").trim(),
+  ).sort((a: any, b: any) => String(a?.name ?? "").localeCompare(String(b?.name ?? ""), "ar"));
+  return { ...result, data: merged };
 }
 
 export async function getSheikhById(id: string) {
@@ -393,7 +427,7 @@ export async function getMyRegistrations(userId: string) {
 
 export async function getApprovedFawaid() {
   const { DEMO_FAWAID } = await loadSeedData();
-  return safeSupabaseQuery(
+  const result = await safeSupabaseQuery(
     "getApprovedFawaid",
     // FawaidPage تُصفّي بالفئة وتبحث محليًا في القائمة كاملة، لذا حدّ ١٠٠ كان
     // ليُخفي ~٨٠٪ من الفوائد (البذرة وحدها ٥١٠). الحدّ هنا حارس ضد الجموح فقط.
@@ -401,6 +435,15 @@ export async function getApprovedFawaid() {
     () => supabase.from("fawaid").select("*").eq("status", "approved").order("created_at", { ascending: false }).limit(1000),
     DEMO_FAWAID,
   );
+  if (result.usingSeed) return result;
+  // دمج مع البذرة — راجع تعليق mergeRowsWithSeed: الجدول الحيّ فيه ٧ فوائد
+  // معتمدة فقط، وبدون الدمج تُحجب ٤٩٦ فائدة في البذرة.
+  const merged = mergeRowsWithSeed<any>(
+    result.data as any[],
+    DEMO_FAWAID as any[],
+    (f) => String(f?.text ?? "").trim().slice(0, 120),
+  );
+  return { ...result, data: merged };
 }
 
 export async function getVerifiedHadith(options: { limit?: number; collection?: string; chapter?: string; authenticityClass?: "sahih" | "daif" | "mawdu" } = {}) {

@@ -62,16 +62,6 @@ const INSTITUTIONS: Institution[] = [
   },
   // مراكز إسلامية
   {
-    id: "rabita",
-    name: "رابطة العالم الإسلامي",
-    type: "center",
-    city: "مكة المكرمة",
-    country: "المملكة العربية السعودية",
-    description: "منظمة إسلامية دولية تعنى بشؤون المسلمين ونشر الوسطية وتعزيز الحوار.",
-    website: "https://www.themwl.org",
-    mapQuery: "رابطة العالم الإسلامي مكة",
-  },
-  {
     id: "ium",
     name: "الجامعة الإسلامية العالمية في ماليزيا",
     type: "university",
@@ -130,15 +120,6 @@ const INSTITUTIONS: Institution[] = [
     country: "عالمي",
     description: "أكبر مكتبة إسلامية رقمية مجانية، تضم آلاف الكتب والمتون الشرعية المُحققة.",
     website: "https://shamela.ws",
-  },
-  {
-    id: "islamweb-library",
-    name: "مكتبة إسلام ويب",
-    type: "library",
-    city: "الدوحة",
-    country: "قطر",
-    description: "مكتبة رقمية إسلامية شاملة تتبع منظومة قطر للشؤون الدينية.",
-    website: "https://www.islamweb.net",
   },
   // مراكز بحثية وهيئات
   {
