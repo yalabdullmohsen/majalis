@@ -1,0 +1,6 @@
+# سجلّات تُلحَق بها الأسطر (append-only) من أكثر من فرع في آن واحد.
+# بدون `merge=union` يعتبر git كل إضافتين في نهاية الملف تعارضًا، فيُفشل
+# دمج الإصدار (release-majlisilm.yml) بلا سبب حقيقي — وقع فعليًا 2026-07-25
+# حين أضافت نافذتا automation/content وautomation/tasks سطورًا في نفس اليوم.
+# `union` يحتفظ بسطور الطرفين معًا، وهو السلوك الصحيح لسجلٍّ تراكمي.
+artifacts/majalis/data/needs-post-review.jsonl merge=union
