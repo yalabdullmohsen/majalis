@@ -153,10 +153,10 @@ function star8Pts(cx: number, cy: number, r1: number, r2: number) {
 
 export function ErrorState({ text, onRetry }: { text: string; onRetry?: () => void }) {
   return (
-    <div className="ui-card ds-empty" role="alert">
-      <p className={`ds-error-text${onRetry ? " ds-error-text--mb" : ""}`}>{text}</p>
+    <div className="adv-error-state" role="alert" aria-live="assertive" dir="rtl">
+      <p className="adv-error-state__msg">{text}</p>
       {onRetry && (
-        <button type="button" className="ds-btn ds-btn--primary" onClick={onRetry}>
+        <button type="button" className="adv-error-state__retry" onClick={onRetry} aria-label="إعادة المحاولة">
           إعادة المحاولة
         </button>
       )}
