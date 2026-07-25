@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect, useMemo, useRef } from "react";
-import { CalendarDays, Heart, HelpCircle, LayoutList, Sparkles } from "lucide-react";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { CalendarDays, Heart, HelpCircle, LayoutList } from "lucide-react";
 import { Link } from "wouter";
 import { PROPHETS, getProphet, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
 import { applyPageSeo } from "@/lib/seo";
@@ -16,15 +16,15 @@ type Citation = { surah: string; ayahs: string; note: string };
 
 const PROPHET_HUE: Record<string, string> = {
   adam: "#5D726A", idris: "#4A6B6B", nuh: "#3D6560", hud: "#5A7066",
-  salih: "#5B6B60", ibrahim: "#173D35", lut: "#3A6A4A", ismail: "#2A5E42",
+  salih: "#5B6B60", ibrahim: "#143F35", lut: "#3A6A4A", ismail: "#2A5E42",
   "is-haq": "#3D6050", yaqub: "#356055", yusuf: "#2D5545", ayyub: "#4A6055",
-  shuayb: "#25504A", musa: "#173D35", harun: "#1E4A38", "dhul-kifl": "#354A42",
-  dawud: "#2A3E35", sulayman: "#173D35", ilyas: "#3A5548", "al-yasa": "#266050",
+  shuayb: "#25504A", musa: "#143F35", harun: "#1E4A38", "dhul-kifl": "#354A42",
+  dawud: "#2A3E35", sulayman: "#143F35", ilyas: "#3A5548", "al-yasa": "#266050",
   yunus: "#1A5555", zakariyya: "#2A503C", yahya: "#205540", isa: "#1E3F50",
-  muhammad: "#173D35",
+  muhammad: "#143F35",
 };
 
-const IVORY = "#D6CFC0";
+const IVORY = "#D6D5CE";
 
 /* بيانات تكميلية: عدد الذكر، المعجزة، الكتاب، المواضع القرآنية */
 type Supplement = { mentioned: number; miracle?: string; book?: string; quranRef?: string };
@@ -729,12 +729,6 @@ const TABS: { id: View; label: string }[] = [
 ];
 
 export default function ProphetStoriesPage() {
-  const todayMiracle = useMemo(() => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
-    return MIRACLES_LIST[(day - 1 + MIRACLES_LIST.length) % MIRACLES_LIST.length];
-  }, []);
   const [search, setSearch] = useState("");
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [view, setView] = useState<View>("grid");
@@ -814,14 +808,6 @@ export default function ProphetStoriesPage() {
           </p>
           <GeometricBorder color={IVORY} size={24} />
         </div>
-      </div>
-
-      {/* معجزة اليوم */}
-      <div className="psod-card">
-        <div className="psod-card__badge"><Sparkles size={11} aria-hidden="true" /> معجزة اليوم</div>
-        <div className="psod-card__nabi">{todayMiracle.nabi}</div>
-        <h2 className="psod-card__miracle">{todayMiracle.miracle}</h2>
-        <div className="psod-card__ayah">{todayMiracle.ayah}</div>
       </div>
 
       {/* تبويبات العرض */}

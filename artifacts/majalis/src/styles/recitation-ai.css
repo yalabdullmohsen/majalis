@@ -326,7 +326,7 @@ html[data-theme="dark"] .rai-correction-card__correct { color: #6EE7B7; }
 .rai-correction-card__dismiss {
   min-height: 42px;
   padding: 0 1rem;
-  border: 1px solid var(--border, #e5e3dd);
+  border: 1px solid var(--border, #E8E7E2);
   border-radius: 10px;
   background: transparent;
   color: var(--text-base, #1a1a1a);

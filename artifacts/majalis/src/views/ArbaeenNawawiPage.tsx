@@ -170,25 +170,6 @@ export default function ArbaeenNawawiPage() {
         </div>
       </header>
 
-      {/* ── حديث اليوم ── */}
-      <section className="an-today" aria-label="حديث اليوم">
-        <div className="an-today__badge">✦ حديث اليوم</div>
-        <div className="an-today__card">
-          <span className="an-today__num">{todayHadith.id} / 40</span>
-          <h2 className="an-today__title">{todayHadith.title}</h2>
-          <blockquote className="an-today__text">«{todayHadith.text}»</blockquote>
-          <p className="an-today__source">{todayHadith.source}</p>
-          <p className="an-today__expl">{todayHadith.explanation}</p>
-          <button
-            type="button"
-            className={`an-read-btn${read.has(todayHadith.id) ? " an-read-btn--done" : ""}`}
-            onClick={() => toggleRead(todayHadith.id)}
-          >
-            {read.has(todayHadith.id) ? "✓ مقروء" : "تعليم كمقروء"}
-          </button>
-        </div>
-      </section>
-
       {/* ── فلاتر ── */}
       <div className="an-filters">
         <input

@@ -52,7 +52,7 @@ export default function HadithBooksAndRulingsPage() {
 
         <div className="hadith-index-card hadith-index-card--soon" aria-disabled="true">
           <span className="hadith-index-card__icon" aria-hidden="true">
-            <Scale size={22} strokeWidth={2} color="#28584D" />
+            <Scale size={22} strokeWidth={2} color="#226A56" />
           </span>
           <h2 className="hadith-index-card__title">عمدة الأحكام</h2>
           <p className="hadith-index-card__desc">
@@ -63,7 +63,7 @@ export default function HadithBooksAndRulingsPage() {
 
         <div className="hadith-index-card hadith-index-card--soon" aria-disabled="true">
           <span className="hadith-index-card__icon" aria-hidden="true">
-            <Gavel size={22} strokeWidth={2} color="#28584D" />
+            <Gavel size={22} strokeWidth={2} color="#226A56" />
           </span>
           <h2 className="hadith-index-card__title">بلوغ المرام</h2>
           <p className="hadith-index-card__desc">
@@ -74,7 +74,7 @@ export default function HadithBooksAndRulingsPage() {
 
         <div className="hadith-index-card hadith-index-card--soon" aria-disabled="true">
           <span className="hadith-index-card__icon" aria-hidden="true">
-            <Landmark size={22} strokeWidth={2} color="#28584D" />
+            <Landmark size={22} strokeWidth={2} color="#226A56" />
           </span>
           <h2 className="hadith-index-card__title">المنتقى من أخبار المصطفى ﷺ</h2>
           <p className="hadith-index-card__desc">

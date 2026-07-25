@@ -1,7 +1,7 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { Link } from "wouter";
-import { Sparkles, Calculator } from "lucide-react";
+import { Calculator } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -267,12 +267,6 @@ export default function MawarithPage() {
     });
   }, []);
 
-  const todayMasala = useMemo(() => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
-    return MASAIL[(day - 1 + MASAIL.length) % MASAIL.length];
-  }, []);
   const [tab, setTab] = useState<MawTab>("varasa");
   const [openWarith, setOpenWarith] = useState<string | null>(null);
   const [search, setSearch] = useState("");
@@ -299,20 +293,12 @@ export default function MawarithPage() {
 
       {/* حاسبة المواريث */}
       <Link href="/mawarith/calculator" className="mwod-card" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
-        <Calculator size={28} strokeWidth={1.6} aria-hidden="true" style={{ color: "#28584D", flexShrink: 0 }} />
+        <Calculator size={28} strokeWidth={1.6} aria-hidden="true" style={{ color: "#226A56", flexShrink: 0 }} />
         <div>
           <h2 className="mwod-card__title" style={{ marginBottom: "0.2rem" }}>حاسبة المواريث</h2>
           <p className="mwod-card__desc">أدخل الورثة والتركة واحصل على توزيع الأنصبة تلقائيًا مع شرح كل خطوة ←</p>
         </div>
       </Link>
-
-      {/* مسألة الميراث اليوم */}
-      <div className="mwod-card">
-        <div className="mwod-card__badge"><Sparkles size={11} aria-hidden="true" /> مسألة الميراث اليوم</div>
-        <h2 className="mwod-card__title">{todayMasala.title}</h2>
-        <p className="mwod-card__desc">{todayMasala.desc}</p>
-        <div className="mwod-card__formula">{todayMasala.formula}</div>
-      </div>
 
       {/* تنبيه تعليمي */}
       <div className="maw-disclaimer" role="note">

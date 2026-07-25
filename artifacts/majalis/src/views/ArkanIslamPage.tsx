@@ -1,7 +1,7 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { ChevronDown, ChevronUp, Sparkles, Star } from "lucide-react";
+import { ChevronDown, ChevronUp, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -44,7 +44,7 @@ const ARKAN: Rukn[] = [
       { label: "ثمرات الشهادتين في الحياة", body: "الشهادتان تُفضيان إلى: راحة النفس بالتوكل على الله، والعدل في التعامل إذ لا يُرى غير الله، وتحرير الإنسان من العبودية للأهواء والبشر والمادة." },
     ],
     scholarQuote: { text: "لا إله إلا الله كلمة يتضمن إثباتها ونفيها توحيد الله في ربوبيته وألوهيته وأسمائه وصفاته.", scholar: "ابن تيمية" },
-    color: "#173D35",
+    color: "#143F35",
   },
   {
     num: 2,
@@ -68,7 +68,7 @@ const ARKAN: Rukn[] = [
       { label: "قضاء الصلاة وأحوالها", body: "تُجمع الصلاة في السفر والمرض. وتُقصَر رباعية الركعات إلى ركعتين في السفر. وتُصلَّى قاعداً إن تعذَّر القيام. ولا يسقط فرضها عن المسلم بأي عذر." },
     ],
     scholarQuote: { text: "الصلاة معراج المؤمنين، وإقامتها على وجهها تُصلح باقي الأعمال.", scholar: "الإمام النووي" },
-    color: "#173D35",
+    color: "#143F35",
   },
   {
     num: 3,
@@ -140,18 +140,12 @@ const ARKAN: Rukn[] = [
       { label: "الحج والعمرة والفرق بينهما", body: "العمرة تُؤدَّى في أي وقت، وأركانها: الإحرام والطواف والسعي والحلق. أما الحج فله مواقيت محددة في ذي الحجة، وهو أكمل وأشمل. ويمكن الجمع بينهما في الحج القِران أو التمتع." },
     ],
     scholarQuote: { text: "الحج مؤتمر إسلامي سنوي يجمع المسلمين على كلمة التوحيد ويذكّرهم بيوم القيامة.", scholar: "الإمام الشافعي" },
-    color: "#173D35",
+    color: "#143F35",
   },
 ];
 
 export default function ArkanIslamPage() {
   const [expanded, setExpanded] = useState<number | null>(1);
-  const todayRukn = useMemo(() => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
-    return ARKAN[(day - 1 + ARKAN.length) % ARKAN.length];
-  }, []);
 
   useEffect(() => {
     applyPageSeo({
@@ -202,17 +196,6 @@ export default function ArkanIslamPage() {
             </button>
           ))}
         </div>
-      </div>
-
-      {/* ركن الإسلام اليوم */}
-      <div className="arod-card">
-        <div className="arod-card__badge"><Sparkles size={11} aria-hidden="true" /> ركن الإسلام اليوم</div>
-        <span className="arod-card__icon"><SectionIcon name={todayRukn.icon} size={28} /></span>
-        <div className="arod-card__num">الركن {todayRukn.numAr}</div>
-        <h2 className="arod-card__title">{todayRukn.title}</h2>
-        <p className="arod-card__sub">{todayRukn.subtitle}</p>
-        <p className="arod-card__summary">{todayRukn.summary}</p>
-        <p className="arod-card__quote">«{todayRukn.scholarQuote.text}»<span className="arod-card__scholar"> — {todayRukn.scholarQuote.scholar}</span></p>
       </div>
 
       {/* ═══ الأركان ═══ */}

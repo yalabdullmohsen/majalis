@@ -378,7 +378,7 @@ export default function MushafPageView() {
       {sidebarOpen && (
         // نقر الخلفية للإغلاق مصحوب بزر إغلاق حقيقي وظاهر داخل اللوحة — مسار
         // وصول بديل كامل بلوحة المفاتيح.
-        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+         
         <div className="mpv-settings-sheet" onClick={() => setSidebarOpen(false)} role="presentation">
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div className="mpv-settings-panel" onClick={(e) => e.stopPropagation()} style={{ height: "70vh", display: "flex", flexDirection: "column" }}>
@@ -403,7 +403,7 @@ export default function MushafPageView() {
       {settingsOpen && (
         // نقر الخلفية للإغلاق مصحوب بزر إغلاق حقيقي وظاهر داخل اللوحة — مسار
         // وصول بديل كامل بلوحة المفاتيح.
-        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+         
         <div className="mpv-settings-sheet" onClick={() => setSettingsOpen(false)} role="presentation">
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div className="mpv-settings-panel" onClick={(e) => e.stopPropagation()}>

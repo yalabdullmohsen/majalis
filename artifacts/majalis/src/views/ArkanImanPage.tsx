@@ -1,7 +1,7 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { ChevronDown, ChevronUp, Sparkles, Star } from "lucide-react";
+import { ChevronDown, ChevronUp, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -44,7 +44,7 @@ const ARKAN_IMAN: RuknIman[] = [
       { label: "أثر الإيمان بالله في السلوك", body: "الإيمان بالله لا يبقى مجرد اعتقاد نظري؛ يُثمر خشيةً في السر، وحياءً من المراقبة، وشكراً على النعم، وتوكلاً في الشدائد. المؤمن حقاً يُوحِّد الله في كل حركة وسكنة." },
     ],
     scholarQuote: { text: "الإيمان بالله يتضمن أربعة أمور: الإيمان بوجوده، وبربوبيته، وبألوهيته، وبأسمائه وصفاته.", scholar: "ابن عثيمين" },
-    color: "#173D35",
+    color: "#143F35",
   },
   {
     num: 2,
@@ -92,7 +92,7 @@ const ARKAN_IMAN: RuknIman[] = [
       { label: "الصحف المنزَّلة الأخرى", body: "نزلت صحف على إبراهيم وعلى موسى قبل التوراة. قال تعالى: ﴿إِنَّ هَٰذَا لَفِي الصُّحُفِ الْأُولَىٰ صُحُفِ إِبْرَاهِيمَ وَمُوسَىٰ﴾. والمؤمن يُصدِّق بكل ما أنزل الله على أنبيائه وإن لم تبلغنا تفاصيله." },
     ],
     scholarQuote: { text: "القرآن ناسخ لسائر الكتب، وهو الحاكم عليها، فلا يُعمل بغيره ولا تُتلقى الشرائع إلا منه.", scholar: "ابن كثير" },
-    color: "#173D35",
+    color: "#143F35",
   },
   {
     num: 4,
@@ -140,7 +140,7 @@ const ARKAN_IMAN: RuknIman[] = [
       { label: "الميزان والصراط والشفاعة", body: "الميزان: يوزن فيه الأعمال يوم القيامة. الصراط: جسر ممدود فوق جهنم يمر عليه الخلق بقدر أعمالهم. الشفاعة: لها أنواع، أعظمها الشفاعة الكبرى لنبينا ﷺ حين يُؤذَن له أن يشفع." },
     ],
     scholarQuote: { text: "من آمن باليوم الآخر حقَّ الإيمان هانت عليه الدنيا وأقبل على الآخرة، وجعل أعماله كلها لما بعد الموت.", scholar: "ابن القيم" },
-    color: "#173D35",
+    color: "#143F35",
   },
   {
     num: 6,
@@ -195,13 +195,6 @@ export default function ArkanImanPage() {
     });
   }, []);
 
-  const todayRukn = useMemo(() => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
-    return ARKAN_IMAN[(day - 1 + ARKAN_IMAN.length) % ARKAN_IMAN.length];
-  }, []);
-
   function toggle(num: number) {
     setOpenId((prev) => (prev === num ? null : num));
   }
@@ -232,17 +225,6 @@ export default function ArkanImanPage() {
           ))}
         </div>
       </section>
-
-      {/* ركن الإيمان اليوم */}
-      <div className="aiod-card">
-        <div className="aiod-card__badge"><Sparkles size={11} aria-hidden="true" /> ركن الإيمان اليوم</div>
-        <span className="aiod-card__icon"><SectionIcon name={todayRukn.icon} size={28} /></span>
-        <div className="aiod-card__num">{todayRukn.numAr}</div>
-        <h2 className="aiod-card__title">{todayRukn.title}</h2>
-        <p className="aiod-card__sub">{todayRukn.subtitle}</p>
-        <p className="aiod-card__summary">{todayRukn.summary}</p>
-        <p className="aiod-card__quote">«{todayRukn.scholarQuote.text}»<span className="aiod-card__scholar"> — {todayRukn.scholarQuote.scholar}</span></p>
-      </div>
 
       {/* قائمة الأركان */}
       <div className="ai-list">
