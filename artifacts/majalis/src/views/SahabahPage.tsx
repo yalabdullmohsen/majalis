@@ -1,5 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
-import { Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -1240,37 +1239,6 @@ const SAHABAH: Sahabi[] = [
 
 const CATEGORIES: SahabiCategory[] = ["الكل", "الخلفاء", "العشرة", "النساء", "العلماء", "الفاتحون"];
 
-/* ─── صحابي اليوم ─── */
-function todaysSahabi(): Sahabi {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
-  return SAHABAH[(dayOfYear - 1 + SAHABAH.length) % SAHABAH.length];
-}
-
-function SahabiOfDayCard({ sahabi }: { sahabi: Sahabi }) {
-  return (
-    <div className="sbod-card">
-      <div className="sbod-card__badge"><Sparkles size={11} aria-hidden="true" /> صحابي اليوم</div>
-      <div className="sbod-card__icon"><SectionIcon name={sahabi.icon} size={32} /></div>
-      <h2 className="sbod-card__name">{sahabi.name}</h2>
-      {sahabi.kunya && <div className="sbod-card__kunya">{sahabi.kunya}</div>}
-      <div className="sbod-card__cats">
-        {sahabi.category.filter(c => c !== "الكل").map(c => (
-          <span key={c} className="sbod-card__cat">{c}</span>
-        ))}
-      </div>
-      <div className="sbod-card__meta">
-        <span>📍 {sahabi.origin}</span>
-        <span>🕌 {sahabi.islam}</span>
-        {sahabi.died && <span>📅 {sahabi.died}</span>}
-      </div>
-      <p className="sbod-card__fadl">{sahabi.fadl}</p>
-      {sahabi.quote && <blockquote className="sbod-card__quote">«{sahabi.quote}»</blockquote>}
-    </div>
-  );
-}
-
 export default function SahabahPage() {
   useEffect(() => {
     applyPageSeo({
@@ -1299,8 +1267,6 @@ export default function SahabahPage() {
   const [activeCat, setActiveCat] = useState<SahabiCategory>("الكل");
   const [search, setSearch] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);
-  const todaySahabi = useMemo(() => todaysSahabi(), []);
-
   const filtered = SAHABAH.filter((s) => {
     const matchCat = activeCat === "الكل" || s.category.includes(activeCat);
     const matchSearch = arabicMatchAny([s.name, s.kunya ?? ""], search);
@@ -1326,8 +1292,6 @@ export default function SahabahPage() {
         </div>
       </section>
 
-      {/* صحابي اليوم */}
-      <SahabiOfDayCard sahabi={todaySahabi} />
 
       <div className="sb-body">
         {/* search */}

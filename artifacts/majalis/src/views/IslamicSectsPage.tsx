@@ -1,5 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
-import { Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -861,12 +860,6 @@ const CATEGORY_COLOR: Record<string, string> = {
 };
 
 export default function IslamicSectsPage() {
-  const todaySect = useMemo(() => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
-    return SECTS[(day - 1 + SECTS.length) % SECTS.length];
-  }, []);
   const [category, setCategory] = useState("الكل");
   const [statusF, setStatusF] = useState("الكل");
   const [selected, setSelected] = useState<Sect | null>(null);
@@ -929,17 +922,6 @@ export default function IslamicSectsPage() {
             <ShareButtons title="الفرق الإسلامية — المجلس العلمي" />
           </div>
         </div>
-      </div>
-
-      {/* فرقة اليوم */}
-      <div className="isod-card">
-        <div className="isod-card__badge"><Sparkles size={11} aria-hidden="true" /> مدرسة اليوم</div>
-        <span className="isod-card__icon">{todaySect.icon}</span>
-        <div className="isod-card__cat">{todaySect.category}</div>
-        <h2 className="isod-card__name">{todaySect.name}</h2>
-        <div className="isod-card__meta">{todaySect.era} · {todaySect.origin}</div>
-        <p className="isod-card__cause">{todaySect.foundingCause}</p>
-        {todaySect.quote && <p className="isod-card__quote">«{todaySect.quote}»</p>}
       </div>
 
       {/* Notice */}

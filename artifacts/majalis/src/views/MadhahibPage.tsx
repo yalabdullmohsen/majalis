@@ -1,6 +1,5 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
-import { useEffect, useState, useMemo } from "react";
-import { Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -152,12 +151,6 @@ const MADHAHIB: Madhhab[] = [
 ];
 
 export default function MadhahibPage() {
-  const todayMadhhab = useMemo(() => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
-    return MADHAHIB[(day - 1 + MADHAHIB.length) % MADHAHIB.length];
-  }, []);
   const [openId, setOpenId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -214,17 +207,6 @@ export default function MadhahibPage() {
           ))}
         </div>
       </section>
-
-      {/* مذهب اليوم */}
-      <div className="mdbod-card">
-        <div className="mdbod-card__badge"><Sparkles size={11} aria-hidden="true" /> مذهب اليوم</div>
-        <span className="mdbod-card__icon"><SectionIcon name={todayMadhhab.icon} size={26} /></span>
-        <h2 className="mdbod-card__name">{todayMadhhab.name}</h2>
-        <div className="mdbod-card__founder">{todayMadhhab.founder} · {todayMadhhab.born}–{todayMadhhab.died}</div>
-        <div className="mdbod-card__origin">{todayMadhhab.origin}</div>
-        <p className="mdbod-card__summary">{todayMadhhab.summary}</p>
-        <p className="mdbod-card__quote">«{todayMadhhab.quote.text}»<span className="mdbod-card__quote-src"> — {todayMadhhab.quote.source}</span></p>
-      </div>
 
       {/* بطاقات المذاهب */}
       <div className="mdb-list">
