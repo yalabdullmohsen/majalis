@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { useNumerals } from "@/hooks/useNumerals";
-import { getDailyHadith, getDailyDhikr } from "@/lib/daily-content";
 import { getLocalSunnahPeriod } from "@/lib/sunnah-by-time";
 
 type TickerItem = {
@@ -46,12 +45,13 @@ function usePrefersReducedMotion(): boolean {
  * حقيقية عبر مضاعفة عناصر المصدر الواحد مرة واحدة (translateX(-50%) على
  * نسخة مكرَّرة بالضبط — لا فراغ نهاية، لا اعتماد على عرض ثابت). يعرض
  * بالتتابع: عدّ الصلاة القادمة (usePrayerCountdown نفسه المستخدَم في
- * PrayerCountdownBanner/NavBar/PrayerTimesPage)، حديثًا وذكرًا يوميين
- * وفترة السنن العملية الحالية من مصادر مُنسَّقة موجودة مسبقًا
- * (daily-content.ts وsunnah-by-time.ts — نفس مصدر بطاقة "مجلس اليوم"
- * وقسم "سنن حسب الوقت" بالرئيسية)، ثم مؤشرات مزايا/أقسام فعلية. كل عنصر
- * حرفي مع مصدره، بلا أي توليد نص شرعي. عنصر غائب البيانات يُتجاوَز بلا
- * فجوة (لا list.push إن لم توجد بيانات).
+ * PrayerCountdownBanner/NavBar/PrayerTimesPage)، وفترة السنن العملية
+ * الحالية من sunnah-by-time.ts (نفس مصدر قسم "سنن حسب الوقت" بالرئيسية)،
+ * ثم مؤشرات مزايا/أقسام فعلية. كل عنصر حرفي مع مصدره، بلا أي توليد نص
+ * شرعي. عنصر غائب البيانات يُتجاوَز بلا فجوة (لا list.push إن لم توجد
+ * بيانات). ميزة "محتوى اليوم" (حديث/ذكر يوميان دوّاران) أُزيلت نهائيًا
+ * من الشريط ومن كل الموقع 2026-07-25 بطلب مباشر — راجع سجل commit للنطاق
+ * الكامل (daily-content.ts وHomeMajlisToday وHomeDailyQuestion).
  */
 export function TopTicker() {
   const { countdown } = usePrayerCountdown();
@@ -77,14 +77,6 @@ export function TopTicker() {
           ? { id: "prayer", text: `مضى على أذان ${slot.name}: ${fmt(sinceMin)}`, href: "/prayer-times" }
           : { id: "prayer", text: `المتبقي على صلاة ${slot.name}: ${fmt(remainingMin ?? "")}`, href: "/prayer-times" }
       );
-    }
-    const hadith = getDailyHadith();
-    if (hadith?.text) {
-      list.push({ id: "hadith", text: hadith.text, source: hadith.source });
-    }
-    const dhikr = getDailyDhikr();
-    if (dhikr?.text) {
-      list.push({ id: "dhikr", text: dhikr.text, source: dhikr.source });
     }
     const sunnah = getLocalSunnahPeriod();
     const suggestion = sunnah?.suggestions?.[0];

@@ -13,7 +13,6 @@ import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeContinueWidget } from "@/components/home/HomeContinueWidget";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
 import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
-import { HomeMajlisToday } from "@/components/home/HomeMajlisToday";
 import { FridayBanner } from "@/components/FridayBanner";
 import { getHijriDateString } from "@/lib/hijri-utils";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerTimesPayload } from "@/lib/prayer-times";
@@ -702,13 +701,6 @@ export default function HomePage() {
           )}
         </div>
       </section>
-
-      {/* ══ مجلس اليوم ══ */}
-      <div style={{ maxWidth: 760, margin: "1rem auto 0", padding: "0 1rem" }}>
-        <SectionErrorBoundary name="مجلس اليوم">
-          <HomeMajlisToday />
-        </SectionErrorBoundary>
-      </div>
 
       {/* ══ زرتَ مؤخراً ══ */}
       <RecentPagesBar />

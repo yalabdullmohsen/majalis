@@ -223,6 +223,16 @@
       "permanent": true
     },
     {
+      "source": "/fatwa/:id",
+      "destination": "/rulings",
+      "permanent": true
+    },
+    {
+      "source": "/fatwa",
+      "destination": "/fiqh",
+      "permanent": true
+    },
+    {
       "source": "/surah-stories",
       "destination": "/quran/surah-stories",
       "permanent": true

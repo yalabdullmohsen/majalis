@@ -575,87 +575,6 @@ html[data-theme="dark"] .rp-section-title {
    §10. Home Sections — عناوين المقاطع
    ══════════════════════════════════════════════ */
 
-/* ── §10a — HomeMajlisToday ──────────────────────────────────────────── */
-.myt-card {
-  background: linear-gradient(140deg, #173D35 0%, #28584D 60%, #173D35 100%);
-  border-radius: var(--ds-radius-2xl);
-  padding: 1rem 1.1rem 1.1rem;
-  margin: 0 0 1.25rem;
-  color: #fff;
-  overflow: hidden;
-  position: relative;
-}
-.myt-card::before {
-  content: "";
-  position: absolute;
-  inset-inline-start: -40px;
-  top: -40px;
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(circle, rgba(255,255,255,.06) 0%, transparent 70%);
-  pointer-events: none;
-}
-.myt-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: .8rem;
-}
-.myt-header__label {
-  display: flex;
-  align-items: center;
-  gap: .3rem;
-  font-size: .8rem;
-  font-weight: 800;
-  letter-spacing: normal;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.7);
-}
-.myt-header__date { font-size: .8rem; color: rgba(255,255,255,.6); }
-.myt-body { display: flex; flex-direction: column; gap: .65rem; }
-.myt-block {
-  display: flex;
-  align-items: flex-start;
-  gap: .65rem;
-  background: rgba(255,255,255,.08);
-  border-radius: .75rem;
-  padding: .65rem .8rem;
-  transition: background .14s;
-}
-.myt-block:hover { background: rgba(255,255,255,.13); }
-.myt-block__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  background: rgba(255,255,255,.12);
-  border-radius: .5rem;
-  flex-shrink: 0;
-  color: rgba(255,255,255,.85);
-}
-.myt-moon { font-size: 1.1rem; line-height: 1; }
-.myt-block__content { flex: 1; min-width: 0; }
-.myt-block__label { font-size: .8rem; font-weight: 700; color: rgba(255,255,255,.55) !important; margin: 0 0 .2rem; letter-spacing: normal; }
-.myt-block__text { font-size: .85rem; font-weight: 600; color: #fff !important; margin: 0; line-height: 1.5; }
-.myt-block__text--lesson { font-size: .82rem; }
-.myt-block__source { font-size: .8rem; color: rgba(255,255,255,.55) !important; margin: .15rem 0 0; }
-.myt-block__source--muted { font-style: normal; color: rgba(255,255,255,.4) !important; }
-.myt-prayer-time { margin-inline-start: .5rem; font-weight: 800; font-size: .95rem; }
-.myt-block__link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  color: rgba(255,255,255,.5);
-  font-size: 1.2rem;
-  flex-shrink: 0;
-  text-decoration: none;
-  transition: color .14s;
-}
-.myt-block__link:hover { color: rgba(255,255,255,.9); }
-
 /* ══════════════════════════════════════════════
    §10b. الصفحة الرئيسية — جميع البطاقات داكنة/أبيض
    ══════════════════════════════════════════════ */
@@ -681,7 +600,6 @@ html[data-theme="dark"] .rp-section-title {
 .home-main--v3 .hit-card,
 .home-main--v3 .hmm-card,
 .home-main--v3 .ds-quiz-home-card,
-.myt-card,
 .hdc__card,
 .ds-page-header,
 .la-page-hero {
@@ -719,7 +637,6 @@ html[data-theme="dark"] .rp-section-title {
 .home-main--v3 .hit-card p,
 .home-main--v3 .hmm-card p,
 .home-main--v3 .ds-quiz-home-card p,
-.myt-card p,
 .hdc__card p,
 .ds-page-header p,
 .la-page-hero p,
@@ -781,7 +698,6 @@ html[data-theme="dark"] .rp-section-title {
 .home-main--v3 .ds-card em,
 .home-main--v3 .hit-card strong,
 .home-main--v3 .hmm-card strong,
-.myt-card strong,
 .hdc__card strong {
   color: rgba(255,255,255,0.90) !important;
 }
@@ -821,7 +737,6 @@ html[data-theme="dark"] .rp-section-title {
 .home-main--v3 .ds-card .page-tag,
 .home-main--v3 .hit-card .page-tag,
 .home-main--v3 .hmm-card .page-tag,
-.myt-card .page-tag,
 .hdc__card .page-tag {
   color: #173D35 !important;
   background: rgba(255,255,255,0.90) !important;
@@ -30971,7 +30886,6 @@ html[data-theme="dark"] .hpv4-hero a.hpv4-hero__cta-primary * {
 .home-hero--v3,
 .home-feature-strip-card:hover .home-feature-strip-icon,
 .elite-stats-section,
-.myt-card,
 .lesson-unified-card__header,
 .ds-btn--primary,
 .btn-v2--primary,
