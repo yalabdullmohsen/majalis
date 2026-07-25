@@ -1048,6 +1048,29 @@ textarea {
   font: inherit;
   font-weight: 700;
 }
+.masar-card__step-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  text-decoration: none;
+}
+.fiqh-stats-list a,
+.fiqh-stats-note a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 0.25rem;
+}
+.kuwait-lessons-feed-note a,
+.kuwait-lessons-attribution a,
+a.twitter-timeline {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 0.35rem;
+}
 
 @media (max-width: 879px) {
   .ds-btn--sm {
