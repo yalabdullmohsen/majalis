@@ -7,14 +7,14 @@
    ══════════════════════════════════════════════ */
 .ikm-page {
   min-height: 100vh;
-  background: var(--elite-white, #F7F4ED);
-  color: var(--elite-ink, #202725);
+  background: var(--elite-white, #FAFAF8);
+  color: var(--elite-ink, #1A1A18);
   padding-bottom: 6rem;
 }
 
 /* Hero */
 .ikm-hero {
-  background: linear-gradient(160deg, #031810 0%, #062B20 45%, #173D35 100%);
+  background: linear-gradient(160deg, #031810 0%, #062B20 45%, #143F35 100%);
   padding: 3rem 1.5rem 2.5rem;
   text-align: center;
   position: relative;
@@ -60,7 +60,7 @@
   /* أصبح هذا القسم بندًا مستقلاً بعد ترحيل الهيدر لنمط sh-hero الحديث،
      يحتاج خلفية داكنة خاصة به لأن ألوان النص (أبيض) صُمِّمت أصلاً على
      خلفية Hero الداكنة القديمة — بلا هذه الخلفية يختفي النص على الأبيض. */
-  background: linear-gradient(160deg, #031810 0%, #062B20 45%, #173D35 100%);
+  background: linear-gradient(160deg, #031810 0%, #062B20 45%, #143F35 100%);
   border-radius: var(--ds-radius-2xl);
   padding: 1.25rem 1.5rem;
   margin: 0 1rem 1.5rem;
@@ -98,20 +98,20 @@
   border: 1.5px solid rgba(23,61,53,0.2);
   border-radius: 2rem;
   background: #FFFFFF;
-  color: var(--elite-ink, #202725);
+  color: var(--elite-ink, #1A1A18);
   font-size: 0.9rem;
   outline: none;
   transition: border-color 0.15s;
 }
 .ikm-search-input:focus {
-  border-color: #173D35;
+  border-color: #143F35;
 }
 .ikm-clear-btn {
   padding: 0.55rem 1rem;
   background: rgba(23,61,53,0.1);
   border: 1px solid rgba(23,61,53,0.2);
   border-radius: 2rem;
-  color: #173D35;
+  color: #143F35;
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
@@ -140,13 +140,13 @@
 .ikm-dom--hadith,
 .ikm-dom--stories,
 .ikm-dom--seerah,
-.ikm-dom--universities { --ikm-bg: #173D35; --ikm-domain-bg: #173D35; }
+.ikm-dom--universities { --ikm-bg: #143F35; --ikm-domain-bg: #143F35; }
 .ikm-dom--fiqh,
 .ikm-dom--fatwa,
-.ikm-dom--lessons      { --ikm-bg: #173D35; --ikm-domain-bg: #173D35; }
+.ikm-dom--lessons      { --ikm-bg: #143F35; --ikm-domain-bg: #143F35; }
 .ikm-dom--tafsir,
 .ikm-dom--tajweed,
-.ikm-dom--rulings      { --ikm-bg: #173D35; --ikm-domain-bg: #173D35; }
+.ikm-dom--rulings      { --ikm-bg: #143F35; --ikm-domain-bg: #143F35; }
 /* aqidah/usul/history/maqasid/arabic/mindmaps كانت بلا تعريف هنا، فتسقط
    خلفيتها لـ--clr-primary الفاتح في الوضع الداكن مع نص أبيض ثابت (تباين
    ~2:1) — أُضيفت بنفس نمط بقية النطاقات (2026-07-22). */
@@ -155,7 +155,7 @@
 .ikm-dom--mindmaps     { --ikm-bg: #062B20; --ikm-domain-bg: #062B20; }
 .ikm-dom--usul,
 .ikm-dom--maqasid,
-.ikm-dom--arabic       { --ikm-bg: #173D35; --ikm-domain-bg: #173D35; }
+.ikm-dom--arabic       { --ikm-bg: #143F35; --ikm-domain-bg: #143F35; }
 
 /* Cards grid */
 .ikm-grid {
@@ -164,7 +164,7 @@
   gap: var(--ds-space-4);
 }
 .ikm-card {
-  background: var(--ikm-bg, #173D35);
+  background: var(--ikm-bg, #143F35);
   border: none;
   border-radius: var(--ds-radius-xl);
   padding: var(--ds-space-5);
@@ -264,7 +264,7 @@
 }
 .ikm-tag--dark {
   background: rgba(23,61,53,0.1);
-  color: #173D35;
+  color: #143F35;
   border-color: rgba(23,61,53,0.15);
 }
 .ikm-card__link {
@@ -404,11 +404,11 @@
 }
 .ikm-rel-reason {
   font-size: var(--ds-text-xs);
-  color: #5E655F;
+  color: #5C5C56;
   margin-top: 0.1rem;
 }
 .ikm-rel-link {
-  color: #173D35;
+  color: #143F35;
   display: flex;
   align-items: center;
   flex-shrink: 0;
@@ -417,7 +417,7 @@
 .ikm-detail__tags-title {
   font-size: 0.82rem;
   font-weight: 600;
-  color: #5E655F;
+  color: #5C5C56;
   margin: 0 0 0.5rem;
 }
 .ikm-detail__tags {
@@ -466,7 +466,7 @@
 }
 .ikm-conn-label {
   font-size: 0.8rem;
-  color: #5E655F;
+  color: #5C5C56;
   white-space: nowrap;
 }
 .ikm-conn-arrow {

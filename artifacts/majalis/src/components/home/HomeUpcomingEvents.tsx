@@ -25,7 +25,7 @@ export function HomeUpcomingEvents() {
 
   const icon = (
     <span aria-hidden="true">
-      <CalendarDays size={18} strokeWidth={1.8} color="#173D35" />
+      <CalendarDays size={18} strokeWidth={1.8} color="#143F35" />
     </span>
   );
 
