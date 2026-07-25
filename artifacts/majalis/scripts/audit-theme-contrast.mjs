@@ -6,8 +6,9 @@
  * تلك بوابة انحدار مُثبَّتة على 25 عطلًا مُصلَحًا سابقًا (سريعة، تعمل في كل
  * test:regression). هذا السكربت كاشف استطلاعي: يمشي على كل عنصر نصي في كل
  * مسار، يقيس لونه المحسوب مقابل أقرب خلفية غير شفافة فعليًا، ويبلّغ عن كل
- * ما هو دون WCAG AA. استُخدم في 2026-07-25 فكشف 47 مخالفة حقيقية (39 منها
- * في الوضع الداكن) أُصلحت كلها ضمن هوية v4.
+ * ما هو دون WCAG AA. استُخدم في 2026-07-25 على 16 مسارًا فكشف 47 مخالفة، ثم وُسِّع إلى 41
+ * مسارًا فكشف 67 أخرى على مسارات لم تكن مغطّاة — أُصلحت كلها (114 مخالفة).
+ * كل توسعة في التغطية تكشف طبقة جديدة: التغطية هنا هي الأداة نفسها.
  *
  * قاعدتان مهمّتان تعلّمناهما وهما مطبَّقتان هنا:
  *  ١) العناصر التي خلفيتها متدرّجة/صورة تُتخطّى: لا يمكن استخراج لون واحد
@@ -21,7 +22,11 @@
 import { chromium } from "playwright";
 const B = process.env.BASE_URL || "http://127.0.0.1:4403";
 const ROUTES=["/","/quran-hub","/lessons","/library","/scholars","/qa","/adhkar","/rulings",
-  "/prayer-times","/seerah","/learning/paths","/topics","/about","/login","/search","/fiqh-council"];
+ "/prayer-times","/seerah","/learning/paths","/topics","/about","/login","/search","/fiqh-council",
+ "/prophet-stories","/quiz","/mushaf","/my-learning","/hadith","/fawaid","/miracles","/sitemap",
+ "/register","/stats","/calendar","/adhan-settings","/tasbeeh-counter","/asmaa-husna",
+ "/islamic-stories","/glossary","/madhahib","/sahabah","/tawhid","/zakat","/sawm","/janaza",
+ "/akhlaq","/raqaiq","/404"];
 const hexOf=s=>{const m=s.match(/\d+/g);return m?m.slice(0,3).map(Number):null;};
 const lin=c=>{c/=255;return c<=0.03928?c/12.92:((c+0.055)/1.055)**2.4;};
 const L=([r,g,b])=>0.2126*lin(r)+0.7152*lin(g)+0.0722*lin(b);
