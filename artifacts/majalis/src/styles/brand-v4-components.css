@@ -71,13 +71,19 @@ button,
               transform var(--dur-fast) var(--ease);
 }
 
-/* الأزرار الدائرية/الحبّة تحتفظ بشكلها — لا يفرض عليها --r-md. */
+/* الأزرار الدائرية/الحبّة تحتفظ بشكلها — لا يفرض عليها --r-md.
+   ⚠ :not(body):not(html) ضرورية وليست احتياطًا: صنف الجسم "has-assistant-fab"
+   ينتهي بـ-fab فطابقه [class$="-fab"] وأعطى body نصف قطر 9999px. Chromium
+   لا يرسم استدارة body (ينشر خلفيته للـcanvas) فمرّت كل فحوص Playwright،
+   بينما WebKit/Safari يرسمها — فظهرت على iPhone «قبة» خضراء تبتلع الهيدر
+   وقوس أخضر عند الحافة (شكوى المالك حرفيًا، 2026-07-25). أي إضافة لاحقة
+   لهذه القائمة يجب أن تحمل نفس الاستثناء. */
 button.rounded-full,
-[class*="rounded-full"],
-[class$="-fab"],
-[class$="-pill"],
-[class$="-chip"],
-[class$="-tag"] {
+[class*="rounded-full"]:not(body):not(html),
+[class$="-fab"]:not(body):not(html),
+[class$="-pill"]:not(body):not(html),
+[class$="-chip"]:not(body):not(html),
+[class$="-tag"]:not(body):not(html) {
   border-radius: var(--r-full);
 }
 
