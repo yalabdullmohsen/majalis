@@ -414,9 +414,13 @@ html[data-theme="dark"] .lpp-cat-btn {
 }
 
 /* أخضر باهت فوق أسطح داكنة (2.8–4.03:1) — يُرفع للون العلامة الفاتح. */
+/* ملاحظة: .hadith-grade مستثناة عمدًا. كل صيغها (سahih/hasan/daif/mawdu)
+   شارات بألوان باستيل فاتحة تعرّف خلفيتها ونصها معًا في index.css
+   وmajalis-v2.css. فرض لون نص فاتح عليها قلب «حسن» و«حسن صحيح» إلى
+   1.82–1.96:1 فوق خلفياتهما الفاتحة — نفس فخّ .qa-badge. أي عطل في صيغة
+   بعينها يُعالَج بتلك الصيغة وحدها لا بالصنف الأب. */
 html[data-theme="dark"] :is(
-  .ruling-card__category, .login-card__brand, .hadith-grade,
-  .login-card__subtitle
+  .ruling-card__category, .login-card__brand, .login-card__subtitle
 ) {
   color: var(--text-brand) !important;
 }
