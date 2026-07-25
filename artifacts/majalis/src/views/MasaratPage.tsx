@@ -83,7 +83,8 @@ function MasarCard({ masar }: { masar: Masar }) {
               {step.href ? (
                 <Link
                   href={step.href}
-                  style={{ fontSize: "0.82rem", color: "var(--mindmap-ink, #1c1810)", lineHeight: 1.55, textDecoration: "none" }}
+                  className="masar-card__step-link"
+                  style={{ color: "var(--mindmap-ink, #1c1810)" }}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = masar.color; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "var(--mindmap-ink, #1c1810)"; }}
                 >
