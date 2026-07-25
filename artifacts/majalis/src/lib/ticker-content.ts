@@ -7,141 +7,74 @@
  *
  * المصادر كلها **موجودة مسبقًا وموثّقة داخل المستودع**؛ لا محتوى جديد
  * أُنشئ هنا ولا نص وُلِّد آليًا:
- *   • DAILY_HADITH_POOL       — أحاديث بدرجاتها ورواتها (لا "ضعيف" بينها أصلًا)
- *   • ARBAEEN_NAWAWI     (42)  — متن الأربعين النووية، يمثّل «سنة نبوية»
- *   • ADHKAR_ITEMS            — أذكار الصباح/المساء (kind=dhikr)، وبقية
- *     التصنيفات (استغفار/كرب/استخارة/سفر/نوم…) تمثّل «دعاء مأثور» (kind=dua)
- *   • SEED_FAWAID       (496) — فوائد علمية، مصفّاة بـfilterQualityFawaid
- *     (دالة جودة موجودة أصلًا في content-quality.ts) بدل DAILY_FAIDA_POOL
- *     الصغير (6 فقط)
- *   • DAILY_AYAH_POOL    (30) — آيات بمراجعها (تنويع إضافي غير مذكور صراحة
- *     في الأنواع المطلوبة، أُبقي عليه لأنه محتوى قرآني موثوق ولا يعارض شيئًا)
- * كلها محلية: لا طلب شبكة إضافي إطلاقًا.
+ *   • DAILY_HADITH_POOL  (49)  — أحاديث بدرجاتها ورواتها
+ *   • ARBAEEN_NAWAWI     (42)  — الأربعون النووية
+ *   • ADHKAR_ITEMS       (51)  — أذكار الصباح والمساء فقط (من أصل 304)
+ *   • DAILY_AYAH_POOL    (30)  — آيات بمراجعها
+ *   • DAILY_FAIDA_POOL    (6)  — فوائد بمصادرها
+ * المجموع 178 عنصرًا — نحو 8.9 أضعاف نافذة منع التكرار (20)، وكلها محلية:
+ * لا طلب شبكة إضافي إطلاقًا.
  *
- * ⚠ نوع «حكمة/اقتباس» غير مُنفَّذ عمدًا: مصدره الوحيد المتاح في المستودع
- * (HIKAM في src/views/HikamSalafPage.tsx) معرَّف داخل ملف عرض (view) لا
- * lib/، وتصديره يستلزم لمس ملف خارج نطاق «أعلى الصفحة الرئيسية» الذي حصره
- * التكليف صراحة. إن رغب المالك بإضافته، يكفي سطر `export` واحد هناك.
- *
- * قواعد منع التكرار المطلوبة والمطبَّقة (2026-07-25، تكليف تنويع/منع تكرار):
- *   ١) لا يتكرر عنصر ظهر ضمن آخر RECENT_LIMIT (=15) عرضًا.
- *   ٢) لا يظهر نفس النوع (kind) أكثر من مرتين متتاليتين.
- *   ٣) الاختيار عبر «Shuffle Bag»: تُخلط كل المعرّفات مرة واحدة وتُسحب
- *      بالترتيب حتى تفرغ الحقيبة، ثم تُعاد بناؤها — توزيع عادل بدل
- *      اختيار عشوائي مباشر قد يُعيد نفس العنصر بلا داعٍ قبل استنفاد الباقي.
- *   ٤) عند تعارض القيدين ١+٢ مع صغر المجمّع: يُخفَّف القيد الأضعف (النوع)
- *      أولًا، ثم قيد عدم التكرار، وفي أسوأ الأحوال يُستبعد آخر عنصر معروض
- *      تحديدًا فقط — لا يتوقف العرض أبدًا.
- *   ٥) «ميزة التطبيق» (kind=feature): عنصر واحد يومي ثابت طوال اليوم
- *      (getDailyFeatureItem)، يتغيّر تلقائيًا كل يوم هجري/ميلادي بالتوقيت
- *      المحلي ولا يتكرر يومين متتاليين (dayIndex % length يضمن ذلك
- *      رياضيًا طالما عدد الميزات ≥ 2).
+ * قواعد منع التكرار المطلوبة والمطبَّقة:
+ *   ١) لا يتكرر عنصر ظهر ضمن آخر RECENT_LIMIT (=20) عرضًا.
+ *   ٢) لا يظهر العنصر نفسه مرتين متتاليتين (حالة خاصة من ١، وتبقى قائمة
+ *      حتى لو نفدت العناصر واضطررنا لإعادة الخلط).
+ *   ٣) عند نفاد غير المكرر يُعاد الخلط وتبدأ دورة جديدة مع إبقاء القاعدة ٢.
  */
 
-import { DAILY_HADITH_POOL, DAILY_AYAH_POOL, getDayIndex } from "./daily-content";
+import { DAILY_HADITH_POOL, DAILY_AYAH_POOL, DAILY_FAIDA_POOL } from "./daily-content";
 import { ADHKAR_ITEMS } from "./adhkar-seed";
 import { ARBAEEN_NAWAWI } from "./arbaeen-nawawi-seed";
-import { SEED_FAWAID } from "./fawaid-seed";
-import { filterQualityFawaid } from "./content-quality";
 
-export type TickerKind = "hadith" | "sunnah" | "dhikr" | "dua" | "faida" | "ayah" | "feature";
+export type TickerKind = "hadith" | "dhikr" | "ayah" | "faida";
 
 export type TickerContentItem = {
   /** معرّف فريد عبر كل المصادر (بادئة المصدر تمنع التصادم بين النطاقات). */
   id: string;
   kind: TickerKind;
-  /** نص كامل بلا قصّ — يُعرض على سطرين أو ثلاثة حسب الطول، لا يُختصر. */
+  label: string;
   text: string;
-  /**
-   * مصدر/تخريج/راوٍ — **داخلي فقط**، لا يُعرض في HeaderTicker.tsx (طلب
-   * صريح: إخفاء التخريج ورقم الحديث واسم الكتاب من الواجهة). يبقى هنا
-   * لأي استخدام مستقبلي (تصدير، صفحة تفصيل) دون فقدان بيانات التوثيق.
-   */
   source?: string;
   href: string;
 };
 
-/** شارة نوع صغيرة تُعرض أعلى النص (حديث/ذكر/دعاء/سنة/فائدة/آية/اكتشف). */
-export const KIND_LABEL: Record<TickerKind, string> = {
-  hadith: "حديث",
-  sunnah: "سنة",
-  dhikr: "ذكر",
-  dua: "دعاء",
-  faida: "فائدة",
-  ayah: "آية",
-  feature: "اكتشف",
-};
+/** أقصى طول للنص المعروض في الشريط. */
+export const MAX_TICKER_TEXT = 110;
+
+/** عدد العناصر المعروضة في دورة واحدة من الشريط. */
+export const VISIBLE_ITEMS = 4;
 
 /** كم عنصرًا سابقًا يُمنع تكرارها. */
-export const RECENT_LIMIT = 15;
+export const RECENT_LIMIT = 20;
 
-/** فاصل التدوير: كل 25 ثانية بالضبط (لا نطاق عشوائي). */
-export const ROTATION_INTERVAL_MS = 25_000;
-
-/** أقل زمن يمرّ قبل أن تُعدّ العودة من الخلفية سببًا كافيًا للتحديث. */
-export const REFRESH_ON_RETURN_AFTER_MS = 25_000;
-
-export const RECENT_STORAGE_KEY = "majlis:ticker:recent:v2";
-const DAILY_FEATURE_STORAGE_KEY = "majlis:ticker:daily-feature:v1";
-
-/** تصنيفات adhkar-seed التي تمثّل «أذكار الصباح/المساء» — kind=dhikr. */
-const DHIKR_CATEGORY_IDS = new Set(["adh-morning", "adh-evening"]);
-
-/** أي درجة تحوي «ضعيف» تُستبعد — لا عرض جازم لمحتوى غير ثابت. */
-function isWeakGrade(grade?: string): boolean {
-  return !!grade && grade.includes("ضعيف");
-}
-
-/** مؤشرات ميزات فعلية قائمة في الموقع — لا نص تسويقي، ولا صفحات وهمية. */
-const FEATURES: TickerContentItem[] = [
-  { id: "feature-nations", kind: "feature", text: "الأمم السابقة: قصص وعبر من أخبار الأمم التي أهلكها الله بتكذيبها للرسل", href: "/nations" },
-  { id: "feature-prophets", kind: "feature", text: "قصص الأنبياء: سِيَر الأنبياء والمرسلين عليهم السلام كاملة وموثّقة", href: "/prophets" },
-  { id: "feature-mushaf", kind: "feature", text: "المصحف: اقرأ القرآن الكريم كاملًا برواياته ومصاحفه المعتمدة", href: "/mushaf" },
-  { id: "feature-qa", kind: "feature", text: "سؤال وجواب: اطرح سؤالك الشرعي وابحث في إجابات موثّقة", href: "/qa" },
-  { id: "feature-reading-plans", kind: "feature", text: "خطط القراءة: نظّم ختمة القرآن الكريم بخطة تناسب وقتك", href: "/reading-plans" },
-  { id: "feature-mawarith", kind: "feature", text: "المواريث: احسب أنصبة الورثة الشرعية بدقة وفق الأحكام الشرعية", href: "/mawarith" },
-  { id: "feature-rulings", kind: "feature", text: "الموسوعة العلمية: آلاف المسائل الفقهية الموثّقة في مكان واحد", href: "/rulings" },
-];
+export const RECENT_STORAGE_KEY = "majlis:ticker:recent:v1";
 
 /**
- * ميزة اليوم — ثابتة طوال اليوم، تتغيّر يوميًا ولا تتكرر يومين متتاليين.
- * dayIndex يزيد بمقدار ١ كل يوم (بتوقيت الكويت، نفس getDayIndex المستخدَم
- * في daily-content.ts)، فـ dayIndex % FEATURES.length يضمن رياضيًا عدم
- * تكرار نفس القيمة يومين متتاليين طالما عدد الميزات ≥ ٢.
+ * يقصّ النص عند حدّ الكلمات لا الحروف، فلا تنقطع كلمة عربية في منتصفها.
+ * السبب العملي: عنصر واحد بطوله الكامل (أطول حديث = 1369 حرفًا) كان يُنتج
+ * كتلة عرضها ~5450px داخل نافذة عرضها ~290px، فيزحف ~25 ثانية وحده —
+ * يبدو للمستخدم كأن الشريط فارغ أو عالق على نفس المحتوى.
+ * النص الكامل يبقى متاحًا عند فتح الرابط.
  */
-export function getDailyFeatureItem(date = new Date(), storage?: Storage): TickerContentItem {
-  const todayKey = String(getDayIndex(date));
-  try {
-    const s = storage ?? (typeof localStorage !== "undefined" ? localStorage : undefined);
-    if (s) {
-      const raw = s.getItem(DAILY_FEATURE_STORAGE_KEY);
-      if (raw) {
-        const parsed: unknown = JSON.parse(raw);
-        if (parsed && typeof parsed === "object" && (parsed as { day?: string }).day === todayKey) {
-          const found = FEATURES.find((f) => f.id === (parsed as { id?: string }).id);
-          if (found) return found;
-        }
-      }
-    }
-    const chosen = FEATURES[getDayIndex(date) % FEATURES.length];
-    if (s) s.setItem(DAILY_FEATURE_STORAGE_KEY, JSON.stringify({ day: todayKey, id: chosen.id }));
-    return chosen;
-  } catch {
-    // تخزين معطّل — لا يمنع العرض، فقط لا يُضمن ثبات الاختيار عبر إعادة تحميل الصفحة.
-    return FEATURES[getDayIndex(date) % FEATURES.length];
-  }
+export function truncateForTicker(text: string, max = MAX_TICKER_TEXT): string {
+  const clean = String(text || "").replace(/\s+/g, " ").trim();
+  if (clean.length <= max) return clean;
+  const cut = clean.slice(0, max);
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${(lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut).trimEnd()}…`;
 }
 
 /** يبني المجمّع الموحَّد من المصادر المحلية. نقي: نفس المدخلات ⇒ نفس المخرجات. */
-export function buildTickerPool(date = new Date(), storage?: Storage): TickerContentItem[] {
+export function buildTickerPool(): TickerContentItem[] {
   const pool: TickerContentItem[] = [];
 
   for (const h of DAILY_HADITH_POOL) {
-    if (!h?.text || isWeakGrade(h.grade)) continue;
+    if (!h?.text) continue;
     pool.push({
       id: `hadith:${h.id}`,
       kind: "hadith",
-      text: h.text,
+      label: "حديث",
+      text: truncateForTicker(h.text),
       source: [h.narrator, h.source].filter(Boolean).join(" — ") || undefined,
       href: "/hadith",
     });
@@ -150,34 +83,27 @@ export function buildTickerPool(date = new Date(), storage?: Storage): TickerCon
   for (const a of ARBAEEN_NAWAWI) {
     if (!a?.text) continue;
     pool.push({
-      id: `sunnah:${a.id}`,
-      kind: "sunnah",
-      text: a.text,
-      source: a.source || a.title || undefined,
-      href: `/arbaeen-nawawi/${a.id}`,
+      id: `arbaeen:${a.id}`,
+      kind: "hadith",
+      label: "الأربعون النووية",
+      text: truncateForTicker(a.text),
+      source: a.title || undefined,
+      href: "/arbaeen-nawawi",
     });
   }
 
   for (const d of ADHKAR_ITEMS) {
-    if (!d?.text || isWeakGrade(d.grade)) continue;
-    const isDailyDhikr = DHIKR_CATEGORY_IDS.has(d.categoryId);
+    if (!d?.text) continue;
+    // أذكار الصباح والمساء فقط: بقية التصنيفات (أذكار النوم/السفر…) مرتبطة
+    // بسياق لا يناسب شريطًا يعمل طوال اليوم.
+    if (d.categoryId !== "adh-morning" && d.categoryId !== "adh-evening") continue;
     pool.push({
-      id: `${isDailyDhikr ? "dhikr" : "dua"}:${d.id}`,
-      kind: isDailyDhikr ? "dhikr" : "dua",
-      text: d.text,
-      source: [d.narrator, d.source].filter(Boolean).join(" — ") || undefined,
+      id: `dhikr:${d.id}`,
+      kind: "dhikr",
+      label: d.categoryId === "adh-morning" ? "أذكار الصباح" : "أذكار المساء",
+      text: truncateForTicker(d.text),
+      source: d.source || undefined,
       href: "/adhkar",
-    });
-  }
-
-  for (const f of filterQualityFawaid(SEED_FAWAID)) {
-    if (!f?.text || f.status !== "approved") continue;
-    pool.push({
-      id: `faida:${f.id}`,
-      kind: "faida",
-      text: f.text,
-      source: f.source || undefined,
-      href: "/fawaid",
     });
   }
 
@@ -186,13 +112,24 @@ export function buildTickerPool(date = new Date(), storage?: Storage): TickerCon
     pool.push({
       id: `ayah:${v.id}`,
       kind: "ayah",
-      text: v.text,
+      label: "آية",
+      text: truncateForTicker(v.text),
       source: v.reference || v.surah || undefined,
       href: "/quran-hub",
     });
   }
 
-  pool.push(getDailyFeatureItem(date, storage));
+  for (const f of DAILY_FAIDA_POOL) {
+    if (!f?.text) continue;
+    pool.push({
+      id: `faida:${f.id}`,
+      kind: "faida",
+      label: f.category || "فائدة",
+      text: truncateForTicker(f.text),
+      source: f.source || undefined,
+      href: "/fawaid",
+    });
+  }
 
   return pool;
 }
@@ -223,86 +160,52 @@ export function writeRecent(ids: string[], storage?: Storage): void {
   }
 }
 
-/* ── Shuffle Bag ─────────────────────────────────────────────────── */
-
-export type ShuffleBagState = { bag: string[] };
-
-export function createShuffleBag(): ShuffleBagState {
-  return { bag: [] };
-}
-
-function shuffleIds(ids: string[], rand: () => number): string[] {
-  const arr = ids.slice();
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(rand() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
 /**
- * يختار العنصر التالي للعرض عبر حقيبة خلط (Shuffle Bag) مع قيدين:
- * لا تكرار ضمن آخر RECENT_LIMIT، ولا نفس النوع أكثر من مرتين متتاليتين.
- * عند تعذّر تحقيق قيد ما يُخفَّف تدريجيًا (النوع أولًا) بدل توقّف العرض.
+ * يختار دفعة العرض التالية.
  *
- * @param pool      المجمّع الكامل
- * @param recent    معرّفات آخر ما عُرض (الأحدث في النهاية)
- * @param bagState  حالة الحقيبة الحالية (تُحدَّث وتُعاد كإخراج)
- * @param rand      مولّد عشوائي قابل للحقن (يجعل الاختبار حتميًا)
+ * @param pool     المجمّع الكامل
+ * @param recent   معرّفات آخر ما عُرض (الأحدث في النهاية)
+ * @param count    كم عنصرًا نريد
+ * @param rand     مولّد عشوائي قابل للحقن (يجعل الاختبار حتميًا)
+ * @returns الدفعة المختارة وسجل «الأخيرة» بعد التحديث
  */
-export function pickNextItem(
+export function pickNextBatch(
   pool: TickerContentItem[],
   recent: string[],
-  bagState: ShuffleBagState,
+  count = VISIBLE_ITEMS,
   rand: () => number = Math.random,
-): { item: TickerContentItem; recent: string[]; bag: ShuffleBagState } {
-  if (pool.length === 0) throw new Error("empty ticker pool");
+): { batch: TickerContentItem[]; recent: string[] } {
+  if (pool.length === 0) return { batch: [], recent };
 
-  const byId = new Map(pool.map((p) => [p.id, p]));
-  let bag = bagState.bag.filter((id) => byId.has(id));
+  const lastShown = recent[recent.length - 1];
+  const recentSet = new Set(recent.slice(-RECENT_LIMIT));
 
-  const recentIds = recent.slice(-RECENT_LIMIT);
-  const recentSet = new Set(recentIds);
-  const recentKinds = recentIds.map((id) => byId.get(id)?.kind).filter(Boolean) as TickerKind[];
-  const last1 = recentKinds[recentKinds.length - 1];
-  const last2 = recentKinds[recentKinds.length - 2];
-  const kindCapped = last1 !== undefined && last1 === last2;
+  // المرشّحون: ما لم يظهر ضمن آخر 20.
+  let candidates = pool.filter((it) => !recentSet.has(it.id));
 
-  const draw = (): TickerContentItem | undefined => {
-    if (bag.length === 0) bag = shuffleIds(Array.from(byId.keys()), rand);
-    const id = bag.pop();
-    return id ? byId.get(id) : undefined;
-  };
+  // نفدت العناصر غير المكررة ⇒ دورة جديدة. القاعدة (٢) تبقى سارية: نستبعد
+  // آخر عنصر عُرض تحديدًا كي لا يظهر مرتين متتاليتين عبر حدّ الدورتين.
+  if (candidates.length < count) {
+    candidates = pool.filter((it) => it.id !== lastShown);
+  }
+  if (candidates.length === 0) candidates = pool.slice();
 
-  let chosen: TickerContentItem | undefined;
-  const maxAttempts = pool.length * 2 + 4;
-
-  // محاولة أولى: كلا القيدين معًا.
-  for (let i = 0; i < maxAttempts && !chosen; i++) {
-    const item = draw();
-    if (!item) break;
-    if (recentSet.has(item.id)) continue;
-    if (kindCapped && item.kind === last1) continue;
-    chosen = item;
+  // خلط Fisher–Yates على نسخة (لا نطفر على المجمّع الأصلي).
+  const shuffled = candidates.slice();
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
 
-  // تخفيف: تجاهل قيد النوع، أبقِ منع التكرار ضمن آخر 15.
-  if (!chosen) {
-    for (let i = 0; i < maxAttempts && !chosen; i++) {
-      const item = draw();
-      if (!item) break;
-      if (recentSet.has(item.id)) continue;
-      chosen = item;
-    }
-  }
-
-  // ملاذ أخير: مجمّع أصغر من نافذة المنع — اقبل أي شيء غير آخر عنصر عُرض
-  // فعليًا، فلا يتكرر العنصر نفسه مرتين متتاليتين على الأقل.
-  if (!chosen) {
-    const lastId = recentIds[recentIds.length - 1];
-    chosen = pool.find((p) => p.id !== lastId) ?? pool[0];
-  }
-
-  const nextRecent = [...recent, chosen.id].slice(-RECENT_LIMIT);
-  return { item: chosen, recent: nextRecent, bag: { bag } };
+  const batch = shuffled.slice(0, Math.min(count, shuffled.length));
+  const nextRecent = [...recent, ...batch.map((b) => b.id)].slice(-RECENT_LIMIT);
+  return { batch, recent: nextRecent };
 }
+
+/** فاصل التدوير: 45–90 ثانية (بالمللي ثانية). */
+export function nextRotationDelayMs(rand: () => number = Math.random): number {
+  return Math.round((45 + rand() * 45) * 1000);
+}
+
+/** أقل زمن يمرّ قبل أن تُعدّ العودة من الخلفية سببًا كافيًا للتحديث. */
+export const REFRESH_ON_RETURN_AFTER_MS = 45_000;
