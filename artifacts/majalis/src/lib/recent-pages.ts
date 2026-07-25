@@ -110,6 +110,7 @@ const LABEL_MAP: Record<string, string> = {
   // ─── السيرة والتاريخ ──────────────────────────────────────────────
   "/seerah":                        "السيرة النبوية",
   "/prophets":                      "الأنبياء",
+  "/nations":                       "الأمم السابقة",
   "/anbiya":                        "الأنبياء",
   "/prophet-stories":               "قصص الأنبياء",
   "/prophetic-medicine":            "الطب النبوي",

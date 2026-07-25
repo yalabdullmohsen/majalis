@@ -3,24 +3,37 @@
 // التشغيل: node scripts/review-queue.mjs [--json] [--limit N]
 // المصدر: artifacts/majalis/data/needs-post-review.jsonl (سطر JSON واحد لكل عنصر، الأحدث آخر السطور).
 
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const LOG_PATH = path.resolve(__dirname, "../data/needs-post-review.jsonl");
+/* ملفات يومية لكل نافذة عمل تحت data/needs-post-review/ — أُضيفت 2026-07-25
+   لأن الإلحاق المتزامن من نافذتين في ملفٍ واحد كان يُفشل دمج الإصدار بتعارضٍ
+   لا معنى له. كل نافذة تكتب ملفها، والقارئ يجمعها كلها هنا. */
+const LOG_DIR = path.resolve(__dirname, "../data/needs-post-review");
+function readAllLogLines() {
+  const files = [];
+  if (existsSync(LOG_PATH)) files.push(LOG_PATH);
+  if (existsSync(LOG_DIR)) {
+    for (const f of readdirSync(LOG_DIR).sort()) {
+      if (f.endsWith(".jsonl")) files.push(path.join(LOG_DIR, f));
+    }
+  }
+  return files.flatMap((f) => readFileSync(f, "utf8").split("\n").filter((l) => l.trim()));
+}
 
 const args = process.argv.slice(2);
 const asJson = args.includes("--json");
 const limitIdx = args.indexOf("--limit");
 const limit = limitIdx !== -1 ? parseInt(args[limitIdx + 1], 10) : 50;
 
-if (!existsSync(LOG_PATH)) {
-  console.log("لا يوجد سجل needs-post-review.jsonl بعد — لا عناصر بانتظار المراجعة.");
+const lines = readAllLogLines().map((l) => l.trim()).filter(Boolean);
+if (lines.length === 0) {
+  console.log("لا عناصر بانتظار المراجعة.");
   process.exit(0);
 }
-
-const lines = readFileSync(LOG_PATH, "utf8").split("\n").map((l) => l.trim()).filter(Boolean);
 const items = [];
 for (const line of lines) {
   try {

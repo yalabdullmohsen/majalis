@@ -7,7 +7,6 @@ import { UserPreferencesProvider } from "@/components/UserPreferencesProvider";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import { LanguageProvider, useLanguage } from "@/components/LanguageProvider";
 import NavBar from "@/components/NavBar";
-import { TopTicker } from "@/components/TopTicker";
 import SiteFooter from "@/components/SiteFooter";
 import { BottomNavBar } from "@/components/BottomNavBar";
 import { TopSectionBar } from "@/components/TopSectionBar";
@@ -264,6 +263,8 @@ const ResearcherProfilePage = lazy(() => import("@/views/ResearcherProfilePage")
 const InstitutionsPage = lazy(() => import("@/views/InstitutionsPage"));
 const AuthCallbackPage = lazy(() => import("@/views/AuthCallbackPage"));
 const ProphetStoriesPage = lazy(() => import("@/views/ProphetStoriesPage"));
+const NationsPage = lazy(() => import("@/views/NationsPage"));
+const NationDetailPage = lazy(() => import("@/views/NationDetailPage"));
 const ProphetsFamilyTreePage = lazy(() => import("@/views/ProphetsFamilyTreePage"));
 const IslamicStoriesPage = lazy(() => import("@/views/IslamicStoriesPage"));
 const CitationPublicPage = lazy(() => import("@/views/CitationPublicPage"));
@@ -475,6 +476,8 @@ function Router() {
       <Route path="/hadith/mawdu"><SafeLazyRoute component={HadithMawduPage} /></Route>
       <Route path="/hadith"><SafeLazyRoute component={HadithPage} /></Route>
       <Route path="/stories"><SafeLazyRoute component={IslamicStoriesPage} /></Route>
+      <Route path="/nations/:slug"><SafeLazyRoute component={NationDetailPage} /></Route>
+      <Route path="/nations"><SafeLazyRoute component={NationsPage} /></Route>
       <Route path="/prophet-stories/:slug"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
       <Route path="/prophet-stories"><Redirect to="/prophets" /></Route>
       <Route path="/prophets/tree"><SafeLazyRoute component={ProphetsFamilyTreePage} /></Route>
@@ -765,7 +768,6 @@ function AppShell() {
         onTouchEnd={onTouchEnd}
       >
         <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
-        <TopTicker />
         <OfflineBanner />
         <UpdateAvailableBanner />
         <NavProgressBar />

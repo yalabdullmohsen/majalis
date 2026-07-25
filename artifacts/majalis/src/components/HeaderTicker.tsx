@@ -9,7 +9,6 @@ import {
   readRecent,
   writeRecent,
   nextRotationDelayMs,
-  truncateForTicker,
   REFRESH_ON_RETURN_AFTER_MS,
   type TickerContentItem,
   type TickerKind,
@@ -79,9 +78,9 @@ const KIND_ICON: Record<TickerKind, LucideIcon> = {
  * دفعة المحتوى المعروضة، مع تدوير دوري ومنع تكرار.
  *
  * سابقًا كان الشريط يعرض ٣ عناصر «يومية» ثابتة (نفس الحديث والذكر طوال
- * اليوم) بنصوصها الكاملة — فبدا متكررًا، وعنصر واحد بطول ١٣٦٩ حرفًا كان
- * يزحف وحده نحو ٢٥ ثانية. الآن: مجمّع ١٧٨ عنصرًا محليًا، دفعة من ٤ تتبدّل
- * كل ٤٥–٩٠ ثانية بلا إعادة تحميل، ولا يتكرر عنصر ضمن آخر ٢٠ عرضًا.
+ * اليوم) فبدا متكررًا. الآن: مجمّع محلي كبير (buildTickerPool، بلا تكرار
+ * نصّي)، دفعة من ٤ تتبدّل كل ٤٥–٩٠ ثانية بلا إعادة تحميل، ولا يتكرر عنصر
+ * ضمن آخر ٢٠ عرضًا. كل نص يُعرض كاملًا من مصدره دون أي قصّ.
  */
 function useRotatingContent(): TickerContentItem[] {
   const pool = useMemo(() => buildTickerPool(), []);
@@ -133,13 +132,14 @@ function useRotatingContent(): TickerContentItem[] {
   return batch;
 }
 
+// المصدر/التخريج ورقم الحديث لا يُعرضان في الواجهة (طلب مباشر)؛ يبقيان في
+// TickerContentItem.source للتحقق الداخلي فقط — النص المعروض هو المتن الكامل.
 function TickerEntry({ item }: { item: TickerItem }) {
   return (
     <Link href={item.href} className="header-ticker__item">
       <item.Icon size={13} strokeWidth={1.8} className="header-ticker__icon" aria-hidden="true" />
       <span className="header-ticker__label">{item.label}:</span>
-      <span className="header-ticker__text">{truncateForTicker(item.text)}</span>
-      {item.source && <span className="header-ticker__source">— {item.source}</span>}
+      <span className="header-ticker__text">{item.text}</span>
     </Link>
   );
 }

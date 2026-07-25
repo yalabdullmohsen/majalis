@@ -504,9 +504,19 @@ export function detectSeedDuplicates(incoming: FiqhCouncilItem, pool = FIQH_COUN
 }
 
 const PUBLIC_FIQH_SOURCES_SEED = [
-  { id: "seed-src-1", slug: "islamweb-majlis", name: "IslamWeb — المجمع الفقهي", organization: "IslamWeb.net", source_type: "json_manifest" as const, base_url: "https://www.islamweb.net", trust_level: "official" as const, is_active: true },
   { id: "seed-src-2", slug: "iifa-oic", name: "الأكاديمية الإسلامية للفقه", organization: "OIC", source_type: "rss" as const, base_url: "https://www.iifa-aifi.org", trust_level: "official" as const, is_active: true },
 ];
+
+/**
+ * هل الخطأ سببه أن الجدول/العلاقة غير موجودة أصلًا في قاعدة البيانات؟
+ * PGRST205 = PostgREST لم يجد الجدول في schema cache.
+ * 42P01   = رمز PostgreSQL القياسي لـ undefined_table.
+ * تُميَّز هذه الحالة عن أخطاء الصلاحيات والشبكة كي لا تُبتلع أخطاء حقيقية.
+ */
+function isMissingRelationError(err: unknown): boolean {
+  const code = (err as { code?: unknown } | null)?.code;
+  return code === "PGRST205" || code === "42P01";
+}
 
 export async function getPublicFiqhSources() {
   if (!isConfigured) {
@@ -529,7 +539,14 @@ export async function getPublicFiqhSources() {
     // لم تُطبَّق migration لها قط) — كان هذا الفرع يُعيد مصفوفة فارغة رغم
     // وجود بيانات احتياطية صحيحة أعلاه، فيظهر قسم "المصادر الرسمية" فارغًا
     // بصمت. الإصلاح: استخدام نفس البيانات الاحتياطية هنا أيضًا.
-    logSupabaseError("getPublicFiqhSources", err);
+    //
+    // ولا يُسجَّل «خطأ» لغياب الجدول تحديدًا: هذه حالة معروفة ودائمة ومقصودة
+    // (لا migration لها)، وكانت تطبع console.error أحمر في كل زيارة لـ
+    // /fiqh-council — ضجيج يغطّي الأخطاء الحقيقية عند فحص الإنتاج. أما أي
+    // خطأ آخر (صلاحيات، شبكة، RLS) فيبقى مُسجَّلًا كما هو لأنه غير متوقَّع.
+    if (!isMissingRelationError(err)) {
+      logSupabaseError("getPublicFiqhSources", err);
+    }
     return { data: PUBLIC_FIQH_SOURCES_SEED, usingSeed: true };
   }
 }

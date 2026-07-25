@@ -26,7 +26,6 @@
   --shadow-soft: 0 1px 2px rgb(23 61 53 / 5%), 0 12px 30px rgb(23 61 53 / 6%);
   --header-height: 3.25rem;
   --bottom-nav-height: 3.25rem;
-  --ticker-height: 1.875rem;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --page-gutter: clamp(1rem, 3vw, 2rem);
   --page-width: 76rem;
@@ -60,7 +59,7 @@ body {
 
 .app-shell { min-height: 100dvh; background: transparent; color: var(--color-text); }
 .app-main {
-  min-height: calc(100dvh - var(--header-height) - var(--ticker-height));
+  min-height: calc(100dvh - var(--header-height));
   padding-block-end: calc(var(--bottom-nav-height) + var(--safe-bottom) + 1.5rem);
 }
 
@@ -82,75 +81,29 @@ body {
   outline-offset: 3px;
 }
 
-/* الشريط المتحرك أعلى الشاشة (TopTicker) — أعلى طبقة، يمتص
-   env(safe-area-inset-top) وحده فلا يتداخل مع النوتش/Dynamic Island،
-   والهيدر يلتصق أسفله مباشرة (راجع .navbar-v3 أدناه). */
-.top-ticker {
-  position: sticky;
-  inset-block-start: 0;
-  z-index: calc(var(--z-nav, 200) + 1);
-  height: calc(var(--ticker-height) + env(safe-area-inset-top, 0px));
-  padding-block-start: env(safe-area-inset-top, 0px);
-  overflow: hidden;
-  background: var(--elite-forest, #143F35);
-  display: flex;
-  align-items: center;
-}
-.top-ticker__track {
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
-  white-space: nowrap;
-  padding-inline-end: 2.5rem;
-  animation: top-ticker-scroll 32s linear infinite;
-}
-.top-ticker__track.is-paused {
-  animation-play-state: paused;
-}
-.top-ticker__item {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #FAFAF8;
-  flex-shrink: 0;
-}
-.top-ticker__item-source {
-  opacity: 0.75;
-  font-weight: 400;
-}
-.top-ticker--static,
-.top-ticker--empty {
-  justify-content: center;
-  padding-inline: 1rem;
-}
-.top-ticker--static .top-ticker__item {
-  white-space: normal;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-}
-.top-ticker__empty-text {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #FAFAF8;
-  opacity: 0.85;
-}
-@keyframes top-ticker-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .top-ticker__track { animation: none; }
-}
-
 /* App header */
-/* الهيدر يلتصق أسفل TopTicker مباشرة (لا أعلى الشاشة) — TopTicker وحده
-   يمتص env(safe-area-inset-top) الآن (طبقة علوية واحدة متّسقة)، فالهيدر
-   لم يعد بحاجة لحشوه الخاص لأنه لم يعد يلامس الحافة العلوية الحقيقية. */
+/* الشريط الأخضر المتحرك (TopTicker) أعلى الهيدر حُذف نهائيًا 2026-07-25
+   (كان يقصّ نص الصلاة/السنن — طلب مباشر). الهيدر الآن أعلى عنصر لاصق في
+   الصفحة، فيمتص env(safe-area-inset-top) بنفسه عبر padding بدل الاعتماد
+   على طبقة منفصلة فوقه. (الشريط الأبيض HeaderTicker بقي بتصميمه وموضعه
+   الأصليين — راجع NavBar.tsx وHeaderTicker.tsx — بطلب مباشر 2026-07-25).
+   ─────────────────────────────────────────────────────────────────────
+   تثبيت sticky (2026-07-25، طلب مباشر) — تحقّق مُسبَق قبل أي تعديل:
+   فُحص عبر WebKit فعليًا (نفس محرّك Safari) على 390px/430px وخمس صفحات
+   مختلفة بعد تمرير 2000px: top:0 يبقى صحيحًا في كل حالة، لا عطل تقني
+   حالي. حاويتا التمرير الفعليتان (html بـ overflow-y:auto، وbody بـ
+   overflow-x:clip فقط) لا تحملان transform ولا contain ولا overflow
+   يُبطل sticky — clip (لا hidden) هي بالذات ما يمنع القص من كسر الثبات
+   (تعليق تاريخي في index.css يحذّر من هذا الخلط تحديدًا)، فلم تُمَس هنا.
+   top:0 صريحة أُضيفت بجانب inset-block-start:0 (نفس القيمة منطقيًا في
+   RTL) لأقصى توافق. z-index يبقى 200 (--z-nav) عمدًا — سلَّم مصمَّم
+   بعناية (sticky:100 < nav:200 < drawer:300 < modal:400 < toast:500)؛
+   رفعه فوق drawer/modal يكسر ظهورهما فوق الهيدر عند الفتح، وهو مقصود. */
 .navbar-v3 {
   position: sticky;
-  inset-block-start: calc(var(--ticker-height) + env(safe-area-inset-top, 0px));
+  inset-block-start: 0;
+  top: 0;
+  padding-block-start: env(safe-area-inset-top, 0px);
   z-index: var(--z-nav, 200);
   min-height: var(--header-height);
   background: color-mix(in srgb, var(--color-surface) 92%, transparent);
@@ -171,8 +124,14 @@ body {
    بين الأقسام. white-space: nowrap يمنع التفاف اسم أي قسم لأكثر من سطر. */
 .top-section-bar {
   position: sticky;
-  top: calc(var(--ticker-height) + env(safe-area-inset-top, 0px) + var(--header-height, 4rem));
+  top: calc(env(safe-area-inset-top, 0px) + var(--header-height, 4rem));
   z-index: 190;
+  /* حاوية الشريط نفسها لا تتجاوز الشاشة مهما كان محتواها؛ التمرير الأفقي
+     يقع داخل .top-section-bar__scroll وحده لا في الصفحة. */
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
   background: color-mix(in srgb, var(--color-surface, #FAF8F5) 96%, transparent);
   border-block-end: 1px solid var(--color-border, #E8E7E2);
   backdrop-filter: blur(14px) saturate(1.15);
@@ -415,7 +374,6 @@ html[data-theme="dark"] .kids-hub-card__icon { background: rgba(232,242,238,0.1)
 }
 .header-ticker__icon { color: var(--color-primary); flex-shrink: 0; }
 .header-ticker__label { color: var(--color-primary); font-weight: 700; }
-.header-ticker__source { color: var(--color-text-muted); font-size: .74rem; }
 @media (min-width: 880px) {
   .header-ticker { width: clamp(200px, 22vw, 340px); }
 }

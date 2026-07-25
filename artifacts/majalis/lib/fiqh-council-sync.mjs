@@ -18,14 +18,6 @@ const RETRY_DELAY_MS = 2000;
 
 const OFFICIAL_SOURCES = [
   {
-    slug: "islamweb-majlis",
-    name: "IslamWeb — المجمع الفقهي",
-    organization: "IslamWeb.net",
-    source_type: "json_manifest",
-    base_url: "https://www.islamweb.net",
-    manifest_file: "fiqh-official-manifest.json",
-  },
-  {
     slug: "iifa-oic",
     name: "الأكاديمية الإسلامية للفقه (OIC-IIFA)",
     organization: "منظمة التعاون الإسلامي",
