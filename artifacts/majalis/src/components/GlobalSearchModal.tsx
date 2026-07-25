@@ -270,7 +270,7 @@ export function GlobalSearchModal({ onClose }: Props) {
     // نقر الخلفية للإغلاق (بلا مكافئ لوحة مفاتيح مباشر) مصحوب بمعالج Escape
     // فعلي (انظر أعلاه) وزر إغلاق ظاهر داخل البطاقة — الوصول الكامل بلوحة
     // المفاتيح مكفول عبر هذين المسارين البديلين، فلا حظر فعلي للوصول.
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
       className={`gsm-overlay${isMobile ? " gsm-overlay--mobile" : ""}`}
       onClick={isMobile ? undefined : onClose}

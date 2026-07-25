@@ -954,7 +954,12 @@ Disallow: /search/
 Sitemap: ${SITE_URL}/sitemap.xml
 `;
 
-const BUILD_DATE = new Date().toUTCString();
+// تواريخ التغذية ثابتة لا لحظة البناء. سجلات المصدر (fiqh_decisions/rulings/
+// courses) لا تحمل أي حقل تاريخ، وكان BUILD_DATE يُكتب في pubDate لكل عنصر —
+// فيرى قارئ RSS كل العناصر «نُشرت للتو» بعد كل نشر، وهو ادّعاء غير صحيح
+// ويُعيد كتابة feed.xml المُتتبَّع في git في كل بناء بلا تغيّر محتوى.
+// حين تُضاف تواريخ حقيقية للسجلات يُشتق pubDate منها لكل عنصر.
+const FEED_DATE = new Date("2026-07-25T00:00:00Z").toUTCString();
 const rssItems = [
   ...(PLATFORM_SEED.fiqh_decisions || []).slice(0, 6).map((row) => ({
     title: `[قرار مجمعي] ${row.title}`,
@@ -983,7 +988,7 @@ const feed = `<?xml version="1.0" encoding="UTF-8"?>
     <link>${escapeXml(SITE_URL)}</link>
     <description>آخر المستجدات العلمية — قرارات وفتاوى وأحكام ودورات</description>
     <language>ar</language>
-    <lastBuildDate>${BUILD_DATE}</lastBuildDate>
+    <lastBuildDate>${FEED_DATE}</lastBuildDate>
     <managingEditor>${escapeXml(SITE.contactEmail)} (${escapeXml(SITE_NAME)})</managingEditor>
     <image>
       <url>${escapeXml(absoluteUrl(DEFAULT_IMAGE))}</url>
@@ -997,7 +1002,7 @@ const feed = `<?xml version="1.0" encoding="UTF-8"?>
       <title>${escapeXml(item.title)}</title>
       <link>${escapeXml(item.link)}</link>
       <description>${escapeXml(item.description)}</description>
-      <pubDate>${BUILD_DATE}</pubDate>
+      <pubDate>${item.pubDate || FEED_DATE}</pubDate>
       ${item.category ? `<dc:subject>${escapeXml(item.category)}</dc:subject>` : ""}
       <guid isPermaLink="true">${escapeXml(item.link)}</guid>
     </item>`,

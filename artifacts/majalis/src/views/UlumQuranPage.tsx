@@ -1,6 +1,5 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
-import { Sparkles } from "lucide-react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -205,12 +204,6 @@ export default function UlumQuranPage() {
     });
   }, []);
 
-  const todayQira = useMemo(() => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const day = Math.floor((now.getTime() - start.getTime()) / 86400000);
-    return QIRAAT_SABA[(day - 1 + QIRAAT_SABA.length) % QIRAAT_SABA.length];
-  }, []);
   const [tab, setTab] = useState<UQTab>("nuzul");
   const [openJam, setOpenJam] = useState<number | null>(null);
   const [search, setSearch] = useState("");
@@ -253,24 +246,6 @@ export default function UlumQuranPage() {
           ))}
         </div>
       </section>
-
-      {/* قراءة اليوم */}
-      <div className="uqod-card">
-        <div className="uqod-card__badge"><Sparkles size={11} aria-hidden="true" /> قراءة اليوم</div>
-        <h2 className="uqod-card__name">{todayQira.name}</h2>
-        <div className="uqod-card__meta">
-          <span className="uqod-card__imam">{todayQira.imam}</span>
-          <span className="uqod-card__sep">·</span>
-          <span className="uqod-card__died">{todayQira.died}</span>
-          <span className="uqod-card__sep">·</span>
-          <span className="uqod-card__origin">{todayQira.origin}</span>
-        </div>
-        <div className="uqod-card__rawi">
-          <span className="uqod-card__rawi-label">الراويان:</span>
-          <span>{todayQira.rawi1} · {todayQira.rawi2}</span>
-        </div>
-        <p className="uqod-card__note">{todayQira.note}</p>
-      </div>
 
       {/* tabs */}
       <div className="uq-tabs-bar" role="tablist" aria-label="أقسام علوم القرآن">

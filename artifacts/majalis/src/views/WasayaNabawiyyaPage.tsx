@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo } from "react";
-import { Copy, Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
@@ -584,41 +583,10 @@ const CATS_MOD: Record<string, string> = {
   الحياة:    "wn-cat--hayah",
 };
 
-/* ─── وصية اليوم ─── */
-function todaysWasiyya(): Wasiyya {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
-  return WASAYA_KABIRA[(dayOfYear - 1 + WASAYA_KABIRA.length) % WASAYA_KABIRA.length];
-}
-
-function WasiyyaOfDayCard({ wasiyya, onCopy, copied }: { wasiyya: Wasiyya; onCopy: () => void; copied: boolean }) {
-  return (
-    <div className="wod-card">
-      <div className="wod-card__badge"><Sparkles size={11} aria-hidden="true" /> وصية اليوم</div>
-      {wasiyya.category && <div className="wod-card__cat">{wasiyya.category}</div>}
-      <h2 className="wod-card__title">{wasiyya.title}</h2>
-      <blockquote className="wod-card__quote">
-        <p className="wod-card__text">«{wasiyya.text}»</p>
-        <footer className="wod-card__source">{wasiyya.source}</footer>
-      </blockquote>
-      {wasiyya.benefit && (
-        <div className="wod-card__benefit">{wasiyya.benefit}</div>
-      )}
-      <button type="button" className="wod-card__copy" onClick={onCopy} aria-label="نسخ الوصية">
-        <Copy size={13} aria-hidden="true" />
-        {copied ? "تم النسخ ✓" : "نسخ الوصية"}
-      </button>
-    </div>
-  );
-}
-
 export default function WasayaNabawiyyaPage() {
   const [activeTab, setActiveTab] = useState<Tab>("kabira");
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [search, setSearch] = useState("");
-  const [wodCopied, setWodCopied] = useState(false);
-  const todayWasiyya = useMemo(() => todaysWasiyya(), []);
 
   const toggleItem = (i: number) => setOpenIdx(prev => (prev === i ? null : i));
 
@@ -674,18 +642,6 @@ export default function WasayaNabawiyyaPage() {
           </div>
         </div>
       </section>
-
-      {/* وصية اليوم */}
-      <WasiyyaOfDayCard
-        wasiyya={todayWasiyya}
-        onCopy={() => {
-          navigator.clipboard.writeText(`${todayWasiyya.title}\n\n«${todayWasiyya.text}»\n— ${todayWasiyya.source}`).then(() => {
-            setWodCopied(true);
-            setTimeout(() => setWodCopied(false), 2000);
-          });
-        }}
-        copied={wodCopied}
-      />
 
       {/* Tabs */}
       <div className="wn-tabs" role="tablist" aria-label="أقسام الوصايا النبوية">

@@ -109,10 +109,13 @@ const CLAIM_RE = /محتوى موثّق|محتوى موثق|موثق من الم
 const REVIEWER_RE = /reviewed_by|reviewedAt|reviewed_at|verifiedBy|verified_by|approved_by|sources\?\./;
 
 /** الملفات التي تعرض شارات توثيق للمحتوى العام. */
+// أُزيل "src/components/seo/SheikhsPageClient.tsx": مسار /sheikhs صار يُحوَّل
+// إلى /lessons، والمكوّن لم يعد يُصيَّر من أي مكان (بقية مخلَّفات هجرة Next.js
+// المتوقفة) — فكان الفحص يحرس ملفًا ميتًا ويعطي طمأنينة زائفة. الصفحات الحية
+// (/scholars) لا تعرض شارة «معتمد» غير مشروطة، وقد جرى التحقق من ذلك يدويًا.
 const BADGE_FILES = [
   "src/components/ScholarlyTrustBadge.tsx",
   "src/components/fiqh-council/FiqhVerifiedBadge.tsx",
-  "src/components/seo/SheikhsPageClient.tsx",
 ];
 
 function checkTrustBadges() {
@@ -147,18 +150,6 @@ function checkTrustBadges() {
     }
     if (!/ai_generated/.test(stb)) {
       fail(TEST, "ScholarlyTrustBadge: لا يوجد وسم للمحتوى المولَّد آليًا (provenance = ai_generated)");
-      ok = false;
-    }
-  }
-
-  // SheikhsPageClient: شارة «معتمد» مشروطة بوجود مصادر.
-  const spc = read("src/components/seo/SheikhsPageClient.tsx");
-  if (spc) {
-    const badLine = spc
-      .split("\n")
-      .find((line) => /is_verified\s*&&/.test(line) && !/sources/.test(line));
-    if (badLine) {
-      fail(TEST, `SheikhsPageClient: شارة «معتمد» تعتمد على is_verified وحده:\n      ${badLine.trim()}`);
       ok = false;
     }
   }

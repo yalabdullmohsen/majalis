@@ -371,9 +371,9 @@ export default function MushafPage() {
         // ملاحظة z-index:10000 في elite-2026.css بخصوص .navbar-v3 المُثبَّت 9999/200.
         // نقر الخلفية للإغلاق مصحوب الآن بمعالج Escape فعلي (أعلاه) — مسار
         // بديل كامل بلوحة المفاتيح.
-        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+         
         <div className="mushaf-v2__sidebar-overlay" role="presentation" onClick={() => setSidebarOpen(false)}>
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, jsx-a11y/no-noninteractive-element-interactions */}
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
           <aside className="mushaf-v2__sidebar" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="فهرس السور والأجزاء والصفحات">
             <div className="mushaf-v2__sidebar-head">
               <div className="mushaf-v2__sidebar-tabs" role="tablist">
