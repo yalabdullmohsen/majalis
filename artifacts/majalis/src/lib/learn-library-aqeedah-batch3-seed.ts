@@ -139,7 +139,7 @@ export const AQEEDAH_BATCH3_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-aswj-2",
     categorySlug: "aqeedat-ahl-sunnah",
     title: "مصدر التلقي عند أهل السنة",
-    description: "الكتاب والسنة بفهم الصحابة والتابعين، وتقديم النقل على الهوى، وضبط الإجماع مع تطبيقات تُظهر أثر العقيدة في السلوك.",
+    description: "الكتاب والسنة بفهم الصحابة والتابعين، وتقديم النقل على الهوى، وضبط الإجماع مع تطبيقات تُظهر أثر العقيدة في السلوك ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط.",
     activity_type: "درس",
     sections: [
       sec("s-as2-1", "body", "أصل التلقي",
@@ -158,7 +158,7 @@ export const AQEEDAH_BATCH3_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-aswj-3",
     categorySlug: "aqeedat-ahl-sunnah",
     title: "الإيمان قول وعمل يزيد وينقص",
-    description: "تعريف الإيمان عند أهل السنة، وزيادته ونقصانه، والفرق عن المرجئة والخوارج ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط.",
+    description: "تعريف الإيمان عند أهل السنة، وزيادته ونقصانه، والفرق عن المرجئة والخوارج ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط والعمدة فيه تقرير أهل السنة بلا غلو ولا تفريط.",
     activity_type: "درس",
     sections: [
       sec("s-as3-1", "body", "تعريف الإيمان",
@@ -177,7 +177,7 @@ export const AQEEDAH_BATCH3_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-aswj-4",
     categorySlug: "aqeedat-ahl-sunnah",
     title: "منهج أهل السنة في الأسماء والصفات",
-    description: "الإثبات بلا تمثيل، والتنزيه بلا تعطيل؛ قواعد الواسطية والطحاوية ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط.",
+    description: "الإثبات بلا تمثيل، والتنزيه بلا تعطيل؛ قواعد الواسطية والطحاوية ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط والعمدة فيه تقرير أهل السنة بلا غلو ولا تفريط.",
     activity_type: "درس",
     sections: [
       sec("s-as4-1", "body", "القاعدة الكلية",
@@ -196,7 +196,7 @@ export const AQEEDAH_BATCH3_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-aswj-5",
     categorySlug: "aqeedat-ahl-sunnah",
     title: "عقيدة أهل السنة في الصحابة وآل البيت",
-    description: "محبة الصحابة وترتيب الفضل، والكفّ عما شجر، وتوقير آل البيت بلا غلو مع ربط المسألة بأدلتها من الكتاب والسنة.",
+    description: "محبة الصحابة وترتيب الفضل، والكفّ عما شجر، وتوقير آل البيت بلا غلو مع ربط المسألة بأدلتها من الكتاب والسنة والعمدة فيه تقرير أهل السنة بلا غلو ولا تفريط.",
     activity_type: "درس",
     sections: [
       sec("s-as5-1", "body", "الصحابة",
@@ -234,7 +234,7 @@ export const AQEEDAH_BATCH3_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-aswj-7",
     categorySlug: "aqeedat-ahl-sunnah",
     title: "وسطية أهل السنة بين الفرق",
-    description: "التوسّط في الصفات والإيمان والصحابة والوعيد والحكم على المعيّن ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط.",
+    description: "التوسّط في الصفات والإيمان والصحابة والوعيد والحكم على المعيّن ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط مع ربط المسألة بأدلتها من الكتاب والسنة.",
     activity_type: "درس",
     sections: [
       sec("s-as7-1", "body", "معنى الوسطية",
@@ -253,7 +253,7 @@ export const AQEEDAH_BATCH3_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-aswj-8",
     categorySlug: "aqeedat-ahl-sunnah",
     title: "السنة والبدعة عند أهل السنة",
-    description: "معنى السنة، وضابط البدعة، وقاعدة الترك، والحذر من البدع الإضافية والعمدة فيه تقرير أهل السنة بلا غلو ولا تفريط.",
+    description: "معنى السنة، وضابط البدعة، وقاعدة الترك، والحذر من البدع الإضافية والعمدة فيه تقرير أهل السنة بلا غلو ولا تفريط مع ربط المسألة بأدلتها من الكتاب والسنة.",
     activity_type: "درس",
     sections: [
       sec("s-as8-1", "body", "السنة",
@@ -272,7 +272,7 @@ export const AQEEDAH_BATCH3_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-aswj-9",
     categorySlug: "aqeedat-ahl-sunnah",
     title: "اليوم الآخر عند أهل السنة",
-    description: "القبر والبعث والحشر والميزان والصراط والجنة والنار والرؤية والشفاعة ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط.",
+    description: "القبر والبعث والحشر والميزان والصراط والجنة والنار والرؤية والشفاعة ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط والعمدة فيه تقرير أهل السنة بلا غلو ولا تفريط.",
     activity_type: "درس",
     sections: [
       sec("s-as9-1", "body", "أصول الباب",
@@ -291,7 +291,7 @@ export const AQEEDAH_BATCH3_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-aswj-10",
     categorySlug: "aqeedat-ahl-sunnah",
     title: "كتب ومراجع عقيدة أهل السنة",
-    description: "متون وشروح معتمدة للطلب: الواسطية، الطحاوية، لمعة الاعتقاد، وأصول السنة والعمدة فيه تقرير أهل السنة بلا غلو ولا تفريط.",
+    description: "متون وشروح معتمدة للطلب: الواسطية، الطحاوية، لمعة الاعتقاد، وأصول السنة والعمدة فيه تقرير أهل السنة بلا غلو ولا تفريط مع ربط المسألة بأدلتها من الكتاب والسنة.",
     activity_type: "درس",
     sections: [
       sec("s-as10-1", "body", "متون المبتدئ",
