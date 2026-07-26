@@ -643,5 +643,35 @@
     "id": "zaylai",
     "name": "الزيلعي",
     "died": "٧٦٢ هـ"
+  },
+  {
+    "id": "dardir",
+    "name": "الدردير",
+    "died": "١٢٠١ هـ"
+  },
+  {
+    "id": "al-dusuki",
+    "name": "الدسوقي",
+    "died": "١٢٣٠ هـ"
+  },
+  {
+    "id": "al-hattab",
+    "name": "الحطّاب",
+    "died": "٩٥٤ هـ"
+  },
+  {
+    "id": "al-kharashi",
+    "name": "الخرشي",
+    "died": "١١٠١ هـ"
+  },
+  {
+    "id": "baqillani",
+    "name": "الباقلاني",
+    "died": "٤٠٣ هـ"
+  },
+  {
+    "id": "al-sanusi",
+    "name": "السنوسي",
+    "died": "٨٩٥ هـ"
   }
 ]
