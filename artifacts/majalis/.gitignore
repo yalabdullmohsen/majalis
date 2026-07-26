@@ -8,5 +8,6 @@ dist/
 .tsbuildinfo
 test-results/
 playwright-report/
+.audit/
 supabase/.temp/
 .env.vercel-production

@@ -5,7 +5,7 @@ import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
-import { PageHeader } from "@/components/ui-common";
+import { PageHeader, PageStatusShell } from "@/components/ui-common";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
@@ -249,23 +249,23 @@ export default function VaultPage() {
 
   if (authLoading) {
     return (
-      <div className="page-shell narrow" dir="rtl">
-        <div className="profile-loading">
+      <PageStatusShell title="المحفظة العلمية">
+        <div className="profile-loading" aria-busy="true">
           <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
         </div>
-      </div>
+      </PageStatusShell>
     );
   }
 
   if (!isLoggedIn) {
     return (
-      <div className="page-shell narrow vault-login-prompt" dir="rtl">
+      <PageStatusShell title="المحفظة العلمية" className="page-shell narrow vault-login-prompt">
         <div className="vault-login-icon" aria-hidden="true"><Lock size={40} strokeWidth={1.3} /></div>
         <p className="vault-login-msg">
           سجّل الدخول للوصول إلى محفظتك العلمية.
         </p>
         <Link href="/login?next=/vault" className="ui-card-btn">تسجيل الدخول</Link>
-      </div>
+      </PageStatusShell>
     );
   }
 

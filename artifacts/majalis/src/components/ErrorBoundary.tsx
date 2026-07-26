@@ -167,6 +167,13 @@ export class SectionErrorBoundary extends Component<SectionBoundaryProps, Sectio
 
   render() {
     if (!this.state.error) return this.props.children;
-    return null;
+    return (
+      <div className="adv-error-state adv-error-state--section" role="alert" aria-live="assertive" dir="rtl">
+        <p className="adv-error-state__msg">تعذّر عرض هذا القسم. يمكنك إعادة المحاولة.</p>
+        <button type="button" className="adv-error-state__retry" onClick={this.reset} aria-label="إعادة المحاولة">
+          إعادة المحاولة
+        </button>
+      </div>
+    );
   }
 }

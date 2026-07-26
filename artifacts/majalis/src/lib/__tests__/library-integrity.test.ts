@@ -53,10 +53,12 @@ assert(
 );
 
 console.log("\n=== لا معرّفات دُمجت سابقًا عادت للظهور ===");
+// معرّفات قديمة دُمجت ثم حُذفت؛ لا تُدرَج هنا المعرّفات الحيّة الحالية
+// (مثل book-tafsir-al-saadi / book-ajrumiyyah) لأنها النسخ الوحيدة في الفهرس.
 const MERGED_AWAY = [
-  "book-madaarij", "book-saadi", "book-tafsir-al-saadi", "book-tabari-tafsir",
-  "book-baghawi-tafsir", "book-ajrumiyyah", "book-alfiyya", "book-al-mustasfa-ghazali",
-  "book-bulugh", "book-al-minhaj-nawawi", "book-muqaddimah",
+  "book-madaarij", "book-saadi", "book-tabari-tafsir",
+  "book-baghawi-tafsir", "book-alfiyya",
+  "book-bulugh", "book-muqaddimah",
 ];
 const idSet = new Set(ids);
 const returned = MERGED_AWAY.filter((id) => idSet.has(id));

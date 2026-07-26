@@ -1977,7 +1977,7 @@ export const SEED_FAWAID = [
   },
   {
     id: "seed-fawaid-263",
-    text: "البيت الذي يُتلى فيه القرآن تتسع ساكنته.",
+    text: "البيت الذي يُتلى فيه القرآن يتسع بأهله.",
     category: "الأخلاق",
     source: "رواه الدارمي",
     author_name: null,
