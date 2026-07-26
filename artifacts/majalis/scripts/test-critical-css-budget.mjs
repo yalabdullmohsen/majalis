@@ -34,9 +34,9 @@ if (!indexCss) {
   process.exit(1);
 }
 
-// سقف بعد إخراج highlighted-content وحذف CSS ميت (~767KB على main الحالي).
-// الهدف التالي: خفض تدريجي نحو 660KB عبر تأجيل طبقات elite/صفحات إضافية.
-const BUDGET = 775_000;
+// سقف بعد موجة تأجيل صفحات + حذف CSS ميت (أنبياء قديم/جنازة) — قياس ~648KB.
+// الهدف التالي: خفض نحو 600KB عبر تأجيل طبقات elite/design-system غير الحرجة.
+const BUDGET = 660_000;
 if (indexCss.size > BUDGET) {
   console.error(
     `✗ CSS الحرج ${indexCss.name} = ${indexCss.size} بايت > الميزانية ${BUDGET}.`,

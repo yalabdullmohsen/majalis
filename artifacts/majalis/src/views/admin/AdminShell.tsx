@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import "@/styles/pages/admin-shell.css";
 import {
   AlertTriangle, BookOpen, Bot, Brain, Building2, CalendarClock, CheckCircle2, Compass, Dna, FolderTree,
   FlaskConical, Flag, GraduationCap, Globe, HelpCircle, Heart, Image, Landmark,

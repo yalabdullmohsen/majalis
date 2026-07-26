@@ -3,6 +3,7 @@ import { BookOpen, Pause, Play, Plus, X } from "lucide-react";
 import { PageHeader, Loading, Empty, Card } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/reading-plans.css";
 import { LIBRARY_CATALOG } from "@/lib/library-catalog";
 import {
   fetchUserPlans, createPlan, logReadingProgress, pausePlan, resumePlan, cancelPlan,
