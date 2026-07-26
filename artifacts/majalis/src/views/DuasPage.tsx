@@ -223,7 +223,7 @@ const DUAS: DuaEntry[] = [
     arabic: "يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ",
     transliteration: "Ya muqallibal-qulub thabbit qalbi 'ala dinik",
     meaning: "يا مقلب القلوب ثبت قلبي على دينك",
-    source: "رواه الترمذي، صحيح",
+    source: "الترمذي ٢١٤٠ — صححه الألباني",
     category: "الدعاء العام",
     occasion: "في أي وقت خاصةً في أوقات الفتن",
     virtue: "كان النبي ﷺ يكثر من هذا الدعاء",
