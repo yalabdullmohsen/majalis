@@ -26,6 +26,7 @@ import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { applyPageSeo } from "@/lib/seo";
 import { undismissFridayBanner } from "@/lib/friday-prayer";
 import { computeNotificationDiagnostics, type NotificationDiagnostics } from "@/lib/notification-diagnostics";
+import "@/styles/pages/adhan-settings.css";
 
 const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 20, 30];
 

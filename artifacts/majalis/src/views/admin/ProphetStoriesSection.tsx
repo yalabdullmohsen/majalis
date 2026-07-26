@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useAdminShell } from "./AdminShell";
 import { AlertTriangle, BookOpen, Save } from "lucide-react";
+import "@/styles/pages/prophet-stories-admin.css";
 
 type Citation = { surah: string; ayahs: string; note: string };
 

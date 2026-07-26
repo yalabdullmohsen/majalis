@@ -32,6 +32,8 @@ import {
   removeOfflineReading,
   type OfflineReadingItem,
 } from "@/lib/offline-reading-pack";
+import "@/styles/pages/vault.css";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 const SECTION_HREF: Record<ReadingSection, string> = {
   adhkar: "/adhkar",
@@ -629,6 +631,7 @@ export default function VaultPage() {
       <div className="twh-share">
         <ShareButtons title="مخزن المعرفة — المجلس العلمي" url="https://www.majlisilm.com/vault" />
       </div>
+      <RelatedKnowledge kind="fawaid" query="محفظة المحفوظات" title="مواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["quran", "hadith"]} title="اختبر معلوماتك أثناء مراجعة مخزنك" count={4} />
       </div>

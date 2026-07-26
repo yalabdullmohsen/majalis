@@ -1,0 +1,40 @@
+/* ══════════════════════════════════════════════
+   UP. UniversitiesPage
+   ══════════════════════════════════════════════ */
+.up-root { min-height: 100svh; background: var(--majalis-parchment); padding-bottom: 1.25rem; direction: rtl; }
+.up-alert {
+  background: var(--majalis-emerald-muted, rgba(31,77,58,.1));
+  border: 1px solid var(--majalis-emerald);
+  border-radius: .75rem;
+  padding: .75rem 1rem;
+  font-size: .875rem;
+  color: var(--majalis-emerald);
+}
+.up-quick-filters { display: flex; align-items: center; gap: .6rem; }
+.up-country-chips { flex: 1; min-width: 0; overflow-x: auto; flex-wrap: nowrap; padding-bottom: .2rem; }
+.up-sheet-filters { display: flex; flex-direction: column; gap: .9rem; padding: 0.25rem 0 1rem; }
+
+.up-filter-label { font-size: .75rem; font-weight: 500; color: var(--majalis-ink-soft); }
+.up-filter-select {
+  padding: .5rem .75rem; font-size: .875rem;
+  border-radius: .75rem; border: 1px solid var(--majalis-line);
+  background: var(--majalis-parchment); color: var(--majalis-ink);
+  outline: none; width: 100%;
+}
+.up-filter-select:focus { box-shadow: 0 0 0 2px var(--majalis-emerald); }
+.up-filter-opt-label { font-size: .875rem; color: var(--majalis-ink-soft); }
+.up-count-text { font-size: .875rem; color: var(--majalis-ink-soft); }
+.up-clear-btn { font-size: .875rem; color: var(--majalis-emerald); background: none; border: none; cursor: pointer; }
+.up-clear-btn:hover { text-decoration: underline; }
+.up-empty-state { text-align: center; padding: 2.5rem 0; color: var(--majalis-ink-soft); opacity: .6; }
+.up-empty-state--py12 { padding-top: 3rem; padding-bottom: 3rem; }
+.up-code { background: var(--majalis-parchment-deep, #f0ece4); padding: .125rem .25rem; border-radius: .25rem; }
+.up-skeleton {
+  background: var(--majalis-panel);
+  border-radius: var(--ds-radius-xl);
+  height: 16rem;
+  animation: pulse 1.5s ease-in-out infinite;
+  border: 1px solid var(--majalis-line);
+}
+.up-search-input { color: var(--majalis-ink); }
+

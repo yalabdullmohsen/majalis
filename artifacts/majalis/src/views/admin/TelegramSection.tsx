@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAdminShell } from "@/views/admin/AdminShell";
 import { Building2, CalendarDays, Clock, Folder, MapPin, Send, User } from "lucide-react";
+import "@/styles/pages/telegram-section.css";
 
 type TgTab = "status" | "channels" | "review" | "stats";
 

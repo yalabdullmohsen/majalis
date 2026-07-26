@@ -6,6 +6,7 @@ import { formatFileSize, type UserSubmission, type SubmissionStatus } from "@/li
 import { Link } from "wouter";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/my-submissions.css";
 
 const STATUS_META: Record<SubmissionStatus, { Icon: LucideIcon; label: string; mod: string }> = {
   pending:  { Icon: Clock,        label: "قيد المراجعة", mod: "msr-status--pending"  },

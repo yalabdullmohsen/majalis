@@ -1,0 +1,22 @@
+/* ═══════════════════════════════════════════════════════════════
+   54  Quran Radio Page  (qrp-*)
+   ═══════════════════════════════════════════════════════════════ */
+.qrp-content { padding: 1.5rem 1rem 8rem; max-width: 860px; margin: 0 auto; }
+.qrp-section-head { margin-bottom: 1rem; }
+.qrp-intro { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem; direction: rtl; }
+.qrp-now-playing {
+  margin-top: 1.25rem; padding: var(--ds-space-4);
+  background: var(--bg-card, #fff);
+  border: 1px solid var(--majalis-gold, #226A56);
+  border-radius: var(--ds-radius-lg); direction: rtl;
+}
+.qrp-now-playing__head {
+  display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: wrap; gap: var(--ds-space-2);
+}
+.qrp-now-playing__name { font-weight: 700; margin-bottom: 0.15rem; }
+.qrp-now-playing__type { font-size: 0.82rem; color: var(--text-muted); }
+.qrp-now-playing__btns { display: flex; gap: var(--ds-space-2); margin-top: 0.75rem; flex-wrap: wrap; }
+.qrp-volume-pct { font-size: 0.78rem; color: var(--text-muted); }
+.qrp-video { width: 100%; border-radius: 0.4rem; max-height: 200px; background: #000; }
+

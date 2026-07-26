@@ -10,6 +10,7 @@ import { getNote, saveNote } from "@/lib/quran-personal";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { ExploreAyahPanel } from "@/components/quran/ExploreAyahPanel";
 import type { PlayerState } from "@/hooks/useAyahPlayer";
+import "@/styles/components/ayah-action-sheet.css";
 
 /**
  * Bottom Sheet مُوحَّد لفعل واحد على آية — يستبدل الأزرار الكبيرة الدائمة

@@ -19,6 +19,8 @@ import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ShareButtons } from "@/components/ContentActions";
+import "@/styles/pages/miracles.css";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 const CATEGORIES = MIRACLE_CATEGORIES;
 const SOURCE_TYPES = ["الكل", "قرآن", "سنة"];
@@ -335,6 +337,7 @@ export default function MiraclesPage({
         {filterPanel}
       </FilterBottomSheet>
       {isAdmin && <AdminQuickEdit section="miracles" />}
+      <RelatedKnowledge kind="book" query="الإعجاز العلمي" title="مواد ذات صلة بالإعجاز" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة والإعجاز" count={4} />
       </div>
