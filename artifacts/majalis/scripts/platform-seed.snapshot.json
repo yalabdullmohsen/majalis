@@ -1,46 +1,32 @@
 {
   "fiqh_decisions": [
     {
-      "id": "fiqh-crypto-2024",
-      "slug": "fiqh-crypto-2024",
-      "title": "حكم التعامل بالعملات الرقمية (المشفّرة)",
-      "category": "الاقتصاد الإسلامي",
-      "type": "resolution"
-    },
-    {
-      "id": "fiqh-organ-donation",
-      "slug": "fiqh-organ-donation",
-      "title": "حكم التبرع بالأعضاء بعد الوفاة",
-      "category": "الطب والنوازل",
-      "type": "recommendation"
-    },
-    {
-      "id": "fiqh-minorities-rights",
-      "slug": "fiqh-minorities-rights",
-      "title": "حقوق الأقليات المسلمة في البلدان غير الإسلامية",
-      "category": "الأقليات المسلمة",
-      "type": "ruling"
-    },
-    {
-      "id": "fiqh-marriage-contract",
-      "slug": "fiqh-marriage-contract",
-      "title": "ضوابط عقد النكاح الإلكتروني",
-      "category": "الأسرة",
+      "id": "items-encrypted-digital-currencies",
+      "slug": "items-encrypted-digital-currencies",
+      "title": "العملات الرقمية المشفَّرة (كالبيتكوين)",
+      "category": "النوازل المعاصرة",
       "type": "research"
     },
     {
-      "id": "fiqh-zakat-stocks",
-      "slug": "fiqh-zakat-stocks",
-      "title": "زكاة الأسهم والصناديق الاستثمارية",
-      "category": "الزكاة والوقف",
+      "id": "items-smart-contracts",
+      "slug": "items-smart-contracts",
+      "title": "العقود الذكية (Smart Contracts)",
+      "category": "النوازل المعاصرة",
+      "type": "research"
+    },
+    {
+      "id": "items-cultured-meat",
+      "slug": "items-cultured-meat",
+      "title": "اللحوم المستزرعة معملياً (المستنبتة)",
+      "category": "الأطعمة والأشربة",
       "type": "resolution"
     },
     {
-      "id": "fiqh-collective-fatwa-hajj",
-      "slug": "fiqh-collective-fatwa-hajj",
-      "title": "فتوى جماعية: حكم تأخير الحج لمن استطاع مادياً",
-      "category": "الحج والعمرة",
-      "type": "fatwa"
+      "id": "items-gmo-animal-foods",
+      "slug": "items-gmo-animal-foods",
+      "title": "الأطعمة المعدَّلة وراثياً من أصل حيواني",
+      "category": "الأطعمة والأشربة",
+      "type": "resolution"
     }
   ],
   "fatwas": [
@@ -129,20 +115,7 @@
       "course_type": "متن"
     }
   ],
-  "fiqh_sessions": [
-    {
-      "slug": "session-24-2024",
-      "title": "الدورة الرابعة والعشرون — المجمع الفقهي الإسلامي",
-      "verification_status": "verified",
-      "publish_status": "published"
-    },
-    {
-      "slug": "session-22-2023",
-      "title": "الدورة الثانية والعشرون — المجمع الفقهي الإسلامي",
-      "verification_status": "verified",
-      "publish_status": "published"
-    }
-  ],
+  "fiqh_sessions": [],
   "qa_items": [
     {
       "question": "من أول الخلفاء الراشدين؟",
