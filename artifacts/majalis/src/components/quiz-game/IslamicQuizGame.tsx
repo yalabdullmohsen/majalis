@@ -15,7 +15,6 @@ import {
 import { getQuizQuestions, getLocalUsedQuizIds, markQuizQuestionUsed } from "@/lib/supabase";
 import { recordQuizAttempt } from "@/lib/quiz-performance-service";
 import { hapticNotify } from "@/lib/capacitor-utils";
-import "@/styles/components/islamic-quiz-game.css";
 
 // ─── Icon renderer ─────────────────────────────────────────────────────────
 
