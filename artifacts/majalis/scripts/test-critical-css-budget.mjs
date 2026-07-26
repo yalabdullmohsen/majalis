@@ -34,9 +34,10 @@ if (!indexCss) {
   process.exit(1);
 }
 
-// سقف بعد موجة 600KB: حذف ميت + تأجيل مجمع/حديث/ملف/مواريث/مصحف/أذكار/أوضاع.
-// قياس ~548KB. الهدف التالي: خفض نحو 500KB عبر تنظيف تكرار elite/majalis-v2.
-const BUDGET = 600_000;
+// سقف بعد موجة ~508KB (2026-07-26): تأجيل كتل صفحات من majalis-v2/design-system
+// + حذف lad-* وبدائيات btn/badge/text-v2 غير المستخدمة + aie/institutions/fiqh-admin.
+// الهدف التالي: نحو 480–500KB عبر تنظيف تكرار elite-2026 مع طبقات brand/final.
+const BUDGET = 520_000;
 if (indexCss.size > BUDGET) {
   console.error(
     `✗ CSS الحرج ${indexCss.name} = ${indexCss.size} بايت > الميزانية ${BUDGET}.`,

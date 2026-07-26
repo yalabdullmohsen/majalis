@@ -528,3 +528,24 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important;
 }
 
+/* ── منقول من الطبقة الحرجة: seerah-back-link ── */
+.seerah-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--majalis-brass, #226A56);
+  text-decoration: none;
+  border: 1px solid rgba(23,61,53,0.25);
+  border-radius: 999px;
+  padding: 0.2rem 0.75rem;
+  transition: border-color 0.15s, background 0.15s;
+  margin-bottom: 1rem;
+  direction: rtl;
+}
+.seerah-back-link:hover {
+  background: rgba(23,61,53,0.08);
+  border-color: rgba(23,61,53,0.50);
+}
+/* ══ نهاية بطاقة الانتقال ══════════════════════════════════════════════════ */
+

@@ -57,6 +57,7 @@ import { AdminModal, Field } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 import { FiqhCompletionBarFromItem } from "@/components/fiqh-council/FiqhCompletionBar";
 import "@/styles/pages/fiqh-council-section.css";
+import "@/styles/pages/fiqh-admin.css";
 
 type AdminTab = "stats" | "items" | "review" | "duplicates" | "relations" | "research" | "sessions" | "sync";
 

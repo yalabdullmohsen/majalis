@@ -298,3 +298,64 @@
    Full redesign: phases 1-4
    ══════════════════════════════════════════════════════════════ */
 
+/* ── منقول من الطبقة الحرجة: Lessons tabs/filters ── */
+/* ══ تبويبات الدروس — override للتصميم الداكن ══════════════════════════════ */
+.kuwait-tab {
+  border-color: rgba(255,255,255,0.10) !important;
+  color: var(--majalis-ink-muted, #9BA3B5) !important;
+  background: rgba(255,255,255,0.04) !important;
+  white-space: nowrap;
+  cursor: pointer;
+  font-family: inherit;
+}
+.kuwait-tab:hover:not(.kuwait-tab--active) {
+  border-color: rgba(23,61,53,0.30) !important;
+  color: var(--majalis-ink, #EDE9DD) !important;
+  background: rgba(255,255,255,0.07) !important;
+}
+.kuwait-tab--active {
+  background: var(--majalis-emerald, #226A56) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+  font-weight: 700;
+}
+/* ══ نهاية override التبويبات ═══════════════════════════════════════════════ */
+
+/* ══ شريط تصفية الدروس — تحسين بصري ════════════════════════════════════════ */
+.lessons-filter-tabs {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  padding: var(--ds-space-2);
+  background: rgba(255,255,255,0.03);
+  border-radius: 0.875rem;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.lessons-filter-tab {
+  flex: 1;
+  min-width: 80px;
+  padding: 0.55rem 1rem;
+  border-radius: 0.625rem;
+  border: none;
+  background: transparent;
+  color: var(--majalis-ink-muted, #9BA3B5);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.lessons-filter-tab:hover {
+  background: rgba(255,255,255,0.06);
+  color: var(--majalis-ink, #EDE9DD);
+}
+.lessons-filter-tab--active {
+  background: var(--majalis-emerald, #226A56);
+  color: #fff;
+  font-weight: 700;
+}
+/* ══ نهاية شريط تصفية الدروس ════════════════════════════════════════════════ */
+

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/components/AuthProvider";
+import "@/styles/components/scholar-follow.css";
 import {
   followSheikh,
   unfollowSheikh,
