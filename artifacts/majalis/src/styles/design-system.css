@@ -385,11 +385,6 @@ article {
   --ds-transition-slow: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Home compact ── */
-.home-page--v3 .home-hero--v3 {
-  padding: var(--ds-space-4) 0 var(--ds-space-5);
-}
-
 .home-page--v3 .home-hero-title--v3 {
   font-size: clamp(1.35rem, 4vw, 1.75rem);
 }
@@ -1336,7 +1331,6 @@ p, li {
   --ds-transition-slow: 350ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-
 body {
   background: var(--msk-canvas, var(--ds-parchment));
   color: var(--msk-text, var(--ds-ink));
@@ -1582,7 +1576,6 @@ hr.decorative,
   opacity: 0.6;
   cursor: not-allowed;
 }
-
 
 /* ══════════════════════════════════════════════════════════════
    Home Polish Additions (home/full-polish)
@@ -1932,7 +1925,6 @@ hr.decorative,
   stroke: var(--majalis-emerald, #226A56);
 }
 
-
 /* Content inside ring */
 .tc-ring-inner {
   position: relative;
@@ -1983,7 +1975,6 @@ hr.decorative,
 .tc-ring-btn--done .tc-ring-hint {
   color: var(--majalis-emerald, #226A56);
 }
-
 
 /* Keyboard hint below counter */
 .tc-keyboard-hint {
@@ -2070,7 +2061,6 @@ hr.decorative,
   color: var(--majalis-ink-soft);
 }
 
-
 /* ═══════════════════════════════════════════════════════
    Push Notification Prompt
    ═══════════════════════════════════════════════════════ */
@@ -2121,22 +2111,17 @@ hr.decorative,
 
 /* شريط الصلاة المدمج */
 
-
-
-
 /* بطاقات عامة */
 
 /* نماذج إدخال */
 
 /* أزرار ثانوية */
 
-
 /* الحلقة */
 
 /* إشعارات Push */
 
 /* صفحة تسجيل الدخول */
-
 
 /* إحصاء التسبيح */
 
@@ -2197,8 +2182,6 @@ hr.decorative,
   color: var(--ds-emerald);
   text-decoration: none;
 }
-
-
 
 /* Streak stat cell */
 .tasbih-stat--streak strong {
@@ -5072,9 +5055,6 @@ h1, h2, h3 {
 }
 
 /* ── 17. الوضع الداكن — Premium layer overrides ── */
-
-
-
 
 /* ── 18. تحسين الانتقالات العامة ── */
 @media (prefers-reduced-motion: no-preference) {

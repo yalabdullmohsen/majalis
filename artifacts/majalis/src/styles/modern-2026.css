@@ -1636,13 +1636,6 @@ p { line-height: var(--lh-normal, 1.65); }
   color: var(--on-emerald-primary) !important;
 }
 
-/* ─── home hero v3 ─── */
-.home-hero--v3 .home-hero-title,
-.home-hero--v3 .home-hero-subtitle,
-.home-hero--v3 .home-hero-desc {
-  color: var(--on-emerald-primary) !important;
-}
-
 /* ─── الأزرار الزمردية: أبيض دائماً ─── */
 .btn-emerald,
 [class*="btn--primary"],

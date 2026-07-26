@@ -28,7 +28,6 @@
   --mj-font-latin:   var(--font-body);
 }
 
-
 /* ══ ترقيع المتغيرات القديمة --mn-* (غير معرَّفة — كانت تسقط على أسود) ══ */
 :root {
   --mn-text-default:   var(--msk-text-2,  #5C5C56);
@@ -559,7 +558,6 @@
 }
 
 /* ── 20. Dark mode overrides ── */
-
 
 /* ══════════════════════════════════════════════════════════════
    DESIGN OVERRIDES — تحكم نهائي من أعلى مستوى في الـ cascade
@@ -1390,29 +1388,6 @@
   text-transform: uppercase;
   color: var(--mj-emerald-600, #226A56);
   opacity: 0.75;
-}
-
-/* ══ بطل الصفحة — القوس المبسّط فوق العنوان ══ */
-.home-hero--v3 {
-  position: relative;
-  overflow: hidden;
-}
-/* نقش القبة الخافت (3% شفافية) في أعلى الخلفية فقط */
-.home-hero--v3::before {
-  content: '';
-  position: absolute;
-  top: -60px;
-  left: 0;
-  right: 0;
-  height: 180px;
-  background-image: url('/arch-divider.svg');
-  background-size: 120% auto;
-  background-repeat: no-repeat;
-  background-position: center top;
-  opacity: 0.04;
-  pointer-events: none;
-  z-index: 0;
-  transform: scaleY(-1);
 }
 
 /* ══ قوس القسم — العنصر التوقيعي بين الأقسام ══ */

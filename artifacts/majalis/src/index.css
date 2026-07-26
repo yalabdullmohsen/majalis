@@ -294,7 +294,6 @@ html {
   --v2-t-slow:       var(--motion-slow);
 }
 
-
 /* ══ وضع النهار — إعادة تصميم الهوية v3 (أخضر رمادي داكن + عاجي دافئ) ══ */
 html {
   --msk-canvas:        #FAFAF8;
@@ -615,11 +614,6 @@ img:not(.navbar-logo) {
   filter: none;
 }
 
-
-
-
-
-
 .home-section-error {
   border: 1px solid rgba(24,54,42,0.35);
   border-radius: var(--ds-radius-xl);
@@ -641,8 +635,6 @@ img:not(.navbar-logo) {
   font-family: inherit;
   font-weight: 800;
 }
-
-
 
 h1,
 h2,
@@ -2734,7 +2726,6 @@ input, textarea, select { font-family: inherit; }
   margin-top: 1rem;
   font-size: var(--ds-text-sm);
 }
-
 
 .page-card-header {
   display: flex;
@@ -5694,7 +5685,6 @@ input, textarea, select { font-family: inherit; }
   }
 }
 
-
 .home-feature-grid--compact {
   grid-template-columns: repeat(3, 1fr);
 }
@@ -8374,7 +8364,6 @@ html[data-theme="dark"] .search-suggestions-panel {
   margin: 0;
 }
 
-
 .hadith-section-sep {
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--msk-border, #E8E7E2) 20%, var(--msk-border, #E8E7E2) 80%, transparent);
@@ -8420,7 +8409,6 @@ html[data-theme="dark"] .search-suggestions-panel {
   line-height: 1.55;
   max-width: 65ch;
 }
-
 
 /* --- Stories page --- */
 .story-card {
@@ -8873,7 +8861,6 @@ html[data-theme="dark"] .search-suggestions-panel {
   font-size: var(--ds-text-sm);
   line-height: 1.7;
 }
-
 
 .site-footer-nav {
   display: flex;
@@ -9704,30 +9691,8 @@ html[data-theme="dark"] .search-suggestions-panel {
 
 /* ── Platform v3: home, nav, worship pages ── */
 .home-page--v3 { background: var(--majalis-parchment); }
-.home-hero--v3 { padding-block: 1.5rem 1rem; }
 .home-hero-grid--v3 { grid-template-columns: 1fr; }
 .home-main--v3 { padding-bottom: 2rem; }
-.home-search--v3 {
-  max-width: 36rem;
-  margin-top: 1rem;
-  grid-template-columns: 1fr auto;
-  padding: 0.35rem;
-  gap: var(--ds-space-2);
-}
-
-.home-search--v3 button {
-  padding: 0.45rem 0.85rem;
-  font-size: 0.78rem;
-  border-radius: 0.65rem;
-  background: var(--msk-gold, #143F35);
-  color: #fff;
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--msk-gold) 25%, transparent);
-}
-
-.home-search--v3 input {
-  padding: 0.55rem 0.65rem;
-  font-size: 0.88rem;
-}
 
 .prayer-countdown-hms {
   font-variant-numeric: tabular-nums;
@@ -10046,8 +10011,6 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
 .navbar-menu-btn__label {
   font-size: 0.85rem;
 }
-
-
 
 .navbar-login {
   display: inline-flex;
@@ -12830,36 +12793,6 @@ svg {
   text-wrap: pretty;
 }
 
-.home-search--v3 {
-  width: 100%;
-  max-width: 100%;
-  min-height: 56px;
-  height: 56px;
-  margin-top: 0;
-  border-radius: 999px;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: stretch;
-  overflow: hidden;
-}
-
-.home-search--v3 input {
-  min-width: 0;
-  width: 100%;
-  min-height: 48px;
-  font-size: clamp(0.85rem, 3.5vw, 0.95rem);
-}
-
-.home-search--v3 button {
-  flex-shrink: 0;
-  min-width: 4.25rem;
-  min-height: var(--mobile-touch-min);
-  height: 100%;
-  font-size: 0.85rem;
-  border-radius: 999px;
-  background: var(--msk-gold, #143F35);
-  color: #fff;
-}
-
 .home-hero-assistant-link--v3 {
   display: inline-flex;
   align-items: center;
@@ -13946,7 +13879,6 @@ body.has-assistant-fab .app-main {
   --ds-hero-grad: linear-gradient(155deg, #0F1220 0%, #171C2E 42%, #1F2540 72%, #131829 100%);
 }
 
-
 /* ─── Phase 1: Unified Button Component ───────────────────── */
 .ds-btn {
   display: inline-flex;
@@ -14077,42 +14009,6 @@ body.has-assistant-fab .app-main {
   background: var(--majalis-parchment);
 }
 
-/* Rich green hero (overrides the minimal v3 default) */
-.home-hero--v3 {
-  position: relative;
-  overflow: hidden;
-  padding-block: clamp(2.75rem, 9vw, 5rem) clamp(3.5rem, 10vw, 6rem);
-  background:
-    radial-gradient(ellipse 60% 50% at 15% 30%, rgba(31, 77, 58, 0.30) 0%, transparent 100%),
-    radial-gradient(ellipse 50% 60% at 85% 70%, rgba(31, 110, 84, 0.22) 0%, transparent 100%),
-    var(--ds-hero-grad);
-  color: var(--majalis-parchment);
-}
-
-/* Geometric dot-grid pattern overlay */
-.home-hero--v3::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image:
-    radial-gradient(circle, rgba(250, 245, 234, 0.085) 1px, transparent 1px);
-  background-size: 44px 44px;
-}
-
-/* Diagonal stripe accent */
-.home-hero--v3::after {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  bottom: 0;
-  height: 100px;
-  background: linear-gradient(180deg, transparent 0%, var(--majalis-parchment) 100%);
-  pointer-events: none;
-  z-index: 1;
-}
-
 /* Ensure hero content sits above overlays */
 .home-hero-grid--v3,
 .home-hero-copy--v3 {
@@ -14138,15 +14034,6 @@ body.has-assistant-fab .app-main {
   line-height: 1.1;
   letter-spacing: -0.01em;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
-}
-
-/* Search bar with gold glow */
-.home-search--v3 {
-  background: rgba(255, 255, 255, 0.98);
-  border: 1.5px solid rgba(250, 245, 234, 0.30);
-  box-shadow:
-    0 0 0 4px rgba(31, 77, 58, 0.12),
-    0 24px 56px rgba(0, 0, 0, 0.22);
 }
 
 /* ─── Phase 2: Quick Links Grid (currently missing CSS!) ──── */
@@ -15692,10 +15579,6 @@ body.has-assistant-fab .app-main {
 
 /* ================================================================
 
-
-
-
-
 /* ═══════════════════════════════════════════════════════════
    نظام الزخرفة الهندسية الإسلامية — GeometricPattern system
    ═══════════════════════════════════════════════════════════ */
@@ -15987,7 +15870,6 @@ body.has-assistant-fab .app-main {
 .univ-badge--degree    { background: rgba(29, 78, 216, 0.1); color: #1d4ed8; }
 .univ-badge--mode      { background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
 .univ-badge--scholarship { background: rgba(180, 131, 20, 0.12); color: var(--majalis-brass-deep); }
-
 
 .univ-btn {
   display: inline-flex;
@@ -16374,7 +16256,6 @@ body.has-assistant-fab .app-main {
   .mj-skeleton { animation: none; background: var(--majalis-parchment-deep); }
 }
 
-
 /* ================================================================
    صفحة "جاري التعديل" — UnderConstruction (متجاوبة، تدعم الوضع الداكن)
    ================================================================ */
@@ -16622,26 +16503,6 @@ body.has-assistant-fab .app-main {
   background: transparent;
   border: 1px solid var(--majalis-line, #e5ddd0);
   color: var(--majalis-ink-soft, #5c564c);
-}
-
-/* ══════════════════════════════════════════════════════════════
-   Design System v5 — Premium Hero & Page Enhancements
-   ══════════════════════════════════════════════════════════════ */
-
-/* ── Hero v3: خلفية مع نمط هندسي إسلامي ── */
-.home-hero--v3 {
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M28 4L34 16L46 10L40 22L52 28L40 34L46 46L34 40L28 52L22 40L10 46L16 34L4 28L16 22L10 10L22 16Z' fill='none' stroke='rgba(255,255,255,0.07)' stroke-width='1'/%3E%3C/svg%3E"),
-    radial-gradient(ellipse 80% 60% at 20% 40%, rgba(154, 109, 26, 0.18) 0%, transparent 60%),
-    radial-gradient(ellipse 100% 80% at 80% 10%, rgba(22, 96, 72, 0.35) 0%, transparent 65%),
-    linear-gradient(160deg, #143F35 0%, #143F35 45%, #143F35 100%);
-  background-size: 56px 56px, cover, cover, cover;
-}
-
-/* fade الأسفل إلى لون الصفحة */
-.home-hero--v3::after {
-  background: linear-gradient(180deg, transparent 50%, var(--majalis-parchment) 100%);
-  height: 5rem;
 }
 
 /* ── Hero Badge (الشارة فوق العنوان) ── */
@@ -17045,9 +16906,7 @@ body.has-assistant-fab .app-main {
 
 /* ── Dark mode overrides ── */
 
-
 /* home-feature-strip-icon dark: defined above with color-mix */
-
 
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — Lesson Cards & Tabs Refinement
@@ -17197,11 +17056,6 @@ body.has-assistant-fab .app-main {
 
 /* ── Dark mode ── */
 
-
-
-
-
-
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — Auth Pages (Login / Register)
    ══════════════════════════════════════════════════════════════ */
@@ -17350,10 +17204,6 @@ body.has-assistant-fab .app-main {
 
 /* ── Dark mode ── */
 
-
-
-
-
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — SideNavDrawer Premium (مدموج في §Mobile Side Nav أعلاه)
    ══════════════════════════════════════════════════════════════ */
@@ -17421,9 +17271,6 @@ body.has-assistant-fab .app-main {
 }
 
 /* ── Dark mode ── */
-
-
-
 
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — Lesson Detail & Content Pages
@@ -17526,9 +17373,6 @@ body.has-assistant-fab .app-main {
 
 /* ── Dark mode ── */
 
-
-
-
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — Typography & Prose Enhancements
    ══════════════════════════════════════════════════════════════ */
@@ -17607,8 +17451,6 @@ body.has-assistant-fab .app-main {
 
 /* ── Dark mode ── */
 
-
-
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — Daily Content Cards (Home sections)
    ══════════════════════════════════════════════════════════════ */
@@ -17680,8 +17522,6 @@ body.has-assistant-fab .app-main {
 }
 
 /* ── Dark mode ── */
-
-
 
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — Page Transition & Loading States
@@ -17828,11 +17668,6 @@ body.has-assistant-fab .app-main {
 }
 
 /* ── Dark mode ── */
-
-
-
-
-
 
 /* ── صفحة الصلاة المبسّطة (PrayerTimesPage) ── */
 /* ── صفحة الصلاة — بطاقة العداد ── */
@@ -18642,7 +18477,6 @@ html[data-theme="dark"] .skeleton-base {
   background: linear-gradient(90deg, #143F35 25%, #143F35 50%, #143F35 75%);
   background-size: 200% 100%;
 }
-
 
 /* ── خط واجهة التطبيق والقوائم (SF Arabic على Apple) ──────────────────────
    يُطبَّق حصرًا على عناصر تنقّل/قوائم الواجهة (الهيدر، الشريط السفلي، القائمة
