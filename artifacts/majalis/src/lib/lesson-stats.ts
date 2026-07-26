@@ -17,18 +17,25 @@ export async function fetchLessonEngagementStats(contentId: string): Promise<Les
   if (!contentId || !isSupabaseConfigured()) return empty;
 
   try {
-    const [viewsRes, savesRes] = await Promise.all([
-      supabase
-        .from("content_views")
-        .select("*", { count: "exact", head: true })
-        .eq("content_type", "lesson")
-        .eq("content_id", contentId),
-      supabase
-        .from("bookmarks")
-        .select("*", { count: "exact", head: true })
-        .eq("content_type", "lesson")
-        .eq("content_id", contentId),
-    ]);
+    // عدد المشاهدات عام؛ bookmarks محمي بـ RLS — لا يُطلب للزائر غير المسجّل (401).
+    const { data: sessionData } = await supabase.auth.getSession();
+    const isAuthed = Boolean(sessionData?.session?.user?.id);
+
+    const viewsPromise = supabase
+      .from("content_views")
+      .select("*", { count: "exact", head: true })
+      .eq("content_type", "lesson")
+      .eq("content_id", contentId);
+
+    const savesPromise = isAuthed
+      ? supabase
+          .from("bookmarks")
+          .select("*", { count: "exact", head: true })
+          .eq("content_type", "lesson")
+          .eq("content_id", contentId)
+      : Promise.resolve({ count: 0, error: null });
+
+    const [viewsRes, savesRes] = await Promise.all([viewsPromise, savesPromise]);
 
     const stats: LessonEngagementStats = {
       views: viewsRes.count || 0,

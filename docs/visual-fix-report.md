@@ -66,3 +66,49 @@
 
 ### حالة البناء
 نجاح
+
+---
+
+## المرحلة 3 — طلبات بيانات فاشلة
+
+**الفرع:** `cursor/visual-fix-phase3-supabase-errors-1f54`  
+**PR:** (يُحدَّث)
+
+### ERR_ABORTED على sharia_rulings
+- السبب: `RequestManager` يُلغي fetch بعد 8 ثوانٍ → Chrome `net::ERR_ABORTED`.
+- الإصلاح: مهلة Supabase العامة → 15 ثانية في `supabase-bootstrap.ts`.
+- FiqhPage: يعرض `ErrorState` + إعادة محاولة بدل Empty صامت؛ `cancelled` عند unmount.
+
+### 401 على bookmarks
+- السبب: `fetchLessonEngagementStats` يطلب `bookmarks` للزائر؛ RLS ترفض.
+- الإصلاح: لا يُطلب bookmarks إلا بوجود جلسة.
+
+### صفحات كانت تنهار بصمت (أُصلِحت)
+| الصفحة | الإصلاح |
+|---|---|
+| `/fiqh` | ErrorState + retry |
+| `/updates` | ErrorState + retry |
+| `/calendar` | ErrorState + retry |
+| `/rulings/:id` | ErrorState عند dbError |
+
+### ما بقي صامتاً (ذِكر — خارج الحد الأدنى)
+LearnHub، FiqhCouncilList، AnnualCourses، Vault، HadithPage catch→[] — سُجّلت للمراجعة لاحقاً.
+
+### حالة البناء
+نجاح
+
+---
+
+## المرحلة 4 — مسارات مكررة (canonical)
+
+**الفرع:** `cursor/visual-fix-phase4-canonical-1f54`  
+**PR:** (يُحدَّث)
+
+### ما نُفّذ
+- `applyPageSeo`: يُطبّق `normalizePath` على canonical دائماً (بلا ?/#).
+- `canonicalPath` صريح لـ `/adhkar` و`/salah-guide` و`/lessons`.
+- JSON-LD لأقسام الأذكار يشير للمسار الأساسي `/adhkar` (لا نسخ ?cat=).
+- `sitemap.xml`: كان أصلاً بلا معاملات استعلام لهذه الصفحات — لا تغيير مطلوب.
+
+### حالة البناء
+نجاح

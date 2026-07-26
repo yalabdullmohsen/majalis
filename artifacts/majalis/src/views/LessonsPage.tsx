@@ -253,6 +253,7 @@ export default function LessonsPage({
   useEffect(() => {
     applyPageSeo({
       path: "/lessons",
+      canonicalPath: "/lessons",
       title: "الدروس الشرعية والعلمية | المجلس العلمي",
       description: "دروس شرعية وعلمية من أئمة وعلماء الكويت والعالم، فقه وعقيدة وقرآن وسيرة ولغة عربية.",
       keywords: ["دروس شرعية", "دروس دينية", "دروس علمية", "علماء الكويت", "حلقات علمية"],

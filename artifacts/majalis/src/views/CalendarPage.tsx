@@ -19,7 +19,7 @@ import { arSA } from "date-fns/locale";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { resolveLessonDetailsHref } from "@/lib/unified-lesson-card";
-import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, ErrorState } from "@/components/ui-common";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import { getHijriDateString, gregorianToHijri } from "@/lib/hijri-utils";
 import { applyPageSeo } from "@/lib/seo";
@@ -171,6 +171,8 @@ export default function CalendarPage() {
   const [selected, setSelected] = useState(today);
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
+  const [retryTick, setRetryTick] = useState(0);
   const [modalEvent, setModalEvent] = useState<CalendarEvent | null>(null);
 
   function handleIcsExport() {
@@ -198,11 +200,16 @@ export default function CalendarPage() {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
+    setLoadError(false);
     getUnifiedActiveLessons()
       .then(({ lessons }) => setEvents(eventsFromLessons(lessons)))
-      .catch(() => setEvents([]))
+      .catch(() => {
+        setEvents([]);
+        setLoadError(true);
+      })
       .finally(() => setLoading(false));
-  }, []);
+  }, [retryTick]);
 
   const monthStart = startOfMonth(cursor);
   const monthEnd = endOfMonth(cursor);
@@ -269,6 +276,8 @@ export default function CalendarPage() {
 
       {loading ? (
         <SkeletonCardGrid count={12} />
+      ) : loadError ? (
+        <ErrorState text="تعذّر تحميل مواعيد الدروس. يرجى المحاولة مرة أخرى." onRetry={() => setRetryTick((n) => n + 1)} />
       ) : (
         <>
           {view === "month" && (

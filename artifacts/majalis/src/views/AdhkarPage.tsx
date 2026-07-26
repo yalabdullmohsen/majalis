@@ -140,6 +140,7 @@ export default function AdhkarPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/adhkar",
+      canonicalPath: "/adhkar",
       title: "الأذكار والأدعية الإسلامية | المجلس العلمي",
       description: "أذكار الصباح والمساء وما بعد الصلاة وسائر الأذكار المأثورة، مع التسبيح التفاعلي وعداد الذكر.",
       keywords: ["أذكار", "أدعية", "أذكار الصباح", "أذكار المساء", "ذكر الله", "أذكار إسلامية"],
@@ -154,7 +155,7 @@ export default function AdhkarPage() {
             "@type": "ListItem",
             position: i + 1,
             name: c.name,
-            url: `https://www.majlisilm.com/adhkar?cat=${c.slug}`,
+            url: `https://www.majlisilm.com/adhkar`,
           })),
         },
       ],

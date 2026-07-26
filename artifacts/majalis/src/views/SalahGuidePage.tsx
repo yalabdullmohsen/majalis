@@ -302,6 +302,7 @@ export default function SalahGuidePage() {
   useEffect(() => {
     applyPageSeo({
       path: "/salah-guide",
+      canonicalPath: "/salah-guide",
       title: "دليل الصلاة الكامل، المجلس العلمي",
       description: "الدليل الشامل للصلاة: شروطها وأركانها وسورها ومراتب المصلين والنوافل والخشوع",
       keywords: ["الصلاة", "كيفية الصلاة", "أركان الصلاة", "شروط الصلاة", "مراتب الصلاة", "سور الصلاة", "النوافل", "السنن الرواتب"],

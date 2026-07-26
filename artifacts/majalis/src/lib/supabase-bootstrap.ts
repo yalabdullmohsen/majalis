@@ -77,11 +77,14 @@ export async function bootstrapSupabaseFromServer(): Promise<boolean> {
 
 let client: SupabaseClient | null = null;
 
+/** مهلة أطول لاستعلامات Supabase الثقيلة (موسوعة الأحكام وغيرها) لتفادي ERR_ABORTED. */
+const SUPABASE_FETCH_TIMEOUT_MS = Math.max(REQUEST_TIMEOUT_MS, 15_000);
+
 function supabaseGlobalFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
   return RequestManager.fetch(input, {
     ...init,
     label: `supabase:${String(input).slice(0, 120)}`,
-    timeoutMs: REQUEST_TIMEOUT_MS,
+    timeoutMs: SUPABASE_FETCH_TIMEOUT_MS,
     retries: 1,
   });
 }
