@@ -55,7 +55,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الهجرة انتقال للدعوة من الاضطهاد إلى بناء مجتمع مسلم.", category: "السيرة", source: "السيرة النبوية — ابن هشام", author_name: "ابن هشام", status: "approved", verification_status: "verified" },
   { text: "بدر أول معركة فاصلة؛ وفيها نصر الله المؤمنين.", category: "السيرة", source: "صحيح البخاري — كتاب المغازي", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
   { text: "ادعُ إلى سبيل ربك بالحكمة والموعظة الحسنة.", category: "الدعوة", source: "النحل: 125", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
-  { text: "طلب العلم فريضة على كل مسلم.", category: "طلب العلم", source: "رواه ابن ماجه — حسنه الألباني", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
+  { text: "من يرد الله به خيراً يفقهه في الدين — متفق عليه. وأما لفظ «طلب العلم فريضة على كل مسلم» فضعيف عند أكثر المحققين فلا يُستقل به؛ وفرضُ ما يحتاجه المسلم من أمر دينه ثابت بعموم التكليف.", category: "طلب العلم", source: "البخاري ٧١ ومسلم ١٠٣٥", author_name: null, status: "approved", verification_status: "verified" },
   { text: "مروا أولادكم بالصلاة لسبع.", category: "التربية", source: "رواه أبو داود — حسنه الألباني", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
   { text: "من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت.", category: "الآداب", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "من لا يرحم لا يرحم؛ فالرحمة سبب لنيل رحمة الله.", category: "الأخلاق", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
@@ -325,8 +325,8 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── العلم والإبداع من منظور إسلامي ── */
   { text: "العقل أكبر نعمة أنعمها الله على الإنسان؛ ومن لم يستعمله في خدمة الحق فقد أضاع أعز ما أُعطي.", category: "طلب العلم", source: "إحياء علوم الدين — الغزالي", author_name: "الإمام الغزالي", status: "approved", verification_status: "verified" },
-  { text: "طلب العلم فريضة على كل مسلم؛ فهو واجب لا يتوقف بنبل ولا جاه ولا سن.", category: "طلب العلم", source: "رواه ابن ماجه — حسّنه الألباني في صحيح ابن ماجه بمجموع طرقه", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
-  { text: "التفكر في خلق الله ساعة خير من عبادة سبعين سنة — فالتأمل في الكون طريق إلى معرفة الخالق.", category: "طلب العلم", source: "رواه أبو الشيخ — يُستشهد به في الفقه", author_name: "أبو الشيخ الأصبهاني", status: "approved", verification_status: "needs_review" },
+  { text: "التفقه في الدين من أعظم الخيرات؛ قال ﷺ: «من يرد الله به خيراً يفقهه في الدين» — متفق عليه. ولا يتوقف نفع العلم على جاهٍ ولا سنٍّ.", category: "طلب العلم", source: "البخاري ٧١ ومسلم ١٠٣٥", author_name: null, status: "approved", verification_status: "verified" },
+  { text: "التأمل في خلق الله مطلوب شرعاً؛ قال تعالى: ﴿وَيَتَفَكَّرُونَ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ﴾. وأما لفظ «التفكر ساعة خير من عبادة سبعين سنة» فلم يثبت مرفوعاً فلا يُستدل به.", category: "طلب العلم", source: "آل عمران: ١٩١؛ ضعّف أهل التحقيق المرفوع المشهور", author_name: null, status: "approved", verification_status: "verified" },
 
   /* ── الدعاء والتوسل ── */
   { text: "ادعوا الله وأنتم موقنون بالإجابة؛ واعلموا أن الله لا يستجيب دعاءً من قلب غافل لاهٍ.", category: "الفقه", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
