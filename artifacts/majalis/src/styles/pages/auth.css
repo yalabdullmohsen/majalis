@@ -293,3 +293,41 @@
   font-weight: 700;
 }
 
+
+/* ══ 14. Login Page ══════════════════════════════════════════════════════════ */
+.login-page {
+  background: linear-gradient(160deg, #F0FDF4 0%, #FAFAFA 60%, #f0faf5 100%) !important;
+}
+.login-card {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(0,0,0,0.07) !important;
+  border-radius: var(--m26-r-xl) !important;
+  box-shadow: var(--m26-shadow-xl) !important;
+  padding: 2.5rem !important;
+}
+.login-card__title {
+  color: var(--txt-primary, #1A1A18) !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--type-h2) !important;
+  font-weight: var(--fw-bold) !important;
+}
+.login-card__subtitle { color: var(--txt-muted, #5C5C56) !important; }
+.login-submit {
+  background: var(--m26-green-800, #166534) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: var(--m26-r-md) !important;
+  font-weight: var(--fw-bold) !important;
+  width: 100% !important;
+  box-shadow: 0 2px 8px rgba(22,101,52,0.25) !important;
+}
+.login-submit:hover {
+  background: var(--m26-green-950, #052E16) !important;
+}
+.login-oauth__btn {
+  background: #FFFFFF !important;
+  border: 1.5px solid rgba(0,0,0,0.10) !important;
+  color: var(--txt-secondary, #5C5C56) !important;
+  border-radius: var(--m26-r-md) !important;
+}
+

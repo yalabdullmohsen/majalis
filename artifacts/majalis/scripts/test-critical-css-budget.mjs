@@ -34,9 +34,9 @@ if (!indexCss) {
   process.exit(1);
 }
 
-// سقف بعد موجة تأجيل صفحات + حذف CSS ميت (أنبياء قديم/جنازة) — قياس ~648KB.
-// الهدف التالي: خفض نحو 600KB عبر تأجيل طبقات elite/design-system غير الحرجة.
-const BUDGET = 660_000;
+// سقف بعد موجة 600KB: حذف ميت + تأجيل مجمع/حديث/ملف/مواريث/مصحف/أذكار/أوضاع.
+// قياس ~548KB. الهدف التالي: خفض نحو 500KB عبر تنظيف تكرار elite/majalis-v2.
+const BUDGET = 600_000;
 if (indexCss.size > BUDGET) {
   console.error(
     `✗ CSS الحرج ${indexCss.name} = ${indexCss.size} بايت > الميزانية ${BUDGET}.`,
