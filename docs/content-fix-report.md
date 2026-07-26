@@ -216,7 +216,7 @@
 ## المرحلة 5 — توحيد الأسماء والألقاب
 
 **الفرع:** `cursor/content-fix-phase5-names-honorifics-1f54`
-**PR:** (يُحدَّث)
+**PR:** https://github.com/yalabdullmohsen/majalis/pull/343
 
 ### الصيغة المعتمدة
 `ابن قيم الجوزية` — استُبدلت كل مواضع `ابن القيم الجوزية` في src (ما عدا جملة تعليمية في quiz تُبقي «ابن القيم» كمثال للخطأ مقابل «ابن قيِّم»).
@@ -230,6 +230,28 @@ scholars-data.ts، scholars-seo.json، library-catalog.ts/.json، library-author
 
 ### استثناء
 - quiz-seed جملة «الصواب… ابن قيِّم… لا ابن القيم» أُبقيت للتمييز التعليمي.
+
+### حالة البناء
+نجاح
+
+---
+
+## المرحلة 6 — حقول مكررة (وسم فقط)
+
+**الفرع:** `cursor/content-fix-phase6-duplicate-fields-1f54`
+**PR:** (يُحدَّث)
+
+### curriculum-topics.json
+- وُسم `_duplicate_summary: true` لـ **33**/36 سجلًا (summary===body)
+- بلا وسم: curriculum-1, curriculum-29, curriculum-32
+
+### quiz-seed.ts
+- قالب «بيان موجز للإجابة»: **غير موجود** في النسخة الحالية (0 موضع)
+- لم يُضف `_templated_explanation` لأن الشرط غير متحقق
+
+### scientific-announcements-seed.ts
+- `sci-rawdat-alafham-muwaiziri`: lessonTitle ← «شرح » + bookTitle
+- `sci-tawheed-saltaweel`: lessonTitle كان يبدأ بـ«شرح» ومطابقاً لـ bookTitle → وُسم `_duplicate_lesson_book: true`
 
 ### حالة البناء
 (تُحدَّث)
