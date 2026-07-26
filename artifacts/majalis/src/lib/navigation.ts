@@ -32,7 +32,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/hadith",        label: "الأحاديث" },
   { href: "/fawaid",        label: "الفوائد" },
   { href: "/stories",       label: "القصص الإسلامية" },
-  { href: "/miracles",             label: "المعجزات" },
+  { href: "/miracles",             label: "إشارات كونية" },
   { href: "/prophetic-medicine",   label: "الطب النبوي" },
   { href: "/qa",            label: "الأسئلة" },
   { href: "/arbaeen-nawawi",label: "الأربعون النووية" },

@@ -72,7 +72,7 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
       { key: "library",  label: "المكتبة",          Icon: Library },
       { key: "fawaid",   label: "الفوائد",          Icon: Lightbulb },
       { key: "adhkar",   label: "الأذكار",          Icon: RefreshCw },
-      { key: "miracles", label: "الإعجاز العلمي",  Icon: Sparkles },
+      { key: "miracles", label: "إشارات كونية",  Icon: Sparkles },
       { key: "qa",       label: "الأسئلة والأجوبة", Icon: HelpCircle },
       { key: "quiz",     label: "المسابقة",         Icon: Target },
     ],

@@ -117,7 +117,7 @@ export const CMS_KIND_LABELS: Record<CmsContentKind, string> = {
   announcement: "إعلان",
   fawaid: "فائدة",
   qa: "سؤال وجواب",
-  miracle: "إعجاز علمي",
+  miracle: "إشارة كونية",
   fiqh_decision: "قرار فقهي",
   sharia_ruling: "حكم شرعي",
   annual_course: "دورة علمية",
