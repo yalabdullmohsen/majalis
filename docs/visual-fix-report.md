@@ -112,3 +112,49 @@ LearnHub، FiqhCouncilList، AnnualCourses، Vault، HadithPage catch→[] — �
 
 ### حالة البناء
 نجاح
+
+---
+
+## المرحلة 5 — صفحات شبه فارغة
+
+**الفرع:** `cursor/visual-fix-phase5-thin-pages-1f54`  
+**PR:** (يُحدَّث)
+
+### طبيعية — لم تُعدَّل
+`/qibla`، `/tasbih`، `/login`، `/search`، `/prayer-countdown`، `/adhan-settings`، `/prayer-times`
+
+### تقنية — عُولجت
+- إثراء `RICH_BODY` في `generate-seo.mjs` لـ `/quiz`، `/raqaiq`، `/daily-wird`، `/learning/paths` بنصوص موجودة أصلاً في الصفحات (لا اختراع).
+- `/learning/paths`: ErrorState + retry عند فشل الجلب.
+
+### قانونية — يحتاج كتابة بشرية (لم تُؤلَّف)
+| المسار | ملاحظة |
+|---|---|
+| `/privacy` | يوجد نص حالي؛ مراجعة بشرية للتغطية القانونية الكاملة |
+| `/terms` | كذلك |
+| `/contact` | كذلك |
+
+### حالة البناء
+(تُحدَّث)
+
+---
+
+## المرحلة 6 — تعدد H1
+
+**الفرع:** `cursor/visual-fix-phase6-single-h1-1f54`  
+**PR:** (يُحدَّث)
+
+### القاعدة
+H1 واحد ظاهر لكل صفحة. أُبقي العنوان الرئيسي H1 وحُوّل الثانوي إلى H2 مع الإبقاء على className (المظهر عبر CSS).
+
+### ملفات عُدّلت (ثانوي → H2 حيث كان تكراراً حقيقياً في الشجرة)
+ProphetStories (أقسام)، TopicPage، PrayerCountdown، AccountDeletion، IslamicStories (أقسام)، MyCitations، UniversitiesCompare، CarMode، LearningQuiz (حالات النتيجة الثانوية)، وغيرها بعد مراجعة الحالات الحصرية.
+
+### CSS
+توسيع محددات `.page-shell h1.*-hero__title` لتشمل `h2` بنفس المظهر.
+
+### ملاحظة
+كثير من حالات «H1 مزدوج» في الفحص كانت حالات حصرية (تحميل/خطأ/نجاح) — أُبقيت H1 لكل حالة على حدة.
+
+### حالة البناء
+نجاح

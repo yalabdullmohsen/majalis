@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { BookOpen, Building2, Leaf, Library, Moon, PenLine, Scale, ScrollText, Sprout, Target, Trophy } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
-import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { fetchPathList, type PathSummary } from "@/lib/learning-paths-service";
@@ -39,6 +39,8 @@ export default function LearningPathsPage() {
   const { user } = useAuth();
   const [paths, setPaths] = useState<PathSummary[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
+  const [retryTick, setRetryTick] = useState(0);
   const [activeCategory, setActiveCategory] = useState(ALL_CAT);
   const [enrolledSlugs, setEnrolledSlugs] = useState<Set<string>>(new Set());
 
@@ -62,8 +64,16 @@ export default function LearningPathsPage() {
   }, []);
 
   useEffect(() => {
-    fetchPathList().then(setPaths).finally(() => setLoading(false));
-  }, []);
+    setLoading(true);
+    setLoadError(false);
+    fetchPathList()
+      .then(setPaths)
+      .catch(() => {
+        setPaths([]);
+        setLoadError(true);
+      })
+      .finally(() => setLoading(false));
+  }, [retryTick]);
 
   useEffect(() => {
     if (!user?.id) { setEnrolledSlugs(new Set()); return; }
@@ -162,8 +172,12 @@ export default function LearningPathsPage() {
       </div>
 
       {loading && <SkeletonCardGrid count={8} />}
+      {!loading && loadError && (
+        <ErrorState text="تعذّر تحميل المسارات العلمية. يرجى المحاولة مرة أخرى." onRetry={() => setRetryTick((n) => n + 1)} />
+      )}
+      {!loading && !loadError && paths.length === 0 && <Empty text="لا توجد مسارات متاحة حالياً." />}
 
-      {!loading && Object.entries(displayed).map(([category, items]) => {
+      {!loading && !loadError && Object.entries(displayed).map(([category, items]) => {
         const meta = CATEGORY_META[category] ?? CATEGORY_META.other;
         return (
           <section key={category} className="lpp-category">

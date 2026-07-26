@@ -178,7 +178,7 @@ export default function MyCitationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="mcp-header-title"><FileText size={20} className="inline ml-1" />اقتباساتي</h1>
+              <h2 className="mcp-header-title"><FileText size={20} className="inline ml-1" />اقتباساتي</h2>
               <p className="mcp-header-count">{saved.length} اقتباس محفوظ</p>
             </div>
             <div className="flex items-center gap-2">

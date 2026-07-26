@@ -5558,7 +5558,15 @@ footer *,
 .page-shell h1.ds-hero__title,
 .page-shell h1.duas-hero__title,
 .page-shell h1.mk-hero__title,
-.page-shell h1.sm-hero__title {
+.page-shell h1.sm-hero__title,
+.page-shell h2.fqh-hub-hero__title,
+.page-shell h2.twh-hub-hero__title,
+.page-shell h2.akl-hero__title,
+.page-shell h2.arkan-hero__title,
+.page-shell h2.ds-hero__title,
+.page-shell h2.duas-hero__title,
+.page-shell h2.mk-hero__title,
+.page-shell h2.sm-hero__title {
   color: #FFFFFF !important;
 }
 

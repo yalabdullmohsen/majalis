@@ -151,7 +151,7 @@ export default function CarModePage() {
   if (lessons.length === 0) {
     return (
       <div className="car-mode" dir="rtl">
-        <h1 className="page-status-shell__title">وضع السيارة</h1>
+        <h2 className="page-status-shell__title">وضع السيارة</h2>
         <div className="car-mode__empty">
           <p>لا تتوفر دروس صوتية حالياً.</p>
           <Link href="/" className="car-mode__back-btn">العودة للرئيسية</Link>
@@ -187,7 +187,7 @@ export default function CarModePage() {
       <div className="car-mode__now-playing">
         <div className="car-mode__disk" aria-hidden="true">{playing ? <Music2 size={40} strokeWidth={1.4} /> : <Mic2 size={40} strokeWidth={1.4} />}</div>
         <p className="car-mode__category">{current.category ?? "درس"}</p>
-        <h1 className="car-mode__title">{current.title}</h1>
+        <h2 className="car-mode__title">{current.title}</h2>
         {current.speaker_name && (
           <p className="car-mode__speaker">{current.speaker_name}</p>
         )}
