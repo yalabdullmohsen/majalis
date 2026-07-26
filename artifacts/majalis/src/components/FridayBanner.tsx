@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { loadAdhanPrefs } from "@/lib/adhan-preferences";
 import {
+import "@/styles/components/friday-banner.css";
   getFridayWindowStatus,
   isFridayBannerDismissed,
   dismissFridayBanner,

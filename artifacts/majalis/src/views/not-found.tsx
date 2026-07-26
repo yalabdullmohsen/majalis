@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Compass, BookOpen, BookMarked, MessageCircle, Clock, Scroll, BookText, Scale } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/not-found.css";
 
 const SUGGESTIONS = [
   { href: "/quran-hub",    label: "مركز القرآن",       Icon: BookOpen   },

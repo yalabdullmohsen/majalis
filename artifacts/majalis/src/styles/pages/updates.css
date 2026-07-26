@@ -9,7 +9,7 @@
 /* 217 Scroll to Top */
 .global-back-btn {
   position: fixed;
-  bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+  bottom: calc(var(--bottom-nav-total, 4.5rem) + 0.25rem);
   inset-inline-start: 1rem;
   z-index: 185;
   /* px بدل rem عمدًا: عند تكبير حجم الخط الجذري (Dynamic Type/تكبير
@@ -55,7 +55,7 @@ html[data-theme="dark"] .global-back-btn {
 
 .scroll-to-top {
   position: fixed;
-  bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+  bottom: calc(var(--bottom-nav-total, 4.5rem) + 0.25rem);
   inset-inline-end: 1rem;
   z-index: 190;
   width: 2.6rem;

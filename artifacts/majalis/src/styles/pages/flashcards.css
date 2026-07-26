@@ -1,0 +1,116 @@
+/* ═══════════════════════════════════════════════════════════════════
+   63  FlashCardsPage — Ring + Keyboard + SM2 preview
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Session top row ── */
+.fc-session__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+/* ── Ring ── */
+.fc-ring {
+  position: relative;
+  width: 68px; height: 68px;
+  flex-shrink: 0;
+}
+.fc-ring__track { stroke: rgba(23,61,53,.12); }
+.fc-ring__fill  { stroke: #226A56; }
+.fc-ring__label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #226A56;
+  pointer-events: none;
+}
+.fc-ring__sep { opacity: 0.5; font-weight: 400; }
+.fc-ring__tot { opacity: 0.6; }
+
+/* ── Keyboard hint paragraph ── */
+.fc-kbd-hint {
+  font-size: 0.7rem;
+  color: var(--clr-ink-soft, #6b7280);
+  text-align: center;
+  flex: 1;
+  padding-inline-start: 0.75rem;
+}
+.fc-kbd {
+  display: inline-block;
+  padding: 0.05rem 0.35rem;
+  border: 1px solid var(--clr-border, rgba(0,0,0,.15));
+  border-radius: var(--ds-radius-xs);
+  font-size: 0.65rem;
+  font-family: monospace;
+  background: rgba(0,0,0,.04);
+  line-height: 1.4;
+}
+
+/* ── Card: category badge + hint text ── */
+.fc-card__top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+.fc-card__cat-badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  background: rgba(23,61,53,.1);
+  border: 1px solid rgba(23,61,53,.2);
+  border-radius: var(--ds-radius-full);
+  color: #226A56;
+}
+.fc-card__hint-text {
+  font-size: 0.78rem;
+  color: var(--clr-ink-soft, #6b7280);
+  margin-top: -0.25rem;
+  margin-bottom: 0.4rem;
+  font-style: normal;
+}
+
+/* ── Quality buttons: SM2 preview row ── */
+.fc-quality__btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+.fc-q__main { font-size: 0.83rem; font-weight: 700; }
+.fc-q__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.63rem;
+  opacity: 0.75;
+}
+.fc-q__days { font-weight: 500; }
+
+/* ── Stats icons ── */
+.fc-stats__icon {
+  color: #226A56;
+  margin-bottom: 0.15rem;
+}
+
+/* Dark mode 63 */
+html[data-theme="dark"] .fc-ring__track { stroke: rgba(23,61,53,.22); }
+html[data-theme="dark"] .fc-ring__label { color: #5ecba1; }
+html[data-theme="dark"] .fc-ring__fill  { stroke: #5ecba1; }
+html[data-theme="dark"] .fc-card__cat-badge {
+  background: rgba(94,203,161,.12);
+  border-color: rgba(94,203,161,.25);
+  color: #5ecba1;
+}
+html[data-theme="dark"] .fc-kbd {
+  background: rgba(255,255,255,.07);
+  border-color: rgba(255,255,255,.2);
+  color: #e8f5ee;
+}
+
