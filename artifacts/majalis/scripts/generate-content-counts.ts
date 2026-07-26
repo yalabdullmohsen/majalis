@@ -41,7 +41,7 @@ const counts = {
   mindMaps: MIND_MAPS.length,
   rulings: rulingsManifest.total,
   courses: ANNUAL_COURSES_SEED.length,
-  miracles: MIRACLES_SEED.length,
+  miracles: MIRACLES_SEED.filter((m) => m.status === "approved" && m.verification_status === "verified").length,
   adhkar: ADHKAR_ITEMS.length,
   qa: SEED_QA.length,
   nations: NATIONS.length,
