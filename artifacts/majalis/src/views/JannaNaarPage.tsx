@@ -3,6 +3,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import "@/styles/pages/janna-naar.css";
 
 /* ══════════════════════════════════════════════════════════════════
@@ -307,7 +308,7 @@ export default function JannaNaarPage() {
         {activeTab === "duas" && (
           <div role="tabpanel" id="jnn-panel-duas" aria-labelledby="jnn-tab-duas">
             <div className="jn-intro">
-              <p>من أعظم ما يتقرَّب به العبد إلى الله دعاؤه بالجنة والاستعاذة من النار. قال ﷺ: «من سأل الله الجنة ثلاثاً قالت الجنة: اللهم أدخله الجنة».</p>
+              <p>من أعظم ما يتقرَّب به العبد إلى الله دعاؤه بالجنة والاستعاذة من النار. قال ﷺ: «من سأل الله الجنة ثلاث مرات قالت الجنة: اللهم أدخله الجنة، ومن استعاذ من النار ثلاث مرات قالت النار: اللهم أجِره من النار» (الترمذي وابن ماجه، وصححه الألباني).</p>
             </div>
             <div className="jn-duas-list">
               {filteredDuas.map((d, i) => (
@@ -322,9 +323,25 @@ export default function JannaNaarPage() {
 
       </div>
 
+      <nav className="jn-related" aria-label="موضوعات ذات صلة">
+        <h2 className="jn-related__title">موضوعات ذات صلة</h2>
+        <div className="jn-related__grid">
+          {[
+            { href: "/tawhid", label: "التوحيد" },
+            { href: "/arkan-iman", label: "أركان الإيمان" },
+            { href: "/alamat-saah", label: "علامات الساعة" },
+            { href: "/malaika", label: "الملائكة" },
+            { href: "/asma-husna", label: "الأسماء الحسنى" },
+          ].map((l) => (
+            <a key={l.href} href={l.href} className="jn-related__link">{l.label}</a>
+          ))}
+        </div>
+      </nav>
+
       <div className="twh-share">
         <ShareButtons title="الجنة والنار — المجلس العلمي" url="https://www.majlisilm.com/janna-naar" />
       </div>
+      <RelatedKnowledge kind="lesson" query="الجنة والنار" title="دروس ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-6">
         <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة" count={4} />
       </div>
