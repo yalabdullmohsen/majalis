@@ -6,6 +6,7 @@ import { Link } from "wouter";
 import { useDropzone, type FileRejection } from "react-dropzone";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/components/AuthProvider";
+import "@/styles/pages/transcribe.css";
 
 type TabId = "upload" | "youtube" | "text";
 type Status = "idle" | "uploading" | "processing" | "done" | "error";

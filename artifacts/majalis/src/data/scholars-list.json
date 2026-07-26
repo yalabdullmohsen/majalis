@@ -107,7 +107,7 @@
   {
     "id": "fawzan",
     "name": "الشيخ صالح الفوزان",
-    "died": "—"
+    "died": "حيّ (معاصر)"
   },
   {
     "id": "al-suyuti",
@@ -493,5 +493,185 @@
     "id": "al-qurtubi",
     "name": "القرطبي",
     "died": "٦٧١ هـ"
+  },
+  {
+    "id": "abu-nuaym",
+    "name": "أبو نعيم الأصبهاني",
+    "died": "٤٣٠ هـ"
+  },
+  {
+    "id": "alusi",
+    "name": "الآلوسي",
+    "died": "١٢٧٠ هـ"
+  },
+  {
+    "id": "baghawi",
+    "name": "البغوي",
+    "died": "٥١٦ هـ"
+  },
+  {
+    "id": "sarakhsi",
+    "name": "السرخسي",
+    "died": "٤٨٣ هـ"
+  },
+  {
+    "id": "kasani",
+    "name": "الكاساني",
+    "died": "٥٨٧ هـ"
+  },
+  {
+    "id": "zamakhshari",
+    "name": "الزمخشري",
+    "died": "٥٣٨ هـ"
+  },
+  {
+    "id": "wahidi",
+    "name": "الواحدي",
+    "died": "٤٦٨ هـ"
+  },
+  {
+    "id": "ibn-atiyya",
+    "name": "ابن عطية",
+    "died": "٥٤٢ هـ"
+  },
+  {
+    "id": "baydawi",
+    "name": "البيضاوي",
+    "died": "٦٨٥ هـ"
+  },
+  {
+    "id": "munawi",
+    "name": "المناوي",
+    "died": "١٠٣١ هـ"
+  },
+  {
+    "id": "tahawi",
+    "name": "الطحاوي",
+    "died": "٣٢١ هـ"
+  },
+  {
+    "id": "marghinani",
+    "name": "المرغيناني",
+    "died": "٥٩٣ هـ"
+  },
+  {
+    "id": "ibn-al-athir",
+    "name": "ابن الأثير",
+    "died": "٦٣٠ هـ"
+  },
+  {
+    "id": "abu-hayyan",
+    "name": "أبو حيان الأندلسي",
+    "died": "٧٤٥ هـ"
+  },
+  {
+    "id": "qadi-iyad",
+    "name": "القاضي عياض",
+    "died": "٥٤٤ هـ"
+  },
+  {
+    "id": "ibn-abi-dunya",
+    "name": "ابن أبي الدنيا",
+    "died": "٢٨١ هـ"
+  },
+  {
+    "id": "amidi",
+    "name": "الآمدي",
+    "died": "٦٣١ هـ"
+  },
+  {
+    "id": "hasan-basri",
+    "name": "الحسن البصري",
+    "died": "١١٠ هـ"
+  },
+  {
+    "id": "ibn-abi-izz",
+    "name": "ابن أبي العز",
+    "died": "٧٩٢ هـ"
+  },
+  {
+    "id": "ramli",
+    "name": "الرملي",
+    "died": "١٠٠٤ هـ"
+  },
+  {
+    "id": "bahuti",
+    "name": "البهوتي",
+    "died": "١٠٥١ هـ"
+  },
+  {
+    "id": "hajjawi",
+    "name": "الحجاوي",
+    "died": "٩٦٨ هـ"
+  },
+  {
+    "id": "mardawi",
+    "name": "المرداوي",
+    "died": "٨٨٥ هـ"
+  },
+  {
+    "id": "ayni",
+    "name": "العيني",
+    "died": "٨٥٥ هـ"
+  },
+  {
+    "id": "khiraqi",
+    "name": "الخرقي",
+    "died": "٣٣٤ هـ"
+  },
+  {
+    "id": "ibn-humam",
+    "name": "ابن الهمام",
+    "died": "٨٦١ هـ"
+  },
+  {
+    "id": "khalil-ibn-ishaq",
+    "name": "خليل بن إسحاق",
+    "died": "٧٧٦ هـ تقريبًا"
+  },
+  {
+    "id": "ibn-abi-hatim",
+    "name": "ابن أبي حاتم",
+    "died": "٣٢٧ هـ"
+  },
+  {
+    "id": "qastallani",
+    "name": "القسطلاني",
+    "died": "٩٢٣ هـ"
+  },
+  {
+    "id": "zaylai",
+    "name": "الزيلعي",
+    "died": "٧٦٢ هـ"
+  },
+  {
+    "id": "dardir",
+    "name": "الدردير",
+    "died": "١٢٠١ هـ"
+  },
+  {
+    "id": "al-dusuki",
+    "name": "الدسوقي",
+    "died": "١٢٣٠ هـ"
+  },
+  {
+    "id": "al-hattab",
+    "name": "الحطّاب",
+    "died": "٩٥٤ هـ"
+  },
+  {
+    "id": "al-kharashi",
+    "name": "الخرشي",
+    "died": "١١٠١ هـ"
+  },
+  {
+    "id": "baqillani",
+    "name": "الباقلاني",
+    "died": "٤٠٣ هـ"
+  },
+  {
+    "id": "al-sanusi",
+    "name": "السنوسي",
+    "died": "٨٩٥ هـ"
   }
 ]

@@ -4,6 +4,8 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/duas.css";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 /* ─── بيانات الأدعية ─── */
 type DuaEntry = {
@@ -198,7 +200,7 @@ const DUAS: DuaEntry[] = [
     title: "دعاء الهم والحزن",
     arabic: "اللَّهُمَّ إِنِّي عَبْدُكَ وَابْنُ عَبْدِكَ وَابْنُ أَمَتِكَ، نَاصِيَتِي بِيَدِكَ، مَاضٍ فِيَّ حُكْمُكَ، عَدْلٌ فِيَّ قَضَاؤُكَ",
     transliteration: "Allahumma inni 'abduka, wabnu 'abdika, wabnu amatika, nasiyati biyadika...",
-    meaning: "اللهم إني عبدك وابن عبدك، ناصيتي بيدك، ماضٍ في حكمك، عدل في قضاؤك",
+    meaning: "اللهم إني عبدك وابن عبدك، ناصيتي بيدك، ماضٍ فيَّ حكمك، عدلٌ فيَّ قضاؤك",
     source: "رواه أحمد، صحيح الجامع",
     category: "الكرب والهم",
     occasion: "عند الهم والحزن",

@@ -43,12 +43,25 @@ const CACHEABLE_API_PATHS = [
   "/api/library",
 ];
 
+const STATIC_SHELL_ASSETS = [
+  "/offline.html",
+  "/logo.png",
+  "/favicon.png",
+  "/star-pattern.svg",
+];
+
 self.addEventListener("install", (event) => {
   event.waitUntil(
     // Never pre-cache /, index.html, or route documents. A cached document can
     // pin a returning PWA to the hashed assets of an older deployment.
     caches.open(OFFLINE_CACHE)
-      .then((cache) => cache.add("/offline.html"))
+      .then((cache) =>
+        Promise.all(
+          STATIC_SHELL_ASSETS.map((url) =>
+            cache.add(url).catch(() => undefined),
+          ),
+        ),
+      )
       .catch(() => undefined),
   );
   self.skipWaiting();
@@ -146,6 +159,17 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(
       fetchWithTimeout(req).catch(() => caches.match(req) || Promise.reject()),
     );
+    return;
+  }
+
+  // أصول ثابتة للهوية/الخطوط المحلية — cache-first (لا hashed، آمنة عبر النشرات)
+  if (
+    STATIC_SHELL_ASSETS.includes(url.pathname) ||
+    url.pathname.startsWith("/fonts/") ||
+    url.pathname === "/manifest.webmanifest" ||
+    url.pathname === "/manifest.json"
+  ) {
+    event.respondWith(cacheFirst(req, OFFLINE_CACHE));
     return;
   }
 

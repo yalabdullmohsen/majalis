@@ -1,0 +1,70 @@
+/* ── 161 — HaramainLessonsSection (hrm-*) ───────────────────────────────── */
+
+.hrm-result--ok    { background: #D4E9DC; border-color: #6EE7B7; }
+.hrm-result--fail  { background: #FEE2E2; border-color: #FCA5A5; }
+
+.hrm-import-btn--all { background: var(--majalis-emerald-deep) !important; }
+
+.hrm-filters--cats { flex-wrap: wrap; }
+.hrm-filter-btn--sm { font-size: 0.72rem !important; padding: 0.2rem 0.55rem !important; }
+
+.hrm-card--makkah { border-top: 3px solid var(--majalis-gold, #226A56); }
+.hrm-card--madinah { border-top: 3px solid var(--majalis-emerald); }
+
+.hrm-card__tag--recurring { background: var(--majalis-sage); color: var(--majalis-emerald-deep); }
+
+/* انسجام ألوان البطاقات المميزة */
+
+/* بطاقات الأقسام */
+
+/* انسجام الألوان في لوحة التحكم */
+.admin-main {
+  background: var(--majalis-parchment);
+}
+.admin-sidebar {
+  background: var(--majalis-panel);
+  border-inline-end: 1px solid var(--majalis-line);
+}
+.admin-nav__group-label {
+  color: var(--majalis-ink-muted);
+  font-size: var(--ds-text-2xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: normal;
+}
+.admin-nav__item {
+  border-radius: var(--ds-radius-sm);
+  transition: background 0.15s, color 0.15s;
+}
+.admin-nav__item.is-active {
+  background: var(--majalis-emerald);
+  color: var(--majalis-parchment);
+}
+.admin-nav__item:not(.is-active):hover {
+  background: var(--majalis-sage);
+  color: var(--majalis-emerald-deep);
+}
+
+/* تحسين بطاقات الدروس في الصفحة الرئيسية */
+
+/* الركن اليومي */
+
+/* تحسين Hero */
+
+/* شريط الرجوع في الإدارة */
+.admin-main-header {
+  background: var(--majalis-parchment);
+}
+
+/* تحسين الإضاءة العامة */
+body {
+  background: var(--majalis-parchment);
+  color: var(--majalis-ink);
+}
+
+/* إخفاء الحدود المكررة */
+.home-page section + section {
+  border-top: none;
+}
+
+/* ── نُقل إلى styles/components/global-search-modal.css ── */

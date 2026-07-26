@@ -4,6 +4,7 @@ import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/ulum-quran.css";
 
 
 type UQTab = "nuzul" | "jam" | "tafsir" | "ijaz" | "ahkam" | "qiraat";

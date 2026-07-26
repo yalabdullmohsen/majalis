@@ -127,7 +127,7 @@
   },
   {
     "id": "author-al-hajjawi",
-    "name": "الشيخ الحجاوي",
+    "name": "الإمام موسى الحجاوي",
     "normalizedName": "الحجاوي",
     "verificationStatus": "pending_review",
     "sources": []
@@ -528,6 +528,293 @@
     "id": "author-taj-al-din-al-subki",
     "name": "الإمام تاج الدين السبكي",
     "normalizedName": "تاج الدين السبكي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-ibn-abd-al-barr",
+    "name": "الإمام ابن عبد البر",
+    "normalizedName": "ابن عبد البر",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-shatibi",
+    "name": "الإمام إبراهيم بن موسى الشاطبي",
+    "normalizedName": "ابراهيم بن موسي الشاطبي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-marghinani",
+    "name": "الإمام علي بن أبي بكر المرغيناني",
+    "normalizedName": "علي بن ابي بكر المرغيناني",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-sarakhsi",
+    "name": "الإمام شمس الأئمة السرخسي",
+    "normalizedName": "شمس الائمه السرخسي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-shawkani",
+    "name": "الإمام محمد بن علي الشوكاني",
+    "normalizedName": "محمد بن علي الشوكاني",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-sanani",
+    "name": "الإمام محمد بن إسماعيل الأمير الصنعاني",
+    "normalizedName": "محمد بن اسماعيل الامير الصنعاني",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-shanqiti",
+    "name": "الشيخ محمد الأمين الشنقيطي",
+    "normalizedName": "محمد الامين الشنقيطي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-alusi",
+    "name": "الإمام شهاب الدين الآلوسي",
+    "normalizedName": "شهاب الدين الالوسي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-abu-nuaym",
+    "name": "الإمام أبو نعيم الأصبهاني",
+    "normalizedName": "ابو نعيم الاصبهاني",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-kasani",
+    "name": "الإمام أبو بكر الكاساني",
+    "normalizedName": "ابو بكر الكاساني",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-zamakhshari",
+    "name": "الإمام محمود بن عمر الزمخشري",
+    "normalizedName": "محمود بن عمر الزمخشري",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-wahidi",
+    "name": "الإمام علي بن أحمد الواحدي",
+    "normalizedName": "علي بن احمد الواحدي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-bayhaqi",
+    "name": "الإمام أحمد بن الحسين البيهقي",
+    "normalizedName": "احمد بن الحسين البيهقي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-ibn-al-mubarak",
+    "name": "الإمام عبد الله بن المبارك",
+    "normalizedName": "عبد الله بن المبارك",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-ibn-uthaymeen",
+    "name": "الشيخ محمد بن صالح العثيمين",
+    "normalizedName": "محمد بن صالح العثيمين",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-ibn-khuzaymah",
+    "name": "الإمام أبو بكر محمد بن إسحاق بن خزيمة",
+    "normalizedName": "ابو بكر محمد بن اسحاق بن خزيمة",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-ibn-ashur",
+    "name": "العلامة محمد الطاهر بن عاشور",
+    "normalizedName": "محمد الطاهر بن عاشور",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-khatib-baghdadi",
+    "name": "الإمام أحمد بن علي الخطيب البغدادي",
+    "normalizedName": "احمد بن علي الخطيب البغدادي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-dhahabi",
+    "name": "الإمام شمس الدين الذهبي",
+    "normalizedName": "شمس الدين الذهبي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-shafii",
+    "name": "الإمام محمد بن إدريس الشافعي",
+    "normalizedName": "محمد بن ادريس الشافعي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-abdurrazzaq",
+    "name": "الإمام عبد الرزاق الصنعاني",
+    "normalizedName": "عبد الرزاق الصنعاني",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-ramli",
+    "name": "الإمام شمس الدين الرملي",
+    "normalizedName": "شمس الدين الرملي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-ibn-abi-izz",
+    "name": "الإمام ابن أبي العز الحنفي",
+    "normalizedName": "ابن ابي العز الحنفي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-mardawi",
+    "name": "الإمام علاء الدين المرداوي",
+    "normalizedName": "علاء الدين المرداوي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-ayni",
+    "name": "الإمام بدر الدين العيني",
+    "normalizedName": "بدر الدين العيني",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-jaziri",
+    "name": "العلامة عبد الرحمن الجزيري",
+    "normalizedName": "عبد الرحمن الجزيري",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-qahtani",
+    "name": "سعيد بن علي بن وهف القحطاني",
+    "normalizedName": "سعيد بن علي بن وهف القحطاني",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-abu-bakr-jazairi",
+    "name": "الشيخ أبو بكر جابر الجزائري",
+    "normalizedName": "ابو بكر جابر الجزائري",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-dimyati",
+    "name": "أبو بكر عثمان بن محمد شطا الدمياطي",
+    "normalizedName": "ابو بكر عثمان بن محمد شطا الدمياطي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-khiraqi",
+    "name": "الإمام عمر بن الحسين الخرقي",
+    "normalizedName": "عمر بن الحسين الخرقي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-ibn-humam",
+    "name": "الإمام كمال الدين ابن الهمام",
+    "normalizedName": "كمال الدين ابن الهمام",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-khalil-ibn-ishaq",
+    "name": "الإمام خليل بن إسحاق الجندي",
+    "normalizedName": "خليل بن اسحاق الجندي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-ibn-abi-hatim",
+    "name": "الإمام ابن أبي حاتم الرازي",
+    "normalizedName": "ابن ابي حاتم الرازي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-qastallani",
+    "name": "الإمام شهاب الدين القسطلاني",
+    "normalizedName": "شهاب الدين القسطلاني",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-zaylai",
+    "name": "الإمام جمال الدين الزيلعي",
+    "normalizedName": "جمال الدين الزيلعي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-dardir",
+    "name": "الإمام أحمد الدردير",
+    "normalizedName": "احمد الدردير",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-dusuki",
+    "name": "الإمام محمد عرفة الدسوقي",
+    "normalizedName": "محمد عرفه الدسوقي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-hattab",
+    "name": "الإمام الحطّاب الرعيني",
+    "normalizedName": "الحطاب الرعيني",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-kharashi",
+    "name": "الإمام محمد الخرشي",
+    "normalizedName": "محمد الخرشي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-baqillani",
+    "name": "القاضي أبو بكر الباقلاني",
+    "normalizedName": "ابو بكر الباقلاني",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-sanusi",
+    "name": "الإمام محمد بن يوسف السنوسي",
+    "normalizedName": "محمد بن يوسف السنوسي",
     "verificationStatus": "pending_review",
     "sources": []
   }

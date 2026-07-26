@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Link } from "wouter";
 import { PROGRESS_TASKS } from "@/lib/daily-progress";
+import "@/styles/components/home/home-week-streak.css";
 
 const DAY_AR = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
 const DAY_SHORT = ["أحد", "إث", "ثل", "أرب", "خم", "جم", "سب"];

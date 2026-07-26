@@ -15,6 +15,7 @@ import {
 } from "@/lib/scholarly-intelligence-service";
 import { RecitationTestPanel } from "@/components/quran/RecitationTestPanel";
 import { fetchSurahDetail, stripEmbeddedBismillah } from "@/lib/quran-api";
+import "@/styles/components/explore-ayah.css";
 
 type Props = {
   surahNum: number;

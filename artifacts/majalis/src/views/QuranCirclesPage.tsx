@@ -7,6 +7,8 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { ShareButtons } from "@/components/ContentActions";
 import { IslamicDivider } from "@/components/design/IslamicDivider";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/quran-circles.css";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 const LEVEL_OPTIONS = ["الكل", "مبتدئ", "متوسط", "متقدم"];
 const TRACK_OPTIONS = ["الكل", "رجال", "نساء", "أطفال", "عام"];
@@ -259,6 +261,7 @@ export default function QuranCirclesPage() {
       <div className="twh-share">
         <ShareButtons title="حلقات القرآن الكريم — المجلس العلمي" url="https://www.majlisilm.com/quran-circles" />
       </div>
+      <RelatedKnowledge kind="lesson" query="حلقات القرآن" title="دروس ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />
       </div>

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { AlertTriangle, Bell, Clock, Globe, RotateCw } from "lucide-react";
 import { Link } from "wouter";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
+import "@/styles/pages/universities-admin.css";
 import {
   adminFetchUniversities,
   adminCreateUniversity,

@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { getTodayAsma } from "@/lib/asma-husna-data";
+import "@/styles/components/home/home-asma-card.css";
 
 const CATEGORY_COLORS: Record<string, string> = {
   الجلال: "#143F35",

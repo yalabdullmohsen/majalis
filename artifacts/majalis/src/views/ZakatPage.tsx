@@ -7,6 +7,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { toWesternDigits } from "@/shared/arabic-normalize";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/zakat.css";
 
 /* ─── بيانات الأصناف ─── */
 type ZakatKind = {
@@ -117,7 +118,7 @@ const KINDS: ZakatKind[] = [
     nisab: "تجب على كل مسلم قادر",
     rate: "صاع من غالب قوت البلد ≈ 2.5 كغ أو ما يعادله نقداً",
     condition: "أن يُدرك آخر رمضان وأول شوال، وأن يكون قادراً",
-    detail: "تُخرَج قبل صلاة عيد الفطر، وتجوز من أول رمضان. يُخرجها عن نفسه ومن يعول. مصرفها الفقراء تحديداً، والحكمة طُهرة للصائم وإغناء الفقراء عن السؤال يوم العيد.",
+    detail: "تُخرَج قبل صلاة عيد الفطر، وفي تقديمها من أول رمضان خلاف بين الفقهاء. يُخرجها عن نفسه ومن يعول. مصرفها الفقراء تحديداً، والحكمة طُهرة للصائم وإغناء الفقراء عن السؤال يوم العيد.",
     dalil: "«فرض رسول الله ﷺ زكاة الفطر صاعاً من تمر أو صاعاً من شعير على العبد والحر والذكر والأنثى والصغير والكبير من المسلمين»",
     dalilRef: "رواه البخاري ومسلم",
     mustahiq: ["الفقراء", "المساكين"],

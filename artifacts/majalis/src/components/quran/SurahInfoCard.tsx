@@ -14,7 +14,17 @@ export function SurahInfoCard({ surah }: { surah: StaticSurahMeta }) {
           <span>التصنيف المشهور في فهرس المصحف</span>
         </div>
       </div>
-      <Link href={`/quran?surah=${surah.number}`} className="surah-info-card__link">قراءة السورة</Link>
+      <nav className="surah-info-card__links" aria-label={`روابط سورة ${surah.name}`}>
+        <Link href={`/quran?surah=${surah.number}`} className="surah-info-card__link">
+          قراءة السورة
+        </Link>
+        <Link href={`/quran/surah-stories/${surah.number}`} className="surah-info-card__link surah-info-card__link--secondary">
+          قصص وفوائد
+        </Link>
+        <Link href="/ulum-quran" className="surah-info-card__link surah-info-card__link--secondary">
+          علوم القرآن
+        </Link>
+      </nav>
     </article>
   );
 }

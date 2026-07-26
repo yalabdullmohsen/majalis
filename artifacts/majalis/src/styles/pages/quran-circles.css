@@ -1,0 +1,39 @@
+/* ══════════════════════════════════════════════════════
+   60  Quran Circles Page  (qcp-*)
+   ══════════════════════════════════════════════════════ */
+
+/* ─ Header ─ */
+.qcp-header  { padding: 1.5rem 0 1rem; border-bottom: 1px solid var(--majalis-line); margin-bottom: 1rem; }
+.qcp-eyebrow { color: var(--majalis-emerald); font-size: 0.82rem; font-weight: 700; margin-bottom: 0.25rem; }
+.qcp-title   { font-family: var(--font-display); font-size: clamp(1.4rem, 5vw, 2rem); font-weight: 700; color: var(--majalis-ink); margin-bottom: 0.35rem; }
+.qcp-subtitle { color: var(--majalis-ink-soft); font-size: 0.9rem; }
+
+/* ─ Filters ─ */
+.qcp-filters     { display: flex; flex-direction: column; gap: var(--ds-space-2); margin-bottom: 1.5rem; }
+.qcp-filter-row  { display: flex; gap: 0.4rem; overflow-x: auto; padding-bottom: 0.25rem; }
+.qcp-filter-label { font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); padding-top: 0.4rem; white-space: nowrap; }
+.qcp-filter-pill { padding: 0.35rem 0.85rem; border-radius: 2rem; border: 1px solid var(--majalis-line); background: var(--majalis-panel); color: var(--majalis-ink-soft); font-size: 0.8rem; font-weight: 400; cursor: pointer; white-space: nowrap; transition: all 0.15s; min-height: 44px; }
+.qcp-filter-pill.is-active { border-color: var(--majalis-emerald); background: var(--majalis-emerald); color: #fff; font-weight: 700; }
+
+/* ─ Grid ─ */
+.qcp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: var(--ds-space-4); margin-top: 1rem; }
+
+/* ─ Skeleton ─ */
+.qcp-skeleton { animation: pulse 1.5s ease-in-out infinite; }
+.qcp-skeleton__head { height: 4.5rem; opacity: 0.4; }
+.qcp-skeleton__bar  { background: var(--majalis-line); border-radius: var(--ds-radius); margin-bottom: 0.5rem; }
+.qcp-skeleton__bar--1 { height: 1rem;  width: 60%; }
+.qcp-skeleton__bar--2 { height: 0.8rem; width: 40%; margin-bottom: 0; }
+
+/* ─ Error ─ */
+.qcp-error      { text-align: center; padding: 3rem 1rem; color: var(--msk-red, #C1595A); }
+.qcp-error__msg { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.qcp-retry-btn  { padding: 0.5rem 1.5rem; background: var(--majalis-emerald); color: #fff; border: none; border-radius: var(--ds-radius); cursor: pointer; }
+
+/* ─ Empty state ─ */
+.qcp-empty        { text-align: center; padding: 4rem 1rem; color: var(--majalis-ink-soft); }
+.qcp-empty__icon  { font-size: 2rem; margin-bottom: 0.75rem; }
+.qcp-empty__title { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.4rem; }
+.qcp-empty__desc  { font-size: 0.85rem; }
+.qcp-clear-btn    { margin-top: 1rem; padding: 0.5rem 1.5rem; background: var(--majalis-sage); color: var(--majalis-emerald-deep); border: none; border-radius: var(--ds-radius); cursor: pointer; font-weight: 600; }
+

@@ -9,11 +9,13 @@ import { RequestManager } from "@/lib/request-manager";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { LIBRARY_CATEGORIES } from "@/lib/library-catalog";
 import { Chip } from "@/components/ui-common";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { ContentHubLayout } from "@/components/layout/ContentHubLayout";
 import { usePersistedState } from "@/hooks/usePersistedState";
 import { applyPageSeo } from "@/lib/seo";
 import { BookOpen, SortAsc, SortDesc, LayoutGrid, List } from "lucide-react";
+import "@/styles/pages/library.css";
 
 type SortKey = "title" | "author" | "newest";
 type ViewMode = "grid" | "list";
@@ -267,6 +269,7 @@ export default function LibraryPage({
       <div className="twh-share">
         <ShareButtons title="المكتبة الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/library" />
       </div>
+      <RelatedKnowledge kind="book" query="مكتبة إسلامية" title="كتب ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["quran", "hadith"]} title="اختبر معلوماتك في علوم الكتاب والسنة" count={4} />
       </div>

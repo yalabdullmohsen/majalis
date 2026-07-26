@@ -431,4 +431,28 @@
   .ah-nod-arabic { font-size: 2rem; }
 }
 
+/* تنبيه منهجي — ضعف سرد الترمذي التفصيلي */
+.ah-method-note {
+  margin: 0 0 1.25rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--ds-radius-lg, 12px);
+  border: 1px solid color-mix(in srgb, #143F35 28%, transparent);
+  background: color-mix(in srgb, #143F35 8%, #fff);
+  color: #1a2e28;
+  font-size: 0.92rem;
+  line-height: 1.85;
+  text-align: right;
+}
+.ah-method-note strong {
+  color: #143F35;
+}
+html[data-theme="dark"] .ah-method-note {
+  background: color-mix(in srgb, #3BAD8A 12%, #0f1714);
+  border-color: color-mix(in srgb, #3BAD8A 35%, transparent);
+  color: #e8f2ee;
+}
+html[data-theme="dark"] .ah-method-note strong {
+  color: #8fd6bc;
+}
+
 /* ── نهاية §218 ────────────────────────────────────────────── */

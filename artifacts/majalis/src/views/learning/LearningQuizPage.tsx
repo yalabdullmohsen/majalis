@@ -9,6 +9,7 @@ import {
   type QuizQuestion,
 } from "@/lib/digital-learning-service";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/learning-quiz.css";
 
 type Phase = "loading" | "playing" | "done" | "error";
 

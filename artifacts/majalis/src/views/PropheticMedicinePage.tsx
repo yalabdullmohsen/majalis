@@ -12,6 +12,8 @@ import {
   PM_CATEGORIES,
   type PropheticMedicineCategory,
 } from "@/lib/prophetic-medicine-seed";
+import "@/styles/pages/prophetic-medicine.css";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 const PM_ICON_MAP: Record<string, LucideIcon> = {
   Leaf, Moon, BookOpen, CalendarDays, Utensils, Sunrise, FlaskConical, Stethoscope,
@@ -187,6 +189,7 @@ export default function PropheticMedicinePage() {
       >
         {filterPanel}
       </FilterBottomSheet>
+      <RelatedKnowledge kind="hadith" query="الطب النبوي" title="أحاديث ومواد في الطب النبوي" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في الطب النبوي" count={4} />
       </div>

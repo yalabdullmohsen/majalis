@@ -1,0 +1,295 @@
+/* ═══════════════════════════════════════
+   صفحة إعدادات الإشعارات (notif-* / nh-*)
+   ═══════════════════════════════════════ */
+
+/* بانرات */
+.notif-banner--warn {
+  background: rgba(24,54,42,0.07) !important;
+  color: var(--elite-forest, #143F35) !important;
+  border: 1px solid rgba(24,54,42,0.22) !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+}
+.notif-banner--err {
+  background: #FEF2F2 !important;
+  color: #991b1b !important;
+  border: 1px solid rgba(185,28,28,0.22) !important;
+  border-radius: 12px !important;
+}
+
+/* بطاقة إعداد */
+.notif-card {
+  background: #fff !important;
+  border: 1px solid rgba(24,54,42,0.09) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 2px 16px rgba(24,54,42,0.05) !important;
+  padding: 1.25rem 1.4rem !important;
+  overflow: hidden !important;
+}
+.notif-card__title {
+  color: rgba(24,54,42,0.55) !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  letter-spacing: normal !important;
+  text-transform: uppercase !important;
+  margin-bottom: 0.75rem !important;
+}
+
+/* صف toggle */
+.notif-row__label {
+  color: #143F35 !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+}
+.notif-row__sub { color: var(--elite-ink-soft, #4A5568) !important; font-size: 0.78rem !important; }
+/* لا يوجد استثناء للوضع الليلي هنا أصلاً (شُخِّص 2026-07-19) — الصف يقع
+   داخل حاوية "-card" تتحول خلفيتها لأخضر داكن #143F35 في الوضع الليلي
+   (قاعدة "Cards dark" العامة)، بينما يبقى النص #143F35 نفسه = 1:1. */
+html[data-theme="dark"] .notif-row__label {
+  color: #E5F0EC !important;
+}
+
+/* التبديل */
+.notif-toggle {
+  background: rgba(24,54,42,0.15) !important;
+  border-radius: 999px !important;
+  transition: background 0.22s !important;
+}
+.notif-toggle--on { background: var(--elite-forest, #143F35) !important; }
+.notif-toggle__thumb {
+  box-shadow: 0 1px 5px rgba(0,0,0,0.25) !important;
+  transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+
+/* وقت التذكير */
+.notif-time__label { color: var(--elite-ink-soft, #4A5568) !important; font-size: 0.875rem !important; }
+.notif-time__input {
+  border: 1.5px solid rgba(24,54,42,0.18) !important;
+  border-radius: 10px !important;
+  color: var(--elite-forest, #143F35) !important;
+  background: var(--elite-white, #FAFAF8) !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  padding: 0.4rem 0.6rem !important;
+  width: 3.5rem !important;
+  text-align: center !important;
+}
+.notif-time__input:focus { border-color: var(--elite-forest, #143F35) !important; outline: none !important; box-shadow: 0 0 0 3px rgba(24,54,42,0.08) !important; }
+.notif-time__hint { color: #8a9a8e !important; font-size: 0.78rem !important; }
+
+/* زر الاختبار */
+.notif-test-btn {
+  width: 100% !important;
+  background: var(--elite-forest, #143F35) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  padding: 0.8rem !important;
+  cursor: pointer !important;
+  transition: opacity 0.15s, transform 0.15s !important;
+  font-family: inherit !important;
+}
+.notif-test-btn:hover { opacity: 0.88 !important; transform: translateY(-1px) !important; }
+.notif-test-btn:active { transform: translateY(0) !important; }
+
+/* تم الحفظ */
+.notif-saved {
+  background: var(--elite-forest, #143F35) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(24,54,42,0.25) !important;
+  text-align: center !important;
+  padding: 0.65rem 1rem !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  animation: nb-slide-in 0.18s ease !important;
+}
+
+/* ── سجل الإشعارات (nh-*) ── */
+.nh-section {
+  background: #fff !important;
+  border: 1px solid rgba(24,54,42,0.09) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 2px 16px rgba(24,54,42,0.05) !important;
+  overflow: hidden !important;
+}
+
+.nh-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 1.05rem 1.25rem 0.85rem !important;
+  background: linear-gradient(135deg, #143F35 0%, #143F35 100%) !important;
+}
+.nh-header__title {
+  color: #fff !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+}
+.nh-header__badge {
+  background: rgba(255,255,255,0.2) !important;
+  color: #fff !important;
+  font-size: 0.68rem !important;
+  font-weight: 800 !important;
+  min-width: 20px !important;
+  height: 20px !important;
+  border-radius: 999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 5px !important;
+  margin-inline-start: 0.4rem !important;
+  border: 1px solid rgba(255,255,255,0.28) !important;
+}
+.nh-header__actions {
+  display: flex !important;
+  gap: 0.4rem !important;
+  align-items: center !important;
+}
+
+.nh-btn {
+  padding: 0.3rem 0.8rem !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255,255,255,0.28) !important;
+  background: rgba(255,255,255,0.1) !important;
+  color: rgba(255,255,255,0.88) !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: background 0.15s !important;
+  font-family: inherit !important;
+}
+.nh-btn:hover { background: rgba(255,255,255,0.2) !important; color: #fff !important; }
+.nh-btn--danger { color: #ffb3b3 !important; border-color: rgba(255,100,100,0.35) !important; background: rgba(255,80,80,0.08) !important; }
+.nh-btn--danger:hover { background: rgba(255,80,80,0.18) !important; color: #ff7070 !important; }
+
+/* بحث */
+.nh-search-wrap {
+  padding: 0.65rem 1rem !important;
+  border-bottom: 1px solid rgba(24,54,42,0.07) !important;
+  background: var(--elite-white, #FAFAF8) !important;
+  position: relative !important;
+}
+.nh-search {
+  width: 100% !important;
+  background: #fff !important;
+  border: 1.5px solid rgba(24,54,42,0.12) !important;
+  border-radius: 12px !important;
+  color: #143F35 !important;
+  font-size: 0.875rem !important;
+  padding: 0.55rem 2rem 0.55rem 0.9rem !important;
+  transition: border-color 0.15s, box-shadow 0.15s !important;
+  font-family: inherit !important;
+}
+.nh-search:focus {
+  outline: none !important;
+  border-color: var(--elite-forest, #143F35) !important;
+  box-shadow: 0 0 0 3px rgba(24,54,42,0.08) !important;
+}
+.nh-search-clear {
+  position: absolute !important;
+  left: 1.5rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  color: var(--elite-ink-soft, #4A5568) !important;
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  font-size: 0.75rem !important;
+  line-height: 1 !important;
+  padding: 0.25rem !important;
+}
+
+/* تبويبات */
+.nh-tabs {
+  display: flex !important;
+  border-bottom: 1px solid rgba(24,54,42,0.08) !important;
+  background: var(--elite-white, #FAFAF8) !important;
+  padding: 0 1rem !important;
+}
+.nh-tab {
+  flex: 1 !important;
+  padding: 0.7rem 0.5rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: var(--elite-ink-soft, #4A5568) !important;
+  border: none !important;
+  border-bottom: 2.5px solid transparent !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  transition: color 0.15s, border-color 0.15s !important;
+  font-family: inherit !important;
+}
+.nh-tab--active {
+  color: var(--elite-forest, #143F35) !important;
+  border-bottom-color: var(--elite-forest, #143F35) !important;
+  font-weight: 700 !important;
+}
+
+/* قائمة */
+.nh-list { background: #fff !important; }
+
+.nh-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 0.75rem !important;
+  padding: 0.9rem 1.15rem !important;
+  border-bottom: 1px solid rgba(24,54,42,0.055) !important;
+  transition: background 0.14s !important;
+  cursor: pointer !important;
+  background: transparent !important;
+}
+.nh-row:hover { background: rgba(24,54,42,0.035) !important; }
+.nh-row:last-child { border-bottom: none !important; }
+
+.nh-row__dot {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background: var(--elite-forest, #143F35) !important;
+  flex-shrink: 0 !important;
+  margin-top: 0.38rem !important;
+}
+.nh-row--read .nh-row__dot {
+  background: transparent !important;
+  border: 1.5px solid rgba(24,54,42,0.2) !important;
+}
+
+.nh-row__title {
+  color: #143F35 !important;
+  font-weight: 700 !important;
+  font-size: 0.875rem !important;
+}
+.nh-row--read .nh-row__title { color: var(--elite-ink-soft, #4A5568) !important; font-weight: 400 !important; }
+.nh-row__body-text { color: var(--elite-ink-soft, #4A5568) !important; font-size: 0.78rem !important; margin-top: 0.18rem !important; }
+.nh-row__meta { color: #8a9a8e !important; font-size: 0.7rem !important; margin-top: 0.22rem !important; }
+
+.nh-row__actions { opacity: 0 !important; transition: opacity 0.15s !important; display: flex !important; gap: 0.3rem !important; align-items: center !important; }
+.nh-row:hover .nh-row__actions { opacity: 1 !important; }
+
+.nh-action {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 28px !important;
+  height: 28px !important;
+  color: var(--elite-ink-soft, #4A5568) !important;
+  border: 1px solid rgba(24,54,42,0.12) !important;
+  border-radius: 7px !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  transition: background 0.13s, color 0.13s !important;
+}
+.nh-action:hover { background: rgba(24,54,42,0.08) !important; color: var(--elite-forest, #143F35) !important; }
+.nh-action--del:hover { background: rgba(192,57,43,0.08) !important; color: #C0392B !important; border-color: rgba(192,57,43,0.2) !important; }
+
+.nh-empty {
+  color: var(--elite-ink-soft, #4A5568) !important;
+  font-size: 0.875rem !important;
+  padding: 2.5rem 1rem !important;
+  text-align: center !important;
+}
+

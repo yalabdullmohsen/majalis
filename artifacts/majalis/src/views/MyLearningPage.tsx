@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 import { useRecentProgress } from "@/hooks/useRecentProgress";
+import "@/styles/pages/my-learning.css";
 import {
   fetchPersonalLibrary,
   fetchLearningNotes,

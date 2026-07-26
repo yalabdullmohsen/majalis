@@ -12,6 +12,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { FaidahCard } from "@/components/fawaid/FaidahCard";
 import { ShareButtons } from "@/components/ContentActions";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 
 const LEGACY_CATEGORIES = [
   "فوائد قرآنية",
@@ -53,6 +54,7 @@ export default function FawaidPage({
 }: {
   initialFawaid?: any[];
 } = {}) {
+  useReadingScrollMemory("fawaid");
   const [fawaid, setFawaid] = useState<any[]>(initialFawaid ?? []);
   const [loading, setLoading] = useState(!initialFawaid);
   const [category, setCategory] = useState("الكل");

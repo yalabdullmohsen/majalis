@@ -1,0 +1,44 @@
+{
+  "branch": "session/content-enrichment-round-4",
+  "mode": "enrichment_and_audit",
+  "started": "2026-07-26T08:32:00Z",
+  "updated": "2026-07-26T08:45:00Z",
+  "baseline_from_counts": {
+    "quiz": 1167,
+    "quiz_template_explanations": 549,
+    "fawaid": 576,
+    "qa": 419,
+    "rulings_encyclopedia": 602,
+    "stories": 73,
+    "library": 162,
+    "library_null_authorId": 2,
+    "scholars": 123,
+    "adhkar": 321
+  },
+  "batches_done": [
+    "stories6_scholars6_books6",
+    "quiz_improve_280_add30_qa20_fawaid20_adhkar4"
+  ],
+  "added_counts": {
+    "stories_new": 6,
+    "scholars_new": 6,
+    "books_new": 6,
+    "stories_total": 79,
+    "scholars_total": 129,
+    "books_total": 168,
+    "quiz_explanations_improved": 280,
+    "quiz_new": 30,
+    "quiz_total": 1197,
+    "qa_new": 20,
+    "qa_total": 439,
+    "fawaid_new": 20,
+    "fawaid_total": 596,
+    "adhkar_new": 4,
+    "adhkar_total": 325,
+    "templates_left_approx": 269
+  },
+  "needs_post_review_notes": [
+    "كتب بلا authorId: تفسير الجلالين وdaawa-taarud — كما في الجولة 3"
+  ],
+  "status": "gates_green_pending_push"
+}

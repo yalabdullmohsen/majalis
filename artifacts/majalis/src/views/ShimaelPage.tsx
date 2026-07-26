@@ -2,10 +2,11 @@ import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { ChevronDown, ChevronUp, Heart, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
-import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import "@/styles/pages/shimael.css";
 
 /* ══════════════════════════════════════════════════════════════════
    §240، الشمائل المحمدية  (.sh-*)
@@ -725,6 +726,7 @@ export default function ShimaelPage() {
       <div className="twh-share">
         <ShareButtons title="الشمائل المحمدية، المجلس العلمي" url="https://www.majlisilm.com/shimail" />
       </div>
+      <RelatedKnowledge kind="hadith" query="الشمائل المحمدية" title="أحاديث ومعارف ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="sira" title="اختبر معلوماتك في السيرة النبوية" count={4} />
       </div>

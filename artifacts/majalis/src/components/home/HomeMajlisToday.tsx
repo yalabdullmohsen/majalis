@@ -12,6 +12,7 @@ import {
   fetchWeekDayFacts, todayWeekDayCode, weekDayInfoTypeLabel,
   type WeekDayFact,
 } from "@/lib/week-day-facts-service";
+import "@/styles/components/home/home-majlis-today.css";
 
 /* ══ مادة «مجلس اليوم» — فتحة واحدة فقط، لا تكرار ══
    الأولوية: مادة يوم الأسبوع (محتوى محرَّر من قاعدة البيانات) إن توفرت

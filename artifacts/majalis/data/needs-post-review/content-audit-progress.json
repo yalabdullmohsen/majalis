@@ -1,0 +1,81 @@
+{
+  "branch": "session/content-language-audit",
+  "pr": 268,
+  "created": "2026-07-26T04:40:00Z",
+  "updated": "2026-07-26T05:18:00Z",
+  "conventions": {
+    "numbers": "أرقام عربية-هندية في المحتوى العربي عند الإمكان؛ السنوات الهجرية بصيغة ن هـ والميلادية بصيغة ن م",
+    "dates": "اليوم ثم الشهر ثم السنة عند الحاجة",
+    "terminology": "ﷺ للنبي، رضي الله عنه/عنها/عنهما/عنهم للصحابة، رحمه الله للعلماء المتوفين",
+    "summary_min_chars": 43
+  },
+  "totals": {
+    "P1_lessons": 1175,
+    "quiz": 997,
+    "rulings": 73,
+    "adhkar_items_approx": 301,
+    "needs_post_review_lines": 52
+  },
+  "sections": [
+    {
+      "id": "P1",
+      "name": "فهارس الدروس والموضوعات",
+      "status": "pass2_done",
+      "items": 1175,
+      "pass1_batches_done": 2,
+      "pass2_batches_done": 1,
+      "notes": "ملخصات >42، بلا تكرار ملخصات"
+    },
+    {
+      "id": "P2",
+      "name": "أحكام أذكار فوائد أسئلة",
+      "status": "pass2_done",
+      "items": 1440,
+      "pass1_batches_done": 2,
+      "pass2_batches_done": 1,
+      "notes": "اكتملت الجولة الأولى: نصوص مقطوعة، ملخصات أحكام، فوائد ضعيفة، إجابات مكررة، توسيع أقصر الفوائد"
+    },
+    {
+      "id": "P3",
+      "name": "اختبار مناسبات دورات مسارات",
+      "status": "pass2_done",
+      "items": 997,
+      "pass1_batches_done": 1,
+      "pass2_batches_done": 1,
+      "notes": "تفريق أسئلة متقاربة، إزالة تلميح الإجابة، توسيع ملخصات قصيرة؛ متبقٍ للجولة 2: إضافة explanation لـ874 سؤالاً بلا شرح"
+    },
+    {
+      "id": "P4",
+      "name": "صفحات views ذات محتوى hardcoded",
+      "status": "pass2_done",
+      "items": 29,
+      "pass1_batches_done": 1,
+      "pass2_batches_done": 1,
+      "notes": "إصلاحات لغوية وتخفيف جزم طبي/فقهي في glossary/duas/salah/janna/sunan/malaika/sawm/zakat"
+    },
+    {
+      "id": "P5",
+      "name": "علماء مكتبة قصص طب أمم",
+      "status": "pass2_done",
+      "items": 0,
+      "pass1_batches_done": 1,
+      "pass2_batches_done": 1,
+      "notes": "تخفيف إعجاز جازم، طب نبوي، أسماء، علماء، قصص، مكتبة، أمم (نوع غير مفصل)"
+    },
+    {
+      "id": "P6",
+      "name": "مرور ثاني + فحوصات نهائية",
+      "status": "pass2_done",
+      "items": 0,
+      "pass1_batches_done": 0,
+      "pass2_batches_done": 1,
+      "notes": "جولة ثانية: اتساق تكرارات الملخصات/الأسئلة، إضافة شروح لأسئلة معدّلة، فحوصات نهائية"
+    }
+  ],
+  "deploy": {
+    "auto_merge_run": "30189015154",
+    "auto_deploy_run": "30189103969",
+    "main_tip": "9da26842",
+    "note": "PR 268 كان مدمجًا مسبقًا؛ الدمج تم عبر Auto-merge workflow على نفس الفرع"
+  }
+}

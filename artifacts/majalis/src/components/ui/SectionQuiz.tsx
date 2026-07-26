@@ -4,6 +4,7 @@ import { ALL_QUESTIONS } from "@/data/islamicQuizData";
 import type { QuizQuestion } from "@/data/islamicQuizData";
 import { recordQuizAttempt } from "@/lib/quiz-performance-service";
 import { hapticNotify } from "@/lib/capacitor-utils";
+import "@/styles/components/section-quiz.css";
 
 type TaggedQuizQuestion = QuizQuestion & { _catId: string };
 

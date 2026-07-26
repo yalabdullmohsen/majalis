@@ -5,6 +5,8 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/sunan-yawmiyya.css";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 /* ─── أنواع البيانات ─── */
 type Sunnah = {
@@ -56,7 +58,7 @@ const SUNAN: Sunnah[] = [
     time: "عند النوم",
     text: "كان ﷺ ينام على شقه الأيمن ويضع يده اليمنى تحت خده الأيمن، ويقول: «بسمك اللهم أموت وأحيا».",
     source: "رواه البخاري",
-    reward: "أثبتت الدراسات الطبية فوائد النوم على الجانب الأيمن للقلب والهضم.",
+    reward: "يُذكر طبياً أن النوم على الجانب الأيمن أيسر للقلب والهضم، والسنة مقدمة في الاتباع.",
   },
   {
     id: "nak-s5",
@@ -132,7 +134,7 @@ const SUNAN: Sunnah[] = [
     time: "عند الشرب",
     text: "كان ﷺ يشرب بثلاث جرعات ويتنفس خارج الإناء بين الجرعات، ونهى عن النفخ في الإناء.",
     source: "متفق عليه",
-    reward: "أثبت الطب أن الشرب ببطء أفضل للجسم من الشرب السريع.",
+    reward: "الشرب على مهَل أرفق بالجسم، والسنة جاءت بالشرب بثلاث جرعات.",
   },
   {
     id: "eat-s4",
@@ -1025,6 +1027,7 @@ export default function SunanYawmiyyaPage() {
           ))}
         </div>
       </section>
+      <RelatedKnowledge kind="hadith" query="السنن اليومية" title="سنن وأحاديث ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["fiqh", "akhlaq"]} title="اختبر معلوماتك في السنن والفقه" count={4} />
       </div>

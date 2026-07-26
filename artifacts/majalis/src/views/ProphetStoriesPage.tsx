@@ -9,6 +9,7 @@ import { supabase } from "@/lib/supabase";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { truncateAtWord } from "@/lib/utils";
 import { ScholarlyTrustBadge } from "@/components/ScholarlyTrustBadge";
+import "@/styles/pages/prophet-stories.css";
 
 type Citation = { surah: string; ayahs: string; note: string };
 

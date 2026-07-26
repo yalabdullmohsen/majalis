@@ -9,6 +9,9 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { Chip } from "@/components/ui-common";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import "@/styles/pages/academic-research.css";
 
 // ── أنواع ────────────────────────────────────────────────────────────────────
 
@@ -532,14 +535,14 @@ function ThesesTab() {
         <div className="ar-filter-group">
           <span className="ar-filter-group__label">الدرجة:</span>
           {(["الكل", "ماجستير", "دكتوراه"] as const).map(d => (
-            <button
+            <Chip
               key={d}
-              type="button"
+              active={degreeFilter === d}
               className={`ar-filter-chip${degreeFilter === d ? " ar-filter-chip--active" : ""}`}
               onClick={() => setDegreeFilter(d)}
             >
               {d}
-            </button>
+            </Chip>
           ))}
         </div>
         <div className="ar-filter-group">
@@ -750,6 +753,7 @@ export default function AcademicResearchPage() {
       <div className="twh-share">
         <ShareButtons title="البحث الأكاديمي الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/academic-research" />
       </div>
+      <RelatedKnowledge kind="book" query="بحث أكاديمي إسلامي" title="مواد ذات صلة بالبحث العلمي" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["tarikh", "hadith"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
       </div>

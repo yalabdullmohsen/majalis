@@ -16,7 +16,7 @@ function estimateReadMinutes(text?: string): number | null {
 type Props = {
   breadcrumbs: { label: string; href?: string }[];
   title: string;
-  subtitle?: string;
+  subtitle?: ReactNode;
   meta?: string;
   tags?: string[];
   body?: string;
@@ -105,7 +105,9 @@ export function ContentDetailLayout({
           )}
         </div>
         <h1 className="content-detail-title">{title}</h1>
-        {subtitle && <p className="content-detail-subtitle">{subtitle}</p>}
+        {subtitle != null && subtitle !== "" && (
+          <p className="content-detail-subtitle">{subtitle}</p>
+        )}
         {tags && tags.length > 0 && (
           <div className="content-hub-chips content-detail-tags">
             {tags.map((tag) => (

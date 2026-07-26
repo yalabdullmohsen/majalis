@@ -8,6 +8,7 @@
 import { AlertTriangle, BookOpen, Calendar, CheckCircle2, Clock, User, XCircle } from "lucide-react";
 import { Link } from "wouter";
 import { ContentReportButton } from "@/components/ContentReportButton";
+import "@/styles/components/scholarly-trust.css";
 
 /** مراجع «ذاتية» — المنصة ليست مصدرًا خارجيًا يُستند إليه في التوثيق. */
 const SELF_SOURCE_RE =

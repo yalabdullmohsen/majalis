@@ -1,8 +1,14 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { FavoriteButton } from "@/components/FavoriteButton";
-import { readPreferences, writePreferences } from "@/lib/user-preferences";
+import { readPreferences, writePreferences, type UserPreferences } from "@/lib/user-preferences";
 import { AdminInlineEdit, type InlineEditContentType } from "@/components/AdminInlineEdit";
+import {
+  isSavedOffline,
+  saveOfflineReading,
+  listOfflineReading,
+  removeOfflineReading,
+} from "@/lib/offline-reading-pack";
 
 const FaidaImageCardModal = lazy(() =>
   import("@/components/fawaid/FaidaImageCardModal").then((m) => ({ default: m.FaidaImageCardModal }))
@@ -14,6 +20,8 @@ type Props = {
   contentType?: string;
   contentId?: string;
   showSave?: boolean;
+  /** حفظ النص للقراءة لاحقًا / دون اتصال على الجهاز */
+  showOfflineSave?: boolean;
   showReadingMode?: boolean;
   showPrint?: boolean;
   showImageCard?: boolean;
@@ -33,9 +41,11 @@ async function copyText(text: string) {
 
 export function ContentActionBar({
   text,
+  title,
   contentType,
   contentId,
   showSave = false,
+  showOfflineSave = true,
   showReadingMode = true,
   showPrint = false,
   showImageCard = false,
@@ -45,10 +55,19 @@ export function ContentActionBar({
 }: Props) {
   const [showCardModal, setShowCardModal] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [offlineSaved, setOfflineSaved] = useState(false);
   const [readingMode, setReadingMode] = useState(() => readPreferences().readingMode);
+  const [readingSize, setReadingSize] = useState(() => Number(readPreferences().readingTextSize) || 17);
+  const [readingWidth, setReadingWidth] = useState<UserPreferences["readingWidth"]>(
+    () => readPreferences().readingWidth,
+  );
   const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => () => { if (copyTimerRef.current) clearTimeout(copyTimerRef.current); }, []);
+
+  useEffect(() => {
+    setOfflineSaved(isSavedOffline(contentType, contentId));
+  }, [contentType, contentId]);
 
   const handleCopy = useCallback(async () => {
     const ok = await copyText(text);
@@ -64,6 +83,39 @@ export function ContentActionBar({
     setReadingMode(next);
     writePreferences({ readingMode: next });
   }, [readingMode]);
+
+  const bumpFont = useCallback((delta: number) => {
+    const next = Math.min(28, Math.max(16, readingSize + delta));
+    setReadingSize(next);
+    writePreferences({ readingTextSize: String(next) });
+  }, [readingSize]);
+
+  const cycleWidth = useCallback(() => {
+    const order: UserPreferences["readingWidth"][] = ["ضيق", "متوسط", "واسع"];
+    const next = order[(order.indexOf(readingWidth) + 1) % order.length];
+    setReadingWidth(next);
+    writePreferences({ readingWidth: next });
+  }, [readingWidth]);
+
+  const toggleOffline = useCallback(() => {
+    if (offlineSaved) {
+      const match = listOfflineReading().find(
+        (i) =>
+          (contentType && contentId && i.contentType === contentType && i.contentId === contentId) ||
+          i.title === (title || "محتوى"),
+      );
+      if (match) removeOfflineReading(match.id);
+      setOfflineSaved(false);
+      return;
+    }
+    saveOfflineReading({
+      title: title || "محتوى محفوظ",
+      text,
+      contentType,
+      contentId,
+    });
+    setOfflineSaved(true);
+  }, [offlineSaved, contentType, contentId, title, text]);
 
   return (
     <div className="content-action-bar" role="toolbar" aria-label="إجراءات المحتوى">
@@ -85,7 +137,18 @@ export function ContentActionBar({
         />
       )}
       {showSave && contentType && contentId && (
-        <FavoriteButton contentType={contentType} contentId={contentId} compact />
+        <FavoriteButton contentType={contentType} contentId={contentId} title={title} compact />
+      )}
+      {showOfflineSave && text.trim().length > 0 && (
+        <button
+          type="button"
+          className={`content-action-bar__btn${offlineSaved ? " content-action-bar__btn--active" : ""}`}
+          onClick={toggleOffline}
+          aria-pressed={offlineSaved}
+          title="حفظ النص للقراءة لاحقًا على هذا الجهاز"
+        >
+          {offlineSaved ? "محفوظ لاحقًا" : "قراءة لاحقًا"}
+        </button>
       )}
       {showReadingMode && (
         <button
@@ -96,6 +159,25 @@ export function ContentActionBar({
         >
           وضع القراءة
         </button>
+      )}
+      {showReadingMode && readingMode && (
+        <div className="content-action-bar__reading-tools" role="group" aria-label="ضبط القراءة">
+          <button type="button" className="content-action-bar__btn" onClick={() => bumpFont(-1)} aria-label="تصغير الخط">
+            أ−
+          </button>
+          <button type="button" className="content-action-bar__btn" onClick={() => bumpFont(1)} aria-label="تكبير الخط">
+            أ+
+          </button>
+          <button
+            type="button"
+            className="content-action-bar__btn"
+            onClick={cycleWidth}
+            aria-label={`عرض النص: ${readingWidth}`}
+            title={`عرض النص: ${readingWidth}`}
+          >
+            عرض
+          </button>
+        </div>
       )}
       {showImageCard && (
         <button

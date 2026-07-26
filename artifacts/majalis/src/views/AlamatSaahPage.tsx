@@ -1,9 +1,10 @@
 import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "@/lib/seo";
-import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/alamat-saah.css";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 /* ══════════════════════════════════════════════════════════════════
    §246، علامات الساعة  (.as-*)

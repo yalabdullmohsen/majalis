@@ -5,6 +5,8 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/hadith-mustalah.css";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 /* ─── أنواع البيانات ─── */
 type HadithTerm = {
@@ -1071,6 +1073,7 @@ export default function HadithSciencePage() {
           ))}
         </div>
       </section>
+      <RelatedKnowledge kind="hadith" query="مصطلح الحديث" title="مواد في علوم الحديث" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في علوم الحديث" count={4} />
       </div>

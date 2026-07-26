@@ -10,6 +10,7 @@ import {
 } from "@/lib/sins-rights-data";
 import type { RightsCategory } from "@/lib/sins-rights-types";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
+import "@/styles/sins-rights.css";
 
 type Tab = "overview" | "allah" | "ibad" | "shared" | "guide" | "what-if" | "muhasaba" | "mindmap";
 

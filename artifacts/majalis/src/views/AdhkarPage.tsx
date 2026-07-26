@@ -7,6 +7,7 @@ import { PageHeader, Empty } from "@/components/ui-common";
 import { ShareButton } from "@/components/ShareButton";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 
 const FEATURED_CATEGORY_SLUGS = new Set([
   "morning", "evening", "sleep", "wakeup", "home-in", "home-out",
@@ -122,6 +123,7 @@ function hapticsComplete() {
 
 /* ══ الصفحة الرئيسية ══ */
 export default function AdhkarPage() {
+  useReadingScrollMemory("adhkar");
   const [location] = useLocation();
   const [category, setCategory]       = useState("all");
   const [currentIndex, setCurrentIndex] = useState(0);

@@ -9,10 +9,13 @@ import { useUserPreferences } from "@/components/UserPreferencesProvider";
 import { THEME_OPTIONS, type ThemePreference } from "@/lib/theme-preference";
 import { clearQuranCache } from "@/lib/quran-api";
 import { DEFAULT_PREFERENCES, type UserPreferences } from "@/lib/user-preferences";
+import { clearLocalBookmarks } from "@/lib/local-bookmarks";
+import { clearOfflineReading } from "@/lib/offline-reading-pack";
 import { useQuranPreferences, type QuranFontId } from "@/hooks/useQuranPreferences";
 import { PushPrompt } from "@/components/PushPrompt";
 import { useLanguage } from "@/components/LanguageProvider";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import "@/styles/pages/settings.css";
 
 function ToggleRow({
   label,
@@ -151,6 +154,18 @@ export default function SettingsPage() {
             <option value="واسع">واسع</option>
           </select>
         </label>
+        <label className="settings-field">
+          <span>عرض النص</span>
+          <select
+            name="reading-width"
+            value={preferences.readingWidth}
+            onChange={(e) => update("readingWidth", e.target.value as UserPreferences["readingWidth"])}
+          >
+            <option value="ضيق">ضيق</option>
+            <option value="متوسط">متوسط</option>
+            <option value="واسع">واسع</option>
+          </select>
+        </label>
         <ToggleRow label={t("settings_reading_mode")} checked={preferences.readingMode} onChange={(value) => update("readingMode", value)} />
       </LegalSection>
 
@@ -233,7 +248,20 @@ export default function SettingsPage() {
           }}>
             {t("settings_download_data")}
           </button>
-          <button type="button" className="settings-danger-btn" onClick={() => updatePreferences(DEFAULT_PREFERENCES)}>
+          <button
+            type="button"
+            className="settings-danger-btn"
+            onClick={() => {
+              updatePreferences(DEFAULT_PREFERENCES);
+              clearLocalBookmarks();
+              void clearOfflineReading();
+              try {
+                localStorage.removeItem("majalis-reading-progress-v1");
+              } catch {
+                /* ignore */
+              }
+            }}
+          >
             {t("settings_clear_local")}
           </button>
         </div>

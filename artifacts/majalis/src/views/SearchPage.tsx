@@ -8,6 +8,7 @@ import { displayText } from "@/lib/display-text";
 import { SearchSkeleton, PageHeader } from "@/components/ui-common";
 import { SearchSuggestions } from "@/components/SearchSuggestions";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
+import "@/styles/pages/search.css";
 
 /* ── تمييز مصطلح البحث في النصوص ── */
 const ARABIC_DIACRITICS_RE = /[ؐ-ًؚ-ٰٟٓ-ٕ]/;

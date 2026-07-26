@@ -1,32 +1,32 @@
 {
   "version": 1,
   "generated_at": "2026-07-25T00:00:00.000Z",
-  "total": 533,
+  "total": 642,
   "chunks": [
     {
       "category": "الطهارة",
       "file": "chunks/الطهارة.json",
-      "count": 44
+      "count": 45
     },
     {
       "category": "الصلاة",
       "file": "chunks/الصلاة.json",
-      "count": 41
+      "count": 51
     },
     {
       "category": "الزكاة",
       "file": "chunks/الزكاة.json",
-      "count": 35
+      "count": 38
     },
     {
       "category": "الحج والعمرة",
       "file": "chunks/الحج-والعمرة.json",
-      "count": 27
+      "count": 28
     },
     {
       "category": "المعاملات",
       "file": "chunks/المعاملات.json",
-      "count": 10
+      "count": 12
     },
     {
       "category": "المواريث والوصايا",
@@ -36,12 +36,12 @@
     {
       "category": "الصيام",
       "file": "chunks/الصيام.json",
-      "count": 34
+      "count": 39
     },
     {
       "category": "الأسرة",
       "file": "chunks/الأسرة.json",
-      "count": 9
+      "count": 11
     },
     {
       "category": "النوازل المعاصرة",
@@ -51,7 +51,7 @@
     {
       "category": "الأطعمة والأشربة",
       "file": "chunks/الأطعمة-والأشربة.json",
-      "count": 2
+      "count": 3
     },
     {
       "category": "اللباس والزينة",
@@ -76,32 +76,32 @@
     {
       "category": "الأيمان والنذور",
       "file": "chunks/الأيمان-والنذور.json",
-      "count": 2
+      "count": 3
     },
     {
       "category": "طلب العلم والدعوة",
       "file": "chunks/طلب-العلم-والدعوة.json",
-      "count": 112
+      "count": 161
     },
     {
       "category": "العقيدة",
       "file": "chunks/العقيدة.json",
-      "count": 38
+      "count": 49
     },
     {
       "category": "القرآن والحديث",
       "file": "chunks/القرآن-والحديث.json",
-      "count": 49
+      "count": 64
     },
     {
       "category": "الأذكار والدعاء",
       "file": "chunks/الأذكار-والدعاء.json",
-      "count": 28
+      "count": 30
     },
     {
       "category": "الأخلاق والآداب",
       "file": "chunks/الأخلاق-والآداب.json",
-      "count": 16
+      "count": 22
     }
   ]
 }

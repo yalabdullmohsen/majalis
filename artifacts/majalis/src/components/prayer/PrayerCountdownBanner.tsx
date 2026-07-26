@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { useNumerals } from "@/hooks/useNumerals";
 import { PRE_ALERT_MINUTES, isBannerDismissedFor, dismissBannerFor } from "@/lib/prayer-alert-preferences";
+import "@/styles/components/prayer-countdown-banner.css";
 
 const PRAYER_ICON_EMOJI: Record<string, string> = {
   "الفجر": "🌙",

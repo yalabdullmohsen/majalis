@@ -81,7 +81,7 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
   line-height: var(--reading-line-height, 1.9);
   font-size: var(--reading-font-size, 1.05rem);
   color: var(--majalis-ink);
-  max-width: 68ch;
+  max-width: var(--reading-max-width, 68ch);
   text-wrap: pretty;
   user-select: text;
 }
@@ -203,6 +203,11 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
   transform: scale(1.02);
 }
 
+.content-action-bar__reading-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
 .content-action-bar__btn--active {
   border-color: var(--majalis-emerald-deep);
   color: var(--majalis-emerald-deep);
