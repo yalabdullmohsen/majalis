@@ -1,0 +1,64 @@
+{
+  "branch": "session/content-enrichment-round-3",
+  "mode": "enrichment_and_audit",
+  "started": "2026-07-26T08:18:00Z",
+  "updated": "2026-07-26T08:35:00Z",
+  "baseline_from_counts": {
+    "quiz": 1137,
+    "quiz_template_explanations": 769,
+    "fawaid": 556,
+    "qa": 400,
+    "rulings_seed": 83,
+    "rulings_encyclopedia": 583,
+    "stories": 67,
+    "library": 156,
+    "library_null_authorId": 43,
+    "scholars": 117,
+    "adhkar": 317,
+    "prophets_bio_lt_220": 4
+  },
+  "gap_analysis": {
+    "priority": [
+      "link_library_authorIds",
+      "unique_stories_and_scholars_books",
+      "improve_template_quiz_explanations",
+      "expand_short_rulings",
+      "qa_fawaid_adhkar_unique",
+      "prophets_short_bios"
+    ]
+  },
+  "batches_done": [
+    "stories6_scholars6_books8_author_link_rulings_prophets",
+    "quiz_improve_220_add30_qa19_fawaid20_adhkar4",
+    "fix_gates_dedupe_books_restore_fawaid_exports"
+  ],
+  "added_counts": {
+    "stories_new": 6,
+    "scholars_new": 6,
+    "books_new_net": 6,
+    "books_removed_dupes": 2,
+    "stories_total": 73,
+    "scholars_total": 123,
+    "books_total": 162,
+    "quiz_explanations_improved": 220,
+    "quiz_new": 30,
+    "quiz_total": 1167,
+    "qa_new": 19,
+    "qa_total": 419,
+    "fawaid_new": 20,
+    "fawaid_total": 576,
+    "adhkar_new": 4,
+    "adhkar_total": 321,
+    "rulings_encyclopedia": 602
+  },
+  "gate_fixes": [
+    "restored filterSeedFawaid/searchFawaid/getFawaidByCategory in fawaid-seed.ts",
+    "removed duplicate book-rawdat-talibin (kept book-rawdatul-talibin)",
+    "removed duplicate book-jami-ulum-hikam (kept book-asrar-hikam-ibn-rajab)",
+    "unified bahuti authorId to author-mansur-al-buhuti; removed duplicate author entries"
+  ],
+  "needs_post_review_notes": [
+    "كتب بلا authorId بعد الربط: تفسير الجلالين (مؤلفان) وdaawa-taarud — يُراجع يدويًا"
+  ],
+  "status": "gates_green_pushed"
+}
