@@ -2,7 +2,7 @@
   "branch": "session/content-enrichment-round-2",
   "mode": "enrichment_and_audit",
   "started": "2026-07-26T07:20:00Z",
-  "updated": "2026-07-26T07:34:52Z",
+  "updated": "2026-07-26T07:42:46Z",
   "baseline_from_counts": {
     "quiz": 1097,
     "quiz_with_explanation": 328,
@@ -70,7 +70,7 @@
     "adh-345 (حفظني بالإسلام): حسن بطرق، يُراجع تحرير المعاصرين للسند",
     "adh-346 (لا سهل إلا ما جعلته سهلا): حسن عند ابن حبان، يُراجع الخلاف في التصحيح"
   ],
-  "status": "gates_passed_awaiting_auto_merge",
+  "status": "merged_and_deployed",
   "final_counts": {
     "$comment": "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
     "generatedAt": "2026-07-26",
@@ -100,5 +100,7 @@
     "counts": "pass",
     "identity": "pass",
     "data_quality": "pass_0_issues"
-  }
+  },
+  "merge_commit": "adf275ec",
+  "deploy_run": 30193245017
 }
