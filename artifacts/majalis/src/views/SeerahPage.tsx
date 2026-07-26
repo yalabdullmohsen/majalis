@@ -327,7 +327,7 @@ export default function SeerahPage() {
 
         {/* Notice */}
         <div className="seerah-notice">
-          <strong><Lightbulb size={14} className="inline ml-1" /> منهج القسم:</strong> يُقدَّم المحتوى التاريخي استناداً إلى المصادر الموثقة كسيرة ابن هشام والبداية والنهاية وزاد المعاد. التفاصيل الشرعية التفصيلية تُضاف تدريجياً من مصادر علمية معتمدة.
+          <strong><Lightbulb size={14} className="inline ml-1" /> منهج القسم:</strong> نعتمد المصادر المحرَّرة (سيرة ابن هشام بعد تمحيص، والبداية والنهاية، وزاد المعاد) مع تقديم ما ثبت في الصحيحين والسنن. نتجنّب الإسرائيليات والروايات الواهية، ولا نُشرع احتفالاً بالمولد أو عبادةً لم يدل عليها دليل.
         </div>
 
         {/* Timeline Layout */}
@@ -433,6 +433,21 @@ export default function SeerahPage() {
             </div>
           </div>
         </div>
+
+        <nav className="seerah-related" aria-label="موضوعات ذات صلة">
+          <h2 className="seerah-related__title">موضوعات ذات صلة</h2>
+          <div className="seerah-related__grid">
+            {[
+              { href: "/prophets", label: "قصص الأنبياء" },
+              { href: "/shamael", label: "الشمائل المحمدية" },
+              { href: "/wasaya-nabawiyya", label: "الوصايا النبوية" },
+              { href: "/tawhid", label: "التوحيد" },
+              { href: "/hadith", label: "الأحاديث الصحيحة" },
+            ].map((l) => (
+              <Link key={l.href} href={l.href} className="seerah-related__link">{l.label}</Link>
+            ))}
+          </div>
+        </nav>
 
         {/* المصادر */}
         <div className="seerah-sources">
