@@ -21,7 +21,7 @@ export type FeatureEntry = {
 export const FEATURE_REGISTRY: FeatureEntry[] = [
   // ── الصفحة الرئيسية ──────────────────────────────────────────
   { id: "home",         label: "الرئيسية",          path: "/",             group: "رئيسي",         status: "active",       inSideNav: true,  inBottomNav: true  },
-  { id: "kids",         label: "الأطفال",           path: "/kids",         group: "رئيسي",         status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "kids",         label: "الأطفال",           path: "/kids",         group: "رئيسي",         status: "coming-soon",  inSideNav: true,  inBottomNav: false },
 
   // ── المحتوى التعليمي ─────────────────────────────────────────
   { id: "lessons",      label: "الدروس",             path: "/lessons",      group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: true  },
@@ -76,7 +76,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "learn",         label: "أبواب العلم",       path: "/learn",        group: "تعلم",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "learning-paths",label: "المسارات العلمية", path: "/learning/paths",group: "تعلم",     status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "my-learning",  label: "لوحتي التعليمية",  path: "/my-learning",  group: "تعلم",          status: "requires-auth",inSideNav: true,  inBottomNav: false },
-  { id: "learning-plan",label: "خطة التعلم",       path: "/learning-plan",group: "تعلم",          status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "learning-plan",label: "خطة التعلم",       path: "/learning-plan",group: "تعلم",          status: "disabled",     inSideNav: false, inBottomNav: false },
 
   // ── التطبيق والقانونية ────────────────────────────────────────
   { id: "about",        label: "من نحن",             path: "/about",        group: "تطبيق",         status: "active",       inSideNav: true,  inBottomNav: false },
@@ -84,7 +84,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "privacy",      label: "سياسة الخصوصية",     path: "/privacy",      group: "تطبيق",         status: "active",       inSideNav: false, inBottomNav: false },
   { id: "terms",        label: "شروط الاستخدام",      path: "/terms",        group: "تطبيق",         status: "active",       inSideNav: false, inBottomNav: false },
   { id: "submit",       label: "أضف محتوى",           path: "/submit",       group: "تطبيق",         status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "features-in-progress", label: "قيد التطوير", path: "/features-in-progress", group: "تطبيق", status: "active",     inSideNav: true,  inBottomNav: false },
+  { id: "features-in-progress", label: "قيد التطوير", path: "/features-in-progress", group: "تطبيق", status: "admin-only", inSideNav: false, inBottomNav: false },
   { id: "topics",       label: "الموضوعات",           path: "/topics",       group: "تعليم",         status: "active",       inSideNav: false, inBottomNav: false },
 
   // ── الإدارة ───────────────────────────────────────────────────

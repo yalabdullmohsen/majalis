@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import { useState, useMemo, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import {
-  Activity, Baby, BarChart2, BarChart3, BookMarked, BookOpen, BookText, BookUser,
+  Activity, Baby, BarChart3, BookMarked, BookOpen, BookText, BookUser,
   Bot, Building2, Calculator, Calendar, CalendarDays, CheckCircle2, ChevronDown, ChevronUp,
   Clock, Compass, CreditCard, FileText, GitBranch, GraduationCap,
   Heart, HelpCircle, Home, Landmark, Layers, Library, Lightbulb,
@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { usePageSwipe } from "@/hooks/usePageSwipe";
+import { filterNavItems, isComingSoonPath } from "@/lib/nav-visibility";
 
 type DrawerProps = {
   open: boolean;
@@ -90,13 +91,11 @@ const DRAWER_GROUPS: NavGroup[] = [
     icon: <IcoHome />,
     items: [
       { href: "/",        label: "الصفحة الرئيسية",    Icon: Home },
-      { href: "/kids",    label: "الأطفال",             Icon: Baby,      desc: "ركن تعليمي آمن وبسيط للأطفال" },
+      { href: "/kids",    label: "الأطفال",             Icon: Baby,      desc: "ركن الأطفال — قيد التجهيز" },
       { href: "/updates", label: "آخر المستجدات",       Icon: Rss },
       { href: "/calendar", label: "التقويم الهجري",     Icon: Calendar,  desc: "التقويم والمناسبات الإسلامية" },
       { href: "/occasions", label: "المناسبات الإسلامية", Icon: Star,     desc: "أذكار المناسبات والأعياد" },
-      { href: "/islam-stats", label: "الإسلام في أرقام",  Icon: BarChart3, desc: "إحصائيات ومعطيات إسلامية" },
       { href: "/about",   label: "عن التطبيق",           Icon: HelpCircle, desc: "تعرّف على المجلس العلمي" },
-      { href: "/features-in-progress", label: "مميزات قيد التطوير", Icon: Layers, desc: "ما الذي نعمل عليه حاليًا" },
     ],
   },
   {
@@ -125,7 +124,6 @@ const DRAWER_GROUPS: NavGroup[] = [
           { href: "/learn",               label: "أبواب العلم",         Icon: Layers,        desc: "فهرس شامل لكل العلوم الشرعية بتصنيف واضح" },
           { href: "/start-here",         label: "ابدأ من هنا",         Icon: Waypoints,     desc: "مسار المبتدئ في طلب العلم" },
           { href: "/adab-talab-ilm",     label: "آداب طالب العلم",    Icon: Star,          desc: "شروط وآداب طلب العلم الشرعي" },
-          { href: "/learning-plan",      label: "خطة التعلّم",        Icon: BarChart2,     desc: "خطتك الأسبوعية للدراسة" },
           { href: "/quiz",               label: "المسابقة التعليمية",  Icon: Zap,           desc: "اختبر معلوماتك" },
           { href: "/flashcards",         label: "بطاقات المراجعة",     Icon: CreditCard,    desc: "راجع المعلومات بطاقةً بطاقة" },
           { href: "/assistant",          label: "المساعد الذكي",       Icon: Bot,           desc: "استفسر عن أي مسألة" },
@@ -240,10 +238,10 @@ const DRAWER_GROUPS: NavGroup[] = [
     items: [
       { href: "/search",              label: "البحث الشامل",        Icon: Search,    desc: "ابحث في كل محتوى التطبيق" },
       { href: "/academic-research",   label: "الأبحاث العلمية",    Icon: FileText,  desc: "أبحاث ودراسات شرعية" },
-      { href: "/knowledge-graph",     label: "شبكة المعرفة",        Icon: GitBranch, desc: "العلاقات بين المفاهيم والمصطلحات" },
-      { href: "/knowledge-map",       label: "الخريطة المعرفية",   Icon: Network,   desc: "خريطة العلوم الشرعية مرئية" },
+      { href: "/knowledge-graph",     label: "استكشف المعرفة",      Icon: Network,   desc: "شبكة المعرفة والخريطة المعرفية" },
       { href: "/mind-map",            label: "الخرائط الذهنية",     Icon: Map,       desc: "تنظيم المعلومات مرئياً" },
       { href: "/islamic-glossary",    label: "المصطلحات الإسلامية", Icon: BookOpen,  desc: "معجم المصطلحات الفقهية" },
+      { href: "/islam-stats",         label: "الإسلام في أرقام",   Icon: BarChart3, desc: "إحصائيات ومعطيات إسلامية" },
     ],
   },
   {
@@ -260,9 +258,18 @@ const DRAWER_GROUPS: NavGroup[] = [
   },
 ];
 
+const VISIBLE_DRAWER_GROUPS: NavGroup[] = DRAWER_GROUPS.map((g) => ({
+  ...g,
+  items: g.items ? filterNavItems(g.items) : undefined,
+  subGroups: g.subGroups?.map((sg) => ({
+    ...sg,
+    items: filterNavItems(sg.items),
+  })),
+}));
+
 /* خريطة: href → id المجموعة */
 const HREF_TO_GROUP: Record<string, string> = {};
-DRAWER_GROUPS.forEach(g => {
+VISIBLE_DRAWER_GROUPS.forEach(g => {
   if (g.items) {
     g.items.forEach(item => { HREF_TO_GROUP[item.href] = g.id; });
   }
@@ -315,10 +322,14 @@ function SubGroupSection({
               href={href}
               onClick={onClose}
               className={`side-nav-link side-nav-link--v2${isActive(href) ? " is-active" : ""}`}
+              aria-label={isComingSoonPath(href) ? `${label} — قريبًا` : label}
             >
               <Icon size={15} strokeWidth={1.8} aria-hidden="true" />
               <span className="side-nav-link__content">
-                <span className="side-nav-link__label">{label}</span>
+                <span className="side-nav-link__label">
+                  {label}
+                  {isComingSoonPath(href) ? <span className="nav-soon-badge">قريبًا</span> : null}
+                </span>
                 {desc && <span className="side-nav-link__desc">{desc}</span>}
               </span>
             </Link>
@@ -415,7 +426,7 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
         </div>
 
         <div className="side-nav-drawer__body">
-          {DRAWER_GROUPS.map((group) => {
+          {VISIBLE_DRAWER_GROUPS.map((group) => {
             const isOpen = openGroups.has(group.id);
             const hasActive = group.items
               ? group.items.some(i => isActive(i.href))
@@ -450,10 +461,14 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
                             href={href}
                             onClick={onClose}
                             className={`side-nav-link side-nav-link--v2${isActive(href) ? " is-active" : ""}`}
+                            aria-label={isComingSoonPath(href) ? `${label} — قريبًا` : label}
                           >
                             <Icon size={16} strokeWidth={1.8} aria-hidden="true" />
                             <span className="side-nav-link__content">
-                              <span className="side-nav-link__label">{label}</span>
+                              <span className="side-nav-link__label">
+                                {label}
+                                {isComingSoonPath(href) ? <span className="nav-soon-badge">قريبًا</span> : null}
+                              </span>
                               {desc && <span className="side-nav-link__desc">{desc}</span>}
                             </span>
                           </Link>

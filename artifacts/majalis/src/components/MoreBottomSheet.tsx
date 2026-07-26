@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import { Link, useLocation } from "wouter";
 import { useEffect } from "react";
 import {
-  Activity, BarChart2, BarChart3, BookMarked, BookOpen, BookText, BookUser,
+  Activity, Baby, BarChart3, BookMarked, BookOpen, BookText, BookUser,
   Bot, Building2, Calculator, Calendar, CalendarDays, CheckCircle2, Clock, Compass, CreditCard,
   FileText, Gavel, GitBranch, GraduationCap, Heart, HelpCircle, Info, Landmark,
   Layers, Library, Lightbulb, Map, Mic2, Moon, Network,
@@ -10,10 +10,13 @@ import {
   Shield, Sparkles, Star, Stethoscope, Sun, Users, Waypoints, X, Zap,
 } from "lucide-react";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
+import { filterNavItems, isComingSoonPath } from "@/lib/nav-visibility";
 import "@/styles/components/more-bottom-sheet.css";
 import "@/styles/components/dark-emerald-menus.css";
 
-const SHEET_SECTIONS = [
+type SheetItem = { href: string; label: string; Icon: typeof BookOpen };
+
+const SHEET_SECTIONS_RAW: { group: string; items: SheetItem[] }[] = [
   /* ── القرآن الكريم ── */
   { group: "القرآن الكريم", items: [
     { href: "/mushaf",              label: "المصحف الشريف",      Icon: BookOpen },
@@ -119,7 +122,6 @@ const SHEET_SECTIONS = [
     { href: "/akhlaq",           label: "الأخلاق الإسلامية",    Icon: Heart },
     { href: "/adab-talab-ilm",   label: "آداب طالب العلم",      Icon: GraduationCap },
     { href: "/islamic-glossary", label: "المصطلحات الإسلامية",  Icon: BookOpen },
-    { href: "/islam-stats",      label: "الإسلام في أرقام",     Icon: BarChart3 },
     { href: "/updates",          label: "آخر المستجدات",        Icon: Rss },
     { href: "/institutions",     label: "المؤسسات الإسلامية",   Icon: Landmark },
   ]},
@@ -127,26 +129,30 @@ const SHEET_SECTIONS = [
   /* ── التعلّم والأدوات ── */
   { group: "التعلّم والأدوات", items: [
     { href: "/learn",                label: "أبواب العلم",         Icon: Layers },
+    { href: "/learning/paths",       label: "المسارات العلمية",    Icon: GraduationCap },
     { href: "/start-here",           label: "ابدأ من هنا",         Icon: Waypoints },
     { href: "/quiz",                 label: "المسابقة التعليمية",  Icon: Zap },
     { href: "/flashcards",           label: "بطاقات المراجعة",     Icon: CreditCard },
     { href: "/assistant",            label: "المساعد الذكي",       Icon: Bot },
     { href: "/mind-map",             label: "الخرائط الذهنية",    Icon: Map },
-    { href: "/learning-plan",        label: "خطة التعلّم",         Icon: BarChart2 },
-    { href: "/learning/paths",       label: "المسارات العلمية",    Icon: GraduationCap },
+    { href: "/knowledge-graph",      label: "استكشف المعرفة",     Icon: Network },
     { href: "/my-learning",          label: "لوحتي التعليمية",    Icon: BarChart3 },
     { href: "/my-citations",         label: "دفتر الفوائد",       Icon: Quote },
     { href: "/reading-plans",        label: "خطط القراءة",        Icon: CalendarDays },
-    { href: "/knowledge-map",        label: "الخريطة المعرفية",   Icon: Network },
-    { href: "/knowledge-graph",      label: "شبكة المعرفة",       Icon: GitBranch },
     { href: "/calendar",             label: "التقويم الهجري",     Icon: Calendar },
     { href: "/universities",         label: "دليل الجامعات",      Icon: Building2 },
+    { href: "/kids",                 label: "ركن الأطفال",         Icon: Baby },
+    { href: "/islam-stats",          label: "الإسلام في أرقام",   Icon: BarChart3 },
     { href: "/search",               label: "البحث الشامل",       Icon: Search },
     { href: "/settings",             label: "الإعدادات",          Icon: Settings },
-    { href: "/features-in-progress", label: "مميزات قيد التطوير", Icon: Layers },
     { href: "/about",                label: "عن التطبيق",         Icon: Info },
   ]},
 ];
+
+const SHEET_SECTIONS = SHEET_SECTIONS_RAW.map((section) => ({
+  ...section,
+  items: filterNavItems(section.items),
+}));
 
 interface Props {
   open: boolean;
@@ -217,18 +223,23 @@ export function MoreBottomSheet({ open, onClose }: Props) {
               <div className="bottom-sheet__grid">
                 {section.items.map(({ href, label, Icon }) => {
                   const active = location === href || (href !== "/" && location.startsWith(href));
+                  const soon = isComingSoonPath(href);
                   return (
                     <Link
                       key={href}
                       href={href}
                       onClick={onClose}
-                      className={`more-sheet-item${active ? " more-sheet-item--active" : ""}`}
+                      className={`more-sheet-item${active ? " more-sheet-item--active" : ""}${soon ? " more-sheet-item--soon" : ""}`}
                       aria-current={active ? "page" : undefined}
+                      aria-label={soon ? `${label} — قريبًا` : label}
                     >
                       <span className="more-sheet-item__icon" aria-hidden="true">
                         <Icon size={20} strokeWidth={1.8} />
                       </span>
-                      <span>{label}</span>
+                      <span>
+                        {label}
+                        {soon ? <span className="nav-soon-badge">قريبًا</span> : null}
+                      </span>
                     </Link>
                   );
                 })}

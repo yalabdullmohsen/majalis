@@ -405,7 +405,7 @@ export const MIND_MAPS: MindMap[] = [
           children: [
             { id: "tl-1", label: "المسابقة التعليمية", href: "/quiz" },
             { id: "tl-2", label: "بطاقات المراجعة", href: "/flashcards" },
-            { id: "tl-3", label: "خطة التعلم", href: "/learning-plan" },
+            { id: "tl-3", label: "المسارات العلمية", href: "/learning/paths" },
             { id: "tl-4", label: "المكتبة الشرعية", href: "/library" },
           ],
         },

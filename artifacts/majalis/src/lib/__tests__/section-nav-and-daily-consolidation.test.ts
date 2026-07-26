@@ -27,17 +27,20 @@ function assert(condition: boolean, label: string) {
   else { console.error(`  ✗ FAIL: ${label}`); failed++; }
 }
 
-console.log("\n=== TopSectionBar — 22 قسمًا فعليًا بلا تكرار وبلا الرئيسية ===");
+console.log("\n=== TopSectionBar — أقسام موسوعية بلا تكرار وبلا الرئيسية ===");
 {
-  assert(SECTION_TABS.length === 22, `22 قسمًا بالضبط (الفعلي: ${SECTION_TABS.length})`);
+  assert(SECTION_TABS.length === 19, `19 قسمًا بعد دمج الأدوات المكررة (الفعلي: ${SECTION_TABS.length})`);
   const hrefs = SECTION_TABS.map((t) => t.href);
   assert(new Set(hrefs).size === hrefs.length, "لا تكرار في مسارات الأقسام (كل href فريد)");
   assert(!hrefs.includes("/"), "«الرئيسية» غير ظاهرة داخل الشريط (تبقى ضمن التنقل الرئيسي فقط)");
   assert(!hrefs.includes("/features-in-progress"), "«مميزات قيد التطوير» غير ظاهرة داخل الشريط");
+  assert(!hrefs.includes("/flashcards"), "بطاقات المراجعة أُخرجت من الشريط العلوي");
+  assert(!hrefs.includes("/islam-stats"), "إحصائيات الإسلام أُخرجت من الشريط العلوي");
   const priorityFirst5 = ["/tawhid", "/seerah", "/fiqh", "/hadith", "/quran-hub"];
   assert(hrefs.slice(0, 5).join(",") === priorityFirst5.join(","),
     `أول 5 أقسام هي أولوية العقيدة/السيرة/الفقه/الحديث/القرآن بالترتيب (الفعلي: ${hrefs.slice(0, 5).join(",")})`);
-  assert(hrefs.includes("/kids"), "قسم الأطفال ضمن الشريط");
+  assert(hrefs.includes("/kids"), "قسم الأطفال ضمن الشريط (قريبًا)");
+  assert(hrefs.includes("/library") && hrefs.includes("/scholars"), "المكتبة والعلماء ضمن الشريط");
   for (const href of hrefs) {
     assert(href.startsWith("/") && href.length > 1, `مسار "${href}" يبدو مسارًا فعليًا (لا فارغ ولا وهمي)`);
   }
@@ -98,27 +101,49 @@ console.log("\n=== تعطيل الباحث الشرعي — سجل الميزا�
   assert(entry?.inBottomNav === false, "لا يظهر في التنقل السفلي");
 
   const kidsEntry = FEATURE_REGISTRY.find((f) => f.id === "kids");
-  assert(kidsEntry !== undefined && kidsEntry.status === "active" && kidsEntry.path === "/kids",
-    "مدخل قسم الأطفال الجديد مسجَّل بحالة active ومسار /kids صحيح");
+  assert(kidsEntry !== undefined && kidsEntry.status === "coming-soon" && kidsEntry.path === "/kids",
+    "مدخل قسم الأطفال مسجَّل بحالة coming-soon ومسار /kids صحيح");
+
+  const circlesEntry = FEATURE_REGISTRY.find((f) => f.id === "quran-circles");
+  assert(circlesEntry !== undefined && circlesEntry.status === "coming-soon",
+    "حلقات التحفيظ بحالة coming-soon");
+
+  const planEntry = FEATURE_REGISTRY.find((f) => f.id === "learning-plan");
+  assert(planEntry !== undefined && planEntry.status === "disabled" && planEntry.inSideNav === false,
+    "خطة التعلم مُعطّلة ومُزالة من القوائم (مدمجة في المسارات)");
 }
 
-console.log("\n=== vercel.json — إعادة توجيه دائمة لمسار الباحث الشرعي ===");
+console.log("\n=== vercel.json — إعادة توجيه دائمة لمسار الباحث الشرعي ومسارات الدمج ===");
 {
   const vercelConfig = JSON.parse(readFileSync(resolve(appRoot, "vercel.json"), "utf-8"));
-  const redirect = (vercelConfig.redirects as Array<{ source: string; destination: string; permanent: boolean }>)
-    .find((r) => r.source === "/scholarly-research");
+  const redirects = vercelConfig.redirects as Array<{ source: string; destination: string; permanent: boolean }>;
+  const redirect = redirects.find((r) => r.source === "/scholarly-research");
   assert(redirect !== undefined, "قاعدة توجيه على مستوى الخادم موجودة لـ /scholarly-research");
   assert(redirect?.destination === "/qa", `الوجهة /qa صحيحة (الفعلية: ${redirect?.destination})`);
   assert(redirect?.permanent === true, "التوجيه دائم (301) لا مؤقت — صحيح لمحركات البحث");
+
+  const mergeRedirects: Array<[string, string]> = [
+    ["/learning-plan", "/learning/paths"],
+    ["/masarat", "/learning/paths"],
+    ["/knowledge-map", "/knowledge-graph"],
+  ];
+  for (const [source, destination] of mergeRedirects) {
+    const rule = redirects.find((r) => r.source === source);
+    assert(rule !== undefined && rule.destination === destination && rule.permanent === true,
+      `توجيه دائم ${source} → ${destination}`);
+  }
 }
 
-console.log("\n=== seo-routes.json — /kids مسجَّل، /scholarly-research أُزيل ===");
+console.log("\n=== seo-routes.json — /kids مسجَّل (noindex)، /scholarly-research أُزيل ===");
 {
   const seoConfig = JSON.parse(readFileSync(resolve(appRoot, "src/lib/seo-routes.json"), "utf-8"));
   const routes = seoConfig.routes as Array<{ path: string; sitemap?: boolean }>;
   const kidsRoute = routes.find((r) => r.path === "/kids");
   assert(kidsRoute !== undefined, "/kids مسجَّل في seo-routes.json");
-  assert(kidsRoute?.sitemap === true, "/kids يظهر في sitemap.xml");
+  assert(kidsRoute?.sitemap === false, "/kids خارج sitemap أثناء حالة قريبًا");
+  const circlesRoute = routes.find((r) => r.path === "/quran-circles");
+  assert(circlesRoute !== undefined && circlesRoute.sitemap === false,
+    "/quran-circles خارج sitemap أثناء حالة قريبًا");
   assert(routes.find((r) => r.path === "/scholarly-research") === undefined,
     "/scholarly-research لم يعد في seo-routes.json (لن يظهر في sitemap.xml القادم)");
 }
