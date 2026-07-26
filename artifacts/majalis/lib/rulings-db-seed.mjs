@@ -6,6 +6,18 @@ import { readFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getSupabaseAdmin } from "./supabase-admin.mjs";
+import { CONTENT_CURRICULUM_ENABLED } from "./content-flags.mjs";
+
+function isCurriculumItem(item) {
+  if (item?.source_origin === "fiqh-curriculum-registry") return true;
+  const key = item?.external_key || item?.id || "";
+  return String(key).startsWith("curriculum-");
+}
+
+function filterCurriculum(items) {
+  if (CONTENT_CURRICULUM_ENABLED) return items;
+  return items.filter((item) => !isCurriculumItem(item));
+}
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(__dirname, "../public/data/rulings-encyclopedia");
@@ -133,7 +145,10 @@ function toDbRow(item) {
 }
 
 export async function seedRulingsFromFilesystem(options = {}) {
-  const { items, total, error, manifestVersion, source } = await loadSeedItems(options);
+  const loaded = await loadSeedItems(options);
+  const { error, manifestVersion, source } = loaded;
+  const items = filterCurriculum(loaded.items || []);
+  const total = items.length;
   if (error) return { ok: false, error };
   if (items.length === 0) return { ok: false, error: "no_seed_items" };
 

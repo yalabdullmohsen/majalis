@@ -1,4 +1,5 @@
 import { requestFetch } from "@/lib/request-manager";
+import { CONTENT_CURRICULUM_ENABLED, isCurriculumRuling } from "./content-flags";
 import type { ShariaRulingExtended } from "./rulings-types";
 
 export { RULINGS_ENCYCLOPEDIA_SEED, RULINGS_ENCYCLOPEDIA_TOTAL } from "./rulings-encyclopedia-seed.generated";
@@ -47,7 +48,10 @@ export async function loadAllRulingsFromChunks(): Promise<ShariaRulingExtended[]
     }),
   );
 
-  allChunksCache = chunks.flat();
+  const flat = chunks.flat();
+  allChunksCache = CONTENT_CURRICULUM_ENABLED
+    ? flat
+    : flat.filter((item) => !isCurriculumRuling(item));
   return allChunksCache;
 }
 
