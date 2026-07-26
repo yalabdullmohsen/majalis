@@ -331,3 +331,41 @@
   border-radius: var(--m26-r-md) !important;
 }
 
+/* ── منقول من الطبقة الحرجة: Login enhancements ── */
+/* ══ صفحة تسجيل الدخول — تحسينات ══════════════════════════════════════════ */
+.login-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+.login-back-link--primary {
+  display: block;
+  text-align: center;
+  padding: 0.7rem 1.25rem;
+  border-radius: var(--ds-radius);
+  background: rgba(46,139,103,0.15);
+  border: 1.5px solid var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, #226A56) !important;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+.login-back-link--primary:hover {
+  background: rgba(46,139,103,0.25);
+}
+.login-back-link:not(.login-back-link--primary) {
+  display: block;
+  text-align: center;
+  color: var(--majalis-ink-muted, #9BA3B5) !important;
+  font-size: 0.85rem;
+  text-decoration: none;
+  padding: 0.4rem;
+  transition: color 0.15s;
+}
+.login-back-link:not(.login-back-link--primary):hover {
+  color: var(--majalis-ink, #EDE9DD) !important;
+}
+/* ══ نهاية تحسينات تسجيل الدخول ══════════════════════════════════════════ */
+
