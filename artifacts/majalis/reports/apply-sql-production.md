@@ -12,7 +12,7 @@
 | `scientific_miracles` | الجدول موجود و**فارغ** (العامة تعتمد seed محليًا) |
 | عمود `verification_status` | **غير موجود** بعد — يلزم الترحيل أدناه قبل أي إدراج من لوحة الإدارة |
 | تصنيفات العقيدة الأربعة | موجودة: `iman-billah` / `aqsam-tawheed` / `nawaqid-islam` / `aqeedat-ahl-sunnah` |
-| دروس `aqsam-tawheed` / `nawaqid-islam` / `aqeedat-ahl-sunnah` | **فارغة** — تحتاج batch3 |
+| دروس `aqsam-tawheed` / `nawaqid-islam` / `aqeedat-ahl-sunnah` / `iman-billah` | **مغطاة ببذرة واجهة** (`learn-library-aqeedah-batch3-seed.ts`) — يُفضَّل تطبيق `learn_library_v2_aqeedah_batch3.sql` الموسّع في SQL Editor للمزامنة الدائمة |
 | `iman-billah` | فيه درس آخر (دورة القواعد المثلى)؛ batch3 يضيف درس «الإيمان بالله» إن لم يوجد بنفس العنوان |
 | `qa_questions` | ≈ ٣٧١ صفًا — دفعات verify batch3–5 جاهزة في المستودع |
 
