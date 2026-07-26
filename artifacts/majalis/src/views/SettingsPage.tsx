@@ -154,6 +154,18 @@ export default function SettingsPage() {
             <option value="واسع">واسع</option>
           </select>
         </label>
+        <label className="settings-field">
+          <span>عرض النص</span>
+          <select
+            name="reading-width"
+            value={preferences.readingWidth}
+            onChange={(e) => update("readingWidth", e.target.value as UserPreferences["readingWidth"])}
+          >
+            <option value="ضيق">ضيق</option>
+            <option value="متوسط">متوسط</option>
+            <option value="واسع">واسع</option>
+          </select>
+        </label>
         <ToggleRow label={t("settings_reading_mode")} checked={preferences.readingMode} onChange={(value) => update("readingMode", value)} />
       </LegalSection>
 

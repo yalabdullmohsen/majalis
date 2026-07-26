@@ -1,5 +1,6 @@
 import "@/styles/rulings-encyclopedia.css";
 import { useCallback, useEffect, useState } from "react";
+import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { Banknote, BookOpen, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, MapPin, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link, useSearch } from "wouter";
@@ -71,6 +72,7 @@ function useDebouncedValue<T>(value: T, delayMs = 350): T {
 const PAGE_SIZE = 24;
 
 export default function RulingsPage() {
+  useReadingScrollMemory("rulings");
   const { isAdmin } = useAuth();
   const [items, setItems] = useState<ShariaRulingExtended[]>([]);
   const [total, setTotal] = useState(0);
