@@ -38,7 +38,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "malik",
-    name: "الإمام مالك",
+    name: "مالك بن أنس",
     fullName: "مالك بن أنس الأصبحي",
     era: "الأئمة الأربعة",
     specialty: ["حديث", "فقه"],
@@ -53,7 +53,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "shafi",
-    name: "الإمام الشافعي",
+    name: "محمد بن إدريس الشافعي",
     fullName: "محمد بن إدريس الشافعي",
     era: "الأئمة الأربعة",
     specialty: ["فقه", "أصول", "شعر"],
@@ -68,7 +68,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "ahmad",
-    name: "الإمام أحمد",
+    name: "أحمد بن حنبل",
     fullName: "أحمد بن محمد بن حنبل الشيباني",
     era: "الأئمة الأربعة",
     specialty: ["حديث", "فقه", "عقيدة"],
@@ -83,7 +83,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "bukhari",
-    name: "الإمام البخاري",
+    name: "محمد بن إسماعيل البخاري",
     fullName: "محمد بن إسماعيل البخاري",
     era: "المحدثون",
     specialty: ["حديث"],
@@ -97,7 +97,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "muslim",
-    name: "الإمام مسلم",
+    name: "مسلم بن الحجاج",
     fullName: "مسلم بن الحجاج القشيري النيسابوري",
     era: "المحدثون",
     specialty: ["حديث", "رجال", "علل"],
@@ -126,7 +126,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "ibn-qayyim",
-    name: "ابن القيم",
+    name: "ابن قيم الجوزية",
     fullName: "محمد بن أبي بكر بن قيم الجوزية",
     era: "العلماء الكبار",
     specialty: ["عقيدة", "فقه", "أخلاق", "تربية"],
@@ -140,7 +140,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "nawawi",
-    name: "الإمام النووي",
+    name: "يحيى بن شرف النووي",
     fullName: "أبو زكريا يحيى بن شرف النووي الدمشقي",
     era: "العلماء الكبار",
     specialty: ["فقه", "حديث", "لغة", "زهد"],
@@ -189,7 +189,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "ibn-baz",
-    name: "الشيخ ابن باز",
+    name: "ابن باز",
     fullName: "عبد العزيز بن عبد الله بن باز",
     era: "المعاصرون",
     specialty: ["فقه", "عقيدة", "حديث"],
@@ -203,7 +203,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "ibn-uthaymeen",
-    name: "الشيخ ابن عثيمين",
+    name: "ابن عثيمين",
     fullName: "محمد بن صالح بن محمد العثيمين",
     era: "المعاصرون",
     specialty: ["فقه", "عقيدة", "تفسير"],
@@ -217,7 +217,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "albani",
-    name: "الشيخ الألباني",
+    name: "الألباني",
     fullName: "محمد ناصر الدين الألباني",
     era: "المعاصرون",
     specialty: ["حديث", "فقه"],
@@ -231,7 +231,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "qaradawi",
-    name: "الشيخ القرضاوي",
+    name: "القرضاوي",
     fullName: "يوسف بن عبد الله القرضاوي",
     era: "المعاصرون",
     specialty: ["فقه", "دعوة", "أصول"],
@@ -245,7 +245,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "tirmidhi",
-    name: "الإمام الترمذي",
+    name: "الترمذي",
     fullName: "محمد بن عيسى بن سَوْرة الترمذي",
     era: "المحدثون",
     specialty: ["حديث", "علل", "رجال"],
@@ -274,7 +274,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "ghazali",
-    name: "الإمام الغزالي",
+    name: "الغزالي",
     fullName: "محمد بن محمد الغزالي الطوسي",
     era: "العلماء الكبار",
     specialty: ["فقه", "أصول", "تصوف", "عقيدة"],
@@ -334,7 +334,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "fawzan",
-    name: "الشيخ صالح الفوزان",
+    name: "صالح الفوزان",
     fullName: "صالح بن فوزان بن عبد الله الفوزان",
     era: "المعاصرون",
     specialty: ["فقه", "عقيدة", "فتوى"],
@@ -348,7 +348,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "al-suyuti",
-    name: "الإمام السيوطي",
+    name: "السيوطي",
     fullName: "جلال الدين عبد الرحمن السيوطي",
     era: "العلماء الكبار",
     specialty: ["تفسير", "حديث", "فقه", "لغة"],
@@ -378,7 +378,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "nasai",
-    name: "الإمام النسائي",
+    name: "النسائي",
     fullName: "أحمد بن شعيب بن علي النسائي",
     era: "المحدثون",
     specialty: ["حديث", "رجال", "علل"],
@@ -392,7 +392,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "daraqutni",
-    name: "الإمام الدارقطني",
+    name: "الدارقطني",
     fullName: "علي بن عمر الدارقطني البغدادي",
     era: "العلماء الكبار",
     specialty: ["حديث", "قراءات", "علل"],
@@ -407,7 +407,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "bayhaki",
-    name: "الإمام البيهقي",
+    name: "البيهقي",
     fullName: "أبو بكر أحمد بن الحسين بن علي البيهقي الخراساني",
     era: "العلماء الكبار",
     specialty: ["حديث", "فقه", "عقيدة", "أصول"],
@@ -448,7 +448,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "shatbi",
-    name: "الإمام الشاطبي",
+    name: "الشاطبي",
     fullName: "إبراهيم بن موسى اللخمي الغرناطي الشاطبي",
     era: "المجددون",
     specialty: ["أصول", "مقاصد", "فقه"],
@@ -491,7 +491,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "zuhayli",
-    name: "الشيخ وهبة الزحيلي",
+    name: "وهبة الزحيلي",
     fullName: "وهبة مصطفى الزحيلي",
     era: "المعاصرون",
     specialty: ["فقه", "تفسير", "أصول"],
@@ -506,7 +506,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "abu-zayd",
-    name: "الشيخ بكر أبو زيد",
+    name: "بكر أبو زيد",
     fullName: "بكر بن عبد الله أبو زيد",
     era: "المعاصرون",
     specialty: ["فقه", "عقيدة", "لغة"],
@@ -520,7 +520,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "muhammad-ghazali",
-    name: "الشيخ محمد الغزالي",
+    name: "محمد الغزالي",
     fullName: "محمد الغزالي السقا",
     era: "المعاصرون",
     specialty: ["دعوة", "عقيدة", "فقه"],
@@ -584,7 +584,7 @@ export const SCHOLARS: Scholar[] = [
     fullName: "عبد الرحمن بن أحمد بن رجب الحنبلي",
     era: "المحدثون",
     specialty: ["حديث", "فقه"],
-    bio: "محدث حنبلي دمشقي، أحد أبرز شراح الأحاديث النبوية. أدرك شيئاً من علم الإمام ابن القيم الجوزية وتتلمذ عليه (ضمن حلقة تلاميذه التي ضمّت أيضاً ابنَي ابن القيم وابن كثير)، وشهد له بقوله: «ولا رأيت أوسع منه علماً، ولا أعرف بمعاني القرآن والسنة وحقائق الإيمان منه»؛ وأخذ أيضاً عن شمس الدين ابن عبد الهادي.",
+    bio: "محدث حنبلي دمشقي، أحد أبرز شراح الأحاديث النبوية. أدرك شيئاً من علم الإمام ابن قيم الجوزية وتتلمذ عليه (ضمن حلقة تلاميذه التي ضمّت أيضاً ابنَي ابن القيم وابن كثير)، وشهد له بقوله: «ولا رأيت أوسع منه علماً، ولا أعرف بمعاني القرآن والسنة وحقائق الإيمان منه»؛ وأخذ أيضاً عن شمس الدين ابن عبد الهادي.",
     key_works: ["جامع العلوم والحكم شرح الأربعين", "فتح الباري شرح البخاري", "لطائف المعارف"],
     died: "٧٩٥ هـ",
     region: "دمشق",
@@ -610,7 +610,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "dhahabi",
-    name: "الإمام الذهبي",
+    name: "الذهبي",
     fullName: "محمد بن أحمد بن عثمان الذهبي",
     era: "العلماء الكبار",
     specialty: ["حديث", "رجال", "تاريخ"],
@@ -645,7 +645,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "ibn-abd-al-wahhab",
-    name: "الشيخ محمد بن عبد الوهاب",
+    name: "محمد بن عبد الوهاب",
     fullName: "محمد بن عبد الوهاب بن سليمان التميمي النجدي",
     era: "المجددون",
     specialty: ["عقيدة", "فقه", "دعوة"],
@@ -690,7 +690,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "muhammad-abdu",
-    name: "الشيخ محمد عبده",
+    name: "محمد عبده",
     fullName: "محمد بن عبده بن حسن خيرالله",
     era: "المجددون",
     specialty: ["عقيدة", "تفسير", "أصول"],
@@ -720,7 +720,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "abu-yusuf",
-    name: "الإمام أبو يوسف",
+    name: "أبو يوسف",
     fullName: "يعقوب بن إبراهيم بن حبيب الأنصاري",
     era: "المحدثون",
     specialty: ["فقه", "أصول", "قضاء"],
@@ -735,7 +735,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "shaybani",
-    name: "الإمام محمد الشيباني",
+    name: "محمد الشيباني",
     fullName: "محمد بن الحسن بن فرقد الشيباني",
     era: "المحدثون",
     specialty: ["فقه", "أصول"],
@@ -750,7 +750,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "muzani",
-    name: "الإمام المزني",
+    name: "المزني",
     fullName: "إسماعيل بن يحيى المزني",
     era: "المحدثون",
     specialty: ["فقه", "أصول"],
@@ -765,7 +765,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "ibn-hibban",
-    name: "الإمام ابن حبان",
+    name: "ابن حبان",
     fullName: "محمد بن حبان بن أحمد التميمي البُستي",
     era: "العلماء الكبار",
     specialty: ["حديث", "رجال", "فقه"],
@@ -780,7 +780,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "ibn-khuzayma",
-    name: "الإمام ابن خزيمة",
+    name: "ابن خزيمة",
     fullName: "محمد بن إسحاق بن خزيمة النيسابوري",
     era: "العلماء الكبار",
     specialty: ["حديث", "فقه", "عقيدة"],
@@ -795,7 +795,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "hakim",
-    name: "الإمام الحاكم",
+    name: "الحاكم",
     fullName: "محمد بن عبد الله بن محمد النيسابوري",
     era: "العلماء الكبار",
     specialty: ["حديث", "رجال"],
@@ -810,7 +810,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "ibn-mubarak",
-    name: "الإمام عبد الله بن المبارك",
+    name: "عبد الله بن المبارك",
     fullName: "أبو عبد الرحمن عبد الله بن المبارك المروزي",
     era: "المحدثون",
     specialty: ["حديث", "زهد", "جهاد", "فقه"],
@@ -825,7 +825,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "sufyan-thawri",
-    name: "الإمام سفيان الثوري",
+    name: "سفيان الثوري",
     fullName: "سفيان بن سعيد بن مسروق الثوري الكوفي",
     era: "المحدثون",
     specialty: ["حديث", "فقه", "زهد"],
@@ -840,7 +840,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "awzai",
-    name: "الإمام الأوزاعي",
+    name: "الأوزاعي",
     fullName: "عبد الرحمن بن عمرو الأوزاعي",
     era: "المحدثون",
     specialty: ["فقه", "حديث"],
@@ -855,7 +855,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "laith-ibn-sad",
-    name: "الإمام الليث بن سعد",
+    name: "الليث بن سعد",
     fullName: "الليث بن سعد بن عبد الرحمن الفهمي",
     era: "المحدثون",
     specialty: ["حديث", "فقه"],
@@ -870,7 +870,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "ibn-al-mundhir",
-    name: "الإمام ابن المنذر",
+    name: "ابن المنذر",
     fullName: "محمد بن إبراهيم بن المنذر النيسابوري",
     era: "العلماء الكبار",
     specialty: ["فقه", "أصول"],
@@ -885,7 +885,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "khattabi",
-    name: "الإمام الخطابي",
+    name: "الخطابي",
     fullName: "حمد بن محمد بن إبراهيم الخطابي البُستي",
     era: "العلماء الكبار",
     specialty: ["حديث", "فقه", "لغة"],
@@ -920,7 +920,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "ali-tantawi",
-    name: "الشيخ علي الطنطاوي",
+    name: "علي الطنطاوي",
     fullName: "علي بن مصطفى بن أحمد الطنطاوي",
     era: "المعاصرون",
     specialty: ["دعوة", "أدب", "فقه"],
@@ -935,7 +935,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "shaarawi",
-    name: "الشيخ الشعراوي",
+    name: "الشعراوي",
     fullName: "محمد متولي الشعراوي",
     era: "المعاصرون",
     specialty: ["تفسير", "دعوة", "لغة"],
@@ -950,7 +950,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "ibn-ghudiyan",
-    name: "الشيخ عبد الله بن غديان",
+    name: "عبد الله بن غديان",
     fullName: "عبد الله بن عبد الرحمن بن عبد الرزاق بن قاسم آل غديان",
     era: "المعاصرون",
     specialty: ["فقه", "عقيدة", "فتوى"],
@@ -965,7 +965,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "afifi",
-    name: "الشيخ عبد الرزاق عفيفي",
+    name: "عبد الرزاق عفيفي",
     fullName: "عبد الرزاق بن عفيفي بن عطية بن عبد البر بن شرف الدين النوبي",
     era: "المعاصرون",
     specialty: ["عقيدة", "فقه", "حديث"],
@@ -980,7 +980,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "sufyan-uyayna",
-    name: "الإمام سفيان بن عيينة",
+    name: "سفيان بن عيينة",
     fullName: "سفيان بن عيينة بن أبي عمران الهلالي",
     era: "المحدثون",
     specialty: ["حديث", "تفسير"],
@@ -995,7 +995,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "muqbil",
-    name: "الشيخ مقبل بن هادي الوادعي",
+    name: "مقبل بن هادي الوادعي",
     fullName: "مقبل بن هادي بن مقبل الوادعي الحمداني",
     era: "المعاصرون",
     specialty: ["حديث", "عقيدة"],
@@ -1010,7 +1010,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "ibn-muflih",
-    name: "الإمام ابن مفلح",
+    name: "ابن مفلح",
     fullName: "محمد بن مفلح بن محمد المقدسي",
     era: "العلماء الكبار",
     specialty: ["فقه", "أصول", "عقيدة"],
@@ -1190,7 +1190,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "ibn-jibreen",
-    name: "الشيخ ابن جبرين",
+    name: "ابن جبرين",
     fullName: "عبد الله بن عبد الرحمن بن جبرين",
     era: "المعاصرون",
     specialty: ["عقيدة", "فقه", "فتوى"],
@@ -1205,7 +1205,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "syed-saabiq",
-    name: "الشيخ سيد سابق",
+    name: "سيد سابق",
     fullName: "سيد سابق محمد التهامي",
     era: "المعاصرون",
     specialty: ["فقه", "دعوة"],
@@ -1220,7 +1220,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "abd-al-karim-al-khudair",
-    name: "الشيخ عبد الكريم الخضير",
+    name: "عبد الكريم الخضير",
     fullName: "عبد الكريم بن عبد الله بن عبد الرحمن الخضير",
     era: "المعاصرون",
     specialty: ["حديث", "فقه", "عقيدة"],
@@ -1280,7 +1280,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "al-qarafi",
-    name: "الإمام القرافي",
+    name: "القرافي",
     fullName: "أبو العباس شهاب الدين أحمد بن إدريس القرافي",
     era: "العلماء الكبار",
     specialty: ["فقه", "أصول", "قواعد"],
@@ -1310,7 +1310,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "al-mizzi",
-    name: "الإمام المزي",
+    name: "المزي",
     fullName: "أبو الحجاج جمال الدين يوسف بن عبد الرحمن المزي",
     era: "العلماء الكبار",
     specialty: ["حديث", "رجال"],
@@ -1325,7 +1325,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "al-saadi",
-    name: "الشيخ عبد الرحمن السعدي",
+    name: "عبد الرحمن السعدي",
     fullName: "عبد الرحمن بن ناصر بن عبد الله السعدي",
     era: "المجددون",
     specialty: ["تفسير", "فقه", "عقيدة"],
@@ -1355,7 +1355,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "ahmad-shakir",
-    name: "الشيخ أحمد محمد شاكر",
+    name: "أحمد محمد شاكر",
     fullName: "أحمد محمد شاكر العرابي",
     era: "المجددون",
     specialty: ["حديث", "تحقيق", "فقه"],
@@ -1370,7 +1370,7 @@ export const SCHOLARS: Scholar[] = [
   },
 {
     id: "al-mundhiri",
-    name: "الحافظ المنذري",
+    name: "المنذري",
     fullName: "أبو محمد زكي الدين عبد العظيم المنذري",
     era: "العلماء الكبار",
     specialty: ["حديث", "فقه"],
@@ -1715,7 +1715,7 @@ export const SCHOLARS: Scholar[] = [
   },
   {
     id: "qadi-iyad",
-    name: "القاضي عياض",
+    name: "عياض",
     fullName: "عياض بن موسى اليحصبي",
     era: "العلماء الكبار",
     specialty: ["حديث", "سيرة", "فقه"],
@@ -1992,7 +1992,7 @@ export const SCHOLARS: Scholar[] = [
   {
     id: "baqillani",
     name: "الباقلاني",
-    fullName: "القاضي أبو بكر محمد بن الطيب الباقلاني",
+    fullName: "أبو بكر محمد بن الطيب الباقلاني",
     era: "العلماء الكبار",
     specialty: ["عقيدة", "أصول"],
     bio: "متكلم أصولي مالكي (ت 403هـ) من كبار محرّري المذهب الأشعري. له إعجاز القرآن والتمهيد، وناظر المخالفين، ودافع عن النبوة ومعجزاتها. أثّر في علم الكلام والأصول تأثيرًا بالغًا. يُقرأ في سياقه العلمي مع الاعتماد على المصادر المحقَّقة، دون غلو في المناقب أو إسقاط معاصر متكلَّف.",
