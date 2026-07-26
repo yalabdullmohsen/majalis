@@ -515,9 +515,25 @@ export default function AlamatSaahPage() {
 
       </div>
 
+      <nav className="as-related" aria-label="موضوعات ذات صلة">
+        <h2 className="as-related__title">موضوعات ذات صلة</h2>
+        <div className="as-related__grid">
+          {[
+            { href: "/tawhid", label: "التوحيد" },
+            { href: "/arkan-iman", label: "أركان الإيمان" },
+            { href: "/janna-naar", label: "الجنة والنار" },
+            { href: "/malaika", label: "الملائكة" },
+            { href: "/learning/paths/aqeedah", label: "مسار العقيدة" },
+          ].map((l) => (
+            <a key={l.href} href={l.href} className="as-related__link">{l.label}</a>
+          ))}
+        </div>
+      </nav>
+
       <div className="twh-share">
         <ShareButtons title="علامات الساعة، المجلس العلمي" url="https://www.majlisilm.com/alamat-saah" />
       </div>
+      <RelatedKnowledge kind="lesson" query="علامات الساعة" title="دروس ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-6">
         <SectionQuiz categoryId={["aqeeda", "tarikh"]} title="اختبر معلوماتك في العقيدة والتاريخ" count={4} />
       </div>
