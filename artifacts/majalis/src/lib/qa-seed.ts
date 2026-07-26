@@ -91,7 +91,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصحابة",
       "slug": "sahabah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-2",
@@ -107,7 +110,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصحابة",
       "slug": "sahabah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-3",
@@ -123,7 +129,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصحابة",
       "slug": "sahabah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-4",
@@ -139,7 +148,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصحابة",
       "slug": "sahabah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-5",
@@ -155,7 +167,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصحابة",
       "slug": "sahabah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-6",
@@ -171,7 +186,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصحابة",
       "slug": "sahabah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-7",
@@ -187,7 +205,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصحابة",
       "slug": "sahabah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-8",
@@ -203,7 +224,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-9",
@@ -219,7 +243,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-10",
@@ -235,7 +262,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-11",
@@ -251,7 +281,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-12",
@@ -267,7 +300,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-13",
@@ -283,7 +319,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-14",
@@ -299,7 +338,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-15",
@@ -315,7 +357,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-16",
@@ -331,7 +376,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-17",
@@ -347,7 +395,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-18",
@@ -363,7 +414,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-19",
@@ -379,7 +433,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-20",
@@ -395,7 +452,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-21",
@@ -411,7 +471,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-22",
@@ -427,7 +490,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-23",
@@ -443,7 +509,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-40",
@@ -459,7 +528,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-41",
@@ -475,7 +547,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-42",
@@ -491,7 +566,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
-    }
+    },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-43",
@@ -507,7 +585,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
-    }
+    },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-44",
@@ -523,7 +604,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
-    }
+    },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-45",
@@ -539,7 +623,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
-    }
+    },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-46",
@@ -555,7 +642,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
-    }
+    },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-53",
@@ -571,7 +661,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصلاة",
       "slug": "salah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-54",
@@ -587,7 +680,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصلاة",
       "slug": "salah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-55",
@@ -603,7 +699,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصلاة",
       "slug": "salah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-66",
@@ -619,7 +718,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الزكاة",
       "slug": "zakat"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-79",
@@ -635,7 +737,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصيام",
       "slug": "sawm"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-80",
@@ -651,7 +756,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصيام",
       "slug": "sawm"
-    }
+    },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-92",
@@ -661,13 +769,17 @@ export const SEED_QA = [
     "ruling_type": "ركن",
     "evidence": "رواه الترمذي وأبو داود والنسائي وابن ماجه عن عبدالرحمن بن يعمر",
     "reference": "صحيح — صححه الألباني وابن خزيمة",
+    "takhrij_status": "NEEDS_HUMAN",
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-05T04:00:00.000Z",
     "qa_categories": {
       "name": "الحج",
       "slug": "hajj"
-    }
+    },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-93",
@@ -683,7 +795,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحج",
       "slug": "hajj"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-108",
@@ -699,7 +814,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "السيرة",
       "slug": "seerah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-109",
@@ -715,7 +833,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "السيرة",
       "slug": "seerah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-110",
@@ -731,7 +852,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "السيرة",
       "slug": "seerah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-111",
@@ -747,7 +871,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "السيرة",
       "slug": "seerah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-112",
@@ -763,7 +890,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "السيرة",
       "slug": "seerah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-113",
@@ -779,7 +909,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "السيرة",
       "slug": "seerah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-114",
@@ -795,7 +928,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "السيرة",
       "slug": "seerah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-131",
@@ -811,7 +947,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحديث",
       "slug": "hadith"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-132",
@@ -827,7 +966,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحديث",
       "slug": "hadith"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-133",
@@ -843,7 +985,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحديث",
       "slug": "hadith"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-134",
@@ -859,7 +1004,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحديث",
       "slug": "hadith"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-135",
@@ -875,7 +1023,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحديث",
       "slug": "hadith"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-136",
@@ -891,7 +1042,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحديث",
       "slug": "hadith"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-137",
@@ -907,7 +1061,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحديث",
       "slug": "hadith"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-138",
@@ -923,7 +1080,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحديث",
       "slug": "hadith"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-144",
@@ -939,7 +1099,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
-    }
+    },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-145",
@@ -955,7 +1118,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
-    }
+    },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-146",
@@ -971,7 +1137,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
-    }
+    },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-147",
@@ -987,7 +1156,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
-    }
+    },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-148",
@@ -1003,7 +1175,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
-    }
+    },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-170",
@@ -1019,7 +1194,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-171",
@@ -1035,7 +1213,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-172",
@@ -1051,7 +1232,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-173",
@@ -1067,7 +1251,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-174",
@@ -1083,7 +1270,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-175",
@@ -1099,7 +1289,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-176",
@@ -1115,7 +1308,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-177",
@@ -1131,7 +1327,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-178",
@@ -1147,7 +1346,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-179",
@@ -1163,7 +1365,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-180",
@@ -1179,7 +1384,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-181",
@@ -1195,7 +1403,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-182",
@@ -1211,7 +1422,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-183",
@@ -1227,7 +1441,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-184",
@@ -1243,7 +1460,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-185",
@@ -1259,7 +1479,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "العقيدة",
       "slug": "aqeedah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-186",
@@ -1275,7 +1498,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-187",
@@ -1291,7 +1517,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-188",
@@ -1307,7 +1536,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-189",
@@ -1323,7 +1555,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-190",
@@ -1339,7 +1574,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-191",
@@ -1355,7 +1593,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-192",
@@ -1371,7 +1612,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-193",
@@ -1387,7 +1631,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-194",
@@ -1403,7 +1650,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-195",
@@ -1419,7 +1669,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-196",
@@ -1435,7 +1688,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصحابة",
       "slug": "sahabah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-197",
@@ -1451,7 +1707,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصحابة",
       "slug": "sahabah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-198",
@@ -1467,7 +1726,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصحابة",
       "slug": "sahabah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-199",
@@ -1483,7 +1745,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصحابة",
       "slug": "sahabah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-200",
@@ -1499,7 +1764,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصحابة",
       "slug": "sahabah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-201",
@@ -1515,7 +1783,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصحابة",
       "slug": "sahabah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-202",
@@ -1531,7 +1802,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصحابة",
       "slug": "sahabah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-203",
@@ -1547,7 +1821,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصحابة",
       "slug": "sahabah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-204",
@@ -1563,7 +1840,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصحابة",
       "slug": "sahabah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-205",
@@ -1579,7 +1859,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصحابة",
       "slug": "sahabah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-206",
@@ -1595,7 +1878,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-207",
@@ -1611,7 +1897,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-208",
@@ -1627,7 +1916,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-209",
@@ -1643,7 +1935,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-210",
@@ -1659,7 +1954,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-211",
@@ -1675,7 +1973,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصلاة",
       "slug": "salah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-212",
@@ -1691,7 +1992,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصلاة",
       "slug": "salah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-213",
@@ -1707,7 +2011,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصلاة",
       "slug": "salah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-214",
@@ -1723,7 +2030,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصلاة",
       "slug": "salah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-215",
@@ -1739,7 +2049,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصلاة",
       "slug": "salah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-216",
@@ -1755,7 +2068,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصلاة",
       "slug": "salah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-217",
@@ -1771,7 +2087,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصلاة",
       "slug": "salah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-218",
@@ -1787,7 +2106,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصلاة",
       "slug": "salah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-219",
@@ -1803,7 +2125,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصلاة",
       "slug": "salah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-220",
@@ -1819,7 +2144,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصلاة",
       "slug": "salah"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-221",
@@ -1835,7 +2163,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصيام",
       "slug": "sawm"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-222",
@@ -1851,7 +2182,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصيام",
       "slug": "sawm"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-223",
@@ -1867,7 +2201,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصيام",
       "slug": "sawm"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-224",
@@ -1883,7 +2220,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصيام",
       "slug": "sawm"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-225",
@@ -1899,7 +2239,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصيام",
       "slug": "sawm"
-    }
+    },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-226",
@@ -1915,7 +2258,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصيام",
       "slug": "sawm"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-227",
@@ -1931,7 +2277,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصيام",
       "slug": "sawm"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-228",
@@ -1947,7 +2296,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الصيام",
       "slug": "sawm"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-229",
@@ -1963,7 +2315,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الزكاة",
       "slug": "zakat"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-230",
@@ -1979,7 +2334,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الزكاة",
       "slug": "zakat"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-231",
@@ -1995,7 +2353,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الزكاة",
       "slug": "zakat"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-232",
@@ -2011,7 +2372,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحج",
       "slug": "hajj"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-233",
@@ -2027,7 +2391,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحج",
       "slug": "hajj"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-234",
@@ -2043,7 +2410,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحج",
       "slug": "hajj"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-235",
@@ -2059,7 +2429,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحج",
       "slug": "hajj"
-    }
+    },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-236",
@@ -2075,7 +2448,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الزكاة",
       "slug": "zakat"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-237",
@@ -2091,7 +2467,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحج",
       "slug": "hajj"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-238",
@@ -2107,7 +2486,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الزكاة",
       "slug": "zakat"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-239",
@@ -2123,7 +2505,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحج",
       "slug": "hajj"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-240",
@@ -2139,7 +2524,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحج",
       "slug": "hajj"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-241",
@@ -2155,7 +2543,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "القرآن",
       "slug": "quran"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-242",
@@ -2171,7 +2562,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "القرآن",
       "slug": "quran"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-243",
@@ -2187,7 +2581,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "القرآن",
       "slug": "quran"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-244",
@@ -2203,7 +2600,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "القرآن",
       "slug": "quran"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-245",
@@ -2219,7 +2619,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "القرآن",
       "slug": "quran"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-246",
@@ -2235,7 +2638,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "القرآن",
       "slug": "quran"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-247",
@@ -2251,7 +2657,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحديث",
       "slug": "hadith"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-248",
@@ -2267,7 +2676,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحديث",
       "slug": "hadith"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-249",
@@ -2283,7 +2695,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحديث",
       "slug": "hadith"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-250",
@@ -2299,7 +2714,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحديث",
       "slug": "hadith"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-251",
@@ -2315,7 +2733,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحديث",
       "slug": "hadith"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-252",
@@ -2331,7 +2752,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحديث",
       "slug": "hadith"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-253",
@@ -2347,7 +2771,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحديث",
       "slug": "hadith"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-254",
@@ -2363,7 +2790,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الحديث",
       "slug": "hadith"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-255",
@@ -2379,7 +2809,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "القرآن",
       "slug": "quran"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-256",
@@ -2395,7 +2828,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-257",
@@ -2411,7 +2847,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-258",
@@ -2427,7 +2866,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-259",
@@ -2443,7 +2885,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-260",
@@ -2459,7 +2904,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-261",
@@ -2475,7 +2923,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الآداب",
       "slug": "adab"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-264",
@@ -2491,7 +2942,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الآداب",
       "slug": "adab"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-265",
@@ -2507,7 +2961,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الآداب",
       "slug": "adab"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-266",
@@ -2523,7 +2980,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-267",
@@ -2539,7 +2999,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-268",
@@ -2555,7 +3018,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-269",
@@ -2571,7 +3037,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-270",
@@ -2587,7 +3056,10 @@ export const SEED_QA = [
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
-    }
+    },
+    "trust_level": "unsourced",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-271",
@@ -2600,7 +3072,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-10T08:00:00.000Z",
-    "qa_categories": { "name": "السيرة النبوية", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة النبوية", "slug": "seerah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-272",
@@ -2613,7 +3088,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-10T08:00:00.000Z",
-    "qa_categories": { "name": "السيرة النبوية", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة النبوية", "slug": "seerah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-273",
@@ -2626,7 +3104,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-10T08:00:00.000Z",
-    "qa_categories": { "name": "السيرة النبوية", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة النبوية", "slug": "seerah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-274",
@@ -2639,7 +3120,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-10T08:00:00.000Z",
-    "qa_categories": { "name": "السيرة النبوية", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة النبوية", "slug": "seerah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-275",
@@ -2652,7 +3136,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-10T08:00:00.000Z",
-    "qa_categories": { "name": "السيرة النبوية", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة النبوية", "slug": "seerah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-276",
@@ -2665,7 +3152,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-10T08:00:00.000Z",
-    "qa_categories": { "name": "السيرة النبوية", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة النبوية", "slug": "seerah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-277",
@@ -2678,7 +3168,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-10T08:00:00.000Z",
-    "qa_categories": { "name": "السيرة النبوية", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة النبوية", "slug": "seerah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-278",
@@ -2691,7 +3184,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-11T08:00:00.000Z",
-    "qa_categories": { "name": "الآداب الإسلامية", "slug": "adab" }
+    "qa_categories": { "name": "الآداب الإسلامية", "slug": "adab" },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-279",
@@ -2704,7 +3200,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-11T08:00:00.000Z",
-    "qa_categories": { "name": "الآداب الإسلامية", "slug": "adab" }
+    "qa_categories": { "name": "الآداب الإسلامية", "slug": "adab" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-280",
@@ -2717,7 +3216,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-11T08:00:00.000Z",
-    "qa_categories": { "name": "الآداب الإسلامية", "slug": "adab" }
+    "qa_categories": { "name": "الآداب الإسلامية", "slug": "adab" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-281",
@@ -2730,7 +3232,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-11T08:00:00.000Z",
-    "qa_categories": { "name": "الآداب الإسلامية", "slug": "adab" }
+    "qa_categories": { "name": "الآداب الإسلامية", "slug": "adab" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-282",
@@ -2743,7 +3248,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-11T08:00:00.000Z",
-    "qa_categories": { "name": "الآداب الإسلامية", "slug": "adab" }
+    "qa_categories": { "name": "الآداب الإسلامية", "slug": "adab" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-283",
@@ -2756,7 +3264,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-11T08:00:00.000Z",
-    "qa_categories": { "name": "الآداب الإسلامية", "slug": "adab" }
+    "qa_categories": { "name": "الآداب الإسلامية", "slug": "adab" },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-284",
@@ -2769,7 +3280,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-12T08:00:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-285",
@@ -2782,7 +3296,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-12T08:00:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-286",
@@ -2795,7 +3312,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-12T08:00:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-287",
@@ -2808,7 +3328,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-12T08:00:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-288",
@@ -2821,7 +3344,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-12T08:00:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-289",
@@ -2834,7 +3360,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-13T08:00:00.000Z",
-    "qa_categories": { "name": "الزكاة", "slug": "zakat" }
+    "qa_categories": { "name": "الزكاة", "slug": "zakat" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-290",
@@ -2847,7 +3376,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-13T08:00:00.000Z",
-    "qa_categories": { "name": "الزكاة", "slug": "zakat" }
+    "qa_categories": { "name": "الزكاة", "slug": "zakat" },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-291",
@@ -2860,7 +3392,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-13T08:00:00.000Z",
-    "qa_categories": { "name": "الزكاة", "slug": "zakat" }
+    "qa_categories": { "name": "الزكاة", "slug": "zakat" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-292",
@@ -2873,7 +3408,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-13T08:00:00.000Z",
-    "qa_categories": { "name": "الزكاة", "slug": "zakat" }
+    "qa_categories": { "name": "الزكاة", "slug": "zakat" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-293",
@@ -2886,7 +3424,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-13T08:00:00.000Z",
-    "qa_categories": { "name": "الزكاة", "slug": "zakat" }
+    "qa_categories": { "name": "الزكاة", "slug": "zakat" },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-294",
@@ -2899,7 +3440,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-14T08:00:00.000Z",
-    "qa_categories": { "name": "الأذكار", "slug": "adhkar" }
+    "qa_categories": { "name": "الأذكار", "slug": "adhkar" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-295",
@@ -2912,7 +3456,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-14T08:00:00.000Z",
-    "qa_categories": { "name": "الأذكار", "slug": "adhkar" }
+    "qa_categories": { "name": "الأذكار", "slug": "adhkar" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-296",
@@ -2925,7 +3472,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-14T08:00:00.000Z",
-    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" }
+    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-297",
@@ -2938,7 +3488,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-14T08:00:00.000Z",
-    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" }
+    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-298",
@@ -2951,7 +3504,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-14T08:00:00.000Z",
-    "qa_categories": { "name": "الآداب", "slug": "adab" }
+    "qa_categories": { "name": "الآداب", "slug": "adab" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-299",
@@ -2964,7 +3520,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-14T08:00:00.000Z",
-    "qa_categories": { "name": "الآداب", "slug": "adab" }
+    "qa_categories": { "name": "الآداب", "slug": "adab" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-300",
@@ -2977,7 +3536,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-14T08:00:00.000Z",
-    "qa_categories": { "name": "القرآن", "slug": "quran" }
+    "qa_categories": { "name": "القرآن", "slug": "quran" },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-301",
@@ -2990,7 +3552,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-14T08:00:00.000Z",
-    "qa_categories": { "name": "القرآن", "slug": "quran" }
+    "qa_categories": { "name": "القرآن", "slug": "quran" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-302",
@@ -3003,7 +3568,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-14T08:00:00.000Z",
-    "qa_categories": { "name": "الحديث", "slug": "hadith" }
+    "qa_categories": { "name": "الحديث", "slug": "hadith" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-303",
@@ -3016,7 +3584,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-14T08:00:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-304",
@@ -3029,7 +3600,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الصلاة", "slug": "salah" }
+    "qa_categories": { "name": "الصلاة", "slug": "salah" },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-306",
@@ -3042,7 +3616,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الحج والعمرة", "slug": "hajj" }
+    "qa_categories": { "name": "الحج والعمرة", "slug": "hajj" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-307",
@@ -3055,7 +3632,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الآداب", "slug": "adab" }
+    "qa_categories": { "name": "الآداب", "slug": "adab" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-308",
@@ -3068,7 +3648,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" }
+    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-309",
@@ -3081,7 +3664,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الأذكار", "slug": "adhkar" }
+    "qa_categories": { "name": "الأذكار", "slug": "adhkar" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-310",
@@ -3094,7 +3680,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الصيام", "slug": "sawm" }
+    "qa_categories": { "name": "الصيام", "slug": "sawm" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-311",
@@ -3107,7 +3696,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الصلاة", "slug": "salah" }
+    "qa_categories": { "name": "الصلاة", "slug": "salah" },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-312",
@@ -3120,7 +3712,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" }
+    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-313",
@@ -3133,7 +3728,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الصلاة", "slug": "salah" }
+    "qa_categories": { "name": "الصلاة", "slug": "salah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-314",
@@ -3146,7 +3744,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "القرآن الكريم", "slug": "quran" }
+    "qa_categories": { "name": "القرآن الكريم", "slug": "quran" },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-315",
@@ -3159,7 +3760,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الزكاة", "slug": "zakat" }
+    "qa_categories": { "name": "الزكاة", "slug": "zakat" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-316",
@@ -3172,7 +3776,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الآداب والأخلاق", "slug": "adab" }
+    "qa_categories": { "name": "الآداب والأخلاق", "slug": "adab" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-317",
@@ -3185,7 +3792,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الصيام", "slug": "sawm" }
+    "qa_categories": { "name": "الصيام", "slug": "sawm" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-318",
@@ -3198,7 +3808,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-319",
@@ -3211,7 +3824,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الصلاة", "slug": "salah" }
+    "qa_categories": { "name": "الصلاة", "slug": "salah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-320",
@@ -3224,7 +3840,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الآداب والأخلاق", "slug": "adab" }
+    "qa_categories": { "name": "الآداب والأخلاق", "slug": "adab" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-321",
@@ -3237,7 +3856,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الصلاة", "slug": "salah" }
+    "qa_categories": { "name": "الصلاة", "slug": "salah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-322",
@@ -3250,7 +3872,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الصيام", "slug": "sawm" }
+    "qa_categories": { "name": "الصيام", "slug": "sawm" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-323",
@@ -3263,7 +3888,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الحديث والأصول", "slug": "hadith" }
+    "qa_categories": { "name": "الحديث والأصول", "slug": "hadith" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-324",
@@ -3276,7 +3904,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الحديث والأصول", "slug": "hadith" }
+    "qa_categories": { "name": "الحديث والأصول", "slug": "hadith" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-325",
@@ -3289,7 +3920,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الصحابة", "slug": "sahabah" }
+    "qa_categories": { "name": "الصحابة", "slug": "sahabah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-326",
@@ -3302,7 +3936,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الآداب والأخلاق", "slug": "adab" }
+    "qa_categories": { "name": "الآداب والأخلاق", "slug": "adab" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-327",
@@ -3315,7 +3952,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الآداب والأخلاق", "slug": "adab" }
+    "qa_categories": { "name": "الآداب والأخلاق", "slug": "adab" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-328",
@@ -3328,7 +3968,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الزكاة", "slug": "zakat" }
+    "qa_categories": { "name": "الزكاة", "slug": "zakat" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-329",
@@ -3341,7 +3984,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الحج والعمرة", "slug": "hajj" }
+    "qa_categories": { "name": "الحج والعمرة", "slug": "hajj" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-330",
@@ -3354,7 +4000,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" }
+    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-331",
@@ -3367,7 +4016,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "القرآن", "slug": "quran" }
+    "qa_categories": { "name": "القرآن", "slug": "quran" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-332",
@@ -3380,7 +4032,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الزكاة", "slug": "zakat" }
+    "qa_categories": { "name": "الزكاة", "slug": "zakat" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-333",
@@ -3393,7 +4048,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" }
+    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-334",
@@ -3406,7 +4064,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الصلاة", "slug": "salah" }
+    "qa_categories": { "name": "الصلاة", "slug": "salah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-335",
@@ -3419,7 +4080,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الصحابة", "slug": "sahabah" }
+    "qa_categories": { "name": "الصحابة", "slug": "sahabah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-336",
@@ -3432,7 +4096,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الصيام", "slug": "sawm" }
+    "qa_categories": { "name": "الصيام", "slug": "sawm" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-337",
@@ -3445,7 +4112,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "السيرة النبوية", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة النبوية", "slug": "seerah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-338",
@@ -3458,7 +4128,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الأذكار", "slug": "adhkar" }
+    "qa_categories": { "name": "الأذكار", "slug": "adhkar" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-339",
@@ -3471,7 +4144,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "علوم الحديث", "slug": "hadith" }
+    "qa_categories": { "name": "علوم الحديث", "slug": "hadith" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-340",
@@ -3484,7 +4160,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-01-15T08:00:00.000Z",
-    "qa_categories": { "name": "الصلاة", "slug": "salah" }
+    "qa_categories": { "name": "الصلاة", "slug": "salah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-341",
@@ -3497,7 +4176,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-01T09:00:00.000Z",
-    "qa_categories": { "name": "الزكاة", "slug": "zakat" }
+    "qa_categories": { "name": "الزكاة", "slug": "zakat" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-342",
@@ -3510,7 +4192,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-01T10:00:00.000Z",
-    "qa_categories": { "name": "الصلاة", "slug": "salah" }
+    "qa_categories": { "name": "الصلاة", "slug": "salah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-343",
@@ -3520,10 +4205,14 @@ export const SEED_QA = [
     "ruling_type": "تأصيل",
     "evidence": "أبو داود: ٢٠٨٥، الترمذي: ١١٠١",
     "reference": "المغني لابن قدامة، بداية المجتهد لابن رشد",
+    "takhrij_status": "NEEDS_HUMAN",
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-01T11:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-344",
@@ -3536,7 +4225,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-02T09:00:00.000Z",
-    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" }
+    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-345",
@@ -3549,7 +4241,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-02T10:00:00.000Z",
-    "qa_categories": { "name": "الصيام", "slug": "sawm" }
+    "qa_categories": { "name": "الصيام", "slug": "sawm" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-346",
@@ -3562,7 +4257,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-02T11:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-347",
@@ -3575,7 +4273,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-03T09:00:00.000Z",
-    "qa_categories": { "name": "السيرة", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة", "slug": "seerah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-348",
@@ -3588,7 +4289,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-03T10:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-349",
@@ -3601,7 +4305,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-03T11:00:00.000Z",
-    "qa_categories": { "name": "الصلاة", "slug": "salah" }
+    "qa_categories": { "name": "الصلاة", "slug": "salah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-350",
@@ -3614,7 +4321,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-04T09:00:00.000Z",
-    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" }
+    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-351",
@@ -3627,7 +4337,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-04T10:00:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-352",
@@ -3640,7 +4353,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-04T11:00:00.000Z",
-    "qa_categories": { "name": "الصحابة", "slug": "sahabah" }
+    "qa_categories": { "name": "الصحابة", "slug": "sahabah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-353",
@@ -3653,7 +4369,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-05T09:00:00.000Z",
-    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" }
+    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-354",
@@ -3666,7 +4385,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-05T10:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-355",
@@ -3679,7 +4401,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-05T11:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-356",
@@ -3692,7 +4417,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-06T09:00:00.000Z",
-    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" }
+    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-357",
@@ -3705,7 +4433,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-06T10:00:00.000Z",
-    "qa_categories": { "name": "الزكاة", "slug": "zakat" }
+    "qa_categories": { "name": "الزكاة", "slug": "zakat" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-358",
@@ -3718,7 +4449,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-06T11:00:00.000Z",
-    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" }
+    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-359",
@@ -3731,7 +4465,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-07T09:00:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-360",
@@ -3744,7 +4481,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-07T10:00:00.000Z",
-    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" }
+    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-361",
@@ -3757,7 +4497,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-07T11:00:00.000Z",
-    "qa_categories": { "name": "علوم الحديث", "slug": "hadith" }
+    "qa_categories": { "name": "علوم الحديث", "slug": "hadith" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-362",
@@ -3770,7 +4513,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-08T09:00:00.000Z",
-    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" }
+    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-363",
@@ -3783,7 +4529,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-08T10:00:00.000Z",
-    "qa_categories": { "name": "الصلاة", "slug": "salah" }
+    "qa_categories": { "name": "الصلاة", "slug": "salah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-364",
@@ -3796,7 +4545,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-08T11:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-365",
@@ -3809,7 +4561,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-09T09:00:00.000Z",
-    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" }
+    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-366",
@@ -3822,7 +4577,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-09T10:00:00.000Z",
-    "qa_categories": { "name": "علوم الحديث", "slug": "hadith" }
+    "qa_categories": { "name": "علوم الحديث", "slug": "hadith" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-367",
@@ -3835,7 +4593,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-09T11:00:00.000Z",
-    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" }
+    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-368",
@@ -3848,7 +4609,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-10T09:00:00.000Z",
-    "qa_categories": { "name": "السيرة", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة", "slug": "seerah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-369",
@@ -3861,7 +4625,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-10T10:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-370",
@@ -3874,7 +4641,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-10T11:00:00.000Z",
-    "qa_categories": { "name": "الحج", "slug": "hajj" }
+    "qa_categories": { "name": "الحج", "slug": "hajj" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-371",
@@ -3887,7 +4657,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-11T09:00:00.000Z",
-    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" }
+    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-372",
@@ -3900,7 +4673,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-11T10:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-373",
@@ -3913,7 +4689,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-11T11:00:00.000Z",
-    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" }
+    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-374",
@@ -3926,7 +4705,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-12T09:00:00.000Z",
-    "qa_categories": { "name": "الحج", "slug": "hajj" }
+    "qa_categories": { "name": "الحج", "slug": "hajj" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-375",
@@ -3939,7 +4721,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-12T10:00:00.000Z",
-    "qa_categories": { "name": "الصحابة", "slug": "sahabah" }
+    "qa_categories": { "name": "الصحابة", "slug": "sahabah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-376",
@@ -3952,7 +4737,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-12T11:00:00.000Z",
-    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" }
+    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-377",
@@ -3965,7 +4753,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-13T09:00:00.000Z",
-    "qa_categories": { "name": "الصيام", "slug": "sawm" }
+    "qa_categories": { "name": "الصيام", "slug": "sawm" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-378",
@@ -3978,7 +4769,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-13T10:00:00.000Z",
-    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" }
+    "qa_categories": { "name": "العقيدة", "slug": "aqeedah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-379",
@@ -3991,7 +4785,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-13T11:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-380",
@@ -4004,7 +4801,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-02-14T09:00:00.000Z",
-    "qa_categories": { "name": "الصحابة", "slug": "sahabah" }
+    "qa_categories": { "name": "الصحابة", "slug": "sahabah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-381",
@@ -4017,7 +4817,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-03-01T09:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-382",
@@ -4030,7 +4833,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-03-01T10:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-383",
@@ -4043,7 +4849,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-03-01T11:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-384",
@@ -4056,7 +4865,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-03-01T12:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-385",
@@ -4069,7 +4881,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-03-01T13:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-386",
@@ -4082,7 +4897,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-03-01T14:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-387",
@@ -4095,7 +4913,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-03-01T15:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-388",
@@ -4108,7 +4929,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-03-01T16:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-389",
@@ -4121,7 +4945,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-03-01T17:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-390",
@@ -4134,7 +4961,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-03-01T18:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-391",
@@ -4147,7 +4977,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-01T08:00:00.000Z",
-    "qa_categories": { "name": "السيرة", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة", "slug": "seerah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-392",
@@ -4160,7 +4993,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-01T09:00:00.000Z",
-    "qa_categories": { "name": "السيرة", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة", "slug": "seerah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-393",
@@ -4173,7 +5009,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-01T10:00:00.000Z",
-    "qa_categories": { "name": "السيرة", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة", "slug": "seerah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-394",
@@ -4186,7 +5025,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-01T11:00:00.000Z",
-    "qa_categories": { "name": "السيرة", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة", "slug": "seerah" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-395",
@@ -4199,7 +5041,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-01T12:00:00.000Z",
-    "qa_categories": { "name": "السيرة", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة", "slug": "seerah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-396",
@@ -4212,7 +5057,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-01T13:00:00.000Z",
-    "qa_categories": { "name": "السيرة", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة", "slug": "seerah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-397",
@@ -4225,7 +5073,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-01T14:00:00.000Z",
-    "qa_categories": { "name": "السيرة", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة", "slug": "seerah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-398",
@@ -4238,7 +5089,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-01T15:00:00.000Z",
-    "qa_categories": { "name": "السيرة", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة", "slug": "seerah" },
+    "trust_level": "primary_text",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-399",
@@ -4251,7 +5105,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-01T16:00:00.000Z",
-    "qa_categories": { "name": "السيرة", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة", "slug": "seerah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-400",
@@ -4264,7 +5121,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-01T17:00:00.000Z",
-    "qa_categories": { "name": "السيرة", "slug": "seerah" }
+    "qa_categories": { "name": "السيرة", "slug": "seerah" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-401",
@@ -4277,7 +5137,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-02T08:00:00.000Z",
-    "qa_categories": { "name": "القرآن", "slug": "quran" }
+    "qa_categories": { "name": "القرآن", "slug": "quran" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-402",
@@ -4290,7 +5153,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-02T09:00:00.000Z",
-    "qa_categories": { "name": "القرآن", "slug": "quran" }
+    "qa_categories": { "name": "القرآن", "slug": "quran" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-403",
@@ -4303,7 +5169,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-02T10:00:00.000Z",
-    "qa_categories": { "name": "القرآن", "slug": "quran" }
+    "qa_categories": { "name": "القرآن", "slug": "quran" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-404",
@@ -4316,7 +5185,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-02T11:00:00.000Z",
-    "qa_categories": { "name": "القرآن", "slug": "quran" }
+    "qa_categories": { "name": "القرآن", "slug": "quran" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-405",
@@ -4329,7 +5201,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-02T12:00:00.000Z",
-    "qa_categories": { "name": "القرآن", "slug": "quran" }
+    "qa_categories": { "name": "القرآن", "slug": "quran" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-406",
@@ -4342,7 +5217,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-02T13:00:00.000Z",
-    "qa_categories": { "name": "القرآن", "slug": "quran" }
+    "qa_categories": { "name": "القرآن", "slug": "quran" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-407",
@@ -4355,7 +5233,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-02T14:00:00.000Z",
-    "qa_categories": { "name": "القرآن", "slug": "quran" }
+    "qa_categories": { "name": "القرآن", "slug": "quran" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-408",
@@ -4368,7 +5249,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-04-02T15:00:00.000Z",
-    "qa_categories": { "name": "القرآن", "slug": "quran" }
+    "qa_categories": { "name": "القرآن", "slug": "quran" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-409",
@@ -4381,7 +5265,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-01T08:00:00.000Z",
-    "qa_categories": { "name": "الحج", "slug": "hajj" }
+    "qa_categories": { "name": "الحج", "slug": "hajj" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-410",
@@ -4394,7 +5281,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-01T09:00:00.000Z",
-    "qa_categories": { "name": "الحج", "slug": "hajj" }
+    "qa_categories": { "name": "الحج", "slug": "hajj" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-411",
@@ -4407,7 +5297,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-01T10:00:00.000Z",
-    "qa_categories": { "name": "الحج", "slug": "hajj" }
+    "qa_categories": { "name": "الحج", "slug": "hajj" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-412",
@@ -4420,7 +5313,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-01T11:00:00.000Z",
-    "qa_categories": { "name": "الحج", "slug": "hajj" }
+    "qa_categories": { "name": "الحج", "slug": "hajj" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-413",
@@ -4433,7 +5329,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-01T12:00:00.000Z",
-    "qa_categories": { "name": "الحج", "slug": "hajj" }
+    "qa_categories": { "name": "الحج", "slug": "hajj" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-414",
@@ -4446,7 +5345,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-02T08:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-415",
@@ -4459,7 +5361,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-02T09:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-416",
@@ -4472,7 +5377,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-02T10:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-417",
@@ -4485,7 +5393,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-02T11:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   /* ───────── أذكار (418-426) ───────── */
   {
@@ -4499,7 +5410,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-05T08:00:00.000Z",
-    "qa_categories": { "name": "الأذكار", "slug": "adhkar" }
+    "qa_categories": { "name": "الأذكار", "slug": "adhkar" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-419",
@@ -4512,7 +5426,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-05T08:10:00.000Z",
-    "qa_categories": { "name": "الأذكار", "slug": "adhkar" }
+    "qa_categories": { "name": "الأذكار", "slug": "adhkar" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-420",
@@ -4525,7 +5442,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-05T08:20:00.000Z",
-    "qa_categories": { "name": "الأذكار", "slug": "adhkar" }
+    "qa_categories": { "name": "الأذكار", "slug": "adhkar" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-421",
@@ -4538,7 +5458,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-05T08:30:00.000Z",
-    "qa_categories": { "name": "الأذكار", "slug": "adhkar" }
+    "qa_categories": { "name": "الأذكار", "slug": "adhkar" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-422",
@@ -4551,7 +5474,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-05T08:40:00.000Z",
-    "qa_categories": { "name": "الأذكار", "slug": "adhkar" }
+    "qa_categories": { "name": "الأذكار", "slug": "adhkar" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-423",
@@ -4564,7 +5490,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-05T08:50:00.000Z",
-    "qa_categories": { "name": "الأذكار", "slug": "adhkar" }
+    "qa_categories": { "name": "الأذكار", "slug": "adhkar" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-424",
@@ -4577,7 +5506,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-05T09:00:00.000Z",
-    "qa_categories": { "name": "الأذكار", "slug": "adhkar" }
+    "qa_categories": { "name": "الأذكار", "slug": "adhkar" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-425",
@@ -4590,7 +5522,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-05T09:10:00.000Z",
-    "qa_categories": { "name": "الأذكار", "slug": "adhkar" }
+    "qa_categories": { "name": "الأذكار", "slug": "adhkar" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-426",
@@ -4603,7 +5538,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-05T09:20:00.000Z",
-    "qa_categories": { "name": "الأذكار", "slug": "adhkar" }
+    "qa_categories": { "name": "الأذكار", "slug": "adhkar" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   /* ───────── صيام (427-435) ───────── */
   {
@@ -4617,7 +5555,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-06T08:00:00.000Z",
-    "qa_categories": { "name": "الصيام", "slug": "sawm" }
+    "qa_categories": { "name": "الصيام", "slug": "sawm" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-428",
@@ -4630,7 +5571,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-06T08:10:00.000Z",
-    "qa_categories": { "name": "الصيام", "slug": "sawm" }
+    "qa_categories": { "name": "الصيام", "slug": "sawm" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-429",
@@ -4643,7 +5587,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-06T08:20:00.000Z",
-    "qa_categories": { "name": "الصيام", "slug": "sawm" }
+    "qa_categories": { "name": "الصيام", "slug": "sawm" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-430",
@@ -4653,10 +5600,14 @@ export const SEED_QA = [
     "ruling_type": "سنة",
     "evidence": "",
     "reference": "مسلم، ابن ماجه، فتاوى اللجنة الدائمة",
+    "takhrij_status": "NEEDS_HUMAN",
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-06T08:30:00.000Z",
-    "qa_categories": { "name": "الصيام", "slug": "sawm" }
+    "qa_categories": { "name": "الصيام", "slug": "sawm" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-431",
@@ -4669,7 +5620,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-06T08:40:00.000Z",
-    "qa_categories": { "name": "الصيام", "slug": "sawm" }
+    "qa_categories": { "name": "الصيام", "slug": "sawm" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-432",
@@ -4679,10 +5633,14 @@ export const SEED_QA = [
     "ruling_type": "سنة",
     "evidence": "",
     "reference": "مسلم، البخاري، أبو داود",
+    "takhrij_status": "NEEDS_HUMAN",
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-06T08:50:00.000Z",
-    "qa_categories": { "name": "الصيام", "slug": "sawm" }
+    "qa_categories": { "name": "الصيام", "slug": "sawm" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-433",
@@ -4695,7 +5653,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-06T09:00:00.000Z",
-    "qa_categories": { "name": "الصيام", "slug": "sawm" }
+    "qa_categories": { "name": "الصيام", "slug": "sawm" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-434",
@@ -4705,10 +5666,14 @@ export const SEED_QA = [
     "ruling_type": "رخصة",
     "evidence": "البقرة: 185",
     "reference": "المغني لابن قدامة، الشرح الممتع لابن عثيمين",
+    "takhrij_status": "NEEDS_HUMAN",
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-06T09:10:00.000Z",
-    "qa_categories": { "name": "الصيام", "slug": "sawm" }
+    "qa_categories": { "name": "الصيام", "slug": "sawm" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-435",
@@ -4721,7 +5686,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-06T09:20:00.000Z",
-    "qa_categories": { "name": "الصيام", "slug": "sawm" }
+    "qa_categories": { "name": "الصيام", "slug": "sawm" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   /* ───────── طهارة (436-444) ───────── */
   {
@@ -4735,7 +5703,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-07T08:00:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-437",
@@ -4748,7 +5719,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-07T08:10:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-438",
@@ -4761,7 +5735,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-07T08:20:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-439",
@@ -4774,7 +5751,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-07T08:30:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-440",
@@ -4787,7 +5767,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-07T08:40:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-441",
@@ -4800,7 +5783,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-07T08:50:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-442",
@@ -4813,7 +5799,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-07T09:00:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-443",
@@ -4826,7 +5815,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-07T09:10:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-444",
@@ -4839,7 +5831,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-07T09:20:00.000Z",
-    "qa_categories": { "name": "الطهارة", "slug": "tahara" }
+    "qa_categories": { "name": "الطهارة", "slug": "tahara" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   /* ───────── فقه (445-452) ───────── */
   {
@@ -4850,10 +5845,14 @@ export const SEED_QA = [
     "ruling_type": "جائز بضوابط",
     "evidence": "",
     "reference": "قرار مجمع الفقه الإسلامي، فتاوى هيئة المحاسبة والمراجعة",
+    "takhrij_status": "NEEDS_HUMAN",
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-08T08:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-446",
@@ -4866,7 +5865,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-08T08:10:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-447",
@@ -4879,7 +5881,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-08T08:20:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-448",
@@ -4892,7 +5897,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-08T08:30:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-449",
@@ -4905,7 +5913,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-08T08:40:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-450",
@@ -4918,7 +5929,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-08T08:50:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-451",
@@ -4931,7 +5945,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-08T09:00:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-452",
@@ -4944,7 +5961,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-08T09:10:00.000Z",
-    "qa_categories": { "name": "الفقه", "slug": "fiqh" }
+    "qa_categories": { "name": "الفقه", "slug": "fiqh" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   /* ───────── حديث (453-460) ───────── */
   {
@@ -4958,7 +5978,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-09T08:00:00.000Z",
-    "qa_categories": { "name": "الحديث", "slug": "hadith" }
+    "qa_categories": { "name": "الحديث", "slug": "hadith" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-454",
@@ -4971,7 +5994,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-09T08:10:00.000Z",
-    "qa_categories": { "name": "الحديث", "slug": "hadith" }
+    "qa_categories": { "name": "الحديث", "slug": "hadith" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-455",
@@ -4984,7 +6010,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-09T08:20:00.000Z",
-    "qa_categories": { "name": "الحديث", "slug": "hadith" }
+    "qa_categories": { "name": "الحديث", "slug": "hadith" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-456",
@@ -4997,7 +6026,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-09T08:30:00.000Z",
-    "qa_categories": { "name": "الحديث", "slug": "hadith" }
+    "qa_categories": { "name": "الحديث", "slug": "hadith" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-457",
@@ -5007,10 +6039,14 @@ export const SEED_QA = [
     "ruling_type": "تعليمي",
     "evidence": "",
     "reference": "نزهة النظر شرح نخبة الفكر لابن حجر، الجرح والتعديل لابن أبي حاتم",
+    "takhrij_status": "NEEDS_HUMAN",
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-09T08:40:00.000Z",
-    "qa_categories": { "name": "الحديث", "slug": "hadith" }
+    "qa_categories": { "name": "الحديث", "slug": "hadith" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-458",
@@ -5023,7 +6059,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-09T08:50:00.000Z",
-    "qa_categories": { "name": "الحديث", "slug": "hadith" }
+    "qa_categories": { "name": "الحديث", "slug": "hadith" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-459",
@@ -5036,7 +6075,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-09T09:00:00.000Z",
-    "qa_categories": { "name": "الحديث", "slug": "hadith" }
+    "qa_categories": { "name": "الحديث", "slug": "hadith" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-460",
@@ -5049,7 +6091,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-09T09:10:00.000Z",
-    "qa_categories": { "name": "الحديث", "slug": "hadith" }
+    "qa_categories": { "name": "الحديث", "slug": "hadith" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   /* ───────── أنبياء (461-467) ───────── */
   {
@@ -5063,7 +6108,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-10T08:00:00.000Z",
-    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" }
+    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-462",
@@ -5076,7 +6124,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-10T08:10:00.000Z",
-    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" }
+    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-463",
@@ -5089,7 +6140,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-10T08:20:00.000Z",
-    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" }
+    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-464",
@@ -5102,7 +6156,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-10T08:30:00.000Z",
-    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" }
+    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-465",
@@ -5115,7 +6172,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-10T08:40:00.000Z",
-    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" }
+    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-466",
@@ -5128,7 +6188,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-10T08:50:00.000Z",
-    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" }
+    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-467",
@@ -5141,7 +6204,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-10T09:00:00.000Z",
-    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" }
+    "qa_categories": { "name": "الأنبياء", "slug": "anbiya" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   /* ───────── زكاة (468-474) ───────── */
   {
@@ -5155,7 +6221,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-11T08:00:00.000Z",
-    "qa_categories": { "name": "الزكاة", "slug": "zakat" }
+    "qa_categories": { "name": "الزكاة", "slug": "zakat" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-469",
@@ -5168,7 +6237,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-11T08:10:00.000Z",
-    "qa_categories": { "name": "الزكاة", "slug": "zakat" }
+    "qa_categories": { "name": "الزكاة", "slug": "zakat" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-470",
@@ -5181,7 +6253,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-11T08:20:00.000Z",
-    "qa_categories": { "name": "الزكاة", "slug": "zakat" }
+    "qa_categories": { "name": "الزكاة", "slug": "zakat" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-471",
@@ -5194,7 +6269,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-11T08:30:00.000Z",
-    "qa_categories": { "name": "الزكاة", "slug": "zakat" }
+    "qa_categories": { "name": "الزكاة", "slug": "zakat" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-472",
@@ -5207,7 +6285,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-11T08:40:00.000Z",
-    "qa_categories": { "name": "الزكاة", "slug": "zakat" }
+    "qa_categories": { "name": "الزكاة", "slug": "zakat" },
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-473",
@@ -5220,7 +6301,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-11T08:50:00.000Z",
-    "qa_categories": { "name": "الزكاة", "slug": "zakat" }
+    "qa_categories": { "name": "الزكاة", "slug": "zakat" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "seed-qa-474",
@@ -5233,7 +6317,10 @@ export const SEED_QA = [
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-11T09:00:00.000Z",
-    "qa_categories": { "name": "الزكاة", "slug": "zakat" }
+    "qa_categories": { "name": "الزكاة", "slug": "zakat" },
+    "trust_level": "general_reasoning",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-26T00:00:00.000Z"
   }
 ];
 

@@ -36,6 +36,9 @@ export type FawaidCuratedItem = {
   author_name: string | null;
   status: "approved";
   verification_status: "verified" | "needs_review";
+  trust_level?: "primary_text" | "scholarly_source" | "institutional_ruling" | "general_reasoning" | "unsourced";
+  editorial_review_status?: "unreviewed" | "reviewed" | "needs_rereview";
+  last_updated_at?: string;
 };
 
 const curated: Omit<FawaidCuratedItem, "id">[] = [
@@ -362,10 +365,22 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "«ادعوني أستجب لكم» — أمر إلهي بالدعاء مقروناً بوعد الإجابة، والاستكبار عن الدعاء استكبار عن العبادة نفسها.", category: "الذكر والدعاء", source: "غافر: 60", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
 ];
 
-export const FAWAID_CURATED_SEED: FawaidCuratedItem[] = curated.map((item, i) => ({
-  ...item,
-  id: `fawaid-curated-${String(i + 1).padStart(3, "0")}`,
-}));
+export const FAWAID_CURATED_SEED: FawaidCuratedItem[] = curated.map((item, i) => {
+  const source = item.source ?? "";
+  let trust_level: FawaidCuratedItem["trust_level"] = "unsourced";
+  if (source) {
+    if (/﴿|: \d+|رقم|صححه|حسّنه/.test(source)) trust_level = "primary_text";
+    else if (/تفسير|ابن|صحيح|سنن|رواه/.test(source)) trust_level = "scholarly_source";
+    else trust_level = "general_reasoning";
+  }
+  return {
+    ...item,
+    id: `fawaid-curated-${String(i + 1).padStart(3, "0")}`,
+    trust_level,
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-25T00:00:00.000Z",
+  };
+});
 
 export function filterCuratedFawaid(items: FawaidCuratedItem[]): FawaidCuratedItem[] {
   return items.filter((f) => f.verification_status === "verified" || f.verification_status === "needs_review");
