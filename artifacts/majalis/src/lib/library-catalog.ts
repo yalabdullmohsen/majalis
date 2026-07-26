@@ -179,7 +179,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
     author: "الإمام عبد الغني المقدسي",
     type: "كتاب",
     category: "فقه",
-    description: "مختصر في أحاديث الأحكام؛ يُقرأ مع شرح بلوغ المرام.",
+    description: "مختصر في أحاديث الأحكام من الصحيحين، وله شروح مستقلة.",
     parts_label: "أبواب",
     status: "approved",
     keywords: ["عمدة الأحكام", "المقدسي", "فقه", "أحكام"],
