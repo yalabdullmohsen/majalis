@@ -2,7 +2,7 @@
   "branch": "session/content-language-audit",
   "pr": 268,
   "created": "2026-07-26T04:40:00Z",
-  "updated": "2026-07-26T04:55:00Z",
+  "updated": "2026-07-26T05:12:00Z",
   "conventions": {
     "numbers": "أرقام عربية-هندية في المحتوى العربي عند الإمكان؛ السنوات الهجرية بصيغة ن هـ والميلادية بصيغة ن م",
     "dates": "اليوم ثم الشهر ثم السنة عند الحاجة",
@@ -14,7 +14,7 @@
     "quiz": 997,
     "rulings": 73,
     "adhkar_items_approx": 301,
-    "needs_post_review_lines": 39
+    "needs_post_review_lines": 45
   },
   "sections": [
     {
@@ -24,24 +24,25 @@
       "items": 1175,
       "pass1_batches_done": 2,
       "pass2_batches_done": 0,
-      "notes": "دفعة 2: توسيع 55 ملخصاً متوسطاً؛ 0 تكرار ملخص؛ 0 أقصر من 36؛ فحص إملائي بلا نتائج. الجولة الثانية لاحقاً مع الاتساق بين الأقسام."
+      "notes": "ملخصات >42، بلا تكرار ملخصات"
     },
     {
       "id": "P2",
       "name": "أحكام أذكار فوائد أسئلة",
-      "status": "in_progress",
-      "items": 0,
-      "pass1_batches_done": 0,
+      "status": "pass1_done",
+      "items": 1440,
+      "pass1_batches_done": 2,
       "pass2_batches_done": 0,
-      "notes": "بدء الجولة الأولى على rulings/adhkar/fawaid/qa"
+      "notes": "اكتملت الجولة الأولى: نصوص مقطوعة، ملخصات أحكام، فوائد ضعيفة، إجابات مكررة، توسيع أقصر الفوائد"
     },
     {
       "id": "P3",
       "name": "اختبار مناسبات دورات مسارات",
-      "status": "pending",
+      "status": "in_progress",
       "items": 997,
       "pass1_batches_done": 0,
-      "pass2_batches_done": 0
+      "pass2_batches_done": 0,
+      "notes": "بدء الجولة الأولى للاختبار والمناسبات والدورات والمسارات"
     },
     {
       "id": "P4",

@@ -743,7 +743,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-hibah-wasiyyah",
     external_key: "ruling-hibah-wasiyyah",
     title: "أحكام الهبة والوصية",
-    summary: "الهبة والوصية وشروطهما وما يترتب عليهما.",
+    summary: "الهبة تمليك في الحياة، والوصية بعد الموت؛ وشروط كلٍّ وما يترتب عليهما.",
     body: `**الهبة:**
 - تمليك عين بلا عوض في الحياة.
 - تلزم بالقبض عند الجمهور.
@@ -772,7 +772,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-ghusl-faraid",
     external_key: "ruling-ghusl-faraid",
     title: "موجبات الغسل وفرائضه",
-    summary: "الأمور التي توجب الغسل وما يجب فعله فيه.",
+    summary: "موجبات الغسل من جنابة وحيض، وما يجب غسله فيه من فروض.",
     body: `**موجبات الغسل:**
 1. الجنابة بإيلاج أو إنزال.
 2. انقطاع الحيض والنفاس.
@@ -1048,7 +1048,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-mirath-asabaat",
     external_key: "ruling-mirath-asabaat",
     title: "أحكام التعصيب في الميراث",
-    summary: "من هم العصبة وكيف يرثون في الفقه الإسلامي.",
+    summary: "تعريف العصبة وأنواعها، وكيف يأخذون الباقي بعد أصحاب الفروض.",
     body: `**تعريف العَصَبة:**
 كل وارث يأخذ ما بقي بعد أصحاب الفروض، وإن انفرد أخذ الكل.
 
@@ -1665,7 +1665,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-fasting-diabetes",
     external_key: "ruling-fasting-diabetes",
     title: "حكم صيام مريض السكري",
-    summary: "هل يُلزَم مريض السكري بالصيام وما البدائل؟",
+    summary: "حكم صيام مريض السكري بحسب قدرته، وبدائل الإفطار من فدية وقضاء.",
     body: `**المسألة:**
 الصيام واجب على كل بالغ عاقل قادر. أما مريض السكري فحكمه يتفاوت بحسب نوع مرضه وشدّته.
 
@@ -1891,7 +1891,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-intoxicants-prohibition",
     external_key: "ruling-intoxicants-prohibition",
     title: "تحريم المسكرات",
-    summary: "حكم كل شراب أو مادة تُسكر أو تُذهب العقل.",
+    summary: "تحريم كل شراب أو مادة تُسكر أو تُذهب العقل، قليلها وكثيرها.",
     body: `**القاعدة العامة:**
 كل ما أسكر كثيرُه فقليلُه حرام، سواء كان من العنب أو التمر أو الحبوب أو غيرها؛ فالعبرة بأثر الإسكار لا بمصدر الشراب.
 
@@ -2228,7 +2228,7 @@ export const RULINGS_SEED: ShariaRuling[] = [
     id: "ruling-oath-kaffarah",
     external_key: "ruling-oath-kaffarah",
     title: "كفارة اليمين",
-    summary: "ما يجب على من حلف يميناً بالله ثم حنث فيها.",
+    summary: "كفارة من حلف يميناً معقودة بالله ثم حنث: إطعام أو كسوة أو صيام.",
     body: `**متى تجب الكفارة:**
 تجب الكفارة على من حلف يميناً معقودة (قصد الحلف عليها) بالله تعالى، ثم حنث فيها (خالف ما حلف عليه)، ولا تجب في يمين اللغو التي تجري على اللسان بلا قصد.
 
