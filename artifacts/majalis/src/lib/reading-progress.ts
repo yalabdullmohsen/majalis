@@ -27,7 +27,13 @@ function writeStore(store: ReadingProgressStore) {
 
 export function markReadingProgress(section: ReadingSection, entry: Omit<ReadingProgressEntry, "at">) {
   const store = readStore();
-  store[section] = { ...entry, at: new Date().toISOString() };
+  const prev = store[section];
+  store[section] = {
+    ...prev,
+    ...entry,
+    scrollY: entry.scrollY ?? prev?.scrollY,
+    at: new Date().toISOString(),
+  };
   writeStore(store);
 }
 
@@ -39,16 +45,37 @@ export function getAllReadingProgress(): ReadingProgressStore {
   return readStore();
 }
 
+/** يعيد موضع التمرير المحفوظ دون التمرير — للاستخدام من الهوك. */
+export function getScrollForSection(section: ReadingSection): number | null {
+  const y = getReadingProgress(section)?.scrollY;
+  return typeof y === "number" && y > 0 ? y : null;
+}
+
+/** يستعيد موضع التمرير مباشرة (سلوك قديم متوافق). */
 export function restoreScrollForSection(section: ReadingSection) {
-  const entry = getReadingProgress(section);
-  if (!entry?.scrollY || typeof window === "undefined") return;
+  const y = getScrollForSection(section);
+  if (y == null || typeof window === "undefined") return;
   window.requestAnimationFrame(() => {
-    window.scrollTo({ top: entry.scrollY, behavior: "smooth" });
+    window.scrollTo({ top: y, behavior: "smooth" });
   });
 }
 
-export function saveScrollForSection(section: ReadingSection) {
+/**
+ * يحفظ موضع التمرير للقسم.
+ * إن لم يوجد سجل بعد وكانت الإزاحة معتبرة، يُنشأ سجل خفيف بعنوان الصفحة.
+ */
+export function saveScrollForSection(section: ReadingSection, scrollY?: number) {
+  if (typeof window === "undefined") return;
+  const y = Math.max(0, Math.round(scrollY ?? window.scrollY));
   const entry = getReadingProgress(section);
-  if (!entry || typeof window === "undefined") return;
-  markReadingProgress(section, { ...entry, scrollY: window.scrollY });
+  if (!entry) {
+    if (y < 80) return;
+    markReadingProgress(section, {
+      id: `scroll-${section}`,
+      title: document.title || section,
+      scrollY: y,
+    });
+    return;
+  }
+  markReadingProgress(section, { ...entry, scrollY: y });
 }

@@ -1,0 +1,77 @@
+import { Link } from "wouter";
+import { FEATURED, FEATURE_CATS } from "@/lib/home-feature-catalog";
+
+export function HomeExplorePlatform() {
+  return (
+    <section aria-labelledby="features-heading" className="hp-explore">
+      <div className="hp-explore__head">
+        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+          <polygon points="11,1 13.5,8 21,8 15,13 17.5,20 11,16 4.5,20 7,13 1,8 8.5,8" fill="none" stroke="#143F35" strokeWidth="1.2"/>
+          <circle cx="11" cy="11" r="3.5" fill="none" stroke="#143F35" strokeWidth="0.8"/>
+        </svg>
+        <h2 id="features-heading" className="hp-explore__title">
+          استكشف المنصة
+        </h2>
+      </div>
+
+      <div className="hp-explore__featured">
+        {FEATURED.map(({ href, Icon, title, desc, cta }) => (
+          <Link key={href} href={href} aria-label={title} className="hp-featured-card">
+            <svg aria-hidden="true" className="hp-featured-card__deco" width="80" height="80" viewBox="0 0 80 80">
+              <polygon points="40,5 55,25 75,20 65,40 75,60 55,55 40,75 25,55 5,60 15,40 5,20 25,25" fill="none" stroke="white" strokeWidth="1"/>
+              <circle cx="40" cy="40" r="15" fill="none" stroke="white" strokeWidth="0.6"/>
+            </svg>
+            <Icon size={22} strokeWidth={1.5} className="hp-featured-card__icon" />
+            <strong className="hp-featured-card__title">{title}</strong>
+            <p className="hp-featured-card__desc">{desc}</p>
+            <span className="hp-featured-card__cta">{cta} ←</span>
+          </Link>
+        ))}
+      </div>
+
+      {/* أقسام بالتصنيف — معاينة مختصرة (٤ عناصر) + رابط لعرض الكل */}
+      {FEATURE_CATS.map(cat => {
+        const PREVIEW_COUNT = 4;
+        const preview = cat.items.slice(0, PREVIEW_COUNT);
+        const remaining = cat.items.length - preview.length;
+        return (
+          <div key={cat.id} className="hp-explore-cat">
+            <div className="hp-explore-cat__head">
+              <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" className="hp-explore-cat__ornament">
+                <polygon points="14,2 20,9 27,9 22,16 25,24 14,20 3,24 6,16 1,9 8,9" fill="#143F35"/>
+                <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="#143F35" opacity="0.6"/>
+                <circle cx="14" cy="14" r="3" fill="#FAFAF8"/>
+              </svg>
+              <h3 className="hp-explore-cat__title">{cat.label}</h3>
+              <span className="hp-explore-cat__count">{cat.items.length} قسم</span>
+            </div>
+            <div className="hp-explore-cat__grid">
+              {preview.map(({ href, Icon: ItemIcon, title, desc }) => (
+                <Link key={href} href={href} className="hp-explore-item">
+                  <span className="hp-explore-item__icon">
+                    <ItemIcon size={14} strokeWidth={2} />
+                  </span>
+                  <div className="hp-explore-item__body">
+                    <strong className="hp-explore-item__title">{title}</strong>
+                    <span className="hp-explore-item__desc">{desc}</span>
+                  </div>
+                </Link>
+              ))}
+              {remaining > 0 && (
+                <Link href="/sitemap" className="hp-explore-more">
+                  +{remaining} أقسام أخرى ←
+                </Link>
+              )}
+            </div>
+          </div>
+        );
+      })}
+
+      <div className="hp-explore__footer">
+        <Link href="/sitemap" className="hp-explore__sitemap">
+          تصفّح كل أقسام المنصة ←
+        </Link>
+      </div>
+    </section>
+  );
+}

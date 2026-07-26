@@ -18,6 +18,40 @@ import {
   type VaultData,
   type VaultNote,
 } from "@/lib/vault-service";
+import {
+  listLocalBookmarks,
+  removeLocalBookmark,
+  type LocalBookmark,
+} from "@/lib/local-bookmarks";
+import {
+  getAllReadingProgress,
+  type ReadingSection,
+} from "@/lib/reading-progress";
+import {
+  listOfflineReading,
+  removeOfflineReading,
+  type OfflineReadingItem,
+} from "@/lib/offline-reading-pack";
+
+const SECTION_HREF: Record<ReadingSection, string> = {
+  adhkar: "/adhkar",
+  qa: "/qa",
+  fawaid: "/fawaid",
+  hadith: "/hadith",
+  rulings: "/rulings",
+  stories: "/islamic-stories",
+  assistant: "/assistant",
+};
+
+const SECTION_LABEL: Record<ReadingSection, string> = {
+  adhkar: "الأذكار",
+  qa: "الأسئلة الشرعية",
+  fawaid: "الفوائد",
+  hadith: "الحديث",
+  rulings: "الأحكام",
+  stories: "القصص",
+  assistant: "المساعد",
+};
 
 type Tab = "bookmarks" | "resume" | "notes";
 
@@ -197,6 +231,200 @@ function NotesTab({
   );
 }
 
+/** محفظة محلية للزائر: محفوظات الجهاز + استئناف القراءة بدون حساب. */
+function GuestVault() {
+  const [tab, setTab] = useState<"bookmarks" | "resume" | "offline">("bookmarks");
+  const [bookmarks, setBookmarks] = useState<LocalBookmark[]>(() => listLocalBookmarks());
+  const [offline, setOffline] = useState<OfflineReadingItem[]>(() => listOfflineReading());
+  const [openOfflineId, setOpenOfflineId] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+
+  const progressStore = getAllReadingProgress();
+  const resume = (Object.keys(progressStore) as ReadingSection[])
+    .map((section) => {
+      const entry = progressStore[section];
+      return entry ? { section, ...entry } : null;
+    })
+    .filter((row): row is { section: ReadingSection; id: string; title?: string; at: string; scrollY?: number } => Boolean(row));
+
+  const filteredBookmarks = bookmarks.filter((b) =>
+    arabicMatchAny([b.title, b.contentType], search),
+  );
+  const filteredResume = resume.filter((r) =>
+    arabicMatchAny([r.title ?? "", SECTION_LABEL[r.section]], search),
+  );
+  const filteredOffline = offline.filter((o) =>
+    arabicMatchAny([o.title, o.text.slice(0, 200)], search),
+  );
+
+  const removeBookmark = (b: LocalBookmark) => {
+    removeLocalBookmark(b.contentType, b.contentId);
+    setBookmarks(listLocalBookmarks());
+  };
+
+  const removeOffline = (id: string) => {
+    removeOfflineReading(id);
+    setOffline(listOfflineReading());
+    if (openOfflineId === id) setOpenOfflineId(null);
+  };
+
+  return (
+    <div className="page-shell narrow vault-page" dir="rtl">
+      <PageHeader
+        eyebrow="على هذا الجهاز"
+        title="المحفظة العلمية"
+        subtitle="محفوظاتك وموضع قراءتك محفوظان محليًا. سجّل الدخول للمزامنة بين الأجهزة."
+      />
+
+      <div className="vault-login-prompt vault-login-prompt--inline">
+        <Lock size={18} strokeWidth={1.5} aria-hidden="true" />
+        <p className="vault-login-msg">للمزامنة السحابية والملاحظات المشتركة:</p>
+        <Link href="/login?next=/vault" className="ui-card-btn">تسجيل الدخول</Link>
+      </div>
+
+      <div className="vault-search-wrap">
+        <input
+          type="text"
+          className="vault-search"
+          placeholder="ابحث في المحفوظات…"
+          aria-label="البحث في المحفظة المحلية"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          dir="rtl"
+        />
+      </div>
+
+      <div className="vault-tabs" role="tablist" aria-label="تبويبات المحفظة المحلية">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tab === "bookmarks"}
+          className={`vault-tab${tab === "bookmarks" ? " vault-tab--active" : ""}`}
+          onClick={() => setTab("bookmarks")}
+        >
+          المحفوظات
+          <span className="vault-tab__count">{bookmarks.length}</span>
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tab === "resume"}
+          className={`vault-tab${tab === "resume" ? " vault-tab--active" : ""}`}
+          onClick={() => setTab("resume")}
+        >
+          قيد القراءة
+          <span className="vault-tab__count">{resume.length}</span>
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tab === "offline"}
+          className={`vault-tab${tab === "offline" ? " vault-tab--active" : ""}`}
+          onClick={() => setTab("offline")}
+        >
+          قراءة لاحقًا
+          <span className="vault-tab__count">{offline.length}</span>
+        </button>
+      </div>
+
+      {tab === "bookmarks" && (
+        <div role="tabpanel" className="vault-list">
+          {filteredBookmarks.length === 0 && (
+            <div className="vault-empty">
+              <div className="vault-empty__icon"><BookmarkCheck size={32} strokeWidth={1.3} /></div>
+              <p>{search ? "لا نتائج للبحث." : "لا توجد محفوظات بعد. استخدم زر «حفظ» على أي محتوى."}</p>
+            </div>
+          )}
+          {filteredBookmarks.map((b) => (
+            <div key={b.id} className="vault-item-card">
+              <span className="vault-item-card__icon"><VaultIcon type={b.contentType} /></span>
+              <div className="vault-item-card__body">
+                <Link href={b.href} className="vault-item-card__title">
+                  {b.title}
+                </Link>
+                <span className="vault-item-card__type">{getContentTypeLabel(b.contentType)} · محلي</span>
+              </div>
+              <div className="vault-item-card__date-col">
+                <span className="vault-item-card__date">
+                  {new Date(b.savedAt).toLocaleDateString("ar-SA", { day: "numeric", month: "short" })}
+                </span>
+                <button type="button" className="vault-item-card__link" onClick={() => removeBookmark(b)}>
+                  إزالة
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {tab === "resume" && (
+        <div role="tabpanel" className="vault-list">
+          {filteredResume.length === 0 && (
+            <div className="vault-empty">
+              <div className="vault-empty__icon" aria-hidden="true"><BookOpen size={40} strokeWidth={1.3} /></div>
+              <p>{search ? "لا نتائج للبحث." : "ابدأ القراءة في الحديث أو الأذكار أو الفوائد ليُحفظ موضعك هنا."}</p>
+            </div>
+          )}
+          {filteredResume.map((r) => (
+            <div key={r.section} className="vault-item-card">
+              <span className="vault-item-card__icon"><VaultIcon type={r.section} /></span>
+              <div className="vault-item-card__body">
+                <p className="vault-item-card__title">{r.title || SECTION_LABEL[r.section]}</p>
+                <span className="vault-item-card__type">{SECTION_LABEL[r.section]}</span>
+              </div>
+              <div className="vault-item-card__date-col">
+                <span className="vault-item-card__date">
+                  {new Date(r.at).toLocaleDateString("ar-SA", { day: "numeric", month: "short" })}
+                </span>
+                <Link href={SECTION_HREF[r.section]} className="vault-item-card__link">
+                  متابعة ←
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {tab === "offline" && (
+        <div role="tabpanel" className="vault-list">
+          {filteredOffline.length === 0 && (
+            <div className="vault-empty">
+              <div className="vault-empty__icon" aria-hidden="true"><FileText size={40} strokeWidth={1.3} /></div>
+              <p>{search ? "لا نتائج للبحث." : "استخدم «قراءة لاحقًا» من شريط إجراءات المحتوى لحفظ النص على الجهاز."}</p>
+            </div>
+          )}
+          {filteredOffline.map((o) => (
+            <article key={o.id} className="vault-item-card vault-item-card--offline">
+              <span className="vault-item-card__icon"><VaultIcon type={o.contentType || "article"} /></span>
+              <div className="vault-item-card__body">
+                <button
+                  type="button"
+                  className="vault-item-card__title"
+                  onClick={() => setOpenOfflineId((id) => (id === o.id ? null : o.id))}
+                >
+                  {o.title}
+                </button>
+                <span className="vault-item-card__type">نص محفوظ على الجهاز</span>
+                {openOfflineId === o.id && (
+                  <p className="vault-offline-text" dir="rtl">{o.text}</p>
+                )}
+              </div>
+              <div className="vault-item-card__date-col">
+                <span className="vault-item-card__date">
+                  {new Date(o.savedAt).toLocaleDateString("ar-SA", { day: "numeric", month: "short" })}
+                </span>
+                <button type="button" className="vault-item-card__link" onClick={() => removeOffline(o.id)}>
+                  إزالة
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function VaultPage() {
@@ -258,15 +486,7 @@ export default function VaultPage() {
   }
 
   if (!isLoggedIn) {
-    return (
-      <PageStatusShell title="المحفظة العلمية" className="page-shell narrow vault-login-prompt">
-        <div className="vault-login-icon" aria-hidden="true"><Lock size={40} strokeWidth={1.3} /></div>
-        <p className="vault-login-msg">
-          سجّل الدخول للوصول إلى محفظتك العلمية.
-        </p>
-        <Link href="/login?next=/vault" className="ui-card-btn">تسجيل الدخول</Link>
-      </PageStatusShell>
-    );
+    return <GuestVault />;
   }
 
   const filteredBookmarks = vaultData.bookmarks.filter((b) =>

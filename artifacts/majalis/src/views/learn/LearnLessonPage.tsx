@@ -5,6 +5,7 @@ import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { fetchLessonDetail, type LessonDetail } from "@/lib/learn-library-service";
 import { supabase } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/library.css";
 
 const SECTION_LABEL: Record<string, string> = {
   objectives: "الموضوعات",

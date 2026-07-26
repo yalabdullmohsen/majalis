@@ -14,6 +14,7 @@ import { CitationActionBar } from "@/components/citation/CitationActionBar";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { fetchAllHadiths, type CdnHadith } from "@/lib/hadith-cdn-service";
+import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -682,6 +683,7 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
 }
 
 export default function HadithPage() {
+  useReadingScrollMemory("hadith");
   useEffect(() => {
     applyPageSeo({
       path: "/hadith",

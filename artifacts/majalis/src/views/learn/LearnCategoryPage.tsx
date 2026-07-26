@@ -4,6 +4,7 @@ import { BookOpen, ChevronLeft, Compass, Layers } from "lucide-react";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { fetchCategoryDetail, type CategoryDetail } from "@/lib/learn-library-service";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/library.css";
 
 export default function LearnCategoryPage() {
   const { slug } = useParams<{ slug: string }>();

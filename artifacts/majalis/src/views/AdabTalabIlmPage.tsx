@@ -4,6 +4,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import "@/styles/pages/adab-talab-ilm.css";
 
 /* ══════════════════════════════════════════════════════════════════
    §243، آداب طالب العلم  (.atl-*)
