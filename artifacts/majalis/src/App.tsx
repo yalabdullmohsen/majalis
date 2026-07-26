@@ -819,18 +819,21 @@ function DeferredAssistantWidget() {
       done = true;
       setReady(true);
     };
-    const idleId =
-      "requestIdleCallback" in window
-        ? window.requestIdleCallback(arm, { timeout: 5000 })
-        : window.setTimeout(arm, 3000);
+    // `"requestIdleCallback" in window` حارسُ نوعٍ يضيّق window إلى never في الفرع
+    // السالب (لأن الخاصية مُعلَنة في lib.dom دائمًا)، فينكسر window.setTimeout عليه.
+    // وفحصُ typeof يبقى فحصًا زمنَ التشغيل بلا تضييق، فيصحّ الفرعان معًا.
+    const hasIdleCallback = typeof window.requestIdleCallback === "function";
+    const idleId = hasIdleCallback
+      ? window.requestIdleCallback(arm, { timeout: 5000 })
+      : window.setTimeout(arm, 3000);
     const onInteract = () => arm();
     window.addEventListener("pointerdown", onInteract, { once: true, passive: true });
     window.addEventListener("keydown", onInteract, { once: true });
     return () => {
-      if ("cancelIdleCallback" in window && typeof idleId === "number") {
-        window.cancelIdleCallback(idleId as number);
+      if (hasIdleCallback) {
+        window.cancelIdleCallback(idleId);
       } else {
-        window.clearTimeout(idleId as number);
+        window.clearTimeout(idleId);
       }
       window.removeEventListener("pointerdown", onInteract);
       window.removeEventListener("keydown", onInteract);
