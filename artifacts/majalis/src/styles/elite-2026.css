@@ -19093,6 +19093,235 @@ html[data-theme="dark"] .sq-hint { color: #8AA89E; }
 
 /* ── نُقل إلى styles/pages/hadith-books.css ── */
 
+/* ── FRB — FridayBanner (تذكير يوم الجمعة) ────────────────────────────── */
+.frb-wrap {
+  position: relative;
+  background: linear-gradient(145deg, #143F35 0%, #143F35 55%, #143F35 100%);
+  border: 1px solid rgba(250,248,242,0.12);
+  border-radius: 14px;
+  padding: 1.6rem 1.25rem 1.4rem;
+  margin: 1rem 0;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.04);
+}
+.frb-geo {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  pointer-events: none;
+}
+.frb-geo--bottom {
+  top: auto; bottom: 0.5rem; right: 1rem;
+  left: auto; width: 60px;
+}
+.frb-dismiss {
+  position: absolute;
+  top: 0.55rem;
+  left: 0.65rem;
+  background: transparent;
+  border: none;
+  color: rgba(250,248,242,0.35);
+  font-size: var(--ds-text-xs);
+  cursor: pointer;
+  padding: 0.3rem 0.45rem;
+  border-radius: 6px;
+  line-height: 1;
+  transition: color 0.15s, background 0.15s;
+}
+.frb-dismiss:hover {
+  color: rgba(250,248,242,0.75);
+  background: rgba(255,255,255,0.06);
+}
+.frb-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+.frb-badge {
+  display: inline-block;
+  background: rgba(250,248,242,0.08);
+  border: 1px solid rgba(250,248,242,0.18);
+  color: rgba(250,248,242,0.75);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: normal;
+  padding: 0.2rem 0.75rem;
+  border-radius: 20px;
+  font-family: var(--font-body, "IBM Plex Sans Arabic", sans-serif);
+}
+.frb-ayah {
+  font-family: "Amiri Quran", "Amiri", "Scheherazade New", serif;
+  font-size: clamp(1.1rem, 4vw, 1.55rem);
+  font-weight: 400;
+  color: #FAFAF8;
+  line-height: 2;
+  margin: 0;
+  padding: 0.25rem 0;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+  direction: rtl;
+}
+.frb-ayah-pause {
+  color: rgba(250,248,242,0.45);
+  font-size: 0.9em;
+}
+.frb-ref {
+  display: block;
+  font-family: var(--font-body, "IBM Plex Sans Arabic", sans-serif);
+  font-size: 0.72rem;
+  color: rgba(250,248,242,0.45);
+  letter-spacing: normal;
+}
+.frb-hadith {
+  font-family: var(--font-body, "IBM Plex Sans Arabic", sans-serif);
+  font-size: 0.82rem;
+  color: rgba(250,248,242,0.6);
+  margin: 0;
+  line-height: 1.65;
+  font-style: normal;
+}
+@media (max-width: 480px) {
+  .frb-wrap { padding: 1.3rem 1rem 1.2rem; border-radius: 10px; }
+  .frb-ayah { font-size: clamp(1rem, 5vw, 1.25rem); line-height: 2; }
+}
+html[data-theme="dark"] .frb-wrap {
+  border-color: rgba(250,248,242,0.09);
+}
+
+/* ── AdhanSettingsPage — permission badges ──────────────────────────────── */
+.ads-perm-badge {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.22rem 0.65rem;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.ads-perm--ok   { background: rgba(23,61,53,.1); color: #226A56; border: 1px solid rgba(23,61,53,.25); }
+.ads-perm--err  { background: rgba(239,68,68,.08); color: #b91c1c; border: 1px solid rgba(239,68,68,.2); }
+.ads-perm--warn { background: rgba(23,61,53,.08); color: #226A56; border: 1px solid rgba(23,61,53,.2); }
+.ads-perm--muted{ background: rgba(0,0,0,.04); color: #6b7280; border: 1px solid rgba(0,0,0,.08); }
+
+/* ── UQ-Qiraat — القراءات السبع (UlumQuranPage) ───────────────────────── */
+.uq-qiraat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--ds-space-4);
+  margin: 1.25rem 0;
+}
+.uq-qiraat-card {
+  background: #fff;
+  border: 1px solid rgba(23,61,53,.14);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  transition: box-shadow 0.2s;
+}
+.uq-qiraat-card:hover { box-shadow: 0 4px 16px rgba(23,61,53,.1); }
+.uq-qiraat-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+.uq-qiraat-card__num {
+  flex-shrink: 0;
+  width: 1.8rem; height: 1.8rem;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #226A56, #143F35);
+  color: #FAFAF8;
+  border-radius: 50%;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: var(--font-body, "IBM Plex Sans Arabic", sans-serif);
+}
+.uq-qiraat-card__name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #226A56;
+  margin: 0;
+  line-height: 1.35;
+}
+.uq-qiraat-card__imam {
+  font-size: 0.78rem;
+  color: #4b5563;
+  margin: 0;
+}
+.uq-qiraat-card__origin {
+  margin-right: auto;
+  font-size: 0.7rem;
+  color: #6b7280;
+  white-space: nowrap;
+  background: rgba(23,61,53,.07);
+  padding: 0.15rem 0.55rem;
+  border-radius: 8px;
+  align-self: flex-start;
+}
+.uq-qiraat-card__rawis {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.uq-qiraat-card__rawi-label {
+  font-size: 0.7rem;
+  color: #6b7280;
+}
+.uq-qiraat-card__rawi {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #143F35;
+  background: rgba(21,48,37,.07);
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+}
+.uq-qiraat-card__sep { color: #9ca3af; font-size: var(--ds-text-xs); }
+.uq-qiraat-card__note {
+  font-size: 0.76rem;
+  color: #4b5563;
+  line-height: 1.55;
+  margin: 0;
+  border-top: 1px solid rgba(23,61,53,.08);
+  padding-top: 0.45rem;
+}
+
+.uq-qiraat-usul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  margin: 1rem 0;
+}
+.uq-usul-card {
+  background: rgba(23,61,53,.04);
+  border: 1px solid rgba(23,61,53,.12);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+}
+.uq-usul-card__title {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #226A56;
+  margin: 0 0 0.35rem;
+}
+.uq-usul-card__desc {
+  font-size: 0.77rem;
+  color: #5C5C56;
+  line-height: 1.65;
+  margin: 0;
+}
+@media (max-width: 540px) {
+  .uq-qiraat-usul { grid-template-columns: 1fr; }
+  .uq-qiraat-grid { grid-template-columns: 1fr; }
+}
+html[data-theme="dark"] .uq-qiraat-card {
+  background: rgba(255,255,255,.04); border-color: rgba(23,61,53,.2);
+}
+html[data-theme="dark"] .uq-usul-card { background: rgba(23,61,53,.07); }
+
+/* ══════════════════════════════════════════════════════════════════════════
    60  My Learning Dashboard v2  (myl2-*)
    ══════════════════════════════════════════════════════════════════════════ */
 
@@ -24149,6 +24378,171 @@ html[data-theme="dark"] .ar-thesis-badge--phd {
 
 /* ── نُقل إلى styles/pages/library.css ── */
 
+/* ── إصلاح جماعي: نصوص فاتحة اللون داخل الوضع الليلي (2026-07-17) ──────────
+   هذه الفئات كانت تستخدم ألوان حبر داكنة صريحة (#111/#0F172A إلخ) بلا أي
+   نسخة للوضع الليلي، فتظهر شبه معدومة فوق خلفيات البطاقات الداكنة الصحيحة.
+   اكتُشفت آليًا عبر scripts/audit-color-contrast.mjs (239 نمطًا عبر 79
+   صفحة)، وهذه الدفعة (155 نمطًا) خلفيتها الداكنة سليمة فعلاً — فقط لون
+   النص يحتاج تصحيحًا. */
+html[data-theme="dark"] .adhkar-focus-btn,
+html[data-theme="dark"] .adhkar-focus-count,
+html[data-theme="dark"] .adhkar-focus-counter,
+html[data-theme="dark"] .adhkar-focus-text,
+html[data-theme="dark"] .ah-card__meaning,
+html[data-theme="dark"] .ah-card__name,
+html[data-theme="dark"] .ah-card__num,
+html[data-theme="dark"] .ah-card__trans,
+html[data-theme="dark"] .ai-card__num,
+html[data-theme="dark"] .ai-card__subtitle,
+html[data-theme="dark"] .ai-card__title,
+html[data-theme="dark"] .akl-card__summary,
+html[data-theme="dark"] .arkan-card__num,
+html[data-theme="dark"] .arkan-card__summary,
+html[data-theme="dark"] .arkan-dalil__text,
+html[data-theme="dark"] .arkan-detail__body,
+html[data-theme="dark"] .arkan-detail__label,
+html[data-theme="dark"] .arkan-scholar__name,
+html[data-theme="dark"] .arkan-scholar__quote,
+html[data-theme="dark"] .as-alama-card__status,
+html[data-theme="dark"] .atl-card__text,
+html[data-theme="dark"] .cal-cell-hijri,
+html[data-theme="dark"] .cal-cell-more,
+html[data-theme="dark"] .cal-cell-num,
+html[data-theme="dark"] .cal-view-tab,
+html[data-theme="dark"] .content-action-bar__btn,
+html[data-theme="dark"] .content-detail-meta,
+html[data-theme="dark"] .content-detail-subtitle,
+html[data-theme="dark"] .dq-arabic,
+html[data-theme="dark"] .dq-card__name,
+html[data-theme="dark"] .dq-card__prophet,
+html[data-theme="dark"] .dq-card__ref,
+html[data-theme="dark"] .dq-count,
+html[data-theme="dark"] .ds-error-text,
+html[data-theme="dark"] .ds-filter-toggle,
+html[data-theme="dark"] .dua-card__arabic,
+html[data-theme="dark"] .dua-card__title,
+html[data-theme="dark"] .fa-card__cat,
+html[data-theme="dark"] .fa-card__grade,
+html[data-theme="dark"] .fa-card__source,
+html[data-theme="dark"] .fa-card__text,
+html[data-theme="dark"] .fiqh-council-category-name,
+html[data-theme="dark"] .fiqh-hub-live-meta,
+html[data-theme="dark"] .fiqh-live-unavailable,
+html[data-theme="dark"] .fq-card__arabic,
+html[data-theme="dark"] .fqh-hub-card__desc,
+html[data-theme="dark"] .fqh-hub-card__title,
+html[data-theme="dark"] .hadith-index-card__desc,
+html[data-theme="dark"] .hj-fadl-card__ref,
+html[data-theme="dark"] .hj-fadl-card__text,
+html[data-theme="dark"] .hj-stat-card__label,
+html[data-theme="dark"] .hj-stat-card__value,
+html[data-theme="dark"] .hj-type-card__desc,
+html[data-theme="dark"] .hk-card__cat,
+html[data-theme="dark"] .hk-card__text,
+html[data-theme="dark"] .hs-card__cat,
+html[data-theme="dark"] .hs-card__term,
+html[data-theme="dark"] .hs-grade,
+html[data-theme="dark"] .ikm-conn-label,
+html[data-theme="dark"] .isp-stat-chip,
+html[data-theme="dark"] .lesson-unified-card__meta-label,
+html[data-theme="dark"] .lesson-unified-card__note,
+html[data-theme="dark"] .lesson-unified-card__sheikh,
+html[data-theme="dark"] .lib-card-author,
+html[data-theme="dark"] .mdb-card__founder,
+html[data-theme="dark"] .mdb-card__name,
+html[data-theme="dark"] .mdb-card__origin,
+html[data-theme="dark"] .miracle-item__body,
+html[data-theme="dark"] .miracle-item__ref,
+html[data-theme="dark"] .miracle-item__title,
+html[data-theme="dark"] .mk-expand-btn,
+html[data-theme="dark"] .mm-card__category,
+html[data-theme="dark"] .mw-lead,
+html[data-theme="dark"] .mw-warith-name,
+html[data-theme="dark"] .mzp-card__category,
+html[data-theme="dark"] .mzp-card__rating-count,
+html[data-theme="dark"] .mzp-cta__desc,
+html[data-theme="dark"] .mzp-set-default-btn,
+html[data-theme="dark"] .nf2-code,
+html[data-theme="dark"] .nf2-desc,
+html[data-theme="dark"] .nf2-suggestions__label,
+html[data-theme="dark"] .occasion-detail__countdown,
+html[data-theme="dark"] .occasions-filter__count,
+html[data-theme="dark"] .page-desc,
+html[data-theme="dark"] .page-link-inline,
+html[data-theme="dark"] .page-meta,
+html[data-theme="dark"] .pmp-card__name,
+html[data-theme="dark"] .prayer-rank-card__eyebrow,
+html[data-theme="dark"] .prayer-rank-card__text,
+html[data-theme="dark"] .prophet-lux-card__bio,
+html[data-theme="dark"] .prophet-lux-card__num,
+html[data-theme="dark"] .prophet-lux-card__pbuh,
+html[data-theme="dark"] .prophet-lux-card__place,
+html[data-theme="dark"] .prophet-lux-card__read,
+html[data-theme="dark"] .prophet-lux-card__surahs,
+html[data-theme="dark"] .prophet-lux-card__title,
+html[data-theme="dark"] .prv-badge,
+html[data-theme="dark"] .prv-tip-text,
+html[data-theme="dark"] .prv-virtue-text,
+html[data-theme="dark"] .prv-virtue-title,
+html[data-theme="dark"] .pt-date-greg,
+html[data-theme="dark"] .pt-date-hijri,
+html[data-theme="dark"] .pt-gov-label,
+html[data-theme="dark"] .pt-prayer__name,
+html[data-theme="dark"] .pt-prayer__time,
+html[data-theme="dark"] .qa-badge,
+html[data-theme="dark"] .qibla-error,
+html[data-theme="dark"] .qrp-intro,
+html[data-theme="dark"] .qs-live-card__desc,
+html[data-theme="dark"] .qs-live-card__name,
+html[data-theme="dark"] .qs-live-card__source,
+html[data-theme="dark"] .qs-surah-name,
+html[data-theme="dark"] .quran-hub-card__desc,
+html[data-theme="dark"] .qzg-lifeline-info__title,
+html[data-theme="dark"] .sb-card__kunya,
+html[data-theme="dark"] .sb-card__name,
+html[data-theme="dark"] .sb-count,
+html[data-theme="dark"] .sch-card__bio,
+html[data-theme="dark"] .sch-card__era,
+html[data-theme="dark"] .sch-card__fullname,
+html[data-theme="dark"] .sch-results-count,
+html[data-theme="dark"] .seerah-timeline__dot,
+html[data-theme="dark"] .settings-danger-btn,
+html[data-theme="dark"] .settings-note,
+html[data-theme="dark"] .sg-shart-desc,
+html[data-theme="dark"] .sg-shart-title,
+html[data-theme="dark"] .srch-quick-sections__title,
+html[data-theme="dark"] .stb-khilaf,
+html[data-theme="dark"] .sw-card__desc,
+html[data-theme="dark"] .sw-card__sub,
+html[data-theme="dark"] .sw-card__title,
+html[data-theme="dark"] .sw-note,
+html[data-theme="dark"] .sy-card__howto-label,
+html[data-theme="dark"] .sy-card__reward,
+html[data-theme="dark"] .sy-card__source,
+html[data-theme="dark"] .sy-card__text,
+html[data-theme="dark"] .sy-card__title,
+html[data-theme="dark"] .tasbeeh-counter__btn,
+html[data-theme="dark"] .tasbeeh-counter__preset,
+html[data-theme="dark"] .tasbih-phrase,
+html[data-theme="dark"] .tasbih-progress-label,
+html[data-theme="dark"] .tc-keyboard-hint,
+html[data-theme="dark"] .th-fardh-card__desc,
+html[data-theme="dark"] .th-fardh-card__title,
+html[data-theme="dark"] .th-naqidh-card__desc,
+html[data-theme="dark"] .th-naqidh-card__title,
+html[data-theme="dark"] .tw-section-lead,
+html[data-theme="dark"] .tw-shart-desc,
+html[data-theme="dark"] .ui-card-btn,
+html[data-theme="dark"] .updates-timeline-summary,
+html[data-theme="dark"] .uq-type-card__desc,
+html[data-theme="dark"] .wn-card__cat,
+html[data-theme="dark"] .zk-card__rate,
+html[data-theme="dark"] .zk-card__title,
+html[data-theme="dark"] .zk-mustahiq__dalil {
+  color: var(--clr-text-1, #E5F0EC) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════
    إصلاح تباين إضافي — عناوين h1-h4 كانت تُسكَتها استثناءات ناقصة في
    majalis-v2.css (رأت لون --majalis-emerald-deep الزمردي الداكن بدل لونها
    الخاص المصمَّم لها)، ثم بعد استثنائها هنا عاد بعضها لخلفية داكنة بلون نص

@@ -5,6 +5,7 @@ import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { fetchPublishedCategoryTree, type CategoryWithCounts } from "@/lib/learn-library-service";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/library.css";
 
 export default function LearnHubPage() {
   const [tree, setTree] = useState<CategoryWithCounts[]>([]);

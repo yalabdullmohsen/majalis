@@ -4,6 +4,7 @@ import { CheckCircle2, Circle } from "lucide-react";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { fetchSeriesDetail, type SeriesDetail } from "@/lib/learn-library-service";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/library.css";
 
 const LEVEL_LABEL: Record<string, string> = { beginner: "مبتدئ", intermediate: "متوسط", advanced: "متقدم" };
 
