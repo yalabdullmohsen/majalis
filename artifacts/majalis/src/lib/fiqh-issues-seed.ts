@@ -13,7 +13,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
     ruling_summary:
       "لا تُعدّ العملات الرقمية غير المُغطّاة بأصول حقيقية نقوداً شرعية؛ والتداول المضاربي فيها فيه غرر وجهالة ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
     evidence_summary: "الاستدلال من نهي أكل المال بالباطل، وأحكام البيع والغرر في المعاملات مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 890,
     published_at: "2024-03-15T10:00:00Z",
@@ -29,7 +29,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
     subcategory: "الطب",
     ruling_summary: "يجوز التبرع بالأعضاء بعد الوفاة عند تحقق الشروط الشرعية والطبية وتُعرض بأدلتها وضوابطها دون اختزال مخلّ مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
     evidence_summary: "الاستدلال بمقصد إحياء النفس وحفظ الكرامة الإنسانية ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 620,
     published_at: "2023-11-08T09:00:00Z",
@@ -43,7 +43,8 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
     summary: "مسألة فقهية حول حقوق المسلمين في البلدان غير الإسلامية وممارسة شعائرهم وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
     category: "الأقليات المسلمة",
     ruling_summary: "للمسلمين حق ممارسة العبادات مع الالتزام بعقودهم وعهودهم مع الدول التي يقيمون فيها ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    evidence_summary: "UNVERIFIED",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 540,
     published_at: "2023-06-20T08:00:00Z",
@@ -57,7 +58,8 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
     summary: "مسألة فقهية في كيفية إخراج زكاة الأسهم والصناديق الاستثمارية ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
     category: "الزكاة والوقف",
     ruling_summary: "تُزكّى الأسهم التجارية بقيمتها السوقية؛ والاستثمارية أرباحها عند بلوغ النصاب وتُعرض بأدلتها وضوابطها دون اختزال مخلّ ويُراجع عند تغيّر صورة المسألة المعاصرة.",
-    documentation_level: "official_verified",
+    evidence_summary: "UNVERIFIED",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 1100,
     published_at: "2022-12-05T06:00:00Z",
@@ -71,7 +73,8 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
     summary: "مسألة فقهية في وجوب الحج على الفور لمن توفرت شروطه ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
     category: "الحج والعمرة",
     ruling_summary: "الحج واجب على الفور لمن استطاع إليه سبيلاً بلا عذر شرعي مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
-    documentation_level: "official_verified",
+    evidence_summary: "UNVERIFIED",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 780,
     published_at: "2022-08-01T05:00:00Z",
@@ -90,7 +93,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
     ruling_summary:
       "يجوز التخدير الكلي عند الضرورة الطبية، ولا يُعدّ ناقضاً للإيمان لانعدام القصد والاختيار والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
     evidence_summary: "الاستدلال بقاعدة الضرورات تبيح المحظورات، وعدم التكليف مع رفع الحرج والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 430,
     published_at: "2025-01-10T08:00:00Z",
@@ -108,7 +111,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
     subcategory: "الطب",
     ruling_summary: "يجوز زراعة الأعضاء الاصطناعية بقصد العلاج وإعادة وظائف الجسم الحيوية وتُعرض بأدلتها وضوابطها دون اختزال مخلّ مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
     evidence_summary: "قاعدة درء المفسدة وجلب المصلحة، والاستدلال بمشروعية التداوي وتُعرض بأدلتها وضوابطها دون اختزال مخلّ مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 310,
     published_at: "2025-02-20T09:00:00Z",
@@ -128,7 +131,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "يحرم الاستنساخ البشري التكاثري؛ ويُجيز بعض العلماء الاستنساخ العلاجي بضوابط صارمة مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
     evidence_summary:
       "مقصد حفظ النسل، وتحريم الاختلاط في الأنساب، وحرمة الكيان الإنساني وتُعرض بأدلتها وضوابطها دون اختزال مخلّ مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 560,
     published_at: "2025-03-05T10:00:00Z",
@@ -148,7 +151,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "أجاز جمهور الفقهاء المعاصرين الإسقاط قبل نفخ الروح للضرورة القصوى في حالات الاغتصاب ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
     evidence_summary:
       "قاعدة الضرورات، وأحكام الجنين قبل نفخ الروح، ومقصد حفظ العقل والكرامة الإنسانية وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 740,
     published_at: "2025-04-12T08:00:00Z",
@@ -167,7 +170,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
     ruling_summary:
       "يجيزه جمع من العلماء المعاصرين بتوافر أركان الزواج وشروطه مع استيفاء الولي والشهود والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
     evidence_summary: "أحكام شروط الزواج، وأن التنازل عن الحق الشخصي لصاحبه جائز ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 950,
     published_at: "2024-09-18T07:00:00Z",
@@ -207,7 +210,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "تثبت المحرمية بوصول اللبن إلى الرضيع بأي طريقة وفق الراجح عند جمهور العلماء المعاصرين مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
     evidence_summary:
       "الاستدلال بعلة تغذية الجسم بلبن المرأة وإنبات اللحم وإنشاز العظم وتُعرض بأدلتها وضوابطها دون اختزال مخلّ مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 490,
     published_at: "2024-11-20T08:00:00Z",
@@ -245,7 +248,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "يصلي رائد الفضاء بحسب توقيت أقرب بلد أُقلع منه أو توقيت مكة المكرمة، ويتوجه نحو الكعبة تقريباً ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
     evidence_summary:
       "مبدأ اليسر ورفع الحرج، وأحكام القبلة للعاجز عن التحقق منها والعمدة فيها الدليل والمصلحة الشرعية المنضبطة ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 1200,
     published_at: "2025-05-15T10:00:00Z",
@@ -265,7 +268,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "تجب الزكاة على العملات الرقمية بنسبة ربع العشر (2.5%) بعد حولان الحول وبلوغ النصاب بقيمتها السوقية ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
     evidence_summary:
       "القياس على زكاة النقدين وعروض التجارة، وعموم النصوص الواردة في وجوب الزكاة في المال مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 820,
     published_at: "2025-06-01T08:00:00Z",
@@ -285,7 +288,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "يجيز أكثر العلماء التأمين الصحي التعاوني، ورخّص كثيرون في التجاري للضرورة ورفع الحرج ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
     evidence_summary:
       "مبدأ التعاون على البر، وقاعدة الضرورة، وتفريق الفقهاء بين صور التأمين ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 760,
     published_at: "2025-07-10T07:00:00Z",
@@ -325,7 +328,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "تصح الوصية بالتبرع بالأعضاء عند جمهور المعاصرين، ويُستحسن تنفيذها احتراماً لرغبة الميت والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
     evidence_summary:
       "أحكام الوصية في الفقه الإسلامي، وقاعدة إحياء النفس، وفتاوى المجامع الفقهية ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 390,
     published_at: "2025-09-12T08:00:00Z",
@@ -345,7 +348,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "يحذر أكثر الفقهاء المعاصرين من استخدام بنوك الحليب المختلط لما قد يُفضي إليه من الخلط في المحرمية والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
     evidence_summary:
       "أحكام الرضاعة المحرِّمة، وقاعدة سد الذرائع، والاحتياط في باب الأنساب وتُعرض بأدلتها وضوابطها دون اختزال مخلّ مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 510,
     published_at: "2025-10-20T07:00:00Z",
@@ -385,7 +388,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "يجوز العلاج بخلايا الجذع البالغة المأخوذة من الشخص نفسه أو من متبرع بإذنه. أما الخلايا الجنينية المأخوذة من أجنة مُجهضة عمداً فمحرمة، ومن أجنة فائضة من التلقيح الصناعي محلّ خلاف معتبر.",
     evidence_summary:
       "أصل إباحة التداوي، وقاعدة الضرورة والحاجة، وحرمة الأجنة البشرية مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 760,
     published_at: "2024-09-10T09:00:00Z",
@@ -405,7 +408,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "يصح الوقف على المحتوى الرقمي النافع إذا توفرت شروط الوقف من ديمومة المنفعة وتعيين الجهة. وصكوك الوقف الرقمية حكمها حكم الوقف عموماً بشرط الشفافية والضمان.",
     evidence_summary:
       "أصل جواز الوقف على كل ما فيه منفعة مستمرة مباحة، وعموم الأدلة على الصدقة الجارية ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 540,
     published_at: "2025-03-20T09:30:00Z",
@@ -425,7 +428,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "العقار المعدّ للبيع تجب فيه زكاة عروض التجارة بقيمته السوقية. أما المعدّ للإيجار فتجب فيه زكاة الدخل (الغلة) إن بلغت نصاباً وحال عليها الحول.",
     evidence_summary:
       "أصل مشروعية الزكاة في السائمة والماشية، وأصل الزكاة في عروض التجارة، وقاعدة الزكاة في المال النامي والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 680,
     published_at: "2024-06-01T09:00:00Z",
@@ -445,7 +448,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "يجوز جراحياً تصحيح حالة الخنثى المشكل للغلبة الطبية وفق رأي الأطباء. أما تغيير جنس الشخص السليم تشريحياً رغبةً نفسية فمحرّم شرعاً ولا يُرتّب عليه أحكام الجنس الجديد.",
     evidence_summary:
       "النهي عن تغيير خلق الله، وقاعدة حرمة الإضرار بالجسم، وأحاديث لعن المتشبهين من الرجال بالنساء والعكس ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 910,
     published_at: "2023-11-08T09:00:00Z",
@@ -466,7 +469,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "تحرم الأمومة البديلة في جميع صورها وفق قرار مجمع الفقه الإسلامي؛ لما فيها من اختلاط الأنساب والإشكال في تحديد الأم الشرعية.",
     evidence_summary:
       "أحكام النسب في الإسلام، وقاعدة سد الذرائع، والنهي عن كل ما يُفضي إلى اختلاط الأنساب ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 830,
     published_at: "2024-02-10T09:00:00Z",
@@ -486,7 +489,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "يحرم القتل الرحيم الإيجابي إجماعاً. أما إيقاف الأجهزة عن الميت دماغياً فقد أجازه بعض العلماء بضوابط طبية وشرعية دقيقة مع اجتناب التعميم خارج محلّ الدليل.",
     evidence_summary:
       "حرمة الدم الإنساني، وقاعدة لا ضرر ولا ضرار، وفقه الضرورة الطبية والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 740,
     published_at: "2024-04-05T09:00:00Z",
@@ -506,7 +509,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "يجوز للدولة تشجيع التطعيم إلزاماً لدرء الضرر العام. أما اللقاحات المأمونة فيُستحسن أخذها تطبيقاً لقاعدة درء الضرر ويُراجع عند تغيّر صورة المسألة المعاصرة.",
     evidence_summary:
       "قاعدة المصلحة العامة تُقدَّم على المصلحة الخاصة، وأحكام الحجر الصحي في السنة النبوية وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 1050,
     published_at: "2021-03-15T09:00:00Z",
@@ -526,7 +529,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "قد تصح NFT المرتبطة بأصول حقيقية ومنافع مشروعة وفق ضوابط الشرع. أما ما كان منها مجرد مضاربة على الشهرة دون قيمة حقيقية ففيه غرر.",
     evidence_summary:
       "أحكام البيع والملكية في الفقه الإسلامي، ومنع الغرر والجهالة في المعاملات مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 890,
     published_at: "2024-07-01T09:00:00Z",
@@ -566,7 +569,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "زراعة الشعر جائزة إذا كانت من شعر الشخص نفسه أو مما يباح بطبيعته، وإزالة العيوب الخِلقية جائزة، أما التجميل التحسيني المحض فيه خلاف.",
     evidence_summary:
       "أحكام التداوي وتغيير خلق الله والقواعد الفقهية في الضرورة والحاجة والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 730,
     published_at: "2025-02-10T10:00:00Z",
@@ -586,7 +589,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "التمويل الجماعي بصيغة المشاركة بالأرباح جائز، وبصيغة القرض بفائدة محرم ربا، وبصيغة التبرع جائز ومستحب ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
     evidence_summary:
       "أحكام الشركة والقرض والربا والهبة في الفقه الإسلامي والعمدة فيها الدليل والمصلحة الشرعية المنضبطة ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 510,
     published_at: "2025-03-18T09:00:00Z",
@@ -626,7 +629,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "إذا وقع التدليس في صفة جوهرية يُؤثّر على الرضا فللمغرور حق فسخ النكاح، مع ثبوت المهر لحصول الدخول والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
     evidence_summary:
       "أحكام الخيار في العقود وشروط الرضا وعيوب النكاح في المذاهب الأربعة والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 860,
     published_at: "2025-05-20T10:00:00Z",
@@ -788,7 +791,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "تجوز قراءة القرآن من الهاتف في الصلاة عند الحاجة — كالإمام الذي يخشى الانقطاع — كما تجوز التلاوة من المصحف الورقي. غير أن المسّ المستمر للشاشة يُفسد الصلاة عند بعض الفقهاء لما فيه من عمل كثير. والراجح أن مسّة واحدة للانتقال بين الصفحات لا تُفسد، وكثير من العلماء المعاصرين يأخذون بهذا.",
     evidence_summary:
       "قياس استخدام المصحف في الصلاة، وضوابط العمل الكثير في الصلاة عند الأئمة الأربعة والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 2100,
     published_at: "2025-07-12T09:00:00Z",
@@ -829,7 +832,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "يجوز للمرأة المتخصصة في العلم الشرعي أن تُدرّس وتُحاضر ببرامج إلكترونية بضوابط: أن يكون الصوت بلا فتنة، وأن لا تخضع لأجنبي بالقول. وتعليم النساء أولى وأوجب.",
     evidence_summary:
       "سنة السيدة عائشة وأمهات المؤمنين في تعليم الصحابة والتابعين، وقاعدة تيسير الوصول إلى العلم الشرعي ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 1560,
     published_at: "2025-07-16T09:00:00Z",
@@ -1092,7 +1095,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "لا تصح الصلاة الجماعية في الميتافيرس، إذ تشترط الشريعة التقاء الأجساد الحقيقية في مكان واحد أو تواصل الصفوف. المأموم يشترط فيه إمكانية المتابعة الحقيقية لا الافتراضية.",
     evidence_summary:
       "اشتراط اتصال الصفوف وإمكانية المتابعة للإمام في فقه الجماعة، وقياس المسألة على الصلاة عبر البث المرئي التي لا يراها الجمهور مجزئة عن الجماعة الحاضرة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 870,
     published_at: "2025-12-01T09:00:00Z",
@@ -1112,7 +1115,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
       "تصح العقود الموثقة بالبصمة البيولوجية وهي في حكم التوقيع الرسمي لأنها أكثر دقة وتحقيقاً للهوية من التوقيع اليدوي. والعبرة في العقود بالمقاصد والمعاني.",
     evidence_summary:
       "قاعدة «العبرة في العقود بالمقاصد والمعاني لا بالألفاظ والمباني»، وأن كل ما يحقق التعريف الكامل ويمنع الجحود معتبَر شرعاً.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     status: "published",
     views_count: 650,
     published_at: "2026-01-15T09:00:00Z",

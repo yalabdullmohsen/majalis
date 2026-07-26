@@ -46,4 +46,113 @@
 - صفوف curriculum الموجودة مسبقاً في Supabase الحي تُخفى من واجهة القراءة عبر الراية؛ لا حذف من قاعدة البيانات في هذه المرحلة.
 
 ### حالة البناء
-(تُحدَّث بعد التشغيل)
+`PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run build` — **نجاح** (f95d2b11)
+
+### إحصاء المرحلة 1
+| التعديلات | الموسوم | البناء |
+|---|---|---|
+| عزل + إعادة توليد موسوعة + طابور 36 | 36 سجل منهج معزول | نجاح |
+
+---
+
+## المرحلة 2 — ادّعاء التوثيق (fiqh-issues)
+
+**الفرع:** `cursor/content-fix-phase2-fiqh-documentation-1f54`
+**PR:** (يُحدَّث)
+
+### القاعدة
+
+- يسمّي مصدراً محدداً ← أُبقي `official_verified`
+
+- قاعدة عامة فقط ← خُفّض إلى `general_reasoning`
+
+- بلا `evidence_summary` ← خُفّض + `evidence_summary: "UNVERIFIED"`
+
+### الجدول
+
+| المعرّف | قبل | بعد | السبب |
+|---|---|---|---|
+| `seed-issue-crypto` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-organ-donation` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-minorities` | official_verified | general_reasoning | لا evidence_summary |
+| `seed-issue-zakat-stocks` | official_verified | general_reasoning | لا evidence_summary |
+| `seed-issue-hajj` | official_verified | general_reasoning | لا evidence_summary |
+| `seed-issue-general-anesthesia` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-artificial-organ-transplant` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-human-cloning` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-abortion-rape-cases` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-misyar-marriage` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-electronic-divorce` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-artificial-breastfeeding` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-fasting-elderly-disabled` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-astronaut-prayer` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-zakat-crypto` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-health-insurance-ruling` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-stock-market-trading` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-organ-donation-will` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-milk-bank-breastfeeding` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-minorities-kitabiyya-marriage` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-stem-cells` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-digital-waqf` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-zakat-real-estate` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-gender-reassignment` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-surrogacy` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-euthanasia` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-covid-vaccine` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-nft-metaverse` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-social-media-dawah` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-hair-transplant` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-crowdfunding` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-polar-fasting` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-deception-marriage-annulment` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-medicinal-cannabis` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-bank-employment` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-life-insurance` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-cosmetic-surgery` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-etf-index-funds` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-hajj-bank-money` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-repeated-umrah` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-quran-phone-prayer` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-online-prayer-congregation` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-online-lectures-women` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-ai-content-dawah` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-minorities-liquor-license` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-minorities-citizenship` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-zakat-real-estate-rentals` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-streaming-music` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-nft-blockchain` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-waqf-digital` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-remote-work-prayer` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-genetic-testing-ancestry` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-ai-fatwa` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-online-nikah` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-electric-vehicle-zakat` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-metaverse-prayer` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-biometric-auth-banking` | official_verified | general_reasoning | قاعدة عامة فقط بلا مصدر مسمّى |
+| `seed-issue-carbon-credits-trading` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-cultured-meat` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-edible-insects` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-encrypted-digital-currencies` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-gmo-animal-foods` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-pre-slaughter-stunning` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+| `seed-issue-smart-contracts` | official_verified | official_verified | evidence_summary يسمّي مصدراً |
+
+- أُبقي official_verified: **33**
+- خُفّض إلى general_reasoning (قاعدة عامة): **28**
+- خُفّض + UNVERIFIED: **3**
+
+### الملفات المعدّلة
+
+- `artifacts/majalis/src/lib/fiqh-issues-seed.ts`
+
+- `artifacts/majalis/src/lib/fiqh-council-types.ts` (إضافة قيمة النوع)
+
+- `artifacts/majalis/src/lib/fiqh-council-trust.ts` (تسمية الواجهة)
+
+### ما لم يُصلَح
+
+- لم تُختَرع مصادر لرفع أي مسألة إلى official_verified.
+
+### حالة البناء
+
+(تُحدَّث)
