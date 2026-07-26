@@ -24,6 +24,7 @@ import {
   type FiqhItemType,
 } from "@/lib/fiqh-council-types";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/fiqh-council.css";
 
 const SUBNAV_LINKS = [
   { href: "/fiqh-council", label: "الرئيسية" },

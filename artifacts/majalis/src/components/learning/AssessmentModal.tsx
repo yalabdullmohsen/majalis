@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { X, CheckCircle2, XCircle } from "lucide-react";
 import { fetchAssessment, submitAssessment, type AssessmentQuestion } from "@/lib/learning-assessment-service";
+import "@/styles/pages/mawarith.css";
 
 export function AssessmentModal({
   assessmentId,

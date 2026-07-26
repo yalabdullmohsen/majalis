@@ -18,6 +18,7 @@ import { fetchAllHadiths, type CdnHadith } from "@/lib/hadith-cdn-service";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
 import "@/styles/components/hadith-badge.css";
+import "@/styles/pages/hadith.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

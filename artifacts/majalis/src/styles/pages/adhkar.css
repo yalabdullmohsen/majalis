@@ -4,3 +4,107 @@
 .adhkar-ring-fill { transition: stroke-dashoffset 0.18s ease; }
 .adhkar-prog-fill { width: var(--adhkar-pct, 0%); }
 
+
+/* ══ 40. Adhkar Focus Mode ══════════════════════════════════════════════════ */
+.adhkar-page--focus .adhkar-focus-shell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-space-6);
+  padding: 1.5rem 0 2rem;
+}
+
+.adhkar-focus-counter {
+  font-size: var(--ds-text-sm);
+  color: var(--txt-subdued, #5C5C56);
+  letter-spacing: normal;
+}
+
+.adhkar-focus-card {
+  background: var(--majalis-panel, #fff);
+  border: 1px solid var(--majalis-line, #e5e7eb);
+  border-radius: var(--ds-radius-2xl);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  max-width: 640px;
+  width: 100%;
+  box-shadow: 0 2px 16px rgba(0,0,0,.06);
+}
+
+.adhkar-focus-text {
+  font-family: var(--font-body);
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  line-height: 2.2;
+  color: var(--txt-primary, #1A1A18);
+  margin: 0 0 1rem;
+}
+
+.adhkar-focus-count {
+  font-size: 0.85rem;
+  color: var(--majalis-emerald, #16A34A);
+  font-weight: 600;
+  margin: 0;
+}
+
+.adhkar-focus-nav {
+  display: flex;
+  gap: var(--ds-space-3);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.adhkar-focus-btn {
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--ds-radius-lg);
+  border: 1.5px solid var(--majalis-line, #e5e7eb);
+  background: var(--majalis-panel, #fff);
+  color: var(--txt-primary, #1A1A18);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, opacity 0.15s;
+}
+.adhkar-focus-btn:hover:not(:disabled) {
+  background: var(--m26-green-50, #F0FDF4);
+  border-color: var(--majalis-emerald, #16A34A);
+}
+.adhkar-focus-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.adhkar-focus-btn--next {
+  background: var(--majalis-emerald, #16A34A);
+  color: #fff;
+  border-color: transparent;
+}
+.adhkar-focus-btn--next:hover:not(:disabled) {
+  background: var(--m26-green-800, #166534);
+}
+.adhkar-focus-btn--details {
+  color: var(--majalis-emerald, #16A34A);
+  border-color: var(--majalis-emerald, #16A34A);
+}
+
+.adhkar-focus-progress {
+  width: 100%;
+  max-width: 640px;
+  height: 4px;
+  background: var(--majalis-line, #e5e7eb);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.adhkar-focus-progress-fill {
+  height: 100%;
+  background: var(--majalis-emerald, #16A34A);
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+
+@keyframes adhkarFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.adhkar-anim-fade {
+  animation: adhkarFadeIn 0.3s ease forwards;
+}
+
