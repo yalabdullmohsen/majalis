@@ -15,6 +15,9 @@ import { FIQH_DOCUMENTATION_LABELS } from "@/lib/fiqh-council-trust";
 import { FIQH_RESEARCH_DISCLAIMER } from "@/lib/fiqh-citation";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
+import { SourceBadge } from "@/components/content-trust/SourceBadge";
+import { ReviewMeta } from "@/components/content-trust/ReviewMeta";
+import { PublicationGate } from "@/components/content-trust/PublicationGate";
 
 function groupItemsByType(issue: FiqhCouncilIssue) {
   const items = issue.items || [];
@@ -83,6 +86,15 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
   if (loading) return <SkeletonCardGrid />;
   if (!issue) return <Empty text="المسألة غير موجودة أو غير منشورة." />;
 
+  if (issue.publication_gate === "blocked") {
+    return (
+      <div className="page-shell narrow fiqh-council-page">
+        <FiqhCouncilSubnav />
+        <PublicationGate publicationGate="blocked" hideWhenBlocked={false} />
+      </div>
+    );
+  }
+
   const grouped = groupItemsByType(issue);
 
   const renderItemList = (title: string, list: typeof issue.items) => {
@@ -127,11 +139,25 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
             <tbody>
               <tr><th>التصنيف</th><td>{issue.category}{issue.subcategory ? ` / ${issue.subcategory}` : ""}</td></tr>
               {issue.documentation_level && (
-                <tr><th>مستوى التوثيق</th><td>{FIQH_DOCUMENTATION_LABELS[issue.documentation_level]}</td></tr>
+                <tr><th>حالة النشر المؤسسي</th><td>{FIQH_DOCUMENTATION_LABELS[issue.documentation_level]}</td></tr>
+              )}
+              {issue.trust_level && (
+                <tr>
+                  <th>درجة توثيق الأدلة</th>
+                  <td>
+                    <SourceBadge trustLevel={issue.trust_level} />
+                  </td>
+                </tr>
               )}
               {issue.updated_at && <tr><th>آخر تحديث</th><td>{issue.updated_at.slice(0, 10)}</td></tr>}
             </tbody>
           </table>
+          <ReviewMeta
+            lastUpdatedAt={issue.last_updated_at || issue.updated_at}
+            reviewedBy={issue.reviewed_by}
+            reviewedAt={issue.last_reviewed_at}
+            editorialReviewStatus={issue.editorial_review_status}
+          />
         </section>
 
         {issue.ruling_summary && (
@@ -144,6 +170,9 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
         {issue.evidence_summary && (
           <section className="content-detail-evidence ui-card">
             <h2>الأدلة المختصرة</h2>
+            <div className="ct-trust-row">
+              {issue.trust_level && <SourceBadge trustLevel={issue.trust_level} />}
+            </div>
             <p>{issue.evidence_summary}</p>
           </section>
         )}

@@ -31,7 +31,10 @@ export function PublicationGate({
   if (isPublicationBlocked(publicationGate, textFlags)) {
     if (hideWhenBlocked) return null;
     return (
-      <p className={className} role="status">
+      <p
+        className={["ct-publication-blocked", className].filter(Boolean).join(" ")}
+        role="status"
+      >
         هذا المحتوى موقوف عن العرض حتى مراجعة علمية بشرية.
       </p>
     );

@@ -1,31 +1,18 @@
-# تعليمات دمج PR الواجهة المؤجّل
+# تعليمات دمج الواجهة المؤجّلة — اكتُمل الربط
 
-**عنوان PR:** `[محتوى] مؤجّل — يدمج بعد انتهاء أعمال الواجهة`  
-**لا يُدمج قبل اكتمال أعمال واجهة الإصلاح الموازية.**
+**PR:** https://github.com/yalabdullmohsen/majalis/pull/356
 
-## الملفات الجديدة في هذا الفرع
+## ما رُبط
 
-| ملف | الغرض |
+| بند | الحالة |
 |---|---|
-| `src/components/content-trust/SourceBadge.tsx` | شارة `trust_level` |
-| `src/components/content-trust/ReviewMeta.tsx` | تاريخ التحديث / المراجع |
-| `src/components/content-trust/PublicationGate.tsx` | إخفاء `blocked` / `SUSPECT_TEXT` |
-| هذا الملف | تعليمات الربط |
+| `SourceBadge` على تفاصيل المسألة الفقهية + نافذة الأسماء الحسنى | تم |
+| `ReviewMeta` (تاريخ التحديث / حالة المراجعة) | تم |
+| `PublicationGate` عند `publication_gate=blocked` | تم |
+| `"verify:citations"` في `package.json` | تم |
+| قسم درجات التوثيق في `/methodology` | تم |
+| أنماط `content-trust.css` | تم |
 
-## خطوات الربط (بعد استقرار فرع الواجهة)
+## ملاحظة
 
-1. ادمج أولاً فرع المحتوى `content/citation-trust-pipeline` (مخطط + بيانات + سكربت).
-2. أضف إلى `package.json` (يملكه فرع الواجهة):
-   ```json
-   "verify:citations": "node scripts/verify-citations.mjs"
-   ```
-3. اربط `SourceBadge` في بطاقات المسائل/الأسئلة/الأسماء حيث يُعرض الدليل.
-4. اربط `ReviewMeta` أسفل صفحات المحتوى.
-5. لفّ المحتوى الحسّاس بـ `PublicationGate`.
-6. انسخ نص `docs/methodology-page-content.md` (من فرع المحتوى) إلى صفحة `/methodology`.
-
-## ممنوع عند الدمج
-
-- استخدام `documentation_level` كشارة ثقة.
-- تصحيح متون آيات/أحاديث من الواجهة.
-- ملء `reviewed_by` بقيم آلية.
+`documentation_level` يبقى بوابة عرض المسائل؛ الشارة تقرأ `trust_level` فقط.

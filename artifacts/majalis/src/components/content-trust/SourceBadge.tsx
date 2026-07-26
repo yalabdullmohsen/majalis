@@ -1,49 +1,33 @@
 /**
- * شارة درجة التوثيق — ملف جديد فقط.
- * لا يُدمج قبل اكتمال أعمال الواجهة (انظر docs/deferred-ui/INTEGRATION.md).
- *
- * يعتمد على trust_level — لا على documentation_level (بوابة عرض الفقه).
- * بعد دمج فرع المحتوى يمكن استبدال النوع المحلي باستيراد من citation-schema.
+ * شارة درجة التوثيق — تعتمد trust_level من citation-schema
+ * لا تستخدم documentation_level (بوابة عرض المسائل الفقهية).
  */
+import "@/styles/components/content-trust.css";
+import {
+  TRUST_LEVEL_DEFINITIONS,
+  type TrustLevel,
+} from "@/lib/citation-schema";
 
-export type TrustLevel =
-  | "primary_text"
-  | "scholarly_source"
-  | "institutional_ruling"
-  | "general_reasoning"
-  | "unsourced";
-
-const LABEL: Record<TrustLevel, string> = {
-  primary_text: "نص أصلي",
-  scholarly_source: "مصدر علمي",
-  institutional_ruling: "قرار مؤسسي",
-  general_reasoning: "استدلال عام",
-  unsourced: "بلا مصدر",
-};
-
-const DEFINITION: Record<TrustLevel, string> = {
-  primary_text: "نص قرآني بسورة ورقم آية، أو حديث بمصنَّف ورقم وحكم وحاكم.",
-  scholarly_source: "نقل عن عالم أو كتاب مسمّى بجزء وصفحة.",
-  institutional_ruling: "قرار مجمع أو هيئة برقم وتاريخ.",
-  general_reasoning: "استدلال بقاعدة عامة بلا نص مسمّى.",
-  unsourced: "بلا شيء يمكن التحقق منه.",
-};
+export type { TrustLevel };
 
 export type SourceBadgeProps = {
   trustLevel: TrustLevel;
   className?: string;
 };
 
-/** عرض فقط — التنسيق النهائي مع نظام التصميم عند الدمج. */
 export function SourceBadge({ trustLevel, className }: SourceBadgeProps) {
+  const def = TRUST_LEVEL_DEFINITIONS[trustLevel];
+  const classes = ["ct-source-badge", `ct-source-badge--${trustLevel}`, className]
+    .filter(Boolean)
+    .join(" ");
   return (
     <span
-      className={className}
+      className={classes}
       data-trust-level={trustLevel}
-      title={DEFINITION[trustLevel]}
+      title={def.definition}
       role="status"
     >
-      {LABEL[trustLevel]}
+      {def.ar}
     </span>
   );
 }

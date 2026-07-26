@@ -47,7 +47,10 @@ export function ReviewMeta({
   if (parts.length === 0) return null;
 
   return (
-    <p className={className} data-editorial-review={editorialReviewStatus ?? ""}>
+    <p
+      className={["ct-review-meta", className].filter(Boolean).join(" ")}
+      data-editorial-review={editorialReviewStatus ?? ""}
+    >
       {parts.join(" · ")}
     </p>
   );

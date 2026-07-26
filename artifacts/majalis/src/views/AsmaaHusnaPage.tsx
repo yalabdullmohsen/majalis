@@ -7,6 +7,8 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 import { ASMAA, ASMA_CATEGORIES, getTodayAsma, type AsmaEntry, type AsmaStatus } from "@/lib/asma-husna-data";
+import { SourceBadge } from "@/components/content-trust/SourceBadge";
+import { ReviewMeta } from "@/components/content-trust/ReviewMeta";
 
 const CATEGORIES = [...ASMA_CATEGORIES];
 const STATUS_FILTERS: Array<"الكل" | AsmaStatus> = ["الكل", "ثابت", "مشهور"];
@@ -257,7 +259,16 @@ export default function AsmaaHusnaPage() {
                   ? "ثابت — له شاهد من القرآن أو السنة الصحيحة"
                   : "مشهور — من سرد الترمذي الضعيف؛ لا يُجزم بتوقيفيته حتى يثبت بدليل مستقل"}
               </p>
+              {selected.trust_level && (
+                <div className="ct-trust-row">
+                  <SourceBadge trustLevel={selected.trust_level} />
+                </div>
+              )}
               <p className="ah-modal__text ah-modal__text--quran">{selected.reference}</p>
+              <ReviewMeta
+                lastUpdatedAt={selected.last_updated_at}
+                editorialReviewStatus={selected.editorial_review_status}
+              />
             </div>
 
             <div className="ah-modal__section">

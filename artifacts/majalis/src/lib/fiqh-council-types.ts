@@ -243,6 +243,14 @@ export type FiqhCouncilIssue = {
   ruling_summary?: string;
   evidence_summary?: string;
   documentation_level?: "official_verified" | "imported_needs_review" | "admin_summary" | "rejected" | "archived";
+  /**
+   * درجة توثيق الأدلة الصادقة (citation-schema).
+   * منفصلة عن documentation_level (بوابة العرض) وعن trust_level لمصادر الاستيراد.
+   */
+  trust_level?: import("./citation-schema").TrustLevel;
+  editorial_review_status?: import("./citation-schema").ReviewStatus;
+  last_updated_at?: string;
+  publication_gate?: import("./citation-schema").PublicationGate;
   status?: "draft" | "review" | "published" | "archived";
   views_count?: number;
   published_at?: string;
