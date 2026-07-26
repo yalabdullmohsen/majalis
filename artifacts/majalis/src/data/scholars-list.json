@@ -613,5 +613,35 @@
     "id": "ayni",
     "name": "العيني",
     "died": "٨٥٥ هـ"
+  },
+  {
+    "id": "khiraqi",
+    "name": "الخرقي",
+    "died": "٣٣٤ هـ"
+  },
+  {
+    "id": "ibn-humam",
+    "name": "ابن الهمام",
+    "died": "٨٦١ هـ"
+  },
+  {
+    "id": "khalil-ibn-ishaq",
+    "name": "خليل بن إسحاق",
+    "died": "٧٧٦ هـ تقريبًا"
+  },
+  {
+    "id": "ibn-abi-hatim",
+    "name": "ابن أبي حاتم",
+    "died": "٣٢٧ هـ"
+  },
+  {
+    "id": "qastallani",
+    "name": "القسطلاني",
+    "died": "٩٢٣ هـ"
+  },
+  {
+    "id": "zaylai",
+    "name": "الزيلعي",
+    "died": "٧٦٢ هـ"
   }
 ]
