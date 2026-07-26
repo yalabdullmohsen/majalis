@@ -129,9 +129,18 @@ function pageTitle(route) {
   return `${name}${TITLE_SUFFIX}`;
 }
 
+/** يوحّد النقط المتكررة في نهاية الوصف (خلل شائع: ".." من قوالب سابقة). */
+function tidyDesc(text) {
+  return String(text || "")
+    .replace(/\.{2,}/g, ".")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function padDesc(text, suffix) {
-  if (!text) return suffix;
-  return text.length >= 50 ? text : `${text}، ${suffix}`;
+  const t = tidyDesc(text);
+  if (!t) return suffix;
+  return t.length >= 50 ? t : `${t}، ${suffix}`;
 }
 
 function clamp(text, max = 300) {
@@ -759,17 +768,44 @@ for (const row of PLATFORM_SEED.courses || []) {
 }
 
 for (const row of LIBRARY_CATALOG) {
+  const related = LIBRARY_CATALOG.filter((b) => b.id !== row.id && b.category && b.category === row.category)
+    .slice(0, 6)
+    .map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author }));
+  const desc = tidyDesc(row.description || row.title);
   addPage(
     {
       path: `/library/${row.id}`,
       title: row.title,
-      description: padDesc(row.description || row.title, `كتاب من المكتبة الشرعية في ${SITE_NAME}`),
+      description: padDesc(desc, `كتاب من المكتبة الشرعية في ${SITE_NAME}`),
       ogType: "book",
     },
     {
-      extraJsonLd: bookJsonLdScript(row),
+      extraJsonLd: bookJsonLdScript({ ...row, description: desc }),
       parents: [{ name: "المكتبة العلمية", path: "/library" }],
       priority: 0.7,
+      richBody: `<h2>عن الكتاب</h2>
+<p>${escapeHtml(desc)}</p>
+<ul>
+  ${row.author ? `<li>المؤلف: ${escapeHtml(row.author)}</li>` : ""}
+  ${row.category ? `<li>التصنيف: ${escapeHtml(row.category)}</li>` : ""}
+</ul>
+${linkList("كتب ذات صلة في نفس التصنيف", related)}
+${linkList("روابط ذات صلة", [
+  { name: "المكتبة العلمية", url: "/library" },
+  { name: "أعلام العلماء", url: "/scholars" },
+  ...(row.category === "حديث"
+    ? [
+        { name: "علوم الحديث", url: "/hadith-science" },
+        { name: "الأحاديث النبوية", url: "/hadith" },
+      ]
+    : []),
+  ...(row.category === "فقه" || /فقه/.test(row.category || "")
+    ? [{ name: "الفقه الإسلامي", url: "/fiqh" }]
+    : []),
+  ...(row.category === "تفسير" || /تفسير|قرآن/.test(row.category || "")
+    ? [{ name: "مركز القرآن", url: "/quran-hub" }]
+    : []),
+])}`,
     },
   );
 }
