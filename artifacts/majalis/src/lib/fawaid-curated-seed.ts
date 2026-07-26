@@ -48,7 +48,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الصدق يهدي إلى البر، والبر يهدي إلى الجنة.", category: "الأخلاق", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "رضا الرب في رضا الوالد، وسخطه في سخطهما.", category: "الآداب", source: "رواه الترمذي وصححه الألباني", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "لا ينبغي لأحد أن يموت إلا وهو يحسن الظن بالله.", category: "العقيدة", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
-  { text: "الوتر سنة مؤكدة؛ وتر الصلاة من سنة النبي ﷺ.", category: "الفقه", source: "رواه أبو داود والترمذي", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
+  { text: "الوتر سنة مؤكدة؛ وتر الصلاة من سنة النبي ﷺ.", category: "الفقه", source: "أبو داود ١٤١٨ والترمذي ٤٥٢ — صححه الألباني", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
   { text: "الوضوء شرط لصحة الصلاة عند الحدث؛ فلا تُقبل صلاة بلا طهارة مما أوجبها.", category: "الفقه", source: "متفق عليه: «لا تُقبل صلاة بغير طهور» — ومعناه مجمع عليه", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "صلاة الجماعة أفضل من صلاة الفذ بسبع وعشرين درجة.", category: "الفقه", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "إنا لله وإنا إليه راجعون — أولئك عليهم صلوات من ربهم ورحمة.", category: "الأخلاق", source: "البقرة: 156-157", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
@@ -169,7 +169,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "من أحبّ للمسلمين ما يُحب لنفسه فقد كمل إيمانه.", category: "العقيدة", source: "لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه — متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "أفضل الإيمان أن تعلم أن الله معك أينما كنت.", category: "العقيدة", source: "رواه الطبراني — حسنه الألباني", author_name: "المعجم الكبير", status: "approved", verification_status: "verified" },
   { text: "من مات وهو يعلم أنه لا إله إلا الله دخل الجنة.", category: "العقيدة", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
-  { text: "التوكل على الله لا يعني ترك الأسباب، بل يعني اليقين بأن الله هو المسبّب.", category: "العقيدة", source: "اعقلها وتوكل — رواه الترمذي", author_name: "الإمام ابن القيم", status: "approved", verification_status: "verified" },
+  { text: "التوكل على الله لا يعني ترك الأسباب؛ قال ﷺ للأعرابي: «اعقلها وتوكل» — الترمذي ٢٥١٧، حسّنه الألباني.", category: "العقيدة", source: "الترمذي ٢٥١٧ — حسن", author_name: null, status: "approved", verification_status: "verified" },
 
   /* ── إضافات الحديث ── */
   { text: "كفى بالمرء كذباً أن يُحدّث بكل ما سمع.", category: "الحديث", source: "رواه مسلم في مقدمة صحيحه", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
@@ -207,7 +207,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── إضافات الآداب ── */
   { text: "الاستئذان ثلاث، فإن أُذن وإلا فارجع.", category: "الآداب", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "إياكم والظن فإن الظن أكذب الحديث.", category: "الآداب", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "حسن الخلق بابٌ من أبواب الجنة التي تُفتح للمسلم.", category: "الآداب", source: "أكثر ما يُدخل الجنة تقوى الله وحسن الخلق — رواه الترمذي", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "حسن الخلق بابٌ من أبواب الجنة؛ قال ﷺ: «أكثر ما يُدخل الجنة تقوى الله وحسن الخلق» — الترمذي ٢٠٠٤، صححه الألباني.", category: "الآداب", source: "الترمذي ٢٠٠٤ — صحيح", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الأخلاق ── */
   { text: "الكبر بطر الحق وغمط الناس.", category: "الأخلاق", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
