@@ -233,11 +233,6 @@
       "permanent": true
     },
     {
-      "source": "/mind-map",
-      "destination": "/knowledge-graph",
-      "permanent": true
-    },
-    {
       "source": "/learning/quiz",
       "destination": "/quiz",
       "permanent": true

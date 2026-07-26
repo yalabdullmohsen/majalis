@@ -140,7 +140,6 @@ console.log("\n=== vercel.json — إعادة توجيه دائمة لمسار �
     ["/learning-plan", "/learning/paths"],
     ["/masarat", "/learning/paths"],
     ["/knowledge-map", "/knowledge-graph"],
-    ["/mind-map", "/knowledge-graph"],
     ["/learning/quiz", "/quiz"],
     ["/mushaf-v2-preview", "/mushaf"],
     ["/features-in-progress", "/updates"],
@@ -162,10 +161,13 @@ console.log("\n=== seo-routes.json — /kids مسجَّل (noindex)، /scholarly
   const circlesRoute = routes.find((r) => r.path === "/quran-circles");
   assert(circlesRoute !== undefined && circlesRoute.sitemap === false,
     "/quran-circles خارج sitemap أثناء حالة قريبًا");
-  for (const p of ["/mind-map", "/universities", "/universities/compare"]) {
+  for (const p of ["/universities", "/universities/compare"]) {
     const route = routes.find((r) => r.path === p);
-    assert(route !== undefined && route.sitemap === false, `${p} خارج sitemap بعد الدمج/التنزيل`);
+    assert(route !== undefined && route.sitemap === false, `${p} خارج sitemap بعد التنزيل`);
   }
+  const mindMapRoute = routes.find((r) => r.path === "/mind-map");
+  assert(mindMapRoute !== undefined && mindMapRoute.sitemap === true,
+    "/mind-map في sitemap (محتوى حي تحت بوابة المعرفة)");
   assert(routes.find((r) => r.path === "/scholarly-research") === undefined,
     "/scholarly-research لم يعد في seo-routes.json (لن يظهر في sitemap.xml القادم)");
 }
@@ -190,11 +192,12 @@ console.log("\n=== nav-visibility — إخفاء/دمج/قريبًا ===");
   }
   assert(isComingSoonPath("/kids") && isComingSoonPath("/quran-circles"), "الأطفال وحلقات التحفيظ قريبًا");
   assert(resolveMergedPath("/knowledge-map") === "/knowledge-graph", "knowledge-map → knowledge-graph");
-  assert(resolveMergedPath("/mind-map") === "/knowledge-graph", "mind-map → knowledge-graph");
+  assert(resolveMergedPath("/mind-map") === "/mind-map", "mind-map يبقى حيًا (لا توجيه)");
+  assert(HIDDEN_FROM_NAV_PATHS.has("/mind-map"), "mind-map مخفي من القوائم الأولى ويُفتح من بوابة المعرفة");
   assert(resolveMergedPath("/learning-plan") === "/learning/paths", "learning-plan → learning/paths");
   assert(resolveMergedPath("/learning/quiz") === "/quiz", "learning/quiz → quiz");
   assert(resolveMergedPath("/features-in-progress") === "/updates", "features-in-progress → updates");
-  assert(Object.keys(MERGED_PATH_REDIRECTS).length >= 6, "جدول إعادة التوجيه موسّع");
+  assert(Object.keys(MERGED_PATH_REDIRECTS).length >= 5, "جدول إعادة التوجيه غير فارغ");
 
   const filtered = filterNavItems([
     { href: "/learn" },
@@ -209,8 +212,8 @@ console.log("\n=== nav-visibility — إخفاء/دمج/قريبًا ===");
   const homeHrefs = FEATURE_CATS.flatMap((c) => c.items.map((i) => i.href));
   assert(!homeHrefs.includes("/car-mode") && !homeHrefs.includes("/mosque-mode"),
     "كتالوج الرئيسية لا يعرض أوضاع السيارة/المسجد");
-  assert(!homeHrefs.includes("/islam-stats") && !homeHrefs.includes("/mind-map"),
-    "كتالوج الرئيسية لا يعرض الإحصاءات ولا الخرائط الذهنية المنفصلة");
+  assert(!homeHrefs.includes("/islam-stats"), "كتالوج الرئيسية لا يعرض الإحصاءات");
+  assert(!homeHrefs.includes("/mind-map"), "كتالوج الأقسام لا يعرض mind-map كمدخل أول (يُفتح من بوابة المعرفة)");
 }
 
 console.log(`\n${"─".repeat(40)}`);

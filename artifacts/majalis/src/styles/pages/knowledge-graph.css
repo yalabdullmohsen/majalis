@@ -3,6 +3,25 @@
    ═══════════════════════════════════════════════════════════════ */
 .kng-page { padding: var(--ds-space-5); max-width: 1000px; margin: 0 auto; }
 
+.kng-mindmap-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald, #143F35) 28%, transparent);
+  background: color-mix(in srgb, var(--majalis-emerald, #143F35) 8%, transparent);
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+.kng-mindmap-link:hover,
+.kng-mindmap-link:focus-visible {
+  background: color-mix(in srgb, var(--majalis-emerald, #143F35) 16%, transparent);
+  outline: none;
+}
+
 .kng-tabs {
   display: flex; gap: var(--ds-space-2); margin-bottom: 1rem;
   border-bottom: 1px solid var(--majalis-line, #e5e7eb);

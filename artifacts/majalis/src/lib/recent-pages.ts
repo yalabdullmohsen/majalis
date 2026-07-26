@@ -63,7 +63,7 @@ const LABEL_MAP: Record<string, string> = {
   "/knowledge-map":                 "استكشف المعرفة",
   "/knowledge-graph":               "استكشف المعرفة",
   "/masarat":                       "مسارات التعلم",
-  "/mind-map":                      "استكشف المعرفة",
+  "/mind-map":                      "الخرائط الذهنية",
   "/flashcards":                    "بطاقات المراجعة",
   "/cards":                         "البطاقات",
   "/study-room":                    "غرفة الدراسة",

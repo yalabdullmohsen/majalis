@@ -31,6 +31,7 @@ const PUBLIC_ROUTES: Array<{ href: string; label: string }> = [
   { href: "/seerah",         label: "السيرة النبوية" },
   { href: "/scholars",       label: "أعلام الإسلام" },
   { href: "/knowledge-graph",label: "استكشف المعرفة" },
+  { href: "/mind-map",       label: "الخرائط الذهنية" },
   { href: "/quran-hub",      label: "القرآن" },
   { href: "/mushaf",         label: "المصحف" },
   { href: "/quran/memorization-plans", label: "خطط حفظ القرآن" },
@@ -53,7 +54,6 @@ const REDIRECT_ROUTES: Array<{ href: string; redirectsTo: string }> = [
   { href: "/research",              redirectsTo: "/fiqh-council/research" },
   { href: "/scholarly-research",    redirectsTo: "/qa" },
   { href: "/learning-path",         redirectsTo: "/learning/paths" },
-  { href: "/mind-map",              redirectsTo: "/knowledge-graph" },
   { href: "/knowledge-map",         redirectsTo: "/knowledge-graph" },
   { href: "/features-in-progress",  redirectsTo: "/updates" },
 ];

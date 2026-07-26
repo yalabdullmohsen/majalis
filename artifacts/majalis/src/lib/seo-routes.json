@@ -1811,10 +1811,9 @@
         "خريطة العلوم الإسلامية",
         "تصور المعرفة الشرعية"
       ],
-      "sitemap": false,
+      "sitemap": true,
       "changefreq": "monthly",
-      "priority": 0.72,
-      "robots": "noindex, follow"
+      "priority": 0.65
     },
     {
       "path": "/knowledge-map",
