@@ -29,6 +29,7 @@ import {
   Users,
   Wrench,
 } from "lucide-react";
+import { filterNavItems } from "@/lib/nav-visibility";
 
 /* ── روابط الوصول السريع ── */
 /* إجراءات سريعة مختصرة — 4 عناصر فقط (إعادة هيكلة الرئيسية، الأولوية 3):
@@ -55,7 +56,7 @@ export const FEATURED: { href: string; Icon: LucideIcon; title: string; desc: st
 export type CatItem = { href: string; Icon: LucideIcon; title: string; desc: string };
 export type FeatureCat = { id: string; Icon: LucideIcon; label: string; items: CatItem[] };
 
-export const FEATURE_CATS: FeatureCat[] = [
+const FEATURE_CATS_RAW: FeatureCat[] = [
   {
     id: "seerah",
     Icon: Moon,
@@ -160,4 +161,10 @@ export const FEATURE_CATS: FeatureCat[] = [
     ],
   },
 ];
+
+/** كتالوج الرئيسية بعد تطبيق سياسة الإخفاء/الدمج. */
+export const FEATURE_CATS: FeatureCat[] = FEATURE_CATS_RAW.map((cat) => ({
+  ...cat,
+  items: filterNavItems(cat.items),
+})).filter((cat) => cat.items.length > 0);
 

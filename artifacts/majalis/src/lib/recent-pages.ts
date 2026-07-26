@@ -1,3 +1,5 @@
+import { resolveMergedPath } from "@/lib/nav-visibility";
+
 const KEY = "msk_recent_pages";
 const MAX = 8;
 
@@ -57,9 +59,10 @@ const LABEL_MAP: Record<string, string> = {
   "/learning/calendar":             "تقويم التعلم",
   "/learning/certificates":         "الشهادات",
   "/my-learning":                   "تعلمي",
-  "/learning-plan":                 "خطة التعلم",
-  "/knowledge-map":                 "خارطة المعرفة",
-  "/knowledge-graph":               "مخطط المعرفة",
+  "/learning-plan":                 "مسارات التعلم",
+  "/knowledge-map":                 "استكشف المعرفة",
+  "/knowledge-graph":               "استكشف المعرفة",
+  "/masarat":                       "مسارات التعلم",
   "/mind-map":                      "خرائط المفاهيم",
   "/flashcards":                    "البطاقات الدعوية",
   "/cards":                         "البطاقات",
@@ -253,10 +256,15 @@ function shouldSkip(href: string): boolean {
  * يُعيد توليد label من LABEL_MAP لكل إدخال محفوظ.
  */
 function migrateStoredPages(pages: RecentPage[]): RecentPage[] {
-  return pages.map((page) => ({
-    ...page,
-    label: labelFor(page.href),
-  }));
+  const seen = new Set<string>();
+  const out: RecentPage[] = [];
+  for (const page of pages) {
+    const href = resolveMergedPath(page.href);
+    if (seen.has(href)) continue;
+    seen.add(href);
+    out.push({ ...page, href, label: labelFor(href) });
+  }
+  return out;
 }
 
 /**
@@ -275,14 +283,19 @@ function preferSpecificTitle(href: string, specificTitle: string | undefined, ge
 }
 
 export function recordRecentPage(href: string, specificTitle?: string): void {
-  if (shouldSkip(href)) return;
+  const resolved = resolveMergedPath(href);
+  if (shouldSkip(resolved)) return;
   try {
     const raw = localStorage.getItem(KEY);
     const stored: RecentPage[] = raw ? JSON.parse(raw) : [];
     const migrated = migrateStoredPages(stored);
-    const filtered = migrated.filter((p) => p.href !== href);
-    const generic = labelFor(href);
-    filtered.unshift({ href, label: preferSpecificTitle(href, specificTitle, generic), visitedAt: Date.now() });
+    const filtered = migrated.filter((p) => p.href !== resolved);
+    const generic = labelFor(resolved);
+    filtered.unshift({
+      href: resolved,
+      label: preferSpecificTitle(resolved, specificTitle, generic),
+      visitedAt: Date.now(),
+    });
     localStorage.setItem(KEY, JSON.stringify(filtered.slice(0, MAX)));
   } catch {
     // localStorage might be unavailable

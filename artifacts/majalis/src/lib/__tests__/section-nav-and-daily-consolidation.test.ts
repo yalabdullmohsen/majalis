@@ -16,6 +16,14 @@ import { dirname, resolve } from "node:path";
 import { isTabActive, SECTION_TABS } from "../../components/TopSectionBar";
 import { HOME_WIDGET_DEFS, sanitizePrefs, type HomeWidgetId } from "../homepage-layout";
 import { FEATURE_REGISTRY } from "../feature-registry";
+import {
+  HIDDEN_FROM_NAV_PATHS,
+  MERGED_PATH_REDIRECTS,
+  filterNavItems,
+  isComingSoonPath,
+  resolveMergedPath,
+} from "../nav-visibility";
+import { FEATURE_CATS } from "../home-feature-catalog";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "../../..");
@@ -146,6 +154,32 @@ console.log("\n=== seo-routes.json — /kids مسجَّل (noindex)، /scholarly
     "/quran-circles خارج sitemap أثناء حالة قريبًا");
   assert(routes.find((r) => r.path === "/scholarly-research") === undefined,
     "/scholarly-research لم يعد في seo-routes.json (لن يظهر في sitemap.xml القادم)");
+}
+
+console.log("\n=== nav-visibility — إخفاء/دمج/قريبًا ===");
+{
+  for (const p of ["/islam-stats", "/study-room", "/vault", "/cards", "/car-mode", "/mosque-mode", "/family"]) {
+    assert(HIDDEN_FROM_NAV_PATHS.has(p), `${p} ضمن المسارات المخفية من الاكتشاف`);
+  }
+  assert(isComingSoonPath("/kids") && isComingSoonPath("/quran-circles"), "الأطفال وحلقات التحفيظ قريبًا");
+  assert(resolveMergedPath("/knowledge-map") === "/knowledge-graph", "knowledge-map → knowledge-graph");
+  assert(resolveMergedPath("/learning-plan") === "/learning/paths", "learning-plan → learning/paths");
+  assert(resolveMergedPath("/masarat") === "/learning/paths", "masarat → learning/paths");
+  assert(Object.keys(MERGED_PATH_REDIRECTS).length >= 3, "جدول إعادة التوجيه غير فارغ");
+
+  const filtered = filterNavItems([
+    { href: "/learn" },
+    { href: "/islam-stats" },
+    { href: "/kids" },
+    { href: "/vault" },
+  ]);
+  assert(filtered.map((i) => i.href).join(",") === "/learn,/kids",
+    `filterNavItems يُبقي الظاهر و«قريبًا» ويُسقط المخفي (الفعلي: ${filtered.map((i) => i.href).join(",")})`);
+
+  const homeHrefs = FEATURE_CATS.flatMap((c) => c.items.map((i) => i.href));
+  assert(!homeHrefs.includes("/car-mode") && !homeHrefs.includes("/mosque-mode"),
+    "كتالوج الرئيسية لا يعرض أوضاع السيارة/المسجد");
+  assert(!homeHrefs.includes("/islam-stats"), "كتالوج الرئيسية لا يعرض إحصائيات الإسلام");
 }
 
 console.log(`\n${"─".repeat(40)}`);

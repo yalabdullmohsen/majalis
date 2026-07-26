@@ -151,7 +151,6 @@ const SECTIONS = [
       { href: "/universities",     label: "دليل الجامعات",        desc: "الجامعات الإسلامية" },
       { href: "/academic-research",label: "البحث الأكاديمي",      desc: "موارد البحث العلمي الشرعي" },
       { href: "/institutions",     label: "المؤسسات الإسلامية",   desc: "المراكز والمجامع العلمية" },
-      { href: "/islam-stats",      label: "إحصائيات الإسلام",     desc: "أرقام وحقائق عن الإسلام" },
     ],
   },
   {
@@ -159,13 +158,10 @@ const SECTIONS = [
     emoji: "⚙️",
     links: [
       { href: "/my-citations",       label: "اقتباساتي",           desc: "اقتباساتك المحفوظة" },
-      { href: "/vault",              label: "خزانتي",              desc: "المحفوظات الشخصية" },
       { href: "/my-submissions",     label: "مشاركاتي",            desc: "محتواك المُرسَل للمراجعة" },
       { href: "/submit",             label: "ارسل محتوى",          desc: "شارك معلومة أو فائدة" },
       { href: "/researcher-profile", label: "ملف الباحث",          desc: "ملفك الشخصي البحثي" },
-      { href: "/study-room",         label: "غرفة الدراسة",        desc: "بيئة مراجعة منظمة" },
       { href: "/transcribe",         label: "نسخ المحاضرات",       desc: "تحويل المحاضرات إلى نص" },
-      { href: "/cards",              label: "البطاقات الدعوية",    desc: "صانع البطاقات الإسلامية" },
       { href: "/stats",              label: "إحصائياتي",           desc: "إحصائيات نشاطك" },
       { href: "/settings",           label: "الإعدادات",           desc: "إعدادات الحساب والتطبيق" },
     ],

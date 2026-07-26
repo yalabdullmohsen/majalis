@@ -142,7 +142,6 @@ const SHEET_SECTIONS_RAW: { group: string; items: SheetItem[] }[] = [
     { href: "/calendar",             label: "التقويم الهجري",     Icon: Calendar },
     { href: "/universities",         label: "دليل الجامعات",      Icon: Building2 },
     { href: "/kids",                 label: "ركن الأطفال",         Icon: Baby },
-    { href: "/islam-stats",          label: "الإسلام في أرقام",   Icon: BarChart3 },
     { href: "/search",               label: "البحث الشامل",       Icon: Search },
     { href: "/settings",             label: "الإعدادات",          Icon: Settings },
     { href: "/about",                label: "عن التطبيق",         Icon: Info },

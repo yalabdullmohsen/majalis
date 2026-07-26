@@ -20,7 +20,24 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/learning-plan", // مدمج تحت المسارات
   "/knowledge-map", // مدمج تحت شبكة المعرفة
   "/masarat",
+  "/islam-stats", // مُنزَّل من الاكتشاف (يبقى المسار حيًا)
+  "/study-room",
+  "/vault", // تحت الحساب/الإعدادات لاحقًا
+  "/cards",
 ]);
+
+/** مسارات قديمة تُعاد كتابتها عند التسجيل في «الأخيرة» أو الروابط المحفوظة. */
+export const MERGED_PATH_REDIRECTS: Record<string, string> = {
+  "/knowledge-map": "/knowledge-graph",
+  "/learning-plan": "/learning/paths",
+  "/masarat": "/learning/paths",
+  "/family-mode": "/family",
+};
+
+export function resolveMergedPath(href: string): string {
+  const clean = href.split("#")[0].split("?")[0] || href;
+  return MERGED_PATH_REDIRECTS[clean] ?? href;
+}
 
 export function isComingSoonPath(href: string): boolean {
   const clean = href.split("#")[0].split("?")[0] || href;

@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { FEATURED, FEATURE_CATS } from "@/lib/home-feature-catalog";
+import { isComingSoonPath } from "@/lib/nav-visibility";
 
 export function HomeExplorePlatform() {
   return (
@@ -46,17 +47,28 @@ export function HomeExplorePlatform() {
               <span className="hp-explore-cat__count">{cat.items.length} قسم</span>
             </div>
             <div className="hp-explore-cat__grid">
-              {preview.map(({ href, Icon: ItemIcon, title, desc }) => (
-                <Link key={href} href={href} className="hp-explore-item">
-                  <span className="hp-explore-item__icon">
-                    <ItemIcon size={14} strokeWidth={2} />
-                  </span>
-                  <div className="hp-explore-item__body">
-                    <strong className="hp-explore-item__title">{title}</strong>
-                    <span className="hp-explore-item__desc">{desc}</span>
-                  </div>
-                </Link>
-              ))}
+              {preview.map(({ href, Icon: ItemIcon, title, desc }) => {
+                const soon = isComingSoonPath(href);
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    className={`hp-explore-item${soon ? " hp-explore-item--soon" : ""}`}
+                    aria-label={soon ? `${title} — قريبًا` : undefined}
+                  >
+                    <span className="hp-explore-item__icon">
+                      <ItemIcon size={14} strokeWidth={2} />
+                    </span>
+                    <div className="hp-explore-item__body">
+                      <strong className="hp-explore-item__title">
+                        {title}
+                        {soon ? <span className="nav-soon-badge">قريبًا</span> : null}
+                      </strong>
+                      <span className="hp-explore-item__desc">{desc}</span>
+                    </div>
+                  </Link>
+                );
+              })}
               {remaining > 0 && (
                 <Link href="/sitemap" className="hp-explore-more">
                   +{remaining} أقسام أخرى ←

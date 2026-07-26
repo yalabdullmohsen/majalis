@@ -241,7 +241,6 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/knowledge-graph",     label: "استكشف المعرفة",      Icon: Network,   desc: "شبكة المعرفة والخريطة المعرفية" },
       { href: "/mind-map",            label: "الخرائط الذهنية",     Icon: Map,       desc: "تنظيم المعلومات مرئياً" },
       { href: "/islamic-glossary",    label: "المصطلحات الإسلامية", Icon: BookOpen,  desc: "معجم المصطلحات الفقهية" },
-      { href: "/islam-stats",         label: "الإسلام في أرقام",   Icon: BarChart3, desc: "إحصائيات ومعطيات إسلامية" },
     ],
   },
   {

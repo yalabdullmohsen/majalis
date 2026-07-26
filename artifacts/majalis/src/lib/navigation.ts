@@ -59,7 +59,6 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/janaza",            label: "أحكام الجنائز" },
   { href: "/sahabah",           label: "أعلام الصحابة" },
   { href: "/shamael",           label: "الشمائل المحمدية" },
-  { href: "/islam-stats",       label: "الإسلام في أرقام" },
   { href: "/islamic-glossary",  label: "المصطلحات الإسلامية" },
   { href: "/adab-talab-ilm",   label: "آداب طالب العلم" },
   { href: "/anbiya",            label: "قصص الأنبياء والرسل" },
@@ -215,8 +214,6 @@ export const HOME_MORE_SECTIONS = [
   { href: "/duas-quran",    title: "أدعية القرآن الكريم",  description: "أدعية قرآنية مأثورة: دعاء الأنبياء والمؤمنين مع سياقها وفوائدها" },
   { href: "/knowledge-graph", title: "استكشف المعرفة",   description: "شبكة المعرفة الإسلامية وعلاقات العلوم الشرعية" },
   { href: "/quran-hub",    title: "مركز القرآن",          description: "بوابتك الشاملة للمصحف والتجويد وعلوم القرآن" },
-  { href: "/study-room",   title: "غرفة الدراسة",         description: "مؤقت بومودورو وتتبع جلسات المذاكرة وإحصائيات التعلم" },
-  { href: "/vault",        title: "مخزن المعرفة",          description: "المفضلات والملاحظات الشخصية واستئناف القراءة" },
   { href: "/learning/calendar", title: "تقويم الدروس",    description: "مواعيد الدروس والدورات الإسلامية القادمة مع تصدير ICS" },
   { href: "/start-here",  title: "ابدأ من هنا",           description: "مسار مرتّب للمبتدئ في طلب العلم الشرعي" },
 ] as const;

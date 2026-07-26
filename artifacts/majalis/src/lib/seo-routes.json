@@ -520,9 +520,10 @@
         "تصميم بطاقات",
         "فوائد دينية"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.7
+      "priority": 0.7,
+      "robots": "noindex, follow"
     },
     {
       "path": "/transcribe",
@@ -1123,7 +1124,7 @@
         "التعلم المنظم",
         "دراسة الشريعة"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
       "priority": 0.72
     },
@@ -1214,10 +1215,10 @@
         "مذاكرة",
         "طلب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
       "priority": 0.7,
-      "robots": "index, follow"
+      "robots": "noindex, follow"
     },
     {
       "path": "/settings",
@@ -1822,7 +1823,7 @@
         "خريطة العلوم",
         "تصفح المعرفة الإسلامية"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
       "priority": 0.72
     },
@@ -1888,7 +1889,8 @@
         "خارطة الطريق",
         "مستجدات التطوير"
       ],
-      "sitemap": false
+      "sitemap": false,
+      "robots": "noindex, follow"
     },
     {
       "path": "/islamic-glossary",
@@ -1913,9 +1915,10 @@
         "انتشار الإسلام",
         "عدد المسلمين"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.72
+      "priority": 0.72,
+      "robots": "noindex, follow"
     },
     {
       "path": "/academic-research",
