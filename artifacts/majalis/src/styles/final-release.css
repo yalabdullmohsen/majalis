@@ -135,19 +135,19 @@ body {
 }
 .top-section-bar__scroll {
   display: flex;
+  flex-wrap: nowrap;
+  direction: rtl;
   gap: 0.4rem;
   overflow-x: auto;
+  overflow-y: hidden;
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  /* الحشوة الجانبية تحترم قصّة الشاشة (الوضع الأفقي على iPhone يزيح
-     المحتوى تحت الحافة المنحنية)، وتضمن ظهور أول وآخر تبويب كاملين
-     بدل التصاقهما بالحافة. */
+  /* حشوة البداية/النهاية: أول وآخر قسم يظهران كاملين بلا التصاق بالحافة. */
   padding-block: 0.4rem;
-  padding-inline-start: max(0.75rem, env(safe-area-inset-right, 0px));
-  padding-inline-end: max(0.75rem, env(safe-area-inset-left, 0px));
-  /* عند التمرير البرمجي لتبويب ما، لا يقف ملاصقًا للحافة. */
-  scroll-padding-inline: 0.75rem;
+  padding-inline-start: max(1rem, env(safe-area-inset-right, 0px));
+  padding-inline-end: max(1rem, env(safe-area-inset-left, 0px));
+  scroll-padding-inline: 1rem;
   width: 100%;
   max-width: min(100%, var(--page-width));
   margin-inline: auto;
@@ -158,6 +158,7 @@ body {
 .top-section-bar__scroll > .top-section-bar__tab {
   flex: 0 0 auto;
   white-space: nowrap;
+  max-width: none;
 }
 .top-section-bar__scroll::-webkit-scrollbar { display: none; }
 .top-section-bar__tab {

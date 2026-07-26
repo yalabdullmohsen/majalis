@@ -14,6 +14,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { isTabActive, SECTION_TABS } from "../../components/TopSectionBar";
+import { MORE_SHEET_SECTIONS, flattenMoreSectionsForTopBar } from "../more-sheet-sections";
 import { HOME_WIDGET_DEFS, sanitizePrefs, type HomeWidgetId } from "../homepage-layout";
 import { FEATURE_REGISTRY } from "../feature-registry";
 
@@ -27,17 +28,22 @@ function assert(condition: boolean, label: string) {
   else { console.error(`  ✗ FAIL: ${label}`); failed++; }
 }
 
-console.log("\n=== TopSectionBar — 22 قسمًا فعليًا بلا تكرار وبلا الرئيسية ===");
+console.log("\n=== TopSectionBar — أقسام المزيد بترتيب أولوية بلا تكرار ===");
 {
-  assert(SECTION_TABS.length === 22, `22 قسمًا بالضبط (الفعلي: ${SECTION_TABS.length})`);
+  const fromMore = flattenMoreSectionsForTopBar();
+  assert(SECTION_TABS.length === fromMore.length, `عدد الشريط = عدد أقسام المزيد المسطّحة (الفعلي: ${SECTION_TABS.length}/${fromMore.length})`);
+  assert(SECTION_TABS.length === MORE_SHEET_SECTIONS.reduce((n, s) => n + s.items.length, 0),
+    "كل عناصر المزيد ظهرت في الشريط (بلا نقص بعد إزالة التكرار)");
   const hrefs = SECTION_TABS.map((t) => t.href);
   assert(new Set(hrefs).size === hrefs.length, "لا تكرار في مسارات الأقسام (كل href فريد)");
   assert(!hrefs.includes("/"), "«الرئيسية» غير ظاهرة داخل الشريط (تبقى ضمن التنقل الرئيسي فقط)");
-  assert(!hrefs.includes("/features-in-progress"), "«مميزات قيد التطوير» غير ظاهرة داخل الشريط");
-  const priorityFirst5 = ["/tawhid", "/seerah", "/fiqh", "/hadith", "/quran-hub"];
-  assert(hrefs.slice(0, 5).join(",") === priorityFirst5.join(","),
-    `أول 5 أقسام هي أولوية العقيدة/السيرة/الفقه/الحديث/القرآن بالترتيب (الفعلي: ${hrefs.slice(0, 5).join(",")})`);
-  assert(hrefs.includes("/kids"), "قسم الأطفال ضمن الشريط");
+  assert(hrefs[0] === "/tawhid", `أول قسم هو التوحيد/العقيدة (الفعلي: ${hrefs[0]})`);
+  const quranIdx = hrefs.indexOf("/mushaf");
+  const hadithIdx = hrefs.indexOf("/hadith");
+  const seerahIdx = hrefs.indexOf("/seerah");
+  const fiqhIdx = hrefs.indexOf("/fiqh");
+  assert(quranIdx > 0 && hadithIdx > quranIdx, "القرآن قبل الحديث في ترتيب الشريط");
+  assert(seerahIdx > hadithIdx && fiqhIdx > seerahIdx, "السيرة ثم الفقه بعد الحديث");
   for (const href of hrefs) {
     assert(href.startsWith("/") && href.length > 1, `مسار "${href}" يبدو مسارًا فعليًا (لا فارغ ولا وهمي)`);
   }
@@ -45,20 +51,17 @@ console.log("\n=== TopSectionBar — 22 قسمًا فعليًا بلا تكرا�
 
 console.log("\n=== isTabActive — فتح القسم الصحيح من الشريط ===");
 {
-  assert(isTabActive("/quran-hub", "/quran-hub") === true, "تبويب القرآن نشط في مساره تمامًا");
-  assert(isTabActive("/quran-hub/tajweed", "/quran-hub") === true, "تبويب القرآن يبقى نشطًا في مسار فرعي (لا يشترط تطابقًا حرفيًا)");
+  assert(isTabActive("/quran-hub", "/quran-hub") === true, "تبويب مركز القرآن نشط في مساره تمامًا");
+  assert(isTabActive("/quran-hub/extra", "/quran-hub") === true, "تبويب مركز القرآن يبقى نشطًا في مسار فرعي");
   assert(isTabActive("/quran-hubx", "/quran-hub") === false, "لا التباس مع مسار مشابه بالاسم لكن مختلف فعليًا (quran-hubx)");
-  assert(isTabActive("/kids", "/kids") === true, "تبويب الأطفال نشط في مساره");
-  assert(isTabActive("/kids", "/quran-hub") === false, "تبويب القرآن غير نشط وأنت في قسم الأطفال");
   assert(isTabActive("/learn/lesson-1", "/learn") === true, "تبويب تعلّم نشط في مسار درس فرعي");
-  assert(isTabActive("/mushaf/page/12", "/mushaf/page") === true, "تبويب المصحف بنظام الصفحات نشط في مسار فرعي مرقّم");
-  assert(isTabActive("/mushaf", "/mushaf/page") === false, "لا التباس بين /mushaf و/mushaf/page رغم اشتراك البادئة");
+  assert(isTabActive("/learning/paths", "/learn") === false, "لا التباس بين /learn و/learning/paths");
+  assert(isTabActive("/learning/paths", "/learning/paths") === true, "تبويب المسارات نشط في مساره");
+  assert(isTabActive("/mushaf/page/12", "/mushaf") === true, "مسار المصحف الفرعي يفعّل تبويب المصحف");
+  assert(isTabActive("/hadith/books-and-rulings", "/hadith") === false, "المسار الأدق للمتون يسبق تبويب الأحاديث العام");
+  assert(isTabActive("/hadith/books-and-rulings", "/hadith/books-and-rulings") === true, "تبويب المتون نشط في مساره");
 
-  // لا قسمان نشطان معًا لنفس location — يمنع التباسًا بصريًا في الشريط.
-  // (مسارا /mushaf و/mushaf/page مستثنيان هنا عمدًا: الشريط كلّه يختفي
-  // فور دخول أي مسار يبدأ بـ/mushaf — قارئ المصحف الغامر له تنقّله
-  // الخاص — فلا يُطرح سؤال "كم تبويبًا نشطًا" هناك أصلًا.)
-  const sampleLocations = ["/quran-hub", "/kids", "/kids/x", "/other-page", "/", "/quran/tajweed", "/updates"];
+  const sampleLocations = ["/quran-hub", "/tawhid", "/other-page", "/", "/quran/tajweed", "/updates", "/learning/paths", "/hadith/books-and-rulings"];
   for (const loc of sampleLocations) {
     const activeCount = SECTION_TABS.filter((t) => isTabActive(loc, t.href)).length;
     assert(activeCount <= 1, `المسار "${loc}" يُفعِّل تبويبًا واحدًا كحد أقصى (الفعلي: ${activeCount})`);
