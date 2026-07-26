@@ -17,10 +17,10 @@ const Icon = ({ d }: { d: string }) => (
 
 const TOPICS: { href: string; icon: string; label: string; desc: string; color: string }[] = [
   {
-    href: "/miracles",
+    href: "/ulum-quran",
     icon: '<circle cx="11" cy="9" r="4"/><path d="M11 13v3"/><path d="M7 16h8"/><path d="M14 6l2-3"/><path d="M8 6 6 3"/>',
-    label: "الإعجاز العلمي",
-    desc: "آيات كونية مذهلة في القرآن والسنة",
+    label: "وجوه الإعجاز القرآني",
+    desc: "البياني والتشريعي والغيبي — بلا إعجاز عددي",
     color: "#0F766E",
   },
   {

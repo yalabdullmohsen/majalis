@@ -183,9 +183,9 @@ export const MIND_MAPS: MindMap[] = [
           id: "eijaz",
           label: "الإعجاز القرآني",
           children: [
-            { id: "ei-1", label: "الإعجاز اللغوي" },
-            { id: "ei-2", label: "الإعجاز العلمي", href: "/miracles" },
-            { id: "ei-3", label: "الإعجاز العددي" },
+            { id: "ei-1", label: "الإعجاز البياني", href: "/ulum-quran" },
+            { id: "ei-2", label: "الإعجاز التشريعي", href: "/ulum-quran" },
+            { id: "ei-3", label: "الإعجاز الغيبي", href: "/ulum-quran" },
           ],
         },
         {

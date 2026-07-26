@@ -31,17 +31,17 @@ const IVORY = "#D6D5CE";
 type Supplement = { mentioned: number; miracle?: string; book?: string; quranRef?: string };
 const SUPPLEMENT: Record<string, Supplement> = {
   adam:        { mentioned: 25, miracle: "خُلق من طين وعُلِّم الأسماء كلها",                    quranRef: "البقرة: ٣٠-٣٩، طه: ١١٥-١٢٣" },
-  idris:       { mentioned: 2,  miracle: "رُفع إلى السماء مكاناً علياً",                         quranRef: "مريم: ٥٦-٥٧، الأنبياء: ٨٥" },
+  idris:       { mentioned: 2,  miracle: "رفعه الله مكاناً علياً — كما في القرآن دون تفصيل زائد", quranRef: "مريم: ٥٦-٥٧، الأنبياء: ٨٥" },
   nuh:         { mentioned: 43, miracle: "السفينة والطوفان، أنجاه الله والمؤمنين",               quranRef: "هود: ٢٥-٤٨، نوح: ١-٢٨" },
   hud:         { mentioned: 7,  miracle: "نجاه الله من الريح العقيم التي أهلكت عاداً",            quranRef: "هود: ٥٠-٦٠، الأحقاف: ٢١-٢٦" },
-  salih:       { mentioned: 9,  miracle: "ناقة الله، خرجت من صخرة صمّاء",                      quranRef: "الأعراف: ٧٣-٧٩، هود: ٦١-٦٨" },
-  ibrahim:     { mentioned: 69, miracle: "لم تحرقه نار نمرود، ﴿كُونِي بَرْدًا وَسَلَامًا﴾",   book: "الصحف", quranRef: "البقرة: ١٢٤-١٣٢، الأنبياء: ٥١-٧١" },
+  salih:       { mentioned: 9,  miracle: "ناقة الله آيةً لثمود — دون تفاصيل لم تثبت في الوحي",   quranRef: "الأعراف: ٧٣-٧٩، هود: ٦١-٦٨" },
+  ibrahim:     { mentioned: 69, miracle: "لم تحرقه النار بعد أن أُلقي فيها، ﴿كُونِي بَرْدًا وَسَلَامًا﴾", book: "الصحف", quranRef: "البقرة: ١٢٤-١٣٢، الأنبياء: ٥١-٧١" },
   lut:         { mentioned: 27, miracle: "نجاه الله وقلب المدينة على أهلها",                     quranRef: "هود: ٧٧-٨٣، الحجر: ٥٨-٧٧" },
-  ismail:      { mentioned: 12, miracle: "الذبح العظيم، فداه الله بكبش",                        quranRef: "الصافات: ١٠١-١١١، إبراهيم: ٣٧" },
+  ismail:      { mentioned: 12, miracle: "الذبح العظيم، فداه الله بذبح عظيم",                     quranRef: "الصافات: ١٠١-١١١، إبراهيم: ٣٧" },
   "is-haq":    { mentioned: 17,                                                                   quranRef: "هود: ٧١، الصافات: ١١٢-١١٣" },
   yaqub:       { mentioned: 16,                                                                   quranRef: "يوسف: ٤-٨٣" },
   yusuf:       { mentioned: 27, miracle: "أُوتي تأويل الأحاديث وحسن الخُلق",                     quranRef: "سورة يوسف كاملة" },
-  ayyub:       { mentioned: 4,  miracle: "شُفي بعد ١٨ سنة من البلاء الشديد",                     quranRef: "الأنبياء: ٨٣-٨٤، ص: ٤١-٤٤" },
+  ayyub:       { mentioned: 4,  miracle: "كشف الله ضرّه بعد بلاء شديد — بلا تحديد مدة لم تثبت",  quranRef: "الأنبياء: ٨٣-٨٤، ص: ٤١-٤٤" },
   shuayb:      { mentioned: 9,                                                                    quranRef: "الأعراف: ٨٥-٩٣، هود: ٨٤-٩٥" },
   musa:        { mentioned: 136, miracle: "العصا، يده البيضاء، انفلاق البحر، التوراة",           book: "التوراة", quranRef: "القصص: ٣-٤٠، طه: ٩-٩٨" },
   harun:       { mentioned: 20,                                                                   quranRef: "طه: ٢٩-٣٦، الأعراف: ١٤٢" },
@@ -61,10 +61,10 @@ const ULUL_AZM_SLUGS = ["nuh", "ibrahim", "musa", "isa", "muhammad"];
 
 const MIRACLES_LIST = [
   { nabi: "محمد ﷺ",   miracle: "القرآن الكريم، المعجزة الخالدة",                ayah: "البقرة: ٢٣" },
-  { nabi: "موسى ﷺ",   miracle: "انفلاق البحر الأحمر لبني إسرائيل",               ayah: "الشعراء: ٦٣" },
+  { nabi: "موسى ﷺ",   miracle: "انفلاق البحر لبني إسرائيل",                      ayah: "الشعراء: ٦٣" },
   { nabi: "عيسى ﷺ",   miracle: "إحياء الموتى وإبراء الأكمه والأبرص",             ayah: "آل عمران: ٤٩" },
   { nabi: "إبراهيم ﷺ", miracle: "النار لم تحرقه، ﴿كُونِي بَرْدًا وَسَلَامًا﴾", ayah: "الأنبياء: ٦٩" },
-  { nabi: "صالح ﷺ",   miracle: "الناقة من الصخرة الصمّاء",                       ayah: "الأعراف: ٧٣" },
+  { nabi: "صالح ﷺ",   miracle: "ناقة الله آية لثمود",                            ayah: "الأعراف: ٧٣" },
   { nabi: "سليمان ﷺ", miracle: "تسخير الجن والريح وفهم لغة الطير",               ayah: "الأنبياء: ٨١" },
   { nabi: "يونس ﷺ",   miracle: "الحياة في بطن الحوت ثم النجاة",                  ayah: "الأنبياء: ٨٧" },
   { nabi: "داود ﷺ",   miracle: "تليين الحديد بيديه والزبور",                      ayah: "سبأ: ١٠" },
@@ -72,10 +72,10 @@ const MIRACLES_LIST = [
   { nabi: "يعقوب ﷺ",  miracle: "عودة البصر من قميص يوسف",                        ayah: "يوسف: ٩٦" },
   { nabi: "نوح ﷺ",    miracle: "السفينة والطوفان، نجاة المؤمنين",               ayah: "هود: ٤٠" },
   { nabi: "آدم ﷺ",    miracle: "خُلق من طين وعُلِّم الأسماء كلها",               ayah: "البقرة: ٣١" },
-  { nabi: "يوسف ﷺ",  miracle: "تأويل الأحلام وإخبار بالغيب",                    ayah: "يوسف: ٤٣-٤٩" },
+  { nabi: "يوسف ﷺ",  miracle: "تأويل الأحلام بإذن الله",                         ayah: "يوسف: ٤٣-٤٩" },
   { nabi: "لوط ﷺ",   miracle: "النجاة من العذاب مع أهله إلا زوجته",             ayah: "هود: ٨١" },
-  { nabi: "شعيب ﷺ",  miracle: "نجاته مع المؤمنين من حجارة الصيحة",              ayah: "هود: ٩٤" },
-  { nabi: "إلياس ﷺ", miracle: "رفعه إلى السماء وإهلاك قومه الكافرين",           ayah: "الصافات: ١٢٤" },
+  { nabi: "شعيب ﷺ",  miracle: "نجاته مع المؤمنين من الصيحة",                    ayah: "هود: ٩٤" },
+  { nabi: "إلياس ﷺ", miracle: "دعا قومه إلى توحيد الله وترك عبادة البعل",      ayah: "الصافات: ١٢٣-١٢٥" },
 ];
 
 function prophetColor(slug: string) { return PROPHET_HUE[slug] || IVORY; }

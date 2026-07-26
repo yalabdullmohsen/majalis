@@ -29,7 +29,7 @@ export default function SurahStoriesPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `سورة ${s.name}`,
-            url: `https://www.majlisilm.com/surah-stories/${s.number}`,
+            url: `https://www.majlisilm.com/quran/surah-stories/${s.number}`,
           })),
         },
       ],
@@ -162,7 +162,7 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
         <Link href={`/mushaf/${story.number}`} className="page-action-btn">قراءة السورة</Link>
 
         <div className="twh-share">
-          <ShareButtons title={`${story.name} — قصص سور القرآن | المجلس العلمي`} url={`https://www.majlisilm.com/surah-stories/${story.number}`} />
+          <ShareButtons title={`${story.name} — قصص سور القرآن | المجلس العلمي`} url={`https://www.majlisilm.com/quran/surah-stories/${story.number}`} />
         </div>
         <div className="px-4 pb-6 mt-4">
           <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />
